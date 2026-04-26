@@ -1494,3 +1494,310 @@ body.no-parallax .g-tile .img { transform: none !important; }
     border-bottom: 1px solid rgba(61,26,53,0.2);
   }
 }
+
+/* ================================================================
+   UI/UX PRO MAX — Liquid Glass · Aurora Mesh · Luxury Serif
+   Estilo: Premium, cinemático, espectacular
+   ================================================================ */
+
+/* ---- Variables del sistema Liquid Glass ---- */
+:root {
+  --serif:       'Cormorant', 'Lora', Georgia, serif;
+  --sans:        'Montserrat', 'Poppins', system-ui, sans-serif;
+  --ease-liquid: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur-liquid:  480ms;
+}
+
+/* ---- Gradient text para itálicas del hero ---- */
+.hero-title .it {
+  background: linear-gradient(
+    135deg,
+    var(--sol-lt) 0%,
+    #c8f0f8     45%,
+    var(--sol-lt) 100%
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textFlow 6s linear infinite;
+}
+@keyframes textFlow {
+  from { background-position: 0% center; }
+  to   { background-position: 220% center; }
+}
+
+/* ---- HERO: banda Aurora animada ---- */
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 160%; height: 55%;
+  top: 0; left: -30%;
+  background: linear-gradient(
+    90deg,
+    transparent          0%,
+    rgba(58,170,187,.10) 20%,
+    rgba(111,196,209,.22) 40%,
+    rgba(58,170,187,.08) 58%,
+    transparent          75%
+  );
+  filter: blur(48px);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  animation: auroraMove 18s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+@keyframes auroraMove {
+  0%   { transform: translateX(-12%) scaleY(.9) rotate(-2deg); opacity: .6; }
+  50%  { transform: translateX(18%)  scaleY(1.3) rotate(2deg);  opacity: 1; }
+  100% { transform: translateX(-12%) scaleY(.9) rotate(-2deg); opacity: .6; }
+}
+
+/* ---- HEADER: glass reforzado + borde shimmer ---- */
+.header.night {
+  backdrop-filter: blur(22px) saturate(1.6);
+  -webkit-backdrop-filter: blur(22px) saturate(1.6);
+}
+.header.day {
+  backdrop-filter: blur(22px) saturate(1.6);
+  -webkit-backdrop-filter: blur(22px) saturate(1.6);
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent               0%,
+    rgba(111,196,209,.65)    25%,
+    rgba(240,232,213,.40)    50%,
+    rgba(111,196,209,.65)    75%,
+    transparent              100%
+  );
+  background-size: 300% 100%;
+  animation: shimmerLine 7s linear infinite;
+}
+@keyframes shimmerLine {
+  from { background-position: 200% center; }
+  to   { background-position: -200% center; }
+}
+
+/* ---- APARTAMENTOS: Liquid Glass hover + glow por color ---- */
+.apt-card.vm { --apt-glow: rgba(107,122,58,.5); }
+.apt-card.vt { --apt-glow: rgba(184,106,60,.5); }
+.apt-card.vs { --apt-glow: rgba(212,168,74,.5); }
+
+@media (hover: hover) {
+  .apt-card:hover {
+    transform: translateY(-14px) scale(1.025);
+    box-shadow:
+      0 64px 128px rgba(0,0,0,.55),
+      0 0   80px var(--apt-glow, rgba(58,170,187,.3)),
+      inset 0 1px 0 rgba(255,255,255,.14);
+    transition:
+      transform   var(--dur-liquid) var(--ease-liquid),
+      box-shadow  var(--dur-liquid) var(--ease-liquid);
+  }
+}
+
+/* Glass sheen sobre las tarjetas */
+.apt-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,.13) 0%,
+    rgba(255,255,255,.04) 40%,
+    transparent           60%
+  );
+  opacity: 0;
+  transition: opacity var(--dur-liquid) var(--ease-liquid);
+  z-index: 5;
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .apt-card:hover::after { opacity: 1; }
+}
+
+/* Ken Burns en la foto de cada apartamento */
+.apt-card .apt-photo { transition: transform 9s ease; }
+@media (hover: hover) {
+  .apt-card:hover .apt-photo { transform: scale(1.09); }
+}
+
+/* ---- GALERÍA: overlay dramático al hover ---- */
+.g-tile::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(26,12,24,.85) 0%,
+    rgba(26,12,24,.30) 38%,
+    transparent        65%
+  );
+  opacity: 0;
+  transition: opacity .42s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .g-tile:hover::before { opacity: 1; }
+  .g-tile:hover .img {
+    transform: scale(1.12) !important;
+    transition: transform .65s cubic-bezier(.23,1,.32,1) !important;
+  }
+}
+
+/* Caption reveal desde abajo */
+.g-tile .caption {
+  z-index: 3;
+  mix-blend-mode: normal;
+  color: var(--arena);
+  bottom: 22px; left: 22px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .4s ease, transform .4s ease;
+}
+@media (hover: hover) {
+  .g-tile:hover .caption { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- COUNTERS: números con gradiente luminoso ---- */
+.counter .num {
+  background: linear-gradient(
+    135deg,
+    var(--sol-lt) 0%,
+    var(--arena)  55%,
+    var(--sol-lt) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 28px rgba(111,196,209,.38));
+}
+.counter .plus,
+.counter .unit {
+  -webkit-text-fill-color: var(--arena);
+  filter: none;
+  opacity: .65;
+}
+
+/* ---- BRIDGE: sol más dramático ---- */
+.bridge .celestial {
+  box-shadow:
+    0 0  70px rgba(245,201,122,.60),
+    0 0 150px rgba(240,232,213,.28),
+    0 0 260px rgba(184,136,58,.20);
+  animation: sunPulse 5s ease-in-out infinite;
+}
+@keyframes sunPulse {
+  0%,100% {
+    box-shadow:
+      0 0  70px rgba(245,201,122,.60),
+      0 0 150px rgba(240,232,213,.28),
+      0 0 260px rgba(184,136,58,.20);
+  }
+  50% {
+    box-shadow:
+      0 0  90px rgba(245,201,122,.80),
+      0 0 200px rgba(240,232,213,.40),
+      0 0 340px rgba(184,136,58,.28);
+  }
+}
+
+/* ---- MANIFEST: números romanos en gradiente + hover slide ---- */
+.manifest .p-num {
+  background: linear-gradient(135deg, var(--sol-lt), var(--arena));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@media (hover: hover) {
+  .manifest .principle { transition: transform var(--dur-liquid) var(--ease-liquid); }
+  .manifest .principle:hover { transform: translateX(10px); }
+}
+
+/* ---- RATINGS: hover más dramático ---- */
+.rating-card {
+  transition:
+    transform  var(--dur-liquid) var(--ease-liquid),
+    box-shadow var(--dur-liquid) var(--ease-liquid);
+}
+@media (hover: hover) {
+  .rating-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 64px rgba(61,26,53,.16);
+  }
+}
+.rating-card .score {
+  filter: drop-shadow(0 0 18px rgba(58,170,187,.18));
+}
+
+/* ---- CONTACT CTA: fondo aurora animado ---- */
+.contact-cta {
+  background: linear-gradient(
+    -45deg,
+    #140919, #2A0F2E, #0f1a2c,
+    #1a0c18, #2A0F2E, #140919
+  );
+  background-size: 500% 500%;
+  animation: ctaAurora 15s ease infinite;
+}
+@keyframes ctaAurora {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.contact-cta::before {
+  background:
+    radial-gradient(ellipse 55% 50% at 50% 50%, rgba(58,170,187,.14), transparent 70%),
+    radial-gradient(ellipse 30% 25% at 15% 75%, rgba(111,196,209,.07), transparent 60%);
+}
+
+/* ---- FLOATING CHAT: glass premium ---- */
+.float-chat .bubble-panel {
+  backdrop-filter: blur(28px) saturate(1.9);
+  -webkit-backdrop-filter: blur(28px) saturate(1.9);
+  box-shadow:
+    0 36px 90px rgba(26,12,24,.45),
+    inset 0 1px 0 rgba(255,255,255,.55);
+}
+
+/* ---- BOTONES: sheen + transición suave ---- */
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition: all var(--dur-liquid) var(--ease-liquid);
+}
+.btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,.18) 0%,
+    transparent           60%
+  );
+  opacity: 0;
+  transition: opacity .3s ease;
+  border-radius: inherit;
+  pointer-events: none;
+}
+.btn:hover::before { opacity: 1; }
+
+/* ---- SCROLLBAR refinado teal ---- */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--ber-dk); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--sol-lt), var(--sol-h));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--sol-lt); }
+
+/* ---- FOCUS RING premium ---- */
+:focus-visible {
+  outline: 2px solid var(--sol-lt);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
