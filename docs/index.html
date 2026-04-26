@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hestía Your Home · Tu hogar en Vera Playa, Almería</title>
+  <meta name="description" content="Tres apartamentos turísticos gestionados directamente en Vera Playa por Alex y Fran. Desde 2016."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Poppins:wght@200;300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/styles.css"/>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+<script>
+  window.__TWEAKS__ = { starfield: true, parallax: true };
+
+  const COMPONENT_FILES = [
+    'components/shared.jsx',
+    'components/chrome.jsx',
+    'components/sections-1.jsx',
+    'components/sections-2.jsx',
+    'components/brand-guide.jsx',
+    'components/tweaks.jsx',
+    'components/app.jsx',
+  ];
+
+  async function loadComponents() {
+    for (const file of COMPONENT_FILES) {
+      const res = await fetch(file);
+      if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
+      const code = await res.text();
+      const transformed = Babel.transform(code, { presets: ['react'] }).code;
+      // eslint-disable-next-line no-eval
+      eval(transformed);
+    }
+  }
+
+  loadComponents().catch(err => {
+    document.getElementById('root').innerHTML =
+      `<div style="padding:40px;font-family:sans-serif;color:#c00">
+        <b>Error loading components:</b><br>${err.message}
+      </div>`;
+    console.error(err);
+  });
+</script>
+</body>
+</html>
