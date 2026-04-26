@@ -122,7 +122,7 @@ const Apartments = ({ lang }) => {
       <div className="apartments-scroll">
         <div className="apartments-track" ref={trackRef} onScroll={handleScroll}>
           {APARTMENTS.map((a, i) => (
-            <div key={a.id} className={`apt-card ${a.id}`}>
+            <div key={a.id} id={`apt-${a.id}`} className={`apt-card ${a.id}`}>
               <img src={`assets/apt-${a.id}.jpg`} alt={a.name} className="apt-photo" loading="eager"/>
               <div className="apt-wash"/>
               <div className="pattern"/>
@@ -141,7 +141,7 @@ const Apartments = ({ lang }) => {
                     </React.Fragment>
                   ))}
                 </div>
-                <a className="apt-cta">{t.apt_cta} →</a>
+                <a href="#contacto" className="apt-cta">{t.apt_cta} →</a>
               </div>
             </div>
           ))}
