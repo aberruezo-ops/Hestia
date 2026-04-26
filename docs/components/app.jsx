@@ -1,42 +1,7 @@
 // ================================================================
-// HESTÍA — App raíz
+// HESTÍA — App raíz (landing)
+// useScrollMode y useReveal viven en shared.jsx
 // ================================================================
-
-const useScrollMode = () => {
-  const [mode, setMode] = React.useState('night');
-  const [scrolled, setScrolled] = React.useState(false);
-  React.useEffect(() => {
-    const onScroll = () => {
-      const y = window.scrollY;
-      const h = window.innerHeight;
-      setScrolled(y > 40);
-      // Hero + bridge area = night/bridge; después = day
-      // Hero ~100vh, bridge ~80vh → a partir de 1.4vh pasa a "day"
-      if (y < h * 0.85) setMode('night');
-      else setMode('day');
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-  return { mode, scrolled };
-};
-
-const useReveal = () => {
-  React.useEffect(() => {
-    const els = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.15 });
-    els.forEach(el => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-};
 
 const App = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');

@@ -42,33 +42,51 @@ const IconChat = () => (
   </svg>
 );
 
+const NAV_PAGES = {
+  mar:       'mar.html',
+  thalassa:  'thalassa.html',
+  salinas:   'salinas.html',
+  nosotros:  'nosotros.html',
+  opiniones: 'opiniones.html',
+  contacto:  'contacto.html',
+};
+
+const isActive = (href) => {
+  const current = window.location.pathname.split('/').pop() || 'index.html';
+  return current === href;
+};
+
 const Header = ({ mode, scrolled, lang }) => {
   const t = COPY[lang];
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
   const close = () => setMobileOpen(false);
-
   React.useEffect(() => { close(); }, [lang]);
+
+  const NavLink = ({ href, children, className = '' }) => (
+    <a href={href} className={`${className} ${isActive(href) ? 'active-page' : ''}`} onClick={close}>
+      {children}
+    </a>
+  );
 
   return (
     <>
       <header className={`header ${mode} ${scrolled ? 'scrolled' : ''}`}>
         <nav className="desktop-nav nav-left">
-          <a href="#apt-vm">{t.nav[1]}</a>
-          <a href="#apt-vt">{t.nav[2]}</a>
-          <a href="#apt-vs">{t.nav[3]}</a>
+          <NavLink href={NAV_PAGES.mar}>{t.nav[1]}</NavLink>
+          <NavLink href={NAV_PAGES.thalassa}>{t.nav[2]}</NavLink>
+          <NavLink href={NAV_PAGES.salinas}>{t.nav[3]}</NavLink>
         </nav>
-        <a href="#top" className="brand-lockup" aria-label="Hestía — Home">
+        <a href="index.html" className="brand-lockup" aria-label="Hestía — Inicio">
           <img src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo"/>
           <span className="wordmark">HESTÍA</span>
           <span className="your-home">your home!</span>
         </a>
         <div className="nav-right-area">
           <nav className="desktop-nav nav-right">
-            <a href="#nosotros">{t.nav[4]}</a>
-            <a href="#opiniones">{t.nav[5]}</a>
-            <a href="#contacto">{t.nav[6]}</a>
-            <a href="#contacto" className="cta">{t.cta_nav}</a>
+            <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
+            <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
+            <NavLink href={NAV_PAGES.contacto}>{t.nav[6]}</NavLink>
+            <NavLink href={NAV_PAGES.contacto} className="cta">{t.cta_nav}</NavLink>
           </nav>
           <button
             className={`hamburger-btn ${mobileOpen ? 'open' : ''}`}
@@ -80,16 +98,15 @@ const Header = ({ mode, scrolled, lang }) => {
           </button>
         </div>
       </header>
-
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
         <nav className="mobile-nav">
-          <a href="#apt-vm" onClick={close}>{t.nav[1]}</a>
-          <a href="#apt-vt" onClick={close}>{t.nav[2]}</a>
-          <a href="#apt-vs" onClick={close}>{t.nav[3]}</a>
-          <a href="#nosotros" onClick={close}>{t.nav[4]}</a>
-          <a href="#opiniones" onClick={close}>{t.nav[5]}</a>
-          <a href="#contacto" onClick={close}>{t.nav[6]}</a>
-          <a href="#contacto" className="mobile-cta" onClick={close}>{t.cta_nav}</a>
+          <NavLink href={NAV_PAGES.mar}>{t.nav[1]}</NavLink>
+          <NavLink href={NAV_PAGES.thalassa}>{t.nav[2]}</NavLink>
+          <NavLink href={NAV_PAGES.salinas}>{t.nav[3]}</NavLink>
+          <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
+          <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
+          <NavLink href={NAV_PAGES.contacto}>{t.nav[6]}</NavLink>
+          <NavLink href={NAV_PAGES.contacto} className="mobile-cta">{t.cta_nav}</NavLink>
         </nav>
       </div>
     </>

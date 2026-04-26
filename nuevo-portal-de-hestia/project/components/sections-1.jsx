@@ -73,11 +73,11 @@ const Bridge = ({ lang }) => {
 
 // --- APARTAMENTOS (scroll horizontal) ---
 const APARTMENTS = [
-  { id: 'vm', num: '01', name: 'Hestía Mar',      license: 'VFT/AL/01580', concept: 'apt_01_concept',
+  { id: 'vm', num: '01', name: 'Hestía Mar',      slug: 'mar',      license: 'VFT/AL/01580', concept: 'apt_01_concept',
     meta: ['6 plazas', '2 hab.', 'Piscina', 'Mascotas OK'] },
-  { id: 'vt', num: '02', name: 'Hestía Thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
+  { id: 'vt', num: '02', name: 'Hestía Thalassa', slug: 'thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
     meta: ['6 plazas', '2 hab.', 'Ático', 'SPA'] },
-  { id: 'vs', num: '03', name: 'Hestía Salinas',  license: 'VTF/AL/07056', concept: 'apt_03_concept',
+  { id: 'vs', num: '03', name: 'Hestía Salinas',  slug: 'salinas',  license: 'VTF/AL/07056', concept: 'apt_03_concept',
     meta: ['6 plazas', '2 hab.', '3 piscinas', 'Salinas'] },
 ];
 
@@ -141,7 +141,7 @@ const Apartments = ({ lang }) => {
                     </React.Fragment>
                   ))}
                 </div>
-                <a href="#contacto" className="apt-cta">{t.apt_cta} →</a>
+                <a href={`${a.slug}.html`} className="apt-cta">{t.apt_cta} →</a>
               </div>
             </div>
           ))}
