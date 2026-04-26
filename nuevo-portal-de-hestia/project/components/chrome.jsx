@@ -5,10 +5,10 @@
 const Topbar = ({ lang, setLang }) => (
   <div className="topbar">
     <div className="contacts">
-      <span>🇪🇸 WhatsApp Alex</span>
+      <span>Alex · WhatsApp</span>
       <span className="hide-mobile">+34 620 316 370</span>
       <span className="sep">·</span>
-      <span>🇬🇧 WhatsApp Fran</span>
+      <span>Fran · WhatsApp</span>
       <span className="hide-mobile">+34 654 138 251</span>
       <span className="sep hide-mobile">·</span>
       <span className="email hide-mobile">info@hestiayourhome.com</span>
@@ -21,27 +21,78 @@ const Topbar = ({ lang, setLang }) => (
   </div>
 );
 
+const IconHamburger = () => (
+  <svg width="22" height="16" viewBox="0 0 22 16" fill="currentColor" aria-hidden="true">
+    <rect width="22" height="2" rx="1"/>
+    <rect y="7" width="22" height="2" rx="1"/>
+    <rect y="14" width="22" height="2" rx="1"/>
+  </svg>
+);
+
+const IconClose = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+    <line x1="4" y1="4" x2="16" y2="16"/>
+    <line x1="16" y1="4" x2="4" y2="16"/>
+  </svg>
+);
+
+const IconChat = () => (
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+);
+
 const Header = ({ mode, scrolled, lang }) => {
   const t = COPY[lang];
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const close = () => setMobileOpen(false);
+
+  React.useEffect(() => { close(); }, [lang]);
+
   return (
-    <header className={`header ${mode} ${scrolled ? 'scrolled' : ''}`}>
-      <nav className="desktop-nav nav-left">
-        <a href="#apartamentos">{t.nav[1]}</a>
-        <a href="#apartamentos">{t.nav[2]}</a>
-        <a href="#apartamentos">{t.nav[3]}</a>
-      </nav>
-      <a href="#top" className="brand-lockup" aria-label="Hestía — Home">
-        <img src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo"/>
-        <span className="wordmark">HESTÍA</span>
-        <span className="your-home">your home!</span>
-      </a>
-      <nav className="desktop-nav nav-right">
-        <a href="#nosotros">{t.nav[4]}</a>
-        <a href="#opiniones">{t.nav[5]}</a>
-        <a href="#contacto">{t.nav[6]}</a>
-        <a href="#contacto" className="cta">{t.cta_nav}</a>
-      </nav>
-    </header>
+    <>
+      <header className={`header ${mode} ${scrolled ? 'scrolled' : ''}`}>
+        <nav className="desktop-nav nav-left">
+          <a href="#apt-vm">{t.nav[1]}</a>
+          <a href="#apt-vt">{t.nav[2]}</a>
+          <a href="#apt-vs">{t.nav[3]}</a>
+        </nav>
+        <a href="#top" className="brand-lockup" aria-label="Hestía — Home">
+          <img src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo"/>
+          <span className="wordmark">HESTÍA</span>
+          <span className="your-home">your home!</span>
+        </a>
+        <div className="nav-right-area">
+          <nav className="desktop-nav nav-right">
+            <a href="#nosotros">{t.nav[4]}</a>
+            <a href="#opiniones">{t.nav[5]}</a>
+            <a href="#contacto">{t.nav[6]}</a>
+            <a href="#contacto" className="cta">{t.cta_nav}</a>
+          </nav>
+          <button
+            className={`hamburger-btn ${mobileOpen ? 'open' : ''}`}
+            onClick={() => setMobileOpen(o => !o)}
+            aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <IconClose /> : <IconHamburger />}
+          </button>
+        </div>
+      </header>
+
+      <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
+        <nav className="mobile-nav">
+          <a href="#apt-vm" onClick={close}>{t.nav[1]}</a>
+          <a href="#apt-vt" onClick={close}>{t.nav[2]}</a>
+          <a href="#apt-vs" onClick={close}>{t.nav[3]}</a>
+          <a href="#nosotros" onClick={close}>{t.nav[4]}</a>
+          <a href="#opiniones" onClick={close}>{t.nav[5]}</a>
+          <a href="#contacto" onClick={close}>{t.nav[6]}</a>
+          <a href="#contacto" className="mobile-cta" onClick={close}>{t.cta_nav}</a>
+        </nav>
+      </div>
+    </>
   );
 };
 
@@ -78,8 +129,8 @@ const FloatingChat = ({ lang }) => {
           </div>
         </a>
       </div>
-      <button className="bubble-btn" onClick={() => setOpen(!open)} aria-label="Open chat">
-        {open ? '×' : '💬'}
+      <button className="bubble-btn" onClick={() => setOpen(!open)} aria-label={open ? 'Cerrar chat' : 'Abrir chat'}>
+        {open ? <IconClose /> : <IconChat />}
       </button>
     </div>
   );
@@ -141,9 +192,9 @@ const Footer = ({ lang }) => {
         <div className="col">
           <h5>{t.footer_apts}</h5>
           <ul>
-            <li><a href="#apartamentos">Hestía Mar</a></li>
-            <li><a href="#apartamentos">Hestía Thalassa</a></li>
-            <li><a href="#apartamentos">Hestía Salinas</a></li>
+            <li><a href="#apt-vm">Hestía Mar</a></li>
+            <li><a href="#apt-vt">Hestía Thalassa</a></li>
+            <li><a href="#apt-vs">Hestía Salinas</a></li>
           </ul>
         </div>
         <div className="col">
