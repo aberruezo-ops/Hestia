@@ -209,19 +209,19 @@ const Footer = ({ lang }) => {
         <div className="col">
           <h5>{t.footer_apts}</h5>
           <ul>
-            <li><a href="#apt-vm">Hestía Mar</a></li>
-            <li><a href="#apt-vt">Hestía Thalassa</a></li>
-            <li><a href="#apt-vs">Hestía Salinas</a></li>
+            <li><a href="mar.html">Hestía Mar</a></li>
+            <li><a href="thalassa.html">Hestía Thalassa</a></li>
+            <li><a href="salinas.html">Hestía Salinas</a></li>
           </ul>
         </div>
         <div className="col">
           <h5>{t.footer_hestia}</h5>
           <ul>
-            <li><a href="#nosotros">{t.nav[4]}</a></li>
-            <li><a href="#opiniones">{t.nav[5]}</a></li>
-            <li><a href="#contacto">{t.nav[6]}</a></li>
-            <li><a href="#">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>
-            <li><a href="#">Cookies</a></li>
+            <li><a href="nosotros.html">{t.nav[4]}</a></li>
+            <li><a href="opiniones.html">{t.nav[5]}</a></li>
+            <li><a href="contacto.html">{t.nav[6]}</a></li>
+            <li><a href="privacidad.html">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>
+            <li><a href="cookies.html">Cookies</a></li>
           </ul>
         </div>
         <div className="col">
