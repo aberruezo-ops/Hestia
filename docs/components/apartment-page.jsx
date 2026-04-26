@@ -165,7 +165,7 @@ const AptPageGallery = ({ apt, lang }) => {
       <p className="gallery-note">
         {lang === 'es'
           ? '↑ Fotos reales próximamente. Mientras tanto, escríbenos y te mandamos más.'
-          : '↑ Real photos coming soon. Meanwhile, write us and we'll send more.'}
+          : "↑ Real photos coming soon. Meanwhile, write us and we'll send more."}
       </p>
     </section>
   );
