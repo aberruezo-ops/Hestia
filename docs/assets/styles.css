@@ -1398,12 +1398,14 @@ footer .footer-brand .addr {
 @media (max-width: 900px) {
   .topbar .contacts { font-size: 10px; gap: 10px; }
   .topbar .contacts .hide-mobile { display: none; }
+  .header { display: flex; justify-content: space-between; align-items: center; gap: 0; }
   .header nav.desktop-nav { display: none; }
   .hamburger-btn { display: flex; }
   .mobile-menu { display: flex; }
-  .compare-grid { grid-template-columns: 1fr; }
+  .compare { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .compare-grid { min-width: 580px; }
   .compare-grid .head { padding-top: 30px; }
-  .compare-grid > div { padding: 12px 20px; }
+  .compare-grid > div { padding: 12px 16px; }
   .team-head { grid-template-columns: 1fr; gap: 30px; }
   .team-grid { grid-template-columns: 1fr; }
   .manifest-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -1423,6 +1425,7 @@ footer .footer-brand .addr {
   .footer-grid { grid-template-columns: 1fr; }
   .topbar .contacts .email { display: none; }
   .cookies { left: 12px; right: 12px; max-width: none; }
+  .hero-logo-wrap { width: clamp(100px, 26vw, 130px); height: clamp(100px, 26vw, 130px); }
 }
 
 /* Reveal on scroll */
