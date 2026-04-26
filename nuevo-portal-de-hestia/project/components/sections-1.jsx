@@ -10,7 +10,15 @@ const Hero = ({ lang, onScrollDown }) => {
 
   return (
     <section id="top" className="hero" data-screen-label="01 Hero">
-      <div className="stars"/>
+      {/* Vídeo de fondo — playas de Almería */}
+      <video
+        className="hero-bg-video"
+        autoPlay muted loop playsInline
+        preload="auto"
+      >
+        <source src="assets/playa-almeria.mp4" type="video/mp4"/>
+      </video>
+      {/* Logo animation overlay — mix-blend-mode screen */}
       <video
         ref={videoRef}
         className="hero-video"
