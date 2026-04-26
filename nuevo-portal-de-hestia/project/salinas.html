@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hestía Your Home · Tu hogar en Vera Playa, Almería</title>
-  <meta name="description" content="Tres apartamentos turísticos gestionados directamente en Vera Playa por Alex y Fran. Desde 2016."/>
+  <title>Hestía Salinas · Vera Playa, Almería</title>
+  <meta name="description" content="Apartamento junto a las Salinas de Puerto Rey con tres piscinas. Vera Playa, Almería. Gestionado directamente por Alex y Fran."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Lora:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=Poppins:wght@200;300;400&display=swap" rel="stylesheet"/>
@@ -18,15 +18,14 @@
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
 
 <script>
+  window.__APT__ = 'vs';
   window.__TWEAKS__ = { starfield: true, parallax: true };
 
   const COMPONENT_FILES = [
     'components/shared.jsx',
     'components/chrome.jsx',
-    'components/sections-1.jsx',
     'components/sections-2.jsx',
-    'components/tweaks.jsx',
-    'components/app.jsx',
+    'components/apartment-page.jsx',
   ];
 
   async function loadComponents() {

@@ -149,4 +149,36 @@ const COPY = {
   }
 };
 
-Object.assign(window, { HestiaLogoMark, Wordmark, COPY });
+// Hooks compartidos — disponibles en todas las páginas
+const useScrollMode = () => {
+  const [mode, setMode] = React.useState('night');
+  const [scrolled, setScrolled] = React.useState(false);
+  React.useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      const h = window.innerHeight;
+      setScrolled(y > 40);
+      if (y < h * 0.85) setMode('night');
+      else setMode('day');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return { mode, scrolled };
+};
+
+const useReveal = () => {
+  React.useEffect(() => {
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+};
+
+Object.assign(window, { HestiaLogoMark, Wordmark, COPY, useScrollMode, useReveal });
