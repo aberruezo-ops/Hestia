@@ -71,9 +71,17 @@ const Bridge = ({ lang }) => {
     <section className="bridge" data-screen-label="02 Amanecer">
       <div className="celestial"/>
       <div className="bridge-inner">
-        <div className="eyebrow" style={{color: 'var(--ber-dk)', opacity: 0.7}}>— 07:14 —</div>
+        <div className="eyebrow bridge-time">— 07:14 —</div>
         <h2 className="reveal" style={{marginTop: 20}}>{t.bridge_title}</h2>
         <p className="reveal delay-1">{t.bridge_sub}</p>
+        <div className="bridge-palette reveal delay-2">
+          {BRIDGE_PALETTE.map((c, i) => (
+            <div key={i} className="bridge-chip" style={{'--chip-color': c.hex}}>
+              <div className="chip-swatch"/>
+              <div className="chip-label">{lang === 'es' ? c.es : c.en}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

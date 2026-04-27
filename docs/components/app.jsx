@@ -51,7 +51,6 @@ const App = () => {
         <Apartments lang={lang} />
         <Compare lang={lang} />
         <Counters lang={lang} />
-        <Gallery lang={lang} />
         <Team lang={lang} />
         <Manifest lang={lang} />
         <Ratings lang={lang} />
