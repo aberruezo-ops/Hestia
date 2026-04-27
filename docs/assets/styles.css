@@ -106,23 +106,47 @@ p  { line-height: 1.65; font-weight: 300; }
   border-bottom: 1px solid rgba(240, 232, 213, 0.08);
 }
 .topbar .contacts {
-  display: flex; gap: 22px; align-items: center; flex-wrap: wrap;
-  opacity: 0.82;
+  display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
 }
-.topbar .contacts span { display: inline-flex; gap: 6px; align-items: center; }
-.topbar .contacts .sep { opacity: 0.3; }
+.topbar .contacts .sep { opacity: 0.3; padding: 0 4px; }
 .topbar .lang {
   display: flex; gap: 2px; align-items: center;
   font-family: var(--sans); font-weight: 400; font-size: 11px;
   letter-spacing: 0.18em;
 }
-.topbar .contacts a,
-.topbar .contacts span:not(.sep) {
-  transition: color .22s ease, opacity .22s ease;
+.topbar-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 9px;
+  border-radius: 20px;
   text-decoration: none;
+  color: var(--arena);
+  opacity: 0.72;
+  transition: opacity .25s ease, color .25s ease, background .25s ease, box-shadow .28s ease;
+  position: relative;
+  cursor: pointer;
 }
+.tl-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: #25D366;
+  flex-shrink: 0;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.topbar-link.email .tl-dot { background: var(--sol-h); }
+.tl-num { opacity: 0.65; font-size: 11px; }
 @media (hover: hover) {
-  .topbar .contacts span:not(.sep):hover { opacity: 1; color: var(--sol-lt); cursor: default; }
+  .topbar-link:hover {
+    opacity: 1;
+    color: var(--sol-lt);
+    background: rgba(111,196,209,.13);
+    box-shadow: 0 0 0 1px rgba(111,196,209,.2);
+  }
+  .topbar-link:hover .tl-dot {
+    transform: scale(1.5);
+    box-shadow: 0 0 6px rgba(37,211,102,.6);
+  }
+  .topbar-link.email:hover .tl-dot {
+    box-shadow: 0 0 6px rgba(240,200,100,.5);
+  }
 }
 
 .topbar .lang button {
@@ -2291,6 +2315,57 @@ body.no-parallax .g-tile .img { transform: none !important; }
   opacity: 0.55;
 }
 
+/* Reservas steps */
+.contacto-reservas {
+  padding: 80px var(--page-pad);
+  background: var(--ber-dk);
+  color: var(--arena);
+}
+.contacto-reservas .eyebrow { color: var(--sol-h); }
+.contacto-reservas h2 {
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 300;
+  margin-top: 10px; margin-bottom: 52px;
+}
+.reservas-steps {
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.reserva-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+  padding: 26px 0;
+  border-bottom: 1px solid rgba(240,232,213,.1);
+}
+.reserva-step:last-child { border-bottom: none; }
+.step-num {
+  font-family: var(--serif);
+  font-size: 42px;
+  font-weight: 300;
+  color: var(--sol-h);
+  opacity: 0.6;
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 52px;
+}
+.step-title {
+  font-family: var(--sans);
+  font-size: 17px;
+  font-weight: 400;
+  margin-bottom: 6px;
+  color: var(--arena);
+}
+.step-desc {
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--arena);
+  opacity: 0.72;
+  line-height: 1.6;
+}
+
 /* FAQ */
 .contacto-faq {
   padding: 80px var(--page-pad);
@@ -2342,8 +2417,18 @@ body.no-parallax .g-tile .img { transform: none !important; }
   transition: max-height .4s ease, padding .4s ease;
 }
 .faq-item.open .faq-a {
-  max-height: 200px;
+  max-height: 320px;
   padding-bottom: 20px;
+}
+.faq-a a {
+  color: var(--ber);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(61,26,53,.35);
+  transition: color .2s, text-decoration-color .2s;
+}
+@media (hover: hover) {
+  .faq-a a:hover { color: var(--sol-h); text-decoration-color: var(--sol-h); }
 }
 .faq-item.open .faq-chevron {
   transform: rotate(0deg);
