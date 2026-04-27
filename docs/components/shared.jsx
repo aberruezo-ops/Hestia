@@ -42,7 +42,7 @@ const COPY = {
     scroll_hint: 'Desliza para despertar',
     hero_meta_right: 'Noche mediterránea — 36.96° N, 1.83° W',
     bridge_title: '…y amanece sobre Vera Playa.',
-    bridge_sub: '320 días de sol al año. El Mediterráneo despierta en teal, el Cabo de Gata se tiñe de olivo, tierra y albero. Tres apartamentos, tres atmósferas, una misma casa.',
+    bridge_sub: 'La noche morada se retira despacio. El alba trae el albero — tierra, pared encalada, sal seca. A las siete, el Mediterráneo abre el ojo en teal y los olivos reciben la luz de costado. Al fondo, el Desierto de Tabernas ya es naranja.',
     apts_eyebrow: 'Nuestros tres apartamentos',
     apts_title: (<>Tres atmósferas, <em>una misma casa.</em></>),
     apts_sub: 'Cada uno toma su color del paisaje que lo rodea. Elige el tuyo — o ven tres veces.',
@@ -100,7 +100,7 @@ const COPY = {
     scroll_hint: 'Scroll to wake up',
     hero_meta_right: 'Mediterranean night — 36.96° N, 1.83° W',
     bridge_title: '…and morning breaks over Vera Playa.',
-    bridge_sub: '320 days of sun a year. The Mediterranean wakes in teal, Cabo de Gata turns olive, earth and ochre. Three apartments, three moods, one home.',
+    bridge_sub: 'The purple night slowly withdraws. Dawn brings the ochre — earth, whitewashed wall, dried salt. By seven, the Mediterranean opens its eye in teal, the olive trees catch the side-light. In the distance, the Tabernas Desert is already orange.',
     apts_eyebrow: 'Our three apartments',
     apts_title: (<>Three moods, <em>one same home.</em></>),
     apts_sub: 'Each one borrows its colour from the landscape around it. Choose yours — or come three times.',
@@ -181,4 +181,65 @@ const useReveal = () => {
   }, []);
 };
 
-Object.assign(window, { HestiaLogoMark, Wordmark, COPY, useScrollMode, useReveal });
+const BRIDGE_PALETTE = [
+  { hex: '#2A0F2E', es: 'Noche · morada',    en: 'Night · purple' },
+  { hex: '#7B3B6B', es: 'Alba · violeta',    en: 'Dawn · violet' },
+  { hex: '#C8975A', es: 'Día · albero',      en: 'Day · ochre' },
+  { hex: '#246B6E', es: 'Mar · teal',        en: 'Sea · teal' },
+  { hex: '#8B4A1E', es: 'Desierto · naranja',en: 'Desert · orange' },
+];
+
+const QUICK_FAQ = {
+  es: [
+    { q: '¿Cómo reservo directamente?',
+      a: <>Escríbenos por <a href="https://wa.me/34620316370" target="_blank" rel="noopener">WhatsApp</a> o a <a href="mailto:info@hestiayourhome.com">info@hestiayourhome.com</a>. Sin intermediarios, sin comisiones. Ver más en <a href="contacto.html">Contacto</a>.</> },
+    { q: '¿Aceptáis mascotas?',
+      a: <>En <a href="mar.html">Hestía Mar</a> sí, las mascotas son parte de la familia. En <a href="thalassa.html">Thalassa</a> y <a href="salinas.html">Salinas</a> consúltanos antes.</> },
+    { q: '¿Cuál apartamento me conviene?',
+      a: <>Compara los tres en <a href="index.html">nuestra home</a>. Mar es planta baja con jardín y mascotas. Thalassa es el ático con SPA. Salinas tiene tres piscinas y vistas al Parque Natural.</> },
+    { q: '¿Quiénes sois Alex y Fran?',
+      a: <><a href="nosotros.html">Somos los propietarios</a>, no una agencia. Gestionamos los tres apartamentos en persona desde 2016. Más de 900 familias nos avalan.</> },
+  ],
+  en: [
+    { q: 'How do I book directly?',
+      a: <>Write to us via <a href="https://wa.me/34654138251" target="_blank" rel="noopener">WhatsApp</a> or <a href="mailto:info@hestiayourhome.com">info@hestiayourhome.com</a>. No middlemen, no commissions. More at <a href="contacto.html">Contact</a>.</> },
+    { q: 'Do you accept pets?',
+      a: <>At <a href="mar.html">Hestía Mar</a>, yes — pets are family. At <a href="thalassa.html">Thalassa</a> and <a href="salinas.html">Salinas</a>, please ask first.</> },
+    { q: 'Which apartment suits me?',
+      a: <>Compare all three on <a href="index.html">our home page</a>. Mar is ground floor with garden and pets. Thalassa is the penthouse with SPA. Salinas has three pools and Nature Park views.</> },
+    { q: 'Who are Alex and Fran?',
+      a: <><a href="nosotros.html">We are the owners</a>, not an agency. We have run the three apartments in person since 2016. Over 900 families back us.</> },
+  ],
+};
+
+const QuickFAQ = ({ lang }) => {
+  const faqs = QUICK_FAQ[lang];
+  const [open, setOpen] = React.useState(null);
+  return (
+    <section className="quick-faq section-cream">
+      <div className="container">
+        <div className="eyebrow qfaq-eyebrow">
+          {lang === 'es' ? 'Preguntas frecuentes' : 'Quick answers'}
+        </div>
+        <div className="qfaq-grid">
+          {faqs.map((f, i) => (
+            <div key={i} className={`qfaq-item ${open === i ? 'open' : ''}`}>
+              <button className="qfaq-q" onClick={() => setOpen(open === i ? null : i)}>
+                <span>{f.q}</span>
+                <span className="qfaq-chevron">{open === i ? '−' : '+'}</span>
+              </button>
+              <div className="qfaq-a">{f.a}</div>
+            </div>
+          ))}
+        </div>
+        <div className="qfaq-more">
+          <a href="contacto.html" className="btn btn-ghost">
+            {lang === 'es' ? 'Más preguntas →' : 'More questions →'}
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+Object.assign(window, { HestiaLogoMark, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ });
