@@ -91,13 +91,13 @@ const Bridge = ({ lang }) => {
 const APARTMENTS = [
   { id: 'vm', num: '01', name: 'Hestía Mar',      slug: 'mar',      license: 'VFT/AL/01580', concept: 'apt_01_concept',
     img: 'assets/apt-vs.jpg',
-    meta: ['6 plazas', '2 hab.', 'Piscina', 'Mascotas OK'] },
+    meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas consultar'] },
   { id: 'vt', num: '02', name: 'Hestía Thalassa', slug: 'thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
     img: 'assets/apt-vt.jpg',
-    meta: ['6 plazas', '2 hab.', 'Ático', 'SPA'] },
+    meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA'] },
   { id: 'vs', num: '03', name: 'Hestía Salinas',  slug: 'salinas',  license: 'VTF/AL/07056', concept: 'apt_03_concept',
     img: 'assets/apt-vm.jpg',
-    meta: ['6 plazas', '2 hab.', '3 piscinas', 'Salinas'] },
+    meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas'] },
 ];
 
 const Apartments = ({ lang }) => {
@@ -183,21 +183,21 @@ const Apartments = ({ lang }) => {
 const Compare = ({ lang }) => {
   const rows = lang === 'es' ? [
     { label: 'Concepto',    vm: 'El mar desde los olivos', vt: 'Ático con vistas al Tabernas', vs: 'Amanecer sobre las salinas' },
-    { label: 'Plazas',      vm: '6 plazas · 2 hab.', vt: '6 plazas · 2 hab.', vs: '6 plazas · 2 hab.' },
+    { label: 'Plazas',      vm: '6 + bebé · 2 hab.', vt: '6 + bebé · 2 hab.', vs: '6 + bebé · 2 hab.' },
     { label: 'Terraza',     vm: 'Esquina 20m² · mar', vt: 'Panorámica 360°', vs: 'Dos terrazas' },
     { label: 'Piscina',     vm: 'Comunitaria', vt: 'Comunitaria + pádel', vs: '3 piscinas' },
     { label: 'Extra ⭑',     vm: 'Jacuzzi temporada', vt: 'SPA cromo + aromaterapia', vs: 'Parque Natural Salinas' },
     { label: 'Playa',       vm: '300 m', vt: '400 m', vs: '350 m' },
-    { label: 'Mascotas',    vm: '✓ Bienvenidas', vt: 'Consultar', vs: 'Consultar' },
+    { label: 'Mascotas',    vm: 'Consultar', vt: 'Consultar', vs: 'Consultar' },
     { label: 'Valoración',  vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
   ] : [
     { label: 'Concept',     vm: 'Sea through the olive grove', vt: 'Penthouse facing Tabernas', vs: 'Sunrise over the salt flats' },
-    { label: 'Guests',      vm: '6 guests · 2 bed.', vt: '6 guests · 2 bed.', vs: '6 guests · 2 bed.' },
+    { label: 'Guests',      vm: '6 + baby · 2 bed.', vt: '6 + baby · 2 bed.', vs: '6 + baby · 2 bed.' },
     { label: 'Terrace',     vm: 'Corner 20m² · sea', vt: '360° panoramic', vs: 'Two terraces' },
     { label: 'Pool',        vm: 'Shared', vt: 'Shared + padel', vs: '3 pools' },
     { label: 'Extra ⭑',     vm: 'Seasonal jacuzzi', vt: 'SPA chromotherapy', vs: 'Salt-flat nature park' },
     { label: 'Beach',       vm: '300 m', vt: '400 m', vs: '350 m' },
-    { label: 'Pets',        vm: '✓ Welcome', vt: 'Ask us', vs: 'Ask us' },
+    { label: 'Pets',        vm: 'Ask us', vt: 'Ask us', vs: 'Ask us' },
     { label: 'Rating',      vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
   ];
   const t = COPY[lang];
