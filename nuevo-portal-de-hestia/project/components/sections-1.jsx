@@ -10,7 +10,15 @@ const Hero = ({ lang, onScrollDown }) => {
 
   return (
     <section id="top" className="hero" data-screen-label="01 Hero">
-      <div className="stars"/>
+      {/* Vídeo de fondo — playas de Almería */}
+      <video
+        className="hero-bg-video"
+        autoPlay muted loop playsInline
+        preload="auto"
+      >
+        <source src="assets/playa-almeria.mp4" type="video/mp4"/>
+      </video>
+      {/* Logo animation overlay — mix-blend-mode screen */}
       <video
         ref={videoRef}
         className="hero-video"
@@ -63,9 +71,17 @@ const Bridge = ({ lang }) => {
     <section className="bridge" data-screen-label="02 Amanecer">
       <div className="celestial"/>
       <div className="bridge-inner">
-        <div className="eyebrow" style={{color: 'var(--ber-dk)', opacity: 0.7}}>— 07:14 —</div>
+        <div className="eyebrow bridge-time">— 07:14 —</div>
         <h2 className="reveal" style={{marginTop: 20}}>{t.bridge_title}</h2>
         <p className="reveal delay-1">{t.bridge_sub}</p>
+        <div className="bridge-palette reveal delay-2">
+          {BRIDGE_PALETTE.map((c, i) => (
+            <div key={i} className="bridge-chip" style={{'--chip-color': c.hex}}>
+              <div className="chip-swatch"/>
+              <div className="chip-label">{lang === 'es' ? c.es : c.en}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -73,11 +89,14 @@ const Bridge = ({ lang }) => {
 
 // --- APARTAMENTOS (scroll horizontal) ---
 const APARTMENTS = [
-  { id: 'vm', num: '01', name: 'Hestía Mar',      license: 'VFT/AL/01580', concept: 'apt_01_concept',
+  { id: 'vm', num: '01', name: 'Hestía Mar',      slug: 'mar',      license: 'VFT/AL/01580', concept: 'apt_01_concept',
+    img: 'assets/apt-vs.jpg',
     meta: ['6 plazas', '2 hab.', 'Piscina', 'Mascotas OK'] },
-  { id: 'vt', num: '02', name: 'Hestía Thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
+  { id: 'vt', num: '02', name: 'Hestía Thalassa', slug: 'thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
+    img: 'assets/apt-vt.jpg',
     meta: ['6 plazas', '2 hab.', 'Ático', 'SPA'] },
-  { id: 'vs', num: '03', name: 'Hestía Salinas',  license: 'VTF/AL/07056', concept: 'apt_03_concept',
+  { id: 'vs', num: '03', name: 'Hestía Salinas',  slug: 'salinas',  license: 'VTF/AL/07056', concept: 'apt_03_concept',
+    img: 'assets/apt-vm.jpg',
     meta: ['6 plazas', '2 hab.', '3 piscinas', 'Salinas'] },
 ];
 
@@ -122,8 +141,8 @@ const Apartments = ({ lang }) => {
       <div className="apartments-scroll">
         <div className="apartments-track" ref={trackRef} onScroll={handleScroll}>
           {APARTMENTS.map((a, i) => (
-            <div key={a.id} className={`apt-card ${a.id}`}>
-              <img src={`assets/apt-${a.id}.jpg`} alt={a.name} className="apt-photo" loading="eager"/>
+            <div key={a.id} id={`apt-${a.id}`} className={`apt-card ${a.id}`}>
+              <img src={a.img} alt={a.name} className="apt-photo" loading="eager"/>
               <div className="apt-wash"/>
               <div className="pattern"/>
               <div className="apt-corner"><span className="bar"/>{a.license}</div>
@@ -141,7 +160,7 @@ const Apartments = ({ lang }) => {
                     </React.Fragment>
                   ))}
                 </div>
-                <a className="apt-cta">{t.apt_cta} →</a>
+                <a href={`${a.slug}.html`} className="apt-cta">{t.apt_cta} →</a>
               </div>
             </div>
           ))}

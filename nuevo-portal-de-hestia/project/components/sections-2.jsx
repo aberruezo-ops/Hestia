@@ -45,7 +45,7 @@ const Counters = ({ lang }) => {
             <div className="lbl">{t.counter_1}</div>
           </div>
           <div className="counter">
-            <div className="num">{sun}<span className="unit">días</span></div>
+            <div className="num">{sun}<span className="unit">{t.days_unit}</span></div>
             <div className="lbl">{t.counter_2}</div>
           </div>
           <div className="counter">
