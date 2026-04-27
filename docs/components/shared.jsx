@@ -575,6 +575,144 @@ const FRASES_HOGAR = [
   },
 ];
 
+// ── Datos curiosos exclusivos para la home ──
+const SABIAS_QUE_HOME_FACTS = [
+  /* Cabo de Gata */
+  {
+    es: 'El Parque Natural Cabo de Gata-Níjar es de origen volcánico: sus acantilados negros son magma solidificado del fondo del mar hace millones de años.',
+    en: 'The Cabo de Gata-Níjar Natural Park is volcanic in origin: its black cliffs are solidified magma from the ocean floor, millions of years old.',
+  },
+  {
+    es: 'La Reserva Marina de Cabo de Gata tiene la mayor visibilidad submarina del Mediterráneo occidental: hasta 40 metros de profundidad a simple vista.',
+    en: 'The Cabo de Gata Marine Reserve has the highest underwater visibility in the western Mediterranean — up to 40 metres of clear water.',
+  },
+  {
+    es: 'La Playa de los Genoveses, en Cabo de Gata, figura entre las 10 playas más vírgenes de Europa según National Geographic.',
+    en: 'Playa de los Genoveses in Cabo de Gata is listed by National Geographic among the 10 most pristine beaches in Europe.',
+  },
+  {
+    es: 'La Playa de Mónsul fue escenario de una escena de "Indiana Jones y la Última Cruzada". Sus dunas de roca volcánica son únicas en el mundo.',
+    en: 'Playa de Mónsul was used in "Indiana Jones and the Last Crusade". Its volcanic rock dunes exist nowhere else on Earth.',
+  },
+  {
+    es: 'La Cala de San Pedro, en Cabo de Gata, solo es accesible a pie o en barco. En su interior existe una aldea habitada desde los años 70 sin luz eléctrica de red.',
+    en: 'Cala de San Pedro in Cabo de Gata is only reachable on foot or by boat. Inside, a village has been inhabited since the 1970s with no mains electricity.',
+  },
+  {
+    es: 'Las Negras, en Cabo de Gata, tiene la única playa de arena volcánica negra del Mediterráneo español. Sus arenas calientan el agua circundante hasta 4 °C más que las playas vecinas.',
+    en: 'Las Negras in Cabo de Gata has the only black volcanic sand beach on the Spanish Mediterranean. Its sands warm the surrounding water up to 4 °C more than nearby beaches.',
+  },
+  {
+    es: 'El Parque Natural Cabo de Gata alberga más de 20 especies vegetales endémicas que no existen en ningún otro lugar del planeta. Algunas crecen en un radio de apenas 5 kilómetros.',
+    en: 'Cabo de Gata Natural Park is home to over 20 endemic plant species that exist nowhere else on Earth. Some grow only within a 5-kilometre radius.',
+  },
+  /* Zona hacia Murcia */
+  {
+    es: 'Águilas, a 40 minutos hacia Murcia, tiene 38 playas en menos de 30 kilómetros — la mayor densidad de calas vírgenes del litoral mediterráneo español.',
+    en: 'Águilas, 40 minutes towards Murcia, has 38 beaches in under 30 kilometres — the highest density of wild coves on the Spanish Mediterranean coast.',
+  },
+  {
+    es: 'Cabo Tiñoso, entre Cartagena y Mazarrón, es el único paraje del Mediterráneo europeo donde la tierra cae al mar desde 400 metros de altura sin ningún acceso rodado.',
+    en: 'Cabo Tiñoso, between Cartagena and Mazarrón, is the only place on the European Mediterranean where land drops into the sea from 400 metres with no road access.',
+  },
+  {
+    es: 'Las minas romanas de Mazarrón extrajeron plata y plomo durante más de 500 años. Sus yacimientos submarinos conservan ánforas y pecios intactos de hace 2.000 años.',
+    en: 'The Roman mines at Mazarrón extracted silver and lead for over 500 years. Their underwater sites preserve intact amphorae and shipwrecks 2,000 years old.',
+  },
+  /* Pueblos */
+  {
+    es: 'Mojácar, a 15 minutos de Vera, es uno de los pueblos más fotografiados del Mediterráneo — un cubo blanco sobre roca que Salvador Dalí describió como "el surrealismo natural".',
+    en: 'Mojácar, 15 minutes from Vera, is one of the most photographed villages in the Mediterranean — a white cube on rock that Salvador Dalí described as "natural surrealism".',
+  },
+  {
+    es: 'Bédar, a 20 minutos hacia el interior, tiene 400 habitantes y más de 500 extranjeros empadronados que eligieron sus casas blancas para vivir. Uno de los pueblos más cosmopolitas por habitante de España.',
+    en: 'Bédar, 20 minutes inland, has 400 inhabitants and over 500 registered foreign residents who chose its white houses as home. One of the most cosmopolitan villages per capita in Spain.',
+  },
+  {
+    es: 'Sorbas, a 30 minutos de Vera, tiene el sistema de cuevas de yeso más extenso y mejor conservado de Europa, con más de 1.000 cavidades.',
+    en: 'Sorbas, 30 minutes from Vera, has the most extensive and best-preserved gypsum cave system in Europe, with over 1,000 cavities.',
+  },
+  /* Playas */
+  {
+    es: 'Las playas de Cabo de Gata tienen el agua con mayor transparencia de España: hasta 30 metros de visibilidad en días sin viento. El turquesa de sus calas figura entre los más intensos del Mediterráneo.',
+    en: 'Cabo de Gata beaches have the clearest water in Spain: up to 30 metres of visibility on calm days. The turquoise of their coves is ranked among the most intense in the Mediterranean.',
+  },
+  {
+    es: 'El litoral entre Vera Playa y Cabo de Gata no tiene ninguna plataforma petrolífera ni central eléctrica a la vista. Es uno de los pocos horizontes marítimos completamente vírgenes de España.',
+    en: 'The coastline between Vera Playa and Cabo de Gata has no oil platform or power plant visible on the horizon — one of the few completely unspoilt maritime views in Spain.',
+  },
+  /* Gastronomía */
+  {
+    es: 'Garrucha, a 5 minutos de Vera, tiene la lonja de gambas rojas más importante del Mediterráneo. La gamba roja de Garrucha es considerada la mejor del mundo por los chefs más premiados de España.',
+    en: 'Garrucha, 5 minutes from Vera, has the Mediterranean\'s most important red prawn market. The Garrucha red prawn is considered the world\'s finest by Spain\'s most acclaimed chefs.',
+  },
+  {
+    es: 'El tomate raf de Almería — el tomate más premiado de España — se cultiva en los invernaderos del entorno de Vera y se exporta a los mejores restaurantes de Europa.',
+    en: 'Almería\'s raf tomato — Spain\'s most award-winning tomato — is grown in greenhouses around Vera and exported to Europe\'s finest restaurants.',
+  },
+  {
+    es: 'La pipirrana almeriense — tomate, pepino, pimiento y atún en aceite — lleva más de tres generaciones cocinándose igual en las casas de Vera. El plato de verano más refrescante del Mediterráneo.',
+    en: 'Almería\'s pipirrana — tomato, cucumber, pepper and tuna in oil — has been cooked the same way in Vera homes for over three generations. The Mediterranean\'s most refreshing summer dish.',
+  },
+  {
+    es: 'La ñora, el pimentón seco que da sabor a la paella auténtica, se cultiva y seca al sol entre Almería y Murcia. Sin ñora, no hay paella.',
+    en: 'The ñora, the dried pepper that flavours authentic paella, is grown and sun-dried between Almería and Murcia. Without ñora, there is no paella.',
+  },
+  /* Clima */
+  {
+    es: 'En Vera Playa, la temperatura media de enero es de 13 °C — más cálida que Niza, Cannes o Montpellier en pleno invierno.',
+    en: 'In Vera Playa, the average January temperature is 13 °C — warmer than Nice, Cannes or Montpellier in the depths of winter.',
+  },
+  {
+    es: 'Vera Playa recibe una media de 230 mm de lluvia al año — menos que Madrid, menos que Roma y una fracción de lo que llueve en el norte de España.',
+    en: 'Vera Playa receives an average of 230 mm of rain a year — less than Madrid, less than Rome, and a fraction of what falls in northern Spain.',
+  },
+  /* Mar */
+  {
+    es: 'El Mediterráneo frente a Almería es el más cálido de toda la cuenca occidental. En verano, la temperatura del agua no baja de 24 °C ni de noche.',
+    en: 'The Mediterranean off Almería is the warmest in the entire western basin. In summer, water temperature never drops below 24 °C, even at night.',
+  },
+  {
+    es: 'La pradera de posidonia de Vera Playa produce entre 10 y 15 litros de oxígeno por m² al día. Es el pulmón subacuático del Mediterráneo occidental.',
+    en: 'The posidonia meadow off Vera Playa produces 10 to 15 litres of oxygen per square metre each day — the underwater lung of the western Mediterranean.',
+  },
+  /* Fauna */
+  {
+    es: 'El tramo de mar entre Vera Playa y la costa norte de África es una de las rutas habituales de los delfines mular del Mediterráneo. Se avistan frecuentemente desde los barcos de Garrucha.',
+    en: 'The stretch of sea between Vera Playa and the North African coast is a regular route for Mediterranean bottlenose dolphins — frequently spotted from Garrucha\'s boats.',
+  },
+  {
+    es: 'La tortuga boba (Caretta caretta) nidifica en las playas del sur de Almería desde hace siglos. Las arenas finas de Vera Playa forman parte de su área de cría mediterránea.',
+    en: 'The loggerhead sea turtle (Caretta caretta) has nested on southern Almería beaches for centuries. Vera Playa\'s fine sands are part of its Mediterranean nesting range.',
+  },
+  {
+    es: 'El águila de Bonelli, una de las rapaces más amenazadas de Europa, anida en los acantilados de Cabo de Gata. Vera Playa es uno de los pocos lugares donde puede verse sobrevolar el mar.',
+    en: 'Bonelli\'s eagle, one of Europe\'s most threatened raptors, nests in the Cabo de Gata cliffs. Vera Playa is one of the few places where it can be seen soaring over the sea.',
+  },
+  /* Flora */
+  {
+    es: 'El esparto que crece salvaje en el campo de Vera fue la base de la economía rural almeriense durante siglos. Con él se fabricaban cestos, cuerdas y algunos de los primeros papeles de la historia.',
+    en: 'The esparto grass growing wild in the Vera countryside was the backbone of Almería\'s rural economy for centuries — used to make baskets, ropes, and some of history\'s earliest paper.',
+  },
+  {
+    es: 'El azufaifo, el árbol más resistente a la sequía de Europa, crece de forma natural en los campos de Vera. Sus frutos fueron alimento cotidiano de fenicios, griegos y romanos en el Mediterráneo.',
+    en: 'The jujube, Europe\'s most drought-resistant tree, grows naturally in the Vera countryside. Its fruits were a daily staple for Phoenicians, Greeks and Romans across the Mediterranean.',
+  },
+  /* Belleza / paisaje */
+  {
+    es: 'El atardecer desde Cabo de Gata tiñe el cielo de naranja, rosa y violeta durante más de 45 minutos seguidos. Los fotógrafos lo llaman "la hora dorada más larga de Europa".',
+    en: 'The sunset from Cabo de Gata turns the sky orange, pink and violet for over 45 continuous minutes. Photographers call it "Europe\'s longest golden hour".',
+  },
+  {
+    es: 'El desierto de Tabernas y el Mediterráneo se ven simultáneamente desde el Cabo de Gata: dos paisajes que no coexisten en ningún otro punto del planeta a tan poca distancia.',
+    en: 'The Tabernas Desert and the Mediterranean are visible simultaneously from Cabo de Gata — two landscapes that coexist nowhere else on the planet at such close range.',
+  },
+  {
+    es: 'La Alcazaba de Almería, construida en el siglo X, fue la mayor fortaleza árabe de España en su época — incluso más extensa que la Alhambra de Granada.',
+    en: 'The Almería Alcazaba, built in the 10th century, was the largest Arab fortress in Spain at the time — even more extensive than the Alhambra in Granada.',
+  },
+];
+
 // Shuffled pools — stable per page load
 const _shuffle = (arr) => {
   const a = [...arr];
@@ -584,26 +722,28 @@ const _shuffle = (arr) => {
   }
   return a;
 };
-const _FACTS_POOL  = _shuffle(SABIAS_QUE_FACTS);
-const _QUOTES_POOL = _shuffle(FRASES_HOGAR);
+const _FACTS_POOL      = _shuffle(SABIAS_QUE_FACTS);
+const _HOME_FACTS_POOL = _shuffle(SABIAS_QUE_HOME_FACTS);
+const _QUOTES_POOL     = _shuffle(FRASES_HOGAR);
 
 // Franja oscura antes del FAQ — solo datos de Almería / Hestía
-const SabiasQue = ({ lang }) => {
-  const [idx, setIdx] = React.useState(() => Math.floor(Math.random() * _FACTS_POOL.length));
+const SabiasQue = ({ lang, pool: propPool }) => {
+  const pool = propPool || _FACTS_POOL;
+  const [idx, setIdx] = React.useState(() => Math.floor(Math.random() * pool.length));
   const [visible, setVisible] = React.useState(true);
 
   React.useEffect(() => {
     const tick = setInterval(() => {
       setVisible(false);
       setTimeout(() => {
-        setIdx(i => (i + 1) % _FACTS_POOL.length);
+        setIdx(i => (i + 1) % pool.length);
         setVisible(true);
       }, 500);
     }, 7000);
     return () => clearInterval(tick);
   }, []);
 
-  const item = _FACTS_POOL[idx];
+  const item = pool[idx];
   return (
     <div className="sabias-que">
       <span className="sq-label">{lang === 'es' ? '¿Sabías que…?' : 'Did you know?'}</span>
@@ -641,4 +781,4 @@ const FraseHogar = ({ lang }) => {
   );
 };
 
-Object.assign(window, { HestiaLogoMark, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar });
+Object.assign(window, { HestiaLogoMark, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, _HOME_FACTS_POOL });
