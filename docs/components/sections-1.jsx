@@ -82,10 +82,13 @@ const Bridge = ({ lang }) => {
 // --- APARTAMENTOS (scroll horizontal) ---
 const APARTMENTS = [
   { id: 'vm', num: '01', name: 'Hestía Mar',      slug: 'mar',      license: 'VFT/AL/01580', concept: 'apt_01_concept',
+    img: 'assets/apt-vs.jpg',
     meta: ['6 plazas', '2 hab.', 'Piscina', 'Mascotas OK'] },
   { id: 'vt', num: '02', name: 'Hestía Thalassa', slug: 'thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
+    img: 'assets/apt-vt.jpg',
     meta: ['6 plazas', '2 hab.', 'Ático', 'SPA'] },
   { id: 'vs', num: '03', name: 'Hestía Salinas',  slug: 'salinas',  license: 'VTF/AL/07056', concept: 'apt_03_concept',
+    img: 'assets/apt-vm.jpg',
     meta: ['6 plazas', '2 hab.', '3 piscinas', 'Salinas'] },
 ];
 
@@ -131,7 +134,7 @@ const Apartments = ({ lang }) => {
         <div className="apartments-track" ref={trackRef} onScroll={handleScroll}>
           {APARTMENTS.map((a, i) => (
             <div key={a.id} id={`apt-${a.id}`} className={`apt-card ${a.id}`}>
-              <img src={`assets/apt-${a.id}.jpg`} alt={a.name} className="apt-photo" loading="eager"/>
+              <img src={a.img} alt={a.name} className="apt-photo" loading="eager"/>
               <div className="apt-wash"/>
               <div className="pattern"/>
               <div className="apt-corner"><span className="bar"/>{a.license}</div>
