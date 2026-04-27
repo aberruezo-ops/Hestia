@@ -55,7 +55,7 @@ const App = () => {
         <Team lang={lang} />
         <Manifest lang={lang} />
         <Ratings lang={lang} />
-        <SabiasQue lang={lang} />
+        <SabiasQue lang={lang} pool={_HOME_FACTS_POOL} />
         <QuickFAQ lang={lang} pageId="home" />
         <ContactCTA lang={lang} />
       </main>
