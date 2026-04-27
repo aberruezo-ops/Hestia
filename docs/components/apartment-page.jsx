@@ -7,7 +7,7 @@ const APT_DATA = {
   vm: {
     id: 'vm', num: '01', slug: 'mar', license: 'VFT/AL/01580',
     name_short: 'Mar',
-    accent: '#246B6E', accent2: '#3A8A8C',
+    accent: '#6B7A3A', accent2: '#8B9A52',
     hero_img: 'assets/apt-vs.jpg',
     bedroom_img: 'assets/photo-vm-bedroom.jpg',
     others: ['vt', 'vs'],
@@ -31,7 +31,7 @@ const APT_DATA = {
   vt: {
     id: 'vt', num: '02', slug: 'thalassa', license: 'VFT/AL/05535',
     name_short: 'Thalassa',
-    accent: '#8B4A1E', accent2: '#A86030',
+    accent: '#8A4A24', accent2: '#B86A3C',
     hero_img: 'assets/apt-vt.jpg',
     bedroom_img: 'assets/photo-vt-bedroom.jpg',
     others: ['vm', 'vs'],
@@ -55,7 +55,7 @@ const APT_DATA = {
   vs: {
     id: 'vs', num: '03', slug: 'salinas', license: 'VTF/AL/07056',
     name_short: 'Salinas',
-    accent: '#B8883A', accent2: '#CCA050',
+    accent: '#9E7A2C', accent2: '#D4A84A',
     hero_img: 'assets/apt-vm.jpg',
     bedroom_img: 'assets/photo-vs-bedroom.jpg',
     others: ['vm', 'vt'],
