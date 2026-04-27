@@ -306,7 +306,7 @@ const NosotrosPageApp = () => {
         <NosotrosViajero lang={lang} />
         <NosotrosTeam lang={lang} />
         <NosotrosManifest lang={lang} />
-        <QuickFAQ lang={lang} />
+        <QuickFAQ lang={lang} pageId="nosotros" />
         <ContactCTA lang={lang} />
       </main>
       <Footer lang={lang} />
