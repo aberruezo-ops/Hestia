@@ -225,6 +225,7 @@ const ContactoPageApp = () => {
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main>
         <ContactoHero lang={lang} />
+        <FraseHogar lang={lang} />
         <ContactoPersons lang={lang} />
         <ContactoAddress lang={lang} />
         <ContactoFAQ lang={lang} />

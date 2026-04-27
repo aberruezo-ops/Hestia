@@ -575,46 +575,70 @@ const FRASES_HOGAR = [
   },
 ];
 
-// Shuffled combined pool — stable per page load
-const _shufflePool = () => {
-  const pool = [...SABIAS_QUE_FACTS, ...FRASES_HOGAR];
-  for (let i = pool.length - 1; i > 0; i--) {
+// Shuffled pools — stable per page load
+const _shuffle = (arr) => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
+    [a[i], a[j]] = [a[j], a[i]];
   }
-  return pool;
+  return a;
 };
-const _SQ_POOL = _shufflePool();
+const _FACTS_POOL  = _shuffle(SABIAS_QUE_FACTS);
+const _QUOTES_POOL = _shuffle(FRASES_HOGAR);
 
+// Franja oscura antes del FAQ — solo datos de Almería / Hestía
 const SabiasQue = ({ lang }) => {
-  const [idx, setIdx] = React.useState(() => Math.floor(Math.random() * _SQ_POOL.length));
+  const [idx, setIdx] = React.useState(() => Math.floor(Math.random() * _FACTS_POOL.length));
   const [visible, setVisible] = React.useState(true);
 
   React.useEffect(() => {
     const tick = setInterval(() => {
       setVisible(false);
       setTimeout(() => {
-        setIdx(i => (i + 1) % _SQ_POOL.length);
+        setIdx(i => (i + 1) % _FACTS_POOL.length);
         setVisible(true);
       }, 500);
     }, 7000);
     return () => clearInterval(tick);
   }, []);
 
-  const item = _SQ_POOL[idx];
-  const label = item.type === 'fact'
-    ? (lang === 'es' ? '¿Sabías que…?' : 'Did you know?')
-    : (lang === 'es' ? 'Sobre el hogar' : 'On home');
-
+  const item = _FACTS_POOL[idx];
   return (
     <div className="sabias-que">
-      <span className="sq-label">{label}</span>
+      <span className="sq-label">{lang === 'es' ? '¿Sabías que…?' : 'Did you know?'}</span>
       <span className={`sq-body ${visible ? 'sq-in' : 'sq-out'}`}>
         <span className="sq-fact">{item[lang]}</span>
-        {item.attr && <span className="sq-attr">{item.attr}</span>}
       </span>
     </div>
   );
 };
 
-Object.assign(window, { HestiaLogoMark, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue });
+// Franja crema tras el hero — frases célebres sobre el hogar
+const FraseHogar = ({ lang }) => {
+  const [idx, setIdx] = React.useState(() => Math.floor(Math.random() * _QUOTES_POOL.length));
+  const [visible, setVisible] = React.useState(true);
+
+  React.useEffect(() => {
+    const tick = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIdx(i => (i + 1) % _QUOTES_POOL.length);
+        setVisible(true);
+      }, 500);
+    }, 8000);
+    return () => clearInterval(tick);
+  }, []);
+
+  const item = _QUOTES_POOL[idx];
+  return (
+    <div className="frase-hogar">
+      <span className={`fh-body ${visible ? 'fh-in' : 'fh-out'}`}>
+        <span className="fh-quote">{item[lang]}</span>
+        <span className="fh-attr">{item.attr}</span>
+      </span>
+    </div>
+  );
+};
+
+Object.assign(window, { HestiaLogoMark, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar });

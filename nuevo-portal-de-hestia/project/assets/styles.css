@@ -3352,6 +3352,48 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 
 /* ============================================================
+   FRASE HOGAR — franja crema tras el hero
+   ============================================================ */
+.frase-hogar {
+  background: var(--arena);
+  color: var(--ber-dk);
+  padding: clamp(22px, 3vw, 36px) var(--page-pad);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 72px;
+  text-align: center;
+  border-bottom: 1px solid var(--arena-dk);
+}
+.fh-body {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(10px, 2vw, 24px);
+  flex-wrap: wrap;
+  justify-content: center;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.fh-body.fh-in  { opacity: 1; transform: translateY(0); }
+.fh-body.fh-out { opacity: 0; transform: translateY(4px); }
+.fh-quote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(14px, 1.6vw, 18px);
+  line-height: 1.5;
+  color: var(--ber);
+  opacity: 0.85;
+}
+.fh-attr {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  opacity: 0.45;
+  white-space: nowrap;
+}
+
+/* ============================================================
    SABÍAS QUE — STRIP ROTANTE
    ============================================================ */
 .sabias-que {

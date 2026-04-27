@@ -149,6 +149,7 @@ const OpinionesPageApp = () => {
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main>
         <OpinionesHero lang={lang} />
+        <FraseHogar lang={lang} />
         <OpinionesRatings lang={lang} />
         <OpinionesTestimonials lang={lang} />
         <SabiasQue lang={lang} />

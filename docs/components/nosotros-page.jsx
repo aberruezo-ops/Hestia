@@ -300,6 +300,7 @@ const NosotrosPageApp = () => {
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main>
         <NosotrosHero lang={lang} />
+        <FraseHogar lang={lang} />
         <NosotrosIntro lang={lang} />
         <NosotrosPorQueHestia lang={lang} />
         <NosotrosPrincipios lang={lang} />

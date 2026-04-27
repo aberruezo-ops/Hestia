@@ -47,6 +47,7 @@ const App = () => {
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main>
         <Hero lang={lang} />
+        <FraseHogar lang={lang} />
         <Bridge lang={lang} />
         <Apartments lang={lang} />
         <Compare lang={lang} />
