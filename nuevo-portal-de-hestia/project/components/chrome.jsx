@@ -5,13 +5,23 @@
 const Topbar = ({ lang, setLang }) => (
   <div className="topbar">
     <div className="contacts">
-      <span>Alex · WhatsApp</span>
-      <span className="hide-mobile">+34 620 316 370</span>
+      <a href="https://wa.me/34620316370" className="topbar-link" target="_blank" rel="noopener" aria-label="WhatsApp Alex">
+        <span className="tl-dot"/>
+        <span className="tl-who">Alex</span>
+        <span className="tl-mode hide-mobile">· WhatsApp ES</span>
+        <span className="tl-num hide-mobile">+34 620 316 370</span>
+      </a>
       <span className="sep">·</span>
-      <span>Fran · WhatsApp</span>
-      <span className="hide-mobile">+34 654 138 251</span>
+      <a href="https://wa.me/34654138251" className="topbar-link" target="_blank" rel="noopener" aria-label="WhatsApp Fran">
+        <span className="tl-dot"/>
+        <span className="tl-who">Fran</span>
+        <span className="tl-mode hide-mobile">· WhatsApp EN</span>
+        <span className="tl-num hide-mobile">+34 654 138 251</span>
+      </a>
       <span className="sep hide-mobile">·</span>
-      <span className="email hide-mobile">info@hestiayourhome.com</span>
+      <a href="mailto:info@hestiayourhome.com" className="topbar-link email hide-mobile" aria-label="Email">
+        info@hestiayourhome.com
+      </a>
     </div>
     <div className="lang">
       <button className={lang === 'es' ? 'active' : ''} onClick={() => setLang('es')}>ES</button>
