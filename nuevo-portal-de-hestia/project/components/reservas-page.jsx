@@ -264,6 +264,7 @@ const ReservasPageApp = () => {
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main>
         <ReservasHero lang={lang} />
+        <FraseHogar lang={lang} />
         <div className="reservas-body">
           <div className="reservas-inner">
             <ReservasForm lang={lang} />
