@@ -29,7 +29,7 @@
 
   async function loadComponents() {
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file);
+      const res = await fetch(file, { cache: 'no-store' });
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       const transformed = Babel.transform(code, { presets: ['react'] }).code;
