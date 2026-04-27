@@ -64,15 +64,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-weight: 200;
   text-transform: lowercase;
   letter-spacing: 0.28em;
-  opacity: 0.42;
+  opacity: 0.72;
 }
 .eyebrow {
   font-family: var(--sans);
   font-weight: 400;
-  font-size: 11px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.32em;
-  opacity: 0.7;
+  opacity: 0.85;
 }
 .slogan {
   font-family: var(--serif);
@@ -111,10 +111,10 @@ p  { line-height: 1.65; font-weight: 300; }
 .topbar .contacts {
   display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
 }
-.topbar .contacts .sep { opacity: 0.3; padding: 0 4px; }
+.topbar .contacts .sep { opacity: 0.55; padding: 0 4px; }
 .topbar .lang {
   display: flex; gap: 2px; align-items: center;
-  font-family: var(--sans); font-weight: 400; font-size: 11px;
+  font-family: var(--sans); font-weight: 400; font-size: 12px;
   letter-spacing: 0.18em;
 }
 .topbar-link {
@@ -154,7 +154,7 @@ p  { line-height: 1.65; font-weight: 300; }
 
 .topbar .lang button {
   padding: 4px 9px;
-  color: var(--arena); opacity: 0.55;
+  color: var(--arena); opacity: 0.85;
   transition: opacity .25s, color .25s;
   text-transform: uppercase;
   position: relative;
@@ -174,7 +174,7 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 .topbar .lang button.active { opacity: 1; color: var(--sol-lt); font-weight: 500; }
 .topbar .lang button.active::after { opacity: 1; }
-.topbar .lang .divider { opacity: 0.3; }
+.topbar .lang .divider { opacity: 0.55; }
 
 /* -------- Header -------- */
 .header {
@@ -243,7 +243,7 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 .brand-lockup .hestia-logo { height: 34px; width: auto; }
 .brand-lockup .wordmark { font-size: 14px; margin-top: 2px; }
-.brand-lockup .your-home { font-size: 9px; margin-top: 1px; }
+.brand-lockup .your-home { font-size: 11px; margin-top: 1px; }
 
 .nav-left { justify-self: start; }
 .nav-right { justify-self: end; }
@@ -1214,10 +1214,10 @@ section {
 }
 .team-member .role {
   font-family: var(--sans);
-  font-size: 11px;
-  letter-spacing: 0.26em;
+  font-size: 12px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  opacity: 0.55;
+  opacity: 0.75;
 }
 .team-member .name {
   font-family: var(--serif);
@@ -1357,7 +1357,7 @@ section {
 }
 .rating-card .platform {
   font-family: var(--sans); font-weight: 500; font-size: 12px;
-  letter-spacing: 0.24em; text-transform: uppercase; opacity: 0.5;
+  letter-spacing: 0.24em; text-transform: uppercase; opacity: 0.75;
   margin-bottom: 20px;
 }
 .rating-card .score {
@@ -1413,7 +1413,7 @@ section {
 .contact-cta .address {
   margin-top: 80px;
   font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
-  opacity: 0.55;
+  opacity: 0.8;
 }
 
 /* ============================================================
@@ -1434,9 +1434,9 @@ footer {
   border-bottom: 1px solid rgba(240,232,213,0.12);
 }
 footer h5 {
-  font-family: var(--sans); font-weight: 500; font-size: 11px;
+  font-family: var(--sans); font-weight: 500; font-size: 12px;
   letter-spacing: 0.22em; text-transform: uppercase;
-  opacity: 0.5;
+  opacity: 0.75;
   margin: 0 0 18px;
 }
 footer .col ul { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 2.1; opacity: 0.8; }
@@ -2041,7 +2041,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   color: var(--apt-accent, var(--sol-lt));
   margin-bottom: 16px;
 }
-.apt-page-eyebrow .sep { margin: 0 8px; opacity: 0.5; }
+.apt-page-eyebrow .sep { margin: 0 8px; opacity: 0.75; }
 .apt-page-name {
   font-family: var(--serif);
   font-weight: 300;
@@ -2663,6 +2663,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .nosotros-team {
   padding: 96px var(--page-pad);
   background: var(--ber-dk);
+  color: var(--arena);
 }
 .nosotros-team-grid {
   display: grid;
@@ -2694,7 +2695,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .nosotros-person-body p {
   font-size: 15px;
-  color: rgba(240,232,213,.65);
+  color: rgba(240,232,213,.85);
   line-height: 1.65;
   margin: 0 0 16px;
 }
@@ -3171,12 +3172,12 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .form-field.full { grid-column: 1 / -1; }
 .form-field label {
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ber);
-  opacity: 0.65;
+  opacity: 0.85;
 }
 .form-field input,
 .form-field select,
@@ -3186,7 +3187,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   font-weight: 300;
   color: var(--ink);
   background: var(--crema);
-  border: 1px solid rgba(61,26,53,.18);
+  border: 1px solid rgba(61,26,53,.32);
   border-radius: 4px;
   padding: 11px 14px;
   outline: none;
@@ -3200,12 +3201,12 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .form-field textarea { min-height: 90px; resize: vertical; }
 .form-extras-label {
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ber);
-  opacity: 0.65;
+  opacity: 0.85;
   margin-bottom: 10px;
 }
 .form-extras-grid {
@@ -3385,11 +3386,11 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .fh-attr {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  opacity: 0.45;
+  opacity: 0.7;
   white-space: nowrap;
 }
 
@@ -3417,11 +3418,11 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .sq-label {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.34em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--sol-lt);
+  color: var(--arena);
   white-space: nowrap;
   flex-shrink: 0;
   min-width: 120px;
