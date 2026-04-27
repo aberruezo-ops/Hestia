@@ -270,7 +270,7 @@ const ReservasPageApp = () => {
             <ReservasAside lang={lang} />
           </div>
         </div>
-        <QuickFAQ lang={lang} />
+        <QuickFAQ lang={lang} pageId="reservas" />
         <ContactCTA lang={lang} />
       </main>
       <Footer lang={lang} />
