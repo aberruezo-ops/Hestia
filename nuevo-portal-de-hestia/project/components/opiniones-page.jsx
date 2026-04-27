@@ -151,6 +151,7 @@ const OpinionesPageApp = () => {
         <OpinionesHero lang={lang} />
         <OpinionesRatings lang={lang} />
         <OpinionesTestimonials lang={lang} />
+        <QuickFAQ lang={lang} />
         <ContactCTA lang={lang} />
       </main>
       <Footer lang={lang} />
