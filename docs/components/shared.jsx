@@ -378,6 +378,7 @@ const QuickFAQ = ({ lang, pageId = 'home' }) => {
 };
 
 const SABIAS_QUE_FACTS = [
+  /* ── Almería y Vera Playa ── */
   {
     type: 'fact',
     es: 'Almería recibe más de 3.000 horas de sol al año — casi el doble que la media europea.',
@@ -385,8 +386,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'El Desierto de Tabernas, a 30 minutos de Vera Playa, es el único desierto auténtico de Europa occidental.',
-    en: 'The Tabernas Desert, 30 minutes from Vera Playa, is the only true desert in Western Europe.',
+    es: 'Almería tiene más días de sol al año que cualquier capital de Europa, incluidas Atenas y Lisboa.',
+    en: 'Almería has more sunny days per year than any European capital — including Athens and Lisbon.',
   },
   {
     type: 'fact',
@@ -395,28 +396,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'Las Salinas de Puerto Rey albergan colonias de flamencos rosas que llegan cada año desde el norte de África.',
-    en: 'The Puerto Rey salt flats host pink flamingo colonies that arrive each year from North Africa.',
-  },
-  {
-    type: 'fact',
-    es: 'Vera Playa fue la primera playa naturista autorizada de España, en 1979.',
-    en: 'Vera Playa was the first officially authorised naturist beach in Spain, in 1979.',
-  },
-  {
-    type: 'fact',
-    es: 'El fondo marino de Cabo de Gata alberga la mayor pradera de posidonia oceánica del Mediterráneo occidental.',
-    en: 'The seabed of Cabo de Gata is home to the largest posidonia meadow in the western Mediterranean.',
-  },
-  {
-    type: 'fact',
-    es: 'El Mediterráneo en Vera Playa alcanza hasta 28 °C en agosto — más cálido que el Caribe en esas fechas.',
-    en: 'The Mediterranean at Vera Playa reaches up to 28 °C in August — warmer than the Caribbean at that time of year.',
-  },
-  {
-    type: 'fact',
-    es: 'El Parque Natural Cabo de Gata-Níjar recibe menos de 200 mm de lluvia al año — la aridez más extrema de Europa continental.',
-    en: 'The Cabo de Gata-Níjar Natural Park receives less than 200 mm of rain a year — the most extreme aridity on mainland Europe.',
+    es: 'El Desierto de Tabernas, a 30 minutos de Vera Playa, es el único desierto auténtico de Europa occidental.',
+    en: 'The Tabernas Desert, 30 minutes from Vera Playa, is the only true desert in Western Europe.',
   },
   {
     type: 'fact',
@@ -425,18 +406,121 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
+    es: 'Almería es la única provincia española con clima desértico reconocido oficialmente por la Organización Meteorológica Mundial.',
+    en: 'Almería is the only Spanish province with a desert climate officially recognised by the World Meteorological Organization.',
+  },
+  {
+    type: 'fact',
+    es: 'Vera Playa fue la primera playa naturista autorizada de España, en 1979.',
+    en: 'Vera Playa was the first officially authorised naturist beach in Spain, in 1979.',
+  },
+  {
+    type: 'fact',
+    es: 'El paseo marítimo de Vera Playa tiene casi 3 kilómetros sin coches — uno de los más largos del litoral mediterráneo español.',
+    en: 'The Vera Playa promenade stretches nearly 3 kilometres without a car — one of the longest on the Spanish Mediterranean coast.',
+  },
+  {
+    type: 'fact',
+    es: 'La temperatura media del Mediterráneo en Vera supera los 26 °C en verano — más cálida que en Mallorca o la Costa Brava.',
+    en: 'The Mediterranean at Vera averages over 26 °C in summer — warmer than Mallorca or the Costa Brava.',
+  },
+  {
+    type: 'fact',
+    es: 'El Mediterráneo en Vera Playa alcanza hasta 28 °C en agosto — más cálido que el Caribe en esas fechas.',
+    en: 'The Mediterranean at Vera Playa reaches up to 28 °C in August — warmer than the Caribbean at that time of year.',
+  },
+  {
+    type: 'fact',
+    es: 'Los 300 kilómetros de costa almeriense incluyen más de 70 playas, muchas de ellas sin urbanizar y sin banderas azules por elección propia.',
+    en: 'Almería\'s 300 kilometres of coastline include over 70 beaches, many of them undeveloped and deliberately without blue flags.',
+  },
+  /* ── Cabo de Gata y naturaleza ── */
+  {
+    type: 'fact',
+    es: 'El Parque Natural Cabo de Gata-Níjar recibe menos de 200 mm de lluvia al año — la aridez más extrema de Europa continental.',
+    en: 'The Cabo de Gata-Níjar Natural Park receives less than 200 mm of rain a year — the most extreme aridity on mainland Europe.',
+  },
+  {
+    type: 'fact',
+    es: 'El fondo marino de Cabo de Gata alberga la mayor pradera de posidonia oceánica del Mediterráneo occidental, declarada patrimonio de interés europeo.',
+    en: 'The seabed of Cabo de Gata holds the largest posidonia meadow in the western Mediterranean, declared a European heritage site.',
+  },
+  {
+    type: 'fact',
+    es: 'El Parque Natural Cabo de Gata tiene más de 1.000 especies vegetales, 200 de ellas endémicas del sur de España.',
+    en: 'The Cabo de Gata Natural Park has over 1,000 plant species, 200 of them endemic to southern Spain.',
+  },
+  {
+    type: 'fact',
+    es: 'Los fondos de Vera Playa son hábitat del caballito de mar mediterráneo — una de las especies más protegidas del litoral español.',
+    en: 'The waters off Vera Playa are habitat for the Mediterranean seahorse — one of the most protected species on the Spanish coast.',
+  },
+  /* ── Historia y gastronomía ── */
+  {
+    type: 'fact',
+    es: 'Las Salinas de Puerto Rey albergan colonias de flamencos rosas que llegan cada año desde el norte de África.',
+    en: 'The Puerto Rey salt flats host pink flamingo colonies that arrive each year from North Africa.',
+  },
+  {
+    type: 'fact',
     es: 'Las Salinas de Puerto Rey fueron explotadas por los romanos hace más de 2.000 años para elaborar el garum, la salsa más valiosa de la antigüedad.',
-    en: 'The Puerto Rey salt flats were worked by the Romans over 2,000 years ago to make garum — the most prized condiment of antiquity.',
+    en: 'The Puerto Rey salt flats were worked by the Romans over 2,000 years ago to produce garum — the most prized condiment of antiquity.',
   },
   {
     type: 'fact',
     es: 'El olivar que inspira a Hestía Mar lleva siglos en la costa de Vera. El aceite de oliva de Almería ya se exportaba en época fenicia.',
-    en: 'The olive grove behind Hestía Mar has stood on the Vera coast for centuries. Almería\'s olive oil was already being exported in Phoenician times.',
+    en: 'The olive grove behind Hestía Mar has stood on the Vera coast for centuries. Almería\'s olive oil was already exported in Phoenician times.',
   },
   {
     type: 'fact',
-    es: 'Almería tiene más días de sol al año que cualquier capital de Europa, incluidas Atenas y Lisboa.',
-    en: 'Almería has more sunny days per year than any European capital — including Athens and Lisbon.',
+    es: 'La mojama de atún de Garrucha — a pocos kilómetros de Vera — es una de las conservas más antiguas del Mediterráneo, con más de 2.000 años de tradición.',
+    en: 'The tuna mojama from Garrucha — a few kilometres from Vera — is one of the Mediterranean\'s oldest preserved foods, with over 2,000 years of tradition.',
+  },
+  {
+    type: 'fact',
+    es: 'La uva moscatel almeriense fue descrita por los viajeros árabes del siglo X como "la reina de todas las frutas".',
+    en: 'The Almería muscat grape was described by Arab travellers in the 10th century as "the queen of all fruits".',
+  },
+  /* ── Hestía: lo que otros no tienen ── */
+  {
+    type: 'fact',
+    es: 'Hestía lleva más de diez años con puntuación máxima ininterrumpida en Booking.com, Airbnb y Google Maps — algo que menos del 1 % de los alojamientos vacacionales de España mantiene durante tanto tiempo.',
+    en: 'Hestía has held top scores on Booking.com, Airbnb and Google Maps for over ten years — something fewer than 1% of holiday rentals in Spain sustain for that long.',
+  },
+  {
+    type: 'fact',
+    es: 'Al reservar directamente con Hestía, el precio es igual o mejor que en Booking o Airbnb — y hablas con los propietarios, no con una centralita ni un bot.',
+    en: 'Booking directly with Hestía gives you the same price or better than Booking or Airbnb — and you speak with the owners, not a call centre or a bot.',
+  },
+  {
+    type: 'fact',
+    es: 'El SPA privado de Hestía Thalassa — con cromoterapia y aromaterapia — es el único de uso exclusivo por apartamento en toda la zona de Vera Playa.',
+    en: 'The private SPA at Hestía Thalassa — with chromotherapy and aromatherapy — is the only exclusive-use SPA per apartment in the entire Vera Playa area.',
+  },
+  {
+    type: 'fact',
+    es: 'En Hestía Mar, las mascotas son siempre bienvenidas sin coste extra — la única política de este tipo en la urbanización.',
+    en: 'At Hestía Mar, pets are always welcome at no extra cost — the only no-supplement pet policy in the complex.',
+  },
+  {
+    type: 'fact',
+    es: 'Más de 900 familias han dormido en Hestía desde 2016. Más del 40 % repite — sin necesidad de ninguna oferta ni descuento.',
+    en: 'Over 900 families have stayed at Hestía since 2016. More than 40% return — with no offer or discount needed.',
+  },
+  {
+    type: 'fact',
+    es: 'Los huéspedes de Hestía reciben, al reservar, una guía personalizada de Alex o Fran con restaurantes, playas secretas y rutas que no aparecen en ninguna guía turística.',
+    en: 'Hestía guests receive, on booking, a personalised guide from Alex or Fran with restaurants, hidden beaches and routes that appear in no travel guide.',
+  },
+  {
+    type: 'fact',
+    es: 'Hestía Salinas es uno de los pocos apartamentos del litoral mediterráneo con acceso peatonal directo a un parque natural protegido desde la puerta.',
+    en: 'Hestía Salinas is one of very few apartments on the Mediterranean coast with direct pedestrian access to a protected natural park from the front door.',
+  },
+  {
+    type: 'fact',
+    es: 'Los cambios de fecha y cancelaciones en Hestía se gestionan directamente con Alex o Fran — una conversación, no un formulario ni una política automática.',
+    en: 'Date changes and cancellations at Hestía are handled directly with Alex or Fran — a conversation, not a form or an automated policy.',
   },
 ];
 
