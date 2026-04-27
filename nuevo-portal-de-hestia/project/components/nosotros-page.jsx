@@ -213,6 +213,7 @@ const NosotrosPageApp = () => {
         <NosotrosTeam lang={lang} />
         <NosotrosManifest lang={lang} />
         <NosotrosStylePlaceholder lang={lang} />
+        <QuickFAQ lang={lang} />
         <ContactCTA lang={lang} />
       </main>
       <Footer lang={lang} />
