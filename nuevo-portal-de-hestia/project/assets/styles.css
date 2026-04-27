@@ -3350,3 +3350,65 @@ body.no-parallax .g-tile .img { transform: none !important; }
   font-size: 11px;
   margin-top: 2px;
 }
+
+/* ============================================================
+   SABÍAS QUE — STRIP ROTANTE
+   ============================================================ */
+.sabias-que {
+  background: var(--ber-dk);
+  color: var(--arena);
+  padding: clamp(28px, 3.5vw, 48px) var(--page-pad);
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 4vw, 60px);
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+  min-height: 90px;
+}
+.sabias-que::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 3px;
+  background: var(--sol);
+}
+.sq-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--sol-lt);
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 120px;
+}
+.sq-body {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.sq-body.sq-in  { opacity: 1; transform: translateY(0); }
+.sq-body.sq-out { opacity: 0; transform: translateY(6px); }
+.sq-fact {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(15px, 1.8vw, 20px);
+  line-height: 1.5;
+  max-width: 72ch;
+  opacity: 0.9;
+}
+.sq-attr {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  opacity: 0.5;
+  white-space: nowrap;
+}
+@media (max-width: 600px) {
+  .sq-label { min-width: unset; }
+  .sq-body { flex-direction: column; gap: 6px; }
+}

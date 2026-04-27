@@ -230,6 +230,7 @@ const ApartmentPageApp = () => {
         <AptPageDesc apt={apt} lang={lang} />
         <AptPageGallery apt={apt} lang={lang} />
         <AptPageOthers apt={apt} lang={lang} />
+        <SabiasQue lang={lang} />
         <QuickFAQ lang={lang} pageId={aptId} />
         <ContactCTA lang={lang} />
       </main>
