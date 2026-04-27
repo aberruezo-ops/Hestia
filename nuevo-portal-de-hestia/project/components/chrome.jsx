@@ -8,14 +8,14 @@ const Topbar = ({ lang, setLang }) => (
       <a href="https://wa.me/34620316370" className="topbar-link" target="_blank" rel="noopener" aria-label="WhatsApp Alex">
         <span className="tl-dot"/>
         <span className="tl-who">Alex</span>
-        <span className="tl-mode hide-mobile">· WhatsApp ES</span>
+        <span className="tl-mode hide-mobile">🇪🇸 Español</span>
         <span className="tl-num hide-mobile">+34 620 316 370</span>
       </a>
       <span className="sep">·</span>
       <a href="https://wa.me/34654138251" className="topbar-link" target="_blank" rel="noopener" aria-label="WhatsApp Fran">
         <span className="tl-dot"/>
         <span className="tl-who">Fran</span>
-        <span className="tl-mode hide-mobile">· WhatsApp EN</span>
+        <span className="tl-mode hide-mobile">🇬🇧 English</span>
         <span className="tl-num hide-mobile">+34 654 138 251</span>
       </a>
       <span className="sep hide-mobile">·</span>
@@ -24,9 +24,9 @@ const Topbar = ({ lang, setLang }) => (
       </a>
     </div>
     <div className="lang">
-      <button className={lang === 'es' ? 'active' : ''} onClick={() => setLang('es')}>ES</button>
+      <button className={lang === 'es' ? 'active' : ''} onClick={() => setLang('es')}>🇪🇸 Español</button>
       <span className="divider">/</span>
-      <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>EN</button>
+      <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>🇬🇧 English</button>
     </div>
   </div>
 );
@@ -59,6 +59,7 @@ const NAV_PAGES = {
   nosotros:  'nosotros.html',
   opiniones: 'opiniones.html',
   contacto:  'contacto.html',
+  reservas:  'reservas.html',
 };
 
 const isActive = (href) => {
@@ -96,7 +97,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
             <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.contacto}>{t.nav[6]}</NavLink>
-            <NavLink href={NAV_PAGES.contacto} className="cta">{t.cta_nav}</NavLink>
+            <NavLink href={NAV_PAGES.reservas} className="cta">{t.cta_nav}</NavLink>
           </nav>
           <button
             className={`hamburger-btn ${mobileOpen ? 'open' : ''}`}
@@ -116,7 +117,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
           <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
           <NavLink href={NAV_PAGES.contacto}>{t.nav[6]}</NavLink>
-          <NavLink href={NAV_PAGES.contacto} className="mobile-cta">{t.cta_nav}</NavLink>
+          <NavLink href={NAV_PAGES.reservas} className="mobile-cta">{t.cta_nav}</NavLink>
         </nav>
       </div>
     </>
@@ -237,8 +238,8 @@ const Footer = ({ lang }) => {
         <div className="col">
           <h5>{t.footer_contacto}</h5>
           <ul>
-            <li><a href="https://wa.me/34620316370">Alex · ES</a></li>
-            <li><a href="https://wa.me/34654138251">Fran · EN</a></li>
+            <li><a href="https://wa.me/34620316370">🇪🇸 Alex · WhatsApp</a></li>
+            <li><a href="https://wa.me/34654138251">🇬🇧 Fran · WhatsApp</a></li>
             <li><a href="mailto:info@hestiayourhome.com">info@hestiayourhome.com</a></li>
           </ul>
         </div>
