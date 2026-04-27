@@ -711,6 +711,35 @@ const SABIAS_QUE_HOME_FACTS = [
     es: 'La Alcazaba de Almería, construida en el siglo X, fue la mayor fortaleza árabe de España en su época — incluso más extensa que la Alhambra de Granada.',
     en: 'The Almería Alcazaba, built in the 10th century, was the largest Arab fortress in Spain at the time — even more extensive than the Alhambra in Granada.',
   },
+  /* Datos espaciales — latitud, posición, coordenadas */
+  {
+    es: 'Vera Playa se sitúa a 37° 14′ N, 1° 47′ O — exactamente la misma latitud que Atenas, Sevilla, Argel y San Francisco.',
+    en: 'Vera Playa sits at 37° 14′ N, 1° 47′ W — exactly the same latitude as Athens, Seville, Algiers and San Francisco.',
+  },
+  {
+    es: 'Vera Playa está a menos de 200 km de la costa africana. Está más cerca de Argelia que de Madrid.',
+    en: 'Vera Playa is less than 200 km from the African coast. It is closer to Algeria than to Madrid.',
+  },
+  {
+    es: 'Vera Playa está a cero metros sobre el nivel del mar — literalmente al nivel del Mediterráneo. El pueblo de Vera, a 10 minutos tierra adentro, se eleva a 105 metros entre cítricos y olivares.',
+    en: 'Vera Playa sits at zero metres above sea level — literally at Mediterranean level. The town of Vera, 10 minutes inland, rises to 105 metres above citrus groves and olive fields.',
+  },
+  {
+    es: 'Por su longitud (1° 47′ O), en Vera Playa el sol de verano se pone a las 21:30 en hora oficial — pero el reloj solar marca las 20:00. Casi dos horas extra de luz vespertina que no existen en el centro de Europa.',
+    en: 'Due to its longitude (1° 47′ W), summer sunsets in Vera Playa happen at 21:30 by the clock — but the sun says 20:00. Nearly two extra hours of evening light that do not exist in central Europe.',
+  },
+  {
+    es: 'Vera Playa queda en la zona subtropical del hemisferio norte — la misma franja climática que el Sahara, el desierto de Atacama y el de Gobi. Es el único rincón de Europa con esa clasificación real.',
+    en: 'Vera Playa lies in the subtropical zone of the northern hemisphere — the same climatic band as the Sahara, Atacama and Gobi deserts. It is the only corner of Europe with that genuine classification.',
+  },
+  {
+    es: 'Desde Vera Playa: 90 km a Almería capital, 550 km a Madrid, 700 km a Barcelona, 780 km a Casablanca. Más cerca de Marruecos que de la capital de España.',
+    en: 'From Vera Playa: 90 km to Almería, 550 km to Madrid, 700 km to Barcelona, 780 km to Casablanca. Closer to Morocco than to the Spanish capital.',
+  },
+  {
+    es: 'El municipio de Vera ocupa el vértice sureste de la España peninsular. 40 km al sur empieza Cabo de Gata; 60 km al norte, la Sierra de las Estancias ya supera los 1.200 metros.',
+    en: 'The municipality of Vera sits at the southeastern vertex of mainland Spain. 40 km south begins Cabo de Gata; 60 km north, the Sierra de las Estancias already exceeds 1,200 metres.',
+  },
 ];
 
 // Shuffled pools — stable per page load
