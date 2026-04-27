@@ -740,6 +740,47 @@ const SABIAS_QUE_HOME_FACTS = [
     es: 'El municipio de Vera ocupa el vértice sureste de la España peninsular. 40 km al sur empieza Cabo de Gata; 60 km al norte, la Sierra de las Estancias ya supera los 1.200 metros.',
     en: 'The municipality of Vera sits at the southeastern vertex of mainland Spain. 40 km south begins Cabo de Gata; 60 km north, the Sierra de las Estancias already exceeds 1,200 metres.',
   },
+  /* Lugares pintorescos y visitables */
+  {
+    es: 'La Geoda de Pulpí, a 30 minutos de Vera, es la mayor geoda visitable del mundo: 11 metros de largo, cristales de selenita de hasta 2 metros. Solo accesible en grupos de 10 personas.',
+    en: 'The Pulpí Geode, 30 minutes from Vera, is the largest accessible geode in the world: 11 metres long, selenite crystals up to 2 metres. Access limited to groups of 10.',
+  },
+  {
+    es: 'El Observatorio Astronómico de Calar Alto, a 1 hora de Vera en la Sierra de los Filabres, tiene el mayor telescopio óptico de España (3,5 m) y más de 300 noches despejadas al año.',
+    en: 'The Calar Alto Astronomical Observatory, 1 hour from Vera in the Sierra de los Filabres, has Spain\'s largest optical telescope (3.5 m) and over 300 clear nights a year.',
+  },
+  {
+    es: 'La Sierra Cabrera, entre Mojácar y Vera, alcanza los 432 metros sobre el mar. Desde sus crestas se ven a la vez el Mediterráneo, el desierto de Tabernas y Sierra Nevada.',
+    en: 'The Sierra Cabrera, between Mojácar and Vera, reaches 432 metres above sea level. From its ridges you can see simultaneously the Mediterranean, the Tabernas Desert and Sierra Nevada.',
+  },
+  {
+    es: 'El Castillo de Vélez Blanco, a 1 hora de Vera, es uno de los castillos del Renacimiento más importantes de España. Su patio original fue vendido y está hoy en el Metropolitan Museum de Nueva York.',
+    en: 'Vélez Blanco Castle, 1 hour from Vera, is one of Spain\'s finest Renaissance castles. Its original patio was sold and now stands inside the Metropolitan Museum of Art in New York.',
+  },
+  {
+    es: 'El Cortijo del Fraile, a 45 minutos de Vera en Níjar, es el escenario real del crimen que inspiró "Bodas de Sangre" de Federico García Lorca. Hoy se puede visitar en ruinas.',
+    en: 'Cortijo del Fraile, 45 minutes from Vera in Níjar, is the real-life scene of the crime that inspired García Lorca\'s "Blood Wedding". The ruins are open to visitors today.',
+  },
+  {
+    es: 'La Playa de los Muertos, cerca de Carboneras y a 30 minutos de Vera, tiene aguas tan transparentes que el fondo se ve a 15 metros de profundidad desde la superficie. Figura en todas las listas de playas vírgenes de España.',
+    en: 'Playa de los Muertos, near Carboneras and 30 minutes from Vera, has water so clear the bottom is visible 15 metres down from the surface. It appears on every list of Spain\'s wildest beaches.',
+  },
+  {
+    es: 'Rodalquilar, en Cabo de Gata, alberga una mina de oro abandonada de los años 40. Sus instalaciones industriales entre volcanes y mar forman uno de los paisajes más surrealistas de Europa.',
+    en: 'Rodalquilar in Cabo de Gata holds an abandoned 1940s gold mine. Its industrial plant set between volcanoes and sea creates one of the most surreal landscapes in Europe.',
+  },
+  {
+    es: 'La Isleta del Moro, en Cabo de Gata, es un pueblo de pescadores con menos de 60 habitantes donde el tiempo parece detenido. Una de las aldeas costeras más fotogénicas del Mediterráneo.',
+    en: 'Isleta del Moro in Cabo de Gata is a fishing village of fewer than 60 inhabitants where time seems to stand still. One of the most photogenic coastal hamlets in the Mediterranean.',
+  },
+  {
+    es: 'Villaricos, a 10 minutos de Vera, fue una de las ciudades fenicias y romanas más importantes del sureste peninsular. Sus necrópolis y restos de murallas llevan 2.700 años junto al mar.',
+    en: 'Villaricos, 10 minutes from Vera, was one of the most important Phoenician and Roman cities in southeastern Iberia. Its necropolises and wall remains have stood by the sea for 2,700 years.',
+  },
+  {
+    es: 'Las minas de plata de Bédar, a 20 minutos de Vera, se explotaron desde la época romana hasta el siglo XX. Sus escombreras de colores siguen tiñendo la sierra de tonos oxidados y violáceos.',
+    en: 'The Bédar silver mines, 20 minutes from Vera, were worked from Roman times until the 20th century. Their coloured spoil heaps still stain the hillside in shades of rust and violet.',
+  },
 ];
 
 // Shuffled pools — stable per page load
