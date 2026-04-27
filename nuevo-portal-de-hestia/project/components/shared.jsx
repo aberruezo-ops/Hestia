@@ -377,4 +377,160 @@ const QuickFAQ = ({ lang, pageId = 'home' }) => {
   );
 };
 
-Object.assign(window, { HestiaLogoMark, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ });
+const SABIAS_QUE_FACTS = [
+  {
+    type: 'fact',
+    es: 'Almería recibe más de 3.000 horas de sol al año — casi el doble que la media europea.',
+    en: 'Almería receives over 3,000 hours of sunshine a year — almost twice the European average.',
+  },
+  {
+    type: 'fact',
+    es: 'El Desierto de Tabernas, a 30 minutos de Vera Playa, es el único desierto auténtico de Europa occidental.',
+    en: 'The Tabernas Desert, 30 minutes from Vera Playa, is the only true desert in Western Europe.',
+  },
+  {
+    type: 'fact',
+    es: '"Almería" viene del árabe Al-Mariyya — "el espejo del mar".',
+    en: '"Almería" comes from the Arabic Al-Mariyya — meaning "the mirror of the sea".',
+  },
+  {
+    type: 'fact',
+    es: 'Las Salinas de Puerto Rey albergan colonias de flamencos rosas que llegan cada año desde el norte de África.',
+    en: 'The Puerto Rey salt flats host pink flamingo colonies that arrive each year from North Africa.',
+  },
+  {
+    type: 'fact',
+    es: 'Vera Playa fue la primera playa naturista autorizada de España, en 1979.',
+    en: 'Vera Playa was the first officially authorised naturist beach in Spain, in 1979.',
+  },
+  {
+    type: 'fact',
+    es: 'El fondo marino de Cabo de Gata alberga la mayor pradera de posidonia oceánica del Mediterráneo occidental.',
+    en: 'The seabed of Cabo de Gata is home to the largest posidonia meadow in the western Mediterranean.',
+  },
+  {
+    type: 'fact',
+    es: 'El Mediterráneo en Vera Playa alcanza hasta 28 °C en agosto — más cálido que el Caribe en esas fechas.',
+    en: 'The Mediterranean at Vera Playa reaches up to 28 °C in August — warmer than the Caribbean at that time of year.',
+  },
+  {
+    type: 'fact',
+    es: 'El Parque Natural Cabo de Gata-Níjar recibe menos de 200 mm de lluvia al año — la aridez más extrema de Europa continental.',
+    en: 'The Cabo de Gata-Níjar Natural Park receives less than 200 mm of rain a year — the most extreme aridity on mainland Europe.',
+  },
+  {
+    type: 'fact',
+    es: 'Almería fue escenario de más de 400 producciones cinematográficas, incluyendo los westerns más icónicos de Sergio Leone.',
+    en: 'Almería was the filming location for over 400 productions, including Sergio Leone\'s most iconic westerns.',
+  },
+  {
+    type: 'fact',
+    es: 'Las Salinas de Puerto Rey fueron explotadas por los romanos hace más de 2.000 años para elaborar el garum, la salsa más valiosa de la antigüedad.',
+    en: 'The Puerto Rey salt flats were worked by the Romans over 2,000 years ago to make garum — the most prized condiment of antiquity.',
+  },
+  {
+    type: 'fact',
+    es: 'El olivar que inspira a Hestía Mar lleva siglos en la costa de Vera. El aceite de oliva de Almería ya se exportaba en época fenicia.',
+    en: 'The olive grove behind Hestía Mar has stood on the Vera coast for centuries. Almería\'s olive oil was already being exported in Phoenician times.',
+  },
+  {
+    type: 'fact',
+    es: 'Almería tiene más días de sol al año que cualquier capital de Europa, incluidas Atenas y Lisboa.',
+    en: 'Almería has more sunny days per year than any European capital — including Athens and Lisbon.',
+  },
+];
+
+const FRASES_HOGAR = [
+  {
+    type: 'quote',
+    es: '«El hogar no es un lugar. Es un sentimiento.»',
+    en: '«Home is not a place. It is a feeling.»',
+    attr: '— Cecelia Ahearn',
+  },
+  {
+    type: 'quote',
+    es: '«El hogar es donde está el corazón.»',
+    en: '«Home is where the heart is.»',
+    attr: '— Plinio el Viejo',
+  },
+  {
+    type: 'quote',
+    es: '«No hay lugar como el hogar.»',
+    en: '«There is no place like home.»',
+    attr: '— L. Frank Baum, El Mago de Oz',
+  },
+  {
+    type: 'quote',
+    es: '«El hogar es el refugio del alma.»',
+    en: '«The home is the refuge of the soul.»',
+    attr: '— Gaston Bachelard',
+  },
+  {
+    type: 'quote',
+    es: '«Donde haya amor, allí está el hogar.»',
+    en: '«Where there is love, there is home.»',
+    attr: '— Leon Tolstoy',
+  },
+  {
+    type: 'quote',
+    es: '«Una casa se construye con ladrillos y vigas; un hogar se edifica con amor y sueños.»',
+    en: '«A house is made of walls and beams; a home is built with love and dreams.»',
+    attr: '— William Arthur Ward',
+  },
+  {
+    type: 'quote',
+    es: '«El hogar es el punto de partida de todo gran viaje.»',
+    en: '«Home is the starting point of every great journey.»',
+    attr: '— Henry Drummond',
+  },
+  {
+    type: 'quote',
+    es: '«Volver a casa es la forma más agradable de viajar.»',
+    en: '«Returning home is the sweetest of all journeys.»',
+    attr: '— Fanny Burney',
+  },
+];
+
+// Shuffled combined pool — stable per page load
+const _shufflePool = () => {
+  const pool = [...SABIAS_QUE_FACTS, ...FRASES_HOGAR];
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool;
+};
+const _SQ_POOL = _shufflePool();
+
+const SabiasQue = ({ lang }) => {
+  const [idx, setIdx] = React.useState(() => Math.floor(Math.random() * _SQ_POOL.length));
+  const [visible, setVisible] = React.useState(true);
+
+  React.useEffect(() => {
+    const tick = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIdx(i => (i + 1) % _SQ_POOL.length);
+        setVisible(true);
+      }, 500);
+    }, 7000);
+    return () => clearInterval(tick);
+  }, []);
+
+  const item = _SQ_POOL[idx];
+  const label = item.type === 'fact'
+    ? (lang === 'es' ? '¿Sabías que…?' : 'Did you know?')
+    : (lang === 'es' ? 'Sobre el hogar' : 'On home');
+
+  return (
+    <div className="sabias-que">
+      <span className="sq-label">{label}</span>
+      <span className={`sq-body ${visible ? 'sq-in' : 'sq-out'}`}>
+        <span className="sq-fact">{item[lang]}</span>
+        {item.attr && <span className="sq-attr">{item.attr}</span>}
+      </span>
+    </div>
+  );
+};
+
+Object.assign(window, { HestiaLogoMark, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue });
