@@ -1024,15 +1024,21 @@ const FraseHogar = ({ lang }) => {
 
 // Widget fijo media pantalla derecha — solo datos curiosos
 const StickyFacts = ({ lang }) => {
+  const total = _HOME_FACTS_POOL.length;
   const [idx, setIdx]         = React.useState(0);
   const [visible, setVisible] = React.useState(true);
   const [open, setOpen]       = React.useState(true);
+
+  const go = (dir) => {
+    setVisible(false);
+    setTimeout(() => { setIdx(i => (i + dir + total) % total); setVisible(true); }, 320);
+  };
 
   React.useEffect(() => {
     if (!open) return;
     const t = setInterval(() => {
       setVisible(false);
-      setTimeout(() => { setIdx(i => (i + 1) % _HOME_FACTS_POOL.length); setVisible(true); }, 400);
+      setTimeout(() => { setIdx(i => (i + 1) % total); setVisible(true); }, 400);
     }, 9000);
     return () => clearInterval(t);
   }, [open]);
@@ -1046,10 +1052,17 @@ const StickyFacts = ({ lang }) => {
         {open ? '−' : '?'}
       </button>
       {open && (
-        <div className={`sf-body ${visible ? 'sf-in' : 'sf-out'}`}>
-          <span className="sf-label">{label}</span>
-          <span className="sf-text">{item[lang]}</span>
-        </div>
+        <>
+          <div className={`sf-body ${visible ? 'sf-in' : 'sf-out'}`}>
+            <span className="sf-label">{label}</span>
+            <span className="sf-text">{item[lang]}</span>
+          </div>
+          <div className="sf-nav">
+            <button className="sf-nav-btn" onClick={() => go(-1)} aria-label={lang === 'es' ? 'Anterior' : 'Previous'}>←</button>
+            <span className="sf-counter">{idx + 1} / {total}</span>
+            <button className="sf-nav-btn" onClick={() => go(1)} aria-label={lang === 'es' ? 'Siguiente' : 'Next'}>→</button>
+          </div>
+        </>
       )}
     </div>
   );
