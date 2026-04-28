@@ -2665,6 +2665,19 @@ body.no-parallax .g-tile .img { transform: none !important; }
   background: var(--ber-dk);
   color: var(--arena);
 }
+/* Headings inside dark sections must be explicitly light */
+.nosotros-team h2,
+.nosotros-team h3,
+.section-dark h2,
+.section-dark h3,
+.section-night h2,
+.section-night h3,
+.sabias-que h2,
+.sabias-que h3,
+.sticky-facts h2,
+.sticky-facts h3 {
+  color: var(--arena);
+}
 .nosotros-team-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

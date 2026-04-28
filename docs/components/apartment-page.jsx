@@ -16,7 +16,7 @@ const APT_DATA = {
       concept: 'El campo de olivos llega al mar.',
       desc: 'Hestía Mar es el apartamento donde el paisaje del olivar se funde con el Mediterráneo. Desde la terraza esquinera de 20m², el mar aparece entre los eucaliptos de Vera Playa. Ideal para familias que buscan privacidad, verde y brisa. Las mascotas son parte de la familia.',
       desc2: 'El apartamento ocupa la planta baja del conjunto y se abre al jardín con acceso directo a la piscina comunitaria. La luz entra por tres orientaciones — mañana, mediodía y tarde. Una cocina completamente equipada, salón-comedor de 28m² y dos dormitorios con ropa de cama de calidad.',
-      features: ['6 plazas + bebé · 2 habitaciones', 'Terraza esquina 20m² · Vistas al mar', 'Piscina comunitaria', 'Mascotas bajo petición', 'Jacuzzi de temporada', '300 m de la playa', 'Aire acondicionado frío/calor', 'Smart TV · WiFi fibra óptica', 'Cocina totalmente equipada', 'Ropa de cama y toallas incluidas'],
+      features: ['6 plazas + bebé · 2 habitaciones', 'Terraza esquina 20m² · Vistas al mar', 'Piscina comunitaria', 'Mascotas permitidas · aviso previo', 'Jacuzzi de temporada', '300 m de la playa', 'Aire acondicionado frío/calor', 'Smart TV · WiFi fibra óptica', 'Cocina totalmente equipada', 'Ropa de cama y toallas incluidas'],
       gallery_captions: ['Salón con vistas al jardín', 'Dormitorio principal', 'Terraza esquinera', 'Cocina equipada', 'Dormitorio secundario', 'Acceso a la piscina'],
     },
     en: {
@@ -24,7 +24,7 @@ const APT_DATA = {
       concept: 'Where the olive grove meets the sea.',
       desc: 'Hestía Mar is where the olive grove landscape merges with the Mediterranean. From the 20m² corner terrace, the sea appears between the eucalyptus trees of Vera Playa. Perfect for families looking for privacy, greenery and sea breeze. Pets are part of the family.',
       desc2: 'The apartment occupies the ground floor of the complex and opens onto the garden with direct pool access. Light enters from three orientations — morning, noon and afternoon. A fully equipped kitchen, 28m² living-dining room, and two bedrooms with quality bed linen.',
-      features: ['6 guests + baby · 2 bedrooms', 'Corner terrace 20m² · Sea views', 'Shared pool', 'Pets on request', 'Seasonal jacuzzi', '300 m from the beach', 'A/C heating & cooling', 'Smart TV · Fibre WiFi', 'Fully equipped kitchen', 'Bed linen & towels included'],
+      features: ['6 guests + baby · 2 bedrooms', 'Corner terrace 20m² · Sea views', 'Shared pool', 'Pets allowed · prior notice', 'Seasonal jacuzzi', '300 m from the beach', 'A/C heating & cooling', 'Smart TV · Fibre WiFi', 'Fully equipped kitchen', 'Bed linen & towels included'],
       gallery_captions: ['Living room with garden views', 'Master bedroom', 'Corner terrace', 'Equipped kitchen', 'Second bedroom', 'Pool access'],
     },
   },
@@ -40,7 +40,7 @@ const APT_DATA = {
       concept: 'El naranja del Desierto de Tabernas.',
       desc: 'Hestía Thalassa es el apartamento ático, donde el naranja del Desierto de Tabernas entra por la terraza panorámica de 360°. Una experiencia sensorial única: SPA con cromoterapia y aromaterapia, amanecer sobre el mar, atardecer sobre el desierto.',
       desc2: 'El ático dispone de dos plantas de vida y una terraza envolvente con vistas simultáneas al Mediterráneo y al Parque Natural de Cabo de Gata. El SPA privado con cromoterapia y aromaterapia convierte cada tarde en un ritual.',
-      features: ['6 plazas + bebé · 2 habitaciones', 'Terraza panorámica 360°', 'Ático — vistas al mar y al desierto', 'Piscina comunitaria + pistas de pádel', 'SPA privado: cromoterapia + aromaterapia', '1,5 km de la playa', 'Mascotas bajo petición', 'Aire acondicionado frío/calor', 'Smart TV · WiFi fibra óptica', 'Cocina totalmente equipada', 'Ropa de cama y toallas incluidas'],
+      features: ['6 plazas + bebé · 2 habitaciones', 'Terraza panorámica 360°', 'Ático — vistas al mar y al desierto', 'Piscina comunitaria + pistas de pádel', 'SPA privado: cromoterapia + aromaterapia', '1,5 km de la playa', 'Mascotas permitidas · aviso previo', 'Aire acondicionado frío/calor', 'Smart TV · WiFi fibra óptica', 'Cocina totalmente equipada', 'Ropa de cama y toallas incluidas'],
       gallery_captions: ['Terraza panorámica 360°', 'Salón duplex', 'SPA con cromoterapia', 'Dormitorio principal', 'Vistas al desierto de Tabernas', 'Atardecer desde el ático'],
     },
     en: {
@@ -64,7 +64,7 @@ const APT_DATA = {
       concept: 'El amarillo albero del amanecer sobre las salinas.',
       desc: 'Hestía Salinas vive en el color albero del amanecer almeriense. Tres piscinas, dos terrazas y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina. El apartamento más luminoso de la colección.',
       desc2: 'A 900 metros del mar y junto al Parque Natural de las Salinas de Puerto Rey, este apartamento ofrece un paisaje que no existe en ningún otro lugar de Europa. La luz de la tarde sobre las salinas tiñe cada habitación de oro.',
-      features: ['6 plazas + bebé · 2 habitaciones', 'Dos terrazas', 'Tres piscinas comunitarias', 'Parque Natural Salinas de Puerto Rey', 'Vistas a las salinas', '900 m de la playa', 'Mascotas bajo petición', 'Aire acondicionado frío/calor', 'Smart TV · WiFi fibra óptica', 'Cocina totalmente equipada', 'Ropa de cama y toallas incluidas'],
+      features: ['6 plazas + bebé · 2 habitaciones', 'Dos terrazas', 'Tres piscinas comunitarias', 'Parque Natural Salinas de Puerto Rey', 'Vistas a las salinas', '900 m de la playa', 'Mascotas permitidas · aviso previo', 'Aire acondicionado frío/calor', 'Smart TV · WiFi fibra óptica', 'Cocina totalmente equipada', 'Ropa de cama y toallas incluidas'],
       gallery_captions: ['Terraza principal al atardecer', 'Salón luminoso', 'Vistas a las salinas', 'Dormitorio principal', 'Segunda terraza', 'Piscina comunitaria'],
     },
     en: {

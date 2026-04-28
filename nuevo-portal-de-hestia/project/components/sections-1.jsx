@@ -188,7 +188,7 @@ const Compare = ({ lang }) => {
     { label: 'Piscina',     vm: 'Comunitaria', vt: 'Comunitaria + pádel', vs: '3 piscinas' },
     { label: 'Extra ⭑',     vm: 'Jacuzzi temporada', vt: 'SPA cromo + aromaterapia', vs: 'Parque Natural Salinas' },
     { label: 'Playa',       vm: '300 m', vt: '1,5 km', vs: '900 m' },
-    { label: 'Mascotas',    vm: 'Consultar', vt: 'Consultar', vs: 'Consultar' },
+    { label: 'Mascotas',    vm: 'Sí · aviso previo', vt: 'Sí · aviso previo', vs: 'Sí · aviso previo' },
     { label: 'Valoración',  vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
   ] : [
     { label: 'Concept',     vm: 'Sea through the olive grove', vt: 'Penthouse facing Tabernas', vs: 'Sunrise over the salt flats' },
@@ -197,7 +197,7 @@ const Compare = ({ lang }) => {
     { label: 'Pool',        vm: 'Shared', vt: 'Shared + padel', vs: '3 pools' },
     { label: 'Extra ⭑',     vm: 'Seasonal jacuzzi', vt: 'SPA chromotherapy', vs: 'Salt-flat nature park' },
     { label: 'Beach',       vm: '300 m', vt: '1,5 km', vs: '900 m' },
-    { label: 'Pets',        vm: 'Ask us', vt: 'Ask us', vs: 'Ask us' },
+    { label: 'Pets',        vm: 'Yes · prior notice', vt: 'Yes · prior notice', vs: 'Yes · prior notice' },
     { label: 'Rating',      vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
   ];
   const t = COPY[lang];
