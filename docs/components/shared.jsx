@@ -573,6 +573,108 @@ const FRASES_HOGAR = [
     en: '«Returning home is the sweetest of all journeys.»',
     attr: '— Fanny Burney',
   },
+  {
+    type: 'quote',
+    es: '«Necesito el mar porque me enseña. No sé si aprendo música o conciencia: no sé si es ola sola o ser profundo, o sólo ronca voz o deslumbrante suposición de peces y navíos.»',
+    en: '«I need the sea because it teaches me. I don\'t know if I learn music or awareness, if it is wave alone or deep being, or only hoarse voice or dazzling assumption of fish and ships.»',
+    attr: '— Pablo Neruda',
+  },
+  {
+    type: 'quote',
+    es: '«El descanso no es holgazanería. Tumbarse en la hierba escuchando el murmullo del agua, contemplar las nubes flotando, no es perder el tiempo.»',
+    en: '«Rest is not idleness. To lie sometimes on the grass listening to the murmur of water, or watching clouds float by, is by no means a waste of time.»',
+    attr: '— John Lubbock',
+  },
+  {
+    type: 'quote',
+    es: '«La cura para todo es agua salada: sudor, lágrimas o el mar.»',
+    en: '«The cure for anything is salt water — sweat, tears, or the sea.»',
+    attr: '— Isak Dinesen',
+  },
+  {
+    type: 'quote',
+    es: '«Vivir bien es la mejor venganza.»',
+    en: '«Living well is the best revenge.»',
+    attr: '— George Herbert',
+  },
+  {
+    type: 'quote',
+    es: '«El mar es todo. Cubre siete décimas partes del globo. Su aliento es puro y vivificante. Es un inmenso desierto donde el hombre nunca está solo.»',
+    en: '«The sea is everything. It covers seven-tenths of the globe. Its breath is pure and healthy. It is an immense desert where a man is never alone.»',
+    attr: '— Jules Verne',
+  },
+  {
+    type: 'quote',
+    es: '«Viajar es la única cosa en la que gastas dinero que te hace más rico.»',
+    en: '«Travel is the only thing you buy that makes you richer.»',
+    attr: '— Anónimo',
+  },
+  {
+    type: 'quote',
+    es: '«La vida es lo que pasa mientras estás ocupado haciendo otros planes.»',
+    en: '«Life is what happens while you\'re busy making other plans.»',
+    attr: '— John Lennon',
+  },
+  {
+    type: 'quote',
+    es: '«El arte del descanso es parte del arte del trabajo.»',
+    en: '«The art of rest is a part of the art of work.»',
+    attr: '— John Steinbeck',
+  },
+  {
+    type: 'quote',
+    es: '«El hogar es donde todos tus viajes terminan.»',
+    en: '«Home is where all your journeys end.»',
+    attr: '— Pico Iyer',
+  },
+  {
+    type: 'quote',
+    es: '«El verano tiene su propia eternidad.»',
+    en: '«Summer has its own eternity.»',
+    attr: '— Charles Bowden',
+  },
+  {
+    type: 'quote',
+    es: '«No hay nada como quedarse en casa para sentirse de verdad cómodo.»',
+    en: '«There is nothing like staying at home for real comfort.»',
+    attr: '— Jane Austen',
+  },
+  {
+    type: 'quote',
+    es: '«Las vacaciones son lo que haces cuando ya no puedes aguantar más lo que has estado aguantando.»',
+    en: '«A vacation is what you take when you can no longer take what you\'ve been taking.»',
+    attr: '— Earl Wilson',
+  },
+  {
+    type: 'quote',
+    es: '«El verdadero descanso es sentir que el tiempo no corre.»',
+    en: '«True rest is the feeling that time is not running.»',
+    attr: '— Marty Rubin',
+  },
+  {
+    type: 'quote',
+    es: '«El sol, el mar y la brisa — la trinidad del bienestar mediterráneo.»',
+    en: '«Sun, sea and breeze — the Mediterranean trinity of wellbeing.»',
+    attr: '— Hestía',
+  },
+  {
+    type: 'quote',
+    es: '«Lo que el sol es para las flores, el amor lo es para el alma humana.»',
+    en: '«What the sun is to the flowers, love is to the human soul.»',
+    attr: '— Joseph Addison',
+  },
+  {
+    type: 'quote',
+    es: '«El espíritu no puede ser permanentemente negado. Se reafirma, aunque indirectamente, en cada acto de reposo.»',
+    en: '«The spirit cannot be permanently denied. It reasserts itself, though indirectly, in every act of rest.»',
+    attr: '— Aldous Huxley',
+  },
+  {
+    type: 'quote',
+    es: '«La felicidad es un lugar entre demasiado poco y demasiado mucho.»',
+    en: '«Happiness is a place between too little and too much.»',
+    attr: '— Proverbio finlandés',
+  },
 ];
 
 // ── Datos curiosos exclusivos para la home ──
@@ -780,6 +882,75 @@ const SABIAS_QUE_HOME_FACTS = [
   {
     es: 'Las minas de plata de Bédar, a 20 minutos de Vera, se explotaron desde la época romana hasta el siglo XX. Sus escombreras de colores siguen tiñendo la sierra de tonos oxidados y violáceos.',
     en: 'The Bédar silver mines, 20 minutes from Vera, were worked from Roman times until the 20th century. Their coloured spoil heaps still stain the hillside in shades of rust and violet.',
+  },
+  /* Más playas impresionantes */
+  {
+    es: 'El Playazo de Rodalquilar tiene una torre vigía del siglo XVIII construida para defender la costa de los piratas berberiscos. Es una de las playas más espectaculares y menos masificadas de todo Cabo de Gata.',
+    en: 'El Playazo de Rodalquilar has an 18th-century watchtower built to defend the coast from Barbary pirates. It is one of the most spectacular and least-crowded beaches in all of Cabo de Gata.',
+  },
+  {
+    es: 'La Cala del Plomo, en Cabo de Gata, solo es accesible a pie (1 hora de caminata) o en barco. Es la playa más aislada del parque natural y una de las más vírgenes del Mediterráneo.',
+    en: 'Cala del Plomo in Cabo de Gata is only reachable on foot (1 hour\'s walk) or by boat — the most isolated beach in the natural park, one of the most pristine in the Mediterranean.',
+  },
+  {
+    es: 'Las Cuatro Calas de Águilas — Cala Cerrada, Cala Carolina, Cala Palmera y Cala del Pino — son cuatro playas consecutivas de aguas cristalinas sin acceso rodado. A solo 40 km de Vera.',
+    en: 'The Cuatro Calas of Águilas — Cala Cerrada, Cala Carolina, Cala Palmera and Cala del Pino — are four consecutive crystal-clear coves with no road access. Just 40 km from Vera.',
+  },
+  /* Más pueblos pintorescos */
+  {
+    es: 'Aguamarga, a 35 minutos de Vera, es uno de los pueblos de Cabo de Gata más pequeños con acceso rodado: menos de 50 habitantes en invierno. Sin bancos, sin cadenas de restaurantes, sin semáforos.',
+    en: 'Aguamarga, 35 minutes from Vera, is one of Cabo de Gata\'s smallest road-accessible villages: fewer than 50 inhabitants in winter. No banks, no chain restaurants, no traffic lights.',
+  },
+  {
+    es: 'San José, en Cabo de Gata, es el pueblo base del parque natural. Desde su puerto salen los barcos hacia calas inaccesibles por tierra. Sus fondos son algunos de los más biodiversos del Mediterráneo occidental.',
+    en: 'San José in Cabo de Gata is the natural park\'s main village. From its harbour, boats depart to coves unreachable by road. Its seabed ranks among the most biodiverse in the western Mediterranean.',
+  },
+  {
+    es: 'Níjar, a 40 minutos de Vera, es la capital artesanal de Almería. Sus talleres de cerámica y esparto llevan produciendo con la misma técnica desde el siglo XV — sin moldes industriales, sin cambiar el método.',
+    en: 'Níjar, 40 minutes from Vera, is Almería\'s craft capital. Its ceramic and esparto workshops have used the same technique since the 15th century — no industrial moulds, method unchanged.',
+  },
+  /* Lugares singulares */
+  {
+    es: 'El Faro de Cabo de Gata fue construido en 1863 y es el más antiguo en activo de la provincia. A su alrededor, las salinas albergan flamencos rosados, avocetas y martinetes todo el año.',
+    en: 'The Cabo de Gata lighthouse was built in 1863 and is the oldest active lighthouse in the province. Around it, the salt flats shelter pink flamingos, avocets and night herons year-round.',
+  },
+  {
+    es: 'La Cueva de Ambrosio, en Vélez Blanco (1 hora de Vera), tiene pinturas rupestres de más de 15.000 años de antigüedad — Patrimonio Mundial y uno de los yacimientos paleolíticos más importantes del sur de Europa.',
+    en: 'Cueva de Ambrosio in Vélez Blanco (1 hour from Vera) holds cave paintings over 15,000 years old — a World Heritage site and one of the most important Palaeolithic art sites in southern Europe.',
+  },
+  {
+    es: 'Fort Bravo y Mini Hollywood, en el Desierto de Tabernas (1 hora de Vera), fueron los platós donde se rodaron "El Bueno, el Feo y el Malo", "Lawrence de Arabia" y más de 600 westerns espagueti.',
+    en: 'Fort Bravo and Mini Hollywood in the Tabernas Desert (1 hour from Vera) were the sets for "The Good, the Bad and the Ugly", "Lawrence of Arabia" and over 600 spaghetti westerns.',
+  },
+  {
+    es: 'El Arco del Agua, en el Valle de Aguas (Sorbas), es un arco natural de yeso de 15 metros de altura — uno de los paisajes geológicos más espectaculares y menos conocidos del sur de Europa.',
+    en: 'The Arco del Agua in the Valle de Aguas (Sorbas) is a natural gypsum arch 15 metres high — one of the most spectacular and least-known geological landscapes in southern Europe.',
+  },
+  /* Clima y naturaleza */
+  {
+    es: 'La Sierra Nevada, con cumbres de más de 3.400 metros, se ve desde la playa de Vera en los días claros de invierno. Solo 80 km separan el Mediterráneo del glaciar más meridional de Europa.',
+    en: 'Sierra Nevada, with peaks above 3,400 metres, is visible from Vera beach on clear winter days. Just 80 km separate the Mediterranean from Europe\'s southernmost glacier.',
+  },
+  {
+    es: 'El Valle del Almanzora, a 30 minutos de Vera, florece en marzo con azahar de naranjo y limonero. El olor llega a la playa los días de poniente — uno de los fenómenos olfativos más sorprendentes de España.',
+    en: 'The Almanzora valley, 30 minutes from Vera, blooms in March with orange and lemon blossom. The scent reaches the beach on westerly days — one of Spain\'s most surprising natural perfume events.',
+  },
+  /* Gastronomía y tradición */
+  {
+    es: 'Garrucha, a 5 minutos de Vera, tiene el único puerto pesquero de la costa almeriense que mantiene en activo la subasta de pescado a primera hora de la mañana. Puedes asistir como visitante.',
+    en: 'Garrucha, 5 minutes from Vera, has the only fishing port on the Almería coast that still holds a live fish auction first thing in the morning. Visitors are welcome.',
+  },
+  {
+    es: 'La almadraba de Cabo de Gata usa la misma trampa de redes laberínticas para atrapar atún rojo que los fenicios diseñaron hace 3.000 años — sin cambiar el método, sin añadir tecnología.',
+    en: 'The Cabo de Gata almadraba uses the same labyrinth-net trap for catching bluefin tuna that the Phoenicians devised 3,000 years ago — unchanged method, no technology added.',
+  },
+  {
+    es: 'El Parque Natural de Sierra María-Los Vélez, a 1 hora de Vera, supera los 2.000 metros. Desde sus cimas se ven simultáneamente el Mediterráneo, las sierras subbéticas y el norte de África.',
+    en: 'Sierra María-Los Vélez Natural Park, 1 hour from Vera, exceeds 2,000 metres. From its peaks you can see the Mediterranean, the Subbetic ranges and North Africa simultaneously.',
+  },
+  {
+    es: 'La Chanca, barrio histórico de Almería capital, tiene casas-cueva excavadas en el risco rojo de la Alcazaba. Algunas siguen habitadas hoy, igual que hace más de mil años.',
+    en: 'La Chanca, Almería city\'s historic quarter, has cave-houses carved into the red rock of the Alcazaba. Some are still inhabited today, just as they were over a thousand years ago.',
   },
 ];
 

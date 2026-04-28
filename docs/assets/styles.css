@@ -740,9 +740,9 @@ section {
   font-size: 9px;
   text-transform: uppercase;
   letter-spacing: 0.13em;
-  opacity: 0.55;
+  opacity: 0.82;
   white-space: nowrap;
-  color: var(--crema);
+  color: var(--ber-dk);
 }
 
 /* Sol/luna en el bridge */
@@ -3472,17 +3472,19 @@ body.no-parallax .g-tile .img { transform: none !important; }
 /* ── Sticky facts corner widget ── */
 .sticky-facts {
   position: fixed;
-  bottom: 28px; left: 28px;
+  top: 90px; right: 20px;
   z-index: 190;
-  width: 252px;
+  width: 280px;
   background: var(--ber-dk);
-  border-radius: 14px;
-  padding: 14px 36px 14px 16px;
-  box-shadow: 0 6px 28px rgba(0,0,0,.38);
+  border-radius: 12px;
+  border-left: 4px solid var(--sol);
+  padding: 14px 36px 14px 18px;
+  box-shadow: 0 6px 32px rgba(0,0,0,.42);
 }
 .sticky-facts.sf-closed {
   width: 40px; height: 40px;
   border-radius: 50%;
+  border-left: none;
   padding: 0;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
@@ -3504,19 +3506,19 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .sf-label {
   display: block;
   font-family: var(--sans);
-  font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--sol-lt); margin-bottom: 7px;
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--sol-lt); margin-bottom: 8px;
 }
 .sf-text {
   display: block;
   font-family: var(--serif);
-  font-size: 11.5px; line-height: 1.55;
+  font-size: 13px; line-height: 1.58;
   color: var(--arena);
 }
 .sf-attr {
   display: block;
   font-family: var(--sans);
-  font-size: 10px; opacity: .6;
-  margin-top: 5px; color: var(--arena);
+  font-size: 11px; opacity: .65;
+  margin-top: 6px; color: var(--arena);
 }
 @media (max-width: 480px) { .sticky-facts { display: none; } }
