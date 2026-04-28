@@ -1022,18 +1022,8 @@ const FraseHogar = ({ lang }) => {
   );
 };
 
-// Widget fijo esquina inferior-izquierda — siempre visible al hacer scroll
+// Widget fijo media pantalla derecha — solo datos curiosos
 const StickyFacts = ({ lang }) => {
-  const pool = React.useMemo(() => {
-    const out = [];
-    const n = Math.max(_HOME_FACTS_POOL.length, _QUOTES_POOL.length);
-    for (let i = 0; i < n; i++) {
-      if (i < _HOME_FACTS_POOL.length) out.push({ kind: 'fact', ..._HOME_FACTS_POOL[i] });
-      if (i < _QUOTES_POOL.length)     out.push({ kind: 'quote', ..._QUOTES_POOL[i] });
-    }
-    return out;
-  }, []);
-
   const [idx, setIdx]         = React.useState(0);
   const [visible, setVisible] = React.useState(true);
   const [open, setOpen]       = React.useState(true);
@@ -1042,15 +1032,13 @@ const StickyFacts = ({ lang }) => {
     if (!open) return;
     const t = setInterval(() => {
       setVisible(false);
-      setTimeout(() => { setIdx(i => (i + 1) % pool.length); setVisible(true); }, 400);
+      setTimeout(() => { setIdx(i => (i + 1) % _HOME_FACTS_POOL.length); setVisible(true); }, 400);
     }, 9000);
     return () => clearInterval(t);
-  }, [open, pool.length]);
+  }, [open]);
 
-  const item  = pool[idx];
-  const label = item.kind === 'fact'
-    ? (lang === 'es' ? '¿Sabías que?' : 'Did you know?')
-    : (lang === 'es' ? 'Sobre el hogar' : 'On home');
+  const item  = _HOME_FACTS_POOL[idx];
+  const label = lang === 'es' ? '¿Sabías que?' : 'Did you know?';
 
   return (
     <div className={`sticky-facts ${open ? '' : 'sf-closed'}`}>
@@ -1061,7 +1049,6 @@ const StickyFacts = ({ lang }) => {
         <div className={`sf-body ${visible ? 'sf-in' : 'sf-out'}`}>
           <span className="sf-label">{label}</span>
           <span className="sf-text">{item[lang]}</span>
-          {item.kind === 'quote' && item.attr && <span className="sf-attr">{item.attr}</span>}
         </div>
       )}
     </div>
