@@ -152,7 +152,6 @@ const OpinionesPageApp = () => {
         <FraseHogar lang={lang} />
         <OpinionesRatings lang={lang} />
         <OpinionesTestimonials lang={lang} />
-        <SabiasQue lang={lang} />
         <QuickFAQ lang={lang} pageId="opiniones" />
         <ContactCTA lang={lang} />
       </main>

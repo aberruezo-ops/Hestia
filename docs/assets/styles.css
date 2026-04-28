@@ -394,16 +394,16 @@ section {
 
 /* ── Cosmos: twinkling stars on dark sections ── */
 @keyframes cosmosGlow {
-  0%   { opacity: 0.18; }
-  35%  { opacity: 0.72; }
-  65%  { opacity: 0.30; }
-  100% { opacity: 0.62; }
+  0%   { opacity: 0.4; }
+  30%  { opacity: 1.0; }
+  60%  { opacity: 0.5; }
+  100% { opacity: 0.85; }
 }
 @keyframes cosmosGlowB {
-  0%   { opacity: 0.55; }
-  45%  { opacity: 0.12; }
-  80%  { opacity: 0.78; }
-  100% { opacity: 0.40; }
+  0%   { opacity: 0.8; }
+  40%  { opacity: 0.35; }
+  75%  { opacity: 1.0; }
+  100% { opacity: 0.55; }
 }
 @keyframes shootStar {
   0%, 84%  { opacity: 0; transform: translate(-8vw, -4vh) rotate(-32deg) scaleX(0.01); }
@@ -411,29 +411,35 @@ section {
   92%      { opacity: 0; transform: translate(38vw, 20vh) rotate(-32deg) scaleX(0.6); }
   100%     { opacity: 0; transform: translate(38vw, 20vh) rotate(-32deg) scaleX(0); }
 }
-.section-dark::after, .section-night::after {
+/* Stars on dark sections: .counters (ber), .manifest (ber-dk), .contact-cta (ber) */
+.counters::after, .manifest::after, .contact-cta::after {
   content: '';
   position: absolute; inset: 0;
-  pointer-events: none; z-index: 0;
+  pointer-events: none; z-index: 0; overflow: hidden;
   background-image:
-    radial-gradient(1.2px 1.2px at  8% 17%, rgba(240,232,213,.85) 0%, transparent 2px),
-    radial-gradient(1px   1px   at 22% 71%, rgba(111,196,209,.70) 0%, transparent 2px),
-    radial-gradient(1.5px 1.5px at 41% 11%, rgba(240,232,213,.75) 0%, transparent 2px),
-    radial-gradient(0.9px 0.9px at 57% 48%, rgba(240,232,213,.60) 0%, transparent 2px),
-    radial-gradient(1px   1px   at 71% 28%, rgba(111,196,209,.65) 0%, transparent 2px),
-    radial-gradient(1.2px 1.2px at 83% 75%, rgba(240,232,213,.70) 0%, transparent 2px),
-    radial-gradient(0.8px 0.8px at 93% 14%, rgba(111,196,209,.55) 0%, transparent 2px),
-    radial-gradient(1px   1px   at 35% 85%, rgba(240,232,213,.50) 0%, transparent 2px),
-    radial-gradient(1.3px 1.3px at 63% 63%, rgba(240,232,213,.45) 0%, transparent 2px),
-    radial-gradient(0.9px 0.9px at 14% 44%, rgba(111,196,209,.40) 0%, transparent 2px);
+    radial-gradient(ellipse 5px 5px at  8% 18%, rgba(240,232,213,.95) 0%, rgba(240,232,213,.25) 60%, transparent 100%),
+    radial-gradient(ellipse 4px 4px at 22% 72%, rgba(111,196,209,.90) 0%, rgba(111,196,209,.20) 60%, transparent 100%),
+    radial-gradient(ellipse 6px 6px at 41% 12%, rgba(240,232,213,.85) 0%, rgba(240,232,213,.20) 60%, transparent 100%),
+    radial-gradient(ellipse 3px 3px at 57% 47%, rgba(240,232,213,.80) 0%, rgba(240,232,213,.18) 60%, transparent 100%),
+    radial-gradient(ellipse 5px 5px at 71% 29%, rgba(111,196,209,.88) 0%, rgba(111,196,209,.22) 60%, transparent 100%),
+    radial-gradient(ellipse 4px 4px at 83% 76%, rgba(240,232,213,.90) 0%, rgba(240,232,213,.20) 60%, transparent 100%),
+    radial-gradient(ellipse 3px 3px at 93% 15%, rgba(111,196,209,.75) 0%, rgba(111,196,209,.15) 60%, transparent 100%),
+    radial-gradient(ellipse 5px 5px at 35% 84%, rgba(240,232,213,.70) 0%, rgba(240,232,213,.15) 60%, transparent 100%),
+    radial-gradient(ellipse 4px 4px at 63% 62%, rgba(240,232,213,.85) 0%, rgba(240,232,213,.18) 60%, transparent 100%),
+    radial-gradient(ellipse 3px 3px at 14% 45%, rgba(111,196,209,.65) 0%, rgba(111,196,209,.12) 60%, transparent 100%),
+    radial-gradient(ellipse 5px 5px at 48% 33%, rgba(240,232,213,.75) 0%, rgba(240,232,213,.16) 60%, transparent 100%),
+    radial-gradient(ellipse 4px 4px at 77% 55%, rgba(111,196,209,.70) 0%, rgba(111,196,209,.14) 60%, transparent 100%);
   background-size: 100% 100%;
-  animation: cosmosGlow 9s ease-in-out infinite;
+  animation: cosmosGlow 10s ease-in-out infinite;
 }
-.section-night::after {
-  animation: cosmosGlowB 11s ease-in-out infinite;
-  animation-delay: -3s;
+.manifest::after {
+  animation: cosmosGlowB 13s ease-in-out infinite;
+  animation-delay: -5s;
 }
-/* Estrella fugaz — sólo en Bridge (parte oscura superior) */
+.contact-cta::after {
+  animation-delay: -2s;
+}
+/* Estrella fugaz — Bridge (parte oscura superior) */
 .bridge::after {
   content: '';
   position: absolute;
