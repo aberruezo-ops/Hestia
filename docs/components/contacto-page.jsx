@@ -229,7 +229,6 @@ const ContactoPageApp = () => {
         <ContactoPersons lang={lang} />
         <ContactoAddress lang={lang} />
         <ContactoFAQ lang={lang} />
-        <SabiasQue lang={lang} />
       </main>
       <Footer lang={lang} />
       <StickyFacts lang={lang} />
