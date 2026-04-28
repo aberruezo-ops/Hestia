@@ -3552,15 +3552,15 @@ body.no-parallax .g-tile .img { transform: none !important; }
   top: 50%; right: 20px;
   transform: translateY(-50%);
   z-index: 88;
-  width: 280px;
+  width: 340px;
   background: var(--ber-dk);
-  border-radius: 12px;
+  border-radius: 14px;
   border-left: 4px solid var(--sol);
-  padding: 14px 36px 14px 18px;
-  box-shadow: 0 6px 32px rgba(0,0,0,.42);
+  padding: 18px 42px 16px 20px;
+  box-shadow: 0 8px 36px rgba(0,0,0,.48);
 }
 .sticky-facts.sf-closed {
-  width: 40px; height: 40px;
+  width: 44px; height: 44px;
   border-radius: 50%;
   border-left: none;
   padding: 0;
@@ -3568,35 +3568,51 @@ body.no-parallax .g-tile .img { transform: none !important; }
   cursor: pointer;
 }
 .sf-toggle {
-  position: absolute; top: 9px; right: 10px;
+  position: absolute; top: 10px; right: 12px;
   background: none; border: none;
   color: var(--arena); opacity: .45;
-  font-size: 16px; line-height: 1;
+  font-size: 17px; line-height: 1;
   cursor: pointer; padding: 2px 4px;
 }
 .sf-toggle:hover { opacity: 1; }
 .sticky-facts.sf-closed .sf-toggle {
-  position: static; opacity: .8; font-size: 18px;
+  position: static; opacity: .8; font-size: 20px;
 }
-.sf-body { transition: opacity .4s; }
+.sf-body { transition: opacity .35s; }
 .sf-body.sf-in  { opacity: 1; }
 .sf-body.sf-out { opacity: 0; }
 .sf-label {
   display: block;
   font-family: var(--sans);
-  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--sol-lt); margin-bottom: 8px;
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--sol-lt); margin-bottom: 10px;
 }
 .sf-text {
   display: block;
   font-family: var(--serif);
-  font-size: 13px; line-height: 1.58;
+  font-size: 22px; line-height: 1.5;
   color: var(--arena);
 }
-.sf-attr {
-  display: block;
+.sf-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(240,232,213,.12);
+}
+.sf-nav-btn {
+  background: none; border: none;
+  color: var(--sol-lt);
+  font-size: 22px; line-height: 1;
+  cursor: pointer; padding: 4px 10px;
+  opacity: 0.65;
+  transition: opacity .18s, transform .18s;
+}
+.sf-nav-btn:hover { opacity: 1; transform: scale(1.18); }
+.sf-counter {
   font-family: var(--sans);
-  font-size: 11px; opacity: .65;
-  margin-top: 6px; color: var(--arena);
+  font-size: 11px; letter-spacing: .1em;
+  color: var(--arena); opacity: 0.38;
 }
 @media (max-width: 480px) { .sticky-facts { display: none; } }
