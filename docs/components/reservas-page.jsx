@@ -83,6 +83,13 @@ const ReservasHero = ({ lang }) => {
   const t = RESERVAS_COPY[lang];
   return (
     <section className="page-hero reservas-hero">
+      <video
+        className="reservas-hero-video"
+        autoPlay muted loop playsInline preload="auto"
+      >
+        <source src="assets/285834_medium.mp4" type="video/mp4"/>
+      </video>
+      <div className="reservas-hero-wash"/>
       <div className="stars"/>
       <div className="page-hero-content">
         <div className="eyebrow">{t.eyebrow}</div>
