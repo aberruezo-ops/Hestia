@@ -3126,19 +3126,22 @@ body.no-parallax .g-tile .img { transform: none !important; }
 /* ================================================================
    RESERVAS — página de reserva directa
    ================================================================ */
-.reservas-hero { min-height: 52vh; }
+.reservas-hero { min-height: 60vh; }
 .reservas-hero-video {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover; object-position: center;
   z-index: 0;
-  opacity: 0.5;
+  opacity: 0.55;
 }
 .reservas-hero-wash {
   position: absolute; inset: 0;
-  background: linear-gradient(to right, rgba(42,15,46,.75) 0%, rgba(42,15,46,.4) 60%, rgba(42,15,46,.2) 100%);
+  background:
+    linear-gradient(to top, rgba(42,15,46,.88) 0%, rgba(42,15,46,.55) 40%, rgba(42,15,46,.1) 100%),
+    linear-gradient(to right, rgba(42,15,46,.5) 0%, transparent 70%);
   z-index: 1;
 }
+.reservas-hero .page-hero-content { z-index: 3; }
 .reservas-body {
   padding: 80px var(--page-pad) 120px;
   background: var(--crema);
@@ -3486,7 +3489,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   position: fixed;
   top: 50%; right: 20px;
   transform: translateY(-50%);
-  z-index: 190;
+  z-index: 88;
   width: 280px;
   background: var(--ber-dk);
   border-radius: 12px;
