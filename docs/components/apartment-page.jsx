@@ -40,7 +40,7 @@ const APT_DATA = {
       concept: 'El naranja del Desierto de Tabernas.',
       desc: 'Hestía Thalassa es el apartamento ático, donde el naranja del Desierto de Tabernas entra por la terraza panorámica de 360°. Una experiencia sensorial única: SPA con cromoterapia y aromaterapia, amanecer sobre el mar, atardecer sobre el desierto.',
       desc2: 'El ático dispone de dos plantas de vida y una terraza envolvente con vistas simultáneas al Mediterráneo y al Parque Natural de Cabo de Gata. El SPA privado con cromoterapia y aromaterapia convierte cada tarde en un ritual.',
-      features: ['6 plazas + bebé · 2 habitaciones', 'Terraza panorámica 360°', 'Ático — vistas al mar y al desierto', 'Piscina comunitaria + pistas de pádel', 'SPA privado: cromoterapia + aromaterapia', '400 m de la playa', 'Mascotas bajo petición', 'Aire acondicionado frío/calor', 'Smart TV · WiFi fibra óptica', 'Cocina totalmente equipada', 'Ropa de cama y toallas incluidas'],
+      features: ['6 plazas + bebé · 2 habitaciones', 'Terraza panorámica 360°', 'Ático — vistas al mar y al desierto', 'Piscina comunitaria + pistas de pádel', 'SPA privado: cromoterapia + aromaterapia', '1,5 km de la playa', 'Mascotas bajo petición', 'Aire acondicionado frío/calor', 'Smart TV · WiFi fibra óptica', 'Cocina totalmente equipada', 'Ropa de cama y toallas incluidas'],
       gallery_captions: ['Terraza panorámica 360°', 'Salón duplex', 'SPA con cromoterapia', 'Dormitorio principal', 'Vistas al desierto de Tabernas', 'Atardecer desde el ático'],
     },
     en: {
@@ -48,7 +48,7 @@ const APT_DATA = {
       concept: 'Orange from the Tabernas desert.',
       desc: 'Hestía Thalassa is the penthouse apartment, where the orange of the Tabernas Desert enters through the 360° panoramic terrace. A unique sensory experience: SPA with chromotherapy and aromatherapy, sunrise over the sea, sunset over the desert.',
       desc2: 'The penthouse spans two living floors and a wraparound terrace with simultaneous views of the Mediterranean and the Cabo de Gata Natural Park. The private SPA with chromotherapy and aromatherapy turns every afternoon into a ritual.',
-      features: ['6 guests + baby · 2 bedrooms', '360° panoramic terrace', 'Penthouse — sea & desert views', 'Shared pool + padel courts', 'Private SPA: chromotherapy & aromatherapy', '400 m from the beach', 'A/C heating & cooling', 'Smart TV · Fibre WiFi', 'Fully equipped kitchen', 'Bed linen & towels included'],
+      features: ['6 guests + baby · 2 bedrooms', '360° panoramic terrace', 'Penthouse — sea & desert views', 'Shared pool + padel courts', 'Private SPA: chromotherapy & aromatherapy', '1.5 km from the beach', 'A/C heating & cooling', 'Smart TV · Fibre WiFi', 'Fully equipped kitchen', 'Bed linen & towels included'],
       gallery_captions: ['360° panoramic terrace', 'Duplex living room', 'SPA with chromotherapy', 'Master bedroom', 'Tabernas desert views', 'Sunset from the penthouse'],
     },
   },
@@ -63,16 +63,16 @@ const APT_DATA = {
       name: 'Hestía Salinas',
       concept: 'El amarillo albero del amanecer sobre las salinas.',
       desc: 'Hestía Salinas vive en el color albero del amanecer almeriense. Tres piscinas, dos terrazas y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina. El apartamento más luminoso de la colección.',
-      desc2: 'A 350 metros del mar y junto al Parque Natural de las Salinas de Puerto Rey, este apartamento ofrece un paisaje que no existe en ningún otro lugar de Europa. La luz de la tarde sobre las salinas tiñe cada habitación de oro.',
-      features: ['6 plazas + bebé · 2 habitaciones', 'Dos terrazas', 'Tres piscinas comunitarias', 'Parque Natural Salinas de Puerto Rey', 'Vistas a las salinas', '350 m de la playa', 'Mascotas bajo petición', 'Aire acondicionado frío/calor', 'Smart TV · WiFi fibra óptica', 'Cocina totalmente equipada', 'Ropa de cama y toallas incluidas'],
+      desc2: 'A 900 metros del mar y junto al Parque Natural de las Salinas de Puerto Rey, este apartamento ofrece un paisaje que no existe en ningún otro lugar de Europa. La luz de la tarde sobre las salinas tiñe cada habitación de oro.',
+      features: ['6 plazas + bebé · 2 habitaciones', 'Dos terrazas', 'Tres piscinas comunitarias', 'Parque Natural Salinas de Puerto Rey', 'Vistas a las salinas', '900 m de la playa', 'Mascotas bajo petición', 'Aire acondicionado frío/calor', 'Smart TV · WiFi fibra óptica', 'Cocina totalmente equipada', 'Ropa de cama y toallas incluidas'],
       gallery_captions: ['Terraza principal al atardecer', 'Salón luminoso', 'Vistas a las salinas', 'Dormitorio principal', 'Segunda terraza', 'Piscina comunitaria'],
     },
     en: {
       name: 'Hestía Salinas',
       concept: 'Ochre yellow, sunrise over the salt flats.',
       desc: 'Hestía Salinas lives in the ochre colour of the Almería sunrise. Three pools, two terraces and the Puerto Rey salt-flat nature park around the corner. The brightest apartment in the collection.',
-      desc2: '350 metres from the sea and beside the Puerto Rey Salt-flat Nature Park, this apartment offers a landscape that exists nowhere else in Europe. The afternoon light over the salt flats turns every room golden.',
-      features: ['6 guests + baby · 2 bedrooms', 'Two terraces', 'Three shared pools', 'Puerto Rey salt-flat nature park', 'Views over the salt flats', '350 m from the beach', 'A/C heating & cooling', 'Smart TV · Fibre WiFi', 'Fully equipped kitchen', 'Bed linen & towels included'],
+      desc2: '900 metres from the sea and beside the Puerto Rey Salt-flat Nature Park, this apartment offers a landscape that exists nowhere else in Europe. The afternoon light over the salt flats turns every room golden.',
+      features: ['6 guests + baby · 2 bedrooms', 'Two terraces', 'Three shared pools', 'Puerto Rey salt-flat nature park', 'Views over the salt flats', '900 m from the beach', 'A/C heating & cooling', 'Smart TV · Fibre WiFi', 'Fully equipped kitchen', 'Bed linen & towels included'],
       gallery_captions: ['Main terrace at sunset', 'Bright living room', 'Salt-flat views', 'Master bedroom', 'Second terrace', 'Shared pool'],
     },
   },
@@ -236,6 +236,7 @@ const ApartmentPageApp = () => {
         <ContactCTA lang={lang} />
       </main>
       <Footer lang={lang} />
+      <StickyFacts lang={lang} />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />
     </>

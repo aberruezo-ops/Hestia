@@ -312,6 +312,7 @@ const NosotrosPageApp = () => {
         <ContactCTA lang={lang} />
       </main>
       <Footer lang={lang} />
+      <StickyFacts lang={lang} />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />
     </>
