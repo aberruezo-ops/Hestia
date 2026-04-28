@@ -410,8 +410,8 @@ section {
   93%     { opacity: 0; transform: translate(28vw,14vh) rotate(-28deg) scaleX(0.4); }
   100%    { opacity: 0; }
 }
-/* 5 tiny stars per dark section — appear/disappear individually via staggered opacity */
-.counters::after, .manifest::after, .contact-cta::after {
+/* Tiny twinkling stars — only on contact CTA footer and contact page hero */
+.contact-cta::after, .contacto-hero::after {
   content: '';
   position: absolute; inset: 0;
   pointer-events: none; z-index: 0;
@@ -425,8 +425,8 @@ section {
   opacity: 0;
   animation: starsWink 24s ease-in-out infinite;
 }
-.manifest::after    { animation-delay: -9s; }
-.contact-cta::after { animation-delay: -16s; }
+.contact-cta::after  { animation-delay: -16s; }
+.contacto-hero::after { animation-delay: -4s; }
 /* Estrella fugaz — Bridge (parte oscura superior) */
 .bridge::after {
   content: '';
@@ -2845,6 +2845,21 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   .page-hero::after { animation: none; }
+}
+/* Override aurora on contact hero — replace with twinkling stars */
+.contacto-hero::after {
+  width: auto; height: auto; top: 0; left: 0;
+  filter: none; border-radius: 0; mix-blend-mode: normal;
+  background-image:
+    radial-gradient(circle 1.5px at  9% 21%, rgba(240,232,213,1) 0%, transparent 100%),
+    radial-gradient(circle 1px   at 37% 67%, rgba(111,196,209,1)  0%, transparent 100%),
+    radial-gradient(circle 1.5px at 68% 14%, rgba(240,232,213,1) 0%, transparent 100%),
+    radial-gradient(circle 1px   at 82% 73%, rgba(111,196,209,1)  0%, transparent 100%),
+    radial-gradient(circle 1.5px at 53% 42%, rgba(240,232,213,1) 0%, transparent 100%);
+  background-size: 100% 100%;
+  opacity: 0;
+  animation: starsWink 24s ease-in-out infinite;
+  animation-delay: -4s;
 }
 
 /* ================================================================
