@@ -187,7 +187,7 @@ const Compare = ({ lang }) => {
     { label: 'Terraza',     vm: 'Esquina 20m² · mar', vt: 'Panorámica 360°', vs: 'Dos terrazas' },
     { label: 'Piscina',     vm: 'Comunitaria', vt: 'Comunitaria + pádel', vs: '3 piscinas' },
     { label: 'Extra ⭑',     vm: 'Jacuzzi temporada', vt: 'SPA cromo + aromaterapia', vs: 'Parque Natural Salinas' },
-    { label: 'Playa',       vm: '300 m', vt: '400 m', vs: '350 m' },
+    { label: 'Playa',       vm: '300 m', vt: '1,5 km', vs: '900 m' },
     { label: 'Mascotas',    vm: 'Consultar', vt: 'Consultar', vs: 'Consultar' },
     { label: 'Valoración',  vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
   ] : [
@@ -196,7 +196,7 @@ const Compare = ({ lang }) => {
     { label: 'Terrace',     vm: 'Corner 20m² · sea', vt: '360° panoramic', vs: 'Two terraces' },
     { label: 'Pool',        vm: 'Shared', vt: 'Shared + padel', vs: '3 pools' },
     { label: 'Extra ⭑',     vm: 'Seasonal jacuzzi', vt: 'SPA chromotherapy', vs: 'Salt-flat nature park' },
-    { label: 'Beach',       vm: '300 m', vt: '400 m', vs: '350 m' },
+    { label: 'Beach',       vm: '300 m', vt: '1,5 km', vs: '900 m' },
     { label: 'Pets',        vm: 'Ask us', vt: 'Ask us', vs: 'Ask us' },
     { label: 'Rating',      vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
   ];

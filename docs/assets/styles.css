@@ -3455,3 +3455,55 @@ body.no-parallax .g-tile .img { transform: none !important; }
   .sq-label { min-width: unset; }
   .sq-body { flex-direction: column; gap: 6px; }
 }
+
+/* ── Sticky facts corner widget ── */
+.sticky-facts {
+  position: fixed;
+  bottom: 28px; left: 28px;
+  z-index: 190;
+  width: 252px;
+  background: var(--ber-dk);
+  border-radius: 14px;
+  padding: 14px 36px 14px 16px;
+  box-shadow: 0 6px 28px rgba(0,0,0,.38);
+}
+.sticky-facts.sf-closed {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.sf-toggle {
+  position: absolute; top: 9px; right: 10px;
+  background: none; border: none;
+  color: var(--arena); opacity: .45;
+  font-size: 16px; line-height: 1;
+  cursor: pointer; padding: 2px 4px;
+}
+.sf-toggle:hover { opacity: 1; }
+.sticky-facts.sf-closed .sf-toggle {
+  position: static; opacity: .8; font-size: 18px;
+}
+.sf-body { transition: opacity .4s; }
+.sf-body.sf-in  { opacity: 1; }
+.sf-body.sf-out { opacity: 0; }
+.sf-label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--sol-lt); margin-bottom: 7px;
+}
+.sf-text {
+  display: block;
+  font-family: var(--serif);
+  font-size: 11.5px; line-height: 1.55;
+  color: var(--arena);
+}
+.sf-attr {
+  display: block;
+  font-family: var(--sans);
+  font-size: 10px; opacity: .6;
+  margin-top: 5px; color: var(--arena);
+}
+@media (max-width: 768px) { .sticky-facts { display: none; } }
