@@ -32,7 +32,7 @@ const APT_DATA = {
     id: 'vt', num: '02', slug: 'thalassa', license: 'VFT/AL/05535',
     name_short: 'Thalassa',
     accent: '#8A4A24', accent2: '#B86A3C',
-    hero_img: 'assets/apt-vt-2.jpg',
+    hero_img: 'assets/apt-vt-3.jpg',
     bedroom_img: 'assets/photo-vt-bedroom.jpg',
     others: ['vm', 'vs'],
     es: {
