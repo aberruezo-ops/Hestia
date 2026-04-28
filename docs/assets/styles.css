@@ -3519,4 +3519,4 @@ body.no-parallax .g-tile .img { transform: none !important; }
   font-size: 10px; opacity: .6;
   margin-top: 5px; color: var(--arena);
 }
-@media (max-width: 768px) { .sticky-facts { display: none; } }
+@media (max-width: 480px) { .sticky-facts { display: none; } }
