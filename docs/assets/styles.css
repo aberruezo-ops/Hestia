@@ -3127,6 +3127,18 @@ body.no-parallax .g-tile .img { transform: none !important; }
    RESERVAS — página de reserva directa
    ================================================================ */
 .reservas-hero { min-height: 52vh; }
+.reservas-hero-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  z-index: 0;
+  opacity: 0.5;
+}
+.reservas-hero-wash {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(42,15,46,.75) 0%, rgba(42,15,46,.4) 60%, rgba(42,15,46,.2) 100%);
+  z-index: 1;
+}
 .reservas-body {
   padding: 80px var(--page-pad) 120px;
   background: var(--crema);
@@ -3472,7 +3484,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
 /* ── Sticky facts corner widget ── */
 .sticky-facts {
   position: fixed;
-  top: 90px; right: 20px;
+  top: 50%; right: 20px;
+  transform: translateY(-50%);
   z-index: 190;
   width: 280px;
   background: var(--ber-dk);
