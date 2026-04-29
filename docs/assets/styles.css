@@ -231,28 +231,43 @@ p  { line-height: 1.65; font-weight: 300; }
   opacity: 1;
   position: relative;
   overflow: hidden;
-  transition: color .35s, border-color .35s;
+  transition: color .4s, border-color .4s;
 }
-/* Wave fill — rises from bottom on hover */
+/* Sea surface wave — idle ripple + rises on hover */
+@keyframes seaIdle {
+  0%, 100% { clip-path: polygon(0 100%, 0 88%, 12% 92%, 28% 86%, 45% 91%, 62% 85%, 78% 90%, 92% 84%, 100% 88%, 100% 100%); }
+  50%       { clip-path: polygon(0 100%, 0 84%, 12% 89%, 28% 82%, 45% 87%, 62% 81%, 78% 86%, 92% 80%, 100% 84%, 100% 100%); }
+}
+@keyframes seaRise {
+  0%   { clip-path: polygon(0 100%, 0 88%, 12% 92%, 28% 86%, 45% 91%, 62% 85%, 78% 90%, 92% 84%, 100% 88%, 100% 100%); }
+  100% { clip-path: polygon(0 100%, 0  -4%, 12%  2%, 28%  -6%, 45%  1%, 62% -5%, 78%  2%, 92% -4%, 100%  0%, 100% 100%); }
+}
+@keyframes seaDrop {
+  0%   { clip-path: polygon(0 100%, 0  -4%, 12%  2%, 28%  -6%, 45%  1%, 62% -5%, 78%  2%, 92% -4%, 100%  0%, 100% 100%); }
+  100% { clip-path: polygon(0 100%, 0 88%, 12% 92%, 28% 86%, 45% 91%, 62% 85%, 78% 90%, 92% 84%, 100% 88%, 100% 100%); }
+}
 .header nav .cta::before {
   content: '';
-  position: absolute;
-  left: -10%; width: 120%;
-  bottom: -115%; height: 130%;
-  border-radius: 45% 45% 0 0 / 25% 25% 0 0;
-  transition: bottom .48s cubic-bezier(.4,0,.2,1);
+  position: absolute; inset: 0;
+  clip-path: polygon(0 100%, 0 88%, 12% 92%, 28% 86%, 45% 91%, 62% 85%, 78% 90%, 92% 84%, 100% 88%, 100% 100%);
+  animation: seaIdle 2.8s ease-in-out infinite;
   pointer-events: none;
 }
-.header nav .cta:hover::before { bottom: -18%; }
-/* Night mode wave */
+.header nav .cta:hover::before {
+  animation: seaRise .55s cubic-bezier(.4,0,.2,1) forwards;
+}
+.header nav .cta:not(:hover)::before {
+  animation: seaDrop .55s cubic-bezier(.4,0,.2,1) forwards;
+}
+/* Night mode */
 .header.night nav .cta { color: var(--sol-lt); border-color: var(--sol-lt); }
 .header.night nav .cta::before { background: var(--sol); }
 .header.night nav .cta:hover { color: var(--ber-dk); border-color: var(--sol); }
-/* Day mode wave */
+/* Day mode */
 .header.day nav .cta { color: var(--ber); border-color: var(--ber); }
 .header.day nav .cta::before { background: var(--ber); }
 .header.day nav .cta:hover { color: var(--crema); border-color: var(--ber); }
-/* Text above the wave */
+/* Text stays above wave */
 .header nav .cta .cta-text { position: relative; z-index: 1; }
 .header nav .cta::after { display: none; }
 
@@ -3606,7 +3621,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   z-index: 88;
   width: 340px;
   background: var(--ber-dk);
-  border-radius: 14px;
+  border-radius: 14px 0 14px 0;
   border-left: 4px solid var(--sol);
   padding: 18px 42px 16px 20px;
   box-shadow: 0 8px 36px rgba(0,0,0,.48);

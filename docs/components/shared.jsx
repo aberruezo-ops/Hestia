@@ -963,9 +963,32 @@ const _shuffle = (arr) => {
   }
   return a;
 };
-const _FACTS_POOL      = _shuffle(SABIAS_QUE_FACTS);
-const _HOME_FACTS_POOL = _shuffle(SABIAS_QUE_HOME_FACTS);
-const _QUOTES_POOL     = _shuffle(FRASES_HOGAR);
+const _FACTS_POOL  = _shuffle(SABIAS_QUE_FACTS);
+const _QUOTES_POOL = _shuffle(FRASES_HOGAR);
+
+// Session-persistent pool: same random order for the whole browser session
+const _getSessionPool = () => {
+  try {
+    const raw = sessionStorage.getItem('hestia-facts-order');
+    if (raw) {
+      const indices = JSON.parse(raw);
+      if (Array.isArray(indices) && indices.length === SABIAS_QUE_HOME_FACTS.length)
+        return indices.map(i => SABIAS_QUE_HOME_FACTS[i]);
+    }
+  } catch {}
+  const indices = _shuffle([...Array(SABIAS_QUE_HOME_FACTS.length).keys()]);
+  try { sessionStorage.setItem('hestia-facts-order', JSON.stringify(indices)); } catch {}
+  return indices.map(i => SABIAS_QUE_HOME_FACTS[i]);
+};
+const _getSessionIdx = () => {
+  try { return Math.max(0, parseInt(sessionStorage.getItem('hestia-facts-idx') || '0', 10)); } catch { return 0; }
+};
+const _saveSessionIdx = (i) => {
+  try { sessionStorage.setItem('hestia-facts-idx', String(i)); } catch {}
+};
+
+// Keep _HOME_FACTS_POOL for backward-compat (FraseHogar etc.)
+const _HOME_FACTS_POOL = _getSessionPool();
 
 // Franja oscura antes del FAQ — solo datos de Almería / Hestía
 const SabiasQue = ({ lang, pool: propPool }) => {
@@ -1024,26 +1047,33 @@ const FraseHogar = ({ lang }) => {
 
 // Widget fijo media pantalla derecha — solo datos curiosos
 const StickyFacts = ({ lang }) => {
-  const total = _HOME_FACTS_POOL.length;
-  const [idx, setIdx]         = React.useState(0);
+  const [pool]  = React.useState(_getSessionPool);
+  const total   = pool.length;
+  const [idx, setIdx]         = React.useState(_getSessionIdx);
   const [visible, setVisible] = React.useState(true);
   const [open, setOpen]       = React.useState(true);
 
-  const go = (dir) => {
+  const advance = (dir) => {
     setVisible(false);
-    setTimeout(() => { setIdx(i => (i + dir + total) % total); setVisible(true); }, 320);
+    setTimeout(() => {
+      setIdx(i => { const n = (i + dir + total) % total; _saveSessionIdx(n); return n; });
+      setVisible(true);
+    }, 320);
   };
 
   React.useEffect(() => {
     if (!open) return;
     const t = setInterval(() => {
       setVisible(false);
-      setTimeout(() => { setIdx(i => (i + 1) % total); setVisible(true); }, 400);
+      setTimeout(() => {
+        setIdx(i => { const n = (i + 1) % total; _saveSessionIdx(n); return n; });
+        setVisible(true);
+      }, 400);
     }, 9000);
     return () => clearInterval(t);
   }, [open]);
 
-  const item  = _HOME_FACTS_POOL[idx];
+  const item  = pool[idx];
   const label = lang === 'es' ? '¿Sabías que?' : 'Did you know?';
 
   return (
@@ -1063,9 +1093,9 @@ const StickyFacts = ({ lang }) => {
             <span className="sf-text">{item[lang]}</span>
           </div>
           <div className="sf-nav">
-            <button className="sf-nav-btn" onClick={() => go(-1)} aria-label={lang === 'es' ? 'Anterior' : 'Previous'}>←</button>
+            <button className="sf-nav-btn" onClick={() => advance(-1)} aria-label={lang === 'es' ? 'Anterior' : 'Previous'}>←</button>
             <span className="sf-counter">{idx + 1} / {total}</span>
-            <button className="sf-nav-btn" onClick={() => go(1)} aria-label={lang === 'es' ? 'Siguiente' : 'Next'}>→</button>
+            <button className="sf-nav-btn" onClick={() => advance(1)} aria-label={lang === 'es' ? 'Siguiente' : 'Next'}>→</button>
           </div>
         </>
       )}
