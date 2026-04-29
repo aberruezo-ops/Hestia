@@ -97,7 +97,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
             <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.contacto}>{t.nav[6]}</NavLink>
-            <NavLink href={NAV_PAGES.reservas} className="cta">{t.cta_nav}</NavLink>
+            <NavLink href={NAV_PAGES.reservas} className="cta"><span className="cta-text">{t.cta_nav}</span></NavLink>
           </nav>
           <button
             className={`hamburger-btn ${mobileOpen ? 'open' : ''}`}
