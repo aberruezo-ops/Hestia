@@ -114,7 +114,7 @@ const NosotrosHero = ({ lang }) => {
         autoPlay muted loop playsInline preload="auto"
         aria-hidden="true"
       >
-        <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
+        <source src="assets/285834_medium.mp4" type="video/mp4"/>
       </video>
       <div className="nosotros-hero-wash"/>
       <div className="page-hero-content">
