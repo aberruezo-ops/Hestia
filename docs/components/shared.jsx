@@ -1047,12 +1047,17 @@ const StickyFacts = ({ lang }) => {
   const label = lang === 'es' ? '¿Sabías que?' : 'Did you know?';
 
   return (
-    <div className={`sticky-facts ${open ? '' : 'sf-closed'}`}>
-      <button className="sf-toggle" onClick={() => setOpen(o => !o)} aria-label={open ? 'Minimizar' : 'Expandir'}>
-        {open ? '−' : '?'}
-      </button>
-      {open && (
+    <div className={`sticky-facts ${open ? '' : 'sf-closed'}`} onClick={!open ? () => setOpen(true) : undefined}>
+      {!open ? (
         <>
+          <span style={{ fontSize: 14, color: 'var(--sol-lt)', fontFamily: 'var(--sans)', letterSpacing: '.12em', textTransform: 'uppercase', fontWeight: 400 }}>
+            {lang === 'es' ? '¿Sabías que?' : 'Did you know?'}
+          </span>
+          <button className="sf-toggle" onClick={() => setOpen(true)} aria-label="Expandir">＋</button>
+        </>
+      ) : (
+        <>
+          <button className="sf-toggle" onClick={() => setOpen(false)} aria-label="Minimizar">−</button>
           <div className={`sf-body ${visible ? 'sf-in' : 'sf-out'}`}>
             <span className="sf-label">{label}</span>
             <span className="sf-text">{item[lang]}</span>
