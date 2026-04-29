@@ -109,7 +109,14 @@ const NosotrosHero = ({ lang }) => {
   const t = NOSOTROS_COPY[lang];
   return (
     <section className="page-hero nosotros-hero">
-      <div className="stars"/>
+      <video
+        className="nosotros-hero-video"
+        autoPlay muted loop playsInline preload="auto"
+        aria-hidden="true"
+      >
+        <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
+      </video>
+      <div className="nosotros-hero-wash"/>
       <div className="page-hero-content">
         <div className="eyebrow">{t.eyebrow}</div>
         <h1>{t.title}</h1>
