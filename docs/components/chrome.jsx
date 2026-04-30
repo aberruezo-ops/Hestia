@@ -7,16 +7,16 @@ const Topbar = ({ lang, setLang }) => (
     <div className="contacts">
       <a href="https://wa.me/34620316370" className="topbar-link" target="_blank" rel="noopener" aria-label="WhatsApp Alex">
         <span className="tl-dot"/>
-        <span className="tl-who">Alex</span>
+        <span className="tl-who hide-mobile">Alex</span>
         <span className="tl-mode hide-mobile">🇪🇸 Español</span>
-        <span className="tl-num hide-mobile">+34 620 316 370</span>
+        <span className="tl-num">+34 620 316 370</span>
       </a>
       <span className="sep">·</span>
       <a href="https://wa.me/34654138251" className="topbar-link" target="_blank" rel="noopener" aria-label="WhatsApp Fran">
         <span className="tl-dot"/>
-        <span className="tl-who">Fran</span>
+        <span className="tl-who hide-mobile">Fran</span>
         <span className="tl-mode hide-mobile">🇬🇧 English</span>
-        <span className="tl-num hide-mobile">+34 654 138 251</span>
+        <span className="tl-num">+34 654 138 251</span>
       </a>
       <span className="sep hide-mobile">·</span>
       <a href="mailto:info@hestiayourhome.com" className="topbar-link email hide-mobile" aria-label="Email">
@@ -24,9 +24,15 @@ const Topbar = ({ lang, setLang }) => (
       </a>
     </div>
     <div className="lang">
-      <button className={lang === 'es' ? 'active' : ''} onClick={() => setLang('es')}>🇪🇸 Español</button>
+      <button className={lang === 'es' ? 'active' : ''} onClick={() => setLang('es')}>
+        <span className="lang-full">🇪🇸 Español</span>
+        <span className="lang-abbr">ES</span>
+      </button>
       <span className="divider">/</span>
-      <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>🇬🇧 English</button>
+      <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>
+        <span className="lang-full">🇬🇧 English</span>
+        <span className="lang-abbr">EN</span>
+      </button>
     </div>
   </div>
 );
@@ -111,13 +117,34 @@ const Header = ({ mode, scrolled, lang }) => {
       </header>
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
         <nav className="mobile-nav">
-          <NavLink href={NAV_PAGES.mar}>{t.nav[1]}</NavLink>
-          <NavLink href={NAV_PAGES.thalassa}>{t.nav[2]}</NavLink>
-          <NavLink href={NAV_PAGES.salinas}>{t.nav[3]}</NavLink>
-          <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
-          <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
-          <NavLink href={NAV_PAGES.contacto}>{t.nav[6]}</NavLink>
-          <NavLink href={NAV_PAGES.reservas} className="mobile-cta">{t.cta_nav}</NavLink>
+          <div className="mn-apts-section">
+            <div className="mn-label eyebrow">{lang === 'es' ? 'Apartamentos' : 'Apartments'}</div>
+            <NavLink href={NAV_PAGES.mar} className="mn-apt mn-vm">
+              <span className="mn-num">01</span>
+              <span className="mn-name">Hestía <em>Mar</em></span>
+            </NavLink>
+            <NavLink href={NAV_PAGES.thalassa} className="mn-apt mn-vt">
+              <span className="mn-num">02</span>
+              <span className="mn-name">Hestía <em>Thalassa</em></span>
+            </NavLink>
+            <NavLink href={NAV_PAGES.salinas} className="mn-apt mn-vs">
+              <span className="mn-num">03</span>
+              <span className="mn-name">Hestía <em>Salinas</em></span>
+            </NavLink>
+          </div>
+          <div className="mn-sep"/>
+          <NavLink href={NAV_PAGES.nosotros} className="mn-page">{t.nav[4]}</NavLink>
+          <NavLink href={NAV_PAGES.opiniones} className="mn-page">{t.nav[5]}</NavLink>
+          <NavLink href={NAV_PAGES.contacto} className="mn-page">{t.nav[6]}</NavLink>
+          <NavLink href={NAV_PAGES.reservas} className="mobile-cta">{t.cta_nav} →</NavLink>
+          <div className="mn-contacts">
+            <a href="https://wa.me/34620316370" target="_blank" rel="noopener">
+              <span className="tl-dot"/>Alex · +34 620 316 370
+            </a>
+            <a href="https://wa.me/34654138251" target="_blank" rel="noopener">
+              <span className="tl-dot"/>Fran · +34 654 138 251
+            </a>
+          </div>
         </nav>
       </div>
     </>
