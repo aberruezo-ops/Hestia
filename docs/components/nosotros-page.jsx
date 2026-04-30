@@ -232,7 +232,11 @@ const NosotrosTeam = ({ lang }) => {
         <h2 className="reveal">{t.team_title}</h2>
         <div className="nosotros-team-grid">
           <div className="nosotros-person reveal">
-            <div className="portrait"><SilhouetteSVG gradId="gNA"/></div>
+            <div className="portrait">
+              <img src="assets/photo-alex.jpg" alt="Alex Berruezo"
+                onError={e => { e.currentTarget.style.display='none'; e.currentTarget.nextSibling && (e.currentTarget.nextSibling.style.display='block'); }}/>
+              <SilhouetteSVG gradId="gNA"/>
+            </div>
             <div className="nosotros-person-body">
               <div className="eyebrow">{t.alex_eyebrow}</div>
               <div className="nos-person-lang">{t.alex_lang}</div>
@@ -246,7 +250,11 @@ const NosotrosTeam = ({ lang }) => {
             </div>
           </div>
           <div className="nosotros-person reveal delay-1">
-            <div className="portrait"><SilhouetteSVG gradId="gNF"/></div>
+            <div className="portrait">
+              <img src="assets/photo-fran.jpg" alt="Fran Moral"
+                onError={e => { e.currentTarget.style.display='none'; e.currentTarget.nextSibling && (e.currentTarget.nextSibling.style.display='block'); }}/>
+              <SilhouetteSVG gradId="gNF"/>
+            </div>
             <div className="nosotros-person-body">
               <div className="eyebrow">{t.fran_eyebrow}</div>
               <div className="nos-person-lang">{t.fran_lang}</div>
