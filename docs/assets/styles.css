@@ -109,8 +109,9 @@ p  { line-height: 1.65; font-weight: 300; }
   border-bottom: 1px solid rgba(240, 232, 213, 0.08);
 }
 .topbar .contacts {
-  display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+  display: flex; gap: 6px; align-items: center; flex-wrap: nowrap;
 }
+.lang-abbr { display: none; }
 .topbar .contacts .sep { opacity: 0.55; padding: 0 4px; }
 .topbar .lang {
   display: flex; gap: 2px; align-items: center;
@@ -292,38 +293,136 @@ p  { line-height: 1.65; font-weight: 300; }
   opacity: 1;
   pointer-events: auto;
 }
+/* -------- Menú móvil — diseño editorial -------- */
 .mobile-nav {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 0;
   text-align: center;
+  width: 100%;
+  padding: 8px 32px 28px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
-.mobile-nav a {
+
+/* Sección apartamentos */
+.mn-apts-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.mn-label {
+  color: var(--sol-lt);
+  margin-bottom: 18px;
+}
+.mn-apt {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 16px;
+  width: 100%;
+  opacity: 0.8;
+  transition: opacity .2s;
+}
+.mn-apt:hover, .mn-apt.active-page { opacity: 1; }
+.mn-num {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-style: italic;
+  min-width: 20px;
+  text-align: right;
+  opacity: 0.7;
+}
+.mn-name {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(28px, 6vw, 42px);
+  font-size: clamp(24px, 6.5vw, 36px);
   letter-spacing: -0.01em;
-  opacity: 0.7;
-  padding: 10px 24px;
+  color: var(--arena);
+}
+.mn-name em { font-style: italic; }
+
+/* Colores por apartamento */
+.mn-vm .mn-num { color: var(--vm2); opacity: 1; }
+.mn-vm .mn-name em { color: var(--vm2); }
+.mn-vt .mn-num { color: var(--vt2); opacity: 1; }
+.mn-vt .mn-name em { color: var(--vt2); }
+.mn-vs .mn-num { color: var(--vs2); opacity: 1; }
+.mn-vs .mn-name em { color: var(--vs2); }
+
+/* Separador */
+.mn-sep {
+  width: 44px;
+  height: 1px;
+  background: rgba(240,232,213,.12);
+  margin: 16px auto;
+  flex-shrink: 0;
+}
+
+/* Páginas secundarias */
+.mn-page {
+  font-family: var(--sans);
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--arena);
+  opacity: 0.4;
+  padding: 7px 16px;
   transition: opacity .2s, color .2s;
 }
-.mobile-nav a:hover { opacity: 1; color: var(--sol-lt); }
+.mn-page:hover, .mn-page.active-page { opacity: 0.9; color: var(--sol-lt); }
+
+/* Botón reserva */
 .mobile-nav .mobile-cta {
-  margin-top: 24px;
+  margin-top: 20px;
+  display: inline-block;
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 400;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
   opacity: 1;
-  padding: 14px 36px;
-  border: 1px solid var(--sol-lt);
-  border-radius: 999px;
+  padding: 13px 32px;
+  border: 1px solid var(--sol);
+  border-radius: 10px 0 10px 0;
   color: var(--sol-lt);
-  transition: background .3s, color .3s;
+  background: transparent;
+  transition: background .3s, color .3s, border-color .3s;
 }
 .mobile-nav .mobile-cta:hover { background: var(--sol); color: var(--ber-dk); border-color: var(--sol); }
+
+/* Contactos al pie del menú */
+.mn-contacts {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: center;
+  padding-top: 18px;
+  border-top: 1px solid rgba(240,232,213,.07);
+  width: 100%;
+}
+.mn-contacts a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(240,232,213,.35);
+  transition: color .2s;
+}
+.mn-contacts a:hover { color: rgba(240,232,213,.7); }
+.mn-contacts .tl-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #25D366;
+  flex-shrink: 0;
+}
 
 /* -------- Floating chat -------- */
 .float-chat {
@@ -861,7 +960,7 @@ section {
   display: flex;
   gap: 24px;
   overflow-x: auto;
-  padding: 0 var(--page-pad) 30px;
+  padding: 20px var(--page-pad) 30px; /* top padding gives room for hover translateY */
   scroll-snap-type: x mandatory;
   scrollbar-width: thin;
 }
@@ -883,8 +982,8 @@ section {
   justify-content: flex-end;
   padding: 36px;
 }
-/* translateZ(0) forces GPU layer so overflow:hidden keeps border-radius on hover */
-.apt-card { -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform; }
+/* translateZ(0) + backface-visibility forces GPU layer and correct border-radius clipping in WebKit */
+.apt-card { -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 .apt-card:hover { -webkit-transform: translateY(-6px) translateZ(0); transform: translateY(-6px) translateZ(0); }
 .apt-card::before {
   content: '';
@@ -904,6 +1003,7 @@ section {
   z-index: 0;
   transform: scale(1.05);
   transition: transform 1.2s ease;
+  border-radius: inherit; /* clip photo to card's border-radius even if overflow clip fails on GPU layer */
 }
 .apt-card:hover .apt-photo { transform: scale(1.12); }
 
@@ -1575,6 +1675,12 @@ footer .footer-brand .addr {
   .topbar .contacts .email { display: none; }
   .cookies { left: 12px; right: 12px; max-width: none; }
   .hero-logo-wrap { width: clamp(100px, 26vw, 130px); height: clamp(100px, 26vw, 130px); }
+  /* Language switcher: show short label only */
+  .lang-full { display: none; }
+  .lang-abbr { display: inline; }
+  /* Phones: smaller */
+  .tl-num { font-size: 10px; letter-spacing: 0; }
+  .topbar .contacts { gap: 4px; }
 }
 
 /* Reveal on scroll */
@@ -2293,13 +2399,14 @@ body.no-parallax .g-tile .img { transform: none !important; }
   transition: transform var(--dur-liquid) var(--ease-liquid);
 }
 @media (hover: hover) {
-  .apt-other-card { -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform; }
+  .apt-other-card { -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
   .apt-other-card:hover { -webkit-transform: translateY(-6px) translateZ(0); transform: translateY(-6px) translateZ(0); }
 }
 .apt-other-img {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
+  border-radius: inherit;
   transition: transform 6s ease;
 }
 @media (hover: hover) {
