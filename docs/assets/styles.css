@@ -804,8 +804,10 @@ section {
 /* Logo animation — se funde sobre el vídeo via screen blend */
 .hero-video {
   position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
+  top: calc(var(--topbar-h, 34px) + 70px); /* start below fixed header */
+  left: 0; right: 0; bottom: 0;
+  width: 100%;
+  height: calc(100% - var(--topbar-h, 34px) - 70px);
   object-fit: contain;
   mix-blend-mode: screen;
   pointer-events: none;
