@@ -791,6 +791,14 @@ section {
   object-fit: contain;
   filter: drop-shadow(0 0 40px rgba(58, 170, 187, 0.35));
 }
+/* Suppress native browser play overlay on all hero videos */
+.hero-bg-video::-webkit-media-controls,
+.hero-video::-webkit-media-controls,
+.hero-bg-video::-webkit-media-controls-start-playback-button,
+.hero-video::-webkit-media-controls-start-playback-button,
+.hero-bg-video::-webkit-media-controls-panel,
+.hero-video::-webkit-media-controls-panel { display: none !important; -webkit-appearance: none; }
+
 /* Vídeo de playa — fondo principal del hero */
 .hero-bg-video {
   position: absolute;
@@ -804,10 +812,10 @@ section {
 /* Logo animation — se funde sobre el vídeo via screen blend */
 .hero-video {
   position: absolute;
-  top: calc(var(--topbar-h, 34px) + 70px); /* start below fixed header */
+  top: var(--nav-offset, 104px); /* measured by JS: topbar + header height */
   left: 0; right: 0; bottom: 0;
   width: 100%;
-  height: calc(100% - var(--topbar-h, 34px) - 70px);
+  height: calc(100% - var(--nav-offset, 104px));
   object-fit: contain;
   mix-blend-mode: screen;
   pointer-events: none;

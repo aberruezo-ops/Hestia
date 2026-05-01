@@ -5,13 +5,40 @@
 // --- HERO cinematográfico ---
 const Hero = ({ lang, onScrollDown }) => {
   const t = COPY[lang];
+  const bgVideoRef = React.useRef(null);
   const videoRef = React.useRef(null);
   const [videoReady, setVideoReady] = React.useState(false);
+
+  React.useEffect(() => {
+    // Measure real nav height so logo video starts exactly below the header
+    const setNavOffset = () => {
+      const topbar = document.querySelector('.topbar');
+      const header = document.querySelector('.header');
+      if (topbar && header) {
+        const offset = topbar.getBoundingClientRect().height + header.getBoundingClientRect().height;
+        document.documentElement.style.setProperty('--nav-offset', `${Math.ceil(offset)}px`);
+      }
+    };
+    setNavOffset();
+    window.addEventListener('resize', setNavOffset);
+
+    // Force autoplay — declarative autoPlay can be blocked on mobile
+    const tryPlay = (el) => { if (el) { el.muted = true; el.play().catch(() => {}); } };
+    tryPlay(bgVideoRef.current);
+    tryPlay(videoRef.current);
+    const onVisible = () => { if (!document.hidden) { tryPlay(bgVideoRef.current); tryPlay(videoRef.current); } };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      window.removeEventListener('resize', setNavOffset);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
+  }, []);
 
   return (
     <section id="top" className="hero" data-screen-label="01 Hero">
       {/* Vídeo de fondo — playas de Almería */}
       <video
+        ref={bgVideoRef}
         className="hero-bg-video"
         autoPlay muted loop playsInline
         preload="auto"
