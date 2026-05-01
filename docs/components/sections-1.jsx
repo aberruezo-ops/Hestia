@@ -67,18 +67,36 @@ const Hero = ({ lang, onScrollDown }) => {
 // --- BRIDGE (transición día/noche) ---
 const Bridge = ({ lang }) => {
   const t = COPY[lang];
+  const sectionRef = React.useRef(null);
+  const [burst, setBurst] = React.useState(false);
+
+  React.useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setTimeout(() => setBurst(true), 420); obs.disconnect(); } },
+      { threshold: 0.38 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <section className="bridge" data-screen-label="02 Amanecer">
-      <div className="celestial"/>
+    <section className="bridge" data-screen-label="02 Amanecer" ref={sectionRef}>
+      <div className={`celestial${burst ? ' sun-burst' : ''}`}/>
       <div className="bridge-inner">
         <div className="eyebrow bridge-time">— 07:14 —</div>
         <h2 className="reveal" style={{marginTop: 20}}>{t.bridge_title}</h2>
         <p className="reveal delay-1">{t.bridge_sub}</p>
-        <div className="bridge-palette reveal delay-2">
+        <div className={`bridge-palette${burst ? ' burst-active' : ''}`}>
           {BRIDGE_PALETTE.map((c, i) => (
-            <div key={i} className="bridge-chip" style={{'--chip-color': c.hex}}>
+            <div key={i} className="bridge-chip" style={{ '--chip-color': c.hex, '--chip-idx': i }}>
               <div className="chip-swatch"/>
-              <div className="chip-label">{lang === 'es' ? c.es : c.en}</div>
+              <div className="chip-label">
+                {(lang === 'es' ? c.es : c.en).split(' · ').map((part, j) => (
+                  <span key={j}>{part}</span>
+                ))}
+              </div>
             </div>
           ))}
         </div>
