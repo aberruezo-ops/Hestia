@@ -81,9 +81,20 @@ const RESERVAS_COPY = {
 
 const ReservasHero = ({ lang }) => {
   const t = RESERVAS_COPY[lang];
+  const videoRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const tryPlay = (el) => { if (el) { el.muted = true; el.play().catch(() => {}); } };
+    tryPlay(videoRef.current);
+    const onVisible = () => { if (!document.hidden) { tryPlay(videoRef.current); } };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => { document.removeEventListener('visibilitychange', onVisible); };
+  }, []);
+
   return (
     <section className="page-hero reservas-hero">
       <video
+        ref={videoRef}
         className="reservas-hero-video"
         autoPlay muted loop playsInline preload="auto"
       >
