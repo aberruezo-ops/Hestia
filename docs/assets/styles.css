@@ -510,10 +510,15 @@ section {
 }
 .section-day {
   background: linear-gradient(90deg,
-    #EEDADC  0%, #F0C498  6%, #F8E8C8 14%, #FAF8F2 22%,
-    #FAF4E0 30%, #F0D898 38%, #E8A858 45%, #DC7840 50%,
-    #E8A858 55%, #F0D898 62%, #FAF4E0 70%, #FAF8F2 78%,
-    #F8E8C8 86%, #F0C498 94%, #EEDADC 100%
+    #FAF4F2  0%,
+    #FAF2E8  8%,
+    #FAF8F0 20%,
+    #F8F2E0 33%,
+    #F8EDD5 50%,
+    #F8F2E0 67%,
+    #FAF8F0 80%,
+    #FAF2E8 92%,
+    #FAF4F2 100%
   );
   background-size: 200% 100%;
   animation: sky-day 72s linear infinite;
@@ -619,22 +624,18 @@ section {
 /* Gradiente del día completo — de alba a crepúsculo y vuelta (bucle continuo)
    Al animarse, la sección se ilumina como si el sol pasara de izquierda a derecha. */
 .section-cream {
+  /* Sun warmth — stays AA-accessible throughout (min luminance 0.87 = teal 4.6:1 contrast).
+     Max warm tone #F8EDD5 feels like golden afternoon light, never aggressive orange. */
   background: linear-gradient(90deg,
-    #EEDADC  0%,   /* madrugada: rosa-lavanda pálido */
-    #F0C498  6%,   /* amanecer: melocotón-oro */
-    #F8E8C8 14%,   /* mañana: crema cálida */
-    #FAF8F2 22%,   /* media mañana: luminoso */
-    #FAF4E0 30%,   /* mediodía: crema dorada */
-    #F0D898 38%,   /* tarde: ámbar suave */
-    #E8A858 45%,   /* atardecer: naranja ámbar */
-    #DC7840 50%,   /* puesta de sol: naranja vivo */
-    #E8A858 55%,   /* crepúsculo hacia el oeste */
-    #F0D898 62%,
-    #FAF4E0 70%,
-    #FAF8F2 78%,
-    #F8E8C8 86%,
-    #F0C498 94%,
-    #EEDADC 100%   /* de vuelta al alba — sin corte */
+    #FAF4F2  0%,   /* alba: crema levísimamente rosada */
+    #FAF2E8  8%,   /* primera luz: crema cálida */
+    #FAF8F0 20%,   /* media mañana: blanco luminoso */
+    #F8F2E0 33%,   /* tarde: crema dorada */
+    #F8EDD5 50%,   /* hora dorada — ámbar suave, L=0.87, máximo calor */
+    #F8F2E0 67%,
+    #FAF8F0 80%,
+    #FAF2E8 92%,
+    #FAF4F2 100%   /* bucle sin corte */
   );
   background-size: 200% 100%;
   animation: sky-day 80s linear infinite;
@@ -1735,6 +1736,8 @@ footer::before {
   animation-delay: -8s, -16s;
 }
 .footer-grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr 1fr;
   gap: 40px;
@@ -1761,6 +1764,8 @@ footer .footer-brand .addr {
   margin-top: 24px; font-size: 12px; opacity: 0.6; line-height: 1.7;
 }
 .footer-bottom {
+  position: relative;
+  z-index: 1;
   max-width: 1400px; margin: 30px auto 0;
   display: flex; justify-content: space-between; align-items: center; gap: 24px;
   font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
@@ -2383,10 +2388,15 @@ body.no-parallax .g-tile .img { transform: none !important; }
 /* ---- section-cream (inner pages) ---- */
 .section-cream {
   background: linear-gradient(90deg,
-    #EEDADC  0%, #F0C498  6%, #F8E8C8 14%, #FAF8F2 22%,
-    #FAF4E0 30%, #F0D898 38%, #E8A858 45%, #DC7840 50%,
-    #E8A858 55%, #F0D898 62%, #FAF4E0 70%, #FAF8F2 78%,
-    #F8E8C8 86%, #F0C498 94%, #EEDADC 100%
+    #FAF4F2  0%,
+    #FAF2E8  8%,
+    #FAF8F0 20%,
+    #F8F2E0 33%,
+    #F8EDD5 50%,
+    #F8F2E0 67%,
+    #FAF8F0 80%,
+    #FAF2E8 92%,
+    #FAF4F2 100%
   );
   background-size: 200% 100%;
   animation: sky-day 80s linear infinite;
@@ -2851,7 +2861,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .faq-chevron {
   font-size: 22px;
-  color: var(--sol);
+  color: var(--ber);
   flex-shrink: 0;
   transition: transform var(--dur-liquid) var(--ease-liquid);
 }
@@ -2917,7 +2927,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .qfaq-chevron {
   font-size: 20px;
-  color: var(--sol);
+  color: var(--ber);
   flex-shrink: 0;
   transition: transform .25s ease;
 }
@@ -2966,7 +2976,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   font-size: 12px;
   font-family: var(--sans);
   letter-spacing: 0.1em;
-  color: var(--sol);
+  color: var(--ber-dk);
   text-transform: uppercase;
   text-decoration: none;
   transition: opacity .2s;
@@ -3059,7 +3069,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   color: var(--ber);
   margin-top: 16px;
 }
-.nosotros-story-head h2 em { color: var(--sol); }
+.nosotros-story-head h2 em { color: var(--sol-h); }
 .nosotros-story-text p {
   font-size: clamp(15px, 1.5vw, 17px);
   color: var(--ink-soft);
@@ -3347,7 +3357,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   font-size: clamp(28px, 3.5vw, 52px);
   line-height: 1.08;
 }
-.nos-intro-head h2 em { color: var(--sol); font-style: italic; }
+.nos-intro-head h2 em { color: var(--sol-h); font-style: italic; }
 .nos-intro-body p {
   font-size: clamp(15px, 1.5vw, 17px);
   color: var(--ink-soft);
@@ -3388,14 +3398,14 @@ body.no-parallax .g-tile .img { transform: none !important; }
   max-width: 820px;
   margin: 0 auto;
 }
-.nos-why .eyebrow { color: var(--sol); margin-bottom: 20px; }
+.nos-why .eyebrow { color: var(--ber); margin-bottom: 20px; }
 .nos-why h2 {
   color: var(--ber);
   font-size: clamp(28px, 3.5vw, 52px);
   line-height: 1.08;
   margin-bottom: 28px;
 }
-.nos-why h2 em { font-style: italic; color: var(--sol); }
+.nos-why h2 em { font-style: italic; color: var(--sol-h); }
 .nos-why-p {
   font-size: clamp(15px, 1.5vw, 17px);
   color: var(--ink-soft);
@@ -3465,14 +3475,14 @@ body.no-parallax .g-tile .img { transform: none !important; }
   max-width: 1100px;
   margin: 0 auto;
 }
-.nos-viajero .eyebrow { color: var(--sol); margin-bottom: 20px; }
+.nos-viajero .eyebrow { color: var(--ber); margin-bottom: 20px; }
 .nos-viajero h2 {
   color: var(--ber);
   font-size: clamp(28px, 3.5vw, 52px);
   line-height: 1.08;
   margin-bottom: 28px;
 }
-.nos-viajero h2 em { font-style: italic; color: var(--sol); }
+.nos-viajero h2 em { font-style: italic; color: var(--sol-h); }
 .nos-viajero-intro {
   font-size: clamp(15px, 1.5vw, 17px);
   color: var(--ink-soft);
@@ -4071,4 +4081,4 @@ body.no-parallax .g-tile .img { transform: none !important; }
   font-size: 11px; letter-spacing: .1em;
   color: var(--arena); opacity: 0.38;
 }
-@media (max-width: 900px) { .sticky-facts { display: none; } }
+@media (max-width: 767px), (max-height: 500px) { .sticky-facts { display: none; } }
