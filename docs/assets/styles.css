@@ -3225,6 +3225,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
   .page-hero::after { animation: none; }
+  /* Dark sections: static dark fallback so light text stays readable */
   .page-hero,
   footer,
   .manifest,
@@ -3232,7 +3233,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
   .nosotros-team,
   .contacto-reservas,
   .section-night,
-  .section-dark,
+  .section-dark { animation: none; background: var(--ber-dk); }
+  /* Light sections: static cream fallback */
   .section-cream,
   .section-day { animation: none; background: var(--crema); }
   .page-hero .stars,
