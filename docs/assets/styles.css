@@ -3347,24 +3347,60 @@ body.no-parallax .g-tile .img { transform: none !important; }
 /* ================================================================
    RESERVAS — página de reserva directa
    ================================================================ */
-/* ---- NOSOTROS HERO VIDEO ---- */
+/* ---- NOSOTROS HERO PHOTO ---- */
 .nosotros-hero { min-height: 65vh; }
-.nosotros-hero-video {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover; object-position: center 30%;
+
+.nosotros-hero-img-wrap {
+  position: absolute; inset: -6%;
+  overflow: hidden;
   z-index: 0;
-  opacity: 0.6;
-  mix-blend-mode: luminosity;
 }
+.nosotros-hero-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 38%;
+  animation: nos-drift 28s ease-in-out infinite alternate;
+  transform-origin: center center;
+  will-change: transform;
+}
+@keyframes nos-drift {
+  from { transform: scale(1.06) translateX(-1.8%) translateY(0%); }
+  to   { transform: scale(1.13) translateX(1.8%) translateY(-2%); }
+}
+
+/* shimmer bands scrolling upward — simulate cloud reflections moving on water */
+.nosotros-hero-ripple {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 14px,
+    rgba(200,180,220,0.06) 14px,
+    rgba(200,180,220,0.06) 15px
+  );
+  animation: nos-ripple 7s linear infinite;
+  z-index: 1;
+  pointer-events: none;
+}
+@keyframes nos-ripple {
+  from { transform: translateY(0); }
+  to   { transform: translateY(30px); }
+}
+
+/* berenjena/eggplant semi-transparent veil */
 .nosotros-hero-wash {
   position: absolute; inset: 0;
   background:
-    linear-gradient(to top,  rgba(42,15,46,.92) 0%, rgba(42,15,46,.65) 35%, rgba(42,15,46,.18) 100%),
-    linear-gradient(to right, rgba(42,15,46,.45) 0%, transparent 65%);
-  z-index: 1;
+    linear-gradient(to top,  rgba(61,26,53,.90) 0%, rgba(61,26,53,.58) 38%, rgba(61,26,53,.32) 100%),
+    linear-gradient(to right, rgba(61,26,53,.42) 0%, transparent 68%);
+  z-index: 2;
 }
 .nosotros-hero .page-hero-content { z-index: 3; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nosotros-hero-img { animation: none; }
+  .nosotros-hero-ripple { animation: none; }
+}
 
 /* ---- RESERVAS HERO VIDEO ---- */
 .reservas-hero { min-height: 60vh; }

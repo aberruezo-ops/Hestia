@@ -109,13 +109,10 @@ const NosotrosHero = ({ lang }) => {
   const t = NOSOTROS_COPY[lang];
   return (
     <section className="page-hero nosotros-hero">
-      <video
-        className="nosotros-hero-video"
-        autoPlay muted loop playsInline preload="auto"
-        aria-hidden="true"
-      >
-        <source src="assets/285834_medium.mp4" type="video/mp4"/>
-      </video>
+      <div className="nosotros-hero-img-wrap" aria-hidden="true">
+        <img src="assets/photo-nosotros-hero.jpg" alt="" className="nosotros-hero-img"/>
+      </div>
+      <div className="nosotros-hero-ripple" aria-hidden="true"/>
       <div className="nosotros-hero-wash"/>
       <div className="page-hero-content">
         <div className="eyebrow">{t.eyebrow}</div>
