@@ -509,13 +509,15 @@ section {
   color: var(--arena);
 }
 .section-day {
-  background: linear-gradient(125deg,
-    #F0E8D5 0%, #E8D4A8 14%, #E4C880 28%, #EBB86A 42%,
-    #E8C898 56%, #EED4B0 70%, #F0E8D5 85%, #E4C880 100%
+  background: linear-gradient(90deg,
+    #EEDADC  0%, #F0C498  6%, #F8E8C8 14%, #FAF8F2 22%,
+    #FAF4E0 30%, #F0D898 38%, #E8A858 45%, #DC7840 50%,
+    #E8A858 55%, #F0D898 62%, #FAF4E0 70%, #FAF8F2 78%,
+    #F8E8C8 86%, #F0C498 94%, #EEDADC 100%
   );
-  background-size: 400% 400%;
-  animation: sky-dawn 44s ease infinite;
-  animation-delay: -18s;
+  background-size: 200% 100%;
+  animation: sky-day 72s linear infinite;
+  animation-delay: -36s;
   color: var(--ber-dk);
 }
 
@@ -599,14 +601,10 @@ section {
   100% { background-position:   0%  50%; }
 }
 
-/* Día: naranja, ámbar, melocotón — amanecer y atardecer */
-@keyframes sky-dawn {
-  0%   { background-position:   0%  50%; }
-  20%  { background-position:  50%   0%; }
-  40%  { background-position: 100%  50%; }
-  60%  { background-position:  70% 100%; }
-  80%  { background-position:  30%  60%; }
-  100% { background-position:   0%  50%; }
+/* Día: el sol viaja de este (alba) a oeste (ocaso) — gradiente horizontal directo */
+@keyframes sky-day {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
 }
 
 /* Deriva suave de las estrellas — parallax muy lento */
@@ -618,13 +616,28 @@ section {
   100% { transform: translate(  0px,  0px); }
 }
 
+/* Gradiente del día completo — de alba a crepúsculo y vuelta (bucle continuo)
+   Al animarse, la sección se ilumina como si el sol pasara de izquierda a derecha. */
 .section-cream {
-  background: linear-gradient(125deg,
-    #FAF6F0 0%, #F5ECD8 10%, #EDCFA8 22%, #E8B870 35%,
-    #F2C898 48%, #FAF0E0 60%, #EDCFA8 72%, #F5ECD8 85%, #FAF6F0 100%
+  background: linear-gradient(90deg,
+    #EEDADC  0%,   /* madrugada: rosa-lavanda pálido */
+    #F0C498  6%,   /* amanecer: melocotón-oro */
+    #F8E8C8 14%,   /* mañana: crema cálida */
+    #FAF8F2 22%,   /* media mañana: luminoso */
+    #FAF4E0 30%,   /* mediodía: crema dorada */
+    #F0D898 38%,   /* tarde: ámbar suave */
+    #E8A858 45%,   /* atardecer: naranja ámbar */
+    #DC7840 50%,   /* puesta de sol: naranja vivo */
+    #E8A858 55%,   /* crepúsculo hacia el oeste */
+    #F0D898 62%,
+    #FAF4E0 70%,
+    #FAF8F2 78%,
+    #F8E8C8 86%,
+    #F0C498 94%,
+    #EEDADC 100%   /* de vuelta al alba — sin corte */
   );
-  background-size: 400% 400%;
-  animation: sky-dawn 50s ease infinite;
+  background-size: 200% 100%;
+  animation: sky-day 80s linear infinite;
   color: var(--ber-dk);
 }
 
@@ -2367,14 +2380,16 @@ body.no-parallax .g-tile .img { transform: none !important; }
   }
 }
 
-/* ---- section-cream (inner pages — same animated dawn gradient) ---- */
+/* ---- section-cream (inner pages) ---- */
 .section-cream {
-  background: linear-gradient(125deg,
-    #FAF6F0 0%, #F5ECD8 10%, #EDCFA8 22%, #E8B870 35%,
-    #F2C898 48%, #FAF0E0 60%, #EDCFA8 72%, #F5ECD8 85%, #FAF6F0 100%
+  background: linear-gradient(90deg,
+    #EEDADC  0%, #F0C498  6%, #F8E8C8 14%, #FAF8F2 22%,
+    #FAF4E0 30%, #F0D898 38%, #E8A858 45%, #DC7840 50%,
+    #E8A858 55%, #F0D898 62%, #FAF4E0 70%, #FAF8F2 78%,
+    #F8E8C8 86%, #F0C498 94%, #EEDADC 100%
   );
-  background-size: 400% 400%;
-  animation: sky-dawn 50s ease infinite;
+  background-size: 200% 100%;
+  animation: sky-day 80s linear infinite;
   animation-delay: -20s;
   color: var(--ber-dk);
 }
@@ -3209,7 +3224,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   .section-night,
   .section-dark,
   .section-cream,
-  .section-day { animation: none; }
+  .section-day { animation: none; background: var(--crema); }
   .page-hero .stars,
   footer::before { animation: none; }
 }
