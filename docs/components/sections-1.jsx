@@ -6,32 +6,14 @@
 const Hero = ({ lang, onScrollDown }) => {
   const t = COPY[lang];
   const bgVideoRef = React.useRef(null);
-  const videoRef = React.useRef(null);
-  const [videoReady, setVideoReady] = React.useState(false);
 
   React.useEffect(() => {
-    // Measure real nav height so logo video starts exactly below the header
-    const setNavOffset = () => {
-      const topbar = document.querySelector('.topbar');
-      const header = document.querySelector('.header');
-      if (topbar && header) {
-        const offset = topbar.getBoundingClientRect().height + header.getBoundingClientRect().height;
-        document.documentElement.style.setProperty('--nav-offset', `${Math.ceil(offset)}px`);
-      }
-    };
-    setNavOffset();
-    window.addEventListener('resize', setNavOffset);
-
     // Force autoplay — declarative autoPlay can be blocked on mobile
     const tryPlay = (el) => { if (el) { el.muted = true; el.play().catch(() => {}); } };
     tryPlay(bgVideoRef.current);
-    tryPlay(videoRef.current);
-    const onVisible = () => { if (!document.hidden) { tryPlay(bgVideoRef.current); tryPlay(videoRef.current); } };
+    const onVisible = () => { if (!document.hidden) { tryPlay(bgVideoRef.current); } };
     document.addEventListener('visibilitychange', onVisible);
-    return () => {
-      window.removeEventListener('resize', setNavOffset);
-      document.removeEventListener('visibilitychange', onVisible);
-    };
+    return () => { document.removeEventListener('visibilitychange', onVisible); };
   }, []);
 
   return (
@@ -46,23 +28,12 @@ const Hero = ({ lang, onScrollDown }) => {
       >
         <source src="assets/playa-almeria.mp4" type="video/mp4"/>
       </video>
-      {/* Logo animation overlay — mix-blend-mode screen */}
-      <video
-        ref={videoRef}
-        className="hero-video"
-        autoPlay muted loop playsInline
-        onCanPlay={() => setVideoReady(true)}
-      >
-        <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
-      </video>
       <div className="hero-content">
         <div className="hero-logo-wrap">
-          {/* Fallback estático — el video va como overlay */}
           <img
             src="assets/logo-teal-transparent.png"
             alt="Hestía"
             className="hero-logo-img"
-            style={{ opacity: videoReady ? 0 : 1, transition: 'opacity .6s' }}
           />
         </div>
         <div className="wordmark hero-wordmark">HESTÍA</div>
