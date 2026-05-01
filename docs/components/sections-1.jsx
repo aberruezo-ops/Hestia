@@ -42,6 +42,7 @@ const Hero = ({ lang, onScrollDown }) => {
         className="hero-bg-video"
         autoPlay muted loop playsInline
         preload="auto"
+        poster="assets/hero-terrace-night.jpg"
       >
         <source src="assets/playa-almeria.mp4" type="video/mp4"/>
       </video>
@@ -52,7 +53,7 @@ const Hero = ({ lang, onScrollDown }) => {
         autoPlay muted loop playsInline
         onCanPlay={() => setVideoReady(true)}
       >
-        <source src="assets/logo-anim.mp4" type="video/mp4"/>
+        <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
       </video>
       <div className="hero-content">
         <div className="hero-logo-wrap">
