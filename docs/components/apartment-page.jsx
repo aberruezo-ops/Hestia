@@ -229,6 +229,7 @@ const ApartmentPageApp = () => {
         <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
         <FraseHogar lang={lang} />
         <AptPageDesc apt={apt} lang={lang} />
+        <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
         <AptPageGallery apt={apt} lang={lang} />
         <AptPageOthers apt={apt} lang={lang} />
         <QuickFAQ lang={lang} pageId={aptId} />
