@@ -108,7 +108,7 @@ const Bridge = ({ lang }) => {
 const APARTMENTS = [
   { id: 'vm', num: '01', name: 'Hestía Mar',      slug: 'mar',      license: 'VFT/AL/01580', concept: 'apt_01_concept',
     img: 'assets/apt-vs.jpg',
-    meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas consultar'] },
+    meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición'] },
   { id: 'vt', num: '02', name: 'Hestía Thalassa', slug: 'thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
     img: 'assets/apt-vt-4.jpg',
     meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA'] },
@@ -205,7 +205,7 @@ const Compare = ({ lang }) => {
     { label: 'Piscina',     vm: 'Comunitaria', vt: 'Comunitaria + pádel', vs: '3 piscinas' },
     { label: 'Extra ⭑',     vm: 'Jacuzzi temporada', vt: 'SPA cromo + aromaterapia', vs: 'Parque Natural Salinas' },
     { label: 'Playa',       vm: '300 m', vt: '1,5 km', vs: '900 m' },
-    { label: 'Mascotas',    vm: 'Sí · aviso previo', vt: 'Sí · aviso previo', vs: 'Sí · aviso previo' },
+    { label: 'Mascotas',    vm: 'Sí · petición + suplem.', vt: 'Sí · petición + suplem.', vs: 'Sí · petición + suplem.' },
     { label: 'Valoración',  vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
   ] : [
     { label: 'Concept',     vm: 'Sea through the olive grove', vt: 'Penthouse facing Tabernas', vs: 'Sunrise over the salt flats' },
@@ -214,7 +214,7 @@ const Compare = ({ lang }) => {
     { label: 'Pool',        vm: 'Shared', vt: 'Shared + padel', vs: '3 pools' },
     { label: 'Extra ⭑',     vm: 'Seasonal jacuzzi', vt: 'SPA chromotherapy', vs: 'Salt-flat nature park' },
     { label: 'Beach',       vm: '300 m', vt: '1,5 km', vs: '900 m' },
-    { label: 'Pets',        vm: 'Yes · prior notice', vt: 'Yes · prior notice', vs: 'Yes · prior notice' },
+    { label: 'Pets',        vm: 'Yes · request + suppl.', vt: 'Yes · request + suppl.', vs: 'Yes · request + suppl.' },
     { label: 'Rating',      vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
   ];
   const t = COPY[lang];
