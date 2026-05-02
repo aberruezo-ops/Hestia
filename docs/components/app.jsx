@@ -49,6 +49,7 @@ const App = () => {
         <Hero lang={lang} />
         <FraseHogar lang={lang} />
         <Bridge lang={lang} />
+        <HomeSearch lang={lang} />
         <Apartments lang={lang} />
         <Compare lang={lang} />
         <Counters lang={lang} />
