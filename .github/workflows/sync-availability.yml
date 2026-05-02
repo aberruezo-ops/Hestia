@@ -1,0 +1,56 @@
+name: Sync iCal availability
+
+# Runs every 4 hours and on manual trigger.
+# Fetches iCal feeds from Booking.com and Airbnb, parses them,
+# and writes docs/assets/availability.json to the repo.
+#
+# Required GitHub Secrets (Settings → Secrets and variables → Actions):
+#   ICAL_VM_AIRBNB   — Hestía Mar,      Airbnb  iCal URL
+#   ICAL_VM_BOOKING  — Hestía Mar,      Booking iCal URL
+#   ICAL_VT_AIRBNB   — Hestía Thalassa, Airbnb  iCal URL
+#   ICAL_VT_BOOKING  — Hestía Thalassa, Booking iCal URL
+#   ICAL_VS_AIRBNB   — Hestía Salinas,  Airbnb  iCal URL
+#   ICAL_VS_BOOKING  — Hestía Salinas,  Booking iCal URL
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'   # every 4 hours
+  workflow_dispatch:          # manual trigger from GitHub UI
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install icalendar requests
+
+      - name: Sync availability data
+        env:
+          ICAL_VM_AIRBNB:  ${{ secrets.ICAL_VM_AIRBNB }}
+          ICAL_VM_BOOKING: ${{ secrets.ICAL_VM_BOOKING }}
+          ICAL_VT_AIRBNB:  ${{ secrets.ICAL_VT_AIRBNB }}
+          ICAL_VT_BOOKING: ${{ secrets.ICAL_VT_BOOKING }}
+          ICAL_VS_AIRBNB:  ${{ secrets.ICAL_VS_AIRBNB }}
+          ICAL_VS_BOOKING: ${{ secrets.ICAL_VS_BOOKING }}
+        run: python .github/scripts/sync_ical.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "hestia-bot"
+          git config user.email "bot@hestiayourhome.com"
+          git add docs/assets/availability.json
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: sync availability data [skip ci]"
+            git push
+          else
+            echo "No changes — availability.json is up to date."
+          fi
