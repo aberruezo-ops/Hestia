@@ -133,6 +133,39 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
         </div>
       </div>
 
+      {/* Por qué no hay precio directo — explicación con voz de Hestía */}
+      <div className="req-why">
+        <div className="req-why-q">
+          {lang === 'es' ? '¿Por qué no damos el precio directamente?' : 'Why don\'t we give the price upfront?'}
+        </div>
+        <p className="req-why-p">
+          {lang === 'es'
+            ? <>
+                Porque el precio en Hestía no es convencional. Aplicamos descuentos
+                para estancias de más de <strong>6, 14 o 28 noches</strong> —
+                y condiciones especiales para más de tres meses.
+                El importe también depende del <strong>número de huéspedes</strong>,
+                de si viajáis con <strong>mascotas</strong>
+                y de las <strong>fechas concretas</strong>:
+                agosto y noviembre sencillamente no son lo mismo.
+              </>
+            : <>
+                Because pricing at Hestía isn't conventional. We offer discounts
+                for stays of <strong>6, 14 or 28+ nights</strong> —
+                and special rates for over three months.
+                The amount also depends on the <strong>number of guests</strong>,
+                whether you're bringing <strong>pets</strong>,
+                and the <strong>specific dates</strong>:
+                August and November simply aren't the same.
+              </>}
+        </p>
+        <p className="req-why-p req-why-close">
+          {lang === 'es'
+            ? <>Intentamos adaptarnos a vuestras necesidades reales. Por eso nos gusta escucharos — y que nos escuchéis. <em>Hestía no es algo convencional.</em></>
+            : <>We try to adapt to your real needs. That's why we like to listen — and to be listened to. <em>Hestía is not a conventional place.</em></>}
+        </p>
+      </div>
+
       {/* Disclaimer — muy claro que es solicitud previa */}
       <div className="req-disclaimer">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
