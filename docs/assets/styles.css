@@ -2231,6 +2231,38 @@ footer .footer-brand .addr {
   line-height: 40px;
 }
 
+/* Why no direct price */
+.req-why {
+  margin-bottom: 24px;
+  padding: 22px 20px;
+  background: rgba(240,232,213,.03);
+  border: 1px solid rgba(240,232,213,.1);
+  border-radius: 12px;
+}
+.req-why-q {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  color: rgba(240,232,213,.8);
+  margin-bottom: 12px;
+}
+.req-why-p {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(240,232,213,.55);
+  margin: 0 0 10px;
+}
+.req-why-p:last-child { margin-bottom: 0; }
+.req-why-p strong { color: rgba(240,232,213,.82); font-weight: 500; }
+.req-why-close { color: rgba(240,232,213,.5); }
+.req-why-close em {
+  font-style: italic;
+  font-family: var(--serif);
+  font-size: 14px;
+  color: rgba(240,232,213,.72);
+}
+
 /* Disclaimer */
 .req-disclaimer {
   display: flex; gap: 12px; align-items: flex-start;
