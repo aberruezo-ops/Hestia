@@ -1816,6 +1816,21 @@ footer .footer-brand .tagline {
 footer .footer-brand .addr {
   margin-top: 24px; font-size: 12px; opacity: 0.6; line-height: 1.7;
 }
+.footer-social {
+  display: flex; gap: 14px; margin-top: 20px; align-items: center;
+}
+.footer-social a {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid rgba(240,232,213,0.2);
+  color: rgba(240,232,213,0.65);
+  transition: color 0.2s, border-color 0.2s;
+}
+.footer-social a:hover { color: var(--sol-lt); border-color: var(--sol-lt); }
+.footer-social-cta {
+  margin-top: 12px; font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; opacity: 0.45;
+}
 .footer-bottom {
   position: relative;
   z-index: 1;
