@@ -484,8 +484,8 @@ const SABIAS_QUE_FACTS = [
   /* ── Hestía: lo que otros no tienen ── */
   {
     type: 'fact',
-    es: 'Hestía lleva más de diez años con puntuación máxima ininterrumpida en Booking.com, Airbnb y Google Maps — algo que menos del 1 % de los alojamientos vacacionales de España mantiene durante tanto tiempo.',
-    en: 'Hestía has held top scores on Booking.com, Airbnb and Google Maps for over ten years — something fewer than 1% of holiday rentals in Spain sustain for that long.',
+    es: 'Hestía lleva más de diez años con puntuación máxima ininterrumpida en Booking.com, Airbnb y Google Maps — algo que menos del 1 % de los apartamentos con huéspedes de España mantiene durante tanto tiempo.',
+    en: 'Hestía has held top scores on Booking.com, Airbnb and Google Maps for over ten years — something fewer than 1% of guest apartments in Spain sustain for that long.',
   },
   {
     type: 'fact',
@@ -563,9 +563,9 @@ const FRASES_HOGAR = [
   },
   {
     type: 'quote',
-    es: '«El hogar es el punto de partida de todo gran viaje.»',
-    en: '«Home is the starting point of every great journey.»',
-    attr: '— Henry Drummond',
+    es: '«El buen huésped deja el lugar mejor de como lo encontró.»',
+    en: '«A good guest leaves a place better than they found it.»',
+    attr: '— Proverbio / Proverb',
   },
   {
     type: 'quote',
@@ -605,9 +605,9 @@ const FRASES_HOGAR = [
   },
   {
     type: 'quote',
-    es: '«Viajar es la única cosa en la que gastas dinero que te hace más rico.»',
-    en: '«Travel is the only thing you buy that makes you richer.»',
-    attr: '— Anónimo',
+    es: '«Quien cuida lo que comparte merece disfrutarlo del todo.»',
+    en: '«Those who care for what they share deserve to enjoy it fully.»',
+    attr: '— Hestía',
   },
   {
     type: 'quote',
@@ -623,9 +623,9 @@ const FRASES_HOGAR = [
   },
   {
     type: 'quote',
-    es: '«El hogar es donde todos tus viajes terminan.»',
-    en: '«Home is where all your journeys end.»',
-    attr: '— Pico Iyer',
+    es: '«Cada lugar que nos acoge bien merece ser cuidado igual de bien.»',
+    en: '«Every place that welcomes us well deserves to be cared for just as well.»',
+    attr: '— Hestía',
   },
   {
     type: 'quote',
@@ -641,9 +641,9 @@ const FRASES_HOGAR = [
   },
   {
     type: 'quote',
-    es: '«Las vacaciones son lo que haces cuando ya no puedes aguantar más lo que has estado aguantando.»',
-    en: '«A vacation is what you take when you can no longer take what you\'ve been taking.»',
-    attr: '— Earl Wilson',
+    es: '«No hace falta irse lejos para descubrir un lugar diferente. Hace falta llegar con los ojos abiertos.»',
+    en: '«You need not go far to discover a different place. You just need to arrive with open eyes.»',
+    attr: '— Hestía',
   },
   {
     type: 'quote',

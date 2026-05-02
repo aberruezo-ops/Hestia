@@ -29,13 +29,13 @@ const NOSOTROS_COPY = {
       { n: '04', t: 'Una estancia que no acaba cuando os vais.', d: 'Vuestra estancia empieza cuando reserváis y termina cuando queréis volver. Eso no es un intercambio económico. Es otra cosa.' },
     ],
 
-    traveler_eyebrow: 'El viajero que nos elige',
+    traveler_eyebrow: 'El huésped que nos elige',
     traveler_title: (<>Sabemos para quién<br/><em>existe Hestía.</em></>),
-    traveler_intro: 'Hay un tipo de viajero que no encaja en las categorías habituales. Deja su casa pero no renuncia a la sensación de hogar. No huye de su vida: la traslada. Cuando llega a un sitio que lo recibe como lo que es, algo encaja. Para ese viajero existe Hestía.',
+    traveler_intro: 'Hay un tipo de huésped que no viene solo a descansar. Trae consigo el cuidado, la curiosidad y las ganas de que el lugar que visita siga siendo lo que es. Cuida lo que usa, respeta lo que comparte y deja el destino un poco mejor de como lo encontró. Para ese huésped existe Hestía.',
     travelers: [
-      { icon: '🏡', t: 'Valora la autenticidad sobre la uniformidad.', d: 'Prefiere una habitación con carácter a una suite sin alma. Le importa más la historia que el tamaño.' },
-      { icon: '🌿', t: 'Necesita sentirse, no solo estar.', d: 'No le basta con que el sitio funcione. Necesita que le dé ganas de quedarse más tiempo.' },
-      { icon: '🔄', t: 'Vuelve. Y lo recomienda.', d: 'Cuando encuentra un lugar donde se ha sentido en casa, vuelve. No hace falta convencerle de nada.' },
+      { icon: '🏡', t: 'Cuida lo que usa como si fuera suyo.', d: 'El apartamento que deja está tan bien como lo encontró. Sabe que el siguiente huésped también lo merece.' },
+      { icon: '🌿', t: 'No solo está: contribuye.', d: 'Recomienda el bar de toda la vida, respeta el silencio de la tarde, deja el entorno mejor de como lo encontró.' },
+      { icon: '🔄', t: 'Vuelve. Y trae a alguien.', d: 'Cuando encuentra un lugar donde se ha sentido en casa, vuelve. Y convierte a otros en huéspedes colaborativos.' },
     ],
 
     team_eyebrow: 'El equipo',
@@ -79,13 +79,13 @@ const NOSOTROS_COPY = {
       { n: '04', t: "A stay that doesn't end when you leave.", d: "Your stay begins when you book and ends when you want to return. That's not an economic exchange. It's something else." },
     ],
 
-    traveler_eyebrow: 'The traveller who chooses us',
+    traveler_eyebrow: 'The guest who chooses us',
     traveler_title: (<>We know who<br/><em>Hestía exists for.</em></>),
-    traveler_intro: "There is a type of traveller who doesn't fit the usual categories. They leave home but don't give up the feeling of being home. They don't flee their life: they move it. When they find a place that receives them as they are, something clicks. Hestía exists for that traveller.",
+    traveler_intro: "There is a type of guest who doesn't come just to rest. They bring care, curiosity and a genuine wish to leave the place a little better than they found it. They look after what they use, respect what they share, and make the destination better every day. Hestía exists for that guest.",
     travelers: [
-      { icon: '🏡', t: 'Values authenticity over uniformity.', d: 'Prefers a room with character to a soulless suite. Story matters more than size.' },
-      { icon: '🌿', t: 'Needs to feel at home, not just be there.', d: "A functional space isn't enough. They need it to make them want to stay longer." },
-      { icon: '🔄', t: 'They come back. And they recommend it.', d: "When they find a place where they felt at home, they return. No convincing needed." },
+      { icon: '🏡', t: 'Cares for what they use as if it were theirs.', d: 'The apartment they leave is as good as they found it. They know the next guest deserves the same.' },
+      { icon: '🌿', t: "They don't just stay: they contribute.", d: 'They recommend the local bar, respect the quiet of the afternoon, leave their surroundings better than they found them.' },
+      { icon: '🔄', t: 'They come back. And bring someone.', d: "When they find a place where they felt at home, they return — and turn others into collaborative guests too." },
     ],
 
     team_eyebrow: 'The team',
