@@ -58,7 +58,7 @@ const RESERVAS_COPY = {
     f_checkout: 'Check-out date',
     f_guests: 'Number of guests',
     f_guests_opts: ['1 guest', '2 guests', '3 guests', '4 guests', '5 guests', '6 guests'],
-    f_pets: 'Travelling with a pet?',
+    f_pets: 'Bringing a pet?',
     f_pets_no: 'No',
     f_pets_yes: 'Yes',
     f_extras_label: 'Extras (optional)',
