@@ -80,7 +80,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
   const buildMsg = () => {
     const c = calc;
     const petsLine = pets
-      ? (lang === 'es' ? `🐾 Mascota: Sí (+${PET_SUPP_NIGHT}€/noche)\n` : `🐾 Pet: Yes (+${PET_SUPP_NIGHT}€/night)\n`)
+      ? (lang === 'es' ? `🐾 Mascota: Sí (+${PET_SUPP_FLAT}€ tarifa plana)\n` : `🐾 Pet: Yes (+${PET_SUPP_FLAT}€ flat fee)\n`)
       : '';
     const discLine = c && c.stayD
       ? (lang === 'es'
@@ -197,7 +197,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
             )}
             {calc.petAmt > 0 && (
               <div className="price-line">
-                <span>{lang === 'es' ? `Suplemento mascota (${calc.nights} × ${PET_SUPP_NIGHT}€)` : `Pet supplement (${calc.nights} × ${PET_SUPP_NIGHT}€)`}</span>
+                <span>{lang === 'es' ? `Suplemento mascota (tarifa plana ${PET_SUPP_FLAT}€)` : `Pet supplement (flat fee ${PET_SUPP_FLAT}€)`}</span>
                 <span>+{fmt(calc.petAmt)}</span>
               </div>
             )}
@@ -207,7 +207,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
             </div>
           </div>
           <p className="price-note">{lang === 'es'
-            ? '* Este es el precio máximo orientativo. En Hestía nos gusta conocer a nuestros huéspedes y entender qué necesitan. Cuéntanos tu situación — muchas veces podemos ajustar el precio.'
+            ? '* Este es el precio máximo orientativo. En Hestía nos gusta conocer a nuestros huéspedes y entender qué necesitan. Cuéntanos de ti y los tuyos — muchas veces podemos ajustar el precio.'
             : '* This is the maximum indicative price. At Hestía we like to get to know our guests and understand what they need. Tell us about your situation — we can often adjust the price.'}</p>
         </div>
       )}
@@ -222,7 +222,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
         </div>
         <label className="req-pets-toggle">
           <input type="checkbox" checked={pets} onChange={e => setPets(e.target.checked)}/>
-          <span>{lang === 'es' ? '🐾 Mascota (+15€/noche)' : '🐾 Pet (+15€/night)'}</span>
+          <span>{lang === 'es' ? `🐾 Mascota (+${PET_SUPP_FLAT}€ tarifa plana)` : `🐾 Pet (+${PET_SUPP_FLAT}€ flat fee)`}</span>
         </label>
       </div>
 
@@ -241,7 +241,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
       <div className="req-disclaimer">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         <p>{lang === 'es'
-          ? <><strong>Solicitud de precio — no es una reserva.</strong> Estos son precios máximos orientativos. En Hestía nos gusta hablar con nuestros huéspedes, entender qué necesitan e intentar adaptar el precio. Cuéntanos tu situación.</>
+          ? <><strong>Solicitud de precio — no es una reserva.</strong> Estos son precios máximos orientativos. En Hestía nos gusta hablar con nuestros huéspedes, entender qué necesitan e intentar adaptar el precio. Cuéntanos de ti y los tuyos.</>
           : <><strong>Price request — not a booking.</strong> These are maximum indicative prices. At Hestía we like to talk to our guests, understand what they need, and try to adapt the price accordingly. Tell us about your situation.</>}</p>
       </div>
 
