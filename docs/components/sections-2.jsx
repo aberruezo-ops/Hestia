@@ -240,7 +240,7 @@ const Ratings = ({ lang }) => {
 };
 
 // --- CONTACT CTA ---
-const ContactCTA = ({ lang }) => {
+const ContactCTA = ({ lang, availHref }) => {
   const t = COPY[lang];
   return (
     <section className="contact-cta" id="contacto" data-screen-label="10 Contacto">
@@ -255,6 +255,11 @@ const ContactCTA = ({ lang }) => {
           <a href="mailto:info@hestiayourhome.com" className="btn btn-ghost-light">
             {t.contact_cta_mail}
           </a>
+          {availHref && (
+            <a href={availHref} className="btn btn-ghost-light">
+              {t.contact_cta_avail} <span className="arrow">→</span>
+            </a>
+          )}
         </div>
         <div className="address">Calle Islas Canarias 7 · 04621 Vera Playa · Almería</div>
       </div>
