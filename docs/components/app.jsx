@@ -57,7 +57,7 @@ const App = () => {
         <Manifest lang={lang} />
         <Ratings lang={lang} />
         <QuickFAQ lang={lang} pageId="home" />
-        <ContactCTA lang={lang} />
+        <ContactCTA lang={lang} availHref="#buscar" />
       </main>
       <Footer lang={lang} />
       <StickyFacts lang={lang} />
