@@ -2464,14 +2464,20 @@ footer .footer-brand .addr {
 
 /* Action buttons */
 .req-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
-.req-btn-wa { background: #25D366 !important; border-color: #25D366 !important; }
-.req-btn-wa:hover { background: #1ebe5a !important; }
+.req-btn-wa { background: #D42B80 !important; border-color: #D42B80 !important; }
+.req-btn-wa:hover { background: #A01F60 !important; }
 .req-btn-wa, .req-btn-mail {
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .req-btn-mail {
   color: rgba(42,15,46,.65) !important;
   border-color: rgba(42,15,46,.25) !important;
+  background: transparent !important;
+}
+.req-btn-mail:hover {
+  background: rgba(42,15,46,.08) !important;
+  color: rgba(42,15,46,.9) !important;
+  border-color: rgba(42,15,46,.5) !important;
 }
 
 /* Reset link */
@@ -2747,8 +2753,8 @@ footer .footer-brand .addr {
   transition: filter .2s, opacity .2s;
   cursor: pointer;
 }
-.hbm-wa  { background: #25D366; color: #fff; }
-.hbm-wa:hover  { filter: brightness(1.08); }
+.hbm-wa  { background: #D42B80; color: #fff; }
+.hbm-wa:hover  { background: #A01F60; }
 .hbm-mail { background: none; border: 1.5px solid rgba(42,15,46,.25); color: rgba(42,15,46,.7); }
 .hbm-mail:hover { border-color: var(--ber); color: var(--ber-dk); }
 .hbm-dis { opacity: .38; cursor: not-allowed; pointer-events: none; }
