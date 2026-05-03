@@ -7,9 +7,6 @@ Env vars (set in workflow or locally):
   ICAL_VM_AIRBNB, ICAL_VM_BOOKING
   ICAL_VT_AIRBNB, ICAL_VT_BOOKING
   ICAL_VS_AIRBNB, ICAL_VS_BOOKING
-
-Apartments: vm (Mar), vt (Thalassa), vs (Salinas)
-Sources:    airbnb, booking
 """
 
 import json
@@ -30,7 +27,6 @@ SOURCES   = ["airbnb", "booking"]
 LOOKAHEAD = 365
 OUTPUT    = Path(__file__).parents[2] / "docs" / "assets" / "availability.json"
 
-# Calendar-app User-Agent — avoids bot-blockers
 HEADERS = {
     "User-Agent":      "CalendarStore/6.0 (1190; OS X 14.4) dataaccessd/1.0",
     "Accept":          "text/calendar, text/plain, */*",
@@ -41,33 +37,53 @@ HEADERS = {
 
 def fetch_ical(url: str) -> tuple[list[dict], str | None]:
     """
-    Fetch iCal URL.
-    Returns (ranges, error_message).
-    ranges is [] both on success-with-no-events and on failure.
-    error_message is None on success, a string on failure.
+    Fetch and parse an iCal URL.
+    Returns (all_ranges, error_message).
+    all_ranges includes every VEVENT regardless of date — filtering is done by caller.
     """
     try:
         resp = requests.get(url, timeout=30, headers=HEADERS)
         if resp.status_code != 200:
             return [], f"HTTP {resp.status_code}"
+
         cal    = Calendar.from_ical(resp.content)
         ranges = []
+
         for comp in cal.walk():
             if comp.name != "VEVENT":
                 continue
+
+            uid     = str(comp.get("UID", ""))
+            summary = str(comp.get("SUMMARY", ""))
+            status  = str(comp.get("STATUS", "CONFIRMED"))
             dtstart = comp.get("DTSTART")
-            dtend   = comp.get("DTEND") or comp.get("DTSTART")
+            dtend   = comp.get("DTEND") or comp.get("DURATION")
+
             if not dtstart:
+                print(f"    skip (no DTSTART): uid={uid[:20]} summary={summary[:30]}")
                 continue
+
             start = dtstart.dt
-            end   = dtend.dt
+            end   = dtend.dt if dtend else start
+
+            # Handle DURATION instead of DTEND
+            if isinstance(end, timedelta):
+                end = (start + end)
+
             if isinstance(start, datetime):
                 start = start.date()
             if isinstance(end, datetime):
                 end = end.date()
-            if start and end and end > start:
-                ranges.append({"start": start.isoformat(), "end": end.isoformat()})
+
+            # Single-day events: DTSTART == DTEND means checkout = next day
+            if end <= start:
+                end = start + timedelta(days=1)
+
+            print(f"    event: {start} → {end}  [{status}] {summary[:40]}")
+            ranges.append({"start": start.isoformat(), "end": end.isoformat()})
+
         return ranges, None
+
     except Exception as exc:
         return [], str(exc)
 
@@ -91,10 +107,12 @@ def main() -> None:
     result  = {}
     any_ok  = False
 
+    print(f"Sync — today={today}  cutoff={cutoff}\n")
+
     for apt in APTS:
-        all_ranges    = []
-        sources_ok    = []   # fetched successfully (even if no events)
-        fetch_errors  = {}   # source → error message
+        all_ranges   = []
+        sources_ok   = []
+        fetch_errors = {}
 
         for src in SOURCES:
             key = f"ICAL_{apt.upper()}_{src.upper()}"
@@ -103,7 +121,7 @@ def main() -> None:
                 print(f"  {apt}/{src}: not configured — skipping")
                 continue
 
-            print(f"  {apt}/{src}: fetching {url[:60]}...")
+            print(f"  {apt}/{src}: fetching...")
             raw, err = fetch_ical(url)
 
             if err:
@@ -113,9 +131,11 @@ def main() -> None:
 
             sources_ok.append(src)
             any_ok = True
-            future = [r for r in raw if r["end"] >= today and r["start"] <= cutoff]
+
+            future  = [r for r in raw if r["end"] > today and r["start"] <= cutoff]
+            skipped = [r for r in raw if r["end"] <= today or r["start"] > cutoff]
             all_ranges.extend(future)
-            print(f"    ✓ {len(raw)} events total, {len(future)} future")
+            print(f"    ✓ {len(raw)} total events — {len(future)} kept, {len(skipped)} outside window")
 
         result[apt] = {
             "blocked":      merge(all_ranges),
@@ -130,17 +150,12 @@ def main() -> None:
         json.dump(result, fh, indent=2, ensure_ascii=False)
 
     print(f"\nWritten → {OUTPUT}")
-
-    # Summary
-    print("\n── Summary ──")
+    print("\n── Blocked ranges ──")
     for apt, d in result.items():
-        ok   = d["sources"]
-        errs = d["fetch_errors"]
-        blk  = len(d["blocked"])
-        print(f"  {apt}: {blk} blocked range(s)  |  ok={ok}  |  errors={errs or 'none'}")
+        print(f"  {apt}: {d['blocked']} (sources={d['sources']} errors={d['fetch_errors'] or 'none'})")
 
     if not any_ok:
-        print("\n⚠ WARNING: No iCal feed could be fetched — all sources failed or unconfigured.")
+        print("\n⚠ WARNING: No iCal feed fetched — all sources failed or unconfigured.")
         sys.exit(1)
 
 

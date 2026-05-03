@@ -61,17 +61,22 @@ def fetch_ical(url: str) -> tuple[list[dict], str | None]:
             if comp.name != "VEVENT":
                 continue
             dtstart = comp.get("DTSTART")
-            dtend   = comp.get("DTEND") or comp.get("DTSTART")
+            dtend   = comp.get("DTEND") or comp.get("DURATION")
             if not dtstart:
                 continue
             start = dtstart.dt
-            end   = dtend.dt
+            end   = dtend.dt if dtend else start
+            # Handle DURATION instead of DTEND
+            if isinstance(end, timedelta):
+                end = start + end
             if isinstance(start, datetime):
                 start = start.date()
             if isinstance(end, datetime):
                 end = end.date()
-            if start and end and end > start:
-                ranges.append({"start": start.isoformat(), "end": end.isoformat()})
+            # Single-day events where DTSTART == DTEND: checkout is the following day
+            if end <= start:
+                end = start + timedelta(days=1)
+            ranges.append({"start": start.isoformat(), "end": end.isoformat()})
         return ranges, None
     except Exception as exc:
         return [], str(exc)
