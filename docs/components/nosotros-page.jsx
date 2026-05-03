@@ -225,6 +225,10 @@ const BRAND_PALETTE = [
     es: { name: 'Verde olivo', story: 'El olivar de Vera Playa con la luz lateral de la mañana. Desde Hestía Mar se ve el mar entre las ramas. Este verde existe en Almería desde antes que Roma.' },
     en: { name: 'Olive green', story: 'The Vera Playa olive grove in the side-light of morning. From Hestía Mar you see the sea between the branches. This green existed in Almería before Rome did.' },
   },
+  { hex: '#3A7D44',
+    es: { name: 'Verde tropical', story: 'El verde que deja boquiabierto. Agapantos, buganvillas, estrelitzias, palmeras — la vegetación de la costa almeriense que no debería existir aquí y existe. Una exuberancia que solo el sol y el mar juntos pueden explicar.' },
+    en: { name: 'Tropical green', story: 'The green that stops you in your tracks. Agapanthus, bougainvillea, bird-of-paradise, palms — the coastal Almería vegetation that should not exist here and does. An abundance that only sun and sea together can explain.' },
+  },
   { hex: '#C8975A',
     es: { name: 'Albero', story: 'La tierra almeriense. La pared encalada a las ocho de la mañana. El color que Almería lleva desde la antigüedad: tierra, cerámica, esparto seco.' },
     en: { name: 'Ochre', story: 'Almería earth. The whitewashed wall at eight in the morning. The colour Almería has carried since antiquity: clay, ceramics, dry esparto grass.' },
@@ -254,8 +258,8 @@ const NosotrosColores = ({ lang }) => (
       </h2>
       <p className="nos-colores-intro reveal delay-1">
         {lang === 'es'
-          ? 'Vera Playa tiene una luz que cambia cada hora. Un ingeniero que observa y un filólogo que nombra. Así nació la paleta de Hestía: ocho momentos del día almeriense, capturados y convertidos en marca.'
-          : 'Vera Playa has a light that changes every hour. An engineer who observes and a philologist who names. That is how the Hestía palette was born: eight moments of the Almería day, captured and turned into a brand.'}
+          ? 'Vera Playa tiene una luz que cambia cada hora y una naturaleza que deja boquiabierto. Un ingeniero que observa y un filólogo que nombra. Así nació la paleta de Hestía: nueve colores del paisaje almeriense, capturados y convertidos en marca.'
+          : 'Vera Playa has a light that changes every hour and a nature that leaves you breathless. An engineer who observes and a philologist who names. That is how the Hestía palette was born: nine colours of the Almería landscape, captured and turned into a brand.'}
       </p>
       <div className="nos-colores-grid">
         {BRAND_PALETTE.map((c, i) => {
