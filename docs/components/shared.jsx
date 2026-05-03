@@ -22,6 +22,12 @@ const HestiaLogoMark = ({ size = 40, color = '#3AAABB' }) => (
   </svg>
 );
 
+const WatermarkBadge = ({ size = 34, pos = {} }) => (
+  <div className="wm-badge" aria-hidden="true" style={{ bottom: 10, right: 10, ...pos }}>
+    <HestiaLogoMark size={size} color="rgba(255,255,255,0.30)"/>
+  </div>
+);
+
 const Wordmark = ({ size = 14, color }) => (
   <div style={{ textAlign: 'center', color }}>
     <div className="wordmark" style={{ fontSize: size }}>HESTÍA</div>
@@ -1151,7 +1157,7 @@ const STAY_DISCOUNTS = [        // descuentos por duración (sobre precio direct
   { min:  6, pct: 0.05, es: '−5 % por estancia larga (6+ noches)',  en: '−5 % long stay (6+ nights)' },
 ];
 
-const PET_SUPP_NIGHT = 15;      // €/noche suplemento mascota
+const PET_SUPP_FLAT = 50;       // €/estancia suplemento mascota (tarifa plana, no incluida en plataformas)
 
 // helpers compat con el motor de calendario
 const _be_adj = (ds, n) => {
@@ -1199,8 +1205,8 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
   const stayDiscAmt = stayD ? Math.round(afterDirect * stayD.pct) : 0;
   const afterStay   = afterDirect - stayDiscAmt;
 
-  // suplemento mascota
-  const petAmt = withPets ? nights * PET_SUPP_NIGHT : 0;
+  // suplemento mascota (tarifa plana, no incluida en plataformas)
+  const petAmt = withPets ? PET_SUPP_FLAT : 0;
 
   const directTotal  = afterStay + petAmt;
   const savings      = totalBooking - directTotal;
@@ -1209,4 +1215,4 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
   return { nights, totalBooking, afterDirect, stayD, stayDiscAmt, afterStay, petAmt, directTotal, savings, avgPerNight };
 };
 
-Object.assign(window, { HestiaLogoMark, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, DIRECT_DISCOUNT, STAY_DISCOUNTS, PET_SUPP_NIGHT, _dayPrice, _calcStay });
+Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, DIRECT_DISCOUNT, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay });

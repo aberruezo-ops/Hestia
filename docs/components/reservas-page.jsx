@@ -119,7 +119,7 @@ const PricePreview = ({ apt, checkin, checkout, pets, lang }) => {
         )}
         {calc.petAmt > 0 && (
           <div className="price-line">
-            <span>{lang === 'es' ? 'Suplemento mascota' : 'Pet supplement'}</span>
+            <span>{lang === 'es' ? `Suplemento mascota (tarifa plana ${PET_SUPP_FLAT}€)` : `Pet supplement (flat fee ${PET_SUPP_FLAT}€)`}</span>
             <span>+{fmt(calc.petAmt)}</span>
           </div>
         )}
@@ -199,13 +199,13 @@ const ReservasForm = ({ lang }) => {
           ? `\n💰 PRECIO ESTIMADO DIRECTO\n` +
             `   ${fmt(calc.directTotal)} total (${calc.nights} noches × ~${fmt(calc.avgPerNight)}/noche)\n` +
             (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') +
-            (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${PET_SUPP_NIGHT}€/noche)\n` : '') +
+            (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${PET_SUPP_FLAT}€ tarifa plana)\n` : '') +
             `   vs. ~${fmt(calc.totalBooking)} en Booking.com → ahorro ~${fmt(calc.savings)}\n` +
             `   ✓ Sin comisiones · Precio igual o mejor que cualquier plataforma\n`
           : `\n💰 ESTIMATED DIRECT PRICE\n` +
             `   ${fmt(calc.directTotal)} total (${calc.nights} nights × ~${fmt(calc.avgPerNight)}/night)\n` +
             (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') +
-            (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${PET_SUPP_NIGHT}€/night)\n` : '') +
+            (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${PET_SUPP_FLAT}€ flat fee)\n` : '') +
             `   vs. ~${fmt(calc.totalBooking)} on Booking.com → saving ~${fmt(calc.savings)}\n` +
             `   ✓ No fees · Same or better price than any platform\n`)
       : '';

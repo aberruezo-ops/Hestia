@@ -100,6 +100,7 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
   return (
     <section className="apt-page-hero" style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
       <img src={apt.hero_img} alt={d.name} className="apt-page-hero-img"/>
+      <WatermarkBadge size={40} pos={{ bottom: 16, right: 16 }}/>
       <div className="apt-page-hero-wash"/>
       <div className="apt-page-hero-content">
         <div className="apt-page-eyebrow">
@@ -186,6 +187,7 @@ const AptPageOthers = ({ apt, lang }) => {
             <a key={o.id} href={`${o.slug}.html`} className={`apt-other-card ${o.id}`}
                style={{ '--other-accent': o.accent }}>
               <img src={o.hero_img} alt={d.name} className="apt-other-img"/>
+              <WatermarkBadge size={28}/>
               <div className="apt-other-wash"/>
               <div className="apt-other-content">
                 <div className="apt-other-num">{o.num}</div>
