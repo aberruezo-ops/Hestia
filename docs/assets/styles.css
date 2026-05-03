@@ -2462,6 +2462,10 @@ footer .footer-brand .addr {
 }
 .req-disclaimer strong { color: rgba(240,190,60,.9); font-weight: 500; }
 
+/* Disabled state — shared by req-panel, home-search cards */
+.req-btn-dis { opacity: .35; pointer-events: none; cursor: default; }
+.req-hint { font-family: var(--sans); font-size: 11px; letter-spacing: .08em; color: #D42B80; margin: 0 0 10px; }
+
 /* Action buttons */
 .req-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
 .req-btn-wa { background: #D42B80 !important; border-color: #D42B80 !important; }
@@ -5511,6 +5515,28 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 
 /* Available card actions */
+.hs-rc-contact { margin-bottom: 12px; }
+.hs-rc-contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.hs-rc-input {
+  flex: 1 1 140px;
+  padding: 8px 12px;
+  border-radius: 6px 0 6px 0;
+  border: 1px solid rgba(240,232,213,.2);
+  background: rgba(255,255,255,.06);
+  color: var(--arena);
+  font-family: var(--sans);
+  font-size: 12px;
+  outline: none;
+  transition: border-color .18s;
+}
+.hs-rc-input::placeholder { color: rgba(240,232,213,.35); }
+.hs-rc-input:focus { border-color: rgba(240,232,213,.5); }
+.hs-rc-hint { font-family: var(--sans); font-size: 11px; color: #D42B80; margin: 0 0 8px; letter-spacing: .06em; }
 .hs-rc-actions {
   display: flex;
   flex-wrap: wrap;

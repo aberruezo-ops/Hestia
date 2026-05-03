@@ -62,6 +62,8 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
   const [email,    setEmail   ] = React.useState('');
   const [comments, setComments] = React.useState('');
 
+  const valid = name.trim().length > 0 && /\S+@\S+/.test(email);
+
   const aptName = _CM.apt_names[aptId] || 'Hestía';
   const calc    = _calcStay(selStart, selEnd, aptId, pets);
 
@@ -228,7 +230,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
 
       {/* Contact form */}
       <div className="req-contact-form">
-        <div className="req-form-title">{lang === 'es' ? 'Tus datos (opcional pero recomendable)' : 'Your details (optional but recommended)'}</div>
+        <div className="req-form-title">{lang === 'es' ? 'Tus datos · nombre y email obligatorios' : 'Your details · name and email required'}</div>
         <div className="req-form-row">
           <input className="req-input" type="text" placeholder={lang === 'es' ? 'Nombre' : 'Name'} value={name} onChange={e => setName(e.target.value)}/>
           <input className="req-input" type="tel" placeholder={lang === 'es' ? 'Teléfono' : 'Phone'} value={phone} onChange={e => setPhone(e.target.value)}/>
@@ -245,14 +247,23 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
           : <><strong>Price request — not a booking.</strong> These are maximum indicative prices. At Hestía we like to talk to our guests, understand what they need, and try to adapt the price accordingly. Tell us about your situation.</>}</p>
       </div>
 
+      {!valid && (name.length > 0 || email.length > 0) && (
+        <p className="req-hint">{lang === 'es' ? '✦ Introduce nombre y email para continuar' : '✦ Enter your name and email to continue'}</p>
+      )}
+
       {/* CTAs */}
       <div className="req-actions">
-        <a href={waHref()} className="btn btn-primary req-btn-wa" target="_blank" rel="noopener">
+        <a href={valid ? waHref() : undefined}
+           className={`btn btn-primary req-btn-wa${!valid ? ' req-btn-dis' : ''}`}
+           target="_blank" rel="noopener"
+           onClick={!valid ? e => e.preventDefault() : undefined}>
           <WaIcon/>
           {lang === 'es' ? 'Solicitar reserva — WhatsApp' : 'Request booking — WhatsApp'}
           <span className="arrow"> →</span>
         </a>
-        <a href={mailHref()} className="btn btn-ghost-dark req-btn-mail">
+        <a href={valid ? mailHref() : undefined}
+           className={`btn btn-ghost-dark req-btn-mail${!valid ? ' req-btn-dis' : ''}`}
+           onClick={!valid ? e => e.preventDefault() : undefined}>
           {lang === 'es' ? 'Solicitar por email' : 'Request by email'}
         </a>
       </div>
