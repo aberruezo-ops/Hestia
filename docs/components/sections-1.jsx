@@ -29,14 +29,6 @@ const Hero = ({ lang, onScrollDown }) => {
         <source src="assets/playa-almeria.mp4" type="video/mp4"/>
       </video>
       <div className="hero-content">
-        <div className="hero-logo-wrap">
-          <img
-            src="assets/logo-teal-transparent.png"
-            alt="Hestía"
-            className="hero-logo-img"
-            onError={e => { e.target.style.display = 'none'; }}
-          />
-        </div>
         <div className="wordmark hero-wordmark">HESTÍA</div>
         <div className="your-home hero-yourhome">your home!</div>
 
