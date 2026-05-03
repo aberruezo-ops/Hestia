@@ -61,8 +61,8 @@
   --arena:   #F0E8D5;
   --arena-dk:#E4D9BE;
   --crema:   #FAF6F0;
-  --ink:     #1A0C18;
-  --ink-soft:#2A1A28;
+  --ink:     #2A0F2E;
+  --ink-soft:#3D1A35;
 
   /* Apartamentos — identidades del brandbook */
   /* Hestía Mar · Olivo — el campo de olivos al mar */
@@ -557,8 +557,8 @@ section {
 }
 .section-night {
   background: linear-gradient(125deg,
-    #3D1A35 0%, #1E0828 14%, #2A0F2E 28%, #1A0820 42%,
-    #3D1A35 56%, #261040 70%, #1A0828 85%, #3D1A35 100%
+    #3D1A35 0%, #2A0F2E 14%, #2A0F2E 28%, #2A0F2E 42%,
+    #3D1A35 56%, #261040 70%, #2A0F2E 85%, #3D1A35 100%
   );
   background-size: 400% 400%;
   animation: sky-night 34s ease infinite;
@@ -567,8 +567,8 @@ section {
 }
 .section-dark {
   background: linear-gradient(125deg,
-    #2A0F2E 0%, #0F0818 14%, #1C082A 28%, #3D1A35 42%,
-    #110620 56%, #261040 70%, #0A0515 85%, #2A0F2E 100%
+    #2A0F2E 0%, #2A0F2E 14%, #2A0F2E 28%, #3D1A35 42%,
+    #2A0F2E 56%, #261040 70%, #2A0F2E 85%, #2A0F2E 100%
   );
   background-size: 400% 400%;
   animation: sky-night 36s ease infinite;
@@ -1733,8 +1733,8 @@ section {
    ============================================================ */
 .manifest {
   background: linear-gradient(125deg,
-    #2A0F2E 0%, #0F0818 10%, #1C082A 22%, #3D1A35 35%,
-    #110620 48%, #261040 62%, #0A0515 75%, #2A0F2E 100%
+    #2A0F2E 0%, #2A0F2E 10%, #2A0F2E 22%, #3D1A35 35%,
+    #2A0F2E 48%, #261040 62%, #2A0F2E 75%, #2A0F2E 100%
   );
   background-size: 400% 400%;
   animation: sky-night 32s ease infinite;
@@ -1874,8 +1874,8 @@ section {
    ============================================================ */
 .contact-cta {
   background: linear-gradient(125deg,
-    #3D1A35 0%, #1E0828 12%, #2A0F2E 25%, #1A0820 38%,
-    #3D1A35 52%, #261040 65%, #1A0828 78%, #3D1A35 100%
+    #3D1A35 0%, #2A0F2E 12%, #2A0F2E 25%, #2A0F2E 38%,
+    #3D1A35 52%, #261040 65%, #2A0F2E 78%, #3D1A35 100%
   );
   background-size: 400% 400%;
   animation: sky-night 34s ease infinite;
@@ -1915,9 +1915,9 @@ section {
 footer {
   position: relative;
   background: linear-gradient(125deg,
-    #2A0F2E 0%, #0F0818 8%, #1C082A 16%, #3D1A35 24%,
-    #0D0620 32%, #261040 40%, #0A0515 48%, #1E0A2C 56%,
-    #2A0F2E 64%, #130824 72%, #3D1A35 80%, #0F0818 88%,
+    #2A0F2E 0%, #2A0F2E 8%, #2A0F2E 16%, #3D1A35 24%,
+    #2A0F2E 32%, #261040 40%, #2A0F2E 48%, #2A0F2E 56%,
+    #2A0F2E 64%, #2A0F2E 72%, #3D1A35 80%, #2A0F2E 88%,
     #2A0F2E 100%
   );
   background-size: 400% 400%;
@@ -2009,7 +2009,7 @@ footer .footer-brand .addr {
    ============================================================ */
 .apt-avail {
   padding: 90px 40px;
-  background: #0d0d0d;
+  background: #2A0F2E;
   border-top: 1px solid rgba(240,232,213,0.07);
 }
 .avail-hd {
@@ -3184,8 +3184,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .contact-cta {
   background: linear-gradient(
     -45deg,
-    #140919, #2A0F2E, #0f1a2c,
-    #1a0c18, #2A0F2E, #140919
+    #140919, #2A0F2E, #2A0F2E,
+    #2A0F2E, #2A0F2E, #140919
   );
   background-size: 500% 500%;
   animation: ctaAurora 15s ease infinite;
@@ -3259,9 +3259,9 @@ body.no-parallax .g-tile .img { transform: none !important; }
   align-items: flex-end;
   padding: calc(var(--topbar-h, 36px) + 80px) var(--page-pad) 80px;
   background: linear-gradient(125deg,
-    #2A0F2E 0%, #0F0818 8%, #1C082A 16%, #3D1A35 24%,
-    #0D0620 32%, #261040 40%, #0A0515 48%, #1E0A2C 56%,
-    #2A0F2E 64%, #130824 72%, #3D1A35 80%, #0F0818 88%,
+    #2A0F2E 0%, #2A0F2E 8%, #2A0F2E 16%, #3D1A35 24%,
+    #2A0F2E 32%, #261040 40%, #2A0F2E 48%, #2A0F2E 56%,
+    #2A0F2E 64%, #2A0F2E 72%, #3D1A35 80%, #2A0F2E 88%,
     #2A0F2E 100%
   );
   background-size: 400% 400%;
@@ -3896,8 +3896,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .contacto-reservas {
   padding: 80px var(--page-pad);
   background: linear-gradient(125deg,
-    #2A0F2E 0%, #0F0818 10%, #1C082A 22%, #3D1A35 35%,
-    #110620 50%, #261040 65%, #0A0515 80%, #2A0F2E 100%
+    #2A0F2E 0%, #2A0F2E 10%, #2A0F2E 22%, #3D1A35 35%,
+    #2A0F2E 50%, #261040 65%, #2A0F2E 80%, #2A0F2E 100%
   );
   background-size: 400% 400%;
   animation: sky-night 36s ease infinite;
@@ -4204,8 +4204,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .nosotros-team {
   padding: 96px var(--page-pad);
   background: linear-gradient(125deg,
-    #2A0F2E 0%, #0F0818 10%, #1C082A 22%, #3D1A35 35%,
-    #0D0620 50%, #1E0A2C 65%, #0A0515 80%, #2A0F2E 100%
+    #2A0F2E 0%, #2A0F2E 10%, #2A0F2E 22%, #3D1A35 35%,
+    #2A0F2E 50%, #2A0F2E 65%, #2A0F2E 80%, #2A0F2E 100%
   );
   background-size: 400% 400%;
   animation: sky-night 40s ease infinite;
@@ -5280,7 +5280,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
    HOME SEARCH WIDGET  (.home-search / .hs-*)
    ═══════════════════════════════════════════════════════════ */
 .home-search {
-  background: linear-gradient(180deg, var(--ber-dk) 0%, #14110c 100%);
+  background: linear-gradient(180deg, var(--ber-dk) 0%, #2A0F2E 100%);
   padding: 80px 0 90px;
   position: relative;
   overflow: hidden;
@@ -5680,6 +5680,58 @@ body.no-parallax .g-tile .img { transform: none !important; }
   line-height: 1.55;
   margin: 0;
 }
+/* Dark-theme price block inside home search result cards */
+.hs-price-block {
+  background: rgba(240,232,213,.05);
+  border: 1px solid rgba(240,232,213,.1);
+  border-radius: 10px 0 10px 0;
+  padding: 16px 18px;
+  margin: 0 0 14px;
+}
+.hs-pb-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.hs-pb-direct { display: flex; flex-direction: column; gap: 2px; }
+.hs-pb-lbl {
+  font-size: 10px; text-transform: uppercase; letter-spacing: .14em;
+  color: rgba(240,232,213,.5); font-family: var(--sans);
+}
+.hs-pb-total {
+  font-family: var(--serif); font-size: clamp(24px, 3.5vw, 36px);
+  font-weight: 400; color: var(--arena); line-height: 1;
+}
+.hs-pb-avg { font-size: 12px; color: rgba(240,232,213,.6); }
+.hs-pb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; }
+.hs-pb-ref { display: flex; flex-direction: column; align-items: flex-end; }
+.hs-pb-ref-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: rgba(240,232,213,.4); }
+.hs-pb-ref-val {
+  font-size: 16px; color: rgba(240,232,213,.38);
+  text-decoration: line-through; font-family: var(--serif);
+}
+.hs-pb-breakdown {
+  border-top: 1px solid rgba(240,232,213,.1);
+  padding-top: 12px; display: flex; flex-direction: column; gap: 5px;
+}
+.hs-pb-line {
+  display: flex; justify-content: space-between;
+  font-size: 12px; color: rgba(240,232,213,.5); font-family: var(--sans);
+}
+.hs-pb-disc { color: #D42B80; }
+.hs-pb-total-line {
+  font-weight: 600; color: var(--arena);
+  border-top: 1px solid rgba(240,232,213,.1);
+  padding-top: 7px; margin-top: 2px; font-size: 13px;
+}
+.hs-pb-note {
+  font-size: 10.5px; color: rgba(240,232,213,.38);
+  margin: 10px 0 0; line-height: 1.5; font-family: var(--sans);
+}
+
 .hs-rc-unavail-note {
   font-family: var(--sans);
   font-size: 13px; font-weight: 300;
@@ -5868,7 +5920,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 
 /* La Voz de Hestía */
 .noticias-voz {
-  background: linear-gradient(160deg, var(--ink) 0%, var(--ber-dk) 60%, #1A0828 100%);
+  background: linear-gradient(160deg, var(--ink) 0%, var(--ber-dk) 60%, #2A0F2E 100%);
   padding: 90px var(--page-pad);
 }
 .noticias-voz-eyebrow {
@@ -6031,7 +6083,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 
 /* Próxima edición */
 .noticias-next {
-  background: linear-gradient(125deg, var(--ber-dk) 0%, #1E0828 50%, var(--ber) 100%);
+  background: linear-gradient(125deg, var(--ber-dk) 0%, #2A0F2E 50%, var(--ber) 100%);
   padding: 80px var(--page-pad);
   text-align: center;
 }

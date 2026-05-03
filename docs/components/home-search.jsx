@@ -52,8 +52,27 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests,
 
   const nights  = checkin && checkout ? _hsDiff(checkin, checkout) : 0;
   const aptName = apt.name;
+  const calc    = (checkin && checkout && checkout > checkin)
+    ? _calcStay(checkin, checkout, apt.id, pet) : null;
+  const fmt = n => n.toLocaleString('es-ES') + ' €';
 
   const buildMsg = () => {
+    const c = calc;
+    const priceBlock = c
+      ? (lang === 'es'
+          ? `\n💰 PRECIO ESTIMADO DIRECTO\n` +
+            `   ${fmt(c.directTotal)} total (${c.nights} noches × ~${fmt(c.avgPerNight)}/noche)\n` +
+            (c.stayD ? `   🏷 ${c.stayD.es}: −${fmt(c.stayDiscAmt)}\n` : '') +
+            (pet ? `   🐾 Mascota: Sí (+${PET_SUPP_FLAT}€ tarifa plana)\n` : '') +
+            `   vs. ~${fmt(c.totalBooking)} en Booking.com → ahorro ~${fmt(c.savings)}\n` +
+            `   ✓ Sin comisiones · Precio igual o mejor que cualquier plataforma\n`
+          : `\n💰 ESTIMATED DIRECT PRICE\n` +
+            `   ${fmt(c.directTotal)} total (${c.nights} nights × ~${fmt(c.avgPerNight)}/night)\n` +
+            (c.stayD ? `   🏷 ${c.stayD.en}: −${fmt(c.stayDiscAmt)}\n` : '') +
+            (pet ? `   🐾 Pet: Yes (+${PET_SUPP_FLAT}€ flat fee)\n` : '') +
+            `   vs. ~${fmt(c.totalBooking)} on Booking.com → saving ~${fmt(c.savings)}\n` +
+            `   ✓ No fees · Same or better price than any platform\n`)
+      : '';
     const lines = [];
     if (lang === 'es') {
       lines.push(`Hola! Quiero solicitar precio para ${aptName}.\n`);
@@ -67,6 +86,7 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests,
       if (extraLinen)  lines.push(`🛏 Sábanas extra: sí`);
       if (cot)         lines.push(`🛏 Cuna de bebé: sí`);
       if (highchair)   lines.push(`🪑 Trona: sí`);
+      lines.push(priceBlock);
       if (rcName)  lines.push(`👤 Nombre: ${rcName}`);
       if (rcEmail) lines.push(`📧 Email: ${rcEmail}`);
       if (rcPhone) lines.push(`📱 Teléfono: ${rcPhone}`);
@@ -83,6 +103,7 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests,
       if (extraLinen)  lines.push(`🛏 Extra linen: yes`);
       if (cot)         lines.push(`🛏 Baby cot: yes`);
       if (highchair)   lines.push(`🪑 High chair: yes`);
+      lines.push(priceBlock);
       if (rcName)  lines.push(`👤 Name: ${rcName}`);
       if (rcEmail) lines.push(`📧 Email: ${rcEmail}`);
       if (rcPhone) lines.push(`📱 Phone: ${rcPhone}`);
@@ -123,6 +144,55 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests,
 
         {available ? (
           <>
+            {calc && (
+              <div className="hs-price-block">
+                <div className="hs-pb-main">
+                  <div className="hs-pb-direct">
+                    <span className="hs-pb-lbl">{lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to'}</span>
+                    <span className="hs-pb-total">{fmt(calc.directTotal)}</span>
+                    <span className="hs-pb-avg">{fmt(calc.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</span>
+                  </div>
+                  <div className="hs-pb-right">
+                    <div className="hs-pb-ref">
+                      <span className="hs-pb-ref-lbl">Booking.com</span>
+                      <span className="hs-pb-ref-val">{fmt(calc.totalBooking)}</span>
+                    </div>
+                    <div className="price-savings-badge">
+                      {lang === 'es' ? 'Ahorras' : 'You save'} ~{fmt(calc.savings)}
+                    </div>
+                  </div>
+                </div>
+                <div className="hs-pb-breakdown">
+                  <div className="hs-pb-line">
+                    <span>{lang === 'es' ? `${calc.nights} noches × precio variable` : `${calc.nights} nights × variable rate`}</span>
+                    <span>{fmt(calc.totalBooking)}</span>
+                  </div>
+                  <div className="hs-pb-line hs-pb-disc">
+                    <span>{lang === 'es' ? '−9 % reserva directa' : '−9 % direct booking'}</span>
+                    <span>−{fmt(calc.totalBooking - calc.afterDirect)}</span>
+                  </div>
+                  {calc.stayD && (
+                    <div className="hs-pb-line hs-pb-disc">
+                      <span>{lang === 'es' ? calc.stayD.es : calc.stayD.en}</span>
+                      <span>−{fmt(calc.stayDiscAmt)}</span>
+                    </div>
+                  )}
+                  {calc.petAmt > 0 && (
+                    <div className="hs-pb-line">
+                      <span>{lang === 'es' ? `Suplemento mascota (${PET_SUPP_FLAT}€ tarifa plana)` : `Pet supplement (${PET_SUPP_FLAT}€ flat fee)`}</span>
+                      <span>+{fmt(calc.petAmt)}</span>
+                    </div>
+                  )}
+                  <div className="hs-pb-line hs-pb-total-line">
+                    <span>{lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'}</span>
+                    <span>{fmt(calc.directTotal)}</span>
+                  </div>
+                </div>
+                <p className="hs-pb-note">{lang === 'es'
+                  ? '* Precio máximo orientativo. Cuéntanos de ti — muchas veces podemos ajustar.'
+                  : '* Maximum indicative price. Tell us about yourselves — we can often adjust.'}</p>
+              </div>
+            )}
             <div className="hs-rc-contact">
               <div className="hs-rc-contact-row">
                 <input className="hs-rc-input" type="text"
