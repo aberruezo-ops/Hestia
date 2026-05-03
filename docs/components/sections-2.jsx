@@ -124,6 +124,7 @@ const Team = ({ lang }) => {
         <div className="team-grid">
           <div className="team-member alex">
             <div className="portrait">
+              <img src="assets/photo-alex.jpg" alt="Alex Berruezo" onError={e => { e.currentTarget.style.display='none'; }}/>
               <svg viewBox="0 0 100 125" className="silhouette" preserveAspectRatio="xMidYMax meet">
                 <defs>
                   <linearGradient id="gA" x1="0" x2="0" y1="0" y2="1">
@@ -147,6 +148,7 @@ const Team = ({ lang }) => {
           </div>
           <div className="team-member fran">
             <div className="portrait">
+              <img src="assets/photo-fran.jpg" alt="Fran Moral" onError={e => { e.currentTarget.style.display='none'; }}/>
               <svg viewBox="0 0 100 125" className="silhouette" preserveAspectRatio="xMidYMax meet">
                 <defs>
                   <linearGradient id="gF" x1="0" x2="0" y1="0" y2="1">
