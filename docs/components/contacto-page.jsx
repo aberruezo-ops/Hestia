@@ -107,7 +107,7 @@ const PersonCard = ({ name, role, langLabel, phone, waLink, quote, initial, acce
         <a href={waLink} className="btn btn-primary" target="_blank" rel="noopener">
           WhatsApp <span className="arrow">→</span>
         </a>
-        <a href={`tel:${phone}`} className="btn btn-ghost">
+        <a href={`tel:${phone}`} className="btn btn-ghost-dark">
           {phone}
         </a>
       </div>
@@ -144,7 +144,7 @@ const ContactoPersons = ({ lang }) => {
           />
         </div>
         <div className="contacto-email-row">
-          <a href="mailto:info@hestiayourhome.com" className="btn btn-ghost-light">
+          <a href="mailto:info@hestiayourhome.com" className="btn btn-ghost-dark">
             ✉ info@hestiayourhome.com
           </a>
         </div>

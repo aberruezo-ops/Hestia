@@ -234,7 +234,7 @@ const ReservasAside = ({ lang }) => {
           <a href="https://wa.me/34620316370" className="btn btn-primary" target="_blank" rel="noopener">
             WhatsApp <span className="arrow">→</span>
           </a>
-          <a href="tel:+34620316370" className="btn btn-ghost">+34 620 316 370</a>
+          <a href="tel:+34620316370" className="btn btn-ghost-dark">+34 620 316 370</a>
         </div>
       </div>
       <div className="reservas-person-card" style={{ '--card-accent': 'var(--vt)' }}>
@@ -248,7 +248,7 @@ const ReservasAside = ({ lang }) => {
           <a href="https://wa.me/34654138251" className="btn btn-primary" target="_blank" rel="noopener">
             WhatsApp <span className="arrow">→</span>
           </a>
-          <a href="tel:+34654138251" className="btn btn-ghost">+34 654 138 251</a>
+          <a href="tel:+34654138251" className="btn btn-ghost-dark">+34 654 138 251</a>
         </div>
       </div>
       <div className="reservas-guarantee">

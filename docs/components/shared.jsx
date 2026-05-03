@@ -374,7 +374,7 @@ const QuickFAQ = ({ lang, pageId = 'home' }) => {
           ))}
         </div>
         <div className="qfaq-more">
-          <a href="contacto.html" className="btn btn-ghost">
+          <a href="contacto.html" className="btn btn-ghost-dark">
             {lang === 'es' ? 'Más preguntas →' : 'More questions →'}
           </a>
         </div>
