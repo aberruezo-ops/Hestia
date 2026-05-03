@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-Run this script from your OWN computer (not a server) to fetch Booking.com
-and Airbnb iCal feeds and update docs/assets/availability.json in-place.
+Run this script from your OWN computer to sync availability from Booking.com.
+
+Booking.com restricts iCal fetches to known calendar-app IPs.
+Run from your home/office machine where your IP is not restricted.
 
 Usage (from repo root):
     python3 .github/scripts/sync_local.py
 
-Booking.com blocks server/CI IPs — this script works because it runs
-from your home/office IP which Booking.com allows.
+Then commit the updated docs/assets/availability.json and push.
 """
 
 import json
@@ -22,11 +23,11 @@ except ImportError:
     print("Missing deps — run: pip install requests icalendar")
     sys.exit(1)
 
-# ── Booking.com iCal URLs (public calendar export tokens) ────────────────────
+# ── iCal URLs — add Airbnb URLs when available ───────────────────────────────
 ICAL_URLS = {
     "vm": {
         "booking": "https://ical.booking.com/v1/export?t=782a0141-0657-48ea-81fc-2b45e4a5ac12",
-        "airbnb":  "",   # add when available
+        "airbnb":  "",
     },
     "vt": {
         "booking": "https://ical.booking.com/v1/export?t=b7ee28cf-3302-435e-ab0e-4f9e64f3f6a7",
@@ -38,24 +39,23 @@ ICAL_URLS = {
     },
 }
 
-LOOKAHEAD   = 365
-OUTPUT_FILE = Path(__file__).parents[2] / "docs" / "assets" / "availability.json"
+LOOKAHEAD = 365
+OUTPUT    = Path(__file__).parents[2] / "docs" / "assets" / "availability.json"
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-                  "AppleWebKit/537.36 (KHTML, like Gecko) "
-                  "Chrome/124.0.0.0 Safari/537.36",
-    "Accept": "text/calendar, text/plain, */*",
+    "User-Agent":      "CalendarStore/6.0 (1190; OS X 14.4) dataaccessd/1.0",
+    "Accept":          "text/calendar, text/plain, */*",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Cache-Control":   "no-cache",
 }
 
 
-def fetch_blocked(url: str) -> list[dict]:
-    if not url:
-        return []
+def fetch_ical(url: str) -> tuple[list[dict], str | None]:
     try:
-        resp = requests.get(url, timeout=20, headers=HEADERS)
-        resp.raise_for_status()
-        cal = Calendar.from_ical(resp.content)
+        resp = requests.get(url, timeout=30, headers=HEADERS)
+        if resp.status_code != 200:
+            return [], f"HTTP {resp.status_code}"
+        cal    = Calendar.from_ical(resp.content)
         ranges = []
         for comp in cal.walk():
             if comp.name != "VEVENT":
@@ -72,23 +72,22 @@ def fetch_blocked(url: str) -> list[dict]:
                 end = end.date()
             if start and end and end > start:
                 ranges.append({"start": start.isoformat(), "end": end.isoformat()})
-        return ranges
+        return ranges, None
     except Exception as exc:
-        print(f"    Warning: {exc}")
-        return []
+        return [], str(exc)
 
 
 def merge(ranges: list[dict]) -> list[dict]:
     if not ranges:
         return []
-    sorted_r = sorted(ranges, key=lambda x: x["start"])
-    merged   = [dict(sorted_r[0])]
-    for r in sorted_r[1:]:
-        if r["start"] <= merged[-1]["end"]:
-            merged[-1]["end"] = max(merged[-1]["end"], r["end"])
+    s = sorted(ranges, key=lambda x: x["start"])
+    m = [dict(s[0])]
+    for r in s[1:]:
+        if r["start"] <= m[-1]["end"]:
+            m[-1]["end"] = max(m[-1]["end"], r["end"])
         else:
-            merged.append(dict(r))
-    return merged
+            m.append(dict(r))
+    return m
 
 
 def main() -> None:
@@ -97,36 +96,42 @@ def main() -> None:
     result = {}
 
     for apt, sources in ICAL_URLS.items():
-        all_ranges     = []
-        active_sources = []
+        all_ranges   = []
+        sources_ok   = []
+        fetch_errors = {}
 
         for src, url in sources.items():
             if not url:
-                print(f"  {apt}/{src}: no URL — skipping")
+                print(f"  {apt}/{src}: not configured — skipping")
                 continue
             print(f"  {apt}/{src}: fetching...")
-            raw    = fetch_blocked(url)
+            raw, err = fetch_ical(url)
+            if err:
+                print(f"    ✗ {err}")
+                fetch_errors[src] = err
+                continue
+            sources_ok.append(src)
             future = [r for r in raw if r["end"] >= today and r["start"] <= cutoff]
-            if future:
-                all_ranges.extend(future)
-                active_sources.append(src)
-                print(f"    → {len(future)} events kept")
-            else:
-                print(f"    → no future events")
+            all_ranges.extend(future)
+            print(f"    ✓ {len(raw)} events total, {len(future)} future")
 
         result[apt] = {
-            "blocked": merge(all_ranges),
-            "updated": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "sources": active_sources,
-            "demo":    False,
+            "blocked":      merge(all_ranges),
+            "updated":      datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "sources":      sources_ok,
+            "fetch_errors": fetch_errors,
+            "demo":         False,
         }
 
-    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as fh:
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    with open(OUTPUT, "w", encoding="utf-8") as fh:
         json.dump(result, fh, indent=2, ensure_ascii=False)
 
-    print(f"\nWritten → {OUTPUT_FILE}")
-    print("\nNext: git add docs/assets/availability.json && git commit -m 'chore: sync availability' && git push")
+    print(f"\nWritten → {OUTPUT}")
+    print("\nNext steps:")
+    print("  git add docs/assets/availability.json")
+    print('  git commit -m "chore: sync availability"')
+    print("  git push")
 
 
 if __name__ == "__main__":

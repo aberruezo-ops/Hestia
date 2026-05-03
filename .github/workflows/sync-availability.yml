@@ -43,6 +43,10 @@ jobs:
           ICAL_VS_BOOKING: "https://ical.booking.com/v1/export?t=237c401e-dc78-4a18-a06d-00868f58c58c"
         run: python .github/scripts/sync_ical.py
 
+      - name: Show result
+        if: always()
+        run: cat docs/assets/availability.json
+
       - name: Commit and push if changed
         run: |
           git config user.name  "hestia-bot"
