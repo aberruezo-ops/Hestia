@@ -111,6 +111,116 @@ const Bridge = ({ lang }) => {
   );
 };
 
+// --- MODAL DE RESERVA DESDE HOME ---
+const HomeBookingModal = ({ apt, lang, onClose }) => {
+  const [name,  setName ] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [phone, setPhone] = React.useState('');
+  const [msg,   setMsg  ] = React.useState('');
+
+  const valid = name.trim().length > 0 && /\S+@\S+/.test(email);
+  const waNum = lang === 'es' ? '34620316370' : '34654138251';
+
+  const buildWaMsg = () => {
+    const intro = lang === 'es'
+      ? `Hola, me llamo ${name}.\n\nMe interesa ${apt.name}.\n`
+      : `Hello, my name is ${name}.\n\nI'm interested in ${apt.name}.\n`;
+    const ph  = phone ? (lang === 'es' ? `Tel: ${phone}\n` : `Phone: ${phone}\n`) : '';
+    const em  = `Email: ${email}\n`;
+    const txt = msg ? `\n${msg}\n` : '';
+    const end = lang === 'es'
+      ? '\n¿Podéis indicarme disponibilidad y precio final?\n¡Gracias!'
+      : '\nCould you let me know availability and final price?\nThank you!';
+    return intro + em + ph + txt + end;
+  };
+
+  const mailSubj = lang === 'es' ? `Consulta reserva — ${apt.name}` : `Booking enquiry — ${apt.name}`;
+  const mailBody = lang === 'es'
+    ? `Nombre: ${name}\nEmail: ${email}\nTeléfono: ${phone || '—'}\nApartamento: ${apt.name}\n\n${msg || '(sin mensaje adicional)'}`
+    : `Name: ${name}\nEmail: ${email}\nPhone: ${phone || '—'}\nApartment: ${apt.name}\n\n${msg || '(no additional message)'}`;
+
+  React.useEffect(() => {
+    const esc = e => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', esc);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.removeEventListener('keydown', esc); document.body.style.overflow = prev; };
+  }, []);
+
+  const WaIcon = () => (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  );
+  const MailIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+      <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/>
+    </svg>
+  );
+
+  return (
+    <div className="hbm-overlay" onClick={onClose} role="dialog" aria-modal="true">
+      <div className="hbm-card" onClick={e => e.stopPropagation()}>
+        <button className="hbm-close" onClick={onClose} aria-label="Cerrar">✕</button>
+
+        <div className="hbm-head">
+          <div className="hbm-apt-num">{apt.num}</div>
+          <div className="hbm-apt-name">HESTÍA <strong>{apt.name.replace('Hestía ', '')}</strong></div>
+          <p className="hbm-sub">{lang === 'es' ? 'Solicitud de información · sin compromiso' : 'No-commitment enquiry'}</p>
+        </div>
+
+        <div className="hbm-form">
+          <div className="hbm-row">
+            <div className="hbm-field">
+              <label>{lang === 'es' ? 'Nombre *' : 'Name *'}</label>
+              <input value={name} onChange={e => setName(e.target.value)}
+                     placeholder={lang === 'es' ? 'Tu nombre' : 'Your name'} autoFocus/>
+            </div>
+            <div className="hbm-field">
+              <label>Email *</label>
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)}
+                     placeholder="tu@email.com"/>
+            </div>
+          </div>
+          <div className="hbm-row">
+            <div className="hbm-field">
+              <label>{lang === 'es' ? 'Teléfono' : 'Phone'} <span className="hbm-opt">{lang === 'es' ? '(opcional)' : '(optional)'}</span></label>
+              <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="+34 600 000 000"/>
+            </div>
+            <div className="hbm-field hbm-field-wide">
+              <label>{lang === 'es' ? 'Mensaje' : 'Message'} <span className="hbm-opt">{lang === 'es' ? '(opcional)' : '(optional)'}</span></label>
+              <textarea value={msg} onChange={e => setMsg(e.target.value)} rows={2}
+                        placeholder={lang === 'es' ? 'Fechas pensadas, número de personas...' : 'Dates in mind, number of guests...'}/>
+            </div>
+          </div>
+          {!valid && (name.length > 0 || email.length > 0) && (
+            <p className="hbm-hint">{lang === 'es' ? '✦ Nombre y email requeridos para continuar' : '✦ Name and email required to continue'}</p>
+          )}
+        </div>
+
+        <div className="hbm-actions">
+          <a href={valid ? `https://wa.me/${waNum}?text=${encodeURIComponent(buildWaMsg())}` : undefined}
+             className={`hbm-btn hbm-wa${!valid ? ' hbm-dis' : ''}`}
+             target="_blank" rel="noopener"
+             onClick={!valid ? e => e.preventDefault() : undefined}>
+            <WaIcon/> {lang === 'es' ? 'WhatsApp con Alex o Fran' : 'WhatsApp Alex or Fran'}
+          </a>
+          <a href={valid ? `mailto:info@hestiayourhome.com?subject=${encodeURIComponent(mailSubj)}&body=${encodeURIComponent(mailBody)}` : undefined}
+             className={`hbm-btn hbm-mail${!valid ? ' hbm-dis' : ''}`}
+             onClick={!valid ? e => e.preventDefault() : undefined}>
+            <MailIcon/> {lang === 'es' ? 'Enviar por email' : 'Send by email'}
+          </a>
+        </div>
+        <p className="hbm-note">
+          {lang === 'es'
+            ? '* Precios orientativos máximos. Alex o Fran responden en menos de 24 h.'
+            : '* Maximum guide prices. Alex or Fran reply within 24 h.'}
+        </p>
+      </div>
+    </div>
+  );
+};
+
 // --- APARTAMENTOS (scroll horizontal) ---
 const APARTMENTS = [
   { id: 'vm', num: '01', name: 'Hestía Mar',      slug: 'mar',      license: 'VFT/AL/01580', concept: 'apt_01_concept',
@@ -127,7 +237,16 @@ const APARTMENTS = [
 const Apartments = ({ lang }) => {
   const t = COPY[lang];
   const trackRef = React.useRef(null);
-  const [activeIdx, setActiveIdx] = React.useState(0);
+  const [activeIdx,  setActiveIdx ] = React.useState(0);
+  const [bookingApt, setBookingApt] = React.useState(null);
+
+  const aptMaxPrice = (aptId) => {
+    const tbl = HESTIA_PRICES[aptId];
+    if (!tbl) return null;
+    const maxBase = Math.max(...tbl.base.slice(1));
+    const maxPeak = tbl.peaks ? Math.max(...tbl.peaks.map(p => p.pn)) : 0;
+    return Math.round(Math.max(maxBase, maxPeak) * (1 - DIRECT_DISCOUNT));
+  };
 
   const handleScroll = () => {
     const track = trackRef.current;
@@ -164,30 +283,46 @@ const Apartments = ({ lang }) => {
       </section>
       <div className="apartments-scroll">
         <div className="apartments-track" ref={trackRef} onScroll={handleScroll}>
-          {APARTMENTS.map((a, i) => (
-            <div key={a.id} id={`apt-${a.id}`} className={`apt-card ${a.id}`}>
-              <img src={a.img} alt={a.name} className="apt-photo" loading="eager"/>
-              <div className="apt-wash"/>
-              <div className="pattern"/>
-              <div className="apt-corner"><span className="bar"/>{a.license}</div>
-              <div className="apt-content">
-                <div className="apt-num">{a.num}</div>
-                <div className="apt-name">
-                  <span className="small">HESTÍA</span><br/>{a.name.replace('Hestía ', '')}
+          {APARTMENTS.map((a, i) => {
+            const maxPrice = aptMaxPrice(a.id);
+            return (
+              <div key={a.id} id={`apt-${a.id}`} className={`apt-card ${a.id}`}>
+                <img src={a.img} alt={a.name} className="apt-photo" loading="eager"/>
+                <WatermarkBadge size={32} pos={{ bottom: 72, right: 16 }}/>
+                <div className="apt-wash"/>
+                <div className="pattern"/>
+                <div className="apt-corner"><span className="bar"/>{a.license}</div>
+                <div className="apt-content">
+                  <div className="apt-num">{a.num}</div>
+                  <div className="apt-name">
+                    <span className="small">HESTÍA</span><br/>{a.name.replace('Hestía ', '')}
+                  </div>
+                  <div className="apt-tag">« {t[a.concept]} »</div>
+                  <div className="apt-meta">
+                    {a.meta.map((m, j) => (
+                      <React.Fragment key={j}>
+                        {j > 0 && <span className="dot"/>}
+                        <span>{m}</span>
+                      </React.Fragment>
+                    ))}
+                  </div>
+                  {maxPrice && (
+                    <div className="apt-price-badge">
+                      <span className="apb-label">{lang === 'es' ? 'hasta' : 'up to'}</span>
+                      <span className="apb-price">{maxPrice.toLocaleString('es-ES')}€</span>
+                      <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
+                    </div>
+                  )}
+                  <div className="apt-ctas">
+                    <a href={`${a.slug}.html`} className="apt-link-cta">{t.apt_cta}</a>
+                    <button className="apt-cta" onClick={() => setBookingApt(a)}>
+                      {lang === 'es' ? 'Reservar →' : 'Book →'}
+                    </button>
+                  </div>
                 </div>
-                <div className="apt-tag">« {t[a.concept]} »</div>
-                <div className="apt-meta">
-                  {a.meta.map((m, j) => (
-                    <React.Fragment key={j}>
-                      {j > 0 && <span className="dot"/>}
-                      <span>{m}</span>
-                    </React.Fragment>
-                  ))}
-                </div>
-                <a href={`${a.slug}.html`} className="apt-cta">{t.apt_cta} →</a>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         <div className="apt-scroll-progress">
           {APARTMENTS.map((_, i) => (
@@ -199,6 +334,7 @@ const Apartments = ({ lang }) => {
           ))}
         </div>
       </div>
+      {bookingApt && <HomeBookingModal apt={bookingApt} lang={lang} onClose={() => setBookingApt(null)}/>}
     </>
   );
 };
