@@ -2328,6 +2328,7 @@ footer .footer-brand .addr {
 /* Guests */
 .req-guests {
   display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap;
   gap: 16px; margin-bottom: 24px;
 }
 .req-guests-lbl {
@@ -2425,6 +2426,176 @@ footer .footer-brand .addr {
   padding: 0; transition: color .2s;
 }
 .req-reset:hover { color: rgba(240,232,213,.7); }
+
+/* ================================================================
+   PRICE ENGINE — Motor de precios
+   ================================================================ */
+.price-engine {
+  background: linear-gradient(135deg, rgba(42,15,46,0.04) 0%, rgba(58,170,187,0.06) 100%);
+  border: 1px solid rgba(42,15,46,0.1);
+  border-radius: 10px 0 10px 0;
+  padding: 24px;
+  margin: 20px 0;
+}
+.price-engine-form {
+  margin: 0 0 24px;
+}
+.price-main-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.price-direct-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.price-label-sm {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ber);
+  opacity: 0.6;
+  font-family: var(--sans);
+}
+.price-direct-total {
+  font-family: var(--serif);
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 400;
+  color: var(--ber-dk);
+  line-height: 1;
+}
+.price-avg-night {
+  font-size: 13px;
+  color: var(--ber);
+  opacity: 0.7;
+}
+.price-right-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.price-booking-ref {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.price-ref-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ber);
+  opacity: 0.5;
+}
+.price-ref-val {
+  font-size: 18px;
+  color: var(--ber);
+  opacity: 0.45;
+  text-decoration: line-through;
+  font-family: var(--serif);
+}
+.price-savings-badge {
+  background: #2d7a3c;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: var(--sans);
+  padding: 4px 10px;
+  border-radius: 10px 0 10px 0;
+  white-space: nowrap;
+}
+.price-breakdown {
+  border-top: 1px solid rgba(42,15,46,0.1);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.price-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-family: var(--sans);
+}
+.price-line-disc {
+  color: #2d7a3c;
+}
+.price-line-total {
+  font-weight: 600;
+  color: var(--ber-dk);
+  border-top: 1px solid rgba(42,15,46,0.12);
+  padding-top: 8px;
+  margin-top: 2px;
+  font-size: 14px;
+}
+.price-note {
+  font-size: 11px;
+  color: var(--ber);
+  opacity: 0.55;
+  margin: 12px 0 0;
+  line-height: 1.5;
+  font-family: var(--sans);
+}
+/* Contact form inside RequestPanel */
+.req-contact-form {
+  margin: 20px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.req-form-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ber);
+  opacity: 0.6;
+  font-family: var(--sans);
+  margin-bottom: 4px;
+}
+.req-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+@media (max-width: 480px) {
+  .req-form-row { grid-template-columns: 1fr; }
+}
+.req-input, .req-textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(42,15,46,0.18);
+  border-radius: 6px 0 6px 0;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-family: var(--sans);
+  color: var(--ber-dk);
+  outline: none;
+  transition: border-color .2s;
+  box-sizing: border-box;
+}
+.req-input:focus, .req-textarea:focus {
+  border-color: var(--sol);
+}
+.req-input-full { width: 100%; }
+.req-textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+.req-pets-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ber);
+  cursor: pointer;
+  margin-left: 12px;
+}
+.req-pets-toggle input { accent-color: var(--sol); }
 
 /* Responsive panel */
 @media (max-width: 600px) {

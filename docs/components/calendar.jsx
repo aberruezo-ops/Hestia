@@ -55,44 +55,92 @@ const _shortDate = (ds, lang) => {
 // RequestPanel — aparece cuando hay fechas seleccionadas
 // ---------------------------------------------------------------
 const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
-  const [guests, setGuests] = React.useState(2);
-  const nights = _diff(selStart, selEnd);
+  const [guests,   setGuests  ] = React.useState(2);
+  const [pets,     setPets    ] = React.useState(false);
+  const [name,     setName    ] = React.useState('');
+  const [phone,    setPhone   ] = React.useState('');
+  const [email,    setEmail   ] = React.useState('');
+  const [comments, setComments] = React.useState('');
+
   const aptName = _CM.apt_names[aptId] || 'Hestía';
+  const calc    = _calcStay(selStart, selEnd, aptId, pets);
+
+  const fmt = n => n.toLocaleString('es-ES') + ' €';
+
+  const months_es = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const months_en = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  const fmtDate = (ds) => {
+    if (!ds) return '';
+    const d = new Date(ds + 'T12:00:00Z');
+    if (lang === 'es') return `${d.getUTCDate()} de ${months_es[d.getUTCMonth()]} de ${d.getUTCFullYear()}`;
+    return `${months_en[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+  };
 
   const buildMsg = () => {
-    const entry = _longDate(selStart, lang);
-    const salida = _longDate(selEnd, lang);
-    if (lang === 'es') {
-      return (
-        `Hola! Quiero solicitar precio para ${aptName}.\n\n` +
-        `📅 Entrada: ${entry}\n` +
-        `📅 Salida: ${salida}\n` +
-        `🌙 Noches: ${nights}\n` +
-        `👥 Huéspedes: ${guests}\n\n` +
-        `Solicito precio y disponibilidad confirmada antes de formalizar la reserva.\n` +
-        `¡Gracias!`
-      );
-    }
+    const c = calc;
+    const petsLine = pets
+      ? (lang === 'es' ? `🐾 Mascota: Sí (+${PET_SUPP_NIGHT}€/noche)\n` : `🐾 Pet: Yes (+${PET_SUPP_NIGHT}€/night)\n`)
+      : '';
+    const discLine = c && c.stayD
+      ? (lang === 'es'
+          ? `🏷 ${c.stayD.es}: −${fmt(c.stayDiscAmt)}\n`
+          : `🏷 ${c.stayD.en}: −${fmt(c.stayDiscAmt)}\n`)
+      : '';
+    const priceBlock = c
+      ? (lang === 'es'
+          ? `\n💰 PRECIO ESTIMADO DIRECTO\n` +
+            `   ${fmt(c.directTotal)} total (${c.nights} noches × ~${fmt(c.avgPerNight)}/noche)\n` +
+            discLine +
+            petsLine +
+            `   vs. ~${fmt(c.totalBooking)} en Booking.com → ahorro ~${fmt(c.savings)}\n` +
+            `   ✓ Sin comisiones · Precio igual o mejor que cualquier plataforma\n`
+          : `\n💰 ESTIMATED DIRECT PRICE\n` +
+            `   ${fmt(c.directTotal)} total (${c.nights} nights × ~${fmt(c.avgPerNight)}/night)\n` +
+            discLine +
+            petsLine +
+            `   vs. ~${fmt(c.totalBooking)} on Booking.com → saving ~${fmt(c.savings)}\n` +
+            `   ✓ No fees · Same or better price than any platform\n`)
+      : '';
+    const nameBlock = name ? (lang === 'es' ? `\n👤 Nombre: ${name}` : `\n👤 Name: ${name}`) : '';
+    const phoneBlock = phone ? (lang === 'es' ? `\n📱 Teléfono: ${phone}` : `\n📱 Phone: ${phone}`) : '';
+    const emailBlock = email ? `\n📧 Email: ${email}` : '';
+    const commBlock  = comments ? (lang === 'es' ? `\n💬 Comentarios: ${comments}` : `\n💬 Comments: ${comments}`) : '';
+
+    if (lang === 'es') return (
+      `¡Hola! Quiero reservar ${aptName}.\n\n` +
+      `📅 Entrada: ${fmtDate(selStart)}\n` +
+      `📅 Salida: ${fmtDate(selEnd)}\n` +
+      `🌙 Noches: ${calc ? calc.nights : '?'}\n` +
+      `👥 Huéspedes: ${guests}` +
+      priceBlock +
+      nameBlock + phoneBlock + emailBlock + commBlock + '\n\n' +
+      `Solicito confirmación de disponibilidad y precio definitivo.\n¡Gracias!`
+    );
     return (
-      `Hello! I'd like to request a price for ${aptName}.\n\n` +
-      `📅 Check-in: ${entry}\n` +
-      `📅 Check-out: ${salida}\n` +
-      `🌙 Nights: ${nights}\n` +
-      `👥 Guests: ${guests}\n\n` +
-      `I'm requesting a price and confirmed availability before making any booking.\n` +
-      `Thank you!`
+      `Hello! I'd like to book ${aptName}.\n\n` +
+      `📅 Check-in: ${fmtDate(selStart)}\n` +
+      `📅 Check-out: ${fmtDate(selEnd)}\n` +
+      `🌙 Nights: ${calc ? calc.nights : '?'}\n` +
+      `👥 Guests: ${guests}` +
+      priceBlock +
+      nameBlock + phoneBlock + emailBlock + commBlock + '\n\n' +
+      `I'd like to confirm availability and the final price.\nThank you!`
     );
   };
 
-  const waHref = () =>
-    'https://wa.me/34620316370?text=' + encodeURIComponent(buildMsg());
-
+  const waNum  = lang === 'es' ? '34620316370' : '34654138251';
+  const waHref = () => `https://wa.me/${waNum}?text=${encodeURIComponent(buildMsg())}`;
   const mailHref = () => {
-    const subj = lang === 'es'
-      ? `Solicitud de precio — ${aptName}`
-      : `Price request — ${aptName}`;
+    const subj = lang === 'es' ? `Solicitud reserva — ${aptName}` : `Booking request — ${aptName}`;
     return `mailto:info@hestiayourhome.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(buildMsg())}`;
   };
+
+  const WaIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  );
 
   return (
     <div className="req-panel" style={{ '--req-accent': accent }}>
@@ -101,126 +149,117 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
       <div className="req-dates">
         <div className="req-date-col">
           <span className="req-date-lbl">{lang === 'es' ? 'Entrada' : 'Check-in'}</span>
-          <span className="req-date-val">{_longDate(selStart, lang)}</span>
+          <span className="req-date-val">{fmtDate(selStart)}</span>
         </div>
         <div className="req-nights">
-          <span className="req-nights-n">{nights}</span>
+          <span className="req-nights-n">{calc ? calc.nights : '—'}</span>
           <span className="req-nights-lbl">{lang === 'es' ? 'noches' : 'nights'}</span>
         </div>
         <div className="req-date-col req-date-col--r">
           <span className="req-date-lbl">{lang === 'es' ? 'Salida' : 'Check-out'}</span>
-          <span className="req-date-val">{_longDate(selEnd, lang)}</span>
+          <span className="req-date-val">{fmtDate(selEnd)}</span>
         </div>
       </div>
+
+      {/* Price engine */}
+      {calc && (
+        <div className="price-engine">
+          <div className="price-main-row">
+            <div className="price-direct-block">
+              <span className="price-label-sm">{lang === 'es' ? 'Precio directo estimado' : 'Estimated direct price'}</span>
+              <span className="price-direct-total">{fmt(calc.directTotal)}</span>
+              <span className="price-avg-night">{fmt(calc.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</span>
+            </div>
+            <div className="price-right-col">
+              <div className="price-booking-ref">
+                <span className="price-ref-label">Booking.com</span>
+                <span className="price-ref-val">{fmt(calc.totalBooking)}</span>
+              </div>
+              <div className="price-savings-badge">
+                {lang === 'es' ? 'Ahorras' : 'You save'} ~{fmt(calc.savings)}
+              </div>
+            </div>
+          </div>
+          <div className="price-breakdown">
+            <div className="price-line">
+              <span>{lang === 'es' ? `${calc.nights} noches × precio variable` : `${calc.nights} nights × variable rate`}</span>
+              <span>{fmt(calc.totalBooking)}</span>
+            </div>
+            <div className="price-line price-line-disc">
+              <span>{lang === 'es' ? `−9 % reserva directa` : `−9 % direct booking`}</span>
+              <span>−{fmt(calc.totalBooking - calc.afterDirect)}</span>
+            </div>
+            {calc.stayD && (
+              <div className="price-line price-line-disc">
+                <span>{lang === 'es' ? calc.stayD.es : calc.stayD.en}</span>
+                <span>−{fmt(calc.stayDiscAmt)}</span>
+              </div>
+            )}
+            {calc.petAmt > 0 && (
+              <div className="price-line">
+                <span>{lang === 'es' ? `Suplemento mascota (${calc.nights} × ${PET_SUPP_NIGHT}€)` : `Pet supplement (${calc.nights} × ${PET_SUPP_NIGHT}€)`}</span>
+                <span>+{fmt(calc.petAmt)}</span>
+              </div>
+            )}
+            <div className="price-line price-line-total">
+              <span>{lang === 'es' ? 'Total estimado directo' : 'Estimated direct total'}</span>
+              <span>{fmt(calc.directTotal)}</span>
+            </div>
+          </div>
+          <p className="price-note">{lang === 'es'
+            ? '* Estimación orientativa. Alex confirma el precio exacto en menos de 24 h. Limpieza final y depósito se confirman al reservar.'
+            : '* Indicative estimate. Alex confirms the exact price within 24 h. Cleaning fee and deposit confirmed at booking.'}</p>
+        </div>
+      )}
 
       {/* Guests */}
       <div className="req-guests">
-        <span className="req-guests-lbl">
-          {lang === 'es' ? 'Número de huéspedes' : 'Number of guests'}
-        </span>
+        <span className="req-guests-lbl">{lang === 'es' ? 'Huéspedes' : 'Guests'}</span>
         <div className="req-guests-ctrl">
-          <button
-            className="req-g-btn"
-            onClick={() => setGuests(g => Math.max(1, g - 1))}
-            aria-label={lang === 'es' ? 'Menos huéspedes' : 'Fewer guests'}
-          >−</button>
+          <button className="req-g-btn" onClick={() => setGuests(g => Math.max(1, g - 1))} aria-label="−">−</button>
           <span className="req-g-num">{guests}</span>
-          <button
-            className="req-g-btn"
-            onClick={() => setGuests(g => Math.min(6, g + 1))}
-            aria-label={lang === 'es' ? 'Más huéspedes' : 'More guests'}
-          >+</button>
+          <button className="req-g-btn" onClick={() => setGuests(g => Math.min(6, g + 1))} aria-label="+">+</button>
         </div>
+        <label className="req-pets-toggle">
+          <input type="checkbox" checked={pets} onChange={e => setPets(e.target.checked)}/>
+          <span>{lang === 'es' ? '🐾 Mascota (+15€/noche)' : '🐾 Pet (+15€/night)'}</span>
+        </label>
       </div>
 
-      {/* Por qué no hay precio directo — explicación con voz de Hestía */}
-      <div className="req-why">
-        <div className="req-why-q">
-          {lang === 'es' ? '¿Por qué no damos el precio directamente?' : 'Why don\'t we give the price upfront?'}
+      {/* Contact form */}
+      <div className="req-contact-form">
+        <div className="req-form-title">{lang === 'es' ? 'Tus datos (opcional pero recomendable)' : 'Your details (optional but recommended)'}</div>
+        <div className="req-form-row">
+          <input className="req-input" type="text" placeholder={lang === 'es' ? 'Nombre' : 'Name'} value={name} onChange={e => setName(e.target.value)}/>
+          <input className="req-input" type="tel" placeholder={lang === 'es' ? 'Teléfono' : 'Phone'} value={phone} onChange={e => setPhone(e.target.value)}/>
         </div>
-        <p className="req-why-p">
-          {lang === 'es'
-            ? <>
-                Porque el precio en Hestía no es convencional. Aplicamos descuentos
-                para estancias de más de <strong>6, 14 o 28 noches</strong> —
-                y condiciones especiales para más de tres meses.
-                El importe también depende del <strong>número de huéspedes</strong>,
-                de si viajáis con <strong>mascotas</strong>
-                y de las <strong>fechas concretas</strong>:
-                agosto y noviembre sencillamente no son lo mismo.
-              </>
-            : <>
-                Because pricing at Hestía isn't conventional. We offer discounts
-                for stays of <strong>6, 14 or 28+ nights</strong> —
-                and special rates for over three months.
-                The amount also depends on the <strong>number of guests</strong>,
-                whether you're bringing <strong>pets</strong>,
-                and the <strong>specific dates</strong>:
-                August and November simply aren't the same.
-              </>}
-        </p>
-        <p className="req-why-p req-why-close">
-          {lang === 'es'
-            ? <>Intentamos adaptarnos a vuestras necesidades reales. Por eso nos gusta escucharos — y que nos escuchéis. <em>Hestía no es algo convencional.</em></>
-            : <>We try to adapt to your real needs. That's why we like to listen — and to be listened to. <em>Hestía is not a conventional place.</em></>}
-        </p>
+        <input className="req-input req-input-full" type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}/>
+        <textarea className="req-textarea" placeholder={lang === 'es' ? 'Comentarios, preguntas, fechas alternativas…' : 'Comments, questions, alternative dates…'} value={comments} onChange={e => setComments(e.target.value)}/>
       </div>
 
-      {/* Disclaimer — muy claro que es solicitud previa */}
+      {/* Disclaimer */}
       <div className="req-disclaimer">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-          <circle cx="12" cy="12" r="10"/>
-          <line x1="12" y1="8" x2="12" y2="12"/>
-          <line x1="12" y1="16" x2="12.01" y2="16"/>
-        </svg>
-        <p>
-          {lang === 'es'
-            ? <>
-                <strong>Solicitud de precio — no es una reserva.</strong>{' '}
-                Al enviar este mensaje únicamente estás pidiendo precio y disponibilidad confirmada.
-                Alex te responde en menos de 24 horas con el importe exacto.
-                La reserva solo se formaliza si tú la confirmas.
-              </>
-            : <>
-                <strong>Price request — not a booking.</strong>{' '}
-                By sending this message you are only asking for a price and confirmed availability.
-                Alex will reply within 24 hours with the exact amount.
-                The booking is only made if you confirm it.
-              </>}
-        </p>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>{lang === 'es'
+          ? <><strong>Solicitud de precio — no es una reserva.</strong> Alex confirma disponibilidad y precio exacto en menos de 24 horas. La reserva solo se formaliza si la confirmas tú.</>
+          : <><strong>Price request — not a booking.</strong> Alex confirms availability and exact price within 24 hours. The booking is only made when you confirm it.</>}</p>
       </div>
 
       {/* CTAs */}
       <div className="req-actions">
-        <a
-          href={waHref()}
-          className="btn btn-primary req-btn-wa"
-          target="_blank"
-          rel="noopener"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-          </svg>
-          {lang === 'es' ? 'Solicitar precio — WhatsApp' : 'Request price — WhatsApp'}
+        <a href={waHref()} className="btn btn-primary req-btn-wa" target="_blank" rel="noopener">
+          <WaIcon/>
+          {lang === 'es' ? 'Solicitar reserva — WhatsApp' : 'Request booking — WhatsApp'}
           <span className="arrow"> →</span>
         </a>
-        <a
-          href={mailHref()}
-          className="btn btn-ghost req-btn-mail"
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-            <polyline points="22,6 12,13 2,6"/>
-          </svg>
-          {lang === 'es' ? 'Solicitar precio — Email' : 'Request price — Email'}
+        <a href={mailHref()} className="btn btn-ghost-dark req-btn-mail">
+          {lang === 'es' ? 'Solicitar por email' : 'Request by email'}
         </a>
       </div>
 
-      {/* Reset */}
       <button className="req-reset" onClick={onReset}>
         ← {lang === 'es' ? 'Cambiar fechas' : 'Change dates'}
       </button>
-
     </div>
   );
 };
