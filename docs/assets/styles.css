@@ -3,6 +3,53 @@
    Lenguaje visual: Noche Mediterránea
    ============================================================ */
 
+/* ================================================================
+   VIDEO INTRO
+   ================================================================ */
+.vintro {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--ber-dk);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vintro-wrap {
+  width: min(88vw, 680px);
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+.vintro-video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px 0 10px 0;
+}
+.vintro-skip {
+  position: absolute;
+  bottom: 36px;
+  right: 36px;
+  background: rgba(240,232,213,.07);
+  border: 1px solid rgba(240,232,213,.18);
+  color: rgba(240,232,213,.5);
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 10px 0 10px 0;
+  cursor: pointer;
+  transition: background .22s, color .22s;
+}
+@media (hover: hover) {
+  .vintro-skip:hover { background: rgba(240,232,213,.16); color: var(--arena); }
+}
+@media (max-width: 600px) {
+  .vintro-wrap { width: 90vw; }
+  .vintro-skip { bottom: 24px; right: 20px; padding: 9px 16px; }
+}
+
 :root {
   /* Paleta marca */
   --ber:     #3D1A35;
