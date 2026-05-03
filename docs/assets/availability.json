@@ -1,20 +1,22 @@
 {
   "vm": {
     "blocked": [],
-    "updated": "2026-05-03T08:59:40Z",
-    "sources": [],
+    "updated": "2026-05-03T09:00:00Z",
+    "sources": ["booking"],
     "demo": false
   },
   "vt": {
     "blocked": [],
-    "updated": "2026-05-03T08:59:40Z",
-    "sources": [],
+    "updated": "2026-05-03T09:00:00Z",
+    "sources": ["booking"],
     "demo": false
   },
   "vs": {
-    "blocked": [],
-    "updated": "2026-05-03T08:59:40Z",
-    "sources": [],
+    "blocked": [
+      { "start": "2026-05-03", "end": "2026-08-24" }
+    ],
+    "updated": "2026-05-03T09:00:00Z",
+    "sources": ["booking"],
     "demo": false
   }
 }
