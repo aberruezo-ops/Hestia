@@ -208,6 +208,66 @@ const NosotrosViajero = ({ lang }) => {
   );
 };
 
+const BRAND_PALETTE = [
+  { hex: '#2A0F2E',
+    es: { name: 'Berenjena', story: 'El cielo de Vera Playa a las tres de la madrugada. Morado oscuro, casi negro — la noche mediterránea antes de que el horizonte empiece a abrirse. El color base de todo.' },
+    en: { name: 'Aubergine', story: 'The Vera Playa sky at three in the morning. Dark purple, almost black — the Mediterranean night before the horizon begins to open. The base colour of everything.' },
+  },
+  { hex: '#4A7FA0',
+    es: { name: 'Teal mediterráneo', story: 'El mar al amanecer. No el azul eléctrico de postal — el teal real, profundo y tranquilo, que el Mediterráneo muestra solo al alba.' },
+    en: { name: 'Mediterranean teal', story: 'The sea at dawn. Not the electric blue of postcards — the real teal, deep and calm, that the Mediterranean only shows at sunrise.' },
+  },
+  { hex: '#C8975A',
+    es: { name: 'Albero', story: 'La tierra almeriense. La pared encalada con la luz de las ocho de la mañana. El color que Almería lleva desde la antigüedad: tierra, cerámica, esparto.' },
+    en: { name: 'Ochre', story: 'Almería earth. The whitewashed wall in eight-o\'clock morning light. The colour Almería has carried since antiquity: clay, ceramics, esparto grass.' },
+  },
+  { hex: '#D4A84A',
+    es: { name: 'Sol almeriense', story: 'La luz de la tarde en verano. Trescientos días al año, este es el color que baña las terrazas de Hestía a las seis. No amarillo. Oro viejo.' },
+    en: { name: 'Almería sun', story: 'Afternoon light in summer. Three hundred days a year, this is the colour washing Hestía\'s terraces at six. Not yellow. Old gold.' },
+  },
+  { hex: '#8B4A1E',
+    es: { name: 'Siena', story: 'El crepúsculo sobre el Mediterráneo. Cuando el sol toca el agua, el cielo se vuelve de este color exacto — naranja rojizo, cálido, irrepetible.' },
+    en: { name: 'Sienna', story: 'Dusk over the Mediterranean. When the sun touches the water, the sky turns this exact colour — red-orange, warm, unrepeatable.' },
+  },
+  { hex: '#F0E8D5',
+    es: { name: 'Arena', story: 'La calima y la arena del Sahara. El polvo fino que llega en verano convierte la luz en algo sólido. Hestía huele a esto: sal, arena, lino.' },
+    en: { name: 'Sand', story: 'Calima and Saharan sand. The fine dust that arrives in summer turns the light solid. Hestía smells of this: salt, sand, linen.' },
+  },
+];
+
+const NosotrosColores = ({ lang }) => (
+  <section className="nos-colores section-cream">
+    <div className="container">
+      <div className="eyebrow">{lang === 'es' ? 'La paleta de Hestía' : 'The Hestía palette'}</div>
+      <h2 className="reveal">
+        {lang === 'es'
+          ? <><em>No inventamos</em> nuestros colores.<br/>Los encontramos aquí.</>
+          : <><em>We didn't invent</em> our colours.<br/>We found them here.</>}
+      </h2>
+      <p className="nos-colores-intro reveal delay-1">
+        {lang === 'es'
+          ? 'Vera Playa tiene una luz que cambia cada hora. Un ingeniero que observa y un filólogo que nombra. Así nació la paleta de Hestía: seis momentos del día almeriense, capturados y convertidos en marca.'
+          : 'Vera Playa has a light that changes every hour. An engineer who observes and a philologist who names. That is how the Hestía palette was born: six moments of the Almería day, captured and turned into a brand.'}
+      </p>
+      <div className="nos-colores-grid">
+        {BRAND_PALETTE.map((c, i) => {
+          const d = c[lang];
+          return (
+            <div key={i} className="nos-color-card reveal" style={{ transitionDelay: `${i * 0.09}s` }}>
+              <div className="nos-color-swatch" style={{ background: c.hex }}/>
+              <div>
+                <div className="nos-color-hex">{c.hex}</div>
+                <div className="nos-color-name">{d.name}</div>
+                <p className="nos-color-story">{d.story}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+);
+
 const NosotrosTeam = ({ lang }) => {
   const t = NOSOTROS_COPY[lang];
   const SilhouetteSVG = ({ gradId }) => (
@@ -315,6 +375,7 @@ const NosotrosPageApp = () => {
         <FraseHogar lang={lang} />
         <NosotrosIntro lang={lang} />
         <NosotrosPorQueHestia lang={lang} />
+        <NosotrosColores lang={lang} />
         <NosotrosPrincipios lang={lang} />
         <NosotrosViajero lang={lang} />
         <NosotrosTeam lang={lang} />

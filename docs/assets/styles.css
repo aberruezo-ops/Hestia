@@ -4206,6 +4206,68 @@ body.no-parallax .g-tile .img { transform: none !important; }
   margin: 6px 0 2px;
 }
 
+/* --- NosotrosColores --- */
+.nos-colores {
+  padding: 96px var(--page-pad);
+}
+.nos-colores .eyebrow { margin-bottom: 16px; }
+.nos-colores h2 { font-size: clamp(32px, 4vw, 58px); line-height: 1.1; margin-bottom: 0; }
+.nos-colores h2 em { font-style: italic; color: var(--sol-h); }
+.nos-colores-intro {
+  font-size: 17px;
+  line-height: 1.75;
+  max-width: 62ch;
+  color: var(--ink-soft);
+  margin: 28px 0 64px;
+}
+.nos-colores-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px 48px;
+}
+@media (max-width: 900px) {
+  .nos-colores-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+}
+@media (max-width: 540px) {
+  .nos-colores-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+.nos-color-card {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+}
+.nos-color-swatch {
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  border-radius: 10px 0 10px 0;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.14);
+}
+.nos-color-hex {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ber);
+  opacity: 0.5;
+  margin-bottom: 3px;
+}
+.nos-color-name {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--ber-dk);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.nos-color-story {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0;
+  opacity: 0.85;
+}
+
 /* ================================================================
    CONTACTO — nuevas secciones (contacto simplificado)
    ================================================================ */
