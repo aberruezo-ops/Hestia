@@ -130,14 +130,19 @@ const BRAND_PALETTE = [
 
 const PorqueHero = ({ lang }) => {
   const t = PORQUE_COPY[lang];
+  const vidRef = React.useRef(null);
+  React.useEffect(() => {
+    if (vidRef.current) {
+      vidRef.current.playbackRate = 0.75;
+      vidRef.current.play().catch(() => {});
+    }
+  }, []);
   return (
-    <section className="page-hero nosotros-hero">
-      <div className="nosotros-hero-img-wrap" aria-hidden="true">
-        <img src="assets/photo-nosotros-hero.jpg" alt="" className="nosotros-hero-img"/>
-        <WatermarkBadge size={40} pos={{ bottom: 16, right: 16 }}/>
-      </div>
-      <div className="nosotros-hero-ripple" aria-hidden="true"/>
-      <div className="nosotros-hero-wash"/>
+    <section className="page-hero porque-hero">
+      <video ref={vidRef} className="porque-hero-video"
+        src="assets/CF5B0673-5F2B-4434-BF04-65182B57986B.mov"
+        muted loop playsInline preload="auto" aria-hidden="true"/>
+      <div className="porque-hero-wash"/>
       <div className="page-hero-content">
         <div className="eyebrow">{t.eyebrow}</div>
         <h1>{t.title}</h1>
