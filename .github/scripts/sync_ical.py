@@ -34,7 +34,10 @@ def fetch_blocked(url: str) -> list[dict]:
     if not url:
         return []
     try:
-        resp = requests.get(url, timeout=20, headers={"User-Agent": "HestiaBot/1.0"})
+        resp = requests.get(url, timeout=20, headers={
+            "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+            "Accept": "text/calendar, text/plain, */*",
+        })
         resp.raise_for_status()
         cal = Calendar.from_ical(resp.content)
         ranges = []

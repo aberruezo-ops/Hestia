@@ -4682,10 +4682,10 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .hs-apt-btn {
   font-family: var(--sans);
-  font-size: 13px; font-weight: 400;
-  letter-spacing: .06em;
+  font-size: 12px; font-weight: 400;
+  letter-spacing: .12em; text-transform: uppercase;
   padding: 8px 18px;
-  border-radius: 100px;
+  border-radius: 10px 0 10px 0;
   border: 1.5px solid rgba(240,232,213,.22);
   background: transparent;
   color: rgba(240,232,213,.7);
@@ -4779,7 +4779,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   display: flex; align-items: center; justify-content: center;
   background: rgba(240,232,213,.08);
   border: 1.5px solid rgba(240,232,213,.16);
-  border-radius: 50%;
+  border-radius: 10px 0 10px 0;
   color: var(--arena);
   font-size: 18px; line-height: 1;
   cursor: pointer;
@@ -4806,9 +4806,10 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .hs-toggle {
   font-family: var(--sans);
-  font-size: 13px; font-weight: 400;
+  font-size: 12px; font-weight: 400;
+  letter-spacing: .12em; text-transform: uppercase;
   padding: 7px 16px;
-  border-radius: 100px;
+  border-radius: 10px 0 10px 0;
   border: 1.5px solid rgba(240,232,213,.2);
   background: transparent;
   color: rgba(240,232,213,.6);
@@ -4831,11 +4832,12 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .hs-extra-item {
   display: flex; align-items: center; gap: 7px;
   font-family: var(--sans);
-  font-size: 13px; font-weight: 300;
+  font-size: 11px; font-weight: 400;
+  letter-spacing: .1em; text-transform: uppercase;
   color: rgba(240,232,213,.65);
   background: rgba(240,232,213,.04);
   border: 1.5px solid rgba(240,232,213,.12);
-  border-radius: 9px;
+  border-radius: 10px 0 10px 0;
   padding: 7px 14px;
   cursor: pointer;
   transition: all .18s;
