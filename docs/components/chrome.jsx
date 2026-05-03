@@ -59,14 +59,15 @@ const IconChat = () => (
 );
 
 const NAV_PAGES = {
-  mar:       'mar.html',
-  thalassa:  'thalassa.html',
-  salinas:   'salinas.html',
-  nosotros:  'nosotros.html',
-  opiniones: 'opiniones.html',
-  noticias:  'noticias.html',
-  contacto:  'contacto.html',
-  reservas:  'reservas.html',
+  mar:           'mar.html',
+  thalassa:      'thalassa.html',
+  salinas:       'salinas.html',
+  nosotros:      'nosotros.html',
+  porqueHestia:  'porque-hestia.html',
+  opiniones:     'opiniones.html',
+  noticias:      'noticias.html',
+  contacto:      'contacto.html',
+  reservas:      'reservas.html',
 };
 
 const isActive = (href) => {
@@ -103,6 +104,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <NavLink href={NAV_PAGES.mar}>{t.nav[1]}</NavLink>
           <NavLink href={NAV_PAGES.thalassa}>{t.nav[2]}</NavLink>
           <NavLink href={NAV_PAGES.salinas}>{t.nav[3]}</NavLink>
+          <NavLink href={NAV_PAGES.porqueHestia}>{t.nav[8]}</NavLink>
         </nav>
         <a href="index.html" className="brand-lockup" aria-label="Hestía — Inicio">
           <img src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo"/>
@@ -142,6 +144,10 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.salinas} className="mn-apt mn-vs">
               <span className="mn-num">03</span>
               <span className="mn-name">Hestía <em>Salinas</em></span>
+            </NavLink>
+            <NavLink href={NAV_PAGES.porqueHestia} className="mn-why">
+              <span className="mn-num">→</span>
+              <span className="mn-name">{t.nav[8]}</span>
             </NavLink>
           </div>
           <div className="mn-sep"/>
@@ -293,6 +299,7 @@ const Footer = ({ lang }) => {
           <h5>{t.footer_hestia}</h5>
           <ul>
             <li><a href="nosotros.html">{t.nav[4]}</a></li>
+            <li><a href="porque-hestia.html">{t.nav[8]}</a></li>
             <li><a href="opiniones.html">{t.nav[5]}</a></li>
             <li><a href="noticias.html">{t.nav[7]}</a></li>
             <li><a href="contacto.html">{t.nav[6]}</a></li>

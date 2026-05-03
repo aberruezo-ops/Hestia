@@ -38,7 +38,7 @@ const Wordmark = ({ size = 14, color }) => (
 // Copy diccionario ES/EN
 const COPY = {
   es: {
-    nav: ['Inicio', 'Hestía Mar', 'Hestía Thalassa', 'Hestía Salinas', 'Nosotros', 'Opiniones', 'Contacto', 'Noticias'],
+    nav: ['Inicio', 'Hestía Mar', 'Hestía Thalassa', 'Hestía Salinas', 'Nosotros', 'Opiniones', 'Contacto', 'Noticias', 'Por qué Hestía'],
     cta_nav: 'Reserva',
     hero_title_1: 'Bienvenido a tu hogar',
     hero_title_2: 'lejos de casa.',
@@ -99,7 +99,7 @@ const COPY = {
     footer_tag: 'Tu hogar en Vera Playa, desde 2016.',
   },
   en: {
-    nav: ['Home', 'Hestía Mar', 'Hestía Thalassa', 'Hestía Salinas', 'About us', 'Reviews', 'Contact', 'News'],
+    nav: ['Home', 'Hestía Mar', 'Hestía Thalassa', 'Hestía Salinas', 'About us', 'Reviews', 'Contact', 'News', 'Why Hestía'],
     cta_nav: 'Book',
     hero_title_1: 'Welcome to your home',
     hero_title_2: 'away from home.',

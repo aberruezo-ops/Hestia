@@ -5,8 +5,8 @@
 const NOSOTROS_COPY = {
   es: {
     eyebrow: 'Vera Playa · Almería · desde 2016',
-    title: (<>Nosotros, vosotros<br/><em>y Hestía.</em></>),
-    sub: 'Dos personas que transformaron tres apartamentos en hogares con alma.',
+    title: (<>Alex y Fran.<br/><em>Vera Playa. Hestía.</em></>),
+    sub: 'Las personas detrás de Hestía y su vínculo con Almería.',
 
     intro_title: (<>No somos una empresa.<em>Somos dos personas.</em></>),
     intro_p1: 'Nos conocisteis cuando reservasteis, o quizás ahora mismo es la primera vez. Da igual. Lo importante es que detrás de Hestía no hay una plataforma, ni un gestor, ni una oficina. Estamos nosotros: Alex y Fran. Dos personas reales que cogen el teléfono, que conocen vuestro nombre y que se ocupan de que cuando llegáis, todo esté exactamente como debería.',
@@ -14,29 +14,13 @@ const NOSOTROS_COPY = {
     intro_quote: '«El hogar no es un lugar, es un sentimiento.»',
     intro_quote_attr: '— Cecelia Ahearn',
 
-    why_eyebrow: 'Por qué Hestía',
-    why_title: (<>La diosa griega del hogar.<br/><em>No de las guerras. Del fuego de casa.</em></>),
-    why_p: 'En la mitología griega, Hestía guardaba el centro de la casa. Era la diosa pacífica, la que transformaba un lugar en hogar. Eso es exactamente lo que intentamos hacer nosotros: que un apartamento de Vera Playa deje de ser un sitio donde dormir y se convierta en el lugar donde os apetece quedarse.',
-    why_quote: '«Porque lo simple, cuando se siente de verdad, deja de ser pequeño y se convierte en algo que el alma nunca olvida.»',
-    why_quote_attr: '— Mundoescritos',
-
-    principles_eyebrow: 'Nuestros principios',
-    principles_title: (<>Cuatro ideas que nunca<br/><em>negociamos.</em></>),
-    principles: [
-      { n: '01', t: 'Como si fuera nuestro.', d: 'Diseñamos y cuidamos cada apartamento como si fuera el nuestro propio. Porque en cierto modo lo es. Y porque queremos que vosotros lo sintáis igual.' },
-      { n: '02', t: 'El detalle que lo cambia todo.', d: 'El cojín bien puesto, el café que espera, la toalla doblada. No son extras. Son la forma en que os decimos que nos importáis.' },
-      { n: '03', t: 'Personas, no clientes.', d: 'Alex y Fran atendemos directamente. Conocemos vuestro nombre antes de que lleguéis y sabemos lo que necesitáis. No hay intermediarios.' },
-      { n: '04', t: 'Una estancia que no acaba cuando os vais.', d: 'Vuestra estancia empieza cuando reserváis y termina cuando queréis volver. Eso no es un intercambio económico. Es otra cosa.' },
-    ],
-
-    traveler_eyebrow: 'El huésped que nos elige',
-    traveler_title: (<>Sabemos para quién<br/><em>existe Hestía.</em></>),
-    traveler_intro: 'Hay un tipo de huésped que no viene solo a descansar. Trae consigo el cuidado, la curiosidad y las ganas de que el lugar que visita siga siendo lo que es. Cuida lo que usa, respeta lo que comparte y deja el destino un poco mejor de como lo encontró. Para ese huésped existe Hestía.',
-    travelers: [
-      { icon: '🏡', t: 'Cuida lo que usa como si fuera suyo.', d: 'El apartamento que deja está tan bien como lo encontró. Sabe que el siguiente huésped también lo merece.' },
-      { icon: '🌿', t: 'No solo está: contribuye.', d: 'Recomienda el bar de toda la vida, respeta el silencio de la tarde, deja el entorno mejor de como lo encontró.' },
-      { icon: '🔄', t: 'Vuelve. Y trae a alguien.', d: 'Cuando encuentra un lugar donde se ha sentido en casa, vuelve. Y convierte a otros en huéspedes colaborativos.' },
-    ],
+    almeria_eyebrow: 'Nuestro vínculo con Almería',
+    almeria_title: (<>Vera Playa no es donde trabajamos.<br/><em>Es donde vivimos.</em></>),
+    almeria_p1: 'Hay lugares que escoges y lugares que te eligen. Almería fue lo segundo. Vera Playa llegó a nuestras vidas antes de que supiéramos lo que íbamos a construir aquí. La playa más larga de la costa, el azul más limpio del Mediterráneo, trescientos días de sol al año y una forma de vivir que todavía no ha perdido el pulso de lo auténtico.',
+    almeria_p2: 'La provincia más soleada de Europa no es la más conocida. Y precisamente eso la protege. En Almería el turismo todavía convive con la vida real: el bar de toda la vida, los pescadores de la mañana, el mercado del jueves. Llevamos más de una década aquí. Y cada apartamento de Hestía mira al mismo Mediterráneo.',
+    almeria_p3: 'Vera Playa es conocida por sus kilómetros de costa protegida, por su playa naturista — una de las más grandes de Europa — y por la tranquilidad de una localidad que sabe lo que tiene sin necesitar demostrarlo. No vendemos Almería porque sea nuestra oficina. La defendemos porque es nuestra casa.',
+    almeria_quote: '«Almería tiene la luz más honesta que conozco. No engaña. Lo que ves es lo que es.»',
+    almeria_quote_attr: '— Alex Berruezo',
 
     team_eyebrow: 'El equipo',
     team_title: (<>Detrás de Hestía hay<br/><em>dos personas reales.</em></>),
@@ -52,11 +36,14 @@ const NOSOTROS_COPY = {
     fran_quote: '«If anything breaks, calls, or changes — I am here. Your stay, my job.»',
 
     manifest_cta: 'Reservar ahora →',
+
+    crosslink_label: 'La historia del nombre',
+    crosslink_text: 'Descubre por qué se llama Hestía →',
   },
   en: {
     eyebrow: 'Vera Playa · Almería · since 2016',
-    title: (<>Us, you<br/><em>and Hestía.</em></>),
-    sub: 'Two people who transformed three apartments into soulful homes.',
+    title: (<>Alex and Fran.<br/><em>Vera Playa. Hestía.</em></>),
+    sub: 'The people behind Hestía and their bond with Almería.',
 
     intro_title: (<>{"We're not a company."}<em>{"We're two people."}</em></>),
     intro_p1: "You may have met us when you booked, or perhaps this is the very first time. It doesn't matter. What matters is that behind Hestía there is no platform, no property manager, no office. There's us: Alex and Fran. Two real people who pick up the phone, know your name, and make sure that when you arrive, everything is exactly as it should be.",
@@ -64,29 +51,13 @@ const NOSOTROS_COPY = {
     intro_quote: "«Home isn't a place, it's a feeling.»",
     intro_quote_attr: '— Cecelia Ahearn',
 
-    why_eyebrow: 'Why Hestía',
-    why_title: (<>The Greek goddess of the hearth.<br/><em>Not of wars. Of the home fire.</em></>),
-    why_p: "In Greek mythology, Hestía kept the heart of the home. She was the peaceful goddess, the one who transformed a place into a home. That is exactly what we try to do: turn an apartment in Vera Playa from a place to sleep into a place you actually want to stay.",
-    why_quote: "«Because what is simple, when truly felt, ceases to be small and becomes something the soul never forgets.»",
-    why_quote_attr: '— Mundoescritos',
-
-    principles_eyebrow: 'Our principles',
-    principles_title: (<>Four ideas we never<br/><em>compromise on.</em></>),
-    principles: [
-      { n: '01', t: 'As if it were ours.', d: 'We design and care for each apartment as if it were our own. Because in a way it is. And because we want you to feel it the same way.' },
-      { n: '02', t: 'The detail that changes everything.', d: 'The neatly placed cushion, the waiting coffee, the folded towel. Not extras. The way we tell you that you matter to us.' },
-      { n: '03', t: 'People, not clients.', d: 'Alex and Fran attend to you directly. We know your name before you arrive and what you need. No intermediaries.' },
-      { n: '04', t: "A stay that doesn't end when you leave.", d: "Your stay begins when you book and ends when you want to return. That's not an economic exchange. It's something else." },
-    ],
-
-    traveler_eyebrow: 'The guest who chooses us',
-    traveler_title: (<>We know who<br/><em>Hestía exists for.</em></>),
-    traveler_intro: "There is a type of guest who doesn't come just to rest. They bring care, curiosity and a genuine wish to leave the place a little better than they found it. They look after what they use, respect what they share, and make the destination better every day. Hestía exists for that guest.",
-    travelers: [
-      { icon: '🏡', t: 'Cares for what they use as if it were theirs.', d: 'The apartment they leave is as good as they found it. They know the next guest deserves the same.' },
-      { icon: '🌿', t: "They don't just stay: they contribute.", d: 'They recommend the local bar, respect the quiet of the afternoon, leave their surroundings better than they found them.' },
-      { icon: '🔄', t: 'They come back. And bring someone.', d: "When they find a place where they felt at home, they return — and turn others into collaborative guests too." },
-    ],
+    almeria_eyebrow: 'Our bond with Almería',
+    almeria_title: (<>Vera Playa isn't where we work.<br/><em>It's where we live.</em></>),
+    almeria_p1: 'There are places you choose, and places that choose you. Almería was the second. Vera Playa entered our lives before we knew what we were going to build here. The longest beach on the coast, the clearest blue in the Mediterranean, three hundred days of sun a year, and a way of living that has not yet lost its authentic pulse.',
+    almeria_p2: "Europe's sunniest province is not its most famous. And that is precisely what protects it. In Almería, tourism still coexists with real life: the neighbourhood bar that has always been there, the morning fishermen, the Thursday market. We have been here for over a decade. And every Hestía apartment looks out at the same Mediterranean.",
+    almeria_p3: 'Vera Playa is known for its kilometres of protected coastline, its naturist beach — one of the largest in Europe — and the calm of a town that knows what it has without needing to prove it. We do not promote Almería because it is our office. We champion it because it is our home.',
+    almeria_quote: '"Almería has the most honest light I know. It does not deceive. What you see is what it is."',
+    almeria_quote_attr: '— Alex Berruezo',
 
     team_eyebrow: 'The team',
     team_title: (<>Behind Hestía there are<br/><em>two real people.</em></>),
@@ -102,6 +73,9 @@ const NOSOTROS_COPY = {
     fran_quote: '«If anything breaks, calls, or changes — I am here. Your stay, my job.»',
 
     manifest_cta: 'Book now →',
+
+    crosslink_label: 'The story of the name',
+    crosslink_text: "Find out why it's called Hestía →",
   },
 };
 
@@ -147,139 +121,24 @@ const NosotrosIntro = ({ lang }) => {
   );
 };
 
-const NosotrosPorQueHestia = ({ lang }) => {
+const NosotrosAlmeria = ({ lang }) => {
   const t = NOSOTROS_COPY[lang];
   return (
     <section className="nos-why section-cream">
       <div className="container">
-        <div className="eyebrow">{t.why_eyebrow}</div>
-        <h2 className="reveal">{t.why_title}</h2>
-        <p className="nos-why-p reveal delay-1">{t.why_p}</p>
+        <div className="eyebrow">{t.almeria_eyebrow}</div>
+        <h2 className="reveal">{t.almeria_title}</h2>
+        <p className="nos-why-p reveal delay-1">{t.almeria_p1}</p>
+        <p className="nos-why-p reveal delay-2">{t.almeria_p2}</p>
+        <p className="nos-why-p reveal delay-2">{t.almeria_p3}</p>
         <blockquote className="nos-blockquote nos-blockquote-cream reveal delay-2">
-          <span className="nos-bq-text">{t.why_quote}</span>
-          <cite>{t.why_quote_attr}</cite>
+          <span className="nos-bq-text">{t.almeria_quote}</span>
+          <cite>{t.almeria_quote_attr}</cite>
         </blockquote>
       </div>
     </section>
   );
 };
-
-const NosotrosPrincipios = ({ lang }) => {
-  const t = NOSOTROS_COPY[lang];
-  return (
-    <section className="nos-principios">
-      <div className="container">
-        <div className="eyebrow nos-principios-eyebrow">{t.principles_eyebrow}</div>
-        <h2 className="reveal">{t.principles_title}</h2>
-        <div className="nos-principios-list">
-          {t.principles.map((p, i) => (
-            <div key={i} className="nos-principio reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
-              <div className="nos-p-num">{p.n}</div>
-              <div className="nos-p-body">
-                <div className="nos-p-title">{p.t}</div>
-                <div className="nos-p-desc">{p.d}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const NosotrosViajero = ({ lang }) => {
-  const t = NOSOTROS_COPY[lang];
-  return (
-    <section className="nos-viajero section-cream">
-      <div className="container">
-        <div className="eyebrow">{t.traveler_eyebrow}</div>
-        <h2 className="reveal">{t.traveler_title}</h2>
-        <p className="nos-viajero-intro reveal delay-1">{t.traveler_intro}</p>
-        <div className="nos-viajero-grid">
-          {t.travelers.map((v, i) => (
-            <div key={i} className="nos-viajero-card reveal" style={{ transitionDelay: `${i * 0.12}s` }}>
-              <div className="nos-viajero-icon">{v.icon}</div>
-              <div className="nos-viajero-title">{v.t}</div>
-              <div className="nos-viajero-desc">{v.d}</div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const BRAND_PALETTE = [
-  { hex: '#2A0F2E',
-    es: { name: 'Berenjena', story: 'El cielo de Vera Playa a las tres de la madrugada. Morado oscuro, casi negro — la noche mediterránea antes de que el horizonte empiece a abrirse. El color base de todo.' },
-    en: { name: 'Aubergine', story: 'The Vera Playa sky at three in the morning. Dark purple, almost black — the Mediterranean night before the horizon begins to open. The base colour of everything.' },
-  },
-  { hex: '#7B3B6B',
-    es: { name: 'Violeta', story: 'El instante entre la noche y el amanecer. El horizonte se tiñe de violeta justo antes de que llegue el azul del mar. Dura menos de veinte minutos. Hay que estar despierto.' },
-    en: { name: 'Violet', story: 'The moment between night and dawn. The horizon turns violet just before the blue of the sea arrives. It lasts less than twenty minutes. You have to be awake.' },
-  },
-  { hex: '#1BC8D8',
-    es: { name: 'Turquesa', story: 'El mar y el cielo al amanecer. No el azul eléctrico de postal — el turquesa real, limpio y luminoso, que el Mediterráneo y el cielo de Almería comparten solo en los primeros minutos del día.' },
-    en: { name: 'Turquoise', story: 'The sea and sky at dawn. Not the electric blue of postcards — the real turquoise, clean and luminous, that the Mediterranean and the Almería sky share only in the first minutes of the day.' },
-  },
-  { hex: '#6B7A3A',
-    es: { name: 'Verde olivo', story: 'El olivar de Vera Playa con la luz lateral de la mañana. Desde Hestía Mar se ve el mar entre las ramas. Este verde existe en Almería desde antes que Roma.' },
-    en: { name: 'Olive green', story: 'The Vera Playa olive grove in the side-light of morning. From Hestía Mar you see the sea between the branches. This green existed in Almería before Rome did.' },
-  },
-  { hex: '#D42B80',
-    es: { name: 'Buganvilla', story: 'El magenta que lo invade todo. Trepa por las paredes blancas, cae sobre las terrazas, se escapa por las verjas. La buganvilla es la firma de la costa almeriense: exuberante, insolente, perfecta.' },
-    en: { name: 'Bougainvillea', story: 'The magenta that takes over everything. It climbs white walls, spills over terraces, escapes through iron gates. Bougainvillea is the signature of the Almería coast: exuberant, insolent, perfect.' },
-  },
-  { hex: '#C8975A',
-    es: { name: 'Albero', story: 'La tierra almeriense. La pared encalada a las ocho de la mañana. El color que Almería lleva desde la antigüedad: tierra, cerámica, esparto seco.' },
-    en: { name: 'Ochre', story: 'Almería earth. The whitewashed wall at eight in the morning. The colour Almería has carried since antiquity: clay, ceramics, dry esparto grass.' },
-  },
-  { hex: '#D4A84A',
-    es: { name: 'Sol almeriense', story: 'La luz de la tarde en verano. Trescientos días al año, este es el color que baña las terrazas de Hestía a las seis. No amarillo. Oro viejo.' },
-    en: { name: 'Almería sun', story: 'Afternoon light in summer. Three hundred days a year, this is the colour washing Hestía\'s terraces at six. Not yellow. Old gold.' },
-  },
-  { hex: '#8B4A1E',
-    es: { name: 'Siena', story: 'El crepúsculo sobre el Mediterráneo. Cuando el sol toca el agua el cielo se vuelve de este color exacto — naranja rojizo, cálido, irrepetible.' },
-    en: { name: 'Sienna', story: 'Dusk over the Mediterranean. When the sun touches the water the sky turns this exact colour — red-orange, warm, unrepeatable.' },
-  },
-  { hex: '#F0E8D5',
-    es: { name: 'Arena', story: 'La calima y la arena del Sahara. El polvo fino que llega en verano convierte la luz en algo sólido. Hestía huele a esto: sal, arena, lino.' },
-    en: { name: 'Sand', story: 'Calima and Saharan sand. The fine dust that arrives in summer turns the light solid. Hestía smells of this: salt, sand, linen.' },
-  },
-];
-
-const NosotrosColores = ({ lang }) => (
-  <section className="nos-colores section-cream">
-    <div className="container">
-      <div className="eyebrow">{lang === 'es' ? 'La paleta de Hestía' : 'The Hestía palette'}</div>
-      <h2 className="reveal">
-        {lang === 'es'
-          ? <><em>No inventamos</em> nuestros colores.<br/>Los encontramos aquí.</>
-          : <><em>We didn't invent</em> our colours.<br/>We found them here.</>}
-      </h2>
-      <p className="nos-colores-intro reveal delay-1">
-        {lang === 'es'
-          ? 'Vera Playa tiene una luz que cambia cada hora y una naturaleza que deja boquiabierto. Un ingeniero que observa y un filólogo que nombra. Así nació la paleta de Hestía: nueve colores del paisaje almeriense, capturados y convertidos en marca.'
-          : 'Vera Playa has a light that changes every hour and a nature that leaves you breathless. An engineer who observes and a philologist who names. That is how the Hestía palette was born: nine colours of the Almería landscape, captured and turned into a brand.'}
-      </p>
-      <div className="nos-colores-grid">
-        {BRAND_PALETTE.map((c, i) => {
-          const d = c[lang];
-          return (
-            <div key={i} className="nos-color-card reveal" style={{ transitionDelay: `${i * 0.09}s` }}>
-              <div className="nos-color-swatch" style={{ background: c.hex }}/>
-              <div>
-                <div className="nos-color-hex">{c.hex}</div>
-                <div className="nos-color-name">{d.name}</div>
-                <p className="nos-color-story">{d.story}</p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  </section>
-);
 
 const NosotrosTeam = ({ lang }) => {
   const t = NOSOTROS_COPY[lang];
@@ -368,6 +227,16 @@ const NosotrosManifest = ({ lang }) => {
   );
 };
 
+const NosotrosCrosslink = ({ lang }) => {
+  const t = NOSOTROS_COPY[lang];
+  return (
+    <section className="pq-crosslink section-cream">
+      <div className="eyebrow">{t.crosslink_label}</div>
+      <a href="porque-hestia.html" className="pq-cl-link">{t.crosslink_text}</a>
+    </section>
+  );
+};
+
 const NosotrosPageApp = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
   const { mode, scrolled } = useScrollMode();
@@ -389,12 +258,10 @@ const NosotrosPageApp = () => {
         <NosotrosHero lang={lang} />
         <FraseHogar lang={lang} />
         <NosotrosIntro lang={lang} />
-        <NosotrosPorQueHestia lang={lang} />
-        <NosotrosColores lang={lang} />
-        <NosotrosPrincipios lang={lang} />
-        <NosotrosViajero lang={lang} />
+        <NosotrosAlmeria lang={lang} />
         <NosotrosTeam lang={lang} />
         <NosotrosManifest lang={lang} />
+        <NosotrosCrosslink lang={lang} />
         <QuickFAQ lang={lang} pageId="nosotros" />
         <ContactCTA lang={lang} />
       </main>
