@@ -4233,15 +4233,19 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .nos-color-card {
   display: flex;
-  gap: 18px;
+  gap: 20px;
   align-items: flex-start;
 }
 .nos-color-swatch {
-  width: 44px;
-  min-width: 44px;
-  height: 44px;
+  width: 60px;
+  min-width: 60px;
+  height: 60px;
   border-radius: 10px 0 10px 0;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.14);
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.18),
+    0 2px 6px rgba(0,0,0,0.14),
+    inset 0 1px 0 rgba(255,255,255,0.22);
+  position: relative;
 }
 .nos-color-hex {
   font-family: 'Courier New', monospace;
