@@ -5894,3 +5894,41 @@ body.no-parallax .g-tile .img { transform: none !important; }
   .noticias-hero { padding-top: 120px; padding-bottom: 60px; }
   .noticias-voz, .noticias-territorio, .noticias-next { padding: 60px var(--page-pad); }
 }
+
+/* ================================================================
+   POR QUÉ HESTÍA — crosslink & mobile nav
+   ================================================================ */
+.pq-crosslink {
+  text-align: center;
+  padding: 72px 24px;
+}
+.pq-cl-link {
+  display: inline-block;
+  margin-top: 18px;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #D42B80;
+  text-decoration: none;
+  border-bottom: 1px solid #D42B80;
+  padding-bottom: 3px;
+  transition: opacity .2s;
+}
+.pq-cl-link:hover { opacity: .7; }
+.mn-why {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 0;
+  text-decoration: none;
+  color: var(--arena);
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-left: 2px solid #D42B80;
+  padding-left: 16px;
+  margin: 4px 0;
+}
+.mn-why .mn-num { color: #D42B80; font-size: 14px; }
