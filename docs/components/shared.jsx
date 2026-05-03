@@ -1113,4 +1113,100 @@ const StickyFacts = ({ lang }) => {
   );
 };
 
-Object.assign(window, { HestiaLogoMark, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL });
+// ================================================================
+// HESTÍA PRICE ENGINE
+// Precios nocturnos que el huésped ve en Booking.com
+// Actualizar mensualmente en el objeto HESTIA_PRICES
+// ================================================================
+const HESTIA_PRICES = {
+  vm: {  // Hestía Mar — VFT/AL/01580
+    // Precio/noche en Booking.com (índice 1=Ene … 12=Dic)
+    base: [0, 95, 95, 112, 132, 142, 162, 195, 228, 162, 132, 95, 95],
+    peaks: [
+      { from: '12-21', to: '01-07', pn: 188 }, // Navidad / Año Nuevo
+      { from: '04-10', to: '04-24', pn: 162 }, // Semana Santa
+    ],
+  },
+  vt: {  // Hestía Thalassa — VFT/AL/05535
+    base: [0, 115, 115, 135, 158, 172, 195, 238, 278, 195, 158, 115, 115],
+    peaks: [
+      { from: '12-21', to: '01-07', pn: 228 },
+      { from: '04-10', to: '04-24', pn: 198 },
+    ],
+  },
+  vs: {  // Hestía Salinas — VTF/AL/07056
+    base: [0, 100, 100, 118, 140, 150, 170, 205, 238, 170, 140, 100, 100],
+    peaks: [
+      { from: '12-21', to: '01-07', pn: 198 },
+      { from: '04-10', to: '04-24', pn: 170 },
+    ],
+  },
+};
+
+const DIRECT_DISCOUNT = 0.09;   // −9 % vs Booking.com
+
+const STAY_DISCOUNTS = [        // descuentos por duración (sobre precio directo)
+  { min: 28, pct: 0.20, es: '−20 % por estancia larga (28+ noches)', en: '−20 % long stay (28+ nights)' },
+  { min: 14, pct: 0.10, es: '−10 % por estancia larga (14+ noches)', en: '−10 % long stay (14+ nights)' },
+  { min:  6, pct: 0.05, es: '−5 % por estancia larga (6+ noches)',  en: '−5 % long stay (6+ nights)' },
+];
+
+const PET_SUPP_NIGHT = 15;      // €/noche suplemento mascota
+
+// helpers compat con el motor de calendario
+const _be_adj = (ds, n) => {
+  const d = new Date(ds + 'T12:00:00Z');
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+};
+const _be_diff = (a, b) =>
+  Math.round((new Date(b + 'T12:00:00Z') - new Date(a + 'T12:00:00Z')) / 86400000);
+
+const _dayPrice = (ds, aptId) => {
+  const tbl = HESTIA_PRICES[aptId];
+  if (!tbl) return 0;
+  const month = parseInt(ds.slice(5, 7), 10);
+  const mmdd  = ds.slice(5);
+  for (const pk of tbl.peaks) {
+    if (pk.from > pk.to) {        // cruza año (12-21 → 01-07)
+      if (mmdd >= pk.from || mmdd < pk.to) return pk.pn;
+    } else {
+      if (mmdd >= pk.from && mmdd < pk.to) return pk.pn;
+    }
+  }
+  return tbl.base[month] || 100;
+};
+
+// Calcula el desglose completo para una estancia
+const _calcStay = (selStart, selEnd, aptId, withPets) => {
+  if (!selStart || !selEnd || !aptId) return null;
+  const nights = _be_diff(selStart, selEnd);
+  if (nights <= 0) return null;
+
+  let totalBooking = 0;
+  let cur = selStart;
+  for (let i = 0; i < nights; i++) {
+    totalBooking += _dayPrice(cur, aptId);
+    cur = _be_adj(cur, 1);
+  }
+  totalBooking = Math.round(totalBooking);
+
+  // −9 % reserva directa
+  const afterDirect = Math.round(totalBooking * (1 - DIRECT_DISCOUNT));
+
+  // descuento por duración
+  const stayD = STAY_DISCOUNTS.find(d => nights >= d.min) || null;
+  const stayDiscAmt = stayD ? Math.round(afterDirect * stayD.pct) : 0;
+  const afterStay   = afterDirect - stayDiscAmt;
+
+  // suplemento mascota
+  const petAmt = withPets ? nights * PET_SUPP_NIGHT : 0;
+
+  const directTotal  = afterStay + petAmt;
+  const savings      = totalBooking - directTotal;
+  const avgPerNight  = Math.round(afterStay / nights);
+
+  return { nights, totalBooking, afterDirect, stayD, stayDiscAmt, afterStay, petAmt, directTotal, savings, avgPerNight };
+};
+
+Object.assign(window, { HestiaLogoMark, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, DIRECT_DISCOUNT, STAY_DISCOUNTS, PET_SUPP_NIGHT, _dayPrice, _calcStay });
