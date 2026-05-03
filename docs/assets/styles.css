@@ -730,6 +730,21 @@ section {
 /* Selection */
 ::selection { background: var(--sol); color: var(--ber-dk); }
 
+/* -------- Watermark badge -------- */
+.wm-badge {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  background: rgba(0,0,0,0.22);
+  border-radius: 10px 0 10px 0;
+  padding: 5px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
 /* -------- Cookies banner -------- */
 .cookies {
   position: fixed;
