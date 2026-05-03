@@ -6,12 +6,27 @@
   <meta http-equiv="Pragma" content="no-cache"/>
   <meta http-equiv="Expires" content="0"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Opiniones · Hestía Your Home · Vera Playa</title>
-  <meta name="description" content="Más de 900 familias y 10 años de puntuaciones casi perfectas. Hestía Your Home, Vera Playa, Almería."/>
+  <title>Noticias & Blog · Hestía Your Home · Vera Playa, Almería</title>
+  <meta name="description" content="Lo que pasa en Vera Playa, Almería, Andalucía y Murcia. Recomendaciones y curiosidades de cada apartamento Hestía. Actualizado cada mes."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Lora:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=Poppins:wght@200;300;400&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="assets/styles.css?v=43"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Noticias & Blog · Hestía Your Home",
+    "description": "Noticias mensuales sobre Vera Playa, Almería, Andalucía y Murcia. Recomendaciones de los anfitriones.",
+    "url": "https://hestiayourhome.com/noticias.html",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Hestía Your Home",
+      "url": "https://hestiayourhome.com"
+    },
+    "inLanguage": ["es", "en"]
+  }
+  </script>
 </head>
 <body>
 <div id="root"></div>
@@ -21,13 +36,12 @@
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
 
 <script>
-  window.__TWEAKS__ = { starfield: true, parallax: true };
+  window.__TWEAKS__ = { starfield: false, parallax: false };
 
   const COMPONENT_FILES = [
     'components/shared.jsx',
     'components/chrome.jsx',
-    'components/sections-2.jsx',
-    'components/opiniones-page.jsx',
+    'components/noticias-page.jsx',
   ];
 
   async function loadComponents() {

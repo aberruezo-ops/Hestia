@@ -64,6 +64,7 @@ const NAV_PAGES = {
   salinas:   'salinas.html',
   nosotros:  'nosotros.html',
   opiniones: 'opiniones.html',
+  noticias:  'noticias.html',
   contacto:  'contacto.html',
   reservas:  'reservas.html',
 };
@@ -102,6 +103,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <nav className="desktop-nav nav-right">
             <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
             <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
+            <NavLink href={NAV_PAGES.noticias}>{t.nav[7]}</NavLink>
             <NavLink href={NAV_PAGES.contacto}>{t.nav[6]}</NavLink>
             <NavLink href={NAV_PAGES.reservas} className="cta"><span className="cta-text">{t.cta_nav}</span></NavLink>
           </nav>
@@ -135,6 +137,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <div className="mn-sep"/>
           <NavLink href={NAV_PAGES.nosotros} className="mn-page">{t.nav[4]}</NavLink>
           <NavLink href={NAV_PAGES.opiniones} className="mn-page">{t.nav[5]}</NavLink>
+          <NavLink href={NAV_PAGES.noticias} className="mn-page">{t.nav[7]}</NavLink>
           <NavLink href={NAV_PAGES.contacto} className="mn-page">{t.nav[6]}</NavLink>
           <NavLink href={NAV_PAGES.reservas} className="mobile-cta">{t.cta_nav} →</NavLink>
           <div className="mn-contacts">
@@ -281,6 +284,7 @@ const Footer = ({ lang }) => {
           <ul>
             <li><a href="nosotros.html">{t.nav[4]}</a></li>
             <li><a href="opiniones.html">{t.nav[5]}</a></li>
+            <li><a href="noticias.html">{t.nav[7]}</a></li>
             <li><a href="contacto.html">{t.nav[6]}</a></li>
             <li><a href="privacidad.html">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>
             <li><a href="cookies.html">Cookies</a></li>
