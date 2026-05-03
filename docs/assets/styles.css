@@ -1299,7 +1299,7 @@ section {
 }
 .compare-grid .head.vm { color: var(--vm); }
 .compare-grid .head.vt { color: var(--vt); }
-.compare-grid .head.vs { color: var(--vs); }
+.compare-grid .head.vs { color: var(--vs-dk); }
 .compare-grid .head .apt-tag {
   font-family: var(--sans);
   font-size: 10px;
@@ -2925,7 +2925,6 @@ body.no-parallax .g-tile .img { transform: none !important; }
   border: 1px solid rgba(240,232,213,.35);
   color: var(--arena);
   padding: 14px 28px;
-  border-radius: 3px;
   font-family: var(--sans);
   font-size: 13px;
   font-weight: 400;
