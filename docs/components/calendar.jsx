@@ -358,10 +358,12 @@ const AptCalendar = ({ aptId, lang, accent }) => {
       .finally(() => setLoading(false));
   }, [aptId]);
 
-  const blocked = data ? data.blocked  : [];
-  const updated = data ? data.updated  : null;
-  const sources = data ? data.sources  : [];
-  const isDemo  = data ? data.demo     : false;
+  const blocked      = data ? data.blocked       : [];
+  const updated      = data ? data.updated       : null;
+  const sources      = data ? data.sources       : [];
+  const fetchErrors  = data ? (data.fetch_errors || {}) : {};
+  const hasSyncError = Object.keys(fetchErrors).length > 0;
+  const isDemo       = data ? data.demo          : false;
 
   // Precompute min nights when selStart changes
   const minNights = React.useMemo(() => {
@@ -502,6 +504,15 @@ const AptCalendar = ({ aptId, lang, accent }) => {
           {lang === 'es'
             ? '⚡ Datos de ejemplo · La sincronización en tiempo real se activará en breve'
             : '⚡ Sample data · Live sync will be activated shortly'}
+        </div>
+      )}
+
+      {/* Sync-error notice — shown only when fetch failed but we have no demo flag */}
+      {!isDemo && hasSyncError && (
+        <div className="avail-sync-err">
+          {lang === 'es'
+            ? <>⚠ La sincronización automática no pudo conectar. Las fechas mostradas pueden no estar actualizadas. Escríbenos para confirmar disponibilidad: <a href="https://wa.me/34620316370" target="_blank" rel="noopener">WhatsApp →</a></>
+            : <>⚠ Auto-sync could not connect. Dates shown may not be up to date. Write to us to confirm availability: <a href="https://wa.me/34620316370" target="_blank" rel="noopener">WhatsApp →</a></>}
         </div>
       )}
 
