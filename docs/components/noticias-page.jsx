@@ -205,6 +205,13 @@ const NoticiasPage = ({ lang }) => {
     <>
       {/* ── Hero ── */}
       <section className="page-hero noticias-hero">
+        <video
+          className="noticias-hero-video"
+          src="assets/BE123FA9-6E78-4AE0-AF49-8253801E58E8.MP4"
+          autoPlay muted loop playsInline
+          aria-hidden="true"
+        />
+        <div className="noticias-hero-wash"/>
         <div className="noticias-hero-inner">
           <div className="noticias-edition-badge">
             {N.edition[lang]}
