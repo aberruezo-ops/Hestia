@@ -34,6 +34,7 @@ const Hero = ({ lang, onScrollDown }) => {
             src="assets/logo-teal-transparent.png"
             alt="Hestía"
             className="hero-logo-img"
+            onError={e => { e.target.style.display = 'none'; }}
           />
         </div>
         <div className="wordmark hero-wordmark">HESTÍA</div>
@@ -48,7 +49,13 @@ const Hero = ({ lang, onScrollDown }) => {
           <a href="#apartamentos" className="btn btn-primary">
             {t.hero_cta_1} <span className="arrow">→</span>
           </a>
-          <a href="#contacto" className="btn btn-ghost-light">{t.hero_cta_2}</a>
+          <a href="#buscar" className="btn btn-ghost-light">
+            {t.hero_cta_avail} <span className="arrow">→</span>
+          </a>
+          <a href="#nosotros" className="btn btn-ghost-light">
+            {t.hero_cta_nosotros} <span className="arrow">→</span>
+          </a>
+          <a href="contacto.html" className="btn btn-ghost-light">{t.hero_cta_2}</a>
         </div>
       </div>
       <div className="hero-meta">
