@@ -191,7 +191,7 @@ const BRIDGE_PALETTE = [
   { hex: '#2A0F2E', es: 'Noche · morada',    en: 'Night · purple' },
   { hex: '#7B3B6B', es: 'Alba · violeta',    en: 'Dawn · violet' },
   { hex: '#C8975A', es: 'Día · albero',      en: 'Day · ochre' },
-  { hex: '#246B6E', es: 'Mar · teal',        en: 'Sea · teal' },
+  { hex: '#1BC8D8', es: 'Mar · turquesa',     en: 'Sea · turquoise' },
   { hex: '#8B4A1E', es: 'Desierto · naranja',en: 'Desert · orange' },
 ];
 
