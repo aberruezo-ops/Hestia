@@ -111,6 +111,7 @@ const NosotrosHero = ({ lang }) => {
     <section className="page-hero nosotros-hero">
       <div className="nosotros-hero-img-wrap" aria-hidden="true">
         <img src="assets/photo-nosotros-hero.jpg" alt="" className="nosotros-hero-img"/>
+        <WatermarkBadge size={40} pos={{ bottom: 16, right: 16 }}/>
       </div>
       <div className="nosotros-hero-ripple" aria-hidden="true"/>
       <div className="nosotros-hero-wash"/>
@@ -304,6 +305,7 @@ const NosotrosTeam = ({ lang }) => {
             <div className="portrait">
               <img src="assets/photo-alex.jpg" alt="Alex Berruezo"
                 onError={e => { e.currentTarget.style.display='none'; e.currentTarget.nextSibling && (e.currentTarget.nextSibling.style.display='block'); }}/>
+              <WatermarkBadge size={28} pos={{ bottom: 8, right: 8 }}/>
               <SilhouetteSVG gradId="gNA"/>
             </div>
             <div className="nosotros-person-body">
@@ -322,6 +324,7 @@ const NosotrosTeam = ({ lang }) => {
             <div className="portrait">
               <img src="assets/photo-fran.jpg" alt="Fran Moral"
                 onError={e => { e.currentTarget.style.display='none'; e.currentTarget.nextSibling && (e.currentTarget.nextSibling.style.display='block'); }}/>
+              <WatermarkBadge size={28} pos={{ bottom: 8, right: 8 }}/>
               <SilhouetteSVG gradId="gNF"/>
             </div>
             <div className="nosotros-person-body">
