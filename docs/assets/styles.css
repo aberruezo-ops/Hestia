@@ -275,20 +275,30 @@ p  { line-height: 1.65; font-weight: 300; }
   transition: transform .35s ease;
 }
 .header nav a:hover::after { transform: scaleX(1); }
+@keyframes cta-cycle {
+  0%,   15% { background: #1BC8D8; border-color: #1BC8D8; }
+  20%,  35% { background: #D42B80; border-color: #D42B80; }
+  40%,  55% { background: #7B3B6B; border-color: #7B3B6B; }
+  60%,  75% { background: #8B4A1E; border-color: #8B4A1E; }
+  80%,  95% { background: #6B7A3A; border-color: #6B7A3A; }
+  100%       { background: #1BC8D8; border-color: #1BC8D8; }
+}
 .header nav .cta {
   padding: 10px 22px;
-  border: 1px solid currentColor;
+  border: 1px solid transparent;
   border-radius: 10px 0 10px 0;
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   opacity: 1;
-  transition: background .3s, color .3s, border-color .3s;
+  color: #fff;
+  animation: cta-cycle 100s linear infinite;
 }
-.header.night nav .cta { color: var(--sol-lt); border-color: var(--sol-lt); }
-.header.night nav .cta:hover { background: var(--sol); color: var(--ber-dk); border-color: var(--sol); }
-.header.day nav .cta { color: var(--vt-dk); border-color: var(--vt-dk); }
-.header.day nav .cta:hover { background: var(--vt-dk); color: #FFF5E8; border-color: var(--vt-dk); }
+.header.night nav .cta,
+.header.day nav .cta { color: #fff; }
+.header nav .cta:hover { filter: brightness(1.14); }
+.header.night nav .cta:hover,
+.header.day nav .cta:hover { color: #fff; }
 .header nav .cta .cta-text { position: relative; }
 .header nav .cta::after { display: none; }
 
