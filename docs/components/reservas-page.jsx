@@ -79,6 +79,62 @@ const RESERVAS_COPY = {
   },
 };
 
+const PricePreview = ({ apt, checkin, checkout, pets, lang }) => {
+  if (!apt || !checkin || !checkout) return null;
+  const calc = _calcStay(checkin, checkout, apt, pets === 'yes');
+  if (!calc || calc.nights <= 0) return null;
+  const fmt = n => n.toLocaleString('es-ES') + ' €';
+  return (
+    <div className="price-engine price-engine-form">
+      <div className="price-main-row">
+        <div className="price-direct-block">
+          <span className="price-label-sm">{lang === 'es' ? 'Precio directo estimado' : 'Estimated direct price'}</span>
+          <span className="price-direct-total">{fmt(calc.directTotal)}</span>
+          <span className="price-avg-night">{fmt(calc.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</span>
+        </div>
+        <div className="price-right-col">
+          <div className="price-booking-ref">
+            <span className="price-ref-label">Booking.com</span>
+            <span className="price-ref-val">{fmt(calc.totalBooking)}</span>
+          </div>
+          <div className="price-savings-badge">
+            {lang === 'es' ? 'Ahorras' : 'You save'} ~{fmt(calc.savings)}
+          </div>
+        </div>
+      </div>
+      <div className="price-breakdown">
+        <div className="price-line">
+          <span>{lang === 'es' ? `${calc.nights} noches` : `${calc.nights} nights`}</span>
+          <span>{fmt(calc.totalBooking)}</span>
+        </div>
+        <div className="price-line price-line-disc">
+          <span>−9 % {lang === 'es' ? 'reserva directa' : 'direct booking'}</span>
+          <span>−{fmt(calc.totalBooking - calc.afterDirect)}</span>
+        </div>
+        {calc.stayD && (
+          <div className="price-line price-line-disc">
+            <span>{lang === 'es' ? calc.stayD.es : calc.stayD.en}</span>
+            <span>−{fmt(calc.stayDiscAmt)}</span>
+          </div>
+        )}
+        {calc.petAmt > 0 && (
+          <div className="price-line">
+            <span>{lang === 'es' ? 'Suplemento mascota' : 'Pet supplement'}</span>
+            <span>+{fmt(calc.petAmt)}</span>
+          </div>
+        )}
+        <div className="price-line price-line-total">
+          <span>{lang === 'es' ? 'Total estimado' : 'Estimated total'}</span>
+          <span>{fmt(calc.directTotal)}</span>
+        </div>
+      </div>
+      <p className="price-note">{lang === 'es'
+        ? '* Estimación orientativa. Limpieza final y depósito se confirman al reservar.'
+        : '* Indicative estimate. Cleaning fee and deposit confirmed at booking.'}</p>
+    </div>
+  );
+};
+
 const ReservasHero = ({ lang }) => {
   const t = RESERVAS_COPY[lang];
   const videoRef = React.useRef(null);
@@ -136,10 +192,28 @@ const ReservasForm = ({ lang }) => {
       ? '\nExtras: ' + extras.map(i => t.f_extras[i]).join(', ')
       : '';
     const petsText = pets === 'yes' ? (lang === 'es' ? 'Sí' : 'Yes') : (lang === 'es' ? 'No' : 'No');
+    const calc = _calcStay(checkin, checkout, apt, pets === 'yes');
+    const fmt = n => n.toLocaleString('es-ES') + ' €';
+    const priceBlock = calc
+      ? (lang === 'es'
+          ? `\n💰 PRECIO ESTIMADO DIRECTO\n` +
+            `   ${fmt(calc.directTotal)} total (${calc.nights} noches × ~${fmt(calc.avgPerNight)}/noche)\n` +
+            (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') +
+            (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${PET_SUPP_NIGHT}€/noche)\n` : '') +
+            `   vs. ~${fmt(calc.totalBooking)} en Booking.com → ahorro ~${fmt(calc.savings)}\n` +
+            `   ✓ Sin comisiones · Precio igual o mejor que cualquier plataforma\n`
+          : `\n💰 ESTIMATED DIRECT PRICE\n` +
+            `   ${fmt(calc.directTotal)} total (${calc.nights} nights × ~${fmt(calc.avgPerNight)}/night)\n` +
+            (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') +
+            (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${PET_SUPP_NIGHT}€/night)\n` : '') +
+            `   vs. ~${fmt(calc.totalBooking)} on Booking.com → saving ~${fmt(calc.savings)}\n` +
+            `   ✓ No fees · Same or better price than any platform\n`)
+      : '';
+    const waNum = lang === 'es' ? '34620316370' : '34654138251';
     const msg = lang === 'es'
-      ? `Hola! Quiero hacer una consulta de reserva.\n\nApartamento: ${aptNames[apt] || apt}\nNombre: ${name}\nEmail: ${email}\nTeléfono: ${tel}\nEntrada: ${checkin}\nSalida: ${checkout}\nHuéspedes: ${guests}\nMascota: ${petsText}${extrasText}\nComentarios: ${comments || '—'}`
-      : `Hello! I'd like to enquire about a booking.\n\nApartment: ${aptNames[apt] || apt}\nName: ${name}\nEmail: ${email}\nPhone: ${tel}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}\nPet: ${petsText}${extrasText}\nComments: ${comments || '—'}`;
-    window.open('https://wa.me/34620316370?text=' + encodeURIComponent(msg), '_blank');
+      ? `Hola! Quiero hacer una consulta de reserva.\n\nApartamento: ${aptNames[apt] || apt}\nNombre: ${name}\nEmail: ${email}\nTeléfono: ${tel}\nEntrada: ${checkin}\nSalida: ${checkout}\nHuéspedes: ${guests}\nMascota: ${petsText}${extrasText}${priceBlock}\nComentarios: ${comments || '—'}`
+      : `Hello! I'd like to enquire about a booking.\n\nApartment: ${aptNames[apt] || apt}\nName: ${name}\nEmail: ${email}\nPhone: ${tel}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}\nPet: ${petsText}${extrasText}${priceBlock}\nComments: ${comments || '—'}`;
+    window.open(`https://wa.me/${waNum}?text=` + encodeURIComponent(msg), '_blank');
   };
 
   return (
@@ -180,6 +254,7 @@ const ReservasForm = ({ lang }) => {
             <input type="date" value={checkout} onChange={e => setCheckout(e.target.value)} required/>
           </div>
         </div>
+        <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} lang={lang}/>
         <div className="form-row">
           <div className="form-field">
             <label>{t.f_guests}</label>
