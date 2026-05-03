@@ -36,11 +36,11 @@ jobs:
       - name: Sync availability data
         env:
           ICAL_VM_AIRBNB:  ${{ secrets.ICAL_VM_AIRBNB }}
-          ICAL_VM_BOOKING: ${{ secrets.ICAL_VM_BOOKING }}
+          ICAL_VM_BOOKING: "https://ical.booking.com/v1/export?t=782a0141-0657-48ea-81fc-2b45e4a5ac12"
           ICAL_VT_AIRBNB:  ${{ secrets.ICAL_VT_AIRBNB }}
-          ICAL_VT_BOOKING: ${{ secrets.ICAL_VT_BOOKING }}
+          ICAL_VT_BOOKING: "https://ical.booking.com/v1/export?t=b7ee28cf-3302-435e-ab0e-4f9e64f3f6a7"
           ICAL_VS_AIRBNB:  ${{ secrets.ICAL_VS_AIRBNB }}
-          ICAL_VS_BOOKING: ${{ secrets.ICAL_VS_BOOKING }}
+          ICAL_VS_BOOKING: "https://ical.booking.com/v1/export?t=237c401e-dc78-4a18-a06d-00868f58c58c"
         run: python .github/scripts/sync_ical.py
 
       - name: Commit and push if changed
