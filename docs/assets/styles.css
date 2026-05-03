@@ -876,6 +876,48 @@ section {
   100% { left: 100%; }
 }
 
+/* Social proof bar */
+.hero-proof {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 28px;
+}
+.hero-proof-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(240,232,213,.85);
+  letter-spacing: 0.04em;
+}
+.hero-proof-item > .hero-proof-name {
+  opacity: 0.6;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+.hero-proof-dot {
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: rgba(240,232,213,.3);
+  flex-shrink: 0;
+}
+.hero-proof-platform {
+  font-family: var(--sans);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(240,232,213,.38);
+  font-weight: 400;
+  padding-left: 8px;
+  border-left: 1px solid rgba(240,232,213,.2);
+}
+
 /* Logo SVG drawing animation */
 .hero-logo path.stroke-draw {
   fill: transparent;
@@ -5066,6 +5108,45 @@ body.no-parallax .g-tile .img { transform: none !important; }
   margin-top: 4px;
 }
 .hs-reset:hover { color: rgba(240,232,213,.75); }
+
+/* Trust bar */
+.hs-trust {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 10.5px;
+  font-family: var(--sans);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(240,232,213,.38);
+  margin-top: 16px;
+}
+.hs-trust-dot {
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: rgba(240,232,213,.22);
+  flex-shrink: 0;
+}
+
+/* Notify me */
+.hs-notify {
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(240,232,213,.08);
+  text-align: center;
+}
+.hs-notify-text {
+  font-family: var(--sans);
+  font-size: 14px; font-weight: 300;
+  color: rgba(240,232,213,.5);
+  line-height: 1.65;
+  margin: 0 auto 22px;
+  max-width: 520px;
+}
+.hs-notify-btn { font-size: 12px; padding: 11px 22px; }
 
 /* Mobile */
 @media (max-width: 600px) {

@@ -49,6 +49,14 @@ const Hero = ({ lang, onScrollDown }) => {
           </a>
           <a href="contacto.html" className="btn btn-ghost-light">{t.hero_cta_2}</a>
         </div>
+        <div className="hero-proof">
+          <span className="hero-proof-item">★ 9.8 <span className="hero-proof-name">Mar</span></span>
+          <span className="hero-proof-dot"/>
+          <span className="hero-proof-item">★ 10 <span className="hero-proof-name">Thalassa</span></span>
+          <span className="hero-proof-dot"/>
+          <span className="hero-proof-item">★ 9.9 <span className="hero-proof-name">Salinas</span></span>
+          <span className="hero-proof-platform">Booking.com</span>
+        </div>
       </div>
       <div className="hero-meta">
         <span>N°01 · Noche mediterránea</span>
