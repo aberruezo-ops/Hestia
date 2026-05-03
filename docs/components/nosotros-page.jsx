@@ -213,21 +213,29 @@ const BRAND_PALETTE = [
     es: { name: 'Berenjena', story: 'El cielo de Vera Playa a las tres de la madrugada. Morado oscuro, casi negro — la noche mediterránea antes de que el horizonte empiece a abrirse. El color base de todo.' },
     en: { name: 'Aubergine', story: 'The Vera Playa sky at three in the morning. Dark purple, almost black — the Mediterranean night before the horizon begins to open. The base colour of everything.' },
   },
+  { hex: '#7B3B6B',
+    es: { name: 'Violeta', story: 'El instante entre la noche y el amanecer. El horizonte se tiñe de violeta justo antes de que llegue el azul del mar. Dura menos de veinte minutos. Hay que estar despierto.' },
+    en: { name: 'Violet', story: 'The moment between night and dawn. The horizon turns violet just before the blue of the sea arrives. It lasts less than twenty minutes. You have to be awake.' },
+  },
   { hex: '#1BC8D8',
-    es: { name: 'Turquesa mediterráneo', story: 'El mar y el cielo al amanecer en Vera Playa. No el azul eléctrico de postal — el turquesa real, limpio y luminoso, que el Mediterráneo y el cielo de Almería comparten solo en los primeros minutos del día.' },
-    en: { name: 'Mediterranean turquoise', story: 'The sea and sky at dawn in Vera Playa. Not the electric blue of postcards — the real turquoise, clean and luminous, that the Mediterranean and the Almería sky share only in the first minutes of the day.' },
+    es: { name: 'Turquesa', story: 'El mar y el cielo al amanecer. No el azul eléctrico de postal — el turquesa real, limpio y luminoso, que el Mediterráneo y el cielo de Almería comparten solo en los primeros minutos del día.' },
+    en: { name: 'Turquoise', story: 'The sea and sky at dawn. Not the electric blue of postcards — the real turquoise, clean and luminous, that the Mediterranean and the Almería sky share only in the first minutes of the day.' },
+  },
+  { hex: '#6B7A3A',
+    es: { name: 'Verde olivo', story: 'El olivar de Vera Playa con la luz lateral de la mañana. Desde Hestía Mar se ve el mar entre las ramas. Este verde existe en Almería desde antes que Roma.' },
+    en: { name: 'Olive green', story: 'The Vera Playa olive grove in the side-light of morning. From Hestía Mar you see the sea between the branches. This green existed in Almería before Rome did.' },
   },
   { hex: '#C8975A',
-    es: { name: 'Albero', story: 'La tierra almeriense. La pared encalada con la luz de las ocho de la mañana. El color que Almería lleva desde la antigüedad: tierra, cerámica, esparto.' },
-    en: { name: 'Ochre', story: 'Almería earth. The whitewashed wall in eight-o\'clock morning light. The colour Almería has carried since antiquity: clay, ceramics, esparto grass.' },
+    es: { name: 'Albero', story: 'La tierra almeriense. La pared encalada a las ocho de la mañana. El color que Almería lleva desde la antigüedad: tierra, cerámica, esparto seco.' },
+    en: { name: 'Ochre', story: 'Almería earth. The whitewashed wall at eight in the morning. The colour Almería has carried since antiquity: clay, ceramics, dry esparto grass.' },
   },
   { hex: '#D4A84A',
     es: { name: 'Sol almeriense', story: 'La luz de la tarde en verano. Trescientos días al año, este es el color que baña las terrazas de Hestía a las seis. No amarillo. Oro viejo.' },
     en: { name: 'Almería sun', story: 'Afternoon light in summer. Three hundred days a year, this is the colour washing Hestía\'s terraces at six. Not yellow. Old gold.' },
   },
   { hex: '#8B4A1E',
-    es: { name: 'Siena', story: 'El crepúsculo sobre el Mediterráneo. Cuando el sol toca el agua, el cielo se vuelve de este color exacto — naranja rojizo, cálido, irrepetible.' },
-    en: { name: 'Sienna', story: 'Dusk over the Mediterranean. When the sun touches the water, the sky turns this exact colour — red-orange, warm, unrepeatable.' },
+    es: { name: 'Siena', story: 'El crepúsculo sobre el Mediterráneo. Cuando el sol toca el agua el cielo se vuelve de este color exacto — naranja rojizo, cálido, irrepetible.' },
+    en: { name: 'Sienna', story: 'Dusk over the Mediterranean. When the sun touches the water the sky turns this exact colour — red-orange, warm, unrepeatable.' },
   },
   { hex: '#F0E8D5',
     es: { name: 'Arena', story: 'La calima y la arena del Sahara. El polvo fino que llega en verano convierte la luz en algo sólido. Hestía huele a esto: sal, arena, lino.' },
@@ -246,8 +254,8 @@ const NosotrosColores = ({ lang }) => (
       </h2>
       <p className="nos-colores-intro reveal delay-1">
         {lang === 'es'
-          ? 'Vera Playa tiene una luz que cambia cada hora. Un ingeniero que observa y un filólogo que nombra. Así nació la paleta de Hestía: seis momentos del día almeriense, capturados y convertidos en marca.'
-          : 'Vera Playa has a light that changes every hour. An engineer who observes and a philologist who names. That is how the Hestía palette was born: six moments of the Almería day, captured and turned into a brand.'}
+          ? 'Vera Playa tiene una luz que cambia cada hora. Un ingeniero que observa y un filólogo que nombra. Así nació la paleta de Hestía: ocho momentos del día almeriense, capturados y convertidos en marca.'
+          : 'Vera Playa has a light that changes every hour. An engineer who observes and a philologist who names. That is how the Hestía palette was born: eight moments of the Almería day, captured and turned into a brand.'}
       </p>
       <div className="nos-colores-grid">
         {BRAND_PALETTE.map((c, i) => {

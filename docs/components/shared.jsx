@@ -188,11 +188,14 @@ const useReveal = () => {
 };
 
 const BRIDGE_PALETTE = [
-  { hex: '#2A0F2E', es: 'Noche · morada',    en: 'Night · purple' },
-  { hex: '#7B3B6B', es: 'Alba · violeta',    en: 'Dawn · violet' },
-  { hex: '#C8975A', es: 'Día · albero',      en: 'Day · ochre' },
-  { hex: '#1BC8D8', es: 'Mar · turquesa',     en: 'Sea · turquoise' },
-  { hex: '#8B4A1E', es: 'Desierto · naranja',en: 'Desert · orange' },
+  { hex: '#2A0F2E', es: 'Noche · berenjena',   en: 'Night · aubergine' },
+  { hex: '#7B3B6B', es: 'Alba · violeta',       en: 'Dawn · violet' },
+  { hex: '#1BC8D8', es: 'Mar · turquesa',       en: 'Sea · turquoise' },
+  { hex: '#6B7A3A', es: 'Olivos · verde',       en: 'Olives · green' },
+  { hex: '#C8975A', es: 'Día · albero',         en: 'Day · ochre' },
+  { hex: '#D4A84A', es: 'Tarde · sol',          en: 'Afternoon · sun' },
+  { hex: '#8B4A1E', es: 'Crepúsculo · siena',  en: 'Dusk · sienna' },
+  { hex: '#F0E8D5', es: 'Calima · arena',       en: 'Calima · sand' },
 ];
 
 const QUICK_FAQ = {
