@@ -265,7 +265,7 @@ const QUICK_FAQ = {
   vs: {
     es: [
       { q: '¿Por qué elegiría Hestía Salinas sobre los otros dos?',
-        a: <>Salinas es el más luminoso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de pádel comunitarios, y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina. La luz de la tarde sobre las salinas tiñe cada habitación de oro — un paisaje que no existe en ningún otro lugar de Europa.</> },
+        a: <>Salinas es el más luminoso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de pádel comunitarios, y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina con acceso peatonal directo. La luz dorada de Almería llena cada habitación — y la naturaleza empieza donde termina la acera.</> },
       { q: '¿Qué son las Salinas de Puerto Rey?',
         a: <>Un Parque Natural a pocos metros del apartamento, con flamencos, aves migratorias y una luz dorada al amanecer única en Europa. Una de las razones por las que este apartamento tiene algo que los demás no tienen.</> },
       { q: '¿Hay de verdad tres piscinas?',
@@ -275,7 +275,7 @@ const QUICK_FAQ = {
     ],
     en: [
       { q: 'Why would I choose Hestía Salinas over the other two?',
-        a: <>Salinas is the brightest of the three. Two terraces, three pools, a communal gym, sauna and padel courts, and the Puerto Rey Salt-flat Nature Park around the corner. The afternoon light over the salt flats turns every room golden — a landscape that exists nowhere else in Europe.</> },
+        a: <>Salinas is the brightest of the three. Two terraces, three pools, a communal gym, sauna and padel courts, and the Puerto Rey Salt-flat Nature Park around the corner with direct pedestrian access. Almería's golden afternoon light fills every room — and nature begins where the pavement ends.</> },
       { q: 'What is the Puerto Rey Nature Park?',
         a: <>A natural park a few metres from the apartment, with flamingos, migratory birds and a golden light at sunrise unique in Europe. One of the reasons this apartment has something the others don't.</> },
       { q: 'Are there really three pools?',
