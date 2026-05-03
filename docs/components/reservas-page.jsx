@@ -247,11 +247,17 @@ const ReservasForm = ({ lang }) => {
         <div className="form-row">
           <div className="form-field">
             <label>{t.f_checkin}</label>
-            <input type="date" value={checkin} onChange={e => setCheckin(e.target.value)} required/>
+            <input type="date" id="res-checkin" value={checkin}
+              onChange={e => {
+                setCheckin(e.target.value);
+                if (e.target.value) setTimeout(() => document.getElementById('res-checkout')?.focus(), 50);
+              }} required/>
           </div>
           <div className="form-field">
             <label>{t.f_checkout}</label>
-            <input type="date" value={checkout} onChange={e => setCheckout(e.target.value)} required/>
+            <input type="date" id="res-checkout" value={checkout}
+              min={checkin || undefined}
+              onChange={e => setCheckout(e.target.value)} required/>
           </div>
         </div>
         <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} lang={lang}/>

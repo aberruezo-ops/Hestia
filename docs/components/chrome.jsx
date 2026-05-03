@@ -74,11 +74,21 @@ const isActive = (href) => {
   return current === href;
 };
 
+const CTA_CYCLE_DURATION = 160; // 8 colors × 20s
+
 const Header = ({ mode, scrolled, lang }) => {
   const t = COPY[lang];
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const close = () => setMobileOpen(false);
   React.useEffect(() => { close(); }, [lang]);
+
+  // Sync animation across page navigations using absolute time
+  React.useEffect(() => {
+    const elapsed = (Date.now() / 1000) % CTA_CYCLE_DURATION;
+    document.querySelectorAll('.header nav .cta').forEach(el => {
+      el.style.animationDelay = `-${elapsed}s`;
+    });
+  }, []);
 
   const NavLink = ({ href, children, className = '' }) => (
     <a href={href} className={`${className} ${isActive(href) ? 'active-page' : ''}`} onClick={close}>

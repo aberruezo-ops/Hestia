@@ -276,12 +276,16 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 .header nav a:hover::after { transform: scaleX(1); }
 @keyframes cta-cycle {
-  0%,   15% { background: #1BC8D8; border-color: #1BC8D8; }
-  20%,  35% { background: #D42B80; border-color: #D42B80; }
-  40%,  55% { background: #7B3B6B; border-color: #7B3B6B; }
-  60%,  75% { background: #8B4A1E; border-color: #8B4A1E; }
-  80%,  95% { background: #6B7A3A; border-color: #6B7A3A; }
-  100%       { background: #1BC8D8; border-color: #1BC8D8; }
+  /* 8 colores × 20 s = 160 s · hold 15 s (9.38%) + fade 5 s (3.12%) */
+  0%,    9.38%  { background: #2A0F2E; border-color: #2A0F2E; } /* berenjena */
+  12.5%, 21.88% { background: #7B3B6B; border-color: #7B3B6B; } /* violeta */
+  25%,   34.38% { background: #1BC8D8; border-color: #1BC8D8; } /* turquesa */
+  37.5%, 46.88% { background: #6B7A3A; border-color: #6B7A3A; } /* verde olivo */
+  50%,   59.38% { background: #D42B80; border-color: #D42B80; } /* buganvilla */
+  62.5%, 71.88% { background: #C8975A; border-color: #C8975A; } /* albero */
+  75%,   84.38% { background: #D4A84A; border-color: #D4A84A; } /* sol */
+  87.5%, 96.88% { background: #8B4A1E; border-color: #8B4A1E; } /* siena */
+  100%           { background: #2A0F2E; border-color: #2A0F2E; }
 }
 .header nav .cta {
   padding: 10px 22px;
@@ -292,7 +296,7 @@ p  { line-height: 1.65; font-weight: 300; }
   text-transform: uppercase;
   opacity: 1;
   color: #fff;
-  animation: cta-cycle 100s linear infinite;
+  animation: cta-cycle 160s linear infinite;
 }
 .header.night nav .cta,
 .header.day nav .cta { color: #fff; }
@@ -1317,17 +1321,43 @@ section {
 }
 .apt-card .apt-meta span { display: inline-flex; align-items: center; gap: 6px; }
 .apt-card .apt-meta .dot { width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: 0.5; }
+/* ---- Price badge on apt-card ---- */
+.apt-price-badge {
+  display: flex; align-items: baseline; gap: 5px; flex-wrap: wrap;
+  margin: 14px 0 4px;
+}
+.apb-label {
+  font-family: var(--sans); font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; opacity: .65;
+}
+.apb-price {
+  font-family: var(--serif); font-size: 24px; font-weight: 400;
+  color: var(--crema); line-height: 1;
+}
+.apb-per {
+  font-family: var(--sans); font-size: 10px; opacity: .55; letter-spacing: .04em;
+}
+/* ---- Two CTAs on apt-card ---- */
+.apt-ctas {
+  display: flex; align-items: center; gap: 16px; margin-top: 16px; flex-wrap: wrap;
+}
+.apt-link-cta {
+  font-family: var(--sans); font-weight: 400; font-size: 11px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  opacity: .65; border-bottom: 1px solid rgba(255,255,255,.3);
+  padding-bottom: 3px; transition: opacity .2s;
+}
+.apt-link-cta:hover { opacity: 1; }
 .apt-card .apt-cta {
-  margin-top: 20px;
+  background: none; border: none; cursor: pointer; color: inherit;
   font-family: var(--sans); font-weight: 400; font-size: 12px;
   letter-spacing: 0.18em; text-transform: uppercase;
   display: inline-flex; align-items: center; gap: 10px;
-  align-self: flex-start;
-  padding-bottom: 6px;
-  border-bottom: 1px solid rgba(255,255,255,0.5);
-  transition: border-color .3s, gap .3s;
+  padding: 7px 16px; border-radius: 10px 0 10px 0;
+  background: rgba(255,255,255,.13); border: 1px solid rgba(255,255,255,.28);
+  transition: background .2s, border-color .2s, gap .2s;
 }
-.apt-card:hover .apt-cta { gap: 18px; border-bottom-color: var(--crema); }
+.apt-card .apt-cta:hover { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.5); gap: 14px; }
 
 .apt-corner {
   position: absolute;
@@ -2631,6 +2661,104 @@ footer .footer-brand .addr {
   .req-guests { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
 
+
+/* ============================================================
+   HOME BOOKING MODAL (HomeBookingModal)
+   ============================================================ */
+.hbm-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(42,15,46,.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: hbm-in .25s ease both;
+}
+@keyframes hbm-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.hbm-card {
+  background: var(--crema);
+  border-radius: 10px 0 10px 0;
+  box-shadow: 0 24px 80px rgba(42,15,46,.4);
+  padding: 40px 40px 32px;
+  width: 100%; max-width: 580px;
+  position: relative;
+  animation: hbm-up .28s cubic-bezier(.22,.68,0,1.2) both;
+  max-height: 90vh; overflow-y: auto;
+}
+@keyframes hbm-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.hbm-close {
+  position: absolute; top: 16px; right: 18px;
+  background: none; border: none; cursor: pointer;
+  font-size: 20px; color: rgba(42,15,46,.4);
+  line-height: 1; padding: 4px 6px;
+  transition: color .15s;
+}
+.hbm-close:hover { color: var(--ber-dk); }
+.hbm-head { margin-bottom: 28px; }
+.hbm-apt-num {
+  font-family: var(--sans); font-size: 11px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--sol); margin-bottom: 4px;
+}
+.hbm-apt-name {
+  font-family: var(--serif); font-size: clamp(22px, 3vw, 30px);
+  font-weight: 300; color: var(--ber-dk); line-height: 1.1;
+}
+.hbm-apt-name strong { font-weight: 400; }
+.hbm-sub {
+  font-family: var(--sans); font-size: 12px; letter-spacing: .1em;
+  text-transform: uppercase; color: rgba(42,15,46,.45); margin: 8px 0 0;
+}
+/* Form */
+.hbm-form { display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px; }
+.hbm-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 480px) { .hbm-row { grid-template-columns: 1fr; } }
+.hbm-field { display: flex; flex-direction: column; gap: 5px; }
+.hbm-field label {
+  font-family: var(--sans); font-size: 11px; font-weight: 500;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--ber); opacity: .8;
+}
+.hbm-opt { font-weight: 300; opacity: .65; text-transform: none; letter-spacing: 0; }
+.hbm-field input, .hbm-field textarea {
+  font-family: var(--sans); font-size: 14px; font-weight: 300;
+  color: var(--ink); background: #fff;
+  border: 1px solid rgba(42,15,46,.22); border-radius: 6px 0 6px 0;
+  padding: 10px 13px; outline: none; transition: border-color .2s;
+  width: 100%; box-sizing: border-box;
+}
+.hbm-field input:focus, .hbm-field textarea:focus { border-color: var(--sol); }
+.hbm-field textarea { min-height: 64px; resize: vertical; }
+.hbm-hint {
+  font-family: var(--sans); font-size: 12px;
+  color: rgba(42,15,46,.5); margin: 0;
+}
+/* Buttons */
+.hbm-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.hbm-btn {
+  display: flex; align-items: center; justify-content: center; gap: 9px;
+  padding: 13px 20px; border-radius: 10px 0 10px 0;
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  letter-spacing: .06em; text-align: center;
+  transition: filter .2s, opacity .2s;
+  cursor: pointer;
+}
+.hbm-wa  { background: #25D366; color: #fff; }
+.hbm-wa:hover  { filter: brightness(1.08); }
+.hbm-mail { background: none; border: 1.5px solid rgba(42,15,46,.25); color: rgba(42,15,46,.7); }
+.hbm-mail:hover { border-color: var(--ber); color: var(--ber-dk); }
+.hbm-dis { opacity: .38; cursor: not-allowed; pointer-events: none; }
+.hbm-note {
+  font-family: var(--sans); font-size: 11px; color: rgba(42,15,46,.42);
+  margin: 0; text-align: center; line-height: 1.5;
+}
+@media (max-width: 480px) {
+  .hbm-card { padding: 32px 24px 28px; }
+}
 
 /* ============================================================
    RESPONSIVE

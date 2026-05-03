@@ -968,6 +968,164 @@ const SABIAS_QUE_HOME_FACTS = [
     es: 'La Chanca, barrio histórico de Almería capital, tiene casas-cueva excavadas en el risco rojo de la Alcazaba. Algunas siguen habitadas hoy, igual que hace más de mil años.',
     en: 'La Chanca, Almería city\'s historic quarter, has cave-houses carved into the red rock of the Alcazaba. Some are still inhabited today, just as they were over a thousand years ago.',
   },
+  /* Naturalismo / Vera Playa */
+  {
+    es: 'Vera Playa es la playa naturista más grande de España — más de 5 km de arena sin ropa desde los años 70. Una de las comunidades naturistas más antiguas y numerosas de Europa.',
+    en: 'Vera Playa is Spain\'s largest naturist beach — over 5 km of clothes-free sand since the 1970s. One of the oldest and largest naturist communities in Europe.',
+  },
+  {
+    es: 'La playa naturista de Vera fue pionera en España cuando la inauguró en 1979. Hoy recibe más de 200.000 visitantes al año y figura en la guía naturista europea como referencia mediterránea.',
+    en: 'Vera\'s naturist beach was a Spanish pioneer when it opened in 1979. Today it attracts over 200,000 visitors a year and is listed as a Mediterranean benchmark in European naturist guides.',
+  },
+  /* El Indalo */
+  {
+    es: 'El Indalo, símbolo de Almería, es una figura pintada en la Cueva de los Letreros hace más de 5.000 años. En Almería se cuelga en los balcones como amuleto de protección contra las tormentas.',
+    en: 'The Indalo, Almería\'s symbol, is a figure painted in the Cueva de los Letreros over 5,000 years ago. In Almería it hangs from balconies as a charm against storms.',
+  },
+  /* Invernaderos — agricultura */
+  {
+    es: 'Los invernaderos de Almería producen el 20 % de la fruta y verdura que consume la Unión Europea. Vistos desde el espacio, forman el área de plástico más grande del planeta: más de 30.000 hectáreas.',
+    en: 'Almería\'s greenhouses produce 20% of the fruit and vegetables consumed by the European Union. Seen from space, they form the largest plastic-covered area on Earth: over 30,000 hectares.',
+  },
+  {
+    es: 'El milagro agrícola almeriense: en 1960 era la provincia más pobre de España; en 2025 tiene una de las rentas per cápita más altas del campo español. La invernadero lo cambió todo en 40 años.',
+    en: 'The Almería agricultural miracle: in 1960 it was Spain\'s poorest province; by 2025 it has one of the highest rural per capita incomes. The greenhouse changed everything in 40 years.',
+  },
+  /* Flamenco */
+  {
+    es: 'El Fandango de Almería es uno de los palos más antiguos del flamenco. Nació en los pueblos mineros del interior y bajó al mar con los jornaleros que construyeron los primeros barrios de Vera Playa.',
+    en: 'The Fandango de Almería is one of flamenco\'s oldest styles. It was born in the inland mining villages and reached the sea with the labourers who built the first neighbourhoods of Vera Playa.',
+  },
+  /* Salinas del Cano */
+  {
+    es: 'Las Salinas del Cano, junto a Hestía Salinas, son una reserva de aves catalogada Zona de Especial Protección. En invierno llegan hasta 600 flamencos rosados de una sola vez.',
+    en: 'The Salinas del Cano, next to Hestía Salinas, are a bird reserve classified as a Special Protection Zone. Up to 600 pink flamingos arrive together in winter.',
+  },
+  {
+    es: 'Las salinas del litoral almeriense llevan produciendo sal para conservar el pescado desde la época fenicia — más de 2.700 años de historia salina ininterrumpida en el mismo litoral.',
+    en: 'The Almería coastal salt flats have produced salt for fish preservation since Phoenician times — over 2,700 years of uninterrupted salt-making history on the same shoreline.',
+  },
+  /* Astronomía / cielos oscuros */
+  {
+    es: 'Almería tiene los cielos nocturnos más oscuros de España peninsular. Varias comarcas del interior están certificadas como "Starlight Reserve": son de los pocos lugares de Europa donde se ve la Vía Láctea a simple vista.',
+    en: 'Almería has the darkest night skies in mainland Spain. Several inland areas are certified Starlight Reserves — among the few places in Europe where the Milky Way is visible to the naked eye.',
+  },
+  /* Cetáceos */
+  {
+    es: 'El Estrecho de Gibraltar, a 2 horas de Vera, es el principal corredor de cetáceos de Europa: orcas, ballenas azules, cachalotes, rorcuales comunes y delfines pasan por él cada año.',
+    en: 'The Strait of Gibraltar, 2 hours from Vera, is Europe\'s main cetacean corridor: orcas, blue whales, sperm whales, fin whales and dolphins pass through it every year.',
+  },
+  {
+    es: 'El cachalote, el cetáceo más grande con dientes del mundo, se alimenta en las aguas profundas frente a Almería. Sus inmersiones de más de 2.000 metros duran hasta 90 minutos.',
+    en: 'The sperm whale, the world\'s largest toothed cetacean, feeds in the deep waters off Almería. Its dives of over 2,000 metres last up to 90 minutes.',
+  },
+  /* Agave */
+  {
+    es: 'El agave americano — la pita — florece una sola vez en su vida, entre 20 y 40 años después de brotar. Su tallo alcanza 6 metros en pocas semanas. Una de las vidas vegetales más dramáticas de la flora mediterránea.',
+    en: 'The American agave — the pita — flowers only once in its lifetime, between 20 and 40 years after sprouting. Its stalk reaches 6 metres in a matter of weeks. One of the most dramatic life cycles in Mediterranean flora.',
+  },
+  /* Cine */
+  {
+    es: 'Juego de Tronos rodó varias escenas de la ciudad de Essos en Almería: el puerto de Pentos, las tierras de Dothrak y la ciudad de Meeren. Almería fue el Orient ficticio de la serie durante 4 temporadas.',
+    en: 'Game of Thrones filmed several Essos city scenes in Almería: the port of Pentos, the Dothraki lands and the city of Meereen. Almería served as the series\' fictional Orient for 4 seasons.',
+  },
+  {
+    es: 'Iron Man 3 rodó las escenas de Mandarin en la costa de Almería. El litoral entre Vera y Cabo de Gata ha sido "Asia", "Arabia", "América Latina" y "el Oeste americano" en más de 800 producciones internacionales.',
+    en: 'Iron Man 3 filmed the Mandarin scenes on the Almería coast. The shoreline between Vera and Cabo de Gata has stood in for "Asia", "Arabia", "Latin America" and "the American West" in over 800 international productions.',
+  },
+  /* Viento */
+  {
+    es: 'El Terral de Vera — viento cálido y seco que baja de la sierra — puede elevar la temperatura 10 °C en pocas horas. Los lugareños lo detectan por el olor a jara y romero que arrastra desde el interior.',
+    en: 'The Vera Terral — a warm, dry wind descending from the sierra — can raise temperatures 10 °C in a matter of hours. Locals detect it by the scent of cistus and rosemary it carries from the interior.',
+  },
+  {
+    es: 'El Levante de Almería es el viento más constante del Mediterráneo occidental: puede soplar sin parar durante 3 o 4 días. Los marineros árabes lo llamaban "el viento que empuja hacia Occidente".',
+    en: 'The Almería Levante is the most constant wind in the western Mediterranean: it can blow without pause for 3 or 4 days. Arab sailors called it "the wind that pushes toward the West".',
+  },
+  /* Migración de aves */
+  {
+    es: 'El litoral almeriense es una de las principales rutas de migración de aves de Europa. Cada otoño, más de un millón de aves rapaces cruzan entre Europa y África sobre el mar frente a Vera Playa.',
+    en: 'The Almería coastline is one of Europe\'s main bird migration routes. Every autumn, over a million raptors cross between Europe and Africa over the sea off Vera Playa.',
+  },
+  /* Historia árabe */
+  {
+    es: 'Más del 60 % de los topónimos de la provincia de Almería son de origen árabe: Vera (Bayra), Almería (Al-Mariyyat), Mojácar (Muxacra), Garrucha (del árabe para "garrucha de mar"). La lengua árabe está en el paisaje.',
+    en: 'Over 60% of Almería\'s place names are of Arabic origin: Vera (Bayra), Almería (Al-Mariyyat), Mojácar (Muxacra), Garrucha (from the Arabic for "sea pulley"). The Arabic language is written in the landscape.',
+  },
+  {
+    es: 'El periodo árabe de Almería (711-1489) duró más de 700 años — más que los 500 años que han pasado desde la conquista castellana. La impronta árabe en la cultura, la cocina y el paisaje es más profunda que cualquier otra.',
+    en: 'The Arab period of Almería (711–1489) lasted over 700 years — more than the 500 years since the Castilian conquest. The Arabic imprint on culture, cuisine and landscape runs deeper than any other.',
+  },
+  /* Terremoto de 1522 */
+  {
+    es: 'El terremoto de Almería de 1522 fue el más destructivo de la historia de España peninsular. Destruyó casi por completo el casco histórico y parte de la Alcazaba. La ciudad se reconstruyó entera en menos de 20 años.',
+    en: 'The 1522 Almería earthquake was the most destructive in mainland Spain\'s history. It almost completely destroyed the historic centre and part of the Alcazaba. The city was fully rebuilt in under 20 years.',
+  },
+  /* Barca de jábega */
+  {
+    es: 'La jábega, embarcación de pesca tradicional del Mediterráneo andaluz, se bota al agua a mano desde la playa sin muelle. El arte de botar la jábega lleva más de 2.000 años sin cambiar de técnica.',
+    en: 'The jábega, the traditional fishing boat of Andalusian Mediterranean, is launched by hand from the beach without a jetty. The art of launching the jábega has kept the same technique for over 2,000 years.',
+  },
+  /* Gamba roja — más detalle */
+  {
+    es: 'La gamba roja de Garrucha vive entre 600 y 1.200 metros de profundidad en el cañón submarino frente a Vera. La riqueza de ese cañón en plancton es lo que le da su sabor único e incomparable.',
+    en: 'Garrucha\'s red prawn lives between 600 and 1,200 metres deep in the submarine canyon off Vera. The canyon\'s plankton richness is what gives it its unique, incomparable flavour.',
+  },
+  /* Mojama */
+  {
+    es: 'La mojama — atún curado en sal al sol — es el embutido de mar más antiguo del Mediterráneo. Se elabora en Barbate y Isla Cristina, y llega a los mercados de Vera desde hace siglos. Un jamón de atún.',
+    en: 'Mojama — salt-cured tuna dried in the sun — is the oldest cured sea product in the Mediterranean. Made in Barbate and Isla Cristina, it has reached Vera\'s markets for centuries. A tuna ham.',
+  },
+  /* Palometas y peces locales */
+  {
+    es: 'El pulpo mediterráneo frente a Vera Playa es considerado el mejor de Europa por los cocineros de vanguardia. Su dieta de gambas y crustáceos en el cañón submarino le da una textura imposible de imitar.',
+    en: 'The Mediterranean octopus off Vera Playa is considered Europe\'s finest by avant-garde chefs. Its diet of prawns and crustaceans in the submarine canyon gives it a texture impossible to replicate.',
+  },
+  /* Lentiscos */
+  {
+    es: 'El lentisco, arbusto perenne de las laderas de Cabo de Gata, produce el mastic griego: la resina que los otomanos mascaban, que perfuma el aguardiente griego y que los fenicios usaban como dentífrico hace 3.500 años.',
+    en: 'Lentisk, the evergreen shrub on Cabo de Gata\'s hillsides, produces Greek mastic: the resin the Ottomans chewed, that perfumes Greek spirits and that the Phoenicians used as toothpaste 3,500 years ago.',
+  },
+  /* Agua dulce */
+  {
+    es: 'Almería es la única provincia española que bebe más agua desalinizada que agua de lluvia. Su planta desalinizadora de Carboneras es una de las más grandes de Europa y lleva en funcionamiento desde 2003.',
+    en: 'Almería is the only Spanish province that drinks more desalinated water than rainwater. Its Carboneras desalination plant is one of Europe\'s largest and has been operating since 2003.',
+  },
+  /* Frontera natural */
+  {
+    es: 'El municipio de Vera hace frontera con tres provincias diferentes: Almería, Murcia y Granada. Es uno de los pocos puntos de España donde tres provincias se tocan en menos de 40 kilómetros.',
+    en: 'The municipality of Vera borders three different provinces: Almería, Murcia and Granada. It is one of the few points in Spain where three provinces meet within 40 kilometres.',
+  },
+  /* Sol en invierno */
+  {
+    es: 'En enero y febrero, Vera Playa tiene más horas de sol que el sur de Portugal y que la Costa Azul francesa. El Mediterráneo almeriense tiene clima de invierno suave con más luz que cualquier otro litoral europeo.',
+    en: 'In January and February, Vera Playa has more sunshine hours than southern Portugal or the French Riviera. The Almería Mediterranean has a mild winter climate with more light than any other European coastline.',
+  },
+  /* Biodiversidad marina */
+  {
+    es: 'El cañón submarino de Vera-Carboneras es uno de los más activos del Mediterráneo: un valle subacuático de 800 metros de profundidad a solo 6 millas náuticas de la costa. Su biodiversidad equivale a la de un arrecife tropical.',
+    en: 'The Vera-Carboneras submarine canyon is one of the Mediterranean\'s most active: an underwater valley 800 metres deep just 6 nautical miles from shore. Its biodiversity rivals that of a tropical reef.',
+  },
+  /* Mimosa */
+  {
+    es: 'La mimosa australiana florece en los jardines de Vera Playa entre enero y marzo, cuando el resto de Europa está en invierno. Sus racimos amarillos son la primera señal visible de que el Mediterráneo despierta.',
+    en: 'Australian mimosa blooms in Vera Playa gardens between January and March, while the rest of Europe is in winter. Its yellow clusters are the first visible sign that the Mediterranean is waking up.',
+  },
+  /* Carretera costera */
+  {
+    es: 'La carretera costera entre Vera Playa y Carboneras discurre por una zona de acantilados volcánicos sin ningún núcleo urbano durante 25 km. Figura entre las 10 rutas escénicas más impactantes del Mediterráneo.',
+    en: 'The coastal road between Vera Playa and Carboneras runs through 25 km of volcanic cliffs with no urban settlement. It ranks among the 10 most dramatic scenic drives on the Mediterranean.',
+  },
+  /* Pesca lunar */
+  {
+    es: 'Los pescadores de Garrucha aún usan el calendario lunar para decidir cuándo pescar gamba roja. La luna nueva y la llena cambian la profundidad de migración del crustáceo — un conocimiento empírico de más de 800 años.',
+    en: 'Garrucha\'s fishermen still use the lunar calendar to decide when to fish for red prawns. New and full moons change the crustacean\'s migration depth — empirical knowledge over 800 years old.',
+  },
+  /* Higos */
+  {
+    es: 'La higuera almeriense da dos cosechas al año: las brevas de junio y los higos de agosto. Los griegos llamaron "la tierra de las dos cosechas" a este litoral — uno de los primeros homenajes escritos a la fertilidad de Almería.',
+    en: 'The Almería fig tree gives two harvests a year: the figs of June and the figs of August. The Greeks called this coastline "the land of two harvests" — one of the first written tributes to Almería\'s fertility.',
+  },
 ];
 
 // Shuffled pools — stable per page load
