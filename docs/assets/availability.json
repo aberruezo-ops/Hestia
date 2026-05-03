@@ -1,28 +1,20 @@
 {
   "vm": {
-    "blocked": [
-      { "start": "2026-05-09", "end": "2026-05-16" },
-      { "start": "2026-05-23", "end": "2026-05-30" },
-      { "start": "2026-06-13", "end": "2026-06-20" },
-      { "start": "2026-07-04", "end": "2026-07-18" },
-      { "start": "2026-07-25", "end": "2026-08-08" },
-      { "start": "2026-08-08", "end": "2026-08-22" },
-      { "start": "2026-08-29", "end": "2026-09-05" }
-    ],
-    "updated": "2026-05-02T07:00:00Z",
+    "blocked": [],
+    "updated": "2026-05-03T02:39:58Z",
     "sources": [],
-    "demo": true
+    "demo": false
   },
   "vt": {
     "blocked": [],
-    "updated": "2026-05-02T07:00:00Z",
+    "updated": "2026-05-03T02:39:58Z",
     "sources": [],
-    "demo": true
+    "demo": false
   },
   "vs": {
     "blocked": [],
-    "updated": "2026-05-02T07:00:00Z",
+    "updated": "2026-05-03T02:39:58Z",
     "sources": [],
-    "demo": true
+    "demo": false
   }
 }
