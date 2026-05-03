@@ -166,7 +166,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
         <div className="price-engine">
           <div className="price-main-row">
             <div className="price-direct-block">
-              <span className="price-label-sm">{lang === 'es' ? 'Precio directo estimado' : 'Estimated direct price'}</span>
+              <span className="price-label-sm">{lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to'}</span>
               <span className="price-direct-total">{fmt(calc.directTotal)}</span>
               <span className="price-avg-night">{fmt(calc.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</span>
             </div>
@@ -202,13 +202,13 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
               </div>
             )}
             <div className="price-line price-line-total">
-              <span>{lang === 'es' ? 'Total estimado directo' : 'Estimated direct total'}</span>
+              <span>{lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'}</span>
               <span>{fmt(calc.directTotal)}</span>
             </div>
           </div>
           <p className="price-note">{lang === 'es'
-            ? '* Estimación orientativa. Alex confirma el precio exacto en menos de 24 h. Limpieza final y depósito se confirman al reservar.'
-            : '* Indicative estimate. Alex confirms the exact price within 24 h. Cleaning fee and deposit confirmed at booking.'}</p>
+            ? '* Este es el precio máximo orientativo. En Hestía nos gusta conocer a nuestros huéspedes y entender qué necesitan. Cuéntanos tu situación — muchas veces podemos ajustar el precio.'
+            : '* This is the maximum indicative price. At Hestía we like to get to know our guests and understand what they need. Tell us about your situation — we can often adjust the price.'}</p>
         </div>
       )}
 
@@ -241,8 +241,8 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
       <div className="req-disclaimer">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         <p>{lang === 'es'
-          ? <><strong>Solicitud de precio — no es una reserva.</strong> Alex confirma disponibilidad y precio exacto en menos de 24 horas. La reserva solo se formaliza si la confirmas tú.</>
-          : <><strong>Price request — not a booking.</strong> Alex confirms availability and exact price within 24 hours. The booking is only made when you confirm it.</>}</p>
+          ? <><strong>Solicitud de precio — no es una reserva.</strong> Estos son precios máximos orientativos. En Hestía nos gusta hablar con nuestros huéspedes, entender qué necesitan e intentar adaptar el precio. Cuéntanos tu situación.</>
+          : <><strong>Price request — not a booking.</strong> These are maximum indicative prices. At Hestía we like to talk to our guests, understand what they need, and try to adapt the price accordingly. Tell us about your situation.</>}</p>
       </div>
 
       {/* CTAs */}

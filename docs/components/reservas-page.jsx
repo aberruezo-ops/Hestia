@@ -88,7 +88,7 @@ const PricePreview = ({ apt, checkin, checkout, pets, lang }) => {
     <div className="price-engine price-engine-form">
       <div className="price-main-row">
         <div className="price-direct-block">
-          <span className="price-label-sm">{lang === 'es' ? 'Precio directo estimado' : 'Estimated direct price'}</span>
+          <span className="price-label-sm">{lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to'}</span>
           <span className="price-direct-total">{fmt(calc.directTotal)}</span>
           <span className="price-avg-night">{fmt(calc.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</span>
         </div>
@@ -124,13 +124,13 @@ const PricePreview = ({ apt, checkin, checkout, pets, lang }) => {
           </div>
         )}
         <div className="price-line price-line-total">
-          <span>{lang === 'es' ? 'Total estimado' : 'Estimated total'}</span>
+          <span>{lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'}</span>
           <span>{fmt(calc.directTotal)}</span>
         </div>
       </div>
       <p className="price-note">{lang === 'es'
-        ? '* Estimación orientativa. Limpieza final y depósito se confirman al reservar.'
-        : '* Indicative estimate. Cleaning fee and deposit confirmed at booking.'}</p>
+        ? '* Precio máximo orientativo. En Hestía nos gusta conocer a nuestros huéspedes y entender qué necesitan — cuéntanos tu situación e intentamos ajustar el precio.'
+        : '* Maximum indicative price. At Hestía we like to get to know our guests and understand what they need — tell us your situation and we\'ll try to adjust the price.'}</p>
     </div>
   );
 };
