@@ -5662,6 +5662,32 @@ body.no-parallax .g-tile .img { transform: none !important; }
    ================================================================ */
 
 /* Hero */
+.porque-hero {
+  min-height: 70vh;
+  background: var(--ber-dk);
+  display: flex;
+  align-items: center;
+  padding: 140px var(--page-pad) 80px;
+  position: relative;
+  overflow: hidden;
+}
+.porque-hero-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  z-index: 0;
+  opacity: 0.5;
+}
+.porque-hero-wash {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top,  rgba(42,15,46,.95) 0%, rgba(42,15,46,.6) 45%, rgba(42,15,46,.18) 100%),
+    linear-gradient(to right, rgba(42,15,46,.65) 0%, transparent 65%);
+  z-index: 1;
+  pointer-events: none;
+}
+.porque-hero .page-hero-content { z-index: 2; }
+
 .noticias-hero {
   min-height: 70vh;
   background: var(--ber-dk);
