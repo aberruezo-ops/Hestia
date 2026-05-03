@@ -276,15 +276,15 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 .header nav a:hover::after { transform: scaleX(1); }
 @keyframes cta-cycle {
-  /* 8 colores × 20 s = 160 s · hold 15 s (9.38%) + fade 5 s (3.12%) */
-  0%,    9.38%  { background: #2A0F2E; border-color: #2A0F2E; } /* berenjena */
-  12.5%, 21.88% { background: #7B3B6B; border-color: #7B3B6B; } /* violeta */
-  25%,   34.38% { background: #1BC8D8; border-color: #1BC8D8; } /* turquesa */
-  37.5%, 46.88% { background: #6B7A3A; border-color: #6B7A3A; } /* verde olivo */
-  50%,   59.38% { background: #D42B80; border-color: #D42B80; } /* buganvilla */
-  62.5%, 71.88% { background: #C8975A; border-color: #C8975A; } /* albero */
-  75%,   84.38% { background: #D4A84A; border-color: #D4A84A; } /* sol */
-  87.5%, 96.88% { background: #8B4A1E; border-color: #8B4A1E; } /* siena */
+  /* 8 colores × 10 s = 80 s · hold 5 s (6.25%) + fade 5 s (6.25%) */
+  0%,    6.25%  { background: #2A0F2E; border-color: #2A0F2E; } /* berenjena */
+  12.5%, 18.75% { background: #7B3B6B; border-color: #7B3B6B; } /* violeta */
+  25%,   31.25% { background: #1BC8D8; border-color: #1BC8D8; } /* turquesa */
+  37.5%, 43.75% { background: #6B7A3A; border-color: #6B7A3A; } /* verde olivo */
+  50%,   56.25% { background: #D42B80; border-color: #D42B80; } /* buganvilla */
+  62.5%, 68.75% { background: #C8975A; border-color: #C8975A; } /* albero */
+  75%,   81.25% { background: #D4A84A; border-color: #D4A84A; } /* sol */
+  87.5%, 93.75% { background: #8B4A1E; border-color: #8B4A1E; } /* siena */
   100%           { background: #2A0F2E; border-color: #2A0F2E; }
 }
 .header nav .cta {
@@ -296,7 +296,7 @@ p  { line-height: 1.65; font-weight: 300; }
   text-transform: uppercase;
   opacity: 1;
   color: #fff;
-  animation: cta-cycle 160s linear infinite;
+  animation: cta-cycle 80s linear infinite;
 }
 .header.night nav .cta,
 .header.day nav .cta { color: #fff; }
@@ -2555,7 +2555,7 @@ footer .footer-brand .addr {
   font-family: var(--serif);
 }
 .price-savings-badge {
-  background: #2d7a3c;
+  background: #D42B80;
   color: #fff;
   font-size: 12px;
   font-weight: 500;
@@ -2579,7 +2579,7 @@ footer .footer-brand .addr {
   font-family: var(--sans);
 }
 .price-line-disc {
-  color: #2d7a3c;
+  color: #D42B80;
 }
 .price-line-total {
   font-weight: 600;

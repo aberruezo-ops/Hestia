@@ -74,7 +74,7 @@ const isActive = (href) => {
   return current === href;
 };
 
-const CTA_CYCLE_DURATION = 160; // 8 colors × 20s
+const CTA_CYCLE_DURATION = 80; // 8 colors × 10s
 
 const Header = ({ mode, scrolled, lang }) => {
   const t = COPY[lang];
