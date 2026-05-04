@@ -1,6 +1,6 @@
 name: Sync iCal availability
 
-# Runs every 4 hours and on manual trigger.
+# Runs every hour and on manual trigger.
 # Fetches iCal feeds from Booking.com and Airbnb, parses them,
 # and writes docs/assets/availability.json to the repo.
 #
@@ -11,6 +11,9 @@ name: Sync iCal availability
 #   ICAL_VT_BOOKING  — Hestía Thalassa, Booking iCal URL
 #   ICAL_VS_AIRBNB   — Hestía Salinas,  Airbnb  iCal URL
 #   ICAL_VS_BOOKING  — Hestía Salinas,  Booking iCal URL
+#
+# NOTE: ICAL_*_BOOKING URLs below are hardcoded as a fallback.
+# Move them to Secrets if the tokens need to be rotated privately.
 
 on:
   schedule:
@@ -36,11 +39,13 @@ jobs:
       - name: Sync availability data
         env:
           ICAL_VM_AIRBNB:  ${{ secrets.ICAL_VM_AIRBNB }}
-          ICAL_VM_BOOKING: "https://ical.booking.com/v1/export?t=782a0141-0657-48ea-81fc-2b45e4a5ac12"
+          ICAL_VM_BOOKING: ${{ secrets.ICAL_VM_BOOKING }}
           ICAL_VT_AIRBNB:  ${{ secrets.ICAL_VT_AIRBNB }}
-          ICAL_VT_BOOKING: "https://ical.booking.com/v1/export?t=b7ee28cf-3302-435e-ab0e-4f9e64f3f6a7"
+          ICAL_VT_BOOKING: ${{ secrets.ICAL_VT_BOOKING }}
           ICAL_VS_AIRBNB:  ${{ secrets.ICAL_VS_AIRBNB }}
-          ICAL_VS_BOOKING: "https://ical.booking.com/v1/export?t=237c401e-dc78-4a18-a06d-00868f58c58c"
+          ICAL_VS_BOOKING: ${{ secrets.ICAL_VS_BOOKING }}
+          # Print first 60 lines of each raw iCal in the logs for debugging
+          ICAL_DEBUG: "1"
         run: python .github/scripts/sync_ical.py
 
       - name: Show result
