@@ -17,7 +17,7 @@ from pathlib import Path
 
 try:
     import requests
-    from icalendar import Calendar
+    from icalendar import Calendar, vPeriod
 except ImportError:
     print("Missing deps — run: pip install requests icalendar")
     sys.exit(1)
@@ -34,12 +34,41 @@ HEADERS = {
     "Cache-Control":   "no-cache",
 }
 
+# Booking.com sometimes sends DTEND as inclusive (last blocked night) instead of
+# exclusive (first free night per RFC 5545).  We detect this by checking whether
+# DTEND == DTSTART (single-day all-day block) and NEVER adjust in that case.
+# For multi-night all-day ranges Booking uses exclusive DTEND — keep as-is.
+
+
+def _to_date(val) -> date | None:
+    """Convert icalendar date/datetime value to a plain date, or None."""
+    if val is None:
+        return None
+    dt = val.dt if hasattr(val, "dt") else val
+    if isinstance(dt, datetime):
+        # Use UTC date; Booking.com all-day events use DATE not DATE-TIME,
+        # but if a datetime slips through, take the UTC date.
+        return dt.utctimetuple()[:3]  # (y, m, d)
+    if isinstance(dt, date):
+        return dt
+    if isinstance(dt, timedelta):
+        return dt  # caller handles duration
+    return None
+
+
+def _coerce_date(val) -> date | None:
+    result = _to_date(val)
+    if isinstance(result, tuple):
+        return date(*result)
+    return result
+
 
 def fetch_ical(url: str) -> tuple[list[dict], str | None]:
     """
     Fetch and parse an iCal URL.
-    Returns (all_ranges, error_message).
-    all_ranges includes every VEVENT regardless of date — filtering is done by caller.
+    Returns (ranges_list, error_or_None).
+    Skips CANCELLED/CANCELED events; handles VFREEBUSY blocks.
+    Individual parse errors per event are caught and logged without aborting.
     """
     try:
         resp = requests.get(url, timeout=30, headers=HEADERS)
@@ -50,37 +79,99 @@ def fetch_ical(url: str) -> tuple[list[dict], str | None]:
         ranges = []
 
         for comp in cal.walk():
-            if comp.name != "VEVENT":
-                continue
 
-            uid     = str(comp.get("UID", ""))
-            summary = str(comp.get("SUMMARY", ""))
-            status  = str(comp.get("STATUS", "CONFIRMED"))
-            dtstart = comp.get("DTSTART")
-            dtend   = comp.get("DTEND") or comp.get("DURATION")
+            # ── VEVENT (reservations and manually closed blocks) ──────────
+            if comp.name == "VEVENT":
+                try:
+                    uid     = str(comp.get("UID", ""))
+                    summary = str(comp.get("SUMMARY", "—"))
+                    transp  = str(comp.get("TRANSP", "OPAQUE")).upper()
+                    status  = str(comp.get("STATUS", "CONFIRMED")).upper()
 
-            if not dtstart:
-                print(f"    skip (no DTSTART): uid={uid[:20]} summary={summary[:30]}")
-                continue
+                    # Skip cancelled reservations — they should not block dates
+                    if status in ("CANCELLED", "CANCELED"):
+                        print(f"    skip [cancelled]: {summary[:45]}")
+                        continue
 
-            start = dtstart.dt
-            end   = dtend.dt if dtend else start
+                    # TRANSPARENT events are "free" (no blocking)
+                    if transp == "TRANSPARENT":
+                        print(f"    skip [transparent]: {summary[:45]}")
+                        continue
 
-            # Handle DURATION instead of DTEND
-            if isinstance(end, timedelta):
-                end = (start + end)
+                    dtstart = comp.get("DTSTART")
+                    if not dtstart:
+                        print(f"    skip [no DTSTART]: uid={uid[:24]} {summary[:30]}")
+                        continue
 
-            if isinstance(start, datetime):
-                start = start.date()
-            if isinstance(end, datetime):
-                end = end.date()
+                    start_raw = dtstart.dt
+                    dtend_prop = comp.get("DTEND")
+                    dur_prop   = comp.get("DURATION")
 
-            # Single-day events: DTSTART == DTEND means checkout = next day
-            if end <= start:
-                end = start + timedelta(days=1)
+                    if dtend_prop:
+                        end_raw = dtend_prop.dt
+                    elif dur_prop:
+                        end_raw = dur_prop.dt  # timedelta
+                    else:
+                        end_raw = None
 
-            print(f"    event: {start} → {end}  [{status}] {summary[:40]}")
-            ranges.append({"start": start.isoformat(), "end": end.isoformat()})
+                    # Convert datetimes → dates
+                    if isinstance(start_raw, datetime):
+                        start = start_raw.date()
+                    elif isinstance(start_raw, date):
+                        start = start_raw
+                    else:
+                        print(f"    skip [bad DTSTART type {type(start_raw)}]: {summary[:30]}")
+                        continue
+
+                    if isinstance(end_raw, timedelta):
+                        end = start + end_raw
+                    elif isinstance(end_raw, datetime):
+                        end = end_raw.date()
+                    elif isinstance(end_raw, date):
+                        end = end_raw
+                    else:
+                        end = start  # will be bumped below
+
+                    # RFC 5545: DTEND for DATE values is exclusive.
+                    # Guard against end <= start (some feeds send same-day).
+                    if end <= start:
+                        end = start + timedelta(days=1)
+
+                    print(f'    event [{status}]: {start} -> {end}  "{summary[:45]}"')
+                    ranges.append({"start": start.isoformat(), "end": end.isoformat()})
+
+                except Exception as ev_err:
+                    print(f"    !! VEVENT parse error: {ev_err} — uid={comp.get('UID','?')!s:.24}")
+
+            # ── VFREEBUSY (some platforms use this for manual blocks) ─────
+            elif comp.name == "VFREEBUSY":
+                try:
+                    fb_val = comp.get("FREEBUSY")
+                    if not fb_val:
+                        continue
+                    fb_items = fb_val if isinstance(fb_val, list) else [fb_val]
+                    for item in fb_items:
+                        periods = item if isinstance(item, list) else [item]
+                        for period in periods:
+                            try:
+                                if hasattr(period, "start"):
+                                    s = period.start.date() if isinstance(period.start, datetime) else period.start
+                                    if hasattr(period, "end"):
+                                        e = period.end.date() if isinstance(period.end, datetime) else period.end
+                                    elif hasattr(period, "duration"):
+                                        e = s + period.duration
+                                    else:
+                                        e = s + timedelta(days=1)
+                                else:
+                                    continue
+                                if e <= s:
+                                    e = s + timedelta(days=1)
+                                print(f"    freebusy: {s} → {e}")
+                                ranges.append({"start": s.isoformat(), "end": e.isoformat()})
+                            except Exception as per_err:
+                                print(f"    !! period parse error: {per_err}")
+                except Exception as fb_err:
+                    print(f"    !! VFREEBUSY parse error: {fb_err}")
 
         return ranges, None
 
@@ -89,6 +180,7 @@ def fetch_ical(url: str) -> tuple[list[dict], str | None]:
 
 
 def merge(ranges: list[dict]) -> list[dict]:
+    """Merge overlapping or adjacent blocked ranges (ISO date strings)."""
     if not ranges:
         return []
     s = sorted(ranges, key=lambda x: x["start"])
@@ -102,10 +194,10 @@ def merge(ranges: list[dict]) -> list[dict]:
 
 
 def main() -> None:
-    today   = date.today().isoformat()
-    cutoff  = (date.today() + timedelta(days=LOOKAHEAD)).isoformat()
-    result  = {}
-    any_ok  = False
+    today  = date.today().isoformat()
+    cutoff = (date.today() + timedelta(days=LOOKAHEAD)).isoformat()
+    result = {}
+    any_ok = False
 
     print(f"Sync — today={today}  cutoff={cutoff}\n")
 
@@ -121,7 +213,7 @@ def main() -> None:
                 print(f"  {apt}/{src}: not configured — skipping")
                 continue
 
-            print(f"  {apt}/{src}: fetching...")
+            print(f"  {apt}/{src}: fetching {url[:60]}…")
             raw, err = fetch_ical(url)
 
             if err:
@@ -133,26 +225,32 @@ def main() -> None:
             any_ok = True
 
             future  = [r for r in raw if r["end"] > today and r["start"] <= cutoff]
-            skipped = [r for r in raw if r["end"] <= today or r["start"] > cutoff]
+            past    = [r for r in raw if r["end"] <= today]
+            far     = [r for r in raw if r["start"] > cutoff]
             all_ranges.extend(future)
-            print(f"    ✓ {len(raw)} total events — {len(future)} kept, {len(skipped)} outside window")
+            print(f"    ✓ {len(raw)} events total — "
+                  f"{len(future)} kept, {len(past)} past, {len(far)} beyond lookahead")
 
+        merged = merge(all_ranges)
         result[apt] = {
-            "blocked":      merge(all_ranges),
+            "blocked":      merged,
             "updated":      datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
             "sources":      sources_ok,
             "fetch_errors": fetch_errors,
             "demo":         False,
         }
+        print(f"  {apt}: {len(merged)} merged block(s) from {sources_ok or 'none'}\n")
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT, "w", encoding="utf-8") as fh:
         json.dump(result, fh, indent=2, ensure_ascii=False)
 
-    print(f"\nWritten → {OUTPUT}")
-    print("\n── Blocked ranges ──")
+    print(f"Written → {OUTPUT}")
+    print("\n── Final blocked ranges ──")
     for apt, d in result.items():
-        print(f"  {apt}: {d['blocked']} (sources={d['sources']} errors={d['fetch_errors'] or 'none'})")
+        print(f"  {apt}: {d['blocked']}")
+        if d["fetch_errors"]:
+            print(f"       errors: {d['fetch_errors']}")
 
     if not any_ok:
         print("\n⚠ WARNING: No iCal feed fetched — all sources failed or unconfigured.")
