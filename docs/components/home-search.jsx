@@ -41,77 +41,112 @@ const _hsFmtDate = (ds, lang) => {
     : `${ME[d.getUTCMonth()].slice(0,3)} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
 };
 
-// ---- Custom calendar range picker ----
+// ---- Custom calendar range picker — mismo estilo que AptCalendar ----
 const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, lang, today }) => {
-  const [hover, setHover] = React.useState('');
+  const [hover, setHover] = React.useState(null);
   const todayDate = new Date(today + 'T12:00:00Z');
   const [viewY, setViewY] = React.useState(todayDate.getUTCFullYear());
   const [viewM, setViewM] = React.useState(todayDate.getUTCMonth());
 
-  const blockedSet = React.useMemo(() => {
-    if (!apt || !avail || !avail[apt]) return null;
-    const set = new Set();
-    for (const range of avail[apt].blocked) {
-      let d = new Date(range.start + 'T12:00:00Z');
-      const end = new Date(range.end + 'T12:00:00Z');
-      while (d < end) { set.add(d.toISOString().slice(0, 10)); d.setUTCDate(d.getUTCDate() + 1); }
-    }
-    return set;
+  const blocked = React.useMemo(() => {
+    if (!apt || !avail || !avail[apt]) return [];
+    return avail[apt].blocked || [];
   }, [apt, avail]);
+
+  const _isBlkLocal = (ds) => blocked.some(r => ds >= r.start && ds < r.end);
+
+  // Hover preview end: follow hover if path is clear
+  let previewEnd = null;
+  if (checkin && !checkout && hover && hover > checkin) {
+    let ok = true;
+    let cur = _hsAdj(checkin, 1);
+    while (cur < hover) { if (_isBlkLocal(cur)) { ok = false; break; } cur = _hsAdj(cur, 1); }
+    if (ok) previewEnd = hover;
+  }
+
+  const handleDayClick = (ds) => {
+    if (ds < today || _isBlkLocal(ds)) return;
+    if (!checkin || checkout || ds <= checkin) { setCheckin(ds); setCheckout(''); return; }
+    let cur = _hsAdj(checkin, 1);
+    while (cur < ds) {
+      if (_isBlkLocal(cur)) { setCheckin(ds); setCheckout(''); return; }
+      cur = _hsAdj(cur, 1);
+    }
+    setCheckout(ds);
+  };
 
   const MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
   const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-  const fmtDay = (y, m, d) => `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-
-  const handleDayClick = (ds) => {
-    if (ds < today) return;
-    if (!checkin || checkout) { setCheckin(ds); setCheckout(''); }
-    else if (ds > checkin)    { setCheckout(ds); }
-    else                      { setCheckin(ds);  setCheckout(''); }
-  };
-
-  const effEnd  = checkout || (checkin && hover > checkin ? hover : '');
-  const hasEnd  = !!effEnd;
+  const WDS_ES = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
+  const WDS_EN = ['Mo','Tu','We','Th','Fr','Sa','Su'];
 
   const renderMonth = (y, m) => {
-    const daysInMonth = new Date(y, m + 1, 0).getDate();
-    const firstDOW    = (new Date(y, m, 1).getDay() + 6) % 7; // Mon=0
-    const dayLabels   = lang === 'es' ? ['L','M','X','J','V','S','D'] : ['M','T','W','T','F','S','S'];
-    const monthName   = (lang === 'es' ? MONTHS_ES : MONTHS_EN)[m];
-    const cells = [];
-    for (let i = 0; i < firstDOW; i++) cells.push(null);
-    for (let d = 1; d <= daysInMonth; d++) cells.push(fmtDay(y, m, d));
+    const nDays  = new Date(y, m + 1, 0).getDate();
+    let firstDow = new Date(y, m, 1).getDay();
+    firstDow = firstDow === 0 ? 6 : firstDow - 1;
+    const wds    = lang === 'es' ? WDS_ES : WDS_EN;
+    const mName  = (lang === 'es' ? MONTHS_ES : MONTHS_EN)[m];
+    const cells  = [];
+    for (let i = 0; i < firstDow; i++) cells.push({ empty: true, k: `e${i}` });
+    for (let d = 1; d <= nDays; d++) cells.push({ d, k: d });
 
     return (
-      <div className="hscal-month" key={`${y}-${m}`}>
-        <div className="hscal-month-hd">{monthName} {y}</div>
-        <div className="hscal-grid">
-          {dayLabels.map((lbl, i) => <div key={i} className="hscal-dow">{lbl}</div>)}
-          {cells.map((ds, i) => {
-            if (!ds) return <div key={`e${i}`} className="hscal-cell hscal-empty"/>;
-            const isPast    = ds < today;
-            const isBlocked = blockedSet ? blockedSet.has(ds) : false;
-            const isStart   = ds === checkin;
-            const isEnd     = ds === checkout;
-            const inRange   = !isStart && !isEnd && !!checkin && !!effEnd && ds > checkin && ds < effEnd;
-            const isDisabled = isPast || isBlocked;
-            let cls = 'hscal-cell';
-            if (isDisabled)            cls += ' hscal-dis';
-            if (isBlocked && !isPast)  cls += ' hscal-blocked';
-            if (isStart)               cls += ' hscal-start';
-            if (isEnd)                 cls += ' hscal-end';
-            if (inRange)               cls += ' hscal-range';
-            let bgStyle = {};
-            if      (isStart && hasEnd) bgStyle.background = 'linear-gradient(to right, transparent 50%, rgba(27,200,216,.13) 50%)';
-            else if (isEnd)             bgStyle.background = 'linear-gradient(to left,  transparent 50%, rgba(27,200,216,.13) 50%)';
-            else if (inRange)           bgStyle.background = 'rgba(27,200,216,.13)';
+      <div className="cal-month" key={`${y}-${m}`}>
+        <div className="cal-mhd">{mName} <span className="cal-yr">{y}</span></div>
+        <div className="cal-grid">
+          {wds.map(w => <div key={w} className="cal-wd">{w}</div>)}
+          {cells.map(cell => {
+            if (cell.empty) return <div key={cell.k} className="cal-cell cal-empty"/>;
+            const { d } = cell;
+            const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            const isPast  = ds < today;
+            const isToday = ds === today;
+            const isBlk   = _isBlkLocal(ds);
+
+            const prevBlk     = isBlk && _isBlkLocal(_hsAdj(ds,-1));
+            const nextBlk     = isBlk && _isBlkLocal(_hsAdj(ds, 1));
+            const isBlkStart  = isBlk && !prevBlk;
+            const isBlkEnd    = isBlk && !nextBlk;
+            const isBlkSingle = isBlkStart && isBlkEnd;
+            const isBlkMid    = isBlk && !isBlkStart && !isBlkEnd;
+
+            const inSel = !!(checkin && checkout && ds >= checkin && ds <= checkout);
+            const isSS  = inSel && ds === checkin;
+            const isSE  = inSel && ds === checkout;
+            const isSM  = inSel && !isSS && !isSE;
+
+            const inPrev = !!(checkin && !checkout && previewEnd && ds >= checkin && ds <= previewEnd);
+            const isPS   = inPrev && ds === checkin;
+            const isPE   = inPrev && ds === previewEnd;
+            const isPM   = inPrev && !isPS && !isPE;
+
+            const isClickable = !isPast && !isBlk;
+            const showBlk = isBlk && !inSel && !inPrev;
+
             return (
-              <div key={ds} className={cls} style={bgStyle}
-                onClick={!isDisabled ? () => handleDayClick(ds) : undefined}
-                onMouseEnter={!isDisabled ? () => setHover(ds) : undefined}
-                onMouseLeave={() => setHover('')}
+              <div key={d}
+                className={['cal-cell',isPast&&'past',isToday&&'today',isBlk&&'blk',
+                  isClickable&&'clickable',inSel&&'in-sel',isSS&&'sel-s',isSE&&'sel-e',isSM&&'sel-m',
+                  inPrev&&'in-prev',isPS&&'prev-s',isPE&&'prev-e',isPM&&'prev-m',
+                ].filter(Boolean).join(' ')}
+                onClick={isClickable ? () => handleDayClick(ds) : undefined}
+                onMouseEnter={isClickable && !checkout ? () => setHover(ds) : undefined}
+                onMouseLeave={isClickable ? () => setHover(null) : undefined}
               >
-                <span>{+ds.slice(8)}</span>
+                {showBlk && !isBlkSingle && isBlkStart && <div className="c-strip c-sr"/>}
+                {showBlk && !isBlkSingle && isBlkEnd   && <div className="c-strip c-sl"/>}
+                {showBlk && isBlkMid                   && <div className="c-strip"/>}
+                {showBlk && (isBlkStart||isBlkEnd||isBlkSingle) && <div className="c-circ"/>}
+                {isSS && !isSE && <div className="c-strip c-sel-strip c-sr"/>}
+                {isSE && !isSS && <div className="c-strip c-sel-strip c-sl"/>}
+                {isSM          && <div className="c-strip c-sel-strip"/>}
+                {(isSS||isSE)  && <div className="c-circ c-sel-circ"/>}
+                {isPS && !isPE && <div className="c-strip c-prev-strip c-sr"/>}
+                {isPE && !isPS && <div className="c-strip c-prev-strip c-sl"/>}
+                {isPM          && <div className="c-strip c-prev-strip"/>}
+                {(isPS||isPE)  && <div className="c-circ c-prev-circ"/>}
+                {isToday && !inSel && !inPrev && <div className="c-today"/>}
+                <span className="c-n">{d}</span>
               </div>
             );
           })}
@@ -120,52 +155,63 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
     );
   };
 
-  const nextY = viewM === 11 ? viewY + 1 : viewY;
-  const nextM = viewM === 11 ? 0 : viewM + 1;
+  const nextY    = viewM === 11 ? viewY + 1 : viewY;
+  const nextM    = viewM === 11 ? 0 : viewM + 1;
   const canGoPrev = viewY > todayDate.getUTCFullYear() || viewM > todayDate.getUTCMonth();
-  const prevMonth = () => { if (!canGoPrev) return; if (viewM === 0) { setViewY(y => y-1); setViewM(11); } else setViewM(m => m-1); };
-  const nextMonth = () => { if (viewM === 11) { setViewY(y => y+1); setViewM(0); } else setViewM(m => m+1); };
+  const prevMonth = () => { if (!canGoPrev) return; if (viewM===0){setViewY(y=>y-1);setViewM(11);}else setViewM(m=>m-1); };
+  const nextMonth = () => { if (viewM===11){setViewY(y=>y+1);setViewM(0);}else setViewM(m=>m+1); };
 
+  const months = lang === 'es' ? MONTHS_ES : MONTHS_EN;
+  const navLbl = `${months[viewM]} · ${months[nextM]} ${nextY}`;
   const nights = checkin && checkout ? _hsDiff(checkin, checkout) : null;
 
   return (
-    <div className="hscal-wrap" onMouseLeave={() => setHover('')}>
+    <div className="hscal-wrap" style={{
+      '--apt-accent': '#1BC8D8',
+      '--sel-fill':   'rgba(27,200,216,.22)',
+      '--sel-circ':   'rgba(27,200,216,.90)',
+      '--prev-fill':  'rgba(27,200,216,.11)',
+      '--prev-circ':  'rgba(27,200,216,.48)',
+    }}>
       <div className="hscal-phase-hint">
-        {!checkin   ? (lang === 'es' ? '↓ Elige fecha de entrada' : '↓ Choose check-in date')
-         : !checkout ? (lang === 'es' ? '→ Ahora elige la fecha de salida' : '→ Now choose check-out date')
+        {!checkin    ? (lang==='es' ? '↓ Elige fecha de entrada'       : '↓ Choose check-in date')
+         : !checkout ? (lang==='es' ? '→ Ahora elige la fecha de salida' : '→ Now choose check-out date')
          : null}
       </div>
-      <div className="hscal-nav-row">
-        <button type="button" className="hscal-nav" onClick={prevMonth} disabled={!canGoPrev}>‹</button>
-        <div className="hscal-months">
-          {renderMonth(viewY, viewM)}
-          {renderMonth(nextY, nextM)}
-        </div>
-        <button type="button" className="hscal-nav" onClick={nextMonth}>›</button>
+      <div className="avail-nav hscal-nav">
+        <button type="button" className={`avail-arr${canGoPrev?'':' off'}`} onClick={prevMonth}
+          aria-label={lang==='es'?'Mes anterior':'Previous month'}>‹</button>
+        <span className="avail-nav-lbl">{navLbl}</span>
+        <button type="button" className="avail-arr" onClick={nextMonth}
+          aria-label={lang==='es'?'Mes siguiente':'Next month'}>›</button>
+      </div>
+      <div className="hscal-months" onMouseLeave={() => { if (!checkout) setHover(null); }}>
+        {renderMonth(viewY, viewM)}
+        {renderMonth(nextY, nextM)}
       </div>
       {(checkin || checkout) && (
         <div className="hscal-sel-row">
           {checkin && (
             <span className="hscal-sel-item">
-              <span className="hscal-sel-lbl">{lang === 'es' ? 'Entrada' : 'Check-in'}</span>
+              <span className="hscal-sel-lbl">{lang==='es' ? 'Entrada' : 'Check-in'}</span>
               <strong>{_hsFmtDate(checkin, lang)}</strong>
             </span>
           )}
           {checkout && (
             <span className="hscal-sel-item">
-              <span className="hscal-sel-lbl">{lang === 'es' ? 'Salida' : 'Check-out'}</span>
+              <span className="hscal-sel-lbl">{lang==='es' ? 'Salida' : 'Check-out'}</span>
               <strong>{_hsFmtDate(checkout, lang)}</strong>
             </span>
           )}
           {nights && (
             <div className="hs-nights-badge">
               <span className="hs-nights-n">{nights}</span>
-              <span className="hs-nights-lbl">{lang === 'es' ? 'noches' : 'nights'}</span>
+              <span className="hs-nights-lbl">{lang==='es' ? 'noches' : 'nights'}</span>
             </div>
           )}
           <button type="button" className="hscal-clear"
             onClick={() => { setCheckin(''); setCheckout(''); }}>
-            {lang === 'es' ? '✕ Borrar' : '✕ Clear'}
+            {lang==='es' ? '✕ Borrar' : '✕ Clear'}
           </button>
         </div>
       )}
