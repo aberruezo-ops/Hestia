@@ -2605,6 +2605,7 @@ footer .footer-brand .addr {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  margin-bottom: 4px;
 }
 .price-ref-label {
   font-size: 10px;

@@ -177,6 +177,10 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
                 <span className="price-ref-label">Booking.com</span>
                 <span className="price-ref-val">{fmt(calc.totalBooking)}</span>
               </div>
+              <div className="price-booking-ref">
+                <span className="price-ref-label">Airbnb</span>
+                <span className="price-ref-val">{fmt(calc.totalAirbnb)}</span>
+              </div>
               <div className="price-savings-badge">
                 {lang === 'es' ? 'Ahorras' : 'You save'} ~{fmt(calc.savings)}
               </div>
@@ -185,11 +189,11 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
           <div className="price-breakdown">
             <div className="price-line">
               <span>{lang === 'es' ? `${calc.nights} noches × precio variable` : `${calc.nights} nights × variable rate`}</span>
-              <span>{fmt(calc.totalBooking)}</span>
+              <span>{fmt(calc.refTotal)}</span>
             </div>
             <div className="price-line price-line-disc">
               <span>{lang === 'es' ? `−9 % reserva directa` : `−9 % direct booking`}</span>
-              <span>−{fmt(calc.totalBooking - calc.afterDirect)}</span>
+              <span>−{fmt(calc.refTotal - calc.afterDirect)}</span>
             </div>
             {calc.stayD && (
               <div className="price-line price-line-disc">

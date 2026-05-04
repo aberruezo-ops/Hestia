@@ -336,6 +336,10 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests,
                       <span className="hs-pb-ref-lbl">Booking.com</span>
                       <span className="hs-pb-ref-val">{fmt(calc.totalBooking)}</span>
                     </div>
+                    <div className="hs-pb-ref">
+                      <span className="hs-pb-ref-lbl">Airbnb</span>
+                      <span className="hs-pb-ref-val">{fmt(calc.totalAirbnb)}</span>
+                    </div>
                     <div className="price-savings-badge">
                       {lang === 'es' ? 'Ahorras' : 'You save'} ~{fmt(calc.savings)}
                     </div>
@@ -344,11 +348,11 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests,
                 <div className="hs-pb-breakdown">
                   <div className="hs-pb-line">
                     <span>{lang === 'es' ? `${calc.nights} noches × precio variable` : `${calc.nights} nights × variable rate`}</span>
-                    <span>{fmt(calc.totalBooking)}</span>
+                    <span>{fmt(calc.refTotal)}</span>
                   </div>
                   <div className="hs-pb-line hs-pb-disc">
                     <span>{lang === 'es' ? '−9 % reserva directa' : '−9 % direct booking'}</span>
-                    <span>−{fmt(calc.totalBooking - calc.afterDirect)}</span>
+                    <span>−{fmt(calc.refTotal - calc.afterDirect)}</span>
                   </div>
                   {calc.stayD && (
                     <div className="hs-pb-line hs-pb-disc">
