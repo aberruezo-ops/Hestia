@@ -3564,48 +3564,26 @@ body.no-parallax .g-tile .img { transform: none !important; }
 
 /* --- Descripción + Features --- */
 .apt-page-desc {
-  padding: 96px var(--page-pad);
+  padding: 80px var(--page-pad);
   background: var(--crema);
 }
 .apt-desc-inner {
-  max-width: 1200px;
+  max-width: 780px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: start;
-}
-@media (max-width: 860px) {
-  .apt-desc-inner { grid-template-columns: 1fr; gap: 48px; }
 }
 .apt-desc-lead {
   font-family: var(--serif);
   font-size: clamp(19px, 2vw, 24px);
-  line-height: 1.6;
+  line-height: 1.65;
   font-weight: 300;
   color: var(--ber);
-  margin: 0 0 24px;
+  margin: 0 0 22px;
 }
-.apt-features-list {
-  list-style: none;
+.apt-desc-body {
+  font-size: 16px;
+  line-height: 1.7;
+  color: rgba(42,15,46,.75);
   margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.apt-features-list li {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-size: 15px;
-  color: var(--ink);
-}
-.feat-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
 }
 
 /* ================================================================
@@ -3656,12 +3634,6 @@ body.no-parallax .g-tile .img { transform: none !important; }
   color: rgba(240,232,213,.38);
   margin-top: 2px;
 }
-.apt-equip-body {
-  display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: 48px;
-  align-items: start;
-}
 .apt-equip-icons {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
@@ -3680,45 +3652,77 @@ body.no-parallax .g-tile .img { transform: none !important; }
   color: rgba(240,232,213,.7);
   line-height: 1.35;
 }
-.apt-equip-highlights {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  position: sticky;
-  top: 100px;
+/* ── Key highlights (5 aspectos principales) ── */
+.apt-key-highlights {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 40px;
 }
-.apt-equip-hl-title {
-  font-family: var(--sans);
-  font-size: 10px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: rgba(240,232,213,.3);
-  margin-bottom: 6px;
-}
-.apt-equip-hl {
+.apt-kh-item {
   display: flex;
-  gap: 10px;
+  gap: 16px;
   align-items: flex-start;
+  padding: 20px 24px 20px 0;
+  border-bottom: 1px solid rgba(240,232,213,.08);
 }
-.aeh-dot {
-  font-size: 22px;
-  line-height: 1.1;
+.apt-kh-item:nth-last-child(-n+2) { border-bottom: none; }
+.akhi-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
   flex-shrink: 0;
-  font-weight: 700;
+  margin-top: 7px;
 }
-.aeh-text {
+.akhi-title {
   font-family: var(--sans);
-  font-size: 13px;
-  color: rgba(240,232,213,.65);
-  line-height: 1.55;
-}
-.aeh-text strong {
-  color: var(--arena);
+  font-size: 14px;
   font-weight: 500;
+  color: var(--arena);
+  display: block;
+  margin-bottom: 4px;
+  line-height: 1.3;
 }
+.akhi-sub {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: rgba(240,232,213,.48);
+  display: block;
+  line-height: 1.45;
+}
+
+/* ── Equipamiento expandible ── */
+.apt-equip-detail { margin-top: 4px; }
+.apt-equip-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 1px solid rgba(240,232,213,.18);
+  color: rgba(240,232,213,.65);
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 11px 20px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: border-color .2s, color .2s;
+}
+.apt-equip-toggle:hover {
+  border-color: rgba(240,232,213,.38);
+  color: var(--arena);
+}
+.aet-icon {
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--apt-accent);
+}
+.apt-equip-detail .apt-equip-icons { margin-top: 28px; }
+
 @media (max-width: 860px) {
-  .apt-equip-body { grid-template-columns: 1fr; }
-  .apt-equip-highlights { position: static; }
+  .apt-key-highlights { grid-template-columns: 1fr; }
+  .apt-kh-item:nth-last-child(-n+2) { border-bottom: 1px solid rgba(240,232,213,.08); }
+  .apt-kh-item:last-child { border-bottom: none; }
   .apt-equip-icons { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 }
 @media (max-width: 480px) {

@@ -245,24 +245,26 @@ const APT_EQUIP = {
 
 const AptEquipamiento = ({ apt, lang }) => {
   const equip = APT_EQUIP[apt.id];
+  const [expanded, setExpanded] = React.useState(false);
   if (!equip) return null;
   const d = equip[lang];
   const accent = apt.accent;
+
   return (
     <section className="apt-equip">
       <div className="container">
         <div className="eyebrow apt-equip-eyebrow">
-          {lang === 'es' ? 'Equipamiento · lo que encontraréis' : 'Amenities · what you will find'}
+          {lang === 'es' ? 'Lo esencial · de un vistazo' : 'Essentials · at a glance'}
         </div>
 
         {/* Stats bar */}
         <div className="apt-equip-stats">
           {[
-            { val: equip.area,      unit: 'm²',                      lbl: lang === 'es' ? 'superficie' : 'area' },
+            { val: equip.area,      unit: 'm²',                           lbl: lang === 'es' ? 'superficie' : 'area' },
             { val: equip.guests,    unit: lang === 'es' ? '+cuna' : '+cot', lbl: lang === 'es' ? 'personas' : 'guests' },
-            { val: equip.bedrooms,  unit: '',                         lbl: lang === 'es' ? 'dormitorios' : 'bedrooms' },
-            { val: equip.bathrooms, unit: '',                         lbl: lang === 'es' ? 'baños' : 'bathrooms' },
-            { val: d.terrace,       unit: '',                         lbl: lang === 'es' ? 'terraza' : 'terrace' },
+            { val: equip.bedrooms,  unit: '',                              lbl: lang === 'es' ? 'dormitorios' : 'bedrooms' },
+            { val: equip.bathrooms, unit: '',                              lbl: lang === 'es' ? 'baños' : 'bathrooms' },
+            { val: d.terrace,       unit: '',                              lbl: lang === 'es' ? 'terraza' : 'terrace' },
           ].map((s, i) => (
             <div key={i} className="apt-equip-stat">
               <span className="aes-val" style={{ color: accent }}>{s.val}</span>
@@ -272,29 +274,42 @@ const AptEquipamiento = ({ apt, lang }) => {
           ))}
         </div>
 
-        {/* Body: icons + highlights */}
-        <div className="apt-equip-body">
-          <div className="apt-equip-icons">
-            {d.icons.map(([icon, label], i) => (
-              <div key={i} className="apt-equip-item">
-                <span className="aei-icon" aria-hidden="true">{icon}</span>
-                <span className="aei-label">{label}</span>
+        {/* 5 highlights principales */}
+        <div className="apt-key-highlights">
+          {d.highlights.slice(0, 5).map((h, i) => (
+            <div key={i} className="apt-kh-item">
+              <span className="akhi-dot" style={{ background: accent }}/>
+              <div>
+                <strong className="akhi-title">{h.b}</strong>
+                {h.t && <span className="akhi-sub">{h.t}</span>}
               </div>
-            ))}
-          </div>
-          <aside className="apt-equip-highlights">
-            <div className="apt-equip-hl-title">
-              {lang === 'es' ? 'Características principales' : 'Key features'}
             </div>
-            {d.highlights.map((h, i) => (
-              <div key={i} className="apt-equip-hl">
-                <span className="aeh-dot" style={{ color: accent }}>·</span>
-                <span className="aeh-text">
-                  <strong>{h.b}</strong>{h.t ? ` — ${h.t}` : ''}
-                </span>
-              </div>
-            ))}
-          </aside>
+          ))}
+        </div>
+
+        {/* Equipamiento completo (expandible) */}
+        <div className="apt-equip-detail">
+          <button
+            className="apt-equip-toggle"
+            onClick={() => setExpanded(e => !e)}
+            aria-expanded={expanded}
+            style={{ '--apt-accent': accent }}
+          >
+            <span className="aet-icon" aria-hidden="true">{expanded ? '−' : '+'}</span>
+            {expanded
+              ? (lang === 'es' ? 'Ocultar equipamiento completo' : 'Hide full amenities')
+              : (lang === 'es' ? 'Ver todo el equipamiento' : 'View full amenities')}
+          </button>
+          {expanded && (
+            <div className="apt-equip-icons">
+              {d.icons.map(([icon, label], i) => (
+                <div key={i} className="apt-equip-item">
+                  <span className="aei-icon" aria-hidden="true">{icon}</span>
+                  <span className="aei-label">{label}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -347,24 +362,14 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
   );
 };
 
-// --- Descripción + features ---
+// --- Descripción ---
 const AptPageDesc = ({ apt, lang }) => {
   const d = apt[lang];
   return (
     <section className="apt-page-desc">
       <div className="apt-desc-inner">
-        <div className="apt-desc-text">
-          <p className="apt-desc-lead">{d.desc}</p>
-          <p>{d.desc2}</p>
-        </div>
-        <ul className="apt-features-list">
-          {d.features.map((f, i) => (
-            <li key={i}>
-              <span className="feat-dot" style={{ background: apt.accent }}/>
-              {f}
-            </li>
-          ))}
-        </ul>
+        <p className="apt-desc-lead">{d.desc}</p>
+        <p className="apt-desc-body">{d.desc2}</p>
       </div>
     </section>
   );
