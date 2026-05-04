@@ -59,12 +59,15 @@ const Hero = ({ lang, onScrollDown }) => {
         </div>
       </div>
       <div className="hero-meta">
-        <span>N°01 · Noche mediterránea</span>
-        <div className="scroll-hint">
-          <span>{t.scroll_hint}</span>
-          <div className="line"></div>
+        <span className="hero-meta-coords">37°11′N · 1°50′W</span>
+        <div className="hero-meta-facts">
+          <span>Alt. 5 m</span>
+          <span className="hm-dot" aria-hidden="true">·</span>
+          <span>{lang === 'es' ? '320+ días de sol' : '320+ sunny days'}</span>
+          <span className="hm-dot" aria-hidden="true">·</span>
+          <span>Mar Mediterráneo</span>
         </div>
-        <span className="hide-mobile">{t.hero_meta_right}</span>
+        <span className="hide-mobile hero-meta-province">Almería · Andalucía</span>
       </div>
     </section>
   );

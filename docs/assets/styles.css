@@ -1023,22 +1023,10 @@ section {
   opacity: 0.7;
   font-weight: 300;
 }
-.hero-meta .scroll-hint {
+.hero-meta-facts {
   display: flex; align-items: center; gap: 10px;
 }
-.hero-meta .scroll-hint .line {
-  width: 40px; height: 1px; background: currentColor;
-  position: relative; overflow: hidden;
-}
-.hero-meta .scroll-hint .line::after {
-  content: ''; position: absolute; left: -40%; top: 0; width: 40%; height: 100%;
-  background: var(--sol-lt);
-  animation: scrollHint 2.2s ease-in-out infinite;
-}
-@keyframes scrollHint {
-  0% { left: -40%; }
-  100% { left: 100%; }
-}
+.hm-dot { opacity: 0.45; }
 
 /* Social proof bar */
 .hero-proof {
