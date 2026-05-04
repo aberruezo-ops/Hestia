@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <url>
+    <loc>https://www.hestiayourhome.com/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/mar.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/mar.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/mar.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/thalassa.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/thalassa.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/thalassa.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/salinas.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/salinas.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/salinas.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/reservas.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/reservas.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/reservas.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/opiniones.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/opiniones.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/opiniones.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/nosotros.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/nosotros.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/nosotros.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/porque-hestia.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/porque-hestia.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/porque-hestia.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/contacto.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/contacto.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/contacto.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/noticias.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/noticias.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/noticias.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>
