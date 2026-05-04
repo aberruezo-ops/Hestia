@@ -237,28 +237,70 @@ p  { line-height: 1.65; font-weight: 300; }
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 24px;
-  transition: background .5s ease, padding .4s ease, backdrop-filter .4s ease, border-color .4s;
+  transition: background .7s ease, padding .4s ease, backdrop-filter .4s ease, border-color .5s ease;
   border-bottom: 1px solid transparent;
+  overflow: hidden;
+}
+/* Scroll-driven radial glow — se mueve con --hdr-scroll (0→1) */
+.header::before {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 52% 200% at calc(12% + var(--hdr-scroll, 0) * 78%) 50%,
+    rgba(27,200,216,0.09) 0%,
+    transparent 65%
+  );
+  transition: background .7s ease;
+}
+.header.day::before {
+  background: radial-gradient(
+    ellipse 52% 200% at calc(12% + var(--hdr-scroll, 0) * 78%) 50%,
+    rgba(212,168,74,0.20) 0%,
+    transparent 65%
+  );
 }
 .header.night {
-  background: rgba(42, 15, 46, 0.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom-color: rgba(240, 232, 213, 0.08);
+  background: linear-gradient(108deg,
+    rgba(42,15,46,0.96)    0%,
+    rgba(62,22,58,0.84)   17%,
+    rgba(27,200,216,0.10) 36%,
+    rgba(123,59,107,0.82) 54%,
+    rgba(42,15,46,0.93)   71%,
+    rgba(55,18,52,0.87)   87%,
+    rgba(27,200,216,0.06) 100%
+  ) 0% 50% / 310% 100%;
+  backdrop-filter: blur(22px) saturate(1.6);
+  -webkit-backdrop-filter: blur(22px) saturate(1.6);
+  border-bottom-color: rgba(240,232,213,0.08);
+  animation: hdr-night-flow 22s ease-in-out infinite;
 }
 .header.day {
-  background: linear-gradient(90deg,
-    rgba(220, 120, 60, 0.08) 0%,
-    rgba(252, 238, 212, 0.92) 20%,
-    rgba(254, 244, 224, 0.94) 50%,
-    rgba(252, 238, 212, 0.92) 80%,
-    rgba(220, 120, 60, 0.08) 100%
-  );
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom-color: rgba(184, 106, 60, 0.14);
+  background: linear-gradient(108deg,
+    rgba(196,140,80,0.05)   0%,
+    rgba(252,242,218,0.96) 20%,
+    rgba(255,250,238,0.97) 46%,
+    rgba(212,168,74,0.13)  65%,
+    rgba(252,242,218,0.95) 82%,
+    rgba(196,140,80,0.05) 100%
+  ) 100% 50% / 290% 100%;
+  backdrop-filter: blur(22px) saturate(1.6);
+  -webkit-backdrop-filter: blur(22px) saturate(1.6);
+  border-bottom-color: rgba(184,106,60,0.14);
+  animation: hdr-day-flow 22s ease-in-out infinite;
 }
 .header.scrolled { padding: 12px var(--page-pad); }
+@keyframes hdr-night-flow {
+  0%   { background-position: 0%   50%; }
+  38%  { background-position: 80%  50%; }
+  65%  { background-position: 32%  50%; }
+  100% { background-position: 0%   50%; }
+}
+@keyframes hdr-day-flow {
+  0%   { background-position: 100% 50%; }
+  45%  { background-position: 12%  50%; }
+  100% { background-position: 100% 50%; }
+}
 
 .header nav {
   display: flex; gap: 28px; align-items: center;
@@ -2989,15 +3031,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   100% { transform: translateX(-12%) scaleY(.9) rotate(-2deg); opacity: .6; }
 }
 
-/* ---- HEADER: glass reforzado + borde shimmer ---- */
-.header.night {
-  backdrop-filter: blur(22px) saturate(1.6);
-  -webkit-backdrop-filter: blur(22px) saturate(1.6);
-}
-.header.day {
-  backdrop-filter: blur(22px) saturate(1.6);
-  -webkit-backdrop-filter: blur(22px) saturate(1.6);
-}
+/* ---- HEADER: shimmer line ---- */
 .header::after {
   content: '';
   position: absolute;
