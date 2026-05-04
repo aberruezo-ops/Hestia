@@ -29,10 +29,21 @@
   display: block;
   border-radius: 6px 0 6px 0;
 }
+/* Fly logo — aparece al cerrar, vuela hasta .hestia-logo */
+.vintro-fly-logo {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: clamp(72px, 11vw, 96px);
+  height: clamp(72px, 11vw, 96px);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+  object-fit: contain;
+  display: block;
+}
 .vintro-skip {
   position: absolute;
-  bottom: 36px;
-  right: 36px;
   background: rgba(240,232,213,.07);
   border: 1px solid rgba(240,232,213,.18);
   color: rgba(240,232,213,.5);
