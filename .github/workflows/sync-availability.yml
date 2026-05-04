@@ -4,16 +4,12 @@ name: Sync iCal availability
 # Fetches iCal feeds from Booking.com and Airbnb, parses them,
 # and writes docs/assets/availability.json to the repo.
 #
-# Required GitHub Secrets (Settings → Secrets and variables → Actions):
-#   ICAL_VM_AIRBNB   — Hestía Mar,      Airbnb  iCal URL
+# Booking.com URLs are stored in GitHub Secrets:
 #   ICAL_VM_BOOKING  — Hestía Mar,      Booking iCal URL
-#   ICAL_VT_AIRBNB   — Hestía Thalassa, Airbnb  iCal URL
 #   ICAL_VT_BOOKING  — Hestía Thalassa, Booking iCal URL
-#   ICAL_VS_AIRBNB   — Hestía Salinas,  Airbnb  iCal URL
 #   ICAL_VS_BOOKING  — Hestía Salinas,  Booking iCal URL
 #
-# NOTE: ICAL_*_BOOKING URLs below are hardcoded as a fallback.
-# Move them to Secrets if the tokens need to be rotated privately.
+# Airbnb URLs are hardcoded below (read-only calendar tokens).
 
 on:
   schedule:
@@ -38,11 +34,11 @@ jobs:
 
       - name: Sync availability data
         env:
-          ICAL_VM_AIRBNB:  ${{ secrets.ICAL_VM_AIRBNB }}
+          ICAL_VM_AIRBNB:  "https://www.airbnb.com/calendar/ical/17253235.ics?t=884f5a6f50994d7ba0ff70ae0adb6a01&locale=es"
           ICAL_VM_BOOKING: ${{ secrets.ICAL_VM_BOOKING }}
-          ICAL_VT_AIRBNB:  ${{ secrets.ICAL_VT_AIRBNB }}
+          ICAL_VT_AIRBNB:  "https://www.airbnb.com/calendar/ical/40813709.ics?t=2e7a355e6706497a9c8e830dfbaa8f84&locale=es"
           ICAL_VT_BOOKING: ${{ secrets.ICAL_VT_BOOKING }}
-          ICAL_VS_AIRBNB:  ${{ secrets.ICAL_VS_AIRBNB }}
+          ICAL_VS_AIRBNB:  "https://www.airbnb.com/calendar/ical/51707917.ics?t=8fcaa412ddbc400085ee555440561c3a&locale=es"
           ICAL_VS_BOOKING: ${{ secrets.ICAL_VS_BOOKING }}
           # Print first 60 lines of each raw iCal in the logs for debugging
           ICAL_DEBUG: "1"
