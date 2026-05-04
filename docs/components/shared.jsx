@@ -1280,8 +1280,8 @@ const StickyFacts = ({ lang }) => {
 
 // ================================================================
 // HESTÍA PRICE ENGINE
-// Precios nocturnos que el huésped ve en Booking.com
-// Actualizar mensualmente en el objeto HESTIA_PRICES
+// Precios nocturnos que el huésped ve en Booking.com / Airbnb
+// Actualizar mensualmente en los objetos HESTIA_PRICES / AIRBNB_PRICES
 // ================================================================
 const HESTIA_PRICES = {
   vm: {  // Hestía Mar — VFT/AL/01580
@@ -1308,7 +1308,31 @@ const HESTIA_PRICES = {
   },
 };
 
-const DIRECT_DISCOUNT = 0.09;   // −9 % vs Booking.com
+const AIRBNB_PRICES = {
+  vm: {  // Hestía Mar — Airbnb #17253235
+    base: [0, 95, 95, 112, 132, 142, 162, 195, 228, 162, 132, 95, 95],
+    peaks: [
+      { from: '12-21', to: '01-07', pn: 188 },
+      { from: '04-10', to: '04-24', pn: 162 },
+    ],
+  },
+  vt: {  // Hestía Thalassa — Airbnb #40813709
+    base: [0, 115, 115, 135, 158, 172, 195, 238, 278, 195, 158, 115, 115],
+    peaks: [
+      { from: '12-21', to: '01-07', pn: 228 },
+      { from: '04-10', to: '04-24', pn: 198 },
+    ],
+  },
+  vs: {  // Hestía Salinas — Airbnb #51707917
+    base: [0, 100, 100, 118, 140, 150, 170, 205, 238, 170, 140, 100, 100],
+    peaks: [
+      { from: '12-21', to: '01-07', pn: 198 },
+      { from: '04-10', to: '04-24', pn: 170 },
+    ],
+  },
+};
+
+const DIRECT_DISCOUNT = 0.09;   // −9 % vs Booking.com / Airbnb
 
 const STAY_DISCOUNTS = [        // descuentos por duración (sobre precio directo)
   { min: 28, pct: 0.20, es: '−20 % por estancia larga (28+ noches)', en: '−20 % long stay (28+ nights)' },
@@ -1333,7 +1357,22 @@ const _dayPrice = (ds, aptId) => {
   const month = parseInt(ds.slice(5, 7), 10);
   const mmdd  = ds.slice(5);
   for (const pk of tbl.peaks) {
-    if (pk.from > pk.to) {        // cruza año (12-21 → 01-07)
+    if (pk.from > pk.to) {
+      if (mmdd >= pk.from || mmdd < pk.to) return pk.pn;
+    } else {
+      if (mmdd >= pk.from && mmdd < pk.to) return pk.pn;
+    }
+  }
+  return tbl.base[month] || 100;
+};
+
+const _airbnbDayPrice = (ds, aptId) => {
+  const tbl = AIRBNB_PRICES[aptId];
+  if (!tbl) return 0;
+  const month = parseInt(ds.slice(5, 7), 10);
+  const mmdd  = ds.slice(5);
+  for (const pk of tbl.peaks) {
+    if (pk.from > pk.to) {
       if (mmdd >= pk.from || mmdd < pk.to) return pk.pn;
     } else {
       if (mmdd >= pk.from && mmdd < pk.to) return pk.pn;
@@ -1349,15 +1388,19 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
   if (nights <= 0) return null;
 
   let totalBooking = 0;
+  let totalAirbnb  = 0;
   let cur = selStart;
   for (let i = 0; i < nights; i++) {
     totalBooking += _dayPrice(cur, aptId);
+    totalAirbnb  += _airbnbDayPrice(cur, aptId);
     cur = _be_adj(cur, 1);
   }
   totalBooking = Math.round(totalBooking);
+  totalAirbnb  = Math.round(totalAirbnb);
 
-  // −9 % reserva directa
-  const afterDirect = Math.round(totalBooking * (1 - DIRECT_DISCOUNT));
+  // −9 % reserva directa (sobre la tarifa de referencia más alta)
+  const refTotal    = Math.max(totalBooking, totalAirbnb);
+  const afterDirect = Math.round(refTotal * (1 - DIRECT_DISCOUNT));
 
   // descuento por duración
   const stayD = STAY_DISCOUNTS.find(d => nights >= d.min) || null;
@@ -1368,10 +1411,10 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
   const petAmt = withPets ? PET_SUPP_FLAT : 0;
 
   const directTotal  = afterStay + petAmt;
-  const savings      = totalBooking - directTotal;
+  const savings      = refTotal - directTotal;
   const avgPerNight  = Math.round(afterStay / nights);
 
-  return { nights, totalBooking, afterDirect, stayD, stayDiscAmt, afterStay, petAmt, directTotal, savings, avgPerNight };
+  return { nights, totalBooking, totalAirbnb, refTotal, afterDirect, stayD, stayDiscAmt, afterStay, petAmt, directTotal, savings, avgPerNight };
 };
 
-Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, DIRECT_DISCOUNT, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay });
+Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, AIRBNB_PRICES, DIRECT_DISCOUNT, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _airbnbDayPrice, _calcStay });

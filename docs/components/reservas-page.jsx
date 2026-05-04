@@ -97,6 +97,10 @@ const PricePreview = ({ apt, checkin, checkout, pets, lang }) => {
             <span className="price-ref-label">Booking.com</span>
             <span className="price-ref-val">{fmt(calc.totalBooking)}</span>
           </div>
+          <div className="price-booking-ref">
+            <span className="price-ref-label">Airbnb</span>
+            <span className="price-ref-val">{fmt(calc.totalAirbnb)}</span>
+          </div>
           <div className="price-savings-badge">
             {lang === 'es' ? 'Ahorras' : 'You save'} ~{fmt(calc.savings)}
           </div>
@@ -105,11 +109,11 @@ const PricePreview = ({ apt, checkin, checkout, pets, lang }) => {
       <div className="price-breakdown">
         <div className="price-line">
           <span>{lang === 'es' ? `${calc.nights} noches` : `${calc.nights} nights`}</span>
-          <span>{fmt(calc.totalBooking)}</span>
+          <span>{fmt(calc.refTotal)}</span>
         </div>
         <div className="price-line price-line-disc">
           <span>−9 % {lang === 'es' ? 'reserva directa' : 'direct booking'}</span>
-          <span>−{fmt(calc.totalBooking - calc.afterDirect)}</span>
+          <span>−{fmt(calc.refTotal - calc.afterDirect)}</span>
         </div>
         {calc.stayD && (
           <div className="price-line price-line-disc">
