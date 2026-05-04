@@ -407,7 +407,7 @@ const AptPageOthers = ({ apt, lang }) => {
           return (
             <a key={o.id} href={`${o.slug}.html`} className={`apt-other-card ${o.id}`}
                style={{ '--other-accent': o.accent }}>
-              <img src={o.hero_img} alt={d.name} className="apt-other-img"/>
+              <img src={o.hero_img} alt={d.name} className="apt-other-img" loading="lazy"/>
               <WatermarkBadge size={28}/>
               <div className="apt-other-wash"/>
               <div className="apt-other-content">

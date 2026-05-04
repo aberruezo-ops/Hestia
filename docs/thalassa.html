@@ -26,7 +26,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Lora:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=Poppins:wght@200;300;400&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="assets/styles.css?v=70"/>
+  <link rel="stylesheet" href="assets/styles.css?v=71"/>
+  <link rel="preload" as="image" href="assets/apt-vt-4.jpg" fetchpriority="high"/>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -67,8 +68,69 @@
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Por qué elegiría Hestía Thalassa sobre los otros dos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Thalassa es el ático, el piso más alto de la urbanización. La terraza panorámica tiene vistas al Mediterráneo y al Salar de los Canos. Además, la urbanización cuenta con SPA comunitario (con sauna), piscina y pistas de pádel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo funciona el SPA de la urbanización?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El SPA es comunitario y está abierto en otoño, invierno y primavera. En verano permanece cerrado, aunque el gimnasio permanece abierto todo el año. El SPA también dispone de sauna."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué vistas tiene la terraza del ático?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Desde la terraza panorámica ves el Mediterráneo y, hacia el interior, el Salar de los Canos — un paisaje árido y de gran belleza. El Desierto de Tabernas propiamente dicho está a unos 30 minutos en coche."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo traer mascotas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, en los tres apartamentos. Siempre bajo petición previa y con un pequeño suplemento. Solo pedimos que se respeten unas normas básicas y sensatas."
+      }
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://www.hestiayourhome.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Hestía Thalassa",
+      "item": "https://www.hestiayourhome.com/thalassa.html"
+    }
+  ]
+}
+  </script>
 </head>
 <body>
+<a href="#root" class="skip-link">Saltar al contenido principal</a>
 <div id="root"></div>
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
