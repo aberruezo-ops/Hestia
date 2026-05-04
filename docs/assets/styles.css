@@ -4295,6 +4295,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
   background: var(--ber-lt);
   border-radius: 10px 0 10px 0;
   overflow: hidden;
+  position: relative;
+  isolation: isolate;
 }
 .nosotros-person .portrait img {
   width: 100%;
