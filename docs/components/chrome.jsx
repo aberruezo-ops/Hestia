@@ -91,6 +91,18 @@ const Header = ({ mode, scrolled, lang }) => {
     });
   }, []);
 
+  // Scroll-driven radial glow: update --hdr-scroll (0→1) on the header element
+  const headerRef = React.useRef(null);
+  React.useEffect(() => {
+    const onScroll = () => {
+      const ratio = Math.min(window.scrollY / (window.innerHeight * 0.55), 1);
+      headerRef.current?.style.setProperty('--hdr-scroll', ratio.toFixed(3));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const NavLink = ({ href, children, className = '' }) => (
     <a href={href} className={`${className} ${isActive(href) ? 'active-page' : ''}`} onClick={close}>
       {children}
@@ -99,7 +111,7 @@ const Header = ({ mode, scrolled, lang }) => {
 
   return (
     <>
-      <header className={`header ${mode} ${scrolled ? 'scrolled' : ''}`}>
+      <header ref={headerRef} className={`header ${mode} ${scrolled ? 'scrolled' : ''}`}>
         <nav className="desktop-nav nav-left">
           <NavLink href={NAV_PAGES.mar}>{t.nav[1]}</NavLink>
           <NavLink href={NAV_PAGES.thalassa}>{t.nav[2]}</NavLink>
