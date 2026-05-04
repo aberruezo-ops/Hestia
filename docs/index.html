@@ -27,7 +27,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Lora:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=Poppins:wght@200;300;400&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="assets/styles.css?v=70"/>
+  <link rel="stylesheet" href="assets/styles.css?v=71"/>
+  <link rel="preload" as="image" href="assets/hero-terrace-night.jpg" fetchpriority="high"/>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -67,8 +68,49 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cómo reservo directamente?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Escríbenos por WhatsApp (https://wa.me/34620316370) o a info@hestiayourhome.com. Sin intermediarios, sin comisiones. O usa el formulario en nuestra página de reservas (https://www.hestiayourhome.com/reservas.html)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo llevar a mi perro?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, en los tres apartamentos. Las mascotas son bienvenidas siempre bajo petición previa y con suplemento, respetando unas condiciones básicas en el apartamento, en las zonas comunes y en los espacios públicos. Avísanos al reservar."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuál apartamento me conviene más?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Mar es planta primera con jardín, terraza de amanecer y mascotas. Thalassa es el ático con SPA comunitario y vistas panorámicas al mar. Salinas tiene tres piscinas y el Parque Natural al lado. Compara los tres en https://www.hestiayourhome.com/"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Quiénes sois Alex y Fran?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Somos los propietarios, no una agencia. Gestionamos los tres apartamentos en persona desde 2016. Más de 900 familias nos avalan."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
+<a href="#root" class="skip-link">Saltar al contenido principal</a>
 <div id="root"></div>
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>

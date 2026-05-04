@@ -26,7 +26,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Lora:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&family=Poppins:wght@200;300;400&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="assets/styles.css?v=70"/>
+  <link rel="stylesheet" href="assets/styles.css?v=71"/>
+  <link rel="preload" as="image" href="assets/apt-vs.jpg" fetchpriority="high"/>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -66,8 +67,69 @@
     }
   }
   </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Por qué elegiría Hestía Salinas sobre los otros dos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Salinas es el más luminoso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de pádel comunitarios, y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina con acceso peatonal directo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué son las Salinas de Puerto Rey?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Un Parque Natural a pocos metros del apartamento, con flamencos, aves migratorias y una luz dorada al amanecer única en Europa. Una de las razones por las que este apartamento tiene algo que los demás no tienen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Hay de verdad tres piscinas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. La urbanización tiene tres piscinas comunitarias — no una sola dividida, sino tres zonas diferenciadas con orientaciones distintas. Además hay gimnasio y sauna comunitarios (abiertos todo el año) y pistas de pádel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo traer mascotas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, en los tres apartamentos. Siempre bajo petición previa y con suplemento, respetando unas condiciones básicas en el apartamento, en las zonas comunes y en los espacios públicos."
+      }
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://www.hestiayourhome.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Hestía Salinas",
+      "item": "https://www.hestiayourhome.com/salinas.html"
+    }
+  ]
+}
+  </script>
 </head>
 <body>
+<a href="#root" class="skip-link">Saltar al contenido principal</a>
 <div id="root"></div>
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>

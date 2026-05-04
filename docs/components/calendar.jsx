@@ -236,11 +236,15 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
       <div className="req-contact-form">
         <div className="req-form-title">{lang === 'es' ? 'Tus datos · nombre y email obligatorios' : 'Your details · name and email required'}</div>
         <div className="req-form-row">
-          <input className="req-input" type="text" placeholder={lang === 'es' ? 'Nombre' : 'Name'} value={name} onChange={e => setName(e.target.value)}/>
-          <input className="req-input" type="tel" placeholder={lang === 'es' ? 'Teléfono' : 'Phone'} value={phone} onChange={e => setPhone(e.target.value)}/>
+          <label htmlFor="req-cal-name" className="sr-only">{lang === 'es' ? 'Nombre' : 'Name'}</label>
+          <input id="req-cal-name" className="req-input" type="text" placeholder={lang === 'es' ? 'Nombre' : 'Name'} value={name} onChange={e => setName(e.target.value)}/>
+          <label htmlFor="req-cal-phone" className="sr-only">{lang === 'es' ? 'Teléfono' : 'Phone'}</label>
+          <input id="req-cal-phone" className="req-input" type="tel" placeholder={lang === 'es' ? 'Teléfono' : 'Phone'} value={phone} onChange={e => setPhone(e.target.value)}/>
         </div>
-        <input className="req-input req-input-full" type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}/>
-        <textarea className="req-textarea" placeholder={lang === 'es' ? 'Comentarios, preguntas, fechas alternativas…' : 'Comments, questions, alternative dates…'} value={comments} onChange={e => setComments(e.target.value)}/>
+        <label htmlFor="req-cal-email" className="sr-only">Email</label>
+        <input id="req-cal-email" className="req-input req-input-full" type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)}/>
+        <label htmlFor="req-cal-comments" className="sr-only">{lang === 'es' ? 'Comentarios' : 'Comments'}</label>
+        <textarea id="req-cal-comments" className="req-textarea" placeholder={lang === 'es' ? 'Comentarios, preguntas, fechas alternativas…' : 'Comments, questions, alternative dates…'} value={comments} onChange={e => setComments(e.target.value)}/>
       </div>
 
       {/* Disclaimer */}
