@@ -41,6 +41,138 @@ const _hsFmtDate = (ds, lang) => {
     : `${ME[d.getUTCMonth()].slice(0,3)} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
 };
 
+// ---- Custom calendar range picker ----
+const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, lang, today }) => {
+  const [hover, setHover] = React.useState('');
+  const todayDate = new Date(today + 'T12:00:00Z');
+  const [viewY, setViewY] = React.useState(todayDate.getUTCFullYear());
+  const [viewM, setViewM] = React.useState(todayDate.getUTCMonth());
+
+  const blockedSet = React.useMemo(() => {
+    if (!apt || !avail || !avail[apt]) return null;
+    const set = new Set();
+    for (const range of avail[apt].blocked) {
+      let d = new Date(range.start + 'T12:00:00Z');
+      const end = new Date(range.end + 'T12:00:00Z');
+      while (d < end) { set.add(d.toISOString().slice(0, 10)); d.setUTCDate(d.getUTCDate() + 1); }
+    }
+    return set;
+  }, [apt, avail]);
+
+  const MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const fmtDay = (y, m, d) => `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+
+  const handleDayClick = (ds) => {
+    if (ds < today) return;
+    if (!checkin || checkout) { setCheckin(ds); setCheckout(''); }
+    else if (ds > checkin)    { setCheckout(ds); }
+    else                      { setCheckin(ds);  setCheckout(''); }
+  };
+
+  const effEnd  = checkout || (checkin && hover > checkin ? hover : '');
+  const hasEnd  = !!effEnd;
+
+  const renderMonth = (y, m) => {
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    const firstDOW    = (new Date(y, m, 1).getDay() + 6) % 7; // Mon=0
+    const dayLabels   = lang === 'es' ? ['L','M','X','J','V','S','D'] : ['M','T','W','T','F','S','S'];
+    const monthName   = (lang === 'es' ? MONTHS_ES : MONTHS_EN)[m];
+    const cells = [];
+    for (let i = 0; i < firstDOW; i++) cells.push(null);
+    for (let d = 1; d <= daysInMonth; d++) cells.push(fmtDay(y, m, d));
+
+    return (
+      <div className="hscal-month" key={`${y}-${m}`}>
+        <div className="hscal-month-hd">{monthName} {y}</div>
+        <div className="hscal-grid">
+          {dayLabels.map((lbl, i) => <div key={i} className="hscal-dow">{lbl}</div>)}
+          {cells.map((ds, i) => {
+            if (!ds) return <div key={`e${i}`} className="hscal-cell hscal-empty"/>;
+            const isPast    = ds < today;
+            const isBlocked = blockedSet ? blockedSet.has(ds) : false;
+            const isStart   = ds === checkin;
+            const isEnd     = ds === checkout;
+            const inRange   = !isStart && !isEnd && !!checkin && !!effEnd && ds > checkin && ds < effEnd;
+            const isDisabled = isPast || isBlocked;
+            let cls = 'hscal-cell';
+            if (isDisabled)            cls += ' hscal-dis';
+            if (isBlocked && !isPast)  cls += ' hscal-blocked';
+            if (isStart)               cls += ' hscal-start';
+            if (isEnd)                 cls += ' hscal-end';
+            if (inRange)               cls += ' hscal-range';
+            let bgStyle = {};
+            if      (isStart && hasEnd) bgStyle.background = 'linear-gradient(to right, transparent 50%, rgba(27,200,216,.13) 50%)';
+            else if (isEnd)             bgStyle.background = 'linear-gradient(to left,  transparent 50%, rgba(27,200,216,.13) 50%)';
+            else if (inRange)           bgStyle.background = 'rgba(27,200,216,.13)';
+            return (
+              <div key={ds} className={cls} style={bgStyle}
+                onClick={!isDisabled ? () => handleDayClick(ds) : undefined}
+                onMouseEnter={!isDisabled ? () => setHover(ds) : undefined}
+                onMouseLeave={() => setHover('')}
+              >
+                <span>{+ds.slice(8)}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const nextY = viewM === 11 ? viewY + 1 : viewY;
+  const nextM = viewM === 11 ? 0 : viewM + 1;
+  const canGoPrev = viewY > todayDate.getUTCFullYear() || viewM > todayDate.getUTCMonth();
+  const prevMonth = () => { if (!canGoPrev) return; if (viewM === 0) { setViewY(y => y-1); setViewM(11); } else setViewM(m => m-1); };
+  const nextMonth = () => { if (viewM === 11) { setViewY(y => y+1); setViewM(0); } else setViewM(m => m+1); };
+
+  const nights = checkin && checkout ? _hsDiff(checkin, checkout) : null;
+
+  return (
+    <div className="hscal-wrap" onMouseLeave={() => setHover('')}>
+      <div className="hscal-phase-hint">
+        {!checkin   ? (lang === 'es' ? '↓ Elige fecha de entrada' : '↓ Choose check-in date')
+         : !checkout ? (lang === 'es' ? '→ Ahora elige la fecha de salida' : '→ Now choose check-out date')
+         : null}
+      </div>
+      <div className="hscal-nav-row">
+        <button type="button" className="hscal-nav" onClick={prevMonth} disabled={!canGoPrev}>‹</button>
+        <div className="hscal-months">
+          {renderMonth(viewY, viewM)}
+          {renderMonth(nextY, nextM)}
+        </div>
+        <button type="button" className="hscal-nav" onClick={nextMonth}>›</button>
+      </div>
+      {(checkin || checkout) && (
+        <div className="hscal-sel-row">
+          {checkin && (
+            <span className="hscal-sel-item">
+              <span className="hscal-sel-lbl">{lang === 'es' ? 'Entrada' : 'Check-in'}</span>
+              <strong>{_hsFmtDate(checkin, lang)}</strong>
+            </span>
+          )}
+          {checkout && (
+            <span className="hscal-sel-item">
+              <span className="hscal-sel-lbl">{lang === 'es' ? 'Salida' : 'Check-out'}</span>
+              <strong>{_hsFmtDate(checkout, lang)}</strong>
+            </span>
+          )}
+          {nights && (
+            <div className="hs-nights-badge">
+              <span className="hs-nights-n">{nights}</span>
+              <span className="hs-nights-lbl">{lang === 'es' ? 'noches' : 'nights'}</span>
+            </div>
+          )}
+          <button type="button" className="hscal-clear"
+            onClick={() => { setCheckin(''); setCheckout(''); }}>
+            {lang === 'es' ? '✕ Borrar' : '✕ Clear'}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
 // ---- Result card ----
 const HsResultCard = ({ apt, available, lang, checkin, checkout, guests,
   baby, pet, extraTowels, extraLinen, cot, highchair }) => {
@@ -48,7 +180,8 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests,
   const [rcName,  setRcName ] = React.useState('');
   const [rcEmail, setRcEmail] = React.useState('');
   const [rcPhone, setRcPhone] = React.useState('');
-  const rcValid = rcName.trim().length > 0 && /\S+@\S+/.test(rcEmail);
+  const rcValidWa   = rcName.trim().length > 0 && rcPhone.replace(/\D/g,'').length >= 6;
+  const rcValidMail = rcName.trim().length > 0 && /\S+@\S+/.test(rcEmail);
 
   const nights  = checkin && checkout ? _hsDiff(checkin, checkout) : 0;
   const aptName = apt.name;
@@ -202,27 +335,26 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests,
                   placeholder="Email *"
                   value={rcEmail} onChange={e => setRcEmail(e.target.value)}/>
                 <input className="hs-rc-input" type="tel"
-                  placeholder={lang === 'es' ? 'Teléfono (opcional)' : 'Phone (optional)'}
+                  placeholder={lang === 'es' ? 'Teléfono (para WhatsApp)' : 'Phone (for WhatsApp)'}
                   value={rcPhone} onChange={e => setRcPhone(e.target.value)}/>
               </div>
-              {!rcValid && (rcName.length > 0 || rcEmail.length > 0) && (
-                <p className="hs-rc-hint">{lang === 'es' ? '✦ Nombre y email requeridos' : '✦ Name and email required'}</p>
-              )}
             </div>
             <div className="hs-rc-actions">
-              <a href={rcValid ? waHref() : undefined}
-                 className={`btn btn-primary hs-wa-btn${!rcValid ? ' req-btn-dis' : ''}`}
+              <a href={rcValidWa ? waHref() : undefined}
+                 className={`btn btn-primary hs-wa-btn${!rcValidWa ? ' req-btn-dis' : ''}`}
                  target="_blank" rel="noopener"
-                 onClick={!rcValid ? e => e.preventDefault() : undefined}>
+                 onClick={!rcValidWa ? e => e.preventDefault() : undefined}
+                 title={!rcValidWa ? (lang === 'es' ? 'Completa nombre y teléfono' : 'Enter name and phone') : undefined}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                 </svg>
                 {lang === 'es' ? 'Solicitar precio — WhatsApp' : 'Request price — WhatsApp'}
                 <span className="arrow"> →</span>
               </a>
-              <a href={rcValid ? mailHref() : undefined}
-                 className={`btn btn-ghost hs-mail-btn${!rcValid ? ' req-btn-dis' : ''}`}
-                 onClick={!rcValid ? e => e.preventDefault() : undefined}>
+              <a href={rcValidMail ? mailHref() : undefined}
+                 className={`btn btn-ghost hs-mail-btn${!rcValidMail ? ' req-btn-dis' : ''}`}
+                 onClick={!rcValidMail ? e => e.preventDefault() : undefined}
+                 title={!rcValidMail ? (lang === 'es' ? 'Completa nombre y email' : 'Enter name and email') : undefined}>
                 {lang === 'es' ? 'Solicitar precio — Email' : 'Request price — Email'}
               </a>
               <a href={`${apt.slug}.html`} className="hs-rc-link">
@@ -316,8 +448,6 @@ const HomeSearch = ({ lang }) => {
 
   const handleReset = () => { setResults(null); setFormErr(''); };
 
-  const nights = checkin && checkout && checkout > checkin ? _hsDiff(checkin, checkout) : null;
-
   return (
     <section className="home-search" id="buscar" data-screen-label="03b Buscador">
       <div className="hs-inner">
@@ -365,47 +495,14 @@ const HomeSearch = ({ lang }) => {
             </div>
           </div>
 
-          {/* Dates + nights summary */}
-          <div className="hs-row">
-            <div className="hs-field">
-              <label className="hs-lbl" htmlFor="hs-checkin">
-                {lang === 'es' ? 'Entrada' : 'Check-in'}
-              </label>
-              <input
-                id="hs-checkin"
-                type="date"
-                className="hs-input"
-                value={checkin}
-                min={today}
-                onChange={e => {
-                  setCheckin(e.target.value);
-                  setResults(null);
-                  if (e.target.value) setTimeout(() => document.getElementById('hs-checkout')?.focus(), 50);
-                }}
-                required
-              />
-            </div>
-            <div className="hs-field">
-              <label className="hs-lbl" htmlFor="hs-checkout">
-                {lang === 'es' ? 'Salida' : 'Check-out'}
-              </label>
-              <input
-                id="hs-checkout"
-                type="date"
-                className="hs-input"
-                value={checkout}
-                min={checkin || today}
-                onChange={e => { setCheckout(e.target.value); setResults(null); }}
-                required
-              />
-            </div>
-            {nights && (
-              <div className="hs-nights-badge">
-                <span className="hs-nights-n">{nights}</span>
-                <span className="hs-nights-lbl">{lang === 'es' ? 'noches' : 'nights'}</span>
-              </div>
-            )}
-          </div>
+          {/* Calendar date range picker */}
+          <HsDateRange
+            checkin={checkin} checkout={checkout}
+            setCheckin={v => { setCheckin(v); setResults(null); }}
+            setCheckout={v => { setCheckout(v); setResults(null); }}
+            avail={avail} apt={apt}
+            lang={lang} today={today}
+          />
 
           {/* Guests */}
           <div className="hs-row hs-row--wrap">
