@@ -95,9 +95,13 @@ const ContactoHero = ({ lang }) => {
   );
 };
 
-const PersonCard = ({ name, role, langLabel, phone, waLink, quote, initial, accent }) => (
+const PersonCard = ({ name, role, langLabel, phone, waLink, quote, initial, accent, imgSrc }) => (
   <div className="contacto-card" style={{ '--card-accent': accent }}>
-    <div className="contacto-avatar">{initial}</div>
+    <div className="contacto-avatar">
+      {imgSrc
+        ? <img src={imgSrc} alt={name} onError={e => { e.currentTarget.style.display='none'; }}/>
+        : initial}
+    </div>
     <div className="contacto-card-body">
       <div className="contacto-card-lang">{langLabel}</div>
       <div className="contacto-card-name">{name}</div>
@@ -131,6 +135,7 @@ const ContactoPersons = ({ lang }) => {
             quote={t.alex_quote}
             initial="A"
             accent="var(--sol)"
+            imgSrc="assets/photo-alex.jpg"
           />
           <PersonCard
             name={t.fran_title}
@@ -141,6 +146,7 @@ const ContactoPersons = ({ lang }) => {
             quote={t.fran_quote}
             initial="F"
             accent="var(--vt)"
+            imgSrc="assets/photo-fran.jpg"
           />
         </div>
         <div className="contacto-email-row">
