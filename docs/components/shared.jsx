@@ -1238,6 +1238,14 @@ const StickyFacts = ({ lang }) => {
   const [idx, setIdx]         = React.useState(_getSessionIdx);
   const [visible, setVisible] = React.useState(true);
   const [open, setOpen]       = React.useState(true);
+  const [pastHero, setPastHero] = React.useState(() => window.scrollY > window.innerHeight * 0.7);
+
+  // Hide while the hero/header is in view; appear once user scrolls past it
+  React.useEffect(() => {
+    const check = () => setPastHero(window.scrollY > window.innerHeight * 0.7);
+    window.addEventListener('scroll', check, { passive: true });
+    return () => window.removeEventListener('scroll', check);
+  }, []);
 
   const advance = (dir) => {
     setVisible(false);
@@ -1263,7 +1271,7 @@ const StickyFacts = ({ lang }) => {
   const label = lang === 'es' ? '¿Sabías que?' : 'Did you know?';
 
   return (
-    <div className={`sticky-facts ${open ? '' : 'sf-closed'}`} onClick={!open ? () => setOpen(true) : undefined}>
+    <div className={`sticky-facts ${open ? '' : 'sf-closed'}${pastHero ? '' : ' sf-hidden'}`} onClick={!open ? () => setOpen(true) : undefined}>
       {!open ? (
         <>
           <span style={{ fontSize: 14, color: 'var(--sol-lt)', fontFamily: 'var(--sans)', letterSpacing: '.12em', textTransform: 'uppercase', fontWeight: 400 }}>
