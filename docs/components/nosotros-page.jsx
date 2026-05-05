@@ -10,7 +10,7 @@ const NOSOTROS_COPY = {
 
     intro_title: (<>No somos una empresa.<em>Somos dos personas.</em></>),
     intro_p1: 'Nos conocisteis cuando reservasteis, o quizás ahora mismo es la primera vez. Da igual. Lo importante es que detrás de Hestía no hay una plataforma, ni un gestor, ni una oficina. Estamos nosotros: Alex y Fran. Dos personas reales que cogen el teléfono, que conocen vuestro nombre y que se ocupan de que cuando llegáis, todo esté exactamente como debería.',
-    intro_p2: 'Somos un ingeniero informático y un filólogo clásico. Llevamos desde 2016 transformando nuestros apartamentos en Vera Playa en algo que, con suerte, vosotros también podéis llamar hogar durante unos días.',
+    intro_p2: 'Somos un ingeniero informático con alma de decorador y un filólogo clásico que sabe cómo hacer que una estancia sea más que una estancia. Llevamos desde 2016 transformando nuestros apartamentos en Vera Playa en algo que, con suerte, vosotros también podéis llamar hogar durante unos días.',
     intro_quote: '«El hogar no es un lugar, es un sentimiento.»',
     intro_quote_attr: '— Cecelia Ahearn',
 
@@ -24,15 +24,15 @@ const NOSOTROS_COPY = {
 
     team_eyebrow: 'El equipo',
     team_title: (<>Detrás de Hestía hay<br/><em>dos personas reales.</em></>),
-    alex_eyebrow: '01 · Creativo · Pre-estancia · Reservas',
+    alex_eyebrow: '01 · Creativo · Decorador · Pre-estancia',
     alex_lang: '🇪🇸 Español',
     alex_name: 'Alex Berruezo',
-    alex_bio: 'Ingeniero informático. Me ocupo de que Hestía se vea y se sienta como un hogar: la decoración, los detalles de bienvenida, las reservas en español y todo lo que ocurre antes de que lleguéis.',
+    alex_bio: 'Ingeniero informático con alma creativa. Me ocupo de la decoración, los detalles y el ambiente de Hestía. Gestiono las reservas y cuido de todo lo que ocurre antes de que lleguéis — para que nada quede al azar.',
     alex_quote: '«A ti, antes de que llegues, te lo cuento todo. Después, cuando te vayas, te echaré de menos.»',
-    fran_eyebrow: '02 · Técnico · In-estancia · Reservas',
+    fran_eyebrow: '02 · Filólogo · In-estancia · Post-estancia',
     fran_lang: '🇬🇧 English',
     fran_name: 'Fran Moral',
-    fran_bio: 'Filólogo clásico. Me encargo de que todo funcione cuando estáis aquí: la atención durante la estancia, las reservas en inglés y todo lo que hace que vuestra experiencia sea memorable.',
+    fran_bio: 'Filólogo clásico. Estoy aquí mientras estáis aquí. Me ocupo de que vuestra estancia sea mejor de lo esperado: de que nada falle, de que lo que necesitéis llegue y de que os vayáis pensando en volver.',
     fran_quote: '«If anything breaks, calls, or changes — I am here. Your stay, my job.»',
 
     manifest_cta: 'Reservar ahora →',
@@ -47,7 +47,7 @@ const NOSOTROS_COPY = {
 
     intro_title: (<>{"We're not a company."}<em>{"We're two people."}</em></>),
     intro_p1: "You may have met us when you booked, or perhaps this is the very first time. It doesn't matter. What matters is that behind Hestía there is no platform, no property manager, no office. There's us: Alex and Fran. Two real people who pick up the phone, know your name, and make sure that when you arrive, everything is exactly as it should be.",
-    intro_p2: "A computer engineer and a classical philologist. Since 2016 we have been turning our apartments in Vera Playa into something that, with luck, you can also call home for a few days.",
+    intro_p2: "A computer engineer with a decorator's sensibility and a classical philologist who knows how to turn a stay into something worth remembering. Since 2016 we have been turning our apartments in Vera Playa into something that, with luck, you can also call home for a few days.",
     intro_quote: "«Home isn't a place, it's a feeling.»",
     intro_quote_attr: '— Cecelia Ahearn',
 
@@ -61,15 +61,15 @@ const NOSOTROS_COPY = {
 
     team_eyebrow: 'The team',
     team_title: (<>Behind Hestía there are<br/><em>two real people.</em></>),
-    alex_eyebrow: '01 · Creative · Pre-stay · Bookings',
+    alex_eyebrow: '01 · Creative · Decorator · Pre-stay',
     alex_lang: '🇪🇸 Español',
     alex_name: 'Alex Berruezo',
-    alex_bio: "Computer engineer. I make sure Hestía looks and feels like a home: the decoration, the welcome details, Spanish bookings and everything that happens before you arrive.",
+    alex_bio: "Computer engineer with a creative eye. I look after Hestía's decoration, atmosphere and welcome details. I manage bookings and take care of everything before you arrive — so nothing is left to chance.",
     alex_quote: '«Before you arrive, I will tell you everything. After you leave, I will miss you a little.»',
-    fran_eyebrow: '02 · Technical · In-stay · Bookings',
+    fran_eyebrow: '02 · Philologist · In-stay · Post-stay',
     fran_lang: '🇬🇧 English',
     fran_name: 'Fran Moral',
-    fran_bio: "Classical philologist. I make sure everything is exceptional while you're here: in-stay support, English bookings and everything that makes your experience truly memorable.",
+    fran_bio: "Classical philologist. I am here while you are here. I make sure your stay exceeds expectations: that nothing goes wrong, that everything you need arrives, and that you leave already thinking about coming back.",
     fran_quote: '«If anything breaks, calls, or changes — I am here. Your stay, my job.»',
 
     manifest_cta: 'Book now →',
