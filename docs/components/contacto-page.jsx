@@ -83,9 +83,19 @@ const CONTACTO_COPY = {
 
 const ContactoHero = ({ lang }) => {
   const t = CONTACTO_COPY[lang];
+  const videoRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const tryPlay = (el) => { if (el) { el.muted = true; el.play().catch(() => {}); } };
+    tryPlay(videoRef.current);
+    const onVisible = () => { if (!document.hidden) tryPlay(videoRef.current); };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => document.removeEventListener('visibilitychange', onVisible);
+  }, []);
+
   return (
     <section className="page-hero contacto-hero">
-      <video className="contacto-hero-video" autoPlay muted loop playsInline preload="auto">
+      <video ref={videoRef} className="contacto-hero-video" autoPlay muted loop playsInline preload="auto">
         <source src="assets/contacto-hero.mp4" type="video/mp4"/>
       </video>
       <div className="contacto-hero-wash"/>
