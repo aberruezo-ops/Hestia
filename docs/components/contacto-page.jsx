@@ -86,7 +86,7 @@ const ContactoHero = ({ lang }) => {
   return (
     <section className="page-hero contacto-hero">
       <video className="contacto-hero-video" autoPlay muted loop playsInline preload="auto">
-        <source src="assets/5B9936F4-A423-470C-A330-6B007042CEF3.mov" type="video/mp4"/>
+        <source src="assets/contacto-hero.mp4" type="video/mp4"/>
       </video>
       <div className="contacto-hero-wash"/>
       <img className="contacto-hero-bottle-logo" src="assets/logo-teal-transparent.png" alt="" aria-hidden="true"/>
