@@ -3765,14 +3765,14 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .gc-wrap { width: 100%; user-select: none; }
 @media (min-width: 600px) {
   .gc-wrap {
-    max-width: 640px;
+    max-width: 560px;
     margin-left: auto;
     margin-right: auto;
   }
 }
 @media (min-width: 1024px) {
   .gc-wrap {
-    max-width: 780px;
+    max-width: 680px;
   }
 }
 .gc-stage {
@@ -3814,7 +3814,6 @@ body.no-parallax .g-tile .img { transform: none !important; }
   inset: 0;
   pointer-events: none;
 }
-.gc-overlay .gc-arrow,
 .gc-overlay .wm-badge { pointer-events: auto; }
 .gc-caption {
   position: absolute;
@@ -3842,46 +3841,41 @@ body.no-parallax .g-tile .img { transform: none !important; }
   z-index: 2;
   pointer-events: none;
 }
-.gc-arrow {
-  position: absolute;
-  top: 50%; transform: translateY(-50%);
-  z-index: 3;
-  background: rgba(42,15,46,.45);
-  border: 1px solid rgba(240,232,213,.18);
-  color: var(--arena);
-  font-size: 26px;
-  line-height: 1;
-  width: 42px; height: 42px;
-  border-radius: 50%;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: background .2s;
-  padding: 0;
-}
-@media (hover: hover) { .gc-arrow:hover { background: rgba(42,15,46,.82); } }
-.gc-prev { left: 12px; }
-.gc-next { right: 12px; }
-.gc-dots {
+.gc-thumbs {
   display: flex;
-  justify-content: center;
-  gap: 7px;
-  padding: 12px 0 20px;
-  flex-wrap: wrap;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 10px 0 4px;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
 }
-.gc-dot {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: rgba(240,232,213,.22);
-  border: none;
+.gc-thumbs::-webkit-scrollbar { display: none; }
+.gc-thumb {
+  flex-shrink: 0;
+  width: 76px;
+  aspect-ratio: 4/3;
+  border-radius: 6px 0 6px 0;
+  overflow: hidden;
   cursor: pointer;
+  border: 2px solid transparent;
+  opacity: 0.42;
+  transition: opacity .25s ease, border-color .25s ease, transform .2s ease;
   padding: 0;
-  transition: background .25s, transform .25s;
+  background: none;
 }
-.gc-dot.gc-dot-on { background: var(--arena); transform: scale(1.45); }
-@media (max-width: 600px) {
-  .gc-arrow { width: 34px; height: 34px; font-size: 20px; }
-  .gc-prev { left: 6px; }
-  .gc-next { right: 6px; }
+.gc-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.gc-thumb.gc-thumb-on {
+  opacity: 1;
+  border-color: var(--turquesa);
+  box-shadow: 0 0 0 1px var(--turquesa);
+}
+@media (hover: hover) {
+  .gc-thumb:hover { opacity: 0.82; transform: scale(1.06); }
+  .gc-thumb.gc-thumb-on:hover { opacity: 1; transform: scale(1.04); }
 }
 
 /* --- Otros apartamentos --- */
