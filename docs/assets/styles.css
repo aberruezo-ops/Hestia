@@ -6363,7 +6363,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 /* ─── Forma corporativa en todos los fondos de sección ──────────────────────
    Los bloques que alinean con el borde superior de la página usan solo la
    esquina de salida; el resto lleva la forma completa del botón (X 0 X 0).
-   overflow:hidden garantiza que el recorte de esquinas sea efectivo.       */
+   overflow:hidden solo en los que ya lo tenían o necesitan clip de hijos.  */
 .hero          { border-radius: 0 0 40px 0; }
 .apt-page-hero { border-radius: 0 0 48px 0; }
 
@@ -6373,15 +6373,26 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .section-day,
 .section-cream,
 .frase-hogar,
+.ratings,
+.compare,
+.apt-page-desc,
+.quick-faq {
+  border-radius: 32px 0 32px 0;
+}
+
+/* Estos ya tenían overflow:hidden en su propia regla; solo añadimos el radio */
 .home-search,
 .counters,
 .manifest,
 .contact-cta,
-.ratings,
-.compare,
-.apt-page-desc,
-.apt-page-gallery,
-.quick-faq {
+.apt-page-gallery {
   border-radius: 32px 0 32px 0;
-  overflow: hidden;
+}
+
+/* ─── Body background oscuro: las esquinas redondeadas muestran el color
+   de la sección vecina en vez del fondo crema del body.
+   :has() evita afectar páginas sin secciones oscuras al inicio.            */
+body:has(.hero),
+body:has(.apt-page-hero) {
+  background: var(--ink);
 }
