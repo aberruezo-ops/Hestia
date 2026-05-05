@@ -85,7 +85,11 @@ const ContactoHero = ({ lang }) => {
   const t = CONTACTO_COPY[lang];
   return (
     <section className="page-hero contacto-hero">
-      <div className="stars"/>
+      <video className="contacto-hero-video" autoPlay muted loop playsInline preload="auto">
+        <source src="assets/5B9936F4-A423-470C-A330-6B007042CEF3.mov" type="video/mp4"/>
+      </video>
+      <div className="contacto-hero-wash"/>
+      <img className="contacto-hero-bottle-logo" src="assets/logo-teal-transparent.png" alt="" aria-hidden="true"/>
       <div className="page-hero-content">
         <div className="eyebrow">{t.eyebrow}</div>
         <h1>{t.title}</h1>
