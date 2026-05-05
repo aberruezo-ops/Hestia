@@ -189,7 +189,8 @@ p  { line-height: 1.65; font-weight: 300; }
   border-radius: 0 0 10px 0;
   overflow: hidden;
 }
-/* Fills the gap created by the header's top-left border-radius so the topbar color bleeds through */
+/* Covers the gap created by the header's top-left border-radius with the topbar colour.
+   z-index 100 puts it in front of the header (99) so backdrop-filter doesn't interfere. */
 .topbar-corner-fill {
   position: fixed;
   top: var(--topbar-h, 36px);
@@ -197,7 +198,7 @@ p  { line-height: 1.65; font-weight: 300; }
   width: 10px;
   height: 10px;
   background: var(--ber-dk);
-  z-index: 98;
+  z-index: 100;
   pointer-events: none;
 }
 .topbar .contacts {
