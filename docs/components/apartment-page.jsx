@@ -315,8 +315,21 @@ const AptPageDesc = ({ apt, lang }) => {
 const GalleryCarousel = ({ imgs, captions }) => {
   const n = imgs.length;
   const [cur, setCur] = React.useState(0);
-  const prev = () => setCur(i => (i - 1 + n) % n);
-  const next = () => setCur(i => (i + 1) % n);
+  const timerRef = React.useRef(null);
+
+  const resetTimer = () => {
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => setCur(i => (i + 1) % n), 3000);
+  };
+
+  React.useEffect(() => {
+    resetTimer();
+    return () => clearInterval(timerRef.current);
+  }, []);
+
+  const prev = () => { setCur(i => (i - 1 + n) % n); resetTimer(); };
+  const next = () => { setCur(i => (i + 1) % n);     resetTimer(); };
+  const go   = i  => { setCur(i);                     resetTimer(); };
 
   // Swipe support
   const touchX = React.useRef(null);
@@ -349,7 +362,7 @@ const GalleryCarousel = ({ imgs, captions }) => {
       <div className="gc-dots">
         {imgs.map((_, i) => (
           <button key={i} className={`gc-dot${i === cur ? ' gc-dot-on' : ''}`}
-                  onClick={() => setCur(i)} aria-label={`Foto ${i + 1}`}/>
+                  onClick={() => go(i)} aria-label={`Foto ${i + 1}`}/>
         ))}
       </div>
     </div>
