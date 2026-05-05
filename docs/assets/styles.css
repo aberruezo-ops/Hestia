@@ -3763,23 +3763,33 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .gc-stage {
   position: relative;
   width: 100%;
-  aspect-ratio: 4/3;
   overflow: hidden;
   background: var(--ink-soft);
+}
+/* ::before establishes 4:3 height reliably even with all-absolute children */
+.gc-stage::before {
+  content: '';
+  display: block;
+  padding-top: 75%;
 }
 .gc-slide {
   position: absolute;
   inset: 0;
-  opacity: 0;
-  transition: opacity .55s ease;
-  pointer-events: none;
+  transition: transform .45s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
 }
-.gc-slide.gc-on { opacity: 1; pointer-events: auto; }
 .gc-slide img {
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
 }
+.gc-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.gc-overlay .gc-arrow,
+.gc-overlay .wm-badge { pointer-events: auto; }
 .gc-caption {
   position: absolute;
   bottom: 0; left: 0; right: 0;
