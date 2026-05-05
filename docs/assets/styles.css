@@ -6459,3 +6459,17 @@ body:has(.hero),
 body:has(.apt-page-hero) {
   background: var(--ink);
 }
+
+/* ── Destellos y estrellitas decorativos — desactivados ── */
+.hero .stars,
+.hero .stars::before,
+.hero .stars::after,
+.page-hero .stars { display: none !important; }
+
+footer::before { background-image: none !important; animation: none !important; }
+
+.contact-cta::after,
+.contacto-hero::after,
+.bridge::after { animation: none !important; opacity: 0 !important; }
+
+.header::after { animation: none !important; opacity: 0 !important; }
