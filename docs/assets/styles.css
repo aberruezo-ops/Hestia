@@ -5042,6 +5042,47 @@ body.no-parallax .g-tile .img { transform: none !important; }
   z-index: 1;
 }
 .reservas-hero .page-hero-content { z-index: 3; }
+
+/* ---- CONTACTO HERO VIDEO ---- */
+.contacto-hero { min-height: 70vh; }
+.contacto-hero-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 72%;
+  z-index: 0;
+  opacity: 0.90;
+}
+.contacto-hero-wash {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, rgba(42,15,46,.80) 0%, rgba(42,15,46,.45) 35%, rgba(42,15,46,.12) 70%, transparent 100%),
+    linear-gradient(to right, rgba(42,15,46,.28) 0%, transparent 55%);
+  z-index: 1;
+}
+.contacto-hero-bottle-logo {
+  position: absolute;
+  left: 36%;
+  top: 62%;
+  transform: translate(-50%, -50%);
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+  opacity: 0.92;
+  filter: sepia(0.15) brightness(1.05);
+  z-index: 2;
+  pointer-events: none;
+}
+.contacto-hero .page-hero-content { z-index: 3; }
+@media (max-width: 600px) {
+  .contacto-hero-bottle-logo {
+    left: 25%;
+    top: 67%;
+    width: 56px;
+    height: 56px;
+  }
+}
+
 .reservas-body {
   padding: 80px var(--page-pad) 120px;
   background: var(--crema);
