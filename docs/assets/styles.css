@@ -271,7 +271,7 @@ p  { line-height: 1.65; font-weight: 300; }
   transition: background .7s ease, padding .4s ease, backdrop-filter .4s ease, border-color .5s ease;
   border-bottom: 1px solid transparent;
   overflow: hidden;
-  border-radius: 0 0 10px 0;
+  border-radius: 10px 0 10px 0;
 }
 /* Scroll-driven radial glow — se mueve con --hdr-scroll (0→1) */
 .header::before {
