@@ -316,6 +316,17 @@ const GalleryCarousel = ({ imgs, captions }) => {
   const n = imgs.length;
   const [cur, setCur] = React.useState(0);
   const thumbsRef = React.useRef(null);
+  const timerRef  = React.useRef(null);
+
+  const resetTimer = () => {
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => setCur(i => (i + 1) % n), 3000);
+  };
+
+  React.useEffect(() => {
+    resetTimer();
+    return () => clearInterval(timerRef.current);
+  }, []);
 
   // Keep active thumbnail visible in the strip
   React.useEffect(() => {
@@ -325,7 +336,7 @@ const GalleryCarousel = ({ imgs, captions }) => {
     if (thumb) thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
   }, [cur]);
 
-  const go = i => setCur(i);
+  const go = i => { setCur(i); resetTimer(); };
 
   // Swipe on main image
   const touchX = React.useRef(null);
@@ -333,7 +344,7 @@ const GalleryCarousel = ({ imgs, captions }) => {
   const onTouchEnd   = e => {
     if (touchX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchX.current;
-    if (Math.abs(dx) > 40) setCur(i => dx < 0 ? (i + 1) % n : (i - 1 + n) % n);
+    if (Math.abs(dx) > 40) { setCur(i => dx < 0 ? (i + 1) % n : (i - 1 + n) % n); resetTimer(); }
     touchX.current = null;
   };
 

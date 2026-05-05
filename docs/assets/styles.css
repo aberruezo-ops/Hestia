@@ -3871,11 +3871,12 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .gc-thumb.gc-thumb-on {
   opacity: 1;
   border-color: var(--turquesa);
-  box-shadow: 0 0 0 1px var(--turquesa);
+  box-shadow: 0 0 0 2px var(--turquesa);
+  transform: scale(1.10);
 }
 @media (hover: hover) {
   .gc-thumb:hover { opacity: 0.82; transform: scale(1.06); }
-  .gc-thumb.gc-thumb-on:hover { opacity: 1; transform: scale(1.04); }
+  .gc-thumb.gc-thumb-on:hover { opacity: 1; transform: scale(1.12); }
 }
 
 /* --- Otros apartamentos --- */
