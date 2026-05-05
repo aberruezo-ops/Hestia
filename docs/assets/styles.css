@@ -189,6 +189,17 @@ p  { line-height: 1.65; font-weight: 300; }
   border-radius: 0 0 10px 0;
   overflow: hidden;
 }
+/* Fills the gap created by the header's top-left border-radius so the topbar color bleeds through */
+.topbar-corner-fill {
+  position: fixed;
+  top: var(--topbar-h, 36px);
+  left: 0;
+  width: 10px;
+  height: 10px;
+  background: var(--ber-dk);
+  z-index: 98;
+  pointer-events: none;
+}
 .topbar .contacts {
   display: flex; gap: 6px; align-items: center; flex-wrap: nowrap;
 }

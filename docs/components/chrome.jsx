@@ -3,38 +3,41 @@
 // ================================================================
 
 const Topbar = ({ lang, setLang }) => (
-  <div className="topbar">
-    <div className="contacts">
-      <a href="https://wa.me/34620316370" className="topbar-link" target="_blank" rel="noopener" aria-label="WhatsApp Alex">
-        <span className="tl-dot"/>
-        <span className="tl-who hide-mobile">Alex</span>
-        <span className="tl-mode hide-mobile">🇪🇸 Español</span>
-        <span className="tl-num">+34 620 316 370</span>
-      </a>
-      <span className="sep">·</span>
-      <a href="https://wa.me/34654138251" className="topbar-link" target="_blank" rel="noopener" aria-label="WhatsApp Fran">
-        <span className="tl-dot"/>
-        <span className="tl-who hide-mobile">Fran</span>
-        <span className="tl-mode hide-mobile">🇬🇧 English</span>
-        <span className="tl-num">+34 654 138 251</span>
-      </a>
-      <span className="sep hide-mobile">·</span>
-      <a href="mailto:info@hestiayourhome.com" className="topbar-link email hide-mobile" aria-label="Email">
-        info@hestiayourhome.com
-      </a>
+  <>
+    <div className="topbar">
+      <div className="contacts">
+        <a href="https://wa.me/34620316370" className="topbar-link" target="_blank" rel="noopener" aria-label="WhatsApp Alex">
+          <span className="tl-dot"/>
+          <span className="tl-who hide-mobile">Alex</span>
+          <span className="tl-mode hide-mobile">🇪🇸 Español</span>
+          <span className="tl-num">+34 620 316 370</span>
+        </a>
+        <span className="sep">·</span>
+        <a href="https://wa.me/34654138251" className="topbar-link" target="_blank" rel="noopener" aria-label="WhatsApp Fran">
+          <span className="tl-dot"/>
+          <span className="tl-who hide-mobile">Fran</span>
+          <span className="tl-mode hide-mobile">🇬🇧 English</span>
+          <span className="tl-num">+34 654 138 251</span>
+        </a>
+        <span className="sep hide-mobile">·</span>
+        <a href="mailto:info@hestiayourhome.com" className="topbar-link email hide-mobile" aria-label="Email">
+          info@hestiayourhome.com
+        </a>
+      </div>
+      <div className="lang">
+        <button className={lang === 'es' ? 'active' : ''} onClick={() => setLang('es')}>
+          <span className="lang-full">🇪🇸 Español</span>
+          <span className="lang-abbr">ES</span>
+        </button>
+        <span className="divider">/</span>
+        <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>
+          <span className="lang-full">🇬🇧 English</span>
+          <span className="lang-abbr">EN</span>
+        </button>
+      </div>
     </div>
-    <div className="lang">
-      <button className={lang === 'es' ? 'active' : ''} onClick={() => setLang('es')}>
-        <span className="lang-full">🇪🇸 Español</span>
-        <span className="lang-abbr">ES</span>
-      </button>
-      <span className="divider">/</span>
-      <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>
-        <span className="lang-full">🇬🇧 English</span>
-        <span className="lang-abbr">EN</span>
-      </button>
-    </div>
-  </div>
+    <div className="topbar-corner-fill" aria-hidden="true" />
+  </>
 );
 
 const IconHamburger = () => (
