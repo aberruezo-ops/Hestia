@@ -3,22 +3,13 @@ name: Sync iCal availability
 # Runs every 4 hours and on manual trigger.
 # Fetches iCal feeds from Booking.com and Airbnb, parses them,
 # and writes docs/assets/availability.json to the repo.
-#
-# Required GitHub Secrets (Settings → Secrets and variables → Actions):
-#   ICAL_VM_AIRBNB   — Hestía Mar,      Airbnb  iCal URL
-#   ICAL_VM_BOOKING  — Hestía Mar,      Booking iCal URL (opcional, ya hardcodeado)
-#   ICAL_VT_AIRBNB   — Hestía Thalassa, Airbnb  iCal URL
-#   ICAL_VT_BOOKING  — Hestía Thalassa, Booking iCal URL (opcional)
-#   ICAL_VS_AIRBNB   — Hestía Salinas,  Airbnb  iCal URL
-#   ICAL_VS_BOOKING  — Hestía Salinas,  Booking iCal URL (opcional)
 
 on:
   schedule:
     - cron: '0 */4 * * *'   # every 4 hours
   workflow_dispatch:          # manual trigger from GitHub UI
 
-# Prevent two runs from overlapping — cancel the in-progress one
-# if a new trigger fires while the previous run is still running.
+# Prevent overlapping runs from generating false-alarm cancelled emails.
 concurrency:
   group: sync-ical
   cancel-in-progress: true
@@ -41,11 +32,11 @@ jobs:
 
       - name: Sync availability data
         env:
-          ICAL_VM_AIRBNB:  ${{ secrets.ICAL_VM_AIRBNB }}
+          ICAL_VM_AIRBNB:  "https://www.airbnb.com/calendar/ical/17253235.ics?t=884f5a6f50994d7ba0ff70ae0adb6a01&locale=es"
           ICAL_VM_BOOKING: "https://ical.booking.com/v1/export?t=782a0141-0657-48ea-81fc-2b45e4a5ac12"
-          ICAL_VT_AIRBNB:  ${{ secrets.ICAL_VT_AIRBNB }}
+          ICAL_VT_AIRBNB:  "https://www.airbnb.com/calendar/ical/40813709.ics?t=2e7a355e6706497a9c8e830dfbaa8f84&locale=es"
           ICAL_VT_BOOKING: "https://ical.booking.com/v1/export?t=b7ee28cf-3302-435e-ab0e-4f9e64f3f6a7"
-          ICAL_VS_AIRBNB:  ${{ secrets.ICAL_VS_AIRBNB }}
+          ICAL_VS_AIRBNB:  "https://www.airbnb.com/calendar/ical/51707917.ics?t=8fcaa412ddbc400085ee555440561c3a&locale=es"
           ICAL_VS_BOOKING: "https://ical.booking.com/v1/export?t=237c401e-dc78-4a18-a06d-00868f58c58c"
         run: python .github/scripts/sync_ical.py
 
