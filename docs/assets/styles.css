@@ -3758,35 +3758,106 @@ body.no-parallax .g-tile .img { transform: none !important; }
   font-family: var(--sans);
   margin: 0;
 }
-.apt-gallery-real {
+/* --- Gallery carousel --- */
+.gc-wrap {
   position: relative;
+  user-select: none;
+}
+.gc-track {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 24px 50px;
+  align-items: center;
+}
+.gc-track::-webkit-scrollbar { display: none; }
+.gc-item {
+  flex-shrink: 0;
+  width: clamp(240px, 44vw, 480px);
   aspect-ratio: 4/3;
+  position: relative;
   border-radius: 10px 0 10px 0;
   overflow: hidden;
-  background: var(--ink-soft);
+  scroll-snap-align: center;
+  cursor: pointer;
+  transition: transform .4s cubic-bezier(.4,0,.2,1), box-shadow .4s ease;
+  transform: scale(0.86);
+  opacity: 0.72;
 }
-.apt-gallery-real img {
+.gc-item.gc-active {
+  transform: scale(1);
+  opacity: 1;
+  box-shadow: 0 24px 72px rgba(42,15,46,.65);
+}
+.gc-item img {
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.5s ease;
 }
-@media (hover: hover) {
-  .apt-gallery-real:hover img { transform: scale(1.05); }
-}
-.apt-gallery-real-cap {
+.gc-cap {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  padding: 28px 12px 10px;
-  background: linear-gradient(to top, rgba(42,15,46,.78), transparent);
+  padding: 32px 14px 12px;
+  background: linear-gradient(to top, rgba(42,15,46,.82), transparent);
   font-size: 10px;
   font-family: var(--sans);
-  letter-spacing: 0.09em;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
-  color: rgba(240,232,213,.82);
+  color: rgba(240,232,213,.85);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.gc-item.gc-active .gc-cap { opacity: 1; }
+.gc-arrow {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  z-index: 2;
+  background: rgba(42,15,46,.6);
+  border: 1px solid rgba(240,232,213,.15);
+  color: var(--arena);
+  font-size: 28px;
+  line-height: 1;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.gc-arrow:hover { background: rgba(42,15,46,.9); }
+.gc-prev { left: 6px; }
+.gc-next { right: 6px; }
+.gc-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 0 24px;
+  flex-wrap: wrap;
+  max-width: 320px;
+  margin: 0 auto;
+}
+.gc-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(240,232,213,.25);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background .2s, transform .2s;
+}
+.gc-dot.gc-dot-on {
+  background: var(--arena);
+  transform: scale(1.4);
+}
+@media (max-width: 600px) {
+  .gc-item { width: clamp(200px, 78vw, 320px); }
+  .gc-track { padding: 16px 32px; gap: 10px; }
+  .gc-arrow { width: 36px; height: 36px; font-size: 22px; }
 }
 
 /* --- Otros apartamentos --- */

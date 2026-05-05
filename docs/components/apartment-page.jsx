@@ -13,17 +13,30 @@ const APT_DATA = {
     others: ['vt', 'vs'],
     gallery_imgs: [
       'assets/apt-vm-gallery-1.jpg',
+      'assets/apt-vm-gallery-2.jpg',
       'assets/apt-vm-gallery-3.jpg',
+      'assets/apt-vm-gallery-4.jpg',
+      'assets/apt-vm-gallery-5.jpg',
       'assets/apt-vm-gallery-6.jpg',
-      'assets/apt-vm-gallery-22.jpg',
+      'assets/apt-vm-gallery-7.jpg',
+      'assets/apt-vm-gallery-8.jpg',
+      'assets/apt-vm-gallery-9.jpg',
       'assets/apt-vm-gallery-10.jpg',
       'assets/apt-vm-gallery-11.jpg',
       'assets/apt-vm-gallery-12.jpg',
       'assets/apt-vm-gallery-13.jpg',
+      'assets/apt-vm-gallery-14.jpg',
       'assets/apt-vm-gallery-15.jpg',
       'assets/apt-vm-gallery-16.jpg',
+      'assets/apt-vm-gallery-17.jpg',
       'assets/apt-vm-gallery-18.jpg',
+      'assets/apt-vm-gallery-19.jpg',
+      'assets/apt-vm-gallery-20.jpg',
+      'assets/apt-vm-gallery-21.jpg',
+      'assets/apt-vm-gallery-22.jpg',
       'assets/apt-vm-gallery-23.jpg',
+      'assets/apt-vm-gallery-24.jpg',
+      'assets/apt-vm-gallery-25.jpg',
     ],
     es: {
       name: 'Hestía Mar',
@@ -31,7 +44,7 @@ const APT_DATA = {
       desc: 'Hestía Mar es el apartamento donde el paisaje del olivar se funde con el Mediterráneo. Desde la terraza esquinera de 20m² orientada al amanecer, el mar aparece entre los eucaliptos de Vera Playa. Al ser de esquina, el apartamento da a tres calles y permite ventilación cruzada natural en todas las estancias.',
       desc2: 'El apartamento ocupa la planta primera y se abre al jardín con acceso a la piscina comunitaria. Al ser esquinero, la luz entra desde el amanecer hasta el atardecer — ves el ciclo solar completo desde la terraza. Aire acondicionado centralizado en todas las estancias. Cocina completamente equipada, salón-comedor de 28m² y dos dormitorios con ropa de cama de calidad.',
       features: ['6 plazas + bebé · 2 habitaciones · planta primera', 'Terraza esquina 20m² · orientada al amanecer · ciclo solar completo', 'Piscina comunitaria · jacuzzi comunitario (verano)', 'Mascotas · petición previa · suplemento', '300 m de la playa · 5 min a pie desde la salida', 'Accesibilidad · adaptado para movilidad reducida', 'Aire acondicionado centralizado en todas las estancias', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'WiFi fibra óptica · Amazon Alexa', 'Lavadora · lavavajillas · nevera · microondas', 'Cafetera de cápsulas + espresso · batidora · plancha', 'Cama matrimonial 150 cm · colchón viscoelástico', 'Toallas 100% algodón 200 hilos · nórdicos de plumas'],
-      gallery_captions: ['Salón · mesa de madera y cocina', 'Salón · vista cenital', 'Cocina equipada Siemens', 'Salón · sofá y decoración', 'Dormitorio principal · pared verde', 'Dormitorio 2 · camas turquesa', 'Terraza esquinera · vistas a la sierra', 'Terraza · velada de verano', 'Baño principal · luz LED', 'Baño 2 · ducha y toallas', 'Piscina y jacuzzi comunitario', 'Detalle decorativo'],
+      gallery_captions: ['Salón · mesa de madera y cocina', 'Salón · sofá con espejo sol', 'Salón · vista cenital', 'Piscina comunitaria nocturna', 'Detalle · jarrón y textiles', 'Cocina equipada · mañana', 'Cocina · encimera y copa', 'Cocina · campana extractora', 'Dormitorio 2 · camas turquesa', 'Dormitorio principal · armario espejo', 'Dormitorio 2 · simétrico', 'Terraza · día y sierra', 'Terraza · velada de verano', 'Terraza · sofás nocturnos', 'Baño 1 · luz LED verde', 'Baño 2 · ducha y toallas', 'Baño 2 · lavabo y aromas', 'Piscina comunitaria · día', 'Piscina · jardines', 'Zona duchas · mosaico azul', 'Salón · lámpara y sofá', 'Salón · sofá completo', 'Detalle · espejo sol dorado', 'Detalle · suelo hidráulico', 'Dormitorio principal · lámpara globo'],
     },
     en: {
       name: 'Hestía Mar',
@@ -39,7 +52,7 @@ const APT_DATA = {
       desc: 'Hestía Mar is where the olive grove landscape merges with the Mediterranean. From the 20m² corner terrace facing the sunrise, the sea appears between the eucalyptus trees of Vera Playa. Being a corner apartment, it faces three streets and benefits from natural cross-ventilation throughout.',
       desc2: 'The apartment is on the first floor and opens onto the garden with access to the shared pool. As a corner unit, light travels through from sunrise to sunset — you can follow the full arc of the sun from the terrace. Centralised air conditioning in every room. A fully equipped kitchen, 28m² living-dining room, and two bedrooms with quality bed linen.',
       features: ['6 guests + baby · 2 bedrooms · first floor', 'Corner terrace 20m² · faces sunrise · full solar arc', 'Shared pool · shared jacuzzi (summer)', 'Pets · on request · supplement', '300 m from the beach · 5 min walk from complex exit', 'Accessibility · adapted for reduced mobility', 'Centralised A/C in every room', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'Fibre WiFi · Amazon Alexa', 'Washer · dishwasher · fridge · microwave', 'Capsule + espresso coffee maker · blender · iron', 'Double bed 150 cm · memory foam mattress', '100% cotton 200-thread towels · down duvets'],
-      gallery_captions: ['Living & dining · wooden table', 'Living room · overhead view', 'Fully equipped kitchen', 'Living room · sofa & decor', 'Master bedroom · green wall', 'Bedroom 2 · teal twin beds', 'Corner terrace · mountain views', 'Terrace · summer evening', 'Main bathroom · LED light', 'Bathroom 2 · shower & towels', 'Shared pool & jacuzzi', 'Decorative detail'],
+      gallery_captions: ['Living & dining · wooden table', 'Living room · sofa & sun mirror', 'Living room · overhead view', 'Community pool · night', 'Detail · vase & textiles', 'Kitchen · morning setup', 'Kitchen · counter & wine', 'Kitchen · extractor hood', 'Bedroom 2 · teal beds', 'Master bedroom · mirrored wardrobe', 'Bedroom 2 · symmetric', 'Terrace · day & mountains', 'Terrace · summer evening', 'Terrace · night sofas', 'Bathroom 1 · green LED', 'Bathroom 2 · shower & towels', 'Bathroom 2 · vessel sink', 'Community pool · daytime', 'Pool · gardens', 'Pool showers · blue mosaic', 'Living room · lamp detail', 'Living room · full sofa', 'Detail · gold sun mirror', 'Detail · hydraulic tiles', 'Master bedroom · globe lamp'],
     },
   },
   vt: {
@@ -298,7 +311,54 @@ const AptPageDesc = ({ apt, lang }) => {
   );
 };
 
-// --- Galería ---
+// --- Galería carousel ---
+const GalleryCarousel = ({ imgs, captions }) => {
+  const scrollRef = React.useRef(null);
+  const [active, setActive] = React.useState(0);
+
+  const updateActive = () => {
+    const c = scrollRef.current;
+    if (!c) return;
+    const cx = c.scrollLeft + c.offsetWidth / 2;
+    let best = 0, minD = Infinity;
+    c.querySelectorAll('.gc-item').forEach((el, i) => {
+      const d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - cx);
+      if (d < minD) { minD = d; best = i; }
+    });
+    setActive(best);
+  };
+
+  const scrollTo = (i) => {
+    const c = scrollRef.current;
+    const el = c && c.querySelectorAll('.gc-item')[i];
+    if (!el) return;
+    c.scrollTo({ left: el.offsetLeft - (c.offsetWidth - el.offsetWidth) / 2, behavior: 'smooth' });
+  };
+
+  React.useEffect(() => { scrollTo(0); }, []);
+
+  return (
+    <div className="gc-wrap">
+      <button className="gc-arrow gc-prev" onClick={() => scrollTo(Math.max(0, active - 1))} aria-label="Anterior">‹</button>
+      <div ref={scrollRef} className="gc-track" onScroll={updateActive}>
+        {imgs.map((src, i) => (
+          <div key={i} className={`gc-item${i === active ? ' gc-active' : ''}`} onClick={() => scrollTo(i)}>
+            <img src={src} alt={captions[i]} loading="lazy"/>
+            <WatermarkBadge size={18}/>
+            <div className="gc-cap">{captions[i]}</div>
+          </div>
+        ))}
+      </div>
+      <button className="gc-arrow gc-next" onClick={() => scrollTo(Math.min(imgs.length - 1, active + 1))} aria-label="Siguiente">›</button>
+      <div className="gc-dots">
+        {imgs.map((_, i) => (
+          <button key={i} className={`gc-dot${i === active ? ' gc-dot-on' : ''}`} onClick={() => scrollTo(i)} aria-label={`Foto ${i+1}`}/>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const AptPageGallery = ({ apt, lang }) => {
   const d = apt[lang];
   const captions = d.gallery_captions;
@@ -308,22 +368,21 @@ const AptPageGallery = ({ apt, lang }) => {
       <div className="apt-gallery-eyebrow eyebrow">
         {lang === 'es' ? 'Galería de fotos' : 'Photo gallery'}
       </div>
-      <div className="apt-gallery-grid">
-        {captions.map((cap, i) => (
-          imgs
-            ? <div key={i} className="apt-gallery-real">
-                <img src={imgs[i]} alt={cap} loading="lazy"/>
-                <WatermarkBadge size={22}/>
-                <div className="apt-gallery-real-cap">{cap}</div>
-              </div>
-            : <PhotoPlaceholder key={i} caption={cap} accent={apt.accent} index={i}/>
-        ))}
-      </div>
-      {!imgs && <p className="gallery-note">
-        {lang === 'es'
-          ? '↑ Fotos reales próximamente. Mientras tanto, escríbenos y te mandamos más.'
-          : "↑ Real photos coming soon. Meanwhile, write us and we'll send more."}
-      </p>}
+      {imgs
+        ? <GalleryCarousel imgs={imgs} captions={captions}/>
+        : <>
+            <div className="apt-gallery-grid">
+              {captions.map((cap, i) => (
+                <PhotoPlaceholder key={i} caption={cap} accent={apt.accent} index={i}/>
+              ))}
+            </div>
+            <p className="gallery-note">
+              {lang === 'es'
+                ? '↑ Fotos reales próximamente. Mientras tanto, escríbenos y te mandamos más.'
+                : "↑ Real photos coming soon. Meanwhile, write us and we'll send more."}
+            </p>
+          </>
+      }
     </section>
   );
 };
