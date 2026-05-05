@@ -328,12 +328,14 @@ const GalleryCarousel = ({ imgs, captions }) => {
     return () => clearInterval(timerRef.current);
   }, []);
 
-  // Keep active thumbnail visible in the strip
+  // Scroll the strip horizontally to centre the active thumb — never the page
   React.useEffect(() => {
-    const el = thumbsRef.current;
-    if (!el) return;
-    const thumb = el.children[cur];
-    if (thumb) thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    const strip = thumbsRef.current;
+    if (!strip) return;
+    const thumb = strip.children[cur];
+    if (!thumb) return;
+    const offset = thumb.offsetLeft - (strip.clientWidth - thumb.offsetWidth) / 2;
+    strip.scrollTo({ left: offset, behavior: 'smooth' });
   }, [cur]);
 
   const go = i => { setCur(i); resetTimer(); };
