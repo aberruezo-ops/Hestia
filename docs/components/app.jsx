@@ -13,19 +13,20 @@ const VideoIntro = ({ lang, onDone }) => {
     exitedRef.current = true;
     const box = boxRef.current;
     if (box) {
-      box.style.transition = 'opacity 2s ease';
+      box.style.transition = 'opacity 5s ease';
       box.style.opacity    = '0';
     }
     setTimeout(() => {
       sessionStorage.setItem('hestia-intro', '1');
       onDone();
-    }, 2000);
+    }, 5000);
   };
 
   React.useEffect(() => {
     const v = videoRef.current;
     if (v) v.play().catch(() => setTimeout(doExit, 200));
-    const bail = setTimeout(doExit, 14000);
+    // Safety bail-out only for total failure — 90s is well beyond any video length
+    const bail = setTimeout(doExit, 90000);
     return () => clearTimeout(bail);
   }, []);
 
