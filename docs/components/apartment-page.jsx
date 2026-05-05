@@ -334,7 +334,7 @@ const PhotoPlaceholder = ({ caption, accent, index }) => (
 const AptPageHero = ({ apt, lang, scrolled, mode }) => {
   const d = apt[lang];
   return (
-    <section className="apt-page-hero" style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
+    <section className="apt-page-hero" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
       <img src={apt.hero_img} alt={d.name} className="apt-page-hero-img"/>
       <WatermarkBadge size={40} pos={{ bottom: 16, right: 16 }}/>
       <div className="apt-page-hero-wash"/>

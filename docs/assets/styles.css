@@ -3506,6 +3506,35 @@ body.no-parallax .g-tile .img { transform: none !important; }
   width: 100%; height: 100%;
   object-fit: cover;
   object-position: center;
+  will-change: transform;
+}
+/* Ken Burns — cámara lenta diferente por apartamento */
+@keyframes kb-vm {
+  0%   { transform: scale(1.05) translate( 0.8%,  0.4%); }
+  100% { transform: scale(1.12) translate(-0.6%, -0.5%); }
+}
+@keyframes kb-vt {
+  0%   { transform: scale(1.06) translate(-0.6%,  0.6%); }
+  100% { transform: scale(1.11) translate( 0.8%, -0.3%); }
+}
+@keyframes kb-vs {
+  0%   { transform: scale(1.05) translate( 0.3%,  0.8%); }
+  100% { transform: scale(1.10) translate(-0.5%, -0.6%); }
+}
+.apt-page-hero[data-apt="vm"] .apt-page-hero-img {
+  animation: kb-vm 22s ease-in-out infinite alternate;
+  transform-origin: 55% 58%;
+}
+.apt-page-hero[data-apt="vt"] .apt-page-hero-img {
+  animation: kb-vt 20s ease-in-out infinite alternate;
+  transform-origin: 44% 45%;
+}
+.apt-page-hero[data-apt="vs"] .apt-page-hero-img {
+  animation: kb-vs 24s ease-in-out infinite alternate;
+  transform-origin: 50% 52%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .apt-page-hero-img { animation: none !important; }
 }
 .apt-page-hero-wash {
   position: absolute; inset: 0;
