@@ -186,7 +186,7 @@ p  { line-height: 1.65; font-weight: 300; }
   gap: 24px;
   letter-spacing: 0.02em;
   border-bottom: 1px solid rgba(240, 232, 213, 0.08);
-  border-radius: 0 0 10px 0;
+  border-radius: 0 0 10px 10px;
   overflow: hidden;
 }
 .topbar .contacts {
