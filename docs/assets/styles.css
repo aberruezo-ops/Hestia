@@ -427,7 +427,7 @@ p  { line-height: 1.65; font-weight: 300; }
   position: fixed;
   inset: 0;
   z-index: 97;
-  background: rgba(26, 12, 24, 0.97);
+  background: rgba(42, 15, 46, 0.97);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   color: var(--arena);
@@ -893,10 +893,10 @@ section {
     /* Gradiente oscuro — más denso abajo donde va el texto */
     linear-gradient(
       170deg,
-      rgba(26,12,24,0.28) 0%,
-      rgba(26,12,24,0.44) 38%,
-      rgba(26,12,24,0.74) 68%,
-      rgba(26,12,24,0.92) 100%
+      rgba(42,15,46,0.28) 0%,
+      rgba(42,15,46,0.44) 38%,
+      rgba(42,15,46,0.74) 68%,
+      rgba(42,15,46,0.92) 100%
     ),
     /* Viraje teal — alinea el Mediterráneo real con la paleta de marca */
     radial-gradient(ellipse 90% 55% at 35% 30%, rgba(58,170,187,0.22), transparent 65%),
@@ -1363,7 +1363,7 @@ section {
     radial-gradient(ellipse 32% 38% at 17% 67%, rgba(255,210,100,.42) 0%, transparent 100%),
     radial-gradient(ellipse 32% 38% at 83% 67%, rgba(255,210,100,.42) 0%, transparent 100%),
     radial-gradient(ellipse 90% 45% at 50% 18%, rgba(0,200,220,.28) 0%, transparent 100%),
-    linear-gradient(to top, rgba(26,12,24,.72) 0%, transparent 58%);
+    linear-gradient(to top, rgba(42,15,46,.72) 0%, transparent 58%);
 }
 .apt-card.vs .apt-wash { background: linear-gradient(160deg, rgba(158,122,44,0.7) 0%, rgba(212,168,74,0.4) 55%, rgba(232,196,118,0.7) 100%); }
 
@@ -3154,8 +3154,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
   position: absolute; inset: 0;
   background: linear-gradient(
     to top,
-    rgba(26,12,24,.85) 0%,
-    rgba(26,12,24,.30) 38%,
+    rgba(42,15,46,.85) 0%,
+    rgba(42,15,46,.30) 38%,
     transparent        65%
   );
   opacity: 0;
@@ -3282,7 +3282,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   backdrop-filter: blur(28px) saturate(1.9);
   -webkit-backdrop-filter: blur(28px) saturate(1.9);
   box-shadow:
-    0 36px 90px rgba(26,12,24,.45),
+    0 36px 90px rgba(42,15,46,.45),
     inset 0 1px 0 rgba(255,255,255,.55);
 }
 
@@ -3540,9 +3540,9 @@ body.no-parallax .g-tile .img { transform: none !important; }
   position: absolute; inset: 0;
   background: linear-gradient(
     to top,
-    rgba(26,12,24,.88) 0%,
-    rgba(26,12,24,.50) 38%,
-    rgba(26,12,24,.18) 70%,
+    rgba(42,15,46,.88) 0%,
+    rgba(42,15,46,.50) 38%,
+    rgba(42,15,46,.18) 70%,
     transparent 100%
   );
   z-index: 1;
@@ -3798,7 +3798,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .apt-other-wash {
   position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(26,12,24,.85) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(42,15,46,.85) 0%, transparent 60%);
   z-index: 1;
 }
 .apt-other-content {
