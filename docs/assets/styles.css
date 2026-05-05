@@ -186,6 +186,8 @@ p  { line-height: 1.65; font-weight: 300; }
   gap: 24px;
   letter-spacing: 0.02em;
   border-bottom: 1px solid rgba(240, 232, 213, 0.08);
+  border-radius: 0 0 10px 0;
+  overflow: hidden;
 }
 .topbar .contacts {
   display: flex; gap: 6px; align-items: center; flex-wrap: nowrap;
@@ -269,6 +271,7 @@ p  { line-height: 1.65; font-weight: 300; }
   transition: background .7s ease, padding .4s ease, backdrop-filter .4s ease, border-color .5s ease;
   border-bottom: 1px solid transparent;
   overflow: hidden;
+  border-radius: 0 0 10px 0;
 }
 /* Scroll-driven radial glow — se mueve con --hdr-scroll (0→1) */
 .header::before {
@@ -3760,6 +3763,18 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 /* --- Gallery carousel --- */
 .gc-wrap { width: 100%; user-select: none; }
+@media (min-width: 600px) {
+  .gc-wrap {
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media (min-width: 1024px) {
+  .gc-wrap {
+    max-width: 780px;
+  }
+}
 .gc-stage {
   position: relative;
   width: 100%;
