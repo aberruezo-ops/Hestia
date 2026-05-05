@@ -5379,6 +5379,14 @@ body.no-parallax .g-tile .img { transform: none !important; }
   top: 50%; right: 20px;
   transform: translateY(-50%);
   z-index: 88;
+  transition: opacity .4s ease, transform .4s ease;
+}
+.sticky-facts.sf-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%) translateX(16px);
+}
+.sticky-facts {
   width: 340px;
   background: var(--ber-dk);
   border-radius: 10px 0 10px 0;
