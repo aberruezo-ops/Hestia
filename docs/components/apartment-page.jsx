@@ -332,15 +332,19 @@ const GalleryCarousel = ({ imgs, captions }) => {
     <div className="gc-wrap">
       <div className="gc-stage" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         {imgs.map((src, i) => (
-          <div key={i} className={`gc-slide${i === cur ? ' gc-on' : ''}`}>
+          <div key={i} className="gc-slide"
+               style={{ transform: `translateX(${(i - cur) * 100}%)` }}>
             <img src={src} alt={captions[i]} loading={i === 0 ? 'eager' : 'lazy'}/>
           </div>
         ))}
-        <WatermarkBadge size={26} pos={{ bottom: 12, right: 12 }}/>
-        <div className="gc-caption">{captions[cur]}</div>
-        <button className="gc-arrow gc-prev" onClick={prev} aria-label="Anterior">‹</button>
-        <button className="gc-arrow gc-next" onClick={next} aria-label="Siguiente">›</button>
-        <div className="gc-counter">{cur + 1} / {n}</div>
+        {/* Overlay layer — position:absolute inset:0 so top/bottom % work correctly */}
+        <div className="gc-overlay">
+          <WatermarkBadge size={26} pos={{ bottom: 12, right: 12 }}/>
+          <div className="gc-caption">{captions[cur]}</div>
+          <button className="gc-arrow gc-prev" onClick={prev} aria-label="Anterior">‹</button>
+          <button className="gc-arrow gc-next" onClick={next} aria-label="Siguiente">›</button>
+          <div className="gc-counter">{cur + 1} / {n}</div>
+        </div>
       </div>
       <div className="gc-dots">
         {imgs.map((_, i) => (
