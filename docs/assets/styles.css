@@ -6360,38 +6360,69 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .mn-why .mn-num { color: #D42B80; font-size: 14px; }
 
-/* ─── Forma corporativa en todos los fondos de sección ──────────────────────
-   Los bloques que alinean con el borde superior de la página usan solo la
-   esquina de salida; el resto lleva la forma completa del botón (X 0 X 0).
-   overflow:hidden solo en los que ya lo tenían o necesitan clip de hijos.  */
-.hero          { border-radius: 0 0 40px 0; }
-.apt-page-hero { border-radius: 0 0 48px 0; }
+/* ─── Forma corporativa + armonía perfecta de esquinas ──────────────────────
+   Principio: cada sección solapa a la anterior 32 px (= border-radius).
+   Así la esquina redondeada de la sección B deja ver el color de la sección
+   A por detrás — nunca el fondo del body.
+   z-index:0 crea un stacking-context por sección, confinando los z-index
+   internos y dejando que el orden DOM (posterior = encima) rija el solapado.
+   padding-top compensado = original + 32 px para mantener el contenido en
+   su posición visual.                                                       */
 
+/* ── Primeras secciones (borde superior de página) — solo esquina de salida */
+.hero,
+.apt-page-hero {
+  position: relative;
+  z-index: 0;
+  border-radius: 0 0 32px 0;
+}
+
+/* ── Resto de secciones — forma completa + solapado */
+.frase-hogar,
+.home-search,
+.apartments-intro,
+.compare,
+.counters,
+.team,
+.manifest,
+.ratings,
+.quick-faq,
+.contact-cta,
+.apt-page-desc,
+.apt-page-gallery {
+  border-radius: 32px 0 32px 0;
+  position: relative;
+  z-index: 0;
+  margin-top: -32px;
+}
+
+/* Clases de fondo utilitarias — solo forma y contexto, sin solapado propio
+   (el solapado lo gestiona la clase de sección específica del mismo elemento) */
 .section-night,
 .section-dark,
 .section-violet,
 .section-day,
-.section-cream,
-.frase-hogar,
-.ratings,
-.compare,
-.apt-page-desc,
-.quick-faq {
+.section-cream {
   border-radius: 32px 0 32px 0;
+  position: relative;
+  z-index: 0;
 }
 
-/* Estos ya tenían overflow:hidden en su propia regla; solo añadimos el radio */
-.home-search,
-.counters,
-.manifest,
-.contact-cta,
-.apt-page-gallery {
-  border-radius: 32px 0 32px 0;
-}
+/* ── Compensación de padding-top (original + 32 px) ── */
+.frase-hogar      { padding-top: calc(clamp(22px,  3vw,  36px)  + 32px); }
+.home-search      { padding-top: calc(80px                       + 32px); }
+.apartments-intro { padding-top: calc(clamp(100px, 10vw, 160px) + 32px); }
+.compare          { padding-top: 32px; }
+.counters         { padding-top: calc(clamp(80px,  10vw, 140px) + 32px); }
+.team             { padding-top: calc(clamp(100px, 12vw, 200px) + 32px); }
+.manifest         { padding-top: calc(clamp(100px, 10vw, 160px) + 32px); }
+.ratings          { padding-top: calc(clamp(90px,  10vw, 140px) + 32px); }
+.quick-faq        { padding-top: calc(72px                       + 32px); }
+.contact-cta      { padding-top: calc(clamp(100px, 12vw, 180px) + 32px); }
+.apt-page-desc    { padding-top: calc(80px                       + 32px); }
+.apt-page-gallery { padding-top: calc(80px                       + 32px); }
 
-/* ─── Body background oscuro: las esquinas redondeadas muestran el color
-   de la sección vecina en vez del fondo crema del body.
-   :has() evita afectar páginas sin secciones oscuras al inicio.            */
+/* Body oscuro: la primera y última sección también quedan limpias */
 body:has(.hero),
 body:has(.apt-page-hero) {
   background: var(--ink);
