@@ -6,16 +6,22 @@ name: Sync iCal availability
 #
 # Required GitHub Secrets (Settings → Secrets and variables → Actions):
 #   ICAL_VM_AIRBNB   — Hestía Mar,      Airbnb  iCal URL
-#   ICAL_VM_BOOKING  — Hestía Mar,      Booking iCal URL
+#   ICAL_VM_BOOKING  — Hestía Mar,      Booking iCal URL (opcional, ya hardcodeado)
 #   ICAL_VT_AIRBNB   — Hestía Thalassa, Airbnb  iCal URL
-#   ICAL_VT_BOOKING  — Hestía Thalassa, Booking iCal URL
+#   ICAL_VT_BOOKING  — Hestía Thalassa, Booking iCal URL (opcional)
 #   ICAL_VS_AIRBNB   — Hestía Salinas,  Airbnb  iCal URL
-#   ICAL_VS_BOOKING  — Hestía Salinas,  Booking iCal URL
+#   ICAL_VS_BOOKING  — Hestía Salinas,  Booking iCal URL (opcional)
 
 on:
   schedule:
-    - cron: '0 * * * *'    # every hour
+    - cron: '0 */4 * * *'   # every 4 hours
   workflow_dispatch:          # manual trigger from GitHub UI
+
+# Prevent two runs from overlapping — cancel the in-progress one
+# if a new trigger fires while the previous run is still running.
+concurrency:
+  group: sync-ical
+  cancel-in-progress: true
 
 permissions:
   contents: write
