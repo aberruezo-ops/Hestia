@@ -91,20 +91,11 @@ const APT_EQUIP = {
         ['🌿', 'Jardines'], ['🛋', 'Chill out'], ['🛗', 'Ascensor'],
         ['📺', 'Smart TV 50"'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'WIFI fibra'],
         ['❄️', 'A/C por conductos'], ['🍳', 'Cocina completa · alto standing'], ['🍽', 'Lavavajillas'],
-        ['🧺', 'Todos los electrodomésticos'], ['🛁', 'Bañera + hidromasaje'], ['🚿', 'Ducha + cromoterapia'],
+        ['🧺', 'Lavadora · secadora'], ['🛁', 'Bañera + hidromasaje'], ['🚿', 'Ducha + cromoterapia'],
         ['🚗', 'Garaje cubierto'], ['🩹', 'Botiquín'],
         ['🎁', 'Kit de bienvenida'], ['☂️', 'Sombrilla playa'], ['👶', 'Cuna · Trona'],
-        ['🪔', 'Cromoterapia · aromas'], ['🧻', 'Tendedero'],
-      ],
-      highlights: [
-        { b: 'Distancia a la playa de no más de 300m', t: '' },
-        { b: 'Terraza de esquina 20m²', t: 'vistas al mar y al pueblo · sol y luna' },
-        { b: 'Dos baños completos', t: 'bañera con hidromasaje · ducha con cromoterapia' },
-        { b: 'Smart TV 50"', t: 'Prime Video, HBO Max, Skyshowtime, Pluto TV · canales internacionales' },
-        { b: 'Garaje cubierto incluido', t: 'en el precio' },
-        { b: 'A/C por conductos', t: 'frío y calor en todo el apartamento' },
-        { b: 'Ropa de cama premium', t: 'sábanas 200 hilos · toallas 600 g/m²' },
-        { b: 'Accesibilidad relativa', t: 'adaptado para movilidad reducida' },
+        ['🛏', 'Sábanas 200 hilos · algodón peinado'], ['🧴', 'Toallas 600g/m² · baño y playa'],
+        ['🌺', 'Nórdico de plumas'], ['🪔', 'Cromoterapia · aromas'], ['🧻', 'Tendedero'],
       ],
     },
     en: {
@@ -114,20 +105,11 @@ const APT_EQUIP = {
         ['🌿', 'Gardens'], ['🛋', 'Chill-out'], ['🛗', 'Lift'],
         ['📺', '50" Smart TV'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'Fibre WIFI'],
         ['❄️', 'Ducted A/C'], ['🍳', 'Full premium kitchen'], ['🍽', 'Dishwasher'],
-        ['🧺', 'All appliances'], ['🛁', 'Bath + hydro-massage'], ['🚿', 'Shower + chromotherapy'],
+        ['🧺', 'Washer · dryer'], ['🛁', 'Bath + hydro-massage'], ['🚿', 'Shower + chromotherapy'],
         ['🚗', 'Covered garage'], ['🩹', 'First-aid kit'],
         ['🎁', 'Welcome kit'], ['☂️', 'Beach umbrella'], ['👶', 'Cot · Highchair'],
-        ['🪔', 'Chromotherapy · aromas'], ['🧻', 'Drying rack'],
-      ],
-      highlights: [
-        { b: 'Beach within 300m', t: '' },
-        { b: '20m² corner terrace', t: 'sea and village views · sun all day' },
-        { b: 'Two full bathrooms', t: 'bathtub + hydro-massage · shower + chromotherapy' },
-        { b: '50" Smart TV', t: 'Prime Video, HBO Max, Skyshowtime, Pluto TV · international channels' },
-        { b: 'Covered garage included', t: 'in the price' },
-        { b: 'Ducted A/C', t: 'heating and cooling throughout' },
-        { b: 'Premium bed linen', t: '200-thread sheets · 600 g/m² towels' },
-        { b: 'Reduced mobility access', t: 'relatively adapted' },
+        ['🛏', '200-thread combed cotton sheets'], ['🧴', 'Bath & beach towels 600g/m²'],
+        ['🌺', 'Down duvet'], ['🪔', 'Chromotherapy · aromas'], ['🧻', 'Drying rack'],
       ],
     },
   },
@@ -139,24 +121,14 @@ const APT_EQUIP = {
         ['🌊', 'Mar · Laguna · Pueblo'], ['☀️', 'Terraza 18m² · vistas al mar'], ['🏊', '3 Piscinas'],
         ['🌡', 'Piscina climatizada'], ['♨️', 'Jacuzzi'], ['💪', 'Gimnasio'],
         ['🧖', 'Sauna'], ['🎾', 'Pista de tenis'], ['🌿', 'Jardines · Columpios'],
-        ['📺', 'Smart TV 50"'], ['🎬', 'Prime · HBO · Netflix · Sky'], ['📶', 'WIFI fibra'],
+        ['📺', 'Smart TV 50"'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'WIFI fibra'],
         ['❄️', 'A/C salón y dormitorios'], ['🍳', 'Cocina completa · alto standing'], ['🍽', 'Lavavajillas'],
-        ['🧺', 'Electrodomésticos alta gama'], ['☕', 'Nespresso + cafetera goteo'],
+        ['🧺', 'Lavadora · alta gama'], ['☕', 'Nespresso + cafetera goteo'],
         ['🛁', 'Dos baños · en suite'], ['🚿', 'Columnas de hidromasaje'],
         ['🚗', 'Garaje interior'], ['🩹', 'Botiquín'],
-        ['🎁', 'Kit de bienvenida'], ['☂️', 'Sombrilla playa'], ['🌺', 'Nórdicos de plumas'],
-        ['🪔', 'Cromoterapia · hidroterapia · aromas'], ['🧻', 'Tendedero'],
-      ],
-      highlights: [
-        { b: '3 piscinas', t: 'incluyendo una climatizada todo el año' },
-        { b: 'Terraza 18m² con vistas al mar', t: 'laguna de Vera y el pueblo' },
-        { b: 'Gimnasio · Sauna · Pista de tenis', t: 'en la urbanización' },
-        { b: 'Dos baños en suite', t: 'ambos con columnas de hidromasaje' },
-        { b: 'Smart TV 50"', t: 'Prime Video, HBO Max, Netflix, Skyshowtime, Pluto TV' },
-        { b: 'Garaje interior incluido', t: 'en el precio' },
-        { b: 'Electrodomésticos de alta gama', t: 'lavadora, lavavajillas, Nespresso, goteo...' },
-        { b: 'Nórdicos de plumas', t: 'sábanas 200 hilos · toallas 600 g/m²' },
-        { b: 'A/C frío y calor', t: 'en salón y todos los dormitorios' },
+        ['🎁', 'Kit de bienvenida'], ['☂️', 'Sombrilla playa'],
+        ['🛏', 'Sábanas 200 hilos · algodón peinado'], ['🧴', 'Toallas 600g/m² · baño y playa'],
+        ['🌺', 'Nórdicos de plumas'], ['🪔', 'Cromoterapia · hidroterapia · aromas'], ['🧻', 'Tendedero'],
       ],
     },
     en: {
@@ -165,24 +137,14 @@ const APT_EQUIP = {
         ['🌊', 'Sea · Lagoon · Village'], ['☀️', '18m² sea-view terrace'], ['🏊', '3 Swimming pools'],
         ['🌡', 'Heated pool (year-round)'], ['♨️', 'Jacuzzi'], ['💪', 'Gym'],
         ['🧖', 'Sauna'], ['🎾', 'Tennis court'], ['🌿', 'Gardens · Swings'],
-        ['📺', '50" Smart TV'], ['🎬', 'Prime · HBO · Netflix · Sky'], ['📶', 'Fibre WIFI'],
+        ['📺', '50" Smart TV'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'Fibre WIFI'],
         ['❄️', 'A/C lounge & bedrooms'], ['🍳', 'Full premium kitchen'], ['🍽', 'Dishwasher'],
-        ['🧺', 'Premium appliances'], ['☕', 'Nespresso + drip coffee maker'],
+        ['🧺', 'Washing machine · premium'], ['☕', 'Nespresso + drip coffee maker'],
         ['🛁', 'Two en-suite bathrooms'], ['🚿', 'Hydro-massage columns'],
         ['🚗', 'Indoor garage'], ['🩹', 'First-aid kit'],
-        ['🎁', 'Welcome kit'], ['☂️', 'Beach umbrella'], ['🌺', 'Down duvets'],
-        ['🪔', 'Chromotherapy · hydrotherapy · aromas'], ['🧻', 'Drying rack'],
-      ],
-      highlights: [
-        { b: '3 swimming pools', t: 'including one heated year-round' },
-        { b: '18m² terrace with sea views', t: 'Vera lagoon and village' },
-        { b: 'Gym · Sauna · Tennis court', t: 'within the complex' },
-        { b: 'Two en-suite bathrooms', t: 'both with hydro-massage columns' },
-        { b: '50" Smart TV', t: 'Prime Video, HBO Max, Netflix, Skyshowtime, Pluto TV' },
-        { b: 'Indoor garage included', t: 'in the price' },
-        { b: 'Premium appliances', t: 'washing machine, dishwasher, Nespresso...' },
-        { b: 'Down duvets', t: '200-thread sheets · 600 g/m² towels' },
-        { b: 'A/C heating & cooling', t: 'lounge and all bedrooms' },
+        ['🎁', 'Welcome kit'], ['☂️', 'Beach umbrella'],
+        ['🛏', '200-thread combed cotton sheets'], ['🧴', 'Bath & beach towels 600g/m²'],
+        ['🌺', 'Down duvets'], ['🪔', 'Chromotherapy · hydrotherapy · aromas'], ['🧻', 'Drying rack'],
       ],
     },
   },
@@ -196,22 +158,12 @@ const APT_EQUIP = {
         ['🎾', 'Pista de tenis'], ['🛋', 'Chill out'], ['🏞', 'Salinas de Puerto Rey'],
         ['📺', 'Smart TV 50" · Ambilight'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'WIFI fibra'],
         ['❄️', 'A/C frío y calor'], ['🍳', 'Cocina completa · alto standing'], ['🍽', 'Lavavajillas'],
-        ['🧺', 'Electrodomésticos alta gama'], ['☕', 'Nespresso + cafetera goteo'],
+        ['🧺', 'Lavadora · alta gama'], ['☕', 'Nespresso + cafetera goteo'],
         ['🛁', 'Bañera + hidromasaje'], ['🚿', 'Cabina ducha + hidromasaje'],
         ['🚗', 'Garaje techado'], ['🩹', 'Botiquín'],
         ['🎁', 'Kit de bienvenida'], ['☂️', 'Sombrilla playa'], ['👶', 'Cuna · Trona'],
-        ['🌺', 'Nórdicos plumas + acrílicos'], ['🪔', 'Cromoterapia · aromas'], ['🧻', 'Tendedero'],
-      ],
-      highlights: [
-        { b: 'Dos terrazas', t: '18m² para el sol · 14m² para el atardecer' },
-        { b: 'Smart TV 50" con Ambilight', t: 'Prime Video, HBO Max, Skyshowtime, Pluto TV' },
-        { b: 'Dos baños completos', t: 'bañera + cabina ducha, ambos con columnas de hidromasaje' },
-        { b: 'A menos de 2 min de la playa', t: '15 min de paseo por las Salinas de Puerto Rey' },
-        { b: 'Garaje techado incluido', t: 'en el precio' },
-        { b: 'Nórdicos de plumas y acrílicos', t: 'también para personas alérgicas' },
-        { b: 'Electrodomésticos de alta gama', t: 'lavadora, lavavajillas, Nespresso...' },
-        { b: 'A/C frío y calor', t: 'en todo el apartamento' },
-        { b: 'Salinas de Puerto Rey', t: 'Parque Natural a 15 minutos a pie' },
+        ['🛏', 'Sábanas 200 hilos · algodón peinado'], ['🧴', 'Toallas 600g/m² · baño y playa'],
+        ['🌺', 'Nórdicos plumas + acrílicos (antialérgicos)'], ['🪔', 'Cromoterapia · aromas'], ['🧻', 'Tendedero'],
       ],
     },
     en: {
@@ -222,22 +174,12 @@ const APT_EQUIP = {
         ['🎾', 'Tennis court'], ['🛋', 'Chill-out'], ['🏞', 'Puerto Rey Salt Flats'],
         ['📺', '50" Smart TV · Ambilight'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'Fibre WIFI'],
         ['❄️', 'A/C heat & cool'], ['🍳', 'Full premium kitchen'], ['🍽', 'Dishwasher'],
-        ['🧺', 'Premium appliances'], ['☕', 'Nespresso + drip coffee maker'],
+        ['🧺', 'Washing machine · premium'], ['☕', 'Nespresso + drip coffee maker'],
         ['🛁', 'Bath + hydro-massage'], ['🚿', 'Shower cabin + hydro-massage'],
         ['🚗', 'Covered garage'], ['🩹', 'First-aid kit'],
         ['🎁', 'Welcome kit'], ['☂️', 'Beach umbrella'], ['👶', 'Cot · Highchair'],
+        ['🛏', '200-thread combed cotton sheets'], ['🧴', 'Bath & beach towels 600g/m²'],
         ['🌺', 'Down & hypoallergenic duvets'], ['🪔', 'Chromotherapy · aromas'], ['🧻', 'Drying rack'],
-      ],
-      highlights: [
-        { b: 'Two terraces', t: '18m² for sun · 14m² for sunsets' },
-        { b: '50" Smart TV with Ambilight', t: 'Prime Video, HBO Max, Skyshowtime, Pluto TV' },
-        { b: 'Two full bathrooms', t: 'bathtub + shower cabin, both with hydro-massage' },
-        { b: 'Under 2 min to the beach', t: '15-min walk along the Puerto Rey Salt Flats' },
-        { b: 'Covered garage included', t: 'in the price' },
-        { b: 'Down & hypoallergenic duvets', t: 'suitable for allergy sufferers too' },
-        { b: 'Premium appliances', t: 'washing machine, dishwasher, Nespresso...' },
-        { b: 'A/C heating & cooling', t: 'throughout the apartment' },
-        { b: 'Puerto Rey Salt Flat Nature Park', t: '15-min walk from the apartment' },
       ],
     },
   },
@@ -245,7 +187,6 @@ const APT_EQUIP = {
 
 const AptEquipamiento = ({ apt, lang }) => {
   const equip = APT_EQUIP[apt.id];
-  const [expanded, setExpanded] = React.useState(false);
   if (!equip) return null;
   const d = equip[lang];
   const accent = apt.accent;
@@ -254,17 +195,15 @@ const AptEquipamiento = ({ apt, lang }) => {
     <section className="apt-equip">
       <div className="container">
         <div className="eyebrow apt-equip-eyebrow">
-          {lang === 'es' ? 'Lo esencial · de un vistazo' : 'Essentials · at a glance'}
+          {lang === 'es' ? 'Equipamiento · de un vistazo' : 'Amenities · at a glance'}
         </div>
-
-        {/* Stats bar */}
         <div className="apt-equip-stats">
           {[
-            { val: equip.area,      unit: 'm²',                           lbl: lang === 'es' ? 'superficie' : 'area' },
+            { val: equip.area,      unit: 'm²',                             lbl: lang === 'es' ? 'superficie' : 'area' },
             { val: equip.guests,    unit: lang === 'es' ? '+cuna' : '+cot', lbl: lang === 'es' ? 'personas' : 'guests' },
-            { val: equip.bedrooms,  unit: '',                              lbl: lang === 'es' ? 'dormitorios' : 'bedrooms' },
-            { val: equip.bathrooms, unit: '',                              lbl: lang === 'es' ? 'baños' : 'bathrooms' },
-            { val: d.terrace,       unit: '',                              lbl: lang === 'es' ? 'terraza' : 'terrace' },
+            { val: equip.bedrooms,  unit: '',                               lbl: lang === 'es' ? 'dormitorios' : 'bedrooms' },
+            { val: equip.bathrooms, unit: '',                               lbl: lang === 'es' ? 'baños' : 'bathrooms' },
+            { val: d.terrace,       unit: '',                               lbl: lang === 'es' ? 'terraza' : 'terrace' },
           ].map((s, i) => (
             <div key={i} className="apt-equip-stat">
               <span className="aes-val" style={{ color: accent }}>{s.val}</span>
@@ -273,43 +212,13 @@ const AptEquipamiento = ({ apt, lang }) => {
             </div>
           ))}
         </div>
-
-        {/* 5 highlights principales */}
-        <div className="apt-key-highlights">
-          {d.highlights.slice(0, 5).map((h, i) => (
-            <div key={i} className="apt-kh-item">
-              <span className="akhi-dot" style={{ background: accent }}/>
-              <div>
-                <strong className="akhi-title">{h.b}</strong>
-                {h.t && <span className="akhi-sub">{h.t}</span>}
-              </div>
+        <div className="apt-equip-icons">
+          {d.icons.map(([icon, label], i) => (
+            <div key={i} className="apt-equip-item">
+              <span className="aei-icon" aria-hidden="true">{icon}</span>
+              <span className="aei-label">{label}</span>
             </div>
           ))}
-        </div>
-
-        {/* Equipamiento completo (expandible) */}
-        <div className="apt-equip-detail">
-          <button
-            className="apt-equip-toggle"
-            onClick={() => setExpanded(e => !e)}
-            aria-expanded={expanded}
-            style={{ '--apt-accent': accent }}
-          >
-            <span className="aet-icon" aria-hidden="true">{expanded ? '−' : '+'}</span>
-            {expanded
-              ? (lang === 'es' ? 'Ocultar equipamiento completo' : 'Hide full amenities')
-              : (lang === 'es' ? 'Ver todo el equipamiento' : 'View full amenities')}
-          </button>
-          {expanded && (
-            <div className="apt-equip-icons">
-              {d.icons.map(([icon, label], i) => (
-                <div key={i} className="apt-equip-item">
-                  <span className="aei-icon" aria-hidden="true">{icon}</span>
-                  <span className="aei-label">{label}</span>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </section>
