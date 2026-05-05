@@ -315,29 +315,25 @@ const AptPageDesc = ({ apt, lang }) => {
 const GalleryCarousel = ({ imgs, captions }) => {
   const n = imgs.length;
   const [cur, setCur] = React.useState(0);
-  const timerRef = React.useRef(null);
+  const thumbsRef = React.useRef(null);
 
-  const resetTimer = () => {
-    clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => setCur(i => (i + 1) % n), 3000);
-  };
-
+  // Keep active thumbnail visible in the strip
   React.useEffect(() => {
-    resetTimer();
-    return () => clearInterval(timerRef.current);
-  }, []);
+    const el = thumbsRef.current;
+    if (!el) return;
+    const thumb = el.children[cur];
+    if (thumb) thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }, [cur]);
 
-  const prev = () => { setCur(i => (i - 1 + n) % n); resetTimer(); };
-  const next = () => { setCur(i => (i + 1) % n);     resetTimer(); };
-  const go   = i  => { setCur(i);                     resetTimer(); };
+  const go = i => setCur(i);
 
-  // Swipe support
+  // Swipe on main image
   const touchX = React.useRef(null);
   const onTouchStart = e => { touchX.current = e.touches[0].clientX; };
   const onTouchEnd   = e => {
     if (touchX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchX.current;
-    if (Math.abs(dx) > 40) dx < 0 ? next() : prev();
+    if (Math.abs(dx) > 40) setCur(i => dx < 0 ? (i + 1) % n : (i - 1 + n) % n);
     touchX.current = null;
   };
 
@@ -350,19 +346,20 @@ const GalleryCarousel = ({ imgs, captions }) => {
             <img src={src} alt={captions[i]} loading={i === 0 ? 'eager' : 'lazy'}/>
           </div>
         ))}
-        {/* Overlay layer — position:absolute inset:0 so top/bottom % work correctly */}
         <div className="gc-overlay">
           <WatermarkBadge size={26} pos={{ bottom: 12, right: 12 }}/>
           <div className="gc-caption">{captions[cur]}</div>
-          <button className="gc-arrow gc-prev" onClick={prev} aria-label="Anterior">‹</button>
-          <button className="gc-arrow gc-next" onClick={next} aria-label="Siguiente">›</button>
           <div className="gc-counter">{cur + 1} / {n}</div>
         </div>
       </div>
-      <div className="gc-dots">
-        {imgs.map((_, i) => (
-          <button key={i} className={`gc-dot${i === cur ? ' gc-dot-on' : ''}`}
-                  onClick={() => go(i)} aria-label={`Foto ${i + 1}`}/>
+      <div className="gc-thumbs" ref={thumbsRef}>
+        {imgs.map((src, i) => (
+          <button key={i}
+                  className={`gc-thumb${i === cur ? ' gc-thumb-on' : ''}`}
+                  onClick={() => go(i)}
+                  aria-label={captions[i]}>
+            <img src={src} alt="" loading="lazy"/>
+          </button>
         ))}
       </div>
     </div>
