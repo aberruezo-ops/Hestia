@@ -3765,6 +3765,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
   width: 100%;
   overflow: hidden;
   background: var(--ink-soft);
+  border-radius: 24px 0 24px 0;
+  transition: box-shadow .35s ease;
 }
 /* ::before establishes 4:3 height reliably even with all-absolute children */
 .gc-stage::before {
@@ -3782,6 +3784,15 @@ body.no-parallax .g-tile .img { transform: none !important; }
   width: 100%; height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform .8s ease;
+}
+@media (hover: hover) {
+  .gc-stage:hover {
+    box-shadow: 0 10px 40px rgba(27,200,216,.22), 0 4px 16px rgba(42,15,46,.4);
+  }
+  .gc-stage:hover .gc-slide img {
+    transform: scale(1.04);
+  }
 }
 .gc-overlay {
   position: absolute;
