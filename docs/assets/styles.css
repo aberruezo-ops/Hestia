@@ -6359,3 +6359,29 @@ body.no-parallax .g-tile .img { transform: none !important; }
   margin: 4px 0;
 }
 .mn-why .mn-num { color: #D42B80; font-size: 14px; }
+
+/* ─── Forma corporativa en todos los fondos de sección ──────────────────────
+   Los bloques que alinean con el borde superior de la página usan solo la
+   esquina de salida; el resto lleva la forma completa del botón (X 0 X 0).
+   overflow:hidden garantiza que el recorte de esquinas sea efectivo.       */
+.hero          { border-radius: 0 0 40px 0; }
+.apt-page-hero { border-radius: 0 0 48px 0; }
+
+.section-night,
+.section-dark,
+.section-violet,
+.section-day,
+.section-cream,
+.frase-hogar,
+.home-search,
+.counters,
+.manifest,
+.contact-cta,
+.ratings,
+.compare,
+.apt-page-desc,
+.apt-page-gallery,
+.quick-faq {
+  border-radius: 32px 0 32px 0;
+  overflow: hidden;
+}
