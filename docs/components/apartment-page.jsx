@@ -8,16 +8,30 @@ const APT_DATA = {
     id: 'vm', num: '01', slug: 'mar', license: 'VFT/AL/01580',
     name_short: 'Mar',
     accent: '#6B7A3A', accent2: '#8B9A52',
-    hero_img: 'assets/apt-vs.jpg',
-    bedroom_img: 'assets/photo-vm-bedroom.jpg',
+    hero_img: 'assets/apt-vm-gallery-1.jpg',
+    bedroom_img: 'assets/apt-vm-gallery-10.jpg',
     others: ['vt', 'vs'],
+    gallery_imgs: [
+      'assets/apt-vm-gallery-1.jpg',
+      'assets/apt-vm-gallery-3.jpg',
+      'assets/apt-vm-gallery-6.jpg',
+      'assets/apt-vm-gallery-22.jpg',
+      'assets/apt-vm-gallery-10.jpg',
+      'assets/apt-vm-gallery-11.jpg',
+      'assets/apt-vm-gallery-12.jpg',
+      'assets/apt-vm-gallery-13.jpg',
+      'assets/apt-vm-gallery-15.jpg',
+      'assets/apt-vm-gallery-16.jpg',
+      'assets/apt-vm-gallery-18.jpg',
+      'assets/apt-vm-gallery-23.jpg',
+    ],
     es: {
       name: 'Hestía Mar',
       concept: 'El campo de olivos llega al mar.',
       desc: 'Hestía Mar es el apartamento donde el paisaje del olivar se funde con el Mediterráneo. Desde la terraza esquinera de 20m² orientada al amanecer, el mar aparece entre los eucaliptos de Vera Playa. Al ser de esquina, el apartamento da a tres calles y permite ventilación cruzada natural en todas las estancias.',
       desc2: 'El apartamento ocupa la planta primera y se abre al jardín con acceso a la piscina comunitaria. Al ser esquinero, la luz entra desde el amanecer hasta el atardecer — ves el ciclo solar completo desde la terraza. Aire acondicionado centralizado en todas las estancias. Cocina completamente equipada, salón-comedor de 28m² y dos dormitorios con ropa de cama de calidad.',
       features: ['6 plazas + bebé · 2 habitaciones · planta primera', 'Terraza esquina 20m² · orientada al amanecer · ciclo solar completo', 'Piscina comunitaria · jacuzzi comunitario (verano)', 'Mascotas · petición previa · suplemento', '300 m de la playa · 5 min a pie desde la salida', 'Accesibilidad · adaptado para movilidad reducida', 'Aire acondicionado centralizado en todas las estancias', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'WiFi fibra óptica · Amazon Alexa', 'Lavadora · lavavajillas · nevera · microondas', 'Cafetera de cápsulas + espresso · batidora · plancha', 'Cama matrimonial 150 cm · colchón viscoelástico', 'Toallas 100% algodón 200 hilos · nórdicos de plumas'],
-      gallery_captions: ['Salón con vistas al jardín', 'Dormitorio principal', 'Terraza esquinera', 'Cocina equipada', 'Dormitorio secundario', 'Acceso a la piscina'],
+      gallery_captions: ['Salón · mesa de madera y cocina', 'Salón · vista cenital', 'Cocina equipada Siemens', 'Salón · sofá y decoración', 'Dormitorio principal · pared verde', 'Dormitorio 2 · camas turquesa', 'Terraza esquinera · vistas a la sierra', 'Terraza · velada de verano', 'Baño principal · luz LED', 'Baño 2 · ducha y toallas', 'Piscina y jacuzzi comunitario', 'Detalle decorativo'],
     },
     en: {
       name: 'Hestía Mar',
@@ -25,7 +39,7 @@ const APT_DATA = {
       desc: 'Hestía Mar is where the olive grove landscape merges with the Mediterranean. From the 20m² corner terrace facing the sunrise, the sea appears between the eucalyptus trees of Vera Playa. Being a corner apartment, it faces three streets and benefits from natural cross-ventilation throughout.',
       desc2: 'The apartment is on the first floor and opens onto the garden with access to the shared pool. As a corner unit, light travels through from sunrise to sunset — you can follow the full arc of the sun from the terrace. Centralised air conditioning in every room. A fully equipped kitchen, 28m² living-dining room, and two bedrooms with quality bed linen.',
       features: ['6 guests + baby · 2 bedrooms · first floor', 'Corner terrace 20m² · faces sunrise · full solar arc', 'Shared pool · shared jacuzzi (summer)', 'Pets · on request · supplement', '300 m from the beach · 5 min walk from complex exit', 'Accessibility · adapted for reduced mobility', 'Centralised A/C in every room', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'Fibre WiFi · Amazon Alexa', 'Washer · dishwasher · fridge · microwave', 'Capsule + espresso coffee maker · blender · iron', 'Double bed 150 cm · memory foam mattress', '100% cotton 200-thread towels · down duvets'],
-      gallery_captions: ['Living room with garden views', 'Master bedroom', 'Corner terrace', 'Equipped kitchen', 'Second bedroom', 'Pool access'],
+      gallery_captions: ['Living & dining · wooden table', 'Living room · overhead view', 'Fully equipped kitchen', 'Living room · sofa & decor', 'Master bedroom · green wall', 'Bedroom 2 · teal twin beds', 'Corner terrace · mountain views', 'Terrace · summer evening', 'Main bathroom · LED light', 'Bathroom 2 · shower & towels', 'Shared pool & jacuzzi', 'Decorative detail'],
     },
   },
   vt: {
@@ -284,10 +298,11 @@ const AptPageDesc = ({ apt, lang }) => {
   );
 };
 
-// --- Galería (6 placeholders) ---
+// --- Galería ---
 const AptPageGallery = ({ apt, lang }) => {
   const d = apt[lang];
   const captions = d.gallery_captions;
+  const imgs = apt.gallery_imgs;
   return (
     <section className="apt-page-gallery">
       <div className="apt-gallery-eyebrow eyebrow">
@@ -295,14 +310,20 @@ const AptPageGallery = ({ apt, lang }) => {
       </div>
       <div className="apt-gallery-grid">
         {captions.map((cap, i) => (
-          <PhotoPlaceholder key={i} caption={cap} accent={apt.accent} index={i}/>
+          imgs
+            ? <div key={i} className="apt-gallery-real">
+                <img src={imgs[i]} alt={cap} loading="lazy"/>
+                <WatermarkBadge size={22}/>
+                <div className="apt-gallery-real-cap">{cap}</div>
+              </div>
+            : <PhotoPlaceholder key={i} caption={cap} accent={apt.accent} index={i}/>
         ))}
       </div>
-      <p className="gallery-note">
+      {!imgs && <p className="gallery-note">
         {lang === 'es'
           ? '↑ Fotos reales próximamente. Mientras tanto, escríbenos y te mandamos más.'
           : "↑ Real photos coming soon. Meanwhile, write us and we'll send more."}
-      </p>
+      </p>}
     </section>
   );
 };

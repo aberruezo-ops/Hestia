@@ -3758,6 +3758,36 @@ body.no-parallax .g-tile .img { transform: none !important; }
   font-family: var(--sans);
   margin: 0;
 }
+.apt-gallery-real {
+  position: relative;
+  aspect-ratio: 4/3;
+  border-radius: 10px 0 10px 0;
+  overflow: hidden;
+  background: var(--ink-soft);
+}
+.apt-gallery-real img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+@media (hover: hover) {
+  .apt-gallery-real:hover img { transform: scale(1.05); }
+}
+.apt-gallery-real-cap {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 28px 12px 10px;
+  background: linear-gradient(to top, rgba(42,15,46,.78), transparent);
+  font-size: 10px;
+  font-family: var(--sans);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: rgba(240,232,213,.82);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 /* --- Otros apartamentos --- */
 .apt-page-others {
