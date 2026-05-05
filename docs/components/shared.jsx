@@ -166,6 +166,17 @@ const COPY = {
 const useScrollMode = () => {
   const [mode, setMode] = React.useState('night');
   const [scrolled, setScrolled] = React.useState(false);
+
+  // Keep --topbar-h in sync with the actual rendered topbar height
+  React.useEffect(() => {
+    const sync = () => {
+      const el = document.querySelector('.topbar');
+      if (el) document.documentElement.style.setProperty('--topbar-h', el.offsetHeight + 'px');
+    };
+    sync();
+    window.addEventListener('resize', sync);
+    return () => window.removeEventListener('resize', sync);
+  }, []);
   React.useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
