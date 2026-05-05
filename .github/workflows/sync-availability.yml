@@ -13,8 +13,13 @@ name: Sync iCal availability
 
 on:
   schedule:
-    - cron: '0 * * * *'    # every hour
+    - cron: '0 */4 * * *'   # every 4 hours
   workflow_dispatch:          # manual trigger from GitHub UI
+
+# Prevent overlapping runs from generating false-alarm cancelled emails.
+concurrency:
+  group: sync-ical
+  cancel-in-progress: true
 
 permissions:
   contents: write
