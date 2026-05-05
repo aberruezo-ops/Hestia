@@ -639,8 +639,8 @@ section {
 }
 .section-night {
   background: linear-gradient(125deg,
-    #3D1A35 0%, #2A0F2E 14%, #2A0F2E 28%, #2A0F2E 42%,
-    #3D1A35 56%, #261040 70%, #2A0F2E 85%, #3D1A35 100%
+    #4E2446 0%, #3D1A35 14%, #5c2a50 28%, #4E2446 42%,
+    #3D1A35 56%, #5c2a50 70%, #4E2446 85%, #3D1A35 100%
   );
   background-size: 400% 400%;
   animation: sky-night 34s ease infinite;
@@ -649,12 +649,23 @@ section {
 }
 .section-dark {
   background: linear-gradient(125deg,
-    #2A0F2E 0%, #2A0F2E 14%, #2A0F2E 28%, #3D1A35 42%,
-    #2A0F2E 56%, #261040 70%, #2A0F2E 85%, #2A0F2E 100%
+    #4E2446 0%, #4E2446 14%, #3D1A35 28%, #5c2a50 42%,
+    #4E2446 56%, #3D1A35 70%, #5c2a50 85%, #4E2446 100%
   );
   background-size: 400% 400%;
   animation: sky-night 36s ease infinite;
   animation-delay: -14s;
+  color: var(--arena);
+}
+/* Medium violet — interior sections */
+.section-violet {
+  background: linear-gradient(125deg,
+    #5c2a50 0%, #4E2446 18%, #6B3060 36%, #4E2446 54%,
+    #5c2a50 72%, #3D1A35 88%, #5c2a50 100%
+  );
+  background-size: 400% 400%;
+  animation: sky-night 30s ease infinite;
+  animation-delay: -20s;
   color: var(--arena);
 }
 .section-day {
@@ -1570,7 +1581,7 @@ section {
    COUNTERS
    ============================================================ */
 .counters {
-  background: var(--ber);
+  background: linear-gradient(125deg, #5c2a50 0%, #4E2446 40%, #6B3060 100%);
   color: var(--arena);
   padding: clamp(80px, 10vw, 140px) var(--page-pad);
   text-align: center;
@@ -1815,8 +1826,8 @@ section {
    ============================================================ */
 .manifest {
   background: linear-gradient(125deg,
-    #2A0F2E 0%, #2A0F2E 10%, #2A0F2E 22%, #3D1A35 35%,
-    #2A0F2E 48%, #261040 62%, #2A0F2E 75%, #2A0F2E 100%
+    #5c2a50 0%, #4E2446 12%, #6B3060 26%, #4E2446 40%,
+    #5c2a50 54%, #4E2446 68%, #3D1A35 82%, #5c2a50 100%
   );
   background-size: 400% 400%;
   animation: sky-night 32s ease infinite;
@@ -2091,7 +2102,7 @@ footer .footer-brand .addr {
    ============================================================ */
 .apt-avail {
   padding: 90px 40px;
-  background: #2A0F2E;
+  background: linear-gradient(135deg, #4E2446 0%, #3D1A35 50%, #5c2a50 100%);
   border-top: 1px solid rgba(240,232,213,0.07);
 }
 .avail-hd {
@@ -3621,14 +3632,15 @@ body.no-parallax .g-tile .img { transform: none !important; }
    ================================================================ */
 .apt-equip {
   padding: 72px var(--page-pad) 80px;
-  background: var(--ber-dk);
+  background: var(--crema);
+  color: var(--ink);
 }
 .apt-equip-eyebrow {
   font-family: var(--sans);
   font-size: 11px;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: rgba(240,232,213,.4);
+  color: rgba(42,15,46,.42);
   margin-bottom: 28px;
 }
 .apt-equip-stats {
@@ -3636,8 +3648,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
   flex-wrap: wrap;
   gap: 28px 40px;
   padding: 20px 0;
-  border-top: 1px solid rgba(240,232,213,.1);
-  border-bottom: 1px solid rgba(240,232,213,.1);
+  border-top: 1px solid rgba(42,15,46,.12);
+  border-bottom: 1px solid rgba(42,15,46,.12);
   margin-bottom: 48px;
 }
 .apt-equip-stat {
@@ -3654,14 +3666,14 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .aes-unit {
   font-family: var(--serif);
   font-size: 14px;
-  color: rgba(240,232,213,.55);
+  color: rgba(42,15,46,.48);
 }
 .aes-lbl {
   font-family: var(--sans);
   font-size: 10px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: rgba(240,232,213,.38);
+  color: rgba(42,15,46,.4);
   margin-top: 2px;
 }
 .apt-equip-icons {
@@ -3679,7 +3691,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .aei-label {
   font-family: var(--sans);
   font-size: 11.5px;
-  color: rgba(240,232,213,.7);
+  color: rgba(42,15,46,.65);
   line-height: 1.35;
 }
 .apt-equip-icons { margin-top: 32px; }
@@ -4245,8 +4257,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .nosotros-team {
   padding: 96px var(--page-pad);
   background: linear-gradient(125deg,
-    #2A0F2E 0%, #2A0F2E 10%, #2A0F2E 22%, #3D1A35 35%,
-    #2A0F2E 50%, #2A0F2E 65%, #2A0F2E 80%, #2A0F2E 100%
+    #5c2a50 0%, #4E2446 12%, #6B3060 26%, #4E2446 42%,
+    #5c2a50 58%, #3D1A35 74%, #5c2a50 88%, #4E2446 100%
   );
   background-size: 400% 400%;
   animation: sky-night 40s ease infinite;
