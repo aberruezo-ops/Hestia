@@ -8,7 +8,7 @@ const APT_DATA = {
     id: 'vm', num: '01', slug: 'mar', license: 'VFT/AL/01580',
     name_short: 'Mar',
     accent: '#6B7A3A', accent2: '#8B9A52',
-    hero_img: 'assets/apt-vm-gallery-1.jpg',
+    hero_img: 'assets/apt-vm-gallery-10.jpg',
     bedroom_img: 'assets/apt-vm-gallery-10.jpg',
     others: ['vt', 'vs'],
     gallery_imgs: [
@@ -313,46 +313,39 @@ const AptPageDesc = ({ apt, lang }) => {
 
 // --- Galería carousel ---
 const GalleryCarousel = ({ imgs, captions }) => {
-  const scrollRef = React.useRef(null);
-  const [active, setActive] = React.useState(0);
+  const n = imgs.length;
+  const [cur, setCur] = React.useState(0);
+  const prev = () => setCur(i => (i - 1 + n) % n);
+  const next = () => setCur(i => (i + 1) % n);
 
-  const updateActive = () => {
-    const c = scrollRef.current;
-    if (!c) return;
-    const cx = c.scrollLeft + c.offsetWidth / 2;
-    let best = 0, minD = Infinity;
-    c.querySelectorAll('.gc-item').forEach((el, i) => {
-      const d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - cx);
-      if (d < minD) { minD = d; best = i; }
-    });
-    setActive(best);
+  // Swipe support
+  const touchX = React.useRef(null);
+  const onTouchStart = e => { touchX.current = e.touches[0].clientX; };
+  const onTouchEnd   = e => {
+    if (touchX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    if (Math.abs(dx) > 40) dx < 0 ? next() : prev();
+    touchX.current = null;
   };
-
-  const scrollTo = (i) => {
-    const c = scrollRef.current;
-    const el = c && c.querySelectorAll('.gc-item')[i];
-    if (!el) return;
-    c.scrollTo({ left: el.offsetLeft - (c.offsetWidth - el.offsetWidth) / 2, behavior: 'smooth' });
-  };
-
-  React.useEffect(() => { scrollTo(0); }, []);
 
   return (
     <div className="gc-wrap">
-      <button className="gc-arrow gc-prev" onClick={() => scrollTo(Math.max(0, active - 1))} aria-label="Anterior">‹</button>
-      <div ref={scrollRef} className="gc-track" onScroll={updateActive}>
+      <div className="gc-stage" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         {imgs.map((src, i) => (
-          <div key={i} className={`gc-item${i === active ? ' gc-active' : ''}`} onClick={() => scrollTo(i)}>
-            <img src={src} alt={captions[i]} loading="lazy"/>
-            <WatermarkBadge size={18}/>
-            <div className="gc-cap">{captions[i]}</div>
+          <div key={i} className={`gc-slide${i === cur ? ' gc-on' : ''}`}>
+            <img src={src} alt={captions[i]} loading={i === 0 ? 'eager' : 'lazy'}/>
           </div>
         ))}
+        <WatermarkBadge size={26} pos={{ bottom: 12, right: 12 }}/>
+        <div className="gc-caption">{captions[cur]}</div>
+        <button className="gc-arrow gc-prev" onClick={prev} aria-label="Anterior">‹</button>
+        <button className="gc-arrow gc-next" onClick={next} aria-label="Siguiente">›</button>
+        <div className="gc-counter">{cur + 1} / {n}</div>
       </div>
-      <button className="gc-arrow gc-next" onClick={() => scrollTo(Math.min(imgs.length - 1, active + 1))} aria-label="Siguiente">›</button>
       <div className="gc-dots">
         {imgs.map((_, i) => (
-          <button key={i} className={`gc-dot${i === active ? ' gc-dot-on' : ''}`} onClick={() => scrollTo(i)} aria-label={`Foto ${i+1}`}/>
+          <button key={i} className={`gc-dot${i === cur ? ' gc-dot-on' : ''}`}
+                  onClick={() => setCur(i)} aria-label={`Foto ${i + 1}`}/>
         ))}
       </div>
     </div>
