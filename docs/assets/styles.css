@@ -189,15 +189,17 @@ p  { line-height: 1.65; font-weight: 300; }
   border-radius: 0 0 10px 0;
   overflow: hidden;
 }
-/* Covers the gap created by the header's top-left border-radius with the topbar colour.
-   z-index 100 puts it in front of the header (99) so backdrop-filter doesn't interfere. */
+/* Fills the triangular gap at the top-left corner between the topbar and the header's
+   border-radius. The radial-gradient creates a concave curve: topbar colour fills the
+   outer triangle while the inner quarter-circle stays transparent so the header's
+   rounded corner remains visible. z-index 100 sits above the header (99). */
 .topbar-corner-fill {
   position: fixed;
   top: var(--topbar-h, 36px);
   left: 0;
   width: 10px;
   height: 10px;
-  background: var(--ber-dk);
+  background: radial-gradient(circle at bottom right, transparent 10px, var(--ber-dk) 10px);
   z-index: 100;
   pointer-events: none;
 }
