@@ -8,7 +8,7 @@ const APT_DATA = {
     id: 'vm', num: '01', slug: 'mar', license: 'VFT/AL/01580',
     name_short: 'Mar',
     accent: '#6B7A3A', accent2: '#8B9A52',
-    hero_img: 'assets/apt-vm-gallery-10.jpg',
+    hero_img: 'assets/apt-vm-hero.jpg',
     bedroom_img: 'assets/apt-vm-gallery-10.jpg',
     others: ['vt', 'vs'],
     gallery_imgs: [
