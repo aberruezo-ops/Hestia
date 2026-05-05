@@ -261,7 +261,7 @@ p  { line-height: 1.65; font-weight: 300; }
 /* -------- Header -------- */
 .header {
   position: fixed;
-  top: 34px; left: 0; right: 0;
+  top: var(--topbar-h, 36px); left: 0; right: 0;
   z-index: 99;
   padding: 18px var(--page-pad);
   display: grid;
