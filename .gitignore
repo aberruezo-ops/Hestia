@@ -1,2 +1,15 @@
 .claude/skills/**/__pycache__/
 **/*.pyc
+
+# Debug screenshots from agent testing sessions
+*.png
+debug_*.png
+mobile_*.png
+desktop_*.png
+screenshot_*.png
+fresh_*.png
+
+# Local copies of CDN assets (use CDN URLs in HTML, not local files)
+docs/assets/react.development.js
+docs/assets/react-dom.development.js
+docs/assets/babel.min.js
