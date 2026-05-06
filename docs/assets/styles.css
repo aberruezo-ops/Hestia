@@ -960,8 +960,7 @@ section {
   position: relative;
   z-index: 3;
   text-align: center;
-  padding: clamp(110px, 16vh, 200px) var(--page-pad) 80px;
-  margin-top: auto;
+  padding: clamp(160px, 18vh, 230px) var(--page-pad) 80px;
 }
 .hero-logo-wrap {
   display: block;
