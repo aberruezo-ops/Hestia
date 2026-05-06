@@ -261,6 +261,25 @@ const AptEquipamiento = ({ apt, lang }) => {
   const d = equip[lang];
   const accent = apt.accent;
 
+  const TECH_KW    = ['TV', 'WiFi', 'WIFI', 'fibra', 'Prime', 'HBO', 'Sky', 'Pluto', 'Alexa', 'Smart', 'fibre', 'Fibre'];
+  const KITCHEN_KW = ['cocin', 'kitchen', 'Kitchen', 'Lavadora', 'lavadora', 'Dishwasher', 'dishwasher', 'Washer', 'washer', 'lavavajillas', 'caf', 'Caf', 'espresso', 'nevera', 'microondas', 'tendedero', 'Tendedero', 'iron', 'Nespresso', 'blender', 'batidora', 'plancha', 'drip'];
+  const OUTDOOR_KW = ['playa', 'Beach', 'beach', 'Piscina', 'piscin', 'pool', 'Pool', 'Terraza', 'terraza', 'terrace', 'Terrace', 'jardín', 'Garden', 'garden', 'jacuzzi', 'Jacuzzi', 'sauna', 'Sauna', 'SPA', 'pádel', 'padel', 'tenis', 'tennis', 'Tennis', 'gym', 'Gym', 'Gimnasio', 'gimnasio', 'Salinas', 'salinas', 'salt', 'Salt', 'lagoon', 'Lagoon', 'chill', 'Chill', 'Lift', 'Ascensor', 'garaje', 'Garaje', 'Garage', 'garage', 'Streams', 'streams', 'Swings', 'columpios', 'Park', 'Parque', 'Mar ', 'Sea ', 'Pueblo', 'Village', 'Laguna', 'climatiz'];
+  const categorize = (label) => {
+    if (TECH_KW.some(k => label.includes(k)))    return 'tech';
+    if (KITCHEN_KW.some(k => label.includes(k))) return 'kitchen';
+    if (OUTDOOR_KW.some(k => label.includes(k))) return 'outdoor';
+    return 'comfort';
+  };
+  const CATS = [
+    { key: 'outdoor', es: 'Espacio y entorno',  en: 'Space & surroundings' },
+    { key: 'tech',    es: 'Tecnología',          en: 'Technology' },
+    { key: 'kitchen', es: 'Cocina',              en: 'Kitchen' },
+    { key: 'comfort', es: 'Confort',             en: 'Comfort' },
+  ];
+  const grouped = CATS
+    .map(cat => ({ ...cat, items: d.icons.filter(([, lbl]) => categorize(lbl) === cat.key) }))
+    .filter(cat => cat.items.length > 0);
+
   return (
     <section className="apt-equip">
       <div className="container">
@@ -282,11 +301,18 @@ const AptEquipamiento = ({ apt, lang }) => {
             </div>
           ))}
         </div>
-        <div className="apt-equip-icons">
-          {d.icons.map(([icon, label], i) => (
-            <div key={i} className="apt-equip-item">
-              <span className="aei-icon" aria-hidden="true">{icon}</span>
-              <span className="aei-label">{label}</span>
+        <div className="apt-equip-categories">
+          {grouped.map(cat => (
+            <div key={cat.key} className="apt-equip-cat">
+              <div className="aec-label" style={{ color: accent }}>{lang === 'es' ? cat.es : cat.en}</div>
+              <div className="apt-equip-icons">
+                {cat.items.map(([icon, label], i) => (
+                  <div key={i} className="apt-equip-item">
+                    <span className="aei-icon" aria-hidden="true">{icon}</span>
+                    <span className="aei-label">{label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>

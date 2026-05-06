@@ -1,6 +1,36 @@
 /* ============================================================
    HESTÍA YOUR HOME — Nuevo portal
    Lenguaje visual: Noche Mediterránea
+   ============================================================
+
+   TABLE OF CONTENTS
+   ─────────────────────────────────────────────────────────────
+   LAYER 00 · Accessibility & base utilities          ~L6
+   LAYER 01 · CSS Custom Properties (tokens)          ~L34
+   LAYER 02 · Reset & global base                     ~L130
+   LAYER 03 · Topbar                                  ~L175
+   LAYER 04 · Header & navigation                     ~L277
+   LAYER 05 · Hero section                            ~L420
+   LAYER 06 · Intro / VideoIntro overlay              ~L560
+   LAYER 07 · Apartments scroll cards                 ~L1295
+   LAYER 08 · Compare section                         ~L1575
+   LAYER 09 · Counters section                        ~L1598
+   LAYER 10 · Gallery section                         ~L1640
+   LAYER 11 · Team section                            ~L1750
+   LAYER 12 · Manifest section                        ~L1825
+   LAYER 13 · Ratings section                         ~L1870
+   LAYER 14 · Contact CTA section                     ~L2000
+   LAYER 15 · Home Search (buscador)                  ~L2060
+   LAYER 16 · Apartment detail pages                  ~L2940
+   LAYER 17 · Opiniones page                          ~L3800
+   LAYER 18 · Nosotros / Porque Hestía pages          ~L3880
+   LAYER 19 · Reservas page                           ~L4000
+   LAYER 20 · Shared components (FAQ, StickyFacts…)   ~L4200
+   LAYER 21 · Footer                                  ~L4450
+   LAYER 22 · Cookies / Legal pages                   ~L4550
+   LAYER 23 · Utility classes                         ~L4650
+   LAYER 24 · Section stacking system                 ~L6595
+   ─────────────────────────────────────────────────────────────
    ============================================================ */
 
 /* ── Accessibility utilities ─────────────────────────────────── */
@@ -1352,6 +1382,9 @@ section {
 /* translateZ(0) + backface-visibility forces GPU layer and correct border-radius clipping in WebKit */
 .apt-card { -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 .apt-card:hover { -webkit-transform: translateY(-6px) translateZ(0); transform: translateY(-6px) translateZ(0); }
+.apt-card.vm:hover { box-shadow: 0 18px 48px rgba(107,122,58,.45), 0 4px 16px rgba(107,122,58,.28); }
+.apt-card.vt:hover { box-shadow: 0 18px 48px rgba(138,74,36,.45),  0 4px 16px rgba(138,74,36,.28); }
+.apt-card.vs:hover { box-shadow: 0 18px 48px rgba(158,122,44,.45), 0 4px 16px rgba(158,122,44,.28); }
 .apt-card::before {
   content: '';
   position: absolute; inset: 0;
@@ -1588,6 +1621,53 @@ section {
 .compare-grid .rate .rate-sub {
   font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em;
   text-transform: uppercase; opacity: 0.5; margin-left: 6px; font-weight: 400;
+}
+
+/* ── Compare cards — mobile swipeable view */
+.compare-cards-mobile { display: none; }
+@media (max-width: 680px) {
+  .compare-grid { display: none !important; }
+  .compare-cards-mobile {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding: 0 var(--page-pad) 32px;
+    scrollbar-width: none;
+  }
+  .compare-cards-mobile::-webkit-scrollbar { display: none; }
+  .cc-card {
+    flex: 0 0 calc(min(100vw - 2 * var(--page-pad), 320px));
+    scroll-snap-align: start;
+    background: var(--ber-dk);
+    border-radius: 20px 0 20px 0;
+    padding: 24px 18px;
+    color: var(--crema);
+    border-top: 3px solid transparent;
+  }
+  .cc-card.cc-vm { border-top-color: #6B7A3A; }
+  .cc-card.cc-vt { border-top-color: #8A4A24; }
+  .cc-card.cc-vs { border-top-color: #9E7A2C; }
+  .cc-card-head {
+    display: flex; flex-direction: column; gap: 6px;
+    margin-bottom: 18px; padding-bottom: 14px;
+    border-bottom: 1px solid rgba(240,232,213,0.12);
+  }
+  .cc-card-name {
+    font-family: var(--serif); font-size: 26px; font-weight: 300;
+    color: var(--crema);
+  }
+  .cc-row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 12px; padding: 9px 0;
+    border-bottom: 1px solid rgba(240,232,213,0.06);
+    font-size: 12.5px;
+  }
+  .cc-row:last-child { border-bottom: none; }
+  .cc-lbl { color: rgba(240,232,213,0.5); flex-shrink: 0; }
+  .cc-val { color: var(--crema); text-align: right; max-width: 60%; }
+  .cc-val.rate { font-family: var(--serif); font-size: 22px; font-weight: 300; color: var(--sol-lt); }
 }
 
 /* ============================================================
@@ -3873,8 +3953,20 @@ body.no-parallax .g-tile .img { transform: none !important; }
   color: rgba(42,15,46,.65);
   line-height: 1.35;
 }
-.apt-equip-icons { margin-top: 32px; }
-
+.apt-equip-categories {
+  display: flex; flex-direction: column; gap: 40px;
+  margin-top: 48px;
+}
+.apt-equip-cat { }
+.aec-label {
+  font-family: var(--sans);
+  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(42,15,46,0.12);
+}
+.apt-equip-icons { margin-top: 0; }
 @media (max-width: 860px) {
   .apt-equip-icons { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 }
