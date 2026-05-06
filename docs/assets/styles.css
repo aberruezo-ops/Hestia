@@ -960,7 +960,7 @@ section {
   position: relative;
   z-index: 3;
   text-align: center;
-  padding: 40px var(--page-pad) 80px;
+  padding: clamp(110px, 16vh, 200px) var(--page-pad) 80px;
   margin-top: auto;
 }
 .hero-logo-wrap {
@@ -2017,6 +2017,8 @@ section {
    ============================================================ */
 footer {
   position: relative;
+  z-index: 39;
+  border-radius: 32px 0 32px 0;
   background: linear-gradient(125deg,
     #2A0F2E 0%, #2A0F2E 8%, #2A0F2E 16%, #3D1A35 24%,
     #2A0F2E 32%, #261040 40%, #2A0F2E 48%, #2A0F2E 56%,
@@ -2027,7 +2029,7 @@ footer {
   animation: sky-night 38s ease infinite;
   animation-delay: -12s;
   color: var(--arena);
-  padding: 90px var(--page-pad) 40px;
+  padding: 122px var(--page-pad) 40px;
 }
 footer::before {
   content: '';
@@ -3354,7 +3356,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   min-height: 60vh;
   display: flex;
   align-items: flex-end;
-  padding: calc(var(--topbar-h, 36px) + 80px) var(--page-pad) 80px;
+  padding: calc(var(--topbar-h, 36px) + 120px) var(--page-pad) 80px;
   background: linear-gradient(125deg,
     #2A0F2E 0%, #2A0F2E 8%, #2A0F2E 16%, #3D1A35 24%,
     #2A0F2E 32%, #261040 40%, #2A0F2E 48%, #2A0F2E 56%,
@@ -6435,24 +6437,26 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .mn-why .mn-num { color: #D42B80; font-size: 14px; }
 
 /* ─── Forma corporativa + armonía perfecta de esquinas ──────────────────────
-   Principio: cada sección solapa a la anterior 32 px (= border-radius).
-   Así la esquina redondeada de la sección B deja ver el color de la sección
-   A por detrás — nunca el fondo del body.
-   z-index:0 crea un stacking-context por sección, confinando los z-index
-   internos y dejando que el orden DOM (posterior = encima) rija el solapado.
-   padding-top compensado = original + 32 px para mantener el contenido en
-   su posición visual.                                                       */
+   Principio: la sección A tiene z-index mayor que B y se extiende 32 px
+   hacia abajo (margin-bottom: -32px). Así son visibles AMBAS esquinas:
+   · Esquina inferior-derecha de A: A está encima, su radio transparente
+     deja ver el color de B por debajo (esquina derecha ✓).
+   · Esquina superior-izquierda de B: B está detrás, el color de A aparece
+     a través del notch redondeado de B (esquina izquierda ✓).
+   padding-top compensado en B = original + 32 px para que el contenido
+   de B empiece bajo la zona de solape.                                      */
 
-/* ── Primeras secciones (borde superior de página) — solo esquina de salida */
+/* ── Primeras secciones — esquina de salida + extensión hacia abajo */
 .hero,
 .apt-page-hero,
 .page-hero {
   position: relative;
-  z-index: 0;
+  z-index: 50;
   border-radius: 0 0 32px 0;
+  margin-bottom: -32px;
 }
 
-/* ── Resto de secciones — forma completa + solapado */
+/* ── Resto de secciones — forma completa, sin margin-top */
 .frase-hogar,
 .home-search,
 .apartments-intro,
@@ -6467,12 +6471,10 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .apt-page-gallery {
   border-radius: 32px 0 32px 0;
   position: relative;
-  z-index: 0;
-  margin-top: -32px;
+  margin-bottom: -32px;
 }
 
-/* Clases de fondo utilitarias — solo forma y contexto, sin solapado propio
-   (el solapado lo gestiona la clase de sección específica del mismo elemento) */
+/* Clases de fondo utilitarias — solo forma y contexto */
 .section-night,
 .section-dark,
 .section-violet,
@@ -6480,10 +6482,23 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .section-cream {
   border-radius: 32px 0 32px 0;
   position: relative;
-  z-index: 0;
 }
 
-/* ── Compensación de padding-top (original + 32 px) ── */
+/* ── z-index decreciente: A siempre encima de B ── */
+.frase-hogar      { z-index: 49; }
+.home-search      { z-index: 48; }
+.apartments-intro { z-index: 47; }
+.compare          { z-index: 46; }
+.counters         { z-index: 45; }
+.team             { z-index: 44; }
+.manifest         { z-index: 43; }
+.ratings          { z-index: 42; }
+.quick-faq        { z-index: 41; }
+.contact-cta      { z-index: 40; }
+.apt-page-desc    { z-index: 49; }
+.apt-page-gallery { z-index: 48; }
+
+/* ── Compensación de padding-top en B (original + 32 px) ── */
 .frase-hogar      { padding-top: calc(clamp(22px,  3vw,  36px)  + 32px); }
 .home-search      { padding-top: calc(80px                       + 32px); }
 .apartments-intro { padding-top: calc(clamp(100px, 10vw, 160px) + 32px); }
