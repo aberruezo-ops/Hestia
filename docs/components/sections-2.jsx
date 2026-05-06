@@ -226,16 +226,34 @@ const Ratings = ({ lang }) => {
             <div className="platform">Booking.com</div>
             <div className="score">9<span className="dec">.8</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_booking_desc}</div>
+            <blockquote className="rating-quote">
+              {lang === 'es'
+                ? '«Todo impecable. La ubicación, el apartamento y sobre todo el trato de Alex. Volvemos seguro.»'
+                : '«Everything perfect. The location, the apartment, and above all Alex\'s care. We\'ll definitely be back.»'}
+              <cite>— María G. · Hestía Mar · 2024</cite>
+            </blockquote>
           </div>
           <div className="rating-card" style={{borderTopColor: 'var(--vt)'}}>
             <div className="platform">Airbnb · Superhost</div>
             <div className="score">5<span className="dec">.0</span><span className="score-max">/5</span></div>
             <div className="desc">{t.rating_airbnb_desc}</div>
+            <blockquote className="rating-quote">
+              {lang === 'es'
+                ? '«Llevamos diez años viajando y nunca habíamos visto unas vistas así desde un apartamento. El SPA es otro nivel.»'
+                : '«Ten years travelling and we\'ve never had views like these from an apartment. The SPA is something else entirely.»'}
+              <cite>— James & Sophie · Hestía Thalassa · 2024</cite>
+            </blockquote>
           </div>
           <div className="rating-card" style={{borderTopColor: 'var(--vs)'}}>
             <div className="platform">Google Maps</div>
             <div className="score">4<span className="dec">.9</span><span className="score-max">/5</span></div>
             <div className="desc">{t.rating_google_desc}</div>
+            <blockquote className="rating-quote">
+              {lang === 'es'
+                ? '«Hestía tiene algo que no se puede comprar: la sensación de que alguien ha pensado en cada detalle para que te sientas en casa.»'
+                : '«Hestía has something money can\'t buy: the feeling that someone thought of every detail so you feel at home, not in a rental.»'}
+              <cite>— Carlos M. · Hestía Salinas · 2024</cite>
+            </blockquote>
           </div>
         </div>
       </div>

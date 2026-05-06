@@ -8,18 +8,18 @@ const VideoIntro = ({ lang, onDone }) => {
   const videoRef  = React.useRef(null);
   const exitedRef = React.useRef(false);
 
-  const doExit = () => {
+  const doExit = (fast = false) => {
     if (exitedRef.current) return;
     exitedRef.current = true;
     const box = boxRef.current;
     if (box) {
-      box.style.transition = 'opacity 5s ease';
+      box.style.transition = `opacity ${fast ? 0.4 : 5}s ease`;
       box.style.opacity    = '0';
     }
     setTimeout(() => {
       sessionStorage.setItem('hestia-intro', '1');
       onDone();
-    }, 5000);
+    }, fast ? 400 : 5000);
   };
 
   React.useEffect(() => {
@@ -42,7 +42,7 @@ const VideoIntro = ({ lang, onDone }) => {
         >
           <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
         </video>
-        <button className="vintro-skip" onClick={doExit}>
+        <button className="vintro-skip" onClick={() => doExit(true)}>
           {lang === 'es' ? 'Saltar →' : 'Skip →'}
         </button>
       </div>

@@ -251,6 +251,12 @@ const Apartments = ({ lang }) => {
     return Math.round(Math.max(maxBase, maxPeak) * (1 - DIRECT_DISCOUNT));
   };
 
+  const aptMinPrice = (aptId) => {
+    const tbl = HESTIA_PRICES[aptId];
+    if (!tbl) return null;
+    return Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT));
+  };
+
   const handleScroll = () => {
     const track = trackRef.current;
     if (!track) return;
@@ -287,7 +293,7 @@ const Apartments = ({ lang }) => {
       <div className="apartments-scroll">
         <div className="apartments-track" ref={trackRef} onScroll={handleScroll}>
           {APARTMENTS.map((a, i) => {
-            const maxPrice = aptMaxPrice(a.id);
+            const minPrice = aptMinPrice(a.id);
             return (
               <div key={a.id} id={`apt-${a.id}`} className={`apt-card ${a.id}`}>
                 <img src={a.img} alt={a.name} className="apt-photo" loading="eager"/>
@@ -309,10 +315,10 @@ const Apartments = ({ lang }) => {
                       </React.Fragment>
                     ))}
                   </div>
-                  {maxPrice && (
+                  {minPrice && (
                     <div className="apt-price-badge">
-                      <span className="apb-label">{lang === 'es' ? 'hasta' : 'up to'}</span>
-                      <span className="apb-price">{maxPrice.toLocaleString('es-ES')}€</span>
+                      <span className="apb-label">{lang === 'es' ? 'desde' : 'from'}</span>
+                      <span className="apb-price">{minPrice.toLocaleString('es-ES')}€</span>
                       <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
                     </div>
                   )}

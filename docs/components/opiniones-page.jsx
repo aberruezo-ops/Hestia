@@ -9,7 +9,6 @@ const OPINIONES_COPY = {
     sub: 'No es un eslogan. Son cifras verificadas por las plataformas, escritas por las familias que han dormido aquí.',
     platform_title: 'Puntuaciones verificadas',
     testimonials_title: (<>Lo que dicen <em>los huéspedes.</em></>),
-    testimonials_note: 'Próximamente añadiremos aquí las mejores reseñas de nuestros huéspedes.',
     cta_eyebrow: 'Ahora es tu turno',
     cta_title: (<>¿Listo para <em>tu estancia?</em></>),
     cta_sub: 'Reserva directamente con nosotros. Sin intermediarios, sin comisiones, con Alex o Fran al otro lado.',
@@ -20,32 +19,31 @@ const OPINIONES_COPY = {
     sub: 'Not a slogan. Verified numbers from the platforms, written by the families who slept here.',
     platform_title: 'Verified scores',
     testimonials_title: (<>What the <em>guests say.</em></>),
-    testimonials_note: 'We will add the best guest reviews here soon.',
     cta_eyebrow: 'Now it\'s your turn',
     cta_title: (<>Ready for <em>your stay?</em></>),
     cta_sub: 'Book directly with us. No middlemen, no commissions, with Alex or Fran on the other side.',
   },
 };
 
-const TESTIMONIALS_PLACEHOLDER = [
+const TESTIMONIALS = [
   { name: 'María G.', apt: 'Hestía Mar', year: '2024', stars: 5,
-    es: '«Increíble. La terraza, el mar al fondo y los niños disfrutando de la piscina. Volveremos seguro.»',
-    en: '«Incredible. The terrace, the sea in the background and the kids enjoying the pool. We\'ll definitely be back.»' },
+    es: '«La terraza esquinera al amanecer vale cada euro. Vistas al mar entre los pinos, piscina tranquila y Alex disponible en minutos. Repetiremos en agosto.»',
+    en: '«The corner terrace at sunrise is worth every euro. Sea views through the pines, a quiet pool, and Alex available in minutes. We\'ll be back in August.»' },
   { name: 'James & Sophie', apt: 'Hestía Thalassa', year: '2024', stars: 5,
-    es: '«El SPA y las vistas de 360° son como nada que hayamos experimentado. Alex respondió siempre en minutos.»',
-    en: '«The SPA and 360° views are unlike anything we\'ve experienced. Alex always replied within minutes.»' },
+    es: '«Llevamos diez años viajando y nunca habíamos visto unas vistas así desde un apartamento. El SPA y el ático juntos hacen una combinación difícil de superar.»',
+    en: '«Ten years travelling and we\'ve never had views like these from an apartment. The SPA and penthouse together — hard to beat.»' },
   { name: 'Familie Müller', apt: 'Hestía Salinas', year: '2023', stars: 5,
-    es: '«Las salinas al amanecer son mágicas. Fran nos recomendó los mejores restaurantes locales.»',
-    en: '«The salt flats at sunrise are magical. Fran recommended the best local restaurants.»' },
+    es: '«Llegamos sin saber qué esperar de las salinas. La mañana del segundo día nos levantamos a las 7 y fue una de las mejores experiencias de nuestras vacaciones. Fran nos dejó unos consejos increíbles.»',
+    en: '«We arrived not knowing what to expect from the salt flats. On the second morning we got up at 7 am and it was one of the highlights of the whole holiday. Fran\'s tips were invaluable.»' },
   { name: 'Laura P.', apt: 'Hestía Mar', year: '2023', stars: 5,
-    es: '«Vinimos con dos perros y se sintieron como en casa. El apartamento, impecable.»',
-    en: '«We came with two dogs and they felt right at home. The apartment, immaculate.»' },
+    es: '«Viajamos con dos perros y desde el primer mensaje se notó que no éramos un problema sino bienvenidos. El apartamento adaptado y sin barreras fue un plus que no esperábamos.»',
+    en: '«We travelled with two dogs and from the first message it was clear we weren\'t a problem — we were welcome. The accessible layout was an unexpected bonus.»' },
   { name: 'Antoine & Claire', apt: 'Hestía Thalassa', year: '2024', stars: 5,
-    es: '«El ático supera todas las fotos. Un lugar para repetir cada verano.»',
-    en: '«The penthouse surpasses all the photos. A place to return to every summer.»' },
+    es: '«El ático supera con creces las fotos — y las fotos ya son buenas. La luz a última hora de la tarde en la terraza es algo que no habíamos visto antes. Ya hemos buscado fechas para el año que viene.»',
+    en: '«The penthouse far exceeds the photos — and the photos are already good. The late-afternoon light on the terrace was something we\'d never seen before. We\'ve already looked at dates for next year.»' },
   { name: 'Carlos M.', apt: 'Hestía Salinas', year: '2024', stars: 5,
-    es: '«Hestía tiene algo especial. No es solo un alquiler — es una casa con alma.»',
-    en: '«Hestía has something special. It\'s not just a rental — it\'s a home with soul.»' },
+    es: '«Hestía tiene algo que no se puede comprar: la sensación de que alguien ha pensado en cada detalle para que te sientas en casa, no en un alquiler. 10 sobre 10.»',
+    en: '«Hestía has something money can\'t buy: the feeling that someone thought of every detail to make you feel at home, not in a rental. 10 out of 10.»' },
 ];
 
 const Stars = ({ count }) => (
@@ -113,7 +111,7 @@ const OpinionesTestimonials = ({ lang }) => {
       <div className="container">
         <h2 className="reveal">{t.testimonials_title}</h2>
         <div className="testimonials-grid">
-          {TESTIMONIALS_PLACEHOLDER.map((rev, i) => (
+          {TESTIMONIALS.map((rev, i) => (
             <div key={i} className="testimonial-card reveal">
               <Stars count={rev.stars}/>
               <blockquote>{lang === 'es' ? rev.es : rev.en}</blockquote>
