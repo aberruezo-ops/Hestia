@@ -488,6 +488,7 @@ const HomeSearch = ({ lang }) => {
       return { ...a, available: _hsAvail(checkin, checkout, blocked) };
     });
     setResults(res);
+    window.dispatchEvent(new CustomEvent('hs-results-change', { detail: true }));
 
     // Scroll to results
     setTimeout(() => {
@@ -496,7 +497,11 @@ const HomeSearch = ({ lang }) => {
     }, 100);
   };
 
-  const handleReset = () => { setResults(null); setFormErr(''); };
+  const handleReset = () => {
+    setResults(null);
+    setFormErr('');
+    window.dispatchEvent(new CustomEvent('hs-results-change', { detail: false }));
+  };
 
   return (
     <section className="home-search" id="buscar" data-screen-label="03b Buscador">
