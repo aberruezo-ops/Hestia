@@ -312,6 +312,8 @@ const PhotoPlaceholder = ({ caption, accent, index }) => (
 // --- Hero de la página de apartamento ---
 const AptPageHero = ({ apt, lang, scrolled, mode }) => {
   const d = apt[lang];
+  const tbl = HESTIA_PRICES[apt.id];
+  const minPrice = tbl ? Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT)) : null;
   return (
     <section className="apt-page-hero" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
       <img src={apt.hero_img} alt={d.name} className="apt-page-hero-img"/>
@@ -328,6 +330,12 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
           {apt.name_short}
         </h1>
         <p className="apt-page-concept">« {d.concept} »</p>
+        {minPrice && (
+          <p className="apt-page-price">
+            {lang === 'es' ? `desde ${minPrice}€` : `from ${minPrice}€`}
+            <span className="app-per">{lang === 'es' ? ' / noche · precio directo' : ' / night · direct price'}</span>
+          </p>
+        )}
         <div className="apt-page-ctas">
           <a href="https://wa.me/34620316370" className="btn btn-primary" target="_blank" rel="noopener">
             {lang === 'es' ? 'Reserva — WhatsApp' : 'Book — WhatsApp'} <span className="arrow">→</span>
@@ -336,6 +344,9 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
             {lang === 'es' ? 'Más información' : 'More info'}
           </a>
         </div>
+        <p className="apt-page-cancel">
+          {lang === 'es' ? '✓ Cancelación gratuita · hasta 7 días antes' : '✓ Free cancellation · up to 7 days before'}
+        </p>
       </div>
     </section>
   );
@@ -357,19 +368,35 @@ const AptPageDesc = ({ apt, lang }) => {
 // --- Galería carousel ---
 const GalleryCarousel = ({ imgs, captions }) => {
   const n = imgs.length;
-  const [cur, setCur] = React.useState(0);
-  const thumbsRef = React.useRef(null);
-  const timerRef  = React.useRef(null);
+  const [cur, setCur]       = React.useState(0);
+  const [lightbox, setLightbox] = React.useState(false);
+  const thumbsRef  = React.useRef(null);
+  const timerRef   = React.useRef(null);
+  const pausedRef  = React.useRef(false);
 
   const resetTimer = () => {
     clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => setCur(i => (i + 1) % n), 3000);
+    timerRef.current = setInterval(() => {
+      if (!pausedRef.current) setCur(i => (i + 1) % n);
+    }, 6000);
   };
 
   React.useEffect(() => {
     resetTimer();
     return () => clearInterval(timerRef.current);
   }, []);
+
+  // Keyboard navigation for lightbox
+  React.useEffect(() => {
+    if (!lightbox) return;
+    const onKey = e => {
+      if (e.key === 'ArrowRight') setCur(i => (i + 1) % n);
+      if (e.key === 'ArrowLeft')  setCur(i => (i - 1 + n) % n);
+      if (e.key === 'Escape')     setLightbox(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lightbox]);
 
   // Scroll the strip horizontally to centre the active thumb — never the page
   React.useEffect(() => {
@@ -393,32 +420,52 @@ const GalleryCarousel = ({ imgs, captions }) => {
     touchX.current = null;
   };
 
+  const openLightbox = () => { setLightbox(true); document.body.style.overflow = 'hidden'; };
+  const closeLightbox = () => { setLightbox(false); document.body.style.overflow = ''; };
+
   return (
-    <div className="gc-wrap">
-      <div className="gc-stage" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-        {imgs.map((src, i) => (
-          <div key={i} className="gc-slide"
-               style={{ transform: `translateX(${(i - cur) * 100}%)` }}>
-            <img src={src} alt={captions[i]} loading={i === 0 ? 'eager' : 'lazy'}/>
+    <>
+      <div className="gc-wrap">
+        <div className="gc-stage"
+             onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
+             onMouseEnter={() => { pausedRef.current = true; }}
+             onMouseLeave={() => { pausedRef.current = false; }}
+             onClick={openLightbox}>
+          {imgs.map((src, i) => (
+            <div key={i} className="gc-slide"
+                 style={{ transform: `translateX(${(i - cur) * 100}%)` }}>
+              <img src={src} alt={captions[i]} loading={i === 0 ? 'eager' : 'lazy'}/>
+            </div>
+          ))}
+          <div className="gc-overlay">
+            <WatermarkBadge size={26} pos={{ bottom: 12, right: 12 }}/>
+            <div className="gc-caption">{captions[cur]}</div>
+            <div className="gc-counter">{cur + 1} / {n}</div>
+            <div className="gc-zoom-hint">⤢</div>
           </div>
-        ))}
-        <div className="gc-overlay">
-          <WatermarkBadge size={26} pos={{ bottom: 12, right: 12 }}/>
-          <div className="gc-caption">{captions[cur]}</div>
-          <div className="gc-counter">{cur + 1} / {n}</div>
+        </div>
+        <div className="gc-thumbs" ref={thumbsRef}>
+          {imgs.map((src, i) => (
+            <button key={i}
+                    className={`gc-thumb${i === cur ? ' gc-thumb-on' : ''}`}
+                    onClick={e => { e.stopPropagation(); go(i); }}
+                    aria-label={captions[i]}>
+              <img src={src} alt="" loading="lazy"/>
+            </button>
+          ))}
         </div>
       </div>
-      <div className="gc-thumbs" ref={thumbsRef}>
-        {imgs.map((src, i) => (
-          <button key={i}
-                  className={`gc-thumb${i === cur ? ' gc-thumb-on' : ''}`}
-                  onClick={() => go(i)}
-                  aria-label={captions[i]}>
-            <img src={src} alt="" loading="lazy"/>
-          </button>
-        ))}
-      </div>
-    </div>
+      {lightbox && (
+        <div className="gc-lightbox" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Galería de fotos">
+          <button className="gc-lb-close" onClick={closeLightbox} aria-label="Cerrar">✕</button>
+          <button className="gc-lb-prev" onClick={e => { e.stopPropagation(); setCur(i => (i - 1 + n) % n); }} aria-label="Anterior">‹</button>
+          <img className="gc-lb-img" src={imgs[cur]} alt={captions[cur]} onClick={e => e.stopPropagation()}/>
+          <button className="gc-lb-next" onClick={e => { e.stopPropagation(); setCur(i => (i + 1) % n); }} aria-label="Siguiente">›</button>
+          <div className="gc-lb-caption">{captions[cur]}</div>
+          <div className="gc-lb-counter">{cur + 1} / {n}</div>
+        </div>
+      )}
+    </>
   );
 };
 
@@ -486,6 +533,27 @@ const AptPageOthers = ({ apt, lang }) => {
   );
 };
 
+// --- Sticky booking bar ---
+const AptStickyBar = ({ apt, lang, scrolled }) => {
+  const tbl = HESTIA_PRICES[apt.id];
+  const minP = tbl ? Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT)) : null;
+  const waMsg = lang === 'es'
+    ? `Hola, me interesa reservar ${apt[lang].name}. ¿Podéis indicarme disponibilidad?`
+    : `Hello, I'm interested in booking ${apt[lang].name}. Could you let me know availability?`;
+  return (
+    <div className={`apt-sticky-bar${scrolled ? ' asb-visible' : ''}`}>
+      <div className="asb-info">
+        <span className="asb-name">HESTÍA <strong>{apt.name_short}</strong></span>
+        {minP && <span className="asb-price">{lang === 'es' ? `desde ${minP}€/noche` : `from ${minP}€/night`}</span>}
+      </div>
+      <a href={`https://wa.me/34620316370?text=${encodeURIComponent(waMsg)}`}
+         className="btn btn-primary asb-cta" target="_blank" rel="noopener">
+        {lang === 'es' ? 'Reservar — WhatsApp' : 'Book — WhatsApp'} <span className="arrow">→</span>
+      </a>
+    </div>
+  );
+};
+
 // --- App de página de apartamento ---
 const ApartmentPageApp = () => {
   const aptId = window.__APT__ || 'vm';
@@ -517,6 +585,7 @@ const ApartmentPageApp = () => {
         <ContactCTA lang={lang} />
       </main>
       <Footer lang={lang} />
+      <AptStickyBar apt={apt} lang={lang} scrolled={scrolled} />
       <StickyFacts lang={lang} />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />
