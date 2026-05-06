@@ -44,10 +44,6 @@ const Hero = ({ lang, onScrollDown }) => {
           <a href="#buscar" className="btn btn-ghost-light">
             {t.hero_cta_avail} <span className="arrow">→</span>
           </a>
-          <a href="#nosotros" className="btn btn-ghost-light">
-            {t.hero_cta_nosotros} <span className="arrow">→</span>
-          </a>
-          <a href="contacto.html" className="btn btn-ghost-light">{t.hero_cta_2}</a>
         </div>
         <div className="hero-proof">
           <span className="hero-proof-item">★ 9.8 <span className="hero-proof-name">Mar</span></span>
@@ -400,6 +396,29 @@ const Compare = ({ lang }) => {
               <div className={`cell ${r.rate ? 'rate' : ''}`}>{r.vt}</div>
               <div className={`cell ${r.rate ? 'rate' : ''}`}>{r.vs}</div>
             </React.Fragment>
+          ))}
+        </div>
+
+        {/* Mobile: swipeable cards (one per apartment) */}
+        <div className="compare-cards-mobile">
+          {[
+            { key: 'vm', num: '01', name: 'Mar',      aptKey: 'apt_01_concept' },
+            { key: 'vt', num: '02', name: 'Thalassa', aptKey: 'apt_02_concept' },
+            { key: 'vs', num: '03', name: 'Salinas',  aptKey: 'apt_03_concept' },
+          ].map(a => (
+            <div key={a.key} className={`cc-card cc-${a.key}`}>
+              <div className="cc-card-head">
+                <span className="apt-tag">{a.num} · Hestía</span>
+                <span className="cc-card-name">{a.name}</span>
+                <span className="apt-concept">« {t[a.aptKey]} »</span>
+              </div>
+              {rows.map((row, i) => (
+                <div key={i} className="cc-row">
+                  <span className="cc-lbl">{row.label}</span>
+                  <span className={`cc-val${row.rate ? ' rate' : ''}`}>{row[a.key]}</span>
+                </div>
+              ))}
+            </div>
           ))}
         </div>
       </div>
