@@ -187,7 +187,7 @@ p  { line-height: 1.65; font-weight: 300; }
   gap: 24px;
   letter-spacing: 0.02em;
   border-bottom: 1px solid rgba(240, 232, 213, 0.08);
-  border-radius: 0 0 10px 0;
+  border-radius: 10px 0 10px 0;
   overflow: hidden;
 }
 /* Fills the triangular gap at the top-left corner between the topbar and the header's
@@ -6619,7 +6619,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .page-hero {
   position: relative;
   z-index: 50;
-  border-radius: 0 0 32px 0;
+  border-radius: 32px 0 32px 0;
   margin-bottom: -32px;
 }
 
