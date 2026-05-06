@@ -6640,33 +6640,14 @@ body.no-parallax .g-tile .img { transform: none !important; }
   margin-bottom: -32px;
 }
 
-/* Light-background sections: no border-radius.
-   Per corner-color principle: dark sections round their bottom-right/top-left so
-   the transparent area reveals the adjacent LIGHT section — clean.
-   Light sections with radius would reveal the dark body/adjacent dark section
-   at their corners, creating visible ink-coloured wedges. */
-.frase-hogar,
-.apartments-intro,
-.compare,
-.gallery,
-.team,
-.ratings,
-.quick-faq,
-.apt-page-desc {
-  border-radius: 0;
-}
-
 /* Clases de fondo utilitarias — solo forma y contexto */
 .section-night,
 .section-dark,
 .section-violet,
-.section-day {
+.section-day,
+.section-cream {
   border-radius: 32px 0 32px 0;
   position: relative;
-}
-.section-cream {
-  position: relative;
-  /* no border-radius: light sections don't round corners per transition principle */
 }
 
 /* ── z-index decreciente: A siempre encima de B ── */
