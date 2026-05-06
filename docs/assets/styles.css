@@ -6517,6 +6517,18 @@ body:has(.apt-page-hero) {
   background: var(--ink);
 }
 
+/* ── Capa GPU: recorte border-radius correcto en Chromium/WebKit ─────────────
+   overflow:hidden + border-radius en el mismo elemento puede no recortar el
+   fondo propio en algunos navegadores. translateZ(0) fuerza composición GPU
+   y asegura que la esquina BR de cada sección oscura quede transparente
+   para que el color de la sección siguiente sea visible.                      */
+.hero, .apt-page-hero, .page-hero,
+.home-search, .counters, .manifest,
+.contact-cta, .contacto-hero {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
 /* ── Destellos y estrellitas decorativos — desactivados ── */
 .hero .stars,
 .hero .stars::before,
