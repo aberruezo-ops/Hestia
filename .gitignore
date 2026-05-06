@@ -9,7 +9,5 @@ desktop_*.png
 screenshot_*.png
 fresh_*.png
 
-# Local copies of CDN assets (use CDN URLs in HTML, not local files)
-docs/assets/react.development.js
-docs/assets/react-dom.development.js
-docs/assets/babel.min.js
+# Local copies of CDN assets are TRACKED (used as CDN fallback)
+# Do NOT add react.development.js, react-dom.development.js, babel.min.js here
