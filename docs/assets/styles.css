@@ -1319,6 +1319,7 @@ section {
 
 .apartments-scroll {
   background: var(--arena);
+  padding-top: 32px;
   padding-bottom: clamp(80px, 10vw, 140px);
   position: relative;
 }
