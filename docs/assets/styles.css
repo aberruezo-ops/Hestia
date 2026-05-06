@@ -90,6 +90,7 @@
   --sol:     #3AAABB;
   --sol-h:   #2A8E9E;
   --sol-lt:  #6FC4D1;
+  --sol-text:#176E80;
   --arena:   #F0E8D5;
   --arena-dk:#E4D9BE;
   --crema:   #FAF6F0;
@@ -102,11 +103,11 @@
   /* Hestía Thalassa · Naranja tostado — Desierto de Tabernas */
   --vt:  #B86A3C;  --vt2: #D08B5A;  --vt-dk: #8A4A24;
   /* Hestía Salinas · Albero — amarillo del amanecer */
-  --vs:  #D4A84A;  --vs2: #E8C476;  --vs-dk: #9E7A2C;
+  --vs:  #D4A84A;  --vs2: #E8C476;  --vs-dk: #7A5E1A;
 
   /* Tipografía */
-  --serif: 'Lora', 'Cormorant Garamond', Georgia, serif;
-  --sans:  'Poppins', system-ui, -apple-system, sans-serif;
+  --serif: 'Playfair Display', 'Lora', Georgia, serif;
+  --sans:  'Inter', system-ui, -apple-system, sans-serif;
 
   /* Escala */
   --page-pad: clamp(24px, 5vw, 80px);
@@ -2817,7 +2818,7 @@ footer .footer-brand .addr {
 .hbm-head { margin-bottom: 28px; }
 .hbm-apt-num {
   font-family: var(--sans); font-size: 11px; letter-spacing: .2em;
-  text-transform: uppercase; color: var(--sol); margin-bottom: 4px;
+  text-transform: uppercase; color: var(--sol-text); margin-bottom: 4px;
 }
 .hbm-apt-name {
   font-family: var(--serif); font-size: clamp(22px, 3vw, 30px);
@@ -3038,8 +3039,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
 
 /* ---- Variables del sistema Liquid Glass ---- */
 :root {
-  --serif:       'Cormorant', 'Lora', Georgia, serif;
-  --sans:        'Montserrat', 'Poppins', system-ui, sans-serif;
+  --serif:       'Playfair Display', Georgia, serif;
+  --sans:        'Inter', system-ui, sans-serif;
   --ease-liquid: cubic-bezier(0.23, 1, 0.32, 1);
   --dur-liquid:  480ms;
 }
@@ -6514,3 +6515,14 @@ footer::before { background-image: none !important; animation: none !important; 
 .bridge::after { animation: none !important; opacity: 0 !important; }
 
 .header::after { animation: none !important; opacity: 0 !important; }
+
+/* ── sky-night background animation — desactivado globalmente ── */
+.section-night,
+.section-dark,
+.section-violet,
+.manifest,
+.contact-cta,
+footer,
+.page-hero,
+.contacto-reservas,
+.nosotros-team { animation: none !important; }
