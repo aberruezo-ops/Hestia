@@ -127,6 +127,13 @@
   --ink:     #2A0F2E;
   --ink-soft:#3D1A35;
 
+  /* Paleta corporativa · 9 colores del paisaje almeriense */
+  --vio:    #7B3B6B;   /* Violeta     — horizonte antes del amanecer  */
+  --tur:    #1BC8D8;   /* Turquesa    — el mar y el cielo al alba      */
+  --bug:    #D42B80;   /* Buganvilla  — el magenta que lo invade todo  */
+  --alb:    #C8975A;   /* Albero      — tierra almeriense, cerámica    */
+  --sie:    #8B4A1E;   /* Siena       — crepúsculo sobre el Mediterráneo */
+
   /* Apartamentos — identidades del brandbook */
   /* Hestía Mar · Olivo — el campo de olivos al mar */
   --vm:  #6B7A3A;  --vm2: #8B9A52;  --vm-dk: #4A5628;
@@ -417,14 +424,14 @@ p  { line-height: 1.65; font-weight: 300; }
   letter-spacing: 0.12em;
   text-transform: uppercase;
   opacity: 1;
-  color: #fff;
+  color: var(--crema);
   animation: cta-cycle 80s linear infinite;
 }
 .header.night nav .cta,
-.header.day nav .cta { color: #fff; }
+.header.day nav .cta { color: var(--crema); }
 .header nav .cta:hover { filter: brightness(1.14); }
 .header.night nav .cta:hover,
-.header.day nav .cta:hover { color: #fff; }
+.header.day nav .cta:hover { color: var(--crema); }
 .header nav .cta .cta-text { position: relative; }
 .header nav .cta::after { display: none; }
 
@@ -2487,7 +2494,7 @@ footer .footer-brand .addr {
 .c-sel-strip { background: var(--sel-fill, rgba(58,170,187,.22)); }
 .c-sel-circ  { background: var(--sel-circ, rgba(58,170,187,.9)); }
 .cal-cell.sel-s .c-n,
-.cal-cell.sel-e .c-n { color: #fff; font-weight: 400; }
+.cal-cell.sel-e .c-n { color: var(--crema); font-weight: 400; }
 .cal-cell.sel-m .c-n { color: rgba(240,232,213,.45); }
 
 /* ---- Preview range (hover) ---- */
@@ -2776,8 +2783,8 @@ footer .footer-brand .addr {
   font-family: var(--serif);
 }
 .price-savings-badge {
-  background: #D42B80;
-  color: #fff;
+  background: var(--bug);
+  color: var(--crema);
   font-size: 12px;
   font-weight: 500;
   font-family: var(--sans);
@@ -2947,8 +2954,8 @@ footer .footer-brand .addr {
 .hbm-opt { font-weight: 300; opacity: .65; text-transform: none; letter-spacing: 0; }
 .hbm-field input, .hbm-field textarea {
   font-family: var(--sans); font-size: 14px; font-weight: 300;
-  color: var(--ink); background: #fff;
-  border: 1px solid rgba(42,15,46,.22); border-radius: 6px 0 6px 0;
+  color: var(--ink); background: var(--crema);
+  border: 1px solid rgba(42,15,46,.22); border-radius: 10px 0 10px 0;
   padding: 10px 13px; outline: none; transition: border-color .2s;
   width: 100%; box-sizing: border-box;
 }
@@ -2968,7 +2975,7 @@ footer .footer-brand .addr {
   transition: filter .2s, opacity .2s;
   cursor: pointer;
 }
-.hbm-wa  { background: #D42B80; color: #fff; }
+.hbm-wa  { background: var(--bug); color: var(--crema); }
 .hbm-wa:hover  { background: #A01F60; }
 .hbm-mail { background: none; border: 1.5px solid rgba(42,15,46,.25); color: rgba(42,15,46,.7); }
 .hbm-mail:hover { border-color: var(--ber); color: var(--ber-dk); }
@@ -4259,7 +4266,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   .contacto-persons-grid { grid-template-columns: 1fr; }
 }
 .contacto-card {
-  background: white;
+  background: var(--crema);
   border-radius: 10px 0 10px 0;
   padding: 40px 36px;
   border-top: 3px solid var(--card-accent, var(--sol));
@@ -4272,7 +4279,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   width: 64px; height: 64px;
   border-radius: 50%;
   background: var(--card-accent, var(--sol));
-  color: white;
+  color: var(--crema);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5073,7 +5080,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   .nos-viajero-grid { grid-template-columns: 1fr; gap: 24px; }
 }
 .nos-viajero-card {
-  background: white;
+  background: var(--crema);
   border-radius: 10px 0 10px 0;
   padding: 36px 30px;
   box-shadow: 0 4px 24px rgba(61,26,53,.07);
@@ -5168,6 +5175,69 @@ body.no-parallax .g-tile .img { transform: none !important; }
   color: var(--ink-soft);
   margin: 0;
   opacity: 0.85;
+}
+
+/* --- BrandGuide · landscape palette ----------------------- */
+.bg-landscape-section { margin-top: 80px; }
+.bg-landscape-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px 36px;
+  margin-top: 40px;
+}
+@media (max-width: 860px) {
+  .bg-landscape-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+}
+@media (max-width: 480px) {
+  .bg-landscape-grid { grid-template-columns: 1fr; gap: 20px; }
+}
+.bg-landscape-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.bg-ls-swatch {
+  width: 52px;
+  min-width: 52px;
+  height: 52px;
+  border-radius: 10px 0 10px 0;
+  box-shadow: 0 4px 16px rgba(42,15,46,.22), 0 2px 6px rgba(42,15,46,.14);
+  display: flex;
+  align-items: flex-end;
+  padding: 4px 5px;
+  flex-shrink: 0;
+}
+.bg-ls-var {
+  font-family: 'Courier New', monospace;
+  font-size: 8px;
+  letter-spacing: .08em;
+  color: rgba(250,246,240,.65);
+  line-height: 1;
+}
+.bg-ls-info { flex: 1; }
+.bg-ls-hex {
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ber);
+  opacity: .5;
+  margin-bottom: 2px;
+}
+.bg-ls-name {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ber-dk);
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+.bg-ls-story {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+  opacity: .8;
 }
 
 /* ================================================================
@@ -5361,7 +5431,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   .reservas-inner { grid-template-columns: 1fr; gap: 56px; }
 }
 .reservas-form-wrap {
-  background: white;
+  background: var(--crema);
   border-radius: 10px 0 10px 0;
   padding: 48px 44px;
   box-shadow: 0 12px 56px rgba(61,26,53,.09);
@@ -5472,7 +5542,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   letter-spacing: 0.1em;
   text-transform: uppercase;
   background: var(--sol);
-  color: white;
+  color: var(--crema);
   border: none;
   border-radius: 10px 0 10px 0;
   cursor: pointer;
@@ -5500,7 +5570,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   margin: 0 0 20px;
 }
 .reservas-person-card {
-  background: white;
+  background: var(--crema);
   border-radius: 10px 0 10px 0;
   padding: 28px 24px;
   border-top: 3px solid var(--card-accent, var(--sol));
@@ -5513,7 +5583,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   width: 48px; height: 48px;
   border-radius: 50%;
   background: var(--card-accent, var(--sol));
-  color: white;
+  color: var(--crema);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5853,7 +5923,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .hs-apt-btn.active {
   background: var(--btn-accent, var(--sol));
   border-color: transparent;
-  color: #fff;
+  color: var(--crema);
   font-weight: 500;
 }
 
