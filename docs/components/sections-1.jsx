@@ -250,7 +250,7 @@ const Apartments = ({ lang }) => {
   const aptMinPrice = (aptId) => {
     const tbl = HESTIA_PRICES[aptId];
     if (!tbl) return null;
-    return Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT));
+    return tbl.desde ?? Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT));
   };
 
   const handleScroll = () => {
@@ -315,7 +315,7 @@ const Apartments = ({ lang }) => {
                     <div className="apt-price-badge">
                       <span className="apb-label">{lang === 'es' ? 'desde' : 'from'}</span>
                       <span className="apb-price">{minPrice.toLocaleString('es-ES')}€</span>
-                      <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
+                      <span className="apb-per">{lang === 'es' ? '/noche · temp. baja · descuentos por 7, 14 y 28+ noches · Pregúntanos' : '/night · low season · discounts for 7, 14 & 28+ nights · Ask us'}</span>
                     </div>
                   )}
                   <div className="apt-ctas">

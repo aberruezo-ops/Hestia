@@ -12,7 +12,7 @@ const PORQUE_COPY = {
     origin_title: (<>No empezó como un negocio.<br/><em>Empezó como una convicción.</em></>),
     origin_p1: '2016. Alex y Fran tienen tres apartamentos en Vera Playa. Podrían haberlos puesto en una plataforma, cobrado la comisión y desconectado el teléfono. Lo contrario es más difícil y más lento — y es exactamente lo que decidieron hacer.',
     origin_p2: 'Hestía nació de una pregunta: ¿qué pasaría si el apartamento de alquiler que usas de vacaciones te hiciera sentir en casa de verdad? No solo limpio y funcional. En casa — con historia, con carácter, con alguien al otro lado que sabe tu nombre.',
-    origin_p3: 'Un ingeniero informático y un filólogo clásico con décadas en Vera Playa. El uno observa y construye; el otro nombra y cuida. Juntos transformaron tres apartamentos en tres hogares con alma propia. Sin oficina. Sin recepción. Con el teléfono siempre encendido.',
+    origin_p3: 'Un ingeniero informático y un filólogo clásico que llevan décadas conociendo Vera Playa. El uno observa y construye; el otro nombra y cuida. Juntos transformaron tres apartamentos en tres hogares con alma propia. Sin oficina. Sin recepción. Con el teléfono siempre encendido.',
     origin_quote: '«Lo más difícil no fue crear Hestía. Fue convencernos de que merecía la pena intentarlo de otra manera.»',
     origin_quote_attr: '— Alex Berruezo',
 
@@ -65,7 +65,7 @@ const PORQUE_COPY = {
     origin_title: (<>It didn't start as a business.<br/><em>It started as a conviction.</em></>),
     origin_p1: '2016. Alex and Fran have three apartments in Vera Playa. They could have listed them on a platform, collected the commission and switched the phone off. The opposite is harder and slower — and that is exactly what they decided to do.',
     origin_p2: 'Hestía was born from a question: what if the holiday apartment you rent actually made you feel at home? Not just clean and functional. At home — with a history, with character, with someone on the other end who knows your name.',
-    origin_p3: 'A computer engineer and a classical philologist with decades in Vera Playa. One observes and builds; the other names and cares. Together they transformed three apartments into three homes with their own soul. No office. No reception desk. With the phone always on.',
+    origin_p3: 'A computer engineer and a classical philologist who have spent decades getting to know Vera Playa. One observes and builds; the other names and cares. Together they transformed three apartments into three homes with their own soul. No office. No reception desk. With the phone always on.',
     origin_quote: '"The hardest part was not creating Hestía. It was convincing ourselves it was worth trying a different way."',
     origin_quote_attr: '— Alex Berruezo',
 

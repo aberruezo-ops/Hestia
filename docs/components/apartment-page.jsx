@@ -339,7 +339,7 @@ const PhotoPlaceholder = ({ caption, accent, index }) => (
 const AptPageHero = ({ apt, lang, scrolled, mode }) => {
   const d = apt[lang];
   const tbl = HESTIA_PRICES[apt.id];
-  const minPrice = tbl ? Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT)) : null;
+  const minPrice = tbl ? (tbl.desde ?? Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT))) : null;
   return (
     <section className="apt-page-hero" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
       <img src={apt.hero_img} alt={d.name} className="apt-page-hero-img"/>
@@ -562,7 +562,7 @@ const AptPageOthers = ({ apt, lang }) => {
 // --- Sticky booking bar ---
 const AptStickyBar = ({ apt, lang, scrolled }) => {
   const tbl = HESTIA_PRICES[apt.id];
-  const minP = tbl ? Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT)) : null;
+  const minP = tbl ? (tbl.desde ?? Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT))) : null;
   const waMsg = lang === 'es'
     ? `Hola, me interesa reservar ${apt[lang].name}. ¿Podéis indicarme disponibilidad?`
     : `Hello, I'm interested in booking ${apt[lang].name}. Could you let me know availability?`;
