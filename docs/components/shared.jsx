@@ -509,6 +509,193 @@ const SABIAS_QUE_FACTS = [
     es: 'La uva moscatel almeriense fue descrita por los viajeros árabes del siglo X como "la reina de todas las frutas".',
     en: 'The Almería muscat grape was described by Arab travellers in the 10th century as "the queen of all fruits".',
   },
+  /* ── Playas cerca de Vera ── */
+  {
+    type: 'fact',
+    es: 'La Playa de los Muertos, a 30 km de Vera, es considerada sistemáticamente una de las diez playas más hermosas de España — y solo se llega a pie por una pista de tierra.',
+    en: 'Playa de los Muertos, 30 km from Vera, is consistently ranked one of the ten most beautiful beaches in Spain — and can only be reached on foot along a dirt track.',
+  },
+  {
+    type: 'fact',
+    es: 'La Playa de Mónsul, en Cabo de Gata, fue escenario de una secuencia de la película Indiana Jones y la Última Cruzada (1989).',
+    en: 'Playa de Mónsul, in Cabo de Gata, was used as a filming location for a sequence in Indiana Jones and the Last Crusade (1989).',
+  },
+  {
+    type: 'fact',
+    es: 'El Playazo de Rodalquilar, a 50 km de Vera, tiene arena dorada de origen volcánico — única en el Mediterráneo español.',
+    en: 'El Playazo de Rodalquilar, 50 km from Vera, has golden sand of volcanic origin — unique on the Spanish Mediterranean coast.',
+  },
+  {
+    type: 'fact',
+    es: 'Las Negras es uno de los últimos pueblos de pescadores del litoral almeriense sin apenas urbanizar: 200 habitantes, una cala y el Mediterráneo más azul del sur.',
+    en: 'Las Negras is one of the last barely-developed fishing villages on the Almería coast: 200 inhabitants, a small cove and the deepest blue Mediterranean of the south.',
+  },
+  {
+    type: 'fact',
+    es: 'La Playa de Carboneras, a 35 km de Vera, aparece en los primeros planos de la miniserie Juego de Tronos — y pocos visitantes lo saben.',
+    en: 'Carboneras beach, 35 km from Vera, appears in the opening scenes of Game of Thrones — and very few visitors know it.',
+  },
+  {
+    type: 'fact',
+    es: 'La cala de Enmedio, entre Carboneras y Cabo de Gata, solo es accesible a nado o en kayak. Sus aguas tienen más de 15 metros de visibilidad.',
+    en: 'Cala de Enmedio, between Carboneras and Cabo de Gata, is only accessible by swimming or kayak. Its waters have over 15 metres of visibility.',
+  },
+  {
+    type: 'fact',
+    es: 'La Playa de Vera tiene bandera azul ininterrumpida desde 1988 — uno de los registros más largos de cualquier playa del Mediterráneo español.',
+    en: 'Vera beach has held the Blue Flag continuously since 1988 — one of the longest records of any beach on the Spanish Mediterranean.',
+  },
+  /* ── Garrucha y pesca ── */
+  {
+    type: 'fact',
+    es: 'La gamba roja de Garrucha, capturada a más de 400 metros de profundidad, es considerada por muchos chefs con estrella Michelin la mejor gamba del mundo.',
+    en: 'The Garrucha red prawn, caught at over 400 metres depth, is considered by many Michelin-starred chefs to be the finest prawn in the world.',
+  },
+  {
+    type: 'fact',
+    es: 'La subasta de pescado en la lonja de Garrucha lleva funcionando cada tarde desde 1924. Todavía hoy es un espectáculo abierto al público.',
+    en: 'The fish auction at Garrucha\'s fish market has taken place every afternoon since 1924. It is still open to the public today.',
+  },
+  {
+    type: 'fact',
+    es: 'Garrucha, a 6 km de Vera Playa, fue durante el siglo XIX el puerto minero más activo del sureste español: exportaba plomo y plata de la Sierra de los Filabres.',
+    en: 'Garrucha, 6 km from Vera Playa, was the most active mining port in south-east Spain during the 19th century, exporting lead and silver from the Sierra de los Filabres.',
+  },
+  /* ── Murcia y provincias limítrofes ── */
+  {
+    type: 'fact',
+    es: 'Águilas (Murcia) está a solo 45 km de Vera Playa. Su carnaval nocturno es declarado de Interés Turístico Internacional — uno de los más espectaculares de España.',
+    en: 'Águilas (Murcia) is just 45 km from Vera Playa. Its night carnival is declared of International Tourist Interest — one of the most spectacular in Spain.',
+  },
+  {
+    type: 'fact',
+    es: 'El Mar Menor, la mayor laguna salada de Europa occidental, está a menos de 90 km de Vera Playa. Sus aguas alcanzan 30 °C en verano.',
+    en: 'The Mar Menor, the largest saltwater lagoon in Western Europe, is less than 90 km from Vera Playa. Its waters reach 30 °C in summer.',
+  },
+  {
+    type: 'fact',
+    es: 'Cartagena, a 90 minutos de Vera, fue fundada por los Cartagineses en el 227 a.C. y es una de las ciudades habitadas de forma ininterrumpida más antiguas de Europa.',
+    en: 'Cartagena, 90 minutes from Vera, was founded by the Carthaginians in 227 BC and is one of the oldest continuously inhabited cities in Europe.',
+  },
+  {
+    type: 'fact',
+    es: 'El Cabo de Palos (Murcia), a 80 km de Vera, tiene uno de los reservas marinas más importantes del Mediterráneo — el mero puede alcanzar aquí un metro de longitud.',
+    en: 'Cabo de Palos (Murcia), 80 km from Vera, has one of the Mediterranean\'s most important marine reserves — grouper here can reach one metre in length.',
+  },
+  {
+    type: 'fact',
+    es: 'Lorca, a 60 km de Vera, es conocida como la "ciudad del sol" murciana. Sus bordados de Semana Santa son declarados Patrimonio Cultural Inmaterial de la Humanidad.',
+    en: 'Lorca, 60 km from Vera, is known as Murcia\'s "city of the sun". Its Holy Week embroideries are declared Intangible Cultural Heritage of Humanity.',
+  },
+  {
+    type: 'fact',
+    es: 'La frontera entre Almería y Murcia es también la frontera botánica entre la estepa ibérica y el matorral mediterráneo — dos ecosistemas que se tocan en la Sierra del Aguilón.',
+    en: 'The Almería-Murcia border is also the botanical frontier between Iberian steppe and Mediterranean scrub — two ecosystems that meet at the Sierra del Aguilón.',
+  },
+  /* ── Historia ── */
+  {
+    type: 'fact',
+    es: 'Los Millares, a 40 km de Vera, es uno de los yacimientos más importantes de la Edad del Cobre de Europa: una ciudad amurallada de 4.500 años de antigüedad.',
+    en: 'Los Millares, 40 km from Vera, is one of Europe\'s most important Copper Age sites: a walled settlement 4,500 years old.',
+  },
+  {
+    type: 'fact',
+    es: 'La Alcazaba de Almería, construida en el siglo X, fue la mayor fortaleza árabe de España en su época — incluso más extensa que la Alhambra de Granada.',
+    en: 'The Alcazaba of Almería, built in the 10th century, was the largest Arab fortress in Spain at the time — even larger than the Alhambra of Granada.',
+  },
+  {
+    type: 'fact',
+    es: 'El castillo de Vélez-Blanco (Almería), a 1 hora de Vera, albergó uno de los patios renacentistas más bellos de España — hoy está en el Metropolitan Museum de Nueva York.',
+    en: 'Vélez-Blanco castle (Almería), 1 hour from Vera, once held one of the finest Renaissance courtyards in Spain — it is now in the Metropolitan Museum of Art in New York.',
+  },
+  {
+    type: 'fact',
+    es: 'Vera fue fundada en 1488 por los Reyes Católicos tras la Reconquista. Su casco histórico sigue siendo uno de los mejor conservados del interior almeriense.',
+    en: 'Vera was founded in 1488 by the Catholic Monarchs after the Reconquista. Its historic centre remains one of the best preserved in inland Almería.',
+  },
+  {
+    type: 'fact',
+    es: 'El Canal de Felipe II, construido en el siglo XVI para regar el Campo de Vera, sigue siendo parcialmente visible y en uso — un testimonio de ingeniería hidráulica renacentista.',
+    en: 'The Canal of Philip II, built in the 16th century to irrigate the Campo de Vera, is still partly visible and in use — a testament to Renaissance hydraulic engineering.',
+  },
+  {
+    type: 'fact',
+    es: 'La cultura argárica (2200-1550 a.C.), nacida en lo que hoy es Almería, fue la primera civilización de la Península Ibérica en trabajar el bronce.',
+    en: 'The Argaric culture (2200–1550 BC), born in what is now Almería, was the first civilisation on the Iberian Peninsula to work with bronze.',
+  },
+  /* ── Costumbres ── */
+  {
+    type: 'fact',
+    es: 'Las fiestas de Moros y Cristianos de Vera se celebran en agosto con más de 2.000 participantes en traje. La batalla del castillo dura toda la noche.',
+    en: 'Vera\'s Moors and Christians festival takes place in August with over 2,000 participants in costume. The castle battle goes on all night.',
+  },
+  {
+    type: 'fact',
+    es: 'El ajoblanco almeriense — sopa fría de almendras, ajo y pan — es anterior al gazpacho. Los árabes lo elaboraban ya en el siglo XI.',
+    en: 'Almería\'s ajoblanco — chilled soup of almonds, garlic and bread — pre-dates gazpacho. Arab inhabitants were making it as far back as the 11th century.',
+  },
+  {
+    type: 'fact',
+    es: 'El "tapeo" en Almería capital todavía funciona como siempre: cada consumición lleva su tapa gratis. Una costumbre que resiste en pocas ciudades españolas.',
+    en: 'Tapas culture in Almería city still works the old way: every drink comes with a free tapa. A tradition that survives in very few Spanish cities.',
+  },
+  {
+    type: 'fact',
+    es: 'La pesca artesanal del boquerón sigue activa en Garrucha y Carboneras. El boquerón en vinagre almeriense usa limón, no vinagre de vino — un matiz que los locales defienden con firmeza.',
+    en: 'Artisanal anchovy fishing is still active in Garrucha and Carboneras. The local anchovy in escabeche uses lemon, not wine vinegar — a distinction locals defend firmly.',
+  },
+  {
+    type: 'fact',
+    es: 'El Obervatario Astronómico de Calar Alto, en la Sierra de los Filabres a 1 hora de Vera, tiene más de 300 noches despejadas al año — el mayor telescopio óptico de España (3,5 m).',
+    en: 'Calar Alto Observatory, in the Sierra de los Filabres 1 hour from Vera, has over 300 clear nights a year — home to Spain\'s largest optical telescope (3.5 m).',
+  },
+  /* ── El mar ── */
+  {
+    type: 'fact',
+    es: 'La visibilidad horizontal bajo el agua en Vera Playa supera los 10 metros en días calm — el doble que la media del Atlántico norte.',
+    en: 'Horizontal underwater visibility at Vera Playa exceeds 10 metres on calm days — twice the average of the North Atlantic.',
+  },
+  {
+    type: 'fact',
+    es: 'El Mediterráneo pierde entre 1 y 3 metros de profundidad cada siglo por la evaporación. Sin el Estrecho de Gibraltar, se secaría en unos 3.000 años.',
+    en: 'The Mediterranean loses between 1 and 3 metres of depth per century through evaporation. Without the Strait of Gibraltar, it would dry up in around 3,000 years.',
+  },
+  {
+    type: 'fact',
+    es: 'El salar de los Canos, visible desde la terraza de Hestía Thalassa, es una laguna costera protegida donde cada primavera llegan cigüeñuelas rosas desde el Sahel africano.',
+    en: 'The Salar de los Canos, visible from Hestía Thalassa\'s terrace, is a protected coastal lagoon visited each spring by black-winged stilts arriving from the African Sahel.',
+  },
+  {
+    type: 'fact',
+    es: 'Con viento de poniente y buena visibilidad, desde el ático de Hestía Thalassa se distingue el perfil de la costa africana de Marruecos — a unos 180 km de distancia.',
+    en: 'On a clear day with westerly wind, the silhouette of the Moroccan coastline — about 180 km away — is visible from the Hestía Thalassa penthouse terrace.',
+  },
+  {
+    type: 'fact',
+    es: 'El delfín mular visita con regularidad las aguas frente a Vera Playa. Los avistamientos son más frecuentes entre mayo y octubre, al amanecer.',
+    en: 'Bottlenose dolphins regularly visit the waters off Vera Playa. Sightings are most frequent between May and October, at dawn.',
+  },
+  {
+    type: 'fact',
+    es: 'La posidonia oceánica tarda entre 10 y 30 años en crecer un centímetro. Los fondos de Vera albergan praderas con más de 100.000 años de antigüedad.',
+    en: 'Posidonia seagrass takes between 10 and 30 years to grow one centimetre. The seabed off Vera holds meadows over 100,000 years old.',
+  },
+  /* ── Almería curiosidades ── */
+  {
+    type: 'fact',
+    es: 'Almería produce el 50 % de las verduras que consume Europa en invierno. El mar de plástico de invernaderos del Campo de Dalías es visible desde el espacio.',
+    en: 'Almería produces 50% of the vegetables consumed in Europe during winter. The plastic sea of greenhouses in the Campo de Dalías is visible from space.',
+  },
+  {
+    type: 'fact',
+    es: 'El Parque Natural Sierra de María-Los Vélez, a 90 minutos de Vera, es uno de los pocos lugares de España donde puede nevar en diciembre mientras en la playa hay 18 °C.',
+    en: 'The Sierra de María-Los Vélez Natural Park, 90 minutes from Vera, is one of the few places in Spain where it can snow in December while the beach enjoys 18 °C.',
+  },
+  {
+    type: 'fact',
+    es: 'El uva de Almería fue el primer producto agrícola español exportado en barco refrigerado, en 1895. Se enviaba directamente a Londres y Nueva York.',
+    en: 'The Almería grape was the first Spanish agricultural product exported by refrigerated ship, in 1895. It was sent directly to London and New York.',
+  },
   /* ── Hestía: lo que otros no tienen ── */
   {
     type: 'fact',
