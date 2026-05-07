@@ -4364,8 +4364,12 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .reservas-garantias {
   padding: 96px var(--page-pad);
 }
-.reservas-garantias .eyebrow { margin-bottom: 16px; }
-.reservas-garantias h2 { margin-bottom: 64px; max-width: 28ch; }
+.reservas-garantias .eyebrow { margin-bottom: 16px; color: var(--ber); }
+.reservas-garantias h2 { margin-bottom: 64px; max-width: 28ch; color: var(--ber); }
+.reservas-garantias .step-num { color: var(--ber); opacity: 0.30; }
+.reservas-garantias .step-title { color: var(--ber); }
+.reservas-garantias .step-desc { color: var(--ber); opacity: 0.65; }
+.reservas-garantias .reserva-step { border-bottom-color: rgba(61,26,53,.12); }
 .rg-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
