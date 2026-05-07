@@ -99,7 +99,6 @@ const ContactoHero = ({ lang }) => {
         <source src="assets/contacto-hero.mp4" type="video/mp4"/>
       </video>
       <div className="contacto-hero-wash"/>
-      <img className="contacto-hero-bottle-logo" src="assets/logo-teal-transparent.png" alt="" aria-hidden="true"/>
       <div className="page-hero-content">
         <div className="eyebrow">{t.eyebrow}</div>
         <h1>{t.title}</h1>
