@@ -224,7 +224,7 @@ p  { line-height: 1.65; font-weight: 300; }
   gap: 24px;
   letter-spacing: 0.02em;
   border-bottom: 1px solid rgba(240, 232, 213, 0.08);
-  border-radius: 10px 0 10px 0;
+  border-radius: 20px 0 20px 0;
   overflow: hidden;
 }
 /* Fills the triangular gap at the top-left corner between the topbar and the header's
@@ -235,9 +235,9 @@ p  { line-height: 1.65; font-weight: 300; }
   position: fixed;
   top: var(--topbar-h, 36px);
   left: 0;
-  width: 10px;
-  height: 10px;
-  background: radial-gradient(circle at bottom right, transparent 10px, var(--ber-dk) 10px);
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle at bottom right, transparent 20px, var(--ber-dk) 20px);
   z-index: 100;
   pointer-events: none;
 }
@@ -324,7 +324,7 @@ p  { line-height: 1.65; font-weight: 300; }
   transition: background .7s ease, padding .4s ease, backdrop-filter .4s ease, border-color .5s ease;
   border-bottom: 1px solid transparent;
   overflow: hidden;
-  border-radius: 10px 0 10px 0;
+  border-radius: 20px 0 20px 0;
 }
 /* Scroll-driven radial glow — se mueve con --hdr-scroll (0→1) */
 .header::before {
