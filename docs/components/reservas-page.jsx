@@ -44,7 +44,7 @@ const GARANTIAS_COPY = {
 const RESERVAS_COPY = {
   es: {
     eyebrow: 'Mejor precio garantizado · Sin intermediarios',
-    title: (<>Reserva tu<br/><em>hogar en Vera.</em></>),
+    title: (<>Reserva tu<br/><em>Hestía.</em></>),
     sub: 'Escríbenos directamente. Alex o Fran confirman en menos de 24 horas.',
     form_title: 'Solicitar reserva',
     form_sub: 'Rellena el formulario y te escribimos por WhatsApp con disponibilidad y precio.',
@@ -81,7 +81,7 @@ const RESERVAS_COPY = {
   },
   en: {
     eyebrow: 'Best price guaranteed · No middlemen',
-    title: (<>Book your<br/><em>home in Vera.</em></>),
+    title: (<>Book your<br/><em>Hestía.</em></>),
     sub: 'Write to us directly. Alex or Fran confirm within 24 hours.',
     form_title: 'Request a booking',
     form_sub: 'Fill in the form and we will message you on WhatsApp with availability and price.',
