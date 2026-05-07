@@ -92,8 +92,9 @@
   position: absolute;
   bottom: 18px;
   right: 18px;
-  background: rgba(42,15,46,.72);
-  border: 1px solid rgba(240,232,213,.28);
+  z-index: 10;
+  background: var(--ber);
+  border: 1.5px solid rgba(240,232,213,.4);
   color: var(--arena);
   font-family: var(--sans);
   font-size: 11px;
@@ -102,12 +103,10 @@
   padding: 9px 18px;
   border-radius: 10px 0 10px 0;
   cursor: pointer;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   transition: background .22s, color .22s;
 }
 @media (hover: hover) {
-  .vintro-skip:hover { background: rgba(42,15,46,.92); color: var(--crema); }
+  .vintro-skip:hover { background: var(--ber-dk); color: var(--crema); }
 }
 @media (max-width: 480px) {
   .vintro-box { border-radius: 8px 0 8px 0; }
