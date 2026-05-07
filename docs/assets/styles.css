@@ -4361,8 +4361,21 @@ body.no-parallax .g-tile .img { transform: none !important; }
   font-weight: 300;
   margin-top: 10px; margin-bottom: 52px;
 }
+.reservas-garantias {
+  padding: 96px var(--page-pad);
+}
+.reservas-garantias .eyebrow { margin-bottom: 16px; }
+.reservas-garantias h2 { margin-bottom: 64px; max-width: 28ch; }
+.rg-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .rg-grid { grid-template-columns: 1fr; gap: 48px; }
+}
 .reservas-steps {
-  max-width: 760px;
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -4399,6 +4412,43 @@ body.no-parallax .g-tile .img { transform: none !important; }
   opacity: 0.72;
   line-height: 1.6;
 }
+.rg-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.rg-card {
+  background: var(--ber);
+  border-radius: 24px 0 24px 0;
+  padding: 32px;
+}
+.rg-card-cancel {
+  background: linear-gradient(135deg, var(--ber-dk), #1a3a3a);
+}
+.rg-card-eyebrow {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sol-lt);
+  margin-bottom: 10px;
+}
+.rg-card-title {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--arena);
+  margin-bottom: 14px;
+}
+.rg-card-body {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: rgba(240,232,213,.80);
+  margin: 0 0 20px;
+}
+.rg-card-cancel .rg-card-body { margin-bottom: 0; }
+.rg-card-cta { display: inline-flex; }
 
 /* FAQ */
 .contacto-faq {

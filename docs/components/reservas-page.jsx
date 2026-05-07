@@ -2,6 +2,45 @@
 // HESTÍA — Página de Reservas
 // ================================================================
 
+const GARANTIAS_COPY = {
+  es: {
+    eyebrow: 'Cómo funciona',
+    title: (<>Reserva directa. Contrato real.<br/><em>Sin letra pequeña.</em></>),
+    steps: [
+      { n: '01', t: 'Solicitas', d: 'Rellena el formulario o escríbenos por WhatsApp con las fechas y el apartamento que te interesa.' },
+      { n: '02', t: 'Confirmamos', d: 'Alex o Fran responden en menos de 24 horas con disponibilidad, precio y cualquier detalle que necesites.' },
+      { n: '03', t: 'Firmamos el contrato', d: 'Enviamos un contrato de arrendamiento turístico privado que garantiza legalmente tu reserva y tu dinero antes de que pagues nada.' },
+      { n: '04', t: 'Pagas', d: 'Según las condiciones acordadas en el contrato — normalmente una señal y el resto antes de la entrada.' },
+      { n: '05', t: 'Llegas', d: 'Recibes instrucciones de acceso y una guía personalizada de Alex antes de tu llegada.' },
+    ],
+    contract_eyebrow: 'El contrato',
+    contract_title: 'Tu reserva, en papel',
+    contract_body: 'Antes de comprometerte puedes pedirnos el borrador del contrato para revisarlo con calma. Pregúntanos cualquier cláusula, condición o duda — y si tienes sugerencias, las escuchamos.',
+    contract_cta: 'Pedir borrador del contrato →',
+    cancel_eyebrow: 'Cancelación',
+    cancel_title: 'Mejor que en Booking o Airbnb',
+    cancel_body: 'Igualamos el periodo de cancelación gratuita que veas en las plataformas. Si tienes que cancelar en periodo no reembolsable, intentamos realquilar el apartamento. Si lo conseguimos, te devolvemos cualquier cantidad que hayas entregado — sin condiciones.',
+  },
+  en: {
+    eyebrow: 'How it works',
+    title: (<>Direct booking. Real contract.<br/><em>No small print.</em></>),
+    steps: [
+      { n: '01', t: 'You request', d: 'Fill in the form or message us on WhatsApp with your dates and the apartment you are interested in.' },
+      { n: '02', t: 'We confirm', d: 'Alex or Fran reply within 24 hours with availability, price and any details you need.' },
+      { n: '03', t: 'We sign the contract', d: 'We send a private tourist rental contract that legally guarantees your booking and your money before you pay anything.' },
+      { n: '04', t: 'You pay', d: 'According to the terms agreed in the contract — usually a deposit and the balance before arrival.' },
+      { n: '05', t: 'You arrive', d: 'You receive access instructions and a personalised guide from Alex before your arrival.' },
+    ],
+    contract_eyebrow: 'The contract',
+    contract_title: 'Your booking, in writing',
+    contract_body: 'Before committing you can ask us for a draft contract to review at your own pace. Ask us about any clause, condition or doubt — and if you have suggestions, we are listening.',
+    contract_cta: 'Request draft contract →',
+    cancel_eyebrow: 'Cancellation',
+    cancel_title: 'Better than Booking or Airbnb',
+    cancel_body: 'We match the free cancellation period you see on the platforms. If you need to cancel within the non-refundable period, we try to re-let the apartment. If we succeed, we return any amount you have paid — no conditions.',
+  },
+};
+
 const RESERVAS_COPY = {
   es: {
     eyebrow: 'Mejor precio garantizado · Sin intermediarios',
@@ -352,6 +391,50 @@ const ReservasAside = ({ lang }) => {
   );
 };
 
+const ReservasGarantias = ({ lang }) => {
+  const t = GARANTIAS_COPY[lang];
+  const waMsg = encodeURIComponent(lang === 'es'
+    ? 'Hola, me gustaría recibir el borrador del contrato de reserva para revisarlo.'
+    : 'Hello, I would like to receive the draft booking contract to review it.');
+  return (
+    <section className="reservas-garantias section-cream">
+      <div className="container">
+        <div className="eyebrow">{t.eyebrow}</div>
+        <h2 className="reveal">{t.title}</h2>
+        <div className="rg-grid">
+          <div className="reservas-steps">
+            {t.steps.map((s, i) => (
+              <div key={i} className="reserva-step reveal" style={{ transitionDelay: `${i * 0.08}s` }}>
+                <div className="step-num">{s.n}</div>
+                <div>
+                  <div className="step-title">{s.t}</div>
+                  <div className="step-desc">{s.d}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="rg-cards">
+            <div className="rg-card reveal">
+              <div className="rg-card-eyebrow">{t.contract_eyebrow}</div>
+              <div className="rg-card-title">{t.contract_title}</div>
+              <p className="rg-card-body">{t.contract_body}</p>
+              <a href={`https://wa.me/34620316370?text=${waMsg}`}
+                 className="btn btn-primary rg-card-cta" target="_blank" rel="noopener">
+                {t.contract_cta}
+              </a>
+            </div>
+            <div className="rg-card rg-card-cancel reveal delay-1">
+              <div className="rg-card-eyebrow">{t.cancel_eyebrow}</div>
+              <div className="rg-card-title">{t.cancel_title}</div>
+              <p className="rg-card-body">{t.cancel_body}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const ReservasPageApp = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
   const { mode, scrolled } = useScrollMode();
@@ -378,6 +461,7 @@ const ReservasPageApp = () => {
             <ReservasAside lang={lang} />
           </div>
         </div>
+        <ReservasGarantias lang={lang} />
         <QuickFAQ lang={lang} pageId="reservas" />
         <ContactCTA lang={lang} />
       </main>
