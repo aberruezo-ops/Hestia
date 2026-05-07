@@ -23,6 +23,10 @@ const BRAND_COPY = {
     pal_title: (<>Berenjena, teal y arena. <em>El día y la noche</em> en tres colores.</>),
     pal_lede: 'La paleta principal nace de una sola foto: la terraza de Hestía Mar a la 1:00 AM. Cojines turquesa, velas encendidas, el cielo violeta de Vera Playa. De ahí salen los tres tonos rectores de toda la marca.',
 
+    landscape_eyebrow: 'Los nueve colores corporativos',
+    landscape_title: (<>La paleta completa. <em>Nueve colores del paisaje.</em></>),
+    landscape_lede: 'Cada color tiene un lugar exacto en Almería. No se eligieron: se encontraron. El cielo, el mar, la tierra, las flores, la piedra. La marca entera cabe en un amanecer sobre Vera Playa.',
+
     apt_eyebrow: 'Tres apartamentos · tres paisajes',
     apt_title: (<>Cada apartamento <em>toma su color del paisaje.</em></>),
     apt_lede: 'Las tres identidades secundarias funcionan como sub-marcas. No son colores arbitrarios: cada uno está extraído de un paisaje real de Almería que define la atmósfera del apartamento.',
@@ -65,6 +69,11 @@ const BRAND_COPY = {
     pal_eyebrow: 'Brand palette',
     pal_title: (<>Aubergine, teal and sand. <em>Day and night</em> in three colours.</>),
     pal_lede: 'The main palette comes from a single photograph: the Hestía Mar terrace at 1:00 AM. Turquoise cushions, lit candles, Vera Playa\'s violet sky. From there, the three governing tones of the whole brand.',
+
+    landscape_eyebrow: 'The nine corporate colours',
+    landscape_title: (<>The complete palette. <em>Nine colours from the landscape.</em></>),
+    landscape_lede: 'Every colour has an exact location in Almería. They were not chosen — they were found. Sky, sea, earth, flowers, stone. The entire brand fits within a single sunrise over Vera Playa.',
+
     apt_eyebrow: 'Three apartments · three landscapes',
     apt_title: (<>Each apartment <em>borrows its colour from its landscape.</em></>),
     apt_lede: 'The three secondary identities work as sub-brands. They are not arbitrary colours: each one is extracted from a real Almerían landscape that defines the apartment\'s atmosphere.',
@@ -87,6 +96,18 @@ const BRAND_COPY = {
     dont_label: 'Don\'t',
   }
 };
+
+const BG_LANDSCAPE = [
+  { hex: '#2A0F2E', cssVar: '--ber-dk', es: { name: 'Berenjena',      story: 'El cielo de Vera Playa a las tres de la madrugada. Morado oscuro, casi negro — la noche mediterránea antes de que el horizonte empiece a abrirse.' }, en: { name: 'Aubergine',     story: 'The Vera Playa sky at three in the morning. Dark purple, almost black — the Mediterranean night before the horizon begins to open.' }, light: false },
+  { hex: '#7B3B6B', cssVar: '--vio',    es: { name: 'Violeta',         story: 'El instante entre la noche y el amanecer. El horizonte se tiñe de violeta justo antes de que llegue el azul del mar. Dura menos de veinte minutos.' },          en: { name: 'Violet',       story: 'The moment between night and dawn. The horizon turns violet just before the blue of the sea arrives. It lasts less than twenty minutes.' },          light: false },
+  { hex: '#1BC8D8', cssVar: '--tur',    es: { name: 'Turquesa',        story: 'El mar y el cielo al amanecer. No el azul eléctrico de postal — el turquesa real, limpio y luminoso, que el Mediterráneo y el cielo de Almería comparten.' },      en: { name: 'Turquoise',    story: 'The sea and sky at dawn. Not the electric blue of postcards — the real turquoise, clean and luminous, that the Mediterranean and Almería sky share.' },      light: false },
+  { hex: '#6B7A3A', cssVar: '--vm',     es: { name: 'Verde olivo',     story: 'El olivar de Vera Playa con la luz lateral de la mañana. Desde Hestía Mar se ve el mar entre las ramas. Este verde existe en Almería desde antes que Roma.' },       en: { name: 'Olive green',  story: 'The Vera Playa olive grove in side-light of morning. From Hestía Mar you see the sea between the branches. This green existed in Almería before Rome.' },  light: false },
+  { hex: '#D42B80', cssVar: '--bug',    es: { name: 'Buganvilla',      story: 'El magenta que lo invade todo. Trepa por las paredes, cae sobre las terrazas, se escapa por las verjas. La firma de la costa almeriense: exuberante, insolente.' }, en: { name: 'Bougainvillea',story: 'The magenta that takes over everything. It climbs walls, spills over terraces, escapes through iron gates. The signature of the Almería coast.' },               light: false },
+  { hex: '#C8975A', cssVar: '--alb',    es: { name: 'Albero',          story: 'La tierra almeriense. La pared encalada a las ocho de la mañana. El color que Almería lleva desde la antigüedad: tierra, cerámica, esparto seco.' },                en: { name: 'Ochre',        story: 'Almería earth. The whitewashed wall at eight in the morning. The colour Almería has carried since antiquity: clay, ceramics, dry esparto grass.' },          light: false },
+  { hex: '#D4A84A', cssVar: '--vs',     es: { name: 'Sol almeriense',  story: 'La luz de la tarde en verano. Trescientos días al año, este es el color que baña las terrazas de Hestía a las seis. No amarillo. Oro viejo.' },                    en: { name: 'Almería sun',  story: 'Afternoon light in summer. Three hundred days a year, this is the colour washing Hestía\'s terraces at six. Not yellow. Old gold.' },                      light: false },
+  { hex: '#8B4A1E', cssVar: '--sie',    es: { name: 'Siena',           story: 'El crepúsculo sobre el Mediterráneo. Cuando el sol toca el agua el cielo se vuelve de este color exacto — naranja rojizo, cálido, irrepetible.' },                   en: { name: 'Sienna',       story: 'Dusk over the Mediterranean. When the sun touches the water the sky turns this exact colour — red-orange, warm, unrepeatable.' },                          light: false },
+  { hex: '#F0E8D5', cssVar: '--arena',  es: { name: 'Arena',           story: 'La calima y la arena del Sahara. El polvo fino que llega en verano convierte la luz en algo sólido. Hestía huele a esto: sal, arena, lino.' },                       en: { name: 'Sand',         story: 'Calima and Saharan sand. The fine dust that arrives in summer turns the light solid. Hestía smells of this: salt, sand, linen.' },                          light: true  },
+];
 
 const BrandGuide = ({ lang }) => {
   const t = BRAND_COPY[lang];
@@ -271,6 +292,30 @@ const BrandGuide = ({ lang }) => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* LANDSCAPE PALETTE — 9 corporate colours */}
+        <div className="bg-landscape-section">
+          <div className="bg-sub-eyebrow">{t.landscape_eyebrow}</div>
+          <h3 className="bg-sub-title">{t.landscape_title}</h3>
+          <p className="bg-sub-lede">{t.landscape_lede}</p>
+          <div className="bg-landscape-grid">
+            {BG_LANDSCAPE.map((c, i) => {
+              const d = c[lang];
+              return (
+                <div key={i} className="bg-landscape-card">
+                  <div className="bg-ls-swatch" style={{ background: c.hex }}>
+                    <span className="bg-ls-var">{c.cssVar}</span>
+                  </div>
+                  <div className="bg-ls-info">
+                    <div className="bg-ls-hex">{c.hex}</div>
+                    <div className="bg-ls-name">{d.name}</div>
+                    <p className="bg-ls-story">{d.story}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
