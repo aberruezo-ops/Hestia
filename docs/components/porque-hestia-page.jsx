@@ -16,6 +16,17 @@ const PORQUE_COPY = {
     origin_quote: '«Lo más difícil no fue crear Hestía. Fue convencernos de que merecía la pena intentarlo de otra manera.»',
     origin_quote_attr: '— Alex Berruezo',
 
+    logo_eyebrow: 'El símbolo',
+    logo_title: (<>Una H de hogar y de mar. <em>Tejado, hoja y ola.</em></>),
+    logo_p1: 'El monograma de Hestía es una serif clásica trabajada en teal vidriado. No fue diseñado: fue descubierto. Las dos columnas verticales de la H sostienen una doble curva que lleva dos lecturas superpuestas.',
+    logo_p2: 'Tres símbolos, una sola letra. Hogar — naturaleza — Mediterráneo.',
+    logo_sym_1_t: 'Las columnas',
+    logo_sym_1_d: 'Estabilidad. La casa. Hestía, la diosa griega del hogar y del fuego que nunca se apaga.',
+    logo_sym_2_t: 'La hoja de olivo',
+    logo_sym_2_d: 'El campo de olivos almeriense. Lo que rodea la casa antes de llegar al mar.',
+    logo_sym_3_t: 'La cresta de ola',
+    logo_sym_3_d: 'El Mediterráneo a 300 m. El destino. Lo que ves desde la terraza al despertar.',
+
     name_eyebrow: 'El nombre',
     name_title: (<>Hestía: la diosa del hogar.<br/><em>No de las guerras. Del fuego de casa.</em></>),
     name_p1: 'En la mitología griega, Hestía era la primogénita de los Titanes — la primera en ser devorada por Cronos y la última en ser liberada. Mientras los demás dioses del Olimpo peleaban por la guerra, el amor o el poder, Hestía guardaba la llama. Era la diosa del hogar, del fuego sagrado, del centro de la casa.',
@@ -57,6 +68,17 @@ const PORQUE_COPY = {
     origin_p3: 'A computer engineer and a classical philologist with decades in Vera Playa. One observes and builds; the other names and cares. Together they transformed three apartments into three homes with their own soul. No office. No reception desk. With the phone always on.',
     origin_quote: '"The hardest part was not creating Hestía. It was convincing ourselves it was worth trying a different way."',
     origin_quote_attr: '— Alex Berruezo',
+
+    logo_eyebrow: 'The symbol',
+    logo_title: (<>An H of home and sea. <em>Roof, leaf and wave.</em></>),
+    logo_p1: 'The Hestía monogram is a classical serif worked in glazed teal. It was not designed: it was discovered. The two vertical columns of the H support a double curve that carries two overlapping readings.',
+    logo_p2: 'Three symbols, one single letter. Home — nature — Mediterranean.',
+    logo_sym_1_t: 'The columns',
+    logo_sym_1_d: 'Stability. The house. Hestía, Greek goddess of the home and the fire that never dies.',
+    logo_sym_2_t: 'The olive leaf',
+    logo_sym_2_d: 'The Almerían olive grove. What surrounds the house before you reach the sea.',
+    logo_sym_3_t: 'The wave crest',
+    logo_sym_3_d: 'The Mediterranean 300 m away. The destination. What you see from the terrace when you wake.',
 
     name_eyebrow: 'The name',
     name_title: (<>Hestía: goddess of the hearth.<br/><em>Not of wars. Of the home fire.</em></>),
@@ -170,6 +192,47 @@ const PorqueOrigen = ({ lang }) => {
               <span className="nos-bq-text">{t.origin_quote}</span>
               <cite>{t.origin_quote_attr}</cite>
             </blockquote>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const PorqueLogo = ({ lang }) => {
+  const t = PORQUE_COPY[lang];
+  const vidRef = React.useRef(null);
+  React.useEffect(() => {
+    if (vidRef.current) {
+      vidRef.current.playbackRate = 0.75;
+      vidRef.current.play().catch(() => {});
+    }
+  }, []);
+  return (
+    <section className="porque-logo section-dark">
+      <div className="container">
+        <div className="eyebrow">{t.logo_eyebrow}</div>
+        <h2 className="reveal">{t.logo_title}</h2>
+        <div className="porque-logo-inner">
+          <div className="porque-logo-video reveal">
+            <video ref={vidRef} src="assets/hestia-vitruvio.mp4"
+              muted loop playsInline preload="auto" aria-hidden="true"/>
+          </div>
+          <div className="porque-logo-text">
+            <p className="reveal">{t.logo_p1}</p>
+            <p className="reveal delay-1">{t.logo_p2}</p>
+            <div className="pls-symbols">
+              {[
+                [t.logo_sym_1_t, t.logo_sym_1_d],
+                [t.logo_sym_2_t, t.logo_sym_2_d],
+                [t.logo_sym_3_t, t.logo_sym_3_d],
+              ].map(([title, desc], i) => (
+                <div key={i} className="pls-sym reveal" style={{ transitionDelay: `${i * 0.12}s` }}>
+                  <strong className="pls-sym-t">{title}</strong>
+                  <span className="pls-sym-d">{desc}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -304,6 +367,7 @@ const PorquePageApp = () => {
       <main>
         <PorqueHero lang={lang} />
         <PorqueOrigen lang={lang} />
+        <PorqueLogo lang={lang} />
         <PorqueNombre lang={lang} />
         <PorqueColores lang={lang} />
         <PorquePrincipios lang={lang} />
