@@ -19,7 +19,7 @@ const GARANTIAS_COPY = {
     contract_cta: 'Pedir borrador del contrato →',
     cancel_eyebrow: 'Cancelación',
     cancel_title: 'Mejor que en Booking o Airbnb',
-    cancel_body: 'Igualamos el periodo de cancelación gratuita que veas en las plataformas. Si tienes que cancelar en periodo no reembolsable, intentamos realquilar el apartamento. Si lo conseguimos, te devolvemos cualquier cantidad que hayas entregado — sin condiciones.',
+    cancel_body: 'Igualamos el periodo de cancelación gratuita que veas en las plataformas. Si tienes que cancelar en periodo no reembolsable, intentamos realquilar el apartamento. Si lo conseguimos, devolvemos cualquier cantidad entregada.',
   },
   en: {
     eyebrow: 'How it works',
@@ -37,7 +37,7 @@ const GARANTIAS_COPY = {
     contract_cta: 'Request draft contract →',
     cancel_eyebrow: 'Cancellation',
     cancel_title: 'Better than Booking or Airbnb',
-    cancel_body: 'We match the free cancellation period you see on the platforms. If you need to cancel within the non-refundable period, we try to re-let the apartment. If we succeed, we return any amount you have paid — no conditions.',
+    cancel_body: 'We match the free cancellation period you see on the platforms. If you need to cancel within the non-refundable period, we try to re-let the apartment. If we succeed, we return any amount paid.',
   },
 };
 
