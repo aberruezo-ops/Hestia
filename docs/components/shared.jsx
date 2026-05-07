@@ -1325,6 +1325,148 @@ const SABIAS_QUE_HOME_FACTS = [
     es: 'La higuera almeriense da dos cosechas al año: las brevas de junio y los higos de agosto. Los griegos llamaron "la tierra de las dos cosechas" a este litoral — uno de los primeros homenajes escritos a la fertilidad de Almería.',
     en: 'The Almería fig tree gives two harvests a year: the figs of June and the figs of August. The Greeks called this coastline "the land of two harvests" — one of the first written tributes to Almería\'s fertility.',
   },
+  /* Murcia y provincias limítrofes */
+  {
+    es: 'Águilas (Murcia) está a solo 45 km de Vera Playa. Su carnaval nocturno es declarado de Interés Turístico Internacional — uno de los más espectaculares de España.',
+    en: 'Águilas (Murcia) is just 45 km from Vera Playa. Its night carnival is declared of International Tourist Interest — one of the most spectacular in Spain.',
+  },
+  {
+    es: 'El Mar Menor, la mayor laguna salada de Europa occidental, está a menos de 90 km de Vera Playa. Sus aguas alcanzan 30 °C en verano.',
+    en: 'The Mar Menor, the largest saltwater lagoon in Western Europe, is less than 90 km from Vera Playa. Its waters reach 30 °C in summer.',
+  },
+  {
+    es: 'Cartagena, a 90 minutos de Vera, fue fundada por los Cartagineses en el 227 a.C. y es una de las ciudades habitadas de forma ininterrumpida más antiguas de Europa.',
+    en: 'Cartagena, 90 minutes from Vera, was founded by the Carthaginians in 227 BC and is one of the oldest continuously inhabited cities in Europe.',
+  },
+  {
+    es: 'El Cabo de Palos (Murcia), a 80 km de Vera, tiene uno de los reservas marinas más importantes del Mediterráneo — el mero puede alcanzar aquí un metro de longitud.',
+    en: 'Cabo de Palos (Murcia), 80 km from Vera, has one of the Mediterranean\'s most important marine reserves — grouper here can reach one metre in length.',
+  },
+  {
+    es: 'Lorca, a 60 km de Vera, es conocida como la "ciudad del sol" murciana. Sus bordados de Semana Santa son declarados Patrimonio Cultural Inmaterial de la Humanidad.',
+    en: 'Lorca, 60 km from Vera, is known as Murcia\'s "city of the sun". Its Holy Week embroideries are declared Intangible Cultural Heritage of Humanity.',
+  },
+  {
+    es: 'La frontera entre Almería y Murcia es también la frontera botánica entre la estepa ibérica y el matorral mediterráneo — dos ecosistemas que se tocan en la Sierra del Aguilón.',
+    en: 'The Almería-Murcia border is also the botanical frontier between Iberian steppe and Mediterranean scrub — two ecosystems that meet at the Sierra del Aguilón.',
+  },
+  /* Historia */
+  {
+    es: 'Los Millares, a 40 km de Vera, es uno de los yacimientos más importantes de la Edad del Cobre de Europa: una ciudad amurallada de 4.500 años de antigüedad.',
+    en: 'Los Millares, 40 km from Vera, is one of Europe\'s most important Copper Age sites: a walled settlement 4,500 years old.',
+  },
+  {
+    es: 'La Alcazaba de Almería, construida en el siglo X, fue la mayor fortaleza árabe de España en su época — incluso más extensa que la Alhambra de Granada.',
+    en: 'The Alcazaba of Almería, built in the 10th century, was the largest Arab fortress in Spain at the time — even larger than the Alhambra of Granada.',
+  },
+  {
+    es: 'El castillo de Vélez-Blanco (Almería), a 1 hora de Vera, albergó uno de los patios renacentistas más bellos de España — hoy está en el Metropolitan Museum de Nueva York.',
+    en: 'Vélez-Blanco castle (Almería), 1 hour from Vera, once held one of the finest Renaissance courtyards in Spain — it is now in the Metropolitan Museum of Art in New York.',
+  },
+  {
+    es: 'Vera fue fundada en 1488 por los Reyes Católicos tras la Reconquista. Su casco histórico sigue siendo uno de los mejor conservados del interior almeriense.',
+    en: 'Vera was founded in 1488 by the Catholic Monarchs after the Reconquista. Its historic centre remains one of the best preserved in inland Almería.',
+  },
+  {
+    es: 'El Canal de Felipe II, construido en el siglo XVI para regar el Campo de Vera, sigue siendo parcialmente visible y en uso — un testimonio de ingeniería hidráulica renacentista.',
+    en: 'The Canal of Philip II, built in the 16th century to irrigate the Campo de Vera, is still partly visible and in use — a testament to Renaissance hydraulic engineering.',
+  },
+  {
+    es: 'La cultura argárica (2200-1550 a.C.), nacida en lo que hoy es Almería, fue la primera civilización de la Península Ibérica en trabajar el bronce.',
+    en: 'The Argaric culture (2200–1550 BC), born in what is now Almería, was the first civilisation on the Iberian Peninsula to work with bronze.',
+  },
+  /* Costumbres */
+  {
+    es: 'Las fiestas de Moros y Cristianos de Vera se celebran en agosto con más de 2.000 participantes en traje. La batalla del castillo dura toda la noche.',
+    en: 'Vera\'s Moors and Christians festival takes place in August with over 2,000 participants in costume. The castle battle goes on all night.',
+  },
+  {
+    es: 'El ajoblanco almeriense — sopa fría de almendras, ajo y pan — es anterior al gazpacho. Los árabes lo elaboraban ya en el siglo XI.',
+    en: 'Almería\'s ajoblanco — chilled soup of almonds, garlic and bread — pre-dates gazpacho. Arab inhabitants were making it as far back as the 11th century.',
+  },
+  {
+    es: 'El "tapeo" en Almería capital todavía funciona como siempre: cada consumición lleva su tapa gratis. Una costumbre que resiste en pocas ciudades españolas.',
+    en: 'Tapas culture in Almería city still works the old way: every drink comes with a free tapa. A tradition that survives in very few Spanish cities.',
+  },
+  {
+    es: 'La pesca artesanal del boquerón sigue activa en Garrucha y Carboneras. El boquerón en vinagre almeriense usa limón, no vinagre de vino — un matiz que los locales defienden con firmeza.',
+    en: 'Artisanal anchovy fishing is still active in Garrucha and Carboneras. The local anchovy in escabeche uses lemon, not wine vinegar — a distinction locals defend firmly.',
+  },
+  {
+    es: 'El Observatorio Astronómico de Calar Alto, en la Sierra de los Filabres a 1 hora de Vera, tiene más de 300 noches despejadas al año — el mayor telescopio óptico de España (3,5 m).',
+    en: 'Calar Alto Observatory, in the Sierra de los Filabres 1 hour from Vera, has over 300 clear nights a year — home to Spain\'s largest optical telescope (3.5 m).',
+  },
+  /* El mar */
+  {
+    es: 'La visibilidad horizontal bajo el agua en Vera Playa supera los 10 metros en días calm — el doble que la media del Atlántico norte.',
+    en: 'Horizontal underwater visibility at Vera Playa exceeds 10 metres on calm days — twice the average of the North Atlantic.',
+  },
+  {
+    es: 'El Mediterráneo pierde entre 1 y 3 metros de profundidad cada siglo por la evaporación. Sin el Estrecho de Gibraltar, se secaría en unos 3.000 años.',
+    en: 'The Mediterranean loses between 1 and 3 metres of depth per century through evaporation. Without the Strait of Gibraltar, it would dry up in around 3,000 years.',
+  },
+  {
+    es: 'El salar de los Canos, visible desde la terraza de Hestía Thalassa, es una laguna costera protegida donde cada primavera llegan cigüeñuelas rosas desde el Sahel africano.',
+    en: 'The Salar de los Canos, visible from Hestía Thalassa\'s terrace, is a protected coastal lagoon visited each spring by black-winged stilts arriving from the African Sahel.',
+  },
+  {
+    es: 'Con viento de poniente y buena visibilidad, desde el ático de Hestía Thalassa se distingue el perfil de la costa africana de Marruecos — a unos 180 km de distancia.',
+    en: 'On a clear day with westerly wind, the silhouette of the Moroccan coastline — about 180 km away — is visible from the Hestía Thalassa penthouse terrace.',
+  },
+  {
+    es: 'El delfín mular visita con regularidad las aguas frente a Vera Playa. Los avistamientos son más frecuentes entre mayo y octubre, al amanecer.',
+    en: 'Bottlenose dolphins regularly visit the waters off Vera Playa. Sightings are most frequent between May and October, at dawn.',
+  },
+  {
+    es: 'La posidonia oceánica tarda entre 10 y 30 años en crecer un centímetro. Los fondos de Vera albergan praderas con más de 100.000 años de antigüedad.',
+    en: 'Posidonia seagrass takes between 10 and 30 years to grow one centimetre. The seabed off Vera holds meadows over 100,000 years old.',
+  },
+  /* Almería curiosidades */
+  {
+    es: 'Almería produce el 50 % de las verduras que consume Europa en invierno. El mar de plástico de invernaderos del Campo de Dalías es visible desde el espacio.',
+    en: 'Almería produces 50% of the vegetables consumed in Europe during winter. The plastic sea of greenhouses in the Campo de Dalías is visible from space.',
+  },
+  {
+    es: 'El Parque Natural Sierra de María-Los Vélez, a 90 minutos de Vera, es uno de los pocos lugares de España donde puede nevar en diciembre mientras en la playa hay 18 °C.',
+    en: 'The Sierra de María-Los Vélez Natural Park, 90 minutes from Vera, is one of the few places in Spain where it can snow in December while the beach enjoys 18 °C.',
+  },
+  {
+    es: 'La uva de Almería fue el primer producto agrícola español exportado en barco refrigerado, en 1895. Se enviaba directamente a Londres y Nueva York.',
+    en: 'The Almería grape was the first Spanish agricultural product exported by refrigerated ship, in 1895. It was sent directly to London and New York.',
+  },
+  /* Hestía */
+  {
+    es: 'Hestía lleva más de diez años con puntuación máxima ininterrumpida en Booking.com, Airbnb y Google Maps — algo que menos del 1 % de los apartamentos con huéspedes de España mantiene durante tanto tiempo.',
+    en: 'Hestía has held top scores on Booking.com, Airbnb and Google Maps for over ten years — something fewer than 1% of guest apartments in Spain sustain for that long.',
+  },
+  {
+    es: 'Al reservar directamente con Hestía, el precio es igual o mejor que en Booking o Airbnb — y hablas con los propietarios, no con una centralita ni un bot.',
+    en: 'Booking directly with Hestía gives you the same price or better than Booking or Airbnb — and you speak with the owners, not a call centre or a bot.',
+  },
+  {
+    es: 'Hestía Thalassa es el único ático de la colección. Desde su terraza panorámica se tienen las vistas más abiertas al Mediterráneo y al Salar de los Canos de toda la urbanización.',
+    en: 'Hestía Thalassa is the only penthouse in the collection. Its panoramic terrace has the most open views of the Mediterranean and the Salar de los Canos in the entire complex.',
+  },
+  {
+    es: 'Las mascotas son bienvenidas en los tres apartamentos Hestía, bajo petición previa y con suplemento, respetando unas condiciones básicas.',
+    en: 'Pets are welcome in all three Hestía apartments, on request and with a supplement, as long as basic conditions are respected.',
+  },
+  {
+    es: 'Más de 900 familias han vivido en Hestía desde 2016. Más del 40 % repite — sin necesidad de ninguna oferta ni descuento.',
+    en: 'Over 900 families have stayed at Hestía since 2016. More than 40% return — with no offer or discount needed.',
+  },
+  {
+    es: 'Los huéspedes de Hestía reciben, al reservar, una guía personalizada de Alex o Fran con restaurantes, playas secretas y rutas que no aparecen en ninguna guía turística.',
+    en: 'Hestía guests receive, on booking, a personalised guide from Alex or Fran with restaurants, hidden beaches and routes that appear in no travel guide.',
+  },
+  {
+    es: 'Hestía Salinas es uno de los pocos apartamentos del litoral mediterráneo con acceso peatonal directo a un parque natural protegido desde la puerta.',
+    en: 'Hestía Salinas is one of very few apartments on the Mediterranean coast with direct pedestrian access to a protected natural park from the front door.',
+  },
+  {
+    es: 'Los cambios de fecha y cancelaciones en Hestía se gestionan directamente con Alex o Fran — una conversación, no un formulario ni una política automática.',
+    en: 'Date changes and cancellations at Hestía are handled directly with Alex or Fran — a conversation, not a form or an automated policy.',
+  },
 ];
 
 // Shuffled pools — stable per page load
