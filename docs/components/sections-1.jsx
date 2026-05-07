@@ -315,7 +315,7 @@ const Apartments = ({ lang }) => {
                     <div className="apt-price-badge">
                       <span className="apb-label">{lang === 'es' ? 'desde' : 'from'}</span>
                       <span className="apb-price">{minPrice.toLocaleString('es-ES')}€</span>
-                      <span className="apb-per">{lang === 'es' ? '/noche · temp. baja · descuentos por 7, 14 y 28+ noches · Pregúntanos' : '/night · low season · discounts for 7, 14 & 28+ nights · Ask us'}</span>
+                      <span className="apb-per">{lang === 'es' ? '/noche*' : '/night*'}</span>
                     </div>
                   )}
                   <div className="apt-ctas">
@@ -339,6 +339,11 @@ const Apartments = ({ lang }) => {
           ))}
         </div>
       </div>
+      <p className="apts-price-note">
+        {lang === 'es'
+          ? '* Precio orientativo de temporada baja, sin descuentos aplicados. El precio final varía según temporada, duración y número de huéspedes. Aplicamos descuentos por 7, 14 y 28+ noches. Pregúntanos y te calculamos el precio exacto.'
+          : '* Indicative low-season price, before discounts. Final price varies by season, duration and number of guests. Discounts apply for 7, 14 and 28+ nights. Ask us and we will calculate the exact price for you.'}
+      </p>
       {bookingApt && <HomeBookingModal apt={bookingApt} lang={lang} onClose={() => setBookingApt(null)}/>}
     </>
   );

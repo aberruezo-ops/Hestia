@@ -1639,7 +1639,7 @@ const StickyFacts = ({ lang }) => {
 // ================================================================
 const HESTIA_PRICES = {
   vm: {  // Hestía Mar — VFT/AL/01580
-    desde: 75,  // precio mínimo temporada baja (precio directo)
+    desde: 87,  // precio mínimo temporada baja (precio directo)
     // Precio/noche en Booking.com (índice 1=Ene … 12=Dic)
     base: [0, 95, 95, 112, 132, 142, 162, 195, 228, 162, 132, 95, 95],
     peaks: [
@@ -1648,7 +1648,7 @@ const HESTIA_PRICES = {
     ],
   },
   vt: {  // Hestía Thalassa — VFT/AL/05535
-    desde: 74,
+    desde: 85,
     base: [0, 115, 115, 135, 158, 172, 195, 238, 278, 195, 158, 115, 115],
     peaks: [
       { from: '12-21', to: '01-07', pn: 228 },
@@ -1656,7 +1656,7 @@ const HESTIA_PRICES = {
     ],
   },
   vs: {  // Hestía Salinas — VTF/AL/07056
-    desde: 70,
+    desde: 80,
     base: [0, 100, 100, 118, 140, 150, 170, 205, 238, 170, 140, 100, 100],
     peaks: [
       { from: '12-21', to: '01-07', pn: 198 },

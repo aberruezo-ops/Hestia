@@ -358,10 +358,17 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
         </h1>
         <p className="apt-page-concept">« {d.concept} »</p>
         {minPrice && (
-          <p className="apt-page-price">
-            {lang === 'es' ? `desde ${minPrice}€` : `from ${minPrice}€`}
-            <span className="app-per">{lang === 'es' ? ' / noche · precio directo' : ' / night · direct price'}</span>
-          </p>
+          <>
+            <p className="apt-page-price">
+              {lang === 'es' ? `desde ${minPrice}€` : `from ${minPrice}€`}
+              <span className="app-per">{lang === 'es' ? ' / noche' : ' / night'}</span>
+            </p>
+            <p className="apt-page-price-note">
+              {lang === 'es'
+                ? '* Precio de temporada baja, sin descuentos. Varía según temporada, duración y nº de huéspedes. Descuentos por 7, 14 y 28+ noches.'
+                : '* Low-season price, before discounts. Varies by season, duration and number of guests. Discounts for 7, 14 & 28+ nights.'}
+            </p>
+          </>
         )}
         <div className="apt-page-ctas">
           <a href="https://wa.me/34620316370" className="btn btn-primary" target="_blank" rel="noopener">
