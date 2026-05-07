@@ -84,7 +84,7 @@ const COPY = {
     manifest_quote: '«Deja esto como te hubiera gustado encontrarlo. Porque alguien, antes que tú, lo hizo.»',
     ratings_eyebrow: 'Lo que dicen de nosotros',
     ratings_title: (<>Diez años puntuando <em>casi perfecto.</em></>),
-    ratings_sub: 'No es un eslogan. Son cifras verificadas por las plataformas, escritas por las familias que han dormido aquí.',
+    ratings_sub: 'No es un eslogan. Son cifras verificadas por las plataformas, escritas por las familias que han vivido aquí.',
     rating_booking_desc: 'Valoración Booking.com — promedio de nuestros tres apartamentos.',
     rating_airbnb_desc: 'Superhost desde 2018. Puntuación máxima ininterrumpida.',
     rating_google_desc: 'Google Maps — opiniones de huéspedes que volvieron a Vera.',
@@ -145,7 +145,7 @@ const COPY = {
     manifest_quote: '«Leave this as you would have liked to find it. Because someone, before you, did.»',
     ratings_eyebrow: 'What they say about us',
     ratings_title: (<>Ten years scoring <em>almost perfect.</em></>),
-    ratings_sub: 'Not a slogan. Verified numbers from the platforms, written by the families who slept here.',
+    ratings_sub: 'Not a slogan. Verified numbers from the platforms, written by the families who lived here.',
     rating_booking_desc: 'Booking.com average — across our three apartments.',
     rating_airbnb_desc: 'Superhost since 2018. Top score, uninterrupted.',
     rating_google_desc: 'Google Maps — reviews from guests who came back to Vera.',
@@ -532,7 +532,7 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'Más de 900 familias han dormido en Hestía desde 2016. Más del 40 % repite — sin necesidad de ninguna oferta ni descuento.',
+    es: 'Más de 900 familias han vivido en Hestía desde 2016. Más del 40 % repite — sin necesidad de ninguna oferta ni descuento.',
     en: 'Over 900 families have stayed at Hestía since 2016. More than 40% return — with no offer or discount needed.',
   },
   {

@@ -23,7 +23,7 @@ const NOSOTROS_COPY = {
     almeria_quote_attr: '— Alex Berruezo',
 
     team_eyebrow: 'El equipo',
-    team_title: (<>Detrás de Hestía hay<br/><em>dos personas reales.</em></>),
+    team_title: (<>Detrás de Hestía hay<br/><em>dos personas.</em></>),
     alex_eyebrow: '01 · Creativo · Decorador · Pre-estancia',
     alex_lang: '🇪🇸 Español',
     alex_name: 'Alex Berruezo',
@@ -60,7 +60,7 @@ const NOSOTROS_COPY = {
     almeria_quote_attr: '— Alex Berruezo',
 
     team_eyebrow: 'The team',
-    team_title: (<>Behind Hestía there are<br/><em>two real people.</em></>),
+    team_title: (<>Behind Hestía there are<br/><em>two people.</em></>),
     alex_eyebrow: '01 · Creative · Decorator · Pre-stay',
     alex_lang: '🇪🇸 Español',
     alex_name: 'Alex Berruezo',

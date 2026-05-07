@@ -6,7 +6,7 @@ const OPINIONES_COPY = {
   es: {
     eyebrow: 'Lo que dicen de nosotros',
     title: (<>Diez años puntuando <em>casi perfecto.</em></>),
-    sub: 'No es un eslogan. Son cifras verificadas por las plataformas, escritas por las familias que han dormido aquí.',
+    sub: 'No es un eslogan. Son cifras verificadas por las plataformas, escritas por las familias que han vivido aquí.',
     platform_title: 'Puntuaciones verificadas',
     testimonials_title: (<>Lo que dicen <em>los huéspedes.</em></>),
     cta_eyebrow: 'Ahora es tu turno',
@@ -16,7 +16,7 @@ const OPINIONES_COPY = {
   en: {
     eyebrow: 'What they say about us',
     title: (<>Ten years scoring <em>almost perfect.</em></>),
-    sub: 'Not a slogan. Verified numbers from the platforms, written by the families who slept here.',
+    sub: 'Not a slogan. Verified numbers from the platforms, written by the families who lived here.',
     platform_title: 'Verified scores',
     testimonials_title: (<>What the <em>guests say.</em></>),
     cta_eyebrow: 'Now it\'s your turn',
