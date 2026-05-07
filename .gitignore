@@ -3,6 +3,13 @@
 
 # Debug screenshots from agent testing sessions
 *.png
+!docs/assets/favicon-32x32.png
+!docs/assets/favicon-16x16.png
+!docs/assets/apple-touch-icon.png
+!docs/assets/logo-*.png
+!docs/assets/photo-*.jpg
+!docs/assets/*.jpg
+!docs/assets/*.mov
 debug_*.png
 mobile_*.png
 desktop_*.png
