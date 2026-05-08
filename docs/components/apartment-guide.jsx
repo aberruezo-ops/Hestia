@@ -894,10 +894,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
       <div className="ag-photo-grid" data-count={photos.length}>
         {photos.map((p, i) => (
           <figure key={i} className="ag-photo" style={{ '--i': i }}>
-            <div className="ag-photo-wrap">
-              <img src={p.src} alt={p.caption || ''} loading="lazy" />
-              {HasMark && <WatermarkBadge size={28} pos={{ bottom: 10, right: 10 }} />}
-            </div>
+            <img src={p.src} alt={p.caption || ''} loading="lazy" />
+            {HasMark && <WatermarkBadge size={28} pos={{ bottom: 10, right: 10 }} />}
             {p.caption && <figcaption>{p.caption}</figcaption>}
           </figure>
         ))}
