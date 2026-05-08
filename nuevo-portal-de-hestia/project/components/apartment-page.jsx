@@ -326,6 +326,11 @@ const ApartmentPageApp = () => {
     document.title = `${apt[lang].name} · Hestía Your Home · Vera Playa`;
   }, [lang]);
 
+  React.useEffect(() => {
+    document.body.classList.add('has-apt-sticky');
+    return () => document.body.classList.remove('has-apt-sticky');
+  }, []);
+
   // Crossfade entre vista apt ↔ guía
   React.useEffect(() => {
     if (guideOpen === renderGuide) return;

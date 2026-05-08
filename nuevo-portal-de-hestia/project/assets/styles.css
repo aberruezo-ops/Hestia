@@ -4299,16 +4299,17 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .ag-photo {
   margin: 0;
+  position: relative;
 }
-.ag-photo img {
+.ag-photo > img {
   display: block;
   width: 100%;
-  height: 100%;
   aspect-ratio: 4/3;
   object-fit: cover;
   border-radius: 10px 0 10px 0;
-  background: color-mix(in oklab, var(--apt-accent) 8%, var(--arena));
 }
+.ag-photo-grid[data-count="1"] .ag-photo > img { aspect-ratio: 16/9; }
+.ag-photo > .wm-badge { z-index: 2; }
 .ag-photo figcaption {
   font-family: var(--serif);
   font-style: italic;
@@ -4688,19 +4689,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .ag-place-link:hover { opacity: 0.7; }
 
-/* ================================================================
-   PHOTO WATERMARK WRAP (logo H sobre cada foto de la guía)
-   ================================================================ */
-.ag-photo-wrap {
-  position: relative;
-  border-radius: 10px 0 10px 0;
-  overflow: hidden;
-}
-.ag-photo-wrap > img { display: block; width: 100%; height: 100%; aspect-ratio: 4/3; object-fit: cover; }
-/* Marca de agua usa el estilo estándar del portal (.wm-badge con cápsula oscura).
-   No la sobreescribimos aquí — solo aseguramos el z-index sobre la imagen. */
-.ag-photo-wrap > .wm-badge { z-index: 2; }
-.ag-photo-grid[data-count="1"] .ag-photo-wrap > img { aspect-ratio: 16/9; }
+/* (Reglas de .ag-photo-wrap eliminadas — la estructura ahora es figure>img directo) */
 
 /* ================================================================
    PRINT — hide map, keep place list
@@ -4765,32 +4754,23 @@ body.no-parallax .g-tile .img { transform: none !important; }
   transition: background 220ms ease-in;
 }
 
-/* 3) Photo grid — render nítido en Safari iOS.
-   Bug conocido: border-radius + overflow:hidden en un parent rasteriza el
-   <img> a baja resolución (efecto de blur/halo). Fix: translateZ(0) en el
-   wrap fuerza capa GPU dedicada a resolución nativa. */
+/* 3) Photo grid — render limpio sin halos.
+   Estructura simplificada: <figure class="ag-photo"> contiene <img> directo
+   más watermark. Sin wrap intermedio, sin overflow:hidden. El border-radius
+   se aplica al <img> mismo, lo cual evita el bug de Safari iOS donde un
+   parent con overflow:hidden + border-radius rasteriza el contenido a baja
+   resolución (causa del halo). */
 .ag-photo,
-.ag-photo-wrap,
-.ag-photo-wrap > img {
+.ag-photo > img {
   filter: none !important;
   -webkit-filter: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   box-shadow: none !important;
-  transition: none !important;
 }
-.ag-photo-wrap {
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  will-change: transform;
-}
-.ag-photo-wrap > img {
+.ag-photo > img {
   background: transparent !important;
-  border-radius: 0 !important;  /* el wrap ya recorta */
   image-rendering: auto;
-  /* Misma capa GPU que el wrap para que el clip rasterice a alta resolución. */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
 }
 
 /* 4) Map markers — fade y scale al togglear categoría */
