@@ -754,18 +754,19 @@ const GuideMap = ({ places, categories, lang, apt }) => {
     };
   }, []);
 
-  // Toggle category visibility on the map
+  // Toggle category visibility on the map. Mantenemos los markers SIEMPRE en
+  // el mapa y simplemente alternamos una clase CSS en el ícono — así la opacity
+  // y el scale animan vía transition (no se ven aparecer/desaparecer en seco).
   const toggleCat = (catId) => {
     const next = new Set(hidden);
     if (next.has(catId)) next.delete(catId);
     else next.add(catId);
     setHidden(next);
-    if (!mapInstanceRef.current) return;
     Object.values(markerRefs.current).forEach(m => {
-      if (!m.placeData) return;
-      const isHidden = next.has(m.placeData.cat);
-      if (isHidden && mapInstanceRef.current.hasLayer(m)) m.remove();
-      else if (!isHidden && !mapInstanceRef.current.hasLayer(m)) m.addTo(mapInstanceRef.current);
+      if (m.placeData?.cat !== catId) return;
+      const el = m.getElement && m.getElement();
+      if (!el) return;
+      el.classList.toggle('is-hidden-cat', next.has(catId));
     });
   };
 
@@ -835,6 +836,23 @@ const AptGuideView = ({ apt, lang, onClose }) => {
     return () => observer.disconnect();
   }, []);
 
+  // Reveal-on-scroll para fotos y números de sección.
+  // Stagger via --i en photos. Una sola pasada (unobserve al primer hit).
+  React.useEffect(() => {
+    const targets = document.querySelectorAll('.apt-guide-view .ag-photo, .apt-guide-view .ag-section-num');
+    if (!targets.length) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.setAttribute('data-revealed', 'true');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+    targets.forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, [a]);
+
   React.useEffect(() => {
     document.body.classList.add('guide-mode');
     window.scrollTo(0, 0);
@@ -867,7 +885,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
     return (
       <div className="ag-photo-grid" data-count={photos.length}>
         {photos.map((p, i) => (
-          <figure key={i} className="ag-photo">
+          <figure key={i} className="ag-photo" style={{ '--i': i }}>
             <div className="ag-photo-wrap">
               <img src={p.src} alt={p.caption || ''} loading="lazy" />
               {HasMark && <WatermarkBadge size={28} pos={{ bottom: 10, right: 10 }} />}
@@ -1094,7 +1112,9 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
     e.preventDefault();
     if (pin.trim().toUpperCase() === expected) {
       setStatus('success');
-      setTimeout(() => { onUnlock(); setOpen(false); }, 250);
+      // Delay matches the modal's .is-success exit animation (scale + blur out)
+      // and lets the apartment-page crossfade kick in cleanly afterwards.
+      setTimeout(() => { onUnlock(); setOpen(false); }, 360);
     } else {
       setStatus('error');
       if (inputRef.current) inputRef.current.focus();

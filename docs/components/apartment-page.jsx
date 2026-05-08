@@ -722,6 +722,8 @@ const ApartmentPageApp = () => {
 
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
   const [guideOpen, setGuideOpen] = React.useState(false);
+  const [renderGuide, setRenderGuide] = React.useState(false);
+  const [phase, setPhase] = React.useState('idle');
   const { mode, scrolled } = useScrollMode();
   useReveal();
 
@@ -731,15 +733,29 @@ const ApartmentPageApp = () => {
     document.title = `${apt[lang].name} · Hestía Your Home · Vera Playa`;
   }, [lang]);
 
+  // Crossfade entre vista apt ↔ guía: fade-out 220ms → swap → RAF → fade-in.
+  // Aplica un blur sutil para mascarar el cambio (truco de Emil para crossfades).
+  React.useEffect(() => {
+    if (guideOpen === renderGuide) return;
+    setPhase('out');
+    const t = setTimeout(() => {
+      setRenderGuide(guideOpen);
+      setPhase('in');
+      // Doble RAF para que el navegador aplique el estado 'in' antes de transicionar a 'idle'.
+      requestAnimationFrame(() => requestAnimationFrame(() => setPhase('idle')));
+    }, 220);
+    return () => clearTimeout(t);
+  }, [guideOpen, renderGuide]);
+
   // La guía vive DENTRO de la página: header y footer del portal se mantienen,
   // y solo el contenido de <main> se sustituye por la guía con su nav lateral.
-  const showGuide = guideOpen && typeof AptGuideView !== 'undefined';
+  const showGuide = renderGuide && typeof AptGuideView !== 'undefined';
 
   return (
     <>
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
-      <main>
+      <main className="apt-main" data-phase={phase}>
         {showGuide ? (
           <AptGuideView apt={apt} lang={lang} onClose={() => setGuideOpen(false)} />
         ) : (
