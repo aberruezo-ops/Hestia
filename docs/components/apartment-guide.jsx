@@ -6,9 +6,9 @@
 
 const APT_GUIDE_PIN = { vm: 'HVM2016', vt: 'HVT2019', vs: 'HVS2021' };
 
-// ----- Mapeo: galería de cada apartamento → estancia -----
+// ----- Mapeo: galería de cada Hestía → estancia -----
 // Reusamos las fotos profesionales que ya están en assets/apt-vX-gallery-N.jpg
-// (mismas que la galería del apartamento). Cada índice apunta a su posición
+// (mismas que la galería del Hestía). Cada índice apunta a su posición
 // en apt.gallery_imgs[]. Las captions se sacan de apt[lang].gallery_captions[].
 const ROOM_PHOTOS = {
   vm: {
@@ -233,7 +233,7 @@ const GUIDE_SHARED = {
       title: 'Bienvenido a tu Hestía',
       paras: [
         'Si lees esto, tu reserva está más que confirmada — y no sabes la ilusión que nos hace tenerte aquí.',
-        'Hemos puesto cariño en cada detalle de este apartamento. Esperamos estar a la altura.',
+        'Hemos puesto cariño en cada detalle del Hestía. Esperamos estar a la altura.',
         'Ya estés preparando el viaje, viviendo tus días aquí, o de vuelta a casa con la maleta a medio deshacer: todo lo que esté en nuestra mano, antes, durante o después de tu estancia, lo haremos. Sin dudarlo. Para eso estamos.',
         'Ahora descansa, relájate y descubre tu hogar lejos de tu casa.',
       ],
@@ -341,7 +341,7 @@ const GUIDE_SHARED = {
       title: 'Welcome to your Hestía',
       paras: [
         'If you\'re reading this, your booking is more than confirmed — and we couldn\'t be more thrilled to have you with us.',
-        'We\'ve put care into every detail of this apartment. We hope to live up to it.',
+        'We\'ve put care into every detail of this Hestía. We hope to live up to it.',
         'Whether you\'re still planning the trip, living your days here, or back home with a half-unpacked suitcase: anything in our hands, before, during or after your stay, we\'ll do it. No hesitation. That\'s what we\'re here for.',
         'Now rest, relax, and discover your home away from home.',
       ],
@@ -446,7 +446,7 @@ const GUIDE_SHARED = {
   },
 };
 
-// Contenido específico por apartamento (extraído de los PDFs originales)
+// Contenido específico por Hestía (extraído de los PDFs originales)
 const GUIDE_BY_APT = {
   // Hestía Vera Mar
   vm: {
@@ -641,7 +641,7 @@ const GUIDE_BY_APT = {
           'Recoge el toldo y los cojines cuando sople aire o llueva.',
           'Usa velas para crear el ambiente perfecto.',
         ]},
-        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Una urbanización textil para olvidarse del mundo y cerca de todo. Aparca tu coche en tu plaza subterránea (nº 290) y disfruta de todo lo que Hestía te ofrece: entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), tu plaza de garaje (nº 290), acceso peatonal desde la urbanización, Hestía Vera Salinas en bloque 22, planta 1, apartamento 7, piscina y pistas deportivas.', recs: [
+        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Una urbanización textil para olvidarse del mundo y cerca de todo. Aparca tu coche en tu plaza subterránea (nº 290) y disfruta de todo lo que Hestía te ofrece: entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), tu plaza de garaje (nº 290), acceso peatonal desde la urbanización, Hestía Vera Salinas en bloque 22, planta 1, puerta 7, piscina y pistas deportivas.', recs: [
           'La urbanización merece la pena recorrerla. Los jardines, los riachuelos, las aves, otros pequeños animales, el desierto alrededor. Es un lugar sin igual, para disfrutar con los más pequeños con toda la tranquilidad de un recinto cerrado.',
           'Cuida las plantas y la limpieza de la urbanización.',
           'Respeta las zonas comunes y las normas de la urbanización.',
@@ -678,7 +678,7 @@ const GUIDE_BY_APT = {
           'Roll up the awning and put away cushions when it\'s windy or raining.',
           'Use candles to create the perfect atmosphere.',
         ]},
-        { id: 'urbanizacion', title: 'Your residential complex', body: 'A textile-free residential complex to forget the world while staying near everything. Park in your underground space (nº 290) and enjoy everything Hestía offers: code-controlled entrance, access/barrier to zone 2 (where Hestía is), your parking space (nº 290), pedestrian access from the complex, Hestía Vera Salinas at block 22, floor 1, apartment 7, swimming pool and sports courts.', recs: [
+        { id: 'urbanizacion', title: 'Your residential complex', body: 'A textile-free residential complex to forget the world while staying near everything. Park in your underground space (nº 290) and enjoy everything Hestía offers: code-controlled entrance, access/barrier to zone 2 (where Hestía is), your parking space (nº 290), pedestrian access from the complex, Hestía Vera Salinas at block 22, floor 1, unit 7, swimming pool and sports courts.', recs: [
           'The complex is worth exploring. The gardens, streams, birds, small animals, the surrounding desert — a place without equal, perfect for kids with the calm of a closed area.',
           'Take care of the plants and the cleanliness of the complex.',
           'Respect the common areas and the complex rules.',
@@ -691,137 +691,35 @@ const GUIDE_BY_APT = {
 };
 
 // ================================================================
-// GuideMap — mapa Leaflet con marcadores numerados por categoría
-// Toggle de categorías en la leyenda; popup con descripción y enlace.
+// GuideMap — mapa de Vera Playa (Google Maps embed)
+// Antes era un Leaflet con coordenadas hardcoded para cada lugar.
+// Reemplazado por iframe genérico de Google + cada lugar abre su
+// propio Google Maps al pulsar "Cómo llegar" en la lista de abajo.
+// Cero coordenadas que mantener.
 // ================================================================
-const GuideMap = ({ places, categories, lang, apt }) => {
-  const mapRef = React.useRef(null);
-  const mapInstanceRef = React.useRef(null);
-  const markerRefs = React.useRef({});
-  const [hidden, setHidden] = React.useState(new Set());
-
-  React.useEffect(() => {
-    if (!window.L || !mapRef.current) return;
-    if (mapInstanceRef.current) return;
-
-    const map = window.L.map(mapRef.current, {
-      zoomControl: true,
-      scrollWheelZoom: false,
-    }).setView([37.18, -1.95], 9);
-
-    window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>',
-    }).addTo(map);
-
-    const catColor = Object.fromEntries(categories.map(c => [c.id, c.color]));
-    const placesNum = places.filter(p => p.lat && p.lng);
-
-    placesNum.forEach((place, i) => {
-      const color = catColor[place.cat] || '#666';
-      const isHome = place.cat === 'home';
-      const num = i + 1;
-      const icon = window.L.divIcon({
-        className: 'ag-map-marker',
-        html: `<div class="ag-map-pin${isHome ? ' is-home' : ''}" style="background:${color}"><span>${isHome ? 'H' : num}</span></div>`,
-        iconSize: [28, 28],
-        iconAnchor: [14, 28],
-      });
-      const marker = window.L.marker([place.lat, place.lng], { icon }).addTo(map);
-      const desc = place.desc || '';
-      const tier = place.tier ? ` <em>${place.tier}</em>` : '';
-      const url  = place.url
-        ? `<br><a href="${place.url}" target="_blank" rel="noopener">${lang === 'es' ? 'Abrir en mapa →' : 'Open in maps →'}</a>`
-        : '';
-      marker.bindPopup(`<div class="ag-map-popup"><strong>${place.name}</strong>${tier}${desc ? `<br>${desc}` : ''}${url}</div>`);
-      marker.placeData = place;
-      markerRefs.current[place.id] = marker;
-    });
-
-    // Auto-fit bounds to markers (excluding the home if it would zoom too tight)
-    if (placesNum.length > 1) {
-      const bounds = window.L.latLngBounds(placesNum.map(p => [p.lat, p.lng]));
-      map.fitBounds(bounds, { padding: [40, 40], maxZoom: 11 });
-    }
-
-    mapInstanceRef.current = map;
-
-    return () => {
-      if (mapInstanceRef.current) {
-        mapInstanceRef.current.remove();
-        mapInstanceRef.current = null;
-      }
-      markerRefs.current = {};
-    };
-  }, []);
-
-  // Mantenemos los markers SIEMPRE en el mapa y simplemente alternamos una
-  // clase CSS en el ícono — así la opacity y el scale animan vía transition.
-  const applyHidden = (next) => {
-    setHidden(next);
-    Object.values(markerRefs.current).forEach(m => {
-      if (!m.placeData) return;
-      const el = m.getElement && m.getElement();
-      if (!el) return;
-      el.classList.toggle('is-hidden-cat', next.has(m.placeData.cat));
-    });
-  };
-  const toggleCat = (catId) => {
-    const next = new Set(hidden);
-    if (next.has(catId)) next.delete(catId);
-    else next.add(catId);
-    applyHidden(next);
-  };
-  const showAll = () => applyHidden(new Set());
-  const hideAllExceptHome = () => {
-    const next = new Set(categories.filter(c => c.id !== 'home').map(c => c.id));
-    applyHidden(next);
-  };
-
-  // Count places per category for the legend chips
-  const counts = {};
-  places.forEach(p => { counts[p.cat] = (counts[p.cat] || 0) + 1; });
-
+const GuideMap = ({ lang }) => {
+  const src = 'https://maps.google.com/maps?q=Vera+Playa+Almer%C3%ADa&z=14&output=embed';
   return (
     <div className="ag-map-block no-print">
-      <div ref={mapRef} className="ag-map" aria-label={lang === 'es' ? 'Mapa de la zona' : 'Area map'} />
-      <div className="ag-map-legend">
-        <div className="ag-map-legend-head">
-          <span className="ag-map-legend-title">
-            {lang === 'es' ? 'Filtra por tipo' : 'Filter by type'}
-          </span>
-          <div className="ag-map-legend-actions">
-            <button type="button" className="ag-map-legend-action" onClick={showAll}>
-              {lang === 'es' ? 'Mostrar todos' : 'Show all'}
-            </button>
-            <span className="ag-map-legend-sep" aria-hidden="true">·</span>
-            <button type="button" className="ag-map-legend-action" onClick={hideAllExceptHome}>
-              {lang === 'es' ? 'Ocultar todos' : 'Hide all'}
-            </button>
-          </div>
-        </div>
-        <div className="ag-map-legend-list">
-          {categories.filter(c => counts[c.id]).map(c => (
-            <button
-              key={c.id}
-              type="button"
-              className={`ag-map-legend-chip${hidden.has(c.id) ? ' is-off' : ''}`}
-              onClick={() => toggleCat(c.id)}
-              aria-pressed={!hidden.has(c.id)}
-            >
-              <span className="ag-map-legend-dot" style={{ background: c.color }} />
-              <span>{c[lang]}</span>
-              <span className="ag-map-legend-count">{counts[c.id]}</span>
-            </button>
-          ))}
-        </div>
+      <iframe
+        className="ag-map"
+        src={src}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        title={lang === 'es' ? 'Mapa de Vera Playa' : 'Vera Playa map'}
+        allowFullScreen
+      />
+      <div className="ag-map-note">
+        {lang === 'es'
+          ? 'Mapa general de Vera Playa. Cada recomendación de abajo abre Google Maps con la búsqueda directa.'
+          : 'Overview of Vera Playa. Each recommendation below opens Google Maps with a direct search.'}
       </div>
     </div>
   );
 };
 
 // ================================================================
-// AptGuideView — guía integrada en la página del apartamento
+// AptGuideView — guía integrada en la página del Hestía
 // (se renderiza dentro del Header / Footer del portal)
 // ================================================================
 const AptGuideView = ({ apt, lang, onClose }) => {
@@ -911,7 +809,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
         <div className="ag-hero-inner">
           <button className="ag-back no-print" onClick={onClose}>
             <span aria-hidden="true">←</span>
-            <span>{lang === 'es' ? 'Volver al apartamento' : 'Back to apartment'}</span>
+            <span>{lang === 'es' ? 'Volver al Hestía' : 'Back to Hestía'}</span>
           </button>
           <span className="ag-hero-eyebrow">{lang === 'es' ? 'Guía del huésped' : 'Guest guide'}</span>
           <h1 className="ag-hero-title">{aptName}</h1>
@@ -1014,7 +912,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <h2 className="ag-h2">{s.surroundings.title}</h2>
             <p className="ag-para">{s.surroundings.intro}</p>
 
-            <GuideMap places={PLACES} categories={CATEGORIES} lang={lang} apt={apt} />
+            <GuideMap lang={lang} />
 
             <h3 className="ag-h3">{lang === 'es' ? 'Fuentes recomendadas' : 'Recommended sources'}</h3>
             <ol className="ag-recs">
@@ -1032,20 +930,24 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                     <span className="ag-cat-count">{inCat.length}</span>
                   </h3>
                   <ul className="ag-places">
-                    {inCat.map(p => (
-                      <li key={p.id} className="ag-place">
-                        <div className="ag-place-main">
-                          <span className="ag-place-name">{p.name}</span>
-                          {p.tier && <span className="ag-place-tier">{p.tier}</span>}
-                        </div>
-                        {p.desc && <span className="ag-place-desc">{p.desc}</span>}
-                        {p.url && (
-                          <a className="ag-place-link" href={p.url} target="_blank" rel="noopener">
-                            {lang === 'es' ? 'Abrir mapa' : 'Open map'} <span aria-hidden="true">↗</span>
+                    {inCat.map(p => {
+                      // Si el lugar trae URL fija (Google Maps share link manual), úsala.
+                      // Si no, búsqueda directa por nombre + Almería — Google la resuelve.
+                      const mapHref = p.url
+                        || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Almería')}`;
+                      return (
+                        <li key={p.id} className="ag-place">
+                          <div className="ag-place-main">
+                            <span className="ag-place-name">{p.name}</span>
+                            {p.tier && <span className="ag-place-tier">{p.tier}</span>}
+                          </div>
+                          {p.desc && <span className="ag-place-desc">{p.desc}</span>}
+                          <a className="ag-place-link" href={mapHref} target="_blank" rel="noopener">
+                            {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
                           </a>
-                        )}
-                      </li>
-                    ))}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               );
@@ -1080,7 +982,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           <div className="ag-content-end no-print">
             <button className="ag-back" onClick={onClose}>
               <span aria-hidden="true">←</span>
-              <span>{lang === 'es' ? 'Volver al apartamento' : 'Back to apartment'}</span>
+              <span>{lang === 'es' ? 'Volver al Hestía' : 'Back to Hestía'}</span>
             </button>
           </div>
 
@@ -1161,8 +1063,8 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
           </h2>
           <p className="apt-guide-gate-desc">
             {lang === 'es'
-              ? 'Recomendaciones del barrio, restaurantes, calas, instrucciones del apartamento y todo lo que necesitas para tu estancia. Reservada para huéspedes con PIN.'
-              : 'Neighbourhood recommendations, restaurants, coves, apartment instructions and everything you need for your stay. Reserved for guests with a PIN.'}
+              ? 'Recomendaciones del barrio, restaurantes, calas, instrucciones del Hestía y todo lo que necesitas para tu estancia. Reservada para huéspedes con PIN.'
+              : 'Neighbourhood recommendations, restaurants, coves, Hestía instructions and everything you need for your stay. Reserved for guests with a PIN.'}
           </p>
           <button className="apt-guide-gate-btn" onClick={() => setOpen(true)}>
             <span>{t.cta}</span>
