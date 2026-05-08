@@ -8614,7 +8614,9 @@ footer,
 }
 
 /* ================================================================
-   LAYER 60 · "Why Direct" — sección wow de ventajas (Hestía + home)
+   LAYER 60 · Direct booking — banda compacta + modal con carrusel
+   La banda (.dbt-*) se coloca encima del calendario; el botón abre
+   el modal (.dbm-*) que muestra cifras clave + carrusel de ventajas.
    ================================================================ */
 .app-match {
   display: inline-block;
@@ -8626,86 +8628,29 @@ footer,
   color: var(--sol-lt, #ffd770);
 }
 
-.why-direct {
-  padding: 72px var(--page-pad);
-  background:
-    radial-gradient(1200px 320px at 50% -50%, color-mix(in oklab, var(--sol) 22%, transparent), transparent 60%),
-    linear-gradient(180deg, var(--crema), color-mix(in oklab, var(--sol) 8%, var(--crema)));
-  border-top: 1px solid rgba(61,26,53,0.06);
-  border-bottom: 1px solid rgba(61,26,53,0.06);
+/* ── Trigger band ── */
+.dbt-band {
+  padding: 44px var(--page-pad) 36px;
   text-align: center;
-  position: relative;
+  background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--sol) 7%, transparent));
+  border-top: 1px solid rgba(61,26,53,0.06);
 }
-.why-direct .container { max-width: 980px; margin: 0 auto; }
-.wd-eyebrow {
-  display: block;
-  margin-bottom: 14px;
-}
-.wd-title {
+.dbt-inner { max-width: 720px; margin: 0 auto; }
+.dbt-eyebrow { display: block; margin-bottom: 12px; }
+.dbt-title {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(34px, 5.2vw, 58px);
-  line-height: 1.05;
+  font-size: clamp(24px, 3.4vw, 34px);
+  line-height: 1.18;
   letter-spacing: -.01em;
-  margin: 0 auto 16px;
-  max-width: 22ch;
+  margin: 0 0 22px;
   color: var(--ber-dk);
 }
-.wd-title em { font-style: italic; color: var(--ber); }
-.wd-sub {
-  font-size: 15px;
-  line-height: 1.55;
-  color: var(--ink-soft);
-  margin: 0 auto 36px;
-  max-width: 38ch;
-}
-
-/* Stat ribbon: 4 cifras clave que se muestran siempre, plegado o no */
-.wd-ribbon {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  max-width: 760px;
-  margin: 0 auto 36px;
-}
-.wd-stat {
-  background: var(--crema);
-  padding: 22px 12px;
-  border-radius: 14px 0 14px 0;
-  border-left: 3px solid var(--sol);
-  text-align: center;
-  box-shadow: 0 6px 22px rgba(42,15,46,.06);
-  animation: wd-stat-in 600ms var(--ease-out, cubic-bezier(.23,1,.32,1)) backwards;
-}
-.wd-num {
-  display: block;
-  font-family: var(--serif);
-  font-size: clamp(26px, 4.4vw, 40px);
-  font-weight: 400;
-  color: var(--ber-dk);
-  line-height: 1;
-  letter-spacing: -.01em;
-  font-variant-numeric: tabular-nums;
-}
-.wd-stat-label {
-  display: block;
-  margin-top: 8px;
-  font-size: 10px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  font-weight: 500;
-}
-@keyframes wd-stat-in {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* CTA pill que despliega el detalle */
-.wd-toggle {
+.dbt-title em { font-style: italic; color: var(--ber); }
+.dbt-btn {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   padding: 14px 28px;
   background: var(--ber);
   color: var(--crema);
@@ -8721,96 +8666,198 @@ footer,
   transition: transform .25s var(--ease-out, cubic-bezier(.23,1,.32,1)),
               background .25s ease, box-shadow .25s ease;
 }
-.wd-toggle:hover {
+.dbt-btn:hover {
   background: var(--ber-dk);
   transform: translateY(-2px);
   box-shadow: 0 12px 32px rgba(42,15,46,.26);
 }
-.wd-toggle:active { transform: translateY(0) scale(.98); }
-.wd-chevron {
-  display: inline-block;
-  font-size: 14px;
-  transition: transform .35s var(--ease-out, cubic-bezier(.23,1,.32,1));
+.dbt-btn:active { transform: translateY(0) scale(.98); }
+.dbt-arrow {
+  font-size: 16px;
+  transition: transform .25s var(--ease-out, cubic-bezier(.23,1,.32,1));
 }
-.wd-chevron.open { transform: rotate(180deg); }
+.dbt-btn:hover .dbt-arrow { transform: translateX(4px); }
 
-/* Detalle desplegable: cards en rejilla con stagger */
-.wd-detail {
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: max-height .55s var(--ease-out, cubic-bezier(.23,1,.32,1)),
-              opacity .35s ease,
-              margin-top .35s ease;
+/* ── Modal backdrop + container ── */
+.dbm-backdrop {
+  position: fixed; inset: 0;
+  z-index: 9000;
+  background: rgba(26, 12, 24, 0.74);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  animation: dbm-fade .25s ease both;
 }
-.wd-detail.open {
-  max-height: 2800px;
-  opacity: 1;
-  margin-top: 38px;
-}
-.wd-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-  gap: 18px;
-  text-align: left;
-}
-.wd-card {
+@keyframes dbm-fade { from { opacity: 0; } to { opacity: 1; } }
+.dbm-modal {
+  position: relative;
   background: var(--crema);
-  padding: 24px 26px 22px;
-  border-radius: 14px 0 14px 0;
-  border-left: 4px solid var(--sol);
-  box-shadow: 0 4px 22px rgba(42,15,46,.06);
-  transition: transform .25s var(--ease-out, cubic-bezier(.23,1,.32,1)),
-              box-shadow .25s var(--ease-out, cubic-bezier(.23,1,.32,1));
-  animation: wd-card-in 500ms var(--ease-out, cubic-bezier(.23,1,.32,1)) backwards;
+  border-radius: 18px 0 18px 0;
+  max-width: 600px;
+  width: 100%;
+  max-height: min(90vh, 720px);
+  overflow: auto;
+  padding: 40px 36px 28px;
+  box-shadow: 0 30px 80px rgba(42,15,46,.45);
+  animation: dbm-rise .42s var(--ease-out, cubic-bezier(.23,1,.32,1)) both;
+  text-align: center;
 }
-.wd-detail.open .wd-card { animation-play-state: running; }
-.wd-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 36px rgba(42,15,46,.14);
+@keyframes dbm-rise {
+  from { opacity: 0; transform: translateY(24px) scale(.96); }
+  to   { opacity: 1; transform: translateY(0)  scale(1); }
 }
-.wd-card-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  gap: 12px;
+.dbm-close {
+  position: absolute; top: 12px; right: 14px;
+  width: 34px; height: 34px;
+  background: transparent; border: 0; cursor: pointer;
+  font-size: 26px; line-height: 1;
+  color: var(--ber-dk);
+  border-radius: 50%;
+  transition: background .25s ease;
 }
-.wd-icon {
-  font-size: 28px;
-  line-height: 1;
-  filter: drop-shadow(0 2px 4px rgba(42,15,46,.12));
-}
-.wd-card-stat {
+.dbm-close:hover { background: rgba(61,26,53,.08); }
+
+.dbm-head { margin-bottom: 22px; }
+.dbm-title {
   font-family: var(--serif);
-  font-size: 24px;
+  font-weight: 300;
+  font-size: clamp(22px, 3.4vw, 30px);
+  line-height: 1.2;
+  margin: 8px 0 0;
+  color: var(--ber-dk);
+}
+.dbm-title em { font-style: italic; color: var(--ber); }
+
+/* ── Stat ribbon dentro del modal ── */
+.dbm-ribbon {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 0 0 24px;
+}
+.dbm-stat {
+  background: color-mix(in oklab, var(--sol) 14%, var(--crema));
+  padding: 12px 6px;
+  border-radius: 10px 0 10px 0;
+  border-left: 2px solid var(--sol);
+  text-align: center;
+}
+.dbm-num {
+  display: block;
+  font-family: var(--serif);
+  font-size: clamp(18px, 3vw, 26px);
+  font-weight: 400;
+  color: var(--ber-dk);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.dbm-stat-label {
+  display: block;
+  margin-top: 4px;
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ── Carrusel: nav + card ── */
+.dbm-carousel {
+  display: grid;
+  grid-template-columns: 36px 1fr 36px;
+  gap: 10px;
+  align-items: center;
+  margin: 0 0 16px;
+}
+.dbm-nav {
+  width: 36px; height: 36px;
+  background: var(--crema);
+  border: 1px solid rgba(61,26,53,.18);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--ber);
+  font-family: var(--serif);
+  line-height: 1;
+  transition: background .25s, color .25s, transform .15s var(--ease-out);
+}
+.dbm-nav:hover { background: var(--ber); color: var(--crema); border-color: var(--ber); }
+.dbm-nav:active { transform: scale(.92); }
+.dbm-card {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--sol) 8%, var(--crema)), var(--crema));
+  border-left: 4px solid var(--sol);
+  border-radius: 14px 0 14px 0;
+  padding: 26px 24px 22px;
+  text-align: left;
+  min-height: 184px;
+  animation: dbm-slide .35s var(--ease-out, cubic-bezier(.23,1,.32,1)) both;
+}
+@keyframes dbm-slide {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.dbm-card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.dbm-icon {
+  font-size: 30px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(42,15,46,.15));
+}
+.dbm-card-stat {
+  font-family: var(--serif);
+  font-size: 26px;
   font-weight: 400;
   color: var(--ber);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -.01em;
 }
-.wd-card-t {
+.dbm-card-t {
   font-family: var(--serif);
-  font-size: 19px;
+  font-size: 20px;
   font-weight: 400;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   color: var(--ber-dk);
-  line-height: 1.25;
+  line-height: 1.22;
 }
-.wd-card-d {
-  font-size: 13.5px;
+.dbm-card-d {
+  font-size: 14px;
   line-height: 1.6;
   color: var(--ink-soft);
   margin: 0;
 }
-@keyframes wd-card-in {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+
+/* ── Dots + counter ── */
+.dbm-dots {
+  display: flex; justify-content: center; gap: 8px;
+  margin: 0 0 10px;
+}
+.dbm-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(61,26,53,.2);
+  border: 0; padding: 0; cursor: pointer;
+  transition: background .25s ease, transform .25s var(--ease-out, cubic-bezier(.23,1,.32,1));
+}
+.dbm-dot:hover { background: rgba(61,26,53,.4); }
+.dbm-dot.active {
+  background: var(--ber);
+  transform: scale(1.4);
+}
+.dbm-counter {
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 600px) {
-  .why-direct { padding: 56px var(--page-pad); }
-  .wd-ribbon { grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 360px; }
-  .wd-grid { grid-template-columns: 1fr; gap: 14px; }
-  .wd-card { padding: 20px 22px; }
+  .dbt-band { padding: 36px var(--page-pad) 30px; }
+  .dbm-modal { padding: 32px 22px 24px; max-height: 92vh; }
+  .dbm-ribbon { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .dbm-carousel { grid-template-columns: 32px 1fr 32px; }
+  .dbm-card { padding: 22px 20px; min-height: 0; }
+  .dbm-card-stat { font-size: 22px; }
+  .dbm-card-t { font-size: 18px; }
 }

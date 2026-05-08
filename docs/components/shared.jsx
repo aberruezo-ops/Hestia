@@ -1576,7 +1576,7 @@ const DIRECT_PERKS = {
     { id:'precio',    icon:'💰', stat:'−9%',     t:'Mejoramos cualquier precio.',                     d:'Mejoramos el precio de cualquier plataforma. Y si nos dices un precio mejor que el que te ofrecemos, te lo mejoramos. Sin discusión, sin letra pequeña.' },
     { id:'comision',  icon:'🚫', stat:'0%',      t:'Sin comisiones de plataforma.',                   d:'El 9–15 % que se quedan las OTAs por cada reserva queda contigo. Pagas el precio real, no el inflado por intermediarios.' },
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Respuesta humana, no un bot.',                    d:'Hablas directamente con Alex o Fran. Casi siempre respondemos en minutos; máximo una hora en horario activo.' },
-    { id:'cancel',    icon:'🔓', stat:'7 días',  t:'Cancelación flexible (y mejorable).',             d:'Gratuita hasta 7 días antes de la llegada. Y si necesitas otras condiciones, ¡pregúntanos! Sin formularios eternos ni sanciones ocultas.' },
+    { id:'cancel',    icon:'🔓', stat:'✓',       t:'Mejoramos las condiciones de cancelación.',       d:'¿Necesitas algo distinto a la política estándar? Pregúntanos, miramos cada caso. Sin formularios eternos, sin sanciones ocultas.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Pago seguro y flexible.',                         d:'Sin pre-autorizaciones que bloqueen tu tarjeta. Si necesitas plazos, los acordamos contigo. Pago directo, sin intermediarios.' },
     { id:'descuento', icon:'🎁', stat:'−30%',    t:'Descuentos por estancia larga.',                  d:'−3 % a partir de 7 noches · −15 % a partir de 15 · −30 % a partir de 29. Aplicables en temporadas elegibles.' },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Guía privada incluida.',                          d:'Recomendaciones de Alex y Fran, instrucciones del Hestía, restaurantes, calas y rutas. Activa toda la estancia.' },
@@ -1586,7 +1586,7 @@ const DIRECT_PERKS = {
     { id:'precio',    icon:'💰', stat:'−9%',     t:'We beat any price.',                              d:'We beat any platform price. And if you tell us a better price than ours, we beat it again. No questions, no small print.' },
     { id:'comision',  icon:'🚫', stat:'0%',      t:'No platform commissions.',                        d:'The 9–15 % OTAs keep on every booking stays with you. You pay the real price, not the inflated one.' },
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Human reply, not a bot.',                         d:'You talk directly to Alex or Fran. Usually within minutes; up to an hour during active hours.' },
-    { id:'cancel',    icon:'🔓', stat:'7 days',  t:'Flexible cancellation (and better on request).',  d:'Free up to 7 days before arrival. Need different terms? Just ask! No endless forms, no hidden penalties.' },
+    { id:'cancel',    icon:'🔓', stat:'✓',       t:'We improve cancellation terms.',                  d:'Need something different from the standard policy? Just ask — we look at each case. No endless forms, no hidden penalties.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Safe, flexible payment.',                         d:'No pre-authorisations blocking your card. If you need installments, we agree them. Direct payment, no middleman.' },
     { id:'descuento', icon:'🎁', stat:'−30%',    t:'Long-stay discounts.',                            d:'−3 % from 7 nights · −15 % from 15 · −30 % from 29. Apply in eligible seasons.' },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Private guide included.',                         d:'Alex & Fran recommendations, Hestía instructions, restaurants, hidden coves and routes. Active throughout your stay.' },
@@ -1599,75 +1599,135 @@ const DIRECT_RIBBON = {
     { num:'−9%',   label:'mejor precio' },
     { num:'0%',    label:'comisiones' },
     { num:'≤1 h',  label:'respuesta' },
-    { num:'7 d',   label:'cancela gratis' },
+    { num:'−30%',  label:'estancia larga' },
   ],
   en: [
     { num:'−9%',   label:'better price' },
     { num:'0%',    label:'commissions' },
     { num:'≤1 h',  label:'reply' },
-    { num:'7 d',   label:'free cancel' },
+    { num:'−30%',  label:'long stay' },
   ],
 };
 
-const DirectBookingPerks = ({ lang }) => {
-  const [open, setOpen] = React.useState(false);
+// Modal con carrusel: una sola card visible, prev/next + dots.
+// Se monta condicionalmente; cierra con backdrop click, ESC o ✕.
+const DirectBookingModal = ({ lang, onClose }) => {
   const list   = DIRECT_PERKS[lang];
   const ribbon = DIRECT_RIBBON[lang];
-  return (
-    <section className="why-direct">
-      <div className="container">
-        <span className="eyebrow wd-eyebrow">
-          {lang === 'es' ? 'Reserva directa' : 'Direct booking'}
-        </span>
-        <h2 className="wd-title">
-          {lang === 'es'
-            ? <>Una <em>mejor manera</em> de reservar.</>
-            : <>A <em>better way</em> to book.</>}
-        </h2>
-        <p className="wd-sub">
-          {lang === 'es'
-            ? 'Ocho razones — todas verificables, todas siempre garantizadas.'
-            : 'Eight reasons — all verifiable, all always guaranteed.'}
-        </p>
+  const len    = list.length;
+  const [idx, setIdx] = React.useState(0);
 
-        <div className="wd-ribbon">
+  React.useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      else if (e.key === 'ArrowRight') setIdx(i => (i + 1) % len);
+      else if (e.key === 'ArrowLeft')  setIdx(i => (i - 1 + len) % len);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [len, onClose]);
+
+  const cur = list[idx];
+  const goPrev = () => setIdx(i => (i - 1 + len) % len);
+  const goNext = () => setIdx(i => (i + 1) % len);
+
+  return (
+    <div className="dbm-backdrop" onClick={onClose} role="dialog" aria-modal="true">
+      <div className="dbm-modal" onClick={e => e.stopPropagation()}>
+        <button
+          type="button" className="dbm-close"
+          onClick={onClose}
+          aria-label={lang === 'es' ? 'Cerrar' : 'Close'}
+        >×</button>
+
+        <div className="dbm-head">
+          <span className="eyebrow">
+            {lang === 'es' ? 'Reserva directa' : 'Direct booking'}
+          </span>
+          <h3 className="dbm-title">
+            {lang === 'es'
+              ? <>Una <em>mejor manera</em> de reservar</>
+              : <>A <em>better way</em> to book</>}
+          </h3>
+        </div>
+
+        <div className="dbm-ribbon">
           {ribbon.map((s, i) => (
-            <div key={i} className="wd-stat" style={{ animationDelay: `${i * 90}ms` }}>
-              <span className="wd-num">{s.num}</span>
-              <span className="wd-stat-label">{s.label}</span>
+            <div key={i} className="dbm-stat">
+              <span className="dbm-num">{s.num}</span>
+              <span className="dbm-stat-label">{s.label}</span>
             </div>
           ))}
         </div>
 
-        <button
-          type="button"
-          className="wd-toggle"
-          onClick={() => setOpen(o => !o)}
-          aria-expanded={open}
-        >
-          <span>{open
-            ? (lang === 'es' ? 'Ocultar el detalle' : 'Hide the detail')
-            : (lang === 'es' ? 'Ver todas las ventajas' : 'See all the perks')}</span>
-          <span className={`wd-chevron ${open ? 'open' : ''}`} aria-hidden="true">↓</span>
-        </button>
-
-        <div className={`wd-detail ${open ? 'open' : ''}`} aria-hidden={!open}>
-          <div className="wd-grid">
-            {list.map((p, i) => (
-              <article key={p.id} className="wd-card" style={{ animationDelay: `${i * 70}ms` }}>
-                <div className="wd-card-head">
-                  <span className="wd-icon" aria-hidden="true">{p.icon}</span>
-                  <span className="wd-card-stat">{p.stat}</span>
-                </div>
-                <h3 className="wd-card-t">{p.t}</h3>
-                <p className="wd-card-d">{p.d}</p>
-              </article>
-            ))}
-          </div>
+        <div className="dbm-carousel">
+          <button type="button" className="dbm-nav" onClick={goPrev}
+            aria-label={lang === 'es' ? 'Anterior' : 'Previous'}>←</button>
+          <article key={cur.id} className="dbm-card">
+            <div className="dbm-card-head">
+              <span className="dbm-icon" aria-hidden="true">{cur.icon}</span>
+              <span className="dbm-card-stat">{cur.stat}</span>
+            </div>
+            <h4 className="dbm-card-t">{cur.t}</h4>
+            <p className="dbm-card-d">{cur.d}</p>
+          </article>
+          <button type="button" className="dbm-nav" onClick={goNext}
+            aria-label={lang === 'es' ? 'Siguiente' : 'Next'}>→</button>
         </div>
+
+        <div className="dbm-dots">
+          {list.map((p, i) => (
+            <button
+              key={p.id}
+              type="button"
+              className={`dbm-dot ${i === idx ? 'active' : ''}`}
+              onClick={() => setIdx(i)}
+              aria-label={`${i + 1} / ${len}`}
+            />
+          ))}
+        </div>
+        <div className="dbm-counter">{idx + 1} / {len}</div>
       </div>
-    </section>
+    </div>
   );
 };
 
-Object.assign(window, { DirectBookingPerks, DIRECT_PERKS, DIRECT_RIBBON });
+// Banda compacta + trigger. Se coloca encima del calendario en cada
+// Hestía (y donde se quiera en el home). Al pulsar el botón, abre el
+// modal con carrusel y stat ribbon.
+const DirectBookingPerks = ({ lang }) => {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <>
+      <section className="dbt-band">
+        <div className="container dbt-inner">
+          <span className="eyebrow dbt-eyebrow">
+            {lang === 'es' ? 'Reservar directo' : 'Direct booking'}
+          </span>
+          <h3 className="dbt-title">
+            {lang === 'es'
+              ? <>Reservar directo es <em>siempre</em> mejor.</>
+              : <>Booking direct is <em>always</em> better.</>}
+          </h3>
+          <button
+            type="button"
+            className="dbt-btn"
+            onClick={() => setOpen(true)}
+            aria-haspopup="dialog"
+          >
+            <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
+            <span className="dbt-arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+      </section>
+      {open && <DirectBookingModal lang={lang} onClose={() => setOpen(false)} />}
+    </>
+  );
+};
+
+Object.assign(window, { DirectBookingPerks, DirectBookingModal, DIRECT_PERKS, DIRECT_RIBBON });

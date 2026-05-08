@@ -806,9 +806,9 @@ const ApartmentPageApp = () => {
             <FraseHogar lang={lang} />
             <AptPageDesc apt={apt} lang={lang} />
             <AptPageGallery apt={apt} lang={lang} />
-            <DirectBookingPerks lang={lang} />
             <AptEquipamiento apt={apt} lang={lang} />
             <AptFloorPlan apt={apt} lang={lang} />
+            <DirectBookingPerks lang={lang} />
             <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
             {typeof AptGuideGate !== 'undefined' &&
               <AptGuideGate apt={apt} lang={lang} onUnlock={() => setGuideOpen(true)} />}
