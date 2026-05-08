@@ -4765,10 +4765,10 @@ body.no-parallax .g-tile .img { transform: none !important; }
   transition: background 220ms ease-in;
 }
 
-/* 3) Photo grid — reset agresivo para garantizar render nítido sin halos.
-   La causa probable del halo: el <img> tenía background:color-mix(...) y
-   border-radius propios que se mezclaban con el clip del wrap, dejando un
-   tinte de color en los bordes redondeados. */
+/* 3) Photo grid — render nítido en Safari iOS.
+   Bug conocido: border-radius + overflow:hidden en un parent rasteriza el
+   <img> a baja resolución (efecto de blur/halo). Fix: translateZ(0) en el
+   wrap fuerza capa GPU dedicada a resolución nativa. */
 .ag-photo,
 .ag-photo-wrap,
 .ag-photo-wrap > img {
@@ -4778,12 +4778,19 @@ body.no-parallax .g-tile .img { transform: none !important; }
   -webkit-backdrop-filter: none !important;
   box-shadow: none !important;
   transition: none !important;
-  transform: none !important;
+}
+.ag-photo-wrap {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
 }
 .ag-photo-wrap > img {
   background: transparent !important;
   border-radius: 0 !important;  /* el wrap ya recorta */
   image-rendering: auto;
+  /* Misma capa GPU que el wrap para que el clip rasterice a alta resolución. */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 
 /* 4) Map markers — fade y scale al togglear categoría */
