@@ -1138,6 +1138,39 @@ const SABIAS_QUE_HOME_FACTS = [
     es: 'La higuera almeriense da dos cosechas al año: las brevas de junio y los higos de agosto. Los griegos llamaron "la tierra de las dos cosechas" a este litoral — uno de los primeros homenajes escritos a la fertilidad de Almería.',
     en: 'The Almería fig tree gives two harvests a year: the figs of June and the figs of August. The Greeks called this coastline "the land of two harvests" — one of the first written tributes to Almería\'s fertility.',
   },
+  /* Almería occidental — Roquetas, Almerimar, El Ejido, Adra */
+  {
+    es: 'Roquetas de Mar tiene 16 km de playa continua y un castillo de 1502 — Santa Ana — construido para defender la costa de los piratas berberiscos. Hoy es uno de los pocos castillos costeros visitables del Mediterráneo español.',
+    en: 'Roquetas de Mar has 16 km of unbroken beach and a 1502 fortress — Santa Ana — built to defend the coast from Barbary pirates. Today it is one of the few visitable coastal castles on the Spanish Mediterranean.',
+  },
+  {
+    es: 'Almerimar nació en los 70 como puerto deportivo de un proyecto urbanístico pionero — uno de los primeros marinas-resort de España. Tiene 1.100 amarres y rutas en velero hasta Marruecos en 14 horas.',
+    en: 'Almerimar was born in the 1970s as the marina of a pioneering resort development — one of the first marina-resorts in Spain. It hosts 1,100 berths and sailing routes to Morocco in 14 hours.',
+  },
+  {
+    es: 'El Ejido produce el 30% del tomate y el pepino que se comen en Europa entre noviembre y marzo. Su "mar de plástico" — 30.000 hectáreas de invernaderos — es el único cultivo humano visible desde el espacio.',
+    en: 'El Ejido grows 30% of all tomatoes and cucumbers eaten in Europe between November and March. Its "plastic sea" — 30,000 hectares of greenhouses — is the only human crop visible from space.',
+  },
+  {
+    es: 'Adra es la ciudad más antigua de Andalucía: fundada por los fenicios hace 3.000 años como Abdera. En su museo hay una moneda púnica con un atún — el primer "logo" comercial de la cuenca mediterránea.',
+    en: 'Adra is Andalusia\'s oldest city: founded by the Phoenicians 3,000 years ago as Abdera. Its museum holds a Punic coin showing a tuna — the first commercial "logo" of the Mediterranean basin.',
+  },
+  {
+    es: 'Las Albuferas de Adra son el último humedal natural de Andalucía oriental: refugio de la malvasía cabeciblanca, ave en peligro crítico que estuvo a punto de extinguirse en los 80.',
+    en: 'The Albuferas of Adra are the last natural wetland of eastern Andalusia: a refuge for the white-headed duck, a critically endangered bird that nearly went extinct in the 1980s.',
+  },
+  {
+    es: 'Berja, Dalías y la Alpujarra almeriense fueron el último reducto musulmán de la Península tras la conquista de Granada en 1492. Sus cortijos blancos en las laderas son herencia directa de aquella arquitectura morisca.',
+    en: 'Berja, Dalías and the Almería Alpujarra were the last Moorish stronghold in the Peninsula after the 1492 fall of Granada. The white-washed mountain farmsteads still carry that Morisco architecture directly.',
+  },
+  {
+    es: 'La Sierra de Gádor — entre Berja y Almería capital — fue la mayor productora de plomo del mundo en el siglo XIX. Sus minas dieron tanto plomo que abastecieron media Europa.',
+    en: 'The Sierra de Gádor — between Berja and Almería city — was the world\'s largest lead producer in the 19th century. Its mines fed half of Europe.',
+  },
+  {
+    es: 'El Cabo Sacratif (Granada, frontera con Almería) es uno de los puntos más al sur de la España peninsular. Su faro lleva más de 160 años guiando barcos por el Estrecho del Mediterráneo.',
+    en: 'Cabo Sacratif (Granada, on the Almería border) is one of the southernmost points of mainland Spain. Its lighthouse has been guiding ships through the Mediterranean strait for over 160 years.',
+  },
 ];
 
 // Shuffled pools — stable per page load
