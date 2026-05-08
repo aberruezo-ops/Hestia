@@ -8311,11 +8311,25 @@ footer,
   transition: background 220ms ease-in;
 }
 
-/* 3) Photo grid — sin entry animation. Las fotos se ven sin filtros desde
-   el primer frame. El blur con @starting-style daba problemas en algunos
-   navegadores (la transición no completaba y las fotos quedaban borrosas). */
-.ag-photo {
-  /* No transitions, no filter. Static. */
+/* 3) Photo grid — reset agresivo para garantizar render nítido sin halos.
+   La causa probable del halo: el <img> tenía background:color-mix(...) y
+   border-radius propios que se mezclaban con el clip del wrap, dejando un
+   tinte de color en los bordes redondeados. */
+.ag-photo,
+.ag-photo-wrap,
+.ag-photo-wrap > img {
+  filter: none !important;
+  -webkit-filter: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+.ag-photo-wrap > img {
+  background: transparent !important;
+  border-radius: 0 !important;  /* el wrap ya recorta */
+  image-rendering: auto;
 }
 
 /* 4) Map markers — fade y scale al togglear categoría */
