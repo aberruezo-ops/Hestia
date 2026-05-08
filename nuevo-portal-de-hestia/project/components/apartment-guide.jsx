@@ -390,80 +390,80 @@ const GUIDE_BY_APT = {
 
   // Hestía Vera Salinas
   vs: {
-    // Salinas se subió como PPTX (no PDF). Mantenemos el enlace al pptx original
-    // hasta que se convierta a PDF.
-    pdf: 'assets/20220627_HestiaVeraSalinas_GuiaHogar_v3.7.pptx',
+    pdf: 'assets/HestiaVeraSalinas_GuiaHogar_v1.0.pdf',
     es: {
       rooms: [
-        { id: 'salon', title: 'Tu salón', body: 'Salón con sofá grande, mesa y cuatro sillas, televisión plana con Netflix y HBO Max, y aire acondicionado centralizado controlado desde el cuadro junto a la puerta.', recs: [
-          'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en casa.',
-          'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.',
-          'Amolda a tu gusto el color y tonalidad de la iluminación con el mando junto al cuadro del A/C.',
+        { id: 'salon', title: 'Tu salón', body: 'En tu sofá-cama disfrutarás de tu televisión con ambilight donde podrás ver tus contenidos en streaming como Netflix, aclimatando la temperatura con el cuadro del aire acondicionado centralizado.', recs: [
+          'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.',
+          'Echa un vistazo a las Normas de uso de Hestía, al final de esta misma guía.',
+          'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando a la misma.',
           'Pídenos tu código para usar la alarma durante tu estancia.',
         ]},
         { id: 'cocina', title: 'Tu cocina', body: 'Con todo lo necesario para que tu estancia sea lo más placentera y cómoda posible: mobiliario de gran calidad, electrodomésticos de alta gama, dotación completa de pequeños electrodomésticos y detalles.', recs: [
           'Los libros de instrucciones de los electrodomésticos se encuentran en los cajones bajo la vitrocerámica.',
-          'Evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.',
+          'Si tienes prisa, evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.',
           'El agua es potable, aunque quizás prefieras agua embotellada.',
         ]},
-        { id: 'banos', title: 'Tus baños', body: 'Dos baños completos con ducha de hidromasaje. Dispones de productos básicos para tus primeros días, además de aromas, velas, secador, botiquín, etc.', recs: [
+        { id: 'dormitorios', title: 'Tus dormitorios', body: 'Dormitorios con las mejores sábanas y rellenos nórdicos de plumas. Colchones de alta calidad y almohadas de viscoelástica. En el armario encontrarás tu sombrilla de playa.', recs: [
+          'Las cremas bronceadoras pueden estropear sábanas, toallas y tapicerías.',
+          'Cuidado con el aire acondicionado por la noche y las corrientes de aire.',
+          'Ponte el despertador un día no muy nublado para ver el amanecer.',
+        ]},
+        { id: 'banos', title: 'Tus baños', body: 'Dos baños: uno con bañera e hidromasaje y cromoterapia en el espejo, y otro con ducha e hidromasaje. Dispones de productos básicos para tus primeros días, además de aromas, velas, secador, botiquín, etc.', recs: [
           'Haz un uso prudente y responsable del agua. El agua es vida.',
           'Las toallas del baño no son para la playa ni para la piscina.',
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
         ]},
-        { id: 'dormitorios', title: 'Tus dormitorios', body: 'Dos dormitorios con la mejor luz albero del amanecer almeriense entrando por las terrazas. Sábanas y rellenos nórdicos de calidad. Colchones de alta gama y almohadas de diferentes durezas.', recs: [
-          'Las cremas bronceadoras pueden estropear sábanas, toallas y tapicerías.',
-          'Cuidado con el aire acondicionado por la noche y las corrientes de aire.',
-          'Ponte el despertador un día no muy nublado para ver el amanecer sobre las salinas.',
-        ]},
-        { id: 'terraza', title: 'Tus terrazas', body: 'Dos terrazas para vivir el sol durante todo el día: una orientada al amanecer sobre las Salinas de Puerto Rey, y otra al atardecer mediterráneo.', recs: [
+        { id: 'terraza', title: 'Tu terraza', body: 'Disfruta de las mejores vistas y los dos ambientes para cada momento de tus vacaciones.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
           'Mientras estés en la terraza apaga o reduce el A/C.',
-          'Recoge cojines y mesas cuando sople aire, llueva o vayas a salir.',
-          'Usa las velas y la guirnalda de luces para crear el ambiente perfecto al atardecer.',
+          'Recoge el toldo y los cojines cuando sople aire o llueva.',
+          'Usa velas para crear el ambiente perfecto.',
         ]},
-        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Tres piscinas comunitarias y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina. Aparca tu coche en tu plaza y disfruta del entorno más natural de los tres apartamentos.', recs: [
-          'Las salinas son un parque natural protegido — disfrútalas con respeto, sin salirte de los caminos.',
-          'Las tres piscinas tienen distintos horarios — pregúntanos.',
+        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Una urbanización textil para olvidarse del mundo y cerca de todo. Aparca tu coche en tu plaza subterránea (nº 290) y disfruta de todo lo que Hestía te ofrece: entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), tu plaza de garaje (nº 290), acceso peatonal desde la urbanización, Hestía Vera Salinas en bloque 22, planta 1, apartamento 7, piscina y pistas deportivas.', recs: [
+          'La urbanización merece la pena recorrerla. Los jardines, los riachuelos, las aves, otros pequeños animales, el desierto alrededor. Es un lugar sin igual, para disfrutar con los más pequeños con toda la tranquilidad de un recinto cerrado.',
+          'Cuida las plantas y la limpieza de la urbanización.',
           'Respeta las zonas comunes y las normas de la urbanización.',
-          'No utilices en la piscina las toallas de casa.',
+          'Respeta a los vecinos.',
+          'Llama a Conserjería para reservar cualquier espacio común.',
         ]},
       ],
     },
     en: {
       rooms: [
-        { id: 'salon', title: 'Your living room', body: 'Living room with a large sofa, table for four, flat-screen TV with Netflix and HBO Max, and centralised A/C controlled from the panel next to the door.', recs: [
-          'Do not leave the A/C on with doors open or while you are away from home.',
-          'Take a look at Hestía\'s usage guidelines, next to the entrance door.',
-          'Adjust colour and tonality of the lighting with the remote next to the A/C panel.',
+        { id: 'salon', title: 'Your living room', body: 'On your sofa-bed you will enjoy your flat-screen smart TV — Netflix and your favourite streaming content. The centralised air-conditioning panel is at your disposal.', recs: [
+          'Do not leave the air conditioner running with doors open or while you are away from Hestía.',
+          'Take a look at Hestía\'s usage guidelines, at the end of this guide.',
+          'Adjust colour and tonality of the table lamp with the remote next to it.',
           'Ask us for your alarm code to use it during your stay.',
         ]},
-        { id: 'cocina', title: 'Your kitchen', body: 'Everything you need for a comfortable stay: quality furniture, premium appliances and a full set of small appliances and details.', recs: [
+        { id: 'cocina', title: 'Your kitchen', body: 'Everything you need for a pleasant and comfortable stay: high-quality furniture, premium appliances and a full set of small appliances and details.', recs: [
           'Appliance manuals are in the drawers under the hob.',
-          'Avoid the eco cycle on the washer and dishwasher — water-saving but excessively long.',
+          'In a hurry? Avoid the eco cycle on washer and dishwasher — water-saving but excessively long.',
           'Tap water is drinkable, but you may prefer bottled.',
         ]},
-        { id: 'banos', title: 'Your bathrooms', body: 'Two full bathrooms with hydromassage shower. Basic products for your first days, plus scents, candles, hairdryer, first-aid kit, etc.', recs: [
+        { id: 'dormitorios', title: 'Your bedrooms', body: 'Bedrooms with the finest sheets and feather or synthetic duvets. Quality mattresses and memory-foam pillows. In the closet you will find your beach umbrella.', recs: [
+          'Tanning creams can ruin sheets, towels and upholstery.',
+          'Watch out for night-time A/C and drafts.',
+          'Set the alarm one clear morning to see the sunrise.',
+        ]},
+        { id: 'banos', title: 'Your bathrooms', body: 'Two bathrooms: one with bathtub, hydromassage and chromotherapy mirror, and another with hydromassage shower. Basic products for your first days, plus scents, candles, hairdryer, first-aid kit, etc.', recs: [
           'Use water responsibly. Water is life.',
           'Bathroom towels are not for the beach or the pool.',
           'Be careful with creams and make-up — they damage textiles.',
         ]},
-        { id: 'dormitorios', title: 'Your bedrooms', body: 'Two bedrooms with the finest ochre Almería sunrise light through the terraces. Quality sheets and feather or synthetic duvets. Premium mattresses and pillows of different firmness.', recs: [
-          'Tanning creams can ruin sheets, towels and upholstery.',
-          'Watch out for night-time A/C and drafts.',
-          'Set the alarm one clear morning to see the sunrise over the salt flats.',
-        ]},
-        { id: 'terraza', title: 'Your terraces', body: 'Two terraces to live the sun all day long: one facing the sunrise over the Puerto Rey salt flats, and the other facing the Mediterranean sunset.', recs: [
+        { id: 'terraza', title: 'Your terrace', body: 'Enjoy the best views and two atmospheres for every moment of your holiday.', recs: [
           'Enjoy the quiet — and let your neighbours enjoy it too.',
           'Turn off or reduce the A/C while you are on the terrace.',
-          'Put away cushions and tables when it\'s windy, raining, or you go out.',
-          'Use the candles and the string lights to create the perfect sunset atmosphere.',
+          'Roll up the awning and put away cushions when it\'s windy or raining.',
+          'Use candles to create the perfect atmosphere.',
         ]},
-        { id: 'urbanizacion', title: 'Your residential complex', body: 'Three shared pools and the Puerto Rey Salt-flat Nature Park around the corner. Park in your space and enjoy the most natural setting of the three apartments.', recs: [
-          'The salt flats are a protected nature park — enjoy them with respect, stay on paths.',
-          'The three pools have different schedules — ask us.',
+        { id: 'urbanizacion', title: 'Your residential complex', body: 'A textile-free residential complex to forget the world while staying near everything. Park in your underground space (nº 290) and enjoy everything Hestía offers: code-controlled entrance, access/barrier to zone 2 (where Hestía is), your parking space (nº 290), pedestrian access from the complex, Hestía Vera Salinas at block 22, floor 1, apartment 7, swimming pool and sports courts.', recs: [
+          'The complex is worth exploring. The gardens, streams, birds, small animals, the surrounding desert — a place without equal, perfect for kids with the calm of a closed area.',
+          'Take care of the plants and the cleanliness of the complex.',
           'Respect the common areas and the complex rules.',
-          'Do not take house towels to the pool.',
+          'Respect the neighbours.',
+          'Call the concierge to reserve any common space.',
         ]},
       ],
     },
