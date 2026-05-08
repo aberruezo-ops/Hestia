@@ -7855,8 +7855,16 @@ footer,
 }
 .ag-photo {
   margin: 0;
-  position: relative;
 }
+/* Frame: contiene img + watermark con anchor de posición. Sin overflow:hidden
+   ni border-radius (eso va en el <img> directamente para evitar el bug de
+   Safari iOS de rasterización a baja resolución). */
+.ag-photo-frame {
+  display: block;
+  position: relative;
+  line-height: 0;
+}
+.ag-photo-frame > img,
 .ag-photo > img {
   display: block;
   width: 100%;
@@ -7864,8 +7872,9 @@ footer,
   object-fit: cover;
   border-radius: 10px 0 10px 0;
 }
+.ag-photo-grid[data-count="1"] .ag-photo-frame > img,
 .ag-photo-grid[data-count="1"] .ag-photo > img { aspect-ratio: 16/9; }
-.ag-photo > .wm-badge { z-index: 2; }
+.ag-photo-frame > .wm-badge { z-index: 2; }
 .ag-photo figcaption {
   font-family: var(--serif);
   font-style: italic;
@@ -8317,6 +8326,8 @@ footer,
    creaba el halo. La animación de entrada usa SOLO opacity — sin filter ni
    transform — para garantizar que no produzca halos ni soft-focus. */
 .ag-photo,
+.ag-photo-frame,
+.ag-photo-frame > img,
 .ag-photo > img {
   filter: none !important;
   -webkit-filter: none !important;
@@ -8324,6 +8335,7 @@ footer,
   -webkit-backdrop-filter: none !important;
   box-shadow: none !important;
 }
+.ag-photo-frame > img,
 .ag-photo > img {
   background: transparent !important;
   image-rendering: auto;
