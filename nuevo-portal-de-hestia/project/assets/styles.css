@@ -4721,3 +4721,162 @@ body.no-parallax .g-tile .img { transform: none !important; }
   }
   .ag-place-link { display: none; }
 }
+
+/* ================================================================
+   GUIDE — Animaciones (Top 6 + bonuses)
+   1) apt ↔ guide crossfade        -> .apt-main[data-phase]
+   2) PIN modal success exit        -> .ag-modal.is-success
+   3) Photo grid stagger reveal     -> .ag-photo[data-revealed]
+   4) Map marker fade on toggle     -> .ag-map-marker.is-hidden-cat
+   5) Section number slide-in       -> .ag-section-num[data-revealed]
+   6) Sidebar nav active state      -> .ag-nav-list a (existing, refined)
+   + gate button :active + arrow hover
+   + prefers-reduced-motion handling
+   ================================================================ */
+
+/* Variables que faltaban */
+:root {
+  --dur-mid:  240ms;
+  --dur-slow: 380ms;
+}
+
+/* 1) Apt ↔ Guide crossfade — el blur ligero mascara el unmount/mount */
+.apt-main {
+  transition: opacity var(--dur-mid) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              filter  var(--dur-mid) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+.apt-main[data-phase="out"],
+.apt-main[data-phase="in"] {
+  opacity: 0;
+  filter: blur(6px);
+  pointer-events: none;
+}
+/* phase=idle (default) → opacity 1, no blur */
+
+/* 2) PIN modal — entry ya existe vía @keyframes ag-modal-in.
+      Añadimos transición para que .is-success pueda animar el salir. */
+.ag-modal {
+  transition: transform 200ms ease-in,
+              opacity   200ms ease-in,
+              filter    200ms ease-in;
+}
+.ag-modal.is-success {
+  transform: scale(0.96);
+  opacity: 0;
+  filter: blur(4px);
+  /* deshabilita la entry keyframe para que la transition tome el control */
+  animation: none;
+}
+/* El backdrop del modal acompaña el desvanecimiento */
+.ag-modal-backdrop:has(.ag-modal.is-success) {
+  background: rgba(20, 8, 24, 0);
+  transition: background 220ms ease-in;
+}
+
+/* 3) Photo grid — reveal con stagger por --i */
+.ag-photo {
+  opacity: 0;
+  transform: translateY(12px);
+  filter: blur(4px);
+  transition: opacity 500ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              transform 500ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              filter 500ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  transition-delay: calc(var(--i, 0) * 60ms);
+}
+.ag-photo[data-revealed] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* 4) Map markers — fade y scale al togglear categoría */
+.ag-map-pin {
+  transition: opacity 220ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              transform 220ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+.ag-map-marker.is-hidden-cat .ag-map-pin {
+  opacity: 0;
+  transform: rotate(-45deg) scale(0.55);
+  pointer-events: none;
+}
+.ag-map-marker.is-hidden-cat .ag-map-pin.is-home {
+  transform: scale(0.55);
+}
+
+/* 5) Section numbers — slide-in lateral discreto al entrar al viewport */
+.ag-section-num {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 600ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              transform 600ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+.ag-section-num[data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+
+/* 6) Sidebar nav — transición suave del active state + bg fade */
+.ag-nav-list a {
+  transition: color 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              border-left-color 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              background 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              padding-left 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+.ag-nav-list a.is-active {
+  background: color-mix(in oklab, var(--apt-accent) 5%, transparent);
+}
+
+/* + Gate button: :active scale + arrow translate on hover */
+.apt-guide-gate-btn {
+  transition: transform 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              background 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              border-color 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+.apt-guide-gate-btn:active { transform: scale(0.97); }
+.apt-guide-gate-arrow {
+  transition: transform 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+@media (hover: hover) and (pointer: fine) {
+  .apt-guide-gate-btn:hover .apt-guide-gate-arrow { transform: translateX(4px); }
+}
+
+/* + Map legend chip: :active feedback */
+.ag-map-legend-chip { transition: background 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+                                  opacity 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+                                  transform 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)); }
+.ag-map-legend-chip:active { transform: scale(0.97); }
+
+/* + Back button (volver al apartamento): :active scale */
+.ag-back { transition: background 200ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+                       transform 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)); }
+.ag-back:active { transform: scale(0.97); }
+
+/* prefers-reduced-motion — desactivamos movimiento, mantenemos opacity/color */
+@media (prefers-reduced-motion: reduce) {
+  .apt-main,
+  .ag-photo,
+  .ag-section-num,
+  .ag-map-pin,
+  .ag-modal,
+  .ag-nav-list a {
+    transition-property: opacity, color, background, border-color !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+  .ag-photo,
+  .ag-section-num {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .apt-guide-gate-btn:active,
+  .ag-back:active,
+  .ag-map-legend-chip:active {
+    transform: none !important;
+  }
+  .ag-map-marker.is-hidden-cat .ag-map-pin {
+    transform: rotate(-45deg) scale(1) !important;
+    /* Solo opacity para "ocultar" sin movimiento */
+  }
+}
