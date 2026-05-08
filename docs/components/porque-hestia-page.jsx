@@ -6,13 +6,13 @@ const PORQUE_COPY = {
   es: {
     eyebrow: 'La idea detrás de Hestía',
     title: (<>Por qué creamos Hestía.<br/><em>Y por qué se llama así.</em></>),
-    sub: 'La historia de un nombre, una diosa y tres apartamentos en Vera Playa.',
+    sub: 'La historia de un nombre, una diosa y tres Hestías en Vera Playa.',
 
     origin_eyebrow: 'El origen',
     origin_title: (<>No empezó como un negocio.<br/><em>Empezó como una convicción.</em></>),
-    origin_p1: '2016. Alex y Fran tienen tres apartamentos en Vera Playa. Podrían haberlos puesto en una plataforma, cobrado la comisión y desconectado el teléfono. Lo contrario es más difícil y más lento — y es exactamente lo que decidieron hacer.',
-    origin_p2: 'Hestía nació de una pregunta: ¿qué pasaría si el apartamento de alquiler que usas de vacaciones te hiciera sentir en casa de verdad? No solo limpio y funcional. En casa — con historia, con carácter, con alguien al otro lado que sabe tu nombre.',
-    origin_p3: 'Un ingeniero informático y un filólogo clásico con décadas en Vera Playa. El uno observa y construye; el otro nombra y cuida. Juntos transformaron tres apartamentos en tres hogares con alma propia. Sin oficina. Sin recepción. Con el teléfono siempre encendido.',
+    origin_p1: '2016. Alex y Fran tienen tres viviendas en Vera Playa. Podrían haberlas puesto en una plataforma, cobrado la comisión y desconectado el teléfono. Lo contrario es más difícil y más lento — y es exactamente lo que decidieron hacer.',
+    origin_p2: 'Hestía nació de una pregunta: ¿qué pasaría si el alquiler de vacaciones que usas te hiciera sentir en casa de verdad? No solo limpio y funcional. En casa — con historia, con carácter, con alguien al otro lado que sabe tu nombre.',
+    origin_p3: 'Un ingeniero informático y un filólogo clásico con décadas en Vera Playa. El uno observa y construye; el otro nombra y cuida. Juntos transformaron tres viviendas en los tres Hestías — tres hogares con alma propia. Sin oficina. Sin recepción. Con el teléfono siempre encendido.',
     origin_quote: '«Lo más difícil no fue crear Hestía. Fue convencernos de que merecía la pena intentarlo de otra manera.»',
     origin_quote_attr: '— Alex Berruezo',
 
@@ -38,7 +38,7 @@ const PORQUE_COPY = {
     principles_eyebrow: 'Nuestros principios',
     principles_title: (<>Cuatro ideas que nunca<br/><em>negociamos.</em></>),
     principles: [
-      { n: '01', t: 'Como si fuera nuestro.', d: 'Diseñamos y cuidamos cada apartamento como si fuera el nuestro propio. Porque en cierto modo lo es. Y porque queremos que vosotros lo sintáis igual.' },
+      { n: '01', t: 'Como si fuera nuestro.', d: 'Diseñamos y cuidamos cada Hestía como si fuera el nuestro propio. Porque en cierto modo lo es. Y porque queremos que vosotros lo sintáis igual.' },
       { n: '02', t: 'El detalle que lo cambia todo.', d: 'El cojín bien puesto, el café que espera, la toalla doblada. No son extras. Son la forma en que os decimos que nos importáis.' },
       { n: '03', t: 'Personas, no clientes.', d: 'Alex y Fran atendemos directamente. Conocemos vuestro nombre antes de que lleguéis y sabemos lo que necesitáis. No hay intermediarios.' },
       { n: '04', t: 'Una estancia que no acaba cuando os vais.', d: 'Vuestra estancia empieza cuando reserváis y termina cuando queréis volver. Eso no es un intercambio económico. Es otra cosa.' },
@@ -48,7 +48,7 @@ const PORQUE_COPY = {
     traveler_title: (<>Sabemos para quién<br/><em>existe Hestía.</em></>),
     traveler_intro: 'Hay un tipo de huésped que no viene solo a descansar. Trae consigo el cuidado, la curiosidad y las ganas de que el lugar que visita siga siendo lo que es. Cuida lo que usa, respeta lo que comparte y deja el destino un poco mejor de como lo encontró. Para ese huésped existe Hestía.',
     travelers: [
-      { icon: '🏡', t: 'Cuida lo que usa como si fuera suyo.', d: 'El apartamento que deja está tan bien como lo encontró. Sabe que el siguiente huésped también lo merece.' },
+      { icon: '🏡', t: 'Cuida lo que usa como si fuera suyo.', d: 'El Hestía que deja está tan bien como lo encontró. Sabe que el siguiente huésped también lo merece.' },
       { icon: '🌿', t: 'No solo está: contribuye.', d: 'Recomienda el bar de toda la vida, respeta el silencio de la tarde, deja el entorno mejor de como lo encontró.' },
       { icon: '🔄', t: 'Vuelve. Y trae a alguien.', d: 'Cuando encuentra un lugar donde se ha sentido en casa, vuelve. Y convierte a otros en huéspedes colaborativos.' },
     ],
@@ -59,13 +59,13 @@ const PORQUE_COPY = {
   en: {
     eyebrow: 'The idea behind Hestía',
     title: (<>Why we created Hestía.<br/><em>And why it has this name.</em></>),
-    sub: 'The story of a name, a goddess and three apartments in Vera Playa.',
+    sub: 'The story of a name, a goddess and three Hestías in Vera Playa.',
 
     origin_eyebrow: 'The origin',
     origin_title: (<>It didn't start as a business.<br/><em>It started as a conviction.</em></>),
-    origin_p1: '2016. Alex and Fran have three apartments in Vera Playa. They could have listed them on a platform, collected the commission and switched the phone off. The opposite is harder and slower — and that is exactly what they decided to do.',
-    origin_p2: 'Hestía was born from a question: what if the holiday apartment you rent actually made you feel at home? Not just clean and functional. At home — with a history, with character, with someone on the other end who knows your name.',
-    origin_p3: 'A computer engineer and a classical philologist with decades in Vera Playa. One observes and builds; the other names and cares. Together they transformed three apartments into three homes with their own soul. No office. No reception desk. With the phone always on.',
+    origin_p1: '2016. Alex and Fran have three properties in Vera Playa. They could have listed them on a platform, collected the commission and switched the phone off. The opposite is harder and slower — and that is exactly what they decided to do.',
+    origin_p2: 'Hestía was born from a question: what if the holiday rental you book actually made you feel at home? Not just clean and functional. At home — with a history, with character, with someone on the other end who knows your name.',
+    origin_p3: 'A computer engineer and a classical philologist with decades in Vera Playa. One observes and builds; the other names and cares. Together they turned three properties into the three Hestías — three homes with their own soul. No office. No reception desk. With the phone always on.',
     origin_quote: '"The hardest part was not creating Hestía. It was convincing ourselves it was worth trying a different way."',
     origin_quote_attr: '— Alex Berruezo',
 
@@ -91,7 +91,7 @@ const PORQUE_COPY = {
     principles_eyebrow: 'Our principles',
     principles_title: (<>Four ideas we never<br/><em>compromise on.</em></>),
     principles: [
-      { n: '01', t: 'As if it were ours.', d: 'We design and care for each apartment as if it were our own. Because in a way it is. And because we want you to feel it the same way.' },
+      { n: '01', t: 'As if it were ours.', d: 'We design and care for each Hestía as if it were our own. Because in a way it is. And because we want you to feel it the same way.' },
       { n: '02', t: 'The detail that changes everything.', d: 'The neatly placed cushion, the waiting coffee, the folded towel. Not extras. The way we tell you that you matter to us.' },
       { n: '03', t: 'People, not clients.', d: 'Alex and Fran attend to you directly. We know your name before you arrive and what you need. No intermediaries.' },
       { n: '04', t: "A stay that doesn't end when you leave.", d: "Your stay begins when you book and ends when you want to return. That's not an economic exchange. It's something else." },
@@ -101,7 +101,7 @@ const PORQUE_COPY = {
     traveler_title: (<>We know who<br/><em>Hestía exists for.</em></>),
     traveler_intro: "There is a type of guest who doesn't come just to rest. They bring care, curiosity and a genuine wish to leave the place a little better than they found it. They look after what they use, respect what they share, and make the destination better every day. Hestía exists for that guest.",
     travelers: [
-      { icon: '🏡', t: 'Cares for what they use as if it were theirs.', d: 'The apartment they leave is as good as they found it. They know the next guest deserves the same.' },
+      { icon: '🏡', t: 'Cares for what they use as if it were theirs.', d: 'The Hestía they leave is as good as they found it. They know the next guest deserves the same.' },
       { icon: '🌿', t: "They don't just stay: they contribute.", d: 'They recommend the local bar, respect the quiet of the afternoon, leave their surroundings better than they found them.' },
       { icon: '🔄', t: 'They come back. And bring someone.', d: "When they find a place where they felt at home, they return — and turn others into collaborative guests too." },
     ],

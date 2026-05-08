@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hestía Thalassa · Vera Playa, Almería</title>
-  <meta name="description" content="Apartamento ático con terraza panorámica 360° y SPA privado. Vera Playa, Almería. Gestionado directamente por Alex y Fran."/>
+  <meta name="description" content="Hestía Thalassa — ático con terraza panorámica 360° y SPA privado. Vera Playa, Almería. Gestionado directamente por Alex y Fran."/>
   <link rel="canonical" href="https://www.hestiayourhome.com/thalassa.html"/>
   <link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/thalassa.html"/>
   <link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/thalassa.html"/>
@@ -18,26 +18,25 @@
   <meta property="og:type"      content="website"/>
   <meta property="og:url"       content="https://www.hestiayourhome.com/thalassa.html"/>
   <meta property="og:title"     content="Hestía Thalassa · Ático con terraza panorámica 360° y SPA · Vera Playa"/>
-  <meta property="og:description" content="Apartamento ático con terraza panorámica 360° y SPA privado. Las mejores vistas de Vera Playa. Gestionado directamente por Alex y Fran."/>
+  <meta property="og:description" content="Hestía Thalassa — ático con terraza panorámica 360° y SPA privado. Las mejores vistas de Vera Playa. Gestionado directamente por Alex y Fran."/>
   <meta property="og:image"     content="https://www.hestiayourhome.com/assets/apt-vt.jpg"/>
   <meta property="og:locale"    content="es_ES"/>
   <meta property="og:locale:alternate" content="en_GB"/>
   <meta name="twitter:card"        content="summary_large_image"/>
   <meta name="twitter:title"       content="Hestía Thalassa · Ático con terraza panorámica 360° y SPA · Vera Playa"/>
-  <meta name="twitter:description" content="Apartamento ático con terraza panorámica 360° y SPA privado. Las mejores vistas de Vera Playa. Gestionado directamente por Alex y Fran."/>
+  <meta name="twitter:description" content="Hestía Thalassa — ático con terraza panorámica 360° y SPA privado. Las mejores vistas de Vera Playa. Gestionado directamente por Alex y Fran."/>
   <meta name="twitter:image"       content="https://www.hestiayourhome.com/assets/apt-vt.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-  <link rel="stylesheet" href="assets/styles.css?v=145"/>
+  <link rel="stylesheet" href="assets/styles.css?v=148"/>
   <link rel="preload" as="image" href="assets/apt-vt-4.jpg" fetchpriority="high"/>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Accommodation",
     "name": "Hestía Thalassa",
-    "description": "Apartamento ático con terraza panorámica 360° y SPA comunitario. 2 habitaciones, 6 plazas + bebé. Vera Playa, Almería.",
+    "description": "Hestía Thalassa — ático con terraza panorámica 360° y SPA comunitario. 2 habitaciones, 6 plazas + bebé. Vera Playa, Almería.",
     "url": "https://www.hestiayourhome.com/thalassa.html",
     "numberOfRooms": 2,
     "occupancy": {"@type": "QuantitativeValue", "maxValue": 7},
@@ -106,7 +105,7 @@
       "name": "¿Puedo traer mascotas?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sí, en los tres apartamentos. Siempre bajo petición previa y con un pequeño suplemento. Solo pedimos que se respeten unas normas básicas y sensatas."
+        "text": "Sí, en los tres Hestías. Siempre bajo petición previa y con un pequeño suplemento. Solo pedimos que se respeten unas normas básicas y sensatas."
       }
     }
   ]
@@ -140,7 +139,6 @@
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react.development.js'"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react-dom.development.js'"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/babel.min.js'"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 <script>
   window.__APT__ = 'vt';
@@ -156,6 +154,12 @@
   ];
 
   async function loadComponents() {
+    // prices.json antes de evaluar componentes (shared.jsx lo lee al parsear)
+    try {
+      const pr = await fetch('data/prices.json?t=' + Date.now(), { cache: 'no-store' });
+      if (pr.ok) window.PRICES_V2 = await pr.json();
+    } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
+
     for (const file of COMPONENT_FILES) {
       const res = await fetch(file + '?t=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);

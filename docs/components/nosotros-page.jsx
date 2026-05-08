@@ -10,14 +10,14 @@ const NOSOTROS_COPY = {
 
     intro_title: (<>No somos una empresa.<em>Somos dos personas.</em></>),
     intro_p1: 'Nos conocisteis cuando reservasteis, o quizás ahora mismo es la primera vez. Da igual. Lo importante es que detrás de Hestía no hay una plataforma, ni un gestor, ni una oficina. Estamos nosotros: Alex y Fran. Dos personas reales que cogen el teléfono, que conocen vuestro nombre y que se ocupan de que cuando llegáis, todo esté exactamente como debería.',
-    intro_p2: 'Somos un ingeniero informático con alma de decorador y un filólogo clásico que sabe cómo hacer que una estancia sea más que una estancia. Llevamos desde 2016 transformando nuestros apartamentos en Vera Playa en algo que, con suerte, vosotros también podéis llamar hogar durante unos días.',
+    intro_p2: 'Somos un ingeniero informático con alma de decorador y un filólogo clásico que sabe cómo hacer que una estancia sea más que una estancia. Llevamos desde 2016 transformando los Hestías en Vera Playa en algo que, con suerte, vosotros también podéis llamar hogar durante unos días.',
     intro_quote: '«El hogar no es un lugar, es un sentimiento.»',
     intro_quote_attr: '— Cecelia Ahearn',
 
     almeria_eyebrow: 'Nuestro vínculo con Almería',
     almeria_title: (<>Vera Playa no es donde trabajamos.<br/><em>Es donde vivimos.</em></>),
     almeria_p1: 'Hay lugares que escoges y lugares que te eligen. Almería fue lo segundo. Vera Playa llegó a nuestras vidas antes de que supiéramos lo que íbamos a construir aquí. La playa más larga de la costa, el azul más limpio del Mediterráneo, trescientos días de sol al año y una forma de vivir que todavía no ha perdido el pulso de lo auténtico.',
-    almeria_p2: 'La provincia más soleada de Europa no es la más conocida. Y precisamente eso la protege. En Almería el turismo todavía convive con la vida real: el bar de toda la vida, los pescadores de la mañana, el mercado del jueves. Llevamos más de una década aquí. Y cada apartamento de Hestía mira al mismo Mediterráneo.',
+    almeria_p2: 'La provincia más soleada de Europa no es la más conocida. Y precisamente eso la protege. En Almería el turismo todavía convive con la vida real: el bar de toda la vida, los pescadores de la mañana, el mercado del jueves. Llevamos más de una década aquí. Y cada Hestía mira al mismo Mediterráneo.',
     almeria_p3: 'Vera Playa es conocida por sus kilómetros de costa protegida, por su playa naturista — una de las más grandes de Europa — y por la tranquilidad de una localidad que sabe lo que tiene sin necesitar demostrarlo. No vendemos Almería porque sea nuestra oficina. La defendemos porque es nuestra casa.',
     almeria_quote: '«Almería tiene la luz más honesta que conozco. No engaña. Lo que ves es lo que es.»',
     almeria_quote_attr: '— Alex Berruezo',
@@ -47,14 +47,14 @@ const NOSOTROS_COPY = {
 
     intro_title: (<>{"We're not a company."}<em>{"We're two people."}</em></>),
     intro_p1: "You may have met us when you booked, or perhaps this is the very first time. It doesn't matter. What matters is that behind Hestía there is no platform, no property manager, no office. There's us: Alex and Fran. Two real people who pick up the phone, know your name, and make sure that when you arrive, everything is exactly as it should be.",
-    intro_p2: "A computer engineer with a decorator's sensibility and a classical philologist who knows how to turn a stay into something worth remembering. Since 2016 we have been turning our apartments in Vera Playa into something that, with luck, you can also call home for a few days.",
+    intro_p2: "A computer engineer with a decorator's sensibility and a classical philologist who knows how to turn a stay into something worth remembering. Since 2016 we have been turning the Hestías in Vera Playa into something that, with luck, you can also call home for a few days.",
     intro_quote: "«Home isn't a place, it's a feeling.»",
     intro_quote_attr: '— Cecelia Ahearn',
 
     almeria_eyebrow: 'Our bond with Almería',
     almeria_title: (<>Vera Playa isn't where we work.<br/><em>It's where we live.</em></>),
     almeria_p1: 'There are places you choose, and places that choose you. Almería was the second. Vera Playa entered our lives before we knew what we were going to build here. The longest beach on the coast, the clearest blue in the Mediterranean, three hundred days of sun a year, and a way of living that has not yet lost its authentic pulse.',
-    almeria_p2: "Europe's sunniest province is not its most famous. And that is precisely what protects it. In Almería, tourism still coexists with real life: the neighbourhood bar that has always been there, the morning fishermen, the Thursday market. We have been here for over a decade. And every Hestía apartment looks out at the same Mediterranean.",
+    almeria_p2: "Europe's sunniest province is not its most famous. And that is precisely what protects it. In Almería, tourism still coexists with real life: the neighbourhood bar that has always been there, the morning fishermen, the Thursday market. We have been here for over a decade. And every Hestía looks out at the same Mediterranean.",
     almeria_p3: 'Vera Playa is known for its kilometres of protected coastline, its naturist beach — one of the largest in Europe — and the calm of a town that knows what it has without needing to prove it. We do not promote Almería because it is our office. We champion it because it is our home.',
     almeria_quote: '"Almería has the most honest light I know. It does not deceive. What you see is what it is."',
     almeria_quote_attr: '— Alex Berruezo',

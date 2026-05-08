@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="assets/styles.css?v=145"/>
+  <link rel="stylesheet" href="assets/styles.css?v=148"/>
 </head>
 <body>
 <div id="root"></div>
@@ -36,6 +36,12 @@
   ];
 
   async function loadComponents() {
+    // prices.json antes de evaluar componentes (shared.jsx lo lee al parsear)
+    try {
+      const pr = await fetch('data/prices.json?t=' + Date.now(), { cache: 'no-store' });
+      if (pr.ok) window.PRICES_V2 = await pr.json();
+    } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
+
     for (const file of COMPONENT_FILES) {
       const res = await fetch(file + '?t=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);

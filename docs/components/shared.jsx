@@ -44,7 +44,7 @@ const COPY = {
     hero_title_1: 'Bienvenido a tu hogar',
     hero_title_2: 'lejos de casa.',
     hero_sub: 'Vera Playa · Almería · desde 2016',
-    hero_cta_1: 'Descubre los apartamentos',
+    hero_cta_1: 'Descubre los Hestías',
     hero_cta_avail: 'Comprobar disponibilidad',
     hero_cta_nosotros: 'Sobre nosotros y Hestía',
     hero_cta_2: 'Escríbenos',
@@ -52,25 +52,25 @@ const COPY = {
     hero_meta_right: 'Noche mediterránea — 36.96° N, 1.83° W',
     bridge_title: '…y amanece sobre Vera Playa.',
     bridge_sub: 'La noche morada se retira despacio. El alba trae el albero — tierra, pared encalada, sal seca. A las siete, el Mediterráneo abre el ojo en teal y los olivos reciben la luz de costado. Al fondo, el Desierto de Tabernas ya es naranja.',
-    apts_eyebrow: 'Nuestros tres apartamentos',
+    apts_eyebrow: 'Nuestros tres Hestías',
     apts_title: (<>Tres atmósferas, <em>una misma casa.</em></>),
     apts_sub: 'Cada uno toma su color del paisaje que lo rodea. Elige el tuyo — o ven tres veces.',
     apt_01_concept: 'El campo de olivos llega al mar',
     apt_02_concept: 'El ático sobre el mar y el Salar de los Canos',
     apt_03_concept: 'El amarillo albero del amanecer sobre las salinas',
-    apt_cta: 'Ver apartamento',
+    apt_cta: 'Ver Hestía',
     compare_eyebrow: 'Compara · Elige · Reserva',
     compare_title: (<>Tres puertas distintas al <em>mismo Mediterráneo.</em></>),
     counters_eyebrow: 'Diez años · una playa · vuestra casa',
     days_unit: 'días',
     counter_1: 'familias han vivido aquí desde 2016',
     counter_2: 'días de sol al año en Vera Playa',
-    counter_3: 'apartamentos gestionados en persona por Alex y Fran',
+    counter_3: 'Hestías gestionados en persona por Alex y Fran',
     gallery_eyebrow: 'Postales desde Vera',
     gallery_title: (<>La luz de Almería <em>cuenta la historia.</em></>),
     team_eyebrow: 'Quienes os reciben',
     team_title: (<>No somos una recepción. <em>Somos Alex y Fran.</em></>),
-    team_intro: 'En 2016 convertimos tres apartamentos en Hestía — la diosa griega del hogar. Diez años después seguimos limpiando, recibiendo, respondiendo WhatsApp y eligiendo las toallas. Todo lo hacemos nosotros, por eso todo importa.',
+    team_intro: 'En 2016 nacieron los tres Hestías — el nombre lo tomamos de la diosa griega del hogar. Diez años después seguimos limpiando, recibiendo, respondiendo WhatsApp y eligiendo las toallas. Todo lo hacemos nosotros, por eso todo importa.',
     alex_role: 'Creativo · Decorador · Pre-estancia',
     alex_quote: '«A ti, antes de que llegues, te lo cuento todo. Después, cuando te vayas, te echaré de menos.»',
     fran_role: 'Filólogo · In-estancia · Post-estancia',
@@ -85,7 +85,7 @@ const COPY = {
     ratings_eyebrow: 'Lo que dicen de nosotros',
     ratings_title: (<>Diez años puntuando <em>casi perfecto.</em></>),
     ratings_sub: 'No es un eslogan. Son cifras verificadas por las plataformas, escritas por las familias que han dormido aquí.',
-    rating_booking_desc: 'Valoración Booking.com — promedio de nuestros tres apartamentos.',
+    rating_booking_desc: 'Valoración Booking.com — promedio de los tres Hestías.',
     rating_airbnb_desc: 'Superhost desde 2018. Puntuación máxima ininterrumpida.',
     rating_google_desc: 'Google Maps — opiniones de huéspedes que volvieron a Vera.',
     contact_eyebrow: 'Reserva directa, sin intermediarios',
@@ -94,7 +94,7 @@ const COPY = {
     contact_cta_wa: 'WhatsApp Alex',
     contact_cta_mail: 'info@hestiayourhome.com',
     contact_cta_avail: 'Comprobar disponibilidad',
-    footer_apts: 'Apartamentos',
+    footer_apts: 'Hestías',
     footer_hestia: 'Hestía',
     footer_contacto: 'Contacto',
     footer_tag: 'Tu hogar en Vera Playa, desde 2016.',
@@ -105,7 +105,7 @@ const COPY = {
     hero_title_1: 'Welcome to your home',
     hero_title_2: 'away from home.',
     hero_sub: 'Vera Playa · Almería · since 2016',
-    hero_cta_1: 'Discover the apartments',
+    hero_cta_1: 'Discover the Hestías',
     hero_cta_avail: 'Check availability',
     hero_cta_nosotros: 'About us & Hestía',
     hero_cta_2: 'Say hello',
@@ -113,25 +113,25 @@ const COPY = {
     hero_meta_right: 'Mediterranean night — 36.96° N, 1.83° W',
     bridge_title: '…and morning breaks over Vera Playa.',
     bridge_sub: 'The purple night slowly withdraws. Dawn brings the ochre — earth, whitewashed wall, dried salt. By seven, the Mediterranean opens its eye in teal, the olive trees catch the side-light. In the distance, the Tabernas Desert is already orange.',
-    apts_eyebrow: 'Our three apartments',
+    apts_eyebrow: 'Our three Hestías',
     apts_title: (<>Three moods, <em>one same home.</em></>),
     apts_sub: 'Each one borrows its colour from the landscape around it. Choose yours — or come three times.',
     apt_01_concept: 'Where the olive grove meets the sea',
     apt_02_concept: 'Penthouse above the sea and the Salar de los Canos',
     apt_03_concept: 'Ochre yellow, sunrise over the salt flats',
-    apt_cta: 'See apartment',
+    apt_cta: 'See Hestía',
     compare_eyebrow: 'Compare · Choose · Book',
     compare_title: (<>Three doors onto the <em>same Mediterranean.</em></>),
     counters_eyebrow: 'Ten years · one beach · your home',
     days_unit: 'days',
     counter_1: 'families have lived here since 2016',
     counter_2: 'days of sunshine a year in Vera Playa',
-    counter_3: 'apartments run in person by Alex & Fran',
+    counter_3: 'Hestías run in person by Alex & Fran',
     gallery_eyebrow: 'Postcards from Vera',
     gallery_title: (<>Almería's light <em>tells the story.</em></>),
     team_eyebrow: 'The hosts',
     team_title: (<>Not a front desk. <em>Just Alex & Fran.</em></>),
-    team_intro: 'In 2016 we turned three apartments into Hestía — the Greek goddess of home. Ten years later we still clean, welcome, reply WhatsApp and choose the towels. We do everything ourselves — that is why it all matters.',
+    team_intro: 'In 2016 the three Hestías opened — we took the name from the Greek goddess of home. Ten years later we still clean, welcome, reply WhatsApp and choose the towels. We do everything ourselves — that is why it all matters.',
     alex_role: 'Creative · Decorator · Pre-stay',
     alex_quote: '«Before you arrive, I will tell you everything. After you leave, I will miss you a little.»',
     fran_role: 'Philologist · In-stay · Post-stay',
@@ -146,7 +146,7 @@ const COPY = {
     ratings_eyebrow: 'What they say about us',
     ratings_title: (<>Ten years scoring <em>almost perfect.</em></>),
     ratings_sub: 'Not a slogan. Verified numbers from the platforms, written by the families who slept here.',
-    rating_booking_desc: 'Booking.com average — across our three apartments.',
+    rating_booking_desc: 'Booking.com average — across our three Hestías.',
     rating_airbnb_desc: 'Superhost since 2018. Top score, uninterrupted.',
     rating_google_desc: 'Google Maps — reviews from guests who came back to Vera.',
     contact_eyebrow: 'Direct booking, no middlemen',
@@ -155,7 +155,7 @@ const COPY = {
     contact_cta_wa: 'WhatsApp Alex',
     contact_cta_mail: 'info@hestiayourhome.com',
     contact_cta_avail: 'Check availability',
-    footer_apts: 'Apartments',
+    footer_apts: 'Hestías',
     footer_hestia: 'Hestía',
     footer_contacto: 'Contact',
     footer_tag: 'Your home in Vera Playa, since 2016.',
@@ -223,29 +223,29 @@ const QUICK_FAQ = {
       { q: '¿Cómo reservo directamente?',
         a: <>Escríbenos por <a href="https://wa.me/34620316370" target="_blank" rel="noopener">WhatsApp</a> o a <a href="mailto:info@hestiayourhome.com">info@hestiayourhome.com</a>. Sin intermediarios, sin comisiones. O usa el formulario en <a href="reservas.html">nuestra página de reservas</a>.</> },
       { q: '¿Puedo llevar a mi perro?',
-        a: <>Sí, en los tres apartamentos. Las mascotas son bienvenidas siempre bajo petición previa y con suplemento, respetando unas condiciones básicas en el apartamento, en las zonas comunes y en los espacios públicos. Avísanos al reservar.</> },
-      { q: '¿Cuál apartamento me conviene más?',
+        a: <>Sí, en los tres Hestías. Las mascotas son bienvenidas siempre bajo petición previa y con suplemento, respetando unas condiciones básicas dentro del Hestía, en las zonas comunes y en los espacios públicos. Avísanos al reservar.</> },
+      { q: '¿Qué Hestía me conviene más?',
         a: <>Compara los tres en <a href="index.html">nuestra home</a>. <a href="mar.html">Mar</a> es planta primera con jardín, terraza de amanecer y mascotas. <a href="thalassa.html">Thalassa</a> es el ático con SPA comunitario y vistas panorámicas al mar. <a href="salinas.html">Salinas</a> tiene tres piscinas y el Parque Natural al lado.</> },
       { q: '¿Quiénes sois Alex y Fran?',
-        a: <><a href="nosotros.html">Somos los propietarios</a>, no una agencia. Gestionamos los tres apartamentos en persona desde 2016. Más de 900 familias nos avalan.</> },
+        a: <><a href="nosotros.html">Somos los propietarios</a>, no una agencia. Gestionamos los tres Hestías en persona desde 2016. Más de 900 familias nos avalan.</> },
     ],
     en: [
       { q: 'How do I book directly?',
         a: <>Write to us via <a href="https://wa.me/34654138251" target="_blank" rel="noopener">WhatsApp</a> or <a href="mailto:info@hestiayourhome.com">info@hestiayourhome.com</a>. No middlemen, no commissions. Or use the form on <a href="reservas.html">our reservations page</a>.</> },
       { q: 'Can I bring my dog?',
-        a: <>Yes, in all three apartments. Pets are welcome on request and with a supplement, as long as basic conditions are respected inside the apartment, in the communal areas and in public spaces. Just let us know when booking.</> },
-      { q: 'Which apartment suits me best?',
+        a: <>Yes, in all three Hestías. Pets are welcome on request and with a supplement, as long as basic conditions are respected inside the Hestía, in the communal areas and in public spaces. Just let us know when booking.</> },
+      { q: 'Which Hestía suits me best?',
         a: <>Compare all three on <a href="index.html">our home page</a>. <a href="mar.html">Mar</a> is first floor with garden, sunrise terrace and pets. <a href="thalassa.html">Thalassa</a> is the penthouse with shared SPA and panoramic sea views. <a href="salinas.html">Salinas</a> has three pools and the Nature Park next door.</> },
       { q: 'Who are Alex and Fran?',
-        a: <><a href="nosotros.html">We are the owners</a>, not an agency. We have run the three apartments in person since 2016. Over 900 families back us.</> },
+        a: <><a href="nosotros.html">We are the owners</a>, not an agency. We have run the three Hestías in person since 2016. Over 900 families back us.</> },
     ],
   },
   vm: {
     es: [
       { q: '¿Por qué elegiría Hestía Mar sobre los otros dos?',
-        a: <>Mar es planta primera, con acceso al jardín y a la piscina comunitaria. Al ser un apartamento de esquina da a tres calles distintas: hacia el mar, hacia los lados y hacia la zona de entrada — lo que permite ventilación cruzada natural en todo el apartamento. La terraza de 20m² está orientada al amanecer, pero desde ella ves el ciclo solar completo. El más íntimo y sereno de los tres.</> },
+        a: <>Mar es planta primera, con acceso al jardín y a la piscina comunitaria. Al ser de esquina da a tres calles distintas: hacia el mar, hacia los lados y hacia la zona de entrada — lo que permite ventilación cruzada natural en todas las estancias. La terraza de 20m² está orientada al amanecer, pero desde ella ves el ciclo solar completo. El más íntimo y sereno de los tres.</> },
       { q: '¿Puedo traer a mi perro (o gato)?',
-        a: <>Sí, las mascotas son bienvenidas en los tres apartamentos, siempre bajo petición previa y con suplemento. Solo pedimos que se respeten unas condiciones básicas y sensatas: dentro del apartamento, en las zonas comunes de la urbanización y en los espacios públicos. Avísanos al reservar.</> },
+        a: <>Sí, las mascotas son bienvenidas en los tres Hestías, siempre bajo petición previa y con suplemento. Solo pedimos que se respeten unas condiciones básicas y sensatas: dentro del Hestía, en las zonas comunes de la urbanización y en los espacios públicos. Avísanos al reservar.</> },
       { q: '¿El jacuzzi está disponible durante mi estancia?',
         a: <>El jacuzzi es comunitario y está abierto durante la temporada de verano, igual que la piscina. Si tienes dudas sobre tus fechas concretas, pregúntanos antes de reservar.</> },
       { q: '¿A qué distancia está la playa?',
@@ -253,9 +253,9 @@ const QUICK_FAQ = {
     ],
     en: [
       { q: 'Why would I choose Hestía Mar over the other two?',
-        a: <>Mar is a first-floor corner apartment with access to the garden and shared pool. Being a corner unit facing three different streets — sea side, lateral and entrance — it has natural cross-ventilation throughout. The 20m² terrace faces the sunrise, but from it you can follow the entire arc of the sun. The most intimate and serene of the three.</> },
+        a: <>Mar is on the first floor, with access to the garden and shared pool. As a corner unit facing three different streets — sea side, lateral and entrance — it has natural cross-ventilation throughout. The 20m² terrace faces the sunrise, but from it you can follow the entire arc of the sun. The most intimate and serene of the three.</> },
       { q: 'Can I bring my dog (or cat)?',
-        a: <>Yes, pets are welcome in all three apartments, always on request and with a supplement. We simply ask that basic conditions are respected: inside the apartment, in the communal areas of the complex, and in public spaces. Let us know when booking.</> },
+        a: <>Yes, pets are welcome in all three Hestías, always on request and with a supplement. We simply ask that basic conditions are respected: inside the Hestía, in the communal areas of the complex, and in public spaces. Let us know when booking.</> },
       { q: 'Is the jacuzzi available during my stay?',
         a: <>The jacuzzi is a shared facility, open during the summer season — just like the pool. If you have doubts about your specific dates, ask us before booking.</> },
       { q: 'How far is the beach?',
@@ -271,7 +271,7 @@ const QUICK_FAQ = {
       { q: '¿Qué vistas tiene la terraza del ático?',
         a: <>Desde la terraza panorámica ves el Mediterráneo y, hacia el interior, el Salar de los Canos — un paisaje árido y de gran belleza. La zona tiene una luz y una aridez espectaculares. El Desierto de Tabernas propiamente dicho está a unos 30 minutos en coche.</> },
       { q: '¿Puedo traer mascotas?',
-        a: <>Sí, en los tres apartamentos. Siempre bajo petición previa y con un pequeño suplemento. Solo pedimos que se respeten unas normas básicas y sensatas: que no suban a sofás, sillones ni camas, y que no hagan sus necesidades en zonas comunes ni en el apartamento.</> },
+        a: <>Sí, en los tres Hestías. Siempre bajo petición previa y con un pequeño suplemento. Solo pedimos que se respeten unas normas básicas y sensatas: que no suban a sofás, sillones ni camas, y que no hagan sus necesidades en zonas comunes ni dentro del Hestía.</> },
     ],
     en: [
       { q: 'Why would I choose Hestía Thalassa over the other two?',
@@ -281,7 +281,7 @@ const QUICK_FAQ = {
       { q: 'What can you see from the penthouse terrace?',
         a: <>From the panoramic terrace you look out over the Mediterranean and, inland, the Salar de los Canos — an arid, strikingly beautiful landscape. The area is dramatic and dry. The Tabernas Desert proper is about 30 minutes by car.</> },
       { q: 'Can I bring pets?',
-        a: <>Yes, in all three apartments. Always on request and with a small supplement. We just ask that basic rules are respected: pets should not get on sofas, armchairs or beds, and must not relieve themselves in the apartment or in communal areas.</> },
+        a: <>Yes, in all three Hestías. Always on request and with a small supplement. We just ask that basic rules are respected: pets should not get on sofas, armchairs or beds, and must not relieve themselves inside the Hestía or in communal areas.</> },
     ],
   },
   vs: {
@@ -289,39 +289,39 @@ const QUICK_FAQ = {
       { q: '¿Por qué elegiría Hestía Salinas sobre los otros dos?',
         a: <>Salinas es el más luminoso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de pádel comunitarios, y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina con acceso peatonal directo. La luz dorada de Almería llena cada habitación — y la naturaleza empieza donde termina la acera.</> },
       { q: '¿Qué son las Salinas de Puerto Rey?',
-        a: <>Un Parque Natural a pocos metros del apartamento, con flamencos, aves migratorias y una luz dorada al amanecer única en Europa. Una de las razones por las que este apartamento tiene algo que los demás no tienen.</> },
+        a: <>Un Parque Natural a pocos metros, con flamencos, aves migratorias y una luz dorada al amanecer única en Europa. Una de las razones por las que Salinas tiene algo que los demás no tienen.</> },
       { q: '¿Hay de verdad tres piscinas?',
         a: <>Sí. La urbanización tiene tres piscinas comunitarias — no una sola dividida, sino tres zonas diferenciadas con orientaciones distintas. Además hay gimnasio y sauna comunitarios (abiertos todo el año) y pistas de pádel. Una de las urbanizaciones mejor equipadas de Vera Playa.</> },
       { q: '¿Puedo traer mascotas?',
-        a: <>Sí, en los tres apartamentos. Siempre bajo petición previa y con suplemento, respetando unas condiciones básicas en el apartamento, en las zonas comunes y en los espacios públicos.</> },
+        a: <>Sí, en los tres Hestías. Siempre bajo petición previa y con suplemento, respetando unas condiciones básicas dentro del Hestía, en las zonas comunes y en los espacios públicos.</> },
     ],
     en: [
       { q: 'Why would I choose Hestía Salinas over the other two?',
         a: <>Salinas is the brightest of the three. Two terraces, three pools, a communal gym, sauna and padel courts, and the Puerto Rey Salt-flat Nature Park around the corner with direct pedestrian access. Almería's golden afternoon light fills every room — and nature begins where the pavement ends.</> },
       { q: 'What is the Puerto Rey Nature Park?',
-        a: <>A natural park a few metres from the apartment, with flamingos, migratory birds and a golden light at sunrise unique in Europe. One of the reasons this apartment has something the others don't.</> },
+        a: <>A natural park a few metres away, with flamingos, migratory birds and a golden light at sunrise unique in Europe. One of the reasons Salinas has something the others don't.</> },
       { q: 'Are there really three pools?',
         a: <>Yes. The complex has three community pools — not one divided, but three separate areas with different orientations. There is also a communal gym and sauna (open year-round) and padel courts. One of the best-equipped complexes in Vera Playa.</> },
       { q: 'Can I bring pets?',
-        a: <>Yes, in all three apartments. Always on request and with a supplement, as long as basic conditions are respected inside the apartment, in the communal areas and in public spaces.</> },
+        a: <>Yes, in all three Hestías. Always on request and with a supplement, as long as basic conditions are respected inside the Hestía, in the communal areas and in public spaces.</> },
     ],
   },
   nosotros: {
     es: [
       { q: '¿Desde cuándo lo hacéis vosotros mismos?',
         a: <>Desde 2016. En diez años hemos recibido a más de 900 familias. Nunca hemos externalizado la gestión: seguimos limpiando, respondiendo y eligiendo las toallas nosotros. <a href="nosotros.html">Conoce nuestra historia.</a></> },
-      { q: '¿Por qué se llaman los apartamentos Hestía?',
-        a: <>Hestía era la diosa griega del hogar — la diosa pacífica, la que guardaba el fuego de casa. Eso es lo que intentamos hacer: que un apartamento deje de ser un sitio donde dormir y se convierta en un lugar donde quedarse.</> },
+      { q: '¿Por qué se llaman así los Hestías?',
+        a: <>Hestía era la diosa griega del hogar — la diosa pacífica, la que guardaba el fuego de casa. Eso es lo que intentamos hacer: que un Hestía deje de ser un sitio donde dormir y se convierta en un lugar donde quedarse.</> },
       { q: '¿Hay alguna agencia o gestor detrás?',
         a: <>No. Somos Alex y Fran. No hay agencia, no hay gestor, no hay centralita. Cuando nos escribes, nos escribes a nosotros directamente.</> },
       { q: '¿Qué pasa si algo falla durante mi estancia?',
         a: <>Fran se encarga de todo lo técnico in situ. Está disponible, responde rápido y resuelve. No hay que esperar a que abra ninguna oficina. Su número: <a href="https://wa.me/34654138251" target="_blank" rel="noopener">WhatsApp Fran</a>.</> },
     ],
     en: [
-      { q: 'How long have you been managing the apartments yourselves?',
+      { q: 'How long have you been managing the Hestías yourselves?',
         a: <>Since 2016. In ten years we have hosted over 900 families. We have never outsourced management: we still clean, reply and choose the towels ourselves. <a href="nosotros.html">Read our story.</a></> },
-      { q: "Why are the apartments called Hestía?",
-        a: <>Hestía was the Greek goddess of the hearth — the peaceful goddess, guardian of the home fire. That is what we try to do: turn an apartment from a place to sleep into a place you want to stay.</> },
+      { q: "Why are they called Hestía?",
+        a: <>Hestía was the Greek goddess of the hearth — the peaceful goddess, guardian of the home fire. That is what we try to do: turn a Hestía from a place to sleep into a place you want to stay.</> },
       { q: 'Is there an agency or property manager behind you?',
         a: <>No. We are Alex and Fran. No agency, no manager, no call centre. When you write to us, you are writing to us directly.</> },
       { q: 'What happens if something goes wrong during my stay?',
@@ -335,7 +335,7 @@ const QUICK_FAQ = {
       { q: '¿Sois realmente Superhost en Airbnb?',
         a: <>Sí, desde 2018 de forma ininterrumpida. El estatus Superhost se revisa cada trimestre y requiere mantener puntuación máxima y tiempo de respuesta alto de forma continua. No es un título que se queda para siempre.</> },
       { q: '¿Qué es lo que más valoran los huéspedes?',
-        a: <>La atención personal de Alex y Fran, la limpieza y el estado de los apartamentos, y la ubicación. Y que cuando algo falla, se resuelve de verdad — no se pone una excusa.</> },
+        a: <>La atención personal de Alex y Fran, la limpieza y el estado de los Hestías, y la ubicación. Y que cuando algo falla, se resuelve de verdad — no se pone una excusa.</> },
       { q: '¿Cómo dejo una reseña tras mi estancia?',
         a: <>En Booking.com, Airbnb o Google Maps, según donde hayas reservado. También puedes escribirnos directamente — nos alegra saber cómo fue la experiencia.</> },
     ],
@@ -345,7 +345,7 @@ const QUICK_FAQ = {
       { q: 'Are you really a Superhost on Airbnb?',
         a: <>Yes, continuously since 2018. Superhost status is reviewed every quarter and requires maintaining top scores and response times consistently. It is not a title that stays forever.</> },
       { q: 'What do guests value most?',
-        a: <>The personal attention from Alex and Fran, cleanliness and condition of the apartments, and location. And that when something goes wrong, it genuinely gets fixed — no excuses.</> },
+        a: <>The personal attention from Alex and Fran, cleanliness and condition of the Hestías, and location. And that when something goes wrong, it genuinely gets fixed — no excuses.</> },
       { q: 'How do I leave a review after my stay?',
         a: <>On Booking.com, Airbnb or Google Maps, depending on where you booked. You can also write to us directly — we love hearing how the experience went.</> },
     ],
@@ -512,8 +512,8 @@ const SABIAS_QUE_FACTS = [
   /* ── Hestía: lo que otros no tienen ── */
   {
     type: 'fact',
-    es: 'Hestía lleva más de diez años con puntuación máxima ininterrumpida en Booking.com, Airbnb y Google Maps — algo que menos del 1 % de los apartamentos con huéspedes de España mantiene durante tanto tiempo.',
-    en: 'Hestía has held top scores on Booking.com, Airbnb and Google Maps for over ten years — something fewer than 1% of guest apartments in Spain sustain for that long.',
+    es: 'Hestía lleva más de diez años con puntuación máxima ininterrumpida en Booking.com, Airbnb y Google Maps — algo que menos del 1 % de los alojamientos turísticos de España mantiene durante tanto tiempo.',
+    en: 'Hestía has held top scores on Booking.com, Airbnb and Google Maps for over ten years — something fewer than 1% of guest accommodations in Spain sustain for that long.',
   },
   {
     type: 'fact',
@@ -527,8 +527,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'Las mascotas son bienvenidas en los tres apartamentos Hestía, bajo petición previa y con suplemento, respetando unas condiciones básicas.',
-    en: 'Pets are welcome in all three Hestía apartments, on request and with a supplement, as long as basic conditions are respected.',
+    es: 'Las mascotas son bienvenidas en los tres Hestías, bajo petición previa y con suplemento, respetando unas condiciones básicas.',
+    en: 'Pets are welcome in all three Hestías, on request and with a supplement, as long as basic conditions are respected.',
   },
   {
     type: 'fact',
@@ -542,8 +542,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'Hestía Salinas es uno de los pocos apartamentos del litoral mediterráneo con acceso peatonal directo a un parque natural protegido desde la puerta.',
-    en: 'Hestía Salinas is one of very few apartments on the Mediterranean coast with direct pedestrian access to a protected natural park from the front door.',
+    es: 'Salinas es uno de los pocos alojamientos del litoral mediterráneo con acceso peatonal directo a un parque natural protegido desde la puerta.',
+    en: 'Salinas is one of very few homes on the Mediterranean coast with direct pedestrian access to a protected natural park from the front door.',
   },
   {
     type: 'fact',
@@ -1338,33 +1338,83 @@ const StickyFacts = ({ lang }) => {
 
 // ================================================================
 // HESTÍA PRICE ENGINE
-// Precios nocturnos que el huésped ve en Booking.com / Airbnb
-// Actualizar mensualmente en los objetos HESTIA_PRICES / AIRBNB_PRICES
+// Fuente de verdad: docs/data/prices.json (editado vía /p-edit.html).
+// El loader del HTML hace fetch antes de evaluar este archivo y deja
+// el JSON en window.PRICES_V2. Si por lo que sea no llegó (red caída,
+// CDN frío), usamos HESTIA_PRICES_FALLBACK para no romper la web.
 // ================================================================
-const HESTIA_PRICES = {
-  vm: {  // Hestía Mar — VFT/AL/01580
-    // Precio/noche en Booking.com (índice 1=Ene … 12=Dic)
-    base: [0, 95, 95, 112, 132, 142, 162, 195, 228, 162, 132, 95, 95],
-    peaks: [
-      { from: '12-21', to: '01-07', pn: 188 }, // Navidad / Año Nuevo
-      { from: '04-10', to: '04-24', pn: 162 }, // Semana Santa
-    ],
-  },
-  vt: {  // Hestía Thalassa — VFT/AL/05535
-    base: [0, 115, 115, 135, 158, 172, 195, 238, 278, 195, 158, 115, 115],
-    peaks: [
-      { from: '12-21', to: '01-07', pn: 228 },
-      { from: '04-10', to: '04-24', pn: 198 },
-    ],
-  },
-  vs: {  // Hestía Salinas — VTF/AL/07056
-    base: [0, 100, 100, 118, 140, 150, 170, 205, 238, 170, 140, 100, 100],
-    peaks: [
-      { from: '12-21', to: '01-07', pn: 198 },
-      { from: '04-10', to: '04-24', pn: 170 },
-    ],
-  },
+
+// --- Fallback con valores aproximados (por si window.PRICES_V2 no carga)
+const HESTIA_PRICES_FALLBACK = {
+  vm: { base: [0, 88, 88, 88, 106, 106, 176, 220, 220, 176, 106, 88, 88], peaks: [] },
+  vt: { base: [0, 86, 86, 86, 103, 103, 172, 215, 215, 172, 103, 86, 86], peaks: [] },
+  vs: { base: [0, 82, 82, 82,  98,  98, 164, 205, 205, 164,  98, 82, 82], peaks: [] },
 };
+
+// --- Helpers para v2 (consultan window.PRICES_V2 ad-hoc)
+const _v2DateInRanges = (ds, ranges) =>
+  (ranges || []).some(([from, to]) => ds >= from && ds <= to);
+
+const _v2SeasonForDate = (ds, v2) => {
+  const year = ds.slice(0, 4);
+  const yd = v2.calendar && v2.calendar[year];
+  if (!yd) return 'baja';
+  // Specials (Sem Santa, Navidad) ganan a las temporadas regulares
+  for (const spec of Object.values(yd.specials || {})) {
+    if (_v2DateInRanges(ds, spec.ranges)) return spec.season || 'baja';
+  }
+  for (const [s, ranges] of Object.entries(yd.seasons || {})) {
+    if (_v2DateInRanges(ds, ranges)) return s;
+  }
+  return 'baja';
+};
+
+const _v2BumpedSeasonForDate = (ds, v2) => {
+  let s = _v2SeasonForDate(ds, v2);
+  if (!v2.rules || !v2.rules.bridgeBumpsOneStep) return s;
+  const year = ds.slice(0, 4);
+  const yd = v2.calendar && v2.calendar[year];
+  const inBridge = (yd && (yd.bridges || []).some(b => _v2DateInRanges(ds, b.ranges)));
+  if (!inBridge) return s;
+  const ladder = (v2.rules.seasonLadder) || ['baja', 'media', 'alta', 'critica'];
+  const idx = ladder.indexOf(s);
+  return (idx >= 0 && idx < ladder.length - 1) ? ladder[idx + 1] : s;
+};
+
+// Devuelve el precio exacto de UNA noche según el modelo v2.
+// null si no hay v2 disponible (callers caen al motor v1).
+const _dayPriceV2 = (ds, aptId) => {
+  const v2 = window.PRICES_V2;
+  if (!v2 || !v2.apts || !v2.apts[aptId]) return null;
+  const apt = v2.apts[aptId];
+  const season = _v2BumpedSeasonForDate(ds, v2);
+  const mult = (v2.seasons && v2.seasons[season] && v2.seasons[season].multiplier) || 1;
+  return Math.round(apt.base * mult);
+};
+
+// Sintetiza la tabla mensual antigua a partir de v2 (sample del día 15).
+// Lo justo para que componentes que computan min/max anuales sigan
+// funcionando sin tocarse. _dayPrice usa v2 directo, no esta tabla.
+const _v2DeriveV1 = (v2) => {
+  const result = {};
+  const year = (v2.calendar && Object.keys(v2.calendar)[0]) || '2026';
+  for (const aptId of Object.keys(v2.apts || {})) {
+    const base = [0];
+    for (let m = 1; m <= 12; m++) {
+      const ds = `${year}-${String(m).padStart(2, '0')}-15`;
+      base[m] = _dayPriceV2(ds, aptId);
+    }
+    // También recogemos el max real iterando todos los rangos (las temporadas
+    // alta/crítica caen en sample del 15 de jul/ago en mi schema, así que el
+    // max ya queda capturado, pero lo blindo).
+    result[aptId] = { base, peaks: [] };
+  }
+  return result;
+};
+
+const HESTIA_PRICES = (window.PRICES_V2 && window.PRICES_V2.apts)
+  ? _v2DeriveV1(window.PRICES_V2)
+  : HESTIA_PRICES_FALLBACK;
 
 const AIRBNB_PRICES = {
   vm: {  // Hestía Mar — Airbnb #17253235
@@ -1410,11 +1460,15 @@ const _be_diff = (a, b) =>
   Math.round((new Date(b + 'T12:00:00Z') - new Date(a + 'T12:00:00Z')) / 86400000);
 
 const _dayPrice = (ds, aptId) => {
+  // v2 (prices.json) tiene resolución por día, así que preferimos eso.
+  // Si no está disponible, caemos a la tabla mensual + peaks (motor antiguo).
+  const v2price = _dayPriceV2(ds, aptId);
+  if (v2price !== null) return v2price;
   const tbl = HESTIA_PRICES[aptId];
   if (!tbl) return 0;
   const month = parseInt(ds.slice(5, 7), 10);
   const mmdd  = ds.slice(5);
-  for (const pk of tbl.peaks) {
+  for (const pk of (tbl.peaks || [])) {
     if (pk.from > pk.to) {
       if (mmdd >= pk.from || mmdd < pk.to) return pk.pn;
     } else {
@@ -1475,4 +1529,4 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
   return { nights, totalBooking, totalAirbnb, refTotal, afterDirect, stayD, stayDiscAmt, afterStay, petAmt, directTotal, savings, avgPerNight };
 };
 
-Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, AIRBNB_PRICES, DIRECT_DISCOUNT, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _airbnbDayPrice, _calcStay });
+Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, AIRBNB_PRICES, DIRECT_DISCOUNT, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _airbnbDayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate });

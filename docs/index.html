@@ -10,7 +10,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hestía Your Home · Tu hogar en Vera Playa, Almería</title>
-  <meta name="description" content="Tres apartamentos turísticos gestionados directamente en Vera Playa por Alex y Fran. Desde 2016."/>
+  <meta name="description" content="Tres Hestías — viviendas turísticas gestionadas directamente en Vera Playa por Alex y Fran. Desde 2016."/>
   <link rel="canonical" href="https://www.hestiayourhome.com/"/>
   <link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/"/>
   <link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/"/>
@@ -18,26 +18,26 @@
   <meta property="og:site_name" content="Hestía Your Home"/>
   <meta property="og:type"      content="website"/>
   <meta property="og:url"       content="https://www.hestiayourhome.com/"/>
-  <meta property="og:title"     content="Hestía Your Home · Apartamentos en Vera Playa, Almería"/>
-  <meta property="og:description" content="Tres apartamentos turísticos gestionados directamente por Alex y Fran en Vera Playa. Precio directo, sin intermediarios. Desde 2016."/>
+  <meta property="og:title"     content="Hestía Your Home · Tres Hestías en Vera Playa, Almería"/>
+  <meta property="og:description" content="Tres Hestías gestionados directamente por Alex y Fran en Vera Playa. Precio directo, sin intermediarios. Desde 2016."/>
   <meta property="og:image"     content="https://www.hestiayourhome.com/assets/hero-terrace-night.jpg"/>
   <meta property="og:locale"    content="es_ES"/>
   <meta property="og:locale:alternate" content="en_GB"/>
   <meta name="twitter:card"        content="summary_large_image"/>
-  <meta name="twitter:title"       content="Hestía Your Home · Apartamentos en Vera Playa, Almería"/>
-  <meta name="twitter:description" content="Tres apartamentos turísticos gestionados directamente por Alex y Fran en Vera Playa. Precio directo, sin intermediarios. Desde 2016."/>
+  <meta name="twitter:title"       content="Hestía Your Home · Tres Hestías en Vera Playa, Almería"/>
+  <meta name="twitter:description" content="Tres Hestías gestionados directamente por Alex y Fran en Vera Playa. Precio directo, sin intermediarios. Desde 2016."/>
   <meta name="twitter:image"       content="https://www.hestiayourhome.com/assets/hero-terrace-night.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="assets/styles.css?v=145"/>
+  <link rel="stylesheet" href="assets/styles.css?v=148"/>
   <link rel="preload" as="image" href="assets/hero-terrace-night.jpg" fetchpriority="high"/>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
     "name": "Hestía Your Home",
-    "description": "Tres apartamentos turísticos gestionados directamente en Vera Playa por Alex y Fran. Desde 2016.",
+    "description": "Tres Hestías — viviendas turísticas gestionadas directamente en Vera Playa por Alex y Fran. Desde 2016.",
     "url": "https://www.hestiayourhome.com",
     "telephone": "+34620316370",
     "email": "info@hestiayourhome.com",
@@ -89,12 +89,12 @@
       "name": "¿Puedo llevar a mi perro?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sí, en los tres apartamentos. Las mascotas son bienvenidas siempre bajo petición previa y con suplemento, respetando unas condiciones básicas en el apartamento, en las zonas comunes y en los espacios públicos. Avísanos al reservar."
+        "text": "Sí, en los tres Hestías. Las mascotas son bienvenidas siempre bajo petición previa y con suplemento, respetando unas condiciones básicas dentro del Hestía, en las zonas comunes y en los espacios públicos. Avísanos al reservar."
       }
     },
     {
       "@type": "Question",
-      "name": "¿Cuál apartamento me conviene más?",
+      "name": "¿Qué Hestía me conviene más?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Mar es planta primera con jardín, terraza de amanecer y mascotas. Thalassa es el ático con SPA comunitario y vistas panorámicas al mar. Salinas tiene tres piscinas y el Parque Natural al lado. Compara los tres en https://www.hestiayourhome.com/"
@@ -105,7 +105,7 @@
       "name": "¿Quiénes sois Alex y Fran?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Somos los propietarios, no una agencia. Gestionamos los tres apartamentos en persona desde 2016. Más de 900 familias nos avalan."
+        "text": "Somos los propietarios, no una agencia. Gestionamos los tres Hestías en persona desde 2016. Más de 900 familias nos avalan."
       }
     }
   ]
@@ -134,6 +134,12 @@
   ];
 
   async function loadComponents() {
+    // prices.json antes de evaluar componentes (shared.jsx lo lee al parsear)
+    try {
+      const pr = await fetch('data/prices.json?t=' + Date.now(), { cache: 'no-store' });
+      if (pr.ok) window.PRICES_V2 = await pr.json();
+    } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
+
     for (const file of COMPONENT_FILES) {
       const res = await fetch(file + '?t=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
