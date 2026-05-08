@@ -883,6 +883,17 @@ section {
 .btn .arrow { transition: transform .3s; }
 .btn:hover .arrow { transform: translateX(4px); }
 
+/* Press feedback — instant response on click (Emil Kowalski) */
+.btn:active,
+.cookies-btns button:active,
+.hs-apt-btn:active,
+.hs-toggle:active,
+.tweaks-jumps button:active,
+.seg-control button:active {
+  transform: scale(0.97);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
 /* Scrollbar discreto */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
