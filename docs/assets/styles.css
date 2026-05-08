@@ -8041,3 +8041,217 @@ footer,
 
   .ag-recs li::before, .ag-list li::before, .ag-list-num li::before { color: var(--apt-accent) !important; }
 }
+
+/* ================================================================
+   GUIDE MAP — mapa Leaflet con marcadores y leyenda
+   ================================================================ */
+.ag-map-block {
+  margin: 28px 0 36px;
+  border: 1px solid color-mix(in oklab, var(--apt-accent) 18%, transparent);
+  border-radius: 14px 0 14px 0;
+  overflow: hidden;
+  background: var(--crema);
+}
+.ag-map {
+  width: 100%;
+  height: clamp(320px, 50vh, 520px);
+  position: relative;
+  z-index: 0;
+}
+.ag-map-legend {
+  padding: 16px 18px;
+  border-top: 1px solid color-mix(in oklab, var(--apt-accent) 14%, transparent);
+  background: color-mix(in oklab, var(--apt-accent) 4%, var(--crema));
+}
+.ag-map-legend-title {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--apt-accent);
+  margin-bottom: 12px;
+}
+.ag-map-legend-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ag-map-legend-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid color-mix(in oklab, var(--apt-accent) 25%, transparent);
+  background: var(--crema);
+  border-radius: 999px;
+  font-size: 13px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all var(--dur-fast, 160ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+.ag-map-legend-chip:hover {
+  background: color-mix(in oklab, var(--apt-accent) 6%, var(--crema));
+}
+.ag-map-legend-chip.is-off {
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+.ag-map-legend-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.12);
+  flex-shrink: 0;
+}
+.ag-map-legend-count {
+  font-size: 11px;
+  color: var(--ink-soft);
+  background: color-mix(in oklab, var(--apt-accent) 8%, transparent);
+  padding: 2px 6px;
+  border-radius: 999px;
+  margin-left: 4px;
+}
+
+/* Map markers */
+.ag-map-marker { background: transparent; border: none; }
+.ag-map-pin {
+  width: 28px; height: 28px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.ag-map-pin span {
+  transform: rotate(45deg);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--serif);
+}
+.ag-map-pin.is-home {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border-width: 3px;
+  transform: none;
+}
+.ag-map-pin.is-home span {
+  transform: none;
+  font-size: 14px;
+}
+
+/* Popup styling */
+.ag-map-popup strong { color: var(--ber-dk); font-size: 14px; }
+.ag-map-popup em { color: var(--apt-accent); font-style: italic; }
+.ag-map-popup a {
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--apt-accent);
+  font-weight: 500;
+  text-decoration: none;
+}
+.ag-map-popup a:hover { text-decoration: underline; }
+
+/* ================================================================
+   GUIDE PLACES LIST — lista categorizada por tipo
+   ================================================================ */
+.ag-cat-group {
+  margin: 32px 0 24px;
+}
+.ag-cat-h {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 12px;
+}
+.ag-cat-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+.ag-cat-count {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-weight: 400;
+  margin-left: 6px;
+}
+.ag-places {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px;
+}
+.ag-place {
+  padding: 12px 14px;
+  background: color-mix(in oklab, var(--apt-accent) 3%, var(--crema));
+  border-radius: 10px 0 10px 0;
+  border: 1px solid color-mix(in oklab, var(--apt-accent) 12%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ag-place-main {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ag-place-name {
+  font-weight: 500;
+  color: var(--ber-dk);
+  font-size: 15px;
+}
+.ag-place-tier {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--apt-accent);
+  font-size: 13px;
+}
+.ag-place-desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.ag-place-link {
+  font-size: 12px;
+  color: var(--apt-accent);
+  text-decoration: none;
+  align-self: flex-start;
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+  transition: opacity var(--dur-fast, 160ms);
+}
+.ag-place-link:hover { opacity: 0.7; }
+
+/* ================================================================
+   PHOTO WATERMARK WRAP (logo H sobre cada foto de la guía)
+   ================================================================ */
+.ag-photo-wrap {
+  position: relative;
+  border-radius: 10px 0 10px 0;
+  overflow: hidden;
+}
+.ag-photo-wrap > img { display: block; width: 100%; height: 100%; aspect-ratio: 4/3; object-fit: cover; }
+.ag-photo-wrap > .wm-badge { pointer-events: none; z-index: 2; }
+.ag-photo-grid[data-count="1"] .ag-photo-wrap > img { aspect-ratio: 16/9; }
+
+/* ================================================================
+   PRINT — hide map, keep place list
+   ================================================================ */
+@media print {
+  .ag-map-block { display: none !important; }
+  .ag-place {
+    background: transparent !important;
+    border: 1px solid #ddd !important;
+    page-break-inside: avoid;
+  }
+  .ag-place-link { display: none; }
+}
