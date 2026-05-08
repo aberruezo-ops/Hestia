@@ -2261,6 +2261,13 @@ footer h5 {
 }
 footer .col ul { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 2.1; opacity: 0.8; }
 footer .col a:hover { color: var(--sol-lt); }
+/* Botón estilizado como enlace para "Revisar consentimiento" */
+.footer-linklike {
+  background: none; border: 0; padding: 0; margin: 0;
+  color: inherit; font: inherit; cursor: pointer;
+  text-align: left; opacity: .9;
+}
+.footer-linklike:hover { color: var(--sol-lt); opacity: 1; }
 footer .footer-brand .hestia-logo { height: 32px; margin-bottom: 14px; }
 footer .footer-brand .tagline {
   font-family: var(--serif); font-style: italic;
