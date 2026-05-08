@@ -6,6 +6,18 @@
 
 const APT_GUIDE_PIN = { vm: 'HVM2016', vt: 'HVT2019', vs: 'HVS2021' };
 
+// Mapa estancia → archivo de página renderizada del PDF.
+// El layout de los 3 PDFs es idéntico: salón p8, cocina p9, dormitorios p10,
+// baños p11, terraza p12, urbanización p13 (mapa) + p14 (zonas comunes).
+const ROOM_PAGE = {
+  salon: 'p-08.jpg',
+  cocina: 'p-09.jpg',
+  dormitorios: 'p-10.jpg',
+  banos: 'p-11.jpg',
+  terraza: 'p-12.jpg',
+  urbanizacion: 'p-13.jpg',
+};
+
 // Contenido COMPARTIDO entre las 3 guías (carta de bienvenida, marca, etc.)
 const GUIDE_SHARED = {
   es: {
@@ -229,6 +241,7 @@ const GUIDE_BY_APT = {
   // Hestía Vera Mar
   vm: {
     pdf: 'assets/HestiaVeraMar_GuiaHogar_v1.0.pdf',
+    imageBase: 'assets/guides/vm',
     es: {
       rooms: [
         { id: 'salon', title: 'Tu salón', body: 'En tu sofá-cama podrás disfrutar de tu televisión plana donde podrás ver tus contenidos en Netflix, aclimatando la temperatura con el cuadro del aire acondicionado centralizado.', recs: [
@@ -243,15 +256,15 @@ const GUIDE_BY_APT = {
           'Evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.',
           'El agua es potable, aunque quizás prefieras agua embotellada.',
         ]},
-        { id: 'banos', title: 'Tus baños', body: 'Dos baños: uno con bañera e hidromasaje y cromoterapia en el espejo, y otro con ducha e hidromasaje. Dispones de productos básicos para tus primeros días, además de aromas, velas, secador, botiquín, etc.', recs: [
-          'Haz un uso prudente y responsable del agua. El agua es vida.',
-          'Las toallas del baño no son para la playa ni para la piscina.',
-          'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
-        ]},
         { id: 'dormitorios', title: 'Tus dormitorios', body: 'Dormitorio principal con vistas al mar, con las mejores sábanas y rellenos nórdicos de plumas o sintéticos. Colchones de alta calidad y almohadas de diferentes durezas. En el armario encontrarás tu sombrilla de playa.', recs: [
           'Las cremas bronceadoras pueden estropear sábanas, toallas y tapicerías.',
           'Cuidado con el aire acondicionado por la noche y las corrientes de aire.',
           'Ponte el despertador un día no muy nublado para ver el amanecer.',
+        ]},
+        { id: 'banos', title: 'Tus baños', body: 'Dos baños: uno con bañera e hidromasaje y cromoterapia en el espejo, y otro con ducha e hidromasaje. Dispones de productos básicos para tus primeros días, además de aromas, velas, secador, botiquín, etc.', recs: [
+          'Haz un uso prudente y responsable del agua. El agua es vida.',
+          'Las toallas del baño no son para la playa ni para la piscina.',
+          'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
         ]},
         { id: 'terraza', title: 'Tu terraza', body: 'Disfruta de las mejores vistas y los dos ambientes para cada momento de tus vacaciones: día y noche.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
@@ -282,15 +295,15 @@ const GUIDE_BY_APT = {
           'Avoid the eco cycle on the washer and dishwasher — water-saving but excessively long.',
           'Tap water is drinkable, but you may prefer bottled.',
         ]},
-        { id: 'banos', title: 'Your bathrooms', body: 'Two bathrooms: one with bathtub, hydromassage and chromotherapy mirror, and another with hydromassage shower. Basic products for your first days, plus scents, candles, hairdryer, first-aid kit, etc.', recs: [
-          'Use water responsibly. Water is life.',
-          'Bathroom towels are not for the beach or the pool.',
-          'Be careful with creams and make-up — they damage textiles.',
-        ]},
         { id: 'dormitorios', title: 'Your bedrooms', body: 'Master bedroom with sea view, finest sheets and feather or synthetic duvets. High-quality mattresses and pillows of different firmness. Your beach umbrella is in the closet.', recs: [
           'Tanning creams can ruin sheets, towels and upholstery.',
           'Watch out for night-time A/C and drafts.',
           'Set the alarm one clear morning to catch the sunrise.',
+        ]},
+        { id: 'banos', title: 'Your bathrooms', body: 'Two bathrooms: one with bathtub, hydromassage and chromotherapy mirror, and another with hydromassage shower. Basic products for your first days, plus scents, candles, hairdryer, first-aid kit, etc.', recs: [
+          'Use water responsibly. Water is life.',
+          'Bathroom towels are not for the beach or the pool.',
+          'Be careful with creams and make-up — they damage textiles.',
         ]},
         { id: 'terraza', title: 'Your terrace', body: 'Enjoy the best views and two atmospheres for every moment of your holiday: day and night.', recs: [
           'Enjoy the quiet — and let your neighbours enjoy it too.',
@@ -312,6 +325,7 @@ const GUIDE_BY_APT = {
   // Hestía Vera Thalassa
   vt: {
     pdf: 'assets/20220607_HestiaVeraThalassa_GuiaHogar_v3.6.pdf',
+    imageBase: 'assets/guides/vt',
     es: {
       rooms: [
         { id: 'salon', title: 'Tu salón', body: 'En tu sofá-cama podrás disfrutar de tu televisión plana donde podrás ver tus contenidos favoritos en Netflix o HBO. Tienes a tu disposición el cuadro del aire acondicionado centralizado.', recs: [
@@ -325,15 +339,15 @@ const GUIDE_BY_APT = {
           'Evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.',
           'El agua es potable, aunque quizás prefieras agua embotellada.',
         ]},
-        { id: 'banos', title: 'Tus baños', body: 'Dos baños con todo el equipamiento de un SPA: cromoterapia, aromaterapia y duchas con hidromasaje. Dispones de productos básicos para tus primeros días, secador, botiquín, etc.', recs: [
-          'Haz un uso prudente y responsable del agua. El agua es vida.',
-          'Las toallas del baño no son para la playa ni para la piscina.',
-          'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
-        ]},
         { id: 'dormitorios', title: 'Tus dormitorios', body: 'Dormitorio principal con vistas al mar y a las palmeras de la urbanización. Colchones de alta calidad y almohadas de diferentes durezas. Sábanas y rellenos nórdicos de plumas o sintéticos.', recs: [
           'Las cremas bronceadoras pueden estropear sábanas, toallas y tapicerías.',
           'Cuidado con el aire acondicionado por la noche y las corrientes de aire.',
           'Si tienes la suerte de ver un amanecer despejado desde la terraza, te recordará por qué viniste.',
+        ]},
+        { id: 'banos', title: 'Tus baños', body: 'Dos baños con todo el equipamiento de un SPA: cromoterapia, aromaterapia y duchas con hidromasaje. Dispones de productos básicos para tus primeros días, secador, botiquín, etc.', recs: [
+          'Haz un uso prudente y responsable del agua. El agua es vida.',
+          'Las toallas del baño no son para la playa ni para la piscina.',
+          'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
         ]},
         { id: 'terraza', title: 'Tu terraza', body: 'Terraza panorámica de 18 m² con vistas al mar y al Salar de los Canos. El mejor sitio del ático para vivir el ciclo solar completo.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
@@ -362,15 +376,15 @@ const GUIDE_BY_APT = {
           'Avoid the eco cycle on the washer and dishwasher — water-saving but excessively long.',
           'Tap water is drinkable, but you may prefer bottled.',
         ]},
-        { id: 'banos', title: 'Your bathrooms', body: 'Two bathrooms with full SPA equipment: chromotherapy, aromatherapy and hydromassage showers. Basic products for your first days, hairdryer, first-aid kit, etc.', recs: [
-          'Use water responsibly. Water is life.',
-          'Bathroom towels are not for the beach or the pool.',
-          'Be careful with creams and make-up — they damage textiles.',
-        ]},
         { id: 'dormitorios', title: 'Your bedrooms', body: 'Master bedroom with views over the sea and the complex palm trees. Quality mattresses and pillows of different firmness. Finest sheets and feather or synthetic duvets.', recs: [
           'Tanning creams can ruin sheets, towels and upholstery.',
           'Watch out for night-time A/C and drafts.',
           'If you catch a clear sunrise from the terrace, it\'ll remind you why you came.',
+        ]},
+        { id: 'banos', title: 'Your bathrooms', body: 'Two bathrooms with full SPA equipment: chromotherapy, aromatherapy and hydromassage showers. Basic products for your first days, hairdryer, first-aid kit, etc.', recs: [
+          'Use water responsibly. Water is life.',
+          'Bathroom towels are not for the beach or the pool.',
+          'Be careful with creams and make-up — they damage textiles.',
         ]},
         { id: 'terraza', title: 'Your terrace', body: '18 m² panoramic terrace with sea and Salar de los Canos views. The best spot in the penthouse to live the full solar arc.', recs: [
           'Enjoy the quiet — and let your neighbours enjoy it too.',
@@ -391,6 +405,7 @@ const GUIDE_BY_APT = {
   // Hestía Vera Salinas
   vs: {
     pdf: 'assets/HestiaVeraSalinas_GuiaHogar_v1.0.pdf',
+    imageBase: 'assets/guides/vs',
     es: {
       rooms: [
         { id: 'salon', title: 'Tu salón', body: 'En tu sofá-cama disfrutarás de tu televisión con ambilight donde podrás ver tus contenidos en streaming como Netflix, aclimatando la temperatura con el cuadro del aire acondicionado centralizado.', recs: [
@@ -511,7 +526,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
         </div>
       </div>
 
-      <header className="ag-cover">
+      <header className="ag-cover" style={{ '--cover-img': `url(${aptInfo.imageBase}/p-01.jpg)` }}>
+        <div className="ag-cover-bg" aria-hidden="true" />
         <div className="ag-cover-inner">
           <span className="ag-eyebrow">{lang === 'es' ? 'Guía del huésped' : 'Guest guide'}</span>
           <h1 className="ag-title">{aptName}</h1>
@@ -553,21 +569,50 @@ const AptGuideView = ({ apt, lang, onClose }) => {
         </div>
       </section>
 
-      {a.rooms.map(room => (
-        <section key={room.id} className={`ag-section ag-room ag-room-${room.id}`}>
-          <div className="ag-section-inner">
-            <span className="ag-room-eyebrow">{aptName}</span>
-            <h2 className="ag-h2">{room.title}</h2>
-            <p className="ag-para">{room.body}</p>
-            <div className="ag-recs-block">
-              <h3 className="ag-h3">{lang === 'es' ? 'Recomendaciones' : 'Recommendations'}</h3>
-              <ol className="ag-recs">
-                {room.recs.map((r, i) => <li key={i}>{r}</li>)}
-              </ol>
+      <section className="ag-section ag-floorplan">
+        <div className="ag-section-inner">
+          <h2 className="ag-h2">{lang === 'es' ? 'Plano y equipamiento' : 'Floor plan and amenities'}</h2>
+          <p className="ag-para">
+            {lang === 'es'
+              ? 'Una vista 3D del apartamento y el detalle del equipamiento que tienes a tu disposición.'
+              : 'A 3D layout of the apartment and the details of every amenity at your disposal.'}
+          </p>
+          <figure className="ag-figure ag-figure-wide">
+            <img src={`${aptInfo.imageBase}/p-07.jpg`} alt={lang === 'es' ? 'Plano del apartamento' : 'Apartment floor plan'} loading="lazy" />
+          </figure>
+        </div>
+      </section>
+
+      {a.rooms.map(room => {
+        const roomPage = ROOM_PAGE[room.id];
+        return (
+          <section key={room.id} className={`ag-section ag-room ag-room-${room.id}`}>
+            <div className="ag-section-inner ag-room-grid">
+              <div className="ag-room-prose">
+                <span className="ag-room-eyebrow">{aptName}</span>
+                <h2 className="ag-h2">{room.title}</h2>
+                <p className="ag-para">{room.body}</p>
+                <div className="ag-recs-block">
+                  <h3 className="ag-h3">{lang === 'es' ? 'Recomendaciones' : 'Recommendations'}</h3>
+                  <ol className="ag-recs">
+                    {room.recs.map((r, i) => <li key={i}>{r}</li>)}
+                  </ol>
+                </div>
+              </div>
+              {roomPage && (
+                <figure className="ag-figure ag-room-photo">
+                  <img src={`${aptInfo.imageBase}/${roomPage}`} alt={room.title} loading="lazy" />
+                </figure>
+              )}
+              {room.id === 'urbanizacion' && (
+                <figure className="ag-figure ag-figure-wide ag-urb-extra">
+                  <img src={`${aptInfo.imageBase}/p-14.jpg`} alt={lang === 'es' ? 'Zonas comunes' : 'Common areas'} loading="lazy" />
+                </figure>
+              )}
             </div>
-          </div>
-        </section>
-      ))}
+          </section>
+        );
+      })}
 
       <section className="ag-section ag-surroundings">
         <div className="ag-section-inner">

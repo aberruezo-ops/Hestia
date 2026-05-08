@@ -4026,14 +4026,31 @@ body.guide-mode .cookies { display: none !important; }
 .ag-toolbar-back:active { transform: scale(0.97); }
 
 .ag-cover {
-  background:
-    radial-gradient(ellipse 90% 70% at 50% 100%, color-mix(in oklab, var(--apt-accent2) 18%, transparent), transparent 70%),
-    linear-gradient(180deg, var(--crema), var(--arena));
-  padding: clamp(80px, 14vw, 180px) clamp(20px, 5vw, 60px) clamp(60px, 10vw, 120px);
+  position: relative;
+  isolation: isolate;
+  padding: clamp(120px, 18vw, 240px) clamp(20px, 5vw, 60px) clamp(80px, 12vw, 140px);
   text-align: center;
   border-bottom: 1px solid color-mix(in oklab, var(--apt-accent) 14%, transparent);
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--crema), var(--arena));
 }
-.ag-cover-inner { max-width: 720px; margin: 0 auto; }
+.ag-cover-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--cover-img, none) center/cover no-repeat;
+  /* Suaviza la imagen para que el texto resalte sin perder ambiente */
+  filter: saturate(1.05);
+}
+.ag-cover-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, transparent 0%, color-mix(in oklab, var(--crema) 70%, transparent) 70%),
+    linear-gradient(180deg, color-mix(in oklab, var(--crema) 30%, transparent) 0%, color-mix(in oklab, var(--crema) 80%, transparent) 100%);
+}
+.ag-cover-inner { position: relative; max-width: 720px; margin: 0 auto; }
 .ag-eyebrow {
   display: inline-block;
   font-size: 11px;
@@ -4258,10 +4275,60 @@ body.guide-mode .cookies { display: none !important; }
   border-top: 1px solid color-mix(in oklab, var(--apt-accent) 14%, transparent);
 }
 
+/* GUIDE FIGURES — imágenes renderizadas del PDF */
+.ag-figure {
+  margin: 32px 0 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--crema);
+  box-shadow:
+    0 1px 2px color-mix(in oklab, var(--ber-dk) 10%, transparent),
+    0 18px 40px -20px color-mix(in oklab, var(--ber-dk) 35%, transparent);
+}
+.ag-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.ag-figure-wide {
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* GUIDE ROOM GRID — texto a la izquierda, foto a la derecha en desktop */
+.ag-room-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 36px;
+  align-items: start;
+  max-width: 1080px;
+}
+@media (min-width: 900px) {
+  .ag-room-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 56px;
+  }
+  .ag-room-grid .ag-urb-extra {
+    grid-column: 1 / -1;
+    margin-top: 4px;
+  }
+}
+.ag-room-photo { margin-top: 0; }
+.ag-room-grid .ag-room-prose { min-width: 0; }
+
+/* FLOOR PLAN section */
+.ag-section.ag-floorplan {
+  background: linear-gradient(180deg, var(--crema), color-mix(in oklab, var(--apt-accent2) 6%, var(--crema)));
+}
+.ag-section.ag-floorplan .ag-section-inner { max-width: 1080px; }
+.ag-section.ag-floorplan .ag-figure { margin-top: 28px; }
+
 @media (max-width: 600px) {
   .ag-toolbar-pdf { display: none; }
   .ag-toolbar-back span:last-child { display: none; }
   .ag-section { padding-top: 48px; padding-bottom: 48px; }
+  .ag-figure { border-radius: 8px; margin-top: 24px; }
 }
 
 /* ================================================================
@@ -4285,7 +4352,16 @@ body.guide-mode .cookies { display: none !important; }
     border-bottom: none;
     padding: 60mm 0 0;
   }
+  .ag-cover-bg { display: none !important; }
   .ag-cover-greeting { display: none; }
+
+  /* En impresión: ocultamos las páginas-foto para no duplicar el texto/recomendaciones,
+     pero mantenemos el plano y la galería de urbanización porque aportan info única. */
+  .ag-room-grid { display: block !important; }
+  .ag-room-photo { display: none !important; }
+  .ag-figure { box-shadow: none !important; border: 1px solid #ddd; page-break-inside: avoid; }
+  .ag-section.ag-floorplan,
+  .ag-figure-wide { page-break-before: auto; page-break-after: auto; }
 
   .ag-section {
     padding: 0 0 18mm;
