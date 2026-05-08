@@ -8628,22 +8628,44 @@ footer,
   color: var(--sol-lt, #ffd770);
 }
 
-/* ── Trigger band ── */
+/* ── Trigger band ──
+   Fondo crema sólido con un wash sol — siempre legible sobre cualquier
+   sección que la rodee (hero oscuro, calendario oscuro, etc.). Bordes
+   redondeados visibles arriba/abajo para que la banda 'flote' del flujo. */
 .dbt-band {
-  padding: 44px var(--page-pad) 36px;
+  padding: 56px var(--page-pad) 56px;
   text-align: center;
-  background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--sol) 7%, transparent));
-  border-top: 1px solid rgba(61,26,53,0.06);
+  background:
+    radial-gradient(1100px 320px at 50% 0%, color-mix(in oklab, var(--sol) 30%, transparent), transparent 60%),
+    linear-gradient(180deg, var(--crema), color-mix(in oklab, var(--sol) 10%, var(--crema)));
+  border-top: 1px solid color-mix(in oklab, var(--sol) 30%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--sol) 30%, transparent);
+  position: relative;
+  isolation: isolate;
+}
+/* Elemento decorativo: dos comillas serif tenues en el fondo */
+.dbt-band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 12% 50%, color-mix(in oklab, var(--sol) 18%, transparent), transparent 80px),
+    radial-gradient(circle at 88% 50%, color-mix(in oklab, var(--ber) 8%, transparent), transparent 80px);
+  pointer-events: none;
+  z-index: -1;
 }
 .dbt-inner { max-width: 720px; margin: 0 auto; }
-.dbt-eyebrow { display: block; margin-bottom: 12px; }
+.dbt-eyebrow {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--ber);
+}
 .dbt-title {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(24px, 3.4vw, 34px);
-  line-height: 1.18;
-  letter-spacing: -.01em;
-  margin: 0 0 22px;
+  font-size: clamp(28px, 4.2vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -.015em;
+  margin: 0 0 28px;
   color: var(--ber-dk);
 }
 .dbt-title em { font-style: italic; color: var(--ber); }

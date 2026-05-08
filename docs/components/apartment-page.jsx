@@ -336,7 +336,7 @@ const PhotoPlaceholder = ({ caption, accent, index }) => (
   </div>
 );
 
-// --- Hero de la página del Hestía ---
+// --- Hero de la página de Hestía ---
 const AptPageHero = ({ apt, lang, scrolled, mode }) => {
   const d = apt[lang];
   const tbl = HESTIA_PRICES[apt.id];
@@ -567,14 +567,14 @@ const AptPageOthers = ({ apt, lang }) => {
   );
 };
 
-// --- Plano del Hestía (solo si floorplan_img está definido) ---
+// --- Plano de Hestía (solo si floorplan_img está definido) ---
 const AptFloorPlan = ({ apt, lang }) => {
   if (!apt.floorplan_img) return null;
   return (
     <section className="apt-floorplan section-cream">
       <div className="container">
         <div className="eyebrow apt-fp-eyebrow">
-          {lang === 'es' ? 'Distribución del Hestía' : 'Hestía layout'}
+          {lang === 'es' ? 'Distribución de Hestía' : 'Hestía layout'}
         </div>
         <h2 className="apt-fp-title">
           {lang === 'es'
@@ -616,7 +616,7 @@ const AptGuideDownload = ({ apt, lang }) => {
   const t = lang === 'es' ? {
     eyebrow: 'Guía digital',
     title: `Descarga la guía de ${apt.es.name}`,
-    desc: 'Recomendaciones del barrio, restaurantes, calas, instrucciones del Hestía y todo lo que necesitas para tu estancia.',
+    desc: 'Recomendaciones del barrio, restaurantes, calas, instrucciones de Hestía y todo lo que necesitas para tu estancia.',
     placeholder: 'PIN de tu reserva',
     submit: 'Descargar PDF',
     helper: 'Encontrarás el PIN en tu confirmación de reserva.',
@@ -744,7 +744,7 @@ const AptStickyBar = ({ apt, lang, scrolled }) => {
   );
 };
 
-// --- App de página del Hestía ---
+// --- App de página de Hestía ---
 const ApartmentPageApp = () => {
   const aptId = window.__APT__ || 'vm';
   const apt = APT_DATA[aptId];
