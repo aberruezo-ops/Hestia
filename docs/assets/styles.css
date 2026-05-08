@@ -8612,3 +8612,205 @@ footer,
   .pe-topbar { flex-direction: column; align-items: flex-start; gap: 6px; }
   .pe-topbar .pe-meta { margin-left: 0; }
 }
+
+/* ================================================================
+   LAYER 60 · "Why Direct" — sección wow de ventajas (Hestía + home)
+   ================================================================ */
+.app-match {
+  display: inline-block;
+  margin-left: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  opacity: 0.85;
+  color: var(--sol-lt, #ffd770);
+}
+
+.why-direct {
+  padding: 72px var(--page-pad);
+  background:
+    radial-gradient(1200px 320px at 50% -50%, color-mix(in oklab, var(--sol) 22%, transparent), transparent 60%),
+    linear-gradient(180deg, var(--crema), color-mix(in oklab, var(--sol) 8%, var(--crema)));
+  border-top: 1px solid rgba(61,26,53,0.06);
+  border-bottom: 1px solid rgba(61,26,53,0.06);
+  text-align: center;
+  position: relative;
+}
+.why-direct .container { max-width: 980px; margin: 0 auto; }
+.wd-eyebrow {
+  display: block;
+  margin-bottom: 14px;
+}
+.wd-title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(34px, 5.2vw, 58px);
+  line-height: 1.05;
+  letter-spacing: -.01em;
+  margin: 0 auto 16px;
+  max-width: 22ch;
+  color: var(--ber-dk);
+}
+.wd-title em { font-style: italic; color: var(--ber); }
+.wd-sub {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0 auto 36px;
+  max-width: 38ch;
+}
+
+/* Stat ribbon: 4 cifras clave que se muestran siempre, plegado o no */
+.wd-ribbon {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  max-width: 760px;
+  margin: 0 auto 36px;
+}
+.wd-stat {
+  background: var(--crema);
+  padding: 22px 12px;
+  border-radius: 14px 0 14px 0;
+  border-left: 3px solid var(--sol);
+  text-align: center;
+  box-shadow: 0 6px 22px rgba(42,15,46,.06);
+  animation: wd-stat-in 600ms var(--ease-out, cubic-bezier(.23,1,.32,1)) backwards;
+}
+.wd-num {
+  display: block;
+  font-family: var(--serif);
+  font-size: clamp(26px, 4.4vw, 40px);
+  font-weight: 400;
+  color: var(--ber-dk);
+  line-height: 1;
+  letter-spacing: -.01em;
+  font-variant-numeric: tabular-nums;
+}
+.wd-stat-label {
+  display: block;
+  margin-top: 8px;
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+@keyframes wd-stat-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* CTA pill que despliega el detalle */
+.wd-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  background: var(--ber);
+  color: var(--crema);
+  border: 0;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(42,15,46,.18);
+  transition: transform .25s var(--ease-out, cubic-bezier(.23,1,.32,1)),
+              background .25s ease, box-shadow .25s ease;
+}
+.wd-toggle:hover {
+  background: var(--ber-dk);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(42,15,46,.26);
+}
+.wd-toggle:active { transform: translateY(0) scale(.98); }
+.wd-chevron {
+  display: inline-block;
+  font-size: 14px;
+  transition: transform .35s var(--ease-out, cubic-bezier(.23,1,.32,1));
+}
+.wd-chevron.open { transform: rotate(180deg); }
+
+/* Detalle desplegable: cards en rejilla con stagger */
+.wd-detail {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height .55s var(--ease-out, cubic-bezier(.23,1,.32,1)),
+              opacity .35s ease,
+              margin-top .35s ease;
+}
+.wd-detail.open {
+  max-height: 2800px;
+  opacity: 1;
+  margin-top: 38px;
+}
+.wd-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 18px;
+  text-align: left;
+}
+.wd-card {
+  background: var(--crema);
+  padding: 24px 26px 22px;
+  border-radius: 14px 0 14px 0;
+  border-left: 4px solid var(--sol);
+  box-shadow: 0 4px 22px rgba(42,15,46,.06);
+  transition: transform .25s var(--ease-out, cubic-bezier(.23,1,.32,1)),
+              box-shadow .25s var(--ease-out, cubic-bezier(.23,1,.32,1));
+  animation: wd-card-in 500ms var(--ease-out, cubic-bezier(.23,1,.32,1)) backwards;
+}
+.wd-detail.open .wd-card { animation-play-state: running; }
+.wd-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(42,15,46,.14);
+}
+.wd-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+.wd-icon {
+  font-size: 28px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(42,15,46,.12));
+}
+.wd-card-stat {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--ber);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.01em;
+}
+.wd-card-t {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 400;
+  margin: 0 0 8px;
+  color: var(--ber-dk);
+  line-height: 1.25;
+}
+.wd-card-d {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+}
+@keyframes wd-card-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .why-direct { padding: 56px var(--page-pad); }
+  .wd-ribbon { grid-template-columns: repeat(2, 1fr); gap: 10px; max-width: 360px; }
+  .wd-grid { grid-template-columns: 1fr; gap: 14px; }
+  .wd-card { padding: 20px 22px; }
+}

@@ -1564,3 +1564,110 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
 };
 
 Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, AIRBNB_PRICES, DIRECT_DISCOUNT, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _airbnbDayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate });
+
+// ================================================================
+// DirectBookingPerks — sección "Reserva directa, una mejor manera"
+// Stat ribbon (4 cifras destacadas) + botón → rejilla de 8 cards
+// ricos con icono, cifra, título y descripción. Reutilizable en
+// home y cada Hestía; mismo copy ES + EN, una sola fuente.
+// ================================================================
+const DIRECT_PERKS = {
+  es: [
+    { id:'precio',    icon:'💰', stat:'−9%',     t:'Precio mejor o te lo igualamos.',                 d:'Si encuentras una tarifa más baja en Booking, Airbnb o cualquier plataforma, te la igualamos o mejoramos. Sin discusión, sin letra pequeña.' },
+    { id:'comision',  icon:'🚫', stat:'0%',      t:'Sin comisiones de plataforma.',                   d:'El 9–15 % que se quedan las OTAs por cada reserva queda contigo. Pagas el precio real, no el inflado por intermediarios.' },
+    { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Respuesta humana, no un bot.',                    d:'Hablas directamente con Alex o Fran. Casi siempre respondemos en minutos; máximo una hora en horario activo.' },
+    { id:'cancel',    icon:'🔓', stat:'7 días',  t:'Cancelación flexible.',                           d:'Gratuita hasta 7 días antes de la llegada. Sin formularios eternos, sin sanciones ocultas, sin batallar contra una plataforma.' },
+    { id:'pago',      icon:'💳', stat:'✓',       t:'Pago seguro y flexible.',                         d:'Sin pre-autorizaciones que bloqueen tu tarjeta. Si necesitas plazos, los acordamos contigo. Pago directo, sin intermediarios.' },
+    { id:'descuento', icon:'🎁', stat:'−30%',    t:'Descuentos por estancia larga.',                  d:'−3 % a partir de 7 noches · −15 % a partir de 15 · −30 % a partir de 29. Aplicables en temporadas elegibles.' },
+    { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Guía privada incluida.',                          d:'Recomendaciones de Alex y Fran, instrucciones del Hestía, restaurantes, calas y rutas. Activa toda la estancia.' },
+    { id:'mascotas',  icon:'🐾', stat:'3/3',     t:'Mascotas bienvenidas.',                           d:'En los tres Hestías. Petición previa y un pequeño suplemento — sin tarifas abusivas ni vetos.' },
+  ],
+  en: [
+    { id:'precio',    icon:'💰', stat:'−9%',     t:'Better price or we match it.',                    d:'If you find a lower rate on Booking, Airbnb or anywhere else, we match or beat it. No questions, no small print.' },
+    { id:'comision',  icon:'🚫', stat:'0%',      t:'No platform commissions.',                        d:'The 9–15 % OTAs keep on every booking stays with you. You pay the real price, not the inflated one.' },
+    { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Human reply, not a bot.',                         d:'You talk directly to Alex or Fran. Usually within minutes; up to an hour during active hours.' },
+    { id:'cancel',    icon:'🔓', stat:'7 days',  t:'Flexible cancellation.',                          d:'Free up to 7 days before arrival. No endless forms, no hidden penalties, no fighting a platform.' },
+    { id:'pago',      icon:'💳', stat:'✓',       t:'Safe, flexible payment.',                         d:'No pre-authorisations blocking your card. If you need installments, we agree them. Direct payment, no middleman.' },
+    { id:'descuento', icon:'🎁', stat:'−30%',    t:'Long-stay discounts.',                            d:'−3 % from 7 nights · −15 % from 15 · −30 % from 29. Apply in eligible seasons.' },
+    { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Private guide included.',                         d:'Alex & Fran recommendations, Hestía instructions, restaurants, hidden coves and routes. Active throughout your stay.' },
+    { id:'mascotas',  icon:'🐾', stat:'3/3',     t:'Pets welcome.',                                   d:'In all three Hestías. On request and with a small supplement — no abusive fees, no blanket bans.' },
+  ],
+};
+
+const DIRECT_RIBBON = {
+  es: [
+    { num:'−9%',   label:'mejor precio' },
+    { num:'0%',    label:'comisiones' },
+    { num:'≤1 h',  label:'respuesta' },
+    { num:'7 d',   label:'cancela gratis' },
+  ],
+  en: [
+    { num:'−9%',   label:'better price' },
+    { num:'0%',    label:'commissions' },
+    { num:'≤1 h',  label:'reply' },
+    { num:'7 d',   label:'free cancel' },
+  ],
+};
+
+const DirectBookingPerks = ({ lang }) => {
+  const [open, setOpen] = React.useState(false);
+  const list   = DIRECT_PERKS[lang];
+  const ribbon = DIRECT_RIBBON[lang];
+  return (
+    <section className="why-direct">
+      <div className="container">
+        <span className="eyebrow wd-eyebrow">
+          {lang === 'es' ? 'Reserva directa' : 'Direct booking'}
+        </span>
+        <h2 className="wd-title">
+          {lang === 'es'
+            ? <>Una <em>mejor manera</em> de reservar.</>
+            : <>A <em>better way</em> to book.</>}
+        </h2>
+        <p className="wd-sub">
+          {lang === 'es'
+            ? 'Ocho razones — todas verificables, todas siempre garantizadas.'
+            : 'Eight reasons — all verifiable, all always guaranteed.'}
+        </p>
+
+        <div className="wd-ribbon">
+          {ribbon.map((s, i) => (
+            <div key={i} className="wd-stat" style={{ animationDelay: `${i * 90}ms` }}>
+              <span className="wd-num">{s.num}</span>
+              <span className="wd-stat-label">{s.label}</span>
+            </div>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          className="wd-toggle"
+          onClick={() => setOpen(o => !o)}
+          aria-expanded={open}
+        >
+          <span>{open
+            ? (lang === 'es' ? 'Ocultar el detalle' : 'Hide the detail')
+            : (lang === 'es' ? 'Ver todas las ventajas' : 'See all the perks')}</span>
+          <span className={`wd-chevron ${open ? 'open' : ''}`} aria-hidden="true">↓</span>
+        </button>
+
+        <div className={`wd-detail ${open ? 'open' : ''}`} aria-hidden={!open}>
+          <div className="wd-grid">
+            {list.map((p, i) => (
+              <article key={p.id} className="wd-card" style={{ animationDelay: `${i * 70}ms` }}>
+                <div className="wd-card-head">
+                  <span className="wd-icon" aria-hidden="true">{p.icon}</span>
+                  <span className="wd-card-stat">{p.stat}</span>
+                </div>
+                <h3 className="wd-card-t">{p.t}</h3>
+                <p className="wd-card-d">{p.d}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+Object.assign(window, { DirectBookingPerks, DIRECT_PERKS, DIRECT_RIBBON });

@@ -239,18 +239,21 @@ const Apartments = ({ lang }) => {
   const [activeIdx,  setActiveIdx ] = React.useState(0);
   const [bookingApt, setBookingApt] = React.useState(null);
 
+  // Precios "desde / hasta" mostrados son el base de prices.json
+  // (lo que el admin ve en /p-edit.html). Sin aplicar directDiscount —
+  // ese descuento es para el ahorro vs plataformas dentro del desglose.
   const aptMaxPrice = (aptId) => {
     const tbl = HESTIA_PRICES[aptId];
     if (!tbl) return null;
     const maxBase = Math.max(...tbl.base.slice(1));
-    const maxPeak = tbl.peaks ? Math.max(...tbl.peaks.map(p => p.pn)) : 0;
-    return Math.round(Math.max(maxBase, maxPeak) * (1 - DIRECT_DISCOUNT));
+    const maxPeak = tbl.peaks && tbl.peaks.length ? Math.max(...tbl.peaks.map(p => p.pn)) : 0;
+    return Math.max(maxBase, maxPeak);
   };
 
   const aptMinPrice = (aptId) => {
     const tbl = HESTIA_PRICES[aptId];
     if (!tbl) return null;
-    return Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT));
+    return Math.min(...tbl.base.slice(1));
   };
 
   const handleScroll = () => {
