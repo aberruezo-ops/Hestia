@@ -287,7 +287,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
 // CalMonth — rejilla de un mes
 // ---------------------------------------------------------------
 const CalMonth = ({
-  year, month, blocked, lang, todayStr,
+  year, month, blocked, lang, todayStr, horizonStr,
   selStart, selEnd, previewEnd,
   onDayClick, onDayHover, onDayLeave,
 }) => {
@@ -311,6 +311,10 @@ const CalMonth = ({
           const { d } = cell;
           const ds      = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
           const isPast  = ds < todayStr;
+          // Beyond booking horizon = no aceptamos reservas con check-in
+          // posterior a esa fecha (ej. cierre antes de Sem. Santa 2027).
+          // Se trata visualmente como "past" — gris, no clickable.
+          const beyondHorizon = !!(horizonStr && ds > horizonStr);
           const isToday = ds === todayStr;
           const isBlk   = _isBlk(ds, blocked);
 
@@ -334,7 +338,7 @@ const CalMonth = ({
           const isPE   = inPrev && ds === previewEnd;
           const isPM   = inPrev && !isPS && !isPE;
 
-          const isClickable = !isPast && !isBlk;
+          const isClickable = !isPast && !beyondHorizon && !isBlk;
           const showBlk = isBlk && !inSel && !inPrev;
 
           return (
@@ -342,7 +346,7 @@ const CalMonth = ({
               key={d}
               className={[
                 'cal-cell',
-                isPast       && 'past',
+                (isPast || beyondHorizon) && 'past',
                 isToday      && 'today',
                 isBlk        && 'blk',
                 isClickable  && 'clickable',
@@ -423,6 +427,11 @@ const AptCalendar = ({ aptId, lang, accent }) => {
   const hasSyncError = Object.keys(fetchErrors).length > 0;
   const isDemo       = data ? data.demo          : false;
 
+  // Cierre de reservas — última fecha de check-in aceptada (ej. 20 mar 2027).
+  // Lee de prices.json (window.PRICES_V2). null = sin restricción.
+  const horizonStr = (window.PRICES_V2 && window.PRICES_V2.bookingHorizon
+    && window.PRICES_V2.bookingHorizon.lastCheckinDate) || null;
+
   // Precompute min nights when selStart changes
   const minNights = React.useMemo(() => {
     if (!selStart) return 6;
@@ -445,7 +454,7 @@ const AptCalendar = ({ aptId, lang, accent }) => {
   }
 
   const handleDayClick = (ds) => {
-    if (ds < todayStr || _isBlk(ds, blocked)) return;
+    if (ds < todayStr || (horizonStr && ds > horizonStr) || _isBlk(ds, blocked)) return;
 
     // Start new selection: no start yet, or selection complete, or clicked before start
     if (!selStart || selEnd || ds < selStart) {
@@ -528,7 +537,7 @@ const AptCalendar = ({ aptId, lang, accent }) => {
   };
 
   const calProps = {
-    blocked, lang, todayStr,
+    blocked, lang, todayStr, horizonStr,
     selStart, selEnd, previewEnd,
     onDayClick:  handleDayClick,
     onDayHover:  ds => { if (!selEnd) setHovDay(ds); },

@@ -1440,15 +1440,33 @@ const AIRBNB_PRICES = {
   },
 };
 
-const DIRECT_DISCOUNT = 0.09;   // −9 % vs Booking.com / Airbnb
+const DIRECT_DISCOUNT = (window.PRICES_V2 && window.PRICES_V2.rules && typeof window.PRICES_V2.rules.directDiscount === 'number')
+  ? window.PRICES_V2.rules.directDiscount
+  : 0.09;   // −9 % vs Booking.com / Airbnb (fallback)
 
-const STAY_DISCOUNTS = [        // descuentos por duración (sobre precio directo)
-  { min: 28, pct: 0.20, es: '−20 % por estancia larga (28+ noches)', en: '−20 % long stay (28+ nights)' },
-  { min: 14, pct: 0.10, es: '−10 % por estancia larga (14+ noches)', en: '−10 % long stay (14+ nights)' },
-  { min:  6, pct: 0.05, es: '−5 % por estancia larga (6+ noches)',  en: '−5 % long stay (6+ nights)' },
-];
+// Stay discounts vienen del JSON cuando está disponible. El JSON puede
+// definir excludeSeasons (ej. "no se aplica en alta/crítica") — eso lo
+// chequea _calcStay día a día. Ordenado de mayor a menor minNights para
+// que el primer match en .find() sea el mejor descuento aplicable.
+const STAY_DISCOUNTS = (window.PRICES_V2 && window.PRICES_V2.rules && Array.isArray(window.PRICES_V2.rules.stayDiscounts))
+  ? window.PRICES_V2.rules.stayDiscounts.slice()
+      .sort((a, b) => b.minNights - a.minNights)
+      .map(d => ({
+        min: d.minNights,
+        pct: d.pct,
+        excludeSeasons: d.excludeSeasons || [],
+        es: d.label || `−${Math.round(d.pct * 100)} % por estancia larga (${d.minNights}+ noches)`,
+        en: `−${Math.round(d.pct * 100)} % long stay (${d.minNights}+ nights)`,
+      }))
+  : [
+      { min: 28, pct: 0.20, excludeSeasons: [], es: '−20 % por estancia larga (28+ noches)', en: '−20 % long stay (28+ nights)' },
+      { min: 14, pct: 0.10, excludeSeasons: [], es: '−10 % por estancia larga (14+ noches)', en: '−10 % long stay (14+ nights)' },
+      { min:  6, pct: 0.05, excludeSeasons: [], es: '−5 % por estancia larga (6+ noches)',  en: '−5 % long stay (6+ nights)' },
+    ];
 
-const PET_SUPP_FLAT = 50;       // €/estancia suplemento mascota (tarifa plana, no incluida en plataformas)
+const PET_SUPP_FLAT = (window.PRICES_V2 && window.PRICES_V2.rules && typeof window.PRICES_V2.rules.petFlatFee === 'number')
+  ? window.PRICES_V2.rules.petFlatFee
+  : 50;       // €/estancia suplemento mascota (fallback)
 
 // helpers compat con el motor de calendario
 const _be_adj = (ds, n) => {
@@ -1514,8 +1532,24 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
   const refTotal    = Math.max(totalBooking, totalAirbnb);
   const afterDirect = Math.round(refTotal * (1 - DIRECT_DISCOUNT));
 
-  // descuento por duración
-  const stayD = STAY_DISCOUNTS.find(d => nights >= d.min) || null;
+  // Descuento por duración. Si el JSON marca excludeSeasons (ej. "no se
+  // aplica en alta/crítica"), comprobamos qué temporadas atraviesa la
+  // estancia y descartamos descuentos que pisen alguna excluida.
+  const v2 = window.PRICES_V2;
+  const seasonsInStay = new Set();
+  if (v2) {
+    let s = selStart;
+    for (let i = 0; i < nights; i++) {
+      seasonsInStay.add(_v2BumpedSeasonForDate(s, v2));
+      s = _be_adj(s, 1);
+    }
+  }
+  const stayD = STAY_DISCOUNTS.find(d => {
+    if (nights < d.min) return false;
+    const excl = d.excludeSeasons || [];
+    if (excl.some(season => seasonsInStay.has(season))) return false;
+    return true;
+  }) || null;
   const stayDiscAmt = stayD ? Math.round(afterDirect * stayD.pct) : 0;
   const afterStay   = afterDirect - stayDiscAmt;
 
