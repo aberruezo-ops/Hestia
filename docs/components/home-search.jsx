@@ -408,7 +408,7 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests,
                 {lang === 'es' ? 'Solicitar precio — Email' : 'Request price — Email'}
               </a>
               <a href={`${apt.slug}.html`} className="hs-rc-link">
-                {lang === 'es' ? 'Ver apartamento' : 'See apartment'} →
+                {lang === 'es' ? 'Ver Hestía' : 'See Hestía'} →
               </a>
             </div>
             <p className="hs-rc-note">
@@ -519,8 +519,8 @@ const HomeSearch = ({ lang }) => {
           </h2>
           <p className="hs-sub">
             {lang === 'es'
-              ? 'Selecciona apartamento — o déjalo en blanco para ver los tres disponibles — y cuéntanos lo que necesitáis.'
-              : 'Choose an apartment — or leave it blank to see all three — and tell us what you need.'}
+              ? 'Selecciona Hestía — o déjalo en blanco para ver los tres disponibles — y cuéntanos lo que necesitáis.'
+              : 'Choose a Hestía — or leave it blank to see all three — and tell us what you need.'}
           </p>
         </div>
 
@@ -530,7 +530,7 @@ const HomeSearch = ({ lang }) => {
           {/* Apartment selector */}
           <div className="hs-field hs-field--full">
             <label className="hs-lbl">
-              {lang === 'es' ? 'Apartamento' : 'Apartment'}
+              {lang === 'es' ? 'Hestía' : 'Hestía'}
             </label>
             <div className="hs-apt-sel">
               {[
@@ -638,7 +638,7 @@ const HomeSearch = ({ lang }) => {
             <span className="hs-trust-dot"/>
             <span>{lang === 'es' ? '✓ Alex confirma en 24h' : '✓ Alex replies in 24h'}</span>
             <span className="hs-trust-dot"/>
-            <span>{lang === 'es' ? 'Solo 3 apartamentos' : 'Only 3 apartments'}</span>
+            <span>{lang === 'es' ? 'Solo 3 Hestías' : 'Only 3 Hestías'}</span>
           </div>
 
         </form>
@@ -652,15 +652,15 @@ const HomeSearch = ({ lang }) => {
                 const nTotal = results.length;
                 if (nAvail === 0)
                   return lang === 'es'
-                    ? `Ningún apartamento disponible para esas fechas exactas.`
-                    : `No apartments available for those exact dates.`;
+                    ? `Ningún Hestía disponible para esas fechas exactas.`
+                    : `No Hestías available for those exact dates.`;
                 if (nAvail === nTotal)
                   return lang === 'es'
-                    ? `${nAvail === 1 ? 'Apartamento disponible' : `${nAvail} apartamentos disponibles`} para esas fechas.`
-                    : `${nAvail === 1 ? 'Apartment available' : `${nAvail} apartments available`} for those dates.`;
+                    ? `${nAvail === 1 ? 'Hestía disponible' : `${nAvail} Hestías disponibles`} para esas fechas.`
+                    : `${nAvail === 1 ? 'Hestía available' : `${nAvail} Hestías available`} for those dates.`;
                 return lang === 'es'
-                  ? `${nAvail} de ${nTotal} apartamentos disponibles para esas fechas.`
-                  : `${nAvail} of ${nTotal} apartments available for those dates.`;
+                  ? `${nAvail} de ${nTotal} Hestías disponibles para esas fechas.`
+                  : `${nAvail} of ${nTotal} Hestías available for those dates.`;
               })()}
             </div>
 
@@ -705,8 +705,8 @@ const HomeSearch = ({ lang }) => {
           </p>
           <a
             href={lang === 'es'
-              ? 'https://wa.me/34620316370?text=Hola%2C%20me%20interesan%20vuestros%20apartamentos%20pero%20mis%20fechas%20est%C3%A1n%20ocupadas.%20%C2%BFPod%C3%A9is%20avisarme%20si%20se%20libera%20algo%3F'
-              : 'https://wa.me/34620316370?text=Hi%2C%20I%27m%20interested%20in%20your%20apartments%20but%20my%20dates%20are%20taken.%20Could%20you%20let%20me%20know%20if%20something%20becomes%20available%3F'}
+              ? 'https://wa.me/34620316370?text=Hola%2C%20me%20interesan%20vuestros%20Hest%C3%ADas%20pero%20mis%20fechas%20est%C3%A1n%20ocupadas.%20%C2%BFPod%C3%A9is%20avisarme%20si%20se%20libera%20algo%3F'
+              : 'https://wa.me/34620316370?text=Hi%2C%20I%27m%20interested%20in%20your%20Hest%C3%ADas%20but%20my%20dates%20are%20taken.%20Could%20you%20let%20me%20know%20if%20something%20becomes%20available%3F'}
             className="btn btn-ghost hs-notify-btn"
             target="_blank" rel="noopener"
           >

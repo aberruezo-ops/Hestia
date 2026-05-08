@@ -27,9 +27,9 @@ const BRAND_COPY = {
     landscape_title: (<>La paleta completa. <em>Nueve colores del paisaje.</em></>),
     landscape_lede: 'Cada color tiene un lugar exacto en Almería. No se eligieron: se encontraron. El cielo, el mar, la tierra, las flores, la piedra. La marca entera cabe en un amanecer sobre Vera Playa.',
 
-    apt_eyebrow: 'Tres apartamentos · tres paisajes',
-    apt_title: (<>Cada apartamento <em>toma su color del paisaje.</em></>),
-    apt_lede: 'Las tres identidades secundarias funcionan como sub-marcas. No son colores arbitrarios: cada uno está extraído de un paisaje real de Almería que define la atmósfera del apartamento.',
+    apt_eyebrow: 'Tres Hestías · tres paisajes',
+    apt_title: (<>Cada Hestía <em>toma su color del paisaje.</em></>),
+    apt_lede: 'Las tres identidades secundarias funcionan como sub-marcas. No son colores arbitrarios: cada uno está extraído de un paisaje real de Almería que define la atmósfera del Hestía.',
 
     type_eyebrow: 'Tipografía',
     type_title: (<>Lora para el alma, <em>Poppins para la voz.</em></>),
@@ -74,9 +74,9 @@ const BRAND_COPY = {
     landscape_title: (<>The complete palette. <em>Nine colours from the landscape.</em></>),
     landscape_lede: 'Every colour has an exact location in Almería. They were not chosen — they were found. Sky, sea, earth, flowers, stone. The entire brand fits within a single sunrise over Vera Playa.',
 
-    apt_eyebrow: 'Three apartments · three landscapes',
-    apt_title: (<>Each apartment <em>borrows its colour from its landscape.</em></>),
-    apt_lede: 'The three secondary identities work as sub-brands. They are not arbitrary colours: each one is extracted from a real Almerían landscape that defines the apartment\'s atmosphere.',
+    apt_eyebrow: 'Three Hestías · three landscapes',
+    apt_title: (<>Each Hestía <em>borrows its colour from its landscape.</em></>),
+    apt_lede: 'The three secondary identities work as sub-brands. They are not arbitrary colours: each one is extracted from a real Almerían landscape that defines the Hestía\'s atmosphere.',
     type_eyebrow: 'Typography',
     type_title: (<>Lora for the soul, <em>Poppins for the voice.</em></>),
     type_lede: 'A sober pair mixing book type and screen type. Lora italics are our signature — they appear in headlines, quotes and concepts. Thin Poppins handles the rest: navigation, data, microcopy.',
@@ -91,7 +91,7 @@ const BRAND_COPY = {
     dont_1: 'On saturated brand backgrounds.',
     dont_2: 'Stretching or warping the mark.',
     dont_3: 'Tilting or rotating the symbol.',
-    dont_4: 'Over apartment gradient washes.',
+    dont_4: 'Over Hestía gradient washes.',
     do_label: 'Do',
     dont_label: 'Don\'t',
   }
@@ -169,7 +169,7 @@ const BrandGuide = ({ lang }) => {
       num: '01',
       name: 'Hestía Mar',
       concept: lang === 'es' ? '« El campo de olivos llega al mar »' : '« Where the olive grove meets the sea »',
-      why: lang === 'es' ? 'Verde olivo profundo extraído del campo almeriense. Apartamento más sereno y mineral, con el detalle marino del cabecero. La paleta neutraliza para que el mar pintado del cabecero sea siempre el protagonista.' : 'Deep olive green from the Almerían countryside. The most serene and mineral apartment, with a marine touch in the headboard. The palette neutralises so the painted sea remains the lead.',
+      why: lang === 'es' ? 'Verde olivo profundo extraído del campo almeriense. Hestía más sereno y mineral, con el detalle marino del cabecero. La paleta neutraliza para que el mar pintado del cabecero sea siempre el protagonista.' : 'Deep olive green from the Almerían countryside. The most serene and mineral Hestía, with a marine touch in the headboard. The palette neutralises so the painted sea remains the lead.',
       photo: 'assets/photo-vm-bedroom.jpg',
       colors: [
         { hex: '#4A5628', name: 'Olivo' },
@@ -195,7 +195,7 @@ const BrandGuide = ({ lang }) => {
       num: '03',
       name: 'Hestía Salinas',
       concept: lang === 'es' ? '« El amarillo albero del amanecer »' : '« The ochre yellow of sunrise »',
-      why: lang === 'es' ? 'Amarillo albero del Parque Natural de las Salinas a las 7:14 AM. La luz dorada que da nombre al apartamento. Tiene la textura del polvo de plaza, del adobe del Sur.' : 'Ochre yellow from the Salt Flats Natural Park at 7:14 AM. The golden light that names the apartment. It carries the texture of square dust, the adobe of the South.',
+      why: lang === 'es' ? 'Amarillo albero del Parque Natural de las Salinas a las 7:14 AM. La luz dorada que da nombre al Hestía. Tiene la textura del polvo de plaza, del adobe del Sur.' : 'Ochre yellow from the Salt Flats Natural Park at 7:14 AM. The golden light that names the Hestía. It carries the texture of square dust, the adobe of the South.',
       photo: 'assets/photo-vs-bedroom.jpg',
       colors: [
         { hex: '#9E7A2C', name: 'Albero' },
@@ -384,7 +384,7 @@ const BrandGuide = ({ lang }) => {
               <div className="meta-row"><span className="key">Tracking</span><span className="val">+0.18em en eyebrows</span></div>
             </div>
             <div className="scale">
-              <div className="scale-row"><span className="lbl">Body · 14</span><span className="sample" style={{fontSize: 13}}>Tres apartamentos en Vera Playa.</span></div>
+              <div className="scale-row"><span className="lbl">Body · 14</span><span className="sample" style={{fontSize: 13}}>Tres Hestías en Vera Playa.</span></div>
               <div className="scale-row"><span className="lbl">Eyebrow · 11</span><span className="sample" style={{fontSize: 10, letterSpacing: '0.22em', textTransform: 'uppercase', fontWeight: 400}}>Manual de identidad</span></div>
               <div className="scale-row"><span className="lbl">Caps · 14</span><span className="sample wordmark" style={{fontSize: 12, letterSpacing: '0.44em'}}>HESTÍA</span></div>
             </div>

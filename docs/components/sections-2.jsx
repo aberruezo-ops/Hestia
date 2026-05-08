@@ -228,8 +228,8 @@ const Ratings = ({ lang }) => {
             <div className="desc">{t.rating_booking_desc}</div>
             <blockquote className="rating-quote">
               {lang === 'es'
-                ? '«Todo impecable. La ubicación, el apartamento y sobre todo el trato de Alex. Volvemos seguro.»'
-                : '«Everything perfect. The location, the apartment, and above all Alex\'s care. We\'ll definitely be back.»'}
+                ? '«Todo impecable. La ubicación, el Hestía y sobre todo el trato de Alex. Volvemos seguro.»'
+                : '«Everything perfect. The location, the Hestía, and above all Alex\'s care. We\'ll definitely be back.»'}
               <cite>— María G. · Hestía Mar · 2024</cite>
             </blockquote>
           </div>
@@ -239,8 +239,8 @@ const Ratings = ({ lang }) => {
             <div className="desc">{t.rating_airbnb_desc}</div>
             <blockquote className="rating-quote">
               {lang === 'es'
-                ? '«Llevamos diez años viajando y nunca habíamos visto unas vistas así desde un apartamento. El SPA es otro nivel.»'
-                : '«Ten years travelling and we\'ve never had views like these from an apartment. The SPA is something else entirely.»'}
+                ? '«Llevamos diez años viajando y nunca habíamos visto unas vistas así desde un alojamiento. El SPA es otro nivel.»'
+                : '«Ten years travelling and we\'ve never had views like these from a holiday rental. The SPA is something else entirely.»'}
               <cite>— James & Sophie · Hestía Thalassa · 2024</cite>
             </blockquote>
           </div>
