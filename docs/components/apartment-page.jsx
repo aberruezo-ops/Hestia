@@ -340,7 +340,11 @@ const PhotoPlaceholder = ({ caption, accent, index }) => (
 const AptPageHero = ({ apt, lang, scrolled, mode }) => {
   const d = apt[lang];
   const tbl = HESTIA_PRICES[apt.id];
-  const minPrice = tbl ? Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT)) : null;
+  // El precio "desde" es el base de prices.json en temporada baja —
+  // exactamente el número que el admin ve en /p-edit.html. Sin restar
+  // el directDiscount: ese descuento sirve para calcular el ahorro
+  // vs Booking/Airbnb dentro del desglose de la reserva, no aquí.
+  const minPrice = tbl ? Math.min(...tbl.base.slice(1)) : null;
   return (
     <section className="apt-page-hero" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
       <img src={apt.hero_img} alt={d.name} className="apt-page-hero-img"/>
@@ -701,7 +705,8 @@ const AptGuideDownload = ({ apt, lang }) => {
 const AptStickyBar = ({ apt, lang, scrolled }) => {
   const ref = React.useRef(null);
   const tbl = HESTIA_PRICES[apt.id];
-  const minP = tbl ? Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT)) : null;
+  // Mismo criterio que el hero: mostrar el base de prices.json directo.
+  const minP = tbl ? Math.min(...tbl.base.slice(1)) : null;
   const waMsg = lang === 'es'
     ? `Hola, me interesa reservar ${apt[lang].name}. ¿Podéis indicarme disponibilidad?`
     : `Hello, I'm interested in booking ${apt[lang].name}. Could you let me know availability?`;
