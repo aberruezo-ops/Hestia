@@ -546,8 +546,8 @@ const AptCalendar = ({ aptId, lang, accent }) => {
         </div>
         <h2 className="avail-title">
           {lang === 'es'
-            ? <><em>Elige tus fechas.</em> El apartamento te espera.</>
-            : <><em>Pick your dates.</em> The apartment is waiting.</>}
+            ? <><em>Elige tus fechas.</em> Tu Hestía te espera.</>
+            : <><em>Pick your dates.</em> Your Hestía is waiting.</>}
         </h2>
         <p className="avail-sub">
           {lang === 'es'

@@ -135,8 +135,8 @@ const HomeBookingModal = ({ apt, lang, onClose }) => {
 
   const mailSubj = lang === 'es' ? `Consulta reserva — ${apt.name}` : `Booking enquiry — ${apt.name}`;
   const mailBody = lang === 'es'
-    ? `Nombre: ${name}\nEmail: ${email}\nTeléfono: ${phone || '—'}\nApartamento: ${apt.name}\n\n${msg || '(sin mensaje adicional)'}`
-    : `Name: ${name}\nEmail: ${email}\nPhone: ${phone || '—'}\nApartment: ${apt.name}\n\n${msg || '(no additional message)'}`;
+    ? `Nombre: ${name}\nEmail: ${email}\nTeléfono: ${phone || '—'}\nHestía: ${apt.name}\n\n${msg || '(sin mensaje adicional)'}`
+    : `Name: ${name}\nEmail: ${email}\nPhone: ${phone || '—'}\nHestía: ${apt.name}\n\n${msg || '(no additional message)'}`;
 
   React.useEffect(() => {
     const esc = e => { if (e.key === 'Escape') onClose(); };
@@ -281,7 +281,7 @@ const Apartments = ({ lang }) => {
 
   return (
     <>
-      <section className="apartments-intro" id="apartamentos" data-screen-label="03 Apartamentos">
+      <section className="apartments-intro" id="apartamentos" data-screen-label="03 Hestías">
         <div className="eyebrow">{t.apts_eyebrow}</div>
         <h2>{t.apts_title}</h2>
         <p>{t.apts_sub}</p>

@@ -226,8 +226,8 @@ const NoticiasPage = ({ lang }) => {
           </h1>
           <p className="noticias-hero-sub">
             {lang === 'es'
-              ? 'Lo que pasa en Vera Playa, Almería, Andalucía y Murcia. Más la voz de Hestía — recomendaciones y curiosidades de cada apartamento.'
-              : 'What\'s happening in Vera Playa, Almería, Andalucía and Murcia. Plus the voice of Hestía — recommendations and curiosities from each apartment.'}
+              ? 'Lo que pasa en Vera Playa, Almería, Andalucía y Murcia. Más la voz de Hestía — recomendaciones y curiosidades de cada Hestía.'
+              : 'What\'s happening in Vera Playa, Almería, Andalucía and Murcia. Plus the voice of Hestía — recommendations and curiosities from each Hestía.'}
           </p>
         </div>
       </section>
@@ -297,7 +297,7 @@ const NoticiasPage = ({ lang }) => {
               {lang === 'es' ? 'Sugerir algo → WhatsApp' : 'Suggest something → WhatsApp'}
             </a>
             <a href="reservas.html" className="btn btn-ghost-light">
-              {lang === 'es' ? 'Reservar apartamento →' : 'Book an apartment →'}
+              {lang === 'es' ? 'Reservar Hestía →' : 'Book a Hestía →'}
             </a>
           </div>
         </div>
