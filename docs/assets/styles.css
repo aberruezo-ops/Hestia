@@ -45,7 +45,7 @@
 }
 .skip-link {
   position: absolute;
-  top: -100%;
+  top: 0;
   left: 16px;
   z-index: 9999;
   background: #2A0F2E;
@@ -55,9 +55,10 @@
   font-family: sans-serif;
   font-size: 14px;
   text-decoration: none;
-  transition: top 0.15s;
+  transform: translateY(-150%);
+  transition: transform var(--dur-fast, 160ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
-.skip-link:focus { top: 0; }
+.skip-link:focus { transform: translateY(0); }
 
 /* ================================================================
    VIDEO INTRO  — caja flotante 600×600, sin bloqueo de pantalla
