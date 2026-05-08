@@ -108,6 +108,7 @@ const App = () => {
         <FraseHogar lang={lang} />
         <HomeSearch lang={lang} />
         <Apartments lang={lang} />
+        <DirectBookingPerks lang={lang} />
         <Compare lang={lang} />
         <Counters lang={lang} />
         <Team lang={lang} />
