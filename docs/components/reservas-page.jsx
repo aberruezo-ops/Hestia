@@ -10,7 +10,7 @@ const RESERVAS_COPY = {
     form_title: 'Solicitar reserva',
     form_sub: 'Rellena el formulario y te escribimos por WhatsApp con disponibilidad y precio.',
     f_apt: 'Hestía',
-    f_apt_ph: 'Elige un Hestía',
+    f_apt_ph: 'Elige Hestía',
     f_name: 'Nombre completo',
     f_name_ph: 'Tu nombre',
     f_email: 'Email',
@@ -112,7 +112,7 @@ const PricePreview = ({ apt, checkin, checkout, pets, lang }) => {
           <span>{fmt(calc.refTotal)}</span>
         </div>
         <div className="price-line price-line-disc">
-          <span>−9 % {lang === 'es' ? 'reserva directa' : 'direct booking'}</span>
+          <span>{lang === 'es' ? 'Mejora reserva directa' : 'Direct-booking improvement'}</span>
           <span>−{fmt(calc.refTotal - calc.afterDirect)}</span>
         </div>
         {calc.stayD && (

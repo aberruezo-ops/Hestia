@@ -8,7 +8,7 @@ const APT_GUIDE_PIN = { vm: 'HVM2016', vt: 'HVT2019', vs: 'HVS2021' };
 
 // ----- Mapeo: galería de cada Hestía → estancia -----
 // Reusamos las fotos profesionales que ya están en assets/apt-vX-gallery-N.jpg
-// (mismas que la galería del Hestía). Cada índice apunta a su posición
+// (mismas que la galería de Hestía). Cada índice apunta a su posición
 // en apt.gallery_imgs[]. Las captions se sacan de apt[lang].gallery_captions[].
 const ROOM_PHOTOS = {
   vm: {
@@ -233,7 +233,7 @@ const GUIDE_SHARED = {
       title: 'Bienvenido a tu Hestía',
       paras: [
         'Si lees esto, tu reserva está más que confirmada — y no sabes la ilusión que nos hace tenerte aquí.',
-        'Hemos puesto cariño en cada detalle del Hestía. Esperamos estar a la altura.',
+        'Hemos puesto cariño en cada detalle de Hestía. Esperamos estar a la altura.',
         'Ya estés preparando el viaje, viviendo tus días aquí, o de vuelta a casa con la maleta a medio deshacer: todo lo que esté en nuestra mano, antes, durante o después de tu estancia, lo haremos. Sin dudarlo. Para eso estamos.',
         'Ahora descansa, relájate y descubre tu hogar lejos de tu casa.',
       ],
@@ -719,7 +719,7 @@ const GuideMap = ({ lang }) => {
 };
 
 // ================================================================
-// AptGuideView — guía integrada en la página del Hestía
+// AptGuideView — guía integrada en la página de Hestía
 // (se renderiza dentro del Header / Footer del portal)
 // ================================================================
 const AptGuideView = ({ apt, lang, onClose }) => {
@@ -809,7 +809,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
         <div className="ag-hero-inner">
           <button className="ag-back no-print" onClick={onClose}>
             <span aria-hidden="true">←</span>
-            <span>{lang === 'es' ? 'Volver al Hestía' : 'Back to Hestía'}</span>
+            <span>{lang === 'es' ? 'Volver a Hestía' : 'Back to Hestía'}</span>
           </button>
           <span className="ag-hero-eyebrow">{lang === 'es' ? 'Guía del huésped' : 'Guest guide'}</span>
           <h1 className="ag-hero-title">{aptName}</h1>
@@ -982,7 +982,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           <div className="ag-content-end no-print">
             <button className="ag-back" onClick={onClose}>
               <span aria-hidden="true">←</span>
-              <span>{lang === 'es' ? 'Volver al Hestía' : 'Back to Hestía'}</span>
+              <span>{lang === 'es' ? 'Volver a Hestía' : 'Back to Hestía'}</span>
             </button>
           </div>
 
@@ -1063,7 +1063,7 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
           </h2>
           <p className="apt-guide-gate-desc">
             {lang === 'es'
-              ? 'Recomendaciones del barrio, restaurantes, calas, instrucciones del Hestía y todo lo que necesitas para tu estancia. Reservada para huéspedes con PIN.'
+              ? 'Recomendaciones del barrio, restaurantes, calas, instrucciones de Hestía y todo lo que necesitas para tu estancia. Reservada para huéspedes con PIN.'
               : 'Neighbourhood recommendations, restaurants, coves, Hestía instructions and everything you need for your stay. Reserved for guests with a PIN.'}
           </p>
           <button className="apt-guide-gate-btn" onClick={() => setOpen(true)}>

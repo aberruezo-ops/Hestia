@@ -10,7 +10,7 @@ const NOSOTROS_COPY = {
 
     intro_title: (<>No somos una empresa.<em>Somos dos personas.</em></>),
     intro_p1: 'Nos conocisteis cuando reservasteis, o quizás ahora mismo es la primera vez. Da igual. Lo importante es que detrás de Hestía no hay una plataforma, ni un gestor, ni una oficina. Estamos nosotros: Alex y Fran. Dos personas reales que cogen el teléfono, que conocen vuestro nombre y que se ocupan de que cuando llegáis, todo esté exactamente como debería.',
-    intro_p2: 'Somos un ingeniero informático con alma de decorador y un filólogo clásico que sabe cómo hacer que una estancia sea más que una estancia. Llevamos desde 2016 transformando los Hestías en Vera Playa en algo que, con suerte, vosotros también podéis llamar hogar durante unos días.',
+    intro_p2: 'Somos un ingeniero informático con alma de decorador y un filólogo clásico que sabe cómo hacer que una estancia sea más que una estancia. Llevamos desde 2016 transformando cada Hestía en Vera Playa en algo que, con suerte, vosotros también podéis llamar hogar durante unos días.',
     intro_quote: '«El hogar no es un lugar, es un sentimiento.»',
     intro_quote_attr: '— Cecelia Ahearn',
 
