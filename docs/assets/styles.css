@@ -953,6 +953,9 @@ section {
 /* -------- Cookies banner -------- */
 .cookies {
   position: fixed;
+  /* En apt pages la sticky bar (z=200, ~60px alto) puede tapar el aviso —
+     subimos cookies por encima en z-index y, si la sticky bar está visible,
+     bajamos también su bottom (regla :has más abajo). */
   bottom: 24px; left: 24px;
   max-width: 380px;
   background: var(--crema);
@@ -960,7 +963,7 @@ section {
   padding: 20px 22px;
   border-radius: 10px 0 10px 0;
   box-shadow: 0 20px 50px rgba(42, 15, 46, 0.3);
-  z-index: 150;
+  z-index: 250;  /* por encima de la sticky bar (200) */
   font-size: 13px;
   border: 1px solid rgba(61,26,53,0.08);
   transform: translateY(calc(100% + 40px));
@@ -3906,6 +3909,12 @@ body.no-parallax .g-tile .img { transform: none !important; }
   will-change: transform;
 }
 .apt-sticky-bar.asb-visible { transform: translateY(0); }
+
+/* Si la sticky bar está visible, el aviso de cookies sube para no quedar
+   tapado. La sticky bar mide ~60px; dejamos 24px de gap. */
+body:has(.apt-sticky-bar.asb-visible) .cookies {
+  bottom: 96px;
+}
 .asb-info {
   display: flex;
   flex-direction: column;
