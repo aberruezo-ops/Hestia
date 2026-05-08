@@ -559,6 +559,108 @@ const AptPageOthers = ({ apt, lang }) => {
   );
 };
 
+// --- Descarga de guía protegida por PIN ---
+//
+// El PIN es fricción de UX, no seguridad real (sitio estático).
+// Los PDFs se sirven desde assets/guides/{PIN}.pdf — la URL solo es
+// "adivinable" si conoces el PIN. Cualquiera con la URL puede descargar.
+//
+const APT_GUIDE_PIN = { vm: 'HVM2016', vt: 'HVT2019', vs: 'HVS2021' };
+
+const AptGuideDownload = ({ apt, lang }) => {
+  const expected = APT_GUIDE_PIN[apt.id];
+  const [pin, setPin] = React.useState('');
+  const [status, setStatus] = React.useState('idle'); // idle | error | success
+  const inputRef = React.useRef(null);
+
+  const t = lang === 'es' ? {
+    eyebrow: 'Guía digital',
+    title: `Descarga la guía de ${apt.es.name}`,
+    desc: 'Recomendaciones del barrio, restaurantes, calas, instrucciones del apartamento y todo lo que necesitas para tu estancia.',
+    placeholder: 'PIN de tu reserva',
+    submit: 'Descargar PDF',
+    helper: 'Encontrarás el PIN en tu confirmación de reserva.',
+    error: 'PIN incorrecto. Revisa tu confirmación de reserva.',
+    success: '¡Descarga iniciada!',
+  } : {
+    eyebrow: 'Digital guide',
+    title: `Download your ${apt.en.name} guide`,
+    desc: 'Neighborhood recommendations, restaurants, coves, apartment instructions and everything you need for your stay.',
+    placeholder: 'Booking PIN',
+    submit: 'Download PDF',
+    helper: 'You will find the PIN in your booking confirmation.',
+    error: 'Wrong PIN. Check your booking confirmation.',
+    success: 'Download started!',
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const entered = pin.trim().toUpperCase();
+    if (entered === expected) {
+      setStatus('success');
+      const a = document.createElement('a');
+      a.href = `assets/guides/${expected}.pdf`;
+      a.download = `Guia-${apt.es.name.replace(/\s+/g, '-')}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    } else {
+      setStatus('error');
+      if (inputRef.current) inputRef.current.focus();
+    }
+  };
+
+  return (
+    <section
+      className="apt-guide"
+      data-apt={apt.id}
+      style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}
+    >
+      <div className="apt-guide-inner">
+        <div className="apt-guide-copy">
+          <span className="apt-guide-eyebrow">{t.eyebrow}</span>
+          <h2 className="apt-guide-title">{t.title}</h2>
+          <p className="apt-guide-desc">{t.desc}</p>
+        </div>
+        <form
+          className={`apt-guide-form${status === 'error' ? ' is-error' : ''}${status === 'success' ? ' is-success' : ''}`}
+          onSubmit={handleSubmit}
+          noValidate
+        >
+          <label htmlFor={`guide-pin-${apt.id}`} className="apt-guide-label">{t.placeholder}</label>
+          <div className="apt-guide-row">
+            <input
+              ref={inputRef}
+              id={`guide-pin-${apt.id}`}
+              type="text"
+              inputMode="text"
+              autoComplete="off"
+              autoCapitalize="characters"
+              spellCheck={false}
+              maxLength={12}
+              className="apt-guide-input"
+              placeholder="HVX0000"
+              value={pin}
+              onChange={(e) => { setPin(e.target.value); if (status !== 'idle') setStatus('idle'); }}
+              aria-invalid={status === 'error'}
+              aria-describedby={`guide-msg-${apt.id}`}
+            />
+            <button type="submit" className="apt-guide-btn">
+              <span>{t.submit}</span>
+              <span className="apt-guide-arrow" aria-hidden="true">↓</span>
+            </button>
+          </div>
+          <p id={`guide-msg-${apt.id}`} className="apt-guide-msg" role="status">
+            {status === 'error'   ? t.error   :
+             status === 'success' ? t.success :
+             t.helper}
+          </p>
+        </form>
+      </div>
+    </section>
+  );
+};
+
 // --- Sticky booking bar ---
 const AptStickyBar = ({ apt, lang, scrolled }) => {
   const tbl = HESTIA_PRICES[apt.id];
@@ -606,6 +708,7 @@ const ApartmentPageApp = () => {
         <AptEquipamiento apt={apt} lang={lang} />
         <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
         <AptPageGallery apt={apt} lang={lang} />
+        <AptGuideDownload apt={apt} lang={lang} />
         <AptPageOthers apt={apt} lang={lang} />
         <QuickFAQ lang={lang} pageId={aptId} />
         <ContactCTA lang={lang} />
