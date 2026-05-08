@@ -6,17 +6,61 @@
 
 const APT_GUIDE_PIN = { vm: 'HVM2016', vt: 'HVT2019', vs: 'HVS2021' };
 
-// Mapa estancia → archivo de página renderizada del PDF.
-// El layout de los 3 PDFs es idéntico: salón p8, cocina p9, dormitorios p10,
-// baños p11, terraza p12, urbanización p13 (mapa) + p14 (zonas comunes).
-const ROOM_PAGE = {
-  salon: 'p-08.jpg',
-  cocina: 'p-09.jpg',
-  dormitorios: 'p-10.jpg',
-  banos: 'p-11.jpg',
-  terraza: 'p-12.jpg',
-  urbanizacion: 'p-13.jpg',
+// ----- Mapeo: galería de cada apartamento → estancia -----
+// Reusamos las fotos profesionales que ya están en assets/apt-vX-gallery-N.jpg
+// (mismas que la galería del apartamento). Cada índice apunta a su posición
+// en apt.gallery_imgs[]. Las captions se sacan de apt[lang].gallery_captions[].
+const ROOM_PHOTOS = {
+  vm: {
+    salon:        [0, 1, 2, 20, 21],      // 'Salón · ...'
+    cocina:       [5, 6, 7],              // 'Cocina · ...'
+    dormitorios:  [8, 9, 10, 24],         // 'Dormitorio · ...'
+    banos:        [14, 15, 16],           // 'Baño · ...'
+    terraza:      [11, 12, 13],           // 'Terraza · ...'
+    urbanizacion: [3, 17, 18, 19],        // 'Piscina', 'Zona duchas'
+  },
+  vt: {
+    salon:        [4, 7, 9],
+    cocina:       [5],
+    dormitorios:  [1, 2, 3],
+    banos:        [6],
+    terraza:      [0, 8, 10],
+    urbanizacion: [],                     // sin foto en galería; usa URB_FALLBACK
+  },
+  vs: {
+    salon:        [0, 1, 2, 3, 4, 5, 6, 7],
+    cocina:       [8, 9, 10, 11],
+    dormitorios:  [12, 13, 14],
+    banos:        [15, 16, 17, 18],
+    terraza:      [19, 20, 21, 22, 23, 24, 25, 26, 27],
+    urbanizacion: [],
+  },
 };
+
+// Fotos extraídas del PDF SIN el logo verde antiguo, usadas como fallback
+// cuando no hay foto de galería para esa estancia (típicamente urbanización).
+const URB_FALLBACK = {
+  vm: ['assets/guides/vm/urb-1.jpg', 'assets/guides/vm/urb-2.jpg'],
+  vt: ['assets/guides/vt/urb-1.jpg', 'assets/guides/vt/urb-2.jpg'],
+  vs: ['assets/guides/vs/urb-1.jpg'],
+};
+
+// Secciones del nav lateral, en orden de aparición
+const GUIDE_SECTIONS = [
+  { id: 'bienvenida',   es: 'Bienvenida',       en: 'Welcome' },
+  { id: 'nombre',       es: 'Nuestro nombre',   en: 'Our name' },
+  { id: 'proposito',    es: '¿Por qué Hestía?', en: 'Why Hestía?' },
+  { id: 'limpieza',     es: 'Limpieza',         en: 'Cleaning' },
+  { id: 'salon',        es: 'Salón',            en: 'Living room' },
+  { id: 'cocina',       es: 'Cocina',           en: 'Kitchen' },
+  { id: 'dormitorios',  es: 'Dormitorios',      en: 'Bedrooms' },
+  { id: 'banos',        es: 'Baños',            en: 'Bathrooms' },
+  { id: 'terraza',      es: 'Terraza',          en: 'Terrace' },
+  { id: 'urbanizacion', es: 'Urbanización',     en: 'Complex' },
+  { id: 'alrededores',  es: 'Alrededores',      en: 'Surroundings' },
+  { id: 'telefonos',    es: 'Teléfonos',        en: 'Useful phones' },
+  { id: 'feedback',     es: 'Comentarios',      en: 'Feedback' },
+];
 
 // Contenido COMPARTIDO entre las 3 guías (carta de bienvenida, marca, etc.)
 const GUIDE_SHARED = {
@@ -241,7 +285,6 @@ const GUIDE_BY_APT = {
   // Hestía Vera Mar
   vm: {
     pdf: 'assets/HestiaVeraMar_GuiaHogar_v1.0.pdf',
-    imageBase: 'assets/guides/vm',
     es: {
       rooms: [
         { id: 'salon', title: 'Tu salón', body: 'En tu sofá-cama podrás disfrutar de tu televisión plana donde podrás ver tus contenidos en Netflix, aclimatando la temperatura con el cuadro del aire acondicionado centralizado.', recs: [
@@ -325,7 +368,6 @@ const GUIDE_BY_APT = {
   // Hestía Vera Thalassa
   vt: {
     pdf: 'assets/20220607_HestiaVeraThalassa_GuiaHogar_v3.6.pdf',
-    imageBase: 'assets/guides/vt',
     es: {
       rooms: [
         { id: 'salon', title: 'Tu salón', body: 'En tu sofá-cama podrás disfrutar de tu televisión plana donde podrás ver tus contenidos favoritos en Netflix o HBO. Tienes a tu disposición el cuadro del aire acondicionado centralizado.', recs: [
@@ -405,7 +447,6 @@ const GUIDE_BY_APT = {
   // Hestía Vera Salinas
   vs: {
     pdf: 'assets/HestiaVeraSalinas_GuiaHogar_v1.0.pdf',
-    imageBase: 'assets/guides/vs',
     es: {
       rooms: [
         { id: 'salon', title: 'Tu salón', body: 'En tu sofá-cama disfrutarás de tu televisión con ambilight donde podrás ver tus contenidos en streaming como Netflix, aclimatando la temperatura con el cuadro del aire acondicionado centralizado.', recs: [
@@ -486,193 +527,245 @@ const GUIDE_BY_APT = {
 };
 
 // ================================================================
-// AptGuideView — vista completa de la guía (reemplaza la página al desbloquear)
+// AptGuideView — guía integrada en la página del apartamento
+// (se renderiza dentro del Header / Footer del portal)
 // ================================================================
 const AptGuideView = ({ apt, lang, onClose }) => {
-  const s = GUIDE_SHARED[lang];
-  const a = GUIDE_BY_APT[apt.id][lang];
-  const aptInfo = GUIDE_BY_APT[apt.id];
-  const aptName = apt[lang].name;
+  const s         = GUIDE_SHARED[lang];
+  const a         = GUIDE_BY_APT[apt.id][lang];
+  const aptInfo   = GUIDE_BY_APT[apt.id];
+  const aptName   = apt[lang].name;
+  const photoMap  = ROOM_PHOTOS[apt.id] || {};
+  const urbExtra  = URB_FALLBACK[apt.id] || [];
+  const galleryImgs     = apt.gallery_imgs || [];
+  const galleryCaptions = apt[lang].gallery_captions || [];
+
+  const [activeSection, setActiveSection] = React.useState('bienvenida');
+  const [navOpen, setNavOpen] = React.useState(false);
+
+  // Scrollspy: marca la sección visible en el nav lateral
+  React.useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter(e => e.isIntersecting);
+      if (visible.length) {
+        const top = visible.reduce((a, b) =>
+          a.boundingClientRect.top < b.boundingClientRect.top ? a : b);
+        setActiveSection(top.target.id.replace('ag-', ''));
+      }
+    }, { rootMargin: '-20% 0px -65% 0px', threshold: 0 });
+
+    GUIDE_SECTIONS.forEach(sec => {
+      const el = document.getElementById(`ag-${sec.id}`);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   React.useEffect(() => {
     document.body.classList.add('guide-mode');
-    document.documentElement.style.scrollBehavior = 'auto';
     window.scrollTo(0, 0);
-    return () => {
-      document.body.classList.remove('guide-mode');
-      document.documentElement.style.scrollBehavior = '';
-    };
+    return () => document.body.classList.remove('guide-mode');
   }, []);
 
   const handlePrint = () => window.print();
 
+  const handleNavClick = (e, id) => {
+    e.preventDefault();
+    setNavOpen(false);
+    const el = document.getElementById(`ag-${id}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  // Devuelve [{src, caption}] para una habitación dada
+  const getRoomPhotos = (roomId) => {
+    const idxs = photoMap[roomId] || [];
+    const fromGallery = idxs
+      .filter(i => i < galleryImgs.length)
+      .map(i => ({ src: galleryImgs[i], caption: galleryCaptions[i] || '' }));
+    if (fromGallery.length) return fromGallery;
+    if (roomId === 'urbanizacion') return urbExtra.map(src => ({ src, caption: '' }));
+    return [];
+  };
+
+  const PhotoGrid = ({ photos }) => {
+    if (!photos || !photos.length) return null;
+    return (
+      <div className="ag-photo-grid" data-count={photos.length}>
+        {photos.map((p, i) => (
+          <figure key={i} className="ag-photo">
+            <img src={p.src} alt={p.caption || ''} loading="lazy" />
+            {p.caption && <figcaption>{p.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    );
+  };
+
   return (
-    <article className="apt-guide-view" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
-      <div className="ag-toolbar no-print">
-        <div className="ag-toolbar-inner">
-          <button className="ag-toolbar-back" onClick={onClose}>
+    <article className="apt-guide-view" data-apt={apt.id}
+             style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
+
+      <header className="ag-hero">
+        <div className="ag-hero-inner">
+          <button className="ag-back no-print" onClick={onClose}>
             <span aria-hidden="true">←</span>
             <span>{lang === 'es' ? 'Volver al apartamento' : 'Back to apartment'}</span>
           </button>
-          <div className="ag-toolbar-actions">
-            <a className="ag-toolbar-pdf" href={aptInfo.pdf} target="_blank" rel="noopener">
-              {lang === 'es' ? 'PDF original' : 'Original PDF'}
-            </a>
-            <button className="ag-toolbar-print" onClick={handlePrint}>
-              <span aria-hidden="true">⇩</span>
-              <span>{lang === 'es' ? 'Descargar PDF' : 'Download PDF'}</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <header className="ag-cover" style={{ '--cover-img': `url(${aptInfo.imageBase}/p-01.jpg)` }}>
-        <div className="ag-cover-bg" aria-hidden="true" />
-        <div className="ag-cover-inner">
-          <span className="ag-eyebrow">{lang === 'es' ? 'Guía del huésped' : 'Guest guide'}</span>
-          <h1 className="ag-title">{aptName}</h1>
-          <p className="ag-subtitle">{apt[lang].concept}</p>
-          <p className="ag-cover-greeting">{s.welcome.title}</p>
+          <span className="ag-hero-eyebrow">{lang === 'es' ? 'Guía del huésped' : 'Guest guide'}</span>
+          <h1 className="ag-hero-title">{aptName}</h1>
+          <p className="ag-hero-sub">
+            {lang === 'es'
+              ? 'Tu hogar lejos de tu casa — con todo lo que necesitas saber.'
+              : 'Your home away from home — with everything you need to know.'}
+          </p>
         </div>
       </header>
 
-      <section className="ag-section ag-welcome">
-        <div className="ag-section-inner">
-          {s.welcome.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
-          <p className="ag-sign">{s.welcome.sign}</p>
-          <p className="ag-signer">{s.welcome.signer}</p>
-        </div>
-      </section>
+      <div className="ag-layout">
 
-      <section className="ag-section ag-name">
-        <div className="ag-section-inner">
-          <h2 className="ag-h2">{s.name.title}</h2>
-          {s.name.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
-        </div>
-      </section>
+        {/* Mobile-only: trigger to open nav */}
+        <button
+          className="ag-nav-toggle no-print"
+          onClick={() => setNavOpen(o => !o)}
+          aria-expanded={navOpen}
+        >
+          <span aria-hidden="true">☰</span>
+          <span>{lang === 'es' ? 'Índice de la guía' : 'Guide contents'}</span>
+        </button>
 
-      <section className="ag-section ag-why">
-        <div className="ag-section-inner">
-          <h2 className="ag-h2">{s.why.title}</h2>
-          {s.why.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
-        </div>
-      </section>
+        <aside className={`ag-nav no-print${navOpen ? ' is-open' : ''}`}>
+          <div className="ag-nav-inner">
+            <span className="ag-nav-label">{lang === 'es' ? 'Índice' : 'Contents'}</span>
+            <ol className="ag-nav-list">
+              {GUIDE_SECTIONS.map((sec, i) => (
+                <li key={sec.id}>
+                  <a
+                    href={`#ag-${sec.id}`}
+                    className={activeSection === sec.id ? 'is-active' : ''}
+                    onClick={(e) => handleNavClick(e, sec.id)}
+                  >
+                    <span className="ag-nav-num">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="ag-nav-text">{sec[lang]}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+            <div className="ag-nav-actions">
+              <a className="ag-nav-btn" href={aptInfo.pdf} target="_blank" rel="noopener">
+                {lang === 'es' ? 'PDF original' : 'Original PDF'}
+              </a>
+              <button className="ag-nav-btn ag-nav-btn-primary" onClick={handlePrint}>
+                {lang === 'es' ? '⇩ Descargar PDF' : '⇩ Download PDF'}
+              </button>
+            </div>
+          </div>
+        </aside>
 
-      <section className="ag-section ag-cleaning">
-        <div className="ag-section-inner">
-          <h2 className="ag-h2">{s.cleaning.title}</h2>
-          <p className="ag-para">{s.cleaning.intro}</p>
-          <p className="ag-note">{s.cleaning.note}</p>
-          <ol className="ag-recs">
-            {s.cleaning.recs.map((r, i) => <li key={i}>{r}</li>)}
-          </ol>
-        </div>
-      </section>
+        <div className="ag-content">
 
-      <section className="ag-section ag-floorplan">
-        <div className="ag-section-inner">
-          <h2 className="ag-h2">{lang === 'es' ? 'Plano y equipamiento' : 'Floor plan and amenities'}</h2>
-          <p className="ag-para">
-            {lang === 'es'
-              ? 'Una vista 3D del apartamento y el detalle del equipamiento que tienes a tu disposición.'
-              : 'A 3D layout of the apartment and the details of every amenity at your disposal.'}
-          </p>
-          <figure className="ag-figure ag-figure-wide">
-            <img src={`${aptInfo.imageBase}/p-07.jpg`} alt={lang === 'es' ? 'Plano del apartamento' : 'Apartment floor plan'} loading="lazy" />
-          </figure>
-        </div>
-      </section>
+          <section id="ag-bienvenida" className="ag-section">
+            <span className="ag-section-num">01</span>
+            <h2 className="ag-h2">{s.welcome.title}</h2>
+            {s.welcome.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
+            <p className="ag-sign">{s.welcome.sign}</p>
+            <p className="ag-signer">{s.welcome.signer}</p>
+          </section>
 
-      {a.rooms.map(room => {
-        const roomPage = ROOM_PAGE[room.id];
-        return (
-          <section key={room.id} className={`ag-section ag-room ag-room-${room.id}`}>
-            <div className="ag-section-inner ag-room-grid">
-              <div className="ag-room-prose">
-                <span className="ag-room-eyebrow">{aptName}</span>
-                <h2 className="ag-h2">{room.title}</h2>
-                <p className="ag-para">{room.body}</p>
-                <div className="ag-recs-block">
-                  <h3 className="ag-h3">{lang === 'es' ? 'Recomendaciones' : 'Recommendations'}</h3>
-                  <ol className="ag-recs">
-                    {room.recs.map((r, i) => <li key={i}>{r}</li>)}
-                  </ol>
+          <section id="ag-nombre" className="ag-section">
+            <span className="ag-section-num">02</span>
+            <h2 className="ag-h2">{s.name.title}</h2>
+            {s.name.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
+          </section>
+
+          <section id="ag-proposito" className="ag-section">
+            <span className="ag-section-num">03</span>
+            <h2 className="ag-h2">{s.why.title}</h2>
+            {s.why.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
+          </section>
+
+          <section id="ag-limpieza" className="ag-section">
+            <span className="ag-section-num">04</span>
+            <h2 className="ag-h2">{s.cleaning.title}</h2>
+            <p className="ag-para">{s.cleaning.intro}</p>
+            <p className="ag-note">{s.cleaning.note}</p>
+            <h3 className="ag-h3">{lang === 'es' ? 'Recomendaciones' : 'Recommendations'}</h3>
+            <ol className="ag-recs">
+              {s.cleaning.recs.map((r, i) => <li key={i}>{r}</li>)}
+            </ol>
+          </section>
+
+          {a.rooms.map((room, idx) => (
+            <section key={room.id} id={`ag-${room.id}`} className={`ag-section ag-room ag-room-${room.id}`}>
+              <span className="ag-section-num">{String(idx + 5).padStart(2, '0')}</span>
+              <h2 className="ag-h2">{room.title}</h2>
+              <p className="ag-para ag-para-lead">{room.body}</p>
+              <PhotoGrid photos={getRoomPhotos(room.id)} />
+              <h3 className="ag-h3">{lang === 'es' ? 'Recomendaciones' : 'Recommendations'}</h3>
+              <ol className="ag-recs">
+                {room.recs.map((r, i) => <li key={i}>{r}</li>)}
+              </ol>
+            </section>
+          ))}
+
+          <section id="ag-alrededores" className="ag-section">
+            <span className="ag-section-num">11</span>
+            <h2 className="ag-h2">{s.surroundings.title}</h2>
+            <p className="ag-para">{s.surroundings.intro}</p>
+            <ol className="ag-recs">
+              {s.surroundings.sources.map((r, i) => <li key={i}>{r}</li>)}
+            </ol>
+            <div className="ag-cats">
+              {s.surroundings.categories.map(cat => (
+                <div key={cat.title} className="ag-cat">
+                  <h3 className="ag-h3">{cat.title}</h3>
+                  <ul className="ag-list">
+                    {cat.items.map((it, i) => <li key={i}>{it}</li>)}
+                  </ul>
                 </div>
-              </div>
-              {roomPage && (
-                <figure className="ag-figure ag-room-photo">
-                  <img src={`${aptInfo.imageBase}/${roomPage}`} alt={room.title} loading="lazy" />
-                </figure>
-              )}
-              {room.id === 'urbanizacion' && (
-                <figure className="ag-figure ag-figure-wide ag-urb-extra">
-                  <img src={`${aptInfo.imageBase}/p-14.jpg`} alt={lang === 'es' ? 'Zonas comunes' : 'Common areas'} loading="lazy" />
-                </figure>
-              )}
+              ))}
+            </div>
+            <div className="ag-restaurants">
+              <h3 className="ag-h3">{s.surroundings.restaurants_title}</h3>
+              <ol className="ag-list ag-list-num">
+                {s.surroundings.restaurants.map((r, i) => <li key={i}>{r}</li>)}
+              </ol>
             </div>
           </section>
-        );
-      })}
 
-      <section className="ag-section ag-surroundings">
-        <div className="ag-section-inner">
-          <h2 className="ag-h2">{s.surroundings.title}</h2>
-          <p className="ag-para">{s.surroundings.intro}</p>
-          <ol className="ag-recs">
-            {s.surroundings.sources.map((r, i) => <li key={i}>{r}</li>)}
-          </ol>
-          <div className="ag-cats">
-            {s.surroundings.categories.map(cat => (
-              <div key={cat.title} className="ag-cat">
-                <h3 className="ag-h3">{cat.title}</h3>
-                <ul className="ag-list">
-                  {cat.items.map((it, i) => <li key={i}>{it}</li>)}
-                </ul>
-              </div>
-            ))}
+          <section id="ag-telefonos" className="ag-section">
+            <span className="ag-section-num">12</span>
+            <h2 className="ag-h2">{s.phones.title}</h2>
+            <div className="ag-wifi">
+              <span className="ag-wifi-label">{s.phones.wifi.label}</span>
+              <code className="ag-wifi-value">{s.phones.wifi.value}</code>
+            </div>
+            <table className="ag-phones-table">
+              <tbody>
+                {s.phones.list.map(item => (
+                  <tr key={item.label}>
+                    <th scope="row">{item.label}</th>
+                    <td>{item.value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+
+          <section id="ag-feedback" className="ag-section">
+            <span className="ag-section-num">13</span>
+            <h2 className="ag-h2">{s.feedback.title}</h2>
+            {s.feedback.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
+          </section>
+
+          <div className="ag-content-end no-print">
+            <button className="ag-back" onClick={onClose}>
+              <span aria-hidden="true">←</span>
+              <span>{lang === 'es' ? 'Volver al apartamento' : 'Back to apartment'}</span>
+            </button>
           </div>
-          <div className="ag-restaurants">
-            <h3 className="ag-h3">{s.surroundings.restaurants_title}</h3>
-            <ol className="ag-list ag-list-num">
-              {s.surroundings.restaurants.map((r, i) => <li key={i}>{r}</li>)}
-            </ol>
-          </div>
-        </div>
-      </section>
 
-      <section className="ag-section ag-phones">
-        <div className="ag-section-inner">
-          <h2 className="ag-h2">{s.phones.title}</h2>
-          <div className="ag-wifi">
-            <span className="ag-wifi-label">{s.phones.wifi.label}</span>
-            <code className="ag-wifi-value">{s.phones.wifi.value}</code>
-          </div>
-          <table className="ag-phones-table">
-            <tbody>
-              {s.phones.list.map(item => (
-                <tr key={item.label}>
-                  <th scope="row">{item.label}</th>
-                  <td>{item.value}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
-      </section>
-
-      <section className="ag-section ag-feedback">
-        <div className="ag-section-inner">
-          <h2 className="ag-h2">{s.feedback.title}</h2>
-          {s.feedback.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
-        </div>
-      </section>
-
-      <footer className="ag-footer no-print">
-        <button className="ag-toolbar-back" onClick={onClose}>
-          <span aria-hidden="true">←</span>
-          <span>{lang === 'es' ? 'Volver al apartamento' : 'Back to apartment'}</span>
-        </button>
-      </footer>
+      </div>
     </article>
   );
 };
