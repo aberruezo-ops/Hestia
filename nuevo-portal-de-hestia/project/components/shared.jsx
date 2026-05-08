@@ -237,9 +237,9 @@ const QUICK_FAQ = {
   vt: {
     es: [
       { q: '¿Por qué elegiría Hestía Thalassa sobre los otros dos?',
-        a: <>Thalassa es el ático. La terraza panorámica de 360° te da el amanecer sobre el Mediterráneo y el atardecer sobre el Desierto de Tabernas al mismo tiempo. El SPA privado con cromoterapia y aromaterapia lo convierte en el más sensorial de los tres.</> },
+        a: <>Thalassa es el ático. La terraza panorámica de 360° te da el amanecer sobre el Mediterráneo y el atardecer sobre el Desierto de Tabernas al mismo tiempo. El SPA privado con aromaterapia lo convierte en el más sensorial de los tres.</> },
       { q: '¿El SPA es privado, solo para nosotros?',
-        a: <>Sí. El SPA con cromoterapia y aromaterapia es de uso exclusivo del apartamento. No se comparte con otros huéspedes en ningún momento.</> },
+        a: <>Sí. El SPA con aromaterapia es de uso exclusivo del apartamento. No se comparte con otros huéspedes en ningún momento.</> },
       { q: '¿Puedo ver el Desierto de Tabernas desde el ático?',
         a: <>Sí. Desde la terraza panorámica tienes vistas simultáneas al Mediterráneo y al Cabo de Gata. El Desierto de Tabernas — el único desierto de Europa — está a unos 30 minutos en coche.</> },
       { q: '¿Puedo traer mascotas?',
@@ -247,9 +247,9 @@ const QUICK_FAQ = {
     ],
     en: [
       { q: 'Why would I choose Hestía Thalassa over the other two?',
-        a: <>Thalassa is the penthouse. The 360° panoramic terrace gives you sunrise over the Mediterranean and sunset over the Tabernas Desert simultaneously. The private SPA with chromotherapy and aromatherapy makes it the most sensory of the three.</> },
+        a: <>Thalassa is the penthouse. The 360° panoramic terrace gives you sunrise over the Mediterranean and sunset over the Tabernas Desert simultaneously. The private SPA with aromatherapy makes it the most sensory of the three.</> },
       { q: 'Is the SPA private, just for us?',
-        a: <>Yes. The SPA with chromotherapy and aromatherapy is for exclusive use of the apartment. It is not shared with other guests at any time.</> },
+        a: <>Yes. The SPA with aromatherapy is for exclusive use of the apartment. It is not shared with other guests at any time.</> },
       { q: 'Can I see the Tabernas Desert from the penthouse?',
         a: <>Yes. From the panoramic terrace you have simultaneous views of the Mediterranean and Cabo de Gata. The Tabernas Desert — Europe's only desert — is about 30 minutes by car.</> },
       { q: 'Can I bring pets?',
@@ -494,8 +494,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'El SPA privado de Hestía Thalassa — con cromoterapia y aromaterapia — es el único de uso exclusivo por apartamento en toda la zona de Vera Playa.',
-    en: 'The private SPA at Hestía Thalassa — with chromotherapy and aromatherapy — is the only exclusive-use SPA per apartment in the entire Vera Playa area.',
+    es: 'El SPA privado de Hestía Thalassa — con aromaterapia — es el único de uso exclusivo por apartamento en toda la zona de Vera Playa.',
+    en: 'The private SPA at Hestía Thalassa — with aromatherapy — is the only exclusive-use SPA per apartment in the entire Vera Playa area.',
   },
   {
     type: 'fact',
