@@ -4740,15 +4740,14 @@ body.no-parallax .g-tile .img { transform: none !important; }
   --dur-slow: 380ms;
 }
 
-/* 1) Apt ↔ Guide crossfade — el blur ligero mascara el unmount/mount */
+/* 1) Apt ↔ Guide crossfade — solo opacity (filter:blur en el padre rompe
+   position:fixed de hermanos como la sticky bar en algunos navegadores). */
 .apt-main {
-  transition: opacity var(--dur-mid) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
-              filter  var(--dur-mid) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  transition: opacity var(--dur-mid) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
 .apt-main[data-phase="out"],
 .apt-main[data-phase="in"] {
   opacity: 0;
-  filter: blur(6px);
   pointer-events: none;
 }
 /* phase=idle (default) → opacity 1, no blur */

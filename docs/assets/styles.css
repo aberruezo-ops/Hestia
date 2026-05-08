@@ -3890,7 +3890,9 @@ body.no-parallax .g-tile .img { transform: none !important; }
 /* --- Apartment sticky booking bar --- */
 .apt-sticky-bar {
   position: fixed;
-  bottom: 0; left: 0; right: 0;
+  /* inset short-hand: top=auto, right=0, bottom=0, left=0 — más robusto que
+     bottom/left/right por separado en algunos motores. */
+  inset: auto 0 0 0;
   z-index: 200;
   background: var(--ber);
   border-top: 1px solid rgba(240,232,213,.12);
@@ -3901,6 +3903,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   padding: 12px var(--page-pad);
   transform: translateY(100%);
   transition: transform .35s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
 }
 .apt-sticky-bar.asb-visible { transform: translateY(0); }
 .asb-info {
@@ -8283,15 +8286,14 @@ footer,
   --dur-slow: 380ms;
 }
 
-/* 1) Apt ↔ Guide crossfade — el blur ligero mascara el unmount/mount */
+/* 1) Apt ↔ Guide crossfade — solo opacity (filter:blur en el padre rompe
+   position:fixed de hermanos como la sticky bar en algunos navegadores). */
 .apt-main {
-  transition: opacity var(--dur-mid) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
-              filter  var(--dur-mid) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  transition: opacity var(--dur-mid) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
 .apt-main[data-phase="out"],
 .apt-main[data-phase="in"] {
   opacity: 0;
-  filter: blur(6px);
   pointer-events: none;
 }
 /* phase=idle (default) → opacity 1, no blur */
