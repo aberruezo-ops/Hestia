@@ -88,10 +88,10 @@ const CATEGORIES = [
 // Las coordenadas son aproximadas (centroides de pueblos cuando no hay punto exacto).
 // Cuando un goo.gl link está disponible, va en .url para el detalle.
 const PLACES = [
-  // Hestía (centro del mapa) — Vera Playa
-  { id: 'hestia-mar',     name: 'Hestía Vera Mar',      cat: 'home',  lat: 37.2245, lng: -1.7975 },
-  { id: 'hestia-thalassa',name: 'Hestía Vera Thalassa', cat: 'home',  lat: 37.2440, lng: -1.7870 },
-  { id: 'hestia-salinas', name: 'Hestía Vera Salinas',  cat: 'home',  lat: 37.2155, lng: -1.7785 },
+  // Hestía (centro del mapa) — los 3 en Vera Playa
+  { id: 'hestia-mar',     name: 'Hestía Vera Mar',      cat: 'home',  lat: 37.2253, lng: -1.7945 },
+  { id: 'hestia-thalassa',name: 'Hestía Vera Thalassa', cat: 'home',  lat: 37.2305, lng: -1.7900 },
+  { id: 'hestia-salinas', name: 'Hestía Vera Salinas',  cat: 'home',  lat: 37.2185, lng: -1.7855 },
 
   // Supermercados
   { id: 'coviran',        name: 'Covirán', desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa.', cat: 'super', lat: 37.2235, lng: -1.7975 },
@@ -457,7 +457,6 @@ const GUIDE_BY_APT = {
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.',
           'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando junto al cuadro del A/C.',
-          'Pídenos tu código para usar la alarma durante tu estancia.',
           'Dispones de extintor en el pasillo exterior a Hestía.',
         ]},
         { id: 'cocina', title: 'Tu cocina', body: 'Con todo lo necesario para que tu estancia sea lo más placentera y cómoda posible: mobiliario de gran calidad, electrodomésticos de alta gama, dotación completa de pequeños electrodomésticos y detalles.', recs: [
@@ -474,6 +473,7 @@ const GUIDE_BY_APT = {
           'Haz un uso prudente y responsable del agua. El agua es vida.',
           'Las toallas del baño no son para la playa ni para la piscina.',
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
+          'Usa la cromoterapia del espejo para crear ambiente — relajante de noche, vibrante por la mañana.',
         ]},
         { id: 'terraza', title: 'Tu terraza', body: 'Disfruta de las mejores vistas y los dos ambientes para cada momento de tus vacaciones: día y noche.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
@@ -496,7 +496,6 @@ const GUIDE_BY_APT = {
           'Do not leave the air conditioner running with doors open or while you are away from Hestía.',
           'Take a look at Hestía\'s usage guidelines, next to the entrance door.',
           'Adjust colour and tonality of the table lamp with the remote next to the A/C panel.',
-          'Ask us for your alarm code to use it during your stay.',
           'A fire extinguisher is in the corridor outside Hestía.',
         ]},
         { id: 'cocina', title: 'Your kitchen', body: 'Everything you need for a comfortable stay: quality furniture, premium appliances and a full set of small appliances and details.', recs: [
@@ -513,6 +512,7 @@ const GUIDE_BY_APT = {
           'Use water responsibly. Water is life.',
           'Bathroom towels are not for the beach or the pool.',
           'Be careful with creams and make-up — they damage textiles.',
+          'Use the chromotherapy mirror to set the mood — relaxing at night, vibrant in the morning.',
         ]},
         { id: 'terraza', title: 'Your terrace', body: 'Enjoy the best views and two atmospheres for every moment of your holiday: day and night.', recs: [
           'Enjoy the quiet — and let your neighbours enjoy it too.',
@@ -556,6 +556,7 @@ const GUIDE_BY_APT = {
           'Haz un uso prudente y responsable del agua. El agua es vida.',
           'Las toallas del baño no son para la playa ni para la piscina.',
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
+          'Usa la cromoterapia del espejo para crear ambiente — relajante de noche, vibrante por la mañana.',
         ]},
         { id: 'terraza', title: 'Tu terraza', body: 'Terraza panorámica de 18 m² con vistas al mar y al Salar de los Canos. El mejor sitio del ático para vivir el ciclo solar completo.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
@@ -593,6 +594,7 @@ const GUIDE_BY_APT = {
           'Use water responsibly. Water is life.',
           'Bathroom towels are not for the beach or the pool.',
           'Be careful with creams and make-up — they damage textiles.',
+          'Use the chromotherapy mirror to set the mood — relaxing at night, vibrant in the morning.',
         ]},
         { id: 'terraza', title: 'Your terrace', body: '18 m² panoramic terrace with sea and Salar de los Canos views. The best spot in the penthouse to live the full solar arc.', recs: [
           'Enjoy the quiet — and let your neighbours enjoy it too.',
@@ -619,7 +621,6 @@ const GUIDE_BY_APT = {
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.',
           'Echa un vistazo a las Normas de uso de Hestía, al final de esta misma guía.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando a la misma.',
-          'Pídenos tu código para usar la alarma durante tu estancia.',
         ]},
         { id: 'cocina', title: 'Tu cocina', body: 'Con todo lo necesario para que tu estancia sea lo más placentera y cómoda posible: mobiliario de gran calidad, electrodomésticos de alta gama, dotación completa de pequeños electrodomésticos y detalles.', recs: [
           'Los libros de instrucciones de los electrodomésticos se encuentran en los cajones bajo la vitrocerámica.',
@@ -635,6 +636,7 @@ const GUIDE_BY_APT = {
           'Haz un uso prudente y responsable del agua. El agua es vida.',
           'Las toallas del baño no son para la playa ni para la piscina.',
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
+          'Usa la cromoterapia del espejo para crear ambiente — relajante de noche, vibrante por la mañana.',
         ]},
         { id: 'terraza', title: 'Tu terraza', body: 'Disfruta de las mejores vistas y los dos ambientes para cada momento de tus vacaciones.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
@@ -657,7 +659,6 @@ const GUIDE_BY_APT = {
           'Do not leave the air conditioner running with doors open or while you are away from Hestía.',
           'Take a look at Hestía\'s usage guidelines, at the end of this guide.',
           'Adjust colour and tonality of the table lamp with the remote next to it.',
-          'Ask us for your alarm code to use it during your stay.',
         ]},
         { id: 'cocina', title: 'Your kitchen', body: 'Everything you need for a pleasant and comfortable stay: high-quality furniture, premium appliances and a full set of small appliances and details.', recs: [
           'Appliance manuals are in the drawers under the hob.',
@@ -673,6 +674,7 @@ const GUIDE_BY_APT = {
           'Use water responsibly. Water is life.',
           'Bathroom towels are not for the beach or the pool.',
           'Be careful with creams and make-up — they damage textiles.',
+          'Use the chromotherapy mirror to set the mood — relaxing at night, vibrant in the morning.',
         ]},
         { id: 'terraza', title: 'Your terrace', body: 'Enjoy the best views and two atmospheres for every moment of your holiday.', recs: [
           'Enjoy the quiet — and let your neighbours enjoy it too.',
@@ -894,8 +896,10 @@ const AptGuideView = ({ apt, lang, onClose }) => {
       <div className="ag-photo-grid" data-count={photos.length}>
         {photos.map((p, i) => (
           <figure key={i} className="ag-photo" style={{ '--i': i }}>
-            <img src={p.src} alt={p.caption || ''} loading="lazy" />
-            {HasMark && <WatermarkBadge size={28} pos={{ bottom: 10, right: 10 }} />}
+            <span className="ag-photo-frame">
+              <img src={p.src} alt={p.caption || ''} loading="lazy" />
+              {HasMark && <WatermarkBadge size={28} pos={{ bottom: 10, right: 10 }} />}
+            </span>
             {p.caption && <figcaption>{p.caption}</figcaption>}
           </figure>
         ))}
