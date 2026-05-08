@@ -696,13 +696,34 @@ const AptGuideDownload = ({ apt, lang }) => {
 
 // --- Sticky booking bar ---
 const AptStickyBar = ({ apt, lang, scrolled }) => {
+  const ref = React.useRef(null);
   const tbl = HESTIA_PRICES[apt.id];
   const minP = tbl ? Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT)) : null;
   const waMsg = lang === 'es'
     ? `Hola, me interesa reservar ${apt[lang].name}. ¿Podéis indicarme disponibilidad?`
     : `Hello, I'm interested in booking ${apt[lang].name}. Could you let me know availability?`;
+
+  // Mide la altura real de la barra y la expone como --apt-sticky-h.
+  // Así Cookies y FloatingChat suben EXACTAMENTE lo que mide la barra,
+  // sin números mágicos por viewport. Una sola fuente de verdad.
+  React.useEffect(() => {
+    if (!ref.current) return;
+    const el = ref.current;
+    const update = () => {
+      const h = Math.round(el.getBoundingClientRect().height);
+      document.documentElement.style.setProperty('--apt-sticky-h', `${h}px`);
+    };
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => {
+      ro.disconnect();
+      document.documentElement.style.removeProperty('--apt-sticky-h');
+    };
+  }, []);
+
   return (
-    <div className={`apt-sticky-bar${scrolled ? ' asb-visible' : ''}`}>
+    <div ref={ref} className={`apt-sticky-bar${scrolled ? ' asb-visible' : ''}`}>
       <div className="asb-info">
         <span className="asb-name">HESTÍA <strong>{apt.name_short}</strong></span>
         {minP && <span className="asb-price">{lang === 'es' ? `desde ${minP}€/noche` : `from ${minP}€/night`}</span>}
@@ -733,12 +754,18 @@ const ApartmentPageApp = () => {
     document.title = `${apt[lang].name} · Hestía Your Home · Vera Playa`;
   }, [lang]);
 
-  // Marca el body para que el aviso de cookies sepa que hay sticky bar
-  // y se reposicione encima vía CSS (sin :has() — más compatible).
+  // Marca el body con dos clases:
+  //  · has-apt-sticky → la página tiene barra sticky (siempre, en apt page)
+  //  · apt-bar-shown  → la barra está VISIBLE (post-scroll). Cookies y
+  //    FloatingChat usan esta para subir solo cuando la barra está fuera.
   React.useEffect(() => {
     document.body.classList.add('has-apt-sticky');
     return () => document.body.classList.remove('has-apt-sticky');
   }, []);
+  React.useEffect(() => {
+    document.body.classList.toggle('apt-bar-shown', !!scrolled);
+    return () => document.body.classList.remove('apt-bar-shown');
+  }, [scrolled]);
 
   // Crossfade entre vista apt ↔ guía: fade-out 220ms → swap → RAF → fade-in.
   // Aplica un blur sutil para mascarar el cambio (truco de Emil para crossfades).

@@ -663,9 +663,12 @@ p  { line-height: 1.65; font-weight: 300; }
   right: 28px;
   z-index: 210;  /* por encima de la sticky bar (200) */
 }
-/* En páginas con sticky bar lo subimos para que no quede tapado */
-body.has-apt-sticky .float-chat {
-  bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+/* Cuando la sticky bar está VISIBLE (post-scroll), el chat sube
+   exactamente la altura medida de la barra (--apt-sticky-h, set por JS
+   vía ResizeObserver) + un margen visual. Sin números mágicos por
+   viewport: la propia barra reporta su altura real, ya envuelva o no. */
+body.apt-bar-shown .float-chat {
+  bottom: calc(var(--apt-sticky-h, 60px) + 16px);
 }
 .float-chat .bubble-btn {
   width: 58px; height: 58px; border-radius: 50%;
@@ -3086,7 +3089,9 @@ footer .footer-brand .addr {
   .ratings-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .float-chat { bottom: calc(20px + env(safe-area-inset-bottom, 0px)); right: 20px; }
-  body.has-apt-sticky .float-chat { bottom: calc(110px + env(safe-area-inset-bottom, 0px)); }
+  /* La regla global con --apt-sticky-h ya cubre el caso "barra visible";
+     aquí solo redefinimos el bottom de reposo para móvil. */
+  body.apt-bar-shown .float-chat { bottom: calc(var(--apt-sticky-h, 60px) + 12px); }
   .float-chat .bubble-panel { width: calc(100vw - 40px); }
 }
 
@@ -3921,18 +3926,13 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .apt-sticky-bar.asb-visible { transform: translateY(0); }
 
-/* En páginas con sticky bar (apt pages), subimos el aviso de cookies para
-   que no quede tapado. Usamos clase en el <body> en vez de :has() para
-   compatibilidad con Safari iPad antiguos.
-   En móvil la sticky bar puede ser más alta (textos envolviendo), así que
-   damos más clearance ahí. */
-body.has-apt-sticky .cookies {
-  bottom: calc(96px + env(safe-area-inset-bottom, 0px));
-}
-@media (max-width: 600px) {
-  body.has-apt-sticky .cookies {
-    bottom: calc(120px + env(safe-area-inset-bottom, 0px));
-  }
+/* Cuando la sticky bar está VISIBLE, las cookies suben EXACTAMENTE la
+   altura medida de la barra (--apt-sticky-h, set por JS vía
+   ResizeObserver) + un margen visual. La altura medida ya incluye su
+   propio safe-area-inset-bottom, no hay que sumarlo aquí.
+   Funciona idéntico en iPhone, iPad y desktop sin números mágicos. */
+body.apt-bar-shown .cookies {
+  bottom: calc(var(--apt-sticky-h, 60px) + 16px);
 }
 .asb-info {
   display: flex;
