@@ -187,14 +187,15 @@ const PLACES = [
   { id: 't-cartagena',    name: 'Cartagena (teatro romano)', cat: 'town', lat: 37.6040, lng: -0.9870 },
 
   // Lugares de interés
-  { id: 'geoda-pulpi',    name: 'Geoda de Pulpí',          cat: 'culture', url: 'https://www.geodapulpi.es', lat: 37.4020, lng: -1.7640 },
-  { id: 'cuevas-sorbas',  name: 'Cuevas de Sorbas',        cat: 'culture', url: 'https://www.cuevasdesorbas.com/', lat: 37.0920, lng: -2.0780 },
-  { id: 'laguna',         name: 'Laguna de Puerto Rey',    cat: 'culture', lat: 37.2280, lng: -1.7775 },
-  { id: 'el-argar',       name: 'Yacimiento prehistórico de El Argar', cat: 'culture', url: 'https://maps.app.goo.gl/dyCfYS3L8qruFVPD9', lat: 37.2520, lng: -1.7760 },
-  { id: 'tabernas',       name: 'Desierto de Tabernas',    cat: 'culture', url: 'https://www.tabernas.es/', lat: 37.0540, lng: -2.3880 },
-  { id: 'minihollywood',  name: 'MiniHollywood (Oasys)',   cat: 'culture', url: 'https://www.oasysparquetematico.com/', lat: 37.0150, lng: -2.4360 },
-  { id: 'aquarium',       name: 'Aquarium Costa de Almería', cat: 'culture', url: 'https://www.aquariumcostadealmeria.com/', lat: 36.7795, lng: -2.5905 },
-  { id: 'mariposario',    name: 'Mariposario de Almería',  cat: 'culture', url: 'https://g.co/kgs/meY7kj', lat: 36.7810, lng: -2.5910 },
+  // Lugares de interés
+  { id: 'geoda-pulpi',    name: 'Geoda de Pulpí',          cat: 'culture', url: 'https://www.geodapulpi.es', lat: 37.4083, lng: -1.7635 },
+  { id: 'cuevas-sorbas',  name: 'Cuevas de Sorbas',        cat: 'culture', url: 'https://www.cuevasdesorbas.com/', lat: 37.1070, lng: -2.0820 },
+  { id: 'laguna',         name: 'Laguna de Puerto Rey',    cat: 'culture', lat: 37.2110, lng: -1.7770 },
+  { id: 'el-argar',       name: 'Yacimiento prehistórico de El Argar', desc: 'Antas.', cat: 'culture', url: 'https://maps.app.goo.gl/dyCfYS3L8qruFVPD9', lat: 37.2440, lng: -1.8920 },
+  { id: 'tabernas',       name: 'Desierto de Tabernas',    cat: 'culture', url: 'https://www.tabernas.es/', lat: 37.0410, lng: -2.3890 },
+  { id: 'minihollywood',  name: 'MiniHollywood (Oasys)',   cat: 'culture', url: 'https://www.oasysparquetematico.com/', lat: 37.0050, lng: -2.4750 },
+  { id: 'aquarium',       name: 'Aquarium Costa de Almería', cat: 'culture', url: 'https://www.aquariumcostadealmeria.com/', lat: 36.7674, lng: -2.6094 },
+  { id: 'mariposario',    name: 'Mariposario de Almería',  cat: 'culture', url: 'https://g.co/kgs/meY7kj', lat: 36.7641, lng: -2.6109 },
 
   // Playas (numeradas según cercanía)
   { id: 'p-cocedores',    name: 'Playa de los Cocedores',   cat: 'beach', url: 'https://goo.gl/maps/pCTJ8y5mt4y4VYkE8', lat: 37.3790, lng: -1.6260 },
