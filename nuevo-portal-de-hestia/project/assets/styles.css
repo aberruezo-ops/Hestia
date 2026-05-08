@@ -3524,3 +3524,165 @@ body.no-parallax .g-tile .img { transform: none !important; }
   .apartments-track .apt-card,
   .gallery-mosaic  .g-tile { animation: none; }
 }
+
+/* ================================================================
+   GUÍA DESCARGABLE — sección protegida por PIN en cada apartamento
+   ================================================================ */
+.apt-guide {
+  padding: clamp(60px, 9vw, 120px) var(--page-pad);
+  background:
+    radial-gradient(ellipse 70% 80% at 80% 0%, color-mix(in oklab, var(--apt-accent2) 14%, transparent), transparent 60%),
+    linear-gradient(180deg, var(--crema), var(--arena));
+  color: var(--ink);
+}
+.apt-guide-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+}
+.apt-guide-copy { max-width: 44ch; }
+.apt-guide-eyebrow {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--apt-accent);
+  margin-bottom: 18px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid color-mix(in oklab, var(--apt-accent) 50%, transparent);
+}
+.apt-guide-title {
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.6vw, 44px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--ber-dk);
+  margin: 0 0 18px;
+}
+.apt-guide-desc {
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.apt-guide-form {
+  background: var(--crema);
+  border: 1px solid color-mix(in oklab, var(--apt-accent) 22%, transparent);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 24px 60px -28px color-mix(in oklab, var(--apt-accent) 50%, transparent);
+  transition: border-color var(--dur-base, 220ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              box-shadow   var(--dur-base, 220ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+.apt-guide-label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.apt-guide-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+.apt-guide-input {
+  flex: 1;
+  min-width: 0;
+  font-family: 'Poppins', system-ui, monospace;
+  font-size: 15px;
+  letter-spacing: 0.16em;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--ber-dk);
+  background: var(--arena);
+  border: 1.5px solid color-mix(in oklab, var(--apt-accent) 18%, transparent);
+  border-radius: 999px;
+  padding: 12px 18px;
+  outline: none;
+  transition: border-color var(--dur-base, 220ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              background   var(--dur-base, 220ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+.apt-guide-input::placeholder { color: color-mix(in oklab, var(--ink-soft) 45%, transparent); letter-spacing: 0.16em; }
+.apt-guide-input:focus {
+  border-color: var(--apt-accent);
+  background: var(--crema);
+}
+.apt-guide-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--crema);
+  background: var(--apt-accent);
+  border: 1.5px solid var(--apt-accent);
+  border-radius: 999px;
+  padding: 12px 22px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--dur-base, 220ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              border-color var(--dur-base, 220ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+.apt-guide-arrow {
+  display: inline-block;
+  transition: transform var(--dur-base, 220ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+@media (hover: hover) and (pointer: fine) {
+  .apt-guide-btn:hover {
+    background: color-mix(in oklab, var(--apt-accent) 80%, var(--ber-dk));
+    border-color: color-mix(in oklab, var(--apt-accent) 80%, var(--ber-dk));
+  }
+  .apt-guide-btn:hover .apt-guide-arrow { transform: translateY(2px); }
+}
+.apt-guide-btn:active {
+  transform: scale(0.97);
+  transition: transform var(--dur-fast, 160ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+.apt-guide-msg {
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  margin: 14px 0 0;
+  color: var(--ink-soft);
+  min-height: 1.4em;
+  transition: color var(--dur-base, 220ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+}
+
+.apt-guide-form.is-error .apt-guide-input {
+  border-color: #c0392b;
+  animation: apt-guide-shake 380ms cubic-bezier(.36,.07,.19,.97);
+}
+.apt-guide-form.is-error .apt-guide-msg { color: #c0392b; }
+.apt-guide-form.is-success .apt-guide-msg { color: var(--apt-accent); }
+
+@keyframes apt-guide-shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+
+@media (max-width: 760px) {
+  .apt-guide-inner { grid-template-columns: 1fr; gap: 28px; }
+  .apt-guide-row { flex-direction: column; }
+  .apt-guide-btn { width: 100%; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .apt-guide-form.is-error .apt-guide-input { animation: none; }
+}
