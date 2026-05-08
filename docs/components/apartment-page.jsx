@@ -340,7 +340,11 @@ const PhotoPlaceholder = ({ caption, accent, index }) => (
 const AptPageHero = ({ apt, lang, scrolled, mode }) => {
   const d = apt[lang];
   const tbl = HESTIA_PRICES[apt.id];
-  const minPrice = tbl ? Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT)) : null;
+  // El precio "desde" es el base de prices.json en temporada baja —
+  // exactamente el número que el admin ve en /p-edit.html. Sin restar
+  // el directDiscount: ese descuento sirve para calcular el ahorro
+  // vs Booking/Airbnb dentro del desglose de la reserva, no aquí.
+  const minPrice = tbl ? Math.min(...tbl.base.slice(1)) : null;
   return (
     <section className="apt-page-hero" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
       <img src={apt.hero_img} alt={d.name} className="apt-page-hero-img"/>
@@ -361,6 +365,9 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
           <p className="apt-page-price">
             {lang === 'es' ? `desde ${minPrice}€` : `from ${minPrice}€`}
             <span className="app-per">{lang === 'es' ? ' / noche · precio directo' : ' / night · direct price'}</span>
+            <span className="app-match">
+              {lang === 'es' ? '· igualamos cualquier precio mejor' : '· we match any lower price'}
+            </span>
           </p>
         )}
         <div className="apt-page-ctas">
@@ -698,7 +705,8 @@ const AptGuideDownload = ({ apt, lang }) => {
 const AptStickyBar = ({ apt, lang, scrolled }) => {
   const ref = React.useRef(null);
   const tbl = HESTIA_PRICES[apt.id];
-  const minP = tbl ? Math.round(Math.min(...tbl.base.slice(1)) * (1 - DIRECT_DISCOUNT)) : null;
+  // Mismo criterio que el hero: mostrar el base de prices.json directo.
+  const minP = tbl ? Math.min(...tbl.base.slice(1)) : null;
   const waMsg = lang === 'es'
     ? `Hola, me interesa reservar ${apt[lang].name}. ¿Podéis indicarme disponibilidad?`
     : `Hello, I'm interested in booking ${apt[lang].name}. Could you let me know availability?`;
@@ -795,9 +803,10 @@ const ApartmentPageApp = () => {
         ) : (
           <>
             <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
+            <AptPageGallery apt={apt} lang={lang} />
+            <DirectBookingPerks lang={lang} />
             <FraseHogar lang={lang} />
             <AptPageDesc apt={apt} lang={lang} />
-            <AptPageGallery apt={apt} lang={lang} />
             <AptEquipamiento apt={apt} lang={lang} />
             <AptFloorPlan apt={apt} lang={lang} />
             <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
