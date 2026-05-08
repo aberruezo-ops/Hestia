@@ -8423,3 +8423,34 @@ footer,
     /* Solo opacity para "ocultar" sin movimiento */
   }
 }
+
+/* Map legend head: title + show all / hide all */
+.ag-map-legend-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.ag-map-legend-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.ag-map-legend-action {
+  background: transparent;
+  border: 0;
+  padding: 4px 6px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--apt-accent);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+              transform 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  font-weight: 500;
+}
+.ag-map-legend-action:hover { background: color-mix(in oklab, var(--apt-accent) 8%, transparent); }
+.ag-map-legend-action:active { transform: scale(0.97); }
+.ag-map-legend-sep { color: var(--ink-soft); opacity: 0.5; font-size: 12px; }

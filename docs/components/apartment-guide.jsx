@@ -88,15 +88,15 @@ const CATEGORIES = [
 // Las coordenadas son aproximadas (centroides de pueblos cuando no hay punto exacto).
 // Cuando un goo.gl link está disponible, va en .url para el detalle.
 const PLACES = [
-  // Hestía (centro del mapa)
-  { id: 'hestia-mar',     name: 'Hestía Vera Mar',      cat: 'home',  lat: 37.2253, lng: -1.8050 },
-  { id: 'hestia-thalassa',name: 'Hestía Vera Thalassa', cat: 'home',  lat: 37.2330, lng: -1.7900 },
-  { id: 'hestia-salinas', name: 'Hestía Vera Salinas',  cat: 'home',  lat: 37.2260, lng: -1.7780 },
+  // Hestía (centro del mapa) — Vera Playa
+  { id: 'hestia-mar',     name: 'Hestía Vera Mar',      cat: 'home',  lat: 37.2245, lng: -1.7975 },
+  { id: 'hestia-thalassa',name: 'Hestía Vera Thalassa', cat: 'home',  lat: 37.2440, lng: -1.7870 },
+  { id: 'hestia-salinas', name: 'Hestía Vera Salinas',  cat: 'home',  lat: 37.2155, lng: -1.7785 },
 
   // Supermercados
-  { id: 'coviran',        name: 'Covirán', desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa.', cat: 'super', lat: 37.2245, lng: -1.8035 },
+  { id: 'coviran',        name: 'Covirán', desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa.', cat: 'super', lat: 37.2235, lng: -1.7975 },
   { id: 'consum',         name: 'Consum', cat: 'super', url: 'https://goo.gl/maps/h6UvnBe3ATHpsPXbA', lat: 37.2200, lng: -1.8090 },
-  { id: 'mercadona',      name: 'Mercadona Vera Playa', cat: 'super', url: 'https://goo.gl/maps/axi9Lb9xLp8yuVUR8', lat: 37.2370, lng: -1.8280 },
+  { id: 'mercadona',      name: 'Mercadona Vera Playa', cat: 'super', url: 'https://goo.gl/maps/axi9Lb9xLp8yuVUR8', lat: 37.2360, lng: -1.7935 },
   { id: 'super-vera',     name: 'Vera (Dia · Lidl · Mercadona)', desc: 'Supermercados grandes en Vera pueblo.', cat: 'super', lat: 37.2491, lng: -1.8639 },
 
   // Librerías
@@ -108,12 +108,12 @@ const PLACES = [
   { id: 'juan-moreno',    name: 'Juan Moreno',       desc: 'Sofisticado. Cocina de autor.',           tier: '€€€', cat: 'restaurant', lat: 37.2495, lng: -1.8623 },
   { id: 'terraza-carmona',name: 'Terraza Carmona',   desc: 'Cocina española moderna en Vera pueblo.', tier: '€€',  cat: 'restaurant', lat: 37.2486, lng: -1.8635 },
   { id: 'gateway-india',  name: 'Gateway to India',  desc: 'Hindú. Bueno y barato.',                   tier: '€',   cat: 'restaurant', lat: 37.2230, lng: -1.8090 },
-  { id: 'pomodoro',       name: 'Pizzería Pomodoro', desc: 'A pie de playa.',                          tier: '€€',  cat: 'restaurant', lat: 37.2300, lng: -1.7950 },
+  { id: 'pomodoro',       name: 'Pizzería Pomodoro', desc: 'A pie de playa.',                          tier: '€€',  cat: 'restaurant', lat: 37.2270, lng: -1.7920 },
   { id: 'trattoria',      name: 'La Trattoria da Marco', desc: 'Garrucha. Las pizzas están geniales.', tier: '€',   cat: 'restaurant', lat: 37.1810, lng: -1.8230 },
-  { id: 'lua',            name: 'Lúa',               desc: 'Sofisticado. Mejor para cena o copa.',     tier: '€€€', cat: 'restaurant', lat: 37.2240, lng: -1.7980 },
-  { id: 'bistro',         name: 'The Bistro',        desc: 'Bastante bien.',                            tier: '€€',  cat: 'restaurant', lat: 37.2210, lng: -1.8000 },
-  { id: 'koa',            name: 'Resto Bar Koa',     desc: 'Frente a Hestía Vera Mar.',                 tier: '€€',  cat: 'restaurant', lat: 37.2255, lng: -1.8048 },
-  { id: 'bbme-rest',      name: 'Restaurante Bbme Palomares', desc: 'En plena playa, a 10 min a pie.',  tier: '€€',  cat: 'restaurant', lat: 37.2180, lng: -1.7820 },
+  { id: 'lua',            name: 'Lúa',               desc: 'Sofisticado. Mejor para cena o copa.',     tier: '€€€', cat: 'restaurant', lat: 37.2310, lng: -1.7935 },
+  { id: 'bistro',         name: 'The Bistro',        desc: 'Bastante bien.',                            tier: '€€',  cat: 'restaurant', lat: 37.2310, lng: -1.7945 },
+  { id: 'koa',            name: 'Resto Bar Koa',     desc: 'Frente a Hestía Vera Mar.',                 tier: '€€',  cat: 'restaurant', lat: 37.2245, lng: -1.7965 },
+  { id: 'bbme-rest',      name: 'Restaurante Bbme Palomares', desc: 'En plena playa, a 10 min a pie.',  tier: '€€',  cat: 'restaurant', lat: 37.2155, lng: -1.7800 },
   { id: 'playa-azul',     name: 'Hostal Playa Azul', desc: 'Villaricos. Excelente paella con bogavante.', tier: '€€', cat: 'restaurant', lat: 37.2460, lng: -1.7660 },
   { id: 'tadeo',          name: 'Tadeo',             desc: 'Villaricos. Arroz con bogavante y tostas de ahumados.', tier: '€€', cat: 'restaurant', lat: 37.2455, lng: -1.7670 },
   { id: 'rosado',         name: 'Freiduría Bar Rosado', desc: 'Buenas referencias.',                    tier: '€€',  cat: 'restaurant', lat: 37.2240, lng: -1.8095 },
@@ -132,12 +132,12 @@ const PLACES = [
   { id: 'regio',          name: 'Vera pueblo: Juan Moreno, Terraza Carmona, Regio', cat: 'celiac', lat: 37.2491, lng: -1.8639 },
 
   // Copas y chiringuitos
-  { id: 'turquesa',       name: 'Chiringuito Playa Turquesa', desc: 'Andando desde casa.', cat: 'bar', lat: 37.2260, lng: -1.7960 },
-  { id: 'paraiso',        name: 'Paraíso Vera Beach', desc: 'Andando desde casa.',         cat: 'bar', lat: 37.2280, lng: -1.7950 },
-  { id: 'chumbo',         name: 'Chiringuito El Chumbo', desc: 'Andando desde casa.',      cat: 'bar', lat: 37.2300, lng: -1.7940 },
-  { id: 'marau',          name: 'Marau Beach Club',                                            cat: 'bar', lat: 37.2250, lng: -1.7975 },
-  { id: 'mar-arena',      name: 'Chiringuito Mar y Arena',                                     cat: 'bar', lat: 37.2310, lng: -1.7935 },
-  { id: 'bbme-palomares', name: 'Bbme Palomares', desc: 'En plena playa, a 10 min a pie.',     cat: 'bar', lat: 37.2180, lng: -1.7820 },
+  { id: 'turquesa',       name: 'Chiringuito Playa Turquesa', desc: 'Andando desde casa.', cat: 'bar', lat: 37.2260, lng: -1.7935 },
+  { id: 'paraiso',        name: 'Paraíso Vera Beach', desc: 'Andando desde casa.',         cat: 'bar', lat: 37.2300, lng: -1.7920 },
+  { id: 'chumbo',         name: 'Chiringuito El Chumbo', desc: 'Andando desde casa.',      cat: 'bar', lat: 37.2360, lng: -1.7895 },
+  { id: 'marau',          name: 'Marau Beach Club',                                            cat: 'bar', lat: 37.2410, lng: -1.7895 },
+  { id: 'mar-arena',      name: 'Chiringuito Mar y Arena',                                     cat: 'bar', lat: 37.2335, lng: -1.7910 },
+  { id: 'bbme-palomares', name: 'Bbme Palomares', desc: 'En plena playa, a 10 min a pie.',     cat: 'bar', lat: 37.2155, lng: -1.7800 },
 
   // Pescaderías
   { id: 'mercado-vera',   name: 'Mercado de abastos (Vera)', cat: 'fish', url: 'https://goo.gl/maps/PaEerwZNxAK1kNTS8', lat: 37.2486, lng: -1.8625 },
@@ -146,8 +146,8 @@ const PLACES = [
   { id: 'pescados-online',name: 'Pescados Garrucha (online)', cat: 'fish', url: 'https://pescadosgarrucha.es/', lat: 37.1815, lng: -1.8230 },
 
   // Farmacias y salud
-  { id: 'farmacia-1',     name: 'Farmacia (junto Consum)', cat: 'pharmacy', url: 'https://goo.gl/maps/bGMV1sjwUqrRTNzk6', lat: 37.2210, lng: -1.8090 },
-  { id: 'farmacia-2',     name: 'Farmacia Vera Playa',     cat: 'pharmacy', url: 'https://goo.gl/maps/GaRHGscDhErp9kBG7', lat: 37.2270, lng: -1.8055 },
+  { id: 'farmacia-1',     name: 'Farmacia (junto Consum)', cat: 'pharmacy', url: 'https://goo.gl/maps/bGMV1sjwUqrRTNzk6', lat: 37.2210, lng: -1.8085 },
+  { id: 'farmacia-2',     name: 'Farmacia Vera Playa',     cat: 'pharmacy', url: 'https://goo.gl/maps/GaRHGscDhErp9kBG7', lat: 37.2260, lng: -1.7985 },
   { id: 'cs-vera',        name: 'Centro de Salud de Vera', cat: 'health',   url: 'https://goo.gl/maps/ei7cMoTYLmWLnWZj7', lat: 37.2473, lng: -1.8612 },
   { id: 'virgen-alcazar', name: 'Virgen del Alcázar', desc: 'Privado.',     cat: 'health', url: 'https://goo.gl/maps/AXJ74Goy1ESTtBVy7', lat: 37.6850, lng: -1.7060 },
 
@@ -155,8 +155,8 @@ const PLACES = [
   { id: 'mercadillos',    name: 'Calendario semanal Almería', cat: 'market', url: 'https://www.mercadillosemanal.com/en.almeria', lat: 37.2491, lng: -1.8639 },
 
   // Actividades
-  { id: 'aquavera',       name: 'Parque acuático Aquavera',  cat: 'activity', url: 'https://www.aquavera.com/',          lat: 37.2310, lng: -1.7960 },
-  { id: 'lunar-cable',    name: 'Lunar Cable Park',          cat: 'activity', url: 'https://lunarcablepark.com/',         lat: 37.0145, lng: -1.8740 },
+  { id: 'aquavera',       name: 'Parque acuático Aquavera',  cat: 'activity', url: 'https://www.aquavera.com/',          lat: 37.2230, lng: -1.7960 },
+  { id: 'lunar-cable',    name: 'Lunar Cable Park',          cat: 'activity', url: 'https://lunarcablepark.com/',         lat: 37.3970, lng: -1.7320 },
   { id: 'rumboalcabo',    name: 'Paseos en barco · Rumbo al Cabo', cat: 'activity', url: 'http://www.rumboalcabo.com/',  lat: 37.1815, lng: -1.8235 },
   { id: 'caboafondo',     name: 'Paseos en barco · El Cabo a Fondo', cat: 'activity', url: 'https://elcaboafondo.es',     lat: 36.7605, lng: -2.1075 },
   { id: 'cabogata',       name: 'Paseos en barco · Cabo de Gata', cat: 'activity', url: 'https://www.cabogataalmeria.com',lat: 36.7605, lng: -2.1075 },
@@ -172,8 +172,8 @@ const PLACES = [
   { id: 'vela-almeria',   name: 'Vela Almería', cat: 'activity', url: 'https://www.velaalmeria.es', lat: 36.8350, lng: -2.4630 },
   { id: 'jetski-island',  name: 'Motos de agua · Carboneras (Desert Island)', cat: 'activity', url: 'https://instagram.com/desertislandjetskiclub', lat: 36.9990, lng: -1.9010 },
   { id: 'buggy',          name: 'Buggy en el desierto', cat: 'activity', url: 'https://buggy-almeria.com/', lat: 37.0540, lng: -2.3880 },
-  { id: 'club-nautico',   name: 'Club Náutico Almanzora', cat: 'activity', url: 'https://maps.app.goo.gl/kgT5rYortJ2s5oPN8', lat: 37.2170, lng: -1.7800 },
-  { id: 'bicis',          name: 'Alquiler de bicicletas (Vera Playa)', cat: 'activity', url: 'https://maps.app.goo.gl/yPqqBXpwgcZyu6568', lat: 37.2240, lng: -1.7960 },
+  { id: 'club-nautico',   name: 'Club Náutico Almanzora', cat: 'activity', url: 'https://maps.app.goo.gl/kgT5rYortJ2s5oPN8', lat: 37.2530, lng: -1.7720 },
+  { id: 'bicis',          name: 'Alquiler de bicicletas (Vera Playa)', cat: 'activity', url: 'https://maps.app.goo.gl/yPqqBXpwgcZyu6568', lat: 37.2270, lng: -1.7965 },
   { id: 'bicis-villaricos',name: 'Bicis Villaricos', desc: 'Tel. 627 139 092', cat: 'activity', lat: 37.2470, lng: -1.7660 },
 
   // Pueblos
@@ -181,7 +181,7 @@ const PLACES = [
   { id: 't-vera',         name: 'Vera pueblo',             cat: 'town', lat: 37.2491, lng: -1.8639 },
   { id: 't-velez',        name: 'Vélez-Rubio',             cat: 'town', lat: 37.6520, lng: -2.0760 },
   { id: 't-sorbas',       name: 'Sorbas',                  cat: 'town', lat: 37.0920, lng: -2.0770 },
-  { id: 't-castillo',     name: 'Castillo Marqués de los Vélez', cat: 'town', lat: 37.6510, lng: -2.0770 },
+  { id: 't-castillo',     name: 'Castillo Marqués de los Vélez', desc: 'Vélez-Blanco.', cat: 'town', lat: 37.6905, lng: -2.0998 },
   { id: 't-gergal',       name: 'Gérgal',                  cat: 'town', lat: 37.1110, lng: -2.5430 },
   { id: 't-lorca',        name: 'Lorca (Murcia)',          cat: 'town', lat: 37.6770, lng: -1.7000 },
   { id: 't-cartagena',    name: 'Cartagena (teatro romano)', cat: 'town', lat: 37.6040, lng: -0.9870 },
@@ -193,8 +193,8 @@ const PLACES = [
   { id: 'el-argar',       name: 'Yacimiento prehistórico de El Argar', cat: 'culture', url: 'https://maps.app.goo.gl/dyCfYS3L8qruFVPD9', lat: 37.2520, lng: -1.7760 },
   { id: 'tabernas',       name: 'Desierto de Tabernas',    cat: 'culture', url: 'https://www.tabernas.es/', lat: 37.0540, lng: -2.3880 },
   { id: 'minihollywood',  name: 'MiniHollywood (Oasys)',   cat: 'culture', url: 'https://www.oasysparquetematico.com/', lat: 37.0150, lng: -2.4360 },
-  { id: 'aquarium',       name: 'Aquarium Costa de Almería', cat: 'culture', url: 'https://www.aquariumcostadealmeria.com/', lat: 36.8400, lng: -2.4500 },
-  { id: 'mariposario',    name: 'Mariposario de Almería',  cat: 'culture', url: 'https://g.co/kgs/meY7kj', lat: 37.0900, lng: -2.4350 },
+  { id: 'aquarium',       name: 'Aquarium Costa de Almería', cat: 'culture', url: 'https://www.aquariumcostadealmeria.com/', lat: 36.7795, lng: -2.5905 },
+  { id: 'mariposario',    name: 'Mariposario de Almería',  cat: 'culture', url: 'https://g.co/kgs/meY7kj', lat: 36.7810, lng: -2.5910 },
 
   // Playas (numeradas según cercanía)
   { id: 'p-cocedores',    name: 'Playa de los Cocedores',   cat: 'beach', url: 'https://goo.gl/maps/pCTJ8y5mt4y4VYkE8', lat: 37.3790, lng: -1.6260 },
@@ -203,39 +203,40 @@ const PLACES = [
   { id: 'p-enmedio',      name: 'Cala de Enmedio',          desc: 'Nuestra favorita. Desde Aguamarga hay que andar campo a través media hora.', cat: 'beach-hard', url: 'https://goo.gl/maps/i72YXUhFgBzi7vhf6', lat: 36.9540, lng: -1.9740 },
   { id: 'p-isleta',       name: 'La Isleta del Moro',       desc: 'Snorkel y comer en La Ola, junto al mar.', cat: 'beach', url: 'https://maps.google.com?q=Playa+del+Penon+Blanco', lat: 36.7970, lng: -2.0630 },
   { id: 'p-playazo',      name: 'El Playazo de Rodalquilar', desc: 'De fácil acceso y suele gustar mucho.', cat: 'beach', url: 'https://goo.gl/maps/bu6fEsoT1mHC9j2w6', lat: 36.8470, lng: -2.0230 },
-  { id: 'p-genoveses',    name: 'Playa de los Genoveses',   desc: 'San José. Hay que dejar el coche antes de la barrera y entrar en autobús.', cat: 'beach', lat: 36.7680, lng: -2.0910 },
-  { id: 'p-monsul',       name: 'Playa de Mónsul',          desc: 'San José. Acceso por barrera y bus.', cat: 'beach', lat: 36.7520, lng: -2.1070 },
-  { id: 'p-barronal',     name: 'Playa del Barronal',       desc: 'San José. Una de nuestras favoritas.', cat: 'beach', url: 'https://goo.gl/maps/sF2xaKDPrHEgjpxv6', lat: 36.7565, lng: -2.1015 },
-  { id: 'p-medialuna',    name: 'Cala de la Media Luna',    desc: 'San José.', cat: 'beach-hard', url: 'https://goo.gl/maps/ngDbWgoBfAdH5x4S8', lat: 36.7595, lng: -2.1010 },
+  { id: 'p-genoveses',    name: 'Playa de los Genoveses',   desc: 'San José. Hay que dejar el coche antes de la barrera y entrar en autobús.', cat: 'beach', lat: 36.7610, lng: -2.0890 },
+  { id: 'p-monsul',       name: 'Playa de Mónsul',          desc: 'San José. Acceso por barrera y bus.', cat: 'beach', lat: 36.7460, lng: -2.1130 },
+  { id: 'p-barronal',     name: 'Playa del Barronal',       desc: 'San José. Una de nuestras favoritas.', cat: 'beach', url: 'https://goo.gl/maps/sF2xaKDPrHEgjpxv6', lat: 36.7430, lng: -2.1180 },
+  { id: 'p-medialuna',    name: 'Cala de la Media Luna',    desc: 'San José.', cat: 'beach-hard', url: 'https://goo.gl/maps/ngDbWgoBfAdH5x4S8', lat: 36.7415, lng: -2.1195 },
 
   // Playas para perros
-  { id: 'p-mijo',         name: 'Cala de Mijo',         cat: 'beach-dog', url: 'https://goo.gl/maps/bH2xyYdjNCdHvGy19', lat: 37.0700, lng: -1.8740 },
-  { id: 'p-canada',       name: 'Playa de la Cañada del Negro', cat: 'beach-dog', url: 'https://goo.gl/maps/9iQMPzR1YWpPGjNc6', lat: 37.0190, lng: -1.8730 },
-  { id: 'playeros',       name: 'Playeros.es · directorio', cat: 'beach-dog', url: 'http://www.playeros.es', lat: 37.2240, lng: -1.7960 },
+  { id: 'p-mijo',         name: 'Cala de Mijo',         cat: 'beach-dog', url: 'https://goo.gl/maps/bH2xyYdjNCdHvGy19', lat: 37.0440, lng: -1.8910 },
+  { id: 'p-canada',       name: 'Playa de la Cañada del Negro', cat: 'beach-dog', url: 'https://goo.gl/maps/9iQMPzR1YWpPGjNc6', lat: 37.0220, lng: -1.8770 },
+  { id: 'playeros',       name: 'Playeros.es · directorio', cat: 'beach-dog', url: 'http://www.playeros.es', lat: 37.1100, lng: -1.8395 },
 
   // Playas naturistas (Vera Playa es la mayor zona naturista de España)
-  { id: 'p-naturista-vera', name: 'Vera Playa naturista', desc: 'Frente al complejo. La mayor zona naturista de España.', cat: 'beach-nude', lat: 37.2305, lng: -1.7940 },
-  { id: 'p-naturista-almanzora', name: 'Playa del Almanzora (zona naturista)', desc: 'Tramo norte de la playa, junto a Villaricos.', cat: 'beach-nude', lat: 37.2410, lng: -1.7700 },
-  { id: 'p-naturista-marina', name: 'Playa de la Marina de la Torre (Mojácar)', desc: 'Zona naturista en su tramo sur.', cat: 'beach-nude', lat: 37.1100, lng: -1.8500 },
+  { id: 'p-naturista-vera', name: 'Vera Playa naturista', desc: 'Frente al complejo naturista. La mayor zona naturista de España.', cat: 'beach-nude', lat: 37.2425, lng: -1.7880 },
+  { id: 'p-naturista-almanzora', name: 'Playa del Almanzora (zona naturista)', desc: 'Tramo norte de la playa, junto a la desembocadura del Almanzora.', cat: 'beach-nude', lat: 37.2530, lng: -1.7720 },
+  { id: 'p-naturista-marina', name: 'Playa de la Marina de la Torre (Mojácar)', desc: 'Zona naturista en su tramo sur.', cat: 'beach-nude', lat: 37.1075, lng: -1.8395 },
 
   // Playas con servicios (sombrillas, hamacas, chiringuitos)
-  { id: 'p-srvc-vera',    name: 'Playa de Vera (sector textil)', desc: 'Sombrillas, hamacas y chiringuitos.', cat: 'beach-srvc', lat: 37.2230, lng: -1.7975 },
-  { id: 'p-srvc-mojacar', name: 'Mojácar Playa',           desc: 'Hamacas, sombrillas y chiringuitos a lo largo del paseo.', cat: 'beach-srvc', lat: 37.1100, lng: -1.8410 },
-  { id: 'p-srvc-garrucha',name: 'Playa de Garrucha',       desc: 'Servicios de playa y paseo marítimo.', cat: 'beach-srvc', lat: 37.1810, lng: -1.8230 },
-  { id: 'p-srvc-quitapellejos', name: 'Playa Quitapellejos (Palomares)', desc: 'Hamacas, sombrillas y chiringuitos cerca de Hestía.', cat: 'beach-srvc', lat: 37.2090, lng: -1.7820 },
+  { id: 'p-srvc-vera',    name: 'Playa de Vera (sector textil)', desc: 'Sombrillas, hamacas y chiringuitos.', cat: 'beach-srvc', lat: 37.2275, lng: -1.7935 },
+  { id: 'p-srvc-mojacar', name: 'Mojácar Playa',           desc: 'Hamacas, sombrillas y chiringuitos a lo largo del paseo.', cat: 'beach-srvc', lat: 37.1100, lng: -1.8395 },
+  { id: 'p-srvc-garrucha',name: 'Playa de Garrucha',       desc: 'Servicios de playa y paseo marítimo.', cat: 'beach-srvc', lat: 37.1815, lng: -1.8210 },
+  { id: 'p-srvc-quitapellejos', name: 'Playa Quitapellejos (Palomares)', desc: 'Hamacas, sombrillas y chiringuitos cerca de Hestía.', cat: 'beach-srvc', lat: 37.2050, lng: -1.7790 },
 ];
 
 // Contenido COMPARTIDO entre las 3 guías (carta de bienvenida, marca, etc.)
 const GUIDE_SHARED = {
   es: {
     welcome: {
-      title: 'Bienvenido a tu hogar',
+      title: 'Bienvenido a tu Hestía',
       paras: [
-        'Estábamos deseando que llegarás y, ¡por fin estás aquí!',
-        'Muchas gracias por habernos elegido.',
-        'Esperamos que el viaje haya sido genial. Ahora descansa, relájate y descubre tu hogar lejos de tu casa…',
+        'Si lees esto, tu reserva está más que confirmada — y no sabes la ilusión que nos hace tenerte aquí.',
+        'Hemos puesto cariño en cada detalle de este apartamento. Esperamos estar a la altura.',
+        'Ya estés preparando el viaje, viviendo tus días aquí, o de vuelta a casa con la maleta a medio deshacer: todo lo que esté en nuestra mano, antes, durante o después de tu estancia, lo haremos. Sin dudarlo. Para eso estamos.',
+        'Ahora descansa, relájate y descubre tu hogar lejos de tu casa.',
       ],
-      sign: 'Nuestros mejores deseos,',
+      sign: 'Con cariño,',
       signer: 'Fran y Alex',
     },
     name: {
@@ -336,13 +337,14 @@ const GUIDE_SHARED = {
   },
   en: {
     welcome: {
-      title: 'Welcome to your home',
+      title: 'Welcome to your Hestía',
       paras: [
-        'We were looking forward to having you here, and here you are!',
-        'Thank you for choosing us.',
-        'We hope your trip was great. Now relax and discover your home away from home…',
+        'If you\'re reading this, your booking is more than confirmed — and we couldn\'t be more thrilled to have you with us.',
+        'We\'ve put care into every detail of this apartment. We hope to live up to it.',
+        'Whether you\'re still planning the trip, living your days here, or back home with a half-unpacked suitcase: anything in our hands, before, during or after your stay, we\'ll do it. No hesitation. That\'s what we\'re here for.',
+        'Now rest, relax, and discover your home away from home.',
       ],
-      sign: 'Best wishes,',
+      sign: 'With love,',
       signer: 'Fran & Alex',
     },
     name: {
@@ -754,20 +756,27 @@ const GuideMap = ({ places, categories, lang, apt }) => {
     };
   }, []);
 
-  // Toggle category visibility on the map. Mantenemos los markers SIEMPRE en
-  // el mapa y simplemente alternamos una clase CSS en el ícono — así la opacity
-  // y el scale animan vía transition (no se ven aparecer/desaparecer en seco).
+  // Mantenemos los markers SIEMPRE en el mapa y simplemente alternamos una
+  // clase CSS en el ícono — así la opacity y el scale animan vía transition.
+  const applyHidden = (next) => {
+    setHidden(next);
+    Object.values(markerRefs.current).forEach(m => {
+      if (!m.placeData) return;
+      const el = m.getElement && m.getElement();
+      if (!el) return;
+      el.classList.toggle('is-hidden-cat', next.has(m.placeData.cat));
+    });
+  };
   const toggleCat = (catId) => {
     const next = new Set(hidden);
     if (next.has(catId)) next.delete(catId);
     else next.add(catId);
-    setHidden(next);
-    Object.values(markerRefs.current).forEach(m => {
-      if (m.placeData?.cat !== catId) return;
-      const el = m.getElement && m.getElement();
-      if (!el) return;
-      el.classList.toggle('is-hidden-cat', next.has(catId));
-    });
+    applyHidden(next);
+  };
+  const showAll = () => applyHidden(new Set());
+  const hideAllExceptHome = () => {
+    const next = new Set(categories.filter(c => c.id !== 'home').map(c => c.id));
+    applyHidden(next);
   };
 
   // Count places per category for the legend chips
@@ -778,9 +787,20 @@ const GuideMap = ({ places, categories, lang, apt }) => {
     <div className="ag-map-block no-print">
       <div ref={mapRef} className="ag-map" aria-label={lang === 'es' ? 'Mapa de la zona' : 'Area map'} />
       <div className="ag-map-legend">
-        <span className="ag-map-legend-title">
-          {lang === 'es' ? 'Filtra por tipo' : 'Filter by type'}
-        </span>
+        <div className="ag-map-legend-head">
+          <span className="ag-map-legend-title">
+            {lang === 'es' ? 'Filtra por tipo' : 'Filter by type'}
+          </span>
+          <div className="ag-map-legend-actions">
+            <button type="button" className="ag-map-legend-action" onClick={showAll}>
+              {lang === 'es' ? 'Mostrar todos' : 'Show all'}
+            </button>
+            <span className="ag-map-legend-sep" aria-hidden="true">·</span>
+            <button type="button" className="ag-map-legend-action" onClick={hideAllExceptHome}>
+              {lang === 'es' ? 'Ocultar todos' : 'Hide all'}
+            </button>
+          </div>
+        </div>
         <div className="ag-map-legend-list">
           {categories.filter(c => counts[c.id]).map(c => (
             <button
