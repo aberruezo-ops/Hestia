@@ -61,6 +61,7 @@ const APT_DATA = {
     accent: '#8A4A24', accent2: '#B86A3C',
     hero_img: 'assets/apt-vt-gallery-01.jpg',
     bedroom_img: 'assets/apt-vt-gallery-02.jpg',
+    floorplan_img: 'assets/IMG_1121.png',
     others: ['vm', 'vs'],
     gallery_imgs: [
       'assets/apt-vt-gallery-01.jpg',
@@ -559,6 +560,38 @@ const AptPageOthers = ({ apt, lang }) => {
   );
 };
 
+// --- Plano del apartamento (solo si floorplan_img está definido) ---
+const AptFloorPlan = ({ apt, lang }) => {
+  if (!apt.floorplan_img) return null;
+  return (
+    <section className="apt-floorplan section-cream">
+      <div className="container">
+        <div className="eyebrow apt-fp-eyebrow">
+          {lang === 'es' ? 'Distribución del apartamento' : 'Apartment layout'}
+        </div>
+        <h2 className="apt-fp-title">
+          {lang === 'es'
+            ? <>{apt.name_short} <em>en dos plantas.</em></>
+            : <>{apt.name_short} <em>across two floors.</em></>}
+        </h2>
+        <p className="apt-fp-desc">
+          {lang === 'es'
+            ? 'El ático Thalassa tiene su distribución en dos niveles: la planta baja con salón, cocina, baño, dormitorio principal y terraza panorámica, y la planta superior con el segundo dormitorio y baño.'
+            : 'The Thalassa penthouse is laid out across two levels: the lower floor with living room, kitchen, bathroom, master bedroom and panoramic terrace; the upper floor with the second bedroom and bathroom.'}
+        </p>
+        <div className="apt-fp-img-wrap reveal">
+          <img
+            src={apt.floorplan_img}
+            alt={lang === 'es' ? `Plano de ${apt[lang].name}` : `Floor plan of ${apt[lang].name}`}
+            className="apt-fp-img"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // --- Descarga de guía protegida por PIN ---
 //
 // El PIN es fricción de UX, no seguridad real (sitio estático).
@@ -706,6 +739,7 @@ const ApartmentPageApp = () => {
         <FraseHogar lang={lang} />
         <AptPageDesc apt={apt} lang={lang} />
         <AptEquipamiento apt={apt} lang={lang} />
+        <AptFloorPlan apt={apt} lang={lang} />
         <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
         <AptPageGallery apt={apt} lang={lang} />
         <AptGuideDownload apt={apt} lang={lang} />
