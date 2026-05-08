@@ -803,10 +803,10 @@ const ApartmentPageApp = () => {
         ) : (
           <>
             <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
+            <AptPageGallery apt={apt} lang={lang} />
             <DirectBookingPerks lang={lang} />
             <FraseHogar lang={lang} />
             <AptPageDesc apt={apt} lang={lang} />
-            <AptPageGallery apt={apt} lang={lang} />
             <AptEquipamiento apt={apt} lang={lang} />
             <AptFloorPlan apt={apt} lang={lang} />
             <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
