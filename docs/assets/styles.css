@@ -937,9 +937,14 @@ section {
   font-size: 13px;
   border: 1px solid rgba(61,26,53,0.08);
   transform: translateY(calc(100% + 40px));
-  transition: transform .6s cubic-bezier(.2,.8,.2,1);
+  /* Exit transition (when .show is removed): fast snap */
+  transition: transform 220ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
-.cookies.show { transform: translateY(0); }
+.cookies.show {
+  transform: translateY(0);
+  /* Enter transition (when .show is added): slower drawer-style */
+  transition: transform 600ms var(--ease-drawer, cubic-bezier(0.32, 0.72, 0, 1));
+}
 .cookies h5 { font-family: var(--serif); font-size: 17px; font-weight: 300; margin-bottom: 6px; }
 .cookies .cookies-btns { display: flex; gap: 10px; margin-top: 14px; }
 .cookies .cookies-btns button {
