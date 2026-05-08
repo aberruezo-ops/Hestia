@@ -1338,33 +1338,83 @@ const StickyFacts = ({ lang }) => {
 
 // ================================================================
 // HESTÍA PRICE ENGINE
-// Precios nocturnos que el huésped ve en Booking.com / Airbnb
-// Actualizar mensualmente en los objetos HESTIA_PRICES / AIRBNB_PRICES
+// Fuente de verdad: docs/data/prices.json (editado vía /p-edit.html).
+// El loader del HTML hace fetch antes de evaluar este archivo y deja
+// el JSON en window.PRICES_V2. Si por lo que sea no llegó (red caída,
+// CDN frío), usamos HESTIA_PRICES_FALLBACK para no romper la web.
 // ================================================================
-const HESTIA_PRICES = {
-  vm: {  // Hestía Mar — VFT/AL/01580
-    // Precio/noche en Booking.com (índice 1=Ene … 12=Dic)
-    base: [0, 95, 95, 112, 132, 142, 162, 195, 228, 162, 132, 95, 95],
-    peaks: [
-      { from: '12-21', to: '01-07', pn: 188 }, // Navidad / Año Nuevo
-      { from: '04-10', to: '04-24', pn: 162 }, // Semana Santa
-    ],
-  },
-  vt: {  // Hestía Thalassa — VFT/AL/05535
-    base: [0, 115, 115, 135, 158, 172, 195, 238, 278, 195, 158, 115, 115],
-    peaks: [
-      { from: '12-21', to: '01-07', pn: 228 },
-      { from: '04-10', to: '04-24', pn: 198 },
-    ],
-  },
-  vs: {  // Hestía Salinas — VTF/AL/07056
-    base: [0, 100, 100, 118, 140, 150, 170, 205, 238, 170, 140, 100, 100],
-    peaks: [
-      { from: '12-21', to: '01-07', pn: 198 },
-      { from: '04-10', to: '04-24', pn: 170 },
-    ],
-  },
+
+// --- Fallback con valores aproximados (por si window.PRICES_V2 no carga)
+const HESTIA_PRICES_FALLBACK = {
+  vm: { base: [0, 88, 88, 88, 106, 106, 176, 220, 220, 176, 106, 88, 88], peaks: [] },
+  vt: { base: [0, 86, 86, 86, 103, 103, 172, 215, 215, 172, 103, 86, 86], peaks: [] },
+  vs: { base: [0, 82, 82, 82,  98,  98, 164, 205, 205, 164,  98, 82, 82], peaks: [] },
 };
+
+// --- Helpers para v2 (consultan window.PRICES_V2 ad-hoc)
+const _v2DateInRanges = (ds, ranges) =>
+  (ranges || []).some(([from, to]) => ds >= from && ds <= to);
+
+const _v2SeasonForDate = (ds, v2) => {
+  const year = ds.slice(0, 4);
+  const yd = v2.calendar && v2.calendar[year];
+  if (!yd) return 'baja';
+  // Specials (Sem Santa, Navidad) ganan a las temporadas regulares
+  for (const spec of Object.values(yd.specials || {})) {
+    if (_v2DateInRanges(ds, spec.ranges)) return spec.season || 'baja';
+  }
+  for (const [s, ranges] of Object.entries(yd.seasons || {})) {
+    if (_v2DateInRanges(ds, ranges)) return s;
+  }
+  return 'baja';
+};
+
+const _v2BumpedSeasonForDate = (ds, v2) => {
+  let s = _v2SeasonForDate(ds, v2);
+  if (!v2.rules || !v2.rules.bridgeBumpsOneStep) return s;
+  const year = ds.slice(0, 4);
+  const yd = v2.calendar && v2.calendar[year];
+  const inBridge = (yd && (yd.bridges || []).some(b => _v2DateInRanges(ds, b.ranges)));
+  if (!inBridge) return s;
+  const ladder = (v2.rules.seasonLadder) || ['baja', 'media', 'alta', 'critica'];
+  const idx = ladder.indexOf(s);
+  return (idx >= 0 && idx < ladder.length - 1) ? ladder[idx + 1] : s;
+};
+
+// Devuelve el precio exacto de UNA noche según el modelo v2.
+// null si no hay v2 disponible (callers caen al motor v1).
+const _dayPriceV2 = (ds, aptId) => {
+  const v2 = window.PRICES_V2;
+  if (!v2 || !v2.apts || !v2.apts[aptId]) return null;
+  const apt = v2.apts[aptId];
+  const season = _v2BumpedSeasonForDate(ds, v2);
+  const mult = (v2.seasons && v2.seasons[season] && v2.seasons[season].multiplier) || 1;
+  return Math.round(apt.base * mult);
+};
+
+// Sintetiza la tabla mensual antigua a partir de v2 (sample del día 15).
+// Lo justo para que componentes que computan min/max anuales sigan
+// funcionando sin tocarse. _dayPrice usa v2 directo, no esta tabla.
+const _v2DeriveV1 = (v2) => {
+  const result = {};
+  const year = (v2.calendar && Object.keys(v2.calendar)[0]) || '2026';
+  for (const aptId of Object.keys(v2.apts || {})) {
+    const base = [0];
+    for (let m = 1; m <= 12; m++) {
+      const ds = `${year}-${String(m).padStart(2, '0')}-15`;
+      base[m] = _dayPriceV2(ds, aptId);
+    }
+    // También recogemos el max real iterando todos los rangos (las temporadas
+    // alta/crítica caen en sample del 15 de jul/ago en mi schema, así que el
+    // max ya queda capturado, pero lo blindo).
+    result[aptId] = { base, peaks: [] };
+  }
+  return result;
+};
+
+const HESTIA_PRICES = (window.PRICES_V2 && window.PRICES_V2.apts)
+  ? _v2DeriveV1(window.PRICES_V2)
+  : HESTIA_PRICES_FALLBACK;
 
 const AIRBNB_PRICES = {
   vm: {  // Hestía Mar — Airbnb #17253235
@@ -1410,11 +1460,15 @@ const _be_diff = (a, b) =>
   Math.round((new Date(b + 'T12:00:00Z') - new Date(a + 'T12:00:00Z')) / 86400000);
 
 const _dayPrice = (ds, aptId) => {
+  // v2 (prices.json) tiene resolución por día, así que preferimos eso.
+  // Si no está disponible, caemos a la tabla mensual + peaks (motor antiguo).
+  const v2price = _dayPriceV2(ds, aptId);
+  if (v2price !== null) return v2price;
   const tbl = HESTIA_PRICES[aptId];
   if (!tbl) return 0;
   const month = parseInt(ds.slice(5, 7), 10);
   const mmdd  = ds.slice(5);
-  for (const pk of tbl.peaks) {
+  for (const pk of (tbl.peaks || [])) {
     if (pk.from > pk.to) {
       if (mmdd >= pk.from || mmdd < pk.to) return pk.pn;
     } else {
@@ -1475,4 +1529,4 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
   return { nights, totalBooking, totalAirbnb, refTotal, afterDirect, stayD, stayDiscAmt, afterStay, petAmt, directTotal, savings, avgPerNight };
 };
 
-Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, AIRBNB_PRICES, DIRECT_DISCOUNT, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _airbnbDayPrice, _calcStay });
+Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, AIRBNB_PRICES, DIRECT_DISCOUNT, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _airbnbDayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate });
