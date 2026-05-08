@@ -366,7 +366,7 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
             {lang === 'es' ? `desde ${minPrice}€` : `from ${minPrice}€`}
             <span className="app-per">{lang === 'es' ? ' / noche · precio directo' : ' / night · direct price'}</span>
             <span className="app-match">
-              {lang === 'es' ? '· igualamos cualquier precio mejor' : '· we match any lower price'}
+              {lang === 'es' ? '· te mejoramos cualquier precio' : '· we beat any price'}
             </span>
           </p>
         )}
@@ -803,10 +803,10 @@ const ApartmentPageApp = () => {
         ) : (
           <>
             <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
-            <AptPageGallery apt={apt} lang={lang} />
-            <DirectBookingPerks lang={lang} />
             <FraseHogar lang={lang} />
             <AptPageDesc apt={apt} lang={lang} />
+            <AptPageGallery apt={apt} lang={lang} />
+            <DirectBookingPerks lang={lang} />
             <AptEquipamiento apt={apt} lang={lang} />
             <AptFloorPlan apt={apt} lang={lang} />
             <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
