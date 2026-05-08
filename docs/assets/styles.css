@@ -1303,7 +1303,7 @@ section {
 @keyframes chipBurst {
   0%   {
     opacity: 0;
-    transform: scale(0) translate(calc((2 - var(--chip-idx, 2)) * 58px), -130px);
+    transform: scale(0.55) translate(calc((2 - var(--chip-idx, 2)) * 58px), -130px);
     filter: blur(10px);
   }
   38%  {
