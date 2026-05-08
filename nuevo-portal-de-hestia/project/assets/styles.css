@@ -4697,7 +4697,16 @@ body.no-parallax .g-tile .img { transform: none !important; }
   overflow: hidden;
 }
 .ag-photo-wrap > img { display: block; width: 100%; height: 100%; aspect-ratio: 4/3; object-fit: cover; }
-.ag-photo-wrap > .wm-badge { pointer-events: none; z-index: 2; }
+.ag-photo-wrap > .wm-badge {
+  pointer-events: none;
+  z-index: 2;
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  bottom: 12px !important;
+  right: 12px !important;
+}
+.ag-photo-wrap > .wm-badge img { opacity: 0.55 !important; }
 .ag-photo-grid[data-count="1"] .ag-photo-wrap > img { aspect-ratio: 16/9; }
 
 /* ================================================================
