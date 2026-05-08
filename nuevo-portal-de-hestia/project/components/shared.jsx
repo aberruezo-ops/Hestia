@@ -781,6 +781,31 @@ const SABIAS_QUE_HOME_FACTS = [
     es: 'Las minas de plata de Bédar, a 20 minutos de Vera, se explotaron desde la época romana hasta el siglo XX. Sus escombreras de colores siguen tiñendo la sierra de tonos oxidados y violáceos.',
     en: 'The Bédar silver mines, 20 minutes from Vera, were worked from Roman times until the 20th century. Their coloured spoil heaps still stain the hillside in shades of rust and violet.',
   },
+  /* Almería occidental — Roquetas, Almerimar, El Ejido, Adra */
+  {
+    es: 'Roquetas de Mar tiene 16 km de playa continua y un castillo de 1502 — Santa Ana — construido para defender la costa de los piratas berberiscos.',
+    en: 'Roquetas de Mar has 16 km of unbroken beach and a 1502 fortress — Santa Ana — built to defend the coast from Barbary pirates.',
+  },
+  {
+    es: 'Almerimar nació en los 70 como puerto deportivo de un proyecto urbanístico pionero — uno de los primeros marinas-resort de España. Tiene 1.100 amarres.',
+    en: 'Almerimar was born in the 1970s as the marina of a pioneering resort development — one of the first marina-resorts in Spain. It hosts 1,100 berths.',
+  },
+  {
+    es: 'El Ejido produce el 30% del tomate y el pepino que se comen en Europa entre noviembre y marzo. Su "mar de plástico" — 30.000 hectáreas de invernaderos — es el único cultivo humano visible desde el espacio.',
+    en: 'El Ejido grows 30% of all tomatoes and cucumbers eaten in Europe between November and March. Its "plastic sea" — 30,000 hectares of greenhouses — is the only human crop visible from space.',
+  },
+  {
+    es: 'Adra es la ciudad más antigua de Andalucía: fundada por los fenicios hace 3.000 años como Abdera. En su museo hay una moneda púnica con un atún — el primer "logo" comercial de la cuenca mediterránea.',
+    en: 'Adra is Andalusia\'s oldest city: founded by the Phoenicians 3,000 years ago as Abdera. Its museum holds a Punic coin showing a tuna — the first commercial "logo" of the Mediterranean basin.',
+  },
+  {
+    es: 'Las Albuferas de Adra son el último humedal natural de Andalucía oriental: refugio de la malvasía cabeciblanca, ave en peligro crítico que estuvo a punto de extinguirse en los 80.',
+    en: 'The Albuferas of Adra are the last natural wetland of eastern Andalusia: a refuge for the white-headed duck, a critically endangered bird that nearly went extinct in the 1980s.',
+  },
+  {
+    es: 'Berja, Dalías y la Alpujarra almeriense fueron el último reducto musulmán de la Península tras la conquista de Granada en 1492. Sus cortijos blancos en las laderas son herencia directa de aquella arquitectura morisca.',
+    en: 'Berja, Dalías and the Almería Alpujarra were the last Moorish stronghold in the Peninsula after the 1492 fall of Granada. The white-washed mountain farmsteads still carry that Morisco architecture directly.',
+  },
 ];
 
 // Shuffled pools — stable per page load
