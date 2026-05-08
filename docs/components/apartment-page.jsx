@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA — Página de detalle de apartamento
+// HESTÍA — Página de detalle de cada Hestía
 // Lee window.__APT__ ('vm' | 'vt' | 'vs') para saber cuál mostrar
 // ================================================================
 
@@ -41,16 +41,16 @@ const APT_DATA = {
     es: {
       name: 'Hestía Mar',
       concept: 'El campo de olivos llega al mar.',
-      desc: 'Hestía Mar es el apartamento donde el paisaje del olivar se funde con el Mediterráneo. Desde la terraza esquinera de 20m² orientada al amanecer, el mar aparece entre los eucaliptos de Vera Playa. Al ser de esquina, el apartamento da a tres calles y permite ventilación cruzada natural en todas las estancias.',
-      desc2: 'El apartamento ocupa la planta primera y se abre al jardín con acceso a la piscina comunitaria. Al ser esquinero, la luz entra desde el amanecer hasta el atardecer — ves el ciclo solar completo desde la terraza. Aire acondicionado centralizado en todas las estancias. Cocina completamente equipada, salón-comedor de 28m² y dos dormitorios con ropa de cama de calidad.',
+      desc: 'Hestía Mar es donde el paisaje del olivar se funde con el Mediterráneo. Desde la terraza esquinera de 20m² orientada al amanecer, el mar aparece entre los eucaliptos de Vera Playa. Al ser esquinera, da a tres calles y permite ventilación cruzada natural en todas las estancias.',
+      desc2: 'Mar ocupa la planta primera y se abre al jardín con acceso a la piscina comunitaria. Al ser esquinera, la luz entra desde el amanecer hasta el atardecer — ves el ciclo solar completo desde la terraza. Aire acondicionado centralizado en todas las estancias. Cocina completamente equipada, salón-comedor de 28m² y dos dormitorios con ropa de cama de calidad.',
       features: ['6 plazas + bebé · 2 habitaciones · planta primera', 'Terraza esquina 20m² · orientada al amanecer · ciclo solar completo', 'Piscina comunitaria · jacuzzi comunitario (verano)', 'Mascotas · petición previa · suplemento', '300 m de la playa · 5 min a pie desde la salida', 'Accesibilidad · adaptado para movilidad reducida', 'Aire acondicionado centralizado en todas las estancias', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'WiFi fibra óptica · Amazon Alexa', 'Lavadora · lavavajillas · nevera · microondas', 'Cafetera de cápsulas + espresso · batidora · plancha', 'Cama matrimonial 150 cm · colchón viscoelástico', 'Toallas 100% algodón 200 hilos · nórdicos de plumas'],
       gallery_captions: ['Salón · mesa de madera y cocina', 'Salón · sofá con espejo sol', 'Salón · vista cenital', 'Piscina comunitaria nocturna', 'Detalle · jarrón y textiles', 'Cocina equipada · mañana', 'Cocina · encimera y copa', 'Cocina · campana extractora', 'Dormitorio 2 · camas turquesa', 'Dormitorio principal · armario espejo', 'Dormitorio 2 · simétrico', 'Terraza · día y sierra', 'Terraza · velada de verano', 'Terraza · sofás nocturnos', 'Baño 1 · luz LED verde', 'Baño 2 · ducha y toallas', 'Baño 2 · lavabo y aromas', 'Piscina comunitaria · día', 'Piscina · jardines', 'Zona duchas · mosaico azul', 'Salón · lámpara y sofá', 'Salón · sofá completo', 'Detalle · espejo sol dorado', 'Detalle · suelo hidráulico', 'Dormitorio principal · lámpara globo'],
     },
     en: {
       name: 'Hestía Mar',
       concept: 'Where the olive grove meets the sea.',
-      desc: 'Hestía Mar is where the olive grove landscape merges with the Mediterranean. From the 20m² corner terrace facing the sunrise, the sea appears between the eucalyptus trees of Vera Playa. Being a corner apartment, it faces three streets and benefits from natural cross-ventilation throughout.',
-      desc2: 'The apartment is on the first floor and opens onto the garden with access to the shared pool. As a corner unit, light travels through from sunrise to sunset — you can follow the full arc of the sun from the terrace. Centralised air conditioning in every room. A fully equipped kitchen, 28m² living-dining room, and two bedrooms with quality bed linen.',
+      desc: 'Hestía Mar is where the olive grove landscape merges with the Mediterranean. From the 20m² corner terrace facing the sunrise, the sea appears between the eucalyptus trees of Vera Playa. As a corner unit, Mar faces three streets and benefits from natural cross-ventilation throughout.',
+      desc2: 'Mar is on the first floor and opens onto the garden with access to the shared pool. As a corner unit, light travels through from sunrise to sunset — you can follow the full arc of the sun from the terrace. Centralised air conditioning in every room. A fully equipped kitchen, 28m² living-dining room, and two bedrooms with quality bed linen.',
       features: ['6 guests + baby · 2 bedrooms · first floor', 'Corner terrace 20m² · faces sunrise · full solar arc', 'Shared pool · shared jacuzzi (summer)', 'Pets · on request · supplement', '300 m from the beach · 5 min walk from complex exit', 'Accessibility · adapted for reduced mobility', 'Centralised A/C in every room', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'Fibre WiFi · Amazon Alexa', 'Washer · dishwasher · fridge · microwave', 'Capsule + espresso coffee maker · blender · iron', 'Double bed 150 cm · memory foam mattress', '100% cotton 200-thread towels · down duvets'],
       gallery_captions: ['Living & dining · wooden table', 'Living room · sofa & sun mirror', 'Living room · overhead view', 'Community pool · night', 'Detail · vase & textiles', 'Kitchen · morning setup', 'Kitchen · counter & wine', 'Kitchen · extractor hood', 'Bedroom 2 · teal beds', 'Master bedroom · mirrored wardrobe', 'Bedroom 2 · symmetric', 'Terrace · day & mountains', 'Terrace · summer evening', 'Terrace · night sofas', 'Bathroom 1 · green LED', 'Bathroom 2 · shower & towels', 'Bathroom 2 · vessel sink', 'Community pool · daytime', 'Pool · gardens', 'Pool showers · blue mosaic', 'Living room · lamp detail', 'Living room · full sofa', 'Detail · gold sun mirror', 'Detail · hydraulic tiles', 'Master bedroom · globe lamp'],
     },
@@ -79,7 +79,7 @@ const APT_DATA = {
     es: {
       name: 'Hestía Thalassa',
       concept: 'El ático sobre el Mediterráneo y el Salar de los Canos.',
-      desc: 'Hestía Thalassa es el apartamento ático, el más elevado de los tres. Desde su terraza panorámica se ve el Mediterráneo y, hacia el interior, el Salar de los Canos — un paisaje árido y de gran belleza que cambia con la luz del día. El punto más abierto y luminoso de toda la urbanización.',
+      desc: 'Hestía Thalassa es el ático, el más elevado de los tres. Desde su terraza panorámica se ve el Mediterráneo y, hacia el interior, el Salar de los Canos — un paisaje árido y de gran belleza que cambia con la luz del día. El punto más abierto y luminoso de toda la urbanización.',
       desc2: 'El ático tiene dos plantas y una terraza con vistas al mar. La urbanización cuenta con SPA comunitario — con sauna y gimnasio —, piscina y pistas de pádel. El SPA está abierto en otoño, invierno y primavera; solo el gimnasio permanece abierto durante el verano.',
       features: ['6 plazas + bebé · 2 habitaciones', 'Ático — el piso más alto de la urbanización', 'Terraza panorámica · vistas al mar y al Salar de los Canos', 'Piscina comunitaria · pistas de pádel', 'SPA comunitario · sauna · gimnasio (otoño-primavera)', '1,5 km de la playa', 'Mascotas · petición previa · suplemento', 'Aire acondicionado frío/calor', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'WiFi fibra óptica · Amazon Alexa', 'Lavadora · lavavajillas · nevera · microondas', 'Cafetera de cápsulas + espresso · batidora · plancha', 'Cama matrimonial 150 cm · colchón viscoelástico', 'Toallas 100% algodón 200 hilos · nórdicos de plumas'],
       gallery_captions: ['Terraza · atardecer dorado y vistas al Mediterráneo', 'Dormitorio principal · pared turquesa y doble mesita', 'Dormitorio principal · cojines bordados y detalle', 'Dormitorio 2 · cabeceros rojos y cojines de colores', 'Salón · vistas al atardecer desde la ventana', 'Comedor · mesa extensible y lámparas negras', 'Baño 1 · mosaico azul y suelo hidráulico', 'Entrada · mueble artesanal y espejo geométrico', 'Terraza · zona chill out bajo el toldo', 'Salón · sofá y planta tropical', 'Terraza · vistas panorámicas y puesta de sol'],
@@ -87,7 +87,7 @@ const APT_DATA = {
     en: {
       name: 'Hestía Thalassa',
       concept: 'The penthouse above the Mediterranean and the Salar de los Canos.',
-      desc: 'Hestía Thalassa is the penthouse — the highest apartment of the three. From its panoramic terrace you look out over the Mediterranean and, inland, the Salar de los Canos: an arid, dramatically beautiful landscape that shifts with the light throughout the day.',
+      desc: 'Hestía Thalassa is the penthouse — the highest of the three. From its panoramic terrace you look out over the Mediterranean and, inland, the Salar de los Canos: an arid, dramatically beautiful landscape that shifts with the light throughout the day.',
       desc2: 'The penthouse spans two floors and a terrace with sea views. The complex also includes a shared SPA — with sauna and gym —, pool and padel courts. The SPA is open in autumn, winter and spring; only the gym stays open during summer.',
       features: ['6 guests + baby · 2 bedrooms', 'Penthouse — highest floor in the complex', 'Panoramic terrace · sea & Salar de los Canos views', 'Shared pool · padel courts', 'Shared SPA · sauna · gym (autumn–spring)', '1.5 km from the beach', 'Pets · on request · supplement', 'A/C heating & cooling', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'Fibre WiFi · Amazon Alexa', 'Washer · dishwasher · fridge · microwave', 'Capsule + espresso coffee maker · blender · iron', 'Double bed 150 cm · memory foam mattress', '100% cotton 200-thread towels · down duvets'],
       gallery_captions: ['Terrace · golden sunset & Mediterranean views', 'Master bedroom · turquoise wall & twin bedside tables', 'Master bedroom · embroidered cushions detail', 'Bedroom 2 · red velvet headboards & colourful pillows', 'Living room · sunset views through the window', 'Dining area · extendable table & black pendants', 'Bathroom 1 · blue mosaic & patterned floor tiles', 'Entrance · artisan cabinet & geometric mirror', 'Terrace · chill-out seating under the awning', 'Living room · sofa & tropical plant', 'Terrace · panoramic views & golden hour'],
@@ -133,16 +133,16 @@ const APT_DATA = {
     es: {
       name: 'Hestía Salinas',
       concept: 'El amarillo albero del amanecer sobre las salinas.',
-      desc: 'Hestía Salinas vive en el color albero del amanecer almeriense. Tres piscinas, dos terrazas y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina. El apartamento más luminoso de la colección.',
-      desc2: 'A 900 metros del mar y junto al Parque Natural de las Salinas de Puerto Rey, este apartamento ofrece un paisaje que no existe en ningún otro lugar de Europa. La luz dorada de la tarde llena cada habitación — el privilegio de vivir junto a la naturaleza.',
+      desc: 'Hestía Salinas vive en el color albero del amanecer almeriense. Tres piscinas, dos terrazas y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina. El Hestía más luminoso de la colección.',
+      desc2: 'A 900 metros del mar y junto al Parque Natural de las Salinas de Puerto Rey, Salinas ofrece un paisaje que no existe en ningún otro lugar de Europa. La luz dorada de la tarde llena cada habitación — el privilegio de vivir junto a la naturaleza.',
       features: ['6 plazas + bebé · 2 habitaciones', 'Dos terrazas', '3 piscinas comunitarias · pistas de pádel', 'Gimnasio + sauna comunitarios', 'Parque Natural Salinas de Puerto Rey · acceso peatonal directo', '900 m de la playa', 'Mascotas · petición previa · suplemento', 'Aire acondicionado frío/calor', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'WiFi fibra óptica · Amazon Alexa', 'Lavadora · lavavajillas · nevera · microondas', 'Cafetera de cápsulas + espresso · batidora · plancha', 'Cama matrimonial 150 cm · colchón viscoelástico', 'Toallas 100% algodón 200 hilos · nórdicos de plumas'],
       gallery_captions: ['Entrada · espejo y pared amarilla', 'Salón-comedor · luz natural y pared albero', 'Salón · sofá mostaza y Smart TV', 'Salón · sofá y sillones turquesa', 'Sofá · detalle y cuadro', 'Salón · vista cenital', 'Salón nocturno · ambiente TV', 'Comedor · mesa y lámpara teal', 'Cocina · campana extractora y encimera', 'Cocina · encimera madera · primer plano', 'Cocina · blanca y completamente equipada', 'Cocina · vista frontal', 'Dormitorio principal · mural olas y edredón teal', 'Dormitorio principal · cama y terraza', 'Dormitorio 2 · dos camas individuales', 'Baño 1 · lavabo y azulejo azul', 'Baño 1 · ducha y mosaico', 'Baño principal · bañera y bidé', 'Baño principal · mueble y espejo', 'Terraza principal · sofás y vistas', 'Terraza pergola · desayuno', 'Terraza · desayuno Hestía', 'Terraza principal · cena romántica nocturna', 'Terraza principal · noche · vistas a la urbanización', 'Terraza principal · atardecer y nubes', 'Segunda terraza · velada romántica', 'Segunda terraza · velada con vino y faroles', 'Terraza · rincón de relax con lucecitas'],
     },
     en: {
       name: 'Hestía Salinas',
       concept: 'Ochre yellow, sunrise over the salt flats.',
-      desc: 'Hestía Salinas lives in the ochre colour of the Almería sunrise. Three pools, two terraces and the Puerto Rey salt-flat nature park around the corner. The brightest apartment in the collection.',
-      desc2: '900 metres from the sea and beside the Puerto Rey Salt-flat Nature Park, this apartment offers a landscape that exists nowhere else in Europe. Golden afternoon light fills every room — the privilege of living beside unspoilt nature.',
+      desc: 'Hestía Salinas lives in the ochre colour of the Almería sunrise. Three pools, two terraces and the Puerto Rey salt-flat nature park around the corner. The brightest Hestía in the collection.',
+      desc2: '900 metres from the sea and beside the Puerto Rey Salt-flat Nature Park, Salinas offers a landscape that exists nowhere else in Europe. Golden afternoon light fills every room — the privilege of living beside unspoilt nature.',
       features: ['6 guests + baby · 2 bedrooms', 'Two terraces', '3 shared pools · padel courts', 'Communal gym + sauna', 'Puerto Rey Salt-flat Nature Park · direct pedestrian access', '900 m from the beach', 'Pets · on request · supplement', 'A/C heating & cooling', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'Fibre WiFi · Amazon Alexa', 'Washer · dishwasher · fridge · microwave', 'Capsule + espresso coffee maker · blender · iron', 'Double bed 150 cm · memory foam mattress', '100% cotton 200-thread towels · down duvets'],
       gallery_captions: ['Entrance · mirror & yellow feature wall', 'Living & dining · natural light & ochre wall', 'Living room · mustard sofa & Smart TV', 'Living room · sofa & teal armchairs', 'Sofa · detail & abstract painting', 'Living room · overhead view', 'Evening living room · TV ambience', 'Dining area · table & teal pendant lamp', 'Kitchen · extractor hood & countertop', 'Kitchen · wood counter · low angle', 'Kitchen · fully equipped white', 'Kitchen · frontal view', 'Master bedroom · wave mural & teal blanket', 'Master bedroom · bed & terrace access', 'Bedroom 2 · twin beds', 'Bathroom 1 · vessel sink & blue tiles', 'Bathroom 1 · shower & mosaic tiles', 'Main bathroom · bathtub & bidet', 'Main bathroom · vanity & ornate mirror', 'Main terrace · lounge chairs & views', 'Pergola terrace · morning breakfast', 'Terrace · Hestía breakfast tray', 'Main terrace · romantic candlelit dinner', 'Main terrace · night · complex views', 'Main terrace · sunset & dramatic sky', 'Second terrace · candlelit evening', 'Second terrace · wine & lantern evening', 'Terrace · cosy corner with fairy lights'],
     },
@@ -150,7 +150,7 @@ const APT_DATA = {
 };
 
 // ================================================================
-// EQUIPAMIENTO — datos por apartamento
+// EQUIPAMIENTO — datos por Hestía
 // ================================================================
 const APT_EQUIP = {
   vm: {
@@ -336,7 +336,7 @@ const PhotoPlaceholder = ({ caption, accent, index }) => (
   </div>
 );
 
-// --- Hero de la página de apartamento ---
+// --- Hero de la página del Hestía ---
 const AptPageHero = ({ apt, lang, scrolled, mode }) => {
   const d = apt[lang];
   const tbl = HESTIA_PRICES[apt.id];
@@ -524,13 +524,13 @@ const AptPageGallery = ({ apt, lang }) => {
   );
 };
 
-// --- Otros apartamentos ---
+// --- Otros Hestías ---
 const AptPageOthers = ({ apt, lang }) => {
   const others = apt.others.map(id => APT_DATA[id]);
   return (
     <section className="apt-page-others">
       <div className="eyebrow" style={{ marginBottom: 32 }}>
-        {lang === 'es' ? 'Los otros dos apartamentos' : 'The other two apartments'}
+        {lang === 'es' ? 'Los otros dos Hestías' : 'The other two Hestías'}
       </div>
       <div className="apt-others-grid">
         {others.map(o => {
@@ -549,7 +549,7 @@ const AptPageOthers = ({ apt, lang }) => {
                 </div>
                 <div className="apt-other-concept">« {d.concept} »</div>
                 <span className="apt-other-cta">
-                  {lang === 'es' ? 'Ver apartamento' : 'See apartment'} →
+                  {lang === 'es' ? 'Ver Hestía' : 'See Hestía'} →
                 </span>
               </div>
             </a>
@@ -560,14 +560,14 @@ const AptPageOthers = ({ apt, lang }) => {
   );
 };
 
-// --- Plano del apartamento (solo si floorplan_img está definido) ---
+// --- Plano del Hestía (solo si floorplan_img está definido) ---
 const AptFloorPlan = ({ apt, lang }) => {
   if (!apt.floorplan_img) return null;
   return (
     <section className="apt-floorplan section-cream">
       <div className="container">
         <div className="eyebrow apt-fp-eyebrow">
-          {lang === 'es' ? 'Distribución del apartamento' : 'Apartment layout'}
+          {lang === 'es' ? 'Distribución del Hestía' : 'Hestía layout'}
         </div>
         <h2 className="apt-fp-title">
           {lang === 'es'
@@ -609,7 +609,7 @@ const AptGuideDownload = ({ apt, lang }) => {
   const t = lang === 'es' ? {
     eyebrow: 'Guía digital',
     title: `Descarga la guía de ${apt.es.name}`,
-    desc: 'Recomendaciones del barrio, restaurantes, calas, instrucciones del apartamento y todo lo que necesitas para tu estancia.',
+    desc: 'Recomendaciones del barrio, restaurantes, calas, instrucciones del Hestía y todo lo que necesitas para tu estancia.',
     placeholder: 'PIN de tu reserva',
     submit: 'Descargar PDF',
     helper: 'Encontrarás el PIN en tu confirmación de reserva.',
@@ -618,7 +618,7 @@ const AptGuideDownload = ({ apt, lang }) => {
   } : {
     eyebrow: 'Digital guide',
     title: `Download your ${apt.en.name} guide`,
-    desc: 'Neighborhood recommendations, restaurants, coves, apartment instructions and everything you need for your stay.',
+    desc: 'Neighborhood recommendations, restaurants, coves, Hestía instructions and everything you need for your stay.',
     placeholder: 'Booking PIN',
     submit: 'Download PDF',
     helper: 'You will find the PIN in your booking confirmation.',
@@ -715,7 +715,7 @@ const AptStickyBar = ({ apt, lang, scrolled }) => {
   );
 };
 
-// --- App de página de apartamento ---
+// --- App de página del Hestía ---
 const ApartmentPageApp = () => {
   const aptId = window.__APT__ || 'vm';
   const apt = APT_DATA[aptId];
@@ -770,10 +770,10 @@ const ApartmentPageApp = () => {
             <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
             <FraseHogar lang={lang} />
             <AptPageDesc apt={apt} lang={lang} />
+            <AptPageGallery apt={apt} lang={lang} />
             <AptEquipamiento apt={apt} lang={lang} />
             <AptFloorPlan apt={apt} lang={lang} />
             <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
-            <AptPageGallery apt={apt} lang={lang} />
             {typeof AptGuideGate !== 'undefined' &&
               <AptGuideGate apt={apt} lang={lang} onUnlock={() => setGuideOpen(true)} />}
             <AptPageOthers apt={apt} lang={lang} />

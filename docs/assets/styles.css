@@ -659,8 +659,13 @@ p  { line-height: 1.65; font-weight: 300; }
 /* -------- Floating chat -------- */
 .float-chat {
   position: fixed;
-  bottom: 28px; right: 28px;
-  z-index: 200;
+  bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+  right: 28px;
+  z-index: 210;  /* por encima de la sticky bar (200) */
+}
+/* En páginas con sticky bar lo subimos para que no quede tapado */
+body.has-apt-sticky .float-chat {
+  bottom: calc(96px + env(safe-area-inset-bottom, 0px));
 }
 .float-chat .bubble-btn {
   width: 58px; height: 58px; border-radius: 50%;
@@ -955,8 +960,10 @@ section {
   position: fixed;
   /* En apt pages la sticky bar (z=200, ~60px alto) puede tapar el aviso —
      subimos cookies por encima en z-index y, si la sticky bar está visible,
-     bajamos también su bottom (regla :has más abajo). */
-  bottom: 24px; left: 24px;
+     bajamos también su bottom (regla más abajo). En iOS sumamos
+     safe-area-inset-bottom para que la barra inferior de Safari no lo coma. */
+  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  left: 24px;
   max-width: 380px;
   background: var(--crema);
   color: var(--ber-dk);
@@ -3078,7 +3085,8 @@ footer .footer-brand .addr {
   .counter:first-child { border-top: none; }
   .ratings-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
-  .float-chat { bottom: 20px; right: 20px; }
+  .float-chat { bottom: calc(20px + env(safe-area-inset-bottom, 0px)); right: 20px; }
+  body.has-apt-sticky .float-chat { bottom: calc(110px + env(safe-area-inset-bottom, 0px)); }
   .float-chat .bubble-panel { width: calc(100vw - 40px); }
 }
 
@@ -3904,6 +3912,9 @@ body.no-parallax .g-tile .img { transform: none !important; }
   justify-content: space-between;
   gap: 16px;
   padding: 12px var(--page-pad);
+  /* Respeta el home-indicator de iOS — el padding inferior crece para que
+     ningún botón quede bajo la zona reservada */
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   transform: translateY(100%);
   transition: transform .35s cubic-bezier(.4,0,.2,1);
   will-change: transform;
@@ -3912,9 +3923,16 @@ body.no-parallax .g-tile .img { transform: none !important; }
 
 /* En páginas con sticky bar (apt pages), subimos el aviso de cookies para
    que no quede tapado. Usamos clase en el <body> en vez de :has() para
-   compatibilidad con Safari iPad antiguos. */
+   compatibilidad con Safari iPad antiguos.
+   En móvil la sticky bar puede ser más alta (textos envolviendo), así que
+   damos más clearance ahí. */
 body.has-apt-sticky .cookies {
-  bottom: 96px;
+  bottom: calc(96px + env(safe-area-inset-bottom, 0px));
+}
+@media (max-width: 600px) {
+  body.has-apt-sticky .cookies {
+    bottom: calc(120px + env(safe-area-inset-bottom, 0px));
+  }
 }
 .asb-info {
   display: flex;
@@ -8066,7 +8084,7 @@ footer,
 }
 
 /* ================================================================
-   GUIDE MAP — mapa Leaflet con marcadores y leyenda
+   GUIDE MAP — embed de Google Maps (sin coordenadas hardcoded)
    ================================================================ */
 .ag-map-block {
   margin: 28px 0 36px;
@@ -8078,8 +8096,16 @@ footer,
 .ag-map {
   width: 100%;
   height: clamp(320px, 50vh, 520px);
-  position: relative;
-  z-index: 0;
+  display: block;
+  border: 0;
+}
+.ag-map-note {
+  padding: 12px 18px;
+  border-top: 1px solid color-mix(in oklab, var(--apt-accent) 14%, transparent);
+  background: color-mix(in oklab, var(--apt-accent) 4%, var(--crema));
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-style: italic;
 }
 .ag-map-legend {
   padding: 16px 18px;
