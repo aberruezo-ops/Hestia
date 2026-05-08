@@ -869,7 +869,7 @@ section {
   border-radius: 10px 0 10px 0;
   font-family: var(--sans); font-weight: 400; font-size: 13px;
   letter-spacing: 0.14em; text-transform: uppercase;
-  transition: all .3s;
+  transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
   border: 1px solid currentColor;
 }
 .btn-primary {
@@ -941,7 +941,7 @@ section {
   padding: 9px 14px; font-size: 11px; letter-spacing: 0.12em;
   text-transform: uppercase; border-radius: 10px 0 10px 0; border: 1px solid var(--ber);
   flex: 1;
-  transition: all .2s;
+  transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
 }
 .cookies .cookies-btns .accept { background: var(--ber); color: var(--crema); }
 .cookies .cookies-btns .accept:hover { background: var(--ber-dk); border-color: var(--ber-dk); }
@@ -3116,7 +3116,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   border-radius: 10px 0 10px 0;
   font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
   color: var(--arena); opacity: 0.65;
-  transition: all .2s;
+  transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out);
 }
 .seg-control button.active {
   background: var(--sol); color: var(--ber-dk); opacity: 1;
@@ -3127,7 +3127,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   font-size: 11px; letter-spacing: 0.1em;
   color: var(--arena);
   background: rgba(240,232,213,0.08);
-  transition: all .2s;
+  transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
 }
 .tweaks-jumps button:hover { background: var(--sol); color: var(--ber-dk); }
 
@@ -3443,7 +3443,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .btn {
   position: relative;
   overflow: hidden;
-  transition: all var(--dur-liquid) var(--ease-liquid);
+  transition: background var(--dur-liquid) var(--ease-liquid), color var(--dur-liquid) var(--ease-liquid), border-color var(--dur-liquid) var(--ease-liquid), box-shadow var(--dur-liquid) var(--ease-liquid);
 }
 .btn::before {
   content: '';
@@ -3612,7 +3612,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  transition: all var(--dur-liquid) var(--ease-liquid);
+  transition: background var(--dur-liquid) var(--ease-liquid), color var(--dur-liquid) var(--ease-liquid), border-color var(--dur-liquid) var(--ease-liquid);
   display: inline-block;
 }
 @media (hover: hover) {
@@ -5975,7 +5975,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   background: transparent;
   color: rgba(240,232,213,.7);
   cursor: pointer;
-  transition: all .2s;
+  transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
 }
 .hs-apt-btn:hover {
   border-color: rgba(240,232,213,.45);
@@ -6099,7 +6099,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   background: transparent;
   color: rgba(240,232,213,.6);
   cursor: pointer;
-  transition: all .18s;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
 .hs-toggle:hover { border-color: rgba(240,232,213,.38); color: var(--arena); }
 .hs-toggle.on {
@@ -6125,7 +6125,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   border-radius: 10px 0 10px 0;
   padding: 7px 14px;
   cursor: pointer;
-  transition: all .18s;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
 .hs-extra-item input[type="checkbox"] { display: none; }
 .hs-extra-item:hover { border-color: rgba(240,232,213,.28); color: var(--arena); }
