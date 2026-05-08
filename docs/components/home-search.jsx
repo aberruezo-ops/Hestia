@@ -53,6 +53,11 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
     return avail[apt].blocked || [];
   }, [apt, avail]);
 
+  // Cierre de reservas — última fecha de check-in aceptada (de prices.json).
+  const horizonStr = (window.PRICES_V2 && window.PRICES_V2.bookingHorizon
+    && window.PRICES_V2.bookingHorizon.lastCheckinDate) || null;
+  const _isBeyondHorizon = (ds) => !!(horizonStr && ds > horizonStr);
+
   const _isBlkLocal = (ds) => blocked.some(r => ds >= r.start && ds < r.end);
 
   // Hover preview end: follow hover if path is clear
@@ -65,7 +70,7 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
   }
 
   const handleDayClick = (ds) => {
-    if (ds < today || _isBlkLocal(ds)) return;
+    if (ds < today || _isBeyondHorizon(ds) || _isBlkLocal(ds)) return;
     if (!checkin || checkout || ds <= checkin) { setCheckin(ds); setCheckout(''); return; }
     let cur = _hsAdj(checkin, 1);
     while (cur < ds) {
@@ -100,6 +105,7 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
             const { d } = cell;
             const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
             const isPast  = ds < today;
+            const isBeyond= _isBeyondHorizon(ds);
             const isToday = ds === today;
             const isBlk   = _isBlkLocal(ds);
 
@@ -120,12 +126,12 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
             const isPE   = inPrev && ds === previewEnd;
             const isPM   = inPrev && !isPS && !isPE;
 
-            const isClickable = !isPast && !isBlk;
+            const isClickable = !isPast && !isBeyond && !isBlk;
             const showBlk = isBlk && !inSel && !inPrev;
 
             return (
               <div key={d}
-                className={['cal-cell',isPast&&'past',isToday&&'today',isBlk&&'blk',
+                className={['cal-cell',(isPast||isBeyond)&&'past',isToday&&'today',isBlk&&'blk',
                   isClickable&&'clickable',inSel&&'in-sel',isSS&&'sel-s',isSE&&'sel-e',isSM&&'sel-m',
                   inPrev&&'in-prev',isPS&&'prev-s',isPE&&'prev-e',isPM&&'prev-m',
                 ].filter(Boolean).join(' ')}
