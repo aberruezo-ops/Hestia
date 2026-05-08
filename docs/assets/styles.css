@@ -6957,3 +6957,38 @@ footer,
 .page-hero,
 .contacto-reservas,
 .nosotros-team { animation: none !important; }
+
+/* ================================================================
+   STAGGER ENTRANCES — apt-cards & gallery tiles (Emil Kowalski)
+   Each card fades up with a 60ms delay after the previous one.
+   fill-mode: backwards keeps base transform/hover working post-animation.
+   ================================================================ */
+@keyframes hestia-fade-up {
+  from { opacity: 0; transform: translateY(14px) translateZ(0); }
+  to   { opacity: 1; transform: translateY(0)   translateZ(0); }
+}
+
+.apartments-track .apt-card,
+.gallery-mosaic  .g-tile {
+  animation: hestia-fade-up 420ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) backwards;
+}
+
+.apartments-track .apt-card:nth-child(1),
+.gallery-mosaic  .g-tile:nth-child(1) { animation-delay:   0ms; }
+.apartments-track .apt-card:nth-child(2),
+.gallery-mosaic  .g-tile:nth-child(2) { animation-delay:  60ms; }
+.apartments-track .apt-card:nth-child(3),
+.gallery-mosaic  .g-tile:nth-child(3) { animation-delay: 120ms; }
+.apartments-track .apt-card:nth-child(4),
+.gallery-mosaic  .g-tile:nth-child(4) { animation-delay: 180ms; }
+.apartments-track .apt-card:nth-child(5),
+.gallery-mosaic  .g-tile:nth-child(5) { animation-delay: 240ms; }
+.apartments-track .apt-card:nth-child(6),
+.gallery-mosaic  .g-tile:nth-child(6) { animation-delay: 300ms; }
+.gallery-mosaic  .g-tile:nth-child(7) { animation-delay: 360ms; }
+.gallery-mosaic  .g-tile:nth-child(8) { animation-delay: 420ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .apartments-track .apt-card,
+  .gallery-mosaic  .g-tile { animation: none; }
+}
