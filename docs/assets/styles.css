@@ -149,6 +149,14 @@
 
   /* Escala */
   --page-pad: clamp(24px, 5vw, 80px);
+
+  /* Motion tokens — Emil Kowalski design engineering */
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);   /* hovers, entradas UI */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);  /* movimiento on-screen */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);   /* iOS-like drawers/banners */
+  --dur-fast:    160ms;  /* feedback botones */
+  --dur-base:    220ms;  /* dropdowns, hovers */
+  --dur-slow:    320ms;  /* modales, drawers */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
