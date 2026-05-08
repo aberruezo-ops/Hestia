@@ -1564,3 +1564,76 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
 };
 
 Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, AIRBNB_PRICES, DIRECT_DISCOUNT, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _airbnbDayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate });
+
+// ================================================================
+// DirectBookingPerks — sección expandible "Por qué reservar directo"
+// Reutilizable en home y en cada Hestía. Una sola fuente de copy,
+// dos variantes visuales (compact|full).
+// ================================================================
+const DIRECT_PERKS = {
+  es: [
+    { t: 'Precio igualado o mejor.',     d: 'Si lo ves más barato en Booking, Airbnb o cualquier otra plataforma, te lo igualamos. Sin discusión.' },
+    { t: 'Sin comisiones de plataforma.', d: 'El 9–15 % que se quedan los intermediarios queda contigo, no en una OTA.' },
+    { t: 'Hablas con Alex o Fran.',       d: 'Personas reales — no un bot ni una centralita. Respondemos casi siempre en menos de una hora.' },
+    { t: 'Descuentos por estancia larga.', d: '−3 % a partir de 7 noches · −15 % a partir de 15 · −30 % a partir de 29 (en temporadas elegibles).' },
+    { t: 'Cancelación flexible.',         d: 'Gratis hasta 7 días antes de tu llegada.' },
+    { t: 'Atención personalizada.',       d: 'Guía con recomendaciones, instrucciones del Hestía y soporte directo durante la estancia.' },
+    { t: 'Mascotas bienvenidas.',         d: 'Previa consulta y con suplemento, en los tres Hestías.' },
+  ],
+  en: [
+    { t: 'Same price or better.',        d: 'If you see a lower price on Booking, Airbnb or anywhere else, we match it. No questions.' },
+    { t: 'No platform commissions.',     d: 'The 9–15 % the OTAs keep stays with you, not with an intermediary.' },
+    { t: "You talk to Alex or Fran.",    d: 'Real people — not a bot or call centre. We usually reply within an hour.' },
+    { t: 'Long-stay discounts.',         d: '−3 % from 7 nights · −15 % from 15 · −30 % from 29 (in eligible seasons).' },
+    { t: 'Flexible cancellation.',       d: 'Free up to 7 days before arrival.' },
+    { t: 'Personalised attention.',      d: 'Guide with recommendations, Hestía instructions and direct support during your stay.' },
+    { t: 'Pets welcome.',                d: 'On request and with a supplement, across all three Hestías.' },
+  ],
+};
+
+const DirectBookingPerks = ({ lang, variant = 'full' }) => {
+  const [open, setOpen] = React.useState(false);
+  const list = DIRECT_PERKS[lang];
+  return (
+    <section className={`direct-perks dp-${variant}`}>
+      <div className="container">
+        <div className="dp-head">
+          <span className="eyebrow dp-eyebrow">
+            {lang === 'es' ? 'Reserva directa' : 'Direct booking'}
+          </span>
+          <h3 className="dp-title">
+            {lang === 'es'
+              ? <>Mejor precio garantizado. <em>Si lo ves más barato fuera, te lo igualamos.</em></>
+              : <>Best price guaranteed. <em>See it cheaper elsewhere, we match it.</em></>}
+          </h3>
+          <button
+            type="button"
+            className="dp-toggle"
+            onClick={() => setOpen(o => !o)}
+            aria-expanded={open}
+          >
+            <span>{open
+              ? (lang === 'es' ? 'Ocultar ventajas' : 'Hide perks')
+              : (lang === 'es' ? 'Ver todas las ventajas' : 'See all perks')}</span>
+            <span className={`dp-chevron ${open ? 'open' : ''}`} aria-hidden="true">↓</span>
+          </button>
+        </div>
+        <div className={`dp-body ${open ? 'open' : ''}`} aria-hidden={!open}>
+          <ul className="dp-list">
+            {list.map((p, i) => (
+              <li key={i} className="dp-item">
+                <span className="dp-bullet" aria-hidden="true">✓</span>
+                <div className="dp-text">
+                  <strong className="dp-item-t">{p.t}</strong>
+                  <span className="dp-item-d">{p.d}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+Object.assign(window, { DirectBookingPerks, DIRECT_PERKS });
