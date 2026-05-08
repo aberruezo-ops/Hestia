@@ -1573,20 +1573,20 @@ Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrol
 // ================================================================
 const DIRECT_PERKS = {
   es: [
-    { id:'precio',    icon:'💰', stat:'−9%',     t:'Precio mejor o te lo igualamos.',                 d:'Si encuentras una tarifa más baja en Booking, Airbnb o cualquier plataforma, te la igualamos o mejoramos. Sin discusión, sin letra pequeña.' },
+    { id:'precio',    icon:'💰', stat:'−9%',     t:'Mejoramos cualquier precio.',                     d:'Mejoramos el precio de cualquier plataforma. Y si nos dices un precio mejor que el que te ofrecemos, te lo mejoramos. Sin discusión, sin letra pequeña.' },
     { id:'comision',  icon:'🚫', stat:'0%',      t:'Sin comisiones de plataforma.',                   d:'El 9–15 % que se quedan las OTAs por cada reserva queda contigo. Pagas el precio real, no el inflado por intermediarios.' },
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Respuesta humana, no un bot.',                    d:'Hablas directamente con Alex o Fran. Casi siempre respondemos en minutos; máximo una hora en horario activo.' },
-    { id:'cancel',    icon:'🔓', stat:'7 días',  t:'Cancelación flexible.',                           d:'Gratuita hasta 7 días antes de la llegada. Sin formularios eternos, sin sanciones ocultas, sin batallar contra una plataforma.' },
+    { id:'cancel',    icon:'🔓', stat:'7 días',  t:'Cancelación flexible (y mejorable).',             d:'Gratuita hasta 7 días antes de la llegada. Y si necesitas otras condiciones, ¡pregúntanos! Sin formularios eternos ni sanciones ocultas.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Pago seguro y flexible.',                         d:'Sin pre-autorizaciones que bloqueen tu tarjeta. Si necesitas plazos, los acordamos contigo. Pago directo, sin intermediarios.' },
     { id:'descuento', icon:'🎁', stat:'−30%',    t:'Descuentos por estancia larga.',                  d:'−3 % a partir de 7 noches · −15 % a partir de 15 · −30 % a partir de 29. Aplicables en temporadas elegibles.' },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Guía privada incluida.',                          d:'Recomendaciones de Alex y Fran, instrucciones del Hestía, restaurantes, calas y rutas. Activa toda la estancia.' },
     { id:'mascotas',  icon:'🐾', stat:'3/3',     t:'Mascotas bienvenidas.',                           d:'En los tres Hestías. Petición previa y un pequeño suplemento — sin tarifas abusivas ni vetos.' },
   ],
   en: [
-    { id:'precio',    icon:'💰', stat:'−9%',     t:'Better price or we match it.',                    d:'If you find a lower rate on Booking, Airbnb or anywhere else, we match or beat it. No questions, no small print.' },
+    { id:'precio',    icon:'💰', stat:'−9%',     t:'We beat any price.',                              d:'We beat any platform price. And if you tell us a better price than ours, we beat it again. No questions, no small print.' },
     { id:'comision',  icon:'🚫', stat:'0%',      t:'No platform commissions.',                        d:'The 9–15 % OTAs keep on every booking stays with you. You pay the real price, not the inflated one.' },
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Human reply, not a bot.',                         d:'You talk directly to Alex or Fran. Usually within minutes; up to an hour during active hours.' },
-    { id:'cancel',    icon:'🔓', stat:'7 days',  t:'Flexible cancellation.',                          d:'Free up to 7 days before arrival. No endless forms, no hidden penalties, no fighting a platform.' },
+    { id:'cancel',    icon:'🔓', stat:'7 days',  t:'Flexible cancellation (and better on request).',  d:'Free up to 7 days before arrival. Need different terms? Just ask! No endless forms, no hidden penalties.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Safe, flexible payment.',                         d:'No pre-authorisations blocking your card. If you need installments, we agree them. Direct payment, no middleman.' },
     { id:'descuento', icon:'🎁', stat:'−30%',    t:'Long-stay discounts.',                            d:'−3 % from 7 nights · −15 % from 15 · −30 % from 29. Apply in eligible seasons.' },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Private guide included.',                         d:'Alex & Fran recommendations, Hestía instructions, restaurants, hidden coves and routes. Active throughout your stay.' },
