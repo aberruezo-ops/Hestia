@@ -110,6 +110,12 @@
   ];
 
   async function loadComponents() {
+    // prices.json antes de evaluar componentes (shared.jsx lo lee al parsear)
+    try {
+      const pr = await fetch('data/prices.json?t=' + Date.now(), { cache: 'no-store' });
+      if (pr.ok) window.PRICES_V2 = await pr.json();
+    } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
+
     for (const file of COMPONENT_FILES) {
       const res = await fetch(file + '?t=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
