@@ -803,3 +803,5 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
     </>
   );
 };
+
+Object.assign(window, { AptGuideGate, AptGuideView });
