@@ -731,31 +731,36 @@ const ApartmentPageApp = () => {
     document.title = `${apt[lang].name} · Hestía Your Home · Vera Playa`;
   }, [lang]);
 
-  // Vista de guía completa: reemplaza toda la página tras introducir el PIN
-  if (guideOpen && typeof AptGuideView !== 'undefined') {
-    return <AptGuideView apt={apt} lang={lang} onClose={() => setGuideOpen(false)} />;
-  }
+  // La guía vive DENTRO de la página: header y footer del portal se mantienen,
+  // y solo el contenido de <main> se sustituye por la guía con su nav lateral.
+  const showGuide = guideOpen && typeof AptGuideView !== 'undefined';
 
   return (
     <>
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main>
-        <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
-        <FraseHogar lang={lang} />
-        <AptPageDesc apt={apt} lang={lang} />
-        <AptEquipamiento apt={apt} lang={lang} />
-        <AptFloorPlan apt={apt} lang={lang} />
-        <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
-        <AptPageGallery apt={apt} lang={lang} />
-        {typeof AptGuideGate !== 'undefined' &&
-          <AptGuideGate apt={apt} lang={lang} onUnlock={() => setGuideOpen(true)} />}
-        <AptPageOthers apt={apt} lang={lang} />
-        <QuickFAQ lang={lang} pageId={aptId} />
-        <ContactCTA lang={lang} />
+        {showGuide ? (
+          <AptGuideView apt={apt} lang={lang} onClose={() => setGuideOpen(false)} />
+        ) : (
+          <>
+            <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
+            <FraseHogar lang={lang} />
+            <AptPageDesc apt={apt} lang={lang} />
+            <AptEquipamiento apt={apt} lang={lang} />
+            <AptFloorPlan apt={apt} lang={lang} />
+            <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
+            <AptPageGallery apt={apt} lang={lang} />
+            {typeof AptGuideGate !== 'undefined' &&
+              <AptGuideGate apt={apt} lang={lang} onUnlock={() => setGuideOpen(true)} />}
+            <AptPageOthers apt={apt} lang={lang} />
+            <QuickFAQ lang={lang} pageId={aptId} />
+            <ContactCTA lang={lang} />
+          </>
+        )}
       </main>
       <Footer lang={lang} />
-      <AptStickyBar apt={apt} lang={lang} scrolled={scrolled} />
+      {!showGuide && <AptStickyBar apt={apt} lang={lang} scrolled={scrolled} />}
       <StickyFacts lang={lang} />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />
