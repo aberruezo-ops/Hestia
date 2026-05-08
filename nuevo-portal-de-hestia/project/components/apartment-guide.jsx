@@ -552,17 +552,16 @@ const GUIDE_BY_APT = {
           'Cuidado con el aire acondicionado por la noche y las corrientes de aire.',
           'Si tienes la suerte de ver un amanecer despejado desde la terraza, te recordará por qué viniste.',
         ]},
-        { id: 'banos', title: 'Tus baños', body: 'Dos baños con todo el equipamiento de un SPA: cromoterapia, aromaterapia y duchas con hidromasaje. Dispones de productos básicos para tus primeros días, secador, botiquín, etc.', recs: [
+        { id: 'banos', title: 'Tus baños', body: 'Dos baños con aromaterapia y duchas con hidromasaje. Dispones de productos básicos para tus primeros días, secador, botiquín, etc.', recs: [
           'Haz un uso prudente y responsable del agua. El agua es vida.',
           'Las toallas del baño no son para la playa ni para la piscina.',
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
-          'Usa la cromoterapia del espejo para crear ambiente — relajante de noche, vibrante por la mañana.',
         ]},
         { id: 'terraza', title: 'Tu terraza', body: 'Terraza panorámica de 18 m² con vistas al mar y al Salar de los Canos. El mejor sitio del ático para vivir el ciclo solar completo.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
           'Mientras estés en la terraza apaga o reduce el A/C.',
           'Recoge el toldo y los cojines cuando sople aire, llueva o vayas a salir.',
-          'Usa velas y la cromoterapia exterior para crear el ambiente perfecto.',
+          'Usa velas para crear el ambiente perfecto al atardecer.',
         ]},
         { id: 'urbanizacion', title: 'Tu urbanización', body: 'Conjunto residencial con SPA comunitario (sauna y gimnasio), piscina y pistas de pádel. El SPA está abierto en otoño, invierno y primavera; en verano solo el gimnasio. Aparca tu coche en tu plaza subterránea y disfruta de todo lo que Hestía te ofrece.', recs: [
           'El SPA es comunitario y de uso por turnos — pregúntanos por la disponibilidad.',
@@ -590,17 +589,16 @@ const GUIDE_BY_APT = {
           'Watch out for night-time A/C and drafts.',
           'If you catch a clear sunrise from the terrace, it\'ll remind you why you came.',
         ]},
-        { id: 'banos', title: 'Your bathrooms', body: 'Two bathrooms with full SPA equipment: chromotherapy, aromatherapy and hydromassage showers. Basic products for your first days, hairdryer, first-aid kit, etc.', recs: [
+        { id: 'banos', title: 'Your bathrooms', body: 'Two bathrooms with aromatherapy and hydromassage showers. Basic products for your first days, hairdryer, first-aid kit, etc.', recs: [
           'Use water responsibly. Water is life.',
           'Bathroom towels are not for the beach or the pool.',
           'Be careful with creams and make-up — they damage textiles.',
-          'Use the chromotherapy mirror to set the mood — relaxing at night, vibrant in the morning.',
         ]},
         { id: 'terraza', title: 'Your terrace', body: '18 m² panoramic terrace with sea and Salar de los Canos views. The best spot in the penthouse to live the full solar arc.', recs: [
           'Enjoy the quiet — and let your neighbours enjoy it too.',
           'Turn off or reduce the A/C while you are on the terrace.',
           'Roll up the awning and put away cushions when it\'s windy, raining, or you go out.',
-          'Use candles and the outdoor chromotherapy to create the perfect atmosphere.',
+          'Use candles to create the perfect sunset atmosphere.',
         ]},
         { id: 'urbanizacion', title: 'Your residential complex', body: 'Residential complex with shared SPA (sauna and gym), pool and padel courts. The SPA opens in autumn, winter and spring; only the gym stays open in summer. Park in your underground space and enjoy everything Hestía offers.', recs: [
           'The SPA is shared by slots — ask us for availability.',
@@ -632,11 +630,10 @@ const GUIDE_BY_APT = {
           'Cuidado con el aire acondicionado por la noche y las corrientes de aire.',
           'Ponte el despertador un día no muy nublado para ver el amanecer.',
         ]},
-        { id: 'banos', title: 'Tus baños', body: 'Dos baños: uno con bañera e hidromasaje y cromoterapia en el espejo, y otro con ducha e hidromasaje. Dispones de productos básicos para tus primeros días, además de aromas, velas, secador, botiquín, etc.', recs: [
+        { id: 'banos', title: 'Tus baños', body: 'Dos baños: uno con bañera e hidromasaje y otro con ducha e hidromasaje. Dispones de productos básicos para tus primeros días, además de aromas, velas, secador, botiquín, etc.', recs: [
           'Haz un uso prudente y responsable del agua. El agua es vida.',
           'Las toallas del baño no son para la playa ni para la piscina.',
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
-          'Usa la cromoterapia del espejo para crear ambiente — relajante de noche, vibrante por la mañana.',
         ]},
         { id: 'terraza', title: 'Tu terraza', body: 'Disfruta de las mejores vistas y los dos ambientes para cada momento de tus vacaciones.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
@@ -670,11 +667,10 @@ const GUIDE_BY_APT = {
           'Watch out for night-time A/C and drafts.',
           'Set the alarm one clear morning to see the sunrise.',
         ]},
-        { id: 'banos', title: 'Your bathrooms', body: 'Two bathrooms: one with bathtub, hydromassage and chromotherapy mirror, and another with hydromassage shower. Basic products for your first days, plus scents, candles, hairdryer, first-aid kit, etc.', recs: [
+        { id: 'banos', title: 'Your bathrooms', body: 'Two bathrooms: one with bathtub and hydromassage, and another with hydromassage shower. Basic products for your first days, plus scents, candles, hairdryer, first-aid kit, etc.', recs: [
           'Use water responsibly. Water is life.',
           'Bathroom towels are not for the beach or the pool.',
           'Be careful with creams and make-up — they damage textiles.',
-          'Use the chromotherapy mirror to set the mood — relaxing at night, vibrant in the morning.',
         ]},
         { id: 'terraza', title: 'Your terrace', body: 'Enjoy the best views and two atmospheres for every moment of your holiday.', recs: [
           'Enjoy the quiet — and let your neighbours enjoy it too.',
