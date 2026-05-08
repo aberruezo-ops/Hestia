@@ -721,6 +721,7 @@ const ApartmentPageApp = () => {
   const apt = APT_DATA[aptId];
 
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
+  const [guideOpen, setGuideOpen] = React.useState(false);
   const { mode, scrolled } = useScrollMode();
   useReveal();
 
@@ -729,6 +730,11 @@ const ApartmentPageApp = () => {
     document.documentElement.lang = lang;
     document.title = `${apt[lang].name} · Hestía Your Home · Vera Playa`;
   }, [lang]);
+
+  // Vista de guía completa: reemplaza toda la página tras introducir el PIN
+  if (guideOpen && typeof AptGuideView !== 'undefined') {
+    return <AptGuideView apt={apt} lang={lang} onClose={() => setGuideOpen(false)} />;
+  }
 
   return (
     <>
@@ -742,7 +748,8 @@ const ApartmentPageApp = () => {
         <AptFloorPlan apt={apt} lang={lang} />
         <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
         <AptPageGallery apt={apt} lang={lang} />
-        <AptGuideDownload apt={apt} lang={lang} />
+        {typeof AptGuideGate !== 'undefined' &&
+          <AptGuideGate apt={apt} lang={lang} onUnlock={() => setGuideOpen(true)} />}
         <AptPageOthers apt={apt} lang={lang} />
         <QuickFAQ lang={lang} pageId={aptId} />
         <ContactCTA lang={lang} />
