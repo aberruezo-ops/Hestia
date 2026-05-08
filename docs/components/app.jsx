@@ -42,9 +42,18 @@ const VideoIntro = ({ lang, onDone }) => {
         >
           <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
         </video>
-        <button className="vintro-skip" onClick={() => doExit(true)}>
-          {lang === 'es' ? 'Saltar →' : 'Skip →'}
-        </button>
+        <div className="vintro-actions">
+          <a
+            className="vintro-cta"
+            href="porque-hestia.html"
+            onClick={() => sessionStorage.setItem('hestia-intro', '1')}
+          >
+            {lang === 'es' ? 'Conocer nuestra marca →' : 'About our brand →'}
+          </a>
+          <button className="vintro-skip" onClick={() => doExit(true)}>
+            {lang === 'es' ? 'Saltar →' : 'Skip →'}
+          </button>
+        </div>
       </div>
     </div>
   );
