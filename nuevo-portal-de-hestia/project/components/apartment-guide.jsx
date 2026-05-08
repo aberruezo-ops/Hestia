@@ -857,22 +857,9 @@ const AptGuideView = ({ apt, lang, onClose }) => {
     return () => observer.disconnect();
   }, []);
 
-  // Reveal-on-scroll para fotos y números de sección.
-  // Stagger via --i en photos. Una sola pasada (unobserve al primer hit).
-  React.useEffect(() => {
-    const targets = document.querySelectorAll('.apt-guide-view .ag-photo, .apt-guide-view .ag-section-num');
-    if (!targets.length) return;
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.setAttribute('data-revealed', 'true');
-          obs.unobserve(e.target);
-        }
-      });
-    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
-    targets.forEach(el => obs.observe(el));
-    return () => obs.disconnect();
-  }, [a]);
+  // Las fotos y .ag-section-num animan al mount via @starting-style en CSS,
+  // sin necesidad de IntersectionObserver. Default visible si el navegador
+  // no soporta @starting-style — más robusto que ocultar y depender de JS.
 
   React.useEffect(() => {
     document.body.classList.add('guide-mode');
