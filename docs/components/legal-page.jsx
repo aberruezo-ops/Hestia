@@ -176,6 +176,23 @@ const LegalContent = ({ copy, lang }) => (
             {s.items && <CookieTable items={s.items} lang={lang}/>}
           </div>
         ))}
+        {/* Solo en /cookies.html: botón para revocar/revisar el consentimiento */}
+        {window.__LEGAL__ === 'cookies' && (
+          <div className="legal-footer-note" style={{ marginBottom: 8 }}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => window.dispatchEvent(new Event('hestia:cookies-reopen'))}
+            >
+              {lang === 'es' ? 'Revisar mi consentimiento de cookies' : 'Review my cookie consent'}
+            </button>
+            <p style={{ opacity: 0.6, fontSize: 13, marginTop: 12 }}>
+              {lang === 'es'
+                ? 'Vuelve a mostrar el banner para que puedas cambiar tu elección.'
+                : 'Re-shows the banner so you can change your choice.'}
+            </p>
+          </div>
+        )}
         <div className="legal-footer-note">
           <p style={{ opacity: 0.5, fontSize: 13 }}>
             {lang === 'es'

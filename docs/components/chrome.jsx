@@ -248,6 +248,17 @@ const Cookies = ({ lang }) => {
       return () => clearTimeout(t);
     }
   }, []);
+  // Permite re-abrir el banner desde cualquier sitio (footer, /cookies.html…)
+  // disparando un evento global. Usuario puede revisar/cambiar el consentimiento
+  // sin tener que limpiar el localStorage a mano — RGPD-compliant.
+  React.useEffect(() => {
+    const reopen = () => {
+      localStorage.removeItem('hestia-cookies');
+      setVisible(true);
+    };
+    window.addEventListener('hestia:cookies-reopen', reopen);
+    return () => window.removeEventListener('hestia:cookies-reopen', reopen);
+  }, []);
   const close = (mode) => {
     localStorage.setItem('hestia-cookies', mode);
     setVisible(false);
@@ -334,6 +345,15 @@ const Footer = ({ lang }) => {
             <li><a href="contacto.html">{t.nav[6]}</a></li>
             <li><a href="privacidad.html">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>
             <li><a href="cookies.html">Cookies</a></li>
+            <li>
+              <button
+                type="button"
+                className="footer-linklike"
+                onClick={() => window.dispatchEvent(new Event('hestia:cookies-reopen'))}
+              >
+                {lang === 'es' ? 'Revisar consentimiento' : 'Review consent'}
+              </button>
+            </li>
           </ul>
         </div>
         <div className="col">

@@ -9,8 +9,8 @@ const RESERVAS_COPY = {
     sub: 'Escríbenos directamente. Alex o Fran confirman en menos de 24 horas.',
     form_title: 'Solicitar reserva',
     form_sub: 'Rellena el formulario y te escribimos por WhatsApp con disponibilidad y precio.',
-    f_apt: 'Apartamento',
-    f_apt_ph: 'Elige un apartamento',
+    f_apt: 'Hestía',
+    f_apt_ph: 'Elige un Hestía',
     f_name: 'Nombre completo',
     f_name_ph: 'Tu nombre',
     f_email: 'Email',
@@ -46,8 +46,8 @@ const RESERVAS_COPY = {
     sub: 'Write to us directly. Alex or Fran confirm within 24 hours.',
     form_title: 'Request a booking',
     form_sub: 'Fill in the form and we will message you on WhatsApp with availability and price.',
-    f_apt: 'Apartment',
-    f_apt_ph: 'Choose an apartment',
+    f_apt: 'Hestía',
+    f_apt_ph: 'Choose a Hestía',
     f_name: 'Full name',
     f_name_ph: 'Your name',
     f_email: 'Email',
@@ -215,8 +215,8 @@ const ReservasForm = ({ lang }) => {
       : '';
     const waNum = lang === 'es' ? '34620316370' : '34654138251';
     const msg = lang === 'es'
-      ? `Hola! Quiero hacer una consulta de reserva.\n\nApartamento: ${aptNames[apt] || apt}\nNombre: ${name}\nEmail: ${email}\nTeléfono: ${tel}\nEntrada: ${checkin}\nSalida: ${checkout}\nHuéspedes: ${guests}\nMascota: ${petsText}${extrasText}${priceBlock}\nComentarios: ${comments || '—'}`
-      : `Hello! I'd like to enquire about a booking.\n\nApartment: ${aptNames[apt] || apt}\nName: ${name}\nEmail: ${email}\nPhone: ${tel}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}\nPet: ${petsText}${extrasText}${priceBlock}\nComments: ${comments || '—'}`;
+      ? `Hola! Quiero hacer una consulta de reserva.\n\nHestía: ${aptNames[apt] || apt}\nNombre: ${name}\nEmail: ${email}\nTeléfono: ${tel}\nEntrada: ${checkin}\nSalida: ${checkout}\nHuéspedes: ${guests}\nMascota: ${petsText}${extrasText}${priceBlock}\nComentarios: ${comments || '—'}`
+      : `Hello! I'd like to enquire about a booking.\n\nHestía: ${aptNames[apt] || apt}\nName: ${name}\nEmail: ${email}\nPhone: ${tel}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}\nPet: ${petsText}${extrasText}${priceBlock}\nComments: ${comments || '—'}`;
     window.open(`https://wa.me/${waNum}?text=` + encodeURIComponent(msg), '_blank');
   };
 
