@@ -93,27 +93,20 @@ const PricePreview = ({ apt, checkin, checkout, pets, lang }) => {
           <span className="price-avg-night">{fmt(calc.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</span>
         </div>
         <div className="price-right-col">
-          <div className="price-booking-ref">
-            <span className="price-ref-label">Booking.com</span>
-            <span className="price-ref-val">{fmt(calc.totalBooking)}</span>
+          <div className="price-guarantee-badge">
+            {lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guarantee'}
           </div>
-          <div className="price-booking-ref">
-            <span className="price-ref-label">Airbnb</span>
-            <span className="price-ref-val">{fmt(calc.totalAirbnb)}</span>
-          </div>
-          <div className="price-savings-badge">
-            {lang === 'es' ? 'Ahorras' : 'You save'} ~{fmt(calc.savings)}
+          <div className="price-guarantee-sub">
+            {lang === 'es'
+              ? 'Si encuentras un precio mejor, te lo mejoramos.'
+              : 'See a better price elsewhere? We\'ll beat it.'}
           </div>
         </div>
       </div>
       <div className="price-breakdown">
         <div className="price-line">
           <span>{lang === 'es' ? `${calc.nights} noches` : `${calc.nights} nights`}</span>
-          <span>{fmt(calc.refTotal)}</span>
-        </div>
-        <div className="price-line price-line-disc">
-          <span>{lang === 'es' ? 'Mejora reserva directa' : 'Direct-booking improvement'}</span>
-          <span>−{fmt(calc.refTotal - calc.afterDirect)}</span>
+          <span>{fmt(calc.baseTotal)}</span>
         </div>
         {calc.stayD && (
           <div className="price-line price-line-disc">
@@ -133,8 +126,8 @@ const PricePreview = ({ apt, checkin, checkout, pets, lang }) => {
         </div>
       </div>
       <p className="price-note">{lang === 'es'
-        ? '* Precio máximo orientativo. En Hestía nos gusta conocer a nuestros huéspedes y entender qué necesitan — cuéntanos tu situación e intentamos ajustar el precio.'
-        : '* Maximum indicative price. At Hestía we like to get to know our guests and understand what they need — tell us your situation and we\'ll try to adjust the price.'}</p>
+        ? '* Precio máximo orientativo. Si ves un precio mejor en cualquier plataforma, te lo mejoramos. Cuéntanos de ti y los tuyos — casi siempre podemos ajustar.'
+        : '* Indicative maximum price. If you find a better price anywhere, we\'ll beat it. Tell us about your situation — we can almost always adjust.'}</p>
     </div>
   );
 };
@@ -204,14 +197,12 @@ const ReservasForm = ({ lang }) => {
             `   ${fmt(calc.directTotal)} total (${calc.nights} noches × ~${fmt(calc.avgPerNight)}/noche)\n` +
             (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') +
             (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${PET_SUPP_FLAT}€ tarifa plana)\n` : '') +
-            `   vs. ~${fmt(calc.totalBooking)} en Booking.com → ahorro ~${fmt(calc.savings)}\n` +
-            `   ✓ Sin comisiones · Precio igual o mejor que cualquier plataforma\n`
+            `   ✓ Mejor precio garantizado · si encuentras un precio mejor, te lo mejoramos\n`
           : `\n💰 ESTIMATED DIRECT PRICE\n` +
             `   ${fmt(calc.directTotal)} total (${calc.nights} nights × ~${fmt(calc.avgPerNight)}/night)\n` +
             (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') +
             (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${PET_SUPP_FLAT}€ flat fee)\n` : '') +
-            `   vs. ~${fmt(calc.totalBooking)} on Booking.com → saving ~${fmt(calc.savings)}\n` +
-            `   ✓ No fees · Same or better price than any platform\n`)
+            `   ✓ Best price guarantee · if you find a better price, we'll beat it\n`)
       : '';
     const waNum = lang === 'es' ? '34620316370' : '34654138251';
     const msg = lang === 'es'
