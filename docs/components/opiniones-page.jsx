@@ -56,8 +56,23 @@ const Stars = ({ count }) => (
 
 const OpinionesHero = ({ lang }) => {
   const t = OPINIONES_COPY[lang];
+  const videoRef = React.useRef(null);
+
+  // Auto-play resiliente a iOS (muted + playsInline) y a tabs en background.
+  React.useEffect(() => {
+    const tryPlay = (el) => { if (el) { el.muted = true; el.play().catch(() => {}); } };
+    tryPlay(videoRef.current);
+    const onVisible = () => { if (!document.hidden) tryPlay(videoRef.current); };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => document.removeEventListener('visibilitychange', onVisible);
+  }, []);
+
   return (
     <section className="page-hero opiniones-hero">
+      <video ref={videoRef} className="opiniones-hero-video" autoPlay muted loop playsInline preload="auto">
+        <source src="assets/mp_.mp4" type="video/mp4"/>
+      </video>
+      <div className="opiniones-hero-wash"/>
       <div className="stars"/>
       <div className="page-hero-content">
         <div className="eyebrow">{t.eyebrow}</div>
