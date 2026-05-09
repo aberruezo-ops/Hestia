@@ -95,14 +95,12 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
             `   ${fmt(c.directTotal)} total (${c.nights} noches × ~${fmt(c.avgPerNight)}/noche)\n` +
             discLine +
             petsLine +
-            `   vs. ~${fmt(c.totalBooking)} en Booking.com → ahorro ~${fmt(c.savings)}\n` +
-            `   ✓ Sin comisiones · Precio igual o mejor que cualquier plataforma\n`
+            `   ✓ Mejor precio garantizado · si encuentras un precio mejor, te lo mejoramos\n`
           : `\n💰 ESTIMATED DIRECT PRICE\n` +
             `   ${fmt(c.directTotal)} total (${c.nights} nights × ~${fmt(c.avgPerNight)}/night)\n` +
             discLine +
             petsLine +
-            `   vs. ~${fmt(c.totalBooking)} on Booking.com → saving ~${fmt(c.savings)}\n` +
-            `   ✓ No fees · Same or better price than any platform\n`)
+            `   ✓ Best price guarantee · if you find a better price, we'll beat it\n`)
       : '';
     const nameBlock = name ? (lang === 'es' ? `\n👤 Nombre: ${name}` : `\n👤 Name: ${name}`) : '';
     const phoneBlock = phone ? (lang === 'es' ? `\n📱 Teléfono: ${phone}` : `\n📱 Phone: ${phone}`) : '';
@@ -173,27 +171,20 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
               <span className="price-avg-night">{fmt(calc.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</span>
             </div>
             <div className="price-right-col">
-              <div className="price-booking-ref">
-                <span className="price-ref-label">Booking.com</span>
-                <span className="price-ref-val">{fmt(calc.totalBooking)}</span>
+              <div className="price-guarantee-badge">
+                {lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guarantee'}
               </div>
-              <div className="price-booking-ref">
-                <span className="price-ref-label">Airbnb</span>
-                <span className="price-ref-val">{fmt(calc.totalAirbnb)}</span>
-              </div>
-              <div className="price-savings-badge">
-                {lang === 'es' ? 'Ahorras' : 'You save'} ~{fmt(calc.savings)}
+              <div className="price-guarantee-sub">
+                {lang === 'es'
+                  ? 'Si encuentras un precio mejor, te lo mejoramos.'
+                  : 'See a better price elsewhere? We\'ll beat it.'}
               </div>
             </div>
           </div>
           <div className="price-breakdown">
             <div className="price-line">
               <span>{lang === 'es' ? `${calc.nights} noches × precio variable` : `${calc.nights} nights × variable rate`}</span>
-              <span>{fmt(calc.refTotal)}</span>
-            </div>
-            <div className="price-line price-line-disc">
-              <span>{lang === 'es' ? `−9 % reserva directa` : `−9 % direct booking`}</span>
-              <span>−{fmt(calc.refTotal - calc.afterDirect)}</span>
+              <span>{fmt(calc.baseTotal)}</span>
             </div>
             {calc.stayD && (
               <div className="price-line price-line-disc">
@@ -213,8 +204,8 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
             </div>
           </div>
           <p className="price-note">{lang === 'es'
-            ? '* Este es el precio máximo orientativo. En Hestía nos gusta conocer a nuestros huéspedes y entender qué necesitan. Cuéntanos de ti y los tuyos — muchas veces podemos ajustar el precio.'
-            : '* This is the maximum indicative price. At Hestía we like to get to know our guests and understand what they need. Tell us about your situation — we can often adjust the price.'}</p>
+            ? '* Precio máximo orientativo. Si ves un precio mejor en cualquier plataforma, te lo mejoramos. Cuéntanos de ti y los tuyos — casi siempre podemos ajustar.'
+            : '* Indicative maximum price. If you find a better price anywhere, we\'ll beat it. Tell us about your situation — we can almost always adjust.'}</p>
         </div>
       )}
 

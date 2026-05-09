@@ -249,14 +249,12 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests,
             `   ${fmt(c.directTotal)} total (${c.nights} noches × ~${fmt(c.avgPerNight)}/noche)\n` +
             (c.stayD ? `   🏷 ${c.stayD.es}: −${fmt(c.stayDiscAmt)}\n` : '') +
             (pet ? `   🐾 Mascota: Sí (+${PET_SUPP_FLAT}€ tarifa plana)\n` : '') +
-            `   vs. ~${fmt(c.totalBooking)} en Booking.com → ahorro ~${fmt(c.savings)}\n` +
-            `   ✓ Sin comisiones · Precio igual o mejor que cualquier plataforma\n`
+            `   ✓ Mejor precio garantizado · si encuentras un precio mejor, te lo mejoramos\n`
           : `\n💰 ESTIMATED DIRECT PRICE\n` +
             `   ${fmt(c.directTotal)} total (${c.nights} nights × ~${fmt(c.avgPerNight)}/night)\n` +
             (c.stayD ? `   🏷 ${c.stayD.en}: −${fmt(c.stayDiscAmt)}\n` : '') +
             (pet ? `   🐾 Pet: Yes (+${PET_SUPP_FLAT}€ flat fee)\n` : '') +
-            `   vs. ~${fmt(c.totalBooking)} on Booking.com → saving ~${fmt(c.savings)}\n` +
-            `   ✓ No fees · Same or better price than any platform\n`)
+            `   ✓ Best price guarantee · if you find a better price, we'll beat it\n`)
       : '';
     const lines = [];
     if (lang === 'es') {
@@ -338,27 +336,20 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests,
                     <span className="hs-pb-avg">{fmt(calc.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</span>
                   </div>
                   <div className="hs-pb-right">
-                    <div className="hs-pb-ref">
-                      <span className="hs-pb-ref-lbl">Booking.com</span>
-                      <span className="hs-pb-ref-val">{fmt(calc.totalBooking)}</span>
+                    <div className="price-guarantee-badge">
+                      {lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guarantee'}
                     </div>
-                    <div className="hs-pb-ref">
-                      <span className="hs-pb-ref-lbl">Airbnb</span>
-                      <span className="hs-pb-ref-val">{fmt(calc.totalAirbnb)}</span>
-                    </div>
-                    <div className="price-savings-badge">
-                      {lang === 'es' ? 'Ahorras' : 'You save'} ~{fmt(calc.savings)}
+                    <div className="price-guarantee-sub">
+                      {lang === 'es'
+                        ? 'Si encuentras un precio mejor, te lo mejoramos.'
+                        : 'See a better price elsewhere? We\'ll beat it.'}
                     </div>
                   </div>
                 </div>
                 <div className="hs-pb-breakdown">
                   <div className="hs-pb-line">
                     <span>{lang === 'es' ? `${calc.nights} noches × precio variable` : `${calc.nights} nights × variable rate`}</span>
-                    <span>{fmt(calc.refTotal)}</span>
-                  </div>
-                  <div className="hs-pb-line hs-pb-disc">
-                    <span>{lang === 'es' ? '−9 % reserva directa' : '−9 % direct booking'}</span>
-                    <span>−{fmt(calc.refTotal - calc.afterDirect)}</span>
+                    <span>{fmt(calc.baseTotal)}</span>
                   </div>
                   {calc.stayD && (
                     <div className="hs-pb-line hs-pb-disc">

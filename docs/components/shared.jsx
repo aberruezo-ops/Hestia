@@ -1637,33 +1637,15 @@ const HESTIA_PRICES = (window.PRICES_V2 && window.PRICES_V2.apts)
   ? _v2DeriveV1(window.PRICES_V2)
   : HESTIA_PRICES_FALLBACK;
 
-const AIRBNB_PRICES = {
-  vm: {  // Hestía Mar — Airbnb #17253235
-    base: [0, 95, 95, 112, 132, 142, 162, 195, 228, 162, 132, 95, 95],
-    peaks: [
-      { from: '12-21', to: '01-07', pn: 188 },
-      { from: '04-10', to: '04-24', pn: 162 },
-    ],
-  },
-  vt: {  // Hestía Thalassa — Airbnb #40813709
-    base: [0, 115, 115, 135, 158, 172, 195, 238, 278, 195, 158, 115, 115],
-    peaks: [
-      { from: '12-21', to: '01-07', pn: 228 },
-      { from: '04-10', to: '04-24', pn: 198 },
-    ],
-  },
-  vs: {  // Hestía Salinas — Airbnb #51707917
-    base: [0, 100, 100, 118, 140, 150, 170, 205, 238, 170, 140, 100, 100],
-    peaks: [
-      { from: '12-21', to: '01-07', pn: 198 },
-      { from: '04-10', to: '04-24', pn: 170 },
-    ],
-  },
-};
+// AIRBNB_PRICES eliminado en mayo 2026 — ya no comparamos precio con
+// plataformas externas. La promesa pública es "te mejoramos cualquier
+// precio que veas en cualquier sitio". Lo que se cobra es el precio
+// directo calculado a partir de prices.json + descuentos por estancia.
+const _airbnbDayPrice = () => 0; // legacy stub para callers antiguos
 
-const DIRECT_DISCOUNT = (window.PRICES_V2 && window.PRICES_V2.rules && typeof window.PRICES_V2.rules.directDiscount === 'number')
-  ? window.PRICES_V2.rules.directDiscount
-  : 0.09;   // −9 % vs Booking.com / Airbnb (fallback)
+// DIRECT_DISCOUNT eliminado en mayo 2026: ya no comparamos vs OTAs.
+// El precio en la web ES el directo. La promesa pública es "te mejoramos
+// cualquier precio que veas en cualquier sitio".
 
 // Stay discounts vienen del JSON cuando está disponible. El JSON puede
 // definir excludeSeasons (ej. "no se aplica en alta/crítica") — eso lo
@@ -1717,40 +1699,22 @@ const _dayPrice = (ds, aptId) => {
   return tbl.base[month] || 100;
 };
 
-const _airbnbDayPrice = (ds, aptId) => {
-  const tbl = AIRBNB_PRICES[aptId];
-  if (!tbl) return 0;
-  const month = parseInt(ds.slice(5, 7), 10);
-  const mmdd  = ds.slice(5);
-  for (const pk of tbl.peaks) {
-    if (pk.from > pk.to) {
-      if (mmdd >= pk.from || mmdd < pk.to) return pk.pn;
-    } else {
-      if (mmdd >= pk.from && mmdd < pk.to) return pk.pn;
-    }
-  }
-  return tbl.base[month] || 100;
-};
-
-// Calcula el desglose completo para una estancia
+// Calcula el desglose completo para una estancia. Modelo simplificado
+// (mayo 2026): un solo precio, el directo. No comparamos con plataformas
+// externas — la promesa pública es "te mejoramos cualquier precio que
+// veas en cualquier sitio".
 const _calcStay = (selStart, selEnd, aptId, withPets) => {
   if (!selStart || !selEnd || !aptId) return null;
   const nights = _be_diff(selStart, selEnd);
   if (nights <= 0) return null;
 
-  // Helper: suma de precios día a día durante N noches a partir de start.
-  const sumNights = (start, n, dayFn) => {
-    let total = 0;
-    let d = start;
-    for (let i = 0; i < n; i++) { total += dayFn(d, aptId); d = _be_adj(d, 1); }
-    return total;
+  const sumNights = (start, n) => {
+    let t = 0; let d = start;
+    for (let i = 0; i < n; i++) { t += _dayPrice(d, aptId); d = _be_adj(d, 1); }
+    return t;
   };
 
-  // Regla short-stay: para estancias de 3-4 noches, el precio se
-  // calcula sobre un horizonte mayor (5/6 noches) menos un descuento
-  // fijo. Empuja a los huéspedes hacia estancias más largas. Se lee
-  // de PRICES_V2.rules.shortStayPricing — array de
-  // { nights, basedOnNights, discount }.
+  // Regla short-stay (3-4 noches cotizadas como 5-6 menos descuento fijo).
   const v2rules = window.PRICES_V2 && window.PRICES_V2.rules;
   const shortRule = (v2rules && Array.isArray(v2rules.shortStayPricing))
     ? v2rules.shortStayPricing.find(r => r.nights === nights)
@@ -1758,18 +1722,9 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
   const horizonNights = shortRule ? shortRule.basedOnNights : nights;
   const flatDiscount  = shortRule ? shortRule.discount      : 0;
 
-  let totalBooking = sumNights(selStart, horizonNights, _dayPrice)      - flatDiscount;
-  let totalAirbnb  = sumNights(selStart, horizonNights, _airbnbDayPrice) - flatDiscount;
-  totalBooking = Math.round(totalBooking);
-  totalAirbnb  = Math.round(totalAirbnb);
+  const baseTotal = Math.round(sumNights(selStart, horizonNights) - flatDiscount);
 
-  // −9 % reserva directa (sobre la tarifa de referencia más alta)
-  const refTotal    = Math.max(totalBooking, totalAirbnb);
-  const afterDirect = Math.round(refTotal * (1 - DIRECT_DISCOUNT));
-
-  // Descuento por duración. Si el JSON marca excludeSeasons (ej. "no se
-  // aplica en alta/crítica"), comprobamos qué temporadas atraviesa la
-  // estancia y descartamos descuentos que pisen alguna excluida.
+  // Descuento por estancia larga. Excluye temporadas marcadas en JSON.
   const v2 = window.PRICES_V2;
   const seasonsInStay = new Set();
   if (v2) {
@@ -1785,20 +1740,17 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
     if (excl.some(season => seasonsInStay.has(season))) return false;
     return true;
   }) || null;
-  const stayDiscAmt = stayD ? Math.round(afterDirect * stayD.pct) : 0;
-  const afterStay   = afterDirect - stayDiscAmt;
+  const stayDiscAmt = stayD ? Math.round(baseTotal * stayD.pct) : 0;
+  const afterStay   = baseTotal - stayDiscAmt;
 
-  // suplemento mascota (tarifa plana, no incluida en plataformas)
   const petAmt = withPets ? PET_SUPP_FLAT : 0;
-
   const directTotal  = afterStay + petAmt;
-  const savings      = refTotal - directTotal;
   const avgPerNight  = Math.round(afterStay / nights);
 
-  return { nights, totalBooking, totalAirbnb, refTotal, afterDirect, stayD, stayDiscAmt, afterStay, petAmt, directTotal, savings, avgPerNight };
+  return { nights, baseTotal, stayD, stayDiscAmt, afterStay, petAmt, directTotal, avgPerNight };
 };
 
-Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, AIRBNB_PRICES, DIRECT_DISCOUNT, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _airbnbDayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate });
+Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate });
 
 // ================================================================
 // DirectBookingPerks — sección "Reserva directa, una mejor manera"
