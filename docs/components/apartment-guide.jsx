@@ -305,12 +305,41 @@ const GUIDE_SHARED = {
     },
     surroundings: {
       title: 'Alrededores y recomendaciones',
-      intro: 'Sería imposible ofrecer un catálogo completo de recomendaciones sobre los alrededores de Hestía, pues sería infinito. Para ello te recomendamos tres fuentes:',
+      intro: 'Sería imposible ofrecer un catálogo completo de recomendaciones sobre los alrededores de Hestía, pues sería infinito. Para empezar a explorar te recomendamos estas fuentes:',
       sources: [
-        'Tienes una pequeña guía de información turística y mapas en el último cajón de la cocina.',
-        'TripAdvisor, www.turismodealmeria.org y www.cabogataalmeria.com',
-        '¡Pregúntanos! Te ayudaremos con mucho gusto según nuestra experiencia y la de nuestros huéspedes como tú. Te dejamos una pequeña muestra…',
+        '¡Pregúntanos! Te ayudaremos con mucho gusto según nuestra experiencia y la de nuestros huéspedes como tú. Más abajo tienes una pequeña muestra…',
       ],
+      sites: {
+        title: 'Sitios web de recomendación turística',
+        groups: [
+          { title: 'Vera y pueblos del Levante almeriense', links: [
+            { label: 'Turismo de Vera', url: 'https://www.veraturismo.com/' },
+            { label: 'Ayuntamiento de Vera', url: 'https://www.vera.es/' },
+            { label: 'Mojácar Turismo', url: 'https://mojacar.es/turismo/' },
+            { label: 'Garrucha Turismo', url: 'https://www.garrucha.es/' },
+            { label: 'Turismo de Cuevas del Almanzora', url: 'https://www.cuevasdelalmanzora.es/turismo' },
+            { label: 'Pulpí Turismo (Geoda)', url: 'https://www.pulpi.es/turismo' },
+            { label: 'Carboneras Turismo', url: 'https://www.carboneras.es/turismo' },
+          ]},
+          { title: 'Almería capital y provincia', links: [
+            { label: 'Turismo de Almería · provincia', url: 'https://www.turismodealmeria.org/' },
+            { label: 'Almería Capital · turismo', url: 'https://www.turismodealmeria.com/' },
+            { label: 'Cabo de Gata · Níjar', url: 'https://www.cabogataalmeria.com/' },
+            { label: 'Junta de Andalucía · turismo', url: 'https://www.andalucia.org/' },
+            { label: 'Geoparque de Cabo de Gata', url: 'https://geoparquecabodegata.es/' },
+            { label: 'Gourmet Almería · gastronomía', url: 'https://gourmetalmeria.com/' },
+            { label: 'TripAdvisor Almería', url: 'https://www.tripadvisor.es/Tourism-g315912-Province_of_Almeria_Andalucia-Vacations.html' },
+          ]},
+          { title: 'Murcia occidental (Lorca, Águilas, Mazarrón)', links: [
+            { label: 'Turismo Región de Murcia', url: 'https://www.murciaturistica.es/' },
+            { label: 'Lorca Turismo', url: 'https://www.lorcaturismo.es/' },
+            { label: 'Águilas Turismo', url: 'https://www.aguilas.es/turismo' },
+            { label: 'Mazarrón Turismo', url: 'https://www.mazarron.es/turismo' },
+            { label: 'Cartagena · Puerto de Culturas', url: 'https://www.cartagenaturismo.es/' },
+            { label: 'Calasparra Turismo', url: 'https://www.calasparra.org/turismo' },
+          ]},
+        ],
+      },
       categories: [
         { title: 'Supermercados', items: [
           'En Vera Playa, Consum y Mercadona, a menos de 3 km.',
@@ -413,12 +442,41 @@ const GUIDE_SHARED = {
     },
     surroundings: {
       title: 'Surroundings and recommendations',
-      intro: 'Offering a complete catalogue of recommendations for the area around Hestía would be endless. We suggest three sources:',
+      intro: 'A complete catalogue of recommendations for the area around Hestía would be endless. To start exploring, we suggest these sources:',
       sources: [
-        'A small tourist guide and maps in the bottom drawer of the kitchen.',
-        'TripAdvisor, turismodealmeria.org and cabogataalmeria.com',
-        'Just ask us! We are happy to help based on our experience and that of guests like you. Here is a small sample…',
+        'Just ask us! We are happy to help based on our experience and that of guests like you. A small sample below…',
       ],
+      sites: {
+        title: 'Tourist information websites',
+        groups: [
+          { title: 'Vera and Levante Almeriense villages', links: [
+            { label: 'Vera Tourism', url: 'https://www.veraturismo.com/' },
+            { label: 'Vera Town Hall', url: 'https://www.vera.es/' },
+            { label: 'Mojácar Tourism', url: 'https://mojacar.es/turismo/' },
+            { label: 'Garrucha Tourism', url: 'https://www.garrucha.es/' },
+            { label: 'Cuevas del Almanzora Tourism', url: 'https://www.cuevasdelalmanzora.es/turismo' },
+            { label: 'Pulpí Tourism (Geode)', url: 'https://www.pulpi.es/turismo' },
+            { label: 'Carboneras Tourism', url: 'https://www.carboneras.es/turismo' },
+          ]},
+          { title: 'Almería city and province', links: [
+            { label: 'Almería Province · tourism', url: 'https://www.turismodealmeria.org/' },
+            { label: 'Almería City · tourism', url: 'https://www.turismodealmeria.com/' },
+            { label: 'Cabo de Gata · Níjar', url: 'https://www.cabogataalmeria.com/' },
+            { label: 'Andalusia · tourism', url: 'https://www.andalucia.org/' },
+            { label: 'Cabo de Gata Geopark', url: 'https://geoparquecabodegata.es/' },
+            { label: 'Gourmet Almería · food', url: 'https://gourmetalmeria.com/' },
+            { label: 'TripAdvisor Almería', url: 'https://www.tripadvisor.com/Tourism-g315912-Province_of_Almeria_Andalucia-Vacations.html' },
+          ]},
+          { title: 'Western Murcia (Lorca, Águilas, Mazarrón)', links: [
+            { label: 'Region of Murcia · tourism', url: 'https://www.murciaturistica.es/' },
+            { label: 'Lorca Tourism', url: 'https://www.lorcaturismo.es/' },
+            { label: 'Águilas Tourism', url: 'https://www.aguilas.es/turismo' },
+            { label: 'Mazarrón Tourism', url: 'https://www.mazarron.es/turismo' },
+            { label: 'Cartagena · Port of Cultures', url: 'https://www.cartagenaturismo.es/' },
+            { label: 'Calasparra Tourism', url: 'https://www.calasparra.org/turismo' },
+          ]},
+        ],
+      },
       categories: [
         { title: 'Supermarkets', items: [
           'Vera Playa: Consum and Mercadona, less than 3 km away.',
@@ -2003,6 +2061,30 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <ol className="ag-recs">
               {s.surroundings.sources.map((r, i) => <li key={i}>{r}</li>)}
             </ol>
+
+            {/* Bloque de sitios web turísticos · agrupados por zona */}
+            {s.surroundings.sites && (
+              <div className="ag-sites">
+                <h3 className="ag-h3">{s.surroundings.sites.title}</h3>
+                <div className="ag-sites-grid">
+                  {s.surroundings.sites.groups.map((g, gi) => (
+                    <div key={gi} className="ag-sites-group">
+                      <h4 className="ag-sites-group-title">{g.title}</h4>
+                      <ul className="ag-sites-list">
+                        {g.links.map((l, li) => (
+                          <li key={li}>
+                            <a href={l.url} target="_blank" rel="noopener noreferrer">
+                              <span className="ag-sites-arrow" aria-hidden="true">↗</span>
+                              {l.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Categorías plegables: cada una abre/cierra al pulsar el head.
                 Si tiene "imperdibles" se ven dentro, arriba del listado general. */}
