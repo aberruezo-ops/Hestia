@@ -62,7 +62,16 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
   const [email,    setEmail   ] = React.useState('');
   const [comments, setComments] = React.useState('');
 
-  const valid = name.trim().length > 0 && /\S+@\S+/.test(email);
+  // Validez por canal: cada botón se habilita cuando tiene los datos
+  // mínimos para ese canal. WhatsApp requiere nombre + teléfono. Email
+  // requiere nombre + email. El mensaje incluye TODOS los datos
+  // rellenos en cada canal (nombre, teléfono, email, comentarios).
+  const hasName  = name.trim().length > 0;
+  const hasPhone = phone.trim().length > 0;
+  const hasEmail = /\S+@\S+/.test(email);
+  const validWA    = hasName && hasPhone;
+  const validEmail = hasName && hasEmail;
+  const valid = validWA || validEmail; // legacy: por si lo usa el hint
 
   const aptName = _CM.apt_names[aptId] || 'Hestía';
   const calc    = _calcStay(selStart, selEnd, aptId, pets);
@@ -246,23 +255,29 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
           : <><strong>Price request — not a booking.</strong> These are maximum indicative prices. At Hestía we like to talk to our guests, understand what they need, and try to adapt the price accordingly. Tell us about your situation.</>}</p>
       </div>
 
-      {!valid && (name.length > 0 || email.length > 0) && (
-        <p className="req-hint">{lang === 'es' ? '✦ Introduce nombre y email para continuar' : '✦ Enter your name and email to continue'}</p>
+      {!valid && (name.length > 0 || phone.length > 0 || email.length > 0) && (
+        <p className="req-hint">{lang === 'es'
+          ? '✦ Introduce tu nombre y un teléfono (WhatsApp) o email para continuar'
+          : '✦ Enter your name and a phone (WhatsApp) or email to continue'}</p>
       )}
 
       {/* CTAs */}
       <div className="req-actions">
-        <a href={valid ? waHref() : undefined}
-           className={`btn btn-primary req-btn-wa${!valid ? ' req-btn-dis' : ''}`}
+        <a href={validWA ? waHref() : undefined}
+           className={`btn btn-primary req-btn-wa${!validWA ? ' req-btn-dis' : ''}`}
            target="_blank" rel="noopener"
-           onClick={!valid ? e => e.preventDefault() : undefined}>
+           aria-disabled={!validWA}
+           title={!validWA ? (lang === 'es' ? 'Necesitas nombre y teléfono' : 'Name and phone required') : undefined}
+           onClick={!validWA ? e => e.preventDefault() : undefined}>
           <WaIcon/>
           {lang === 'es' ? 'Solicitar reserva — WhatsApp' : 'Request booking — WhatsApp'}
           <span className="arrow"> →</span>
         </a>
-        <a href={valid ? mailHref() : undefined}
-           className={`btn btn-ghost-dark req-btn-mail${!valid ? ' req-btn-dis' : ''}`}
-           onClick={!valid ? e => e.preventDefault() : undefined}>
+        <a href={validEmail ? mailHref() : undefined}
+           className={`btn btn-ghost-dark req-btn-mail${!validEmail ? ' req-btn-dis' : ''}`}
+           aria-disabled={!validEmail}
+           title={!validEmail ? (lang === 'es' ? 'Necesitas nombre y email' : 'Name and email required') : undefined}
+           onClick={!validEmail ? e => e.preventDefault() : undefined}>
           {lang === 'es' ? 'Solicitar por email' : 'Request by email'}
         </a>
       </div>
