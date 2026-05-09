@@ -9939,11 +9939,16 @@ footer,
 }
 .widget-mini-label { line-height: 1; }
 
-/* Variante "Acceso huéspedes" — destaca con fondo sol filled. */
+/* Variante "Acceso huéspedes" — destaca con fondo sol filled y forma
+   corporativa: dos esquinas redondeadas en diagonal (top-left + bottom-right)
+   igual que las .widget-card. */
 .widget-mini-access {
   background: var(--sol);
   color: var(--ber-dk);
   font-weight: 600;
+  border-radius: 12px 0 12px 0;
+  padding: 12px 18px;
+  border-left: 3px solid var(--sol);
 }
 .widget-mini-access .widget-mini-icon {
   background: rgba(61,26,53,.16);
@@ -9952,6 +9957,7 @@ footer,
 .widget-mini-access:hover {
   background: var(--ber-dk);
   color: var(--sol);
+  border-left-color: var(--sol);
 }
 .widget-mini-access:hover .widget-mini-icon {
   background: rgba(240,232,213,.08);
