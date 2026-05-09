@@ -1,7 +1,7 @@
 {
   "_doc": "Hestía pricing source of truth. Edited via /admin.html (GitHub PAT). Read by web at runtime via fetch('data/prices.json'). All dates are local Europe/Madrid (no timezone offsets).",
   "version": 1,
-  "updatedAt": "2026-05-09T18:58:13.051Z",
+  "updatedAt": "2026-05-09T18:58:47.668Z",
   "currency": "EUR",
   "apts": {
     "vm": {
@@ -46,8 +46,8 @@
     "extraGuestPerNight": 5,
     "minNights": 4,
     "minStayPriceEquivalentToFour": true,
-    "directDiscount": 0.09,
-    "petFlatFee": 50,
+    "directDiscount": 0,
+    "petFlatFee": 55,
     "stayDiscounts": [
       {
         "minNights": 7,
