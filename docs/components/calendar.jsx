@@ -432,11 +432,15 @@ const AptCalendar = ({ aptId, lang, accent }) => {
   const horizonStr = (window.PRICES_V2 && window.PRICES_V2.bookingHorizon
     && window.PRICES_V2.bookingHorizon.lastCheckinDate) || null;
 
-  // Precompute min nights when selStart changes
+  // Estancia mínima: lee de prices.json (window.PRICES_V2.rules.minNights).
+  // Default 3 noches si el JSON no llega. Si la entrada elegida tiene menos
+  // huecos consecutivos disponibles, ajusta al máximo posible.
+  const baseMinNights = (window.PRICES_V2 && window.PRICES_V2.rules
+    && window.PRICES_V2.rules.minNights) || 3;
   const minNights = React.useMemo(() => {
-    if (!selStart) return 6;
-    return Math.min(6, _maxConsec(selStart, blocked));
-  }, [selStart, blocked]);
+    if (!selStart) return baseMinNights;
+    return Math.min(baseMinNights, _maxConsec(selStart, blocked));
+  }, [selStart, blocked, baseMinNights]);
 
   // Compute preview end for hover display
   let previewEnd = null;
