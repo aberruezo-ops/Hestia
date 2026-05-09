@@ -9679,7 +9679,8 @@ footer,
   transform: translateY(-50%) translateX(20px);
 }
 
-/* Card común — fondo ber-dk, borde-sol, redondeado asimétrico. */
+/* Card común — fondo ber-dk, borde apt-accent (default sol),
+   redondeado asimétrico. */
 .widget-card {
   position: relative;
   width: 244px;
@@ -9687,7 +9688,7 @@ footer,
   background: var(--ber-dk);
   color: var(--arena);
   border-radius: 12px 0 12px 0;
-  border-left: 3px solid var(--sol);
+  border-left: 3px solid var(--apt-accent, var(--sol));
   padding: 13px 14px 12px;
   box-shadow: 0 10px 28px rgba(42,15,46,.32);
 }
@@ -9702,7 +9703,7 @@ footer,
   width: 24px; height: 24px;
   border-radius: 50%;
   background: var(--ber-dk);
-  color: var(--sol);
+  color: var(--apt-accent, var(--sol));
   border: 0;
   font-size: 18px;
   line-height: 1;
@@ -9720,7 +9721,7 @@ footer,
 .widget-card .eyebrow {
   display: block;
   margin-bottom: 4px;
-  color: var(--sol);
+  color: var(--apt-accent, var(--sol));
   font-size: 9.5px;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -9735,7 +9736,7 @@ footer,
 }
 .widget-title em {
   font-style: italic;
-  color: var(--sol);
+  color: var(--apt-accent, var(--sol));
   font-weight: 500;
 }
 
@@ -9754,7 +9755,7 @@ footer,
 .widget-stat strong {
   font-family: var(--serif);
   font-size: 14px;
-  color: var(--sol);
+  color: var(--apt-accent, var(--sol));
   font-weight: 500;
   line-height: 1.05;
 }
@@ -9783,9 +9784,9 @@ footer,
   gap: 6px;
   padding: 7px 12px;
   border-radius: 999px;
-  background: var(--sol);
+  background: var(--apt-accent, var(--sol));
   color: var(--ber-dk);
-  border: 1px solid var(--sol);
+  border: 1px solid var(--apt-accent, var(--sol));
   font-family: var(--sans);
   font-size: 10px;
   letter-spacing: .12em;
@@ -9801,12 +9802,12 @@ footer,
 }
 .widget-cta-ghost {
   background: transparent;
-  color: var(--sol);
+  color: var(--apt-accent, var(--sol));
 }
 .widget-cta-ghost:hover {
   background: rgba(240,232,213,.08);
-  color: var(--sol);
-  border-color: var(--sol);
+  color: var(--apt-accent, var(--sol));
+  border-color: var(--apt-accent, var(--sol));
 }
 
 /* Body del Sabías que. */
@@ -9818,6 +9819,7 @@ footer,
   font-size: 9.5px;
   letter-spacing: .14em;
   margin-bottom: 6px;
+  color: var(--apt-accent, var(--sol-lt));
 }
 .widget-sabias .sf-text {
   font-size: 13px;
@@ -9830,6 +9832,7 @@ footer,
 .widget-sabias .sf-nav-btn {
   font-size: 16px;
   padding: 2px 8px;
+  color: var(--apt-accent, var(--sol-lt));
 }
 .widget-sabias .sf-counter {
   font-size: 9.5px;
@@ -9899,30 +9902,34 @@ footer,
   color: var(--ber-dk);
 }
 
-/* ── Pastilla corporativa (botones plegados o de acceso directo) ──
-   Pill horizontal con ✦ + label en caps. Alineada al mismo
-   right-edge que las cards desplegadas. */
+/* ── Botón corporativo unificado de los 3 widgets ──────────────────
+   Forma con dos esquinas redondeadas en diagonal + border-left
+   (igual que las .widget-card). Color: --apt-accent del Hestía
+   actual (vm cyan, vt marrón, vs dorado). Default sol en el resto
+   de la web. */
 .widget-mini {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--ber-dk);
-  color: var(--crema);
+  background: var(--apt-accent, var(--sol));
+  color: var(--ber-dk);
   border: 0;
-  padding: 11px 16px 11px 14px;
-  border-radius: 999px;
+  border-left: 3px solid var(--apt-accent, var(--sol));
+  border-radius: 12px 0 12px 0;
+  padding: 12px 18px;
   font-family: var(--sans);
   font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   box-shadow: 0 6px 18px rgba(42,15,46,.32);
-  transition: background .25s ease, transform .15s ease, color .25s ease;
+  transition: background .25s ease, color .25s ease, transform .15s ease, border-color .25s ease;
   white-space: nowrap;
 }
 .widget-mini:hover {
-  background: var(--ber);
+  background: var(--ber-dk);
+  color: var(--apt-accent, var(--sol));
   transform: translateX(-2px);
 }
 .widget-mini-icon {
@@ -9931,38 +9938,22 @@ footer,
   justify-content: center;
   width: 20px; height: 20px;
   border-radius: 50%;
-  background: rgba(240,232,213,.08);
-  color: var(--sol);
+  background: rgba(61,26,53,.16);
+  color: var(--ber-dk);
   font-size: 13px;
   font-weight: 600;
   line-height: 1;
+  transition: background .25s ease, color .25s ease;
+}
+.widget-mini:hover .widget-mini-icon {
+  background: rgba(240,232,213,.08);
+  color: var(--apt-accent, var(--sol));
 }
 .widget-mini-label { line-height: 1; }
 
-/* Variante "Acceso huéspedes" — destaca con fondo sol filled y forma
-   corporativa: dos esquinas redondeadas en diagonal (top-left + bottom-right)
-   igual que las .widget-card. */
-.widget-mini-access {
-  background: var(--sol);
-  color: var(--ber-dk);
-  font-weight: 600;
-  border-radius: 12px 0 12px 0;
-  padding: 12px 18px;
-  border-left: 3px solid var(--sol);
-}
-.widget-mini-access .widget-mini-icon {
-  background: rgba(61,26,53,.16);
-  color: var(--ber-dk);
-}
-.widget-mini-access:hover {
-  background: var(--ber-dk);
-  color: var(--sol);
-  border-left-color: var(--sol);
-}
-.widget-mini-access:hover .widget-mini-icon {
-  background: rgba(240,232,213,.08);
-  color: var(--sol);
-}
+/* Compat: alias .widget-mini-access se mantiene como no-op (ya hereda
+   todo el estilo unificado del .widget-mini). */
+.widget-mini-access {}
 
 /* En mobile el stack se oculta — ya hay banda inline en cada página
    y el mobile-chat se encarga de la guía. */
