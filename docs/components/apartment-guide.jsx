@@ -1818,7 +1818,7 @@ const DayPlans = ({ lang }) => {
   return (
     <div className="ag-day-plans">
       <div className="ag-day-plans-head">
-        <span className="eyebrow">{lang === 'es' ? 'Itinerarios curados' : 'Curated itineraries'}</span>
+        <span className="eyebrow">{lang === 'es' ? 'Sugerencias de excursiones' : 'Suggested excursions'}</span>
         <h3 className="ag-h3" style={{ margin: 0 }}>
           {lang === 'es' ? 'Planes de día por la zona' : 'One-day plans around'}
         </h3>
