@@ -21,6 +21,95 @@ const utf8ToB64 = (s) => btoa(unescape(encodeURIComponent(s)));
 const b64ToUtf8 = (s) => decodeURIComponent(escape(atob(s.replace(/\n/g, ''))));
 
 // ============================================================
+// validateYearCoverage — para un año dado, comprueba que cada
+// día está cubierto por exactamente una temporada/especial. Los
+// puentes no cuentan: solo bumpean +1 grado, no asignan
+// temporada base.
+//
+// Returns { gaps: [{start, end}], overlaps: [{start, end, sources}] }.
+// ============================================================
+const validateYearCoverage = (year, cal) => {
+  const isLeap = (y) => (y % 4 === 0 && y % 100 !== 0) || (y % 400 === 0);
+  const daysInMonth = [31, isLeap(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const totalDays = daysInMonth.reduce((a, b) => a + b, 0);
+
+  // Mapa día (ISO) → array de fuentes ('season:baja', 'special:semSanta'…)
+  const daySources = new Map();
+  const fillRange = (sIso, eIso, label) => {
+    if (!sIso || !eIso) return;
+    const [sy, sm, sd] = sIso.split('-').map(Number);
+    const [ey, em, ed] = eIso.split('-').map(Number);
+    const cur = new Date(Date.UTC(sy, sm - 1, sd));
+    const end = new Date(Date.UTC(ey, em - 1, ed));
+    while (cur <= end) {
+      const k = cur.toISOString().slice(0, 10);
+      if (!daySources.has(k)) daySources.set(k, []);
+      daySources.get(k).push(label);
+      cur.setUTCDate(cur.getUTCDate() + 1);
+    }
+  };
+
+  for (const sid of Object.keys(cal.seasons || {})) {
+    for (const r of cal.seasons[sid] || []) fillRange(r[0], r[1], `season:${sid}`);
+  }
+  for (const spid of Object.keys(cal.specials || {})) {
+    const sp = cal.specials[spid];
+    for (const r of sp.ranges || []) fillRange(r[0], r[1], `special:${spid}`);
+  }
+
+  // Walk year, build gaps and overlaps en rangos contiguos
+  const gaps = [];
+  const overlaps = [];
+  let curGap = null;
+  let curOverlap = null;
+
+  const cur = new Date(Date.UTC(year, 0, 1));
+  const endY = new Date(Date.UTC(year, 11, 31));
+  while (cur <= endY) {
+    const k = cur.toISOString().slice(0, 10);
+    const sources = daySources.get(k) || [];
+
+    if (sources.length === 0) {
+      if (!curGap) curGap = { start: k, end: k };
+      else curGap.end = k;
+      if (curOverlap) { overlaps.push(curOverlap); curOverlap = null; }
+    } else {
+      if (curGap) { gaps.push(curGap); curGap = null; }
+      if (sources.length > 1) {
+        const key = sources.slice().sort().join(',');
+        if (!curOverlap || curOverlap.key !== key) {
+          if (curOverlap) overlaps.push(curOverlap);
+          curOverlap = { start: k, end: k, sources: sources.slice().sort(), key };
+        } else {
+          curOverlap.end = k;
+        }
+      } else {
+        if (curOverlap) { overlaps.push(curOverlap); curOverlap = null; }
+      }
+    }
+    cur.setUTCDate(cur.getUTCDate() + 1);
+  }
+  if (curGap) gaps.push(curGap);
+  if (curOverlap) overlaps.push(curOverlap);
+
+  return { gaps, overlaps, totalDays };
+};
+
+// Etiqueta humana de una "fuente" (season:alta → "alta", special:semSanta → "Semana Santa").
+const sourceLabel = (src, cal, seasons) => {
+  if (src.startsWith('season:')) {
+    const id = src.slice(7);
+    return (seasons[id] && seasons[id].label) || id;
+  }
+  if (src.startsWith('special:')) {
+    const id = src.slice(8);
+    const sp = cal.specials && cal.specials[id];
+    return (sp && sp.label) || id;
+  }
+  return src;
+};
+
+// ============================================================
 // CalendarEditor — UI estructurada para editar el calendario.
 // Lee/escribe el mismo JSON que el textarea (fuente única) pero
 // con tablas por año + secciones de especiales y puentes. El
@@ -127,9 +216,46 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
 
       {years.map(year => {
         const cal = parsed.calendar[year];
+        const valid = validateYearCoverage(Number(year), cal);
+        const okCoverage = valid.gaps.length === 0 && valid.overlaps.length === 0;
         return (
           <div key={year} className="pe-card">
             <h2>Calendario {year} · temporadas</h2>
+            {okCoverage ? (
+              <div className="pe-success pe-validate-ok">
+                ✓ {valid.totalDays} días cubiertos · sin huecos ni solapamientos
+              </div>
+            ) : (
+              <div className="pe-validate">
+                {valid.gaps.length > 0 && (
+                  <div className="pe-validate-block pe-validate-gaps">
+                    <strong>{valid.gaps.length} hueco(s) sin temporada — añade un rango que los cubra:</strong>
+                    <ul>
+                      {valid.gaps.map((g, i) => (
+                        <li key={i}>
+                          {g.start === g.end ? g.start : `${g.start} → ${g.end}`}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {valid.overlaps.length > 0 && (
+                  <div className="pe-validate-block pe-validate-overlaps">
+                    <strong>{valid.overlaps.length} solapamiento(s) — un día solo puede pertenecer a una temporada o especial:</strong>
+                    <ul>
+                      {valid.overlaps.map((o, i) => (
+                        <li key={i}>
+                          {o.start === o.end ? o.start : `${o.start} → ${o.end}`}
+                          <span className="pe-validate-sources">
+                            {' '}— {o.sources.map(s => sourceLabel(s, cal, seasons)).join(' + ')}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
             <div className="pe-cal-seasons">
               {seasonIds.map(sid => {
                 const s = seasons[sid];
