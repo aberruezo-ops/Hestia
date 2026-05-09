@@ -10240,3 +10240,35 @@ body.apt-bar-shown .widget-stack {
 }
 .opiniones-hero .stars { z-index: 2; }
 .opiniones-hero .page-hero-content { position: relative; z-index: 3; }
+
+/* Validación de cobertura del calendario en p-edit */
+.pe-validate-ok {
+  margin: 0 0 18px;
+  font-size: 13px;
+}
+.pe-validate {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 18px;
+}
+.pe-validate-block {
+  padding: 12px 14px;
+  border-radius: 8px 0 8px 0;
+  border-left: 3px solid;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.pe-validate-block strong { display: block; margin-bottom: 6px; font-weight: 600; }
+.pe-validate-block ul { margin: 0; padding-left: 18px; }
+.pe-validate-block li { margin: 2px 0; font-family: var(--mono, ui-monospace, Consolas, monospace); font-size: 12.5px; }
+.pe-validate-gaps {
+  background: rgba(245, 158, 11, .08);
+  border-left-color: #f59e0b;
+  color: #92400e;
+}
+.pe-validate-overlaps {
+  background: rgba(239, 68, 68, .08);
+  border-left-color: #ef4444;
+  color: #991b1b;
+}
+.pe-validate-sources { color: var(--ink-soft); font-size: 11.5px; }
