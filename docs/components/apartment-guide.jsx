@@ -353,7 +353,7 @@ const GUIDE_SHARED = {
     },
     phones: {
       title: 'Teléfonos y datos de utilidad',
-      wifi: { label: 'Contraseña WiFi', value: 'Hestiavera' },
+      wifi: { label: 'Contraseña WiFi', value: 'Mira en el router (puede haber cambiado)' },
       list: [
         { label: 'Bomberos', value: '080' },
         { label: 'Emergencias', value: '112' },
@@ -461,7 +461,7 @@ const GUIDE_SHARED = {
     },
     phones: {
       title: 'Useful data and phone numbers',
-      wifi: { label: 'WiFi password', value: 'Hestiavera' },
+      wifi: { label: 'WiFi password', value: 'Check the router (may have changed)' },
       list: [
         { label: 'Firefighters', value: '080' },
         { label: 'Emergencies', value: '112' },
@@ -1522,6 +1522,119 @@ const DAY_PLANS = [
     tip_es:'En invierno hay menos sitios abiertos. Llamad antes para confirmar la programación de música en vivo.',
     tip_en:'Fewer venues open in winter. Call ahead to confirm live-music nights.',
   },
+
+  // ── PLANES DEPORTIVOS · CRUCERO Y EXTRAS ─────────────────────
+  {
+    id:'plan-crucero-cabo',
+    type:'fullday', audience:'both',
+    title_es:'Crucero por el Cabo de Gata',
+    title_en:'Cabo de Gata cruise',
+    start:'10:00', end:'17:30',
+    tags_es:['barco','calas inaccesibles','snorkel'],
+    tags_en:['boat','hidden coves','snorkel'],
+    steps:[
+      { t:'10:00', es:'Salida hacia el puerto de Carboneras o San José', en:'Drive to Carboneras or San José harbour',
+                   d_es:'Compañías como Cabo de Gata Charter, Cala&Bay y otras ofrecen cruceros de medio día y de día completo.', d_en:'Cabo de Gata Charter, Cala&Bay and others offer half-day and full-day cruises.' },
+      { t:'11:00', es:'Embarque y briefing de seguridad',           en:'Boarding and safety briefing',
+                   d_es:'Reservar antes — los grupos son pequeños (10-25 personas).',                                d_en:'Book ahead — small groups (10-25 people).' },
+      { t:'11:30', es:'Ruta por la costa virgen del parque',         en:'Cruise along the protected coast',
+                   d_es:'Calas inaccesibles por tierra: Cala del Cuervo, Cala Cerrada, San Pedro desde el mar.',     d_en:'Coves you can\'t reach by land: Cala del Cuervo, Cala Cerrada, San Pedro from the sea.' },
+      { t:'13:00', es:'Parada para snorkel y aperitivo a bordo',     en:'Snorkel stop and onboard aperitif',
+                   d_es:'Bañito en agua transparente. Algunas compañías incluyen paella o picoteo.',                  d_en:'Swim in clear water. Some operators include paella or finger food.' },
+      { t:'15:30', es:'Vuelta a puerto y comida tardía',             en:'Return to port and late lunch',
+                   d_es:'Carboneras: marisquerías a pie de puerto. San José: La Ola o La Gallineta.',               d_en:'Carboneras: harbour seafood spots. San José: La Ola or La Gallineta.' },
+    ],
+    tip_es:'Llevad gorra, crema solar mineral y una sudadera ligera — en el barco hay viento aunque haga calor.',
+    tip_en:'Bring a hat, mineral sunscreen and a light hoodie — there\'s wind on board even when it\'s hot.',
+  },
+  {
+    id:'plan-lunar-cable',
+    type:'evening', audience:'kids',
+    title_es:'Lunar Cable Park · wakeboard sin barco',
+    title_en:'Lunar Cable Park · cable wakeboarding',
+    start:'17:00', end:'21:30',
+    tags_es:['niños','aventura','agua'],
+    tags_en:['kids','adventure','water'],
+    steps:[
+      { t:'17:00', es:'Salida hacia el Lunar Cable Park',           en:'Drive to Lunar Cable Park',
+                   d_es:'Wakeboard, kneeboard y esquí acuático sobre un cable que tira en circuito — sin barco. A 20-30 min de Hestía según la sede.', d_en:'Wakeboard, kneeboard and water-ski on a circuit cable — no boat needed. 20-30 min from Hestía depending on the venue.' },
+      { t:'18:00', es:'Sesión de cable (1 h) o pase de tarde',       en:'Cable session (1 h) or afternoon pass',
+                   d_es:'Hay nivel principiante con barra para niños desde 6-7 años. Equipo neopreno y casco incluidos.', d_en:'Beginner setup with bar for kids from 6-7 years old. Wetsuit and helmet included.' },
+      { t:'19:30', es:'Ducha y cambio',                              en:'Shower and change',
+                   d_es:'Vestuarios en la propia instalación.',                                                     d_en:'Changing rooms on site.' },
+      { t:'20:30', es:'Cena en chiringuito a pie de playa',          en:'Dinner at a beach bar',
+                   d_es:'Vuelta a Hestía + cena en Pomodoro o Marau.',                                              d_en:'Back to Hestía + dinner at Pomodoro or Marau.' },
+    ],
+    tip_es:'Reservad la sesión online — en agosto se llena. Llevad bañador, toalla, chanclas.',
+    tip_en:'Book the session online — fills up in August. Bring swimwear, towel, flip-flops.',
+  },
+  {
+    id:'plan-motos-acuaticas',
+    type:'morning', audience:'adults',
+    title_es:'Motos acuáticas · ruta guiada por la costa',
+    title_en:'Jet-ski guided coastal tour',
+    start:'10:00', end:'14:00',
+    tags_es:['adrenalina','mar','adultos'],
+    tags_en:['adrenaline','sea','adults'],
+    steps:[
+      { t:'10:00', es:'Llegada al centro náutico (Vera Playa o Garrucha)', en:'Arrive at the watersports centre (Vera Playa or Garrucha)',
+                   d_es:'Hay varias empresas con punto de salida desde la propia playa.',                            d_en:'Several operators launch directly from the beach.' },
+      { t:'10:30', es:'Briefing y entrega del jet ski',              en:'Briefing and jet-ski hand-off',
+                   d_es:'Sin licencia con monitor a bordo (acompañado). Con licencia, libre.',                       d_en:'No licence required with a guide on board. With licence, free riding.' },
+      { t:'11:00', es:'Ruta de 1-2 h hasta Garrucha o Mojácar',     en:'1-2 h ride to Garrucha or Mojácar',
+                   d_es:'En grupo, paradas para fotos y baño en alguna cala.',                                      d_en:'In group, photo and swim stops at some cove.' },
+      { t:'13:00', es:'Comida en Pomodoro o Lúa',                   en:'Lunch at Pomodoro or Lúa',
+                   d_es:'A pie de playa, descanso al sol después del subidón.',                                     d_en:'Right by the sea, sun-lounger relax after the rush.' },
+    ],
+    tip_es:'No conducir motos acuáticas con resaca. Crema solar resistente al agua y ropa que se pueda mojar.',
+    tip_en:'Never drive a jet-ski hung-over. Waterproof sunscreen and clothes you don\'t mind getting wet.',
+  },
+  {
+    id:'plan-bici-costa',
+    type:'morning', audience:'both',
+    title_es:'Ruta en bici por la costa · Vera → Mojácar',
+    title_en:'Coastal bike ride · Vera → Mojácar',
+    start:'9:00', end:'14:00',
+    tags_es:['bicicleta','costa','familiar'],
+    tags_en:['cycling','coastline','family'],
+    steps:[
+      { t:'9:00',  es:'Recogida de bicis en Vera Playa',             en:'Pick up bikes in Vera Playa',
+                   d_es:'Hay alquileres en Pueblo Indalo, Garrucha y Mojácar. Bicis para niños y carro para los más peques.', d_en:'Rentals in Pueblo Indalo, Garrucha and Mojácar. Kids bikes and toddler trailers available.' },
+      { t:'9:30',  es:'Paseo del Almanzora y carril bici a Garrucha', en:'Almanzora promenade and bike lane to Garrucha',
+                   d_es:'Asfalto liso y plano. Llano todo el camino.',                                              d_en:'Smooth flat tarmac. Flat all the way.' },
+      { t:'11:00', es:'Subida suave hacia Mojácar Playa',            en:'Gentle climb to Mojácar Beach',
+                   d_es:'Carril bici en el paseo del Mediterráneo. Vistas al mar todo el rato.',                    d_en:'Bike lane along Paseo del Mediterráneo. Sea views the whole way.' },
+      { t:'12:30', es:'Aperitivo en chiringuito de Mojácar',         en:'Aperitif at a Mojácar beach bar',
+                   d_es:'Cerveza, refresco, helado para los niños.',                                                d_en:'Beer, soft drink, ice cream for the kids.' },
+      { t:'13:30', es:'Vuelta tranquila a Hestía',                   en:'Calm ride back to Hestía',
+                   d_es:'Si hay viento del oeste, la vuelta cuesta menos.',                                          d_en:'With a westerly wind, the way back is easier.' },
+    ],
+    tip_es:'En verano, salid temprano: a partir de las 12:00 el sol pega fuerte aunque vayáis junto al mar.',
+    tip_en:'In summer, leave early: after noon the sun is strong even by the sea.',
+  },
+  {
+    id:'plan-curso-buceo',
+    type:'fullday', audience:'adults',
+    title_es:'Curso de buceo Open Water (Las Negras o San José)',
+    title_en:'Open Water diving course (Las Negras or San José)',
+    start:'9:00', end:'18:30',
+    tags_es:['titulación','buceo','aventura'],
+    tags_en:['certification','diving','adventure'],
+    steps:[
+      { t:'9:00',  es:'Salida hacia Las Negras',                     en:'Drive to Las Negras',
+                   d_es:'1 h. Buceo Las Negras o Isub Almería ofrecen Open Water PADI/SSI en 3-4 días.',            d_en:'1 h. Buceo Las Negras or Isub Almería run PADI/SSI Open Water in 3-4 days.' },
+      { t:'10:00', es:'Teoría y piscina · primer día',               en:'Theory and pool · day one',
+                   d_es:'Vídeos online previos + repaso presencial. Práctica en aguas confinadas.',                 d_en:'Online theory before + classroom recap. Confined-water practice.' },
+      { t:'14:00', es:'Comida en una terraza del paseo',             en:'Lunch on a promenade terrace',
+                   d_es:'Pescaíto y un buen vino blanco antes de la siguiente sesión.',                             d_en:'Fried fish and a good white wine before the next session.' },
+      { t:'15:30', es:'Inmersión 1 en aguas abiertas',               en:'Open-water dive 1',
+                   d_es:'Profundidad limitada (12 m). Visibilidad 15-30 m, posidonia, fauna mediterránea.',          d_en:'Limited depth (12 m). Visibility 15-30 m, posidonia, Mediterranean fauna.' },
+      { t:'17:30', es:'Debriefing y café',                           en:'Debrief and coffee',
+                   d_es:'Repaso del bitácora antes de volver.',                                                     d_en:'Logbook review before driving back.' },
+    ],
+    tip_es:'El curso Open Water son 3-4 días. Si solo vais una mañana → bautismo (sin titulación) por unos 70 €.',
+    tip_en:'The Open Water course is 3-4 days. For a single morning → try-dive (no certification) from around €70.',
+  },
 ];
 
 const DayPlanCard = ({ plan, lang }) => {
@@ -1586,6 +1699,11 @@ const DayPlans = ({ lang }) => {
         <h3 className="ag-h3" style={{ margin: 0 }}>
           {lang === 'es' ? 'Planes de día por la zona' : 'One-day plans around'}
         </h3>
+        <p className="ag-day-plans-disclaimer">
+          {lang === 'es'
+            ? 'Estos son solo ideas — hay innumerables opciones para todos los gustos. Os animamos a descubrir, vivir Vera y Hestía a vuestro propio ritmo.'
+            : 'These are just ideas — there are countless options for every taste. We invite you to discover, to live Vera and Hestía at your own pace.'}
+        </p>
       </div>
       <div className="dp-tabs" role="tablist">
         {tabs.map(t => (
@@ -1894,6 +2012,14 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
       return () => window.removeEventListener('keydown', onKey);
     }
   }, [open]);
+
+  // Permite abrir el modal desde otros sitios (ej. sidebar de escritorio)
+  // disparando window.dispatchEvent(new Event('hestia:open-guide-pin')).
+  React.useEffect(() => {
+    const onOpen = () => setOpen(true);
+    window.addEventListener('hestia:open-guide-pin', onOpen);
+    return () => window.removeEventListener('hestia:open-guide-pin', onOpen);
+  }, []);
 
   const submit = (e) => {
     e.preventDefault();
