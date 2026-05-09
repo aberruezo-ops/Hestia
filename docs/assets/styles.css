@@ -10159,3 +10159,63 @@ body.apt-bar-shown .widget-stack {
 }
 .ga-modal-back:active,
 .ga-modal-submit:active { transform: scale(.97); transition: transform .16s ease; }
+
+/* ── Calendar editor in p-edit ── */
+.pe-h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 17px;
+  margin: 24px 0 12px;
+  color: var(--ber-dk);
+}
+.pe-cal-seasons {
+  display: grid;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+.pe-cal-season {
+  background: rgba(61,26,53,.025);
+  border-left: 3px solid rgba(61,26,53,.12);
+  border-radius: 8px 0 8px 0;
+  padding: 12px 14px;
+}
+.pe-cal-season-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.pe-cal-season-head strong {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--ber-dk);
+}
+.pe-cal-season-head .pe-hint {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--ink-soft);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.pe-cal-empty {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-style: italic;
+  padding: 6px 0 0;
+}
+.pe-table-cal { margin-top: 6px; }
+.pe-table-cal th, .pe-table-cal td { padding: 6px 8px; }
+.pe-table-cal td:last-child { text-align: right; width: 36px; }
+.pe-table-cal input { max-width: none; width: 100%; }
+.pe-input-date {
+  font-family: var(--sans);
+  font-size: 13px;
+  padding: 6px 8px;
+}
+.pe-btn-sm {
+  padding: 4px 10px;
+  font-size: 11px;
+  letter-spacing: .08em;
+  margin-left: auto;
+}
