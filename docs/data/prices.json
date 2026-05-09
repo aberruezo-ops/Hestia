@@ -1,22 +1,47 @@
 {
   "_doc": "Hestía pricing source of truth. Edited via /admin.html (GitHub PAT). Read by web at runtime via fetch('data/prices.json'). All dates are local Europe/Madrid (no timezone offsets).",
   "version": 1,
-  "updatedAt": "2026-05-08T19:34:00+02:00",
+  "updatedAt": "2026-05-09T18:58:13.051Z",
   "currency": "EUR",
-
   "apts": {
-    "vm": { "name": "Hestía Vera Mar",      "vft": "VFT/AL/01580", "base": 88 },
-    "vt": { "name": "Hestía Vera Thalassa", "vft": "VFT/AL/05535", "base": 86 },
-    "vs": { "name": "Hestía Vera Salinas",  "vft": "VTF/AL/07056", "base": 82 }
+    "vm": {
+      "name": "Hestía Vera Mar",
+      "vft": "VFT/AL/01580",
+      "base": 88
+    },
+    "vt": {
+      "name": "Hestía Vera Thalassa",
+      "vft": "VFT/AL/05535",
+      "base": 86
+    },
+    "vs": {
+      "name": "Hestía Vera Salinas",
+      "vft": "VTF/AL/07056",
+      "base": 83
+    }
   },
-
   "seasons": {
-    "baja":    { "label": "Baja",    "multiplier": 1.00, "color": "#9ca3af" },
-    "media":   { "label": "Media",   "multiplier": 1.20, "color": "#10b981" },
-    "alta":    { "label": "Alta",    "multiplier": 2.00, "color": "#f59e0b" },
-    "critica": { "label": "Crítica", "multiplier": 2.50, "color": "#ef4444" }
+    "baja": {
+      "label": "Baja",
+      "multiplier": 1,
+      "color": "#9ca3af"
+    },
+    "media": {
+      "label": "Media",
+      "multiplier": 1.2,
+      "color": "#10b981"
+    },
+    "alta": {
+      "label": "Alta",
+      "multiplier": 2,
+      "color": "#f59e0b"
+    },
+    "critica": {
+      "label": "Crítica",
+      "multiplier": 2.5,
+      "color": "#ef4444"
+    }
   },
-
   "rules": {
     "extraGuestPerNight": 5,
     "minNights": 4,
@@ -24,51 +49,201 @@
     "directDiscount": 0.09,
     "petFlatFee": 50,
     "stayDiscounts": [
-      { "minNights": 7,  "pct": 0.03, "excludeSeasons": ["critica"],          "label": "−3 % a partir de 7 noches" },
-      { "minNights": 15, "pct": 0.15, "excludeSeasons": ["alta", "critica"],  "label": "−15 % a partir de 15 noches" },
-      { "minNights": 29, "pct": 0.30, "excludeSeasons": ["alta", "critica"],  "label": "−30 % a partir de 29 noches" }
+      {
+        "minNights": 7,
+        "pct": 0.03,
+        "excludeSeasons": [
+          "critica"
+        ],
+        "label": "−3 % a partir de 7 noches"
+      },
+      {
+        "minNights": 15,
+        "pct": 0.15,
+        "excludeSeasons": [
+          "alta",
+          "critica"
+        ],
+        "label": "−15 % a partir de 15 noches"
+      },
+      {
+        "minNights": 29,
+        "pct": 0.3,
+        "excludeSeasons": [
+          "alta",
+          "critica"
+        ],
+        "label": "−30 % a partir de 29 noches"
+      }
     ],
     "bridgeBumpsOneStep": true,
-    "seasonLadder": ["baja", "media", "alta", "critica"]
+    "seasonLadder": [
+      "baja",
+      "media",
+      "alta",
+      "critica"
+    ]
   },
-
   "calendar": {
     "2026": {
       "seasons": {
-        "baja":    [["2026-01-01", "2026-03-28"], ["2026-04-07", "2026-04-30"], ["2026-11-03", "2026-12-21"]],
-        "media":   [["2026-05-01", "2026-06-11"], ["2026-09-16", "2026-10-31"]],
-        "alta":    [["2026-06-12", "2026-07-10"], ["2026-09-01", "2026-09-15"]],
-        "critica": [["2026-07-11", "2026-08-31"]]
+        "baja": [
+          [
+            "2026-01-01",
+            "2026-03-28"
+          ],
+          [
+            "2026-04-07",
+            "2026-04-30"
+          ],
+          [
+            "2026-11-03",
+            "2026-12-21"
+          ]
+        ],
+        "media": [
+          [
+            "2026-05-01",
+            "2026-06-11"
+          ],
+          [
+            "2026-09-16",
+            "2026-10-31"
+          ]
+        ],
+        "alta": [
+          [
+            "2026-06-12",
+            "2026-07-10"
+          ],
+          [
+            "2026-09-01",
+            "2026-09-15"
+          ]
+        ],
+        "critica": [
+          [
+            "2026-07-11",
+            "2026-08-31"
+          ]
+        ]
       },
       "specials": {
-        "semSanta": { "season": "media", "ranges": [["2026-03-29", "2026-04-06"]], "label": "Semana Santa" },
-        "navidad":  { "season": "media", "ranges": [["2026-12-22", "2026-12-31"]], "label": "Navidad" }
+        "semSanta": {
+          "season": "media",
+          "ranges": [
+            [
+              "2026-03-29",
+              "2026-04-06"
+            ]
+          ],
+          "label": "Semana Santa"
+        },
+        "navidad": {
+          "season": "media",
+          "ranges": [
+            [
+              "2026-12-22",
+              "2026-12-31"
+            ]
+          ],
+          "label": "Navidad"
+        }
       },
       "bridges": [
-        { "name": "Reyes",                     "ranges": [["2026-01-05", "2026-01-06"]] },
-        { "name": "Día del Trabajador",        "ranges": [["2026-05-01", "2026-05-03"]] },
-        { "name": "Hispanidad",                "ranges": [["2026-10-10", "2026-10-12"]] },
-        { "name": "Todos los Santos",          "ranges": [["2026-10-31", "2026-11-02"]] },
-        { "name": "Constitución + Inmaculada", "ranges": [["2026-12-05", "2026-12-08"]] }
+        {
+          "name": "Reyes",
+          "ranges": [
+            [
+              "2026-01-05",
+              "2026-01-06"
+            ]
+          ]
+        },
+        {
+          "name": "Día del Trabajador",
+          "ranges": [
+            [
+              "2026-05-01",
+              "2026-05-03"
+            ]
+          ]
+        },
+        {
+          "name": "Hispanidad",
+          "ranges": [
+            [
+              "2026-10-10",
+              "2026-10-12"
+            ]
+          ]
+        },
+        {
+          "name": "Todos los Santos",
+          "ranges": [
+            [
+              "2026-10-31",
+              "2026-11-02"
+            ]
+          ]
+        },
+        {
+          "name": "Constitución + Inmaculada",
+          "ranges": [
+            [
+              "2026-12-05",
+              "2026-12-08"
+            ]
+          ]
+        }
       ]
     },
     "2027": {
       "seasons": {
-        "baja":    [["2027-01-07", "2027-03-20"]],
-        "media":   [],
-        "alta":    [],
+        "baja": [
+          [
+            "2027-01-07",
+            "2027-03-20"
+          ]
+        ],
+        "media": [],
+        "alta": [],
         "critica": []
       },
       "specials": {
-        "navidad": { "season": "media", "ranges": [["2027-01-01", "2027-01-06"]], "label": "Navidad" }
+        "navidad": {
+          "season": "media",
+          "ranges": [
+            [
+              "2027-01-01",
+              "2027-01-06"
+            ]
+          ],
+          "label": "Navidad"
+        }
       },
       "bridges": [
-        { "name": "Año Nuevo", "ranges": [["2027-01-01", "2027-01-03"]] },
-        { "name": "Reyes",     "ranges": [["2027-01-06", "2027-01-06"]] }
+        {
+          "name": "Año Nuevo",
+          "ranges": [
+            [
+              "2027-01-01",
+              "2027-01-03"
+            ]
+          ]
+        },
+        {
+          "name": "Reyes",
+          "ranges": [
+            [
+              "2027-01-06",
+              "2027-01-06"
+            ]
+          ]
+        }
       ]
     }
   },
-
   "bookingHorizon": {
     "lastCheckinDate": "2027-03-20",
     "reason": "Cierre antes de Semana Santa 2027 (Domingo de Ramos: 2027-03-21)"
