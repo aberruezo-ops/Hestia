@@ -770,6 +770,17 @@ const ApartmentPageApp = () => {
     document.body.classList.add('has-apt-sticky');
     return () => document.body.classList.remove('has-apt-sticky');
   }, []);
+  // Setea --apt-accent y --apt-accent2 a nivel de :root para que los
+  // widgets flotantes (fuera del <main>) puedan tomar el color del
+  // Hestía actual. Default sol se mantiene en otras páginas.
+  React.useEffect(() => {
+    document.documentElement.style.setProperty('--apt-accent', apt.accent);
+    document.documentElement.style.setProperty('--apt-accent2', apt.accent2);
+    return () => {
+      document.documentElement.style.removeProperty('--apt-accent');
+      document.documentElement.style.removeProperty('--apt-accent2');
+    };
+  }, [apt.accent, apt.accent2]);
   React.useEffect(() => {
     document.body.classList.toggle('apt-bar-shown', !!scrolled);
     return () => document.body.classList.remove('apt-bar-shown');
