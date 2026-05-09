@@ -958,43 +958,78 @@ section {
   -webkit-backdrop-filter: blur(3px);
 }
 
-/* -------- Cookies banner -------- */
+/* -------- Cookies banner --------
+   Pill horizontal centrado abajo. Una sola línea en escritorio/iPad,
+   wrap a dos líneas en móvil. Altura compacta para que SIEMPRE quepa
+   por encima de la sticky bar + safe-area-inset-bottom de iOS Safari. */
 .cookies {
   position: fixed;
-  /* En apt pages la sticky bar (z=200, ~60px alto) puede tapar el aviso —
-     subimos cookies por encima en z-index y, si la sticky bar está visible,
-     bajamos también su bottom (regla más abajo). En iOS sumamos
-     safe-area-inset-bottom para que la barra inferior de Safari no lo coma. */
-  bottom: calc(24px + env(safe-area-inset-bottom, 0px));
-  left: 24px;
-  max-width: 380px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  width: calc(100vw - 24px);
+  max-width: 580px;
   background: var(--crema);
   color: var(--ber-dk);
-  padding: 20px 22px;
-  border-radius: 10px 0 10px 0;
-  box-shadow: 0 20px 50px rgba(42, 15, 46, 0.3);
-  z-index: 250;  /* por encima de la sticky bar (200) */
+  padding: 12px 16px;
+  border-radius: 999px;
+  box-shadow: 0 16px 44px rgba(42, 15, 46, 0.32), 0 0 0 1px rgba(61,26,53,0.08);
+  z-index: 250;  /* por encima de la sticky bar (200) y del sidebar (88) */
   font-size: 13px;
-  border: 1px solid rgba(61,26,53,0.08);
-  transform: translateY(calc(100% + 40px));
-  /* Exit transition (when .show is removed): fast snap */
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  transform: translateX(-50%) translateY(calc(100% + 60px));
   transition: transform 220ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
 .cookies.show {
-  transform: translateY(0);
-  /* Enter transition (when .show is added): slower drawer-style */
+  transform: translateX(-50%) translateY(0);
   transition: transform 600ms var(--ease-drawer, cubic-bezier(0.32, 0.72, 0, 1));
 }
-.cookies h5 { font-family: var(--serif); font-size: 17px; font-weight: 300; margin-bottom: 6px; }
-.cookies .cookies-btns { display: flex; gap: 10px; margin-top: 14px; }
-.cookies .cookies-btns button {
-  padding: 9px 14px; font-size: 11px; letter-spacing: 0.12em;
-  text-transform: uppercase; border-radius: 10px 0 10px 0; border: 1px solid var(--ber);
+/* Cuando la sticky bar está visible, el pill sube exactamente lo que mide.
+   --apt-sticky-h ya incluye su propio safe-area-inset-bottom. */
+body.apt-bar-shown .cookies {
+  bottom: calc(var(--apt-sticky-h, 60px) + 14px);
+}
+.cookies h5 {
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.cookies p {
+  margin: 0;
   flex: 1;
-  transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+  min-width: 180px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+.cookies .cookies-btns {
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  flex-shrink: 0;
+}
+.cookies .cookies-btns button {
+  padding: 7px 14px;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  border: 1px solid var(--ber);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--dur-base, .2s) var(--ease-out, ease),
+              color var(--dur-base, .2s) var(--ease-out, ease),
+              border-color var(--dur-base, .2s) var(--ease-out, ease);
 }
 .cookies .cookies-btns .accept { background: var(--ber); color: var(--crema); }
 .cookies .cookies-btns .accept:hover { background: var(--ber-dk); border-color: var(--ber-dk); }
+.cookies .cookies-btns .essential { background: transparent; color: var(--ber); }
 .cookies .cookies-btns .essential:hover { background: var(--ber); color: var(--crema); }
 
 /* ============================================================
@@ -3933,14 +3968,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .apt-sticky-bar.asb-visible { transform: translateY(0); }
 
-/* Cuando la sticky bar está VISIBLE, las cookies suben EXACTAMENTE la
-   altura medida de la barra (--apt-sticky-h, set por JS vía
-   ResizeObserver) + un margen visual. La altura medida ya incluye su
-   propio safe-area-inset-bottom, no hay que sumarlo aquí.
-   Funciona idéntico en iPhone, iPad y desktop sin números mágicos. */
-body.apt-bar-shown .cookies {
-  bottom: calc(var(--apt-sticky-h, 60px) + 16px);
-}
+/* (regla movida arriba al bloque .cookies) */
 .asb-info {
   display: flex;
   flex-direction: column;
@@ -9133,6 +9161,13 @@ footer,
   margin-bottom: 6px;
   color: var(--apt-accent);
 }
+.ag-day-plans-disclaimer {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin: 10px 0 0;
+}
 /* Filtro de audiencia (con niños / sin niños / todos) */
 .dp-tabs {
   display: flex;
@@ -9358,22 +9393,61 @@ footer,
     pointer-events: auto;
   }
 }
-.ads-close {
+.ads-min {
   position: absolute;
   top: -10px; right: -10px;
-  width: 28px; height: 28px;
+  width: 30px; height: 30px;
   border-radius: 50%;
   background: var(--ber-dk);
-  color: var(--arena);
+  color: var(--sol);
   border: 0;
-  font-size: 18px;
+  font-size: 22px;
   line-height: 1;
+  font-weight: 600;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(42,15,46,.4);
   z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding-bottom: 4px;
   transition: background .25s ease, transform .15s var(--ease-out, ease);
 }
-.ads-close:hover { background: var(--ber); transform: scale(1.06); }
+.ads-min:hover { background: var(--ber); transform: scale(1.06); }
+
+/* Estado minimizado: pill flotante a la derecha que restaura al pulsarse */
+.apt-desktop-sidebar-mini {
+  display: none;
+}
+@media (min-width: 900px) {
+  .apt-desktop-sidebar-mini {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 88;
+    background: var(--ber-dk);
+    color: var(--crema);
+    border: 0;
+    padding: 12px 14px 12px 18px;
+    border-radius: 999px 0 0 999px;
+    font-family: var(--sans);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: -6px 8px 24px rgba(42,15,46,.36);
+    transition: background .25s ease, padding .25s ease;
+  }
+  .apt-desktop-sidebar-mini:hover {
+    background: var(--ber);
+    padding-right: 18px;
+  }
+}
+.ads-mini-star { color: var(--sol); font-size: 14px; }
+.ads-mini-label { line-height: 1; }
 
 .ads-card {
   background: var(--ber-dk);

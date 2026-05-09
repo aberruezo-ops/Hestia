@@ -703,6 +703,86 @@ const FRASES_HOGAR = [
     en: '«Happiness is a place between too little and too much.»',
     attr: '— Proverbio finlandés',
   },
+
+  /* ── ALMERÍA · PROVINCIA AMPLIADA ─────────────────────────── */
+  { type:'fact', es:'Almería es la provincia más soleada de Europa con más de 3.000 horas anuales — supera a Atenas, Lisboa y Marsella.', en:'Almería is Europe\'s sunniest province with over 3,000 hours a year — beating Athens, Lisbon and Marseille.' },
+  { type:'fact', es:'En Almería se filmaron clásicos como El Bueno, el Feo y el Malo (1966), Lawrence de Arabia (1962) o Indiana Jones y la Última Cruzada (1989).', en:'Almería was the location for classics like The Good, the Bad and the Ugly (1966), Lawrence of Arabia (1962) and Indiana Jones and the Last Crusade (1989).' },
+  { type:'fact', es:'La Alcazaba de Almería es la segunda fortaleza musulmana más grande de España, sólo superada por la Alhambra de Granada.', en:'Almería\'s Alcazaba is the second-largest Muslim fortress in Spain, beaten only by Granada\'s Alhambra.' },
+  { type:'fact', es:'El Mar de Plástico de Almería — más de 30.000 hectáreas de invernaderos — se ve desde el espacio y abastece de hortalizas a media Europa en invierno.', en:'Almería\'s Sea of Plastic — over 30,000 ha of greenhouses — is visible from space and supplies half of Europe with winter vegetables.' },
+  { type:'fact', es:'La Geoda de Pulpí es la mayor cueva con cristales de yeso transparentes accesible al público en Europa: 8 metros de cristales gigantes.', en:'The Pulpí Geode is Europe\'s largest publicly accessible cave of transparent gypsum crystals: 8 m of giant crystals.' },
+  { type:'fact', es:'En Roquetas de Mar nació el cantaor Manolo Caracol — uno de los grandes del flamenco del siglo XX.', en:'Cantaor Manolo Caracol — one of the great 20th-century flamenco voices — was born in Roquetas de Mar.' },
+  { type:'fact', es:'En Sorbas existen las únicas formaciones de karst en yeso a gran escala de toda Europa.', en:'Sorbas hosts the only large-scale gypsum karst formations in all of Europe.' },
+  { type:'fact', es:'La Cueva de los Letreros, en Vélez-Blanco, conserva pinturas rupestres declaradas Patrimonio de la Humanidad — la imagen del «Indalo» nació allí.', en:'The Letreros Cave in Vélez-Blanco preserves UNESCO-listed rock paintings — the image of the "Indalo" was born there.' },
+  { type:'fact', es:'El Indalo, símbolo de Almería, es una figura prehistórica de hace ~4.500 años; durante siglos se pintó en las puertas de Mojácar como talismán.', en:'The Indalo, Almería\'s symbol, is a ~4,500-year-old prehistoric figure; for centuries it was painted on Mojácar doors as a talisman.' },
+  { type:'fact', es:'El Castillo de Vélez-Blanco albergaba un patio renacentista que hoy se exhibe íntegro en el Museo Metropolitano de Nueva York.', en:'Vélez-Blanco Castle housed a Renaissance courtyard that today stands intact at the Metropolitan Museum in New York.' },
+  { type:'fact', es:'La Sierra de los Filabres acoge el observatorio astronómico de Calar Alto, uno de los más importantes de Europa continental.', en:'The Filabres mountain range hosts Calar Alto, one of mainland Europe\'s leading astronomical observatories.' },
+  { type:'fact', es:'En Garrucha la lonja de pescado abre cada tarde y subasta gambas rojas que viajan hasta los mejores restaurantes de Madrid.', en:'Garrucha\'s fish market opens every afternoon and auctions red prawns that travel to Madrid\'s top restaurants.' },
+  { type:'fact', es:'La Alpujarra Almeriense, al pie de Sierra Nevada, conserva pueblos blancos colgados de la montaña como Laujar de Andarax y Ohanes.', en:'The Almerian Alpujarra, at the foot of Sierra Nevada, preserves white villages clinging to the mountain like Laujar de Andarax and Ohanes.' },
+  { type:'fact', es:'En Lucainena de las Torres, declarado uno de los pueblos más bonitos de España, se conservan minas de hierro del siglo XIX y un trenecillo minero.', en:'Lucainena de las Torres, listed among Spain\'s prettiest villages, preserves 19th-century iron mines and a mining train.' },
+  { type:'fact', es:'El cabo de Gata-Níjar es la única región de Europa continental con clima oficialmente desértico — menos de 200 mm de lluvia al año.', en:'Cabo de Gata-Níjar is the only mainland-European region with an officially desert climate — under 200 mm of rain a year.' },
+  { type:'fact', es:'En el Cabo de Gata existen unas 1.000 especies vegetales, 200 de ellas endémicas — más diversidad que cualquier otro parque del Mediterráneo español.', en:'Cabo de Gata holds about 1,000 plant species, 200 of them endemic — more diversity than any other Spanish Mediterranean park.' },
+  { type:'fact', es:'La Sierra de María-Los Vélez es uno de los mejores lugares de Andalucía para ver águila real, búho real y treparriscos.', en:'Sierra de María-Los Vélez is one of Andalusia\'s best spots to see golden eagle, eagle owl and wallcreeper.' },
+  { type:'fact', es:'El uvo Ohanes — uva blanca tardía de la Alpujarra almeriense — alcanzó tal fama en el siglo XIX que se exportaba en barriles a Londres y Nueva York.', en:'The Ohanes grape — a late white grape from the Almerian Alpujarra — was so famed in the 19th century it shipped in barrels to London and New York.' },
+  { type:'fact', es:'En Almería hay más de 70 municipios y solo 3 superan los 50.000 habitantes: la capital, Roquetas y El Ejido.', en:'Almería has over 70 municipalities and only 3 top 50,000 people: the capital, Roquetas and El Ejido.' },
+  { type:'fact', es:'El Refugio de la Guerra Civil de Almería son 4,5 km de túneles bajo la ciudad construidos para proteger a la población — los segundos más largos de España.', en:'Almería\'s Civil War Shelter is a 4.5 km network of underground tunnels built to shelter the population — Spain\'s second-longest.' },
+
+  /* ── MURCIA (provincia fronteriza) ────────────────────────── */
+  { type:'fact', es:'El Mar Menor, a 1 h de Vera Playa, es la mayor laguna salada de Europa: 170 km² con aguas siempre templadas.', en:'The Mar Menor, 1 h from Vera Playa, is Europe\'s largest saltwater lagoon: 170 km² of always-warm water.' },
+  { type:'fact', es:'En Cartagena se conserva el único teatro romano en uso de toda Andalucía/Murcia: cabe 7.000 personas y se redescubrió en 1988.', en:'Cartagena holds the only working Roman theatre in Andalusia/Murcia: it seats 7,000 and was rediscovered in 1988.' },
+  { type:'fact', es:'La Manga del Mar Menor mide 22 km y es una franja de arena de apenas 100-1.000 m de ancho que separa dos mares.', en:'La Manga del Mar Menor is 22 km long — a sand strip just 100-1,000 m wide separating two seas.' },
+  { type:'fact', es:'Águilas, la primera población murciana al norte de Almería, fundó en 1879 el primer carnaval declarado de Interés Turístico Internacional de la Región.', en:'Águilas, the first Murcian town north of Almería, founded in 1879 the first carnival declared of International Tourist Interest in the Region.' },
+  { type:'fact', es:'Los pasteles de carne de Murcia tienen más de 600 años — se servían en bodas árabes antes de la Reconquista.', en:'Murcia\'s meat pasties date back over 600 years — they were served at Arab weddings before the Reconquista.' },
+  { type:'fact', es:'La Catedral de Murcia tiene la segunda fachada barroca más grande de Europa y un campanario de 92 m, el segundo más alto de España.', en:'Murcia Cathedral has Europe\'s second-largest Baroque façade and a 92 m bell tower, Spain\'s second-tallest.' },
+  { type:'fact', es:'Caravaca de la Cruz es una de las cinco ciudades santas del cristianismo (junto a Roma, Jerusalén, Santiago y Santo Toribio).', en:'Caravaca de la Cruz is one of Christianity\'s five Holy Cities — alongside Rome, Jerusalem, Santiago and Santo Toribio.' },
+  { type:'fact', es:'El Valle de Ricote, último reducto morisco de la península, conserva pueblos colgados sobre cañones de huerta tropical.', en:'The Ricote Valley, the last Morisco stronghold in Iberia, preserves villages clinging over canyons of tropical orchards.' },
+  { type:'fact', es:'Lorca, restaurada tras el terremoto de 2011, posee el casco histórico barroco más completo de la España mediterránea.', en:'Lorca, rebuilt after the 2011 earthquake, holds the most complete Baroque old town of Mediterranean Spain.' },
+  { type:'fact', es:'La huerta de Murcia produce el 70 % del limón consumido en Europa y el 40 % de los pimientos en conserva.', en:'Murcia\'s vegetable plain produces 70 % of Europe\'s lemons and 40 % of canned peppers.' },
+  { type:'fact', es:'El zarangollo murciano (calabacín, cebolla y huevo) y los michirones (habas con jamón y guindilla) son los reyes de cualquier tapeo en la Plaza de las Flores.', en:'Murcian zarangollo (zucchini, onion and egg) and michirones (broad beans with ham and chili) rule any tapas crawl at Plaza de las Flores.' },
+  { type:'fact', es:'En la pedanía cartagenera de Cabo de Palos hay un faro decimonónico encaramado a 81 m sobre el mar — un sitio top mundial para buceo.', en:'In Cabo de Palos (Cartagena) a 19th-century lighthouse perches 81 m above the sea — a world-class dive spot.' },
+  { type:'fact', es:'El Bando de la Huerta de Murcia (Martes de Pascua) reúne a más de 500.000 personas vestidas de traje regional — más que la Tomatina o las Fallas.', en:'Murcia\'s Bando de la Huerta (Easter Tuesday) draws over 500,000 people in regional dress — more than La Tomatina or Las Fallas.' },
+  { type:'fact', es:'El paparajote, dulce típico de Murcia, se hace envolviendo una hoja de limonero en masa: la masa se come, la hoja no.', en:'The paparajote, a Murcian sweet, wraps a lemon-tree leaf in batter: you eat the batter, not the leaf.' },
+
+  /* ── GRANADA (provincia fronteriza al oeste) ──────────────── */
+  { type:'fact', es:'La Alhambra de Granada es el monumento más visitado de España: más de 2,7 millones de visitas al año.', en:'Granada\'s Alhambra is Spain\'s most-visited monument: over 2.7 million visits a year.' },
+  { type:'fact', es:'Sierra Nevada tiene el pico más alto de la península (Mulhacén, 3.479 m) y la estación de esquí más al sur de Europa.', en:'Sierra Nevada has Iberia\'s highest peak (Mulhacén, 3,479 m) and Europe\'s southernmost ski resort.' },
+  { type:'fact', es:'La Costa Tropical de Granada produce mangos, papayas, chirimoyas y aguacates al aire libre — el clima subtropical más al norte del mundo.', en:'Granada\'s Tropical Coast grows mangoes, papayas, custard apples and avocados outdoors — the world\'s northernmost subtropical climate.' },
+  { type:'fact', es:'La Alpujarra granadina aún conserva pueblos donde se habla un castellano con vocablos árabes que se han perdido en el resto de España.', en:'Granada\'s Alpujarra preserves villages where Spanish still uses Arabic words lost in the rest of the country.' },
+  { type:'fact', es:'Las Cuevas del Sacromonte (Granada) son un barrio entero excavado en la roca donde aún viven familias gitanas y se baila zambra.', en:'The Sacromonte Caves (Granada) form an entire neighbourhood carved into rock where Roma families still live and dance the zambra.' },
+  { type:'fact', es:'Federico García Lorca nació en Fuente Vaqueros, a 17 km de Granada — su casa-museo recibe miles de poetas cada año.', en:'Federico García Lorca was born in Fuente Vaqueros, 17 km from Granada — his house-museum draws thousands of poets each year.' },
+  { type:'fact', es:'En Granada, "ir de tapas" significa que cada caña va acompañada de una tapa gratis — costumbre más viva aquí que en cualquier otra capital.', en:'In Granada, "going for tapas" means every drink comes with a free tapa — alive here more than in any other Spanish capital.' },
+  { type:'fact', es:'Las cuevas de Guadix son el conjunto más grande de viviendas trogloditas habitadas de Europa: más de 4.500 personas viven en ellas hoy.', en:'The Guadix caves are Europe\'s largest set of inhabited troglodyte dwellings: over 4,500 people live in them today.' },
+  { type:'fact', es:'En Salobreña, frontera con Almería, se cultiva la mejor caña de azúcar de Europa — última destilería tradicional de ron en España.', en:'In Salobreña, on the Almería border, Europe\'s best sugar cane is grown — Spain\'s last traditional rum distillery operates here.' },
+  { type:'fact', es:'El Albaicín de Granada es el conjunto urbano nazarí mejor conservado del mundo, declarado Patrimonio de la Humanidad en 1984.', en:'Granada\'s Albaicín is the world\'s best-preserved Nasrid urban quarter, UNESCO-listed since 1984.' },
+  { type:'fact', es:'La Acequia Real de la Alhambra lleva 800 años trayendo agua de Sierra Nevada — su sistema hidráulico inspiró acueductos en India y Marruecos.', en:'The Alhambra\'s Royal Acequia has carried Sierra Nevada water for 800 years — its hydraulic system inspired aqueducts in India and Morocco.' },
+  { type:'fact', es:'En Castril (norte de Granada) está el río más oligotrofo de Andalucía: agua tan limpia que sirve de patrón para estudios europeos.', en:'In Castril (northern Granada) flows Andalusia\'s most oligotrophic river: water so clean it serves as a benchmark for European studies.' },
+
+  /* ── JAÉN (provincia fronteriza al norte) ─────────────────── */
+  { type:'fact', es:'Jaén produce el 20 % del aceite de oliva del mundo: si fuera un país, sería el cuarto productor mundial.', en:'Jaén produces 20 % of the world\'s olive oil: if it were a country it would be the fourth-largest producer.' },
+  { type:'fact', es:'En el Parque Natural de Cazorla, Segura y las Villas nace el Guadalquivir — el río más largo de Andalucía, 657 km.', en:'In Cazorla, Segura and Las Villas Natural Park rises the Guadalquivir — Andalusia\'s longest river at 657 km.' },
+  { type:'fact', es:'Úbeda y Baeza son ciudades gemelas Patrimonio de la Humanidad por su Renacimiento andaluz, raro y casi único en Europa.', en:'Úbeda and Baeza are twin UNESCO World Heritage cities for their Andalusian Renaissance — rare and nearly unique in Europe.' },
+  { type:'fact', es:'En Jaén capital, los Baños Árabes del Palacio de Villardompardo son los mejor conservados de España.', en:'In Jaén city, the Arab Baths at Palacio de Villardompardo are the best-preserved in Spain.' },
+  { type:'fact', es:'La Sierra de Cazorla aún conserva linces ibéricos en libertad — se han pasado de 94 ejemplares en 2002 a más de 2.000 en 2024.', en:'Sierra de Cazorla still has wild Iberian lynxes — populations grew from 94 in 2002 to over 2,000 in 2024.' },
+  { type:'fact', es:'El Castillo de Santa Catalina (Jaén) se ve en pintura del Greco — y desde su mirador se domina el mar de olivos hasta Sierra Mágina.', en:'Santa Catalina Castle (Jaén) appears in an El Greco painting — its mirador sweeps the olive sea to Sierra Mágina.' },
+  { type:'fact', es:'En Andújar (Jaén) se celebra el Cristo de los Jueves Santos, una procesión que reúne a más de 700.000 peregrinos cada abril.', en:'Andújar (Jaén) hosts the Cristo de los Jueves Santos, a procession drawing over 700,000 pilgrims each April.' },
+  { type:'fact', es:'El cocido de pelotas, el ajilimoje, los ochíos y las gachamigas son cuatro pilares de la cocina serrana de Jaén.', en:'Cocido de pelotas, ajilimoje, ochíos and gachamigas are four pillars of Jaén\'s mountain cuisine.' },
+  { type:'fact', es:'Iznatoraf es uno de los pueblos más altos de Jaén: 1.063 m, calles empedradas de piedra y vistas que llegan a Sierra Cazorla y Sierra Morena.', en:'Iznatoraf is one of Jaén\'s highest villages: 1,063 m, cobbled streets, views reaching Cazorla and Sierra Morena.' },
+  { type:'fact', es:'En Sabiote, Jaén, el castillo de los Vázquez de Molina conserva uno de los patios renacentistas más bellos de España, casi desconocido.', en:'In Sabiote, Jaén, the Vázquez de Molina castle holds one of Spain\'s loveliest — and least-known — Renaissance courtyards.' },
+
+  /* ── CRUCE DE PROVINCIAS Y CURIOSIDADES VARIAS ────────────── */
+  { type:'fact', es:'Almería, Murcia, Granada y Jaén comparten Sierra Nevada: la única cordillera del sur de Europa con nieve casi todo el año.', en:'Almería, Murcia, Granada and Jaén share Sierra Nevada — the only southern-European range with snow most of the year.' },
+  { type:'fact', es:'La N-340, "carretera del Mediterráneo", recorre Almería, Murcia y Cataluña enlazando a más de 4 millones de habitantes costeros.', en:'The N-340 "Mediterranean road" crosses Almería, Murcia and Catalonia, linking over 4 million coastal residents.' },
+  { type:'fact', es:'En la frontera Almería-Granada, el Geoparque del Cabo de Gata se cruza con el de Sierra Nevada — único corredor desierto-alta montaña de Europa.', en:'On the Almería-Granada border, the Cabo de Gata Geopark meets Sierra Nevada\'s — Europe\'s only desert-to-high-mountain corridor.' },
+  { type:'fact', es:'El Geoparque Mundial UNESCO de Granada (norte) y el del Cabo de Gata (Almería) son dos de los seis únicos de España.', en:'Granada\'s northern UNESCO Global Geopark and Cabo de Gata\'s (Almería) are two of just six in all of Spain.' },
+  { type:'fact', es:'Los olivos del campo de Vera y los de Jaén forman parte del mayor bosque cultivado del mundo: 350 millones de olivos.', en:'Vera\'s olive groves and Jaén\'s belong to the world\'s largest cultivated forest: 350 million olive trees.' },
+  { type:'fact', es:'El AVE Madrid-Granada, abierto en 2019, redujo el viaje desde Madrid a 3 h — antes eran casi 5 con tren convencional.', en:'The Madrid-Granada AVE high-speed line, opened in 2019, cut Madrid travel to 3 h — formerly nearly 5 by conventional train.' },
+  { type:'fact', es:'La carretera A-92, que cruza Andalucía oriental, es la única que une a las cuatro provincias fronterizas con Almería en menos de 4 horas.', en:'The A-92 motorway across eastern Andalusia is the only road linking all four provinces bordering Almería in under 4 hours.' },
+  { type:'fact', es:'Granada y Almería tienen el cielo más oscuro de la Andalucía mediterránea — la noche en el Cabo y en Sierra Nevada compite con la del Atacama.', en:'Granada and Almería have Andalusia\'s darkest Mediterranean skies — nights at Cabo de Gata and Sierra Nevada rival those of Atacama.' },
+
+  /* ── HESTÍA · TOQUES DE MARCA ─────────────────────────────── */
+  { type:'fact', es:'Hestía está más cerca de Mojácar (10 min) que del centro de Vera pueblo (15 min) — la mejor manera de conocer ambos sin moverte de Hestía.', en:'Hestía is closer to Mojácar (10 min) than to Vera town centre (15 min) — the best way to know both without leaving Hestía.' },
+  { type:'fact', es:'Desde la terraza de Hestía Thalassa se ve el Mediterráneo, el Salar de los Canos y, en días limpios, las cumbres nevadas de Sierra Nevada.', en:'From Hestía Thalassa\'s terrace you can see the Mediterranean, the Salar de los Canos and, on clear days, snow-capped Sierra Nevada.' },
+  { type:'fact', es:'A 30 min de Hestía empieza el Parque Natural de Cabo de Gata-Níjar y a 90 min el Parque Natural de Sierra María-Los Vélez. Dos parques en un día son posibles.', en:'30 min from Hestía starts the Cabo de Gata-Níjar Natural Park; 90 min to Sierra María-Los Vélez. Two parks in one day is possible.' },
+  { type:'fact', es:'Hestía Vera Salinas linda con el Parque Natural de las Salinas de Puerto Rey: andas tres minutos y estás entre flamencos.', en:'Hestía Vera Salinas adjoins the Puerto Rey Salt Flats Natural Park: a three-minute walk puts you among flamingos.' },
 ];
 
 // ── Datos curiosos exclusivos para la home ──
@@ -1745,16 +1825,32 @@ const DirectBookingPerks = ({ lang }) => {
 // ================================================================
 const AptDesktopSidebar = ({ lang, onGuideClick }) => {
   const ribbon = DIRECT_RIBBON[lang];
-  const [closed, setClosed] = React.useState(false);
-  if (closed) return null;
+  const [minimized, setMinimized] = React.useState(false);
+  if (minimized) {
+    return (
+      <button
+        type="button"
+        className="apt-desktop-sidebar-mini"
+        onClick={() => setMinimized(false)}
+        aria-label={lang === 'es' ? 'Restaurar widget de reserva directa' : 'Restore direct-booking widget'}
+        title={lang === 'es' ? 'Reserva directa' : 'Direct booking'}
+      >
+        <span className="ads-mini-star" aria-hidden="true">✦</span>
+        <span className="ads-mini-label">
+          {lang === 'es' ? 'Reserva directa' : 'Direct booking'}
+        </span>
+      </button>
+    );
+  }
   return (
     <aside className="apt-desktop-sidebar" aria-label={lang === 'es' ? 'Reserva directa y guía' : 'Direct booking and guide'}>
       <button
         type="button"
-        className="ads-close"
-        aria-label={lang === 'es' ? 'Ocultar' : 'Hide'}
-        onClick={() => setClosed(true)}
-      >×</button>
+        className="ads-min"
+        aria-label={lang === 'es' ? 'Minimizar' : 'Minimize'}
+        title={lang === 'es' ? 'Minimizar' : 'Minimize'}
+        onClick={() => setMinimized(true)}
+      >−</button>
       <section className="ads-card ads-perks">
         <span className="eyebrow">{lang === 'es' ? 'Reserva directa' : 'Direct booking'}</span>
         <h4 className="ads-title">
