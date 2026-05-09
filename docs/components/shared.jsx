@@ -2233,34 +2233,198 @@ const WidgetTopRecs = ({ lang }) => {
   );
 };
 
-// Botón corporativo "Acceso huéspedes" — siempre visible, sin estado
-// expand/minimize. Dispara el evento global hestia:open-guide-pin
-// (manejado por AptGuideGate en las páginas Hestía). Si no hay
-// gate en la página, también navegamos a mar.html como fallback
-// para que el huésped llegue a un sitio donde poder introducir el PIN.
-const WidgetGuestAccess = ({ lang }) => {
-  const onClick = () => {
-    const gate = document.querySelector('.apt-guide-gate');
-    if (gate) {
-      gate.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTimeout(() => window.dispatchEvent(new Event('hestia:open-guide-pin')), 250);
+// PINs por apartamento. Espejo del que vive en apartment-page.jsx /
+// apartment-guide.jsx — al ser un sitio estático, los PINs no son
+// secretos: solo fricción de UX para diferenciar a huéspedes.
+const HESTIA_GUIDE_PINS = { vm: 'HVM2016', vt: 'HVT2019', vs: 'HVS2021' };
+const HESTIA_APT_META = {
+  vm: { name: 'Hestía Mar',      slug: 'mar',      accent: '#3AAABB', concept_es: 'Frente a la playa', concept_en: 'By the beach' },
+  vt: { name: 'Hestía Thalassa', slug: 'thalassa', accent: '#8A4A24', concept_es: 'Ático panorámico',  concept_en: 'Panoramic penthouse' },
+  vs: { name: 'Hestía Salinas',  slug: 'salinas',  accent: '#9E7A2C', concept_es: 'Junto a las salinas', concept_en: 'Next to the salt flats' },
+};
+
+// Modal global de acceso huéspedes. Dos pasos:
+// 1) Selección de Hestía (omitido si window.__APT__ ya está definido).
+// 2) Introducción del PIN.
+// PIN correcto → marca sessionStorage y navega a <slug>.html. La
+// apartment-page detecta el flag al montar y abre la guía directamente.
+const GuestAccessModal = ({ lang, onClose }) => {
+  const currentApt = window.__APT__;
+  const [step, setStep] = React.useState(currentApt ? 'pin' : 'select');
+  const [selectedApt, setSelectedApt] = React.useState(currentApt || null);
+  const [pin, setPin] = React.useState('');
+  const [status, setStatus] = React.useState('idle');
+  const inputRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (step === 'pin' && inputRef.current) {
+      setTimeout(() => inputRef.current.focus(), 80);
+    }
+  }, [step]);
+  React.useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
+  const pickApt = (id) => {
+    setSelectedApt(id);
+    setStep('pin');
+  };
+  const back = () => {
+    if (currentApt) return; // si estás en una página Hestía, no hay paso atrás
+    setStep('select');
+    setPin('');
+    setStatus('idle');
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+    const expected = HESTIA_GUIDE_PINS[selectedApt];
+    if (pin.trim().toUpperCase() === expected) {
+      setStatus('success');
+      try { sessionStorage.setItem('hestia-guide-unlock-' + selectedApt, '1'); } catch (err) {}
+      const meta = HESTIA_APT_META[selectedApt];
+      // Si ya estás en la página del apt seleccionado, dispara el
+      // evento que abre la guía in-situ (sin navegación). Si no,
+      // navega al .html — el flag de sessionStorage hace que se
+      // abra la guía automáticamente al cargar.
+      setTimeout(() => {
+        if (currentApt === selectedApt) {
+          window.dispatchEvent(new Event('hestia:open-guide-pin'));
+          onClose();
+        } else {
+          window.location.href = meta.slug + '.html';
+        }
+      }, 360);
     } else {
-      window.location.href = 'mar.html#guide';
+      setStatus('error');
+      if (inputRef.current) inputRef.current.focus();
     }
   };
+
+  const t = lang === 'es' ? {
+    title_select: 'Acceso huéspedes',
+    desc_select:  'Elige tu Hestía e introduce el PIN que te enviamos con la reserva.',
+    title_pin: (n) => `Acceso a ${n}`,
+    desc_pin: 'Introduce el PIN que recibiste con tu reserva.',
+    placeholder: 'PIN de tu reserva',
+    submit: 'Entrar',
+    helper: 'El PIN está en tu confirmación de reserva.',
+    error: 'PIN incorrecto. Revisa tu confirmación.',
+    success: 'PIN correcto. Abriendo guía…',
+    cancel: 'Cancelar',
+    back: '← Cambiar',
+  } : {
+    title_select: 'Guest access',
+    desc_select:  'Pick your Hestía and enter the PIN we sent with your booking.',
+    title_pin: (n) => `${n} guide access`,
+    desc_pin: 'Enter the PIN from your booking.',
+    placeholder: 'Booking PIN',
+    submit: 'Open',
+    helper: 'You will find the PIN in your booking confirmation.',
+    error: 'Wrong PIN. Check your booking confirmation.',
+    success: 'PIN accepted. Opening guide…',
+    cancel: 'Cancel',
+    back: '← Change',
+  };
+
+  const aptIds = ['vm', 'vt', 'vs'];
+
   return (
-    <button
-      type="button"
-      className="widget-mini widget-mini-access"
-      onClick={onClick}
-      aria-label={lang === 'es' ? 'Acceso huéspedes' : 'Guest access'}
-      title={lang === 'es' ? 'Acceso huéspedes con PIN' : 'Guest access with PIN'}
-    >
-      <span className="widget-mini-icon" aria-hidden="true">✦</span>
-      <span className="widget-mini-label">
-        {lang === 'es' ? 'Acceso huéspedes' : 'Guest access'}
-      </span>
-    </button>
+    <div className="ga-modal-backdrop" onClick={onClose}>
+      <div
+        className={`ga-modal${status === 'error' ? ' is-error' : ''}${status === 'success' ? ' is-success' : ''}`}
+        role="dialog"
+        aria-modal="true"
+        onClick={e => e.stopPropagation()}
+        style={selectedApt ? { '--ga-accent': HESTIA_APT_META[selectedApt].accent } : undefined}
+      >
+        <button className="ga-modal-close" onClick={onClose} aria-label={t.cancel}>×</button>
+        {step === 'select' ? (
+          <>
+            <span className="ga-modal-eyebrow">{t.title_select}</span>
+            <p className="ga-modal-desc">{t.desc_select}</p>
+            <div className="ga-apt-grid">
+              {aptIds.map(id => {
+                const m = HESTIA_APT_META[id];
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    className="ga-apt-card"
+                    onClick={() => pickApt(id)}
+                    style={{ '--ga-accent': m.accent }}
+                  >
+                    <span className="ga-apt-star" aria-hidden="true">✦</span>
+                    <span className="ga-apt-name">{m.name}</span>
+                    <span className="ga-apt-concept">{m[`concept_${lang}`]}</span>
+                    <span className="ga-apt-arrow" aria-hidden="true">→</span>
+                  </button>
+                );
+              })}
+            </div>
+          </>
+        ) : (
+          <>
+            <span className="ga-modal-eyebrow">{HESTIA_APT_META[selectedApt].name}</span>
+            <h3 className="ga-modal-title">{t.title_pin(HESTIA_APT_META[selectedApt].name)}</h3>
+            <p className="ga-modal-desc">{t.desc_pin}</p>
+            <form onSubmit={submit} noValidate>
+              <label htmlFor="ga-pin" className="ga-modal-label">{t.placeholder}</label>
+              <input
+                ref={inputRef}
+                id="ga-pin"
+                type="text"
+                inputMode="text"
+                autoComplete="off"
+                autoCapitalize="characters"
+                spellCheck={false}
+                maxLength={12}
+                className="ga-modal-input"
+                placeholder="HVX0000"
+                value={pin}
+                onChange={e => { setPin(e.target.value); if (status !== 'idle') setStatus('idle'); }}
+                aria-invalid={status === 'error'}
+              />
+              <p className="ga-modal-msg" role="status">
+                {status === 'error'   ? t.error   :
+                 status === 'success' ? t.success :
+                 t.helper}
+              </p>
+              <div className="ga-modal-actions">
+                {!currentApt && (
+                  <button type="button" className="ga-modal-back" onClick={back}>{t.back}</button>
+                )}
+                <button type="submit" className="ga-modal-submit">{t.submit}</button>
+              </div>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Botón corporativo "Acceso huéspedes" — abre el modal global.
+const WidgetGuestAccess = ({ lang }) => {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <>
+      <button
+        type="button"
+        className="widget-mini widget-mini-access"
+        onClick={() => setOpen(true)}
+        aria-label={lang === 'es' ? 'Acceso huéspedes' : 'Guest access'}
+        title={lang === 'es' ? 'Acceso huéspedes con PIN' : 'Guest access with PIN'}
+      >
+        <span className="widget-mini-icon" aria-hidden="true">✦</span>
+        <span className="widget-mini-label">
+          {lang === 'es' ? 'Acceso huéspedes' : 'Guest access'}
+        </span>
+      </button>
+      {open && <GuestAccessModal lang={lang} onClose={() => setOpen(false)} />}
+    </>
   );
 };
 
