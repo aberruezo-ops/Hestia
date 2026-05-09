@@ -266,7 +266,7 @@ const Cookies = ({ lang }) => {
   return (
     <div className={`cookies ${visible ? 'show' : ''}`}>
       <h5>{lang === 'es' ? 'Cookies necesarias' : 'Cookie notice'}</h5>
-      <p style={{margin:0, opacity:0.75, lineHeight:1.5}}>
+      <p>
         {lang === 'es'
           ? 'Usamos cookies para que la web funcione. Puedes elegir.'
           : 'We use cookies to make this site work. You can choose.'}
