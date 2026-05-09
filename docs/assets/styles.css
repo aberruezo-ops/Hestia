@@ -959,21 +959,22 @@ section {
 }
 
 /* -------- Cookies banner --------
-   Card compacto centrado abajo. Bordes redondeados moderados (no 999) para
-   permitir wrap sin alturas locas. Animación con opacity para no chocar con
-   transform de padres. z-index altísimo para ir por encima de Tawk chat. */
+   Forma de botón corporativo: fondo ber-dk con borde sol a la izquierda,
+   redondeado asimétrico (igual que .widget-card y .ads-card). ✦ inicial
+   y texto en crema/arena. Animación con opacity para no chocar con
+   transform de padres. z-index altísimo para ir por encima de Tawk. */
 .cookies {
   position: fixed;
   left: 50%;
   bottom: 24px;
-  width: min(540px, calc(100vw - 24px));
-  background: var(--crema);
-  color: var(--ber-dk);
-  padding: 14px 18px;
-  border-radius: 18px;
-  border: 1px solid rgba(61,26,53,0.10);
-  box-shadow: 0 18px 50px rgba(42, 15, 46, 0.36), 0 4px 14px rgba(42,15,46,0.18);
-  z-index: 9999;  /* por encima de Tawk (~1000) y de cualquier sticky */
+  width: min(560px, calc(100vw - 24px));
+  background: var(--ber-dk);
+  color: var(--arena);
+  padding: 14px 20px 14px 22px;
+  border-radius: 14px 0 14px 0;
+  border-left: 4px solid var(--sol);
+  box-shadow: 0 18px 50px rgba(42, 15, 46, 0.42), 0 4px 14px rgba(42,15,46,0.22);
+  z-index: 9999;
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -999,13 +1000,27 @@ section {
 body.apt-bar-shown .cookies {
   bottom: calc(var(--apt-sticky-h, 60px) + 16px);
 }
+/* ✦ corporativo al inicio. */
+.cookies::before {
+  content: '✦';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: rgba(240,232,213,.08);
+  color: var(--sol);
+  font-size: 14px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
 .cookies h5 {
   font-family: var(--serif);
   font-size: 15px;
   font-weight: 500;
   margin: 0;
   line-height: 1.2;
-  color: var(--ber-dk);
+  color: var(--sol);
   white-space: nowrap;
 }
 .cookies p {
@@ -1014,8 +1029,8 @@ body.apt-bar-shown .cookies {
   min-width: 180px;
   font-size: 13px;
   line-height: 1.45;
-  color: var(--ber-dk);
-  opacity: 0.85;
+  color: var(--arena);
+  opacity: 0.88;
 }
 .cookies .cookies-btns {
   display: flex;
@@ -1026,21 +1041,40 @@ body.apt-bar-shown .cookies {
 .cookies .cookies-btns button {
   padding: 9px 16px;
   font-size: 11px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   font-weight: 600;
   border-radius: 999px;
-  border: 1px solid var(--ber);
+  border: 1px solid var(--sol);
   white-space: nowrap;
   cursor: pointer;
   transition: background var(--dur-base, .2s) var(--ease-out, ease),
               color var(--dur-base, .2s) var(--ease-out, ease),
-              border-color var(--dur-base, .2s) var(--ease-out, ease);
+              border-color var(--dur-base, .2s) var(--ease-out, ease),
+              transform .15s ease;
 }
-.cookies .cookies-btns .accept { background: var(--ber); color: var(--crema); }
-.cookies .cookies-btns .accept:hover { background: var(--ber-dk); border-color: var(--ber-dk); }
-.cookies .cookies-btns .essential { background: transparent; color: var(--ber); }
-.cookies .cookies-btns .essential:hover { background: var(--ber); color: var(--crema); }
+/* Override colores corporativos sobre el fondo ber-dk. */
+.cookies .cookies-btns .accept {
+  background: var(--sol);
+  color: var(--ber-dk);
+  border-color: var(--sol);
+}
+.cookies .cookies-btns .accept:hover {
+  background: transparent;
+  color: var(--sol);
+  border-color: var(--sol);
+  transform: translateX(2px);
+}
+.cookies .cookies-btns .essential {
+  background: transparent;
+  color: var(--sol);
+  border-color: var(--sol);
+}
+.cookies .cookies-btns .essential:hover {
+  background: rgba(240,232,213,.08);
+  color: var(--sol);
+  border-color: var(--sol);
+}
 
 /* ============================================================
    HERO
