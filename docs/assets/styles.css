@@ -7937,6 +7937,57 @@ footer,
   font-weight: 600;
 }
 
+/* SITIOS WEB TURÍSTICOS ----------------------------------------- */
+.ag-sites { margin: 32px 0 0; }
+.ag-sites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px 22px;
+  margin-top: 16px;
+}
+.ag-sites-group {
+  background: color-mix(in oklab, var(--apt-accent) 4%, var(--crema));
+  border-radius: 10px 0 10px 0;
+  padding: 16px 18px 14px;
+}
+.ag-sites-group-title {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--apt-accent);
+  font-weight: 600;
+  margin: 0 0 10px;
+  line-height: 1.3;
+}
+.ag-sites-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+.ag-sites-list li { line-height: 1.45; }
+.ag-sites-list a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.ag-sites-list a:hover {
+  color: var(--apt-accent);
+  border-bottom-color: currentColor;
+}
+.ag-sites-arrow {
+  color: var(--apt-accent);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
 /* PHOTO GRID ----------------------------------------------------- */
 .ag-photo-grid {
   display: grid;
