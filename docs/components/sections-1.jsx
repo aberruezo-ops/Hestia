@@ -51,7 +51,7 @@ const Hero = ({ lang, onScrollDown }) => {
           <span className="hero-proof-item">★ 10 <span className="hero-proof-name">Thalassa</span></span>
           <span className="hero-proof-dot"/>
           <span className="hero-proof-item">★ 9.9 <span className="hero-proof-name">Salinas</span></span>
-          <span className="hero-proof-platform">Booking.com</span>
+          <span className="hero-proof-platform">{lang === 'es' ? 'Booking · Airbnb · Google' : 'Booking · Airbnb · Google'}</span>
         </div>
       </div>
       <div className="hero-meta">
