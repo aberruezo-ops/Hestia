@@ -820,6 +820,17 @@ const ApartmentPageApp = () => {
       </main>
       <Footer lang={lang} />
       {!showGuide && <AptStickyBar apt={apt} lang={lang} scrolled={scrolled} />}
+      {/* En escritorio/iPad mostramos el widget de reserva directa + guía;
+          StickyFacts queda solo en móvil — CSS resuelve el switch. */}
+      {!showGuide && (
+        <AptDesktopSidebar
+          lang={lang}
+          onGuideClick={() => {
+            const el = document.querySelector('.apt-guide-gate');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }}
+        />
+      )}
       <StickyFacts lang={lang} />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />

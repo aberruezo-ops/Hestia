@@ -1702,6 +1702,13 @@ const DirectBookingModal = ({ lang, onClose }) => {
 // modal con carrusel y stat ribbon.
 const DirectBookingPerks = ({ lang }) => {
   const [open, setOpen] = React.useState(false);
+  // Permite abrir el modal desde otros lugares (ej. el sidebar de
+  // escritorio en las páginas de Hestía) disparando un evento global.
+  React.useEffect(() => {
+    const onOpen = () => setOpen(true);
+    window.addEventListener('hestia:open-direct-perks', onOpen);
+    return () => window.removeEventListener('hestia:open-direct-perks', onOpen);
+  }, []);
   return (
     <>
       <section className="dbt-band">
@@ -1730,4 +1737,69 @@ const DirectBookingPerks = ({ lang }) => {
   );
 };
 
-Object.assign(window, { DirectBookingPerks, DirectBookingModal, DIRECT_PERKS, DIRECT_RIBBON });
+// ================================================================
+// AptDesktopSidebar — widget lateral visible solo en escritorio/iPad
+// (≥900 px) en las páginas de Hestía. Sustituye a StickyFacts ahí.
+// Dos cajas apiladas: ventajas resumidas (con CTA al modal completo)
+// y acceso a la guía si ya estás reservado.
+// ================================================================
+const AptDesktopSidebar = ({ lang, onGuideClick }) => {
+  const ribbon = DIRECT_RIBBON[lang];
+  const [closed, setClosed] = React.useState(false);
+  if (closed) return null;
+  return (
+    <aside className="apt-desktop-sidebar" aria-label={lang === 'es' ? 'Reserva directa y guía' : 'Direct booking and guide'}>
+      <button
+        type="button"
+        className="ads-close"
+        aria-label={lang === 'es' ? 'Ocultar' : 'Hide'}
+        onClick={() => setClosed(true)}
+      >×</button>
+      <section className="ads-card ads-perks">
+        <span className="eyebrow">{lang === 'es' ? 'Reserva directa' : 'Direct booking'}</span>
+        <h4 className="ads-title">
+          {lang === 'es'
+            ? <>Una <em>mejor manera</em> de reservar</>
+            : <>A <em>better way</em> to book</>}
+        </h4>
+        <ul className="ads-stats">
+          {ribbon.map((s, i) => (
+            <li key={i} className="ads-stat">
+              <strong>{s.num}</strong>
+              <span>{s.label}</span>
+            </li>
+          ))}
+        </ul>
+        <button
+          type="button"
+          className="ads-btn"
+          onClick={() => window.dispatchEvent(new Event('hestia:open-direct-perks'))}
+        >
+          <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </section>
+      <section className="ads-card ads-guide">
+        <span className="eyebrow">{lang === 'es' ? '¿Ya estás reservado?' : 'Already booked?'}</span>
+        <h4 className="ads-title">
+          {lang === 'es' ? <>Tu <em>guía privada</em></> : <>Your <em>private guide</em></>}
+        </h4>
+        <p className="ads-text">
+          {lang === 'es'
+            ? 'Recomendaciones de Alex y Fran, instrucciones de tu Hestía, planes de día y todo lo que necesitas para tu estancia.'
+            : 'Alex & Fran\'s recommendations, your Hestía instructions, day plans and everything you need for your stay.'}
+        </p>
+        <button
+          type="button"
+          className="ads-btn ads-btn-ghost"
+          onClick={onGuideClick}
+        >
+          <span>{lang === 'es' ? 'Acceder con PIN' : 'Open with PIN'}</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </section>
+    </aside>
+  );
+};
+
+Object.assign(window, { DirectBookingPerks, DirectBookingModal, AptDesktopSidebar, DIRECT_PERKS, DIRECT_RIBBON });
