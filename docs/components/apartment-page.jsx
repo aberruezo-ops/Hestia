@@ -826,8 +826,12 @@ const ApartmentPageApp = () => {
         <AptDesktopSidebar
           lang={lang}
           onGuideClick={() => {
+            // Scroll a la sección y, en paralelo, dispara el evento que
+            // abre el modal de PIN dentro de AptGuideGate. Pequeño delay
+            // para que el scroll suave comience antes del modal.
             const el = document.querySelector('.apt-guide-gate');
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            setTimeout(() => window.dispatchEvent(new Event('hestia:open-guide-pin')), 250);
           }}
         />
       )}
