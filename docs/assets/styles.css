@@ -10360,3 +10360,30 @@ body.apt-bar-shown .widget-stack {
   max-width: 200px;
   line-height: 1.4;
 }
+
+/* Acciones del formulario de reservas: 2 botones (WhatsApp + Email)
+   en fila, cada uno se habilita según campos rellenos. */
+.reservas-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.reservas-actions > .btn { flex: 1 1 220px; }
+.reservas-submit-mail {
+  width: 100%;
+  padding: 16px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--ber);
+  border: 1.5px solid var(--ber);
+  border-radius: 10px 0 10px 0;
+  cursor: pointer;
+  transition: background var(--dur-liquid) var(--ease-liquid),
+              color var(--dur-liquid) var(--ease-liquid);
+}
+.reservas-submit-mail:hover { background: var(--ber); color: var(--crema); }
