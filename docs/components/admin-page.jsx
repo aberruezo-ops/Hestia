@@ -519,6 +519,79 @@ const AdminApp = () => {
       </div>
 
       <div className="pe-card">
+        <h2>Estancia corta · precio penalizado</h2>
+        <p className="pe-lede">
+          Para empujar a estancias de 5+ noches, las de 3 y 4 se cotizan
+          como si duraran más, menos un descuento fijo. Ej.: 3 noches =
+          precio de 5 noches − 10 €. Vacía la tabla para desactivar.
+        </p>
+        <table className="pe-table">
+          <thead>
+            <tr>
+              <th>Noches reales</th>
+              <th>Calcular como (noches)</th>
+              <th>Descuento fijo (€)</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {(data.rules.shortStayPricing || []).map((r, i) => (
+              <tr key={i}>
+                <td>
+                  <input type="number" min="1" step="1"
+                    value={r.nights}
+                    onChange={e => {
+                      const arr = (data.rules.shortStayPricing || []).slice();
+                      arr[i] = { ...arr[i], nights: Number(e.target.value) };
+                      update('rules.shortStayPricing', arr);
+                    }}
+                    className="pe-input pe-input-num" />
+                </td>
+                <td>
+                  <input type="number" min="1" step="1"
+                    value={r.basedOnNights}
+                    onChange={e => {
+                      const arr = (data.rules.shortStayPricing || []).slice();
+                      arr[i] = { ...arr[i], basedOnNights: Number(e.target.value) };
+                      update('rules.shortStayPricing', arr);
+                    }}
+                    className="pe-input pe-input-num" />
+                </td>
+                <td>
+                  <input type="number" min="0" step="1"
+                    value={r.discount}
+                    onChange={e => {
+                      const arr = (data.rules.shortStayPricing || []).slice();
+                      arr[i] = { ...arr[i], discount: Number(e.target.value) };
+                      update('rules.shortStayPricing', arr);
+                    }}
+                    className="pe-input pe-input-num" />
+                </td>
+                <td style={{textAlign:'right'}}>
+                  <button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
+                    onClick={() => {
+                      const arr = (data.rules.shortStayPricing || []).slice();
+                      arr.splice(i, 1);
+                      update('rules.shortStayPricing', arr);
+                    }}
+                    aria-label="Eliminar">×</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
+          style={{marginTop: 8}}
+          onClick={() => {
+            const arr = (data.rules.shortStayPricing || []).slice();
+            const last = arr[arr.length - 1];
+            const nextN = last ? last.nights + 1 : 3;
+            arr.push({ nights: nextN, basedOnNights: nextN + 2, discount: 10 });
+            update('rules.shortStayPricing', arr);
+          }}>+ Regla</button>
+      </div>
+
+      <div className="pe-card">
         <h2>Descuentos por estancia larga</h2>
         <table className="pe-table">
           <thead>

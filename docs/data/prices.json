@@ -19,8 +19,11 @@
 
   "rules": {
     "extraGuestPerNight": 5,
-    "minNights": 4,
-    "minStayPriceEquivalentToFour": true,
+    "minNights": 3,
+    "shortStayPricing": [
+      { "nights": 3, "basedOnNights": 5, "discount": 10, "label": "3 noches: precio de 5 − 10 €" },
+      { "nights": 4, "basedOnNights": 6, "discount": 20, "label": "4 noches: precio de 6 − 20 €" }
+    ],
     "directDiscount": 0.09,
     "petFlatFee": 50,
     "stayDiscounts": [
