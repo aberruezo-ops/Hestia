@@ -89,12 +89,15 @@ const CATEGORIES = [
 // Cuando un goo.gl link está disponible, va en .url para el detalle.
 const PLACES = [
   // Hestía (centro del mapa) — los 3 en Vera Playa
-  // Coordenadas: Salinas confirmada por dirección postal (Pueblo Salinas
-  // Fase II, Avenida de la Alcazaba 115, Plus Code 65JJ+9P). Mar y
-  // Thalassa siguen siendo aproximadas hasta que se confirmen.
-  { id: 'hestia-mar',     name: 'Hestía Vera Mar',      cat: 'home',  lat: 37.2290, lng: -1.7960 },
-  { id: 'hestia-thalassa',name: 'Hestía Vera Thalassa', cat: 'home',  lat: 37.2300, lng: -1.7940 },
-  { id: 'hestia-salinas', name: 'Hestía Vera Salinas',  cat: 'home',  lat: 37.2125, lng: -1.7920 },
+  // Coordenadas exactas extraídas de los Plus Codes que el usuario
+  // pegó desde Google Maps (decodificadas a lat/lng centradas en cada
+  // pin). Direcciones postales:
+  //   · Mar      — C. Islas Canarias 7, Bloque 3 · 65HW+J3 Vera
+  //   · Thalassa — C. Tomillo 2                  · 65MG+8C Playas de Vera
+  //   · Salinas  — Avda. Alcazaba 115, Pueblo Salinas Fase II · 65JJ+9P Playas de Vera
+  { id: 'hestia-mar',     name: 'Hestía Vera Mar',      cat: 'home',  lat: 37.22883, lng: -1.80385 },
+  { id: 'hestia-thalassa',name: 'Hestía Vera Thalassa', cat: 'home',  lat: 37.23336, lng: -1.82415 },
+  { id: 'hestia-salinas', name: 'Hestía Vera Salinas',  cat: 'home',  lat: 37.23094, lng: -1.81860 },
 
   // Supermercados
   { id: 'coviran',        name: 'Covirán', desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa.', cat: 'super', lat: 37.2235, lng: -1.7975 },
@@ -753,10 +756,10 @@ const GuideMap = ({ lang, apt }) => {
       <div className="ag-map-note">
         {lang === 'es'
           ? (home
-              ? `Mapa centrado en ${home.name}. Coordenadas aproximadas — para la dirección exacta, escríbenos.`
+              ? `Mapa centrado en ${home.name}.`
               : 'Mapa general de Vera Playa. Cada recomendación de abajo abre Google Maps con la búsqueda directa.')
           : (home
-              ? `Map centred on ${home.name}. Coordinates approximate — for the exact address, just write to us.`
+              ? `Map centred on ${home.name}.`
               : 'Overview of Vera Playa. Each recommendation below opens Google Maps with a direct search.')}
       </div>
     </div>
