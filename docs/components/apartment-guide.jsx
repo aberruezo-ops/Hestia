@@ -89,12 +89,12 @@ const CATEGORIES = [
 // Cuando un goo.gl link está disponible, va en .url para el detalle.
 const PLACES = [
   // Hestía (centro del mapa) — los 3 en Vera Playa
-  // Coordenadas aproximadas: Mar y Thalassa en el sector textil de Vera Playa
-  // (zona Calle Islas Canarias / urbanización Vera Mediterránea); Salinas
-  // en Pueblo Salinas, junto al Parque Natural de las Salinas de Puerto Rey.
+  // Coordenadas: Salinas confirmada por dirección postal (Pueblo Salinas
+  // Fase II, Avenida de la Alcazaba 115, Plus Code 65JJ+9P). Mar y
+  // Thalassa siguen siendo aproximadas hasta que se confirmen.
   { id: 'hestia-mar',     name: 'Hestía Vera Mar',      cat: 'home',  lat: 37.2290, lng: -1.7960 },
   { id: 'hestia-thalassa',name: 'Hestía Vera Thalassa', cat: 'home',  lat: 37.2300, lng: -1.7940 },
-  { id: 'hestia-salinas', name: 'Hestía Vera Salinas',  cat: 'home',  lat: 37.2160, lng: -1.7980 },
+  { id: 'hestia-salinas', name: 'Hestía Vera Salinas',  cat: 'home',  lat: 37.2125, lng: -1.7920 },
 
   // Supermercados
   { id: 'coviran',        name: 'Covirán', desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa.', cat: 'super', lat: 37.2235, lng: -1.7975 },
@@ -200,48 +200,49 @@ const PLACES = [
   { id: 'aquarium',       name: 'Aquarium Costa de Almería', cat: 'culture', url: 'https://www.aquariumcostadealmeria.com/', lat: 36.7674, lng: -2.6094 },
   { id: 'mariposario',    name: 'Mariposario de Almería',  cat: 'culture', url: 'https://g.co/kgs/meY7kj', lat: 36.7641, lng: -2.6109 },
 
-  // Playas (orden: cerca-norte → Vera → sur hacia Cabo de Gata → Adra)
-  // Las del top-5 son las que destacamos arriba con "Saber más".
+  // Playas (orden geográfico: norte → Vera → Cabo de Gata → Almería → Adra).
+  // Cada entrada lleva rating (estrellas Google), services (qué tiene)
+  // y access (cómo se llega: 🚗 coche · 🚌 bus · 🚶 a pie · ⛵ barca).
   // ── HACIA EL NORTE (camino a Murcia)
-  { id: 'p-cocedores',    name: 'Playa de los Cocedores',        desc: 'San Juan de los Terreros (Pulpí). La última cala almeriense antes de Murcia. Aguas turquesas y rocas de arenisca con cuevas naturales.', cat: 'beach', url: 'https://goo.gl/maps/pCTJ8y5mt4y4VYkE8', lat: 37.3790, lng: -1.6260 },
-  { id: 'p-carolina',     name: 'Playa de la Carolina',          desc: 'San Juan de los Terreros. Larga, dorada, tranquila. Familiar.',                                       cat: 'beach', lat: 37.3550, lng: -1.6510 },
-  { id: 'p-calabardina',  name: 'Playa de Calabardina (Águilas)', desc: 'Murcia. Pueblo costero íntimo. Cala protegida, agua transparente. 35 min.',                          cat: 'beach', lat: 37.4020, lng: -1.5840 },
-  { id: 'p-hornillo',     name: 'Playa del Hornillo (Águilas)',  desc: 'Murcia. Cala urbana de aguas tranquilas, junto a la antigua estación inglesa.',                       cat: 'beach', lat: 37.4080, lng: -1.5780 },
-  { id: 'p-calnegre',     name: 'Playas de Calnegre',            desc: 'Lorca-Mazarrón (Murcia). Parque regional protegido, calas vírgenes y áridas. 50 min.',                cat: 'beach-hard', lat: 37.4730, lng: -1.4250 },
+  { id: 'p-cocedores',    name: 'Playa de los Cocedores',        desc: 'San Juan de los Terreros (Pulpí). Última cala almeriense antes de Murcia. Aguas turquesas y rocas de arenisca con cuevas naturales.', cat: 'beach', rating: 4.5, services: '🛏️ 🚻 ♿', access: '🚗 parking pequeño · pista corta', url: 'https://goo.gl/maps/pCTJ8y5mt4y4VYkE8', lat: 37.3790, lng: -1.6260 },
+  { id: 'p-carolina',     name: 'Playa de la Carolina',          desc: 'San Juan de los Terreros. Larga, dorada, tranquila. Familiar.', cat: 'beach', rating: 4.4, services: '🚿 🛟 🍹 🛏️ 🚻 ♿', access: '🚗 parking abundante', lat: 37.3550, lng: -1.6510 },
+  { id: 'p-calabardina',  name: 'Playa de Calabardina (Águilas)', desc: 'Murcia. Pueblo costero íntimo. Cala protegida, agua transparente. 35 min.', cat: 'beach', rating: 4.5, services: '🚿 🍹 🛏️ 🚻', access: '🚗 parking en pueblo', lat: 37.4020, lng: -1.5840 },
+  { id: 'p-hornillo',     name: 'Playa del Hornillo (Águilas)',  desc: 'Murcia. Cala urbana de aguas tranquilas, junto a la antigua estación inglesa.', cat: 'beach', rating: 4.5, services: '🚿 🛟 🍹 🛏️ 🚻', access: '🚗 · 🚌 línea Águilas', lat: 37.4080, lng: -1.5780 },
+  { id: 'p-calnegre',     name: 'Playas de Calnegre',            desc: 'Lorca-Mazarrón (Murcia). Parque regional protegido, calas vírgenes y áridas. 50 min.', cat: 'beach-hard', rating: 4.6, services: 'sin servicios', access: '🚗 pista de tierra · 🚶 corto', lat: 37.4730, lng: -1.4250 },
 
   // ── VERA PLAYA Y ALREDEDORES INMEDIATOS
-  { id: 'p-vera',         name: 'Playa de Vera (sector textil)', desc: 'Justo al lado de Hestía. Larga, fina, agua templada. La playa de cabecera.',                          cat: 'beach', lat: 37.2275, lng: -1.7935 },
-  { id: 'p-garrucha',     name: 'Playa de Garrucha',             desc: 'Pueblo pesquero a 10 min. Buena lonja de pescado. Paseo agradable.',                                  cat: 'beach', lat: 37.1810, lng: -1.8230 },
-  { id: 'p-macenas',      name: 'Playa de Macenas (Mojácar)',    desc: 'Sur de Mojácar. Mezcla de calas vírgenes y arena dorada. Castillo del s. XVIII al fondo.',           cat: 'beach', lat: 37.0830, lng: -1.8350 },
-  { id: 'p-piedras',      name: 'Piedras de Molino (Carboneras)', desc: 'Cala icónica al lado del Algarrobico. Aguas cristalinas, fondo rocoso para snorkel.',                cat: 'beach', url: 'https://goo.gl/maps/eySnjWJp1YcjkSiu9', lat: 37.0200, lng: -1.8730 },
+  { id: 'p-vera',         name: 'Playa de Vera (sector textil)', desc: 'Justo al lado de Hestía. Larga, fina, agua templada. La playa de cabecera.', cat: 'beach', rating: 4.4, services: '🚿 🛟 🍹 🛏️ 🚻 ♿ 🏊 Bandera Azul', access: '🚶 desde Hestía · 🚗 parking en calle', lat: 37.2275, lng: -1.7935 },
+  { id: 'p-garrucha',     name: 'Playa de Garrucha',             desc: 'Pueblo pesquero a 10 min. Buena lonja de pescado. Paseo agradable.', cat: 'beach', rating: 4.4, services: '🚿 🛟 🍹 🛏️ 🚻 ♿', access: '🚗 parking en pueblo', lat: 37.1810, lng: -1.8230 },
+  { id: 'p-macenas',      name: 'Playa de Macenas (Mojácar)',    desc: 'Sur de Mojácar. Mezcla de calas vírgenes y arena dorada. Castillo del s. XVIII al fondo.', cat: 'beach', rating: 4.5, services: '🍹 🛏️ parcial', access: '🚗 acceso por carretera', lat: 37.0830, lng: -1.8350 },
+  { id: 'p-piedras',      name: 'Piedras de Molino (Carboneras)', desc: 'Cala icónica al lado del Algarrobico. Aguas cristalinas, fondo rocoso para snorkel.', cat: 'beach', rating: 4.5, services: 'sin servicios', access: '🚗 parking pequeño · 🚶 5 min', url: 'https://goo.gl/maps/eySnjWJp1YcjkSiu9', lat: 37.0200, lng: -1.8730 },
 
   // ── HACIA EL SUR (Cabo de Gata)
-  { id: 'p-mesa-roldan',  name: 'Mesa Roldán (Carboneras)',      desc: 'Domo volcánico con faro y fortaleza. Mirador con vistas a la Playa de los Muertos. Sale en Juego de Tronos.', cat: 'beach', lat: 36.9620, lng: -1.9080 },
-  { id: 'p-muertos',      name: 'Playa de los Muertos',          desc: 'Carboneras. Top 5 mejores playas de España. Acceso por sendero pedregoso desde el aparcamiento. ~15 min andando.', cat: 'beach-hard', url: 'https://goo.gl/maps/uh1baJWHPp1uan81A', lat: 37.0050, lng: -1.8800, top5: true, top5Idx: 1 },
-  { id: 'p-enmedio',      name: 'Cala de Enmedio',               desc: 'Agua Amarga. Nuestra favorita. Desde el pueblo se anda media hora campo a través — lo que la mantiene casi virgen.', cat: 'beach-hard', url: 'https://goo.gl/maps/i72YXUhFgBzi7vhf6', lat: 36.9540, lng: -1.9740, top5: true, top5Idx: 4 },
-  { id: 'p-plomo',        name: 'Cala del Plomo',                desc: 'Agua Amarga. Cala virgen de arena oscura. Acceso a pie por pista, ~30 min. Aguas cristalinas.', cat: 'beach-hard', lat: 36.9460, lng: -1.9690 },
-  { id: 'p-aguamarga',    name: 'Playa de Agua Amarga',          desc: 'Pueblo blanco con encanto, calas pequeñas y restaurantes a pie de arena.',                            cat: 'beach', lat: 36.9395, lng: -2.0000 },
-  { id: 'p-negras',       name: 'Playa de Las Negras',           desc: 'Pueblo bohemio con cantos rodados negros y agua cristalina. Punto de salida hacia la Cala de San Pedro.', cat: 'beach', lat: 36.8770, lng: -2.0030 },
-  { id: 'p-san-pedro',    name: 'Cala de San Pedro',             desc: 'Solo accesible andando (90 min desde Las Negras) o en barca. Comunidad hippie estable, fuente natural, sin servicios.', cat: 'beach-hard', lat: 36.8540, lng: -1.9890 },
-  { id: 'p-playazo',      name: 'El Playazo de Rodalquilar',     desc: 'Cabo de Gata. De fácil acceso, larga, rocas en los extremos. Castillo de San Ramón al sur.',         cat: 'beach', url: 'https://goo.gl/maps/bu6fEsoT1mHC9j2w6', lat: 36.8470, lng: -2.0230 },
-  { id: 'p-isleta',       name: 'La Isleta del Moro',            desc: 'Pueblo pesquero diminuto con calas. Snorkel y comer en La Ola junto al mar.',                         cat: 'beach', url: 'https://maps.google.com?q=Playa+del+Penon+Blanco', lat: 36.7970, lng: -2.0630 },
-  { id: 'p-genoveses',    name: 'Playa de los Genoveses',        desc: 'San José. Bahía perfecta de medio km, dunas con sabinas. Acceso por bus desde la barrera en verano.', cat: 'beach', lat: 36.7610, lng: -2.0890, top5: true, top5Idx: 3 },
-  { id: 'p-monsul',       name: 'Playa de Mónsul',               desc: 'San José. Famosa por la duna y la roca volcánica. Sale en El bueno, el feo y el malo. Acceso barrera/bus.', cat: 'beach', lat: 36.7460, lng: -2.1130, top5: true, top5Idx: 2 },
-  { id: 'p-barronal',     name: 'Playa del Barronal',            desc: 'San José. Más virgen que Mónsul. Detrás de las dunas de la pista. Una de nuestras favoritas.',       cat: 'beach', url: 'https://goo.gl/maps/sF2xaKDPrHEgjpxv6', lat: 36.7430, lng: -2.1180, top5: true, top5Idx: 5 },
-  { id: 'p-medialuna',    name: 'Cala de la Media Luna',         desc: 'San José. Pequeña, simétrica, mar transparente. Se llega andando desde el Barronal.',                cat: 'beach-hard', url: 'https://goo.gl/maps/ngDbWgoBfAdH5x4S8', lat: 36.7415, lng: -2.1195 },
-  { id: 'p-cabogata',     name: 'Las Salinas (Cabo de Gata pueblo)', desc: 'Frente a las salinas con flamencos. Faro al fondo. Atardecer espectacular.',                       cat: 'beach', lat: 36.7530, lng: -2.2250 },
-  { id: 'p-fabriquilla',  name: 'La Fabriquilla / El Corralete', desc: 'Última cala antes del Faro de Cabo de Gata. Roca volcánica, agua transparente. Punto más al sur.',  cat: 'beach', lat: 36.7270, lng: -2.1950 },
+  { id: 'p-mesa-roldan',  name: 'Mesa Roldán (Carboneras)',      desc: 'Domo volcánico con faro y fortaleza. Mirador con vistas a la Playa de los Muertos. Sale en Juego de Tronos.', cat: 'beach', rating: 4.7, services: 'mirador · sin baño', access: '🚗 hasta el faro · 🚶 corto', lat: 36.9620, lng: -1.9080 },
+  { id: 'p-muertos',      name: 'Playa de los Muertos',          desc: 'Carboneras. Una de las mejores playas de España. Aguas cristalinas, cantos rodados grandes. Sin un solo servicio.', cat: 'beach-hard', rating: 4.6, services: 'virgen · sin servicios', access: '🚗 parking de pago en verano · 🚶 15 min sendero pedregoso, fuerte pendiente', url: 'https://goo.gl/maps/uh1baJWHPp1uan81A', lat: 37.0050, lng: -1.8800, top5: true, top5Idx: 1 },
+  { id: 'p-enmedio',      name: 'Cala de Enmedio',               desc: 'Agua Amarga. Nuestra favorita. Arena fina blanca enmarcada por roca esculpida. Casi virgen porque exige caminar.', cat: 'beach-hard', rating: 4.7, services: 'virgen · sin servicios', access: '🚗 hasta Agua Amarga · 🚶 30 min campo a través', url: 'https://goo.gl/maps/i72YXUhFgBzi7vhf6', lat: 36.9540, lng: -1.9740, top5: true, top5Idx: 4 },
+  { id: 'p-plomo',        name: 'Cala del Plomo',                desc: 'Agua Amarga. Cala virgen de arena oscura. Aguas cristalinas, snorkel.', cat: 'beach-hard', rating: 4.6, services: 'virgen · sin servicios', access: '🚗 pista corta · 🚶 30 min a pie', lat: 36.9460, lng: -1.9690 },
+  { id: 'p-aguamarga',    name: 'Playa de Agua Amarga',          desc: 'Pueblo blanco con encanto, calas pequeñas y restaurantes a pie de arena.', cat: 'beach', rating: 4.5, services: '🚿 🍹 🛏️ 🚻', access: '🚗 parking en pueblo', lat: 36.9395, lng: -2.0000 },
+  { id: 'p-negras',       name: 'Playa de Las Negras',           desc: 'Pueblo bohemio con cantos rodados negros y agua cristalina. Punto de salida hacia la Cala de San Pedro.', cat: 'beach', rating: 4.4, services: '🚿 🍹 🚻', access: '🚗 parking a la entrada del pueblo · ⛵ taxi-barca a San Pedro', lat: 36.8770, lng: -2.0030 },
+  { id: 'p-san-pedro',    name: 'Cala de San Pedro',             desc: 'Comunidad hippie estable, fuente de agua dulce, sin servicios. Solo accesible a pie o por barca.', cat: 'beach-hard', rating: 4.7, services: 'virgen · fuente natural', access: '🚶 90 min desde Las Negras (sendero costero) · ⛵ taxi-barca en verano', lat: 36.8540, lng: -1.9890 },
+  { id: 'p-playazo',      name: 'El Playazo de Rodalquilar',     desc: 'Cabo de Gata. De fácil acceso, larga, rocas en los extremos. Castillo de San Ramón al sur.', cat: 'beach', rating: 4.6, services: '🚻 mínimos · sin chiringuito', access: '🚗 hasta el aparcamiento al pie de la playa', url: 'https://goo.gl/maps/bu6fEsoT1mHC9j2w6', lat: 36.8470, lng: -2.0230 },
+  { id: 'p-isleta',       name: 'La Isleta del Moro',            desc: 'Pueblo pesquero diminuto con calas. Snorkel y comer en La Ola junto al mar.', cat: 'beach', rating: 4.5, services: '🍹 🚻', access: '🚗 parking en pueblo · 🚶 corto', url: 'https://maps.google.com?q=Playa+del+Penon+Blanco', lat: 36.7970, lng: -2.0630 },
+  { id: 'p-genoveses',    name: 'Playa de los Genoveses',        desc: 'San José. Bahía perfecta de medio km, dunas con sabinas. Sin servicios para preservar el paraje.', cat: 'beach', rating: 4.7, services: 'virgen · 🛟 verano', access: '🚌 bus desde San José en verano (acceso restringido al coche) · 🚲 carril bici · 🚶 25 min desde San José', lat: 36.7610, lng: -2.0890, top5: true, top5Idx: 3 },
+  { id: 'p-monsul',       name: 'Playa de Mónsul',               desc: 'San José. Famosa por la duna y la roca volcánica. Sale en El bueno, el feo y el malo y en Indiana Jones.', cat: 'beach', rating: 4.7, services: '🚻 🛟 verano · sin chiringuito', access: '🚌 bus desde San José en verano (acceso restringido al coche) · 🚲 carril bici', lat: 36.7460, lng: -2.1130, top5: true, top5Idx: 2 },
+  { id: 'p-barronal',     name: 'Playa del Barronal',            desc: 'San José. Más virgen que Mónsul. Detrás de las dunas de la pista. Una de nuestras favoritas.', cat: 'beach', rating: 4.6, services: 'virgen · sin servicios', access: '🚌 bus + 🚶 10 min andando entre dunas', url: 'https://goo.gl/maps/sF2xaKDPrHEgjpxv6', lat: 36.7430, lng: -2.1180, top5: true, top5Idx: 5 },
+  { id: 'p-medialuna',    name: 'Cala de la Media Luna',         desc: 'San José. Pequeña, simétrica, mar transparente. Se llega andando desde el Barronal.', cat: 'beach-hard', rating: 4.6, services: 'virgen', access: '🚶 desde el Barronal por sendero costero', url: 'https://goo.gl/maps/ngDbWgoBfAdH5x4S8', lat: 36.7415, lng: -2.1195 },
+  { id: 'p-cabogata',     name: 'Las Salinas (Cabo de Gata pueblo)', desc: 'Frente a las salinas con flamencos. Faro al fondo. Atardecer espectacular.', cat: 'beach', rating: 4.5, services: '🚿 🍹 🛏️ 🚻 ♿', access: '🚗 parking gratuito · 🚌 línea M-100', lat: 36.7530, lng: -2.2250 },
+  { id: 'p-fabriquilla',  name: 'La Fabriquilla / El Corralete', desc: 'Última cala antes del Faro de Cabo de Gata. Roca volcánica, agua transparente. Punto más al sur.', cat: 'beach', rating: 4.5, services: 'mínimos', access: '🚗 hasta el faro', lat: 36.7270, lng: -2.1950 },
 
   // ── ALMERÍA CAPITAL (paso intermedio hacia Adra)
-  { id: 'p-zapillo',      name: 'Playa del Zapillo (Almería)',   desc: 'Capital. Bandera azul. Paseo, hamacas, chiringuitos, paddle.',                                         cat: 'beach', lat: 36.8290, lng: -2.4380 },
-  { id: 'p-nueva-almeria', name: 'Playa Nueva Almería / Térmica', desc: 'Capital. Paralela al Zapillo, 1,5 km de arena con todos los servicios.',                              cat: 'beach', lat: 36.8270, lng: -2.4540 },
-  { id: 'p-costacabana',  name: 'Playa de Costacabana',          desc: 'Almería. Larga, urbana, con un paseo amplio. Buena para familias.',                                   cat: 'beach', lat: 36.8200, lng: -2.4040 },
-  { id: 'p-almeria',      name: 'Playa de El Palmer (Almería)',  desc: 'Capital. Paseo, hamacas, chiringuitos. 1 h 15 min en coche.',                                         cat: 'beach', lat: 36.8230, lng: -2.4140 },
-  { id: 'p-aguadulce',    name: 'Playa de Aguadulce (Roquetas)', desc: 'Roquetas de Mar. Larga, urbana, amplia. Buena para familia.',                                          cat: 'beach', lat: 36.8070, lng: -2.5680 },
-  { id: 'p-toyo',         name: 'Playa del Toyo (Retamar)',      desc: 'Retamar / El Ejido. Limita con el Parque Natural. Arena fina y tranquila.',                            cat: 'beach', lat: 36.8100, lng: -2.3640 },
-  { id: 'p-almerimar',    name: 'Playa de Almerimar (El Ejido)',  desc: 'Junto al puerto deportivo. 1 h 30 min de Vera. Aguas tranquilas.',                                    cat: 'beach', lat: 36.7050, lng: -2.7920 },
-  { id: 'p-balerma',      name: 'Playa de Balerma (El Ejido)',    desc: 'La playa más larga de la zona. Arena gruesa, casi virgen en algunos tramos.',                         cat: 'beach', lat: 36.7430, lng: -2.8870 },
-  { id: 'p-adra',         name: 'Playa de San Nicolás (Adra)',    desc: 'Adra. Última playa antes de Granada. 1 h 50 min en coche.',                                          cat: 'beach', lat: 36.7430, lng: -3.0220 },
+  { id: 'p-zapillo',      name: 'Playa del Zapillo (Almería)',   desc: 'Capital. Bandera Azul. Paseo, hamacas, chiringuitos, paddle.', cat: 'beach', rating: 4.3, services: '🚿 🛟 🍹 🛏️ 🚻 ♿ 🏊 Bandera Azul', access: '🚗 · 🚌 bus urbano', lat: 36.8290, lng: -2.4380 },
+  { id: 'p-nueva-almeria', name: 'Playa Nueva Almería / Térmica', desc: 'Capital. Paralela al Zapillo, 1,5 km de arena con todos los servicios.', cat: 'beach', rating: 4.3, services: '🚿 🛟 🍹 🛏️ 🚻 ♿', access: '🚗 · 🚌 bus urbano', lat: 36.8270, lng: -2.4540 },
+  { id: 'p-costacabana',  name: 'Playa de Costacabana',          desc: 'Almería. Larga, urbana, con un paseo amplio. Buena para familias.', cat: 'beach', rating: 4.2, services: '🚿 🛟 🍹 🛏️ 🚻', access: '🚗 · 🚌 bus M-2', lat: 36.8200, lng: -2.4040 },
+  { id: 'p-almeria',      name: 'Playa de El Palmer (Almería)',  desc: 'Capital. Paseo, hamacas, chiringuitos. 1 h 15 min en coche.', cat: 'beach', rating: 4.2, services: '🚿 🛟 🍹 🛏️ 🚻', access: '🚗 · 🚌 bus urbano', lat: 36.8230, lng: -2.4140 },
+  { id: 'p-aguadulce',    name: 'Playa de Aguadulce (Roquetas)', desc: 'Roquetas de Mar. Larga, urbana, amplia. Buena para familia.', cat: 'beach', rating: 4.3, services: '🚿 🛟 🍹 🛏️ 🚻 ♿ 🏊 Bandera Azul', access: '🚗 parking · 🚌 línea M-302', lat: 36.8070, lng: -2.5680 },
+  { id: 'p-toyo',         name: 'Playa del Toyo (Retamar)',      desc: 'Retamar / El Ejido. Limita con el Parque Natural. Arena fina y tranquila.', cat: 'beach', rating: 4.4, services: '🚿 🛟 🍹 🛏️ 🚻 ♿', access: '🚗 parking', lat: 36.8100, lng: -2.3640 },
+  { id: 'p-almerimar',    name: 'Playa de Almerimar (El Ejido)',  desc: 'Junto al puerto deportivo. 1 h 30 min de Vera. Aguas tranquilas.', cat: 'beach', rating: 4.3, services: '🚿 🛟 🍹 🛏️ 🚻 ♿ 🏊 Bandera Azul', access: '🚗 parking', lat: 36.7050, lng: -2.7920 },
+  { id: 'p-balerma',      name: 'Playa de Balerma (El Ejido)',    desc: 'La playa más larga de la zona. Arena gruesa, casi virgen en algunos tramos.', cat: 'beach', rating: 4.2, services: '🚿 🛟 🍹 🛏️ 🚻', access: '🚗 parking abundante', lat: 36.7430, lng: -2.8870 },
+  { id: 'p-adra',         name: 'Playa de San Nicolás (Adra)',    desc: 'Adra. Última playa antes de Granada. 1 h 50 min en coche.', cat: 'beach', rating: 4.2, services: '🚿 🛟 🍹 🛏️ 🚻', access: '🚗 parking', lat: 36.7430, lng: -3.0220 },
 
 
   // Playas para perros
@@ -793,8 +794,23 @@ const CatGroup = ({ cat, places, lang }) => {
                 <div className="ag-place-main">
                   <span className="ag-place-name">{p.name}</span>
                   {p.tier && <span className="ag-place-tier">{p.tier}</span>}
+                  {typeof p.rating === 'number' && (
+                    <span className="ag-place-rating" title={lang === 'es' ? 'Valoración Google' : 'Google rating'}>
+                      ⭐ {p.rating.toFixed(1)}
+                    </span>
+                  )}
                 </div>
                 {p.desc && <span className="ag-place-desc">{p.desc}</span>}
+                {p.services && (
+                  <span className="ag-place-services" aria-label={lang === 'es' ? 'Servicios' : 'Services'}>
+                    {p.services}
+                  </span>
+                )}
+                {p.access && (
+                  <span className="ag-place-access" aria-label={lang === 'es' ? 'Acceso' : 'Access'}>
+                    {p.access}
+                  </span>
+                )}
                 <a className="ag-place-link" href={mapHref} target="_blank" rel="noopener">
                   {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
                 </a>
@@ -844,8 +860,23 @@ const Top5BeachesBand = ({ places, lang }) => {
                 <span className="ag-top5-photo-label">{lang === 'es' ? 'Ver fotos' : 'Photos'}</span>
               </a>
               <div className="ag-top5-text">
-                <span className="ag-top5-name">{p.name}</span>
+                <div className="ag-top5-name-row">
+                  <span className="ag-top5-name">{p.name}</span>
+                  {typeof p.rating === 'number' && (
+                    <span className="ag-top5-rating">⭐ {p.rating.toFixed(1)}</span>
+                  )}
+                </div>
                 {p.desc && <span className="ag-top5-desc">{p.desc}</span>}
+                {p.services && (
+                  <span className="ag-top5-meta">
+                    <em>{lang === 'es' ? 'Servicios:' : 'Services:'}</em> {p.services}
+                  </span>
+                )}
+                {p.access && (
+                  <span className="ag-top5-meta">
+                    <em>{lang === 'es' ? 'Acceso:' : 'Access:'}</em> {p.access}
+                  </span>
+                )}
                 <div className="ag-top5-links">
                   <a href={mapHref} target="_blank" rel="noopener">
                     {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
