@@ -909,11 +909,13 @@ const DAY_PLAN_GROUPS = {
   evening:  { es: 'Tarde-noche',    en: 'Evening',       sub_es: 'Atardecer, cena y un sitio especial',         sub_en: 'Sunset, dinner and a beautiful night spot' },
 };
 
+// audience: 'kids' (con niños), 'adults' (sin niños — cenas tardías,
+// senderos largos, carretera de montaña), 'both' (vale para los dos).
 const DAY_PLANS = [
   // ── MADRUGADORES ──────────────────────────────────────────────
   {
     id:'plan-flamencos',
-    type:'morning',
+    type:'morning', audience:'both',
     title_es:'Amanecer con flamencos + lonja de Garrucha',
     title_en:'Sunrise with flamingos + Garrucha fish market',
     start:'7:00', end:'14:00',
@@ -934,7 +936,7 @@ const DAY_PLANS = [
   },
   {
     id:'plan-monsul-amanecer',
-    type:'morning',
+    type:'morning', audience:'adults',
     title_es:'Amanecer en Mónsul + Mojácar pueblo',
     title_en:'Sunrise at Mónsul + Mojácar village',
     start:'6:30', end:'14:30',
@@ -957,7 +959,7 @@ const DAY_PLANS = [
   },
   {
     id:'plan-sendero-litoral',
-    type:'morning',
+    type:'morning', audience:'both',
     title_es:'Sendero del litoral + desayuno con vistas',
     title_en:'Coastal walk + breakfast with a view',
     start:'7:00', end:'14:00',
@@ -980,7 +982,7 @@ const DAY_PLANS = [
   // ── DÍA COMPLETO ──────────────────────────────────────────────
   {
     id:'plan-cabo-gata',
-    type:'fullday',
+    type:'fullday', audience:'both',
     title_es:'Cabo de Gata esencial',
     title_en:'Cabo de Gata essentials',
     start:'9:30', end:'19:30',
@@ -1005,7 +1007,7 @@ const DAY_PLANS = [
   },
   {
     id:'plan-carboneras-aguamarga',
-    type:'fullday',
+    type:'fullday', audience:'both',
     title_es:'Carboneras → Mesa Roldán → Agua Amarga',
     title_en:'Carboneras → Mesa Roldán → Agua Amarga',
     start:'9:30', end:'20:00',
@@ -1030,7 +1032,7 @@ const DAY_PLANS = [
   },
   {
     id:'plan-vera-sorbas-tabernas',
-    type:'fullday',
+    type:'fullday', audience:'both',
     title_es:'Vera pueblo + cuevas de Sorbas + western de Tabernas',
     title_en:'Vera village + Sorbas caves + Tabernas western',
     start:'9:00', end:'19:30',
@@ -1055,7 +1057,7 @@ const DAY_PLANS = [
   // ── TARDE-NOCHE ───────────────────────────────────────────────
   {
     id:'plan-monsul-cena',
-    type:'evening',
+    type:'evening', audience:'adults',
     title_es:'Atardecer en Mónsul + cena en San José',
     title_en:'Sunset at Mónsul + dinner in San José',
     start:'17:00', end:'23:00',
@@ -1078,7 +1080,7 @@ const DAY_PLANS = [
   },
   {
     id:'plan-mojacar-noche',
-    type:'evening',
+    type:'evening', audience:'adults',
     title_es:'Mojácar pueblo al anochecer',
     title_en:'Mojácar village at nightfall',
     start:'17:30', end:'23:30',
@@ -1101,7 +1103,7 @@ const DAY_PLANS = [
   },
   {
     id:'plan-riad-cabrera',
-    type:'evening',
+    type:'evening', audience:'adults',
     title_es:'Cena en Riad Cabrera (Sierra Cabrera)',
     title_en:'Dinner at Riad Cabrera (Sierra Cabrera)',
     start:'18:00', end:'23:30',
@@ -1122,7 +1124,7 @@ const DAY_PLANS = [
   },
   {
     id:'plan-cala-enmedio-tarde',
-    type:'evening',
+    type:'evening', audience:'adults',
     title_es:'Cala de Enmedio + Agua Amarga al anochecer',
     title_en:'Cala de Enmedio + Agua Amarga at dusk',
     start:'16:00', end:'23:00',
@@ -1142,6 +1144,123 @@ const DAY_PLANS = [
     ],
     tip_es:'Llévate una toalla extra y agua — la cala no tiene servicios.',
     tip_en:'Bring an extra towel and water — the cove has no services.',
+  },
+
+  // ── PLANES CON NIÑOS ─────────────────────────────────────────
+  {
+    id:'plan-flamencos-niños',
+    type:'morning', audience:'kids',
+    title_es:'Flamencos en las Salinas + barco en Garrucha',
+    title_en:'Flamingos at the Salt Flats + Garrucha boat',
+    start:'9:00', end:'14:30',
+    tags_es:['niños','animales','barco'],
+    tags_en:['kids','animals','boat'],
+    steps:[
+      { t:'9:00',  es:'Sendero a las Salinas de Puerto Rey',         en:'Walk to Puerto Rey Salt Flats',
+                   d_es:'Acceso peatonal directo desde la urbanización Pueblo Salinas. Llevad binoculares — los flamencos están a 50-100 m.', d_en:'Direct walking access from the Pueblo Salinas complex. Bring binoculars — flamingos are 50-100 m away.' },
+      { t:'10:30', es:'Desayuno en Garrucha',                        en:'Breakfast in Garrucha',
+                   d_es:'Cruasán y zumo en cualquier bar del paseo. Cerca del puerto.',                            d_en:'Croissant and juice at any promenade bar near the harbour.' },
+      { t:'11:30', es:'Excursión en barco desde el puerto',          en:'Boat trip from the harbour',
+                   d_es:'Mar Azul y otras compañías ofrecen vueltas de 1 h costeras. Reserva el día antes.',       d_en:'Mar Azul and others offer 1 h coastal tours. Book the day before.' },
+      { t:'13:00', es:'Comida en Pizzería Pomodoro',                 en:'Lunch at Pizzería Pomodoro',
+                   d_es:'A pie de playa, ambiente familiar, niños pueden moverse.',                                d_en:'Right on the beach, family-friendly, kids can roam.' },
+    ],
+    tip_es:'En invierno los barcos no salen. Llamad antes para confirmar — Mar Azul +34 950 13 24 11.',
+    tip_en:'No boats in winter — call to confirm: Mar Azul +34 950 13 24 11.',
+  },
+  {
+    id:'plan-mini-hollywood',
+    type:'fullday', audience:'kids',
+    title_es:'Mini Hollywood (Oasys, Parque del Oeste)',
+    title_en:'Mini Hollywood (Oasys Western Park)',
+    start:'10:00', end:'19:00',
+    tags_es:['niños','western','animales','desierto'],
+    tags_en:['kids','western','animals','desert'],
+    steps:[
+      { t:'10:00', es:'Salida hacia el Desierto de Tabernas',        en:'Drive to the Tabernas Desert',
+                   d_es:'45 min en coche por la A-7 hacia Almería.',                                               d_en:'45 min on the A-7 towards Almería.' },
+      { t:'11:30', es:'Show del Oeste · gunfighters',                en:'Wild West gunfight show',
+                   d_es:'En la calle principal del poblado. Los niños alucinan con los disparos y los caballos.',  d_en:'On the main street. Kids love the gunfire and horses.' },
+      { t:'13:00', es:'Comida en el saloon',                         en:'Lunch at the saloon',
+                   d_es:'Hamburguesas, alitas, burrito mexicano. Apto para niños.',                                d_en:'Burgers, wings, Mexican burrito. Kid-approved.' },
+      { t:'14:30', es:'Reserva zoológica del desierto',              en:'Desert zoo reserve',
+                   d_es:'Lobos, rapaces, pumas, dromedarios. Educativo y bien cuidado.',                           d_en:'Wolves, raptors, pumas, camels. Educational and well kept.' },
+      { t:'16:00', es:'Show de can-can en el saloon',                en:'Can-can show at the saloon',
+                   d_es:'Tradicional. Apto para todos los públicos.',                                              d_en:'Classic. Family-friendly.' },
+      { t:'17:30', es:'Piscinas del parque (verano)',                en:'Park pools (summer)',
+                   d_es:'En temporada de calor. Llevad bañador y toalla.',                                         d_en:'Hot season only. Bring swimwear and towels.' },
+    ],
+    tip_es:'Compra entrada online — ahorras 2-3 € y evitas la cola en taquilla.',
+    tip_en:'Buy tickets online — saves €2-3 and skips the queue.',
+  },
+  {
+    id:'plan-geoda-pulpi',
+    type:'fullday', audience:'kids',
+    title_es:'Geoda gigante de Pulpí + Playa de los Cocedores',
+    title_en:'Pulpí giant geode + Cocedores beach',
+    start:'10:00', end:'19:00',
+    tags_es:['niños','minería','aventura','playa'],
+    tags_en:['kids','mining','adventure','beach'],
+    steps:[
+      { t:'10:00', es:'Salida hacia Pulpí',                          en:'Drive to Pulpí',
+                   d_es:'45 min. Reserva online imprescindible — grupos pequeños.',                                d_en:'45 min. Online booking required — small groups only.' },
+      { t:'11:00', es:'Visita guiada a la Geoda Gigante',            en:'Guided tour of the Giant Geode',
+                   d_es:'8 m de cristales — la segunda más grande del mundo. Casco, linterna y arnés incluidos.',  d_en:'8 m of crystals — second largest in the world. Helmet, torch and harness included.' },
+      { t:'13:00', es:'Comida en San Juan de los Terreros',          en:'Lunch in San Juan de los Terreros',
+                   d_es:'Pueblo costero pequeño con varios restaurantes a pie de mar.',                            d_en:'Small coastal town with several seafront restaurants.' },
+      { t:'15:30', es:'Playa de los Cocedores',                      en:'Cocedores beach',
+                   d_es:'Cuevas excavadas en la arenisca, perfectas para que los niños exploren. Aguas turquesas.', d_en:'Sandstone caves perfect for kids to explore. Turquoise water.' },
+      { t:'18:00', es:'Helado en San Juan o Pulpí pueblo',           en:'Ice cream in San Juan or Pulpí',
+                   d_es:'Última parada antes de volver.',                                                          d_en:'Last stop before heading back.' },
+    ],
+    tip_es:'Reserva la Geoda con 1-2 semanas de antelación. Edad mínima 6 años.',
+    tip_en:'Book the geode 1-2 weeks ahead. Minimum age 6.',
+  },
+  {
+    id:'plan-aqua-vera',
+    type:'fullday', audience:'kids',
+    title_es:'Aqua Vera (parque acuático) + cena en chiringuito',
+    title_en:'Aqua Vera waterpark + beach-bar dinner',
+    start:'11:00', end:'21:30',
+    tags_es:['niños','toboganes','playa','verano'],
+    tags_en:['kids','slides','beach','summer'],
+    steps:[
+      { t:'11:00', es:'Apertura de Aqua Vera',                       en:'Aqua Vera opens',
+                   d_es:'Solo abre en temporada (junio-septiembre). 10 min en coche desde Hestía.',                d_en:'Open only in summer (June-September). 10 min drive from Hestía.' },
+      { t:'14:00', es:'Comida dentro del parque',                    en:'Lunch inside the park',
+                   d_es:'O salís y volvéis con sello en la mano. Hay menú infantil.',                              d_en:'Or step out and come back with a hand stamp. Kids menu available.' },
+      { t:'15:00', es:'Toboganes y río salvaje',                     en:'Slides and lazy river',
+                   d_es:'Hay zona infantil con altura mínima muy baja y zona para mayores.',                       d_en:'Kids area with low height limits and a bigger-kids area.' },
+      { t:'18:30', es:'Salida del parque · ducha en Hestía',         en:'Leave the park · shower at Hestía',
+                   d_es:'Volved relajados, secad, descansad un rato.',                                              d_en:'Drive back relaxed, dry off, rest a while.' },
+      { t:'20:30', es:'Cena en Chiringuito Playa Turquesa',          en:'Dinner at Chiringuito Playa Turquesa',
+                   d_es:'Pizza/pasta a pie de arena. Andando desde Hestía. Niños pueden seguir jugando en la playa.', d_en:'Pizza/pasta on the sand. Walkable from Hestía. Kids can play on the beach.' },
+    ],
+    tip_es:'Aqua Vera no abre fuera de temporada. Llamad antes para confirmar fechas si vais en mayo o septiembre.',
+    tip_en:'Aqua Vera is closed out of season. Call to confirm dates in May or September.',
+  },
+  {
+    id:'plan-mojacar-niños',
+    type:'evening', audience:'kids',
+    title_es:'Mojácar pueblo + heladería + cena pizzería',
+    title_en:'Mojácar village + ice cream + pizza dinner',
+    start:'17:30', end:'22:30',
+    tags_es:['niños','pueblo blanco','helado','pizza'],
+    tags_en:['kids','white village','ice cream','pizza'],
+    steps:[
+      { t:'17:30', es:'Subir a Mojácar pueblo',                      en:'Drive up to Mojácar',
+                   d_es:'25 min. Aparcad abajo en el parking público y subid andando — más fresco al atardecer.',  d_en:'25 min. Park below in the public lot and walk up — cooler at sunset.' },
+      { t:'18:30', es:'Mirador del Castillo',                        en:'Castle viewpoint',
+                   d_es:'Cuesta arriba con escalones — niños mayores de 4 años lo disfrutan. Vistas al mar.',      d_en:'Uphill with steps — kids 4+ enjoy it. Sea views.' },
+      { t:'19:30', es:'Helado en la Plaza Nueva',                    en:'Ice cream on Plaza Nueva',
+                   d_es:'Sentaos en la plaza con vistas al Mediterráneo. Heladería artesanal.',                    d_en:'Sit on the square with sea views. Artisan ice cream.' },
+      { t:'20:30', es:'Cena en pizzería del pueblo',                 en:'Dinner at a village pizzeria',
+                   d_es:'Cabo Norte tiene menú infantil; otros sitios también. Reservad si es viernes/sábado.',     d_en:'Cabo Norte has a kids menu; others too. Book Fri/Sat.' },
+      { t:'22:00', es:'Bajada al coche',                             en:'Walk back down',
+                   d_es:'Mojácar de noche es magia con farolillos.',                                                d_en:'Mojácar at night is magic with the lanterns.' },
+    ],
+    tip_es:'El carrito de bebé no es la mejor opción — calzado bueno para los peques en las cuestas empedradas.',
+    tip_en:'Strollers are awkward — solid shoes for the kids on the cobbled streets.',
   },
 ];
 
@@ -1186,6 +1305,20 @@ const DayPlanCard = ({ plan, lang }) => {
 };
 
 const DayPlans = ({ lang }) => {
+  // Filtro por audiencia: kids (con niños), adults (sin niños), all (todos).
+  // Los planes 'both' aparecen en kids y en adults.
+  const [audience, setAudience] = React.useState('all');
+  const matches = (p) => {
+    if (audience === 'all')    return true;
+    if (audience === 'kids')   return p.audience === 'kids'   || p.audience === 'both';
+    if (audience === 'adults') return p.audience === 'adults' || p.audience === 'both' || !p.audience;
+    return true;
+  };
+  const tabs = [
+    { id:'all',    es:'Todos',     en:'All' },
+    { id:'adults', es:'Sin niños', en:'No kids' },
+    { id:'kids',   es:'Con niños', en:'With kids' },
+  ];
   return (
     <div className="ag-day-plans">
       <div className="ag-day-plans-head">
@@ -1194,8 +1327,22 @@ const DayPlans = ({ lang }) => {
           {lang === 'es' ? 'Planes de día por la zona' : 'One-day plans around'}
         </h3>
       </div>
+      <div className="dp-tabs" role="tablist">
+        {tabs.map(t => (
+          <button
+            key={t.id}
+            role="tab"
+            type="button"
+            className={`dp-tab ${audience === t.id ? 'active' : ''}`}
+            aria-selected={audience === t.id}
+            onClick={() => setAudience(t.id)}
+          >
+            {t[lang]}
+          </button>
+        ))}
+      </div>
       {Object.entries(DAY_PLAN_GROUPS).map(([type, group]) => {
-        const plans = DAY_PLANS.filter(p => p.type === type);
+        const plans = DAY_PLANS.filter(p => p.type === type && matches(p));
         if (!plans.length) return null;
         return (
           <div key={type} className="dp-group">

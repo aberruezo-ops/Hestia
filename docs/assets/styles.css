@@ -9089,6 +9089,36 @@ footer,
   margin-bottom: 6px;
   color: var(--apt-accent);
 }
+/* Filtro de audiencia (con niños / sin niños / todos) */
+.dp-tabs {
+  display: flex;
+  gap: 6px;
+  margin: 0 0 22px;
+  padding: 4px;
+  background: color-mix(in oklab, var(--apt-accent) 8%, var(--crema));
+  border-radius: 999px;
+  width: fit-content;
+}
+.dp-tab {
+  background: transparent;
+  border: 0;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--ber-dk);
+  cursor: pointer;
+  transition: background var(--dur-fast, 160ms) var(--ease-out, ease), color var(--dur-fast) var(--ease-out);
+}
+.dp-tab:hover { color: var(--apt-accent); }
+.dp-tab.active {
+  background: var(--apt-accent);
+  color: var(--crema);
+}
+
 .dp-group { margin: 18px 0 10px; }
 .dp-group-title {
   display: flex; flex-direction: column;
