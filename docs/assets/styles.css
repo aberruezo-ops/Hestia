@@ -3806,30 +3806,46 @@ body.no-parallax .g-tile .img { transform: none !important; }
   object-position: center;
   will-change: transform;
 }
-/* Ken Burns — cámara lenta diferente por apartamento */
+/* Ken Burns — movimiento contínuo y visible diferente por apartamento.
+   Cada Hestía con su propio recorrido de zoom + pan + leve rotación
+   para que el huésped perciba el movimiento sin que sea agresivo. */
 @keyframes kb-vm {
-  0%   { transform: scale(1.05) translate( 0.8%,  0.4%); }
-  100% { transform: scale(1.12) translate(-0.6%, -0.5%); }
+  0%   { transform: scale(1.04) translate( 1.5%,  1.0%) rotate(0deg); }
+  50%  { transform: scale(1.14) translate(-1.0%, -0.7%) rotate(0.4deg); }
+  100% { transform: scale(1.08) translate( 0.6%, -1.2%) rotate(-0.2deg); }
 }
 @keyframes kb-vt {
-  0%   { transform: scale(1.06) translate(-0.6%,  0.6%); }
-  100% { transform: scale(1.11) translate( 0.8%, -0.3%); }
+  0%   { transform: scale(1.05) translate(-1.4%,  1.2%) rotate(0deg); }
+  50%  { transform: scale(1.15) translate( 1.2%, -0.8%) rotate(-0.3deg); }
+  100% { transform: scale(1.09) translate(-0.6%, -1.4%) rotate(0.4deg); }
 }
 @keyframes kb-vs {
-  0%   { transform: scale(1.05) translate( 0.3%,  0.8%); }
-  100% { transform: scale(1.10) translate(-0.5%, -0.6%); }
+  0%   { transform: scale(1.04) translate( 0.8%,  1.4%) rotate(0deg); }
+  50%  { transform: scale(1.13) translate(-1.4%, -0.6%) rotate(0.3deg); }
+  100% { transform: scale(1.08) translate( 1.2%, -1.0%) rotate(-0.4deg); }
 }
 .apt-page-hero[data-apt="vm"] .apt-page-hero-img {
-  animation: kb-vm 22s ease-in-out infinite alternate;
+  animation: kb-vm 18s ease-in-out infinite alternate;
   transform-origin: 55% 58%;
 }
 .apt-page-hero[data-apt="vt"] .apt-page-hero-img {
-  animation: kb-vt 20s ease-in-out infinite alternate;
+  animation: kb-vt 17s ease-in-out infinite alternate;
   transform-origin: 44% 45%;
 }
 .apt-page-hero[data-apt="vs"] .apt-page-hero-img {
-  animation: kb-vs 24s ease-in-out infinite alternate;
+  animation: kb-vs 19s ease-in-out infinite alternate;
   transform-origin: 50% 52%;
+}
+/* Filtro de saturación/contraste por Hestía — los mismos retoques que
+   se aplican en las cards de la home para que el hero "respire" igual. */
+.apt-page-hero[data-apt="vt"] .apt-page-hero-img {
+  filter: brightness(1.06) saturate(1.20) contrast(1.04);
+}
+.apt-page-hero[data-apt="vm"] .apt-page-hero-img {
+  filter: brightness(1.04) saturate(1.10) contrast(1.02);
+}
+.apt-page-hero[data-apt="vs"] .apt-page-hero-img {
+  filter: brightness(1.05) saturate(1.16) contrast(1.03);
 }
 @media (prefers-reduced-motion: reduce) {
   .apt-page-hero-img { animation: none !important; }
