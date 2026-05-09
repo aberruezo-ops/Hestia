@@ -1794,11 +1794,11 @@ const DirectBookingPerks = ({ lang }) => {
       <section className="dbt-band">
         <div className="container dbt-inner">
           <span className="eyebrow dbt-eyebrow">
-            {lang === 'es' ? 'Reservar directo' : 'Direct booking'}
+            {lang === 'es' ? 'Reserva directa' : 'Direct booking'}
           </span>
           <h3 className="dbt-title">
             {lang === 'es'
-              ? <>Reservar directo es <em>siempre</em> mejor.</>
+              ? <>Reserva directa, <em>siempre</em> mejor.</>
               : <>Booking direct is <em>always</em> better.</>}
           </h3>
           <button
@@ -2057,15 +2057,15 @@ const WidgetGuidePin = ({ lang, onGuideClick }) => {
     return (
       <WidgetMiniPill
         icon="✦"
-        label={lang === 'es' ? 'Mi guía privada' : 'My private guide'}
-        ariaLabel={lang === 'es' ? 'Restaurar guía privada' : 'Restore private guide'}
+        label={lang === 'es' ? 'Guía para huéspedes' : 'Guests\' guidebook'}
+        ariaLabel={lang === 'es' ? 'Restaurar guía para huéspedes' : 'Restore guests\' guidebook'}
         onClick={() => setMin(false)}
         className="widget-mini-guide"
       />
     );
   }
   return (
-    <section className="widget-card widget-guide" aria-label={lang === 'es' ? 'Mi guía privada' : 'My private guide'}>
+    <section className="widget-card widget-guide" aria-label={lang === 'es' ? 'Guía para huéspedes' : 'Guests\' guidebook'}>
       <button
         type="button"
         className="widget-min-btn"
@@ -2075,7 +2075,7 @@ const WidgetGuidePin = ({ lang, onGuideClick }) => {
       >−</button>
       <span className="eyebrow">{lang === 'es' ? '¿Ya estás reservado?' : 'Already booked?'}</span>
       <h4 className="widget-title">
-        {lang === 'es' ? <>Mi <em>guía privada</em></> : <>My <em>private guide</em></>}
+        {lang === 'es' ? <>Guía para <em>huéspedes</em></> : <>Guests' <em>guidebook</em></>}
       </h4>
       <p className="widget-text">
         {lang === 'es'
@@ -2127,8 +2127,8 @@ const WidgetStack = ({ lang, apt, onGuideClick }) => {
 
   return (
     <div className={`widget-stack ${hidden ? 'is-hidden' : ''}`} aria-hidden={hidden}>
-      <WidgetDirectBooking lang={lang} />
       <WidgetSabiasQue lang={lang} />
+      <WidgetDirectBooking lang={lang} />
       {apt && <WidgetGuidePin lang={lang} onGuideClick={onGuideClick} />}
     </div>
   );
