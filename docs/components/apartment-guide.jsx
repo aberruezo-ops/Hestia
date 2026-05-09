@@ -102,32 +102,32 @@ const PLACES = [
   // Supermercados
   { id: 'coviran',        name: 'Covirán', desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa.', cat: 'super', lat: 37.2235, lng: -1.7975 },
   { id: 'consum',         name: 'Consum', cat: 'super', url: 'https://goo.gl/maps/h6UvnBe3ATHpsPXbA', lat: 37.2200, lng: -1.8090 },
-  { id: 'mercadona',      name: 'Mercadona Vera Playa', cat: 'super', url: 'https://goo.gl/maps/axi9Lb9xLp8yuVUR8', lat: 37.2360, lng: -1.7935 },
-  { id: 'super-vera',     name: 'Vera (Dia · Lidl · Mercadona)', desc: 'Supermercados grandes en Vera pueblo.', cat: 'super', lat: 37.2491, lng: -1.8639 },
+  { id: 'mercadona',      name: 'Mercadona Vera Playa', cat: 'super', url: 'https://goo.gl/maps/axi9Lb9xLp8yuVUR8', lat: 37.2360, lng: -1.7935 , featured: true },
+  { id: 'super-vera',     name: 'Vera (Dia · Lidl · Mercadona)', desc: 'Supermercados grandes en Vera pueblo.', cat: 'super', lat: 37.2491, lng: -1.8639 , featured: true },
 
   // Librerías
-  { id: 'nobel',          name: 'Nobel', desc: 'Librería en Vera.', cat: 'bookshop', lat: 37.2491, lng: -1.8639 },
-  { id: 'macondo',        name: 'Macondo', desc: 'Librería en Mojácar.', cat: 'bookshop', lat: 37.1377, lng: -1.8523 },
+  { id: 'nobel',          name: 'Nobel', desc: 'Librería en Vera.', cat: 'bookshop', lat: 37.2491, lng: -1.8639 , featured: true },
+  { id: 'macondo',        name: 'Macondo', desc: 'Librería en Mojácar.', cat: 'bookshop', lat: 37.1377, lng: -1.8523 , featured: true },
 
   // Restaurantes
-  { id: 'riad-cabrera',   name: 'Riad Cabrera',     desc: 'Marroquí en Sierra Cabrera. Carretera de montaña, pero merece muchísimo la pena.', tier: '€€€', cat: 'restaurant', lat: 37.1550, lng: -1.8700 },
-  { id: 'juan-moreno',    name: 'Juan Moreno',       desc: 'Sofisticado. Cocina de autor.',           tier: '€€€', cat: 'restaurant', lat: 37.2495, lng: -1.8623 },
+  { id: 'riad-cabrera',   name: 'Riad Cabrera',     desc: 'Marroquí en Sierra Cabrera. Carretera de montaña, pero merece muchísimo la pena.', tier: '€€€', cat: 'restaurant', lat: 37.1550, lng: -1.8700 , featured: true },
+  { id: 'juan-moreno',    name: 'Juan Moreno',       desc: 'Sofisticado. Cocina de autor.',           tier: '€€€', cat: 'restaurant', lat: 37.2495, lng: -1.8623 , featured: true },
   { id: 'terraza-carmona',name: 'Terraza Carmona',   desc: 'Cocina española moderna en Vera pueblo.', tier: '€€',  cat: 'restaurant', lat: 37.2486, lng: -1.8635 },
   { id: 'gateway-india',  name: 'Gateway to India',  desc: 'Hindú. Bueno y barato.',                   tier: '€',   cat: 'restaurant', lat: 37.2230, lng: -1.8090 },
   { id: 'pomodoro',       name: 'Pizzería Pomodoro', desc: 'A pie de playa.',                          tier: '€€',  cat: 'restaurant', lat: 37.2270, lng: -1.7920 },
   { id: 'trattoria',      name: 'La Trattoria da Marco', desc: 'Garrucha. Las pizzas están geniales.', tier: '€',   cat: 'restaurant', lat: 37.1810, lng: -1.8230 },
-  { id: 'lua',            name: 'Lúa',               desc: 'Sofisticado. Mejor para cena o copa.',     tier: '€€€', cat: 'restaurant', lat: 37.2310, lng: -1.7935 },
+  { id: 'lua',            name: 'Lúa',               desc: 'Sofisticado. Mejor para cena o copa.',     tier: '€€€', cat: 'restaurant', lat: 37.2310, lng: -1.7935 , featured: true },
   { id: 'bistro',         name: 'The Bistro',        desc: 'Bastante bien.',                            tier: '€€',  cat: 'restaurant', lat: 37.2310, lng: -1.7945 },
-  { id: 'koa',            name: 'Resto Bar Koa',     desc: 'Frente a Hestía Vera Mar.',                 tier: '€€',  cat: 'restaurant', lat: 37.2245, lng: -1.7965 },
+  { id: 'koa',            name: 'Resto Bar Koa',     desc: 'Frente a Hestía Vera Mar.',                 tier: '€€',  cat: 'restaurant', lat: 37.2245, lng: -1.7965 , featured: true },
   { id: 'bbme-rest',      name: 'Restaurante Bbme Palomares', desc: 'En plena playa, a 10 min a pie.',  tier: '€€',  cat: 'restaurant', lat: 37.2155, lng: -1.7800 },
-  { id: 'playa-azul',     name: 'Hostal Playa Azul', desc: 'Villaricos. Excelente paella con bogavante.', tier: '€€', cat: 'restaurant', lat: 37.2460, lng: -1.7660 },
-  { id: 'tadeo',          name: 'Tadeo',             desc: 'Villaricos. Arroz con bogavante y tostas de ahumados.', tier: '€€', cat: 'restaurant', lat: 37.2455, lng: -1.7670 },
+  { id: 'playa-azul',     name: 'Hostal Playa Azul', desc: 'Villaricos. Excelente paella con bogavante.', tier: '€€', cat: 'restaurant', lat: 37.2460, lng: -1.7660 , featured: true },
+  { id: 'tadeo',          name: 'Tadeo',             desc: 'Villaricos. Arroz con bogavante y tostas de ahumados.', tier: '€€', cat: 'restaurant', lat: 37.2455, lng: -1.7670 , featured: true },
   { id: 'rosado',         name: 'Freiduría Bar Rosado', desc: 'Buenas referencias.',                    tier: '€€',  cat: 'restaurant', lat: 37.2240, lng: -1.8095 },
   { id: 'av-alicante',    name: 'Av. Ciudad de Alicante', desc: 'Detrás del Consum: pubs, comida rápida y más.',     cat: 'restaurant', lat: 37.2196, lng: -1.8082 },
   { id: 'valentino',      name: 'Ristorante di Valentino', desc: 'Mojácar.',                            tier: '€€',  cat: 'restaurant', lat: 37.1377, lng: -1.8523 },
   { id: 'cabo-norte',     name: 'Cabo Norte',        desc: 'Mojácar. Buena materia prima a buen precio.', tier: '€€',cat: 'restaurant', lat: 37.1370, lng: -1.8530 },
   { id: 'neptuno',        name: 'Restaurante Neptuno', desc: 'Mojácar. Buen pescado.',                  tier: '€€',  cat: 'restaurant', lat: 37.1360, lng: -1.8520 },
-  { id: 'martin-fierro',  name: 'Asador Martín Fierro', desc: 'Rodalquilar.',                            tier: '€€€', cat: 'restaurant', lat: 36.8475, lng: -2.0395 },
+  { id: 'martin-fierro',  name: 'Asador Martín Fierro', desc: 'Rodalquilar.',                            tier: '€€€', cat: 'restaurant', lat: 36.8475, lng: -2.0395 , featured: true },
   { id: 'oro-luz',        name: 'Oro y Luz',         desc: 'Rodalquilar.',                                tier: '€€€', cat: 'restaurant', lat: 36.8480, lng: -2.0400 },
   { id: 'la-villa',       name: 'La Villa',          desc: 'Aguamarga.',                                  tier: '€€€', cat: 'restaurant', lat: 36.9395, lng: -2.0000 },
 
@@ -138,16 +138,16 @@ const PLACES = [
   { id: 'regio',          name: 'Vera pueblo: Juan Moreno, Terraza Carmona, Regio', cat: 'celiac', lat: 37.2491, lng: -1.8639 },
 
   // Copas y chiringuitos
-  { id: 'turquesa',       name: 'Chiringuito Playa Turquesa', desc: 'Andando desde casa.', cat: 'bar', lat: 37.2260, lng: -1.7935 },
+  { id: 'turquesa',       name: 'Chiringuito Playa Turquesa', desc: 'Andando desde casa.', cat: 'bar', lat: 37.2260, lng: -1.7935 , featured: true },
   { id: 'paraiso',        name: 'Paraíso Vera Beach', desc: 'Andando desde casa.',         cat: 'bar', lat: 37.2300, lng: -1.7920 },
   { id: 'chumbo',         name: 'Chiringuito El Chumbo', desc: 'Andando desde casa.',      cat: 'bar', lat: 37.2360, lng: -1.7895 },
-  { id: 'marau',          name: 'Marau Beach Club',                                            cat: 'bar', lat: 37.2410, lng: -1.7895 },
+  { id: 'marau',          name: 'Marau Beach Club',                                            cat: 'bar', lat: 37.2410, lng: -1.7895 , featured: true },
   { id: 'mar-arena',      name: 'Chiringuito Mar y Arena',                                     cat: 'bar', lat: 37.2335, lng: -1.7910 },
-  { id: 'bbme-palomares', name: 'Bbme Palomares', desc: 'En plena playa, a 10 min a pie.',     cat: 'bar', lat: 37.2155, lng: -1.7800 },
+  { id: 'bbme-palomares', name: 'Bbme Palomares', desc: 'En plena playa, a 10 min a pie.',     cat: 'bar', lat: 37.2155, lng: -1.7800 , featured: true },
 
   // Pescaderías
-  { id: 'mercado-vera',   name: 'Mercado de abastos (Vera)', cat: 'fish', url: 'https://goo.gl/maps/PaEerwZNxAK1kNTS8', lat: 37.2486, lng: -1.8625 },
-  { id: 'el-mero',        name: 'Pescadería El Mero (Garrucha)', cat: 'fish', url: 'https://goo.gl/maps/AdJz6SEyGRvLeToDA', lat: 37.1815, lng: -1.8235 },
+  { id: 'mercado-vera',   name: 'Mercado de abastos (Vera)', cat: 'fish', url: 'https://goo.gl/maps/PaEerwZNxAK1kNTS8', lat: 37.2486, lng: -1.8625 , featured: true },
+  { id: 'el-mero',        name: 'Pescadería El Mero (Garrucha)', cat: 'fish', url: 'https://goo.gl/maps/AdJz6SEyGRvLeToDA', lat: 37.1815, lng: -1.8235 , featured: true },
   { id: 'isabel',         name: 'Pescados y Mariscos Isabel (Garrucha)', cat: 'fish', url: 'https://goo.gl/maps/RHCieMNkgo3FL8m5A', lat: 37.1820, lng: -1.8240 },
   { id: 'pescados-online',name: 'Pescados Garrucha (online)', cat: 'fish', url: 'https://pescadosgarrucha.es/', lat: 37.1815, lng: -1.8230 },
 
@@ -221,17 +221,17 @@ const PLACES = [
 
   // ── HACIA EL SUR (Cabo de Gata)
   { id: 'p-mesa-roldan',  name: 'Mesa Roldán (Carboneras)',      desc: 'Domo volcánico con faro y fortaleza. Mirador con vistas a la Playa de los Muertos. Sale en Juego de Tronos.', cat: 'beach', rating: 4.7, services: 'mirador · sin baño', access: '🚗 hasta el faro · 🚶 corto', lat: 36.9620, lng: -1.9080 },
-  { id: 'p-muertos',      name: 'Playa de los Muertos',          desc: 'Carboneras. Una de las mejores playas de España. Aguas cristalinas, cantos rodados grandes. Sin un solo servicio.', cat: 'beach-hard', rating: 4.6, services: 'virgen · sin servicios', access: '🚗 parking de pago en verano · 🚶 15 min sendero pedregoso, fuerte pendiente', url: 'https://goo.gl/maps/uh1baJWHPp1uan81A', lat: 37.0050, lng: -1.8800, top5: true, top5Idx: 1 },
-  { id: 'p-enmedio',      name: 'Cala de Enmedio',               desc: 'Agua Amarga. Nuestra favorita. Arena fina blanca enmarcada por roca esculpida. Casi virgen porque exige caminar.', cat: 'beach-hard', rating: 4.7, services: 'virgen · sin servicios', access: '🚗 hasta Agua Amarga · 🚶 30 min campo a través', url: 'https://goo.gl/maps/i72YXUhFgBzi7vhf6', lat: 36.9540, lng: -1.9740, top5: true, top5Idx: 4 },
+  { id: 'p-muertos',      name: 'Playa de los Muertos',          desc: 'Carboneras. Una de las mejores playas de España. Aguas cristalinas, cantos rodados grandes. Sin un solo servicio.', cat: 'beach-hard', rating: 4.6, services: 'virgen · sin servicios', access: '🚗 parking de pago en verano · 🚶 15 min sendero pedregoso, fuerte pendiente', url: 'https://goo.gl/maps/uh1baJWHPp1uan81A', lat: 37.0050, lng: -1.8800, featured: true, featuredOrder: 1 },
+  { id: 'p-enmedio',      name: 'Cala de Enmedio',               desc: 'Agua Amarga. Nuestra favorita. Arena fina blanca enmarcada por roca esculpida. Casi virgen porque exige caminar.', cat: 'beach-hard', rating: 4.7, services: 'virgen · sin servicios', access: '🚗 hasta Agua Amarga · 🚶 30 min campo a través', url: 'https://goo.gl/maps/i72YXUhFgBzi7vhf6', lat: 36.9540, lng: -1.9740, featured: true, featuredOrder: 4 },
   { id: 'p-plomo',        name: 'Cala del Plomo',                desc: 'Agua Amarga. Cala virgen de arena oscura. Aguas cristalinas, snorkel.', cat: 'beach-hard', rating: 4.6, services: 'virgen · sin servicios', access: '🚗 pista corta · 🚶 30 min a pie', lat: 36.9460, lng: -1.9690 },
   { id: 'p-aguamarga',    name: 'Playa de Agua Amarga',          desc: 'Pueblo blanco con encanto, calas pequeñas y restaurantes a pie de arena.', cat: 'beach', rating: 4.5, services: '🚿 🍹 🛏️ 🚻', access: '🚗 parking en pueblo', lat: 36.9395, lng: -2.0000 },
   { id: 'p-negras',       name: 'Playa de Las Negras',           desc: 'Pueblo bohemio con cantos rodados negros y agua cristalina. Punto de salida hacia la Cala de San Pedro.', cat: 'beach', rating: 4.4, services: '🚿 🍹 🚻', access: '🚗 parking a la entrada del pueblo · ⛵ taxi-barca a San Pedro', lat: 36.8770, lng: -2.0030 },
   { id: 'p-san-pedro',    name: 'Cala de San Pedro',             desc: 'Comunidad hippie estable, fuente de agua dulce, sin servicios. Solo accesible a pie o por barca.', cat: 'beach-hard', rating: 4.7, services: 'virgen · fuente natural', access: '🚶 90 min desde Las Negras (sendero costero) · ⛵ taxi-barca en verano', lat: 36.8540, lng: -1.9890 },
   { id: 'p-playazo',      name: 'El Playazo de Rodalquilar',     desc: 'Cabo de Gata. De fácil acceso, larga, rocas en los extremos. Castillo de San Ramón al sur.', cat: 'beach', rating: 4.6, services: '🚻 mínimos · sin chiringuito', access: '🚗 hasta el aparcamiento al pie de la playa', url: 'https://goo.gl/maps/bu6fEsoT1mHC9j2w6', lat: 36.8470, lng: -2.0230 },
   { id: 'p-isleta',       name: 'La Isleta del Moro',            desc: 'Pueblo pesquero diminuto con calas. Snorkel y comer en La Ola junto al mar.', cat: 'beach', rating: 4.5, services: '🍹 🚻', access: '🚗 parking en pueblo · 🚶 corto', url: 'https://maps.google.com?q=Playa+del+Penon+Blanco', lat: 36.7970, lng: -2.0630 },
-  { id: 'p-genoveses',    name: 'Playa de los Genoveses',        desc: 'San José. Bahía perfecta de medio km, dunas con sabinas. Sin servicios para preservar el paraje.', cat: 'beach', rating: 4.7, services: 'virgen · 🛟 verano', access: '🚌 bus desde San José en verano (acceso restringido al coche) · 🚲 carril bici · 🚶 25 min desde San José', lat: 36.7610, lng: -2.0890, top5: true, top5Idx: 3 },
-  { id: 'p-monsul',       name: 'Playa de Mónsul',               desc: 'San José. Famosa por la duna y la roca volcánica. Sale en El bueno, el feo y el malo y en Indiana Jones.', cat: 'beach', rating: 4.7, services: '🚻 🛟 verano · sin chiringuito', access: '🚌 bus desde San José en verano (acceso restringido al coche) · 🚲 carril bici', lat: 36.7460, lng: -2.1130, top5: true, top5Idx: 2 },
-  { id: 'p-barronal',     name: 'Playa del Barronal',            desc: 'San José. Más virgen que Mónsul. Detrás de las dunas de la pista. Una de nuestras favoritas.', cat: 'beach', rating: 4.6, services: 'virgen · sin servicios', access: '🚌 bus + 🚶 10 min andando entre dunas', url: 'https://goo.gl/maps/sF2xaKDPrHEgjpxv6', lat: 36.7430, lng: -2.1180, top5: true, top5Idx: 5 },
+  { id: 'p-genoveses',    name: 'Playa de los Genoveses',        desc: 'San José. Bahía perfecta de medio km, dunas con sabinas. Sin servicios para preservar el paraje.', cat: 'beach', rating: 4.7, services: 'virgen · 🛟 verano', access: '🚌 bus desde San José en verano (acceso restringido al coche) · 🚲 carril bici · 🚶 25 min desde San José', lat: 36.7610, lng: -2.0890, featured: true, featuredOrder: 3 },
+  { id: 'p-monsul',       name: 'Playa de Mónsul',               desc: 'San José. Famosa por la duna y la roca volcánica. Sale en El bueno, el feo y el malo y en Indiana Jones.', cat: 'beach', rating: 4.7, services: '🚻 🛟 verano · sin chiringuito', access: '🚌 bus desde San José en verano (acceso restringido al coche) · 🚲 carril bici', lat: 36.7460, lng: -2.1130, featured: true, featuredOrder: 2 },
+  { id: 'p-barronal',     name: 'Playa del Barronal',            desc: 'San José. Más virgen que Mónsul. Detrás de las dunas de la pista. Una de nuestras favoritas.', cat: 'beach', rating: 4.6, services: 'virgen · sin servicios', access: '🚌 bus + 🚶 10 min andando entre dunas', url: 'https://goo.gl/maps/sF2xaKDPrHEgjpxv6', lat: 36.7430, lng: -2.1180, featured: true, featuredOrder: 5 },
   { id: 'p-medialuna',    name: 'Cala de la Media Luna',         desc: 'San José. Pequeña, simétrica, mar transparente. Se llega andando desde el Barronal.', cat: 'beach-hard', rating: 4.6, services: 'virgen', access: '🚶 desde el Barronal por sendero costero', url: 'https://goo.gl/maps/ngDbWgoBfAdH5x4S8', lat: 36.7415, lng: -2.1195 },
   { id: 'p-cabogata',     name: 'Las Salinas (Cabo de Gata pueblo)', desc: 'Frente a las salinas con flamencos. Faro al fondo. Atardecer espectacular.', cat: 'beach', rating: 4.5, services: '🚿 🍹 🛏️ 🚻 ♿', access: '🚗 parking gratuito · 🚌 línea M-100', lat: 36.7530, lng: -2.2250 },
   { id: 'p-fabriquilla',  name: 'La Fabriquilla / El Corralete', desc: 'Última cala antes del Faro de Cabo de Gata. Roca volcánica, agua transparente. Punto más al sur.', cat: 'beach', rating: 4.5, services: 'mínimos', access: '🚗 hasta el faro', lat: 36.7270, lng: -2.1950 },
@@ -772,6 +772,42 @@ const GuideMap = ({ lang, apt }) => {
 // ================================================================
 const CatGroup = ({ cat, places, lang }) => {
   const [open, setOpen] = React.useState(false);
+  const featured = places
+    .filter(p => p.featured)
+    .sort((a, b) => (a.featuredOrder || 99) - (b.featuredOrder || 99));
+  const rest = places.filter(p => !p.featured);
+  const renderPlace = (p) => {
+    const mapHref = p.url
+      || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Almería')}`;
+    return (
+      <li key={p.id} className={`ag-place${p.featured ? ' is-featured' : ''}`}>
+        <div className="ag-place-main">
+          {p.featured && <span className="ag-place-star" title={lang === 'es' ? 'Imperdible' : 'Must-see'} aria-hidden="true">✦</span>}
+          <span className="ag-place-name">{p.name}</span>
+          {p.tier && <span className="ag-place-tier">{p.tier}</span>}
+          {typeof p.rating === 'number' && (
+            <span className="ag-place-rating" title={lang === 'es' ? 'Valoración Google' : 'Google rating'}>
+              ⭐ {p.rating.toFixed(1)}
+            </span>
+          )}
+        </div>
+        {p.desc && <span className="ag-place-desc">{p.desc}</span>}
+        {p.services && (
+          <span className="ag-place-services" aria-label={lang === 'es' ? 'Servicios' : 'Services'}>
+            {p.services}
+          </span>
+        )}
+        {p.access && (
+          <span className="ag-place-access" aria-label={lang === 'es' ? 'Acceso' : 'Access'}>
+            {p.access}
+          </span>
+        )}
+        <a className="ag-place-link" href={mapHref} target="_blank" rel="noopener">
+          {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
+        </a>
+      </li>
+    );
+  };
   return (
     <div className={`ag-cat-group ${open ? 'is-open' : ''}`}>
       <button
@@ -786,41 +822,29 @@ const CatGroup = ({ cat, places, lang }) => {
         <span className={`ag-cat-chev ${open ? 'open' : ''}`} aria-hidden="true">↓</span>
       </button>
       <div className="ag-cat-body" aria-hidden={!open}>
-        <ul className="ag-places">
-          {places.map(p => {
-            // Si el lugar trae URL fija (Google Maps share link manual), úsala.
-            // Si no, búsqueda directa por nombre + Almería — Google la resuelve.
-            const mapHref = p.url
-              || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Almería')}`;
-            return (
-              <li key={p.id} className="ag-place">
-                <div className="ag-place-main">
-                  <span className="ag-place-name">{p.name}</span>
-                  {p.tier && <span className="ag-place-tier">{p.tier}</span>}
-                  {typeof p.rating === 'number' && (
-                    <span className="ag-place-rating" title={lang === 'es' ? 'Valoración Google' : 'Google rating'}>
-                      ⭐ {p.rating.toFixed(1)}
-                    </span>
-                  )}
-                </div>
-                {p.desc && <span className="ag-place-desc">{p.desc}</span>}
-                {p.services && (
-                  <span className="ag-place-services" aria-label={lang === 'es' ? 'Servicios' : 'Services'}>
-                    {p.services}
-                  </span>
-                )}
-                {p.access && (
-                  <span className="ag-place-access" aria-label={lang === 'es' ? 'Acceso' : 'Access'}>
-                    {p.access}
-                  </span>
-                )}
-                <a className="ag-place-link" href={mapHref} target="_blank" rel="noopener">
-                  {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
-                </a>
-              </li>
-            );
-          })}
-        </ul>
+        {featured.length > 0 && (
+          <>
+            <div className="ag-cat-sub-h">
+              <span className="ag-cat-sub-star" aria-hidden="true">✦</span>
+              {lang === 'es' ? 'Imperdibles' : 'Must-see'}
+            </div>
+            <ul className="ag-places ag-places-featured">
+              {featured.map(renderPlace)}
+            </ul>
+          </>
+        )}
+        {rest.length > 0 && (
+          <>
+            {featured.length > 0 && (
+              <div className="ag-cat-sub-h ag-cat-sub-h-rest">
+                {lang === 'es' ? 'Más recomendaciones' : 'More recommendations'}
+              </div>
+            )}
+            <ul className="ag-places">
+              {rest.map(renderPlace)}
+            </ul>
+          </>
+        )}
       </div>
     </div>
   );
@@ -834,7 +858,7 @@ const CatGroup = ({ cat, places, lang }) => {
 const Top5BeachesBand = ({ places, lang }) => {
   const tops = places
     .filter(p => p.top5)
-    .sort((a, b) => (a.top5Idx || 99) - (b.top5Idx || 99));
+    .sort((a, b) => (a.featuredOrder || 99) - (b.featuredOrder || 99));
   if (!tops.length) return null;
   return (
     <div className="ag-top5">
@@ -851,7 +875,7 @@ const Top5BeachesBand = ({ places, lang }) => {
           const photosHref = `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(p.name + ' Almería')}`;
           return (
             <li key={p.id} className="ag-top5-item">
-              <span className="ag-top5-num">{String(p.top5Idx).padStart(2, '0')}</span>
+              <span className="ag-top5-num">{String(p.featuredOrder).padStart(2, '0')}</span>
               <a
                 className="ag-top5-photo"
                 href={photosHref}
@@ -1262,6 +1286,110 @@ const DAY_PLANS = [
     tip_es:'El carrito de bebé no es la mejor opción — calzado bueno para los peques en las cuestas empedradas.',
     tip_en:'Strollers are awkward — solid shoes for the kids on the cobbled streets.',
   },
+
+  // ── PLANES EXTRA (rutas, trekking, escapadas) ────────────────
+  {
+    id:'plan-carretera-cabo',
+    type:'fullday', audience:'both',
+    title_es:'Carretera del Cabo: calas escondidas en coche',
+    title_en:'Cabo coastal road: hidden coves by car',
+    start:'9:30', end:'19:30',
+    tags_es:['ruta en coche','calas vírgenes','snorkel'],
+    tags_en:['road trip','virgin coves','snorkel'],
+    steps:[
+      { t:'9:30',  es:'Salida hacia Carboneras por la costa',         en:'Drive south along the coast to Carboneras',
+                   d_es:'AL-5106. Carretera con curvas y miradores espectaculares.',                              d_en:'AL-5106. Winding road with stunning viewpoints.' },
+      { t:'10:30', es:'Mirador de Mesa Roldán y bajada a Los Muertos', en:'Mesa Roldán viewpoint and descent to Los Muertos',
+                   d_es:'Aparcas arriba y bajas a la playa por sendero.',                                          d_en:'Park at the top and walk down the trail.' },
+      { t:'12:30', es:'Cala del Plomo (Agua Amarga)',                en:'Cala del Plomo (Agua Amarga)',
+                   d_es:'Pista de tierra · 30 min andando · casi siempre vacía.',                                  d_en:'Dirt road · 30 min walk · almost always empty.' },
+      { t:'14:30', es:'Comida en Las Negras o Agua Amarga',          en:'Lunch in Las Negras or Agua Amarga',
+                   d_es:'Las Negras tiene ambiente bohemio; Agua Amarga más cuidado.',                             d_en:'Las Negras has bohemian vibe; Agua Amarga is more polished.' },
+      { t:'16:30', es:'Playazo de Rodalquilar',                       en:'Playazo de Rodalquilar',
+                   d_es:'Aparcamiento al pie de la playa. Castillo de San Ramón al sur.',                          d_en:'Park right by the beach. San Ramón castle to the south.' },
+      { t:'18:00', es:'La Isleta del Moro: snorkel y aperitivo',     en:'La Isleta del Moro: snorkel and aperitif',
+                   d_es:'Pueblo pesquero diminuto. Snorkel en el Peñón Blanco. Cerveza al sol.',                  d_en:'Tiny fishing village. Snorkel at Peñón Blanco. Beer in the sun.' },
+    ],
+    tip_es:'Lleva neumáticos en buen estado: hay tramos de pista que pinchan. Y agua, mucha agua.',
+    tip_en:'Make sure your tyres are sound — some dirt tracks bite. Bring lots of water.',
+  },
+  {
+    id:'plan-trek-san-pedro',
+    type:'fullday', audience:'adults',
+    title_es:'Trekking del litoral · Las Negras → Cala de San Pedro',
+    title_en:'Coastal trek · Las Negras → Cala de San Pedro',
+    start:'8:30', end:'19:00',
+    tags_es:['trekking','sendero costero','cala virgen'],
+    tags_en:['hiking','coastal path','virgin cove'],
+    steps:[
+      { t:'8:30',  es:'Salida hacia Las Negras',                     en:'Drive to Las Negras',
+                   d_es:'1 h en coche. Aparcad en el pueblo, junto a la playa.',                                   d_en:'1 h drive. Park in the village, next to the beach.' },
+      { t:'10:00', es:'Inicio del sendero costero (PR-A 357)',       en:'Start of the coastal trail (PR-A 357)',
+                   d_es:'Sale del extremo norte del pueblo. 90 min andando con desnivel moderado.',                d_en:'Starts at the north end of the village. 90 min walk with moderate elevation.' },
+      { t:'11:30', es:'Llegada a la Cala de San Pedro',              en:'Arrival at Cala de San Pedro',
+                   d_es:'Cala virgen con fuente natural. Comunidad estable, sin servicios. Agua limpia.',          d_en:'Virgin cove with natural spring. Long-time community, no services. Clean water.' },
+      { t:'12:00', es:'Baño y bocadillo en la cala',                 en:'Swim and packed lunch in the cove',
+                   d_es:'Llevad la comida — no hay nada que comprar. Sombra escasa.',                              d_en:'Bring food — nothing to buy. Little shade.' },
+      { t:'15:00', es:'Vuelta caminando · 90 min',                   en:'Walk back · 90 min',
+                   d_es:'O vuelta en taxi-barca por unos 10 € por persona si están operando.',                     d_en:'Or boat-taxi back for ~€10 per person if operating.' },
+      { t:'17:30', es:'Cerveza en Las Negras',                       en:'Beer in Las Negras',
+                   d_es:'Premio en alguna terraza con vistas al pedregal.',                                        d_en:'Reward yourselves on a pebble-beach terrace.' },
+    ],
+    tip_es:'Calzado de trekking obligatorio. 3 L de agua por persona. Crema solar y gorra. Sombrita en la cala — la sombra escasea.',
+    tip_en:'Trekking shoes required. 3 L water per person. Sunscreen and hat. Take a beach umbrella — shade is scarce.',
+  },
+  {
+    id:'plan-murcia-gastro',
+    type:'fullday', audience:'both',
+    title_es:'Murcia capital y su gastronomía',
+    title_en:'Murcia city and its gastronomy',
+    start:'9:00', end:'20:00',
+    tags_es:['ciudad','tapas','cultura'],
+    tags_en:['city','tapas','culture'],
+    steps:[
+      { t:'9:00',  es:'Salida hacia Murcia',                         en:'Drive to Murcia',
+                   d_es:'1 h 30 min por la A-7. Aparcamiento subterráneo en el centro (Plaza Circular).',          d_en:'1 h 30 min on the A-7. Underground parking downtown (Plaza Circular).' },
+      { t:'11:00', es:'Catedral de Santa María',                     en:'Cathedral of Santa María',
+                   d_es:'Fachada barroca, torre con vistas. Entrada combinada al museo.',                          d_en:'Baroque façade, bell tower with views. Combined ticket includes the museum.' },
+      { t:'12:30', es:'Plaza de las Flores · tapeo',                 en:'Plaza de las Flores · tapas',
+                   d_es:'Pasteles de carne, marineras, michirones, zarangollo. Un poco en cada terraza.',           d_en:'Meat pasties, marineras (anchovy on potato salad), michirones, zarangollo. A bite at each terrace.' },
+      { t:'14:30', es:'Comida en El Rincón de Pepe o Salzillo',      en:'Lunch at El Rincón de Pepe or Salzillo',
+                   d_es:'Cocina murciana tradicional. Caldero, arroz a banda, mero al horno.',                     d_en:'Traditional Murcian cuisine. Caldero, arroz a banda, baked grouper.' },
+      { t:'16:30', es:'Real Casino de Murcia',                       en:'Real Casino de Murcia',
+                   d_es:'Edificio único del siglo XIX. Patio árabe, biblioteca inglesa, salón pompeyano.',         d_en:'Unique 19th-century building. Arab patio, English library, Pompeian hall.' },
+      { t:'17:30', es:'Paseo por Trapería y Platería',               en:'Stroll along Trapería and Platería',
+                   d_es:'Calles peatonales con tiendas históricas y heladerías.',                                  d_en:'Pedestrian streets with historic shops and gelaterias.' },
+    ],
+    tip_es:'Si vais en jueves, parad a la vuelta en el mercadillo de Vera para comprar producto de Murcia: pimentón, paparajotes, vino del Bullas.',
+    tip_en:'If on Thursday, stop at Vera market on the way back for Murcian produce: paprika, paparajotes, Bullas wine.',
+  },
+  {
+    id:'plan-nijar-ceramica',
+    type:'fullday', audience:'both',
+    title_es:'San José + Níjar y sus alfareros',
+    title_en:'San José + Níjar pottery workshops',
+    start:'10:00', end:'20:00',
+    tags_es:['cultura','artesanía','pueblo blanco'],
+    tags_en:['culture','crafts','white village'],
+    steps:[
+      { t:'10:00', es:'Salida hacia San José',                       en:'Drive to San José',
+                   d_es:'1 h. Aparcamiento gratuito a la entrada del pueblo.',                                     d_en:'1 h drive. Free parking at the village entrance.' },
+      { t:'11:30', es:'Paseo por el puerto y la playa de San José',  en:'Walk the harbour and San José beach',
+                   d_es:'Mañana tranquila. Cafés con vista al Mediterráneo.',                                      d_en:'Quiet morning. Cafés with Mediterranean views.' },
+      { t:'13:30', es:'Comida en La Gallineta',                      en:'Lunch at La Gallineta',
+                   d_es:'Junto al mar, productos del Cabo de Gata. Reserva.',                                      d_en:'Seaside, Cabo de Gata produce. Book ahead.' },
+      { t:'15:30', es:'Subir a Níjar pueblo',                         en:'Drive up to Níjar village',
+                   d_es:'30 min. Pueblo blanco colgado en la sierra Alhamilla.',                                    d_en:'30 min. White village clinging to the Alhamilla mountains.' },
+      { t:'16:30', es:'Talleres de cerámica en la calle Real',       en:'Pottery workshops on Calle Real',
+                   d_es:'Cerámica Tito · Cerámica Cosano · El Oficio. Cada uno con estilo propio. Compra una pieza.', d_en:'Cerámica Tito · Cerámica Cosano · El Oficio. Each with its own style. Buy a piece.' },
+      { t:'18:00', es:'Mirador de la Atalaya',                       en:'Atalaya viewpoint',
+                   d_es:'Vistas al Cabo de Gata y al desierto. Muy bueno al atardecer.',                            d_en:'Views over Cabo de Gata and the desert. Best at sunset.' },
+      { t:'19:00', es:'Café o tapa en la Plaza de la Glorieta',      en:'Coffee or tapa at Plaza de la Glorieta',
+                   d_es:'Antes de bajar a la N-340.',                                                              d_en:'Before heading back down to the N-340.' },
+    ],
+    tip_es:'Cada taller cierra a sus horas — abren mañanas y desde las 17:00. Llamad antes si vais en pleno verano: en agosto hay menos actividad.',
+    tip_en:'Each workshop has its own hours — typically mornings and from 5 pm. Call ahead in mid-summer; August is quieter.',
+  },
 ];
 
 const DayPlanCard = ({ plan, lang }) => {
@@ -1561,11 +1689,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               {s.surroundings.sources.map((r, i) => <li key={i}>{r}</li>)}
             </ol>
 
-            {/* TOP-5 PLAYAS — siempre visible, encabeza la sección de playas
-                con cards más grandes que llevan a Google Imágenes para "saber más". */}
-            <Top5BeachesBand places={PLACES} lang={lang} />
-
-            {/* Categorías plegables: cada una abre/cierra al pulsar el head */}
+            {/* Categorías plegables: cada una abre/cierra al pulsar el head.
+                Si tiene "imperdibles" se ven dentro, arriba del listado general. */}
             {CATEGORIES.filter(c => c.id !== 'home').map(cat => {
               const inCat = PLACES.filter(p => p.cat === cat.id);
               if (!inCat.length) return null;

@@ -8323,6 +8323,45 @@ footer,
 }
 .ag-place-link:hover { opacity: 0.7; }
 
+/* Sub-cabecera "Imperdibles" / "Más recomendaciones" dentro de cada categoría */
+.ag-cat-sub-h {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 10px;
+  padding: 0 4px;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--apt-accent);
+}
+.ag-cat-sub-h-rest {
+  color: var(--ink-soft);
+  margin-top: 22px;
+}
+.ag-cat-sub-star {
+  color: var(--apt-accent);
+  font-size: 13px;
+  line-height: 1;
+}
+.ag-place.is-featured {
+  border-left: 3px solid var(--apt-accent);
+  background: color-mix(in oklab, var(--apt-accent) 6%, var(--crema));
+}
+.ag-place-star {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px; height: 16px;
+  margin-right: 6px;
+  color: var(--apt-accent);
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.ag-places-featured { margin-bottom: 4px; }
+
 /* Rating + servicios + acceso de cada lugar (sobre todo playas) */
 .ag-place-rating {
   display: inline-flex; align-items: center;
