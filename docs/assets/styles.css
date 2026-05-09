@@ -8214,13 +8214,49 @@ footer,
    GUIDE PLACES LIST — lista categorizada por tipo
    ================================================================ */
 .ag-cat-group {
-  margin: 32px 0 24px;
+  margin: 18px 0 0;
+  border-top: 1px solid color-mix(in oklab, var(--apt-accent) 12%, transparent);
 }
+.ag-cat-group:last-child {
+  border-bottom: 1px solid color-mix(in oklab, var(--apt-accent) 12%, transparent);
+}
+/* El head ahora es un <button> plegable. Se comporta visualmente como un h3
+   pero con cursor pointer, chevron y hover. Mantengo la familia del h3. */
 .ag-cat-h {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 0 0 12px;
+  width: 100%;
+  margin: 0;
+  padding: 16px 4px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(16px, 2.2vw, 20px);
+  color: var(--ber-dk);
+  text-align: left;
+  transition: background var(--dur-fast, 160ms) var(--ease-out, ease);
+}
+.ag-cat-h:hover { background: color-mix(in oklab, var(--apt-accent) 4%, transparent); }
+.ag-cat-h:active { transform: scale(.998); }
+.ag-cat-label { flex: 1; min-width: 0; }
+.ag-cat-chev {
+  font-size: 14px;
+  color: var(--ink-soft);
+  transition: transform .35s var(--ease-out, cubic-bezier(.23,1,.32,1));
+}
+.ag-cat-chev.open { transform: rotate(180deg); }
+.ag-cat-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .45s var(--ease-out, cubic-bezier(.23,1,.32,1)),
+              padding .35s ease;
+}
+.ag-cat-group.is-open .ag-cat-body {
+  max-height: 6000px;
+  padding: 4px 0 18px;
 }
 .ag-cat-dot {
   width: 14px; height: 14px;
@@ -8882,4 +8918,114 @@ footer,
   .dbm-card { padding: 22px 20px; min-height: 0; }
   .dbm-card-stat { font-size: 22px; }
   .dbm-card-t { font-size: 18px; }
+}
+
+/* ================================================================
+   LAYER 65 · Guía · Top-5 playas destacadas
+   ================================================================ */
+.ag-top5 {
+  margin: 28px 0 32px;
+  padding: 24px 22px 18px;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--apt-accent) 6%, var(--crema)), var(--crema));
+  border-left: 4px solid var(--apt-accent);
+  border-radius: 14px 0 14px 0;
+}
+.ag-top5-head {
+  margin: 0 0 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid color-mix(in oklab, var(--apt-accent) 14%, transparent);
+}
+.ag-top5-head .eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--apt-accent);
+}
+.ag-top5-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.ag-top5-item {
+  display: grid;
+  grid-template-columns: 36px 88px 1fr;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 4px;
+  border-radius: 10px 0 10px 0;
+  transition: background var(--dur-fast, 160ms) var(--ease-out, ease);
+}
+.ag-top5-item:hover { background: color-mix(in oklab, var(--apt-accent) 4%, transparent); }
+.ag-top5-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--apt-accent);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.ag-top5-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 64px; width: 88px;
+  background: color-mix(in oklab, var(--apt-accent) 14%, var(--crema));
+  border: 1px solid color-mix(in oklab, var(--apt-accent) 22%, transparent);
+  border-radius: 8px 0 8px 0;
+  text-decoration: none;
+  color: var(--apt-accent);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform .15s var(--ease-out);
+}
+.ag-top5-photo:hover {
+  background: var(--apt-accent);
+  color: var(--crema);
+  transform: translateY(-2px);
+}
+.ag-top5-photo-icon { font-size: 22px; line-height: 1; }
+.ag-top5-photo-label { font-size: 9px; }
+.ag-top5-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.ag-top5-name {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--ber-dk);
+  line-height: 1.2;
+}
+.ag-top5-desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.ag-top5-links {
+  display: flex;
+  gap: 18px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+.ag-top5-links a {
+  font-size: 12px;
+  letter-spacing: .04em;
+  color: var(--apt-accent);
+  font-weight: 500;
+  text-decoration: none;
+}
+.ag-top5-links a:hover { opacity: 0.7; }
+@media (max-width: 600px) {
+  .ag-top5 { padding: 18px 16px; }
+  .ag-top5-item { grid-template-columns: 28px 64px 1fr; gap: 10px; }
+  .ag-top5-photo { width: 64px; height: 52px; }
+  .ag-top5-photo-icon { font-size: 18px; }
 }

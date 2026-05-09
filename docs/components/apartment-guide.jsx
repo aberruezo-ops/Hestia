@@ -89,9 +89,12 @@ const CATEGORIES = [
 // Cuando un goo.gl link está disponible, va en .url para el detalle.
 const PLACES = [
   // Hestía (centro del mapa) — los 3 en Vera Playa
-  { id: 'hestia-mar',     name: 'Hestía Vera Mar',      cat: 'home',  lat: 37.2253, lng: -1.7945 },
-  { id: 'hestia-thalassa',name: 'Hestía Vera Thalassa', cat: 'home',  lat: 37.2305, lng: -1.7900 },
-  { id: 'hestia-salinas', name: 'Hestía Vera Salinas',  cat: 'home',  lat: 37.2185, lng: -1.7855 },
+  // Coordenadas aproximadas: Mar y Thalassa en el sector textil de Vera Playa
+  // (zona Calle Islas Canarias / urbanización Vera Mediterránea); Salinas
+  // en Pueblo Salinas, junto al Parque Natural de las Salinas de Puerto Rey.
+  { id: 'hestia-mar',     name: 'Hestía Vera Mar',      cat: 'home',  lat: 37.2290, lng: -1.7960 },
+  { id: 'hestia-thalassa',name: 'Hestía Vera Thalassa', cat: 'home',  lat: 37.2300, lng: -1.7940 },
+  { id: 'hestia-salinas', name: 'Hestía Vera Salinas',  cat: 'home',  lat: 37.2160, lng: -1.7980 },
 
   // Supermercados
   { id: 'coviran',        name: 'Covirán', desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa.', cat: 'super', lat: 37.2235, lng: -1.7975 },
@@ -197,17 +200,41 @@ const PLACES = [
   { id: 'aquarium',       name: 'Aquarium Costa de Almería', cat: 'culture', url: 'https://www.aquariumcostadealmeria.com/', lat: 36.7674, lng: -2.6094 },
   { id: 'mariposario',    name: 'Mariposario de Almería',  cat: 'culture', url: 'https://g.co/kgs/meY7kj', lat: 36.7641, lng: -2.6109 },
 
-  // Playas (numeradas según cercanía)
-  { id: 'p-cocedores',    name: 'Playa de los Cocedores',   cat: 'beach', url: 'https://goo.gl/maps/pCTJ8y5mt4y4VYkE8', lat: 37.3790, lng: -1.6260 },
-  { id: 'p-piedras',      name: 'Piedras de Molino (Algarrobico)', cat: 'beach', url: 'https://goo.gl/maps/eySnjWJp1YcjkSiu9', lat: 37.0200, lng: -1.8730 },
-  { id: 'p-muertos',      name: 'Playa de los Muertos',     desc: 'Hay que verla. Bastante gente, pero merece la pena.', cat: 'beach-hard', url: 'https://goo.gl/maps/uh1baJWHPp1uan81A', lat: 37.0050, lng: -1.8800 },
-  { id: 'p-enmedio',      name: 'Cala de Enmedio',          desc: 'Nuestra favorita. Desde Aguamarga hay que andar campo a través media hora.', cat: 'beach-hard', url: 'https://goo.gl/maps/i72YXUhFgBzi7vhf6', lat: 36.9540, lng: -1.9740 },
-  { id: 'p-isleta',       name: 'La Isleta del Moro',       desc: 'Snorkel y comer en La Ola, junto al mar.', cat: 'beach', url: 'https://maps.google.com?q=Playa+del+Penon+Blanco', lat: 36.7970, lng: -2.0630 },
-  { id: 'p-playazo',      name: 'El Playazo de Rodalquilar', desc: 'De fácil acceso y suele gustar mucho.', cat: 'beach', url: 'https://goo.gl/maps/bu6fEsoT1mHC9j2w6', lat: 36.8470, lng: -2.0230 },
-  { id: 'p-genoveses',    name: 'Playa de los Genoveses',   desc: 'San José. Hay que dejar el coche antes de la barrera y entrar en autobús.', cat: 'beach', lat: 36.7610, lng: -2.0890 },
-  { id: 'p-monsul',       name: 'Playa de Mónsul',          desc: 'San José. Acceso por barrera y bus.', cat: 'beach', lat: 36.7460, lng: -2.1130 },
-  { id: 'p-barronal',     name: 'Playa del Barronal',       desc: 'San José. Una de nuestras favoritas.', cat: 'beach', url: 'https://goo.gl/maps/sF2xaKDPrHEgjpxv6', lat: 36.7430, lng: -2.1180 },
-  { id: 'p-medialuna',    name: 'Cala de la Media Luna',    desc: 'San José.', cat: 'beach-hard', url: 'https://goo.gl/maps/ngDbWgoBfAdH5x4S8', lat: 36.7415, lng: -2.1195 },
+  // Playas (orden: cerca-norte → Vera → sur hacia Cabo de Gata → Adra)
+  // Las del top-5 son las que destacamos arriba con "Saber más".
+  // ── HACIA EL NORTE (camino a Murcia)
+  { id: 'p-cocedores',    name: 'Playa de los Cocedores',        desc: 'San Juan de los Terreros (Pulpí). La última cala almeriense antes de Murcia. Aguas turquesas y rocas de arenisca con cuevas naturales.', cat: 'beach', url: 'https://goo.gl/maps/pCTJ8y5mt4y4VYkE8', lat: 37.3790, lng: -1.6260 },
+  { id: 'p-carolina',     name: 'Playa de la Carolina',          desc: 'San Juan de los Terreros. Larga, dorada, tranquila. Familiar.',                                       cat: 'beach', lat: 37.3550, lng: -1.6510 },
+  { id: 'p-calabardina',  name: 'Playa de Calabardina (Águilas)', desc: 'Murcia. Pueblo costero íntimo. Cala protegida, agua transparente. 35 min.',                          cat: 'beach', lat: 37.4020, lng: -1.5840 },
+  { id: 'p-hornillo',     name: 'Playa del Hornillo (Águilas)',  desc: 'Murcia. Cala urbana de aguas tranquilas, junto a la antigua estación inglesa.',                       cat: 'beach', lat: 37.4080, lng: -1.5780 },
+  { id: 'p-calnegre',     name: 'Playas de Calnegre',            desc: 'Lorca-Mazarrón (Murcia). Parque regional protegido, calas vírgenes y áridas. 50 min.',                cat: 'beach-hard', lat: 37.4730, lng: -1.4250 },
+
+  // ── VERA PLAYA Y ALREDEDORES INMEDIATOS
+  { id: 'p-vera',         name: 'Playa de Vera (sector textil)', desc: 'Justo al lado de Hestía. Larga, fina, agua templada. La playa de cabecera.',                          cat: 'beach', lat: 37.2275, lng: -1.7935 },
+  { id: 'p-garrucha',     name: 'Playa de Garrucha',             desc: 'Pueblo pesquero a 10 min. Buena lonja de pescado. Paseo agradable.',                                  cat: 'beach', lat: 37.1810, lng: -1.8230 },
+  { id: 'p-macenas',      name: 'Playa de Macenas (Mojácar)',    desc: 'Sur de Mojácar. Mezcla de calas vírgenes y arena dorada. Castillo del s. XVIII al fondo.',           cat: 'beach', lat: 37.0830, lng: -1.8350 },
+  { id: 'p-piedras',      name: 'Piedras de Molino (Carboneras)', desc: 'Cala icónica al lado del Algarrobico. Aguas cristalinas, fondo rocoso para snorkel.',                cat: 'beach', url: 'https://goo.gl/maps/eySnjWJp1YcjkSiu9', lat: 37.0200, lng: -1.8730 },
+
+  // ── HACIA EL SUR (Cabo de Gata)
+  { id: 'p-muertos',      name: 'Playa de los Muertos',          desc: 'Carboneras. Top 5 mejores playas de España. Acceso por sendero pedregoso desde el aparcamiento. ~15 min andando.', cat: 'beach-hard', url: 'https://goo.gl/maps/uh1baJWHPp1uan81A', lat: 37.0050, lng: -1.8800, top5: true, top5Idx: 1 },
+  { id: 'p-enmedio',      name: 'Cala de Enmedio',               desc: 'Agua Amarga. Nuestra favorita. Desde el pueblo se anda media hora campo a través — lo que la mantiene casi virgen.', cat: 'beach-hard', url: 'https://goo.gl/maps/i72YXUhFgBzi7vhf6', lat: 36.9540, lng: -1.9740, top5: true, top5Idx: 4 },
+  { id: 'p-aguamarga',    name: 'Playa de Agua Amarga',          desc: 'Pueblo blanco con encanto, calas pequeñas y restaurantes a pie de arena.',                            cat: 'beach', lat: 36.9395, lng: -2.0000 },
+  { id: 'p-playazo',      name: 'El Playazo de Rodalquilar',     desc: 'Cabo de Gata. De fácil acceso, larga, rocas en los extremos. Castillo de San Ramón al sur.',         cat: 'beach', url: 'https://goo.gl/maps/bu6fEsoT1mHC9j2w6', lat: 36.8470, lng: -2.0230 },
+  { id: 'p-isleta',       name: 'La Isleta del Moro',            desc: 'Pueblo pesquero diminuto con calas. Snorkel y comer en La Ola junto al mar.',                         cat: 'beach', url: 'https://maps.google.com?q=Playa+del+Penon+Blanco', lat: 36.7970, lng: -2.0630 },
+  { id: 'p-genoveses',    name: 'Playa de los Genoveses',        desc: 'San José. Bahía perfecta de medio km, dunas con sabinas. Acceso por bus desde la barrera en verano.', cat: 'beach', lat: 36.7610, lng: -2.0890, top5: true, top5Idx: 3 },
+  { id: 'p-monsul',       name: 'Playa de Mónsul',               desc: 'San José. Famosa por la duna y la roca volcánica. Sale en El bueno, el feo y el malo. Acceso barrera/bus.', cat: 'beach', lat: 36.7460, lng: -2.1130, top5: true, top5Idx: 2 },
+  { id: 'p-barronal',     name: 'Playa del Barronal',            desc: 'San José. Más virgen que Mónsul. Detrás de las dunas de la pista. Una de nuestras favoritas.',       cat: 'beach', url: 'https://goo.gl/maps/sF2xaKDPrHEgjpxv6', lat: 36.7430, lng: -2.1180, top5: true, top5Idx: 5 },
+  { id: 'p-medialuna',    name: 'Cala de la Media Luna',         desc: 'San José. Pequeña, simétrica, mar transparente. Se llega andando desde el Barronal.',                cat: 'beach-hard', url: 'https://goo.gl/maps/ngDbWgoBfAdH5x4S8', lat: 36.7415, lng: -2.1195 },
+  { id: 'p-cabogata',     name: 'Las Salinas (Cabo de Gata pueblo)', desc: 'Frente a las salinas con flamencos. Faro al fondo. Atardecer espectacular.',                       cat: 'beach', lat: 36.7530, lng: -2.2250 },
+
+  // ── MUCHO MÁS AL SUR (Almería capital → Adra)
+  { id: 'p-almeria',      name: 'Playa de El Palmer (Almería)',  desc: 'Capital. Paseo, hamacas, chiringuitos. 1 h 15 min en coche.',                                         cat: 'beach', lat: 36.8230, lng: -2.4140 },
+  { id: 'p-aguadulce',    name: 'Playa de Aguadulce (Roquetas)', desc: 'Roquetas de Mar. Larga, urbana, amplia. Buena para familia.',                                          cat: 'beach', lat: 36.8070, lng: -2.5680 },
+  { id: 'p-toyo',         name: 'Playa del Toyo (Retamar)',      desc: 'Retamar / El Ejido. Limita con el Parque Natural. Arena fina y tranquila.',                            cat: 'beach', lat: 36.8100, lng: -2.3640 },
+  { id: 'p-almerimar',    name: 'Playa de Almerimar (El Ejido)',  desc: 'Junto al puerto deportivo. 1 h 30 min de Vera. Aguas tranquilas.',                                    cat: 'beach', lat: 36.7050, lng: -2.7920 },
+  { id: 'p-balerma',      name: 'Playa de Balerma (El Ejido)',    desc: 'La playa más larga de la zona. Arena gruesa, casi virgen en algunos tramos.',                         cat: 'beach', lat: 36.7430, lng: -2.8870 },
+  { id: 'p-adra',         name: 'Playa de San Nicolás (Adra)',    desc: 'Adra. Última playa antes de Granada. 1 h 50 min en coche.',                                          cat: 'beach', lat: 36.7430, lng: -3.0220 },
+
 
   // Playas para perros
   { id: 'p-mijo',         name: 'Cala de Mijo',         cat: 'beach-dog', url: 'https://goo.gl/maps/bH2xyYdjNCdHvGy19', lat: 37.0440, lng: -1.8910 },
@@ -697,8 +724,13 @@ const GUIDE_BY_APT = {
 // propio Google Maps al pulsar "Cómo llegar" en la lista de abajo.
 // Cero coordenadas que mantener.
 // ================================================================
-const GuideMap = ({ lang }) => {
-  const src = 'https://maps.google.com/maps?q=Vera+Playa+Almer%C3%ADa&z=14&output=embed';
+const GuideMap = ({ lang, apt }) => {
+  // Si tenemos el apt actual, centramos el embed en las coords concretas
+  // de esa Hestía. Si no, generic Vera Playa.
+  const home = apt && PLACES.find(p => p.id === `hestia-${apt.slug}`);
+  const src = home
+    ? `https://maps.google.com/maps?q=${home.lat},${home.lng}&z=15&output=embed`
+    : 'https://maps.google.com/maps?q=Vera+Playa+Almer%C3%ADa&z=14&output=embed';
   return (
     <div className="ag-map-block no-print">
       <iframe
@@ -706,14 +738,119 @@ const GuideMap = ({ lang }) => {
         src={src}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-        title={lang === 'es' ? 'Mapa de Vera Playa' : 'Vera Playa map'}
+        title={home ? `${home.name} — mapa` : (lang === 'es' ? 'Mapa de Vera Playa' : 'Vera Playa map')}
         allowFullScreen
       />
       <div className="ag-map-note">
         {lang === 'es'
-          ? 'Mapa general de Vera Playa. Cada recomendación de abajo abre Google Maps con la búsqueda directa.'
-          : 'Overview of Vera Playa. Each recommendation below opens Google Maps with a direct search.'}
+          ? (home
+              ? `Mapa centrado en ${home.name}. Coordenadas aproximadas — para la dirección exacta, escríbenos.`
+              : 'Mapa general de Vera Playa. Cada recomendación de abajo abre Google Maps con la búsqueda directa.')
+          : (home
+              ? `Map centred on ${home.name}. Coordinates approximate — for the exact address, just write to us.`
+              : 'Overview of Vera Playa. Each recommendation below opens Google Maps with a direct search.')}
       </div>
+    </div>
+  );
+};
+
+// ================================================================
+// CatGroup — una categoría plegable de la sección "Alrededores".
+// Click en el head abre/cierra. Animación max-height suave.
+// ================================================================
+const CatGroup = ({ cat, places, lang }) => {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div className={`ag-cat-group ${open ? 'is-open' : ''}`}>
+      <button
+        type="button"
+        className="ag-cat-h"
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+      >
+        <span className="ag-cat-dot" style={{ background: cat.color }} aria-hidden="true" />
+        <span className="ag-cat-label">{cat[lang]}</span>
+        <span className="ag-cat-count">{places.length}</span>
+        <span className={`ag-cat-chev ${open ? 'open' : ''}`} aria-hidden="true">↓</span>
+      </button>
+      <div className="ag-cat-body" aria-hidden={!open}>
+        <ul className="ag-places">
+          {places.map(p => {
+            // Si el lugar trae URL fija (Google Maps share link manual), úsala.
+            // Si no, búsqueda directa por nombre + Almería — Google la resuelve.
+            const mapHref = p.url
+              || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Almería')}`;
+            return (
+              <li key={p.id} className="ag-place">
+                <div className="ag-place-main">
+                  <span className="ag-place-name">{p.name}</span>
+                  {p.tier && <span className="ag-place-tier">{p.tier}</span>}
+                </div>
+                {p.desc && <span className="ag-place-desc">{p.desc}</span>}
+                <a className="ag-place-link" href={mapHref} target="_blank" rel="noopener">
+                  {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
+};
+
+// ================================================================
+// Top5BeachesBand — cinta destacada con las cinco playas top.
+// Cada card lleva al "Cómo llegar" de Google Maps + "Ver fotos"
+// (Google Imágenes con la búsqueda) como pequeña vista previa.
+// ================================================================
+const Top5BeachesBand = ({ places, lang }) => {
+  const tops = places
+    .filter(p => p.top5)
+    .sort((a, b) => (a.top5Idx || 99) - (b.top5Idx || 99));
+  if (!tops.length) return null;
+  return (
+    <div className="ag-top5">
+      <div className="ag-top5-head">
+        <span className="eyebrow">{lang === 'es' ? 'Lo que no te puedes perder' : 'Don\'t-miss spots'}</span>
+        <h3 className="ag-h3" style={{ margin: 0 }}>
+          {lang === 'es' ? 'Top 5 playas de la zona' : 'Top 5 beaches around'}
+        </h3>
+      </div>
+      <ol className="ag-top5-list">
+        {tops.map(p => {
+          const mapHref = p.url
+            || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Almería')}`;
+          const photosHref = `https://www.google.com/search?tbm=isch&q=${encodeURIComponent(p.name + ' Almería')}`;
+          return (
+            <li key={p.id} className="ag-top5-item">
+              <span className="ag-top5-num">{String(p.top5Idx).padStart(2, '0')}</span>
+              <a
+                className="ag-top5-photo"
+                href={photosHref}
+                target="_blank" rel="noopener"
+                aria-label={lang === 'es' ? `Ver fotos de ${p.name}` : `See photos of ${p.name}`}
+                title={lang === 'es' ? 'Abrir en Google Imágenes' : 'Open in Google Images'}
+              >
+                <span className="ag-top5-photo-icon" aria-hidden="true">📷</span>
+                <span className="ag-top5-photo-label">{lang === 'es' ? 'Ver fotos' : 'Photos'}</span>
+              </a>
+              <div className="ag-top5-text">
+                <span className="ag-top5-name">{p.name}</span>
+                {p.desc && <span className="ag-top5-desc">{p.desc}</span>}
+                <div className="ag-top5-links">
+                  <a href={mapHref} target="_blank" rel="noopener">
+                    {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
+                  </a>
+                  <a href={photosHref} target="_blank" rel="noopener">
+                    {lang === 'es' ? 'Saber más' : 'Read more'} <span aria-hidden="true">↗</span>
+                  </a>
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
     </div>
   );
 };
@@ -912,45 +1049,22 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <h2 className="ag-h2">{s.surroundings.title}</h2>
             <p className="ag-para">{s.surroundings.intro}</p>
 
-            <GuideMap lang={lang} />
+            <GuideMap lang={lang} apt={apt} />
 
             <h3 className="ag-h3">{lang === 'es' ? 'Fuentes recomendadas' : 'Recommended sources'}</h3>
             <ol className="ag-recs">
               {s.surroundings.sources.map((r, i) => <li key={i}>{r}</li>)}
             </ol>
 
+            {/* TOP-5 PLAYAS — siempre visible, encabeza la sección de playas
+                con cards más grandes que llevan a Google Imágenes para "saber más". */}
+            <Top5BeachesBand places={PLACES} lang={lang} />
+
+            {/* Categorías plegables: cada una abre/cierra al pulsar el head */}
             {CATEGORIES.filter(c => c.id !== 'home').map(cat => {
               const inCat = PLACES.filter(p => p.cat === cat.id);
               if (!inCat.length) return null;
-              return (
-                <div key={cat.id} className="ag-cat-group">
-                  <h3 className="ag-h3 ag-cat-h">
-                    <span className="ag-cat-dot" style={{ background: cat.color }} aria-hidden="true" />
-                    {cat[lang]}
-                    <span className="ag-cat-count">{inCat.length}</span>
-                  </h3>
-                  <ul className="ag-places">
-                    {inCat.map(p => {
-                      // Si el lugar trae URL fija (Google Maps share link manual), úsala.
-                      // Si no, búsqueda directa por nombre + Almería — Google la resuelve.
-                      const mapHref = p.url
-                        || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Almería')}`;
-                      return (
-                        <li key={p.id} className="ag-place">
-                          <div className="ag-place-main">
-                            <span className="ag-place-name">{p.name}</span>
-                            {p.tier && <span className="ag-place-tier">{p.tier}</span>}
-                          </div>
-                          {p.desc && <span className="ag-place-desc">{p.desc}</span>}
-                          <a className="ag-place-link" href={mapHref} target="_blank" rel="noopener">
-                            {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              );
+              return <CatGroup key={cat.id} cat={cat} places={inCat} lang={lang} />;
             })}
           </section>
 
