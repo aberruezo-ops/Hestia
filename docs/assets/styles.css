@@ -9561,3 +9561,222 @@ footer,
 @media (min-width: 1100px) {
   .apt-desktop-sidebar { width: 320px; }
 }
+
+/* ================================================================
+   LAYER 68 · WidgetStack · pila de widgets flotantes independientes
+   en el lateral derecho. Cada widget se minimiza a una pastilla
+   corporativa (forma rounded-left, recta a la derecha, ✦ + label).
+   Tres widgets posibles: Reserva directa, ¿Sabías que?, Mi guía
+   privada (este último solo en páginas Hestía).
+   ================================================================ */
+
+.widget-stack {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 88;
+  display: none; /* hidden by default; revealed at min-width: 900 */
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  max-height: calc(100vh - 120px);
+  pointer-events: auto;
+  transition: opacity .35s ease, transform .35s ease;
+}
+@media (min-width: 900px) {
+  .widget-stack { display: flex; }
+}
+.widget-stack.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%) translateX(20px);
+}
+
+/* Card común — fondo ber-dk, borde-sol, redondeado asimétrico. */
+.widget-card {
+  position: relative;
+  width: 296px;
+  max-width: 28vw;
+  background: var(--ber-dk);
+  color: var(--arena);
+  border-radius: 14px 0 14px 0;
+  border-left: 4px solid var(--sol);
+  padding: 18px 20px 16px;
+  box-shadow: 0 12px 36px rgba(42,15,46,.36);
+}
+@media (min-width: 1100px) {
+  .widget-card { width: 320px; }
+}
+
+/* Botón minimizar de cada card (arriba-derecha del propio card). */
+.widget-min-btn {
+  position: absolute;
+  top: -10px; right: -10px;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--ber-dk);
+  color: var(--sol);
+  border: 0;
+  font-size: 22px;
+  line-height: 1;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(42,15,46,.4);
+  z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding-bottom: 4px;
+  transition: background .25s ease, transform .15s var(--ease-out, ease);
+}
+.widget-min-btn:hover { background: var(--ber); transform: scale(1.06); }
+
+/* Eyebrow + título dentro del card. */
+.widget-card .eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--sol);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.widget-title {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--arena);
+  margin: 0 0 12px;
+  line-height: 1.25;
+}
+.widget-title em {
+  font-style: italic;
+  color: var(--sol);
+  font-weight: 500;
+}
+
+/* Stats del widget de Reserva directa. */
+.widget-stats {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 14px;
+}
+.widget-stat {
+  display: flex; flex-direction: column;
+}
+.widget-stat strong {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--sol);
+  font-weight: 500;
+  line-height: 1.05;
+}
+.widget-stat span {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--arena);
+  opacity: .82;
+  margin-top: 2px;
+}
+
+/* Texto del widget de guía. */
+.widget-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--arena);
+  opacity: .82;
+  margin: 0 0 14px;
+}
+
+/* CTA común a todos los widgets. */
+.widget-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--sol);
+  color: var(--ber-dk);
+  border: 1px solid var(--sol);
+  font-family: var(--sans);
+  font-size: 11.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease, transform .15s ease;
+}
+.widget-cta:hover {
+  background: transparent;
+  color: var(--sol);
+  transform: translateX(2px);
+}
+.widget-cta-ghost {
+  background: transparent;
+  color: var(--sol);
+}
+.widget-cta-ghost:hover {
+  background: rgba(240,232,213,.08);
+  color: var(--sol);
+  border-color: var(--sol);
+}
+
+/* Body del Sabías que. */
+.widget-sabias .sf-body { transition: opacity .35s; }
+.widget-sabias .sf-body.sf-in  { opacity: 1; }
+.widget-sabias .sf-body.sf-out { opacity: 0; }
+
+/* ── Pastilla corporativa (estado minimizado) ─────────────────────
+   Borde redondeado a la izquierda + recta a la derecha (pegada al
+   borde del viewport). ✦ + label en caps. */
+.widget-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ber-dk);
+  color: var(--crema);
+  border: 0;
+  padding: 11px 12px 11px 18px;
+  margin-right: -16px; /* pega la parte recta al borde del viewport */
+  border-radius: 999px 0 0 999px;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: -6px 8px 24px rgba(42,15,46,.36);
+  transition: background .25s ease, padding .25s ease, transform .15s ease;
+  white-space: nowrap;
+}
+.widget-mini:hover {
+  background: var(--ber);
+  padding-right: 16px;
+  transform: translateX(-2px);
+}
+.widget-mini-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: rgba(240,232,213,.08);
+  color: var(--sol);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1;
+}
+.widget-mini-label { line-height: 1; }
+
+/* En mobile el stack se oculta — ya hay banda inline en cada página
+   y el mobile-chat se encarga de la guía. */
+@media (max-width: 767px), (max-height: 600px) {
+  .widget-stack { display: none !important; }
+}
+
+/* Respeta la sticky bar de Hestía: si está activa, sube el stack
+   un poco más para no chocar visualmente con el chat flotante. */
+body.apt-bar-shown .widget-stack {
+  top: calc(50% - var(--apt-sticky-h, 0px) / 2);
+}
