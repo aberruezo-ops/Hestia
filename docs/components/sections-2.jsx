@@ -31,7 +31,7 @@ const Counters = ({ lang }) => {
     if (ref.current) io.observe(ref.current);
     return () => io.disconnect();
   }, []);
-  const families = useCountUp(900, 2200, seen);
+  const families = useCountUp(600, 2200, seen);
   const sun = useCountUp(320, 2000, seen);
   const apts = useCountUp(3, 1200, seen);
 
