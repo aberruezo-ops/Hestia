@@ -9606,14 +9606,14 @@ footer,
 
 .widget-stack {
   position: fixed;
-  right: 16px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%);
   z-index: 88;
   display: none; /* hidden by default; revealed at min-width: 900 */
   flex-direction: column;
   align-items: flex-end;
-  gap: 12px;
+  gap: 10px;
   max-height: calc(100vh - 120px);
   pointer-events: auto;
   transition: opacity .35s ease, transform .35s ease;
@@ -9630,36 +9630,36 @@ footer,
 /* Card común — fondo ber-dk, borde-sol, redondeado asimétrico. */
 .widget-card {
   position: relative;
-  width: 296px;
-  max-width: 28vw;
+  width: 244px;
+  max-width: 24vw;
   background: var(--ber-dk);
   color: var(--arena);
-  border-radius: 14px 0 14px 0;
-  border-left: 4px solid var(--sol);
-  padding: 18px 20px 16px;
-  box-shadow: 0 12px 36px rgba(42,15,46,.36);
+  border-radius: 12px 0 12px 0;
+  border-left: 3px solid var(--sol);
+  padding: 13px 14px 12px;
+  box-shadow: 0 10px 28px rgba(42,15,46,.32);
 }
 @media (min-width: 1100px) {
-  .widget-card { width: 320px; }
+  .widget-card { width: 260px; }
 }
 
 /* Botón minimizar de cada card (arriba-derecha del propio card). */
 .widget-min-btn {
   position: absolute;
-  top: -10px; right: -10px;
-  width: 30px; height: 30px;
+  top: -8px; right: -8px;
+  width: 24px; height: 24px;
   border-radius: 50%;
   background: var(--ber-dk);
   color: var(--sol);
   border: 0;
-  font-size: 22px;
+  font-size: 18px;
   line-height: 1;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(42,15,46,.4);
+  box-shadow: 0 3px 9px rgba(42,15,46,.4);
   z-index: 1;
   display: flex; align-items: center; justify-content: center;
-  padding-bottom: 4px;
+  padding-bottom: 3px;
   transition: background .25s ease, transform .15s var(--ease-out, ease);
 }
 .widget-min-btn:hover { background: var(--ber); transform: scale(1.06); }
@@ -9667,19 +9667,19 @@ footer,
 /* Eyebrow + título dentro del card. */
 .widget-card .eyebrow {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   color: var(--sol);
-  font-size: 10.5px;
+  font-size: 9.5px;
   letter-spacing: .14em;
   text-transform: uppercase;
 }
 .widget-title {
   font-family: var(--serif);
-  font-size: 19px;
+  font-size: 15px;
   font-weight: 500;
   color: var(--arena);
-  margin: 0 0 12px;
-  line-height: 1.25;
+  margin: 0 0 10px;
+  line-height: 1.22;
 }
 .widget-title em {
   font-style: italic;
@@ -9690,51 +9690,52 @@ footer,
 /* Stats del widget de Reserva directa. */
 .widget-stats {
   list-style: none;
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   padding: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px 14px;
+  gap: 6px 10px;
 }
 .widget-stat {
   display: flex; flex-direction: column;
 }
 .widget-stat strong {
   font-family: var(--serif);
-  font-size: 18px;
+  font-size: 14px;
   color: var(--sol);
   font-weight: 500;
   line-height: 1.05;
 }
 .widget-stat span {
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: 9.5px;
   color: var(--arena);
-  opacity: .82;
-  margin-top: 2px;
+  opacity: .8;
+  margin-top: 1px;
+  line-height: 1.25;
 }
 
 /* Texto del widget de guía. */
 .widget-text {
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 11.5px;
+  line-height: 1.45;
   color: var(--arena);
   opacity: .82;
-  margin: 0 0 14px;
+  margin: 0 0 10px;
 }
 
 /* CTA común a todos los widgets. */
 .widget-cta {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 16px;
+  gap: 6px;
+  padding: 7px 12px;
   border-radius: 999px;
   background: var(--sol);
   color: var(--ber-dk);
   border: 1px solid var(--sol);
   font-family: var(--sans);
-  font-size: 11.5px;
+  font-size: 10px;
   letter-spacing: .12em;
   text-transform: uppercase;
   font-weight: 600;
@@ -9760,6 +9761,27 @@ footer,
 .widget-sabias .sf-body { transition: opacity .35s; }
 .widget-sabias .sf-body.sf-in  { opacity: 1; }
 .widget-sabias .sf-body.sf-out { opacity: 0; }
+/* Override: tamaños compactos para el sabias-que dentro del widget */
+.widget-sabias .sf-label {
+  font-size: 9.5px;
+  letter-spacing: .14em;
+  margin-bottom: 6px;
+}
+.widget-sabias .sf-text {
+  font-size: 13px;
+  line-height: 1.42;
+}
+.widget-sabias .sf-nav {
+  margin-top: 9px;
+  padding-top: 8px;
+}
+.widget-sabias .sf-nav-btn {
+  font-size: 16px;
+  padding: 2px 8px;
+}
+.widget-sabias .sf-counter {
+  font-size: 9.5px;
+}
 
 /* ── Pastilla corporativa (estado minimizado) ─────────────────────
    Borde redondeado a la izquierda + recta a la derecha (pegada al
