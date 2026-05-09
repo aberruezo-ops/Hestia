@@ -8,7 +8,7 @@ const APT_DATA = {
     id: 'vm', num: '01', slug: 'mar', license: 'VFT/AL/01580',
     name_short: 'Mar',
     accent: '#6B7A3A', accent2: '#8B9A52',
-    hero_img: 'assets/apt-vm-gallery-10.jpg',
+    hero_img: 'assets/apt-vs.jpg',
     bedroom_img: 'assets/apt-vm-gallery-10.jpg',
     others: ['vt', 'vs'],
     gallery_imgs: [
@@ -59,7 +59,7 @@ const APT_DATA = {
     id: 'vt', num: '02', slug: 'thalassa', license: 'VFT/AL/05535',
     name_short: 'Thalassa',
     accent: '#8A4A24', accent2: '#B86A3C',
-    hero_img: 'assets/apt-vt-gallery-01.jpg',
+    hero_img: 'assets/apt-vt-4.jpg',
     bedroom_img: 'assets/apt-vt-gallery-02.jpg',
     floorplan_img: 'assets/IMG_1121.png',
     others: ['vm', 'vs'],
@@ -97,7 +97,7 @@ const APT_DATA = {
     id: 'vs', num: '03', slug: 'salinas', license: 'VTF/AL/07056',
     name_short: 'Salinas',
     accent: '#9E7A2C', accent2: '#D4A84A',
-    hero_img: 'assets/apt-vs-gallery-21.jpg',
+    hero_img: 'assets/apt-vm.jpg',
     bedroom_img: 'assets/apt-vs-gallery-21.jpg',
     others: ['vm', 'vt'],
     gallery_imgs: [
