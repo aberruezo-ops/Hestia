@@ -216,9 +216,13 @@ const PLACES = [
   { id: 'p-piedras',      name: 'Piedras de Molino (Carboneras)', desc: 'Cala icónica al lado del Algarrobico. Aguas cristalinas, fondo rocoso para snorkel.',                cat: 'beach', url: 'https://goo.gl/maps/eySnjWJp1YcjkSiu9', lat: 37.0200, lng: -1.8730 },
 
   // ── HACIA EL SUR (Cabo de Gata)
+  { id: 'p-mesa-roldan',  name: 'Mesa Roldán (Carboneras)',      desc: 'Domo volcánico con faro y fortaleza. Mirador con vistas a la Playa de los Muertos. Sale en Juego de Tronos.', cat: 'beach', lat: 36.9620, lng: -1.9080 },
   { id: 'p-muertos',      name: 'Playa de los Muertos',          desc: 'Carboneras. Top 5 mejores playas de España. Acceso por sendero pedregoso desde el aparcamiento. ~15 min andando.', cat: 'beach-hard', url: 'https://goo.gl/maps/uh1baJWHPp1uan81A', lat: 37.0050, lng: -1.8800, top5: true, top5Idx: 1 },
   { id: 'p-enmedio',      name: 'Cala de Enmedio',               desc: 'Agua Amarga. Nuestra favorita. Desde el pueblo se anda media hora campo a través — lo que la mantiene casi virgen.', cat: 'beach-hard', url: 'https://goo.gl/maps/i72YXUhFgBzi7vhf6', lat: 36.9540, lng: -1.9740, top5: true, top5Idx: 4 },
+  { id: 'p-plomo',        name: 'Cala del Plomo',                desc: 'Agua Amarga. Cala virgen de arena oscura. Acceso a pie por pista, ~30 min. Aguas cristalinas.', cat: 'beach-hard', lat: 36.9460, lng: -1.9690 },
   { id: 'p-aguamarga',    name: 'Playa de Agua Amarga',          desc: 'Pueblo blanco con encanto, calas pequeñas y restaurantes a pie de arena.',                            cat: 'beach', lat: 36.9395, lng: -2.0000 },
+  { id: 'p-negras',       name: 'Playa de Las Negras',           desc: 'Pueblo bohemio con cantos rodados negros y agua cristalina. Punto de salida hacia la Cala de San Pedro.', cat: 'beach', lat: 36.8770, lng: -2.0030 },
+  { id: 'p-san-pedro',    name: 'Cala de San Pedro',             desc: 'Solo accesible andando (90 min desde Las Negras) o en barca. Comunidad hippie estable, fuente natural, sin servicios.', cat: 'beach-hard', lat: 36.8540, lng: -1.9890 },
   { id: 'p-playazo',      name: 'El Playazo de Rodalquilar',     desc: 'Cabo de Gata. De fácil acceso, larga, rocas en los extremos. Castillo de San Ramón al sur.',         cat: 'beach', url: 'https://goo.gl/maps/bu6fEsoT1mHC9j2w6', lat: 36.8470, lng: -2.0230 },
   { id: 'p-isleta',       name: 'La Isleta del Moro',            desc: 'Pueblo pesquero diminuto con calas. Snorkel y comer en La Ola junto al mar.',                         cat: 'beach', url: 'https://maps.google.com?q=Playa+del+Penon+Blanco', lat: 36.7970, lng: -2.0630 },
   { id: 'p-genoveses',    name: 'Playa de los Genoveses',        desc: 'San José. Bahía perfecta de medio km, dunas con sabinas. Acceso por bus desde la barrera en verano.', cat: 'beach', lat: 36.7610, lng: -2.0890, top5: true, top5Idx: 3 },
@@ -226,8 +230,12 @@ const PLACES = [
   { id: 'p-barronal',     name: 'Playa del Barronal',            desc: 'San José. Más virgen que Mónsul. Detrás de las dunas de la pista. Una de nuestras favoritas.',       cat: 'beach', url: 'https://goo.gl/maps/sF2xaKDPrHEgjpxv6', lat: 36.7430, lng: -2.1180, top5: true, top5Idx: 5 },
   { id: 'p-medialuna',    name: 'Cala de la Media Luna',         desc: 'San José. Pequeña, simétrica, mar transparente. Se llega andando desde el Barronal.',                cat: 'beach-hard', url: 'https://goo.gl/maps/ngDbWgoBfAdH5x4S8', lat: 36.7415, lng: -2.1195 },
   { id: 'p-cabogata',     name: 'Las Salinas (Cabo de Gata pueblo)', desc: 'Frente a las salinas con flamencos. Faro al fondo. Atardecer espectacular.',                       cat: 'beach', lat: 36.7530, lng: -2.2250 },
+  { id: 'p-fabriquilla',  name: 'La Fabriquilla / El Corralete', desc: 'Última cala antes del Faro de Cabo de Gata. Roca volcánica, agua transparente. Punto más al sur.',  cat: 'beach', lat: 36.7270, lng: -2.1950 },
 
-  // ── MUCHO MÁS AL SUR (Almería capital → Adra)
+  // ── ALMERÍA CAPITAL (paso intermedio hacia Adra)
+  { id: 'p-zapillo',      name: 'Playa del Zapillo (Almería)',   desc: 'Capital. Bandera azul. Paseo, hamacas, chiringuitos, paddle.',                                         cat: 'beach', lat: 36.8290, lng: -2.4380 },
+  { id: 'p-nueva-almeria', name: 'Playa Nueva Almería / Térmica', desc: 'Capital. Paralela al Zapillo, 1,5 km de arena con todos los servicios.',                              cat: 'beach', lat: 36.8270, lng: -2.4540 },
+  { id: 'p-costacabana',  name: 'Playa de Costacabana',          desc: 'Almería. Larga, urbana, con un paseo amplio. Buena para familias.',                                   cat: 'beach', lat: 36.8200, lng: -2.4040 },
   { id: 'p-almeria',      name: 'Playa de El Palmer (Almería)',  desc: 'Capital. Paseo, hamacas, chiringuitos. 1 h 15 min en coche.',                                         cat: 'beach', lat: 36.8230, lng: -2.4140 },
   { id: 'p-aguadulce',    name: 'Playa de Aguadulce (Roquetas)', desc: 'Roquetas de Mar. Larga, urbana, amplia. Buena para familia.',                                          cat: 'beach', lat: 36.8070, lng: -2.5680 },
   { id: 'p-toyo',         name: 'Playa del Toyo (Retamar)',      desc: 'Retamar / El Ejido. Limita con el Parque Natural. Arena fina y tranquila.',                            cat: 'beach', lat: 36.8100, lng: -2.3640 },
