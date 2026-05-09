@@ -9613,7 +9613,8 @@ footer,
   display: none; /* hidden by default; revealed at min-width: 900 */
   flex-direction: column;
   align-items: flex-end;
-  gap: 10px;
+  justify-content: center;
+  gap: 12px;
   max-height: calc(100vh - 120px);
   pointer-events: auto;
   transition: opacity .35s ease, transform .35s ease;
@@ -9847,9 +9848,9 @@ footer,
   color: var(--ber-dk);
 }
 
-/* ── Pastilla corporativa (estado minimizado) ─────────────────────
-   Borde redondeado a la izquierda + recta a la derecha (pegada al
-   borde del viewport). ✦ + label en caps. */
+/* ── Pastilla corporativa (botones plegados o de acceso directo) ──
+   Pill horizontal con ✦ + label en caps. Alineada al mismo
+   right-edge que las cards desplegadas. */
 .widget-mini {
   display: inline-flex;
   align-items: center;
@@ -9857,22 +9858,20 @@ footer,
   background: var(--ber-dk);
   color: var(--crema);
   border: 0;
-  padding: 11px 12px 11px 18px;
-  margin-right: -16px; /* pega la parte recta al borde del viewport */
-  border-radius: 999px 0 0 999px;
+  padding: 11px 16px 11px 14px;
+  border-radius: 999px;
   font-family: var(--sans);
   font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
   font-weight: 500;
   cursor: pointer;
-  box-shadow: -6px 8px 24px rgba(42,15,46,.36);
-  transition: background .25s ease, padding .25s ease, transform .15s ease;
+  box-shadow: 0 6px 18px rgba(42,15,46,.32);
+  transition: background .25s ease, transform .15s ease, color .25s ease;
   white-space: nowrap;
 }
 .widget-mini:hover {
   background: var(--ber);
-  padding-right: 16px;
   transform: translateX(-2px);
 }
 .widget-mini-icon {
@@ -9888,6 +9887,25 @@ footer,
   line-height: 1;
 }
 .widget-mini-label { line-height: 1; }
+
+/* Variante "Acceso huéspedes" — destaca con fondo sol filled. */
+.widget-mini-access {
+  background: var(--sol);
+  color: var(--ber-dk);
+  font-weight: 600;
+}
+.widget-mini-access .widget-mini-icon {
+  background: rgba(61,26,53,.16);
+  color: var(--ber-dk);
+}
+.widget-mini-access:hover {
+  background: var(--ber-dk);
+  color: var(--sol);
+}
+.widget-mini-access:hover .widget-mini-icon {
+  background: rgba(240,232,213,.08);
+  color: var(--sol);
+}
 
 /* En mobile el stack se oculta — ya hay banda inline en cada página
    y el mobile-chat se encarga de la guía. */
