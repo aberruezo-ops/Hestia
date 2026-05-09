@@ -793,6 +793,13 @@ const ApartmentPageApp = () => {
   // y solo el contenido de <main> se sustituye por la guía con su nav lateral.
   const showGuide = renderGuide && typeof AptGuideView !== 'undefined';
 
+  // Marca body.guide-open mientras la guía está activa — los widgets
+  // flotantes la respetan y se ocultan vía MutationObserver.
+  React.useEffect(() => {
+    document.body.classList.toggle('guide-open', !!showGuide);
+    return () => document.body.classList.remove('guide-open');
+  }, [showGuide]);
+
   return (
     <>
       <Topbar lang={lang} setLang={setLang} />
@@ -820,22 +827,18 @@ const ApartmentPageApp = () => {
       </main>
       <Footer lang={lang} />
       {!showGuide && <AptStickyBar apt={apt} lang={lang} scrolled={scrolled} />}
-      {/* En escritorio/iPad mostramos el widget de reserva directa + guía;
-          StickyFacts queda solo en móvil — CSS resuelve el switch. */}
-      {!showGuide && (
-        <AptDesktopSidebar
-          lang={lang}
-          onGuideClick={() => {
-            // Scroll a la sección y, en paralelo, dispara el evento que
-            // abre el modal de PIN dentro de AptGuideGate. Pequeño delay
-            // para que el scroll suave comience antes del modal.
-            const el = document.querySelector('.apt-guide-gate');
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            setTimeout(() => window.dispatchEvent(new Event('hestia:open-guide-pin')), 250);
-          }}
-        />
-      )}
-      <StickyFacts lang={lang} />
+      {/* WidgetStack: 3 widgets flotantes independientes, cada uno con
+          minimizado a pastilla corporativa. Se ocultan automáticamente
+          cuando la guía está abierta (body.guide-open). */}
+      <WidgetStack
+        lang={lang}
+        apt={apt.id}
+        onGuideClick={() => {
+          const el = document.querySelector('.apt-guide-gate');
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => window.dispatchEvent(new Event('hestia:open-guide-pin')), 250);
+        }}
+      />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />
     </>
