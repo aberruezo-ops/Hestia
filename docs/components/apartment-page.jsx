@@ -830,15 +830,7 @@ const ApartmentPageApp = () => {
       {/* WidgetStack: 3 widgets flotantes independientes, cada uno con
           minimizado a pastilla corporativa. Se ocultan automáticamente
           cuando la guía está abierta (body.guide-open). */}
-      <WidgetStack
-        lang={lang}
-        apt={apt.id}
-        onGuideClick={() => {
-          const el = document.querySelector('.apt-guide-gate');
-          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          setTimeout(() => window.dispatchEvent(new Event('hestia:open-guide-pin')), 250);
-        }}
-      />
+      <WidgetStack lang={lang} />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />
     </>

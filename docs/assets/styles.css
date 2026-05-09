@@ -9783,6 +9783,70 @@ footer,
   font-size: 9.5px;
 }
 
+/* ── Widget Top Recomendaciones (Imprescindibles Vera y Almería) ── */
+.widget-recs .tr-body { transition: opacity .35s; }
+.widget-recs .tr-body.tr-in  { opacity: 1; }
+.widget-recs .tr-body.tr-out { opacity: 0; }
+.widget-recs .tr-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 4px;
+}
+.widget-recs .tr-icon {
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.widget-recs .tr-name {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--sol);
+  margin: 0;
+  line-height: 1.2;
+}
+.widget-recs .tr-place {
+  display: block;
+  font-family: var(--sans);
+  font-size: 9.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--arena);
+  opacity: .65;
+  margin: 4px 0 6px;
+}
+.widget-recs .tr-desc {
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--arena);
+  opacity: .85;
+  margin: 0;
+}
+.widget-recs .sf-nav {
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(240,232,213,.12);
+}
+.widget-recs .tr-map {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--sol);
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--sol);
+  transition: background .25s ease, color .25s ease;
+}
+.widget-recs .tr-map:hover {
+  background: var(--sol);
+  color: var(--ber-dk);
+}
+
 /* ── Pastilla corporativa (estado minimizado) ─────────────────────
    Borde redondeado a la izquierda + recta a la derecha (pegada al
    borde del viewport). ✦ + label en caps. */
