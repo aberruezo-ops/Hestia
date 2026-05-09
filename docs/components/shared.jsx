@@ -2094,11 +2094,150 @@ const WidgetGuidePin = ({ lang, onGuideClick }) => {
   );
 };
 
-// Pila completa. Si `apt` está dado, añade WidgetGuidePin. Se oculta:
+// Top 5 recomendaciones imprescindibles de Vera + Almería. Mezcla de
+// categorías para que cada huésped descubra algo nuevo: playa, pueblo,
+// cena, mercado, naturaleza/cultura. Se rotan cada 11 s; navegables.
+const TOP_RECS = [
+  {
+    id: 'monsul',
+    icon: '🌊',
+    name_es: 'Playa de Mónsul',
+    name_en: 'Mónsul Beach',
+    place_es: 'Cabo de Gata · 1 h en coche',
+    place_en: 'Cabo de Gata · 1 h drive',
+    desc_es: 'La duna y la roca volcánica que salieron en Indiana Jones. Acceso restringido al coche en verano (bus desde San José).',
+    desc_en: 'The dune and volcanic rock from Indiana Jones. Cars restricted in summer (bus from San José).',
+    url: 'https://www.google.com/maps/place/Playa+de+M%C3%B3nsul/@36.7460,-2.1130,16z',
+  },
+  {
+    id: 'mojacar',
+    icon: '🏘',
+    name_es: 'Mojácar pueblo',
+    name_en: 'Mojácar village',
+    place_es: 'Sierra Cabrera · 25 min',
+    place_en: 'Sierra Cabrera · 25 min',
+    desc_es: 'Pueblo blanco encalado en la ladera, callejuelas árabes, mirador de la Plaza Nueva con vistas al mar y a la sierra.',
+    desc_en: 'Whitewashed hill village, Arab streets, Plaza Nueva mirador with sea and mountain views.',
+    url: 'https://www.google.com/maps/place/Moj%C3%A1car/',
+  },
+  {
+    id: 'lua',
+    icon: '🍷',
+    name_es: 'Restaurante Lúa',
+    name_en: 'Lúa restaurant',
+    place_es: 'Vera Playa · andando',
+    place_en: 'Vera Playa · walking distance',
+    desc_es: 'Cocina creativa de mar y huerta, sofisticado pero cercano. Carta de vinos cuidada. Reservar fines de semana.',
+    desc_en: 'Creative sea & garden cuisine, sophisticated yet close. Considered wine list. Book on weekends.',
+    url: 'https://www.google.com/maps/search/Lua+Vera+Playa',
+  },
+  {
+    id: 'lonja',
+    icon: '🐟',
+    name_es: 'Lonja de Garrucha',
+    name_en: 'Garrucha fish market',
+    place_es: 'Garrucha · 10 min',
+    place_en: 'Garrucha · 10 min',
+    desc_es: 'Subasta de pescado en directo, gratis. Llegan los barcos y subastan al instante. La gamba roja es D.O.',
+    desc_en: 'Live fish auction, free. Boats arrive and the auction runs immediately. PDO red prawns.',
+    url: 'https://www.google.com/maps/place/Lonja+de+Garrucha',
+  },
+  {
+    id: 'salinas',
+    icon: '🦩',
+    name_es: 'Salinas de Puerto Rey',
+    name_en: 'Puerto Rey Salt Flats',
+    place_es: 'Vera Playa · al lado',
+    place_en: 'Vera Playa · next door',
+    desc_es: 'Parque Natural a pocos metros con flamencos, aves migratorias y luz dorada al amanecer. Acceso peatonal directo.',
+    desc_en: 'Nature park metres away with flamingos, migratory birds and golden dawn light. Direct walking access.',
+    url: 'https://www.google.com/maps/place/Salinas+de+Vera',
+  },
+];
+
+const WidgetTopRecs = ({ lang }) => {
+  const [min, setMin] = _useLocalMin('toprecs');
+  const total = TOP_RECS.length;
+  const [idx, setIdx] = React.useState(() => {
+    try { return Math.max(0, Math.min(total - 1, parseInt(sessionStorage.getItem('hestia-toprecs-idx') || '0', 10))); }
+    catch (e) { return 0; }
+  });
+  const [visible, setVisible] = React.useState(true);
+
+  const advance = (dir) => {
+    setVisible(false);
+    setTimeout(() => {
+      setIdx(i => {
+        const n = (i + dir + total) % total;
+        try { sessionStorage.setItem('hestia-toprecs-idx', String(n)); } catch (e) {}
+        return n;
+      });
+      setVisible(true);
+    }, 320);
+  };
+
+  React.useEffect(() => {
+    if (min) return;
+    const t = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIdx(i => {
+          const n = (i + 1) % total;
+          try { sessionStorage.setItem('hestia-toprecs-idx', String(n)); } catch (e) {}
+          return n;
+        });
+        setVisible(true);
+      }, 400);
+    }, 11000);
+    return () => clearInterval(t);
+  }, [min, total]);
+
+  if (min) {
+    return (
+      <WidgetMiniPill
+        icon="★"
+        label={lang === 'es' ? 'Imprescindibles' : 'Must-see'}
+        ariaLabel={lang === 'es' ? 'Restaurar recomendaciones' : 'Restore recommendations'}
+        onClick={() => setMin(false)}
+        className="widget-mini-recs"
+      />
+    );
+  }
+  const item = TOP_RECS[idx];
+  return (
+    <section className="widget-card widget-recs" aria-label={lang === 'es' ? 'Imprescindibles de Vera y Almería' : 'Vera & Almería must-see'}>
+      <button
+        type="button"
+        className="widget-min-btn"
+        aria-label={lang === 'es' ? 'Minimizar' : 'Minimize'}
+        title={lang === 'es' ? 'Minimizar' : 'Minimize'}
+        onClick={() => setMin(true)}
+      >−</button>
+      <span className="eyebrow">{lang === 'es' ? 'Imprescindibles · Vera y Almería' : 'Must-see · Vera & Almería'}</span>
+      <div className={`tr-body ${visible ? 'tr-in' : 'tr-out'}`}>
+        <div className="tr-head">
+          <span className="tr-icon" aria-hidden="true">{item.icon}</span>
+          <h4 className="tr-name">{item[`name_${lang}`]}</h4>
+        </div>
+        <span className="tr-place">{item[`place_${lang}`]}</span>
+        <p className="tr-desc">{item[`desc_${lang}`]}</p>
+      </div>
+      <div className="sf-nav">
+        <button className="sf-nav-btn" onClick={() => advance(-1)} aria-label={lang === 'es' ? 'Anterior' : 'Previous'}>←</button>
+        <a className="tr-map" href={item.url} target="_blank" rel="noopener" aria-label={lang === 'es' ? 'Ver en mapa' : 'View on map'}>
+          {lang === 'es' ? 'Mapa' : 'Map'} →
+        </a>
+        <button className="sf-nav-btn" onClick={() => advance(1)} aria-label={lang === 'es' ? 'Siguiente' : 'Next'}>→</button>
+      </div>
+    </section>
+  );
+};
+
+// Pila completa. Tres widgets fijos para toda la web. Se oculta:
 //  - Antes de pasar el hero (scrollY < 70% viewport).
 //  - Cuando la búsqueda del home está activa (hs-results-change=true).
 //  - Cuando la guía Hestía está abierta (body.guide-open).
-const WidgetStack = ({ lang, apt, onGuideClick }) => {
+const WidgetStack = ({ lang }) => {
   const [pastHero, setPastHero] = React.useState(() => window.scrollY > window.innerHeight * 0.7);
   const [searchActive, setSearchActive] = React.useState(false);
   const [guideOpen, setGuideOpen] = React.useState(() => document.body.classList.contains('guide-open'));
@@ -2129,9 +2268,9 @@ const WidgetStack = ({ lang, apt, onGuideClick }) => {
     <div className={`widget-stack ${hidden ? 'is-hidden' : ''}`} aria-hidden={hidden}>
       <WidgetSabiasQue lang={lang} />
       <WidgetDirectBooking lang={lang} />
-      {apt && <WidgetGuidePin lang={lang} onGuideClick={onGuideClick} />}
+      <WidgetTopRecs lang={lang} />
     </div>
   );
 };
 
-Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin });
+Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin, WidgetTopRecs, TOP_RECS });
