@@ -750,7 +750,19 @@ const ApartmentPageApp = () => {
   const apt = APT_DATA[aptId];
 
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
-  const [guideOpen, setGuideOpen] = React.useState(false);
+  // Si el huésped acaba de validar el PIN en otra página vía
+  // GuestAccessModal, sessionStorage tiene un flag 'hestia-guide-unlock-<apt>'.
+  // Al montar abrimos la guía directamente y limpiamos el flag.
+  const [guideOpen, setGuideOpen] = React.useState(() => {
+    try {
+      const k = 'hestia-guide-unlock-' + apt.id;
+      if (sessionStorage.getItem(k) === '1') {
+        sessionStorage.removeItem(k);
+        return true;
+      }
+    } catch (e) {}
+    return false;
+  });
   const [renderGuide, setRenderGuide] = React.useState(false);
   const [phase, setPhase] = React.useState('idle');
   const { mode, scrolled } = useScrollMode();
