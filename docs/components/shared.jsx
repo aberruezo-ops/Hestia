@@ -2233,6 +2233,37 @@ const WidgetTopRecs = ({ lang }) => {
   );
 };
 
+// Botón corporativo "Acceso huéspedes" — siempre visible, sin estado
+// expand/minimize. Dispara el evento global hestia:open-guide-pin
+// (manejado por AptGuideGate en las páginas Hestía). Si no hay
+// gate en la página, también navegamos a mar.html como fallback
+// para que el huésped llegue a un sitio donde poder introducir el PIN.
+const WidgetGuestAccess = ({ lang }) => {
+  const onClick = () => {
+    const gate = document.querySelector('.apt-guide-gate');
+    if (gate) {
+      gate.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => window.dispatchEvent(new Event('hestia:open-guide-pin')), 250);
+    } else {
+      window.location.href = 'mar.html#guide';
+    }
+  };
+  return (
+    <button
+      type="button"
+      className="widget-mini widget-mini-access"
+      onClick={onClick}
+      aria-label={lang === 'es' ? 'Acceso huéspedes' : 'Guest access'}
+      title={lang === 'es' ? 'Acceso huéspedes con PIN' : 'Guest access with PIN'}
+    >
+      <span className="widget-mini-icon" aria-hidden="true">✦</span>
+      <span className="widget-mini-label">
+        {lang === 'es' ? 'Acceso huéspedes' : 'Guest access'}
+      </span>
+    </button>
+  );
+};
+
 // Pila completa. Tres widgets fijos para toda la web. Se oculta:
 //  - Antes de pasar el hero (scrollY < 70% viewport).
 //  - Cuando la búsqueda del home está activa (hs-results-change=true).
@@ -2268,9 +2299,9 @@ const WidgetStack = ({ lang }) => {
     <div className={`widget-stack ${hidden ? 'is-hidden' : ''}`} aria-hidden={hidden}>
       <WidgetSabiasQue lang={lang} />
       <WidgetDirectBooking lang={lang} />
-      <WidgetTopRecs lang={lang} />
+      <WidgetGuestAccess lang={lang} />
     </div>
   );
 };
 
-Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin, WidgetTopRecs, TOP_RECS });
+Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin, WidgetGuestAccess, WidgetTopRecs, TOP_RECS });
