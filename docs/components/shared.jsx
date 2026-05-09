@@ -1731,8 +1731,8 @@ const DirectBookingModal = ({ lang, onClose }) => {
           </span>
           <h3 className="dbm-title">
             {lang === 'es'
-              ? <>Una <em>mejor manera</em> de reservar</>
-              : <>A <em>better way</em> to book</>}
+              ? <>La <em>mejor manera</em> de reservar</>
+              : <>The <em>best way</em> to book</>}
           </h3>
         </div>
 
@@ -1855,8 +1855,8 @@ const AptDesktopSidebar = ({ lang, onGuideClick }) => {
         <span className="eyebrow">{lang === 'es' ? 'Reserva directa' : 'Direct booking'}</span>
         <h4 className="ads-title">
           {lang === 'es'
-            ? <>Una <em>mejor manera</em> de reservar</>
-            : <>A <em>better way</em> to book</>}
+            ? <>La <em>mejor manera</em> de reservar</>
+            : <>The <em>best way</em> to book</>}
         </h4>
         <ul className="ads-stats">
           {ribbon.map((s, i) => (
@@ -1899,3 +1899,239 @@ const AptDesktopSidebar = ({ lang, onGuideClick }) => {
 };
 
 Object.assign(window, { DirectBookingPerks, DirectBookingModal, AptDesktopSidebar, DIRECT_PERKS, DIRECT_RIBBON });
+
+// ================================================================
+// WidgetStack — pila de widgets flotantes independientes a la derecha
+// (≥900 px). Tres widgets, cada uno con su propio botón de
+// minimizar/restaurar. Estado persistido en localStorage para que
+// el huésped no tenga que cerrarlos en cada página.
+//   1. Reserva directa (perks summary + CTA al modal completo)
+//   2. ¿Sabías que? (curiosidades rotando cada 9 s)
+//   3. Tu guía privada — solo si la página tiene window.__APT__ y NO
+//      se está visualizando la guía abierta.
+// Todos se ocultan cuando body.guide-open (la guía Hestía está abierta)
+// y cuando la búsqueda del home está activa (hs-results-change).
+// ================================================================
+
+const _useLocalMin = (key, fallback = false) => {
+  const k = `hestia-widget-${key}-min`;
+  const [min, setMin] = React.useState(() => {
+    try { return localStorage.getItem(k) === '1'; } catch (e) { return fallback; }
+  });
+  const update = (v) => {
+    setMin(v);
+    try { localStorage.setItem(k, v ? '1' : '0'); } catch (e) {}
+  };
+  return [min, update];
+};
+
+// Pastilla corporativa de minimizado, reutilizada por los 3 widgets.
+// Borde redondeado a la izquierda + recta a la derecha (pegada al borde
+// del viewport). Estrella sol + label en caps + tinte ber-dk corporativo.
+const WidgetMiniPill = ({ icon = '✦', label, onClick, ariaLabel, className = '' }) => (
+  <button
+    type="button"
+    className={`widget-mini ${className}`}
+    onClick={onClick}
+    aria-label={ariaLabel || label}
+    title={label}
+  >
+    <span className="widget-mini-icon" aria-hidden="true">{icon}</span>
+    <span className="widget-mini-label">{label}</span>
+  </button>
+);
+
+const WidgetDirectBooking = ({ lang }) => {
+  const [min, setMin] = _useLocalMin('direct');
+  const ribbon = DIRECT_RIBBON[lang];
+  if (min) {
+    return (
+      <WidgetMiniPill
+        icon="✦"
+        label={lang === 'es' ? 'Reserva directa' : 'Direct booking'}
+        ariaLabel={lang === 'es' ? 'Restaurar reserva directa' : 'Restore direct booking'}
+        onClick={() => setMin(false)}
+        className="widget-mini-direct"
+      />
+    );
+  }
+  return (
+    <section className="widget-card widget-direct" aria-label={lang === 'es' ? 'Reserva directa' : 'Direct booking'}>
+      <button
+        type="button"
+        className="widget-min-btn"
+        aria-label={lang === 'es' ? 'Minimizar' : 'Minimize'}
+        title={lang === 'es' ? 'Minimizar' : 'Minimize'}
+        onClick={() => setMin(true)}
+      >−</button>
+      <span className="eyebrow">{lang === 'es' ? 'Reserva directa' : 'Direct booking'}</span>
+      <h4 className="widget-title">
+        {lang === 'es'
+          ? <>La <em>mejor manera</em> de reservar</>
+          : <>The <em>best way</em> to book</>}
+      </h4>
+      <ul className="widget-stats">
+        {ribbon.map((s, i) => (
+          <li key={i} className="widget-stat">
+            <strong>{s.num}</strong>
+            <span>{s.label}</span>
+          </li>
+        ))}
+      </ul>
+      <button
+        type="button"
+        className="widget-cta"
+        onClick={() => window.dispatchEvent(new Event('hestia:open-direct-perks'))}
+      >
+        <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </section>
+  );
+};
+
+const WidgetSabiasQue = ({ lang }) => {
+  const [min, setMin] = _useLocalMin('sabias');
+  const [pool] = React.useState(_getSessionPool);
+  const total  = pool.length;
+  const [idx, setIdx]         = React.useState(_getSessionIdx);
+  const [visible, setVisible] = React.useState(true);
+
+  const advance = (dir) => {
+    setVisible(false);
+    setTimeout(() => {
+      setIdx(i => { const n = (i + dir + total) % total; _saveSessionIdx(n); return n; });
+      setVisible(true);
+    }, 320);
+  };
+
+  React.useEffect(() => {
+    if (min) return;
+    const t = setInterval(() => {
+      setVisible(false);
+      setTimeout(() => {
+        setIdx(i => { const n = (i + 1) % total; _saveSessionIdx(n); return n; });
+        setVisible(true);
+      }, 400);
+    }, 9000);
+    return () => clearInterval(t);
+  }, [min, total]);
+
+  if (min) {
+    return (
+      <WidgetMiniPill
+        icon="?"
+        label={lang === 'es' ? '¿Sabías que?' : 'Did you know?'}
+        ariaLabel={lang === 'es' ? 'Restaurar curiosidades' : 'Restore did-you-know'}
+        onClick={() => setMin(false)}
+        className="widget-mini-sabias"
+      />
+    );
+  }
+  const item = pool[idx];
+  return (
+    <section className="widget-card widget-sabias" aria-label={lang === 'es' ? 'Sabías que' : 'Did you know'}>
+      <button
+        type="button"
+        className="widget-min-btn"
+        aria-label={lang === 'es' ? 'Minimizar' : 'Minimize'}
+        title={lang === 'es' ? 'Minimizar' : 'Minimize'}
+        onClick={() => setMin(true)}
+      >−</button>
+      <div className={`sf-body ${visible ? 'sf-in' : 'sf-out'}`}>
+        <span className="sf-label">{lang === 'es' ? '¿Sabías que?' : 'Did you know?'}</span>
+        <span className="sf-text">{item[lang]}</span>
+      </div>
+      <div className="sf-nav">
+        <button className="sf-nav-btn" onClick={() => advance(-1)} aria-label={lang === 'es' ? 'Anterior' : 'Previous'}>←</button>
+        <span className="sf-counter">{idx + 1} / {total}</span>
+        <button className="sf-nav-btn" onClick={() => advance(1)} aria-label={lang === 'es' ? 'Siguiente' : 'Next'}>→</button>
+      </div>
+    </section>
+  );
+};
+
+const WidgetGuidePin = ({ lang, onGuideClick }) => {
+  const [min, setMin] = _useLocalMin('guide');
+  if (min) {
+    return (
+      <WidgetMiniPill
+        icon="✦"
+        label={lang === 'es' ? 'Mi guía privada' : 'My private guide'}
+        ariaLabel={lang === 'es' ? 'Restaurar guía privada' : 'Restore private guide'}
+        onClick={() => setMin(false)}
+        className="widget-mini-guide"
+      />
+    );
+  }
+  return (
+    <section className="widget-card widget-guide" aria-label={lang === 'es' ? 'Mi guía privada' : 'My private guide'}>
+      <button
+        type="button"
+        className="widget-min-btn"
+        aria-label={lang === 'es' ? 'Minimizar' : 'Minimize'}
+        title={lang === 'es' ? 'Minimizar' : 'Minimize'}
+        onClick={() => setMin(true)}
+      >−</button>
+      <span className="eyebrow">{lang === 'es' ? '¿Ya estás reservado?' : 'Already booked?'}</span>
+      <h4 className="widget-title">
+        {lang === 'es' ? <>Mi <em>guía privada</em></> : <>My <em>private guide</em></>}
+      </h4>
+      <p className="widget-text">
+        {lang === 'es'
+          ? 'Recomendaciones de Alex y Fran, instrucciones de Hestía, planes de día y todo lo que necesitas para tu estancia.'
+          : 'Alex & Fran\'s recommendations, Hestía instructions, day plans and everything you need for your stay.'}
+      </p>
+      <button
+        type="button"
+        className="widget-cta widget-cta-ghost"
+        onClick={onGuideClick}
+      >
+        <span>{lang === 'es' ? 'Acceder con PIN' : 'Open with PIN'}</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </section>
+  );
+};
+
+// Pila completa. Si `apt` está dado, añade WidgetGuidePin. Se oculta:
+//  - Antes de pasar el hero (scrollY < 70% viewport).
+//  - Cuando la búsqueda del home está activa (hs-results-change=true).
+//  - Cuando la guía Hestía está abierta (body.guide-open).
+const WidgetStack = ({ lang, apt, onGuideClick }) => {
+  const [pastHero, setPastHero] = React.useState(() => window.scrollY > window.innerHeight * 0.7);
+  const [searchActive, setSearchActive] = React.useState(false);
+  const [guideOpen, setGuideOpen] = React.useState(() => document.body.classList.contains('guide-open'));
+
+  React.useEffect(() => {
+    const check = () => setPastHero(window.scrollY > window.innerHeight * 0.7);
+    window.addEventListener('scroll', check, { passive: true });
+    return () => window.removeEventListener('scroll', check);
+  }, []);
+
+  React.useEffect(() => {
+    const handler = e => setSearchActive(!!e.detail);
+    window.addEventListener('hs-results-change', handler);
+    return () => window.removeEventListener('hs-results-change', handler);
+  }, []);
+
+  React.useEffect(() => {
+    const obs = new MutationObserver(() => {
+      setGuideOpen(document.body.classList.contains('guide-open'));
+    });
+    obs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    return () => obs.disconnect();
+  }, []);
+
+  const hidden = !pastHero || searchActive || guideOpen;
+
+  return (
+    <div className={`widget-stack ${hidden ? 'is-hidden' : ''}`} aria-hidden={hidden}>
+      <WidgetDirectBooking lang={lang} />
+      <WidgetSabiasQue lang={lang} />
+      {apt && <WidgetGuidePin lang={lang} onGuideClick={onGuideClick} />}
+    </div>
+  );
+};
+
+Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin });
