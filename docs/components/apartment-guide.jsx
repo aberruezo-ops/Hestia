@@ -898,6 +898,322 @@ const Top5BeachesBand = ({ places, lang }) => {
 };
 
 // ================================================================
+// DAY_PLANS — itinerarios de un día curados por Alex y Fran.
+// Tres grupos: madrugadores (amanecer), día completo (mañana+
+// comida+tarde) y tarde-noche (cena en sitio bonito). Cada plan
+// es una card plegable con timeline + consejo.
+// ================================================================
+const DAY_PLAN_GROUPS = {
+  morning:  { es: 'Madrugadores',   en: 'Early birds',   sub_es: 'Empezar al amanecer y terminar comiendo',     sub_en: 'Start at sunrise, finish over lunch' },
+  fullday:  { es: 'Día completo',   en: 'Full-day',      sub_es: 'Mañana, comida y tarde sin prisas',           sub_en: 'Morning, lunch, afternoon — unhurried' },
+  evening:  { es: 'Tarde-noche',    en: 'Evening',       sub_es: 'Atardecer, cena y un sitio especial',         sub_en: 'Sunset, dinner and a beautiful night spot' },
+};
+
+const DAY_PLANS = [
+  // ── MADRUGADORES ──────────────────────────────────────────────
+  {
+    id:'plan-flamencos',
+    type:'morning',
+    title_es:'Amanecer con flamencos + lonja de Garrucha',
+    title_en:'Sunrise with flamingos + Garrucha fish market',
+    start:'7:00', end:'14:00',
+    tags_es:['naturaleza','desayuno','marisco'],
+    tags_en:['nature','breakfast','seafood'],
+    steps:[
+      { t:'7:00',  es:'Sendero a las Salinas de Puerto Rey',         en:'Walk to the Puerto Rey Salt Flats',
+                   d_es:'Acceso peatonal directo desde la urbanización Pueblo Salinas. Flamencos al amanecer.', d_en:'Direct walking access from the Pueblo Salinas complex. Flamingos at sunrise.' },
+      { t:'8:30',  es:'Desayuno en bar local de Garrucha',           en:'Breakfast at a local Garrucha bar',
+                   d_es:'Tostada con tomate en cualquier bar del paseo del puerto.',                            d_en:'Toast with tomato at any bar along the harbour promenade.' },
+      { t:'10:00', es:'Lonja del puerto · subasta de pescado',       en:'Fish market · live auction',
+                   d_es:'Espectáculo gratis. Llegan los barcos y subastan al instante.',                       d_en:'Free spectacle. Boats arrive, the auction runs immediately.' },
+      { t:'12:30', es:'Comida en Tadeo (Villaricos)',                en:'Lunch at Tadeo (Villaricos)',
+                   d_es:'Arroz con bogavante. 15 min en coche desde Garrucha.',                                d_en:'Lobster rice. 15 min drive from Garrucha.' },
+    ],
+    tip_es:'En verano la subasta termina pronto: si vas a las 10:00 ya casi no queda. Mejor llegar a las 9:30.',
+    tip_en:'In summer the auction wraps up early. Aim to arrive by 9:30.',
+  },
+  {
+    id:'plan-monsul-amanecer',
+    type:'morning',
+    title_es:'Amanecer en Mónsul + Mojácar pueblo',
+    title_en:'Sunrise at Mónsul + Mojácar village',
+    start:'6:30', end:'14:30',
+    tags_es:['amanecer','playa virgen','pueblo blanco'],
+    tags_en:['sunrise','virgin beach','white village'],
+    steps:[
+      { t:'6:30',  es:'Salida hacia San José',                       en:'Drive to San José',
+                   d_es:'1 h por la N-340. La barrera de la pista a Mónsul abre temprano.',                    d_en:'1 h on the N-340. The Mónsul track gate opens early.' },
+      { t:'7:30',  es:'Mónsul al amanecer',                          en:'Mónsul at sunrise',
+                   d_es:'Sin nadie. Foto desde la duna. Después, un baño rápido si te atreves.',               d_en:'Empty. Shoot from the dune. Then a quick swim if you dare.' },
+      { t:'10:30', es:'Desayuno en San José',                        en:'Breakfast in San José',
+                   d_es:'Cualquier cafetería del puerto. Zumo de naranja recién hecho.',                       d_en:'Any harbour café. Fresh orange juice.' },
+      { t:'12:00', es:'Subir a Mojácar pueblo',                      en:'Up to Mojácar village',
+                   d_es:'Callejuelas blancas, mirador de la Plaza Nueva, vistas a la Sierra Cabrera.',          d_en:'Whitewashed streets, mirador at Plaza Nueva, Sierra Cabrera views.' },
+      { t:'14:00', es:'Comida en Cabo Norte',                        en:'Lunch at Cabo Norte',
+                   d_es:'Buena materia prima a precio sensato. Reserva.',                                       d_en:'Quality produce at fair prices. Book ahead.' },
+    ],
+    tip_es:'En julio-agosto la barrera al sur cierra el paso de coches a partir de las 9:00. Vete antes.',
+    tip_en:'In July-August the southern barrier closes to cars after 9 am. Leave earlier.',
+  },
+  {
+    id:'plan-sendero-litoral',
+    type:'morning',
+    title_es:'Sendero del litoral + desayuno con vistas',
+    title_en:'Coastal walk + breakfast with a view',
+    start:'7:00', end:'14:00',
+    tags_es:['caminar','playa','chiringuito'],
+    tags_en:['walking','beach','beach bar'],
+    steps:[
+      { t:'7:00',  es:'Caminata por la playa de Vera al amanecer',   en:'Walk along Vera beach at dawn',
+                   d_es:'Desde Hestía hacia el sur, hasta el Almanzora. Arena fina y agua templada.',           d_en:'From Hestía southward to the Almanzora. Fine sand, warm water.' },
+      { t:'8:30',  es:'Desayuno en Chiringuito Playa Turquesa',      en:'Breakfast at Chiringuito Playa Turquesa',
+                   d_es:'A pie. Tostada, café, pies en la arena.',                                              d_en:'On foot. Toast, coffee, toes in the sand.' },
+      { t:'10:00', es:'Paseo del puerto de Garrucha',                en:'Garrucha harbour promenade',
+                   d_es:'Lonja, barcas, terrazas con sombra.',                                                  d_en:'Market, fishing boats, shaded terraces.' },
+      { t:'13:30', es:'Comida en Lúa (Vera Playa)',                  en:'Lunch at Lúa (Vera Playa)',
+                   d_es:'Sofisticado y a pie de Hestía. Buena bodega.',                                         d_en:'Sophisticated and walkable from Hestía. Good wine list.' },
+    ],
+    tip_es:'Si es jueves, parada extra a las 11:00 en el mercadillo de Vera pueblo.',
+    tip_en:'If it is Thursday, add an 11:00 stop at the Vera village street market.',
+  },
+
+  // ── DÍA COMPLETO ──────────────────────────────────────────────
+  {
+    id:'plan-cabo-gata',
+    type:'fullday',
+    title_es:'Cabo de Gata esencial',
+    title_en:'Cabo de Gata essentials',
+    start:'9:30', end:'19:30',
+    tags_es:['parque natural','faro','playa virgen'],
+    tags_en:['natural park','lighthouse','virgin beach'],
+    steps:[
+      { t:'9:30',  es:'Salida hacia el Faro de Cabo de Gata',        en:'Drive to the Cabo de Gata lighthouse',
+                   d_es:'1 h 15 min. Carretera espectacular junto al mar.',                                    d_en:'1 h 15 min. Stunning seaside road.' },
+      { t:'10:45', es:'Faro y Arrecife de las Sirenas',              en:'Lighthouse and Sirenas Reef',
+                   d_es:'Mirador con dos columnas volcánicas saliendo del mar.',                                d_en:'Viewpoint with two volcanic columns rising from the sea.' },
+      { t:'11:45', es:'Salinas de Cabo de Gata',                     en:'Cabo de Gata Salt Flats',
+                   d_es:'Otra colonia de flamencos. Foto desde el observatorio.',                               d_en:'Another flamingo colony. Shot from the observation deck.' },
+      { t:'13:30', es:'Comida en San José',                          en:'Lunch in San José',
+                   d_es:'La Gallineta o La Ola — junto al mar.',                                                d_en:'La Gallineta or La Ola — right by the sea.' },
+      { t:'15:30', es:'Playa de Genoveses o Mónsul',                 en:'Genoveses or Mónsul beach',
+                   d_es:'En verano, bus desde San José. En invierno entras con coche.',                         d_en:'Summer: bus from San José. Winter: drive in.' },
+      { t:'18:30', es:'Café en San José antes de volver',            en:'Coffee in San José before heading back',
+                   d_es:'Terraza del puerto, atardecer suave.',                                                 d_en:'Harbour terrace, gentle sunset.' },
+    ],
+    tip_es:'Lleva agua y crema solar. La sombra escasea en todo el parque.',
+    tip_en:'Bring water and sunscreen. Shade is scarce throughout the park.',
+  },
+  {
+    id:'plan-carboneras-aguamarga',
+    type:'fullday',
+    title_es:'Carboneras → Mesa Roldán → Agua Amarga',
+    title_en:'Carboneras → Mesa Roldán → Agua Amarga',
+    start:'9:30', end:'20:00',
+    tags_es:['costa salvaje','sendero','pueblo blanco'],
+    tags_en:['wild coast','hiking','white village'],
+    steps:[
+      { t:'9:30',  es:'Salida por la costa hacia Carboneras',        en:'Coastal drive to Carboneras',
+                   d_es:'Pasando por Mojácar y Macenas.',                                                       d_en:'Through Mojácar and Macenas.' },
+      { t:'11:00', es:'Mesa Roldán: faro y fortaleza',               en:'Mesa Roldán: lighthouse and fortress',
+                   d_es:'Mirador 360º. Aquí rodaron Juego de Tronos.',                                          d_en:'360° viewpoint. Filmed for Game of Thrones.' },
+      { t:'12:30', es:'Bajada a la Playa de los Muertos',            en:'Down to Playa de los Muertos',
+                   d_es:'15 min de sendero pedregoso. Una de las mejores playas de España.',                    d_en:'15 min rocky path. One of Spain\'s best beaches.' },
+      { t:'14:30', es:'Comida en Carboneras',                        en:'Lunch in Carboneras',
+                   d_es:'Cualquier marisquería del puerto.',                                                    d_en:'Any seafood spot at the harbour.' },
+      { t:'16:30', es:'Coche hasta Agua Amarga',                     en:'Drive to Agua Amarga',
+                   d_es:'15 min. El pueblo blanco más cuidado de la zona.',                                     d_en:'15 min. The most polished white village around.' },
+      { t:'18:00', es:'Aperitivo en Agua Amarga',                    en:'Aperitif in Agua Amarga',
+                   d_es:'Terraza con vistas al mar.',                                                           d_en:'Sea-view terrace.' },
+    ],
+    tip_es:'El sendero a Los Muertos tiene rampa fuerte. Calzado cerrado y agua.',
+    tip_en:'The Los Muertos path is steep and rocky. Closed shoes and water.',
+  },
+  {
+    id:'plan-vera-sorbas-tabernas',
+    type:'fullday',
+    title_es:'Vera pueblo + cuevas de Sorbas + western de Tabernas',
+    title_en:'Vera village + Sorbas caves + Tabernas western',
+    start:'9:00', end:'19:30',
+    tags_es:['cultura','aventura','interior'],
+    tags_en:['culture','adventure','inland'],
+    steps:[
+      { t:'9:00',  es:'Vera pueblo',                                 en:'Vera town',
+                   d_es:'Si es jueves, mercadillo. Iglesia de la Encarnación, plaza mayor.',                    d_en:'If Thursday, the street market. Encarnación church, main square.' },
+      { t:'11:00', es:'Cuevas de Sorbas',                            en:'Sorbas caves',
+                   d_es:'Karst de yeso único en Europa. Visita guiada de 2 h con casco y linterna.',           d_en:'Unique gypsum karst in Europe. 2 h guided visit with helmet and torch.' },
+      { t:'13:30', es:'Comida en Sorbas',                            en:'Lunch in Sorbas',
+                   d_es:'Cualquier mesón del pueblo. Cocina serrana.',                                          d_en:'Any village inn. Mountain home cooking.' },
+      { t:'15:30', es:'Desierto de Tabernas',                        en:'Tabernas Desert',
+                   d_es:'Fort Bravo o Mini Hollywood — único desierto auténtico de Europa.',                    d_en:'Fort Bravo or Mini Hollywood — Europe\'s only true desert.' },
+      { t:'18:00', es:'Vuelta con parada en bar de carretera',       en:'Return with a roadside-bar stop',
+                   d_es:'Caña, tapa, atardecer entre olivos.',                                                  d_en:'Beer, tapa, sunset among olive groves.' },
+    ],
+    tip_es:'Reserva las cuevas con antelación — los grupos son pequeños.',
+    tip_en:'Book the caves in advance — groups are small.',
+  },
+
+  // ── TARDE-NOCHE ───────────────────────────────────────────────
+  {
+    id:'plan-monsul-cena',
+    type:'evening',
+    title_es:'Atardecer en Mónsul + cena en San José',
+    title_en:'Sunset at Mónsul + dinner in San José',
+    start:'17:00', end:'23:00',
+    tags_es:['atardecer','playa','cena con vistas'],
+    tags_en:['sunset','beach','dinner with a view'],
+    steps:[
+      { t:'17:00', es:'Salida hacia San José',                       en:'Drive to San José',
+                   d_es:'1 h. En verano deja el coche en la entrada y coge el bus.',                            d_en:'1 h. In summer leave the car at the entrance and take the bus.' },
+      { t:'18:30', es:'Atardecer en Mónsul',                         en:'Sunset at Mónsul',
+                   d_es:'Sube a la duna y sentirás Indiana Jones.',                                             d_en:'Climb the dune — pure Indiana Jones.' },
+      { t:'20:30', es:'Paseo por San José',                          en:'Stroll through San José',
+                   d_es:'Puerto, calles peatonales, terrazas.',                                                 d_en:'Harbour, pedestrian streets, terraces.' },
+      { t:'21:30', es:'Cena en La Ola junto al mar',                 en:'Dinner at La Ola by the sea',
+                   d_es:'Mesa al borde del agua. Reserva.',                                                     d_en:'Table at the water\'s edge. Book.' },
+      { t:'23:00', es:'Copa en alguna terraza del puerto',           en:'A drink at a harbour terrace',
+                   d_es:'San José se vacía pronto, así que vuelve relajado.',                                   d_en:'San José empties early — drive back relaxed.' },
+    ],
+    tip_es:'Lleva chaqueta — en cuanto cae el sol refresca, incluso en agosto.',
+    tip_en:'Bring a jacket — once the sun sets it cools down even in August.',
+  },
+  {
+    id:'plan-mojacar-noche',
+    type:'evening',
+    title_es:'Mojácar pueblo al anochecer',
+    title_en:'Mojácar village at nightfall',
+    start:'17:30', end:'23:30',
+    tags_es:['pueblo blanco','mirador','copa'],
+    tags_en:['white village','viewpoint','drinks'],
+    steps:[
+      { t:'17:30', es:'Subir a Mojácar pueblo',                      en:'Drive up to Mojácar',
+                   d_es:'25 min. Aparca abajo y sube andando.',                                                 d_en:'25 min. Park below and walk up.' },
+      { t:'18:30', es:'Mirador del Castillo · vistas 360°',          en:'Castle viewpoint · 360° views',
+                   d_es:'Mediterráneo, Sierra Cabrera, salar de la Algaida.',                                   d_en:'Mediterranean, Sierra Cabrera, Algaida salt-marsh.' },
+      { t:'19:30', es:'Paseo por la Plaza Nueva',                    en:'Stroll along Plaza Nueva',
+                   d_es:'Atardecer en cafés con jazmín.',                                                       d_en:'Sunset at cafés scented with jasmine.' },
+      { t:'21:00', es:'Cena en Cabo Norte',                          en:'Dinner at Cabo Norte',
+                   d_es:'Buena materia prima, ambiente tranquilo.',                                             d_en:'Quality produce, calm atmosphere.' },
+      { t:'23:00', es:'Copa con el pueblo iluminado',                en:'A drink with the village lit up',
+                   d_es:'Cualquier terraza alta — Mojácar de noche es magia.',                                  d_en:'Any rooftop terrace — Mojácar lit up is magic.' },
+    ],
+    tip_es:'Las cuestas son empinadas. Calzado cómodo si os gusta callejear.',
+    tip_en:'The streets are steep. Comfy shoes if you like to wander.',
+  },
+  {
+    id:'plan-riad-cabrera',
+    type:'evening',
+    title_es:'Cena en Riad Cabrera (Sierra Cabrera)',
+    title_en:'Dinner at Riad Cabrera (Sierra Cabrera)',
+    start:'18:00', end:'23:30',
+    tags_es:['montaña','marroquí','cena especial'],
+    tags_en:['mountain','Moroccan','special dinner'],
+    steps:[
+      { t:'18:00', es:'Salida hacia la Sierra Cabrera',              en:'Drive to Sierra Cabrera',
+                   d_es:'45 min de carretera de montaña — atardecer entre olivos.',                             d_en:'45 min of mountain road — sunset through olive groves.' },
+      { t:'19:30', es:'Mirador de la Sierra',                        en:'Sierra viewpoint',
+                   d_es:'Pintamos el valle con la luz dorada del final del día.',                               d_en:'The valley painted in late-day gold.' },
+      { t:'21:00', es:'Cena en Riad Cabrera',                        en:'Dinner at Riad Cabrera',
+                   d_es:'Tagines, té de menta, decoración marroquí auténtica. Reserva sí o sí.',                d_en:'Tagines, mint tea, authentic Moroccan decor. Reserve in advance.' },
+      { t:'23:00', es:'Vuelta tranquila a Hestía',                   en:'Calm drive back to Hestía',
+                   d_es:'Lleva mantita — la sierra refresca por la noche.',                                     d_en:'Bring a light blanket — the sierra cools at night.' },
+    ],
+    tip_es:'Carretera de montaña sinuosa. Si os marea, tomad el bíodramina antes.',
+    tip_en:'Winding mountain road. If you get carsick, take meds beforehand.',
+  },
+  {
+    id:'plan-cala-enmedio-tarde',
+    type:'evening',
+    title_es:'Cala de Enmedio + Agua Amarga al anochecer',
+    title_en:'Cala de Enmedio + Agua Amarga at dusk',
+    start:'16:00', end:'23:00',
+    tags_es:['cala virgen','baño','cena pueblo'],
+    tags_en:['virgin cove','swim','village dinner'],
+    steps:[
+      { t:'16:00', es:'Salida hacia Agua Amarga',                    en:'Drive to Agua Amarga',
+                   d_es:'1 h por la costa.',                                                                    d_en:'1 h along the coast.' },
+      { t:'17:00', es:'Sendero a la Cala de Enmedio',                en:'Path to Cala de Enmedio',
+                   d_es:'30 min campo a través. Casi vacía a partir de las 17:00.',                             d_en:'30 min cross-country. Nearly empty after 5 pm.' },
+      { t:'17:30', es:'Baño y atardecer en la cala',                 en:'Swim and sunset in the cove',
+                   d_es:'Arena blanca, roca esculpida, agua cristalina.',                                       d_en:'White sand, sculpted rock, crystalline water.' },
+      { t:'19:30', es:'Vuelta caminando a Agua Amarga',              en:'Walk back to Agua Amarga',
+                   d_es:'Calzado cerrado para la pista de tierra.',                                             d_en:'Closed shoes for the dirt path.' },
+      { t:'21:00', es:'Cena en Agua Amarga frente al mar',           en:'Dinner in Agua Amarga by the sea',
+                   d_es:'Cualquier restaurante del paseo. Ambiente boho.',                                      d_en:'Any seafront restaurant. Boho atmosphere.' },
+    ],
+    tip_es:'Llévate una toalla extra y agua — la cala no tiene servicios.',
+    tip_en:'Bring an extra towel and water — the cove has no services.',
+  },
+];
+
+const DayPlanCard = ({ plan, lang }) => {
+  const [open, setOpen] = React.useState(false);
+  const title = plan[`title_${lang}`];
+  const tags  = plan[`tags_${lang}`] || [];
+  const tip   = plan[`tip_${lang}`];
+  return (
+    <article className={`dp-card ${open ? 'is-open' : ''}`}>
+      <button type="button" className="dp-card-head" onClick={() => setOpen(o => !o)} aria-expanded={open}>
+        <span className="dp-card-time">{plan.start}<span className="dp-card-arrow" aria-hidden="true">→</span>{plan.end}</span>
+        <span className="dp-card-title">{title}</span>
+        <span className={`dp-card-chev ${open ? 'open' : ''}`} aria-hidden="true">↓</span>
+      </button>
+      <div className="dp-card-body" aria-hidden={!open}>
+        {tags.length > 0 && (
+          <div className="dp-tags">
+            {tags.map(t => <span key={t} className="dp-tag">{t}</span>)}
+          </div>
+        )}
+        <ol className="dp-timeline">
+          {plan.steps.map((s, i) => (
+            <li key={i} className="dp-step">
+              <span className="dp-step-time">{s.t}</span>
+              <div className="dp-step-body">
+                <strong className="dp-step-what">{s[lang]}</strong>
+                <span className="dp-step-detail">{s[`d_${lang}`]}</span>
+              </div>
+            </li>
+          ))}
+        </ol>
+        {tip && (
+          <div className="dp-tip">
+            <span className="dp-tip-label">{lang === 'es' ? 'Tip de Alex y Fran' : 'Tip from Alex & Fran'}</span>
+            <span className="dp-tip-text">{tip}</span>
+          </div>
+        )}
+      </div>
+    </article>
+  );
+};
+
+const DayPlans = ({ lang }) => {
+  return (
+    <div className="ag-day-plans">
+      <div className="ag-day-plans-head">
+        <span className="eyebrow">{lang === 'es' ? 'Itinerarios curados' : 'Curated itineraries'}</span>
+        <h3 className="ag-h3" style={{ margin: 0 }}>
+          {lang === 'es' ? 'Planes de día por la zona' : 'One-day plans around'}
+        </h3>
+      </div>
+      {Object.entries(DAY_PLAN_GROUPS).map(([type, group]) => {
+        const plans = DAY_PLANS.filter(p => p.type === type);
+        if (!plans.length) return null;
+        return (
+          <div key={type} className="dp-group">
+            <h4 className="dp-group-title">
+              <span>{group[lang]}</span>
+              <small>{group[`sub_${lang}`]}</small>
+            </h4>
+            <div className="dp-cards">
+              {plans.map(plan => <DayPlanCard key={plan.id} plan={plan} lang={lang} />)}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+// ================================================================
 // AptGuideView — guía integrada en la página de Hestía
 // (se renderiza dentro del Header / Footer del portal)
 // ================================================================
@@ -1108,6 +1424,9 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               if (!inCat.length) return null;
               return <CatGroup key={cat.id} cat={cat} places={inCat} lang={lang} />;
             })}
+
+            {/* Planes de día curados — itinerarios de un día completo */}
+            <DayPlans lang={lang} />
           </section>
 
           <section id="ag-telefonos" className="ag-section">
