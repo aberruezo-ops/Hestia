@@ -20,6 +20,259 @@ const apiHeaders = (token) => ({
 const utf8ToB64 = (s) => btoa(unescape(encodeURIComponent(s)));
 const b64ToUtf8 = (s) => decodeURIComponent(escape(atob(s.replace(/\n/g, ''))));
 
+// ============================================================
+// CalendarEditor — UI estructurada para editar el calendario.
+// Lee/escribe el mismo JSON que el textarea (fuente única) pero
+// con tablas por año + secciones de especiales y puentes. El
+// textarea avanzado se mantiene plegado para edición libre.
+// ============================================================
+const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, seasons }) => {
+  const [advancedOpen, setAdvancedOpen] = React.useState(false);
+
+  // Parseamos el JSON cada vez. Si está roto, no renderizamos las
+  // tablas (el usuario tiene que arreglarlo en el textarea avanzado).
+  let parsed = null;
+  try { parsed = JSON.parse(calJson); } catch (e) {}
+  const ok = parsed && parsed.calendar && parsed.bookingHorizon;
+
+  const writeBack = (next) => {
+    setCalJson(JSON.stringify(next, null, 2));
+    updateCalJson(JSON.stringify(next, null, 2));
+  };
+
+  // Helpers que mutan el árbol y persisten al textarea.
+  const updateRange = (year, kind, key, idx, side, value) => {
+    if (!parsed) return;
+    const next = JSON.parse(JSON.stringify(parsed));
+    if (kind === 'seasons') {
+      next.calendar[year].seasons[key][idx][side === 'start' ? 0 : 1] = value;
+    } else if (kind === 'specials') {
+      next.calendar[year].specials[key].ranges[idx][side === 'start' ? 0 : 1] = value;
+    } else if (kind === 'bridges') {
+      next.calendar[year].bridges[idx].ranges[0][side === 'start' ? 0 : 1] = value;
+    }
+    writeBack(next);
+  };
+  const removeRange = (year, kind, key, idx) => {
+    if (!parsed) return;
+    const next = JSON.parse(JSON.stringify(parsed));
+    if (kind === 'seasons') next.calendar[year].seasons[key].splice(idx, 1);
+    else if (kind === 'specials') next.calendar[year].specials[key].ranges.splice(idx, 1);
+    else if (kind === 'bridges') next.calendar[year].bridges.splice(idx, 1);
+    writeBack(next);
+  };
+  const addRange = (year, kind, key) => {
+    if (!parsed) return;
+    const next = JSON.parse(JSON.stringify(parsed));
+    const today = `${year}-01-01`;
+    if (kind === 'seasons') {
+      if (!next.calendar[year].seasons[key]) next.calendar[year].seasons[key] = [];
+      next.calendar[year].seasons[key].push([today, today]);
+    } else if (kind === 'specials') {
+      next.calendar[year].specials[key].ranges.push([today, today]);
+    } else if (kind === 'bridges') {
+      next.calendar[year].bridges.push({ name: 'Nuevo puente', ranges: [[today, today]] });
+    }
+    writeBack(next);
+  };
+  const updateBridgeName = (year, idx, name) => {
+    if (!parsed) return;
+    const next = JSON.parse(JSON.stringify(parsed));
+    next.calendar[year].bridges[idx].name = name;
+    writeBack(next);
+  };
+  const updateHorizon = (value) => {
+    if (!parsed) return;
+    const next = JSON.parse(JSON.stringify(parsed));
+    next.bookingHorizon.lastCheckinDate = value;
+    writeBack(next);
+  };
+
+  if (!ok) {
+    return (
+      <div className="pe-card">
+        <h2>Calendario y horizonte de reservas</h2>
+        <div className="pe-error">JSON inválido — {calErr}. Edita el bloque avanzado abajo para arreglarlo.</div>
+        <textarea
+          value={calJson}
+          onChange={e => updateCalJson(e.target.value)}
+          rows={20}
+          className="pe-textarea pe-mono"
+          spellCheck="false"
+        />
+      </div>
+    );
+  }
+
+  const years = Object.keys(parsed.calendar).sort();
+  const seasonIds = Object.keys(seasons);
+
+  return (
+    <>
+      <div className="pe-card">
+        <h2>Horizonte de reservas</h2>
+        <div className="pe-grid">
+          <div className="pe-field">
+            <label>Última fecha de check-in permitida</label>
+            <input
+              type="date"
+              value={parsed.bookingHorizon.lastCheckinDate}
+              onChange={e => updateHorizon(e.target.value)}
+              className="pe-input"
+            />
+            <small className="pe-hint">{parsed.bookingHorizon.reason}</small>
+          </div>
+        </div>
+      </div>
+
+      {years.map(year => {
+        const cal = parsed.calendar[year];
+        return (
+          <div key={year} className="pe-card">
+            <h2>Calendario {year} · temporadas</h2>
+            <div className="pe-cal-seasons">
+              {seasonIds.map(sid => {
+                const s = seasons[sid];
+                const ranges = cal.seasons[sid] || [];
+                return (
+                  <div key={sid} className="pe-cal-season">
+                    <div className="pe-cal-season-head">
+                      <span className="pe-dot" style={{ background: s.color }} />
+                      <strong>{s.label}</strong>
+                      <span className="pe-hint">×{s.multiplier}</span>
+                      <button
+                        type="button"
+                        className="pe-btn pe-btn-ghost pe-btn-sm"
+                        onClick={() => addRange(year, 'seasons', sid)}
+                      >+ Rango</button>
+                    </div>
+                    {ranges.length === 0 ? (
+                      <div className="pe-cal-empty">Sin rangos</div>
+                    ) : (
+                      <table className="pe-table pe-table-cal">
+                        <thead>
+                          <tr>
+                            <th>Desde</th>
+                            <th>Hasta</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {ranges.map((r, i) => (
+                            <tr key={i}>
+                              <td>
+                                <input type="date" value={r[0]}
+                                  onChange={e => updateRange(year, 'seasons', sid, i, 'start', e.target.value)}
+                                  className="pe-input pe-input-date" />
+                              </td>
+                              <td>
+                                <input type="date" value={r[1]}
+                                  onChange={e => updateRange(year, 'seasons', sid, i, 'end', e.target.value)}
+                                  className="pe-input pe-input-date" />
+                              </td>
+                              <td>
+                                <button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
+                                  onClick={() => removeRange(year, 'seasons', sid, i)}
+                                  aria-label="Eliminar">×</button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <h3 className="pe-h3">Especiales</h3>
+            {Object.entries(cal.specials || {}).map(([sid, sp]) => (
+              <div key={sid} className="pe-cal-season">
+                <div className="pe-cal-season-head">
+                  <strong>{sp.label || sid}</strong>
+                  <span className="pe-hint">temporada: {sp.season}</span>
+                  <button
+                    type="button"
+                    className="pe-btn pe-btn-ghost pe-btn-sm"
+                    onClick={() => addRange(year, 'specials', sid)}
+                  >+ Rango</button>
+                </div>
+                <table className="pe-table pe-table-cal">
+                  <thead><tr><th>Desde</th><th>Hasta</th><th></th></tr></thead>
+                  <tbody>
+                    {sp.ranges.map((r, i) => (
+                      <tr key={i}>
+                        <td><input type="date" value={r[0]}
+                          onChange={e => updateRange(year, 'specials', sid, i, 'start', e.target.value)}
+                          className="pe-input pe-input-date" /></td>
+                        <td><input type="date" value={r[1]}
+                          onChange={e => updateRange(year, 'specials', sid, i, 'end', e.target.value)}
+                          className="pe-input pe-input-date" /></td>
+                        <td><button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
+                          onClick={() => removeRange(year, 'specials', sid, i)}>×</button></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ))}
+
+            <h3 className="pe-h3">Puentes nacionales (+1 grado de temporada)</h3>
+            <button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
+              onClick={() => addRange(year, 'bridges')}>+ Puente</button>
+            <table className="pe-table pe-table-cal">
+              <thead><tr><th>Nombre</th><th>Desde</th><th>Hasta</th><th></th></tr></thead>
+              <tbody>
+                {(cal.bridges || []).map((b, i) => (
+                  <tr key={i}>
+                    <td>
+                      <input type="text" value={b.name}
+                        onChange={e => updateBridgeName(year, i, e.target.value)}
+                        className="pe-input" />
+                    </td>
+                    <td>
+                      <input type="date" value={b.ranges[0][0]}
+                        onChange={e => updateRange(year, 'bridges', null, i, 'start', e.target.value)}
+                        className="pe-input pe-input-date" />
+                    </td>
+                    <td>
+                      <input type="date" value={b.ranges[0][1]}
+                        onChange={e => updateRange(year, 'bridges', null, i, 'end', e.target.value)}
+                        className="pe-input pe-input-date" />
+                    </td>
+                    <td><button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
+                      onClick={() => removeRange(year, 'bridges', null, i)}>×</button></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      })}
+
+      <div className="pe-card">
+        <button type="button" className="pe-btn pe-btn-ghost"
+          onClick={() => setAdvancedOpen(o => !o)}>
+          {advancedOpen ? '▼ Ocultar JSON avanzado' : '▶ Edición avanzada (JSON)'}
+        </button>
+        {advancedOpen && (
+          <>
+            <p className="pe-lede">Para cambios masivos, paste/copy de un año entero, o cuando quieras añadir un año nuevo. Los cambios aquí se reflejan en las tablas de arriba.</p>
+            <textarea
+              value={calJson}
+              onChange={e => updateCalJson(e.target.value)}
+              rows={20}
+              className="pe-textarea pe-mono"
+              spellCheck="false"
+            />
+            {!calOk && <div className="pe-error">JSON inválido — {calErr}</div>}
+          </>
+        )}
+      </div>
+    </>
+  );
+};
+
 const AdminApp = () => {
   const [phase,    setPhase]    = React.useState('login');
   const [token,    setToken]    = React.useState('');
@@ -305,20 +558,14 @@ const AdminApp = () => {
         </table>
       </div>
 
-      <div className="pe-card">
-        <h2>Calendario y horizonte de reservas</h2>
-        <p className="pe-lede">
-          Edición avanzada en JSON: rangos por temporada, especiales (Sem. Santa, Navidad), puentes nacionales y fecha de cierre de reservas. Cambia 1 vez al año. Validación en vivo abajo.
-        </p>
-        <textarea
-          value={calJson}
-          onChange={e => updateCalJson(e.target.value)}
-          rows={20}
-          className="pe-textarea pe-mono"
-          spellCheck="false"
-        />
-        {!calOk && <div className="pe-error">JSON inválido — {calErr}</div>}
-      </div>
+      <CalendarEditor
+        calJson={calJson}
+        setCalJson={setCalJson}
+        updateCalJson={updateCalJson}
+        calOk={calOk}
+        calErr={calErr}
+        seasons={data.seasons}
+      />
 
       <div className="pe-actions">
         <button onClick={save} disabled={!calOk} className="pe-btn pe-btn-primary">
