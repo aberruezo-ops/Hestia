@@ -1597,14 +1597,28 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
   const nights = _be_diff(selStart, selEnd);
   if (nights <= 0) return null;
 
-  let totalBooking = 0;
-  let totalAirbnb  = 0;
-  let cur = selStart;
-  for (let i = 0; i < nights; i++) {
-    totalBooking += _dayPrice(cur, aptId);
-    totalAirbnb  += _airbnbDayPrice(cur, aptId);
-    cur = _be_adj(cur, 1);
-  }
+  // Helper: suma de precios día a día durante N noches a partir de start.
+  const sumNights = (start, n, dayFn) => {
+    let total = 0;
+    let d = start;
+    for (let i = 0; i < n; i++) { total += dayFn(d, aptId); d = _be_adj(d, 1); }
+    return total;
+  };
+
+  // Regla short-stay: para estancias de 3-4 noches, el precio se
+  // calcula sobre un horizonte mayor (5/6 noches) menos un descuento
+  // fijo. Empuja a los huéspedes hacia estancias más largas. Se lee
+  // de PRICES_V2.rules.shortStayPricing — array de
+  // { nights, basedOnNights, discount }.
+  const v2rules = window.PRICES_V2 && window.PRICES_V2.rules;
+  const shortRule = (v2rules && Array.isArray(v2rules.shortStayPricing))
+    ? v2rules.shortStayPricing.find(r => r.nights === nights)
+    : null;
+  const horizonNights = shortRule ? shortRule.basedOnNights : nights;
+  const flatDiscount  = shortRule ? shortRule.discount      : 0;
+
+  let totalBooking = sumNights(selStart, horizonNights, _dayPrice)      - flatDiscount;
+  let totalAirbnb  = sumNights(selStart, horizonNights, _airbnbDayPrice) - flatDiscount;
   totalBooking = Math.round(totalBooking);
   totalAirbnb  = Math.round(totalAirbnb);
 
