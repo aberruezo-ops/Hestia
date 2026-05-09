@@ -118,7 +118,7 @@ const App = () => {
         <ContactCTA lang={lang} availHref="#buscar" />
       </main>
       <Footer lang={lang} />
-      <StickyFacts lang={lang} />
+      <WidgetStack lang={lang} />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />
       {tweaksOpen && <TweaksPanel tweaks={tweaks} update={updateTweak} lang={lang} setLang={setLang} />}

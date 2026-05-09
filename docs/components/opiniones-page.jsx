@@ -154,7 +154,7 @@ const OpinionesPageApp = () => {
         <ContactCTA lang={lang} />
       </main>
       <Footer lang={lang} />
-      <StickyFacts lang={lang} />
+      <WidgetStack lang={lang} />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />
     </>
