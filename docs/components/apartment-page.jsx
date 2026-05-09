@@ -379,7 +379,7 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
           </a>
         </div>
         <p className="apt-page-cancel">
-          {lang === 'es' ? '✓ Cancelación gratuita · hasta 7 días antes' : '✓ Free cancellation · up to 7 days before'}
+          {lang === 'es' ? '✓ Política de cancelación sin competencia' : '✓ Unmatched cancellation policy'}
         </p>
       </div>
     </section>
