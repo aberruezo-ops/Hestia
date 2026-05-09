@@ -2025,6 +2025,12 @@ body.apt-bar-shown .cookies {
   display: block;
   z-index: 1;
 }
+/* La foto de Fran es más vertical: object-position 38% encuadra cara
+   y hombros con un poco de aire arriba y a los lados. */
+.team-member.fran .portrait img,
+.team-member .portrait img[src*="photo-fran"] {
+  object-position: center 38%;
+}
 .team-member .portrait .silhouette {
   position: absolute;
   left: 50%; bottom: 0; transform: translateX(-50%);
@@ -3824,17 +3830,41 @@ body.no-parallax .g-tile .img { transform: none !important; }
   50%  { transform: scale(1.13) translate(-1.4%, -0.6%) rotate(0.3deg); }
   100% { transform: scale(1.08) translate( 1.2%, -1.0%) rotate(-0.4deg); }
 }
+/* !important sobre duration/iteration para sobrescribir la regla
+   universal de prefers-reduced-motion (línea ~3300) que las pone a
+   0.01ms / count 1 — iOS Safari activa esa preferencia por defecto. */
 .apt-page-hero[data-apt="vm"] .apt-page-hero-img {
-  animation: kb-vm 18s ease-in-out infinite alternate;
+  animation: kb-vm 18s ease-in-out infinite alternate !important;
+  animation-iteration-count: infinite !important;
+  animation-duration: 18s !important;
   transform-origin: 55% 58%;
+  will-change: transform, filter;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 .apt-page-hero[data-apt="vt"] .apt-page-hero-img {
-  animation: kb-vt 17s ease-in-out infinite alternate;
+  animation: kb-vt 17s ease-in-out infinite alternate !important;
+  animation-iteration-count: infinite !important;
+  animation-duration: 17s !important;
   transform-origin: 44% 45%;
+  will-change: transform, filter;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 .apt-page-hero[data-apt="vs"] .apt-page-hero-img {
-  animation: kb-vs 19s ease-in-out infinite alternate;
+  animation: kb-vs 19s ease-in-out infinite alternate !important;
+  animation-iteration-count: infinite !important;
+  animation-duration: 19s !important;
   transform-origin: 50% 52%;
+  will-change: transform, filter;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
 }
 /* Filtro de saturación/contraste por Hestía — los mismos retoques que
    se aplican en las cards de la home para que el hero "respire" igual. */
@@ -3847,9 +3877,13 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .apt-page-hero[data-apt="vs"] .apt-page-hero-img {
   filter: brightness(1.05) saturate(1.16) contrast(1.03);
 }
-@media (prefers-reduced-motion: reduce) {
-  .apt-page-hero-img { animation: none !important; }
-}
+/* No respetamos prefers-reduced-motion para el hero del Hestía: el
+   movimiento es muy gentil (zoom < 15 %, pan < 1.5 %) y forma parte
+   de la identidad visual. iOS lo activa por defecto en muchos iPhones,
+   por lo que la regla anterior dejaba el hero estático en móvil. */
+/* prefers-reduced-motion: NO desactivamos la animación del hero de
+   Hestía a propósito (ver nota arriba). Si algún huésped lo encuentra
+   molesto, podemos exponer un toggle en el futuro. */
 .apt-page-hero-wash {
   position: absolute; inset: 0;
   background: linear-gradient(
@@ -4520,7 +4554,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   overflow: hidden;
   flex-shrink: 0;
 }
-.contacto-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.contacto-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
 .contacto-card-body {
   display: flex;
   flex-direction: column;
@@ -4938,6 +4972,18 @@ body.no-parallax .g-tile .img { transform: none !important; }
   object-fit: cover;
   object-position: center top;
   display: block;
+}
+/* La foto de Fran es más vertical que la de Alex (925×2000 vs ratio
+   estándar). object-position: center top dejaba ver sólo el techo y
+   la pared. Bajamos hasta 38 % para encuadrar cabeza y hombros, y
+   subimos un poco el ancho del contenedor para dejarle aire alrededor. */
+.nosotros-person.nosotros-fran .portrait,
+.nosotros-person:has(img[src*="photo-fran"]) .portrait {
+  max-width: 240px;
+  aspect-ratio: 4 / 5;
+}
+.nosotros-person .portrait img[src*="photo-fran"] {
+  object-position: center 38%;
 }
 .nosotros-person .portrait svg {
   width: 100%;
@@ -5866,7 +5912,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   overflow: hidden;
   flex-shrink: 0;
 }
-.reservas-person-card .r-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.reservas-person-card .r-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
 .reservas-person-card .r-name {
   font-family: var(--serif);
   font-size: 20px;
