@@ -51,12 +51,12 @@ const GUIDE_SECTIONS = [
   { id: 'nombre',       es: 'Nuestro nombre',   en: 'Our name' },
   { id: 'proposito',    es: '¿Por qué Hestía?', en: 'Why Hestía?' },
   { id: 'limpieza',     es: 'Limpieza',         en: 'Cleaning' },
-  { id: 'salon',        es: 'Salón',            en: 'Living room' },
-  { id: 'cocina',       es: 'Cocina',           en: 'Kitchen' },
-  { id: 'dormitorios',  es: 'Dormitorios',      en: 'Bedrooms' },
-  { id: 'banos',        es: 'Baños',            en: 'Bathrooms' },
-  { id: 'terraza',      es: 'Terraza',          en: 'Terrace' },
-  { id: 'urbanizacion', es: 'Urbanización',     en: 'Complex' },
+  { id: 'salon',        es: 'Mi salón',         en: 'My living room' },
+  { id: 'cocina',       es: 'Mi cocina',        en: 'My kitchen' },
+  { id: 'dormitorios',  es: 'Mis dormitorios',  en: 'My bedrooms' },
+  { id: 'banos',        es: 'Mis baños',        en: 'My bathrooms' },
+  { id: 'terraza',      es: 'Mi terraza',       en: 'My terrace' },
+  { id: 'urbanizacion', es: 'Mi urbanización',  en: 'My complex' },
   { id: 'alrededores',  es: 'Alrededores',      en: 'Surroundings' },
   { id: 'telefonos',    es: 'Teléfonos',        en: 'Useful phones' },
   { id: 'feedback',     es: 'Comentarios',      en: 'Feedback' },
@@ -492,35 +492,35 @@ const GUIDE_BY_APT = {
     pdf: 'assets/HestiaVeraMar_GuiaHogar_v1.0.pdf',
     es: {
       rooms: [
-        { id: 'salon', title: 'Tu salón', body: 'En tu sofá-cama podrás disfrutar de tu televisión plana donde podrás ver tus contenidos en Netflix, aclimatando la temperatura con el cuadro del aire acondicionado centralizado.', recs: [
+        { id: 'salon', title: 'Mi salón', body: 'Mi sofá-cama y mi televisión plana son el rincón perfecto para una tarde de Netflix. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.',
           'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando junto al cuadro del A/C.',
           'Dispones de extintor en el pasillo exterior a Hestía.',
         ]},
-        { id: 'cocina', title: 'Tu cocina', body: 'Con todo lo necesario para que tu estancia sea lo más placentera y cómoda posible: mobiliario de gran calidad, electrodomésticos de alta gama, dotación completa de pequeños electrodomésticos y detalles.', recs: [
+        { id: 'cocina', title: 'Mi cocina', body: 'Mi cocina tiene todo lo que necesitas para sentirte como en casa: mobiliario de calidad, electrodomésticos de alta gama y un set completo de pequeños electrodomésticos y detalles.', recs: [
           'Los libros de instrucciones de los electrodomésticos se encuentran en los cajones bajo la vitrocerámica.',
           'Evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.',
           'El agua es potable, aunque quizás prefieras agua embotellada.',
         ]},
-        { id: 'dormitorios', title: 'Tus dormitorios', body: 'Dormitorio principal con vistas al mar, con las mejores sábanas y rellenos nórdicos de plumas o sintéticos. Colchones de alta calidad y almohadas de diferentes durezas. En el armario encontrarás tu sombrilla de playa.', recs: [
+        { id: 'dormitorios', title: 'Mis dormitorios', body: 'Mi dormitorio principal mira al mar y tiene las mejores sábanas y rellenos nórdicos de plumas o sintéticos. Colchones de alta calidad y almohadas de diferentes durezas. En el armario te espera la sombrilla de playa.', recs: [
           'Las cremas bronceadoras pueden estropear sábanas, toallas y tapicerías.',
           'Cuidado con el aire acondicionado por la noche y las corrientes de aire.',
           'Ponte el despertador un día no muy nublado para ver el amanecer.',
         ]},
-        { id: 'banos', title: 'Tus baños', body: 'Dos baños: uno con bañera e hidromasaje y cromoterapia en el espejo, y otro con ducha e hidromasaje. Dispones de productos básicos para tus primeros días, además de aromas, velas, secador, botiquín, etc.', recs: [
+        { id: 'banos', title: 'Mis baños', body: 'Mis dos baños: uno con bañera, hidromasaje y cromoterapia en el espejo, y otro con ducha hidromasaje. Productos básicos para tus primeros días, aromas, velas, secador, botiquín y más.', recs: [
           'Haz un uso prudente y responsable del agua. El agua es vida.',
           'Las toallas del baño no son para la playa ni para la piscina.',
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
           'Usa la cromoterapia del espejo para crear ambiente — relajante de noche, vibrante por la mañana.',
         ]},
-        { id: 'terraza', title: 'Tu terraza', body: 'Disfruta de las mejores vistas y los dos ambientes para cada momento de tus vacaciones: día y noche.', recs: [
+        { id: 'terraza', title: 'Mi terraza', body: 'Mi terraza tiene las mejores vistas y dos ambientes para cada momento de las vacaciones: día y noche.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
           'Mientras estés en la terraza apaga o reduce el A/C.',
           'Recoge el toldo y los cojines cuando sople aire, llueva o vayas a salir.',
           'Usa velas para crear el ambiente perfecto.',
         ]},
-        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Una urbanización textil para olvidarse del mundo y cerca de todo. Aparca tu coche en tu plaza subterránea (nº 160) y disfruta de todo lo que Hestía te ofrece: entrada y salida controladas por código, plazas de garaje interiores en la planta -2, zona de parking exterior y portal de acceso peatonal (nº 14, 1.A) en planta 0, piscina y jacuzzi en planta -2, atajo peatonal a la playa y zonas verdes.', recs: [
+        { id: 'urbanizacion', title: 'Mi urbanización', body: 'Mi urbanización es textil — para olvidarse del mundo y cerca de todo. Tu plaza subterránea es la nº 160. Tienes entrada y salida controladas por código, plazas de garaje interiores en la planta -2, zona de parking exterior y portal de acceso peatonal (nº 14, 1.A) en planta 0, piscina y jacuzzi en planta -2, atajo peatonal a la playa y zonas verdes.', recs: [
           'Para ir a la piscina o playa baja en el ascensor a la planta -2, atravesa el parking y baja hasta la planta a nivel del suelo del bloque de enfrente. Allí encontrarás la zona de aguas.',
           'Junto a la piscina tienes un atajo para ir y volver de la playa.',
           'Respeta las zonas comunes y las normas de la urbanización.',
@@ -531,23 +531,23 @@ const GUIDE_BY_APT = {
     },
     en: {
       rooms: [
-        { id: 'salon', title: 'Your living room', body: 'On your sofa-bed you can enjoy your flat-screen TV — Netflix and your favourite content. The centralised air-conditioning panel is at your disposal.', recs: [
+        { id: 'salon', title: 'My living room', body: 'My sofa-bed and flat-screen TV are the perfect spot for a Netflix afternoon. You control the temperature with the centralised A/C panel.', recs: [
           'Do not leave the air conditioner running with doors open or while you are away from Hestía.',
           'Take a look at Hestía\'s usage guidelines, next to the entrance door.',
           'Adjust colour and tonality of the table lamp with the remote next to the A/C panel.',
           'A fire extinguisher is in the corridor outside Hestía.',
         ]},
-        { id: 'cocina', title: 'Your kitchen', body: 'Everything you need for a comfortable stay: quality furniture, premium appliances and a full set of small appliances and details.', recs: [
+        { id: 'cocina', title: 'My kitchen', body: 'My kitchen has everything you need to feel at home: quality furniture, premium appliances and a full set of small appliances and details.', recs: [
           'Appliance manuals are in the drawers under the hob.',
           'Avoid the eco cycle on the washer and dishwasher — water-saving but excessively long.',
           'Tap water is drinkable, but you may prefer bottled.',
         ]},
-        { id: 'dormitorios', title: 'Your bedrooms', body: 'Master bedroom with sea view, finest sheets and feather or synthetic duvets. High-quality mattresses and pillows of different firmness. Your beach umbrella is in the closet.', recs: [
+        { id: 'dormitorios', title: 'My bedrooms', body: 'My master bedroom faces the sea and has the finest sheets and feather or synthetic duvets. Quality mattresses and pillows of different firmness. Your beach umbrella waits in the closet.', recs: [
           'Tanning creams can ruin sheets, towels and upholstery.',
           'Watch out for night-time A/C and drafts.',
           'Set the alarm one clear morning to catch the sunrise.',
         ]},
-        { id: 'banos', title: 'Your bathrooms', body: 'Two bathrooms: one with bathtub, hydromassage and chromotherapy mirror, and another with hydromassage shower. Basic products for your first days, plus scents, candles, hairdryer, first-aid kit, etc.', recs: [
+        { id: 'banos', title: 'My bathrooms', body: 'My two bathrooms: one with bathtub, hydromassage and chromotherapy mirror, and another with a hydromassage shower. Basic products for your first days, plus scents, candles, hairdryer, first-aid kit and more.', recs: [
           'Use water responsibly. Water is life.',
           'Bathroom towels are not for the beach or the pool.',
           'Be careful with creams and make-up — they damage textiles.',
@@ -575,34 +575,34 @@ const GUIDE_BY_APT = {
     pdf: 'assets/20220607_HestiaVeraThalassa_GuiaHogar_v3.6.pdf',
     es: {
       rooms: [
-        { id: 'salon', title: 'Tu salón', body: 'En tu sofá-cama podrás disfrutar de tu televisión plana donde podrás ver tus contenidos favoritos en Netflix o HBO. Tienes a tu disposición el cuadro del aire acondicionado centralizado.', recs: [
+        { id: 'salon', title: 'Mi salón', body: 'En tu sofá-cama podrás disfrutar de tu televisión plana donde podrás ver tus contenidos favoritos en Netflix o HBO. Tienes a tu disposición el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en casa.',
           'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de pie con el mando junto al cuadro del A/C.',
           'Si necesitas usar la chimenea eléctrica, que sea mientras estés en Hestía.',
         ]},
-        { id: 'cocina', title: 'Tu cocina', body: 'Con todo lo necesario para que tu estancia sea lo más placentera y cómoda posible: mobiliario de gran calidad, electrodomésticos de alta gama, dotación completa de pequeños electrodomésticos y detalles.', recs: [
+        { id: 'cocina', title: 'Mi cocina', body: 'Con todo lo necesario para que tu estancia sea lo más placentera y cómoda posible: mobiliario de gran calidad, electrodomésticos de alta gama, dotación completa de pequeños electrodomésticos y detalles.', recs: [
           'Los libros de instrucciones de los electrodomésticos se encuentran en los cajones bajo la vitrocerámica.',
           'Evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.',
           'El agua es potable, aunque quizás prefieras agua embotellada.',
         ]},
-        { id: 'dormitorios', title: 'Tus dormitorios', body: 'Dormitorio principal con vistas al mar y a las palmeras de la urbanización. Colchones de alta calidad y almohadas de diferentes durezas. Sábanas y rellenos nórdicos de plumas o sintéticos.', recs: [
+        { id: 'dormitorios', title: 'Mis dormitorios', body: 'Dormitorio principal con vistas al mar y a las palmeras de la urbanización. Colchones de alta calidad y almohadas de diferentes durezas. Sábanas y rellenos nórdicos de plumas o sintéticos.', recs: [
           'Las cremas bronceadoras pueden estropear sábanas, toallas y tapicerías.',
           'Cuidado con el aire acondicionado por la noche y las corrientes de aire.',
           'Si tienes la suerte de ver un amanecer despejado desde la terraza, te recordará por qué viniste.',
         ]},
-        { id: 'banos', title: 'Tus baños', body: 'Dos baños con aromaterapia y duchas con hidromasaje. Dispones de productos básicos para tus primeros días, secador, botiquín, etc.', recs: [
+        { id: 'banos', title: 'Mis baños', body: 'Dos baños con aromaterapia y duchas con hidromasaje. Dispones de productos básicos para tus primeros días, secador, botiquín, etc.', recs: [
           'Haz un uso prudente y responsable del agua. El agua es vida.',
           'Las toallas del baño no son para la playa ni para la piscina.',
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
         ]},
-        { id: 'terraza', title: 'Tu terraza', body: 'Terraza panorámica de 18 m² con vistas al mar y al Salar de los Canos. El mejor sitio del ático para vivir el ciclo solar completo.', recs: [
+        { id: 'terraza', title: 'Mi terraza', body: 'Terraza panorámica de 18 m² con vistas al mar y al Salar de los Canos. El mejor sitio del ático para vivir el ciclo solar completo.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
           'Mientras estés en la terraza apaga o reduce el A/C.',
           'Recoge el toldo y los cojines cuando sople aire, llueva o vayas a salir.',
           'Usa velas para crear el ambiente perfecto al atardecer.',
         ]},
-        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Conjunto residencial con SPA comunitario (sauna y gimnasio), piscina y pistas de pádel. El SPA está abierto en otoño, invierno y primavera; en verano solo el gimnasio. Aparca tu coche en tu plaza subterránea y disfruta de todo lo que Hestía te ofrece.', recs: [
+        { id: 'urbanizacion', title: 'Mi urbanización', body: 'Conjunto residencial con SPA comunitario (sauna y gimnasio), piscina y pistas de pádel. El SPA está abierto en otoño, invierno y primavera; en verano solo el gimnasio. Aparca tu coche en tu plaza subterránea y disfruta de todo lo que Hestía te ofrece.', recs: [
           'El SPA es comunitario y de uso por turnos — pregúntanos por la disponibilidad.',
           'Las pistas de pádel son comunitarias y se reservan en recepción.',
           'Respeta las zonas comunes y las normas de la urbanización.',
@@ -654,33 +654,33 @@ const GUIDE_BY_APT = {
     pdf: 'assets/HestiaVeraSalinas_GuiaHogar_v1.0.pdf',
     es: {
       rooms: [
-        { id: 'salon', title: 'Tu salón', body: 'En tu sofá-cama disfrutarás de tu televisión con ambilight donde podrás ver tus contenidos en streaming como Netflix, aclimatando la temperatura con el cuadro del aire acondicionado centralizado.', recs: [
+        { id: 'salon', title: 'Mi salón', body: 'En tu sofá-cama disfrutarás de tu televisión con ambilight donde podrás ver tus contenidos en streaming como Netflix, aclimatando la temperatura con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.',
           'Echa un vistazo a las Normas de uso de Hestía, al final de esta misma guía.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando a la misma.',
         ]},
-        { id: 'cocina', title: 'Tu cocina', body: 'Con todo lo necesario para que tu estancia sea lo más placentera y cómoda posible: mobiliario de gran calidad, electrodomésticos de alta gama, dotación completa de pequeños electrodomésticos y detalles.', recs: [
+        { id: 'cocina', title: 'Mi cocina', body: 'Con todo lo necesario para que tu estancia sea lo más placentera y cómoda posible: mobiliario de gran calidad, electrodomésticos de alta gama, dotación completa de pequeños electrodomésticos y detalles.', recs: [
           'Los libros de instrucciones de los electrodomésticos se encuentran en los cajones bajo la vitrocerámica.',
           'Si tienes prisa, evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.',
           'El agua es potable, aunque quizás prefieras agua embotellada.',
         ]},
-        { id: 'dormitorios', title: 'Tus dormitorios', body: 'Dormitorios con las mejores sábanas y rellenos nórdicos de plumas. Colchones de alta calidad y almohadas de viscoelástica. En el armario encontrarás tu sombrilla de playa.', recs: [
+        { id: 'dormitorios', title: 'Mis dormitorios', body: 'Dormitorios con las mejores sábanas y rellenos nórdicos de plumas. Colchones de alta calidad y almohadas de viscoelástica. En el armario encontrarás tu sombrilla de playa.', recs: [
           'Las cremas bronceadoras pueden estropear sábanas, toallas y tapicerías.',
           'Cuidado con el aire acondicionado por la noche y las corrientes de aire.',
           'Ponte el despertador un día no muy nublado para ver el amanecer.',
         ]},
-        { id: 'banos', title: 'Tus baños', body: 'Dos baños: uno con bañera e hidromasaje y otro con ducha e hidromasaje. Dispones de productos básicos para tus primeros días, además de aromas, velas, secador, botiquín, etc.', recs: [
+        { id: 'banos', title: 'Mis baños', body: 'Dos baños: uno con bañera e hidromasaje y otro con ducha e hidromasaje. Dispones de productos básicos para tus primeros días, además de aromas, velas, secador, botiquín, etc.', recs: [
           'Haz un uso prudente y responsable del agua. El agua es vida.',
           'Las toallas del baño no son para la playa ni para la piscina.',
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
         ]},
-        { id: 'terraza', title: 'Tu terraza', body: 'Disfruta de las mejores vistas y los dos ambientes para cada momento de tus vacaciones.', recs: [
+        { id: 'terraza', title: 'Mi terraza', body: 'Disfruta de las mejores vistas y los dos ambientes para cada momento de tus vacaciones.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
           'Mientras estés en la terraza apaga o reduce el A/C.',
           'Recoge el toldo y los cojines cuando sople aire o llueva.',
           'Usa velas para crear el ambiente perfecto.',
         ]},
-        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Una urbanización textil para olvidarse del mundo y cerca de todo. Aparca tu coche en tu plaza subterránea (nº 290) y disfruta de todo lo que Hestía te ofrece: entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), tu plaza de garaje (nº 290), acceso peatonal desde la urbanización, Hestía Vera Salinas en bloque 22, planta 1, puerta 7, piscina y pistas deportivas.', recs: [
+        { id: 'urbanizacion', title: 'Mi urbanización', body: 'Una urbanización textil para olvidarse del mundo y cerca de todo. Aparca tu coche en tu plaza subterránea (nº 290) y disfruta de todo lo que Hestía te ofrece: entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), tu plaza de garaje (nº 290), acceso peatonal desde la urbanización, Hestía Vera Salinas en bloque 22, planta 1, puerta 7, piscina y pistas deportivas.', recs: [
           'La urbanización merece la pena recorrerla. Los jardines, los riachuelos, las aves, otros pequeños animales, el desierto alrededor. Es un lugar sin igual, para disfrutar con los más pequeños con toda la tranquilidad de un recinto cerrado.',
           'Cuida las plantas y la limpieza de la urbanización.',
           'Respeta las zonas comunes y las normas de la urbanización.',

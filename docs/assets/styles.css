@@ -959,66 +959,76 @@ section {
 }
 
 /* -------- Cookies banner --------
-   Pill horizontal centrado abajo. Una sola línea en escritorio/iPad,
-   wrap a dos líneas en móvil. Altura compacta para que SIEMPRE quepa
-   por encima de la sticky bar + safe-area-inset-bottom de iOS Safari. */
+   Card compacto centrado abajo. Bordes redondeados moderados (no 999) para
+   permitir wrap sin alturas locas. Animación con opacity para no chocar con
+   transform de padres. z-index altísimo para ir por encima de Tawk chat. */
 .cookies {
   position: fixed;
-  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
   left: 50%;
-  width: calc(100vw - 24px);
-  max-width: 580px;
+  bottom: 24px;
+  width: min(540px, calc(100vw - 24px));
   background: var(--crema);
   color: var(--ber-dk);
-  padding: 12px 16px;
-  border-radius: 999px;
-  box-shadow: 0 16px 44px rgba(42, 15, 46, 0.32), 0 0 0 1px rgba(61,26,53,0.08);
-  z-index: 250;  /* por encima de la sticky bar (200) y del sidebar (88) */
-  font-size: 13px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(61,26,53,0.10);
+  box-shadow: 0 18px 50px rgba(42, 15, 46, 0.36), 0 4px 14px rgba(42,15,46,0.18);
+  z-index: 9999;  /* por encima de Tawk (~1000) y de cualquier sticky */
+  font-size: 14px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
   justify-content: center;
-  transform: translateX(-50%) translateY(calc(100% + 60px));
-  transition: transform 220ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  transform: translate(-50%, 0);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 260ms ease, visibility 260ms;
 }
 .cookies.show {
-  transform: translateX(-50%) translateY(0);
-  transition: transform 600ms var(--ease-drawer, cubic-bezier(0.32, 0.72, 0, 1));
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
-/* Cuando la sticky bar está visible, el pill sube exactamente lo que mide.
-   --apt-sticky-h ya incluye su propio safe-area-inset-bottom. */
+/* iOS safe-area: solo si el dispositivo lo expone. */
+@supports (bottom: env(safe-area-inset-bottom)) {
+  .cookies { bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 16px)); }
+}
+/* Cuando la sticky bar está visible, el card sube exactamente lo que mide. */
 body.apt-bar-shown .cookies {
-  bottom: calc(var(--apt-sticky-h, 60px) + 14px);
+  bottom: calc(var(--apt-sticky-h, 60px) + 16px);
 }
 .cookies h5 {
   font-family: var(--serif);
-  font-size: 14px;
-  font-weight: 400;
+  font-size: 15px;
+  font-weight: 500;
   margin: 0;
   line-height: 1.2;
+  color: var(--ber-dk);
   white-space: nowrap;
 }
 .cookies p {
   margin: 0;
-  flex: 1;
+  flex: 1 1 200px;
   min-width: 180px;
-  font-size: 12.5px;
+  font-size: 13px;
   line-height: 1.45;
-  color: var(--ink-soft);
+  color: var(--ber-dk);
+  opacity: 0.85;
 }
 .cookies .cookies-btns {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   margin: 0;
   flex-shrink: 0;
 }
 .cookies .cookies-btns button {
-  padding: 7px 14px;
-  font-size: 10.5px;
-  letter-spacing: 0.12em;
+  padding: 9px 16px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  font-weight: 600;
   border-radius: 999px;
   border: 1px solid var(--ber);
   white-space: nowrap;
