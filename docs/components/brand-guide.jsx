@@ -29,7 +29,7 @@ const BRAND_COPY = {
 
     apt_eyebrow: 'Tres Hestías · tres paisajes',
     apt_title: (<>Cada Hestía <em>toma su color del paisaje.</em></>),
-    apt_lede: 'Las tres identidades secundarias funcionan como sub-marcas. No son colores arbitrarios: cada uno está extraído de un paisaje real de Almería que define la atmósfera del Hestía.',
+    apt_lede: 'Las tres identidades secundarias funcionan como sub-marcas. No son colores arbitrarios: cada uno está extraído de un paisaje real de Almería que define la atmósfera de Hestía.',
 
     type_eyebrow: 'Tipografía',
     type_title: (<>Lora para el alma, <em>Poppins para la voz.</em></>),
@@ -195,7 +195,7 @@ const BrandGuide = ({ lang }) => {
       num: '03',
       name: 'Hestía Salinas',
       concept: lang === 'es' ? '« El amarillo albero del amanecer »' : '« The ochre yellow of sunrise »',
-      why: lang === 'es' ? 'Amarillo albero del Parque Natural de las Salinas a las 7:14 AM. La luz dorada que da nombre al Hestía. Tiene la textura del polvo de plaza, del adobe del Sur.' : 'Ochre yellow from the Salt Flats Natural Park at 7:14 AM. The golden light that names the Hestía. It carries the texture of square dust, the adobe of the South.',
+      why: lang === 'es' ? 'Amarillo albero del Parque Natural de las Salinas a las 7:14 AM. La luz dorada que da nombre a Hestía. Tiene la textura del polvo de plaza, del adobe del Sur.' : 'Ochre yellow from the Salt Flats Natural Park at 7:14 AM. The golden light that names the Hestía. It carries the texture of square dust, the adobe of the South.',
       photo: 'assets/photo-vs-bedroom.jpg',
       colors: [
         { hex: '#9E7A2C', name: 'Albero' },

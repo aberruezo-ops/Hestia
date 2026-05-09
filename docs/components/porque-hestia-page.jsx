@@ -12,7 +12,7 @@ const PORQUE_COPY = {
     origin_title: (<>No empezó como un negocio.<br/><em>Empezó como una convicción.</em></>),
     origin_p1: '2016. Alex y Fran tienen tres viviendas en Vera Playa. Podrían haberlas puesto en una plataforma, cobrado la comisión y desconectado el teléfono. Lo contrario es más difícil y más lento — y es exactamente lo que decidieron hacer.',
     origin_p2: 'Hestía nació de una pregunta: ¿qué pasaría si el alquiler de vacaciones que usas te hiciera sentir en casa de verdad? No solo limpio y funcional. En casa — con historia, con carácter, con alguien al otro lado que sabe tu nombre.',
-    origin_p3: 'Un ingeniero informático y un filólogo clásico con décadas en Vera Playa. El uno observa y construye; el otro nombra y cuida. Juntos transformaron tres viviendas en los tres Hestías — tres hogares con alma propia. Sin oficina. Sin recepción. Con el teléfono siempre encendido.',
+    origin_p3: 'Un ingeniero informático y un filólogo clásico con décadas en Vera Playa. El uno observa y construye; el otro nombra y cuida. Juntos transformaron tres viviendas en los tres — tres hogares con alma propia. Sin oficina. Sin recepción. Con el teléfono siempre encendido.',
     origin_quote: '«Lo más difícil no fue crear Hestía. Fue convencernos de que merecía la pena intentarlo de otra manera.»',
     origin_quote_attr: '— Alex Berruezo',
 

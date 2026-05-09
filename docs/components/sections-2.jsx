@@ -228,7 +228,7 @@ const Ratings = ({ lang }) => {
             <div className="desc">{t.rating_booking_desc}</div>
             <blockquote className="rating-quote">
               {lang === 'es'
-                ? '«Todo impecable. La ubicación, el Hestía y sobre todo el trato de Alex. Volvemos seguro.»'
+                ? '«Todo impecable. La ubicación, Hestía y sobre todo el trato de Alex. Volvemos seguro.»'
                 : '«Everything perfect. The location, the Hestía, and above all Alex\'s care. We\'ll definitely be back.»'}
               <cite>— María G. · Hestía Mar · 2024</cite>
             </blockquote>
