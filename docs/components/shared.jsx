@@ -2514,6 +2514,10 @@ const GuestAccessModal = ({ lang, onClose }) => {
 };
 
 // Botón corporativo "Acceso huéspedes" — abre el modal global.
+// El modal se monta vía ReactDOM.createPortal directamente sobre <body>
+// porque el WidgetStack que lo contiene tiene `transform: translateY(-50%)`
+// y eso rompería `position: fixed` del backdrop (lo anclaría al widget
+// en lugar del viewport). Con portal el modal queda fullscreen y centrado.
 const WidgetGuestAccess = ({ lang }) => {
   const [open, setOpen] = React.useState(false);
   return (
@@ -2530,7 +2534,10 @@ const WidgetGuestAccess = ({ lang }) => {
           {lang === 'es' ? 'Acceso huéspedes' : 'Guest access'}
         </span>
       </button>
-      {open && <GuestAccessModal lang={lang} onClose={() => setOpen(false)} />}
+      {open && ReactDOM.createPortal(
+        <GuestAccessModal lang={lang} onClose={() => setOpen(false)} />,
+        document.body
+      )}
     </>
   );
 };
