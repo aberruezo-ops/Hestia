@@ -183,8 +183,13 @@ const ReservasForm = ({ lang }) => {
 
   const aptNames = { vm: 'Hestía Mar', vt: 'Hestía Thalassa', vs: 'Hestía Salinas' };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const hasName  = name.trim().length > 0;
+  const hasTel   = tel.replace(/\D/g, '').length >= 6;
+  const hasEmail = /\S+@\S+/.test(email);
+  const validWA    = hasName && hasTel;
+  const validEmail = hasName && hasEmail;
+
+  const buildMsg = () => {
     const extrasText = extras.length > 0
       ? '\nExtras: ' + extras.map(i => t.f_extras[i]).join(', ')
       : '';
@@ -204,18 +209,54 @@ const ReservasForm = ({ lang }) => {
             (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${PET_SUPP_FLAT}€ flat fee)\n` : '') +
             `   ✓ Best price guarantee · if you find a better price, we'll beat it\n`)
       : '';
+    const lines = lang === 'es'
+      ? [
+          `¡Hola! Quiero hacer una consulta de reserva.\n`,
+          `Hestía: ${aptNames[apt] || apt || '—'}`,
+          name  ? `Nombre: ${name}`  : null,
+          email ? `Email: ${email}`  : null,
+          tel   ? `Teléfono: ${tel}` : null,
+          checkin  ? `Entrada: ${checkin}`   : null,
+          checkout ? `Salida: ${checkout}`   : null,
+          guests   ? `Huéspedes: ${guests}`  : null,
+          `Mascota: ${petsText}${extrasText}${priceBlock}`,
+          `Comentarios: ${comments || '—'}`,
+        ].filter(Boolean)
+      : [
+          `Hello! I'd like to enquire about a booking.\n`,
+          `Hestía: ${aptNames[apt] || apt || '—'}`,
+          name  ? `Name: ${name}`    : null,
+          email ? `Email: ${email}`  : null,
+          tel   ? `Phone: ${tel}`    : null,
+          checkin  ? `Check-in: ${checkin}`   : null,
+          checkout ? `Check-out: ${checkout}` : null,
+          guests   ? `Guests: ${guests}`      : null,
+          `Pet: ${petsText}${extrasText}${priceBlock}`,
+          `Comments: ${comments || '—'}`,
+        ].filter(Boolean);
+    return lines.join('\n');
+  };
+
+  const sendWhatsApp = (e) => {
+    e.preventDefault();
+    if (!validWA) return;
     const waNum = lang === 'es' ? '34620316370' : '34654138251';
-    const msg = lang === 'es'
-      ? `Hola! Quiero hacer una consulta de reserva.\n\nHestía: ${aptNames[apt] || apt}\nNombre: ${name}\nEmail: ${email}\nTeléfono: ${tel}\nEntrada: ${checkin}\nSalida: ${checkout}\nHuéspedes: ${guests}\nMascota: ${petsText}${extrasText}${priceBlock}\nComentarios: ${comments || '—'}`
-      : `Hello! I'd like to enquire about a booking.\n\nHestía: ${aptNames[apt] || apt}\nName: ${name}\nEmail: ${email}\nPhone: ${tel}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\nGuests: ${guests}\nPet: ${petsText}${extrasText}${priceBlock}\nComments: ${comments || '—'}`;
-    window.open(`https://wa.me/${waNum}?text=` + encodeURIComponent(msg), '_blank');
+    window.open(`https://wa.me/${waNum}?text=` + encodeURIComponent(buildMsg()), '_blank');
+  };
+  const sendEmail = (e) => {
+    e.preventDefault();
+    if (!validEmail) return;
+    const subj = lang === 'es'
+      ? `Consulta reserva — ${aptNames[apt] || apt || 'Hestía'}`
+      : `Booking enquiry — ${aptNames[apt] || apt || 'Hestía'}`;
+    window.location.href = `mailto:info@hestiayourhome.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(buildMsg())}`;
   };
 
   return (
     <div className="reservas-form-wrap">
       <div className="reservas-form-title">{t.form_title}</div>
       <div className="reservas-form-sub">{t.form_sub}</div>
-      <form className="reservas-form" onSubmit={handleSubmit}>
+      <form className="reservas-form" onSubmit={sendWhatsApp}>
         <div className="form-field full">
           <label>{t.f_apt}</label>
           <select value={apt} onChange={e => setApt(e.target.value)} required>
@@ -287,8 +328,27 @@ const ReservasForm = ({ lang }) => {
           <label>{t.f_comments}</label>
           <textarea placeholder={t.f_comments_ph} value={comments} onChange={e => setComments(e.target.value)}/>
         </div>
-        <button type="submit" className="reservas-submit">{t.submit}</button>
-        <p className="reservas-note">{t.note}</p>
+        <div className="reservas-actions">
+          <button
+            type="button"
+            onClick={sendWhatsApp}
+            className={`btn btn-primary reservas-submit${!validWA ? ' req-btn-dis' : ''}`}
+            aria-disabled={!validWA}
+            title={!validWA ? (lang === 'es' ? 'Necesitas nombre y teléfono' : 'Name and phone required') : undefined}>
+            {lang === 'es' ? 'Enviar por WhatsApp →' : 'Send via WhatsApp →'}
+          </button>
+          <button
+            type="button"
+            onClick={sendEmail}
+            className={`btn btn-ghost-dark reservas-submit-mail${!validEmail ? ' req-btn-dis' : ''}`}
+            aria-disabled={!validEmail}
+            title={!validEmail ? (lang === 'es' ? 'Necesitas nombre y email' : 'Name and email required') : undefined}>
+            {lang === 'es' ? 'Enviar por email' : 'Send by email'}
+          </button>
+        </div>
+        <p className="reservas-note">{lang === 'es'
+          ? 'Habilitamos WhatsApp con teléfono y email con email. Alex o Fran te responden en menos de 24 h.'
+          : 'WhatsApp enables with phone, email with email. Alex or Fran reply within 24 h.'}</p>
       </form>
     </div>
   );
