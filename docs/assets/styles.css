@@ -305,6 +305,13 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 .topbar-link.email .tl-dot { background: var(--sol-h); }
 .tl-num { opacity: 0.65; font-size: 11px; }
+.topbar-link:focus-visible {
+  opacity: 1;
+  color: var(--sol-lt);
+}
+@media (hover: none) {
+  .topbar-link { opacity: 1; }
+}
 @media (hover: hover) {
   .topbar-link:hover {
     opacity: 1;
@@ -1650,7 +1657,11 @@ body.apt-bar-shown .cookies {
   opacity: .65; border-bottom: 1px solid rgba(255,255,255,.3);
   padding-bottom: 3px; transition: opacity .2s;
 }
-.apt-link-cta:hover { opacity: 1; }
+.apt-link-cta:hover,
+.apt-link-cta:focus-visible { opacity: 1; }
+@media (hover: none) {
+  .apt-link-cta { opacity: 1; }
+}
 .apt-card .apt-cta {
   background: none; border: none; cursor: pointer; color: inherit;
   font-family: var(--sans); font-weight: 400; font-size: 12px;
@@ -4446,6 +4457,10 @@ body.no-parallax .g-tile .img { transform: none !important; }
   .gc-thumb:hover { opacity: 0.82; transform: scale(1.06); }
   .gc-thumb.gc-thumb-on:hover { opacity: 1; transform: scale(1.12); }
 }
+.gc-thumb:focus-visible { opacity: 0.85; outline: 2px solid var(--sol); outline-offset: 2px; }
+@media (hover: none) {
+  .gc-thumb { opacity: 0.7; }
+}
 
 /* --- Otros apartamentos --- */
 .apt-page-others {
@@ -6384,7 +6399,11 @@ body.no-parallax .g-tile .img { transform: none !important; }
   cursor: pointer; padding: 2px 4px;
   transition: opacity .2s;
 }
-.sf-toggle:hover { opacity: 1; }
+.sf-toggle:hover,
+.sf-toggle:focus-visible { opacity: 1; }
+@media (hover: none) {
+  .sf-toggle { opacity: .85; }
+}
 .sticky-facts.sf-closed .sf-toggle {
   position: static; opacity: .8; font-size: 15px;
   order: 2;
@@ -6422,6 +6441,10 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 @media (hover: hover) and (pointer: fine) {
   .sf-nav-btn:hover { opacity: 1; transform: scale(1.18); }
+}
+.sf-nav-btn:focus-visible { opacity: 1; }
+@media (hover: none) {
+  .sf-nav-btn { opacity: .9; }
 }
 .sf-counter {
   font-family: var(--sans);
