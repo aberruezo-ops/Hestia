@@ -267,36 +267,125 @@ const PorqueNombre = ({ lang }) => {
   );
 };
 
+// PorqueValores — sección "Nuestros valores"
+// Scroll-driven monogram: a la izquierda, un panel sticky con H E S T I A
+// apiladas vertical, la activa "ilumina" con crossfade + blur (Emil-style
+// transition mask). A la derecha, las 6 entradas de valor en cascada con
+// stagger refinado. Una línea de progreso vertical en el borde izquierdo
+// del section acompaña al scroll. Mobile: sin sticky; cada valor recibe
+// su propia tarjeta con letra inset, mismo easing y stagger.
 const PorqueValores = ({ lang }) => {
   const t = PORQUE_COPY[lang];
-  const word = 'HESTIA'.split('');
+  const sectionRef = React.useRef(null);
+  const valueRefs  = React.useRef([]);
+  const [activeIdx, setActiveIdx] = React.useState(0);
+  const [progress,  setProgress]  = React.useState(0);
+
+  // IntersectionObserver: detecta qué valor está más cerca del centro
+  // del viewport — ese es el activo.
+  React.useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter(e => e.isIntersecting);
+        if (visible.length === 0) return;
+        visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        const idx = Number(visible[0].target.dataset.idx);
+        if (!Number.isNaN(idx)) setActiveIdx(idx);
+      },
+      { rootMargin: '-42% 0px -42% 0px', threshold: [0, 0.5, 1] }
+    );
+    valueRefs.current.forEach(el => el && obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
+  // Progreso de scroll a lo largo de la sección (0..1) para la línea
+  // vertical decorativa.
+  React.useEffect(() => {
+    const onScroll = () => {
+      const el = sectionRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const total = rect.height - vh;
+      if (total <= 0) { setProgress(rect.top < 0 ? 1 : 0); return; }
+      const scrolled = -rect.top;
+      const p = Math.max(0, Math.min(1, scrolled / total));
+      setProgress(p);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+
+  const activeValue = t.values[activeIdx] || t.values[0];
+
   return (
-    <section className="pq-valores section-dark">
-      <div className="pq-valores-watermark" aria-hidden="true">
-        {word.map((c, i) => (
-          <span key={i} className="pq-wm-letter reveal" style={{ transitionDelay: `${i * 0.12}s` }}>{c}</span>
-        ))}
-      </div>
+    <section ref={sectionRef} className="pq-valores section-dark">
+      <div
+        className="pq-valores-progress"
+        aria-hidden="true"
+        style={{ '--progress': progress }}
+      />
       <div className="container">
         <div className="pq-valores-head">
           <div className="eyebrow pq-valores-eyebrow">{t.values_eyebrow}</div>
           <h2 className="reveal pq-valores-title">{t.values_title}</h2>
           <p className="pq-valores-lede reveal delay-1">{t.values_lede}</p>
         </div>
-        <div className="pq-valores-rows">
-          {t.values.map((v, i) => (
-            <article key={i} className={`pq-valor reveal ${i % 2 === 0 ? 'pq-valor--left' : 'pq-valor--right'}`}>
-              <div className="pq-valor-letter" aria-hidden="true">
-                <span className="pq-valor-letter-glyph">{v.letter}</span>
-              </div>
-              <div className="pq-valor-body">
-                <div className="pq-valor-index">0{i + 1} / 06</div>
-                <h3 className="pq-valor-name">{v.name}</h3>
-                <p className="pq-valor-desc">{v.desc}</p>
-              </div>
-            </article>
-          ))}
+
+        <div className="pq-valores-stage">
+          <aside className="pq-valores-monogram" aria-hidden="true">
+            <div className="pq-mono-stack">
+              {t.values.map((v, i) => (
+                <span
+                  key={i}
+                  className={
+                    'pq-mono-letter' +
+                    (i === activeIdx ? ' is-active' : '') +
+                    (i  <  activeIdx ? ' is-past'   : '') +
+                    (i  >  activeIdx ? ' is-future' : '')
+                  }
+                >
+                  {v.letter}
+                </span>
+              ))}
+            </div>
+            <div className="pq-mono-current" key={activeIdx}>
+              <span className="pq-mono-current-idx">0{activeIdx + 1} <span className="pq-mono-current-sep">/</span> 06</span>
+              <span className="pq-mono-current-name">{activeValue.name}</span>
+            </div>
+          </aside>
+
+          <div className="pq-valores-rail">
+            {t.values.map((v, i) => (
+              <article
+                key={i}
+                ref={el => { valueRefs.current[i] = el; }}
+                data-idx={i}
+                className={
+                  'pq-valor pq-valor-v2 reveal' +
+                  (i === activeIdx ? ' is-active' : '')
+                }
+              >
+                <div className="pq-valor-mark" aria-hidden="true">
+                  <span className="pq-valor-mark-glyph">{v.letter}</span>
+                  <span className="pq-valor-mark-rule"/>
+                </div>
+                <div className="pq-valor-body">
+                  <div className="pq-valor-index">0{i + 1} <span className="pq-valor-index-sep">/</span> 06</div>
+                  <h3 className="pq-valor-name">{v.name}</h3>
+                  <p className="pq-valor-desc">{v.desc}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
+
         <div className="pq-valores-closing reveal delay-2">{t.values_closing}</div>
       </div>
     </section>
