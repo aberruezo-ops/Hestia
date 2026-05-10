@@ -827,7 +827,7 @@ const ApartmentPageApp = () => {
     <>
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
-      <main className="apt-main" data-phase={phase}>
+      <main className="apt-main" data-phase={phase} data-apt={apt.id}>
         {showGuide ? (
           <AptGuideView apt={apt} lang={lang} onClose={() => setGuideOpen(false)} />
         ) : (
