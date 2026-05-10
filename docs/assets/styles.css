@@ -8283,6 +8283,15 @@ footer,
   font-size: 13px;
   font-weight: 600;
 }
+/* Leyenda del mapa de la urbanización: misma estructura que .ag-recs
+   pero numeración no padded (1, 2, 3...) para coincidir con los
+   círculos sobre el plano aéreo. */
+.ag-map-legend li::before {
+  content: counter(rec);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+}
 
 /* SITIOS WEB TURÍSTICOS ----------------------------------------- */
 .ag-sites { margin: 32px 0 0; }
