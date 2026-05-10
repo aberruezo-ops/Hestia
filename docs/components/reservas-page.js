@@ -209,7 +209,7 @@ const ReservasForm = ({
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "reservas-form-wrap"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h2", {
     className: "reservas-form-title"
   }, t.form_title), /*#__PURE__*/React.createElement("div", {
     className: "reservas-form-sub"
@@ -351,7 +351,7 @@ const ReservasAside = ({
   const t = RESERVAS_COPY[lang];
   return /*#__PURE__*/React.createElement("aside", {
     className: "reservas-aside"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h2", {
     className: "reservas-aside-title"
   }, t.aside_title), /*#__PURE__*/React.createElement("div", {
     className: "reservas-person-card",

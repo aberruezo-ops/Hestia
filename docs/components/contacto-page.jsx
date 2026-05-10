@@ -135,8 +135,11 @@ const PersonCard = ({ name, role, langLabel, phone, waLink, quote, initial, acce
 const ContactoPersons = ({ lang }) => {
   const t = CONTACTO_COPY[lang];
   return (
-    <section className="contacto-persons">
+    <section className="contacto-persons" aria-labelledby="contacto-persons-h2">
       <div className="container">
+        <h2 id="contacto-persons-h2" className="sr-only">
+          {lang === 'es' ? 'Contacta directamente con Alex y Fran' : 'Contact Alex and Fran directly'}
+        </h2>
         <p className="contacto-intro">{t.intro}</p>
         <div className="contacto-persons-grid">
           <PersonCard
@@ -175,8 +178,11 @@ const ContactoPersons = ({ lang }) => {
 const ContactoAddress = ({ lang }) => {
   const t = CONTACTO_COPY[lang];
   return (
-    <section className="contacto-address section-cream">
+    <section className="contacto-address section-cream" aria-labelledby="contacto-address-h2">
       <div className="container">
+        <h2 id="contacto-address-h2" className="sr-only">
+          {lang === 'es' ? 'Dirección, licencias y reserva' : 'Address, licences and booking'}
+        </h2>
         <div className="contacto-addr-grid">
           <div>
             <div className="eyebrow">{t.addr_eyebrow}</div>
