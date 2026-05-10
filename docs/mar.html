@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="assets/styles.css?v=188"/>
+  <link rel="stylesheet" href="assets/styles.css?v=189"/>
   <link rel="preload" as="image" href="assets/apt-vm.jpg" fetchpriority="high"/>
   <script type="application/ld+json">
   {
@@ -140,7 +140,9 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react-dom.development.js'"></script>
 <script>
   window.__APT__ = 'vm';
-  window.__TWEAKS__ = { starfield: true, parallax: true };
+  const __PRM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  window.__TWEAKS__ = { starfield: true && !__PRM, parallax: true && !__PRM };
 
   const COMPONENT_FILES = [
     'components/shared.js',
