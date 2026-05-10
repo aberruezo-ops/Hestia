@@ -11250,3 +11250,493 @@ a:focus-visible,
   outline: 2px solid var(--sol-lt);
   outline-offset: 2px;
 }
+
+/* ================================================================
+   PDF EDITORIAL — HESTÍA VERA SALINAS  (apt[data-apt="vs"])
+
+   Diseño "Editorial Mediterránea" para el PDF que se genera al
+   imprimir la guía de Salinas. Paleta ochre #9E7A2C (sal bajo el
+   sol almeriense). Tipografía serif (Playfair Display) en hero,
+   números, capítulos. Inter para cuerpo. No es una vista de
+   pantalla — sólo se ve al imprimir.
+
+   El resto de apts (vm, vt) usan el print CSS legacy (líneas
+   8516-8576 y 8874-8882) sin tocar.
+   ================================================================ */
+
+/* Mostrar elementos sólo en print (cover, TOC). */
+.print-only { display: none; }
+
+@media print {
+  .apt-guide-view[data-apt="vs"] .print-only { display: block; }
+
+  /* ── @page setup específico para Salinas ──
+     Tamaño A4, márgenes asimétricos pensados para el grid editorial.
+     Páginas con nombre para portada (sin headers/footers) y body. */
+  @page vs-cover {
+    size: A4;
+    margin: 0;
+    @top-center  { content: none; }
+    @bottom-center { content: none; }
+  }
+  @page vs-body {
+    size: A4;
+    margin: 22mm 18mm 22mm 18mm;
+    @top-left {
+      content: "HESTÍA  ·  SALINAS";
+      font-family: 'Inter', sans-serif;
+      font-size: 8pt;
+      letter-spacing: 0.32em;
+      color: #9E7A2C;
+      padding-bottom: 4mm;
+    }
+    @top-right {
+      content: "GUÍA DEL HOGAR";
+      font-family: 'Inter', sans-serif;
+      font-size: 8pt;
+      letter-spacing: 0.32em;
+      color: #6b6b6b;
+      padding-bottom: 4mm;
+    }
+    @bottom-left {
+      content: "Vera Playa · Almería";
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 9pt;
+      color: #6b6b6b;
+      padding-top: 4mm;
+    }
+    @bottom-right {
+      content: counter(page);
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 11pt;
+      color: #9E7A2C;
+      padding-top: 4mm;
+    }
+  }
+
+  .apt-guide-view[data-apt="vs"] { page: vs-body; }
+
+  /* ── PORTADA ────────────────────────────────────────────────── */
+  .apt-guide-view[data-apt="vs"] .ag-print-cover {
+    page: vs-cover;
+    page-break-after: always;
+    break-after: page;
+    width: 210mm;
+    height: 297mm;
+    position: relative;
+    overflow: hidden;
+    color: #2A0F2E;
+    background: #FAF6F0;     /* crema cálido */
+    font-family: 'Playfair Display', serif;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 78% 22%, rgba(212,168,74,.32), transparent 55%),
+      radial-gradient(circle at 12% 88%, rgba(158,122,44,.18), transparent 55%),
+      linear-gradient(180deg, #FAF6F0 0%, #F0E5C8 100%);
+    z-index: 0;
+  }
+  /* Capa decorativa de "salinas" — geometría sutil de cuadrículas
+     evocando los charcos rectangulares de las salinas reales. */
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-bg::before {
+    content: '';
+    position: absolute;
+    inset: 60% 0 0 0;
+    background-image:
+      linear-gradient(90deg, rgba(158,122,44,.18) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(158,122,44,.18) 1px, transparent 1px);
+    background-size: 22mm 14mm;
+    mask-image: linear-gradient(180deg, transparent, black 40%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(180deg, transparent, black 40%, black 90%, transparent);
+    opacity: 0.55;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-frame {
+    position: absolute;
+    inset: 18mm 18mm;
+    z-index: 1;
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    gap: 0;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid rgba(158,122,44,.4);
+    padding-bottom: 6mm;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-brand {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14pt;
+    color: #2A0F2E;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-meta {
+    font-family: 'Inter', sans-serif;
+    font-size: 8pt;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #9E7A2C;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-num {
+    position: absolute;
+    top: 32mm; right: 14mm;
+    font-family: 'Playfair Display', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 280pt;
+    line-height: 0.85;
+    color: rgba(158,122,44,.18);
+    letter-spacing: -0.06em;
+    z-index: 0;
+    user-select: none;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-mid {
+    align-self: end;
+    margin-bottom: 8mm;
+    z-index: 2;
+    position: relative;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-eyebrow {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 8.5pt;
+    font-weight: 400;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #9E7A2C;
+    margin-bottom: 14mm;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 300;
+    font-size: 78pt;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #2A0F2E;
+    margin: 0;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-title em {
+    font-style: italic;
+    font-weight: 400;
+    color: #9E7A2C;
+    display: block;
+    margin-top: 2mm;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-sub {
+    margin: 8mm 0 0;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16pt;
+    color: #4a3325;
+    max-width: 130mm;
+    line-height: 1.3;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-rule {
+    height: 1px;
+    background: #9E7A2C;
+    margin: 8mm 0 6mm;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-sig-line {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 8pt;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: #6b6b6b;
+    margin-bottom: 3mm;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-sig-name {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 22pt;
+    font-weight: 400;
+    color: #2A0F2E;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-coord {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3mm;
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #6b6b6b;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── ÍNDICE ─────────────────────────────────────────────────── */
+  .apt-guide-view[data-apt="vs"] .ag-print-toc {
+    page-break-before: always;
+    page-break-after: always;
+    break-before: page;
+    break-after: page;
+    padding: 6mm 0;
+    color: #2A0F2E;
+    font-family: 'Inter', sans-serif;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-toc-label {
+    display: block;
+    font-size: 9pt;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #9E7A2C;
+    margin-bottom: 6mm;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-toc-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 300;
+    font-size: 38pt;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 14mm;
+    color: #2A0F2E;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-toc-title em {
+    font-style: italic;
+    color: #9E7A2C;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: toc;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-toc-list li {
+    display: grid;
+    grid-template-columns: 14mm 1fr;
+    gap: 6mm;
+    align-items: baseline;
+    padding: 4mm 0;
+    border-bottom: 1px solid rgba(158,122,44,.18);
+    page-break-inside: avoid;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-toc-num {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18pt;
+    color: #9E7A2C;
+    line-height: 1;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-toc-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 16pt;
+    color: #2A0F2E;
+    line-height: 1.2;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-print-toc-leader { display: none; }
+  .apt-guide-view[data-apt="vs"] .ag-print-toc-foot {
+    margin-top: 14mm;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 11pt;
+    color: #6b6b6b;
+    line-height: 1.5;
+    max-width: 140mm;
+  }
+
+  /* ── HERO oculta en print (la portada la sustituye) ─────────── */
+  .apt-guide-view[data-apt="vs"] .ag-hero { display: none !important; }
+
+  /* ── SECCIONES editoriales ──────────────────────────────────── */
+  .apt-guide-view[data-apt="vs"] .ag-section {
+    background: white !important;
+    color: #2A0F2E !important;
+    page-break-inside: auto;
+    break-inside: auto;
+    padding: 0 !important;
+    margin: 0 0 14mm !important;
+    border: 0 !important;
+    position: relative;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-section:not(:first-child) {
+    page-break-before: always;
+    break-before: page;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-section-num {
+    display: block !important;
+    font-family: 'Playfair Display', serif !important;
+    font-weight: 300 !important;
+    font-style: italic !important;
+    font-size: 64pt !important;
+    line-height: 0.9 !important;
+    color: #9E7A2C !important;
+    margin: 0 0 2mm !important;
+    letter-spacing: -0.03em !important;
+    background: none !important;
+    border: 0 !important;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-h2 {
+    font-family: 'Playfair Display', serif !important;
+    font-weight: 400 !important;
+    font-size: 30pt !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.015em !important;
+    color: #2A0F2E !important;
+    margin: 0 0 8mm !important;
+    padding-bottom: 4mm !important;
+    border-bottom: 1px solid rgba(158,122,44,.45) !important;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-h2::after {
+    display: none !important;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-h3 {
+    font-family: 'Inter', sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 9pt !important;
+    letter-spacing: 0.28em !important;
+    text-transform: uppercase !important;
+    color: #9E7A2C !important;
+    margin: 10mm 0 4mm !important;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-para {
+    font-family: 'Inter', sans-serif !important;
+    font-size: 10.5pt !important;
+    line-height: 1.65 !important;
+    color: #1f1a16 !important;
+    margin: 0 0 4mm !important;
+    text-align: justify;
+    hyphens: auto;
+    widows: 3;
+    orphans: 3;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-para-lead {
+    font-family: 'Playfair Display', serif !important;
+    font-style: italic !important;
+    font-size: 13pt !important;
+    line-height: 1.45 !important;
+    color: #2A0F2E !important;
+    text-align: left;
+    margin-bottom: 6mm !important;
+  }
+  /* Drop cap en el primer párrafo no-lead de cada sección */
+  .apt-guide-view[data-apt="vs"] .ag-section .ag-para-lead + .ag-para::first-letter,
+  .apt-guide-view[data-apt="vs"] .ag-section > .ag-para:first-of-type::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 56pt;
+    line-height: 0.85;
+    float: left;
+    margin: 1mm 3mm -2mm 0;
+    color: #9E7A2C;
+  }
+
+  /* Recomendaciones — cards crema con número ochre */
+  .apt-guide-view[data-apt="vs"] .ag-recs {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 4mm 0 0 !important;
+    counter-reset: rec;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-recs li {
+    counter-increment: rec;
+    position: relative;
+    padding: 4mm 4mm 4mm 14mm !important;
+    margin-bottom: 3mm !important;
+    background: #FAF6F0 !important;
+    border-left: 2px solid #9E7A2C !important;
+    border-bottom: 0 !important;
+    border-radius: 0 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 10pt !important;
+    line-height: 1.55 !important;
+    color: #1f1a16 !important;
+    page-break-inside: avoid;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-recs li::before {
+    content: counter(rec, decimal-leading-zero) !important;
+    position: absolute;
+    left: 4mm;
+    top: 4mm;
+    font-family: 'Playfair Display', serif !important;
+    font-style: italic !important;
+    font-weight: 400 !important;
+    font-size: 16pt !important;
+    color: #9E7A2C !important;
+  }
+  /* Map legend: número compacto sin padding */
+  .apt-guide-view[data-apt="vs"] .ag-map-legend li::before {
+    content: counter(rec) !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    font-size: 13pt !important;
+  }
+
+  /* Firma "With love" en bienvenida */
+  .apt-guide-view[data-apt="vs"] .ag-sign {
+    margin-top: 10mm !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 9pt !important;
+    letter-spacing: 0.24em !important;
+    text-transform: uppercase !important;
+    color: #6b6b6b !important;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-signer {
+    font-family: 'Playfair Display', serif !important;
+    font-style: italic !important;
+    font-weight: 400 !important;
+    font-size: 26pt !important;
+    color: #2A0F2E !important;
+    margin: 2mm 0 0 !important;
+  }
+
+  /* Fotos: bordes finos, ratio 4:3, captions italics, sin watermark visual */
+  .apt-guide-view[data-apt="vs"] .ag-photo-grid {
+    gap: 4mm !important;
+    margin: 6mm 0 !important;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-photo {
+    page-break-inside: avoid;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-photo-frame > img,
+  .apt-guide-view[data-apt="vs"] .ag-photo > img {
+    aspect-ratio: 4/3 !important;
+    object-fit: cover;
+    border: 1px solid rgba(158,122,44,.3) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-photo .wm-badge { display: none !important; }
+  .apt-guide-view[data-apt="vs"] .ag-photo figcaption {
+    font-family: 'Playfair Display', serif !important;
+    font-style: italic !important;
+    font-size: 9pt !important;
+    color: #6b6b6b !important;
+    margin-top: 2mm !important;
+    text-align: center;
+  }
+
+  /* Sección de urbanización con leyenda — empuja a página propia */
+  .apt-guide-view[data-apt="vs"] .ag-room-urbanizacion {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  /* Reset definitivo: quitar fondos restantes y normalizar */
+  .apt-guide-view[data-apt="vs"] {
+    background: white !important;
+    color: #2A0F2E !important;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-content {
+    padding: 0 !important;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-layout {
+    display: block !important;
+    padding: 0 !important;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-nav,
+  .apt-guide-view[data-apt="vs"] .ag-nav-toggle,
+  .apt-guide-view[data-apt="vs"] .ag-back,
+  .apt-guide-view[data-apt="vs"] .no-print {
+    display: none !important;
+  }
+}
