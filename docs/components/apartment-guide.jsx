@@ -738,7 +738,17 @@ const GUIDE_BY_APT = {
           'Recoge el toldo y los cojines cuando sople aire o llueva.',
           'Usa velas para crear el ambiente perfecto.',
         ]},
-        { id: 'urbanizacion', title: 'Mi urbanización', body: 'Mi urbanización es textil — para olvidarse del mundo y cerca de todo. Tu plaza subterránea es la nº 290. Tienes entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), acceso peatonal desde la urbanización, piscina y pistas deportivas. Hestía Vera Salinas está en bloque 22, planta 1, puerta 7.', recs: [
+        { id: 'urbanizacion', title: 'Mi urbanización', body: 'Mi urbanización es textil — para olvidarse del mundo y cerca de todo. Tu plaza subterránea es la nº 290. Tienes entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), acceso peatonal desde la urbanización, piscina y pistas deportivas. Hestía Vera Salinas está en bloque 22, planta 1, puerta 7.',
+          points: [
+            'Entrada y salida a la urbanización controlada por código.',
+            'Acceso/barrera a la zona 2, donde está Hestía.',
+            'Plaza de garaje de Hestía. Número 290.',
+            'Acceso peatonal a Hestía desde la urbanización.',
+            'Hestía Vera Salinas. Bloque 22, planta 1, apartamento 7.',
+            'Piscina.',
+            'Pistas deportivas.',
+          ],
+          recs: [
           'La urbanización merece la pena recorrerla. Los jardines, los riachuelos, las aves, otros pequeños animales, el desierto alrededor. Es un lugar sin igual, para disfrutar con los más pequeños con toda la tranquilidad de un recinto cerrado.',
           'Cuida las plantas y la limpieza de la urbanización.',
           'Respeta las zonas comunes y las normas de la urbanización.',
@@ -775,7 +785,17 @@ const GUIDE_BY_APT = {
           'Roll up the awning and put away cushions when it\'s windy or raining.',
           'Use candles to create the perfect atmosphere.',
         ]},
-        { id: 'urbanizacion', title: 'My complex', body: 'My complex is textile-free — to forget the world while staying near everything. Your underground parking space is nº 290. Code-controlled entrance, barrier to zone 2 (where Hestía is), pedestrian access from the complex, swimming pool and sports courts. Hestía Vera Salinas is at block 22, floor 1, unit 7.', recs: [
+        { id: 'urbanizacion', title: 'My complex', body: 'My complex is textile-free — to forget the world while staying near everything. Your underground parking space is nº 290. Code-controlled entrance, barrier to zone 2 (where Hestía is), pedestrian access from the complex, swimming pool and sports courts. Hestía Vera Salinas is at block 22, floor 1, unit 7.',
+          points: [
+            'Entrance and exit to the complex controlled by code.',
+            'Access/barrier to zone 2, where Hestía is.',
+            'Hestía parking space. Number 290.',
+            'Pedestrian access to Hestía from the complex.',
+            'Hestía Vera Salinas. Block 22, floor 1, apartment 7.',
+            'Swimming pool.',
+            'Sports courts.',
+          ],
+          recs: [
           'The complex is worth exploring. The gardens, streams, birds, small animals, the surrounding desert — a place without equal, perfect for kids with the calm of a closed area.',
           'Take care of the plants and the cleanliness of the complex.',
           'Respect the common areas and the complex rules.',
@@ -2043,6 +2063,14 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               <h2 className="ag-h2">{room.title}</h2>
               <p className="ag-para ag-para-lead">{room.body}</p>
               <PhotoGrid photos={getRoomPhotos(room.id)} />
+              {room.points && room.points.length > 0 && (
+                <>
+                  <h3 className="ag-h3">{lang === 'es' ? 'Leyenda del mapa' : 'Map legend'}</h3>
+                  <ol className="ag-recs ag-map-legend">
+                    {room.points.map((p, i) => <li key={i}>{p}</li>)}
+                  </ol>
+                </>
+              )}
               <h3 className="ag-h3">{lang === 'es' ? 'Recomendaciones' : 'Recommendations'}</h3>
               <ol className="ag-recs">
                 {room.recs.map((r, i) => <li key={i}>{r}</li>)}
