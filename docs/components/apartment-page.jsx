@@ -408,29 +408,33 @@ const GalleryCarousel = ({ imgs, captions }) => {
   const timerRef   = React.useRef(null);
   const pausedRef  = React.useRef(false);
 
+  // Cambia de foto envolviendo el setState en una View Transition.
+  // En navegadores sin soporte, _vt simplemente ejecuta el callback.
+  const stepTo = (next) => _vt(() => setCur(next));
+
   const resetTimer = () => {
     clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
-      if (!pausedRef.current) setCur(i => (i + 1) % n);
+      if (!pausedRef.current) stepTo((cur + 1) % n);
     }, 6000);
   };
 
   React.useEffect(() => {
     resetTimer();
     return () => clearInterval(timerRef.current);
-  }, []);
+  }, [cur, n]);
 
   // Keyboard navigation for lightbox
   React.useEffect(() => {
     if (!lightbox) return;
     const onKey = e => {
-      if (e.key === 'ArrowRight') setCur(i => (i + 1) % n);
-      if (e.key === 'ArrowLeft')  setCur(i => (i - 1 + n) % n);
+      if (e.key === 'ArrowRight') stepTo((cur + 1) % n);
+      if (e.key === 'ArrowLeft')  stepTo((cur - 1 + n) % n);
       if (e.key === 'Escape')     setLightbox(false);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [lightbox]);
+  }, [lightbox, cur, n]);
 
   // Scroll the strip horizontally to centre the active thumb — never the page
   React.useEffect(() => {
@@ -442,7 +446,7 @@ const GalleryCarousel = ({ imgs, captions }) => {
     strip.scrollTo({ left: offset, behavior: 'smooth' });
   }, [cur]);
 
-  const go = i => { setCur(i); resetTimer(); };
+  const go = i => { stepTo(i); resetTimer(); };
 
   // Swipe on main image
   const touchX = React.useRef(null);
@@ -450,7 +454,7 @@ const GalleryCarousel = ({ imgs, captions }) => {
   const onTouchEnd   = e => {
     if (touchX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchX.current;
-    if (Math.abs(dx) > 40) { setCur(i => dx < 0 ? (i + 1) % n : (i - 1 + n) % n); resetTimer(); }
+    if (Math.abs(dx) > 40) { stepTo(dx < 0 ? (cur + 1) % n : (cur - 1 + n) % n); resetTimer(); }
     touchX.current = null;
   };
 
@@ -466,7 +470,7 @@ const GalleryCarousel = ({ imgs, captions }) => {
              onMouseLeave={() => { pausedRef.current = false; }}
              onClick={openLightbox}>
           {imgs.map((src, i) => (
-            <div key={i} className="gc-slide"
+            <div key={i} className={`gc-slide${i === cur ? ' gc-slide-active' : ''}`}
                  style={{ transform: `translateX(${(i - cur) * 100}%)` }}>
               <img src={src} alt={captions[i]} loading={i === 0 ? 'eager' : 'lazy'}/>
             </div>
@@ -829,7 +833,7 @@ const ApartmentPageApp = () => {
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main className="apt-main" data-phase={phase} data-apt={apt.id}>
         {showGuide ? (
-          <AptGuideView apt={apt} lang={lang} onClose={() => setGuideOpen(false)} />
+          <AptGuideView apt={apt} lang={lang} onClose={() => _vt(() => setGuideOpen(false))} />
         ) : (
           <>
             <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
@@ -841,7 +845,7 @@ const ApartmentPageApp = () => {
             <DirectBookingPerks lang={lang} />
             <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
             {typeof AptGuideGate !== 'undefined' &&
-              <AptGuideGate apt={apt} lang={lang} onUnlock={() => setGuideOpen(true)} />}
+              <AptGuideGate apt={apt} lang={lang} onUnlock={() => _vt(() => setGuideOpen(true))} />}
             <AptPageOthers apt={apt} lang={lang} />
             <QuickFAQ lang={lang} pageId={aptId} />
             <ContactCTA lang={lang} />
