@@ -407,9 +407,10 @@ const GalleryCarousel = ({
   const timerRef = React.useRef(null);
   const pausedRef = React.useRef(false);
 
-  // Cambia de foto envolviendo el setState en una View Transition.
-  // En navegadores sin soporte, _vt simplemente ejecuta el callback.
-  const stepTo = next => _vt(() => setCur(next));
+  // Cambia de foto. La animación visual la lleva el CSS sobre
+  // .gc-slide (transform translateX). NO envolvemos en _vt() porque
+  // colisiona con el slide CSS y produce flicker en mobile.
+  const stepTo = next => setCur(next);
   const resetTimer = () => {
     clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
@@ -450,10 +451,13 @@ const GalleryCarousel = ({
     resetTimer();
   };
 
-  // Swipe on main image
+  // Swipe on main image. Trackeamos si hubo swipe para no abrir el
+  // lightbox al soltar (touchend dispara click sintético después).
   const touchX = React.useRef(null);
+  const swipedRef = React.useRef(false);
   const onTouchStart = e => {
     touchX.current = e.touches[0].clientX;
+    swipedRef.current = false;
   };
   const onTouchEnd = e => {
     if (touchX.current === null) return;
@@ -461,10 +465,15 @@ const GalleryCarousel = ({
     if (Math.abs(dx) > 40) {
       stepTo(dx < 0 ? (cur + 1) % n : (cur - 1 + n) % n);
       resetTimer();
+      swipedRef.current = true;
     }
     touchX.current = null;
   };
   const openLightbox = () => {
+    if (swipedRef.current) {
+      swipedRef.current = false;
+      return;
+    }
     setLightbox(true);
     document.body.style.overflow = 'hidden';
   };
