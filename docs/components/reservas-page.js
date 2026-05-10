@@ -363,6 +363,8 @@ const ReservasAside = ({
   }, /*#__PURE__*/React.createElement("img", {
     src: "assets/photo-alex.jpg",
     alt: "Alex Berruezo",
+    width: "731",
+    height: "1014",
     loading: "lazy",
     onError: e => {
       e.currentTarget.style.display = 'none';
@@ -398,6 +400,8 @@ const ReservasAside = ({
   }, /*#__PURE__*/React.createElement("img", {
     src: "assets/photo-fran.jpg",
     alt: "Fran Moral",
+    width: "925",
+    height: "2000",
     loading: "lazy",
     onError: e => {
       e.currentTarget.style.display = 'none';
