@@ -3851,7 +3851,7 @@ const AptGuideView = ({
   }), room.points && room.points.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"
   }, lang === 'es' ? 'Leyenda del mapa' : 'Map legend'), /*#__PURE__*/React.createElement("ol", {
-    className: "ag-recs ag-map-legend"
+    className: "ag-recs ag-urb-points"
   }, room.points.map((p, i) => /*#__PURE__*/React.createElement("li", {
     key: i
   }, p)))), /*#__PURE__*/React.createElement("h3", {

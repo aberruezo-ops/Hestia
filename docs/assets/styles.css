@@ -11252,32 +11252,45 @@ a:focus-visible,
 }
 
 /* ================================================================
-   PDF EDITORIAL — HESTÍA VERA SALINAS  (apt[data-apt="vs"])
+   PDF — HESTÍA VERA SALINAS  (apt[data-apt="vs"])
 
-   Diseño "Editorial Mediterránea" para el PDF que se genera al
-   imprimir la guía de Salinas. Paleta ochre #9E7A2C (sal bajo el
-   sol almeriense). Tipografía serif (Playfair Display) en hero,
-   números, capítulos. Inter para cuerpo. No es una vista de
-   pantalla — sólo se ve al imprimir.
+   PDF brand-consistent: replica exactamente el lenguaje visual de
+   la guía web (.apt-guide-view en pantalla) — mismas tipografías,
+   misma paleta crema + ochre apt-accent, misma escala, esquinas
+   asimétricas 10px 0 10px 0, recomendaciones en cards de crema
+   con bullet apt-accent.
 
-   El resto de apts (vm, vt) usan el print CSS legacy (líneas
-   8516-8576 y 8874-8882) sin tocar.
+   Las únicas piezas exclusivas del PDF son:
+   - Portada (.ag-print-cover) que reemplaza el .ag-hero del web.
+   - Índice (.ag-print-toc) que reemplaza la sidebar de navegación.
+   - @page con headers/footers brand minimal.
+
+   Resto de apts (vm, vt) usan el print CSS legacy hasta que el
+   usuario confirme si los quiere también.
    ================================================================ */
 
 /* Mostrar elementos sólo en print (cover, TOC). */
 .print-only { display: none; }
 
+/* En pantalla, la leyenda del mapa (puntos numerados de la
+   urbanización) usa la misma estética de .ag-recs, sólo cambia el
+   formato del contador a 1, 2, 3 (sin padding 0). Es la clase
+   .ag-urb-points (renombrada para no colisionar con el .ag-map-legend
+   del Google Maps section). */
+.ag-urb-points li::before {
+  content: counter(rec) !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+}
+
 @media print {
   .apt-guide-view[data-apt="vs"] .print-only { display: block; }
 
-  /* ── @page setup específico para Salinas ──
-     Tamaño A4, márgenes asimétricos pensados para el grid editorial.
-     Páginas con nombre para portada (sin headers/footers) y body. */
+  /* ── @page con headers/footers brand minimal ─────────────────── */
   @page vs-cover {
     size: A4;
     margin: 0;
-    @top-center  { content: none; }
-    @bottom-center { content: none; }
   }
   @page vs-body {
     size: A4;
@@ -11286,6 +11299,7 @@ a:focus-visible,
       content: "HESTÍA  ·  SALINAS";
       font-family: 'Inter', sans-serif;
       font-size: 8pt;
+      font-weight: 500;
       letter-spacing: 0.32em;
       color: #9E7A2C;
       padding-bottom: 4mm;
@@ -11295,15 +11309,15 @@ a:focus-visible,
       font-family: 'Inter', sans-serif;
       font-size: 8pt;
       letter-spacing: 0.32em;
-      color: #6b6b6b;
+      color: #6b6657;
       padding-bottom: 4mm;
     }
     @bottom-left {
-      content: "Vera Playa · Almería";
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 9pt;
-      color: #6b6b6b;
+      content: "www.hestiayourhome.com";
+      font-family: 'Inter', sans-serif;
+      font-size: 8pt;
+      letter-spacing: 0.18em;
+      color: #6b6657;
       padding-top: 4mm;
     }
     @bottom-right {
@@ -11315,10 +11329,13 @@ a:focus-visible,
       padding-top: 4mm;
     }
   }
-
   .apt-guide-view[data-apt="vs"] { page: vs-body; }
 
-  /* ── PORTADA ────────────────────────────────────────────────── */
+  /* ── PORTADA ───────────────────────────────────────────────────
+     Replica el .ag-hero de la web: gradient apt-accent2 8% → crema,
+     eyebrow letterspaced ochre, h1 serif weight 400 con apt-name
+     en italic, sub italic. Añade marca "Hestía your home!" arriba
+     y firma + licencia + URL abajo. */
   .apt-guide-view[data-apt="vs"] .ag-print-cover {
     page: vs-cover;
     page-break-after: always;
@@ -11328,34 +11345,20 @@ a:focus-visible,
     position: relative;
     overflow: hidden;
     color: #2A0F2E;
-    background: #FAF6F0;     /* crema cálido */
-    font-family: 'Playfair Display', serif;
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, #D4A84A 8%, #FAF6F0),
+      #FAF6F0
+    );
+    font-family: 'Inter', sans-serif;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(circle at 78% 22%, rgba(212,168,74,.32), transparent 55%),
-      radial-gradient(circle at 12% 88%, rgba(158,122,44,.18), transparent 55%),
-      linear-gradient(180deg, #FAF6F0 0%, #F0E5C8 100%);
-    z-index: 0;
-  }
-  /* Capa decorativa de "salinas" — geometría sutil de cuadrículas
-     evocando los charcos rectangulares de las salinas reales. */
-  .apt-guide-view[data-apt="vs"] .ag-print-cover-bg::before {
-    content: '';
-    position: absolute;
-    inset: 60% 0 0 0;
-    background-image:
-      linear-gradient(90deg, rgba(158,122,44,.18) 1px, transparent 1px),
-      linear-gradient(0deg, rgba(158,122,44,.18) 1px, transparent 1px);
-    background-size: 22mm 14mm;
-    mask-image: linear-gradient(180deg, transparent, black 40%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(180deg, transparent, black 40%, black 90%, transparent);
-    opacity: 0.55;
+    /* fondo decorativo eliminado — la portada es minimal brand */
+    display: none;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-frame {
     position: absolute;
-    inset: 18mm 18mm;
+    inset: 22mm 22mm 26mm 22mm;
     z-index: 1;
     display: grid;
     grid-template-rows: auto 1fr auto auto;
@@ -11365,86 +11368,80 @@ a:focus-visible,
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    border-bottom: 1px solid rgba(158,122,44,.4);
-    padding-bottom: 6mm;
+    padding-bottom: 4mm;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-brand {
     font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 14pt;
+    font-weight: 400;
+    font-size: 13pt;
     color: #2A0F2E;
+    letter-spacing: 0.04em;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-meta {
     font-family: 'Inter', sans-serif;
     font-size: 8pt;
-    letter-spacing: 0.32em;
+    font-weight: 500;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     color: #9E7A2C;
   }
-  .apt-guide-view[data-apt="vs"] .ag-print-cover-num {
-    position: absolute;
-    top: 32mm; right: 14mm;
-    font-family: 'Playfair Display', serif;
-    font-weight: 300;
-    font-style: italic;
-    font-size: 280pt;
-    line-height: 0.85;
-    color: rgba(158,122,44,.18);
-    letter-spacing: -0.06em;
-    z-index: 0;
-    user-select: none;
-  }
+  /* Número decorativo eliminado — choca con el lenguaje brand */
+  .apt-guide-view[data-apt="vs"] .ag-print-cover-num { display: none; }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-mid {
-    align-self: end;
-    margin-bottom: 8mm;
-    z-index: 2;
-    position: relative;
+    align-self: center;
+    text-align: center;
+    max-width: 150mm;
+    margin: 0 auto;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-eyebrow {
-    display: block;
+    display: inline-block;
     font-family: 'Inter', sans-serif;
-    font-size: 8.5pt;
+    font-size: 9pt;
     font-weight: 400;
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: #9E7A2C;
-    margin-bottom: 14mm;
+    margin-bottom: 10mm;
+    padding-bottom: 2mm;
+    border-bottom: 1px solid color-mix(in oklab, #9E7A2C 50%, transparent);
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-title {
     font-family: 'Playfair Display', serif;
-    font-weight: 300;
-    font-size: 78pt;
-    line-height: 0.95;
-    letter-spacing: -0.03em;
+    font-weight: 400;
+    font-size: 56pt;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
     color: #2A0F2E;
     margin: 0;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-title em {
     font-style: italic;
-    font-weight: 400;
     color: #9E7A2C;
-    display: block;
-    margin-top: 2mm;
+    margin-left: 0.18em;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-sub {
-    margin: 8mm 0 0;
+    margin: 6mm auto 0;
     font-family: 'Playfair Display', serif;
     font-style: italic;
     font-weight: 400;
-    font-size: 16pt;
-    color: #4a3325;
+    font-size: 14pt;
+    color: #5a4838;
+    line-height: 1.45;
     max-width: 130mm;
-    line-height: 1.3;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-rule {
-    height: 1px;
+    width: 48px;
+    height: 2px;
     background: #9E7A2C;
-    margin: 8mm 0 6mm;
+    margin: 6mm 0 4mm;
+    border-radius: 0;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-bottom {
     display: flex;
     justify-content: space-between;
     align-items: end;
+    border-top: 1px solid color-mix(in oklab, #9E7A2C 25%, transparent);
+    padding-top: 6mm;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-sig-line {
     display: block;
@@ -11452,13 +11449,13 @@ a:focus-visible,
     font-size: 8pt;
     letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: #6b6b6b;
-    margin-bottom: 3mm;
+    color: #6b6657;
+    margin-bottom: 2mm;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-sig-name {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 22pt;
+    font-size: 18pt;
     font-weight: 400;
     color: #2A0F2E;
   }
@@ -11466,10 +11463,10 @@ a:focus-visible,
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 3mm;
+    gap: 2mm;
     font-family: 'Inter', sans-serif;
-    font-size: 9pt;
-    color: #6b6b6b;
+    font-size: 8.5pt;
+    color: #6b6657;
     letter-spacing: 0.06em;
   }
 
@@ -11479,173 +11476,192 @@ a:focus-visible,
     page-break-after: always;
     break-before: page;
     break-after: page;
-    padding: 6mm 0;
+    padding: 0;
     color: #2A0F2E;
     font-family: 'Inter', sans-serif;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-label {
     display: block;
     font-size: 9pt;
+    font-weight: 500;
     letter-spacing: 0.32em;
     text-transform: uppercase;
     color: #9E7A2C;
-    margin-bottom: 6mm;
+    margin-bottom: 4mm;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-title {
     font-family: 'Playfair Display', serif;
-    font-weight: 300;
-    font-size: 38pt;
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin: 0 0 14mm;
+    font-weight: 400;
+    font-size: 32pt;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    margin: 0 0 12mm;
     color: #2A0F2E;
+    padding-bottom: 6mm;
+    position: relative;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-title em {
     font-style: italic;
     color: #9E7A2C;
   }
+  .apt-guide-view[data-apt="vs"] .ag-print-toc-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 48px;
+    height: 2px;
+    background: #9E7A2C;
+  }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    counter-reset: toc;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-list li {
     display: grid;
-    grid-template-columns: 14mm 1fr;
-    gap: 6mm;
+    grid-template-columns: 12mm 1fr;
+    gap: 4mm;
     align-items: baseline;
-    padding: 4mm 0;
-    border-bottom: 1px solid rgba(158,122,44,.18);
+    padding: 3mm 0;
+    border-bottom: 1px dotted color-mix(in oklab, #9E7A2C 22%, transparent);
     page-break-inside: avoid;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-num {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 18pt;
+    font-size: 14pt;
     color: #9E7A2C;
     line-height: 1;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-name {
     font-family: 'Playfair Display', serif;
-    font-size: 16pt;
+    font-size: 13pt;
     color: #2A0F2E;
     line-height: 1.2;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-leader { display: none; }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-foot {
-    margin-top: 14mm;
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 11pt;
-    color: #6b6b6b;
-    line-height: 1.5;
+    margin-top: 10mm;
+    font-family: 'Inter', sans-serif;
+    font-size: 9pt;
+    color: #6b6657;
+    line-height: 1.55;
     max-width: 140mm;
+    font-style: italic;
   }
 
-  /* ── HERO oculta en print (la portada la sustituye) ─────────── */
+  /* ── HERO oculto en print (la portada lo sustituye) ─────────── */
   .apt-guide-view[data-apt="vs"] .ag-hero { display: none !important; }
 
-  /* ── SECCIONES editoriales ──────────────────────────────────── */
+  /* ── SECCIONES: lenguaje brand idéntico al web ─────────────────
+     Replica .ag-section, .ag-section-num, .ag-h2 (con ::after rule
+     ochre 48×2px), .ag-h3, .ag-para, .ag-recs (cards crema con
+     bullet italic apt-accent), .ag-photo-frame con asym radius. */
+
   .apt-guide-view[data-apt="vs"] .ag-section {
     background: white !important;
     color: #2A0F2E !important;
-    page-break-inside: auto;
-    break-inside: auto;
     padding: 0 !important;
-    margin: 0 0 14mm !important;
+    margin: 0 0 12mm !important;
     border: 0 !important;
+    border-bottom: 1px solid color-mix(in oklab, #9E7A2C 14%, transparent) !important;
+    page-break-inside: auto;
     position: relative;
   }
   .apt-guide-view[data-apt="vs"] .ag-section:not(:first-child) {
     page-break-before: always;
     break-before: page;
+    padding-top: 0 !important;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-section:last-of-type {
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
   }
   .apt-guide-view[data-apt="vs"] .ag-section-num {
     display: block !important;
     font-family: 'Playfair Display', serif !important;
-    font-weight: 300 !important;
     font-style: italic !important;
-    font-size: 64pt !important;
-    line-height: 0.9 !important;
+    font-weight: 400 !important;
+    font-size: 11pt !important;
+    letter-spacing: 0.18em !important;
     color: #9E7A2C !important;
-    margin: 0 0 2mm !important;
-    letter-spacing: -0.03em !important;
+    margin: 0 0 4mm !important;
+    text-transform: none !important;
     background: none !important;
     border: 0 !important;
   }
   .apt-guide-view[data-apt="vs"] .ag-h2 {
     font-family: 'Playfair Display', serif !important;
     font-weight: 400 !important;
-    font-size: 30pt !important;
-    line-height: 1.05 !important;
-    letter-spacing: -0.015em !important;
+    font-size: 26pt !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.01em !important;
     color: #2A0F2E !important;
-    margin: 0 0 8mm !important;
+    margin: 0 0 6mm !important;
     padding-bottom: 4mm !important;
-    border-bottom: 1px solid rgba(158,122,44,.45) !important;
+    border-bottom: 0 !important;
+    position: relative;
   }
   .apt-guide-view[data-apt="vs"] .ag-h2::after {
-    display: none !important;
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 48px !important;
+    height: 2px !important;
+    background: #9E7A2C !important;
+    display: block !important;
   }
   .apt-guide-view[data-apt="vs"] .ag-h3 {
-    font-family: 'Inter', sans-serif !important;
+    font-family: 'Playfair Display', serif !important;
     font-weight: 500 !important;
-    font-size: 9pt !important;
-    letter-spacing: 0.28em !important;
-    text-transform: uppercase !important;
-    color: #9E7A2C !important;
-    margin: 10mm 0 4mm !important;
+    font-size: 13pt !important;
+    color: #2A0F2E !important;
+    margin: 8mm 0 3mm !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
   }
   .apt-guide-view[data-apt="vs"] .ag-para {
     font-family: 'Inter', sans-serif !important;
     font-size: 10.5pt !important;
+    font-weight: 400 !important;
     line-height: 1.65 !important;
     color: #1f1a16 !important;
     margin: 0 0 4mm !important;
-    text-align: justify;
-    hyphens: auto;
+    text-align: left;
     widows: 3;
     orphans: 3;
   }
   .apt-guide-view[data-apt="vs"] .ag-para-lead {
-    font-family: 'Playfair Display', serif !important;
-    font-style: italic !important;
-    font-size: 13pt !important;
-    line-height: 1.45 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 11.5pt !important;
+    font-weight: 400 !important;
+    font-style: normal !important;
+    line-height: 1.55 !important;
     color: #2A0F2E !important;
-    text-align: left;
-    margin-bottom: 6mm !important;
-  }
-  /* Drop cap en el primer párrafo no-lead de cada sección */
-  .apt-guide-view[data-apt="vs"] .ag-section .ag-para-lead + .ag-para::first-letter,
-  .apt-guide-view[data-apt="vs"] .ag-section > .ag-para:first-of-type::first-letter {
-    font-family: 'Playfair Display', serif;
-    font-weight: 400;
-    font-style: italic;
-    font-size: 56pt;
-    line-height: 0.85;
-    float: left;
-    margin: 1mm 3mm -2mm 0;
-    color: #9E7A2C;
+    margin-bottom: 5mm !important;
   }
 
-  /* Recomendaciones — cards crema con número ochre */
+  /* Recomendaciones — replica exacta de .ag-recs en pantalla:
+     cards crema con bullet italic apt-accent + asym radius */
   .apt-guide-view[data-apt="vs"] .ag-recs {
     list-style: none !important;
     padding: 0 !important;
     margin: 4mm 0 0 !important;
     counter-reset: rec;
+    display: block !important;
+    gap: 0 !important;
   }
   .apt-guide-view[data-apt="vs"] .ag-recs li {
     counter-increment: rec;
     position: relative;
     padding: 4mm 4mm 4mm 14mm !important;
     margin-bottom: 3mm !important;
-    background: #FAF6F0 !important;
-    border-left: 2px solid #9E7A2C !important;
+    background: color-mix(in oklab, #9E7A2C 4%, #FAF6F0) !important;
+    border: 0 !important;
     border-bottom: 0 !important;
-    border-radius: 0 !important;
+    border-radius: 10px 0 10px 0 !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 10pt !important;
     line-height: 1.55 !important;
@@ -11659,37 +11675,38 @@ a:focus-visible,
     top: 4mm;
     font-family: 'Playfair Display', serif !important;
     font-style: italic !important;
-    font-weight: 400 !important;
-    font-size: 16pt !important;
+    font-weight: 600 !important;
+    font-size: 11pt !important;
     color: #9E7A2C !important;
   }
-  /* Map legend: número compacto sin padding */
-  .apt-guide-view[data-apt="vs"] .ag-map-legend li::before {
+  /* Leyenda urb: número plano sin padding 01 02… */
+  .apt-guide-view[data-apt="vs"] .ag-urb-points li::before {
     content: counter(rec) !important;
     font-style: normal !important;
     font-weight: 700 !important;
-    font-size: 13pt !important;
+    font-size: 12pt !important;
   }
 
   /* Firma "With love" en bienvenida */
   .apt-guide-view[data-apt="vs"] .ag-sign {
-    margin-top: 10mm !important;
+    margin-top: 8mm !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 9pt !important;
     letter-spacing: 0.24em !important;
     text-transform: uppercase !important;
-    color: #6b6b6b !important;
+    color: #6b6657 !important;
   }
   .apt-guide-view[data-apt="vs"] .ag-signer {
     font-family: 'Playfair Display', serif !important;
     font-style: italic !important;
     font-weight: 400 !important;
-    font-size: 26pt !important;
+    font-size: 22pt !important;
     color: #2A0F2E !important;
     margin: 2mm 0 0 !important;
   }
 
-  /* Fotos: bordes finos, ratio 4:3, captions italics, sin watermark visual */
+  /* Fotos — replican el .ag-photo de pantalla: asym radius, sin
+     watermark visual en print, caption italic discreta */
   .apt-guide-view[data-apt="vs"] .ag-photo-grid {
     gap: 4mm !important;
     margin: 6mm 0 !important;
@@ -11701,27 +11718,27 @@ a:focus-visible,
   .apt-guide-view[data-apt="vs"] .ag-photo > img {
     aspect-ratio: 4/3 !important;
     object-fit: cover;
-    border: 1px solid rgba(158,122,44,.3) !important;
-    border-radius: 0 !important;
+    border: 1px solid color-mix(in oklab, #9E7A2C 25%, transparent) !important;
+    border-radius: 10px 0 10px 0 !important;
     box-shadow: none !important;
   }
   .apt-guide-view[data-apt="vs"] .ag-photo .wm-badge { display: none !important; }
   .apt-guide-view[data-apt="vs"] .ag-photo figcaption {
-    font-family: 'Playfair Display', serif !important;
-    font-style: italic !important;
+    font-family: 'Inter', sans-serif !important;
+    font-style: normal !important;
     font-size: 9pt !important;
-    color: #6b6b6b !important;
+    color: #6b6657 !important;
     margin-top: 2mm !important;
-    text-align: center;
+    text-align: left;
   }
 
-  /* Sección de urbanización con leyenda — empuja a página propia */
+  /* Sección urbanización en página propia */
   .apt-guide-view[data-apt="vs"] .ag-room-urbanizacion {
     page-break-before: always;
     break-before: page;
   }
 
-  /* Reset definitivo: quitar fondos restantes y normalizar */
+  /* Reset general: nav y back ocultos */
   .apt-guide-view[data-apt="vs"] {
     background: white !important;
     color: #2A0F2E !important;
