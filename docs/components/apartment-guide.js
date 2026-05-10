@@ -3689,7 +3689,65 @@ const AptGuideView = ({
     className: "ag-hero-title"
   }, aptName), /*#__PURE__*/React.createElement("p", {
     className: "ag-hero-sub"
-  }, lang === 'es' ? 'Tu hogar lejos de tu casa — con todo lo que necesitas saber.' : 'Your home away from home — with everything you need to know.'))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Tu hogar lejos de tu casa — con todo lo que necesitas saber.' : 'Your home away from home — with everything you need to know.'))), apt.id === 'vs' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "ag-print-cover print-only",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-print-cover-bg",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "ag-print-cover-frame"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-print-cover-top"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-print-cover-brand"
+  }, "Hest\xEDa Your Home"), /*#__PURE__*/React.createElement("span", {
+    className: "ag-print-cover-meta"
+  }, lang === 'es' ? 'Guía del hogar · v1.0' : 'Home guide · v1.0')), /*#__PURE__*/React.createElement("div", {
+    className: "ag-print-cover-num",
+    "aria-hidden": "true"
+  }, apt.num), /*#__PURE__*/React.createElement("div", {
+    className: "ag-print-cover-mid"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-print-cover-eyebrow"
+  }, lang === 'es' ? 'Vera Playa · Almería · Desde 2016' : 'Vera Playa · Almería · Since 2016'), /*#__PURE__*/React.createElement("h1", {
+    className: "ag-print-cover-title"
+  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, apt.name_short)), /*#__PURE__*/React.createElement("p", {
+    className: "ag-print-cover-sub"
+  }, lang === 'es' ? 'Junto a las salinas. Donde la luz se queda más tiempo.' : 'Next to the salt flats. Where light lingers longer.')), /*#__PURE__*/React.createElement("div", {
+    className: "ag-print-cover-rule",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "ag-print-cover-bottom"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-print-cover-sig"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-print-cover-sig-line"
+  }, lang === 'es' ? 'Tu hogar, escrito a mano por' : 'Your home, hand-written by'), /*#__PURE__*/React.createElement("span", {
+    className: "ag-print-cover-sig-name"
+  }, "Alex & Fran")), /*#__PURE__*/React.createElement("div", {
+    className: "ag-print-cover-coord"
+  }, /*#__PURE__*/React.createElement("span", null, "VTF/AL/07056"), /*#__PURE__*/React.createElement("span", null, "www.hestiayourhome.com"))))), /*#__PURE__*/React.createElement("nav", {
+    className: "ag-print-toc print-only",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-print-toc-label"
+  }, lang === 'es' ? 'Índice' : 'Contents'), /*#__PURE__*/React.createElement("h2", {
+    className: "ag-print-toc-title"
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tu Hest\xEDa,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "en once cap\xEDtulos.")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Your Hest\xEDa,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "in eleven chapters."))), /*#__PURE__*/React.createElement("ol", {
+    className: "ag-print-toc-list"
+  }, GUIDE_SECTIONS.map((sec, i) => /*#__PURE__*/React.createElement("li", {
+    key: sec.id
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-print-toc-num"
+  }, String(i + 1).padStart(2, '0')), /*#__PURE__*/React.createElement("span", {
+    className: "ag-print-toc-name"
+  }, sec[lang]), /*#__PURE__*/React.createElement("span", {
+    className: "ag-print-toc-leader",
+    "aria-hidden": "true"
+  })))), /*#__PURE__*/React.createElement("p", {
+    className: "ag-print-toc-foot"
+  }, lang === 'es' ? 'Esta guía cubre todo lo que necesitas saber sobre tu Hestía y los alrededores. Léela con calma — está hecha para acompañarte.' : 'This guide covers everything you need to know about your Hestía and the surroundings. Read it slowly — it is made to accompany you.'))), /*#__PURE__*/React.createElement("div", {
     className: "ag-layout"
   }, /*#__PURE__*/React.createElement("button", {
     className: "ag-nav-toggle no-print",
