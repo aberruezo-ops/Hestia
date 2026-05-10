@@ -24,15 +24,25 @@ const Topbar = ({ lang, setLang }) => (
           info@hestiayourhome.com
         </a>
       </div>
-      <div className="lang">
-        <button className={lang === 'es' ? 'active' : ''} onClick={() => setLang('es')}>
-          <span className="lang-full">🇪🇸 Español</span>
-          <span className="lang-abbr">ES</span>
+      <div className="lang" role="group" aria-label="Language">
+        <button
+          className={lang === 'es' ? 'active' : ''}
+          onClick={() => setLang('es')}
+          aria-pressed={lang === 'es'}
+          aria-label="Español"
+        >
+          <span className="lang-full" aria-hidden="true">🇪🇸 Español</span>
+          <span className="lang-abbr" aria-hidden="true">ES</span>
         </button>
-        <span className="divider">/</span>
-        <button className={lang === 'en' ? 'active' : ''} onClick={() => setLang('en')}>
-          <span className="lang-full">🇬🇧 English</span>
-          <span className="lang-abbr">EN</span>
+        <span className="divider" aria-hidden="true">/</span>
+        <button
+          className={lang === 'en' ? 'active' : ''}
+          onClick={() => setLang('en')}
+          aria-pressed={lang === 'en'}
+          aria-label="English"
+        >
+          <span className="lang-full" aria-hidden="true">🇬🇧 English</span>
+          <span className="lang-abbr" aria-hidden="true">EN</span>
         </button>
       </div>
     </div>

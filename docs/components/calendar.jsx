@@ -222,9 +222,9 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
       <div className="req-guests">
         <span className="req-guests-lbl">{lang === 'es' ? 'Huéspedes' : 'Guests'}</span>
         <div className="req-guests-ctrl">
-          <button className="req-g-btn" onClick={() => setGuests(g => Math.max(1, g - 1))} aria-label="−">−</button>
+          <button className="req-g-btn" onClick={() => setGuests(g => Math.max(1, g - 1))} aria-label={lang === 'es' ? 'Quitar huésped' : 'Remove guest'}>−</button>
           <span className="req-g-num">{guests}</span>
-          <button className="req-g-btn" onClick={() => setGuests(g => Math.min(6, g + 1))} aria-label="+">+</button>
+          <button className="req-g-btn" onClick={() => setGuests(g => Math.min(6, g + 1))} aria-label={lang === 'es' ? 'Añadir huésped' : 'Add guest'}>+</button>
         </div>
         <label className="req-pets-toggle">
           <input type="checkbox" checked={pets} onChange={e => setPets(e.target.checked)}/>
