@@ -10879,3 +10879,66 @@ body.apt-bar-shown .widget-stack {
   text-transform: none;
   line-height: 1;
 }
+
+/* ================================================================
+   VIEW TRANSITIONS · animaciones nativas del navegador (Chrome
+   111+, Safari 18.2+, Firefox 144+). Si el navegador no soporta,
+   los cambios de estado pasan sin animación (degradación natural).
+   ================================================================ */
+
+/* Velocidad base de las cross-fades automáticas */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 320ms;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Galería de fotos: la imagen activa fade entre slides — se
+   marca con view-transition-name único por slide-active. */
+.gc-slide-active img {
+  view-transition-name: gc-active-photo;
+}
+::view-transition-old(gc-active-photo),
+::view-transition-new(gc-active-photo) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Filtros de /opiniones: las cards reordenan con cross-fade más
+   suave, sin nombres específicos por card (sería costoso). El root
+   transition se basta. */
+
+/* Modal de Acceso huéspedes: paso 1 ↔ paso 2 con fade gentle. */
+.ga-modal {
+  view-transition-name: ga-modal;
+}
+::view-transition-old(ga-modal),
+::view-transition-new(ga-modal) {
+  animation-duration: 280ms;
+}
+
+/* Guía Hestía: apt-main hace de contenedor; al abrir/cerrar guía
+   el contenido swap se anima como una "deeper navigation". */
+.apt-main {
+  view-transition-name: apt-main;
+}
+::view-transition-old(apt-main),
+::view-transition-new(apt-main) {
+  animation-duration: 360ms;
+  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Respeto a prefers-reduced-motion: las view transitions siguen
+   funcionando pero más rápidas y sin movimiento amplio. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-old(gc-active-photo),
+  ::view-transition-new(gc-active-photo),
+  ::view-transition-old(ga-modal),
+  ::view-transition-new(ga-modal),
+  ::view-transition-old(apt-main),
+  ::view-transition-new(apt-main) {
+    animation-duration: 80ms;
+  }
+}

@@ -193,7 +193,7 @@ const OpinionesTestimonials = ({ lang }) => {
               role="tab"
               aria-selected={filter === tab.id}
               className={`opiniones-tab${filter === tab.id ? ' is-active' : ''}`}
-              onClick={() => { setFilter(tab.id); setExpanded(false); }}>
+              onClick={() => _vt(() => { setFilter(tab.id); setExpanded(false); })}>
               {lang === 'es' ? tab.es : tab.en}
               <span className="opiniones-tab-count">({counts[tab.id]})</span>
             </button>
