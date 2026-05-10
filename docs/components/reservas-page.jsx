@@ -361,7 +361,7 @@ const ReservasAside = ({ lang }) => {
       <h2 className="reservas-aside-title">{t.aside_title}</h2>
       <div className="reservas-person-card" style={{ '--card-accent': 'var(--sol)' }}>
         <div className="r-avatar">
-          <img src="assets/photo-alex.jpg" alt="Alex Berruezo" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
+          <img src="assets/photo-alex.jpg" alt="Alex Berruezo" width="731" height="1014" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
         </div>
         <div>
           <div className="r-name">Alex Berruezo</div>
@@ -377,7 +377,7 @@ const ReservasAside = ({ lang }) => {
       </div>
       <div className="reservas-person-card" style={{ '--card-accent': 'var(--vt)' }}>
         <div className="r-avatar" style={{ background: 'var(--vt)' }}>
-          <img src="assets/photo-fran.jpg" alt="Fran Moral" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
+          <img src="assets/photo-fran.jpg" alt="Fran Moral" width="925" height="2000" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
         </div>
         <div>
           <div className="r-name">Fran Moral</div>
