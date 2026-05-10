@@ -211,6 +211,7 @@ const Header = ({
     className: "brand-lockup",
     "aria-label": "Hest\xEDa \u2014 Inicio"
   }, /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     src: "assets/logo-teal-transparent.png",
     alt: "Hest\xEDa",
     className: "hestia-logo"
@@ -444,6 +445,7 @@ const Footer = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "col footer-brand"
   }, /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     src: "assets/logo-teal-transparent.png",
     alt: "Hest\xEDa",
     className: "hestia-logo"

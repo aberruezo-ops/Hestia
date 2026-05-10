@@ -174,6 +174,7 @@ const PersonCard = ({
 }, /*#__PURE__*/React.createElement("div", {
   className: "contacto-avatar"
 }, imgSrc ? /*#__PURE__*/React.createElement("img", {
+  decoding: "async",
   src: imgSrc,
   alt: name,
   loading: "lazy",

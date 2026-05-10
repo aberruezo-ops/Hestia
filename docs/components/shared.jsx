@@ -39,7 +39,7 @@ const HestiaLogoMark = ({ size = 40, color = '#3AAABB' }) => (
 
 const WatermarkBadge = ({ size = 34, pos = {} }) => (
   <div className="wm-badge" aria-hidden="true" style={{ bottom: 10, right: 10, ...pos }}>
-    <img src="assets/logo-teal-transparent.png" alt="" width={size} height={size}
+    <img decoding="async" src="assets/logo-teal-transparent.png" alt="" width={size} height={size}
          style={{ display: 'block', opacity: 0.50, filter: 'brightness(0) invert(1)' }}/>
   </div>
 );

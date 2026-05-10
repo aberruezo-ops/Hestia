@@ -1934,7 +1934,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
         {photos.map((p, i) => (
           <figure key={i} className="ag-photo" style={{ '--i': i }}>
             <span className="ag-photo-frame">
-              <img src={p.src} alt={p.caption || ''} loading="lazy" />
+              <img decoding="async" src={p.src} alt={p.caption || ''} loading="lazy" />
               {HasMark && <WatermarkBadge size={28} pos={{ bottom: 10, right: 10 }} />}
             </span>
             {p.caption && <figcaption>{p.caption}</figcaption>}
