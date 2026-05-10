@@ -347,7 +347,10 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
   const minPrice = tbl ? Math.min(...tbl.base.slice(1)) : null;
   return (
     <section className="apt-page-hero" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
-      <img src={apt.hero_img} alt={d.name} className="apt-page-hero-img"/>
+      <picture>
+        <source srcSet={apt.hero_img.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
+        <img src={apt.hero_img} alt={d.name} className="apt-page-hero-img"/>
+      </picture>
       <WatermarkBadge size={40} pos={{ bottom: 16, right: 16 }}/>
       <div className="apt-page-hero-wash"/>
       <div className="apt-page-hero-content">
@@ -549,7 +552,10 @@ const AptPageOthers = ({ apt, lang }) => {
           return (
             <a key={o.id} href={`${o.slug}.html`} className={`apt-other-card ${o.id}`}
                style={{ '--other-accent': o.accent }}>
-              <img src={o.hero_img} alt={d.name} className="apt-other-img" loading="lazy"/>
+              <picture>
+                <source srcSet={o.hero_img.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
+                <img src={o.hero_img} alt={d.name} className="apt-other-img" loading="lazy"/>
+              </picture>
               <WatermarkBadge size={28}/>
               <div className="apt-other-wash"/>
               <div className="apt-other-content">
