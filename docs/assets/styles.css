@@ -10431,3 +10431,119 @@ body.apt-bar-shown .widget-stack {
   .apt-main[data-apt="vt"] .gc-slide:hover img { filter: brightness(1.07) saturate(1.22) contrast(1.05); }
   .apt-main[data-apt="vs"] .gc-slide:hover img { filter: brightness(1.06) saturate(1.18) contrast(1.04); }
 }
+
+/* ── Tabs y filtros de la nueva sección de opiniones ───────────── */
+.opiniones-tt-sub {
+  text-align: center;
+  font-size: 14px;
+  color: var(--ink-soft);
+  max-width: 620px;
+  margin: 14px auto 24px;
+  line-height: 1.5;
+}
+.opiniones-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 16px 0 28px;
+}
+.opiniones-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 12px 0 12px 0;
+  border: 1px solid color-mix(in oklab, var(--ber) 20%, transparent);
+  background: transparent;
+  color: var(--ber);
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease, border-color .25s ease;
+}
+.opiniones-tab:hover {
+  background: color-mix(in oklab, var(--ber) 6%, transparent);
+  border-color: var(--ber);
+}
+.opiniones-tab.is-active {
+  background: var(--ber-dk);
+  color: var(--sol);
+  border-color: var(--ber-dk);
+}
+.opiniones-tab-count {
+  font-size: 10px;
+  opacity: 0.7;
+  letter-spacing: .04em;
+  font-weight: 400;
+}
+.opiniones-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--sol-h);
+  font-weight: 600;
+  margin: 24px 0 14px;
+}
+.osl-star { color: var(--sol); font-size: 14px; }
+.opiniones-empty {
+  text-align: center;
+  font-size: 14px;
+  color: var(--ink-soft);
+  font-style: italic;
+  padding: 40px 0;
+}
+.testimonial-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+.testimonial-source {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--src-color, #3D1A35) 10%, transparent);
+  color: var(--src-color, var(--ber-dk));
+  border: 1px solid color-mix(in oklab, var(--src-color, #3D1A35) 32%, transparent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.opiniones-expand-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+.opiniones-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 12px 0 12px 0;
+  background: var(--ber-dk);
+  color: var(--sol);
+  border: 0;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .25s ease, transform .15s ease;
+}
+.opiniones-expand-btn:hover {
+  background: var(--ber);
+  transform: translateY(-1px);
+}
