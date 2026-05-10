@@ -181,13 +181,13 @@ const RequestPanel = ({
   }, /*#__PURE__*/React.createElement("button", {
     className: "req-g-btn",
     onClick: () => setGuests(g => Math.max(1, g - 1)),
-    "aria-label": "\u2212"
+    "aria-label": lang === 'es' ? 'Quitar huésped' : 'Remove guest'
   }, "\u2212"), /*#__PURE__*/React.createElement("span", {
     className: "req-g-num"
   }, guests), /*#__PURE__*/React.createElement("button", {
     className: "req-g-btn",
     onClick: () => setGuests(g => Math.min(6, g + 1)),
-    "aria-label": "+"
+    "aria-label": lang === 'es' ? 'Añadir huésped' : 'Add guest'
   }, "+")), /*#__PURE__*/React.createElement("label", {
     className: "req-pets-toggle"
   }, /*#__PURE__*/React.createElement("input", {
