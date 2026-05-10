@@ -11059,6 +11059,23 @@ body.apt-bar-shown .widget-stack {
   font-weight: 500;
   margin-top: 2px;
 }
+.eo-required {
+  color: #c0392b;
+  font-weight: 600;
+  margin-left: 2px;
+}
+.eo-input-pin {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 500;
+}
+.eo-input-pin::placeholder {
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--sans);
+  font-weight: 400;
+}
 
 /* Selector de Hestía */
 .eo-apt-grid {

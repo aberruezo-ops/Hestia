@@ -7,6 +7,11 @@
 
 const W3F_KEY = '95a86784-6d6a-496f-9830-15759c0a3cff';
 
+// Mismo PIN que se usa en /mar /thalassa /salinas para desbloquear
+// la descarga de la guía. Friction de UX (no seguridad real), pero
+// asegura que sólo huéspedes que recibieron el PIN pueden opinar.
+const EO_GUIDE_PIN = { vm: 'HVM2016', vt: 'HVT2019', vs: 'HVS2021' };
+
 const ESCRIBIR_COPY = {
   es: {
     eyebrow: 'Comparte tu experiencia',
@@ -16,6 +21,9 @@ const ESCRIBIR_COPY = {
     apt_vm: 'Hestía Mar',
     apt_vt: 'Hestía Thalassa',
     apt_vs: 'Hestía Salinas',
+    pin_label: 'PIN de tu reserva',
+    pin_ph: 'Ej. HVM2016',
+    pin_help: 'El mismo PIN que te dimos para acceder a la guía de tu Hestía. Imprescindible: sin PIN no podemos validar que la opinión es de un huésped real.',
     rating_label: 'Tu valoración',
     name_label: 'Tu nombre o cómo quieres firmar',
     name_ph: 'María G., Familie Müller, James & Sophie…',
@@ -36,6 +44,8 @@ const ESCRIBIR_COPY = {
     val_email: 'Email no válido',
     val_text: 'Escribe al menos 30 caracteres',
     val_apt: 'Selecciona el Hestía donde te alojaste',
+    val_pin: 'Introduce el PIN de tu reserva',
+    val_pin_match: 'PIN incorrecto. Comprueba el que te enviamos para tu Hestía.',
   },
   en: {
     eyebrow: 'Share your experience',
@@ -45,6 +55,9 @@ const ESCRIBIR_COPY = {
     apt_vm: 'Hestía Mar',
     apt_vt: 'Hestía Thalassa',
     apt_vs: 'Hestía Salinas',
+    pin_label: 'Your booking PIN',
+    pin_ph: 'e.g. HVM2016',
+    pin_help: 'The same PIN we gave you to access your Hestía guide. Required: without a PIN we cannot verify the review is from a real guest.',
     rating_label: 'Your rating',
     name_label: 'Your name or how to sign',
     name_ph: 'María G., Familie Müller, James & Sophie…',
@@ -65,6 +78,8 @@ const ESCRIBIR_COPY = {
     val_email: 'Invalid email',
     val_text: 'Write at least 30 characters',
     val_apt: 'Pick the Hestía where you stayed',
+    val_pin: 'Enter your booking PIN',
+    val_pin_match: 'Wrong PIN. Check the one we sent for your Hestía.',
   },
 };
 
@@ -94,6 +109,7 @@ const StarsInput = ({ value, onChange, lang }) => {
 const EscribirOpinionForm = ({ lang }) => {
   const t = ESCRIBIR_COPY[lang];
   const [apt,    setApt]    = React.useState('');
+  const [pin,    setPin]    = React.useState('');
   const [rating, setRating] = React.useState(0);
   const [name,   setName]   = React.useState('');
   const [email,  setEmail]  = React.useState('');
@@ -105,6 +121,12 @@ const EscribirOpinionForm = ({ lang }) => {
   const validate = () => {
     const e = {};
     if (!apt) e.apt = t.val_apt;
+    const pinNorm = pin.trim().toUpperCase();
+    if (!pinNorm) {
+      e.pin = t.val_pin;
+    } else if (apt && EO_GUIDE_PIN[apt] && pinNorm !== EO_GUIDE_PIN[apt]) {
+      e.pin = t.val_pin_match;
+    }
     if (!name.trim()) e.name = t.val_name;
     if (!/\S+@\S+\.\S+/.test(email)) e.email = t.val_email;
     if (text.trim().length < 30) e.text = t.val_text;
@@ -121,10 +143,12 @@ const EscribirOpinionForm = ({ lang }) => {
 
     const fd = new FormData();
     fd.append('access_key', W3F_KEY);
-    fd.append('subject', `Nueva opinión · ${aptName} · ${rating}★ · ${name}`);
+    const pinNorm = pin.trim().toUpperCase();
+    fd.append('subject', `Nueva opinión · ${aptName} · PIN ${pinNorm} ✓ · ${rating}★ · ${name}`);
     fd.append('from_name', name);
     fd.append('replyto', email);
     fd.append('Hestía', aptName);
+    fd.append('PIN guía', pinNorm + ' (verificado client-side)');
     fd.append('Valoración', `${rating}/5`);
     fd.append('Nombre', name);
     fd.append('Email', email);
@@ -181,13 +205,38 @@ const EscribirOpinionForm = ({ lang }) => {
                   type="button"
                   key={id}
                   className={`eo-apt-pick${apt === id ? ' is-on' : ''}`}
-                  onClick={() => { setApt(id); setErrors(e => ({ ...e, apt: undefined })); }}>
+                  onClick={() => { setApt(id); setErrors(e => ({ ...e, apt: undefined, pin: undefined })); }}>
                   <span className="eo-apt-dot" data-apt={id}/>
                   {t[`apt_${id}`]}
                 </button>
               ))}
             </div>
             {errors.apt && <span className="eo-err">{errors.apt}</span>}
+          </div>
+
+          {/* PIN de reserva — imprescindible */}
+          <div className="eo-field">
+            <label className="eo-label" htmlFor="eo-pin">
+              {t.pin_label} <span className="eo-required" aria-hidden="true">*</span>
+            </label>
+            <input
+              id="eo-pin"
+              type="text"
+              inputMode="text"
+              className="eo-input eo-input-pin"
+              value={pin}
+              onChange={e => { setPin(e.target.value); setErrors(er => ({ ...er, pin: undefined })); }}
+              placeholder={t.pin_ph}
+              autoComplete="off"
+              spellCheck={false}
+              maxLength={20}
+              required
+              aria-required="true"
+              aria-invalid={errors.pin ? 'true' : 'false'}
+              aria-describedby="eo-pin-help"
+            />
+            <span id="eo-pin-help" className="eo-help">{t.pin_help}</span>
+            {errors.pin && <span className="eo-err">{errors.pin}</span>}
           </div>
 
           {/* Stars */}
