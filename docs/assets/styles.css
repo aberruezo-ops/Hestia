@@ -11722,7 +11722,31 @@ a:focus-visible,
     border-radius: 10px 0 10px 0 !important;
     box-shadow: none !important;
   }
-  .apt-guide-view[data-apt="vs"] .ag-photo .wm-badge { display: none !important; }
+  /* Marca de agua: visible en print con tinta teal corporativa.
+     Override de los inline-style de WatermarkBadge (filter + opacity)
+     vía !important — necesario porque <img style="..."> gana al CSS
+     a no ser que se eleve. print-color-adjust fuerza al navegador a
+     respetar los colores en la impresión (por defecto Chrome los
+     descarta para ahorrar tinta). */
+  .apt-guide-view[data-apt="vs"] .ag-photo .wm-badge {
+    display: block !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+  .apt-guide-view[data-apt="vs"] .ag-photo .wm-badge img {
+    filter: none !important;
+    opacity: 0.6 !important;
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
+  /* Recs cards y backgrounds en general: forzar colores en print
+     para que la cremita y el border-left ochre no se pierdan. */
+  .apt-guide-view[data-apt="vs"] .ag-recs li,
+  .apt-guide-view[data-apt="vs"] .ag-print-cover,
+  .apt-guide-view[data-apt="vs"] .ag-h2::after {
+    print-color-adjust: exact !important;
+    -webkit-print-color-adjust: exact !important;
+  }
   .apt-guide-view[data-apt="vs"] .ag-photo figcaption {
     font-family: 'Inter', sans-serif !important;
     font-style: normal !important;
