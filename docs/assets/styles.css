@@ -10394,3 +10394,40 @@ body.apt-bar-shown .widget-stack {
               color var(--dur-liquid) var(--ease-liquid);
 }
 .reservas-submit-mail:hover { background: var(--ber); color: var(--crema); }
+
+/* ================================================================
+   PROFESIONALIZACIÓN DE FOTOS INTERIORES POR HESTÍA
+   ================================================================
+   Mismo enfoque sutil que las cards de la home: brightness +
+   saturate + contrast ligeramente elevados para que la luz natural
+   de cada Hestía "respire", sin que parezca un filtro de Instagram.
+   Aplicado a galería principal, plano de planta y miniaturas de
+   "otros Hestías". transition para que el efecto sea suave al
+   cargar la imagen. */
+
+.apt-main[data-apt="vm"] .gc-slide img,
+.apt-main[data-apt="vm"] .apt-fp-img,
+.apt-main[data-apt="vm"] .apt-other-img {
+  filter: brightness(1.04) saturate(1.10) contrast(1.02);
+  transition: filter .6s ease, transform .8s ease;
+}
+.apt-main[data-apt="vt"] .gc-slide img,
+.apt-main[data-apt="vt"] .apt-fp-img,
+.apt-main[data-apt="vt"] .apt-other-img {
+  filter: brightness(1.06) saturate(1.18) contrast(1.04);
+  transition: filter .6s ease, transform .8s ease;
+}
+.apt-main[data-apt="vs"] .gc-slide img,
+.apt-main[data-apt="vs"] .apt-fp-img,
+.apt-main[data-apt="vs"] .apt-other-img {
+  filter: brightness(1.05) saturate(1.14) contrast(1.03);
+  transition: filter .6s ease, transform .8s ease;
+}
+
+/* Sutil "lift" al pasar el cursor sobre una foto de la galería —
+   refuerza la sensación profesional sin ser invasivo. */
+@media (hover: hover) and (pointer: fine) {
+  .apt-main[data-apt="vm"] .gc-slide:hover img { filter: brightness(1.05) saturate(1.14) contrast(1.03); }
+  .apt-main[data-apt="vt"] .gc-slide:hover img { filter: brightness(1.07) saturate(1.22) contrast(1.05); }
+  .apt-main[data-apt="vs"] .gc-slide:hover img { filter: brightness(1.06) saturate(1.18) contrast(1.04); }
+}
