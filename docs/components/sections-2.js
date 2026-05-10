@@ -163,6 +163,7 @@ const Team = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "portrait"
   }, /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     src: "assets/photo-alex.jpg",
     alt: "Alex Berruezo",
     width: "731",
@@ -220,6 +221,7 @@ const Team = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "portrait"
   }, /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     src: "assets/photo-fran.jpg",
     alt: "Fran Moral",
     width: "925",

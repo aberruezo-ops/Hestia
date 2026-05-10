@@ -349,7 +349,7 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
     <section className="apt-page-hero" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
       <picture>
         <source srcSet={apt.hero_img.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
-        <img src={apt.hero_img} alt={d.name} className="apt-page-hero-img"/>
+        <img decoding="async" src={apt.hero_img} alt={d.name} className="apt-page-hero-img"/>
       </picture>
       <WatermarkBadge size={40} pos={{ bottom: 16, right: 16 }}/>
       <div className="apt-page-hero-wash"/>
@@ -477,7 +477,7 @@ const GalleryCarousel = ({ imgs, captions }) => {
                  style={{ transform: `translateX(${(i - cur) * 100}%)` }}>
               <picture>
                 <source srcSet={src.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
-                <img src={src} alt={captions[i]} loading={i === 0 ? 'eager' : 'lazy'}/>
+                <img decoding="async" src={src} alt={captions[i]} loading={i === 0 ? 'eager' : 'lazy'}/>
               </picture>
             </div>
           ))}
@@ -496,7 +496,7 @@ const GalleryCarousel = ({ imgs, captions }) => {
                     aria-label={captions[i]}>
               <picture>
                 <source srcSet={src.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
-                <img src={src} alt="" loading="lazy"/>
+                <img decoding="async" src={src} alt="" loading="lazy"/>
               </picture>
             </button>
           ))}
@@ -508,7 +508,7 @@ const GalleryCarousel = ({ imgs, captions }) => {
           <button className="gc-lb-prev" onClick={e => { e.stopPropagation(); setCur(i => (i - 1 + n) % n); }} aria-label="Anterior">‹</button>
           <picture className="gc-lb-pic">
             <source srcSet={imgs[cur].replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
-            <img className="gc-lb-img" src={imgs[cur]} alt={captions[cur]} onClick={e => e.stopPropagation()}/>
+            <img decoding="async" className="gc-lb-img" src={imgs[cur]} alt={captions[cur]} onClick={e => e.stopPropagation()}/>
           </picture>
           <button className="gc-lb-next" onClick={e => { e.stopPropagation(); setCur(i => (i + 1) % n); }} aria-label="Siguiente">›</button>
           <div className="gc-lb-caption">{captions[cur]}</div>
@@ -563,7 +563,7 @@ const AptPageOthers = ({ apt, lang }) => {
                style={{ '--other-accent': o.accent }}>
               <picture>
                 <source srcSet={o.hero_img.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
-                <img src={o.hero_img} alt={d.name} className="apt-other-img" loading="lazy"/>
+                <img decoding="async" src={o.hero_img} alt={d.name} className="apt-other-img" loading="lazy"/>
               </picture>
               <WatermarkBadge size={28}/>
               <div className="apt-other-wash"/>
@@ -606,7 +606,7 @@ const AptFloorPlan = ({ apt, lang }) => {
             : 'The Thalassa penthouse is laid out as a single open floor: living room, kitchen, two bedrooms, two bathrooms and a panoramic terrace with sea and Salar de los Canos views.'}
         </p>
         <div className="apt-fp-img-wrap reveal">
-          <img
+          <img decoding="async"
             src={apt.floorplan_img}
             alt={lang === 'es' ? `Plano de ${apt[lang].name}` : `Floor plan of ${apt[lang].name}`}
             className="apt-fp-img"

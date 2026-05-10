@@ -132,7 +132,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <NavLink href={NAV_PAGES.porqueHestia}>{t.nav[8]}</NavLink>
         </nav>
         <a href="index.html" className="brand-lockup" aria-label="Hestía — Inicio">
-          <img src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo"/>
+          <img decoding="async" src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo"/>
           <span className="wordmark">HESTÍA</span>
           <span className="your-home">your home!</span>
         </a>
@@ -299,7 +299,7 @@ const Footer = ({ lang }) => {
     <footer>
       <div className="footer-grid">
         <div className="col footer-brand">
-          <img src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo"/>
+          <img decoding="async" src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo"/>
           <div className="wordmark" style={{fontSize: 13, marginBottom: 4}}>HESTÍA</div>
           <div className="your-home" style={{fontSize: 9, marginBottom: 16}}>your home!</div>
           <div className="tagline">

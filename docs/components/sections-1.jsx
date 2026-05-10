@@ -297,7 +297,7 @@ const Apartments = ({ lang }) => {
               <div key={a.id} id={`apt-${a.id}`} className={`apt-card ${a.id}`}>
                 <picture>
                   <source srcSet={a.img.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
-                  <img src={a.img} alt={a.name} className="apt-photo" loading="eager"/>
+                  <img decoding="async" src={a.img} alt={a.name} className="apt-photo" loading="eager"/>
                 </picture>
                 <WatermarkBadge size={32} pos={{ bottom: 72, right: 16 }}/>
                 <div className="apt-wash"/>
