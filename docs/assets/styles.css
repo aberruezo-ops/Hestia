@@ -5395,6 +5395,112 @@ body.no-parallax .g-tile .img { transform: none !important; }
   line-height: 1.65;
 }
 
+/* --- PorqueValores · acrónimo HESTIA --- */
+.pq-valores {
+  padding: 110px var(--page-pad);
+  background: var(--ber-dk);
+  color: var(--arena);
+  position: relative;
+  overflow: hidden;
+}
+.pq-valores::before {
+  content: 'HESTIA';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(220px, 32vw, 460px);
+  letter-spacing: 0.02em;
+  color: var(--sol-h);
+  opacity: 0.04;
+  pointer-events: none;
+  white-space: nowrap;
+  line-height: 1;
+}
+.pq-valores .container {
+  max-width: 1180px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.pq-valores-eyebrow { color: var(--sol-lt); }
+.pq-valores-title {
+  color: var(--arena);
+  font-size: clamp(28px, 3.5vw, 52px);
+  line-height: 1.08;
+  margin: 16px 0 28px;
+}
+.pq-valores-title em { font-style: italic; color: var(--sol-lt); }
+.pq-valores-lede {
+  font-size: clamp(15px, 1.5vw, 17px);
+  color: rgba(240,232,213,.78);
+  line-height: 1.72;
+  max-width: 64ch;
+  margin: 0 0 64px;
+}
+.pq-valores-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px 56px;
+}
+@media (max-width: 980px) {
+  .pq-valores-grid { grid-template-columns: repeat(2, 1fr); gap: 36px 40px; }
+}
+@media (max-width: 600px) {
+  .pq-valores-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+.pq-valor {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 22px;
+  align-items: start;
+  padding-top: 24px;
+  border-top: 1px solid rgba(240,232,213,.14);
+}
+.pq-valor-letter {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(72px, 7vw, 96px);
+  line-height: 0.85;
+  color: var(--sol-h);
+  text-align: left;
+}
+.pq-valor-name {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 400;
+  color: var(--arena);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.pq-valor-desc {
+  font-size: 14.5px;
+  font-weight: 300;
+  color: rgba(240,232,213,.72);
+  line-height: 1.7;
+}
+.pq-valores-closing {
+  margin-top: 72px;
+  text-align: center;
+  font-family: var(--serif);
+  font-size: clamp(20px, 2.4vw, 30px);
+  font-weight: 300;
+  color: var(--arena);
+  letter-spacing: 0.005em;
+  line-height: 1.4;
+  padding-top: 48px;
+  border-top: 1px solid rgba(240,232,213,.18);
+}
+.pq-valores-closing em {
+  font-style: italic;
+  color: var(--sol-lt);
+}
+
 .nos-viajero {
   padding: 96px var(--page-pad);
 }
