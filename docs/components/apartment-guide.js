@@ -2832,6 +2832,67 @@ const DAY_PLANS = [
   tip_es: 'Si vais en jueves, parad a la vuelta en el mercadillo de Vera para comprar producto de Murcia: pimentón, paparajotes, vino del Bullas.',
   tip_en: 'If on Thursday, stop at Vera market on the way back for Murcian produce: paprika, paparajotes, Bullas wine.'
 }, {
+  id: 'plan-almeria-capital',
+  type: 'fullday',
+  audience: 'both',
+  title_es: 'Almería capital · un día completo',
+  title_en: 'Almería city · a full day',
+  start: '9:00',
+  end: '21:30',
+  tags_es: ['ciudad', 'cultura', 'tapas', 'historia'],
+  tags_en: ['city', 'culture', 'tapas', 'history'],
+  steps: [{
+    t: '9:00',
+    es: 'Salida hacia Almería',
+    en: 'Drive to Almería',
+    d_es: '1 h 15 min por la A-7. Aparcamiento en el centro (Obispo Orberá o Plaza Vieja).',
+    d_en: '1 h 15 min on the A-7. Park downtown (Obispo Orberá or Plaza Vieja).'
+  }, {
+    t: '10:30',
+    es: 'Alcazaba',
+    en: 'Alcazaba fortress',
+    d_es: 'La segunda mayor fortaleza musulmana de Al-Ándalus. Tres recintos, vistas al puerto. Entrada gratis para UE.',
+    d_en: 'The second-largest Muslim fortress in Al-Andalus. Three enclosures, harbour views. Free entry for EU citizens.'
+  }, {
+    t: '12:30',
+    es: 'Catedral-fortaleza',
+    en: 'Cathedral-fortress',
+    d_es: 'Catedral renacentista del XVI con aspecto de fortaleza por las incursiones berberiscas. Torre subible.',
+    d_en: '16th-century Renaissance cathedral built like a fortress against Barbary raids. Climbable tower.'
+  }, {
+    t: '13:30',
+    es: 'Tapeo en Plaza Vieja y centro',
+    en: 'Tapas in Plaza Vieja and old town',
+    d_es: 'Tradición almeriense: pides una caña y eliges tapa gratis. Casa Puga, La Mala, El Quinto Toro.',
+    d_en: 'Almería tradition: order a beer, pick a free tapa. Casa Puga, La Mala, El Quinto Toro.'
+  }, {
+    t: '15:30',
+    es: 'Refugios de la Guerra Civil',
+    en: 'Civil War shelters',
+    d_es: '4,5 km subterráneos bajo el Paseo. Visita guiada de 1 h — reserva online en tickets.almeriaculturayocio.es.',
+    d_en: '4.5 km of tunnels under the Paseo. 1 h guided visit — book online at tickets.almeriaculturayocio.es.'
+  }, {
+    t: '17:00',
+    es: 'Cable Inglés y paseo marítimo',
+    en: 'Cable Inglés and seafront',
+    d_es: 'Cargadero de mineral del XIX, hito industrial. Paseo hasta la Playa del Zapillo.',
+    d_en: '19th-century iron ore loader, industrial landmark. Walk down to Playa del Zapillo.'
+  }, {
+    t: '18:30',
+    es: 'Café o helado en Calle de las Tiendas',
+    en: 'Coffee or ice-cream on Calle de las Tiendas',
+    d_es: 'La calle comercial más antigua de la ciudad. Heladería Bornay, Café Colón.',
+    d_en: 'The oldest commercial street in town. Bornay ice-cream parlour, Café Colón.'
+  }, {
+    t: '20:00',
+    es: 'Cena con vistas en el puerto',
+    en: 'Dinner with views at the harbour',
+    d_es: 'Terrace bar o Joseba Añorga (Club de Mar). Pescaíto frito, arroces y atardecer sobre el agua.',
+    d_en: 'Terrace bar or Joseba Añorga (Club de Mar). Fried fish, rice dishes and sunset over the water.'
+  }],
+  tip_es: 'En verano dale la vuelta: tapeo y refugios por la mañana, baño en el Zapillo a media tarde y cena tardía. La luz del atardecer sobre la Alcazaba y la catedral es de las cosas más bonitas de Almería.',
+  tip_en: 'In summer flip it: tapas + shelters in the morning, swim at Zapillo mid-afternoon, late dinner. The evening light on the Alcazaba and cathedral is one of Almería\'s finest sights.'
+}, {
   id: 'plan-nijar-ceramica',
   type: 'fullday',
   audience: 'both',
