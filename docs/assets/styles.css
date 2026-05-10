@@ -3992,6 +3992,14 @@ body.no-parallax .g-tile .img { transform: none !important; }
   align-items: center;
   justify-content: center;
 }
+.gc-lb-pic {
+  /* picture wrapper: deja que el img haga su size; sin layout extra */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 90vw;
+  max-height: 90vh;
+}
 .gc-lb-img {
   max-width: min(90vw, 1200px);
   max-height: 90vh;
