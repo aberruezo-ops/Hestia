@@ -158,13 +158,13 @@ const HomeBookingModal = ({ apt, lang, onClose }) => {
   );
 
   return (
-    <div className="hbm-overlay" onClick={onClose} role="dialog" aria-modal="true">
+    <div className="hbm-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="hbm-apt-title">
       <div className="hbm-card" onClick={e => e.stopPropagation()}>
         <button className="hbm-close" onClick={onClose} aria-label="Cerrar">✕</button>
 
         <div className="hbm-head">
           <div className="hbm-apt-num">{apt.num}</div>
-          <div className="hbm-apt-name">HESTÍA <strong>{apt.name.replace('Hestía ', '')}</strong></div>
+          <div id="hbm-apt-title" className="hbm-apt-name">HESTÍA <strong>{apt.name.replace('Hestía ', '')}</strong></div>
           <p className="hbm-sub">{lang === 'es' ? 'Solicitud de información · sin compromiso' : 'No-commitment enquiry'}</p>
         </div>
 

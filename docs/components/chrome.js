@@ -320,8 +320,11 @@ const FloatingChat = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "bubble-panel",
     role: "dialog",
-    "aria-hidden": !open
-  }, /*#__PURE__*/React.createElement("h4", null, lang === 'es' ? 'Hablemos.' : 'Let\'s talk.'), /*#__PURE__*/React.createElement("p", {
+    "aria-hidden": !open,
+    "aria-labelledby": "float-chat-title"
+  }, /*#__PURE__*/React.createElement("h4", {
+    id: "float-chat-title"
+  }, lang === 'es' ? 'Hablemos.' : 'Let\'s talk.'), /*#__PURE__*/React.createElement("p", {
     className: "small"
   }, lang === 'es' ? 'Te responde una persona. En minutos, no en días.' : 'A real person replies. In minutes, not days.'), /*#__PURE__*/React.createElement("a", {
     className: "contact-row",
