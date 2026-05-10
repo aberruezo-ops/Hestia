@@ -356,7 +356,7 @@ const PorqueLogo = ({
     style: {
       transitionDelay: `${i * 0.12}s`
     }
-  }, /*#__PURE__*/React.createElement("strong", {
+  }, /*#__PURE__*/React.createElement("h3", {
     className: "pls-sym-t"
   }, title), /*#__PURE__*/React.createElement("span", {
     className: "pls-sym-d"

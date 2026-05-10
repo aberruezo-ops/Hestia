@@ -208,10 +208,14 @@ const ContactoPersons = ({
 }) => {
   const t = CONTACTO_COPY[lang];
   return /*#__PURE__*/React.createElement("section", {
-    className: "contacto-persons"
+    className: "contacto-persons",
+    "aria-labelledby": "contacto-persons-h2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
-  }, /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("h2", {
+    id: "contacto-persons-h2",
+    className: "sr-only"
+  }, lang === 'es' ? 'Contacta directamente con Alex y Fran' : 'Contact Alex and Fran directly'), /*#__PURE__*/React.createElement("p", {
     className: "contacto-intro"
   }, t.intro), /*#__PURE__*/React.createElement("div", {
     className: "contacto-persons-grid"
@@ -247,10 +251,14 @@ const ContactoAddress = ({
 }) => {
   const t = CONTACTO_COPY[lang];
   return /*#__PURE__*/React.createElement("section", {
-    className: "contacto-address section-cream"
+    className: "contacto-address section-cream",
+    "aria-labelledby": "contacto-address-h2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h2", {
+    id: "contacto-address-h2",
+    className: "sr-only"
+  }, lang === 'es' ? 'Dirección, licencias y reserva' : 'Address, licences and booking'), /*#__PURE__*/React.createElement("div", {
     className: "contacto-addr-grid"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
