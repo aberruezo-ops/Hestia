@@ -1,12 +1,14 @@
 // ============================================================
 // HESTÍA · ADMIN — /p-edit.html
-// Editor de docs/data/prices.json. Login con GitHub PAT
-// (permiso contents:write sobre el repo). El token vive solo
-// en memoria — nunca en el repo, nunca en localStorage.
+// Editor de docs/data/prices.json + docs/data/reviews.json.
+// Login con GitHub PAT (permiso contents:write sobre el repo).
+// El token vive solo en memoria — nunca en el repo ni localStorage.
+// Tabs: [ Pricing ] [ Reviews ]
 // ============================================================
 
 const REPO   = 'aberruezo-ops/hestia';
-const PATH   = 'docs/data/prices.json';
+const PATH         = 'docs/data/prices.json';
+const REVIEWS_PATH = 'docs/data/reviews.json';
 const BRANCH = 'main';
 const API    = 'https://api.github.com';
 
@@ -399,16 +401,201 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
   );
 };
 
+// ============================================================
+// REVIEWS — modelo + componentes de la pestaña Reviews
+// ============================================================
+const REVIEW_SOURCES = [
+  { id: 'booking', label: 'Booking.com', short: 'Booking', color: '#003B95' },
+  { id: 'airbnb',  label: 'Airbnb',      short: 'Airbnb',  color: '#FF5A5F' },
+  { id: 'google',  label: 'Google',      short: 'Google',  color: '#4285F4' },
+  { id: 'web',     label: 'Web propia',  short: 'Web',     color: '#3D1A35' },
+];
+const REVIEW_APTS = [
+  { id: 'vm', label: 'Hestía Mar' },
+  { id: 'vt', label: 'Hestía Thalassa' },
+  { id: 'vs', label: 'Hestía Salinas' },
+  { id: 'all', label: 'Sin asignar' },
+];
+const newReviewId = (source) => {
+  const prefix = source === 'booking' ? 'bk' : source === 'airbnb' ? 'ab' : source === 'google' ? 'go' : 'wb';
+  return `${prefix}-${Date.now().toString(36)}`;
+};
+const todayIso = () => new Date().toISOString().slice(0, 10);
+
+const ReviewRow = ({ review, onChange, onRemove }) => {
+  const sourceMeta = REVIEW_SOURCES.find(s => s.id === review.source) || REVIEW_SOURCES[3];
+  const isPending = review.status === 'pending';
+  return (
+    <div className={`pe-card pe-rev-row${isPending ? ' pe-rev-pending' : ''}`}>
+      <div className="pe-rev-head">
+        <span className="pe-rev-status" style={{ background: isPending ? '#f59e0b' : '#10b981' }}>
+          {isPending ? 'PENDIENTE' : 'PUBLICADA'}
+        </span>
+        <span className="pe-rev-source-badge" style={{ background: sourceMeta.color, color: '#fff' }}>
+          {sourceMeta.short}
+        </span>
+        <span className="pe-rev-id">{review.id}</span>
+        <button type="button" className="pe-btn pe-btn-ghost pe-btn-sm pe-rev-del" onClick={onRemove}>× Eliminar</button>
+      </div>
+      <div className="pe-rev-grid">
+        <div className="pe-field">
+          <label>Estado</label>
+          <select value={review.status || 'pending'} onChange={e => onChange('status', e.target.value)} className="pe-input">
+            <option value="pending">Pendiente</option>
+            <option value="published">Publicada</option>
+          </select>
+        </div>
+        <div className="pe-field">
+          <label>Fuente</label>
+          <select value={review.source} onChange={e => onChange('source', e.target.value)} className="pe-input">
+            {REVIEW_SOURCES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
+          </select>
+        </div>
+        <div className="pe-field">
+          <label>Hestía</label>
+          <select value={review.apt} onChange={e => onChange('apt', e.target.value)} className="pe-input">
+            {REVIEW_APTS.map(a => <option key={a.id} value={a.id}>{a.label}</option>)}
+          </select>
+        </div>
+        <div className="pe-field">
+          <label>Nombre</label>
+          <input type="text" value={review.name || ''} onChange={e => onChange('name', e.target.value)} className="pe-input"/>
+        </div>
+        <div className="pe-field">
+          <label>País (ISO 2)</label>
+          <input type="text" maxLength={2} value={review.country || ''} onChange={e => onChange('country', e.target.value.toUpperCase())} className="pe-input"/>
+        </div>
+        <div className="pe-field">
+          <label>Fecha</label>
+          <input type="date" value={review.date || ''} onChange={e => onChange('date', e.target.value)} className="pe-input"/>
+        </div>
+        <div className="pe-field">
+          <label>Rating ({review.source === 'booking' ? '/10' : '/5'})</label>
+          <input type="number" min={0} max={review.source === 'booking' ? 10 : 5} step={0.1}
+            value={review.rating} onChange={e => onChange('rating', Number(e.target.value))} className="pe-input"/>
+        </div>
+        <div className="pe-field">
+          <label>Idioma</label>
+          <select value={review.lang || 'es'} onChange={e => onChange('lang', e.target.value)} className="pe-input">
+            <option value="es">ES</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
+      </div>
+      <div className="pe-field" style={{marginTop: 12}}>
+        <label>Texto</label>
+        <textarea rows={3} value={review.text || ''} onChange={e => onChange('text', e.target.value)} className="pe-textarea"/>
+      </div>
+      <div className="pe-field" style={{marginTop: 12, flexDirection:'row', alignItems:'center', gap:8, display:'flex'}}>
+        <input type="checkbox" id={`hl-${review.id}`} checked={!!review.highlight} onChange={e => onChange('highlight', e.target.checked)}/>
+        <label htmlFor={`hl-${review.id}`} style={{cursor:'pointer'}}>
+          ✦ Destacar como "Más relevante" en /opiniones
+        </label>
+      </div>
+    </div>
+  );
+};
+
+const NewReviewForm = ({ onAdd, onCancel }) => {
+  const [source, setSource] = React.useState('web');
+  const [apt, setApt] = React.useState('vm');
+  const [name, setName] = React.useState('');
+  const [country, setCountry] = React.useState('ES');
+  const [date, setDate] = React.useState(todayIso());
+  const [rating, setRating] = React.useState(5);
+  const [lang, setLang] = React.useState('es');
+  const [text, setText] = React.useState('');
+  const [highlight, setHighlight] = React.useState(false);
+
+  const submit = (e) => {
+    e.preventDefault();
+    if (!name.trim() || !text.trim()) return alert('Nombre y texto son obligatorios');
+    onAdd({
+      id: newReviewId(source), source, apt,
+      name: name.trim(), country: country.toUpperCase(),
+      date, rating: Number(rating), lang,
+      text: text.trim(), highlight,
+      status: 'published',
+    });
+  };
+  return (
+    <form onSubmit={submit}>
+      <h3 className="pe-h3">Añadir review nueva</h3>
+      <p className="pe-hint" style={{marginBottom:14}}>
+        Si la review viene del formulario público (vía email Web3Forms), copia los campos aquí.
+        Por defecto se añade como "Publicada".
+      </p>
+      <div className="pe-rev-grid">
+        <div className="pe-field">
+          <label>Fuente</label>
+          <select value={source} onChange={e => setSource(e.target.value)} className="pe-input">
+            {REVIEW_SOURCES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
+          </select>
+        </div>
+        <div className="pe-field">
+          <label>Hestía</label>
+          <select value={apt} onChange={e => setApt(e.target.value)} className="pe-input">
+            {REVIEW_APTS.filter(a => a.id !== 'all').map(a => <option key={a.id} value={a.id}>{a.label}</option>)}
+          </select>
+        </div>
+        <div className="pe-field">
+          <label>Nombre</label>
+          <input type="text" value={name} onChange={e => setName(e.target.value)} className="pe-input" required/>
+        </div>
+        <div className="pe-field">
+          <label>País (ISO 2)</label>
+          <input type="text" maxLength={2} value={country} onChange={e => setCountry(e.target.value.toUpperCase())} className="pe-input"/>
+        </div>
+        <div className="pe-field">
+          <label>Fecha</label>
+          <input type="date" value={date} onChange={e => setDate(e.target.value)} className="pe-input"/>
+        </div>
+        <div className="pe-field">
+          <label>Rating ({source === 'booking' ? '/10' : '/5'})</label>
+          <input type="number" min={0} max={source === 'booking' ? 10 : 5} step={0.1}
+            value={rating} onChange={e => setRating(Number(e.target.value))} className="pe-input"/>
+        </div>
+        <div className="pe-field">
+          <label>Idioma</label>
+          <select value={lang} onChange={e => setLang(e.target.value)} className="pe-input">
+            <option value="es">ES</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
+      </div>
+      <div className="pe-field" style={{marginTop: 12}}>
+        <label>Texto</label>
+        <textarea rows={4} value={text} onChange={e => setText(e.target.value)} className="pe-textarea" required/>
+      </div>
+      <div className="pe-field" style={{marginTop: 12, flexDirection:'row', alignItems:'center', gap:8, display:'flex'}}>
+        <input type="checkbox" id="new-hl" checked={highlight} onChange={e => setHighlight(e.target.checked)}/>
+        <label htmlFor="new-hl" style={{cursor:'pointer'}}>✦ Marcar como "Más relevante"</label>
+      </div>
+      <div className="pe-actions" style={{marginTop:16}}>
+        <button type="submit" className="pe-btn pe-btn-primary">Añadir a la lista</button>
+        <button type="button" onClick={onCancel} className="pe-btn pe-btn-ghost">Cancelar</button>
+        <span className="pe-hint">Recuerda pulsar <strong>"Guardar"</strong> al final para commitear.</span>
+      </div>
+    </form>
+  );
+};
+
 const AdminApp = () => {
   const [phase,    setPhase]    = React.useState('login');
+  const [mode,     setMode]     = React.useState('pricing');  // 'pricing' | 'reviews'
   const [token,    setToken]    = React.useState('');
   const [data,     setData]     = React.useState(null);
   const [sha,      setSha]      = React.useState(null);
+  const [reviewsData, setReviewsData] = React.useState(null);
+  const [reviewsSha,  setReviewsSha]  = React.useState(null);
   const [calJson,  setCalJson]  = React.useState('');
   const [calOk,    setCalOk]    = React.useState(true);
   const [calErr,   setCalErr]   = React.useState('');
   const [error,    setError]    = React.useState(null);
   const [success,  setSuccess]  = React.useState(null);
+  const [showAddReview, setShowAddReview] = React.useState(false);
+  const [filterStatus, setFilterStatus] = React.useState('all');
+  const [filterSource, setFilterSource] = React.useState('all');
 
   const login = async (e) => {
     e.preventDefault();
@@ -419,6 +606,7 @@ const AdminApp = () => {
       if (!t) throw new Error('Token vacío.');
       const ok = await fetch(`${API}/repos/${REPO}`, { headers: apiHeaders(t) });
       if (!ok.ok) throw new Error(`Token inválido o sin acceso al repo (HTTP ${ok.status}).`);
+      // 1) Pricing
       const fr = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, { headers: apiHeaders(t) });
       if (!fr.ok) throw new Error(`No se pudo leer ${PATH} (HTTP ${fr.status}).`);
       const file   = await fr.json();
@@ -431,6 +619,16 @@ const AdminApp = () => {
         bookingHorizon: parsed.bookingHorizon,
       }, null, 2));
       setCalOk(true); setCalErr('');
+      // 2) Reviews (best-effort: no rompe login si falla)
+      try {
+        const fr2 = await fetch(`${API}/repos/${REPO}/contents/${REVIEWS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(t) });
+        if (fr2.ok) {
+          const file2 = await fr2.json();
+          const parsed2 = JSON.parse(b64ToUtf8(file2.content));
+          setReviewsData(parsed2);
+          setReviewsSha(file2.sha);
+        }
+      } catch (_) { /* reviews opcional */ }
       setPhase('ready');
     } catch (err) {
       setError(err.message);
@@ -439,8 +637,68 @@ const AdminApp = () => {
   };
 
   const logout = () => {
-    setToken(''); setData(null); setSha(null); setCalJson(''); setError(null); setSuccess(null);
+    setToken(''); setData(null); setSha(null); setCalJson('');
+    setReviewsData(null); setReviewsSha(null);
+    setError(null); setSuccess(null);
     setPhase('login');
+  };
+
+  // ---- Helpers para reviews ----
+  const updateReview = (id, key, value) => {
+    setReviewsData(prev => {
+      const next = JSON.parse(JSON.stringify(prev));
+      const idx = next.items.findIndex(r => r.id === id);
+      if (idx >= 0) next.items[idx][key] = value;
+      return next;
+    });
+  };
+  const removeReview = (id) => {
+    if (!confirm('¿Eliminar esta review? No se puede deshacer.')) return;
+    setReviewsData(prev => {
+      const next = JSON.parse(JSON.stringify(prev));
+      next.items = next.items.filter(r => r.id !== id);
+      return next;
+    });
+  };
+  const addReview = (newItem) => {
+    setReviewsData(prev => {
+      const next = JSON.parse(JSON.stringify(prev || { items: [] }));
+      next.items = [newItem, ...(next.items || [])];
+      return next;
+    });
+  };
+
+  const saveReviews = async () => {
+    setPhase('saving'); setError(null); setSuccess(null);
+    try {
+      const merged = {
+        ...reviewsData,
+        version: (reviewsData.version || 1),
+        updatedAt: new Date().toISOString(),
+      };
+      const body = JSON.stringify({
+        message: `chore(reviews): update via /p-edit · ${new Date().toISOString().slice(0,16).replace('T',' ')}`,
+        content: utf8ToB64(JSON.stringify(merged, null, 2) + '\n'),
+        sha: reviewsSha,
+        branch: BRANCH,
+      });
+      const r = await fetch(`${API}/repos/${REPO}/contents/${REVIEWS_PATH}`, {
+        method: 'PUT',
+        headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
+        body,
+      });
+      if (!r.ok) {
+        const j = await r.json().catch(() => ({}));
+        throw new Error(`Guardado fallido (HTTP ${r.status}): ${j.message || ''}`);
+      }
+      const result = await r.json();
+      setReviewsSha(result.content.sha);
+      setReviewsData(merged);
+      setSuccess('Reviews guardadas. Pages re-desplegará en ~30 s.');
+      setPhase('ready');
+    } catch (err) {
+      setError(err.message); setPhase('ready');
+    }
   };
 
   const update = (path, value) => {
@@ -550,18 +808,122 @@ const AdminApp = () => {
     return <div className="pe-shell"><div className="pe-card"><p>{phase === 'loading' ? 'Autenticando y cargando…' : 'Guardando…'}</p></div></div>;
   }
 
+  // ---- Reviews — listado y filtros ----
+  const renderReviewsTab = () => {
+    if (!reviewsData) {
+      return (
+        <div className="pe-card">
+          <p className="pe-error">No se pudo cargar <code>{REVIEWS_PATH}</code>. Comprueba que el archivo existe.</p>
+        </div>
+      );
+    }
+    const items = (reviewsData.items || []).slice();
+    items.sort((a, b) => {
+      if (a.status !== b.status) return a.status === 'pending' ? -1 : 1;
+      return (b.date || '').localeCompare(a.date || '');
+    });
+    const filtered = items.filter(r => {
+      if (filterStatus !== 'all' && r.status !== filterStatus) return false;
+      if (filterSource !== 'all' && r.source !== filterSource) return false;
+      return true;
+    });
+    const counts = {
+      all: items.length,
+      pending:   items.filter(r => r.status === 'pending').length,
+      published: items.filter(r => r.status === 'published').length,
+    };
+    return (
+      <>
+        <div className="pe-card">
+          <h2>Reviews · {counts.all} total · <strong>{counts.pending} pendientes</strong></h2>
+          <div className="pe-rev-filters">
+            <div className="pe-rev-filter-group">
+              <span className="pe-rev-flbl">Estado:</span>
+              {[['all','Todas',counts.all], ['pending','Pendientes',counts.pending], ['published','Publicadas',counts.published]].map(([id,lbl,n]) => (
+                <button key={id} type="button"
+                  className={`pe-btn pe-btn-sm${filterStatus === id ? ' pe-btn-primary' : ' pe-btn-ghost'}`}
+                  onClick={() => setFilterStatus(id)}>{lbl} ({n})</button>
+              ))}
+            </div>
+            <div className="pe-rev-filter-group">
+              <span className="pe-rev-flbl">Fuente:</span>
+              <button type="button"
+                className={`pe-btn pe-btn-sm${filterSource === 'all' ? ' pe-btn-primary' : ' pe-btn-ghost'}`}
+                onClick={() => setFilterSource('all')}>Todas</button>
+              {REVIEW_SOURCES.map(s => (
+                <button key={s.id} type="button"
+                  className={`pe-btn pe-btn-sm${filterSource === s.id ? ' pe-btn-primary' : ' pe-btn-ghost'}`}
+                  onClick={() => setFilterSource(s.id)}>{s.short}</button>
+              ))}
+            </div>
+          </div>
+          <button type="button" className="pe-btn pe-btn-primary" style={{marginTop:16}}
+            onClick={() => setShowAddReview(s => !s)}>
+            {showAddReview ? '× Cancelar añadir' : '+ Añadir review nueva'}
+          </button>
+        </div>
+
+        {showAddReview && (
+          <div className="pe-card">
+            <NewReviewForm
+              onAdd={item => { addReview(item); setShowAddReview(false); }}
+              onCancel={() => setShowAddReview(false)}
+            />
+          </div>
+        )}
+
+        {filtered.length === 0 ? (
+          <div className="pe-card"><p className="pe-hint">Sin reviews para este filtro.</p></div>
+        ) : (
+          filtered.map(r => (
+            <ReviewRow key={r.id} review={r}
+              onChange={(key, val) => updateReview(r.id, key, val)}
+              onRemove={() => removeReview(r.id)}/>
+          ))
+        )}
+
+        <div className="pe-actions">
+          <button onClick={saveReviews} className="pe-btn pe-btn-primary">Guardar reviews y desplegar</button>
+          <span className="pe-hint">Commitea a <code>{BRANCH}</code> y GitHub Pages re-despliega solo.</span>
+        </div>
+      </>
+    );
+  };
+
   // phase === 'ready'
   return (
     <div className="pe-shell">
       <div className="pe-topbar">
-        <span>Hestía · Pricing Edit</span>
-        <span className="pe-meta">Última actualización: {data.updatedAt || '—'}</span>
+        <span>Hestía · Admin</span>
+        <span className="pe-meta">
+          {mode === 'pricing' ? `Precios actualizados: ${data.updatedAt || '—'}` :
+           reviewsData ? `${(reviewsData.items || []).length} reviews` : ''}
+        </span>
         <button onClick={logout} className="pe-btn pe-btn-ghost">Cerrar sesión</button>
+      </div>
+
+      <div className="pe-tabs">
+        <button type="button"
+          className={`pe-tab${mode === 'pricing' ? ' is-active' : ''}`}
+          onClick={() => { setMode('pricing'); setError(null); setSuccess(null); }}>
+          💰 Pricing
+        </button>
+        <button type="button"
+          className={`pe-tab${mode === 'reviews' ? ' is-active' : ''}`}
+          onClick={() => { setMode('reviews'); setError(null); setSuccess(null); }}>
+          ⭐ Reviews
+          {reviewsData && (() => {
+            const pending = (reviewsData.items || []).filter(r => r.status === 'pending').length;
+            return pending > 0 ? <span className="pe-tab-badge">{pending}</span> : null;
+          })()}
+        </button>
       </div>
 
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
+      {mode === 'reviews' ? renderReviewsTab() : (
+      <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>
         <div className="pe-grid">
@@ -772,6 +1134,8 @@ const AdminApp = () => {
         </button>
         <span className="pe-hint">El cambio se commitea a <code>{BRANCH}</code> y GitHub Pages re-despliega solo.</span>
       </div>
+      </>
+      )}
     </div>
   );
 };
