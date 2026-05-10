@@ -8,7 +8,10 @@ const RESERVAS_COPY = {
     title: (<>Reserva tu<br/><em>hogar en Vera.</em></>),
     sub: 'Escríbenos directamente. Alex o Fran confirman en menos de 24 horas.',
     form_title: 'Solicitar reserva',
-    form_sub: 'Rellena el formulario y te escribimos por WhatsApp con disponibilidad y precio.',
+    form_sub: 'Tres pasos: dinos qué buscas, te enseñamos disponibilidad y precio, y eliges cómo enviar la solicitud.',
+    step1_title: 'Tu reserva',
+    step2_title: 'Disponibilidad y precio',
+    step3_title: 'Cómo nos lo envías',
     f_apt: 'Hestía',
     f_apt_ph: 'Elige Hestía',
     f_name: 'Nombre completo',
@@ -26,9 +29,29 @@ const RESERVAS_COPY = {
     f_pets_yes: 'Sí',
     f_extras_label: 'Extras (opcional)',
     f_extras: ['Ropa de cama extra', 'Toallas extra', 'Cuna de bebé', 'Silla de bebé'],
-    f_comments: 'Comentarios',
+    f_comments: 'Comentarios (opcional)',
     f_comments_ph: 'Fechas alternativas, preguntas, necesidades especiales…',
-    submit: 'Enviar por WhatsApp →',
+    check_avail: 'Comprobar disponibilidad y precio →',
+    edit_data: 'Cambiar datos',
+    continue_to_send: 'Continuar →',
+    status_avail: 'Disponible para tus fechas',
+    status_taken: 'Ocupado en esas fechas',
+    status_taken_sub: 'Aún así puedes enviarnos la solicitud — te avisamos si se libera o te proponemos alternativas.',
+    status_no_data: 'No tenemos datos en este momento',
+    status_no_data_sub: 'Sin problema — envíanos la solicitud y te confirmamos en menos de 24 h.',
+    channel_label: 'Elige cómo quieres enviarnos la solicitud',
+    channel_wa: 'WhatsApp',
+    channel_wa_desc: 'Necesitamos tu nombre y teléfono.',
+    channel_email: 'Email',
+    channel_email_desc: 'Necesitamos tu nombre y email. Abrirá tu cliente de correo con todo pre-rellenado.',
+    send_wa: 'Enviar por WhatsApp →',
+    send_email: 'Enviar por email →',
+    summary_apt: 'Hestía',
+    summary_dates: 'Fechas',
+    summary_guests: 'Huéspedes',
+    summary_pets: 'Mascota',
+    summary_extras: 'Extras',
+    summary_nights: (n) => `${n} ${n === 1 ? 'noche' : 'noches'}`,
     note: 'Al pulsar se abrirá WhatsApp con tu solicitud. Alex o Fran te responden en menos de 24 horas.',
     aside_title: 'Tu solicitud llega a:',
     guarantee_title: 'Reserva directa',
@@ -45,7 +68,10 @@ const RESERVAS_COPY = {
     title: (<>Book your<br/><em>home in Vera.</em></>),
     sub: 'Write to us directly. Alex or Fran confirm within 24 hours.',
     form_title: 'Request a booking',
-    form_sub: 'Fill in the form and we will message you on WhatsApp with availability and price.',
+    form_sub: 'Three steps: tell us what you need, see availability and price, then choose how to send the request.',
+    step1_title: 'Your booking',
+    step2_title: 'Availability and price',
+    step3_title: 'How to send it',
     f_apt: 'Hestía',
     f_apt_ph: 'Choose a Hestía',
     f_name: 'Full name',
@@ -63,9 +89,29 @@ const RESERVAS_COPY = {
     f_pets_yes: 'Yes',
     f_extras_label: 'Extras (optional)',
     f_extras: ['Extra bed linen', 'Extra towels', 'Baby cot', 'Baby chair'],
-    f_comments: 'Comments',
+    f_comments: 'Comments (optional)',
     f_comments_ph: 'Alternative dates, questions, special needs…',
-    submit: 'Send via WhatsApp →',
+    check_avail: 'Check availability and price →',
+    edit_data: 'Change details',
+    continue_to_send: 'Continue →',
+    status_avail: 'Available for your dates',
+    status_taken: 'Taken on those dates',
+    status_taken_sub: 'You can still send the request — we will let you know if it frees up or suggest alternatives.',
+    status_no_data: 'No data right now',
+    status_no_data_sub: 'No worries — send the request and we will confirm within 24 h.',
+    channel_label: 'Choose how to send your request',
+    channel_wa: 'WhatsApp',
+    channel_wa_desc: 'We need your name and phone.',
+    channel_email: 'Email',
+    channel_email_desc: 'We need your name and email. Will open your mail client with everything pre-filled.',
+    send_wa: 'Send via WhatsApp →',
+    send_email: 'Send by email →',
+    summary_apt: 'Hestía',
+    summary_dates: 'Dates',
+    summary_guests: 'Guests',
+    summary_pets: 'Pet',
+    summary_extras: 'Extras',
+    summary_nights: (n) => `${n} ${n === 1 ? 'night' : 'nights'}`,
     note: 'Clicking will open WhatsApp with your request. Alex or Fran will reply within 24 hours.',
     aside_title: 'Your request goes to:',
     guarantee_title: 'Direct booking',
@@ -164,37 +210,90 @@ const ReservasHero = ({ lang }) => {
   );
 };
 
+// Helper: comprueba si un rango está libre dado un array blocked [{start,end}].
+// Igual semántica que home-search _hsAvail (end exclusivo).
+const _resAvail = (checkin, checkout, blocked) => {
+  if (!blocked) return null;
+  return !blocked.some(r => checkin < r.end && checkout > r.start);
+};
+
 const ReservasForm = ({ lang }) => {
   const t = RESERVAS_COPY[lang];
-  const [apt, setApt] = React.useState('');
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [tel, setTel] = React.useState('');
-  const [checkin, setCheckin] = React.useState('');
+  const aptNames = { vm: 'Hestía Mar', vt: 'Hestía Thalassa', vs: 'Hestía Salinas' };
+
+  // Step 1 — datos que afectan a precio y disponibilidad
+  const [apt, setApt]           = React.useState('');
+  const [checkin, setCheckin]   = React.useState('');
   const [checkout, setCheckout] = React.useState('');
-  const [guests, setGuests] = React.useState('');
-  const [pets, setPets] = React.useState('no');
-  const [extras, setExtras] = React.useState([]);
+  const [guests, setGuests]     = React.useState('');
+  const [pets, setPets]         = React.useState('no');
+  const [extras, setExtras]     = React.useState([]);
+
+  // Step 3 — datos del canal + comentarios
+  const [name, setName]         = React.useState('');
+  const [tel, setTel]           = React.useState('');
+  const [email, setEmail]       = React.useState('');
   const [comments, setComments] = React.useState('');
+
+  // Workflow
+  const [step, setStep]         = React.useState(1);
+  const [channel, setChannel]   = React.useState('whatsapp');
+
+  // Disponibilidad (carga lazy)
+  const [avail, setAvail]       = React.useState(null);
+  const [availLoaded, setAvailLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(j => setAvail(j))
+      .catch(() => {})
+      .finally(() => setAvailLoaded(true));
+  }, []);
 
   const toggleExtra = (i) => {
     setExtras(prev => prev.includes(i) ? prev.filter(x => x !== i) : [...prev, i]);
   };
 
-  const aptNames = { vm: 'Hestía Mar', vt: 'Hestía Thalassa', vs: 'Hestía Salinas' };
-
+  // Validaciones
+  const step1Complete = apt && checkin && checkout && guests && checkin < checkout;
   const hasName  = name.trim().length > 0;
   const hasTel   = tel.replace(/\D/g, '').length >= 6;
   const hasEmail = /\S+@\S+/.test(email);
-  const validWA    = hasName && hasTel;
-  const validEmail = hasName && hasEmail;
+  const channelValid = channel === 'whatsapp' ? (hasName && hasTel) : (hasName && hasEmail);
 
+  // Cálculo
+  const calc = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes') : null;
+  const blocked = avail && avail[apt] ? avail[apt].blocked : null;
+  const isAvailable = step1Complete && availLoaded ? _resAvail(checkin, checkout, blocked) : null;
+
+  // Avanzar pasos
+  const goToStep2 = () => {
+    if (!step1Complete) return;
+    setStep(2);
+    setTimeout(() => {
+      document.getElementById('rf-step-2')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  };
+  const goToStep3 = () => {
+    setStep(3);
+    setTimeout(() => {
+      document.getElementById('rf-step-3')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  };
+  const editStep1 = () => {
+    setStep(1);
+    setTimeout(() => {
+      document.getElementById('rf-step-1')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  };
+
+  // Mensaje a enviar (igual semántica que antes)
   const buildMsg = () => {
     const extrasText = extras.length > 0
       ? '\nExtras: ' + extras.map(i => t.f_extras[i]).join(', ')
       : '';
-    const petsText = pets === 'yes' ? (lang === 'es' ? 'Sí' : 'Yes') : (lang === 'es' ? 'No' : 'No');
-    const calc = _calcStay(checkin, checkout, apt, pets === 'yes');
+    const petsText = pets === 'yes' ? (lang === 'es' ? 'Sí' : 'Yes') : 'No';
     const fmt = n => n.toLocaleString('es-ES') + ' €';
     const priceBlock = calc
       ? (lang === 'es'
@@ -213,143 +312,269 @@ const ReservasForm = ({ lang }) => {
       ? [
           `¡Hola! Quiero hacer una consulta de reserva.\n`,
           `Hestía: ${aptNames[apt] || apt || '—'}`,
-          name  ? `Nombre: ${name}`  : null,
-          email ? `Email: ${email}`  : null,
-          tel   ? `Teléfono: ${tel}` : null,
-          checkin  ? `Entrada: ${checkin}`   : null,
-          checkout ? `Salida: ${checkout}`   : null,
-          guests   ? `Huéspedes: ${guests}`  : null,
+          `Nombre: ${name}`,
+          channel === 'whatsapp' ? `Teléfono: ${tel}` : `Email: ${email}`,
+          `Entrada: ${checkin}`,
+          `Salida: ${checkout}`,
+          `Huéspedes: ${guests}`,
           `Mascota: ${petsText}${extrasText}${priceBlock}`,
           `Comentarios: ${comments || '—'}`,
-        ].filter(Boolean)
+        ]
       : [
           `Hello! I'd like to enquire about a booking.\n`,
           `Hestía: ${aptNames[apt] || apt || '—'}`,
-          name  ? `Name: ${name}`    : null,
-          email ? `Email: ${email}`  : null,
-          tel   ? `Phone: ${tel}`    : null,
-          checkin  ? `Check-in: ${checkin}`   : null,
-          checkout ? `Check-out: ${checkout}` : null,
-          guests   ? `Guests: ${guests}`      : null,
+          `Name: ${name}`,
+          channel === 'whatsapp' ? `Phone: ${tel}` : `Email: ${email}`,
+          `Check-in: ${checkin}`,
+          `Check-out: ${checkout}`,
+          `Guests: ${guests}`,
           `Pet: ${petsText}${extrasText}${priceBlock}`,
           `Comments: ${comments || '—'}`,
-        ].filter(Boolean);
+        ];
     return lines.join('\n');
   };
 
-  const sendWhatsApp = (e) => {
-    e.preventDefault();
-    if (!validWA) return;
-    const waNum = lang === 'es' ? '34620316370' : '34654138251';
-    window.open(`https://wa.me/${waNum}?text=` + encodeURIComponent(buildMsg()), '_blank');
+  const send = (e) => {
+    e?.preventDefault();
+    if (!step1Complete || !channelValid) return;
+    if (channel === 'whatsapp') {
+      const waNum = lang === 'es' ? '34620316370' : '34654138251';
+      window.open(`https://wa.me/${waNum}?text=` + encodeURIComponent(buildMsg()), '_blank');
+    } else {
+      const subj = lang === 'es'
+        ? `Consulta reserva — ${aptNames[apt] || 'Hestía'}`
+        : `Booking enquiry — ${aptNames[apt] || 'Hestía'}`;
+      window.location.href = `mailto:info@hestiayourhome.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(buildMsg())}`;
+    }
   };
-  const sendEmail = (e) => {
-    e.preventDefault();
-    if (!validEmail) return;
-    const subj = lang === 'es'
-      ? `Consulta reserva — ${aptNames[apt] || apt || 'Hestía'}`
-      : `Booking enquiry — ${aptNames[apt] || apt || 'Hestía'}`;
-    window.location.href = `mailto:info@hestiayourhome.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(buildMsg())}`;
-  };
+
+  // Resúmenes para los headers de cada step cuando están plegados
+  const step1Summary = step1Complete ? (
+    <span className="rf-summary-line">
+      <strong>{aptNames[apt]}</strong>
+      {' · '}{checkin} → {checkout}
+      {' · '}{guests}
+      {pets === 'yes' && <> · {lang === 'es' ? '🐾 mascota' : '🐾 pet'}</>}
+      {extras.length > 0 && <> · {extras.length} {lang === 'es' ? 'extras' : 'extras'}</>}
+    </span>
+  ) : null;
+
+  const fmt = n => n.toLocaleString('es-ES') + ' €';
 
   return (
     <div className="reservas-form-wrap">
       <h2 className="reservas-form-title">{t.form_title}</h2>
       <div className="reservas-form-sub">{t.form_sub}</div>
-      <form className="reservas-form" onSubmit={sendWhatsApp}>
-        <div className="form-field full">
-          <label>{t.f_apt}</label>
-          <select value={apt} onChange={e => setApt(e.target.value)} required>
-            <option value="">{t.f_apt_ph}</option>
-            <option value="vm">Hestía Mar</option>
-            <option value="vt">Hestía Thalassa</option>
-            <option value="vs">Hestía Salinas</option>
-          </select>
-        </div>
-        <div className="form-row">
-          <div className="form-field">
-            <label>{t.f_name}</label>
-            <input type="text" placeholder={t.f_name_ph} value={name} onChange={e => setName(e.target.value)} required autoComplete="name"/>
+
+      {/* SECTION 1 — DATOS */}
+      <section
+        id="rf-step-1"
+        className={`rf-step rf-step-1 ${step === 1 ? 'is-open' : 'is-collapsed'}`}
+        aria-current={step === 1 ? 'step' : undefined}
+      >
+        <header className="rf-step-head">
+          <span className="rf-step-num">01</span>
+          <h3 className="rf-step-title">{t.step1_title}</h3>
+          {step > 1 && (
+            <button type="button" className="rf-edit" onClick={editStep1}>
+              <span className="rf-edit-summary">{step1Summary}</span>
+              <span className="rf-edit-action">{t.edit_data}</span>
+            </button>
+          )}
+        </header>
+        {step === 1 && (
+          <div className="rf-step-body">
+            <div className="form-field full">
+              <label>{t.f_apt}</label>
+              <select value={apt} onChange={e => setApt(e.target.value)} required>
+                <option value="">{t.f_apt_ph}</option>
+                <option value="vm">Hestía Mar</option>
+                <option value="vt">Hestía Thalassa</option>
+                <option value="vs">Hestía Salinas</option>
+              </select>
+            </div>
+            <div className="form-row">
+              <div className="form-field">
+                <label>{t.f_checkin}</label>
+                <input type="date" id="res-checkin" value={checkin}
+                  onChange={e => {
+                    setCheckin(e.target.value);
+                    if (e.target.value) setTimeout(() => document.getElementById('res-checkout')?.focus(), 50);
+                  }} required/>
+              </div>
+              <div className="form-field">
+                <label>{t.f_checkout}</label>
+                <input type="date" id="res-checkout" value={checkout}
+                  min={checkin || undefined}
+                  onChange={e => setCheckout(e.target.value)} required/>
+              </div>
+            </div>
+            <div className="form-row">
+              <div className="form-field">
+                <label>{t.f_guests}</label>
+                <select value={guests} onChange={e => setGuests(e.target.value)} required>
+                  <option value="">—</option>
+                  {t.f_guests_opts.map((o, i) => <option key={i} value={o}>{o}</option>)}
+                </select>
+              </div>
+              <div className="form-field">
+                <label>{t.f_pets}</label>
+                <select value={pets} onChange={e => setPets(e.target.value)}>
+                  <option value="no">{t.f_pets_no}</option>
+                  <option value="yes">{t.f_pets_yes}</option>
+                </select>
+              </div>
+            </div>
+            <div className="form-field full">
+              <div className="form-extras-label">{t.f_extras_label}</div>
+              <div className="form-extras-grid">
+                {t.f_extras.map((ex, i) => (
+                  <label key={i} className="form-extra-item">
+                    <input type="checkbox" checked={extras.includes(i)} onChange={() => toggleExtra(i)}/>
+                    {ex}
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div className="rf-step-actions">
+              <button
+                type="button"
+                onClick={goToStep2}
+                className={`btn btn-primary rf-next${!step1Complete ? ' req-btn-dis' : ''}`}
+                aria-disabled={!step1Complete}
+              >
+                {t.check_avail}
+              </button>
+            </div>
           </div>
-          <div className="form-field">
-            <label>{t.f_tel}</label>
-            <input type="tel" placeholder={t.f_tel_ph} value={tel} onChange={e => setTel(e.target.value)} autoComplete="tel"/>
+        )}
+      </section>
+
+      {/* SECTION 2 — DISPONIBILIDAD Y PRECIO */}
+      <section
+        id="rf-step-2"
+        className={`rf-step rf-step-2 ${step >= 2 ? 'is-open' : 'is-locked'} ${step > 2 ? 'is-collapsed' : ''}`}
+        aria-current={step === 2 ? 'step' : undefined}
+      >
+        <header className="rf-step-head">
+          <span className="rf-step-num">02</span>
+          <h3 className="rf-step-title">{t.step2_title}</h3>
+          {step === 1 && <span className="rf-step-locked-note" aria-hidden="true">🔒</span>}
+        </header>
+        {step >= 2 && (
+          <div className="rf-step-body">
+            {/* Status badge */}
+            {isAvailable === true && (
+              <div className="rf-status rf-status-ok">
+                <span className="rf-status-icon" aria-hidden="true">✓</span>
+                <span>{t.status_avail}</span>
+              </div>
+            )}
+            {isAvailable === false && (
+              <div className="rf-status rf-status-taken">
+                <span className="rf-status-icon" aria-hidden="true">×</span>
+                <span className="rf-status-main">{t.status_taken}</span>
+                <span className="rf-status-sub">{t.status_taken_sub}</span>
+              </div>
+            )}
+            {isAvailable === null && availLoaded && (
+              <div className="rf-status rf-status-unknown">
+                <span className="rf-status-icon" aria-hidden="true">·</span>
+                <span className="rf-status-main">{t.status_no_data}</span>
+                <span className="rf-status-sub">{t.status_no_data_sub}</span>
+              </div>
+            )}
+
+            {/* Price */}
+            {calc && (
+              <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} lang={lang}/>
+            )}
+
+            {step === 2 && (
+              <div className="rf-step-actions">
+                <button type="button" className="btn btn-primary rf-next" onClick={goToStep3}>
+                  {t.continue_to_send}
+                </button>
+              </div>
+            )}
           </div>
-        </div>
-        <div className="form-field full">
-          <label>{t.f_email}</label>
-          <input type="email" placeholder={t.f_email_ph} value={email} onChange={e => setEmail(e.target.value)} required autoComplete="email"/>
-        </div>
-        <div className="form-row">
-          <div className="form-field">
-            <label>{t.f_checkin}</label>
-            <input type="date" id="res-checkin" value={checkin}
-              onChange={e => {
-                setCheckin(e.target.value);
-                if (e.target.value) setTimeout(() => document.getElementById('res-checkout')?.focus(), 50);
-              }} required/>
+        )}
+      </section>
+
+      {/* SECTION 3 — CANAL */}
+      <section
+        id="rf-step-3"
+        className={`rf-step rf-step-3 ${step >= 3 ? 'is-open' : 'is-locked'}`}
+        aria-current={step === 3 ? 'step' : undefined}
+      >
+        <header className="rf-step-head">
+          <span className="rf-step-num">03</span>
+          <h3 className="rf-step-title">{t.step3_title}</h3>
+          {step < 3 && <span className="rf-step-locked-note" aria-hidden="true">🔒</span>}
+        </header>
+        {step >= 3 && (
+          <div className="rf-step-body">
+            <div className="rf-channel-label">{t.channel_label}</div>
+            <div className="rf-channels" role="tablist">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={channel === 'whatsapp'}
+                className={`rf-channel ${channel === 'whatsapp' ? 'is-active' : ''}`}
+                onClick={() => setChannel('whatsapp')}
+              >
+                <span className="rf-channel-name">{t.channel_wa}</span>
+                <span className="rf-channel-desc">{t.channel_wa_desc}</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={channel === 'email'}
+                className={`rf-channel ${channel === 'email' ? 'is-active' : ''}`}
+                onClick={() => setChannel('email')}
+              >
+                <span className="rf-channel-name">{t.channel_email}</span>
+                <span className="rf-channel-desc">{t.channel_email_desc}</span>
+              </button>
+            </div>
+
+            <form className="reservas-form rf-channel-form" onSubmit={send}>
+              <div className="form-field full">
+                <label>{t.f_name}</label>
+                <input type="text" placeholder={t.f_name_ph} value={name}
+                  onChange={e => setName(e.target.value)} required autoComplete="name"/>
+              </div>
+              {channel === 'whatsapp' ? (
+                <div className="form-field full">
+                  <label>{t.f_tel}</label>
+                  <input type="tel" placeholder={t.f_tel_ph} value={tel}
+                    onChange={e => setTel(e.target.value)} required autoComplete="tel"/>
+                </div>
+              ) : (
+                <div className="form-field full">
+                  <label>{t.f_email}</label>
+                  <input type="email" placeholder={t.f_email_ph} value={email}
+                    onChange={e => setEmail(e.target.value)} required autoComplete="email"/>
+                </div>
+              )}
+              <div className="form-field full">
+                <label>{t.f_comments}</label>
+                <textarea placeholder={t.f_comments_ph} value={comments}
+                  onChange={e => setComments(e.target.value)}/>
+              </div>
+              <div className="rf-step-actions">
+                <button
+                  type="submit"
+                  className={`btn btn-primary reservas-submit${!channelValid ? ' req-btn-dis' : ''}`}
+                  aria-disabled={!channelValid}
+                >
+                  {channel === 'whatsapp' ? t.send_wa : t.send_email}
+                </button>
+              </div>
+            </form>
           </div>
-          <div className="form-field">
-            <label>{t.f_checkout}</label>
-            <input type="date" id="res-checkout" value={checkout}
-              min={checkin || undefined}
-              onChange={e => setCheckout(e.target.value)} required/>
-          </div>
-        </div>
-        <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} lang={lang}/>
-        <div className="form-row">
-          <div className="form-field">
-            <label>{t.f_guests}</label>
-            <select value={guests} onChange={e => setGuests(e.target.value)} required>
-              <option value="">—</option>
-              {t.f_guests_opts.map((o, i) => <option key={i} value={o}>{o}</option>)}
-            </select>
-          </div>
-          <div className="form-field">
-            <label>{t.f_pets}</label>
-            <select value={pets} onChange={e => setPets(e.target.value)}>
-              <option value="no">{t.f_pets_no}</option>
-              <option value="yes">{t.f_pets_yes}</option>
-            </select>
-          </div>
-        </div>
-        <div className="form-field full">
-          <div className="form-extras-label">{t.f_extras_label}</div>
-          <div className="form-extras-grid">
-            {t.f_extras.map((ex, i) => (
-              <label key={i} className="form-extra-item">
-                <input type="checkbox" checked={extras.includes(i)} onChange={() => toggleExtra(i)}/>
-                {ex}
-              </label>
-            ))}
-          </div>
-        </div>
-        <div className="form-field full">
-          <label>{t.f_comments}</label>
-          <textarea placeholder={t.f_comments_ph} value={comments} onChange={e => setComments(e.target.value)}/>
-        </div>
-        <div className="reservas-actions">
-          <button
-            type="button"
-            onClick={sendWhatsApp}
-            className={`btn btn-primary reservas-submit${!validWA ? ' req-btn-dis' : ''}`}
-            aria-disabled={!validWA}
-            title={!validWA ? (lang === 'es' ? 'Necesitas nombre y teléfono' : 'Name and phone required') : undefined}>
-            {lang === 'es' ? 'Enviar por WhatsApp →' : 'Send via WhatsApp →'}
-          </button>
-          <button
-            type="button"
-            onClick={sendEmail}
-            className={`btn btn-ghost-dark reservas-submit-mail${!validEmail ? ' req-btn-dis' : ''}`}
-            aria-disabled={!validEmail}
-            title={!validEmail ? (lang === 'es' ? 'Necesitas nombre y email' : 'Name and email required') : undefined}>
-            {lang === 'es' ? 'Enviar por email' : 'Send by email'}
-          </button>
-        </div>
-        <p className="reservas-note">{lang === 'es'
-          ? 'Habilitamos WhatsApp con teléfono y email con email. Alex o Fran te responden en menos de 24 h.'
-          : 'WhatsApp enables with phone, email with email. Alex or Fran reply within 24 h.'}</p>
-      </form>
+        )}
+      </section>
     </div>
   );
 };
