@@ -10,7 +10,10 @@ const RESERVAS_COPY = {
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Reserva tu", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "hogar en Vera.")),
     sub: 'Escríbenos directamente. Alex o Fran confirman en menos de 24 horas.',
     form_title: 'Solicitar reserva',
-    form_sub: 'Rellena el formulario y te escribimos por WhatsApp con disponibilidad y precio.',
+    form_sub: 'Tres pasos: dinos qué buscas, te enseñamos disponibilidad y precio, y eliges cómo enviar la solicitud.',
+    step1_title: 'Tu reserva',
+    step2_title: 'Disponibilidad y precio',
+    step3_title: 'Cómo nos lo envías',
     f_apt: 'Hestía',
     f_apt_ph: 'Elige Hestía',
     f_name: 'Nombre completo',
@@ -28,9 +31,29 @@ const RESERVAS_COPY = {
     f_pets_yes: 'Sí',
     f_extras_label: 'Extras (opcional)',
     f_extras: ['Ropa de cama extra', 'Toallas extra', 'Cuna de bebé', 'Silla de bebé'],
-    f_comments: 'Comentarios',
+    f_comments: 'Comentarios (opcional)',
     f_comments_ph: 'Fechas alternativas, preguntas, necesidades especiales…',
-    submit: 'Enviar por WhatsApp →',
+    check_avail: 'Comprobar disponibilidad y precio →',
+    edit_data: 'Cambiar datos',
+    continue_to_send: 'Continuar →',
+    status_avail: 'Disponible para tus fechas',
+    status_taken: 'Ocupado en esas fechas',
+    status_taken_sub: 'Aún así puedes enviarnos la solicitud — te avisamos si se libera o te proponemos alternativas.',
+    status_no_data: 'No tenemos datos en este momento',
+    status_no_data_sub: 'Sin problema — envíanos la solicitud y te confirmamos en menos de 24 h.',
+    channel_label: 'Elige cómo quieres enviarnos la solicitud',
+    channel_wa: 'WhatsApp',
+    channel_wa_desc: 'Necesitamos tu nombre y teléfono.',
+    channel_email: 'Email',
+    channel_email_desc: 'Necesitamos tu nombre y email. Abrirá tu cliente de correo con todo pre-rellenado.',
+    send_wa: 'Enviar por WhatsApp →',
+    send_email: 'Enviar por email →',
+    summary_apt: 'Hestía',
+    summary_dates: 'Fechas',
+    summary_guests: 'Huéspedes',
+    summary_pets: 'Mascota',
+    summary_extras: 'Extras',
+    summary_nights: n => `${n} ${n === 1 ? 'noche' : 'noches'}`,
     note: 'Al pulsar se abrirá WhatsApp con tu solicitud. Alex o Fran te responden en menos de 24 horas.',
     aside_title: 'Tu solicitud llega a:',
     guarantee_title: 'Reserva directa',
@@ -41,7 +64,10 @@ const RESERVAS_COPY = {
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Book your", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "home in Vera.")),
     sub: 'Write to us directly. Alex or Fran confirm within 24 hours.',
     form_title: 'Request a booking',
-    form_sub: 'Fill in the form and we will message you on WhatsApp with availability and price.',
+    form_sub: 'Three steps: tell us what you need, see availability and price, then choose how to send the request.',
+    step1_title: 'Your booking',
+    step2_title: 'Availability and price',
+    step3_title: 'How to send it',
     f_apt: 'Hestía',
     f_apt_ph: 'Choose a Hestía',
     f_name: 'Full name',
@@ -59,9 +85,29 @@ const RESERVAS_COPY = {
     f_pets_yes: 'Yes',
     f_extras_label: 'Extras (optional)',
     f_extras: ['Extra bed linen', 'Extra towels', 'Baby cot', 'Baby chair'],
-    f_comments: 'Comments',
+    f_comments: 'Comments (optional)',
     f_comments_ph: 'Alternative dates, questions, special needs…',
-    submit: 'Send via WhatsApp →',
+    check_avail: 'Check availability and price →',
+    edit_data: 'Change details',
+    continue_to_send: 'Continue →',
+    status_avail: 'Available for your dates',
+    status_taken: 'Taken on those dates',
+    status_taken_sub: 'You can still send the request — we will let you know if it frees up or suggest alternatives.',
+    status_no_data: 'No data right now',
+    status_no_data_sub: 'No worries — send the request and we will confirm within 24 h.',
+    channel_label: 'Choose how to send your request',
+    channel_wa: 'WhatsApp',
+    channel_wa_desc: 'We need your name and phone.',
+    channel_email: 'Email',
+    channel_email_desc: 'We need your name and email. Will open your mail client with everything pre-filled.',
+    send_wa: 'Send via WhatsApp →',
+    send_email: 'Send by email →',
+    summary_apt: 'Hestía',
+    summary_dates: 'Dates',
+    summary_guests: 'Guests',
+    summary_pets: 'Pet',
+    summary_extras: 'Extras',
+    summary_nights: n => `${n} ${n === 1 ? 'night' : 'nights'}`,
     note: 'Clicking will open WhatsApp with your request. Alex or Fran will reply within 24 hours.',
     aside_title: 'Your request goes to:',
     guarantee_title: 'Direct booking',
@@ -159,63 +205,147 @@ const ReservasHero = ({
     className: "page-hero-sub"
   }, t.sub)));
 };
+
+// Helper: comprueba si un rango está libre dado un array blocked [{start,end}].
+// Igual semántica que home-search _hsAvail (end exclusivo).
+const _resAvail = (checkin, checkout, blocked) => {
+  if (!blocked) return null;
+  return !blocked.some(r => checkin < r.end && checkout > r.start);
+};
 const ReservasForm = ({
   lang
 }) => {
   const t = RESERVAS_COPY[lang];
-  const [apt, setApt] = React.useState('');
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [tel, setTel] = React.useState('');
-  const [checkin, setCheckin] = React.useState('');
-  const [checkout, setCheckout] = React.useState('');
-  const [guests, setGuests] = React.useState('');
-  const [pets, setPets] = React.useState('no');
-  const [extras, setExtras] = React.useState([]);
-  const [comments, setComments] = React.useState('');
-  const toggleExtra = i => {
-    setExtras(prev => prev.includes(i) ? prev.filter(x => x !== i) : [...prev, i]);
-  };
   const aptNames = {
     vm: 'Hestía Mar',
     vt: 'Hestía Thalassa',
     vs: 'Hestía Salinas'
   };
+
+  // Step 1 — datos que afectan a precio y disponibilidad
+  const [apt, setApt] = React.useState('');
+  const [checkin, setCheckin] = React.useState('');
+  const [checkout, setCheckout] = React.useState('');
+  const [guests, setGuests] = React.useState('');
+  const [pets, setPets] = React.useState('no');
+  const [extras, setExtras] = React.useState([]);
+
+  // Step 3 — datos del canal + comentarios
+  const [name, setName] = React.useState('');
+  const [tel, setTel] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [comments, setComments] = React.useState('');
+
+  // Workflow
+  const [step, setStep] = React.useState(1);
+  const [channel, setChannel] = React.useState('whatsapp');
+
+  // Disponibilidad (carga lazy)
+  const [avail, setAvail] = React.useState(null);
+  const [availLoaded, setAvailLoaded] = React.useState(false);
+  React.useEffect(() => {
+    fetch('assets/availability.json?t=' + Date.now(), {
+      cache: 'no-store'
+    }).then(r => r.ok ? r.json() : null).then(j => setAvail(j)).catch(() => {}).finally(() => setAvailLoaded(true));
+  }, []);
+  const toggleExtra = i => {
+    setExtras(prev => prev.includes(i) ? prev.filter(x => x !== i) : [...prev, i]);
+  };
+
+  // Validaciones
+  const step1Complete = apt && checkin && checkout && guests && checkin < checkout;
   const hasName = name.trim().length > 0;
   const hasTel = tel.replace(/\D/g, '').length >= 6;
   const hasEmail = /\S+@\S+/.test(email);
-  const validWA = hasName && hasTel;
-  const validEmail = hasName && hasEmail;
+  const channelValid = channel === 'whatsapp' ? hasName && hasTel : hasName && hasEmail;
+
+  // Cálculo
+  const calc = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes') : null;
+  const blocked = avail && avail[apt] ? avail[apt].blocked : null;
+  const isAvailable = step1Complete && availLoaded ? _resAvail(checkin, checkout, blocked) : null;
+
+  // Avanzar pasos
+  const goToStep2 = () => {
+    if (!step1Complete) return;
+    setStep(2);
+    setTimeout(() => {
+      document.getElementById('rf-step-2')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 60);
+  };
+  const goToStep3 = () => {
+    setStep(3);
+    setTimeout(() => {
+      document.getElementById('rf-step-3')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 60);
+  };
+  const editStep1 = () => {
+    setStep(1);
+    setTimeout(() => {
+      document.getElementById('rf-step-1')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }, 60);
+  };
+
+  // Mensaje a enviar (igual semántica que antes)
   const buildMsg = () => {
     const extrasText = extras.length > 0 ? '\nExtras: ' + extras.map(i => t.f_extras[i]).join(', ') : '';
-    const petsText = pets === 'yes' ? lang === 'es' ? 'Sí' : 'Yes' : lang === 'es' ? 'No' : 'No';
-    const calc = _calcStay(checkin, checkout, apt, pets === 'yes');
+    const petsText = pets === 'yes' ? lang === 'es' ? 'Sí' : 'Yes' : 'No';
     const fmt = n => n.toLocaleString('es-ES') + ' €';
     const priceBlock = calc ? lang === 'es' ? `\n💰 PRECIO ESTIMADO DIRECTO\n` + `   ${fmt(calc.directTotal)} total (${calc.nights} noches × ~${fmt(calc.avgPerNight)}/noche)\n` + (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${PET_SUPP_FLAT}€ tarifa plana)\n` : '') + `   ✓ Mejor precio garantizado · si encuentras un precio mejor, te lo mejoramos\n` : `\n💰 ESTIMATED DIRECT PRICE\n` + `   ${fmt(calc.directTotal)} total (${calc.nights} nights × ~${fmt(calc.avgPerNight)}/night)\n` + (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${PET_SUPP_FLAT}€ flat fee)\n` : '') + `   ✓ Best price guarantee · if you find a better price, we'll beat it\n` : '';
-    const lines = lang === 'es' ? [`¡Hola! Quiero hacer una consulta de reserva.\n`, `Hestía: ${aptNames[apt] || apt || '—'}`, name ? `Nombre: ${name}` : null, email ? `Email: ${email}` : null, tel ? `Teléfono: ${tel}` : null, checkin ? `Entrada: ${checkin}` : null, checkout ? `Salida: ${checkout}` : null, guests ? `Huéspedes: ${guests}` : null, `Mascota: ${petsText}${extrasText}${priceBlock}`, `Comentarios: ${comments || '—'}`].filter(Boolean) : [`Hello! I'd like to enquire about a booking.\n`, `Hestía: ${aptNames[apt] || apt || '—'}`, name ? `Name: ${name}` : null, email ? `Email: ${email}` : null, tel ? `Phone: ${tel}` : null, checkin ? `Check-in: ${checkin}` : null, checkout ? `Check-out: ${checkout}` : null, guests ? `Guests: ${guests}` : null, `Pet: ${petsText}${extrasText}${priceBlock}`, `Comments: ${comments || '—'}`].filter(Boolean);
+    const lines = lang === 'es' ? [`¡Hola! Quiero hacer una consulta de reserva.\n`, `Hestía: ${aptNames[apt] || apt || '—'}`, `Nombre: ${name}`, channel === 'whatsapp' ? `Teléfono: ${tel}` : `Email: ${email}`, `Entrada: ${checkin}`, `Salida: ${checkout}`, `Huéspedes: ${guests}`, `Mascota: ${petsText}${extrasText}${priceBlock}`, `Comentarios: ${comments || '—'}`] : [`Hello! I'd like to enquire about a booking.\n`, `Hestía: ${aptNames[apt] || apt || '—'}`, `Name: ${name}`, channel === 'whatsapp' ? `Phone: ${tel}` : `Email: ${email}`, `Check-in: ${checkin}`, `Check-out: ${checkout}`, `Guests: ${guests}`, `Pet: ${petsText}${extrasText}${priceBlock}`, `Comments: ${comments || '—'}`];
     return lines.join('\n');
   };
-  const sendWhatsApp = e => {
-    e.preventDefault();
-    if (!validWA) return;
-    const waNum = lang === 'es' ? '34620316370' : '34654138251';
-    window.open(`https://wa.me/${waNum}?text=` + encodeURIComponent(buildMsg()), '_blank');
+  const send = e => {
+    e?.preventDefault();
+    if (!step1Complete || !channelValid) return;
+    if (channel === 'whatsapp') {
+      const waNum = lang === 'es' ? '34620316370' : '34654138251';
+      window.open(`https://wa.me/${waNum}?text=` + encodeURIComponent(buildMsg()), '_blank');
+    } else {
+      const subj = lang === 'es' ? `Consulta reserva — ${aptNames[apt] || 'Hestía'}` : `Booking enquiry — ${aptNames[apt] || 'Hestía'}`;
+      window.location.href = `mailto:info@hestiayourhome.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(buildMsg())}`;
+    }
   };
-  const sendEmail = e => {
-    e.preventDefault();
-    if (!validEmail) return;
-    const subj = lang === 'es' ? `Consulta reserva — ${aptNames[apt] || apt || 'Hestía'}` : `Booking enquiry — ${aptNames[apt] || apt || 'Hestía'}`;
-    window.location.href = `mailto:info@hestiayourhome.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(buildMsg())}`;
-  };
+
+  // Resúmenes para los headers de cada step cuando están plegados
+  const step1Summary = step1Complete ? /*#__PURE__*/React.createElement("span", {
+    className: "rf-summary-line"
+  }, /*#__PURE__*/React.createElement("strong", null, aptNames[apt]), ' · ', checkin, " \u2192 ", checkout, ' · ', guests, pets === 'yes' && /*#__PURE__*/React.createElement(React.Fragment, null, " \xB7 ", lang === 'es' ? '🐾 mascota' : '🐾 pet'), extras.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, " \xB7 ", extras.length, " ", lang === 'es' ? 'extras' : 'extras')) : null;
+  const fmt = n => n.toLocaleString('es-ES') + ' €';
   return /*#__PURE__*/React.createElement("div", {
     className: "reservas-form-wrap"
   }, /*#__PURE__*/React.createElement("h2", {
     className: "reservas-form-title"
   }, t.form_title), /*#__PURE__*/React.createElement("div", {
     className: "reservas-form-sub"
-  }, t.form_sub), /*#__PURE__*/React.createElement("form", {
-    className: "reservas-form",
-    onSubmit: sendWhatsApp
+  }, t.form_sub), /*#__PURE__*/React.createElement("section", {
+    id: "rf-step-1",
+    className: `rf-step rf-step-1 ${step === 1 ? 'is-open' : 'is-collapsed'}`,
+    "aria-current": step === 1 ? 'step' : undefined
+  }, /*#__PURE__*/React.createElement("header", {
+    className: "rf-step-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-step-num"
+  }, "01"), /*#__PURE__*/React.createElement("h3", {
+    className: "rf-step-title"
+  }, t.step1_title), step > 1 && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "rf-edit",
+    onClick: editStep1
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-edit-summary"
+  }, step1Summary), /*#__PURE__*/React.createElement("span", {
+    className: "rf-edit-action"
+  }, t.edit_data))), step === 1 && /*#__PURE__*/React.createElement("div", {
+    className: "rf-step-body"
   }, /*#__PURE__*/React.createElement("div", {
     className: "form-field full"
   }, /*#__PURE__*/React.createElement("label", null, t.f_apt), /*#__PURE__*/React.createElement("select", {
@@ -231,34 +361,6 @@ const ReservasForm = ({
   }, "Hest\xEDa Thalassa"), /*#__PURE__*/React.createElement("option", {
     value: "vs"
   }, "Hest\xEDa Salinas"))), /*#__PURE__*/React.createElement("div", {
-    className: "form-row"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "form-field"
-  }, /*#__PURE__*/React.createElement("label", null, t.f_name), /*#__PURE__*/React.createElement("input", {
-    type: "text",
-    placeholder: t.f_name_ph,
-    value: name,
-    onChange: e => setName(e.target.value),
-    required: true,
-    autoComplete: "name"
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "form-field"
-  }, /*#__PURE__*/React.createElement("label", null, t.f_tel), /*#__PURE__*/React.createElement("input", {
-    type: "tel",
-    placeholder: t.f_tel_ph,
-    value: tel,
-    onChange: e => setTel(e.target.value),
-    autoComplete: "tel"
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "form-field full"
-  }, /*#__PURE__*/React.createElement("label", null, t.f_email), /*#__PURE__*/React.createElement("input", {
-    type: "email",
-    placeholder: t.f_email_ph,
-    value: email,
-    onChange: e => setEmail(e.target.value),
-    required: true,
-    autoComplete: "email"
-  })), /*#__PURE__*/React.createElement("div", {
     className: "form-row"
   }, /*#__PURE__*/React.createElement("div", {
     className: "form-field"
@@ -280,13 +382,7 @@ const ReservasForm = ({
     min: checkin || undefined,
     onChange: e => setCheckout(e.target.value),
     required: true
-  }))), /*#__PURE__*/React.createElement(PricePreview, {
-    apt: apt,
-    checkin: checkin,
-    checkout: checkout,
-    pets: pets,
-    lang: lang
-  }), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "form-row"
   }, /*#__PURE__*/React.createElement("div", {
     className: "form-field"
@@ -322,28 +418,145 @@ const ReservasForm = ({
     checked: extras.includes(i),
     onChange: () => toggleExtra(i)
   }), ex)))), /*#__PURE__*/React.createElement("div", {
+    className: "rf-step-actions"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: goToStep2,
+    className: `btn btn-primary rf-next${!step1Complete ? ' req-btn-dis' : ''}`,
+    "aria-disabled": !step1Complete
+  }, t.check_avail)))), /*#__PURE__*/React.createElement("section", {
+    id: "rf-step-2",
+    className: `rf-step rf-step-2 ${step >= 2 ? 'is-open' : 'is-locked'} ${step > 2 ? 'is-collapsed' : ''}`,
+    "aria-current": step === 2 ? 'step' : undefined
+  }, /*#__PURE__*/React.createElement("header", {
+    className: "rf-step-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-step-num"
+  }, "02"), /*#__PURE__*/React.createElement("h3", {
+    className: "rf-step-title"
+  }, t.step2_title), step === 1 && /*#__PURE__*/React.createElement("span", {
+    className: "rf-step-locked-note",
+    "aria-hidden": "true"
+  }, "\uD83D\uDD12")), step >= 2 && /*#__PURE__*/React.createElement("div", {
+    className: "rf-step-body"
+  }, isAvailable === true && /*#__PURE__*/React.createElement("div", {
+    className: "rf-status rf-status-ok"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-status-icon",
+    "aria-hidden": "true"
+  }, "\u2713"), /*#__PURE__*/React.createElement("span", null, t.status_avail)), isAvailable === false && /*#__PURE__*/React.createElement("div", {
+    className: "rf-status rf-status-taken"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-status-icon",
+    "aria-hidden": "true"
+  }, "\xD7"), /*#__PURE__*/React.createElement("span", {
+    className: "rf-status-main"
+  }, t.status_taken), /*#__PURE__*/React.createElement("span", {
+    className: "rf-status-sub"
+  }, t.status_taken_sub)), isAvailable === null && availLoaded && /*#__PURE__*/React.createElement("div", {
+    className: "rf-status rf-status-unknown"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-status-icon",
+    "aria-hidden": "true"
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+    className: "rf-status-main"
+  }, t.status_no_data), /*#__PURE__*/React.createElement("span", {
+    className: "rf-status-sub"
+  }, t.status_no_data_sub)), calc && /*#__PURE__*/React.createElement(PricePreview, {
+    apt: apt,
+    checkin: checkin,
+    checkout: checkout,
+    pets: pets,
+    lang: lang
+  }), step === 2 && /*#__PURE__*/React.createElement("div", {
+    className: "rf-step-actions"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "btn btn-primary rf-next",
+    onClick: goToStep3
+  }, t.continue_to_send)))), /*#__PURE__*/React.createElement("section", {
+    id: "rf-step-3",
+    className: `rf-step rf-step-3 ${step >= 3 ? 'is-open' : 'is-locked'}`,
+    "aria-current": step === 3 ? 'step' : undefined
+  }, /*#__PURE__*/React.createElement("header", {
+    className: "rf-step-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-step-num"
+  }, "03"), /*#__PURE__*/React.createElement("h3", {
+    className: "rf-step-title"
+  }, t.step3_title), step < 3 && /*#__PURE__*/React.createElement("span", {
+    className: "rf-step-locked-note",
+    "aria-hidden": "true"
+  }, "\uD83D\uDD12")), step >= 3 && /*#__PURE__*/React.createElement("div", {
+    className: "rf-step-body"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rf-channel-label"
+  }, t.channel_label), /*#__PURE__*/React.createElement("div", {
+    className: "rf-channels",
+    role: "tablist"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    role: "tab",
+    "aria-selected": channel === 'whatsapp',
+    className: `rf-channel ${channel === 'whatsapp' ? 'is-active' : ''}`,
+    onClick: () => setChannel('whatsapp')
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-channel-name"
+  }, t.channel_wa), /*#__PURE__*/React.createElement("span", {
+    className: "rf-channel-desc"
+  }, t.channel_wa_desc)), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    role: "tab",
+    "aria-selected": channel === 'email',
+    className: `rf-channel ${channel === 'email' ? 'is-active' : ''}`,
+    onClick: () => setChannel('email')
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-channel-name"
+  }, t.channel_email), /*#__PURE__*/React.createElement("span", {
+    className: "rf-channel-desc"
+  }, t.channel_email_desc))), /*#__PURE__*/React.createElement("form", {
+    className: "reservas-form rf-channel-form",
+    onSubmit: send
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "form-field full"
+  }, /*#__PURE__*/React.createElement("label", null, t.f_name), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    placeholder: t.f_name_ph,
+    value: name,
+    onChange: e => setName(e.target.value),
+    required: true,
+    autoComplete: "name"
+  })), channel === 'whatsapp' ? /*#__PURE__*/React.createElement("div", {
+    className: "form-field full"
+  }, /*#__PURE__*/React.createElement("label", null, t.f_tel), /*#__PURE__*/React.createElement("input", {
+    type: "tel",
+    placeholder: t.f_tel_ph,
+    value: tel,
+    onChange: e => setTel(e.target.value),
+    required: true,
+    autoComplete: "tel"
+  })) : /*#__PURE__*/React.createElement("div", {
+    className: "form-field full"
+  }, /*#__PURE__*/React.createElement("label", null, t.f_email), /*#__PURE__*/React.createElement("input", {
+    type: "email",
+    placeholder: t.f_email_ph,
+    value: email,
+    onChange: e => setEmail(e.target.value),
+    required: true,
+    autoComplete: "email"
+  })), /*#__PURE__*/React.createElement("div", {
     className: "form-field full"
   }, /*#__PURE__*/React.createElement("label", null, t.f_comments), /*#__PURE__*/React.createElement("textarea", {
     placeholder: t.f_comments_ph,
     value: comments,
     onChange: e => setComments(e.target.value)
   })), /*#__PURE__*/React.createElement("div", {
-    className: "reservas-actions"
+    className: "rf-step-actions"
   }, /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: sendWhatsApp,
-    className: `btn btn-primary reservas-submit${!validWA ? ' req-btn-dis' : ''}`,
-    "aria-disabled": !validWA,
-    title: !validWA ? lang === 'es' ? 'Necesitas nombre y teléfono' : 'Name and phone required' : undefined
-  }, lang === 'es' ? 'Enviar por WhatsApp →' : 'Send via WhatsApp →'), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    onClick: sendEmail,
-    className: `btn btn-ghost-dark reservas-submit-mail${!validEmail ? ' req-btn-dis' : ''}`,
-    "aria-disabled": !validEmail,
-    title: !validEmail ? lang === 'es' ? 'Necesitas nombre y email' : 'Name and email required' : undefined
-  }, lang === 'es' ? 'Enviar por email' : 'Send by email')), /*#__PURE__*/React.createElement("p", {
-    className: "reservas-note"
-  }, lang === 'es' ? 'Habilitamos WhatsApp con teléfono y email con email. Alex o Fran te responden en menos de 24 h.' : 'WhatsApp enables with phone, email with email. Alex or Fran reply within 24 h.')));
+    type: "submit",
+    className: `btn btn-primary reservas-submit${!channelValid ? ' req-btn-dis' : ''}`,
+    "aria-disabled": !channelValid
+  }, channel === 'whatsapp' ? t.send_wa : t.send_email))))));
 };
 const ReservasAside = ({
   lang
