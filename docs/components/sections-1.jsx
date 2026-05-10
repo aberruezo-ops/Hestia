@@ -295,7 +295,10 @@ const Apartments = ({ lang }) => {
             const minPrice = aptMinPrice(a.id);
             return (
               <div key={a.id} id={`apt-${a.id}`} className={`apt-card ${a.id}`}>
-                <img src={a.img} alt={a.name} className="apt-photo" loading="eager"/>
+                <picture>
+                  <source srcSet={a.img.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
+                  <img src={a.img} alt={a.name} className="apt-photo" loading="eager"/>
+                </picture>
                 <WatermarkBadge size={32} pos={{ bottom: 72, right: 16 }}/>
                 <div className="apt-wash"/>
                 <div className="pattern"/>
