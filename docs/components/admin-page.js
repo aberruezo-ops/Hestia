@@ -549,6 +549,221 @@ const ReviewRow = ({
     }
   }, "\u2726 Destacar como \"M\xE1s relevante\" en /opiniones")));
 };
+
+// Parser para extraer una review del cuerpo del email que llega desde
+// /escribir-opinion vía Web3Forms. Web3Forms manda los campos del form
+// como pares "Label: valor" (idéntico a los nombres que usamos en
+// FormData en escribir-opinion-page.jsx). Buscamos por etiqueta con
+// alias ES/EN; "Opinión" se captura como texto multi-línea hasta el
+// siguiente label.
+const REV_PARSE_FIELDS = {
+  hestia: ['Hestía', 'Hestia'],
+  rating: ['Valoración', 'Valoracion', 'Rating'],
+  name: ['Nombre', 'Name', 'from_name'],
+  email: ['Email', 'Correo'],
+  dates: ['Fechas', 'Fecha', 'Date'],
+  lang: ['Idioma', 'Language'],
+  pin: ['PIN guía', 'PIN reserva', 'PIN'],
+  text: ['Opinión', 'Opinion', 'Review', 'Comentarios']
+};
+const REV_MONTHS = {
+  enero: '01',
+  febrero: '02',
+  marzo: '03',
+  abril: '04',
+  mayo: '05',
+  junio: '06',
+  julio: '07',
+  agosto: '08',
+  septiembre: '09',
+  octubre: '10',
+  noviembre: '11',
+  diciembre: '12',
+  january: '01',
+  february: '02',
+  march: '03',
+  april: '04',
+  may: '05',
+  june: '06',
+  july: '07',
+  august: '08',
+  september: '09',
+  october: '10',
+  november: '11',
+  december: '12'
+};
+const parseFieldOneLine = (raw, labels) => {
+  for (const lbl of labels) {
+    // Match "Label : value" (también ::, ：, sin :) hasta fin de línea
+    const re = new RegExp(`(?:^|\\n)\\s*${lbl.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&')}\\s*[:：]\\s*([^\\n\\r]+)`, 'i');
+    const m = raw.match(re);
+    if (m && m[1].trim()) return m[1].trim();
+  }
+  return '';
+};
+const parseFieldMultiLine = (raw, labels) => {
+  for (const lbl of labels) {
+    const lblEsc = lbl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Captura desde "Label:" hasta el siguiente label conocido o final
+    const stop = Object.values(REV_PARSE_FIELDS).flat().filter(l => l !== lbl).map(l => l.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+    const re = new RegExp(`(?:^|\\n)\\s*${lblEsc}\\s*[:：]\\s*([\\s\\S]+?)(?=\\n\\s*(?:${stop})\\s*[:：]|$)`, 'i');
+    const m = raw.match(re);
+    if (m && m[1].trim()) return m[1].trim();
+  }
+  return '';
+};
+const parseEmailToReview = raw => {
+  const hestiaText = parseFieldOneLine(raw, REV_PARSE_FIELDS.hestia);
+  const apt = /Mar\b/i.test(hestiaText) ? 'vm' : /Thalassa/i.test(hestiaText) ? 'vt' : /Salinas/i.test(hestiaText) ? 'vs' : 'vm';
+  const rRaw = parseFieldOneLine(raw, REV_PARSE_FIELDS.rating);
+  const rMatch = rRaw.match(/(\d+(?:[.,]\d+)?)/);
+  const rating = rMatch ? Number(rMatch[1].replace(',', '.')) : 5;
+  const name = parseFieldOneLine(raw, REV_PARSE_FIELDS.name);
+  const email = parseFieldOneLine(raw, REV_PARSE_FIELDS.email);
+  const datesText = parseFieldOneLine(raw, REV_PARSE_FIELDS.dates);
+  let date = todayIso();
+  if (datesText) {
+    const lower = datesText.toLowerCase();
+    const yMatch = datesText.match(/\b(20\d\d)\b/);
+    if (yMatch) {
+      let mo = '01';
+      for (const [n, num] of Object.entries(REV_MONTHS)) {
+        if (lower.includes(n)) {
+          mo = num;
+          break;
+        }
+      }
+      date = `${yMatch[1]}-${mo}-15`;
+    }
+  }
+  const langText = parseFieldOneLine(raw, REV_PARSE_FIELDS.lang);
+  const lang = /english|inglés|ingles|\ben\b/i.test(langText) ? 'en' : 'es';
+  const text = parseFieldMultiLine(raw, REV_PARSE_FIELDS.text);
+  return {
+    apt,
+    rating,
+    name,
+    email,
+    date,
+    lang,
+    text
+  };
+};
+const PasteFromEmail = ({
+  onAdd,
+  onCancel
+}) => {
+  const [raw, setRaw] = React.useState('');
+  const [parsed, setParsed] = React.useState(null);
+  const [err, setErr] = React.useState('');
+  const doParse = () => {
+    setErr('');
+    if (raw.trim().length < 20) {
+      setErr('Pega primero el cuerpo del email.');
+      setParsed(null);
+      return;
+    }
+    const p = parseEmailToReview(raw);
+    if (!p.name && !p.text) {
+      setErr('No he podido extraer nombre ni texto. Asegúrate de pegar el cuerpo completo del email.');
+      setParsed(null);
+      return;
+    }
+    setParsed(p);
+  };
+  const accept = () => {
+    if (!parsed) return;
+    onAdd({
+      id: newReviewId('web'),
+      source: 'web',
+      apt: parsed.apt,
+      name: parsed.name || '—',
+      country: '',
+      date: parsed.date,
+      rating: Number(parsed.rating) || 5,
+      lang: parsed.lang,
+      text: parsed.text || '',
+      highlight: false,
+      status: 'pending'
+    });
+  };
+  return /*#__PURE__*/React.createElement("form", {
+    onSubmit: e => {
+      e.preventDefault();
+      doParse();
+    }
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "pe-h3"
+  }, "\uD83D\uDCCB Pegar desde email"), /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint",
+    style: {
+      marginBottom: 12
+    }
+  }, "Pega el cuerpo del email que llega desde ", /*#__PURE__*/React.createElement("code", null, "/escribir-opinion"), ". Extraigo Hest\xEDa, valoraci\xF3n, nombre, email, fechas, idioma y texto. Se a\xF1ade como ", /*#__PURE__*/React.createElement("strong", null, "PENDIENTE"), " para revisar antes de publicar."), /*#__PURE__*/React.createElement("textarea", {
+    rows: 10,
+    value: raw,
+    onChange: e => {
+      setRaw(e.target.value);
+      setParsed(null);
+      setErr('');
+    },
+    className: "pe-textarea",
+    placeholder: 'Hestía: Hestía Mar\nValoración: 5/5\nNombre: María G.\nEmail: maria@email.com\nFechas: Agosto 2024\nIdioma: Español\nOpinión: La estancia fue maravillosa...',
+    autoFocus: true
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "pe-actions",
+    style: {
+      marginTop: 12
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    className: "pe-btn pe-btn-primary"
+  }, "Parsear"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: onCancel,
+    className: "pe-btn pe-btn-ghost"
+  }, "Cancelar"), raw && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost pe-btn-sm",
+    onClick: () => {
+      setRaw('');
+      setParsed(null);
+      setErr('');
+    }
+  }, "Limpiar")), err && /*#__PURE__*/React.createElement("p", {
+    className: "pe-paste-err",
+    style: {
+      marginTop: 10
+    }
+  }, err), parsed && /*#__PURE__*/React.createElement("div", {
+    className: "pe-paste-preview"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-paste-preview-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "pe-paste-preview-tag"
+  }, "VISTA PREVIA"), /*#__PURE__*/React.createElement("span", {
+    className: "pe-hint"
+  }, "Edita despu\xE9s si algo no est\xE1 bien.")), /*#__PURE__*/React.createElement("dl", {
+    className: "pe-paste-grid"
+  }, /*#__PURE__*/React.createElement("dt", null, "Hest\xEDa"), "      ", /*#__PURE__*/React.createElement("dd", null, (REVIEW_APTS.find(a => a.id === parsed.apt) || {}).label || parsed.apt), /*#__PURE__*/React.createElement("dt", null, "Valoraci\xF3n"), "  ", /*#__PURE__*/React.createElement("dd", null, parsed.rating, "/5"), /*#__PURE__*/React.createElement("dt", null, "Nombre"), "      ", /*#__PURE__*/React.createElement("dd", null, parsed.name || /*#__PURE__*/React.createElement("em", null, "\u2014 no detectado")), parsed.email && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("dt", null, "Email"), /*#__PURE__*/React.createElement("dd", {
+    className: "pe-mono"
+  }, parsed.email)), /*#__PURE__*/React.createElement("dt", null, "Fecha"), "       ", /*#__PURE__*/React.createElement("dd", {
+    className: "pe-mono"
+  }, parsed.date), /*#__PURE__*/React.createElement("dt", null, "Idioma"), "      ", /*#__PURE__*/React.createElement("dd", null, parsed.lang.toUpperCase()), /*#__PURE__*/React.createElement("dt", null, "Texto"), "       ", /*#__PURE__*/React.createElement("dd", {
+    className: "pe-paste-text"
+  }, parsed.text || /*#__PURE__*/React.createElement("em", null, "\u2014 no detectado"))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-actions",
+    style: {
+      marginTop: 14
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    onClick: accept,
+    className: "pe-btn pe-btn-primary"
+  }, "\u2713 Crear como pendiente"), /*#__PURE__*/React.createElement("span", {
+    className: "pe-hint"
+  }, "Recuerda ", /*#__PURE__*/React.createElement("strong", null, "Guardar"), " al final para commitear."))));
+};
 const NewReviewForm = ({
   onAdd,
   onCancel
@@ -710,7 +925,7 @@ const AdminApp = () => {
   const [calErr, setCalErr] = React.useState('');
   const [error, setError] = React.useState(null);
   const [success, setSuccess] = React.useState(null);
-  const [showAddReview, setShowAddReview] = React.useState(false);
+  const [addMode, setAddMode] = React.useState(null); // null | 'manual' | 'paste'
   const [filterStatus, setFilterStatus] = React.useState('all');
   const [filterSource, setFilterSource] = React.useState('all');
   const login = async e => {
@@ -995,21 +1210,38 @@ const AdminApp = () => {
       type: "button",
       className: `pe-btn pe-btn-sm${filterSource === s.id ? ' pe-btn-primary' : ' pe-btn-ghost'}`,
       onClick: () => setFilterSource(s.id)
-    }, s.short)))), /*#__PURE__*/React.createElement("button", {
-      type: "button",
-      className: "pe-btn pe-btn-primary",
+    }, s.short)))), /*#__PURE__*/React.createElement("div", {
+      className: "pe-rev-add-actions",
       style: {
-        marginTop: 16
+        marginTop: 16,
+        display: 'flex',
+        gap: 8,
+        flexWrap: 'wrap'
+      }
+    }, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: `pe-btn ${addMode === 'paste' ? 'pe-btn-primary' : 'pe-btn-ghost'}`,
+      onClick: () => setAddMode(m => m === 'paste' ? null : 'paste')
+    }, addMode === 'paste' ? '× Cancelar' : '📋 Pegar desde email'), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: `pe-btn ${addMode === 'manual' ? 'pe-btn-primary' : 'pe-btn-ghost'}`,
+      onClick: () => setAddMode(m => m === 'manual' ? null : 'manual')
+    }, addMode === 'manual' ? '× Cancelar' : '+ Añadir manualmente'))), addMode === 'paste' && /*#__PURE__*/React.createElement("div", {
+      className: "pe-card"
+    }, /*#__PURE__*/React.createElement(PasteFromEmail, {
+      onAdd: item => {
+        addReview(item);
+        setAddMode(null);
       },
-      onClick: () => setShowAddReview(s => !s)
-    }, showAddReview ? '× Cancelar añadir' : '+ Añadir review nueva')), showAddReview && /*#__PURE__*/React.createElement("div", {
+      onCancel: () => setAddMode(null)
+    })), addMode === 'manual' && /*#__PURE__*/React.createElement("div", {
       className: "pe-card"
     }, /*#__PURE__*/React.createElement(NewReviewForm, {
       onAdd: item => {
         addReview(item);
-        setShowAddReview(false);
+        setAddMode(null);
       },
-      onCancel: () => setShowAddReview(false)
+      onCancel: () => setAddMode(null)
     })), filtered.length === 0 ? /*#__PURE__*/React.createElement("div", {
       className: "pe-card"
     }, /*#__PURE__*/React.createElement("p", {
