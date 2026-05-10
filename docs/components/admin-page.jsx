@@ -496,6 +496,175 @@ const ReviewRow = ({ review, onChange, onRemove }) => {
   );
 };
 
+// Parser para extraer una review del cuerpo del email que llega desde
+// /escribir-opinion vía Web3Forms. Web3Forms manda los campos del form
+// como pares "Label: valor" (idéntico a los nombres que usamos en
+// FormData en escribir-opinion-page.jsx). Buscamos por etiqueta con
+// alias ES/EN; "Opinión" se captura como texto multi-línea hasta el
+// siguiente label.
+const REV_PARSE_FIELDS = {
+  hestia:  ['Hestía', 'Hestia'],
+  rating:  ['Valoración', 'Valoracion', 'Rating'],
+  name:    ['Nombre', 'Name', 'from_name'],
+  email:   ['Email', 'Correo'],
+  dates:   ['Fechas', 'Fecha', 'Date'],
+  lang:    ['Idioma', 'Language'],
+  pin:     ['PIN guía', 'PIN reserva', 'PIN'],
+  text:    ['Opinión', 'Opinion', 'Review', 'Comentarios'],
+};
+const REV_MONTHS = {
+  enero:'01', febrero:'02', marzo:'03', abril:'04', mayo:'05', junio:'06',
+  julio:'07', agosto:'08', septiembre:'09', octubre:'10', noviembre:'11', diciembre:'12',
+  january:'01', february:'02', march:'03', april:'04', may:'05', june:'06',
+  july:'07', august:'08', september:'09', october:'10', november:'11', december:'12',
+};
+const parseFieldOneLine = (raw, labels) => {
+  for (const lbl of labels) {
+    // Match "Label : value" (también ::, ：, sin :) hasta fin de línea
+    const re = new RegExp(`(?:^|\\n)\\s*${lbl.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&')}\\s*[:：]\\s*([^\\n\\r]+)`, 'i');
+    const m = raw.match(re);
+    if (m && m[1].trim()) return m[1].trim();
+  }
+  return '';
+};
+const parseFieldMultiLine = (raw, labels) => {
+  for (const lbl of labels) {
+    const lblEsc = lbl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Captura desde "Label:" hasta el siguiente label conocido o final
+    const stop = Object.values(REV_PARSE_FIELDS).flat().filter(l => l !== lbl).map(l => l.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+    const re = new RegExp(`(?:^|\\n)\\s*${lblEsc}\\s*[:：]\\s*([\\s\\S]+?)(?=\\n\\s*(?:${stop})\\s*[:：]|$)`, 'i');
+    const m = raw.match(re);
+    if (m && m[1].trim()) return m[1].trim();
+  }
+  return '';
+};
+
+const parseEmailToReview = (raw) => {
+  const hestiaText = parseFieldOneLine(raw, REV_PARSE_FIELDS.hestia);
+  const apt = /Mar\b/i.test(hestiaText)      ? 'vm'
+            : /Thalassa/i.test(hestiaText)   ? 'vt'
+            : /Salinas/i.test(hestiaText)    ? 'vs'
+            : 'vm';
+
+  const rRaw = parseFieldOneLine(raw, REV_PARSE_FIELDS.rating);
+  const rMatch = rRaw.match(/(\d+(?:[.,]\d+)?)/);
+  const rating = rMatch ? Number(rMatch[1].replace(',', '.')) : 5;
+
+  const name  = parseFieldOneLine(raw, REV_PARSE_FIELDS.name);
+  const email = parseFieldOneLine(raw, REV_PARSE_FIELDS.email);
+
+  const datesText = parseFieldOneLine(raw, REV_PARSE_FIELDS.dates);
+  let date = todayIso();
+  if (datesText) {
+    const lower = datesText.toLowerCase();
+    const yMatch = datesText.match(/\b(20\d\d)\b/);
+    if (yMatch) {
+      let mo = '01';
+      for (const [n, num] of Object.entries(REV_MONTHS)) {
+        if (lower.includes(n)) { mo = num; break; }
+      }
+      date = `${yMatch[1]}-${mo}-15`;
+    }
+  }
+
+  const langText = parseFieldOneLine(raw, REV_PARSE_FIELDS.lang);
+  const lang = /english|inglés|ingles|\ben\b/i.test(langText) ? 'en' : 'es';
+
+  const text = parseFieldMultiLine(raw, REV_PARSE_FIELDS.text);
+
+  return { apt, rating, name, email, date, lang, text };
+};
+
+const PasteFromEmail = ({ onAdd, onCancel }) => {
+  const [raw, setRaw]       = React.useState('');
+  const [parsed, setParsed] = React.useState(null);
+  const [err, setErr]       = React.useState('');
+
+  const doParse = () => {
+    setErr('');
+    if (raw.trim().length < 20) {
+      setErr('Pega primero el cuerpo del email.');
+      setParsed(null);
+      return;
+    }
+    const p = parseEmailToReview(raw);
+    if (!p.name && !p.text) {
+      setErr('No he podido extraer nombre ni texto. Asegúrate de pegar el cuerpo completo del email.');
+      setParsed(null);
+      return;
+    }
+    setParsed(p);
+  };
+
+  const accept = () => {
+    if (!parsed) return;
+    onAdd({
+      id: newReviewId('web'),
+      source: 'web',
+      apt: parsed.apt,
+      name: parsed.name || '—',
+      country: '',
+      date: parsed.date,
+      rating: Number(parsed.rating) || 5,
+      lang: parsed.lang,
+      text: parsed.text || '',
+      highlight: false,
+      status: 'pending',
+    });
+  };
+
+  return (
+    <form onSubmit={e => { e.preventDefault(); doParse(); }}>
+      <h3 className="pe-h3">📋 Pegar desde email</h3>
+      <p className="pe-hint" style={{marginBottom:12}}>
+        Pega el cuerpo del email que llega desde <code>/escribir-opinion</code>.
+        Extraigo Hestía, valoración, nombre, email, fechas, idioma y texto.
+        Se añade como <strong>PENDIENTE</strong> para revisar antes de publicar.
+      </p>
+      <textarea
+        rows={10}
+        value={raw}
+        onChange={e => { setRaw(e.target.value); setParsed(null); setErr(''); }}
+        className="pe-textarea"
+        placeholder={'Hestía: Hestía Mar\nValoración: 5/5\nNombre: María G.\nEmail: maria@email.com\nFechas: Agosto 2024\nIdioma: Español\nOpinión: La estancia fue maravillosa...'}
+        autoFocus
+      />
+      <div className="pe-actions" style={{marginTop:12}}>
+        <button type="submit" className="pe-btn pe-btn-primary">Parsear</button>
+        <button type="button" onClick={onCancel} className="pe-btn pe-btn-ghost">Cancelar</button>
+        {raw && (
+          <button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
+            onClick={() => { setRaw(''); setParsed(null); setErr(''); }}>Limpiar</button>
+        )}
+      </div>
+      {err && <p className="pe-paste-err" style={{marginTop:10}}>{err}</p>}
+      {parsed && (
+        <div className="pe-paste-preview">
+          <div className="pe-paste-preview-head">
+            <span className="pe-paste-preview-tag">VISTA PREVIA</span>
+            <span className="pe-hint">Edita después si algo no está bien.</span>
+          </div>
+          <dl className="pe-paste-grid">
+            <dt>Hestía</dt>      <dd>{(REVIEW_APTS.find(a => a.id === parsed.apt) || {}).label || parsed.apt}</dd>
+            <dt>Valoración</dt>  <dd>{parsed.rating}/5</dd>
+            <dt>Nombre</dt>      <dd>{parsed.name || <em>— no detectado</em>}</dd>
+            {parsed.email && (<><dt>Email</dt><dd className="pe-mono">{parsed.email}</dd></>)}
+            <dt>Fecha</dt>       <dd className="pe-mono">{parsed.date}</dd>
+            <dt>Idioma</dt>      <dd>{parsed.lang.toUpperCase()}</dd>
+            <dt>Texto</dt>       <dd className="pe-paste-text">{parsed.text || <em>— no detectado</em>}</dd>
+          </dl>
+          <div className="pe-actions" style={{marginTop:14}}>
+            <button type="button" onClick={accept} className="pe-btn pe-btn-primary">
+              ✓ Crear como pendiente
+            </button>
+            <span className="pe-hint">Recuerda <strong>Guardar</strong> al final para commitear.</span>
+          </div>
+        </div>
+      )}
+    </form>
+  );
+};
+
 const NewReviewForm = ({ onAdd, onCancel }) => {
   const [source, setSource] = React.useState('web');
   const [apt, setApt] = React.useState('vm');
@@ -593,7 +762,7 @@ const AdminApp = () => {
   const [calErr,   setCalErr]   = React.useState('');
   const [error,    setError]    = React.useState(null);
   const [success,  setSuccess]  = React.useState(null);
-  const [showAddReview, setShowAddReview] = React.useState(false);
+  const [addMode, setAddMode] = React.useState(null); // null | 'manual' | 'paste'
   const [filterStatus, setFilterStatus] = React.useState('all');
   const [filterSource, setFilterSource] = React.useState('all');
 
@@ -857,17 +1026,35 @@ const AdminApp = () => {
               ))}
             </div>
           </div>
-          <button type="button" className="pe-btn pe-btn-primary" style={{marginTop:16}}
-            onClick={() => setShowAddReview(s => !s)}>
-            {showAddReview ? '× Cancelar añadir' : '+ Añadir review nueva'}
-          </button>
+          <div className="pe-rev-add-actions" style={{marginTop:16, display:'flex', gap:8, flexWrap:'wrap'}}>
+            <button
+              type="button"
+              className={`pe-btn ${addMode === 'paste' ? 'pe-btn-primary' : 'pe-btn-ghost'}`}
+              onClick={() => setAddMode(m => m === 'paste' ? null : 'paste')}>
+              {addMode === 'paste' ? '× Cancelar' : '📋 Pegar desde email'}
+            </button>
+            <button
+              type="button"
+              className={`pe-btn ${addMode === 'manual' ? 'pe-btn-primary' : 'pe-btn-ghost'}`}
+              onClick={() => setAddMode(m => m === 'manual' ? null : 'manual')}>
+              {addMode === 'manual' ? '× Cancelar' : '+ Añadir manualmente'}
+            </button>
+          </div>
         </div>
 
-        {showAddReview && (
+        {addMode === 'paste' && (
+          <div className="pe-card">
+            <PasteFromEmail
+              onAdd={item => { addReview(item); setAddMode(null); }}
+              onCancel={() => setAddMode(null)}
+            />
+          </div>
+        )}
+        {addMode === 'manual' && (
           <div className="pe-card">
             <NewReviewForm
-              onAdd={item => { addReview(item); setShowAddReview(false); }}
-              onCancel={() => setShowAddReview(false)}
+              onAdd={item => { addReview(item); setAddMode(null); }}
+              onCancel={() => setAddMode(null)}
             />
           </div>
         )}
