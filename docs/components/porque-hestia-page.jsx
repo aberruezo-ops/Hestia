@@ -39,23 +39,14 @@ const PORQUE_COPY = {
     values_title: (<>HESTIA, una palabra<br/><em>y seis maneras de habitarla.</em></>),
     values_lede: 'El nombre que recibimos de la diosa griega no es solo símbolo: es una guía. Cada letra de Hestía nombra un valor que practicamos a diario. Seis ideas que se suman en una sola: la confianza.',
     values: [
-      { letter: 'H', name: 'Hospitalidad', desc: 'La llama que recibe. Hestía es la diosa del hogar y guarda el fuego de bienvenida — el que se honra al partir y al volver. Cada Hestía se enciende para ti antes de que llegues.' },
-      { letter: 'E', name: 'Escucha',      desc: 'Personas, no clientes. Alex en español, Fran en inglés. Conocemos tu nombre antes de que cruces la puerta y sabemos lo que necesitas porque nos lo cuentas — y porque escuchamos.' },
-      { letter: 'S', name: 'Sencillez',    desc: 'Sin recepción. Sin oficina. Sin formularios. Lo esencial hecho con cuidado: tres llaves, tres casas, dos personas al teléfono. Lo demás sobra.' },
+      { letter: 'H', name: 'Hospitalidad', desc: 'La llama que recibe. Hestía es la diosa del hogar y guarda el fuego de bienvenida — el que se honra al partir y al volver. Tu estancia empieza el día que reservas y no termina cuando te marchas: termina el día que quieres volver.' },
+      { letter: 'E', name: 'Escucha',      desc: 'Personas, no clientes. Alex en español, Fran en inglés. Conocemos tu nombre antes de que cruces la puerta y sabemos lo que necesitas — porque nos lo cuentas y porque escuchamos. Sin formularios. Sin intermediarios.' },
+      { letter: 'S', name: 'Sencillez',    desc: 'Sin recepción. Sin oficina. Lo esencial hecho con cuidado: tres llaves, tres casas, dos personas al teléfono. Lo demás sobra.' },
       { letter: 'T', name: 'Transparencia', desc: 'Sin letra pequeña. Precios claros, fotos reales, distancias medidas en metros. Si algo no está, lo decimos. Si algo se rompe, lo arreglamos. Lo que ves es lo que hay.' },
-      { letter: 'I', name: 'Integridad',   desc: 'Lo que prometemos al reservar es lo que entregamos al abrir la puerta. La coherencia entre el primer mensaje y la última noche. Cuidamos cada Hestía como si fuera nuestra — porque, en cierto modo, lo es.' },
+      { letter: 'I', name: 'Integridad',   desc: 'Lo que prometemos al reservar es lo que entregamos al abrir la puerta. Diseñamos cada Hestía como si fuera nuestra propia casa — porque, en cierto modo, lo es. El cojín bien puesto, el café que espera, la toalla doblada: el detalle que lo cambia todo.' },
       { letter: 'A', name: 'Arraigo',      desc: 'No inventamos nada. Hestía huele a sal, a olivar, a calima del Sahara. Llevamos décadas en Vera Playa y eso es lo que entregamos: no un decorado, sino el sitio real.' },
     ],
     values_closing: (<>Seis valores que se suman en uno: <em>la confianza.</em></>),
-
-    principles_eyebrow: 'Nuestros principios',
-    principles_title: (<>Cuatro ideas que nunca<br/><em>negociamos.</em></>),
-    principles: [
-      { n: '01', t: 'Como si fuera nuestro.', d: 'Diseñamos y cuidamos cada Hestía como si fuera el nuestro propio. Porque en cierto modo lo es. Y porque queremos que vosotros lo sintáis igual.' },
-      { n: '02', t: 'El detalle que lo cambia todo.', d: 'El cojín bien puesto, el café que espera, la toalla doblada. No son extras. Son la forma en que os decimos que nos importáis.' },
-      { n: '03', t: 'Personas, no clientes.', d: 'Alex y Fran atendemos directamente. Conocemos vuestro nombre antes de que lleguéis y sabemos lo que necesitáis. No hay intermediarios.' },
-      { n: '04', t: 'Una estancia que no acaba cuando os vais.', d: 'Vuestra estancia empieza cuando reserváis y termina cuando queréis volver. Eso no es un intercambio económico. Es otra cosa.' },
-    ],
 
     traveler_eyebrow: 'El huésped que nos elige',
     traveler_title: (<>Sabemos para quién<br/><em>existe Hestía.</em></>),
@@ -105,23 +96,14 @@ const PORQUE_COPY = {
     values_title: (<>HESTIA, one word<br/><em>and six ways to inhabit it.</em></>),
     values_lede: 'The name we received from the Greek goddess is not only a symbol: it is a guide. Every letter of Hestía names a value we practice every day. Six ideas that add up to one: trust.',
     values: [
-      { letter: 'H', name: 'Hospitality',  desc: 'The flame that welcomes. Hestía is the goddess of the hearth — keeper of the fire honoured when leaving and returning. Every Hestía is lit for you before you arrive.' },
-      { letter: 'E', name: 'Empathy',      desc: 'People, not clients. Alex in Spanish, Fran in English. We know your name before you cross the door and what you need — because you tell us, and because we listen.' },
-      { letter: 'S', name: 'Simplicity',   desc: 'No reception. No office. No forms. The essentials done with care: three keys, three homes, two people on the phone. Anything more is in the way.' },
+      { letter: 'H', name: 'Hospitality',  desc: 'The flame that welcomes. Hestía is the goddess of the hearth — keeper of the fire honoured when leaving and returning. Your stay begins the day you book and does not end when you leave: it ends the day you want to come back.' },
+      { letter: 'E', name: 'Empathy',      desc: 'People, not clients. Alex in Spanish, Fran in English. We know your name before you cross the door and what you need — because you tell us, and because we listen. No forms. No intermediaries.' },
+      { letter: 'S', name: 'Simplicity',   desc: 'No reception. No office. The essentials done with care: three keys, three homes, two people on the phone. Anything more is in the way.' },
       { letter: 'T', name: 'Transparency', desc: 'No small print. Clear prices, real photos, distances measured in metres. If something is missing, we say so. If something breaks, we fix it. What you see is what is there.' },
-      { letter: 'I', name: 'Integrity',    desc: 'What we promise at booking is what we hand over when the door opens. Consistency between the first message and the last night. We care for every Hestía as if it were ours — because in a way it is.' },
+      { letter: 'I', name: 'Integrity',    desc: 'What we promise at booking is what we hand over when the door opens. We design every Hestía as if it were our own home — because in a way it is. The neatly placed cushion, the waiting coffee, the folded towel: the detail that changes everything.' },
       { letter: 'A', name: 'Authenticity', desc: 'We invented nothing. Hestía smells of salt, olive grove, Saharan calima. We have been in Vera Playa for decades — and that is what we hand over: not a stage set, but the real place.' },
     ],
     values_closing: (<>Six values that add up to one: <em>trust.</em></>),
-
-    principles_eyebrow: 'Our principles',
-    principles_title: (<>Four ideas we never<br/><em>compromise on.</em></>),
-    principles: [
-      { n: '01', t: 'As if it were ours.', d: 'We design and care for each Hestía as if it were our own. Because in a way it is. And because we want you to feel it the same way.' },
-      { n: '02', t: 'The detail that changes everything.', d: 'The neatly placed cushion, the waiting coffee, the folded towel. Not extras. The way we tell you that you matter to us.' },
-      { n: '03', t: 'People, not clients.', d: 'Alex and Fran attend to you directly. We know your name before you arrive and what you need. No intermediaries.' },
-      { n: '04', t: "A stay that doesn't end when you leave.", d: "Your stay begins when you book and ends when you want to return. That's not an economic exchange. It's something else." },
-    ],
 
     traveler_eyebrow: 'The guest who chooses us',
     traveler_title: (<>We know who<br/><em>Hestía exists for.</em></>),
@@ -287,21 +269,32 @@ const PorqueNombre = ({ lang }) => {
 
 const PorqueValores = ({ lang }) => {
   const t = PORQUE_COPY[lang];
+  const word = 'HESTIA'.split('');
   return (
     <section className="pq-valores section-dark">
+      <div className="pq-valores-watermark" aria-hidden="true">
+        {word.map((c, i) => (
+          <span key={i} className="pq-wm-letter reveal" style={{ transitionDelay: `${i * 0.12}s` }}>{c}</span>
+        ))}
+      </div>
       <div className="container">
-        <div className="eyebrow pq-valores-eyebrow">{t.values_eyebrow}</div>
-        <h2 className="reveal pq-valores-title">{t.values_title}</h2>
-        <p className="pq-valores-lede reveal delay-1">{t.values_lede}</p>
-        <div className="pq-valores-grid">
+        <div className="pq-valores-head">
+          <div className="eyebrow pq-valores-eyebrow">{t.values_eyebrow}</div>
+          <h2 className="reveal pq-valores-title">{t.values_title}</h2>
+          <p className="pq-valores-lede reveal delay-1">{t.values_lede}</p>
+        </div>
+        <div className="pq-valores-rows">
           {t.values.map((v, i) => (
-            <div key={i} className="pq-valor reveal" style={{ transitionDelay: `${i * 0.08}s` }}>
-              <div className="pq-valor-letter" aria-hidden="true">{v.letter}</div>
-              <div className="pq-valor-body">
-                <div className="pq-valor-name">{v.name}</div>
-                <div className="pq-valor-desc">{v.desc}</div>
+            <article key={i} className={`pq-valor reveal ${i % 2 === 0 ? 'pq-valor--left' : 'pq-valor--right'}`}>
+              <div className="pq-valor-letter" aria-hidden="true">
+                <span className="pq-valor-letter-glyph">{v.letter}</span>
               </div>
-            </div>
+              <div className="pq-valor-body">
+                <div className="pq-valor-index">0{i + 1} / 06</div>
+                <h3 className="pq-valor-name">{v.name}</h3>
+                <p className="pq-valor-desc">{v.desc}</p>
+              </div>
+            </article>
           ))}
         </div>
         <div className="pq-valores-closing reveal delay-2">{t.values_closing}</div>
@@ -342,29 +335,6 @@ const PorqueColores = ({ lang }) => (
     </div>
   </section>
 );
-
-const PorquePrincipios = ({ lang }) => {
-  const t = PORQUE_COPY[lang];
-  return (
-    <section className="nos-principios">
-      <div className="container">
-        <div className="eyebrow nos-principios-eyebrow">{t.principles_eyebrow}</div>
-        <h2 className="reveal">{t.principles_title}</h2>
-        <div className="nos-principios-list">
-          {t.principles.map((p, i) => (
-            <div key={i} className="nos-principio reveal" style={{ transitionDelay: `${i * 0.1}s` }}>
-              <div className="nos-p-num">{p.n}</div>
-              <div className="nos-p-body">
-                <div className="nos-p-title">{p.t}</div>
-                <div className="nos-p-desc">{p.d}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
 
 const PorqueViajero = ({ lang }) => {
   const t = PORQUE_COPY[lang];
@@ -422,7 +392,6 @@ const PorquePageApp = () => {
         <PorqueNombre lang={lang} />
         <PorqueValores lang={lang} />
         <PorqueColores lang={lang} />
-        <PorquePrincipios lang={lang} />
         <PorqueViajero lang={lang} />
         <PorqueCrosslink lang={lang} />
         <ContactCTA lang={lang} />
