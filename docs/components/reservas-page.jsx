@@ -125,18 +125,33 @@ const RESERVAS_COPY = {
   },
 };
 
-const PricePreview = ({ apt, checkin, checkout, pets, lang }) => {
+const _resExtrasList = () => {
+  const v = window.PRICES_V2 && window.PRICES_V2.rules && window.PRICES_V2.rules.extras;
+  return Array.isArray(v) ? v : [];
+};
+
+const _resExtraUnitSuffix = (unit, lang) => {
+  if (unit === 'noche') return lang === 'es' ? '/noche' : '/night';
+  if (unit === 'hora')  return lang === 'es' ? '/hora'  : '/hour';
+  if (unit === 'set')   return lang === 'es' ? '/set'   : '/set';
+  return '';
+};
+
+const PricePreview = ({ apt, checkin, checkout, pets, lang, extras = [] }) => {
   if (!apt || !checkin || !checkout) return null;
   const calc = _calcStay(checkin, checkout, apt, pets === 'yes');
   if (!calc || calc.nights <= 0) return null;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
+  const extrasTotal = extras.reduce((s, e) => s + e.amount, 0);
+  const grandTotal = calc.directTotal + extrasTotal;
+  const grandAvg = Math.round(grandTotal / calc.nights);
   return (
     <div className="price-engine price-engine-form">
       <div className="price-main-row">
         <div className="price-direct-block">
           <span className="price-label-sm">{lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to'}</span>
-          <span className="price-direct-total">{fmt(calc.directTotal)}</span>
-          <span className="price-avg-night">{fmt(calc.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</span>
+          <span className="price-direct-total">{fmt(grandTotal)}</span>
+          <span className="price-avg-night">{fmt(grandAvg)}{lang === 'es' ? '/noche' : '/night'}</span>
         </div>
         <div className="price-right-col">
           <div className="price-guarantee-badge">
@@ -166,9 +181,19 @@ const PricePreview = ({ apt, checkin, checkout, pets, lang }) => {
             <span>+{fmt(calc.petAmt)}</span>
           </div>
         )}
+        {extras.map(ex => (
+          <div className="price-line" key={ex.id}>
+            <span>
+              {ex.label}
+              {ex.unit === 'hora'  && ` · ${ex.qty} h × ${ex.unitPrice} €`}
+              {ex.unit === 'noche' && ` · ${ex.qty} ${lang === 'es' ? 'noches' : 'nights'} × ${ex.unitPrice} €`}
+            </span>
+            <span>+{fmt(ex.amount)}</span>
+          </div>
+        ))}
         <div className="price-line price-line-total">
           <span>{lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'}</span>
-          <span>{fmt(calc.directTotal)}</span>
+          <span>{fmt(grandTotal)}</span>
         </div>
       </div>
       <p className="price-note">{lang === 'es'
@@ -227,7 +252,10 @@ const ReservasForm = ({ lang }) => {
   const [checkout, setCheckout] = React.useState('');
   const [guests, setGuests]     = React.useState('');
   const [pets, setPets]         = React.useState('no');
-  const [extras, setExtras]     = React.useState([]);
+  // extrasSel: { [id]: qty }. 0/missing = no seleccionado.
+  // Para unidades no-hora, qty siempre es 1; para 'hora', el usuario edita.
+  const [extrasSel, setExtrasSel] = React.useState({});
+  const extrasList = _resExtrasList();
 
   // Step 3 — datos del canal + comentarios
   const [name, setName]         = React.useState('');
@@ -251,8 +279,38 @@ const ReservasForm = ({ lang }) => {
       .finally(() => setAvailLoaded(true));
   }, []);
 
-  const toggleExtra = (i) => {
-    setExtras(prev => prev.includes(i) ? prev.filter(x => x !== i) : [...prev, i]);
+  const toggleExtra = (id) => {
+    setExtrasSel(prev => {
+      const cur = prev[id] || 0;
+      return { ...prev, [id]: cur > 0 ? 0 : 1 };
+    });
+  };
+  const setExtraQty = (id, qty) => {
+    const n = Math.max(1, Math.floor(Number(qty) || 1));
+    setExtrasSel(prev => ({ ...prev, [id]: n }));
+  };
+
+  // Computa los extras seleccionados con su importe ya calculado.
+  // Se evalúa SIEMPRE; si no hay noches válidas, los 'noche' dan amount 0
+  // pero igualmente quedan listados para mostrar al usuario.
+  const computeSelectedExtras = (nights) => {
+    return extrasList
+      .filter(ex => (extrasSel[ex.id] || 0) > 0)
+      .map(ex => {
+        const qty = extrasSel[ex.id];
+        let amount, lineQty;
+        if (ex.unit === 'hora')       { lineQty = qty;     amount = ex.price * qty; }
+        else if (ex.unit === 'noche') { lineQty = nights;  amount = ex.price * nights; }
+        else                          { lineQty = 1;       amount = ex.price; }
+        return {
+          id: ex.id,
+          label: lang === 'es' ? ex.label_es : ex.label_en,
+          unit: ex.unit,
+          unitPrice: ex.price,
+          qty: lineQty,
+          amount,
+        };
+      });
   };
 
   // Validaciones
@@ -264,6 +322,9 @@ const ReservasForm = ({ lang }) => {
 
   // Cálculo
   const calc = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes') : null;
+  const nightsForExtras = calc?.nights || 0;
+  const selectedExtras = computeSelectedExtras(nightsForExtras);
+  const extrasCount = Object.values(extrasSel).filter(v => v > 0).length;
   const blocked = avail && avail[apt] ? avail[apt].blocked : null;
   const isAvailable = step1Complete && availLoaded ? _resAvail(checkin, checkout, blocked) : null;
 
@@ -288,24 +349,51 @@ const ReservasForm = ({ lang }) => {
     }, 60);
   };
 
-  // Mensaje a enviar (igual semántica que antes)
+  // Mensaje a enviar
   const buildMsg = () => {
-    const extrasText = extras.length > 0
-      ? '\nExtras: ' + extras.map(i => t.f_extras[i]).join(', ')
-      : '';
-    const petsText = pets === 'yes' ? (lang === 'es' ? 'Sí' : 'Yes') : 'No';
     const fmt = n => n.toLocaleString('es-ES') + ' €';
+    const extrasTotal = selectedExtras.reduce((s, e) => s + e.amount, 0);
+
+    // Bloque "Extras" en el cuerpo (entre Mascota y Precio)
+    let extrasText = '';
+    if (selectedExtras.length > 0) {
+      const headEs = '\nExtras:';
+      const headEn = '\nExtras:';
+      const lines = selectedExtras.map(ex => {
+        if (ex.unit === 'hora') {
+          return `  • ${ex.label} — ${ex.qty} h × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
+        }
+        if (ex.unit === 'noche') {
+          return `  • ${ex.label} — ${ex.qty} ${lang === 'es' ? 'noches' : 'nights'} × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
+        }
+        if (ex.amount > 0) {
+          return `  • ${ex.label} — ${fmt(ex.amount)}`;
+        }
+        return `  • ${ex.label}`;
+      });
+      const subtotal = extrasTotal > 0
+        ? `\n  Subtotal extras: ${fmt(extrasTotal)}`
+        : '';
+      extrasText = (lang === 'es' ? headEs : headEn) + '\n' + lines.join('\n') + subtotal;
+    }
+
+    const petsText = pets === 'yes' ? (lang === 'es' ? 'Sí' : 'Yes') : 'No';
+
+    const grandTotal = calc ? calc.directTotal + extrasTotal : 0;
+    const grandAvg   = calc ? Math.round(grandTotal / calc.nights) : 0;
     const priceBlock = calc
       ? (lang === 'es'
           ? `\n💰 PRECIO ESTIMADO DIRECTO\n` +
-            `   ${fmt(calc.directTotal)} total (${calc.nights} noches × ~${fmt(calc.avgPerNight)}/noche)\n` +
+            `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` +
             (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') +
             (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${PET_SUPP_FLAT}€ tarifa plana)\n` : '') +
+            (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
             `   ✓ Mejor precio garantizado · si encuentras un precio mejor, te lo mejoramos\n`
           : `\n💰 ESTIMATED DIRECT PRICE\n` +
-            `   ${fmt(calc.directTotal)} total (${calc.nights} nights × ~${fmt(calc.avgPerNight)}/night)\n` +
+            `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` +
             (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') +
             (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${PET_SUPP_FLAT}€ flat fee)\n` : '') +
+            (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
             `   ✓ Best price guarantee · if you find a better price, we'll beat it\n`)
       : '';
     const lines = lang === 'es'
@@ -355,7 +443,7 @@ const ReservasForm = ({ lang }) => {
       {' · '}{checkin} → {checkout}
       {' · '}{guests}
       {pets === 'yes' && <> · {lang === 'es' ? '🐾 mascota' : '🐾 pet'}</>}
-      {extras.length > 0 && <> · {extras.length} {lang === 'es' ? 'extras' : 'extras'}</>}
+      {extrasCount > 0 && <> · {extrasCount} {lang === 'es' ? 'extras' : 'extras'}</>}
     </span>
   ) : null;
 
@@ -428,12 +516,41 @@ const ReservasForm = ({ lang }) => {
             <div className="form-field full">
               <div className="form-extras-label">{t.f_extras_label}</div>
               <div className="form-extras-grid">
-                {t.f_extras.map((ex, i) => (
-                  <label key={i} className="form-extra-item">
-                    <input type="checkbox" checked={extras.includes(i)} onChange={() => toggleExtra(i)}/>
-                    {ex}
-                  </label>
-                ))}
+                {extrasList.map(ex => {
+                  const qty = extrasSel[ex.id] || 0;
+                  const checked = qty > 0;
+                  const label = lang === 'es' ? ex.label_es : ex.label_en;
+                  const suffix = _resExtraUnitSuffix(ex.unit, lang);
+                  return (
+                    <label key={ex.id} className={`form-extra-item${checked ? ' is-checked' : ''}`}>
+                      <input
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => toggleExtra(ex.id)}
+                      />
+                      <span className="form-extra-text">
+                        {label}
+                        {ex.price > 0 && (
+                          <span className="form-extra-price"> · {ex.price} €{suffix}</span>
+                        )}
+                      </span>
+                      {checked && ex.unit === 'hora' && (
+                        <span className="form-extra-qty-wrap">
+                          <input
+                            type="number"
+                            min="1"
+                            step="1"
+                            value={qty}
+                            onChange={e => setExtraQty(ex.id, e.target.value)}
+                            className="form-extra-qty"
+                            aria-label={lang === 'es' ? 'Horas' : 'Hours'}
+                          />
+                          <span className="form-extra-qty-unit">h</span>
+                        </span>
+                      )}
+                    </label>
+                  );
+                })}
               </div>
             </div>
             <div className="rf-step-actions">
@@ -487,7 +604,7 @@ const ReservasForm = ({ lang }) => {
 
             {/* Price */}
             {calc && (
-              <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} lang={lang}/>
+              <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} lang={lang} extras={selectedExtras}/>
             )}
 
             {step === 2 && (
