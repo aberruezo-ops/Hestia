@@ -475,7 +475,10 @@ const GalleryCarousel = ({ imgs, captions }) => {
           {imgs.map((src, i) => (
             <div key={i} className={`gc-slide${i === cur ? ' gc-slide-active' : ''}`}
                  style={{ transform: `translateX(${(i - cur) * 100}%)` }}>
-              <img src={src} alt={captions[i]} loading={i === 0 ? 'eager' : 'lazy'}/>
+              <picture>
+                <source srcSet={src.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
+                <img src={src} alt={captions[i]} loading={i === 0 ? 'eager' : 'lazy'}/>
+              </picture>
             </div>
           ))}
           <div className="gc-overlay">
@@ -491,7 +494,10 @@ const GalleryCarousel = ({ imgs, captions }) => {
                     className={`gc-thumb${i === cur ? ' gc-thumb-on' : ''}`}
                     onClick={e => { e.stopPropagation(); go(i); }}
                     aria-label={captions[i]}>
-              <img src={src} alt="" loading="lazy"/>
+              <picture>
+                <source srcSet={src.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
+                <img src={src} alt="" loading="lazy"/>
+              </picture>
             </button>
           ))}
         </div>
@@ -500,7 +506,10 @@ const GalleryCarousel = ({ imgs, captions }) => {
         <div className="gc-lightbox" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label="Galería de fotos">
           <button className="gc-lb-close" onClick={closeLightbox} aria-label="Cerrar">✕</button>
           <button className="gc-lb-prev" onClick={e => { e.stopPropagation(); setCur(i => (i - 1 + n) % n); }} aria-label="Anterior">‹</button>
-          <img className="gc-lb-img" src={imgs[cur]} alt={captions[cur]} onClick={e => e.stopPropagation()}/>
+          <picture className="gc-lb-pic">
+            <source srcSet={imgs[cur].replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
+            <img className="gc-lb-img" src={imgs[cur]} alt={captions[cur]} onClick={e => e.stopPropagation()}/>
+          </picture>
           <button className="gc-lb-next" onClick={e => { e.stopPropagation(); setCur(i => (i + 1) % n); }} aria-label="Siguiente">›</button>
           <div className="gc-lb-caption">{captions[cur]}</div>
           <div className="gc-lb-counter">{cur + 1} / {n}</div>
