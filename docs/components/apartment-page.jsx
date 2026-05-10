@@ -411,9 +411,10 @@ const GalleryCarousel = ({ imgs, captions }) => {
   const timerRef   = React.useRef(null);
   const pausedRef  = React.useRef(false);
 
-  // Cambia de foto envolviendo el setState en una View Transition.
-  // En navegadores sin soporte, _vt simplemente ejecuta el callback.
-  const stepTo = (next) => _vt(() => setCur(next));
+  // Cambia de foto. La animación visual la lleva el CSS sobre
+  // .gc-slide (transform translateX). NO envolvemos en _vt() porque
+  // colisiona con el slide CSS y produce flicker en mobile.
+  const stepTo = (next) => setCur(next);
 
   const resetTimer = () => {
     clearInterval(timerRef.current);
@@ -451,17 +452,27 @@ const GalleryCarousel = ({ imgs, captions }) => {
 
   const go = i => { stepTo(i); resetTimer(); };
 
-  // Swipe on main image
+  // Swipe on main image. Trackeamos si hubo swipe para no abrir el
+  // lightbox al soltar (touchend dispara click sintético después).
   const touchX = React.useRef(null);
-  const onTouchStart = e => { touchX.current = e.touches[0].clientX; };
+  const swipedRef = React.useRef(false);
+  const onTouchStart = e => { touchX.current = e.touches[0].clientX; swipedRef.current = false; };
   const onTouchEnd   = e => {
     if (touchX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchX.current;
-    if (Math.abs(dx) > 40) { stepTo(dx < 0 ? (cur + 1) % n : (cur - 1 + n) % n); resetTimer(); }
+    if (Math.abs(dx) > 40) {
+      stepTo(dx < 0 ? (cur + 1) % n : (cur - 1 + n) % n);
+      resetTimer();
+      swipedRef.current = true;
+    }
     touchX.current = null;
   };
 
-  const openLightbox = () => { setLightbox(true); document.body.style.overflow = 'hidden'; };
+  const openLightbox = () => {
+    if (swipedRef.current) { swipedRef.current = false; return; }
+    setLightbox(true);
+    document.body.style.overflow = 'hidden';
+  };
   const closeLightbox = () => { setLightbox(false); document.body.style.overflow = ''; };
 
   return (

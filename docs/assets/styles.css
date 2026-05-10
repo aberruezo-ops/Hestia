@@ -4361,6 +4361,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 24px 0 24px 0;
   transition: box-shadow .35s ease;
+  touch-action: pan-y;
 }
 /* ::before establishes 4:3 height reliably even with all-absolute children */
 .gc-stage::before {
@@ -4372,8 +4373,9 @@ body.no-parallax .g-tile .img { transform: none !important; }
   position: absolute;
   inset: 0;
   transition: transform .45s cubic-bezier(.4,0,.2,1);
-  will-change: transform;
+  backface-visibility: hidden;
 }
+.gc-slide-active { will-change: transform; }
 .gc-slide img {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -11172,16 +11174,11 @@ body.apt-bar-shown .widget-stack {
   animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-/* Galería de fotos: la imagen activa fade entre slides — se
-   marca con view-transition-name único por slide-active. */
-.gc-slide-active img {
-  view-transition-name: gc-active-photo;
-}
-::view-transition-old(gc-active-photo),
-::view-transition-new(gc-active-photo) {
-  animation-duration: 380ms;
-  animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1);
-}
+/* Galería de fotos: la transición la lleva .gc-slide vía
+   transform: translateX (CSS transition .45s). No usamos
+   View Transitions aquí: colisionaban con el slide-translate y
+   producían flicker en mobile (notablemente iOS Safari y Chrome
+   Android). */
 
 /* Filtros de /opiniones: las cards reordenan con cross-fade más
    suave, sin nombres específicos por card (sería costoso). El root
