@@ -386,23 +386,79 @@ const PorqueNombre = ({
     className: "nos-bq-text"
   }, t.name_quote), /*#__PURE__*/React.createElement("cite", null, t.name_quote_attr))));
 };
+
+// PorqueValores — sección "Nuestros valores"
+// Scroll-driven monogram: a la izquierda, un panel sticky con H E S T I A
+// apiladas vertical, la activa "ilumina" con crossfade + blur (Emil-style
+// transition mask). A la derecha, las 6 entradas de valor en cascada con
+// stagger refinado. Una línea de progreso vertical en el borde izquierdo
+// del section acompaña al scroll. Mobile: sin sticky; cada valor recibe
+// su propia tarjeta con letra inset, mismo easing y stagger.
 const PorqueValores = ({
   lang
 }) => {
   const t = PORQUE_COPY[lang];
-  const word = 'HESTIA'.split('');
+  const sectionRef = React.useRef(null);
+  const valueRefs = React.useRef([]);
+  const [activeIdx, setActiveIdx] = React.useState(0);
+  const [progress, setProgress] = React.useState(0);
+
+  // IntersectionObserver: detecta qué valor está más cerca del centro
+  // del viewport — ese es el activo.
+  React.useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return;
+    const obs = new IntersectionObserver(entries => {
+      const visible = entries.filter(e => e.isIntersecting);
+      if (visible.length === 0) return;
+      visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+      const idx = Number(visible[0].target.dataset.idx);
+      if (!Number.isNaN(idx)) setActiveIdx(idx);
+    }, {
+      rootMargin: '-42% 0px -42% 0px',
+      threshold: [0, 0.5, 1]
+    });
+    valueRefs.current.forEach(el => el && obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
+  // Progreso de scroll a lo largo de la sección (0..1) para la línea
+  // vertical decorativa.
+  React.useEffect(() => {
+    const onScroll = () => {
+      const el = sectionRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const total = rect.height - vh;
+      if (total <= 0) {
+        setProgress(rect.top < 0 ? 1 : 0);
+        return;
+      }
+      const scrolled = -rect.top;
+      const p = Math.max(0, Math.min(1, scrolled / total));
+      setProgress(p);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, {
+      passive: true
+    });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+  const activeValue = t.values[activeIdx] || t.values[0];
   return /*#__PURE__*/React.createElement("section", {
+    ref: sectionRef,
     className: "pq-valores section-dark"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "pq-valores-watermark",
-    "aria-hidden": "true"
-  }, word.map((c, i) => /*#__PURE__*/React.createElement("span", {
-    key: i,
-    className: "pq-wm-letter reveal",
+    className: "pq-valores-progress",
+    "aria-hidden": "true",
     style: {
-      transitionDelay: `${i * 0.12}s`
+      '--progress': progress
     }
-  }, c))), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("div", {
     className: "container"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pq-valores-head"
@@ -413,24 +469,51 @@ const PorqueValores = ({
   }, t.values_title), /*#__PURE__*/React.createElement("p", {
     className: "pq-valores-lede reveal delay-1"
   }, t.values_lede)), /*#__PURE__*/React.createElement("div", {
-    className: "pq-valores-rows"
+    className: "pq-valores-stage"
+  }, /*#__PURE__*/React.createElement("aside", {
+    className: "pq-valores-monogram",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pq-mono-stack"
+  }, t.values.map((v, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    className: 'pq-mono-letter' + (i === activeIdx ? ' is-active' : '') + (i < activeIdx ? ' is-past' : '') + (i > activeIdx ? ' is-future' : '')
+  }, v.letter))), /*#__PURE__*/React.createElement("div", {
+    className: "pq-mono-current",
+    key: activeIdx
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "pq-mono-current-idx"
+  }, "0", activeIdx + 1, " ", /*#__PURE__*/React.createElement("span", {
+    className: "pq-mono-current-sep"
+  }, "/"), " 06"), /*#__PURE__*/React.createElement("span", {
+    className: "pq-mono-current-name"
+  }, activeValue.name))), /*#__PURE__*/React.createElement("div", {
+    className: "pq-valores-rail"
   }, t.values.map((v, i) => /*#__PURE__*/React.createElement("article", {
     key: i,
-    className: `pq-valor reveal ${i % 2 === 0 ? 'pq-valor--left' : 'pq-valor--right'}`
+    ref: el => {
+      valueRefs.current[i] = el;
+    },
+    "data-idx": i,
+    className: 'pq-valor pq-valor-v2 reveal' + (i === activeIdx ? ' is-active' : '')
   }, /*#__PURE__*/React.createElement("div", {
-    className: "pq-valor-letter",
+    className: "pq-valor-mark",
     "aria-hidden": "true"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "pq-valor-letter-glyph"
-  }, v.letter)), /*#__PURE__*/React.createElement("div", {
+    className: "pq-valor-mark-glyph"
+  }, v.letter), /*#__PURE__*/React.createElement("span", {
+    className: "pq-valor-mark-rule"
+  })), /*#__PURE__*/React.createElement("div", {
     className: "pq-valor-body"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pq-valor-index"
-  }, "0", i + 1, " / 06"), /*#__PURE__*/React.createElement("h3", {
+  }, "0", i + 1, " ", /*#__PURE__*/React.createElement("span", {
+    className: "pq-valor-index-sep"
+  }, "/"), " 06"), /*#__PURE__*/React.createElement("h3", {
     className: "pq-valor-name"
   }, v.name), /*#__PURE__*/React.createElement("p", {
     className: "pq-valor-desc"
-  }, v.desc))))), /*#__PURE__*/React.createElement("div", {
+  }, v.desc)))))), /*#__PURE__*/React.createElement("div", {
     className: "pq-valores-closing reveal delay-2"
   }, t.values_closing)));
 };
