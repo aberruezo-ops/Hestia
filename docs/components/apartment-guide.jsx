@@ -2127,7 +2127,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               {room.points && room.points.length > 0 && (
                 <>
                   <h3 className="ag-h3">{lang === 'es' ? 'Leyenda del mapa' : 'Map legend'}</h3>
-                  <ol className="ag-recs ag-map-legend">
+                  <ol className="ag-recs ag-urb-points">
                     {room.points.map((p, i) => <li key={i}>{p}</li>)}
                   </ol>
                 </>
