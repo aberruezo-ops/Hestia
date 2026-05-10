@@ -303,6 +303,44 @@ const GUIDE_SHARED = {
         'Las toallas, úsalas solo en Hestía.',
       ],
     },
+    rules: {
+      title: 'Normas de Hestía',
+      intro: 'Estas normas vienen del contrato que firmaste con nosotros. Son sencillas y están pensadas para que tú, los próximos huéspedes y nuestros vecinos disfrutemos de Hestía.',
+      items: [
+        { icon: '🛒', t: 'Reponed lo que consumáis',
+          d: 'Hestía dispone de productos consumibles. Si gastáis o consumís algo, intentad reponerlo — salvo el kit de bienvenida, que es un pequeño regalo nuestro. Reponed también lo que consumáis fuera de ese kit.' },
+        { icon: '🌿', t: 'Cuidad el medio ambiente',
+          d: 'No malgastéis la luz ni el agua. No dejéis el aire acondicionado con las ventanas abiertas o cuando salgáis. Sentíos como en vuestro hogar.' },
+        { icon: '🪑', t: 'Recoged la terraza si salís',
+          d: 'Cojines, toldo y plantas — especialmente si hay viento, lluvia o predicción de mal tiempo.' },
+        { icon: '🛏️', t: 'Cuidad equipamiento y mobiliario',
+          d: 'No extraigáis nada de Hestía. Tras vuestra estancia haremos inventario; cualquier deterioro o sustracción será responsabilidad vuestra.' },
+        { icon: '🤫', t: 'Respetad el descanso',
+          d: 'El vuestro y el de los vecinos. Evitad ruidos, música o jaleo a deshoras.' },
+        { icon: '🚪', t: 'Hestía es solo para vosotros',
+          d: 'No para terceros que no figuren en la reserva.' },
+        { icon: '🕒', t: 'Check-in 15:00 · Check-out 11:00',
+          d: 'Necesitamos un margen considerable para dejar Hestía a punto para la siguiente llegada. Late check-out y early check-in sujetos a disponibilidad.' },
+        { icon: '🐾', t: 'Mascotas solo con aprobación previa',
+          d: 'No están permitidas salvo que nos lo hayáis pedido explícitamente y nosotros lo hayamos aprobado.' },
+        { icon: '🚭', t: 'No se fuma dentro de Hestía',
+          d: 'En toda la casa está prohibido.' },
+        { icon: '🏖️', t: 'Toallas solo dentro de Hestía',
+          d: 'No las uséis en la piscina ni en la playa. Para esos sitios, llevad las vuestras.' },
+        { icon: '🌬️', t: 'Tender solo en el tendedero',
+          d: 'No colguéis ropa en las barandillas ni en la terraza.' },
+        { icon: '🏊', t: 'Respetad las normas de la urbanización',
+          d: 'Especialmente el horario de piscina y zonas comunes. El incumplimiento es responsabilidad vuestra.' },
+        { icon: '👙', t: 'Urbanización textil',
+          d: 'No están permitidos el naturismo ni el topless en ninguna zona de la urbanización.' },
+        { icon: '👨‍👩‍👧', t: 'Menores bajo responsabilidad de sus padres',
+          d: 'Cualquier incidente con menores en Hestía o en zonas comunes es responsabilidad de sus padres o tutores.' },
+        { icon: '🛎️', t: 'Servicios comunes y exterior',
+          d: 'Lo que pase fuera de Hestía no es responsabilidad nuestra — pero siempre intentaremos ayudaros.' },
+        { icon: '🧺', t: 'Dejad Hestía limpia y recogida',
+          d: 'De las sábanas y toallas nos encargamos nosotros. Por favor, no las lavéis con ropa de otro color.' },
+      ],
+    },
     surroundings: {
       title: 'Alrededores y recomendaciones',
       intro: 'Sería imposible ofrecer un catálogo completo de recomendaciones sobre los alrededores de Hestía, pues sería infinito. Para empezar a explorar te recomendamos estas fuentes:',
@@ -438,6 +476,44 @@ const GUIDE_SHARED = {
         'Please take care of Hestía\'s textiles and furniture.',
         'Ask us if you want optional cleaning or extra textile services.',
         'Use towels only inside Hestía.',
+      ],
+    },
+    rules: {
+      title: 'Hestía house rules',
+      intro: 'These rules come from the contract you signed. They are simple — they exist so you, future guests and our neighbours all enjoy Hestía.',
+      items: [
+        { icon: '🛒', t: 'Replace what you use up',
+          d: 'Hestía has consumable supplies. If you use or finish something, please try to replace it — except the welcome kit, which is a small gift from us. Replace also what you consume beyond that kit.' },
+        { icon: '🌿', t: 'Look after the environment',
+          d: 'Do not waste water or electricity. Never run the AC with windows open or when you leave. Treat it as your own home.' },
+        { icon: '🪑', t: 'Tidy the terrace before going out',
+          d: 'Cushions, awning and plants — especially when there is wind, rain or bad weather forecast.' },
+        { icon: '🛏️', t: 'Care for furniture and equipment',
+          d: 'Do not remove anything from Hestía. After your stay we run an inventory; any damage or loss will be your responsibility.' },
+        { icon: '🤫', t: 'Respect rest hours',
+          d: 'Yours and your neighbours\'. Avoid noise, music or loud gatherings late at night or early morning.' },
+        { icon: '🚪', t: 'Hestía is only for you',
+          d: 'Not for third parties who are not on the booking.' },
+        { icon: '🕒', t: 'Check-in 15:00 · Check-out 11:00',
+          d: 'We need a considerable window to prepare Hestía for the next arrival. Late check-out and early check-in are subject to availability.' },
+        { icon: '🐾', t: 'Pets only with prior approval',
+          d: 'Not allowed unless you have asked us and we have approved them explicitly.' },
+        { icon: '🚭', t: 'No smoking inside Hestía',
+          d: 'Strictly forbidden in the whole apartment.' },
+        { icon: '🏖️', t: 'Towels stay inside Hestía',
+          d: 'Do not take them to the pool or the beach. Use your own for those.' },
+        { icon: '🌬️', t: 'Hang laundry on the drying rack only',
+          d: 'Not on railings or terrace edges.' },
+        { icon: '🏊', t: 'Respect the community rules',
+          d: 'Especially pool hours and shared areas. Breaking those rules is your responsibility.' },
+        { icon: '👙', t: 'Textile community',
+          d: 'Naturism and topless are not allowed anywhere in the urbanisation.' },
+        { icon: '👨‍👩‍👧', t: 'Minors under their parents\' responsibility',
+          d: 'Any incident with minors inside Hestía or in shared areas is the responsibility of their parents/guardians.' },
+        { icon: '🛎️', t: 'Common services and outside areas',
+          d: 'What happens outside Hestía is not our responsibility — but we will always try to help.' },
+        { icon: '🧺', t: 'Leave Hestía clean and tidy',
+          d: 'We take care of sheets and towels. Please do not wash them with coloured laundry.' },
       ],
     },
     surroundings: {
@@ -2147,9 +2223,28 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             </ol>
           </section>
 
+          {s.rules && (
+            <section id="ag-normas" className="ag-section ag-section-rules">
+              <span className="ag-section-num">05</span>
+              <h2 className="ag-h2">{s.rules.title}</h2>
+              <p className="ag-para">{s.rules.intro}</p>
+              <ul className="ag-rules-grid">
+                {s.rules.items.map((rule, i) => (
+                  <li key={i} className="ag-rule">
+                    <span className="ag-rule-icon" aria-hidden="true">{rule.icon}</span>
+                    <div className="ag-rule-body">
+                      <h4 className="ag-rule-title">{rule.t}</h4>
+                      <p className="ag-rule-desc">{rule.d}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
+
           {a.rooms.map((room, idx) => (
             <section key={room.id} id={`ag-${room.id}`} className={`ag-section ag-room ag-room-${room.id}`}>
-              <span className="ag-section-num">{String(idx + 5).padStart(2, '0')}</span>
+              <span className="ag-section-num">{String(idx + 6).padStart(2, '0')}</span>
               <h2 className="ag-h2">{room.title}</h2>
               <p className="ag-para ag-para-lead">{room.body}</p>
               <PhotoGrid photos={getRoomPhotos(room.id)} />
@@ -2169,7 +2264,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           ))}
 
           <section id="ag-alrededores" className="ag-section">
-            <span className="ag-section-num">11</span>
+            <span className="ag-section-num">12</span>
             <h2 className="ag-h2">{s.surroundings.title}</h2>
             <p className="ag-para">{s.surroundings.intro}</p>
 
@@ -2217,7 +2312,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-telefonos" className="ag-section">
-            <span className="ag-section-num">12</span>
+            <span className="ag-section-num">13</span>
             <h2 className="ag-h2">{s.phones.title}</h2>
             <div className="ag-wifi">
               <span className="ag-wifi-label">{s.phones.wifi.label}</span>
@@ -2236,7 +2331,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-feedback" className="ag-section">
-            <span className="ag-section-num">13</span>
+            <span className="ag-section-num">14</span>
             <h2 className="ag-h2">{s.feedback.title}</h2>
             {s.feedback.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
           </section>

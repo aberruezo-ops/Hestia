@@ -1662,9 +1662,19 @@ const STAY_DISCOUNTS = (window.PRICES_V2 && window.PRICES_V2.rules && Array.isAr
       { min:  6, pct: 0.05, excludeSeasons: [], es: '−5 % por estancia larga (6+ noches)',  en: '−5 % long stay (6+ nights)' },
     ];
 
-const PET_SUPP_FLAT = (window.PRICES_V2 && window.PRICES_V2.rules && typeof window.PRICES_V2.rules.petFlatFee === 'number')
-  ? window.PRICES_V2.rules.petFlatFee
-  : 50;       // €/estancia suplemento mascota (fallback)
+// Suplemento mascota. Contract: 10€/noche con máximo 50€/estancia.
+// Si rules.petPerNight/petMax existen, los respeta; si no, cae al
+// petFlatFee legacy (fijo) o al fallback hardcoded.
+const PET_RULES = (window.PRICES_V2 && window.PRICES_V2.rules) || {};
+const PET_PER_NIGHT = typeof PET_RULES.petPerNight === 'number' ? PET_RULES.petPerNight : null;
+const PET_MAX       = typeof PET_RULES.petMax       === 'number' ? PET_RULES.petMax       : null;
+const PET_SUPP_FLAT = typeof PET_RULES.petFlatFee   === 'number' ? PET_RULES.petFlatFee   : 50;
+const _petCost = (nights) => {
+  if (PET_PER_NIGHT !== null && PET_MAX !== null) {
+    return Math.min(nights * PET_PER_NIGHT, PET_MAX);
+  }
+  return PET_SUPP_FLAT;
+};
 
 // helpers compat con el motor de calendario
 const _be_adj = (ds, n) => {
@@ -1738,7 +1748,7 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
   const stayDiscAmt = stayD ? Math.round(baseTotal * stayD.pct) : 0;
   const afterStay   = baseTotal - stayDiscAmt;
 
-  const petAmt = withPets ? PET_SUPP_FLAT : 0;
+  const petAmt = withPets ? _petCost(nights) : 0;
   const directTotal  = afterStay + petAmt;
   const avgPerNight  = Math.round(afterStay / nights);
 

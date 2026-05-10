@@ -60,49 +60,79 @@
       }
     ],
     "directDiscount": 0,
-    "petFlatFee": 55,
+    "petPerNight": 10,
+    "petMax": 50,
+    "petFlatFee": 50,
     "extras": [
       {
-        "id": "cuna",
-        "label_es": "Cuna de bebé",
-        "label_en": "Baby cot",
+        "id": "huespedAdicional",
+        "label_es": "Huésped adicional (incluye sábanas y toallas)",
+        "label_en": "Extra guest (includes sheets and towels)",
+        "price": 20,
+        "unit": "noche"
+      },
+      {
+        "id": "toallas",
+        "label_es": "Juego de toallas adicional",
+        "label_en": "Extra towel set",
+        "price": 6,
+        "unit": "set"
+      },
+      {
+        "id": "sabanasIndividual",
+        "label_es": "Juego de sábanas adicional · individual",
+        "label_en": "Extra sheet set · single",
         "price": 10,
-        "unit": "estancia"
+        "unit": "set"
+      },
+      {
+        "id": "sabanasDoble",
+        "label_es": "Juego de sábanas adicional · doble",
+        "label_en": "Extra sheet set · double",
+        "price": 12,
+        "unit": "set"
       },
       {
         "id": "trona",
         "label_es": "Trona",
-        "label_en": "Baby chair",
-        "price": 10,
+        "label_en": "Baby high chair",
+        "price": 5,
         "unit": "estancia"
       },
       {
-        "id": "sabanas",
-        "label_es": "Juego de sábanas",
-        "label_en": "Bed linen set",
-        "price": 10,
-        "unit": "set"
-      },
-      {
-        "id": "toallas",
-        "label_es": "Juego de toallas",
-        "label_en": "Towel set",
-        "price": 10,
-        "unit": "set"
+        "id": "cuna",
+        "label_es": "Cuna (sábanas incluidas)",
+        "label_en": "Baby cot (sheets included)",
+        "price": 20,
+        "unit": "estancia"
       },
       {
         "id": "earlyCheckin",
-        "label_es": "Early check-in",
-        "label_en": "Early check-in",
+        "label_es": "Early check-in · 10 €/h antes de 15:00 (o 40 € desde 10:00)",
+        "label_en": "Early check-in · 10 €/h before 15:00 (or 40 € from 10:00)",
         "price": 10,
         "unit": "hora"
       },
       {
         "id": "lateCheckout",
-        "label_es": "Late check-out",
-        "label_en": "Late check-out",
+        "label_es": "Late check-out · 10 €/h después de 11:00 (o 40 € hasta 18:00)",
+        "label_en": "Late check-out · 10 €/h after 11:00 (or 40 € until 18:00)",
         "price": 10,
         "unit": "hora"
+      },
+      {
+        "id": "lateCheckin23",
+        "label_es": "Late check-in presencial · 21:00 → 23:00",
+        "label_en": "Late check-in (in person) · 21:00 → 23:00",
+        "price": 20,
+        "unit": "estancia"
+      },
+      {
+        "id": "lateCheckin00",
+        "label_es": "Late check-in presencial · 23:00 → 00:00",
+        "label_en": "Late check-in (in person) · 23:00 → 00:00",
+        "price": 40,
+        "unit": "estancia"
       }
     ],
     "stayDiscounts": [
