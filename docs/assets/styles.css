@@ -3636,7 +3636,6 @@ body.no-parallax .g-tile .img { transform: none !important; }
 :focus-visible {
   outline: 2px solid var(--sol-lt);
   outline-offset: 3px;
-  border-radius: 3px;
 }
 
 /* ================================================================
@@ -11194,4 +11193,27 @@ body.apt-bar-shown .widget-stack {
   ::view-transition-new(apt-main) {
     animation-duration: 80ms;
   }
+}
+
+/* ===========================================================
+   A11y · Focus rings (WCAG 2.4.7) — overrides
+   - Mouse clicks: no outline (cleaner UX, border-color shift suffices).
+   - Keyboard focus on cualquier elemento interactivo: ring cyan visible.
+   Estos selectores ganan a las reglas .X:focus { outline: none }
+   dispersas (mismo specificity, posición posterior en el archivo).
+   =========================================================== */
+:focus:not(:focus-visible) { outline: none; }
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+[role="tab"]:focus-visible,
+[role="radio"]:focus-visible,
+[role="checkbox"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--sol-lt);
+  outline-offset: 2px;
 }
