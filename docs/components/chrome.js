@@ -48,23 +48,34 @@ const Topbar = ({
   className: "topbar-link email hide-mobile",
   "aria-label": "Email"
 }, "info@hestiayourhome.com")), /*#__PURE__*/React.createElement("div", {
-  className: "lang"
+  className: "lang",
+  role: "group",
+  "aria-label": "Language"
 }, /*#__PURE__*/React.createElement("button", {
   className: lang === 'es' ? 'active' : '',
-  onClick: () => setLang('es')
+  onClick: () => setLang('es'),
+  "aria-pressed": lang === 'es',
+  "aria-label": "Espa\xF1ol"
 }, /*#__PURE__*/React.createElement("span", {
-  className: "lang-full"
+  className: "lang-full",
+  "aria-hidden": "true"
 }, "\uD83C\uDDEA\uD83C\uDDF8 Espa\xF1ol"), /*#__PURE__*/React.createElement("span", {
-  className: "lang-abbr"
+  className: "lang-abbr",
+  "aria-hidden": "true"
 }, "ES")), /*#__PURE__*/React.createElement("span", {
-  className: "divider"
+  className: "divider",
+  "aria-hidden": "true"
 }, "/"), /*#__PURE__*/React.createElement("button", {
   className: lang === 'en' ? 'active' : '',
-  onClick: () => setLang('en')
+  onClick: () => setLang('en'),
+  "aria-pressed": lang === 'en',
+  "aria-label": "English"
 }, /*#__PURE__*/React.createElement("span", {
-  className: "lang-full"
+  className: "lang-full",
+  "aria-hidden": "true"
 }, "\uD83C\uDDEC\uD83C\uDDE7 English"), /*#__PURE__*/React.createElement("span", {
-  className: "lang-abbr"
+  className: "lang-abbr",
+  "aria-hidden": "true"
 }, "EN")))), /*#__PURE__*/React.createElement("div", {
   className: "topbar-corner-fill",
   "aria-hidden": "true"
