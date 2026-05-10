@@ -1157,6 +1157,127 @@ const AdminApp = () => {
     className: "pe-input pe-input-num"
   })))), /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
+  }, /*#__PURE__*/React.createElement("h2", null, "Extras configurables"), /*#__PURE__*/React.createElement("p", {
+    className: "pe-lede"
+  }, "Items opcionales que el hu\xE9sped puede pedir desde el formulario de reserva. Edita label, precio y unidad. Eliminar una fila la quita de la web."), /*#__PURE__*/React.createElement("table", {
+    className: "pe-table pe-table-extras"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      minWidth: 110
+    }
+  }, "ID"), /*#__PURE__*/React.createElement("th", null, "Label ES"), /*#__PURE__*/React.createElement("th", null, "Label EN"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      width: 100
+    }
+  }, "Precio (\u20AC)"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      width: 130
+    }
+  }, "Unidad"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, (data.rules.extras || []).map((ex, i) => /*#__PURE__*/React.createElement("tr", {
+    key: ex.id || i
+  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: ex.id,
+    onChange: e => {
+      const arr = (data.rules.extras || []).slice();
+      arr[i] = {
+        ...arr[i],
+        id: e.target.value.trim()
+      };
+      update('rules.extras', arr);
+    },
+    className: "pe-input pe-mono"
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: ex.label_es,
+    onChange: e => {
+      const arr = (data.rules.extras || []).slice();
+      arr[i] = {
+        ...arr[i],
+        label_es: e.target.value
+      };
+      update('rules.extras', arr);
+    },
+    className: "pe-input"
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: ex.label_en,
+    onChange: e => {
+      const arr = (data.rules.extras || []).slice();
+      arr[i] = {
+        ...arr[i],
+        label_en: e.target.value
+      };
+      update('rules.extras', arr);
+    },
+    className: "pe-input"
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    step: "1",
+    value: ex.price,
+    onChange: e => {
+      const arr = (data.rules.extras || []).slice();
+      arr[i] = {
+        ...arr[i],
+        price: Number(e.target.value)
+      };
+      update('rules.extras', arr);
+    },
+    className: "pe-input pe-input-num"
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("select", {
+    value: ex.unit,
+    onChange: e => {
+      const arr = (data.rules.extras || []).slice();
+      arr[i] = {
+        ...arr[i],
+        unit: e.target.value
+      };
+      update('rules.extras', arr);
+    },
+    className: "pe-input"
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "estancia"
+  }, "por estancia"), /*#__PURE__*/React.createElement("option", {
+    value: "noche"
+  }, "por noche"), /*#__PURE__*/React.createElement("option", {
+    value: "hora"
+  }, "por hora"), /*#__PURE__*/React.createElement("option", {
+    value: "set"
+  }, "por set"), /*#__PURE__*/React.createElement("option", {
+    value: "unidad"
+  }, "por unidad"))), /*#__PURE__*/React.createElement("td", {
+    style: {
+      textAlign: 'right'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost pe-btn-sm",
+    onClick: () => {
+      const arr = (data.rules.extras || []).slice();
+      arr.splice(i, 1);
+      update('rules.extras', arr);
+    },
+    "aria-label": "Eliminar"
+  }, "\xD7")))))), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost pe-btn-sm",
+    style: {
+      marginTop: 8
+    },
+    onClick: () => {
+      const arr = (data.rules.extras || []).slice();
+      arr.push({
+        id: 'nuevo' + (arr.length + 1),
+        label_es: 'Nuevo extra',
+        label_en: 'New extra',
+        price: 0,
+        unit: 'estancia'
+      });
+      update('rules.extras', arr);
+    }
+  }, "+ Extra")), /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
   }, /*#__PURE__*/React.createElement("h2", null, "Estancia corta \xB7 precio penalizado"), /*#__PURE__*/React.createElement("p", {
     className: "pe-lede"
   }, "Para empujar a estancias de 5+ noches, las de 3 y 4 se cotizan como si duraran m\xE1s, menos un descuento fijo. Ej.: 3 noches = precio de 5 noches \u2212 10 \u20AC. Vac\xEDa la tabla para desactivar."), /*#__PURE__*/React.createElement("table", {
