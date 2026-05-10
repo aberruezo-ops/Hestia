@@ -407,6 +407,7 @@ const Apartments = ({
       srcSet: a.img.replace(/\.(jpg|jpeg|png)$/i, '.webp'),
       type: "image/webp"
     }), /*#__PURE__*/React.createElement("img", {
+      decoding: "async",
       src: a.img,
       alt: a.name,
       className: "apt-photo",

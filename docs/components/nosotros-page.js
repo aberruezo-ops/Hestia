@@ -80,6 +80,7 @@ const NosotrosHero = ({
     className: "nosotros-hero-img-wrap",
     "aria-hidden": "true"
   }, /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     src: "assets/photo-nosotros-hero.jpg",
     alt: "Alex y Fran, propietarios de Hest\xEDa Your Home, en Vera Playa",
     className: "nosotros-hero-img",
@@ -200,6 +201,7 @@ const NosotrosTeam = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "portrait"
   }, /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     src: "assets/photo-alex.jpg",
     alt: "Alex Berruezo",
     width: "731",
@@ -240,6 +242,7 @@ const NosotrosTeam = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "portrait"
   }, /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     src: "assets/photo-fran.jpg",
     alt: "Fran Moral",
     width: "925",

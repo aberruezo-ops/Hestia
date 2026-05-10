@@ -331,6 +331,7 @@ const AptPageHero = ({
     srcSet: apt.hero_img.replace(/\.(jpg|jpeg|png)$/i, '.webp'),
     type: "image/webp"
   }), /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     src: apt.hero_img,
     alt: d.name,
     className: "apt-page-hero-img"
@@ -494,6 +495,7 @@ const GalleryCarousel = ({
     srcSet: src.replace(/\.(jpg|jpeg|png)$/i, '.webp'),
     type: "image/webp"
   }), /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     src: src,
     alt: captions[i],
     loading: i === 0 ? 'eager' : 'lazy'
@@ -526,6 +528,7 @@ const GalleryCarousel = ({
     srcSet: src.replace(/\.(jpg|jpeg|png)$/i, '.webp'),
     type: "image/webp"
   }), /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     src: src,
     alt: "",
     loading: "lazy"
@@ -552,6 +555,7 @@ const GalleryCarousel = ({
     srcSet: imgs[cur].replace(/\.(jpg|jpeg|png)$/i, '.webp'),
     type: "image/webp"
   }), /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     className: "gc-lb-img",
     src: imgs[cur],
     alt: captions[cur],
@@ -623,6 +627,7 @@ const AptPageOthers = ({
       srcSet: o.hero_img.replace(/\.(jpg|jpeg|png)$/i, '.webp'),
       type: "image/webp"
     }), /*#__PURE__*/React.createElement("img", {
+      decoding: "async",
       src: o.hero_img,
       alt: d.name,
       className: "apt-other-img",
@@ -664,6 +669,7 @@ const AptFloorPlan = ({
   }, lang === 'es' ? 'El ático Thalassa se distribuye en una sola planta: salón, cocina, dos dormitorios, dos baños y terraza panorámica con vistas al mar y al Salar de los Canos.' : 'The Thalassa penthouse is laid out as a single open floor: living room, kitchen, two bedrooms, two bathrooms and a panoramic terrace with sea and Salar de los Canos views.'), /*#__PURE__*/React.createElement("div", {
     className: "apt-fp-img-wrap reveal"
   }, /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     src: apt.floorplan_img,
     alt: lang === 'es' ? `Plano de ${apt[lang].name}` : `Floor plan of ${apt[lang].name}`,
     className: "apt-fp-img",

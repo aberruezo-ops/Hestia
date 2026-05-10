@@ -82,6 +82,7 @@ const WatermarkBadge = ({
     ...pos
   }
 }, /*#__PURE__*/React.createElement("img", {
+  decoding: "async",
   src: "assets/logo-teal-transparent.png",
   alt: "",
   width: size,

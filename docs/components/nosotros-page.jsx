@@ -84,7 +84,7 @@ const NosotrosHero = ({ lang }) => {
   return (
     <section className="page-hero nosotros-hero">
       <div className="nosotros-hero-img-wrap" aria-hidden="true">
-        <img src="assets/photo-nosotros-hero.jpg" alt="Alex y Fran, propietarios de Hestía Your Home, en Vera Playa" className="nosotros-hero-img" width="1500" height="1125"/>
+        <img decoding="async" src="assets/photo-nosotros-hero.jpg" alt="Alex y Fran, propietarios de Hestía Your Home, en Vera Playa" className="nosotros-hero-img" width="1500" height="1125"/>
         <WatermarkBadge size={40} pos={{ bottom: 16, right: 16 }}/>
       </div>
       <div className="nosotros-hero-ripple" aria-hidden="true"/>
@@ -162,7 +162,7 @@ const NosotrosTeam = ({ lang }) => {
         <div className="nosotros-team-grid">
           <div className="nosotros-person reveal">
             <div className="portrait">
-              <img src="assets/photo-alex.jpg" alt="Alex Berruezo"
+              <img decoding="async" src="assets/photo-alex.jpg" alt="Alex Berruezo"
                 width="731" height="1014"
                 loading="lazy"
                 onError={e => { e.currentTarget.style.display='none'; e.currentTarget.nextSibling && (e.currentTarget.nextSibling.style.display='block'); }}/>
@@ -183,7 +183,7 @@ const NosotrosTeam = ({ lang }) => {
           </div>
           <div className="nosotros-person reveal delay-1">
             <div className="portrait">
-              <img src="assets/photo-fran.jpg" alt="Fran Moral"
+              <img decoding="async" src="assets/photo-fran.jpg" alt="Fran Moral"
                 width="925" height="2000"
                 loading="lazy"
                 onError={e => { e.currentTarget.style.display='none'; e.currentTarget.nextSibling && (e.currentTarget.nextSibling.style.display='block'); }}/>
