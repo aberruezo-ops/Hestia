@@ -387,116 +387,70 @@ const PorqueNombre = ({
   }, t.name_quote), /*#__PURE__*/React.createElement("cite", null, t.name_quote_attr))));
 };
 
-// PorqueValores v3 — sección "Nuestros valores", pinned cinemático.
-// Un único viewport sticky de 100vh sostiene un stage que avanza por las
-// 6 letras de HESTIA a medida que el usuario scrollea. Por cada fase:
-// (1) la letra gigante se desvanece con blur y la siguiente entra desde
-// un transform-origin distinto; (2) el cuerpo de texto remonta con un
-// stagger letter-by-letter del nombre; (3) la atmósfera de fondo
-// (radial-gradients hue-shifted) crossfade entre el valor saliente y
-// el entrante; (4) el strip inferior re-subraya la letra activa. La
-// barra de progreso superior y el riel del strip avanzan continuos.
-const PORQUE_V3_HUES = {
+// PorqueValores v4 — sección "Nuestros valores", una pantalla interactiva.
+// Sin scroll choreography ni sticky. Stage compacto (auto height) con
+// letra gigante a la izquierda y nombre + descripción a la derecha.
+// Debajo las 6 letras HESTIA como tabs clickables (role="tablist").
+// Auto-advance suave cada 7 s; pausa al hover/focus en la sección.
+// Navegación por teclado: ←/→/Home/End. Cada cambio orquesta una mini-
+// coreografía: hue del fondo crossfade, letra activa entra con blur
+// bridge, nombre letter-by-letter, descripción slide.
+const PORQUE_V4_HUES = {
   H: '209, 139, 139',
-  // melocotón-rosa — hospitalidad cálida
   E: '58, 170, 187',
-  // teal — escucha
   S: '201, 167, 107',
-  // arena — sencillez
   T: '212, 168, 74',
-  // sol — transparencia luminosa
   I: '140, 70, 120',
-  // ber — integridad
-  A: '125, 140, 90' // sage — arraigo
+  A: '125, 140, 90'
 };
+const PORQUE_V4_AUTOPLAY_MS = 7000;
 const PorqueValores = ({
   lang
 }) => {
   const t = PORQUE_COPY[lang];
-  const wrapRef = React.useRef(null);
   const stageRef = React.useRef(null);
-  const lastIdx = React.useRef(0);
   const [activeIdx, setActiveIdx] = React.useState(0);
-  const PHASES = t.values.length;
-
-  // Scroll-progress driver. Escribe --progress y --phase-t directamente en
-  // CSS variables del stage para evitar re-render por frame. Sólo
-  // setState cuando cruza una fase.
+  const [paused, setPaused] = React.useState(false);
+  const COUNT = t.values.length;
   React.useEffect(() => {
-    const wrap = wrapRef.current;
-    const stage = stageRef.current;
-    if (!wrap || !stage) return;
-    let raf = 0;
-    const compute = () => {
-      raf = 0;
-      const rect = wrap.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const total = rect.height - vh;
-      if (total <= 0) {
-        stage.style.setProperty('--progress', '0');
-        stage.style.setProperty('--phase-t', '0');
-        return;
-      }
-      const scrolled = -rect.top;
-      const p = Math.max(0, Math.min(0.99999, scrolled / total));
-      const fp = p * PHASES;
-      const idx = Math.min(PHASES - 1, Math.floor(fp));
-      const within = Math.max(0, Math.min(1, fp - idx));
-      stage.style.setProperty('--progress', ((idx + within) / PHASES).toFixed(4));
-      stage.style.setProperty('--phase-t', within.toFixed(3));
-      if (idx !== lastIdx.current) {
-        lastIdx.current = idx;
-        setActiveIdx(idx);
-      }
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(compute);
-    };
-    compute();
-    window.addEventListener('scroll', onScroll, {
-      passive: true
-    });
-    window.addEventListener('resize', onScroll);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, [PHASES]);
-
-  // Mouse parallax (desktop, no reduced motion). Escribe --mx / --my
-  // directamente en CSS vars; sin React re-render.
+    if (paused) return;
+    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+    const id = setInterval(() => {
+      setActiveIdx(i => (i + 1) % COUNT);
+    }, PORQUE_V4_AUTOPLAY_MS);
+    return () => clearInterval(id);
+  }, [paused, COUNT]);
   React.useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (window.matchMedia('(pointer: coarse)').matches) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const stage = stageRef.current;
-    if (!stage) return;
-    let raf = 0;
-    const onMove = e => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        const xn = e.clientX / window.innerWidth - 0.5;
-        const yn = e.clientY / window.innerHeight - 0.5;
-        stage.style.setProperty('--mx', xn.toFixed(3));
-        stage.style.setProperty('--my', yn.toFixed(3));
-      });
-    };
-    window.addEventListener('mousemove', onMove, {
-      passive: true
-    });
-    return () => {
-      window.removeEventListener('mousemove', onMove);
-      if (raf) cancelAnimationFrame(raf);
-    };
+    const el = stageRef.current;
+    if (el) el.style.setProperty('--autoplay-ms', `${PORQUE_V4_AUTOPLAY_MS}ms`);
   }, []);
   const v = t.values[activeIdx] || t.values[0];
   const nameChars = (v.name || '').split('');
+  const onSelect = idx => {
+    if (idx === activeIdx) return;
+    setActiveIdx(idx);
+  };
+  const onKeyNav = e => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      setActiveIdx(i => (i + 1) % COUNT);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      setActiveIdx(i => (i - 1 + COUNT) % COUNT);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      setActiveIdx(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      setActiveIdx(COUNT - 1);
+    }
+  };
   return /*#__PURE__*/React.createElement("section", {
-    className: "pq-valores pq-valores-v3 section-dark"
+    className: "pq-valores pq-valores-v4 section-dark"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "container pq-v3-intro"
+    className: "container pq-v4-intro"
   }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow pq-valores-eyebrow"
   }, t.values_eyebrow), /*#__PURE__*/React.createElement("h2", {
@@ -504,81 +458,93 @@ const PorqueValores = ({
   }, t.values_title), /*#__PURE__*/React.createElement("p", {
     className: "pq-valores-lede reveal delay-1"
   }, t.values_lede)), /*#__PURE__*/React.createElement("div", {
-    ref: wrapRef,
-    className: "pq-v3-pin-wrap"
-  }, /*#__PURE__*/React.createElement("div", {
     ref: stageRef,
-    className: "pq-v3-stage"
+    className: `pq-v4-stage${paused ? ' is-paused' : ''}`,
+    onMouseEnter: () => setPaused(true),
+    onMouseLeave: () => setPaused(false),
+    onFocus: () => setPaused(true),
+    onBlur: () => setPaused(false)
   }, /*#__PURE__*/React.createElement("div", {
-    className: "pq-v3-wash-stack",
+    className: "pq-v4-wash-stack",
     "aria-hidden": "true"
   }, t.values.map((vv, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
-    className: "pq-v3-wash-layer",
+    className: "pq-v4-wash-layer",
     style: {
-      '--hue': PORQUE_V3_HUES[vv.letter] || '212, 168, 74',
+      '--hue': PORQUE_V4_HUES[vv.letter] || '212, 168, 74',
       opacity: i === activeIdx ? 1 : 0
     }
   }))), /*#__PURE__*/React.createElement("div", {
-    className: "pq-v3-grain",
+    className: "pq-v4-grain",
     "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("header", {
-    className: "pq-v3-progress"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "pq-v3-progress-num"
-  }, "0", activeIdx + 1), /*#__PURE__*/React.createElement("span", {
-    className: "pq-v3-progress-track"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "pq-v3-progress-fill"
-  })), /*#__PURE__*/React.createElement("span", {
-    className: "pq-v3-progress-total"
-  }, "06")), /*#__PURE__*/React.createElement("div", {
-    className: "pq-v3-main"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "pq-v4-main"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "pq-v3-letter",
+    className: "pq-v4-letter",
     "aria-hidden": "true"
-  }, t.values.map((vv, i) => {
-    const cls = 'pq-v3-glyph' + (i === activeIdx ? ' is-active' : i < activeIdx ? ' is-past' : ' is-future');
-    return /*#__PURE__*/React.createElement("span", {
-      key: i,
-      className: cls
-    }, vv.letter);
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "pq-v3-text",
+  }, t.values.map((vv, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    className: 'pq-v4-glyph' + (i === activeIdx ? ' is-active' : '')
+  }, vv.letter))), /*#__PURE__*/React.createElement("div", {
+    className: "pq-v4-text",
     key: activeIdx
   }, /*#__PURE__*/React.createElement("div", {
-    className: "pq-v3-text-meta"
+    className: "pq-v4-text-meta"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "pq-v3-text-idx"
+    className: "pq-v4-text-idx"
   }, "0", activeIdx + 1, /*#__PURE__*/React.createElement("span", {
-    className: "pq-v3-text-idx-sep"
-  }, " / "), "06"), /*#__PURE__*/React.createElement("span", {
-    className: "pq-v3-text-chip"
+    className: "pq-v4-text-idx-sep"
+  }, " / "), "0", COUNT), /*#__PURE__*/React.createElement("span", {
+    className: "pq-v4-text-chip"
   }, v.letter)), /*#__PURE__*/React.createElement("h3", {
-    className: "pq-v3-text-name",
+    className: "pq-v4-text-name",
     "aria-label": v.name
   }, nameChars.map((ch, i) => /*#__PURE__*/React.createElement("span", {
     key: i,
-    className: "pq-v3-name-char",
+    className: "pq-v4-name-char",
     style: {
-      '--ch-delay': `${i * 28}ms`
+      '--ch-delay': `${i * 26}ms`
     }
   }, ch === ' ' ? ' ' : ch))), /*#__PURE__*/React.createElement("p", {
-    className: "pq-v3-text-desc"
-  }, v.desc))), /*#__PURE__*/React.createElement("footer", {
-    className: "pq-v3-strip",
-    "aria-hidden": "true"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pq-v3-strip-track"
-  }, t.values.map((vv, i) => /*#__PURE__*/React.createElement("span", {
+    className: "pq-v4-text-desc"
+  }, v.desc))), /*#__PURE__*/React.createElement("div", {
+    className: "pq-v4-strip",
+    role: "tablist",
+    "aria-label": lang === 'es' ? 'Valores de Hestía' : 'Hestía values',
+    onKeyDown: onKeyNav
+  }, t.values.map((vv, i) => /*#__PURE__*/React.createElement("button", {
     key: i,
-    className: 'pq-v3-strip-letter' + (i === activeIdx ? ' is-active' : i < activeIdx ? ' is-past' : '')
-  }, vv.letter))), /*#__PURE__*/React.createElement("div", {
-    className: "pq-v3-strip-rail"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pq-v3-strip-rail-fill"
-  }))))), /*#__PURE__*/React.createElement("div", {
-    className: "container pq-v3-outro"
+    type: "button",
+    role: "tab",
+    "aria-selected": i === activeIdx,
+    tabIndex: i === activeIdx ? 0 : -1,
+    className: 'pq-v4-strip-btn' + (i === activeIdx ? ' is-active' : ''),
+    style: {
+      '--hue': PORQUE_V4_HUES[vv.letter] || '212, 168, 74'
+    },
+    onClick: () => onSelect(i),
+    "aria-label": `${vv.letter} — ${vv.name}`
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "pq-v4-strip-letter"
+  }, vv.letter), i === activeIdx && !paused && /*#__PURE__*/React.createElement("span", {
+    className: "pq-v4-strip-ring",
+    key: activeIdx,
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 24 24",
+    className: "pq-v4-strip-ring-svg"
+  }, /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "12",
+    r: "10.5",
+    className: "pq-v4-strip-ring-track"
+  }), /*#__PURE__*/React.createElement("circle", {
+    cx: "12",
+    cy: "12",
+    r: "10.5",
+    className: "pq-v4-strip-ring-fill"
+  }))))))), /*#__PURE__*/React.createElement("div", {
+    className: "container pq-v4-outro"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pq-valores-closing reveal delay-2"
   }, t.values_closing)));
