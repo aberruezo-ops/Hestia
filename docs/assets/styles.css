@@ -515,11 +515,16 @@ p  { line-height: 1.65; font-weight: 300; }
   -webkit-backdrop-filter: blur(20px);
   color: var(--arena);
   flex-direction: column;
-  justify-content: center;
+  /* flex-start + padding-top generoso para que el primer item ('01 Hestía Mar')
+     no quede tapado por el header fijo en móviles. Centro horizontal mantenido. */
+  justify-content: flex-start;
   align-items: center;
+  padding-top: clamp(96px, 18vh, 140px);
   opacity: 0;
   pointer-events: none;
   transition: opacity .3s ease;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .mobile-menu.open {
   opacity: 1;
@@ -5992,7 +5997,9 @@ body.no-parallax .g-tile .img { transform: none !important; }
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 72px;
+  /* min-height generoso (cubre frase de 2 líneas + attr en móvil)
+     y crece con el viewport. clamp pequeño-grande. */
+  min-height: clamp(112px, 18vw, 140px);
   text-align: center;
   border-bottom: 1px solid var(--arena-dk);
 }
