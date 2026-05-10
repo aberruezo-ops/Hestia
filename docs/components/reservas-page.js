@@ -114,17 +114,31 @@ const RESERVAS_COPY = {
     guarantee_items: ['Same price or better than any platform', 'No platform commissions', 'Alex or Fran reply personally', 'Confirmation within 24 hours', 'Real flexibility on changes and cancellations']
   }
 };
+const _resExtrasList = () => {
+  const v = window.PRICES_V2 && window.PRICES_V2.rules && window.PRICES_V2.rules.extras;
+  return Array.isArray(v) ? v : [];
+};
+const _resExtraUnitSuffix = (unit, lang) => {
+  if (unit === 'noche') return lang === 'es' ? '/noche' : '/night';
+  if (unit === 'hora') return lang === 'es' ? '/hora' : '/hour';
+  if (unit === 'set') return lang === 'es' ? '/set' : '/set';
+  return '';
+};
 const PricePreview = ({
   apt,
   checkin,
   checkout,
   pets,
-  lang
+  lang,
+  extras = []
 }) => {
   if (!apt || !checkin || !checkout) return null;
   const calc = _calcStay(checkin, checkout, apt, pets === 'yes');
   if (!calc || calc.nights <= 0) return null;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
+  const extrasTotal = extras.reduce((s, e) => s + e.amount, 0);
+  const grandTotal = calc.directTotal + extrasTotal;
+  const grandAvg = Math.round(grandTotal / calc.nights);
   return /*#__PURE__*/React.createElement("div", {
     className: "price-engine price-engine-form"
   }, /*#__PURE__*/React.createElement("div", {
@@ -135,9 +149,9 @@ const PricePreview = ({
     className: "price-label-sm"
   }, lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to'), /*#__PURE__*/React.createElement("span", {
     className: "price-direct-total"
-  }, fmt(calc.directTotal)), /*#__PURE__*/React.createElement("span", {
+  }, fmt(grandTotal)), /*#__PURE__*/React.createElement("span", {
     className: "price-avg-night"
-  }, fmt(calc.avgPerNight), lang === 'es' ? '/noche' : '/night')), /*#__PURE__*/React.createElement("div", {
+  }, fmt(grandAvg), lang === 'es' ? '/noche' : '/night')), /*#__PURE__*/React.createElement("div", {
     className: "price-right-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-badge"
@@ -151,9 +165,12 @@ const PricePreview = ({
     className: "price-line price-line-disc"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
     className: "price-line"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento mascota (tarifa plana ${PET_SUPP_FLAT}€)` : `Pet supplement (flat fee ${PET_SUPP_FLAT}€)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento mascota (tarifa plana ${PET_SUPP_FLAT}€)` : `Pet supplement (flat fee ${PET_SUPP_FLAT}€)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), extras.map(ex => /*#__PURE__*/React.createElement("div", {
+    className: "price-line",
+    key: ex.id
+  }, /*#__PURE__*/React.createElement("span", null, ex.label, ex.unit === 'hora' && ` · ${ex.qty} h × ${ex.unitPrice} €`, ex.unit === 'noche' && ` · ${ex.qty} ${lang === 'es' ? 'noches' : 'nights'} × ${ex.unitPrice} €`), /*#__PURE__*/React.createElement("span", null, "+", fmt(ex.amount)))), /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-total"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'), /*#__PURE__*/React.createElement("span", null, fmt(calc.directTotal)))), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'), /*#__PURE__*/React.createElement("span", null, fmt(grandTotal)))), /*#__PURE__*/React.createElement("p", {
     className: "price-note"
   }, lang === 'es' ? '* Precio máximo orientativo. Si ves un precio mejor en cualquier plataforma, te lo mejoramos. Cuéntanos de ti y los tuyos — casi siempre podemos ajustar.' : '* Indicative maximum price. If you find a better price anywhere, we\'ll beat it. Tell us about your situation — we can almost always adjust.'));
 };
@@ -228,7 +245,10 @@ const ReservasForm = ({
   const [checkout, setCheckout] = React.useState('');
   const [guests, setGuests] = React.useState('');
   const [pets, setPets] = React.useState('no');
-  const [extras, setExtras] = React.useState([]);
+  // extrasSel: { [id]: qty }. 0/missing = no seleccionado.
+  // Para unidades no-hora, qty siempre es 1; para 'hora', el usuario edita.
+  const [extrasSel, setExtrasSel] = React.useState({});
+  const extrasList = _resExtrasList();
 
   // Step 3 — datos del canal + comentarios
   const [name, setName] = React.useState('');
@@ -248,8 +268,49 @@ const ReservasForm = ({
       cache: 'no-store'
     }).then(r => r.ok ? r.json() : null).then(j => setAvail(j)).catch(() => {}).finally(() => setAvailLoaded(true));
   }, []);
-  const toggleExtra = i => {
-    setExtras(prev => prev.includes(i) ? prev.filter(x => x !== i) : [...prev, i]);
+  const toggleExtra = id => {
+    setExtrasSel(prev => {
+      const cur = prev[id] || 0;
+      return {
+        ...prev,
+        [id]: cur > 0 ? 0 : 1
+      };
+    });
+  };
+  const setExtraQty = (id, qty) => {
+    const n = Math.max(1, Math.floor(Number(qty) || 1));
+    setExtrasSel(prev => ({
+      ...prev,
+      [id]: n
+    }));
+  };
+
+  // Computa los extras seleccionados con su importe ya calculado.
+  // Se evalúa SIEMPRE; si no hay noches válidas, los 'noche' dan amount 0
+  // pero igualmente quedan listados para mostrar al usuario.
+  const computeSelectedExtras = nights => {
+    return extrasList.filter(ex => (extrasSel[ex.id] || 0) > 0).map(ex => {
+      const qty = extrasSel[ex.id];
+      let amount, lineQty;
+      if (ex.unit === 'hora') {
+        lineQty = qty;
+        amount = ex.price * qty;
+      } else if (ex.unit === 'noche') {
+        lineQty = nights;
+        amount = ex.price * nights;
+      } else {
+        lineQty = 1;
+        amount = ex.price;
+      }
+      return {
+        id: ex.id,
+        label: lang === 'es' ? ex.label_es : ex.label_en,
+        unit: ex.unit,
+        unitPrice: ex.price,
+        qty: lineQty,
+        amount
+      };
+    });
   };
 
   // Validaciones
@@ -261,6 +322,9 @@ const ReservasForm = ({
 
   // Cálculo
   const calc = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes') : null;
+  const nightsForExtras = calc?.nights || 0;
+  const selectedExtras = computeSelectedExtras(nightsForExtras);
+  const extrasCount = Object.values(extrasSel).filter(v => v > 0).length;
   const blocked = avail && avail[apt] ? avail[apt].blocked : null;
   const isAvailable = step1Complete && availLoaded ? _resAvail(checkin, checkout, blocked) : null;
 
@@ -294,12 +358,35 @@ const ReservasForm = ({
     }, 60);
   };
 
-  // Mensaje a enviar (igual semántica que antes)
+  // Mensaje a enviar
   const buildMsg = () => {
-    const extrasText = extras.length > 0 ? '\nExtras: ' + extras.map(i => t.f_extras[i]).join(', ') : '';
-    const petsText = pets === 'yes' ? lang === 'es' ? 'Sí' : 'Yes' : 'No';
     const fmt = n => n.toLocaleString('es-ES') + ' €';
-    const priceBlock = calc ? lang === 'es' ? `\n💰 PRECIO ESTIMADO DIRECTO\n` + `   ${fmt(calc.directTotal)} total (${calc.nights} noches × ~${fmt(calc.avgPerNight)}/noche)\n` + (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${PET_SUPP_FLAT}€ tarifa plana)\n` : '') + `   ✓ Mejor precio garantizado · si encuentras un precio mejor, te lo mejoramos\n` : `\n💰 ESTIMATED DIRECT PRICE\n` + `   ${fmt(calc.directTotal)} total (${calc.nights} nights × ~${fmt(calc.avgPerNight)}/night)\n` + (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${PET_SUPP_FLAT}€ flat fee)\n` : '') + `   ✓ Best price guarantee · if you find a better price, we'll beat it\n` : '';
+    const extrasTotal = selectedExtras.reduce((s, e) => s + e.amount, 0);
+
+    // Bloque "Extras" en el cuerpo (entre Mascota y Precio)
+    let extrasText = '';
+    if (selectedExtras.length > 0) {
+      const headEs = '\nExtras:';
+      const headEn = '\nExtras:';
+      const lines = selectedExtras.map(ex => {
+        if (ex.unit === 'hora') {
+          return `  • ${ex.label} — ${ex.qty} h × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
+        }
+        if (ex.unit === 'noche') {
+          return `  • ${ex.label} — ${ex.qty} ${lang === 'es' ? 'noches' : 'nights'} × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
+        }
+        if (ex.amount > 0) {
+          return `  • ${ex.label} — ${fmt(ex.amount)}`;
+        }
+        return `  • ${ex.label}`;
+      });
+      const subtotal = extrasTotal > 0 ? `\n  Subtotal extras: ${fmt(extrasTotal)}` : '';
+      extrasText = (lang === 'es' ? headEs : headEn) + '\n' + lines.join('\n') + subtotal;
+    }
+    const petsText = pets === 'yes' ? lang === 'es' ? 'Sí' : 'Yes' : 'No';
+    const grandTotal = calc ? calc.directTotal + extrasTotal : 0;
+    const grandAvg = calc ? Math.round(grandTotal / calc.nights) : 0;
+    const priceBlock = calc ? lang === 'es' ? `\n💰 PRECIO ESTIMADO DIRECTO\n` + `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` + (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${PET_SUPP_FLAT}€ tarifa plana)\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Mejor precio garantizado · si encuentras un precio mejor, te lo mejoramos\n` : `\n💰 ESTIMATED DIRECT PRICE\n` + `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` + (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${PET_SUPP_FLAT}€ flat fee)\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Best price guarantee · if you find a better price, we'll beat it\n` : '';
     const lines = lang === 'es' ? [`¡Hola! Quiero hacer una consulta de reserva.\n`, `Hestía: ${aptNames[apt] || apt || '—'}`, `Nombre: ${name}`, channel === 'whatsapp' ? `Teléfono: ${tel}` : `Email: ${email}`, `Entrada: ${checkin}`, `Salida: ${checkout}`, `Huéspedes: ${guests}`, `Mascota: ${petsText}${extrasText}${priceBlock}`, `Comentarios: ${comments || '—'}`] : [`Hello! I'd like to enquire about a booking.\n`, `Hestía: ${aptNames[apt] || apt || '—'}`, `Name: ${name}`, channel === 'whatsapp' ? `Phone: ${tel}` : `Email: ${email}`, `Check-in: ${checkin}`, `Check-out: ${checkout}`, `Guests: ${guests}`, `Pet: ${petsText}${extrasText}${priceBlock}`, `Comments: ${comments || '—'}`];
     return lines.join('\n');
   };
@@ -318,7 +405,7 @@ const ReservasForm = ({
   // Resúmenes para los headers de cada step cuando están plegados
   const step1Summary = step1Complete ? /*#__PURE__*/React.createElement("span", {
     className: "rf-summary-line"
-  }, /*#__PURE__*/React.createElement("strong", null, aptNames[apt]), ' · ', checkin, " \u2192 ", checkout, ' · ', guests, pets === 'yes' && /*#__PURE__*/React.createElement(React.Fragment, null, " \xB7 ", lang === 'es' ? '🐾 mascota' : '🐾 pet'), extras.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, " \xB7 ", extras.length, " ", lang === 'es' ? 'extras' : 'extras')) : null;
+  }, /*#__PURE__*/React.createElement("strong", null, aptNames[apt]), ' · ', checkin, " \u2192 ", checkout, ' · ', guests, pets === 'yes' && /*#__PURE__*/React.createElement(React.Fragment, null, " \xB7 ", lang === 'es' ? '🐾 mascota' : '🐾 pet'), extrasCount > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, " \xB7 ", extrasCount, " ", lang === 'es' ? 'extras' : 'extras')) : null;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
   return /*#__PURE__*/React.createElement("div", {
     className: "reservas-form-wrap"
@@ -410,14 +497,36 @@ const ReservasForm = ({
     className: "form-extras-label"
   }, t.f_extras_label), /*#__PURE__*/React.createElement("div", {
     className: "form-extras-grid"
-  }, t.f_extras.map((ex, i) => /*#__PURE__*/React.createElement("label", {
-    key: i,
-    className: "form-extra-item"
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "checkbox",
-    checked: extras.includes(i),
-    onChange: () => toggleExtra(i)
-  }), ex)))), /*#__PURE__*/React.createElement("div", {
+  }, extrasList.map(ex => {
+    const qty = extrasSel[ex.id] || 0;
+    const checked = qty > 0;
+    const label = lang === 'es' ? ex.label_es : ex.label_en;
+    const suffix = _resExtraUnitSuffix(ex.unit, lang);
+    return /*#__PURE__*/React.createElement("label", {
+      key: ex.id,
+      className: `form-extra-item${checked ? ' is-checked' : ''}`
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "checkbox",
+      checked: checked,
+      onChange: () => toggleExtra(ex.id)
+    }), /*#__PURE__*/React.createElement("span", {
+      className: "form-extra-text"
+    }, label, ex.price > 0 && /*#__PURE__*/React.createElement("span", {
+      className: "form-extra-price"
+    }, " \xB7 ", ex.price, " \u20AC", suffix)), checked && ex.unit === 'hora' && /*#__PURE__*/React.createElement("span", {
+      className: "form-extra-qty-wrap"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "number",
+      min: "1",
+      step: "1",
+      value: qty,
+      onChange: e => setExtraQty(ex.id, e.target.value),
+      className: "form-extra-qty",
+      "aria-label": lang === 'es' ? 'Horas' : 'Hours'
+    }), /*#__PURE__*/React.createElement("span", {
+      className: "form-extra-qty-unit"
+    }, "h")));
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "rf-step-actions"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -467,7 +576,8 @@ const ReservasForm = ({
     checkin: checkin,
     checkout: checkout,
     pets: pets,
-    lang: lang
+    lang: lang,
+    extras: selectedExtras
   }), step === 2 && /*#__PURE__*/React.createElement("div", {
     className: "rf-step-actions"
   }, /*#__PURE__*/React.createElement("button", {

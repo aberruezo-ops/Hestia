@@ -6127,6 +6127,32 @@ body.no-parallax .g-tile .img { transform: none !important; }
   padding: 0;
   flex-shrink: 0;
 }
+.form-extra-item .form-extra-text { flex: 1; min-width: 0; }
+.form-extra-item .form-extra-price {
+  color: var(--ber);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.form-extra-item.is-checked { color: var(--ber-dk); }
+.form-extra-qty-wrap {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.form-extra-qty {
+  width: 56px;
+  padding: 4px 6px;
+  border: 1px solid color-mix(in oklab, var(--ber) 18%, transparent);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 13px;
+  text-align: center;
+  background: white;
+}
+.form-extra-qty:focus-visible { outline: 2px solid var(--sol); outline-offset: 1px; }
+.form-extra-qty-unit { color: var(--ink-soft); font-size: 12px; }
 .reservas-submit {
   width: 100%;
   padding: 16px;
