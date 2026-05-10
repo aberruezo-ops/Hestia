@@ -1819,7 +1819,7 @@ const DirectBookingModal = ({ lang, onClose }) => {
   const goNext = () => setIdx(i => (i + 1) % len);
 
   return (
-    <div className="dbm-backdrop" onClick={onClose} role="dialog" aria-modal="true">
+    <div className="dbm-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="dbm-title">
       <div className="dbm-modal" onClick={e => e.stopPropagation()}>
         <button
           type="button" className="dbm-close"
@@ -1831,7 +1831,7 @@ const DirectBookingModal = ({ lang, onClose }) => {
           <span className="eyebrow">
             {lang === 'es' ? 'Reserva directa' : 'Direct booking'}
           </span>
-          <h3 className="dbm-title">
+          <h3 id="dbm-title" className="dbm-title">
             {lang === 'es'
               ? <>La <em>mejor manera</em> de reservar</>
               : <>The <em>best way</em> to book</>}
@@ -2441,6 +2441,7 @@ const GuestAccessModal = ({ lang, onClose }) => {
         className={`ga-modal${status === 'error' ? ' is-error' : ''}${status === 'success' ? ' is-success' : ''}`}
         role="dialog"
         aria-modal="true"
+        aria-label={step === 'select' ? t.title_select : t.title_pin(HESTIA_APT_META[selectedApt]?.name || '')}
         onClick={e => e.stopPropagation()}
         style={selectedApt ? { '--ga-accent': HESTIA_APT_META[selectedApt].accent } : undefined}
       >

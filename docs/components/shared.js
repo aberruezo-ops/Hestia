@@ -2603,7 +2603,8 @@ const DirectBookingModal = ({
     className: "dbm-backdrop",
     onClick: onClose,
     role: "dialog",
-    "aria-modal": "true"
+    "aria-modal": "true",
+    "aria-labelledby": "dbm-title"
   }, /*#__PURE__*/React.createElement("div", {
     className: "dbm-modal",
     onClick: e => e.stopPropagation()
@@ -2617,6 +2618,7 @@ const DirectBookingModal = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "eyebrow"
   }, lang === 'es' ? 'Reserva directa' : 'Direct booking'), /*#__PURE__*/React.createElement("h3", {
+    id: "dbm-title",
     className: "dbm-title"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "La ", /*#__PURE__*/React.createElement("em", null, "mejor manera"), " de reservar") : /*#__PURE__*/React.createElement(React.Fragment, null, "The ", /*#__PURE__*/React.createElement("em", null, "best way"), " to book"))), /*#__PURE__*/React.createElement("div", {
     className: "dbm-ribbon"
@@ -3261,6 +3263,7 @@ const GuestAccessModal = ({
     className: `ga-modal${status === 'error' ? ' is-error' : ''}${status === 'success' ? ' is-success' : ''}`,
     role: "dialog",
     "aria-modal": "true",
+    "aria-label": step === 'select' ? t.title_select : t.title_pin(HESTIA_APT_META[selectedApt]?.name || ''),
     onClick: e => e.stopPropagation(),
     style: selectedApt ? {
       '--ga-accent': HESTIA_APT_META[selectedApt].accent
