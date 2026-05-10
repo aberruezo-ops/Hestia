@@ -1,7 +1,7 @@
 {
   "_doc": "Hestía pricing source of truth. Edited via /admin.html (GitHub PAT). Read by web at runtime via fetch('data/prices.json'). All dates are local Europe/Madrid (no timezone offsets).",
   "version": 1,
-  "updatedAt": "2026-05-09T19:57:35.565Z",
+  "updatedAt": "2026-05-10T20:07:57.703Z",
   "currency": "EUR",
   "apts": {
     "vm": {
@@ -66,28 +66,28 @@
         "id": "cuna",
         "label_es": "Cuna de bebé",
         "label_en": "Baby cot",
-        "price": 0,
+        "price": 10,
         "unit": "estancia"
       },
       {
         "id": "trona",
         "label_es": "Trona",
         "label_en": "Baby chair",
-        "price": 0,
+        "price": 10,
         "unit": "estancia"
       },
       {
         "id": "sabanas",
         "label_es": "Juego de sábanas",
         "label_en": "Bed linen set",
-        "price": 0,
+        "price": 10,
         "unit": "set"
       },
       {
         "id": "toallas",
         "label_es": "Juego de toallas",
         "label_en": "Towel set",
-        "price": 0,
+        "price": 10,
         "unit": "set"
       },
       {
