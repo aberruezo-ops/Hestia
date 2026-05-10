@@ -2,6 +2,21 @@
 // HESTÍA — componentes compartidos
 // ================================================================
 
+// View Transition helper: usa la API nativa del navegador (Chrome 111+,
+// Safari 18.2+, Firefox 144+). En navegadores sin soporte, ejecuta el
+// callback directamente sin animación. Se exporta como window._vt.
+const _vt = (cb) => {
+  if (typeof document !== 'undefined' && typeof document.startViewTransition === 'function') {
+    document.startViewTransition(() => {
+      // El callback es síncrono dentro del wrapper; React lotea los
+      // setState dentro de él para que la animación los capture juntos.
+      cb();
+    });
+  } else {
+    cb();
+  }
+};
+
 const HestiaLogoMark = ({ size = 40, color = '#3AAABB' }) => (
   <svg viewBox="0 0 120 120" width={size} height={size} aria-hidden="true">
     {/* Dos columnas H serif */}
@@ -1750,7 +1765,7 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
   return { nights, baseTotal, stayD, stayDiscAmt, afterStay, petAmt, directTotal, avgPerNight };
 };
 
-Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate });
+Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt });
 
 // ================================================================
 // DirectBookingPerks — sección "Reserva directa, una mejor manera"
@@ -2374,15 +2389,17 @@ const GuestAccessModal = ({ lang, onClose }) => {
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
-  const pickApt = (id) => {
+  const pickApt = (id) => _vt(() => {
     setSelectedApt(id);
     setStep('pin');
-  };
+  });
   const back = () => {
     if (currentApt) return; // si estás en una página Hestía, no hay paso atrás
-    setStep('select');
-    setPin('');
-    setStatus('idle');
+    _vt(() => {
+      setStep('select');
+      setPin('');
+      setStatus('idle');
+    });
   };
 
   const submit = (e) => {
