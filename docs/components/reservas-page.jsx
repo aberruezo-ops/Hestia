@@ -269,16 +269,16 @@ const ReservasForm = ({ lang }) => {
         <div className="form-row">
           <div className="form-field">
             <label>{t.f_name}</label>
-            <input type="text" placeholder={t.f_name_ph} value={name} onChange={e => setName(e.target.value)} required/>
+            <input type="text" placeholder={t.f_name_ph} value={name} onChange={e => setName(e.target.value)} required autoComplete="name"/>
           </div>
           <div className="form-field">
             <label>{t.f_tel}</label>
-            <input type="tel" placeholder={t.f_tel_ph} value={tel} onChange={e => setTel(e.target.value)}/>
+            <input type="tel" placeholder={t.f_tel_ph} value={tel} onChange={e => setTel(e.target.value)} autoComplete="tel"/>
           </div>
         </div>
         <div className="form-field full">
           <label>{t.f_email}</label>
-          <input type="email" placeholder={t.f_email_ph} value={email} onChange={e => setEmail(e.target.value)} required/>
+          <input type="email" placeholder={t.f_email_ph} value={email} onChange={e => setEmail(e.target.value)} required autoComplete="email"/>
         </div>
         <div className="form-row">
           <div className="form-field">

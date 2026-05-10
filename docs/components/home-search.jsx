@@ -377,13 +377,13 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests,
               <div className="hs-rc-contact-row">
                 <input className="hs-rc-input" type="text"
                   placeholder={lang === 'es' ? 'Nombre *' : 'Name *'}
-                  value={rcName} onChange={e => setRcName(e.target.value)}/>
+                  value={rcName} onChange={e => setRcName(e.target.value)} autoComplete="name"/>
                 <input className="hs-rc-input" type="email"
                   placeholder="Email *"
-                  value={rcEmail} onChange={e => setRcEmail(e.target.value)}/>
+                  value={rcEmail} onChange={e => setRcEmail(e.target.value)} autoComplete="email"/>
                 <input className="hs-rc-input" type="tel"
                   placeholder={lang === 'es' ? 'Teléfono (para WhatsApp)' : 'Phone (for WhatsApp)'}
-                  value={rcPhone} onChange={e => setRcPhone(e.target.value)}/>
+                  value={rcPhone} onChange={e => setRcPhone(e.target.value)} autoComplete="tel"/>
               </div>
             </div>
             <div className="hs-rc-actions">

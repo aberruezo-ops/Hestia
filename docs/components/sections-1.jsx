@@ -173,18 +173,18 @@ const HomeBookingModal = ({ apt, lang, onClose }) => {
             <div className="hbm-field">
               <label>{lang === 'es' ? 'Nombre *' : 'Name *'}</label>
               <input value={name} onChange={e => setName(e.target.value)}
-                     placeholder={lang === 'es' ? 'Tu nombre' : 'Your name'} autoFocus/>
+                     placeholder={lang === 'es' ? 'Tu nombre' : 'Your name'} autoFocus autoComplete="name"/>
             </div>
             <div className="hbm-field">
               <label>Email *</label>
               <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-                     placeholder="tu@email.com"/>
+                     placeholder="tu@email.com" autoComplete="email"/>
             </div>
           </div>
           <div className="hbm-row">
             <div className="hbm-field">
               <label>{lang === 'es' ? 'Teléfono' : 'Phone'} <span className="hbm-opt">{lang === 'es' ? '(opcional)' : '(optional)'}</span></label>
-              <input value={phone} onChange={e => setPhone(e.target.value)} placeholder="+34 600 000 000"/>
+              <input type="tel" value={phone} onChange={e => setPhone(e.target.value)} placeholder="+34 600 000 000" autoComplete="tel"/>
             </div>
             <div className="hbm-field hbm-field-wide">
               <label>{lang === 'es' ? 'Mensaje' : 'Message'} <span className="hbm-opt">{lang === 'es' ? '(opcional)' : '(optional)'}</span></label>
