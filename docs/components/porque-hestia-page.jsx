@@ -236,7 +236,7 @@ const PorqueLogo = ({ lang }) => {
                 [t.logo_sym_3_t, t.logo_sym_3_d],
               ].map(([title, desc], i) => (
                 <div key={i} className="pls-sym reveal" style={{ transitionDelay: `${i * 0.12}s` }}>
-                  <strong className="pls-sym-t">{title}</strong>
+                  <h3 className="pls-sym-t">{title}</h3>
                   <span className="pls-sym-d">{desc}</span>
                 </div>
               ))}
