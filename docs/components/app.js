@@ -61,7 +61,7 @@ const VideoIntro = ({
 };
 const App = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
-  const [introOver, setIntroOver] = React.useState(() => !!sessionStorage.getItem('hestia-intro'));
+  const [introOver, setIntroOver] = React.useState(() => !!sessionStorage.getItem('hestia-intro') || window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const {
     mode,
     scrolled
