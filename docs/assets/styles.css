@@ -9218,24 +9218,26 @@ footer,
   align-items: center;
   gap: 14px;
   padding: 14px 28px;
-  background: var(--ber);
-  color: var(--crema);
-  border: 0;
-  border-radius: 999px;
+  background: var(--sol);
+  color: var(--ber-dk);
+  border: 1px solid var(--sol);
+  border-radius: 10px 0 10px 0;
   font-family: var(--sans);
   font-size: 12px;
   letter-spacing: .16em;
   text-transform: uppercase;
   font-weight: 500;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(42,15,46,.18);
+  box-shadow: 0 8px 24px color-mix(in oklab, var(--sol) 28%, transparent);
   transition: transform .25s var(--ease-out, cubic-bezier(.23,1,.32,1)),
-              background .25s ease, box-shadow .25s ease;
+              background .25s ease, border-color .25s ease, box-shadow .25s ease, color .25s ease;
 }
 .dbt-btn:hover {
-  background: var(--ber-dk);
+  background: var(--sol-h);
+  border-color: var(--sol-h);
+  color: var(--crema);
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(42,15,46,.26);
+  box-shadow: 0 12px 32px color-mix(in oklab, var(--sol) 40%, transparent);
 }
 .dbt-btn:active { transform: translateY(0) scale(.98); }
 .dbt-arrow {
