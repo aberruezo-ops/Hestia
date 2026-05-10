@@ -268,13 +268,16 @@ const PorqueNombre = ({ lang }) => {
 };
 
 // PorqueValores v4 — sección "Nuestros valores", una pantalla interactiva.
-// Sin scroll choreography ni sticky. Stage compacto (auto height) con
-// letra gigante a la izquierda y nombre + descripción a la derecha.
-// Debajo las 6 letras HESTIA como tabs clickables (role="tablist").
-// Auto-advance suave cada 7 s; pausa al hover/focus en la sección.
-// Navegación por teclado: ←/→/Home/End. Cada cambio orquesta una mini-
-// coreografía: hue del fondo crossfade, letra activa entra con blur
-// bridge, nombre letter-by-letter, descripción slide.
+// Sin scroll choreography ni sticky. Stage compacto con letra gigante
+// a la izquierda (Playfair Display variable: opsz + wght animados en
+// keyframe de 10 s, por @property — la letra "transforma" su trazo
+// continuamente mientras está activa) y nombre + descripción a la
+// derecha. Debajo las 6 letras HESTIA como tabs clickables.
+//
+// Autoplay 10 s ininterrumpido (NO pausa al hover; sólo se pausa al
+// hacer focus por teclado para a11y de lectura con screen-reader).
+// Navegación por teclado: ←/→/Home/End. La letra se puede cambiar a
+// mano clicando un tab; la siguiente cíclica se retoma desde ahí.
 const PORQUE_V4_HUES = {
   H: '209, 139, 139',
   E: '58, 170, 187',
@@ -283,7 +286,7 @@ const PORQUE_V4_HUES = {
   I: '140, 70, 120',
   A: '125, 140, 90',
 };
-const PORQUE_V4_AUTOPLAY_MS = 7000;
+const PORQUE_V4_AUTOPLAY_MS = 10000;
 
 const PorqueValores = ({ lang }) => {
   const t = PORQUE_COPY[lang];
@@ -336,8 +339,6 @@ const PorqueValores = ({ lang }) => {
       <div
         ref={stageRef}
         className={`pq-v4-stage${paused ? ' is-paused' : ''}`}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
         onFocus={() => setPaused(true)}
         onBlur={() => setPaused(false)}
       >
