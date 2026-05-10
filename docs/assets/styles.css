@@ -11293,6 +11293,67 @@ body.apt-bar-shown .widget-stack {
 }
 .pe-rev-row { position: relative; }
 .pe-rev-pending { border-left: 4px solid #f59e0b; }
+
+/* PasteFromEmail — vista previa del parseo */
+.pe-paste-err {
+  color: #c0392b;
+  font-size: 13px;
+  font-weight: 500;
+}
+.pe-paste-preview {
+  margin-top: 18px;
+  padding: 18px;
+  background: rgba(245, 158, 11, 0.07);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-radius: 8px;
+}
+.pe-paste-preview-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.pe-paste-preview-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #f59e0b;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+.pe-paste-grid {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 8px 14px;
+  margin: 0;
+  font-size: 14px;
+}
+.pe-paste-grid dt {
+  font-weight: 600;
+  color: var(--ink-soft);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  align-self: start;
+  padding-top: 2px;
+}
+.pe-paste-grid dd {
+  margin: 0;
+  color: var(--ink);
+}
+.pe-paste-grid dd em { color: var(--ink-soft); font-style: italic; }
+.pe-paste-text {
+  white-space: pre-wrap;
+  line-height: 1.55;
+  padding: 8px 10px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  max-height: 200px;
+  overflow-y: auto;
+}
 .pe-rev-head {
   display: flex;
   align-items: center;
