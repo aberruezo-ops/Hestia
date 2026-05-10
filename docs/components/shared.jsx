@@ -1763,6 +1763,7 @@ const DIRECT_PERKS = {
     { id:'descuento', icon:'🎁', stat:'−30%',    t:'Descuentos por estancia larga.',                  d:'−3 % a partir de 7 noches · −15 % a partir de 15 · −30 % a partir de 29. Aplicables en temporadas elegibles.' },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Guía privada incluida.',                          d:'Recomendaciones de Alex y Fran, instrucciones de Hestía, restaurantes, calas y rutas. Activa toda la estancia.' },
     { id:'mascotas',  icon:'🐾', stat:'3/3',     t:'Mascotas bienvenidas.',                           d:'En los tres. Petición previa y un pequeño suplemento — sin tarifas abusivas ni vetos.' },
+    { id:'proceso',   icon:'📜', stat:'20%',     t:'Contrato, prereserva y resto al llegar.',         d:'Te enviamos un borrador de contrato con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelación y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Una pequeña prereserva a convenir — normalmente el 20 % del total — se paga al formalizar el contrato; el resto, al llegar a Hestía. Acusamos recibo de todo (contrato y pago) para darte confianza, garantía y seguridad en cada paso.' },
   ],
   en: [
     { id:'precio',    icon:'💰', stat:'✓',       t:'We beat any price.',                              d:'We beat any platform price. And if you tell us a lower one than ours, we beat that too. No questions, no small print.' },
@@ -1773,6 +1774,7 @@ const DIRECT_PERKS = {
     { id:'descuento', icon:'🎁', stat:'−30%',    t:'Long-stay discounts.',                            d:'−3 % from 7 nights · −15 % from 15 · −30 % from 29. Apply in eligible seasons.' },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Private guide included.',                         d:'Alex & Fran recommendations, Hestía instructions, restaurants, hidden coves and routes. Active throughout your stay.' },
     { id:'mascotas',  icon:'🐾', stat:'3/3',     t:'Pets welcome.',                                   d:'In all three Hestías. On request and with a small supplement — no abusive fees, no blanket bans.' },
+    { id:'proceso',   icon:'📜', stat:'20%',     t:'Contract, deposit and balance on arrival.',       d:'We send you a draft contract with the rights and obligations of both parties (prices, payments, cancellation terms and house rules). You review it, fill it in, sign and return it. A small deposit to agree — usually 20 % of the total — is paid when the contract is signed; the rest, on arrival at Hestía. We acknowledge everything (contract and payment) so you have trust, guarantee and security at every step.' },
   ],
 };
 

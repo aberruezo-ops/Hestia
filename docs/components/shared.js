@@ -2494,6 +2494,12 @@ const DIRECT_PERKS = {
     stat: '3/3',
     t: 'Mascotas bienvenidas.',
     d: 'En los tres. Petición previa y un pequeño suplemento — sin tarifas abusivas ni vetos.'
+  }, {
+    id: 'proceso',
+    icon: '📜',
+    stat: '20%',
+    t: 'Contrato, prereserva y resto al llegar.',
+    d: 'Te enviamos un borrador de contrato con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelación y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Una pequeña prereserva a convenir — normalmente el 20 % del total — se paga al formalizar el contrato; el resto, al llegar a Hestía. Acusamos recibo de todo (contrato y pago) para darte confianza, garantía y seguridad en cada paso.'
   }],
   en: [{
     id: 'precio',
@@ -2543,6 +2549,12 @@ const DIRECT_PERKS = {
     stat: '3/3',
     t: 'Pets welcome.',
     d: 'In all three Hestías. On request and with a small supplement — no abusive fees, no blanket bans.'
+  }, {
+    id: 'proceso',
+    icon: '📜',
+    stat: '20%',
+    t: 'Contract, deposit and balance on arrival.',
+    d: 'We send you a draft contract with the rights and obligations of both parties (prices, payments, cancellation terms and house rules). You review it, fill it in, sign and return it. A small deposit to agree — usually 20 % of the total — is paid when the contract is signed; the rest, on arrival at Hestía. We acknowledge everything (contract and payment) so you have trust, guarantee and security at every step.'
   }]
 };
 const DIRECT_RIBBON = {
