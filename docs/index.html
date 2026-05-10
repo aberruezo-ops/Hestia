@@ -118,19 +118,17 @@
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react.development.js'"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react-dom.development.js'"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/babel.min.js'"></script>
-
 <script>
   window.__TWEAKS__ = { starfield: true, parallax: true };
 
   const COMPONENT_FILES = [
-    'components/shared.jsx',
-    'components/chrome.jsx',
-    'components/sections-1.jsx',
-    'components/sections-2.jsx',
-    'components/tweaks.jsx',
-    'components/home-search.jsx',
-    'components/app.jsx',
+    'components/shared.js',
+    'components/chrome.js',
+    'components/sections-1.js',
+    'components/sections-2.js',
+    'components/tweaks.js',
+    'components/home-search.js',
+    'components/app.js',
   ];
 
   async function loadComponents() {
@@ -144,9 +142,8 @@
       const res = await fetch(file + '?t=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
-      const transformed = Babel.transform(code, { presets: ['react'] }).code;
       // eslint-disable-next-line no-eval
-      eval(transformed);
+      eval(code);
     }
   }
 
