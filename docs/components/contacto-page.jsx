@@ -112,7 +112,7 @@ const PersonCard = ({ name, role, langLabel, phone, waLink, quote, initial, acce
   <div className="contacto-card" style={{ '--card-accent': accent }}>
     <div className="contacto-avatar">
       {imgSrc
-        ? <img src={imgSrc} alt={name} onError={e => { e.currentTarget.style.display='none'; }}/>
+        ? <img src={imgSrc} alt={name} loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
         : initial}
     </div>
     <div className="contacto-card-body">
