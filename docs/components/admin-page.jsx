@@ -1007,6 +1007,111 @@ const AdminApp = () => {
       </div>
 
       <div className="pe-card">
+        <h2>Extras configurables</h2>
+        <p className="pe-lede">
+          Items opcionales que el huésped puede pedir desde el formulario
+          de reserva. Edita label, precio y unidad. Eliminar una fila la
+          quita de la web.
+        </p>
+        <table className="pe-table pe-table-extras">
+          <thead>
+            <tr>
+              <th style={{minWidth: 110}}>ID</th>
+              <th>Label ES</th>
+              <th>Label EN</th>
+              <th style={{width: 100}}>Precio (€)</th>
+              <th style={{width: 130}}>Unidad</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {(data.rules.extras || []).map((ex, i) => (
+              <tr key={ex.id || i}>
+                <td>
+                  <input type="text"
+                    value={ex.id}
+                    onChange={e => {
+                      const arr = (data.rules.extras || []).slice();
+                      arr[i] = { ...arr[i], id: e.target.value.trim() };
+                      update('rules.extras', arr);
+                    }}
+                    className="pe-input pe-mono" />
+                </td>
+                <td>
+                  <input type="text"
+                    value={ex.label_es}
+                    onChange={e => {
+                      const arr = (data.rules.extras || []).slice();
+                      arr[i] = { ...arr[i], label_es: e.target.value };
+                      update('rules.extras', arr);
+                    }}
+                    className="pe-input" />
+                </td>
+                <td>
+                  <input type="text"
+                    value={ex.label_en}
+                    onChange={e => {
+                      const arr = (data.rules.extras || []).slice();
+                      arr[i] = { ...arr[i], label_en: e.target.value };
+                      update('rules.extras', arr);
+                    }}
+                    className="pe-input" />
+                </td>
+                <td>
+                  <input type="number" min="0" step="1"
+                    value={ex.price}
+                    onChange={e => {
+                      const arr = (data.rules.extras || []).slice();
+                      arr[i] = { ...arr[i], price: Number(e.target.value) };
+                      update('rules.extras', arr);
+                    }}
+                    className="pe-input pe-input-num" />
+                </td>
+                <td>
+                  <select
+                    value={ex.unit}
+                    onChange={e => {
+                      const arr = (data.rules.extras || []).slice();
+                      arr[i] = { ...arr[i], unit: e.target.value };
+                      update('rules.extras', arr);
+                    }}
+                    className="pe-input">
+                    <option value="estancia">por estancia</option>
+                    <option value="noche">por noche</option>
+                    <option value="hora">por hora</option>
+                    <option value="set">por set</option>
+                    <option value="unidad">por unidad</option>
+                  </select>
+                </td>
+                <td style={{textAlign:'right'}}>
+                  <button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
+                    onClick={() => {
+                      const arr = (data.rules.extras || []).slice();
+                      arr.splice(i, 1);
+                      update('rules.extras', arr);
+                    }}
+                    aria-label="Eliminar">×</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
+          style={{marginTop: 8}}
+          onClick={() => {
+            const arr = (data.rules.extras || []).slice();
+            arr.push({
+              id: 'nuevo' + (arr.length + 1),
+              label_es: 'Nuevo extra',
+              label_en: 'New extra',
+              price: 0,
+              unit: 'estancia',
+            });
+            update('rules.extras', arr);
+          }}>+ Extra</button>
+      </div>
+
+      <div className="pe-card">
         <h2>Estancia corta · precio penalizado</h2>
         <p className="pe-lede">
           Para empujar a estancias de 5+ noches, las de 3 y 4 se cotizan

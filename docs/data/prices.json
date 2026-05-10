@@ -61,6 +61,50 @@
     ],
     "directDiscount": 0,
     "petFlatFee": 55,
+    "extras": [
+      {
+        "id": "cuna",
+        "label_es": "Cuna de bebé",
+        "label_en": "Baby cot",
+        "price": 0,
+        "unit": "estancia"
+      },
+      {
+        "id": "trona",
+        "label_es": "Trona",
+        "label_en": "Baby chair",
+        "price": 0,
+        "unit": "estancia"
+      },
+      {
+        "id": "sabanas",
+        "label_es": "Juego de sábanas",
+        "label_en": "Bed linen set",
+        "price": 0,
+        "unit": "set"
+      },
+      {
+        "id": "toallas",
+        "label_es": "Juego de toallas",
+        "label_en": "Towel set",
+        "price": 0,
+        "unit": "set"
+      },
+      {
+        "id": "earlyCheckin",
+        "label_es": "Early check-in",
+        "label_en": "Early check-in",
+        "price": 10,
+        "unit": "hora"
+      },
+      {
+        "id": "lateCheckout",
+        "label_es": "Late check-out",
+        "label_en": "Late check-out",
+        "price": 10,
+        "unit": "hora"
+      }
+    ],
     "stayDiscounts": [
       {
         "minNights": 7,
