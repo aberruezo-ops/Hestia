@@ -35,6 +35,19 @@ const PORQUE_COPY = {
     name_quote: '«El primer día que lo dijimos en voz alta, supimos que era el único nombre posible.»',
     name_quote_attr: '— Fran Moral',
 
+    values_eyebrow: 'Nuestros valores',
+    values_title: (<>HESTIA, una palabra<br/><em>y seis maneras de habitarla.</em></>),
+    values_lede: 'El nombre que recibimos de la diosa griega no es solo símbolo: es una guía. Cada letra de Hestía nombra un valor que practicamos a diario. Seis ideas que se suman en una sola: la confianza.',
+    values: [
+      { letter: 'H', name: 'Hospitalidad', desc: 'La llama que recibe. Hestía es la diosa del hogar y guarda el fuego de bienvenida — el que se honra al partir y al volver. Cada Hestía se enciende para ti antes de que llegues.' },
+      { letter: 'E', name: 'Escucha',      desc: 'Personas, no clientes. Alex en español, Fran en inglés. Conocemos tu nombre antes de que cruces la puerta y sabemos lo que necesitas porque nos lo cuentas — y porque escuchamos.' },
+      { letter: 'S', name: 'Sencillez',    desc: 'Sin recepción. Sin oficina. Sin formularios. Lo esencial hecho con cuidado: tres llaves, tres casas, dos personas al teléfono. Lo demás sobra.' },
+      { letter: 'T', name: 'Transparencia', desc: 'Sin letra pequeña. Precios claros, fotos reales, distancias medidas en metros. Si algo no está, lo decimos. Si algo se rompe, lo arreglamos. Lo que ves es lo que hay.' },
+      { letter: 'I', name: 'Integridad',   desc: 'Lo que prometemos al reservar es lo que entregamos al abrir la puerta. La coherencia entre el primer mensaje y la última noche. Cuidamos cada Hestía como si fuera nuestra — porque, en cierto modo, lo es.' },
+      { letter: 'A', name: 'Arraigo',      desc: 'No inventamos nada. Hestía huele a sal, a olivar, a calima del Sahara. Llevamos décadas en Vera Playa y eso es lo que entregamos: no un decorado, sino el sitio real.' },
+    ],
+    values_closing: (<>Seis valores que se suman en uno: <em>la confianza.</em></>),
+
     principles_eyebrow: 'Nuestros principios',
     principles_title: (<>Cuatro ideas que nunca<br/><em>negociamos.</em></>),
     principles: [
@@ -87,6 +100,19 @@ const PORQUE_COPY = {
     name_p3: 'Fran is a classical philologist — he knows Greek names from the inside. When the time came to name the project, the answer already existed. Hestía: the one who transforms a place into a home. The keeper of the welcoming fire. Exactly what we try to be.',
     name_quote: '"The first time we said it aloud, we knew it was the only possible name."',
     name_quote_attr: '— Fran Moral',
+
+    values_eyebrow: 'Our values',
+    values_title: (<>HESTIA, one word<br/><em>and six ways to inhabit it.</em></>),
+    values_lede: 'The name we received from the Greek goddess is not only a symbol: it is a guide. Every letter of Hestía names a value we practice every day. Six ideas that add up to one: trust.',
+    values: [
+      { letter: 'H', name: 'Hospitality',  desc: 'The flame that welcomes. Hestía is the goddess of the hearth — keeper of the fire honoured when leaving and returning. Every Hestía is lit for you before you arrive.' },
+      { letter: 'E', name: 'Empathy',      desc: 'People, not clients. Alex in Spanish, Fran in English. We know your name before you cross the door and what you need — because you tell us, and because we listen.' },
+      { letter: 'S', name: 'Simplicity',   desc: 'No reception. No office. No forms. The essentials done with care: three keys, three homes, two people on the phone. Anything more is in the way.' },
+      { letter: 'T', name: 'Transparency', desc: 'No small print. Clear prices, real photos, distances measured in metres. If something is missing, we say so. If something breaks, we fix it. What you see is what is there.' },
+      { letter: 'I', name: 'Integrity',    desc: 'What we promise at booking is what we hand over when the door opens. Consistency between the first message and the last night. We care for every Hestía as if it were ours — because in a way it is.' },
+      { letter: 'A', name: 'Authenticity', desc: 'We invented nothing. Hestía smells of salt, olive grove, Saharan calima. We have been in Vera Playa for decades — and that is what we hand over: not a stage set, but the real place.' },
+    ],
+    values_closing: (<>Six values that add up to one: <em>trust.</em></>),
 
     principles_eyebrow: 'Our principles',
     principles_title: (<>Four ideas we never<br/><em>compromise on.</em></>),
@@ -259,6 +285,31 @@ const PorqueNombre = ({ lang }) => {
   );
 };
 
+const PorqueValores = ({ lang }) => {
+  const t = PORQUE_COPY[lang];
+  return (
+    <section className="pq-valores section-dark">
+      <div className="container">
+        <div className="eyebrow pq-valores-eyebrow">{t.values_eyebrow}</div>
+        <h2 className="reveal pq-valores-title">{t.values_title}</h2>
+        <p className="pq-valores-lede reveal delay-1">{t.values_lede}</p>
+        <div className="pq-valores-grid">
+          {t.values.map((v, i) => (
+            <div key={i} className="pq-valor reveal" style={{ transitionDelay: `${i * 0.08}s` }}>
+              <div className="pq-valor-letter" aria-hidden="true">{v.letter}</div>
+              <div className="pq-valor-body">
+                <div className="pq-valor-name">{v.name}</div>
+                <div className="pq-valor-desc">{v.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="pq-valores-closing reveal delay-2">{t.values_closing}</div>
+      </div>
+    </section>
+  );
+};
+
 const PorqueColores = ({ lang }) => (
   <section className="nos-colores section-cream">
     <div className="container">
@@ -369,6 +420,7 @@ const PorquePageApp = () => {
         <PorqueOrigen lang={lang} />
         <PorqueLogo lang={lang} />
         <PorqueNombre lang={lang} />
+        <PorqueValores lang={lang} />
         <PorqueColores lang={lang} />
         <PorquePrincipios lang={lang} />
         <PorqueViajero lang={lang} />
