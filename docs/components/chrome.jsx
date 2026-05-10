@@ -199,8 +199,8 @@ const FloatingChat = ({ lang }) => {
   const [open, setOpen] = React.useState(false);
   return (
     <div className={`float-chat ${open ? 'open' : ''}`}>
-      <div className="bubble-panel" role="dialog" aria-hidden={!open}>
-        <h4>{lang === 'es' ? 'Hablemos.' : 'Let\'s talk.'}</h4>
+      <div className="bubble-panel" role="dialog" aria-hidden={!open} aria-labelledby="float-chat-title">
+        <h4 id="float-chat-title">{lang === 'es' ? 'Hablemos.' : 'Let\'s talk.'}</h4>
         <p className="small">
           {lang === 'es'
             ? 'Te responde una persona. En minutos, no en días.'

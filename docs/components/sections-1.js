@@ -227,7 +227,8 @@ const HomeBookingModal = ({
     className: "hbm-overlay",
     onClick: onClose,
     role: "dialog",
-    "aria-modal": "true"
+    "aria-modal": "true",
+    "aria-labelledby": "hbm-apt-title"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hbm-card",
     onClick: e => e.stopPropagation()
@@ -240,6 +241,7 @@ const HomeBookingModal = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "hbm-apt-num"
   }, apt.num), /*#__PURE__*/React.createElement("div", {
+    id: "hbm-apt-title",
     className: "hbm-apt-name"
   }, "HEST\xCDA ", /*#__PURE__*/React.createElement("strong", null, apt.name.replace('Hestía ', ''))), /*#__PURE__*/React.createElement("p", {
     className: "hbm-sub"
