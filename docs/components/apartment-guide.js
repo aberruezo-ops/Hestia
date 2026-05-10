@@ -3653,6 +3653,7 @@ const AptGuideView = ({
     }, /*#__PURE__*/React.createElement("span", {
       className: "ag-photo-frame"
     }, /*#__PURE__*/React.createElement("img", {
+      decoding: "async",
       src: p.src,
       alt: p.caption || '',
       loading: "lazy"

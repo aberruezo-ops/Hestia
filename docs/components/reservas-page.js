@@ -361,6 +361,7 @@ const ReservasAside = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "r-avatar"
   }, /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     src: "assets/photo-alex.jpg",
     alt: "Alex Berruezo",
     width: "731",
@@ -398,6 +399,7 @@ const ReservasAside = ({
       background: 'var(--vt)'
     }
   }, /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
     src: "assets/photo-fran.jpg",
     alt: "Fran Moral",
     width: "925",
