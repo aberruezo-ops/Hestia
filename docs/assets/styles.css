@@ -10688,7 +10688,7 @@ body.apt-bar-shown .widget-stack {
 .opiniones-tt-sub {
   text-align: center;
   font-size: 14px;
-  color: var(--ink-soft);
+  color: color-mix(in oklab, var(--arena) 78%, transparent);
   max-width: 620px;
   margin: 14px auto 24px;
   line-height: 1.5;
@@ -10706,9 +10706,9 @@ body.apt-bar-shown .widget-stack {
   gap: 6px;
   padding: 9px 16px;
   border-radius: 12px 0 12px 0;
-  border: 1px solid color-mix(in oklab, var(--ber) 20%, transparent);
+  border: 1px solid rgba(240, 232, 213, 0.22);
   background: transparent;
-  color: var(--ber);
+  color: color-mix(in oklab, var(--arena) 85%, transparent);
   font-family: var(--sans);
   font-size: 12px;
   letter-spacing: .1em;
@@ -10718,17 +10718,18 @@ body.apt-bar-shown .widget-stack {
   transition: background .25s ease, color .25s ease, border-color .25s ease;
 }
 .opiniones-tab:hover {
-  background: color-mix(in oklab, var(--ber) 6%, transparent);
-  border-color: var(--ber);
+  background: rgba(240, 232, 213, 0.06);
+  border-color: rgba(240, 232, 213, 0.45);
+  color: var(--arena);
 }
 .opiniones-tab.is-active {
-  background: var(--ber-dk);
+  background: rgba(58, 170, 187, 0.12);
   color: var(--sol);
-  border-color: var(--ber-dk);
+  border-color: var(--sol);
 }
 .opiniones-tab-count {
   font-size: 10px;
-  opacity: 0.7;
+  opacity: 0.75;
   letter-spacing: .04em;
   font-weight: 400;
 }
@@ -10748,7 +10749,7 @@ body.apt-bar-shown .widget-stack {
 .opiniones-empty {
   text-align: center;
   font-size: 14px;
-  color: var(--ink-soft);
+  color: color-mix(in oklab, var(--arena) 70%, transparent);
   font-style: italic;
   padding: 40px 0;
 }
