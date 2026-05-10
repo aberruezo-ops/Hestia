@@ -5428,20 +5428,19 @@ body.no-parallax .g-tile .img { transform: none !important; }
 
 /* --- PorqueValores · acrónimo HESTIA (cinematic) --- */
 /* ================================================================
-   PorqueValores — sección "Nuestros valores" (rediseño v2)
+   PorqueValores v3 — sección "Nuestros valores", pinned cinemático
 
-   Filosofía: scroll-driven monogram. Sticky a la izquierda, las 6
-   letras de HESTIA apiladas vertical; la activa se ilumina con un
-   crossfade + blur bridge (técnica Emil) mientras las demás quedan
-   en outline tenue. A la derecha, 6 bloques de valor en cascada con
-   stagger refinado. Línea de progreso vertical decorativa siguiendo
-   el scroll de la sección.
+   Filosofía: una pantalla pinned (sticky) sostiene el stage; el scroll
+   avanza por 6 fases que muestran las 6 letras de HESTIA. Cada cambio
+   de fase orquesta: letra gigante (crossfade + blur bridge + parallax
+   de ratón), texto a la derecha (name letter-by-letter, desc desliza
+   con blur), atmósfera de fondo (radial-gradients por hue), strip
+   inferior (letra activa con glow + riel horizontal continuo).
 
-   Easing único, hidden details:
-   - cubic-bezier(0.23, 1, 0.32, 1) para entradas y morph (strong
-     ease-out — directo de animations.dev).
-   - Sólo transform / opacity / filter animados (GPU-friendly).
-   - prefers-reduced-motion: opacity sólo; sin morph ni transformaciones.
+   Hidden details: scroll y mouse escriben CSS vars directamente — sin
+   re-render React por frame. Sólo cuando cruza una fase se reactualiza
+   el estado (para regenerar el texto con stagger). Sólo transform /
+   opacity / filter animados.
    ================================================================ */
 
 :root {
@@ -5449,46 +5448,12 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 
 .pq-valores {
-  padding: clamp(80px, 10vw, 140px) var(--page-pad);
-  background:
-    radial-gradient(1200px 700px at 20% 0%, rgba(123,59,107,0.35), transparent 60%),
-    radial-gradient(900px 600px at 100% 100%, rgba(58,170,187,0.10), transparent 70%),
-    var(--ber-dk);
+  padding: 0;
+  background: var(--ber-dk);
   color: var(--arena);
   position: relative;
   overflow: hidden;
 }
-
-/* Línea vertical de progreso (decorativa) */
-.pq-valores-progress {
-  position: absolute;
-  top: 0; bottom: 0;
-  left: max(16px, calc((100vw - 1240px) / 2 - 32px));
-  width: 1px;
-  background: linear-gradient(180deg,
-    transparent 0%,
-    rgba(240, 232, 213, 0.08) 8%,
-    rgba(240, 232, 213, 0.08) 92%,
-    transparent 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-.pq-valores-progress::before {
-  content: '';
-  position: absolute;
-  top: 8%;
-  left: -0.5px;
-  width: 2px;
-  height: calc((100% - 16%) * var(--progress, 0));
-  background: linear-gradient(180deg, var(--sol-h), var(--sol-lt));
-  box-shadow: 0 0 16px rgba(212, 168, 74, 0.45);
-  transition: height 200ms var(--pq-ease);
-  border-radius: 2px;
-}
-@media (max-width: 980px) {
-  .pq-valores-progress { display: none; }
-}
-
 .pq-valores .container {
   max-width: 1240px;
   margin: 0 auto;
@@ -5496,9 +5461,14 @@ body.no-parallax .g-tile .img { transform: none !important; }
   z-index: 2;
 }
 
-.pq-valores-head {
-  max-width: 720px;
-  margin-bottom: clamp(60px, 8vw, 110px);
+/* Intro / outro estáticos del section v3 */
+.pq-v3-intro {
+  padding: clamp(80px, 10vw, 140px) var(--page-pad) clamp(32px, 5vw, 64px);
+  max-width: 1240px;
+}
+.pq-v3-outro {
+  padding: clamp(32px, 5vw, 64px) var(--page-pad) clamp(80px, 10vw, 140px);
+  max-width: 1240px;
 }
 .pq-valores-eyebrow { color: var(--sol-lt); }
 .pq-valores-title {
@@ -5507,6 +5477,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   line-height: 1.06;
   margin: 16px 0 28px;
   letter-spacing: -0.005em;
+  max-width: 720px;
 }
 .pq-valores-title em { font-style: italic; color: var(--sol-lt); }
 .pq-valores-lede {
@@ -5517,231 +5488,326 @@ body.no-parallax .g-tile .img { transform: none !important; }
   margin: 0;
 }
 
-/* Stage: dos columnas, monograma sticky + raíl de valores */
-.pq-valores-stage {
-  display: grid;
-  grid-template-columns: minmax(180px, 320px) minmax(0, 1fr);
-  gap: clamp(40px, 6vw, 96px);
-  align-items: start;
+/* Wrapper de scroll: alto total define cuánto "dura" la pinned section.
+   6 fases × 85vh = 510vh. La fase activa se calcula en JS a partir del
+   getBoundingClientRect del wrap; sticky inside dura 1 viewport. */
+.pq-v3-pin-wrap {
+  position: relative;
+  height: calc(6 * 85vh);
 }
 @media (max-width: 980px) {
-  .pq-valores-stage {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
+  .pq-v3-pin-wrap { height: calc(6 * 110vh); }
 }
 
-/* Monograma sticky */
-.pq-valores-monogram {
+.pq-v3-stage {
   position: sticky;
-  top: 18vh;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: clamp(20px, 3vw, 40px);
+  padding: clamp(28px, 4vw, 56px) clamp(20px, 5vw, 80px);
+  overflow: hidden;
+  isolation: isolate;
+  /* fallbacks por si JS no carga */
+  --progress: 0;
+  --phase-t: 0;
+  --mx: 0;
+  --my: 0;
+}
+
+/* Atmósfera: stack de capas, una por valor, crossfade por opacity */
+.pq-v3-wash-stack {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.pq-v3-wash-layer {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1100px 800px at 22% 30%, rgba(var(--hue), 0.28), transparent 60%),
+    radial-gradient(900px  700px at 78% 80%, rgba(var(--hue), 0.14), transparent 70%),
+    radial-gradient(600px  500px at 50% 50%, rgba(var(--hue), 0.06), transparent 80%);
+  transition: opacity 1000ms var(--pq-ease);
+  will-change: opacity;
+}
+
+/* Grain overlay para textura analógica sutil */
+.pq-v3-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.6) 0.5px, transparent 0.5px),
+    radial-gradient(rgba(0,0,0,0.4) 0.5px, transparent 0.5px);
+  background-size: 4px 4px, 5px 5px;
+  background-position: 0 0, 2px 2px;
+}
+
+/* Cabecera del stage: contador + barra continua */
+.pq-v3-progress {
+  position: relative;
+  z-index: 3;
   display: flex;
-  flex-direction: column;
-  gap: 28px;
-  align-items: flex-start;
-  padding-left: 8px;
+  align-items: center;
+  gap: 18px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(240, 232, 213, 0.55);
+}
+.pq-v3-progress-num {
+  color: var(--sol-lt);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+}
+.pq-v3-progress-total {
+  color: rgba(240, 232, 213, 0.3);
+  font-variant-numeric: tabular-nums;
+}
+.pq-v3-progress-track {
+  flex: 1;
+  height: 1px;
+  background: rgba(240, 232, 213, 0.12);
+  overflow: hidden;
+  position: relative;
+}
+.pq-v3-progress-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--sol-lt), var(--sol-h));
+  transform-origin: left center;
+  transform: scaleX(var(--progress, 0));
+  will-change: transform;
+}
+
+/* Cuerpo principal: letra gigante + texto */
+.pq-v3-main {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(24px, 5vw, 80px);
+  min-height: 0;
+}
+
+.pq-v3-letter {
+  position: relative;
+  height: 100%;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
   user-select: none;
 }
-@media (max-width: 980px) {
-  .pq-valores-monogram { display: none; }
-}
 
-.pq-mono-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.pq-v3-glyph {
+  position: absolute;
   font-family: var(--serif);
   font-style: italic;
-  line-height: 0.92;
-  letter-spacing: -0.01em;
-}
-.pq-mono-letter {
-  display: block;
-  font-size: clamp(48px, 5.2vw, 78px);
   font-weight: 300;
+  font-size: clamp(220px, 40vw, 580px);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg,
+    var(--sol-lt) 0%,
+    var(--sol-h)  55%,
+    rgba(184, 122, 44, 0.85) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 60px 100px rgba(212, 168, 74, 0.30))
+          blur(10px);
+  opacity: 0;
+  transform-style: preserve-3d;
+  transform:
+    translate3d(calc(var(--mx, 0) * 16px), calc(var(--my, 0) * 16px), 0)
+    rotateX(calc(var(--my, 0) * -4deg))
+    rotateY(calc(var(--mx, 0) *  4deg))
+    scale(0.86);
+  transition:
+    opacity 950ms var(--pq-ease),
+    filter  950ms var(--pq-ease),
+    transform 950ms var(--pq-ease);
+  will-change: opacity, filter, transform;
+}
+.pq-v3-glyph.is-past   { transform: scale(1.06) translateY(-2vh); }
+.pq-v3-glyph.is-future { transform: scale(0.88) translateY( 2vh); }
+.pq-v3-glyph.is-active {
+  opacity: 1;
+  filter: drop-shadow(0 60px 120px rgba(212, 168, 74, 0.45)) blur(0);
+  transform:
+    translate3d(calc(var(--mx, 0) * 16px), calc(var(--my, 0) * 16px), 0)
+    rotateX(calc(var(--my, 0) * -4deg))
+    rotateY(calc(var(--mx, 0) *  4deg))
+    scale(1);
+}
+
+/* Panel de texto a la derecha */
+.pq-v3-text {
+  position: relative;
+  max-width: 56ch;
+  /* re-anima cada vez que cambia key={activeIdx} */
+  animation: pqV3Slide 800ms var(--pq-ease);
+}
+@keyframes pqV3Slide {
+  0%   { opacity: 0; transform: translateY(18px); filter: blur(3px); }
+  60%  { filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+.pq-v3-text-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(240, 232, 213, 0.55);
+}
+.pq-v3-text-idx { font-variant-numeric: tabular-nums; }
+.pq-v3-text-idx-sep { opacity: 0.4; }
+.pq-v3-text-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 8px;
+  border: 1px solid rgba(212, 168, 74, 0.55);
+  border-radius: 999px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--sol-lt);
+  background: rgba(212, 168, 74, 0.07);
+}
+
+.pq-v3-text-name {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(36px, 4.8vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.012em;
+  color: var(--arena);
+  margin: 0 0 28px;
+  /* importante para que los chars hagan stagger respetando espacios */
+  white-space: pre-wrap;
+}
+.pq-v3-name-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(4px);
+  animation: pqNameChar 720ms var(--pq-ease) forwards;
+  animation-delay: var(--ch-delay, 0ms);
+  /* glow sutil sobre el nombre activo */
+  text-shadow: 0 8px 30px rgba(212, 168, 74, 0.20);
+}
+@keyframes pqNameChar {
+  0%   { opacity: 0; transform: translateY(28px); filter: blur(4px); }
+  60%  { filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+.pq-v3-text-desc {
+  font-size: clamp(15px, 1.4vw, 18px);
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(240, 232, 213, 0.85);
+  max-width: 50ch;
+  margin: 0;
+}
+
+/* Strip inferior: letras + riel continuo */
+.pq-v3-strip {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.pq-v3-strip-track {
+  display: flex;
+  gap: clamp(20px, 3.5vw, 48px);
+  align-items: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+}
+.pq-v3-strip-letter {
+  font-size: clamp(20px, 2.4vw, 30px);
   color: rgba(240, 232, 213, 0.18);
   transition:
-    color   500ms var(--pq-ease),
-    opacity 500ms var(--pq-ease),
+    color     500ms var(--pq-ease),
     transform 500ms var(--pq-ease),
-    filter  500ms var(--pq-ease);
-  will-change: color, transform, filter;
+    text-shadow 500ms var(--pq-ease);
 }
-.pq-mono-letter.is-past {
-  color: rgba(240, 232, 213, 0.32);
-  opacity: 0.6;
-}
-.pq-mono-letter.is-future {
-  color: rgba(240, 232, 213, 0.14);
-  opacity: 0.55;
-}
-.pq-mono-letter.is-active {
+.pq-v3-strip-letter.is-past { color: rgba(240, 232, 213, 0.36); }
+.pq-v3-strip-letter.is-active {
   color: var(--sol-lt);
-  background: linear-gradient(180deg, var(--sol-lt) 0%, var(--sol-h) 100%);
+  background: linear-gradient(180deg, var(--sol-lt), var(--sol-h));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  opacity: 1;
-  transform: translateX(6px);
-  filter: drop-shadow(0 0 24px rgba(212, 168, 74, 0.35));
+  transform: translateY(-3px) scale(1.18);
+  text-shadow: 0 10px 28px rgba(212, 168, 74, 0.45);
 }
-
-/* Tarjeta del valor activo bajo el stack */
-.pq-mono-current {
-  margin-top: 12px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(240, 232, 213, 0.12);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-height: 80px;
-  /* Re-anima cuando cambia activeIdx (key prop en JSX) */
-  animation: pqMonoFade 600ms var(--pq-ease);
-}
-@keyframes pqMonoFade {
-  0%   { opacity: 0; transform: translateY(8px); filter: blur(2px); }
-  60%  { filter: blur(0); }
-  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
-}
-.pq-mono-current-idx {
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--sol-lt);
-  opacity: 0.85;
-}
-.pq-mono-current-sep { opacity: 0.4; margin: 0 4px; }
-.pq-mono-current-name {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(20px, 1.9vw, 26px);
-  font-weight: 400;
-  color: var(--arena);
-  line-height: 1.1;
-}
-
-/* Raíl de valores (columna derecha) */
-.pq-valores-rail {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(56px, 8vh, 120px);
-}
-
-.pq-valor-v2 {
-  display: grid;
-  grid-template-columns: 64px minmax(0, 1fr);
-  gap: clamp(20px, 2.4vw, 40px);
-  align-items: start;
-  position: relative;
-  padding: clamp(12px, 1.6vw, 24px) 0;
-  /* Reset reglas viejas: anular grid 2-col, alternancia, border-top, etc. */
-  border-top: 0;
-}
-.pq-valor-v2::after { display: none; }
-
-/* Marker columna izquierda: letra + regla */
-.pq-valor-mark {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-  padding-top: 4px;
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 700ms var(--pq-ease), transform 700ms var(--pq-ease);
-}
-.pq-valor-mark-glyph {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(36px, 3.6vw, 52px);
-  font-weight: 400;
-  line-height: 1;
-  background: linear-gradient(180deg, var(--sol-lt) 0%, var(--sol-h) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 8px 24px rgba(212, 168, 74, 0.20));
-}
-.pq-valor-mark-rule {
-  display: block;
-  width: 0;
+.pq-v3-strip-rail {
+  width: min(70%, 600px);
   height: 1px;
-  background: linear-gradient(90deg, var(--sol-h), transparent);
-  transition: width 900ms var(--pq-ease) 250ms;
+  background: rgba(240, 232, 213, 0.10);
+  position: relative;
+  overflow: hidden;
 }
-.pq-valor-v2.in .pq-valor-mark {
-  opacity: 1;
-  transform: translateY(0);
-}
-.pq-valor-v2.in .pq-valor-mark-rule { width: 48px; }
-.pq-valor-v2.is-active .pq-valor-mark-rule {
-  width: 64px;
-  box-shadow: 0 0 12px rgba(212, 168, 74, 0.5);
-}
-
-/* Cuerpo del valor */
-.pq-valor-v2 .pq-valor-body {
-  opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity   700ms var(--pq-ease) 100ms,
-    transform 700ms var(--pq-ease) 100ms;
-}
-.pq-valor-v2.in .pq-valor-body {
-  opacity: 1;
-  transform: translateY(0);
+.pq-v3-strip-rail-fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--sol-lt), var(--sol-h));
+  transform-origin: left center;
+  transform: scaleX(var(--progress, 0));
+  will-change: transform;
 }
 
-.pq-valor-v2 .pq-valor-index {
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--sol-lt);
-  opacity: 0.65;
-  margin-bottom: 14px;
-}
-.pq-valor-index-sep { opacity: 0.4; margin: 0 4px; }
-
-.pq-valor-v2 .pq-valor-name {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(28px, 3.2vw, 46px);
-  font-weight: 400;
-  color: var(--arena);
-  margin: 0 0 18px;
-  line-height: 1.08;
-  letter-spacing: -0.005em;
-  transition: color 500ms var(--pq-ease);
-}
-.pq-valor-v2.is-active .pq-valor-name {
-  color: #fff;
-}
-
-.pq-valor-v2 .pq-valor-desc {
-  font-size: clamp(14.5px, 1.25vw, 16.5px);
-  font-weight: 300;
-  color: rgba(240, 232, 213, 0.72);
-  line-height: 1.78;
-  max-width: 56ch;
-  margin: 0;
-  transition: color 500ms var(--pq-ease);
-}
-.pq-valor-v2.is-active .pq-valor-desc {
-  color: rgba(240, 232, 213, 0.92);
-}
-
+/* Mobile: layout en columna, letra más pequeña, parallax desactivada por
+   pointer:coarse (en JS), pero por si acaso reseteamos vars.            */
 @media (max-width: 980px) {
-  .pq-valor-v2 {
-    grid-template-columns: 1fr;
-    gap: 18px;
+  .pq-v3-stage {
+    grid-template-rows: auto auto 1fr auto;
+    padding: 24px 20px;
   }
-  .pq-valor-mark-glyph { font-size: clamp(72px, 22vw, 120px); }
-  .pq-valor-mark-rule { width: 0; }
-  .pq-valor-v2.in .pq-valor-mark-rule { width: 36px; }
+  .pq-v3-main {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(28vh, 1fr) auto;
+    gap: 8px;
+    align-items: end;
+  }
+  .pq-v3-letter { min-height: 32vh; }
+  .pq-v3-glyph {
+    font-size: clamp(180px, 56vw, 320px);
+    --mx: 0;
+    --my: 0;
+  }
+  .pq-v3-text-name { font-size: clamp(30px, 8vw, 44px); }
+  .pq-v3-text-desc { font-size: 15px; max-width: 100%; }
+  .pq-v3-strip-rail { width: 80%; }
 }
 
 .pq-valores-closing {
@@ -5778,19 +5844,21 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pq-mono-letter,
-  .pq-valor-mark,
-  .pq-valor-v2 .pq-valor-body,
-  .pq-valor-v2 .pq-valor-name,
-  .pq-valor-v2 .pq-valor-desc {
+  .pq-v3-glyph,
+  .pq-v3-strip-letter,
+  .pq-v3-wash-layer {
     transition: opacity 200ms ease, color 200ms ease;
     transform: none !important;
     filter: none !important;
   }
-  .pq-valor-mark { opacity: 1; }
-  .pq-valor-v2 .pq-valor-body { opacity: 1; }
-  .pq-valores-progress::before { transition: none; }
-  .pq-mono-current { animation: none; }
+  .pq-v3-text { animation: none; }
+  .pq-v3-name-char {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .pq-v3-glyph.is-active { opacity: 1; }
 }
 
 .nos-viajero {
