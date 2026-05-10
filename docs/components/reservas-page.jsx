@@ -254,7 +254,7 @@ const ReservasForm = ({ lang }) => {
 
   return (
     <div className="reservas-form-wrap">
-      <div className="reservas-form-title">{t.form_title}</div>
+      <h2 className="reservas-form-title">{t.form_title}</h2>
       <div className="reservas-form-sub">{t.form_sub}</div>
       <form className="reservas-form" onSubmit={sendWhatsApp}>
         <div className="form-field full">
@@ -358,7 +358,7 @@ const ReservasAside = ({ lang }) => {
   const t = RESERVAS_COPY[lang];
   return (
     <aside className="reservas-aside">
-      <div className="reservas-aside-title">{t.aside_title}</div>
+      <h2 className="reservas-aside-title">{t.aside_title}</h2>
       <div className="reservas-person-card" style={{ '--card-accent': 'var(--sol)' }}>
         <div className="r-avatar">
           <img src="assets/photo-alex.jpg" alt="Alex Berruezo" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
