@@ -276,6 +276,25 @@ const OpinionesPageApp = () => {
         <FraseHogar lang={lang} />
         <OpinionesRatings lang={lang} />
         <OpinionesTestimonials lang={lang} />
+        <section className="opiniones-share-cta">
+          <div className="container">
+            <div className="osc-eyebrow">{lang === 'es' ? '¿Has dormido en Hestía?' : 'Have you stayed at Hestía?'}</div>
+            <h2 className="osc-title">
+              {lang === 'es'
+                ? <>Tu opinión <em>nos ayuda</em>.</>
+                : <>Your opinion <em>helps us</em>.</>}
+            </h2>
+            <p className="osc-text">
+              {lang === 'es'
+                ? 'Escríbenos en dos minutos cómo te fue. Una vez aprobada, aparecerá en esta misma página y nos ayudará a mejorar lo que toque.'
+                : 'Tell us how it went in two minutes. After we review it, it appears right here and helps us improve where it matters.'}
+            </p>
+            <a href="escribir-opinion.html" className="btn btn-primary osc-btn">
+              {lang === 'es' ? 'Comparte tu experiencia' : 'Share your experience'}
+              <span className="arrow"> →</span>
+            </a>
+          </div>
+        </section>
         <QuickFAQ lang={lang} pageId="opiniones" />
         <ContactCTA lang={lang} />
       </main>
