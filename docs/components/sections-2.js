@@ -106,6 +106,7 @@ const Gallery = ({
     const el = ref.current;
     if (!el) return;
     const onScroll = () => {
+      if (document.body.classList.contains('no-parallax')) return;
       const imgs = el.querySelectorAll('.g-tile .img');
       imgs.forEach((img, i) => {
         const rect = img.parentElement.getBoundingClientRect();
