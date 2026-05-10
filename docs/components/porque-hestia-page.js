@@ -387,58 +387,72 @@ const PorqueNombre = ({
   }, t.name_quote), /*#__PURE__*/React.createElement("cite", null, t.name_quote_attr))));
 };
 
-// PorqueValores — sección "Nuestros valores"
-// Scroll-driven monogram: a la izquierda, un panel sticky con H E S T I A
-// apiladas vertical, la activa "ilumina" con crossfade + blur (Emil-style
-// transition mask). A la derecha, las 6 entradas de valor en cascada con
-// stagger refinado. Una línea de progreso vertical en el borde izquierdo
-// del section acompaña al scroll. Mobile: sin sticky; cada valor recibe
-// su propia tarjeta con letra inset, mismo easing y stagger.
+// PorqueValores v3 — sección "Nuestros valores", pinned cinemático.
+// Un único viewport sticky de 100vh sostiene un stage que avanza por las
+// 6 letras de HESTIA a medida que el usuario scrollea. Por cada fase:
+// (1) la letra gigante se desvanece con blur y la siguiente entra desde
+// un transform-origin distinto; (2) el cuerpo de texto remonta con un
+// stagger letter-by-letter del nombre; (3) la atmósfera de fondo
+// (radial-gradients hue-shifted) crossfade entre el valor saliente y
+// el entrante; (4) el strip inferior re-subraya la letra activa. La
+// barra de progreso superior y el riel del strip avanzan continuos.
+const PORQUE_V3_HUES = {
+  H: '209, 139, 139',
+  // melocotón-rosa — hospitalidad cálida
+  E: '58, 170, 187',
+  // teal — escucha
+  S: '201, 167, 107',
+  // arena — sencillez
+  T: '212, 168, 74',
+  // sol — transparencia luminosa
+  I: '140, 70, 120',
+  // ber — integridad
+  A: '125, 140, 90' // sage — arraigo
+};
 const PorqueValores = ({
   lang
 }) => {
   const t = PORQUE_COPY[lang];
-  const sectionRef = React.useRef(null);
-  const valueRefs = React.useRef([]);
+  const wrapRef = React.useRef(null);
+  const stageRef = React.useRef(null);
+  const lastIdx = React.useRef(0);
   const [activeIdx, setActiveIdx] = React.useState(0);
-  const [progress, setProgress] = React.useState(0);
+  const PHASES = t.values.length;
 
-  // IntersectionObserver: detecta qué valor está más cerca del centro
-  // del viewport — ese es el activo.
+  // Scroll-progress driver. Escribe --progress y --phase-t directamente en
+  // CSS variables del stage para evitar re-render por frame. Sólo
+  // setState cuando cruza una fase.
   React.useEffect(() => {
-    if (typeof IntersectionObserver === 'undefined') return;
-    const obs = new IntersectionObserver(entries => {
-      const visible = entries.filter(e => e.isIntersecting);
-      if (visible.length === 0) return;
-      visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-      const idx = Number(visible[0].target.dataset.idx);
-      if (!Number.isNaN(idx)) setActiveIdx(idx);
-    }, {
-      rootMargin: '-42% 0px -42% 0px',
-      threshold: [0, 0.5, 1]
-    });
-    valueRefs.current.forEach(el => el && obs.observe(el));
-    return () => obs.disconnect();
-  }, []);
-
-  // Progreso de scroll a lo largo de la sección (0..1) para la línea
-  // vertical decorativa.
-  React.useEffect(() => {
-    const onScroll = () => {
-      const el = sectionRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
+    const wrap = wrapRef.current;
+    const stage = stageRef.current;
+    if (!wrap || !stage) return;
+    let raf = 0;
+    const compute = () => {
+      raf = 0;
+      const rect = wrap.getBoundingClientRect();
       const vh = window.innerHeight;
       const total = rect.height - vh;
       if (total <= 0) {
-        setProgress(rect.top < 0 ? 1 : 0);
+        stage.style.setProperty('--progress', '0');
+        stage.style.setProperty('--phase-t', '0');
         return;
       }
       const scrolled = -rect.top;
-      const p = Math.max(0, Math.min(1, scrolled / total));
-      setProgress(p);
+      const p = Math.max(0, Math.min(0.99999, scrolled / total));
+      const fp = p * PHASES;
+      const idx = Math.min(PHASES - 1, Math.floor(fp));
+      const within = Math.max(0, Math.min(1, fp - idx));
+      stage.style.setProperty('--progress', ((idx + within) / PHASES).toFixed(4));
+      stage.style.setProperty('--phase-t', within.toFixed(3));
+      if (idx !== lastIdx.current) {
+        lastIdx.current = idx;
+        setActiveIdx(idx);
+      }
     };
-    onScroll();
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(compute);
+    };
+    compute();
     window.addEventListener('scroll', onScroll, {
       passive: true
     });
@@ -446,22 +460,43 @@ const PorqueValores = ({
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [PHASES]);
+
+  // Mouse parallax (desktop, no reduced motion). Escribe --mx / --my
+  // directamente en CSS vars; sin React re-render.
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const stage = stageRef.current;
+    if (!stage) return;
+    let raf = 0;
+    const onMove = e => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const xn = e.clientX / window.innerWidth - 0.5;
+        const yn = e.clientY / window.innerHeight - 0.5;
+        stage.style.setProperty('--mx', xn.toFixed(3));
+        stage.style.setProperty('--my', yn.toFixed(3));
+      });
+    };
+    window.addEventListener('mousemove', onMove, {
+      passive: true
+    });
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      if (raf) cancelAnimationFrame(raf);
     };
   }, []);
-  const activeValue = t.values[activeIdx] || t.values[0];
+  const v = t.values[activeIdx] || t.values[0];
+  const nameChars = (v.name || '').split('');
   return /*#__PURE__*/React.createElement("section", {
-    ref: sectionRef,
-    className: "pq-valores section-dark"
+    className: "pq-valores pq-valores-v3 section-dark"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "pq-valores-progress",
-    "aria-hidden": "true",
-    style: {
-      '--progress': progress
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "container"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pq-valores-head"
+    className: "container pq-v3-intro"
   }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow pq-valores-eyebrow"
   }, t.values_eyebrow), /*#__PURE__*/React.createElement("h2", {
@@ -469,51 +504,82 @@ const PorqueValores = ({
   }, t.values_title), /*#__PURE__*/React.createElement("p", {
     className: "pq-valores-lede reveal delay-1"
   }, t.values_lede)), /*#__PURE__*/React.createElement("div", {
-    className: "pq-valores-stage"
-  }, /*#__PURE__*/React.createElement("aside", {
-    className: "pq-valores-monogram",
-    "aria-hidden": "true"
+    ref: wrapRef,
+    className: "pq-v3-pin-wrap"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "pq-mono-stack"
-  }, t.values.map((v, i) => /*#__PURE__*/React.createElement("span", {
-    key: i,
-    className: 'pq-mono-letter' + (i === activeIdx ? ' is-active' : '') + (i < activeIdx ? ' is-past' : '') + (i > activeIdx ? ' is-future' : '')
-  }, v.letter))), /*#__PURE__*/React.createElement("div", {
-    className: "pq-mono-current",
-    key: activeIdx
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "pq-mono-current-idx"
-  }, "0", activeIdx + 1, " ", /*#__PURE__*/React.createElement("span", {
-    className: "pq-mono-current-sep"
-  }, "/"), " 06"), /*#__PURE__*/React.createElement("span", {
-    className: "pq-mono-current-name"
-  }, activeValue.name))), /*#__PURE__*/React.createElement("div", {
-    className: "pq-valores-rail"
-  }, t.values.map((v, i) => /*#__PURE__*/React.createElement("article", {
-    key: i,
-    ref: el => {
-      valueRefs.current[i] = el;
-    },
-    "data-idx": i,
-    className: 'pq-valor pq-valor-v2 reveal' + (i === activeIdx ? ' is-active' : '')
+    ref: stageRef,
+    className: "pq-v3-stage"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "pq-valor-mark",
+    className: "pq-v3-wash-stack",
     "aria-hidden": "true"
+  }, t.values.map((vv, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "pq-v3-wash-layer",
+    style: {
+      '--hue': PORQUE_V3_HUES[vv.letter] || '212, 168, 74',
+      opacity: i === activeIdx ? 1 : 0
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "pq-v3-grain",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("header", {
+    className: "pq-v3-progress"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "pq-valor-mark-glyph"
-  }, v.letter), /*#__PURE__*/React.createElement("span", {
-    className: "pq-valor-mark-rule"
+    className: "pq-v3-progress-num"
+  }, "0", activeIdx + 1), /*#__PURE__*/React.createElement("span", {
+    className: "pq-v3-progress-track"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "pq-v3-progress-fill"
+  })), /*#__PURE__*/React.createElement("span", {
+    className: "pq-v3-progress-total"
+  }, "06")), /*#__PURE__*/React.createElement("div", {
+    className: "pq-v3-main"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pq-v3-letter",
+    "aria-hidden": "true"
+  }, t.values.map((vv, i) => {
+    const cls = 'pq-v3-glyph' + (i === activeIdx ? ' is-active' : i < activeIdx ? ' is-past' : ' is-future');
+    return /*#__PURE__*/React.createElement("span", {
+      key: i,
+      className: cls
+    }, vv.letter);
   })), /*#__PURE__*/React.createElement("div", {
-    className: "pq-valor-body"
+    className: "pq-v3-text",
+    key: activeIdx
   }, /*#__PURE__*/React.createElement("div", {
-    className: "pq-valor-index"
-  }, "0", i + 1, " ", /*#__PURE__*/React.createElement("span", {
-    className: "pq-valor-index-sep"
-  }, "/"), " 06"), /*#__PURE__*/React.createElement("h3", {
-    className: "pq-valor-name"
-  }, v.name), /*#__PURE__*/React.createElement("p", {
-    className: "pq-valor-desc"
-  }, v.desc)))))), /*#__PURE__*/React.createElement("div", {
+    className: "pq-v3-text-meta"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "pq-v3-text-idx"
+  }, "0", activeIdx + 1, /*#__PURE__*/React.createElement("span", {
+    className: "pq-v3-text-idx-sep"
+  }, " / "), "06"), /*#__PURE__*/React.createElement("span", {
+    className: "pq-v3-text-chip"
+  }, v.letter)), /*#__PURE__*/React.createElement("h3", {
+    className: "pq-v3-text-name",
+    "aria-label": v.name
+  }, nameChars.map((ch, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    className: "pq-v3-name-char",
+    style: {
+      '--ch-delay': `${i * 28}ms`
+    }
+  }, ch === ' ' ? ' ' : ch))), /*#__PURE__*/React.createElement("p", {
+    className: "pq-v3-text-desc"
+  }, v.desc))), /*#__PURE__*/React.createElement("footer", {
+    className: "pq-v3-strip",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pq-v3-strip-track"
+  }, t.values.map((vv, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    className: 'pq-v3-strip-letter' + (i === activeIdx ? ' is-active' : i < activeIdx ? ' is-past' : '')
+  }, vv.letter))), /*#__PURE__*/React.createElement("div", {
+    className: "pq-v3-strip-rail"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pq-v3-strip-rail-fill"
+  }))))), /*#__PURE__*/React.createElement("div", {
+    className: "container pq-v3-outro"
+  }, /*#__PURE__*/React.createElement("div", {
     className: "pq-valores-closing reveal delay-2"
   }, t.values_closing)));
 };
