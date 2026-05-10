@@ -176,6 +176,7 @@ const PersonCard = ({
 }, imgSrc ? /*#__PURE__*/React.createElement("img", {
   src: imgSrc,
   alt: name,
+  loading: "lazy",
   onError: e => {
     e.currentTarget.style.display = 'none';
   }
