@@ -25,26 +25,21 @@ const OPINIONES_COPY = {
   },
 };
 
-const TESTIMONIALS = [
-  { name: 'María G.', apt: 'Hestía Mar', year: '2024', stars: 5,
-    es: '«La terraza esquinera al amanecer vale cada euro. Vistas al mar entre los pinos, piscina tranquila y Alex disponible en minutos. Repetiremos en agosto.»',
-    en: '«The corner terrace at sunrise is worth every euro. Sea views through the pines, a quiet pool, and Alex available in minutes. We\'ll be back in August.»' },
-  { name: 'James & Sophie', apt: 'Hestía Thalassa', year: '2024', stars: 5,
-    es: '«Llevamos diez años viajando y nunca habíamos visto unas vistas así desde un alojamiento. El SPA y el ático juntos hacen una combinación difícil de superar.»',
-    en: '«Ten years travelling and we\'ve never had views like these from a holiday rental. The SPA and penthouse together — hard to beat.»' },
-  { name: 'Familie Müller', apt: 'Hestía Salinas', year: '2023', stars: 5,
-    es: '«Llegamos sin saber qué esperar de las salinas. La mañana del segundo día nos levantamos a las 7 y fue una de las mejores experiencias de nuestras vacaciones. Fran nos dejó unos consejos increíbles.»',
-    en: '«We arrived not knowing what to expect from the salt flats. On the second morning we got up at 7 am and it was one of the highlights of the whole holiday. Fran\'s tips were invaluable.»' },
-  { name: 'Laura P.', apt: 'Hestía Mar', year: '2023', stars: 5,
-    es: '«Viajamos con dos perros y desde el primer mensaje se notó que no éramos un problema sino bienvenidos. El Hestía adaptado y sin barreras fue un plus que no esperábamos.»',
-    en: '«We travelled with two dogs and from the first message it was clear we weren\'t a problem — we were welcome. The accessible layout was an unexpected bonus.»' },
-  { name: 'Antoine & Claire', apt: 'Hestía Thalassa', year: '2024', stars: 5,
-    es: '«El ático supera con creces las fotos — y las fotos ya son buenas. La luz a última hora de la tarde en la terraza es algo que no habíamos visto antes. Ya hemos buscado fechas para el año que viene.»',
-    en: '«The penthouse far exceeds the photos — and the photos are already good. The late-afternoon light on the terrace was something we\'d never seen before. We\'ve already looked at dates for next year.»' },
-  { name: 'Carlos M.', apt: 'Hestía Salinas', year: '2024', stars: 5,
-    es: '«Hestía tiene algo que no se puede comprar: la sensación de que alguien ha pensado en cada detalle para que te sientas en casa, no en un alquiler. 10 sobre 10.»',
-    en: '«Hestía has something money can\'t buy: the feeling that someone thought of every detail to make you feel at home, not in a rental. 10 out of 10.»' },
-];
+// Mapeo apt → nombre completo para mostrar.
+const APT_FULL = { vm: 'Hestía Mar', vt: 'Hestía Thalassa', vs: 'Hestía Salinas', all: 'Hestía' };
+// Etiquetas de plataforma + color de badge.
+const SOURCE_META = {
+  booking: { label: 'Booking.com', short: 'Booking', color: '#003B95' },
+  airbnb:  { label: 'Airbnb',      short: 'Airbnb',  color: '#FF5A5F' },
+  google:  { label: 'Google',      short: 'Google',  color: '#4285F4' },
+  web:     { label: 'Hestía',      short: 'Web',     color: '#3D1A35' },
+};
+// Convierte rating a 5 estrellas (Booking usa /10, Airbnb/Google /5).
+const ratingToStars = (rating, source) => {
+  if (rating == null) return 5;
+  if (source === 'booking') return Math.round(rating / 2);
+  return Math.round(rating);
+};
 
 const Stars = ({ count }) => (
   <div className="stars-row" aria-label={`${count} estrellas`}>
@@ -119,25 +114,141 @@ const OpinionesRatings = ({ lang }) => {
   );
 };
 
+// ============================================================
+// OpinionesTestimonials — sección de reviews curadas + web propia
+// Lee window.REVIEWS (cargado en el HTML antes que el componente).
+// Filtros: todas | Booking | Airbnb | Google | Web.
+// Por defecto muestra "highlights" + recientes; expandible al resto.
+// ============================================================
 const OpinionesTestimonials = ({ lang }) => {
   const t = OPINIONES_COPY[lang];
+  const all = (window.REVIEWS && Array.isArray(window.REVIEWS.items))
+    ? window.REVIEWS.items.filter(r => r.status === 'published')
+    : [];
+
+  const [filter, setFilter] = React.useState('all'); // 'all'|'booking'|'airbnb'|'google'|'web'
+  const [expanded, setExpanded] = React.useState(false);
+
+  // Filtrado por fuente.
+  const filtered = filter === 'all' ? all : all.filter(r => r.source === filter);
+
+  // Agrupación visible:
+  // - Highlights: marcadas como destacadas (las "más relevantes").
+  // - Recientes: las 6 más nuevas que NO sean highlights.
+  // - Resto: todas las demás cuando se expande.
+  const highlights = filtered.filter(r => r.highlight)
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  const nonHL = filtered.filter(r => !r.highlight)
+    .sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  const recent = nonHL.slice(0, 6);
+  const rest   = nonHL.slice(6);
+
+  const visible = expanded
+    ? [...highlights, ...recent, ...rest]
+    : [...highlights, ...recent];
+
+  // Cuenta por filtro para mostrar (3) etc en la pestaña.
+  const counts = {
+    all:     all.length,
+    booking: all.filter(r => r.source === 'booking').length,
+    airbnb:  all.filter(r => r.source === 'airbnb').length,
+    google:  all.filter(r => r.source === 'google').length,
+    web:     all.filter(r => r.source === 'web').length,
+  };
+
+  const fmtDate = (iso) => {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (lang === 'es') {
+      const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+      return `${months[d.getMonth()]} ${d.getFullYear()}`;
+    }
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return `${months[d.getMonth()]} ${d.getFullYear()}`;
+  };
+
+  const tabs = [
+    { id: 'all',     es: 'Todas',    en: 'All' },
+    { id: 'booking', es: 'Booking',  en: 'Booking' },
+    { id: 'airbnb',  es: 'Airbnb',   en: 'Airbnb' },
+    { id: 'google',  es: 'Google',   en: 'Google' },
+    { id: 'web',     es: 'Web',      en: 'Web' },
+  ];
+
   return (
     <section className="opiniones-testimonials">
       <div className="container">
         <h2 className="reveal">{t.testimonials_title}</h2>
-        <div className="testimonials-grid">
-          {TESTIMONIALS.map((rev, i) => (
-            <div key={i} className="testimonial-card reveal">
-              <Stars count={rev.stars}/>
-              <blockquote>{lang === 'es' ? rev.es : rev.en}</blockquote>
-              <div className="testimonial-meta">
-                <span className="testimonial-name">{rev.name}</span>
-                <span className="testimonial-apt">{rev.apt}</span>
-                <span className="testimonial-year">{rev.year}</span>
-              </div>
-            </div>
+        <p className="opiniones-tt-sub reveal">
+          {lang === 'es'
+            ? 'Mezcla de Booking, Airbnb, Google Maps y opiniones recogidas en nuestra propia web. Curadas y verificadas.'
+            : 'A mix of Booking, Airbnb, Google Maps and reviews collected on our own site. Curated and verified.'}
+        </p>
+
+        <div className="opiniones-tabs reveal" role="tablist">
+          {tabs.map(tab => (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={filter === tab.id}
+              className={`opiniones-tab${filter === tab.id ? ' is-active' : ''}`}
+              onClick={() => { setFilter(tab.id); setExpanded(false); }}>
+              {lang === 'es' ? tab.es : tab.en}
+              <span className="opiniones-tab-count">({counts[tab.id]})</span>
+            </button>
           ))}
         </div>
+
+        {visible.length === 0 ? (
+          <p className="opiniones-empty">
+            {lang === 'es' ? 'Aún no hay opiniones para este filtro.' : 'No reviews yet for this filter.'}
+          </p>
+        ) : (
+          <>
+            {highlights.length > 0 && filter === 'all' && (
+              <div className="opiniones-section-label reveal">
+                <span className="osl-star" aria-hidden="true">✦</span>
+                {lang === 'es' ? 'Más relevantes' : 'Most relevant'}
+              </div>
+            )}
+            <div className="testimonials-grid">
+              {visible.map((rev) => {
+                const meta = SOURCE_META[rev.source] || SOURCE_META.web;
+                const stars = ratingToStars(rev.rating, rev.source);
+                return (
+                  <div key={rev.id} className="testimonial-card reveal">
+                    <div className="testimonial-top">
+                      <Stars count={stars}/>
+                      <span className="testimonial-source" style={{ '--src-color': meta.color }}>
+                        {meta.short}
+                      </span>
+                    </div>
+                    <blockquote>«{rev.text}»</blockquote>
+                    <div className="testimonial-meta">
+                      <span className="testimonial-name">{rev.name}</span>
+                      <span className="testimonial-apt">{APT_FULL[rev.apt] || 'Hestía'}</span>
+                      <span className="testimonial-year">{fmtDate(rev.date)}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            {rest.length > 0 && (
+              <div className="opiniones-expand-wrap reveal">
+                <button
+                  type="button"
+                  className="opiniones-expand-btn"
+                  onClick={() => setExpanded(e => !e)}>
+                  {expanded
+                    ? (lang === 'es' ? `Mostrar menos` : 'Show less')
+                    : (lang === 'es' ? `Ver todas (+${rest.length})` : `See all (+${rest.length})`)}
+                  <span aria-hidden="true">{expanded ? '↑' : '↓'}</span>
+                </button>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </section>
   );
