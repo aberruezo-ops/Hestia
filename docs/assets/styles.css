@@ -11252,6 +11252,207 @@ a:focus-visible,
 }
 
 /* ================================================================
+   /reservas — formulario en 3 secciones progresivas
+
+   Layout: una página, tres steps (Datos / Disponibilidad+Precio /
+   Canal). Cada step se desbloquea cuando el anterior es válido,
+   permite editar volviendo atrás (step 1) y muestra summary
+   compacto cuando está plegado.
+   ================================================================ */
+
+.rf-step {
+  border-top: 1px solid color-mix(in oklab, var(--ber) 12%, transparent);
+  padding: 24px 0;
+  transition: opacity 200ms var(--ease-out, cubic-bezier(.23,1,.32,1));
+}
+.rf-step:first-of-type { border-top: 0; padding-top: 8px; }
+.rf-step.is-locked { opacity: 0.42; pointer-events: none; }
+.rf-step.is-locked .rf-step-title { color: var(--ink-soft); }
+
+.rf-step-head {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 0;
+  position: relative;
+}
+.rf-step-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  color: var(--sol-h);
+  min-width: 28px;
+}
+.rf-step-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(20px, 2.4vw, 26px);
+  color: var(--ber-dk);
+  margin: 0;
+  flex: 1;
+}
+.rf-step-locked-note {
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+.rf-step-body {
+  margin-top: 18px;
+  animation: rfStepIn 240ms var(--ease-out, cubic-bezier(.23,1,.32,1));
+}
+@keyframes rfStepIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rf-step-body { animation: none; }
+}
+
+.rf-step-actions {
+  margin-top: 24px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.rf-step-actions .btn { flex: 1 1 240px; min-width: 0; }
+
+/* Resumen compacto cuando step 1 está plegado */
+.rf-edit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+  background: color-mix(in oklab, var(--sol) 5%, transparent);
+  border: 1px solid color-mix(in oklab, var(--sol) 18%, transparent);
+  color: var(--ber);
+  border-radius: 999px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font: inherit;
+  transition: background var(--dur-fast) var(--ease-out);
+  max-width: 100%;
+  text-align: left;
+}
+.rf-edit:hover { background: color-mix(in oklab, var(--sol) 10%, transparent); }
+.rf-edit:focus-visible { outline: 2px solid var(--sol); outline-offset: 2px; }
+.rf-edit-summary {
+  font-size: 13px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+.rf-edit-action {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sol-h);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+@media (max-width: 560px) {
+  .rf-edit { width: 100%; margin-left: 0; margin-top: 8px; flex-wrap: wrap; }
+  .rf-edit-summary { white-space: normal; max-width: none; }
+}
+
+/* Status badge (step 2) */
+.rf-status {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 14px 16px;
+  border-radius: 10px 0 10px 0;
+  margin-bottom: 18px;
+}
+.rf-status .rf-status-icon {
+  font-size: 18px;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  grid-row: span 2;
+}
+.rf-status .rf-status-main { font-weight: 500; color: var(--ber-dk); }
+.rf-status .rf-status-sub { display: block; font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
+.rf-status-ok {
+  background: color-mix(in oklab, #25D366 8%, var(--crema));
+  border: 1px solid color-mix(in oklab, #25D366 22%, transparent);
+}
+.rf-status-ok .rf-status-icon { background: #25D366; color: white; }
+.rf-status-taken {
+  background: color-mix(in oklab, var(--ber) 6%, var(--crema));
+  border: 1px solid color-mix(in oklab, var(--ber) 18%, transparent);
+}
+.rf-status-taken .rf-status-icon { background: var(--ber); color: white; }
+.rf-status-unknown {
+  background: color-mix(in oklab, var(--sol) 5%, var(--crema));
+  border: 1px solid color-mix(in oklab, var(--sol) 18%, transparent);
+}
+.rf-status-unknown .rf-status-icon { background: var(--sol-h); color: white; }
+
+/* Canal tabs (step 3) */
+.rf-channel-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sol-h);
+  margin-bottom: 12px;
+}
+.rf-channels {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+@media (max-width: 560px) {
+  .rf-channels { grid-template-columns: 1fr; }
+}
+.rf-channel {
+  text-align: left;
+  background: var(--crema);
+  border: 2px solid color-mix(in oklab, var(--ber) 14%, transparent);
+  border-radius: 10px 0 10px 0;
+  padding: 16px 18px;
+  cursor: pointer;
+  font: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+.rf-channel:hover {
+  border-color: color-mix(in oklab, var(--sol) 40%, transparent);
+}
+.rf-channel:focus-visible {
+  outline: 2px solid var(--sol);
+  outline-offset: 2px;
+}
+.rf-channel.is-active {
+  border-color: var(--sol);
+  background: color-mix(in oklab, var(--sol) 6%, var(--crema));
+}
+.rf-channel-name {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--ber-dk);
+  font-weight: 500;
+}
+.rf-channel-desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+.rf-channel-form { background: none; padding: 0; box-shadow: none; }
+
+/* ================================================================
    PDF — HESTÍA VERA SALINAS  (apt[data-apt="vs"])
 
    PDF brand-consistent: replica exactamente el lenguaje visual de
