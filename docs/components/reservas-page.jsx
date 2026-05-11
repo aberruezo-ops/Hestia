@@ -279,6 +279,48 @@ const ReservasForm = ({ lang }) => {
       .finally(() => setAvailLoaded(true));
   }, []);
 
+  // Prefill desde URL: /reservas.html?apt=vm&checkin=YYYY-MM-DD&...
+  // Llamado desde home-search o desde el calendar de cada apt page.
+  // Si llega con apt+checkin+checkout+guests, salta directo al step 2
+  // (disponibilidad + precio) para que el huésped revise y avance.
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const qs = new URLSearchParams(window.location.search);
+    const qApt      = qs.get('apt');
+    const qCheckin  = qs.get('checkin');
+    const qCheckout = qs.get('checkout');
+    const qGuests   = qs.get('guests');
+    const qPets     = qs.get('pets');
+    let hadAny = false;
+    if (qApt && ['vm', 'vt', 'vs'].includes(qApt)) { setApt(qApt); hadAny = true; }
+    if (qCheckin && /^\d{4}-\d{2}-\d{2}$/.test(qCheckin))   { setCheckin(qCheckin);   hadAny = true; }
+    if (qCheckout && /^\d{4}-\d{2}-\d{2}$/.test(qCheckout)) { setCheckout(qCheckout); hadAny = true; }
+    if (qGuests) {
+      const n = parseInt(qGuests, 10);
+      if (!Number.isNaN(n) && n >= 1 && n <= 6) {
+        const guestStr = lang === 'es'
+          ? `${n} ${n === 1 ? 'huésped' : 'huéspedes'}`
+          : `${n} ${n === 1 ? 'guest' : 'guests'}`;
+        setGuests(guestStr);
+        hadAny = true;
+      }
+    }
+    if (qPets === 'yes') { setPets('yes'); hadAny = true; }
+    // Si vino apt + ambas fechas, avanzamos al step 2 directamente.
+    if (qApt && qCheckin && qCheckout) {
+      setStep(2);
+      setTimeout(() => {
+        document.getElementById('rf-step-2')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 120);
+    }
+    // Si el prefill se ha aplicado, limpiamos los params para que un
+    // refresh no re-prefille (UX confusa cuando el huésped ya está
+    // editando). El estado se mantiene en React.
+    if (hadAny && window.history && window.history.replaceState) {
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, [lang]);
+
   const toggleExtra = (id) => {
     setExtrasSel(prev => {
       const cur = prev[id] || 0;
