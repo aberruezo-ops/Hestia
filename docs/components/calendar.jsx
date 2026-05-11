@@ -242,6 +242,9 @@ const CalMonth = ({
           const isBlkEnd  = isBlk && !nextBlk;
           const isBlkSingle = isBlkStart && isBlkEnd;
           const isBlkMid  = isBlk && !isBlkStart && !isBlkEnd;
+          // Día POST-bloqueo: no bloqueado pero anterior sí. Mañana
+          // todavía ocupada, tarde libre para check-in.
+          const isBlkAfter = !isBlk && _isBlk(_adj(ds, -1), blocked);
 
           // Selection markers
           const inSel = selStart && selEnd && ds >= selStart && ds <= selEnd;
@@ -281,11 +284,19 @@ const CalMonth = ({
               onMouseEnter={isClickable ? () => onDayHover(ds) : undefined}
               onMouseLeave={isClickable ? onDayLeave : undefined}
             >
-              {/* --- Blocked range rendering --- */}
+              {/* --- Blocked range rendering ---
+                  · First blocked day (departure morning libre): right-strip
+                  · Middle + last blocked night (fully booked): solid strip
+                  · Day-after-block (arrival, mañana ocupada + tarde libre):
+                    left-strip
+                  · Single-day block: strip centrado
+              */}
               {showBlk && !isBlkSingle && isBlkStart && <div className="c-strip c-sr"/>}
-              {showBlk && !isBlkSingle && isBlkEnd   && <div className="c-strip c-sl"/>}
-              {showBlk && isBlkMid                   && <div className="c-strip"/>}
-              {showBlk && (isBlkStart || isBlkEnd || isBlkSingle) && <div className="c-circ"/>}
+              {showBlk && (isBlkMid || (isBlkEnd && !isBlkSingle)) && <div className="c-strip"/>}
+              {isBlkAfter && !inSel && !inPrev && <div className="c-strip c-sl"/>}
+              {showBlk && isBlkSingle && <div className="c-strip"/>}
+              {showBlk && (isBlkStart || isBlkSingle) && <div className="c-circ"/>}
+              {isBlkAfter && !inSel && !inPrev && <div className="c-circ"/>}
 
               {/* --- Selection range rendering --- */}
               {isSS && !isSE && <div className="c-strip c-sel-strip c-sr"/>}
