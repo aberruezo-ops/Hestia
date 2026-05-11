@@ -2919,23 +2919,36 @@ footer .footer-brand .addr {
 
 /* Action buttons */
 .req-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
-/* CTA primary "Avanzar con la reserva" — más grande, prominente, marca turquesa */
+/* CTA primary "Avanzar con la reserva" — alto contraste sobre cualquier fondo,
+   solido brand sol con texto crema y sombra acentuada.                       */
 .hs-forward-btn,
 .req-btn-forward {
-  padding: 14px 26px !important;
+  background: var(--sol) !important;
+  border: 2px solid var(--sol) !important;
+  color: var(--crema) !important;
+  padding: 16px 26px !important;
   font-size: 15px !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   letter-spacing: 0.04em !important;
   width: 100%;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(58, 170, 187, 0.28);
-  transition: transform var(--dur-fast) var(--ease-out),
+  box-shadow:
+    0 10px 28px rgba(42, 142, 158, 0.45),
+    0 2px 6px rgba(42, 15, 46, 0.18);
+  transition: background var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out),
               box-shadow var(--dur-fast) var(--ease-out);
+  text-shadow: 0 1px 2px rgba(42, 15, 46, 0.25);
 }
 .hs-forward-btn:hover,
 .req-btn-forward:hover {
+  background: var(--sol-h) !important;
+  border-color: var(--sol-h) !important;
+  color: var(--crema) !important;
   transform: translateY(-1px);
-  box-shadow: 0 12px 32px rgba(58, 170, 187, 0.38);
+  box-shadow:
+    0 14px 36px rgba(42, 142, 158, 0.55),
+    0 4px 10px rgba(42, 15, 46, 0.22);
 }
 .hs-forward-btn:active,
 .req-btn-forward:active {
@@ -4200,18 +4213,49 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .asb-match {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--sol-lt);
   opacity: 0.95;
-  white-space: nowrap;
+  white-space: normal;
+  line-height: 1.3;
+  max-width: 100%;
+  display: block;
 }
 .asb-cta { flex-shrink: 0; white-space: nowrap; }
+
+/* Botón ✕ para cerrar la sticky bar — esquina superior derecha. */
+.asb-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--arena);
+  border: 1px solid rgba(240, 232, 213, 0.3);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0.65;
+  transition: opacity var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+.asb-close:hover {
+  opacity: 1;
+  background: rgba(240, 232, 213, 0.1);
+}
+.apt-sticky-bar { padding-right: 40px; }
 @media (max-width: 480px) {
   .asb-price { font-size: 17px; }
-  .asb-match { font-size: 9.5px; }
-  .apt-sticky-bar { padding: 10px 16px; }
+  .asb-match { font-size: 10px; }
+  .apt-sticky-bar { padding: 10px 40px 10px 16px; }
 }
 
 /* --- Descripción + Features --- */
@@ -11917,10 +11961,10 @@ a:focus-visible,
 .rf-status .rf-status-main { font-weight: 500; color: var(--ber-dk); }
 .rf-status .rf-status-sub { display: block; font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
 .rf-status-ok {
-  background: color-mix(in oklab, #25D366 8%, var(--crema));
-  border: 1px solid color-mix(in oklab, #25D366 22%, transparent);
+  background: var(--ok-bg);
+  border: 1px solid color-mix(in oklab, var(--ok) 30%, transparent);
 }
-.rf-status-ok .rf-status-icon { background: #25D366; color: white; }
+.rf-status-ok .rf-status-icon { background: var(--ok); color: white; }
 .rf-status-taken {
   background: color-mix(in oklab, var(--ber) 6%, var(--crema));
   border: 1px solid color-mix(in oklab, var(--ber) 18%, transparent);

@@ -284,35 +284,30 @@ const HsDateRange = ({
 // ---- Result card ----
 // Flujo nuevo: el huésped ve disponibilidad + precio base aquí, y un único
 // CTA "Avanzar con la reserva" lo lleva a /reservas con apt+fechas+huéspedes
-// pre-rellenados. Datos de contacto se gestionan allí (paso 3) — aquí
-// reducimos la carga al mínimo.
+// pre-rellenados. Extras (cuna, trona, sábanas, mascota...) y datos de
+// contacto se gestionan allí — aquí reducimos la carga al mínimo.
 const HsResultCard = ({
   apt,
   available,
   lang,
   checkin,
   checkout,
-  guests,
-  baby,
-  pet,
-  extraTowels,
-  extraLinen,
-  cot,
-  highchair
+  guests
 }) => {
   const nights = checkin && checkout ? _hsDiff(checkin, checkout) : 0;
   const aptName = apt.name;
-  const calc = checkin && checkout && checkout > checkin ? _calcStay(checkin, checkout, apt.id, pet) : null;
+  // Precio base sin extras (sin mascota) — el detalle se ve en /reservas.
+  const calc = checkin && checkout && checkout > checkin ? _calcStay(checkin, checkout, apt.id, false) : null;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
 
-  // URL del CTA "Avanzar con la reserva" — pasa apt+fechas+huéspedes+mascota
+  // URL del CTA "Avanzar con la reserva" — pasa apt+fechas+huéspedes.
+  // Mascota y extras se eligen en /reservas (paso único de extras).
   const reservasHref = (() => {
     const params = new URLSearchParams();
     params.set('apt', apt.id);
     if (checkin) params.set('checkin', checkin);
     if (checkout) params.set('checkout', checkout);
     if (guests) params.set('guests', String(guests));
-    if (pet) params.set('pets', 'yes');
     return 'reservas.html?' + params.toString();
   })();
   return /*#__PURE__*/React.createElement("div", {
@@ -404,12 +399,8 @@ const HomeSearch = ({
   const [checkin, setCheckin] = React.useState('');
   const [checkout, setCheckout] = React.useState('');
   const [guests, setGuests] = React.useState(2);
-  const [baby, setBaby] = React.useState(false);
-  const [pet, setPet] = React.useState(false);
-  const [extraTowels, setExtraTowels] = React.useState(false);
-  const [extraLinen, setExtraLinen] = React.useState(false);
-  const [cot, setCot] = React.useState(false);
-  const [highchair, setHighchair] = React.useState(false);
+  // Extras (cuna, trona, sábanas, toallas, mascota) se rellenan SOLO en
+  // /reservas para no duplicar trabajo. Aquí solo huéspedes + fechas.
 
   // Results
   const [results, setResults] = React.useState(null);
@@ -534,63 +525,7 @@ const HomeSearch = ({
     type: "button",
     className: "hs-cnt-btn",
     onClick: () => setGuests(g => Math.min(6, g + 1))
-  }, "+"))), /*#__PURE__*/React.createElement("div", {
-    className: "hs-toggles"
-  }, [{
-    key: 'baby',
-    val: baby,
-    set: setBaby,
-    es: 'Bebé',
-    en: 'Baby'
-  }, {
-    key: 'pet',
-    val: pet,
-    set: setPet,
-    es: 'Mascota',
-    en: 'Pet'
-  }].map(t => /*#__PURE__*/React.createElement("button", {
-    key: t.key,
-    type: "button",
-    className: `hs-toggle${t.val ? ' on' : ''}`,
-    onClick: () => t.set(v => !v)
-  }, lang === 'es' ? t.es : t.en)))), /*#__PURE__*/React.createElement("div", {
-    className: "hs-field hs-field--full"
-  }, /*#__PURE__*/React.createElement("label", {
-    className: "hs-lbl"
-  }, lang === 'es' ? 'Extras' : 'Extras'), /*#__PURE__*/React.createElement("div", {
-    className: "hs-extras"
-  }, [{
-    key: 'towels',
-    val: extraTowels,
-    set: setExtraTowels,
-    es: 'Toallas extra',
-    en: 'Extra towels'
-  }, {
-    key: 'linen',
-    val: extraLinen,
-    set: setExtraLinen,
-    es: 'Sábanas extra',
-    en: 'Extra linen'
-  }, {
-    key: 'cot',
-    val: cot,
-    set: setCot,
-    es: 'Cuna de bebé',
-    en: 'Baby cot'
-  }, {
-    key: 'highchair',
-    val: highchair,
-    set: setHighchair,
-    es: 'Trona',
-    en: 'High chair'
-  }].map(x => /*#__PURE__*/React.createElement("label", {
-    key: x.key,
-    className: `hs-extra-item${x.val ? ' checked' : ''}`
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "checkbox",
-    checked: x.val,
-    onChange: () => x.set(v => !v)
-  }), lang === 'es' ? x.es : x.en)))), formErr && /*#__PURE__*/React.createElement("div", {
+  }, "+")))), formErr && /*#__PURE__*/React.createElement("div", {
     className: "hs-form-err"
   }, formErr), /*#__PURE__*/React.createElement("div", {
     className: "hs-submit-row"
@@ -625,13 +560,7 @@ const HomeSearch = ({
     lang: lang,
     checkin: checkin,
     checkout: checkout,
-    guests: guests,
-    baby: baby,
-    pet: pet,
-    extraTowels: extraTowels,
-    extraLinen: extraLinen,
-    cot: cot,
-    highchair: highchair
+    guests: guests
   })), results.every(r => r.available === null) && /*#__PURE__*/React.createElement("div", {
     className: "hs-no-data"
   }, lang === 'es' ? 'No tenemos datos de disponibilidad en este momento. Escríbenos directamente y te respondemos en menos de 24 h.' : 'We don\'t have availability data right now. Write to us directly and we\'ll reply within 24 h.', ' ', /*#__PURE__*/React.createElement("a", {

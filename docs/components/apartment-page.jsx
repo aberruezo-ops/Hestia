@@ -742,6 +742,16 @@ const AptStickyBar = ({ apt, lang, scrolled }) => {
   const waMsg = lang === 'es'
     ? `Hola, me interesa reservar ${apt[lang].name}. ¿Podéis indicarme disponibilidad?`
     : `Hello, I'm interested in booking ${apt[lang].name}. Could you let me know availability?`;
+  // Cerrar — estado persistente por sesión (no por dominio).
+  const [closed, setClosed] = React.useState(() => {
+    try { return sessionStorage.getItem('hestia-asb-closed-' + apt.id) === '1'; }
+    catch (_) { return false; }
+  });
+  const close = () => {
+    setClosed(true);
+    try { sessionStorage.setItem('hestia-asb-closed-' + apt.id, '1'); } catch (_) {}
+  };
+  if (closed) return null;
 
   // Mide la altura real de la barra y la expone como --apt-sticky-h.
   // Así Cookies y FloatingChat suben EXACTAMENTE lo que mide la barra,
@@ -764,6 +774,13 @@ const AptStickyBar = ({ apt, lang, scrolled }) => {
 
   return (
     <div ref={ref} className={`apt-sticky-bar${scrolled ? ' asb-visible' : ''}`}>
+      <button
+        type="button"
+        className="asb-close"
+        aria-label={lang === 'es' ? 'Cerrar barra de reserva' : 'Close booking bar'}
+        title={lang === 'es' ? 'Cerrar' : 'Close'}
+        onClick={close}
+      >×</button>
       <div className="asb-info">
         <span className="asb-name">HESTÍA <strong>{apt.name_short}</strong></span>
         {minP && (
