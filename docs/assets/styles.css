@@ -10660,22 +10660,18 @@ footer,
   position: relative;
   width: 244px;
   max-width: 24vw;
-  /* Widget queda visible incluso cuando la página tiene bg eggplant
-     (contact-cta, footer, section-dark). Cambio:
-     - bg ber-lt en lugar de ber-dk para separarse del bg de la página
-     - border-top/right/bottom sutil cream-tint para definir silueta
-       sobre cualquier bg
-     - box-shadow doble: eggplant para elevación + sol glow tenue
-       para definir borde cuando el bg es ber-dk                       */
-  background: var(--ber-lt);
-  color: var(--arena);
+  /* Bulletproof: hex literal + bordes muy explícitos para que el
+     widget se vea sobre CUALQUIER fondo, incluido ber-dk eggplant
+     animado del contact-cta / footer / section-dark.                */
+  background: #4E2446 !important;            /* ber-lt literal — distintos de bg page */
+  color: #F0E8D5 !important;                 /* arena literal */
   border-radius: 12px 0 12px 0;
-  border: 1px solid rgba(240, 232, 213, 0.12);
-  border-left: 3px solid var(--apt-accent, var(--sol));
+  border: 1px solid rgba(255, 255, 255, 0.18);   /* borde blanco tenue siempre visible */
+  border-left: 3px solid var(--apt-accent, #3AAABB);
   padding: 13px 14px 12px;
   box-shadow:
-    0 10px 28px rgba(42, 15, 46, 0.45),
-    0 0 0 1px rgba(58, 170, 187, 0.18);
+    0 12px 32px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(58, 170, 187, 0.30);          /* halo sol más fuerte */
 }
 @media (min-width: 1100px) {
   .widget-card { width: 260px; }
@@ -10892,47 +10888,51 @@ footer,
    (igual que las .widget-card). Color: --apt-accent del Hestía
    actual (vm cyan, vt marrón, vs dorado). Default sol en el resto
    de la web. */
+/* widget-mini bulletproof — hex literales para que iPad no pueda
+   renderizar nada distinto a sol turquesa con texto eggplant. */
 .widget-mini {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--apt-accent, var(--sol));
-  color: var(--ber-dk);
+  background: #3AAABB !important;            /* sol literal */
+  color: #2A0F2E !important;                 /* ber-dk literal */
   border: 0;
-  border-left: 3px solid var(--apt-accent, var(--sol));
+  border-left: 3px solid #3AAABB !important;
   border-radius: 12px 0 12px 0;
   padding: 12px 18px;
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: 12px;                           /* +1px legibilidad */
   letter-spacing: .14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;                          /* peso superior para legibilidad sobre sol */
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(42,15,46,.32);
+  box-shadow:
+    0 6px 18px rgba(42,15,46,.45),
+    0 0 0 1px rgba(255,255,255,.10);          /* halo blanco tenue para silueta */
   transition: background .25s ease, color .25s ease, transform .15s ease, border-color .25s ease;
   white-space: nowrap;
 }
 .widget-mini:hover {
-  background: var(--ber-dk);
-  color: var(--apt-accent, var(--sol));
+  background: #2A8E9E !important;            /* sol-h literal */
+  color: #2A0F2E !important;                 /* mantener AA */
   transform: translateX(-2px);
 }
 .widget-mini-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px; height: 20px;
+  width: 22px; height: 22px;
   border-radius: 50%;
-  background: rgba(61,26,53,.16);
-  color: var(--ber-dk);
-  font-size: 13px;
-  font-weight: 600;
+  background: rgba(42, 15, 46, 0.22);         /* eggplant tinte sobre sol */
+  color: #2A0F2E;
+  font-size: 14px;
+  font-weight: 700;
   line-height: 1;
   transition: background .25s ease, color .25s ease;
 }
 .widget-mini:hover .widget-mini-icon {
-  background: rgba(240,232,213,.08);
-  color: var(--apt-accent, var(--sol));
+  background: rgba(240,232,213,.18);
+  color: #2A0F2E;
 }
 .widget-mini-label { line-height: 1; }
 
@@ -11368,34 +11368,36 @@ body.apt-bar-shown .widget-stack {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 9px 16px;
+  padding: 10px 18px;
   border-radius: 12px 0 12px 0;
-  border: 1px solid rgba(240, 232, 213, 0.22);
+  border: 1.5px solid rgba(240, 232, 213, 0.45);   /* +contraste vs antes 0.22 */
   background: transparent;
-  color: color-mix(in srgb, var(--arena) 85%, transparent);
+  color: #F0E8D5;                                  /* arena sólido literal */
   font-family: var(--sans);
   font-size: 12px;
   letter-spacing: .1em;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: background .25s ease, color .25s ease, border-color .25s ease;
+  transition: background .25s ease, color .25s ease, border-color .25s ease, transform .15s ease;
 }
 .opiniones-tab:hover {
-  background: rgba(240, 232, 213, 0.06);
-  border-color: rgba(240, 232, 213, 0.45);
-  color: var(--arena);
+  background: rgba(240, 232, 213, 0.10);
+  border-color: rgba(240, 232, 213, 0.75);
+  color: #FFFFFF;
 }
 .opiniones-tab.is-active {
-  background: rgba(58, 170, 187, 0.12);
-  color: var(--sol);
-  border-color: var(--sol);
+  background: #3AAABB !important;                  /* sol sólido — AAA con ber-dk text */
+  color: #2A0F2E !important;                       /* ber-dk literal */
+  border-color: #3AAABB !important;
+  font-weight: 700;
 }
+.opiniones-tab.is-active .opiniones-tab-count { color: #2A0F2E; opacity: 0.85; }
 .opiniones-tab-count {
-  font-size: 10px;
-  opacity: 0.75;
+  font-size: 11px;
+  opacity: 0.85;
   letter-spacing: .04em;
-  font-weight: 400;
+  font-weight: 500;
 }
 .opiniones-section-label {
   display: inline-flex;
