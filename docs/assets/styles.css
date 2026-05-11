@@ -10933,33 +10933,70 @@ footer,
    actual (vm cyan, vt marrón, vs dorado). Default sol en el resto
    de la web. */
 /* widget-mini bulletproof — hex literales para que iPad no pueda
-   renderizar nada distinto a sol turquesa con texto eggplant. */
+   renderizar nada distinto a sol turquesa con texto eggplant.
+   Background animado (gradient pan + sutil pulso de halo) para llamar
+   la atención sin agredir. */
 .widget-mini {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #3AAABB !important;            /* sol literal */
-  color: #2A0F2E !important;                 /* ber-dk literal */
+  background-color: #3AAABB !important;
+  background-image: linear-gradient(
+    105deg,
+    #3AAABB 0%,
+    #6FC4D1 32%,
+    #3AAABB 55%,
+    #2A8E9E 78%,
+    #3AAABB 100%
+  ) !important;
+  background-size: 280% 100% !important;
+  background-position: 0% 50%;
+  color: #2A0F2E !important;
   border: 0;
   border-left: 3px solid #3AAABB !important;
   border-radius: 12px 0 12px 0;
   padding: 12px 18px;
   font-family: var(--sans);
-  font-size: 12px;                           /* +1px legibilidad */
+  font-size: 12px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  font-weight: 700;                          /* peso superior para legibilidad sobre sol */
+  font-weight: 700;
   cursor: pointer;
   box-shadow:
     0 6px 18px rgba(42,15,46,.45),
-    0 0 0 1px rgba(255,255,255,.10);          /* halo blanco tenue para silueta */
-  transition: background .25s ease, color .25s ease, transform .15s ease, border-color .25s ease;
+    0 0 0 1px rgba(255,255,255,.10),
+    0 0 18px rgba(58,170,187,.30);
+  transition: transform .15s ease, border-color .25s ease, box-shadow .35s ease;
   white-space: nowrap;
+  animation: widgetMiniShimmer 7s ease-in-out infinite, widgetMiniPulse 3.4s ease-in-out infinite;
+}
+@keyframes widgetMiniShimmer {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+@keyframes widgetMiniPulse {
+  0%, 100% {
+    box-shadow:
+      0 6px 18px rgba(42,15,46,.45),
+      0 0 0 1px rgba(255,255,255,.10),
+      0 0 14px rgba(58,170,187,.25);
+  }
+  50% {
+    box-shadow:
+      0 8px 22px rgba(42,15,46,.50),
+      0 0 0 1px rgba(255,255,255,.18),
+      0 0 28px rgba(58,170,187,.55);
+  }
 }
 .widget-mini:hover {
-  background: #2A8E9E !important;            /* sol-h literal */
-  color: #2A0F2E !important;                 /* mantener AA */
   transform: translateX(-2px);
+  animation-play-state: paused;
+  background-image: linear-gradient(105deg, #6FC4D1 0%, #3AAABB 100%) !important;
+  background-position: 0% 50% !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .widget-mini { animation: none !important; background-image: none !important; }
 }
 .widget-mini-icon {
   display: inline-flex;
@@ -10988,15 +11025,16 @@ footer,
    el color del apartamento. Hex literales para evitar fallos de parser
    en iPad y mantener AA con texto crema #F0E8D5. */
 [data-apt="mar"] .widget-mini {
-  background: #6B7A3A !important;       /* olivo Mar */
-  color: #F0E8D5 !important;            /* arena */
+  background-color: #6B7A3A !important;
+  background-image: linear-gradient(
+    105deg,
+    #6B7A3A 0%, #8B9A52 32%, #6B7A3A 55%, #556330 78%, #6B7A3A 100%
+  ) !important;
+  color: #F0E8D5 !important;
   border-left-color: #8B9A52 !important;
-  box-shadow:
-    0 6px 18px rgba(42,15,46,.45),
-    0 0 0 1px rgba(255,255,255,.14);
 }
 [data-apt="mar"] .widget-mini:hover {
-  background: #8B9A52 !important;       /* accent2 Mar más claro */
+  background-image: linear-gradient(105deg, #8B9A52 0%, #6B7A3A 100%) !important;
   color: #2A0F2E !important;
 }
 [data-apt="mar"] .widget-mini-icon {
@@ -11009,15 +11047,16 @@ footer,
 }
 
 [data-apt="thalassa"] .widget-mini {
-  background: #8A4A24 !important;       /* siena Thalassa */
+  background-color: #8A4A24 !important;
+  background-image: linear-gradient(
+    105deg,
+    #8A4A24 0%, #B86A3C 32%, #8A4A24 55%, #6E3A1C 78%, #8A4A24 100%
+  ) !important;
   color: #F0E8D5 !important;
   border-left-color: #B86A3C !important;
-  box-shadow:
-    0 6px 18px rgba(42,15,46,.45),
-    0 0 0 1px rgba(255,255,255,.14);
 }
 [data-apt="thalassa"] .widget-mini:hover {
-  background: #B86A3C !important;
+  background-image: linear-gradient(105deg, #B86A3C 0%, #8A4A24 100%) !important;
   color: #2A0F2E !important;
 }
 [data-apt="thalassa"] .widget-mini-icon {
@@ -11030,15 +11069,16 @@ footer,
 }
 
 [data-apt="salinas"] .widget-mini {
-  background: #9E7A2C !important;       /* dorado Salinas */
-  color: #2A0F2E !important;            /* eggplant — mejor contraste sobre dorado */
+  background-color: #9E7A2C !important;
+  background-image: linear-gradient(
+    105deg,
+    #9E7A2C 0%, #D4A84A 32%, #9E7A2C 55%, #7E6022 78%, #9E7A2C 100%
+  ) !important;
+  color: #2A0F2E !important;
   border-left-color: #D4A84A !important;
-  box-shadow:
-    0 6px 18px rgba(42,15,46,.45),
-    0 0 0 1px rgba(255,255,255,.18);
 }
 [data-apt="salinas"] .widget-mini:hover {
-  background: #D4A84A !important;
+  background-image: linear-gradient(105deg, #D4A84A 0%, #9E7A2C 100%) !important;
   color: #2A0F2E !important;
 }
 [data-apt="salinas"] .widget-mini-icon {
