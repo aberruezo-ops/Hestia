@@ -6813,23 +6813,36 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .form-extra-qty:focus-visible { outline: 2px solid var(--sol); outline-offset: 1px; }
 .form-extra-qty-unit { color: var(--ink-soft); font-size: 12px; }
+/* Submit del form de reservas — sol turquesa con texto crema lograba
+   contraste 1.8:1 (FAIL AA). Cambio a ber-dk #2A0F2E con peso 700
+   sobre sol sólido → ratio ~4.5 OK. Hex literales para evitar fallos
+   de var() en iPad. */
 .reservas-submit {
   width: 100%;
   padding: 16px;
   font-family: var(--sans);
   font-size: 14px;
-  font-weight: 400;
-  letter-spacing: 0.1em;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  background: var(--sol);
-  color: var(--crema);
-  border: none;
+  background-color: #3AAABB !important;
+  background-image: none !important;
+  color: #2A0F2E !important;
+  border: 0 !important;
   border-radius: 10px 0 10px 0;
   cursor: pointer;
-  transition: background var(--dur-liquid) var(--ease-liquid);
+  box-shadow: 0 6px 22px rgba(58,170,187,.45);
+  transition: background-color var(--dur-liquid) var(--ease-liquid), box-shadow .25s ease, transform .15s ease;
   margin-top: 8px;
 }
-.reservas-submit:hover { background: var(--sol-h); }
+.reservas-submit:hover {
+  background-color: #6FC4D1 !important;
+  color: #2A0F2E !important;
+  box-shadow: 0 8px 28px rgba(58,170,187,.60);
+  transform: translateY(-1px);
+}
+.reservas-submit:active { transform: translateY(0) scale(.99); }
+.reservas-submit::before { display: none !important; }
 .reservas-note {
   font-size: 12px;
   color: var(--ink-soft);
