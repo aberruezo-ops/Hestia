@@ -1015,17 +1015,19 @@ section {
   left: 50%;
   bottom: 24px;
   width: min(560px, calc(100vw - 24px));
-  background: var(--ber-dk);
-  color: var(--arena);
-  padding: 14px 20px 14px 22px;
+  background-color: #2A0F2E !important;            /* ber-dk literal */
+  background-image: none !important;
+  color: #F0E8D5 !important;                        /* arena literal */
+  padding: 16px 22px 16px 24px;
   border-radius: 14px 0 14px 0;
-  border-left: 4px solid var(--sol);
-  box-shadow: 0 18px 50px rgba(42, 15, 46, 0.42), 0 4px 14px rgba(42,15,46,0.22);
+  border: 1px solid rgba(240,232,213,.22);
+  border-left: 4px solid #3AAABB;                   /* sol */
+  box-shadow: 0 18px 50px rgba(42, 15, 46, 0.62), 0 4px 14px rgba(42,15,46,0.32);
   z-index: 9999;
   font-size: 14px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
   justify-content: center;
   transform: translate(-50%, 0);
@@ -1063,21 +1065,21 @@ body.apt-bar-shown .cookies {
 }
 .cookies h5 {
   font-family: var(--serif);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   margin: 0;
   line-height: 1.2;
-  color: var(--sol);
+  color: #6FC4D1 !important;          /* sol-lt — más legible que sol puro */
   white-space: nowrap;
 }
 .cookies p {
   margin: 0;
-  flex: 1 1 200px;
+  flex: 1 1 220px;
   min-width: 180px;
-  font-size: 13px;
-  line-height: 1.45;
-  color: var(--arena);
-  opacity: 0.88;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #F0E8D5 !important;          /* arena 100% — sin opacity */
+  opacity: 1;
 }
 .cookies .cookies-btns {
   display: flex;
@@ -1086,41 +1088,39 @@ body.apt-bar-shown .cookies {
   flex-shrink: 0;
 }
 .cookies .cookies-btns button {
-  padding: 9px 16px;
-  font-size: 11px;
+  padding: 10px 18px;
+  font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 999px;
-  border: 1px solid var(--sol);
   white-space: nowrap;
   cursor: pointer;
-  transition: background var(--dur-base, .2s) var(--ease-out, ease),
-              color var(--dur-base, .2s) var(--ease-out, ease),
-              border-color var(--dur-base, .2s) var(--ease-out, ease),
-              transform .15s ease;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .15s ease, box-shadow .2s ease;
 }
-/* Override colores corporativos sobre el fondo ber-dk. */
+/* Aceptar — sol turquesa sólido + texto eggplant, hex literales. */
 .cookies .cookies-btns .accept {
-  background: var(--sol);
-  color: var(--ber-dk);
-  border-color: var(--sol);
+  background-color: #3AAABB !important;
+  color: #2A0F2E !important;
+  border: 0 !important;
+  box-shadow: 0 3px 12px rgba(58,170,187,.40);
 }
 .cookies .cookies-btns .accept:hover {
-  background: transparent;
-  color: var(--sol);
-  border-color: var(--sol);
-  transform: translateX(2px);
+  background-color: #6FC4D1 !important;
+  color: #2A0F2E !important;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(58,170,187,.55);
 }
+/* Solo esenciales — outline arena (alto contraste sobre eggplant). */
 .cookies .cookies-btns .essential {
-  background: transparent;
-  color: var(--sol);
-  border-color: var(--sol);
+  background-color: transparent !important;
+  color: #F0E8D5 !important;
+  border: 1.5px solid #F0E8D5 !important;
 }
 .cookies .cookies-btns .essential:hover {
-  background: rgba(240,232,213,.08);
-  color: var(--sol);
-  border-color: var(--sol);
+  background-color: rgba(240,232,213,.14) !important;
+  color: #F0E8D5 !important;
+  border-color: #F0E8D5 !important;
 }
 
 /* ============================================================
