@@ -849,6 +849,27 @@ body.apt-bar-shown .float-chat {
   flex-shrink: 0;
 }
 .float-chat .contact-row .avatar.fran { background: var(--ber); color: var(--sol-lt); }
+/* Avatares con foto — Alex y Fran. La imagen es de fondo y se zoom
+   manual con background-size + background-position para centrar
+   la cara. En Alex la foto original es plano medio (cuerpo entero
+   sentado), así que se acerca bastante. En Fran ya es primer plano. */
+.float-chat .contact-row .avatar.avatar-photo {
+  background-color: var(--ber-lt);
+  background-repeat: no-repeat;
+  border: 1.5px solid rgba(240, 232, 213, 0.55);
+  box-shadow: 0 2px 6px rgba(42, 15, 46, 0.30);
+  font-size: 0;          /* oculta cualquier fallback de texto */
+}
+.float-chat .contact-row .avatar.avatar-alex {
+  background-image: url("photo-alex.jpg");
+  background-size: 360%;
+  background-position: 41% 22%;
+}
+.float-chat .contact-row .avatar.avatar-fran {
+  background-image: url("photo-fran.jpg");
+  background-size: 145%;
+  background-position: 50% 32%;
+}
 .float-chat .contact-row .info { line-height: 1.3; }
 .float-chat .contact-row .info .name { font-weight: 500; }
 .float-chat .contact-row .info .sub { font-size: 11px; opacity: 0.6; }
