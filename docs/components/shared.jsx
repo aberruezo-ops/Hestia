@@ -1755,7 +1755,214 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
   return { nights, baseTotal, stayD, stayDiscAmt, afterStay, petAmt, directTotal, avgPerNight };
 };
 
-Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt });
+// ================================================================
+// DateRangePicker — calendario doble con bloqueadas visibles, auto-jump
+// al checkout y preview en hover. Mismas mecánicas y estética que el
+// HsDateRange de la home, expuesto vía window para uso en /reservas.
+// ================================================================
+const _drAvail = (checkin, checkout, blocked) => {
+  if (!blocked) return null;
+  return !blocked.some(r => checkin < r.end && checkout > r.start);
+};
+const _drAdj = (ds, n) => {
+  const d = new Date(ds + 'T12:00:00Z');
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+};
+const _drDiff = (a, b) =>
+  Math.round((new Date(b + 'T12:00:00Z') - new Date(a + 'T12:00:00Z')) / 86400000);
+const _drFmtDate = (ds, lang) => {
+  if (!ds) return '';
+  const d = new Date(ds + 'T12:00:00Z');
+  const M  = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
+              'Septiembre','Octubre','Noviembre','Diciembre'];
+  const ME = ['January','February','March','April','May','June','July','August',
+              'September','October','November','December'];
+  return lang === 'es'
+    ? `${d.getUTCDate()} ${M[d.getUTCMonth()].slice(0,3).toLowerCase()}. ${d.getUTCFullYear()}`
+    : `${ME[d.getUTCMonth()].slice(0,3)} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+};
+const _drToday = () => new Date().toISOString().slice(0, 10);
+
+const DateRangePicker = ({
+  checkin, checkout, setCheckin, setCheckout,
+  blocked, lang, today,
+  accent,
+}) => {
+  const [hover, setHover] = React.useState(null);
+  const t = today || _drToday();
+  const todayDate = new Date(t + 'T12:00:00Z');
+  const [viewY, setViewY] = React.useState(todayDate.getUTCFullYear());
+  const [viewM, setViewM] = React.useState(todayDate.getUTCMonth());
+
+  const blockedList = blocked || [];
+  const horizonStr = (window.PRICES_V2 && window.PRICES_V2.bookingHorizon
+    && window.PRICES_V2.bookingHorizon.lastCheckinDate) || null;
+  const _isBeyondHorizon = (ds) => !!(horizonStr && ds > horizonStr);
+  const _isBlk = (ds) => blockedList.some(r => ds >= r.start && ds < r.end);
+
+  let previewEnd = null;
+  if (checkin && !checkout && hover && hover > checkin) {
+    let ok = true;
+    let cur = _drAdj(checkin, 1);
+    while (cur < hover) { if (_isBlk(cur)) { ok = false; break; } cur = _drAdj(cur, 1); }
+    if (ok) previewEnd = hover;
+  }
+
+  const handleDayClick = (ds) => {
+    if (ds < t || _isBeyondHorizon(ds) || _isBlk(ds)) return;
+    if (!checkin || checkout || ds <= checkin) { setCheckin(ds); setCheckout(''); return; }
+    let cur = _drAdj(checkin, 1);
+    while (cur < ds) {
+      if (_isBlk(cur)) { setCheckin(ds); setCheckout(''); return; }
+      cur = _drAdj(cur, 1);
+    }
+    setCheckout(ds);
+  };
+
+  const MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const WDS_ES = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
+  const WDS_EN = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+
+  const renderMonth = (y, m) => {
+    const nDays  = new Date(y, m + 1, 0).getDate();
+    let firstDow = new Date(y, m, 1).getDay();
+    firstDow = firstDow === 0 ? 6 : firstDow - 1;
+    const wds   = lang === 'es' ? WDS_ES : WDS_EN;
+    const mName = (lang === 'es' ? MONTHS_ES : MONTHS_EN)[m];
+    const cells = [];
+    for (let i = 0; i < firstDow; i++) cells.push({ empty: true, k: `e${i}` });
+    for (let d = 1; d <= nDays; d++) cells.push({ d, k: d });
+    return (
+      <div className="cal-month" key={`${y}-${m}`}>
+        <div className="cal-mhd">{mName} <span className="cal-yr">{y}</span></div>
+        <div className="cal-grid">
+          {wds.map(w => <div key={w} className="cal-wd">{w}</div>)}
+          {cells.map(cell => {
+            if (cell.empty) return <div key={cell.k} className="cal-cell cal-empty"/>;
+            const { d } = cell;
+            const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            const isPast   = ds < t;
+            const isBeyond = _isBeyondHorizon(ds);
+            const isToday  = ds === t;
+            const isBlk    = _isBlk(ds);
+            const prevBlk  = isBlk && _isBlk(_drAdj(ds, -1));
+            const nextBlk  = isBlk && _isBlk(_drAdj(ds,  1));
+            const isBlkStart  = isBlk && !prevBlk;
+            const isBlkEnd    = isBlk && !nextBlk;
+            const isBlkSingle = isBlkStart && isBlkEnd;
+            const isBlkMid    = isBlk && !isBlkStart && !isBlkEnd;
+            const inSel = !!(checkin && checkout && ds >= checkin && ds <= checkout);
+            const isSS  = inSel && ds === checkin;
+            const isSE  = inSel && ds === checkout;
+            const isSM  = inSel && !isSS && !isSE;
+            const inPrev = !!(checkin && !checkout && previewEnd && ds >= checkin && ds <= previewEnd);
+            const isPS   = inPrev && ds === checkin;
+            const isPE   = inPrev && ds === previewEnd;
+            const isPM   = inPrev && !isPS && !isPE;
+            const isClickable = !isPast && !isBeyond && !isBlk;
+            const showBlk = isBlk && !inSel && !inPrev;
+            return (
+              <div key={d}
+                className={['cal-cell',(isPast||isBeyond)&&'past',isToday&&'today',isBlk&&'blk',
+                  isClickable&&'clickable',inSel&&'in-sel',isSS&&'sel-s',isSE&&'sel-e',isSM&&'sel-m',
+                  inPrev&&'in-prev',isPS&&'prev-s',isPE&&'prev-e',isPM&&'prev-m',
+                ].filter(Boolean).join(' ')}
+                onClick={isClickable ? () => handleDayClick(ds) : undefined}
+                onMouseEnter={isClickable && !checkout ? () => setHover(ds) : undefined}
+                onMouseLeave={isClickable ? () => setHover(null) : undefined}>
+                {showBlk && !isBlkSingle && isBlkStart && <div className="c-strip c-sr"/>}
+                {showBlk && !isBlkSingle && isBlkEnd   && <div className="c-strip c-sl"/>}
+                {showBlk && isBlkMid                   && <div className="c-strip"/>}
+                {showBlk && (isBlkStart||isBlkEnd||isBlkSingle) && <div className="c-circ"/>}
+                {isSS && !isSE && <div className="c-strip c-sel-strip c-sr"/>}
+                {isSE && !isSS && <div className="c-strip c-sel-strip c-sl"/>}
+                {isSM          && <div className="c-strip c-sel-strip"/>}
+                {(isSS||isSE)  && <div className="c-circ c-sel-circ"/>}
+                {isPS && !isPE && <div className="c-strip c-prev-strip c-sr"/>}
+                {isPE && !isPS && <div className="c-strip c-prev-strip c-sl"/>}
+                {isPM          && <div className="c-strip c-prev-strip"/>}
+                {(isPS||isPE)  && <div className="c-circ c-prev-circ"/>}
+                {isToday && !inSel && !inPrev && <div className="c-today"/>}
+                <span className="c-n">{d}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const nextY = viewM === 11 ? viewY + 1 : viewY;
+  const nextM = viewM === 11 ? 0 : viewM + 1;
+  const canGoPrev = viewY > todayDate.getUTCFullYear() || viewM > todayDate.getUTCMonth();
+  const prevMonth = () => { if (!canGoPrev) return; if (viewM === 0) { setViewY(y => y - 1); setViewM(11); } else setViewM(m => m - 1); };
+  const nextMonth = () => { if (viewM === 11) { setViewY(y => y + 1); setViewM(0); } else setViewM(m => m + 1); };
+
+  const months = lang === 'es' ? MONTHS_ES : MONTHS_EN;
+  const navLbl = `${months[viewM]} · ${months[nextM]} ${nextY}`;
+  const nights = checkin && checkout ? _drDiff(checkin, checkout) : null;
+  const acc = accent || '#1BC8D8';
+
+  // Deriva variables CSS de selección desde el acento (rgba con alpha)
+  const _toRgb = (hex) => {
+    const h = hex.replace('#', '');
+    return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+  };
+  const [r, g, b] = _toRgb(acc);
+
+  return (
+    <div className="hscal-wrap" style={{
+      '--apt-accent': acc,
+      '--sel-fill':   `rgba(${r},${g},${b},.22)`,
+      '--sel-circ':   `rgba(${r},${g},${b},.90)`,
+      '--prev-fill':  `rgba(${r},${g},${b},.11)`,
+      '--prev-circ':  `rgba(${r},${g},${b},.48)`,
+    }}>
+      <div className="hscal-phase-hint">
+        {!checkin  ? (lang === 'es' ? '↓ Elige fecha de entrada'       : '↓ Choose check-in date')
+         : !checkout ? (lang === 'es' ? '→ Ahora elige la fecha de salida' : '→ Now choose check-out date')
+         : null}
+      </div>
+      <div className="avail-nav hscal-nav">
+        <button type="button" className={`avail-arr${canGoPrev ? '' : ' off'}`} onClick={prevMonth}
+          aria-label={lang === 'es' ? 'Mes anterior' : 'Previous month'}>‹</button>
+        <span className="avail-nav-lbl">{navLbl}</span>
+        <button type="button" className="avail-arr" onClick={nextMonth}
+          aria-label={lang === 'es' ? 'Mes siguiente' : 'Next month'}>›</button>
+      </div>
+      <div className="hscal-months" onMouseLeave={() => { if (!checkout) setHover(null); }}>
+        {renderMonth(viewY, viewM)}
+        {renderMonth(nextY, nextM)}
+      </div>
+      {(checkin || checkout) && (
+        <div className="hscal-sel-row">
+          {checkin && (
+            <span className="hscal-sel-item">
+              <span className="hscal-sel-lbl">{lang === 'es' ? 'Entrada' : 'Check-in'}</span>
+              <strong>{_drFmtDate(checkin, lang)}</strong>
+            </span>
+          )}
+          {checkout && (
+            <span className="hscal-sel-item">
+              <span className="hscal-sel-lbl">{lang === 'es' ? 'Salida' : 'Check-out'}</span>
+              <strong>{_drFmtDate(checkout, lang)}</strong>
+            </span>
+          )}
+          {nights && (
+            <div className="hs-nights-badge">
+              <span className="hs-nights-n">{nights}</span>
+              <span className="hs-nights-lbl">{lang === 'es' ? 'noches' : 'nights'}</span>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt, DateRangePicker, _drAvail, _drAdj, _drDiff, _drFmtDate });
 
 // ================================================================
 // DirectBookingPerks — sección "Reserva directa, una mejor manera"
