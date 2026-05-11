@@ -448,28 +448,18 @@ const ReservasForm = ({
   }, "Hest\xEDa Thalassa"), /*#__PURE__*/React.createElement("option", {
     value: "vs"
   }, "Hest\xEDa Salinas"))), /*#__PURE__*/React.createElement("div", {
-    className: "form-row"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "form-field"
-  }, /*#__PURE__*/React.createElement("label", null, t.f_checkin), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    id: "res-checkin",
-    value: checkin,
-    onChange: e => {
-      setCheckin(e.target.value);
-      if (e.target.value) setTimeout(() => document.getElementById('res-checkout')?.focus(), 50);
-    },
-    required: true
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "form-field"
-  }, /*#__PURE__*/React.createElement("label", null, t.f_checkout), /*#__PURE__*/React.createElement("input", {
-    type: "date",
-    id: "res-checkout",
-    value: checkout,
-    min: checkin || undefined,
-    onChange: e => setCheckout(e.target.value),
-    required: true
-  }))), /*#__PURE__*/React.createElement("div", {
+    className: "form-field full"
+  }, /*#__PURE__*/React.createElement("label", null, lang === 'es' ? 'Fechas de la estancia' : 'Stay dates'), /*#__PURE__*/React.createElement(DateRangePicker, {
+    checkin: checkin,
+    checkout: checkout,
+    setCheckin: setCheckin,
+    setCheckout: setCheckout,
+    blocked: apt && avail && avail[apt] ? avail[apt].blocked : [],
+    accent: apt === 'vm' ? '#6B7A3A' : apt === 'vt' ? '#B86A3C' : apt === 'vs' ? '#D4A84A' : '#3AAABB',
+    lang: lang
+  }), !apt && /*#__PURE__*/React.createElement("p", {
+    className: "form-help-note"
+  }, lang === 'es' ? '↑ Selecciona primero una Hestía para ver las fechas bloqueadas.' : '↑ Pick a Hestía first to see blocked dates.')), /*#__PURE__*/React.createElement("div", {
     className: "form-row"
   }, /*#__PURE__*/React.createElement("div", {
     className: "form-field"
