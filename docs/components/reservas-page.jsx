@@ -147,9 +147,10 @@ const _resExtraUnitSuffix = (unit, lang) => {
   return '';
 };
 
-const PricePreview = ({ apt, checkin, checkout, pets, lang, extras = [] }) => {
+const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] }) => {
   if (!apt || !checkin || !checkout) return null;
-  const calc = _calcStay(checkin, checkout, apt, pets === 'yes');
+  const gn = parseInt(guests, 10) || null;
+  const calc = _calcStay(checkin, checkout, apt, pets === 'yes', gn);
   if (!calc || calc.nights <= 0) return null;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
   const extrasTotal = extras.reduce((s, e) => s + e.amount, 0);
@@ -183,6 +184,16 @@ const PricePreview = ({ apt, checkin, checkout, pets, lang, extras = [] }) => {
           <div className="price-line price-line-disc">
             <span>{lang === 'es' ? calc.stayD.es : calc.stayD.en}</span>
             <span>−{fmt(calc.stayDiscAmt)}</span>
+          </div>
+        )}
+        {calc.guestSuppAmt > 0 && (
+          <div className="price-line">
+            <span>
+              {lang === 'es'
+                ? `Suplemento ${calc.guests} huéspedes (+${calc.guestSuppPerNight} €/noche)`
+                : `${calc.guests}-guest supplement (+${calc.guestSuppPerNight} €/night)`}
+            </span>
+            <span>+{fmt(calc.guestSuppAmt)}</span>
           </div>
         )}
         {calc.petAmt > 0 && (
@@ -378,7 +389,7 @@ const ReservasForm = ({ lang }) => {
   const channelValid = channel === 'whatsapp' ? (hasName && hasTel) : (hasName && hasEmail);
 
   // Cálculo
-  const calc = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes') : null;
+  const calc = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes', parseInt(guests, 10) || null) : null;
   const nightsForExtras = calc?.nights || 0;
   const selectedExtras = computeSelectedExtras(nightsForExtras);
   const extrasCount = Object.values(extrasSel).filter(v => v > 0).length;
@@ -747,7 +758,7 @@ const ReservasForm = ({ lang }) => {
             {/* Price — debajo de los extras para que el huésped vea cómo
                 cambia el total al añadir cada extra. */}
             {calc && (
-              <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} lang={lang} extras={selectedExtras}/>
+              <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} guests={guests} lang={lang} extras={selectedExtras}/>
             )}
 
             {step === 2 && (

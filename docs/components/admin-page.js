@@ -1389,6 +1389,111 @@ const AdminApp = () => {
     className: "pe-input pe-input-num"
   })))), /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
+  }, /*#__PURE__*/React.createElement("h2", null, "Suplementos por hu\xE9sped"), /*#__PURE__*/React.createElement("p", {
+    className: "pe-lede"
+  }, "Precio escalonado por n\xFAmero de hu\xE9spedes. Cada fila es el coste adicional ", /*#__PURE__*/React.createElement("strong", null, "por noche"), " al subir un escal\xF3n. Base = 1 hu\xE9sped. Ej. 2 hu\xE9spedes = 1 hu\xE9sped + suplemento 1\u21922; 4 hu\xE9spedes = 1 hu\xE9sped + suplemento 1\u21922 + 2\u21923 + 3\u21924."), /*#__PURE__*/React.createElement("table", {
+    className: "pe-table pe-table-extras"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    style: {
+      width: 80
+    }
+  }, "De"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      width: 80
+    }
+  }, "A"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      width: 140
+    }
+  }, "\u20AC/noche"), /*#__PURE__*/React.createElement("th", null, "Etiqueta"), /*#__PURE__*/React.createElement("th", {
+    style: {
+      width: 80
+    }
+  }))), /*#__PURE__*/React.createElement("tbody", null, (data.rules.guestSupplements || []).map((g, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    max: "10",
+    step: "1",
+    value: g.from,
+    onChange: e => {
+      const arr = (data.rules.guestSupplements || []).slice();
+      arr[i] = {
+        ...arr[i],
+        from: Number(e.target.value)
+      };
+      update('rules.guestSupplements', arr);
+    },
+    className: "pe-input pe-input-num"
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    max: "10",
+    step: "1",
+    value: g.to,
+    onChange: e => {
+      const arr = (data.rules.guestSupplements || []).slice();
+      arr[i] = {
+        ...arr[i],
+        to: Number(e.target.value)
+      };
+      update('rules.guestSupplements', arr);
+    },
+    className: "pe-input pe-input-num"
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    step: "1",
+    value: g.perNight,
+    onChange: e => {
+      const arr = (data.rules.guestSupplements || []).slice();
+      arr[i] = {
+        ...arr[i],
+        perNight: Number(e.target.value)
+      };
+      update('rules.guestSupplements', arr);
+    },
+    className: "pe-input pe-input-num"
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: g.label || '',
+    onChange: e => {
+      const arr = (data.rules.guestSupplements || []).slice();
+      arr[i] = {
+        ...arr[i],
+        label: e.target.value
+      };
+      update('rules.guestSupplements', arr);
+    },
+    className: "pe-input"
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    onClick: () => {
+      const arr = (data.rules.guestSupplements || []).slice();
+      arr.splice(i, 1);
+      update('rules.guestSupplements', arr);
+    }
+  }, "Quitar")))))), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    style: {
+      marginTop: 12
+    },
+    onClick: () => {
+      const arr = (data.rules.guestSupplements || []).slice();
+      const lastTo = arr.length ? arr[arr.length - 1].to : 1;
+      arr.push({
+        from: lastTo,
+        to: lastTo + 1,
+        perNight: 0,
+        label: `${lastTo} → ${lastTo + 1} huéspedes`
+      });
+      update('rules.guestSupplements', arr);
+    }
+  }, "+ A\xF1adir escal\xF3n")), /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
   }, /*#__PURE__*/React.createElement("h2", null, "Extras configurables"), /*#__PURE__*/React.createElement("p", {
     className: "pe-lede"
   }, "Items opcionales que el hu\xE9sped puede pedir desde el formulario de reserva. Edita label, precio y unidad. Eliminar una fila la quita de la web."), /*#__PURE__*/React.createElement("table", {

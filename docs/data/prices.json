@@ -44,6 +44,13 @@
   },
   "rules": {
     "extraGuestPerNight": 5,
+    "guestSupplements": [
+      { "from": 1, "to": 2, "perNight": 1,  "label": "1 → 2 huéspedes" },
+      { "from": 2, "to": 3, "perNight": 5,  "label": "2 → 3 huéspedes" },
+      { "from": 3, "to": 4, "perNight": 6,  "label": "3 → 4 huéspedes" },
+      { "from": 4, "to": 5, "perNight": 10, "label": "4 → 5 huéspedes" },
+      { "from": 5, "to": 6, "perNight": 1,  "label": "5 → 6 huéspedes" }
+    ],
     "minNights": 3,
     "shortStayPricing": [
       {
