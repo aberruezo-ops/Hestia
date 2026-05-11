@@ -62,26 +62,28 @@ const GUIDE_SECTIONS = [
   { id: 'feedback',     es: 'Comentarios',      en: 'Feedback' },
 ];
 
-// ----- Categorías de lugares (color + etiqueta bilingüe) -----
+// ----- Categorías de lugares (icono + color brand + etiqueta bilingüe) -----
+// Color: 1 token de la paleta corporativa por categoría. Icono: emoji
+// neutro que ya forma parte del set Unicode (sin assets externos).
 const CATEGORIES = [
-  { id: 'home',        es: 'Hestía',                 en: 'Hestía',                color: '#2A0F2E' },
-  { id: 'restaurant',  es: 'Restaurantes',           en: 'Restaurants',           color: '#C84C4C' },
-  { id: 'celiac',      es: 'Restaurantes celíacos',  en: 'Gluten-free dining',    color: '#E07B5B' },
-  { id: 'bar',         es: 'Copas y chiringuitos',   en: 'Bars & beach bars',     color: '#D4A84A' },
-  { id: 'beach',       es: 'Playas',                 en: 'Beaches',               color: '#3AAABB' },
-  { id: 'beach-dog',   es: 'Playas para perros',     en: 'Dog-friendly beaches',  color: '#7BAA3F' },
-  { id: 'beach-nude',  es: 'Playas naturistas',      en: 'Naturist beaches',      color: '#B86A3C' },
-  { id: 'beach-srvc',  es: 'Playas con servicios',   en: 'Beaches with services', color: '#3A6FAF' },
-  { id: 'beach-hard',  es: 'Playas de difícil acceso', en: 'Hard-access beaches', color: '#5D4A8A' },
-  { id: 'super',       es: 'Supermercados',          en: 'Supermarkets',          color: '#6B7A3A' },
-  { id: 'fish',        es: 'Pescaderías',            en: 'Fish markets',          color: '#4A8A8A' },
-  { id: 'pharmacy',    es: 'Farmacias',              en: 'Pharmacies',            color: '#E8985C' },
-  { id: 'health',      es: 'Centros de salud',       en: 'Health centres',        color: '#D14747' },
-  { id: 'activity',    es: 'Actividades',            en: 'Activities',            color: '#FF8A3A' },
-  { id: 'town',        es: 'Pueblos',                en: 'Towns',                 color: '#8A4A24' },
-  { id: 'culture',     es: 'Lugares de interés',     en: 'Places of interest',    color: '#5C7AAB' },
-  { id: 'bookshop',    es: 'Librerías',              en: 'Bookshops',             color: '#A07842' },
-  { id: 'market',      es: 'Mercadillos',            en: 'Street markets',        color: '#9E7A2C' },
+  { id: 'home',        es: 'Hestía',                 en: 'Hestía',                color: 'var(--ber-dk)',  icon: '🏠' },
+  { id: 'restaurant',  es: 'Restaurantes',           en: 'Restaurants',           color: 'var(--vt)',      icon: '🍽️' },
+  { id: 'celiac',      es: 'Restaurantes celíacos',  en: 'Gluten-free dining',    color: 'var(--vt2)',     icon: '🌾' },
+  { id: 'bar',         es: 'Copas y chiringuitos',   en: 'Bars & beach bars',     color: 'var(--vs)',      icon: '🍹' },
+  { id: 'beach',       es: 'Playas',                 en: 'Beaches',               color: 'var(--sol)',     icon: '🏖️' },
+  { id: 'beach-dog',   es: 'Playas para perros',     en: 'Dog-friendly beaches',  color: 'var(--vm)',      icon: '🐕' },
+  { id: 'beach-nude',  es: 'Playas naturistas',      en: 'Naturist beaches',      color: 'var(--bug)',     icon: '🌞' },
+  { id: 'beach-srvc',  es: 'Playas con servicios',   en: 'Beaches with services', color: 'var(--tur)',     icon: '🛟' },
+  { id: 'beach-hard',  es: 'Playas de difícil acceso', en: 'Hard-access beaches', color: 'var(--vio)',     icon: '🧗' },
+  { id: 'super',       es: 'Supermercados',          en: 'Supermarkets',          color: 'var(--vm2)',     icon: '🛒' },
+  { id: 'fish',        es: 'Pescaderías',            en: 'Fish markets',          color: 'var(--sol-text)', icon: '🐟' },
+  { id: 'pharmacy',    es: 'Farmacias',              en: 'Pharmacies',            color: 'var(--alb)',     icon: '💊' },
+  { id: 'health',      es: 'Centros de salud',       en: 'Health centres',        color: 'var(--err)',     icon: '⚕️' },
+  { id: 'activity',    es: 'Actividades',            en: 'Activities',            color: 'var(--vs2)',     icon: '⛵' },
+  { id: 'town',        es: 'Pueblos',                en: 'Towns',                 color: 'var(--vt-dk)',   icon: '🏘️' },
+  { id: 'culture',     es: 'Lugares de interés',     en: 'Places of interest',    color: 'var(--sol-h)',   icon: '🏛️' },
+  { id: 'bookshop',    es: 'Librerías',              en: 'Bookshops',             color: 'var(--sie)',     icon: '📚' },
+  { id: 'market',      es: 'Mercadillos',            en: 'Street markets',        color: 'var(--vs-dk)',   icon: '🧺' },
 ];
 
 // ----- Lugares: nombre, categoría, descripción opcional, coords aproximadas, URL -----
@@ -970,7 +972,9 @@ const CatGroup = ({ cat, places, lang }) => {
         onClick={() => setOpen(o => !o)}
         aria-expanded={open}
       >
-        <span className="ag-cat-dot" style={{ background: cat.color }} aria-hidden="true" />
+        <span className="ag-cat-dot" style={{ background: cat.color }} aria-hidden="true">
+          <span className="ag-cat-icon">{cat.icon}</span>
+        </span>
         <span className="ag-cat-label">{cat[lang]}</span>
         <span className="ag-cat-count">{places.length}</span>
         <span className={`ag-cat-chev ${open ? 'open' : ''}`} aria-hidden="true">↓</span>
