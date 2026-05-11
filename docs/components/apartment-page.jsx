@@ -376,8 +376,8 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
           </p>
         )}
         <div className="apt-page-ctas">
-          <a href="https://wa.me/34620316370" className="btn btn-primary" target="_blank" rel="noopener">
-            {lang === 'es' ? 'Reserva — WhatsApp' : 'Book — WhatsApp'} <span className="arrow">→</span>
+          <a href={`reservas.html?apt=${apt.id}`} className="btn btn-primary">
+            {lang === 'es' ? 'Reservar' : 'Book now'} <span className="arrow">→</span>
           </a>
           <a href="contacto.html" className="btn btn-ghost-light">
             {lang === 'es' ? 'Más información' : 'More info'}

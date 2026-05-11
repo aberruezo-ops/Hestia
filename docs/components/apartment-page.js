@@ -364,11 +364,9 @@ const AptPageHero = ({
   }, lang === 'es' ? '· Si encuentras un precio más bajo, te lo mejoramos.' : '· Find a lower price anywhere — we will beat it.')), /*#__PURE__*/React.createElement("div", {
     className: "apt-page-ctas"
   }, /*#__PURE__*/React.createElement("a", {
-    href: "https://wa.me/34620316370",
-    className: "btn btn-primary",
-    target: "_blank",
-    rel: "noopener"
-  }, lang === 'es' ? 'Reserva — WhatsApp' : 'Book — WhatsApp', " ", /*#__PURE__*/React.createElement("span", {
+    href: `reservas.html?apt=${apt.id}`,
+    className: "btn btn-primary"
+  }, lang === 'es' ? 'Reservar' : 'Book now', " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
   }, "\u2192")), /*#__PURE__*/React.createElement("a", {
     href: "contacto.html",
