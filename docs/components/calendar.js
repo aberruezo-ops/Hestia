@@ -62,11 +62,13 @@ const RequestPanel = ({
   onReset
 }) => {
   const [guests, setGuests] = React.useState(2);
-  // Mascota y demás extras se eligen en /reservas (paso único de extras).
-  // Aquí mostramos precio base sin suplementos para no inflar la estimación
-  // ni duplicar campos.
+  // Pet y baby SÍ se eligen aquí porque afectan al precio (mascota) y
+  // a la preparación (bebé). El resto de extras (cuna, trona, sábanas
+  // adicionales, toallas adicionales) se eligen en /reservas.
+  const [pets, setPets] = React.useState(false);
+  const [baby, setBaby] = React.useState(false);
   const aptName = _CM.apt_names[aptId] || 'Hestía';
-  const calc = _calcStay(selStart, selEnd, aptId, false);
+  const calc = _calcStay(selStart, selEnd, aptId, pets);
   const fmt = n => n.toLocaleString('es-ES') + ' €';
   const months_es = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   const months_en = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -78,14 +80,16 @@ const RequestPanel = ({
   };
 
   // CTA "Avanzar con la reserva": navega a /reservas pre-rellenado.
-  // Datos de contacto, extras (mascota, cuna, etc) y comentarios se
-  // gestionan allí — aquí solo lo esencial para ver precio base.
+  // Datos de contacto, extras detallados (cuna, trona, sábanas, toallas)
+  // y comentarios se gestionan allí — aquí solo lo esencial.
   const reservasHref = (() => {
     const params = new URLSearchParams();
     params.set('apt', aptId);
     if (selStart) params.set('checkin', selStart);
     if (selEnd) params.set('checkout', selEnd);
     if (guests) params.set('guests', String(guests));
+    if (pets) params.set('pets', 'yes');
+    if (baby) params.set('baby', 'yes');
     return 'reservas.html?' + params.toString();
   })();
   return /*#__PURE__*/React.createElement("div", {
@@ -137,7 +141,9 @@ const RequestPanel = ({
     className: "price-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `${calc.nights} noches × precio variable` : `${calc.nights} nights × variable rate`), /*#__PURE__*/React.createElement("span", null, fmt(calc.baseTotal))), calc.stayD && /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-disc"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "price-line"
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Suplemento mascota (10 €/noche · máx. 50 €)' : 'Pet supplement (10 €/night · max 50 €)'), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-total"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'), /*#__PURE__*/React.createElement("span", null, fmt(calc.directTotal)))), /*#__PURE__*/React.createElement("p", {
     className: "price-note"
@@ -157,7 +163,19 @@ const RequestPanel = ({
     className: "req-g-btn",
     onClick: () => setGuests(g => Math.min(6, g + 1)),
     "aria-label": lang === 'es' ? 'Añadir huésped' : 'Add guest'
-  }, "+"))), /*#__PURE__*/React.createElement("div", {
+  }, "+")), /*#__PURE__*/React.createElement("label", {
+    className: "req-pets-toggle"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: pets,
+    onChange: e => setPets(e.target.checked)
+  }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? '🐾 Mascota' : '🐾 Pet')), /*#__PURE__*/React.createElement("label", {
+    className: "req-pets-toggle"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: baby,
+    onChange: e => setBaby(e.target.checked)
+  }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? '👶 Bebé' : '👶 Baby'))), /*#__PURE__*/React.createElement("div", {
     className: "req-disclaimer"
   }, /*#__PURE__*/React.createElement("svg", {
     width: "13",
