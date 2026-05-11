@@ -4125,6 +4125,55 @@ body.no-parallax .g-tile .img { transform: none !important; }
   gap: 16px;
   flex-wrap: wrap;
 }
+/* Botón "Reservar" del hero del apt — bulletproof, color del apartamento
+   con hex literales !important para que NUNCA quede oscurecido por el
+   washer del hero. Texto arena en Mar/Thalassa (bg oscuro), ber-dk en
+   Salinas (bg dorado claro). */
+a.apt-page-reserve-btn {
+  background-color: #3AAABB !important;        /* fallback sol */
+  background-image: none !important;
+  color: #2A0F2E !important;
+  border: 0 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 6px 22px rgba(58,170,187,.45);
+}
+a.apt-page-reserve-btn::before { display: none !important; }
+.apt-page-hero[data-apt="vm"] a.apt-page-reserve-btn,
+body[data-apt="mar"] a.apt-page-reserve-btn {
+  background-color: #6B7A3A !important;        /* olivo Mar */
+  color: #F0E8D5 !important;
+  box-shadow: 0 6px 22px rgba(107,122,58,.55) !important;
+}
+.apt-page-hero[data-apt="vm"] a.apt-page-reserve-btn:hover,
+body[data-apt="mar"] a.apt-page-reserve-btn:hover {
+  background-color: #8B9A52 !important;
+  color: #2A0F2E !important;
+  box-shadow: 0 8px 28px rgba(107,122,58,.70) !important;
+}
+.apt-page-hero[data-apt="vt"] a.apt-page-reserve-btn,
+body[data-apt="thalassa"] a.apt-page-reserve-btn {
+  background-color: #B86A3C !important;        /* siena Thalassa */
+  color: #F0E8D5 !important;
+  box-shadow: 0 6px 22px rgba(184,106,60,.55) !important;
+}
+.apt-page-hero[data-apt="vt"] a.apt-page-reserve-btn:hover,
+body[data-apt="thalassa"] a.apt-page-reserve-btn:hover {
+  background-color: #D4906A !important;
+  color: #2A0F2E !important;
+  box-shadow: 0 8px 28px rgba(184,106,60,.70) !important;
+}
+.apt-page-hero[data-apt="vs"] a.apt-page-reserve-btn,
+body[data-apt="salinas"] a.apt-page-reserve-btn {
+  background-color: #D4A84A !important;        /* dorado Salinas */
+  color: #2A0F2E !important;
+  box-shadow: 0 6px 22px rgba(212,168,74,.55) !important;
+}
+.apt-page-hero[data-apt="vs"] a.apt-page-reserve-btn:hover,
+body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
+  background-color: #E8C170 !important;
+  color: #2A0F2E !important;
+  box-shadow: 0 8px 28px rgba(212,168,74,.70) !important;
+}
 .apt-page-price {
   font-family: var(--serif);
   font-weight: 300;
@@ -12321,14 +12370,15 @@ a:focus-visible,
 }
 .rf-chip {
   min-width: 44px;
-  padding: 10px 14px;
+  padding: 11px 18px;
   background: white;
-  border: 2px solid color-mix(in srgb, var(--ber) 12%, transparent);
-  border-radius: 999px;
+  border: 2px solid color-mix(in srgb, var(--ber) 18%, transparent);
+  border-radius: 10px 0 10px 0;          /* esquinas asimétricas corporativas */
   cursor: pointer;
   font: inherit;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   color: var(--ber);
   transition: all var(--dur-fast) var(--ease-out);
 }
@@ -12341,7 +12391,8 @@ a:focus-visible,
   background: var(--sol);
   border-color: var(--sol);
   color: var(--ber-dk);
-  box-shadow: 0 4px 12px rgba(58, 170, 187, 0.30);
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(58, 170, 187, 0.32);
 }
 .rf-chip:active { transform: scale(0.96); }
 .rf-chip-hint {
