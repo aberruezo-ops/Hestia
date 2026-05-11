@@ -316,7 +316,7 @@ const HsResultCard = ({
   const nights = checkin && checkout ? _hsDiff(checkin, checkout) : 0;
   const aptName = apt.name;
   // Precio base sin extras (sin mascota) — el detalle se ve en /reservas.
-  const calc = checkin && checkout && checkout > checkin ? _calcStay(checkin, checkout, apt.id, false) : null;
+  const calc = checkin && checkout && checkout > checkin ? _calcStay(checkin, checkout, apt.id, false, parseInt(guests, 10) || null) : null;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
 
   // URL del CTA "Avanzar con la reserva" — pasa apt+fechas+huéspedes.
