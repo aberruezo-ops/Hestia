@@ -63,7 +63,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
   const [baby, setBaby] = React.useState(false);
 
   const aptName = _CM.apt_names[aptId] || 'Hestía';
-  const calc    = _calcStay(selStart, selEnd, aptId, pets);
+  const calc    = _calcStay(selStart, selEnd, aptId, pets, guests);
 
   const fmt = n => n.toLocaleString('es-ES') + ' €';
 

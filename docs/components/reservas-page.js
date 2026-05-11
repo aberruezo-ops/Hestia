@@ -139,11 +139,13 @@ const PricePreview = ({
   checkin,
   checkout,
   pets,
+  guests,
   lang,
   extras = []
 }) => {
   if (!apt || !checkin || !checkout) return null;
-  const calc = _calcStay(checkin, checkout, apt, pets === 'yes');
+  const gn = parseInt(guests, 10) || null;
+  const calc = _calcStay(checkin, checkout, apt, pets === 'yes', gn);
   if (!calc || calc.nights <= 0) return null;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
   const extrasTotal = extras.reduce((s, e) => s + e.amount, 0);
@@ -173,7 +175,9 @@ const PricePreview = ({
     className: "price-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `${calc.nights} noches` : `${calc.nights} nights`), /*#__PURE__*/React.createElement("span", null, fmt(calc.baseTotal))), calc.stayD && /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-disc"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.guestSuppAmt > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "price-line"
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento ${calc.guests} huéspedes (+${calc.guestSuppPerNight} €/noche)` : `${calc.guests}-guest supplement (+${calc.guestSuppPerNight} €/night)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.guestSuppAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
     className: "price-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento mascota (10 €/noche · máx. 50 €)` : `Pet supplement (10 €/night · max 50 €)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), extras.map(ex => /*#__PURE__*/React.createElement("div", {
     className: "price-line",
@@ -394,7 +398,7 @@ const ReservasForm = ({
   const channelValid = channel === 'whatsapp' ? hasName && hasTel : hasName && hasEmail;
 
   // Cálculo
-  const calc = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes') : null;
+  const calc = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes', parseInt(guests, 10) || null) : null;
   const nightsForExtras = calc?.nights || 0;
   const selectedExtras = computeSelectedExtras(nightsForExtras);
   const extrasCount = Object.values(extrasSel).filter(v => v > 0).length;
@@ -695,6 +699,7 @@ const ReservasForm = ({
     checkin: checkin,
     checkout: checkout,
     pets: pets,
+    guests: guests,
     lang: lang,
     extras: selectedExtras
   }), step === 2 && /*#__PURE__*/React.createElement("div", {

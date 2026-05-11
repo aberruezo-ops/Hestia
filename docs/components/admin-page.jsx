@@ -1194,6 +1194,91 @@ const AdminApp = () => {
       </div>
 
       <div className="pe-card">
+        <h2>Suplementos por huésped</h2>
+        <p className="pe-lede">
+          Precio escalonado por número de huéspedes. Cada fila es el
+          coste adicional <strong>por noche</strong> al subir un escalón.
+          Base = 1 huésped. Ej. 2 huéspedes = 1 huésped + suplemento 1→2;
+          4 huéspedes = 1 huésped + suplemento 1→2 + 2→3 + 3→4.
+        </p>
+        <table className="pe-table pe-table-extras">
+          <thead>
+            <tr>
+              <th style={{width: 80}}>De</th>
+              <th style={{width: 80}}>A</th>
+              <th style={{width: 140}}>€/noche</th>
+              <th>Etiqueta</th>
+              <th style={{width: 80}}></th>
+            </tr>
+          </thead>
+          <tbody>
+            {(data.rules.guestSupplements || []).map((g, i) => (
+              <tr key={i}>
+                <td>
+                  <input type="number" min="1" max="10" step="1"
+                    value={g.from}
+                    onChange={e => {
+                      const arr = (data.rules.guestSupplements || []).slice();
+                      arr[i] = { ...arr[i], from: Number(e.target.value) };
+                      update('rules.guestSupplements', arr);
+                    }}
+                    className="pe-input pe-input-num" />
+                </td>
+                <td>
+                  <input type="number" min="1" max="10" step="1"
+                    value={g.to}
+                    onChange={e => {
+                      const arr = (data.rules.guestSupplements || []).slice();
+                      arr[i] = { ...arr[i], to: Number(e.target.value) };
+                      update('rules.guestSupplements', arr);
+                    }}
+                    className="pe-input pe-input-num" />
+                </td>
+                <td>
+                  <input type="number" min="0" step="1"
+                    value={g.perNight}
+                    onChange={e => {
+                      const arr = (data.rules.guestSupplements || []).slice();
+                      arr[i] = { ...arr[i], perNight: Number(e.target.value) };
+                      update('rules.guestSupplements', arr);
+                    }}
+                    className="pe-input pe-input-num" />
+                </td>
+                <td>
+                  <input type="text"
+                    value={g.label || ''}
+                    onChange={e => {
+                      const arr = (data.rules.guestSupplements || []).slice();
+                      arr[i] = { ...arr[i], label: e.target.value };
+                      update('rules.guestSupplements', arr);
+                    }}
+                    className="pe-input" />
+                </td>
+                <td>
+                  <button type="button"
+                    className="pe-btn pe-btn-ghost"
+                    onClick={() => {
+                      const arr = (data.rules.guestSupplements || []).slice();
+                      arr.splice(i, 1);
+                      update('rules.guestSupplements', arr);
+                    }}>Quitar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <button type="button"
+          className="pe-btn pe-btn-ghost"
+          style={{marginTop: 12}}
+          onClick={() => {
+            const arr = (data.rules.guestSupplements || []).slice();
+            const lastTo = arr.length ? arr[arr.length - 1].to : 1;
+            arr.push({ from: lastTo, to: lastTo + 1, perNight: 0, label: `${lastTo} → ${lastTo + 1} huéspedes` });
+            update('rules.guestSupplements', arr);
+          }}>+ Añadir escalón</button>
+      </div>
+
+      <div className="pe-card">
         <h2>Extras configurables</h2>
         <p className="pe-lede">
           Items opcionales que el huésped puede pedir desde el formulario

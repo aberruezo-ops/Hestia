@@ -68,7 +68,7 @@ const RequestPanel = ({
   const [pets, setPets] = React.useState(false);
   const [baby, setBaby] = React.useState(false);
   const aptName = _CM.apt_names[aptId] || 'Hestía';
-  const calc = _calcStay(selStart, selEnd, aptId, pets);
+  const calc = _calcStay(selStart, selEnd, aptId, pets, guests);
   const fmt = n => n.toLocaleString('es-ES') + ' €';
   const months_es = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   const months_en = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
