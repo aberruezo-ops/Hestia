@@ -2647,8 +2647,37 @@ footer .footer-brand .addr {
   z-index: 0;
   pointer-events: none;
 }
-.c-strip.c-sr { left: 50%; right: -1px; border-radius: 0 3px 3px 0; }
-.c-strip.c-sl { right: 50%; left: -1px; border-radius: 3px 0 0 3px; }
+/* Día PRE-bloqueo (departure: el huésped sale esta mañana). Strip
+   full-width pero con gradient mask: fundido de transparente (izquierda
+   / mañana libre) a sólido (derecha / tarde bloqueada). Mucho más
+   legible que un corte duro al 50 %.                                 */
+.c-strip.c-sr {
+  left: -1px; right: -1px;
+  border-radius: 3px;
+  -webkit-mask-image: linear-gradient(90deg,
+    transparent 0%, transparent 20%,
+    rgba(0,0,0,0.55) 42%,
+    #000 60%, #000 100%);
+          mask-image: linear-gradient(90deg,
+    transparent 0%, transparent 20%,
+    rgba(0,0,0,0.55) 42%,
+    #000 60%, #000 100%);
+}
+/* Día POST-bloqueo (arrival: el huésped del bloqueo sale esta mañana,
+   tu check-in posible esa tarde). Espejo del anterior: sólido a la
+   izquierda (mañana ocupada), fundido a transparente a la derecha. */
+.c-strip.c-sl {
+  left: -1px; right: -1px;
+  border-radius: 3px;
+  -webkit-mask-image: linear-gradient(90deg,
+    #000 0%, #000 40%,
+    rgba(0,0,0,0.55) 58%,
+    transparent 80%, transparent 100%);
+          mask-image: linear-gradient(90deg,
+    #000 0%, #000 40%,
+    rgba(0,0,0,0.55) 58%,
+    transparent 80%, transparent 100%);
+}
 /* Circle — días bloqueados aislados o extremos del rango. Crema +
    forma cuadrada (width = height) para que sea círculo perfecto, no
    elipse. */
