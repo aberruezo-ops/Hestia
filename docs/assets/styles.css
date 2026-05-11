@@ -808,7 +808,8 @@ section {
   color: var(--arena);
 }
 .section-day {
-  background: linear-gradient(90deg,
+  background-color: var(--crema);
+  background-image: linear-gradient(90deg,
     var(--crema-alba)  0%,
     var(--crema-dawn)  8%,
     var(--crema-noon) 20%,
@@ -923,18 +924,18 @@ section {
 /* Gradiente del día completo — de alba a crepúsculo y vuelta (bucle continuo)
    Al animarse, la sección se ilumina como si el sol pasara de izquierda a derecha. */
 .section-cream {
-  /* Sun warmth — stays AA-accessible throughout (min luminance 0.87 = teal 4.6:1 contrast).
-     Max warm tone var(--crema-warm) feels like golden afternoon light, never aggressive orange. */
-  background: linear-gradient(90deg,
-    var(--crema-alba)  0%,   /* alba: crema levísimamente rosada */
-    var(--crema-dawn)  8%,   /* primera luz: crema cálida */
-    var(--crema-noon) 20%,   /* media mañana: blanco luminoso */
-    var(--crema-dusk) 33%,   /* tarde: crema dorada */
-    var(--crema-warm) 50%,   /* hora dorada — ámbar suave, L=0.87, máximo calor */
+  /* Fallback sólido: si el gradient falla, el cream sólido queda. */
+  background-color: var(--crema);
+  background-image: linear-gradient(90deg,
+    var(--crema-alba)  0%,
+    var(--crema-dawn)  8%,
+    var(--crema-noon) 20%,
+    var(--crema-dusk) 33%,
+    var(--crema-warm) 50%,
     var(--crema-dusk) 67%,
     var(--crema-noon) 80%,
     var(--crema-dawn) 92%,
-    var(--crema-alba) 100%   /* bucle sin corte */
+    var(--crema-alba) 100%
   );
   background-size: 200% 100%;
   animation: sky-day 80s linear infinite;
@@ -2964,18 +2965,36 @@ footer .footer-brand .addr {
   transform: scale(0.98);
 }
 
-/* Sticky bar CTA — fuerza colores explícitos para evitar que algún reset
-   externo lo deje invisible sobre el fondo eggplant. */
-.asb-cta.btn-primary {
-  background: var(--sol) !important;
-  color: var(--ber-dk) !important;
-  border-color: var(--sol) !important;
-  font-weight: 600;
+/* Sticky bar CTA "RESERVAR" — bulletproof. Selector .asb-cta sin
+   acoplarse a btn-primary (que tiene su propio cascade). Hex literales
+   sin var() para que NINGÚN parser viejo pueda romperlo. */
+a.asb-cta,
+.asb-cta {
+  background-color: #3AAABB !important;          /* sol */
+  background-image: none !important;
+  color: #2A0F2E !important;                     /* ber-dk */
+  border: 0 !important;
+  border-radius: 8px 0 8px 0 !important;
+  padding: 10px 22px !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  flex-shrink: 0;
+  white-space: nowrap;
+  text-decoration: none !important;
 }
-.asb-cta.btn-primary:hover {
-  background: var(--sol-h) !important;
-  color: var(--crema) !important;
-  border-color: var(--sol-h) !important;
+a.asb-cta:hover,
+.asb-cta:hover {
+  background-color: #2A8E9E !important;          /* sol-h */
+  color: #2A0F2E !important;                     /* mantener ber-dk para AA */
+}
+.asb-cta:active {
+  transform: scale(0.97);
 }
 .req-actions-forward,
 .hs-rc-actions-forward {
@@ -3914,7 +3933,10 @@ body.no-parallax .g-tile .img { transform: none !important; }
 
 /* ---- section-cream (inner pages) ---- */
 .section-cream {
-  background: linear-gradient(90deg,
+  /* Fallback sólido: si el gradient falla por cualquier razón
+     (color tokens, parser, etc.), esta queda y los textos dark se ven. */
+  background-color: var(--crema);
+  background-image: linear-gradient(90deg,
     var(--crema-alba)  0%,
     var(--crema-dawn)  8%,
     var(--crema-noon) 20%,
