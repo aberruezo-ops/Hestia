@@ -299,17 +299,21 @@ const NoticiasPage = ({
     className: "noticias-hero-inner"
   }, /*#__PURE__*/React.createElement("div", {
     className: "noticias-edition-badge"
-  }, N.edition[lang]), /*#__PURE__*/React.createElement("div", {
-    className: "eyebrow",
-    style: {
-      color: 'var(--sol-lt)',
-      marginBottom: 16
-    }
-  }, N.updated[lang]), /*#__PURE__*/React.createElement("h1", {
+  }, lang === 'es' ? 'Próxima edición · Junio 2026' : 'Next edition · June 2026'), /*#__PURE__*/React.createElement("h1", {
     className: "noticias-hero-title"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Noticias & Blog", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "del territorio Hest\xEDa")) : /*#__PURE__*/React.createElement(React.Fragment, null, "News & Blog", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "from Hest\xEDa territory"))), /*#__PURE__*/React.createElement("p", {
     className: "noticias-hero-sub"
-  }, lang === 'es' ? 'Lo que pasa en Vera Playa, Almería, Andalucía y Murcia. Más la voz de Hestía — recomendaciones y curiosidades de cada Hestía.' : 'What\'s happening in Vera Playa, Almería, Andalucía and Murcia. Plus the voice of Hestía — recommendations and curiosities from each Hestía.'))), /*#__PURE__*/React.createElement("section", {
+  }, lang === 'es' ? 'Cada mes actualizamos esta página con lo mejor del territorio. Si quieres que cubramos algo — un evento, un rincón, un restaurante — escríbenos.' : "Every month we update this page with the best of the territory. If you'd like us to cover something — an event, a corner, a restaurant — write to us."), /*#__PURE__*/React.createElement("div", {
+    className: "noticias-hero-ctas"
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "https://wa.me/34620316370?text=Hola%2C%20quiero%20sugerir%20algo%20para%20el%20blog%20de%20Hest%C3%ADa",
+    className: "btn btn-primary",
+    target: "_blank",
+    rel: "noopener"
+  }, lang === 'es' ? 'Sugerir algo → WhatsApp' : 'Suggest something → WhatsApp'), /*#__PURE__*/React.createElement("a", {
+    href: "reservas.html",
+    className: "btn btn-ghost-light"
+  }, lang === 'es' ? 'Reservar Hestía →' : 'Book a Hestía →')))), /*#__PURE__*/React.createElement("section", {
     className: "noticias-voz"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
@@ -351,28 +355,7 @@ const NoticiasPage = ({
     key: ai,
     article: a,
     lang: lang
-  })))))))), /*#__PURE__*/React.createElement("section", {
-    className: "noticias-next"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "noticias-next-inner"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "eyebrow",
-    style: {
-      color: 'var(--sol-lt)'
-    }
-  }, lang === 'es' ? 'Próxima edición · Junio 2026' : 'Next edition · June 2026'), /*#__PURE__*/React.createElement("p", {
-    className: "noticias-next-text"
-  }, lang === 'es' ? 'Cada mes actualizamos esta página con lo mejor del territorio. Si quieres que cubramos algo — un evento, un rincón, un restaurante — escríbenos.' : "Every month we update this page with the best of the territory. If you'd like us to cover something — an event, a corner, a restaurant — write to us."), /*#__PURE__*/React.createElement("div", {
-    className: "noticias-next-ctas"
-  }, /*#__PURE__*/React.createElement("a", {
-    href: "https://wa.me/34620316370?text=Hola%2C%20quiero%20sugerir%20algo%20para%20el%20blog%20de%20Hest%C3%ADa",
-    className: "btn btn-primary",
-    target: "_blank",
-    rel: "noopener"
-  }, lang === 'es' ? 'Sugerir algo → WhatsApp' : 'Suggest something → WhatsApp'), /*#__PURE__*/React.createElement("a", {
-    href: "reservas.html",
-    className: "btn btn-ghost-light"
-  }, lang === 'es' ? 'Reservar Hestía →' : 'Book a Hestía →')))));
+  })))))))));
 };
 
 // ── App wrapper ────────────────────────────────────────────────────
