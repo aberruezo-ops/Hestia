@@ -1283,7 +1283,25 @@ body.apt-bar-shown .cookies {
   display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
   max-width: 680px; margin-left: auto; margin-right: auto;
 }
-.hero-ctas .btn { font-size: 12px; padding: 11px 20px; }
+.hero-ctas .btn { font-size: 12px; padding: 12px 22px; }
+
+/* "Descubre cada Hestía" sobre el hero con video — bulletproof.
+   El .btn-primary genérico no ganaba al ::before sheen sobre el wash.
+   Hex literales + !important + sombra glow garantizan silueta. */
+.hero-ctas .btn-primary {
+  background-color: #3AAABB !important;
+  background-image: none !important;
+  color: #2A0F2E !important;
+  border: 0 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 6px 22px rgba(58,170,187,.55), 0 0 0 1px rgba(240,232,213,.18);
+}
+.hero-ctas .btn-primary::before { display: none !important; }
+.hero-ctas .btn-primary:hover {
+  background-color: #6FC4D1 !important;
+  color: #2A0F2E !important;
+  box-shadow: 0 8px 28px rgba(58,170,187,.70), 0 0 0 1px rgba(240,232,213,.32);
+}
 
 /* Meta bar bottom hero */
 .hero-meta {
