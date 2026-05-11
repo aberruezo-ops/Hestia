@@ -11045,18 +11045,41 @@ body[data-apt="salinas"] .widget-cta:hover {
 /* En páginas Hestía (Mar/Thalassa/Salinas) los widgets plegados toman
    el color del apartamento. Hex literales para evitar fallos de parser
    en iPad y mantener AA con texto crema #F0E8D5. */
-[data-apt="mar"] .widget-mini {
-  background-color: #6B7A3A !important;
-  background-image: linear-gradient(
-    105deg,
-    #6B7A3A 0%, #8B9A52 32%, #6B7A3A 55%, #556330 78%, #6B7A3A 100%
-  ) !important;
-  color: #F0E8D5 !important;
-  border-left-color: #8B9A52 !important;
+/* Widget-mini en páginas apt: chip ghost — fondo casi transparente
+   sobre el bg del apt, borde + halo del color del Hestía, y el texto
+   del label se rellena con el gradient del apt (background-clip: text).
+   Pierde el shimmer pero gana ligereza visual. */
+[data-apt="mar"] .widget-mini,
+body[data-apt="mar"] .widget-mini {
+  background-color: rgba(107, 122, 58, 0.18) !important;
+  background-image: none !important;
+  border: 1px solid rgba(139, 154, 82, 0.55) !important;
+  border-left: 3px solid #8B9A52 !important;
+  box-shadow:
+    0 6px 18px rgba(42,15,46,.45),
+    0 0 22px rgba(107,122,58,.35) !important;
+  animation: widgetMiniPulse 3.4s ease-in-out infinite !important;
 }
-[data-apt="mar"] .widget-mini:hover {
-  background-image: linear-gradient(105deg, #8B9A52 0%, #6B7A3A 100%) !important;
-  color: #2A0F2E !important;
+[data-apt="mar"] .widget-mini .widget-mini-label,
+body[data-apt="mar"] .widget-mini .widget-mini-label {
+  background: linear-gradient(105deg, #B5C77A 0%, #8B9A52 50%, #B5C77A 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+[data-apt="mar"] .widget-mini-icon,
+body[data-apt="mar"] .widget-mini-icon {
+  background: rgba(139, 154, 82, 0.30) !important;
+  color: #B5C77A !important;
+}
+[data-apt="mar"] .widget-mini:hover,
+body[data-apt="mar"] .widget-mini:hover {
+  background-color: rgba(107, 122, 58, 0.30) !important;
+  border-color: #B5C77A !important;
+  box-shadow:
+    0 8px 22px rgba(42,15,46,.50),
+    0 0 32px rgba(107,122,58,.55) !important;
 }
 [data-apt="mar"] .widget-mini-icon {
   background: rgba(240,232,213,.20);
@@ -11067,18 +11090,37 @@ body[data-apt="salinas"] .widget-cta:hover {
   color: #2A0F2E;
 }
 
-[data-apt="thalassa"] .widget-mini {
-  background-color: #8A4A24 !important;
-  background-image: linear-gradient(
-    105deg,
-    #8A4A24 0%, #B86A3C 32%, #8A4A24 55%, #6E3A1C 78%, #8A4A24 100%
-  ) !important;
-  color: #F0E8D5 !important;
-  border-left-color: #B86A3C !important;
+[data-apt="thalassa"] .widget-mini,
+body[data-apt="thalassa"] .widget-mini {
+  background-color: rgba(138, 74, 36, 0.20) !important;
+  background-image: none !important;
+  border: 1px solid rgba(184, 106, 60, 0.55) !important;
+  border-left: 3px solid #B86A3C !important;
+  box-shadow:
+    0 6px 18px rgba(42,15,46,.45),
+    0 0 22px rgba(184,106,60,.35) !important;
+  animation: widgetMiniPulse 3.4s ease-in-out infinite !important;
 }
-[data-apt="thalassa"] .widget-mini:hover {
-  background-image: linear-gradient(105deg, #B86A3C 0%, #8A4A24 100%) !important;
-  color: #2A0F2E !important;
+[data-apt="thalassa"] .widget-mini .widget-mini-label,
+body[data-apt="thalassa"] .widget-mini .widget-mini-label {
+  background: linear-gradient(105deg, #E69875 0%, #B86A3C 50%, #E69875 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+[data-apt="thalassa"] .widget-mini-icon,
+body[data-apt="thalassa"] .widget-mini-icon {
+  background: rgba(184, 106, 60, 0.30) !important;
+  color: #E69875 !important;
+}
+[data-apt="thalassa"] .widget-mini:hover,
+body[data-apt="thalassa"] .widget-mini:hover {
+  background-color: rgba(138, 74, 36, 0.32) !important;
+  border-color: #E69875 !important;
+  box-shadow:
+    0 8px 22px rgba(42,15,46,.50),
+    0 0 32px rgba(184,106,60,.55) !important;
 }
 [data-apt="thalassa"] .widget-mini-icon {
   background: rgba(240,232,213,.22);
@@ -11089,18 +11131,37 @@ body[data-apt="salinas"] .widget-cta:hover {
   color: #2A0F2E;
 }
 
-[data-apt="salinas"] .widget-mini {
-  background-color: #9E7A2C !important;
-  background-image: linear-gradient(
-    105deg,
-    #9E7A2C 0%, #D4A84A 32%, #9E7A2C 55%, #7E6022 78%, #9E7A2C 100%
-  ) !important;
-  color: #2A0F2E !important;
-  border-left-color: #D4A84A !important;
+[data-apt="salinas"] .widget-mini,
+body[data-apt="salinas"] .widget-mini {
+  background-color: rgba(158, 122, 44, 0.22) !important;
+  background-image: none !important;
+  border: 1px solid rgba(212, 168, 74, 0.60) !important;
+  border-left: 3px solid #D4A84A !important;
+  box-shadow:
+    0 6px 18px rgba(42,15,46,.45),
+    0 0 22px rgba(212,168,74,.40) !important;
+  animation: widgetMiniPulse 3.4s ease-in-out infinite !important;
 }
-[data-apt="salinas"] .widget-mini:hover {
-  background-image: linear-gradient(105deg, #D4A84A 0%, #9E7A2C 100%) !important;
-  color: #2A0F2E !important;
+[data-apt="salinas"] .widget-mini .widget-mini-label,
+body[data-apt="salinas"] .widget-mini .widget-mini-label {
+  background: linear-gradient(105deg, #F0CE7A 0%, #D4A84A 50%, #F0CE7A 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+[data-apt="salinas"] .widget-mini-icon,
+body[data-apt="salinas"] .widget-mini-icon {
+  background: rgba(212, 168, 74, 0.30) !important;
+  color: #F0CE7A !important;
+}
+[data-apt="salinas"] .widget-mini:hover,
+body[data-apt="salinas"] .widget-mini:hover {
+  background-color: rgba(158, 122, 44, 0.34) !important;
+  border-color: #F0CE7A !important;
+  box-shadow:
+    0 8px 22px rgba(42,15,46,.50),
+    0 0 32px rgba(212,168,74,.60) !important;
 }
 [data-apt="salinas"] .widget-mini-icon {
   background: rgba(42,15,46,.22);
