@@ -56,11 +56,14 @@ const _shortDate = (ds, lang) => {
 // ---------------------------------------------------------------
 const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
   const [guests, setGuests] = React.useState(2);
-  // Mascota y demás extras se eligen en /reservas (paso único de extras).
-  // Aquí mostramos precio base sin suplementos para no inflar la estimación
-  // ni duplicar campos.
+  // Pet y baby SÍ se eligen aquí porque afectan al precio (mascota) y
+  // a la preparación (bebé). El resto de extras (cuna, trona, sábanas
+  // adicionales, toallas adicionales) se eligen en /reservas.
+  const [pets, setPets] = React.useState(false);
+  const [baby, setBaby] = React.useState(false);
+
   const aptName = _CM.apt_names[aptId] || 'Hestía';
-  const calc    = _calcStay(selStart, selEnd, aptId, false);
+  const calc    = _calcStay(selStart, selEnd, aptId, pets);
 
   const fmt = n => n.toLocaleString('es-ES') + ' €';
 
@@ -75,14 +78,16 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
   };
 
   // CTA "Avanzar con la reserva": navega a /reservas pre-rellenado.
-  // Datos de contacto, extras (mascota, cuna, etc) y comentarios se
-  // gestionan allí — aquí solo lo esencial para ver precio base.
+  // Datos de contacto, extras detallados (cuna, trona, sábanas, toallas)
+  // y comentarios se gestionan allí — aquí solo lo esencial.
   const reservasHref = (() => {
     const params = new URLSearchParams();
     params.set('apt', aptId);
     if (selStart) params.set('checkin',  selStart);
     if (selEnd)   params.set('checkout', selEnd);
     if (guests)   params.set('guests',   String(guests));
+    if (pets)     params.set('pets',     'yes');
+    if (baby)     params.set('baby',     'yes');
     return 'reservas.html?' + params.toString();
   })();
 
@@ -136,6 +141,12 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
                 <span>−{fmt(calc.stayDiscAmt)}</span>
               </div>
             )}
+            {calc.petAmt > 0 && (
+              <div className="price-line">
+                <span>{lang === 'es' ? 'Suplemento mascota (10 €/noche · máx. 50 €)' : 'Pet supplement (10 €/night · max 50 €)'}</span>
+                <span>+{fmt(calc.petAmt)}</span>
+              </div>
+            )}
             <div className="price-line price-line-total">
               <span>{lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'}</span>
               <span>{fmt(calc.directTotal)}</span>
@@ -147,8 +158,8 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
         </div>
       )}
 
-      {/* Guests — sin extras: cuna, trona, sábanas, toallas y mascota se
-          eligen en /reservas (paso único). */}
+      {/* Guests + mascota + bebé. Cuna/trona/sábanas/toallas se eligen
+          luego en /reservas (paso único de extras). */}
       <div className="req-guests">
         <span className="req-guests-lbl">{lang === 'es' ? 'Huéspedes' : 'Guests'}</span>
         <div className="req-guests-ctrl">
@@ -156,6 +167,14 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
           <span className="req-g-num">{guests}</span>
           <button className="req-g-btn" onClick={() => setGuests(g => Math.min(6, g + 1))} aria-label={lang === 'es' ? 'Añadir huésped' : 'Add guest'}>+</button>
         </div>
+        <label className="req-pets-toggle">
+          <input type="checkbox" checked={pets} onChange={e => setPets(e.target.checked)}/>
+          <span>{lang === 'es' ? '🐾 Mascota' : '🐾 Pet'}</span>
+        </label>
+        <label className="req-pets-toggle">
+          <input type="checkbox" checked={baby} onChange={e => setBaby(e.target.checked)}/>
+          <span>{lang === 'es' ? '👶 Bebé' : '👶 Baby'}</span>
+        </label>
       </div>
 
       {/* Disclaimer — pricing y promesa de mejor precio */}

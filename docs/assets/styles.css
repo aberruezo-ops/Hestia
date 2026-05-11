@@ -2919,16 +2919,16 @@ footer .footer-brand .addr {
 
 /* Action buttons */
 .req-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
-/* CTA primary "Avanzar con la reserva" — alto contraste sobre cualquier fondo,
-   solido brand sol con texto crema y sombra acentuada.                       */
+/* CTA primary "Avanzar con la reserva" — alto contraste: turquesa con
+   texto eggplant oscuro (#2A0F2E) sobre sol (#3AAABB), ratio AA+. */
 .hs-forward-btn,
 .req-btn-forward {
   background: var(--sol) !important;
   border: 2px solid var(--sol) !important;
-  color: var(--crema) !important;
+  color: var(--ber-dk) !important;
   padding: 16px 26px !important;
   font-size: 15px !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
   letter-spacing: 0.04em !important;
   width: 100%;
   justify-content: center;
@@ -2936,9 +2936,9 @@ footer .footer-brand .addr {
     0 10px 28px rgba(42, 142, 158, 0.45),
     0 2px 6px rgba(42, 15, 46, 0.18);
   transition: background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
               transform var(--dur-fast) var(--ease-out),
               box-shadow var(--dur-fast) var(--ease-out);
-  text-shadow: 0 1px 2px rgba(42, 15, 46, 0.25);
 }
 .hs-forward-btn:hover,
 .req-btn-forward:hover {
@@ -2953,6 +2953,20 @@ footer .footer-brand .addr {
 .hs-forward-btn:active,
 .req-btn-forward:active {
   transform: scale(0.98);
+}
+
+/* Sticky bar CTA — fuerza colores explícitos para evitar que algún reset
+   externo lo deje invisible sobre el fondo eggplant. */
+.asb-cta.btn-primary {
+  background: var(--sol) !important;
+  color: var(--ber-dk) !important;
+  border-color: var(--sol) !important;
+  font-weight: 600;
+}
+.asb-cta.btn-primary:hover {
+  background: var(--sol-h) !important;
+  color: var(--crema) !important;
+  border-color: var(--sol-h) !important;
 }
 .req-actions-forward,
 .hs-rc-actions-forward {
@@ -6495,6 +6509,11 @@ body.no-parallax .g-tile .img { transform: none !important; }
   color: var(--sol-text);
   font-style: italic;
   margin: 8px 0 0;
+}
+.rf-extras-block {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid color-mix(in oklab, var(--ber) 14%, transparent);
 }
 .form-extras-label {
   font-family: var(--sans);

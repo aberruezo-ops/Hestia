@@ -306,6 +306,13 @@ const ReservasForm = ({ lang }) => {
       }
     }
     if (qPets === 'yes') { setPets('yes'); hadAny = true; }
+    // Bebé: lo pre-seleccionamos como extra "trona" o "cuna" si llega; el
+    // huésped lo confirma/cambia en step 2 (extras).
+    const qBaby = qs.get('baby');
+    if (qBaby === 'yes') {
+      setExtrasSel(prev => ({ ...prev, cuna: 1, trona: 1 }));
+      hadAny = true;
+    }
     // Si vino apt + ambas fechas, avanzamos al step 2 directamente.
     if (qApt && qCheckin && qCheckout) {
       setStep(2);
@@ -563,46 +570,6 @@ const ReservasForm = ({ lang }) => {
                 </select>
               </div>
             </div>
-            <div className="form-field full">
-              <div className="form-extras-label">{t.f_extras_label}</div>
-              <div className="form-extras-grid">
-                {extrasList.map(ex => {
-                  const qty = extrasSel[ex.id] || 0;
-                  const checked = qty > 0;
-                  const label = lang === 'es' ? ex.label_es : ex.label_en;
-                  const suffix = _resExtraUnitSuffix(ex.unit, lang);
-                  return (
-                    <label key={ex.id} className={`form-extra-item${checked ? ' is-checked' : ''}`}>
-                      <input
-                        type="checkbox"
-                        checked={checked}
-                        onChange={() => toggleExtra(ex.id)}
-                      />
-                      <span className="form-extra-text">
-                        {label}
-                        {ex.price > 0 && (
-                          <span className="form-extra-price"> · {ex.price} €{suffix}</span>
-                        )}
-                      </span>
-                      {checked && ex.unit === 'hora' && (
-                        <span className="form-extra-qty-wrap">
-                          <input
-                            type="number"
-                            min="1"
-                            step="1"
-                            value={qty}
-                            onChange={e => setExtraQty(ex.id, e.target.value)}
-                            className="form-extra-qty"
-                            aria-label={lang === 'es' ? 'Horas' : 'Hours'}
-                          />
-                          <span className="form-extra-qty-unit">h</span>
-                        </span>
-                      )}
-                    </label>
-                  );
-                })}
-              </div>
-            </div>
             <div className="rf-step-actions">
               <button
                 type="button"
@@ -655,6 +622,51 @@ const ReservasForm = ({ lang }) => {
             {/* Price */}
             {calc && (
               <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} lang={lang} extras={selectedExtras}/>
+            )}
+
+            {/* Extras editor — viven aquí (no en step 1) para que el huésped
+                que llega prefilled desde la apt page los vea inmediatamente. */}
+            {step === 2 && (
+              <div className="form-field full rf-extras-block">
+                <div className="form-extras-label">{t.f_extras_label}</div>
+                <div className="form-extras-grid">
+                  {extrasList.map(ex => {
+                    const qty = extrasSel[ex.id] || 0;
+                    const checked = qty > 0;
+                    const label = lang === 'es' ? ex.label_es : ex.label_en;
+                    const suffix = _resExtraUnitSuffix(ex.unit, lang);
+                    return (
+                      <label key={ex.id} className={`form-extra-item${checked ? ' is-checked' : ''}`}>
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          onChange={() => toggleExtra(ex.id)}
+                        />
+                        <span className="form-extra-text">
+                          {label}
+                          {ex.price > 0 && (
+                            <span className="form-extra-price"> · {ex.price} €{suffix}</span>
+                          )}
+                        </span>
+                        {checked && ex.unit === 'hora' && (
+                          <span className="form-extra-qty-wrap">
+                            <input
+                              type="number"
+                              min="1"
+                              step="1"
+                              value={qty}
+                              onChange={e => setExtraQty(ex.id, e.target.value)}
+                              className="form-extra-qty"
+                              aria-label={lang === 'es' ? 'Horas' : 'Hours'}
+                            />
+                            <span className="form-extra-qty-unit">h</span>
+                          </span>
+                        )}
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
             )}
 
             {step === 2 && (
