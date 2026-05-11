@@ -5673,11 +5673,11 @@ body.no-parallax .g-tile .img { transform: none !important; }
    ============================================================ */
 
 .pq-v4-intro {
-  padding: clamp(80px, 10vw, 140px) var(--page-pad) clamp(28px, 4vw, 56px);
+  padding: clamp(56px, 7vw, 96px) var(--page-pad) clamp(20px, 3vw, 40px);
   max-width: 1240px;
 }
 .pq-v4-outro {
-  padding: clamp(28px, 4vw, 56px) var(--page-pad) clamp(80px, 10vw, 140px);
+  padding: clamp(16px, 2.4vw, 32px) var(--page-pad) clamp(56px, 7vw, 96px);
   max-width: 1240px;
 }
 .pq-valores-eyebrow { color: var(--sol-lt); }
@@ -5703,7 +5703,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   position: relative;
   max-width: 1240px;
   margin: 0 auto;
-  padding: clamp(32px, 5vw, 72px) clamp(20px, 4vw, 80px) clamp(36px, 5vw, 80px);
+  padding: clamp(20px, 3vw, 48px) clamp(20px, 4vw, 80px) clamp(24px, 3.5vw, 56px);
   overflow: hidden;
   isolation: isolate;
   border-radius: 20px 0 20px 0;
@@ -5750,13 +5750,13 @@ body.no-parallax .g-tile .img { transform: none !important; }
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   align-items: center;
-  gap: clamp(24px, 5vw, 80px);
-  min-height: clamp(360px, 50vh, 520px);
+  gap: clamp(20px, 4vw, 64px);
+  min-height: clamp(260px, 36vh, 380px);
 }
 
 .pq-v4-letter {
   position: relative;
-  height: clamp(280px, 42vh, 440px);
+  height: clamp(200px, 28vh, 300px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -5785,7 +5785,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   position: absolute;
   font-family: 'Playfair Display', var(--serif);
   font-style: italic;
-  font-size: clamp(220px, 32vw, 440px);
+  font-size: clamp(160px, 22vw, 300px);
   line-height: 0.82;
   letter-spacing: -0.02em;
   background: linear-gradient(180deg,
@@ -5799,15 +5799,15 @@ body.no-parallax .g-tile .img { transform: none !important; }
   /* Estado base (cuando NO is-active): la letra está oculta */
   --pq-wght: 400;
   --pq-opsz: 14;
-  --pq-halo: 0.30;
+  --pq-halo: 0.20;
   font-variation-settings: 'opsz' var(--pq-opsz), 'wght' var(--pq-wght);
-  filter: drop-shadow(0 40px 80px rgba(212, 168, 74, var(--pq-halo))) blur(8px);
+  filter: drop-shadow(0 30px 60px rgba(212, 168, 74, var(--pq-halo))) blur(14px);
   opacity: 0;
-  transform: scale(0.92) translateY(8px);
+  transform: scale(0.96) translateY(4px);
   transition:
-    opacity   850ms var(--pq-ease),
-    filter    850ms var(--pq-ease),
-    transform 850ms var(--pq-ease);
+    opacity   1400ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    filter    1400ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 1400ms cubic-bezier(0.22, 0.61, 0.36, 1);
   will-change: opacity, filter, transform, font-variation-settings;
 }
 /* La letra activa corre una secuencia continua de 10 s que vuelve al
@@ -5816,57 +5816,64 @@ body.no-parallax .g-tile .img { transform: none !important; }
    El halo dorado respira en paralelo. */
 .pq-v4-glyph.is-active {
   opacity: 1;
-  animation: pqV4LetterMorph 10000ms cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+  animation: pqV4LetterMorph 10000ms cubic-bezier(0.33, 0, 0.2, 1) forwards;
 }
 @keyframes pqV4LetterMorph {
   0% {
     --pq-wght: 400;
     --pq-opsz: 14;
-    --pq-halo: 0.30;
-    transform: scale(0.94) translateY(8px);
-    filter: drop-shadow(0 40px 80px rgba(212, 168, 74, 0.30)) blur(6px);
+    --pq-halo: 0.18;
+    opacity: 0;
+    transform: scale(0.97) translateY(4px);
+    filter: drop-shadow(0 30px 60px rgba(212, 168, 74, 0.18)) blur(10px);
   }
-  8% {
-    --pq-wght: 460;
-    --pq-opsz: 36;
-    --pq-halo: 0.40;
+  16% {
+    --pq-wght: 480;
+    --pq-opsz: 40;
+    --pq-halo: 0.36;
+    opacity: 1;
     transform: scale(1.00) translateY(0);
-    filter: drop-shadow(0 50px 100px rgba(212, 168, 74, 0.40)) blur(0);
+    filter: drop-shadow(0 46px 90px rgba(212, 168, 74, 0.36)) blur(0);
   }
-  28% {
+  32% {
     --pq-wght: 620;
     --pq-opsz: 80;
-    --pq-halo: 0.55;
-    transform: scale(1.02) translateY(-3px) rotate(-0.4deg);
-    filter: drop-shadow(0 60px 120px rgba(212, 168, 74, 0.55)) blur(0);
+    --pq-halo: 0.50;
+    opacity: 1;
+    transform: scale(1.02) translateY(-2px) rotate(-0.3deg);
+    filter: drop-shadow(0 56px 110px rgba(212, 168, 74, 0.50)) blur(0);
   }
   50% {
-    --pq-wght: 850;
+    --pq-wght: 820;
     --pq-opsz: 120;
-    --pq-halo: 0.70;
-    transform: scale(1.04) translateY(0) rotate(0deg);
-    filter: drop-shadow(0 75px 150px rgba(212, 168, 74, 0.70)) blur(0);
+    --pq-halo: 0.62;
+    opacity: 1;
+    transform: scale(1.035) translateY(0) rotate(0deg);
+    filter: drop-shadow(0 66px 130px rgba(212, 168, 74, 0.62)) blur(0);
   }
-  72% {
+  68% {
     --pq-wght: 620;
     --pq-opsz: 80;
-    --pq-halo: 0.55;
-    transform: scale(1.02) translateY(3px) rotate(0.4deg);
-    filter: drop-shadow(0 60px 120px rgba(212, 168, 74, 0.55)) blur(0);
+    --pq-halo: 0.50;
+    opacity: 1;
+    transform: scale(1.02) translateY(2px) rotate(0.3deg);
+    filter: drop-shadow(0 56px 110px rgba(212, 168, 74, 0.50)) blur(0);
   }
-  92% {
-    --pq-wght: 460;
-    --pq-opsz: 36;
-    --pq-halo: 0.38;
+  84% {
+    --pq-wght: 480;
+    --pq-opsz: 40;
+    --pq-halo: 0.34;
+    opacity: 1;
     transform: scale(1.00) translateY(0) rotate(0deg);
-    filter: drop-shadow(0 50px 100px rgba(212, 168, 74, 0.38)) blur(0.4px);
+    filter: drop-shadow(0 46px 90px rgba(212, 168, 74, 0.34)) blur(0);
   }
   100% {
     --pq-wght: 400;
     --pq-opsz: 14;
-    --pq-halo: 0.30;
-    transform: scale(0.98) translateY(-4px);
-    filter: drop-shadow(0 40px 80px rgba(212, 168, 74, 0.30)) blur(2px);
+    --pq-halo: 0.18;
+    opacity: 0;
+    transform: scale(0.97) translateY(-4px);
+    filter: drop-shadow(0 30px 60px rgba(212, 168, 74, 0.18)) blur(10px);
   }
 }
 
@@ -6059,9 +6066,9 @@ body.no-parallax .g-tile .img { transform: none !important; }
     min-height: 0;
   }
   .pq-v4-letter {
-    height: clamp(180px, 28vh, 260px);
+    height: clamp(140px, 22vh, 200px);
   }
-  .pq-v4-glyph { font-size: clamp(180px, 52vw, 300px); }
+  .pq-v4-glyph { font-size: clamp(130px, 38vw, 220px); }
   .pq-v4-text-name { font-size: clamp(28px, 8vw, 42px); margin-bottom: 16px; }
   .pq-v4-text-desc { font-size: 15px; max-width: 100%; }
   .pq-v4-strip { gap: 4px; margin-top: 24px; }
@@ -6096,7 +6103,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 
 .pq-valores-closing {
-  margin-top: clamp(60px, 8vw, 110px);
+  margin-top: clamp(24px, 3.5vw, 56px);
   text-align: center;
   font-family: var(--serif);
   font-size: clamp(22px, 2.8vw, 36px);
@@ -6104,21 +6111,11 @@ body.no-parallax .g-tile .img { transform: none !important; }
   color: var(--arena);
   letter-spacing: 0.002em;
   line-height: 1.35;
-  padding-top: 56px;
-  border-top: 1px solid rgba(240,232,213,0.16);
+  padding-top: 0;
+  border-top: 0;
   position: relative;
 }
-.pq-valores-closing::before {
-  content: '';
-  position: absolute;
-  top: -1px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 64px;
-  height: 1px;
-  background: var(--sol-h);
-  box-shadow: 0 0 20px rgba(212,168,74,0.6);
-}
+.pq-valores-closing::before { content: none; }
 .pq-valores-closing em {
   font-style: italic;
   color: var(--sol-lt);
