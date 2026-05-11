@@ -149,9 +149,9 @@ const COPY = {
     team_eyebrow: 'Quienes os reciben',
     team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "No somos una recepci\xF3n. ", /*#__PURE__*/React.createElement("em", null, "Somos Alex y Fran.")),
     team_intro: 'En 2016 nacieron los tres — el nombre lo tomamos de la diosa griega del hogar. Diez años después seguimos limpiando, recibiendo, respondiendo WhatsApp y eligiendo las toallas. Todo lo hacemos nosotros, por eso todo importa.',
-    alex_role: 'Creativo · Decorador · Pre-estancia',
+    alex_role: 'Reserva · Antes de tu llegada',
     alex_quote: '«A ti, antes de que llegues, te lo cuento todo. Después, cuando te vayas, te echaré de menos.»',
-    fran_role: 'Filólogo · In-estancia · Post-estancia',
+    fran_role: 'Estancia · Mientras estás aquí',
     fran_quote: '«If anything breaks, calls, or changes — I am here. Your stay, my job.»',
     manifest_eyebrow: 'El huésped colaborativo',
     manifest_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hest\xEDa no es solo un alquiler: ", /*#__PURE__*/React.createElement("em", null, "se vive, invita a ser cuidado, se comparte\u2026")),
@@ -211,9 +211,9 @@ const COPY = {
     team_eyebrow: 'The hosts',
     team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Not a front desk. ", /*#__PURE__*/React.createElement("em", null, "Just Alex & Fran.")),
     team_intro: 'In 2016 the three Hestías opened — we took the name from the Greek goddess of home. Ten years later we still clean, welcome, reply WhatsApp and choose the towels. We do everything ourselves — that is why it all matters.',
-    alex_role: 'Creative · Decorator · Pre-stay',
+    alex_role: 'Booking · Before you arrive',
     alex_quote: '«Before you arrive, I will tell you everything. After you leave, I will miss you a little.»',
-    fran_role: 'Philologist · In-stay · Post-stay',
+    fran_role: 'Stay · While you are here',
     fran_quote: '«If anything breaks, calls, or changes — I am here. Your stay, my job.»',
     manifest_eyebrow: 'The collaborative guest',
     manifest_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hest\xEDa isn\u2019t just a rental: ", /*#__PURE__*/React.createElement("em", null, "it\u2019s lived in, cared for, shared\u2026")),
@@ -492,7 +492,7 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "No. Somos Alex y Fran. No hay agencia, no hay gestor, no hay centralita. Cuando nos escribes, nos escribes a nosotros directamente.")
     }, {
       q: '¿Qué pasa si algo falla durante mi estancia?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Fran se encarga de todo lo t\xE9cnico in situ. Est\xE1 disponible, responde r\xE1pido y resuelve. No hay que esperar a que abra ninguna oficina. Su n\xFAmero: ", /*#__PURE__*/React.createElement("a", {
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Fran se encarga de tu estancia: est\xE1 aqu\xED mientras est\xE1s aqu\xED. Responde r\xE1pido, va en persona y resuelve sin esperar a que abra ninguna oficina. Su n\xFAmero: ", /*#__PURE__*/React.createElement("a", {
         href: "https://wa.me/34654138251",
         target: "_blank",
         rel: "noopener"
