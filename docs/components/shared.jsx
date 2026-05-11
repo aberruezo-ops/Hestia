@@ -1873,6 +1873,10 @@ const DateRangePicker = ({
             const isBlkEnd    = isBlk && !nextBlk;
             const isBlkSingle = isBlkStart && isBlkEnd;
             const isBlkMid    = isBlk && !isBlkStart && !isBlkEnd;
+            // Día POST-bloqueo: no está bloqueado pero el día anterior sí.
+            // Su mañana está "ocupada" (huésped sale en checkout) y la
+            // tarde libre (puedes hacer check-in). Visual: left-strip.
+            const isBlkAfter  = !isBlk && _isBlk(_drAdj(ds, -1));
             const inSel = !!(checkin && checkout && ds >= checkin && ds <= checkout);
             const isSS  = inSel && ds === checkin;
             const isSE  = inSel && ds === checkout;
@@ -1893,10 +1897,21 @@ const DateRangePicker = ({
                 onClick={isClickable ? () => handleDayClick(ds) : undefined}
                 onMouseEnter={isClickable && !checkout ? () => setHover(ds) : undefined}
                 onMouseLeave={isClickable ? () => setHover(null) : undefined}>
+                {/* Día PRE-bloqueo (primer día del rango): right-strip
+                    tarde-onward bloqueada, mañana libre como check-out. */}
                 {showBlk && !isBlkSingle && isBlkStart && <div className="c-strip c-sr"/>}
-                {showBlk && !isBlkSingle && isBlkEnd   && <div className="c-strip c-sl"/>}
-                {showBlk && isBlkMid                   && <div className="c-strip"/>}
-                {showBlk && (isBlkStart||isBlkEnd||isBlkSingle) && <div className="c-circ"/>}
+                {/* Días bloqueados intermedios y último del rango (también
+                    fully ocupado de noche): strip sólido. */}
+                {showBlk && (isBlkMid || (isBlkEnd && !isBlkSingle)) && <div className="c-strip"/>}
+                {/* Día POST-bloqueo (no bloqueado, anterior sí): left-strip
+                    para indicar que la mañana sigue ocupada (huésped sale)
+                    pero la tarde es libre como check-in. */}
+                {isBlkAfter && !inSel && !inPrev && <div className="c-strip c-sl"/>}
+                {/* Single-day block: strip estrecho centrado para destacar */}
+                {showBlk && isBlkSingle && <div className="c-strip"/>}
+                {/* Círculo en los días de TRANSICIÓN (departure y arrival) */}
+                {showBlk && (isBlkStart || isBlkSingle) && <div className="c-circ"/>}
+                {isBlkAfter && !inSel && !inPrev && <div className="c-circ"/>}
                 {isSS && !isSE && <div className="c-strip c-sel-strip c-sr"/>}
                 {isSE && !isSS && <div className="c-strip c-sel-strip c-sl"/>}
                 {isSM          && <div className="c-strip c-sel-strip"/>}
