@@ -369,7 +369,9 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
             {lang === 'es' ? `desde ${minPrice}€` : `from ${minPrice}€`}
             <span className="app-per">{lang === 'es' ? ' / noche · precio directo' : ' / night · direct price'}</span>
             <span className="app-match">
-              {lang === 'es' ? '· te mejoramos cualquier precio' : '· we beat any price'}
+              {lang === 'es'
+                ? '· Si encuentras un precio más bajo, te lo mejoramos.'
+                : '· Find a lower price anywhere — we will beat it.'}
             </span>
           </p>
         )}
@@ -764,7 +766,14 @@ const AptStickyBar = ({ apt, lang, scrolled }) => {
     <div ref={ref} className={`apt-sticky-bar${scrolled ? ' asb-visible' : ''}`}>
       <div className="asb-info">
         <span className="asb-name">HESTÍA <strong>{apt.name_short}</strong></span>
-        {minP && <span className="asb-price">{lang === 'es' ? `desde ${minP}€/noche` : `from ${minP}€/night`}</span>}
+        {minP && (
+          <span className="asb-price">
+            {lang === 'es' ? `desde ${minP}€/noche` : `from ${minP}€/night`}
+            <span className="asb-match" aria-hidden="true">
+              {lang === 'es' ? '✓ ¿mejor precio? te lo mejoramos' : '✓ better price? we beat it'}
+            </span>
+          </span>
+        )}
       </div>
       <a href={`https://wa.me/34620316370?text=${encodeURIComponent(waMsg)}`}
          className="btn btn-primary asb-cta" target="_blank" rel="noopener">

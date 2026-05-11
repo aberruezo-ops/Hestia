@@ -452,7 +452,9 @@ const Apartments = ({
       className: "apb-price"
     }, minPrice.toLocaleString('es-ES'), "\u20AC"), /*#__PURE__*/React.createElement("span", {
       className: "apb-per"
-    }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price')), /*#__PURE__*/React.createElement("div", {
+    }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
+      className: "apb-match"
+    }, lang === 'es' ? '✓ Si encuentras un precio más bajo, te lo mejoramos' : '✓ Find a lower price — we will beat it')), /*#__PURE__*/React.createElement("div", {
       className: "apt-ctas"
     }, /*#__PURE__*/React.createElement("a", {
       href: `${a.slug}.html`,

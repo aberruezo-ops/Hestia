@@ -361,7 +361,7 @@ const AptPageHero = ({
     className: "app-per"
   }, lang === 'es' ? ' / noche · precio directo' : ' / night · direct price'), /*#__PURE__*/React.createElement("span", {
     className: "app-match"
-  }, lang === 'es' ? '· te mejoramos cualquier precio' : '· we beat any price')), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '· Si encuentras un precio más bajo, te lo mejoramos.' : '· Find a lower price anywhere — we will beat it.')), /*#__PURE__*/React.createElement("div", {
     className: "apt-page-ctas"
   }, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370",
@@ -836,7 +836,10 @@ const AptStickyBar = ({
     className: "asb-name"
   }, "HEST\xCDA ", /*#__PURE__*/React.createElement("strong", null, apt.name_short)), minP && /*#__PURE__*/React.createElement("span", {
     className: "asb-price"
-  }, lang === 'es' ? `desde ${minP}€/noche` : `from ${minP}€/night`)), /*#__PURE__*/React.createElement("a", {
+  }, lang === 'es' ? `desde ${minP}€/noche` : `from ${minP}€/night`, /*#__PURE__*/React.createElement("span", {
+    className: "asb-match",
+    "aria-hidden": "true"
+  }, lang === 'es' ? '✓ ¿mejor precio? te lo mejoramos' : '✓ better price? we beat it'))), /*#__PURE__*/React.createElement("a", {
     href: `https://wa.me/34620316370?text=${encodeURIComponent(waMsg)}`,
     className: "btn btn-primary asb-cta",
     target: "_blank",
