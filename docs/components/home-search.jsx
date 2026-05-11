@@ -148,6 +148,7 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
             return (
               <div key={d}
                 className={['cal-cell',(isPast||isBeyond)&&'past',isToday&&'today',isBlk&&'blk',
+                  isBlkAfter && 'blk-after',
                   isClickable&&'clickable',inSel&&'in-sel',isSS&&'sel-s',isSE&&'sel-e',isSM&&'sel-m',
                   inPrev&&'in-prev',isPS&&'prev-s',isPE&&'prev-e',isPM&&'prev-m',
                 ].filter(Boolean).join(' ')}

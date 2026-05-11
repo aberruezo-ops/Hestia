@@ -2636,6 +2636,11 @@ footer .footer-brand .addr {
 }
 .cal-cell.past      .c-n { opacity: .2; }
 .cal-cell.blk       .c-n { color: var(--ber-dk); font-weight: 500; text-decoration: line-through; text-decoration-color: rgba(61,26,53,.45); }
+/* Día POST-bloqueo: aunque la celda NO esté bloqueada, parte del número
+   queda sobre el strip de fundido. Forzar texto oscuro para que se lea
+   en la zona de transición. Sin line-through (el día sí está libre por
+   la tarde). */
+.cal-cell.blk-after .c-n { color: var(--ber-dk); font-weight: 500; }
 .cal-cell.today:not(.blk) .c-n { color: var(--apt-accent,var(--sol)); font-weight: 500; }
 /* Strip — horizontal bar connecting blocked range. Color crema. */
 .c-strip {
@@ -2648,35 +2653,44 @@ footer .footer-brand .addr {
   pointer-events: none;
 }
 /* Día PRE-bloqueo (departure: el huésped sale esta mañana). Strip
-   full-width pero con gradient mask: fundido de transparente (izquierda
-   / mañana libre) a sólido (derecha / tarde bloqueada). Mucho más
-   legible que un corte duro al 50 %.                                 */
+   full-width con gradient amplio: fundido lento de transparente
+   (mañana libre) a sólido (tarde bloqueada). ~70 % del cell.        */
 .c-strip.c-sr {
   left: -1px; right: -1px;
   border-radius: 3px;
   -webkit-mask-image: linear-gradient(90deg,
-    transparent 0%, transparent 20%,
-    rgba(0,0,0,0.55) 42%,
-    #000 60%, #000 100%);
+    transparent 0%,
+    transparent 12%,
+    rgba(0,0,0,0.18) 28%,
+    rgba(0,0,0,0.50) 44%,
+    rgba(0,0,0,0.78) 60%,
+    #000 78%, #000 100%);
           mask-image: linear-gradient(90deg,
-    transparent 0%, transparent 20%,
-    rgba(0,0,0,0.55) 42%,
-    #000 60%, #000 100%);
+    transparent 0%,
+    transparent 12%,
+    rgba(0,0,0,0.18) 28%,
+    rgba(0,0,0,0.50) 44%,
+    rgba(0,0,0,0.78) 60%,
+    #000 78%, #000 100%);
 }
-/* Día POST-bloqueo (arrival: el huésped del bloqueo sale esta mañana,
-   tu check-in posible esa tarde). Espejo del anterior: sólido a la
-   izquierda (mañana ocupada), fundido a transparente a la derecha. */
+/* Día POST-bloqueo (arrival: huésped sale esta mañana, tu check-in
+   esta tarde). Espejo: sólido a la izquierda, transición lenta y
+   transparente a la derecha.                                        */
 .c-strip.c-sl {
   left: -1px; right: -1px;
   border-radius: 3px;
   -webkit-mask-image: linear-gradient(90deg,
-    #000 0%, #000 40%,
-    rgba(0,0,0,0.55) 58%,
-    transparent 80%, transparent 100%);
+    #000 0%, #000 22%,
+    rgba(0,0,0,0.78) 40%,
+    rgba(0,0,0,0.50) 56%,
+    rgba(0,0,0,0.18) 72%,
+    transparent 88%, transparent 100%);
           mask-image: linear-gradient(90deg,
-    #000 0%, #000 40%,
-    rgba(0,0,0,0.55) 58%,
-    transparent 80%, transparent 100%);
+    #000 0%, #000 22%,
+    rgba(0,0,0,0.78) 40%,
+    rgba(0,0,0,0.50) 56%,
+    rgba(0,0,0,0.18) 72%,
+    transparent 88%, transparent 100%);
 }
 /* Circle — días bloqueados aislados o extremos del rango. Crema +
    forma cuadrada (width = height) para que sea círculo perfecto, no
