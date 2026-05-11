@@ -2570,6 +2570,10 @@ const DateRangePicker = ({
       const isBlkEnd = isBlk && !nextBlk;
       const isBlkSingle = isBlkStart && isBlkEnd;
       const isBlkMid = isBlk && !isBlkStart && !isBlkEnd;
+      // Día POST-bloqueo: no está bloqueado pero el día anterior sí.
+      // Su mañana está "ocupada" (huésped sale en checkout) y la
+      // tarde libre (puedes hacer check-in). Visual: left-strip.
+      const isBlkAfter = !isBlk && _isBlk(_drAdj(ds, -1));
       const inSel = !!(checkin && checkout && ds >= checkin && ds <= checkout);
       const isSS = inSel && ds === checkin;
       const isSE = inSel && ds === checkout;
@@ -2589,11 +2593,15 @@ const DateRangePicker = ({
         onMouseLeave: isClickable ? () => setHover(null) : undefined
       }, showBlk && !isBlkSingle && isBlkStart && /*#__PURE__*/React.createElement("div", {
         className: "c-strip c-sr"
-      }), showBlk && !isBlkSingle && isBlkEnd && /*#__PURE__*/React.createElement("div", {
-        className: "c-strip c-sl"
-      }), showBlk && isBlkMid && /*#__PURE__*/React.createElement("div", {
+      }), showBlk && (isBlkMid || isBlkEnd && !isBlkSingle) && /*#__PURE__*/React.createElement("div", {
         className: "c-strip"
-      }), showBlk && (isBlkStart || isBlkEnd || isBlkSingle) && /*#__PURE__*/React.createElement("div", {
+      }), isBlkAfter && !inSel && !inPrev && /*#__PURE__*/React.createElement("div", {
+        className: "c-strip c-sl"
+      }), showBlk && isBlkSingle && /*#__PURE__*/React.createElement("div", {
+        className: "c-strip"
+      }), showBlk && (isBlkStart || isBlkSingle) && /*#__PURE__*/React.createElement("div", {
+        className: "c-circ"
+      }), isBlkAfter && !inSel && !inPrev && /*#__PURE__*/React.createElement("div", {
         className: "c-circ"
       }), isSS && !isSE && /*#__PURE__*/React.createElement("div", {
         className: "c-strip c-sel-strip c-sr"

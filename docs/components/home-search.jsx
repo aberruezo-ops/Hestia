@@ -127,6 +127,9 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
             const isBlkEnd    = isBlk && !nextBlk;
             const isBlkSingle = isBlkStart && isBlkEnd;
             const isBlkMid    = isBlk && !isBlkStart && !isBlkEnd;
+            // Día POST-bloqueo: no bloqueado pero el anterior sí. Mañana
+            // ocupada (huésped sale), tarde libre como check-in.
+            const isBlkAfter  = !isBlk && _isBlkLocal(_hsAdj(ds, -1));
 
             const inSel = !!(checkin && checkout && ds >= checkin && ds <= checkout);
             const isSS  = inSel && ds === checkin;
@@ -153,9 +156,11 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
                 onMouseLeave={isClickable ? () => setHover(null) : undefined}
               >
                 {showBlk && !isBlkSingle && isBlkStart && <div className="c-strip c-sr"/>}
-                {showBlk && !isBlkSingle && isBlkEnd   && <div className="c-strip c-sl"/>}
-                {showBlk && isBlkMid                   && <div className="c-strip"/>}
-                {showBlk && (isBlkStart||isBlkEnd||isBlkSingle) && <div className="c-circ"/>}
+                {showBlk && (isBlkMid || (isBlkEnd && !isBlkSingle)) && <div className="c-strip"/>}
+                {isBlkAfter && !inSel && !inPrev && <div className="c-strip c-sl"/>}
+                {showBlk && isBlkSingle && <div className="c-strip"/>}
+                {showBlk && (isBlkStart || isBlkSingle) && <div className="c-circ"/>}
+                {isBlkAfter && !inSel && !inPrev && <div className="c-circ"/>}
                 {isSS && !isSE && <div className="c-strip c-sel-strip c-sr"/>}
                 {isSE && !isSS && <div className="c-strip c-sel-strip c-sl"/>}
                 {isSM          && <div className="c-strip c-sel-strip"/>}
