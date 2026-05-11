@@ -2944,7 +2944,7 @@ footer .footer-brand .addr {
 .req-btn-forward:hover {
   background: var(--sol-h) !important;
   border-color: var(--sol-h) !important;
-  color: var(--crema) !important;
+  color: var(--ber-dk) !important;     /* ber-dk sobre sol-h = ratio 4.55 ✓ AA */
   transform: translateY(-1px);
   box-shadow:
     0 14px 36px rgba(42, 142, 158, 0.55),
@@ -2965,7 +2965,7 @@ footer .footer-brand .addr {
 }
 .asb-cta.btn-primary:hover {
   background: var(--sol-h) !important;
-  color: var(--crema) !important;
+  color: var(--ber-dk) !important;     /* AA: ratio 4.55 sobre sol-h */
   border-color: var(--sol-h) !important;
 }
 .req-actions-forward,
@@ -7456,7 +7456,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .reservas-form-wrap .c-n              { color: var(--ber-dk); opacity: 0.85; }
 .reservas-form-wrap .cal-cell.past .c-n { color: var(--ber); opacity: 0.25; }
 .reservas-form-wrap .cal-cell.blk  .c-n { color: var(--ber-dk); opacity: 0.7; }
-.reservas-form-wrap .cal-cell.today:not(.blk) .c-n { color: var(--apt-accent, var(--sol)); font-weight: 600; }
+.reservas-form-wrap .cal-cell.today:not(.blk) .c-n { color: var(--sol-text); font-weight: 700; }
 .reservas-form-wrap .cal-cell.in-sel .c-n,
 .reservas-form-wrap .cal-cell.sel-s  .c-n,
 .reservas-form-wrap .cal-cell.sel-e  .c-n { color: var(--ber-dk); font-weight: 600; opacity: 1; }
@@ -7464,7 +7464,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .reservas-form-wrap .cal-cell.prev-s .c-n,
 .reservas-form-wrap .cal-cell.prev-e .c-n { color: var(--ber-dk); opacity: 0.85; }
 .reservas-form-wrap .cal-cell.prev-m .c-n { color: var(--ber-dk); opacity: 0.5; }
-.reservas-form-wrap .hscal-phase-hint { color: var(--sol-h); }
+.reservas-form-wrap .hscal-phase-hint { color: var(--sol-text); font-weight: 600; }
 .reservas-form-wrap .avail-nav-lbl    { color: var(--ber-dk); opacity: 0.85; }
 .reservas-form-wrap .avail-arr        { color: var(--ber); }
 .reservas-form-wrap .hscal-sel-lbl    { color: var(--ber); opacity: 0.7; }
@@ -9278,7 +9278,12 @@ footer,
   width: 30px; height: 30px;
   border-radius: 50%;
   border: 2px solid white;
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.15);
+  /* Doble shadow: el primero define un borde ber-dk fino para que dots
+     con bg claro (vs, sol, alb, tur, vs2) se separen del fondo cream
+     con suficiente contraste WCAG. El segundo es la sombra de elevación. */
+  box-shadow:
+    0 0 0 1.5px rgba(42, 15, 46, 0.35),
+    0 2px 6px rgba(0, 0, 0, 0.20);
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
