@@ -332,9 +332,13 @@ const FloatingChat = ({
     target: "_blank",
     rel: "noopener"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "avatar avatar-photo avatar-alex",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("div", {
+    className: "avatar avatar-photo"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: "assets/photo-alex.jpg",
+    alt: "",
+    loading: "lazy",
+    className: "avatar-img avatar-img-alex"
+  })), /*#__PURE__*/React.createElement("div", {
     className: "info"
   }, /*#__PURE__*/React.createElement("div", {
     className: "name"
@@ -344,9 +348,13 @@ const FloatingChat = ({
     className: "contact-row",
     href: "tel:+34620316370"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "avatar avatar-photo avatar-alex",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("div", {
+    className: "avatar avatar-photo"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: "assets/photo-alex.jpg",
+    alt: "",
+    loading: "lazy",
+    className: "avatar-img avatar-img-alex"
+  })), /*#__PURE__*/React.createElement("div", {
     className: "info"
   }, /*#__PURE__*/React.createElement("div", {
     className: "name"
@@ -358,9 +366,13 @@ const FloatingChat = ({
     target: "_blank",
     rel: "noopener"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "avatar avatar-photo avatar-fran",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("div", {
+    className: "avatar avatar-photo"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: "assets/photo-fran.jpg",
+    alt: "",
+    loading: "lazy",
+    className: "avatar-img avatar-img-fran"
+  })), /*#__PURE__*/React.createElement("div", {
     className: "info"
   }, /*#__PURE__*/React.createElement("div", {
     className: "name"
@@ -370,9 +382,13 @@ const FloatingChat = ({
     className: "contact-row",
     href: "tel:+34654138251"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "avatar avatar-photo avatar-fran",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("div", {
+    className: "avatar avatar-photo"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: "assets/photo-fran.jpg",
+    alt: "",
+    loading: "lazy",
+    className: "avatar-img avatar-img-fran"
+  })), /*#__PURE__*/React.createElement("div", {
     className: "info"
   }, /*#__PURE__*/React.createElement("div", {
     className: "name"

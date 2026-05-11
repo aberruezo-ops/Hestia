@@ -842,34 +842,45 @@ body.apt-bar-shown .float-chat {
 }
 .float-chat .contact-row:first-of-type { border-top: none; }
 .float-chat .contact-row .avatar {
-  width: 34px; height: 34px; border-radius: 50%;
+  width: 44px; height: 44px; border-radius: 50%;
   background: var(--sol); color: var(--ber-dk);
   display: flex; align-items: center; justify-content: center;
-  font-family: var(--serif); font-size: 15px;
+  font-family: var(--serif); font-size: 18px;
   flex-shrink: 0;
 }
 .float-chat .contact-row .avatar.fran { background: var(--ber); color: var(--sol-lt); }
-/* Avatares con foto — Alex y Fran. La imagen es de fondo y se zoom
-   manual con background-size + background-position para centrar
-   la cara. Alex (731×1014) cara en (~48%, ~38%) — necesita zoom alto.
-   Fran (925×2000) cara en (~50%, ~36%) — ya es primer plano. */
+/* Avatares con foto — img dentro de div circular con overflow:hidden.
+   object-fit: cover + object-position centran la cara. transform: scale
+   añade zoom extra para que la cara llene el círculo, no aparezca
+   diminuta dentro. */
 .float-chat .contact-row .avatar.avatar-photo {
-  background-color: #F0E8D5;       /* arena cálida — fallback si la foto no llega */
-  background-repeat: no-repeat;
-  border: 1.5px solid rgba(240, 232, 213, 0.65);
-  box-shadow: 0 2px 6px rgba(42, 15, 46, 0.30), inset 0 0 0 1px rgba(42, 15, 46, 0.06);
-  font-size: 0;                    /* oculta cualquier fallback de texto */
   overflow: hidden;
+  position: relative;
+  background: #F0E8D5;
+  border: 1.5px solid rgba(240, 232, 213, 0.7);
+  box-shadow: 0 2px 8px rgba(42, 15, 46, 0.32), inset 0 0 0 1px rgba(42, 15, 46, 0.06);
 }
-.float-chat .contact-row .avatar.avatar-alex {
-  background-image: url("photo-alex.jpg");
-  background-size: 460%;           /* zoom fuerte para que la cara llene */
-  background-position: 48% 36%;    /* centro en cara (no en ventana de detrás) */
+.float-chat .contact-row .avatar-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
-.float-chat .contact-row .avatar.avatar-fran {
-  background-image: url("photo-fran.jpg");
-  background-size: 165%;
-  background-position: 50% 30%;
+/* Alex (731×1014) — cara en (~48%, ~30%). Scale 1.6 con transform-origin
+   sobre la cara para que la cabeza + barba entera entre en el círculo. */
+.float-chat .contact-row .avatar-img-alex {
+  object-position: 48% 30%;
+  transform: scale(1.6);
+  transform-origin: 48% 30%;
+}
+/* Fran (925×2000) — primer plano vertical, su cara entera ya cabe sin
+   ampliar mucho. Solo posicionamos centro arriba. */
+.float-chat .contact-row .avatar-img-fran {
+  object-position: 50% 32%;
+  transform: scale(1.15);
+  transform-origin: 50% 32%;
 }
 .float-chat .contact-row .info { line-height: 1.3; }
 .float-chat .contact-row .info .name { font-weight: 500; }
