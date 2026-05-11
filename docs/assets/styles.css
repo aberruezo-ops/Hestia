@@ -543,12 +543,25 @@ p  { line-height: 1.65; font-weight: 300; }
 .header.day .hamburger-btn:hover { background: rgba(184,106,60,0.10); }
 
 /* -------- Mobile menu overlay -------- */
+/* Fondo animado tipo aurora con la paleta de Hestía: berenjena de base
+   + tintes de violeta, sol turquesa, buganvilla, olivo y dorado que
+   respiran lentamente. Capas separadas (::before y ::after) para que
+   los gradientes se desplacen con tiempos distintos sin solaparse. */
 .mobile-menu {
   display: none;
   position: fixed;
   inset: 0;
   z-index: 97;
-  background: rgba(42, 15, 46, 0.97);
+  background-color: #2A0F2E;       /* ber-dk literal — fallback sólido */
+  background-image: linear-gradient(
+    135deg,
+    #2A0F2E 0%,
+    #3D1A48 40%,
+    #2A0F2E 70%,
+    #1A0A1E 100%
+  );
+  background-size: 220% 220%;
+  animation: mmAuroraBase 24s ease-in-out infinite;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   color: var(--arena);
@@ -563,10 +576,60 @@ p  { line-height: 1.65; font-weight: 300; }
   transition: opacity .3s ease;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  isolation: isolate;
+}
+/* Capa 1 — manchas sol turquesa + violeta que respiran. */
+.mobile-menu::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 35% at 20% 18%, rgba(58, 170, 187, 0.30), transparent 65%),
+    radial-gradient(ellipse 45% 40% at 80% 35%, rgba(123, 59, 107, 0.32), transparent 70%),
+    radial-gradient(ellipse 60% 45% at 50% 90%, rgba(58, 170, 187, 0.18), transparent 70%);
+  filter: blur(12px);
+  animation: mmAuroraLayer1 18s ease-in-out infinite alternate;
+}
+/* Capa 2 — manchas buganvilla + olivo + dorado, ritmo más lento. */
+.mobile-menu::after {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 40% 30% at 75% 75%, rgba(212, 43, 128, 0.20), transparent 70%),
+    radial-gradient(ellipse 50% 35% at 15% 65%, rgba(107, 122, 58, 0.18), transparent 70%),
+    radial-gradient(ellipse 35% 30% at 60% 25%, rgba(212, 168, 74, 0.16), transparent 70%);
+  filter: blur(18px);
+  animation: mmAuroraLayer2 28s ease-in-out infinite alternate-reverse;
+  mix-blend-mode: screen;
 }
 .mobile-menu.open {
   opacity: 1;
   pointer-events: auto;
+}
+@keyframes mmAuroraBase {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes mmAuroraLayer1 {
+  0%   { transform: translate(0, 0)   scale(1);    opacity: 0.85; }
+  50%  { transform: translate(4%, -3%) scale(1.06); opacity: 1; }
+  100% { transform: translate(-3%, 4%) scale(0.96); opacity: 0.8; }
+}
+@keyframes mmAuroraLayer2 {
+  0%   { transform: translate(0, 0)    scale(1);    opacity: 0.7; }
+  50%  { transform: translate(-5%, 3%) scale(1.08); opacity: 1; }
+  100% { transform: translate(4%, -4%) scale(0.94); opacity: 0.65; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu,
+  .mobile-menu::before,
+  .mobile-menu::after { animation: none; }
 }
 /* -------- Menú móvil — diseño editorial -------- */
 .mobile-nav {
