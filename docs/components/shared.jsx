@@ -1678,6 +1678,22 @@ const _petCost = (nights) => {
   return PET_SUPP_FLAT;
 };
 
+// Suplementos escalonados por número de huéspedes (precio base = 1 huésped).
+// Sumamos los tramos perNight entre 1 y el número de huéspedes seleccionado.
+// Por ejemplo, 4 huéspedes = supp(1→2) + supp(2→3) + supp(3→4) por noche.
+const _guestSuppPerNight = (guests) => {
+  const rules = (window.PRICES_V2 && window.PRICES_V2.rules) || {};
+  const supps = Array.isArray(rules.guestSupplements) ? rules.guestSupplements : null;
+  if (!supps || !guests || guests <= 1) return 0;
+  let total = 0;
+  for (const s of supps) {
+    if (typeof s.to === 'number' && s.to <= guests && typeof s.perNight === 'number') {
+      total += s.perNight;
+    }
+  }
+  return total;
+};
+
 // helpers compat con el motor de calendario
 const _be_adj = (ds, n) => {
   const d = new Date(ds + 'T12:00:00Z');
@@ -1710,7 +1726,7 @@ const _dayPrice = (ds, aptId) => {
 // (mayo 2026): un solo precio, el directo. No comparamos con plataformas
 // externas — la promesa pública es "te mejoramos cualquier precio que
 // veas en cualquier sitio".
-const _calcStay = (selStart, selEnd, aptId, withPets) => {
+const _calcStay = (selStart, selEnd, aptId, withPets, guests) => {
   if (!selStart || !selEnd || !aptId) return null;
   const nights = _be_diff(selStart, selEnd);
   if (nights <= 0) return null;
@@ -1751,10 +1767,19 @@ const _calcStay = (selStart, selEnd, aptId, withPets) => {
   const afterStay   = baseTotal - stayDiscAmt;
 
   const petAmt = withPets ? _petCost(nights) : 0;
-  const directTotal  = afterStay + petAmt;
-  const avgPerNight  = Math.round(afterStay / nights);
 
-  return { nights, baseTotal, stayD, stayDiscAmt, afterStay, petAmt, directTotal, avgPerNight };
+  // Suplemento por huéspedes — base = 1 huésped, se suma escalón a escalón.
+  const guestSuppPerNight = _guestSuppPerNight(guests);
+  const guestSuppAmt = guestSuppPerNight * nights;
+
+  const directTotal  = afterStay + petAmt + guestSuppAmt;
+  const avgPerNight  = Math.round((afterStay + guestSuppAmt) / nights);
+
+  return {
+    nights, baseTotal, stayD, stayDiscAmt, afterStay,
+    petAmt, guestSuppPerNight, guestSuppAmt, guests: guests || null,
+    directTotal, avgPerNight,
+  };
 };
 
 // ================================================================
