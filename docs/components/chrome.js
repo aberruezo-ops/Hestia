@@ -332,8 +332,9 @@ const FloatingChat = ({
     target: "_blank",
     rel: "noopener"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "avatar"
-  }, "A"), /*#__PURE__*/React.createElement("div", {
+    className: "avatar avatar-photo avatar-alex",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "info"
   }, /*#__PURE__*/React.createElement("div", {
     className: "name"
@@ -343,11 +344,9 @@ const FloatingChat = ({
     className: "contact-row",
     href: "tel:+34620316370"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "avatar",
-    style: {
-      background: 'var(--ber-lt)'
-    }
-  }, "A"), /*#__PURE__*/React.createElement("div", {
+    className: "avatar avatar-photo avatar-alex",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "info"
   }, /*#__PURE__*/React.createElement("div", {
     className: "name"
@@ -359,8 +358,9 @@ const FloatingChat = ({
     target: "_blank",
     rel: "noopener"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "avatar fran"
-  }, "F"), /*#__PURE__*/React.createElement("div", {
+    className: "avatar avatar-photo avatar-fran",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "info"
   }, /*#__PURE__*/React.createElement("div", {
     className: "name"
@@ -370,11 +370,9 @@ const FloatingChat = ({
     className: "contact-row",
     href: "tel:+34654138251"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "avatar fran",
-    style: {
-      opacity: 0.75
-    }
-  }, "F"), /*#__PURE__*/React.createElement("div", {
+    className: "avatar avatar-photo avatar-fran",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "info"
   }, /*#__PURE__*/React.createElement("div", {
     className: "name"
