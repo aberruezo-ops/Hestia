@@ -179,10 +179,23 @@ const PricePreview = ({
     className: "price-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento ${calc.guests} huéspedes (+${calc.guestSuppPerNight} €/noche)` : `${calc.guests}-guest supplement (+${calc.guestSuppPerNight} €/night)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.guestSuppAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
     className: "price-line"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento mascota (10 €/noche · máx. 50 €)` : `Pet supplement (10 €/night · max 50 €)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), extras.map(ex => /*#__PURE__*/React.createElement("div", {
-    className: "price-line",
-    key: ex.id
-  }, /*#__PURE__*/React.createElement("span", null, ex.label, ex.unit === 'hora' && ` · ${ex.qty} h × ${ex.unitPrice} €`, ex.unit === 'noche' && ` · ${ex.qty} ${lang === 'es' ? 'noches' : 'nights'} × ${ex.unitPrice} €`), /*#__PURE__*/React.createElement("span", null, "+", fmt(ex.amount)))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento mascota (10 €/noche · máx. 50 €)` : `Pet supplement (10 €/night · max 50 €)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), extras.map(ex => {
+    const u = ex.units || 1;
+    let detail = '';
+    if (ex.unit === 'hora') {
+      detail = ` · ${u} h × ${ex.unitPrice} €`;
+    } else if (ex.unit === 'noche') {
+      const nLabel = lang === 'es' ? 'noches' : 'nights';
+      const uLabel = lang === 'es' ? u === 1 ? 'unidad' : 'unidades' : u === 1 ? 'unit' : 'units';
+      detail = ` · ${u} ${uLabel} × ${ex.qty} ${nLabel} × ${ex.unitPrice} €`;
+    } else if (u > 1) {
+      detail = ` · ${u} × ${ex.unitPrice} €`;
+    }
+    return /*#__PURE__*/React.createElement("div", {
+      className: "price-line",
+      key: ex.id
+    }, /*#__PURE__*/React.createElement("span", null, ex.label, detail), /*#__PURE__*/React.createElement("span", null, "+", fmt(ex.amount)));
+  }), /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-total"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'), /*#__PURE__*/React.createElement("span", null, fmt(grandTotal)))), /*#__PURE__*/React.createElement("p", {
     className: "price-note"
@@ -355,11 +368,32 @@ const ReservasForm = ({
     });
   };
   const setExtraQty = (id, qty) => {
-    const n = Math.max(1, Math.floor(Number(qty) || 1));
+    const n = Math.max(0, Math.floor(Number(qty) || 0));
     setExtrasSel(prev => ({
       ...prev,
       [id]: n
     }));
+  };
+  // Máximo qty por extra = número de huéspedes (1 set por huésped).
+  // Si todavía no se han elegido huéspedes, se permite hasta 6.
+  const extraMaxQty = Math.max(1, parseInt(guests, 10) || 6);
+  const incExtra = id => {
+    setExtrasSel(prev => {
+      const cur = prev[id] || 0;
+      return {
+        ...prev,
+        [id]: Math.min(extraMaxQty, cur + 1)
+      };
+    });
+  };
+  const decExtra = id => {
+    setExtrasSel(prev => {
+      const cur = prev[id] || 0;
+      return {
+        ...prev,
+        [id]: Math.max(0, cur - 1)
+      };
+    });
   };
 
   // Computa los extras seleccionados con su importe ya calculado.
@@ -374,17 +408,21 @@ const ReservasForm = ({
         amount = ex.price * qty;
       } else if (ex.unit === 'noche') {
         lineQty = nights;
-        amount = ex.price * nights;
+        amount = ex.price * nights * qty;
       } else {
-        lineQty = 1;
-        amount = ex.price;
+        lineQty = qty;
+        amount = ex.price * qty;
       }
+      // qty es siempre el número de unidades elegidas por el huésped
+      // (1 por defecto, hasta el número de huéspedes). lineQty depende
+      // del tipo (horas, noches, o el propio qty).
       return {
         id: ex.id,
         label: lang === 'es' ? ex.label_es : ex.label_en,
         unit: ex.unit,
         unitPrice: ex.price,
         qty: lineQty,
+        units: qty,
         amount
       };
     });
@@ -669,9 +707,8 @@ const ReservasForm = ({
     }, /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: "rf-extra-chip-btn",
-      role: "checkbox",
-      "aria-checked": checked,
-      onClick: () => toggleExtra(ex.id)
+      onClick: () => checked ? null : incExtra(ex.id),
+      "aria-label": checked ? label : lang === 'es' ? `Añadir ${label}` : `Add ${label}`
     }, /*#__PURE__*/React.createElement("span", {
       className: "rf-extra-chip-mark",
       "aria-hidden": "true"
@@ -681,19 +718,25 @@ const ReservasForm = ({
       className: "rf-extra-chip-label"
     }, label), ex.price > 0 && /*#__PURE__*/React.createElement("span", {
       className: "rf-extra-chip-price"
-    }, ex.price, " \u20AC", suffix))), checked && ex.unit === 'hora' && /*#__PURE__*/React.createElement("span", {
-      className: "rf-extra-chip-qty"
-    }, /*#__PURE__*/React.createElement("input", {
-      type: "number",
-      min: "1",
-      step: "1",
-      value: qty,
-      onChange: e => setExtraQty(ex.id, e.target.value),
-      className: "form-extra-qty",
-      "aria-label": lang === 'es' ? 'Horas' : 'Hours'
-    }), /*#__PURE__*/React.createElement("span", {
-      className: "form-extra-qty-unit"
-    }, "h")));
+    }, ex.price, " \u20AC", suffix))), checked && /*#__PURE__*/React.createElement("div", {
+      className: "rf-extra-stepper",
+      role: "group",
+      "aria-label": lang === 'es' ? `Cantidad de ${label}` : `Quantity of ${label}`
+    }, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "rf-extra-step-btn",
+      onClick: () => decExtra(ex.id),
+      "aria-label": lang === 'es' ? 'Quitar uno' : 'Remove one'
+    }, "\u2212"), /*#__PURE__*/React.createElement("span", {
+      className: "rf-extra-step-num",
+      "aria-live": "polite"
+    }, qty), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "rf-extra-step-btn",
+      onClick: () => incExtra(ex.id),
+      disabled: qty >= extraMaxQty,
+      "aria-label": lang === 'es' ? 'Añadir uno' : 'Add one'
+    }, "+")));
   }))), calc && /*#__PURE__*/React.createElement(PricePreview, {
     apt: apt,
     checkin: checkin,

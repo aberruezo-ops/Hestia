@@ -12510,6 +12510,60 @@ a:focus-visible,
   margin-left: 8px;
 }
 
+/* Stepper +/− para extras (toallas, sábanas, etc.) — 1 a N huéspedes.
+   Sin input de texto: solo botones de incrementar/decrementar. */
+.rf-extra-stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 10px;
+  padding: 4px 6px;
+  background: rgba(58, 170, 187, 0.10);
+  border-radius: 10px 0 10px 0;
+  border: 1.5px solid rgba(58, 170, 187, 0.32);
+  flex-shrink: 0;
+}
+.rf-extra-step-btn {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  background: #3AAABB;
+  color: #2A0F2E;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background-color .18s ease, transform .12s ease, box-shadow .18s ease;
+  box-shadow: 0 2px 8px rgba(58, 170, 187, 0.28);
+}
+.rf-extra-step-btn:hover:not(:disabled) {
+  background: #6FC4D1;
+  transform: scale(1.06);
+  box-shadow: 0 3px 10px rgba(58, 170, 187, 0.40);
+}
+.rf-extra-step-btn:active:not(:disabled) { transform: scale(0.94); }
+.rf-extra-step-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: var(--ber);
+  color: var(--arena);
+  box-shadow: none;
+}
+.rf-extra-step-num {
+  min-width: 22px;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ber-dk);
+  font-variant-numeric: tabular-nums;
+}
+
 .rf-step-body {
   margin-top: 18px;
   animation: rfStepIn 240ms var(--ease-out, cubic-bezier(.23,1,.32,1));
