@@ -481,21 +481,29 @@ const ReservasForm = ({ lang }) => {
                 <option value="vs">Hestía Salinas</option>
               </select>
             </div>
-            <div className="form-row">
-              <div className="form-field">
-                <label>{t.f_checkin}</label>
-                <input type="date" id="res-checkin" value={checkin}
-                  onChange={e => {
-                    setCheckin(e.target.value);
-                    if (e.target.value) setTimeout(() => document.getElementById('res-checkout')?.focus(), 50);
-                  }} required/>
-              </div>
-              <div className="form-field">
-                <label>{t.f_checkout}</label>
-                <input type="date" id="res-checkout" value={checkout}
-                  min={checkin || undefined}
-                  onChange={e => setCheckout(e.target.value)} required/>
-              </div>
+            <div className="form-field full">
+              <label>{lang === 'es' ? 'Fechas de la estancia' : 'Stay dates'}</label>
+              <DateRangePicker
+                checkin={checkin}
+                checkout={checkout}
+                setCheckin={setCheckin}
+                setCheckout={setCheckout}
+                blocked={apt && avail && avail[apt] ? avail[apt].blocked : []}
+                accent={
+                  apt === 'vm' ? '#6B7A3A'
+                  : apt === 'vt' ? '#B86A3C'
+                  : apt === 'vs' ? '#D4A84A'
+                  : '#3AAABB'
+                }
+                lang={lang}
+              />
+              {!apt && (
+                <p className="form-help-note">
+                  {lang === 'es'
+                    ? '↑ Selecciona primero una Hestía para ver las fechas bloqueadas.'
+                    : '↑ Pick a Hestía first to see blocked dates.'}
+                </p>
+              )}
             </div>
             <div className="form-row">
               <div className="form-field">
