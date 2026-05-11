@@ -10592,30 +10592,39 @@ footer,
   justify-content: space-between;
   gap: 12px;
   width: 100%;
-  padding: 11px 16px;
-  background: var(--sol);
-  color: var(--ber-dk);
-  border: 0;
+  padding: 12px 18px;
+  background-color: #3AAABB !important;
+  background-image: none !important;
+  color: #2A0F2E !important;
+  border: 0 !important;
   border-radius: 999px;
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 700 !important;
   cursor: pointer;
-  transition: background .25s ease, transform .15s var(--ease-out, ease);
+  box-shadow: 0 3px 12px rgba(58,170,187,.35);
+  transition: background-color .25s ease, transform .15s var(--ease-out, ease), box-shadow .25s ease;
 }
-.ads-btn:hover { background: var(--sol-lt); transform: translateY(-1px); }
+.ads-btn:hover {
+  background-color: #6FC4D1 !important;
+  color: #2A0F2E !important;
+  transform: translateY(-1px);
+  box-shadow: 0 5px 16px rgba(58,170,187,.5);
+}
 .ads-btn:active { transform: translateY(0) scale(.98); }
 .ads-btn-ghost {
-  background: transparent;
-  color: var(--crema);
-  border: 1px solid rgba(240,232,213,.35);
+  background-color: transparent !important;
+  background-image: none !important;
+  color: #F0E8D5 !important;
+  border: 1px solid #F0E8D5 !important;
+  box-shadow: none;
 }
 .ads-btn-ghost:hover {
-  background: rgba(240,232,213,.08);
-  color: var(--sol);
-  border-color: var(--sol);
+  background-color: rgba(240,232,213,.16) !important;
+  color: #F0E8D5 !important;
+  border-color: #F0E8D5 !important;
 }
 
 @media (min-width: 1100px) {
@@ -10758,37 +10767,75 @@ footer,
   margin: 0 0 10px;
 }
 
-/* CTA común a todos los widgets. */
+/* CTA común a todos los widgets — bulletproof. Default sol turquesa
+   sólido (#3AAABB) con texto eggplant (#2A0F2E) y peso 700 para AA
+   garantizado sobre la card ber-lt. En apt pages el override por
+   data-apt cambia el color al accent del Hestía. */
 .widget-cta {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 12px;
+  padding: 9px 14px;
   border-radius: 999px;
-  background: var(--apt-accent, var(--sol));
-  color: var(--ber-dk);
-  border: 1px solid var(--apt-accent, var(--sol));
+  background-color: #3AAABB !important;        /* sol literal */
+  background-image: none !important;
+  color: #2A0F2E !important;                   /* ber-dk literal */
+  border: 0 !important;
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700 !important;
   cursor: pointer;
-  transition: background .25s ease, color .25s ease, transform .15s ease;
+  box-shadow: 0 3px 12px rgba(58,170,187,.35);
+  transition: background-color .25s ease, color .25s ease, transform .15s ease, box-shadow .25s ease;
 }
 .widget-cta:hover {
-  background: transparent;
-  color: var(--sol);
+  background-color: #6FC4D1 !important;        /* sol-lt */
+  color: #2A0F2E !important;
   transform: translateX(2px);
+  box-shadow: 0 5px 16px rgba(58,170,187,.5);
 }
 .widget-cta-ghost {
-  background: transparent;
-  color: var(--apt-accent, var(--sol));
+  background-color: transparent !important;
+  color: #F0E8D5 !important;                   /* arena sobre ber-lt */
+  border: 1px solid #F0E8D5 !important;
+  font-weight: 700 !important;
+  box-shadow: none;
 }
 .widget-cta-ghost:hover {
-  background: rgba(240,232,213,.08);
-  color: var(--apt-accent, var(--sol));
-  border-color: var(--apt-accent, var(--sol));
+  background-color: rgba(240,232,213,.16) !important;
+  color: #F0E8D5 !important;
+  border-color: #F0E8D5 !important;
+}
+
+/* Overrides por apt — botón ventajas toma color del Hestía. */
+[data-apt="mar"] .widget-cta {
+  background-color: #6B7A3A !important;
+  color: #F0E8D5 !important;
+  box-shadow: 0 3px 12px rgba(107,122,58,.45);
+}
+[data-apt="mar"] .widget-cta:hover {
+  background-color: #8B9A52 !important;
+  color: #2A0F2E !important;
+}
+[data-apt="thalassa"] .widget-cta {
+  background-color: #B86A3C !important;
+  color: #2A0F2E !important;
+  box-shadow: 0 3px 12px rgba(184,106,60,.45);
+}
+[data-apt="thalassa"] .widget-cta:hover {
+  background-color: #D4906A !important;
+  color: #2A0F2E !important;
+}
+[data-apt="salinas"] .widget-cta {
+  background-color: #D4A84A !important;
+  color: #2A0F2E !important;
+  box-shadow: 0 3px 12px rgba(212,168,74,.45);
+}
+[data-apt="salinas"] .widget-cta:hover {
+  background-color: #E8C170 !important;
+  color: #2A0F2E !important;
 }
 
 /* Body del Sabías que. */
@@ -10939,6 +10986,72 @@ footer,
 /* Compat: alias .widget-mini-access se mantiene como no-op (ya hereda
    todo el estilo unificado del .widget-mini). */
 .widget-mini-access {}
+
+/* En páginas Hestía (Mar/Thalassa/Salinas) los widgets plegados toman
+   el color del apartamento. Hex literales para evitar fallos de parser
+   en iPad y mantener AA con texto crema #F0E8D5. */
+[data-apt="mar"] .widget-mini {
+  background: #6B7A3A !important;       /* olivo Mar */
+  color: #F0E8D5 !important;            /* arena */
+  border-left-color: #8B9A52 !important;
+  box-shadow:
+    0 6px 18px rgba(42,15,46,.45),
+    0 0 0 1px rgba(255,255,255,.14);
+}
+[data-apt="mar"] .widget-mini:hover {
+  background: #8B9A52 !important;       /* accent2 Mar más claro */
+  color: #2A0F2E !important;
+}
+[data-apt="mar"] .widget-mini-icon {
+  background: rgba(240,232,213,.20);
+  color: #F0E8D5;
+}
+[data-apt="mar"] .widget-mini:hover .widget-mini-icon {
+  background: rgba(42,15,46,.22);
+  color: #2A0F2E;
+}
+
+[data-apt="thalassa"] .widget-mini {
+  background: #8A4A24 !important;       /* siena Thalassa */
+  color: #F0E8D5 !important;
+  border-left-color: #B86A3C !important;
+  box-shadow:
+    0 6px 18px rgba(42,15,46,.45),
+    0 0 0 1px rgba(255,255,255,.14);
+}
+[data-apt="thalassa"] .widget-mini:hover {
+  background: #B86A3C !important;
+  color: #2A0F2E !important;
+}
+[data-apt="thalassa"] .widget-mini-icon {
+  background: rgba(240,232,213,.22);
+  color: #F0E8D5;
+}
+[data-apt="thalassa"] .widget-mini:hover .widget-mini-icon {
+  background: rgba(42,15,46,.22);
+  color: #2A0F2E;
+}
+
+[data-apt="salinas"] .widget-mini {
+  background: #9E7A2C !important;       /* dorado Salinas */
+  color: #2A0F2E !important;            /* eggplant — mejor contraste sobre dorado */
+  border-left-color: #D4A84A !important;
+  box-shadow:
+    0 6px 18px rgba(42,15,46,.45),
+    0 0 0 1px rgba(255,255,255,.18);
+}
+[data-apt="salinas"] .widget-mini:hover {
+  background: #D4A84A !important;
+  color: #2A0F2E !important;
+}
+[data-apt="salinas"] .widget-mini-icon {
+  background: rgba(42,15,46,.22);
+  color: #2A0F2E;
+}
+[data-apt="salinas"] .widget-mini:hover .widget-mini-icon {
+  background: rgba(42,15,46,.30);
+  color: #2A0F2E;
+}
 
 /* En mobile el stack se oculta — ya hay banda inline en cada página
    y el mobile-chat se encarga de la guía. */
@@ -11449,23 +11562,48 @@ body.apt-bar-shown .widget-stack {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 24px;
+  padding: 14px 28px;
   border-radius: 12px 0 12px 0;
-  background: var(--ber-dk);
-  color: var(--sol);
-  border: 0;
+  background-color: #3AAABB !important;   /* sol turquesa sólido */
+  background-image: none !important;
+  color: #2A0F2E !important;              /* ber-dk */
+  border: 0 !important;
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700 !important;
   cursor: pointer;
-  transition: background .25s ease, transform .15s ease;
+  transition: background-color .25s ease, transform .15s ease, box-shadow .25s ease;
+  box-shadow: 0 4px 18px rgba(58,170,187,.35);
 }
 .opiniones-expand-btn:hover {
-  background: var(--ber);
+  background-color: #6FC4D1 !important;
+  color: #2A0F2E !important;
   transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(58,170,187,.5);
 }
+
+/* CTA WhatsApp en .contact-cta — bulletproof. El .btn-primary genérico
+   queda lavado por el ::before sheen sobre el fondo oscuro animado.
+   Forzamos sol turquesa sólido + ber-dk text con hex literales. */
+a.cta-wa-btn,
+.contact-cta a.cta-wa-btn {
+  background-color: #3AAABB !important;
+  background-image: none !important;
+  color: #2A0F2E !important;
+  border: 0 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 18px rgba(58,170,187,.35);
+}
+a.cta-wa-btn:hover,
+.contact-cta a.cta-wa-btn:hover {
+  background-color: #6FC4D1 !important;
+  color: #2A0F2E !important;
+  box-shadow: 0 6px 22px rgba(58,170,187,.5);
+}
+a.cta-wa-btn::before,
+.contact-cta a.cta-wa-btn::before { display: none !important; }
 
 /* ================================================================
    ESCRIBIR OPINIÓN — formulario público en /escribir-opinion
