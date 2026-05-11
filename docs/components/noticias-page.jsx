@@ -214,10 +214,7 @@ const NoticiasPage = ({ lang }) => {
         <div className="noticias-hero-wash"/>
         <div className="noticias-hero-inner">
           <div className="noticias-edition-badge">
-            {N.edition[lang]}
-          </div>
-          <div className="eyebrow" style={{ color: 'var(--sol-lt)', marginBottom: 16 }}>
-            {N.updated[lang]}
+            {lang === 'es' ? 'Próxima edición · Junio 2026' : 'Next edition · June 2026'}
           </div>
           <h1 className="noticias-hero-title">
             {lang === 'es'
@@ -226,9 +223,18 @@ const NoticiasPage = ({ lang }) => {
           </h1>
           <p className="noticias-hero-sub">
             {lang === 'es'
-              ? 'Lo que pasa en Vera Playa, Almería, Andalucía y Murcia. Más la voz de Hestía — recomendaciones y curiosidades de cada Hestía.'
-              : 'What\'s happening in Vera Playa, Almería, Andalucía and Murcia. Plus the voice of Hestía — recommendations and curiosities from each Hestía.'}
+              ? 'Cada mes actualizamos esta página con lo mejor del territorio. Si quieres que cubramos algo — un evento, un rincón, un restaurante — escríbenos.'
+              : "Every month we update this page with the best of the territory. If you'd like us to cover something — an event, a corner, a restaurant — write to us."}
           </p>
+          <div className="noticias-hero-ctas">
+            <a href="https://wa.me/34620316370?text=Hola%2C%20quiero%20sugerir%20algo%20para%20el%20blog%20de%20Hest%C3%ADa"
+               className="btn btn-primary" target="_blank" rel="noopener">
+              {lang === 'es' ? 'Sugerir algo → WhatsApp' : 'Suggest something → WhatsApp'}
+            </a>
+            <a href="reservas.html" className="btn btn-ghost-light">
+              {lang === 'es' ? 'Reservar Hestía →' : 'Book a Hestía →'}
+            </a>
+          </div>
         </div>
       </section>
 
@@ -280,28 +286,6 @@ const NoticiasPage = ({ lang }) => {
         </div>
       </section>
 
-      {/* ── Próxima edición ── */}
-      <section className="noticias-next">
-        <div className="noticias-next-inner">
-          <div className="eyebrow" style={{ color: 'var(--sol-lt)' }}>
-            {lang === 'es' ? 'Próxima edición · Junio 2026' : 'Next edition · June 2026'}
-          </div>
-          <p className="noticias-next-text">
-            {lang === 'es'
-              ? 'Cada mes actualizamos esta página con lo mejor del territorio. Si quieres que cubramos algo — un evento, un rincón, un restaurante — escríbenos.'
-              : "Every month we update this page with the best of the territory. If you'd like us to cover something — an event, a corner, a restaurant — write to us."}
-          </p>
-          <div className="noticias-next-ctas">
-            <a href="https://wa.me/34620316370?text=Hola%2C%20quiero%20sugerir%20algo%20para%20el%20blog%20de%20Hest%C3%ADa"
-               className="btn btn-primary" target="_blank" rel="noopener">
-              {lang === 'es' ? 'Sugerir algo → WhatsApp' : 'Suggest something → WhatsApp'}
-            </a>
-            <a href="reservas.html" className="btn btn-ghost-light">
-              {lang === 'es' ? 'Reservar Hestía →' : 'Book a Hestía →'}
-            </a>
-          </div>
-        </div>
-      </section>
     </>
   );
 };
