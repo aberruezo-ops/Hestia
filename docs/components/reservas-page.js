@@ -374,15 +374,28 @@ const ReservasForm = ({
       [id]: n
     }));
   };
-  // Máximo qty por extra = número de huéspedes (1 set por huésped).
-  // Si todavía no se han elegido huéspedes, se permite hasta 6.
-  const extraMaxQty = Math.max(1, parseInt(guests, 10) || 6);
+  // Máximo qty por extra. Items "estancia" (cuna, trona, late check-in)
+  // son binarios → max 1. "hora" (early check-in, late check-out) hasta
+  // 8 horas. Resto (set/noche) escala con huéspedes — default 6.
+  const guestCap = Math.max(1, parseInt(guests, 10) || 6);
+  const maxForExtra = ex => {
+    if (!ex) return guestCap;
+    if (ex.unit === 'estancia') return 1;
+    if (ex.unit === 'hora') return 8;
+    return guestCap;
+  };
+  const extrasById = React.useMemo(() => {
+    const m = {};
+    for (const ex of extrasList) m[ex.id] = ex;
+    return m;
+  }, [extrasList]);
   const incExtra = id => {
     setExtrasSel(prev => {
       const cur = prev[id] || 0;
+      const max = maxForExtra(extrasById[id]);
       return {
         ...prev,
-        [id]: Math.min(extraMaxQty, cur + 1)
+        [id]: Math.min(max, cur + 1)
       };
     });
   };
@@ -734,7 +747,7 @@ const ReservasForm = ({
       type: "button",
       className: "rf-extra-step-btn",
       onClick: () => incExtra(ex.id),
-      disabled: qty >= extraMaxQty,
+      disabled: qty >= maxForExtra(ex),
       "aria-label": lang === 'es' ? 'Añadir uno' : 'Add one'
     }, "+")));
   }))), calc && /*#__PURE__*/React.createElement(PricePreview, {
