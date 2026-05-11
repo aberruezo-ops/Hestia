@@ -428,7 +428,7 @@ const ReviewRow = ({ review, onChange, onRemove }) => {
   return (
     <div className={`pe-card pe-rev-row${isPending ? ' pe-rev-pending' : ''}`}>
       <div className="pe-rev-head">
-        <span className="pe-rev-status" style={{ background: isPending ? '#f59e0b' : '#10b981' }}>
+        <span className="pe-rev-status" style={{ background: isPending ? 'var(--warn)' : 'var(--ok)' }}>
           {isPending ? 'PENDIENTE' : 'PUBLICADA'}
         </span>
         <span className="pe-rev-source-badge" style={{ background: sourceMeta.color, color: '#fff' }}>
