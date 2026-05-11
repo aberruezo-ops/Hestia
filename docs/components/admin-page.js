@@ -432,7 +432,7 @@ const ReviewRow = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "pe-rev-status",
     style: {
-      background: isPending ? '#f59e0b' : '#10b981'
+      background: isPending ? 'var(--warn)' : 'var(--ok)'
     }
   }, isPending ? 'PENDIENTE' : 'PUBLICADA'), /*#__PURE__*/React.createElement("span", {
     className: "pe-rev-source-badge",
