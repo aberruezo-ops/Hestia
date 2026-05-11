@@ -774,7 +774,8 @@ section {
   position: relative;
 }
 .section-night {
-  background: linear-gradient(125deg,
+  background-color: var(--ber);
+  background-image: linear-gradient(125deg,
     #4E2446 0%, #3D1A35 14%, var(--ber-glow) 28%, #4E2446 42%,
     #3D1A35 56%, var(--ber-glow) 70%, #4E2446 85%, #3D1A35 100%
   );
@@ -784,7 +785,8 @@ section {
   color: var(--arena);
 }
 .section-dark {
-  background: linear-gradient(125deg,
+  background-color: var(--ber);
+  background-image: linear-gradient(125deg,
     #4E2446 0%, #4E2446 14%, #3D1A35 28%, var(--ber-glow) 42%,
     #4E2446 56%, #3D1A35 70%, var(--ber-glow) 85%, #4E2446 100%
   );
@@ -795,7 +797,8 @@ section {
 }
 /* Medium violet — interior sections */
 .section-violet {
-  background: linear-gradient(125deg,
+  background-color: var(--ber-lt);
+  background-image: linear-gradient(125deg,
     var(--ber-glow) 0%, #4E2446 18%, var(--ber-twilight) 36%, #4E2446 54%,
     var(--ber-glow) 72%, #3D1A35 88%, var(--ber-glow) 100%
   );
@@ -2145,7 +2148,8 @@ body.apt-bar-shown .cookies {
    HUÉSPED COLABORATIVO — manifest block
    ============================================================ */
 .manifest {
-  background: linear-gradient(125deg,
+  background-color: var(--ber-lt);
+  background-image: linear-gradient(125deg,
     var(--ber-glow) 0%, #4E2446 12%, var(--ber-twilight) 26%, #4E2446 40%,
     var(--ber-glow) 54%, #4E2446 68%, #3D1A35 82%, var(--ber-glow) 100%
   );
@@ -2307,7 +2311,10 @@ body.apt-bar-shown .cookies {
    CONTACT CTA
    ============================================================ */
 .contact-cta {
-  background: linear-gradient(125deg,
+  /* Color base sólido como fallback — garantiza fondo eggplant aunque
+     el gradient falle (ej. iOS con Smart Invert, color profile, etc.) */
+  background-color: var(--ber-dk);
+  background-image: linear-gradient(125deg,
     #3D1A35 0%, #2A0F2E 12%, #2A0F2E 25%, #2A0F2E 38%,
     #3D1A35 52%, var(--ber-cosmic) 65%, #2A0F2E 78%, #3D1A35 100%
   );
@@ -2350,7 +2357,9 @@ footer {
   position: relative;
   z-index: 39;
   border-radius: 32px 0 32px 0;
-  background: linear-gradient(125deg,
+  /* Color base sólido como fallback. */
+  background-color: var(--ber-dk);
+  background-image: linear-gradient(125deg,
     #2A0F2E 0%, #2A0F2E 8%, #2A0F2E 16%, #3D1A35 24%,
     #2A0F2E 32%, var(--ber-cosmic) 40%, #2A0F2E 48%, #2A0F2E 56%,
     #2A0F2E 64%, #2A0F2E 72%, #3D1A35 80%, #2A0F2E 88%,
@@ -3767,7 +3776,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
   display: flex;
   align-items: flex-end;
   padding: calc(var(--topbar-h, 36px) + 120px) var(--page-pad) 80px;
-  background: linear-gradient(125deg,
+  background-color: var(--ber-dk);
+  background-image: linear-gradient(125deg,
     #2A0F2E 0%, #2A0F2E 8%, #2A0F2E 16%, #3D1A35 24%,
     #2A0F2E 32%, var(--ber-cosmic) 40%, #2A0F2E 48%, #2A0F2E 56%,
     #2A0F2E 64%, #2A0F2E 72%, #3D1A35 80%, #2A0F2E 88%,
