@@ -808,6 +808,9 @@ const AptStickyBar = ({
   // Mismo criterio que el hero: mostrar el base de prices.json directo.
   const minP = tbl ? Math.min(...tbl.base.slice(1)) : null;
   const waMsg = lang === 'es' ? `Hola, me interesa reservar ${apt[lang].name}. ¿Podéis indicarme disponibilidad?` : `Hello, I'm interested in booking ${apt[lang].name}. Could you let me know availability?`;
+  // El CTA del sticky bar lleva a /reservas con el apt pre-seleccionado.
+  // Datos de contacto y canal (WhatsApp/email) se gestionan allí.
+  const reservasHref = `reservas.html?apt=${apt.id}`;
   // Cerrar — estado persistente por sesión (no por dominio).
   const [closed, setClosed] = React.useState(() => {
     try {
@@ -861,11 +864,9 @@ const AptStickyBar = ({
     className: "asb-match",
     "aria-hidden": "true"
   }, lang === 'es' ? '✓ ¿mejor precio? te lo mejoramos' : '✓ better price? we beat it'))), /*#__PURE__*/React.createElement("a", {
-    href: `https://wa.me/34620316370?text=${encodeURIComponent(waMsg)}`,
-    className: "btn btn-primary asb-cta",
-    target: "_blank",
-    rel: "noopener"
-  }, lang === 'es' ? 'Reservar — WhatsApp' : 'Book — WhatsApp', " ", /*#__PURE__*/React.createElement("span", {
+    href: reservasHref,
+    className: "btn btn-primary asb-cta"
+  }, lang === 'es' ? 'Reservar' : 'Book', " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
   }, "\u2192")));
 };

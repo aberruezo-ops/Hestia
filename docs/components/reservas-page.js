@@ -501,19 +501,38 @@ const ReservasForm = ({
     className: "rf-step-body"
   }, /*#__PURE__*/React.createElement("div", {
     className: "form-field full"
-  }, /*#__PURE__*/React.createElement("label", null, t.f_apt), /*#__PURE__*/React.createElement("select", {
-    value: apt,
-    onChange: e => setApt(e.target.value),
-    required: true
-  }, /*#__PURE__*/React.createElement("option", {
-    value: ""
-  }, t.f_apt_ph), /*#__PURE__*/React.createElement("option", {
-    value: "vm"
-  }, "Hest\xEDa Mar"), /*#__PURE__*/React.createElement("option", {
-    value: "vt"
-  }, "Hest\xEDa Thalassa"), /*#__PURE__*/React.createElement("option", {
-    value: "vs"
-  }, "Hest\xEDa Salinas"))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("label", null, t.f_apt), /*#__PURE__*/React.createElement("div", {
+    className: "rf-apt-pick",
+    role: "radiogroup",
+    "aria-label": t.f_apt
+  }, [{
+    id: 'vm',
+    name: 'Hestía Mar',
+    accent: '#6B7A3A'
+  }, {
+    id: 'vt',
+    name: 'Hestía Thalassa',
+    accent: '#B86A3C'
+  }, {
+    id: 'vs',
+    name: 'Hestía Salinas',
+    accent: '#D4A84A'
+  }].map(o => /*#__PURE__*/React.createElement("button", {
+    key: o.id,
+    type: "button",
+    role: "radio",
+    "aria-checked": apt === o.id,
+    className: `rf-apt-chip${apt === o.id ? ' is-on' : ''}`,
+    style: {
+      '--apt-accent': o.accent
+    },
+    onClick: () => setApt(o.id)
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-apt-chip-dot",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "rf-apt-chip-name"
+  }, o.name))))), /*#__PURE__*/React.createElement("div", {
     className: "form-field full"
   }, /*#__PURE__*/React.createElement("label", null, lang === 'es' ? 'Fechas de la estancia' : 'Stay dates'), /*#__PURE__*/React.createElement(DateRangePicker, {
     checkin: checkin,
@@ -526,28 +545,39 @@ const ReservasForm = ({
   }), !apt && /*#__PURE__*/React.createElement("p", {
     className: "form-help-note"
   }, lang === 'es' ? '↑ Selecciona primero una Hestía para ver las fechas bloqueadas.' : '↑ Pick a Hestía first to see blocked dates.')), /*#__PURE__*/React.createElement("div", {
-    className: "form-row"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "form-field"
-  }, /*#__PURE__*/React.createElement("label", null, t.f_guests), /*#__PURE__*/React.createElement("select", {
-    value: guests,
-    onChange: e => setGuests(e.target.value),
-    required: true
-  }, /*#__PURE__*/React.createElement("option", {
-    value: ""
-  }, "\u2014"), t.f_guests_opts.map((o, i) => /*#__PURE__*/React.createElement("option", {
+    className: "form-field full"
+  }, /*#__PURE__*/React.createElement("label", null, t.f_guests), /*#__PURE__*/React.createElement("div", {
+    className: "rf-chip-row",
+    role: "radiogroup",
+    "aria-label": t.f_guests
+  }, t.f_guests_opts.map((o, i) => /*#__PURE__*/React.createElement("button", {
     key: i,
-    value: o
-  }, o)))), /*#__PURE__*/React.createElement("div", {
-    className: "form-field"
-  }, /*#__PURE__*/React.createElement("label", null, t.f_pets), /*#__PURE__*/React.createElement("select", {
-    value: pets,
-    onChange: e => setPets(e.target.value)
-  }, /*#__PURE__*/React.createElement("option", {
-    value: "no"
-  }, t.f_pets_no), /*#__PURE__*/React.createElement("option", {
-    value: "yes"
-  }, t.f_pets_yes)))), /*#__PURE__*/React.createElement("div", {
+    type: "button",
+    role: "radio",
+    "aria-checked": guests === o,
+    className: `rf-chip${guests === o ? ' is-on' : ''}`,
+    onClick: () => setGuests(o)
+  }, i + 1))), /*#__PURE__*/React.createElement("span", {
+    className: "rf-chip-hint"
+  }, guests || (lang === 'es' ? 'Selecciona número de huéspedes' : 'Pick the number of guests'))), /*#__PURE__*/React.createElement("div", {
+    className: "form-field full"
+  }, /*#__PURE__*/React.createElement("label", null, t.f_pets), /*#__PURE__*/React.createElement("div", {
+    className: "rf-chip-row",
+    role: "radiogroup",
+    "aria-label": t.f_pets
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    role: "radio",
+    "aria-checked": pets === 'no',
+    className: `rf-chip rf-chip-wide${pets === 'no' ? ' is-on' : ''}`,
+    onClick: () => setPets('no')
+  }, t.f_pets_no), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    role: "radio",
+    "aria-checked": pets === 'yes',
+    className: `rf-chip rf-chip-wide${pets === 'yes' ? ' is-on' : ''}`,
+    onClick: () => setPets('yes')
+  }, "\uD83D\uDC3E ", t.f_pets_yes))), /*#__PURE__*/React.createElement("div", {
     className: "rf-step-actions"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -604,25 +634,32 @@ const ReservasForm = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "form-extras-label"
   }, t.f_extras_label), /*#__PURE__*/React.createElement("div", {
-    className: "form-extras-grid"
+    className: "rf-extras-chips"
   }, extrasList.map(ex => {
     const qty = extrasSel[ex.id] || 0;
     const checked = qty > 0;
     const label = lang === 'es' ? ex.label_es : ex.label_en;
     const suffix = _resExtraUnitSuffix(ex.unit, lang);
-    return /*#__PURE__*/React.createElement("label", {
+    return /*#__PURE__*/React.createElement("div", {
       key: ex.id,
-      className: `form-extra-item${checked ? ' is-checked' : ''}`
-    }, /*#__PURE__*/React.createElement("input", {
-      type: "checkbox",
-      checked: checked,
-      onChange: () => toggleExtra(ex.id)
-    }), /*#__PURE__*/React.createElement("span", {
-      className: "form-extra-text"
-    }, label, ex.price > 0 && /*#__PURE__*/React.createElement("span", {
-      className: "form-extra-price"
-    }, " \xB7 ", ex.price, " \u20AC", suffix)), checked && ex.unit === 'hora' && /*#__PURE__*/React.createElement("span", {
-      className: "form-extra-qty-wrap"
+      className: `rf-extra-chip${checked ? ' is-on' : ''}`
+    }, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "rf-extra-chip-btn",
+      role: "checkbox",
+      "aria-checked": checked,
+      onClick: () => toggleExtra(ex.id)
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "rf-extra-chip-mark",
+      "aria-hidden": "true"
+    }, checked ? '✓' : '＋'), /*#__PURE__*/React.createElement("span", {
+      className: "rf-extra-chip-text"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "rf-extra-chip-label"
+    }, label), ex.price > 0 && /*#__PURE__*/React.createElement("span", {
+      className: "rf-extra-chip-price"
+    }, ex.price, " \u20AC", suffix))), checked && ex.unit === 'hora' && /*#__PURE__*/React.createElement("span", {
+      className: "rf-extra-chip-qty"
     }, /*#__PURE__*/React.createElement("input", {
       type: "number",
       min: "1",
