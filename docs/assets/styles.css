@@ -126,7 +126,7 @@
   color: var(--arena);
 }
 @media (hover: hover) and (pointer: fine) {
-  .vintro-cta:hover  { background: var(--sol-h); border-color: var(--sol-h); color: var(--ber-dk); }
+  .vintro-cta:hover  { background: var(--sol-h); border-color: var(--sol-h); color: var(--crema); }
   .vintro-skip:hover { background: var(--ber-dk); color: var(--crema); }
 }
 .vintro-cta:active,
@@ -723,7 +723,7 @@ body.apt-bar-shown .float-chat {
   transition: transform .3s ease, background .3s;
 }
 @media (hover: hover) and (pointer: fine) {
-  .float-chat .bubble-btn:hover { transform: scale(1.06); background: var(--sol-h); color: var(--ber-dk); }
+  .float-chat .bubble-btn:hover { transform: scale(1.06); background: var(--sol-h); color: var(--crema); }
 }
 .float-chat .bubble-panel {
   position: absolute;
@@ -956,7 +956,7 @@ section {
 .btn-primary {
   background: var(--sol); color: var(--ber-dk); border-color: var(--sol);
 }
-.btn-primary:hover { background: var(--sol-h); border-color: var(--sol-h); color: var(--ber-dk); }
+.btn-primary:hover { background: var(--sol-h); border-color: var(--sol-h); color: var(--crema); }
 .btn-ghost-light { color: var(--arena); border-color: var(--arena); }
 .btn-ghost-light:hover { background: var(--arena); color: var(--ber-dk); }
 .btn-ghost-dark { color: var(--ber); border-color: var(--ber); }
@@ -2944,7 +2944,7 @@ footer .footer-brand .addr {
 .req-btn-forward:hover {
   background: var(--sol-h) !important;
   border-color: var(--sol-h) !important;
-  color: var(--ber-dk) !important;     /* ber-dk sobre sol-h = ratio 4.55 ✓ AA */
+  color: var(--crema) !important;
   transform: translateY(-1px);
   box-shadow:
     0 14px 36px rgba(42, 142, 158, 0.55),
@@ -2965,7 +2965,7 @@ footer .footer-brand .addr {
 }
 .asb-cta.btn-primary:hover {
   background: var(--sol-h) !important;
-  color: var(--ber-dk) !important;     /* AA: ratio 4.55 sobre sol-h */
+  color: var(--crema) !important;
   border-color: var(--sol-h) !important;
 }
 .req-actions-forward,
@@ -3080,7 +3080,7 @@ footer .footer-brand .addr {
   font-family: var(--serif);
 }
 .price-savings-badge {
-  background: var(--err);   /* err = bug intensificado, ratio crema 5.27 AA */
+  background: var(--bug);
   color: var(--crema);
   font-size: 12px;
   font-weight: 500;
@@ -3272,7 +3272,7 @@ footer .footer-brand .addr {
   transition: filter .2s, opacity .2s;
   cursor: pointer;
 }
-.hbm-wa  { background: var(--err); color: var(--crema); }   /* err = bug intensificado, AA con crema */
+.hbm-wa  { background: var(--bug); color: var(--crema); }
 .hbm-wa:hover  { background: var(--err-dk); }
 .hbm-mail { background: none; border: 1.5px solid rgba(42,15,46,.25); color: rgba(42,15,46,.7); }
 .hbm-mail:hover { border-color: var(--ber); color: var(--ber-dk); }
@@ -7247,14 +7247,14 @@ body.no-parallax .g-tile .img { transform: none !important; }
   flex-shrink: 0;
 }
 .hs-rc-status.ok {
-  background: rgba(107, 122, 58, 0.15);    /* var(--ok) vm tint */
-  color: var(--ok-dk);
-  border: 1px solid rgba(107, 122, 58, 0.30);
+  background: rgba(100,180,80,.15);
+  color: var(--ok);
+  border: 1px solid rgba(100,180,80,.25);
 }
 .hs-rc-status.no {
-  background: rgba(184, 36, 110, 0.10);    /* var(--err) bug tint */
-  color: var(--err-dk);
-  border: 1px solid rgba(184, 36, 110, 0.22);
+  background: rgba(200,90,70,.12);
+  color: var(--alb);
+  border: 1px solid rgba(200,90,70,.2);
 }
 
 /* Available card actions */
@@ -7456,7 +7456,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .reservas-form-wrap .c-n              { color: var(--ber-dk); opacity: 0.85; }
 .reservas-form-wrap .cal-cell.past .c-n { color: var(--ber); opacity: 0.25; }
 .reservas-form-wrap .cal-cell.blk  .c-n { color: var(--ber-dk); opacity: 0.7; }
-.reservas-form-wrap .cal-cell.today:not(.blk) .c-n { color: var(--sol-text); font-weight: 700; }
+.reservas-form-wrap .cal-cell.today:not(.blk) .c-n { color: var(--apt-accent, var(--sol)); font-weight: 600; }
 .reservas-form-wrap .cal-cell.in-sel .c-n,
 .reservas-form-wrap .cal-cell.sel-s  .c-n,
 .reservas-form-wrap .cal-cell.sel-e  .c-n { color: var(--ber-dk); font-weight: 600; opacity: 1; }
@@ -7464,7 +7464,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .reservas-form-wrap .cal-cell.prev-s .c-n,
 .reservas-form-wrap .cal-cell.prev-e .c-n { color: var(--ber-dk); opacity: 0.85; }
 .reservas-form-wrap .cal-cell.prev-m .c-n { color: var(--ber-dk); opacity: 0.5; }
-.reservas-form-wrap .hscal-phase-hint { color: var(--sol-text); font-weight: 600; }
+.reservas-form-wrap .hscal-phase-hint { color: var(--sol-h); }
 .reservas-form-wrap .avail-nav-lbl    { color: var(--ber-dk); opacity: 0.85; }
 .reservas-form-wrap .avail-arr        { color: var(--ber); }
 .reservas-form-wrap .hscal-sel-lbl    { color: var(--ber); opacity: 0.7; }
@@ -7587,9 +7587,9 @@ body.no-parallax .g-tile .img { transform: none !important; }
   font-weight: 400;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--sol-text);
+  color: var(--sol-lt);
   background: rgba(58,170,187,.12);
-  border: 1px solid rgba(42,142,158,.40);
+  border: 1px solid rgba(58,170,187,.3);
   border-radius: 10px 0 10px 0;
   padding: 6px 16px;
   margin-bottom: 20px;
@@ -9278,12 +9278,7 @@ footer,
   width: 30px; height: 30px;
   border-radius: 50%;
   border: 2px solid white;
-  /* Doble shadow: el primero define un borde ber-dk fino para que dots
-     con bg claro (vs, sol, alb, tur, vs2) se separen del fondo cream
-     con suficiente contraste WCAG. El segundo es la sombra de elevación. */
-  box-shadow:
-    0 0 0 1.5px rgba(42, 15, 46, 0.35),
-    0 2px 6px rgba(0, 0, 0, 0.20);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.15);
   flex-shrink: 0;
   display: inline-flex;
   align-items: center;
@@ -9821,7 +9816,7 @@ footer,
 .dbt-btn:hover {
   background: var(--sol-h);
   border-color: var(--sol-h);
-  color: var(--ber-dk);
+  color: var(--crema);
   transform: translateY(-2px);
   box-shadow: 0 12px 32px color-mix(in oklab, var(--sol) 40%, transparent);
 }
@@ -11171,12 +11166,12 @@ body.apt-bar-shown .widget-stack {
 .pe-validate-block ul { margin: 0; padding-left: 18px; }
 .pe-validate-block li { margin: 2px 0; font-family: var(--mono, ui-monospace, Consolas, monospace); font-size: 12.5px; }
 .pe-validate-gaps {
-  background: rgba(200, 151, 90, .12);    /* var(--warn) alb tint */
+  background: rgba(245, 158, 11, .08);
   border-left-color: var(--warn);
   color: var(--warn-dk);
 }
 .pe-validate-overlaps {
-  background: rgba(184, 36, 110, .10);    /* var(--err) bug tint */
+  background: rgba(239, 68, 68, .08);
   border-left-color: var(--err);
   color: var(--err-dk);
 }
@@ -11536,7 +11531,7 @@ body.apt-bar-shown .widget-stack {
 .eo-error-msg {
   margin-top: 8px;
   padding: 12px 16px;
-  background: rgba(184, 36, 110, 0.10);    /* var(--err) bug tint */
+  background: rgba(192,57,43,.1);
   border-left: 3px solid var(--err);
   border-radius: 8px 0 8px 0;
   color: var(--err-dk);
@@ -11668,7 +11663,7 @@ body.apt-bar-shown .widget-stack {
   display: inline-block;
   padding: 3px 8px;
   border-radius: 4px;
-  background: var(--warn-dk);   /* alb más oscuro para que el texto blanco contraste AA */
+  background: var(--warn);
   color: white;
   font-size: 10px;
   font-weight: 700;
@@ -11790,7 +11785,7 @@ body.apt-bar-shown .widget-stack {
   height: 22px;
   padding: 0 6px;
   border-radius: 999px;
-  background: var(--warn-dk);    /* alb-dark para contraste AA del texto blanco */
+  background: var(--warn);
   color: #fff;
   font-size: 11px;
   font-weight: 700;
@@ -12199,7 +12194,7 @@ a:focus-visible,
   background: color-mix(in oklab, var(--sol) 5%, var(--crema));
   border: 1px solid color-mix(in oklab, var(--sol) 18%, transparent);
 }
-.rf-status-unknown .rf-status-icon { background: var(--sol-text); color: white; }   /* sol-text más oscuro: AA con white */
+.rf-status-unknown .rf-status-icon { background: var(--sol-h); color: white; }
 
 /* Canal tabs (step 3) */
 .rf-channel-label {
