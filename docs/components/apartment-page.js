@@ -365,7 +365,7 @@ const AptPageHero = ({
     className: "apt-page-ctas"
   }, /*#__PURE__*/React.createElement("a", {
     href: `reservas.html?apt=${apt.id}`,
-    className: "btn btn-primary"
+    className: "btn btn-primary apt-page-reserve-btn"
   }, lang === 'es' ? 'Reservar' : 'Book now', " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
   }, "\u2192")), /*#__PURE__*/React.createElement("a", {

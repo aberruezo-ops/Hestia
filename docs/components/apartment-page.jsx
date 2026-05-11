@@ -376,7 +376,7 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
           </p>
         )}
         <div className="apt-page-ctas">
-          <a href={`reservas.html?apt=${apt.id}`} className="btn btn-primary">
+          <a href={`reservas.html?apt=${apt.id}`} className="btn btn-primary apt-page-reserve-btn">
             {lang === 'es' ? 'Reservar' : 'Book now'} <span className="arrow">→</span>
           </a>
           <a href="contacto.html" className="btn btn-ghost-light">
