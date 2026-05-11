@@ -7416,6 +7416,56 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   flex-wrap: wrap;
 }
 .hs-submit { font-size: 15px; padding: 13px 28px; }
+
+/* ──────────────────────────────────────────────────────────────────
+   .btn-primary BULLETPROOF SOBRE FONDOS OSCUROS
+   ──────────────────────────────────────────────────────────────────
+   El .btn-primary genérico (sol var() + ber-dk var()) se desvanecía
+   sobre fondos oscuros (.home-search, .section-dark, .section-night,
+   .hero, .contact-cta, .apt-page-hero) en algunos parsers (iPad
+   Safari con color-mix legacy). El ::before sheen + alpha bg llegaba
+   a aparecer transparente — el botón quedaba sólo como outline.
+   Este bloque ataca el problema en TODOS los sitios a la vez con
+   hex literales y peso 700.
+   ────────────────────────────────────────────────────────────────── */
+.home-search .btn-primary,
+.section-dark .btn-primary,
+.section-night .btn-primary,
+.contact-cta .btn-primary,
+.hero .btn-primary,
+.eo-hero .btn-primary,
+.apt-page-hero .btn-primary,
+.page-hero .btn-primary {
+  background-color: #3AAABB !important;        /* sol turquesa */
+  background-image: none !important;
+  color: #2A0F2E !important;                   /* ber-dk */
+  border: 0 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 6px 22px rgba(58,170,187,.50), 0 0 0 1px rgba(240,232,213,.18) !important;
+}
+.home-search .btn-primary::before,
+.section-dark .btn-primary::before,
+.section-night .btn-primary::before,
+.contact-cta .btn-primary::before,
+.hero .btn-primary::before,
+.eo-hero .btn-primary::before,
+.apt-page-hero .btn-primary::before,
+.page-hero .btn-primary::before {
+  display: none !important;
+}
+.home-search .btn-primary:hover,
+.section-dark .btn-primary:hover,
+.section-night .btn-primary:hover,
+.contact-cta .btn-primary:hover,
+.hero .btn-primary:hover,
+.eo-hero .btn-primary:hover,
+.apt-page-hero .btn-primary:hover,
+.page-hero .btn-primary:hover {
+  background-color: #6FC4D1 !important;        /* sol-lt */
+  color: #2A0F2E !important;
+  box-shadow: 0 8px 28px rgba(58,170,187,.65), 0 0 0 1px rgba(240,232,213,.32) !important;
+  transform: translateY(-1px);
+}
 .hs-loading-note {
   font-family: var(--sans);
   font-size: 12px; font-weight: 300;
