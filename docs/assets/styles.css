@@ -10764,38 +10764,48 @@ footer,
   margin: 0 0 10px;
 }
 
-/* CTA común a todos los widgets — bulletproof. Default sol turquesa
-   sólido (#3AAABB) con texto eggplant (#2A0F2E) y peso 700 para AA
-   garantizado sobre la card ber-lt. En apt pages el override por
-   data-apt cambia el color al accent del Hestía. */
+/* CTA común a todos los widgets — bulletproof, **formato botón**.
+   Full-width dentro de la card, padding generoso, esquinas asimétricas
+   (mismo lenguaje que .btn-primary / .dbt-btn). Default sol turquesa
+   sólido. En apt pages, override por data-apt cambia al accent. */
 .widget-cta {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 9px 14px;
-  border-radius: 999px;
-  background-color: #3AAABB !important;        /* sol literal */
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  margin-top: 6px;
+  border-radius: 10px 0 10px 0;
+  background-color: #3AAABB !important;
   background-image: none !important;
-  color: #2A0F2E !important;                   /* ber-dk literal */
+  color: #2A0F2E !important;
   border: 0 !important;
   font-family: var(--sans);
-  font-size: 11px;
-  letter-spacing: .12em;
+  font-size: 11.5px;
+  letter-spacing: .14em;
   text-transform: uppercase;
   font-weight: 700 !important;
   cursor: pointer;
-  box-shadow: 0 3px 12px rgba(58,170,187,.35);
+  box-shadow: 0 4px 14px rgba(58,170,187,.40);
   transition: background-color .25s ease, color .25s ease, transform .15s ease, box-shadow .25s ease;
 }
-.widget-cta:hover {
-  background-color: #6FC4D1 !important;        /* sol-lt */
-  color: #2A0F2E !important;
-  transform: translateX(2px);
-  box-shadow: 0 5px 16px rgba(58,170,187,.5);
+.widget-cta > span:last-child {
+  font-size: 14px;
+  line-height: 1;
+  transition: transform .25s var(--ease-out, cubic-bezier(.23,1,.32,1));
 }
+.widget-cta:hover {
+  background-color: #6FC4D1 !important;
+  color: #2A0F2E !important;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 20px rgba(58,170,187,.55);
+}
+.widget-cta:hover > span:last-child { transform: translateX(3px); }
+.widget-cta:active { transform: translateY(0) scale(.98); }
 .widget-cta-ghost {
   background-color: transparent !important;
-  color: #F0E8D5 !important;                   /* arena sobre ber-lt */
+  color: #F0E8D5 !important;
   border: 1px solid #F0E8D5 !important;
   font-weight: 700 !important;
   box-shadow: none;
@@ -10806,33 +10816,44 @@ footer,
   border-color: #F0E8D5 !important;
 }
 
-/* Overrides por apt — botón ventajas toma color del Hestía. */
-[data-apt="mar"] .widget-cta {
+/* Overrides por apt — botón ventajas toma color del Hestía.
+   Selector reforzado con [data-apt=…] sobre el body O sobre .apt-main
+   para que gane al !important del default. */
+[data-apt="mar"] .widget-cta,
+body[data-apt="mar"] .widget-cta {
   background-color: #6B7A3A !important;
   color: #F0E8D5 !important;
-  box-shadow: 0 3px 12px rgba(107,122,58,.45);
+  box-shadow: 0 4px 14px rgba(107,122,58,.50) !important;
 }
-[data-apt="mar"] .widget-cta:hover {
+[data-apt="mar"] .widget-cta:hover,
+body[data-apt="mar"] .widget-cta:hover {
   background-color: #8B9A52 !important;
   color: #2A0F2E !important;
+  box-shadow: 0 7px 20px rgba(107,122,58,.65) !important;
 }
-[data-apt="thalassa"] .widget-cta {
+[data-apt="thalassa"] .widget-cta,
+body[data-apt="thalassa"] .widget-cta {
   background-color: #B86A3C !important;
   color: #2A0F2E !important;
-  box-shadow: 0 3px 12px rgba(184,106,60,.45);
+  box-shadow: 0 4px 14px rgba(184,106,60,.50) !important;
 }
-[data-apt="thalassa"] .widget-cta:hover {
+[data-apt="thalassa"] .widget-cta:hover,
+body[data-apt="thalassa"] .widget-cta:hover {
   background-color: #D4906A !important;
   color: #2A0F2E !important;
+  box-shadow: 0 7px 20px rgba(184,106,60,.65) !important;
 }
-[data-apt="salinas"] .widget-cta {
+[data-apt="salinas"] .widget-cta,
+body[data-apt="salinas"] .widget-cta {
   background-color: #D4A84A !important;
   color: #2A0F2E !important;
-  box-shadow: 0 3px 12px rgba(212,168,74,.45);
+  box-shadow: 0 4px 14px rgba(212,168,74,.50) !important;
 }
-[data-apt="salinas"] .widget-cta:hover {
+[data-apt="salinas"] .widget-cta:hover,
+body[data-apt="salinas"] .widget-cta:hover {
   background-color: #E8C170 !important;
   color: #2A0F2E !important;
+  box-shadow: 0 7px 20px rgba(212,168,74,.65) !important;
 }
 
 /* Body del Sabías que. */
