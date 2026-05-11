@@ -76,8 +76,12 @@ const HsDateRange = ({
   const horizonStr = window.PRICES_V2 && window.PRICES_V2.bookingHorizon && window.PRICES_V2.bookingHorizon.lastCheckinDate || null;
   const _isBeyondHorizon = ds => !!(horizonStr && ds > horizonStr);
   const _isBlkLocal = ds => blocked.some(r => ds >= r.start && ds < r.end);
+  // Día "partido" — primer día de bloque: mañana libre (check-out válido),
+  // tarde ocupada (check-in NO válido).
+  const _isBlkStartLocal = ds => _isBlkLocal(ds) && !_isBlkLocal(_hsAdj(ds, -1));
 
-  // Hover preview end: follow hover if path is clear
+  // Hover preview end: el camino intermedio debe estar libre. El hover
+  // puede ser un blocked-start (check-out válido).
   let previewEnd = null;
   if (checkin && !checkout && hover && hover > checkin) {
     let ok = true;
@@ -92,12 +96,18 @@ const HsDateRange = ({
     if (ok) previewEnd = hover;
   }
   const handleDayClick = ds => {
-    if (ds < today || _isBeyondHorizon(ds) || _isBlkLocal(ds)) return;
+    if (ds < today || _isBeyondHorizon(ds)) return;
+    const blk = _isBlkLocal(ds);
+    const blkStart = blk && _isBlkStartLocal(ds);
+    if (blk && !blkStart) return;
+    // Fase check-in: blocked-start no vale (noche ocupada).
     if (!checkin || checkout || ds <= checkin) {
+      if (blkStart) return;
       setCheckin(ds);
       setCheckout('');
       return;
     }
+    // Fase check-out: blocked-start vale (mañana libre antes de 15:00).
     let cur = _hsAdj(checkin, 1);
     while (cur < ds) {
       if (_isBlkLocal(cur)) {
@@ -167,7 +177,9 @@ const HsDateRange = ({
       const isPS = inPrev && ds === checkin;
       const isPE = inPrev && ds === previewEnd;
       const isPM = inPrev && !isPS && !isPE;
-      const isClickable = !isPast && !isBeyond && !isBlk;
+
+      // Un blocked-start es clickable (puede ser check-out: mañana libre)
+      const isClickable = !isPast && !isBeyond && (!isBlk || isBlkStart);
       const showBlk = isBlk && !inSel && !inPrev;
       return /*#__PURE__*/React.createElement("div", {
         key: d,

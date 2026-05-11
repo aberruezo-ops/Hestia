@@ -255,7 +255,8 @@ const CalMonth = ({
           const isPE   = inPrev && ds === previewEnd;
           const isPM   = inPrev && !isPS && !isPE;
 
-          const isClickable = !isPast && !beyondHorizon && !isBlk;
+          // Un blocked-start es clickable (puede ser check-out: mañana libre)
+          const isClickable = !isPast && !beyondHorizon && (!isBlk || isBlkStart);
           const showBlk = isBlk && !inSel && !inPrev;
 
           return (
@@ -375,10 +376,16 @@ const AptCalendar = ({ aptId, lang, accent }) => {
   }
 
   const handleDayClick = (ds) => {
-    if (ds < todayStr || (horizonStr && ds > horizonStr) || _isBlk(ds, blocked)) return;
+    if (ds < todayStr || (horizonStr && ds > horizonStr)) return;
+    const blk      = _isBlk(ds, blocked);
+    const blkStart = blk && !_isBlk(_adj(ds, -1), blocked);
+    // Bloqueado mid-block: ni check-in ni check-out posibles.
+    if (blk && !blkStart) return;
 
     // Start new selection: no start yet, or selection complete, or clicked before start
     if (!selStart || selEnd || ds < selStart) {
+      // Un blocked-start NO vale como check-in (la noche está ocupada).
+      if (blkStart) return;
       setSelStart(ds); setSelEnd(null); setSelMsg(null); setHovDay(null);
       return;
     }
