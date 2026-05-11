@@ -6930,15 +6930,23 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .frase-hogar {
   background: var(--arena);
   color: var(--ber-dk);
-  padding: clamp(22px, 3vw, 36px) var(--page-pad);
+  padding: clamp(32px, 4vw, 48px) var(--page-pad);
   display: flex;
   justify-content: center;
   align-items: center;
-  /* min-height generoso (cubre frase de 2 líneas + attr en móvil)
-     y crece con el viewport. clamp pequeño-grande. */
-  min-height: clamp(112px, 18vw, 140px);
+  /* Altura fija para que QUEPA SIEMPRE la frase más larga del pool
+     ("Una casa se construye con ladrillos y vigas; un hogar se edifica
+     con amor y sueños." → 3-4 líneas en móvil) + attr en una línea.
+     Cálculo: 4 líneas × line-height 1.5 × 18px ≈ 108 px + gap + attr
+     18 px + padding 32 px × 2 = ~210 px. Margen extra → 220 px. */
+  min-height: 220px;
   text-align: center;
   border-bottom: 1px solid var(--arena-dk);
+}
+@media (min-width: 820px) {
+  /* Desktop: la frase suele caber en 1-2 líneas, baja el min-height
+     pero seguimos garantizando holgura. */
+  .frase-hogar { min-height: 180px; }
 }
 .fh-body {
   display: flex;
