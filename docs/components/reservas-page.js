@@ -818,7 +818,7 @@ const ReservasAside = ({
     className: "r-lang"
   }, "\uD83C\uDDEA\uD83C\uDDF8 Espa\xF1ol"), /*#__PURE__*/React.createElement("div", {
     className: "r-role"
-  }, lang === 'es' ? 'Creativo · Pre-estancia · Reservas' : 'Creative · Pre-stay · Bookings')), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Reserva · Antes de tu llegada' : 'Booking · Before you arrive')), /*#__PURE__*/React.createElement("div", {
     className: "r-actions"
   }, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370",
@@ -859,7 +859,7 @@ const ReservasAside = ({
     }
   }, "\uD83C\uDDEC\uD83C\uDDE7 English"), /*#__PURE__*/React.createElement("div", {
     className: "r-role"
-  }, lang === 'es' ? 'Técnico · In-estancia · Bookings EN' : 'Technical · In-stay · English bookings')), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Estancia · Mientras estás aquí' : 'Stay · While you are here')), /*#__PURE__*/React.createElement("div", {
     className: "r-actions"
   }, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34654138251",

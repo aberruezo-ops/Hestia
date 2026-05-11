@@ -851,7 +851,7 @@ const ReservasAside = ({ lang }) => {
         <div>
           <div className="r-name">Alex Berruezo</div>
           <div className="r-lang">🇪🇸 Español</div>
-          <div className="r-role">{lang === 'es' ? 'Creativo · Pre-estancia · Reservas' : 'Creative · Pre-stay · Bookings'}</div>
+          <div className="r-role">{lang === 'es' ? 'Reserva · Antes de tu llegada' : 'Booking · Before you arrive'}</div>
         </div>
         <div className="r-actions">
           <a href="https://wa.me/34620316370" className="btn btn-primary" target="_blank" rel="noopener">
@@ -867,7 +867,7 @@ const ReservasAside = ({ lang }) => {
         <div>
           <div className="r-name">Fran Moral</div>
           <div className="r-lang" style={{ color: 'var(--vt)' }}>🇬🇧 English</div>
-          <div className="r-role">{lang === 'es' ? 'Técnico · In-estancia · Bookings EN' : 'Technical · In-stay · English bookings'}</div>
+          <div className="r-role">{lang === 'es' ? 'Estancia · Mientras estás aquí' : 'Stay · While you are here'}</div>
         </div>
         <div className="r-actions">
           <a href="https://wa.me/34654138251" className="btn btn-primary" target="_blank" rel="noopener">
