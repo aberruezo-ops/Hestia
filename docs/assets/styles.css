@@ -2652,45 +2652,25 @@ footer .footer-brand .addr {
   z-index: 0;
   pointer-events: none;
 }
-/* Día PRE-bloqueo (departure: el huésped sale esta mañana). Strip
-   full-width con gradient amplio: fundido lento de transparente
-   (mañana libre) a sólido (tarde bloqueada). ~70 % del cell.        */
+/* Día PRE-bloqueo (departure: huésped sale esta mañana).
+   DIAGONAL split: triángulo BOTTOM-RIGHT bloqueado (tarde + noche),
+   esquina TOP-LEFT libre (mañana disponible para check-out).
+   La línea diagonal comunica "media celda con disponibilidad". */
 .c-strip.c-sr {
   left: -1px; right: -1px;
   border-radius: 3px;
-  -webkit-mask-image: linear-gradient(90deg,
-    transparent 0%,
-    transparent 12%,
-    rgba(0,0,0,0.18) 28%,
-    rgba(0,0,0,0.50) 44%,
-    rgba(0,0,0,0.78) 60%,
-    #000 78%, #000 100%);
-          mask-image: linear-gradient(90deg,
-    transparent 0%,
-    transparent 12%,
-    rgba(0,0,0,0.18) 28%,
-    rgba(0,0,0,0.50) 44%,
-    rgba(0,0,0,0.78) 60%,
-    #000 78%, #000 100%);
+  -webkit-clip-path: polygon(100% 0, 100% 100%, 0 100%);
+          clip-path: polygon(100% 0, 100% 100%, 0 100%);
 }
-/* Día POST-bloqueo (arrival: huésped sale esta mañana, tu check-in
-   esta tarde). Espejo: sólido a la izquierda, transición lenta y
-   transparente a la derecha.                                        */
+/* Día POST-bloqueo (arrival: huésped del bloque sale esta mañana,
+   tu check-in posible esta tarde).
+   Espejo: triángulo TOP-LEFT bloqueado (mañana ocupada),
+   esquina BOTTOM-RIGHT libre (tarde para check-in).             */
 .c-strip.c-sl {
   left: -1px; right: -1px;
   border-radius: 3px;
-  -webkit-mask-image: linear-gradient(90deg,
-    #000 0%, #000 22%,
-    rgba(0,0,0,0.78) 40%,
-    rgba(0,0,0,0.50) 56%,
-    rgba(0,0,0,0.18) 72%,
-    transparent 88%, transparent 100%);
-          mask-image: linear-gradient(90deg,
-    #000 0%, #000 22%,
-    rgba(0,0,0,0.78) 40%,
-    rgba(0,0,0,0.50) 56%,
-    rgba(0,0,0,0.18) 72%,
-    transparent 88%, transparent 100%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 0 100%);
+          clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 /* Circle — días bloqueados aislados o extremos del rango. Crema +
    forma cuadrada (width = height) para que sea círculo perfecto, no
