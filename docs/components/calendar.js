@@ -299,7 +299,7 @@ const CalMonth = ({
     const showBlk = isBlk && !inSel && !inPrev;
     return /*#__PURE__*/React.createElement("div", {
       key: d,
-      className: ['cal-cell', (isPast || beyondHorizon) && 'past', isToday && 'today', isBlk && 'blk', isClickable && 'clickable', inSel && 'in-sel', isSS && 'sel-s', isSE && 'sel-e', isSM && 'sel-m', inPrev && 'in-prev', isPS && 'prev-s', isPE && 'prev-e', isPM && 'prev-m'].filter(Boolean).join(' '),
+      className: ['cal-cell', (isPast || beyondHorizon) && 'past', isToday && 'today', isBlk && 'blk', isBlkAfter && 'blk-after', isClickable && 'clickable', inSel && 'in-sel', isSS && 'sel-s', isSE && 'sel-e', isSM && 'sel-m', inPrev && 'in-prev', isPS && 'prev-s', isPE && 'prev-e', isPM && 'prev-m'].filter(Boolean).join(' '),
       onClick: isClickable ? () => onDayClick(ds) : undefined,
       onMouseEnter: isClickable ? () => onDayHover(ds) : undefined,
       onMouseLeave: isClickable ? onDayLeave : undefined
