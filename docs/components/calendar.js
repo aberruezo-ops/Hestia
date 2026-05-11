@@ -62,9 +62,11 @@ const RequestPanel = ({
   onReset
 }) => {
   const [guests, setGuests] = React.useState(2);
-  const [pets, setPets] = React.useState(false);
+  // Mascota y demás extras se eligen en /reservas (paso único de extras).
+  // Aquí mostramos precio base sin suplementos para no inflar la estimación
+  // ni duplicar campos.
   const aptName = _CM.apt_names[aptId] || 'Hestía';
-  const calc = _calcStay(selStart, selEnd, aptId, pets);
+  const calc = _calcStay(selStart, selEnd, aptId, false);
   const fmt = n => n.toLocaleString('es-ES') + ' €';
   const months_es = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   const months_en = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -76,14 +78,14 @@ const RequestPanel = ({
   };
 
   // CTA "Avanzar con la reserva": navega a /reservas pre-rellenado.
-  // Datos de contacto, extras y comentarios se gestionan allí.
+  // Datos de contacto, extras (mascota, cuna, etc) y comentarios se
+  // gestionan allí — aquí solo lo esencial para ver precio base.
   const reservasHref = (() => {
     const params = new URLSearchParams();
     params.set('apt', aptId);
     if (selStart) params.set('checkin', selStart);
     if (selEnd) params.set('checkout', selEnd);
     if (guests) params.set('guests', String(guests));
-    if (pets) params.set('pets', 'yes');
     return 'reservas.html?' + params.toString();
   })();
   return /*#__PURE__*/React.createElement("div", {
@@ -135,9 +137,7 @@ const RequestPanel = ({
     className: "price-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `${calc.nights} noches × precio variable` : `${calc.nights} nights × variable rate`), /*#__PURE__*/React.createElement("span", null, fmt(calc.baseTotal))), calc.stayD && /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-disc"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
-    className: "price-line"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento mascota (tarifa plana ${PET_SUPP_FLAT}€)` : `Pet supplement (flat fee ${PET_SUPP_FLAT}€)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-total"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'), /*#__PURE__*/React.createElement("span", null, fmt(calc.directTotal)))), /*#__PURE__*/React.createElement("p", {
     className: "price-note"
@@ -157,13 +157,7 @@ const RequestPanel = ({
     className: "req-g-btn",
     onClick: () => setGuests(g => Math.min(6, g + 1)),
     "aria-label": lang === 'es' ? 'Añadir huésped' : 'Add guest'
-  }, "+")), /*#__PURE__*/React.createElement("label", {
-    className: "req-pets-toggle"
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "checkbox",
-    checked: pets,
-    onChange: e => setPets(e.target.checked)
-  }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `🐾 Mascota (+${PET_SUPP_FLAT}€ tarifa plana)` : `🐾 Pet (+${PET_SUPP_FLAT}€ flat fee)`))), /*#__PURE__*/React.createElement("div", {
+  }, "+"))), /*#__PURE__*/React.createElement("div", {
     className: "req-disclaimer"
   }, /*#__PURE__*/React.createElement("svg", {
     width: "13",
