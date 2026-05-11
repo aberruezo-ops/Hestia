@@ -270,6 +270,7 @@ const CalMonth = ({
                 (isPast || beyondHorizon) && 'past',
                 isToday      && 'today',
                 isBlk        && 'blk',
+                isBlkAfter   && 'blk-after',
                 isClickable  && 'clickable',
                 inSel        && 'in-sel',
                 isSS         && 'sel-s',
