@@ -306,6 +306,17 @@ const ReservasForm = ({
       setPets('yes');
       hadAny = true;
     }
+    // Bebé: lo pre-seleccionamos como extra "trona" o "cuna" si llega; el
+    // huésped lo confirma/cambia en step 2 (extras).
+    const qBaby = qs.get('baby');
+    if (qBaby === 'yes') {
+      setExtrasSel(prev => ({
+        ...prev,
+        cuna: 1,
+        trona: 1
+      }));
+      hadAny = true;
+    }
     // Si vino apt + ambas fechas, avanzamos al step 2 directamente.
     if (qApt && qCheckin && qCheckout) {
       setStep(2);
@@ -537,41 +548,6 @@ const ReservasForm = ({
   }, t.f_pets_no), /*#__PURE__*/React.createElement("option", {
     value: "yes"
   }, t.f_pets_yes)))), /*#__PURE__*/React.createElement("div", {
-    className: "form-field full"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "form-extras-label"
-  }, t.f_extras_label), /*#__PURE__*/React.createElement("div", {
-    className: "form-extras-grid"
-  }, extrasList.map(ex => {
-    const qty = extrasSel[ex.id] || 0;
-    const checked = qty > 0;
-    const label = lang === 'es' ? ex.label_es : ex.label_en;
-    const suffix = _resExtraUnitSuffix(ex.unit, lang);
-    return /*#__PURE__*/React.createElement("label", {
-      key: ex.id,
-      className: `form-extra-item${checked ? ' is-checked' : ''}`
-    }, /*#__PURE__*/React.createElement("input", {
-      type: "checkbox",
-      checked: checked,
-      onChange: () => toggleExtra(ex.id)
-    }), /*#__PURE__*/React.createElement("span", {
-      className: "form-extra-text"
-    }, label, ex.price > 0 && /*#__PURE__*/React.createElement("span", {
-      className: "form-extra-price"
-    }, " \xB7 ", ex.price, " \u20AC", suffix)), checked && ex.unit === 'hora' && /*#__PURE__*/React.createElement("span", {
-      className: "form-extra-qty-wrap"
-    }, /*#__PURE__*/React.createElement("input", {
-      type: "number",
-      min: "1",
-      step: "1",
-      value: qty,
-      onChange: e => setExtraQty(ex.id, e.target.value),
-      className: "form-extra-qty",
-      "aria-label": lang === 'es' ? 'Horas' : 'Hours'
-    }), /*#__PURE__*/React.createElement("span", {
-      className: "form-extra-qty-unit"
-    }, "h")));
-  }))), /*#__PURE__*/React.createElement("div", {
     className: "rf-step-actions"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -624,6 +600,41 @@ const ReservasForm = ({
     lang: lang,
     extras: selectedExtras
   }), step === 2 && /*#__PURE__*/React.createElement("div", {
+    className: "form-field full rf-extras-block"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "form-extras-label"
+  }, t.f_extras_label), /*#__PURE__*/React.createElement("div", {
+    className: "form-extras-grid"
+  }, extrasList.map(ex => {
+    const qty = extrasSel[ex.id] || 0;
+    const checked = qty > 0;
+    const label = lang === 'es' ? ex.label_es : ex.label_en;
+    const suffix = _resExtraUnitSuffix(ex.unit, lang);
+    return /*#__PURE__*/React.createElement("label", {
+      key: ex.id,
+      className: `form-extra-item${checked ? ' is-checked' : ''}`
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "checkbox",
+      checked: checked,
+      onChange: () => toggleExtra(ex.id)
+    }), /*#__PURE__*/React.createElement("span", {
+      className: "form-extra-text"
+    }, label, ex.price > 0 && /*#__PURE__*/React.createElement("span", {
+      className: "form-extra-price"
+    }, " \xB7 ", ex.price, " \u20AC", suffix)), checked && ex.unit === 'hora' && /*#__PURE__*/React.createElement("span", {
+      className: "form-extra-qty-wrap"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "number",
+      min: "1",
+      step: "1",
+      value: qty,
+      onChange: e => setExtraQty(ex.id, e.target.value),
+      className: "form-extra-qty",
+      "aria-label": lang === 'es' ? 'Horas' : 'Hours'
+    }), /*#__PURE__*/React.createElement("span", {
+      className: "form-extra-qty-unit"
+    }, "h")));
+  }))), step === 2 && /*#__PURE__*/React.createElement("div", {
     className: "rf-step-actions"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
