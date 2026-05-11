@@ -408,8 +408,8 @@ const ContactCTA = ({
   }, t.contact_eyebrow), /*#__PURE__*/React.createElement("h2", null, t.contact_title), /*#__PURE__*/React.createElement("p", null, t.contact_sub), /*#__PURE__*/React.createElement("div", {
     className: "ctas"
   }, /*#__PURE__*/React.createElement("a", {
-    href: "https://wa.me/34620316370",
-    className: "btn btn-primary",
+    href: t.contact_cta_wa_href,
+    className: "btn btn-primary cta-wa-btn",
     target: "_blank",
     rel: "noopener"
   }, t.contact_cta_wa, " ", /*#__PURE__*/React.createElement("span", {

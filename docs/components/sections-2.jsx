@@ -272,7 +272,7 @@ const ContactCTA = ({ lang, availHref }) => {
         <h2>{t.contact_title}</h2>
         <p>{t.contact_sub}</p>
         <div className="ctas">
-          <a href="https://wa.me/34620316370" className="btn btn-primary" target="_blank" rel="noopener">
+          <a href={t.contact_cta_wa_href} className="btn btn-primary cta-wa-btn" target="_blank" rel="noopener">
             {t.contact_cta_wa} <span className="arrow">→</span>
           </a>
           <a href="mailto:info@hestiayourhome.com" className="btn btn-ghost-light">
