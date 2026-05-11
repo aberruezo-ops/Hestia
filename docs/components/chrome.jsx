@@ -207,28 +207,28 @@ const FloatingChat = ({ lang }) => {
             : 'A real person replies. In minutes, not days.'}
         </p>
         <a className="contact-row" href="https://wa.me/34620316370" target="_blank" rel="noopener">
-          <div className="avatar">A</div>
+          <div className="avatar avatar-photo avatar-alex" aria-hidden="true"/>
           <div className="info">
             <div className="name">Alex · WhatsApp</div>
             <div className="sub">Español · +34 620 316 370</div>
           </div>
         </a>
         <a className="contact-row" href="tel:+34620316370">
-          <div className="avatar" style={{background:'var(--ber-lt)'}}>A</div>
+          <div className="avatar avatar-photo avatar-alex" aria-hidden="true"/>
           <div className="info">
             <div className="name">Alex · {lang === 'es' ? 'Teléfono' : 'Phone'}</div>
             <div className="sub">+34 620 316 370</div>
           </div>
         </a>
         <a className="contact-row" href="https://wa.me/34654138251" target="_blank" rel="noopener">
-          <div className="avatar fran">F</div>
+          <div className="avatar avatar-photo avatar-fran" aria-hidden="true"/>
           <div className="info">
             <div className="name">Fran · WhatsApp</div>
             <div className="sub">English · +34 654 138 251</div>
           </div>
         </a>
         <a className="contact-row" href="tel:+34654138251">
-          <div className="avatar fran" style={{opacity:0.75}}>F</div>
+          <div className="avatar avatar-photo avatar-fran" aria-hidden="true"/>
           <div className="info">
             <div className="name">Fran · {lang === 'es' ? 'Teléfono' : 'Phone'}</div>
             <div className="sub">+34 654 138 251</div>
