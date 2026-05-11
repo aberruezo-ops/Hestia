@@ -3720,7 +3720,9 @@ body.no-parallax .g-tile .img { transform: none !important; }
 
 /* ---- CONTACT CTA: fondo aurora animado ---- */
 .contact-cta {
-  background: linear-gradient(
+  /* background-image (no shorthand) para NO resetear el background-color
+     fallback definido en la regla anterior. */
+  background-image: linear-gradient(
     -45deg,
     var(--ber-void), #2A0F2E, #2A0F2E,
     #2A0F2E, #2A0F2E, var(--ber-void)
