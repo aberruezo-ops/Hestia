@@ -63,22 +63,6 @@ const RequestPanel = ({
 }) => {
   const [guests, setGuests] = React.useState(2);
   const [pets, setPets] = React.useState(false);
-  const [name, setName] = React.useState('');
-  const [phone, setPhone] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [comments, setComments] = React.useState('');
-
-  // Validez por canal: cada botón se habilita cuando tiene los datos
-  // mínimos para ese canal. WhatsApp requiere nombre + teléfono. Email
-  // requiere nombre + email. El mensaje incluye TODOS los datos
-  // rellenos en cada canal (nombre, teléfono, email, comentarios).
-  const hasName = name.trim().length > 0;
-  const hasPhone = phone.trim().length > 0;
-  const hasEmail = /\S+@\S+/.test(email);
-  const validWA = hasName && hasPhone;
-  const validEmail = hasName && hasEmail;
-  const valid = validWA || validEmail; // legacy: por si lo usa el hint
-
   const aptName = _CM.apt_names[aptId] || 'Hestía';
   const calc = _calcStay(selStart, selEnd, aptId, pets);
   const fmt = n => n.toLocaleString('es-ES') + ' €';
@@ -90,33 +74,18 @@ const RequestPanel = ({
     if (lang === 'es') return `${d.getUTCDate()} de ${months_es[d.getUTCMonth()]} de ${d.getUTCFullYear()}`;
     return `${months_en[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
   };
-  const buildMsg = () => {
-    const c = calc;
-    const petsLine = pets ? lang === 'es' ? `🐾 Mascota: Sí (+${PET_SUPP_FLAT}€ tarifa plana)\n` : `🐾 Pet: Yes (+${PET_SUPP_FLAT}€ flat fee)\n` : '';
-    const discLine = c && c.stayD ? lang === 'es' ? `🏷 ${c.stayD.es}: −${fmt(c.stayDiscAmt)}\n` : `🏷 ${c.stayD.en}: −${fmt(c.stayDiscAmt)}\n` : '';
-    const priceBlock = c ? lang === 'es' ? `\n💰 PRECIO ESTIMADO DIRECTO\n` + `   ${fmt(c.directTotal)} total (${c.nights} noches × ~${fmt(c.avgPerNight)}/noche)\n` + discLine + petsLine + `   ✓ Mejor precio garantizado · si encuentras un precio mejor, te lo mejoramos\n` : `\n💰 ESTIMATED DIRECT PRICE\n` + `   ${fmt(c.directTotal)} total (${c.nights} nights × ~${fmt(c.avgPerNight)}/night)\n` + discLine + petsLine + `   ✓ Best price guarantee · if you find a better price, we'll beat it\n` : '';
-    const nameBlock = name ? lang === 'es' ? `\n👤 Nombre: ${name}` : `\n👤 Name: ${name}` : '';
-    const phoneBlock = phone ? lang === 'es' ? `\n📱 Teléfono: ${phone}` : `\n📱 Phone: ${phone}` : '';
-    const emailBlock = email ? `\n📧 Email: ${email}` : '';
-    const commBlock = comments ? lang === 'es' ? `\n💬 Comentarios: ${comments}` : `\n💬 Comments: ${comments}` : '';
-    if (lang === 'es') return `¡Hola! Quiero reservar ${aptName}.\n\n` + `📅 Entrada: ${fmtDate(selStart)}\n` + `📅 Salida: ${fmtDate(selEnd)}\n` + `🌙 Noches: ${calc ? calc.nights : '?'}\n` + `👥 Huéspedes: ${guests}` + priceBlock + nameBlock + phoneBlock + emailBlock + commBlock + '\n\n' + `Solicito confirmación de disponibilidad y precio definitivo.\n¡Gracias!`;
-    return `Hello! I'd like to book ${aptName}.\n\n` + `📅 Check-in: ${fmtDate(selStart)}\n` + `📅 Check-out: ${fmtDate(selEnd)}\n` + `🌙 Nights: ${calc ? calc.nights : '?'}\n` + `👥 Guests: ${guests}` + priceBlock + nameBlock + phoneBlock + emailBlock + commBlock + '\n\n' + `I'd like to confirm availability and the final price.\nThank you!`;
-  };
-  const waNum = lang === 'es' ? '34620316370' : '34654138251';
-  const waHref = () => `https://wa.me/${waNum}?text=${encodeURIComponent(buildMsg())}`;
-  const mailHref = () => {
-    const subj = lang === 'es' ? `Solicitud reserva — ${aptName}` : `Booking request — ${aptName}`;
-    return `mailto:info@hestiayourhome.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(buildMsg())}`;
-  };
-  const WaIcon = () => /*#__PURE__*/React.createElement("svg", {
-    width: "16",
-    height: "16",
-    viewBox: "0 0 24 24",
-    fill: "currentColor",
-    "aria-hidden": "true"
-  }, /*#__PURE__*/React.createElement("path", {
-    d: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
-  }));
+
+  // CTA "Avanzar con la reserva": navega a /reservas pre-rellenado.
+  // Datos de contacto, extras y comentarios se gestionan allí.
+  const reservasHref = (() => {
+    const params = new URLSearchParams();
+    params.set('apt', aptId);
+    if (selStart) params.set('checkin', selStart);
+    if (selEnd) params.set('checkout', selEnd);
+    if (guests) params.set('guests', String(guests));
+    if (pets) params.set('pets', 'yes');
+    return 'reservas.html?' + params.toString();
+  })();
   return /*#__PURE__*/React.createElement("div", {
     className: "req-panel",
     style: {
@@ -195,54 +164,6 @@ const RequestPanel = ({
     checked: pets,
     onChange: e => setPets(e.target.checked)
   }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `🐾 Mascota (+${PET_SUPP_FLAT}€ tarifa plana)` : `🐾 Pet (+${PET_SUPP_FLAT}€ flat fee)`))), /*#__PURE__*/React.createElement("div", {
-    className: "req-contact-form"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "req-form-title"
-  }, lang === 'es' ? 'Tus datos · nombre y email obligatorios' : 'Your details · name and email required'), /*#__PURE__*/React.createElement("div", {
-    className: "req-form-row"
-  }, /*#__PURE__*/React.createElement("label", {
-    htmlFor: "req-cal-name",
-    className: "sr-only"
-  }, lang === 'es' ? 'Nombre' : 'Name'), /*#__PURE__*/React.createElement("input", {
-    id: "req-cal-name",
-    className: "req-input",
-    type: "text",
-    placeholder: lang === 'es' ? 'Nombre' : 'Name',
-    value: name,
-    onChange: e => setName(e.target.value),
-    autoComplete: "name"
-  }), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "req-cal-phone",
-    className: "sr-only"
-  }, lang === 'es' ? 'Teléfono' : 'Phone'), /*#__PURE__*/React.createElement("input", {
-    id: "req-cal-phone",
-    className: "req-input",
-    type: "tel",
-    placeholder: lang === 'es' ? 'Teléfono' : 'Phone',
-    value: phone,
-    onChange: e => setPhone(e.target.value),
-    autoComplete: "tel"
-  })), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "req-cal-email",
-    className: "sr-only"
-  }, "Email"), /*#__PURE__*/React.createElement("input", {
-    id: "req-cal-email",
-    className: "req-input req-input-full",
-    type: "email",
-    placeholder: "Email",
-    value: email,
-    onChange: e => setEmail(e.target.value),
-    autoComplete: "email"
-  }), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "req-cal-comments",
-    className: "sr-only"
-  }, lang === 'es' ? 'Comentarios' : 'Comments'), /*#__PURE__*/React.createElement("textarea", {
-    id: "req-cal-comments",
-    className: "req-textarea",
-    placeholder: lang === 'es' ? 'Comentarios, preguntas, fechas alternativas…' : 'Comments, questions, alternative dates…',
-    value: comments,
-    onChange: e => setComments(e.target.value)
-  })), /*#__PURE__*/React.createElement("div", {
     className: "req-disclaimer"
   }, /*#__PURE__*/React.createElement("svg", {
     width: "13",
@@ -266,27 +187,14 @@ const RequestPanel = ({
     y1: "16",
     x2: "12.01",
     y2: "16"
-  })), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Solicitud de precio \u2014 no es una reserva."), " Estos son precios m\xE1ximos orientativos. En Hest\xEDa nos gusta hablar con nuestros hu\xE9spedes, entender qu\xE9 necesitan e intentar adaptar el precio. Cu\xE9ntanos de ti y los tuyos.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Price request \u2014 not a booking."), " These are maximum indicative prices. At Hest\xEDa we like to talk to our guests, understand what they need, and try to adapt the price accordingly. Tell us about your situation."))), !valid && (name.length > 0 || phone.length > 0 || email.length > 0) && /*#__PURE__*/React.createElement("p", {
-    className: "req-hint"
-  }, lang === 'es' ? '✦ Introduce tu nombre y un teléfono (WhatsApp) o email para continuar' : '✦ Enter your name and a phone (WhatsApp) or email to continue'), /*#__PURE__*/React.createElement("div", {
-    className: "req-actions"
+  })), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Precio m\xE1ximo orientativo."), " Si encuentras un precio m\xE1s bajo te lo mejoramos. En la siguiente pantalla podr\xE1s a\xF1adir extras (cuna, trona, s\xE1banas, mascota\u2026) y dejarnos tus datos. Alex confirma en menos de 24 h.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Maximum indicative price."), " Find a lower price anywhere \u2014 we will beat it. On the next screen you can add extras (cot, high chair, linen, pet\u2026) and leave your details. Alex confirms within 24 h."))), /*#__PURE__*/React.createElement("div", {
+    className: "req-actions req-actions-forward"
   }, /*#__PURE__*/React.createElement("a", {
-    href: validWA ? waHref() : undefined,
-    className: `btn btn-primary req-btn-wa${!validWA ? ' req-btn-dis' : ''}`,
-    target: "_blank",
-    rel: "noopener",
-    "aria-disabled": !validWA,
-    title: !validWA ? lang === 'es' ? 'Necesitas nombre y teléfono' : 'Name and phone required' : undefined,
-    onClick: !validWA ? e => e.preventDefault() : undefined
-  }, /*#__PURE__*/React.createElement(WaIcon, null), lang === 'es' ? 'Solicitar reserva — WhatsApp' : 'Request booking — WhatsApp', /*#__PURE__*/React.createElement("span", {
+    href: reservasHref,
+    className: "btn btn-primary req-btn-forward"
+  }, lang === 'es' ? 'Avanzar con la reserva' : 'Continue with the booking', /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, " \u2192")), /*#__PURE__*/React.createElement("a", {
-    href: validEmail ? mailHref() : undefined,
-    className: `btn btn-ghost-dark req-btn-mail${!validEmail ? ' req-btn-dis' : ''}`,
-    "aria-disabled": !validEmail,
-    title: !validEmail ? lang === 'es' ? 'Necesitas nombre y email' : 'Name and email required' : undefined,
-    onClick: !validEmail ? e => e.preventDefault() : undefined
-  }, lang === 'es' ? 'Solicitar por email' : 'Request by email')), /*#__PURE__*/React.createElement("button", {
+  }, " \u2192"))), /*#__PURE__*/React.createElement("button", {
     className: "req-reset",
     onClick: onReset
   }, "\u2190 ", lang === 'es' ? 'Cambiar fechas' : 'Change dates'));
