@@ -523,12 +523,26 @@ const ReservasForm = ({ lang }) => {
           <div className="rf-step-body">
             <div className="form-field full">
               <label>{t.f_apt}</label>
-              <select value={apt} onChange={e => setApt(e.target.value)} required>
-                <option value="">{t.f_apt_ph}</option>
-                <option value="vm">Hestía Mar</option>
-                <option value="vt">Hestía Thalassa</option>
-                <option value="vs">Hestía Salinas</option>
-              </select>
+              <div className="rf-apt-pick" role="radiogroup" aria-label={t.f_apt}>
+                {[
+                  { id: 'vm', name: 'Hestía Mar',      accent: '#6B7A3A' },
+                  { id: 'vt', name: 'Hestía Thalassa', accent: '#B86A3C' },
+                  { id: 'vs', name: 'Hestía Salinas',  accent: '#D4A84A' },
+                ].map(o => (
+                  <button
+                    key={o.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={apt === o.id}
+                    className={`rf-apt-chip${apt === o.id ? ' is-on' : ''}`}
+                    style={{ '--apt-accent': o.accent }}
+                    onClick={() => setApt(o.id)}
+                  >
+                    <span className="rf-apt-chip-dot" aria-hidden="true"/>
+                    <span className="rf-apt-chip-name">{o.name}</span>
+                  </button>
+                ))}
+              </div>
             </div>
             <div className="form-field full">
               <label>{lang === 'es' ? 'Fechas de la estancia' : 'Stay dates'}</label>
@@ -554,20 +568,47 @@ const ReservasForm = ({ lang }) => {
                 </p>
               )}
             </div>
-            <div className="form-row">
-              <div className="form-field">
-                <label>{t.f_guests}</label>
-                <select value={guests} onChange={e => setGuests(e.target.value)} required>
-                  <option value="">—</option>
-                  {t.f_guests_opts.map((o, i) => <option key={i} value={o}>{o}</option>)}
-                </select>
+            <div className="form-field full">
+              <label>{t.f_guests}</label>
+              <div className="rf-chip-row" role="radiogroup" aria-label={t.f_guests}>
+                {t.f_guests_opts.map((o, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    role="radio"
+                    aria-checked={guests === o}
+                    className={`rf-chip${guests === o ? ' is-on' : ''}`}
+                    onClick={() => setGuests(o)}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
               </div>
-              <div className="form-field">
-                <label>{t.f_pets}</label>
-                <select value={pets} onChange={e => setPets(e.target.value)}>
-                  <option value="no">{t.f_pets_no}</option>
-                  <option value="yes">{t.f_pets_yes}</option>
-                </select>
+              <span className="rf-chip-hint">
+                {guests || (lang === 'es' ? 'Selecciona número de huéspedes' : 'Pick the number of guests')}
+              </span>
+            </div>
+            <div className="form-field full">
+              <label>{t.f_pets}</label>
+              <div className="rf-chip-row" role="radiogroup" aria-label={t.f_pets}>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={pets === 'no'}
+                  className={`rf-chip rf-chip-wide${pets === 'no' ? ' is-on' : ''}`}
+                  onClick={() => setPets('no')}
+                >
+                  {t.f_pets_no}
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={pets === 'yes'}
+                  className={`rf-chip rf-chip-wide${pets === 'yes' ? ' is-on' : ''}`}
+                  onClick={() => setPets('yes')}
+                >
+                  🐾 {t.f_pets_yes}
+                </button>
               </div>
             </div>
             <div className="rf-step-actions">
@@ -624,32 +665,36 @@ const ReservasForm = ({ lang }) => {
               <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} lang={lang} extras={selectedExtras}/>
             )}
 
-            {/* Extras editor — viven aquí (no en step 1) para que el huésped
-                que llega prefilled desde la apt page los vea inmediatamente. */}
+            {/* Extras editor — chips selectables. Toca para marcar, vuelve a
+                tocar para desmarcar. Para "hora" aparece un input de horas. */}
             {step === 2 && (
               <div className="form-field full rf-extras-block">
                 <div className="form-extras-label">{t.f_extras_label}</div>
-                <div className="form-extras-grid">
+                <div className="rf-extras-chips">
                   {extrasList.map(ex => {
                     const qty = extrasSel[ex.id] || 0;
                     const checked = qty > 0;
                     const label = lang === 'es' ? ex.label_es : ex.label_en;
                     const suffix = _resExtraUnitSuffix(ex.unit, lang);
                     return (
-                      <label key={ex.id} className={`form-extra-item${checked ? ' is-checked' : ''}`}>
-                        <input
-                          type="checkbox"
-                          checked={checked}
-                          onChange={() => toggleExtra(ex.id)}
-                        />
-                        <span className="form-extra-text">
-                          {label}
-                          {ex.price > 0 && (
-                            <span className="form-extra-price"> · {ex.price} €{suffix}</span>
-                          )}
-                        </span>
+                      <div key={ex.id} className={`rf-extra-chip${checked ? ' is-on' : ''}`}>
+                        <button
+                          type="button"
+                          className="rf-extra-chip-btn"
+                          role="checkbox"
+                          aria-checked={checked}
+                          onClick={() => toggleExtra(ex.id)}
+                        >
+                          <span className="rf-extra-chip-mark" aria-hidden="true">{checked ? '✓' : '＋'}</span>
+                          <span className="rf-extra-chip-text">
+                            <span className="rf-extra-chip-label">{label}</span>
+                            {ex.price > 0 && (
+                              <span className="rf-extra-chip-price">{ex.price} €{suffix}</span>
+                            )}
+                          </span>
+                        </button>
                         {checked && ex.unit === 'hora' && (
-                          <span className="form-extra-qty-wrap">
+                          <span className="rf-extra-chip-qty">
                             <input
                               type="number"
                               min="1"
@@ -662,7 +707,7 @@ const ReservasForm = ({ lang }) => {
                             <span className="form-extra-qty-unit">h</span>
                           </span>
                         )}
-                      </label>
+                      </div>
                     );
                   })}
                 </div>
