@@ -850,9 +850,9 @@ body.apt-bar-shown .float-chat {
 }
 .float-chat .contact-row .avatar.fran { background: var(--ber); color: var(--sol-lt); }
 /* Avatares con foto — img dentro de div circular con overflow:hidden.
-   object-fit: cover + object-position centran la cara. Tamaño explícito
-   más grande que el contenedor (scale 1.4) para zoom extra y que la
-   cara llene el círculo, no aparezca diminuta dentro. */
+   object-fit: cover + object-position centran la cara. transform: scale
+   añade zoom extra para que la cara llene el círculo, no aparezca
+   diminuta dentro. */
 .float-chat .contact-row .avatar.avatar-photo {
   overflow: hidden;
   position: relative;
@@ -868,8 +868,8 @@ body.apt-bar-shown .float-chat {
   object-fit: cover;
   display: block;
 }
-/* Alex (731×1014) — cara en (~48%, ~35%). Scale 1.6 con object-position
-   ajustado para que la cabeza + barba entera entren en el círculo. */
+/* Alex (731×1014) — cara en (~48%, ~30%). Scale 1.6 con transform-origin
+   sobre la cara para que la cabeza + barba entera entre en el círculo. */
 .float-chat .contact-row .avatar-img-alex {
   object-position: 48% 30%;
   transform: scale(1.6);
