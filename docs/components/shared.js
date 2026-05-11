@@ -2471,8 +2471,15 @@ const DateRangePicker = ({
   const horizonStr = window.PRICES_V2 && window.PRICES_V2.bookingHorizon && window.PRICES_V2.bookingHorizon.lastCheckinDate || null;
   const _isBeyondHorizon = ds => !!(horizonStr && ds > horizonStr);
   const _isBlk = ds => blockedList.some(r => ds >= r.start && ds < r.end);
+
+  // Día "partido": el primer día de un rango bloqueado tiene la mañana
+  // libre (el huésped que llega lo hace a las 15:00). Por tanto puede
+  // usarse como check-out, pero NUNCA como check-in.
+  const _isBlkStart = ds => _isBlk(ds) && !_isBlk(_drAdj(ds, -1));
   let previewEnd = null;
   if (checkin && !checkout && hover && hover > checkin) {
+    // El hover puede ser un blocked-start (check-out válido) — comprueba
+    // que el camino intermedio entre check-in y hover está libre.
     let ok = true;
     let cur = _drAdj(checkin, 1);
     while (cur < hover) {
@@ -2485,12 +2492,23 @@ const DateRangePicker = ({
     if (ok) previewEnd = hover;
   }
   const handleDayClick = ds => {
-    if (ds < t || _isBeyondHorizon(ds) || _isBlk(ds)) return;
+    if (ds < t || _isBeyondHorizon(ds)) return;
+    const blk = _isBlk(ds);
+    const blkStart = blk && _isBlkStart(ds);
+    // Día completamente bloqueado (mid-block o fin de bloque interior):
+    // no puede ser ni check-in ni check-out.
+    if (blk && !blkStart) return;
+
+    // Fase: elegir check-in. Un blocked-start NO sirve como check-in
+    // (la noche está ocupada). Pulsar lo trata como "cambiar selección".
     if (!checkin || checkout || ds <= checkin) {
+      if (blkStart) return;
       setCheckin(ds);
       setCheckout('');
       return;
     }
+    // Fase: elegir check-out. Permitimos el blocked-start como check-out
+    // (mañana libre antes de las 15:00). Verificamos camino libre.
     let cur = _drAdj(checkin, 1);
     while (cur < ds) {
       if (_isBlk(cur)) {
@@ -2560,7 +2578,8 @@ const DateRangePicker = ({
       const isPS = inPrev && ds === checkin;
       const isPE = inPrev && ds === previewEnd;
       const isPM = inPrev && !isPS && !isPE;
-      const isClickable = !isPast && !isBeyond && !isBlk;
+      // Un blocked-start es clickable (puede ser check-out: mañana libre)
+      const isClickable = !isPast && !isBeyond && (!isBlk || isBlkStart);
       const showBlk = isBlk && !inSel && !inPrev;
       return /*#__PURE__*/React.createElement("div", {
         key: d,
