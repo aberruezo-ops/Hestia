@@ -202,16 +202,25 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
             <span>+{fmt(calc.petAmt)}</span>
           </div>
         )}
-        {extras.map(ex => (
-          <div className="price-line" key={ex.id}>
-            <span>
-              {ex.label}
-              {ex.unit === 'hora'  && ` · ${ex.qty} h × ${ex.unitPrice} €`}
-              {ex.unit === 'noche' && ` · ${ex.qty} ${lang === 'es' ? 'noches' : 'nights'} × ${ex.unitPrice} €`}
-            </span>
-            <span>+{fmt(ex.amount)}</span>
-          </div>
-        ))}
+        {extras.map(ex => {
+          const u = ex.units || 1;
+          let detail = '';
+          if (ex.unit === 'hora') {
+            detail = ` · ${u} h × ${ex.unitPrice} €`;
+          } else if (ex.unit === 'noche') {
+            const nLabel = lang === 'es' ? 'noches' : 'nights';
+            const uLabel = lang === 'es' ? (u === 1 ? 'unidad' : 'unidades') : (u === 1 ? 'unit' : 'units');
+            detail = ` · ${u} ${uLabel} × ${ex.qty} ${nLabel} × ${ex.unitPrice} €`;
+          } else if (u > 1) {
+            detail = ` · ${u} × ${ex.unitPrice} €`;
+          }
+          return (
+            <div className="price-line" key={ex.id}>
+              <span>{ex.label}{detail}</span>
+              <span>+{fmt(ex.amount)}</span>
+            </div>
+          );
+        })}
         <div className="price-line price-line-total">
           <span>{lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'}</span>
           <span>{fmt(grandTotal)}</span>
@@ -354,8 +363,23 @@ const ReservasForm = ({ lang }) => {
     });
   };
   const setExtraQty = (id, qty) => {
-    const n = Math.max(1, Math.floor(Number(qty) || 1));
+    const n = Math.max(0, Math.floor(Number(qty) || 0));
     setExtrasSel(prev => ({ ...prev, [id]: n }));
+  };
+  // Máximo qty por extra = número de huéspedes (1 set por huésped).
+  // Si todavía no se han elegido huéspedes, se permite hasta 6.
+  const extraMaxQty = Math.max(1, parseInt(guests, 10) || 6);
+  const incExtra = (id) => {
+    setExtrasSel(prev => {
+      const cur = prev[id] || 0;
+      return { ...prev, [id]: Math.min(extraMaxQty, cur + 1) };
+    });
+  };
+  const decExtra = (id) => {
+    setExtrasSel(prev => {
+      const cur = prev[id] || 0;
+      return { ...prev, [id]: Math.max(0, cur - 1) };
+    });
   };
 
   // Computa los extras seleccionados con su importe ya calculado.
@@ -368,14 +392,18 @@ const ReservasForm = ({ lang }) => {
         const qty = extrasSel[ex.id];
         let amount, lineQty;
         if (ex.unit === 'hora')       { lineQty = qty;     amount = ex.price * qty; }
-        else if (ex.unit === 'noche') { lineQty = nights;  amount = ex.price * nights; }
-        else                          { lineQty = 1;       amount = ex.price; }
+        else if (ex.unit === 'noche') { lineQty = nights;  amount = ex.price * nights * qty; }
+        else                          { lineQty = qty;     amount = ex.price * qty; }
+        // qty es siempre el número de unidades elegidas por el huésped
+        // (1 por defecto, hasta el número de huéspedes). lineQty depende
+        // del tipo (horas, noches, o el propio qty).
         return {
           id: ex.id,
           label: lang === 'es' ? ex.label_es : ex.label_en,
           unit: ex.unit,
           unitPrice: ex.price,
           qty: lineQty,
+          units: qty,
           amount,
         };
       });
@@ -722,9 +750,8 @@ const ReservasForm = ({ lang }) => {
                         <button
                           type="button"
                           className="rf-extra-chip-btn"
-                          role="checkbox"
-                          aria-checked={checked}
-                          onClick={() => toggleExtra(ex.id)}
+                          onClick={() => (checked ? null : incExtra(ex.id))}
+                          aria-label={checked ? label : (lang === 'es' ? `Añadir ${label}` : `Add ${label}`)}
                         >
                           <span className="rf-extra-chip-mark" aria-hidden="true">{checked ? '✓' : '＋'}</span>
                           <span className="rf-extra-chip-text">
@@ -734,19 +761,27 @@ const ReservasForm = ({ lang }) => {
                             )}
                           </span>
                         </button>
-                        {checked && ex.unit === 'hora' && (
-                          <span className="rf-extra-chip-qty">
-                            <input
-                              type="number"
-                              min="1"
-                              step="1"
-                              value={qty}
-                              onChange={e => setExtraQty(ex.id, e.target.value)}
-                              className="form-extra-qty"
-                              aria-label={lang === 'es' ? 'Horas' : 'Hours'}
-                            />
-                            <span className="form-extra-qty-unit">h</span>
-                          </span>
+                        {checked && (
+                          <div
+                            className="rf-extra-stepper"
+                            role="group"
+                            aria-label={lang === 'es' ? `Cantidad de ${label}` : `Quantity of ${label}`}
+                          >
+                            <button
+                              type="button"
+                              className="rf-extra-step-btn"
+                              onClick={() => decExtra(ex.id)}
+                              aria-label={lang === 'es' ? 'Quitar uno' : 'Remove one'}
+                            >−</button>
+                            <span className="rf-extra-step-num" aria-live="polite">{qty}</span>
+                            <button
+                              type="button"
+                              className="rf-extra-step-btn"
+                              onClick={() => incExtra(ex.id)}
+                              disabled={qty >= extraMaxQty}
+                              aria-label={lang === 'es' ? 'Añadir uno' : 'Add one'}
+                            >+</button>
+                          </div>
                         )}
                       </div>
                     );
