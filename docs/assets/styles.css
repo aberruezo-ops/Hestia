@@ -146,7 +146,7 @@
   --ber:     #3D1A35;
   --ber-dk:  #2A0F2E;
   --ber-lt:  #4E2446;
-  --sol:     #3AAABB;
+  --sol:     var(--sol);
   --sol-h:   #2A8E9E;
   --sol-lt:  #6FC4D1;
   --sol-text:#176E80;
@@ -158,7 +158,7 @@
 
   /* Paleta corporativa · 9 colores del paisaje almeriense */
   --vio:    #7B3B6B;   /* Violeta     — horizonte antes del amanecer  */
-  --tur:    #1BC8D8;   /* Turquesa    — el mar y el cielo al alba      */
+  --tur:    var(--tur);   /* Turquesa    — el mar y el cielo al alba      */
   --bug:    #D42B80;   /* Buganvilla  — el magenta que lo invade todo  */
   --alb:    #C8975A;   /* Albero      — tierra almeriense, cerámica    */
   --sie:    #8B4A1E;   /* Siena       — crepúsculo sobre el Mediterráneo */
@@ -170,6 +170,37 @@
   --vt:  #B86A3C;  --vt2: #D08B5A;  --vt-dk: #8A4A24;
   /* Hestía Salinas · Albero — amarillo del amanecer */
   --vs:  #D4A84A;  --vs2: #E8C476;  --vs-dk: #7A5E1A;
+
+  /* Crema · variantes atmosféricas del cielo a lo largo del día */
+  --crema-alba: var(--crema-alba);          /* alba rosada */
+  --crema-dawn: var(--crema-dawn);          /* primera luz cálida */
+  --crema-noon: var(--crema-noon);          /* media mañana luminosa */
+  --crema-dusk: var(--crema-dusk);          /* tarde dorada */
+  --crema-warm: var(--crema-warm);          /* crema cálida intensa */
+
+  /* Berenjena · variantes para gradientes animados de sky/twilight */
+  --ber-glow:     var(--ber-glow);        /* berenjena suave (night gradients) */
+  --ber-warm:     var(--ber-warm);        /* berenjena rojizo (sunset bridge)  */
+  --ber-twilight: var(--ber-twilight);        /* berenjena luminoso (twilight)     */
+  --ber-cosmic:   var(--ber-cosmic);        /* berenjena casi negro (deep night) */
+  --ber-pitch:    var(--ber-pitch);        /* casi negro cálido                 */
+  --ber-void:     var(--ber-void);        /* casi negro frío (cosmic void)     */
+
+  /* Tokens semánticos corporativos
+     ─ Errores/peligro     → bug (buganvilla)
+     ─ Avisos/pendiente    → alb (albero, ya cálido)
+     ─ Éxito/publicado     → vm  (olivo)
+     ─ Información         → sol (turquesa)
+     Fondos suaves derivados con opacity-mix para mantener cohesión.  */
+  --err:        #B8246E;          /* bug intensificado para errores */
+  --err-dk:     #7A1648;
+  --err-bg:     #F8E0EB;          /* mix(bug, crema) */
+  --warn:       #C8975A;          /* alb */
+  --warn-dk:    #8A6432;
+  --warn-bg:    #F5E8D4;
+  --ok:         #6B7A3A;          /* vm olivo */
+  --ok-dk:      #4A5628;
+  --ok-bg:      #E6E8D5;
 
   /* Tipografía */
   --serif: 'Playfair Display', 'Lora', Georgia, serif;
@@ -451,7 +482,7 @@ p  { line-height: 1.65; font-weight: 300; }
   /* 8 colores × 10 s = 80 s · hold 5 s (6.25%) + fade 5 s (6.25%) */
   0%,    6.25%  { background: #2A0F2E; border-color: #2A0F2E; } /* berenjena */
   12.5%, 18.75% { background: #7B3B6B; border-color: #7B3B6B; } /* violeta */
-  25%,   31.25% { background: #1BC8D8; border-color: #1BC8D8; } /* turquesa */
+  25%,   31.25% { background: var(--tur); border-color: var(--tur); } /* turquesa */
   37.5%, 43.75% { background: #6B7A3A; border-color: #6B7A3A; } /* verde olivo */
   50%,   56.25% { background: #D42B80; border-color: #D42B80; } /* buganvilla */
   62.5%, 68.75% { background: #C8975A; border-color: #C8975A; } /* albero */
@@ -744,8 +775,8 @@ section {
 }
 .section-night {
   background: linear-gradient(125deg,
-    #4E2446 0%, #3D1A35 14%, #5c2a50 28%, #4E2446 42%,
-    #3D1A35 56%, #5c2a50 70%, #4E2446 85%, #3D1A35 100%
+    #4E2446 0%, #3D1A35 14%, var(--ber-glow) 28%, #4E2446 42%,
+    #3D1A35 56%, var(--ber-glow) 70%, #4E2446 85%, #3D1A35 100%
   );
   background-size: 400% 400%;
   animation: sky-night 34s ease infinite;
@@ -754,8 +785,8 @@ section {
 }
 .section-dark {
   background: linear-gradient(125deg,
-    #4E2446 0%, #4E2446 14%, #3D1A35 28%, #5c2a50 42%,
-    #4E2446 56%, #3D1A35 70%, #5c2a50 85%, #4E2446 100%
+    #4E2446 0%, #4E2446 14%, #3D1A35 28%, var(--ber-glow) 42%,
+    #4E2446 56%, #3D1A35 70%, var(--ber-glow) 85%, #4E2446 100%
   );
   background-size: 400% 400%;
   animation: sky-night 36s ease infinite;
@@ -765,8 +796,8 @@ section {
 /* Medium violet — interior sections */
 .section-violet {
   background: linear-gradient(125deg,
-    #5c2a50 0%, #4E2446 18%, #6B3060 36%, #4E2446 54%,
-    #5c2a50 72%, #3D1A35 88%, #5c2a50 100%
+    var(--ber-glow) 0%, #4E2446 18%, var(--ber-twilight) 36%, #4E2446 54%,
+    var(--ber-glow) 72%, #3D1A35 88%, var(--ber-glow) 100%
   );
   background-size: 400% 400%;
   animation: sky-night 30s ease infinite;
@@ -775,15 +806,15 @@ section {
 }
 .section-day {
   background: linear-gradient(90deg,
-    #FAF4F2  0%,
-    #FAF2E8  8%,
-    #FAF8F0 20%,
-    #F8F2E0 33%,
-    #F8EDD5 50%,
-    #F8F2E0 67%,
-    #FAF8F0 80%,
-    #FAF2E8 92%,
-    #FAF4F2 100%
+    var(--crema-alba)  0%,
+    var(--crema-dawn)  8%,
+    var(--crema-noon) 20%,
+    var(--crema-dusk) 33%,
+    var(--crema-warm) 50%,
+    var(--crema-dusk) 67%,
+    var(--crema-noon) 80%,
+    var(--crema-dawn) 92%,
+    var(--crema-alba) 100%
   );
   background-size: 200% 100%;
   animation: sky-day 72s linear infinite;
@@ -890,17 +921,17 @@ section {
    Al animarse, la sección se ilumina como si el sol pasara de izquierda a derecha. */
 .section-cream {
   /* Sun warmth — stays AA-accessible throughout (min luminance 0.87 = teal 4.6:1 contrast).
-     Max warm tone #F8EDD5 feels like golden afternoon light, never aggressive orange. */
+     Max warm tone var(--crema-warm) feels like golden afternoon light, never aggressive orange. */
   background: linear-gradient(90deg,
-    #FAF4F2  0%,   /* alba: crema levísimamente rosada */
-    #FAF2E8  8%,   /* primera luz: crema cálida */
-    #FAF8F0 20%,   /* media mañana: blanco luminoso */
-    #F8F2E0 33%,   /* tarde: crema dorada */
-    #F8EDD5 50%,   /* hora dorada — ámbar suave, L=0.87, máximo calor */
-    #F8F2E0 67%,
-    #FAF8F0 80%,
-    #FAF2E8 92%,
-    #FAF4F2 100%   /* bucle sin corte */
+    var(--crema-alba)  0%,   /* alba: crema levísimamente rosada */
+    var(--crema-dawn)  8%,   /* primera luz: crema cálida */
+    var(--crema-noon) 20%,   /* media mañana: blanco luminoso */
+    var(--crema-dusk) 33%,   /* tarde: crema dorada */
+    var(--crema-warm) 50%,   /* hora dorada — ámbar suave, L=0.87, máximo calor */
+    var(--crema-dusk) 67%,
+    var(--crema-noon) 80%,
+    var(--crema-dawn) 92%,
+    var(--crema-alba) 100%   /* bucle sin corte */
   );
   background-size: 200% 100%;
   animation: sky-day 80s linear infinite;
@@ -1333,11 +1364,12 @@ body.apt-bar-shown .cookies {
   background: linear-gradient(
     180deg,
     var(--ber-dk) 0%,
-    var(--ber) 15%,
-    #5c3755 40%,
-    #a0647a 60%,
-    #e0a88a 78%,
-    var(--arena) 100%
+    var(--ber)    15%,
+    var(--ber-lt) 35%,
+    var(--vio)    52%,
+    var(--bug)    68%,
+    var(--alb)    84%,
+    var(--arena)  100%
   );
   color: var(--arena);
   display: flex;
@@ -1486,8 +1518,8 @@ body.apt-bar-shown .cookies {
   width: clamp(120px, 14vw, 200px);
   height: clamp(120px, 14vw, 200px);
   border-radius: 50%;
-  background: radial-gradient(circle, #fff5d8 0%, #f5c97a 55%, #e09560 100%);
-  box-shadow: 0 0 120px rgba(245, 201, 122, 0.5);
+  background: radial-gradient(circle, var(--crema) 0%, var(--vs2) 55%, var(--vs) 100%);
+  box-shadow: 0 0 120px rgba(232, 196, 118, 0.5);
   z-index: 1;
 }
 
@@ -1823,7 +1855,7 @@ body.apt-bar-shown .cookies {
   }
   .cc-card.cc-vm { border-top-color: #6B7A3A; }
   .cc-card.cc-vt { border-top-color: #8A4A24; }
-  .cc-card.cc-vs { border-top-color: #9E7A2C; }
+  .cc-card.cc-vs { border-top-color: var(--vs-dk); }
   .cc-card-head {
     display: flex; flex-direction: column; gap: 6px;
     margin-bottom: 18px; padding-bottom: 14px;
@@ -1849,7 +1881,7 @@ body.apt-bar-shown .cookies {
    COUNTERS
    ============================================================ */
 .counters {
-  background: linear-gradient(125deg, #5c2a50 0%, #4E2446 40%, #6B3060 100%);
+  background: linear-gradient(125deg, var(--ber-glow) 0%, #4E2446 40%, var(--ber-twilight) 100%);
   color: var(--arena);
   padding: clamp(80px, 10vw, 140px) var(--page-pad);
   text-align: center;
@@ -1968,13 +2000,14 @@ body.apt-bar-shown .cookies {
 .g-5 { grid-column: span 4; min-height: 300px; }
 .g-6 { grid-column: span 4; min-height: 300px; }
 
-/* Placeholder gradient fills con pattern */
-.g-tile.tile-a .img { background: linear-gradient(135deg, #3AAABB 0%, #246B6E 55%, #1c4e50 100%); }
-.g-tile.tile-b .img { background: linear-gradient(155deg, #8B4A1E 0%, #A86030 50%, #d99263 100%); }
-.g-tile.tile-c .img { background: linear-gradient(135deg, #3D1A35 0%, #5c3755 60%, #8B4A1E 100%); }
-.g-tile.tile-d .img { background: linear-gradient(175deg, #B8883A 0%, #CCA050 50%, #f0d89a 100%); }
-.g-tile.tile-e .img { background: linear-gradient(115deg, #246B6E 0%, #3AAABB 60%, #b4e0e6 100%); }
-.g-tile.tile-f .img { background: linear-gradient(135deg, #FAF6F0 0%, #E4D9BE 60%, #c5b78c 100%); }
+/* Placeholder gradient fills · cada tile usa una familia de la paleta
+   corporativa para mantener coherencia con su caption.                */
+.g-tile.tile-a .img { background: linear-gradient(135deg, var(--sol) 0%, var(--sol-h) 55%, var(--sol-text) 100%); }
+.g-tile.tile-b .img { background: linear-gradient(155deg, var(--sie) 0%, var(--vt) 50%, var(--vt2) 100%); }
+.g-tile.tile-c .img { background: linear-gradient(135deg, var(--ber) 0%, var(--ber-lt) 60%, var(--sie) 100%); }
+.g-tile.tile-d .img { background: linear-gradient(175deg, var(--vs-dk) 0%, var(--vs) 50%, var(--vs2) 100%); }
+.g-tile.tile-e .img { background: linear-gradient(115deg, var(--sol-text) 0%, var(--sol) 60%, var(--sol-lt) 100%); }
+.g-tile.tile-f .img { background: linear-gradient(135deg, var(--crema) 0%, var(--arena) 60%, var(--arena-dk) 100%); }
 
 /* Suave texture */
 .g-tile .img::after {
@@ -2054,7 +2087,7 @@ body.apt-bar-shown .cookies {
   z-index: 2;
   opacity: 0.85;
 }
-.team-member.alex .portrait { background: linear-gradient(160deg, #4E2446, #246B6E); }
+.team-member.alex .portrait { background: linear-gradient(160deg, #4E2446, var(--sol-text)); }
 .team-member.fran .portrait { background: linear-gradient(160deg, #2A0F2E, #8B4A1E); }
 
 .team-member .member-info {
@@ -2102,8 +2135,8 @@ body.apt-bar-shown .cookies {
    ============================================================ */
 .manifest {
   background: linear-gradient(125deg,
-    #5c2a50 0%, #4E2446 12%, #6B3060 26%, #4E2446 40%,
-    #5c2a50 54%, #4E2446 68%, #3D1A35 82%, #5c2a50 100%
+    var(--ber-glow) 0%, #4E2446 12%, var(--ber-twilight) 26%, #4E2446 40%,
+    var(--ber-glow) 54%, #4E2446 68%, #3D1A35 82%, var(--ber-glow) 100%
   );
   background-size: 400% 400%;
   animation: sky-night 32s ease infinite;
@@ -2265,7 +2298,7 @@ body.apt-bar-shown .cookies {
 .contact-cta {
   background: linear-gradient(125deg,
     #3D1A35 0%, #2A0F2E 12%, #2A0F2E 25%, #2A0F2E 38%,
-    #3D1A35 52%, #261040 65%, #2A0F2E 78%, #3D1A35 100%
+    #3D1A35 52%, var(--ber-cosmic) 65%, #2A0F2E 78%, #3D1A35 100%
   );
   background-size: 400% 400%;
   animation: sky-night 34s ease infinite;
@@ -2308,7 +2341,7 @@ footer {
   border-radius: 32px 0 32px 0;
   background: linear-gradient(125deg,
     #2A0F2E 0%, #2A0F2E 8%, #2A0F2E 16%, #3D1A35 24%,
-    #2A0F2E 32%, #261040 40%, #2A0F2E 48%, #2A0F2E 56%,
+    #2A0F2E 32%, var(--ber-cosmic) 40%, #2A0F2E 48%, #2A0F2E 56%,
     #2A0F2E 64%, #2A0F2E 72%, #3D1A35 80%, #2A0F2E 88%,
     #2A0F2E 100%
   );
@@ -2408,7 +2441,7 @@ footer .footer-brand .addr {
    ============================================================ */
 .apt-avail {
   padding: 90px 40px;
-  background: linear-gradient(135deg, #4E2446 0%, #3D1A35 50%, #5c2a50 100%);
+  background: linear-gradient(135deg, #4E2446 0%, #3D1A35 50%, var(--ber-glow) 100%);
   border-top: 1px solid rgba(240,232,213,0.07);
 }
 .avail-hd {
@@ -2430,7 +2463,7 @@ footer .footer-brand .addr {
 .avail-dot {
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: #4ade80;
+  background: var(--ok);
   flex-shrink: 0;
   animation: avail-pulse 2.5s ease-in-out infinite;
 }
@@ -2518,7 +2551,7 @@ footer .footer-brand .addr {
   transition: border-color .2s, color .2s;
   padding: 0;
 }
-.avail-arr:hover:not(.off) { border-color: var(--apt-accent,#3aaabb); color: var(--apt-accent,#3aaabb); }
+.avail-arr:hover:not(.off) { border-color: var(--apt-accent,var(--sol)); color: var(--apt-accent,var(--sol)); }
 .avail-arr.off { opacity: .22; cursor: default; pointer-events: none; }
 .avail-months {
   display: grid;
@@ -2582,7 +2615,7 @@ footer .footer-brand .addr {
 }
 .cal-cell.past      .c-n { opacity: .2; }
 .cal-cell.blk       .c-n { color: var(--ber-dk); font-weight: 500; text-decoration: line-through; text-decoration-color: rgba(61,26,53,.45); }
-.cal-cell.today:not(.blk) .c-n { color: var(--apt-accent,#3aaabb); font-weight: 500; }
+.cal-cell.today:not(.blk) .c-n { color: var(--apt-accent,var(--sol)); font-weight: 500; }
 /* Strip — horizontal bar connecting blocked range. Color crema. */
 .c-strip {
   position: absolute;
@@ -2616,7 +2649,7 @@ footer .footer-brand .addr {
   width: 30px; height: 30px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  border: 1.5px solid var(--apt-accent,#3aaabb);
+  border: 1.5px solid var(--apt-accent,var(--sol));
   z-index: 2;
   pointer-events: none;
 }
@@ -2677,7 +2710,7 @@ footer .footer-brand .addr {
 /* ---- Clickable days ---- */
 .cal-cell.clickable { cursor: pointer; }
 .cal-cell.clickable:hover:not(.in-sel):not(.in-prev) .c-n {
-  color: var(--apt-accent, #3aaabb);
+  color: var(--apt-accent, var(--sol));
 }
 
 /* ---- Selection range ---- */
@@ -2707,7 +2740,7 @@ footer .footer-brand .addr {
 }
 .avail-hint-dot {
   width: 7px; height: 7px; border-radius: 50%;
-  background: var(--apt-accent, #3aaabb); flex-shrink: 0;
+  background: var(--apt-accent, var(--sol)); flex-shrink: 0;
   animation: avail-pulse 1.8s ease-in-out infinite;
 }
 .avail-hint strong { color: rgba(42,15,46,.9); }
@@ -2733,7 +2766,7 @@ footer .footer-brand .addr {
 
 /* ---- Legend selection dot ---- */
 .leg-dot.lg-sel {
-  background: var(--apt-accent, #3aaabb);
+  background: var(--apt-accent, var(--sol));
   opacity: .9;
 }
 
@@ -2744,7 +2777,7 @@ footer .footer-brand .addr {
   max-width: 820px; margin: 32px auto 0;
   background: var(--crema);
   border: 1px solid rgba(42,15,46,.1);
-  border-top: 2px solid var(--req-accent, #3aaabb);
+  border-top: 2px solid var(--req-accent, var(--sol));
   border-radius: 10px 0 10px 0;
   padding: 32px 32px 28px;
   box-shadow: 0 8px 48px rgba(42,15,46,.18);
@@ -2780,7 +2813,7 @@ footer .footer-brand .addr {
 }
 .req-nights-n {
   font-family: var(--serif); font-size: 38px; font-weight: 300;
-  color: var(--req-accent, #3aaabb); line-height: 1;
+  color: var(--req-accent, var(--sol)); line-height: 1;
 }
 .req-nights-lbl {
   font-family: var(--sans); font-size: 10px;
@@ -2876,7 +2909,7 @@ footer .footer-brand .addr {
 /* Action buttons */
 .req-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
 .req-btn-wa { background: #D42B80 !important; border-color: #D42B80 !important; }
-.req-btn-wa:hover { background: #A01F60 !important; }
+.req-btn-wa:hover { background: var(--err-dk) !important; }
 .req-btn-wa, .req-btn-mail {
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
@@ -3166,7 +3199,7 @@ footer .footer-brand .addr {
   cursor: pointer;
 }
 .hbm-wa  { background: var(--bug); color: var(--crema); }
-.hbm-wa:hover  { background: #A01F60; }
+.hbm-wa:hover  { background: var(--err-dk); }
 .hbm-mail { background: none; border: 1.5px solid rgba(42,15,46,.25); color: rgba(42,15,46,.7); }
 .hbm-mail:hover { border-color: var(--ber); color: var(--ber-dk); }
 .hbm-dis { opacity: .38; cursor: not-allowed; pointer-events: none; }
@@ -3356,7 +3389,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   background: linear-gradient(
     135deg,
     var(--sol-lt) 0%,
-    #c8f0f8     45%,
+    var(--sol-lt)     45%,
     var(--sol-lt) 100%
   );
   background-size: 220% auto;
@@ -3587,8 +3620,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .contact-cta {
   background: linear-gradient(
     -45deg,
-    #140919, #2A0F2E, #2A0F2E,
-    #2A0F2E, #2A0F2E, #140919
+    var(--ber-void), #2A0F2E, #2A0F2E,
+    #2A0F2E, #2A0F2E, var(--ber-void)
   );
   background-size: 500% 500%;
   animation: ctaAurora 15s ease infinite;
@@ -3662,7 +3695,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   padding: calc(var(--topbar-h, 36px) + 120px) var(--page-pad) 80px;
   background: linear-gradient(125deg,
     #2A0F2E 0%, #2A0F2E 8%, #2A0F2E 16%, #3D1A35 24%,
-    #2A0F2E 32%, #261040 40%, #2A0F2E 48%, #2A0F2E 56%,
+    #2A0F2E 32%, var(--ber-cosmic) 40%, #2A0F2E 48%, #2A0F2E 56%,
     #2A0F2E 64%, #2A0F2E 72%, #3D1A35 80%, #2A0F2E 88%,
     #2A0F2E 100%
   );
@@ -3798,15 +3831,15 @@ body.no-parallax .g-tile .img { transform: none !important; }
 /* ---- section-cream (inner pages) ---- */
 .section-cream {
   background: linear-gradient(90deg,
-    #FAF4F2  0%,
-    #FAF2E8  8%,
-    #FAF8F0 20%,
-    #F8F2E0 33%,
-    #F8EDD5 50%,
-    #F8F2E0 67%,
-    #FAF8F0 80%,
-    #FAF2E8 92%,
-    #FAF4F2 100%
+    var(--crema-alba)  0%,
+    var(--crema-dawn)  8%,
+    var(--crema-noon) 20%,
+    var(--crema-dusk) 33%,
+    var(--crema-warm) 50%,
+    var(--crema-dusk) 67%,
+    var(--crema-noon) 80%,
+    var(--crema-dawn) 92%,
+    var(--crema-alba) 100%
   );
   background-size: 200% 100%;
   animation: sky-day 80s linear infinite;
@@ -4650,7 +4683,7 @@ body.no-parallax .g-tile .img { transform: none !important; }
   padding: 80px var(--page-pad);
   background: linear-gradient(125deg,
     #2A0F2E 0%, #2A0F2E 10%, #2A0F2E 22%, #3D1A35 35%,
-    #2A0F2E 50%, #261040 65%, #2A0F2E 80%, #2A0F2E 100%
+    #2A0F2E 50%, var(--ber-cosmic) 65%, #2A0F2E 80%, #2A0F2E 100%
   );
   background-size: 400% 400%;
   animation: sky-night 36s ease infinite;
@@ -4957,8 +4990,8 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .nosotros-team {
   padding: 96px var(--page-pad);
   background: linear-gradient(125deg,
-    #5c2a50 0%, #4E2446 12%, #6B3060 26%, #4E2446 42%,
-    #5c2a50 58%, #3D1A35 74%, #5c2a50 88%, #4E2446 100%
+    var(--ber-glow) 0%, #4E2446 12%, var(--ber-twilight) 26%, #4E2446 42%,
+    var(--ber-glow) 58%, #3D1A35 74%, var(--ber-glow) 88%, #4E2446 100%
   );
   background-size: 400% 400%;
   animation: sky-night 40s ease infinite;
@@ -6979,9 +7012,9 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .hs-form-err {
   font-family: var(--sans);
   font-size: 13px;
-  color: #e08080;
-  background: rgba(224,128,128,.1);
-  border: 1px solid rgba(224,128,128,.25);
+  color: var(--err);
+  background: rgba(184, 36, 110, 0.10);    /* err con baja alpha */
+  border: 1px solid rgba(184, 36, 110, 0.25);
   border-radius: 10px 0 10px 0;
   padding: 10px 14px;
 }
@@ -7086,12 +7119,12 @@ body.no-parallax .g-tile .img { transform: none !important; }
 }
 .hs-rc-status.ok {
   background: rgba(100,180,80,.15);
-  color: #8ecb72;
+  color: var(--ok);
   border: 1px solid rgba(100,180,80,.25);
 }
 .hs-rc-status.no {
   background: rgba(200,90,70,.12);
-  color: #c87a6a;
+  color: var(--alb);
   border: 1px solid rgba(200,90,70,.2);
 }
 
@@ -7954,10 +7987,10 @@ footer,
 }
 
 .apt-guide-form.is-error .apt-guide-input {
-  border-color: #c0392b;
+  border-color: var(--err);
   animation: apt-guide-shake 380ms cubic-bezier(.36,.07,.19,.97);
 }
-.apt-guide-form.is-error .apt-guide-msg { color: #c0392b; }
+.apt-guide-form.is-error .apt-guide-msg { color: var(--err); }
 .apt-guide-form.is-success .apt-guide-msg { color: var(--apt-accent); }
 
 @keyframes apt-guide-shake {
@@ -8158,10 +8191,10 @@ footer,
   transition: color var(--dur-base, 220ms) var(--ease-out, ease-out);
 }
 .ag-modal.is-error .ag-modal-input {
-  border-color: #c0392b;
+  border-color: var(--err);
   animation: apt-guide-shake 380ms cubic-bezier(.36,.07,.19,.97);
 }
-.ag-modal.is-error .ag-modal-msg { color: #c0392b; }
+.ag-modal.is-error .ag-modal-msg { color: var(--err); }
 .ag-modal.is-success .ag-modal-msg { color: var(--apt-accent, var(--sol)); }
 
 .ag-modal-actions {
@@ -9435,7 +9468,7 @@ footer,
 /* ================================================================
    LAYER 99 · /p-edit.html (admin de precios, oculto, no enlazado)
    ================================================================ */
-.pe-body { background: #f3eee7; min-height: 100vh; font-family: var(--sans); color: var(--ber-dk); }
+.pe-body { background: var(--crema); min-height: 100vh; font-family: var(--sans); color: var(--ber-dk); }
 .pe-shell { max-width: 920px; margin: 0 auto; padding: 32px 20px 80px; }
 .pe-topbar {
   display: flex; align-items: center; gap: 16px;
@@ -9481,7 +9514,7 @@ footer,
 .pe-mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
 .pe-textarea {
   width: 100%; padding: 12px 14px;
-  background: #fcfaf6;
+  background: var(--crema);
   border: 1px solid rgba(61,26,53,0.18);
   border-radius: 6px 0 6px 0;
   font-size: 12px; line-height: 1.45;
@@ -9507,15 +9540,15 @@ footer,
 .pe-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 8px 0; }
 .pe-error {
   padding: 12px 16px; margin-top: 12px;
-  background: #fde7e0; color: #7a1f1f;
-  border-left: 3px solid #c0392b;
+  background: var(--err-bg); color: var(--err-dk);
+  border-left: 3px solid var(--err);
   border-radius: 0 8px 8px 0;
   font-size: 13px; line-height: 1.5;
 }
 .pe-success {
   padding: 12px 16px; margin-bottom: 18px;
-  background: #e1f0e2; color: #1f5f29;
-  border-left: 3px solid #2e7d32;
+  background: var(--ok-bg); color: var(--ok-dk);
+  border-left: 3px solid var(--ok-dk);
   border-radius: 0 8px 8px 0;
   font-size: 13px;
 }
@@ -9549,7 +9582,7 @@ footer,
   font-weight: 500;
   letter-spacing: .02em;
   opacity: 0.85;
-  color: var(--sol-lt, #ffd770);
+  color: var(--sol-lt);
 }
 
 /* ── Trigger band ──
@@ -10333,7 +10366,7 @@ footer,
   cursor: pointer;
   transition: background .25s ease, transform .15s var(--ease-out, ease);
 }
-.ads-btn:hover { background: var(--sol-lt, #ffd770); transform: translateY(-1px); }
+.ads-btn:hover { background: var(--sol-lt); transform: translateY(-1px); }
 .ads-btn:active { transform: translateY(0) scale(.98); }
 .ads-btn-ghost {
   background: transparent;
@@ -10822,10 +10855,10 @@ body.apt-bar-shown .widget-stack {
   transition: color .22s ease;
 }
 .ga-modal.is-error .ga-modal-input {
-  border-color: #c0392b;
+  border-color: var(--err);
   animation: apt-guide-shake 380ms cubic-bezier(.36,.07,.19,.97);
 }
-.ga-modal.is-error .ga-modal-msg { color: #c0392b; }
+.ga-modal.is-error .ga-modal-msg { color: var(--err); }
 .ga-modal.is-success .ga-modal-msg { color: var(--ga-accent, var(--sol)); }
 
 .ga-modal-actions {
@@ -10966,13 +10999,13 @@ body.apt-bar-shown .widget-stack {
 .pe-validate-block li { margin: 2px 0; font-family: var(--mono, ui-monospace, Consolas, monospace); font-size: 12.5px; }
 .pe-validate-gaps {
   background: rgba(245, 158, 11, .08);
-  border-left-color: #f59e0b;
-  color: #92400e;
+  border-left-color: var(--warn);
+  color: var(--warn-dk);
 }
 .pe-validate-overlaps {
   background: rgba(239, 68, 68, .08);
-  border-left-color: #ef4444;
-  color: #991b1b;
+  border-left-color: var(--err);
+  color: var(--err-dk);
 }
 .pe-validate-sources { color: var(--ink-soft); font-size: 11.5px; }
 
@@ -11244,12 +11277,12 @@ body.apt-bar-shown .widget-stack {
 }
 .eo-err {
   font-size: 12px;
-  color: #c0392b;
+  color: var(--err);
   font-weight: 500;
   margin-top: 2px;
 }
 .eo-required {
-  color: #c0392b;
+  color: var(--err);
   font-weight: 600;
   margin-left: 2px;
 }
@@ -11295,9 +11328,9 @@ body.apt-bar-shown .widget-stack {
 .eo-apt-dot {
   width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
 }
-.eo-apt-dot[data-apt="vm"] { background: #3AAABB; }
+.eo-apt-dot[data-apt="vm"] { background: var(--sol); }
 .eo-apt-dot[data-apt="vt"] { background: #8A4A24; }
-.eo-apt-dot[data-apt="vs"] { background: #9E7A2C; }
+.eo-apt-dot[data-apt="vs"] { background: var(--vs-dk); }
 
 /* Estrellas clicables */
 .eo-stars {
@@ -11331,9 +11364,9 @@ body.apt-bar-shown .widget-stack {
   margin-top: 8px;
   padding: 12px 16px;
   background: rgba(192,57,43,.1);
-  border-left: 3px solid #c0392b;
+  border-left: 3px solid var(--err);
   border-radius: 8px 0 8px 0;
-  color: #8b2922;
+  color: var(--err-dk);
   font-size: 13px;
 }
 
@@ -11437,11 +11470,11 @@ body.apt-bar-shown .widget-stack {
   margin-right: 4px;
 }
 .pe-rev-row { position: relative; }
-.pe-rev-pending { border-left: 4px solid #f59e0b; }
+.pe-rev-pending { border-left: 4px solid var(--warn); }
 
 /* PasteFromEmail — vista previa del parseo */
 .pe-paste-err {
-  color: #c0392b;
+  color: var(--err);
   font-size: 13px;
   font-weight: 500;
 }
@@ -11462,7 +11495,7 @@ body.apt-bar-shown .widget-stack {
   display: inline-block;
   padding: 3px 8px;
   border-radius: 4px;
-  background: #f59e0b;
+  background: var(--warn);
   color: white;
   font-size: 10px;
   font-weight: 700;
@@ -11584,7 +11617,7 @@ body.apt-bar-shown .widget-stack {
   height: 22px;
   padding: 0 6px;
   border-radius: 999px;
-  background: #f59e0b;
+  background: var(--warn);
   color: #fff;
   font-size: 11px;
   font-weight: 700;
@@ -11925,7 +11958,7 @@ a:focus-visible,
       font-size: 8pt;
       font-weight: 500;
       letter-spacing: 0.32em;
-      color: #9E7A2C;
+      color: var(--vs-dk);
       padding-bottom: 4mm;
     }
     @top-right {
@@ -11933,7 +11966,7 @@ a:focus-visible,
       font-family: 'Inter', sans-serif;
       font-size: 8pt;
       letter-spacing: 0.32em;
-      color: #6b6657;
+      color: var(--arena-dk);
       padding-bottom: 4mm;
     }
     @bottom-left {
@@ -11941,7 +11974,7 @@ a:focus-visible,
       font-family: 'Inter', sans-serif;
       font-size: 8pt;
       letter-spacing: 0.18em;
-      color: #6b6657;
+      color: var(--arena-dk);
       padding-top: 4mm;
     }
     @bottom-right {
@@ -11949,7 +11982,7 @@ a:focus-visible,
       font-family: 'Playfair Display', serif;
       font-style: italic;
       font-size: 11pt;
-      color: #9E7A2C;
+      color: var(--vs-dk);
       padding-top: 4mm;
     }
   }
@@ -12007,7 +12040,7 @@ a:focus-visible,
     font-weight: 500;
     letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: #9E7A2C;
+    color: var(--vs-dk);
   }
   /* Número decorativo eliminado — choca con el lenguaje brand */
   .apt-guide-view[data-apt="vs"] .ag-print-cover-num { display: none; }
@@ -12024,10 +12057,10 @@ a:focus-visible,
     font-weight: 400;
     letter-spacing: 0.32em;
     text-transform: uppercase;
-    color: #9E7A2C;
+    color: var(--vs-dk);
     margin-bottom: 10mm;
     padding-bottom: 2mm;
-    border-bottom: 1px solid color-mix(in oklab, #9E7A2C 50%, transparent);
+    border-bottom: 1px solid color-mix(in oklab, var(--vs-dk) 50%, transparent);
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-title {
     font-family: 'Playfair Display', serif;
@@ -12040,7 +12073,7 @@ a:focus-visible,
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-title em {
     font-style: italic;
-    color: #9E7A2C;
+    color: var(--vs-dk);
     margin-left: 0.18em;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-sub {
@@ -12049,14 +12082,14 @@ a:focus-visible,
     font-style: italic;
     font-weight: 400;
     font-size: 14pt;
-    color: #5a4838;
+    color: var(--ber-pitch);
     line-height: 1.45;
     max-width: 130mm;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-rule {
     width: 48px;
     height: 2px;
-    background: #9E7A2C;
+    background: var(--vs-dk);
     margin: 6mm 0 4mm;
     border-radius: 0;
   }
@@ -12064,7 +12097,7 @@ a:focus-visible,
     display: flex;
     justify-content: space-between;
     align-items: end;
-    border-top: 1px solid color-mix(in oklab, #9E7A2C 25%, transparent);
+    border-top: 1px solid color-mix(in oklab, var(--vs-dk) 25%, transparent);
     padding-top: 6mm;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-sig-line {
@@ -12073,7 +12106,7 @@ a:focus-visible,
     font-size: 8pt;
     letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: #6b6657;
+    color: var(--arena-dk);
     margin-bottom: 2mm;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-cover-sig-name {
@@ -12090,7 +12123,7 @@ a:focus-visible,
     gap: 2mm;
     font-family: 'Inter', sans-serif;
     font-size: 8.5pt;
-    color: #6b6657;
+    color: var(--arena-dk);
     letter-spacing: 0.06em;
   }
 
@@ -12110,7 +12143,7 @@ a:focus-visible,
     font-weight: 500;
     letter-spacing: 0.32em;
     text-transform: uppercase;
-    color: #9E7A2C;
+    color: var(--vs-dk);
     margin-bottom: 4mm;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-title {
@@ -12126,7 +12159,7 @@ a:focus-visible,
   }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-title em {
     font-style: italic;
-    color: #9E7A2C;
+    color: var(--vs-dk);
   }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-title::after {
     content: '';
@@ -12135,7 +12168,7 @@ a:focus-visible,
     left: 0;
     width: 48px;
     height: 2px;
-    background: #9E7A2C;
+    background: var(--vs-dk);
   }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-list {
     list-style: none;
@@ -12148,14 +12181,14 @@ a:focus-visible,
     gap: 4mm;
     align-items: baseline;
     padding: 3mm 0;
-    border-bottom: 1px dotted color-mix(in oklab, #9E7A2C 22%, transparent);
+    border-bottom: 1px dotted color-mix(in oklab, var(--vs-dk) 22%, transparent);
     page-break-inside: avoid;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-num {
     font-family: 'Playfair Display', serif;
     font-style: italic;
     font-size: 14pt;
-    color: #9E7A2C;
+    color: var(--vs-dk);
     line-height: 1;
   }
   .apt-guide-view[data-apt="vs"] .ag-print-toc-name {
@@ -12169,7 +12202,7 @@ a:focus-visible,
     margin-top: 10mm;
     font-family: 'Inter', sans-serif;
     font-size: 9pt;
-    color: #6b6657;
+    color: var(--arena-dk);
     line-height: 1.55;
     max-width: 140mm;
     font-style: italic;
@@ -12189,7 +12222,7 @@ a:focus-visible,
     padding: 0 !important;
     margin: 0 0 12mm !important;
     border: 0 !important;
-    border-bottom: 1px solid color-mix(in oklab, #9E7A2C 14%, transparent) !important;
+    border-bottom: 1px solid color-mix(in oklab, var(--vs-dk) 14%, transparent) !important;
     page-break-inside: auto;
     position: relative;
   }
@@ -12209,7 +12242,7 @@ a:focus-visible,
     font-weight: 400 !important;
     font-size: 11pt !important;
     letter-spacing: 0.18em !important;
-    color: #9E7A2C !important;
+    color: var(--vs-dk) !important;
     margin: 0 0 4mm !important;
     text-transform: none !important;
     background: none !important;
@@ -12234,7 +12267,7 @@ a:focus-visible,
     left: 0 !important;
     width: 48px !important;
     height: 2px !important;
-    background: #9E7A2C !important;
+    background: var(--vs-dk) !important;
     display: block !important;
   }
   .apt-guide-view[data-apt="vs"] .ag-h3 {
@@ -12251,7 +12284,7 @@ a:focus-visible,
     font-size: 10.5pt !important;
     font-weight: 400 !important;
     line-height: 1.65 !important;
-    color: #1f1a16 !important;
+    color: var(--ber-pitch) !important;
     margin: 0 0 4mm !important;
     text-align: left;
     widows: 3;
@@ -12282,14 +12315,14 @@ a:focus-visible,
     position: relative;
     padding: 4mm 4mm 4mm 14mm !important;
     margin-bottom: 3mm !important;
-    background: color-mix(in oklab, #9E7A2C 4%, #FAF6F0) !important;
+    background: color-mix(in oklab, var(--vs-dk) 4%, #FAF6F0) !important;
     border: 0 !important;
     border-bottom: 0 !important;
     border-radius: 10px 0 10px 0 !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 10pt !important;
     line-height: 1.55 !important;
-    color: #1f1a16 !important;
+    color: var(--ber-pitch) !important;
     page-break-inside: avoid;
   }
   .apt-guide-view[data-apt="vs"] .ag-recs li::before {
@@ -12301,7 +12334,7 @@ a:focus-visible,
     font-style: italic !important;
     font-weight: 600 !important;
     font-size: 11pt !important;
-    color: #9E7A2C !important;
+    color: var(--vs-dk) !important;
   }
   /* Leyenda urb: número plano sin padding 01 02… */
   .apt-guide-view[data-apt="vs"] .ag-urb-points li::before {
@@ -12318,7 +12351,7 @@ a:focus-visible,
     font-size: 9pt !important;
     letter-spacing: 0.24em !important;
     text-transform: uppercase !important;
-    color: #6b6657 !important;
+    color: var(--arena-dk) !important;
   }
   .apt-guide-view[data-apt="vs"] .ag-signer {
     font-family: 'Playfair Display', serif !important;
@@ -12342,7 +12375,7 @@ a:focus-visible,
   .apt-guide-view[data-apt="vs"] .ag-photo > img {
     aspect-ratio: 4/3 !important;
     object-fit: cover;
-    border: 1px solid color-mix(in oklab, #9E7A2C 25%, transparent) !important;
+    border: 1px solid color-mix(in oklab, var(--vs-dk) 25%, transparent) !important;
     border-radius: 10px 0 10px 0 !important;
     box-shadow: none !important;
   }
@@ -12375,7 +12408,7 @@ a:focus-visible,
     font-family: 'Inter', sans-serif !important;
     font-style: normal !important;
     font-size: 9pt !important;
-    color: #6b6657 !important;
+    color: var(--arena-dk) !important;
     margin-top: 2mm !important;
     text-align: left;
   }
