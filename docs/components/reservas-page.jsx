@@ -27,6 +27,9 @@ const RESERVAS_COPY = {
     f_pets: '¿Viaja con mascota?',
     f_pets_no: 'No',
     f_pets_yes: 'Sí',
+    f_baby: '¿Viaja con bebé?',
+    f_baby_no: 'No',
+    f_baby_yes: 'Sí',
     f_extras_label: 'Extras (opcional)',
     f_extras: ['Ropa de cama extra', 'Toallas extra', 'Cuna de bebé', 'Silla de bebé'],
     f_comments: 'Comentarios (opcional)',
@@ -87,6 +90,9 @@ const RESERVAS_COPY = {
     f_pets: 'Bringing a pet?',
     f_pets_no: 'No',
     f_pets_yes: 'Yes',
+    f_baby: 'Bringing a baby?',
+    f_baby_no: 'No',
+    f_baby_yes: 'Yes',
     f_extras_label: 'Extras (optional)',
     f_extras: ['Extra bed linen', 'Extra towels', 'Baby cot', 'Baby chair'],
     f_comments: 'Comments (optional)',
@@ -127,7 +133,11 @@ const RESERVAS_COPY = {
 
 const _resExtrasList = () => {
   const v = window.PRICES_V2 && window.PRICES_V2.rules && window.PRICES_V2.rules.extras;
-  return Array.isArray(v) ? v : [];
+  if (!Array.isArray(v)) return [];
+  // "huespedAdicional" se gestiona vía el contador de huéspedes y solo
+  // tiene sentido para modificar reservas existentes (no para crear una
+  // nueva). Se queda en /p-edit para el admin, fuera del flujo público.
+  return v.filter(ex => ex.id !== 'huespedAdicional');
 };
 
 const _resExtraUnitSuffix = (unit, lang) => {
@@ -252,6 +262,7 @@ const ReservasForm = ({ lang }) => {
   const [checkout, setCheckout] = React.useState('');
   const [guests, setGuests]     = React.useState('');
   const [pets, setPets]         = React.useState('no');
+  const [baby, setBaby]         = React.useState('no');
   // extrasSel: { [id]: qty }. 0/missing = no seleccionado.
   // Para unidades no-hora, qty siempre es 1; para 'hora', el usuario edita.
   const [extrasSel, setExtrasSel] = React.useState({});
@@ -306,13 +317,10 @@ const ReservasForm = ({ lang }) => {
       }
     }
     if (qPets === 'yes') { setPets('yes'); hadAny = true; }
-    // Bebé: lo pre-seleccionamos como extra "trona" o "cuna" si llega; el
-    // huésped lo confirma/cambia en step 2 (extras).
+    // Bebé: setea el toggle Sí/No y deja la opción a marcar cuna/trona en
+    // los extras (no las marca automáticamente — el huésped decide).
     const qBaby = qs.get('baby');
-    if (qBaby === 'yes') {
-      setExtrasSel(prev => ({ ...prev, cuna: 1, trona: 1 }));
-      hadAny = true;
-    }
+    if (qBaby === 'yes') { setBaby('yes'); hadAny = true; }
     // Si vino apt + ambas fechas, avanzamos al step 2 directamente.
     if (qApt && qCheckin && qCheckout) {
       setStep(2);
@@ -427,6 +435,7 @@ const ReservasForm = ({ lang }) => {
     }
 
     const petsText = pets === 'yes' ? (lang === 'es' ? 'Sí' : 'Yes') : 'No';
+    const babyText = baby === 'yes' ? (lang === 'es' ? 'Sí' : 'Yes') : 'No';
 
     const grandTotal = calc ? calc.directTotal + extrasTotal : 0;
     const grandAvg   = calc ? Math.round(grandTotal / calc.nights) : 0;
@@ -454,7 +463,8 @@ const ReservasForm = ({ lang }) => {
           `Entrada: ${checkin}`,
           `Salida: ${checkout}`,
           `Huéspedes: ${guests}`,
-          `Mascota: ${petsText}${extrasText}${priceBlock}`,
+          `Mascota: ${petsText}`,
+          `Bebé: ${babyText}${extrasText}${priceBlock}`,
           `Comentarios: ${comments || '—'}`,
         ]
       : [
@@ -465,7 +475,8 @@ const ReservasForm = ({ lang }) => {
           `Check-in: ${checkin}`,
           `Check-out: ${checkout}`,
           `Guests: ${guests}`,
-          `Pet: ${petsText}${extrasText}${priceBlock}`,
+          `Pet: ${petsText}`,
+          `Baby: ${babyText}${extrasText}${priceBlock}`,
           `Comments: ${comments || '—'}`,
         ];
     return lines.join('\n');
@@ -611,6 +622,29 @@ const ReservasForm = ({ lang }) => {
                 </button>
               </div>
             </div>
+            <div className="form-field full">
+              <label>{t.f_baby}</label>
+              <div className="rf-chip-row" role="radiogroup" aria-label={t.f_baby}>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={baby === 'no'}
+                  className={`rf-chip rf-chip-wide${baby === 'no' ? ' is-on' : ''}`}
+                  onClick={() => setBaby('no')}
+                >
+                  {t.f_baby_no}
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={baby === 'yes'}
+                  className={`rf-chip rf-chip-wide${baby === 'yes' ? ' is-on' : ''}`}
+                  onClick={() => setBaby('yes')}
+                >
+                  👶 {t.f_baby_yes}
+                </button>
+              </div>
+            </div>
             <div className="rf-step-actions">
               <button
                 type="button"
@@ -660,13 +694,9 @@ const ReservasForm = ({ lang }) => {
               </div>
             )}
 
-            {/* Price */}
-            {calc && (
-              <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} lang={lang} extras={selectedExtras}/>
-            )}
-
-            {/* Extras editor — chips selectables. Toca para marcar, vuelve a
-                tocar para desmarcar. Para "hora" aparece un input de horas. */}
+            {/* Extras editor (chips) — primero los extras para que el
+                precio que sale debajo se vea recalculándose en vivo a
+                medida que el huésped marca/desmarca. */}
             {step === 2 && (
               <div className="form-field full rf-extras-block">
                 <div className="form-extras-label">{t.f_extras_label}</div>
@@ -712,6 +742,12 @@ const ReservasForm = ({ lang }) => {
                   })}
                 </div>
               </div>
+            )}
+
+            {/* Price — debajo de los extras para que el huésped vea cómo
+                cambia el total al añadir cada extra. */}
+            {calc && (
+              <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} lang={lang} extras={selectedExtras}/>
             )}
 
             {step === 2 && (

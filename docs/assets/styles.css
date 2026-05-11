@@ -2914,7 +2914,7 @@ footer .footer-brand .addr {
 .req-disclaimer strong { color: rgba(240,190,60,.9); font-weight: 500; }
 
 /* Disabled state — shared by req-panel, home-search cards */
-.req-btn-dis { opacity: .35; pointer-events: none; cursor: default; }
+.req-btn-dis { opacity: .60; pointer-events: none; cursor: default; }
 .req-hint { font-family: var(--sans); font-size: 11px; letter-spacing: .08em; color: #D42B80; margin: 0 0 10px; }
 
 /* Action buttons */
@@ -7445,6 +7445,31 @@ body.no-parallax .g-tile .img { transform: none !important; }
 /* ── Calendar range picker (home search) ──────────────────────── */
 /* Cell/grid rendering reuses the existing .cal-* and .c-* classes */
 .hscal-wrap { display: flex; flex-direction: column; }
+
+/* Tema CLARO del datepicker en /reservas — el calendario base está
+   pensado para fondos oscuros (home-search hero). Aquí el contenedor
+   .reservas-form-wrap es cream, así que sobreescribimos los colores
+   de texto para que se lean correctamente.                          */
+.reservas-form-wrap .cal-mhd          { color: var(--ber-dk); }
+.reservas-form-wrap .cal-yr           { color: var(--ber); opacity: 0.55; }
+.reservas-form-wrap .cal-wd           { color: var(--ber); opacity: 0.5; }
+.reservas-form-wrap .c-n              { color: var(--ber-dk); opacity: 0.85; }
+.reservas-form-wrap .cal-cell.past .c-n { color: var(--ber); opacity: 0.25; }
+.reservas-form-wrap .cal-cell.blk  .c-n { color: var(--ber-dk); opacity: 0.7; }
+.reservas-form-wrap .cal-cell.today:not(.blk) .c-n { color: var(--apt-accent, var(--sol)); font-weight: 600; }
+.reservas-form-wrap .cal-cell.in-sel .c-n,
+.reservas-form-wrap .cal-cell.sel-s  .c-n,
+.reservas-form-wrap .cal-cell.sel-e  .c-n { color: var(--ber-dk); font-weight: 600; opacity: 1; }
+.reservas-form-wrap .cal-cell.sel-m  .c-n { color: var(--ber-dk); opacity: 0.7; }
+.reservas-form-wrap .cal-cell.prev-s .c-n,
+.reservas-form-wrap .cal-cell.prev-e .c-n { color: var(--ber-dk); opacity: 0.85; }
+.reservas-form-wrap .cal-cell.prev-m .c-n { color: var(--ber-dk); opacity: 0.5; }
+.reservas-form-wrap .hscal-phase-hint { color: var(--sol-h); }
+.reservas-form-wrap .avail-nav-lbl    { color: var(--ber-dk); opacity: 0.85; }
+.reservas-form-wrap .avail-arr        { color: var(--ber); }
+.reservas-form-wrap .hscal-sel-lbl    { color: var(--ber); opacity: 0.7; }
+.reservas-form-wrap .hscal-sel-item strong { color: var(--ber-dk); }
+
 .hscal-phase-hint {
   font-family: var(--sans);
   font-size: 11px; font-weight: 400;
