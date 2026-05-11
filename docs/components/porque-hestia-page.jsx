@@ -278,13 +278,20 @@ const PorqueNombre = ({ lang }) => {
 // hacer focus por teclado para a11y de lectura con screen-reader).
 // Navegación por teclado: ←/→/Home/End. La letra se puede cambiar a
 // mano clicando un tab; la siguiente cíclica se retoma desde ahí.
+// Hues por letra (RGB de la paleta corporativa Hestía):
+//   H Hospitalidad → bug   (#D42B80) buganvilla
+//   E Escucha      → sol   (#3AAABB) turquesa
+//   S Sencillez    → alb   (#C8975A) albero
+//   T Transparencia→ vs    (#D4A84A) amarillo amanecer
+//   I Integridad   → vio   (#7B3B6B) violeta
+//   A Arraigo      → vm    (#6B7A3A) olivo
 const PORQUE_V4_HUES = {
-  H: '209, 139, 139',
+  H: '212, 43, 128',
   E: '58, 170, 187',
-  S: '201, 167, 107',
+  S: '200, 151, 90',
   T: '212, 168, 74',
-  I: '140, 70, 120',
-  A: '125, 140, 90',
+  I: '123, 59, 107',
+  A: '107, 122, 58',
 };
 const PORQUE_V4_AUTOPLAY_MS = 10000;
 
