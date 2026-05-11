@@ -9781,8 +9781,16 @@ footer,
 .pe-btn-primary:hover { background: var(--ber-dk); border-color: var(--ber-dk); }
 .pe-btn-primary:active { transform: scale(0.98); }
 .pe-btn-primary[disabled] { opacity: .4; cursor: not-allowed; }
-.pe-btn-ghost { background: transparent; color: var(--arena); border-color: rgba(240,232,213,.4); }
-.pe-btn-ghost:hover { background: rgba(240,232,213,.1); }
+.pe-btn-ghost {
+  background: transparent;
+  color: var(--ber);                                  /* eggplant sobre crema, AA */
+  border-color: rgba(61, 26, 53, 0.35);
+}
+.pe-btn-ghost:hover {
+  background: rgba(61, 26, 53, 0.06);
+  border-color: var(--ber);
+  color: var(--ber-dk);
+}
 .pe-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 8px 0; }
 .pe-error {
   padding: 12px 16px; margin-top: 12px;
