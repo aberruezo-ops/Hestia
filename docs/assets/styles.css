@@ -1641,7 +1641,7 @@ body.apt-bar-shown .cookies {
   line-height: 1;
   font-weight: 300;
   font-style: italic;
-  opacity: 0.6;
+  opacity: 0.85;     /* antes 0.6 — ilegible sobre dark eggplant */
   margin-bottom: -20px;
 }
 .apt-card .apt-name {
@@ -1650,20 +1650,20 @@ body.apt-bar-shown .cookies {
   font-weight: 300;
   letter-spacing: -0.01em;
 }
-.apt-card .apt-name .small { font-size: 0.55em; opacity: 0.85; letter-spacing: 0.04em; }
+.apt-card .apt-name .small { font-size: 0.55em; opacity: 0.95; letter-spacing: 0.04em; }
 .apt-card .apt-tag {
   font-family: var(--sans);
   font-weight: 300;
   font-style: italic;
   font-size: 15px;
-  opacity: 0.85;
+  opacity: 0.95;     /* antes 0.85 — el tagline debe leerse */
   max-width: 30ch;
 }
 .apt-card .apt-meta {
   display: flex; gap: 14px; flex-wrap: wrap;
   margin-top: 12px;
   font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
-  opacity: 0.8;
+  opacity: 0.9;     /* antes 0.8 */
 }
 .apt-card .apt-meta span { display: inline-flex; align-items: center; gap: 6px; }
 .apt-card .apt-meta .dot { width: 3px; height: 3px; background: currentColor; border-radius: 50%; opacity: 0.5; }
