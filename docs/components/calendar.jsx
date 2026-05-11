@@ -56,10 +56,11 @@ const _shortDate = (ds, lang) => {
 // ---------------------------------------------------------------
 const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
   const [guests, setGuests] = React.useState(2);
-  const [pets,   setPets  ] = React.useState(false);
-
+  // Mascota y demás extras se eligen en /reservas (paso único de extras).
+  // Aquí mostramos precio base sin suplementos para no inflar la estimación
+  // ni duplicar campos.
   const aptName = _CM.apt_names[aptId] || 'Hestía';
-  const calc    = _calcStay(selStart, selEnd, aptId, pets);
+  const calc    = _calcStay(selStart, selEnd, aptId, false);
 
   const fmt = n => n.toLocaleString('es-ES') + ' €';
 
@@ -74,14 +75,14 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
   };
 
   // CTA "Avanzar con la reserva": navega a /reservas pre-rellenado.
-  // Datos de contacto, extras y comentarios se gestionan allí.
+  // Datos de contacto, extras (mascota, cuna, etc) y comentarios se
+  // gestionan allí — aquí solo lo esencial para ver precio base.
   const reservasHref = (() => {
     const params = new URLSearchParams();
     params.set('apt', aptId);
     if (selStart) params.set('checkin',  selStart);
     if (selEnd)   params.set('checkout', selEnd);
     if (guests)   params.set('guests',   String(guests));
-    if (pets)     params.set('pets',     'yes');
     return 'reservas.html?' + params.toString();
   })();
 
@@ -135,12 +136,6 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
                 <span>−{fmt(calc.stayDiscAmt)}</span>
               </div>
             )}
-            {calc.petAmt > 0 && (
-              <div className="price-line">
-                <span>{lang === 'es' ? `Suplemento mascota (tarifa plana ${PET_SUPP_FLAT}€)` : `Pet supplement (flat fee ${PET_SUPP_FLAT}€)`}</span>
-                <span>+{fmt(calc.petAmt)}</span>
-              </div>
-            )}
             <div className="price-line price-line-total">
               <span>{lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'}</span>
               <span>{fmt(calc.directTotal)}</span>
@@ -152,7 +147,8 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
         </div>
       )}
 
-      {/* Guests */}
+      {/* Guests — sin extras: cuna, trona, sábanas, toallas y mascota se
+          eligen en /reservas (paso único). */}
       <div className="req-guests">
         <span className="req-guests-lbl">{lang === 'es' ? 'Huéspedes' : 'Guests'}</span>
         <div className="req-guests-ctrl">
@@ -160,10 +156,6 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
           <span className="req-g-num">{guests}</span>
           <button className="req-g-btn" onClick={() => setGuests(g => Math.min(6, g + 1))} aria-label={lang === 'es' ? 'Añadir huésped' : 'Add guest'}>+</button>
         </div>
-        <label className="req-pets-toggle">
-          <input type="checkbox" checked={pets} onChange={e => setPets(e.target.checked)}/>
-          <span>{lang === 'es' ? `🐾 Mascota (+${PET_SUPP_FLAT}€ tarifa plana)` : `🐾 Pet (+${PET_SUPP_FLAT}€ flat fee)`}</span>
-        </label>
       </div>
 
       {/* Disclaimer — pricing y promesa de mejor precio */}
