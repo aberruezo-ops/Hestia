@@ -196,6 +196,51 @@ const OpinionesRatings = ({
 // ============================================================
 // OpinionesTestimonials — sección de reviews curadas + web propia
 // Lee window.REVIEWS (cargado en el HTML antes que el componente).
+// Cinta horizontal con frases cortas extraídas de las reviews —
+// teaser emocional antes del grid estructurado. Bg eggplant + texto
+// arena (ratio ~11:1). Pausa en hover. Off en reduced-motion.
+const OpinionesQuotesMarquee = ({
+  lang
+}) => {
+  const all = window.REVIEWS && Array.isArray(window.REVIEWS.items) ? window.REVIEWS.items.filter(r => r.status === 'published') : [];
+  // Picamos ~12 frases cortas (max 90 chars) representativas: primera
+  // oración de cada review que entre en el límite. Filtramos por idioma
+  // de la review para no mezclar.
+  const quotes = all.map(r => {
+    const txt = (r.text || '').split(/[.!?]/)[0].trim();
+    return {
+      txt,
+      name: r.name,
+      apt: r.apt,
+      lang: r.lang
+    };
+  }).filter(q => q.txt.length > 25 && q.txt.length < 100 && q.lang === lang).slice(0, 14);
+  if (quotes.length === 0) return null;
+  const doubled = [...quotes, ...quotes];
+  return /*#__PURE__*/React.createElement("section", {
+    className: "opiniones-quotes-marquee",
+    "aria-label": lang === 'es' ? 'Frases destacadas' : 'Featured quotes'
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "oqm-track",
+    "aria-hidden": "true"
+  }, doubled.map((q, i) => /*#__PURE__*/React.createElement(React.Fragment, {
+    key: i
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "oqm-quote"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "oqm-mark"
+  }, "\xAB"), /*#__PURE__*/React.createElement("span", {
+    className: "oqm-text"
+  }, q.txt), /*#__PURE__*/React.createElement("span", {
+    className: "oqm-mark"
+  }, "\xBB"), /*#__PURE__*/React.createElement("span", {
+    className: "oqm-attr"
+  }, " \u2014 ", q.name)), /*#__PURE__*/React.createElement("span", {
+    className: "oqm-dot",
+    "aria-hidden": "true"
+  }, "\u2726")))));
+};
+
 // Filtros: todas | Booking | Airbnb | Google | Web.
 // Por defecto muestra "highlights" + recientes; expandible al resto.
 // ============================================================
@@ -349,6 +394,8 @@ const OpinionesPageApp = () => {
   }), /*#__PURE__*/React.createElement(FraseHogar, {
     lang: lang
   }), /*#__PURE__*/React.createElement(OpinionesRatings, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(OpinionesQuotesMarquee, {
     lang: lang
   }), /*#__PURE__*/React.createElement(OpinionesTestimonials, {
     lang: lang
