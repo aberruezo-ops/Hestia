@@ -301,31 +301,56 @@ const RatingsMarquee = ({ lang }) => {
   );
 };
 
+// --- DIRECT PERKS TEASER --- banda corta encima de ContactCTA con un
+// solo botón que abre el modal de ventajas de la reserva directa.
+// Garantiza acceso al modal en móvil en TODAS las páginas con ContactCTA.
+const DirectPerksTeaser = ({ lang }) => (
+  <section className="direct-perks-teaser" aria-labelledby="dpt-eyebrow">
+    <div className="dpt-inner">
+      <span id="dpt-eyebrow" className="eyebrow dpt-eyebrow">
+        {lang === 'es' ? 'Reserva directa · la mejor forma de reservar' : 'Direct booking · the best way to book'}
+      </span>
+      <button
+        type="button"
+        className="dpt-btn"
+        onClick={() => window.dispatchEvent(new Event('hestia:open-direct-perks'))}
+        aria-haspopup="dialog"
+      >
+        <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
+        <span className="dpt-arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+  </section>
+);
+
 // --- CONTACT CTA ---
 const ContactCTA = ({ lang, availHref }) => {
   const t = COPY[lang];
   return (
-    <section className="contact-cta" id="contacto" data-screen-label="10 Contacto">
-      <div className="inner">
-        <div className="eyebrow">{t.contact_eyebrow}</div>
-        <h2>{t.contact_title}</h2>
-        <p>{t.contact_sub}</p>
-        <div className="ctas">
-          <a href={t.contact_cta_wa_href} className="btn btn-primary cta-wa-btn" target="_blank" rel="noopener">
-            {t.contact_cta_wa} <span className="arrow">→</span>
-          </a>
-          <a href="mailto:info@hestiayourhome.com" className="btn btn-ghost-light">
-            {t.contact_cta_mail}
-          </a>
-          {availHref && (
-            <a href={availHref} className="btn btn-ghost-light">
-              {t.contact_cta_avail} <span className="arrow">→</span>
+    <>
+      <DirectPerksTeaser lang={lang} />
+      <section className="contact-cta" id="contacto" data-screen-label="10 Contacto">
+        <div className="inner">
+          <div className="eyebrow">{t.contact_eyebrow}</div>
+          <h2>{t.contact_title}</h2>
+          <p>{t.contact_sub}</p>
+          <div className="ctas">
+            <a href={t.contact_cta_wa_href} className="btn btn-primary cta-wa-btn" target="_blank" rel="noopener">
+              {t.contact_cta_wa} <span className="arrow">→</span>
             </a>
-          )}
+            <a href="mailto:info@hestiayourhome.com" className="btn btn-ghost-light">
+              {t.contact_cta_mail}
+            </a>
+            {availHref && (
+              <a href={availHref} className="btn btn-ghost-light">
+                {t.contact_cta_avail} <span className="arrow">→</span>
+              </a>
+            )}
+          </div>
+          <div className="address">Calle Islas Canarias 7 · 04621 Vera Playa · Almería</div>
         </div>
-        <div className="address">Calle Islas Canarias 7 · 04621 Vera Playa · Almería</div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 

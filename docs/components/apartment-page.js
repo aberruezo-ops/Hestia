@@ -866,7 +866,17 @@ const AptStickyBar = ({
     className: "btn btn-primary asb-cta"
   }, lang === 'es' ? 'Reservar' : 'Book', " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "\u2192")));
+  }, "\u2192")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "asb-perks",
+    onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks')),
+    "aria-label": lang === 'es' ? 'Ver ventajas de la reserva directa' : 'See direct booking perks'
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "asb-perks-icon",
+    "aria-hidden": "true"
+  }, "\u2726"), /*#__PURE__*/React.createElement("span", {
+    className: "asb-perks-text"
+  }, lang === 'es' ? 'Ver ventajas' : 'See perks')));
 };
 
 // --- App de página de Hestía ---
