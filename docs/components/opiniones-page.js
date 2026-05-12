@@ -296,7 +296,7 @@ const OpinionesTestimonials = ({
     const stars = ratingToStars(rev.rating, rev.source);
     return /*#__PURE__*/React.createElement("div", {
       key: rev.id,
-      className: "testimonial-card reveal"
+      className: "testimonial-card"
     }, /*#__PURE__*/React.createElement("div", {
       className: "testimonial-top"
     }, /*#__PURE__*/React.createElement(Stars, {

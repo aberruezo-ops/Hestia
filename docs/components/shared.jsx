@@ -211,14 +211,26 @@ const useScrollMode = () => {
 
 const useReveal = () => {
   React.useEffect(() => {
-    const els = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
     }, { threshold: 0.15 });
-    els.forEach(el => io.observe(el));
-    return () => io.disconnect();
+    // Observa los .reveal presentes en el primer render.
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+    // Y los que aparezcan después (filtros, tabs, expansiones…) vía
+    // MutationObserver. Sin esto, una card .reveal añadida tras un
+    // setState quedaría con opacity:0 para siempre.
+    const observe = (node) => {
+      if (!(node instanceof Element)) return;
+      if (node.classList && node.classList.contains('reveal') && !node.classList.contains('in')) io.observe(node);
+      node.querySelectorAll && node.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+    };
+    const mo = new MutationObserver((mutations) => {
+      mutations.forEach(m => m.addedNodes.forEach(observe));
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => { io.disconnect(); mo.disconnect(); };
   }, []);
 };
 
