@@ -6512,6 +6512,36 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 
 /* Atmósfera: stack de capas con hue, crossfade por opacity */
+/* Stack de fotos — un detalle de cada Hestía por letra, blur 36px +
+   opacity baja (24%) + saturate boost. Crossfade 1.2 s con la letra
+   activa. Cada layer es absoluta sobre el stage, debajo del wash. */
+.pq-v4-photo-stack {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.pq-v4-photo-layer {
+  position: absolute;
+  inset: -8%;                              /* margen para que el blur no enseñe bordes */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(36px) saturate(1.25) brightness(0.78);
+  opacity: 0;
+  transition: opacity 1.2s var(--pq-ease, cubic-bezier(.2, .8, .2, 1)),
+              transform 12s ease-in-out;
+  transform: scale(1.05);
+  will-change: opacity, transform;
+}
+.pq-v4-photo-layer[style*="opacity: 1"] {
+  /* La activa hace un slow zoom in mientras está visible (10 s de
+     autoplay = breathing). */
+  transform: scale(1.12);
+}
+
 .pq-v4-wash-stack {
   position: absolute;
   inset: 0;
@@ -6590,13 +6620,26 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-size: clamp(160px, 22vw, 300px);
   line-height: 0.82;
   letter-spacing: -0.02em;
-  background: linear-gradient(180deg,
-    var(--sol-lt) 0%,
+  /* Cristalización — gradient multi-stop con highlights blancos en
+     posiciones diagonales + arena translúcida + sol-lt + dorado.
+     background-size 200% para animar shimmer cromático. */
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    var(--sol-lt) 18%,
+    rgba(255, 255, 255, 0.85) 35%,
     var(--sol-h)  55%,
-    rgba(184, 122, 44, 0.85) 100%);
+    rgba(240, 232, 213, 0.75) 72%,
+    rgba(184, 122, 44, 0.88) 100%);
+  background-size: 220% 220%;
+  background-position: 0% 0%;
   -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  /* Glass-like inner stroke vía text-shadow blanco mínimo */
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.18),
+    0 -1px 0 rgba(0, 0, 0, 0.12);
 
   /* Estado base (cuando NO is-active): la letra está oculta */
   --pq-wght: 400;
@@ -6610,16 +6653,25 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
     opacity   1400ms cubic-bezier(0.22, 0.61, 0.36, 1),
     filter    1400ms cubic-bezier(0.22, 0.61, 0.36, 1),
     transform 1400ms cubic-bezier(0.22, 0.61, 0.36, 1);
-  will-change: opacity, filter, transform, font-variation-settings;
+  will-change: opacity, filter, transform, font-variation-settings, background-position;
+}
+/* Shimmer cromático sobre la letra activa — el gradient se desplaza
+   muy lentamente dando sensación de luz que pasa por cristal. */
+.pq-v4-glyph.is-active {
+  animation:
+    pqV4LetterMorph   10000ms cubic-bezier(0.33, 0, 0.2, 1) forwards,
+    pqV4GlyphShimmer  9000ms ease-in-out infinite;
+}
+@keyframes pqV4GlyphShimmer {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
 }
 /* La letra activa corre una secuencia continua de 10 s que vuelve al
    estado inicial — síncrono con el setInterval del autoplay. El peso
    crece de 400 a 850 y la talla óptica de 14 a 120 antes de regresar.
-   El halo dorado respira en paralelo. */
-.pq-v4-glyph.is-active {
-  opacity: 1;
-  animation: pqV4LetterMorph 10000ms cubic-bezier(0.33, 0, 0.2, 1) forwards;
-}
+   El halo dorado respira en paralelo. La opacity se gestiona dentro
+   del keyframe (definida arriba con doble animation). */
 @keyframes pqV4LetterMorph {
   0% {
     --pq-wght: 400;
