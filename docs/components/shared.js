@@ -3254,6 +3254,54 @@ const DIRECT_RIBBON = {
   }]
 };
 
+// Cada perk recibe su propio acento de la paleta — 9 micro-identidades.
+const _PERK_HUES = {
+  precio: {
+    c1: '#D4A84A',
+    c2: '#E8C476'
+  },
+  // dorado/sol
+  comision: {
+    c1: '#8B4A1E',
+    c2: '#B86A3C'
+  },
+  // siena
+  respuesta: {
+    c1: '#3AAABB',
+    c2: '#6FC4D1'
+  },
+  // turquesa
+  cancel: {
+    c1: '#7B3B6B',
+    c2: '#A45A8E'
+  },
+  // violeta
+  pago: {
+    c1: '#C8975A',
+    c2: '#E2B47A'
+  },
+  // albero
+  descuento: {
+    c1: '#D42B80',
+    c2: '#E5559C'
+  },
+  // buganvilla
+  guia: {
+    c1: '#6B7A3A',
+    c2: '#8B9A52'
+  },
+  // olivo
+  mascotas: {
+    c1: '#3AAABB',
+    c2: '#6FC4D1'
+  },
+  // turquesa
+  proceso: {
+    c1: '#4E2446',
+    c2: '#7B3B6B'
+  } // berenjena
+};
+
 // Modal con carrusel: una sola card visible, prev/next + dots.
 // Se monta condicionalmente; cierra con backdrop click, ESC o ✕.
 const DirectBookingModal = ({
@@ -3264,11 +3312,20 @@ const DirectBookingModal = ({
   const ribbon = DIRECT_RIBBON[lang];
   const len = list.length;
   const [idx, setIdx] = React.useState(0);
+  // Dirección del último cambio — 'next' o 'prev' o '' (sin dirección).
+  // Usado para que la transición de card sea direction-aware.
+  const [dir, setDir] = React.useState('');
   React.useEffect(() => {
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const onKey = e => {
-      if (e.key === 'Escape') onClose();else if (e.key === 'ArrowRight') setIdx(i => (i + 1) % len);else if (e.key === 'ArrowLeft') setIdx(i => (i - 1 + len) % len);
+      if (e.key === 'Escape') onClose();else if (e.key === 'ArrowRight') {
+        setDir('next');
+        setIdx(i => (i + 1) % len);
+      } else if (e.key === 'ArrowLeft') {
+        setDir('prev');
+        setIdx(i => (i - 1 + len) % len);
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => {
@@ -3277,8 +3334,15 @@ const DirectBookingModal = ({
     };
   }, [len, onClose]);
   const cur = list[idx];
-  const goPrev = () => setIdx(i => (i - 1 + len) % len);
-  const goNext = () => setIdx(i => (i + 1) % len);
+  const hue = _PERK_HUES[cur.id] || _PERK_HUES.respuesta;
+  const goPrev = () => {
+    setDir('prev');
+    setIdx(i => (i - 1 + len) % len);
+  };
+  const goNext = () => {
+    setDir('next');
+    setIdx(i => (i + 1) % len);
+  };
   return /*#__PURE__*/React.createElement("div", {
     className: "dbm-backdrop",
     onClick: onClose,
@@ -3287,8 +3351,23 @@ const DirectBookingModal = ({
     "aria-labelledby": "dbm-title"
   }, /*#__PURE__*/React.createElement("div", {
     className: "dbm-modal",
-    onClick: e => e.stopPropagation()
-  }, /*#__PURE__*/React.createElement("button", {
+    onClick: e => e.stopPropagation(),
+    style: {
+      '--perk-c1': hue.c1,
+      '--perk-c2': hue.c2
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "dbm-motes",
+    "aria-hidden": "true"
+  }, Array.from({
+    length: 14
+  }).map((_, i) => /*#__PURE__*/React.createElement("span", {
+    key: i,
+    className: "dbm-mote",
+    style: {
+      '--mote-i': i
+    }
+  }))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "dbm-close",
     onClick: onClose,
@@ -3304,7 +3383,10 @@ const DirectBookingModal = ({
     className: "dbm-ribbon"
   }, ribbon.map((s, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
-    className: "dbm-stat"
+    className: "dbm-stat",
+    style: {
+      '--stagger': `${i * 80}ms`
+    }
   }, /*#__PURE__*/React.createElement("span", {
     className: "dbm-num"
   }, s.num), /*#__PURE__*/React.createElement("span", {
@@ -3318,7 +3400,8 @@ const DirectBookingModal = ({
     "aria-label": lang === 'es' ? 'Anterior' : 'Previous'
   }, "\u2190"), /*#__PURE__*/React.createElement("article", {
     key: cur.id,
-    className: "dbm-card"
+    className: `dbm-card ${dir === 'next' ? 'is-from-right' : dir === 'prev' ? 'is-from-left' : ''}`,
+    "data-perk": cur.id
   }, /*#__PURE__*/React.createElement("div", {
     className: "dbm-card-head"
   }, /*#__PURE__*/React.createElement("span", {
@@ -3341,7 +3424,10 @@ const DirectBookingModal = ({
     key: p.id,
     type: "button",
     className: `dbm-dot ${i === idx ? 'active' : ''}`,
-    onClick: () => setIdx(i),
+    onClick: () => {
+      setDir(i > idx ? 'next' : 'prev');
+      setIdx(i);
+    },
     "aria-label": `${i + 1} / ${len}`
   }))), /*#__PURE__*/React.createElement("div", {
     className: "dbm-counter"
