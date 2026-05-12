@@ -175,9 +175,7 @@ const PricePreview = ({
     className: "price-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `${calc.nights} noches` : `${calc.nights} nights`), /*#__PURE__*/React.createElement("span", null, fmt(calc.baseTotal))), calc.stayD && /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-disc"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.guestSuppAmt > 0 && /*#__PURE__*/React.createElement("div", {
-    className: "price-line"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento ${calc.guests} huéspedes (+${calc.guestSuppPerNight} €/noche)` : `${calc.guests}-guest supplement (+${calc.guestSuppPerNight} €/night)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.guestSuppAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
     className: "price-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento mascota (10 €/noche · máx. 50 €)` : `Pet supplement (10 €/night · max 50 €)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), extras.map(ex => {
     const u = ex.units || 1;
