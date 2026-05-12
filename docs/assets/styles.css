@@ -3389,6 +3389,174 @@ a.asb-cta:hover,
 .asb-cta:active {
   transform: scale(0.97);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   BOTONES "CRISTAL METÁLICO ANIMADO" EN PÁGINAS APARTAMENTO
+   ───────────────────────────────────────────────────────────
+   En las páginas de cada Hestía, los CTAs (sticky-bar, hero
+   "Reservar", widget-mini plegados) llevan tratamiento glass +
+   metallic + animated tint. Cada apt usa SU color:
+   - Mar      → olivo  #6B7A3A / claro #8B9A52
+   - Thalassa → siena  #8A4A24 / claro #B86A3C
+   - Salinas  → dorado #9E7A2C / claro #D4A84A
+   El metálico = gradient 3-stop (oscuro / claro / oscuro) animado
+   por background-position 8 s. El sheen = banda blanca 25% en
+   ::after que pasa cada 8 s. Contraste arena (Mar/Thalassa) o
+   ber-dk (Salinas) — todos >4.5 AA. */
+[data-apt="mar"]      .asb-cta,
+[data-apt="thalassa"] .asb-cta,
+[data-apt="salinas"]  .asb-cta,
+body[data-apt="mar"]      a.apt-page-reserve-btn,
+body[data-apt="thalassa"] a.apt-page-reserve-btn,
+body[data-apt="salinas"]  a.apt-page-reserve-btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 10px 0 10px 0 !important;
+  -webkit-backdrop-filter: blur(6px) saturate(1.35);
+          backdrop-filter: blur(6px) saturate(1.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.20),
+    0 6px 22px var(--apt-glow, rgba(58, 170, 187, 0.45)) !important;
+  border: 1px solid rgba(240, 232, 213, 0.22) !important;
+  animation: aptCtaFlow 9s ease-in-out infinite;
+  background-size: 220% 220% !important;
+}
+/* Mar — olivo metálico */
+[data-apt="mar"]      .asb-cta,
+body[data-apt="mar"]      a.apt-page-reserve-btn {
+  background-image: linear-gradient(135deg,
+    #6B7A3A 0%, #8B9A52 32%, #6B7A3A 55%, #556330 78%, #6B7A3A 100%) !important;
+  color: #F0E8D5 !important;
+  --apt-glow: rgba(107, 122, 58, 0.55);
+}
+/* Thalassa — siena metálico */
+[data-apt="thalassa"] .asb-cta,
+body[data-apt="thalassa"] a.apt-page-reserve-btn {
+  background-image: linear-gradient(135deg,
+    #8A4A24 0%, #B86A3C 32%, #8A4A24 55%, #6E3A1C 78%, #8A4A24 100%) !important;
+  color: #F0E8D5 !important;
+  --apt-glow: rgba(184, 106, 60, 0.55);
+}
+/* Salinas — dorado metálico (texto eggplant para AA sobre dorado claro) */
+[data-apt="salinas"]  .asb-cta,
+body[data-apt="salinas"]  a.apt-page-reserve-btn {
+  background-image: linear-gradient(135deg,
+    #9E7A2C 0%, #D4A84A 32%, #9E7A2C 55%, #7E6022 78%, #9E7A2C 100%) !important;
+  color: #2A0F2E !important;
+  --apt-glow: rgba(212, 168, 74, 0.55);
+}
+/* Sheen sweep — banda blanca 25% que cruza cada 8 s. Sin lavar el bg. */
+[data-apt="mar"]      .asb-cta::after,
+[data-apt="thalassa"] .asb-cta::after,
+[data-apt="salinas"]  .asb-cta::after,
+body[data-apt="mar"]      a.apt-page-reserve-btn::after,
+body[data-apt="thalassa"] a.apt-page-reserve-btn::after,
+body[data-apt="salinas"]  a.apt-page-reserve-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 70%);
+  background-size: 240% 100%;
+  background-position: -50% 0%;
+  animation: aptCtaSheen 8s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 1;
+}
+[data-apt="mar"]      .asb-cta > *,
+[data-apt="thalassa"] .asb-cta > *,
+[data-apt="salinas"]  .asb-cta > *,
+body[data-apt="mar"]      a.apt-page-reserve-btn > *,
+body[data-apt="thalassa"] a.apt-page-reserve-btn > *,
+body[data-apt="salinas"]  a.apt-page-reserve-btn > * { position: relative; z-index: 2; }
+
+/* Hover — más glow, más sheen */
+[data-apt="mar"]      .asb-cta:hover,
+[data-apt="thalassa"] .asb-cta:hover,
+[data-apt="salinas"]  .asb-cta:hover,
+body[data-apt="mar"]      a.apt-page-reserve-btn:hover,
+body[data-apt="thalassa"] a.apt-page-reserve-btn:hover,
+body[data-apt="salinas"]  a.apt-page-reserve-btn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.48),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+    0 10px 32px var(--apt-glow, rgba(58, 170, 187, 0.65)) !important;
+}
+
+@keyframes aptCtaFlow {
+  0%, 100% { background-position: 0% 0%; }
+  50%      { background-position: 100% 100%; }
+}
+@keyframes aptCtaSheen {
+  0%   { background-position: -50% 0%; }
+  55%  { background-position: 150% 0%; }
+  100% { background-position: 150% 0%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-apt="mar"]      .asb-cta,
+  [data-apt="thalassa"] .asb-cta,
+  [data-apt="salinas"]  .asb-cta,
+  body[data-apt="mar"]      a.apt-page-reserve-btn,
+  body[data-apt="thalassa"] a.apt-page-reserve-btn,
+  body[data-apt="salinas"]  a.apt-page-reserve-btn { animation: none; }
+  [data-apt="mar"]      .asb-cta::after,
+  [data-apt="thalassa"] .asb-cta::after,
+  [data-apt="salinas"]  .asb-cta::after,
+  body[data-apt="mar"]      a.apt-page-reserve-btn::after,
+  body[data-apt="thalassa"] a.apt-page-reserve-btn::after,
+  body[data-apt="salinas"]  a.apt-page-reserve-btn::after { animation: none; }
+}
+
+/* Widget-mini plegados sobre apt — añadir sheen metálico encima del
+   ghost actual (cult-ui Family Button feel pero más sutil). El bg
+   ghost translúcido se mantiene; añadimos sólo la banda animada. */
+[data-apt="mar"]      .widget-mini::after,
+[data-apt="thalassa"] .widget-mini::after,
+[data-apt="salinas"]  .widget-mini::after,
+body[data-apt="mar"]      .widget-mini::after,
+body[data-apt="thalassa"] .widget-mini::after,
+body[data-apt="salinas"]  .widget-mini::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 65%);
+  background-size: 240% 100%;
+  background-position: -50% 0%;
+  animation: aptCtaSheen 10s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+}
+[data-apt="mar"]      .widget-mini,
+[data-apt="thalassa"] .widget-mini,
+[data-apt="salinas"]  .widget-mini,
+body[data-apt="mar"]      .widget-mini,
+body[data-apt="thalassa"] .widget-mini,
+body[data-apt="salinas"]  .widget-mini {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+[data-apt="mar"]      .widget-mini > *,
+[data-apt="thalassa"] .widget-mini > *,
+[data-apt="salinas"]  .widget-mini > *,
+body[data-apt="mar"]      .widget-mini > *,
+body[data-apt="thalassa"] .widget-mini > *,
+body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) {
+  [data-apt="mar"]      .widget-mini::after,
+  [data-apt="thalassa"] .widget-mini::after,
+  [data-apt="salinas"]  .widget-mini::after { animation: none; }
+}
 .req-actions-forward,
 .hs-rc-actions-forward {
   display: flex;
