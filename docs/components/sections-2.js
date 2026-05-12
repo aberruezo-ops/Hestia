@@ -391,6 +391,31 @@ const Ratings = ({
   }, lang === 'es' ? '«Hestía tiene algo que no se puede comprar: la sensación de que alguien ha pensado en cada detalle para que te sientas en casa.»' : '«Hestía has something money can\'t buy: the feeling that someone thought of every detail so you feel at home, not in a rental.»', /*#__PURE__*/React.createElement("cite", null, "\u2014 Carlos M. \xB7 Hest\xEDa Salinas \xB7 2024"))))));
 };
 
+// --- RATINGS MARQUEE — cinta de plataformas/métricas bajo Ratings ---
+// Texto-only marquee: sin logos externos (cero deps). Arena #F0E8D5 sobre
+// eggplant #2A0F2E (ratio ~11:1). Track duplicado para loop continuo.
+const RatingsMarquee = ({
+  lang
+}) => {
+  const items = lang === 'es' ? ['★ 9.8 · Booking.com', '★ 5.0 · Airbnb Superhost', '★ 4.9 · Google Maps', '600+ familias desde 2016', 'Sin comisiones · reserva directa', '10 años en Vera Playa', 'Mejor precio garantizado', 'Te responde Alex o Fran en <24 h'] : ['★ 9.8 · Booking.com', '★ 5.0 · Airbnb Superhost', '★ 4.9 · Google Maps', '600+ families since 2016', 'No commissions · direct booking', '10 years in Vera Playa', 'Best price guaranteed', 'Alex or Fran reply within 24 h'];
+  // Duplicamos el array para que el loop sea continuo (translateX -50%).
+  const doubled = [...items, ...items];
+  return /*#__PURE__*/React.createElement("section", {
+    className: "ratings-marquee",
+    "aria-label": lang === 'es' ? 'Plataformas y métricas' : 'Platforms and metrics'
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rm-track",
+    "aria-hidden": "true"
+  }, doubled.map((it, i) => /*#__PURE__*/React.createElement(React.Fragment, {
+    key: i
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rm-item"
+  }, it), /*#__PURE__*/React.createElement("span", {
+    className: "rm-dot",
+    "aria-hidden": "true"
+  }, "\u2726")))));
+};
+
 // --- CONTACT CTA ---
 const ContactCTA = ({
   lang,
@@ -432,5 +457,6 @@ Object.assign(window, {
   Team,
   Manifest,
   Ratings,
+  RatingsMarquee,
   ContactCTA
 });
