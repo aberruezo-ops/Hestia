@@ -644,6 +644,7 @@ const GUIDE_BY_APT = {
   vm: {
     pdf: 'assets/HestiaVeraMar_GuiaHogar_v1.0.pdf',
     es: {
+      cover_tagline: 'El campo de olivos llega al mar. Donde el descanso encuentra su raíz.',
       rooms: [
         { id: 'salon', title: 'Mi salón', body: 'Mi sofá-cama y mi televisión plana son el rincón perfecto para una tarde de Netflix. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.',
@@ -683,6 +684,7 @@ const GUIDE_BY_APT = {
       ],
     },
     en: {
+      cover_tagline: 'Where the olive grove meets the sea. Rest, with its roots in place.',
       rooms: [
         { id: 'salon', title: 'My living room', body: 'My sofa-bed and flat-screen TV are the perfect spot for a Netflix afternoon. You control the temperature with the centralised A/C panel.', recs: [
           'Do not leave the air conditioner running with doors open or while you are away from Hestía.',
@@ -727,6 +729,7 @@ const GUIDE_BY_APT = {
   vt: {
     pdf: 'assets/20220607_HestiaVeraThalassa_GuiaHogar_v3.6.pdf',
     es: {
+      cover_tagline: 'Ático sobre el mar y el Salar de los Canos. Donde el horizonte se ensancha.',
       rooms: [
         { id: 'salon', title: 'Mi salón', body: 'Mi sofá-cama y mi televisión plana son el sitio perfecto para una sesión de Netflix o HBO. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en casa.',
@@ -764,6 +767,7 @@ const GUIDE_BY_APT = {
       ],
     },
     en: {
+      cover_tagline: 'Penthouse over the sea and the Salar de los Canos. Where the horizon widens.',
       rooms: [
         { id: 'salon', title: 'My living room', body: 'My sofa-bed and flat-screen TV are the perfect spot for a Netflix or HBO session. You control the temperature with the centralised A/C panel.', recs: [
           'Do not leave the A/C on with doors open or while you are away from home.',
@@ -806,6 +810,7 @@ const GUIDE_BY_APT = {
   vs: {
     pdf: 'assets/HestiaVeraSalinas_GuiaHogar_v1.0.pdf',
     es: {
+      cover_tagline: 'Junto a las salinas. Donde la luz se queda más tiempo.',
       rooms: [
         { id: 'salon', title: 'Mi salón', body: 'Mi sofá-cama y mi televisión con ambilight son el rincón perfecto para una sesión de Netflix. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.',
@@ -853,6 +858,7 @@ const GUIDE_BY_APT = {
       ],
     },
     en: {
+      cover_tagline: 'Next to the salt flats. Where light lingers longer.',
       rooms: [
         { id: 'salon', title: 'My living room', body: 'My sofa-bed and ambilight smart TV are the perfect spot for a Netflix session. You control the temperature with the centralised air-conditioning panel.', recs: [
           'Do not leave the air conditioner running with doors open or while you are away from Hestía.',
@@ -2110,66 +2116,62 @@ const AptGuideView = ({ apt, lang, onClose }) => {
         </div>
       </header>
 
-      {/* PDF-only: portada + índice editoriales (sólo Salinas por ahora). */}
-      {apt.id === 'vs' && (
-        <>
-          <div className="ag-print-cover print-only" aria-hidden="true">
-            <div className="ag-print-cover-bg" aria-hidden="true"/>
-            <div className="ag-print-cover-frame">
-              <div className="ag-print-cover-top">
-                <span className="ag-print-cover-brand">Hestía Your Home</span>
-                <span className="ag-print-cover-meta">{lang === 'es' ? 'Guía del hogar · v1.0' : 'Home guide · v1.0'}</span>
-              </div>
-              <div className="ag-print-cover-num" aria-hidden="true">{apt.num}</div>
-              <div className="ag-print-cover-mid">
-                <span className="ag-print-cover-eyebrow">
-                  {lang === 'es' ? 'Vera Playa · Almería · Desde 2016' : 'Vera Playa · Almería · Since 2016'}
-                </span>
-                <h1 className="ag-print-cover-title">
-                  Hestía <em>{apt.name_short}</em>
-                </h1>
-                <p className="ag-print-cover-sub">
-                  {lang === 'es'
-                    ? 'Junto a las salinas. Donde la luz se queda más tiempo.'
-                    : 'Next to the salt flats. Where light lingers longer.'}
-                </p>
-              </div>
-              <div className="ag-print-cover-rule" aria-hidden="true"/>
-              <div className="ag-print-cover-bottom">
-                <div className="ag-print-cover-sig">
-                  <span className="ag-print-cover-sig-line">{lang === 'es' ? 'Tu hogar, escrito a mano por' : 'Your home, hand-written by'}</span>
-                  <span className="ag-print-cover-sig-name">Alex &amp; Fran</span>
-                </div>
-                <div className="ag-print-cover-coord">
-                  <span>VTF/AL/07056</span>
-                  <span>www.hestiayourhome.com</span>
-                </div>
-              </div>
+      {/* PDF-only: portada + índice editoriales — ahora para los 3 apts. */}
+      <div className="ag-print-cover print-only" aria-hidden="true">
+        <div className="ag-print-cover-bg" aria-hidden="true"/>
+        <div className="ag-print-cover-frame">
+          <div className="ag-print-cover-top">
+            <span className="ag-print-cover-brand">Hestía Your Home</span>
+            <span className="ag-print-cover-meta">{lang === 'es' ? 'Guía del hogar · v1.0' : 'Home guide · v1.0'}</span>
+          </div>
+          <div className="ag-print-cover-num" aria-hidden="true">{apt.num}</div>
+          <div className="ag-print-cover-mid">
+            <span className="ag-print-cover-eyebrow">
+              {lang === 'es' ? 'Vera Playa · Almería · Desde 2016' : 'Vera Playa · Almería · Since 2016'}
+            </span>
+            <h1 className="ag-print-cover-title">
+              Hestía <em>{apt.name_short}</em>
+            </h1>
+            <p className="ag-print-cover-sub">
+              {s.cover_tagline}
+            </p>
+          </div>
+          <div className="ag-print-cover-rule" aria-hidden="true"/>
+          <div className="ag-print-cover-bottom">
+            <div className="ag-print-cover-sig">
+              <span className="ag-print-cover-sig-line">{lang === 'es' ? 'Tu hogar, escrito a mano por' : 'Your home, hand-written by'}</span>
+              <span className="ag-print-cover-sig-name">Alex &amp; Fran</span>
+            </div>
+            <div className="ag-print-cover-coord">
+              <span>{apt.license}</span>
+              <span>www.hestiayourhome.com</span>
             </div>
           </div>
+        </div>
+      </div>
 
-          <nav className="ag-print-toc print-only" aria-hidden="true">
-            <span className="ag-print-toc-label">{lang === 'es' ? 'Índice' : 'Contents'}</span>
-            <h2 className="ag-print-toc-title">
-              {lang === 'es' ? <>Tu Hestía,<br/><em>en once capítulos.</em></> : <>Your Hestía,<br/><em>in eleven chapters.</em></>}
-            </h2>
-            <ol className="ag-print-toc-list">
-              {GUIDE_SECTIONS.map((sec, i) => (
-                <li key={sec.id}>
-                  <span className="ag-print-toc-num">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="ag-print-toc-name">{sec[lang]}</span>
-                  <span className="ag-print-toc-leader" aria-hidden="true"/>
-                </li>
-              ))}
-            </ol>
-            <p className="ag-print-toc-foot">
-              {lang === 'es'
-                ? 'Esta guía cubre todo lo que necesitas saber sobre tu Hestía y los alrededores. Léela con calma — está hecha para acompañarte.'
-                : 'This guide covers everything you need to know about your Hestía and the surroundings. Read it slowly — it is made to accompany you.'}
-            </p>
-          </nav>
-        </>
-      )}
+      <nav className="ag-print-toc print-only" aria-hidden="true">
+        <span className="ag-print-toc-label">{lang === 'es' ? 'Índice' : 'Contents'}</span>
+        <h2 className="ag-print-toc-title">
+          {lang === 'es'
+            ? <>Tu Hestía,<br/><em>en {GUIDE_SECTIONS.length} capítulos.</em></>
+            : <>Your Hestía,<br/><em>in {GUIDE_SECTIONS.length} chapters.</em></>}
+        </h2>
+        <ol className="ag-print-toc-list">
+          {GUIDE_SECTIONS.map((sec, i) => (
+            <li key={sec.id}>
+              <span className="ag-print-toc-num">{String(i + 1).padStart(2, '0')}</span>
+              <span className="ag-print-toc-name">{sec[lang]}</span>
+              <span className="ag-print-toc-leader" aria-hidden="true"/>
+            </li>
+          ))}
+        </ol>
+        <p className="ag-print-toc-foot">
+          {lang === 'es'
+            ? 'Esta guía cubre todo lo que necesitas saber sobre tu Hestía y los alrededores. Léela con calma — está hecha para acompañarte.'
+            : 'This guide covers everything you need to know about your Hestía and the surroundings. Read it slowly — it is made to accompany you.'}
+        </p>
+      </nav>
 
       <div className="ag-layout">
 

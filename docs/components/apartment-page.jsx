@@ -7,7 +7,7 @@ const APT_DATA = {
   vm: {
     id: 'vm', num: '01', slug: 'mar', license: 'VFT/AL/01580',
     name_short: 'Mar',
-    accent: '#6B7A3A', accent2: '#8B9A52',
+    accent: '#6B7A3A', accent2: '#8B9A52', accent_dk: '#4A5628',
     hero_img: 'assets/apt-vs.jpg',
     bedroom_img: 'assets/apt-vm-gallery-10.jpg',
     others: ['vt', 'vs'],
@@ -58,7 +58,7 @@ const APT_DATA = {
   vt: {
     id: 'vt', num: '02', slug: 'thalassa', license: 'VFT/AL/05535',
     name_short: 'Thalassa',
-    accent: '#8A4A24', accent2: '#B86A3C',
+    accent: '#8A4A24', accent2: '#B86A3C', accent_dk: '#6E3A1C',
     hero_img: 'assets/apt-vt-4.jpg',
     bedroom_img: 'assets/apt-vt-gallery-02.jpg',
     floorplan_img: 'assets/IMG_1121.png',
@@ -96,7 +96,7 @@ const APT_DATA = {
   vs: {
     id: 'vs', num: '03', slug: 'salinas', license: 'VTF/AL/07056',
     name_short: 'Salinas',
-    accent: '#9E7A2C', accent2: '#D4A84A',
+    accent: '#9E7A2C', accent2: '#D4A84A', accent_dk: '#7A5E1A',
     hero_img: 'assets/apt-vm.jpg',
     bedroom_img: 'assets/apt-vs-gallery-21.jpg',
     others: ['vm', 'vt'],
@@ -859,13 +859,15 @@ const ApartmentPageApp = () => {
   React.useEffect(() => {
     document.documentElement.style.setProperty('--apt-accent', apt.accent);
     document.documentElement.style.setProperty('--apt-accent2', apt.accent2);
+    document.documentElement.style.setProperty('--apt-accent-dk', apt.accent_dk || apt.accent);
     document.body.setAttribute('data-apt', apt.slug);
     return () => {
       document.documentElement.style.removeProperty('--apt-accent');
       document.documentElement.style.removeProperty('--apt-accent2');
+      document.documentElement.style.removeProperty('--apt-accent-dk');
       document.body.removeAttribute('data-apt');
     };
-  }, [apt.accent, apt.accent2, apt.slug]);
+  }, [apt.accent, apt.accent2, apt.accent_dk, apt.slug]);
   React.useEffect(() => {
     document.body.classList.toggle('apt-bar-shown', !!scrolled);
     return () => document.body.classList.remove('apt-bar-shown');
