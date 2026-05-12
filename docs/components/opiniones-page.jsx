@@ -217,7 +217,7 @@ const OpinionesTestimonials = ({ lang }) => {
                 const meta = SOURCE_META[rev.source] || SOURCE_META.web;
                 const stars = ratingToStars(rev.rating, rev.source);
                 return (
-                  <div key={rev.id} className="testimonial-card reveal">
+                  <div key={rev.id} className="testimonial-card">
                     <div className="testimonial-top">
                       <Stars count={stars}/>
                       <span className="testimonial-source" style={{ '--src-color': meta.color }}>
