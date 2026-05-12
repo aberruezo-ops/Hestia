@@ -3408,7 +3408,25 @@ a.asb-cta:hover,
 [data-apt="salinas"]  .asb-cta,
 body[data-apt="mar"]      a.apt-page-reserve-btn,
 body[data-apt="thalassa"] a.apt-page-reserve-btn,
-body[data-apt="salinas"]  a.apt-page-reserve-btn {
+body[data-apt="salinas"]  a.apt-page-reserve-btn,
+[data-apt="mar"]      .widget-cta,
+[data-apt="thalassa"] .widget-cta,
+[data-apt="salinas"]  .widget-cta,
+body[data-apt="mar"]      .widget-cta,
+body[data-apt="thalassa"] .widget-cta,
+body[data-apt="salinas"]  .widget-cta,
+[data-apt="mar"]      .ads-btn,
+[data-apt="thalassa"] .ads-btn,
+[data-apt="salinas"]  .ads-btn,
+body[data-apt="mar"]      .ads-btn,
+body[data-apt="thalassa"] .ads-btn,
+body[data-apt="salinas"]  .ads-btn,
+[data-apt="mar"]      .ag-nav-btn-primary,
+[data-apt="thalassa"] .ag-nav-btn-primary,
+[data-apt="salinas"]  .ag-nav-btn-primary,
+body[data-apt="mar"]      .ag-nav-btn-primary,
+body[data-apt="thalassa"] .ag-nav-btn-primary,
+body[data-apt="salinas"]  .ag-nav-btn-primary {
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -3425,25 +3443,46 @@ body[data-apt="salinas"]  a.apt-page-reserve-btn {
 }
 /* Mar — olivo metálico */
 [data-apt="mar"]      .asb-cta,
-body[data-apt="mar"]      a.apt-page-reserve-btn {
+body[data-apt="mar"]      a.apt-page-reserve-btn,
+[data-apt="mar"]      .widget-cta,
+body[data-apt="mar"]      .widget-cta,
+[data-apt="mar"]      .ads-btn,
+body[data-apt="mar"]      .ads-btn,
+[data-apt="mar"]      .ag-nav-btn-primary,
+body[data-apt="mar"]      .ag-nav-btn-primary {
   background-image: linear-gradient(135deg,
     #6B7A3A 0%, #8B9A52 32%, #6B7A3A 55%, #556330 78%, #6B7A3A 100%) !important;
+  background-color: #6B7A3A !important;
   color: #F0E8D5 !important;
   --apt-glow: rgba(107, 122, 58, 0.55);
 }
 /* Thalassa — siena metálico */
 [data-apt="thalassa"] .asb-cta,
-body[data-apt="thalassa"] a.apt-page-reserve-btn {
+body[data-apt="thalassa"] a.apt-page-reserve-btn,
+[data-apt="thalassa"] .widget-cta,
+body[data-apt="thalassa"] .widget-cta,
+[data-apt="thalassa"] .ads-btn,
+body[data-apt="thalassa"] .ads-btn,
+[data-apt="thalassa"] .ag-nav-btn-primary,
+body[data-apt="thalassa"] .ag-nav-btn-primary {
   background-image: linear-gradient(135deg,
     #8A4A24 0%, #B86A3C 32%, #8A4A24 55%, #6E3A1C 78%, #8A4A24 100%) !important;
+  background-color: #8A4A24 !important;
   color: #F0E8D5 !important;
   --apt-glow: rgba(184, 106, 60, 0.55);
 }
-/* Salinas — dorado metálico (texto eggplant para AA sobre dorado claro) */
+/* Salinas — dorado metálico */
 [data-apt="salinas"]  .asb-cta,
-body[data-apt="salinas"]  a.apt-page-reserve-btn {
+body[data-apt="salinas"]  a.apt-page-reserve-btn,
+[data-apt="salinas"]  .widget-cta,
+body[data-apt="salinas"]  .widget-cta,
+[data-apt="salinas"]  .ads-btn,
+body[data-apt="salinas"]  .ads-btn,
+[data-apt="salinas"]  .ag-nav-btn-primary,
+body[data-apt="salinas"]  .ag-nav-btn-primary {
   background-image: linear-gradient(135deg,
     #9E7A2C 0%, #D4A84A 32%, #9E7A2C 55%, #7E6022 78%, #9E7A2C 100%) !important;
+  background-color: #9E7A2C !important;
   color: #2A0F2E !important;
   --apt-glow: rgba(212, 168, 74, 0.55);
 }
@@ -3453,7 +3492,25 @@ body[data-apt="salinas"]  a.apt-page-reserve-btn {
 [data-apt="salinas"]  .asb-cta::after,
 body[data-apt="mar"]      a.apt-page-reserve-btn::after,
 body[data-apt="thalassa"] a.apt-page-reserve-btn::after,
-body[data-apt="salinas"]  a.apt-page-reserve-btn::after {
+body[data-apt="salinas"]  a.apt-page-reserve-btn::after,
+[data-apt="mar"]      .widget-cta::after,
+[data-apt="thalassa"] .widget-cta::after,
+[data-apt="salinas"]  .widget-cta::after,
+body[data-apt="mar"]      .widget-cta::after,
+body[data-apt="thalassa"] .widget-cta::after,
+body[data-apt="salinas"]  .widget-cta::after,
+[data-apt="mar"]      .ads-btn::after,
+[data-apt="thalassa"] .ads-btn::after,
+[data-apt="salinas"]  .ads-btn::after,
+body[data-apt="mar"]      .ads-btn::after,
+body[data-apt="thalassa"] .ads-btn::after,
+body[data-apt="salinas"]  .ads-btn::after,
+[data-apt="mar"]      .ag-nav-btn-primary::after,
+[data-apt="thalassa"] .ag-nav-btn-primary::after,
+[data-apt="salinas"]  .ag-nav-btn-primary::after,
+body[data-apt="mar"]      .ag-nav-btn-primary::after,
+body[data-apt="thalassa"] .ag-nav-btn-primary::after,
+body[data-apt="salinas"]  .ag-nav-btn-primary::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -3473,15 +3530,51 @@ body[data-apt="salinas"]  a.apt-page-reserve-btn::after {
 [data-apt="salinas"]  .asb-cta > *,
 body[data-apt="mar"]      a.apt-page-reserve-btn > *,
 body[data-apt="thalassa"] a.apt-page-reserve-btn > *,
-body[data-apt="salinas"]  a.apt-page-reserve-btn > * { position: relative; z-index: 2; }
+body[data-apt="salinas"]  a.apt-page-reserve-btn > *,
+[data-apt="mar"]      .widget-cta > *,
+[data-apt="thalassa"] .widget-cta > *,
+[data-apt="salinas"]  .widget-cta > *,
+body[data-apt="mar"]      .widget-cta > *,
+body[data-apt="thalassa"] .widget-cta > *,
+body[data-apt="salinas"]  .widget-cta > *,
+[data-apt="mar"]      .ads-btn > *,
+[data-apt="thalassa"] .ads-btn > *,
+[data-apt="salinas"]  .ads-btn > *,
+body[data-apt="mar"]      .ads-btn > *,
+body[data-apt="thalassa"] .ads-btn > *,
+body[data-apt="salinas"]  .ads-btn > *,
+[data-apt="mar"]      .ag-nav-btn-primary > *,
+[data-apt="thalassa"] .ag-nav-btn-primary > *,
+[data-apt="salinas"]  .ag-nav-btn-primary > *,
+body[data-apt="mar"]      .ag-nav-btn-primary > *,
+body[data-apt="thalassa"] .ag-nav-btn-primary > *,
+body[data-apt="salinas"]  .ag-nav-btn-primary > * { position: relative; z-index: 2; }
 
-/* Hover — más glow, más sheen */
+/* Hover — más glow */
 [data-apt="mar"]      .asb-cta:hover,
 [data-apt="thalassa"] .asb-cta:hover,
 [data-apt="salinas"]  .asb-cta:hover,
 body[data-apt="mar"]      a.apt-page-reserve-btn:hover,
 body[data-apt="thalassa"] a.apt-page-reserve-btn:hover,
-body[data-apt="salinas"]  a.apt-page-reserve-btn:hover {
+body[data-apt="salinas"]  a.apt-page-reserve-btn:hover,
+[data-apt="mar"]      .widget-cta:hover,
+[data-apt="thalassa"] .widget-cta:hover,
+[data-apt="salinas"]  .widget-cta:hover,
+body[data-apt="mar"]      .widget-cta:hover,
+body[data-apt="thalassa"] .widget-cta:hover,
+body[data-apt="salinas"]  .widget-cta:hover,
+[data-apt="mar"]      .ads-btn:hover,
+[data-apt="thalassa"] .ads-btn:hover,
+[data-apt="salinas"]  .ads-btn:hover,
+body[data-apt="mar"]      .ads-btn:hover,
+body[data-apt="thalassa"] .ads-btn:hover,
+body[data-apt="salinas"]  .ads-btn:hover,
+[data-apt="mar"]      .ag-nav-btn-primary:hover,
+[data-apt="thalassa"] .ag-nav-btn-primary:hover,
+[data-apt="salinas"]  .ag-nav-btn-primary:hover,
+body[data-apt="mar"]      .ag-nav-btn-primary:hover,
+body[data-apt="thalassa"] .ag-nav-btn-primary:hover,
+body[data-apt="salinas"]  .ag-nav-btn-primary:hover {
   transform: translateY(-1px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.48),
@@ -3504,13 +3597,31 @@ body[data-apt="salinas"]  a.apt-page-reserve-btn:hover {
   [data-apt="salinas"]  .asb-cta,
   body[data-apt="mar"]      a.apt-page-reserve-btn,
   body[data-apt="thalassa"] a.apt-page-reserve-btn,
-  body[data-apt="salinas"]  a.apt-page-reserve-btn { animation: none; }
+  body[data-apt="salinas"]  a.apt-page-reserve-btn,
+  [data-apt="mar"]      .widget-cta,
+  [data-apt="thalassa"] .widget-cta,
+  [data-apt="salinas"]  .widget-cta,
+  [data-apt="mar"]      .ads-btn,
+  [data-apt="thalassa"] .ads-btn,
+  [data-apt="salinas"]  .ads-btn,
+  [data-apt="mar"]      .ag-nav-btn-primary,
+  [data-apt="thalassa"] .ag-nav-btn-primary,
+  [data-apt="salinas"]  .ag-nav-btn-primary { animation: none; }
   [data-apt="mar"]      .asb-cta::after,
   [data-apt="thalassa"] .asb-cta::after,
   [data-apt="salinas"]  .asb-cta::after,
   body[data-apt="mar"]      a.apt-page-reserve-btn::after,
   body[data-apt="thalassa"] a.apt-page-reserve-btn::after,
-  body[data-apt="salinas"]  a.apt-page-reserve-btn::after { animation: none; }
+  body[data-apt="salinas"]  a.apt-page-reserve-btn::after,
+  [data-apt="mar"]      .widget-cta::after,
+  [data-apt="thalassa"] .widget-cta::after,
+  [data-apt="salinas"]  .widget-cta::after,
+  [data-apt="mar"]      .ads-btn::after,
+  [data-apt="thalassa"] .ads-btn::after,
+  [data-apt="salinas"]  .ads-btn::after,
+  [data-apt="mar"]      .ag-nav-btn-primary::after,
+  [data-apt="thalassa"] .ag-nav-btn-primary::after,
+  [data-apt="salinas"]  .ag-nav-btn-primary::after { animation: none; }
 }
 
 /* Widget-mini plegados sobre apt — añadir sheen metálico encima del
