@@ -1711,7 +1711,15 @@ body.apt-bar-shown .cookies {
   overflow: hidden;
   scroll-snap-align: center;
   cursor: pointer;
-  transition: transform .6s cubic-bezier(.2,.8,.2,1);
+  /* CSS vars para el tilt 3D (mousemove). Default 0 = sin tilt. */
+  --tilt-rx: 0deg;
+  --tilt-ry: 0deg;
+  --tilt-tz: 0px;
+  transform: perspective(1000px)
+             rotateX(var(--tilt-rx))
+             rotateY(var(--tilt-ry))
+             translate3d(0, var(--tilt-tz), 0);
+  transition: transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
   color: var(--crema);
   display: flex;
   flex-direction: column;
@@ -1719,12 +1727,59 @@ body.apt-bar-shown .cookies {
   padding: 36px;
 }
 /* translateZ(0) + backface-visibility forces GPU layer and correct border-radius clipping in WebKit */
-.apt-card { -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.apt-card { will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 @media (hover: hover) and (pointer: fine) {
-  .apt-card:hover { -webkit-transform: translateY(-6px) translateZ(0); transform: translateY(-6px) translateZ(0); }
+  .apt-card:hover { --tilt-tz: -6px; }
   .apt-card.vm:hover { box-shadow: 0 18px 48px rgba(107,122,58,.45), 0 4px 16px rgba(107,122,58,.28); }
   .apt-card.vt:hover { box-shadow: 0 18px 48px rgba(138,74,36,.45),  0 4px 16px rgba(138,74,36,.28); }
   .apt-card.vs:hover { box-shadow: 0 18px 48px rgba(158,122,44,.45), 0 4px 16px rgba(158,122,44,.28); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .apt-card { transition: box-shadow .35s ease; }
+}
+
+/* Gradient border animado tipo cult-ui — anillo conic-gradient que
+   rota a 16s, visible solo al hover, en el color del apt. Vive en
+   ::after con mask que solo afecta a la banda del borde (1.5 px) —
+   el texto y foto interior quedan intactos. */
+@property --apt-border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+.apt-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--apt-border-angle, 0deg),
+    rgba(240, 232, 213, 0) 0%,
+    var(--apt-border-c1, #3AAABB) 30%,
+    var(--apt-border-c2, #6FC4D1) 50%,
+    rgba(240, 232, 213, 0) 80%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0;
+  animation: aptBorderSpin 16s linear infinite;
+  transition: opacity .35s ease;
+}
+.apt-card.vm { --apt-border-c1: #6B7A3A; --apt-border-c2: #8B9A52; }
+.apt-card.vt { --apt-border-c1: #8A4A24; --apt-border-c2: #B86A3C; }
+.apt-card.vs { --apt-border-c1: #9E7A2C; --apt-border-c2: #D4A84A; }
+@media (hover: hover) and (pointer: fine) {
+  .apt-card:hover::after { opacity: 0.95; }
+}
+@keyframes aptBorderSpin {
+  to { --apt-border-angle: 360deg; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .apt-card::after { animation: none; }
 }
 .apt-card::before {
   content: '';
@@ -2357,6 +2412,68 @@ body.apt-bar-shown .cookies {
   line-height: 1.5;
   opacity: 0.7;
   max-width: 44ch;
+}
+
+/* ============================================================
+   RATINGS MARQUEE — cinta de plataformas/métricas bajo Ratings
+   ============================================================ */
+.ratings-marquee {
+  background-color: #2A0F2E;
+  color: #F0E8D5;                              /* ratio ~11:1 sobre eggplant */
+  border-top: 1px solid rgba(240, 232, 213, 0.10);
+  border-bottom: 1px solid rgba(240, 232, 213, 0.10);
+  overflow: hidden;
+  padding: 16px 0;
+  position: relative;
+}
+.ratings-marquee::before,
+.ratings-marquee::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 1;
+  pointer-events: none;
+}
+.ratings-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, #2A0F2E, transparent);
+}
+.ratings-marquee::after {
+  right: 0;
+  background: linear-gradient(270deg, #2A0F2E, transparent);
+}
+.rm-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(28px, 4vw, 48px);
+  width: max-content;
+  animation: rmScroll 42s linear infinite;
+  white-space: nowrap;
+  will-change: transform;
+}
+.rm-item {
+  font-family: var(--sans);
+  font-size: clamp(13px, 1.2vw, 15px);
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #F0E8D5;
+}
+.rm-dot {
+  color: #6FC4D1;                               /* sol-lt — pinta de marca */
+  font-size: 11px;
+  opacity: 0.7;
+}
+@keyframes rmScroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+@media (hover: hover) and (pointer: fine) {
+  .ratings-marquee:hover .rm-track { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rm-track { animation: none; }
 }
 
 /* ============================================================

@@ -262,6 +262,45 @@ const Ratings = ({ lang }) => {
   );
 };
 
+// --- RATINGS MARQUEE — cinta de plataformas/métricas bajo Ratings ---
+// Texto-only marquee: sin logos externos (cero deps). Arena #F0E8D5 sobre
+// eggplant #2A0F2E (ratio ~11:1). Track duplicado para loop continuo.
+const RatingsMarquee = ({ lang }) => {
+  const items = lang === 'es' ? [
+    '★ 9.8 · Booking.com',
+    '★ 5.0 · Airbnb Superhost',
+    '★ 4.9 · Google Maps',
+    '600+ familias desde 2016',
+    'Sin comisiones · reserva directa',
+    '10 años en Vera Playa',
+    'Mejor precio garantizado',
+    'Te responde Alex o Fran en <24 h',
+  ] : [
+    '★ 9.8 · Booking.com',
+    '★ 5.0 · Airbnb Superhost',
+    '★ 4.9 · Google Maps',
+    '600+ families since 2016',
+    'No commissions · direct booking',
+    '10 years in Vera Playa',
+    'Best price guaranteed',
+    'Alex or Fran reply within 24 h',
+  ];
+  // Duplicamos el array para que el loop sea continuo (translateX -50%).
+  const doubled = [...items, ...items];
+  return (
+    <section className="ratings-marquee" aria-label={lang === 'es' ? 'Plataformas y métricas' : 'Platforms and metrics'}>
+      <div className="rm-track" aria-hidden="true">
+        {doubled.map((it, i) => (
+          <React.Fragment key={i}>
+            <span className="rm-item">{it}</span>
+            <span className="rm-dot" aria-hidden="true">✦</span>
+          </React.Fragment>
+        ))}
+      </div>
+    </section>
+  );
+};
+
 // --- CONTACT CTA ---
 const ContactCTA = ({ lang, availHref }) => {
   const t = COPY[lang];
@@ -290,4 +329,4 @@ const ContactCTA = ({ lang, availHref }) => {
   );
 };
 
-Object.assign(window, { Counters, Gallery, Team, Manifest, Ratings, ContactCTA });
+Object.assign(window, { Counters, Gallery, Team, Manifest, Ratings, RatingsMarquee, ContactCTA });
