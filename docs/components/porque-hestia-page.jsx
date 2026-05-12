@@ -293,6 +293,17 @@ const PORQUE_V4_HUES = {
   I: '123, 59, 107',
   A: '107, 122, 58',
 };
+// Detalle fotográfico de cada Hestía detrás de cada letra. Crossfade
+// con la letra activa. Distribuido entre los 3 apts para que el
+// usuario vea fragmentos de los 3 Hestías en una sola sección.
+const PORQUE_V4_PHOTOS = {
+  H: 'apt-vm-gallery-1.jpg',
+  E: 'apt-vt-gallery-01.jpg',
+  S: 'apt-vs-gallery-1.jpg',
+  T: 'apt-vm-gallery-10.jpg',
+  I: 'apt-vt-gallery-05.jpg',
+  A: 'apt-vs-gallery-10.jpg',
+};
 const PORQUE_V4_AUTOPLAY_MS = 10000;
 
 const PorqueValores = ({ lang }) => {
@@ -349,6 +360,20 @@ const PorqueValores = ({ lang }) => {
         onFocus={() => setPaused(true)}
         onBlur={() => setPaused(false)}
       >
+        {/* Stack de fotos detrás — un detalle de Hestía por letra,
+            blur + opacidad bajos. Crossfade con activeIdx. */}
+        <div className="pq-v4-photo-stack" aria-hidden="true">
+          {t.values.map((vv, i) => (
+            <div
+              key={i}
+              className="pq-v4-photo-layer"
+              style={{
+                backgroundImage: `url(assets/${PORQUE_V4_PHOTOS[vv.letter] || PORQUE_V4_PHOTOS.A})`,
+                opacity: i === activeIdx ? 1 : 0,
+              }}
+            />
+          ))}
+        </div>
         <div className="pq-v4-wash-stack" aria-hidden="true">
           {t.values.map((vv, i) => (
             <div
