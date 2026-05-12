@@ -2133,6 +2133,63 @@ const DateRangePicker = ({
   );
 };
 
+// ────────────────────────────────────────────────────────────────
+// Video loop fade — añade fade-out 0.65 s antes del final + fade-in
+// al recomenzar para que el corte del loop no se note.
+// Funciona sobre cualquier <video loop> del sitio (excepto los que
+// llevan data-no-loop-fade). La CSS aplica transition opacity y la
+// clase .is-fading se añade/quita aquí según currentTime/duration.
+// ────────────────────────────────────────────────────────────────
+const _initVideoFadeLoop = (() => {
+  const FADE_S = 0.65;
+  const attached = new WeakSet();
+  const attach = (v) => {
+    if (attached.has(v) || !v || v.dataset.noLoopFade !== undefined) return;
+    attached.add(v);
+    let lastT = 0;
+    const tick = () => {
+      const t = v.currentTime;
+      const d = v.duration;
+      if (!d || isNaN(d) || d < FADE_S * 2.5) return;
+      if (t < lastT) {
+        // El loop ha vuelto al principio (currentTime se reseteó).
+        v.classList.remove('is-fading');
+      } else if (d - t < FADE_S) {
+        v.classList.add('is-fading');
+      } else if (t > FADE_S && v.classList.contains('is-fading')) {
+        v.classList.remove('is-fading');
+      }
+      lastT = t;
+    };
+    v.addEventListener('timeupdate', tick);
+    v.addEventListener('seeking', () => {
+      if (v.currentTime < FADE_S) v.classList.remove('is-fading');
+    });
+  };
+  let initialized = false;
+  return () => {
+    if (initialized) return;
+    initialized = true;
+    const scan = (root) => {
+      (root.querySelectorAll ? root.querySelectorAll('video[loop]') : []).forEach(attach);
+      if (root instanceof HTMLVideoElement && root.hasAttribute('loop')) attach(root);
+    };
+    scan(document);
+    const mo = new MutationObserver((muts) => {
+      muts.forEach(m => m.addedNodes.forEach(n => { if (n instanceof Element) scan(n); }));
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+  };
+})();
+// Auto-init en cuanto se carga el módulo.
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', _initVideoFadeLoop, { once: true });
+  } else {
+    _initVideoFadeLoop();
+  }
+}
+
 Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt, DateRangePicker, _drAvail, _drAdj, _drDiff, _drFmtDate });
 
 // ================================================================
