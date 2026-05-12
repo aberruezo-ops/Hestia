@@ -422,7 +422,7 @@ const GUIDE_SHARED = {
     },
     phones: {
       title: 'Teléfonos y datos de utilidad',
-      wifi: { label: 'Contraseña WiFi', value: 'Mira en el router (puede haber cambiado)' },
+      wifi: { label: 'Contraseña WiFi', value: 'Hestiavera (si no funciona, mírala en el router — puede haber cambiado)' },
       list: [
         { label: 'Bomberos', value: '080' },
         { label: 'Emergencias', value: '112' },
@@ -597,7 +597,7 @@ const GUIDE_SHARED = {
     },
     phones: {
       title: 'Useful data and phone numbers',
-      wifi: { label: 'WiFi password', value: 'Check the router (may have changed)' },
+      wifi: { label: 'WiFi password', value: 'Hestiavera (if it does not work, check the router — may have changed)' },
       list: [
         { label: 'Firefighters', value: '080' },
         { label: 'Emergencies', value: '112' },
