@@ -624,90 +624,75 @@ p  { line-height: 1.65; font-weight: 300; }
 .brand-lockup .your-home { font-size: 11px; margin-top: 1px; }
 
 /* ────────────────────────────────────────────────────────────────
-   ANIMACIONES DEL LOGO H AL HOVER · Reflection sweep + Constellation
+   ANIMACIÓN DEL LOGO H AL HOVER · Liquid breathing (opción 3)
    ────────────────────────────────────────────────────────────────
-   1) ::before = banda de luz que cruza la H (650 ms, una pasada).
-   2) ::after  = halo glow + 4 puntos turquesa que respiran (1.8 s).
-   Sólo en el header (no en el footer). Off en reduced-motion. */
-.header .brand-lockup .hestia-logo-mark::before,
+   La H "respira": scale 1 → 1.04 + drop-shadow turquesa que se
+   expande y contrae cada 1.2 s. Halo radial detrás respirando en
+   contrafase. Sólo en el header (no footer). Off en reduced-motion. */
 .header .brand-lockup .hestia-logo-mark::after {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: -8px;
   pointer-events: none;
-  border-radius: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(58, 170, 187, 0.55) 0%,
+    rgba(58, 170, 187, 0.25) 40%,
+    transparent 75%);
+  filter: blur(8px);
   opacity: 0;
-  transition: opacity .35s ease;
-  z-index: 3;
-}
-/* 1 · Sweep — banda diagonal que cruza la H */
-.header .brand-lockup .hestia-logo-mark::before {
-  background: linear-gradient(115deg,
-    transparent 30%,
-    rgba(111, 196, 209, 0.0) 40%,
-    rgba(255, 255, 255, 0.65) 50%,
-    rgba(111, 196, 209, 0.0) 60%,
-    transparent 70%);
-  background-size: 280% 280%;
-  background-position: -50% 0%;
-  /* mix-blend-mode screen: el sweep solo "ilumina", no oscurece */
-  mix-blend-mode: screen;
-  filter: blur(2px);
-  z-index: 4;
-}
-/* 2 · Constellation — halo central + 4 puntos turquesa que respiran */
-.header .brand-lockup .hestia-logo-mark::after {
-  background:
-    radial-gradient(3px 3px at 18% 22%, rgba(111,196,209,.95), transparent 70%),
-    radial-gradient(2px 2px at 82% 15%, rgba(111,196,209,.85), transparent 70%),
-    radial-gradient(2.5px 2.5px at 14% 78%, rgba(58,170,187,.90), transparent 70%),
-    radial-gradient(3px 3px at 88% 80%, rgba(111,196,209,.75), transparent 70%),
-    radial-gradient(circle at 50% 50%, rgba(58, 170, 187, 0.35), transparent 70%);
-  /* halo central */
-  filter: drop-shadow(0 0 8px rgba(58, 170, 187, 0.4));
+  transition: opacity .45s ease;
   z-index: 1;
 }
+.header .brand-lockup .hestia-logo {
+  transition: transform .5s cubic-bezier(.2, .8, .2, 1),
+              filter    .5s cubic-bezier(.2, .8, .2, 1);
+}
 
-/* HOVER · activa los dos efectos */
+/* HOVER · breathing infinito en bucle */
 .header .brand-lockup:hover .hestia-logo,
 .header .brand-lockup:focus-visible .hestia-logo {
-  filter: drop-shadow(0 0 10px rgba(58, 170, 187, 0.55));
-  transform: translateY(-1px);
-}
-.header .brand-lockup:hover .hestia-logo-mark::before,
-.header .brand-lockup:focus-visible .hestia-logo-mark::before {
-  animation: hestiaLogoSweep 700ms cubic-bezier(.2, .8, .2, 1) forwards;
-  opacity: 1;
+  animation: hestiaLogoBreath 1.2s ease-in-out infinite;
 }
 .header .brand-lockup:hover .hestia-logo-mark::after,
 .header .brand-lockup:focus-visible .hestia-logo-mark::after {
   opacity: 1;
-  animation: hestiaLogoConstellation 1.8s ease-in-out infinite;
-  animation-delay: 350ms;            /* arranca justo después del sweep */
+  animation: hestiaLogoHalo 1.2s ease-in-out infinite;
 }
 
-@keyframes hestiaLogoSweep {
-  0%   { background-position: -50% 0%;  opacity: 0; }
-  20%  { opacity: 1; }
-  100% { background-position: 200% 0%;  opacity: 0; }
+@keyframes hestiaLogoBreath {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 4px rgba(58, 170, 187, 0.35));
+  }
+  50% {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 14px rgba(58, 170, 187, 0.75));
+  }
 }
-@keyframes hestiaLogoConstellation {
-  0%, 100% { transform: scale(1);   opacity: 0.85; }
-  50%      { transform: scale(1.10); opacity: 1; }
+@keyframes hestiaLogoHalo {
+  0%, 100% {
+    transform: scale(0.85);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .header .brand-lockup:hover .hestia-logo-mark::before,
-  .header .brand-lockup:hover .hestia-logo-mark::after,
-  .header .brand-lockup:focus-visible .hestia-logo-mark::before,
-  .header .brand-lockup:focus-visible .hestia-logo-mark::after {
-    animation: none;
-    opacity: 0;
-  }
   .header .brand-lockup:hover .hestia-logo,
   .header .brand-lockup:focus-visible .hestia-logo {
+    animation: none;
     transform: none;
-    filter: drop-shadow(0 0 6px rgba(58, 170, 187, 0.4));
+    filter: drop-shadow(0 0 8px rgba(58, 170, 187, 0.5));
+  }
+  .header .brand-lockup:hover .hestia-logo-mark::after,
+  .header .brand-lockup:focus-visible .hestia-logo-mark::after {
+    animation: none;
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
