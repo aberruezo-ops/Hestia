@@ -2184,9 +2184,6 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               ))}
             </ol>
             <div className="ag-nav-actions">
-              <a className="ag-nav-btn" href={aptInfo.pdf} target="_blank" rel="noopener">
-                {lang === 'es' ? 'PDF original' : 'Original PDF'}
-              </a>
               <button className="ag-nav-btn ag-nav-btn-primary" onClick={handlePrint}>
                 {lang === 'es' ? '⇩ Descargar PDF' : '⇩ Download PDF'}
               </button>
