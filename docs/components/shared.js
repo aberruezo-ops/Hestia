@@ -2030,6 +2030,276 @@ const SABIAS_QUE_HOME_FACTS = [/* Cabo de Gata */
 }, {
   es: 'El Cabo Sacratif (Granada, frontera con Almería) es uno de los puntos más al sur de la España peninsular. Su faro lleva más de 160 años guiando barcos por el Estrecho del Mediterráneo.',
   en: 'Cabo Sacratif (Granada, on the Almería border) is one of the southernmost points of mainland Spain. Its lighthouse has been guiding ships through the Mediterranean strait for over 160 years.'
+}, /* ── Bloque ampliado · Almería ── */
+{
+  es: 'El desierto de Tabernas es el único desierto propiamente dicho de Europa continental: llueve menos de 250 mm al año y hay paisajes idénticos a Arizona a media hora de Vera.',
+  en: 'The Tabernas Desert is the only true desert in continental Europe: under 250 mm of rain per year and Arizona-like badlands half an hour from Vera.'
+}, {
+  es: 'Más de 500 películas se han rodado en Tabernas. Sergio Leone filmó allí "El bueno, el feo y el malo" (1966) y los decorados se conservan como parques temáticos en Fort Bravo y Oasys.',
+  en: 'Over 500 films have been shot in Tabernas. Sergio Leone filmed "The Good, the Bad and the Ugly" there in 1966 — the sets still stand as theme parks at Fort Bravo and Oasys.'
+}, {
+  es: 'El símbolo del Indalo, hoy en banderas y matrículas almerienses, es una pintura prehistórica del Abrigo de los Letreros en Vélez Blanco (hace ~4.500 años).',
+  en: 'The Indalo symbol — on Almería\'s flag and number plates today — is a prehistoric painting from the Letreros shelter in Vélez Blanco, roughly 4,500 years old.'
+}, {
+  es: 'La Geoda de Pulpí es la cavidad geológica visitable más grande del mundo: 11 m de largo, llena de cristales transparentes de yeso, descubierta por casualidad por unos espeleólogos en 1999.',
+  en: 'The Pulpí Geode is the world\'s largest accessible geode — 11 m long, packed with transparent gypsum crystals, found by chance by cavers in 1999.'
+}, {
+  es: 'Macael lleva sacando mármol blanco desde el Imperio Romano: con piedra de su sierra se hicieron las columnas de Medina Azahara y los patios de la Alhambra.',
+  en: 'Macael has been quarrying white marble since Roman times — its stone built the columns of Medina Azahara and the courtyards of the Alhambra.'
+}, {
+  es: 'Los Yesos de Sorbas son un kárst único: bajo el pueblo serpentean más de 1.000 cuevas naturales talladas por el agua en el yeso, con cristales que parecen catedrales subterráneas.',
+  en: 'The Sorbas gypsum karst is unique in Europe: over 1,000 natural caves wind beneath the village, water-carved through gypsum into crystal cathedrals.'
+}, {
+  es: 'En Los Millares, junto a Santa Fe de Mondújar, hay una de las primeras ciudades amuralladas de Europa (siglo XXVI a.C.): una civilización del Calcolítico con murallas y torres mucho antes que Troya.',
+  en: 'Los Millares, near Santa Fe de Mondújar, holds one of Europe\'s earliest walled cities (26th century BC) — Copper Age towers and ramparts older than Troy.'
+}, {
+  es: 'El Cable Inglés del puerto de Almería es la única estructura de hierro Eiffel-style en el sur peninsular. Servía para cargar mineral en barcos y hoy es Bien de Interés Cultural.',
+  en: 'Almería port\'s "Cable Inglés" is the only Eiffel-style iron structure in southern Spain — built to load mineral onto ships, now a protected heritage site.'
+}, {
+  es: 'La Alcazaba de Almería es la segunda fortaleza musulmana más grande de España tras la Alhambra. En su día albergó a 20.000 habitantes — más que muchas ciudades europeas medievales.',
+  en: 'Almería\'s Alcazaba is Spain\'s second-largest Muslim fortress after the Alhambra. At its peak it housed 20,000 people — more than many medieval European cities.'
+}, {
+  es: 'Almería fue, en el siglo XI, una de las ciudades más ricas del Mediterráneo: sus sederías exportaban a Bagdad, El Cairo y Bizancio.',
+  en: 'In the 11th century Almería was one of the Mediterranean\'s wealthiest cities — its silks travelled to Baghdad, Cairo and Byzantium.'
+}, {
+  es: 'Mojácar la Vieja se asienta sobre un cerro con vistas a 360°. La leyenda dice que la última musulmana de la Reconquista negoció aquí la rendición sin perder casa ni huerta.',
+  en: 'Old Mojácar perches on a 360°-view hill. Legend has it the last Muslim of the Reconquista negotiated her surrender here without losing house or garden.'
+}, {
+  es: 'Garrucha tiene una de las lonjas de pescado más vivas del Levante: la gamba roja de Garrucha está en las mejores cartas de Madrid y Barcelona y se subasta a la voz cada tarde.',
+  en: 'Garrucha\'s fish market is one of the liveliest on the south coast. Its red prawn ends up on Madrid and Barcelona\'s top menus, auctioned out loud every afternoon.'
+}, {
+  es: 'La Sierra de los Filabres es la zona astronómica más limpia de Europa continental: en su cima está Calar Alto, el mayor observatorio del continente con un telescopio de 3,5 m.',
+  en: 'The Filabres range has continental Europe\'s clearest skies: at its peak sits Calar Alto, the continent\'s largest observatory with a 3.5 m telescope.'
+}, {
+  es: 'En el yacimiento argárico de El Argar (Antas) está el origen del nombre de toda una cultura prehistórica: la Cultura del Argar dominó el SE peninsular hace 4.000 años.',
+  en: 'The Argaric culture — which dominated south-east Iberia 4,000 years ago — takes its name from the El Argar dig in Antas.'
+}, {
+  es: 'Las Salinas de Cabo de Gata producen sal marina por evaporación natural desde la época fenicia. Hoy alimentan a la única colonia estable de flamencos del sureste peninsular.',
+  en: 'The Cabo de Gata salt flats have produced sea salt by natural evaporation since Phoenician times. They feed the only stable flamingo colony of south-east Iberia.'
+}, {
+  es: 'En Roquetas de Mar hay una "alcazaba" cristiana del XVI: el Castillo de Santa Ana, construido para vigilar piratas berberiscos que asaltaban la costa cada verano.',
+  en: 'In Roquetas stands Santa Ana — a 16th-century Christian "alcazaba" built to spot Berber pirates who raided the coast each summer.'
+}, {
+  es: 'Carboneras tiene la playa de los Muertos, repetidamente votada entre las mejores de España: 1 km de cantos rodados y agua transparente sin un solo edificio detrás.',
+  en: 'Carboneras owns Playa de los Muertos, repeatedly voted among Spain\'s best — 1 km of pebbles, crystalline water, not a single building behind it.'
+}, {
+  es: 'Vélez Blanco tiene un castillo renacentista cuyo patio fue desmontado y vendido entero a Nueva York en 1904 — hoy está reconstruido pieza a pieza en el Metropolitan Museum.',
+  en: 'Vélez Blanco\'s Renaissance castle had its courtyard dismantled and sold whole to New York in 1904 — today it stands reassembled inside the Metropolitan Museum.'
+}, {
+  es: 'Cuevas del Almanzora alberga uno de los yacimientos prehistóricos más densos de Europa: 26 enterramientos argáricos hallados solo en el cabezo de Fuente Álamo.',
+  en: 'Cuevas del Almanzora holds one of Europe\'s densest prehistoric sites: 26 Argaric burials found in the single hill of Fuente Álamo.'
+}, {
+  es: 'El acueducto de los Milagros en Albox sigue funcionando 250 años después: lleva agua de la Sierra de las Estancias a los huertos del pueblo con un caudal constante.',
+  en: 'The Milagros aqueduct in Albox still works 250 years on — bringing water from the Estancias range to the village gardens at constant flow.'
+}, {
+  es: 'Pulpí tiene la mina del Polvorín, la mayor explotación de hierro abandonada de Europa: un laberinto de galerías inundadas que se exploran en kayak con linterna frontal.',
+  en: 'Pulpí\'s Polvorín mine — Europe\'s largest abandoned iron operation — is a flooded gallery maze you can kayak through with a head torch.'
+}, {
+  es: 'Níjar es famoso por sus jarapas — alfombras tejidas con tiras de tela reciclada en telar de pedal — y por la cerámica vidriada que se hace desde el XVI.',
+  en: 'Níjar is known for its "jarapas" — rugs woven from recycled fabric strips on foot looms — and for the glazed pottery it has made since the 16th century.'
+}, {
+  es: 'El Karst en Yesos de Sorbas es el segundo del mundo en extensión tras el de Sicilia. Bajo tus pies en Sorbas pasan cuevas que nadie ha cartografiado del todo.',
+  en: 'The Sorbas gypsum karst is the world\'s second largest after Sicily\'s. Beneath the village wind caves still not fully mapped.'
+}, {
+  es: 'El Almanzora era río navegable en época romana: por él subían barcos hasta el actual Cuevas para cargar plomo y plata de la sierra.',
+  en: 'The Almanzora was a navigable river in Roman times — boats sailed up to modern Cuevas to load lead and silver from the mountains.'
+}, {
+  es: 'La Cala de San Pedro, junto a Las Negras, solo se llega andando o en barca. Era refugio de hippies en los 70 y hoy sobreviven 8 personas viviendo sin coches ni red eléctrica.',
+  en: 'San Pedro Cove, next to Las Negras, can only be reached on foot or by boat. Hippies took refuge there in the 70s — eight still live there today without cars or grid power.'
+}, {
+  es: 'Almería capital tuvo la primera bombilla eléctrica encendida en España, en 1882, gracias al ingeniero Gaspar Molina y al inglés Samuel Wood que montaron una pequeña central en el barrio de la Almedina.',
+  en: 'Almería had Spain\'s first electric bulb lit in 1882, thanks to engineer Gaspar Molina and English engineer Samuel Wood who set up a small plant in the Almedina district.'
+}, {
+  es: 'El "tropicalismo" almeriense: subtropicales como chirimoyas, mangos, papayas y aguacates crecen al aire libre en el bajo Andarax — el único microclima de Europa que lo permite.',
+  en: 'Almería\'s tropical microclimate: cherimoyas, mangoes, papayas and avocados grow outdoors in the lower Andarax — the only spot in Europe where they can.'
+}, {
+  es: 'En Tabernas se rueda casi todos los meses: Indiana Jones, El Dorado, Lawrence de Arabia, Conan, Patton, Doctor Who, Juego de Tronos y Star Wars han pasado por sus ramblas.',
+  en: 'Tabernas hosts shoots almost every month: Indiana Jones, El Dorado, Lawrence of Arabia, Conan, Patton, Doctor Who, Game of Thrones and Star Wars have all rolled cameras here.'
+}, {
+  es: 'Las gambas rojas de Garrucha se diferencian de otras del Mediterráneo porque viven a 600-800 m de profundidad. Por eso su carne es más dulce — el frío concentra los azúcares.',
+  en: 'Garrucha\'s red prawns live at 600-800 m depth — that cold concentrates sugars in the flesh, making them sweeter than other Mediterranean reds.'
+}, {
+  es: 'La cueva del Tesoro, en el Cabezo María (Pulpí), guarda pinturas rupestres del Neolítico: cabras, ciervos y figuras humanas pintadas hace 7.000 años.',
+  en: 'The Treasure Cave in Cabezo María (Pulpí) holds Neolithic rock paintings — goats, deer and human figures painted 7,000 years ago.'
+}, {
+  es: 'El faro de Mesa Roldán (Carboneras) ha aparecido en "Juego de Tronos" como la Atalaya Marina de Meereen — el mar visto desde aquí sale en los créditos de la serie.',
+  en: 'Mesa Roldán lighthouse (Carboneras) appeared in Game of Thrones as Meereen\'s sea watch — its sea view shows up in the credits.'
+}, {
+  es: 'En Almería se inventó la "tapa" tal como la conocemos hoy: la costumbre de servir algo de comer GRATIS con la bebida sigue siendo norma — pruébala en el barrio de Las Cuatro Calles.',
+  en: 'Almería is the birthplace of the modern "tapa" — a free bite served with every drink. Still the norm. Try it in the Cuatro Calles district.'
+}, {
+  es: 'La ruta del cine en Tabernas es la única en Europa donde puedes hacer tu propia escena de duelo al sol con vestuario, caballo y diligencia de época.',
+  en: 'Tabernas\' cinema route is the only one in Europe where you can stage your own western showdown with full period costume, horse and stagecoach.'
+}, {
+  es: 'En el Parque Natural Sierra María-Los Vélez crecen sabinas centenarias y abetos pinsapos relictos del último período glaciar — un bosque que viene del Pleistoceno.',
+  en: 'Sierra María-Los Vélez Natural Park grows centuries-old junipers and pinsapo firs left over from the last ice age — a forest straight out of the Pleistocene.'
+}, {
+  es: 'En Cuevas del Almanzora se inventó el chocolate a la taza con canela y leche al estilo árabe — sigue siendo receta protegida de varias chocolaterías locales.',
+  en: 'The Arab-style thick chocolate with cinnamon and milk was invented in Cuevas del Almanzora — still a protected recipe at a handful of local chocolatiers.'
+}, /* ── Bloque ampliado · Murcia limítrofe (sureste) ── */
+{
+  es: 'Cartagena fue fundada por los cartagineses en 227 a.C. como Qart Hadasht. Roma la conquistó en 209 a.C. y desde allí Aníbal mandaba mensajes a Cartago vía paloma — la primera "red" del Mediterráneo.',
+  en: 'Cartagena was founded by the Carthaginians in 227 BC as Qart Hadasht. Rome took it in 209 BC and Hannibal sent pigeon-post to Carthage from there — the Mediterranean\'s first "network".'
+}, {
+  es: 'El Teatro Romano de Cartagena estuvo enterrado bajo la ciudad hasta 1988. Fue descubierto al rehabilitar el barrio del Molinete — y hoy es uno de los mejor conservados de España.',
+  en: 'Cartagena\'s Roman Theatre lay buried under the city until 1988. It was uncovered while restoring the Molinete quarter — now one of the best preserved in Spain.'
+}, {
+  es: 'Isaac Peral inventó el primer submarino eléctrico del mundo en Cartagena (1888) — funcional, navegaba sumergido. El original se expone en el puerto de la ciudad.',
+  en: 'Isaac Peral built the world\'s first electric submarine in Cartagena (1888) — fully functional and submersible. The original is on display at the city\'s port.'
+}, {
+  es: 'Mazarrón conserva dos pecios fenicios del siglo VII a.C. — los más antiguos del Mediterráneo occidental. Uno se ha extraído pieza a pieza, el otro sigue intacto bajo la arena.',
+  en: 'Mazarrón holds two 7th-century BC Phoenician shipwrecks — the oldest in the western Mediterranean. One has been recovered piece by piece, the other still rests intact under sand.'
+}, {
+  es: 'Las Gredas de Bolnuevo (Mazarrón) son esculturas naturales talladas por el viento en arcilla amarilla durante miles de años — un paisaje marciano a 50 m de la playa.',
+  en: 'The Bolnuevo Gredas (Mazarrón) are wind-carved sculptures in yellow clay — a Martian landscape 50 m from the beach.'
+}, {
+  es: 'Águilas celebra el carnaval declarado de Interés Turístico Internacional desde 2015. Su mascota, el "Cuerva", es un personaje único en España: media broma, media tradición ancestral.',
+  en: 'Águilas\' carnival has been an international tourism event since 2015. Its mascot, "El Cuerva", is unique in Spain — half-joke, half-ancient-tradition.'
+}, {
+  es: 'Lorca sufrió un terremoto de 5,1 en 2011 que arruinó su casco histórico. La reconstrucción ha recuperado uno de los conjuntos barrocos más completos del sur peninsular.',
+  en: 'Lorca was hit by a magnitude 5.1 earthquake in 2011 that flattened its historic centre. The rebuild has recovered one of southern Spain\'s most complete baroque ensembles.'
+}, {
+  es: 'La Semana Santa de Lorca, declarada de Interés Internacional, no es como las otras: hay carros romanos a galope, bordados en hilo de oro de 8 kg y carreras de caballos en plena procesión.',
+  en: 'Lorca\'s Holy Week — internationally declared — is unlike any other: galloping Roman chariots, 8-kg gold-thread embroideries and horse races during the procession.'
+}, {
+  es: 'Caravaca de la Cruz es una de las 5 ciudades santas del mundo católico. Su Vera Cruz es la única reliquia que se baña en agua y vino cada año — los demás lugares santos están en Roma, Jerusalén, Santiago y Loyola.',
+  en: 'Caravaca de la Cruz is one of five holy cities of Catholicism. Its Vera Cruz is the only relic dipped in wine and water each year — the others are Rome, Jerusalem, Santiago and Loyola.'
+}, {
+  es: 'Sierra Espuña es el único bosque de pinos repoblado entero a mano: a finales del XIX el ingeniero Ricardo Codorníu plantó allí 20 millones de pinos para frenar la erosión.',
+  en: 'Sierra Espuña is the only forest planted entirely by hand: in the late 19th century engineer Ricardo Codorníu planted 20 million pine trees there to stop erosion.'
+}, {
+  es: 'Calblanque es un parque protegido sin un solo edificio en 13 km de costa — entrar requiere autobús lanzadera en verano. El mar es transparente y la arena, dorada de mineral.',
+  en: 'Calblanque is a protected park with not one building along its 13 km of coast — shuttle access only in summer. The sea is clear, the sand mineral-gold.'
+}, {
+  es: 'El Mar Menor es la laguna salada de agua de mar más grande de Europa: 135 km² y solo 7 m en su punto más profundo. Las aguas tienen el doble de sal que el mar y propiedades terapéuticas.',
+  en: 'The Mar Menor is Europe\'s largest saltwater lagoon — 135 km², just 7 m deep at most. Its water is twice as salty as the sea and has therapeutic properties.'
+}, {
+  es: 'Calasparra produce un arroz protegido por DOP que es el único en Europa que se cultiva con agua corriente de río — la cebada del agua mantiene el grano firme y absorbente.',
+  en: 'Calasparra grows a PDO-protected rice — the only one in Europe cultivated with flowing river water, which keeps the grain firm and absorbent.'
+}, {
+  es: 'Mula es famosa por sus tambores: la Noche de los Tambores reúne a 20.000 tamborileros que tocan sin parar de la medianoche al amanecer en Semana Santa.',
+  en: 'Mula is famous for its drums: the Night of the Drums brings together 20,000 drummers playing nonstop from midnight to dawn during Holy Week.'
+}, {
+  es: 'En Bullas, Jumilla y Yecla se hace el mejor monastrell del mundo: una uva tinta robusta que solo madura bien en suelos secos y soleados como los del altiplano murciano.',
+  en: 'Bullas, Jumilla and Yecla produce the world\'s best Monastrell — a robust red grape that only ripens properly in dry, sunny plateaus like Murcia\'s altiplano.'
+}, {
+  es: 'Murcia capital tiene la Casa-Museo Salzillo, dedicada al escultor del XVIII que talló todos los pasos de la Semana Santa local. Sus figuras en madera policromada se conservan intactas tras 250 años.',
+  en: 'Murcia city houses the Salzillo museum, devoted to the 18th-century sculptor who carved every local Holy Week throne. His polychrome wood figures survive intact after 250 years.'
+}, {
+  es: 'El Valle de Ricote es el último reducto morisco de España: tras la expulsión de 1614 sobrevivieron varias familias por un permiso especial del rey. Hoy se mantienen los huertos de palmera y limonero.',
+  en: 'The Ricote Valley is Spain\'s last Morisco stronghold: after the 1614 expulsion a handful of families survived by royal exemption. The palm and lemon orchards endure.'
+}, {
+  es: 'Cieza tiene Medina Siyâsa, una ciudad andalusí del XII que mantiene 25 viviendas con yeserías originales — restos únicos de la vida cotidiana musulmana medieval.',
+  en: 'Cieza holds Medina Siyâsa, a 12th-century Andalusi town with 25 dwellings still showing original plasterwork — unique remains of medieval Muslim daily life.'
+}, {
+  es: 'La Sierra de la Pila, entre Fortuna y Abarán, esconde la Cueva Negra: yacimiento del Paleolítico con homínidos de hace 800.000 años — entre los más antiguos del sur europeo.',
+  en: 'Sierra de la Pila, between Fortuna and Abarán, hides Cueva Negra — a Paleolithic site with 800,000-year-old hominins, among southern Europe\'s oldest.'
+}, {
+  es: 'En Aledo (Murcia, frontera con Almería) hay una torre vigía del XII que se ve desde la Sierra de los Filabres — los moros la usaban para mandar señales de humo a Mojácar y Vera.',
+  en: 'In Aledo (Murcia, on the Almería border) stands a 12th-century watchtower visible from the Filabres range — Moors used it to send smoke signals to Mojácar and Vera.'
+}, {
+  es: 'Los baños romanos de Fortuna (Murcia) llevan funcionando 2.000 años: las mismas aguas termales que usaron los legionarios se siguen embotellando hoy.',
+  en: 'The Roman baths of Fortuna (Murcia) have been working for 2,000 years: the same thermal water once used by Roman legionaries is still bottled today.'
+}, {
+  es: 'En las salinas de San Pedro del Pinatar conviven flamencos, avocetas y cigüeñuelas. Es el humedal con más especies de aves protegidas del sureste peninsular.',
+  en: 'San Pedro del Pinatar\'s salt flats are home to flamingos, avocets and stilts — the south-east\'s wetland with most protected bird species.'
+}, {
+  es: 'Yecla tiene la mayor producción mundial de muebles tapizados de gama media: una de cada 10 sofás vendidos en Europa se fabrica en sus polígonos industriales.',
+  en: 'Yecla is the world\'s largest producer of mid-range upholstered furniture: 1 in every 10 sofas sold in Europe is built in its industrial parks.'
+}, {
+  es: 'Cope (entre Águilas y Calabardina) tiene una torre defensiva del XVI dentro del mar — la marea sube y la rodea por completo dos veces al día.',
+  en: 'Cope (between Águilas and Calabardina) has a 16th-century defence tower in the sea — the tide surrounds it completely twice a day.'
+}, {
+  es: 'El embalse de la Cierva (Mula) se llenó tan rápido al construirlo en 1929 que se quedó atrapado un pueblo entero, La Puebla de Mula — todavía emerge en años secos.',
+  en: 'The Cierva reservoir (Mula) filled so fast after its 1929 construction that the entire village of La Puebla de Mula was trapped — it still emerges in drought years.'
+}, /* ── Bloque ampliado · Granada limítrofe (Costa Tropical, Alpujarra y altiplano) ── */
+{
+  es: 'La Alpujarra granadina conserva las "tinaos" — pórticos cubiertos entre casas — y los tejados planos de launa, arcilla impermeable que se compacta cada otoño antes de las lluvias.',
+  en: 'The Granadan Alpujarra keeps its "tinaos" — covered passages between houses — and flat launa roofs of waterproof clay, compacted every autumn before the rains.'
+}, {
+  es: 'Trevélez es uno de los pueblos a más altitud habitados de España (1.476 m) y curan allí jamones DOP por la sequedad del aire — el frío seco mata bacterias sin necesidad de pimentón.',
+  en: 'Trevélez is one of Spain\'s highest inhabited villages (1,476 m) and cures PDO hams thanks to its dry air — cold dryness kills bacteria without needing paprika.'
+}, {
+  es: 'Sierra Nevada tiene el segundo techo de la España peninsular: el Mulhacén (3.479 m). Está a 1h45 en coche de Vera Playa — puedes esquiar y bañarte en el mar el mismo día.',
+  en: 'Sierra Nevada has mainland Spain\'s second-highest peak: Mulhacén (3,479 m). It\'s 1h45 from Vera Playa by car — ski and swim in the sea the same day.'
+}, {
+  es: 'En Orce (Granada, altiplano) está el yacimiento de Venta Micena: allí se halló el resto humano más antiguo de Europa (1,4 millones de años), conocido como el Hombre de Orce.',
+  en: 'Orce (Granada altiplano) holds the Venta Micena site — Europe\'s oldest human remains were found there, 1.4 million years old: the so-called Orce Man.'
+}, {
+  es: 'Galera (Granada, altiplano) conserva una necrópolis ibera del siglo IV a.C. con la Dama de Galera, una estatuilla de alabastro fenicia anterior a los íberos.',
+  en: 'Galera (Granada altiplano) holds a 4th-century BC Iberian necropolis with the Lady of Galera — a Phoenician alabaster statuette older than the Iberians themselves.'
+}, {
+  es: 'Guadix tiene 2.000 viviendas cueva habitadas — el mayor barrio troglodita de Europa. Las casas mantienen 18-20°C todo el año sin calefacción ni aire acondicionado.',
+  en: 'Guadix has 2,000 inhabited cave dwellings — Europe\'s largest troglodyte district. They stay 18-20°C year-round without heating or AC.'
+}, {
+  es: 'Baza conserva los baños árabes del siglo X mejor preservados de Andalucía oriental. Funcionaron 600 años hasta que un terremoto en 1531 los cerró.',
+  en: 'Baza holds eastern Andalusia\'s best preserved 10th-century Arab baths. They worked for 600 years until a 1531 earthquake closed them.'
+}, {
+  es: 'El Geoparque de Granada (en torno a Guadix y Baza) tiene la mayor concentración de cárcavas y badlands de Europa — paisaje lunar de arcillas rojizas talladas por el agua.',
+  en: 'The Granada Geopark (around Guadix and Baza) holds Europe\'s densest concentration of badlands — a lunar landscape of water-carved red clays.'
+}, {
+  es: 'En Castril (Granada, frontera con Jaén) nace un río que perfora la montaña por dentro: la Cerrada del Río Castril es una pasarela colgada sobre el agua que se mete en cuevas.',
+  en: 'In Castril (Granada, on the Jaén border) a river bores through the mountain — the Río Castril gorge is a hanging walkway over water that disappears into caves.'
+}, {
+  es: 'La Costa Tropical granadina (Salobreña, Almuñécar, Castell de Ferro) tiene las únicas plantaciones de caña de azúcar de Europa continental. El último ingenio cerró en 2006.',
+  en: 'The Granadan Costa Tropical (Salobreña, Almuñécar, Castell de Ferro) hosts continental Europe\'s only sugarcane plantations. The last mill closed in 2006.'
+}, {
+  es: 'Almuñécar fue Sexi, una ciudad fenicia del siglo VIII a.C. — exportaba garum (salsa de pescado fermentado) a todo el Mediterráneo. Aún se conservan piscinas de fabricación romanas.',
+  en: 'Almuñécar was Sexi — an 8th-century BC Phoenician city that exported garum (fermented fish sauce) across the Mediterranean. Roman production pools still survive.'
+}, {
+  es: 'Salobreña tiene un castillo nazarí del XIII pegado a un peñón sobre el mar. En su época fue prisión real — varios sultanes de Granada acabaron allí.',
+  en: 'Salobreña\'s 13th-century Nasrid castle clings to a sea-cliff. In its day it was a royal prison — several sultans of Granada ended their reigns there.'
+}, {
+  es: 'Motril fue capital azucarera de Europa entre el XVI y el XIX. Aún se conservan sus chimeneas de ladrillo — patrimonio industrial único en el sur peninsular.',
+  en: 'Motril was Europe\'s sugar capital between the 16th and 19th centuries. Its brick chimneys still stand — industrial heritage unique to southern Spain.'
+}, {
+  es: 'La Calahorra (Granada, Marquesado del Zenete) tiene un castillo del siglo XVI con un patio renacentista italiano dentro: el primer ejemplo del Cinquecento en España.',
+  en: 'La Calahorra (Granada, Zenete Marquisate) holds a 16th-century castle with a Renaissance Italian courtyard inside — the first Cinquecento example in Spain.'
+}, {
+  es: 'En Jérez del Marquesado (Granada) nacen los ríos que abastecen toda la cuenca del Genil — un manantial subterráneo de la Sierra Nevada que no se seca nunca.',
+  en: 'In Jérez del Marquesado (Granada) springs the water for the entire Genil basin — an underground source from Sierra Nevada that never dries up.'
+}, {
+  es: 'En las cuevas de Pampaneira (Alpujarra) se hace el primer chocolate ecológico de España con cacao trazable y leche de cabra payoya — uno de los proyectos artesanos más premiados del país.',
+  en: 'In Pampaneira (Alpujarra) sits Spain\'s first organic chocolate workshop with traceable cocoa and "payoya" goat milk — one of the country\'s most awarded craft projects.'
+}, {
+  es: 'Capileira y Bubión son los pueblos de la Alpujarra que aparecen en "Sur" de Federico García Lorca — el paisaje de cumbres y arrayanes de los textos.',
+  en: 'Capileira and Bubión are the Alpujarra villages in Federico García Lorca\'s "Sur" — the same peaks and myrtle terraces of the texts.'
+}, {
+  es: 'Pedro Antonio de Alarcón, autor de "El sombrero de tres picos", recorrió la Alpujarra en 1872 a lomos de mulo y escribió uno de los primeros libros de viajes modernos en español.',
+  en: 'Pedro Antonio de Alarcón — author of "The Three-Cornered Hat" — rode the Alpujarra by mule in 1872 and wrote one of Spain\'s first modern travel books.'
+}, {
+  es: 'La estación de esquí de Sierra Nevada es la más al sur de Europa: las pistas miran al Mediterráneo y desde el Veleta se ve el Rif marroquí en días claros.',
+  en: 'Sierra Nevada is Europe\'s southernmost ski resort: pistes face the Mediterranean and from Veleta peak you can see the Moroccan Rif on clear days.'
+}, {
+  es: 'En los telégrafos de la Calahorra (Granada) está la última fonda de muleros del antiguo camino real — un edificio del XIX donde paraban arrieros entre Granada y Almería.',
+  en: 'In La Calahorra (Granada) stands the last muleteer inn of the old royal road — a 19th-century building where carriers stopped between Granada and Almería.'
+}, {
+  es: 'En Lanjarón (Alpujarra) hay 6 manantiales con propiedades distintas — la marca de agua mineral más vendida en España nació allí en 1818.',
+  en: 'Lanjarón (Alpujarra) has 6 mineral springs with distinct properties — Spain\'s top-selling bottled water started there in 1818.'
+}, {
+  es: 'Sierra Nevada es refugio del único glaciar relicto de Europa al sur del paralelo 40°: bolsa de hielo permanente bajo el pico Veleta, restos del último período glacial.',
+  en: 'Sierra Nevada shelters Europe\'s only relict glacier south of the 40th parallel: a permanent ice pocket under Veleta peak, surviving from the last ice age.'
+}, {
+  es: 'En Pórtugos (Alpujarra) brota la Fuente Agria — agua ferruginosa que tiñe de naranja la piedra. Se cree que ayuda a la anemia y los lugareños la beben a diario.',
+  en: 'In Pórtugos (Alpujarra) springs the Fuente Agria — iron-rich water that stains stones orange. Said to help with anaemia and drunk daily by locals.'
+}, {
+  es: 'Huéscar (Granada, altiplano) le declaró la guerra a Dinamarca en 1809 por las Guerras Napoleónicas y se olvidaron de firmar la paz hasta 1981 — 172 años de "guerra" sin un solo disparo.',
+  en: 'Huéscar (Granada altiplano) declared war on Denmark in 1809 during the Napoleonic Wars and forgot to sign peace until 1981 — 172 years of "war" without a single shot fired.'
+}, {
+  es: 'La Falla de Baza es la mayor falla activa del sur peninsular: provoca pequeños terremotos cada año y dio forma a toda la hoya entre Granada y Almería.',
+  en: 'The Baza Fault is southern Iberia\'s largest active fault — it triggers small quakes yearly and shaped the entire basin between Granada and Almería.'
+}, {
+  es: 'La Cueva de las Ventanas en Píñar (Granada) tiene espeleotemas de aragonito raros: cristales en forma de flor que solo crecen en condiciones de humedad y temperatura muy estables.',
+  en: 'The Ventanas Cave in Píñar (Granada) holds rare aragonite formations — flower-shaped crystals that only grow under very stable humidity and temperature.'
+}, {
+  es: 'En las cuevas del Sacromonte (Granada) nació el "zambra" — variante del flamenco más antigua y exclusiva de la comunidad gitana de Granada.',
+  en: 'In the Sacromonte caves (Granada) was born the "zambra" — the oldest flamenco style, exclusive to Granada\'s Roma community.'
+}, {
+  es: 'El Marquesado del Zenete (Granada) cría la oveja segureña — raza autóctona que da el cordero más apreciado del altiplano. Pasta en sierras altas y solo se vende en mercados locales.',
+  en: 'The Zenete Marquisate (Granada) breeds the Segureña sheep — a native breed yielding the most prized lamb in the altiplano. Grazed in high sierras, sold only in local markets.'
+}, {
+  es: 'La almendra "marcona" — la favorita de pastelerías de toda Europa — se cultiva entre Almería oriental, sur de Murcia y norte de Granada: el triángulo perfecto de altura y sequedad.',
+  en: 'The Marcona almond — favourite of European patisseries — grows in eastern Almería, southern Murcia and northern Granada: the perfect dry, elevated triangle.'
 }];
 
 // Shuffled pools — stable per page load
