@@ -11038,17 +11038,22 @@ footer,
 .dbt-btn:hover .dbt-arrow { transform: translateX(4px); }
 
 /* ── Modal backdrop + container ── */
+/* 1. ENTRADA CINEMATOGRÁFICA — backdrop con blur progresivo + modal spring */
 .dbm-backdrop {
   position: fixed; inset: 0;
   z-index: 9000;
-  background: rgba(26, 12, 24, 0.74);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(26, 12, 24, 0.0);
+  -webkit-backdrop-filter: blur(0px);
+          backdrop-filter: blur(0px);
   display: flex; align-items: center; justify-content: center;
   padding: 20px;
-  animation: dbm-fade .25s ease both;
+  animation: dbm-backdrop .42s cubic-bezier(.4, 0, .2, 1) forwards;
+  isolation: isolate;
 }
-@keyframes dbm-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes dbm-backdrop {
+  0%   { background: rgba(26, 12, 24, 0.0); -webkit-backdrop-filter: blur(0px); backdrop-filter: blur(0px); }
+  100% { background: rgba(26, 12, 24, 0.74); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+}
 .dbm-modal {
   position: relative;
   background: var(--crema);
@@ -11056,16 +11061,60 @@ footer,
   max-width: 600px;
   width: 100%;
   max-height: min(90vh, 720px);
-  overflow: auto;
+  overflow: hidden auto;
   padding: 40px 36px 28px;
-  box-shadow: 0 30px 80px rgba(42,15,46,.45);
-  animation: dbm-rise .42s var(--ease-out, cubic-bezier(.23,1,.32,1)) both;
+  box-shadow: 0 30px 80px rgba(42,15,46,.45),
+              0 0 0 1px color-mix(in srgb, var(--perk-c1, #3AAABB) 24%, transparent);
+  animation: dbm-rise .55s cubic-bezier(.22, 1.18, .36, 1) both;
   text-align: center;
+  isolation: isolate;
+  /* tinte por perk — la card se sintoniza con el color de la ventaja */
+  --perk-c1: #3AAABB;
+  --perk-c2: #6FC4D1;
+  transition: box-shadow .5s ease;
 }
 @keyframes dbm-rise {
-  from { opacity: 0; transform: translateY(24px) scale(.96); }
-  to   { opacity: 1; transform: translateY(0)  scale(1); }
+  0%   { opacity: 0; transform: translateY(32px) scale(.92); }
+  60%  { opacity: 1; transform: translateY(-4px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0)    scale(1); }
 }
+
+/* 5 · MOTES ambientales — partículas turquesas flotando detrás */
+.dbm-motes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.dbm-mote {
+  position: absolute;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--perk-c1) 80%, white) 0%, transparent 70%);
+  filter: blur(0.5px);
+  opacity: 0;
+  /* posiciones distribuidas con seed */
+  --mote-x: calc((var(--mote-i) * 73) % 100 * 1%);
+  --mote-y: calc((var(--mote-i) * 137 + 13) % 100 * 1%);
+  --mote-dur: calc(7s + ((var(--mote-i) * 13) % 6) * 1s);
+  --mote-delay: calc((var(--mote-i) * 0.4s) - 2s);
+  left: var(--mote-x);
+  top: var(--mote-y);
+  animation: dbm-mote var(--mote-dur) ease-in-out infinite;
+  animation-delay: var(--mote-delay);
+}
+.dbm-mote:nth-child(odd)  { width: 5px; height: 5px; }
+.dbm-mote:nth-child(3n)   { width: 3px; height: 3px; }
+@keyframes dbm-mote {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(0.6); opacity: 0; }
+  20%      { opacity: 0.65; }
+  50%      { transform: translate3d(20px, -28px, 0) scale(1.1); opacity: 0.9; }
+  80%      { opacity: 0.45; }
+}
+/* el contenido del modal va por encima de las motas */
+.dbm-modal > *:not(.dbm-motes) { position: relative; z-index: 1; }
 .dbm-close {
   position: absolute; top: 12px; right: 14px;
   width: 34px; height: 34px;
@@ -11096,11 +11145,20 @@ footer,
   margin: 0 0 24px;
 }
 .dbm-stat {
-  background: color-mix(in srgb, var(--sol) 14%, var(--crema));
+  background: color-mix(in srgb, var(--perk-c1, var(--sol)) 14%, var(--crema));
   padding: 12px 6px;
   border-radius: 10px 0 10px 0;
-  border-left: 2px solid var(--sol);
+  border-left: 2px solid var(--perk-c1, var(--sol));
   text-align: center;
+  /* Stagger entrance — cada stat entra 80 ms después del anterior */
+  opacity: 0;
+  transform: translateY(8px);
+  animation: dbm-stat-in .55s cubic-bezier(.22, 1.18, .36, 1) forwards;
+  animation-delay: calc(380ms + var(--stagger, 0ms));
+  transition: background .5s ease, border-color .5s ease;
+}
+@keyframes dbm-stat-in {
+  to { opacity: 1; transform: translateY(0); }
 }
 .dbm-num {
   display: block;
@@ -11142,35 +11200,45 @@ footer,
 }
 .dbm-nav:hover { background: var(--ber); color: var(--crema); border-color: var(--ber); }
 .dbm-nav:active { transform: scale(.92); }
+/* 6 · TINTE POR PERK — la card cambia su acento con el color de la ventaja
+   actual (data-perk en el JSX). 3 · DIRECTION-AWARE SLIDE: .is-from-right
+   entra desde la derecha, .is-from-left desde la izquierda. */
 .dbm-card {
   background-color: var(--crema);
-  background-image: linear-gradient(180deg, color-mix(in srgb, var(--sol) 8%, var(--crema)), var(--crema));
-  border-left: 4px solid var(--sol);
+  background-image: linear-gradient(180deg,
+    color-mix(in srgb, var(--perk-c1, var(--sol)) 12%, var(--crema)),
+    color-mix(in srgb, var(--perk-c2, var(--sol-lt)) 4%, var(--crema)));
+  border-left: 4px solid var(--perk-c1, var(--sol));
   border-radius: 14px 0 14px 0;
   padding: 26px 24px 22px;
   text-align: left;
   min-height: 184px;
-  animation: dbm-slide .35s var(--ease-out, cubic-bezier(.23,1,.32,1)) both;
+  transition: background-image .5s ease, border-color .5s ease, box-shadow .5s ease;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--perk-c2, var(--sol-lt)) 18%, transparent);
+  animation: dbm-card-in .45s cubic-bezier(.22, 1, .36, 1) both;
 }
-@keyframes dbm-slide {
-  from { opacity: 0; transform: translateX(20px); }
-  to   { opacity: 1; transform: translateX(0); }
+.dbm-card.is-from-right { animation-name: dbm-card-from-right; }
+.dbm-card.is-from-left  { animation-name: dbm-card-from-left; }
+@keyframes dbm-card-in {
+  from { opacity: 0; transform: translateY(8px); filter: blur(2px); }
+  to   { opacity: 1; transform: translateY(0);   filter: blur(0); }
 }
+@keyframes dbm-card-from-right {
+  from { opacity: 0; transform: translateX(36px); filter: blur(3px); }
+  to   { opacity: 1; transform: translateX(0);    filter: blur(0); }
+}
+@keyframes dbm-card-from-left {
+  from { opacity: 0; transform: translateX(-36px); filter: blur(3px); }
+  to   { opacity: 1; transform: translateX(0);     filter: blur(0); }
+}
+
+/* 4 · STAGGER REVEAL dentro de la card — cada hijo entra escalonado */
 .dbm-card-head {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 12px;
-}
-.dbm-icon {
-  font-size: 30px;
-  line-height: 1;
-  filter: drop-shadow(0 2px 4px rgba(42,15,46,.15));
-}
-.dbm-card-stat {
-  font-family: var(--serif);
-  font-size: 26px;
-  font-weight: 400;
-  color: var(--ber);
-  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: dbm-staggered .42s cubic-bezier(.22, 1, .36, 1) .08s forwards;
 }
 .dbm-card-t {
   font-family: var(--serif);
@@ -11179,12 +11247,40 @@ footer,
   margin: 0 0 10px;
   color: var(--ber-dk);
   line-height: 1.22;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: dbm-staggered .42s cubic-bezier(.22, 1, .36, 1) .20s forwards;
 }
 .dbm-card-d {
   font-size: 14px;
   line-height: 1.6;
   color: var(--ink-soft);
   margin: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: dbm-staggered .55s cubic-bezier(.22, 1, .36, 1) .32s forwards;
+}
+@keyframes dbm-staggered {
+  to { opacity: 1; transform: translateY(0); }
+}
+.dbm-icon {
+  font-size: 30px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px color-mix(in srgb, var(--perk-c1, #2A0F2E) 35%, transparent));
+  display: inline-block;
+  animation: dbm-icon-pop .55s cubic-bezier(.22, 1.4, .36, 1) both;
+}
+@keyframes dbm-icon-pop {
+  from { opacity: 0; transform: scale(.4) rotate(-12deg); }
+  to   { opacity: 1; transform: scale(1)  rotate(0); }
+}
+.dbm-card-stat {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--perk-c1, var(--ber));
+  font-variant-numeric: tabular-nums;
+  transition: color .5s ease;
 }
 
 /* ── Dots + counter ── */
@@ -11201,8 +11297,15 @@ footer,
 }
 .dbm-dot:hover { background: rgba(61,26,53,.4); }
 .dbm-dot.active {
-  background: var(--ber);
+  background: var(--perk-c1, var(--ber));
   transform: scale(1.4);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--perk-c1, var(--sol)) 50%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dbm-backdrop, .dbm-modal, .dbm-stat, .dbm-card,
+  .dbm-card-head, .dbm-card-t, .dbm-card-d, .dbm-icon { animation: none; opacity: 1; transform: none; filter: none; }
+  .dbm-mote { animation: none; opacity: 0; }
 }
 .dbm-counter {
   font-size: 11px;
