@@ -473,11 +473,22 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 .header nav a:hover { opacity: 1; }
 .header nav a::after {
-  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
-  height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left;
-  transition: transform .35s ease;
+  content: '';
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, #6FC4D1 20%, #3AAABB 50%, #6FC4D1 80%, transparent);
+  transition: left .42s cubic-bezier(.2, .8, .2, 1), right .42s cubic-bezier(.2, .8, .2, 1);
+  pointer-events: none;
 }
-.header nav a:hover::after { transform: scaleX(1); }
+.header nav a:hover::after,
+.header nav a:focus-visible::after,
+.header nav a.active-page::after {
+  left: 0;
+  right: 0;
+}
 @keyframes cta-cycle {
   /* 8 colores × 10 s = 80 s · hold 5 s (6.25%) + fade 5 s (6.25%) */
   0%,    6.25%  { background: #2A0F2E; border-color: #2A0F2E; } /* berenjena */
@@ -3802,23 +3813,35 @@ body.no-parallax .g-tile .img { transform: none !important; }
 
 /* ---- Gradient text para itálicas del hero ---- */
 .hero-title .it {
+  /* Shimmer cult-ui — el italic mantiene sol-lt como base pero un
+     brillo crema más intenso lo cruza cada 6 s. Contraste base
+     #6FC4D1 sobre eggplant ~6.4 (AA). El brillo crema #F0E8D5 da
+     ~10.5 (AAA) — nunca baja. */
   background: linear-gradient(
-    135deg,
-    var(--sol-lt) 0%,
-    var(--sol-lt)     45%,
-    var(--sol-lt) 100%
+    100deg,
+    #6FC4D1 0%,
+    #6FC4D1 40%,
+    #F0E8D5 50%,
+    #6FC4D1 60%,
+    #6FC4D1 100%
   );
-  background-size: 220% auto;
+  background-size: 250% auto;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: textFlow 6s linear infinite;
+  animation: heroItShimmer 7s ease-in-out infinite;
 }
-@keyframes textFlow {
-  from { background-position: 0% center; }
-  to   { background-position: 220% center; }
+@keyframes heroItShimmer {
+  0%   { background-position: 100% center; }
+  100% { background-position: 0% center; }
 }
-
+@media (prefers-reduced-motion: reduce) {
+  .hero-title .it {
+    background: none;
+    -webkit-text-fill-color: #6FC4D1;
+    animation: none;
+  }
+}
 /* ---- HERO: banda Aurora animada (sobre el wash, bajo el contenido) ---- */
 .hero::after {
   content: '';
@@ -4070,20 +4093,33 @@ body.no-parallax .g-tile .img { transform: none !important; }
   overflow: hidden;
   transition: background var(--dur-liquid) var(--ease-liquid), color var(--dur-liquid) var(--ease-liquid), border-color var(--dur-liquid) var(--ease-liquid), box-shadow var(--dur-liquid) var(--ease-liquid);
 }
+/* Shine sweep cult-ui — banda blanca al 42% que cruza el botón en
+   hover (650 ms, sólo izquierda → derecha, no vuelve). Narrow + skew
+   para que no lave el bg. Inhabilitado en buttons dark-bulletproof
+   por su propio override más abajo. */
 .btn::before {
   content: '';
-  position: absolute; inset: 0;
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 60%;
+  height: 100%;
   background: linear-gradient(
-    135deg,
-    rgba(255,255,255,.18) 0%,
-    transparent           60%
+    110deg,
+    transparent       30%,
+    rgba(255,255,255, 0.42) 50%,
+    transparent       70%
   );
-  opacity: 0;
-  transition: opacity .3s ease;
-  border-radius: inherit;
+  transform: skewX(-22deg);
+  transition: left .65s cubic-bezier(.2, .8, .2, 1);
   pointer-events: none;
+  border-radius: inherit;
 }
-.btn:hover::before { opacity: 1; }
+.btn:hover::before { left: 130%; }
+@media (prefers-reduced-motion: reduce) {
+  .btn::before { transition: none; }
+  .btn:hover::before { left: -75%; }
+}
 
 /* ---- SCROLLBAR refinado teal ---- */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
