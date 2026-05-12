@@ -5078,6 +5078,11 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   .apt-sticky-bar .asb-match { display: none; }
   .asb-perks { padding: 7px 10px; font-size: 10.5px; }
 }
+@media (min-width: 900px) {
+  /* En desktop el widget-card "Reserva directa" del WidgetStack ya
+     ofrece el botón a la derecha — el chip de la sticky es redundante. */
+  .asb-perks { display: none; }
+}
 
 /* (regla movida arriba al bloque .cookies) */
 .asb-info {
