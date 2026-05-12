@@ -186,16 +186,8 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
             <span>−{fmt(calc.stayDiscAmt)}</span>
           </div>
         )}
-        {calc.guestSuppAmt > 0 && (
-          <div className="price-line">
-            <span>
-              {lang === 'es'
-                ? `Suplemento ${calc.guests} huéspedes (+${calc.guestSuppPerNight} €/noche)`
-                : `${calc.guests}-guest supplement (+${calc.guestSuppPerNight} €/night)`}
-            </span>
-            <span>+{fmt(calc.guestSuppAmt)}</span>
-          </div>
-        )}
+        {/* El suplemento por número de huéspedes se incluye en directTotal
+            pero no se muestra como línea separada — pedido del usuario. */}
         {calc.petAmt > 0 && (
           <div className="price-line">
             <span>{lang === 'es' ? `Suplemento mascota (10 €/noche · máx. 50 €)` : `Pet supplement (10 €/night · max 50 €)`}</span>
