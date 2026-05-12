@@ -1767,21 +1767,40 @@ body.apt-bar-shown .cookies {
           mask-composite: exclude;
   z-index: 5;
   pointer-events: none;
-  opacity: 0;
+  opacity: 0.55;                                /* visible siempre — móvil sin hover */
   animation: aptBorderSpin 16s linear infinite;
   transition: opacity .35s ease;
 }
 .apt-card.vm { --apt-border-c1: #6B7A3A; --apt-border-c2: #8B9A52; }
 .apt-card.vt { --apt-border-c1: #8A4A24; --apt-border-c2: #B86A3C; }
 .apt-card.vs { --apt-border-c1: #9E7A2C; --apt-border-c2: #D4A84A; }
+.apt-card:active::after { opacity: 0.85; }     /* feedback táctil al pulsar */
 @media (hover: hover) and (pointer: fine) {
-  .apt-card:hover::after { opacity: 0.95; }
+  .apt-card::after        { opacity: 0.45; }   /* base más baja en desktop, gana hover */
+  .apt-card:hover::after  { opacity: 0.95; }
 }
 @keyframes aptBorderSpin {
   to { --apt-border-angle: 360deg; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .apt-card::after { animation: none; }
+  .apt-card::after { animation: none; opacity: 0.55; }
+}
+
+/* Micro-tilt táctil al pulsar en móvil — sin mousemove, solo :active.
+   Le da vida y feedback cuando el dedo toca la card. ±2° + lift -3 px. */
+@media (hover: none) and (pointer: coarse) {
+  .apt-card {
+    transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
+  }
+  .apt-card:active {
+    --tilt-rx: -2deg;
+    --tilt-ry: 1.5deg;
+    --tilt-tz: -3px;
+    transition: transform .12s ease-out, box-shadow .12s ease-out;
+  }
+  .apt-card.vm:active { box-shadow: 0 14px 36px rgba(107,122,58,.45), 0 3px 12px rgba(107,122,58,.30); }
+  .apt-card.vt:active { box-shadow: 0 14px 36px rgba(138,74,36,.45),  0 3px 12px rgba(138,74,36,.30); }
+  .apt-card.vs:active { box-shadow: 0 14px 36px rgba(158,122,44,.45), 0 3px 12px rgba(158,122,44,.30); }
 }
 .apt-card::before {
   content: '';
