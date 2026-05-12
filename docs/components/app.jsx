@@ -117,6 +117,7 @@ const App = () => {
         <Team lang={lang} />
         <Manifest lang={lang} />
         <Ratings lang={lang} />
+        <RatingsMarquee lang={lang} />
         <QuickFAQ lang={lang} pageId="home" />
         <ContactCTA lang={lang} availHref="#buscar" />
       </main>
