@@ -798,6 +798,15 @@ const AptStickyBar = ({ apt, lang, scrolled }) => {
       <a href={reservasHref} className="btn btn-primary asb-cta">
         {lang === 'es' ? 'Reservar' : 'Book'} <span className="arrow">→</span>
       </a>
+      <button
+        type="button"
+        className="asb-perks"
+        onClick={() => window.dispatchEvent(new Event('hestia:open-direct-perks'))}
+        aria-label={lang === 'es' ? 'Ver ventajas de la reserva directa' : 'See direct booking perks'}
+      >
+        <span className="asb-perks-icon" aria-hidden="true">✦</span>
+        <span className="asb-perks-text">{lang === 'es' ? 'Ver ventajas' : 'See perks'}</span>
+      </button>
     </div>
   );
 };
