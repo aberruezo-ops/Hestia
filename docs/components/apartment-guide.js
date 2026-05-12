@@ -3996,12 +3996,7 @@ const AptGuideView = ({
     className: "ag-nav-text"
   }, sec[lang]))))), /*#__PURE__*/React.createElement("div", {
     className: "ag-nav-actions"
-  }, /*#__PURE__*/React.createElement("a", {
-    className: "ag-nav-btn",
-    href: aptInfo.pdf,
-    target: "_blank",
-    rel: "noopener"
-  }, lang === 'es' ? 'PDF original' : 'Original PDF'), /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("button", {
     className: "ag-nav-btn ag-nav-btn-primary",
     onClick: handlePrint
   }, lang === 'es' ? '⇩ Descargar PDF' : '⇩ Download PDF')))), /*#__PURE__*/React.createElement("div", {
