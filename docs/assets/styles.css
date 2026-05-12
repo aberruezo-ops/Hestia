@@ -14414,3 +14414,19 @@ a:focus-visible,
   color: rgba(42, 15, 46, 0.72);
   max-width: 38ch;
 }
+
+/* ============================================================
+   Video loop fade — disimula el corte de los <video loop> con
+   fade-out 0.65 s antes del final y fade-in al recomenzar.
+   Gestionado por _initVideoFadeLoop en shared.js — aquí solo
+   la transición CSS y la clase .is-fading.
+   ============================================================ */
+video[loop] {
+  transition: opacity 0.65s ease-in-out;
+  will-change: opacity;
+}
+video[loop].is-fading { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  video[loop] { transition: none; }
+  video[loop].is-fading { opacity: 1; }
+}
