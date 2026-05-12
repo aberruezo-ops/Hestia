@@ -843,18 +843,20 @@ const ApartmentPageApp = () => {
   // Setea --apt-accent y --apt-accent2 a nivel de :root para que los
   // widgets flotantes (fuera del <main>) puedan tomar el color del
   // Hestía actual. Default sol se mantiene en otras páginas.
-  // Además se setea data-apt en body para que selectores CSS
-  // [data-apt="..."] casen aunque el widget cuelgue del root.
+  // Además se setea data-apt=<slug> en body para que selectores CSS
+  // [data-apt="mar"|"thalassa"|"salinas"] casen aunque el widget
+  // cuelgue del root. (apt.id es "vm/vt/vs" — usamos slug para CSS
+  // legible.)
   React.useEffect(() => {
     document.documentElement.style.setProperty('--apt-accent', apt.accent);
     document.documentElement.style.setProperty('--apt-accent2', apt.accent2);
-    document.body.setAttribute('data-apt', apt.id);
+    document.body.setAttribute('data-apt', apt.slug);
     return () => {
       document.documentElement.style.removeProperty('--apt-accent');
       document.documentElement.style.removeProperty('--apt-accent2');
       document.body.removeAttribute('data-apt');
     };
-  }, [apt.accent, apt.accent2, apt.id]);
+  }, [apt.accent, apt.accent2, apt.slug]);
   React.useEffect(() => {
     document.body.classList.toggle('apt-bar-shown', !!scrolled);
     return () => document.body.classList.remove('apt-bar-shown');
