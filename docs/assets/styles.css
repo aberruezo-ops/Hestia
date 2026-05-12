@@ -146,7 +146,7 @@
   --ber:     #3D1A35;
   --ber-dk:  #2A0F2E;
   --ber-lt:  #4E2446;
-  --sol:     var(--sol);
+  --sol:     #3AAABB;
   --sol-h:   #2A8E9E;
   --sol-lt:  #6FC4D1;
   --sol-text:#176E80;
@@ -158,7 +158,7 @@
 
   /* Paleta corporativa · 9 colores del paisaje almeriense */
   --vio:    #7B3B6B;   /* Violeta     — horizonte antes del amanecer  */
-  --tur:    var(--tur);   /* Turquesa    — el mar y el cielo al alba      */
+  --tur:    #1BC8D8;   /* Turquesa    — el mar y el cielo al alba      */
   --bug:    #D42B80;   /* Buganvilla  — el magenta que lo invade todo  */
   --alb:    #C8975A;   /* Albero      — tierra almeriense, cerámica    */
   --sie:    #8B4A1E;   /* Siena       — crepúsculo sobre el Mediterráneo */
@@ -172,19 +172,22 @@
   --vs:  #D4A84A;  --vs2: #E8C476;  --vs-dk: #7A5E1A;
 
   /* Crema · variantes atmosféricas del cielo a lo largo del día */
-  --crema-alba: var(--crema-alba);          /* alba rosada */
-  --crema-dawn: var(--crema-dawn);          /* primera luz cálida */
-  --crema-noon: var(--crema-noon);          /* media mañana luminosa */
-  --crema-dusk: var(--crema-dusk);          /* tarde dorada */
-  --crema-warm: var(--crema-warm);          /* crema cálida intensa */
+  --crema-alba: #F5E8DB;                    /* alba rosada */
+  --crema-dawn: #F2E6CE;                    /* primera luz cálida */
+  --crema-noon: #FFF6E2;                    /* media mañana luminosa */
+  --crema-dusk: #E8D4A6;                    /* tarde dorada */
+  --crema-warm: #F6E3C2;                    /* crema cálida intensa */
 
-  /* Berenjena · variantes para gradientes animados de sky/twilight */
-  --ber-glow:     var(--ber-glow);        /* berenjena suave (night gradients) */
-  --ber-warm:     var(--ber-warm);        /* berenjena rojizo (sunset bridge)  */
-  --ber-twilight: var(--ber-twilight);        /* berenjena luminoso (twilight)     */
-  --ber-cosmic:   var(--ber-cosmic);        /* berenjena casi negro (deep night) */
-  --ber-pitch:    var(--ber-pitch);        /* casi negro cálido                 */
-  --ber-void:     var(--ber-void);        /* casi negro frío (cosmic void)     */
+  /* Berenjena · variantes para gradientes animados de sky/twilight.
+     Valores hex reales — antes eran var() autoreferentes (undefined)
+     que provocaban gradientes transparentes en .nosotros-team y
+     similares, dejando texto crema sobre cream visible del body. */
+  --ber-glow:     #4E2446;                  /* berenjena suave (night gradients) */
+  --ber-warm:     #5D2A48;                  /* berenjena rojizo (sunset bridge)  */
+  --ber-twilight: #3D1A35;                  /* berenjena luminoso (twilight)     */
+  --ber-cosmic:   #1A0A1E;                  /* berenjena casi negro (deep night) */
+  --ber-pitch:    #15080F;                  /* casi negro cálido                 */
+  --ber-void:     #0F0414;                  /* casi negro frío (cosmic void)     */
 
   /* Tokens semánticos corporativos
      ─ Errores/peligro     → bug (buganvilla)
@@ -490,48 +493,113 @@ p  { line-height: 1.65; font-weight: 300; }
   right: 0;
 }
 @keyframes cta-cycle {
-  /* 8 colores × 10 s = 80 s · hold 5 s (6.25%) + fade 5 s (6.25%) */
-  0%,    6.25%  { background: #2A0F2E; border-color: #2A0F2E; } /* berenjena */
-  12.5%, 18.75% { background: #7B3B6B; border-color: #7B3B6B; } /* violeta */
-  25%,   31.25% { background: var(--tur); border-color: var(--tur); } /* turquesa */
-  37.5%, 43.75% { background: #6B7A3A; border-color: #6B7A3A; } /* verde olivo */
-  50%,   56.25% { background: #D42B80; border-color: #D42B80; } /* buganvilla */
-  62.5%, 68.75% { background: #C8975A; border-color: #C8975A; } /* albero */
-  75%,   81.25% { background: #D4A84A; border-color: #D4A84A; } /* sol */
-  87.5%, 93.75% { background: #8B4A1E; border-color: #8B4A1E; } /* siena */
-  100%           { background: #2A0F2E; border-color: #2A0F2E; }
+  /* 8 colores de la paleta tintando un halo, no la bg sólida. El bg
+     se queda en glass y el tinte cicla detrás. */
+  0%,    6.25%  { --cta-tint: rgba(42, 15, 46, 0.55); }   /* berenjena */
+  12.5%, 18.75% { --cta-tint: rgba(123, 59, 107, 0.55); } /* violeta */
+  25%,   31.25% { --cta-tint: rgba(58, 170, 187, 0.55); } /* turquesa */
+  37.5%, 43.75% { --cta-tint: rgba(107, 122, 58, 0.55); } /* olivo */
+  50%,   56.25% { --cta-tint: rgba(212, 43, 128, 0.55); } /* buganvilla */
+  62.5%, 68.75% { --cta-tint: rgba(200, 151, 90, 0.55); } /* albero */
+  75%,   81.25% { --cta-tint: rgba(212, 168, 74, 0.55); } /* sol */
+  87.5%, 93.75% { --cta-tint: rgba(139, 74, 30, 0.55); }  /* siena */
+  100%          { --cta-tint: rgba(42, 15, 46, 0.55); }
 }
+/* RESERVA del header — efecto glass cult-ui sobre vidrio OSCURO.
+   El header pasa de cream (idle) a transparent (scrolled) — un glass
+   claro daría cream-on-cream. Usamos eggplant translúcido (#2A0F2E al
+   62%) + backdrop blur: el texto crema #F0E8D5 mantiene contraste
+   AAA (>10:1) sobre el cristal, sea cual sea el fondo. ::before lleva
+   el halo coloreado que cicla. ::after es el sheen de luz. */
 .header nav .cta {
+  position: relative;
   padding: 10px 22px;
-  border: 1px solid transparent;
+  border: 1px solid rgba(240, 232, 213, 0.28) !important;
   border-radius: 10px 0 10px 0;
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   opacity: 1;
-  color: var(--crema);
-  animation: cta-cycle 80s linear infinite;
+  color: #F0E8D5 !important;
+  background-color: rgba(42, 15, 46, 0.62) !important;   /* eggplant translúcido */
+  background-image: none !important;
+  -webkit-backdrop-filter: blur(14px) saturate(1.6);
+          backdrop-filter: blur(14px) saturate(1.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.30),
+    0 6px 22px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+  isolation: isolate;
+  animation: none;
   /* Magnetic CTA — offsets seteados por JS (mousemove). Spring rápido
      pero suave para que el botón se sienta vivo. Off en mobile. */
   --mag-x: 0px;
   --mag-y: 0px;
-  transform: translate3d(var(--mag-x), var(--mag-y), 0);
-  transition: transform .25s cubic-bezier(.2, 1.4, .35, 1), filter .25s ease, color .25s ease;
+  --cta-tint: rgba(58, 170, 187, 0.55);
 }
-.header.night nav .cta,
-.header.day nav .cta { color: var(--crema); }
-.header nav .cta:hover { filter: brightness(1.14); }
-.header.night nav .cta:hover,
-.header.day nav .cta:hover { color: var(--crema); }
+/* Halo coloreado animado por debajo del cristal — sustituye al cycle de bg. */
+.header nav .cta::before {
+  content: '';
+  position: absolute;
+  inset: -30%;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 50%, var(--cta-tint), transparent 65%);
+  filter: blur(14px);
+  opacity: 0.85;
+  pointer-events: none;
+  animation: cta-cycle 80s linear infinite;
+  animation-delay: var(--cta-delay, 0s);
+}
+/* Sheen — destello que pasa lentamente por la superficie. */
+.header nav .cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.0)  20%,
+    rgba(255, 255, 255, 0.22) 45%,
+    rgba(255, 255, 255, 0.0)  70%
+  );
+  background-size: 220% 100%;
+  background-position: 0% 0%;
+  pointer-events: none;
+  animation: ctaGlassSheen 9s ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes ctaGlassSheen {
+  0%   { background-position: -50% 0%; }
+  55%  { background-position: 150% 0%; }
+  100% { background-position: 150% 0%; }
+}
+.header nav .cta .cta-text { z-index: 2; }
+@media (prefers-reduced-motion: reduce) {
+  .header nav .cta::before,
+  .header nav .cta::after { animation: none; }
+}
+.header nav .cta {
+  transform: translate3d(var(--mag-x), var(--mag-y), 0);
+  transition: transform .25s cubic-bezier(.2, 1.4, .35, 1), filter .25s ease, color .25s ease, background-color .3s ease, box-shadow .3s ease;
+}
+.header nav .cta:hover {
+  background-color: rgba(42, 15, 46, 0.78) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.32),
+    0 10px 32px rgba(0, 0, 0, 0.36),
+    0 0 0 1px rgba(240, 232, 213, 0.30);
+}
 .header nav .cta .cta-text {
   position: relative;
+  z-index: 2;
   --mag-tx: 0px;
   --mag-ty: 0px;
   display: inline-block;
   transform: translate3d(var(--mag-tx), var(--mag-ty), 0);
   transition: transform .25s cubic-bezier(.2, 1.4, .35, 1);
 }
-.header nav .cta::after { display: none; }
 @media (prefers-reduced-motion: reduce) {
   .header nav .cta,
   .header nav .cta .cta-text { transform: none; transition: none; }
