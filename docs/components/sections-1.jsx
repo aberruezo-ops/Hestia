@@ -282,6 +282,47 @@ const Apartments = ({ lang }) => {
     }
   };
 
+  // Tilt 3D al pasar el cursor sobre cada apt-card. Solo en desktop con
+  // hover real (excluye táctil). Máx ±6° en X/Y. Se desactiva si el
+  // usuario prefiere reduced-motion. CSS lee --tilt-rx / --tilt-ry.
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const m = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const rm = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!m.matches || rm.matches) return;
+    const track = trackRef.current;
+    if (!track) return;
+    const cards = Array.from(track.querySelectorAll('.apt-card'));
+    const cleanup = [];
+    cards.forEach(card => {
+      let raf = 0;
+      const onMove = (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+        const rx = (0.5 - y) * 6;
+        const ry = (x - 0.5) * 6;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          card.style.setProperty('--tilt-rx', `${rx.toFixed(2)}deg`);
+          card.style.setProperty('--tilt-ry', `${ry.toFixed(2)}deg`);
+        });
+      };
+      const onLeave = () => {
+        cancelAnimationFrame(raf);
+        card.style.setProperty('--tilt-rx', '0deg');
+        card.style.setProperty('--tilt-ry', '0deg');
+      };
+      card.addEventListener('mousemove', onMove);
+      card.addEventListener('mouseleave', onLeave);
+      cleanup.push(() => {
+        card.removeEventListener('mousemove', onMove);
+        card.removeEventListener('mouseleave', onLeave);
+      });
+    });
+    return () => cleanup.forEach(fn => fn());
+  }, []);
+
   return (
     <>
       <section className="apartments-intro" id="apartamentos" data-screen-label="03 Hestías">
