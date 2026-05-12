@@ -3995,6 +3995,17 @@ const WidgetStack = ({
   const [pastHero, setPastHero] = React.useState(() => window.scrollY > window.innerHeight * 0.7);
   const [searchActive, setSearchActive] = React.useState(false);
   const [guideOpen, setGuideOpen] = React.useState(() => document.body.classList.contains('guide-open'));
+  // Modal global "Ver todas las ventajas" — escucha el evento
+  // hestia:open-direct-perks que disparan los botones del widget
+  // (.widget-cta) y del sidebar (.ads-btn). Antes solo funcionaba
+  // si DirectBookingPerks estaba mounted en la página. Ahora cualquier
+  // página con WidgetStack tiene el listener garantizado.
+  const [perksOpen, setPerksOpen] = React.useState(false);
+  React.useEffect(() => {
+    const onOpen = () => setPerksOpen(true);
+    window.addEventListener('hestia:open-direct-perks', onOpen);
+    return () => window.removeEventListener('hestia:open-direct-perks', onOpen);
+  }, []);
   React.useEffect(() => {
     const check = () => setPastHero(window.scrollY > window.innerHeight * 0.7);
     window.addEventListener('scroll', check, {
@@ -4018,7 +4029,7 @@ const WidgetStack = ({
     return () => obs.disconnect();
   }, []);
   const hidden = !pastHero || searchActive || guideOpen;
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: `widget-stack ${hidden ? 'is-hidden' : ''}`,
     "aria-hidden": hidden
   }, /*#__PURE__*/React.createElement(WidgetSabiasQue, {
@@ -4027,6 +4038,9 @@ const WidgetStack = ({
     lang: lang
   }), /*#__PURE__*/React.createElement(WidgetGuestAccess, {
     lang: lang
+  })), perksOpen && /*#__PURE__*/React.createElement(DirectBookingModal, {
+    lang: lang,
+    onClose: () => setPerksOpen(false)
   }));
 };
 Object.assign(window, {
