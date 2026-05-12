@@ -609,9 +609,107 @@ p  { line-height: 1.65; font-weight: 300; }
   display: flex; flex-direction: column; align-items: center; gap: 4px;
   line-height: 1;
 }
-.brand-lockup .hestia-logo { height: 34px; width: auto; }
+.brand-lockup .hestia-logo-mark {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+  /* área pequeña extra para que el ::after constellation no se recorte */
+  padding: 6px;
+  margin: -6px;
+}
+.brand-lockup .hestia-logo { height: 34px; width: auto; position: relative; z-index: 2; transition: filter .4s ease, transform .4s ease; }
 .brand-lockup .wordmark { font-size: 14px; margin-top: 2px; }
 .brand-lockup .your-home { font-size: 11px; margin-top: 1px; }
+
+/* ────────────────────────────────────────────────────────────────
+   ANIMACIONES DEL LOGO H AL HOVER · Reflection sweep + Constellation
+   ────────────────────────────────────────────────────────────────
+   1) ::before = banda de luz que cruza la H (650 ms, una pasada).
+   2) ::after  = halo glow + 4 puntos turquesa que respiran (1.8 s).
+   Sólo en el header (no en el footer). Off en reduced-motion. */
+.header .brand-lockup .hestia-logo-mark::before,
+.header .brand-lockup .hestia-logo-mark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity .35s ease;
+  z-index: 3;
+}
+/* 1 · Sweep — banda diagonal que cruza la H */
+.header .brand-lockup .hestia-logo-mark::before {
+  background: linear-gradient(115deg,
+    transparent 30%,
+    rgba(111, 196, 209, 0.0) 40%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(111, 196, 209, 0.0) 60%,
+    transparent 70%);
+  background-size: 280% 280%;
+  background-position: -50% 0%;
+  /* mix-blend-mode screen: el sweep solo "ilumina", no oscurece */
+  mix-blend-mode: screen;
+  filter: blur(2px);
+  z-index: 4;
+}
+/* 2 · Constellation — halo central + 4 puntos turquesa que respiran */
+.header .brand-lockup .hestia-logo-mark::after {
+  background:
+    radial-gradient(3px 3px at 18% 22%, rgba(111,196,209,.95), transparent 70%),
+    radial-gradient(2px 2px at 82% 15%, rgba(111,196,209,.85), transparent 70%),
+    radial-gradient(2.5px 2.5px at 14% 78%, rgba(58,170,187,.90), transparent 70%),
+    radial-gradient(3px 3px at 88% 80%, rgba(111,196,209,.75), transparent 70%),
+    radial-gradient(circle at 50% 50%, rgba(58, 170, 187, 0.35), transparent 70%);
+  /* halo central */
+  filter: drop-shadow(0 0 8px rgba(58, 170, 187, 0.4));
+  z-index: 1;
+}
+
+/* HOVER · activa los dos efectos */
+.header .brand-lockup:hover .hestia-logo,
+.header .brand-lockup:focus-visible .hestia-logo {
+  filter: drop-shadow(0 0 10px rgba(58, 170, 187, 0.55));
+  transform: translateY(-1px);
+}
+.header .brand-lockup:hover .hestia-logo-mark::before,
+.header .brand-lockup:focus-visible .hestia-logo-mark::before {
+  animation: hestiaLogoSweep 700ms cubic-bezier(.2, .8, .2, 1) forwards;
+  opacity: 1;
+}
+.header .brand-lockup:hover .hestia-logo-mark::after,
+.header .brand-lockup:focus-visible .hestia-logo-mark::after {
+  opacity: 1;
+  animation: hestiaLogoConstellation 1.8s ease-in-out infinite;
+  animation-delay: 350ms;            /* arranca justo después del sweep */
+}
+
+@keyframes hestiaLogoSweep {
+  0%   { background-position: -50% 0%;  opacity: 0; }
+  20%  { opacity: 1; }
+  100% { background-position: 200% 0%;  opacity: 0; }
+}
+@keyframes hestiaLogoConstellation {
+  0%, 100% { transform: scale(1);   opacity: 0.85; }
+  50%      { transform: scale(1.10); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header .brand-lockup:hover .hestia-logo-mark::before,
+  .header .brand-lockup:hover .hestia-logo-mark::after,
+  .header .brand-lockup:focus-visible .hestia-logo-mark::before,
+  .header .brand-lockup:focus-visible .hestia-logo-mark::after {
+    animation: none;
+    opacity: 0;
+  }
+  .header .brand-lockup:hover .hestia-logo,
+  .header .brand-lockup:focus-visible .hestia-logo {
+    transform: none;
+    filter: drop-shadow(0 0 6px rgba(58, 170, 187, 0.4));
+  }
+}
 
 .nav-left { justify-self: start; }
 .nav-right { justify-self: end; }

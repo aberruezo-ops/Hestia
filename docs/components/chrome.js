@@ -279,12 +279,15 @@ const Header = ({
     href: "index.html",
     className: "brand-lockup",
     "aria-label": "Hest\xEDa \u2014 Inicio"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "hestia-logo-mark",
+    "aria-hidden": "true"
   }, /*#__PURE__*/React.createElement("img", {
     decoding: "async",
     src: "assets/logo-teal-transparent.png",
-    alt: "Hest\xEDa",
+    alt: "",
     className: "hestia-logo"
-  }), /*#__PURE__*/React.createElement("span", {
+  })), /*#__PURE__*/React.createElement("span", {
     className: "wordmark"
   }, "HEST\xCDA"), /*#__PURE__*/React.createElement("span", {
     className: "your-home"
