@@ -184,6 +184,75 @@ const Header = ({
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Magnetic CTA — el botón RESERVA del header atrae el cursor cuando está
+  // cerca (radio 80 px). El texto interior desliza max 12 px hacia el
+  // cursor, el botón entero 6 px. Spring suave vía transition CSS.
+  // Solo en desktop con hover real, off en reduced-motion.
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const btn = headerRef.current?.querySelector('nav .cta');
+    if (!btn) return;
+    const inner = btn.querySelector('.cta-text');
+    let raf = 0;
+    const onMove = e => {
+      const r = btn.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.hypot(dx, dy);
+      const radius = Math.max(r.width, r.height) + 60;
+      if (dist > radius) {
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          btn.style.setProperty('--mag-x', '0px');
+          btn.style.setProperty('--mag-y', '0px');
+          if (inner) {
+            inner.style.setProperty('--mag-tx', '0px');
+            inner.style.setProperty('--mag-ty', '0px');
+          }
+        });
+        return;
+      }
+      const strength = 1 - dist / radius; // 0 lejos → 1 cerca
+      const maxBtn = 6;
+      const maxTxt = 12;
+      const btnX = dx / radius * maxBtn * strength;
+      const btnY = dy / radius * maxBtn * strength;
+      const txtX = dx / radius * maxTxt * strength;
+      const txtY = dy / radius * maxTxt * strength;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        btn.style.setProperty('--mag-x', `${btnX.toFixed(2)}px`);
+        btn.style.setProperty('--mag-y', `${btnY.toFixed(2)}px`);
+        if (inner) {
+          inner.style.setProperty('--mag-tx', `${txtX.toFixed(2)}px`);
+          inner.style.setProperty('--mag-ty', `${txtY.toFixed(2)}px`);
+        }
+      });
+    };
+    const onLeave = () => {
+      cancelAnimationFrame(raf);
+      btn.style.setProperty('--mag-x', '0px');
+      btn.style.setProperty('--mag-y', '0px');
+      if (inner) {
+        inner.style.setProperty('--mag-tx', '0px');
+        inner.style.setProperty('--mag-ty', '0px');
+      }
+    };
+    window.addEventListener('mousemove', onMove, {
+      passive: true
+    });
+    window.addEventListener('blur', onLeave);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('blur', onLeave);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
   const NavLink = ({
     href,
     children,
