@@ -62,6 +62,10 @@ const GUIDE_SECTIONS = [{
   es: 'Bienvenida',
   en: 'Welcome'
 }, {
+  id: 'wifi',
+  es: 'Mi WiFi',
+  en: 'My WiFi'
+}, {
   id: 'nombre',
   es: 'Nuestro nombre',
   en: 'Our name'
@@ -1488,12 +1492,17 @@ const GUIDE_SHARED = {
       restaurants_title: 'Nuestro TOP 10 restaurantes (a menos de 30 minutos)',
       restaurants: ['Riad Cabrera. Marroquí en Sierra Cabrera. Aunque es por carretera de montaña, merece la pena. €€€', 'Juan Moreno. Sofisticado. Cocina de autor. €€€', 'Gateway to India. Comida india. Agradable. €', 'The Bistro. Bastante bueno. €€', 'Lúa. Sofisticado. Mejor para cena/copa. €€€', 'Freiduría Bar Rosado. Buenas referencias. €€', 'Restaurante-Hostal Playa Azul (Villaricos). Excelente paella con bogavante. €€', 'Yaho. Cocina oriental (china, japonesa) en Puerto Rey. Muy recomendable. €', 'Pizzería La Trattoria da Marco (Garrucha). Buena pizza. €', 'Marau Beach Club. A pie de playa. €€']
     },
+    wifi: {
+      title: 'Mi WiFi',
+      intro: 'Conéctate sin pedir permiso — el WiFi de Hestía está abierto a sus huéspedes.',
+      ssidLabel: 'Red',
+      ssidValue: 'Hestía',
+      passLabel: 'Contraseña',
+      passValue: 'Hestiavera',
+      note: 'Si la contraseña no funciona, la actualizada está en una pegatina pegada al router (suele estar en la entrada o detrás del televisor). Avísanos si no la encuentras y te la pasamos.'
+    },
     phones: {
       title: 'Teléfonos y datos de utilidad',
-      wifi: {
-        label: 'Contraseña WiFi',
-        value: 'Hestiavera (si no funciona, mírala en el router — puede haber cambiado)'
-      },
       list: [{
         label: 'Bomberos',
         value: '080'
@@ -1714,12 +1723,17 @@ const GUIDE_SHARED = {
       restaurants_title: 'Our TOP 10 restaurants (less than 30 min)',
       restaurants: ['Riad Cabrera. Moroccan, in Sierra Cabrera. The mountain road is worth it. €€€', 'Juan Moreno. Sophisticated signature cuisine. €€€', 'Gateway to India. Indian food. Pleasant. €', 'The Bistro. Quite good. €€', 'Lúa. Sophisticated. Better for dinner / drinks. €€€', 'Freiduría Bar Rosado. Good references. €€', 'Restaurante-Hostal Playa Azul (Villaricos). Excellent lobster paella. €€', 'Yaho. Asian (Chinese, Japanese) in Puerto Rey. Highly recommended. €', 'Pizzería La Trattoria da Marco (Garrucha). Good pizza. €', 'Marau Beach Club. On the beach. €€']
     },
+    wifi: {
+      title: 'My WiFi',
+      intro: 'Connect without asking — Hestía\'s WiFi is open to its guests.',
+      ssidLabel: 'Network',
+      ssidValue: 'Hestía',
+      passLabel: 'Password',
+      passValue: 'Hestiavera',
+      note: 'If the password does not work, the current one is on a sticker attached to the router (usually in the entrance or behind the TV). Let us know if you cannot find it and we will share it.'
+    },
     phones: {
       title: 'Useful data and phone numbers',
-      wifi: {
-        label: 'WiFi password',
-        value: 'Hestiavera (if it does not work, check the router — may have changed)'
-      },
       list: [{
         label: 'Firefighters',
         value: '080'
@@ -4016,11 +4030,36 @@ const AptGuideView = ({
   }, s.welcome.sign), /*#__PURE__*/React.createElement("p", {
     className: "ag-signer"
   }, s.welcome.signer)), /*#__PURE__*/React.createElement("section", {
+    id: "ag-wifi",
+    className: "ag-section ag-section-wifi"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-section-num"
+  }, "02"), /*#__PURE__*/React.createElement("h2", {
+    className: "ag-h2"
+  }, s.wifi.title), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para ag-para-lead"
+  }, s.wifi.intro), /*#__PURE__*/React.createElement("div", {
+    className: "ag-wifi-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-wifi-row"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-wifi-row-label"
+  }, s.wifi.ssidLabel), /*#__PURE__*/React.createElement("code", {
+    className: "ag-wifi-row-value"
+  }, s.wifi.ssidValue)), /*#__PURE__*/React.createElement("div", {
+    className: "ag-wifi-row"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-wifi-row-label"
+  }, s.wifi.passLabel), /*#__PURE__*/React.createElement("code", {
+    className: "ag-wifi-row-value ag-wifi-row-pass"
+  }, s.wifi.passValue)), /*#__PURE__*/React.createElement("p", {
+    className: "ag-wifi-note"
+  }, s.wifi.note))), /*#__PURE__*/React.createElement("section", {
     id: "ag-nombre",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "02"), /*#__PURE__*/React.createElement("h2", {
+  }, "03"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.name.title), s.name.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
@@ -4030,7 +4069,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "03"), /*#__PURE__*/React.createElement("h2", {
+  }, "04"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.why.title), s.why.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
@@ -4040,7 +4079,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "04"), /*#__PURE__*/React.createElement("h2", {
+  }, "05"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.cleaning.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -4057,7 +4096,7 @@ const AptGuideView = ({
     className: "ag-section ag-section-rules"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "05"), /*#__PURE__*/React.createElement("h2", {
+  }, "06"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.rules.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -4081,7 +4120,7 @@ const AptGuideView = ({
     className: `ag-section ag-room ag-room-${room.id}`
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, String(idx + 6).padStart(2, '0')), /*#__PURE__*/React.createElement("h2", {
+  }, String(idx + 7).padStart(2, '0')), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, room.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-lead"
@@ -4104,7 +4143,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "12"), /*#__PURE__*/React.createElement("h2", {
+  }, "13"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.surroundings.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -4155,15 +4194,9 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "13"), /*#__PURE__*/React.createElement("h2", {
+  }, "14"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
-  }, s.phones.title), /*#__PURE__*/React.createElement("div", {
-    className: "ag-wifi"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-wifi-label"
-  }, s.phones.wifi.label), /*#__PURE__*/React.createElement("code", {
-    className: "ag-wifi-value"
-  }, s.phones.wifi.value)), /*#__PURE__*/React.createElement("table", {
+  }, s.phones.title), /*#__PURE__*/React.createElement("table", {
     className: "ag-phones-table"
   }, /*#__PURE__*/React.createElement("tbody", null, s.phones.list.map(item => /*#__PURE__*/React.createElement("tr", {
     key: item.label
@@ -4174,7 +4207,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "14"), /*#__PURE__*/React.createElement("h2", {
+  }, "15"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.feedback.title), s.feedback.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
