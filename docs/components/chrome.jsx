@@ -199,7 +199,9 @@ const Header = ({ mode, scrolled, lang }) => {
           <NavLink href={NAV_PAGES.porqueHestia}>{t.nav[8]}</NavLink>
         </nav>
         <a href="index.html" className="brand-lockup" aria-label="Hestía — Inicio">
-          <img decoding="async" src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo"/>
+          <span className="hestia-logo-mark" aria-hidden="true">
+            <img decoding="async" src="assets/logo-teal-transparent.png" alt="" className="hestia-logo"/>
+          </span>
           <span className="wordmark">HESTÍA</span>
           <span className="your-home">your home!</span>
         </a>
