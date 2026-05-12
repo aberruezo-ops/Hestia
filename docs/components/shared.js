@@ -3291,13 +3291,10 @@ const DirectBookingPerks = ({
   lang
 }) => {
   const [open, setOpen] = React.useState(false);
-  // Permite abrir el modal desde otros lugares (ej. el sidebar de
-  // escritorio en las páginas de Hestía) disparando un evento global.
-  React.useEffect(() => {
-    const onOpen = () => setOpen(true);
-    window.addEventListener('hestia:open-direct-perks', onOpen);
-    return () => window.removeEventListener('hestia:open-direct-perks', onOpen);
-  }, []);
+  // El listener global hestia:open-direct-perks vive en WidgetStack
+  // (mounted en todas las páginas con widgets). No lo duplicamos aquí
+  // porque sino aparecían DOS modales superpuestos en home/apt y al
+  // cerrar uno el otro quedaba bloqueando la página.
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
     className: "dbt-band"
   }, /*#__PURE__*/React.createElement("div", {
