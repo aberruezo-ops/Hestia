@@ -10075,29 +10075,61 @@ footer,
 }
 .ag-list-num li:last-child { border-bottom: none; }
 
-/* PHONES TABLE --------------------------------------------------- */
-.ag-wifi {
-  display: inline-flex;
+/* MI WIFI · sección dedicada en la guía ---------------------------- */
+.ag-section-wifi { /* hereda layout de .ag-section */ }
+.ag-wifi-card {
+  margin-top: 16px;
+  padding: clamp(20px, 3vw, 32px);
+  background: color-mix(in srgb, var(--apt-accent, #3AAABB) 8%, var(--crema));
+  border: 1px solid color-mix(in srgb, var(--apt-accent, #3AAABB) 28%, transparent);
+  border-left: 4px solid var(--apt-accent, #3AAABB);
+  border-radius: 12px 0 12px 0;
+  display: grid;
+  gap: 14px;
+  max-width: 520px;
+}
+.ag-wifi-row {
+  display: flex;
   align-items: baseline;
   gap: 14px;
-  padding: 14px 20px;
-  background: color-mix(in srgb, var(--apt-accent) 7%, var(--crema));
-  border: 1px solid color-mix(in srgb, var(--apt-accent) 25%, transparent);
-  border-radius: 10px 0 10px 0;
-  margin: 20px 0;
+  padding: 8px 0;
+  border-bottom: 1px dashed color-mix(in srgb, var(--ber-dk) 18%, transparent);
 }
-.ag-wifi-label {
-  font-size: 13px;
+.ag-wifi-row:last-of-type { border-bottom: 0; }
+.ag-wifi-row-label {
+  font-family: var(--sans);
+  font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--apt-accent);
+  color: var(--apt-accent, #176E80);
+  font-weight: 700;
+  min-width: 96px;
+  flex-shrink: 0;
 }
-.ag-wifi-value {
+.ag-wifi-row-value {
   font-family: var(--mono, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace);
-  font-size: 18px;
+  font-size: clamp(18px, 2.2vw, 26px);
   color: var(--ber-dk);
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  user-select: all;
 }
+.ag-wifi-row-pass {
+  background: color-mix(in srgb, var(--apt-accent, #3AAABB) 14%, var(--crema));
+  padding: 4px 10px;
+  border-radius: 6px 0 6px 0;
+}
+.ag-wifi-note {
+  margin: 4px 0 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: rgba(42, 15, 46, 0.74);
+  font-style: italic;
+}
+
+/* PHONES TABLE --------------------------------------------------- */
+/* (regla .ag-wifi antigua eliminada — sustituida por .ag-wifi-card
+   en sección dedicada). */
 .ag-phones-table {
   width: 100%;
   border-collapse: collapse;
