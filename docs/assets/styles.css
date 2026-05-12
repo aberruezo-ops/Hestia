@@ -500,14 +500,31 @@ p  { line-height: 1.65; font-weight: 300; }
   opacity: 1;
   color: var(--crema);
   animation: cta-cycle 80s linear infinite;
+  /* Magnetic CTA — offsets seteados por JS (mousemove). Spring rápido
+     pero suave para que el botón se sienta vivo. Off en mobile. */
+  --mag-x: 0px;
+  --mag-y: 0px;
+  transform: translate3d(var(--mag-x), var(--mag-y), 0);
+  transition: transform .25s cubic-bezier(.2, 1.4, .35, 1), filter .25s ease, color .25s ease;
 }
 .header.night nav .cta,
 .header.day nav .cta { color: var(--crema); }
 .header nav .cta:hover { filter: brightness(1.14); }
 .header.night nav .cta:hover,
 .header.day nav .cta:hover { color: var(--crema); }
-.header nav .cta .cta-text { position: relative; }
+.header nav .cta .cta-text {
+  position: relative;
+  --mag-tx: 0px;
+  --mag-ty: 0px;
+  display: inline-block;
+  transform: translate3d(var(--mag-tx), var(--mag-ty), 0);
+  transition: transform .25s cubic-bezier(.2, 1.4, .35, 1);
+}
 .header nav .cta::after { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .header nav .cta,
+  .header nav .cta .cta-text { transform: none; transition: none; }
+}
 
 .brand-lockup {
   display: flex; flex-direction: column; align-items: center; gap: 4px;
@@ -5392,6 +5409,85 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 @media (hover: hover) {
   .platform-link:hover { opacity: 0.7; }
+}
+
+/* Pull-quotes marquee — cinta de frases cortas entre Ratings y Grid.
+   Bg eggplant #2A0F2E + texto arena #F0E8D5 (~11:1 ratio). Pausa hover. */
+.opiniones-quotes-marquee {
+  background-color: #2A0F2E;
+  color: #F0E8D5;
+  border-top: 1px solid rgba(240, 232, 213, 0.10);
+  border-bottom: 1px solid rgba(240, 232, 213, 0.10);
+  overflow: hidden;
+  padding: 18px 0;
+  position: relative;
+}
+.opiniones-quotes-marquee::before,
+.opiniones-quotes-marquee::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 100px;
+  z-index: 1;
+  pointer-events: none;
+}
+.opiniones-quotes-marquee::before {
+  left: 0;
+  background: linear-gradient(90deg, #2A0F2E, transparent);
+}
+.opiniones-quotes-marquee::after {
+  right: 0;
+  background: linear-gradient(270deg, #2A0F2E, transparent);
+}
+.oqm-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 3vw, 40px);
+  width: max-content;
+  animation: oqmScroll 90s linear infinite;
+  white-space: nowrap;
+  will-change: transform;
+}
+.oqm-quote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(14px, 1.3vw, 17px);
+  font-weight: 300;
+  color: #F0E8D5;
+  letter-spacing: 0.005em;
+}
+.oqm-mark {
+  color: #6FC4D1;       /* sol-lt — el «...» con pinta de marca */
+  font-style: normal;
+  font-weight: 600;
+  opacity: 0.85;
+  margin: 0 4px;
+}
+.oqm-text { opacity: 0.95; }
+.oqm-attr {
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: 0.78em;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.55;
+  margin-left: 4px;
+}
+.oqm-dot {
+  color: #6FC4D1;
+  font-size: 11px;
+  opacity: 0.5;
+}
+@keyframes oqmScroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+@media (hover: hover) and (pointer: fine) {
+  .opiniones-quotes-marquee:hover .oqm-track { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .oqm-track { animation: none; }
 }
 
 .opiniones-testimonials {
