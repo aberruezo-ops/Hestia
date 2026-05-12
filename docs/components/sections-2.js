@@ -416,13 +416,38 @@ const RatingsMarquee = ({
   }, "\u2726")))));
 };
 
+// --- DIRECT PERKS TEASER --- banda corta encima de ContactCTA con un
+// solo botón que abre el modal de ventajas de la reserva directa.
+// Garantiza acceso al modal en móvil en TODAS las páginas con ContactCTA.
+const DirectPerksTeaser = ({
+  lang
+}) => /*#__PURE__*/React.createElement("section", {
+  className: "direct-perks-teaser",
+  "aria-labelledby": "dpt-eyebrow"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "dpt-inner"
+}, /*#__PURE__*/React.createElement("span", {
+  id: "dpt-eyebrow",
+  className: "eyebrow dpt-eyebrow"
+}, lang === 'es' ? 'Reserva directa · la mejor forma de reservar' : 'Direct booking · the best way to book'), /*#__PURE__*/React.createElement("button", {
+  type: "button",
+  className: "dpt-btn",
+  onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks')),
+  "aria-haspopup": "dialog"
+}, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'), /*#__PURE__*/React.createElement("span", {
+  className: "dpt-arrow",
+  "aria-hidden": "true"
+}, "\u2192"))));
+
 // --- CONTACT CTA ---
 const ContactCTA = ({
   lang,
   availHref
 }) => {
   const t = COPY[lang];
-  return /*#__PURE__*/React.createElement("section", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(DirectPerksTeaser, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement("section", {
     className: "contact-cta",
     id: "contacto",
     "data-screen-label": "10 Contacto"
@@ -449,7 +474,7 @@ const ContactCTA = ({
     className: "arrow"
   }, "\u2192"))), /*#__PURE__*/React.createElement("div", {
     className: "address"
-  }, "Calle Islas Canarias 7 \xB7 04621 Vera Playa \xB7 Almer\xEDa")));
+  }, "Calle Islas Canarias 7 \xB7 04621 Vera Playa \xB7 Almer\xEDa"))));
 };
 Object.assign(window, {
   Counters,

@@ -2679,6 +2679,72 @@ body.apt-bar-shown .cookies {
 }
 
 /* ============================================================
+   DIRECT PERKS TEASER — banda corta encima de ContactCTA
+   ============================================================ */
+.direct-perks-teaser {
+  background-color: #2A0F2E;
+  color: #F0E8D5;
+  padding: clamp(20px, 3vw, 36px) var(--page-pad);
+  border-top: 1px solid rgba(240, 232, 213, 0.08);
+  position: relative;
+}
+.direct-perks-teaser::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  width: 80px;
+  height: 1px;
+  background: #6FC4D1;
+  transform: translateX(-50%);
+  opacity: 0.45;
+}
+.dpt-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+  justify-content: space-between;
+}
+.dpt-eyebrow {
+  color: #6FC4D1 !important;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+}
+.dpt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 22px;
+  border-radius: 10px 0 10px 0;
+  background-color: #3AAABB !important;
+  background-image: none !important;
+  color: #2A0F2E !important;
+  border: 0 !important;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(58, 170, 187, 0.40);
+  transition: background-color .25s ease, transform .15s ease, box-shadow .25s ease;
+}
+.dpt-btn:hover {
+  background-color: #6FC4D1 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(58, 170, 187, 0.55);
+}
+.dpt-btn:active { transform: translateY(0) scale(.98); }
+.dpt-arrow { font-size: 14px; line-height: 1; transition: transform .25s ease; }
+.dpt-btn:hover .dpt-arrow { transform: translateX(3px); }
+@media (max-width: 640px) {
+  .dpt-inner { flex-direction: column; gap: 14px; text-align: center; }
+}
+
+/* ============================================================
    CONTACT CTA
    ============================================================ */
 .contact-cta {
@@ -4978,6 +5044,40 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   will-change: transform;
 }
 .apt-sticky-bar.asb-visible { transform: translateY(0); }
+
+/* Chip "Ver ventajas" en sticky bar — corporativo, glass tenue,
+   tipográficamente subordinado al RESERVAR pero accesible siempre. */
+.asb-perks {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 8px 0 8px 0;
+  background: rgba(240, 232, 213, 0.08);
+  color: #F0E8D5;
+  border: 1px solid rgba(240, 232, 213, 0.30);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: background .2s ease, border-color .2s ease, transform .15s ease;
+}
+.asb-perks:hover {
+  background: rgba(240, 232, 213, 0.16);
+  border-color: rgba(240, 232, 213, 0.55);
+}
+.asb-perks:active { transform: scale(.97); }
+.asb-perks-icon { color: #6FC4D1; font-size: 12px; opacity: .9; }
+@media (max-width: 540px) {
+  /* En pantallas estrechas mantenemos el chip pero ocultamos el texto
+     largo "✓ ¿mejor precio?…" del .asb-match para no saturar. */
+  .apt-sticky-bar .asb-match { display: none; }
+  .asb-perks { padding: 7px 10px; font-size: 10.5px; }
+}
 
 /* (regla movida arriba al bloque .cookies) */
 .asb-info {
