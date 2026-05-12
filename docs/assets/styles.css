@@ -14208,3 +14208,94 @@ a:focus-visible,
     display: none !important;
   }
 }
+
+/* ============================================================
+   MAPA WEB · /mapa.html
+   Accesible sólo desde el pie. Layout claro, jerarquía editorial,
+   contraste seguro (cream + ber-dk).
+   ============================================================ */
+.mapa-page {
+  background: var(--crema);
+  color: var(--ber-dk);
+  padding: clamp(80px, 12vw, 140px) var(--page-pad) clamp(64px, 10vw, 120px);
+  min-height: calc(100vh - var(--topbar-h, 50px));
+}
+.mapa-inner { max-width: 1100px; margin: 0 auto; }
+.mapa-eyebrow {
+  color: #176E80;
+  letter-spacing: 0.18em;
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.mapa-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 64px);
+  color: #2A0F2E;
+  margin: 0 0 16px;
+  line-height: 1.05;
+}
+.mapa-sub {
+  font-size: clamp(15px, 1.4vw, 18px);
+  color: #3D1A35;
+  max-width: 60ch;
+  margin: 0 0 48px;
+  line-height: 1.6;
+}
+.mapa-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(32px, 4vw, 56px);
+}
+.mapa-section-title {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #176E80;
+  margin: 0 0 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(42, 15, 46, 0.14);
+}
+.mapa-list { list-style: none; padding: 0; margin: 0; }
+.mapa-item { margin-bottom: 22px; }
+.mapa-item:last-child { margin-bottom: 0; }
+.mapa-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  color: #2A0F2E;
+  text-decoration: none;
+  font-family: var(--serif);
+  font-size: clamp(18px, 1.6vw, 22px);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  transition: color .2s ease, transform .25s var(--ease-out, ease);
+  margin-bottom: 4px;
+}
+.mapa-link::after {
+  content: '';
+  display: block;
+  height: 1.5px;
+  width: 0;
+  background: #3AAABB;
+  transition: width .35s ease;
+}
+.mapa-link:hover { color: #176E80; }
+.mapa-link:hover .mapa-link-arrow { transform: translateX(4px); }
+.mapa-link-arrow {
+  font-size: 16px;
+  color: #3AAABB;
+  transition: transform .25s ease;
+}
+.mapa-desc {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(42, 15, 46, 0.72);
+  max-width: 38ch;
+}

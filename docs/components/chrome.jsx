@@ -430,6 +430,7 @@ const Footer = ({ lang }) => {
             <li><a href="contacto.html">{t.nav[6]}</a></li>
             <li><a href="privacidad.html">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>
             <li><a href="cookies.html">Cookies</a></li>
+            <li><a href="mapa.html">{lang === 'es' ? 'Mapa web' : 'Site map'}</a></li>
             <li>
               <button
                 type="button"
