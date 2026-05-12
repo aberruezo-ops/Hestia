@@ -10,23 +10,23 @@
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#2A0F2E"/>
-  <title>Comparte tu experiencia · Hestía Your Home · Vera Playa</title>
-  <meta name="description" content="¿Has dormido en Hestía? Cuéntanos cómo te fue. Tu opinión, una vez aprobada, aparecerá en la web."/>
-  <link rel="canonical" href="https://www.hestiayourhome.com/escribir-opinion.html"/>
+  <title>Mapa web · Hestía Your Home</title>
+  <meta name="description" content="Todos los apartados de Hestía Your Home en una sola página. Los tres Hestías, reservas, opiniones, noticias y más."/>
   <meta name="robots" content="noindex, follow"/>
+  <link rel="canonical" href="https://www.hestiayourhome.com/mapa.html"/>
   <meta property="og:site_name" content="Hestía Your Home"/>
   <meta property="og:type"      content="website"/>
-  <meta property="og:url"       content="https://www.hestiayourhome.com/escribir-opinion.html"/>
-  <meta property="og:title"     content="Comparte tu experiencia · Hestía Your Home"/>
-  <meta property="og:description" content="¿Has dormido en Hestía? Cuéntanos cómo te fue. Tu opinión, una vez aprobada, aparecerá en la web."/>
+  <meta property="og:url"       content="https://www.hestiayourhome.com/mapa.html"/>
+  <meta property="og:title"     content="Mapa web · Hestía Your Home"/>
+  <meta property="og:description" content="Todos los apartados del sitio en una sola página."/>
   <meta property="og:image"     content="https://www.hestiayourhome.com/assets/hero-terrace-night.jpg"/>
   <meta property="og:image:width"  content="1600"/>
   <meta property="og:image:height" content="1600"/>
   <meta property="og:image:alt"    content="Hestía Your Home · Vera Playa, Almería"/>
   <meta property="og:locale"    content="es_ES"/>
-  <meta name="twitter:card"        content="summary_large_image"/>
-  <meta name="twitter:title"       content="Comparte tu experiencia · Hestía Your Home"/>
-  <meta name="twitter:description" content="¿Has dormido en Hestía? Cuéntanos cómo te fue."/>
+  <meta name="twitter:card"        content="summary"/>
+  <meta name="twitter:title"       content="Mapa web · Hestía Your Home"/>
+  <meta name="twitter:description" content="Todos los apartados del sitio en una sola página."/>
   <meta name="twitter:image"       content="https://www.hestiayourhome.com/assets/hero-terrace-night.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -35,21 +35,18 @@
   <link rel="stylesheet" href="assets/styles.css?v=275"/>
 </head>
 <body>
-<a href="#root" class="skip-link">Saltar al contenido principal</a>
 <div id="root"></div>
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react.development.js'"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react-dom.development.js'"></script>
 <script>
   const __PRM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  window.__TWEAKS__ = { starfield: false && !__PRM, parallax: false && !__PRM };
+  window.__TWEAKS__ = { starfield: true && !__PRM, parallax: false && !__PRM };
 
   const COMPONENT_FILES = [
     'components/shared.js',
     'components/chrome.js',
-    'components/sections-2.js',
-    'components/escribir-opinion-page.js',
+    'components/mapa-page.js',
   ];
 
   async function loadComponents() {

@@ -634,7 +634,9 @@ const Footer = ({
     href: "privacidad.html"
   }, lang === 'es' ? 'Privacidad' : 'Privacy')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "cookies.html"
-  }, "Cookies")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("button", {
+  }, "Cookies")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "mapa.html"
+  }, lang === 'es' ? 'Mapa web' : 'Site map')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "footer-linklike",
     onClick: () => window.dispatchEvent(new Event('hestia:cookies-reopen'))
