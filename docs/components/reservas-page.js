@@ -934,9 +934,17 @@ const ReservasAside = ({
     className: "reservas-guarantee"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rg-title"
-  }, t.guarantee_title), /*#__PURE__*/React.createElement("ul", null, t.guarantee_items.map((item, i) => /*#__PURE__*/React.createElement("li", {
-    key: i
-  }, item)))));
+  }, t.guarantee_title), /*#__PURE__*/React.createElement("p", {
+    className: "rg-lede"
+  }, lang === 'es' ? 'Mejor precio garantizado · sin comisiones · respuesta humana en menos de 24 h.' : 'Best price guaranteed · no commissions · human reply within 24 h.'), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "rg-cta",
+    onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks')),
+    "aria-haspopup": "dialog"
+  }, lang === 'es' ? 'Ver todas las ventajas' : 'See all perks', /*#__PURE__*/React.createElement("span", {
+    className: "rg-cta-arrow",
+    "aria-hidden": "true"
+  }, "\u2192"))));
 };
 const ReservasPageApp = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
