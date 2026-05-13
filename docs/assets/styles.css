@@ -14773,3 +14773,24 @@ img[src*="apt-vt-gallery-"] {
   transform: translate(-50%, -50%) rotate(-30deg);
   pointer-events: none;
 }
+
+/* Mensajes de error del DateRangePicker (shared) — visible cuando se
+   intenta una selección no permitida (1 noche, crítica < 7, etc.). */
+.hscal-msg {
+  margin: 10px 0 0;
+  padding: 12px 16px;
+  border-radius: 10px 0 10px 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  border-left: 4px solid;
+}
+.hscal-msg-error {
+  background: color-mix(in srgb, #D42B80 8%, var(--crema));
+  border-left-color: #D42B80;
+  color: var(--ber-dk);
+}
+.hscal-msg-info {
+  background: color-mix(in srgb, var(--sol) 8%, var(--crema));
+  border-left-color: var(--sol);
+  color: var(--ber-dk);
+}
