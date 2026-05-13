@@ -14724,3 +14724,29 @@ img[src*="apt-vt-gallery-"] {
 @media (prefers-reduced-motion: reduce) {
   img[src*="apt-vt-gallery-"] { transition: none; }
 }
+
+/* Warning de estancia mínima en /reservas — visible si el usuario
+   intenta menos noches que minNights (p.ej. 1 noche). */
+.rf-min-nights-warn {
+  margin: 20px 0 0;
+  padding: 14px 18px;
+  background: color-mix(in srgb, #D42B80 8%, var(--crema));
+  border: 1px solid color-mix(in srgb, #D42B80 35%, transparent);
+  border-left: 4px solid #D42B80;
+  border-radius: 10px 0 10px 0;
+  display: grid;
+  gap: 4px;
+}
+.rf-min-nights-warn strong {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #D42B80;
+}
+.rf-min-nights-warn span {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ber-dk);
+}
