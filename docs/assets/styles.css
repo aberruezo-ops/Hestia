@@ -14691,3 +14691,36 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 @media (prefers-reduced-motion: reduce) {
   img[src$="photo-alex.jpg"]:not(.avatar-img) { transition: none; }
 }
+
+/* ============================================================
+   THALASSA · efecto cristal wow en las fotos del Hestía
+   ────────────────────────────────────────────────────────────
+   Aplica a todas las imágenes apt-vt-gallery-*.jpg en cualquier
+   contexto del sitio (galería principal, room photos en la
+   guía del huésped, hero secundario). Cristal: brillo +
+   saturación + warmth + drop-shadow suave. En hover (donde
+   aplique) intensifica.
+   ============================================================ */
+img[src*="apt-vt-gallery-"] {
+  filter:
+    brightness(1.04)
+    contrast(1.10)
+    saturate(1.18)
+    drop-shadow(0 10px 26px rgba(138, 74, 36, 0.22));
+  transition: filter .6s cubic-bezier(.2, .8, .2, 1),
+              transform .8s cubic-bezier(.2, .8, .2, 1);
+}
+.gc-stage img[src*="apt-vt-gallery-"]:hover,
+.ag-photo img[src*="apt-vt-gallery-"]:hover,
+.apt-card.vt img[src*="apt-vt-gallery-"]:hover {
+  filter:
+    brightness(1.08)
+    contrast(1.14)
+    saturate(1.26)
+    drop-shadow(0 14px 34px rgba(138, 74, 36, 0.32));
+  transform: scale(1.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  img[src*="apt-vt-gallery-"] { transition: none; }
+}
