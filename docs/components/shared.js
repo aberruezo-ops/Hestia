@@ -2785,15 +2785,16 @@ const DateRangePicker = ({
   const horizonStr = window.PRICES_V2 && window.PRICES_V2.bookingHorizon && window.PRICES_V2.bookingHorizon.lastCheckinDate || null;
   const _isBeyondHorizon = ds => !!(horizonStr && ds > horizonStr);
   const _isBlk = ds => blockedList.some(r => ds >= r.start && ds < r.end);
-  // Estancia mínima — base + reglas adicionales:
-  //   - Base (minNights): 2 noches. 1 noche queda prohibida en todo caso.
-  //   - Temporada crítica: minimo elevado a criticalSeasonMinNights (7).
-  //   - Excepciones a la crítica:
-  //     · Check-in inminente (≤ imminentDays desde hoy) → base.
-  //     · El rango (checkin..checkout) rellena exactamente un hueco
-  //       entre dos reservas existentes → base.
+  // Estancia mínima — capas de reglas:
+  //   1) 1 noche → siempre prohibida.
+  //   2) Por defecto: 3 noches mínimo (minNights).
+  //   3) Temporada crítica: 7 noches mínimo (criticalSeasonMinNights).
+  //   4) Excepción 2 noches (twoNightFloor): solo si el check-in cae en
+  //      la semana actual (≤ imminentDays) O si el rango rellena
+  //      exactamente un hueco entre dos reservas (gap-fill).
   const rules = window.PRICES_V2 && window.PRICES_V2.rules || {};
-  const baseMinN = rules.minNights || 2;
+  const baseMinN = rules.minNights || 3;
+  const twoNightFloor = rules.twoNightFloor || 2;
   const criticalMinN = rules.criticalSeasonMinNights || baseMinN;
   const imminentD = rules.imminentDays || 7;
   const _isCriticalDate = ds => {
@@ -2810,12 +2811,13 @@ const DateRangePicker = ({
   };
   const _effectiveMinN = (cin, coutCandidate) => {
     if (!cin) return baseMinN;
-    if (!_isCriticalDate(cin)) return baseMinN;
-    // Excepción 1: check-in inminente (≤ imminentDays desde hoy)
-    if (_drDiff(t, cin) <= imminentD) return baseMinN;
-    // Excepción 2: rango exacto entre dos reservas existentes
-    if (coutCandidate && _isGapFiller(cin, coutCandidate)) return baseMinN;
-    return criticalMinN;
+    const isImminent = _drDiff(t, cin) <= imminentD;
+    const isGapFill = coutCandidate && _isGapFiller(cin, coutCandidate);
+    // Excepción universal de 2 noches: aplica incluso en temporada crítica.
+    if (isImminent || isGapFill) return twoNightFloor;
+    // Sin excepción: crítica → criticalMinN; resto → baseMinN.
+    if (_isCriticalDate(cin)) return criticalMinN;
+    return baseMinN;
   };
   // Día "demasiado cerca del check-in para ser un check-out válido".
   // Cuando ya hay check-in seleccionado, los días entre checkin+1 y
@@ -2879,8 +2881,8 @@ const DateRangePicker = ({
       const isCrit = _isCriticalDate(checkin);
       setDrMsg({
         type: 'error',
-        es: isCrit ? `Temporada crítica: estancia mínima ${effMin} noches. Excepción: si rellenas exactamente un hueco entre dos reservas o si el check-in es esta semana (≤${imminentD} días), bastarían 2 noches.` : `Estancia mínima ${effMin} noches. Selecciona una fecha de salida más adelante.`,
-        en: isCrit ? `Critical season: minimum stay ${effMin} nights. Exception: if you exactly fill a gap between two bookings or check-in is this week (≤${imminentD} days), 2 nights would suffice.` : `Minimum stay ${effMin} nights. Pick a later check-out date.`
+        es: isCrit ? `Temporada crítica: estancia mínima ${effMin} noches. Excepción: 2 noches solo si el check-in es esta semana (≤${imminentD} días) o el rango rellena exactamente un hueco entre dos reservas existentes.` : `Estancia mínima ${effMin} noches. Las reservas de 2 noches solo se permiten para la semana actual (≤${imminentD} días) o cuando rellenan exactamente un hueco entre dos reservas existentes.`,
+        en: isCrit ? `Critical season: minimum stay ${effMin} nights. Exception: 2 nights only if check-in is this week (≤${imminentD} days) or the range exactly fills a gap between two existing bookings.` : `Minimum stay ${effMin} nights. Two-night stays are only allowed for the current week (≤${imminentD} days) or when they exactly fill a gap between two existing bookings.`
       });
       return;
     }
