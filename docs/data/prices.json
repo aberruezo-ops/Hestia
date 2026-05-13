@@ -77,6 +77,8 @@
       }
     ],
     "minNights": 2,
+    "criticalSeasonMinNights": 7,
+    "imminentDays": 7,
     "shortStayPricing": [
       {
         "nights": 2,
