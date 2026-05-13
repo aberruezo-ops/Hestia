@@ -1924,6 +1924,7 @@ const DateRangePicker = ({
   accent,
 }) => {
   const [hover, setHover] = React.useState(null);
+  const [drMsg, setDrMsg] = React.useState(null);
   const t = today || _drToday();
   const todayDate = new Date(t + 'T12:00:00Z');
   const [viewY, setViewY] = React.useState(todayDate.getUTCFullYear());
@@ -1934,16 +1935,45 @@ const DateRangePicker = ({
     && window.PRICES_V2.bookingHorizon.lastCheckinDate) || null;
   const _isBeyondHorizon = (ds) => !!(horizonStr && ds > horizonStr);
   const _isBlk = (ds) => blockedList.some(r => ds >= r.start && ds < r.end);
-  // Estancia mínima — leída de prices.json. Default 2 (1 noche prohibida).
-  const minNights = (window.PRICES_V2 && window.PRICES_V2.rules
-    && window.PRICES_V2.rules.minNights) || 2;
+  // Estancia mínima — base + reglas adicionales:
+  //   - Base (minNights): 2 noches. 1 noche queda prohibida en todo caso.
+  //   - Temporada crítica: minimo elevado a criticalSeasonMinNights (7).
+  //   - Excepciones a la crítica:
+  //     · Check-in inminente (≤ imminentDays desde hoy) → base.
+  //     · El rango (checkin..checkout) rellena exactamente un hueco
+  //       entre dos reservas existentes → base.
+  const rules = (window.PRICES_V2 && window.PRICES_V2.rules) || {};
+  const baseMinN     = rules.minNights || 2;
+  const criticalMinN = rules.criticalSeasonMinNights || baseMinN;
+  const imminentD    = rules.imminentDays || 7;
+  const _isCriticalDate = (ds) => {
+    const v2 = window.PRICES_V2;
+    if (!v2 || typeof _v2BumpedSeasonForDate !== 'function') return false;
+    return _v2BumpedSeasonForDate(ds, v2) === 'critica';
+  };
+  const _isGapFiller = (cin, cout) => {
+    if (!cin || !cout) return false;
+    const dayBefore = _drAdj(cin, -1);
+    const beforeBlk = blockedList.some(r => dayBefore >= r.start && dayBefore < r.end);
+    const checkoutStartsBlk = blockedList.some(r => r.start === cout);
+    return beforeBlk && checkoutStartsBlk;
+  };
+  const _effectiveMinN = (cin, coutCandidate) => {
+    if (!cin) return baseMinN;
+    if (!_isCriticalDate(cin)) return baseMinN;
+    // Excepción 1: check-in inminente (≤ imminentDays desde hoy)
+    if (_drDiff(t, cin) <= imminentD) return baseMinN;
+    // Excepción 2: rango exacto entre dos reservas existentes
+    if (coutCandidate && _isGapFiller(cin, coutCandidate)) return baseMinN;
+    return criticalMinN;
+  };
   // Día "demasiado cerca del check-in para ser un check-out válido".
   // Cuando ya hay check-in seleccionado, los días entre checkin+1 y
-  // checkin+minNights-1 NO son seleccionables como check-out.
+  // checkin+effectiveMin-1 NO son seleccionables como check-out.
   const _tooSoonForCheckout = (ds) => {
     if (!checkin || checkout) return false;
     if (ds <= checkin) return false;
-    return _drDiff(checkin, ds) < minNights;
+    return _drDiff(checkin, ds) < _effectiveMinN(checkin, ds);
   };
 
   // Día "partido": el primer día de un rango bloqueado tiene la mañana
@@ -1973,19 +2003,42 @@ const DateRangePicker = ({
     // (la noche está ocupada). Pulsar lo trata como "cambiar selección".
     if (!checkin || checkout || ds <= checkin) {
       if (blkStart) return;
-      setCheckin(ds); setCheckout(''); return;
+      setCheckin(ds); setCheckout(''); setDrMsg(null); return;
     }
-    // Fase: elegir check-out. Rechaza si el rango < minNights — 1 noche
-    // y similares prohibidos. El usuario debe seleccionar otra fecha.
-    if (_drDiff(checkin, ds) < minNights) return;
-    // Verificamos camino libre (sin bloqueadas en el medio). Permitimos
-    // el blocked-start como check-out (mañana libre antes de las 15:00).
+    // Fase: elegir check-out. Rechaza si el rango < effectiveMin para
+    // este check-in. Crítica = 7 noches salvo que sea inminente o
+    // rellene exactamente un hueco entre reservas existentes.
+    const nights = _drDiff(checkin, ds);
+    const effMin = _effectiveMinN(checkin, ds);
+    if (nights === 1) {
+      setDrMsg({
+        type: 'error',
+        es: 'No se permiten reservas de 1 noche. La estancia mínima es 2 noches.',
+        en: 'One-night bookings are not allowed. Minimum stay is 2 nights.',
+      });
+      return;
+    }
+    if (nights < effMin) {
+      const isCrit = _isCriticalDate(checkin);
+      setDrMsg({
+        type: 'error',
+        es: isCrit
+          ? `Temporada crítica: estancia mínima ${effMin} noches. Excepción: si rellenas exactamente un hueco entre dos reservas o si el check-in es esta semana (≤${imminentD} días), bastarían 2 noches.`
+          : `Estancia mínima ${effMin} noches. Selecciona una fecha de salida más adelante.`,
+        en: isCrit
+          ? `Critical season: minimum stay ${effMin} nights. Exception: if you exactly fill a gap between two bookings or check-in is this week (≤${imminentD} days), 2 nights would suffice.`
+          : `Minimum stay ${effMin} nights. Pick a later check-out date.`,
+      });
+      return;
+    }
+    // Verificamos camino libre (sin bloqueadas en el medio).
     let cur = _drAdj(checkin, 1);
     while (cur < ds) {
-      if (_isBlk(cur)) { setCheckin(ds); setCheckout(''); return; }
+      if (_isBlk(cur)) { setCheckin(ds); setCheckout(''); setDrMsg(null); return; }
       cur = _drAdj(cur, 1);
     }
     setCheckout(ds);
+    setDrMsg(null);
   };
 
   const MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -2050,7 +2103,7 @@ const DateRangePicker = ({
                 onClick={isClickable ? () => handleDayClick(ds) : undefined}
                 onMouseEnter={isClickable && !checkout ? () => setHover(ds) : undefined}
                 onMouseLeave={isClickable ? () => setHover(null) : undefined}
-                title={isTooSoon ? (lang === 'es' ? `Estancia mínima ${minNights} noches` : `Minimum stay ${minNights} nights`) : undefined}>
+                title={isTooSoon ? (lang === 'es' ? `Estancia mínima ${_effectiveMinN(checkin, ds)} noches` : `Minimum stay ${_effectiveMinN(checkin, ds)} nights`) : undefined}>
                 {/* Día PRE-bloqueo (primer día del rango): right-strip
                     tarde-onward bloqueada, mañana libre como check-out. */}
                 {showBlk && !isBlkSingle && isBlkStart && <div className="c-strip c-sr"/>}
@@ -2115,6 +2168,11 @@ const DateRangePicker = ({
          : !checkout ? (lang === 'es' ? '→ Ahora elige la fecha de salida' : '→ Now choose check-out date')
          : null}
       </div>
+      {drMsg && (
+        <div className={`hscal-msg hscal-msg-${drMsg.type || 'info'}`} role={drMsg.type === 'error' ? 'alert' : 'status'}>
+          {drMsg[lang] || drMsg.es}
+        </div>
+      )}
       <div className="avail-nav hscal-nav">
         <button type="button" className={`avail-arr${canGoPrev ? '' : ' off'}`} onClick={prevMonth}
           aria-label={lang === 'es' ? 'Mes anterior' : 'Previous month'}>‹</button>
