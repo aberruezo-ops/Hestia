@@ -929,11 +929,20 @@ const ReservasAside = ({ lang }) => {
       </div>
       <div className="reservas-guarantee">
         <div className="rg-title">{t.guarantee_title}</div>
-        <ul>
-          {t.guarantee_items.map((item, i) => (
-            <li key={i}>{item}</li>
-          ))}
-        </ul>
+        <p className="rg-lede">
+          {lang === 'es'
+            ? 'Mejor precio garantizado · sin comisiones · respuesta humana en menos de 24 h.'
+            : 'Best price guaranteed · no commissions · human reply within 24 h.'}
+        </p>
+        <button
+          type="button"
+          className="rg-cta"
+          onClick={() => window.dispatchEvent(new Event('hestia:open-direct-perks'))}
+          aria-haspopup="dialog"
+        >
+          {lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}
+          <span className="rg-cta-arrow" aria-hidden="true">→</span>
+        </button>
       </div>
     </aside>
   );
