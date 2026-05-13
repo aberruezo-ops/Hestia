@@ -415,7 +415,14 @@ const ReservasForm = ({ lang }) => {
   };
 
   // Validaciones
-  const step1Complete = apt && checkin && checkout && guests && checkin < checkout;
+  // minNights desde prices.json — bloquea 1-noche y cualquier estancia
+  // por debajo del mínimo. Default 2 si no hay PRICES_V2 cargado todavía.
+  const minNights = (window.PRICES_V2 && window.PRICES_V2.rules && window.PRICES_V2.rules.minNights) || 2;
+  const nightsSelected = (checkin && checkout)
+    ? Math.round((new Date(checkout + 'T12:00:00Z') - new Date(checkin + 'T12:00:00Z')) / 86400000)
+    : 0;
+  const meetsMinNights = nightsSelected >= minNights;
+  const step1Complete = apt && checkin && checkout && guests && checkin < checkout && meetsMinNights;
   const hasName  = name.trim().length > 0;
   const hasTel   = tel.replace(/\D/g, '').length >= 6;
   const hasEmail = /\S+@\S+/.test(email);
@@ -689,6 +696,16 @@ const ReservasForm = ({ lang }) => {
                 </button>
               </div>
             </div>
+            {checkin && checkout && nightsSelected > 0 && nightsSelected < minNights && (
+              <div className="rf-min-nights-warn" role="alert">
+                <strong>{lang === 'es' ? '⚠ Estancia mínima' : '⚠ Minimum stay'}</strong>
+                <span>
+                  {lang === 'es'
+                    ? `No aceptamos reservas de ${nightsSelected} ${nightsSelected === 1 ? 'noche' : 'noches'}. La estancia mínima en cualquier Hestía es de ${minNights} noches. Ajusta la fecha de salida para continuar.`
+                    : `We don't accept ${nightsSelected}-night stays. Minimum stay at any Hestía is ${minNights} nights. Adjust the check-out date to continue.`}
+                </span>
+              </div>
+            )}
             <div className="rf-step-actions">
               <button
                 type="button"
