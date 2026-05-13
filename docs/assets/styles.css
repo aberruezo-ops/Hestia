@@ -14794,3 +14794,84 @@ img[src*="apt-vt-gallery-"] {
   border-left-color: var(--sol);
   color: var(--ber-dk);
 }
+
+/* Grid de disponibilidad por Hestía en /reservas — aparece en step 2
+   cuando el huésped no ha elegido apt. Le muestra los 3 con su estado
+   para esas fechas y le deja elegir uno con un click. */
+.rf-apt-availability {
+  margin: 0 0 20px;
+  padding: 18px 20px;
+  background: color-mix(in srgb, var(--sol) 5%, var(--crema));
+  border: 1px solid color-mix(in srgb, var(--sol) 16%, transparent);
+  border-radius: 12px 0 12px 0;
+}
+.rf-apt-avail-lede {
+  margin: 0 0 14px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ber-dk);
+  font-weight: 500;
+}
+.rf-apt-avail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+.rf-apt-avail-card {
+  --apt-c: #3AAABB;
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+  text-align: left;
+  background: var(--crema);
+  border: 1.5px solid var(--apt-c);
+  border-left-width: 4px;
+  border-radius: 10px 0 10px 0;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: transform .18s ease, box-shadow .25s ease, background .25s ease;
+}
+.rf-apt-avail-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--apt-c) 32%, transparent);
+}
+.rf-apt-avail-card.is-taken {
+  opacity: 0.78;
+  border-style: dashed;
+}
+.rf-apt-avail-name {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ber-dk);
+}
+.rf-apt-avail-badge {
+  display: inline-block;
+  width: fit-content;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.rf-apt-avail-card.is-free .rf-apt-avail-badge {
+  background: color-mix(in srgb, #6B7A3A 18%, var(--crema));
+  color: #4A5628;
+}
+.rf-apt-avail-card.is-taken .rf-apt-avail-badge {
+  background: color-mix(in srgb, #D42B80 18%, var(--crema));
+  color: #8A1B53;
+}
+.rf-apt-avail-card.is-unknown .rf-apt-avail-badge {
+  background: color-mix(in srgb, var(--ber-lt) 20%, var(--crema));
+  color: var(--ink-soft);
+}
+.rf-apt-avail-cta {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--apt-c);
+  margin-top: 4px;
+}

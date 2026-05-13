@@ -445,7 +445,11 @@ const ReservasForm = ({
   const minNights = window.PRICES_V2 && window.PRICES_V2.rules && window.PRICES_V2.rules.minNights || 2;
   const nightsSelected = checkin && checkout ? Math.round((new Date(checkout + 'T12:00:00Z') - new Date(checkin + 'T12:00:00Z')) / 86400000) : 0;
   const meetsMinNights = nightsSelected >= minNights;
-  const step1Complete = apt && checkin && checkout && guests && checkin < checkout && meetsMinNights;
+  // step1Ready = puede pasar al step 2 incluso sin apt elegido. Si no hay
+  // apt, en step 2 se muestra un grid con los 3 Hestías y su estado de
+  // disponibilidad → el huésped elige el que prefiera (o el que tenga libre).
+  const step1Ready = checkin && checkout && guests && checkin < checkout && meetsMinNights;
+  const step1Complete = apt && step1Ready;
   const hasName = name.trim().length > 0;
   const hasTel = tel.replace(/\D/g, '').length >= 6;
   const hasEmail = /\S+@\S+/.test(email);
@@ -459,9 +463,10 @@ const ReservasForm = ({
   const blocked = avail && avail[apt] ? avail[apt].blocked : null;
   const isAvailable = step1Complete && availLoaded ? _resAvail(checkin, checkout, blocked) : null;
 
-  // Avanzar pasos
+  // Avanzar pasos. step1Ready basta (sin apt) — en step 2 el huésped
+  // verá la disponibilidad de los 3 Hestías y puede elegir uno.
   const goToStep2 = () => {
-    if (!step1Complete) return;
+    if (!step1Ready) return;
     setStep(2);
     setTimeout(() => {
       document.getElementById('rf-step-2')?.scrollIntoView({
@@ -669,8 +674,8 @@ const ReservasForm = ({
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: goToStep2,
-    className: `btn btn-primary rf-next${!step1Complete ? ' req-btn-dis' : ''}`,
-    "aria-disabled": !step1Complete
+    className: `btn btn-primary rf-next${!step1Ready ? ' req-btn-dis' : ''}`,
+    "aria-disabled": !step1Ready
   }, t.check_avail)))), /*#__PURE__*/React.createElement("section", {
     id: "rf-step-2",
     className: `rf-step rf-step-2 ${step >= 2 ? 'is-open' : 'is-locked'} ${step > 2 ? 'is-collapsed' : ''}`,
@@ -686,12 +691,54 @@ const ReservasForm = ({
     "aria-hidden": "true"
   }, "\uD83D\uDD12")), step >= 2 && /*#__PURE__*/React.createElement("div", {
     className: "rf-step-body"
-  }, isAvailable === true && /*#__PURE__*/React.createElement("div", {
+  }, !apt && availLoaded && /*#__PURE__*/React.createElement("div", {
+    className: "rf-apt-availability",
+    "aria-label": lang === 'es' ? 'Disponibilidad por Hestía' : 'Availability per Hestía'
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "rf-apt-avail-lede"
+  }, lang === 'es' ? 'Estas son las Hestías disponibles para tus fechas. Elige una para continuar.' : 'These are the Hestías available for your dates. Pick one to continue.'), /*#__PURE__*/React.createElement("div", {
+    className: "rf-apt-avail-grid"
+  }, [{
+    id: 'vm',
+    name: 'Hestía Mar',
+    slug: 'mar',
+    color: '#6B7A3A'
+  }, {
+    id: 'vt',
+    name: 'Hestía Thalassa',
+    slug: 'thalassa',
+    color: '#B86A3C'
+  }, {
+    id: 'vs',
+    name: 'Hestía Salinas',
+    slug: 'salinas',
+    color: '#D4A84A'
+  }].map(a => {
+    const blk = avail && avail[a.id] ? avail[a.id].blocked : null;
+    const free = blk ? _resAvail(checkin, checkout, blk) : null;
+    const statusClass = free === true ? 'is-free' : free === false ? 'is-taken' : 'is-unknown';
+    const statusLabel = free === true ? lang === 'es' ? 'Disponible' : 'Available' : free === false ? lang === 'es' ? 'Ocupado' : 'Taken' : lang === 'es' ? 'Sin datos' : 'No data';
+    return /*#__PURE__*/React.createElement("button", {
+      key: a.id,
+      type: "button",
+      className: `rf-apt-avail-card ${statusClass}`,
+      style: {
+        '--apt-c': a.color
+      },
+      onClick: () => setApt(a.id)
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "rf-apt-avail-name"
+    }, a.name), /*#__PURE__*/React.createElement("span", {
+      className: "rf-apt-avail-badge"
+    }, statusLabel), /*#__PURE__*/React.createElement("span", {
+      className: "rf-apt-avail-cta"
+    }, free === false ? lang === 'es' ? 'Envío de solicitud igualmente →' : 'Send request anyway →' : lang === 'es' ? 'Elegir y continuar →' : 'Choose and continue →'));
+  }))), apt && isAvailable === true && /*#__PURE__*/React.createElement("div", {
     className: "rf-status rf-status-ok"
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-status-icon",
     "aria-hidden": "true"
-  }, "\u2713"), /*#__PURE__*/React.createElement("span", null, t.status_avail)), isAvailable === false && /*#__PURE__*/React.createElement("div", {
+  }, "\u2713"), /*#__PURE__*/React.createElement("span", null, t.status_avail)), apt && isAvailable === false && /*#__PURE__*/React.createElement("div", {
     className: "rf-status rf-status-taken"
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-status-icon",
@@ -700,7 +747,7 @@ const ReservasForm = ({
     className: "rf-status-main"
   }, t.status_taken), /*#__PURE__*/React.createElement("span", {
     className: "rf-status-sub"
-  }, t.status_taken_sub)), isAvailable === null && availLoaded && /*#__PURE__*/React.createElement("div", {
+  }, t.status_taken_sub)), apt && isAvailable === null && availLoaded && /*#__PURE__*/React.createElement("div", {
     className: "rf-status rf-status-unknown"
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-status-icon",
