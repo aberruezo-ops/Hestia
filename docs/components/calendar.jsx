@@ -206,7 +206,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
 const CalMonth = ({
   year, month, blocked, lang, todayStr, horizonStr,
   selStart, selEnd, previewEnd,
-  minNights,
+  minNights, effMinFn,
   onDayClick, onDayHover, onDayLeave,
 }) => {
   const wds    = lang === 'es' ? _CM.wd_es : _CM.wd_en;
@@ -259,8 +259,11 @@ const CalMonth = ({
           const isPE   = inPrev && ds === previewEnd;
           const isPM   = inPrev && !isPS && !isPE;
 
-          // Demasiado cerca del check-in: el rango sería < minNights.
-          const isTooSoon = !!(selStart && !selEnd && ds > selStart && _diff(selStart, ds) < (minNights || 2));
+          // Demasiado cerca del check-in: el rango sería < effectiveMin.
+          // effMinFn calcula el mínimo aplicable a este candidato (tiene
+          // en cuenta temporada crítica, inminencia y gap-fill).
+          const effMinHere = effMinFn ? effMinFn(selStart, ds) : (minNights || 2);
+          const isTooSoon = !!(selStart && !selEnd && ds > selStart && _diff(selStart, ds) < effMinHere);
           // Un blocked-start es clickable (puede ser check-out: mañana libre)
           const isClickable = !isPast && !beyondHorizon && !isTooSoon && (!isBlk || isBlkStart);
           const showBlk = isBlk && !inSel && !inPrev;
@@ -288,7 +291,7 @@ const CalMonth = ({
               onClick={isClickable ? () => onDayClick(ds) : undefined}
               onMouseEnter={isClickable ? () => onDayHover(ds) : undefined}
               onMouseLeave={isClickable ? onDayLeave : undefined}
-              title={isTooSoon ? (lang === 'es' ? `Estancia mínima ${minNights} noches` : `Minimum stay ${minNights} nights`) : undefined}
+              title={isTooSoon ? (lang === 'es' ? `Estancia mínima ${effMinHere} noches` : `Minimum stay ${effMinHere} nights`) : undefined}
             >
               {/* --- Blocked range rendering ---
                   · First blocked day (departure morning libre): right-strip
@@ -367,15 +370,36 @@ const AptCalendar = ({ aptId, lang, accent }) => {
   const horizonStr = (window.PRICES_V2 && window.PRICES_V2.bookingHorizon
     && window.PRICES_V2.bookingHorizon.lastCheckinDate) || null;
 
-  // Estancia mínima: lee de prices.json (window.PRICES_V2.rules.minNights).
-  // Default 3 noches si el JSON no llega. Si la entrada elegida tiene menos
-  // huecos consecutivos disponibles, ajusta al máximo posible.
-  const baseMinNights = (window.PRICES_V2 && window.PRICES_V2.rules
-    && window.PRICES_V2.rules.minNights) || 3;
+  // Estancia mínima: lee de prices.json. Reglas adicionales:
+  //   - criticalSeasonMinNights eleva el mínimo (default 7) en temporada
+  //     crítica salvo que: a) check-in inminente, b) rellene gap exacto.
+  const rulesPC = (window.PRICES_V2 && window.PRICES_V2.rules) || {};
+  const baseMinNights      = rulesPC.minNights || 3;
+  const criticalMinNights  = rulesPC.criticalSeasonMinNights || baseMinNights;
+  const imminentDays       = rulesPC.imminentDays || 7;
+  const _isCriticalDate = (ds) => {
+    const v2 = window.PRICES_V2;
+    if (!v2 || typeof _v2BumpedSeasonForDate !== 'function') return false;
+    return _v2BumpedSeasonForDate(ds, v2) === 'critica';
+  };
+  const _isGapFiller = (cin, cout) => {
+    if (!cin || !cout) return false;
+    const dayBefore = _adj(cin, -1);
+    const beforeBlk = blocked.some(r => dayBefore >= r.start && dayBefore < r.end);
+    const checkoutStartsBlk = blocked.some(r => r.start === cout);
+    return beforeBlk && checkoutStartsBlk;
+  };
+  const _effectiveMinN = (cin, coutCandidate) => {
+    if (!cin) return baseMinNights;
+    if (!_isCriticalDate(cin)) return baseMinNights;
+    if (_diff(todayStr, cin) <= imminentDays) return baseMinNights;
+    if (coutCandidate && _isGapFiller(cin, coutCandidate)) return baseMinNights;
+    return criticalMinNights;
+  };
   const minNights = React.useMemo(() => {
     if (!selStart) return baseMinNights;
-    return Math.min(baseMinNights, _maxConsec(selStart, blocked));
-  }, [selStart, blocked, baseMinNights]);
+    return Math.min(_effectiveMinN(selStart, null), _maxConsec(selStart, blocked));
+  }, [selStart, blocked, baseMinNights, criticalMinNights, imminentDays]);
 
   // Compute preview end for hover display
   let previewEnd = null;
@@ -426,14 +450,29 @@ const AptCalendar = ({ aptId, lang, accent }) => {
       cur = _adj(cur, 1);
     }
 
-    // Enforce minimum nights — rechaza la selección (sin auto-ajustar)
-    // para que la estancia mínima sea una regla firme, no una sugerencia.
+    // Enforce minimum nights — rechaza la selección con mensaje
+    // explicativo según el caso: 1 noche prohibida en cualquier caso,
+    // 2 noches en temporada crítica salvo excepciones.
     const nights = _diff(selStart, ds);
-    if (nights < minNights) {
+    const effMin = _effectiveMinN(selStart, ds);
+    if (nights === 1) {
       setSelMsg({
         type: 'error',
-        es: `Estancia mínima ${minNights} noches. Selecciona una fecha de salida más adelante.`,
-        en: `Minimum stay ${minNights} nights. Pick a later check-out date.`,
+        es: 'No se permiten reservas de 1 noche. La estancia mínima es 2 noches.',
+        en: 'One-night bookings are not allowed. Minimum stay is 2 nights.',
+      });
+      return;
+    }
+    if (nights < effMin) {
+      const isCrit = _isCriticalDate(selStart);
+      setSelMsg({
+        type: 'error',
+        es: isCrit
+          ? `Temporada crítica: estancia mínima ${effMin} noches en estas fechas. Excepción: si rellenas exactamente un hueco entre dos reservas o si el check-in es esta semana (≤${imminentDays} días), bastarían 2 noches.`
+          : `Estancia mínima ${effMin} noches. Selecciona una fecha de salida más adelante.`,
+        en: isCrit
+          ? `Critical season: minimum stay ${effMin} nights on these dates. Exception: if you exactly fill a gap between two bookings or check-in is this week (≤${imminentDays} days), 2 nights would suffice.`
+          : `Minimum stay ${effMin} nights. Pick a later check-out date.`,
       });
       return;
     }
@@ -484,6 +523,7 @@ const AptCalendar = ({ aptId, lang, accent }) => {
     blocked, lang, todayStr, horizonStr,
     selStart, selEnd, previewEnd,
     minNights,
+    effMinFn: (cin, cout) => _effectiveMinN(cin, cout),
     onDayClick:  handleDayClick,
     onDayHover:  ds => { if (!selEnd) setHovDay(ds); },
     onDayLeave:  ()  => setHovDay(null),
