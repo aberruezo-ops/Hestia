@@ -370,11 +370,15 @@ const AptCalendar = ({ aptId, lang, accent }) => {
   const horizonStr = (window.PRICES_V2 && window.PRICES_V2.bookingHorizon
     && window.PRICES_V2.bookingHorizon.lastCheckinDate) || null;
 
-  // Estancia mínima: lee de prices.json. Reglas adicionales:
-  //   - criticalSeasonMinNights eleva el mínimo (default 7) en temporada
-  //     crítica salvo que: a) check-in inminente, b) rellene gap exacto.
+  // Estancia mínima — capas:
+  //   1) 1 noche → prohibida siempre.
+  //   2) Base (minNights, default 3).
+  //   3) Crítica (criticalSeasonMinNights, default 7).
+  //   4) Excepción de 2 noches (twoNightFloor): solo si check-in inminente
+  //      (≤ imminentDays) o gap-fill exacto.
   const rulesPC = (window.PRICES_V2 && window.PRICES_V2.rules) || {};
   const baseMinNights      = rulesPC.minNights || 3;
+  const twoNightFloor      = rulesPC.twoNightFloor || 2;
   const criticalMinNights  = rulesPC.criticalSeasonMinNights || baseMinNights;
   const imminentDays       = rulesPC.imminentDays || 7;
   const _isCriticalDate = (ds) => {
@@ -391,10 +395,12 @@ const AptCalendar = ({ aptId, lang, accent }) => {
   };
   const _effectiveMinN = (cin, coutCandidate) => {
     if (!cin) return baseMinNights;
-    if (!_isCriticalDate(cin)) return baseMinNights;
-    if (_diff(todayStr, cin) <= imminentDays) return baseMinNights;
-    if (coutCandidate && _isGapFiller(cin, coutCandidate)) return baseMinNights;
-    return criticalMinNights;
+    const isImminent = _diff(todayStr, cin) <= imminentDays;
+    const isGapFill  = coutCandidate && _isGapFiller(cin, coutCandidate);
+    // Excepción universal: 2 noches si imminent o gap-fill (incl. crítica).
+    if (isImminent || isGapFill) return twoNightFloor;
+    if (_isCriticalDate(cin)) return criticalMinNights;
+    return baseMinNights;
   };
   const minNights = React.useMemo(() => {
     if (!selStart) return baseMinNights;
@@ -468,11 +474,11 @@ const AptCalendar = ({ aptId, lang, accent }) => {
       setSelMsg({
         type: 'error',
         es: isCrit
-          ? `Temporada crítica: estancia mínima ${effMin} noches en estas fechas. Excepción: si rellenas exactamente un hueco entre dos reservas o si el check-in es esta semana (≤${imminentDays} días), bastarían 2 noches.`
-          : `Estancia mínima ${effMin} noches. Selecciona una fecha de salida más adelante.`,
+          ? `Temporada crítica: estancia mínima ${effMin} noches. Excepción: 2 noches solo si el check-in es esta semana (≤${imminentDays} días) o el rango rellena exactamente un hueco entre dos reservas existentes.`
+          : `Estancia mínima ${effMin} noches. Las reservas de 2 noches solo se permiten para la semana actual (≤${imminentDays} días) o cuando rellenan exactamente un hueco entre dos reservas existentes.`,
         en: isCrit
-          ? `Critical season: minimum stay ${effMin} nights on these dates. Exception: if you exactly fill a gap between two bookings or check-in is this week (≤${imminentDays} days), 2 nights would suffice.`
-          : `Minimum stay ${effMin} nights. Pick a later check-out date.`,
+          ? `Critical season: minimum stay ${effMin} nights. Exception: 2 nights only if check-in is this week (≤${imminentDays} days) or the range exactly fills a gap between two existing bookings.`
+          : `Minimum stay ${effMin} nights. Two-night stays are only allowed for the current week (≤${imminentDays} days) or when they exactly fill a gap between two existing bookings.`,
       });
       return;
     }
