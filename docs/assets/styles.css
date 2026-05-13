@@ -14750,3 +14750,26 @@ img[src*="apt-vt-gallery-"] {
   line-height: 1.5;
   color: var(--ber-dk);
 }
+
+/* Calendario · días "too-soon" (rango < minNights desde el check-in)
+   Visualmente desactivados — el huésped no puede pulsarlos. Tooltip
+   nativo explica "Estancia mínima N noches". Aplica a ambos pickers
+   (DateRangePicker en /reservas y home-search, CalMonth en apt page). */
+.cal-cell.too-soon {
+  cursor: not-allowed;
+  opacity: 0.32;
+  position: relative;
+  pointer-events: auto;       /* deja pasar el title (tooltip) */
+}
+.cal-cell.too-soon::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 60%;
+  height: 1px;
+  background: var(--ber-dk, #2A0F2E);
+  opacity: 0.45;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  pointer-events: none;
+}
