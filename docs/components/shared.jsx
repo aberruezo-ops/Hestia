@@ -1934,6 +1934,17 @@ const DateRangePicker = ({
     && window.PRICES_V2.bookingHorizon.lastCheckinDate) || null;
   const _isBeyondHorizon = (ds) => !!(horizonStr && ds > horizonStr);
   const _isBlk = (ds) => blockedList.some(r => ds >= r.start && ds < r.end);
+  // Estancia mínima — leída de prices.json. Default 2 (1 noche prohibida).
+  const minNights = (window.PRICES_V2 && window.PRICES_V2.rules
+    && window.PRICES_V2.rules.minNights) || 2;
+  // Día "demasiado cerca del check-in para ser un check-out válido".
+  // Cuando ya hay check-in seleccionado, los días entre checkin+1 y
+  // checkin+minNights-1 NO son seleccionables como check-out.
+  const _tooSoonForCheckout = (ds) => {
+    if (!checkin || checkout) return false;
+    if (ds <= checkin) return false;
+    return _drDiff(checkin, ds) < minNights;
+  };
 
   // Día "partido": el primer día de un rango bloqueado tiene la mañana
   // libre (el huésped que llega lo hace a las 15:00). Por tanto puede
@@ -1964,8 +1975,11 @@ const DateRangePicker = ({
       if (blkStart) return;
       setCheckin(ds); setCheckout(''); return;
     }
-    // Fase: elegir check-out. Permitimos el blocked-start como check-out
-    // (mañana libre antes de las 15:00). Verificamos camino libre.
+    // Fase: elegir check-out. Rechaza si el rango < minNights — 1 noche
+    // y similares prohibidos. El usuario debe seleccionar otra fecha.
+    if (_drDiff(checkin, ds) < minNights) return;
+    // Verificamos camino libre (sin bloqueadas en el medio). Permitimos
+    // el blocked-start como check-out (mañana libre antes de las 15:00).
     let cur = _drAdj(checkin, 1);
     while (cur < ds) {
       if (_isBlk(cur)) { setCheckin(ds); setCheckout(''); return; }
@@ -2019,19 +2033,24 @@ const DateRangePicker = ({
             const isPS   = inPrev && ds === checkin;
             const isPE   = inPrev && ds === previewEnd;
             const isPM   = inPrev && !isPS && !isPE;
+            // Demasiado cerca del check-in para ser check-out válido
+            // (rango < minNights). Se marca como "too-soon" y no clickable.
+            const isTooSoon = _tooSoonForCheckout(ds);
             // Un blocked-start es clickable (puede ser check-out: mañana libre)
-            const isClickable = !isPast && !isBeyond && (!isBlk || isBlkStart);
+            const isClickable = !isPast && !isBeyond && !isTooSoon && (!isBlk || isBlkStart);
             const showBlk = isBlk && !inSel && !inPrev;
             return (
               <div key={d}
                 className={['cal-cell',(isPast||isBeyond)&&'past',isToday&&'today',isBlk&&'blk',
                   isBlkAfter && 'blk-after',
+                  isTooSoon && 'too-soon',
                   isClickable&&'clickable',inSel&&'in-sel',isSS&&'sel-s',isSE&&'sel-e',isSM&&'sel-m',
                   inPrev&&'in-prev',isPS&&'prev-s',isPE&&'prev-e',isPM&&'prev-m',
                 ].filter(Boolean).join(' ')}
                 onClick={isClickable ? () => handleDayClick(ds) : undefined}
                 onMouseEnter={isClickable && !checkout ? () => setHover(ds) : undefined}
-                onMouseLeave={isClickable ? () => setHover(null) : undefined}>
+                onMouseLeave={isClickable ? () => setHover(null) : undefined}
+                title={isTooSoon ? (lang === 'es' ? `Estancia mínima ${minNights} noches` : `Minimum stay ${minNights} nights`) : undefined}>
                 {/* Día PRE-bloqueo (primer día del rango): right-strip
                     tarde-onward bloqueada, mañana libre como check-out. */}
                 {showBlk && !isBlkSingle && isBlkStart && <div className="c-strip c-sr"/>}
