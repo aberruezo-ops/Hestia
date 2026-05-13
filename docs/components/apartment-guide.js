@@ -33,8 +33,10 @@ const ROOM_PHOTOS = {
   vt: {
     salon: [4, 7, 9],
     cocina: [5],
-    dormitorios: [1, 2, 3],
-    banos: [6],
+    dormitorios: [1, 2, 3, 11, 12],
+    // + cama-2 naranja (12) + cama-2 horizontal (13)
+    banos: [6, 13, 14, 15],
+    // + ducha (14) + lavabo redondo (15) + grifo (16)
     terraza: [0, 8, 10],
     urbanizacion: [] // sin foto en galería; usa URB_FALLBACK
   },
