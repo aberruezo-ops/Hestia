@@ -225,6 +225,7 @@ const CalMonth = ({
   selStart,
   selEnd,
   previewEnd,
+  minNights,
   onDayClick,
   onDayHover,
   onDayLeave
@@ -294,15 +295,18 @@ const CalMonth = ({
     const isPE = inPrev && ds === previewEnd;
     const isPM = inPrev && !isPS && !isPE;
 
+    // Demasiado cerca del check-in: el rango sería < minNights.
+    const isTooSoon = !!(selStart && !selEnd && ds > selStart && _diff(selStart, ds) < (minNights || 2));
     // Un blocked-start es clickable (puede ser check-out: mañana libre)
-    const isClickable = !isPast && !beyondHorizon && (!isBlk || isBlkStart);
+    const isClickable = !isPast && !beyondHorizon && !isTooSoon && (!isBlk || isBlkStart);
     const showBlk = isBlk && !inSel && !inPrev;
     return /*#__PURE__*/React.createElement("div", {
       key: d,
-      className: ['cal-cell', (isPast || beyondHorizon) && 'past', isToday && 'today', isBlk && 'blk', isBlkAfter && 'blk-after', isClickable && 'clickable', inSel && 'in-sel', isSS && 'sel-s', isSE && 'sel-e', isSM && 'sel-m', inPrev && 'in-prev', isPS && 'prev-s', isPE && 'prev-e', isPM && 'prev-m'].filter(Boolean).join(' '),
+      className: ['cal-cell', (isPast || beyondHorizon) && 'past', isToday && 'today', isBlk && 'blk', isBlkAfter && 'blk-after', isTooSoon && 'too-soon', isClickable && 'clickable', inSel && 'in-sel', isSS && 'sel-s', isSE && 'sel-e', isSM && 'sel-m', inPrev && 'in-prev', isPS && 'prev-s', isPE && 'prev-e', isPM && 'prev-m'].filter(Boolean).join(' '),
       onClick: isClickable ? () => onDayClick(ds) : undefined,
       onMouseEnter: isClickable ? () => onDayHover(ds) : undefined,
-      onMouseLeave: isClickable ? onDayLeave : undefined
+      onMouseLeave: isClickable ? onDayLeave : undefined,
+      title: isTooSoon ? lang === 'es' ? `Estancia mínima ${minNights} noches` : `Minimum stay ${minNights} nights` : undefined
     }, showBlk && !isBlkSingle && isBlkStart && /*#__PURE__*/React.createElement("div", {
       className: "c-strip c-sr"
     }), showBlk && (isBlkMid || isBlkEnd && !isBlkSingle) && /*#__PURE__*/React.createElement("div", {
@@ -444,20 +448,19 @@ const AptCalendar = ({
       cur = _adj(cur, 1);
     }
 
-    // Enforce minimum nights
+    // Enforce minimum nights — rechaza la selección (sin auto-ajustar)
+    // para que la estancia mínima sea una regla firme, no una sugerencia.
     const nights = _diff(selStart, ds);
     if (nights < minNights) {
-      const extEnd = _adj(selStart, minNights);
-      setSelEnd(extEnd);
       setSelMsg({
-        type: 'info',
-        es: `Estancia mínima ${minNights} noches — fecha de salida ajustada.`,
-        en: `Minimum stay ${minNights} nights — check-out date adjusted.`
+        type: 'error',
+        es: `Estancia mínima ${minNights} noches. Selecciona una fecha de salida más adelante.`,
+        en: `Minimum stay ${minNights} nights. Pick a later check-out date.`
       });
-    } else {
-      setSelEnd(ds);
-      setSelMsg(null);
+      return;
     }
+    setSelEnd(ds);
+    setSelMsg(null);
     setHovDay(null);
   };
   const handleReset = () => {
@@ -505,6 +508,7 @@ const AptCalendar = ({
     selStart,
     selEnd,
     previewEnd,
+    minNights,
     onDayClick: handleDayClick,
     onDayHover: ds => {
       if (!selEnd) setHovDay(ds);
