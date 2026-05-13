@@ -440,7 +440,12 @@ const ReservasForm = ({
   };
 
   // Validaciones
-  const step1Complete = apt && checkin && checkout && guests && checkin < checkout;
+  // minNights desde prices.json — bloquea 1-noche y cualquier estancia
+  // por debajo del mínimo. Default 2 si no hay PRICES_V2 cargado todavía.
+  const minNights = window.PRICES_V2 && window.PRICES_V2.rules && window.PRICES_V2.rules.minNights || 2;
+  const nightsSelected = checkin && checkout ? Math.round((new Date(checkout + 'T12:00:00Z') - new Date(checkin + 'T12:00:00Z')) / 86400000) : 0;
+  const meetsMinNights = nightsSelected >= minNights;
+  const step1Complete = apt && checkin && checkout && guests && checkin < checkout && meetsMinNights;
   const hasName = name.trim().length > 0;
   const hasTel = tel.replace(/\D/g, '').length >= 6;
   const hasEmail = /\S+@\S+/.test(email);
@@ -656,7 +661,10 @@ const ReservasForm = ({
     "aria-checked": baby === 'yes',
     className: `rf-chip rf-chip-wide${baby === 'yes' ? ' is-on' : ''}`,
     onClick: () => setBaby('yes')
-  }, "\uD83D\uDC76 ", t.f_baby_yes))), /*#__PURE__*/React.createElement("div", {
+  }, "\uD83D\uDC76 ", t.f_baby_yes))), checkin && checkout && nightsSelected > 0 && nightsSelected < minNights && /*#__PURE__*/React.createElement("div", {
+    className: "rf-min-nights-warn",
+    role: "alert"
+  }, /*#__PURE__*/React.createElement("strong", null, lang === 'es' ? '⚠ Estancia mínima' : '⚠ Minimum stay'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `No aceptamos reservas de ${nightsSelected} ${nightsSelected === 1 ? 'noche' : 'noches'}. La estancia mínima en cualquier Hestía es de ${minNights} noches. Ajusta la fecha de salida para continuar.` : `We don't accept ${nightsSelected}-night stays. Minimum stay at any Hestía is ${minNights} nights. Adjust the check-out date to continue.`)), /*#__PURE__*/React.createElement("div", {
     className: "rf-step-actions"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
