@@ -415,13 +415,17 @@ const ReservasForm = ({ lang }) => {
   };
 
   // Validaciones
-  // minNights desde prices.json — bloquea 1-noche y cualquier estancia
-  // por debajo del mínimo. Default 2 si no hay PRICES_V2 cargado todavía.
-  const minNights = (window.PRICES_V2 && window.PRICES_V2.rules && window.PRICES_V2.rules.minNights) || 2;
+  // minNights desde prices.json. Base 3 noches. Excepción 2 noches solo
+  // si check-in inminente o gap-fill exacto. 1 noche siempre prohibida.
+  const rrules = (window.PRICES_V2 && window.PRICES_V2.rules) || {};
+  const minNights = rrules.minNights || 3;
+  const twoNightFloor = rrules.twoNightFloor || 2;
   const nightsSelected = (checkin && checkout)
     ? Math.round((new Date(checkout + 'T12:00:00Z') - new Date(checkin + 'T12:00:00Z')) / 86400000)
     : 0;
-  const meetsMinNights = nightsSelected >= minNights;
+  // floor mínimo absoluto (2) — el bloqueo final se valida en el picker;
+  // aquí solo aseguramos que no sea < twoNightFloor.
+  const meetsMinNights = nightsSelected >= twoNightFloor;
   // step1Ready = puede pasar al step 2 incluso sin apt elegido. Si no hay
   // apt, en step 2 se muestra un grid con los 3 Hestías y su estado de
   // disponibilidad → el huésped elige el que prefiera (o el que tenga libre).
