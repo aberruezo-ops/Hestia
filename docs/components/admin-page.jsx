@@ -12,6 +12,11 @@ const REVIEWS_PATH = 'docs/data/reviews.json';
 const BRANCH = 'main';
 const API    = 'https://api.github.com';
 
+// Cloudflare Web Analytics — Worker proxy + identificadores (no secretos)
+const CF_WORKER_URL = 'https://little-night-9399.hestia-vera-almeria.workers.dev/';
+const CF_ACCOUNT    = 'ccb910d549f39e3bad5d89e33315d57e';
+const CF_SITE_TAG   = '770c05669c6b45ea8f1026576fe7dcce';
+
 const apiHeaders = (token) => ({
   'Authorization': `Bearer ${token}`,
   'Accept':        'application/vnd.github+json',
@@ -750,12 +755,48 @@ const NewReviewForm = ({ onAdd, onCancel }) => {
 };
 
 // ============================================================
-// AnalyticsTab — funnel local (localStorage) + acceso al panel
-// de Cloudflare. La API GraphQL de CF está bloqueada por CORS
-// desde dominios externos, así que el tráfico global se ve
-// directamente en dash.cloudflare.com.
+// AnalyticsTab — datos en vivo de Cloudflare Web Analytics
+// (vía Worker proxy para sortear CORS) + funnel local.
 // ============================================================
 const AnalyticsTab = () => {
+  const [cfData,   setCfData]   = React.useState(null);
+  const [loading,  setLoading]  = React.useState(true);
+  const [cfError,  setCfError]  = React.useState(null);
+  const [days,     setDays]     = React.useState(30);
+
+  const fetchCF = React.useCallback(async (d) => {
+    setLoading(true);
+    setCfError(null);
+    try {
+      const until = new Date().toISOString();
+      const since = new Date(Date.now() - d * 86400000).toISOString();
+      const flt   = `AND:[{datetime_geq:"${since}"},{datetime_leq:"${until}"},{siteTag:"${CF_SITE_TAG}"}]`;
+      const query = `{viewer{accounts(filter:{accountTag:"${CF_ACCOUNT}"}){` +
+        `pages:rumPageloadEventsAdaptiveGroups(filter:{${flt}},limit:10,orderBy:[count_DESC])` +
+        `{count dimensions{requestPath}}` +
+        `countries:rumPageloadEventsAdaptiveGroups(filter:{${flt}},limit:8,orderBy:[count_DESC])` +
+        `{count dimensions{countryName}}` +
+        `devices:rumPageloadEventsAdaptiveGroups(filter:{${flt}},limit:4,orderBy:[count_DESC])` +
+        `{count dimensions{deviceType}}` +
+        `}}}`;
+      const res = await fetch(CF_WORKER_URL, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ query }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      if (json.errors?.length) throw new Error(json.errors[0].message);
+      setCfData(json.data?.viewer?.accounts?.[0] || null);
+    } catch (e) {
+      setCfError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  React.useEffect(() => { fetchCF(days); }, [days, fetchCF]);
+
   // Funnel local (localStorage)
   const localEvents = (() => {
     try { return JSON.parse(localStorage.getItem('_htevt') || '[]'); } catch (_) { return []; }
@@ -774,23 +815,84 @@ const AnalyticsTab = () => {
     return `${d.toLocaleDateString('es-ES')} ${d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
   };
 
-  const cfDashUrl = `https://dash.cloudflare.com/?to=/:account/web-analytics`;
+  const totalPV  = cfData ? (cfData.pages     || []).reduce((s, r) => s + r.count, 0) : 0;
+  const totalCtr = cfData ? (cfData.countries || []).reduce((s, r) => s + r.count, 0) : 0;
+  const totalDev = cfData ? (cfData.devices   || []).reduce((s, r) => s + r.count, 0) : 0;
+
+  const BarRow = ({ label, count, total, bold }) => {
+    const pct = total ? Math.round(count / total * 100) : 0;
+    return (
+      <div className="pe-cf-row">
+        <div className="pe-cf-bar-wrap"><div className="pe-cf-bar" style={{ width: `${pct}%` }}/></div>
+        <span className={`pe-cf-row-label${bold ? ' pe-cf-row-bold' : ''}`}>{label}</span>
+        <span className="pe-cf-row-n">{count.toLocaleString('es-ES')}</span>
+      </div>
+    );
+  };
+
+  const pathLabel = (p) => {
+    if (!p || p === '/' || p === '/index.html') return 'Inicio';
+    return p.replace(/\.html$/, '').replace(/^\//, '') || p;
+  };
 
   return (
     <div className="pe-card pe-analytics">
-      <h2>Analítica</h2>
-
-      {/* Acceso a Cloudflare */}
-      <div className="pe-cf-banner">
-        <div>
-          <div className="pe-cf-banner-eyebrow">TRÁFICO GLOBAL</div>
-          <div className="pe-cf-banner-title">Visitas, países y dispositivos en Cloudflare</div>
-          <div className="pe-cf-banner-sub">Datos en tiempo real del beacon, sin cookies ni banner GDPR.</div>
+      <div className="pe-analytics-hd">
+        <h2>Analítica</h2>
+        <div className="pe-period-tabs">
+          {[7, 30, 90].map(d => (
+            <button key={d} type="button"
+              className={`pe-period-tab${days === d ? ' is-active' : ''}`}
+              onClick={() => setDays(d)}>
+              {d}d
+            </button>
+          ))}
+          <button type="button" className="pe-period-tab" onClick={() => fetchCF(days)}
+            title="Recargar">↺</button>
         </div>
-        <a href={cfDashUrl} target="_blank" rel="noopener" className="pe-btn pe-btn-primary pe-cf-banner-btn">
-          Abrir panel Cloudflare ↗
-        </a>
       </div>
+
+      {/* CF live data */}
+      {loading && <div className="pe-analytics-loading">Cargando Cloudflare…</div>}
+      {cfError  && <div className="pe-error" style={{marginBottom:16}}>CF: {cfError}</div>}
+
+      {!loading && !cfError && cfData && (
+        <>
+          <div className="pe-cf-summary">
+            <div className="pe-cf-stat">
+              <div className="pe-cf-stat-n">{totalPV.toLocaleString('es-ES')}</div>
+              <div className="pe-cf-stat-lbl">páginas vistas · {days}d</div>
+            </div>
+          </div>
+
+          <div className="pe-cf-cols">
+            <div className="pe-cf-col">
+              <div className="pe-cf-col-title">Páginas más vistas</div>
+              {(cfData.pages || []).length === 0 && <p className="pe-hint">Sin datos en este rango.</p>}
+              {(cfData.pages || []).map((r, i) => (
+                <BarRow key={i} label={pathLabel(r.dimensions.requestPath)}
+                  count={r.count} total={totalPV} bold={i === 0} />
+              ))}
+            </div>
+            <div className="pe-cf-col">
+              <div className="pe-cf-col-title">Países</div>
+              {(cfData.countries || []).length === 0 && <p className="pe-hint">—</p>}
+              {(cfData.countries || []).map((r, i) => (
+                <BarRow key={i} label={r.dimensions.countryName || '—'}
+                  count={r.count} total={totalCtr} bold={i === 0} />
+              ))}
+            </div>
+            <div className="pe-cf-col">
+              <div className="pe-cf-col-title">Dispositivos</div>
+              {(cfData.devices || []).length === 0 && <p className="pe-hint">—</p>}
+              {(cfData.devices || []).map((r, i) => (
+                <BarRow key={i} label={r.dimensions.deviceType || '—'}
+                  count={r.count} total={totalDev} bold={i === 0} />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
 
       {/* Funnel local */}
       <div className="pe-analytics-sep"/>
@@ -832,11 +934,6 @@ const AnalyticsTab = () => {
           </table>
         )
       }
-
-      <div className="pe-analytics-note">
-        <strong>Nota:</strong> El funnel cuenta eventos de este navegador (localStorage), no del sitio entero.
-        Las visitas globales, países y dispositivos están en Cloudflare.
-      </div>
     </div>
   );
 };
