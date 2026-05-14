@@ -13,25 +13,6 @@ const PATH = 'docs/data/prices.json';
 const REVIEWS_PATH = 'docs/data/reviews.json';
 const BRANCH = 'main';
 const API = 'https://api.github.com';
-
-// Cloudflare Web Analytics — site tag (público, igual que en el beacon)
-const CF_SITE_TAG = '770c05669c6b45ea8f1026576fe7dcce';
-// Token y Account ID: se guardan en localStorage._htcf (nunca en el repo)
-const _cfCreds = () => {
-  try {
-    return JSON.parse(localStorage.getItem('_htcf') || '{}');
-  } catch (_) {
-    return {};
-  }
-};
-const _cfSave = (t, a) => {
-  try {
-    localStorage.setItem('_htcf', JSON.stringify({
-      t,
-      a
-    }));
-  } catch (_) {}
-};
 const apiHeaders = token => ({
   'Authorization': `Bearer ${token}`,
   'Accept': 'application/vnd.github+json',
@@ -933,57 +914,12 @@ const NewReviewForm = ({
 };
 
 // ============================================================
-// AnalyticsTab — pestaña de analítica con datos en tiempo real
-// de Cloudflare Web Analytics API + funnel local (localStorage).
+// AnalyticsTab — funnel local (localStorage) + acceso al panel
+// de Cloudflare. La API GraphQL de CF está bloqueada por CORS
+// desde dominios externos, así que el tráfico global se ve
+// directamente en dash.cloudflare.com.
 // ============================================================
 const AnalyticsTab = () => {
-  const creds0 = _cfCreds();
-  const [cfToken, setCfToken] = React.useState(creds0.t || '');
-  const [cfAcct, setCfAcct] = React.useState(creds0.a || '');
-  const [cfData, setCfData] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
-  const [cfError, setCfError] = React.useState(null);
-  const [days, setDays] = React.useState(30);
-  const [showCfg, setShowCfg] = React.useState(!creds0.t);
-  const fetchCF = React.useCallback(async (d, tok, acct) => {
-    if (!tok || !acct) return;
-    setLoading(true);
-    setCfError(null);
-    try {
-      const until = new Date().toISOString();
-      const since = new Date(Date.now() - d * 86400000).toISOString();
-      const flt = `AND:[{datetime_geq:"${since}"},{datetime_leq:"${until}"},{siteTag:"${CF_SITE_TAG}"}]`;
-      const query = `{viewer{accounts(filter:{accountTag:"${acct}"}){` + `pages:rumPageloadEventsAdaptiveGroups(filter:{${flt}},limit:10,orderBy:[count_DESC])` + `{count dimensions{requestPath}}` + `countries:rumPageloadEventsAdaptiveGroups(filter:{${flt}},limit:8,orderBy:[count_DESC])` + `{count dimensions{countryName}}` + `devices:rumPageloadEventsAdaptiveGroups(filter:{${flt}},limit:4,orderBy:[count_DESC])` + `{count dimensions{deviceType}}` + `}}}`;
-      const res = await fetch('https://api.cloudflare.com/client/v4/graphql', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${tok}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          query
-        })
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = await res.json();
-      if (json.errors?.length) throw new Error(json.errors[0].message);
-      setCfData(json.data.viewer.accounts[0]);
-    } catch (e) {
-      setCfError(e.message);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-  React.useEffect(() => {
-    if (cfToken && cfAcct) fetchCF(days, cfToken, cfAcct);
-  }, [days, cfToken, cfAcct, fetchCF]);
-  const saveCfg = e => {
-    e.preventDefault();
-    _cfSave(cfToken.trim(), cfAcct.trim());
-    setShowCfg(false);
-    fetchCF(days, cfToken.trim(), cfAcct.trim());
-  };
-
   // Funnel local (localStorage)
   const localEvents = (() => {
     try {
@@ -1014,134 +950,27 @@ const AnalyticsTab = () => {
       minute: '2-digit'
     })}`;
   };
-  const totalPV = cfData ? (cfData.pages || []).reduce((s, r) => s + r.count, 0) : null;
-  const totalCtr = cfData ? (cfData.countries || []).reduce((s, r) => s + r.count, 0) : null;
-  const totalDev = cfData ? (cfData.devices || []).reduce((s, r) => s + r.count, 0) : null;
-  const BarRow = ({
-    label,
-    count,
-    total,
-    bold
-  }) => {
-    const pct = total ? Math.round(count / total * 100) : 0;
-    return /*#__PURE__*/React.createElement("div", {
-      className: "pe-cf-row"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "pe-cf-bar-wrap"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "pe-cf-bar",
-      style: {
-        width: `${pct}%`
-      }
-    })), /*#__PURE__*/React.createElement("span", {
-      className: `pe-cf-row-label${bold ? ' pe-cf-row-bold' : ''}`
-    }, label), /*#__PURE__*/React.createElement("span", {
-      className: "pe-cf-row-n"
-    }, count.toLocaleString('es-ES')));
-  };
-  const pathLabel = p => {
-    if (!p || p === '/' || p === '/index.html') return 'Inicio';
-    return p.replace(/\.html$/, '').replace(/^\//, '') || p;
-  };
+  const cfDashUrl = `https://dash.cloudflare.com/?to=/:account/web-analytics`;
   return /*#__PURE__*/React.createElement("div", {
     className: "pe-card pe-analytics"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pe-analytics-hd"
   }, /*#__PURE__*/React.createElement("h2", null, "Anal\xEDtica"), /*#__PURE__*/React.createElement("div", {
-    className: "pe-period-tabs"
-  }, [7, 30, 90].map(d => /*#__PURE__*/React.createElement("button", {
-    key: d,
-    type: "button",
-    className: `pe-period-tab${days === d ? ' is-active' : ''}`,
-    onClick: () => setDays(d)
-  }, d, "d")), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: "pe-period-tab",
-    onClick: () => fetchCF(days),
-    title: "Recargar"
-  }, "\u21BA"))), showCfg ? /*#__PURE__*/React.createElement("form", {
-    className: "pe-cf-cfg",
-    onSubmit: saveCfg
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pe-cf-cfg-title"
-  }, "Conectar Cloudflare"), /*#__PURE__*/React.createElement("div", {
-    className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "API Token ", /*#__PURE__*/React.createElement("span", {
-    className: "pe-hint"
-  }, "(Account Analytics: Read)")), /*#__PURE__*/React.createElement("input", {
-    className: "pe-input pe-input-wide",
-    type: "password",
-    placeholder: "cfut_\u2026",
-    value: cfToken,
-    onChange: e => setCfToken(e.target.value)
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Account ID"), /*#__PURE__*/React.createElement("input", {
-    className: "pe-input pe-input-wide",
-    type: "text",
-    placeholder: "32 hex chars",
-    value: cfAcct,
-    onChange: e => setCfAcct(e.target.value)
-  })), /*#__PURE__*/React.createElement("button", {
-    type: "submit",
-    className: "pe-btn pe-btn-primary",
-    disabled: !cfToken.trim() || !cfAcct.trim()
-  }, "Conectar")) : /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: "pe-btn pe-btn-ghost pe-cf-cfg-toggle",
-    onClick: () => setShowCfg(true)
-  }, "\u2699 Credenciales CF"), !showCfg && loading && /*#__PURE__*/React.createElement("div", {
-    className: "pe-analytics-loading"
-  }, "Cargando Cloudflare\u2026"), !showCfg && cfError && /*#__PURE__*/React.createElement("div", {
-    className: "pe-error",
-    style: {
-      marginBottom: 16
-    }
-  }, "CF: ", cfError), !showCfg && !loading && !cfError && cfData && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "pe-cf-summary"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pe-cf-stat"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pe-cf-stat-n"
-  }, totalPV?.toLocaleString('es-ES') ?? '—'), /*#__PURE__*/React.createElement("div", {
-    className: "pe-cf-stat-lbl"
-  }, "p\xE1ginas vistas"))), /*#__PURE__*/React.createElement("div", {
-    className: "pe-cf-cols"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pe-cf-col"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pe-cf-col-title"
-  }, "P\xE1ginas m\xE1s vistas"), (cfData.pages || []).map((r, i) => /*#__PURE__*/React.createElement(BarRow, {
-    key: i,
-    label: pathLabel(r.dimensions.requestPath),
-    count: r.count,
-    total: totalPV,
-    bold: i === 0
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "pe-cf-col"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pe-cf-col-title"
-  }, "Pa\xEDses"), (cfData.countries || []).map((r, i) => /*#__PURE__*/React.createElement(BarRow, {
-    key: i,
-    label: r.dimensions.countryName || '—',
-    count: r.count,
-    total: totalCtr,
-    bold: i === 0
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "pe-cf-col"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pe-cf-col-title"
-  }, "Dispositivos"), (cfData.devices || []).map((r, i) => /*#__PURE__*/React.createElement(BarRow, {
-    key: i,
-    label: r.dimensions.deviceType || '—',
-    count: r.count,
-    total: totalDev,
-    bold: i === 0
-  }))))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-banner"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-banner-eyebrow"
+  }, "TR\xC1FICO GLOBAL"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-banner-title"
+  }, "Visitas, pa\xEDses y dispositivos en Cloudflare"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-banner-sub"
+  }, "Datos en tiempo real del beacon, sin cookies ni banner GDPR.")), /*#__PURE__*/React.createElement("a", {
+    href: cfDashUrl,
+    target: "_blank",
+    rel: "noopener",
+    className: "pe-btn pe-btn-primary pe-cf-banner-btn"
+  }, "Abrir panel Cloudflare \u2197")), /*#__PURE__*/React.createElement("div", {
     className: "pe-analytics-sep"
   }), /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-col-title"
-  }, "Funnel \xB7 este navegador"), /*#__PURE__*/React.createElement("div", {
+  }, "Funnel de reservas \xB7 este navegador"), /*#__PURE__*/React.createElement("div", {
     className: "pe-funnel"
   }, FUNNEL.map((step, i) => {
     const n = fc[step.name] || 0;
@@ -1174,7 +1003,9 @@ const AnalyticsTab = () => {
     className: "pe-ev-name"
   }, ev.name), /*#__PURE__*/React.createElement("td", {
     className: "pe-ev-data"
-  }, Object.entries(ev).filter(([k]) => k !== 'ts' && k !== 'name').map(([k, v]) => `${k}: ${v}`).join(' · ') || '—'))))));
+  }, Object.entries(ev).filter(([k]) => k !== 'ts' && k !== 'name').map(([k, v]) => `${k}: ${v}`).join(' · ') || '—'))))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-analytics-note"
+  }, /*#__PURE__*/React.createElement("strong", null, "Nota:"), " El funnel cuenta eventos de este navegador (localStorage), no del sitio entero. Las visitas globales, pa\xEDses y dispositivos est\xE1n en Cloudflare."));
 };
 const AdminApp = () => {
   const [phase, setPhase] = React.useState('login');
