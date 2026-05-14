@@ -449,6 +449,7 @@ const ReservasForm = ({ lang }) => {
   const goToStep2 = () => {
     if (!step1Ready) return;
     setStep(2);
+    if (typeof _hestiaTrack === 'function') _hestiaTrack('booking_step2', { apt: apt || 'all', checkin, checkout });
     setTimeout(() => {
       document.getElementById('rf-step-2')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 60);
@@ -545,6 +546,7 @@ const ReservasForm = ({ lang }) => {
   const send = (e) => {
     e?.preventDefault();
     if (!step1Complete || !channelValid) return;
+    if (typeof _hestiaTrack === 'function') _hestiaTrack('booking_sent', { apt: apt || 'all', channel, checkin, checkout });
     if (channel === 'whatsapp') {
       const waNum = lang === 'es' ? '34620316370' : '34654138251';
       window.open(`https://wa.me/${waNum}?text=` + encodeURIComponent(buildMsg()), '_blank');

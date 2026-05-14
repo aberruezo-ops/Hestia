@@ -18,6 +18,40 @@ const _vt = cb => {
     cb();
   }
 };
+
+// ----------------------------------------------------------------
+// _hestiaTrack — registra eventos de funnel.
+// Guarda en localStorage (ring buffer 300 eventos) para la pestaña
+// Analítica de /p-edit. También intenta enviar al endpoint RUM de
+// Cloudflare si el beacon está cargado.
+// ----------------------------------------------------------------
+const _hestiaTrack = (name, props = {}) => {
+  try {
+    const ev = {
+      ts: Date.now(),
+      name,
+      ...props
+    };
+    const key = '_htevt';
+    const arr = JSON.parse(localStorage.getItem(key) || '[]');
+    arr.unshift(ev);
+    if (arr.length > 300) arr.length = 300;
+    localStorage.setItem(key, JSON.stringify(arr));
+  } catch (_) {}
+  try {
+    if (window.__cfBeacon) {
+      navigator.sendBeacon('https://cloudflareinsights.com/cdn-cgi/rum', new Blob([JSON.stringify({
+        ...window.__cfBeacon,
+        type: 'custom',
+        name,
+        ...props
+      })], {
+        type: 'application/json'
+      }));
+    }
+  } catch (_) {}
+};
+window._hestiaTrack = _hestiaTrack;
 const HestiaLogoMark = ({
   size = 40,
   color = '#3AAABB'
@@ -2905,6 +2939,11 @@ const DateRangePicker = ({
     }
     setCheckout(ds);
     setDrMsg(null);
+    _hestiaTrack('dates_selected', {
+      checkin,
+      checkout: ds,
+      nights
+    });
   };
   const MONTHS_ES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
