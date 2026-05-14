@@ -555,6 +555,12 @@ const HomeSearch = ({
     window.dispatchEvent(new CustomEvent('hs-results-change', {
       detail: true
     }));
+    if (typeof _hestiaTrack === 'function') _hestiaTrack('search_initiated', {
+      apt: apt || 'all',
+      checkin,
+      checkout,
+      nights
+    });
 
     // Scroll to results
     setTimeout(() => {

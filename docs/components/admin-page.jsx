@@ -1077,6 +1077,92 @@ const AdminApp = () => {
     );
   };
 
+  const renderAnalyticsTab = () => {
+    const raw = (() => {
+      try { return JSON.parse(localStorage.getItem('_htevt') || '[]'); }
+      catch (_) { return []; }
+    })();
+
+    const FUNNEL = [
+      { name: 'search_initiated', label: 'Búsquedas realizadas' },
+      { name: 'dates_selected',   label: 'Fechas seleccionadas' },
+      { name: 'booking_step2',    label: 'Formulario abierto' },
+      { name: 'booking_sent',     label: 'Consultas enviadas' },
+    ];
+    const counts = {};
+    for (const ev of raw) counts[ev.name] = (counts[ev.name] || 0) + 1;
+
+    const fmt = (ts) => {
+      const d = new Date(ts);
+      return `${d.toLocaleDateString('es-ES')} ${d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+    };
+    const recent = raw.slice(0, 60);
+
+    return (
+      <div className="pe-card pe-analytics">
+        <h2>Analítica · Funnel de reservas</h2>
+        <p className="pe-lede">
+          Eventos de este navegador (localStorage). Para datos globales de tráfico, abre el panel de Cloudflare.
+        </p>
+        <a href="https://dash.cloudflare.com" target="_blank" rel="noopener" className="pe-btn pe-btn-ghost pe-cf-link">
+          Abrir panel Cloudflare ↗
+        </a>
+
+        <div className="pe-funnel">
+          {FUNNEL.map((step, i) => {
+            const n = counts[step.name] || 0;
+            const prev = i > 0 ? (counts[FUNNEL[i - 1].name] || 0) : null;
+            const pct = prev ? Math.round((n / prev) * 100) : null;
+            return (
+              <div key={step.name} className="pe-funnel-step">
+                <div className="pe-funnel-n">{n}</div>
+                <div className="pe-funnel-label">{step.label}</div>
+                {pct !== null && (
+                  <div className="pe-funnel-conv">{pct}%</div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        <h3 className="pe-analytics-h3">Últimos eventos</h3>
+        {recent.length === 0
+          ? <p className="pe-hint">Sin eventos registrados todavía en este navegador.</p>
+          : (
+            <table className="pe-table pe-table-events">
+              <thead>
+                <tr>
+                  <th>Hora</th>
+                  <th>Evento</th>
+                  <th>Datos</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recent.map((ev, i) => (
+                  <tr key={i}>
+                    <td className="pe-ev-ts">{fmt(ev.ts)}</td>
+                    <td className="pe-ev-name">{ev.name}</td>
+                    <td className="pe-ev-data">
+                      {Object.entries(ev)
+                        .filter(([k]) => k !== 'ts' && k !== 'name')
+                        .map(([k, v]) => `${k}: ${v}`)
+                        .join(' · ') || '—'}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )
+        }
+
+        <div className="pe-analytics-note">
+          <strong>Nota:</strong> Estos datos son del navegador actual. Usuarios con otro navegador o dispositivo
+          tienen su propio registro. Los datos de tráfico globales (visitas, países, dispositivos) están en Cloudflare.
+        </div>
+      </div>
+    );
+  };
+
   // phase === 'ready'
   return (
     <div className="pe-shell">
@@ -1104,12 +1190,17 @@ const AdminApp = () => {
             return pending > 0 ? <span className="pe-tab-badge">{pending}</span> : null;
           })()}
         </button>
+        <button type="button"
+          className={`pe-tab${mode === 'analytics' ? ' is-active' : ''}`}
+          onClick={() => { setMode('analytics'); setError(null); setSuccess(null); }}>
+          📊 Analítica
+        </button>
       </div>
 
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'analytics' ? renderAnalyticsTab() : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>
