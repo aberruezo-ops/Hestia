@@ -2900,6 +2900,12 @@ body.apt-bar-shown .cookies {
   border-top: 1px solid rgba(240, 232, 213, 0.08);
   position: relative;
 }
+/* En desktop el WidgetStack flotante a la derecha ya hostea el CTA
+   "Ver todas las ventajas" — la banda inline es redundante. La
+   mostramos solo en mobile (donde el WidgetStack está oculto). */
+@media (min-width: 768px) {
+  .direct-perks-teaser { display: none; }
+}
 .direct-perks-teaser::before {
   content: '';
   position: absolute;
