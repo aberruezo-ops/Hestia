@@ -64,6 +64,7 @@ const HsDateRange = ({
   today
 }) => {
   const [hover, setHover] = React.useState(null);
+  const [drMsg, setDrMsg] = React.useState(null);
   const todayDate = new Date(today + 'T12:00:00Z');
   const [viewY, setViewY] = React.useState(todayDate.getUTCFullYear());
   const [viewM, setViewM] = React.useState(todayDate.getUTCMonth());
@@ -79,6 +80,45 @@ const HsDateRange = ({
   // Día "partido" — primer día de bloque: mañana libre (check-out válido),
   // tarde ocupada (check-in NO válido).
   const _isBlkStartLocal = ds => _isBlkLocal(ds) && !_isBlkLocal(_hsAdj(ds, -1));
+
+  // Estancia mínima — capas de reglas (idéntico a DateRangePicker en shared):
+  //   1) 1 noche → siempre prohibida.
+  //   2) Por defecto: 3 noches mínimo (minNights).
+  //   3) Temporada crítica: 7 noches mínimo (criticalSeasonMinNights).
+  //   4) Excepción 2 noches (twoNightFloor): solo si el check-in cae en
+  //      la semana actual (≤ imminentDays) O si el rango rellena
+  //      exactamente un hueco entre dos reservas (gap-fill).
+  const rules = window.PRICES_V2 && window.PRICES_V2.rules || {};
+  const baseMinN = rules.minNights || 3;
+  const twoNightFloor = rules.twoNightFloor || 2;
+  const criticalMinN = rules.criticalSeasonMinNights || baseMinN;
+  const imminentD = rules.imminentDays || 7;
+  const _isCriticalDate = ds => {
+    const v2 = window.PRICES_V2;
+    if (!v2 || typeof _v2BumpedSeasonForDate !== 'function') return false;
+    return _v2BumpedSeasonForDate(ds, v2) === 'critica';
+  };
+  const _isGapFiller = (cin, cout) => {
+    if (!cin || !cout) return false;
+    const dayBefore = _hsAdj(cin, -1);
+    const beforeBlk = blocked.some(r => dayBefore >= r.start && dayBefore < r.end);
+    const checkoutStartsBlk = blocked.some(r => r.start === cout);
+    return beforeBlk && checkoutStartsBlk;
+  };
+  const _effectiveMinN = (cin, coutCandidate) => {
+    if (!cin) return baseMinN;
+    const isImminent = _hsDiff(today, cin) <= imminentD;
+    const isGapFill = coutCandidate && _isGapFiller(cin, coutCandidate);
+    if (isImminent || isGapFill) return twoNightFloor;
+    if (_isCriticalDate(cin)) return criticalMinN;
+    return baseMinN;
+  };
+  // Día "demasiado cerca del check-in para ser un check-out válido".
+  const _tooSoonForCheckout = ds => {
+    if (!checkin || checkout) return false;
+    if (ds <= checkin) return false;
+    return _hsDiff(checkin, ds) < _effectiveMinN(checkin, ds);
+  };
 
   // Hover preview end: el camino intermedio debe estar libre. El hover
   // puede ser un blocked-start (check-out válido).
@@ -105,19 +145,42 @@ const HsDateRange = ({
       if (blkStart) return;
       setCheckin(ds);
       setCheckout('');
+      setDrMsg(null);
       return;
     }
-    // Fase check-out: blocked-start vale (mañana libre antes de 15:00).
+    // Fase check-out: rechazar 1 noche y rangos < effectiveMin.
+    const nights = _hsDiff(checkin, ds);
+    const effMin = _effectiveMinN(checkin, ds);
+    if (nights === 1) {
+      setDrMsg({
+        type: 'error',
+        es: 'No se permiten reservas de 1 noche. La estancia mínima es 2 noches.',
+        en: 'One-night bookings are not allowed. Minimum stay is 2 nights.'
+      });
+      return;
+    }
+    if (nights < effMin) {
+      const isCrit = _isCriticalDate(checkin);
+      setDrMsg({
+        type: 'error',
+        es: isCrit ? `Temporada crítica: estancia mínima ${effMin} noches. Excepción: 2 noches solo si el check-in es esta semana (≤${imminentD} días) o el rango rellena exactamente un hueco entre dos reservas existentes.` : `Estancia mínima ${effMin} noches. Las reservas de 2 noches solo se permiten para la semana actual (≤${imminentD} días) o cuando rellenan exactamente un hueco entre dos reservas existentes.`,
+        en: isCrit ? `Critical season: minimum stay ${effMin} nights. Exception: 2 nights only if check-in is this week (≤${imminentD} days) or the range exactly fills a gap between two existing bookings.` : `Minimum stay ${effMin} nights. Two-night stays are only allowed for the current week (≤${imminentD} days) or when they exactly fill a gap between two existing bookings.`
+      });
+      return;
+    }
+    // Verificar camino libre (sin bloqueadas en el medio).
     let cur = _hsAdj(checkin, 1);
     while (cur < ds) {
       if (_isBlkLocal(cur)) {
         setCheckin(ds);
         setCheckout('');
+        setDrMsg(null);
         return;
       }
       cur = _hsAdj(cur, 1);
     }
     setCheckout(ds);
+    setDrMsg(null);
   };
   const MONTHS_ES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -181,15 +244,19 @@ const HsDateRange = ({
       const isPE = inPrev && ds === previewEnd;
       const isPM = inPrev && !isPS && !isPE;
 
+      // Demasiado cerca del check-in para ser check-out válido
+      // (rango < effectiveMin). No clickable + visual atenuado.
+      const isTooSoon = _tooSoonForCheckout(ds);
       // Un blocked-start es clickable (puede ser check-out: mañana libre)
-      const isClickable = !isPast && !isBeyond && (!isBlk || isBlkStart);
+      const isClickable = !isPast && !isBeyond && !isTooSoon && (!isBlk || isBlkStart);
       const showBlk = isBlk && !inSel && !inPrev;
       return /*#__PURE__*/React.createElement("div", {
         key: d,
-        className: ['cal-cell', (isPast || isBeyond) && 'past', isToday && 'today', isBlk && 'blk', isBlkAfter && 'blk-after', isClickable && 'clickable', inSel && 'in-sel', isSS && 'sel-s', isSE && 'sel-e', isSM && 'sel-m', inPrev && 'in-prev', isPS && 'prev-s', isPE && 'prev-e', isPM && 'prev-m'].filter(Boolean).join(' '),
+        className: ['cal-cell', (isPast || isBeyond) && 'past', isToday && 'today', isBlk && 'blk', isBlkAfter && 'blk-after', isTooSoon && 'too-soon', isClickable && 'clickable', inSel && 'in-sel', isSS && 'sel-s', isSE && 'sel-e', isSM && 'sel-m', inPrev && 'in-prev', isPS && 'prev-s', isPE && 'prev-e', isPM && 'prev-m'].filter(Boolean).join(' '),
         onClick: isClickable ? () => handleDayClick(ds) : undefined,
         onMouseEnter: isClickable && !checkout ? () => setHover(ds) : undefined,
-        onMouseLeave: isClickable ? () => setHover(null) : undefined
+        onMouseLeave: isClickable ? () => setHover(null) : undefined,
+        title: isTooSoon ? lang === 'es' ? `Estancia mínima ${_effectiveMinN(checkin, ds)} noches` : `Minimum stay ${_effectiveMinN(checkin, ds)} nights` : undefined
       }, showBlk && !isBlkSingle && isBlkStart && /*#__PURE__*/React.createElement("div", {
         className: "c-strip c-sr"
       }), showBlk && (isBlkMid || isBlkEnd && !isBlkSingle) && /*#__PURE__*/React.createElement("div", {
@@ -255,7 +322,10 @@ const HsDateRange = ({
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "hscal-phase-hint"
-  }, !checkin ? lang === 'es' ? '↓ Elige fecha de entrada' : '↓ Choose check-in date' : !checkout ? lang === 'es' ? '→ Ahora elige la fecha de salida' : '→ Now choose check-out date' : null), /*#__PURE__*/React.createElement("div", {
+  }, !checkin ? lang === 'es' ? '↓ Elige fecha de entrada' : '↓ Choose check-in date' : !checkout ? lang === 'es' ? '→ Ahora elige la fecha de salida' : '→ Now choose check-out date' : null), drMsg && /*#__PURE__*/React.createElement("div", {
+    className: `hscal-msg hscal-msg-${drMsg.type || 'info'}`,
+    role: drMsg.type === 'error' ? 'alert' : 'status'
+  }, drMsg[lang] || drMsg.es), /*#__PURE__*/React.createElement("div", {
     className: "avail-nav hscal-nav"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -296,6 +366,7 @@ const HsDateRange = ({
     onClick: () => {
       setCheckin('');
       setCheckout('');
+      setDrMsg(null);
     }
   }, lang === 'es' ? '✕ Borrar' : '✕ Clear')));
 };
@@ -436,9 +507,39 @@ const HomeSearch = ({
       setFormErr(lang === 'es' ? 'La salida debe ser posterior a la entrada.' : 'Check-out must be after check-in.');
       return;
     }
+    // Reglas idénticas al DateRangePicker compartido (shared.jsx) y al
+    // AptCalendar (calendar.jsx): 1 noche prohibida; 2 noches solo si
+    // check-in inminente o gap-fill; crítica = 7; resto = base 3.
     const nights = _hsDiff(checkin, checkout);
-    if (nights < 1) {
-      setFormErr(lang === 'es' ? 'La estancia mínima es de 1 noche.' : 'Minimum stay is 1 night.');
+    const rules = window.PRICES_V2 && window.PRICES_V2.rules || {};
+    const baseMinN = rules.minNights || 3;
+    const twoNightFloor = rules.twoNightFloor || 2;
+    const criticalMinN = rules.criticalSeasonMinNights || baseMinN;
+    const imminentD = rules.imminentDays || 7;
+    const _isCrit = ds => {
+      const v2 = window.PRICES_V2;
+      if (!v2 || typeof _v2BumpedSeasonForDate !== 'function') return false;
+      return _v2BumpedSeasonForDate(ds, v2) === 'critica';
+    };
+    // Gap-fill solo es posible si hay apt seleccionado (sin apt no hay blocked).
+    const blkList = apt && avail && avail[apt] ? avail[apt].blocked || [] : [];
+    const _isGap = (cin, cout) => {
+      if (!cin || !cout || !blkList.length) return false;
+      const dayBefore = _hsAdj(cin, -1);
+      const beforeBlk = blkList.some(r => dayBefore >= r.start && dayBefore < r.end);
+      const checkoutStartsBlk = blkList.some(r => r.start === cout);
+      return beforeBlk && checkoutStartsBlk;
+    };
+    const isImminent = _hsDiff(today, checkin) <= imminentD;
+    const isGapFill = _isGap(checkin, checkout);
+    const effMin = isImminent || isGapFill ? twoNightFloor : _isCrit(checkin) ? criticalMinN : baseMinN;
+    if (nights === 1) {
+      setFormErr(lang === 'es' ? 'No se permiten reservas de 1 noche. La estancia mínima es 2 noches.' : 'One-night bookings are not allowed. Minimum stay is 2 nights.');
+      return;
+    }
+    if (nights < effMin) {
+      const isCrit = _isCrit(checkin);
+      setFormErr(lang === 'es' ? isCrit ? `Temporada crítica: estancia mínima ${effMin} noches. Excepción: 2 noches solo si el check-in es esta semana (≤${imminentD} días) o el rango rellena un hueco exacto entre reservas.` : `Estancia mínima ${effMin} noches. Las reservas de 2 noches solo se permiten para la semana actual (≤${imminentD} días) o gap-fill exacto entre reservas.` : isCrit ? `Critical season: minimum stay ${effMin} nights. Exception: 2 nights only if check-in is this week (≤${imminentD} days) or the range exactly fills a gap.` : `Minimum stay ${effMin} nights. Two-night stays only allowed for the current week (≤${imminentD} days) or exact gap-fill.`);
       return;
     }
     const aptsToCheck = apt ? [apt] : ['vm', 'vt', 'vs'];
