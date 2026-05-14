@@ -446,13 +446,9 @@ const ReservasForm = ({
   const minNights = rrules.minNights || 3;
   const twoNightFloor = rrules.twoNightFloor || 2;
   const nightsSelected = checkin && checkout ? Math.round((new Date(checkout + 'T12:00:00Z') - new Date(checkin + 'T12:00:00Z')) / 86400000) : 0;
-<<<<<<< HEAD
   // floor mínimo absoluto (2) — el bloqueo final se valida en el picker;
   // aquí solo aseguramos que no sea < twoNightFloor.
   const meetsMinNights = nightsSelected >= twoNightFloor;
-=======
-  const meetsMinNights = nightsSelected >= minNights;
->>>>>>> origin/main
   // step1Ready = puede pasar al step 2 incluso sin apt elegido. Si no hay
   // apt, en step 2 se muestra un grid con los 3 Hestías y su estado de
   // disponibilidad → el huésped elige el que prefiera (o el que tenga libre).
