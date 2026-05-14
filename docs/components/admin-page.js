@@ -944,9 +944,16 @@ const AnalyticsTab = () => {
           query
         })
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const json = await res.json();
+      const txt = await res.text();
+      if (!res.ok) throw new Error(`HTTP ${res.status} — ${txt.slice(0, 400)}`);
+      let json;
+      try {
+        json = JSON.parse(txt);
+      } catch (_) {
+        throw new Error(`Respuesta no es JSON: ${txt.slice(0, 200)}`);
+      }
       if (json.errors?.length) throw new Error(json.errors[0].message);
+      if (json.error) throw new Error(json.error);
       setCfData(json.data?.viewer?.accounts?.[0] || null);
     } catch (e) {
       setCfError(e.message);
