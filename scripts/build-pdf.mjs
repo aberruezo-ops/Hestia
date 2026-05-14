@@ -315,13 +315,35 @@ section.no-break {
   color: var(--ber-dk);
   margin-top: 3pt;
 }
+.welcome-photo {
+  margin: 14mm 0 0;
+  break-inside: avoid;
+}
+.welcome-photo img {
+  width: 100%;
+  height: 95mm;
+  object-fit: cover;
+  border-radius: 8mm 0 8mm 0;
+  display: block;
+}
+.wifi-photo {
+  margin: 12mm 0 0;
+  break-inside: avoid;
+}
+.wifi-photo img {
+  width: 100%;
+  height: 95mm;
+  object-fit: cover;
+  border-radius: 8mm 0 8mm 0;
+  display: block;
+}
 
 /* ============ WiFi card ============ */
 .wifi-card {
   margin: 8mm 0 0;
   padding: 14mm 16mm;
   background: linear-gradient(135deg, var(--crema-dawn) 0%, var(--crema-warm) 100%);
-  border-radius: 6mm;
+  border-radius: 8mm 0 8mm 0;
   border: 1px solid rgba(232,194,107,0.40);
   break-inside: avoid;
 }
@@ -411,12 +433,51 @@ section.no-break {
 }
 
 /* ============ Photo grid ============ */
+/* Firma de marca: border-radius asimétrico 10px 0 10px 0
+   (escalado a mm para A4) — esquinas top-left y bottom-right
+   redondeadas, las otras dos rectas. */
 .photos {
-  margin: 6mm 0 0;
+  margin: 8mm 0 0;
+}
+.photos-page {
+  break-before: page;
+  page-break-before: always;
+  margin: 0;
+}
+.photos-page-eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 8.5pt;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--apt-c);
+  margin-bottom: 7mm;
+}
+/* Fotos de galería con altura fija para llenar el A4 sin huecos.
+   - cols-2 (3-4 fotos en 2x2): cada foto ~115mm de alto
+   - cols-1 con 2 fotos: 115mm cada una, stacked
+   - cols-1 con 1 foto: gran panorámica 190mm */
+.photos-page .photos-grid.cols-2 .photo img {
+  aspect-ratio: auto;
+  height: 115mm;
+}
+.photos-page .photos-grid.cols-1 .photo img {
+  aspect-ratio: auto;
+  height: 115mm;
+}
+.photos-page .photos-grid.cols-1.single .photo img {
+  height: 190mm;
+}
+/* Trío: 2 fotos arriba + 1 abajo a ancho completo */
+.photos-page .photos-grid.trio .photo:nth-child(3) {
+  grid-column: 1 / -1;
+}
+.photos-page .photos-grid.trio .photo:nth-child(3) img {
+  height: 95mm;
 }
 .photos-grid {
   display: grid;
-  gap: 5mm;
+  gap: 6mm;
 }
 .photos-grid.cols-2 { grid-template-columns: 1fr 1fr; }
 .photos-grid.cols-1 { grid-template-columns: 1fr; }
@@ -427,33 +488,68 @@ section.no-break {
 }
 .photo img {
   width: 100%;
-  height: 75mm;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 3mm;
+  border-radius: 5mm 0 5mm 0;
   display: block;
   background: var(--hair);
 }
-.photo.tall img { height: 105mm; }
+.photos-grid.cols-1 .photo img {
+  aspect-ratio: 16 / 9;
+  border-radius: 7mm 0 7mm 0;
+}
 .photo figcaption {
   margin-top: 4pt;
-  font-family: 'Inter', sans-serif;
-  font-size: 8pt;
-  letter-spacing: 0.04em;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 10pt;
+  letter-spacing: 0.01em;
   color: var(--ink-soft);
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
-/* Hero photo (room intro) */
-.room-hero {
+.room-points {
   margin: 0 0 6mm;
+  padding: 0;
+  list-style: none;
+}
+.room-points li {
+  padding: 4pt 0 4pt 14pt;
+  position: relative;
+  font-size: 10pt;
+  line-height: 1.5;
+  color: var(--ink);
+  border-bottom: 1px solid var(--hair);
+}
+.room-points li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  top: 2pt;
+  color: var(--apt-c);
+  font-weight: 700;
+  font-size: 14pt;
+  line-height: 1;
+}
+
+/* Hero photo (room intro) — más grande, marca asimétrica */
+.room-hero {
+  margin: 0 0 7mm;
   break-inside: avoid;
 }
 .room-hero img {
   width: 100%;
-  height: 105mm;
+  height: 130mm;
   object-fit: cover;
-  border-radius: 3mm;
+  border-radius: 8mm 0 8mm 0;
   display: block;
+}
+.room-hero figcaption {
+  margin-top: 6pt;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 11pt;
+  color: var(--ink-soft);
 }
 
 /* ============ Rules grid ============ */
@@ -497,15 +593,22 @@ section.no-break {
 }
 
 /* ============ Categories list ============ */
-.cat-block { margin-bottom: 6mm; break-inside: avoid; }
+.cat-block {
+  margin-bottom: 6mm;
+  break-inside: avoid;
+  padding: 5mm 6mm;
+  border: 1px solid color-mix(in srgb, var(--apt-c) 22%, transparent);
+  border-radius: 6mm 0 6mm 0;
+  background: color-mix(in srgb, var(--apt-c) 3%, var(--crema));
+}
 .cat-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: 14pt;
   font-weight: 600;
-  color: var(--ber-dk);
-  margin-bottom: 4pt;
-  border-bottom: 1px solid var(--hair-strong);
-  padding-bottom: 2pt;
+  color: var(--apt-c-dk);
+  margin-bottom: 5pt;
+  padding-bottom: 3pt;
+  border-bottom: 1px solid color-mix(in srgb, var(--apt-c) 25%, transparent);
 }
 .cat-items { margin: 0; padding: 0; list-style: none; }
 .cat-items li {
@@ -513,6 +616,18 @@ section.no-break {
   font-size: 9.5pt;
   line-height: 1.55;
   color: var(--ink);
+  padding-left: 12pt;
+  position: relative;
+}
+.cat-items li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--apt-c);
+  font-weight: 700;
+  font-size: 14pt;
+  line-height: 1.2;
 }
 
 /* ============ Restaurants ============ */
@@ -606,10 +721,10 @@ section.no-break {
   break-inside: avoid;
   page-break-inside: avoid;
   margin-bottom: 8mm;
-  padding: 5mm 6mm;
+  padding: 6mm 7mm;
   background: rgba(232,194,107,0.08);
   border-left: 3pt solid var(--apt-c);
-  border-radius: 0 3mm 3mm 0;
+  border-radius: 6mm 0 6mm 0;
 }
 .dayplan-title {
   font-family: 'Cormorant Garamond', serif;
@@ -739,8 +854,10 @@ function renderCover(aptId, lang, aptData, byApt) {
   </div>`;
 }
 
-function renderWelcome(shared) {
+function renderWelcome(shared, aptData) {
   const w = shared.welcome;
+  // Foto decorativa al pie (paisaje horizontal — busca una de terraza/exterior)
+  const photo = aptData.gallery_imgs[11] || aptData.gallery_imgs[0];
   return `
   <section class="welcome">
     <div class="section-hd">
@@ -750,11 +867,16 @@ function renderWelcome(shared) {
     ${w.paras.map(p => `<p>${esc(p)}</p>`).join('\n')}
     <div class="welcome-sign">${esc(w.sign)}</div>
     <div class="welcome-signer">${esc(w.signer)}</div>
+    ${photo ? `
+      <figure class="welcome-photo">
+        <img src="${fileUrl(photo)}" alt=""/>
+      </figure>` : ''}
   </section>`;
 }
 
-function renderWifi(shared) {
+function renderWifi(shared, aptData) {
   const w = shared.wifi;
+  const photo = aptData.gallery_imgs[1] || aptData.gallery_imgs[0];
   return `
   <section>
     <div class="section-hd">
@@ -773,6 +895,10 @@ function renderWifi(shared) {
       </div>
       <div class="wifi-note">${esc(w.note)}</div>
     </div>
+    ${photo ? `
+      <figure class="wifi-photo">
+        <img src="${fileUrl(photo)}" alt=""/>
+      </figure>` : ''}
   </section>`;
 }
 
@@ -838,11 +964,19 @@ function renderRoom(room, aptData, roomPhotos, urbFallback, aptId, lang) {
   let photos = photoIdxs
     .map(idx => ({ src: galleryImgs[idx], caption: captions[idx] }))
     .filter(p => !!p.src);
-  // Fallback urbanización si no hay fotos en la galería
   if (photos.length === 0 && room.id === 'urbanizacion' && urbFallback[aptId]) {
     photos = urbFallback[aptId].map(src => ({ src, caption: '' }));
   }
   const points = room.points || null;
+  const hero = photos[0];
+  const rest = photos.slice(1);
+
+  // Galería: si hay restos, los repartimos en filas de 2 fotos
+  // por página. La primera página tiene hero + body + recs +
+  // (si caben) 2 fotos del grid. Las siguientes son full-grid.
+  const firstPagePhotos = rest.slice(0, 0);          // primera página: solo hero+texto (más respirado)
+  const galleryPhotos   = rest;                       // resto en página(s) de galería
+
   return `
   <section class="room">
     <div class="section-hd">
@@ -850,16 +984,17 @@ function renderRoom(room, aptData, roomPhotos, urbFallback, aptId, lang) {
       <h2>${esc(room.title)}</h2>
     </div>
 
-    ${photos[0] ? `
+    ${hero ? `
       <figure class="room-hero">
-        <img src="${fileUrl(photos[0].src)}" alt=""/>
+        <img src="${fileUrl(hero.src)}" alt=""/>
+        ${hero.caption ? `<figcaption>${esc(hero.caption)}</figcaption>` : ''}
       </figure>` : ''}
 
     <p class="room-body">${esc(room.body)}</p>
 
     ${points ? `
-      <ul style="margin:0 0 6mm;padding-left:18pt;font-size:10pt;color:var(--ink);line-height:1.55">
-        ${points.map(p => `<li style="padding:2pt 0">${esc(p)}</li>`).join('')}
+      <ul class="room-points">
+        ${points.map(p => `<li>${esc(p)}</li>`).join('')}
       </ul>` : ''}
 
     <div class="recs">
@@ -867,17 +1002,39 @@ function renderRoom(room, aptData, roomPhotos, urbFallback, aptId, lang) {
       <ul>${room.recs.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
     </div>
 
-    ${photos.length > 1 ? `
-      <div class="photos">
-        <div class="photos-grid cols-2">
-          ${photos.slice(1).map(p => `
-            <figure class="photo">
-              <img src="${fileUrl(p.src)}" alt=""/>
-              ${p.caption ? `<figcaption>${esc(p.caption)}</figcaption>` : ''}
-            </figure>`).join('')}
-        </div>
-      </div>` : ''}
+    ${galleryPhotos.length > 0 ? renderRoomGallery(galleryPhotos, room, lang) : ''}
   </section>`;
+}
+
+// Galería de fotos de una estancia: rompe a página nueva y reparte
+// las fotos en filas de 2 o 1 según cuántas haya, ocupando el ancho
+// completo de la página A4 para que no quede espacio vacío.
+function renderRoomGallery(photos, room, lang) {
+  const n = photos.length;
+  // Agrupamos por bloques de hasta 4 fotos por página (2x2)
+  const pages = [];
+  for (let i = 0; i < n; i += 4) pages.push(photos.slice(i, i + 4));
+
+  return pages.map((pagePhotos, pi) => {
+    // 1 foto → panorámica grande; 2 fotos → 1 col stacked;
+    // 3 fotos → 2x2 con la tercera span 2 cols; 4 fotos → 2x2
+    let cols;
+    if (pagePhotos.length === 1)      cols = 'cols-1 single';
+    else if (pagePhotos.length === 2) cols = 'cols-1';
+    else if (pagePhotos.length === 3) cols = 'cols-2 trio';
+    else                              cols = 'cols-2';
+    return `
+    <div class="photos photos-page">
+      <div class="photos-page-eyebrow">${esc(lang === 'es' ? 'Galería' : 'Gallery')} · ${esc(room.title.toLowerCase())}</div>
+      <div class="photos-grid ${cols}">
+        ${pagePhotos.map(p => `
+          <figure class="photo">
+            <img src="${fileUrl(p.src)}" alt=""/>
+            ${p.caption ? `<figcaption>${esc(p.caption)}</figcaption>` : ''}
+          </figure>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
 }
 
 function renderSurroundings(shared, lang) {
@@ -984,8 +1141,9 @@ function renderPhones(shared) {
   </section>`;
 }
 
-function renderFeedback(shared, lang) {
+function renderFeedback(shared, lang, aptData) {
   const f = shared.feedback;
+  const photo = aptData.gallery_imgs[12] || aptData.gallery_imgs[3] || aptData.gallery_imgs[0];
   return `
   <section>
     <div class="section-hd">
@@ -993,6 +1151,10 @@ function renderFeedback(shared, lang) {
       <h2>${esc(f.title)}</h2>
     </div>
     ${f.paras.map(p => `<p class="closing-quote">${esc(p)}</p>`).join('')}
+    ${photo ? `
+      <figure class="welcome-photo">
+        <img src="${fileUrl(photo)}" alt=""/>
+      </figure>` : ''}
   </section>`;
 }
 
@@ -1046,8 +1208,8 @@ function buildHTML(aptId, lang, data) {
 </head>
 <body>
 ${renderCover(aptId, lang, apt, data.GUIDE_BY_APT)}
-${renderWelcome(shared)}
-${renderWifi(shared)}
+${renderWelcome(shared, apt)}
+${renderWifi(shared, apt)}
 ${renderNameAndWhy(shared)}
 ${renderCleaning(shared)}
 ${renderRules(shared, lang)}
@@ -1057,7 +1219,7 @@ ${guide[lang].rooms.map(room =>
 ${renderSurroundings(shared, lang)}
 ${renderDayPlans(data.DAY_PLANS, lang)}
 ${renderPhones(shared)}
-${renderFeedback(shared, lang)}
+${renderFeedback(shared, lang, apt)}
 ${renderBackCover(apt, lang)}
 </body>
 </html>`;
