@@ -179,18 +179,26 @@ const Team = ({ lang }) => {
   );
 };
 
-// --- MANIFEST (Huésped colaborativo) ---
+// --- MANIFEST (Viajero hogareño + colaborador) ---
+// Dos arquetipos fusionados en una sola narrativa:
+//   1) Lead — Viajero hogareño: vives aquí, no haces turismo.
+//   2) Bridge — porque es tu casa ahora, lo cuidas como propio.
+//   3) Principles — cuatro maneras concretas de cuidar.
+//   4) Quote — para quien venga después.
 const Manifest = ({ lang }) => {
   const t = COPY[lang];
   return (
-    <section className="manifest" data-screen-label="08 Huésped colaborativo">
+    <section className="manifest" data-screen-label="08 Viajero hogareño">
       <div className="manifest-inner">
         <div>
           <div className="eyebrow">{t.manifest_eyebrow}</div>
           <h2>{t.manifest_title}</h2>
+          <p className="manifest-lead">{t.manifest_lead_1}</p>
+          <p className="manifest-lead">{t.manifest_lead_2}</p>
           <p className="closing-quote">{t.manifest_quote}</p>
         </div>
         <div className="principles">
+          <div className="principles-eyebrow">{t.manifest_principles_eyebrow}</div>
           <div className="principle">
             <div className="p-num">i.</div>
             <div className="p-text">{t.manifest_p1}</div>

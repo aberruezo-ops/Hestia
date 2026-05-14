@@ -2679,10 +2679,36 @@ body.apt-bar-shown .cookies {
   line-height: 1.02;
 }
 .manifest h2 em { font-style: italic; color: var(--sol-lt); }
+/* Manifest lead — dos párrafos narrativos que introducen el "viajero
+   hogareño" antes de la lista de cuidados. Tipografía serif, prosa
+   reposada (no sloganesca). El segundo párrafo hace el puente al
+   colaborador: "porque es tu casa ahora, lo cuidas como propio." */
+.manifest .manifest-lead {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(16px, 1.35vw, 21px);
+  line-height: 1.55;
+  letter-spacing: -0.002em;
+  color: rgba(240, 232, 213, 0.88);
+  margin: 0 0 18px;
+  max-width: 60ch;
+}
+.manifest .manifest-lead:last-of-type { margin-bottom: 28px; }
 .manifest .principles {
   display: flex;
   flex-direction: column;
   gap: 0;
+}
+.manifest .principles-eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--sol-lt);
+  opacity: 0.72;
+  margin-bottom: 6px;
+  padding-bottom: 14px;
 }
 .manifest .principle {
   display: grid;
