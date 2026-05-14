@@ -1910,6 +1910,37 @@ const DAY_PLANS = [
     tip_es:'Llevad sudadera GORDA y gorro: a 2.000 m hace 10-15 °C menos que en Vera, incluso en agosto. Linterna roja para no romper la adaptación a la oscuridad.',
     tip_en:'Bring a HEAVY hoodie and beanie: at 2,000 m it\'s 10-15 °C colder than in Vera, even in August. Red flashlight to preserve dark adaptation.',
   },
+  {
+    id:'plan-granada-alhambra',
+    type:'fullday', audience:'both',
+    title_es:'Granada · Alhambra y Albaicín en un día',
+    title_en:'Granada · Alhambra and Albaicín in a day',
+    start:'7:00', end:'22:30',
+    tags_es:['cultura','patrimonio','día largo','reserva imprescindible'],
+    tags_en:['culture','heritage','long day','booking required'],
+    steps:[
+      { t:'7:00',  es:'Salida temprano hacia Granada',                  en:'Early drive to Granada',
+                   d_es:'3 h 30 min por A-7 y A-92. Desayuno rápido en Hestía o parada en gasolinera de Sorbas.', d_en:'3 h 30 min via A-7 and A-92. Quick breakfast at Hestía or a stop at the Sorbas service station.' },
+      { t:'10:30', es:'Llegada a Granada · aparcamiento Alhambra',      en:'Arrive in Granada · Alhambra parking',
+                   d_es:'Parking oficial junto al recinto. Si llegáis con margen, café en el Parador antes de entrar.', d_en:'Official car park next to the complex. If you arrive early, coffee at the Parador before entering.' },
+      { t:'11:00', es:'Visita a la Alhambra · Nazaríes, Generalife, Alcazaba', en:'Alhambra visit · Nasrid Palaces, Generalife, Alcazaba',
+                   d_es:'Entrada con franja horaria — respetad la hora de los Nazaríes. 3 horas de visita sin prisa.', d_en:'Timed-entry ticket — respect the Nasrid Palaces slot. 3 hours unhurried.' },
+      { t:'14:30', es:'Comida en el Realejo o cerca de Plaza Nueva',    en:'Lunch in Realejo or near Plaza Nueva',
+                   d_es:'Tapeo andaluz o un menú tranquilo. Los Diamantes (clásico) o Bar Ávila (tapas con la caña).', d_en:'Andalusian tapas or a relaxed menu. Los Diamantes (classic) or Bar Ávila (free tapa with each drink).' },
+      { t:'16:30', es:'Subir al Albaicín por la Cuesta del Chapiz',     en:'Walk up to the Albaicín via Cuesta del Chapiz',
+                   d_es:'Calles blancas, cármenes, jazmines. Calzado cómodo — las cuestas pinchan.', d_en:'White streets, carmen houses, jasmine. Comfortable shoes — the slopes bite.' },
+      { t:'17:30', es:'Mirador de San Nicolás',                        en:'San Nicolás viewpoint',
+                   d_es:'La estampa más famosa de Granada: la Alhambra con Sierra Nevada al fondo. Llegad antes de que llene.', d_en:'Granada\'s most famous view: the Alhambra with Sierra Nevada behind. Arrive before it fills up.' },
+      { t:'18:30', es:'Bajada por el Sacromonte (opcional) o vuelta al coche', en:'Down through Sacromonte (optional) or back to the car',
+                   d_es:'Si os queda energía, asomaos al Sacromonte y a sus cuevas-flamenco. Si no, directo al coche.', d_en:'If energy allows, peek into Sacromonte and its cave-flamenco venues. Otherwise, straight to the car.' },
+      { t:'19:00', es:'Salida hacia Vera Playa',                       en:'Drive back to Vera Playa',
+                   d_es:'3 h 30 min. Atardecer entre olivos y el Desierto de Tabernas al cruzar.', d_en:'3 h 30 min. Sunset through olive groves and the Tabernas Desert on the way back.' },
+      { t:'22:30', es:'Vuelta a Hestía sin trasnochar',                en:'Back to Hestía, not too late',
+                   d_es:'Día largo pero memorable. Una cerveza en la terraza y a la cama.', d_en:'Long but memorable day. A beer on the terrace and to bed.' },
+    ],
+    tip_es:'Reservad la entrada a la Alhambra con varias semanas (incluso meses) de antelación en alhambra-patronato.es. Sin entrada no se entra: el cupo diario está topado. Llevad DNI/pasaporte — lo piden en cada acceso. Si os queda batería para más, una opción es dormir en Granada y volver al día siguiente.',
+    tip_en:'Book Alhambra tickets weeks (even months) ahead at alhambra-patronato.es. No ticket, no entry — daily quota is capped. Bring your ID/passport — it is checked at each gate. If you have the stamina, consider sleeping in Granada and returning the next day.',
+  },
 ];
 
 const DayPlanCard = ({ plan, lang }) => {
@@ -1976,8 +2007,8 @@ const DayPlans = ({ lang }) => {
         </h3>
         <p className="ag-day-plans-disclaimer">
           {lang === 'es'
-            ? 'Estos son solo ideas — hay innumerables opciones para todos los gustos. Os animamos a descubrir, vivir Vera y Hestía a vuestro propio ritmo.'
-            : 'These are just ideas — there are countless options for every taste. We invite you to discover, to live Vera and Hestía at your own pace.'}
+            ? 'Estos son solo ideas — hay innumerables opciones para todos los gustos. Los horarios son orientativos: dependen tanto de vuestras necesidades como de las posibles excursiones o actividades que decidáis contratar. Os animamos a descubrir, vivir Vera y Hestía a vuestro propio ritmo.'
+            : 'These are just ideas — there are countless options for every taste. The times are approximate: they depend on your own needs and on any excursions or activities you may book. We invite you to discover, to live Vera and Hestía at your own pace.'}
         </p>
       </div>
       <div className="dp-tabs" role="tablist">
