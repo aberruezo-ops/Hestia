@@ -277,23 +277,34 @@ const Team = ({
   }, "+34 654 138 251")))))));
 };
 
-// --- MANIFEST (Huésped colaborativo) ---
+// --- MANIFEST (Viajero hogareño + colaborador) ---
+// Dos arquetipos fusionados en una sola narrativa:
+//   1) Lead — Viajero hogareño: vives aquí, no haces turismo.
+//   2) Bridge — porque es tu casa ahora, lo cuidas como propio.
+//   3) Principles — cuatro maneras concretas de cuidar.
+//   4) Quote — para quien venga después.
 const Manifest = ({
   lang
 }) => {
   const t = COPY[lang];
   return /*#__PURE__*/React.createElement("section", {
     className: "manifest",
-    "data-screen-label": "08 Hu\xE9sped colaborativo"
+    "data-screen-label": "08 Viajero hogare\xF1o"
   }, /*#__PURE__*/React.createElement("div", {
     className: "manifest-inner"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
   }, t.manifest_eyebrow), /*#__PURE__*/React.createElement("h2", null, t.manifest_title), /*#__PURE__*/React.createElement("p", {
+    className: "manifest-lead"
+  }, t.manifest_lead_1), /*#__PURE__*/React.createElement("p", {
+    className: "manifest-lead"
+  }, t.manifest_lead_2), /*#__PURE__*/React.createElement("p", {
     className: "closing-quote"
   }, t.manifest_quote)), /*#__PURE__*/React.createElement("div", {
     className: "principles"
   }, /*#__PURE__*/React.createElement("div", {
+    className: "principles-eyebrow"
+  }, t.manifest_principles_eyebrow), /*#__PURE__*/React.createElement("div", {
     className: "principle"
   }, /*#__PURE__*/React.createElement("div", {
     className: "p-num"
