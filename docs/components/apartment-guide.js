@@ -1779,7 +1779,7 @@ const GUIDE_SHARED = {
 const GUIDE_BY_APT = {
   // Hestía Vera Mar
   vm: {
-    pdf: 'assets/HestiaVeraMar_GuiaHogar_v1.0.pdf',
+    pdf: 'downloads/Hestia-Mar-Guia.pdf',
     es: {
       cover_tagline: 'El campo de olivos llega al mar. Donde el descanso encuentra su raíz.',
       rooms: [{
@@ -1851,7 +1851,7 @@ const GUIDE_BY_APT = {
   },
   // Hestía Vera Thalassa
   vt: {
-    pdf: 'assets/20220607_HestiaVeraThalassa_GuiaHogar_v3.6.pdf',
+    pdf: 'downloads/Hestia-Thalassa-Guia.pdf',
     es: {
       cover_tagline: 'Ático sobre el mar y el Salar de los Canos. Donde el horizonte se ensancha.',
       rooms: [{
@@ -1923,7 +1923,7 @@ const GUIDE_BY_APT = {
   },
   // Hestía Vera Salinas
   vs: {
-    pdf: 'assets/HestiaVeraSalinas_GuiaHogar_v1.0.pdf',
+    pdf: 'downloads/Hestia-Salinas-Guia.pdf',
     es: {
       cover_tagline: 'Junto a las salinas. Donde la luz se queda más tiempo.',
       rooms: [{
@@ -3923,7 +3923,6 @@ const AptGuideView = ({
     window.scrollTo(0, 0);
     return () => document.body.classList.remove('guide-mode');
   }, []);
-  const handlePrint = () => window.print();
   const handleNavClick = (e, id) => {
     e.preventDefault();
     setNavOpen(false);
@@ -4085,10 +4084,13 @@ const AptGuideView = ({
     className: "ag-nav-text"
   }, sec[lang]))))), /*#__PURE__*/React.createElement("div", {
     className: "ag-nav-actions"
-  }, /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("a", {
     className: "ag-nav-btn ag-nav-btn-primary",
-    onClick: handlePrint
-  }, lang === 'es' ? '⇩ Descargar PDF' : '⇩ Download PDF')))), /*#__PURE__*/React.createElement("div", {
+    href: aptInfo.pdf,
+    download: true,
+    target: "_blank",
+    rel: "noopener"
+  }, lang === 'es' ? '⇩ Descargar guía (PDF)' : '⇩ Download guide (PDF)')))), /*#__PURE__*/React.createElement("div", {
     className: "ag-content"
   }, /*#__PURE__*/React.createElement("section", {
     id: "ag-bienvenida",
