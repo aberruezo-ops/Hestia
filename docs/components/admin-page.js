@@ -1260,6 +1260,80 @@ const AdminApp = () => {
       className: "pe-hint"
     }, "Commitea a ", /*#__PURE__*/React.createElement("code", null, BRANCH), " y GitHub Pages re-despliega solo.")));
   };
+  const renderAnalyticsTab = () => {
+    const raw = (() => {
+      try {
+        return JSON.parse(localStorage.getItem('_htevt') || '[]');
+      } catch (_) {
+        return [];
+      }
+    })();
+    const FUNNEL = [{
+      name: 'search_initiated',
+      label: 'Búsquedas realizadas'
+    }, {
+      name: 'dates_selected',
+      label: 'Fechas seleccionadas'
+    }, {
+      name: 'booking_step2',
+      label: 'Formulario abierto'
+    }, {
+      name: 'booking_sent',
+      label: 'Consultas enviadas'
+    }];
+    const counts = {};
+    for (const ev of raw) counts[ev.name] = (counts[ev.name] || 0) + 1;
+    const fmt = ts => {
+      const d = new Date(ts);
+      return `${d.toLocaleDateString('es-ES')} ${d.toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit'
+      })}`;
+    };
+    const recent = raw.slice(0, 60);
+    return /*#__PURE__*/React.createElement("div", {
+      className: "pe-card pe-analytics"
+    }, /*#__PURE__*/React.createElement("h2", null, "Anal\xEDtica \xB7 Funnel de reservas"), /*#__PURE__*/React.createElement("p", {
+      className: "pe-lede"
+    }, "Eventos de este navegador (localStorage). Para datos globales de tr\xE1fico, abre el panel de Cloudflare."), /*#__PURE__*/React.createElement("a", {
+      href: "https://dash.cloudflare.com",
+      target: "_blank",
+      rel: "noopener",
+      className: "pe-btn pe-btn-ghost pe-cf-link"
+    }, "Abrir panel Cloudflare \u2197"), /*#__PURE__*/React.createElement("div", {
+      className: "pe-funnel"
+    }, FUNNEL.map((step, i) => {
+      const n = counts[step.name] || 0;
+      const prev = i > 0 ? counts[FUNNEL[i - 1].name] || 0 : null;
+      const pct = prev ? Math.round(n / prev * 100) : null;
+      return /*#__PURE__*/React.createElement("div", {
+        key: step.name,
+        className: "pe-funnel-step"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "pe-funnel-n"
+      }, n), /*#__PURE__*/React.createElement("div", {
+        className: "pe-funnel-label"
+      }, step.label), pct !== null && /*#__PURE__*/React.createElement("div", {
+        className: "pe-funnel-conv"
+      }, pct, "%"));
+    })), /*#__PURE__*/React.createElement("h3", {
+      className: "pe-analytics-h3"
+    }, "\xDAltimos eventos"), recent.length === 0 ? /*#__PURE__*/React.createElement("p", {
+      className: "pe-hint"
+    }, "Sin eventos registrados todav\xEDa en este navegador.") : /*#__PURE__*/React.createElement("table", {
+      className: "pe-table pe-table-events"
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Hora"), /*#__PURE__*/React.createElement("th", null, "Evento"), /*#__PURE__*/React.createElement("th", null, "Datos"))), /*#__PURE__*/React.createElement("tbody", null, recent.map((ev, i) => /*#__PURE__*/React.createElement("tr", {
+      key: i
+    }, /*#__PURE__*/React.createElement("td", {
+      className: "pe-ev-ts"
+    }, fmt(ev.ts)), /*#__PURE__*/React.createElement("td", {
+      className: "pe-ev-name"
+    }, ev.name), /*#__PURE__*/React.createElement("td", {
+      className: "pe-ev-data"
+    }, Object.entries(ev).filter(([k]) => k !== 'ts' && k !== 'name').map(([k, v]) => `${k}: ${v}`).join(' · ') || '—'))))), /*#__PURE__*/React.createElement("div", {
+      className: "pe-analytics-note"
+    }, /*#__PURE__*/React.createElement("strong", null, "Nota:"), " Estos datos son del navegador actual. Usuarios con otro navegador o dispositivo tienen su propio registro. Los datos de tr\xE1fico globales (visitas, pa\xEDses, dispositivos) est\xE1n en Cloudflare."));
+  };
 
   // phase === 'ready'
   return /*#__PURE__*/React.createElement("div", {
@@ -1294,11 +1368,19 @@ const AdminApp = () => {
     return pending > 0 ? /*#__PURE__*/React.createElement("span", {
       className: "pe-tab-badge"
     }, pending) : null;
-  })())), success && /*#__PURE__*/React.createElement("div", {
+  })()), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'analytics' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('analytics');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCCA Anal\xEDtica")), success && /*#__PURE__*/React.createElement("div", {
     className: "pe-success"
   }, success), error && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
-  }, error), mode === 'reviews' ? renderReviewsTab() : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, error), mode === 'analytics' ? renderAnalyticsTab() : mode === 'reviews' ? renderReviewsTab() : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("h2", null, "Precios base por noche \xB7 2 hu\xE9spedes \xB7 temporada baja"), /*#__PURE__*/React.createElement("div", {
     className: "pe-grid"
