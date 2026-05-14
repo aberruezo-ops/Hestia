@@ -12,6 +12,12 @@ const REVIEWS_PATH = 'docs/data/reviews.json';
 const BRANCH = 'main';
 const API    = 'https://api.github.com';
 
+// Cloudflare Web Analytics — site tag (público, igual que en el beacon)
+const CF_SITE_TAG = '770c05669c6b45ea8f1026576fe7dcce';
+// Token y Account ID: se guardan en localStorage._htcf (nunca en el repo)
+const _cfCreds = () => { try { return JSON.parse(localStorage.getItem('_htcf') || '{}'); } catch (_) { return {}; } };
+const _cfSave  = (t, a) => { try { localStorage.setItem('_htcf', JSON.stringify({ t, a })); } catch (_) {} };
+
 const apiHeaders = (token) => ({
   'Authorization': `Bearer ${token}`,
   'Accept':        'application/vnd.github+json',
@@ -749,6 +755,223 @@ const NewReviewForm = ({ onAdd, onCancel }) => {
   );
 };
 
+// ============================================================
+// AnalyticsTab — pestaña de analítica con datos en tiempo real
+// de Cloudflare Web Analytics API + funnel local (localStorage).
+// ============================================================
+const AnalyticsTab = () => {
+  const creds0 = _cfCreds();
+  const [cfToken,  setCfToken]  = React.useState(creds0.t || '');
+  const [cfAcct,   setCfAcct]   = React.useState(creds0.a || '');
+  const [cfData,   setCfData]   = React.useState(null);
+  const [loading,  setLoading]  = React.useState(false);
+  const [cfError,  setCfError]  = React.useState(null);
+  const [days,     setDays]     = React.useState(30);
+  const [showCfg,  setShowCfg]  = React.useState(!creds0.t);
+
+  const fetchCF = React.useCallback(async (d, tok, acct) => {
+    if (!tok || !acct) return;
+    setLoading(true);
+    setCfError(null);
+    try {
+      const until = new Date().toISOString();
+      const since = new Date(Date.now() - d * 86400000).toISOString();
+      const flt   = `AND:[{datetime_geq:"${since}"},{datetime_leq:"${until}"},{siteTag:"${CF_SITE_TAG}"}]`;
+      const query = `{viewer{accounts(filter:{accountTag:"${acct}"}){` +
+        `pages:rumPageloadEventsAdaptiveGroups(filter:{${flt}},limit:10,orderBy:[count_DESC])` +
+        `{count dimensions{requestPath}}` +
+        `countries:rumPageloadEventsAdaptiveGroups(filter:{${flt}},limit:8,orderBy:[count_DESC])` +
+        `{count dimensions{countryName}}` +
+        `devices:rumPageloadEventsAdaptiveGroups(filter:{${flt}},limit:4,orderBy:[count_DESC])` +
+        `{count dimensions{deviceType}}` +
+        `}}}`;
+      const res  = await fetch('https://api.cloudflare.com/client/v4/graphql', {
+        method:  'POST',
+        headers: { 'Authorization': `Bearer ${tok}`, 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ query }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      if (json.errors?.length) throw new Error(json.errors[0].message);
+      setCfData(json.data.viewer.accounts[0]);
+    } catch (e) {
+      setCfError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  React.useEffect(() => {
+    if (cfToken && cfAcct) fetchCF(days, cfToken, cfAcct);
+  }, [days, cfToken, cfAcct, fetchCF]);
+
+  const saveCfg = (e) => {
+    e.preventDefault();
+    _cfSave(cfToken.trim(), cfAcct.trim());
+    setShowCfg(false);
+    fetchCF(days, cfToken.trim(), cfAcct.trim());
+  };
+
+  // Funnel local (localStorage)
+  const localEvents = (() => {
+    try { return JSON.parse(localStorage.getItem('_htevt') || '[]'); } catch (_) { return []; }
+  })();
+  const FUNNEL = [
+    { name: 'search_initiated', label: 'Búsquedas' },
+    { name: 'dates_selected',   label: 'Fechas' },
+    { name: 'booking_step2',    label: 'Formulario' },
+    { name: 'booking_sent',     label: 'Enviados' },
+  ];
+  const fc = {};
+  for (const ev of localEvents) fc[ev.name] = (fc[ev.name] || 0) + 1;
+
+  const fmt = (ts) => {
+    const d = new Date(ts);
+    return `${d.toLocaleDateString('es-ES')} ${d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+  };
+
+  const totalPV  = cfData ? (cfData.pages    || []).reduce((s, r) => s + r.count, 0) : null;
+  const totalCtr = cfData ? (cfData.countries || []).reduce((s, r) => s + r.count, 0) : null;
+  const totalDev = cfData ? (cfData.devices   || []).reduce((s, r) => s + r.count, 0) : null;
+
+  const BarRow = ({ label, count, total, bold }) => {
+    const pct = total ? Math.round(count / total * 100) : 0;
+    return (
+      <div className="pe-cf-row">
+        <div className="pe-cf-bar-wrap"><div className="pe-cf-bar" style={{ width: `${pct}%` }}/></div>
+        <span className={`pe-cf-row-label${bold ? ' pe-cf-row-bold' : ''}`}>{label}</span>
+        <span className="pe-cf-row-n">{count.toLocaleString('es-ES')}</span>
+      </div>
+    );
+  };
+
+  const pathLabel = (p) => {
+    if (!p || p === '/' || p === '/index.html') return 'Inicio';
+    return p.replace(/\.html$/, '').replace(/^\//, '') || p;
+  };
+
+  return (
+    <div className="pe-card pe-analytics">
+      <div className="pe-analytics-hd">
+        <h2>Analítica</h2>
+        <div className="pe-period-tabs">
+          {[7, 30, 90].map(d => (
+            <button key={d} type="button"
+              className={`pe-period-tab${days === d ? ' is-active' : ''}`}
+              onClick={() => setDays(d)}>
+              {d}d
+            </button>
+          ))}
+          <button type="button" className="pe-period-tab" onClick={() => fetchCF(days)}
+            title="Recargar">↺</button>
+        </div>
+      </div>
+
+      {/* Cloudflare credentials */}
+      {showCfg ? (
+        <form className="pe-cf-cfg" onSubmit={saveCfg}>
+          <div className="pe-cf-cfg-title">Conectar Cloudflare</div>
+          <div className="pe-field">
+            <label>API Token <span className="pe-hint">(Account Analytics: Read)</span></label>
+            <input className="pe-input pe-input-wide" type="password" placeholder="cfut_…"
+              value={cfToken} onChange={e => setCfToken(e.target.value)} />
+          </div>
+          <div className="pe-field">
+            <label>Account ID</label>
+            <input className="pe-input pe-input-wide" type="text" placeholder="32 hex chars"
+              value={cfAcct} onChange={e => setCfAcct(e.target.value)} />
+          </div>
+          <button type="submit" className="pe-btn pe-btn-primary"
+            disabled={!cfToken.trim() || !cfAcct.trim()}>Conectar</button>
+        </form>
+      ) : (
+        <button type="button" className="pe-btn pe-btn-ghost pe-cf-cfg-toggle"
+          onClick={() => setShowCfg(true)}>⚙ Credenciales CF</button>
+      )}
+
+      {/* Cloudflare live data */}
+      {!showCfg && loading && <div className="pe-analytics-loading">Cargando Cloudflare…</div>}
+      {!showCfg && cfError  && <div className="pe-error" style={{marginBottom:16}}>CF: {cfError}</div>}
+
+      {!showCfg && !loading && !cfError && cfData && (
+        <>
+          <div className="pe-cf-summary">
+            <div className="pe-cf-stat">
+              <div className="pe-cf-stat-n">{totalPV?.toLocaleString('es-ES') ?? '—'}</div>
+              <div className="pe-cf-stat-lbl">páginas vistas</div>
+            </div>
+          </div>
+
+          <div className="pe-cf-cols">
+            <div className="pe-cf-col">
+              <div className="pe-cf-col-title">Páginas más vistas</div>
+              {(cfData.pages || []).map((r, i) => (
+                <BarRow key={i} label={pathLabel(r.dimensions.requestPath)}
+                  count={r.count} total={totalPV} bold={i === 0} />
+              ))}
+            </div>
+            <div className="pe-cf-col">
+              <div className="pe-cf-col-title">Países</div>
+              {(cfData.countries || []).map((r, i) => (
+                <BarRow key={i} label={r.dimensions.countryName || '—'}
+                  count={r.count} total={totalCtr} bold={i === 0} />
+              ))}
+            </div>
+            <div className="pe-cf-col">
+              <div className="pe-cf-col-title">Dispositivos</div>
+              {(cfData.devices || []).map((r, i) => (
+                <BarRow key={i} label={r.dimensions.deviceType || '—'}
+                  count={r.count} total={totalDev} bold={i === 0} />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Funnel local */}
+      <div className="pe-analytics-sep"/>
+      <div className="pe-cf-col-title">Funnel · este navegador</div>
+      <div className="pe-funnel">
+        {FUNNEL.map((step, i) => {
+          const n    = fc[step.name] || 0;
+          const prev = i > 0 ? (fc[FUNNEL[i - 1].name] || 0) : null;
+          const pct  = prev ? Math.round((n / prev) * 100) : null;
+          return (
+            <div key={step.name} className="pe-funnel-step">
+              <div className="pe-funnel-n">{n}</div>
+              <div className="pe-funnel-label">{step.label}</div>
+              {pct !== null && <div className="pe-funnel-conv">{pct}%</div>}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Eventos recientes */}
+      <h3 className="pe-analytics-h3" style={{marginTop:20}}>Últimos eventos</h3>
+      {localEvents.length === 0
+        ? <p className="pe-hint">Sin eventos registrados todavía en este navegador.</p>
+        : (
+          <table className="pe-table pe-table-events">
+            <thead><tr><th>Hora</th><th>Evento</th><th>Datos</th></tr></thead>
+            <tbody>
+              {localEvents.slice(0, 60).map((ev, i) => (
+                <tr key={i}>
+                  <td className="pe-ev-ts">{fmt(ev.ts)}</td>
+                  <td className="pe-ev-name">{ev.name}</td>
+                  <td className="pe-ev-data">
+                    {Object.entries(ev).filter(([k]) => k !== 'ts' && k !== 'name')
+                      .map(([k, v]) => `${k}: ${v}`).join(' · ') || '—'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )
+      }
+    </div>
+  );
+};
+
 const AdminApp = () => {
   const [phase,    setPhase]    = React.useState('login');
   const [mode,     setMode]     = React.useState('pricing');  // 'pricing' | 'reviews'
@@ -1077,92 +1300,6 @@ const AdminApp = () => {
     );
   };
 
-  const renderAnalyticsTab = () => {
-    const raw = (() => {
-      try { return JSON.parse(localStorage.getItem('_htevt') || '[]'); }
-      catch (_) { return []; }
-    })();
-
-    const FUNNEL = [
-      { name: 'search_initiated', label: 'Búsquedas realizadas' },
-      { name: 'dates_selected',   label: 'Fechas seleccionadas' },
-      { name: 'booking_step2',    label: 'Formulario abierto' },
-      { name: 'booking_sent',     label: 'Consultas enviadas' },
-    ];
-    const counts = {};
-    for (const ev of raw) counts[ev.name] = (counts[ev.name] || 0) + 1;
-
-    const fmt = (ts) => {
-      const d = new Date(ts);
-      return `${d.toLocaleDateString('es-ES')} ${d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
-    };
-    const recent = raw.slice(0, 60);
-
-    return (
-      <div className="pe-card pe-analytics">
-        <h2>Analítica · Funnel de reservas</h2>
-        <p className="pe-lede">
-          Eventos de este navegador (localStorage). Para datos globales de tráfico, abre el panel de Cloudflare.
-        </p>
-        <a href="https://dash.cloudflare.com" target="_blank" rel="noopener" className="pe-btn pe-btn-ghost pe-cf-link">
-          Abrir panel Cloudflare ↗
-        </a>
-
-        <div className="pe-funnel">
-          {FUNNEL.map((step, i) => {
-            const n = counts[step.name] || 0;
-            const prev = i > 0 ? (counts[FUNNEL[i - 1].name] || 0) : null;
-            const pct = prev ? Math.round((n / prev) * 100) : null;
-            return (
-              <div key={step.name} className="pe-funnel-step">
-                <div className="pe-funnel-n">{n}</div>
-                <div className="pe-funnel-label">{step.label}</div>
-                {pct !== null && (
-                  <div className="pe-funnel-conv">{pct}%</div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-
-        <h3 className="pe-analytics-h3">Últimos eventos</h3>
-        {recent.length === 0
-          ? <p className="pe-hint">Sin eventos registrados todavía en este navegador.</p>
-          : (
-            <table className="pe-table pe-table-events">
-              <thead>
-                <tr>
-                  <th>Hora</th>
-                  <th>Evento</th>
-                  <th>Datos</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recent.map((ev, i) => (
-                  <tr key={i}>
-                    <td className="pe-ev-ts">{fmt(ev.ts)}</td>
-                    <td className="pe-ev-name">{ev.name}</td>
-                    <td className="pe-ev-data">
-                      {Object.entries(ev)
-                        .filter(([k]) => k !== 'ts' && k !== 'name')
-                        .map(([k, v]) => `${k}: ${v}`)
-                        .join(' · ') || '—'}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )
-        }
-
-        <div className="pe-analytics-note">
-          <strong>Nota:</strong> Estos datos son del navegador actual. Usuarios con otro navegador o dispositivo
-          tienen su propio registro. Los datos de tráfico globales (visitas, países, dispositivos) están en Cloudflare.
-        </div>
-      </div>
-    );
-  };
-
   // phase === 'ready'
   return (
     <div className="pe-shell">
@@ -1200,7 +1337,7 @@ const AdminApp = () => {
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'analytics' ? renderAnalyticsTab() : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>

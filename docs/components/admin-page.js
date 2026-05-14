@@ -13,6 +13,25 @@ const PATH = 'docs/data/prices.json';
 const REVIEWS_PATH = 'docs/data/reviews.json';
 const BRANCH = 'main';
 const API = 'https://api.github.com';
+
+// Cloudflare Web Analytics — site tag (público, igual que en el beacon)
+const CF_SITE_TAG = '770c05669c6b45ea8f1026576fe7dcce';
+// Token y Account ID: se guardan en localStorage._htcf (nunca en el repo)
+const _cfCreds = () => {
+  try {
+    return JSON.parse(localStorage.getItem('_htcf') || '{}');
+  } catch (_) {
+    return {};
+  }
+};
+const _cfSave = (t, a) => {
+  try {
+    localStorage.setItem('_htcf', JSON.stringify({
+      t,
+      a
+    }));
+  } catch (_) {}
+};
 const apiHeaders = token => ({
   'Authorization': `Bearer ${token}`,
   'Accept': 'application/vnd.github+json',
@@ -912,6 +931,251 @@ const NewReviewForm = ({
     className: "pe-hint"
   }, "Recuerda pulsar ", /*#__PURE__*/React.createElement("strong", null, "\"Guardar\""), " al final para commitear.")));
 };
+
+// ============================================================
+// AnalyticsTab — pestaña de analítica con datos en tiempo real
+// de Cloudflare Web Analytics API + funnel local (localStorage).
+// ============================================================
+const AnalyticsTab = () => {
+  const creds0 = _cfCreds();
+  const [cfToken, setCfToken] = React.useState(creds0.t || '');
+  const [cfAcct, setCfAcct] = React.useState(creds0.a || '');
+  const [cfData, setCfData] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
+  const [cfError, setCfError] = React.useState(null);
+  const [days, setDays] = React.useState(30);
+  const [showCfg, setShowCfg] = React.useState(!creds0.t);
+  const fetchCF = React.useCallback(async (d, tok, acct) => {
+    if (!tok || !acct) return;
+    setLoading(true);
+    setCfError(null);
+    try {
+      const until = new Date().toISOString();
+      const since = new Date(Date.now() - d * 86400000).toISOString();
+      const flt = `AND:[{datetime_geq:"${since}"},{datetime_leq:"${until}"},{siteTag:"${CF_SITE_TAG}"}]`;
+      const query = `{viewer{accounts(filter:{accountTag:"${acct}"}){` + `pages:rumPageloadEventsAdaptiveGroups(filter:{${flt}},limit:10,orderBy:[count_DESC])` + `{count dimensions{requestPath}}` + `countries:rumPageloadEventsAdaptiveGroups(filter:{${flt}},limit:8,orderBy:[count_DESC])` + `{count dimensions{countryName}}` + `devices:rumPageloadEventsAdaptiveGroups(filter:{${flt}},limit:4,orderBy:[count_DESC])` + `{count dimensions{deviceType}}` + `}}}`;
+      const res = await fetch('https://api.cloudflare.com/client/v4/graphql', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${tok}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          query
+        })
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      if (json.errors?.length) throw new Error(json.errors[0].message);
+      setCfData(json.data.viewer.accounts[0]);
+    } catch (e) {
+      setCfError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+  React.useEffect(() => {
+    if (cfToken && cfAcct) fetchCF(days, cfToken, cfAcct);
+  }, [days, cfToken, cfAcct, fetchCF]);
+  const saveCfg = e => {
+    e.preventDefault();
+    _cfSave(cfToken.trim(), cfAcct.trim());
+    setShowCfg(false);
+    fetchCF(days, cfToken.trim(), cfAcct.trim());
+  };
+
+  // Funnel local (localStorage)
+  const localEvents = (() => {
+    try {
+      return JSON.parse(localStorage.getItem('_htevt') || '[]');
+    } catch (_) {
+      return [];
+    }
+  })();
+  const FUNNEL = [{
+    name: 'search_initiated',
+    label: 'Búsquedas'
+  }, {
+    name: 'dates_selected',
+    label: 'Fechas'
+  }, {
+    name: 'booking_step2',
+    label: 'Formulario'
+  }, {
+    name: 'booking_sent',
+    label: 'Enviados'
+  }];
+  const fc = {};
+  for (const ev of localEvents) fc[ev.name] = (fc[ev.name] || 0) + 1;
+  const fmt = ts => {
+    const d = new Date(ts);
+    return `${d.toLocaleDateString('es-ES')} ${d.toLocaleTimeString('es-ES', {
+      hour: '2-digit',
+      minute: '2-digit'
+    })}`;
+  };
+  const totalPV = cfData ? (cfData.pages || []).reduce((s, r) => s + r.count, 0) : null;
+  const totalCtr = cfData ? (cfData.countries || []).reduce((s, r) => s + r.count, 0) : null;
+  const totalDev = cfData ? (cfData.devices || []).reduce((s, r) => s + r.count, 0) : null;
+  const BarRow = ({
+    label,
+    count,
+    total,
+    bold
+  }) => {
+    const pct = total ? Math.round(count / total * 100) : 0;
+    return /*#__PURE__*/React.createElement("div", {
+      className: "pe-cf-row"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "pe-cf-bar-wrap"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "pe-cf-bar",
+      style: {
+        width: `${pct}%`
+      }
+    })), /*#__PURE__*/React.createElement("span", {
+      className: `pe-cf-row-label${bold ? ' pe-cf-row-bold' : ''}`
+    }, label), /*#__PURE__*/React.createElement("span", {
+      className: "pe-cf-row-n"
+    }, count.toLocaleString('es-ES')));
+  };
+  const pathLabel = p => {
+    if (!p || p === '/' || p === '/index.html') return 'Inicio';
+    return p.replace(/\.html$/, '').replace(/^\//, '') || p;
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card pe-analytics"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-analytics-hd"
+  }, /*#__PURE__*/React.createElement("h2", null, "Anal\xEDtica"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-period-tabs"
+  }, [7, 30, 90].map(d => /*#__PURE__*/React.createElement("button", {
+    key: d,
+    type: "button",
+    className: `pe-period-tab${days === d ? ' is-active' : ''}`,
+    onClick: () => setDays(d)
+  }, d, "d")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-period-tab",
+    onClick: () => fetchCF(days),
+    title: "Recargar"
+  }, "\u21BA"))), showCfg ? /*#__PURE__*/React.createElement("form", {
+    className: "pe-cf-cfg",
+    onSubmit: saveCfg
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-cfg-title"
+  }, "Conectar Cloudflare"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "API Token ", /*#__PURE__*/React.createElement("span", {
+    className: "pe-hint"
+  }, "(Account Analytics: Read)")), /*#__PURE__*/React.createElement("input", {
+    className: "pe-input pe-input-wide",
+    type: "password",
+    placeholder: "cfut_\u2026",
+    value: cfToken,
+    onChange: e => setCfToken(e.target.value)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Account ID"), /*#__PURE__*/React.createElement("input", {
+    className: "pe-input pe-input-wide",
+    type: "text",
+    placeholder: "32 hex chars",
+    value: cfAcct,
+    onChange: e => setCfAcct(e.target.value)
+  })), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    className: "pe-btn pe-btn-primary",
+    disabled: !cfToken.trim() || !cfAcct.trim()
+  }, "Conectar")) : /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost pe-cf-cfg-toggle",
+    onClick: () => setShowCfg(true)
+  }, "\u2699 Credenciales CF"), !showCfg && loading && /*#__PURE__*/React.createElement("div", {
+    className: "pe-analytics-loading"
+  }, "Cargando Cloudflare\u2026"), !showCfg && cfError && /*#__PURE__*/React.createElement("div", {
+    className: "pe-error",
+    style: {
+      marginBottom: 16
+    }
+  }, "CF: ", cfError), !showCfg && !loading && !cfError && cfData && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-summary"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-stat"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-stat-n"
+  }, totalPV?.toLocaleString('es-ES') ?? '—'), /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-stat-lbl"
+  }, "p\xE1ginas vistas"))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-cols"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-col"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-col-title"
+  }, "P\xE1ginas m\xE1s vistas"), (cfData.pages || []).map((r, i) => /*#__PURE__*/React.createElement(BarRow, {
+    key: i,
+    label: pathLabel(r.dimensions.requestPath),
+    count: r.count,
+    total: totalPV,
+    bold: i === 0
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-col"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-col-title"
+  }, "Pa\xEDses"), (cfData.countries || []).map((r, i) => /*#__PURE__*/React.createElement(BarRow, {
+    key: i,
+    label: r.dimensions.countryName || '—',
+    count: r.count,
+    total: totalCtr,
+    bold: i === 0
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-col"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-col-title"
+  }, "Dispositivos"), (cfData.devices || []).map((r, i) => /*#__PURE__*/React.createElement(BarRow, {
+    key: i,
+    label: r.dimensions.deviceType || '—',
+    count: r.count,
+    total: totalDev,
+    bold: i === 0
+  }))))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-analytics-sep"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "pe-cf-col-title"
+  }, "Funnel \xB7 este navegador"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-funnel"
+  }, FUNNEL.map((step, i) => {
+    const n = fc[step.name] || 0;
+    const prev = i > 0 ? fc[FUNNEL[i - 1].name] || 0 : null;
+    const pct = prev ? Math.round(n / prev * 100) : null;
+    return /*#__PURE__*/React.createElement("div", {
+      key: step.name,
+      className: "pe-funnel-step"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "pe-funnel-n"
+    }, n), /*#__PURE__*/React.createElement("div", {
+      className: "pe-funnel-label"
+    }, step.label), pct !== null && /*#__PURE__*/React.createElement("div", {
+      className: "pe-funnel-conv"
+    }, pct, "%"));
+  })), /*#__PURE__*/React.createElement("h3", {
+    className: "pe-analytics-h3",
+    style: {
+      marginTop: 20
+    }
+  }, "\xDAltimos eventos"), localEvents.length === 0 ? /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint"
+  }, "Sin eventos registrados todav\xEDa en este navegador.") : /*#__PURE__*/React.createElement("table", {
+    className: "pe-table pe-table-events"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Hora"), /*#__PURE__*/React.createElement("th", null, "Evento"), /*#__PURE__*/React.createElement("th", null, "Datos"))), /*#__PURE__*/React.createElement("tbody", null, localEvents.slice(0, 60).map((ev, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", {
+    className: "pe-ev-ts"
+  }, fmt(ev.ts)), /*#__PURE__*/React.createElement("td", {
+    className: "pe-ev-name"
+  }, ev.name), /*#__PURE__*/React.createElement("td", {
+    className: "pe-ev-data"
+  }, Object.entries(ev).filter(([k]) => k !== 'ts' && k !== 'name').map(([k, v]) => `${k}: ${v}`).join(' · ') || '—'))))));
+};
 const AdminApp = () => {
   const [phase, setPhase] = React.useState('login');
   const [mode, setMode] = React.useState('pricing'); // 'pricing' | 'reviews'
@@ -1260,80 +1524,6 @@ const AdminApp = () => {
       className: "pe-hint"
     }, "Commitea a ", /*#__PURE__*/React.createElement("code", null, BRANCH), " y GitHub Pages re-despliega solo.")));
   };
-  const renderAnalyticsTab = () => {
-    const raw = (() => {
-      try {
-        return JSON.parse(localStorage.getItem('_htevt') || '[]');
-      } catch (_) {
-        return [];
-      }
-    })();
-    const FUNNEL = [{
-      name: 'search_initiated',
-      label: 'Búsquedas realizadas'
-    }, {
-      name: 'dates_selected',
-      label: 'Fechas seleccionadas'
-    }, {
-      name: 'booking_step2',
-      label: 'Formulario abierto'
-    }, {
-      name: 'booking_sent',
-      label: 'Consultas enviadas'
-    }];
-    const counts = {};
-    for (const ev of raw) counts[ev.name] = (counts[ev.name] || 0) + 1;
-    const fmt = ts => {
-      const d = new Date(ts);
-      return `${d.toLocaleDateString('es-ES')} ${d.toLocaleTimeString('es-ES', {
-        hour: '2-digit',
-        minute: '2-digit'
-      })}`;
-    };
-    const recent = raw.slice(0, 60);
-    return /*#__PURE__*/React.createElement("div", {
-      className: "pe-card pe-analytics"
-    }, /*#__PURE__*/React.createElement("h2", null, "Anal\xEDtica \xB7 Funnel de reservas"), /*#__PURE__*/React.createElement("p", {
-      className: "pe-lede"
-    }, "Eventos de este navegador (localStorage). Para datos globales de tr\xE1fico, abre el panel de Cloudflare."), /*#__PURE__*/React.createElement("a", {
-      href: "https://dash.cloudflare.com",
-      target: "_blank",
-      rel: "noopener",
-      className: "pe-btn pe-btn-ghost pe-cf-link"
-    }, "Abrir panel Cloudflare \u2197"), /*#__PURE__*/React.createElement("div", {
-      className: "pe-funnel"
-    }, FUNNEL.map((step, i) => {
-      const n = counts[step.name] || 0;
-      const prev = i > 0 ? counts[FUNNEL[i - 1].name] || 0 : null;
-      const pct = prev ? Math.round(n / prev * 100) : null;
-      return /*#__PURE__*/React.createElement("div", {
-        key: step.name,
-        className: "pe-funnel-step"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "pe-funnel-n"
-      }, n), /*#__PURE__*/React.createElement("div", {
-        className: "pe-funnel-label"
-      }, step.label), pct !== null && /*#__PURE__*/React.createElement("div", {
-        className: "pe-funnel-conv"
-      }, pct, "%"));
-    })), /*#__PURE__*/React.createElement("h3", {
-      className: "pe-analytics-h3"
-    }, "\xDAltimos eventos"), recent.length === 0 ? /*#__PURE__*/React.createElement("p", {
-      className: "pe-hint"
-    }, "Sin eventos registrados todav\xEDa en este navegador.") : /*#__PURE__*/React.createElement("table", {
-      className: "pe-table pe-table-events"
-    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Hora"), /*#__PURE__*/React.createElement("th", null, "Evento"), /*#__PURE__*/React.createElement("th", null, "Datos"))), /*#__PURE__*/React.createElement("tbody", null, recent.map((ev, i) => /*#__PURE__*/React.createElement("tr", {
-      key: i
-    }, /*#__PURE__*/React.createElement("td", {
-      className: "pe-ev-ts"
-    }, fmt(ev.ts)), /*#__PURE__*/React.createElement("td", {
-      className: "pe-ev-name"
-    }, ev.name), /*#__PURE__*/React.createElement("td", {
-      className: "pe-ev-data"
-    }, Object.entries(ev).filter(([k]) => k !== 'ts' && k !== 'name').map(([k, v]) => `${k}: ${v}`).join(' · ') || '—'))))), /*#__PURE__*/React.createElement("div", {
-      className: "pe-analytics-note"
-    }, /*#__PURE__*/React.createElement("strong", null, "Nota:"), " Estos datos son del navegador actual. Usuarios con otro navegador o dispositivo tienen su propio registro. Los datos de tr\xE1fico globales (visitas, pa\xEDses, dispositivos) est\xE1n en Cloudflare."));
-  };
 
   // phase === 'ready'
   return /*#__PURE__*/React.createElement("div", {
@@ -1380,7 +1570,7 @@ const AdminApp = () => {
     className: "pe-success"
   }, success), error && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
-  }, error), mode === 'analytics' ? renderAnalyticsTab() : mode === 'reviews' ? renderReviewsTab() : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, error), mode === 'analytics' ? /*#__PURE__*/React.createElement(AnalyticsTab, null) : mode === 'reviews' ? renderReviewsTab() : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("h2", null, "Precios base por noche \xB7 2 hu\xE9spedes \xB7 temporada baja"), /*#__PURE__*/React.createElement("div", {
     className: "pe-grid"
