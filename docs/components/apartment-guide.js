@@ -315,6 +315,8 @@ const PLACES = [
   id: 'riad-cabrera',
   name: 'Riad Cabrera',
   desc: 'Marroquí en Sierra Cabrera. Carretera de montaña, pero merece muchísimo la pena.',
+  specialty: 'tagine de cordero con ciruelas, pastilla de pichón y té con menta en la terraza al atardecer.',
+  tip: 'Reserva con tiempo y sube con luz: las curvas tienen su gracia, pero de noche cuestan.',
   tier: '€€€',
   cat: 'restaurant',
   lat: 37.1550,
@@ -323,7 +325,8 @@ const PLACES = [
 }, {
   id: 'juan-moreno',
   name: 'Juan Moreno',
-  desc: 'Sofisticado. Cocina de autor.',
+  desc: 'Sofisticado. Cocina de autor en Vera pueblo.',
+  specialty: 'menú degustación con producto local, atún rojo de almadraba y arroces secos.',
   tier: '€€€',
   cat: 'restaurant',
   lat: 37.2495,
@@ -332,7 +335,8 @@ const PLACES = [
 }, {
   id: 'terraza-carmona',
   name: 'Terraza Carmona',
-  desc: 'Cocina española moderna en Vera pueblo.',
+  desc: 'Cocina española moderna en Vera pueblo. Casa con historia.',
+  specialty: 'gurullos con conejo y caldero de pescado; postres caseros.',
   tier: '€€',
   cat: 'restaurant',
   lat: 37.2486,
@@ -341,6 +345,7 @@ const PLACES = [
   id: 'gateway-india',
   name: 'Gateway to India',
   desc: 'Hindú. Bueno y barato.',
+  specialty: 'cordero rogan josh, pollo tikka masala y pan naan de ajo.',
   tier: '€',
   cat: 'restaurant',
   lat: 37.2230,
@@ -349,6 +354,7 @@ const PLACES = [
   id: 'pomodoro',
   name: 'Pizzería Pomodoro',
   desc: 'A pie de playa.',
+  specialty: 'pizza al horno de leña — la diavola y la quattro formaggi salen siempre.',
   tier: '€€',
   cat: 'restaurant',
   lat: 37.2270,
@@ -357,6 +363,7 @@ const PLACES = [
   id: 'trattoria',
   name: 'La Trattoria da Marco',
   desc: 'Garrucha. Las pizzas están geniales.',
+  specialty: 'pizza calzone, pasta a la carbonara auténtica y tiramisú.',
   tier: '€',
   cat: 'restaurant',
   lat: 37.1810,
@@ -365,6 +372,8 @@ const PLACES = [
   id: 'lua',
   name: 'Lúa',
   desc: 'Sofisticado. Mejor para cena o copa.',
+  specialty: 'tartar de atún rojo, croquetas de gamba roja y carrillera al PX.',
+  tip: 'Reserva mesa fuera al atardecer; la carta de cócteles está a la altura.',
   tier: '€€€',
   cat: 'restaurant',
   lat: 37.2310,
@@ -374,6 +383,7 @@ const PLACES = [
   id: 'bistro',
   name: 'The Bistro',
   desc: 'Bastante bien.',
+  specialty: 'entrecot a la parrilla y ensalada de burrata.',
   tier: '€€',
   cat: 'restaurant',
   lat: 37.2310,
@@ -381,7 +391,8 @@ const PLACES = [
 }, {
   id: 'koa',
   name: 'Resto Bar Koa',
-  desc: 'Frente a Hestía Vera Mar.',
+  desc: 'Frente a Hestía Vera Mar. Bocados pensados, ambiente cercano.',
+  specialty: 'bao de panceta, ceviche del día y poke bowl.',
   tier: '€€',
   cat: 'restaurant',
   lat: 37.2245,
@@ -391,6 +402,7 @@ const PLACES = [
   id: 'bbme-rest',
   name: 'Restaurante Bbme Palomares',
   desc: 'En plena playa, a 10 min a pie.',
+  specialty: 'arroz negro con sepia y all i oli, sardinas a la espalda.',
   tier: '€€',
   cat: 'restaurant',
   lat: 37.2155,
@@ -399,6 +411,8 @@ const PLACES = [
   id: 'playa-azul',
   name: 'Hostal Playa Azul',
   desc: 'Villaricos. Excelente paella con bogavante.',
+  specialty: 'paella con bogavante (encargar al reservar), gambas blancas de Garrucha.',
+  tip: 'Pide la paella al hacer la reserva — la preparan al momento.',
   tier: '€€',
   cat: 'restaurant',
   lat: 37.2460,
@@ -407,16 +421,38 @@ const PLACES = [
 }, {
   id: 'tadeo',
   name: 'Tadeo',
-  desc: 'Villaricos. Arroz con bogavante y tostas de ahumados.',
+  desc: 'Villaricos. Cocina de mar con producto del día.',
+  specialty: 'arroz con bogavante, tostas de ahumados y pulpo a la brasa.',
   tier: '€€',
   cat: 'restaurant',
   lat: 37.2455,
   lng: -1.7670,
   featured: true
 }, {
+  id: 'rincon-puerto',
+  name: 'Rincón del Puerto (Garrucha)',
+  desc: 'Junto a la lonja de Garrucha. Marisco fresquísimo y ambiente de pueblo pesquero.',
+  specialty: 'camarones crudos de Garrucha (imprescindibles), gamba roja a la plancha y quisquilla viva.',
+  tip: 'Pide los camarones crudos según vienen del barco — no hay nada igual en la zona.',
+  tier: '€€€',
+  cat: 'restaurant',
+  lat: 37.1818,
+  lng: -1.8235,
+  featured: true
+}, {
+  id: 'almadraba',
+  name: 'La Almadraba (Garrucha)',
+  desc: 'Garrucha. Vista al puerto, especializado en pescado de la lonja.',
+  specialty: 'gamba roja de Garrucha, lubina a la sal y arroz caldoso de marisco.',
+  tier: '€€€',
+  cat: 'restaurant',
+  lat: 37.1822,
+  lng: -1.8232
+}, {
   id: 'rosado',
   name: 'Freiduría Bar Rosado',
   desc: 'Buenas referencias.',
+  specialty: 'fritura mixta de pescado y boquerones rebozados.',
   tier: '€€',
   cat: 'restaurant',
   lat: 37.2240,
@@ -432,6 +468,7 @@ const PLACES = [
   id: 'valentino',
   name: 'Ristorante di Valentino',
   desc: 'Mojácar.',
+  specialty: 'pasta fresca casera — los ravioli de espinacas y la lasagna.',
   tier: '€€',
   cat: 'restaurant',
   lat: 37.1377,
@@ -440,6 +477,7 @@ const PLACES = [
   id: 'cabo-norte',
   name: 'Cabo Norte',
   desc: 'Mojácar. Buena materia prima a buen precio.',
+  specialty: 'chuletón de vaca madurada, pulpo a la gallega y croquetas caseras.',
   tier: '€€',
   cat: 'restaurant',
   lat: 37.1370,
@@ -448,6 +486,7 @@ const PLACES = [
   id: 'neptuno',
   name: 'Restaurante Neptuno',
   desc: 'Mojácar. Buen pescado.',
+  specialty: 'pescado del día a la sal, fideuá y arroz caldoso.',
   tier: '€€',
   cat: 'restaurant',
   lat: 37.1360,
@@ -455,7 +494,9 @@ const PLACES = [
 }, {
   id: 'martin-fierro',
   name: 'Asador Martín Fierro',
-  desc: 'Rodalquilar.',
+  desc: 'Rodalquilar. Asador argentino dentro del Parque Natural.',
+  specialty: 'parrillada argentina, entraña, mollejas y empanadas criollas.',
+  tip: 'Mesa fuera en primavera/otoño — el cielo de Cabo de Gata vale por sí solo.',
   tier: '€€€',
   cat: 'restaurant',
   lat: 36.8475,
@@ -464,7 +505,8 @@ const PLACES = [
 }, {
   id: 'oro-luz',
   name: 'Oro y Luz',
-  desc: 'Rodalquilar.',
+  desc: 'Rodalquilar. Cocina creativa con producto del Parque.',
+  specialty: 'menú degustación de temporada con verduras del huerto y pescado de Carboneras.',
   tier: '€€€',
   cat: 'restaurant',
   lat: 36.8480,
@@ -472,43 +514,75 @@ const PLACES = [
 }, {
   id: 'la-villa',
   name: 'La Villa',
-  desc: 'Aguamarga.',
+  desc: 'Aguamarga. Mediterráneo elegante a pie de pueblo.',
+  specialty: 'risotto de gambas, atún rojo a la parrilla y postre de chocolate templado.',
   tier: '€€€',
   cat: 'restaurant',
   lat: 36.9395,
   lng: -2.0000
+}, {
+  id: 'maruja',
+  name: 'Chiringuito Maruja',
+  desc: 'Vera Playa. A pie de arena, ambiente sin pretensiones.',
+  specialty: 'pescaíto frito, ensaladilla de la casa y sardinas al espeto en verano.',
+  tier: '€€',
+  cat: 'restaurant',
+  lat: 37.2310,
+  lng: -1.7920
 },
-// Restaurantes celíacos
+// Restaurantes celíacos (con menú o platos sin gluten certificados)
 {
   id: 'celiac-near',
   name: 'Cerca de Hestía: Lúa, Chiringuito Maruja, Pizzería Memoli',
+  desc: 'Andando o en 5 min en coche.',
+  specialty: 'En Memoli pizza con base sin gluten; en Lúa el tartar y los pescados de la pizarra.',
+  tip: 'Avisa al reservar — preparan utensilios separados.',
   cat: 'celiac',
   lat: 37.2240,
-  lng: -1.7980
+  lng: -1.7980,
+  featured: true
 }, {
   id: 'boracay',
   name: 'Boracay (Garrucha)',
+  desc: 'Mediterráneo a pie del puerto.',
+  specialty: 'arroces y pescados de la lonja sin gluten.',
   cat: 'celiac',
   lat: 37.1810,
   lng: -1.8230
 }, {
   id: 'kontiki',
   name: 'Mojácar: Cabo Norte, Neptuno, Kontiki',
+  desc: 'Tres opciones seguras en el paseo de Mojácar.',
+  specialty: 'Kontiki tiene carta sin gluten amplia; Neptuno controla muy bien el pescado.',
   cat: 'celiac',
   lat: 37.1377,
-  lng: -1.8523
+  lng: -1.8523,
+  featured: true
 }, {
   id: 'regio',
   name: 'Vera pueblo: Juan Moreno, Terraza Carmona, Regio',
+  desc: 'En el centro de Vera: tres clásicos con opciones sin gluten.',
+  specialty: 'En Regio los gurullos y la olla de trigo; en Juan Moreno menú degustación adaptado bajo aviso.',
+  tip: 'Reserva avisando — la cocina los prepara con cubiertos limpios.',
   cat: 'celiac',
   lat: 37.2491,
-  lng: -1.8639
+  lng: -1.8639,
+  featured: true
+}, {
+  id: 'celiac-asoc',
+  name: 'Asociación de Celíacos de Almería',
+  desc: 'Listado actualizado de restaurantes y obradores certificados.',
+  cat: 'celiac',
+  url: 'https://celiacosalmeria.es',
+  lat: 36.8350,
+  lng: -2.4630
 },
 // Copas y chiringuitos
 {
   id: 'turquesa',
   name: 'Chiringuito Playa Turquesa',
-  desc: 'Andando desde casa.',
+  desc: 'Andando desde casa. Ambiente familiar de día, copas al atardecer.',
+  specialty: 'mojito de menta del huerto y tabla de quesos al sol.',
   cat: 'bar',
   lat: 37.2260,
   lng: -1.7935,
@@ -516,20 +590,25 @@ const PLACES = [
 }, {
   id: 'paraiso',
   name: 'Paraíso Vera Beach',
-  desc: 'Andando desde casa.',
+  desc: 'Andando desde casa. Música chill desde media tarde.',
+  specialty: 'gin tonics premium y picoteo de tapeo mediterráneo.',
   cat: 'bar',
   lat: 37.2300,
   lng: -1.7920
 }, {
   id: 'chumbo',
   name: 'Chiringuito El Chumbo',
-  desc: 'Andando desde casa.',
+  desc: 'Andando desde casa. El más relajado del paseo.',
+  specialty: 'sangría de cava, sardinas al espeto en verano y arroz del día.',
   cat: 'bar',
   lat: 37.2360,
   lng: -1.7895
 }, {
   id: 'marau',
   name: 'Marau Beach Club',
+  desc: 'Beach club con DJ y zona de hamacas vista mar.',
+  specialty: 'cócteles de autor y carta asiática (poke, bao, tartar).',
+  tip: 'Mejor reservar hamaca en julio-agosto; los atardeceres con DJ valen la pena.',
   cat: 'bar',
   lat: 37.2410,
   lng: -1.7895,
@@ -537,16 +616,30 @@ const PLACES = [
 }, {
   id: 'mar-arena',
   name: 'Chiringuito Mar y Arena',
+  desc: 'Pequeño y muy local, a pie de arena.',
+  specialty: 'caña fría, paella los domingos y boquerones en vinagre.',
   cat: 'bar',
   lat: 37.2335,
   lng: -1.7910
 }, {
   id: 'bbme-palomares',
   name: 'Bbme Palomares',
-  desc: 'En plena playa, a 10 min a pie.',
+  desc: 'En plena playa, a 10 min a pie. Vistas amplias al Mediterráneo.',
+  specialty: 'spritz al atardecer, ostras y tapeo gourmet.',
+  tip: 'Vete andando por la orilla al atardecer y vuelve en taxi: la luz vale la caminata.',
   cat: 'bar',
   lat: 37.2155,
   lng: -1.7800,
+  featured: true
+}, {
+  id: 'lebreros',
+  name: 'Los Lebreros (Garrucha puerto)',
+  desc: 'Caña, marisco y vista al puerto pesquero.',
+  specialty: 'gambas blancas, quisquilla viva y conchas finas.',
+  tip: 'Ir sobre las 19:00 cuando atracan los barcos.',
+  cat: 'bar',
+  lat: 37.1820,
+  lng: -1.8235,
   featured: true
 },
 // Pescaderías
@@ -612,14 +705,69 @@ const PLACES = [
   lat: 37.6850,
   lng: -1.7060
 },
-// Mercadillos
+// Mercadillos (los mejores de la zona, ordenados por día)
 {
-  id: 'mercadillos',
-  name: 'Calendario semanal Almería',
+  id: 'm-vera-sab',
+  name: 'Mercadillo de Vera (sábado mañana)',
+  desc: 'El más grande de la comarca. Frutas y verduras de la huerta, ropa, calzado, artesanía.',
+  best: 'queso fresco de cabra y aceite local en la zona de productores.',
+  tip: 'Llega sobre las 10:00 — a la una empieza a recoger.',
+  cat: 'market',
+  lat: 37.2491,
+  lng: -1.8639,
+  featured: true
+}, {
+  id: 'm-mojacar-mie',
+  name: 'Mercadillo de Mojácar (miércoles mañana)',
+  desc: 'En el Parque Comercial. Mezcla de productos frescos y artículos locales.',
+  best: 'aceitunas aliñadas y especias de la sierra.',
+  cat: 'market',
+  lat: 37.1377,
+  lng: -1.8523,
+  featured: true
+}, {
+  id: 'm-garrucha-vie',
+  name: 'Mercadillo de Garrucha (viernes mañana)',
+  desc: 'Pequeño pero con muy buen pescado de la lonja al lado.',
+  best: 'gamba roja de Garrucha al precio del día — pasa antes por la lonja.',
+  tip: 'Combínalo con la subasta del puerto a las 17:00.',
+  cat: 'market',
+  lat: 37.1815,
+  lng: -1.8235,
+  featured: true
+}, {
+  id: 'm-pulpi-mie',
+  name: 'Mercadillo de Pulpí (miércoles mañana)',
+  desc: 'En el centro del pueblo, ambiente local sin turistas.',
+  best: 'higos chumbos en agosto y melones de huerta.',
+  cat: 'market',
+  lat: 37.4055,
+  lng: -1.7635
+}, {
+  id: 'm-cuevas-sab',
+  name: 'Mercadillo de Cuevas del Almanzora (sábado mañana)',
+  desc: 'Junto al castillo. Frutas, verduras y ropa.',
+  best: 'productos del valle del Almanzora.',
+  cat: 'market',
+  lat: 37.2980,
+  lng: -1.8830
+}, {
+  id: 'm-mercadillos',
+  name: 'Calendario semanal completo',
+  desc: 'Todos los mercadillos de Almería por día y municipio.',
   cat: 'market',
   url: 'https://www.mercadillosemanal.com/en.almeria',
   lat: 37.2491,
   lng: -1.8639
+}, {
+  id: 'm-artesanal-mojacar',
+  name: 'Mercado artesanal de Mojácar Pueblo (verano)',
+  desc: 'Plaza Nueva al atardecer en julio y agosto. Bisutería, cuero, cerámica.',
+  best: 'artesanía local — perfecto para regalos.',
+  tip: 'Empieza sobre las 20:00, cuando baja el sol.',
+  cat: 'market',
+  lat: 37.1380,
+  lng: -1.8525
 },
 // Actividades
 {
@@ -881,6 +1029,8 @@ const PLACES = [
   id: 'p-cocedores',
   name: 'Playa de los Cocedores',
   desc: 'San Juan de los Terreros (Pulpí). Última cala almeriense antes de Murcia. Aguas turquesas y rocas de arenisca con cuevas naturales.',
+  best: 'las cuevas labradas por el viento al sur de la cala — fotos icónicas.',
+  tip: 'Mejor a primera hora; el parking es pequeño y se llena en agosto.',
   cat: 'beach',
   rating: 4.5,
   services: '🛏️ 🚻 ♿',
@@ -892,6 +1042,7 @@ const PLACES = [
   id: 'p-carolina',
   name: 'Playa de la Carolina',
   desc: 'San Juan de los Terreros. Larga, dorada, tranquila. Familiar.',
+  best: 'arena fina para niños y aguas poco profundas.',
   cat: 'beach',
   rating: 4.4,
   services: '🚿 🛟 🍹 🛏️ 🚻 ♿',
@@ -902,6 +1053,7 @@ const PLACES = [
   id: 'p-calabardina',
   name: 'Playa de Calabardina (Águilas)',
   desc: 'Murcia. Pueblo costero íntimo. Cala protegida, agua transparente. 35 min.',
+  best: 'snorkel en el extremo rocoso — buena visibilidad.',
   cat: 'beach',
   rating: 4.5,
   services: '🚿 🍹 🛏️ 🚻',
@@ -912,6 +1064,7 @@ const PLACES = [
   id: 'p-hornillo',
   name: 'Playa del Hornillo (Águilas)',
   desc: 'Murcia. Cala urbana de aguas tranquilas, junto a la antigua estación inglesa.',
+  best: 'la silueta de la estación inglesa al fondo — foto de postal.',
   cat: 'beach',
   rating: 4.5,
   services: '🚿 🛟 🍹 🛏️ 🚻',
@@ -922,6 +1075,8 @@ const PLACES = [
   id: 'p-calnegre',
   name: 'Playas de Calnegre',
   desc: 'Lorca-Mazarrón (Murcia). Parque regional protegido, calas vírgenes y áridas. 50 min.',
+  best: 'soledad absoluta y fondos rocosos para snorkel.',
+  tip: 'Lleva agua, sombra y zapatos — no hay nada en kilómetros.',
   cat: 'beach-hard',
   rating: 4.6,
   services: 'sin servicios',
@@ -934,6 +1089,7 @@ const PLACES = [
   id: 'p-vera',
   name: 'Playa de Vera (sector textil)',
   desc: 'Justo al lado de Hestía. Larga, fina, agua templada. La playa de cabecera.',
+  best: 'el atardecer caminando por la orilla hacia Garrucha.',
   cat: 'beach',
   rating: 4.4,
   services: '🚿 🛟 🍹 🛏️ 🚻 ♿ 🏊 Bandera Azul',
@@ -944,6 +1100,7 @@ const PLACES = [
   id: 'p-garrucha',
   name: 'Playa de Garrucha',
   desc: 'Pueblo pesquero a 10 min. Buena lonja de pescado. Paseo agradable.',
+  best: 'tomar algo en el puerto al atardecer cuando llegan los barcos.',
   cat: 'beach',
   rating: 4.4,
   services: '🚿 🛟 🍹 🛏️ 🚻 ♿',
@@ -954,6 +1111,7 @@ const PLACES = [
   id: 'p-macenas',
   name: 'Playa de Macenas (Mojácar)',
   desc: 'Sur de Mojácar. Mezcla de calas vírgenes y arena dorada. Castillo del s. XVIII al fondo.',
+  best: 'la torre vigía y las calas pequeñas al sur, casi vírgenes.',
   cat: 'beach',
   rating: 4.5,
   services: '🍹 🛏️ parcial',
@@ -964,6 +1122,8 @@ const PLACES = [
   id: 'p-piedras',
   name: 'Piedras de Molino (Carboneras)',
   desc: 'Cala icónica al lado del Algarrobico. Aguas cristalinas, fondo rocoso para snorkel.',
+  best: 'snorkel entre las rocas — pulpos y meros si tienes suerte.',
+  tip: 'Lleva calzado de agua: el acceso es por piedras.',
   cat: 'beach',
   rating: 4.5,
   services: 'sin servicios',
@@ -977,6 +1137,8 @@ const PLACES = [
   id: 'p-mesa-roldan',
   name: 'Mesa Roldán (Carboneras)',
   desc: 'Domo volcánico con faro y fortaleza. Mirador con vistas a la Playa de los Muertos. Sale en Juego de Tronos.',
+  best: 'subir al atardecer — mirador 360° sobre el Mediterráneo.',
+  tip: 'Aparca antes del último tramo y sube andando: la pista no siempre está bien.',
   cat: 'beach',
   rating: 4.7,
   services: 'mirador · sin baño',
@@ -987,6 +1149,8 @@ const PLACES = [
   id: 'p-muertos',
   name: 'Playa de los Muertos',
   desc: 'Carboneras. Una de las mejores playas de España. Aguas cristalinas, cantos rodados grandes. Sin un solo servicio.',
+  best: 'el azul del agua — el contraste con las paredes blancas es irreal.',
+  tip: 'En julio-agosto ve a primera hora (antes de las 10) o última (a partir de las 18) — al mediodía el sol pega a plomo y el sendero quema.',
   cat: 'beach-hard',
   rating: 4.6,
   services: 'virgen · sin servicios',
@@ -1000,6 +1164,8 @@ const PLACES = [
   id: 'p-enmedio',
   name: 'Cala de Enmedio',
   desc: 'Agua Amarga. Nuestra favorita. Arena fina blanca enmarcada por roca esculpida. Casi virgen porque exige caminar.',
+  best: 'las roca esculpidas por el viento al fondo — escenario de cuento.',
+  tip: 'En verano, primera hora del día: la luz al amanecer sobre la roca blanca es magia, y a mediodía no hay sombra.',
   cat: 'beach-hard',
   rating: 4.7,
   services: 'virgen · sin servicios',
@@ -1013,6 +1179,8 @@ const PLACES = [
   id: 'p-plomo',
   name: 'Cala del Plomo',
   desc: 'Agua Amarga. Cala virgen de arena oscura. Aguas cristalinas, snorkel.',
+  best: 'snorkel en el extremo norte — la roca volcánica esconde mucha vida.',
+  tip: 'Lleva nevera y sombra: no hay un solo árbol.',
   cat: 'beach-hard',
   rating: 4.6,
   services: 'virgen · sin servicios',
@@ -1023,6 +1191,7 @@ const PLACES = [
   id: 'p-aguamarga',
   name: 'Playa de Agua Amarga',
   desc: 'Pueblo blanco con encanto, calas pequeñas y restaurantes a pie de arena.',
+  best: 'cenar en La Villa o en Asador La Chumbera con los pies en la arena.',
   cat: 'beach',
   rating: 4.5,
   services: '🚿 🍹 🛏️ 🚻',
@@ -1033,6 +1202,7 @@ const PLACES = [
   id: 'p-negras',
   name: 'Playa de Las Negras',
   desc: 'Pueblo bohemio con cantos rodados negros y agua cristalina. Punto de salida hacia la Cala de San Pedro.',
+  best: 'tomar una caña en La Caleta viendo las barcas pesqueras.',
   cat: 'beach',
   rating: 4.4,
   services: '🚿 🍹 🚻',
@@ -1043,6 +1213,8 @@ const PLACES = [
   id: 'p-san-pedro',
   name: 'Cala de San Pedro',
   desc: 'Comunidad hippie estable, fuente de agua dulce, sin servicios. Solo accesible a pie o por barca.',
+  best: 'la mezcla irrepetible: ruinas, fuente natural y comunidad alternativa.',
+  tip: 'En verano coge el taxi-barca desde Las Negras (15 min); el sendero costero exige forma física y son 90 min al sol.',
   cat: 'beach-hard',
   rating: 4.7,
   services: 'virgen · fuente natural',
@@ -1053,6 +1225,8 @@ const PLACES = [
   id: 'p-playazo',
   name: 'El Playazo de Rodalquilar',
   desc: 'Cabo de Gata. De fácil acceso, larga, rocas en los extremos. Castillo de San Ramón al sur.',
+  best: 'subir al Castillo de San Ramón al final del día — vistas perfectas.',
+  tip: 'En julio-agosto el parking se llena: ve antes de las 10:30 o después de las 18:00.',
   cat: 'beach',
   rating: 4.6,
   services: '🚻 mínimos · sin chiringuito',
@@ -1064,6 +1238,8 @@ const PLACES = [
   id: 'p-isleta',
   name: 'La Isleta del Moro',
   desc: 'Pueblo pesquero diminuto con calas. Snorkel y comer en La Ola junto al mar.',
+  best: 'comer pescado fresco en La Ola con las barcas detrás.',
+  tip: 'La cala del Peñón Blanco es la mejor para snorkel; ve con gafas.',
   cat: 'beach',
   rating: 4.5,
   services: '🍹 🚻',
@@ -1075,6 +1251,8 @@ const PLACES = [
   id: 'p-genoveses',
   name: 'Playa de los Genoveses',
   desc: 'San José. Bahía perfecta de medio km, dunas con sabinas. Sin servicios para preservar el paraje.',
+  best: 'la bahía vista desde la duna sur — postal de Cabo de Gata.',
+  tip: 'En julio-agosto, primera hora (7:30-10) o última (18:30 hasta puesta de sol). El acceso al coche está restringido — coge el bus o la bici desde San José.',
   cat: 'beach',
   rating: 4.7,
   services: 'virgen · 🛟 verano',
@@ -1087,6 +1265,8 @@ const PLACES = [
   id: 'p-monsul',
   name: 'Playa de Mónsul',
   desc: 'San José. Famosa por la duna y la roca volcánica. Sale en El bueno, el feo y el malo y en Indiana Jones.',
+  best: 'la roca volcánica del centro y la duna gigante al oeste.',
+  tip: 'Atardecer en julio-agosto: la roca se enciende en naranja sobre las 20:30 y se vacía la playa. A primera hora también es mágica y sin gente.',
   cat: 'beach',
   rating: 4.7,
   services: '🚻 🛟 verano · sin chiringuito',
@@ -1099,6 +1279,8 @@ const PLACES = [
   id: 'p-barronal',
   name: 'Playa del Barronal',
   desc: 'San José. Más virgen que Mónsul. Detrás de las dunas de la pista. Una de nuestras favoritas.',
+  best: 'caminar entre dunas hasta llegar y encontrar la cala vacía.',
+  tip: 'En verano ve temprano o al final del día — sin sombra y con calor extremo.',
   cat: 'beach',
   rating: 4.6,
   services: 'virgen · sin servicios',
@@ -1112,6 +1294,8 @@ const PLACES = [
   id: 'p-medialuna',
   name: 'Cala de la Media Luna',
   desc: 'San José. Pequeña, simétrica, mar transparente. Se llega andando desde el Barronal.',
+  best: 'su forma perfecta de media luna — solo se ve desde el sendero costero.',
+  tip: 'Combínala con el Barronal: 10 min andando entre las dos.',
   cat: 'beach-hard',
   rating: 4.6,
   services: 'virgen',
@@ -1123,6 +1307,8 @@ const PLACES = [
   id: 'p-cabogata',
   name: 'Las Salinas (Cabo de Gata pueblo)',
   desc: 'Frente a las salinas con flamencos. Faro al fondo. Atardecer espectacular.',
+  best: 'los flamencos en las salinas al amanecer o atardecer.',
+  tip: 'Atardecer del lado del Faro de Cabo de Gata es uno de los más fotografiados de la provincia.',
   cat: 'beach',
   rating: 4.5,
   services: '🚿 🍹 🛏️ 🚻 ♿',
@@ -1133,6 +1319,8 @@ const PLACES = [
   id: 'p-fabriquilla',
   name: 'La Fabriquilla / El Corralete',
   desc: 'Última cala antes del Faro de Cabo de Gata. Roca volcánica, agua transparente. Punto más al sur.',
+  best: 'el faro y el Arrecife de las Sirenas justo después.',
+  tip: 'Encadena con el mirador del Arrecife de las Sirenas al atardecer.',
   cat: 'beach',
   rating: 4.5,
   services: 'mínimos',
@@ -2058,7 +2246,19 @@ const CatGroup = ({
       title: lang === 'es' ? 'Valoración Google' : 'Google rating'
     }, "\u2B50 ", p.rating.toFixed(1))), p.desc && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-desc"
-    }, p.desc), p.services && /*#__PURE__*/React.createElement("span", {
+    }, p.desc), p.specialty && /*#__PURE__*/React.createElement("span", {
+      className: "ag-place-specialty"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-place-specialty-tag"
+    }, lang === 'es' ? 'Pide:' : 'Order:'), ' ', p.specialty), p.best && /*#__PURE__*/React.createElement("span", {
+      className: "ag-place-best"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-place-best-tag"
+    }, lang === 'es' ? 'Lo mejor:' : 'Highlight:'), ' ', p.best), p.tip && /*#__PURE__*/React.createElement("span", {
+      className: "ag-place-tip"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-place-tip-tag"
+    }, lang === 'es' ? 'Tip:' : 'Tip:'), ' ', p.tip), p.services && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-services",
       "aria-label": lang === 'es' ? 'Servicios' : 'Services'
     }, p.services), p.access && /*#__PURE__*/React.createElement("span", {
