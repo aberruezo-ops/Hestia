@@ -103,36 +103,33 @@ const esc = (s) => (s == null ? '' : String(s)
 const fileUrl = (relPath) => pathToFileURL(join(DOCS, relPath)).href;
 
 // ---------------------------------------------------------------
-// Marca: SVG inline del logo Hestía (dos columnas H + ola/hoja)
-// Usado en cover, contraportada, headers de página y watermark.
+// Marca: PNG real del logo Hestía (assets/logo-teal-transparent.png)
+// Usado en cover, contraportada, sello de sección y watermark.
+// Se aplica filter CSS distinto según contexto:
+//   - default (teal):       sin filtro
+//   - .logo--white:         brightness(0) invert(1) → blanco
+//   - .logo--cream:         brightness(0) saturate(100%) invert(94%) sepia(13%) saturate(417%) hue-rotate(354deg) brightness(99%) contrast(96%) → crema
+//   - .logo--apt:           hue-rotate + saturate según --apt-c-dk
 // ---------------------------------------------------------------
-const logoSVG = (color = 'currentColor', includeWaves = true) => `
-<svg viewBox="0 0 120 120" aria-hidden="true">
-  <g fill="${color}">
-    <path d="M18 22 L32 22 L32 50 L32 56 L30 62 L30 98 L18 98 Z"/>
-    <path d="M88 22 L102 22 L102 98 L90 98 L90 62 L88 56 L88 50 Z"/>
-    <rect x="14" y="20" width="22" height="4" rx="1"/>
-    <rect x="84" y="20" width="22" height="4" rx="1"/>
-    <rect x="14" y="96" width="22" height="4" rx="1"/>
-    <rect x="84" y="96" width="22" height="4" rx="1"/>
-    <rect x="36" y="56" width="48" height="6" rx="1"/>
-  </g>
-  ${includeWaves ? `
-  <path d="M32 58 C 44 42, 60 42, 60 56 C 60 46, 78 46, 90 62"
-        fill="none" stroke="${color}" stroke-width="5" stroke-linecap="round"/>
-  <path d="M32 66 C 46 52, 60 52, 60 64 C 60 54, 76 54, 90 70"
-        fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" opacity="0.7"/>` : ''}
-</svg>`;
+const logoIMG = (cls = '') =>
+  `<img src="${fileUrl('assets/logo-teal-transparent.png')}" alt="Hestía" class="logo ${cls}"/>`;
 
-// Watermark badge para fotos: caja oscura con logo blanco translúcido
+// Helper: foto enmarcada (img + watermark) — wrapper con overflow
+// hidden y border-radius para que el badge no sobresalga.
+const photoFrame = (src) => `
+<span class="photo-frame">
+  <img src="${fileUrl(src)}" alt=""/>
+  <div class="wm-badge" aria-hidden="true">${logoIMG('logo--white')}</div>
+</span>`;
+
+// Watermark suelto (caso especial — sin wrapper)
 const watermarkBadge = () => `
-<div class="wm-badge" aria-hidden="true">${logoSVG('#FAF6F0', false)}</div>`;
+<div class="wm-badge" aria-hidden="true">${logoIMG('logo--white')}</div>`;
 
-// Cinta de sección — sello de marca + nombre de Hestía en el top
-// de cada sección. Aparece una vez por sección (~una por página).
+// Sello de sección — logo + nombre Hestía en el top de cada sección.
 const sectionMark = (aptData, lang) =>
   `<div class="sect-mark">
-    <div class="sect-mark-logo">${logoSVG('var(--apt-c-dk)', false)}</div>
+    <div class="sect-mark-logo">${logoIMG('logo--apt')}</div>
     <div class="sect-mark-text">
       <span class="sect-mark-name">Hestía · ${esc(aptData.name_short)}</span>
       <span class="sect-mark-meta">${esc(lang === 'es' ? 'Guía del huésped' : 'Guest guide')} · ${esc(aptData.num)}</span>
@@ -261,7 +258,25 @@ a { color: var(--teal-dk); text-decoration: none; }
   text-transform: uppercase;
   color: var(--crema);
 }
-.cover-mark svg { width: 22px; height: 22px; }
+.cover-mark .logo { width: 22px; height: 22px; }
+
+/* Variantes de color del logo (PNG teal con filter CSS) */
+.logo { display: inline-block; vertical-align: middle; }
+.logo--white {
+  filter: brightness(0) invert(1);
+}
+.logo--cream {
+  /* Convierte el teal a crema cálida (#F6E3C2) */
+  filter: brightness(0) invert(1) sepia(60%) saturate(450%) hue-rotate(355deg) brightness(98%);
+}
+.logo--apt {
+  /* Convierte el teal al accent oscuro de cada Hestía */
+  filter: brightness(0) saturate(100%);
+}
+.logo--ber {
+  /* Convierte el teal a berenjena oscuro */
+  filter: brightness(0) saturate(100%) invert(8%) sepia(31%) saturate(2200%) hue-rotate(280deg);
+}
 .cover-eyebrow {
   font-family: 'Inter', sans-serif;
   font-size: 9.5pt;
@@ -344,7 +359,7 @@ section.no-break {
   display: flex;
   align-items: center;
 }
-.sect-mark-logo svg { width: 100%; height: 100%; }
+.sect-mark-logo .logo { width: 100%; height: 100%; }
 .sect-mark-text {
   flex: 1;
   display: flex;
@@ -406,24 +421,12 @@ section.no-break {
 .welcome-photo {
   margin: 14mm 0 0;
   break-inside: avoid;
-}
-.welcome-photo img {
-  width: 100%;
-  height: 95mm;
-  object-fit: cover;
-  border-radius: 8mm 0 8mm 0;
-  display: block;
+  position: relative;
 }
 .wifi-photo {
   margin: 12mm 0 0;
   break-inside: avoid;
-}
-.wifi-photo img {
-  width: 100%;
-  height: 95mm;
-  object-fit: cover;
-  border-radius: 8mm 0 8mm 0;
-  display: block;
+  position: relative;
 }
 
 /* ============ WiFi card ============ */
@@ -588,15 +591,40 @@ section.no-break {
   break-inside: avoid;
   page-break-inside: avoid;
   margin: 0;
-  position: relative;
 }
-.photo img {
+/* Wrapper que recorta foto + watermark con la asimetría de marca.
+   El badge nunca puede sobresalir de las esquinas redondeadas. */
+.photo-frame {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 5mm 0 5mm 0;
+  line-height: 0;
+  background: var(--hair);
+}
+.photo-frame img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 5mm 0 5mm 0;
   display: block;
-  background: var(--hair);
+}
+/* Room hero: wrapper más grande con asimetría más pronunciada */
+.room-hero .photo-frame {
+  border-radius: 8mm 0 8mm 0;
+}
+.room-hero .photo-frame img {
+  aspect-ratio: auto;
+  height: 115mm;
+}
+/* Welcome / wifi / feedback decorative photo */
+.welcome-photo .photo-frame,
+.wifi-photo .photo-frame {
+  border-radius: 8mm 0 8mm 0;
+}
+.welcome-photo .photo-frame img,
+.wifi-photo .photo-frame img {
+  aspect-ratio: auto;
+  height: 95mm;
 }
 
 /* Marca de agua sobre cada foto: caja oscura con logo blanco
@@ -606,32 +634,36 @@ section.no-break {
   position: absolute;
   bottom: 6pt;
   right: 6pt;
-  width: 22pt;
-  height: 22pt;
-  background: rgba(42,15,46,0.55);
-  border-radius: 3mm 0 3mm 0;
+  width: 16pt;
+  height: 16pt;
+  background: rgba(42,15,46,0.42);
+  border-radius: 2mm 0 2mm 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3pt;
+  padding: 2pt;
   pointer-events: none;
 }
-.wm-badge svg {
+.wm-badge .logo {
   width: 100%;
   height: 100%;
-  opacity: 0.85;
+  opacity: 0.70;
+  display: block;
+  object-fit: contain;
 }
 .room-hero .wm-badge,
 .welcome-photo .wm-badge,
 .wifi-photo .wm-badge {
-  width: 28pt;
-  height: 28pt;
+  width: 22pt;
+  height: 22pt;
   bottom: 8pt;
   right: 8pt;
 }
-.photos-grid.cols-1 .photo img {
-  aspect-ratio: 16 / 9;
+.photos-grid.cols-1 .photo .photo-frame {
   border-radius: 7mm 0 7mm 0;
+}
+.photos-grid.cols-1 .photo .photo-frame img {
+  aspect-ratio: 16 / 9;
 }
 .photo figcaption {
   margin-top: 4pt;
@@ -671,13 +703,7 @@ section.no-break {
 .room-hero {
   margin: 0 0 7mm;
   break-inside: avoid;
-}
-.room-hero img {
-  width: 100%;
-  height: 115mm;
-  object-fit: cover;
-  border-radius: 8mm 0 8mm 0;
-  display: block;
+  position: relative;
 }
 .room-hero figcaption {
   margin-top: 6pt;
@@ -1078,11 +1104,18 @@ section.no-break {
   height: 100%;
 }
 .back-mark {
+  display: flex;
+  align-items: center;
+  gap: 12pt;
   font-family: 'Cormorant Garamond', serif;
   font-size: 28pt;
   font-style: italic;
   color: var(--crema-warm);
   margin-bottom: 8mm;
+}
+.back-mark .logo {
+  width: 38pt;
+  height: 38pt;
 }
 .back-meta {
   font-family: 'Inter', sans-serif;
@@ -1106,7 +1139,7 @@ function renderCover(aptId, lang, aptData, byApt) {
   return `
   <div class="cover" style="background-image: url('${fileUrl(heroImg)}')">
     <div class="cover-mark">
-      ${logoSVG('#F6E3C2')}
+      ${logoIMG('logo--cream')}
       Hestía
     </div>
     <div class="cover-content">
@@ -1136,8 +1169,7 @@ function renderWelcome(shared, aptData, lang) {
     <div class="welcome-signer">${esc(w.signer)}</div>
     ${photo ? `
       <figure class="welcome-photo">
-        <img src="${fileUrl(photo)}" alt=""/>
-        ${watermarkBadge()}
+        ${photoFrame(photo)}
       </figure>` : ''}
   </section>`;
 }
@@ -1166,8 +1198,7 @@ function renderWifi(shared, aptData, lang) {
     </div>
     ${photo ? `
       <figure class="wifi-photo">
-        <img src="${fileUrl(photo)}" alt=""/>
-        ${watermarkBadge()}
+        ${photoFrame(photo)}
       </figure>` : ''}
   </section>`;
 }
@@ -1260,8 +1291,7 @@ function renderRoom(room, aptData, roomPhotos, urbFallback, aptId, lang) {
 
     ${hero ? `
       <figure class="room-hero">
-        <img src="${fileUrl(hero.src)}" alt=""/>
-        ${watermarkBadge()}
+        ${photoFrame(hero.src)}
         ${hero.caption ? `<figcaption>${esc(hero.caption)}</figcaption>` : ''}
       </figure>` : ''}
 
@@ -1304,8 +1334,7 @@ function renderRoomGallery(photos, room, lang) {
       <div class="photos-grid ${cols}">
         ${pagePhotos.map(p => `
           <figure class="photo">
-            <img src="${fileUrl(p.src)}" alt=""/>
-            ${watermarkBadge()}
+            ${photoFrame(p.src)}
             ${p.caption ? `<figcaption>${esc(p.caption)}</figcaption>` : ''}
           </figure>`).join('')}
       </div>
@@ -1432,8 +1461,7 @@ function renderFeedback(shared, aptData, lang) {
     ${f.paras.map(p => `<p class="closing-quote">${esc(p)}</p>`).join('')}
     ${photo ? `
       <figure class="welcome-photo">
-        <img src="${fileUrl(photo)}" alt=""/>
-        ${watermarkBadge()}
+        ${photoFrame(photo)}
       </figure>` : ''}
   </section>`;
 }
@@ -1571,7 +1599,10 @@ function renderBackCover(aptData, lang) {
   <div class="back-cover">
     <div class="back-cover-inner">
       <div>
-        <div class="back-mark">Hestía</div>
+        <div class="back-mark">
+          ${logoIMG('logo--cream')}
+          <span>Hestía</span>
+        </div>
         <div style="font-family:'Cormorant Garamond',serif;font-size:30pt;line-height:1.1;color:var(--crema)">
           ${esc(lang === 'es' ? 'Gracias por elegirnos.' : 'Thank you for choosing us.')}
         </div>
