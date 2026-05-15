@@ -460,6 +460,14 @@ const GalleryCarousel = ({
   const timerRef = React.useRef(null);
   const pausedRef = React.useRef(false);
 
+  // Smart object-position per photo — calculated from edge centroid.
+  // Loaded from data/photo-positions.json (cargado en window.PHOTO_POS).
+  const posFor = src => {
+    const map = window.PHOTO_POS || {};
+    const key = src.split('/').pop();
+    return map[key] || '50% 50%';
+  };
+
   // Cambia de foto. La animación visual la lleva el CSS sobre
   // .gc-slide (transform translateX). NO envolvemos en _vt() porque
   // colisiona con el slide CSS y produce flicker en mobile.
@@ -560,7 +568,10 @@ const GalleryCarousel = ({
     decoding: "async",
     src: src,
     alt: captions[i],
-    loading: i === 0 ? 'eager' : 'lazy'
+    loading: i === 0 ? 'eager' : 'lazy',
+    style: {
+      objectPosition: posFor(src)
+    }
   })))), /*#__PURE__*/React.createElement("div", {
     className: "gc-overlay"
   }, /*#__PURE__*/React.createElement(WatermarkBadge, {
@@ -593,7 +604,10 @@ const GalleryCarousel = ({
     decoding: "async",
     src: src,
     alt: "",
-    loading: "lazy"
+    loading: "lazy",
+    style: {
+      objectPosition: posFor(src)
+    }
   })))))), lightbox && /*#__PURE__*/React.createElement("div", {
     className: "gc-lightbox",
     onClick: closeLightbox,
