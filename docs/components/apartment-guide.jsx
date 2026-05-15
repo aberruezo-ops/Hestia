@@ -130,12 +130,42 @@ const PLACES = [
   { id: 'rosado',         name: 'Freiduría Bar Rosado', desc: 'Buenas referencias.',                    specialty: 'fritura mixta de pescado y boquerones rebozados.', tier: '€€',  cat: 'restaurant', lat: 37.2240, lng: -1.8095 },
   { id: 'av-alicante',    name: 'Av. Ciudad de Alicante', desc: 'Detrás del Consum: pubs, comida rápida y más.',     cat: 'restaurant', lat: 37.2196, lng: -1.8082 },
   { id: 'valentino',      name: 'Ristorante di Valentino', desc: 'Mojácar.',                            specialty: 'pasta fresca casera — los ravioli de espinacas y la lasagna.', tier: '€€',  cat: 'restaurant', lat: 37.1377, lng: -1.8523 },
-  { id: 'cabo-norte',     name: 'Cabo Norte',        desc: 'Mojácar. Buena materia prima a buen precio.', specialty: 'chuletón de vaca madurada, pulpo a la gallega y croquetas caseras.', tier: '€€',cat: 'restaurant', lat: 37.1370, lng: -1.8530 },
+  { id: 'cabo-norte',     name: 'Cabo Norte',        desc: 'Mojácar. Buena materia prima a buen precio.', specialty: 'gambas al ajillo (imprescindibles), chuletón de vaca madurada, pulpo a la gallega y croquetas caseras.', tier: '€€',cat: 'restaurant', lat: 37.1370, lng: -1.8530 },
   { id: 'neptuno',        name: 'Restaurante Neptuno', desc: 'Mojácar. Buen pescado.',                  specialty: 'pescado del día a la sal, fideuá y arroz caldoso.', tier: '€€',  cat: 'restaurant', lat: 37.1360, lng: -1.8520 },
   { id: 'martin-fierro',  name: 'Asador Martín Fierro', desc: 'Rodalquilar. Asador argentino dentro del Parque Natural.', specialty: 'parrillada argentina, entraña, mollejas y empanadas criollas.', tip: 'Mesa fuera en primavera/otoño — el cielo de Cabo de Gata vale por sí solo.', tier: '€€€', cat: 'restaurant', lat: 36.8475, lng: -2.0395 , featured: true },
   { id: 'oro-luz',        name: 'Oro y Luz',         desc: 'Rodalquilar. Cocina creativa con producto del Parque.', specialty: 'menú degustación de temporada con verduras del huerto y pescado de Carboneras.', tier: '€€€', cat: 'restaurant', lat: 36.8480, lng: -2.0400 },
   { id: 'la-villa',       name: 'La Villa',          desc: 'Aguamarga. Mediterráneo elegante a pie de pueblo.', specialty: 'risotto de gambas, atún rojo a la parrilla y postre de chocolate templado.', tier: '€€€', cat: 'restaurant', lat: 36.9395, lng: -2.0000 },
   { id: 'maruja',         name: 'Chiringuito Maruja', desc: 'Vera Playa. A pie de arena, ambiente sin pretensiones.', specialty: 'pescaíto frito, ensaladilla de la casa y sardinas al espeto en verano.', tier: '€€', cat: 'restaurant', lat: 37.2310, lng: -1.7920 },
+
+  // ── Top-rated por Google en la zona (≥4.5 estrellas) ─────────
+  // Mojácar
+  { id: 'titos-mojacar',  name: "Tito's (Mojácar)",  desc: 'Mojácar Pueblo. Tapas y carta tradicional con producto local. Imprescindible.', specialty: 'rabo de toro, croquetas de jamón y atún encebollado.', tip: 'Reserva con días de antelación en verano — siempre llena.', tier: '€€', rating: 4.6, cat: 'restaurant', lat: 37.1380, lng: -1.8523, featured: true },
+  { id: 'acebuche',       name: 'El Acebuche (Mojácar)', desc: 'Recomendado por Guía Repsol y Bib Gourmand. Cocina almeriense actualizada.', specialty: 'menú degustación con producto de proximidad — pescados de Garrucha y verduras del huerto.', tier: '€€€', rating: 4.7, cat: 'restaurant', lat: 37.1373, lng: -1.8519, featured: true },
+  { id: 'almirez',        name: 'El Almirez (Mojácar)', desc: 'Mojácar Pueblo. Cocina mediterránea elegante con terraza con vistas.', specialty: 'arroz meloso de bogavante y solomillo a la brasa.', tier: '€€€', rating: 4.6, cat: 'restaurant', lat: 37.1378, lng: -1.8525 },
+  // Vera pueblo
+  { id: 'casa-egea',      name: 'Casa Egea (Vera)',  desc: 'Vera pueblo. Cocina tradicional con producto del Levante almeriense.', specialty: 'fritura de pescaíto, arroz a banda y postres caseros.', tier: '€€', rating: 4.6, cat: 'restaurant', lat: 37.2494, lng: -1.8631 },
+  { id: 'regio-restaurante', name: 'Regio (Vera)',   desc: 'Vera pueblo. Casa de comidas con platos de cuchara y arroces.', specialty: 'olla de trigo, gurullos con conejo y arroz caldoso.', tier: '€€', rating: 4.5, cat: 'restaurant', lat: 37.2487, lng: -1.8637 },
+  // Garrucha
+  { id: 'almejero',       name: 'El Almejero (Garrucha)', desc: 'Garrucha. Frente al puerto, especialista en marisco y arroces. Bib Gourmand.', specialty: 'arroz caldoso con bogavante, gamba roja a la plancha y almejas a la marinera.', tip: 'Mejor a mediodía con la luz del puerto.', tier: '€€€', rating: 4.6, cat: 'restaurant', lat: 37.1820, lng: -1.8240, featured: true },
+  // Cabo de Gata · San José y alrededores
+  { id: 'gallineta',      name: 'La Gallineta (Pozo de los Frailes)', desc: 'Pozo de los Frailes. Uno de los más reputados del Parque Natural. Reserva imprescindible.', specialty: 'menú degustación de pescado del día y atún rojo de almadraba.', tip: 'Reserva con 1-2 semanas de antelación en temporada.', tier: '€€€', rating: 4.7, cat: 'restaurant', lat: 36.7860, lng: -2.0900, featured: true },
+  { id: '4nudos',         name: '4 Nudos (San José)', desc: 'San José. Cocina creativa con producto del mar de Cabo de Gata.', specialty: 'tartar de atún, ceviche de corvina y arroz negro.', tier: '€€€', rating: 4.6, cat: 'restaurant', lat: 36.7670, lng: -2.1080 },
+  { id: 'casa-miguel-sj', name: 'Casa Miguel (San José)', desc: 'San José. Clásico de pescado y marisco a buen precio.', specialty: 'fritura de pescaíto, arroz marinero y gamba roja.', tier: '€€', rating: 4.5, cat: 'restaurant', lat: 36.7665, lng: -2.1075 },
+  // Carboneras / Agua Amarga
+  { id: 'chumbera',       name: 'Asador La Chumbera (Sopalmo)', desc: 'Entre Mojácar y Agua Amarga. Cocina al fuego con vistas espectaculares al mar.', specialty: 'cordero al horno de leña, lubina a la sal y chuletón de ternera.', tip: 'Atardecer en la terraza — una de las mejores panorámicas de la costa.', tier: '€€€', rating: 4.6, cat: 'restaurant', lat: 37.0410, lng: -1.8810, featured: true },
+  // Almería capital
+  { id: 'joseba-anorga',  name: 'Joseba Añorga (Almería capital)', desc: 'Cocina vasca-mediterránea de autor. Recomendado por Guía Michelin.', specialty: 'menú degustación con producto de mercado, pescados a la brasa.', tier: '€€€€', rating: 4.7, cat: 'restaurant', lat: 36.8395, lng: -2.4635, featured: true },
+  { id: 'casa-puga',      name: 'Casa Puga (Almería capital)', desc: 'Histórica taberna fundada en 1870. Templo de la tapa almeriense.', specialty: 'tapas tradicionales — caracoles, ensaladilla y tortilla del Sacromonte.', tip: 'Sin reservas — llega antes de las 13:30 o sobre las 20:00 para evitar cola.', tier: '€€', rating: 4.5, cat: 'restaurant', lat: 36.8395, lng: -2.4633, featured: true },
+  { id: 'tetería',        name: 'Tetería Almedina (Almería capital)', desc: 'Barrio Almedina. Cocina marroquí auténtica en el casco antiguo.', specialty: 'tagine de cordero, cuscús casero y té con menta.', tier: '€€', rating: 4.6, cat: 'restaurant', lat: 36.8400, lng: -2.4690 },
+  { id: 'torreluz-med',   name: 'Torreluz Mediterráneo (Almería capital)', desc: 'En Plaza Flores. Cocina mediterránea con producto de mercado.', specialty: 'arroces marineros, atún rojo y carrillera de ternera.', tier: '€€€', rating: 4.5, cat: 'restaurant', lat: 36.8392, lng: -2.4625 },
+  { id: 'salmantice',     name: 'Salmantice (Almería capital)', desc: 'Asador castellano-leonés. Carnes a la brasa de primera.', specialty: 'chuletón de buey, lechazo asado y embutidos ibéricos.', tier: '€€€', rating: 4.5, cat: 'restaurant', lat: 36.8378, lng: -2.4602 },
+  // Murcia · Cartagena, Lorca, Águilas
+  { id: 'magoga',         name: 'Magoga (Cartagena)', desc: 'Cartagena. ⭐ Estrella Michelin. Cocina murciana de alta gama.', specialty: 'menú degustación con producto del Mar Menor y huerta murciana.', tip: 'Reserva con 3-4 semanas — es de lo mejor del Sureste.', tier: '€€€€', rating: 4.7, cat: 'restaurant', lat: 37.6017, lng: -0.9886, featured: true },
+  { id: 'marquesita',     name: 'La Marquesita (Cartagena)', desc: 'Cartagena. Clásico imprescindible junto al teatro romano.', specialty: 'caldero del Mar Menor, dorada a la sal y arroz con bogavante.', tier: '€€€', rating: 4.5, cat: 'restaurant', lat: 37.6030, lng: -0.9870 },
+  { id: 'san-roque',      name: 'El Barrio de San Roque (Cartagena)', desc: 'Cartagena. Cocina tradicional con producto de la lonja.', specialty: 'michirones, marineras y arroz caldero.', tier: '€€', rating: 4.5, cat: 'restaurant', lat: 37.6042, lng: -0.9905 },
+  { id: 'el-faro-aguilas',name: 'El Faro (Águilas)', desc: 'Águilas. A pie de puerto. Famoso por el arroz caldero murciano.', specialty: 'arroz caldero, salmonete y dorada a la sal.', tier: '€€€', rating: 4.6, cat: 'restaurant', lat: 37.4070, lng: -1.5790, featured: true },
+  { id: 'juan-mari',      name: 'Juan Mari (Águilas)', desc: 'Águilas. Cocina marinera con producto del día.', specialty: 'lubina al horno, arroces y mariscada.', tier: '€€€', rating: 4.5, cat: 'restaurant', lat: 37.4065, lng: -1.5810 },
+  { id: 'casino-lorca',   name: 'Asador Casino de Lorca', desc: 'Lorca. Comedor histórico dentro del Casino. Cocina murciana actualizada.', specialty: 'arroces secos, cordero segureño y verduras de la huerta.', tier: '€€€', rating: 4.5, cat: 'restaurant', lat: 37.6770, lng: -1.7000 },
 
   // Restaurantes celíacos (con menú o platos sin gluten certificados)
   { id: 'celiac-near',    name: 'Cerca de Hestía: Lúa, Chiringuito Maruja, Pizzería Memoli', desc: 'Andando o en 5 min en coche.', specialty: 'En Memoli pizza con base sin gluten; en Lúa el tartar y los pescados de la pizarra.', tip: 'Avisa al reservar — preparan utensilios separados.', cat: 'celiac', lat: 37.2240, lng: -1.7980, featured: true },
@@ -152,6 +182,23 @@ const PLACES = [
   { id: 'mar-arena',      name: 'Chiringuito Mar y Arena', desc: 'Pequeño y muy local, a pie de arena.',                                    specialty: 'caña fría, paella los domingos y boquerones en vinagre.', cat: 'bar', lat: 37.2335, lng: -1.7910 },
   { id: 'bbme-palomares', name: 'Bbme Palomares', desc: 'En plena playa, a 10 min a pie. Vistas amplias al Mediterráneo.',     specialty: 'spritz al atardecer, ostras y tapeo gourmet.', tip: 'Vete andando por la orilla al atardecer y vuelve en taxi: la luz vale la caminata.', cat: 'bar', lat: 37.2155, lng: -1.7800 , featured: true },
   { id: 'lebreros',       name: 'Los Lebreros (Garrucha puerto)', desc: 'Caña, marisco y vista al puerto pesquero.', specialty: 'gambas blancas, quisquilla viva y conchas finas.', tip: 'Ir sobre las 19:00 cuando atracan los barcos.', cat: 'bar', lat: 37.1820, lng: -1.8235, featured: true },
+  // ── Bares top-rated por Google ───────────────────────────────
+  // Mojácar pueblo
+  { id: 'cantares',       name: 'Cantares (Mojácar Pueblo)', desc: 'Plaza Nueva. Terraza con vistas al valle, ambiente bohemio.', specialty: 'vermut con tapa, tabla ibérica y cócteles al atardecer.', tip: 'Reserva mesa con vistas al valle — el atardecer es brutal.', rating: 4.5, cat: 'bar', lat: 37.1380, lng: -1.8525, featured: true },
+  { id: 'mandala',        name: 'Mandala (Mojácar Pueblo)', desc: 'Coctelería de autor en el casco antiguo.', specialty: 'gin tonics premium y mezcales mexicanos.', rating: 4.5, cat: 'bar', lat: 37.1378, lng: -1.8522 },
+  // Vera
+  { id: 'cafe-bahia',     name: 'Café Bahía (Vera pueblo)', desc: 'Plaza Mayor. Aperitivo clásico con tapa.', specialty: 'caña con tapa de jamón ibérico de la zona.', rating: 4.4, cat: 'bar', lat: 37.2491, lng: -1.8639 },
+  // San José
+  { id: 'sahara-sj',      name: 'Bar Sahara (San José)', desc: 'San José. Música en vivo y ambiente de Cabo de Gata.', specialty: 'cervezas artesanas locales y tapas marineras.', rating: 4.5, cat: 'bar', lat: 36.7665, lng: -2.1080 },
+  // Almería capital
+  { id: 'la-mala',        name: 'La Mala (Almería capital)', desc: 'Centro histórico. Coctelería referente de la capital.', specialty: 'cócteles de autor — Negroni clarificado, Old Fashioned con PX.', tip: 'Mejor a partir de las 22:00; antes está más tranquilo.', rating: 4.7, cat: 'bar', lat: 36.8395, lng: -2.4625, featured: true },
+  { id: 'tetería-cap',    name: 'Tetería La Almedina Cafés (Almería)', desc: 'Casco antiguo. Té marroquí y dulces árabes.', specialty: 'té con menta, pastelería árabe y cuscús dulce.', rating: 4.6, cat: 'bar', lat: 36.8398, lng: -2.4688 },
+  { id: 'jovellanos',     name: 'Jovellanos 16 (Almería capital)', desc: 'Tapeo de calidad en el centro. Producto y elaboración.', specialty: 'croquetas líquidas, atún rojo crujiente y bao de cochinita.', rating: 4.6, cat: 'bar', lat: 36.8380, lng: -2.4615 },
+  // Murcia · Cartagena
+  { id: 'columbares',     name: 'Columbares (Cartagena)', desc: 'Plaza San Sebastián. Tapas creativas y vermuts.', specialty: 'marinera, michirón y zarangollo.', rating: 4.6, cat: 'bar', lat: 37.6020, lng: -0.9885, featured: true },
+  { id: 'el-zorro',       name: 'El Zorro Pub (Cartagena)', desc: 'Coctelería junto al puerto. Carta extensa.', specialty: 'gin tonics de autor y combinados premium.', rating: 4.5, cat: 'bar', lat: 37.5995, lng: -0.9810 },
+  // Águilas
+  { id: 'mar-menuda',     name: 'La Mar Menuda (Águilas)', desc: 'Águilas. Coctelería frente al mar.', specialty: 'mojitos, vermut casero y tapeo marinero.', rating: 4.5, cat: 'bar', lat: 37.4080, lng: -1.5785 },
 
   // Pescaderías
   { id: 'mercado-vera',   name: 'Mercado de abastos (Vera)', cat: 'fish', url: 'https://goo.gl/maps/PaEerwZNxAK1kNTS8', lat: 37.2486, lng: -1.8625 , featured: true },
