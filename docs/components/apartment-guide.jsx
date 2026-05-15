@@ -92,7 +92,7 @@ const CATEGORIES = [
   { id: 'beach-srvc',  es: 'Playas con servicios',   en: 'Beaches with services', color: 'var(--tur)',     icon: '🛟' },
   { id: 'beach-hard',  es: 'Playas de difícil acceso', en: 'Hard-access beaches', color: 'var(--vio)',     icon: '🧗' },
   { id: 'super',       es: 'Supermercados',          en: 'Supermarkets',          color: 'var(--vm2)',     icon: '🛒' },
-  { id: 'fish',        es: 'Pescaderías',            en: 'Fish markets',          color: 'var(--sol-text)', icon: '🐟' },
+  { id: 'fish',        es: 'Producto fresco · pescado, carne, pan',  en: 'Fresh produce · fish, meat, bread', color: 'var(--sol-text)', icon: '🐟' },
   { id: 'pharmacy',    es: 'Farmacias',              en: 'Pharmacies',            color: 'var(--alb)',     icon: '💊' },
   { id: 'health',      es: 'Centros de salud',       en: 'Health centres',        color: 'var(--err)',     icon: '⚕️' },
   { id: 'activity',    es: 'Actividades',            en: 'Activities',            color: 'var(--vs2)',     icon: '⛵' },
@@ -118,10 +118,14 @@ const PLACES = [
   { id: 'hestia-salinas', name: 'Hestía Vera Salinas',  cat: 'home',  lat: 37.23094, lng: -1.81860 },
 
   // Supermercados
-  { id: 'coviran',        name: 'Covirán', desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa.', cat: 'super', lat: 37.2235, lng: -1.7975 },
-  { id: 'consum',         name: 'Consum', cat: 'super', url: 'https://goo.gl/maps/h6UvnBe3ATHpsPXbA', lat: 37.2200, lng: -1.8090 },
-  { id: 'mercadona',      name: 'Mercadona Vera Playa', cat: 'super', url: 'https://goo.gl/maps/axi9Lb9xLp8yuVUR8', lat: 37.2360, lng: -1.7935 , featured: true },
-  { id: 'super-vera',     name: 'Vera (Dia · Lidl · Mercadona)', desc: 'Supermercados grandes en Vera pueblo.', cat: 'super', lat: 37.2491, lng: -1.8639 , featured: true },
+  { id: 'coviran',        name: 'Covirán', desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa. Para básicos sin coger el coche.', cat: 'super', lat: 37.2235, lng: -1.7975 },
+  { id: 'consum',         name: 'Consum (Vera Playa)', desc: 'Supermercado mediano a 5 min en coche. Sorpresa: tiene un buen surtido de productos británicos (cereales, salsas, té, alubias Heinz) por la afluencia inglesa de la zona.', specialty: 'estantería de productos UK — Marmite, Yorkshire Tea, baked beans, salsas Branston, mince pies en Navidad.', cat: 'super', url: 'https://goo.gl/maps/h6UvnBe3ATHpsPXbA', lat: 37.2200, lng: -1.8090, featured: true },
+  { id: 'mercadona',      name: 'Mercadona Vera Playa', desc: 'Mercadona estándar a 5 min en coche. El más completo de la zona.', cat: 'super', url: 'https://goo.gl/maps/axi9Lb9xLp8yuVUR8', lat: 37.2360, lng: -1.7935, featured: true },
+  { id: 'super-vera',     name: 'Vera pueblo (Dia · Lidl · Mercadona)', desc: 'Supermercados grandes en Vera pueblo, a 10 min en coche.', cat: 'super', lat: 37.2491, lng: -1.8639, featured: true },
+  // Supermercados británicos / internacionales — para huéspedes UK que echen de menos lo de casa
+  { id: 'iceland-vera',   name: 'Iceland Overseas (Vera Playa)', desc: 'Supermercado británico junto al complejo Vera Natura. Productos congelados, ready meals, té, salsas y dulces típicos de UK.', specialty: 'fish & chips congelados, Yorkshire puddings, scotch eggs, productos M&S y Tesco.', tip: 'Imprescindible para huéspedes ingleses con nostalgia. Hablan inglés en caja.', cat: 'super', lat: 37.2380, lng: -1.7895, featured: true },
+  { id: 'quicksave',      name: 'Quicksave Britannia (Mojácar)', desc: 'Supermercado británico clásico de la Costa Almería. Surtido amplio de marcas UK que no encuentras en supermercado español.', specialty: 'embutidos ingleses (sausages, bacon Wiltshire), pasteles, panes especiales, repostería casera.', cat: 'super', lat: 37.1450, lng: -1.8540 },
+  { id: 'aldi-vera',      name: 'Aldi (Vera)', desc: 'Cadena alemana low-cost. A 10 min en coche junto a Mercadona.', specialty: 'productos alemanes (cerveza, embutidos, dulces) y precios bajos en básicos.', cat: 'super', lat: 37.2358, lng: -1.7940 },
 
   // Librerías
   { id: 'nobel',          name: 'Nobel', desc: 'Librería en Vera.', cat: 'bookshop', lat: 37.2491, lng: -1.8639 , featured: true },
@@ -215,11 +219,20 @@ const PLACES = [
   // Águilas
   { id: 'mar-menuda',     name: 'La Mar Menuda (Águilas)', desc: 'Águilas. Coctelería frente al mar.', specialty: 'mojitos, vermut casero y tapeo marinero.', rating: 4.5, cat: 'bar', lat: 37.4080, lng: -1.5785 },
 
-  // Pescaderías
-  { id: 'mercado-vera',   name: 'Mercado de abastos (Vera)', cat: 'fish', url: 'https://goo.gl/maps/PaEerwZNxAK1kNTS8', lat: 37.2486, lng: -1.8625 , featured: true },
-  { id: 'el-mero',        name: 'Pescadería El Mero (Garrucha)', cat: 'fish', url: 'https://goo.gl/maps/AdJz6SEyGRvLeToDA', lat: 37.1815, lng: -1.8235 , featured: true },
-  { id: 'isabel',         name: 'Pescados y Mariscos Isabel (Garrucha)', cat: 'fish', url: 'https://goo.gl/maps/RHCieMNkgo3FL8m5A', lat: 37.1820, lng: -1.8240 },
-  { id: 'pescados-online',name: 'Pescados Garrucha (online)', cat: 'fish', url: 'https://pescadosgarrucha.es/', lat: 37.1815, lng: -1.8230 },
+  // Pescaderías y lonja
+  { id: 'lonja-garrucha', name: 'Lonja de Garrucha (subasta)', desc: 'Una de las lonjas más activas del Mediterráneo español. Subasta diaria de marisco y pescado de barco — se puede ver el espectáculo desde la cristalera.', specialty: 'gamba roja de Garrucha (la mejor del Mediterráneo), quisquilla, conchas finas, gallineta.', tip: 'La subasta es a las 17:00 los días laborables. Llega con tiempo y compra después en las pescaderías de al lado.', cat: 'fish', lat: 37.1810, lng: -1.8240, featured: true },
+  { id: 'mercado-vera',   name: 'Mercado de abastos (Vera pueblo)', desc: 'Mercado tradicional cubierto con frutería, carnicería, pescadería y charcutería. Producto local del día.', specialty: 'producto fresco de la huerta de Almería, carne de la sierra, pescado de la lonja.', tip: 'Sábado por la mañana es cuando más vida tiene — combínalo con el mercadillo exterior.', cat: 'fish', url: 'https://goo.gl/maps/PaEerwZNxAK1kNTS8', lat: 37.2486, lng: -1.8625, featured: true },
+  { id: 'el-mero',        name: 'Pescadería El Mero (Garrucha)', desc: 'Junto a la lonja. Una de las pescaderías de referencia de Garrucha.', specialty: 'gamba roja recién subastada, lubinas y doradas salvajes, mariscos del día.', cat: 'fish', url: 'https://goo.gl/maps/AdJz6SEyGRvLeToDA', lat: 37.1815, lng: -1.8235, featured: true },
+  { id: 'isabel',         name: 'Pescados y Mariscos Isabel (Garrucha)', desc: 'Pescadería pequeña pero con mucho oficio.', specialty: 'pescado para horno (besugo, dorada), pulpo cocido y conserva casera de mojama.', cat: 'fish', url: 'https://goo.gl/maps/RHCieMNkgo3FL8m5A', lat: 37.1820, lng: -1.8240 },
+  { id: 'pescados-online',name: 'Pescados Garrucha (online)', desc: 'Servicio de pescado y marisco online — entrega en Vera Playa el mismo día.', specialty: 'gamba roja de Garrucha empacada en hielo, lista para comer o congelar.', tip: 'Útil si quieres llevarte producto a casa al final de la estancia.', cat: 'fish', url: 'https://pescadosgarrucha.es/', lat: 37.1815, lng: -1.8230 },
+  { id: 'pescaderia-vera',name: 'Pescadería Hermanos Quintana (Vera pueblo)', desc: 'Tradicional, de las pescaderías de toda la vida en Vera. Producto fresco diario.', specialty: 'pescado del día y marisco a precio razonable.', cat: 'fish', lat: 37.2493, lng: -1.8633 },
+  // Carnicerías, charcuterías y producto de calidad
+  { id: 'carniceria-rey', name: 'Carnicería Rey (Vera pueblo)', desc: 'Carnicería de confianza con carne de la Sierra de los Filabres y cordero segureño.', specialty: 'cordero segureño (IGP), chuletón de vaca madurada, embutidos artesanos.', tip: 'Pide con un día de antelación si quieres cordero entero o piezas grandes.', cat: 'fish', lat: 37.2490, lng: -1.8635, featured: true },
+  { id: 'carniceria-garrucha', name: 'Carnicería Hermanos López (Garrucha)', desc: 'Carnicería con producto local y embutidos curados en la sierra.', specialty: 'morcilla de Vera, jamón ibérico de Las Alpujarras, chorizo casero.', cat: 'fish', lat: 37.1818, lng: -1.8233 },
+  { id: 'jamoneria-vera', name: 'Jamonería Sierra Almería (Vera)', desc: 'Especialista en ibéricos y jamones de toda España. Cortan al momento.', specialty: 'jamón ibérico de bellota, lomo embuchado, chorizo cular y caña de lomo.', tip: 'Se puede comprar jamón cortado a cuchillo y envasado al vacío para llevar a casa.', cat: 'fish', lat: 37.2495, lng: -1.8636 },
+  { id: 'panaderia-vera', name: 'Panadería La Viña (Vera pueblo)', desc: 'Panadería tradicional con horno de leña.', specialty: 'pan de Cuevas, mollete almeriense, ensaimadas y empanadillas saladas.', tip: 'Llega antes de las 11:00 — el pan de Cuevas se acaba pronto.', cat: 'fish', lat: 37.2491, lng: -1.8637 },
+  { id: 'fruteria-vera',  name: 'Frutería del Mercado (Vera)', desc: 'Frutería y verdulería de la huerta de Almería en el mercado de abastos.', specialty: 'tomates raf, pimientos asar, melones de huerta, naranjas valencianas.', cat: 'fish', lat: 37.2486, lng: -1.8625 },
+  { id: 'queseria-velez', name: 'Quesería Los Vélez', desc: 'Quesos artesanos de cabra y oveja de la Sierra de María-Los Vélez.', specialty: 'queso de cabra al romero, oveja semicurado y manchego de los Vélez.', tip: 'Pídelo en queserías de Vera o ve directamente al obrador en Vélez-Rubio.', cat: 'fish', lat: 37.6520, lng: -2.0760 },
 
   // Farmacias y salud
   { id: 'farmacia-1',     name: 'Farmacia (junto Consum)', cat: 'pharmacy', url: 'https://goo.gl/maps/bGMV1sjwUqrRTNzk6', lat: 37.2210, lng: -1.8085 },
