@@ -103,6 +103,44 @@ const esc = (s) => (s == null ? '' : String(s)
 const fileUrl = (relPath) => pathToFileURL(join(DOCS, relPath)).href;
 
 // ---------------------------------------------------------------
+// Marca: SVG inline del logo Hestía (dos columnas H + ola/hoja)
+// Usado en cover, contraportada, headers de página y watermark.
+// ---------------------------------------------------------------
+const logoSVG = (color = 'currentColor', includeWaves = true) => `
+<svg viewBox="0 0 120 120" aria-hidden="true">
+  <g fill="${color}">
+    <path d="M18 22 L32 22 L32 50 L32 56 L30 62 L30 98 L18 98 Z"/>
+    <path d="M88 22 L102 22 L102 98 L90 98 L90 62 L88 56 L88 50 Z"/>
+    <rect x="14" y="20" width="22" height="4" rx="1"/>
+    <rect x="84" y="20" width="22" height="4" rx="1"/>
+    <rect x="14" y="96" width="22" height="4" rx="1"/>
+    <rect x="84" y="96" width="22" height="4" rx="1"/>
+    <rect x="36" y="56" width="48" height="6" rx="1"/>
+  </g>
+  ${includeWaves ? `
+  <path d="M32 58 C 44 42, 60 42, 60 56 C 60 46, 78 46, 90 62"
+        fill="none" stroke="${color}" stroke-width="5" stroke-linecap="round"/>
+  <path d="M32 66 C 46 52, 60 52, 60 64 C 60 54, 76 54, 90 70"
+        fill="none" stroke="${color}" stroke-width="3" stroke-linecap="round" opacity="0.7"/>` : ''}
+</svg>`;
+
+// Watermark badge para fotos: caja oscura con logo blanco translúcido
+const watermarkBadge = () => `
+<div class="wm-badge" aria-hidden="true">${logoSVG('#FAF6F0', false)}</div>`;
+
+// Cinta de sección — sello de marca + nombre de Hestía en el top
+// de cada sección. Aparece una vez por sección (~una por página).
+const sectionMark = (aptData, lang) =>
+  `<div class="sect-mark">
+    <div class="sect-mark-logo">${logoSVG('var(--apt-c-dk)', false)}</div>
+    <div class="sect-mark-text">
+      <span class="sect-mark-name">Hestía · ${esc(aptData.name_short)}</span>
+      <span class="sect-mark-meta">${esc(lang === 'es' ? 'Guía del huésped' : 'Guest guide')} · ${esc(aptData.num)}</span>
+    </div>
+    <div class="sect-mark-rule"></div>
+  </div>`;
+
+// ---------------------------------------------------------------
 // 3) CSS de marca + print
 // ---------------------------------------------------------------
 const CSS = `
@@ -139,7 +177,7 @@ const CSS = `
 html, body {
   margin: 0;
   padding: 0;
-  background: var(--crema);
+  background: #FFFFFF;
   color: var(--ink);
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 10.5pt;
@@ -289,6 +327,56 @@ section.no-break {
 .section-hd .eyebrow { color: var(--apt-c); }
 .section-hd h2 { margin-bottom: 0; color: var(--apt-c-dk); }
 
+/* Sello de marca al inicio de cada sección. Layout horizontal:
+   logo + nombre Hestía a la izquierda, meta a la derecha, regla
+   en color del acento de la Hestía debajo. Sin fondos pesados. */
+.sect-mark {
+  display: flex;
+  align-items: center;
+  gap: 8pt;
+  margin: 0 0 14pt;
+  padding-bottom: 6pt;
+  position: relative;
+}
+.sect-mark-logo {
+  width: 14pt;
+  height: 14pt;
+  display: flex;
+  align-items: center;
+}
+.sect-mark-logo svg { width: 100%; height: 100%; }
+.sect-mark-text {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 10pt;
+}
+.sect-mark-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 11pt;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--apt-c-dk);
+}
+.sect-mark-meta {
+  font-family: 'Inter', sans-serif;
+  font-size: 7.5pt;
+  font-weight: 600;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-left: auto;
+}
+.sect-mark-rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5pt;
+  background: linear-gradient(90deg, var(--apt-c) 0%, var(--apt-c) 22mm, transparent 22mm);
+}
+
 /* ============ Welcome ============ */
 .welcome {
   padding-top: 6mm;
@@ -339,13 +427,26 @@ section.no-break {
 }
 
 /* ============ WiFi card ============ */
+/* Versión print-friendly: sin fondo de color, solo borde fino con
+   acento de la Hestía. Marca visible sin gastar tinta de fondo. */
 .wifi-card {
   margin: 8mm 0 0;
-  padding: 14mm 16mm;
-  background: linear-gradient(135deg, var(--crema-dawn) 0%, var(--crema-warm) 100%);
+  padding: 12mm 14mm;
+  background: transparent;
   border-radius: 8mm 0 8mm 0;
-  border: 1px solid rgba(232,194,107,0.40);
+  border: 1.5pt solid var(--apt-c);
   break-inside: avoid;
+  position: relative;
+}
+.wifi-card::before {
+  content: '';
+  position: absolute;
+  top: -1pt;
+  left: -1pt;
+  width: 18mm;
+  height: 6pt;
+  background: var(--apt-c);
+  border-radius: 8mm 0 0 0;
 }
 .wifi-row { display: flex; align-items: baseline; gap: 14pt; margin-bottom: 8pt; }
 .wifi-lbl {
@@ -397,6 +498,8 @@ section.no-break {
   margin-top: 4mm;
   padding-top: 6mm;
   border-top: 1px solid var(--hair);
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 .recs-title {
   font-family: 'Inter', sans-serif;
@@ -485,6 +588,7 @@ section.no-break {
   break-inside: avoid;
   page-break-inside: avoid;
   margin: 0;
+  position: relative;
 }
 .photo img {
   width: 100%;
@@ -493,6 +597,37 @@ section.no-break {
   border-radius: 5mm 0 5mm 0;
   display: block;
   background: var(--hair);
+}
+
+/* Marca de agua sobre cada foto: caja oscura con logo blanco
+   translúcido en la esquina inferior derecha. Firma de marca
+   en cada imagen del PDF — igual concepto que la web. */
+.wm-badge {
+  position: absolute;
+  bottom: 6pt;
+  right: 6pt;
+  width: 22pt;
+  height: 22pt;
+  background: rgba(42,15,46,0.55);
+  border-radius: 3mm 0 3mm 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3pt;
+  pointer-events: none;
+}
+.wm-badge svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+}
+.room-hero .wm-badge,
+.welcome-photo .wm-badge,
+.wifi-photo .wm-badge {
+  width: 28pt;
+  height: 28pt;
+  bottom: 8pt;
+  right: 8pt;
 }
 .photos-grid.cols-1 .photo img {
   aspect-ratio: 16 / 9;
@@ -539,7 +674,7 @@ section.no-break {
 }
 .room-hero img {
   width: 100%;
-  height: 130mm;
+  height: 115mm;
   object-fit: cover;
   border-radius: 8mm 0 8mm 0;
   display: block;
@@ -593,13 +728,14 @@ section.no-break {
 }
 
 /* ============ Categories list ============ */
+/* Print-friendly: sin fondo, solo borde fino con accent. */
 .cat-block {
   margin-bottom: 6mm;
   break-inside: avoid;
   padding: 5mm 6mm;
-  border: 1px solid color-mix(in srgb, var(--apt-c) 22%, transparent);
+  border: 0.8pt solid color-mix(in srgb, var(--apt-c) 32%, transparent);
   border-radius: 6mm 0 6mm 0;
-  background: color-mix(in srgb, var(--apt-c) 3%, var(--crema));
+  background: transparent;
 }
 .cat-title {
   font-family: 'Cormorant Garamond', serif;
@@ -717,12 +853,14 @@ section.no-break {
 }
 
 /* ============ Day plan ============ */
+/* Print-friendly: sin fondo de color, borde + acento a la izquierda */
 .dayplan {
   break-inside: avoid;
   page-break-inside: avoid;
   margin-bottom: 8mm;
-  padding: 6mm 7mm;
-  background: rgba(232,194,107,0.08);
+  padding: 5mm 7mm;
+  background: transparent;
+  border: 0.8pt solid color-mix(in srgb, var(--apt-c) 30%, transparent);
   border-left: 3pt solid var(--apt-c);
   border-radius: 6mm 0 6mm 0;
 }
@@ -784,6 +922,144 @@ section.no-break {
   margin: 0 0 8mm;
 }
 
+/* ============ Por qué Hestía ============ */
+.porque .section-hd h2 { font-size: 28pt; }
+.porque-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 14pt;
+  color: var(--ber);
+  margin-top: 4pt;
+}
+.porque-origin,
+.porque-values,
+.porque-traveler {
+  break-inside: avoid-page;
+  margin-top: 10mm;
+}
+.porque-origin .eyebrow,
+.porque-values .eyebrow,
+.porque-traveler .eyebrow {
+  color: var(--apt-c);
+  font-size: 9pt;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.porque-h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: 20pt;
+  line-height: 1.18;
+  color: var(--ber-dk);
+  margin: 4pt 0 8pt;
+  max-width: 150mm;
+}
+.porque-p {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13pt;
+  line-height: 1.55;
+  color: var(--ber);
+  max-width: 150mm;
+  margin: 0 0 8pt;
+}
+.porque-quote {
+  margin: 10mm 0 0;
+  padding: 0 0 0 8mm;
+  border-left: 2pt solid var(--apt-c);
+  break-inside: avoid;
+}
+.porque-quote p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 16pt;
+  line-height: 1.45;
+  color: var(--ber-dk);
+  margin: 0 0 4pt;
+}
+.porque-quote-attr {
+  font-family: 'Inter', sans-serif;
+  font-size: 9pt;
+  letter-spacing: 0.10em;
+  color: var(--ink-soft);
+}
+.porque-closing {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 14pt;
+  color: var(--apt-c-dk);
+  margin: 8mm 0 0;
+  text-align: center;
+}
+
+/* HESTIA letters — H E S T I A */
+.hestia-letters {
+  display: grid;
+  gap: 5mm;
+  margin: 7mm 0 0;
+}
+.hestia-letter {
+  break-inside: avoid;
+  display: grid;
+  grid-template-columns: 32pt 1fr;
+  gap: 10pt;
+  align-items: start;
+  padding: 4mm 0;
+  border-top: 0.6pt solid var(--hair);
+}
+.hl-letter {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 34pt;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--apt-c);
+}
+.hl-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ber-dk);
+  margin-bottom: 3pt;
+}
+.hl-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12pt;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.traveler-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6mm;
+  margin-top: 6mm;
+}
+.traveler-card {
+  break-inside: avoid;
+  padding: 4mm 4mm;
+  border: 0.8pt solid color-mix(in srgb, var(--apt-c) 30%, transparent);
+  border-radius: 5mm 0 5mm 0;
+}
+.traveler-icon {
+  font-size: 22pt;
+  margin-bottom: 3pt;
+}
+.traveler-t {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13pt;
+  font-weight: 500;
+  color: var(--ber-dk);
+  margin-bottom: 3pt;
+  line-height: 1.25;
+}
+.traveler-d {
+  font-size: 9pt;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
 .back-cover {
   page: cover;
   position: relative;
@@ -825,21 +1101,12 @@ section.no-break {
 // ---------------------------------------------------------------
 function renderCover(aptId, lang, aptData, byApt) {
   const guideData = byApt[aptId][lang];
-  const heroImg = aptData.gallery_imgs[0] || aptData.hero_img;
+  // Cover photo: el mismo hero que abre la página de cada Hestía en la web
+  const heroImg = aptData.hero_img || aptData.gallery_imgs[0];
   return `
   <div class="cover" style="background-image: url('${fileUrl(heroImg)}')">
     <div class="cover-mark">
-      <svg viewBox="0 0 120 120" aria-hidden="true">
-        <g fill="#F6E3C2">
-          <path d="M18 22 L32 22 L32 50 L32 56 L30 62 L30 98 L18 98 Z"/>
-          <path d="M88 22 L102 22 L102 98 L90 98 L90 62 L88 56 L88 50 Z"/>
-          <rect x="14" y="20" width="22" height="4" rx="1"/>
-          <rect x="84" y="20" width="22" height="4" rx="1"/>
-          <rect x="14" y="96" width="22" height="4" rx="1"/>
-          <rect x="84" y="96" width="22" height="4" rx="1"/>
-          <rect x="36" y="56" width="48" height="6" rx="1"/>
-        </g>
-      </svg>
+      ${logoSVG('#F6E3C2')}
       Hestía
     </div>
     <div class="cover-content">
@@ -854,12 +1121,12 @@ function renderCover(aptId, lang, aptData, byApt) {
   </div>`;
 }
 
-function renderWelcome(shared, aptData) {
+function renderWelcome(shared, aptData, lang) {
   const w = shared.welcome;
-  // Foto decorativa al pie (paisaje horizontal — busca una de terraza/exterior)
   const photo = aptData.gallery_imgs[11] || aptData.gallery_imgs[0];
   return `
   <section class="welcome">
+    ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(w.title.split(' ')[0]).toUpperCase()}</div>
       <h2>${esc(w.title)}</h2>
@@ -870,15 +1137,17 @@ function renderWelcome(shared, aptData) {
     ${photo ? `
       <figure class="welcome-photo">
         <img src="${fileUrl(photo)}" alt=""/>
+        ${watermarkBadge()}
       </figure>` : ''}
   </section>`;
 }
 
-function renderWifi(shared, aptData) {
+function renderWifi(shared, aptData, lang) {
   const w = shared.wifi;
   const photo = aptData.gallery_imgs[1] || aptData.gallery_imgs[0];
   return `
   <section>
+    ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(w.title.toUpperCase())}</div>
       <h2>${esc(w.title)}</h2>
@@ -898,15 +1167,17 @@ function renderWifi(shared, aptData) {
     ${photo ? `
       <figure class="wifi-photo">
         <img src="${fileUrl(photo)}" alt=""/>
+        ${watermarkBadge()}
       </figure>` : ''}
   </section>`;
 }
 
-function renderNameAndWhy(shared) {
+function renderNameAndWhy(shared, aptData, lang) {
   const n = shared.name;
   const w = shared.why;
   return `
   <section>
+    ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc((n.title + ' · ' + w.title).toUpperCase())}</div>
       <h2>${esc(n.title)}</h2>
@@ -918,10 +1189,11 @@ function renderNameAndWhy(shared) {
   </section>`;
 }
 
-function renderCleaning(shared) {
+function renderCleaning(shared, aptData, lang) {
   const c = shared.cleaning;
   return `
   <section>
+    ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(c.title.toUpperCase())}</div>
       <h2>${esc(c.title)}</h2>
@@ -935,10 +1207,11 @@ function renderCleaning(shared) {
   </section>`;
 }
 
-function renderRules(shared, lang) {
+function renderRules(shared, aptData, lang) {
   const r = shared.rules;
   return `
   <section>
+    ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(r.title.toUpperCase())}</div>
       <h2>${esc(r.title)}</h2>
@@ -979,6 +1252,7 @@ function renderRoom(room, aptData, roomPhotos, urbFallback, aptId, lang) {
 
   return `
   <section class="room">
+    ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(room.title.toUpperCase())}</div>
       <h2>${esc(room.title)}</h2>
@@ -987,6 +1261,7 @@ function renderRoom(room, aptData, roomPhotos, urbFallback, aptId, lang) {
     ${hero ? `
       <figure class="room-hero">
         <img src="${fileUrl(hero.src)}" alt=""/>
+        ${watermarkBadge()}
         ${hero.caption ? `<figcaption>${esc(hero.caption)}</figcaption>` : ''}
       </figure>` : ''}
 
@@ -1030,6 +1305,7 @@ function renderRoomGallery(photos, room, lang) {
         ${pagePhotos.map(p => `
           <figure class="photo">
             <img src="${fileUrl(p.src)}" alt=""/>
+            ${watermarkBadge()}
             ${p.caption ? `<figcaption>${esc(p.caption)}</figcaption>` : ''}
           </figure>`).join('')}
       </div>
@@ -1037,10 +1313,11 @@ function renderRoomGallery(photos, room, lang) {
   }).join('');
 }
 
-function renderSurroundings(shared, lang) {
+function renderSurroundings(shared, aptData, lang) {
   const s = shared.surroundings;
   return `
   <section>
+    ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(s.title.toUpperCase())}</div>
       <h2>${esc(s.title)}</h2>
@@ -1078,11 +1355,11 @@ function renderSurroundings(shared, lang) {
   </section>`;
 }
 
-function renderDayPlans(DAY_PLANS, lang) {
+function renderDayPlans(DAY_PLANS, aptData, lang) {
   if (!DAY_PLANS || DAY_PLANS.length === 0) return '';
-  const fmt = (k) => lang === 'es' ? `title_es` : `title_en`;
   return `
   <section>
+    ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(lang === 'es' ? 'ITINERARIOS' : 'ITINERARIES')}</div>
       <h2>${esc(lang === 'es' ? 'Días que podéis vivir' : 'Days you can live')}</h2>
@@ -1123,10 +1400,11 @@ function renderDayPlans(DAY_PLANS, lang) {
   </section>`;
 }
 
-function renderPhones(shared) {
+function renderPhones(shared, aptData, lang) {
   const p = shared.phones;
   return `
   <section>
+    ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(p.title.toUpperCase())}</div>
       <h2>${esc(p.title)}</h2>
@@ -1141,11 +1419,12 @@ function renderPhones(shared) {
   </section>`;
 }
 
-function renderFeedback(shared, lang, aptData) {
+function renderFeedback(shared, aptData, lang) {
   const f = shared.feedback;
   const photo = aptData.gallery_imgs[12] || aptData.gallery_imgs[3] || aptData.gallery_imgs[0];
   return `
   <section>
+    ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(f.title.toUpperCase())}</div>
       <h2>${esc(f.title)}</h2>
@@ -1154,7 +1433,136 @@ function renderFeedback(shared, lang, aptData) {
     ${photo ? `
       <figure class="welcome-photo">
         <img src="${fileUrl(photo)}" alt=""/>
+        ${watermarkBadge()}
       </figure>` : ''}
+  </section>`;
+}
+
+// ---------------------------------------------------------------
+// Por qué Hestía — contenido extraído de porque-hestia-page.jsx
+// ---------------------------------------------------------------
+const PORQUE_PDF = {
+  es: {
+    eyebrow: 'La idea detrás de Hestía',
+    title: 'Por qué creamos Hestía',
+    subtitle: 'Y por qué se llama así.',
+    origin_eyebrow: 'EL ORIGEN',
+    origin_title: 'No empezó como un negocio. Empezó como una convicción.',
+    origin_paras: [
+      '2016. Alex y Fran tienen tres viviendas en Vera Playa. Podrían haberlas puesto en una plataforma, cobrado la comisión y desconectado el teléfono. Lo contrario es más difícil y más lento — y es exactamente lo que decidieron hacer.',
+      'Hestía nació de una pregunta: ¿qué pasaría si el alquiler de vacaciones que usas te hiciera sentir en casa de verdad? No solo limpio y funcional. En casa — con historia, con carácter, con alguien al otro lado que sabe tu nombre.',
+      'Un ingeniero informático y un filólogo clásico con décadas en Vera Playa. El uno observa y construye; el otro nombra y cuida. Juntos transformaron tres viviendas en los tres — tres hogares con alma propia. Sin oficina. Sin recepción. Con el teléfono siempre encendido.',
+    ],
+    origin_quote: 'Lo más difícil no fue crear Hestía. Fue convencernos de que merecía la pena intentarlo de otra manera.',
+    origin_quote_attr: '— Alex Berruezo',
+    values_eyebrow: 'NUESTROS VALORES',
+    values_title: 'HESTIA · seis maneras de habitarla',
+    values_lede: 'El nombre que recibimos de la diosa griega no es solo símbolo: es una guía. Cada letra de Hestía nombra un valor que practicamos a diario. Seis ideas que se suman en una sola: la confianza.',
+    values: [
+      { letter: 'H', name: 'Hospitalidad', desc: 'La llama que recibe. Hestía es la diosa del hogar y guarda el fuego de bienvenida — el que se honra al partir y al volver. Tu estancia empieza el día que reservas y no termina cuando te marchas: termina el día que quieres volver.' },
+      { letter: 'E', name: 'Escucha',      desc: 'Personas, no clientes. Alex en español, Fran en inglés. Conocemos tu nombre antes de que cruces la puerta y sabemos lo que necesitas — porque nos lo cuentas y porque escuchamos. Sin formularios. Sin intermediarios.' },
+      { letter: 'S', name: 'Sencillez',    desc: 'Sin recepción. Sin oficina. Lo esencial hecho con cuidado: tres llaves, tres casas, dos personas al teléfono. Lo demás sobra.' },
+      { letter: 'T', name: 'Transparencia', desc: 'Sin letra pequeña. Precios claros, fotos reales, distancias medidas en metros. Si algo no está, lo decimos. Si algo se rompe, lo arreglamos. Lo que ves es lo que hay.' },
+      { letter: 'I', name: 'Integridad',   desc: 'Lo que prometemos al reservar es lo que entregamos al abrir la puerta. Diseñamos cada Hestía como si fuera nuestra propia casa — porque, en cierto modo, lo es. El cojín bien puesto, el café que espera, la toalla doblada: el detalle que lo cambia todo.' },
+      { letter: 'A', name: 'Arraigo',      desc: 'No inventamos nada. Hestía huele a sal, a olivar, a calima del Sahara. Llevamos décadas en Vera Playa y eso es lo que entregamos: no un decorado, sino el sitio real.' },
+    ],
+    values_closing: 'Seis valores que se suman en uno: la confianza.',
+    traveler_eyebrow: 'EL HUÉSPED QUE NOS ELIGE',
+    traveler_title: 'Sabemos para quién existe Hestía',
+    traveler_intro: 'Hay un tipo de huésped que no viene solo a descansar. Trae consigo el cuidado, la curiosidad y las ganas de que el lugar que visita siga siendo lo que es. Cuida lo que usa, respeta lo que comparte y deja el destino un poco mejor de como lo encontró. Para ese huésped existe Hestía.',
+    travelers: [
+      { icon: '🏡', t: 'Cuida lo que usa como si fuera suyo.', d: 'El Hestía que deja está tan bien como lo encontró. Sabe que el siguiente huésped también lo merece.' },
+      { icon: '🌿', t: 'No solo está: contribuye.',           d: 'Recomienda el bar de toda la vida, respeta el silencio de la tarde, deja el entorno mejor de como lo encontró.' },
+      { icon: '🔄', t: 'Vuelve. Y trae a alguien.',          d: 'Cuando encuentra un lugar donde se ha sentido en casa, vuelve. Y convierte a otros en huéspedes colaborativos.' },
+    ],
+  },
+  en: {
+    eyebrow: 'The idea behind Hestía',
+    title: 'Why we created Hestía',
+    subtitle: 'And why it has this name.',
+    origin_eyebrow: 'THE ORIGIN',
+    origin_title: "It didn't start as a business. It started as a conviction.",
+    origin_paras: [
+      '2016. Alex and Fran have three properties in Vera Playa. They could have listed them on a platform, collected the commission and switched the phone off. The opposite is harder and slower — and that is exactly what they decided to do.',
+      'Hestía was born from a question: what if the holiday rental you book actually made you feel at home? Not just clean and functional. At home — with a history, with character, with someone on the other end who knows your name.',
+      'A computer engineer and a classical philologist with decades in Vera Playa. One observes and builds; the other names and cares. Together they turned three properties into the three Hestías — three homes with their own soul. No office. No reception desk. With the phone always on.',
+    ],
+    origin_quote: 'The hardest part was not creating Hestía. It was convincing ourselves it was worth trying a different way.',
+    origin_quote_attr: '— Alex Berruezo',
+    values_eyebrow: 'OUR VALUES',
+    values_title: 'HESTIA · six ways to inhabit it',
+    values_lede: 'The name we received from the Greek goddess is not only a symbol: it is a guide. Every letter of Hestía names a value we practice every day. Six ideas that add up to one: trust.',
+    values: [
+      { letter: 'H', name: 'Hospitality',  desc: 'The flame that welcomes. Hestía is the goddess of the hearth — keeper of the fire honoured when leaving and returning. Your stay begins the day you book and does not end when you leave: it ends the day you want to come back.' },
+      { letter: 'E', name: 'Empathy',      desc: 'People, not clients. Alex in Spanish, Fran in English. We know your name before you cross the door and what you need — because you tell us, and because we listen. No forms. No intermediaries.' },
+      { letter: 'S', name: 'Simplicity',   desc: 'No reception. No office. The essentials done with care: three keys, three homes, two people on the phone. Anything more is in the way.' },
+      { letter: 'T', name: 'Transparency', desc: 'No small print. Clear prices, real photos, distances measured in metres. If something is missing, we say so. If something breaks, we fix it. What you see is what is there.' },
+      { letter: 'I', name: 'Integrity',    desc: 'What we promise at booking is what we hand over when the door opens. We design every Hestía as if it were our own home — because in a way it is. The neatly placed cushion, the waiting coffee, the folded towel: the detail that changes everything.' },
+      { letter: 'A', name: 'Authenticity', desc: 'We invented nothing. Hestía smells of salt, olive grove, Saharan calima. We have been in Vera Playa for decades — and that is what we hand over: not a stage set, but the real place.' },
+    ],
+    values_closing: 'Six values that add up to one: trust.',
+    traveler_eyebrow: 'THE GUEST WHO CHOOSES US',
+    traveler_title: 'We know who Hestía exists for',
+    traveler_intro: "There is a type of guest who doesn't come just to rest. They bring care, curiosity and a genuine wish to leave the place a little better than they found it. They look after what they use, respect what they share, and make the destination better every day. Hestía exists for that guest.",
+    travelers: [
+      { icon: '🏡', t: 'Cares for what they use as if it were theirs.', d: 'The Hestía they leave is as good as they found it. They know the next guest deserves the same.' },
+      { icon: '🌿', t: "They don't just stay: they contribute.",        d: 'They recommend the local bar, respect the quiet of the afternoon, leave their surroundings better than they found them.' },
+      { icon: '🔄', t: 'They come back. And bring someone.',           d: "When they find a place where they felt at home, they return — and turn others into collaborative guests too." },
+    ],
+  },
+};
+
+function renderPorque(aptData, lang) {
+  const p = PORQUE_PDF[lang];
+  return `
+  <section class="porque">
+    ${sectionMark(aptData, lang)}
+    <div class="section-hd">
+      <div class="eyebrow">${esc(p.eyebrow.toUpperCase())}</div>
+      <h2>${esc(p.title)}</h2>
+      <div class="porque-sub">${esc(p.subtitle)}</div>
+    </div>
+
+    <div class="porque-origin">
+      <div class="eyebrow">${esc(p.origin_eyebrow)}</div>
+      <h3 class="porque-h3">${esc(p.origin_title)}</h3>
+      ${p.origin_paras.map(par => `<p class="porque-p">${esc(par)}</p>`).join('')}
+      <blockquote class="porque-quote">
+        <p>${esc(p.origin_quote)}</p>
+        <div class="porque-quote-attr">${esc(p.origin_quote_attr)}</div>
+      </blockquote>
+    </div>
+
+    <div class="porque-values">
+      <div class="eyebrow">${esc(p.values_eyebrow)}</div>
+      <h3 class="porque-h3">${esc(p.values_title)}</h3>
+      <p class="porque-p">${esc(p.values_lede)}</p>
+      <div class="hestia-letters">
+        ${p.values.map(v => `
+          <div class="hestia-letter">
+            <span class="hl-letter">${esc(v.letter)}</span>
+            <div class="hl-body">
+              <div class="hl-name">${esc(v.name)}</div>
+              <div class="hl-desc">${esc(v.desc)}</div>
+            </div>
+          </div>`).join('')}
+      </div>
+      <p class="porque-closing">${esc(p.values_closing)}</p>
+    </div>
+
+    <div class="porque-traveler">
+      <div class="eyebrow">${esc(p.traveler_eyebrow)}</div>
+      <h3 class="porque-h3">${esc(p.traveler_title)}</h3>
+      <p class="porque-p">${esc(p.traveler_intro)}</p>
+      <div class="traveler-grid">
+        ${p.travelers.map(t => `
+          <div class="traveler-card">
+            <div class="traveler-icon">${t.icon}</div>
+            <div class="traveler-t">${esc(t.t)}</div>
+            <div class="traveler-d">${esc(t.d)}</div>
+          </div>`).join('')}
+      </div>
+    </div>
   </section>`;
 }
 
@@ -1208,18 +1616,19 @@ function buildHTML(aptId, lang, data) {
 </head>
 <body>
 ${renderCover(aptId, lang, apt, data.GUIDE_BY_APT)}
-${renderWelcome(shared, apt)}
-${renderWifi(shared, apt)}
-${renderNameAndWhy(shared)}
-${renderCleaning(shared)}
-${renderRules(shared, lang)}
+${renderWelcome(shared, apt, lang)}
+${renderWifi(shared, apt, lang)}
+${renderNameAndWhy(shared, apt, lang)}
+${renderCleaning(shared, apt, lang)}
+${renderRules(shared, apt, lang)}
 ${guide[lang].rooms.map(room =>
   renderRoom(room, apt, data.ROOM_PHOTOS, data.URB_FALLBACK, aptId, lang)
 ).join('\n')}
-${renderSurroundings(shared, lang)}
-${renderDayPlans(data.DAY_PLANS, lang)}
-${renderPhones(shared)}
-${renderFeedback(shared, lang, apt)}
+${renderSurroundings(shared, apt, lang)}
+${renderDayPlans(data.DAY_PLANS, apt, lang)}
+${renderPhones(shared, apt, lang)}
+${renderPorque(apt, lang)}
+${renderFeedback(shared, apt, lang)}
 ${renderBackCover(apt, lang)}
 </body>
 </html>`;

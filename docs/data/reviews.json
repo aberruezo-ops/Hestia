@@ -1,7 +1,7 @@
 {
   "_doc": "Reviews curadas y de la web. source: 'booking'|'airbnb'|'google'|'web'. apt: 'vm'|'vt'|'vs'|'all'. highlight: true para destacarse en la sección de relevantes. status: 'published'|'pending' (solo published se muestra al público).",
   "version": 1,
-  "updatedAt": "2026-05-11T20:00:00Z",
+  "updatedAt": "2026-05-15T20:30:00Z",
   "items": [
     {
       "id": "bk-001",
@@ -300,6 +300,45 @@
       "lang": "es",
       "text": "Reserva directa, contrato claro, prereserva fácil. Salinas estaba impecable y la guía digital nos llevó a sitios reales — el restaurante de Garrucha al que fuimos no aparece en ninguna app. Volvemos en septiembre.",
       "highlight": false,
+      "status": "published"
+    },
+    {
+      "id": "go-005",
+      "source": "google",
+      "apt": "vt",
+      "name": "Mihaela Puscasu",
+      "country": "ES",
+      "date": "2025-10-15",
+      "rating": 5,
+      "lang": "es",
+      "text": "Un apartamento muy bonito, todo está al detalle. De los mejores sitios que he estado en Vera. Pero lo mejor de todo los propietarios (Alejandro y Fran).",
+      "highlight": true,
+      "status": "published"
+    },
+    {
+      "id": "go-006",
+      "source": "google",
+      "apt": "vt",
+      "name": "Sergio Cantalejo Cano",
+      "country": "ES",
+      "date": "2025-09-15",
+      "rating": 5,
+      "lang": "es",
+      "text": "Han sido unos días maravillosos en Vera. Desde que llegamos nos sentimos como en casa. El apartamento estaba limpio, bien equipado y decorado con buen gusto. La terraza estupenda con el mar de fondo.",
+      "highlight": false,
+      "status": "published"
+    },
+    {
+      "id": "go-007",
+      "source": "google",
+      "apt": "vt",
+      "name": "Beatriz Sanchez",
+      "country": "ES",
+      "date": "2025-09-15",
+      "rating": 5,
+      "lang": "es",
+      "text": "¿Sabéis esa sensación de estar en tu propio hogar? Pues esa ha sido la nuestra. Tranquilidad, comodidad, acogedor, con unas vistas brutales — incluso me atrevería a ponerle el adjetivo de lujo: no le falta detalle.",
+      "highlight": true,
       "status": "published"
     }
   ]
