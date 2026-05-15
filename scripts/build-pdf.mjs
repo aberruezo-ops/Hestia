@@ -910,6 +910,35 @@ section.no-break {
   text-transform: uppercase;
   font-size: 7.5pt;
 }
+.place-events {
+  margin-top: 2mm;
+  padding: 2mm 3mm;
+  background: rgba(var(--apt-rgb, 122, 90, 35), 0.04);
+  border-left: 2pt solid var(--apt-c-dk);
+  border-radius: 8pt 0 8pt 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.place-events-tag {
+  font-weight: 700;
+  color: var(--apt-c-dk);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 7.5pt;
+  margin-bottom: 1mm;
+}
+.place-events ul {
+  margin: 0;
+  padding-left: 4mm;
+  font-size: 9pt;
+  line-height: 1.45;
+}
+.place-events li { margin: 0.5mm 0; }
+.place-event-when {
+  color: var(--ink-soft, #6b5d63);
+  font-style: italic;
+  font-size: 8.5pt;
+}
 
 /* ============ Sites grid ============ */
 .sites-grid {
@@ -1530,6 +1559,16 @@ function renderPlacesRich(PLACES, CATEGORIES, aptData, lang) {
             ${p.specialty ? `<div class="place-meta"><span class="place-meta-tag">${tagPide}:</span> ${esc(p.specialty)}</div>` : ''}
             ${p.best ? `<div class="place-meta"><span class="place-meta-tag">${tagBest}:</span> ${esc(p.best)}</div>` : ''}
             ${p.tip ? `<div class="place-meta"><span class="place-meta-tag">${tagTip}:</span> ${esc(p.tip)}</div>` : ''}
+            ${Array.isArray(p.events) && p.events.length > 0 ? `
+              <div class="place-events">
+                <div class="place-events-tag">${lang === 'es' ? 'Fiestas y eventos' : 'Festivals & events'}</div>
+                <ul>
+                  ${p.events.map(ev => `
+                    <li>
+                      <strong>${esc(ev.name)}</strong>${ev.when ? ` <span class="place-event-when">· ${esc(ev.when)}</span>` : ''}${ev.d ? ` — ${esc(ev.d)}` : ''}
+                    </li>`).join('')}
+                </ul>
+              </div>` : ''}
             ${p.services ? `<div class="place-meta">${esc(p.services)}</div>` : ''}
             ${p.access ? `<div class="place-meta">${esc(p.access)}</div>` : ''}
           </div>`;

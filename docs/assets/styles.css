@@ -10788,6 +10788,75 @@ footer,
 }
 .ag-place-access { font-style: italic; opacity: .85; }
 
+/* Specialty / tip / best — micro-pills antes del texto en kursive */
+.ag-place-specialty,
+.ag-place-best,
+.ag-place-tip {
+  display: block;
+  margin-top: 4px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.ag-place-specialty-tag,
+.ag-place-best-tag,
+.ag-place-tip-tag {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--apt-accent, var(--ber-dk)) 75%, var(--ber-dk));
+  padding: 1px 6px;
+  margin-right: 4px;
+  border-radius: 8px 0 8px 0;
+  background: color-mix(in srgb, var(--apt-accent, var(--ber)) 8%, transparent);
+  vertical-align: 1px;
+}
+
+/* Eventos y fiestas — lista de festividades por pueblo */
+.ag-place-events {
+  display: block;
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: color-mix(in srgb, var(--apt-accent, var(--ber)) 4%, var(--crema));
+  border-left: 3px solid color-mix(in srgb, var(--apt-accent, var(--ber)) 40%, transparent);
+  border-radius: 10px 0 10px 0;
+}
+.ag-place-events-tag {
+  display: block;
+  font-family: var(--sans);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--apt-accent, var(--ber-dk)) 80%, var(--ber-dk));
+  margin-bottom: 4px;
+}
+.ag-place-events-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ag-place-event {
+  font-size: 12.5px;
+  line-height: 1.45;
+  margin: 2px 0;
+  color: var(--ink);
+}
+.ag-place-event-name {
+  font-weight: 600;
+  color: var(--ber-dk);
+}
+.ag-place-event-when {
+  color: var(--ink-soft);
+  font-style: italic;
+  font-size: 11.5px;
+}
+.ag-place-event-desc {
+  color: var(--ink-soft);
+}
+
 /* (Reglas de .ag-photo-wrap eliminadas — la estructura ahora es figure>img directo) */
 
 /* ================================================================

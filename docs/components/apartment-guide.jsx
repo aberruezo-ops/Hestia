@@ -244,14 +244,112 @@ const PLACES = [
   { id: 'bicis-villaricos',name: 'Bicis Villaricos', desc: 'Tel. 627 139 092', cat: 'activity', lat: 37.2470, lng: -1.7660 },
 
   // Pueblos
-  { id: 't-mojacar',      name: 'Mojácar (casco antiguo)', cat: 'town', lat: 37.1377, lng: -1.8523 },
-  { id: 't-vera',         name: 'Vera pueblo',             cat: 'town', lat: 37.2491, lng: -1.8639 },
-  { id: 't-velez',        name: 'Vélez-Rubio',             cat: 'town', lat: 37.6520, lng: -2.0760 },
-  { id: 't-sorbas',       name: 'Sorbas',                  cat: 'town', lat: 37.0920, lng: -2.0770 },
-  { id: 't-castillo',     name: 'Castillo Marqués de los Vélez', desc: 'Vélez-Blanco.', cat: 'town', lat: 37.6905, lng: -2.0998 },
-  { id: 't-gergal',       name: 'Gérgal',                  cat: 'town', lat: 37.1110, lng: -2.5430 },
-  { id: 't-lorca',        name: 'Lorca (Murcia)',          cat: 'town', lat: 37.6770, lng: -1.7000 },
-  { id: 't-cartagena',    name: 'Cartagena (teatro romano)', cat: 'town', lat: 37.6040, lng: -0.9870 },
+  // Pueblos — cada uno con atractivos, recomendaciones y eventos clave.
+  // El campo `events` es una lista de fiestas/festivales con su mes.
+  { id: 't-mojacar',      name: 'Mojácar',                desc: 'El pueblo blanco más fotografiado de Almería, colgado sobre un cerro a 175 m. Herencia árabe en cada calle estrecha encalada.', best: 'Plaza del Frontón al atardecer (mirador), Fuente Mora, Iglesia de Santa María (fortaleza-iglesia), Puerta de la Ciudad y el símbolo del Indalo.', tip: 'Aparca en el parking de la entrada y sube andando. Mejor a última hora — la luz dora las fachadas y bajan las temperaturas.', events: [
+      { name: 'Moros y Cristianos', when: '2.ª semana de junio', d: 'Tres días de desfiles, embajadas y batallas históricas en homenaje a la Reconquista de 1488.' },
+      { name: 'Fiestas patronales de San Agustín', when: '28-29 de agosto', d: 'Procesión del Indalo, conciertos en Plaza Nueva y verbenas en la playa.' },
+      { name: 'Noche de los Museos', when: 'mayo', d: 'Visitas nocturnas gratuitas a museos y galerías del casco antiguo.' },
+    ], cat: 'town', lat: 37.1377, lng: -1.8523, featured: true },
+  { id: 't-vera',         name: 'Vera pueblo',            desc: 'Cabecera comarcal. Plaza Mayor con palmeras, iglesia-fortaleza del s. XVI, ayuntamiento del s. XVIII y restos de la muralla.', best: 'Iglesia de la Encarnación (sólo fortaleza de iglesia conservada en Andalucía con cuatro torres), Plaza Mayor, Mercado de Abastos y Museo Histórico Municipal.', tip: 'Aprovecha la mañana de sábado para el mercadillo grande y queda a comer en Juan Moreno o Terraza Carmona.', events: [
+      { name: 'Feria y Fiestas de Vera (San Cleofás)', when: '24-29 de septiembre', d: 'Feria patronal con caseta municipal, conciertos, toros y procesión de San Cleofás.' },
+      { name: 'Romería de la Virgen de las Angustias', when: 'último domingo de abril', d: 'Romería al santuario de Cabrera con caballos y carretas engalanadas.' },
+      { name: 'Festival de Cante Flamenco', when: 'agosto', d: 'Uno de los festivales flamencos veteranos del Levante almeriense.' },
+    ], cat: 'town', lat: 37.2491, lng: -1.8639, featured: true },
+  { id: 't-velez',        name: 'Vélez-Rubio',            desc: 'Puerta de la Comarca de los Vélez, al norte de la provincia. Imponente arquitectura barroca y casas señoriales.', best: 'Iglesia de la Encarnación (catedral barroca del s. XVIII), Museo Comarcal Velezano y Casa de los Arrieros.', tip: 'Combina con Vélez-Blanco y la Cueva de los Letreros (arte rupestre Patrimonio UNESCO). Un día perfecto desde Vera.', events: [
+      { name: 'Fiestas patronales en honor a la Virgen del Carmen', when: '15-16 de julio', d: 'Procesión nocturna y verbena en la plaza.' },
+      { name: 'Romería de la Virgen de la Cabeza', when: 'último domingo de abril', d: 'Una de las romerías más arraigadas de la sierra.' },
+    ], cat: 'town', lat: 37.6520, lng: -2.0760 },
+  { id: 't-velez-blanco', name: 'Vélez-Blanco',           desc: 'Pueblo encalado coronado por uno de los castillos renacentistas más bellos de España. Su patio original está hoy en el Metropolitan de Nueva York.', best: 'Castillo del Marqués de los Vélez (s. XVI), Cueva de los Letreros (arte rupestre, Indalo original), Iglesia de Santiago.', tip: 'La Cueva de los Letreros exige visita guiada (reserva en oficina de turismo). En el castillo, no te pierdas el Cubo del Marqués.', events: [
+      { name: 'Festival Internacional de Música y Patrimonio', when: 'segunda quincena de julio', d: 'Conciertos de música clásica y jazz en el patio del castillo.' },
+      { name: 'Fiestas de San Roque', when: '16 de agosto', d: 'Procesión, danzas tradicionales de los moros y cristianos del Marqués.' },
+      { name: 'Festival Drácula', when: 'última semana de octubre', d: 'Recreaciones góticas en el castillo — pintoresco y único.' },
+    ], cat: 'town', lat: 37.6905, lng: -2.0998, featured: true },
+  { id: 't-castillo',     name: 'Castillo Marqués de los Vélez', desc: 'Dentro de Vélez-Blanco. Fortaleza renacentista del s. XVI, una de las cumbres del Renacimiento andaluz.', best: 'Vista desde la Torre del Homenaje, la galería con vistas al valle y la reproducción del patio renacentista (el original está en el MET).', tip: 'Entrada económica (~5 €). Combínalo con la Cueva de los Letreros y comida en Vélez-Rubio.', cat: 'town', lat: 37.6905, lng: -2.0998 },
+  { id: 't-sorbas',       name: 'Sorbas',                  desc: 'Pueblo de casas colgadas sobre el barranco. Su entorno es el Paraje Natural Karst en Yesos, único en Europa.', best: 'Mirador de las casas colgadas, Cuevas de Sorbas (visita guiada en yeso natural), alfarería tradicional (talleres abiertos), Iglesia de Santa María.', tip: 'Las cuevas se visitan con guía obligatorio (3 niveles de dificultad). Reserva en cuevasdesorbas.com.', events: [
+      { name: 'Fiestas en honor a la Virgen de las Nieves', when: '5-8 de agosto', d: 'Patrona con procesión, verbena y degustación de productos típicos.' },
+      { name: 'Festival Alfarería de Sorbas', when: 'octubre', d: 'Demostraciones de los últimos alfareros tradicionales.' },
+    ], cat: 'town', lat: 37.0920, lng: -2.0770, featured: true },
+  { id: 't-nijar',        name: 'Níjar',                  desc: 'Pueblo blanco al pie de Sierra Alhamilla, puerta natural al Parque de Cabo de Gata. Cuna de la cerámica andaluza más reputada y de la jarapa (alfombra tradicional).', best: 'Calle de las Tiendas (alfarerías centenarias — La Tienda de los Milagros, El Oficio), Iglesia de Santa María (s. XVI), Plaza La Glorieta.', tip: 'Las jarapas y la cerámica de Níjar son uno de los mejores recuerdos posibles de Almería. Pregunta por el taller de Matilde Sánchez.', events: [
+      { name: 'Fiestas patronales de San Antonio Abad', when: '17 de enero', d: 'Hogueras (luminarias) y bendición de animales.' },
+      { name: 'Fiestas del Cristo de la Salud', when: 'segunda semana de septiembre', d: 'Feria, conciertos y verbena en la plaza.' },
+      { name: 'Feria de la Cerámica', when: 'julio', d: 'Encuentro de alfareros tradicionales con talleres abiertos al público.' },
+    ], cat: 'town', lat: 36.9663, lng: -2.2056, featured: true },
+  { id: 't-gergal',       name: 'Gérgal',                  desc: 'Pueblo blanco a los pies de la Sierra de los Filabres. Punto de partida natural para el Observatorio Astronómico de Calar Alto (uno de los más importantes de Europa).', best: 'Castillo de Gérgal (s. XV, vistas), Observatorio de Calar Alto (visitas guiadas a 2.168 m), senderismo en los Filabres.', tip: 'Para Calar Alto, reserva con antelación en calaralto.es. Las visitas nocturnas con observación de estrellas son experiencias únicas.', events: [
+      { name: 'Fiestas patronales de la Virgen de la Cabeza', when: 'último fin de semana de abril', d: 'Romería a la ermita y procesión por el pueblo.' },
+    ], cat: 'town', lat: 37.1110, lng: -2.5430 },
+  { id: 't-cuevas',       name: 'Cuevas del Almanzora',   desc: 'Capital del valle del Almanzora, dominada por un castillo del s. XV restaurado.', best: 'Castillo del Marqués (museo arqueológico y de arte), Cueva del Tesoro, ruta del Almanzora (paseos al río).', tip: 'Si vas con niños, el museo del castillo tiene yacimientos del Argar (Edad del Bronce) muy didácticos.', events: [
+      { name: 'Fiestas de San Diego', when: '12-13 de noviembre', d: 'Procesión, conciertos y verbena.' },
+      { name: 'Feria de Cuevas', when: 'mediados de agosto', d: 'Feria veraniega con caseta municipal y conciertos.' },
+    ], cat: 'town', lat: 37.2978, lng: -1.8814 },
+  { id: 't-garrucha',     name: 'Garrucha',                desc: 'Pueblo pesquero a 10 min de Hestía. Su lonja es de las más importantes del Mediterráneo (famosa la gamba roja).', best: 'Subasta de pescado (17:00 días laborables), Paseo Marítimo, Castillo de Jesús Nazareno (s. XVIII), Plaza del Pueblo.', tip: 'Llega al puerto sobre las 19:00 para ver descargar el día y comer al lado en Rincón del Puerto o El Almejero.', events: [
+      { name: 'Fiestas patronales de la Virgen del Carmen', when: '15-16 de julio', d: 'Procesión marítima de la Virgen por el puerto — la más emotiva de la zona.' },
+      { name: 'Fiestas de San Joaquín', when: '20-22 de agosto', d: 'Feria con conciertos en el paseo marítimo y fuegos artificiales sobre el mar.' },
+    ], cat: 'town', lat: 37.1815, lng: -1.8225, featured: true },
+  { id: 't-san-jose',     name: 'San José',                desc: 'Capital del Parque Natural de Cabo de Gata. Pueblo blanco junto al mar, base perfecta para explorar playas vírgenes.', best: 'Paseo del puerto deportivo, Centro de Visitantes Las Amoladeras, playas de Genoveses y Mónsul a 5-10 min.', tip: 'En julio-agosto el acceso a Genoveses/Mónsul se restringe — llega temprano o usa el bus lanzadera desde el pueblo.', events: [
+      { name: 'Fiestas de la Virgen del Carmen', when: '15-16 de julio', d: 'Procesión marítima con barcas pesqueras engalanadas.' },
+      { name: 'Festival Mar de Cabo de Gata', when: 'agosto', d: 'Conciertos de música mediterránea al atardecer en el puerto.' },
+    ], cat: 'town', lat: 36.7665, lng: -2.1083 },
+  { id: 't-almeria',      name: 'Almería capital',         desc: 'Capital de la provincia, a 1 h 15 min. Mezcla única de Alcazaba musulmana, Catedral-fortaleza y barrios marineros.', best: 'Alcazaba (segunda más grande de España tras la Alhambra), Catedral de la Encarnación (con planta de fortaleza), Refugios de la Guerra Civil, barrio de La Chanca, Cable Inglés (mirador al puerto), Aljibes Árabes.', tip: 'Empieza por la Alcazaba al abrir, baja al casco antiguo a tomar tapas (en Almería con cada caña traen una gratis), y termina en el Paseo Marítimo al atardecer.', events: [
+      { name: 'Semana Santa de Almería', when: 'marzo o abril', d: 'Declarada de Interés Turístico Nacional. Hermandades por el casco antiguo.' },
+      { name: 'Feria de Almería en honor a la Virgen del Mar', when: 'última semana de agosto', d: 'Feria principal, con casetas en el recinto ferial y procesión marítima de la Patrona.' },
+      { name: 'Festival de Flamenco y Música Tradicional', when: 'octubre', d: 'En diferentes localizaciones del casco histórico.' },
+    ], cat: 'town', lat: 36.8350, lng: -2.4630, featured: true },
+  { id: 't-lorca',        name: 'Lorca (Murcia)',          desc: 'Ciudad barroca declarada Conjunto Histórico-Artístico. Conocida como "la Ciudad del Sol" y por una de las Semanas Santas más espectaculares de España.', best: 'Castillo de Lorca (Fortaleza del Sol — visita guiada con teatralización), Colegiata de San Patricio, Palacio de Guevara, Museo MASS (bordados de la Semana Santa Blancos y Azules), Plaza de España.', tip: 'Sube al castillo en el ferrocarril turístico desde el centro. Si vas en Semana Santa, reserva alojamiento y entradas con meses de antelación.', events: [
+      { name: 'Semana Santa de Lorca', when: 'marzo o abril', d: '⭐ Fiesta de Interés Turístico Internacional. La rivalidad histórica entre la Hermandad Blanca y la Azul produce procesiones únicas: cabalgatas con caballos y vestuario bordado en oro y seda.' },
+      { name: 'Feria y Fiestas de Lorca', when: '6-21 de septiembre', d: 'Feria veraniega con conciertos, festejos taurinos y verbenas.' },
+      { name: 'Noche de los Museos', when: 'mayo', d: 'Visitas nocturnas gratuitas a museos y monumentos.' },
+    ], cat: 'town', lat: 37.6770, lng: -1.7000, featured: true },
+  { id: 't-aguilas',      name: 'Águilas (Murcia)',        desc: 'Pueblo costero murciano a 30 min al norte. Famoso por su Carnaval, declarado de Interés Turístico Internacional.', best: 'Castillo de San Juan (mirador), Plaza de España, Embarcadero del Hornillo (antigua estación ferroviaria inglesa), Cuatro Calas (sur), Cala Cerrada.', tip: 'En invierno (febrero) es imprescindible el Carnaval — uno de los más auténticos de España, con la Musa del Carnaval y comparsas todo el año preparándose.', events: [
+      { name: 'Carnaval de Águilas', when: 'febrero', d: '⭐ Fiesta de Interés Turístico Internacional. Tres días de comparsas, batalla de flores, entierro de la sardina.' },
+      { name: 'Fiestas patronales de la Virgen de los Dolores', when: 'segunda semana de septiembre', d: 'Procesión marítima y verbena en el paseo.' },
+      { name: 'Festival Trovero Marín', when: 'agosto', d: 'Festival de cante de trovo, género único de la cultura murciana.' },
+    ], cat: 'town', lat: 37.4060, lng: -1.5840, featured: true },
+  { id: 't-cartagena',    name: 'Cartagena (Murcia)',      desc: 'Ciudad portuaria con 3.000 años de historia. Romana, modernista y militar — única en el Mediterráneo. A 1 h 30 min.', best: 'Teatro Romano (descubierto en 1988, en perfecta conservación), Calle Mayor modernista, Museo del Foro Romano, Submarino Peral, Castillo de la Concepción (mirador), barrio del Molinete, Casa Cervantes.', tip: 'El bono "Puerto de Culturas" da acceso a todos los monumentos por ~25 €. Sube al castillo al atardecer.', events: [
+      { name: 'Carthagineses y Romanos', when: '2.ª quincena de septiembre', d: '⭐ Fiesta de Interés Turístico Internacional. 10 días de recreación histórica de la conquista romana — campamentos, batallas, mercado romano.' },
+      { name: 'La Mar de Músicas', when: 'julio', d: 'Festival internacional de músicas del mundo. Conciertos en el Auditorio del Parque Torres con vista al puerto.' },
+      { name: 'Semana Santa de Cartagena', when: 'marzo o abril', d: 'Fiesta de Interés Turístico Internacional. Procesiones nocturnas únicas en sus tronos iluminados con cera.' },
+    ], cat: 'town', lat: 37.6040, lng: -0.9870, featured: true },
+  // ── Pueblos adicionales (la Comarca, Murcia y conexiones) ─────
+  { id: 't-carboneras',   name: 'Carboneras',              desc: 'Pueblo pesquero al norte del Cabo de Gata. Punto de partida hacia Playa de los Muertos y Mesa Roldán.', best: 'Castillo de San Andrés (s. XVI, escenario de Juego de Tronos), Mesa Roldán y su faro, playa del Algarrobico (polémica icónica), puerto pesquero al atardecer.', tip: 'Sube a Mesa Roldán al amanecer o al atardecer — vistas a las mejores calas vírgenes de la zona.', events: [
+      { name: 'Moros y Cristianos de Carboneras', when: 'primera quincena de septiembre', d: 'Embajadas y desembarcos en la playa, una de las recreaciones más vistosas del Levante.' },
+      { name: 'Fiestas patronales de San Antonio de Padua', when: '13 de junio', d: 'Procesión por las calles del puerto y verbena.' },
+    ], cat: 'town', lat: 36.9963, lng: -1.8966, featured: true },
+  { id: 't-pulpi',        name: 'Pulpí',                   desc: 'Pueblo del Levante almeriense, último al norte. Famoso mundialmente por la Geoda gigante (8 m de altura).', best: 'Geoda de Pulpí (visita guiada en mina, segunda más grande del mundo), Playa de los Cocedores, Castillo de San Juan de los Terreros.', tip: 'La visita a la Geoda requiere reserva con semanas de antelación en geodapulpi.es. Grupos de 8 personas máx, en pozo a 50 m.', events: [
+      { name: 'Fiestas de San Juan', when: '23-24 de junio', d: 'Hogueras en la playa, baño nocturno y verbena junto al mar.' },
+      { name: 'Fiestas patronales de San Miguel', when: '29 de septiembre', d: 'Feria, conciertos y degustación gastronómica.' },
+    ], cat: 'town', lat: 37.4055, lng: -1.7635, featured: true },
+  { id: 't-tabernas',     name: 'Tabernas',                desc: 'Pueblo blanco en medio del único desierto de Europa. Escenario de más de 500 películas (El bueno, el feo y el malo).', best: 'Desierto de Tabernas, Mini Hollywood (Oasys), Fort Bravo (poblado del Oeste), Castillo de Tabernas, ruta de localizaciones de cine.', tip: 'En verano hace mucho calor — ve por la mañana temprano. Mini Hollywood y Fort Bravo tienen espectáculos con dobles, ideal con niños.', events: [
+      { name: 'Almería Western Film Festival', when: 'octubre', d: 'Festival internacional dedicado al género western, con proyecciones en el desierto.' },
+      { name: 'Fiestas de la Virgen de las Angustias', when: 'segunda semana de septiembre', d: 'Verbena y procesión por el casco antiguo.' },
+    ], cat: 'town', lat: 37.0420, lng: -2.3890, featured: true },
+  { id: 't-roquetas',     name: 'Roquetas de Mar',         desc: 'Capital turística del sur de la provincia, a 1 h 30 min. Playas largas, marismas con flamencos y el Aquarium más grande de la costa.', best: 'Castillo de Santa Ana, Aquarium Costa de Almería, Marismas de las Salinas Viejas (flamencos), playas de Bajadilla y Aguadulce.', tip: 'El Aquarium es perfecto para días nublados o con niños. Combínalo con el paseo por el puerto deportivo y el Castillo.', events: [
+      { name: 'Festival Internacional Roquetas Flamenca', when: 'julio', d: 'Espectáculos al aire libre en el Castillo de Santa Ana.' },
+      { name: 'Fiestas patronales de la Virgen del Rosario', when: 'primera quincena de octubre', d: 'Feria local, conciertos y procesión marinera.' },
+    ], cat: 'town', lat: 36.7641, lng: -2.6094 },
+  { id: 't-turre',        name: 'Turre',                   desc: 'Pueblo blanco al pie de la Sierra Cabrera, a 15 min de Hestía. Auténtico y poco turistificado, con buenos olivares y almazaras.', best: 'Almazara de aceite (visitas con cata), senderismo en Sierra Cabrera, mirador hacia Mojácar y la costa, Iglesia de la Encarnación.', tip: 'Combínalo con una comida en Riad Cabrera (a 10 min, en la sierra). El aceite local es excepcional.', events: [
+      { name: 'Fiestas patronales de San Francisco Javier', when: '3 de diciembre', d: 'Procesión y verbena en la plaza.' },
+      { name: 'Feria de Turre', when: 'agosto', d: 'Feria veraniega con caseta municipal.' },
+    ], cat: 'town', lat: 37.1530, lng: -1.8870 },
+  { id: 't-bedar',        name: 'Bédar',                   desc: 'Pueblo blanco serrano con pasado minero, encaramado a 600 m. Vistas espectaculares al Levante almeriense.', best: 'Ruta minera (antiguos cargaderos y túneles), Iglesia de Santa María (s. XVI), mirador del pueblo, fuentes naturales.', tip: 'En verano es 5-7 °C más fresco que la costa — escapada perfecta para el calor. Combínalo con tapas en Bédar centro.', events: [
+      { name: 'Fiestas patronales de San Gregorio', when: 'segunda quincena de mayo', d: 'Procesión, danzas tradicionales y degustación de migas.' },
+    ], cat: 'town', lat: 37.1860, lng: -1.9610 },
+  { id: 't-macael',       name: 'Macael',                  desc: 'Capital mundial del mármol blanco — el mismo de la Alhambra, el Patio de los Leones y el Vaticano. A 50 min.', best: 'Centro de Interpretación del Mármol, ruta de los talleres artesanales, canteras (con visita guiada), Iglesia de Santa María (toda de mármol).', tip: 'El Centro de Interpretación explica 5.000 años de historia del mármol macaelero. Combínalo con Cantoria y Olula (Museo Pérez Siquier).', events: [
+      { name: 'Fiestas patronales en honor a la Virgen del Rosario', when: 'primera semana de octubre', d: 'Procesión, conciertos y feria del mármol.' },
+      { name: 'Feria del Mármol', when: 'mayo (bienal)', d: 'Encuentro internacional con escultores y empresas del sector.' },
+    ], cat: 'town', lat: 37.3850, lng: -2.2780 },
+  { id: 't-olula',        name: 'Olula del Río',           desc: 'Pueblo del valle del Almanzora, sede del Museo Pérez Siquier (uno de los mejores museos de fotografía contemporánea de España).', best: 'Museo Carmen Pérez Siquier (gratuito), Plaza Mayor, mercado los miércoles.', tip: 'Imperdible para amantes del arte. El museo está abierto de mié a dom — comprueba horarios.', cat: 'town', lat: 37.3680, lng: -2.2785 },
+  { id: 't-albox',        name: 'Albox',                   desc: 'Capital del valle del Almanzora. Mercados al aire libre con producto local y artesanía marroquí.', best: 'Mercadillo de los sábados (uno de los más grandes de Almería), Iglesia de Santa María, paseo del Llano.', tip: 'El mercadillo es famoso por sus precios — perfecto para producto fresco si te quedas más de una semana.', events: [
+      { name: 'Fiestas patronales del Saliente', when: 'primera semana de septiembre', d: 'Romería al Santuario del Saliente, una de las más concurridas de Almería.' },
+    ], cat: 'town', lat: 37.3870, lng: -2.1490 },
+  { id: 't-antas',        name: 'Antas',                   desc: 'Pueblo cercano a Hestía con yacimiento argárico (Edad del Bronce) de El Argar — el más importante de la Península.', best: 'Yacimiento de El Argar, Centro de Interpretación, Cabezo de Yerba, Iglesia de Santa María.', tip: 'El yacimiento explica una de las primeras civilizaciones urbanas de Europa (3.000 a.C.). Visita guiada gratis los fines de semana.', events: [
+      { name: 'Fiestas patronales del Cristo de la Salud', when: '14 de septiembre', d: 'Procesión y verbena.' },
+    ], cat: 'town', lat: 37.2440, lng: -1.8920 },
+  { id: 't-mazarron',     name: 'Mazarrón (Murcia)',       desc: 'Pueblo costero murciano con pasado minero romano. Playas vírgenes y aguas turquesas a 1 h 15 min.', best: 'Playa de Bolnuevo y sus erosiones geológicas (Las Gredas), Playa de la Carolina, Castillo de los Vélez, Museo Arqueológico.', tip: 'Las Gredas de Bolnuevo son formaciones erosionadas únicas — visítalas al atardecer para la mejor luz.', events: [
+      { name: 'Fiestas patronales de la Purísima Concepción', when: '8 de diciembre', d: 'Procesión, hogueras y verbena.' },
+      { name: 'Carnaval de Mazarrón', when: 'febrero', d: 'Comparsas y desfiles por el paseo marítimo.' },
+    ], cat: 'town', lat: 37.5970, lng: -1.3170 },
+  { id: 't-cuevas-velez', name: 'Cuevas de los Letreros (Vélez-Blanco)', desc: 'Abrigo rupestre con pinturas neolíticas. Aquí se descubrió el Indalo, símbolo de Almería.', best: 'Las pinturas rupestres (4.000-7.000 a.C.) Patrimonio de la Humanidad UNESCO — antílopes, brujos y el Indalo original.', tip: 'Visita guiada obligatoria. Reserva en la Oficina de Turismo de Vélez-Blanco (teléfono 950 415 354).', cat: 'town', lat: 37.6920, lng: -2.0960 },
 
   // Lugares de interés
   // Lugares de interés
@@ -1046,6 +1144,22 @@ const CatGroup = ({ cat, places, lang }) => {
             <span className="ag-place-tip-tag">{lang === 'es' ? 'Tip:' : 'Tip:'}</span>
             {' '}{p.tip}
           </span>
+        )}
+        {Array.isArray(p.events) && p.events.length > 0 && (
+          <div className="ag-place-events">
+            <span className="ag-place-events-tag">
+              {lang === 'es' ? 'Fiestas y eventos' : 'Festivals & events'}
+            </span>
+            <ul className="ag-place-events-list">
+              {p.events.map((e, i) => (
+                <li key={i} className="ag-place-event">
+                  <span className="ag-place-event-name">{e.name}</span>
+                  {e.when && <span className="ag-place-event-when"> · {e.when}</span>}
+                  {e.d && <span className="ag-place-event-desc"> — {e.d}</span>}
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
         {p.services && (
           <span className="ag-place-services" aria-label={lang === 'es' ? 'Servicios' : 'Services'}>
