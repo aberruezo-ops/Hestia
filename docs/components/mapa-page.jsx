@@ -1,0 +1,138 @@
+// ================================================================
+// HESTÍA — Mapa web (sitemap)
+// Página accesible sólo desde el pie. Lista los apartados del sitio
+// organizados por bloque, en ES/EN según preferencia del huésped.
+// ================================================================
+
+const MAPA_COPY = {
+  es: {
+    eyebrow: 'Mapa del sitio',
+    title: 'Mapa web',
+    sub: 'Todos los apartados del sitio en una sola página. Una opción más para encontrar lo que buscas.',
+    sections: [
+      {
+        title: 'Los Hestías',
+        items: [
+          { href: 'index.html', label: 'Home', desc: 'Empieza aquí — los tres Hestías de un vistazo.' },
+          { href: 'mar.html', label: 'Hestía Mar', desc: 'Olivo · planta primera con jardín y terraza al amanecer.' },
+          { href: 'thalassa.html', label: 'Hestía Thalassa', desc: 'Siena · ático con SPA comunitario y vistas panorámicas.' },
+          { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Dorado · tres piscinas y Parque Natural al lado.' },
+        ],
+      },
+      {
+        title: 'Reserva',
+        items: [
+          { href: 'reservas.html', label: 'Reservas', desc: 'Comprobar disponibilidad, ver precio y enviar la solicitud.' },
+          { href: 'contacto.html', label: 'Contacto', desc: 'WhatsApp, teléfono y email — te responde una persona.' },
+        ],
+      },
+      {
+        title: 'Conócenos',
+        items: [
+          { href: 'nosotros.html', label: 'Nosotros', desc: 'Alex y Fran — quiénes somos y por qué Vera Playa.' },
+          { href: 'porque-hestia.html', label: 'Por qué Hestía', desc: 'Nuestros seis valores y la paleta de Almería.' },
+          { href: 'opiniones.html', label: 'Opiniones', desc: 'Lo que dicen los huéspedes — Booking, Airbnb, Google y web.' },
+          { href: 'noticias.html', label: 'Noticias', desc: 'Lo mejor del territorio cada mes — Almería, Murcia, Granada.' },
+          { href: 'escribir-opinion.html', label: 'Dejar opinión', desc: 'Para huéspedes que ya han dormido en un Hestía.' },
+        ],
+      },
+      {
+        title: 'Legal',
+        items: [
+          { href: 'privacidad.html', label: 'Privacidad', desc: 'Cómo tratamos tus datos — RGPD.' },
+          { href: 'cookies.html', label: 'Cookies', desc: 'Qué cookies usamos y cómo gestionarlas.' },
+        ],
+      },
+    ],
+  },
+  en: {
+    eyebrow: 'Sitemap',
+    title: 'Site map',
+    sub: 'Every section of the site on one page. One more way to find what you are looking for.',
+    sections: [
+      {
+        title: 'The Hestías',
+        items: [
+          { href: 'index.html', label: 'Home', desc: 'Start here — the three Hestías at a glance.' },
+          { href: 'mar.html', label: 'Hestía Mar', desc: 'Olive · first floor with garden and sunrise terrace.' },
+          { href: 'thalassa.html', label: 'Hestía Thalassa', desc: 'Sienna · penthouse with shared SPA and panoramic views.' },
+          { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Gold · three pools and the Nature Park next door.' },
+        ],
+      },
+      {
+        title: 'Book',
+        items: [
+          { href: 'reservas.html', label: 'Reservations', desc: 'Check availability, see the price and send the request.' },
+          { href: 'contacto.html', label: 'Contact', desc: 'WhatsApp, phone and email — a real person replies.' },
+        ],
+      },
+      {
+        title: 'About us',
+        items: [
+          { href: 'nosotros.html', label: 'About us', desc: 'Alex and Fran — who we are and why Vera Playa.' },
+          { href: 'porque-hestia.html', label: 'Why Hestía', desc: 'Our six values and the Almería palette.' },
+          { href: 'opiniones.html', label: 'Reviews', desc: 'What guests say — Booking, Airbnb, Google and our site.' },
+          { href: 'noticias.html', label: 'News', desc: 'The best of the territory each month — Almería, Murcia, Granada.' },
+          { href: 'escribir-opinion.html', label: 'Leave a review', desc: 'For guests who have stayed at a Hestía.' },
+        ],
+      },
+      {
+        title: 'Legal',
+        items: [
+          { href: 'privacidad.html', label: 'Privacy', desc: 'How we handle your data — GDPR.' },
+          { href: 'cookies.html', label: 'Cookies', desc: 'What cookies we use and how to manage them.' },
+        ],
+      },
+    ],
+  },
+};
+
+const MapaPage = ({ lang }) => {
+  const t = MAPA_COPY[lang];
+  return (
+    <section className="mapa-page">
+      <div className="container mapa-inner">
+        <div className="eyebrow mapa-eyebrow">{t.eyebrow}</div>
+        <h1 className="mapa-title">{t.title}</h1>
+        <p className="mapa-sub">{t.sub}</p>
+        <div className="mapa-grid">
+          {t.sections.map((sec, i) => (
+            <div key={i} className="mapa-section reveal" style={{ transitionDelay: `${i * 60}ms` }}>
+              <h2 className="mapa-section-title">{sec.title}</h2>
+              <ul className="mapa-list">
+                {sec.items.map((it) => (
+                  <li key={it.href} className="mapa-item">
+                    <a className="mapa-link" href={it.href}>
+                      <span className="mapa-link-label">{it.label}</span>
+                      <span className="mapa-link-arrow" aria-hidden="true">→</span>
+                    </a>
+                    <p className="mapa-desc">{it.desc}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const MapaPageApp = () => {
+  const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
+  const { mode, scrolled } = useScrollMode();
+  useReveal();
+  React.useEffect(() => { localStorage.setItem('hestia-lang', lang); document.documentElement.lang = lang; }, [lang]);
+  return (
+    <>
+      <Topbar lang={lang} setLang={setLang} />
+      <Header mode={mode} scrolled={scrolled} lang={lang} />
+      <main><MapaPage lang={lang} /></main>
+      <Footer lang={lang} />
+      <FloatingChat lang={lang} />
+      <Cookies lang={lang} />
+    </>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<MapaPageApp/>);

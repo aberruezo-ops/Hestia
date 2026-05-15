@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /cookies.html
+Disallow: /privacidad.html
+Disallow: /p-edit.html
+Disallow: /data/
+
+Sitemap: https://www.hestiayourhome.com/sitemap.xml

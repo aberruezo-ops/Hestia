@@ -1,0 +1,66 @@
+name: Sync iCal availability
+
+# Runs every hour and on manual trigger.
+# Fetches iCal feeds from Booking.com and Airbnb, parses them,
+# and writes docs/assets/availability.json to the repo.
+#
+# Booking.com URLs are stored in GitHub Secrets:
+#   ICAL_VM_BOOKING  — Hestía Mar,      Booking iCal URL
+#   ICAL_VT_BOOKING  — Hestía Thalassa, Booking iCal URL
+#   ICAL_VS_BOOKING  — Hestía Salinas,  Booking iCal URL
+#
+# Airbnb URLs are hardcoded below (read-only calendar tokens).
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'   # every 4 hours
+  workflow_dispatch:          # manual trigger from GitHub UI
+
+# Prevent overlapping runs from generating false-alarm cancelled emails.
+concurrency:
+  group: sync-ical
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install icalendar requests
+
+      - name: Sync availability data
+        env:
+          ICAL_VM_AIRBNB:  "https://www.airbnb.com/calendar/ical/17253235.ics?t=884f5a6f50994d7ba0ff70ae0adb6a01&locale=es"
+          ICAL_VM_BOOKING: ${{ secrets.ICAL_VM_BOOKING }}
+          ICAL_VT_AIRBNB:  "https://www.airbnb.com/calendar/ical/40813709.ics?t=2e7a355e6706497a9c8e830dfbaa8f84&locale=es"
+          ICAL_VT_BOOKING: ${{ secrets.ICAL_VT_BOOKING }}
+          ICAL_VS_AIRBNB:  "https://www.airbnb.com/calendar/ical/51707917.ics?t=8fcaa412ddbc400085ee555440561c3a&locale=es"
+          ICAL_VS_BOOKING: ${{ secrets.ICAL_VS_BOOKING }}
+          # Print first 60 lines of each raw iCal in the logs for debugging
+          ICAL_DEBUG: "1"
+        run: python .github/scripts/sync_ical.py
+
+      - name: Show result
+        if: always()
+        run: cat docs/assets/availability.json
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name  "hestia-bot"
+          git config user.email "bot@hestiayourhome.com"
+          git add docs/assets/availability.json
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: sync availability data [skip ci]"
+            git push
+          else
+            echo "No changes — availability.json is up to date."
+          fi
