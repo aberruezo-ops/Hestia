@@ -1926,8 +1926,9 @@ async function generate(aptId, lang, data) {
 // ---------------------------------------------------------------
 const args = process.argv.slice(2);
 const aptArg = args[0];
-const langArg = args[1] || 'es';
+const langArg = args[1];   // si no se pasa, generamos AMBOS idiomas
 const apts = aptArg ? [aptArg] : ['vm', 'vt', 'vs'];
+const langs = langArg ? [langArg] : ['es', 'en'];
 
 (async () => {
   console.log('Cargando datos de guías…');
@@ -1935,7 +1936,9 @@ const apts = aptArg ? [aptArg] : ['vm', 'vt', 'vs'];
   console.log('Datos cargados. Generando PDFs…\n');
 
   for (const apt of apts) {
-    await generate(apt, langArg, data);
+    for (const lang of langs) {
+      await generate(apt, lang, data);
+    }
   }
   console.log('\n✓ Hecho.');
 })().catch(e => {

@@ -59,9 +59,24 @@ const GUIDE_SECTIONS = [
   { id: 'terraza',      es: 'Mi terraza',       en: 'My terrace' },
   { id: 'urbanizacion', es: 'Mi urbanización',  en: 'My complex' },
   { id: 'alrededores',  es: 'Alrededores',      en: 'Surroundings' },
+  { id: 'sabores',      es: 'Sabores',          en: 'Tastes' },
+  { id: 'pueblos',      es: 'Pueblos y cultura', en: 'Towns & culture' },
+  { id: 'mar-playas',   es: 'Mar y playas',     en: 'Sea & beaches' },
+  { id: 'actividades',  es: 'Actividades y planes', en: 'Activities & plans' },
+  { id: 'mercados',     es: 'Mercados y compras', en: 'Markets & shops' },
   { id: 'telefonos',    es: 'Teléfonos',        en: 'Useful phones' },
   { id: 'feedback',     es: 'Comentarios',      en: 'Feedback' },
 ];
+
+// Mapeo de qué categorías van en cada sección temática.
+// El bloque 'alrededores' queda solo con intro/mapa/fuentes oficiales.
+const SECTION_CATS = {
+  sabores:     ['restaurant', 'bar', 'fish', 'super', 'celiac'],
+  pueblos:     ['town', 'culture', 'bookshop'],
+  'mar-playas':['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
+  actividades: ['activity'],
+  mercados:    ['market'],
+};
 
 // ----- Categorías de lugares (icono + color brand + etiqueta bilingüe) -----
 // Color: 1 token de la paleta corporativa por categoría. Icono: emoji
@@ -2905,7 +2920,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <div className="ag-nav-actions">
               <a
                 className="ag-nav-btn ag-nav-btn-primary"
-                href={aptInfo.pdf}
+                href={lang === 'en' ? aptInfo.pdf.replace('-Guia.pdf', '-Guia-EN.pdf') : aptInfo.pdf}
                 download
                 target="_blank"
                 rel="noopener"
@@ -3041,21 +3056,102 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                 </div>
               </div>
             )}
+          </section>
 
-            {/* Categorías plegables: cada una abre/cierra al pulsar el head.
-                Si tiene "imperdibles" se ven dentro, arriba del listado general. */}
-            {CATEGORIES.filter(c => c.id !== 'home').map(cat => {
-              const inCat = PLACES.filter(p => p.cat === cat.id);
+          {/* Sabores · comer y beber */}
+          <section id="ag-sabores" className="ag-section">
+            <span className="ag-section-num">14</span>
+            <h2 className="ag-h2">{lang === 'es' ? 'Sabores' : 'Tastes'}</h2>
+            <p className="ag-para">
+              {lang === 'es'
+                ? 'Restaurantes, bares y lugares para comprar. Nuestras recomendaciones, lo que pediríamos en cada sitio y dónde ir cuando apriete el hambre.'
+                : 'Restaurants, bars and places to shop. Our recommendations, what we would order at each spot and where to go when hunger strikes.'}
+            </p>
+            {SECTION_CATS.sabores.map(catId => {
+              const cat = CATEGORIES.find(c => c.id === catId);
+              if (!cat) return null;
+              const inCat = PLACES.filter(p => p.cat === catId);
               if (!inCat.length) return null;
-              return <CatGroup key={cat.id} cat={cat} places={inCat} lang={lang} />;
+              return <CatGroup key={catId} cat={cat} places={inCat} lang={lang} />;
             })}
+          </section>
 
-            {/* Planes de día curados — itinerarios de un día completo */}
+          {/* Pueblos y cultura */}
+          <section id="ag-pueblos" className="ag-section">
+            <span className="ag-section-num">15</span>
+            <h2 className="ag-h2">{lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'}</h2>
+            <p className="ag-para">
+              {lang === 'es'
+                ? 'Pueblos blancos, castillos, yacimientos y festivales. Cada lugar con sus atractivos principales, recomendaciones y las fiestas que merece la pena coincidir.'
+                : 'White villages, castles, archaeological sites and festivals. Each place with its highlights, recommendations and festivals worth timing your visit with.'}
+            </p>
+            {SECTION_CATS.pueblos.map(catId => {
+              const cat = CATEGORIES.find(c => c.id === catId);
+              if (!cat) return null;
+              const inCat = PLACES.filter(p => p.cat === catId);
+              if (!inCat.length) return null;
+              return <CatGroup key={catId} cat={cat} places={inCat} lang={lang} />;
+            })}
+          </section>
+
+          {/* Mar y playas */}
+          <section id="ag-mar-playas" className="ag-section">
+            <span className="ag-section-num">16</span>
+            <h2 className="ag-h2">{lang === 'es' ? 'Mar y playas' : 'Sea & beaches'}</h2>
+            <p className="ag-para">
+              {lang === 'es'
+                ? 'Las mejores playas y calas — desde las más accesibles a las vírgenes que exigen caminar un rato. Servicios, acceso y la mejor hora para ir en cada época del año.'
+                : 'The best beaches and coves — from the easily accessible to the wild ones that require a walk. Services, access and the best hour to visit in each season.'}
+            </p>
+            <Top5BeachesBand places={PLACES} lang={lang} />
+            {SECTION_CATS['mar-playas'].map(catId => {
+              const cat = CATEGORIES.find(c => c.id === catId);
+              if (!cat) return null;
+              const inCat = PLACES.filter(p => p.cat === catId);
+              if (!inCat.length) return null;
+              return <CatGroup key={catId} cat={cat} places={inCat} lang={lang} />;
+            })}
+          </section>
+
+          {/* Actividades y planes de día */}
+          <section id="ag-actividades" className="ag-section">
+            <span className="ag-section-num">17</span>
+            <h2 className="ag-h2">{lang === 'es' ? 'Actividades y planes' : 'Activities & plans'}</h2>
+            <p className="ag-para">
+              {lang === 'es'
+                ? 'Buceo, kayak, vuelo en biplaza, parques acuáticos, observatorios. Y nuestros itinerarios curados para vivir días redondos por la zona.'
+                : 'Diving, kayaking, scenic flights, water parks, observatories. And our curated itineraries for full days around the area.'}
+            </p>
+            {SECTION_CATS.actividades.map(catId => {
+              const cat = CATEGORIES.find(c => c.id === catId);
+              if (!cat) return null;
+              const inCat = PLACES.filter(p => p.cat === catId);
+              if (!inCat.length) return null;
+              return <CatGroup key={catId} cat={cat} places={inCat} lang={lang} />;
+            })}
             <DayPlans lang={lang} />
           </section>
 
+          {/* Mercados y compras */}
+          <section id="ag-mercados" className="ag-section">
+            <span className="ag-section-num">18</span>
+            <h2 className="ag-h2">{lang === 'es' ? 'Mercados y compras' : 'Markets & shops'}</h2>
+            <p className="ag-para">
+              {lang === 'es'
+                ? 'El calendario semanal de mercadillos de la zona y los mejores sitios para llevarte un recuerdo: cerámica de Níjar, jarapas, aceite local.'
+                : 'Weekly street markets in the area and the best places for souvenirs: Níjar ceramics, traditional rugs, local olive oil.'}
+            </p>
+            {SECTION_CATS.mercados.map(catId => {
+              const cat = CATEGORIES.find(c => c.id === catId);
+              if (!cat) return null;
+              const inCat = PLACES.filter(p => p.cat === catId);
+              if (!inCat.length) return null;
+              return <CatGroup key={catId} cat={cat} places={inCat} lang={lang} />;
+            })}
+          </section>
+
           <section id="ag-telefonos" className="ag-section">
-            <span className="ag-section-num">14</span>
+            <span className="ag-section-num">19</span>
             <h2 className="ag-h2">{s.phones.title}</h2>
             <table className="ag-phones-table">
               <tbody>
@@ -3070,7 +3166,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-feedback" className="ag-section">
-            <span className="ag-section-num">15</span>
+            <span className="ag-section-num">20</span>
             <h2 className="ag-h2">{s.feedback.title}</h2>
             {s.feedback.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
           </section>
