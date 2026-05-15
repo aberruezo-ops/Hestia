@@ -15398,3 +15398,124 @@ img[src*="apt-vt-gallery-"] {
   border-color: var(--apt-accent) !important;
   color: #FFFFFF !important;
 }
+
+/* ============================================================
+   /p-edit · Reviews tab — listado compacto + expansión
+   ============================================================ */
+.pe-rev-row.is-collapsed { padding: 0; }
+.pe-rev-row.is-expanded  { padding: 0; }
+.pe-rev-row-summary {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 14px 48px 64px 38px 64px 1.2fr 24px 60px 2fr;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  border-radius: 10px 0 10px 0;
+  transition: background 0.15s ease;
+}
+.pe-rev-row-summary:hover {
+  background: color-mix(in srgb, var(--ber) 5%, transparent);
+}
+.pe-rev-row.is-expanded .pe-rev-row-summary {
+  background: color-mix(in srgb, var(--ber) 6%, transparent);
+  border-bottom: 1px solid rgba(61,26,53,0.10);
+  border-radius: 10px 0 0 0;
+}
+.pe-rev-row-chevron {
+  font-size: 11px;
+  color: var(--ink-soft);
+  width: 14px;
+  text-align: center;
+}
+.pe-rev-row-summary .pe-rev-status {
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #fff;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  text-align: center;
+}
+.pe-rev-row-summary .pe-rev-source-badge {
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+  text-align: center;
+  white-space: nowrap;
+}
+.pe-rev-apt-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ber-dk);
+  background: color-mix(in srgb, var(--ber) 8%, transparent);
+  padding: 2px 4px;
+  border-radius: 4px;
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+.pe-rev-date-cell {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.pe-rev-name-cell {
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--ber-dk);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pe-rev-country-cell {
+  font-size: 10px;
+  color: var(--ink-soft);
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+.pe-rev-rating-cell {
+  font-size: 11px;
+  color: var(--ber-dk);
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+}
+.pe-rev-snippet {
+  font-size: 11.5px;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-style: italic;
+}
+.pe-rev-row.pe-rev-pending {
+  border-left: 3px solid var(--warn, #C8975A);
+}
+.pe-rev-row-body {
+  padding: 16px 18px 18px;
+}
+@media (max-width: 720px) {
+  .pe-rev-row-summary {
+    grid-template-columns: 14px 1fr auto auto;
+    grid-template-rows: auto auto;
+    gap: 6px 10px;
+  }
+  .pe-rev-status, .pe-rev-source-badge, .pe-rev-apt-badge, .pe-rev-rating-cell {
+    grid-row: 1;
+  }
+  .pe-rev-name-cell {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    font-size: 13px;
+  }
+  .pe-rev-date-cell, .pe-rev-country-cell, .pe-rev-snippet { display: none; }
+}

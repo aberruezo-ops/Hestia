@@ -428,24 +428,53 @@ const ReviewRow = ({
   onChange,
   onRemove
 }) => {
+  const [expanded, setExpanded] = React.useState(false);
   const sourceMeta = REVIEW_SOURCES.find(s => s.id === review.source) || REVIEW_SOURCES[3];
+  const aptMeta = REVIEW_APTS.find(a => a.id === review.apt) || {
+    label: review.apt
+  };
   const isPending = review.status === 'pending';
+  const dateLbl = review.date ? review.date.slice(0, 7) : '—';
+  const snippet = (review.text || '').slice(0, 110);
+  const ratingLbl = review.source === 'booking' ? `${review.rating}/10` : `${review.rating}/5`;
   return /*#__PURE__*/React.createElement("div", {
-    className: `pe-card pe-rev-row${isPending ? ' pe-rev-pending' : ''}`
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "pe-rev-head"
+    className: `pe-card pe-rev-row${isPending ? ' pe-rev-pending' : ''}${expanded ? ' is-expanded' : ' is-collapsed'}`
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-rev-row-summary",
+    onClick: () => setExpanded(e => !e),
+    "aria-expanded": expanded
   }, /*#__PURE__*/React.createElement("span", {
+    className: "pe-rev-row-chevron",
+    "aria-hidden": "true"
+  }, expanded ? '▾' : '▸'), /*#__PURE__*/React.createElement("span", {
     className: "pe-rev-status",
     style: {
-      background: isPending ? 'var(--warn)' : 'var(--ok)'
+      background: isPending ? 'var(--warn, #C8975A)' : 'var(--ok, #6B7A3A)'
     }
-  }, isPending ? 'PENDIENTE' : 'PUBLICADA'), /*#__PURE__*/React.createElement("span", {
+  }, isPending ? 'PEND' : 'PUB'), /*#__PURE__*/React.createElement("span", {
     className: "pe-rev-source-badge",
     style: {
       background: sourceMeta.color,
       color: '#fff'
     }
   }, sourceMeta.short), /*#__PURE__*/React.createElement("span", {
+    className: "pe-rev-apt-badge"
+  }, aptMeta.label), /*#__PURE__*/React.createElement("span", {
+    className: "pe-rev-date-cell"
+  }, dateLbl), /*#__PURE__*/React.createElement("span", {
+    className: "pe-rev-name-cell"
+  }, review.name || '—'), /*#__PURE__*/React.createElement("span", {
+    className: "pe-rev-country-cell"
+  }, review.country || ''), /*#__PURE__*/React.createElement("span", {
+    className: "pe-rev-rating-cell"
+  }, ratingLbl, review.highlight ? ' ✦' : ''), /*#__PURE__*/React.createElement("span", {
+    className: "pe-rev-snippet"
+  }, snippet, review.text && review.text.length > 110 ? '…' : '')), expanded && /*#__PURE__*/React.createElement("div", {
+    className: "pe-rev-row-body"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-rev-head"
+  }, /*#__PURE__*/React.createElement("span", {
     className: "pe-rev-id"
   }, review.id), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -552,7 +581,7 @@ const ReviewRow = ({
     style: {
       cursor: 'pointer'
     }
-  }, "\u2726 Destacar como \"M\xE1s relevante\" en /opiniones")));
+  }, "\u2726 Destacar como \"M\xE1s relevante\" en /opiniones"))));
 };
 
 // Parser para extraer una review del cuerpo del email que llega desde
@@ -1148,6 +1177,7 @@ const AdminApp = () => {
   const [addMode, setAddMode] = React.useState(null); // null | 'manual' | 'paste'
   const [filterStatus, setFilterStatus] = React.useState('all');
   const [filterSource, setFilterSource] = React.useState('all');
+  const [filterApt, setFilterApt] = React.useState('all');
   const login = async e => {
     e.preventDefault();
     setPhase('loading');
@@ -1397,6 +1427,7 @@ const AdminApp = () => {
     const filtered = items.filter(r => {
       if (filterStatus !== 'all' && r.status !== filterStatus) return false;
       if (filterSource !== 'all' && r.source !== filterSource) return false;
+      if (filterApt !== 'all' && r.apt !== filterApt && r.apt !== 'all') return false;
       return true;
     });
     const counts = {
@@ -1404,15 +1435,27 @@ const AdminApp = () => {
       pending: items.filter(r => r.status === 'pending').length,
       published: items.filter(r => r.status === 'published').length
     };
+    // Counts por fuente y por apt (respetan el resto de filtros activos
+    // para que el huésped vea cuántas hay tras el filtrado combinado).
+    const baseForSrc = items.filter(r => filterStatus === 'all' || r.status === filterStatus).filter(r => filterApt === 'all' || r.apt === filterApt || r.apt === 'all');
+    const baseForApt = items.filter(r => filterStatus === 'all' || r.status === filterStatus).filter(r => filterSource === 'all' || r.source === filterSource);
+    const srcCounts = {
+      all: baseForSrc.length,
+      ...Object.fromEntries(REVIEW_SOURCES.map(s => [s.id, baseForSrc.filter(r => r.source === s.id).length]))
+    };
+    const aptCounts = {
+      all: baseForApt.length,
+      ...Object.fromEntries(REVIEW_APTS.filter(a => a.id !== 'all').map(a => [a.id, baseForApt.filter(r => r.apt === a.id || r.apt === 'all').length]))
+    };
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
       className: "pe-card"
-    }, /*#__PURE__*/React.createElement("h2", null, "Reviews \xB7 ", counts.all, " total \xB7 ", /*#__PURE__*/React.createElement("strong", null, counts.pending, " pendientes")), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("h2", null, "Reviews \xB7 ", filtered.length, " de ", counts.all, " \xB7 ", /*#__PURE__*/React.createElement("strong", null, counts.pending, " pendientes")), /*#__PURE__*/React.createElement("div", {
       className: "pe-rev-filters"
     }, /*#__PURE__*/React.createElement("div", {
       className: "pe-rev-filter-group"
     }, /*#__PURE__*/React.createElement("span", {
       className: "pe-rev-flbl"
-    }, "Estado:"), [['all', 'Todas', counts.all], ['pending', 'Pendientes', counts.pending], ['published', 'Publicadas', counts.published]].map(([id, lbl, n]) => /*#__PURE__*/React.createElement("button", {
+    }, "Estado"), [['all', 'Todas', counts.all], ['pending', 'Pendientes', counts.pending], ['published', 'Publicadas', counts.published]].map(([id, lbl, n]) => /*#__PURE__*/React.createElement("button", {
       key: id,
       type: "button",
       className: `pe-btn pe-btn-sm${filterStatus === id ? ' pe-btn-primary' : ' pe-btn-ghost'}`,
@@ -1421,16 +1464,29 @@ const AdminApp = () => {
       className: "pe-rev-filter-group"
     }, /*#__PURE__*/React.createElement("span", {
       className: "pe-rev-flbl"
-    }, "Fuente:"), /*#__PURE__*/React.createElement("button", {
+    }, "Fuente"), /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: `pe-btn pe-btn-sm${filterSource === 'all' ? ' pe-btn-primary' : ' pe-btn-ghost'}`,
       onClick: () => setFilterSource('all')
-    }, "Todas"), REVIEW_SOURCES.map(s => /*#__PURE__*/React.createElement("button", {
+    }, "Todas (", srcCounts.all, ")"), REVIEW_SOURCES.map(s => /*#__PURE__*/React.createElement("button", {
       key: s.id,
       type: "button",
       className: `pe-btn pe-btn-sm${filterSource === s.id ? ' pe-btn-primary' : ' pe-btn-ghost'}`,
       onClick: () => setFilterSource(s.id)
-    }, s.short)))), /*#__PURE__*/React.createElement("div", {
+    }, s.short, " (", srcCounts[s.id], ")"))), /*#__PURE__*/React.createElement("div", {
+      className: "pe-rev-filter-group"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "pe-rev-flbl"
+    }, "Hest\xEDa"), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: `pe-btn pe-btn-sm${filterApt === 'all' ? ' pe-btn-primary' : ' pe-btn-ghost'}`,
+      onClick: () => setFilterApt('all')
+    }, "Todas (", aptCounts.all, ")"), REVIEW_APTS.filter(a => a.id !== 'all').map(a => /*#__PURE__*/React.createElement("button", {
+      key: a.id,
+      type: "button",
+      className: `pe-btn pe-btn-sm${filterApt === a.id ? ' pe-btn-primary' : ' pe-btn-ghost'}`,
+      onClick: () => setFilterApt(a.id)
+    }, a.label, " (", aptCounts[a.id], ")")))), /*#__PURE__*/React.createElement("div", {
       className: "pe-rev-add-actions",
       style: {
         marginTop: 16,

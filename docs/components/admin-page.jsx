@@ -428,75 +428,102 @@ const newReviewId = (source) => {
 const todayIso = () => new Date().toISOString().slice(0, 10);
 
 const ReviewRow = ({ review, onChange, onRemove }) => {
+  const [expanded, setExpanded] = React.useState(false);
   const sourceMeta = REVIEW_SOURCES.find(s => s.id === review.source) || REVIEW_SOURCES[3];
+  const aptMeta   = REVIEW_APTS.find(a => a.id === review.apt) || { label: review.apt };
   const isPending = review.status === 'pending';
+  const dateLbl = review.date ? review.date.slice(0, 7) : '—';
+  const snippet = (review.text || '').slice(0, 110);
+  const ratingLbl = review.source === 'booking'
+    ? `${review.rating}/10`
+    : `${review.rating}/5`;
+
   return (
-    <div className={`pe-card pe-rev-row${isPending ? ' pe-rev-pending' : ''}`}>
-      <div className="pe-rev-head">
-        <span className="pe-rev-status" style={{ background: isPending ? 'var(--warn)' : 'var(--ok)' }}>
-          {isPending ? 'PENDIENTE' : 'PUBLICADA'}
+    <div className={`pe-card pe-rev-row${isPending ? ' pe-rev-pending' : ''}${expanded ? ' is-expanded' : ' is-collapsed'}`}>
+      <button
+        type="button"
+        className="pe-rev-row-summary"
+        onClick={() => setExpanded(e => !e)}
+        aria-expanded={expanded}
+      >
+        <span className="pe-rev-row-chevron" aria-hidden="true">{expanded ? '▾' : '▸'}</span>
+        <span className="pe-rev-status" style={{ background: isPending ? 'var(--warn, #C8975A)' : 'var(--ok, #6B7A3A)' }}>
+          {isPending ? 'PEND' : 'PUB'}
         </span>
         <span className="pe-rev-source-badge" style={{ background: sourceMeta.color, color: '#fff' }}>
           {sourceMeta.short}
         </span>
-        <span className="pe-rev-id">{review.id}</span>
-        <button type="button" className="pe-btn pe-btn-ghost pe-btn-sm pe-rev-del" onClick={onRemove}>× Eliminar</button>
-      </div>
-      <div className="pe-rev-grid">
-        <div className="pe-field">
-          <label>Estado</label>
-          <select value={review.status || 'pending'} onChange={e => onChange('status', e.target.value)} className="pe-input">
-            <option value="pending">Pendiente</option>
-            <option value="published">Publicada</option>
-          </select>
+        <span className="pe-rev-apt-badge">{aptMeta.label}</span>
+        <span className="pe-rev-date-cell">{dateLbl}</span>
+        <span className="pe-rev-name-cell">{review.name || '—'}</span>
+        <span className="pe-rev-country-cell">{review.country || ''}</span>
+        <span className="pe-rev-rating-cell">{ratingLbl}{review.highlight ? ' ✦' : ''}</span>
+        <span className="pe-rev-snippet">{snippet}{review.text && review.text.length > 110 ? '…' : ''}</span>
+      </button>
+
+      {expanded && (
+        <div className="pe-rev-row-body">
+          <div className="pe-rev-head">
+            <span className="pe-rev-id">{review.id}</span>
+            <button type="button" className="pe-btn pe-btn-ghost pe-btn-sm pe-rev-del" onClick={onRemove}>× Eliminar</button>
+          </div>
+          <div className="pe-rev-grid">
+            <div className="pe-field">
+              <label>Estado</label>
+              <select value={review.status || 'pending'} onChange={e => onChange('status', e.target.value)} className="pe-input">
+                <option value="pending">Pendiente</option>
+                <option value="published">Publicada</option>
+              </select>
+            </div>
+            <div className="pe-field">
+              <label>Fuente</label>
+              <select value={review.source} onChange={e => onChange('source', e.target.value)} className="pe-input">
+                {REVIEW_SOURCES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
+              </select>
+            </div>
+            <div className="pe-field">
+              <label>Hestía</label>
+              <select value={review.apt} onChange={e => onChange('apt', e.target.value)} className="pe-input">
+                {REVIEW_APTS.map(a => <option key={a.id} value={a.id}>{a.label}</option>)}
+              </select>
+            </div>
+            <div className="pe-field">
+              <label>Nombre</label>
+              <input type="text" value={review.name || ''} onChange={e => onChange('name', e.target.value)} className="pe-input"/>
+            </div>
+            <div className="pe-field">
+              <label>País (ISO 2)</label>
+              <input type="text" maxLength={2} value={review.country || ''} onChange={e => onChange('country', e.target.value.toUpperCase())} className="pe-input"/>
+            </div>
+            <div className="pe-field">
+              <label>Fecha</label>
+              <input type="date" value={review.date || ''} onChange={e => onChange('date', e.target.value)} className="pe-input"/>
+            </div>
+            <div className="pe-field">
+              <label>Rating ({review.source === 'booking' ? '/10' : '/5'})</label>
+              <input type="number" min={0} max={review.source === 'booking' ? 10 : 5} step={0.1}
+                value={review.rating} onChange={e => onChange('rating', Number(e.target.value))} className="pe-input"/>
+            </div>
+            <div className="pe-field">
+              <label>Idioma</label>
+              <select value={review.lang || 'es'} onChange={e => onChange('lang', e.target.value)} className="pe-input">
+                <option value="es">ES</option>
+                <option value="en">EN</option>
+              </select>
+            </div>
+          </div>
+          <div className="pe-field" style={{marginTop: 12}}>
+            <label>Texto</label>
+            <textarea rows={3} value={review.text || ''} onChange={e => onChange('text', e.target.value)} className="pe-textarea"/>
+          </div>
+          <div className="pe-field" style={{marginTop: 12, flexDirection:'row', alignItems:'center', gap:8, display:'flex'}}>
+            <input type="checkbox" id={`hl-${review.id}`} checked={!!review.highlight} onChange={e => onChange('highlight', e.target.checked)}/>
+            <label htmlFor={`hl-${review.id}`} style={{cursor:'pointer'}}>
+              ✦ Destacar como "Más relevante" en /opiniones
+            </label>
+          </div>
         </div>
-        <div className="pe-field">
-          <label>Fuente</label>
-          <select value={review.source} onChange={e => onChange('source', e.target.value)} className="pe-input">
-            {REVIEW_SOURCES.map(s => <option key={s.id} value={s.id}>{s.label}</option>)}
-          </select>
-        </div>
-        <div className="pe-field">
-          <label>Hestía</label>
-          <select value={review.apt} onChange={e => onChange('apt', e.target.value)} className="pe-input">
-            {REVIEW_APTS.map(a => <option key={a.id} value={a.id}>{a.label}</option>)}
-          </select>
-        </div>
-        <div className="pe-field">
-          <label>Nombre</label>
-          <input type="text" value={review.name || ''} onChange={e => onChange('name', e.target.value)} className="pe-input"/>
-        </div>
-        <div className="pe-field">
-          <label>País (ISO 2)</label>
-          <input type="text" maxLength={2} value={review.country || ''} onChange={e => onChange('country', e.target.value.toUpperCase())} className="pe-input"/>
-        </div>
-        <div className="pe-field">
-          <label>Fecha</label>
-          <input type="date" value={review.date || ''} onChange={e => onChange('date', e.target.value)} className="pe-input"/>
-        </div>
-        <div className="pe-field">
-          <label>Rating ({review.source === 'booking' ? '/10' : '/5'})</label>
-          <input type="number" min={0} max={review.source === 'booking' ? 10 : 5} step={0.1}
-            value={review.rating} onChange={e => onChange('rating', Number(e.target.value))} className="pe-input"/>
-        </div>
-        <div className="pe-field">
-          <label>Idioma</label>
-          <select value={review.lang || 'es'} onChange={e => onChange('lang', e.target.value)} className="pe-input">
-            <option value="es">ES</option>
-            <option value="en">EN</option>
-          </select>
-        </div>
-      </div>
-      <div className="pe-field" style={{marginTop: 12}}>
-        <label>Texto</label>
-        <textarea rows={3} value={review.text || ''} onChange={e => onChange('text', e.target.value)} className="pe-textarea"/>
-      </div>
-      <div className="pe-field" style={{marginTop: 12, flexDirection:'row', alignItems:'center', gap:8, display:'flex'}}>
-        <input type="checkbox" id={`hl-${review.id}`} checked={!!review.highlight} onChange={e => onChange('highlight', e.target.checked)}/>
-        <label htmlFor={`hl-${review.id}`} style={{cursor:'pointer'}}>
-          ✦ Destacar como "Más relevante" en /opiniones
-        </label>
-      </div>
+      )}
     </div>
   );
 };
@@ -958,6 +985,7 @@ const AdminApp = () => {
   const [addMode, setAddMode] = React.useState(null); // null | 'manual' | 'paste'
   const [filterStatus, setFilterStatus] = React.useState('all');
   const [filterSource, setFilterSource] = React.useState('all');
+  const [filterApt,    setFilterApt]    = React.useState('all');
 
   const login = async (e) => {
     e.preventDefault();
@@ -1187,6 +1215,7 @@ const AdminApp = () => {
     const filtered = items.filter(r => {
       if (filterStatus !== 'all' && r.status !== filterStatus) return false;
       if (filterSource !== 'all' && r.source !== filterSource) return false;
+      if (filterApt    !== 'all' && r.apt    !== filterApt && r.apt !== 'all') return false;
       return true;
     });
     const counts = {
@@ -1194,13 +1223,31 @@ const AdminApp = () => {
       pending:   items.filter(r => r.status === 'pending').length,
       published: items.filter(r => r.status === 'published').length,
     };
+    // Counts por fuente y por apt (respetan el resto de filtros activos
+    // para que el huésped vea cuántas hay tras el filtrado combinado).
+    const baseForSrc = items
+      .filter(r => filterStatus === 'all' || r.status === filterStatus)
+      .filter(r => filterApt    === 'all' || r.apt    === filterApt    || r.apt === 'all');
+    const baseForApt = items
+      .filter(r => filterStatus === 'all' || r.status === filterStatus)
+      .filter(r => filterSource === 'all' || r.source === filterSource);
+    const srcCounts = {
+      all: baseForSrc.length,
+      ...Object.fromEntries(REVIEW_SOURCES.map(s => [s.id, baseForSrc.filter(r => r.source === s.id).length])),
+    };
+    const aptCounts = {
+      all: baseForApt.length,
+      ...Object.fromEntries(REVIEW_APTS.filter(a => a.id !== 'all').map(a =>
+        [a.id, baseForApt.filter(r => r.apt === a.id || r.apt === 'all').length]
+      )),
+    };
     return (
       <>
         <div className="pe-card">
-          <h2>Reviews · {counts.all} total · <strong>{counts.pending} pendientes</strong></h2>
+          <h2>Reviews · {filtered.length} de {counts.all} · <strong>{counts.pending} pendientes</strong></h2>
           <div className="pe-rev-filters">
             <div className="pe-rev-filter-group">
-              <span className="pe-rev-flbl">Estado:</span>
+              <span className="pe-rev-flbl">Estado</span>
               {[['all','Todas',counts.all], ['pending','Pendientes',counts.pending], ['published','Publicadas',counts.published]].map(([id,lbl,n]) => (
                 <button key={id} type="button"
                   className={`pe-btn pe-btn-sm${filterStatus === id ? ' pe-btn-primary' : ' pe-btn-ghost'}`}
@@ -1208,14 +1255,25 @@ const AdminApp = () => {
               ))}
             </div>
             <div className="pe-rev-filter-group">
-              <span className="pe-rev-flbl">Fuente:</span>
+              <span className="pe-rev-flbl">Fuente</span>
               <button type="button"
                 className={`pe-btn pe-btn-sm${filterSource === 'all' ? ' pe-btn-primary' : ' pe-btn-ghost'}`}
-                onClick={() => setFilterSource('all')}>Todas</button>
+                onClick={() => setFilterSource('all')}>Todas ({srcCounts.all})</button>
               {REVIEW_SOURCES.map(s => (
                 <button key={s.id} type="button"
                   className={`pe-btn pe-btn-sm${filterSource === s.id ? ' pe-btn-primary' : ' pe-btn-ghost'}`}
-                  onClick={() => setFilterSource(s.id)}>{s.short}</button>
+                  onClick={() => setFilterSource(s.id)}>{s.short} ({srcCounts[s.id]})</button>
+              ))}
+            </div>
+            <div className="pe-rev-filter-group">
+              <span className="pe-rev-flbl">Hestía</span>
+              <button type="button"
+                className={`pe-btn pe-btn-sm${filterApt === 'all' ? ' pe-btn-primary' : ' pe-btn-ghost'}`}
+                onClick={() => setFilterApt('all')}>Todas ({aptCounts.all})</button>
+              {REVIEW_APTS.filter(a => a.id !== 'all').map(a => (
+                <button key={a.id} type="button"
+                  className={`pe-btn pe-btn-sm${filterApt === a.id ? ' pe-btn-primary' : ' pe-btn-ghost'}`}
+                  onClick={() => setFilterApt(a.id)}>{a.label} ({aptCounts[a.id]})</button>
               ))}
             </div>
           </div>
