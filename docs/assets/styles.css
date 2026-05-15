@@ -15644,3 +15644,108 @@ img[src*="apt-vt-gallery-"] {
   font-size: 13px;
   text-shadow: 0 1px 0 rgba(0,0,0,0.04);
 }
+
+/* ============================================================
+   /reservas · resumen del paso 1 plegado — card con color de Hestía
+   ============================================================ */
+.rf-summary-card {
+  background: linear-gradient(135deg,
+    color-mix(in srgb, var(--apt-accent) 12%, var(--crema)) 0%,
+    color-mix(in srgb, var(--apt-accent) 5%, var(--crema)) 100%);
+  border: 1px solid color-mix(in srgb, var(--apt-accent) 30%, transparent);
+  border-radius: 14px 0 14px 0;
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+  position: relative;
+}
+.rf-summary-apt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--apt-accent);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+.rf-summary-apt strong {
+  font-weight: 600;
+  color: color-mix(in srgb, var(--apt-accent) 78%, var(--ber-dk));
+}
+.rf-summary-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--apt-accent);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--apt-accent) 25%, transparent);
+}
+.rf-summary-dates {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ber-dk);
+  letter-spacing: 0.01em;
+}
+.rf-summary-date {
+  background: rgba(255,255,255,0.55);
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.rf-summary-arrow {
+  color: var(--apt-accent);
+  font-weight: 600;
+  font-size: 14px;
+}
+.rf-summary-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+.rf-summary-pill {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--apt-accent) 60%, var(--ber-dk));
+  background: rgba(255,255,255,0.50);
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--apt-accent) 22%, transparent);
+  white-space: nowrap;
+}
+
+/* Reset/override del antiguo rf-edit (que ahora envuelve la card) */
+.rf-edit:has(.rf-summary-card) {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  margin-left: 0;
+  width: 100%;
+  max-width: 100%;
+}
+.rf-edit:has(.rf-summary-card) .rf-edit-action {
+  align-self: flex-end;
+  color: var(--apt-accent, var(--sol-h));
+  letter-spacing: 0.18em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--apt-accent, var(--ber)) 28%, transparent);
+}
+.rf-edit:has(.rf-summary-card):hover .rf-edit-action {
+  background: color-mix(in srgb, var(--apt-accent, var(--ber)) 8%, transparent);
+}

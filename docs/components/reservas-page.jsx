@@ -310,6 +310,18 @@ const _resAvail = (checkin, checkout, blocked) => {
 const ReservasForm = ({ lang }) => {
   const t = RESERVAS_COPY[lang];
   const aptNames = { vm: 'Hestía Mar', vt: 'Hestía Thalassa', vs: 'Hestía Salinas' };
+  const aptAccents = { vm: '#6B7A3A', vt: '#8A4A24', vs: '#9E7A2C' };
+  // Formato ES: "16 may 2026" · EN: "May 16, 2026"
+  const fmtResDate = (iso) => {
+    if (!iso) return '';
+    const [y, m, d] = iso.split('-').map(Number);
+    if (lang === 'es') {
+      const mo = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][m - 1];
+      return `${d} ${mo} ${y}`;
+    }
+    const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m - 1];
+    return `${mo} ${d}, ${y}`;
+  };
 
   // Step 1 — datos que afectan a precio y disponibilidad
   const [apt, setApt]           = React.useState('');
@@ -601,15 +613,45 @@ const ReservasForm = ({ lang }) => {
     }
   };
 
-  // Resúmenes para los headers de cada step cuando están plegados
+  // Resumen del paso 1 cuando está plegado — card con color del Hestía,
+  // fechas en español, badge bonita.
+  const nightsBooked = step1Complete ? nightsSelected : null;
   const step1Summary = step1Complete ? (
-    <span className="rf-summary-line">
-      <strong>{aptNames[apt]}</strong>
-      {' · '}{checkin} → {checkout}
-      {' · '}{guests}
-      {pets === 'yes' && <> · {lang === 'es' ? '🐾 mascota' : '🐾 pet'}</>}
-      {extrasCount > 0 && <> · {extrasCount} {lang === 'es' ? 'extras' : 'extras'}</>}
-    </span>
+    <div
+      className="rf-summary-card"
+      data-apt={apt}
+      style={{ '--apt-accent': aptAccents[apt] || 'var(--ber)' }}
+    >
+      <div className="rf-summary-apt">
+        <span className="rf-summary-dot" aria-hidden="true"/>
+        <strong>{aptNames[apt]}</strong>
+      </div>
+      <div className="rf-summary-dates">
+        <span className="rf-summary-date">{fmtResDate(checkin)}</span>
+        <span className="rf-summary-arrow" aria-hidden="true">→</span>
+        <span className="rf-summary-date">{fmtResDate(checkout)}</span>
+      </div>
+      <div className="rf-summary-pills">
+        {nightsBooked && (
+          <span className="rf-summary-pill">
+            {nightsBooked} {nightsBooked === 1
+              ? (lang === 'es' ? 'noche' : 'night')
+              : (lang === 'es' ? 'noches' : 'nights')}
+          </span>
+        )}
+        <span className="rf-summary-pill">
+          {guests} {guests === 1
+            ? (lang === 'es' ? 'huésped' : 'guest')
+            : (lang === 'es' ? 'huéspedes' : 'guests')}
+        </span>
+        {pets === 'yes' && (
+          <span className="rf-summary-pill">🐾 {lang === 'es' ? 'mascota' : 'pet'}</span>
+        )}
+        {extrasCount > 0 && (
+          <span className="rf-summary-pill">+{extrasCount} {lang === 'es' ? 'extras' : 'extras'}</span>
+        )}
+      </div>
+    </div>
   ) : null;
 
   const fmt = n => n.toLocaleString('es-ES') + ' €';

@@ -326,6 +326,22 @@ const ReservasForm = ({
     vt: 'Hestía Thalassa',
     vs: 'Hestía Salinas'
   };
+  const aptAccents = {
+    vm: '#6B7A3A',
+    vt: '#8A4A24',
+    vs: '#9E7A2C'
+  };
+  // Formato ES: "16 may 2026" · EN: "May 16, 2026"
+  const fmtResDate = iso => {
+    if (!iso) return '';
+    const [y, m, d] = iso.split('-').map(Number);
+    if (lang === 'es') {
+      const mo = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'][m - 1];
+      return `${d} ${mo} ${y}`;
+    }
+    const mo = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][m - 1];
+    return `${mo} ${d}, ${y}`;
+  };
 
   // Step 1 — datos que afectan a precio y disponibilidad
   const [apt, setApt] = React.useState('');
@@ -617,10 +633,40 @@ const ReservasForm = ({
     }
   };
 
-  // Resúmenes para los headers de cada step cuando están plegados
-  const step1Summary = step1Complete ? /*#__PURE__*/React.createElement("span", {
-    className: "rf-summary-line"
-  }, /*#__PURE__*/React.createElement("strong", null, aptNames[apt]), ' · ', checkin, " \u2192 ", checkout, ' · ', guests, pets === 'yes' && /*#__PURE__*/React.createElement(React.Fragment, null, " \xB7 ", lang === 'es' ? '🐾 mascota' : '🐾 pet'), extrasCount > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, " \xB7 ", extrasCount, " ", lang === 'es' ? 'extras' : 'extras')) : null;
+  // Resumen del paso 1 cuando está plegado — card con color del Hestía,
+  // fechas en español, badge bonita.
+  const nightsBooked = step1Complete ? nightsSelected : null;
+  const step1Summary = step1Complete ? /*#__PURE__*/React.createElement("div", {
+    className: "rf-summary-card",
+    "data-apt": apt,
+    style: {
+      '--apt-accent': aptAccents[apt] || 'var(--ber)'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rf-summary-apt"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-summary-dot",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("strong", null, aptNames[apt])), /*#__PURE__*/React.createElement("div", {
+    className: "rf-summary-dates"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-summary-date"
+  }, fmtResDate(checkin)), /*#__PURE__*/React.createElement("span", {
+    className: "rf-summary-arrow",
+    "aria-hidden": "true"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "rf-summary-date"
+  }, fmtResDate(checkout))), /*#__PURE__*/React.createElement("div", {
+    className: "rf-summary-pills"
+  }, nightsBooked && /*#__PURE__*/React.createElement("span", {
+    className: "rf-summary-pill"
+  }, nightsBooked, " ", nightsBooked === 1 ? lang === 'es' ? 'noche' : 'night' : lang === 'es' ? 'noches' : 'nights'), /*#__PURE__*/React.createElement("span", {
+    className: "rf-summary-pill"
+  }, guests, " ", guests === 1 ? lang === 'es' ? 'huésped' : 'guest' : lang === 'es' ? 'huéspedes' : 'guests'), pets === 'yes' && /*#__PURE__*/React.createElement("span", {
+    className: "rf-summary-pill"
+  }, "\uD83D\uDC3E ", lang === 'es' ? 'mascota' : 'pet'), extrasCount > 0 && /*#__PURE__*/React.createElement("span", {
+    className: "rf-summary-pill"
+  }, "+", extrasCount, " ", lang === 'es' ? 'extras' : 'extras'))) : null;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
   return /*#__PURE__*/React.createElement("div", {
     className: "reservas-form-wrap"
