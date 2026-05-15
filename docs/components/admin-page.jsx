@@ -1430,6 +1430,34 @@ const AdminApp = () => {
               value={data.rules.minNights}
               onChange={e => update('rules.minNights', Number(e.target.value))}
               className="pe-input pe-input-num" />
+            <small className="pe-hint">Mínimo por defecto fuera de temporada crítica.</small>
+          </div>
+          <div className="pe-field">
+            <label>Ventana de estancia corta (días)</label>
+            <input type="number" min="0" step="1"
+              value={data.rules.imminentDays}
+              onChange={e => update('rules.imminentDays', Number(e.target.value))}
+              className="pe-input pe-input-num" />
+            <small className="pe-hint">
+              Si el check-in es dentro de este número de días, se permite el mínimo
+              de estancia corta (típicamente 2 noches). Pon 0 para desactivar.
+            </small>
+          </div>
+          <div className="pe-field">
+            <label>Mínimo en estancia corta (noches)</label>
+            <input type="number" min="1" max="7" step="1"
+              value={data.rules.twoNightFloor}
+              onChange={e => update('rules.twoNightFloor', Number(e.target.value))}
+              className="pe-input pe-input-num" />
+            <small className="pe-hint">Cuántas noches admitir dentro de la ventana corta. Por defecto 2.</small>
+          </div>
+          <div className="pe-field">
+            <label>Mínimo en temporada crítica (noches)</label>
+            <input type="number" min="1" step="1"
+              value={data.rules.criticalSeasonMinNights}
+              onChange={e => update('rules.criticalSeasonMinNights', Number(e.target.value))}
+              className="pe-input pe-input-num" />
+            <small className="pe-hint">Solo aplica en fechas marcadas como crítica.</small>
           </div>
           <div className="pe-field">
             <label>Descuento reserva directa (0–1)</label>

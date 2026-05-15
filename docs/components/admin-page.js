@@ -1650,7 +1650,43 @@ const AdminApp = () => {
     value: data.rules.minNights,
     onChange: e => update('rules.minNights', Number(e.target.value)),
     className: "pe-input pe-input-num"
-  })), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("small", {
+    className: "pe-hint"
+  }, "M\xEDnimo por defecto fuera de temporada cr\xEDtica.")), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Ventana de estancia corta (d\xEDas)"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    step: "1",
+    value: data.rules.imminentDays,
+    onChange: e => update('rules.imminentDays', Number(e.target.value)),
+    className: "pe-input pe-input-num"
+  }), /*#__PURE__*/React.createElement("small", {
+    className: "pe-hint"
+  }, "Si el check-in es dentro de este n\xFAmero de d\xEDas, se permite el m\xEDnimo de estancia corta (t\xEDpicamente 2 noches). Pon 0 para desactivar.")), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "M\xEDnimo en estancia corta (noches)"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    max: "7",
+    step: "1",
+    value: data.rules.twoNightFloor,
+    onChange: e => update('rules.twoNightFloor', Number(e.target.value)),
+    className: "pe-input pe-input-num"
+  }), /*#__PURE__*/React.createElement("small", {
+    className: "pe-hint"
+  }, "Cu\xE1ntas noches admitir dentro de la ventana corta. Por defecto 2.")), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "M\xEDnimo en temporada cr\xEDtica (noches)"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    step: "1",
+    value: data.rules.criticalSeasonMinNights,
+    onChange: e => update('rules.criticalSeasonMinNights', Number(e.target.value)),
+    className: "pe-input pe-input-num"
+  }), /*#__PURE__*/React.createElement("small", {
+    className: "pe-hint"
+  }, "Solo aplica en fechas marcadas como cr\xEDtica.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
   }, /*#__PURE__*/React.createElement("label", null, "Descuento reserva directa (0\u20131)"), /*#__PURE__*/React.createElement("input", {
     type: "number",
