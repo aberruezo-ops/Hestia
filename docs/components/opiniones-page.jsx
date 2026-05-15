@@ -25,6 +25,13 @@ const OPINIONES_COPY = {
   },
 };
 
+// Color de acento por Hestía (los mismos que en /opiniones tabs).
+const APT_ACCENT = {
+  vm:  '#6B7A3A',
+  vt:  '#8A4A24',
+  vs:  '#9E7A2C',
+  all: '#3D1A35',
+};
 // Mapeo apt → nombre completo para mostrar.
 const APT_FULL = { vm: 'Hestía Mar', vt: 'Hestía Thalassa', vs: 'Hestía Salinas', all: 'Hestía' };
 // Etiquetas de plataforma + color de badge.
@@ -290,21 +297,31 @@ const OpinionesTestimonials = ({ lang }) => {
               {visible.map((rev) => {
                 const meta = SOURCE_META[rev.source] || SOURCE_META.web;
                 const stars = ratingToStars(rev.rating, rev.source);
+                const aptColor = APT_ACCENT[rev.apt] || APT_ACCENT.all;
+                const aptName = APT_FULL[rev.apt] || 'Hestía';
                 return (
-                  <div key={rev.id} className="testimonial-card">
-                    <div className="testimonial-top">
+                  <article
+                    key={rev.id}
+                    className="testimonial-card"
+                    data-apt={rev.apt}
+                    data-source={rev.source}
+                    style={{ '--apt-color': aptColor, '--src-color': meta.color }}
+                  >
+                    <span className="testimonial-stripe" aria-hidden="true"/>
+                    <header className="testimonial-head">
+                      <span className="testimonial-source-pill">{meta.short}</span>
+                      <span className="testimonial-apt-pill">{aptName}</span>
+                    </header>
+                    <span className="testimonial-quote-mark" aria-hidden="true">“</span>
+                    <blockquote className="testimonial-quote">{rev.text}</blockquote>
+                    <footer className="testimonial-foot">
+                      <div className="testimonial-foot-left">
+                        <span className="testimonial-name">{rev.name}</span>
+                        <span className="testimonial-year">{fmtDate(rev.date)}</span>
+                      </div>
                       <Stars count={stars}/>
-                      <span className="testimonial-source" style={{ '--src-color': meta.color }}>
-                        {meta.short}
-                      </span>
-                    </div>
-                    <blockquote>«{rev.text}»</blockquote>
-                    <div className="testimonial-meta">
-                      <span className="testimonial-name">{rev.name}</span>
-                      <span className="testimonial-apt">{APT_FULL[rev.apt] || 'Hestía'}</span>
-                      <span className="testimonial-year">{fmtDate(rev.date)}</span>
-                    </div>
-                  </div>
+                    </footer>
+                  </article>
                 );
               })}
             </div>

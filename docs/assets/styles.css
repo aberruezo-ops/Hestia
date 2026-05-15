@@ -15519,3 +15519,128 @@ img[src*="apt-vt-gallery-"] {
   }
   .pe-rev-date-cell, .pe-rev-country-cell, .pe-rev-snippet { display: none; }
 }
+
+/* ============================================================
+   Opiniones · cards rediseñadas — light cream + eggplant text
+   Cada card lleva el color del apt en la franja superior y un
+   pill de apt con accent + pill de source en su color de plataforma.
+   ============================================================ */
+.opiniones-testimonials .testimonials-grid {
+  gap: 28px;
+  padding: 8px 0;
+}
+.testimonial-card {
+  background: linear-gradient(180deg, #FFFCF6 0%, var(--crema) 100%) !important;
+  border: 1px solid color-mix(in srgb, var(--apt-color, var(--ber)) 12%, transparent) !important;
+  border-radius: 14px 0 14px 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(42,15,46,0.04), 0 8px 24px rgba(42,15,46,0.08);
+  transition: transform 0.35s var(--ease-liquid), box-shadow 0.35s var(--ease-liquid);
+  break-inside: avoid;
+}
+@media (hover: hover) {
+  .testimonial-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(42,15,46,0.06), 0 16px 40px rgba(42,15,46,0.14);
+    background: #FFFCF6 !important;
+  }
+}
+.testimonial-stripe {
+  display: block;
+  height: 5px;
+  background: linear-gradient(90deg, var(--apt-color) 0%, color-mix(in srgb, var(--apt-color) 50%, transparent) 100%);
+}
+.testimonial-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 18px 22px 0;
+}
+.testimonial-source-pill {
+  font-family: var(--sans);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--src-color);
+  color: #FFFFFF;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.testimonial-apt-pill {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--apt-color);
+  white-space: nowrap;
+}
+.testimonial-quote-mark {
+  display: block;
+  font-family: var(--serif);
+  font-size: 64px;
+  line-height: 0.5;
+  color: var(--apt-color);
+  opacity: 0.28;
+  padding: 18px 22px 0;
+  font-weight: 600;
+}
+.testimonial-card blockquote.testimonial-quote {
+  font-family: var(--serif) !important;
+  font-style: normal !important;
+  font-size: 15.5px !important;
+  line-height: 1.6 !important;
+  color: var(--ber-dk) !important;
+  margin: 4px 22px 18px !important;
+  flex: 1;
+  padding: 0;
+}
+.testimonial-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 22px;
+  background: color-mix(in srgb, var(--apt-color) 4%, transparent);
+  border-top: 1px solid color-mix(in srgb, var(--apt-color) 14%, transparent);
+}
+.testimonial-foot-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.testimonial-foot .testimonial-name {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.01em;
+  color: var(--ber-dk);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.testimonial-foot .testimonial-year {
+  font-family: var(--sans);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ber) 65%, transparent);
+}
+.testimonial-foot .stars-row {
+  flex-shrink: 0;
+}
+.testimonial-foot .star {
+  color: var(--sol, #E8C26B);
+  font-size: 13px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.04);
+}

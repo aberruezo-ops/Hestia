@@ -27,6 +27,13 @@ const OPINIONES_COPY = {
   }
 };
 
+// Color de acento por Hestía (los mismos que en /opiniones tabs).
+const APT_ACCENT = {
+  vm: '#6B7A3A',
+  vt: '#8A4A24',
+  vs: '#9E7A2C',
+  all: '#3D1A35'
+};
 // Mapeo apt → nombre completo para mostrar.
 const APT_FULL = {
   vm: 'Hestía Mar',
@@ -391,27 +398,42 @@ const OpinionesTestimonials = ({
   }, visible.map(rev => {
     const meta = SOURCE_META[rev.source] || SOURCE_META.web;
     const stars = ratingToStars(rev.rating, rev.source);
-    return /*#__PURE__*/React.createElement("div", {
+    const aptColor = APT_ACCENT[rev.apt] || APT_ACCENT.all;
+    const aptName = APT_FULL[rev.apt] || 'Hestía';
+    return /*#__PURE__*/React.createElement("article", {
       key: rev.id,
-      className: "testimonial-card"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "testimonial-top"
-    }, /*#__PURE__*/React.createElement(Stars, {
-      count: stars
-    }), /*#__PURE__*/React.createElement("span", {
-      className: "testimonial-source",
+      className: "testimonial-card",
+      "data-apt": rev.apt,
+      "data-source": rev.source,
       style: {
+        '--apt-color': aptColor,
         '--src-color': meta.color
       }
-    }, meta.short)), /*#__PURE__*/React.createElement("blockquote", null, "\xAB", rev.text, "\xBB"), /*#__PURE__*/React.createElement("div", {
-      className: "testimonial-meta"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "testimonial-stripe",
+      "aria-hidden": "true"
+    }), /*#__PURE__*/React.createElement("header", {
+      className: "testimonial-head"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "testimonial-source-pill"
+    }, meta.short), /*#__PURE__*/React.createElement("span", {
+      className: "testimonial-apt-pill"
+    }, aptName)), /*#__PURE__*/React.createElement("span", {
+      className: "testimonial-quote-mark",
+      "aria-hidden": "true"
+    }, "\u201C"), /*#__PURE__*/React.createElement("blockquote", {
+      className: "testimonial-quote"
+    }, rev.text), /*#__PURE__*/React.createElement("footer", {
+      className: "testimonial-foot"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "testimonial-foot-left"
     }, /*#__PURE__*/React.createElement("span", {
       className: "testimonial-name"
     }, rev.name), /*#__PURE__*/React.createElement("span", {
-      className: "testimonial-apt"
-    }, APT_FULL[rev.apt] || 'Hestía'), /*#__PURE__*/React.createElement("span", {
       className: "testimonial-year"
-    }, fmtDate(rev.date))));
+    }, fmtDate(rev.date))), /*#__PURE__*/React.createElement(Stars, {
+      count: stars
+    })));
   })), rest.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "opiniones-expand-wrap reveal"
   }, /*#__PURE__*/React.createElement("button", {
