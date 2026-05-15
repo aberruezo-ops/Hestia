@@ -396,6 +396,56 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
   );
 };
 
+// --- TrustStrip ---
+// Tira de confianza bajo el hero: años operando + reseñas + ★ + países.
+// Datos reales calculados de window.REVIEWS (data/reviews.json).
+const TrustStrip = ({ apt, lang }) => {
+  const all = (window.REVIEWS && window.REVIEWS.items) || [];
+  const own = all.filter(r =>
+    r.status === 'published' && (r.apt === apt.id || r.apt === 'all'));
+  const total = own.length;
+  // Booking usa /10, otros /5 — normalizamos todo a /5
+  const ratings = own.map(r => r.source === 'booking' ? r.rating / 2 : r.rating)
+    .filter(n => typeof n === 'number' && !isNaN(n));
+  const avg = ratings.length
+    ? Math.round((ratings.reduce((s, n) => s + n, 0) / ratings.length) * 10) / 10
+    : null;
+  const countries = new Set(own.map(r => r.country).filter(Boolean));
+  const years = new Date().getFullYear() - 2016;
+
+  const stats = [
+    { v: `${years} ${lang === 'es' ? 'años' : 'years'}`,
+      l: lang === 'es' ? 'desde 2016' : 'since 2016' },
+    { v: total.toString(),
+      l: lang === 'es' ? (total === 1 ? 'reseña verificada' : 'reseñas verificadas') : (total === 1 ? 'verified review' : 'verified reviews') },
+    avg ? { v: `${avg}★`,
+            l: lang === 'es' ? 'valoración media' : 'avg rating' } : null,
+    countries.size > 1 ? { v: countries.size.toString(),
+            l: lang === 'es' ? 'países de origen' : 'guest countries' } : null,
+  ].filter(Boolean);
+
+  return (
+    <section className="apt-trust-strip" data-apt={apt.id} style={{ '--apt-accent': apt.accent }}>
+      <div className="apt-trust-inner">
+        {stats.map((s, i) => (
+          <div key={i} className="apt-trust-item">
+            <div className="apt-trust-v">{s.v}</div>
+            <div className="apt-trust-l">{s.l}</div>
+          </div>
+        ))}
+        <div className="apt-trust-item apt-trust-direct">
+          <div className="apt-trust-v">
+            {lang === 'es' ? 'Sin comisión' : 'No fees'}
+          </div>
+          <div className="apt-trust-l">
+            {lang === 'es' ? 'reserva directa' : 'direct booking'}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // --- Descripción ---
 const AptPageDesc = ({ apt, lang }) => {
   const d = apt[lang];
@@ -913,6 +963,7 @@ const ApartmentPageApp = () => {
         ) : (
           <>
             <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
+            <TrustStrip apt={apt} lang={lang} />
             <FraseHogar lang={lang} />
             <AptPageDesc apt={apt} lang={lang} />
             <AptPageGallery apt={apt} lang={lang} />

@@ -15279,3 +15279,102 @@ img[src*="apt-vt-gallery-"] {
 @media (max-width: 600px) {
   .pe-cf-banner { flex-direction: column; align-items: flex-start; gap: 12px; }
 }
+
+/* ============================================================
+   Apartment page · Trust strip
+   ============================================================ */
+.apt-trust-strip {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--apt-accent) 4%, var(--crema)) 0%, var(--crema) 100%);
+  padding: 18px 24px;
+  border-bottom: 1px solid color-mix(in srgb, var(--apt-accent) 18%, transparent);
+}
+.apt-trust-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 20px;
+  align-items: center;
+}
+.apt-trust-item {
+  text-align: center;
+  position: relative;
+  padding: 4px 8px;
+}
+.apt-trust-item + .apt-trust-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  bottom: 20%;
+  width: 1px;
+  background: color-mix(in srgb, var(--apt-accent) 22%, transparent);
+}
+.apt-trust-v {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--apt-accent);
+  line-height: 1.1;
+}
+.apt-trust-l {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-top: 4px;
+}
+.apt-trust-direct .apt-trust-v {
+  font-style: italic;
+  font-size: 17px;
+}
+@media (max-width: 600px) {
+  .apt-trust-strip { padding: 14px 16px; }
+  .apt-trust-inner { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .apt-trust-v { font-size: 18px; }
+  .apt-trust-item + .apt-trust-item::before { display: none; }
+}
+
+/* ============================================================
+   /reservas · step 2 · ReviewQuote (cita rotando)
+   ============================================================ */
+.rf-quote {
+  margin: 0 0 22px;
+  padding: 18px 20px 18px 28px;
+  background: color-mix(in srgb, var(--sol) 5%, var(--crema));
+  border-left: 3px solid var(--sol);
+  border-radius: 10px 0 10px 0;
+  position: relative;
+}
+.rf-quote-mark {
+  position: absolute;
+  top: 4px;
+  left: 12px;
+  font-family: var(--serif);
+  font-size: 42px;
+  line-height: 1;
+  color: color-mix(in srgb, var(--sol) 55%, transparent);
+}
+.rf-quote-text {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--ber);
+  margin: 0 0 10px;
+}
+.rf-quote-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.rf-quote-name { font-weight: 700; color: var(--ber-dk); }
+.rf-quote-sep { opacity: 0.4; }
+.rf-quote-source { font-style: italic; text-transform: none; letter-spacing: 0.01em; }

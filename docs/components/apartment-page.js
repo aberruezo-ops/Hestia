@@ -379,6 +379,58 @@ const AptPageHero = ({
   }, lang === 'es' ? '✓ Política de cancelación sin competencia' : '✓ Unmatched cancellation policy')));
 };
 
+// --- TrustStrip ---
+// Tira de confianza bajo el hero: años operando + reseñas + ★ + países.
+// Datos reales calculados de window.REVIEWS (data/reviews.json).
+const TrustStrip = ({
+  apt,
+  lang
+}) => {
+  const all = window.REVIEWS && window.REVIEWS.items || [];
+  const own = all.filter(r => r.status === 'published' && (r.apt === apt.id || r.apt === 'all'));
+  const total = own.length;
+  // Booking usa /10, otros /5 — normalizamos todo a /5
+  const ratings = own.map(r => r.source === 'booking' ? r.rating / 2 : r.rating).filter(n => typeof n === 'number' && !isNaN(n));
+  const avg = ratings.length ? Math.round(ratings.reduce((s, n) => s + n, 0) / ratings.length * 10) / 10 : null;
+  const countries = new Set(own.map(r => r.country).filter(Boolean));
+  const years = new Date().getFullYear() - 2016;
+  const stats = [{
+    v: `${years} ${lang === 'es' ? 'años' : 'years'}`,
+    l: lang === 'es' ? 'desde 2016' : 'since 2016'
+  }, {
+    v: total.toString(),
+    l: lang === 'es' ? total === 1 ? 'reseña verificada' : 'reseñas verificadas' : total === 1 ? 'verified review' : 'verified reviews'
+  }, avg ? {
+    v: `${avg}★`,
+    l: lang === 'es' ? 'valoración media' : 'avg rating'
+  } : null, countries.size > 1 ? {
+    v: countries.size.toString(),
+    l: lang === 'es' ? 'países de origen' : 'guest countries'
+  } : null].filter(Boolean);
+  return /*#__PURE__*/React.createElement("section", {
+    className: "apt-trust-strip",
+    "data-apt": apt.id,
+    style: {
+      '--apt-accent': apt.accent
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "apt-trust-inner"
+  }, stats.map((s, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "apt-trust-item"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "apt-trust-v"
+  }, s.v), /*#__PURE__*/React.createElement("div", {
+    className: "apt-trust-l"
+  }, s.l))), /*#__PURE__*/React.createElement("div", {
+    className: "apt-trust-item apt-trust-direct"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "apt-trust-v"
+  }, lang === 'es' ? 'Sin comisión' : 'No fees'), /*#__PURE__*/React.createElement("div", {
+    className: "apt-trust-l"
+  }, lang === 'es' ? 'reserva directa' : 'direct booking'))));
+};
+
 // --- Descripción ---
 const AptPageDesc = ({
   apt,
@@ -989,6 +1041,9 @@ const ApartmentPageApp = () => {
     lang: lang,
     scrolled: scrolled,
     mode: mode
+  }), /*#__PURE__*/React.createElement(TrustStrip, {
+    apt: apt,
+    lang: lang
   }), /*#__PURE__*/React.createElement(FraseHogar, {
     lang: lang
   }), /*#__PURE__*/React.createElement(AptPageDesc, {

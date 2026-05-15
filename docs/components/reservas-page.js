@@ -199,6 +199,69 @@ const PricePreview = ({
     className: "price-note"
   }, lang === 'es' ? '* Precio máximo orientativo. Si ves un precio mejor en cualquier plataforma, te lo mejoramos. Cuéntanos de ti y los tuyos — casi siempre podemos ajustar.' : '* Indicative maximum price. If you find a better price anywhere, we\'ll beat it. Tell us about your situation — we can almost always adjust.'));
 };
+
+// ReviewQuote — cita rotando de una reseña real verificada en el
+// paso 2 del formulario de reservas. Lee window.REVIEWS y elige
+// una al azar de las published (filtrada por apt si hay uno).
+const ReviewQuote = ({
+  apt,
+  lang
+}) => {
+  const pool = React.useMemo(() => {
+    const all = window.REVIEWS && window.REVIEWS.items || [];
+    let list = all.filter(r => r.status === 'published');
+    if (apt) {
+      const aptOnly = list.filter(r => r.apt === apt);
+      if (aptOnly.length >= 3) list = aptOnly;
+    }
+    // Prefer highlighted reviews 70% of the time
+    const hi = list.filter(r => r.highlight);
+    if (hi.length && Math.random() < 0.7) return hi;
+    return list;
+  }, [apt]);
+  if (!pool.length) return null;
+  const r = pool[Math.floor(Math.random() * pool.length)];
+  const date = new Date(r.date);
+  const mo = String(date.getMonth() + 1).padStart(2, '0');
+  const yr = date.getFullYear();
+  const sourceLbl = {
+    booking: 'Booking',
+    airbnb: 'Airbnb',
+    google: 'Google',
+    web: 'Hestía'
+  }[r.source] || r.source;
+  const aptLbl = {
+    vm: 'Mar',
+    vt: 'Thalassa',
+    vs: 'Salinas',
+    all: ''
+  }[r.apt] || '';
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rf-quote",
+    "aria-label": lang === 'es' ? 'Reseña verificada' : 'Verified review'
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rf-quote-mark",
+    "aria-hidden": "true"
+  }, "\u201C"), /*#__PURE__*/React.createElement("p", {
+    className: "rf-quote-text"
+  }, r.text), /*#__PURE__*/React.createElement("div", {
+    className: "rf-quote-meta"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-quote-name"
+  }, r.name), /*#__PURE__*/React.createElement("span", {
+    className: "rf-quote-sep"
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+    className: "rf-quote-date"
+  }, mo, "/", yr), aptLbl && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+    className: "rf-quote-sep"
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+    className: "rf-quote-apt"
+  }, "Hest\xEDa ", aptLbl)), /*#__PURE__*/React.createElement("span", {
+    className: "rf-quote-sep"
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+    className: "rf-quote-source"
+  }, lang === 'es' ? 'Reseña en' : 'Review on', " ", sourceLbl)));
+};
 const ReservasHero = ({
   lang
 }) => {
@@ -706,7 +769,10 @@ const ReservasForm = ({
     "aria-hidden": "true"
   }, "\uD83D\uDD12")), step >= 2 && /*#__PURE__*/React.createElement("div", {
     className: "rf-step-body"
-  }, !apt && availLoaded && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(ReviewQuote, {
+    apt: apt,
+    lang: lang
+  }), !apt && availLoaded && /*#__PURE__*/React.createElement("div", {
     className: "rf-apt-availability",
     "aria-label": lang === 'es' ? 'Disponibilidad por Hestía' : 'Availability per Hestía'
   }, /*#__PURE__*/React.createElement("p", {

@@ -225,6 +225,49 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
   );
 };
 
+// ReviewQuote — cita rotando de una reseña real verificada en el
+// paso 2 del formulario de reservas. Lee window.REVIEWS y elige
+// una al azar de las published (filtrada por apt si hay uno).
+const ReviewQuote = ({ apt, lang }) => {
+  const pool = React.useMemo(() => {
+    const all = (window.REVIEWS && window.REVIEWS.items) || [];
+    let list = all.filter(r => r.status === 'published');
+    if (apt) {
+      const aptOnly = list.filter(r => r.apt === apt);
+      if (aptOnly.length >= 3) list = aptOnly;
+    }
+    // Prefer highlighted reviews 70% of the time
+    const hi = list.filter(r => r.highlight);
+    if (hi.length && Math.random() < 0.7) return hi;
+    return list;
+  }, [apt]);
+
+  if (!pool.length) return null;
+  const r = pool[Math.floor(Math.random() * pool.length)];
+  const date = new Date(r.date);
+  const mo = String(date.getMonth() + 1).padStart(2, '0');
+  const yr = date.getFullYear();
+  const sourceLbl = {
+    booking: 'Booking', airbnb: 'Airbnb', google: 'Google', web: 'Hestía',
+  }[r.source] || r.source;
+  const aptLbl = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas', all: '' }[r.apt] || '';
+
+  return (
+    <div className="rf-quote" aria-label={lang === 'es' ? 'Reseña verificada' : 'Verified review'}>
+      <div className="rf-quote-mark" aria-hidden="true">“</div>
+      <p className="rf-quote-text">{r.text}</p>
+      <div className="rf-quote-meta">
+        <span className="rf-quote-name">{r.name}</span>
+        <span className="rf-quote-sep">·</span>
+        <span className="rf-quote-date">{mo}/{yr}</span>
+        {aptLbl && <><span className="rf-quote-sep">·</span><span className="rf-quote-apt">Hestía {aptLbl}</span></>}
+        <span className="rf-quote-sep">·</span>
+        <span className="rf-quote-source">{lang === 'es' ? 'Reseña en' : 'Review on'} {sourceLbl}</span>
+      </div>
+    </div>
+  );
+};
+
 const ReservasHero = ({ lang }) => {
   const t = RESERVAS_COPY[lang];
   const videoRef = React.useRef(null);
@@ -744,6 +787,7 @@ const ReservasForm = ({ lang }) => {
         </header>
         {step >= 2 && (
           <div className="rf-step-body">
+            <ReviewQuote apt={apt} lang={lang} />
             {/* Si no hay apt elegido, mostramos los 3 Hestías con su
                 disponibilidad para las fechas → el huésped elige uno. */}
             {!apt && availLoaded && (
