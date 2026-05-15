@@ -1102,6 +1102,83 @@ const GuideMap = ({ lang, apt }) => {
 };
 
 // ================================================================
+// CompactPlaceItem — versión reducida del lugar (no-featured).
+// Muestra solo headline (nombre + tier + rating). Click para
+// expandir descripción/specialty/tip/events si los tiene.
+// ================================================================
+const CompactPlaceItem = ({ p, lang }) => {
+  const [open, setOpen] = React.useState(false);
+  const hasDetails = p.desc || p.specialty || p.best || p.tip ||
+                     p.services || p.access ||
+                     (Array.isArray(p.events) && p.events.length > 0);
+  const mapHref = p.url
+    || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Almería')}`;
+  return (
+    <li className={`ag-place ag-place-compact${open ? ' is-open' : ''}`}>
+      <button
+        type="button"
+        className="ag-place-compact-head"
+        onClick={() => hasDetails && setOpen(o => !o)}
+        aria-expanded={open}
+        disabled={!hasDetails}>
+        <span className="ag-place-name">{p.name}</span>
+        {p.tier && <span className="ag-place-tier">{p.tier}</span>}
+        {typeof p.rating === 'number' && (
+          <span className="ag-place-rating">⭐ {p.rating.toFixed(1)}</span>
+        )}
+        {hasDetails && (
+          <span className={`ag-place-compact-chev ${open ? 'open' : ''}`} aria-hidden="true">↓</span>
+        )}
+      </button>
+      {open && (
+        <div className="ag-place-compact-body">
+          {p.desc && <span className="ag-place-desc">{p.desc}</span>}
+          {p.specialty && (
+            <span className="ag-place-specialty">
+              <span className="ag-place-specialty-tag">{lang === 'es' ? 'Pide:' : 'Order:'}</span>
+              {' '}{p.specialty}
+            </span>
+          )}
+          {p.best && (
+            <span className="ag-place-best">
+              <span className="ag-place-best-tag">{lang === 'es' ? 'Lo mejor:' : 'Highlight:'}</span>
+              {' '}{p.best}
+            </span>
+          )}
+          {p.tip && (
+            <span className="ag-place-tip">
+              <span className="ag-place-tip-tag">{lang === 'es' ? 'Tip:' : 'Tip:'}</span>
+              {' '}{p.tip}
+            </span>
+          )}
+          {Array.isArray(p.events) && p.events.length > 0 && (
+            <div className="ag-place-events">
+              <span className="ag-place-events-tag">
+                {lang === 'es' ? 'Fiestas y eventos' : 'Festivals & events'}
+              </span>
+              <ul className="ag-place-events-list">
+                {p.events.map((e, i) => (
+                  <li key={i} className="ag-place-event">
+                    <span className="ag-place-event-name">{e.name}</span>
+                    {e.when && <span className="ag-place-event-when"> · {e.when}</span>}
+                    {e.d && <span className="ag-place-event-desc"> — {e.d}</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {p.services && <span className="ag-place-services">{p.services}</span>}
+          {p.access && <span className="ag-place-access">{p.access}</span>}
+          <a className="ag-place-link" href={mapHref} target="_blank" rel="noopener">
+            {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      )}
+    </li>
+  );
+};
+
+// ================================================================
 // CatGroup — una categoría plegable de la sección "Alrededores".
 // Click en el head abre/cierra. Animación max-height suave.
 // ================================================================
@@ -1211,8 +1288,10 @@ const CatGroup = ({ cat, places, lang }) => {
                 {lang === 'es' ? 'Más recomendaciones' : 'More recommendations'}
               </div>
             )}
-            <ul className="ag-places">
-              {rest.map(renderPlace)}
+            <ul className="ag-places ag-places-compact">
+              {rest.map(p => (
+                <CompactPlaceItem key={p.id} p={p} lang={lang} />
+              ))}
             </ul>
           </>
         )}

@@ -3033,6 +3033,80 @@ const GuideMap = ({
 };
 
 // ================================================================
+// CompactPlaceItem — versión reducida del lugar (no-featured).
+// Muestra solo headline (nombre + tier + rating). Click para
+// expandir descripción/specialty/tip/events si los tiene.
+// ================================================================
+const CompactPlaceItem = ({
+  p,
+  lang
+}) => {
+  const [open, setOpen] = React.useState(false);
+  const hasDetails = p.desc || p.specialty || p.best || p.tip || p.services || p.access || Array.isArray(p.events) && p.events.length > 0;
+  const mapHref = p.url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Almería')}`;
+  return /*#__PURE__*/React.createElement("li", {
+    className: `ag-place ag-place-compact${open ? ' is-open' : ''}`
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "ag-place-compact-head",
+    onClick: () => hasDetails && setOpen(o => !o),
+    "aria-expanded": open,
+    disabled: !hasDetails
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-name"
+  }, p.name), p.tier && /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-tier"
+  }, p.tier), typeof p.rating === 'number' && /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-rating"
+  }, "\u2B50 ", p.rating.toFixed(1)), hasDetails && /*#__PURE__*/React.createElement("span", {
+    className: `ag-place-compact-chev ${open ? 'open' : ''}`,
+    "aria-hidden": "true"
+  }, "\u2193")), open && /*#__PURE__*/React.createElement("div", {
+    className: "ag-place-compact-body"
+  }, p.desc && /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-desc"
+  }, p.desc), p.specialty && /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-specialty"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-specialty-tag"
+  }, lang === 'es' ? 'Pide:' : 'Order:'), ' ', p.specialty), p.best && /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-best"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-best-tag"
+  }, lang === 'es' ? 'Lo mejor:' : 'Highlight:'), ' ', p.best), p.tip && /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-tip"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-tip-tag"
+  }, lang === 'es' ? 'Tip:' : 'Tip:'), ' ', p.tip), Array.isArray(p.events) && p.events.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "ag-place-events"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-events-tag"
+  }, lang === 'es' ? 'Fiestas y eventos' : 'Festivals & events'), /*#__PURE__*/React.createElement("ul", {
+    className: "ag-place-events-list"
+  }, p.events.map((e, i) => /*#__PURE__*/React.createElement("li", {
+    key: i,
+    className: "ag-place-event"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-event-name"
+  }, e.name), e.when && /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-event-when"
+  }, " \xB7 ", e.when), e.d && /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-event-desc"
+  }, " \u2014 ", e.d))))), p.services && /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-services"
+  }, p.services), p.access && /*#__PURE__*/React.createElement("span", {
+    className: "ag-place-access"
+  }, p.access), /*#__PURE__*/React.createElement("a", {
+    className: "ag-place-link",
+    href: mapHref,
+    target: "_blank",
+    rel: "noopener"
+  }, lang === 'es' ? 'Cómo llegar' : 'Directions', " ", /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "\u2197"))));
+};
+
+// ================================================================
 // CatGroup — una categoría plegable de la sección "Alrededores".
 // Click en el head abre/cierra. Animación max-height suave.
 // ================================================================
@@ -3141,8 +3215,12 @@ const CatGroup = ({
   }, featured.map(renderPlace))), rest.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, featured.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "ag-cat-sub-h ag-cat-sub-h-rest"
   }, lang === 'es' ? 'Más recomendaciones' : 'More recommendations'), /*#__PURE__*/React.createElement("ul", {
-    className: "ag-places"
-  }, rest.map(renderPlace)))));
+    className: "ag-places ag-places-compact"
+  }, rest.map(p => /*#__PURE__*/React.createElement(CompactPlaceItem, {
+    key: p.id,
+    p: p,
+    lang: lang
+  }))))));
 };
 
 // ================================================================
