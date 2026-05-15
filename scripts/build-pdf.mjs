@@ -822,6 +822,95 @@ section.no-break {
   color: var(--apt-c);
 }
 
+/* ============ PLACES enriquecidos (rating, specialty, tip, best) ============ */
+.places-cat {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  margin: 6mm 0 10mm;
+}
+.places-cat-h {
+  display: flex;
+  align-items: baseline;
+  gap: 8pt;
+  margin-bottom: 4mm;
+  padding-bottom: 2mm;
+  border-bottom: 1px solid var(--hair);
+}
+.places-cat-icon {
+  font-size: 14pt;
+}
+.places-cat-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14pt;
+  font-weight: 600;
+  color: var(--apt-c-dk);
+  letter-spacing: 0.02em;
+}
+.places-cat-count {
+  font-size: 9pt;
+  color: var(--ink-soft, #6b5d63);
+  font-style: italic;
+  margin-left: auto;
+}
+.place-item {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  margin-bottom: 4mm;
+  padding: 3mm 0;
+  border-bottom: 1px dotted var(--hair);
+  font-size: 9.5pt;
+  line-height: 1.4;
+}
+.place-item:last-child { border-bottom: none; }
+.place-item.is-featured {
+  background: rgba(var(--apt-rgb, 122, 90, 35), 0.04);
+  padding-left: 3mm;
+  padding-right: 3mm;
+  border-radius: 10pt 0 10pt 0;
+  border-bottom: none;
+}
+.place-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4pt 8pt;
+}
+.place-star {
+  color: var(--apt-c-dk);
+  font-size: 9pt;
+}
+.place-name {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 10pt;
+}
+.place-tier {
+  font-size: 8pt;
+  color: var(--apt-c-dk);
+  letter-spacing: 0.06em;
+}
+.place-rating {
+  font-size: 9pt;
+  color: var(--ink-soft, #6b5d63);
+  font-variant-numeric: tabular-nums;
+}
+.place-desc {
+  margin-top: 1.5mm;
+  color: var(--ink);
+}
+.place-meta {
+  margin-top: 1.5mm;
+  font-size: 9pt;
+  color: var(--ink);
+}
+.place-meta-tag {
+  font-weight: 600;
+  color: var(--apt-c-dk);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 7.5pt;
+}
+
 /* ============ Sites grid ============ */
 .sites-grid {
   display: grid;
@@ -1384,6 +1473,86 @@ function renderSurroundings(shared, aptData, lang) {
   </section>`;
 }
 
+// ---------------------------------------------------------------
+// PLACES enriquecidos: agrupados por categoría con specialty/tip/best/rating.
+// Solo categorías relevantes para el huésped: comer/beber/playas/mercados/celíaco.
+// ---------------------------------------------------------------
+function renderPlacesRich(PLACES, CATEGORIES, aptData, lang) {
+  if (!PLACES || !CATEGORIES) return '';
+  // Categorías que valen la pena imprimir en el PDF (no incluimos los Hestía,
+  // ni "home", para no duplicar). Orden editorial: comer → beber → playas →
+  // mercados → celíaco → actividades → pescaderías.
+  const CAT_ORDER = ['restaurant', 'bar', 'beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog', 'market', 'celiac', 'activity', 'fish', 'super', 'town', 'culture'];
+  const catsById = new Map(CATEGORIES.map(c => [c.id, c]));
+
+  const byCat = {};
+  for (const p of PLACES) {
+    if (p.cat === 'home') continue;
+    if (!byCat[p.cat]) byCat[p.cat] = [];
+    byCat[p.cat].push(p);
+  }
+
+  // Orden dentro de cada categoría: featured primero (por featuredOrder), luego rating desc, luego nombre
+  const sortPlaces = (list) => list.sort((a, b) => {
+    if (a.featured !== b.featured) return a.featured ? -1 : 1;
+    if (a.featured && b.featured) return (a.featuredOrder || 99) - (b.featuredOrder || 99);
+    if ((b.rating || 0) !== (a.rating || 0)) return (b.rating || 0) - (a.rating || 0);
+    return a.name.localeCompare(b.name);
+  });
+
+  const blocks = [];
+  for (const catId of CAT_ORDER) {
+    const items = byCat[catId];
+    if (!items || !items.length) continue;
+    const cat = catsById.get(catId);
+    if (!cat) continue;
+    sortPlaces(items);
+    blocks.push(`
+      <div class="places-cat">
+        <div class="places-cat-h">
+          <span class="places-cat-icon">${esc(cat.icon || '')}</span>
+          <span class="places-cat-name">${esc(cat[lang] || cat.es)}</span>
+          <span class="places-cat-count">${items.length}</span>
+        </div>
+        ${items.map(p => {
+          const tagPide = lang === 'es' ? 'Pide' : 'Order';
+          const tagBest = lang === 'es' ? 'Lo mejor' : 'Highlight';
+          const tagTip  = lang === 'es' ? 'Tip'  : 'Tip';
+          return `
+          <div class="place-item${p.featured ? ' is-featured' : ''}">
+            <div class="place-head">
+              ${p.featured ? '<span class="place-star">✦</span>' : ''}
+              <span class="place-name">${esc(p.name)}</span>
+              ${p.tier ? `<span class="place-tier">${esc(p.tier)}</span>` : ''}
+              ${typeof p.rating === 'number' ? `<span class="place-rating">⭐ ${p.rating.toFixed(1)}</span>` : ''}
+            </div>
+            ${p.desc ? `<div class="place-desc">${esc(p.desc)}</div>` : ''}
+            ${p.specialty ? `<div class="place-meta"><span class="place-meta-tag">${tagPide}:</span> ${esc(p.specialty)}</div>` : ''}
+            ${p.best ? `<div class="place-meta"><span class="place-meta-tag">${tagBest}:</span> ${esc(p.best)}</div>` : ''}
+            ${p.tip ? `<div class="place-meta"><span class="place-meta-tag">${tagTip}:</span> ${esc(p.tip)}</div>` : ''}
+            ${p.services ? `<div class="place-meta">${esc(p.services)}</div>` : ''}
+            ${p.access ? `<div class="place-meta">${esc(p.access)}</div>` : ''}
+          </div>`;
+        }).join('')}
+      </div>`);
+  }
+
+  if (!blocks.length) return '';
+
+  return `
+  <section>
+    ${sectionMark(aptData, lang)}
+    <div class="section-hd">
+      <div class="eyebrow">${esc(lang === 'es' ? 'GUÍA AMPLIADA' : 'EXPANDED GUIDE')}</div>
+      <h2>${esc(lang === 'es' ? 'Lugares recomendados' : 'Places we recommend')}</h2>
+    </div>
+    <p class="rules-intro">${esc(lang === 'es'
+      ? 'Una selección personal, organizada por tipo. Las valoraciones son las de Google Maps cuando hicimos esta guía. Para cada sitio, lo que pedirías si fuéramos nosotros.'
+      : 'A personal selection, organised by type. Ratings are from Google Maps when we wrote this guide. For each, what we would order if we were you.')}</p>
+    ${blocks.join('\n')}
+  </section>`;
+}
+
 function renderDayPlans(DAY_PLANS, aptData, lang) {
   if (!DAY_PLANS || DAY_PLANS.length === 0) return '';
   return `
@@ -1656,6 +1825,7 @@ ${guide[lang].rooms.map(room =>
   renderRoom(room, apt, data.ROOM_PHOTOS, data.URB_FALLBACK, aptId, lang)
 ).join('\n')}
 ${renderSurroundings(shared, apt, lang)}
+${renderPlacesRich(data.PLACES, data.CATEGORIES, apt, lang)}
 ${renderDayPlans(data.DAY_PLANS, apt, lang)}
 ${renderPhones(shared, apt, lang)}
 ${renderPorque(apt, lang)}

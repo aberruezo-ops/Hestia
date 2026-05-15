@@ -319,6 +319,7 @@ const PLACES = [
   tip: 'Reserva con tiempo y sube con luz: las curvas tienen su gracia, pero de noche cuestan.',
   tier: '€€€',
   cat: 'restaurant',
+  rating: 4.6,
   lat: 37.1550,
   lng: -1.8700,
   featured: true
@@ -329,6 +330,7 @@ const PLACES = [
   specialty: 'menú degustación con producto local, atún rojo de almadraba y arroces secos.',
   tier: '€€€',
   cat: 'restaurant',
+  rating: 4.5,
   lat: 37.2495,
   lng: -1.8623,
   featured: true
@@ -339,6 +341,7 @@ const PLACES = [
   specialty: 'gurullos con conejo y caldero de pescado; postres caseros.',
   tier: '€€',
   cat: 'restaurant',
+  rating: 4.5,
   lat: 37.2486,
   lng: -1.8635
 }, {
@@ -348,6 +351,7 @@ const PLACES = [
   specialty: 'cordero rogan josh, pollo tikka masala y pan naan de ajo.',
   tier: '€',
   cat: 'restaurant',
+  rating: 4.2,
   lat: 37.2230,
   lng: -1.8090
 }, {
@@ -357,6 +361,7 @@ const PLACES = [
   specialty: 'pizza al horno de leña — la diavola y la quattro formaggi salen siempre.',
   tier: '€€',
   cat: 'restaurant',
+  rating: 4.3,
   lat: 37.2270,
   lng: -1.7920
 }, {
@@ -366,6 +371,7 @@ const PLACES = [
   specialty: 'pizza calzone, pasta a la carbonara auténtica y tiramisú.',
   tier: '€',
   cat: 'restaurant',
+  rating: 4.4,
   lat: 37.1810,
   lng: -1.8230
 }, {
@@ -376,6 +382,7 @@ const PLACES = [
   tip: 'Reserva mesa fuera al atardecer; la carta de cócteles está a la altura.',
   tier: '€€€',
   cat: 'restaurant',
+  rating: 4.5,
   lat: 37.2310,
   lng: -1.7935,
   featured: true
@@ -386,6 +393,7 @@ const PLACES = [
   specialty: 'entrecot a la parrilla y ensalada de burrata.',
   tier: '€€',
   cat: 'restaurant',
+  rating: 4.3,
   lat: 37.2310,
   lng: -1.7945
 }, {
@@ -395,6 +403,7 @@ const PLACES = [
   specialty: 'bao de panceta, ceviche del día y poke bowl.',
   tier: '€€',
   cat: 'restaurant',
+  rating: 4.5,
   lat: 37.2245,
   lng: -1.7965,
   featured: true
@@ -405,6 +414,7 @@ const PLACES = [
   specialty: 'arroz negro con sepia y all i oli, sardinas a la espalda.',
   tier: '€€',
   cat: 'restaurant',
+  rating: 4.4,
   lat: 37.2155,
   lng: -1.7800
 }, {
@@ -415,6 +425,7 @@ const PLACES = [
   tip: 'Pide la paella al hacer la reserva — la preparan al momento.',
   tier: '€€',
   cat: 'restaurant',
+  rating: 4.5,
   lat: 37.2460,
   lng: -1.7660,
   featured: true
@@ -425,6 +436,7 @@ const PLACES = [
   specialty: 'arroz con bogavante, tostas de ahumados y pulpo a la brasa.',
   tier: '€€',
   cat: 'restaurant',
+  rating: 4.4,
   lat: 37.2455,
   lng: -1.7670,
   featured: true
@@ -455,6 +467,7 @@ const PLACES = [
   specialty: 'fritura mixta de pescado y boquerones rebozados.',
   tier: '€€',
   cat: 'restaurant',
+  rating: 4.3,
   lat: 37.2240,
   lng: -1.8095
 }, {
@@ -471,6 +484,7 @@ const PLACES = [
   specialty: 'pasta fresca casera — los ravioli de espinacas y la lasagna.',
   tier: '€€',
   cat: 'restaurant',
+  rating: 4.3,
   lat: 37.1377,
   lng: -1.8523
 }, {
@@ -480,6 +494,7 @@ const PLACES = [
   specialty: 'gambas al ajillo (imprescindibles), chuletón de vaca madurada, pulpo a la gallega y croquetas caseras.',
   tier: '€€',
   cat: 'restaurant',
+  rating: 4.5,
   lat: 37.1370,
   lng: -1.8530
 }, {
@@ -489,6 +504,7 @@ const PLACES = [
   specialty: 'pescado del día a la sal, fideuá y arroz caldoso.',
   tier: '€€',
   cat: 'restaurant',
+  rating: 4.3,
   lat: 37.1360,
   lng: -1.8520
 }, {
@@ -499,6 +515,7 @@ const PLACES = [
   tip: 'Mesa fuera en primavera/otoño — el cielo de Cabo de Gata vale por sí solo.',
   tier: '€€€',
   cat: 'restaurant',
+  rating: 4.6,
   lat: 36.8475,
   lng: -2.0395,
   featured: true
@@ -509,6 +526,7 @@ const PLACES = [
   specialty: 'menú degustación de temporada con verduras del huerto y pescado de Carboneras.',
   tier: '€€€',
   cat: 'restaurant',
+  rating: 4.5,
   lat: 36.8480,
   lng: -2.0400
 }, {
@@ -518,6 +536,7 @@ const PLACES = [
   specialty: 'risotto de gambas, atún rojo a la parrilla y postre de chocolate templado.',
   tier: '€€€',
   cat: 'restaurant',
+  rating: 4.5,
   lat: 36.9395,
   lng: -2.0000
 }, {
@@ -527,6 +546,7 @@ const PLACES = [
   specialty: 'pescaíto frito, ensaladilla de la casa y sardinas al espeto en verano.',
   tier: '€€',
   cat: 'restaurant',
+  rating: 4.3,
   lat: 37.2310,
   lng: -1.7920
 },
@@ -824,6 +844,7 @@ const PLACES = [
   desc: 'Andando desde casa. Ambiente familiar de día, copas al atardecer.',
   specialty: 'mojito de menta del huerto y tabla de quesos al sol.',
   cat: 'bar',
+  rating: 4.3,
   lat: 37.2260,
   lng: -1.7935,
   featured: true
@@ -833,6 +854,7 @@ const PLACES = [
   desc: 'Andando desde casa. Música chill desde media tarde.',
   specialty: 'gin tonics premium y picoteo de tapeo mediterráneo.',
   cat: 'bar',
+  rating: 4.3,
   lat: 37.2300,
   lng: -1.7920
 }, {
@@ -841,6 +863,7 @@ const PLACES = [
   desc: 'Andando desde casa. El más relajado del paseo.',
   specialty: 'sangría de cava, sardinas al espeto en verano y arroz del día.',
   cat: 'bar',
+  rating: 4.2,
   lat: 37.2360,
   lng: -1.7895
 }, {
@@ -850,6 +873,7 @@ const PLACES = [
   specialty: 'cócteles de autor y carta asiática (poke, bao, tartar).',
   tip: 'Mejor reservar hamaca en julio-agosto; los atardeceres con DJ valen la pena.',
   cat: 'bar',
+  rating: 4.4,
   lat: 37.2410,
   lng: -1.7895,
   featured: true
@@ -859,6 +883,7 @@ const PLACES = [
   desc: 'Pequeño y muy local, a pie de arena.',
   specialty: 'caña fría, paella los domingos y boquerones en vinagre.',
   cat: 'bar',
+  rating: 4.2,
   lat: 37.2335,
   lng: -1.7910
 }, {
@@ -868,6 +893,7 @@ const PLACES = [
   specialty: 'spritz al atardecer, ostras y tapeo gourmet.',
   tip: 'Vete andando por la orilla al atardecer y vuelve en taxi: la luz vale la caminata.',
   cat: 'bar',
+  rating: 4.4,
   lat: 37.2155,
   lng: -1.7800,
   featured: true
@@ -878,6 +904,7 @@ const PLACES = [
   specialty: 'gambas blancas, quisquilla viva y conchas finas.',
   tip: 'Ir sobre las 19:00 cuando atracan los barcos.',
   cat: 'bar',
+  rating: 4.4,
   lat: 37.1820,
   lng: -1.8235,
   featured: true
