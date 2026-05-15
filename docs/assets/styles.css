@@ -15378,3 +15378,23 @@ img[src*="apt-vt-gallery-"] {
 .rf-quote-name { font-weight: 700; color: var(--ber-dk); }
 .rf-quote-sep { opacity: 0.4; }
 .rf-quote-source { font-style: italic; text-transform: none; letter-spacing: 0.01em; }
+
+/* ============================================================
+   Opiniones — filtro por apartamento (debajo del de fuente)
+   ============================================================ */
+.opiniones-tabs-apt {
+  margin: -8px 0 24px;
+}
+.opiniones-tab-apt {
+  /* Borde y texto en el acento de cada Hestía cuando se hace hover/active */
+  border-color: color-mix(in srgb, var(--apt-accent, var(--ber)) 55%, transparent);
+}
+.opiniones-tab-apt:hover {
+  border-color: color-mix(in srgb, var(--apt-accent) 85%, transparent);
+  background: color-mix(in srgb, var(--apt-accent) 12%, transparent);
+}
+.opiniones-tab-apt.is-active {
+  background: var(--apt-accent) !important;
+  border-color: var(--apt-accent) !important;
+  color: #FFFFFF !important;
+}

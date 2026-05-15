@@ -165,10 +165,13 @@ const OpinionesTestimonials = ({ lang }) => {
     : [];
 
   const [filter, setFilter] = React.useState('all'); // 'all'|'booking'|'airbnb'|'google'|'web'
+  const [aptFilter, setAptFilter] = React.useState('all'); // 'all'|'vm'|'vt'|'vs'
   const [expanded, setExpanded] = React.useState(false);
 
-  // Filtrado por fuente.
-  const filtered = filter === 'all' ? all : all.filter(r => r.source === filter);
+  // Filtrado combinado: por fuente Y por apartamento.
+  const filtered = all
+    .filter(r => filter === 'all' || r.source === filter)
+    .filter(r => aptFilter === 'all' || r.apt === aptFilter || r.apt === 'all');
 
   // Agrupación visible:
   // - Highlights: marcadas como destacadas (las "más relevantes").
@@ -185,13 +188,25 @@ const OpinionesTestimonials = ({ lang }) => {
     ? [...highlights, ...recent, ...rest]
     : [...highlights, ...recent];
 
-  // Cuenta por filtro para mostrar (3) etc en la pestaña.
+  // Cuenta por filtro de fuente (respeta el filtro de apartamento activo
+   // — así los contadores reflejan lo que verá el usuario al hacer click).
+  const inApt = aptFilter === 'all'
+    ? all
+    : all.filter(r => r.apt === aptFilter || r.apt === 'all');
   const counts = {
-    all:     all.length,
-    booking: all.filter(r => r.source === 'booking').length,
-    airbnb:  all.filter(r => r.source === 'airbnb').length,
-    google:  all.filter(r => r.source === 'google').length,
-    web:     all.filter(r => r.source === 'web').length,
+    all:     inApt.length,
+    booking: inApt.filter(r => r.source === 'booking').length,
+    airbnb:  inApt.filter(r => r.source === 'airbnb').length,
+    google:  inApt.filter(r => r.source === 'google').length,
+    web:     inApt.filter(r => r.source === 'web').length,
+  };
+  // Counts por apartamento (respetan el filtro de fuente activo).
+  const inSrc = filter === 'all' ? all : all.filter(r => r.source === filter);
+  const aptCounts = {
+    all: inSrc.length,
+    vm:  inSrc.filter(r => r.apt === 'vm' || r.apt === 'all').length,
+    vt:  inSrc.filter(r => r.apt === 'vt' || r.apt === 'all').length,
+    vs:  inSrc.filter(r => r.apt === 'vs' || r.apt === 'all').length,
   };
 
   const fmtDate = (iso) => {
@@ -212,6 +227,12 @@ const OpinionesTestimonials = ({ lang }) => {
     { id: 'google',  es: 'Google',   en: 'Google' },
     { id: 'web',     es: 'Web',      en: 'Web' },
   ];
+  const aptTabs = [
+    { id: 'all', es: 'Todas las Hestías', en: 'All Hestías',   accent: 'var(--ber)' },
+    { id: 'vm',  es: 'Mar',               en: 'Mar',           accent: '#6B7A3A' },
+    { id: 'vt',  es: 'Thalassa',          en: 'Thalassa',      accent: '#8A4A24' },
+    { id: 'vs',  es: 'Salinas',           en: 'Salinas',       accent: '#9E7A2C' },
+  ];
 
   return (
     <section className="opiniones-testimonials">
@@ -223,7 +244,7 @@ const OpinionesTestimonials = ({ lang }) => {
             : 'A mix of Booking, Airbnb, Google Maps and reviews collected on our own site. Curated and verified.'}
         </p>
 
-        <div className="opiniones-tabs reveal" role="tablist">
+        <div className="opiniones-tabs reveal" role="tablist" aria-label={lang === 'es' ? 'Filtrar por fuente' : 'Filter by source'}>
           {tabs.map(tab => (
             <button
               key={tab.id}
@@ -237,6 +258,21 @@ const OpinionesTestimonials = ({ lang }) => {
             </button>
           ))}
         </div>
+        <div className="opiniones-tabs opiniones-tabs-apt reveal" role="tablist" aria-label={lang === 'es' ? 'Filtrar por Hestía' : 'Filter by Hestía'}>
+          {aptTabs.map(tab => (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={aptFilter === tab.id}
+              className={`opiniones-tab opiniones-tab-apt${aptFilter === tab.id ? ' is-active' : ''}`}
+              style={{ '--apt-accent': tab.accent }}
+              onClick={() => _vt(() => { setAptFilter(tab.id); setExpanded(false); })}>
+              {lang === 'es' ? tab.es : tab.en}
+              <span className="opiniones-tab-count">({aptCounts[tab.id]})</span>
+            </button>
+          ))}
+        </div>
 
         {visible.length === 0 ? (
           <p className="opiniones-empty">
@@ -244,7 +280,7 @@ const OpinionesTestimonials = ({ lang }) => {
           </p>
         ) : (
           <>
-            {highlights.length > 0 && filter === 'all' && (
+            {highlights.length > 0 && filter === 'all' && aptFilter === 'all' && (
               <div className="opiniones-section-label reveal">
                 <span className="osl-star" aria-hidden="true">✦</span>
                 {lang === 'es' ? 'Más relevantes' : 'Most relevant'}
