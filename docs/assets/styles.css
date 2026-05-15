@@ -15753,3 +15753,134 @@ img[src*="apt-vt-gallery-"] {
 .rf-edit:has(.rf-summary-card):hover .rf-edit-action {
   background: color-mix(in srgb, var(--apt-accent, var(--ber)) 8%, transparent);
 }
+
+/* ============================================================
+   Guía · Day Plans — filtros nuevos (duración, tema) + meta de plan
+   ============================================================ */
+.dp-filters-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin: 14px 0;
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--apt-accent, var(--ber)) 4%, var(--crema));
+  border-radius: 10px 0 10px 0;
+  border: 1px solid color-mix(in srgb, var(--apt-accent, var(--ber)) 12%, transparent);
+}
+.dp-filter-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--apt-accent, var(--ber)) 80%, var(--ber-dk));
+  min-width: 70px;
+}
+.dp-theme-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+}
+.dp-theme-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: transparent;
+  border: 1px solid color-mix(in srgb, var(--theme-color) 40%, transparent);
+  color: var(--theme-color);
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.dp-theme-chip:hover {
+  background: color-mix(in srgb, var(--theme-color) 12%, transparent);
+}
+.dp-theme-chip.active {
+  background: var(--theme-color);
+  color: #fff;
+  border-color: var(--theme-color);
+}
+.dp-theme-clear {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  background: transparent;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.dp-theme-clear:hover { color: var(--ber-dk); }
+
+/* Meta-bar dentro de la card del plan */
+.dp-meta-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--hair, rgba(61,26,53,0.10));
+}
+.dp-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.dp-meta-duration, .dp-meta-km {
+  background: color-mix(in srgb, var(--ber) 6%, transparent);
+  color: var(--ber-dk);
+  border: 1px solid color-mix(in srgb, var(--ber) 12%, transparent);
+}
+.dp-meta-theme {
+  background: color-mix(in srgb, var(--theme-color) 12%, transparent);
+  color: var(--theme-color);
+  border: 1px solid color-mix(in srgb, var(--theme-color) 28%, transparent);
+}
+
+/* Extra info en cada step (km, rating, gmaps link) */
+.dp-step-extra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 4px;
+  font-size: 10.5px;
+}
+.dp-step-km {
+  color: var(--ink-soft);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.dp-step-rating {
+  color: var(--apt-accent, var(--sol-text));
+  font-weight: 700;
+}
+.dp-step-rating small {
+  font-weight: 400;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+.dp-step-gmaps {
+  color: var(--apt-accent, var(--sol-text));
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+.dp-step-gmaps:hover {
+  border-bottom-style: solid;
+}

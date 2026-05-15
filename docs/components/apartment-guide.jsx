@@ -1114,6 +1114,66 @@ const DAY_PLAN_GROUPS = {
   evening:  { es: 'Tarde-noche',    en: 'Evening',       sub_es: 'Atardecer, cena y un sitio especial',         sub_en: 'Sunset, dinner and a beautiful night spot' },
 };
 
+// Etiquetas de cada tema con icono y color
+const THEMES_DEFS = {
+  naturaleza:  { es: 'Naturaleza',  en: 'Nature',       icon: '🌿', color: '#6B7A3A' },
+  gastronomia: { es: 'Gastronomía', en: 'Food',         icon: '🍴', color: '#8A4A24' },
+  cultura:     { es: 'Cultura',     en: 'Culture',      icon: '🏛️', color: '#3D1A35' },
+  historia:    { es: 'Historia',    en: 'History',      icon: '📜', color: '#5D2A48' },
+  pintoresco:  { es: 'Pintoresco',  en: 'Picturesque',  icon: '✦',  color: '#D4A84A' },
+  aventura:    { es: 'Aventura',    en: 'Adventure',    icon: '⛰️', color: '#3AAABB' },
+  relax:       { es: 'Relax',       en: 'Relax',        icon: '☕', color: '#9E7A2C' },
+  familia:     { es: 'Familia',     en: 'Family',       icon: '👨‍👩‍👧', color: '#D42B80' },
+};
+
+// Categorías de duración para filtrar
+const DURATION_BUCKETS = [
+  { id: 'short',  es: '2-3 h',    en: '2-3 h',     min: 0,  max: 3 },
+  { id: 'half',   es: 'Media jornada', en: 'Half day', min: 4, max: 6 },
+  { id: 'full',   es: 'Día completo',  en: 'Full day', min: 7, max: 24 },
+];
+
+// Metadata para los 35 planes existentes (themes inferidos por id,
+// duration_h calculada de start-end). Para los planes NUEVOS (más
+// abajo) los campos están dentro del propio plan.
+const PLAN_META = {
+  'plan-flamencos':           { duration_h: 7,  themes: ['naturaleza','familia','gastronomia'] },
+  'plan-monsul-amanecer':     { duration_h: 8,  themes: ['naturaleza','pintoresco'] },
+  'plan-sendero-litoral':     { duration_h: 7,  themes: ['naturaleza','aventura','relax'] },
+  'plan-cabo-gata':           { duration_h: 10, themes: ['naturaleza','aventura','pintoresco'] },
+  'plan-carboneras-aguamarga':{ duration_h: 10, themes: ['naturaleza','pintoresco'] },
+  'plan-vera-sorbas-tabernas':{ duration_h: 10, themes: ['naturaleza','cultura','aventura'] },
+  'plan-monsul-cena':         { duration_h: 6,  themes: ['naturaleza','pintoresco','gastronomia'] },
+  'plan-mojacar-noche':       { duration_h: 6,  themes: ['cultura','gastronomia','pintoresco'] },
+  'plan-riad-cabrera':        { duration_h: 6,  themes: ['cultura','gastronomia'] },
+  'plan-cala-enmedio-tarde':  { duration_h: 7,  themes: ['naturaleza','aventura','relax'] },
+  'plan-flamencos-niños':     { duration_h: 6,  themes: ['naturaleza','familia','gastronomia'] },
+  'plan-mini-hollywood':      { duration_h: 9,  themes: ['familia','cultura','aventura'] },
+  'plan-geoda-pulpi':         { duration_h: 9,  themes: ['naturaleza','aventura'] },
+  'plan-aqua-vera':           { duration_h: 10, themes: ['familia','aventura'] },
+  'plan-mojacar-niños':       { duration_h: 5,  themes: ['cultura','gastronomia','pintoresco','familia'] },
+  'plan-carretera-cabo':      { duration_h: 10, themes: ['naturaleza','aventura','pintoresco'] },
+  'plan-trek-san-pedro':      { duration_h: 10, themes: ['naturaleza','aventura'] },
+  'plan-murcia-gastro':       { duration_h: 11, themes: ['gastronomia','cultura'] },
+  'plan-almeria-capital':     { duration_h: 12, themes: ['cultura','gastronomia','historia'] },
+  'plan-nijar-ceramica':      { duration_h: 10, themes: ['cultura','pintoresco'] },
+  'plan-kayak-cabo':          { duration_h: 6,  themes: ['naturaleza','aventura','pintoresco'] },
+  'plan-snorkel-familia':     { duration_h: 4,  themes: ['naturaleza','familia','aventura'] },
+  'plan-buceo-las-negras':    { duration_h: 10, themes: ['naturaleza','aventura'] },
+  'plan-parque-vera-niños':   { duration_h: 4,  themes: ['familia','relax'] },
+  'plan-estrellas-cabo':      { duration_h: 6,  themes: ['naturaleza','aventura','pintoresco','relax'] },
+  'plan-mojacar-noche-musica':{ duration_h: 6,  themes: ['cultura','gastronomia','pintoresco'] },
+  'plan-crucero-cabo':        { duration_h: 8,  themes: ['naturaleza','aventura','familia','pintoresco'] },
+  'plan-lunar-cable':         { duration_h: 4,  themes: ['aventura','familia'] },
+  'plan-motos-acuaticas':     { duration_h: 4,  themes: ['aventura'] },
+  'plan-bici-costa':          { duration_h: 5,  themes: ['naturaleza','aventura','familia'] },
+  'plan-curso-buceo':         { duration_h: 10, themes: ['naturaleza','aventura'] },
+  'plan-lua-paseo':           { duration_h: 4,  themes: ['gastronomia','relax'] },
+  'plan-garrucha-malecon':    { duration_h: 4,  themes: ['familia','gastronomia','pintoresco'] },
+  'plan-calar-alto':          { duration_h: 8,  themes: ['naturaleza','aventura','cultura','relax'] },
+  'plan-granada-alhambra':    { duration_h: 16, themes: ['cultura','historia','pintoresco'] },
+};
+
 // audience: 'kids' (con niños), 'adults' (sin niños — cenas tardías,
 // senderos largos, carretera de montaña), 'both' (vale para los dos).
 const DAY_PLANS = [
@@ -1941,13 +2001,249 @@ const DAY_PLANS = [
     tip_es:'Reservad la entrada a la Alhambra con varias semanas (incluso meses) de antelación en alhambra-patronato.es. Sin entrada no se entra: el cupo diario está topado. Llevad DNI/pasaporte — lo piden en cada acceso. Si os queda batería para más, una opción es dormir en Granada y volver al día siguiente.',
     tip_en:'Book Alhambra tickets weeks (even months) ahead at alhambra-patronato.es. No ticket, no entry — daily quota is capped. Bring your ID/passport — it is checked at each gate. If you have the stamina, consider sleeping in Granada and returning the next day.',
   },
+
+  // ── 12 PLANES NUEVOS — schema completo (themes, duration_h, km, gmaps, rating) ──
+
+  {
+    id:'plan-mercadillo-vera', type:'morning', audience:'both', duration_h:2,
+    themes:['gastronomia','pintoresco'],
+    title_es:'Mercadillo de Vera (jueves) + desayuno',
+    title_en:'Vera street market (Thursdays) + breakfast',
+    start:'9:00', end:'11:00',
+    tags_es:['jueves','mercado','desayuno','tomate raf'], tags_en:['thursday','market','breakfast','raf tomato'],
+    steps:[
+      { t:'9:00',  es:'Salida hacia Vera pueblo', en:'Drive to Vera town', d_es:'10 min en coche por la AL-7107.', d_en:'10 min by car on AL-7107.', km:8, gmaps:'https://maps.google.com/?q=Vera+Almeria' },
+      { t:'9:15',  es:'Desayuno en Bar Manolo', en:'Breakfast at Bar Manolo', d_es:'Tostada con tomate raf y aceite, café con leche. 4€.', d_en:'Raf tomato + olive oil toast, café con leche. €4.', km:0.2, gmaps:'https://maps.google.com/?q=Bar+Manolo+Vera+Almeria', rating:{ v:4.4, src:'google' } },
+      { t:'10:00', es:'Mercadillo · Plaza Mayor', en:'Market · Plaza Mayor', d_es:'Tomate raf, queso curado de Garrucha, miel de azahar, aceitunas aliñadas, hierbas, ropa.', d_en:'Raf tomato, Garrucha cured cheese, orange-blossom honey, marinated olives, herbs, clothes.', km:0.1, gmaps:'https://maps.google.com/?q=Mercadillo+Vera+Almeria', rating:{ v:4.5, src:'google' } },
+      { t:'11:00', es:'Vuelta a Hestía', en:'Back to Hestía', km:8, gmaps:'https://maps.google.com/?q=Vera+Playa' },
+    ],
+    tip_es:'Solo los jueves de 8:30 a 13:30. En agosto, mejor antes de las 11 — luego aprieta el sol. Llevad bolsa propia.',
+    tip_en:'Only Thursdays 8:30-13:30. In August go before 11 — gets too hot afterwards. Bring your own bag.',
+  },
+
+  {
+    id:'plan-termas-alhamilla', type:'morning', audience:'adults', duration_h:4,
+    themes:['relax','naturaleza','cultura'],
+    title_es:'Termas romanas de Sierra Alhamilla',
+    title_en:'Roman thermal baths of Sierra Alhamilla',
+    start:'8:30', end:'12:30',
+    tags_es:['termas','aguas termales','romano','silencio'], tags_en:['thermal','spa','roman','silence'],
+    steps:[
+      { t:'8:30',  es:'Salida hacia Pechina', en:'Drive to Pechina', d_es:'70 min por la A-7 dirección Almería.', d_en:'70 min on the A-7 toward Almería.', km:90, gmaps:'https://maps.google.com/?q=Pechina+Almeria' },
+      { t:'9:45',  es:'Llegada al Balneario de Sierra Alhamilla', en:'Arrival at Sierra Alhamilla Spa', d_es:'Aguas a 58° desde tiempos romanos. Edificio del s.XVIII.', d_en:'58° waters since Roman times. 18th-c. building.', km:0, gmaps:'https://maps.google.com/?q=Balneario+Sierra+Alhamilla', rating:{ v:4.6, src:'google' } },
+      { t:'10:00', es:'Baños en piscina termal y cuevas', en:'Bath in thermal pool and caves', d_es:'Agua mineralizada con propiedades terapéuticas. ~10€/persona.', d_en:'Mineralized water with therapeutic properties. ~€10/person.', km:0, gmaps:'https://maps.google.com/?q=Balneario+Sierra+Alhamilla' },
+      { t:'11:30', es:'Desayuno en el restaurante del balneario', en:'Breakfast at the spa restaurant', d_es:'Tortilla, café, vista al pueblo de Pechina al fondo.', d_en:'Tortilla, coffee, view of Pechina village below.', km:0, gmaps:'https://maps.google.com/?q=Balneario+Sierra+Alhamilla' },
+      { t:'12:30', es:'Vuelta a Vera Playa', en:'Back to Vera Playa', km:90, gmaps:'https://maps.google.com/?q=Vera+Playa' },
+    ],
+    tip_es:'Llamad antes — horario de baños cambia por temporada (+34 950 31 75 13). Llevad chanclas para la zona húmeda.',
+    tip_en:'Call ahead — bath schedule changes by season (+34 950 31 75 13). Bring flip-flops for the wet area.',
+  },
+
+  {
+    id:'plan-faro-cabo-corto', type:'morning', audience:'both', duration_h:3,
+    themes:['naturaleza','pintoresco'],
+    title_es:'Faro y mirador de Cabo de Gata (mañana corta)',
+    title_en:'Cabo de Gata lighthouse and lookout (short morning)',
+    start:'9:00', end:'12:00',
+    tags_es:['faro','flamencos','mirador'], tags_en:['lighthouse','flamingos','viewpoint'],
+    steps:[
+      { t:'9:00',  es:'Salida hacia Cabo de Gata', en:'Drive to Cabo de Gata', d_es:'1 h 15 min, carretera espectacular.', d_en:'1 h 15 min, spectacular road.', km:90, gmaps:'https://maps.google.com/?q=Cabo+de+Gata' },
+      { t:'10:15', es:'Salinas de Cabo de Gata · flamencos', en:'Cabo de Gata salt flats · flamingos', d_es:'Otra colonia de flamencos diferente a la de Vera. Foto desde el observatorio.', d_en:'Another flamingo colony, different from Vera. Photo from the observatory.', km:5, gmaps:'https://maps.google.com/?q=Salinas+Cabo+de+Gata', rating:{ v:4.7, src:'google' } },
+      { t:'11:00', es:'Faro y arrecife de las Sirenas', en:'Lighthouse and Sirens reef', d_es:'Mirador con vista a las dos columnas volcánicas saliendo del mar.', d_en:'Lookout with view of the two volcanic columns rising from the sea.', km:5, gmaps:'https://maps.google.com/?q=Faro+Cabo+de+Gata', rating:{ v:4.6, src:'google' } },
+      { t:'12:00', es:'Vuelta a Hestía', en:'Back to Hestía', km:90, gmaps:'https://maps.google.com/?q=Vera+Playa' },
+    ],
+    tip_es:'Para una mañana 100% naturaleza sin estresarse. Si queréis hacer playa también, alargad y combinadlo con Mónsul (otro plan).',
+    tip_en:'For a 100% nature morning without stress. To add a beach, extend and combine with Mónsul (another plan).',
+  },
+
+  {
+    id:'plan-genoveses-atardecer', type:'evening', audience:'both', duration_h:3,
+    themes:['naturaleza','relax','pintoresco'],
+    title_es:'Playa de los Genoveses al atardecer',
+    title_en:'Los Genoveses beach at sunset',
+    start:'17:00', end:'20:00',
+    tags_es:['playa virgen','atardecer','sin servicios'], tags_en:['virgin beach','sunset','no services'],
+    steps:[
+      { t:'17:00', es:'Salida hacia San José', en:'Drive to San José', d_es:'1 h 10 min por la N-340 y AL-3115.', d_en:'1 h 10 min on N-340 and AL-3115.', km:85, gmaps:'https://maps.google.com/?q=San+Jose+Almeria' },
+      { t:'18:15', es:'Aparcar en el parking de Genoveses', en:'Park at the Genoveses car park', d_es:'En verano hay barrera de coches: parking de pago + bus lanzadera o caminar 20 min.', d_en:'In summer cars are restricted: paid parking + shuttle bus, or 20-min walk.', km:6, gmaps:'https://maps.google.com/?q=Playa+de+los+Genoveses', rating:{ v:4.7, src:'google' } },
+      { t:'18:45', es:'Baño y paseo por la playa virgen', en:'Swim and walk on the virgin beach', d_es:'1.300 m de arena dorada sin construcciones. Eucaliptos al borde.', d_en:'1,300 m of golden sand with no buildings. Eucalyptus at the edge.', km:0, gmaps:'https://maps.google.com/?q=Playa+de+los+Genoveses' },
+      { t:'19:30', es:'Atardecer mirando al cabo', en:'Sunset facing the cape', d_es:'El sol cae detrás del Cerro del Cabrero. Aire fresco al ponerse.', d_en:'Sun drops behind Cerro del Cabrero. Cool air when it sets.', km:0, gmaps:'https://maps.google.com/?q=Playa+de+los+Genoveses' },
+      { t:'20:00', es:'Vuelta a Hestía', en:'Back to Hestía', km:91, gmaps:'https://maps.google.com/?q=Vera+Playa' },
+    ],
+    tip_es:'No hay chiringuito ni servicios. Llevad agua, snack y toalla extra. Si vais en julio-agosto comprobad la barrera de coches en cabodegata.es.',
+    tip_en:'No beach bar, no services. Bring water, snack and extra towel. In July-August check car restrictions at cabodegata.es.',
+  },
+
+  {
+    id:'plan-pulpi-cocedores', type:'morning', audience:'both', duration_h:5,
+    themes:['aventura','naturaleza','familia'],
+    title_es:'Geoda gigante de Pulpí + Playa de los Cocedores',
+    title_en:'Pulpí giant geode + Cocedores beach',
+    start:'10:00', end:'15:00',
+    tags_es:['geoda','minería','cala','niños'], tags_en:['geode','mining','cove','kids'],
+    steps:[
+      { t:'10:00', es:'Salida hacia Pulpí', en:'Drive to Pulpí', d_es:'45 min, reserva online imprescindible.', d_en:'45 min, online booking required.', km:45, gmaps:'https://maps.google.com/?q=Pulpi+Almeria' },
+      { t:'11:00', es:'Visita guiada a la Geoda Gigante', en:'Guided tour of the Giant Geode', d_es:'8 m de cristales — la 2ª más grande del mundo. Casco, linterna y arnés incluidos. ~22€ adulto.', d_en:'8 m of crystals — the world\'s 2nd largest. Helmet, lamp and harness included. ~€22/adult.', km:0, gmaps:'https://maps.google.com/?q=Geoda+Pulpi', rating:{ v:4.8, src:'google' } },
+      { t:'13:00', es:'Comida en San Juan de los Terreros', en:'Lunch at San Juan de los Terreros', d_es:'Pueblo costero pequeño. Restaurantes a pie de mar (Mejillonera, La Tasca).', d_en:'Small coastal village. Beachfront restaurants (Mejillonera, La Tasca).', km:13, gmaps:'https://maps.google.com/?q=San+Juan+de+los+Terreros', rating:{ v:4.3, src:'google' } },
+      { t:'14:30', es:'Playa de los Cocedores', en:'Cocedores beach', d_es:'Cuevas excavadas en la arenisca, perfectas para que los niños exploren. Aguas turquesas.', d_en:'Caves carved into the sandstone — perfect for kids to explore. Turquoise waters.', km:8, gmaps:'https://maps.google.com/?q=Playa+de+los+Cocedores', rating:{ v:4.6, src:'google' } },
+      { t:'15:00', es:'Vuelta a Hestía', en:'Back to Hestía', km:50, gmaps:'https://maps.google.com/?q=Vera+Playa' },
+    ],
+    tip_es:'Reservad la Geoda con 1-2 semanas de antelación en geodapulpi.es. Edad mínima 6 años. Temperatura constante 20° dentro — llevad sudadera.',
+    tip_en:'Book the Geode 1-2 weeks ahead at geodapulpi.es. Min age 6. Constant 20° inside — bring a sweatshirt.',
+  },
+
+  {
+    id:'plan-cartagena-roma', type:'fullday', audience:'both', duration_h:8,
+    themes:['cultura','historia','gastronomia'],
+    title_es:'Cartagena · Teatro romano y modernismo',
+    title_en:'Cartagena · Roman theatre and modernism',
+    start:'8:00', end:'18:00',
+    tags_es:['romano','modernismo','puerto','tapas'], tags_en:['roman','modernism','harbour','tapas'],
+    steps:[
+      { t:'8:00',  es:'Salida hacia Cartagena', en:'Drive to Cartagena', d_es:'1 h 45 min por la A-7 y AP-7.', d_en:'1 h 45 min on A-7 and AP-7.', km:160, gmaps:'https://maps.google.com/?q=Cartagena+Spain' },
+      { t:'10:00', es:'Teatro Romano de Cartagena', en:'Roman Theatre of Cartagena', d_es:'Reabierto en 2008 tras décadas enterrado. Imprescindible. ~7€.', d_en:'Reopened in 2008 after decades buried. Must-see. ~€7.', km:0, gmaps:'https://maps.google.com/?q=Teatro+Romano+Cartagena', rating:{ v:4.7, src:'google' } },
+      { t:'12:00', es:'Calle Mayor + Casino + Casas modernistas', en:'Main street + Casino + Modernist houses', d_es:'Joya del modernismo español. Caminad sin prisa.', d_en:'Spanish modernism gem. Walk slowly.', km:0.5, gmaps:'https://maps.google.com/?q=Calle+Mayor+Cartagena', rating:{ v:4.6, src:'google' } },
+      { t:'13:30', es:'Comida de tapas en La Marquesita', en:'Lunch tapas at La Marquesita', d_es:'Marineras (boquerones en vinagre sobre rosquilla) — invento cartagenero. ~25€/persona.', d_en:'Marineras (vinegar anchovy on a rosquilla bagel) — Cartagena invention. ~€25/person.', km:0.3, gmaps:'https://maps.google.com/?q=La+Marquesita+Cartagena', rating:{ v:4.4, src:'google' } },
+      { t:'15:30', es:'Puerto y submarino Peral', en:'Harbour and Peral submarine', d_es:'1er submarino con propulsión eléctrica del mundo (1888). Paseo por el muelle.', d_en:'World\'s first electric-powered submarine (1888). Walk along the docks.', km:0.7, gmaps:'https://maps.google.com/?q=Submarino+Peral+Cartagena', rating:{ v:4.5, src:'google' } },
+      { t:'16:30', es:'Castillo de la Concepción · ascensor panorámico', en:'Concepción Castle · panoramic lift', d_es:'Vistas 360° de la bahía. Ascensor desde el puerto.', d_en:'360° bay views. Lift from the harbour.', km:0.5, gmaps:'https://maps.google.com/?q=Castillo+de+la+Concepcion+Cartagena', rating:{ v:4.5, src:'google' } },
+      { t:'17:30', es:'Café y vuelta', en:'Coffee and drive back', d_es:'1 h 45 min de carretera.', d_en:'1 h 45 min drive.', km:160, gmaps:'https://maps.google.com/?q=Vera+Playa' },
+    ],
+    tip_es:'Sacad la entrada al Teatro Romano online (museoteatroromanocartagena.es) — incluye museo subterráneo. Cartagena merece una vuelta de noche también, si os animáis a quedaros.',
+    tip_en:'Buy Roman Theatre tickets online (museoteatroromanocartagena.es) — includes the underground museum. Worth visiting at night too if you feel like staying.',
+  },
+
+  {
+    id:'plan-lorca-castillo', type:'fullday', audience:'both', duration_h:7,
+    themes:['cultura','historia'],
+    title_es:'Lorca · Castillo, judería y bordados',
+    title_en:'Lorca · Castle, Jewish quarter and embroidery',
+    start:'9:00', end:'16:00',
+    tags_es:['castillo','semana santa','judería','bordados'], tags_en:['castle','holy week','jewish quarter','embroidery'],
+    steps:[
+      { t:'9:00',  es:'Salida hacia Lorca', en:'Drive to Lorca', d_es:'1 h por la A-7.', d_en:'1 h on A-7.', km:80, gmaps:'https://maps.google.com/?q=Lorca+Murcia' },
+      { t:'10:00', es:'Castillo de Lorca · Fortaleza del Sol', en:'Lorca Castle · Sun Fortress', d_es:'Torre Alfonsina, sinagoga medieval y judería excavada en 2002. Tren turístico desde el casco.', d_en:'Alfonsina Tower, medieval synagogue and Jewish quarter excavated in 2002. Tourist train from old town.', km:1, gmaps:'https://maps.google.com/?q=Castillo+de+Lorca', rating:{ v:4.5, src:'google' } },
+      { t:'12:00', es:'Casco histórico · Plaza de España y Colegiata', en:'Old town · Plaza España and Colegiata', d_es:'Iglesia de San Patricio (s.XVI), una de las pocas colegiatas extra-catedralicias.', d_en:'San Patricio church (16th c.), one of the few non-cathedral collegiates.', km:1, gmaps:'https://maps.google.com/?q=Plaza+de+Espana+Lorca', rating:{ v:4.6, src:'google' } },
+      { t:'13:30', es:'Museo del Bordado · Paso Azul o Paso Blanco', en:'Embroidery Museum · Paso Azul or Paso Blanco', d_es:'Bordado en seda único en el mundo — declarado Patrimonio Inmaterial. ~6€.', d_en:'Silk embroidery unique in the world — declared Intangible Heritage. ~€6.', km:0.3, gmaps:'https://maps.google.com/?q=Museo+Bordado+Paso+Azul+Lorca', rating:{ v:4.7, src:'google' } },
+      { t:'14:30', es:'Comida en El Esquinazo', en:'Lunch at El Esquinazo', d_es:'Cocina lorquina tradicional — migas, michirones, conejo al ajillo. ~30€/persona.', d_en:'Traditional Lorca cuisine — migas, michirones, garlic rabbit. ~€30/person.', km:0.5, gmaps:'https://maps.google.com/?q=El+Esquinazo+Lorca', rating:{ v:4.4, src:'google' } },
+      { t:'16:00', es:'Vuelta a Hestía', en:'Back to Hestía', km:80, gmaps:'https://maps.google.com/?q=Vera+Playa' },
+    ],
+    tip_es:'Si vais en Semana Santa, Lorca tiene la mejor procesión de España según muchos — pero las plazas se llenan, reservad con meses.',
+    tip_en:'During Holy Week, Lorca has Spain\'s most spectacular processions according to many — but spots fill, book months ahead.',
+  },
+
+  {
+    id:'plan-cazorla-sierra', type:'fullday', audience:'adults', duration_h:9,
+    themes:['naturaleza','relax'],
+    title_es:'Sierra de Cazorla · día verde en la montaña',
+    title_en:'Sierra de Cazorla · green day in the mountains',
+    start:'8:00', end:'19:00',
+    tags_es:['sierra','río','parque natural','desconexión'], tags_en:['mountains','river','natural park','disconnect'],
+    steps:[
+      { t:'8:00',  es:'Salida hacia Cazorla', en:'Drive to Cazorla', d_es:'2 h 45 min por la A-7 y A-92.', d_en:'2 h 45 min on A-7 and A-92.', km:230, gmaps:'https://maps.google.com/?q=Cazorla+Jaen' },
+      { t:'10:45', es:'Pueblo de Cazorla · Plaza de Santa María', en:'Cazorla town · Plaza Santa María', d_es:'Pueblo blanco encajado entre dos sierras. Café en cualquiera de las terrazas.', d_en:'White village wedged between two ranges. Coffee at any terrace.', km:1, gmaps:'https://maps.google.com/?q=Plaza+de+Santa+Maria+Cazorla', rating:{ v:4.7, src:'google' } },
+      { t:'11:30', es:'Sendero del Río Borosa (tramo corto, 4 km)', en:'Río Borosa trail (short 4 km section)', d_es:'Pasarelas sobre el río más espectacular del parque. Plano y familiar.', d_en:'Walkways over the park\'s most spectacular river. Flat and family-friendly.', km:25, gmaps:'https://maps.google.com/?q=Sendero+Rio+Borosa', rating:{ v:4.8, src:'google' } },
+      { t:'14:00', es:'Comida en Mesón Leandro (Burunchel)', en:'Lunch at Mesón Leandro (Burunchel)', d_es:'Cocina serrana — venado, ciervo, gachamigas. ~35€/persona.', d_en:'Mountain cuisine — venison, deer, gachamigas. ~€35/person.', km:15, gmaps:'https://maps.google.com/?q=Meson+Leandro+Burunchel', rating:{ v:4.6, src:'google' } },
+      { t:'16:00', es:'Mirador Cinco Puertas', en:'Cinco Puertas viewpoint', d_es:'Vista de toda la Sierra de Cazorla con el embalse del Tranco al fondo.', d_en:'Sweeping view of all Sierra de Cazorla with the Tranco reservoir below.', km:10, gmaps:'https://maps.google.com/?q=Mirador+Cinco+Puertas+Cazorla', rating:{ v:4.7, src:'google' } },
+      { t:'17:00', es:'Vuelta a Vera Playa', en:'Drive back to Vera Playa', d_es:'2 h 45 min.', d_en:'2 h 45 min.', km:230, gmaps:'https://maps.google.com/?q=Vera+Playa' },
+    ],
+    tip_es:'Llevad calzado de senderismo (incluso para 4 km) y agua. Sierra de Cazorla tiene 200.000 ha — si os engancha, mereceréis volver a dormir un par de días.',
+    tip_en:'Bring hiking shoes (even for 4 km) and water. Sierra de Cazorla has 200,000 ha — if hooked, worth returning to sleep a couple nights.',
+  },
+
+  {
+    id:'plan-tapas-vera-pueblo', type:'evening', audience:'both', duration_h:3,
+    themes:['gastronomia','pintoresco','cultura'],
+    title_es:'Tapas tour por Vera pueblo',
+    title_en:'Tapas tour around Vera village',
+    start:'20:00', end:'23:00',
+    tags_es:['tapas','rutas tapas','vino','barato'], tags_en:['tapas','tapas route','wine','cheap'],
+    steps:[
+      { t:'20:00', es:'Salida hacia Vera pueblo', en:'Drive to Vera town', d_es:'10 min en coche.', d_en:'10 min by car.', km:8, gmaps:'https://maps.google.com/?q=Vera+Almeria' },
+      { t:'20:15', es:'Bar Las Vegas · cerveza + tapa de marisco', en:'Bar Las Vegas · beer + seafood tapa', d_es:'Cerveza fría + chocos fritos o gambas — gratis con la consumición. ~3€.', d_en:'Cold beer + fried squid or shrimp — free with the drink. ~€3.', km:0.3, gmaps:'https://maps.google.com/?q=Bar+Las+Vegas+Vera+Almeria', rating:{ v:4.4, src:'google' } },
+      { t:'21:00', es:'Bodega El Choto · vino + tapa de carne', en:'Bodega El Choto · wine + meat tapa', d_es:'Buena selección de vinos murcianos y andaluces. Ambiente tradicional. ~5€/copa.', d_en:'Good Murcia and Andalusia wine selection. Traditional atmosphere. ~€5/glass.', km:0.2, gmaps:'https://maps.google.com/?q=Bodega+El+Choto+Vera+Almeria', rating:{ v:4.5, src:'google' } },
+      { t:'21:45', es:'Bar Pasaje · ración para compartir', en:'Bar Pasaje · sharing platter', d_es:'Pulpo a la gallega o jamón ibérico. Mesa fuera en verano. ~12€/ración.', d_en:'Galician octopus or Iberian ham. Outdoor table in summer. ~€12/dish.', km:0.1, gmaps:'https://maps.google.com/?q=Bar+Pasaje+Vera+Almeria', rating:{ v:4.5, src:'google' } },
+      { t:'22:30', es:'Helado en Heladería La Ibense', en:'Ice cream at La Ibense', d_es:'Heladería artesanal del paseo — turrón, chocolate al ron, mantecado.', d_en:'Artisan ice cream parlour on the promenade — turrón, rum chocolate, mantecado.', km:0.2, gmaps:'https://maps.google.com/?q=Heladeria+La+Ibense+Vera', rating:{ v:4.6, src:'google' } },
+      { t:'23:00', es:'Vuelta a Hestía', en:'Back to Hestía', km:8, gmaps:'https://maps.google.com/?q=Vera+Playa' },
+    ],
+    tip_es:'En Andalucía la tapa va con la consumición — cuesta acostumbrarse después de Madrid. Pedid "una caña" y ya viene con algo. Llevad efectivo, los bares pequeños no siempre cobran con tarjeta.',
+    tip_en:'In Andalusia tapas come free with each drink — takes getting used to after Madrid. Ask for "una caña" and it comes with food. Bring cash — small bars don\'t always take card.',
+  },
+
+  {
+    id:'plan-villaricos-pescaderia', type:'morning', audience:'both', duration_h:3,
+    themes:['gastronomia','pintoresco'],
+    title_es:'Villaricos · pescadería del puerto + paella en Tadeo',
+    title_en:'Villaricos · port fish market + paella at Tadeo',
+    start:'10:30', end:'14:30',
+    tags_es:['pesca','marisco','paella','arroz'], tags_en:['fishing','seafood','paella','rice'],
+    steps:[
+      { t:'10:30', es:'Salida hacia Villaricos', en:'Drive to Villaricos', d_es:'15 min por la AL-7.', d_en:'15 min on AL-7.', km:13, gmaps:'https://maps.google.com/?q=Villaricos+Almeria' },
+      { t:'10:50', es:'Pescadería del puerto · ver llegar las barcas', en:'Port fish market · watch boats arrive', d_es:'Las barcas llegan sobre las 11. Pescado del día — gambas, calamar, sepia. Compradlo y os lo limpian.', d_en:'Boats arrive around 11. Day catch — shrimp, squid, cuttlefish. Buy and they clean it for you.', km:0.5, gmaps:'https://maps.google.com/?q=Lonja+de+Villaricos', rating:{ v:4.5, src:'google' } },
+      { t:'12:00', es:'Paseo por el puerto y la cala de la Galera', en:'Walk port and Galera cove', d_es:'Pueblo pesquero auténtico, sin turisficar. La cala es de piedra pequeña.', d_en:'Authentic fishing village, untouched by tourism. Cove has small pebbles.', km:0.3, gmaps:'https://maps.google.com/?q=Cala+de+la+Galera+Villaricos' },
+      { t:'13:00', es:'Comida en Restaurante Tadeo', en:'Lunch at Restaurant Tadeo', d_es:'Arroz con bogavante — la mejor de la zona, sin excepciones. Reservad. ~35€/persona.', d_en:'Lobster rice — the best in the area, no exceptions. Book ahead. ~€35/person.', km:0.2, gmaps:'https://maps.google.com/?q=Restaurante+Tadeo+Villaricos', rating:{ v:4.7, src:'google' } },
+      { t:'14:30', es:'Vuelta a Hestía', en:'Back to Hestía', km:13, gmaps:'https://maps.google.com/?q=Vera+Playa' },
+    ],
+    tip_es:'En Tadeo el arroz lleva 35-40 min de cocción. Pedidlo nada más sentaros y mientras tanto picad gambas o boquerones. Solo abren mediodía.',
+    tip_en:'At Tadeo the rice takes 35-40 min cooking. Order it as soon as you sit and snack on shrimp/anchovies meanwhile. Lunch only.',
+  },
+
+  {
+    id:'plan-monsul-mojacar-mediodia', type:'fullday', audience:'both', duration_h:6,
+    themes:['naturaleza','pintoresco','cultura'],
+    title_es:'Mónsul de mañana + Mojácar pueblo de tarde',
+    title_en:'Mónsul morning + Mojácar village afternoon',
+    start:'9:00', end:'17:00',
+    tags_es:['playa virgen','pueblo blanco','dos en uno'], tags_en:['virgin beach','white village','two-in-one'],
+    steps:[
+      { t:'9:00',  es:'Salida hacia San José', en:'Drive to San José', d_es:'1 h 10 min, salir temprano para evitar barrera de coches.', d_en:'1 h 10 min, leave early to beat car barrier.', km:85, gmaps:'https://maps.google.com/?q=San+Jose+Almeria' },
+      { t:'10:15', es:'Subir a la duna de Mónsul', en:'Climb the Mónsul dune', d_es:'Foto desde lo alto. Sentirás Indiana Jones (rodaron aquí La última cruzada).', d_en:'Photo from the top. Indiana Jones moment (Last Crusade was filmed here).', km:6, gmaps:'https://maps.google.com/?q=Playa+de+Monsul', rating:{ v:4.8, src:'google' } },
+      { t:'11:30', es:'Baño en Mónsul', en:'Swim at Mónsul', d_es:'La roca circular en el agua es la marca de la casa.', d_en:'The circular rock in the water is the trademark.', km:0, gmaps:'https://maps.google.com/?q=Playa+de+Monsul' },
+      { t:'13:00', es:'Comida en La Ola (San José)', en:'Lunch at La Ola (San José)', d_es:'A pie de mar. Pulpo, tartar de atún, arroces. ~40€/persona.', d_en:'Beachfront. Octopus, tuna tartare, rices. ~€40/person.', km:6, gmaps:'https://maps.google.com/?q=La+Ola+San+Jose+Almeria', rating:{ v:4.5, src:'google' } },
+      { t:'15:00', es:'Salida hacia Mojácar pueblo', en:'Drive to Mojácar village', d_es:'40 min, carretera por la costa.', d_en:'40 min, coast road.', km:50, gmaps:'https://maps.google.com/?q=Mojacar+Pueblo' },
+      { t:'15:45', es:'Mojácar pueblo · Plaza Nueva y mirador', en:'Mojácar village · Plaza Nueva and lookout', d_es:'Pueblo blanco encalado en la sierra. Vistas a 360°. Heladería La Veleta para la merienda.', d_en:'White-washed mountain village. 360° views. La Veleta ice-cream stop.', km:1, gmaps:'https://maps.google.com/?q=Plaza+Nueva+Mojacar', rating:{ v:4.7, src:'google' } },
+      { t:'17:00', es:'Vuelta a Vera Playa', en:'Back to Vera Playa', km:13, gmaps:'https://maps.google.com/?q=Vera+Playa' },
+    ],
+    tip_es:'En verano la barrera al sur de San José cierra coches a partir de las 9:00 — id antes o coged el bus lanzadera. Mojácar pueblo se sube en coche pero hay aparcamiento abajo y andar.',
+    tip_en:'In summer the south barrier of San José closes cars from 9:00 — leave earlier or take the shuttle. Mojácar town has parking below — walk up.',
+  },
+
+  {
+    id:'plan-saltos-cuevas-sierra', type:'morning', audience:'both', duration_h:5,
+    themes:['naturaleza','aventura'],
+    title_es:'Cuevas de Sorbas y Karst de yesos',
+    title_en:'Sorbas Caves and Gypsum Karst',
+    start:'10:00', end:'15:00',
+    tags_es:['cuevas','karst','geología','aventura'], tags_en:['caves','karst','geology','adventure'],
+    steps:[
+      { t:'10:00', es:'Salida hacia Sorbas', en:'Drive to Sorbas', d_es:'45 min por la A-7.', d_en:'45 min on A-7.', km:60, gmaps:'https://maps.google.com/?q=Sorbas+Almeria' },
+      { t:'11:00', es:'Visita guiada a las Cuevas de Sorbas', en:'Guided tour of Sorbas Caves', d_es:'Karst de yesos único en Europa. 2 h con casco y linterna. ~22€ adulto.', d_en:'Gypsum karst unique in Europe. 2 h with helmet and lamp. ~€22/adult.', km:5, gmaps:'https://maps.google.com/?q=Cuevas+de+Sorbas', rating:{ v:4.7, src:'google' } },
+      { t:'13:00', es:'Comida en Sorbas pueblo', en:'Lunch in Sorbas town', d_es:'Mesón La Era — cocina serrana, gachas, migas. ~25€/persona.', d_en:'Mesón La Era — mountain cuisine, gachas, migas. ~€25/person.', km:5, gmaps:'https://maps.google.com/?q=Sorbas+Almeria', rating:{ v:4.4, src:'google' } },
+      { t:'14:30', es:'Vuelta con parada en mirador del Río Aguas', en:'Drive back via Río Aguas viewpoint', d_es:'5 min en la salida del pueblo. El cañón se ve desde arriba.', d_en:'5 min from town exit. Canyon seen from above.', km:65, gmaps:'https://maps.google.com/?q=Vera+Playa' },
+    ],
+    tip_es:'Reservad las cuevas con antelación en cuevasdesorbas.com — los grupos son pequeños (15 max). Hace fresco dentro: 18° constante. Calzado cerrado, las cuerdas y escaleras requieren manos libres.',
+    tip_en:'Book caves ahead at cuevasdesorbas.com — small groups (15 max). Cool inside: constant 18°. Closed shoes — ropes and ladders need free hands.',
+  },
 ];
+
+// Helper para enriquecer plan con metadata (themes/duration_h) si está
+// en PLAN_META o ya viene en el propio plan (planes nuevos).
+const enrichPlan = (plan) => ({
+  ...plan,
+  duration_h: plan.duration_h ?? PLAN_META[plan.id]?.duration_h,
+  themes:     plan.themes     ?? PLAN_META[plan.id]?.themes ?? [],
+});
 
 const DayPlanCard = ({ plan, lang }) => {
   const [open, setOpen] = React.useState(false);
   const title = plan[`title_${lang}`];
   const tags  = plan[`tags_${lang}`] || [];
   const tip   = plan[`tip_${lang}`];
+  const themes = plan.themes || [];
+  const durH = plan.duration_h;
+
+  // Total km del itinerario (suma km de cada paso)
+  const totalKm = (plan.steps || []).reduce((s, st) => s + (st.km || 0), 0);
+
   return (
     <article className={`dp-card ${open ? 'is-open' : ''}`}>
       <button type="button" className="dp-card-head" onClick={() => setOpen(o => !o)} aria-expanded={open}>
@@ -1956,6 +2252,21 @@ const DayPlanCard = ({ plan, lang }) => {
         <span className={`dp-card-chev ${open ? 'open' : ''}`} aria-hidden="true">↓</span>
       </button>
       <div className="dp-card-body" aria-hidden={!open}>
+        {(durH || totalKm > 0 || themes.length > 0) && (
+          <div className="dp-meta-bar">
+            {durH && <span className="dp-meta-pill dp-meta-duration">⏱ {durH} h</span>}
+            {totalKm > 0 && <span className="dp-meta-pill dp-meta-km">🚗 {Math.round(totalKm)} km</span>}
+            {themes.map(th => {
+              const def = THEMES_DEFS[th] || { es: th, en: th, color: '#3D1A35', icon: '·' };
+              return (
+                <span key={th} className="dp-meta-pill dp-meta-theme"
+                  style={{ '--theme-color': def.color }}>
+                  {def.icon} {def[lang] || def.es}
+                </span>
+              );
+            })}
+          </div>
+        )}
         {tags.length > 0 && (
           <div className="dp-tags">
             {tags.map(t => <span key={t} className="dp-tag">{t}</span>)}
@@ -1967,7 +2278,24 @@ const DayPlanCard = ({ plan, lang }) => {
               <span className="dp-step-time">{s.t}</span>
               <div className="dp-step-body">
                 <strong className="dp-step-what">{s[lang]}</strong>
-                <span className="dp-step-detail">{s[`d_${lang}`]}</span>
+                {s[`d_${lang}`] && <span className="dp-step-detail">{s[`d_${lang}`]}</span>}
+                {(s.km != null || s.gmaps || s.rating) && (
+                  <div className="dp-step-extra">
+                    {s.km != null && s.km > 0 && (
+                      <span className="dp-step-km">📍 {s.km < 1 ? `${Math.round(s.km*1000)} m` : `${s.km} km`}</span>
+                    )}
+                    {s.rating && (
+                      <span className="dp-step-rating" title={`Fuente: ${s.rating.src}`}>
+                        ★ {s.rating.v} <small>· {s.rating.src}</small>
+                      </span>
+                    )}
+                    {s.gmaps && (
+                      <a className="dp-step-gmaps" href={s.gmaps} target="_blank" rel="noopener">
+                        {lang === 'es' ? 'Cómo llegar →' : 'Directions →'}
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
             </li>
           ))}
@@ -1984,20 +2312,45 @@ const DayPlanCard = ({ plan, lang }) => {
 };
 
 const DayPlans = ({ lang }) => {
-  // Filtro por audiencia: kids (con niños), adults (sin niños), all (todos).
-  // Los planes 'both' aparecen en kids y en adults.
+  // Filtros: audiencia (existing), duración, temas (multi-select).
   const [audience, setAudience] = React.useState('all');
+  const [duration, setDuration] = React.useState('all');
+  const [themes, setThemes]     = React.useState([]);
+
   const matches = (p) => {
-    if (audience === 'all')    return true;
-    if (audience === 'kids')   return p.audience === 'kids'   || p.audience === 'both';
-    if (audience === 'adults') return p.audience === 'adults' || p.audience === 'both' || !p.audience;
+    if (audience === 'all')    {} // pass
+    else if (audience === 'kids'   && !(p.audience === 'kids'   || p.audience === 'both')) return false;
+    else if (audience === 'adults' && !(p.audience === 'adults' || p.audience === 'both' || !p.audience)) return false;
+
+    if (duration !== 'all') {
+      const bucket = DURATION_BUCKETS.find(b => b.id === duration);
+      if (bucket) {
+        const dh = p.duration_h || 0;
+        if (dh < bucket.min || dh > bucket.max) return false;
+      }
+    }
+    if (themes.length > 0) {
+      const planThemes = p.themes || [];
+      // OR logic: que al menos uno de los temas seleccionados esté en el plan
+      if (!themes.some(t => planThemes.includes(t))) return false;
+    }
     return true;
   };
+
+  const toggleTheme = (id) => {
+    setThemes(prev => prev.includes(id) ? prev.filter(t => t !== id) : [...prev, id]);
+  };
+
   const tabs = [
     { id:'all',    es:'Todos',     en:'All' },
     { id:'adults', es:'Sin niños', en:'No kids' },
     { id:'kids',   es:'Con niños', en:'With kids' },
   ];
+  const durationTabs = [
+    { id:'all', es:'Cualquiera', en:'Any' },
+    ...DURATION_BUCKETS,
+  ];
+
   return (
     <div className="ag-day-plans">
       <div className="ag-day-plans-head">
@@ -2007,26 +2360,74 @@ const DayPlans = ({ lang }) => {
         </h3>
         <p className="ag-day-plans-disclaimer">
           {lang === 'es'
-            ? 'Estos son solo ideas — hay innumerables opciones para todos los gustos. Los horarios son orientativos: dependen tanto de vuestras necesidades como de las posibles excursiones o actividades que decidáis contratar. Os animamos a descubrir, vivir Vera y Hestía a vuestro propio ritmo.'
-            : 'These are just ideas — there are countless options for every taste. The times are approximate: they depend on your own needs and on any excursions or activities you may book. We invite you to discover, to live Vera and Hestía at your own pace.'}
+            ? 'Estos son solo ideas — hay innumerables opciones para todos los gustos. Los horarios son orientativos: dependen tanto de vuestras necesidades como de las posibles excursiones o actividades que decidáis contratar. Las puntuaciones son las que aparecen en Google Maps cuando hicimos la guía. Os animamos a descubrir, vivir Vera y Hestía a vuestro propio ritmo.'
+            : 'These are just ideas — there are countless options for every taste. The times are approximate: they depend on your own needs and on any excursions or activities you may book. Ratings are from Google Maps when we wrote this guide. We invite you to discover, to live Vera and Hestía at your own pace.'}
         </p>
       </div>
-      <div className="dp-tabs" role="tablist">
-        {tabs.map(t => (
-          <button
-            key={t.id}
-            role="tab"
-            type="button"
-            className={`dp-tab ${audience === t.id ? 'active' : ''}`}
-            aria-selected={audience === t.id}
-            onClick={() => setAudience(t.id)}
-          >
-            {t[lang]}
-          </button>
-        ))}
+
+      {/* Fila 1: filtro por audiencia */}
+      <div className="dp-filters-row">
+        <span className="dp-filter-label">{lang === 'es' ? 'Audiencia' : 'Audience'}</span>
+        <div className="dp-tabs" role="tablist">
+          {tabs.map(t => (
+            <button
+              key={t.id}
+              role="tab"
+              type="button"
+              className={`dp-tab ${audience === t.id ? 'active' : ''}`}
+              onClick={() => setAudience(t.id)}>
+              {t[lang]}
+            </button>
+          ))}
+        </div>
       </div>
+
+      {/* Fila 2: filtro por duración */}
+      <div className="dp-filters-row">
+        <span className="dp-filter-label">{lang === 'es' ? 'Duración' : 'Duration'}</span>
+        <div className="dp-tabs" role="tablist">
+          {durationTabs.map(t => (
+            <button
+              key={t.id}
+              role="tab"
+              type="button"
+              className={`dp-tab ${duration === t.id ? 'active' : ''}`}
+              onClick={() => setDuration(t.id)}>
+              {t[lang] || t.es}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Fila 3: filtro por tema (chips multi-select) */}
+      <div className="dp-filters-row">
+        <span className="dp-filter-label">{lang === 'es' ? 'Tema' : 'Theme'}</span>
+        <div className="dp-theme-chips">
+          {Object.entries(THEMES_DEFS).map(([id, def]) => {
+            const active = themes.includes(id);
+            return (
+              <button
+                key={id}
+                type="button"
+                className={`dp-theme-chip ${active ? 'active' : ''}`}
+                style={{ '--theme-color': def.color }}
+                onClick={() => toggleTheme(id)}>
+                {def.icon} {def[lang]}
+              </button>
+            );
+          })}
+          {themes.length > 0 && (
+            <button type="button" className="dp-theme-clear" onClick={() => setThemes([])}>
+              ✕ {lang === 'es' ? 'Limpiar' : 'Clear'}
+            </button>
+          )}
+        </div>
+      </div>
+
       {Object.entries(DAY_PLAN_GROUPS).map(([type, group]) => {
-        const plans = DAY_PLANS.filter(p => p.type === type && matches(p));
+        const plans = DAY_PLANS
+          .map(enrichPlan)
+          .filter(p => p.type === type && matches(p));
         if (!plans.length) return null;
         return (
           <div key={type} className="dp-group">
