@@ -16921,11 +16921,33 @@ img[src*="apt-vt-gallery-"] {
 /* --- Dashboard KPI cards --- */
 .rv-dashboard {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   margin: 14px 0;
 }
-@media (max-width: 980px) { .rv-dashboard { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1300px) { .rv-dashboard { grid-template-columns: repeat(8, 1fr); } }
+@media (max-width: 980px)  { .rv-dashboard { grid-template-columns: repeat(2, 1fr); } }
+.rv-yearly-min { color: #6B7A3A; }
+.rv-yearly-max { color: #B86A3C; font-weight: 600; }
+.rv-mini-link {
+  margin-left: 8px;
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid rgba(58,170,187,.4);
+  color: var(--sol);
+  padding: 1px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.rv-mini-link:hover { background: rgba(58,170,187,.12); }
+.rv-calc-em {
+  font-size: 10px;
+  color: var(--ink-soft);
+  font-style: normal;
+  display: inline-block;
+}
 
 /* Dashboard multi-año (cabecera) — comparativa Bruto/Comisión/Neto/Margen
    por año. Los datos vienen del Google Sheet de Hestía, clasificados

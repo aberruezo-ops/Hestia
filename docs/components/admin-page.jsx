@@ -1785,7 +1785,13 @@ info@hestiayourhome.com · +34 620 316 370`;
 const RESERVAS_PATH = 'data-private/reservas.json';
 
 const APT_NAMES   = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
-const APT_COLOR   = { vm: '#3D1A35', vt: '#3AAABB', vs: '#8A4A24' };
+// Colores reales de marca (Hestía brandbook):
+//   Mar      → #6B7A3A verde olivo (olivar de Vera Playa)
+//   Thalassa → #B86A3C teja        (Desierto de Tabernas)
+//   Salinas  → #D4A84A albero      (amarillo del amanecer)
+const APT_COLOR   = { vm: '#6B7A3A', vt: '#B86A3C', vs: '#D4A84A' };
+// Albero es claro: el chip necesita texto oscuro para legibilidad.
+const APT_TEXT    = { vm: '#FFFBF4', vt: '#FFFBF4', vs: '#3D1A35' };
 
 // Tasas de comisión por defecto (% sobre ingreso_total). Editable
 // por reserva: la UI los usa solo como sugerencia inicial cuando
@@ -1806,6 +1812,18 @@ function getCanalKey(canal) {
   return 'directo';
 }
 
+// Auto-calculo del gasto de limpieza según regla de negocio:
+//   · 90 € si la entrada cae en julio o agosto
+//   · 90 € si la estancia es de más de 10 noches
+//   · 80 € en cualquier otro caso
+function autoLimpieza(entrada, noches) {
+  if (!entrada) return 80;
+  const mes = parseInt(entrada.slice(5, 7));
+  if (mes === 7 || mes === 8) return 90;
+  if ((noches || 0) > 10)     return 90;
+  return 80;
+}
+
 // Devuelve la reserva con todos los campos derivados recalculados
 // a partir de las fuentes (entrada, salida, ingreso_total,
 // comision, gasto_limpieza, canal). Mantiene los campos editables
@@ -1821,11 +1839,18 @@ function calcDerived(r) {
     if (days > 0) out.noches = days;
   }
 
+  // 2. Gasto limpieza autocalculado salvo override manual (cuando
+  // el usuario marca _limpieza_manual=true en el draft, respeta el
+  // valor ya introducido). Por defecto aplicamos la regla.
+  if (!r._limpieza_manual) {
+    out.gasto_limpieza = autoLimpieza(out.entrada, out.noches);
+  }
+
   const ingreso = Number(out.ingreso_total) || 0;
   const com     = Number(out.comision)      || 0;
   const gasto   = Number(out.gasto_limpieza) || 0;
 
-  // 2. BAI = ingreso_total − comision − gasto_limpieza.
+  // 3. BAI = ingreso_total − comision − gasto_limpieza.
   out.bai = Math.round((ingreso - com - gasto) * 100) / 100;
 
   // 3. Rentabilidad = BAI / ingreso_total.
@@ -1928,14 +1953,23 @@ const ReservasTab = ({ token }) => {
     const comision = sum(list, 'comision');
     const limpieza = sum(list, 'gasto_limpieza');
     const neto     = sum(list, 'bai');
+    const renta    = sum(list, 'renta');
     const noches   = sum(list, 'noches');
+    // Precio bruto por noche: usar el pre-calculado del Sheet
+    // (precio_bruto_noche). Filtramos nulos y ceros para min/max.
+    const preciosNoche = list
+      .map(r => Number(r.precio_bruto_noche))
+      .filter(p => p > 0 && Number.isFinite(p));
     return {
       reservas:  list.length,
       noches,
-      bruto, comision, limpieza, neto,
-      margen:        bruto ? neto / bruto : 0,
+      bruto, comision, limpieza, neto, renta,
+      rentabilidad:  bruto ? neto / bruto : 0,
+      comisionPct:   bruto ? comision / bruto : 0,
       brutoPorNoche: noches ? bruto / noches : 0,
       netoPorNoche:  noches ? neto  / noches : 0,
+      minNoche: preciosNoche.length ? Math.min(...preciosNoche) : 0,
+      maxNoche: preciosNoche.length ? Math.max(...preciosNoche) : 0,
     };
   };
   const kFocus = yearMetrics(focusList);
@@ -2033,14 +2067,21 @@ const ReservasTab = ({ token }) => {
           next.comision = Math.round(next.ingreso_total * rate * 100) / 100;
         }
       }
-      // Si cambia ingreso_total, ajustamos comisión solo si la
-      // anterior coincidía con un múltiplo del canal (heurística:
-      // si era 0 o seguía la tasa). Para no ser invasivos, NO
-      // ajustamos comisión automáticamente; solo cuando se cambia
-      // el canal. El usuario edita la comisión a mano si quiere.
+      // Si el usuario edita la limpieza directamente, marcamos
+      // _limpieza_manual=true para que el auto-cálculo no la
+      // sobrescriba al cambiar entrada/salida.
+      if (field === 'gasto_limpieza') {
+        next._limpieza_manual = true;
+      }
       next = calcDerived(next);
       return next;
     });
+  };
+
+  // Restaura el auto-cálculo de limpieza desactivando el flag
+  // de override manual.
+  const resetLimpiezaAuto = () => {
+    setDraft(prev => calcDerived({ ...prev, _limpieza_manual: false }));
   };
 
   const saveDraft = () => {
@@ -2110,9 +2151,10 @@ const ReservasTab = ({ token }) => {
                   <th className="num">Comisiones</th>
                   <th className="num">Limpieza</th>
                   <th className="num">Neto (BAI)</th>
-                  <th className="num">Margen</th>
-                  <th className="num">€/noche bruto</th>
-                  <th className="num">€/noche neto</th>
+                  <th className="num">Rentabilidad</th>
+                  <th className="num">€/noche medio</th>
+                  <th className="num">€/noche mín</th>
+                  <th className="num">€/noche máx</th>
                 </tr></thead>
                 <tbody>
                   {allYears.map(y => {
@@ -2129,9 +2171,10 @@ const ReservasTab = ({ token }) => {
                         <td className="num rv-yearly-neg">−{fmtEur(m.comision)}</td>
                         <td className="num rv-yearly-neg">−{fmtEur(m.limpieza)}</td>
                         <td className="num"><strong>{fmtEur(m.neto)}</strong></td>
-                        <td className="num">{fmtPct(m.margen)}</td>
+                        <td className="num"><strong>{fmtPct(m.rentabilidad)}</strong></td>
                         <td className="num">{fmtEur(m.brutoPorNoche)}</td>
-                        <td className="num">{fmtEur(m.netoPorNoche)}</td>
+                        <td className="num rv-yearly-min">{m.minNoche ? fmtEur(m.minNoche) : '—'}</td>
+                        <td className="num rv-yearly-max">{m.maxNoche ? fmtEur(m.maxNoche) : '—'}</td>
                       </tr>
                     );
                   })}
@@ -2144,11 +2187,13 @@ const ReservasTab = ({ token }) => {
         {/* ───── KPIs del año focal ───── */}
         <div className="rv-dashboard">
           <KpiCard label={`Reservas ${focusYear}`} value={kFocus.reservas} sub={`${kFocus.noches} noches`} />
-          <KpiCard label="Bruto" accent="#3AAABB" value={fmtEur(kFocus.bruto)} sub={`${fmtEur(kFocus.brutoPorNoche)}/noche`} />
-          <KpiCard label="Comisiones" accent="#B86A3C" value={fmtEur(kFocus.comision)} sub={kFocus.bruto ? `${fmtPct(kFocus.comision/kFocus.bruto)} del bruto` : null} />
-          <KpiCard label="Limpieza" accent="#7A5A23" value={fmtEur(kFocus.limpieza)} sub={kFocus.bruto ? `${fmtPct(kFocus.limpieza/kFocus.bruto)} del bruto` : null} />
-          <KpiCard label="Neto (BAI)" accent="#6B7A3A" value={fmtEur(kFocus.neto)} sub={`${fmtEur(kFocus.netoPorNoche)}/noche`} />
-          <KpiCard label="Margen" value={fmtPct(kFocus.margen)} sub="neto / bruto" />
+          <KpiCard label="Bruto" accent="#B86A3C" value={fmtEur(kFocus.bruto)} sub={`${fmtEur(kFocus.brutoPorNoche)}/noche medio`} />
+          <KpiCard label="Comisiones" accent="#D4A84A" value={fmtEur(kFocus.comision)} sub={kFocus.bruto ? `${fmtPct(kFocus.comisionPct)} del bruto` : null} />
+          <KpiCard label="Limpieza" value={fmtEur(kFocus.limpieza)} sub={kFocus.bruto ? `${fmtPct(kFocus.limpieza/kFocus.bruto)} del bruto` : null} />
+          <KpiCard label="Neto (BAI)" accent="#6B7A3A" value={fmtEur(kFocus.neto)} sub={`${fmtEur(kFocus.netoPorNoche)}/noche neto`} />
+          <KpiCard label="Rentabilidad" accent="#6B7A3A" value={fmtPct(kFocus.rentabilidad)} sub="neto / bruto" />
+          <KpiCard label="€/noche mín" value={kFocus.minNoche ? fmtEur(kFocus.minNoche) : '—'} sub="reserva más barata" />
+          <KpiCard label="€/noche máx" value={kFocus.maxNoche ? fmtEur(kFocus.maxNoche) : '—'} sub="reserva más cara" />
         </div>
 
         {/* Subrejilla: por apartamento + por canal */}
@@ -2158,7 +2203,7 @@ const ReservasTab = ({ token }) => {
             <div className="rv-block-rows">
               {byApt.map(b => (
                 <div key={b.apt} className="rv-block-row rv-block-row-apt" data-apt={b.apt} style={{'--apt-c': APT_COLOR[b.apt]}}>
-                  <span className="rv-apt-chip" style={{background: APT_COLOR[b.apt]}}>{APT_NAMES[b.apt]}</span>
+                  <span className="rv-apt-chip" style={{background: APT_COLOR[b.apt], color: APT_TEXT[b.apt]}}>{APT_NAMES[b.apt]}</span>
                   <span className="rv-block-row-meta">{b.reservas} reservas · {b.noches} noches</span>
                   <span className="rv-block-row-val">{fmtEur(b.ingreso)}</span>
                 </div>
@@ -2186,7 +2231,7 @@ const ReservasTab = ({ token }) => {
             <ul>
               {enEstancia.map((r, i) => (
                 <li key={i}>
-                  <span className="rv-apt-chip" style={{background: APT_COLOR[r.apt]}}>{APT_NAMES[r.apt]}</span>
+                  <span className="rv-apt-chip" style={{background: APT_COLOR[r.apt], color: APT_TEXT[r.apt]}}>{APT_NAMES[r.apt]}</span>
                   <strong>{r.responsable}</strong>
                   <span className="rv-prox-meta">salida {fmtDate(r.salida)} · {r.huespedes} pax · {r.canal}</span>
                 </li>
@@ -2203,7 +2248,7 @@ const ReservasTab = ({ token }) => {
               {proximas.map((r, i) => (
                 <li key={i}>
                   <span className="rv-prox-date">{fmtDate(r.entrada)}</span>
-                  <span className="rv-apt-chip" style={{background: APT_COLOR[r.apt]}}>{APT_NAMES[r.apt]}</span>
+                  <span className="rv-apt-chip" style={{background: APT_COLOR[r.apt], color: APT_TEXT[r.apt]}}>{APT_NAMES[r.apt]}</span>
                   <strong>{r.responsable}</strong>
                   <span className="rv-prox-meta">{r.huespedes} pax · {r.noches}n · {r.canal}</span>
                 </li>
@@ -2258,7 +2303,7 @@ const ReservasTab = ({ token }) => {
                     data-apt={r.apt} style={{'--apt-c': APT_COLOR[r.apt] || 'transparent'}}
                     onClick={() => openRow(idx)}>
                     <td className={`rv-status rv-status-${status}`} title={status}>{statusIcon}</td>
-                    <td><span className="rv-apt-chip" style={{background: APT_COLOR[r.apt]}}>{APT_NAMES[r.apt] || r.apt}</span></td>
+                    <td><span className="rv-apt-chip" style={{background: APT_COLOR[r.apt], color: APT_TEXT[r.apt]}}>{APT_NAMES[r.apt] || r.apt}</span></td>
                     <td>{r.responsable}{r.mascota ? ' 🐾' : ''}{r.cuna_trona ? ' 👶' : ''}</td>
                     <td>{fmtDate(r.entrada)}</td>
                     <td>{fmtDate(r.salida)}</td>
@@ -2409,7 +2454,11 @@ const ReservasTab = ({ token }) => {
                     <input type="number" step="0.01" value={draft.comision || 0} onChange={e => updateDraft('comision', Number(e.target.value))} />
                   </div>
                   <div className="rv-field">
-                    <label>Gasto limpieza</label>
+                    <label>Gasto limpieza
+                      {draft._limpieza_manual
+                        ? <button type="button" className="rv-mini-link" onClick={resetLimpiezaAuto}>↻ auto</button>
+                        : <span className="rv-hint-inline">auto (jul/ago o &gt;10n: 90 € · resto: 80 €)</span>}
+                    </label>
                     <input type="number" step="0.01" value={draft.gasto_limpieza || 0} onChange={e => updateDraft('gasto_limpieza', Number(e.target.value))} />
                   </div>
                 </div>
@@ -2434,10 +2483,32 @@ const ReservasTab = ({ token }) => {
                 <div className="rv-calc-block">
                   <div className="rv-calc-block-title">Calculado automáticamente</div>
                   <div className="rv-calc-grid">
+                    <div><span>Noches</span><strong>{draft.noches || '—'}</strong></div>
                     <div><span>BAI</span><strong>{fmtEur(draft.bai)}</strong></div>
                     <div><span>Rentabilidad</span><strong>{fmtPct(draft.rentabilidad_pct)}</strong></div>
                     <div><span>Bruto/noche</span><strong>{fmtEur(draft.precio_bruto_noche)}</strong></div>
                     <div><span>Neto/noche</span><strong>{fmtEur(draft.precio_neto_noche)}</strong></div>
+                    {(() => {
+                      const renta = Math.max(0, (Number(draft.ingreso_total)||0) - (Number(draft.al_checkin)||0));
+                      return <div><span>Renta declarable<br/><em className="rv-calc-em">ingreso − cash checkin</em></span><strong>{fmtEur(renta)}</strong></div>;
+                    })()}
+                    {(() => {
+                      const eurHuespNoche = (draft.noches > 0 && draft.huespedes > 0 && draft.ingreso_total > 0)
+                        ? (draft.ingreso_total / draft.noches / draft.huespedes) : null;
+                      return <div><span>€/huésped/noche</span><strong>{fmtEur(eurHuespNoche)}</strong></div>;
+                    })()}
+                    {(() => {
+                      if (!draft.entrada || !draft.f_reserva) return null;
+                      const dE = new Date(draft.entrada); const dF = new Date(draft.f_reserva);
+                      const dias = Math.round((dE.getTime() - dF.getTime()) / 86400000);
+                      return <div><span>Antelación</span><strong>{dias} días</strong></div>;
+                    })()}
+                    {(() => {
+                      const ingreso = Number(draft.ingreso_total)||0;
+                      const com = Number(draft.comision)||0;
+                      const pct = ingreso > 0 ? com / ingreso : 0;
+                      return <div><span>Comisión efectiva</span><strong>{fmtPct(pct)}</strong></div>;
+                    })()}
                   </div>
                 </div>
               </fieldset>
