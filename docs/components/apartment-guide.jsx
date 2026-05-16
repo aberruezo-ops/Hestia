@@ -50,7 +50,6 @@ const GUIDE_SECTIONS = [
   { id: 'bienvenida',   es: 'Bienvenida',       en: 'Welcome' },
   { id: 'llegada',      es: 'Llegada y salida', en: 'Arrival & departure' },
   { id: 'wifi',         es: 'Mi WiFi',          en: 'My WiFi' },
-  { id: 'nombre',       es: 'Nuestro nombre',   en: 'Our name' },
   { id: 'proposito',    es: '¿Por qué Hestía?', en: 'Why Hestía?' },
   { id: 'limpieza',     es: 'Limpieza',         en: 'Cleaning' },
   { id: 'salon',        es: 'Mi salón',         en: 'My living room' },
@@ -770,18 +769,12 @@ const GUIDE_SHARED = {
       garbageTitle: 'Basura y reciclaje',
       garbageBody: 'Por normativa municipal, los contenedores de basura y reciclaje están SIEMPRE fuera de la urbanización (no dentro). Te recomendamos aprovechar la salida del día siguiente, o cualquier viaje en coche, para tirarlas de paso. Te agradeceríamos enormemente que no la dejes en los descansillos del edificio ni dentro de Hestía — atrae bichos y el equipo de limpieza no las recoge.',
     },
-    name: {
-      title: 'Nuestro nombre',
-      paras: [
-        'En la mitología griega, Hestía (en griego, Ἑστία) es la diosa del hogar, es decir, del fuego que da calor y vida a los hogares.',
-        'Es una diosa pacífica y eso es lo que os deseamos en vuestra estancia: tranquilidad y descanso. No podíamos llamarnos de otra manera…',
-      ],
-    },
+    name: null,
     why: {
-      title: '¿Por qué hemos creado Hestía?',
+      title: '¿Por qué Hestía?',
       paras: [
-        'Hestía no es lujo. Tampoco es un alquiler vacacional al uso. Se trata más bien de hogares, de alojamientos de calidad, con la intención de que os sintáis como en vuestra propia casa, creados con nuestro mayor cariño, esfuerzo y dedicación.',
-        'Todo ello para que disfrutéis de vuestras merecidas vacaciones, sin preocuparos de nada, en un entorno cálido, bien decorado y cómodo. Hestía es lo que a nosotros nos gustaría encontrar cuando viajamos.',
+        'Hestía no es lujo. Tampoco es un alquiler vacacional al uso. Es nuestro hogar — y queremos que también sea el tuyo durante tu estancia.',
+        'La historia completa (de dónde viene el nombre, por qué empezamos, qué buscamos cuando viajamos nosotros) está contada con detalle en la web, en la sección "Por qué Hestía" → hestiayourhome.com/porque-hestia',
       ],
     },
     cleaning: {
@@ -981,18 +974,12 @@ const GUIDE_SHARED = {
       sign: 'With love,',
       signer: 'Fran & Alex',
     },
-    name: {
-      title: 'Our name',
-      paras: [
-        'In Greek mythology, Hestia (Ἑστία) is the goddess of home — of the fireplace that warms and gives life to our homes.',
-        'She is a peaceful goddess and that is exactly what we wish for your stay: rest and relaxation. We could not have any other name.',
-      ],
-    },
+    name: null,
     why: {
-      title: 'Why have we created Hestía?',
+      title: 'Why Hestía?',
       paras: [
-        'Hestía is not luxury. It is not a typical holiday rental either. Rather, it is high-quality accommodation for you to feel at home away from home, built with our deepest care, effort and dedication.',
-        'All so that you can enjoy the holiday you deserve, free of worries, in a warm, well-decorated and comfortable place. Hestía is exactly what we would like to find every time we travel.',
+        'Hestía is not luxury. It is not a standard holiday rental either. It is our home — and we want it to be yours too during your stay.',
+        'The full story (where the name comes from, why we started, what we look for when we travel ourselves) is told in detail on the website, in the "Why Hestía" section → hestiayourhome.com/porque-hestia',
       ],
     },
     cleaning: {
@@ -3700,20 +3687,14 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             </div>
           </section>
 
-          <section id="ag-nombre" className="ag-section">
-            <span className="ag-section-num">04</span>
-            <h2 className="ag-h2">{s.name.title}</h2>
-            {s.name.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
-          </section>
-
           <section id="ag-proposito" className="ag-section">
-            <span className="ag-section-num">05</span>
+            <span className="ag-section-num">04</span>
             <h2 className="ag-h2">{s.why.title}</h2>
             {s.why.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
           </section>
 
           <section id="ag-limpieza" className="ag-section">
-            <span className="ag-section-num">06</span>
+            <span className="ag-section-num">05</span>
             <h2 className="ag-h2">{s.cleaning.title}</h2>
             <p className="ag-para">{s.cleaning.intro}</p>
             <p className="ag-note">{s.cleaning.note}</p>
@@ -3725,7 +3706,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {s.rules && (
             <section id="ag-normas" className="ag-section ag-section-rules">
-              <span className="ag-section-num">07</span>
+              <span className="ag-section-num">06</span>
               <h2 className="ag-h2">{s.rules.title}</h2>
               <p className="ag-para">{s.rules.intro}</p>
               <ul className="ag-rules-grid">
@@ -3744,7 +3725,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {a.rooms.map((room, idx) => (
             <section key={room.id} id={`ag-${room.id}`} className={`ag-section ag-room ag-room-${room.id}`}>
-              <span className="ag-section-num">{String(idx + 8).padStart(2, '0')}</span>
+              <span className="ag-section-num">{String(idx + 7).padStart(2, '0')}</span>
               <h2 className="ag-h2">{room.title}</h2>
               <p className="ag-para ag-para-lead">{room.body}</p>
               <PhotoGrid photos={getRoomPhotos(room.id)} />
@@ -3764,7 +3745,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           ))}
 
           <section id="ag-alrededores" className="ag-section">
-            <span className="ag-section-num">14</span>
+            <span className="ag-section-num">13</span>
             <h2 className="ag-h2">{s.surroundings.title}</h2>
             <p className="ag-para">{s.surroundings.intro}</p>
 
@@ -3809,7 +3790,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Sabores · comer y beber */}
           <section id="ag-sabores" className="ag-section">
-            <span className="ag-section-num">15</span>
+            <span className="ag-section-num">14</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Sabores' : 'Tastes'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3830,7 +3811,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Pueblos y cultura */}
           <section id="ag-pueblos" className="ag-section">
-            <span className="ag-section-num">16</span>
+            <span className="ag-section-num">15</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3851,7 +3832,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Mar y playas */}
           <section id="ag-mar-playas" className="ag-section">
-            <span className="ag-section-num">17</span>
+            <span className="ag-section-num">16</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mar y playas' : 'Sea & beaches'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3870,7 +3851,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Actividades y planes de día */}
           <section id="ag-actividades" className="ag-section">
-            <span className="ag-section-num">18</span>
+            <span className="ag-section-num">17</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Actividades y planes' : 'Activities & plans'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3889,7 +3870,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Mercados y compras */}
           <section id="ag-mercados" className="ag-section">
-            <span className="ag-section-num">19</span>
+            <span className="ag-section-num">18</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mercados y compras' : 'Markets & shops'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3907,7 +3888,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Salud y servicios · centros de salud, vets, fisio, farmacias */}
           <section id="ag-salud" className="ag-section">
-            <span className="ag-section-num">20</span>
+            <span className="ag-section-num">19</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Salud y servicios' : 'Health & services'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3925,7 +3906,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Movilidad · gasolineras y carga eléctrica */}
           <section id="ag-movilidad" className="ag-section">
-            <span className="ag-section-num">21</span>
+            <span className="ag-section-num">20</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3947,7 +3928,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-telefonos" className="ag-section">
-            <span className="ag-section-num">22</span>
+            <span className="ag-section-num">21</span>
             <h2 className="ag-h2">{s.phones.title}</h2>
             <table className="ag-phones-table">
               <tbody>
@@ -3962,7 +3943,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-feedback" className="ag-section">
-            <span className="ag-section-num">23</span>
+            <span className="ag-section-num">22</span>
             <h2 className="ag-h2">{s.feedback.title}</h2>
             {s.feedback.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
           </section>
