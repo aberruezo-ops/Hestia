@@ -13311,50 +13311,126 @@ body.apt-bar-shown .widget-stack {
   margin: 24px 0 12px;
   color: var(--ber-dk);
 }
+/* Calendar editor — cards horizontales (antes apilados a ancho
+   completo, demasiado verticales). Grid auto-fit que pone 2-4
+   cards por fila según el ancho. Cada card es compacto y los
+   rangos son filas flex en lugar de una <table> con thead. */
 .pe-cal-seasons {
   display: grid;
-  gap: 18px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
 }
-.pe-cal-season {
+.pe-cal-card {
   background: rgba(61,26,53,.025);
-  border-left: 3px solid rgba(61,26,53,.12);
-  border-radius: 8px 0 8px 0;
-  padding: 12px 14px;
+  border-left: 3px solid var(--season-c, rgba(61,26,53,.18));
+  border-radius: 6px 0 6px 0;
+  padding: 8px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
-.pe-cal-season-head {
+.pe-cal-card-special { border-left-color: rgba(176,106,60,.5); }
+.pe-cal-card-head {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
+  gap: 8px;
 }
-.pe-cal-season-head strong {
+.pe-cal-card-head strong {
   font-family: var(--serif);
-  font-size: 16px;
+  font-size: 14px;
   color: var(--ber-dk);
+  line-height: 1.1;
 }
-.pe-cal-season-head .pe-hint {
+.pe-cal-mult {
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--ink-soft);
-  letter-spacing: .08em;
+  letter-spacing: .06em;
   text-transform: uppercase;
 }
+.pe-cal-add {
+  margin-left: auto;
+  width: 22px; height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(61,26,53,.18);
+  background: #FFFBF4;
+  color: var(--ber-dk);
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .12s ease;
+}
+.pe-cal-add:hover { background: rgba(58,170,187,.12); }
 .pe-cal-empty {
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--ink-soft);
   font-style: italic;
-  padding: 6px 0 0;
 }
-.pe-table-cal { margin-top: 6px; }
-.pe-table-cal th, .pe-table-cal td { padding: 6px 8px; }
-.pe-table-cal td:last-child { text-align: right; width: 36px; }
-.pe-table-cal input { max-width: none; width: 100%; }
+.pe-cal-ranges {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.pe-cal-range {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.pe-cal-range .pe-input-date { flex: 1 1 0; min-width: 0; }
+.pe-cal-arrow {
+  font-size: 11px;
+  color: var(--ink-soft);
+  flex-shrink: 0;
+}
+.pe-cal-remove {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ink-soft);
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .12s ease, color .12s ease;
+}
+.pe-cal-remove:hover {
+  background: rgba(176,106,60,.12);
+  color: #8a4a24;
+}
+/* Puentes: una fila por puente, ocupa todo el ancho */
+.pe-cal-bridges-h {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+.pe-cal-bridges-h .pe-h3 { margin: 0; }
+.pe-cal-bridges-h .pe-btn-sm { margin-left: auto; }
+.pe-cal-bridges {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 6px;
+}
+.pe-cal-bridge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pe-cal-bridge-name { flex: 2 1 0; min-width: 0; }
+.pe-cal-bridge .pe-input-date { flex: 1 1 0; min-width: 0; }
 .pe-input-date {
   font-family: var(--sans);
-  font-size: 13px;
-  padding: 6px 8px;
+  font-size: 12.5px;
+  padding: 5px 7px;
 }
 .pe-btn-sm {
   padding: 4px 10px;

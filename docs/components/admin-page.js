@@ -358,103 +358,124 @@ const CalendarEditor = ({
       const ranges = cal.seasons[sid] || [];
       return /*#__PURE__*/React.createElement("div", {
         key: sid,
-        className: "pe-cal-season"
+        className: "pe-cal-card",
+        style: {
+          '--season-c': s.color
+        }
       }, /*#__PURE__*/React.createElement("div", {
-        className: "pe-cal-season-head"
+        className: "pe-cal-card-head"
       }, /*#__PURE__*/React.createElement("span", {
         className: "pe-dot",
         style: {
           background: s.color
         }
       }), /*#__PURE__*/React.createElement("strong", null, s.label), /*#__PURE__*/React.createElement("span", {
-        className: "pe-hint"
+        className: "pe-cal-mult"
       }, "\xD7", s.multiplier), /*#__PURE__*/React.createElement("button", {
         type: "button",
-        className: "pe-btn pe-btn-ghost pe-btn-sm",
-        onClick: () => addRange(year, 'seasons', sid)
-      }, "+ Rango")), ranges.length === 0 ? /*#__PURE__*/React.createElement("div", {
+        className: "pe-cal-add",
+        onClick: () => addRange(year, 'seasons', sid),
+        "aria-label": "A\xF1adir rango"
+      }, "+")), ranges.length === 0 ? /*#__PURE__*/React.createElement("div", {
         className: "pe-cal-empty"
-      }, "Sin rangos") : /*#__PURE__*/React.createElement("table", {
-        className: "pe-table pe-table-cal"
-      }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Desde"), /*#__PURE__*/React.createElement("th", null, "Hasta"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, ranges.map((r, i) => /*#__PURE__*/React.createElement("tr", {
-        key: i
-      }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+      }, "Sin rangos") : /*#__PURE__*/React.createElement("div", {
+        className: "pe-cal-ranges"
+      }, ranges.map((r, i) => /*#__PURE__*/React.createElement("div", {
+        key: i,
+        className: "pe-cal-range"
+      }, /*#__PURE__*/React.createElement("input", {
         type: "date",
         value: r[0],
         onChange: e => updateRange(year, 'seasons', sid, i, 'start', e.target.value),
         className: "pe-input pe-input-date"
-      })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+      }), /*#__PURE__*/React.createElement("span", {
+        className: "pe-cal-arrow"
+      }, "\u2192"), /*#__PURE__*/React.createElement("input", {
         type: "date",
         value: r[1],
         onChange: e => updateRange(year, 'seasons', sid, i, 'end', e.target.value),
         className: "pe-input pe-input-date"
-      })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
+      }), /*#__PURE__*/React.createElement("button", {
         type: "button",
-        className: "pe-btn pe-btn-ghost pe-btn-sm",
+        className: "pe-cal-remove",
         onClick: () => removeRange(year, 'seasons', sid, i),
         "aria-label": "Eliminar"
-      }, "\xD7")))))));
+      }, "\xD7")))));
     })), /*#__PURE__*/React.createElement("h3", {
       className: "pe-h3"
-    }, "Especiales"), Object.entries(cal.specials || {}).map(([sid, sp]) => /*#__PURE__*/React.createElement("div", {
+    }, "Especiales"), /*#__PURE__*/React.createElement("div", {
+      className: "pe-cal-seasons"
+    }, Object.entries(cal.specials || {}).map(([sid, sp]) => /*#__PURE__*/React.createElement("div", {
       key: sid,
-      className: "pe-cal-season"
+      className: "pe-cal-card pe-cal-card-special"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "pe-cal-season-head"
+      className: "pe-cal-card-head"
     }, /*#__PURE__*/React.createElement("strong", null, sp.label || sid), /*#__PURE__*/React.createElement("span", {
-      className: "pe-hint"
-    }, "temporada: ", sp.season), /*#__PURE__*/React.createElement("button", {
+      className: "pe-cal-mult"
+    }, sp.season), /*#__PURE__*/React.createElement("button", {
       type: "button",
-      className: "pe-btn pe-btn-ghost pe-btn-sm",
-      onClick: () => addRange(year, 'specials', sid)
-    }, "+ Rango")), /*#__PURE__*/React.createElement("table", {
-      className: "pe-table pe-table-cal"
-    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Desde"), /*#__PURE__*/React.createElement("th", null, "Hasta"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, sp.ranges.map((r, i) => /*#__PURE__*/React.createElement("tr", {
-      key: i
-    }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+      className: "pe-cal-add",
+      onClick: () => addRange(year, 'specials', sid),
+      "aria-label": "A\xF1adir rango"
+    }, "+")), /*#__PURE__*/React.createElement("div", {
+      className: "pe-cal-ranges"
+    }, sp.ranges.map((r, i) => /*#__PURE__*/React.createElement("div", {
+      key: i,
+      className: "pe-cal-range"
+    }, /*#__PURE__*/React.createElement("input", {
       type: "date",
       value: r[0],
       onChange: e => updateRange(year, 'specials', sid, i, 'start', e.target.value),
       className: "pe-input pe-input-date"
-    })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+    }), /*#__PURE__*/React.createElement("span", {
+      className: "pe-cal-arrow"
+    }, "\u2192"), /*#__PURE__*/React.createElement("input", {
       type: "date",
       value: r[1],
       onChange: e => updateRange(year, 'specials', sid, i, 'end', e.target.value),
       className: "pe-input pe-input-date"
-    })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
+    }), /*#__PURE__*/React.createElement("button", {
       type: "button",
-      className: "pe-btn pe-btn-ghost pe-btn-sm",
+      className: "pe-cal-remove",
       onClick: () => removeRange(year, 'specials', sid, i)
-    }, "\xD7")))))))), /*#__PURE__*/React.createElement("h3", {
+    }, "\xD7"))))))), /*#__PURE__*/React.createElement("div", {
+      className: "pe-cal-bridges-h"
+    }, /*#__PURE__*/React.createElement("h3", {
       className: "pe-h3"
-    }, "Puentes nacionales (+1 grado de temporada)"), /*#__PURE__*/React.createElement("button", {
+    }, "Puentes nacionales ", /*#__PURE__*/React.createElement("span", {
+      className: "pe-hint"
+    }, "+1 grado de temporada")), /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: "pe-btn pe-btn-ghost pe-btn-sm",
       onClick: () => addRange(year, 'bridges')
-    }, "+ Puente"), /*#__PURE__*/React.createElement("table", {
-      className: "pe-table pe-table-cal"
-    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Nombre"), /*#__PURE__*/React.createElement("th", null, "Desde"), /*#__PURE__*/React.createElement("th", null, "Hasta"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, (cal.bridges || []).map((b, i) => /*#__PURE__*/React.createElement("tr", {
-      key: i
-    }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+    }, "+ Puente")), /*#__PURE__*/React.createElement("div", {
+      className: "pe-cal-bridges"
+    }, (cal.bridges || []).map((b, i) => /*#__PURE__*/React.createElement("div", {
+      key: i,
+      className: "pe-cal-bridge"
+    }, /*#__PURE__*/React.createElement("input", {
       type: "text",
       value: b.name,
       onChange: e => updateBridgeName(year, i, e.target.value),
-      className: "pe-input"
-    })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+      className: "pe-input pe-cal-bridge-name",
+      placeholder: "Nombre del puente"
+    }), /*#__PURE__*/React.createElement("input", {
       type: "date",
       value: b.ranges[0][0],
       onChange: e => updateRange(year, 'bridges', null, i, 'start', e.target.value),
       className: "pe-input pe-input-date"
-    })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+    }), /*#__PURE__*/React.createElement("span", {
+      className: "pe-cal-arrow"
+    }, "\u2192"), /*#__PURE__*/React.createElement("input", {
       type: "date",
       value: b.ranges[0][1],
       onChange: e => updateRange(year, 'bridges', null, i, 'end', e.target.value),
       className: "pe-input pe-input-date"
-    })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
+    }), /*#__PURE__*/React.createElement("button", {
       type: "button",
-      className: "pe-btn pe-btn-ghost pe-btn-sm",
+      className: "pe-cal-remove",
       onClick: () => removeRange(year, 'bridges', null, i)
-    }, "\xD7")))))));
+    }, "\xD7")))));
   }), /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("button", {

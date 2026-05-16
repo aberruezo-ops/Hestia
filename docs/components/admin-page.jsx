@@ -361,50 +361,37 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
                 const s = seasons[sid];
                 const ranges = cal.seasons[sid] || [];
                 return (
-                  <div key={sid} className="pe-cal-season">
-                    <div className="pe-cal-season-head">
+                  <div key={sid} className="pe-cal-card" style={{'--season-c': s.color}}>
+                    <div className="pe-cal-card-head">
                       <span className="pe-dot" style={{ background: s.color }} />
                       <strong>{s.label}</strong>
-                      <span className="pe-hint">×{s.multiplier}</span>
+                      <span className="pe-cal-mult">×{s.multiplier}</span>
                       <button
                         type="button"
-                        className="pe-btn pe-btn-ghost pe-btn-sm"
+                        className="pe-cal-add"
                         onClick={() => addRange(year, 'seasons', sid)}
-                      >+ Rango</button>
+                        aria-label="Añadir rango"
+                      >+</button>
                     </div>
                     {ranges.length === 0 ? (
                       <div className="pe-cal-empty">Sin rangos</div>
                     ) : (
-                      <table className="pe-table pe-table-cal">
-                        <thead>
-                          <tr>
-                            <th>Desde</th>
-                            <th>Hasta</th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {ranges.map((r, i) => (
-                            <tr key={i}>
-                              <td>
-                                <input type="date" value={r[0]}
-                                  onChange={e => updateRange(year, 'seasons', sid, i, 'start', e.target.value)}
-                                  className="pe-input pe-input-date" />
-                              </td>
-                              <td>
-                                <input type="date" value={r[1]}
-                                  onChange={e => updateRange(year, 'seasons', sid, i, 'end', e.target.value)}
-                                  className="pe-input pe-input-date" />
-                              </td>
-                              <td>
-                                <button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
-                                  onClick={() => removeRange(year, 'seasons', sid, i)}
-                                  aria-label="Eliminar">×</button>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                      <div className="pe-cal-ranges">
+                        {ranges.map((r, i) => (
+                          <div key={i} className="pe-cal-range">
+                            <input type="date" value={r[0]}
+                              onChange={e => updateRange(year, 'seasons', sid, i, 'start', e.target.value)}
+                              className="pe-input pe-input-date" />
+                            <span className="pe-cal-arrow">→</span>
+                            <input type="date" value={r[1]}
+                              onChange={e => updateRange(year, 'seasons', sid, i, 'end', e.target.value)}
+                              className="pe-input pe-input-date" />
+                            <button type="button" className="pe-cal-remove"
+                              onClick={() => removeRange(year, 'seasons', sid, i)}
+                              aria-label="Eliminar">×</button>
+                          </div>
+                        ))}
+                      </div>
                     )}
                   </div>
                 );
@@ -412,66 +399,62 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
             </div>
 
             <h3 className="pe-h3">Especiales</h3>
-            {Object.entries(cal.specials || {}).map(([sid, sp]) => (
-              <div key={sid} className="pe-cal-season">
-                <div className="pe-cal-season-head">
-                  <strong>{sp.label || sid}</strong>
-                  <span className="pe-hint">temporada: {sp.season}</span>
-                  <button
-                    type="button"
-                    className="pe-btn pe-btn-ghost pe-btn-sm"
-                    onClick={() => addRange(year, 'specials', sid)}
-                  >+ Rango</button>
-                </div>
-                <table className="pe-table pe-table-cal">
-                  <thead><tr><th>Desde</th><th>Hasta</th><th></th></tr></thead>
-                  <tbody>
+            <div className="pe-cal-seasons">
+              {Object.entries(cal.specials || {}).map(([sid, sp]) => (
+                <div key={sid} className="pe-cal-card pe-cal-card-special">
+                  <div className="pe-cal-card-head">
+                    <strong>{sp.label || sid}</strong>
+                    <span className="pe-cal-mult">{sp.season}</span>
+                    <button
+                      type="button"
+                      className="pe-cal-add"
+                      onClick={() => addRange(year, 'specials', sid)}
+                      aria-label="Añadir rango"
+                    >+</button>
+                  </div>
+                  <div className="pe-cal-ranges">
                     {sp.ranges.map((r, i) => (
-                      <tr key={i}>
-                        <td><input type="date" value={r[0]}
+                      <div key={i} className="pe-cal-range">
+                        <input type="date" value={r[0]}
                           onChange={e => updateRange(year, 'specials', sid, i, 'start', e.target.value)}
-                          className="pe-input pe-input-date" /></td>
-                        <td><input type="date" value={r[1]}
+                          className="pe-input pe-input-date" />
+                        <span className="pe-cal-arrow">→</span>
+                        <input type="date" value={r[1]}
                           onChange={e => updateRange(year, 'specials', sid, i, 'end', e.target.value)}
-                          className="pe-input pe-input-date" /></td>
-                        <td><button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
-                          onClick={() => removeRange(year, 'specials', sid, i)}>×</button></td>
-                      </tr>
+                          className="pe-input pe-input-date" />
+                        <button type="button" className="pe-cal-remove"
+                          onClick={() => removeRange(year, 'specials', sid, i)}>×</button>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
-              </div>
-            ))}
+                  </div>
+                </div>
+              ))}
+            </div>
 
-            <h3 className="pe-h3">Puentes nacionales (+1 grado de temporada)</h3>
-            <button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
-              onClick={() => addRange(year, 'bridges')}>+ Puente</button>
-            <table className="pe-table pe-table-cal">
-              <thead><tr><th>Nombre</th><th>Desde</th><th>Hasta</th><th></th></tr></thead>
-              <tbody>
-                {(cal.bridges || []).map((b, i) => (
-                  <tr key={i}>
-                    <td>
-                      <input type="text" value={b.name}
-                        onChange={e => updateBridgeName(year, i, e.target.value)}
-                        className="pe-input" />
-                    </td>
-                    <td>
-                      <input type="date" value={b.ranges[0][0]}
-                        onChange={e => updateRange(year, 'bridges', null, i, 'start', e.target.value)}
-                        className="pe-input pe-input-date" />
-                    </td>
-                    <td>
-                      <input type="date" value={b.ranges[0][1]}
-                        onChange={e => updateRange(year, 'bridges', null, i, 'end', e.target.value)}
-                        className="pe-input pe-input-date" />
-                    </td>
-                    <td><button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
-                      onClick={() => removeRange(year, 'bridges', null, i)}>×</button></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="pe-cal-bridges-h">
+              <h3 className="pe-h3">Puentes nacionales <span className="pe-hint">+1 grado de temporada</span></h3>
+              <button type="button" className="pe-btn pe-btn-ghost pe-btn-sm"
+                onClick={() => addRange(year, 'bridges')}>+ Puente</button>
+            </div>
+            <div className="pe-cal-bridges">
+              {(cal.bridges || []).map((b, i) => (
+                <div key={i} className="pe-cal-bridge">
+                  <input type="text" value={b.name}
+                    onChange={e => updateBridgeName(year, i, e.target.value)}
+                    className="pe-input pe-cal-bridge-name"
+                    placeholder="Nombre del puente" />
+                  <input type="date" value={b.ranges[0][0]}
+                    onChange={e => updateRange(year, 'bridges', null, i, 'start', e.target.value)}
+                    className="pe-input pe-input-date" />
+                  <span className="pe-cal-arrow">→</span>
+                  <input type="date" value={b.ranges[0][1]}
+                    onChange={e => updateRange(year, 'bridges', null, i, 'end', e.target.value)}
+                    className="pe-input pe-input-date" />
+                  <button type="button" className="pe-cal-remove"
+                    onClick={() => removeRange(year, 'bridges', null, i)}>×</button>
+                </div>
+              ))}
+            </div>
           </div>
         );
       })}
