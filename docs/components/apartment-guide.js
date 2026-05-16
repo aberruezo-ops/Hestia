@@ -104,10 +104,6 @@ const GUIDE_SECTIONS = [{
   es: 'Alrededores',
   en: 'Surroundings'
 }, {
-  id: 'lugares',
-  es: 'Lugares de interés',
-  en: 'Places of interest'
-}, {
   id: 'sabores',
   es: 'Sabores',
   en: 'Tastes'
@@ -120,17 +116,17 @@ const GUIDE_SECTIONS = [{
   es: 'Mar y playas',
   en: 'Sea & beaches'
 }, {
-  id: 'actividades',
-  es: 'Actividades y planes',
-  en: 'Activities & plans'
+  id: 'planes',
+  es: 'Planes y excursiones',
+  en: 'Things to do'
 }, {
   id: 'mercados',
   es: 'Mercados y compras',
   en: 'Markets & shops'
 }, {
   id: 'salud',
-  es: 'Salud y servicios',
-  en: 'Health & services'
+  es: 'Salud',
+  en: 'Health'
 }, {
   id: 'movilidad',
   es: 'Gasolineras y carga eléctrica',
@@ -151,7 +147,7 @@ const SECTION_CATS = {
   sabores: ['restaurant', 'bar', 'fish', 'super', 'celiac'],
   pueblos: ['town', 'bookshop'],
   'mar-playas': ['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
-  actividades: ['activity', 'sport', 'bodega'],
+  planes: ['gem', 'water', 'adventure', 'trek', 'leisure', 'bodega'],
   mercados: ['market'],
   salud: ['health', 'vet', 'pet-board', 'physio', 'pharmacy'],
   movilidad: ['fuel', 'ev-charge']
@@ -257,41 +253,47 @@ const CATEGORIES = [{
   color: 'var(--vt2)',
   icon: '🐾'
 }, {
+  id: 'gem',
+  es: 'Visitas únicas',
+  en: 'Unique visits',
+  color: 'var(--sol)',
+  icon: '🗺️'
+}, {
+  id: 'water',
+  es: 'Agua y costa',
+  en: 'Water & coast',
+  color: 'var(--tur)',
+  icon: '🌊'
+}, {
+  id: 'adventure',
+  es: 'Aventura',
+  en: 'Adventure',
+  color: 'var(--err)',
+  icon: '⚡'
+}, {
+  id: 'trek',
+  es: 'Rutas y senderismo',
+  en: 'Hiking & trails',
+  color: 'var(--vm2)',
+  icon: '🥾'
+}, {
+  id: 'leisure',
+  es: 'Ocio y familia',
+  en: 'Leisure & family',
+  color: 'var(--vs2)',
+  icon: '🎭'
+}, {
   id: 'bodega',
   es: 'Bodegas y enoturismo',
   en: 'Wineries & wine tours',
   color: 'var(--ber)',
   icon: '🍷'
 }, {
-  id: 'health',
-  es: 'Centros de salud',
-  en: 'Health centres',
-  color: 'var(--err)',
-  icon: '⚕️'
-}, {
-  id: 'activity',
-  es: 'Actividades',
-  en: 'Activities',
-  color: 'var(--vs2)',
-  icon: '⛵'
-}, {
-  id: 'sport',
-  es: 'Deporte y aventura',
-  en: 'Sports & adventure',
-  color: 'var(--err)',
-  icon: '⚡'
-}, {
   id: 'town',
   es: 'Pueblos',
   en: 'Towns',
   color: 'var(--vt-dk)',
   icon: '🏘️'
-}, {
-  id: 'culture',
-  es: 'Lugares de interés',
-  en: 'Places of interest',
-  color: 'var(--sol-h)',
-  icon: '🏛️'
 }, {
   id: 'bookshop',
   es: 'Librerías',
@@ -1529,7 +1531,7 @@ const PLACES = [
   name: 'Parque acuático Aquavera',
   desc: 'Toboganes, piscinas y zona infantil. A 5 min en coche dentro de la propia Vera Playa.',
   level: 'Fácil · todas las edades · zona infantil supervisada',
-  cat: 'activity',
+  cat: 'leisure',
   url: 'https://www.aquavera.com/',
   lat: 37.2230,
   lng: -1.7960,
@@ -1540,7 +1542,7 @@ const PLACES = [
   name: 'Paseos en barco · Rumbo al Cabo',
   desc: 'Salidas desde Garrucha con visita a calas accesibles solo por mar. Embarcación cómoda.',
   level: 'Fácil · todas las edades · chalecos a bordo',
-  cat: 'activity',
+  cat: 'water',
   url: 'http://www.rumboalcabo.com/',
   lat: 37.1815,
   lng: -1.8235
@@ -1549,7 +1551,7 @@ const PLACES = [
   name: 'Paseos en barco · El Cabo a Fondo',
   desc: 'Excursiones marítimas por Cabo de Gata desde San José. Avistamiento de delfines algunos días.',
   level: 'Fácil · todas las edades',
-  cat: 'activity',
+  cat: 'water',
   url: 'https://elcaboafondo.es',
   lat: 36.7605,
   lng: -2.1075
@@ -1558,7 +1560,7 @@ const PLACES = [
   name: 'Paseos en barco · Cabo de Gata',
   desc: 'Travesía por las calas vírgenes del parque natural.',
   level: 'Fácil · todas las edades',
-  cat: 'activity',
+  cat: 'water',
   url: 'https://www.cabogataalmeria.com',
   lat: 36.7605,
   lng: -2.1075
@@ -1567,7 +1569,7 @@ const PLACES = [
   name: 'Mojácar Fiesta · actividades',
   desc: 'Catálogo amplio de planes en Mojácar (kayak, paddle surf, paseos, alquiler de barcos).',
   level: 'Variable · cada actividad indica su exigencia',
-  cat: 'activity',
+  cat: 'leisure',
   url: 'https://mojacarfiesta.com/actividades/',
   lat: 37.1377,
   lng: -1.8523
@@ -1576,7 +1578,7 @@ const PLACES = [
   name: 'Vuelo en biplaza (Vera-Palomares)',
   desc: 'Vuelos en ultraligero biplaza desde el aeródromo de Palomares. Vistas de costa, salinas y desierto.',
   level: 'Fácil · 8+ años · sin movilidad reducida (acceso al avión)',
-  cat: 'activity',
+  cat: 'leisure',
   url: 'https://aeronomadas.com/es/vuelos-biplaza',
   lat: 37.2150,
   lng: -1.7720
@@ -1585,7 +1587,7 @@ const PLACES = [
   name: 'Turismo industrial y científico',
   desc: 'Visitas guiadas a invernaderos, plantas solares y observatorios de Almería.',
   level: 'Fácil · todas las edades',
-  cat: 'activity',
+  cat: 'leisure',
   url: 'https://myalmeria.com/turismo-industrial-y-cientifico-en-almeria',
   lat: 36.8400,
   lng: -2.4600
@@ -1604,7 +1606,7 @@ const PLACES = [
   specialty: 'Sistema de 5 torres para wakeboard, ski náutico y kneeboard. Además: circuito hinchable acuático (el mayor del sur de España), kayak, paddle surf, mini-rampa de skate y gimnasio outdoor. Sesiones de iniciación con instructor.',
   level: 'Medio · 8+ años en cable infantil · 12+ años en cable principal · Saber nadar bien · Forma física básica',
   tip: 'Reserva online con 24 h en julio-agosto. Llévate crema solar, gorra y agua — el sol pega fuerte sobre el embalse. La primera caída es a los 5 minutos; al final del día acabas tirado en la hamaca con muy buena cara.',
-  cat: 'sport',
+  cat: 'adventure',
   url: 'https://lunarcablepark.com/',
   lat: 37.3970,
   lng: -1.7320,
@@ -1618,7 +1620,7 @@ const PLACES = [
   specialty: 'Pesca privada de 4 h o día completo · alquiler de barcos por horas o jornada · paseos guiados.',
   level: 'Fácil · 6+ años con adulto · No apto si te marea el barco con facilidad',
   tip: 'Reserva con días de antelación, sobre todo en julio-agosto. Si vais 4, sale más a cuenta el privado que el compartido. Patrón profesional incluido en el privado.',
-  cat: 'sport',
+  cat: 'water',
   url: 'https://garruchaadventuresports.com/',
   lat: 37.1810,
   lng: -1.8210,
@@ -1632,7 +1634,7 @@ const PLACES = [
   specialty: 'Para por Mesa Roldán (escenario de Juego de Tronos) y permite snorkel en aguas cristalinas con peces y posidonia.',
   level: 'Fácil-Medio · 8+ años · Saber nadar · Hacer snorkel básico',
   tip: 'Llévate calzado de agua o sandalias antideslizantes — algunas calas tienen piedras al entrar. La crema solar tiene que ser biodegradable (Cabo de Gata es parque protegido).',
-  cat: 'sport',
+  cat: 'water',
   url: 'https://mojacartour.com/',
   lat: 37.1377,
   lng: -1.8523,
@@ -1645,7 +1647,7 @@ const PLACES = [
   specialty: 'Inmersiones de 2 h con guía profesional. Bautismo de buceo para no certificados.',
   level: 'Snorkel: Medio · 8+ años · Saber nadar. · Buceo: Alto · 10+ años · Examen médico simple',
   tip: 'Salida temprana (8:00), pero compensa: el mar está plano y la luz para fotos es perfecta.',
-  cat: 'sport',
+  cat: 'water',
   url: 'https://deepemotiondiving.com/',
   lat: 37.1380,
   lng: -1.8520
@@ -1654,7 +1656,7 @@ const PLACES = [
   name: 'Buceo · Tortuga (Vera Playa)',
   desc: 'Centro de buceo cercano, con bautismos y cursos PADI completos.',
   level: 'Bautismo: Medio · 10+ años · Buena salud cardiopulmonar. · Cursos PADI: Alto · 12+ años con autorización',
-  cat: 'sport',
+  cat: 'water',
   url: 'https://www.buceotortuga.com',
   lat: 37.2470,
   lng: -1.7660
@@ -1663,7 +1665,7 @@ const PLACES = [
   name: 'Buceo · Villaricos Sub',
   desc: 'Inmersiones en los pecios y arrecifes de Villaricos. Equipo completo en alquiler.',
   level: 'Medio-Alto · titulación PADI Open Water o equivalente · 14+ años',
-  cat: 'sport',
+  cat: 'water',
   url: 'https://www.villaricosub.com',
   lat: 37.2470,
   lng: -1.7660
@@ -1672,7 +1674,7 @@ const PLACES = [
   name: 'Buceo · Mojácar',
   desc: 'Centro tradicional de buceo en Mojácar.',
   level: 'Bautismo: Medio · 10+ años. · Inmersiones: depende del nivel certificado',
-  cat: 'sport',
+  cat: 'water',
   url: 'https://www.buceomojacar.com',
   lat: 37.1380,
   lng: -1.8520
@@ -1682,7 +1684,7 @@ const PLACES = [
   desc: 'Alquiler de motos de agua en Vera Playa, sin necesidad de licencia. Sesiones de 15-30 min en zona acotada.',
   level: 'Medio · 16+ años (carnet de identidad obligatorio) · Saber nadar · No apto embarazadas ni problemas de espalda',
   tip: 'Casco y chaleco incluidos. Lleva ropa que se pueda mojar — terminas calado.',
-  cat: 'sport',
+  cat: 'water',
   url: 'https://www.aquamundo.es',
   lat: 37.2300,
   lng: -1.7960
@@ -1692,7 +1694,7 @@ const PLACES = [
   desc: 'Salidas guiadas en moto de agua por la costa de Cabo de Gata desde Carboneras. Recorridos hasta calas a las que no llegan los barcos.',
   level: 'Medio-Alto · 18+ años con DNI · Saber nadar · No apto embarazadas',
   tip: 'Distancia: 50 min en coche desde Vera Playa. Reserva por Instagram.',
-  cat: 'sport',
+  cat: 'water',
   url: 'https://instagram.com/desertislandjetskiclub',
   lat: 36.9990,
   lng: -1.9010
@@ -1701,7 +1703,7 @@ const PLACES = [
   name: 'Karting Garrucha',
   desc: 'Pista de karting outdoor en Garrucha. Karts adultos y karts infantiles separados. Distancia: ~10 min en coche desde Vera Playa.',
   level: 'Fácil-Medio · adultos en kart grande · niños 8+ años con karts pequeños · No apto problemas cervicales',
-  cat: 'sport',
+  cat: 'adventure',
   url: 'https://kartinggarrucha.es/',
   lat: 37.1810,
   lng: -1.8230
@@ -1711,7 +1713,7 @@ const PLACES = [
   desc: 'Rutas en buggy 4×4 por el desierto de Tabernas (escenario de los spaghetti westerns). Ruta corta 1 h o larga 3 h con paradas. Distancia: ~1 h en coche desde Vera Playa (~70 km).',
   level: 'Medio · 18+ años para conducir · 6+ años de copiloto con adulto · No apto embarazadas ni problemas de espalda · Polvo y vibración alta',
   tip: 'Llévate gafas de sol, pañuelo o buff para la boca y agua. Acabas blanco de polvo — es parte de la experiencia.',
-  cat: 'sport',
+  cat: 'adventure',
   url: 'https://buggy-almeria.com/',
   lat: 37.0540,
   lng: -2.3880
@@ -1720,7 +1722,7 @@ const PLACES = [
   name: 'Vera Surfing · clases de surf',
   desc: 'Clases de surf y SUP en la propia Playa de Vera. Material en alquiler.',
   level: 'Fácil · 6+ años con instructor · Saber nadar',
-  cat: 'sport',
+  cat: 'water',
   url: 'https://cambiatugesto.vera.es/turismo/index.php?page=directorio_view&id=1498',
   lat: 37.2240,
   lng: -1.7950
@@ -1729,7 +1731,7 @@ const PLACES = [
   name: 'Vela Almería · iniciación a la vela',
   desc: 'Cursos de iniciación a la vela en el puerto de Almería. Salidas en velero ligero y crucero.',
   level: 'Medio · 10+ años con autorización · Saber nadar',
-  cat: 'sport',
+  cat: 'water',
   url: 'https://www.velaalmeria.es',
   lat: 36.8350,
   lng: -2.4630
@@ -1742,7 +1744,7 @@ const PLACES = [
   specialty: '~6 km · 2 h · desnivel mínimo · señalizada PR-A 96.',
   level: 'Fácil · todas las edades (con cuidado en tramos cerca del acantilado) · Apta para mayores con buena movilidad',
   tip: 'Mejor por la mañana o al atardecer — sin sombra. Lleva 1,5 L agua/persona en verano.',
-  cat: 'sport',
+  cat: 'trek',
   url: 'https://senderosdealmeria.es/otras-zonas/la-mena-macenas-pr-a-96/',
   lat: 37.1130,
   lng: -1.8500,
@@ -1754,7 +1756,7 @@ const PLACES = [
   desc: 'Subida desde la costa hasta el casco antiguo de Mojácar. ~7 km ida y vuelta, baja dificultad.',
   level: 'Fácil-Medio · 10+ años · Subida sostenida pero corta',
   tip: 'Combínalo con desayuno o comida en la Plaza Nueva de Mojácar arriba.',
-  cat: 'sport',
+  cat: 'trek',
   url: 'https://www.google.com/maps/search/?api=1&query=Marina+de+la+Torre+Mojacar+sendero',
   lat: 37.1100,
   lng: -1.8395
@@ -1763,7 +1765,7 @@ const PLACES = [
   name: 'Rambla del Sopalmo',
   desc: 'Sendero por la rambla del Sopalmo (Sierra Cabrera). Descenso suave de ~90 min.',
   level: 'Fácil · todas las edades · Calzado cerrado',
-  cat: 'sport',
+  cat: 'trek',
   url: 'https://www.google.com/maps/search/?api=1&query=Rambla+Sopalmo+Sierra+Cabrera',
   lat: 37.1400,
   lng: -1.8800
@@ -1773,21 +1775,21 @@ const PLACES = [
   desc: 'Ruta circular exigente con ascenso pronunciado y vistas del valle del Aguas y la Sierra Cabrera. ~12 km · 4 h · desnivel ~700 m.',
   level: 'Alto · 14+ años con experiencia · Buena forma física · No apto principiantes ni con problemas de rodilla',
   tip: 'Sólo en otoño-invierno-primavera: en verano hace demasiado calor para subir. Lleva 2 L agua, comida y bastones.',
-  cat: 'sport',
+  cat: 'trek',
   url: 'https://www.wikiloc.com/hiking-trails/cortijo-cabrera-turre-mojacar-6347444',
   lat: 37.1550,
   lng: -1.8700
 }, {
   id: 'club-nautico',
   name: 'Club Náutico Almanzora',
-  cat: 'activity',
+  cat: 'water',
   url: 'https://maps.app.goo.gl/kgT5rYortJ2s5oPN8',
   lat: 37.2530,
   lng: -1.7720
 }, {
   id: 'bicis',
   name: 'Alquiler de bicicletas (Vera Playa)',
-  cat: 'activity',
+  cat: 'leisure',
   url: 'https://maps.app.goo.gl/yPqqBXpwgcZyu6568',
   lat: 37.2270,
   lng: -1.7965
@@ -1795,7 +1797,7 @@ const PLACES = [
   id: 'bicis-villaricos',
   name: 'Bicis Villaricos',
   desc: 'Tel. 627 139 092',
-  cat: 'activity',
+  cat: 'leisure',
   lat: 37.2470,
   lng: -1.7660
 },
@@ -2371,6 +2373,153 @@ const PLACES = [
   lat: 37.6920,
   lng: -2.0960
 },
+// Visitas únicas (gem) — en sección Planes y excursiones
+{
+  id: 'g-salinas',
+  name: 'Salinas de Cabo de Gata',
+  cat: 'gem',
+  featured: true,
+  desc: 'Laguna rosa con cientos de flamencos al atardecer. El reflejo del cielo sobre la sal es irreal — la foto más sorprendente de Almería.',
+  desc_en: 'Pink lagoon with hundreds of flamingos at sunset. The sky reflected in the salt is surreal — Almería\'s most surprising shot.',
+  dist: '55 km · 45 min',
+  icon: '🦩',
+  url: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.7780,-2.2100',
+  web: 'https://www.juntadeandalucia.es/medioambiente/portal/landing-page-mapa-espacios-naturales/_blank/15006',
+  lat: 36.7780,
+  lng: -2.2100
+}, {
+  id: 'g-arrecife',
+  name: 'Arrecife de las Sirenas',
+  cat: 'gem',
+  featured: true,
+  desc: 'Escollos volcánicos negros emergiendo del Mediterráneo turquesa, junto al faro de Cabo de Gata. La imagen más icónica de la costa almeriense.',
+  desc_en: 'Black volcanic rocks rising from turquoise sea beside Cabo de Gata lighthouse. The most iconic image of the Almería coast.',
+  dist: '55 km · 45 min',
+  icon: '🌋',
+  url: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.7280,-2.1890',
+  web: 'https://www.parquenaturalcabodegata.com/lugares/faro-de-cabo-de-gata/',
+  lat: 36.7280,
+  lng: -2.1890
+}, {
+  id: 'g-cortijo-fraile',
+  name: 'Cortijo del Fraile',
+  cat: 'gem',
+  featured: true,
+  desc: 'Ruinas del cortijo donde ocurrió el crimen real que inspiró "Bodas de Sangre" de Lorca. Silencio absoluto, muros de adobe y una historia que eriza la piel.',
+  desc_en: 'Ruins of the farmhouse where the real crime inspiring Lorca\'s "Blood Wedding" took place. Adobe walls, silence and a story that raises goosebumps.',
+  dist: '50 km · 40 min',
+  icon: '🎭',
+  url: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.8830,-2.0800',
+  web: 'https://www.tugasa.com/ficha-enclave/cortijo-del-fraile/',
+  lat: 36.8830,
+  lng: -2.0800
+}, {
+  id: 'g-isleta',
+  name: 'La Isleta del Moro',
+  cat: 'gem',
+  featured: true,
+  desc: 'El pueblo pesquero más auténtico y fotogénico del Parque. Casas encaladas, barcas de colores y silencio. Una postal que todavía existe de verdad.',
+  desc_en: 'The most authentic and photogenic fishing village in the Park. Whitewashed houses, coloured boats and silence. A real postcard that still exists.',
+  dist: '60 km · 50 min',
+  icon: '🎣',
+  url: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.9060,-2.0250',
+  web: 'https://www.parquenaturalcabodegata.com/pueblos/la-isleta-del-moro/',
+  lat: 36.9060,
+  lng: -2.0250
+}, {
+  id: 'g-rodalquilar',
+  name: 'Minas de Oro de Rodalquilar',
+  cat: 'gem',
+  desc: 'Minas de oro decimonónicas abandonadas en pleno Parque Natural. Edificios industriales art-decó oxidados por el salitre. Perturbadoras y espectaculares.',
+  desc_en: '19th-century gold mines abandoned inside the Natural Park. Art Deco industrial buildings eaten by salt air. Haunting and spectacular.',
+  dist: '65 km · 55 min',
+  icon: '⛏️',
+  url: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.8470,-2.0360',
+  web: 'https://www.parquenaturalcabodegata.com/lugares/minas-de-rodalquilar/',
+  lat: 36.8470,
+  lng: -2.0360
+}, {
+  id: 'g-escullos',
+  name: 'Castillo de Los Escullos',
+  cat: 'gem',
+  desc: 'Fortaleza costera del s. XVIII en una cala volcánica casi virgen. El castillo emerge del agua como sacado de una novela de piratas.',
+  desc_en: '18th-century coastal fortress on a near-virgin volcanic cove. The castle rises from the water like something from a pirate novel.',
+  dist: '55 km · 45 min',
+  icon: '🏰',
+  url: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.8810,-2.0600',
+  lat: 36.8810,
+  lng: -2.0600
+}, {
+  id: 'g-villaricos',
+  name: 'Baria · Villaricos',
+  cat: 'gem',
+  featured: true,
+  desc: 'Ciudad fenicio-romana (s. VI a.C.) a pie de playa, a 10 minutos de Hestía. Hay murallas, factorías de garum y una necrópolis. Casi sin señalizar — busca los carteles verdes.',
+  desc_en: 'Phoenician-Roman city (6th c. BC) right by the beach, 10 min from Hestía. Walls, garum factories and a necropolis remain. Barely signposted — look for the green signs.',
+  dist: '10 km · 12 min',
+  icon: '⚱️',
+  url: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.2440,-1.8920',
+  web: 'https://www.museoarqueologicoalmeria.com/',
+  lat: 37.2440,
+  lng: -1.8920
+}, {
+  id: 'g-pozo-frailes',
+  name: 'El Pozo de los Frailes',
+  cat: 'gem',
+  desc: 'Noria morisca, aljibe y el único molino de viento en funcionamiento del Cabo de Gata. Bucólico, fuera del circuito turístico y sin ningún cartel de bienvenida.',
+  desc_en: 'Moorish waterwheel, cistern and the only working windmill in Cabo de Gata. Bucolic, off the tourist circuit and with no welcome sign.',
+  dist: '55 km · 45 min',
+  icon: '💨',
+  url: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.8290,-2.1430',
+  lat: 36.8290,
+  lng: -2.1430
+}, {
+  id: 'g-molinos',
+  name: 'Molinos del Río Aguas',
+  cat: 'gem',
+  desc: 'Molinos medievales en un cañón kárstico donde el río Aguas brota en pleno desierto. Palmitos, cañas, silencio y la sensación de estar en otro tiempo.',
+  desc_en: 'Medieval mills in a karst canyon where the Río Aguas springs from the desert. Dwarf palms, reeds, silence and the feeling of being in another era.',
+  dist: '80 km · 1h',
+  icon: '🌿',
+  url: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.0690,-2.0780',
+  lat: 37.0690,
+  lng: -2.0780
+}, {
+  id: 'g-vera-historica',
+  name: 'Vera histórica',
+  cat: 'gem',
+  desc: 'Pueblo rehecho en el s. XV tras el terremoto de 1518. La Colegiata, las plazas adoquinadas y la vida andaluza tranquila a 10 minutos de la playa.',
+  desc_en: 'Town rebuilt in the 15th c. after the 1518 earthquake. The Collegiate Church, cobbled squares and quiet Andalusian life just 10 minutes from the beach.',
+  dist: '5 km · 8 min',
+  icon: '🏯',
+  url: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.2530,-1.8640',
+  lat: 37.2530,
+  lng: -1.8640
+}, {
+  id: 'g-starlight',
+  name: 'Cielo oscuro · Reserva Starlight',
+  cat: 'gem',
+  desc: 'La comarca es Reserva Starlight. El interior de Mojácar (Turre, Bédar, Cabrera) ofrece noches sin contaminación lumínica — la Vía Láctea a simple vista.',
+  desc_en: 'The area holds Starlight Reserve status. Inland Mojácar (Turre, Bédar, Cabrera) gives unpolluted nights — the Milky Way visible to the naked eye.',
+  dist: '20 km · 20 min',
+  icon: '🔭',
+  url: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.1130,-1.9510',
+  web: 'https://www.fundacion-starlight.org/',
+  lat: 37.1130,
+  lng: -1.9510
+}, {
+  id: 'g-entinas',
+  name: 'Punta Entinas-Sabinal',
+  cat: 'gem',
+  desc: 'Dunas fósiles, pinar y laguna con flamencos en el punto más al sur de la provincia de Granada. El fin del mundo en el buen sentido.',
+  desc_en: 'Fossil dunes, pine forest and flamingo lagoon at the southernmost tip of Granada province. The end of the world in the best sense.',
+  dist: '120 km · 1h 20min',
+  icon: '🌊',
+  url: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.6750,-2.9820',
+  web: 'https://www.juntadeandalucia.es/medioambiente/portal/landing-page-mapa-espacios-naturales/_blank/85760',
+  lat: 36.6750,
+  lng: -2.9820
+},
 // Lugares de interés — dist desde Vera Playa · gmaps: cómo llegar · web: info externa
 {
   id: 'laguna',
@@ -2446,7 +2595,7 @@ const PLACES = [
   dist: '~115 km',
   how: '🚗 · 1h 20min',
   note: 'Parque temático del Oeste, zoo safari. Ideal con niños.',
-  guideAnchor: '#ag-actividades',
+  guideAnchor: '#ag-planes',
   guideNote: 'Itinerario día completo',
   planId: 'plan-mini-hollywood',
   gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.0050,-2.4750',
@@ -4305,215 +4454,6 @@ const EventsCalendar = ({
     defaultOpen: mi === currentMonth
   }))));
 };
-
-// GEMS — lugares curiosos, bellos y únicos que no aparecen en ninguna otra
-// sección de la guía (sin playas, restaurantes, pueblos ni actividades).
-const GEMS = [{
-  id: 'g-salinas',
-  icon: '🦩',
-  name: {
-    es: 'Salinas de Cabo de Gata',
-    en: 'Cabo de Gata Salt Flats'
-  },
-  dist: '55 km · 45 min',
-  note: {
-    es: 'Laguna rosa con cientos de flamencos al atardecer. El reflejo del cielo sobre la sal es irreal — la foto más sorprendente de Almería.',
-    en: 'Pink lagoon with hundreds of flamingos at sunset. The sky reflected in the salt is surreal — Almería\'s most surprising shot.'
-  },
-  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.7780,-2.2100',
-  web: 'https://www.juntadeandalucia.es/medioambiente/portal/landing-page-mapa-espacios-naturales/_blank/15006'
-}, {
-  id: 'g-arrecife',
-  icon: '🌋',
-  name: {
-    es: 'Arrecife de las Sirenas',
-    en: 'Arrecife de las Sirenas'
-  },
-  dist: '55 km · 45 min',
-  note: {
-    es: 'Escollos volcánicos negros emergiendo del Mediterráneo turquesa, junto al faro de Cabo de Gata. La imagen más icónica de la costa almeriense.',
-    en: 'Black volcanic rocks rising from turquoise sea beside Cabo de Gata lighthouse. The most iconic image of the Almería coast.'
-  },
-  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.7280,-2.1890',
-  web: 'https://www.parquenaturalcabodegata.com/lugares/faro-de-cabo-de-gata/'
-}, {
-  id: 'g-cortijo-fraile',
-  icon: '🎭',
-  name: {
-    es: 'Cortijo del Fraile',
-    en: 'Cortijo del Fraile'
-  },
-  dist: '50 km · 40 min',
-  note: {
-    es: 'Ruinas del cortijo donde ocurrió el crimen real que inspiró "Bodas de Sangre" de Lorca. Silencio absoluto, muros de adobe y una historia que eriza la piel.',
-    en: 'Ruins of the farmhouse where the real crime inspiring Lorca\'s "Blood Wedding" took place. Adobe walls, silence and a story that raises goosebumps.'
-  },
-  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.8830,-2.0800',
-  web: 'https://www.tugasa.com/ficha-enclave/cortijo-del-fraile/'
-}, {
-  id: 'g-isleta',
-  icon: '🎣',
-  name: {
-    es: 'La Isleta del Moro',
-    en: 'La Isleta del Moro'
-  },
-  dist: '60 km · 50 min',
-  note: {
-    es: 'El pueblo pesquero más auténtico y fotogénico del Parque. Casas encaladas, barcas de colores y silencio. Una postal que todavía existe de verdad.',
-    en: 'The most authentic and photogenic fishing village in the Park. Whitewashed houses, coloured boats and silence. A real postcard that still exists.'
-  },
-  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.9060,-2.0250',
-  web: 'https://www.parquenaturalcabodegata.com/pueblos/la-isleta-del-moro/'
-}, {
-  id: 'g-rodalquilar',
-  icon: '⛏️',
-  name: {
-    es: 'Minas de Oro de Rodalquilar',
-    en: 'Rodalquilar Gold Mines'
-  },
-  dist: '65 km · 55 min',
-  note: {
-    es: 'Minas de oro decimonónicas abandonadas en pleno Parque Natural. Edificios industriales art-decó oxidados por el salitre. Perturbadoras y espectaculares.',
-    en: '19th-century gold mines abandoned inside the Natural Park. Art Deco industrial buildings eaten by salt air. Haunting and spectacular.'
-  },
-  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.8470,-2.0360',
-  web: 'https://www.parquenaturalcabodegata.com/lugares/minas-de-rodalquilar/'
-}, {
-  id: 'g-escullos',
-  icon: '🏰',
-  name: {
-    es: 'Castillo de Los Escullos',
-    en: 'Los Escullos Castle'
-  },
-  dist: '55 km · 45 min',
-  note: {
-    es: 'Fortaleza costera del s. XVIII en una cala volcánica casi virgen. El castillo emerge del agua como sacado de una novela de piratas.',
-    en: '18th-century coastal fortress on a near-virgin volcanic cove. The castle rises from the water like something from a pirate novel.'
-  },
-  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.8810,-2.0600',
-  web: null
-}, {
-  id: 'g-villaricos',
-  icon: '⚱️',
-  name: {
-    es: 'Baria · Villaricos',
-    en: 'Baria · Villaricos'
-  },
-  dist: '10 km · 12 min',
-  note: {
-    es: 'Ciudad fenicio-romana (s. VI a.C.) a pie de playa, a 10 minutos de Hestía. Hay murallas, factorías de garum y una necrópolis. Casi sin señalizar — busca los carteles verdes.',
-    en: 'Phoenician-Roman city (6th c. BC) right by the beach, 10 min from Hestía. Walls, garum factories and a necropolis remain. Barely signposted — look for the green signs.'
-  },
-  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.2440,-1.8920',
-  web: 'https://www.museoarqueologicoalmeria.com/'
-}, {
-  id: 'g-pozo-frailes',
-  icon: '💨',
-  name: {
-    es: 'El Pozo de los Frailes',
-    en: 'El Pozo de los Frailes'
-  },
-  dist: '55 km · 45 min',
-  note: {
-    es: 'Noria morisca, aljibe y el único molino de viento en funcionamiento del Cabo de Gata. Bucólico, fuera del circuito turístico y sin ningún cartel de bienvenida.',
-    en: 'Moorish waterwheel, cistern and the only working windmill in Cabo de Gata. Bucolic, off the tourist circuit and with no welcome sign.'
-  },
-  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.8290,-2.1430',
-  web: null
-}, {
-  id: 'g-molinos',
-  icon: '🌿',
-  name: {
-    es: 'Molinos del Río Aguas',
-    en: 'Río Aguas Mills'
-  },
-  dist: '80 km · 1h',
-  note: {
-    es: 'Molinos medievales en un cañón kárstico donde el río Aguas brota en pleno desierto. Palmitos, cañas, silencio y la sensación de estar en otro tiempo.',
-    en: 'Medieval mills in a karst canyon where the Río Aguas springs from the desert. Dwarf palms, reeds, silence and the feeling of being in another era.'
-  },
-  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.0690,-2.0780',
-  web: null
-}, {
-  id: 'g-vera-historica',
-  icon: '🏯',
-  name: {
-    es: 'Vera histórica',
-    en: 'Historic Vera'
-  },
-  dist: '5 km · 8 min',
-  note: {
-    es: 'Pueblo rehecho en el s. XV tras el terremoto de 1518. La Colegiata, las plazas adoquinadas y la vida andaluza tranquila a 10 minutos de la playa.',
-    en: 'Town rebuilt in the 15th c. after the 1518 earthquake. The Collegiate Church, cobbled squares and quiet Andalusian life just 10 minutes from the beach.'
-  },
-  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.2530,-1.8640',
-  web: null
-}, {
-  id: 'g-starlight',
-  icon: '🔭',
-  name: {
-    es: 'Cielo oscuro · Reserva Starlight',
-    en: 'Dark Sky · Starlight Reserve'
-  },
-  dist: '20 km · 20 min',
-  note: {
-    es: 'La comarca es Reserva Starlight. El interior de Mojácar (Turre, Bédar, Cabrera) ofrece noches sin contaminación lumínica — la Vía Láctea a simple vista.',
-    en: 'The area holds Starlight Reserve status. Inland Mojácar (Turre, Bédar, Cabrera) gives unpolluted nights — the Milky Way visible to the naked eye.'
-  },
-  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.1130,-1.9510',
-  web: 'https://www.fundacion-starlight.org/'
-}, {
-  id: 'g-entinas',
-  icon: '🌊',
-  name: {
-    es: 'Punta Entinas-Sabinal',
-    en: 'Punta Entinas-Sabinal'
-  },
-  dist: '120 km · 1h 20min',
-  note: {
-    es: 'Dunas fósiles, pinar y laguna con flamencos en el punto más al sur de la provincia de Granada. El fin del mundo en el buen sentido.',
-    en: 'Fossil dunes, pine forest and flamingo lagoon at the southernmost tip of Granada province. The end of the world in the best sense.'
-  },
-  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.6750,-2.9820',
-  web: 'https://www.juntadeandalucia.es/medioambiente/portal/landing-page-mapa-espacios-naturales/_blank/85760'
-}];
-
-// LugaresSection — grid de tarjetas de lugares curiosos, bellos y únicos.
-const LugaresSection = ({
-  lang
-}) => /*#__PURE__*/React.createElement("div", {
-  className: "ag-gems-grid"
-}, GEMS.map(g => {
-  const name = lang === 'es' ? g.name.es : g.name.en;
-  const note = lang === 'es' ? g.note.es : g.note.en;
-  return /*#__PURE__*/React.createElement("article", {
-    key: g.id,
-    className: "ag-gem-card"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "ag-gem-head"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-gem-icon",
-    "aria-hidden": "true"
-  }, g.icon), /*#__PURE__*/React.createElement("span", {
-    className: "ag-gem-dist"
-  }, g.dist)), /*#__PURE__*/React.createElement("h4", {
-    className: "ag-gem-name"
-  }, name), /*#__PURE__*/React.createElement("p", {
-    className: "ag-gem-note"
-  }, note), /*#__PURE__*/React.createElement("div", {
-    className: "ag-gem-links"
-  }, /*#__PURE__*/React.createElement("a", {
-    href: g.gmaps,
-    target: "_blank",
-    rel: "noopener",
-    className: "ag-gem-btn ag-gem-map"
-  }, "\uD83D\uDCCD ", lang === 'es' ? 'Cómo llegar' : 'Directions'), g.web && /*#__PURE__*/React.createElement("a", {
-    href: g.web,
-    target: "_blank",
-    rel: "noopener",
-    className: "ag-gem-btn ag-gem-web"
-  }, "\uD83C\uDF10 ", lang === 'es' ? 'Más info' : 'More info')));
-}));
 const CatGroup = ({
   cat,
   places,
@@ -4540,9 +4480,11 @@ const CatGroup = ({
     }, p.tier), typeof p.rating === 'number' && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-rating",
       title: lang === 'es' ? 'Valoración Google' : 'Google rating'
-    }, "\u2B50 ", p.rating.toFixed(1))), p.desc && /*#__PURE__*/React.createElement("span", {
+    }, "\u2B50 ", p.rating.toFixed(1))), (p.desc || p.desc_en) && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-desc"
-    }, p.desc), p.specialty && /*#__PURE__*/React.createElement("span", {
+    }, lang === 'en' && p.desc_en ? p.desc_en : p.desc, p.dist && /*#__PURE__*/React.createElement("span", {
+      className: "ag-place-dist"
+    }, " \xB7 ", p.dist)), p.specialty && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-specialty"
     }, /*#__PURE__*/React.createElement("span", {
       className: "ag-place-specialty-tag"
@@ -8394,22 +8336,11 @@ const AptGuideView = ({
     className: "ag-sites-arrow",
     "aria-hidden": "true"
   }, "\u2197"), l.label))))))))), /*#__PURE__*/React.createElement("section", {
-    id: "ag-lugares",
-    className: "ag-section"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-section-num"
-  }, "13"), /*#__PURE__*/React.createElement("h2", {
-    className: "ag-h2"
-  }, lang === 'es' ? 'Lugares de interés' : 'Places of interest'), /*#__PURE__*/React.createElement("p", {
-    className: "ag-para"
-  }, lang === 'es' ? 'Curiosidades, paisajes que sorprenden y rincones que no salen en ninguna otra sección de esta guía. Nada de restaurantes ni playas — solo lugares que merece la pena conocer por sí mismos.' : 'Curiosities, surprising landscapes and corners that appear nowhere else in this guide. No restaurants, no beaches — just places worth knowing for their own sake.'), /*#__PURE__*/React.createElement(LugaresSection, {
-    lang: lang
-  })), /*#__PURE__*/React.createElement("section", {
     id: "ag-sabores",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "14"), /*#__PURE__*/React.createElement("h2", {
+  }, "13"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Sabores' : 'Tastes'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -8431,7 +8362,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "15"), /*#__PURE__*/React.createElement("h2", {
+  }, "14"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -8453,7 +8384,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "16"), /*#__PURE__*/React.createElement("h2", {
+  }, "15"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Mar y playas' : 'Sea & beaches'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -8472,15 +8403,15 @@ const AptGuideView = ({
       lang: lang
     });
   })), /*#__PURE__*/React.createElement("section", {
-    id: "ag-actividades",
+    id: "ag-planes",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "17"), /*#__PURE__*/React.createElement("h2", {
+  }, "16"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
-  }, lang === 'es' ? 'Actividades y planes' : 'Activities & plans'), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? 'Planes y excursiones' : 'Things to do'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, lang === 'es' ? 'Buceo, kayak, vuelo en biplaza, parques acuáticos, observatorios. Y nuestros itinerarios curados para vivir días redondos por la zona.' : 'Diving, kayaking, scenic flights, water parks, observatories. And our curated itineraries for full days around the area.'), SECTION_CATS.actividades.map(catId => {
+  }, lang === 'es' ? 'Visitas únicas, agua y costa, aventura, senderismo, ocio familiar y enoturismo. Todo lo que merece la pena hacer en la zona, clasificado por tipo.' : 'Unique visits, water & coast, adventure, hiking, family leisure and wine tourism. Everything worth doing in the area, sorted by type.'), SECTION_CATS.planes.map(catId => {
     const cat = CATEGORIES.find(c => c.id === catId);
     if (!cat) return null;
     const inCat = PLACES.filter(p => p.cat === catId);
@@ -8498,7 +8429,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "18"), /*#__PURE__*/React.createElement("h2", {
+  }, "17"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Mercados y compras' : 'Markets & shops'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -8518,7 +8449,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "19"), /*#__PURE__*/React.createElement("h2", {
+  }, "18"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Salud y servicios' : 'Health & services'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -8538,7 +8469,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "20"), /*#__PURE__*/React.createElement("h2", {
+  }, "19"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"

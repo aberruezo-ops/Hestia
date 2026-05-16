@@ -749,7 +749,7 @@ p  { line-height: 1.65; font-weight: 300; }
      no quede tapado por el header fijo en móviles. Centro horizontal mantenido. */
   justify-content: flex-start;
   align-items: center;
-  padding-top: clamp(110px, 18vh, 150px);
+  padding-top: clamp(120px, 20vh, 160px);
   opacity: 0;
   pointer-events: none;
   transition: opacity .3s ease;
@@ -948,12 +948,12 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 .mn-mid-ventajas:hover { background: rgba(232,194,107,.14); }
 
-/* Páginas secundarias — fila horizontal */
+/* Páginas secundarias — columna vertical */
 .mn-pages-row {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0 2px;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
   width: 100%;
 }
 .mn-page {

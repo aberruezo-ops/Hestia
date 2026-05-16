@@ -893,6 +893,7 @@ const AptGuideDownload = ({
     }
   };
   return /*#__PURE__*/React.createElement("section", {
+    id: "guide",
     className: "apt-guide",
     "data-apt": apt.id,
     style: {
