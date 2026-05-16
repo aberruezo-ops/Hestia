@@ -2118,7 +2118,7 @@ const ReservasTab = ({ token }) => {
             <div className="rv-block-h">Por apartamento</div>
             <div className="rv-block-rows">
               {byApt.map(b => (
-                <div key={b.apt} className="rv-block-row">
+                <div key={b.apt} className="rv-block-row rv-block-row-apt" data-apt={b.apt} style={{'--apt-c': APT_COLOR[b.apt]}}>
                   <span className="rv-apt-chip" style={{background: APT_COLOR[b.apt]}}>{APT_NAMES[b.apt]}</span>
                   <span className="rv-block-row-meta">{b.reservas} reservas · {b.noches} noches</span>
                   <span className="rv-block-row-val">{fmtEur(b.ingreso)}</span>
@@ -2215,7 +2215,9 @@ const ReservasTab = ({ token }) => {
                 const statusIcon = status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
                 const isSel = idx === selectedIdx;
                 return (
-                  <tr key={idx} className={`rv-row rv-row-${status}${isSel ? ' is-selected' : ''}`} onClick={() => openRow(idx)}>
+                  <tr key={idx} className={`rv-row rv-row-${status}${isSel ? ' is-selected' : ''}`}
+                    data-apt={r.apt} style={{'--apt-c': APT_COLOR[r.apt] || 'transparent'}}
+                    onClick={() => openRow(idx)}>
                     <td className={`rv-status rv-status-${status}`} title={status}>{statusIcon}</td>
                     <td><span className="rv-apt-chip" style={{background: APT_COLOR[r.apt]}}>{APT_NAMES[r.apt] || r.apt}</span></td>
                     <td>{r.responsable}{r.mascota ? ' 🐾' : ''}{r.cuna_trona ? ' 👶' : ''}</td>
@@ -2240,10 +2242,10 @@ const ReservasTab = ({ token }) => {
       {draft && (
         <>
           <div className="rv-edit-backdrop" onClick={cancelDraft} />
-          <aside className="rv-edit-panel">
+          <aside className="rv-edit-panel" data-apt={draft.apt} style={{'--apt-c': APT_COLOR[draft.apt] || '#3D1A35'}}>
             <header className="rv-edit-head">
               <div>
-                <div className="rv-edit-eyebrow">{selectedIdx < reservas.length ? 'Editar reserva' : 'Nueva reserva'}</div>
+                <div className="rv-edit-eyebrow">{selectedIdx < reservas.length ? 'Editar reserva' : 'Nueva reserva'} · {APT_NAMES[draft.apt] || ''}</div>
                 <h3>{draft.responsable || '(sin nombre)'}</h3>
               </div>
               <button type="button" className="rv-edit-close" onClick={cancelDraft} aria-label="Cerrar">×</button>
