@@ -608,55 +608,71 @@ const PLACES = [
     ], cat: 'town', lat: 38.6125, lng: -1.1170 },
   { id: 't-cuevas-velez', name: 'Cuevas de los Letreros (Vélez-Blanco)', desc: 'Abrigo rupestre con pinturas neolíticas. Aquí se descubrió el Indalo, símbolo de Almería.', best: 'Las pinturas rupestres (4.000-7.000 a.C.) Patrimonio de la Humanidad UNESCO — antílopes, brujos y el Indalo original.', tip: 'Visita guiada obligatoria. Reserva en la Oficina de Turismo de Vélez-Blanco (teléfono 950 415 354).', cat: 'town', lat: 37.6920, lng: -2.0960 },
 
-  // Lugares de interés — dist desde Vera Playa · guideAnchor: ancla en la guía · planId: itinerario del día
+  // Lugares de interés — dist desde Vera Playa · gmaps: cómo llegar · web: info externa
   { id: 'laguna',         name: 'Laguna de Puerto Rey',
     cat: 'culture',
-    dist: '~3 km · 5 min', how: '🚗 o 🚶',
-    note: 'Espacio natural junto a Vera Playa · flamencos, aves acuáticas y sendero de ribera.',
+    dist: '~3 km', how: '🚗 o 🚶 · 5 min',
+    note: 'Flamencos, aves acuáticas y sendero de ribera.',
     guideAnchor: '#ag-alrededores',
-    url: 'https://www.google.com/maps/search/?api=1&query=Laguna+Puerto+Rey+Vera+Almeria', lat: 37.2110, lng: -1.7770 },
+    gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.2110,-1.7770',
+    web: 'https://www.juntadeandalucia.es/medioambiente/portal/landing-page-mapa-espacios-naturales/_blank/57800',
+    lat: 37.2110, lng: -1.7770 },
   { id: 'el-argar',       name: 'Yacimiento El Argar',
     cat: 'culture',
-    dist: '~25 km · 25 min', how: '🚗',
-    note: 'Antas. Yacimiento de la Edad del Bronce (2200-1550 a.C.) que da nombre a la cultura argárica.',
+    dist: '~25 km', how: '🚗 · 25 min',
+    note: 'Antas. Cultura argárica (2200–1550 a.C.).',
     guideAnchor: '#ag-pueblos', guideNote: 'Cuevas del Almanzora',
-    url: 'https://maps.app.goo.gl/dyCfYS3L8qruFVPD9', lat: 37.2440, lng: -1.8920 },
+    gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.2440,-1.8920',
+    web: 'https://www.museoarqueologicoalmeria.com/',
+    lat: 37.2440, lng: -1.8920 },
   { id: 'geoda-pulpi',    name: 'Geoda de Pulpí',
     cat: 'culture',
-    dist: '~60 km · 45 min', how: '🚗',
-    note: 'Segunda geoda más grande del mundo (8 m). Visita guiada obligatoria · grupos de 8 máx · pozo a 50 m.',
+    dist: '~60 km', how: '🚗 · 45 min',
+    note: '2ª geoda más grande del mundo. Visita guiada, grupos de 8.',
     guideAnchor: '#ag-pueblos', guideNote: 'Pulpí', planId: 'plan-geoda-pulpi',
-    url: 'https://www.geodapulpi.es', lat: 37.4083, lng: -1.7635 },
+    gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.4083,-1.7635',
+    web: 'https://www.geodapulpi.es',
+    lat: 37.4083, lng: -1.7635 },
   { id: 'cuevas-sorbas',  name: 'Cuevas de Sorbas',
     cat: 'culture',
-    dist: '~75 km · 55 min', how: '🚗',
-    note: 'Karst en yeso único en Europa. Visita guiada · 3 niveles de dificultad.',
+    dist: '~75 km', how: '🚗 · 55 min',
+    note: 'Karst en yeso único en Europa. 3 niveles de dificultad.',
     guideAnchor: '#ag-pueblos', guideNote: 'Sorbas', planId: 'plan-vera-sorbas-tabernas',
-    url: 'https://www.cuevasdesorbas.com/', lat: 37.1070, lng: -2.0820 },
+    gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.1070,-2.0820',
+    web: 'https://www.cuevasdesorbas.com/',
+    lat: 37.1070, lng: -2.0820 },
   { id: 'tabernas',       name: 'Desierto de Tabernas',
     cat: 'culture',
-    dist: '~110 km · 1 h 15 min', how: '🚗',
-    note: 'Único desierto de Europa · escenario de 500+ películas, incluido El bueno, el feo y el malo.',
+    dist: '~110 km', how: '🚗 · 1h 15min',
+    note: 'Único desierto de Europa. 500+ películas rodadas aquí.',
     guideAnchor: '#ag-pueblos', guideNote: 'Tabernas', planId: 'plan-vera-sorbas-tabernas',
-    url: 'https://www.tabernas.es/', lat: 37.0410, lng: -2.3890 },
-  { id: 'minihollywood',  name: 'MiniHollywood (Oasys)',
+    gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.0410,-2.3890',
+    web: 'https://www.juntadeandalucia.es/medioambiente/portal/areas-tematicas/parques-naturales/sierra-nevada',
+    lat: 37.0410, lng: -2.3890 },
+  { id: 'minihollywood',  name: 'MiniHollywood · Oasys',
     cat: 'culture',
-    dist: '~115 km · 1 h 20 min', how: '🚗',
-    note: 'Parque temático del Oeste · espectáculos de dobles · zoo safari · ideal con niños.',
+    dist: '~115 km', how: '🚗 · 1h 20min',
+    note: 'Parque temático del Oeste, zoo safari. Ideal con niños.',
     guideAnchor: '#ag-actividades', guideNote: 'Itinerario día completo', planId: 'plan-mini-hollywood',
-    url: 'https://www.oasysparquetematico.com/', lat: 37.0050, lng: -2.4750 },
+    gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.0050,-2.4750',
+    web: 'https://www.oasysparquetematico.com/',
+    lat: 37.0050, lng: -2.4750 },
   { id: 'aquarium',       name: 'Aquarium Costa de Almería',
     cat: 'culture',
-    dist: '~110 km · 1 h 15 min', how: '🚗',
-    note: 'Roquetas de Mar. El mayor de la costa almeriense · 4.000 ejemplares de 300 especies.',
+    dist: '~110 km', how: '🚗 · 1h 15min',
+    note: 'Roquetas de Mar. 4.000 ejemplares de 300 especies.',
     guideAnchor: '#ag-pueblos', guideNote: 'Roquetas de Mar',
-    url: 'https://www.aquariumcostadealmeria.com/', lat: 36.7674, lng: -2.6094 },
+    gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.7674,-2.6094',
+    web: 'https://www.aquariumcostadealmeria.com/',
+    lat: 36.7674, lng: -2.6094 },
   { id: 'mariposario',    name: 'Mariposario de Almería',
     cat: 'culture',
-    dist: '~110 km · 1 h 15 min', how: '🚗',
-    note: 'Almería capital. Jardín interior climatizado con mariposas tropicales vivas en vuelo libre.',
+    dist: '~110 km', how: '🚗 · 1h 15min',
+    note: 'Almería. Mariposas tropicales en vuelo libre.',
     guideAnchor: '#ag-pueblos', guideNote: 'Almería capital',
-    url: 'https://g.co/kgs/meY7kj', lat: 36.7641, lng: -2.6109 },
+    gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.7641,-2.6109',
+    web: 'https://www.google.com/maps/search/?api=1&query=Mariposario+Almería',
+    lat: 36.7641, lng: -2.6109 },
 
   // Playas (orden geográfico: norte → Vera → Cabo de Gata → Almería → Adra).
   // Cada entrada lleva rating (estrellas Google), services (qué tiene)
@@ -1821,43 +1837,44 @@ const EventsCalendar = ({ lang }) => {
   );
 };
 
-// LugaresSection — lista compacta de lugares de interés (cat: 'culture').
-// Cada entrada es una línea: nombre · distancia · nota · enlace guía · enlace externo.
+// LugaresSection — tabla ultra-compacta de lugares de interés.
+// Una fila por lugar: nombre · dist · nota · [📍 Cómo llegar] [🌐 Web]
 const LugaresSection = ({ lang }) => {
   const lugares = PLACES.filter(p => p.cat === 'culture');
   if (!lugares.length) return null;
   return (
-    <ul className="ag-lugares-list">
-      {lugares.map(p => {
-        const mapHref = p.url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Almería')}`;
-        return (
-          <li key={p.id} className="ag-lugar">
-            <span className="ag-lugar-name">{p.name}</span>
-            {p.dist && (
-              <span className="ag-lugar-dist">{p.how} {p.dist}</span>
-            )}
-            {p.note && <span className="ag-lugar-note">{p.note}</span>}
-            <span className="ag-lugar-links">
-              {p.guideAnchor && (
-                <a href={p.guideAnchor} className="ag-lugar-link-guide">
-                  {lang === 'es'
-                    ? (p.guideNote ? `En guía → ${p.guideNote}` : 'En la guía')
-                    : (p.guideNote ? `In guide → ${p.guideNote}` : 'In guide')}
+    <table className="ag-lugares-table">
+      <thead>
+        <tr>
+          <th>{lang === 'es' ? 'Lugar' : 'Place'}</th>
+          <th>{lang === 'es' ? 'Dist.' : 'Dist.'}</th>
+          <th>{lang === 'es' ? 'Nota' : 'Note'}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {lugares.map(p => {
+          const mapsHref = p.gmaps || `https://www.google.com/maps/dir/Vera+Playa,Almería/${p.lat},${p.lng}`;
+          return (
+            <tr key={p.id}>
+              <td className="ag-lt-name">{p.name}</td>
+              <td className="ag-lt-dist" nowrap="true">{p.dist}{p.how ? <><br/><span className="ag-lt-how">{p.how}</span></> : null}</td>
+              <td className="ag-lt-note">{p.note}</td>
+              <td className="ag-lt-links" nowrap="true">
+                <a href={mapsHref} target="_blank" rel="noopener" className="ag-lt-btn ag-lt-map">
+                  📍
                 </a>
-              )}
-              {p.planId && (
-                <a href={`#${p.planId}`} className="ag-lugar-link-plan">
-                  {lang === 'es' ? 'Itinerario ↓' : 'Itinerary ↓'}
-                </a>
-              )}
-              <a href={mapHref} target="_blank" rel="noopener" className="ag-lugar-link-ext">
-                {lang === 'es' ? 'Cómo llegar ↗' : 'Directions ↗'}
-              </a>
-            </span>
-          </li>
-        );
-      })}
-    </ul>
+                {p.web && (
+                  <a href={p.web} target="_blank" rel="noopener" className="ag-lt-btn ag-lt-web">
+                    🌐
+                  </a>
+                )}
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
   );
 };
 
