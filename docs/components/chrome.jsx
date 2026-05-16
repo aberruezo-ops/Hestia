@@ -261,38 +261,49 @@ const Header = ({ mode, scrolled, lang }) => {
           </button>
         </div>
       </header>
+// Menú móvil rediseñado: apartamentos en fila (nombre + 🔑), mid-row pills, secondary horizontal
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
         <nav className="mobile-nav">
-          <div className="mn-apts-section">
-            <div className="mn-label eyebrow">{lang === 'es' ? 'Apartamentos' : 'Apartments'}</div>
-            <NavLink href={NAV_PAGES.mar} className="mn-apt mn-vm">
-              <span className="mn-num">01</span>
-              <span className="mn-name">Hestía <em>Mar</em></span>
+          <div className="mn-label eyebrow">{lang === 'es' ? 'Apartamentos' : 'Apartments'}</div>
+          <div className="mn-apts-grid">
+            <div className="mn-apt-row mn-vm">
+              <NavLink href={NAV_PAGES.mar} className="mn-apt-link">
+                <span className="mn-num">01</span>
+                <span className="mn-name">Hestía <em>Mar</em></span>
+              </NavLink>
+              <NavLink href={NAV_PAGES.mar} className="mn-apt-guide mn-vm" title={lang === 'es' ? 'Guía del huésped' : 'Guest guide'}>🔑</NavLink>
+            </div>
+            <div className="mn-apt-row mn-vt">
+              <NavLink href={NAV_PAGES.thalassa} className="mn-apt-link">
+                <span className="mn-num">02</span>
+                <span className="mn-name">Hestía <em>Thalassa</em></span>
+              </NavLink>
+              <NavLink href={NAV_PAGES.thalassa} className="mn-apt-guide mn-vt" title={lang === 'es' ? 'Guía del huésped' : 'Guest guide'}>🔑</NavLink>
+            </div>
+            <div className="mn-apt-row mn-vs">
+              <NavLink href={NAV_PAGES.salinas} className="mn-apt-link">
+                <span className="mn-num">03</span>
+                <span className="mn-name">Hestía <em>Salinas</em></span>
+              </NavLink>
+              <NavLink href={NAV_PAGES.salinas} className="mn-apt-guide mn-vs" title={lang === 'es' ? 'Guía del huésped' : 'Guest guide'}>🔑</NavLink>
+            </div>
+          </div>
+          <div className="mn-sep"/>
+          <div className="mn-mid-row">
+            <NavLink href={NAV_PAGES.porqueHestia} className="mn-mid-why">
+              → {lang === 'es' ? 'Por qué Hestía' : 'Why Hestía'}
             </NavLink>
-            <NavLink href={NAV_PAGES.thalassa} className="mn-apt mn-vt">
-              <span className="mn-num">02</span>
-              <span className="mn-name">Hestía <em>Thalassa</em></span>
-            </NavLink>
-            <NavLink href={NAV_PAGES.salinas} className="mn-apt mn-vs">
-              <span className="mn-num">03</span>
-              <span className="mn-name">Hestía <em>Salinas</em></span>
-            </NavLink>
-            <NavLink href={NAV_PAGES.porqueHestia} className="mn-why">
-              <span className="mn-num">→</span>
-              <span className="mn-name">{t.nav[8]}</span>
+            <NavLink href={NAV_PAGES.ventajas} className="mn-mid-ventajas">
+              ✓ {lang === 'es' ? 'Reserva directa' : 'Direct booking'}
             </NavLink>
           </div>
           <div className="mn-sep"/>
-          <NavLink href={NAV_PAGES.ventajas} className="mn-ventajas">
-            <span className="mn-ventajas-icon" aria-hidden="true">✓</span>
-            <span>{t.mn_ventajas}</span>
-          </NavLink>
-          <MnGuestSection t={t} lang={lang} NavLink={NavLink} NAV_PAGES={NAV_PAGES} />
-          <div className="mn-sep"/>
-          <NavLink href={NAV_PAGES.nosotros} className="mn-page">{t.nav[4]}</NavLink>
-          <NavLink href={NAV_PAGES.opiniones} className="mn-page">{t.nav[5]}</NavLink>
-          <NavLink href={NAV_PAGES.noticias} className="mn-page">{t.nav[7]}</NavLink>
-          <NavLink href={NAV_PAGES.contacto} className="mn-page">{t.nav[6]}</NavLink>
+          <div className="mn-pages-row">
+            <NavLink href={NAV_PAGES.nosotros} className="mn-page">{t.nav[4]}</NavLink>
+            <NavLink href={NAV_PAGES.opiniones} className="mn-page">{t.nav[5]}</NavLink>
+            <NavLink href={NAV_PAGES.noticias} className="mn-page">{t.nav[7]}</NavLink>
+            <NavLink href={NAV_PAGES.contacto} className="mn-page">{t.nav[6]}</NavLink>
+          </div>
           <NavLink href={NAV_PAGES.reservas} className="mobile-cta">{t.cta_nav} →</NavLink>
           <div className="mn-contacts">
             <a href="https://wa.me/34620316370" target="_blank" rel="noopener">
