@@ -16787,83 +16787,82 @@ img[src*="apt-vt-gallery-"] {
    ============================================================ */
 .ag-calendar { margin: 24px 0 28px; }
 .ag-calendar .ag-h3 { margin-bottom: 4px; }
-.ag-calendar-grid {
+
+/* Calendario de eventos · cards horizontales wrap (antes 12 columnas
+   apiladas verticalmente, demasiado largo). Cada evento es una card
+   independiente; la grid auto-fit pone las que quepan por fila. */
+.ag-cal-cards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 10px;
   margin-top: 14px;
 }
-@media (max-width: 900px) { .ag-calendar-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 540px) { .ag-calendar-grid { grid-template-columns: 1fr; } }
-.ag-cal-month {
-  background: rgba(255, 251, 244, 0.6);
+.ag-cal-card {
+  background: rgba(255, 251, 244, 0.7);
   border: 1px solid rgba(61,26,53,.10);
-  border-radius: 6px;
-  padding: 10px 12px;
+  border-left: 3px solid var(--vt);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 12px 11px;
   display: flex;
   flex-direction: column;
+  gap: 4px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.ag-cal-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(61,26,53,.08);
+}
+.ag-cal-card[data-region="murcia"] { border-left-color: var(--vs); }
+.ag-cal-card.is-current {
+  background: rgba(232, 194, 107, 0.14);
+  border-color: var(--sol);
+}
+.ag-cal-card.is-star { border-left-width: 5px; }
+.ag-cal-card-head {
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
-.ag-cal-month.is-current {
-  border-color: var(--sol);
-  border-width: 2px;
-  background: rgba(232, 194, 107, 0.12);
-}
-.ag-cal-month.is-empty {
-  opacity: 0.45;
-}
-.ag-cal-month-head {
-  display: flex;
-  align-items: baseline;
-  gap: 6px;
-}
-.ag-cal-month-num {
-  font-size: 11px;
+.ag-cal-card-month {
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--ink-soft);
-  font-variant-numeric: tabular-nums;
+  letter-spacing: .08em;
+  color: #fff;
+  background: var(--vt);
+  padding: 2px 7px;
+  border-radius: 3px;
 }
-.ag-cal-month-name {
+.ag-cal-card[data-region="murcia"] .ag-cal-card-month { background: var(--vs); color: #3D1A35; }
+.ag-cal-card-when {
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  letter-spacing: .02em;
+  flex: 1 1 0;
+  min-width: 0;
+}
+.ag-cal-card-star {
+  color: var(--sol);
+  font-size: 13px;
+  line-height: 1;
+}
+.ag-cal-card-name {
+  margin: 2px 0 0;
+  font-family: var(--serif);
   font-size: 14px;
   font-weight: 600;
-  color: var(--ink);
-  text-transform: capitalize;
+  color: var(--ber-dk);
+  line-height: 1.25;
 }
-.ag-cal-month-count {
-  margin-left: auto;
+.ag-cal-card-place {
   font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  padding: 1px 6px;
-  background: var(--vt);
-  color: #fff;
-  border-radius: 9px;
-}
-.ag-cal-events { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.ag-cal-event {
-  padding: 8px 10px;
-  border-left: 3px solid var(--vt);
-  background: rgba(255, 255, 255, 0.55);
-  border-radius: 0 4px 4px 0;
-}
-.ag-cal-event-name {
-  font-weight: 600;
-  font-size: 12.5px;
-  color: var(--ink);
-}
-.ag-cal-event-meta {
-  font-size: 11px;
-  color: var(--ink-soft);
-  margin: 2px 0 4px;
-}
-.ag-cal-event-place { font-style: italic; }
-.ag-cal-event-dot { margin: 0 4px; }
-.ag-cal-event-desc { font-size: 11.5px; color: var(--ink-soft); line-height: 1.4; }
-.ag-cal-empty {
-  font-size: 12px;
-  color: var(--ink-soft);
   font-style: italic;
+  color: var(--ink-soft);
+}
+.ag-cal-card-desc {
+  margin: 4px 0 0;
+  font-size: 11.5px;
+  color: var(--ink);
+  line-height: 1.4;
 }
 
 /* ============================================================

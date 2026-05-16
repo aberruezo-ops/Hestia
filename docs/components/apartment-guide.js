@@ -2237,6 +2237,84 @@ const PLACES = [
   lat: 37.5970,
   lng: -1.3170
 }, {
+  id: 't-murcia',
+  name: 'Murcia capital',
+  desc: 'Capital de la Región a 1 h 50 min. Catedral barroca, casino del s. XIX, jardines y la huerta más fértil de Europa. Cuna del Bando de la Huerta.',
+  best: 'Catedral de Santa María (fachada barroca + torre con vistas), Casino de Murcia (s. XIX, joya ecléctica), Real Casino, Museo Salzillo (imaginería barroca), Plaza de las Flores, Plaza Cardenal Belluga.',
+  tip: 'En Plaza de las Flores y Plaza de San Juan, todas las terrazas sirven marineras y matrimonios. Pide siempre una caña + tapa por 2 €.',
+  events: [{
+    name: 'Bando de la Huerta',
+    when: 'martes tras Semana Santa',
+    d: '⭐ Fiesta de Interés Turístico Internacional. La huerta entera "invade" la ciudad: peñas en traje regional, paellas en la calle, música y baile desde el amanecer.'
+  }, {
+    name: 'Entierro de la Sardina',
+    when: 'sábado tras Semana Santa',
+    d: '⭐ Fiesta de Interés Turístico Internacional. Cabalgata nocturna mitológica con carrozas y juguetes lanzados al público. Cierra las Fiestas de Primavera.'
+  }, {
+    name: 'Semana Santa de Murcia',
+    when: 'marzo o abril',
+    d: 'Fiesta de Interés Turístico Internacional. Procesiones con imaginería barroca de Salzillo — tallas del s. XVIII únicas en España.'
+  }, {
+    name: 'Feria de Septiembre',
+    when: 'primera semana de septiembre',
+    d: 'Feria patronal con conciertos, mercado medieval, fuegos artificiales y feria taurina.'
+  }],
+  cat: 'town',
+  lat: 37.9836,
+  lng: -1.1280,
+  featured: true
+}, {
+  id: 't-caravaca',
+  name: 'Caravaca de la Cruz (Murcia)',
+  desc: 'Ciudad Santa — una de las cinco del mundo cristiano con jubileo perpetuo cada 7 años. A 2 h 15 min, sierras del noroeste murciano.',
+  best: 'Real Basílica de la Vera Cruz (s. XVII, con la reliquia de la Vera Cruz), Castillo de Caravaca, Museo de la Fiesta, casco antiguo medieval.',
+  tip: 'El Año Jubilar (cada 7 años: próximo 2024 y luego 2031) atrae miles de peregrinos. Fuera de Año Jubilar, mucho más tranquila.',
+  events: [{
+    name: 'Caballos del Vino',
+    when: '1-3 de mayo',
+    d: '⭐ Patrimonio Inmaterial de la Humanidad UNESCO + Fiesta de Interés Turístico Internacional. Caballos enjaezados con sedas bordadas suben al castillo a galope tendido. Único en el mundo.'
+  }, {
+    name: 'Moros y Cristianos de Caravaca',
+    when: '1-5 de mayo',
+    d: 'Recreación histórica con desfiles, embajadas y la conquista cristiana del castillo. Coincide con Caballos del Vino.'
+  }],
+  cat: 'town',
+  lat: 38.1083,
+  lng: -1.8617,
+  featured: true
+}, {
+  id: 't-san-pedro',
+  name: 'San Pedro del Pinatar (Murcia)',
+  desc: 'Pueblo costero del Mar Menor a 1 h 20 min. Salinas, baños de lodo terapéuticos y el sabor del caldero murciano.',
+  best: 'Salinas y arenales de San Pedro (parque regional, flamencos), playas de Lo Pagán, baños de lodo (terapéuticos, gratuitos), puerto pesquero.',
+  tip: 'Los baños de lodo en las charcas de Las Salinas son una experiencia única — embárrate, deja secar al sol y enjuaga en el mar.',
+  events: [{
+    name: 'Fiestas patronales del Carmen',
+    when: '16 de julio',
+    d: 'Procesión marinera de la Virgen del Carmen con flota pesquera engalanada saliendo del puerto.'
+  }, {
+    name: 'Festival Internacional de Cante de las Minas',
+    when: 'primera semana de agosto',
+    d: 'En La Unión (a 15 min), pero la zona se vuelca. Cante flamenco minero — el más importante del mundo.'
+  }],
+  cat: 'town',
+  lat: 37.8200,
+  lng: -0.7800
+}, {
+  id: 't-yecla',
+  name: 'Yecla (Murcia)',
+  desc: 'Pueblo del interior vinícola murciano a 2 h 40 min. Capital del vino DOP Yecla (monastrell). Conjunto histórico de iglesias barrocas.',
+  best: 'Basílica de la Purísima Concepción, Iglesia Vieja, Museo del Vino, bodegas DOP Yecla (Castaño, Barahonda).',
+  tip: 'Combina Yecla con Jumilla (a 30 min) para una ruta del vino monastrell murciano — los tintos más potentes y golosos del Sureste.',
+  events: [{
+    name: 'Moros y Cristianos de Yecla',
+    when: '5-10 de diciembre',
+    d: 'Fiesta de Interés Turístico Nacional. La fiesta más importante de Yecla — desfiles, embajadas, fuegos y "Bajada de la Virgen" desde el santuario.'
+  }],
+  cat: 'town',
+  lat: 38.6125,
+  lng: -1.1170
+}, {
   id: 't-cuevas-velez',
   name: 'Cuevas de los Letreros (Vélez-Blanco)',
   desc: 'Abrigo rupestre con pinturas neolíticas. Aquí se descubrió el Indalo, símbolo de Almería.',
@@ -3946,7 +4024,8 @@ function monthIndexFromWhen(when) {
 const EventsCalendar = ({
   lang
 }) => {
-  // Aplana todos los eventos con referencia al lugar de origen
+  // Aplana todos los eventos con referencia al lugar de origen y
+  // los ordena cronológicamente por mes detectado.
   const all = [];
   PLACES.forEach(p => {
     if (Array.isArray(p.events)) {
@@ -3962,59 +4041,48 @@ const EventsCalendar = ({
     }
   });
   if (all.length === 0) return null;
-  // Agrupa por mes
-  const byMonth = Array.from({
-    length: 12
-  }, () => []);
-  all.forEach(e => byMonth[e.monthIdx].push(e));
+  all.sort((a, b) => a.monthIdx - b.monthIdx);
   const today = new Date();
   const currentMonth = today.getMonth();
   const MONTHS = lang === 'es' ? MONTHS_ES : MONTHS_EN;
+  // Etiqueta el origen del evento (almería · murcia · regional)
+  // para que el chip de la card use color y texto adecuados.
+  const regionOf = place => {
+    if (/Murcia/i.test(place)) return 'murcia';
+    return 'almeria';
+  };
   return /*#__PURE__*/React.createElement("div", {
     className: "ag-calendar"
   }, /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"
   }, lang === 'es' ? 'Eventos y fiestas patronales · año a vista de pájaro' : 'Events & patron-saint festivals · year at a glance'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, lang === 'es' ? 'Calendario consolidado de fiestas y eventos de los pueblos del entorno. Si vienes en estas fechas, vale la pena coincidir.' : 'Consolidated calendar of festivals and events from the surrounding villages. If you visit on these dates, it is worth timing your trip with them.'), /*#__PURE__*/React.createElement("div", {
-    className: "ag-calendar-grid"
-  }, MONTHS.map((mname, mi) => {
-    const evs = byMonth[mi];
-    const isCurrent = mi === currentMonth;
-    const isEmpty = evs.length === 0;
-    return /*#__PURE__*/React.createElement("div", {
-      key: mi,
-      className: `ag-cal-month${isCurrent ? ' is-current' : ''}${isEmpty ? ' is-empty' : ''}`,
-      "data-month": mname
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "ag-cal-month-head"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "ag-cal-month-num"
-    }, String(mi + 1).padStart(2, '0')), /*#__PURE__*/React.createElement("span", {
-      className: "ag-cal-month-name"
-    }, mname.charAt(0).toUpperCase() + mname.slice(1)), evs.length > 0 && /*#__PURE__*/React.createElement("span", {
-      className: "ag-cal-month-count"
-    }, evs.length)), evs.length > 0 ? /*#__PURE__*/React.createElement("ul", {
-      className: "ag-cal-events"
-    }, evs.map((e, i) => /*#__PURE__*/React.createElement("li", {
+  }, lang === 'es' ? 'Calendario consolidado de fiestas y eventos de los pueblos del entorno (Almería + Murcia). Si vienes en estas fechas, vale la pena coincidir.' : 'Consolidated calendar of festivals and events from the surrounding villages (Almería + Murcia). If you visit on these dates, it is worth timing your trip with them.'), /*#__PURE__*/React.createElement("div", {
+    className: "ag-cal-cards"
+  }, all.map((e, i) => {
+    const isCurrent = e.monthIdx === currentMonth;
+    const isStar = /⭐/.test(e.d || '');
+    const region = regionOf(e.place);
+    return /*#__PURE__*/React.createElement("article", {
       key: i,
-      className: "ag-cal-event"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "ag-cal-event-name"
-    }, e.name), /*#__PURE__*/React.createElement("div", {
-      className: "ag-cal-event-meta"
+      className: `ag-cal-card${isCurrent ? ' is-current' : ''}${isStar ? ' is-star' : ''}`,
+      "data-region": region
+    }, /*#__PURE__*/React.createElement("header", {
+      className: "ag-cal-card-head"
     }, /*#__PURE__*/React.createElement("span", {
-      className: "ag-cal-event-when"
-    }, e.when), /*#__PURE__*/React.createElement("span", {
-      className: "ag-cal-event-dot",
-      "aria-hidden": "true"
-    }, "\xB7"), /*#__PURE__*/React.createElement("span", {
-      className: "ag-cal-event-place"
-    }, e.place)), e.d && /*#__PURE__*/React.createElement("div", {
-      className: "ag-cal-event-desc"
-    }, e.d)))) : /*#__PURE__*/React.createElement("div", {
-      className: "ag-cal-empty"
-    }, lang === 'es' ? 'Sin eventos destacados' : 'No featured events'));
+      className: "ag-cal-card-month"
+    }, MONTHS[e.monthIdx].slice(0, 3).toUpperCase()), /*#__PURE__*/React.createElement("span", {
+      className: "ag-cal-card-when"
+    }, e.when), isStar && /*#__PURE__*/React.createElement("span", {
+      className: "ag-cal-card-star",
+      title: lang === 'es' ? 'Interés turístico internacional' : 'International tourist interest'
+    }, "\u2605")), /*#__PURE__*/React.createElement("h4", {
+      className: "ag-cal-card-name"
+    }, e.name), /*#__PURE__*/React.createElement("div", {
+      className: "ag-cal-card-place"
+    }, e.place), e.d && /*#__PURE__*/React.createElement("p", {
+      className: "ag-cal-card-desc"
+    }, e.d.replace(/^⭐\s*/, '')));
   })));
 };
 const CatGroup = ({
