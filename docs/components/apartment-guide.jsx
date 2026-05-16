@@ -75,7 +75,7 @@ const SECTION_CATS = {
   sabores:     ['restaurant', 'bar', 'fish', 'super', 'celiac'],
   pueblos:     ['town', 'culture', 'bookshop'],
   'mar-playas':['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
-  actividades: ['activity'],
+  actividades: ['activity', 'sport'],
   mercados:    ['market'],
   movilidad:   ['fuel', 'ev-charge'],
 };
@@ -98,6 +98,7 @@ const CATEGORIES = [
   { id: 'pharmacy',    es: 'Farmacias',              en: 'Pharmacies',            color: 'var(--alb)',     icon: '💊' },
   { id: 'health',      es: 'Centros de salud',       en: 'Health centres',        color: 'var(--err)',     icon: '⚕️' },
   { id: 'activity',    es: 'Actividades',            en: 'Activities',            color: 'var(--vs2)',     icon: '⛵' },
+  { id: 'sport',       es: 'Deporte y aventura',     en: 'Sports & adventure',    color: 'var(--err)',     icon: '⚡' },
   { id: 'town',        es: 'Pueblos',                en: 'Towns',                 color: 'var(--vt-dk)',   icon: '🏘️' },
   { id: 'culture',     es: 'Lugares de interés',     en: 'Places of interest',    color: 'var(--sol-h)',   icon: '🏛️' },
   { id: 'bookshop',    es: 'Librerías',              en: 'Bookshops',             color: 'var(--sie)',     icon: '📚' },
@@ -253,24 +254,128 @@ const PLACES = [
   { id: 'm-mercadillos',  name: 'Calendario semanal completo', desc: 'Todos los mercadillos de Almería por día y municipio.', cat: 'market', url: 'https://www.mercadillosemanal.com/en.almeria', lat: 37.2491, lng: -1.8639 },
   { id: 'm-artesanal-mojacar', name: 'Mercado artesanal de Mojácar Pueblo (verano)', desc: 'Plaza Nueva al atardecer en julio y agosto. Bisutería, cuero, cerámica.', best: 'artesanía local — perfecto para regalos.', tip: 'Empieza sobre las 20:00, cuando baja el sol.', cat: 'market', lat: 37.1380, lng: -1.8525 },
 
-  // Actividades
-  { id: 'aquavera',       name: 'Parque acuático Aquavera',  cat: 'activity', url: 'https://www.aquavera.com/',          lat: 37.2230, lng: -1.7960 },
-  { id: 'lunar-cable',    name: 'Lunar Cable Park',          cat: 'activity', url: 'https://lunarcablepark.com/',         lat: 37.3970, lng: -1.7320 },
-  { id: 'rumboalcabo',    name: 'Paseos en barco · Rumbo al Cabo', cat: 'activity', url: 'http://www.rumboalcabo.com/',  lat: 37.1815, lng: -1.8235 },
-  { id: 'caboafondo',     name: 'Paseos en barco · El Cabo a Fondo', cat: 'activity', url: 'https://elcaboafondo.es',     lat: 36.7605, lng: -2.1075 },
-  { id: 'cabogata',       name: 'Paseos en barco · Cabo de Gata', cat: 'activity', url: 'https://www.cabogataalmeria.com',lat: 36.7605, lng: -2.1075 },
-  { id: 'buceo-tortuga',  name: 'Buceo · Tortuga',           cat: 'activity', url: 'https://www.buceotortuga.com',        lat: 37.2470, lng: -1.7660 },
-  { id: 'buceo-villaricos', name: 'Buceo · Villaricos Sub',  cat: 'activity', url: 'https://www.villaricosub.com',        lat: 37.2470, lng: -1.7660 },
-  { id: 'buceo-mojacar',  name: 'Buceo · Mojácar',           cat: 'activity', url: 'https://www.buceomojacar.com',        lat: 37.1380, lng: -1.8520 },
-  { id: 'mojacar-fiesta', name: 'Mojácar Fiesta · actividades', cat: 'activity', url: 'https://mojacarfiesta.com/actividades/', lat: 37.1377, lng: -1.8523 },
-  { id: 'aquamundo',      name: 'Motos de agua · Aquamundo (sin titulación)', cat: 'activity', url: 'https://www.aquamundo.es', lat: 37.2300, lng: -1.7960 },
-  { id: 'karting',        name: 'Karting Garrucha',          cat: 'activity', url: 'https://kartinggarrucha.es/',         lat: 37.1810, lng: -1.8230 },
-  { id: 'biplaza',        name: 'Vuelo en biplaza (Vera-Palomares)', cat: 'activity', url: 'https://aeronomadas.com/es/vuelos-biplaza', lat: 37.2150, lng: -1.7720 },
-  { id: 'turismo-ind',    name: 'Turismo industrial y científico', cat: 'activity', url: 'https://myalmeria.com/turismo-industrial-y-cientifico-en-almeria', lat: 36.8400, lng: -2.4600 },
-  { id: 'vera-surfing',   name: 'Vera Surfing', cat: 'activity', url: 'https://cambiatugesto.vera.es/turismo/index.php?page=directorio_view&id=1498', lat: 37.2240, lng: -1.7950 },
-  { id: 'vela-almeria',   name: 'Vela Almería', cat: 'activity', url: 'https://www.velaalmeria.es', lat: 36.8350, lng: -2.4630 },
-  { id: 'jetski-island',  name: 'Motos de agua · Carboneras (Desert Island)', cat: 'activity', url: 'https://instagram.com/desertislandjetskiclub', lat: 36.9990, lng: -1.9010 },
-  { id: 'buggy',          name: 'Buggy en el desierto', cat: 'activity', url: 'https://buggy-almeria.com/', lat: 37.0540, lng: -2.3880 },
+  // Actividades — más tranquilas, aptas para todas las edades.
+  { id: 'aquavera',       name: 'Parque acuático Aquavera',
+    desc: 'Toboganes, piscinas y zona infantil. Plan de día completo a 10 min en coche.',
+    level: 'Fácil · todas las edades · zona infantil supervisada',
+    cat: 'activity', url: 'https://www.aquavera.com/', lat: 37.2230, lng: -1.7960, featured: true, featuredOrder: 1 },
+  { id: 'rumboalcabo',    name: 'Paseos en barco · Rumbo al Cabo',
+    desc: 'Salidas desde Garrucha con visita a calas accesibles solo por mar. Embarcación cómoda.',
+    level: 'Fácil · todas las edades · chalecos a bordo',
+    cat: 'activity', url: 'http://www.rumboalcabo.com/', lat: 37.1815, lng: -1.8235 },
+  { id: 'caboafondo',     name: 'Paseos en barco · El Cabo a Fondo',
+    desc: 'Excursiones marítimas por Cabo de Gata desde San José. Avistamiento de delfines algunos días.',
+    level: 'Fácil · todas las edades',
+    cat: 'activity', url: 'https://elcaboafondo.es', lat: 36.7605, lng: -2.1075 },
+  { id: 'cabogata',       name: 'Paseos en barco · Cabo de Gata',
+    desc: 'Travesía por las calas vírgenes del parque natural.',
+    level: 'Fácil · todas las edades',
+    cat: 'activity', url: 'https://www.cabogataalmeria.com', lat: 36.7605, lng: -2.1075 },
+  { id: 'mojacar-fiesta', name: 'Mojácar Fiesta · actividades',
+    desc: 'Catálogo amplio de planes en Mojácar (kayak, paddle surf, paseos, alquiler de barcos).',
+    level: 'Variable · cada actividad indica su exigencia',
+    cat: 'activity', url: 'https://mojacarfiesta.com/actividades/', lat: 37.1377, lng: -1.8523 },
+  { id: 'biplaza',        name: 'Vuelo en biplaza (Vera-Palomares)',
+    desc: 'Vuelos en ultraligero biplaza desde el aeródromo de Palomares. Vistas de costa, salinas y desierto.',
+    level: 'Fácil · 8+ años · sin movilidad reducida (acceso al avión)',
+    cat: 'activity', url: 'https://aeronomadas.com/es/vuelos-biplaza', lat: 37.2150, lng: -1.7720 },
+  { id: 'turismo-ind',    name: 'Turismo industrial y científico',
+    desc: 'Visitas guiadas a invernaderos, plantas solares y observatorios de Almería.',
+    level: 'Fácil · todas las edades',
+    cat: 'activity', url: 'https://myalmeria.com/turismo-industrial-y-cientifico-en-almeria', lat: 36.8400, lng: -2.4600 },
+
+  // ==========================================================
+  // DEPORTE Y AVENTURA — actividades más exigentes con prerrequisitos.
+  // Cada una incluye dificultad, edad mínima y notas de aptitud
+  // (saber nadar, movilidad, equipo). Verificadas mayo 2026 vía
+  // Garrucha Adventure Sports, Mojácar Tour, Deep Emotion,
+  // Wikiloc y la red de senderos de Almería.
+  // ==========================================================
+  { id: 'lunar-cable',    name: 'Lunar Cable Park (wakeboard · ski náutico)',
+    desc: 'El primer cable park de España, en San Pedro del Pinatar. Cable de 800 m sobre laguna salada — sin barco, sin olas. Para empezar wakeboard de cero o entrenarse en serio. Distancia: ~50 min en coche por la AP-7. Pase de 2 h 25 € · día completo 65 €. Chiringuito y solárium en la orilla.',
+    specialty: 'Sesiones de iniciación con instructor (tabla, casco y chaleco incluidos). Tiene cable principal y un cable infantil más bajo y lento.',
+    level: 'Medio · 8+ años en cable infantil · 12+ años en cable principal · Saber nadar bien · Forma física básica',
+    tip: 'Reserva online con 24 h. Llévate crema solar, gorra y agua — el sol pega fuerte sobre la laguna. La primera caída es a los 5 minutos; al final del día acabas tirado en la hamaca con muy buena cara.',
+    cat: 'sport', url: 'https://lunarcablepark.com/', lat: 37.7980, lng: -0.7790, featured: true, featuredOrder: 1, rating: 4.7 },
+  { id: 'sport-garrucha-adventure', name: 'Garrucha Adventure Sports · pesca y alquiler de barcos',
+    desc: 'Empresa especializada en pesca recreativa con embarcación Menorquina 500 (4 personas). Salidas desde el puerto de Garrucha. También alquilan barcos sin patrón y con patrón. Distancia: ~10 min en coche.',
+    specialty: 'Pesca privada de 4 h o día completo · alquiler de barcos por horas o jornada · paseos guiados.',
+    level: 'Fácil · 6+ años con adulto · No apto si te marea el barco con facilidad',
+    tip: 'Reserva con días de antelación, sobre todo en julio-agosto. Si vais 4, sale más a cuenta el privado que el compartido. Patrón profesional incluido en el privado.',
+    cat: 'sport', url: 'https://garruchaadventuresports.com/', lat: 37.1810, lng: -1.8210, featured: true, featuredOrder: 2, rating: 4.8 },
+  { id: 'sport-mojacar-tour-snorkel', name: 'Snorkel Cabo de Gata · Mojácar Tour',
+    desc: 'Excursión guiada en barco a las calas vírgenes de Cabo de Gata (Cala de Enmedio, San Pedro, Plomo). Recogida en Vera Playa o Garrucha. Día completo 9:00-18:00. Equipo y picnic incluidos.',
+    specialty: 'Para por Mesa Roldán (escenario de Juego de Tronos) y permite snorkel en aguas cristalinas con peces y posidonia.',
+    level: 'Fácil-Medio · 8+ años · Saber nadar · Hacer snorkel básico',
+    tip: 'Llévate calzado de agua o sandalias antideslizantes — algunas calas tienen piedras al entrar. La crema solar tiene que ser biodegradable (Cabo de Gata es parque protegido).',
+    cat: 'sport', url: 'https://mojacartour.com/', lat: 37.1377, lng: -1.8523, featured: true, featuredOrder: 3 },
+  { id: 'sport-deep-emotion', name: 'Snorkel y buceo · Deep Emotion (Mojácar)',
+    desc: 'Centro de buceo en Mojácar con salidas diarias a Cabo de Gata. Snorkel guiado 60 €/persona (incluye traslado, equipo, guía, fotos y picnic). Buceo PADI desde bautismo a Open Water.',
+    specialty: 'Inmersiones de 2 h con guía profesional. Bautismo de buceo para no certificados.',
+    level: 'Snorkel: Medio · 8+ años · Saber nadar. · Buceo: Alto · 10+ años · Examen médico simple',
+    tip: 'Salida temprana (8:00), pero compensa: el mar está plano y la luz para fotos es perfecta.',
+    cat: 'sport', url: 'https://deepemotiondiving.com/', lat: 37.1380, lng: -1.8520 },
+  { id: 'buceo-tortuga',  name: 'Buceo · Tortuga (Vera Playa)',
+    desc: 'Centro de buceo cercano, con bautismos y cursos PADI completos.',
+    level: 'Bautismo: Medio · 10+ años · Buena salud cardiopulmonar. · Cursos PADI: Alto · 12+ años con autorización',
+    cat: 'sport', url: 'https://www.buceotortuga.com', lat: 37.2470, lng: -1.7660 },
+  { id: 'buceo-villaricos', name: 'Buceo · Villaricos Sub',
+    desc: 'Inmersiones en los pecios y arrecifes de Villaricos. Equipo completo en alquiler.',
+    level: 'Medio-Alto · titulación PADI Open Water o equivalente · 14+ años',
+    cat: 'sport', url: 'https://www.villaricosub.com', lat: 37.2470, lng: -1.7660 },
+  { id: 'buceo-mojacar',  name: 'Buceo · Mojácar',
+    desc: 'Centro tradicional de buceo en Mojácar.',
+    level: 'Bautismo: Medio · 10+ años. · Inmersiones: depende del nivel certificado',
+    cat: 'sport', url: 'https://www.buceomojacar.com', lat: 37.1380, lng: -1.8520 },
+  { id: 'aquamundo',      name: 'Motos de agua · Aquamundo (sin titulación)',
+    desc: 'Alquiler de motos de agua en Vera Playa, sin necesidad de licencia. Sesiones de 15-30 min en zona acotada.',
+    level: 'Medio · 16+ años (carnet de identidad obligatorio) · Saber nadar · No apto embarazadas ni problemas de espalda',
+    tip: 'Casco y chaleco incluidos. Lleva ropa que se pueda mojar — terminas calado.',
+    cat: 'sport', url: 'https://www.aquamundo.es', lat: 37.2300, lng: -1.7960 },
+  { id: 'jetski-island',  name: 'Motos de agua · Desert Island (Carboneras)',
+    desc: 'Salidas guiadas en moto de agua por la costa de Cabo de Gata desde Carboneras. Recorridos hasta calas a las que no llegan los barcos.',
+    level: 'Medio-Alto · 18+ años con DNI · Saber nadar · No apto embarazadas',
+    tip: 'Distancia: 50 min en coche desde Vera Playa. Reserva por Instagram.',
+    cat: 'sport', url: 'https://instagram.com/desertislandjetskiclub', lat: 36.9990, lng: -1.9010 },
+  { id: 'karting',        name: 'Karting Garrucha',
+    desc: 'Pista de karting outdoor en Garrucha. Karts adultos y karts infantiles separados. Distancia: ~10 min en coche.',
+    level: 'Fácil-Medio · adultos en kart grande · niños 8+ años con karts pequeños · No apto problemas cervicales',
+    cat: 'sport', url: 'https://kartinggarrucha.es/', lat: 37.1810, lng: -1.8230 },
+  { id: 'buggy',          name: 'Buggy en el desierto de Tabernas',
+    desc: 'Rutas en buggy 4×4 por el desierto de Tabernas (escenario de los spaghetti westerns). Ruta corta 1 h o larga 3 h con paradas. Distancia: ~1 h en coche.',
+    level: 'Medio · 18+ años para conducir · 6+ años de copiloto con adulto · No apto embarazadas ni problemas de espalda · Polvo y vibración alta',
+    tip: 'Llévate gafas de sol, pañuelo o buff para la boca y agua. Acabas blanco de polvo — es parte de la experiencia.',
+    cat: 'sport', url: 'https://buggy-almeria.com/', lat: 37.0540, lng: -2.3880 },
+  { id: 'vera-surfing',   name: 'Vera Surfing · clases de surf',
+    desc: 'Clases de surf y SUP en la propia Playa de Vera. Material en alquiler.',
+    level: 'Fácil · 6+ años con instructor · Saber nadar',
+    cat: 'sport', url: 'https://cambiatugesto.vera.es/turismo/index.php?page=directorio_view&id=1498', lat: 37.2240, lng: -1.7950 },
+  { id: 'vela-almeria',   name: 'Vela Almería · iniciación a la vela',
+    desc: 'Cursos de iniciación a la vela en el puerto de Almería. Salidas en velero ligero y crucero.',
+    level: 'Medio · 10+ años con autorización · Saber nadar',
+    cat: 'sport', url: 'https://www.velaalmeria.es', lat: 36.8350, lng: -2.4630 },
+
+  // Trekking — rutas verificadas en wikiloc / senderosdealmeria.es
+  { id: 'trek-la-mena',   name: 'Sendero La Mena – Macenas (PR-A 96)',
+    desc: 'Ruta lineal junto al mar entre los acantilados de Mojácar y la playa de Macenas. Pasa por la Torre del Pirulico (s.XVI) y miradores.',
+    specialty: '~6 km · 2 h · desnivel mínimo · señalizada PR-A 96.',
+    level: 'Fácil · todas las edades (con cuidado en tramos cerca del acantilado) · Apta para mayores con buena movilidad',
+    tip: 'Mejor por la mañana o al atardecer — sin sombra. Lleva 1,5 L agua/persona en verano.',
+    cat: 'sport', url: 'https://senderosdealmeria.es/otras-zonas/la-mena-macenas-pr-a-96/', lat: 37.1130, lng: -1.8500, featured: true, featuredOrder: 5 },
+  { id: 'trek-marina-mojacar', name: 'Marina de la Torre → Mojácar Pueblo',
+    desc: 'Subida desde la costa hasta el casco antiguo de Mojácar. ~7 km ida y vuelta, baja dificultad.',
+    level: 'Fácil-Medio · 10+ años · Subida sostenida pero corta',
+    tip: 'Combínalo con desayuno o comida en la Plaza Nueva de Mojácar arriba.',
+    cat: 'sport', url: 'https://www.google.com/maps/search/?api=1&query=Marina+de+la+Torre+Mojacar+sendero', lat: 37.1100, lng: -1.8395 },
+  { id: 'trek-rambla-sopalmo', name: 'Rambla del Sopalmo',
+    desc: 'Sendero por la rambla del Sopalmo (Sierra Cabrera). Descenso suave de ~90 min.',
+    level: 'Fácil · todas las edades · Calzado cerrado',
+    cat: 'sport', url: 'https://www.google.com/maps/search/?api=1&query=Rambla+Sopalmo+Sierra+Cabrera', lat: 37.1400, lng: -1.8800 },
+  { id: 'trek-jali',      name: 'El Jalí – Sierra Cabrera (Turre)',
+    desc: 'Ruta circular exigente con ascenso pronunciado y vistas del valle del Aguas y la Sierra Cabrera. ~12 km · 4 h · desnivel ~700 m.',
+    level: 'Alto · 14+ años con experiencia · Buena forma física · No apto principiantes ni con problemas de rodilla',
+    tip: 'Sólo en otoño-invierno-primavera: en verano hace demasiado calor para subir. Lleva 2 L agua, comida y bastones.',
+    cat: 'sport', url: 'https://www.wikiloc.com/hiking-trails/cortijo-cabrera-turre-mojacar-6347444', lat: 37.1550, lng: -1.8700 },
   { id: 'club-nautico',   name: 'Club Náutico Almanzora', cat: 'activity', url: 'https://maps.app.goo.gl/kgT5rYortJ2s5oPN8', lat: 37.2530, lng: -1.7720 },
   { id: 'bicis',          name: 'Alquiler de bicicletas (Vera Playa)', cat: 'activity', url: 'https://maps.app.goo.gl/yPqqBXpwgcZyu6568', lat: 37.2270, lng: -1.7965 },
   { id: 'bicis-villaricos',name: 'Bicis Villaricos', desc: 'Tel. 627 139 092', cat: 'activity', lat: 37.2470, lng: -1.7660 },
@@ -1227,7 +1332,7 @@ const GuideMap = ({ lang, apt }) => {
 const CompactPlaceItem = ({ p, lang }) => {
   const [open, setOpen] = React.useState(false);
   const hasDetails = p.desc || p.specialty || p.best || p.tip ||
-                     p.services || p.access ||
+                     p.services || p.access || p.level ||
                      (Array.isArray(p.events) && p.events.length > 0);
   const mapHref = p.url
     || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Almería')}`;
@@ -1287,6 +1392,12 @@ const CompactPlaceItem = ({ p, lang }) => {
           )}
           {p.services && <span className="ag-place-services">{p.services}</span>}
           {p.access && <span className="ag-place-access">{p.access}</span>}
+          {p.level && (
+            <span className="ag-place-level">
+              <span className="ag-place-level-tag">{lang === 'es' ? 'Dificultad:' : 'Level:'}</span>
+              {' '}{p.level}
+            </span>
+          )}
           <a className="ag-place-link" href={mapHref} target="_blank" rel="noopener">
             {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
           </a>
@@ -1364,6 +1475,12 @@ const CatGroup = ({ cat, places, lang }) => {
         {p.access && (
           <span className="ag-place-access" aria-label={lang === 'es' ? 'Acceso' : 'Access'}>
             {p.access}
+          </span>
+        )}
+        {p.level && (
+          <span className="ag-place-level">
+            <span className="ag-place-level-tag">{lang === 'es' ? 'Dificultad:' : 'Level:'}</span>
+            {' '}{p.level}
           </span>
         )}
         <a className="ag-place-link" href={mapHref} target="_blank" rel="noopener">
@@ -1632,6 +1749,59 @@ const DAY_PLANS = [
   },
 
   // ── DÍA COMPLETO ──────────────────────────────────────────────
+  {
+    id:'plan-lunar-cable',
+    type:'fullday', audience:'both',
+    title_es:'Día en Lunar Cable Park · iniciación al wakeboard',
+    title_en:'A day at Lunar Cable Park · wakeboarding initiation',
+    start:'8:30', end:'19:00',
+    tags_es:['deporte','aventura','wakeboard','laguna'],
+    tags_en:['sport','adventure','wakeboard','lagoon'],
+    steps:[
+      { t:'8:30',  es:'Salida hacia San Pedro del Pinatar',
+                   en:'Drive to San Pedro del Pinatar',
+                   d_es:'~50 min por la AP-7 dirección Murcia. Salida 798 (San Pedro del Pinatar).',
+                   d_en:'~50 min on the AP-7 toward Murcia. Exit 798 (San Pedro del Pinatar).',
+                   km:65, gmaps:'https://www.google.com/maps/search/?api=1&query=Lunar+Cable+Park+San+Pedro+Pinatar' },
+      { t:'9:30',  es:'Llegada a Lunar Cable Park y check-in',
+                   en:'Arrive at Lunar Cable Park and check in',
+                   d_es:'Pase de 2 h (25 €) o día completo (65 €). Equipo incluido (tabla, casco, chaleco). Si vas con niños, pide cable infantil.',
+                   d_en:'2 h pass (€25) or full day (€65). Gear included (board, helmet, vest). If with children, ask for the kids cable.',
+                   km:0, gmaps:'https://www.google.com/maps/search/?api=1&query=Lunar+Cable+Park' },
+      { t:'10:00', es:'Briefing de seguridad y primeros intentos en cable infantil',
+                   en:'Safety briefing and first attempts on the kids cable',
+                   d_es:'15 min de explicación + práctica en el cable bajo. Las primeras caídas son a los 5 minutos — es parte del aprendizaje.',
+                   d_en:'15 min briefing + practice on the low cable. First wipeouts come within 5 min — part of learning.',
+                   km:0 },
+      { t:'12:00', es:'Sesión en cable principal (800 m)',
+                   en:'Session on the main 800 m cable',
+                   d_es:'Cuando consigues levantarte, pasas al cable grande. Más velocidad, vueltas completas a la laguna.',
+                   d_en:'Once you can stand up, switch to the main cable. More speed, full laps around the lagoon.',
+                   km:0 },
+      { t:'14:00', es:'Comida en chiringuito junto a la laguna',
+                   en:'Lunch at the lagoon-side chiringuito',
+                   d_es:'Picoteo, ensalada, hamburguesa, cerveza fría. Hamacas y solárium incluidos en el pase de día.',
+                   d_en:'Tapas, salad, burger, cold beer. Sun loungers and solarium included with day pass.',
+                   km:0 },
+      { t:'15:30', es:'Segunda sesión o descanso en hamaca',
+                   en:'Second session or hammock break',
+                   d_es:'Si compraste pase de día, segunda tanda. Si solo 2 h, ya estás derrotado y feliz — toca relax.',
+                   d_en:'Day pass: second round. 2 h pass: you are done and happy — time to relax.',
+                   km:0 },
+      { t:'17:30', es:'Vuelta hacia Vera Playa',
+                   en:'Drive back to Vera Playa',
+                   d_es:'~50 min. Si te queda energía, parada en San Pedro del Pinatar a comer pescado en el puerto.',
+                   d_en:'~50 min. If you have energy left, stop at San Pedro del Pinatar harbour for fresh fish.',
+                   km:65 },
+      { t:'19:00', es:'Llegada a Hestía. Ducha larga, cerveza en la terraza.',
+                   en:'Back at Hestía. Long shower, beer on the terrace.',
+                   d_es:'Te van a doler músculos que no sabías que tenías. Vale la pena.',
+                   d_en:'You will ache in muscles you did not know you had. Worth it.',
+                   km:0 },
+    ],
+    tip_es:'Reserva online con 24 h, sobre todo julio-agosto. Crema solar resistente al agua factor 50 (el sol se refleja en la laguna y abrasa). Lleva ropa de cambio seca, gorra, gafas de sol con cordón y zapatillas de agua. Edad mínima recomendada: 8 años en cable infantil, 12 años en principal. Saber nadar bien es imprescindible.',
+    tip_en:'Book online 24 h ahead, especially July-August. Waterproof SPF 50 sunscreen (lagoon reflects light hard). Bring dry change of clothes, cap, sunglasses with strap and water shoes. Minimum age: 8 on kids cable, 12 on main. Strong swimming required.',
+  },
   {
     id:'plan-cabo-gata',
     type:'fullday', audience:'both',

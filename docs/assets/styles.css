@@ -10787,6 +10787,25 @@ footer,
   color: var(--ink-soft);
 }
 .ag-place-access { font-style: italic; opacity: .85; }
+.ag-place-level {
+  display: block;
+  margin-top: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--ber-dk);
+  background: rgba(232, 194, 107, 0.18);
+  border-left: 3px solid var(--sol);
+  border-radius: 4px;
+}
+.ag-place-level-tag {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 10.5px;
+  color: var(--ber);
+  margin-right: 4px;
+}
 
 /* ============================================================
    Lugares compactos (no-featured) — solo headline, click para expandir
