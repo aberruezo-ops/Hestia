@@ -4207,12 +4207,12 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
           </p>
 
           <ul className="apt-guide-gate-stats">
-            <li><strong>22</strong> {lang === 'es' ? 'capítulos sobre tu Hestía y el entorno' : 'chapters on your Hestía and the area'}</li>
-            <li><strong>230+</strong> {lang === 'es' ? 'lugares curados: restaurantes, playas, bares, bodegas, mercados, pescaderías…' : 'curated spots: restaurants, beaches, bars, wineries, markets, fishmongers…'}</li>
-            <li><strong>48</strong> {lang === 'es' ? 'planes de día completo' : 'full-day itineraries'}</li>
+            <li>{lang === 'es' ? <><strong>22 capítulos</strong> sobre tu Hestía y el entorno</> : <><strong>22 chapters</strong> on your Hestía and the area</>}</li>
+            <li>{lang === 'es' ? <><strong>230+ lugares curados</strong> — restaurantes, playas, bares, bodegas, mercados, pescaderías…</> : <><strong>230+ curated spots</strong> — restaurants, beaches, bars, wineries, markets, fishmongers…</>}</li>
+            <li>{lang === 'es' ? <><strong>48 planes de día completo</strong> con horarios, rutas y reservas</> : <><strong>48 full-day itineraries</strong> with timing, routes and bookings</>}</li>
             <li>{lang === 'es' ? <><strong>Calendario anual</strong> de fiestas patronales y eventos</> : <><strong>Annual calendar</strong> of festivals and local events</>}</li>
-            <li>{lang === 'es' ? <>Servicios para tenerlo todo a mano: centros de salud, <strong>veterinarios 24 h</strong>, farmacias, fisioterapeutas, <strong>guarderías y residencias para mascotas</strong>…</> : <>Everything within reach: health centres, <strong>24 h vets</strong>, pharmacies, physio clinics, <strong>pet boarding & daycare</strong>…</>}</li>
-            <li>{lang === 'es' ? <>Teléfonos útiles y nuestro contacto directo, <strong>antes, durante y después</strong> de tu estancia</> : <>Useful phones and our direct line, <strong>before, during and after</strong> your stay</>}</li>
+            <li>{lang === 'es' ? <><strong>Servicios a mano</strong> — centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías y residencias para mascotas…</> : <><strong>Everything within reach</strong> — health centres, 24 h vets, pharmacies, physio clinics, pet boarding & daycare…</>}</li>
+            <li>{lang === 'es' ? <><strong>Teléfonos útiles</strong> y nuestro contacto directo antes, durante y después de tu estancia</> : <><strong>Useful phones</strong> and our direct line before, during and after your stay</>}</li>
           </ul>
 
           <p className="apt-guide-gate-foot">
