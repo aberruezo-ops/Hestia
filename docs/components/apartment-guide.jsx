@@ -742,6 +742,13 @@ const GUIDE_SHARED = {
       ],
       sign: 'Con cariño,',
       signer: 'Fran y Alex',
+      whyTitle: '¿Por qué Hestía?',
+      whyParas: [
+        'Hestía no es lujo. Tampoco es un alquiler vacacional al uso. Es nuestro hogar — y queremos que también sea el tuyo durante tu estancia.',
+        'La historia completa (de dónde viene el nombre, por qué empezamos, qué buscamos cuando viajamos nosotros) está contada con detalle en la web.',
+      ],
+      whyLinkLabel: 'Leer la historia completa de Hestía',
+      whyLinkHref: '/porque-hestia.html',
     },
     checkin: {
       title: 'Llegada y salida',
@@ -770,13 +777,7 @@ const GUIDE_SHARED = {
       garbageBody: 'Por normativa municipal, los contenedores de basura y reciclaje están SIEMPRE fuera de la urbanización (no dentro). Te recomendamos aprovechar la salida del día siguiente, o cualquier viaje en coche, para tirarlas de paso. Te agradeceríamos enormemente que no la dejes en los descansillos del edificio ni dentro de Hestía — atrae bichos y el equipo de limpieza no las recoge.',
     },
     name: null,
-    why: {
-      title: '¿Por qué Hestía?',
-      paras: [
-        'Hestía no es lujo. Tampoco es un alquiler vacacional al uso. Es nuestro hogar — y queremos que también sea el tuyo durante tu estancia.',
-        'La historia completa (de dónde viene el nombre, por qué empezamos, qué buscamos cuando viajamos nosotros) está contada con detalle en la web, en la sección "Por qué Hestía" → hestiayourhome.com/porque-hestia',
-      ],
-    },
+    why: null,
     cleaning: {
       title: 'Protocolo de limpieza',
       intro: 'Puedes estar tranquilo. Nuestros protocolos de limpieza garantizan la desinfección y la higiene tanto de las superficies, como de la ropa de hogar.',
@@ -815,6 +816,10 @@ const GUIDE_SHARED = {
           d: 'No colguéis ropa en las barandillas ni en la terraza.' },
         { icon: '🏊', t: 'Respetad las normas de la urbanización',
           d: 'Especialmente el horario de piscina y zonas comunes. El incumplimiento es responsabilidad vuestra.' },
+        { icon: '🚗', t: 'No correr con el coche en la mancomunidad',
+          d: 'La velocidad máxima dentro de la mancomunidad es muy baja. Hay niños, mascotas y peatones — circulad despacio, siempre. Es una norma de la comunidad y de sentido común.' },
+        { icon: '🧹', t: 'No ensuciar ni deteriorar las zonas comunes',
+          d: 'Jardines, piscina, ascensores, pasillos y descansillos: dejadlos como os los encontrasteis. Cualquier desperfecto o suciedad reiterada es responsabilidad del huésped.' },
         { icon: '👙', t: 'Urbanización textil',
           d: 'No están permitidos el naturismo ni el topless en ninguna zona de la urbanización.' },
         { icon: '👨‍👩‍👧', t: 'Menores bajo responsabilidad de sus padres',
@@ -973,15 +978,16 @@ const GUIDE_SHARED = {
       ],
       sign: 'With love,',
       signer: 'Fran & Alex',
+      whyTitle: 'Why Hestía?',
+      whyParas: [
+        'Hestía is not luxury. It is not a standard holiday rental either. It is our home — and we want it to be yours too during your stay.',
+        'The full story (where the name comes from, why we started, what we look for when we travel ourselves) is told in detail on the website.',
+      ],
+      whyLinkLabel: 'Read the full Hestía story',
+      whyLinkHref: '/porque-hestia.html',
     },
     name: null,
-    why: {
-      title: 'Why Hestía?',
-      paras: [
-        'Hestía is not luxury. It is not a standard holiday rental either. It is our home — and we want it to be yours too during your stay.',
-        'The full story (where the name comes from, why we started, what we look for when we travel ourselves) is told in detail on the website, in the "Why Hestía" section → hestiayourhome.com/porque-hestia',
-      ],
-    },
+    why: null,
     cleaning: {
       title: 'Cleaning protocol',
       intro: 'You can rest easy. Our cleaning protocols guarantee the disinfection and hygiene of every surface and all home textiles.',
@@ -1020,6 +1026,10 @@ const GUIDE_SHARED = {
           d: 'Not on railings or terrace edges.' },
         { icon: '🏊', t: 'Respect the community rules',
           d: 'Especially pool hours and shared areas. Breaking those rules is your responsibility.' },
+        { icon: '🚗', t: 'No speeding inside the resort',
+          d: 'Speed limits inside the resort are very low. Children, pets and pedestrians around — drive slowly, always. It is both a community rule and common sense.' },
+        { icon: '🧹', t: 'Do not dirty or damage common areas',
+          d: 'Gardens, pool, lifts, corridors and landings: leave them as you found them. Any repeated mess or damage is the guest\'s responsibility.' },
         { icon: '👙', t: 'Textile community',
           d: 'Naturism and topless are not allowed anywhere in the urbanisation.' },
         { icon: '👨‍👩‍👧', t: 'Minors under their parents\' responsibility',
@@ -3604,6 +3614,16 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             {s.welcome.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
             <p className="ag-sign">{s.welcome.sign}</p>
             <p className="ag-signer">{s.welcome.signer}</p>
+
+            {s.welcome.whyTitle && (
+              <div className="ag-welcome-why">
+                <h3 className="ag-h3">{s.welcome.whyTitle}</h3>
+                {s.welcome.whyParas.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
+                <a className="ag-welcome-why-link" href={s.welcome.whyLinkHref}>
+                  {s.welcome.whyLinkLabel} →
+                </a>
+              </div>
+            )}
           </section>
 
           {s.checkin && (
@@ -3687,14 +3707,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             </div>
           </section>
 
-          <section id="ag-proposito" className="ag-section">
-            <span className="ag-section-num">04</span>
-            <h2 className="ag-h2">{s.why.title}</h2>
-            {s.why.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
-          </section>
-
           <section id="ag-limpieza" className="ag-section">
-            <span className="ag-section-num">05</span>
+            <span className="ag-section-num">04</span>
             <h2 className="ag-h2">{s.cleaning.title}</h2>
             <p className="ag-para">{s.cleaning.intro}</p>
             <p className="ag-note">{s.cleaning.note}</p>
@@ -3706,7 +3720,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {s.rules && (
             <section id="ag-normas" className="ag-section ag-section-rules">
-              <span className="ag-section-num">06</span>
+              <span className="ag-section-num">05</span>
               <h2 className="ag-h2">{s.rules.title}</h2>
               <p className="ag-para">{s.rules.intro}</p>
               <ul className="ag-rules-grid">
@@ -3725,7 +3739,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {a.rooms.map((room, idx) => (
             <section key={room.id} id={`ag-${room.id}`} className={`ag-section ag-room ag-room-${room.id}`}>
-              <span className="ag-section-num">{String(idx + 7).padStart(2, '0')}</span>
+              <span className="ag-section-num">{String(idx + 6).padStart(2, '0')}</span>
               <h2 className="ag-h2">{room.title}</h2>
               <p className="ag-para ag-para-lead">{room.body}</p>
               <PhotoGrid photos={getRoomPhotos(room.id)} />
@@ -3745,7 +3759,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           ))}
 
           <section id="ag-alrededores" className="ag-section">
-            <span className="ag-section-num">13</span>
+            <span className="ag-section-num">12</span>
             <h2 className="ag-h2">{s.surroundings.title}</h2>
             <p className="ag-para">{s.surroundings.intro}</p>
 
@@ -3790,7 +3804,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Sabores · comer y beber */}
           <section id="ag-sabores" className="ag-section">
-            <span className="ag-section-num">14</span>
+            <span className="ag-section-num">13</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Sabores' : 'Tastes'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3811,7 +3825,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Pueblos y cultura */}
           <section id="ag-pueblos" className="ag-section">
-            <span className="ag-section-num">15</span>
+            <span className="ag-section-num">14</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3832,7 +3846,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Mar y playas */}
           <section id="ag-mar-playas" className="ag-section">
-            <span className="ag-section-num">16</span>
+            <span className="ag-section-num">15</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mar y playas' : 'Sea & beaches'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3851,7 +3865,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Actividades y planes de día */}
           <section id="ag-actividades" className="ag-section">
-            <span className="ag-section-num">17</span>
+            <span className="ag-section-num">16</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Actividades y planes' : 'Activities & plans'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3870,7 +3884,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Mercados y compras */}
           <section id="ag-mercados" className="ag-section">
-            <span className="ag-section-num">18</span>
+            <span className="ag-section-num">17</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mercados y compras' : 'Markets & shops'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3888,7 +3902,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Salud y servicios · centros de salud, vets, fisio, farmacias */}
           <section id="ag-salud" className="ag-section">
-            <span className="ag-section-num">19</span>
+            <span className="ag-section-num">18</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Salud y servicios' : 'Health & services'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3906,7 +3920,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Movilidad · gasolineras y carga eléctrica */}
           <section id="ag-movilidad" className="ag-section">
-            <span className="ag-section-num">20</span>
+            <span className="ag-section-num">19</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3928,7 +3942,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-telefonos" className="ag-section">
-            <span className="ag-section-num">21</span>
+            <span className="ag-section-num">20</span>
             <h2 className="ag-h2">{s.phones.title}</h2>
             <table className="ag-phones-table">
               <tbody>
@@ -3943,7 +3957,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-feedback" className="ag-section">
-            <span className="ag-section-num">22</span>
+            <span className="ag-section-num">21</span>
             <h2 className="ag-h2">{s.feedback.title}</h2>
             {s.feedback.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
           </section>
