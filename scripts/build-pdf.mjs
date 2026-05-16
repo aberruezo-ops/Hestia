@@ -1670,18 +1670,15 @@ function renderWifi(shared, aptData, lang) {
 }
 
 function renderNameAndWhy(shared, aptData, lang) {
-  const n = shared.name;
   const w = shared.why;
+  if (!w) return '';
   return `
   <section class="compact">
     ${sectionMark(aptData, lang)}
     <div class="section-hd">
-      <div class="eyebrow">${esc((n.title + ' · ' + w.title).toUpperCase())}</div>
-      <h2>${esc(n.title)}</h2>
+      <div class="eyebrow">${esc(w.title.toUpperCase())}</div>
+      <h2>${esc(w.title)}</h2>
     </div>
-    ${n.paras.map(p => `<p style="font-family:'Cormorant Garamond',serif;font-size:13pt;line-height:1.55;color:var(--ber);max-width:150mm">${esc(p)}</p>`).join('\n')}
-
-    <h3 style="margin-top:14mm">${esc(w.title)}</h3>
     ${w.paras.map(p => `<p style="font-family:'Cormorant Garamond',serif;font-size:13pt;line-height:1.55;color:var(--ber);max-width:150mm">${esc(p)}</p>`).join('\n')}
   </section>`;
 }
