@@ -64,6 +64,7 @@ const GUIDE_SECTIONS = [
   { id: 'mar-playas',   es: 'Mar y playas',     en: 'Sea & beaches' },
   { id: 'actividades',  es: 'Actividades y planes', en: 'Activities & plans' },
   { id: 'mercados',     es: 'Mercados y compras', en: 'Markets & shops' },
+  { id: 'movilidad',    es: 'Gasolineras y carga eléctrica', en: 'Fuel & EV charging' },
   { id: 'telefonos',    es: 'Teléfonos',        en: 'Useful phones' },
   { id: 'feedback',     es: 'Comentarios',      en: 'Feedback' },
 ];
@@ -76,6 +77,7 @@ const SECTION_CATS = {
   'mar-playas':['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
   actividades: ['activity'],
   mercados:    ['market'],
+  movilidad:   ['fuel', 'ev-charge'],
 };
 
 // ----- Categorías de lugares (icono + color brand + etiqueta bilingüe) -----
@@ -100,6 +102,8 @@ const CATEGORIES = [
   { id: 'culture',     es: 'Lugares de interés',     en: 'Places of interest',    color: 'var(--sol-h)',   icon: '🏛️' },
   { id: 'bookshop',    es: 'Librerías',              en: 'Bookshops',             color: 'var(--sie)',     icon: '📚' },
   { id: 'market',      es: 'Mercadillos',            en: 'Street markets',        color: 'var(--vs-dk)',   icon: '🧺' },
+  { id: 'fuel',        es: 'Gasolineras',            en: 'Petrol stations',       color: 'var(--ber-lt)',  icon: '⛽' },
+  { id: 'ev-charge',   es: 'Puntos de carga eléctrica', en: 'EV charging points', color: 'var(--teal-dk)', icon: '🔌' },
 ];
 
 // ----- Lugares: nombre, categoría, descripción opcional, coords aproximadas, URL -----
@@ -450,6 +454,92 @@ const PLACES = [
   { id: 'p-srvc-mojacar', name: 'Mojácar Playa',           desc: 'Hamacas, sombrillas y chiringuitos a lo largo del paseo.', cat: 'beach-srvc', lat: 37.1100, lng: -1.8395 },
   { id: 'p-srvc-garrucha',name: 'Playa de Garrucha',       desc: 'Servicios de playa y paseo marítimo.', cat: 'beach-srvc', lat: 37.1815, lng: -1.8210 },
   { id: 'p-srvc-quitapellejos', name: 'Playa Quitapellejos (Palomares)', desc: 'Hamacas, sombrillas y chiringuitos cerca de Hestía.', cat: 'beach-srvc', lat: 37.2050, lng: -1.7790 },
+
+  // ==========================================================
+  // GASOLINERAS — verificadas en mayo 2026 vía repsol.es, Cepsa,
+  // Plenoil y observatorio de precios. Horarios y precios pueden
+  // cambiar; el link de Google Maps siempre apunta al lugar real
+  // por búsqueda directa, así que aunque el listado se quede
+  // viejo, el navegador llega al sitio correcto.
+  // ==========================================================
+  { id: 'gas-repsol-vera',    name: 'Repsol Vera (C/ Ancha)',
+    desc: 'La estación de servicio más conveniente desde Vera Playa. Justo en la entrada de Vera pueblo viniendo desde la playa. Distancia: ~7 min en coche (5,5 km).',
+    specialty: 'Marca: Repsol · Servicios: tienda, café, aseos, parking.',
+    tip: 'Horario habitual: 6:30 – 22:30 todos los días. Por la noche queda fuera de servicio — para repostar de madrugada, usa Plenoil o BARAZA+.',
+    cat: 'fuel', url: 'https://www.google.com/maps/search/?api=1&query=Repsol+Vera+Calle+Ancha+Almeria',
+    lat: 37.2462, lng: -1.8645, featured: true, featuredOrder: 1 },
+  { id: 'gas-plenoil-vera',   name: 'Plenoil Vera (Crta. de Cuevas)',
+    desc: 'Gasolinera low-cost, automática, abierta 24 h sin personal. Suele ser de las más baratas de la zona (1,53 € gasolina 95, 1,85 € diésel en mayo 2026). Distancia: ~9 min en coche (7 km).',
+    specialty: 'Marca: Plenoil · Solo surtidor (sin tienda) · Pago con tarjeta o app.',
+    tip: 'Útil para repostar barato y para horario nocturno. No hay aseos ni café.',
+    cat: 'fuel', url: 'https://www.google.com/maps/search/?api=1&query=Plenoil+Vera+Carretera+Cuevas',
+    lat: 37.2540, lng: -1.8580, featured: true, featuredOrder: 2 },
+  { id: 'gas-baraza-vera',    name: 'BARAZA+ (N-340A km 533)',
+    desc: 'En la nacional N-340A, salida natural si vas hacia Murcia/Cartagena por la antigua. Abierta 24 horas. Distancia: ~8 min en coche (6,5 km).',
+    specialty: 'Marca: independiente · Servicios: tienda 24 h, aseos, café automático.',
+    tip: 'Sirve también para coger la N-340 sin volver al pueblo.',
+    cat: 'fuel', url: 'https://www.google.com/maps/search/?api=1&query=BARAZA+gasolinera+N-340A+Vera',
+    lat: 37.2490, lng: -1.8970 },
+  { id: 'gas-vera-diesel',    name: 'Vera Diesel (Ctra. de Ronda)',
+    desc: 'Estación local con buena reputación. Distancia: ~7 min en coche (5,5 km).',
+    specialty: 'Marca: independiente · Servicios: tienda, lavadero de coches.',
+    tip: 'Horario: 7:00 – 22:00 todos los días. Teléfono: 950 39 34 76.',
+    cat: 'fuel', url: 'https://www.google.com/maps/search/?api=1&query=Vera+Diesel+Carretera+Ronda+Vera+Almeria',
+    lat: 37.2475, lng: -1.8620 },
+  { id: 'gas-repsol-garrucha',name: 'Repsol Garrucha (Puerto)',
+    desc: 'Junto al puerto pesquero de Garrucha. Ideal si vas a comer pescado o pasear por el paseo marítimo. Distancia: ~10 min en coche (5,5 km).',
+    specialty: 'Marca: Repsol · Servicios: tienda, aseos.',
+    tip: 'Horario: 7:00 – 22:00 aprox. Teléfono: 950 46 01 01. Cierra de madrugada.',
+    cat: 'fuel', url: 'https://www.google.com/maps/search/?api=1&query=Repsol+Garrucha+Puerto',
+    lat: 37.1808, lng: -1.8210 },
+  { id: 'gas-cepsa-garrucha', name: 'Cepsa La Garrucha (AL-152 Garrucha-Turre)',
+    desc: 'En la carretera entre Garrucha y Turre. Útil si vienes/vas hacia Mojácar o Sierra Cabrera. Distancia: ~12 min en coche (7 km).',
+    specialty: 'Marca: Cepsa (grupo Moeve) · Servicios: tienda, café, aseos.',
+    tip: 'Horario habitual: 7:00 – 22:00.',
+    cat: 'fuel', url: 'https://www.google.com/maps/search/?api=1&query=Cepsa+La+Garrucha+AL-152+Turre',
+    lat: 37.1700, lng: -1.8650 },
+  { id: 'gas-repsol-mojacar', name: 'Repsol Mojácar (AL-118 km 0,6)',
+    desc: 'En la carretera entre Mojácar pueblo y Mojácar Playa. Si haces excursión a Mojácar, repostar a la vuelta sale de paso. Distancia: ~18 min en coche (15 km).',
+    specialty: 'Marca: Repsol · Servicios: tienda, café, aseos.',
+    tip: 'Horario habitual: 6:30 – 22:30.',
+    cat: 'fuel', url: 'https://www.google.com/maps/search/?api=1&query=Repsol+Mojacar+AL-118',
+    lat: 37.1380, lng: -1.8475 },
+  { id: 'gas-repsol-palomares',name: 'Repsol Palomares (ALP-118)',
+    desc: 'En la carretera hacia Palomares/Cuevas del Almanzora, paso natural si vas al norte (Aguilas, Mar Menor). Distancia: ~10 min en coche (8 km).',
+    specialty: 'Marca: Repsol · Servicios: tienda básica, aseos.',
+    tip: 'Horario habitual: 7:00 – 21:00.',
+    cat: 'fuel', url: 'https://www.google.com/maps/search/?api=1&query=Repsol+Palomares+Almeria',
+    lat: 37.2370, lng: -1.7700 },
+
+  // ==========================================================
+  // PUNTOS DE CARGA ELÉCTRICA — verificados mayo 2026 vía
+  // Electromaps, MiCarburante e Iberdrola. La red cambia rápido;
+  // siempre comprueba disponibilidad en la app antes de salir.
+  // ==========================================================
+  { id: 'ev-mercadona-vera-mz', name: 'Mercadona Vera (Av. Medina Azahara)',
+    desc: 'Punto de carga en el parking subterráneo del Mercadona de Vera Playa. 2 conectores AC tipo 2 (hasta 22 kW). Gratuito mientras compras. Distancia: ~6 min en coche (4 km).',
+    specialty: 'Tipo: AC (carga lenta-rápida) · Conector: Type 2 · Hasta 22 kW.',
+    tip: 'Horario igual que la tienda: lunes-sábado 9:00 – 21:30, domingos cerrado. Pensado para 1-2 h durante la compra; no es carga rápida.',
+    cat: 'ev-charge', url: 'https://www.google.com/maps/search/?api=1&query=Mercadona+Vera+Medina+Azahara',
+    lat: 37.2360, lng: -1.7935, featured: true, featuredOrder: 1 },
+  { id: 'ev-mercadona-vera-pueblo', name: 'Mercadona Vera Pueblo (C/ Baza)',
+    desc: 'Segunda ubicación de Mercadona en Vera pueblo, con 2 conectores AC tipo 2. Gratuito para clientes. Distancia: ~10 min en coche (7 km).',
+    specialty: 'Tipo: AC · Conector: Type 2 · Hasta 22 kW (la potencia real entregada varía 4-22 kW según la hora).',
+    tip: 'Horario: lunes-sábado 9:00 – 21:30. Aparcamiento accesible. Combina con la compra para sacarle partido.',
+    cat: 'ev-charge', url: 'https://www.google.com/maps/search/?api=1&query=Mercadona+Vera+Pueblo+Calle+Baza',
+    lat: 37.2491, lng: -1.8639 },
+  { id: 'ev-lidl-albox',      name: 'Lidl Albox (ruta hacia interior)',
+    desc: 'Punto de carga rápida del programa público de Lidl. CCS, CHAdeMO y Type 2. Primeros 30 min gratis. Distancia: ~35 min en coche (35 km) hacia el interior por la A-334.',
+    specialty: 'Tipo: DC rápida · Conectores: CCS · CHAdeMO · Type 2 · Hasta 150 kW.',
+    tip: 'Es la mejor opción de carga rápida real cerca de Vera. Si vas a Mojácar/Almería y necesitas potencia, mejor desviarte aquí.',
+    cat: 'ev-charge', url: 'https://www.google.com/maps/search/?api=1&query=Lidl+Albox+puntos+recarga+coche+electrico',
+    lat: 37.3893, lng: -2.1424, featured: true, featuredOrder: 2 },
+  { id: 'ev-electromaps',     name: 'Mapa completo (Electromaps)',
+    desc: 'Mapa actualizado con todos los puntos de carga públicos de Vera y alrededores. Incluye estado en tiempo real (libre/ocupado), precios y reseñas de otros conductores.',
+    specialty: 'Es la fuente más fiable para EV en España.',
+    tip: 'Recomendamos descargar la app antes de venir: planifica con tu coche y autonomía real.',
+    cat: 'ev-charge', url: 'https://www.electromaps.com/en/charging-stations/spain/almeria/vera',
+    lat: 37.2491, lng: -1.8639 },
 ];
 
 // Contenido COMPARTIDO entre las 3 guías (carta de bienvenida, marca, etc.)
@@ -3163,8 +3253,31 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             })}
           </section>
 
-          <section id="ag-telefonos" className="ag-section">
+          {/* Movilidad · gasolineras y carga eléctrica */}
+          <section id="ag-movilidad" className="ag-section">
             <span className="ag-section-num">19</span>
+            <h2 className="ag-h2">{lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'}</h2>
+            <p className="ag-para">
+              {lang === 'es'
+                ? 'Estaciones de servicio y puntos de carga para coche eléctrico en Vera Playa y alrededores. Cada lugar incluye distancia desde tu Hestía, horario habitual y enlace directo a Google Maps para llegar.'
+                : 'Petrol stations and EV charging points in Vera Playa and surroundings. Each spot includes distance from your Hestía, typical opening hours and a direct Google Maps link.'}
+            </p>
+            <p className="ag-para" style={{fontSize:'0.92em',color:'var(--ink-soft)'}}>
+              {lang === 'es'
+                ? 'Los horarios son orientativos (verificados en mayo 2026 mediante Repsol, Cepsa, Plenoil y Electromaps). El enlace de Google Maps siempre lleva al lugar correcto aunque cambie la información.'
+                : 'Hours are approximate (verified in May 2026 via Repsol, Cepsa, Plenoil and Electromaps). The Google Maps link always reaches the correct location even if details change.'}
+            </p>
+            {SECTION_CATS.movilidad.map(catId => {
+              const cat = CATEGORIES.find(c => c.id === catId);
+              if (!cat) return null;
+              const inCat = PLACES.filter(p => p.cat === catId);
+              if (!inCat.length) return null;
+              return <CatGroup key={catId} cat={cat} places={inCat} lang={lang} />;
+            })}
+          </section>
+
+          <section id="ag-telefonos" className="ag-section">
+            <span className="ag-section-num">20</span>
             <h2 className="ag-h2">{s.phones.title}</h2>
             <table className="ag-phones-table">
               <tbody>
@@ -3179,7 +3292,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-feedback" className="ag-section">
-            <span className="ag-section-num">20</span>
+            <span className="ag-section-num">21</span>
             <h2 className="ag-h2">{s.feedback.title}</h2>
             {s.feedback.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
           </section>
