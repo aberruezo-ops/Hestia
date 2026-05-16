@@ -16742,37 +16742,408 @@ img[src*="apt-vt-gallery-"] {
 }
 
 /* ============================================================
-   Subbloque "Por qué Hestía" dentro de la Bienvenida (sec 01)
+   P.D. al final de la Bienvenida (sec 01) con link a /porque-hestia
    ============================================================ */
-.ag-welcome-why {
-  margin-top: 18px;
-  padding: 14px 18px 16px;
-  background: rgba(232, 194, 107, 0.08);
+.ag-welcome-pd {
+  margin-top: 22px;
+  padding: 14px 18px;
+  background: rgba(232, 194, 107, 0.10);
   border-left: 3px solid var(--sol);
   border-radius: 0 4px 4px 0;
-}
-.ag-welcome-why .ag-h3 {
-  margin-top: 0;
-  margin-bottom: 8px;
-  color: var(--ber);
-}
-.ag-welcome-why .ag-para {
   font-size: 14px;
-  line-height: 1.55;
-}
-.ag-welcome-why-link {
-  display: inline-block;
-  margin-top: 8px;
-  font-family: var(--serif);
+  line-height: 1.6;
+  color: var(--ink-soft);
   font-style: italic;
-  font-size: 14px;
+}
+.ag-welcome-pd-tag {
+  display: inline-block;
+  font-family: var(--serif);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--ber);
+  margin-right: 6px;
+}
+.ag-welcome-pd-link {
+  font-style: italic;
   color: var(--sol);
   text-decoration: none;
   border-bottom: 1px solid var(--sol);
-  padding-bottom: 2px;
+  padding-bottom: 1px;
   transition: color 0.18s ease, border-color 0.18s ease;
+  white-space: nowrap;
 }
-.ag-welcome-why-link:hover {
+.ag-welcome-pd-link:hover {
   color: var(--ber);
   border-color: var(--ber);
 }
+
+/* ============================================================
+   Reservas v2 · dashboard + tabla + panel de edición
+   ============================================================ */
+.rv-card { position: relative; }
+.rv-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 10px;
+}
+.rv-head h2 { margin: 0; }
+.rv-head .rv-count { font-size: 12px; color: var(--ink-soft); font-weight: 400; }
+
+/* --- Dashboard KPI cards --- */
+.rv-dashboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 14px 0;
+}
+@media (max-width: 980px) { .rv-dashboard { grid-template-columns: repeat(2, 1fr); } }
+.rv-kpi {
+  background: rgba(255, 251, 244, 0.7);
+  border: 1px solid rgba(61,26,53,.10);
+  border-left: 3px solid var(--sol);
+  border-radius: 4px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.rv-kpi-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.rv-kpi-value {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+}
+.rv-kpi-sub {
+  font-size: 10.5px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Subrejilla por apt + por canal --- */
+.rv-dashboard-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 6px 0 16px;
+}
+@media (max-width: 800px) { .rv-dashboard-2 { grid-template-columns: 1fr; } }
+.rv-block {
+  background: rgba(255, 251, 244, 0.5);
+  border: 1px solid rgba(61,26,53,.08);
+  border-radius: 4px;
+  padding: 10px 14px;
+}
+.rv-block-h {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ber-dk);
+  margin-bottom: 6px;
+}
+.rv-block-rows { display: flex; flex-direction: column; gap: 4px; }
+.rv-block-row {
+  display: grid;
+  grid-template-columns: 90px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+}
+.rv-block-row-meta { font-size: 11px; color: var(--ink-soft); }
+.rv-block-row-val { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--ber-dk); }
+.rv-canal-tag {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ber);
+  background: rgba(232,194,107,.25);
+  padding: 2px 7px;
+  border-radius: 3px;
+  text-align: center;
+}
+
+/* --- Banners de estancia / próximas --- */
+.rv-now {
+  margin: 12px 0;
+  padding: 12px 16px;
+  border-radius: 4px;
+}
+.rv-now h3 {
+  margin: 0 0 8px;
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.rv-now ul { list-style: none; margin: 0; padding: 0; }
+.rv-now li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0;
+  font-size: 13px;
+  border-bottom: 1px dotted rgba(61,26,53,.10);
+}
+.rv-now li:last-child { border-bottom: none; }
+.rv-banner-staying {
+  background: rgba(106, 122, 58, 0.10);
+  border-left: 3px solid #6B7A3A;
+}
+.rv-banner-staying h3 { color: #6B7A3A; }
+.rv-banner-upcoming {
+  background: rgba(232, 194, 107, 0.12);
+  border-left: 3px solid var(--sol);
+}
+.rv-banner-upcoming h3 { color: var(--ber-dk); }
+.rv-prox-date { font-weight: 600; font-variant-numeric: tabular-nums; min-width: 90px; }
+.rv-prox-meta { color: var(--ink-soft); font-size: 11.5px; margin-left: auto; }
+
+/* --- Toolbar de filtros --- */
+.rv-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 16px 0 10px;
+  flex-wrap: wrap;
+}
+.rv-toolbar label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-soft); }
+.rv-toolbar select { padding: 4px 8px; font-family: inherit; }
+.rv-hint { margin-left: auto; font-size: 11.5px; color: var(--ink-soft); font-style: italic; }
+.rv-hint-inline { font-size: 10.5px; color: var(--ink-soft); font-weight: 400; font-style: italic; margin-left: 6px; }
+
+/* --- Tabla principal --- */
+.rv-table-wrap { overflow-x: auto; }
+.rv-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.rv-table thead th {
+  padding: 6px 8px;
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ber-dk);
+  background: rgba(255, 251, 244, 0.6);
+  border-bottom: 1px solid rgba(61,26,53,.15);
+  text-align: left;
+  font-weight: 700;
+}
+.rv-table tbody td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(61,26,53,.06);
+  vertical-align: middle;
+}
+.rv-table td.num, .rv-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+.rv-row { cursor: pointer; transition: background 0.12s ease; }
+.rv-row:hover { background: rgba(255, 251, 244, 0.85); }
+.rv-row.is-selected { background: rgba(58, 170, 187, 0.10); }
+.rv-row-past { opacity: 0.55; }
+
+.rv-status-th { width: 24px; padding: 0 !important; }
+.rv-status {
+  width: 24px;
+  text-align: center;
+  font-size: 14px;
+  padding: 0 !important;
+  border-bottom: none !important;
+  position: relative;
+}
+.rv-status::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+}
+.rv-status-staying { color: #6B7A3A; }
+.rv-status-staying::before { background: #6B7A3A; }
+.rv-status-upcoming { color: var(--sol); }
+.rv-status-upcoming::before { background: var(--sol); }
+.rv-status-past { color: var(--ink-soft); }
+.rv-status-past::before { background: transparent; }
+.rv-status-unknown { color: var(--ink-soft); opacity: 0.4; }
+
+.rv-row-staying { background: rgba(106, 122, 58, 0.04); }
+.rv-row-upcoming { background: rgba(58, 170, 187, 0.04); }
+
+.rv-apt-chip {
+  display: inline-block;
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+}
+
+/* --- Panel de edición (slide-in derecha) --- */
+.rv-edit-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(42, 15, 46, 0.40);
+  z-index: 998;
+  animation: rvFadeIn 0.18s ease;
+}
+@keyframes rvFadeIn { from { opacity: 0 } to { opacity: 1 } }
+.rv-edit-panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(520px, 92vw);
+  background: #FFFBF4;
+  border-left: 1px solid rgba(61,26,53,.20);
+  box-shadow: -8px 0 24px rgba(42, 15, 46, 0.18);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  animation: rvSlideIn 0.20s ease;
+}
+@keyframes rvSlideIn { from { transform: translateX(100%) } to { transform: translateX(0) } }
+
+.rv-edit-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: var(--ber);
+  color: #FFFBF4;
+}
+.rv-edit-head h3 {
+  margin: 2px 0 0;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 600;
+  color: #FFFBF4;
+}
+.rv-edit-eyebrow {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sol-lt, #6FC4D1);
+}
+.rv-edit-close {
+  background: transparent;
+  border: 1px solid rgba(255,251,244,0.4);
+  color: #FFFBF4;
+  font-size: 18px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: 1;
+}
+.rv-edit-close:hover { background: rgba(255,251,244,0.15); }
+
+.rv-edit-body { flex: 1; overflow-y: auto; padding: 16px 20px 24px; }
+.rv-edit-body fieldset {
+  border: none;
+  margin: 0 0 18px;
+  padding: 0;
+  border-bottom: 1px solid rgba(61,26,53,.08);
+  padding-bottom: 14px;
+}
+.rv-edit-body fieldset:last-of-type { border-bottom: none; }
+.rv-edit-body legend {
+  font-family: var(--serif);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ber-dk);
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.rv-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 9px;
+}
+.rv-field label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+.rv-field input,
+.rv-field select,
+.rv-field textarea {
+  padding: 6px 10px;
+  border: 1px solid rgba(61,26,53,.18);
+  border-radius: 3px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ink);
+}
+.rv-field input:focus, .rv-field select:focus, .rv-field textarea:focus {
+  outline: none;
+  border-color: var(--sol);
+  box-shadow: 0 0 0 2px rgba(58, 170, 187, 0.15);
+}
+.rv-field input.rv-readonly,
+.rv-readonly {
+  background: rgba(232, 194, 107, 0.10);
+  color: var(--ink-soft);
+  border-style: dashed;
+}
+.rv-calc {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--sol);
+  background: rgba(58, 170, 187, 0.10);
+  padding: 1px 5px;
+  border-radius: 2px;
+  margin-left: 5px;
+}
+
+.rv-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rv-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+
+.rv-calc-block {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: rgba(232, 194, 107, 0.10);
+  border-left: 3px solid var(--sol);
+  border-radius: 0 3px 3px 0;
+}
+.rv-calc-block-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ber-dk);
+  margin-bottom: 6px;
+}
+.rv-calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 16px;
+}
+.rv-calc-grid > div { display: flex; justify-content: space-between; font-size: 12px; }
+.rv-calc-grid span { color: var(--ink-soft); }
+.rv-calc-grid strong { color: var(--ber-dk); font-variant-numeric: tabular-nums; }
+
+.rv-edit-foot {
+  padding: 14px 20px;
+  border-top: 1px solid rgba(61,26,53,.10);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+}
+.rv-edit-foot-right { display: flex; gap: 8px; }
+.rv-btn-danger { color: #B23A2B; }
+.rv-btn-danger:hover { background: rgba(178,58,43,0.10); }
