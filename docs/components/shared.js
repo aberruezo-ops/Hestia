@@ -4341,6 +4341,62 @@ const WidgetStack = ({
     onClose: () => setPerksOpen(false)
   }));
 };
+
+// ================================================================
+// HomeGuideTeaser — bloque "La guía completa de Hestía" para la home.
+// Mismo lenguaje visual que AptGuideGate (en la apt-page) pero sin
+// referencia a un apartamento concreto. El CTA abre GuestAccessModal
+// (mismo modal que el botón Acceso huéspedes) para pedir apto + PIN.
+// ================================================================
+const HomeGuideTeaser = ({
+  lang
+}) => {
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const t = lang === 'es' ? {
+    eyebrow: 'Guía del huésped',
+    title_a: 'La guía completa de ',
+    title_em: 'Hestía',
+    desc: /*#__PURE__*/React.createElement(React.Fragment, null, "No es un folleto: es la ", /*#__PURE__*/React.createElement("strong", null, "supergu\xEDa que nos habr\xEDa gustado encontrar a nosotros"), " cuando llegamos por primera vez a Vera. Veintid\xF3s cap\xEDtulos con todo lo que necesitas para vivir tu estancia \u2014 desde c\xF3mo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense."),
+    stats: [/*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 cap\xEDtulos"), " sobre tu Hest\xEDa y el entorno"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "230+ lugares curados"), " \u2014 restaurantes, playas, bares, bodegas, mercados, pescader\xEDas\u2026"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 planes de d\xEDa completo"), " con horarios, rutas y reservas"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Servicios a mano"), " \u2014 centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarder\xEDas y residencias para mascotas\u2026"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Tel\xE9fonos \xFAtiles"), " y nuestro contacto directo antes, durante y despu\xE9s de tu estancia")],
+    foot: 'Web interactiva + PDF descargable de 40 páginas. Reservada para huéspedes con PIN.',
+    cta: 'Solo para huéspedes'
+  } : {
+    eyebrow: 'Guest guide',
+    title_a: 'The complete ',
+    title_em: 'Hestía',
+    title_b: ' guide',
+    desc: /*#__PURE__*/React.createElement(React.Fragment, null, "This isn't a leaflet: it's the ", /*#__PURE__*/React.createElement("strong", null, "super-guide we wish we'd had ourselves"), " the first time we arrived in Vera. Twenty-two chapters with everything you need for your stay \u2014 from how to get here from any of the five nearest airports to the corners only locals from the Levante know."),
+    stats: [/*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 chapters"), " on your Hest\xEDa and the area"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "230+ curated spots"), " \u2014 restaurants, beaches, bars, wineries, markets, fishmongers\u2026"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 full-day itineraries"), " with timing, routes and bookings"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Annual calendar"), " of festivals and local events"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Everything within reach"), " \u2014 health centres, 24 h vets, pharmacies, physio clinics, pet boarding & daycare\u2026"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Useful phones"), " and our direct line before, during and after your stay")],
+    foot: 'Interactive web + 40-page downloadable PDF. Reserved for guests with a PIN.',
+    cta: 'Guests only'
+  };
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
+    className: "apt-guide-gate apt-guide-gate-home"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "apt-guide-gate-inner"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "apt-guide-gate-eyebrow"
+  }, t.eyebrow), /*#__PURE__*/React.createElement("h2", {
+    className: "apt-guide-gate-title"
+  }, t.title_a, /*#__PURE__*/React.createElement("em", null, t.title_em), t.title_b || ''), /*#__PURE__*/React.createElement("p", {
+    className: "apt-guide-gate-desc"
+  }, t.desc), /*#__PURE__*/React.createElement("ul", {
+    className: "apt-guide-gate-stats"
+  }, t.stats.map((s, i) => /*#__PURE__*/React.createElement("li", {
+    key: i
+  }, s))), /*#__PURE__*/React.createElement("p", {
+    className: "apt-guide-gate-foot"
+  }, t.foot), /*#__PURE__*/React.createElement("button", {
+    className: "apt-guide-gate-btn",
+    onClick: () => setModalOpen(true)
+  }, /*#__PURE__*/React.createElement("span", null, t.cta), /*#__PURE__*/React.createElement("span", {
+    className: "apt-guide-gate-arrow",
+    "aria-hidden": "true"
+  }, "\u2192")))), modalOpen && ReactDOM.createPortal(/*#__PURE__*/React.createElement(GuestAccessModal, {
+    lang: lang,
+    onClose: () => setModalOpen(false)
+  }), document.body));
+};
 Object.assign(window, {
   WidgetStack,
   WidgetDirectBooking,
@@ -4348,5 +4404,6 @@ Object.assign(window, {
   WidgetGuidePin,
   WidgetGuestAccess,
   WidgetTopRecs,
-  TOP_RECS
+  TOP_RECS,
+  HomeGuideTeaser
 });

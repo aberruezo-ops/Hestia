@@ -5283,14 +5283,9 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 /* --- Apartment sticky booking bar --- */
 .apt-sticky-bar {
   position: fixed;
-  left: 0;
-  right: 0;
-  /* bottom anclado al visual viewport via JS (--asb-vv-gap). En iOS
-     Safari, position:fixed con bottom:0 se desancla durante el scroll
-     de momentum y aparece la barra "subiendo" por la pantalla. Usando
-     visualViewport.height obtenemos el bottom REAL del área visible
-     y la barra queda pegada al borde inferior en todo momento. */
-  bottom: var(--asb-vv-gap, 0px);
+  /* inset short-hand: top=auto, right=0, bottom=0, left=0 — más robusto que
+     bottom/left/right por separado en algunos motores. */
+  inset: auto 0 0 0;
   z-index: 200;
   background: var(--ber);
   border-top: 1px solid rgba(240,232,213,.12);
@@ -5303,8 +5298,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
      ningún botón quede bajo la zona reservada */
   padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   transform: translateY(100%);
-  transition: transform .35s cubic-bezier(.4,0,.2,1),
-              bottom .15s linear;
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
 }
 .apt-sticky-bar.asb-visible { transform: translateY(0); }
 
@@ -9658,25 +9653,26 @@ footer,
 .apt-guide-gate-stats {
   list-style: none;
   margin: 0 auto 28px;
-  padding: 18px 24px;
+  padding: 22px 28px;
   max-width: 60ch;
   background: rgba(255, 251, 244, 0.55);
   border: 1px solid rgba(61, 26, 53, 0.10);
-  border-radius: 6px;
+  border-radius: 8px;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 8px;
+  gap: 12px;
   text-align: left;
 }
+/* OJO — display: block (no flex). El flex en cada li trataba cada
+   <strong> inline como un flex item independiente y descolocaba el
+   texto en columnas raras cuando el li tenía varios <strong>. */
 .apt-guide-gate-stats li {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
+  display: block;
   font-family: var(--sans);
-  font-size: 14px;
-  line-height: 1.45;
+  font-size: 14.5px;
+  line-height: 1.55;
   color: var(--ink-soft);
-  padding-left: 14px;
+  padding-left: 22px;
   position: relative;
 }
 .apt-guide-gate-stats li::before {
@@ -9684,14 +9680,15 @@ footer,
   position: absolute;
   left: 0;
   color: var(--apt-accent, var(--sol));
-  font-size: 11px;
-  top: 2px;
+  font-size: 12px;
+  top: 3px;
 }
 .apt-guide-gate-stats li strong {
   color: var(--ink);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
+.apt-guide-gate-stats li strong + strong { margin-left: 0; }
 .apt-guide-gate-foot {
   font-family: var(--sans);
   font-size: 12.5px;
