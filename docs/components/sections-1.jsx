@@ -19,7 +19,7 @@
 // el bucle sea imperceptible.
 // VIDEO_V se añade como query string al src para cache-bust cuando
 // re-grading o re-encode: bump cuando cambies los .mp4.
-const VIDEO_V = '2026-05-16';
+const VIDEO_V = '2026-05-16-2';
 const HERO_VIDEOS = [
   { src: 'assets/Videoshome/hero-playa-almeria.mp4',
     poster: 'assets/hero-terrace-night.jpg',
@@ -41,6 +41,18 @@ const HERO_VIDEOS = [
     poster: 'assets/hero-terrace-night.jpg',
     mood: 'teal',
     alt: 'Playa aérea · arena dorada y agua turquesa' },
+  { src: 'assets/Videoshome/hero-atardecer-logo.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'warm',
+    alt: 'Atardecer cinematográfico con logo Hestía' },
+  { src: 'assets/Videoshome/hero-olas-acantilado.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'night',
+    alt: 'Olas rompiendo en acantilado rocoso' },
+  { src: 'assets/Videoshome/hero-cala-aerea.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'teal',
+    alt: 'Cala aérea · arena dorada y agua azul intenso' },
   // Para añadir un vídeo: súbelo a docs/assets/Videoshome/ y añade
   // una entrada con la misma forma. Para hacerlo circular, procesa
   // con ffmpeg crossfade end→start (ver scripts/build-pdf.mjs para
