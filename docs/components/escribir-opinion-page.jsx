@@ -225,10 +225,15 @@ const EscribirOpinionForm = ({ lang }) => {
               inputMode="text"
               className="eo-input eo-input-pin"
               value={pin}
-              onChange={e => { setPin(e.target.value); setErrors(er => ({ ...er, pin: undefined })); }}
+              onChange={e => { setPin(e.target.value.toUpperCase()); setErrors(er => ({ ...er, pin: undefined })); }}
               placeholder={t.pin_ph}
               autoComplete="off"
+              autoCapitalize="characters"
+              autoCorrect="off"
               spellCheck={false}
+              enterKeyHint="next"
+              data-1p-ignore="true"
+              data-lpignore="true"
               maxLength={20}
               required
               aria-required="true"

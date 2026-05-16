@@ -248,7 +248,7 @@ const EscribirOpinionForm = ({
     className: "eo-input eo-input-pin",
     value: pin,
     onChange: e => {
-      setPin(e.target.value);
+      setPin(e.target.value.toUpperCase());
       setErrors(er => ({
         ...er,
         pin: undefined
@@ -256,7 +256,12 @@ const EscribirOpinionForm = ({
     },
     placeholder: t.pin_ph,
     autoComplete: "off",
+    autoCapitalize: "characters",
+    autoCorrect: "off",
     spellCheck: false,
+    enterKeyHint: "next",
+    "data-1p-ignore": "true",
+    "data-lpignore": "true",
     maxLength: 20,
     required: true,
     "aria-required": "true",
