@@ -3785,14 +3785,22 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
       <div className="ag-layout">
 
-        {/* Mobile-only: trigger to open nav */}
+        {/* Mobile-only: trigger to open nav — sticky, botón corporativo */}
         <button
           className="ag-nav-toggle no-print"
           onClick={() => setNavOpen(o => !o)}
           aria-expanded={navOpen}
+          aria-label={lang === 'es' ? 'Abrir índice de la guía' : 'Open guide contents'}
         >
-          <span aria-hidden="true">☰</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="14" y2="18"/>
+          </svg>
           <span>{lang === 'es' ? 'Índice de la guía' : 'Guide contents'}</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ marginLeft: 'auto', opacity: 0.7 }}>
+            <polyline points={navOpen ? '18 15 12 9 6 15' : '6 9 12 15 18 9'}/>
+          </svg>
         </button>
 
         <aside className={`ag-nav no-print${navOpen ? ' is-open' : ''}`}>

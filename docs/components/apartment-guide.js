@@ -7842,10 +7842,49 @@ const AptGuideView = ({
   }, /*#__PURE__*/React.createElement("button", {
     className: "ag-nav-toggle no-print",
     onClick: () => setNavOpen(o => !o),
-    "aria-expanded": navOpen
-  }, /*#__PURE__*/React.createElement("span", {
+    "aria-expanded": navOpen,
+    "aria-label": lang === 'es' ? 'Abrir índice de la guía' : 'Open guide contents'
+  }, /*#__PURE__*/React.createElement("svg", {
+    width: "16",
+    height: "16",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.2",
+    strokeLinecap: "round",
     "aria-hidden": "true"
-  }, "\u2630"), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Índice de la guía' : 'Guide contents')), /*#__PURE__*/React.createElement("aside", {
+  }, /*#__PURE__*/React.createElement("line", {
+    x1: "3",
+    y1: "6",
+    x2: "21",
+    y2: "6"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "3",
+    y1: "12",
+    x2: "21",
+    y2: "12"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "3",
+    y1: "18",
+    x2: "14",
+    y2: "18"
+  })), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Índice de la guía' : 'Guide contents'), /*#__PURE__*/React.createElement("svg", {
+    width: "14",
+    height: "14",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    "aria-hidden": "true",
+    style: {
+      marginLeft: 'auto',
+      opacity: 0.7
+    }
+  }, /*#__PURE__*/React.createElement("polyline", {
+    points: navOpen ? '18 15 12 9 6 15' : '6 9 12 15 18 9'
+  }))), /*#__PURE__*/React.createElement("aside", {
     className: `ag-nav no-print${navOpen ? ' is-open' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "ag-nav-inner"
