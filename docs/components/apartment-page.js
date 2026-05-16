@@ -132,13 +132,13 @@ const APT_EQUIP = {
     daily_es: {
       eyebrow: 'Tu día en Hestía Mar',
       morning: 'Te despiertas con el mar a 300 metros y la luz que entra por la terraza de esquina. Cocina con desayuno, sales a la piscina y al jacuzzi del jardín sin coger el coche.',
-      core: 'La casa funciona con A/C por conductos, fibra y Smart TV con Prime, HBO, Sky y Pluto. La cocina está completa (lavavajillas, lavadora y secadora). Dos baños con bañera de hidromasaje y ducha con cromoterapia.',
+      core: 'La casa funciona con A/C por conductos, fibra y Smart TV con Prime, HBO, Sky y Pluto. La cocina está completa (lavavajillas, lavadora y secadora). Dos baños: uno con columna de hidroterapia y espejo de cromoterapia, otro con ducha y luz de colores.',
       behind: 'Antes de que llegues: sábanas de 200 hilos planchadas, toallas de 600 g/m² para baño y playa, kit de bienvenida con producto local, sombrilla preparada, cuna y trona montadas si las pediste. El A/C ajustado a la estación y el botiquín revisado.'
     },
     daily_en: {
       eyebrow: 'A day at Hestía Mar',
       morning: 'You wake up to the sea 300 m away and the light pouring in from the corner terrace. Breakfast in the kitchen, then the pool and jacuzzi in the garden — no need to take the car.',
-      core: 'The flat runs on ducted A/C, fibre Wi-Fi and a Smart TV with Prime, HBO, Sky and Pluto. Full kitchen (dishwasher, washer & dryer). Two bathrooms with hydro-massage bath and chromotherapy shower.',
+      core: 'The flat runs on ducted A/C, fibre Wi-Fi and a Smart TV with Prime, HBO, Sky and Pluto. Full kitchen (dishwasher, washer & dryer). Two bathrooms: one with a hydrotherapy column and chromotherapy mirror, the other with a shower and colour lighting.',
       behind: 'Before you arrive: 200-thread sheets ironed, 600 g/m² towels for bath and beach, a welcome kit with local produce, beach umbrella ready, cot and high chair set up if you booked them. A/C tuned to the season, first-aid kit checked.'
     },
     es: {
