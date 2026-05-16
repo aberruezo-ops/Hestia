@@ -7766,7 +7766,22 @@ const AptGuideView = ({
     }
   }, /*#__PURE__*/React.createElement("header", {
     className: "ag-hero"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, apt.hero_img && /*#__PURE__*/React.createElement("picture", {
+    className: "ag-hero-photo",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("source", {
+    srcSet: apt.hero_img.replace(/\.(jpg|jpeg|png)$/i, '.webp'),
+    type: "image/webp"
+  }), /*#__PURE__*/React.createElement("img", {
+    src: apt.hero_img,
+    alt: "",
+    className: "ag-hero-img",
+    decoding: "async",
+    fetchpriority: "high"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "ag-hero-wash",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "ag-hero-inner"
   }, /*#__PURE__*/React.createElement("button", {
     className: "ag-back no-print",

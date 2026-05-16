@@ -3711,6 +3711,13 @@ const AptGuideView = ({ apt, lang, onClose }) => {
              style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
 
       <header className="ag-hero">
+        {apt.hero_img && (
+          <picture className="ag-hero-photo" aria-hidden="true">
+            <source srcSet={apt.hero_img.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
+            <img src={apt.hero_img} alt="" className="ag-hero-img" decoding="async" fetchpriority="high"/>
+          </picture>
+        )}
+        <div className="ag-hero-wash" aria-hidden="true"/>
         <div className="ag-hero-inner">
           <button className="ag-back no-print" onClick={onClose}>
             <span aria-hidden="true">←</span>
