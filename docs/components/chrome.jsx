@@ -261,7 +261,6 @@ const Header = ({ mode, scrolled, lang }) => {
           </button>
         </div>
       </header>
-// Menú móvil rediseñado: apartamentos en fila (nombre + 🔑), mid-row pills, secondary horizontal
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
         <nav className="mobile-nav">
           <div className="mn-label eyebrow">{lang === 'es' ? 'Apartamentos' : 'Apartments'}</div>
@@ -271,21 +270,21 @@ const Header = ({ mode, scrolled, lang }) => {
                 <span className="mn-num">01</span>
                 <span className="mn-name">Hestía <em>Mar</em></span>
               </NavLink>
-              <NavLink href={NAV_PAGES.mar} className="mn-apt-guide mn-vm" title={lang === 'es' ? 'Guía del huésped' : 'Guest guide'}>🔑</NavLink>
+              <a href="mar.html#guide" className="mn-apt-guide mn-vm" title={lang === 'es' ? 'Guía del huésped' : 'Guest guide'} onClick={close}>🔑</a>
             </div>
             <div className="mn-apt-row mn-vt">
               <NavLink href={NAV_PAGES.thalassa} className="mn-apt-link">
                 <span className="mn-num">02</span>
                 <span className="mn-name">Hestía <em>Thalassa</em></span>
               </NavLink>
-              <NavLink href={NAV_PAGES.thalassa} className="mn-apt-guide mn-vt" title={lang === 'es' ? 'Guía del huésped' : 'Guest guide'}>🔑</NavLink>
+              <a href="thalassa.html#guide" className="mn-apt-guide mn-vt" title={lang === 'es' ? 'Guía del huésped' : 'Guest guide'} onClick={close}>🔑</a>
             </div>
             <div className="mn-apt-row mn-vs">
               <NavLink href={NAV_PAGES.salinas} className="mn-apt-link">
                 <span className="mn-num">03</span>
                 <span className="mn-name">Hestía <em>Salinas</em></span>
               </NavLink>
-              <NavLink href={NAV_PAGES.salinas} className="mn-apt-guide mn-vs" title={lang === 'es' ? 'Guía del huésped' : 'Guest guide'}>🔑</NavLink>
+              <a href="salinas.html#guide" className="mn-apt-guide mn-vs" title={lang === 'es' ? 'Guía del huésped' : 'Guest guide'} onClick={close}>🔑</a>
             </div>
           </div>
           <div className="mn-sep"/>
