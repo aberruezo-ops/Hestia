@@ -4044,9 +4044,25 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
           </h2>
           <p className="apt-guide-gate-desc">
             {lang === 'es'
-              ? 'Recomendaciones del barrio, restaurantes, calas, instrucciones de Hestía y todo lo que necesitas para tu estancia. Reservada para huéspedes con PIN.'
-              : 'Neighbourhood recommendations, restaurants, coves, Hestía instructions and everything you need for your stay. Reserved for guests with a PIN.'}
+              ? <>No es un folleto: es la <strong>superguía que nos habría gustado encontrar a nosotros</strong> cuando llegamos por primera vez a Vera. Veintidós capítulos con todo lo que necesitas para vivir tu estancia — desde cómo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense.</>
+              : <>This isn&apos;t a leaflet: it&apos;s the <strong>super-guide we wish we&apos;d had ourselves</strong> the first time we arrived in Vera. Twenty-two chapters with everything you need for your stay — from how to get here from any of the five nearest airports to the corners only locals from the Levante know.</>}
           </p>
+
+          <ul className="apt-guide-gate-stats">
+            <li><strong>22</strong> {lang === 'es' ? 'capítulos sobre tu Hestía y el entorno' : 'chapters on your Hestía and the area'}</li>
+            <li><strong>230+</strong> {lang === 'es' ? 'lugares curados: restaurantes, playas, bares, bodegas, mercados, pescaderías…' : 'curated spots: restaurants, beaches, bars, wineries, markets, fishmongers…'}</li>
+            <li><strong>48</strong> {lang === 'es' ? 'planes de día completo' : 'full-day itineraries'}</li>
+            <li>{lang === 'es' ? <><strong>Calendario anual</strong> de fiestas patronales y eventos</> : <><strong>Annual calendar</strong> of festivals and local events</>}</li>
+            <li>{lang === 'es' ? <>Centros de salud, <strong>veterinarios 24 h</strong>, fisioterapia, farmacias</> : <>Health centres, <strong>24 h vets</strong>, physio clinics, pharmacies</>}</li>
+            <li>{lang === 'es' ? <>Teléfonos útiles y nuestro contacto directo, <strong>antes, durante y después</strong> de tu estancia</> : <>Useful phones and our direct line, <strong>before, during and after</strong> your stay</>}</li>
+          </ul>
+
+          <p className="apt-guide-gate-foot">
+            {lang === 'es'
+              ? <>Web interactiva + PDF descargable de 40 páginas. Reservada para huéspedes con PIN.</>
+              : <>Interactive web + 40-page downloadable PDF. Reserved for guests with a PIN.</>}
+          </p>
+
           <button className="apt-guide-gate-btn" onClick={() => setOpen(true)}>
             <span>{t.cta}</span>
             <span className="apt-guide-gate-arrow" aria-hidden="true">→</span>
