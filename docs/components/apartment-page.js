@@ -793,7 +793,12 @@ const AptGuideDownload = ({
   };
   const handleSubmit = e => {
     e.preventDefault();
-    const entered = pin.trim().toUpperCase();
+    // Lee del DOM, no del state. En móvil, tipear el último carácter
+    // y pulsar submit casi a la vez puede hacer que el setState del
+    // onChange no haya committed todavía y `pin` sea el valor anterior.
+    const liveValue = inputRef.current && inputRef.current.value || pin;
+    const entered = liveValue.trim().toUpperCase();
+    if (entered !== pin) setPin(entered);
     if (entered === expected) {
       setStatus('success');
       const a = document.createElement('a');
@@ -840,7 +845,11 @@ const AptGuideDownload = ({
     inputMode: "text",
     autoComplete: "off",
     autoCapitalize: "characters",
+    autoCorrect: "off",
     spellCheck: false,
+    enterKeyHint: "go",
+    "data-1p-ignore": "true",
+    "data-lpignore": "true",
     maxLength: 12,
     className: "apt-guide-input",
     placeholder: "HVX0000",

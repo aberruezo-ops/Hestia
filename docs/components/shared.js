@@ -4089,7 +4089,14 @@ const GuestAccessModal = ({
   const submit = e => {
     e.preventDefault();
     const expected = HESTIA_GUIDE_PINS[selectedApt];
-    if (pin.trim().toUpperCase() === expected) {
+    // Lee del DOM, no del state. Si el usuario tipea y pulsa submit
+    // muy rápido, el setState del último onChange puede no haberse
+    // committed todavía y `pin` devolvería el valor anterior (la
+    // primera pulsación de Entrar SIEMPRE fallaba por esto).
+    const liveValue = inputRef.current && inputRef.current.value || pin;
+    const entered = liveValue.trim().toUpperCase();
+    if (entered === expected) {
+      if (entered !== pin) setPin(entered);
       setStatus('success');
       try {
         sessionStorage.setItem('hestia-guide-unlock-' + selectedApt, '1');
@@ -4200,7 +4207,11 @@ const GuestAccessModal = ({
     inputMode: "text",
     autoComplete: "off",
     autoCapitalize: "characters",
+    autoCorrect: "off",
     spellCheck: false,
+    enterKeyHint: "go",
+    "data-1p-ignore": "true",
+    "data-lpignore": "true",
     maxLength: 12,
     className: "ga-modal-input",
     placeholder: "HVX0000",
