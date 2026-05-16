@@ -1667,17 +1667,19 @@ const CompactPlaceItem = ({ p, lang }) => {
 // ================================================================
 const DishesGuide = ({ lang }) => {
   if (!Array.isArray(ICONIC_DISHES) || ICONIC_DISHES.length === 0) return null;
+  const [open, setOpen] = React.useState(false);
   const placeById = id => PLACES.find(p => p.id === id);
   return (
-    <div className="ag-dishes">
-      <h3 className="ag-h3 ag-dishes-title">
-        {lang === 'es' ? 'Platos típicos · pídelos por nombre' : 'Iconic dishes · order them by name'}
-      </h3>
-      <p className="ag-para ag-dishes-intro">
-        {lang === 'es'
-          ? 'Una selección de lo que merece la pena probar en la zona — entre Almería y Murcia — con los sitios concretos donde lo bordan.'
-          : 'A short list of what is worth trying in the area — between Almería and Murcia — with the specific spots that nail each dish.'}
-      </p>
+    <div className={`ag-cat-group${open ? ' is-open' : ''}`} style={{ marginBottom: '8px' }}>
+      <button type="button" className="ag-cat-h" onClick={() => setOpen(o => !o)} aria-expanded={open}>
+        <span className="ag-cat-dot" style={{ background: 'var(--apt-accent)' }} aria-hidden="true">
+          <span className="ag-cat-icon">🍽️</span>
+        </span>
+        <span className="ag-cat-label">{lang === 'es' ? 'Platos típicos' : 'Iconic dishes'}</span>
+        <span className="ag-cat-count">{ICONIC_DISHES.length}</span>
+        <span className={`ag-cat-chev${open ? ' open' : ''}`} aria-hidden="true">↓</span>
+      </button>
+      <div className="ag-cat-body" aria-hidden={!open}>
       <div className="ag-dishes-grid">
         {ICONIC_DISHES.map(d => {
           const name = lang === 'es' ? d.name_es : d.name_en;
@@ -1728,6 +1730,7 @@ const DishesGuide = ({ lang }) => {
             </article>
           );
         })}
+      </div>
       </div>
     </div>
   );
