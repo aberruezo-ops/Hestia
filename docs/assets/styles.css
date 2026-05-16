@@ -10871,6 +10871,133 @@ footer,
   color: var(--ink-soft);
 }
 
+/* Platos típicos — bloque al inicio de Sabores */
+.ag-dishes {
+  margin: 28px 0 36px;
+}
+.ag-dishes-title {
+  margin: 0 0 6px;
+  font-size: 19px;
+}
+.ag-dishes-intro {
+  margin: 0 0 18px;
+  color: var(--ink-soft);
+}
+.ag-dishes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+@media (max-width: 720px) {
+  .ag-dishes-grid { grid-template-columns: 1fr; }
+}
+.ag-dish-card {
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: rgba(255, 251, 244, 0.6);
+  break-inside: avoid;
+}
+.ag-dish-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+.ag-dish-icon {
+  font-size: 26px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.ag-dish-titles { flex: 1; min-width: 0; }
+.ag-dish-name {
+  margin: 0 0 2px;
+  font-size: 15.5px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.ag-dish-region {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--vt);
+  background: rgba(202, 75, 38, 0.10);
+  padding: 2px 7px;
+  border-radius: 3px;
+}
+.ag-dish-desc {
+  margin: 0 0 8px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.ag-dish-tip {
+  margin: 6px 0 8px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  background: rgba(232, 194, 107, 0.14);
+  border-left: 3px solid var(--sol);
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+.ag-dish-tip-tag {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 10.5px;
+  color: var(--ber);
+  margin-right: 3px;
+}
+.ag-dish-where {
+  margin-top: 6px;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+.ag-dish-where-tag {
+  display: inline-block;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 10.5px;
+  color: var(--ber-dk);
+  margin-right: 6px;
+}
+.ag-dish-where-text {
+  color: var(--ink);
+}
+.ag-dish-chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  vertical-align: middle;
+}
+.ag-dish-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 11px;
+  background: rgba(58, 170, 187, 0.10);
+  color: var(--vt-dk);
+  text-decoration: none;
+  border: 1px solid rgba(58, 170, 187, 0.30);
+  transition: background 150ms, border-color 150ms;
+}
+.ag-dish-chip:hover {
+  background: rgba(58, 170, 187, 0.20);
+  border-color: rgba(58, 170, 187, 0.55);
+}
+.ag-dish-extlink {
+  color: var(--vt-dk);
+  text-decoration: underline;
+  font-weight: 500;
+}
+
 /* ============================================================
    Lugares compactos (no-featured) — solo headline, click para expandir
    ============================================================ */
