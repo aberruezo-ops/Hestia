@@ -1649,9 +1649,388 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "ct-actions-hint"
   }, "Faltan campos obligatorios (marcados con *)."))));
 };
+
+// ============================================================
+// ReservasTab — pestaña de reservas.
+// Lee data-private/reservas.json (zona privada del repo, no
+// publicada en docs/) vía la API de GitHub con el PAT del usuario.
+// Permite filtrar, ver resumen, editar inline una reserva, y
+// guardar el JSON de vuelta.
+// La sincronización en vivo con Google Sheets requiere setup
+// adicional documentado en data-private/SETUP-SHEETS-SYNC.md.
+// ============================================================
+const RESERVAS_PATH = 'data-private/reservas.json';
+const ReservasTab = ({
+  token
+}) => {
+  const [data, setData] = React.useState(null);
+  const [sha, setSha] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
+  const [success, setSuccess] = React.useState(null);
+  const [filterApt, setFilterApt] = React.useState('all');
+  const [filterCanal, setFilterCanal] = React.useState('all');
+  const [editIdx, setEditIdx] = React.useState(-1);
+
+  // Carga inicial del JSON desde GitHub
+  React.useEffect(() => {
+    if (!token) return;
+    setLoading(true);
+    fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
+      headers: apiHeaders(token)
+    }).then(r => r.json()).then(j => {
+      if (j.message) throw new Error(j.message);
+      setSha(j.sha);
+      const json = JSON.parse(b64DecodeUtf8(j.content));
+      setData(json);
+    }).catch(e => setError('Error cargando reservas: ' + e.message)).finally(() => setLoading(false));
+  }, [token]);
+  if (!data && !loading && !error) return null;
+  if (loading && !data) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDDD3\uFE0F Reservas"), /*#__PURE__*/React.createElement("p", null, "Cargando\u2026"));
+  const reservas = data && data.reservas || [];
+  const APT_NAMES = {
+    vm: 'Mar',
+    vt: 'Thalassa',
+    vs: 'Salinas'
+  };
+  const APT_COLOR = {
+    vm: '#3D1A35',
+    vt: '#3AAABB',
+    vs: '#8A4A24'
+  };
+
+  // Filtros
+  const filtered = reservas.filter(r => {
+    if (filterApt !== 'all' && r.apt !== filterApt) return true && false;
+    if (filterCanal !== 'all' && (r.canal || '').toLowerCase().trim() !== filterCanal) return false;
+    return true;
+  }).filter(r => filterApt === 'all' || r.apt === filterApt);
+
+  // Resumen
+  const today = new Date().toISOString().slice(0, 10);
+  const ingresoTotal = reservas.reduce((s, r) => s + (r.ingreso_total || 0), 0);
+  const ingresoFuturo = reservas.filter(r => r.salida && r.salida >= today).reduce((s, r) => s + (r.ingreso_total || 0), 0);
+  const byApt = ['vm', 'vt', 'vs'].map(apt => {
+    const list = reservas.filter(r => r.apt === apt);
+    return {
+      apt,
+      count: list.length,
+      sum: list.reduce((s, r) => s + (r.ingreso_total || 0), 0)
+    };
+  });
+  const byCanal = {};
+  reservas.forEach(r => {
+    const c = (r.canal || '—').trim() || '—';
+    if (!byCanal[c]) byCanal[c] = {
+      count: 0,
+      sum: 0
+    };
+    byCanal[c].count++;
+    byCanal[c].sum += r.ingreso_total || 0;
+  });
+
+  // Próximos check-ins (siguientes 14 días)
+  const in14 = (() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 14);
+    return d.toISOString().slice(0, 10);
+  })();
+  const proximos = reservas.filter(r => r.entrada && r.entrada >= today && r.entrada <= in14).sort((a, b) => a.entrada.localeCompare(b.entrada));
+  const canales = Array.from(new Set(reservas.map(r => (r.canal || '').trim()).filter(Boolean)));
+  const saveReservas = async newReservas => {
+    setError(null);
+    setSuccess(null);
+    const newData = {
+      ...data,
+      reservas: newReservas,
+      updatedAt: new Date().toISOString(),
+      count: newReservas.length
+    };
+    try {
+      const body = {
+        message: `chore(reservas): update via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
+        content: b64EncodeUtf8(JSON.stringify(newData, null, 2)),
+        sha,
+        branch: BRANCH
+      };
+      const r = await fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}`, {
+        method: 'PUT',
+        headers: apiHeaders(token),
+        body: JSON.stringify(body)
+      });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.message || 'Error desconocido');
+      setSha(j.content.sha);
+      setData(newData);
+      setSuccess('Reservas guardadas en data-private/reservas.json ✓');
+      setEditIdx(-1);
+    } catch (e) {
+      setError('Error guardando: ' + e.message);
+    }
+  };
+  const updateRow = (idx, patch) => {
+    const nr = [...reservas];
+    nr[idx] = {
+      ...nr[idx],
+      ...patch
+    };
+    saveReservas(nr);
+  };
+  const deleteRow = idx => {
+    if (!confirm(`¿Borrar reserva de ${reservas[idx].responsable}?`)) return;
+    const nr = reservas.filter((_, i) => i !== idx);
+    saveReservas(nr);
+  };
+  const addRow = () => {
+    const nr = [{
+      apt: 'vm',
+      responsable: '',
+      telefono: null,
+      huespedes: 2,
+      menores_12: null,
+      cuna_trona: null,
+      mascota: false,
+      dni_enviado: false,
+      noches: null,
+      entrada: today,
+      salida: today,
+      cancelacion: 'Cancelable 14',
+      canal: 'Directo',
+      contactado: 'Alex',
+      f_reserva: today,
+      ingreso_total: 0,
+      reserva: 0,
+      pago_previo: 0,
+      al_checkin: 0,
+      comision: 0,
+      renta: 0,
+      fianza: false,
+      gasto_limpieza: 0,
+      pagos_leila: 0,
+      bai: 0,
+      observaciones: '',
+      rentabilidad_pct: null,
+      precio_neto_noche: null,
+      precio_bruto_noche: null
+    }, ...reservas];
+    saveReservas(nr);
+    setEditIdx(0);
+  };
+  const fmtEur = n => n == null ? '—' : `${n.toLocaleString('es-ES', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  })} €`;
+  const fmtDate = d => d || '—';
+  return /*#__PURE__*/React.createElement(React.Fragment, null, error && /*#__PURE__*/React.createElement("div", {
+    className: "pe-error"
+  }, error), success && /*#__PURE__*/React.createElement("div", {
+    className: "pe-success"
+  }, success), /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDDD3\uFE0F Reservas ", /*#__PURE__*/React.createElement("span", {
+    className: "rv-count"
+  }, "\xB7 ", reservas.length, " \xB7 actualizado ", data.updatedAt ? data.updatedAt.slice(0, 10) : '—')), /*#__PURE__*/React.createElement("p", {
+    className: "pe-help"
+  }, "Datos sincronizados desde la hoja \"Hest\xEDa - Reservas\" de Google Drive. Snapshot en", /*#__PURE__*/React.createElement("code", null, " data-private/reservas.json"), " (fuera de la web p\xFAblica). Para sincronizaci\xF3n en vivo con el Sheet, ver ", /*#__PURE__*/React.createElement("code", null, "data-private/SETUP-SHEETS-SYNC.md"), "."), /*#__PURE__*/React.createElement("div", {
+    className: "rv-stats"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rv-stat"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rv-stat-label"
+  }, "Ingreso total"), /*#__PURE__*/React.createElement("span", {
+    className: "rv-stat-val"
+  }, fmtEur(ingresoTotal))), /*#__PURE__*/React.createElement("div", {
+    className: "rv-stat"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rv-stat-label"
+  }, "A\xFAn por llegar"), /*#__PURE__*/React.createElement("span", {
+    className: "rv-stat-val"
+  }, fmtEur(ingresoFuturo))), byApt.map(b => /*#__PURE__*/React.createElement("div", {
+    key: b.apt,
+    className: "rv-stat",
+    style: {
+      borderLeftColor: APT_COLOR[b.apt]
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rv-stat-label"
+  }, APT_NAMES[b.apt], " \xB7 ", b.count), /*#__PURE__*/React.createElement("span", {
+    className: "rv-stat-val"
+  }, fmtEur(b.sum))))), /*#__PURE__*/React.createElement("div", {
+    className: "rv-stats rv-stats-canal"
+  }, Object.entries(byCanal).map(([c, v]) => /*#__PURE__*/React.createElement("div", {
+    key: c,
+    className: "rv-stat rv-stat-small"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rv-stat-label"
+  }, c), /*#__PURE__*/React.createElement("span", {
+    className: "rv-stat-val"
+  }, v.count, " \xB7 ", fmtEur(v.sum))))), proximos.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "rv-proximos"
+  }, /*#__PURE__*/React.createElement("h3", null, "Pr\xF3ximos check-ins (14 d\xEDas)"), /*#__PURE__*/React.createElement("ul", null, proximos.map((r, i) => /*#__PURE__*/React.createElement("li", {
+    key: i
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rv-prox-date"
+  }, fmtDate(r.entrada)), /*#__PURE__*/React.createElement("span", {
+    className: "rv-apt-chip",
+    style: {
+      background: APT_COLOR[r.apt]
+    }
+  }, APT_NAMES[r.apt] || r.apt), /*#__PURE__*/React.createElement("span", {
+    className: "rv-prox-name"
+  }, r.responsable), /*#__PURE__*/React.createElement("span", {
+    className: "rv-prox-meta"
+  }, r.huespedes, " pax \xB7 ", r.noches, " noches \xB7 ", r.canal))))), /*#__PURE__*/React.createElement("div", {
+    className: "rv-toolbar"
+  }, /*#__PURE__*/React.createElement("label", null, "Apartamento", /*#__PURE__*/React.createElement("select", {
+    value: filterApt,
+    onChange: e => setFilterApt(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "Todos"), Object.entries(APT_NAMES).map(([k, v]) => /*#__PURE__*/React.createElement("option", {
+    key: k,
+    value: k
+  }, v)))), /*#__PURE__*/React.createElement("label", null, "Canal", /*#__PURE__*/React.createElement("select", {
+    value: filterCanal,
+    onChange: e => setFilterCanal(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "Todos"), canales.map(c => /*#__PURE__*/React.createElement("option", {
+    key: c,
+    value: c.toLowerCase()
+  }, c)))), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-primary",
+    onClick: addRow
+  }, "+ Nueva reserva")), /*#__PURE__*/React.createElement("div", {
+    className: "rv-table-wrap"
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "rv-table"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Hu\xE9sped"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Noches"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Pax"), /*#__PURE__*/React.createElement("th", null, "Canal"), /*#__PURE__*/React.createElement("th", null, "Cancelaci\xF3n"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Ingreso"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Comisi\xF3n"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "BAI"), /*#__PURE__*/React.createElement("th", null, "Estado"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, filtered.map((r, idxOrig) => {
+    const idx = reservas.indexOf(r);
+    const isEdit = idx === editIdx;
+    const past = r.salida && r.salida < today;
+    const onUpd = field => e => updateRow(idx, {
+      [field]: e.target.value
+    });
+    return isEdit ? /*#__PURE__*/React.createElement("tr", {
+      key: idx,
+      className: "rv-edit"
+    }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("select", {
+      defaultValue: r.apt,
+      onBlur: onUpd('apt')
+    }, Object.keys(APT_NAMES).map(k => /*#__PURE__*/React.createElement("option", {
+      key: k,
+      value: k
+    }, APT_NAMES[k])))), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+      defaultValue: r.responsable,
+      onBlur: onUpd('responsable')
+    })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+      type: "date",
+      defaultValue: r.entrada || '',
+      onBlur: onUpd('entrada')
+    })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+      type: "date",
+      defaultValue: r.salida || '',
+      onBlur: onUpd('salida')
+    })), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "number",
+      defaultValue: r.noches || 0,
+      onBlur: e => updateRow(idx, {
+        noches: Number(e.target.value)
+      })
+    })), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "number",
+      defaultValue: r.huespedes || 0,
+      onBlur: e => updateRow(idx, {
+        huespedes: Number(e.target.value)
+      })
+    })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+      defaultValue: r.canal || '',
+      onBlur: onUpd('canal')
+    })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
+      defaultValue: r.cancelacion || '',
+      onBlur: onUpd('cancelacion')
+    })), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "number",
+      step: "0.01",
+      defaultValue: r.ingreso_total || 0,
+      onBlur: e => updateRow(idx, {
+        ingreso_total: Number(e.target.value)
+      })
+    })), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "number",
+      step: "0.01",
+      defaultValue: r.comision || 0,
+      onBlur: e => updateRow(idx, {
+        comision: Number(e.target.value)
+      })
+    })), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, /*#__PURE__*/React.createElement("input", {
+      type: "number",
+      step: "0.01",
+      defaultValue: r.bai || 0,
+      onBlur: e => updateRow(idx, {
+        bai: Number(e.target.value)
+      })
+    })), /*#__PURE__*/React.createElement("td", null, past ? '✓' : '◷'), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "pe-btn pe-btn-ghost",
+      onClick: () => setEditIdx(-1)
+    }, "OK"), " ", /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "pe-btn pe-btn-ghost",
+      onClick: () => deleteRow(idx)
+    }, "\uD83D\uDDD1"))) : /*#__PURE__*/React.createElement("tr", {
+      key: idx,
+      className: past ? 'rv-past' : ''
+    }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+      className: "rv-apt-chip",
+      style: {
+        background: APT_COLOR[r.apt]
+      }
+    }, APT_NAMES[r.apt] || r.apt)), /*#__PURE__*/React.createElement("td", null, r.responsable, r.mascota ? ' 🐾' : '', r.cuna_trona ? ' 👶' : ''), /*#__PURE__*/React.createElement("td", null, fmtDate(r.entrada)), /*#__PURE__*/React.createElement("td", null, fmtDate(r.salida)), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, r.noches || '—'), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, r.huespedes || '—'), /*#__PURE__*/React.createElement("td", null, r.canal || '—'), /*#__PURE__*/React.createElement("td", {
+      className: "rv-tiny"
+    }, r.cancelacion || '—'), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, fmtEur(r.ingreso_total)), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, fmtEur(r.comision)), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, fmtEur(r.bai)), /*#__PURE__*/React.createElement("td", null, past ? '✓' : r.entrada && r.entrada <= today ? '🏠' : '◷'), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "pe-btn pe-btn-ghost",
+      onClick: () => setEditIdx(idx)
+    }, "\u270F\uFE0F")));
+  }))))));
+};
 const AdminApp = () => {
   const [phase, setPhase] = React.useState('login');
-  const [mode, setMode] = React.useState('pricing'); // 'pricing' | 'reviews' | 'analytics' | 'contract'
+  const [mode, setMode] = React.useState('pricing'); // 'pricing' | 'reviews' | 'analytics' | 'contract' | 'reservas'
   const [token, setToken] = React.useState('');
   const [data, setData] = React.useState(null);
   const [sha, setSha] = React.useState(null);
@@ -2074,12 +2453,22 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCC4 Contrato")), success && /*#__PURE__*/React.createElement("div", {
+  }, "\uD83D\uDCC4 Contrato"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'reservas' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('reservas');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDDD3\uFE0F Reservas")), success && /*#__PURE__*/React.createElement("div", {
     className: "pe-success"
   }, success), error && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
   }, error), mode === 'analytics' ? /*#__PURE__*/React.createElement(AnalyticsTab, null) : mode === 'contract' ? /*#__PURE__*/React.createElement(ContractTab, {
     pricesData: data
+  }) : mode === 'reservas' ? /*#__PURE__*/React.createElement(ReservasTab, {
+    token: token
   }) : mode === 'reviews' ? renderReviewsTab() : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("h2", null, "Precios base por noche \xB7 2 hu\xE9spedes \xB7 temporada baja"), /*#__PURE__*/React.createElement("div", {
