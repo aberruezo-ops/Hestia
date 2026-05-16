@@ -1102,8 +1102,13 @@ const ApartmentPageApp = () => {
 
   // Crossfade entre vista apt ↔ guía: fade-out 220ms → swap → RAF → fade-in.
   // Aplica un blur sutil para mascarar el cambio (truco de Emil para crossfades).
+  // Al abrir la guía, sube al top para que el hero de la guía sea visible.
   React.useEffect(() => {
     if (guideOpen === renderGuide) return;
+    if (guideOpen) window.scrollTo({
+      top: 0,
+      behavior: 'instant'
+    });
     setPhase('out');
     const t = setTimeout(() => {
       setRenderGuide(guideOpen);
