@@ -331,6 +331,21 @@ section {
   break-before: page;
   page-break-before: always;
 }
+/* Secciones cortas que fluyen unas tras otras en la misma página
+   para mantener el PDF en ~40-50 páginas. Solo se rompe página si
+   el contenido no cabe físicamente. */
+section.compact {
+  break-before: auto;
+  page-break-before: auto;
+  margin-top: 8mm;
+  padding-top: 4mm;
+  border-top: 0.3pt solid rgba(61, 26, 53, 0.10);
+}
+section.compact:first-of-type,
+section.compact + section.compact {
+  border-top: none;
+  padding-top: 0;
+}
 section.no-break {
   break-before: auto;
   page-break-before: auto;
@@ -486,9 +501,11 @@ section.no-break {
 .two-col h3 { margin-top: 0; }
 
 /* ============ Room sections ============ */
+/* En modo compacto las habitaciones fluyen unas tras otras y
+   sólo se rompe página si una no cabe. */
 .room {
-  break-before: page;
-  page-break-before: always;
+  break-before: auto;
+  page-break-before: auto;
 }
 .room-body {
   font-family: 'Cormorant Garamond', serif;
@@ -825,42 +842,49 @@ section.no-break {
 
 /* ============ PLACES enriquecidos (rating, specialty, tip, best) ============ */
 .places-cat {
-  break-inside: avoid;
-  page-break-inside: avoid;
-  margin: 6mm 0 10mm;
+  break-inside: auto;
+  page-break-inside: auto;
+  margin: 3mm 0 5mm;
 }
 .places-cat-h {
   display: flex;
   align-items: baseline;
-  gap: 8pt;
-  margin-bottom: 4mm;
-  padding-bottom: 2mm;
-  border-bottom: 1px solid var(--hair);
+  gap: 5pt;
+  margin-bottom: 2mm;
+  padding-bottom: 1mm;
+  border-bottom: 0.5pt solid var(--hair);
 }
 .places-cat-icon {
-  font-size: 14pt;
+  font-size: 11pt;
 }
 .places-cat-name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 14pt;
+  font-size: 12pt;
   font-weight: 600;
   color: var(--apt-c-dk);
   letter-spacing: 0.02em;
 }
 .places-cat-count {
-  font-size: 9pt;
+  font-size: 8pt;
   color: var(--ink-soft, #6b5d63);
   font-style: italic;
   margin-left: auto;
 }
+.places-cat-more {
+  font-size: 8pt;
+  color: var(--ink-soft, #6b5d63);
+  font-style: italic;
+  margin: 1mm 0 0;
+  padding-left: 4mm;
+}
 .place-item {
   break-inside: avoid;
   page-break-inside: avoid;
-  margin-bottom: 4mm;
-  padding: 3mm 0;
-  border-bottom: 1px dotted var(--hair);
-  font-size: 9.5pt;
-  line-height: 1.4;
+  margin-bottom: 1.5mm;
+  padding: 1mm 0 1.5mm;
+  border-bottom: 0.3pt dotted var(--hair);
+  font-size: 8.5pt;
+  line-height: 1.35;
 }
 .place-item:last-child { border-bottom: none; }
 .place-item.is-featured {
@@ -1500,9 +1524,8 @@ function renderCover(aptId, lang, aptData, byApt) {
 
 function renderWelcome(shared, aptData, lang) {
   const w = shared.welcome;
-  const photo = aptData.gallery_imgs[11] || aptData.gallery_imgs[0];
   return `
-  <section class="welcome">
+  <section class="welcome compact">
     ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(w.title.split(' ')[0]).toUpperCase()}</div>
@@ -1511,10 +1534,6 @@ function renderWelcome(shared, aptData, lang) {
     ${w.paras.map(p => `<p>${esc(p)}</p>`).join('\n')}
     <div class="welcome-sign">${esc(w.sign)}</div>
     <div class="welcome-signer">${esc(w.signer)}</div>
-    ${photo ? `
-      <figure class="welcome-photo">
-        ${photoFrame(photo)}
-      </figure>` : ''}
   </section>`;
 }
 
@@ -1628,9 +1647,8 @@ function renderEventsCalendar(PLACES, lang) {
 
 function renderWifi(shared, aptData, lang) {
   const w = shared.wifi;
-  const photo = aptData.gallery_imgs[1] || aptData.gallery_imgs[0];
   return `
-  <section>
+  <section class="compact">
     ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(w.title.toUpperCase())}</div>
@@ -1648,10 +1666,6 @@ function renderWifi(shared, aptData, lang) {
       </div>
       <div class="wifi-note">${esc(w.note)}</div>
     </div>
-    ${photo ? `
-      <figure class="wifi-photo">
-        ${photoFrame(photo)}
-      </figure>` : ''}
   </section>`;
 }
 
@@ -1659,7 +1673,7 @@ function renderNameAndWhy(shared, aptData, lang) {
   const n = shared.name;
   const w = shared.why;
   return `
-  <section>
+  <section class="compact">
     ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc((n.title + ' · ' + w.title).toUpperCase())}</div>
@@ -1675,7 +1689,7 @@ function renderNameAndWhy(shared, aptData, lang) {
 function renderCleaning(shared, aptData, lang) {
   const c = shared.cleaning;
   return `
-  <section>
+  <section class="compact">
     ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(c.title.toUpperCase())}</div>
@@ -1693,7 +1707,7 @@ function renderCleaning(shared, aptData, lang) {
 function renderRules(shared, aptData, lang) {
   const r = shared.rules;
   return `
-  <section>
+  <section class="compact">
     ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(r.title.toUpperCase())}</div>
@@ -1714,38 +1728,19 @@ function renderRules(shared, aptData, lang) {
 }
 
 function renderRoom(room, aptData, roomPhotos, urbFallback, aptId, lang) {
-  const photoIdxs = roomPhotos[aptId][room.id] || [];
-  const captions = aptData[lang].gallery_captions || [];
-  const galleryImgs = aptData.gallery_imgs || [];
-  let photos = photoIdxs
-    .map(idx => ({ src: galleryImgs[idx], caption: captions[idx] }))
-    .filter(p => !!p.src);
-  if (photos.length === 0 && room.id === 'urbanizacion' && urbFallback[aptId]) {
-    photos = urbFallback[aptId].map(src => ({ src, caption: '' }));
-  }
+  // Modo compacto: las galerías de habitaciones y la foto hero por
+  // estancia se eliminaron para reducir el PDF de ~102 a ~40-50
+  // páginas. La portada conserva su foto. Las imágenes siguen
+  // disponibles en la web (apartment-guide.jsx).
   const points = room.points || null;
-  const hero = photos[0];
-  const rest = photos.slice(1);
-
-  // Galería: si hay restos, los repartimos en filas de 2 fotos
-  // por página. La primera página tiene hero + body + recs +
-  // (si caben) 2 fotos del grid. Las siguientes son full-grid.
-  const firstPagePhotos = rest.slice(0, 0);          // primera página: solo hero+texto (más respirado)
-  const galleryPhotos   = rest;                       // resto en página(s) de galería
 
   return `
-  <section class="room">
+  <section class="room compact">
     ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(room.title.toUpperCase())}</div>
       <h2>${esc(room.title)}</h2>
     </div>
-
-    ${hero ? `
-      <figure class="room-hero">
-        ${photoFrame(hero.src)}
-        ${hero.caption ? `<figcaption>${esc(hero.caption)}</figcaption>` : ''}
-      </figure>` : ''}
 
     <p class="room-body">${esc(room.body)}</p>
 
@@ -1758,8 +1753,6 @@ function renderRoom(room, aptData, roomPhotos, urbFallback, aptId, lang) {
       <div class="recs-title">${esc(lang === 'es' ? 'Recomendaciones' : 'Recommendations')}</div>
       <ul>${room.recs.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
     </div>
-
-    ${galleryPhotos.length > 0 ? renderRoomGallery(galleryPhotos, room, lang) : ''}
   </section>`;
 }
 
@@ -1889,9 +1882,12 @@ function renderIconicDishes(dishes, PLACES, aptData, lang) {
 // ---------------------------------------------------------------
 function renderPlacesRich(PLACES, CATEGORIES, aptData, lang) {
   if (!PLACES || !CATEGORIES) return '';
-  // Categorías que valen la pena imprimir en el PDF (no incluimos los Hestía,
-  // ni "home", para no duplicar). Orden editorial: comer → beber → playas →
-  // mercados → celíaco → actividades → pescaderías.
+  // Modo compacto: top 8 lugares por categoría (todos los featured
+  // + mejores ratings hasta 8). En la web siguen estando todos los
+  // 230 lugares; el PDF prioriza recomendación curada para que
+  // quepa en ~40-50 páginas. Los eventos por lugar ya están
+  // consolidados en EventsCalendar — no se duplican aquí.
+  const MAX_PER_CAT = 6;
   const CAT_ORDER = ['restaurant', 'bar', 'beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog', 'market', 'celiac', 'activity', 'sport', 'bodega', 'fish', 'super', 'fuel', 'ev-charge', 'health', 'vet', 'physio', 'pharmacy', 'town', 'culture'];
   const catsById = new Map(CATEGORIES.map(c => [c.id, c]));
 
@@ -1902,7 +1898,6 @@ function renderPlacesRich(PLACES, CATEGORIES, aptData, lang) {
     byCat[p.cat].push(p);
   }
 
-  // Orden dentro de cada categoría: featured primero (por featuredOrder), luego rating desc, luego nombre
   const sortPlaces = (list) => list.sort((a, b) => {
     if (a.featured !== b.featured) return a.featured ? -1 : 1;
     if (a.featured && b.featured) return (a.featuredOrder || 99) - (b.featuredOrder || 99);
@@ -1917,17 +1912,23 @@ function renderPlacesRich(PLACES, CATEGORIES, aptData, lang) {
     const cat = catsById.get(catId);
     if (!cat) continue;
     sortPlaces(items);
+    const shown = items.slice(0, MAX_PER_CAT);
+    const hidden = items.length - shown.length;
     blocks.push(`
       <div class="places-cat">
         <div class="places-cat-h">
           <span class="places-cat-icon">${esc(cat.icon || '')}</span>
           <span class="places-cat-name">${esc(cat[lang] || cat.es)}</span>
-          <span class="places-cat-count">${items.length}</span>
+          <span class="places-cat-count">${shown.length}${hidden > 0 ? ` / ${items.length}` : ''}</span>
         </div>
-        ${items.map(p => {
+        ${shown.map(p => {
           const tagPide = lang === 'es' ? 'Pide' : 'Order';
           const tagBest = lang === 'es' ? 'Lo mejor' : 'Highlight';
           const tagTip  = lang === 'es' ? 'Tip'  : 'Tip';
+          const metaParts = [];
+          if (p.specialty) metaParts.push(`<span class="place-meta-tag">${tagPide}:</span> ${esc(p.specialty)}`);
+          if (p.best)      metaParts.push(`<span class="place-meta-tag">${tagBest}:</span> ${esc(p.best)}`);
+          if (p.tip)       metaParts.push(`<span class="place-meta-tag">${tagTip}:</span> ${esc(p.tip)}`);
           return `
           <div class="place-item${p.featured ? ' is-featured' : ''}">
             <div class="place-head">
@@ -1937,24 +1938,13 @@ function renderPlacesRich(PLACES, CATEGORIES, aptData, lang) {
               ${typeof p.rating === 'number' ? `<span class="place-rating">⭐ ${p.rating.toFixed(1)}</span>` : ''}
             </div>
             ${p.desc ? `<div class="place-desc">${esc(p.desc)}</div>` : ''}
-            ${p.specialty ? `<div class="place-meta"><span class="place-meta-tag">${tagPide}:</span> ${esc(p.specialty)}</div>` : ''}
-            ${p.best ? `<div class="place-meta"><span class="place-meta-tag">${tagBest}:</span> ${esc(p.best)}</div>` : ''}
-            ${p.tip ? `<div class="place-meta"><span class="place-meta-tag">${tagTip}:</span> ${esc(p.tip)}</div>` : ''}
-            ${Array.isArray(p.events) && p.events.length > 0 ? `
-              <div class="place-events">
-                <div class="place-events-tag">${lang === 'es' ? 'Fiestas y eventos' : 'Festivals & events'}</div>
-                <ul>
-                  ${p.events.map(ev => `
-                    <li>
-                      <strong>${esc(ev.name)}</strong>${ev.when ? ` <span class="place-event-when">· ${esc(ev.when)}</span>` : ''}${ev.d ? ` — ${esc(ev.d)}` : ''}
-                    </li>`).join('')}
-                </ul>
-              </div>` : ''}
+            ${metaParts.length ? `<div class="place-meta">${metaParts.join(' &nbsp;·&nbsp; ')}</div>` : ''}
             ${p.services ? `<div class="place-meta">${esc(p.services)}</div>` : ''}
             ${p.access ? `<div class="place-meta">${esc(p.access)}</div>` : ''}
             ${p.level ? `<div class="place-level"><span class="place-level-tag">${lang === 'es' ? 'Dificultad:' : 'Level:'}</span> ${esc(p.level)}</div>` : ''}
           </div>`;
         }).join('')}
+        ${hidden > 0 ? `<div class="places-cat-more">${lang === 'es' ? `+ ${hidden} más en la guía web` : `+ ${hidden} more in the web guide`}</div>` : ''}
       </div>`);
   }
 
@@ -1976,6 +1966,11 @@ function renderPlacesRich(PLACES, CATEGORIES, aptData, lang) {
 
 function renderDayPlans(DAY_PLANS, aptData, lang) {
   if (!DAY_PLANS || DAY_PLANS.length === 0) return '';
+  // Modo compacto: mostramos los primeros 8 itinerarios (el resto
+  // sigue en la guía web, que tiene los 48 completos).
+  const MAX_PLANS = 8;
+  const shown = DAY_PLANS.slice(0, MAX_PLANS);
+  const hidden = DAY_PLANS.length - shown.length;
   return `
   <section>
     ${sectionMark(aptData, lang)}
@@ -1984,9 +1979,9 @@ function renderDayPlans(DAY_PLANS, aptData, lang) {
       <h2>${esc(lang === 'es' ? 'Días que podéis vivir' : 'Days you can live')}</h2>
     </div>
     <p class="rules-intro">${esc(lang === 'es'
-      ? 'Recorridos pensados para vosotros — adaptables según vuestras ganas. Los horarios son orientativos.'
-      : 'Routes built for you — adaptable to your mood. Times are approximate.')}</p>
-    ${DAY_PLANS.map(plan => {
+      ? `Recorridos pensados para vosotros — adaptables según vuestras ganas. Los horarios son orientativos. Hay ${DAY_PLANS.length} en total; aquí los ${shown.length} más representativos.`
+      : `Routes built for you — adaptable to your mood. Times are approximate. There are ${DAY_PLANS.length} in total; here are the ${shown.length} most representative.`)}</p>
+    ${shown.map(plan => {
       const title = plan[`title_${lang}`] || plan.title_es;
       const tags  = plan[`tags_${lang}`] || plan.tags_es || [];
       const tip   = plan[`tip_${lang}`] || plan.tip_es;
@@ -2016,13 +2011,14 @@ function renderDayPlans(DAY_PLANS, aptData, lang) {
           ${tip ? `<div class="dayplan-tip">💡 ${esc(tip)}</div>` : ''}
         </div>`;
     }).join('\n')}
+    ${hidden > 0 ? `<div class="places-cat-more" style="margin-top:6mm">${lang === 'es' ? `+ ${hidden} itinerarios más en la guía web` : `+ ${hidden} more itineraries in the web guide`}</div>` : ''}
   </section>`;
 }
 
 function renderPhones(shared, aptData, lang) {
   const p = shared.phones;
   return `
-  <section>
+  <section class="compact">
     ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(p.title.toUpperCase())}</div>
@@ -2040,19 +2036,14 @@ function renderPhones(shared, aptData, lang) {
 
 function renderFeedback(shared, aptData, lang) {
   const f = shared.feedback;
-  const photo = aptData.gallery_imgs[12] || aptData.gallery_imgs[3] || aptData.gallery_imgs[0];
   return `
-  <section>
+  <section class="compact">
     ${sectionMark(aptData, lang)}
     <div class="section-hd">
       <div class="eyebrow">${esc(f.title.toUpperCase())}</div>
       <h2>${esc(f.title)}</h2>
     </div>
     ${f.paras.map(p => `<p class="closing-quote">${esc(p)}</p>`).join('')}
-    ${photo ? `
-      <figure class="welcome-photo">
-        ${photoFrame(photo)}
-      </figure>` : ''}
   </section>`;
 }
 
