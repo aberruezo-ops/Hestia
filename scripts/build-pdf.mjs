@@ -928,6 +928,28 @@ section.no-break {
   font-size: 7.5pt;
   margin-right: 1mm;
 }
+.disclaimer-box {
+  margin: 4mm 0 5mm;
+  padding: 3mm 4mm;
+  background: rgba(141, 110, 99, 0.08);
+  border-left: 1pt solid var(--ber);
+  border-radius: 1mm;
+  page-break-inside: avoid;
+}
+.disclaimer-tag {
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ber-dk);
+  margin-bottom: 1.5mm;
+}
+.disclaimer-body {
+  margin: 0;
+  font-size: 9pt;
+  line-height: 1.55;
+  color: var(--ink);
+}
 .place-events {
   margin-top: 2mm;
   padding: 2mm 3mm;
@@ -1489,6 +1511,11 @@ function renderSurroundings(shared, aptData, lang) {
     </div>
     <p>${esc(s.intro)}</p>
     ${s.sources.map(src => `<p class="subtle" style="font-size:10pt">${esc(src)}</p>`).join('')}
+    ${s.disclaimer ? `
+    <aside class="disclaimer-box">
+      <div class="disclaimer-tag">${esc(s.disclaimer_title)}</div>
+      <p class="disclaimer-body">${esc(s.disclaimer)}</p>
+    </aside>` : ''}
 
     <h3 style="margin-top:10mm">${esc(lang === 'es' ? 'Lo esencial alrededor' : 'Essentials nearby')}</h3>
     <div class="two-col">
