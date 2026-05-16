@@ -81,6 +81,9 @@ const COPY = {
   es: {
     nav: ['Inicio', 'Hestía Mar', 'Hestía Thalassa', 'Hestía Salinas', 'Nosotros', 'Opiniones', 'Contacto', 'Noticias', 'Por qué Hestía'],
     cta_nav: 'Reserva',
+    mn_ventajas: 'Ventajas de reserva directa',
+    mn_guests: 'Acceso para huéspedes',
+    mn_guide: 'Tu guía',
     hero_title_1: 'Bienvenido a tu hogar',
     hero_title_2: 'lejos de casa.',
     hero_sub: 'Vera Playa · Almería · desde 2016',
@@ -146,6 +149,9 @@ const COPY = {
   en: {
     nav: ['Home', 'Hestía Mar', 'Hestía Thalassa', 'Hestía Salinas', 'About us', 'Reviews', 'Contact', 'News', 'Why Hestía'],
     cta_nav: 'Book',
+    mn_ventajas: 'Direct booking perks',
+    mn_guests: 'Guest access',
+    mn_guide: 'Your guide',
     hero_title_1: 'Welcome to your home',
     hero_title_2: 'away from home.',
     hero_sub: 'Vera Playa · Almería · since 2016',
