@@ -24,8 +24,8 @@ const HERO_VIDEOS = [{
 }, {
   src: 'assets/7777897352361363392.mp4',
   poster: 'assets/hero-terrace-night.jpg',
-  mood: 'violet',
-  alt: 'Hestía · vista atmosférica'
+  mood: 'warm',
+  alt: 'Atardecer · Vera Playa'
 }
 // Ejemplos para cuando subas más vídeos:
 // { src: 'assets/hero-cabo-gata.mp4',  poster: 'assets/hero-cabo-gata.jpg',  mood: 'teal',  alt: 'Cabo de Gata' },
