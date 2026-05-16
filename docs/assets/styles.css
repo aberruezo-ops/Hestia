@@ -12273,7 +12273,33 @@ footer,
   text-transform: uppercase;
   color: var(--ink-soft);
   font-variant-numeric: tabular-nums;
+  margin-bottom: 16px;
 }
+.dbm-cta {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  background: var(--ber);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10px 0 10px 0;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 18px color-mix(in srgb, var(--ber) 35%, transparent);
+  transition: background .2s ease, box-shadow .2s ease, transform .15s ease;
+}
+.dbm-cta:hover {
+  background: color-mix(in srgb, var(--ber) 85%, #000);
+  box-shadow: 0 6px 24px color-mix(in srgb, var(--ber) 45%, transparent);
+  transform: translateY(-1px);
+}
+.dbm-cta:active { transform: translateY(0); }
 
 @media (max-width: 600px) {
   .dbt-band { padding: 36px var(--page-pad) 30px; }

@@ -2466,6 +2466,13 @@ const DirectBookingModal = ({ lang, onClose }) => {
           ))}
         </div>
         <div className="dbm-counter">{idx + 1} / {len}</div>
+        <a
+          href="reservas.html"
+          className="dbm-cta"
+          onClick={onClose}
+        >
+          {lang === 'es' ? 'Reservar ahora' : 'Book now'}
+        </a>
       </div>
     </div>
   );
