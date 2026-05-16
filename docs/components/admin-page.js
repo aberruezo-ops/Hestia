@@ -24,6 +24,96 @@ const apiHeaders = token => ({
   'X-GitHub-Api-Version': '2022-11-28'
 });
 
+// ============================================================
+// CONTRATO — datos por apartamento (variantes de la plantilla
+// unificada en docs/contracts/template-base.md).
+// ============================================================
+const APT_CONTRACT_DATA = {
+  vm: {
+    name: 'Hestía Vera Mar',
+    shortName: 'Mar',
+    direccion: 'Apto. 1A, del portal 14, edificio 3, en la urbanización Paraíso Playa, en C/ Islas Canarias, 7',
+    plazaGaraje: '160',
+    zonaObras: 'enfrente',
+    bloqueAccesibilidad: true,
+    bloqueSabanas: 'Un juego de sábanas para la cama de matrimonio y dos juegos de sábanas para las camas individuales.'
+  },
+  vt: {
+    name: 'Hestía Vera Thalassa',
+    shortName: 'Thalassa',
+    direccion: 'Apto. 11, planta 5ª, escalera 13, en la urbanización Thalassa, en C/ Tomillo 2',
+    plazaGaraje: '163',
+    zonaObras: 'cercanas',
+    bloqueAccesibilidad: false,
+    bloqueSabanas: 'Un juego de sábanas para la cama doble (D1) y un juego para cada cama individual del dormitorio dos (D2).'
+  },
+  vs: {
+    name: 'Hestía Vera Salinas',
+    shortName: 'Salinas',
+    direccion: 'Apto. 7, planta 1ª, bloque 22, en la urbanización Pueblo Salinas, en C/ Alcazaba 115',
+    plazaGaraje: '290',
+    zonaObras: 'cercanas',
+    bloqueAccesibilidad: false,
+    bloqueSabanas: 'Dos juegos de sábanas para la cama de matrimonio y sofá-cama y un juego de sábanas por cada cama individual del dormitorio dos.'
+  }
+};
+
+// Conversión de número entero a letras en español (mayúsculas).
+// Soporta 0–999999. Usa "Y" entre decena y unidad (TREINTA Y UNO).
+// Caso especial 21-29: VEINTIUNO, VEINTIDÓS, … en una palabra.
+function numToSpanish(n) {
+  n = Math.trunc(n);
+  if (n === 0) return 'CERO';
+  if (n < 0) return 'MENOS ' + numToSpanish(-n);
+  const u = ['', 'UNO', 'DOS', 'TRES', 'CUATRO', 'CINCO', 'SEIS', 'SIETE', 'OCHO', 'NUEVE'];
+  const teens = ['DIEZ', 'ONCE', 'DOCE', 'TRECE', 'CATORCE', 'QUINCE', 'DIECISÉIS', 'DIECISIETE', 'DIECIOCHO', 'DIECINUEVE'];
+  const tw = ['VEINTE', 'VEINTIUNO', 'VEINTIDÓS', 'VEINTITRÉS', 'VEINTICUATRO', 'VEINTICINCO', 'VEINTISÉIS', 'VEINTISIETE', 'VEINTIOCHO', 'VEINTINUEVE'];
+  const tens = ['', '', 'VEINTE', 'TREINTA', 'CUARENTA', 'CINCUENTA', 'SESENTA', 'SETENTA', 'OCHENTA', 'NOVENTA'];
+  const hu = ['', 'CIENTO', 'DOSCIENTOS', 'TRESCIENTOS', 'CUATROCIENTOS', 'QUINIENTOS', 'SEISCIENTOS', 'SETECIENTOS', 'OCHOCIENTOS', 'NOVECIENTOS'];
+  function under1000(n) {
+    if (n === 0) return '';
+    if (n === 100) return 'CIEN';
+    let r = '';
+    const h = Math.floor(n / 100);
+    if (h > 0) r += hu[h] + ' ';
+    n %= 100;
+    if (n === 0) return r.trim();
+    if (n < 10) return (r + u[n]).trim();
+    if (n < 20) return (r + teens[n - 10]).trim();
+    if (n < 30) return (r + tw[n - 20]).trim();
+    const t = Math.floor(n / 10),
+      un = n % 10;
+    r += tens[t];
+    if (un > 0) r += ' Y ' + u[un];
+    return r.trim();
+  }
+  let r = '';
+  if (n >= 1000) {
+    const th = Math.floor(n / 1000);
+    if (th === 1) r += 'MIL ';else r += under1000(th) + ' MIL ';
+    n %= 1000;
+  }
+  r += under1000(n);
+  return r.trim();
+}
+
+// Formateo de fecha "DD de MES de AAAA" en español.
+function fmtFechaEs(date) {
+  const meses = ['ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO', 'JULIO', 'AGOSTO', 'SEPTIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'];
+  const d = typeof date === 'string' ? new Date(date + 'T12:00:00') : date;
+  return `${String(d.getDate()).padStart(2, '0')} de ${meses[d.getMonth()]} de ${d.getFullYear()}`;
+}
+function fmtFechaCorta(date) {
+  const d = typeof date === 'string' ? new Date(date + 'T12:00:00') : date;
+  return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+}
+function diffNoches(entradaIso, salidaIso) {
+  if (!entradaIso || !salidaIso) return 0;
+  const a = new Date(entradaIso + 'T00:00:00');
+  const b = new Date(salidaIso + 'T00:00:00');
+  return Math.max(0, Math.round((b - a) / (24 * 60 * 60 * 1000)));
+}
+
 // base64 ↔ utf-8 (atob/btoa no manejan UTF-8 directamente)
 const utf8ToB64 = s => btoa(unescape(encodeURIComponent(s)));
 const b64ToUtf8 = s => decodeURIComponent(escape(atob(s.replace(/\n/g, ''))));
@@ -1161,9 +1251,407 @@ const AnalyticsTab = () => {
     className: "pe-ev-data"
   }, Object.entries(ev).filter(([k]) => k !== 'ts' && k !== 'name').map(([k, v]) => `${k}: ${v}`).join(' · ') || '—'))))));
 };
+
+// ============================================================
+// ContractTab — generador de contratos de arrendamiento.
+// Plantilla base: docs/contracts/template-base.md.
+// Flujo: rellenas el formulario → "Generar contrato y abrir correo"
+// abre dos cosas a la vez:
+//   1) Una ventana con el contrato listo para imprimir → guardar PDF.
+//   2) mailto: con el correo del huésped, asunto y cuerpo
+//      prerrellenados (el usuario adjunta el PDF descargado).
+// ============================================================
+const ContractTab = ({
+  pricesData
+}) => {
+  // Estado del formulario
+  const today = new Date().toISOString().slice(0, 10);
+  const [apt, setApt] = React.useState('vm');
+  const [nombre, setNombre] = React.useState('');
+  const [domicilio, setDomicilio] = React.useState('');
+  const [dni, setDni] = React.useState('');
+  const [telefono, setTelefono] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [fechaEntrada, setFechaEntrada] = React.useState('');
+  const [fechaSalida, setFechaSalida] = React.useState('');
+  const [huespedes, setHuespedes] = React.useState(2);
+  const [mascota, setMascota] = React.useState(false);
+  const [precioTotal, setPrecioTotal] = React.useState('');
+  const [prereserva, setPrereserva] = React.useState('');
+  const [diasCancelacion, setDiasCancelacion] = React.useState(14);
+  const [fianza, setFianza] = React.useState(false);
+  const [fechaFirma, setFechaFirma] = React.useState(today);
+  const aptInfo = APT_CONTRACT_DATA[apt];
+  const noches = diffNoches(fechaEntrada, fechaSalida);
+  const remanente = Math.max(0, Number(precioTotal || 0) - Number(prereserva || 0));
+
+  // Lista de extras (tabla cláusula novena) — leídos de prices.json.
+  const extras = pricesData && pricesData.rules && pricesData.rules.extras || [];
+  const formOk = () => apt && nombre && fechaEntrada && fechaSalida && noches > 0 && huespedes >= 1 && Number(precioTotal) > 0 && Number(prereserva) >= 0 && Number(prereserva) <= Number(precioTotal) && diasCancelacion > 0;
+  const buildContractHTML = () => {
+    const a = aptInfo;
+    const fechaFirmaStr = fmtFechaEs(fechaFirma);
+    const fechaEntradaStr = fmtFechaCorta(fechaEntrada);
+    const fechaSalidaStr = fmtFechaCorta(fechaSalida);
+    const precioL = numToSpanish(precioTotal);
+    const preL = numToSpanish(prereserva);
+    const remL = numToSpanish(remanente);
+    const huespL = numToSpanish(huespedes);
+    const cancelL = numToSpanish(diasCancelacion);
+    const nochesL = numToSpanish(noches);
+    const mascotaTexto = mascota ? ' y mascota' : '';
+    const lineaFianza = fianza ? '<li>Si no se ha realizado la transferencia por la fianza que se explica en el punto 2.4.</li>' : '';
+    const clausulaFianza = fianza ? `<p><strong>2.4</strong> Dos días antes de la llegada a Hestía, la Parte Arrendataria ingresará la fianza de TRESCIENTOS (300) EUROS. Esta fianza se devolverá a la finalización de la estancia, una vez revisada la vivienda, descontando los desperfectos ocasionados, si los hubiere.</p>` : '';
+    const clausulaMascotas = mascota ? 'Queda prohibida la introducción de cualquier tipo de animal doméstico o salvaje dentro de la vivienda, salvo la mascota declarada de la familia.' : 'Queda prohibida la introducción de cualquier tipo de animal doméstico o salvaje dentro de la vivienda.';
+    const bloqueAccesibilidad = a.bloqueAccesibilidad ? `
+      <p>Hestía permite acceder a la vivienda desde el garaje sin apenas escalones (no más de dos), pero no desde el portal desde donde existen unos 6 escalones aproximadamente. Dentro de Hestía, el acceso a la terraza tiene el marco de la ventana y la ducha y la bañera no están preparadas para personas con movilidad reducida, por lo que requerirían ayuda.</p>` : '';
+    const tablaExtras = extras.map(e => {
+      const labelClean = (e.label_es || '').split(' · ')[0];
+      const detail = (e.label_es || '').split(' · ').slice(1).join(' · ');
+      return `<tr>
+        <td>${labelClean}${detail ? ` <span class="ed">· ${detail}</span>` : ''}</td>
+        <td class="num">${e.price} €</td>
+        <td>${e.unit === 'noche' ? 'por noche' : e.unit === 'estancia' ? 'por estancia' : e.unit === 'hora' ? 'por hora' : 'por ' + e.unit}</td>
+      </tr>`;
+    }).join('');
+    return `<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8">
+<title>Contrato · ${a.shortName} · ${nombre}</title>
+<style>
+  @page { size: A4; margin: 18mm 18mm; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: #222; font-size: 11pt; line-height: 1.55; max-width: 174mm; margin: 0 auto; padding: 6mm 0; }
+  h1 { font-size: 16pt; text-align: center; letter-spacing: 0.04em; margin: 0 0 4mm; }
+  .lugar { text-align: center; font-style: italic; margin: 0 0 8mm; }
+  h2 { font-size: 12pt; margin: 6mm 0 2mm; letter-spacing: 0.06em; }
+  h3 { font-size: 11pt; margin: 4mm 0 1mm; text-transform: uppercase; letter-spacing: 0.04em; color: #444; }
+  p { margin: 1.5mm 0; text-align: justify; }
+  ul, ol { margin: 1mm 0 2mm 6mm; padding: 0; }
+  li { margin: 0.5mm 0; }
+  table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 10pt; }
+  th, td { text-align: left; padding: 1.5mm 2mm; border-bottom: 0.3pt solid #ccc; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td .ed { color: #666; font-size: 9pt; }
+  .firmas { margin-top: 10mm; display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; }
+  .firma { padding-top: 18mm; border-top: 0.5pt solid #888; font-size: 10pt; }
+  .firma strong { display: block; margin-bottom: 1mm; }
+  @media print { body { padding: 0; } button { display: none; } }
+  .print-bar { position: fixed; top: 10px; right: 10px; background: #fff; padding: 8px; border: 1px solid #ccc; border-radius: 4px; z-index: 100; }
+  .print-bar button { font-size: 14px; padding: 6px 14px; cursor: pointer; }
+</style></head>
+<body>
+<div class="print-bar"><button onclick="window.print()">🖨️ Imprimir / Guardar como PDF</button></div>
+
+<h1>CONTRATO DE ARRENDAMIENTO POR TEMPORADA</h1>
+<p class="lugar">Madrid, ${fechaFirmaStr}</p>
+
+<h2>REUNIDOS</h2>
+<p>Por una parte, <strong>D. Alejandro Berruezo Márquez</strong> y <strong>D. Francisco Javier Moral Arévalo</strong>, mayores de edad, y con domicilio a efectos de notificaciones en Avenida de la Constitución 38, 1A, 28821 de Coslada, Madrid, con DNI. ***DNI-RETIRADO*** y ***DNI-RETIRADO***, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ***IBAN-RETIRADO***.</p>
+<p><em>(De ahora en adelante, "Los Propietarios".)</em></p>
+<p>De otra parte, <strong>D./Dña. ${nombre.toUpperCase()}</strong>, mayor de edad, con domicilio a efectos de notificaciones en: <strong>${domicilio || '____________'}</strong>, con Documento Nacional de Identidad: <strong>${dni || '____________'}</strong>, y con teléfono: <strong>${telefono || '____________'}</strong>.</p>
+<p><em>(en adelante, "la Parte Arrendataria".)</em></p>
+<p>Ambas partes se reconocen capacidad legal suficiente para este acto y libremente,</p>
+
+<h2>EXPONEN</h2>
+<p><strong>I.</strong> Que el Propietario es titular de la siguiente finca en perfecto estado de uso:</p>
+<p><strong>VIVIENDA:</strong> Dirección: ${a.direccion}, en Vera (Almería), y plaza de garaje <strong>${a.plazaGaraje}</strong>, en las condiciones y con los muebles y servicios cuya descripción y fotografías se exponen en la página web www.hestiayourhome.com.</p>
+<p>La vivienda se entrega limpia, en perfecto estado de uso, conservación y habitabilidad y los suministros y servicios que posee la misma se encuentran en funcionamiento. La vivienda se devolverá limpia y en perfecto estado.</p>
+${bloqueAccesibilidad}
+<p>Hestía se encuentra en una zona de expansión y existen obras de construcción ${a.zonaObras}. La Parte Arrendataria da por conocida esta situación y los Propietarios no se hacen responsables de cualquier situación ocasionada por dichas obras.</p>
+<p><strong>II.</strong> Ambas partes han acordado concertar el arrendamiento por temporada de la finca antes descrita, por lo que establecen el presente contrato, que se regirá por lo dispuesto en las siguientes,</p>
+
+<h2>CLÁUSULAS</h2>
+
+<h3>Primera · Objeto</h3>
+<p>El Propietario cede en arrendamiento de temporada con la duración que se indicará a la Parte Arrendataria, que acepta, la finca descrita.</p>
+
+<h3>Segunda · Renta y fianza</h3>
+<p><strong>2.1</strong> La renta neta es de <strong>${precioL} (${precioTotal}) EUROS</strong> para <strong>${huespL} (${huespedes}) personas${mascotaTexto}</strong>. Este contrato no tendrá validez en los siguientes casos:</p>
+<ul>
+  <li>Sin el correspondiente justificante de abono en la cuenta ***IBAN-RETIRADO*** o BIZUM al teléfono +34 620 316 370 de la prereserva, es decir, <strong>${preL} (${prereserva}) EUROS</strong>. Deberá ingresarse en el momento de la formalización de este contrato.</li>
+  <li>Sin el correspondiente abono en efectivo del remanente de la estancia, es decir, <strong>${remL} (${remanente}) EUROS</strong>. Deberá pagarse en efectivo en el momento del check-in.</li>
+  <li>Si no se envía el DNI o pasaporte de cada uno de los huéspedes mayores de 16 años, como adjunto al contrato firmado.</li>
+  ${lineaFianza}
+</ul>
+<p><strong>2.2</strong> La cancelación del contrato con más de <strong>${cancelL} (${diasCancelacion}) días</strong> del inicio de la reserva no supondrá ningún coste, aunque se agradece comunicar lo antes posible la cancelación, con el fin de que otros huéspedes puedan disfrutar de Hestía.</p>
+<p><strong>2.3</strong> La cancelación del contrato con menos de <strong>${cancelL} (${diasCancelacion}) días</strong> del inicio de la estancia supondrá la pérdida de las cantidades entregadas, salvo cuestión de fuerza mayor demostrable oficialmente de alguno de los huéspedes. En este caso, si se consigue realquilar, se devolverán todas las cantidades entregadas o se podrán posponer las fechas a los próximos SEIS (6) meses desde la fecha de la estancia.</p>
+${clausulaFianza}
+
+<h3>Tercera · Duración</h3>
+<p>Este contrato se otorga por la temporada de <strong>${nochesL} (${noches}) noches</strong>, desde el día <strong>${fechaEntradaStr}</strong> a las 15:00, y quedará automáticamente resuelto sin necesidad de aviso alguno, el día <strong>${fechaSalidaStr}</strong> a las 11:00, debiendo la Parte Arrendataria entregar las llaves con anterioridad.</p>
+<p>La Parte Arrendataria deberá abandonar la finca en el estado en que la encontró, dejándola libre de efectos y enseres y permaneciendo en perfecto estado los servicios de que dispone, sin que quepa prórroga del mismo salvo acuerdo escrito entre las partes.</p>
+
+<h3>Cuarta · Obligaciones de las partes</h3>
+<p><strong>4.1</strong> La Parte Arrendataria se obliga a conservar la vivienda en perfecto estado durante el plazo de duración libremente pactado entre ambas partes.</p>
+<p><strong>4.2</strong> La Parte Arrendataria no podrá alojar a más huéspedes ni realizar en la vivienda actividades molestas, insalubres, nocivas, peligrosas, ilícitas o contrarias a los Estatutos de la Comunidad. Tampoco podrá almacenar materias inflamables, explosivas o corrosivas en la vivienda y/o desarrollar, en la misma, actividades mercantiles o de industria.</p>
+<p><strong>4.3</strong> La Parte Arrendataria será directa y exclusivamente responsable y exime de toda responsabilidad a la propiedad por: i) Los daños que puedan ocasionarse a personas o cosas y sean derivados de mal uso por la Parte Arrendataria de instalaciones para servicios y suministros de la casa de temporada arrendada. ii) Los daños, deterioros o pérdidas que se produzcan en la misma, ya sean causados por la Parte Arrendataria o por las personas que convivan en la vivienda.</p>
+<p><strong>4.4</strong> La Parte Arrendataria no podrá hacer obras, ni introducir modificación alguna sin permiso escrito del Propietario. En ningún caso podrá hacer taladros o agujeros en las paredes.</p>
+<p><strong>4.5</strong> El Propietario mantendrá los suministros de agua y luz, etc., al corriente de pago y en pleno funcionamiento, así como el seguro de la vivienda vigente.</p>
+<p><strong>4.6</strong> La Parte Arrendataria se verá obligada a la reparación y conservación de los enseres y muebles siempre que se derive por mal uso, así como de las instalaciones eléctricas y fontanería, siendo por cuenta de la parte arrendadora las obras que tengan carácter de mayores.</p>
+<p><strong>4.7</strong> ${clausulaMascotas}</p>
+<p><strong>4.8</strong> Queda prohibido el subarriendo en cualquiera de sus modalidades.</p>
+
+<h3>Quinta · Renuncias</h3>
+<p>La Parte Arrendataria renuncia a los derechos contenidos en los artículos 31 a 33 de la Ley de Arrendamientos Urbanos, y por tanto a los derechos de Arrendamiento, subrogación, cesión, o traspaso, ya sean de forma total o parcial, tanteo, retracto y derecho de impugnación de la transmisión.</p>
+
+<h3>Sexta · Cláusula penal</h3>
+<p>El incumplimiento de la obligación de abandonar la Vivienda en el plazo pactado obligará a la Parte Arrendataria a satisfacer en concepto de cláusula penal, la suma correspondiente al triple de la renta diaria, exigibles por semanas vencidas hasta la libre disponibilidad de la vivienda por el Propietario, sin perjuicio de las costas, gastos y demás indemnizaciones que fueran a su cargo incluso minutas de abogado y procurador, aunque no fuera preceptiva su intervención.</p>
+
+<h3>Séptima · Jurisdicción</h3>
+<p>Las partes integrantes se someten a la jurisdicción y competencia de los tribunales y juzgados del lugar donde está situada la vivienda, con renuncia expresa a su fuero propio.</p>
+<p>Ambas partes se ratifican en el presente contrato y firman por duplicado, a un solo efecto, en el lugar y fecha indicados en el encabezamiento.</p>
+
+<h3>Octava · Servicios incluidos</h3>
+<p>El apartamento se entrega limpio y dotado.</p>
+<ul>
+  <li>Un juego de toallas por cada huésped.</li>
+  <li>${a.bloqueSabanas}</li>
+</ul>
+
+<h3>Novena · Servicios adicionales</h3>
+<p>Los siguientes servicios pueden añadirse a la reserva. Precios sincronizados con la web:</p>
+<table>
+  <thead><tr><th>Servicio</th><th class="num">Precio</th><th>Unidad</th></tr></thead>
+  <tbody>${tablaExtras}</tbody>
+</table>
+
+<h3>Décima · Normas de Hestía</h3>
+<p>Hestía dispone de productos consumibles. Por favor, sed colaborativos: si gastáis o consumís, reponed (salvo el kit que es un pequeño regalo por nuestra parte).</p>
+<p>Respetad el medio ambiente e intentad no malgastar la luz y el agua. En vuestro hogar no dejaríais el aire acondicionado encendido con las ventanas abiertas o cuando no estáis en casa. Pues eso, sentíos como en vuestro hogar.</p>
+<p>Asimismo, si salís, recoged los cojines, el toldo, las plantas de la terraza, especialmente si hay viento, lluvia o predicción de mal tiempo.</p>
+<p>Respetad y no extraigáis de Hestía el equipamiento, el contenido, el mobiliario y los detalles. Tras vuestra estancia se realizará un inventario e inspección de Hestía, con lo que cualquier deterioro o sustracción será vuestra responsabilidad.</p>
+<p>Nuestro máximo deseo es que descanséis y que respetéis igualmente el descanso de nuestros vecinos, evitando los ruidos, la música y el jaleo a deshoras. Hestía es exclusivamente para vuestro uso y disfrute, no para el de otros.</p>
+<p>Respetad las horas de check-in (a partir de las 15:00) y check-out (hasta las 11:00). No están permitidas las mascotas, salvo aprobación explícita. No fuméis. Las toallas son para uso exclusivo dentro de Hestía. Solo está permitido colgar ropa en el tendedero. El uso de las zonas comunes será en el horario permitido, especialmente la piscina. No está permitido el naturismo ni el toples en toda la urbanización, ya que se trata de una urbanización textil. Cualquier incidente o problemática derivada de los menores de edad será responsabilidad de sus padres/tutores. Cualquier situación o incidente de los servicios comunes o del exterior de Hestía no es responsabilidad nuestra, aunque intentaremos ayudarte. Por favor, intenta dejar Hestía limpio y recogido. De las sábanas y toallas nos encargamos nosotros. En cualquier caso, no laves las toallas y sábanas con ropa de otro color, por favor.</p>
+
+<div class="firmas">
+  <div class="firma">
+    <strong>Los Propietarios</strong> <em style="font-weight:normal">(con una es suficiente)</em><br>
+    Fdo.: Alejandro Berruezo Márquez<br>
+    Fdo.: Francisco Javier Moral Arévalo
+  </div>
+  <div class="firma">
+    <strong>La Parte Arrendataria</strong><br>
+    Fdo.: <strong>${nombre.toUpperCase()}</strong>
+  </div>
+</div>
+
+</body></html>`;
+  };
+  const buildEmailBody = () => {
+    const fechaEntradaStr = fmtFechaCorta(fechaEntrada);
+    const fechaSalidaStr = fmtFechaCorta(fechaSalida);
+    const apartamento = aptInfo.shortName;
+    return `Estimado/a ${nombre},
+
+¡Muchas gracias por tu interés en Hestía! Adjunto encontrarás el contrato de arrendamiento para tu estancia en Hestía Vera ${apartamento} del ${fechaEntradaStr} al ${fechaSalidaStr}.
+
+Para confirmar tu reserva necesitamos que nos hagas llegar:
+
+1. El contrato firmado por todas las partes (puedes contestar a este correo con el PDF firmado adjunto).
+2. El DNI o pasaporte de cada huésped mayor de 16 años.
+3. El justificante de la prereserva de ${prereserva} €, ingresada por transferencia a la cuenta ***IBAN-RETIRADO*** o BIZUM al teléfono +34 620 316 370.
+
+El remanente de ${remanente} € se abona en efectivo el día de la llegada, en el momento del check-in.
+
+Recibida toda la documentación, tu reserva quedará confirmada y te escribiremos unos días antes de tu llegada para coordinar el check-in (autónomo o presencial, lo que te encaje mejor).
+
+Si tienes cualquier duda, escríbenos sin problema.
+
+Un abrazo,
+Alex y Fran · Hestía
+info@hestiayourhome.com · +34 620 316 370`;
+  };
+  const onGenerar = () => {
+    if (!formOk()) {
+      alert('Faltan campos por rellenar. Comprueba que el huésped tiene nombre, fechas y precio total > 0, y que la prereserva no supere el total.');
+      return;
+    }
+    // 1. Abrir ventana con el contrato (auto-print después de un momento)
+    const html = buildContractHTML();
+    const w = window.open('', '_blank');
+    if (w) {
+      w.document.open();
+      w.document.write(html);
+      w.document.close();
+      // Da tiempo al render antes de imprimir
+      setTimeout(() => {
+        try {
+          w.focus();
+          w.print();
+        } catch (e) {}
+      }, 700);
+    } else {
+      alert('Tu navegador ha bloqueado la ventana emergente. Permite popups en /p-edit.html y vuelve a intentarlo.');
+      return;
+    }
+    // 2. Abrir mailto en otra pestaña (después de un instante para no romper la ventana de impresión)
+    setTimeout(() => {
+      const subject = `Contrato de reserva · Hestía Vera ${aptInfo.shortName} · ${fmtFechaCorta(fechaEntrada)} → ${fmtFechaCorta(fechaSalida)}`;
+      const body = buildEmailBody();
+      const mailto = `mailto:${encodeURIComponent(email || '')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
+    }, 1500);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDCC4 Generar contrato"), /*#__PURE__*/React.createElement("p", {
+    className: "pe-help"
+  }, "Rellena los datos del hu\xE9sped. El precio total lo dictas t\xFA \xB7 la fecha de firma se rellena con la de hoy (puedes cambiarla). Al pulsar ", /*#__PURE__*/React.createElement("strong", null, "Generar contrato y abrir correo"), " se abren dos ventanas: el contrato listo para guardar como PDF y tu cliente de correo con el mensaje prerrellenado al hu\xE9sped. Recuerda ", /*#__PURE__*/React.createElement("strong", null, "adjuntar manualmente"), " el PDF descargado al correo antes de enviarlo (los navegadores no permiten adjuntar autom\xE1ticamente desde un ", /*#__PURE__*/React.createElement("code", null, "mailto:"), ")."), /*#__PURE__*/React.createElement("div", {
+    className: "ct-form"
+  }, /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Apartamento"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-grid"
+  }, Object.entries(APT_CONTRACT_DATA).map(([id, info]) => /*#__PURE__*/React.createElement("label", {
+    key: id,
+    className: `ct-radio ${apt === id ? 'is-active' : ''}`
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "radio",
+    name: "apt",
+    value: id,
+    checked: apt === id,
+    onChange: () => setApt(id)
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "ct-radio-name"
+  }, info.name), /*#__PURE__*/React.createElement("span", {
+    className: "ct-radio-meta"
+  }, "Plaza ", info.plazaGaraje))))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Datos del hu\xE9sped"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-grid"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Nombre completo *"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: nombre,
+    onChange: e => setNombre(e.target.value),
+    placeholder: "V\xCDCTOR CORT\xC9S"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "DNI o pasaporte"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: dni,
+    onChange: e => setDni(e.target.value),
+    placeholder: "12345678A"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field",
+    style: {
+      gridColumn: '1 / -1'
+    }
+  }, /*#__PURE__*/React.createElement("label", null, "Domicilio"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    value: domicilio,
+    onChange: e => setDomicilio(e.target.value),
+    placeholder: "C/ Mayor 10, 1\xBAB, 28013 Madrid"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Tel\xE9fono"), /*#__PURE__*/React.createElement("input", {
+    type: "tel",
+    value: telefono,
+    onChange: e => setTelefono(e.target.value),
+    placeholder: "+34 600 000 000"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Email *"), /*#__PURE__*/React.createElement("input", {
+    type: "email",
+    value: email,
+    onChange: e => setEmail(e.target.value),
+    placeholder: "huesped@ejemplo.com"
+  })))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Estancia"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-grid"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Fecha de entrada *"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    value: fechaEntrada,
+    onChange: e => setFechaEntrada(e.target.value)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Fecha de salida *"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    value: fechaSalida,
+    onChange: e => setFechaSalida(e.target.value)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Noches (calculado)"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    readOnly: true,
+    value: noches,
+    className: "ct-readonly"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "N\xBA de hu\xE9spedes"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    max: "8",
+    value: huespedes,
+    onChange: e => setHuespedes(Number(e.target.value))
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "\xBFMascota?"), /*#__PURE__*/React.createElement("label", {
+    className: "ct-toggle"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: mascota,
+    onChange: e => setMascota(e.target.checked)
+  }), " ", /*#__PURE__*/React.createElement("span", null, "S\xED, viaja con mascota"))))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Importes (\u20AC)"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-grid"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Precio total *"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    value: precioTotal,
+    onChange: e => setPrecioTotal(e.target.value),
+    placeholder: "630"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Prereserva (Bizum / transferencia) *"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    value: prereserva,
+    onChange: e => setPrereserva(e.target.value),
+    placeholder: "130"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Remanente (efectivo en check-in)"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    readOnly: true,
+    value: `${remanente} €`,
+    className: "ct-readonly"
+  })))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Pol\xEDtica"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-grid"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "D\xEDas de cancelaci\xF3n sin coste *"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    max: "60",
+    value: diasCancelacion,
+    onChange: e => setDiasCancelacion(Number(e.target.value))
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "\xBFFianza?"), /*#__PURE__*/React.createElement("label", {
+    className: "ct-toggle"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: fianza,
+    onChange: e => setFianza(e.target.checked)
+  }), " ", /*#__PURE__*/React.createElement("span", null, "S\xED, 300 \u20AC (transferencia 2 d\xEDas antes)"))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Fecha del contrato (firma)"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    value: fechaFirma,
+    onChange: e => setFechaFirma(e.target.value)
+  })))), /*#__PURE__*/React.createElement("div", {
+    className: "ct-actions"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-primary",
+    onClick: onGenerar,
+    disabled: !formOk()
+  }, "\uD83D\uDCE8 Generar contrato y abrir correo"), !formOk() && /*#__PURE__*/React.createElement("span", {
+    className: "ct-actions-hint"
+  }, "Faltan campos obligatorios (marcados con *)."))));
+};
 const AdminApp = () => {
   const [phase, setPhase] = React.useState('login');
-  const [mode, setMode] = React.useState('pricing'); // 'pricing' | 'reviews'
+  const [mode, setMode] = React.useState('pricing'); // 'pricing' | 'reviews' | 'analytics' | 'contract'
   const [token, setToken] = React.useState('');
   const [data, setData] = React.useState(null);
   const [sha, setSha] = React.useState(null);
@@ -1578,11 +2066,21 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCCA Anal\xEDtica")), success && /*#__PURE__*/React.createElement("div", {
+  }, "\uD83D\uDCCA Anal\xEDtica"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'contract' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('contract');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCC4 Contrato")), success && /*#__PURE__*/React.createElement("div", {
     className: "pe-success"
   }, success), error && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
-  }, error), mode === 'analytics' ? /*#__PURE__*/React.createElement(AnalyticsTab, null) : mode === 'reviews' ? renderReviewsTab() : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, error), mode === 'analytics' ? /*#__PURE__*/React.createElement(AnalyticsTab, null) : mode === 'contract' ? /*#__PURE__*/React.createElement(ContractTab, {
+    pricesData: data
+  }) : mode === 'reviews' ? renderReviewsTab() : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("h2", null, "Precios base por noche \xB7 2 hu\xE9spedes \xB7 temporada baja"), /*#__PURE__*/React.createElement("div", {
     className: "pe-grid"
