@@ -14,19 +14,26 @@
 //        — warm:   bermellón cálido (atardecer, dorado)
 //        — night:  azul profundo (noche cerrada, estrellas)
 // Para crear un mood nuevo: añade ::before override en styles.css.
+// Los .mp4 viven en docs/assets/Videoshome/ y todos vienen procesados
+// con grading + sharpening y loop circular (xfade end→start) para que
+// el bucle sea imperceptible.
 const HERO_VIDEOS = [
-  { src: 'assets/playa-almeria.mp4',
+  { src: 'assets/Videoshome/hero-playa-almeria.mp4',
     poster: 'assets/hero-terrace-night.jpg',
     mood: 'violet',
-    alt: 'Playa de Almería al atardecer' },
-  { src: 'assets/7777897352361363392.mp4',
+    alt: 'Costa aérea · turquesa' },
+  { src: 'assets/Videoshome/hero-cabo-gata-mediodia.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'teal',
+    alt: 'Cabo de Gata · mediodía' },
+  { src: 'assets/Videoshome/hero-atardecer-aereo.mp4',
     poster: 'assets/hero-terrace-night.jpg',
     mood: 'warm',
-    alt: 'Atardecer · Vera Playa' },
-  // Ejemplos para cuando subas más vídeos:
-  // { src: 'assets/hero-cabo-gata.mp4',  poster: 'assets/hero-cabo-gata.jpg',  mood: 'teal',  alt: 'Cabo de Gata' },
-  // { src: 'assets/hero-mojacar.mp4',    poster: 'assets/hero-mojacar.jpg',    mood: 'warm',  alt: 'Atardecer en Mojácar' },
-  // { src: 'assets/hero-salinas.mp4',    poster: 'assets/hero-salinas.jpg',    mood: 'night', alt: 'Salinas al anochecer' },
+    alt: 'Atardecer aéreo sobre la playa' },
+  // Para añadir un vídeo: súbelo a docs/assets/Videoshome/ y añade
+  // una entrada con la misma forma. Para hacerlo circular, procesa
+  // con ffmpeg crossfade end→start (ver scripts/build-pdf.mjs para
+  // el comando exacto que usamos). Moods: violet | teal | warm | night.
 ];
 
 // --- HERO cinematográfico ---
