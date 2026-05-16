@@ -162,6 +162,51 @@ const OpinionesQuotesMarquee = ({ lang }) => {
   );
 };
 
+const REVIEW_WORDS = 25; // palabras visibles antes del "leer más"
+
+const ReviewCard = ({ rev, lang, fmtDate }) => {
+  const meta = SOURCE_META[rev.source] || SOURCE_META.web;
+  const stars = ratingToStars(rev.rating, rev.source);
+  const aptColor = APT_ACCENT[rev.apt] || APT_ACCENT.all;
+  const aptName = APT_FULL[rev.apt] || 'Hestía';
+  const text = rev.text || '';
+  const words = text.split(/\s+/);
+  const needsTrunc = words.length > REVIEW_WORDS;
+  const [open, setOpen] = React.useState(false);
+  const displayed = needsTrunc && !open ? words.slice(0, REVIEW_WORDS).join(' ') + '…' : text;
+
+  return (
+    <article
+      className="testimonial-card"
+      data-apt={rev.apt}
+      data-source={rev.source}
+      style={{ '--apt-color': aptColor, '--src-color': meta.color }}
+    >
+      <span className="testimonial-stripe" aria-hidden="true"/>
+      <header className="testimonial-head">
+        <span className="testimonial-source-pill">{meta.short}</span>
+        <span className="testimonial-apt-pill">{aptName}</span>
+      </header>
+      <span className="testimonial-quote-mark" aria-hidden="true">"</span>
+      <blockquote className="testimonial-quote">{displayed}</blockquote>
+      {needsTrunc && (
+        <button type="button" className="testimonial-expand-btn" onClick={() => setOpen(o => !o)}>
+          {open
+            ? (lang === 'es' ? 'Leer menos' : 'Show less')
+            : (lang === 'es' ? 'Leer más' : 'Read more')}
+        </button>
+      )}
+      <footer className="testimonial-foot">
+        <div className="testimonial-foot-left">
+          <span className="testimonial-name">{rev.name}</span>
+          <span className="testimonial-year">{fmtDate(rev.date)}</span>
+        </div>
+        <Stars count={stars}/>
+      </footer>
+    </article>
+  );
+};
+
 // Filtros: todas | Booking | Airbnb | Google | Web.
 // Por defecto muestra "highlights" + recientes; expandible al resto.
 // ============================================================
@@ -294,36 +339,9 @@ const OpinionesTestimonials = ({ lang }) => {
               </div>
             )}
             <div className="testimonials-grid">
-              {visible.map((rev) => {
-                const meta = SOURCE_META[rev.source] || SOURCE_META.web;
-                const stars = ratingToStars(rev.rating, rev.source);
-                const aptColor = APT_ACCENT[rev.apt] || APT_ACCENT.all;
-                const aptName = APT_FULL[rev.apt] || 'Hestía';
-                return (
-                  <article
-                    key={rev.id}
-                    className="testimonial-card"
-                    data-apt={rev.apt}
-                    data-source={rev.source}
-                    style={{ '--apt-color': aptColor, '--src-color': meta.color }}
-                  >
-                    <span className="testimonial-stripe" aria-hidden="true"/>
-                    <header className="testimonial-head">
-                      <span className="testimonial-source-pill">{meta.short}</span>
-                      <span className="testimonial-apt-pill">{aptName}</span>
-                    </header>
-                    <span className="testimonial-quote-mark" aria-hidden="true">“</span>
-                    <blockquote className="testimonial-quote">{rev.text}</blockquote>
-                    <footer className="testimonial-foot">
-                      <div className="testimonial-foot-left">
-                        <span className="testimonial-name">{rev.name}</span>
-                        <span className="testimonial-year">{fmtDate(rev.date)}</span>
-                      </div>
-                      <Stars count={stars}/>
-                    </footer>
-                  </article>
-                );
-              })}
+              {visible.map((rev) => (
+                <ReviewCard key={rev.id} rev={rev} lang={lang} fmtDate={fmtDate} />
+              ))}
             </div>
             {rest.length > 0 && (
               <div className="opiniones-expand-wrap reveal">

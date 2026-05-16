@@ -16496,6 +16496,23 @@ img[src*="apt-vt-gallery-"] {
   flex: 1;
   padding: 0;
 }
+.testimonial-expand-btn {
+  display: inline-block;
+  margin: -8px 22px 12px;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--apt-color, var(--ber));
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity .2s;
+}
+.testimonial-expand-btn:hover { opacity: 1; }
 .testimonial-foot {
   display: flex;
   align-items: center;
