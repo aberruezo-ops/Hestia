@@ -10179,24 +10179,43 @@ footer,
 }
 .ag-nav-btn:active { transform: scale(0.97); }
 
-/* Mobile: collapsible nav ---------------------------------------- */
+/* Mobile: botón de índice siempre visible (sticky) --------------- */
 .ag-nav-toggle {
   display: none;
 }
 @media (max-width: 900px) {
   .ag-nav-toggle {
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
-    margin: 24px var(--page-pad) 0;
-    padding: 12px 18px;
-    border: 1px solid color-mix(in srgb, var(--apt-accent) 35%, transparent);
-    background: var(--crema);
-    color: var(--apt-accent);
-    border-radius: 999px;
-    font-size: 14px;
+    /* Sticky: se queda pegado bajo el header al hacer scroll */
+    position: sticky;
+    top: calc(var(--topbar-h, 36px) + 64px);
+    z-index: 50;
+    width: 100%;
+    margin: 20px 0 0;
+    padding: 14px 20px;
+    /* Botón corporativo Hestía */
+    background: var(--apt-accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px 0 10px 0;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     cursor: pointer;
+    box-shadow: 0 4px 18px color-mix(in srgb, var(--apt-accent) 40%, transparent);
+    transition: background 0.18s ease, box-shadow 0.18s ease;
   }
+  .ag-nav-toggle:hover {
+    background: color-mix(in srgb, var(--apt-accent) 85%, var(--ber-dk));
+    box-shadow: 0 6px 24px color-mix(in srgb, var(--apt-accent) 50%, transparent);
+  }
+  .ag-nav-toggle:active { transform: scale(0.98); }
+}
   .ag-nav {
     position: fixed;
     inset: 0 0 0 auto;
