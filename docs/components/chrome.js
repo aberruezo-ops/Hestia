@@ -410,15 +410,10 @@ const Header = ({
     title: lang === 'es' ? 'Guía del huésped' : 'Guest guide'
   }, "\uD83D\uDD11"))), /*#__PURE__*/React.createElement("div", {
     className: "mn-sep"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "mn-mid-row"
-  }, /*#__PURE__*/React.createElement(NavLink, {
+  }), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.porqueHestia,
-    className: "mn-mid-why"
-  }, "\u2192 ", lang === 'es' ? 'Por qué Hestía' : 'Why Hestía'), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.ventajas,
-    className: "mn-mid-ventajas"
-  }, "\u2713 ", lang === 'es' ? 'Reserva directa' : 'Direct booking')), /*#__PURE__*/React.createElement("div", {
+    className: "mn-mid-why mn-mid-why-full"
+  }, "\u2192 ", lang === 'es' ? 'Por qué Hestía' : 'Why Hestía'), /*#__PURE__*/React.createElement("div", {
     className: "mn-sep"
   }), /*#__PURE__*/React.createElement("div", {
     className: "mn-pages-row"
@@ -434,10 +429,15 @@ const Header = ({
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.contacto,
     className: "mn-page"
-  }, t.nav[6])), /*#__PURE__*/React.createElement(NavLink, {
+  }, t.nav[6])), /*#__PURE__*/React.createElement("div", {
+    className: "mn-cta-row"
+  }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
     className: "mobile-cta"
-  }, t.cta_nav, " \u2192"), /*#__PURE__*/React.createElement("div", {
+  }, t.cta_nav, " \u2192"), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.ventajas,
+    className: "mn-mid-ventajas mn-ventajas-inline"
+  }, "\u2713 ", lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks')), /*#__PURE__*/React.createElement("div", {
     className: "mn-contacts"
   }, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370",

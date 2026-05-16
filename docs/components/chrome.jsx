@@ -289,14 +289,9 @@ const Header = ({ mode, scrolled, lang }) => {
             </div>
           </div>
           <div className="mn-sep"/>
-          <div className="mn-mid-row">
-            <NavLink href={NAV_PAGES.porqueHestia} className="mn-mid-why">
-              → {lang === 'es' ? 'Por qué Hestía' : 'Why Hestía'}
-            </NavLink>
-            <NavLink href={NAV_PAGES.ventajas} className="mn-mid-ventajas">
-              ✓ {lang === 'es' ? 'Reserva directa' : 'Direct booking'}
-            </NavLink>
-          </div>
+          <NavLink href={NAV_PAGES.porqueHestia} className="mn-mid-why mn-mid-why-full">
+            → {lang === 'es' ? 'Por qué Hestía' : 'Why Hestía'}
+          </NavLink>
           <div className="mn-sep"/>
           <div className="mn-pages-row">
             <NavLink href={NAV_PAGES.nosotros} className="mn-page">{t.nav[4]}</NavLink>
@@ -304,7 +299,12 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.noticias} className="mn-page">{t.nav[7]}</NavLink>
             <NavLink href={NAV_PAGES.contacto} className="mn-page">{t.nav[6]}</NavLink>
           </div>
-          <NavLink href={NAV_PAGES.reservas} className="mobile-cta">{t.cta_nav} →</NavLink>
+          <div className="mn-cta-row">
+            <NavLink href={NAV_PAGES.reservas} className="mobile-cta">{t.cta_nav} →</NavLink>
+            <NavLink href={NAV_PAGES.ventajas} className="mn-mid-ventajas mn-ventajas-inline">
+              ✓ {lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks'}
+            </NavLink>
+          </div>
           <div className="mn-contacts">
             <a href="https://wa.me/34620316370" target="_blank" rel="noopener">
               <span className="tl-dot"/>Alex · +34 620 316 370
