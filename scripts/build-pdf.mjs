@@ -910,6 +910,24 @@ section.no-break {
   text-transform: uppercase;
   font-size: 7.5pt;
 }
+.place-level {
+  margin-top: 2mm;
+  padding: 1.5mm 2.5mm;
+  font-size: 9pt;
+  line-height: 1.45;
+  color: var(--ber-dk);
+  background: rgba(232, 194, 107, 0.18);
+  border-left: 1pt solid var(--sol);
+  border-radius: 1mm;
+}
+.place-level-tag {
+  font-weight: 600;
+  color: var(--ber);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 7.5pt;
+  margin-right: 1mm;
+}
 .place-events {
   margin-top: 2mm;
   padding: 2mm 3mm;
@@ -1511,7 +1529,7 @@ function renderPlacesRich(PLACES, CATEGORIES, aptData, lang) {
   // Categorías que valen la pena imprimir en el PDF (no incluimos los Hestía,
   // ni "home", para no duplicar). Orden editorial: comer → beber → playas →
   // mercados → celíaco → actividades → pescaderías.
-  const CAT_ORDER = ['restaurant', 'bar', 'beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog', 'market', 'celiac', 'activity', 'fish', 'super', 'fuel', 'ev-charge', 'town', 'culture'];
+  const CAT_ORDER = ['restaurant', 'bar', 'beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog', 'market', 'celiac', 'activity', 'sport', 'fish', 'super', 'fuel', 'ev-charge', 'town', 'culture'];
   const catsById = new Map(CATEGORIES.map(c => [c.id, c]));
 
   const byCat = {};
@@ -1571,6 +1589,7 @@ function renderPlacesRich(PLACES, CATEGORIES, aptData, lang) {
               </div>` : ''}
             ${p.services ? `<div class="place-meta">${esc(p.services)}</div>` : ''}
             ${p.access ? `<div class="place-meta">${esc(p.access)}</div>` : ''}
+            ${p.level ? `<div class="place-level"><span class="place-level-tag">${lang === 'es' ? 'Dificultad:' : 'Level:'}</span> ${esc(p.level)}</div>` : ''}
           </div>`;
         }).join('')}
       </div>`);
