@@ -1145,11 +1145,20 @@ const ContractTab = ({ pricesData }) => {
     const heroUrl = assetUrl(a.heroPhoto);
     return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
+<base href="${origin}${baseDir}">
 <title>Contrato · Hestía Vera ${a.shortName} · ${nombre}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
+  /* Forzar a Chrome/Edge a imprimir los colores de fondo y los
+     degradados de la portada hero. Sin esto, la cabecera con la
+     foto se imprime en blanco al exportar a PDF. */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
   :root {
     --ber: #3D1A35;
     --ber-dk: #2A0F2E;
@@ -1163,19 +1172,36 @@ const ContractTab = ({ pricesData }) => {
   }
   @page {
     size: A4;
-    margin: 16mm 16mm 22mm 16mm;
+    margin: 22mm 16mm 22mm 16mm;
+    @top-left {
+      content: "HESTÍA  ·  contrato de arrendamiento";
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 9pt;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: #3D1A35;
+      padding-top: 6mm;
+    }
+    @top-right {
+      content: "Hestía Vera ${a.shortName}";
+      font-family: 'Lora', Georgia, serif;
+      font-size: 9pt;
+      font-style: italic;
+      color: #3AAABB;
+      padding-top: 6mm;
+    }
     @bottom-left {
-      content: "Hestía Your Home · info@hestiayourhome.com · +34 620 316 370";
+      content: "Hestía Your Home  ·  info@hestiayourhome.com  ·  +34 620 316 370";
       font-family: 'Lora', Georgia, serif;
       font-size: 8pt;
       color: #4E2446;
-      padding-bottom: 4mm;
+      padding-bottom: 6mm;
     }
     @bottom-center {
       content: "✦";
       color: #3AAABB;
       font-size: 10pt;
-      padding-bottom: 4mm;
+      padding-bottom: 6mm;
     }
     @bottom-right {
       content: "Página " counter(page) " de " counter(pages);
@@ -1183,8 +1209,14 @@ const ContractTab = ({ pricesData }) => {
       font-size: 8.5pt;
       font-weight: 600;
       color: #3D1A35;
-      padding-bottom: 4mm;
+      padding-bottom: 6mm;
     }
+  }
+  @page :first {
+    /* La primera página no necesita header de texto porque ya
+       lleva la cabecera completa de marca con logo y la foto hero. */
+    @top-left   { content: ""; }
+    @top-right  { content: ""; }
   }
   /* Cabecera de marca al inicio (página 1) */
   .brand-header {
@@ -1329,6 +1361,20 @@ const ContractTab = ({ pricesData }) => {
   }
   p strong { color: var(--ber-dk); }
   p em { color: var(--ber-lt); }
+
+  /* Línea para rellenar a mano cuando falta DNI / dirección /
+     teléfono. Se imprime como un guion bajo continuo de ancho
+     fijo. El huésped la rellena con bolígrafo. */
+  .blank-line {
+    display: inline-block;
+    border-bottom: 0.6pt solid var(--ber-lt);
+    min-width: 55mm;
+    height: 4mm;
+    vertical-align: baseline;
+    margin: 0 1mm;
+  }
+  .blank-line.short { min-width: 30mm; }
+  .blank-line.long  { min-width: 80mm; }
   ul, ol { margin: 1mm 0 2mm 6mm; padding: 0; color: var(--ber); }
   li { margin: 0.8mm 0; }
   li::marker { color: var(--sol); }
@@ -1417,13 +1463,31 @@ const ContractTab = ({ pricesData }) => {
     position: fixed;
     top: 10px;
     right: 10px;
+    max-width: 300px;
     background: var(--arena);
     border: 1pt solid var(--ber);
-    border-radius: 4px;
-    padding: 6px 10px;
+    border-radius: 6px;
+    padding: 10px 12px;
     z-index: 100;
     box-shadow: 0 2px 8px rgba(61,26,53,0.15);
+    font-family: 'Lora', sans-serif;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--ber);
   }
+  .print-bar h4 {
+    margin: 0 0 4px;
+    font-family: 'Playfair Display', serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ber-dk);
+  }
+  .print-bar ul {
+    margin: 0 0 8px 14px;
+    padding: 0;
+    font-size: 10.5px;
+  }
+  .print-bar ul li { margin: 2px 0; }
   .print-bar button {
     background: var(--ber);
     color: var(--arena);
@@ -1432,13 +1496,22 @@ const ContractTab = ({ pricesData }) => {
     font-family: 'Lora', sans-serif;
     font-size: 13px;
     font-weight: 600;
-    padding: 6px 16px;
+    padding: 8px 16px;
     cursor: pointer;
+    width: 100%;
   }
   .print-bar button:hover { background: var(--ber-lt); }
 </style></head>
 <body>
-<div class="print-bar"><button onclick="window.print()">Imprimir / Guardar como PDF</button></div>
+<div class="print-bar">
+  <h4>Ajustes recomendados</h4>
+  <ul>
+    <li><strong>Gráficos de fondo:</strong> activado</li>
+    <li><strong>Encabezados y pies:</strong> desactivado</li>
+    <li><strong>Márgenes:</strong> predeterminado</li>
+  </ul>
+  <button onclick="window.print()">Imprimir / Guardar como PDF</button>
+</div>
 
 <div class="brand-header">
   <img src="${logoUrl}" alt="Hestía" class="brand-header-logo">
@@ -1464,7 +1537,7 @@ const ContractTab = ({ pricesData }) => {
 <h2>Reunidos</h2>
 <p>Por una parte, <strong>D. Alejandro Berruezo Márquez</strong> y <strong>D. Francisco Javier Moral Arévalo</strong>, mayores de edad, y con domicilio a efectos de notificaciones en Avenida de la Constitución 38, 1A, 28821 de Coslada, Madrid, con DNI. ***DNI-RETIRADO*** y ***DNI-RETIRADO***, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ***IBAN-RETIRADO***.</p>
 <p><em>(De ahora en adelante, "Los Propietarios".)</em></p>
-<p>De otra parte, <strong>D./Dña. ${nombre.toUpperCase()}</strong>, mayor de edad, con domicilio a efectos de notificaciones en: <strong>${domicilio || '____________'}</strong>, con Documento Nacional de Identidad: <strong>${dni || '____________'}</strong>, y con teléfono: <strong>${telefono || '____________'}</strong>.</p>
+<p>De otra parte, <strong>D./Dña. ${nombre.toUpperCase()}</strong>, mayor de edad, con domicilio a efectos de notificaciones en: ${domicilio ? `<strong>${domicilio}</strong>` : '<span class="blank-line long" aria-label="dirección a rellenar"></span>'}, con Documento Nacional de Identidad: ${dni ? `<strong>${dni}</strong>` : '<span class="blank-line short" aria-label="DNI a rellenar"></span>'}, y con teléfono: ${telefono ? `<strong>${telefono}</strong>` : '<span class="blank-line short" aria-label="teléfono a rellenar"></span>'}.</p>
 <p><em>(en adelante, "la Parte Arrendataria".)</em></p>
 <p>Ambas partes se reconocen capacidad legal suficiente para este acto y libremente,</p>
 
@@ -1591,8 +1664,29 @@ info@hestiayourhome.com · +34 620 316 370`;
       w.document.open();
       w.document.write(html);
       w.document.close();
-      // Da tiempo al render antes de imprimir
-      setTimeout(() => { try { w.focus(); w.print(); } catch (e) {} }, 700);
+      // Esperar a que las imágenes (logo + hero por apt) y las fuentes
+      // (Playfair Display / Lora) carguen antes de invocar print().
+      // Sin esto, el PDF puede salir sin la cabecera de marca ni la
+      // foto del apartamento.
+      const triggerPrint = () => { try { w.focus(); w.print(); } catch (e) {} };
+      const waitForAssets = () => {
+        try {
+          const imgs = Array.from(w.document.images || []);
+          const imgPromises = imgs.map(img =>
+            img.complete && img.naturalWidth > 0
+              ? Promise.resolve()
+              : new Promise(r => { img.onload = img.onerror = r; })
+          );
+          const fontsReady = (w.document.fonts && w.document.fonts.ready) || Promise.resolve();
+          Promise.all([...imgPromises, fontsReady])
+            .then(() => setTimeout(triggerPrint, 250))
+            .catch(() => setTimeout(triggerPrint, 1500));
+        } catch (e) {
+          setTimeout(triggerPrint, 1500);
+        }
+      };
+      if (w.document.readyState === 'complete') waitForAssets();
+      else w.addEventListener('load', waitForAssets);
     } else {
       alert('Tu navegador ha bloqueado la ventana emergente. Permite popups en /p-edit.html y vuelve a intentarlo.');
       return;
