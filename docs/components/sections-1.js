@@ -4,6 +4,30 @@
 // HESTÍA — Secciones de la home
 // ================================================================
 
+// --- HERO · galería rotatoria de vídeos de fondo ----------------
+// Cada visita a la home elige un vídeo al azar de esta lista. La
+// clase `mood-*` modula el "velo" (gradientes de .hero::before) para
+// que combine con la luz del clip. Para añadir uno nuevo basta con:
+//   1. Subir el .mp4 a docs/assets/
+//   2. Añadir aquí un objeto { src, poster, mood, alt }
+//      · mood ∈ 'violet' | 'teal' | 'warm' | 'night'
+//        — violet: velo morado (atmósfera nocturna, marina suave)
+//        — teal:   azul mediterráneo (día, agua clara)
+//        — warm:   bermellón cálido (atardecer, dorado)
+//        — night:  azul profundo (noche cerrada, estrellas)
+// Para crear un mood nuevo: añade ::before override en styles.css.
+const HERO_VIDEOS = [{
+  src: 'assets/playa-almeria.mp4',
+  poster: 'assets/hero-terrace-night.jpg',
+  mood: 'violet',
+  alt: 'Playa de Almería al atardecer'
+}
+// Ejemplos para cuando subas más vídeos:
+// { src: 'assets/hero-cabo-gata.mp4',  poster: 'assets/hero-cabo-gata.jpg',  mood: 'teal',  alt: 'Cabo de Gata' },
+// { src: 'assets/hero-mojacar.mp4',    poster: 'assets/hero-mojacar.jpg',    mood: 'warm',  alt: 'Atardecer en Mojácar' },
+// { src: 'assets/hero-salinas.mp4',    poster: 'assets/hero-salinas.jpg',    mood: 'night', alt: 'Salinas al anochecer' },
+];
+
 // --- HERO cinematográfico ---
 const Hero = ({
   lang,
@@ -11,6 +35,13 @@ const Hero = ({
 }) => {
   const t = COPY[lang];
   const bgVideoRef = React.useRef(null);
+
+  // Elegimos el vídeo una sola vez al montar (no en cada render),
+  // para que el componente no haga "flicker" si algo re-renderiza.
+  const pick = React.useMemo(() => {
+    const i = Math.floor(Math.random() * HERO_VIDEOS.length);
+    return HERO_VIDEOS[i] || HERO_VIDEOS[0];
+  }, []);
   React.useEffect(() => {
     // Force autoplay — declarative autoPlay can be blocked on mobile
     const tryPlay = el => {
@@ -32,8 +63,9 @@ const Hero = ({
   }, []);
   return /*#__PURE__*/React.createElement("section", {
     id: "top",
-    className: "hero",
-    "data-screen-label": "01 Hero"
+    className: `hero mood-${pick.mood}`,
+    "data-screen-label": "01 Hero",
+    "data-hero-video": pick.src
   }, /*#__PURE__*/React.createElement("video", {
     ref: bgVideoRef,
     className: "hero-bg-video",
@@ -42,9 +74,11 @@ const Hero = ({
     loop: true,
     playsInline: true,
     preload: "auto",
-    poster: "assets/hero-terrace-night.jpg"
+    poster: pick.poster,
+    "aria-label": pick.alt,
+    key: pick.src
   }, /*#__PURE__*/React.createElement("source", {
-    src: "assets/playa-almeria.mp4",
+    src: pick.src,
     type: "video/mp4"
   })), /*#__PURE__*/React.createElement("div", {
     className: "hero-content"

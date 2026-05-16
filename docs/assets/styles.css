@@ -1559,6 +1559,46 @@ body.apt-bar-shown .cookies {
     radial-gradient(ellipse 60% 45% at 88% 88%, rgba(61,26,53,0.40), transparent 60%);
   z-index: 1;
   pointer-events: none;
+  transition: background 600ms ease;
+}
+/* Variantes de "velo" según el mood del vídeo rotatorio del hero.
+   mood-violet es el por defecto (regla de arriba). Los siguientes
+   sobreescriben el background cuando .hero lleva la clase. */
+.hero.mood-teal::before {
+  background:
+    linear-gradient(
+      170deg,
+      rgba(15,42,46,0.22) 0%,
+      rgba(15,42,46,0.40) 38%,
+      rgba(20,40,55,0.70) 68%,
+      rgba(20,40,55,0.92) 100%
+    ),
+    radial-gradient(ellipse 90% 55% at 35% 30%, rgba(58,170,187,0.32), transparent 65%),
+    radial-gradient(ellipse 60% 45% at 88% 88%, rgba(20,80,110,0.45), transparent 60%);
+}
+.hero.mood-warm::before {
+  background:
+    linear-gradient(
+      170deg,
+      rgba(58,28,18,0.22) 0%,
+      rgba(70,30,20,0.42) 38%,
+      rgba(58,15,30,0.74) 68%,
+      rgba(42,12,28,0.92) 100%
+    ),
+    radial-gradient(ellipse 90% 55% at 35% 30%, rgba(232,160,80,0.22), transparent 65%),
+    radial-gradient(ellipse 60% 45% at 88% 88%, rgba(140,40,30,0.45), transparent 60%);
+}
+.hero.mood-night::before {
+  background:
+    linear-gradient(
+      170deg,
+      rgba(12,16,38,0.40) 0%,
+      rgba(12,16,38,0.60) 38%,
+      rgba(12,16,38,0.86) 68%,
+      rgba(8,10,28,0.96) 100%
+    ),
+    radial-gradient(ellipse 90% 55% at 35% 30%, rgba(80,110,180,0.18), transparent 65%),
+    radial-gradient(ellipse 60% 45% at 88% 88%, rgba(40,28,80,0.45), transparent 60%);
 }
 /* Estrellas */
 .hero .stars {
