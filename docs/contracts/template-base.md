@@ -1,12 +1,15 @@
 # Plantilla unificada · Contrato de arrendamiento por temporada
 
-Síntesis de los tres contratos reales (HVM, HVT, HVS). El generador
-de `/p-edit.html → 📄 Contrato` rellenará los `{{placeholders}}`
-a partir del formulario y elegirá el bloque correcto donde aparece
-`[VARIANTE: …]`.
+Esta es la plantilla cerrada que rellena el generador de `/p-edit.html → 📄 Contrato`. Cada `{{placeholder}}` se sustituye por el valor que tú metas en el formulario; cada `[VARIANTE]` se elige según el apartamento.
 
-Las **[DECISIÓN]** son puntos donde los tres contratos difieren y
-necesito tu confirmación antes de cerrar la lógica.
+**Decisiones cerradas** (mayo 2026):
+1. **Política de cancelación**: la dictas tú al crear cada contrato (campo libre de días).
+2. **Fianza**: toggle sí/no en el formulario. Cuando sí → 300 € fijos.
+3. **Huésped adicional**: 20 €/noche (fuente: `prices.json`).
+4. **Cláusula de fuerza mayor**: SIEMPRE incluida.
+5. **Texto COVID-19**: eliminado.
+6. **Plazas de garaje**: Mar = 160 · Thalassa = 163 · Salinas = 290.
+7. **Servicios adicionales**: tabla al final del contrato sincronizada con `docs/data/prices.json` (la misma que ve el cliente en la web y editas en `/p-edit`).
 
 ---
 
@@ -16,7 +19,7 @@ Madrid, **{{FECHA_FIRMA}}**
 
 ### REUNIDOS
 
-Por una parte, **D. Alejandro Berruezo Márquez** y **Francisco Javier Moral Arévalo**, mayores de edad, y con domicilio a efectos de notificaciones en Avenida de la Constitución 38, 1A, 28821 de Coslada, Madrid, con DNI. 02646392N y 75018031N, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ES2114650100911726525059.
+Por una parte, **D. Alejandro Berruezo Márquez** y **D. Francisco Javier Moral Arévalo**, mayores de edad, y con domicilio a efectos de notificaciones en Avenida de la Constitución 38, 1A, 28821 de Coslada, Madrid, con DNI. 02646392N y 75018031N, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ES2114650100911726525059.
 
 *(De ahora en adelante, "Los Propietarios".)*
 
@@ -34,7 +37,7 @@ Ambas partes se reconocen capacidad legal suficiente para este acto y libremente
 
 **I.** Que el Propietario es titular de la siguiente finca en perfecto estado de uso:
 
-**VIVIENDA:** Dirección: **{{APT_DIRECCION_COMPLETA}}**, en Vera (Almería){{APT_PLAZA_GARAJE_LINE}}, en las condiciones y con los muebles y servicios cuya descripción y fotografías se exponen en la página web www.hestiayourhome.com.
+**VIVIENDA:** Dirección: **{{APT_DIRECCION_COMPLETA}}**, en Vera (Almería), y plaza de garaje **{{APT_PLAZA_GARAJE}}**, en las condiciones y con los muebles y servicios cuya descripción y fotografías se exponen en la página web www.hestiayourhome.com.
 
 La vivienda se entrega limpia, en perfecto estado de uso, conservación y habitabilidad y los suministros y servicios que posee la misma se encuentran en funcionamiento. La vivienda se devolverá limpia y en perfecto estado.
 
@@ -58,13 +61,13 @@ El Propietario cede en arrendamiento de temporada con la duración que se indica
 - Sin el correspondiente justificante de abono en la cuenta ES2114650100911726525059 o BIZUM al teléfono +34 620 316 370 de la prereserva, es decir, **{{PRERESERVA_LETRAS}} ({{PRERESERVA_NUM}}) EUROS**. Deberá ingresarse en el momento de la formalización de este contrato.
 - Sin el correspondiente abono en efectivo del remanente de la estancia, es decir, **{{REMANENTE_LETRAS}} ({{REMANENTE_NUM}}) EUROS**. Deberá pagarse en efectivo en el momento del check-in.
 - Si no se envía el DNI o pasaporte de cada uno de los huéspedes mayores de 16 años, como adjunto al contrato firmado.
-{{LINEA_FIANZA_REQUISITO}}
+{{LINEA_FIANZA_REQUISITO}}  *(solo si fianza activada: "- Si no se ha realizado la transferencia por la fianza que se explica en el punto 2.4.")*
 
 **2.2** La cancelación del contrato con más de **{{DIAS_CANCELACION_LETRAS}} ({{DIAS_CANCELACION}}) días** del inicio de la reserva no supondrá ningún coste, aunque se agradece comunicar lo antes posible la cancelación, con el fin de que otros huéspedes puedan disfrutar de Hestía.
 
-**2.3** La cancelación del contrato con menos de **{{DIAS_CANCELACION_LETRAS}} ({{DIAS_CANCELACION}}) días** del inicio de la estancia supondrá la pérdida de las cantidades entregadas, salvo que se realquile, en cuyo caso se devolverán todas las cantidades entregadas. {{CLAUSULA_FUERZA_MAYOR}}
+**2.3** La cancelación del contrato con menos de **{{DIAS_CANCELACION_LETRAS}} ({{DIAS_CANCELACION}}) días** del inicio de la estancia supondrá la pérdida de las cantidades entregadas, salvo cuestión de fuerza mayor demostrable oficialmente de alguno de los huéspedes. En este caso, si se consigue realquilar, se devolverán todas las cantidades entregadas o se podrán posponer las fechas a los próximos SEIS (6) meses desde la fecha de la estancia.
 
-{{BLOQUE_2_4_FIANZA}}
+{{BLOQUE_2_4_FIANZA}}  *(solo si fianza activada: "**2.4** Dos días antes de la llegada a Hestía, la Parte Arrendataria ingresará la fianza de TRESCIENTOS (300) EUROS. Esta fianza se devolverá a la finalización de la estancia, una vez revisada la vivienda, descontando los desperfectos ocasionados, si los hubiere.")*
 
 #### TERCERA · DURACIÓN
 
@@ -89,6 +92,8 @@ La Parte Arrendataria deberá abandonar la finca en el estado en que la encontr�
 **4.6** La Parte Arrendataria se verá obligada a la reparación y conservación de los enseres y muebles siempre que se derive por mal uso, así como de las instalaciones eléctricas y fontanería, siendo por cuenta de la parte arrendadora las obras que tengan carácter de mayores.
 
 **4.7** {{CLAUSULA_MASCOTAS}}
+  *Por defecto (sin mascota): "Queda prohibida la introducción de cualquier tipo de animal doméstico o salvaje dentro de la vivienda."*
+  *Con mascota: "Queda prohibida la introducción de cualquier tipo de animal doméstico o salvaje dentro de la vivienda, salvo la mascota declarada de la familia."*
 
 **4.8** Queda prohibido el subarriendo en cualquiera de sus modalidades.
 
@@ -109,20 +114,26 @@ Ambas partes se ratifican en el presente contrato y firman por duplicado, a un s
 #### OCTAVA · SERVICIOS INCLUIDOS
 
 El apartamento se entrega limpio y dotado.
-Un juego de toallas por cada huésped.
-{{BLOQUE_SABANAS_POR_APT}}
+- Un juego de toallas por cada huésped.
+- {{BLOQUE_SABANAS_POR_APT}}
 
 #### NOVENA · SERVICIOS ADICIONALES
 
-- **Huésped adicional:** {{PRECIO_HUESPED_EXTRA}} € por noche (incluye juego de sábanas y de toallas).
-- **Juego de toallas adicional:** 6 €. Hestía cuenta con un juego por huésped incluido en el precio.
-- **Juego de sábanas adicional:** 10 € individual, 12 € doble. Hestía proporciona un juego doble para los dos primeros huéspedes, 1 juego individual para el tercer huésped, 1 juego individual para el cuarto huésped y un juego doble para el quinto y sexto huésped. Si deseas modificar esta configuración, infórmanos, por favor.
-- **Trona:** 5 € por estancia.
-- **Cuna:** 20 € por estancia (juego de sábanas incluido).
-- **Late check-out o salida tardía** (sujeto a disponibilidad): 10 € por hora después de las 11:00 o 40 € hasta las 18:00.
-- **Early check-in o entrada temprana** (sujeto a disponibilidad): 10 € por cada hora antes de las 15:00 o 40 € desde las 10:00.
-- **Late check-in o entrada después de las 21:00:** 20 € hasta las 23:00 y 40 € hasta las 0:00 si no se opta por la llegada autónoma y se desea llegada presencial.
-- **Mascota:** 10 €/noche/mascota. No más de 50 € por mascota por estancia.
+Los siguientes servicios pueden añadirse a la reserva. Los precios son los publicados en la web y se mantienen actualizados desde `/p-edit`:
+
+| Servicio | Precio | Unidad |
+|---|---:|---|
+| Huésped adicional *(incluye sábanas y toallas)* | 20 € | por noche |
+| Juego de toallas adicional | 6 € | por set |
+| Juego de sábanas adicional · individual | 10 € | por set |
+| Juego de sábanas adicional · doble | 12 € | por set |
+| Trona | 5 € | por estancia |
+| Cuna *(sábanas incluidas)* | 20 € | por estancia |
+| Early check-in · 10 €/h antes de 15:00 (o 40 € desde 10:00) | 10 € | por hora |
+| Late check-out · 10 €/h después de 11:00 (o 40 € hasta 18:00) | 10 € | por hora |
+| Late check-in presencial · 21:00 → 23:00 | 20 € | por estancia |
+| Late check-in presencial · 23:00 → 00:00 | 40 € | por estancia |
+| Suplemento mascota | 10 € / noche | máx. 50 €/estancia |
 
 #### DÉCIMA · NORMAS DE HESTÍA
 
@@ -149,6 +160,7 @@ No está permitido el naturismo ni el toples en toda la urbanización, ya que se
 Cualquier incidente o problemática derivada de los menores de edad, tanto en Hestía como en las zonas comunes, será responsabilidad de sus padres/tutores.
 Cualquier situación o incidente de los servicios comunes o del exterior de Hestía no es responsabilidad nuestra, aunque intentaremos ayudarte.
 Por favor, intenta dejar Hestía limpio y recogido. De las sábanas y toallas nos encargamos nosotros. En cualquier caso, no laves las toallas y sábanas con ropa de otro color, por favor.
+Por favor, deja los cojines de la terraza en el interior si hay viento, lluvia o previsión.
 
 ---
 
@@ -165,24 +177,24 @@ Por favor, intenta dejar Hestía limpio y recogido. De las sábanas y toallas no
 
 ### Hestía Vera Mar (HVM)
 - `APT_DIRECCION_COMPLETA`: Apto. 1A, del portal 14, edificio 3, en la urbanización Paraíso Playa, en C/ Islas Canarias, 7
-- `APT_PLAZA_GARAJE_LINE`: ` y plaza de garaje 160`  *(a confirmar)*
+- `APT_PLAZA_GARAJE`: **160**
 - `ZONA_OBRAS`: "enfrente"
-- `BLOQUE_ACCESIBILIDAD`: SÍ (movilidad reducida + escalones)
-- `BLOQUE_SABANAS`: "Un juego de sábanas para la cama de matrimonio y dos juegos de sábanas para las camas individuales."
+- `BLOQUE_ACCESIBILIDAD`: **SÍ** (movilidad reducida + escalones)
+- `BLOQUE_SABANAS_POR_APT`: "Un juego de sábanas para la cama de matrimonio y dos juegos de sábanas para las camas individuales."
 
 ### Hestía Vera Thalassa (HVT)
 - `APT_DIRECCION_COMPLETA`: Apto. 11, planta 5ª, escalera 13, en la urbanización Thalassa, en C/ Tomillo 2
-- `APT_PLAZA_GARAJE_LINE`: ` y plaza de garaje 163`  *(a confirmar)*
+- `APT_PLAZA_GARAJE`: **163**
 - `ZONA_OBRAS`: "cercanas"
 - `BLOQUE_ACCESIBILIDAD`: NO
-- `BLOQUE_SABANAS`: "Un juego de sábanas para la cama doble (D1) y un juego para cada cama individual (D2)."
+- `BLOQUE_SABANAS_POR_APT`: "Un juego de sábanas para la cama doble (D1) y un juego para cada cama individual del dormitorio dos (D2)."
 
 ### Hestía Vera Salinas (HVS)
 - `APT_DIRECCION_COMPLETA`: Apto. 7, planta 1ª, bloque 22, en la urbanización Pueblo Salinas, en C/ Alcazaba 115
-- `APT_PLAZA_GARAJE_LINE`: ` y plaza de garaje 290`  *(✅ confirmado en contrato real)*
+- `APT_PLAZA_GARAJE`: **290** ✅ confirmado
 - `ZONA_OBRAS`: "cercanas"
 - `BLOQUE_ACCESIBILIDAD`: NO
-- `BLOQUE_SABANAS`: "Dos juegos de sábanas para la cama de matrimonio y sofá-cama y un juego de sábanas por cada cama individual del dormitorio dos."
+- `BLOQUE_SABANAS_POR_APT`: "Dos juegos de sábanas para la cama de matrimonio y sofá-cama y un juego de sábanas por cada cama individual del dormitorio dos."
 
 ---
 
@@ -190,22 +202,20 @@ Por favor, intenta dejar Hestía limpio y recogido. De las sábanas y toallas no
 
 | Campo | Tipo | Origen / Lógica |
 |---|---|---|
-| Apartamento | select (Mar / Thalassa / Salinas) | Carga variantes anteriores |
-| Nombre completo del arrendatario | text | Mayúsculas en el contrato |
-| Domicilio del arrendatario | text | |
-| DNI / Pasaporte | text | |
-| Teléfono | text (E.164 si posible) | |
-| Email | text | Para envío posterior |
-| Fecha de entrada | date | `FECHA_ENTRADA` |
-| Fecha de salida | date | `FECHA_SALIDA` → calcula `N_NOCHES` |
-| Nº de huéspedes | number 1-6 | |
-| Mascota | toggle sí/no (+ nº) | Activa cláusula 4.7 variante |
-| Importe total (€) | number | Lo dictas tú al confirmar |
-| Importe prereserva (€) | number | Por defecto 20-25% del total, editable |
-| Política de cancelación | select (7 / 14 / 30 días) | **[DECISIÓN — ver abajo]** |
-| Fianza (€) | number, 0 si no aplica | |
-| Cláusula de fuerza mayor | toggle | **[DECISIÓN]** |
-| Servicios extra | chips multi-select | Tabla del bloque NOVENA |
-| Fecha del contrato (firma) | date (hoy por defecto) | `FECHA_FIRMA` |
+| **Apartamento** | select (Mar / Thalassa / Salinas) | Carga la variante de dirección, garaje, accesibilidad y sábanas |
+| **Nombre completo del arrendatario** | text | Se imprime en mayúsculas |
+| **Domicilio del arrendatario** | text | Calle, número, ciudad, CP |
+| **DNI / Pasaporte** | text | |
+| **Teléfono** | text | |
+| **Email** | text (opcional) | Para envío posterior por correo |
+| **Fecha de entrada** | date | `{{FECHA_ENTRADA}}` |
+| **Fecha de salida** | date | `{{FECHA_SALIDA}}` → calcula `{{N_NOCHES}}` |
+| **Nº de huéspedes** | number 1-6 | `{{N_HUESPEDES}}` |
+| **¿Mascota?** | toggle sí/no (+ nº) | Activa cláusula 4.7 variante + texto `{{BLOQUE_MASCOTA_RENTA}}` |
+| **Importe total (€)** | number | Lo dictas tú al confirmar — `{{PRECIO_TOTAL_NUM}}` |
+| **Importe prereserva (€)** | number | Por defecto 20-25 % del total, editable — `{{PRERESERVA_NUM}}` |
+| **Política de cancelación (días)** | number | Lo dictas tú — `{{DIAS_CANCELACION}}` |
+| **¿Fianza?** | toggle sí/no | Sí → 300 € fijos · activa la línea de requisito + cláusula 2.4 |
+| **Fecha del contrato (firma)** | date (hoy por defecto) | `{{FECHA_FIRMA}}` |
 
-El generador convertirá automáticamente cifras a letras (`630 → SEISCIENTOS TREINTA`) usando una librería en JS.
+El generador convertirá automáticamente cifras a letras (`630 → SEISCIENTOS TREINTA`) usando una librería en JS, y calculará el `{{REMANENTE_NUM}}` como `precio_total − prereserva`.
