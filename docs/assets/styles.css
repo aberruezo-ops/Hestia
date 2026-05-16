@@ -16845,11 +16845,69 @@ img[src*="apt-vt-gallery-"] {
 /* --- Dashboard KPI cards --- */
 .rv-dashboard {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 10px;
   margin: 14px 0;
 }
 @media (max-width: 980px) { .rv-dashboard { grid-template-columns: repeat(2, 1fr); } }
+
+/* Dashboard multi-año (cabecera) — comparativa Bruto/Comisión/Neto/Margen
+   por año. Los datos vienen del Google Sheet de Hestía, clasificados
+   por año de salida (criterio contable real). */
+.rv-yearly {
+  margin: 14px 0 18px;
+  background: linear-gradient(180deg, rgba(58,170,187,0.04) 0%, rgba(255,251,244,0) 100%);
+  border: 1px solid rgba(61,26,53,.08);
+  border-radius: 10px;
+  padding: 14px 16px 4px;
+}
+.rv-yearly-h {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.rv-yearly-h h3 {
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--ber);
+}
+.rv-yearly-sub { font-size: 11px; color: var(--ink-soft); }
+.rv-yearly-wrap { overflow-x: auto; }
+.rv-yearly-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.rv-yearly-table th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(61,26,53,.10);
+  white-space: nowrap;
+}
+.rv-yearly-table th.num { text-align: right; }
+.rv-yearly-table td {
+  padding: 8px 10px;
+  border-bottom: 1px dashed rgba(61,26,53,.06);
+}
+.rv-yearly-table td.num { text-align: right; }
+.rv-yearly-row { cursor: pointer; transition: background .12s ease; }
+.rv-yearly-row:hover { background: rgba(58,170,187,0.06); }
+.rv-yearly-row.is-focus {
+  background: rgba(58,170,187,0.12);
+  box-shadow: inset 3px 0 0 0 var(--sol);
+}
+.rv-yearly-row.is-focus td { font-weight: 600; }
+.rv-yearly-neg { color: #8a4a24; }
 .rv-kpi {
   background: rgba(255, 251, 244, 0.7);
   border: 1px solid rgba(61,26,53,.10);

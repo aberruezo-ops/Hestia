@@ -2157,6 +2157,7 @@ const ReservasTab = ({
   const [filterStatus, setFilterStatus] = React.useState('all');
   const [selectedIdx, setSelectedIdx] = React.useState(-1);
   const [draft, setDraft] = React.useState(null);
+  const [focusYearOverride, setFocusYearOverride] = React.useState(null);
 
   // Carga inicial del JSON desde GitHub.
   React.useEffect(() => {
@@ -2184,11 +2185,11 @@ const ReservasTab = ({
   const reservas = data && data.reservas || [];
   const today = new Date().toISOString().slice(0, 10);
 
-  // --- Agrupación por año (entrada). Cuando solo hay un año la
-  // comparativa muestra '—' en la columna de variación. ---
-  const yearOf = r => (r.entrada || r.f_reserva || '').slice(0, 4);
+  // --- Agrupación por año. Usamos r.year (calculado por el parser
+  // a partir de la fecha de SALIDA — criterio contable de Hestía).
+  // Fallback a la fecha de salida o entrada si falta. ---
+  const yearOf = r => r.year ? String(r.year) : (r.salida || r.entrada || '').slice(0, 4);
   const currentYear = String(new Date().getFullYear());
-  const dataYear = data.year ? String(data.year) : currentYear;
   const byYear = {};
   reservas.forEach(r => {
     const y = yearOf(r);
@@ -2196,35 +2197,47 @@ const ReservasTab = ({
     (byYear[y] = byYear[y] || []).push(r);
   });
   const allYears = Object.keys(byYear).sort();
-  const focusYear = byYear[dataYear] ? dataYear : allYears[allYears.length - 1] || currentYear;
+  const defaultFocus = byYear[currentYear] ? currentYear : allYears[allYears.length - 1] || currentYear;
+  const focusYear = focusYearOverride && byYear[focusYearOverride] ? focusYearOverride : defaultFocus;
   const focusList = byYear[focusYear] || [];
-  const otherList = Object.entries(byYear).filter(([y]) => y !== focusYear).flatMap(([, v]) => v);
 
-  // --- KPIs por bloque ---
+  // --- Métricas consistentes año a año ---
+  // Bruto = ingreso_total (lo que paga el huésped al canal).
+  // Comisiones = lo que se queda Airbnb/Booking/Avaibook.
+  // Limpieza = gasto_limpieza (pago a equipo de limpieza).
+  // Neto = bai (Beneficio Antes Impuestos, según hoja Hestía).
+  // Excluimos 'renta' (sólo presente 2023+, semántica cambia año a año).
   const sum = (list, key) => list.reduce((a, r) => a + (Number(r[key]) || 0), 0);
-  const avg = (list, key) => {
-    const valid = list.filter(r => r[key] != null && !isNaN(r[key]));
-    return valid.length ? sum(valid, key) / valid.length : 0;
+  const yearMetrics = list => {
+    const bruto = sum(list, 'ingreso_total');
+    const comision = sum(list, 'comision');
+    const limpieza = sum(list, 'gasto_limpieza');
+    const neto = sum(list, 'bai');
+    const noches = sum(list, 'noches');
+    return {
+      reservas: list.length,
+      noches,
+      bruto,
+      comision,
+      limpieza,
+      neto,
+      margen: bruto ? neto / bruto : 0,
+      brutoPorNoche: noches ? bruto / noches : 0,
+      netoPorNoche: noches ? neto / noches : 0
+    };
   };
-  const kpis = list => ({
-    reservas: list.length,
-    ingreso: sum(list, 'ingreso_total'),
-    bai: sum(list, 'bai'),
-    comision: sum(list, 'comision'),
-    gasto_limpieza: sum(list, 'gasto_limpieza'),
-    noches: sum(list, 'noches'),
-    margen: avg(list, 'rentabilidad_pct'),
-    precio_bruto: avg(list, 'precio_bruto_noche')
-  });
-  const kFocus = kpis(focusList);
-  const kOther = kpis(otherList);
+  const kFocus = yearMetrics(focusList);
 
   // KPIs por apartamento (sólo año focal)
   const byApt = ['vm', 'vt', 'vs'].map(apt => {
     const list = focusList.filter(r => r.apt === apt);
+    const m = yearMetrics(list);
     return {
       apt,
-      ...kpis(list)
+      reservas: m.reservas,
+      noches: m.noches,
+      ingreso: m.bruto,
+      bai: m.neto
     };
   });
 
@@ -2242,18 +2255,20 @@ const ReservasTab = ({
     byCanal[c].bai += Number(r.bai) || 0;
   });
 
-  // --- Próximas y en estancia ---
+  // --- Próximas y en estancia (en todos los años, son atemporales) ---
   const enEstancia = reservas.filter(r => reservaStatus(r, today) === 'staying').sort((a, b) => a.salida.localeCompare(b.salida));
   const proximas = reservas.filter(r => reservaStatus(r, today) === 'upcoming').sort((a, b) => a.entrada.localeCompare(b.entrada)).slice(0, 8);
 
-  // --- Filtros visibles ---
-  const filtered = reservas.filter(r => {
+  // --- Filtros visibles. El listado SÓLO muestra el año focal
+  // (por defecto el actual). Los demás años están en el dashboard
+  // multi-año de la cabecera. ---
+  const filtered = focusList.filter(r => {
     if (filterApt !== 'all' && r.apt !== filterApt) return false;
     if (filterCanal !== 'all' && getCanalKey(r.canal) !== filterCanal) return false;
     if (filterStatus !== 'all' && reservaStatus(r, today) !== filterStatus) return false;
     return true;
   }).sort((a, b) => (a.entrada || '').localeCompare(b.entrada || ''));
-  const canalKeys = Array.from(new Set(reservas.map(r => getCanalKey(r.canal))));
+  const canalKeys = Array.from(new Set(focusList.map(r => getCanalKey(r.canal))));
 
   // --- Acciones ---
   const saveReservas = async newReservas => {
@@ -2408,48 +2423,94 @@ const ReservasTab = ({
     className: "rv-head"
   }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDDD3\uFE0F Reservas ", /*#__PURE__*/React.createElement("span", {
     className: "rv-count"
-  }, "\xB7 ", reservas.length, " reservas \xB7 a\xF1o ", focusYear, otherList.length ? ` (vs ${otherList.length} de otros años)` : '', " \xB7 actualizado ", data.updatedAt ? data.updatedAt.slice(0, 10) : '—')), /*#__PURE__*/React.createElement("button", {
+  }, "\xB7 a\xF1o ", focusYear, " \xB7 ", focusList.length, " reservas \xB7 actualizado ", data.updatedAt ? data.updatedAt.slice(0, 10) : '—')), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-primary",
     onClick: newRow
-  }, "+ Nueva")), /*#__PURE__*/React.createElement("div", {
+  }, "+ Nueva")), allYears.length > 1 && /*#__PURE__*/React.createElement("div", {
+    className: "rv-yearly"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rv-yearly-h"
+  }, /*#__PURE__*/React.createElement("h3", null, "Hist\xF3rico por a\xF1o"), /*#__PURE__*/React.createElement("span", {
+    className: "rv-yearly-sub"
+  }, "Click en un a\xF1o para verlo en el listado")), /*#__PURE__*/React.createElement("div", {
+    className: "rv-yearly-wrap"
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "rv-yearly-table"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "A\xF1o"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Reservas"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Noches"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Bruto"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Comisiones"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Limpieza"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Neto (BAI)"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Margen"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "\u20AC/noche bruto"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "\u20AC/noche neto"))), /*#__PURE__*/React.createElement("tbody", null, allYears.map(y => {
+    const m = yearMetrics(byYear[y]);
+    const isFocus = y === focusYear;
+    return /*#__PURE__*/React.createElement("tr", {
+      key: y,
+      className: `rv-yearly-row${isFocus ? ' is-focus' : ''}`,
+      onClick: () => setFocusYearOverride(y)
+    }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, y)), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, m.reservas), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, m.noches), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, fmtEur(m.bruto)), /*#__PURE__*/React.createElement("td", {
+      className: "num rv-yearly-neg"
+    }, "\u2212", fmtEur(m.comision)), /*#__PURE__*/React.createElement("td", {
+      className: "num rv-yearly-neg"
+    }, "\u2212", fmtEur(m.limpieza)), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, /*#__PURE__*/React.createElement("strong", null, fmtEur(m.neto))), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, fmtPct(m.margen)), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, fmtEur(m.brutoPorNoche)), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, fmtEur(m.netoPorNoche)));
+  }))))), /*#__PURE__*/React.createElement("div", {
     className: "rv-dashboard"
   }, /*#__PURE__*/React.createElement(KpiCard, {
-    label: "Reservas",
+    label: `Reservas ${focusYear}`,
     value: kFocus.reservas,
-    sub: otherList.length ? `vs ${kOther.reservas} otros años (${fmtDelta(kFocus.reservas, kOther.reservas)})` : 'único año en datos'
+    sub: `${kFocus.noches} noches`
   }), /*#__PURE__*/React.createElement(KpiCard, {
-    label: "Ingreso total",
+    label: "Bruto",
     accent: "#3AAABB",
-    value: fmtEur(kFocus.ingreso),
-    sub: otherList.length ? `vs ${fmtEur(kOther.ingreso)} (${fmtDelta(kFocus.ingreso, kOther.ingreso)})` : null
-  }), /*#__PURE__*/React.createElement(KpiCard, {
-    label: "BAI (beneficio)",
-    accent: "#6B7A3A",
-    value: fmtEur(kFocus.bai),
-    sub: otherList.length ? `vs ${fmtEur(kOther.bai)} (${fmtDelta(kFocus.bai, kOther.bai)})` : null
+    value: fmtEur(kFocus.bruto),
+    sub: `${fmtEur(kFocus.brutoPorNoche)}/noche`
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "Comisiones",
     accent: "#B86A3C",
     value: fmtEur(kFocus.comision),
-    sub: otherList.length ? `vs ${fmtEur(kOther.comision)} (${fmtDelta(kFocus.comision, kOther.comision)})` : null
+    sub: kFocus.bruto ? `${fmtPct(kFocus.comision / kFocus.bruto)} del bruto` : null
   }), /*#__PURE__*/React.createElement(KpiCard, {
-    label: "Noches reservadas",
-    value: kFocus.noches,
-    sub: otherList.length ? `vs ${kOther.noches} (${fmtDelta(kFocus.noches, kOther.noches)})` : null
-  }), /*#__PURE__*/React.createElement(KpiCard, {
-    label: "Margen medio",
-    value: fmtPct(kFocus.margen),
-    sub: otherList.length ? `vs ${fmtPct(kOther.margen)}` : null
-  }), /*#__PURE__*/React.createElement(KpiCard, {
-    label: "Precio bruto/noche",
-    value: fmtEur(kFocus.precio_bruto),
-    sub: otherList.length ? `vs ${fmtEur(kOther.precio_bruto)}` : null
-  }), /*#__PURE__*/React.createElement(KpiCard, {
-    label: "Gasto limpieza",
+    label: "Limpieza",
     accent: "#7A5A23",
-    value: fmtEur(kFocus.gasto_limpieza),
-    sub: otherList.length ? `vs ${fmtEur(kOther.gasto_limpieza)}` : null
+    value: fmtEur(kFocus.limpieza),
+    sub: kFocus.bruto ? `${fmtPct(kFocus.limpieza / kFocus.bruto)} del bruto` : null
+  }), /*#__PURE__*/React.createElement(KpiCard, {
+    label: "Neto (BAI)",
+    accent: "#6B7A3A",
+    value: fmtEur(kFocus.neto),
+    sub: `${fmtEur(kFocus.netoPorNoche)}/noche`
+  }), /*#__PURE__*/React.createElement(KpiCard, {
+    label: "Margen",
+    value: fmtPct(kFocus.margen),
+    sub: "neto / bruto"
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-dashboard-2"
   }, /*#__PURE__*/React.createElement("div", {
