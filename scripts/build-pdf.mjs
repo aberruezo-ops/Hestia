@@ -83,6 +83,7 @@ function loadGuideData() {
     URB_FALLBACK:    sandbox.URB_FALLBACK,
     CATEGORIES:      sandbox.CATEGORIES,
     PLACES:          sandbox.PLACES,
+    ICONIC_DISHES:   sandbox.ICONIC_DISHES,
     DAY_PLAN_GROUPS: sandbox.DAY_PLAN_GROUPS,
     DAY_PLANS:       sandbox.DAY_PLANS,
     GUIDE_SECTIONS:  sandbox.GUIDE_SECTIONS,
@@ -950,6 +951,101 @@ section.no-break {
   line-height: 1.55;
   color: var(--ink);
 }
+
+.dishes-section {
+  margin: 6mm 0 8mm;
+  page-break-inside: auto;
+}
+.dishes-title {
+  margin: 0 0 1.5mm;
+  font-size: 13pt;
+  color: var(--apt-c-dk);
+}
+.dishes-intro {
+  margin: 0 0 4mm;
+  font-size: 9.5pt;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.dishes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3mm;
+}
+.dish-card {
+  border: 0.5pt solid rgba(0,0,0,0.15);
+  border-radius: 2mm;
+  padding: 3mm 3.5mm;
+  background: rgba(255, 251, 244, 0.6);
+  page-break-inside: avoid;
+}
+.dish-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 3mm;
+  margin-bottom: 1.5mm;
+}
+.dish-icon {
+  font-size: 14pt;
+  line-height: 1;
+}
+.dish-titles { flex: 1; }
+.dish-name {
+  font-size: 10.5pt;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: 0.5mm;
+}
+.dish-region {
+  display: inline-block;
+  font-size: 7.5pt;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--apt-c-dk);
+  background: rgba(202, 75, 38, 0.10);
+  padding: 0.5mm 1.5mm;
+  border-radius: 1mm;
+}
+.dish-desc {
+  margin: 0 0 1.5mm;
+  font-size: 9pt;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.dish-tip {
+  margin: 1.5mm 0;
+  padding: 1.5mm 2.5mm;
+  background: rgba(232, 194, 107, 0.14);
+  border-left: 1pt solid var(--sol);
+  border-radius: 0.8mm;
+  font-size: 8.5pt;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.dish-tip-tag {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 7.5pt;
+  color: var(--ber);
+  margin-right: 1mm;
+}
+.dish-where {
+  font-size: 8.5pt;
+  line-height: 1.5;
+  color: var(--ink);
+  margin-top: 1.5mm;
+}
+.dish-where-tag {
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 7.5pt;
+  color: var(--ber-dk);
+  margin-right: 1mm;
+}
 .place-events {
   margin-top: 2mm;
   padding: 2mm 3mm;
@@ -1548,6 +1644,48 @@ function renderSurroundings(shared, aptData, lang) {
 }
 
 // ---------------------------------------------------------------
+// ICONIC_DISHES: platos típicos de Almería y Murcia al inicio de Sabores.
+// Cada plato → tarjeta con icono, nombre, región, descripción, tip y
+// sitios donde probarlo (placeIds → nombres de PLACES, o whereText).
+// ---------------------------------------------------------------
+function renderIconicDishes(dishes, PLACES, aptData, lang) {
+  if (!Array.isArray(dishes) || dishes.length === 0) return '';
+  const placeById = id => (PLACES || []).find(p => p.id === id);
+  const cards = dishes.map(d => {
+    const name = lang === 'es' ? d.name_es : d.name_en;
+    const region = lang === 'es' ? d.region_es : d.region_en;
+    const desc = lang === 'es' ? d.desc_es : d.desc_en;
+    const tip = lang === 'es' ? d.tip_es : d.tip_en;
+    const whereText = lang === 'es' ? d.where_es : d.where_en;
+    const refs = (d.placeIds || []).map(placeById).filter(Boolean);
+    const whereBlock = refs.length > 0
+      ? `<div class="dish-where"><span class="dish-where-tag">${lang === 'es' ? 'Dónde:' : 'Where:'}</span> ${refs.map(p => esc(p.name)).join(' · ')}</div>`
+      : (whereText ? `<div class="dish-where"><span class="dish-where-tag">${lang === 'es' ? 'Dónde:' : 'Where:'}</span> ${esc(whereText)}</div>` : '');
+    return `
+      <article class="dish-card">
+        <div class="dish-head">
+          <span class="dish-icon">${esc(d.icon || '🍴')}</span>
+          <div class="dish-titles">
+            <div class="dish-name">${esc(name)}</div>
+            <div class="dish-region">${esc(region)}</div>
+          </div>
+        </div>
+        <p class="dish-desc">${esc(desc)}</p>
+        ${tip ? `<div class="dish-tip"><span class="dish-tip-tag">${lang === 'es' ? 'Tip:' : 'Tip:'}</span> ${esc(tip)}</div>` : ''}
+        ${whereBlock}
+      </article>`;
+  }).join('');
+  return `
+    <section class="dishes-section">
+      <h3 class="dishes-title">${esc(lang === 'es' ? 'Platos típicos · pídelos por nombre' : 'Iconic dishes · order them by name')}</h3>
+      <p class="dishes-intro">${esc(lang === 'es'
+        ? 'Una selección de lo que merece la pena probar en la zona — entre Almería y Murcia — con los sitios concretos donde lo bordan.'
+        : 'A short list of what is worth trying in the area — between Almería and Murcia — with the specific spots that nail each dish.')}</p>
+      <div class="dishes-grid">${cards}</div>
+    </section>`;
+}
+
+// ---------------------------------------------------------------
 // PLACES enriquecidos: agrupados por categoría con specialty/tip/best/rating.
 // Solo categorías relevantes para el huésped: comer/beber/playas/mercados/celíaco.
 // ---------------------------------------------------------------
@@ -1910,6 +2048,7 @@ ${guide[lang].rooms.map(room =>
   renderRoom(room, apt, data.ROOM_PHOTOS, data.URB_FALLBACK, aptId, lang)
 ).join('\n')}
 ${renderSurroundings(shared, apt, lang)}
+${renderIconicDishes(data.ICONIC_DISHES, data.PLACES, apt, lang)}
 ${renderPlacesRich(data.PLACES, data.CATEGORIES, apt, lang)}
 ${renderDayPlans(data.DAY_PLANS, apt, lang)}
 ${renderPhones(shared, apt, lang)}

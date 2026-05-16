@@ -1415,6 +1415,80 @@ const CompactPlaceItem = ({ p, lang }) => {
 // CatGroup — una categoría plegable de la sección "Alrededores".
 // Click en el head abre/cierra. Animación max-height suave.
 // ================================================================
+// ================================================================
+// DishesGuide — platos típicos al inicio de Sabores. Tarjeta por
+// plato: icono + nombre + región + descripción + tip + sitios para
+// probarlo. Los sitios son chips clicables que enlazan a la anchor
+// del lugar dentro de la guía (PLACES tiene id) o a Google Maps.
+// ================================================================
+const DishesGuide = ({ lang }) => {
+  if (!Array.isArray(ICONIC_DISHES) || ICONIC_DISHES.length === 0) return null;
+  const placeById = id => PLACES.find(p => p.id === id);
+  return (
+    <div className="ag-dishes">
+      <h3 className="ag-h3 ag-dishes-title">
+        {lang === 'es' ? 'Platos típicos · pídelos por nombre' : 'Iconic dishes · order them by name'}
+      </h3>
+      <p className="ag-para ag-dishes-intro">
+        {lang === 'es'
+          ? 'Una selección de lo que merece la pena probar en la zona — entre Almería y Murcia — con los sitios concretos donde lo bordan.'
+          : 'A short list of what is worth trying in the area — between Almería and Murcia — with the specific spots that nail each dish.'}
+      </p>
+      <div className="ag-dishes-grid">
+        {ICONIC_DISHES.map(d => {
+          const name = lang === 'es' ? d.name_es : d.name_en;
+          const region = lang === 'es' ? d.region_es : d.region_en;
+          const desc = lang === 'es' ? d.desc_es : d.desc_en;
+          const tip = lang === 'es' ? d.tip_es : d.tip_en;
+          const whereText = lang === 'es' ? d.where_es : d.where_en;
+          const refs = (d.placeIds || []).map(placeById).filter(Boolean);
+          return (
+            <article key={d.id} className="ag-dish-card">
+              <div className="ag-dish-head">
+                <span className="ag-dish-icon" aria-hidden="true">{d.icon}</span>
+                <div className="ag-dish-titles">
+                  <h4 className="ag-dish-name">{name}</h4>
+                  <span className="ag-dish-region">{region}</span>
+                </div>
+              </div>
+              <p className="ag-dish-desc">{desc}</p>
+              {tip && (
+                <p className="ag-dish-tip">
+                  <span className="ag-dish-tip-tag">{lang === 'es' ? 'Tip:' : 'Tip:'}</span> {tip}
+                </p>
+              )}
+              {refs.length > 0 && (
+                <div className="ag-dish-where">
+                  <span className="ag-dish-where-tag">{lang === 'es' ? 'Dónde:' : 'Where:'}</span>
+                  <span className="ag-dish-chips">
+                    {refs.map(p => (
+                      <a key={p.id} className="ag-dish-chip"
+                         href={p.url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Almería')}`}
+                         target="_blank" rel="noopener">
+                        {p.name} <span aria-hidden="true">↗</span>
+                      </a>
+                    ))}
+                  </span>
+                </div>
+              )}
+              {refs.length === 0 && whereText && (
+                <p className="ag-dish-where ag-dish-where-text">
+                  <span className="ag-dish-where-tag">{lang === 'es' ? 'Dónde:' : 'Where:'}</span> {whereText}
+                  {d.extLink && (
+                    <> <a className="ag-dish-extlink" href={d.extLink} target="_blank" rel="noopener">
+                      {lang === 'es' ? 'mapa' : 'map'} <span aria-hidden="true">↗</span>
+                    </a></>
+                  )}
+                </p>
+              )}
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 const CatGroup = ({ cat, places, lang }) => {
   const [open, setOpen] = React.useState(false);
   const featured = places
@@ -1621,6 +1695,100 @@ const DAY_PLAN_GROUPS = {
   fullday:  { es: 'Día completo',   en: 'Full-day',      sub_es: 'Mañana, comida y tarde sin prisas',           sub_en: 'Morning, lunch, afternoon — unhurried' },
   evening:  { es: 'Tarde-noche',    en: 'Evening',       sub_es: 'Atardecer, cena y un sitio especial',         sub_en: 'Sunset, dinner and a beautiful night spot' },
 };
+
+// ================================================================
+// ICONIC_DISHES — platos típicos de Almería, Murcia y Levante
+// almeriense que merecen ser pedidos por nombre. Cada plato lista los
+// sitios concretos donde probarlo (placeIds apuntan a PLACES; los
+// platos murcianos no tienen referencia local — se sugiere zona).
+// Renderiza al inicio de la sección Sabores (web + PDF).
+// ================================================================
+const ICONIC_DISHES = [
+  { id:'gurullos', icon:'🍝',
+    name_es:'Gurullos almerienses', name_en:'Almerían gurullos',
+    region_es:'Almería · Levante', region_en:'Almería · Levante',
+    desc_es:'Pasta artesana parecida a un fideo de pellizco, guisada con conejo, pulpo o sepia. Plato de campo, cuchara contundente.',
+    desc_en:'Hand-pinched pasta cooked with rabbit, octopus or cuttlefish. A robust country dish.',
+    placeIds:['terraza-carmona','regio-restaurante','casa-egea'] },
+  { id:'olla-trigo', icon:'🍲',
+    name_es:'Olla de trigo', name_en:'Wheat stew (olla de trigo)',
+    region_es:'Levante almeriense', region_en:'Levante almeriense',
+    desc_es:'Guiso de trigo entero con costilla, chorizo, habichuelas y verduras. Receta de pastores, plato de invierno por excelencia.',
+    desc_en:'Whole-wheat stew with pork ribs, chorizo, beans and vegetables. An old shepherd recipe, the winter classic.',
+    placeIds:['regio-restaurante','casa-egea'] },
+  { id:'caldero-almeriense', icon:'🥘',
+    name_es:'Caldero almeriense', name_en:'Almerían caldero (rice & fish)',
+    region_es:'Almería', region_en:'Almería',
+    desc_es:'Arroz cocinado en caldera de hierro con fumet de pescados de roca. Se sirve en dos vuelcos: primero el arroz, luego el pescado con all-i-oli.',
+    desc_en:'Rice cooked in a cast-iron pot with rockfish broth. Served in two courses — rice first, fish with garlic mayo after.',
+    placeIds:['terraza-carmona'] },
+  { id:'gamba-roja', icon:'🦐',
+    name_es:'Gamba roja de Garrucha', name_en:'Garrucha red shrimp',
+    region_es:'Garrucha · marca de calidad', region_en:'Garrucha · quality label',
+    desc_es:'La estrella indiscutible del litoral. Carne dulce, intensa, casi cremosa. Solo a la plancha con sal gorda — sin más.',
+    desc_en:'The undisputed star of the coast. Sweet, intense, almost creamy flesh. Just grilled with coarse salt — no embellishment.',
+    tip_es:'Temporada fuerte enero-junio. Es cara (90-160 €/kg según pieza). Pídela según vaya la lonja del día.',
+    tip_en:'Peak season January-June. Pricey (€90-160/kg). Order it depending on the day\'s catch.',
+    placeIds:['almejero','almadraba','playa-azul','tadeo'] },
+  { id:'quisquilla', icon:'🍤',
+    name_es:'Quisquilla y camarón de Garrucha', name_en:'Garrucha pink shrimp & prawn',
+    region_es:'Garrucha', region_en:'Garrucha',
+    desc_es:'Más pequeñas que la gamba roja pero igual de delicadas. La quisquilla viene viva; el camarón se sirve crudo, recién bajado del barco.',
+    desc_en:'Smaller than the red shrimp but just as delicate. Quisquilla comes live; camarones are served raw, straight off the boat.',
+    placeIds:['rincon-puerto'] },
+  { id:'migas', icon:'🌾',
+    name_es:'Migas almerienses', name_en:'Almerían migas',
+    region_es:'Almería', region_en:'Almería',
+    desc_es:'Sémola de pan o harina frita con ajo y aceite, acompañada de tropezones: pimiento, chorizo, sardinas, uvas o naranja. Cada casa tiene su versión.',
+    desc_en:'Bread or flour semolina fried with garlic and oil, served with side bites: peppers, chorizo, sardines, grapes or orange. Every house has its version.',
+    placeIds:['casa-egea','regio-restaurante'] },
+  { id:'atun-almadraba', icon:'🐟',
+    name_es:'Atún rojo de almadraba', name_en:'Almadraba bluefin tuna',
+    region_es:'Costa · temporada', region_en:'Coast · in season',
+    desc_es:'El "ronqueo" del atún (despiece tradicional) se hace en mayo-junio. Tartar, tataki, ventresca a la brasa, encebollado — cada parte se presta a una preparación.',
+    desc_en:'The "ronqueo" (traditional bluefin butchering) happens in May-June. Tartar, tataki, grilled belly, with onions — each cut has its preparation.',
+    tip_es:'Mayo-junio es el mejor momento. Reserva con días en estos sitios.',
+    tip_en:'May-June is peak. Book days ahead at these spots.',
+    placeIds:['lua','titos-mojacar','almirez','juan-moreno'] },
+  { id:'pescaito-frito', icon:'🍽️',
+    name_es:'Pescaíto frito y fritura mixta', name_en:'Fried fish platter',
+    region_es:'Toda la costa', region_en:'All along the coast',
+    desc_es:'Boquerones, calamares, salmonetes, gambas y rosada en harina de garbanzo. La fritura andaluza por excelencia, a pie de playa.',
+    desc_en:'Anchovies, squid, red mullet, prawns and pollock in chickpea flour. The classic Andalusian fry-up, at the beach.',
+    placeIds:['maruja','rosado'] },
+  { id:'caldero-mar-menor', icon:'🥘',
+    name_es:'Caldero del Mar Menor', name_en:'Mar Menor caldero',
+    region_es:'Murcia · Mar Menor', region_en:'Murcia · Mar Menor',
+    desc_es:'Primo murciano del caldero almeriense: arroz cocinado en caldera con pescados del Mar Menor (mújol, dorada) y salmorreta de ñora. Servido en dos vuelcos.',
+    desc_en:'Murcian cousin of the Almería caldero: rice cooked in a pot with Mar Menor fish (grey mullet, sea bream) and ñora-based salmorreta. Two-course service.',
+    where_es:'San Pedro del Pinatar y Lo Pagán (Murcia). El plan de día de Lunar Cable Park es la excusa perfecta para comerlo allí.',
+    where_en:'San Pedro del Pinatar and Lo Pagán (Murcia). The Lunar Cable Park day plan is the perfect excuse to try it.',
+    extLink:'https://www.google.com/maps/search/?api=1&query=Caldero+San+Pedro+del+Pinatar' },
+  { id:'paparajotes', icon:'🍋',
+    name_es:'Paparajotes (Murcia)', name_en:'Paparajotes (Murcia)',
+    region_es:'Murcia · postre', region_en:'Murcia · dessert',
+    desc_es:'Hoja de limonero rebozada y frita, espolvoreada con azúcar y canela. El truco: NO se come la hoja — se "ordeña" la masa y se descarta.',
+    desc_en:'Lemon leaf battered and fried, dusted with sugar and cinnamon. The trick: do NOT eat the leaf — slide the dough off and discard.',
+    where_es:'Murcia capital (cualquier restaurante tradicional). En la zona: bares de la huerta murciana en La Manga y Mar Menor.',
+    where_en:'Murcia city (any traditional restaurant). In the area: huerta-style bars at La Manga and Mar Menor.',
+    extLink:'https://www.google.com/maps/search/?api=1&query=Paparajotes+Murcia' },
+  { id:'marinera', icon:'🥖',
+    name_es:'Marinera murciana', name_en:'Murcian "marinera"',
+    region_es:'Murcia · tapa', region_en:'Murcia · tapa',
+    desc_es:'Una rosquilla de pan crujiente con ensaladilla rusa por encima y una anchoa enrollada. La tapa identitaria de Murcia capital — siempre por pares.',
+    desc_en:'A crunchy bread ring topped with Russian salad and a curled anchovy. Murcia city\'s signature tapa — always order in pairs.',
+    where_es:'Bares de tapas de Murcia capital (zona de la Trapería). En La Manga y Mar Menor, en cualquier bar de barrio.',
+    where_en:'Tapas bars in Murcia city (Trapería area). At La Manga and Mar Menor, any neighbourhood bar.',
+    extLink:'https://www.google.com/maps/search/?api=1&query=Marinera+tapa+Murcia' },
+  { id:'pastel-carne', icon:'🥧',
+    name_es:'Pastel de carne murciano', name_en:'Murcian meat pie',
+    region_es:'Murcia', region_en:'Murcia',
+    desc_es:'Masa hojaldrada rellena de ternera picada, chorizo, huevo y especias. Se come tibio a media mañana con cerveza, como tapa de calle.',
+    desc_en:'Puff-pastry pie filled with minced beef, chorizo, egg and spices. Eaten warm mid-morning with a beer, as a street snack.',
+    where_es:'Panaderías de Murcia capital (Bonache es el referente). En la zona: panaderías de Águilas y Mazarrón.',
+    where_en:'Murcia city bakeries (Bonache is the reference). In the area: bakeries in Águilas and Mazarrón.',
+    extLink:'https://www.google.com/maps/search/?api=1&query=Pastel+de+carne+Murcia' },
+];
 
 // Etiquetas de cada tema con icono y color
 const THEMES_DEFS = {
@@ -3351,6 +3519,9 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                 ? 'Restaurantes, bares y lugares para comprar. Nuestras recomendaciones, lo que pediríamos en cada sitio y dónde ir cuando apriete el hambre.'
                 : 'Restaurants, bars and places to shop. Our recommendations, what we would order at each spot and where to go when hunger strikes.'}
             </p>
+
+            <DishesGuide lang={lang} />
+
             {SECTION_CATS.sabores.map(catId => {
               const cat = CATEGORIES.find(c => c.id === catId);
               if (!cat) return null;
