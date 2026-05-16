@@ -952,6 +952,73 @@ section.no-break {
   color: var(--ink);
 }
 
+.checkin-intro { margin: 0 0 4mm; font-size: 10pt; line-height: 1.6; color: var(--ink); }
+.checkin-h3 { margin: 6mm 0 2mm; font-size: 12pt; color: var(--apt-c-dk); }
+.checkin-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3mm;
+  margin: 2mm 0 3mm;
+}
+.checkin-mode {
+  padding: 3mm 3.5mm;
+  border: 0.5pt solid rgba(0,0,0,0.15);
+  border-radius: 2mm;
+  background: rgba(255, 251, 244, 0.6);
+  page-break-inside: avoid;
+}
+.checkin-mode-tag {
+  display: inline-block;
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--apt-c-dk);
+  background: rgba(58, 170, 187, 0.14);
+  padding: 0.5mm 2mm;
+  border-radius: 1mm;
+  margin-bottom: 1.5mm;
+}
+.checkin-mode-body {
+  margin: 0;
+  font-size: 9pt;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.checkin-garage {
+  display: inline-block;
+  padding: 2mm 4mm;
+  background: rgba(232, 194, 107, 0.18);
+  border-left: 1pt solid var(--sol);
+  border-radius: 1mm;
+  margin: 1mm 0 1.5mm;
+}
+.checkin-garage-apt {
+  font-weight: 600;
+  font-size: 10pt;
+  margin-right: 2mm;
+}
+.checkin-garage-sep { color: var(--ink-soft); margin-right: 2mm; }
+.checkin-garage-label {
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ber-dk);
+  margin-right: 2mm;
+}
+.checkin-garage-num {
+  font-size: 16pt;
+  font-weight: 700;
+  color: var(--ber-dk);
+  font-variant-numeric: tabular-nums;
+}
+.checkin-note {
+  font-size: 8.5pt;
+  color: var(--ink-soft);
+  margin-top: 0;
+}
+
 .dishes-section {
   margin: 6mm 0 8mm;
   page-break-inside: auto;
@@ -1425,6 +1492,44 @@ function renderWelcome(shared, aptData, lang) {
       <figure class="welcome-photo">
         ${photoFrame(photo)}
       </figure>` : ''}
+  </section>`;
+}
+
+function renderCheckin(shared, aptData, aptGuide, lang) {
+  const c = shared.checkin;
+  if (!c) return '';
+  const garageSpot = (aptGuide && aptGuide.garageSpot) || aptData.garageSpot || '—';
+  const aptName = (aptData[lang] && aptData[lang].name) || aptData.name || '';
+  return `
+  <section class="checkin">
+    ${sectionMark(aptData, lang)}
+    <div class="section-hd">
+      <div class="eyebrow">${esc((c.title.split(' ')[0]).toUpperCase())}</div>
+      <h2>${esc(c.title)}</h2>
+    </div>
+    <p class="checkin-intro">${esc(c.intro)}</p>
+
+    <h3 class="checkin-h3">${esc(c.modalitiesTitle)}</h3>
+    <div class="checkin-modes">
+      ${c.modalities.map(m => `
+        <div class="checkin-mode">
+          <div class="checkin-mode-tag">${esc(m.tag)}</div>
+          <p class="checkin-mode-body">${esc(m.body)}</p>
+        </div>`).join('')}
+    </div>
+
+    <h3 class="checkin-h3">${esc(c.garageTitle)}</h3>
+    <p>${esc(c.garageIntro)}</p>
+    <div class="checkin-garage">
+      <span class="checkin-garage-apt">${esc(aptName)}</span>
+      <span class="checkin-garage-sep">·</span>
+      <span class="checkin-garage-label">${lang === 'es' ? 'Plaza' : 'Spot'}</span>
+      <span class="checkin-garage-num">${esc(garageSpot)}</span>
+    </div>
+    <p class="checkin-note"><em>${esc(c.garageNote)}</em></p>
+
+    <h3 class="checkin-h3">${esc(c.checkoutTitle)}</h3>
+    <p>${esc(c.checkoutBody)}</p>
   </section>`;
 }
 
@@ -2040,6 +2145,7 @@ function buildHTML(aptId, lang, data) {
 <body>
 ${renderCover(aptId, lang, apt, data.GUIDE_BY_APT)}
 ${renderWelcome(shared, apt, lang)}
+${renderCheckin(shared, apt, guide, lang)}
 ${renderWifi(shared, apt, lang)}
 ${renderNameAndWhy(shared, apt, lang)}
 ${renderCleaning(shared, apt, lang)}

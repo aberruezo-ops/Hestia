@@ -19,6 +19,10 @@ const HERO_VIDEOS = [
     poster: 'assets/hero-terrace-night.jpg',
     mood: 'violet',
     alt: 'Playa de Almería al atardecer' },
+  { src: 'assets/7777897352361363392.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'violet',
+    alt: 'Hestía · vista atmosférica' },
   // Ejemplos para cuando subas más vídeos:
   // { src: 'assets/hero-cabo-gata.mp4',  poster: 'assets/hero-cabo-gata.jpg',  mood: 'teal',  alt: 'Cabo de Gata' },
   // { src: 'assets/hero-mojacar.mp4',    poster: 'assets/hero-mojacar.jpg',    mood: 'warm',  alt: 'Atardecer en Mojácar' },

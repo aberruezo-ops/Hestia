@@ -48,6 +48,7 @@ const URB_FALLBACK = {
 // Secciones del nav lateral, en orden de aparición
 const GUIDE_SECTIONS = [
   { id: 'bienvenida',   es: 'Bienvenida',       en: 'Welcome' },
+  { id: 'llegada',      es: 'Llegada y salida', en: 'Arrival & departure' },
   { id: 'wifi',         es: 'Mi WiFi',          en: 'My WiFi' },
   { id: 'nombre',       es: 'Nuestro nombre',   en: 'Our name' },
   { id: 'proposito',    es: '¿Por qué Hestía?', en: 'Why Hestía?' },
@@ -661,6 +662,20 @@ const GUIDE_SHARED = {
       sign: 'Con cariño,',
       signer: 'Fran y Alex',
     },
+    checkin: {
+      title: 'Llegada y salida',
+      intro: 'Lo tienes todo cubierto: Fran te escribirá unos días antes de tu llegada para acordar la modalidad que mejor te encaje y los detalles concretos (dirección exacta, código del portal, cómo entrar). No tienes de qué preocuparte — solo decirle a qué hora aproximada llegas.',
+      modalitiesTitle: 'Dos modalidades de check-in',
+      modalities: [
+        { tag: 'Autónoma', body: 'Llegas y entras directamente. Fran te pasa por mensaje el código de la urbanización, el acceso a la caja-llaves y las instrucciones paso a paso. Útil si vienes con vuelo nocturno o si prefieres tu ritmo.' },
+        { tag: 'Presencial', body: 'Te recibe Fran en persona, te enseña la casa y te resuelve cualquier duda en el momento. Horario de recepción presencial: 15:00 – 21:00. Si tu llegada cae fuera, pasamos a la modalidad autónoma sin más.' },
+      ],
+      garageTitle: 'Plaza de garaje',
+      garageIntro: 'Todos los apartamentos llevan plaza de garaje incluida en la urbanización Pueblo Salinas. La plaza que te corresponde según tu Hestía es:',
+      garageNote: 'A confirmar con Fran antes de tu llegada — alguna semana puede haber rotación por mantenimiento.',
+      checkoutTitle: 'Check-out',
+      checkoutBody: 'La salida es siempre antes de las 11:00. Deja las llaves donde Fran te indique (caja-llaves o entrega presencial, según hayas entrado). La basura, en los contenedores de la urbanización; las toallas y sábanas, sobre la cama — del resto se encarga el equipo de limpieza.',
+    },
     name: {
       title: 'Nuestro nombre',
       paras: [
@@ -835,6 +850,20 @@ const GUIDE_SHARED = {
     },
   },
   en: {
+    checkin: {
+      title: 'Arrival & departure',
+      intro: 'You are covered: Fran will message you a few days before your arrival to agree on the option that suits you best and share the specifics (exact address, gate code, how to get in). Nothing to worry about — just let him know your approximate arrival time.',
+      modalitiesTitle: 'Two check-in options',
+      modalities: [
+        { tag: 'Self check-in', body: 'You arrive and let yourself in. Fran sends you the gate code, lockbox access and step-by-step instructions by message. Handy for late flights or if you prefer your own pace.' },
+        { tag: 'In-person check-in', body: 'Fran greets you, shows you around and answers anything on the spot. In-person reception hours: 15:00 – 21:00. If your arrival falls outside that window, we switch to self check-in — no problem.' },
+      ],
+      garageTitle: 'Garage spot',
+      garageIntro: 'Every apartment comes with an included garage spot in the Pueblo Salinas complex. The spot assigned to your Hestía is:',
+      garageNote: 'Confirm with Fran before arrival — occasional rotation for maintenance.',
+      checkoutTitle: 'Check-out',
+      checkoutBody: 'Check-out is always before 11:00. Leave the keys wherever Fran tells you (lockbox or in-person, depending on how you arrived). Bin bags go in the complex containers; towels and sheets stay on the bed — the cleaning team handles the rest.',
+    },
     welcome: {
       title: 'Welcome to your Hestía',
       paras: [
@@ -1026,6 +1055,7 @@ const GUIDE_BY_APT = {
   // Hestía Vera Mar
   vm: {
     pdf: 'downloads/Hestia-Mar-Guia.pdf',
+    garageSpot: '160',
     es: {
       cover_tagline: 'El campo de olivos llega al mar. Donde el descanso encuentra su raíz.',
       rooms: [
@@ -1111,6 +1141,7 @@ const GUIDE_BY_APT = {
   // Hestía Vera Thalassa
   vt: {
     pdf: 'downloads/Hestia-Thalassa-Guia.pdf',
+    garageSpot: '163',
     es: {
       cover_tagline: 'Ático sobre el mar y el Salar de los Canos. Donde el horizonte se ensancha.',
       rooms: [
@@ -1192,6 +1223,7 @@ const GUIDE_BY_APT = {
   // Hestía Vera Salinas
   vs: {
     pdf: 'downloads/Hestia-Salinas-Guia.pdf',
+    garageSpot: '290',
     es: {
       cover_tagline: 'Junto a las salinas. Donde la luz se queda más tiempo.',
       rooms: [
@@ -3386,8 +3418,39 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <p className="ag-signer">{s.welcome.signer}</p>
           </section>
 
-          <section id="ag-wifi" className="ag-section ag-section-wifi">
+          {s.checkin && (
+          <section id="ag-llegada" className="ag-section ag-section-checkin">
             <span className="ag-section-num">02</span>
+            <h2 className="ag-h2">{s.checkin.title}</h2>
+            <p className="ag-para ag-para-lead">{s.checkin.intro}</p>
+
+            <h3 className="ag-h3">{s.checkin.modalitiesTitle}</h3>
+            <div className="ag-checkin-modes">
+              {s.checkin.modalities.map((m, i) => (
+                <div key={i} className="ag-checkin-mode">
+                  <span className="ag-checkin-mode-tag">{m.tag}</span>
+                  <p className="ag-checkin-mode-body">{m.body}</p>
+                </div>
+              ))}
+            </div>
+
+            <h3 className="ag-h3">{s.checkin.garageTitle}</h3>
+            <p className="ag-para">{s.checkin.garageIntro}</p>
+            <div className="ag-checkin-garage">
+              <span className="ag-checkin-garage-apt">{apt.name}</span>
+              <span className="ag-checkin-garage-sep">·</span>
+              <span className="ag-checkin-garage-label">{lang === 'es' ? 'Plaza' : 'Spot'}</span>
+              <span className="ag-checkin-garage-num">{aptInfo.garageSpot || '—'}</span>
+            </div>
+            <p className="ag-para ag-para-note">{s.checkin.garageNote}</p>
+
+            <h3 className="ag-h3">{s.checkin.checkoutTitle}</h3>
+            <p className="ag-para">{s.checkin.checkoutBody}</p>
+          </section>
+          )}
+
+          <section id="ag-wifi" className="ag-section ag-section-wifi">
+            <span className="ag-section-num">03</span>
             <h2 className="ag-h2">{s.wifi.title}</h2>
             <p className="ag-para ag-para-lead">{s.wifi.intro}</p>
             <div className="ag-wifi-card">
@@ -3404,19 +3467,19 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-nombre" className="ag-section">
-            <span className="ag-section-num">03</span>
+            <span className="ag-section-num">04</span>
             <h2 className="ag-h2">{s.name.title}</h2>
             {s.name.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
           </section>
 
           <section id="ag-proposito" className="ag-section">
-            <span className="ag-section-num">04</span>
+            <span className="ag-section-num">05</span>
             <h2 className="ag-h2">{s.why.title}</h2>
             {s.why.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
           </section>
 
           <section id="ag-limpieza" className="ag-section">
-            <span className="ag-section-num">05</span>
+            <span className="ag-section-num">06</span>
             <h2 className="ag-h2">{s.cleaning.title}</h2>
             <p className="ag-para">{s.cleaning.intro}</p>
             <p className="ag-note">{s.cleaning.note}</p>
@@ -3428,7 +3491,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {s.rules && (
             <section id="ag-normas" className="ag-section ag-section-rules">
-              <span className="ag-section-num">06</span>
+              <span className="ag-section-num">07</span>
               <h2 className="ag-h2">{s.rules.title}</h2>
               <p className="ag-para">{s.rules.intro}</p>
               <ul className="ag-rules-grid">
@@ -3447,7 +3510,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {a.rooms.map((room, idx) => (
             <section key={room.id} id={`ag-${room.id}`} className={`ag-section ag-room ag-room-${room.id}`}>
-              <span className="ag-section-num">{String(idx + 7).padStart(2, '0')}</span>
+              <span className="ag-section-num">{String(idx + 8).padStart(2, '0')}</span>
               <h2 className="ag-h2">{room.title}</h2>
               <p className="ag-para ag-para-lead">{room.body}</p>
               <PhotoGrid photos={getRoomPhotos(room.id)} />
@@ -3467,7 +3530,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           ))}
 
           <section id="ag-alrededores" className="ag-section">
-            <span className="ag-section-num">13</span>
+            <span className="ag-section-num">14</span>
             <h2 className="ag-h2">{s.surroundings.title}</h2>
             <p className="ag-para">{s.surroundings.intro}</p>
 
@@ -3512,7 +3575,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Sabores · comer y beber */}
           <section id="ag-sabores" className="ag-section">
-            <span className="ag-section-num">14</span>
+            <span className="ag-section-num">15</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Sabores' : 'Tastes'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3533,7 +3596,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Pueblos y cultura */}
           <section id="ag-pueblos" className="ag-section">
-            <span className="ag-section-num">15</span>
+            <span className="ag-section-num">16</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3551,7 +3614,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Mar y playas */}
           <section id="ag-mar-playas" className="ag-section">
-            <span className="ag-section-num">16</span>
+            <span className="ag-section-num">17</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mar y playas' : 'Sea & beaches'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3570,7 +3633,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Actividades y planes de día */}
           <section id="ag-actividades" className="ag-section">
-            <span className="ag-section-num">17</span>
+            <span className="ag-section-num">18</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Actividades y planes' : 'Activities & plans'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3589,7 +3652,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Mercados y compras */}
           <section id="ag-mercados" className="ag-section">
-            <span className="ag-section-num">18</span>
+            <span className="ag-section-num">19</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mercados y compras' : 'Markets & shops'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3607,7 +3670,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Movilidad · gasolineras y carga eléctrica */}
           <section id="ag-movilidad" className="ag-section">
-            <span className="ag-section-num">19</span>
+            <span className="ag-section-num">20</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3629,7 +3692,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-telefonos" className="ag-section">
-            <span className="ag-section-num">20</span>
+            <span className="ag-section-num">21</span>
             <h2 className="ag-h2">{s.phones.title}</h2>
             <table className="ag-phones-table">
               <tbody>
@@ -3644,7 +3707,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-feedback" className="ag-section">
-            <span className="ag-section-num">21</span>
+            <span className="ag-section-num">22</span>
             <h2 className="ag-h2">{s.feedback.title}</h2>
             {s.feedback.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
           </section>
