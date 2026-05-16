@@ -17,6 +17,9 @@
 // Los .mp4 viven en docs/assets/Videoshome/ y todos vienen procesados
 // con grading + sharpening y loop circular (xfade end→start) para que
 // el bucle sea imperceptible.
+// VIDEO_V se añade como query string al src para cache-bust cuando
+// re-grading o re-encode: bump cuando cambies los .mp4.
+const VIDEO_V = '2026-05-16';
 const HERO_VIDEOS = [
   { src: 'assets/Videoshome/hero-playa-almeria.mp4',
     poster: 'assets/hero-terrace-night.jpg',
@@ -82,7 +85,7 @@ const Hero = ({ lang, onScrollDown }) => {
         aria-label={pick.alt}
         key={pick.src}
       >
-        <source src={pick.src} type="video/mp4"/>
+        <source src={`${pick.src}?v=${VIDEO_V}`} type="video/mp4"/>
       </video>
       <div className="hero-content">
         <div className="wordmark hero-wordmark">HESTÍA</div>
