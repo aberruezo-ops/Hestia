@@ -370,12 +370,12 @@ const PLACES = [
   lng: -1.8540
 }, {
   id: 'aldi-vera',
-  name: 'Aldi (Vera)',
-  desc: 'Cadena alemana low-cost. A 10 min en coche junto a Mercadona.',
+  name: 'Aldi (Vera pueblo)',
+  desc: 'Cadena alemana low-cost. En Vera pueblo, a unos 10 min en coche desde Vera Playa.',
   specialty: 'productos alemanes (cerveza, embutidos, dulces) y precios bajos en básicos.',
   cat: 'super',
-  lat: 37.2358,
-  lng: -1.7940
+  lat: 37.2491,
+  lng: -1.8639
 },
 // Librerías
 {
@@ -1316,7 +1316,7 @@ const PLACES = [
 {
   id: 'aquavera',
   name: 'Parque acuático Aquavera',
-  desc: 'Toboganes, piscinas y zona infantil. Plan de día completo a 10 min en coche.',
+  desc: 'Toboganes, piscinas y zona infantil. A 5 min en coche dentro de la propia Vera Playa.',
   level: 'Fácil · todas las edades · zona infantil supervisada',
   cat: 'activity',
   url: 'https://www.aquavera.com/',
@@ -2680,7 +2680,7 @@ const PLACES = [
 }, {
   id: 'gas-cepsa-garrucha',
   name: 'Cepsa La Garrucha (AL-152 Garrucha-Turre)',
-  desc: 'En la carretera entre Garrucha y Turre. Útil si vienes/vas hacia Mojácar o Sierra Cabrera. Distancia: ~12 min en coche (7 km).',
+  desc: 'En la carretera entre Garrucha y Turre. Útil si vienes/vas hacia Mojácar o Sierra Cabrera. Distancia aproximada: ~15 min en coche (~15 km) desde Vera Playa.',
   specialty: 'Marca: Cepsa (grupo Moeve) · Servicios: tienda, café, aseos.',
   tip: 'Horario habitual: 7:00 – 22:00.',
   cat: 'fuel',
@@ -2690,7 +2690,7 @@ const PLACES = [
 }, {
   id: 'gas-repsol-mojacar',
   name: 'Repsol Mojácar (AL-118 km 0,6)',
-  desc: 'En la carretera entre Mojácar pueblo y Mojácar Playa. Si haces excursión a Mojácar, repostar a la vuelta sale de paso. Distancia: ~18 min en coche (15 km).',
+  desc: 'En la carretera entre Mojácar pueblo y Mojácar Playa. Si haces excursión a Mojácar, repostar a la vuelta sale de paso. Distancia aproximada: ~15-18 min en coche (~14-15 km) desde Vera Playa.',
   specialty: 'Marca: Repsol · Servicios: tienda, café, aseos.',
   tip: 'Horario habitual: 6:30 – 22:30.',
   cat: 'fuel',
@@ -2700,7 +2700,7 @@ const PLACES = [
 }, {
   id: 'gas-repsol-palomares',
   name: 'Repsol Palomares (ALP-118)',
-  desc: 'En la carretera hacia Palomares/Cuevas del Almanzora, paso natural si vas al norte (Aguilas, Mar Menor). Distancia: ~10 min en coche (8 km).',
+  desc: 'En la carretera hacia Palomares/Cuevas del Almanzora, paso natural si vas al norte (Aguilas, Mar Menor). Distancia aproximada: ~7 min en coche (~6 km) desde Vera Playa.',
   specialty: 'Marca: Repsol · Servicios: tienda básica, aseos.',
   tip: 'Horario habitual: 7:00 – 21:00.',
   cat: 'fuel',
@@ -2716,7 +2716,7 @@ const PLACES = [
 {
   id: 'ev-mercadona-vera-mz',
   name: 'Mercadona Vera (Av. Medina Azahara)',
-  desc: 'Punto de carga en el parking subterráneo del Mercadona de Vera Playa. 2 conectores AC tipo 2 (hasta 22 kW). Gratuito mientras compras. Distancia: ~6 min en coche (4 km).',
+  desc: 'Punto de carga en el parking subterráneo del Mercadona de Vera Playa. 2 conectores AC tipo 2 (hasta 22 kW). Gratuito mientras compras. Distancia aproximada: ~5 min en coche (~3 km) desde Vera Playa.',
   specialty: 'Tipo: AC (carga lenta-rápida) · Conector: Type 2 · Hasta 22 kW.',
   tip: 'Horario igual que la tienda: lunes-sábado 9:00 – 21:30, domingos cerrado. Pensado para 1-2 h durante la compra; no es carga rápida.',
   cat: 'ev-charge',
@@ -2728,7 +2728,7 @@ const PLACES = [
 }, {
   id: 'ev-mercadona-vera-pueblo',
   name: 'Mercadona Vera Pueblo (C/ Baza)',
-  desc: 'Segunda ubicación de Mercadona en Vera pueblo, con 2 conectores AC tipo 2. Gratuito para clientes. Distancia: ~10 min en coche (7 km).',
+  desc: 'Segunda ubicación de Mercadona en Vera pueblo, con 2 conectores AC tipo 2. Gratuito para clientes. Distancia aproximada: ~10 min en coche (~6 km) desde Vera Playa.',
   specialty: 'Tipo: AC · Conector: Type 2 · Hasta 22 kW (la potencia real entregada varía 4-22 kW según la hora).',
   tip: 'Horario: lunes-sábado 9:00 – 21:30. Aparcamiento accesible. Combina con la compra para sacarle partido.',
   cat: 'ev-charge',
@@ -2854,6 +2854,8 @@ const GUIDE_SHARED = {
     surroundings: {
       title: 'Alrededores y recomendaciones',
       intro: 'Sería imposible ofrecer un catálogo completo de recomendaciones sobre los alrededores de Hestía, pues sería infinito. Para empezar a explorar te recomendamos estas fuentes:',
+      disclaimer_title: 'Sobre lo que leerás a continuación',
+      disclaimer: 'Todas las distancias y tiempos de coche son aproximados y se calculan desde la urbanización Vera Playa como punto común a las tres Hestías (que están a menos de 2 km entre sí). Conviene comprobar la ruta exacta en Google Maps antes de salir, sobre todo en verano cuando el tráfico se carga. Los horarios de bares, restaurantes y comercios cambian con la temporada y pueden alterarse sin previo aviso — siempre que puedas, llama o consulta su web antes de ir. Las valoraciones (⭐) y los "best" que destacamos son recomendaciones personales y dependen del momento: un sitio brillante en mayo puede estar saturado en agosto, un chiringuito impecable en temporada puede cerrar en invierno, y el aforo o el tiempo cambian la experiencia. Tómalo como guía de salida, no como verdad absoluta.',
       sources: ['¡Pregúntanos! Te ayudaremos con mucho gusto según nuestra experiencia y la de nuestros huéspedes como tú. Más abajo tienes una pequeña muestra…'],
       sites: {
         title: 'Sitios web de recomendación turística',
@@ -2951,7 +2953,7 @@ const GUIDE_SHARED = {
       ssidValue: 'Hestía',
       passLabel: 'Contraseña',
       passValue: 'Hestiavera',
-      note: 'Si la contraseña no funciona, la actualizada está en una pegatina pegada al router (suele estar en la entrada o detrás del televisor). Avísanos si no la encuentras y te la pasamos.'
+      note: 'Si la contraseña no funciona, la actualizada está en una pegatina pegada al router. El router suele estar cerca del sofá, escondido en algún hueco o al lado de la tele. Avísanos si no lo encuentras y te lo decimos.'
     },
     phones: {
       title: 'Teléfonos y datos de utilidad',
@@ -3085,6 +3087,8 @@ const GUIDE_SHARED = {
     surroundings: {
       title: 'Surroundings and recommendations',
       intro: 'A complete catalogue of recommendations for the area around Hestía would be endless. To start exploring, we suggest these sources:',
+      disclaimer_title: 'About what you are about to read',
+      disclaimer: 'All distances and drive times are approximate and measured from the Vera Playa complex as a common reference for the three Hestías (which sit within 2 km of each other). Check the exact route on Google Maps before heading out, especially in summer when traffic builds up. Opening hours for bars, restaurants and shops change with the season and may be altered without notice — when in doubt, phone ahead or check their website. Star ratings (⭐) and "best" picks are personal recommendations and depend on the moment: a place that shines in May can be saturated in August, an impeccable beach shack in season may close in winter, and crowd or weather change the experience. Take this as a starting guide, not gospel.',
       sources: ['Just ask us! We are happy to help based on our experience and that of guests like you. A small sample below…'],
       sites: {
         title: 'Tourist information websites',
@@ -3182,7 +3186,7 @@ const GUIDE_SHARED = {
       ssidValue: 'Hestía',
       passLabel: 'Password',
       passValue: 'Hestiavera',
-      note: 'If the password does not work, the current one is on a sticker attached to the router (usually in the entrance or behind the TV). Let us know if you cannot find it and we will share it.'
+      note: 'If the password does not work, the current one is on a sticker attached to the router. The router is usually near the sofa, tucked into a nook, or next to the TV. Let us know if you cannot find it and we will tell you where.'
     },
     phones: {
       title: 'Useful data and phone numbers',
@@ -6989,7 +6993,14 @@ const AptGuideView = ({
     className: "ag-h2"
   }, s.surroundings.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, s.surroundings.intro), /*#__PURE__*/React.createElement(GuideMap, {
+  }, s.surroundings.intro), s.surroundings.disclaimer && /*#__PURE__*/React.createElement("aside", {
+    className: "ag-disclaimer",
+    role: "note"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-disclaimer-tag"
+  }, s.surroundings.disclaimer_title), /*#__PURE__*/React.createElement("p", {
+    className: "ag-disclaimer-body"
+  }, s.surroundings.disclaimer)), /*#__PURE__*/React.createElement(GuideMap, {
     lang: lang,
     apt: apt
   }), /*#__PURE__*/React.createElement("h3", {

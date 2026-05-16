@@ -10807,6 +10807,30 @@ footer,
   margin-right: 4px;
 }
 
+.ag-disclaimer {
+  margin: 20px 0 24px;
+  padding: 14px 18px;
+  background: rgba(141, 110, 99, 0.08);
+  border-left: 4px solid var(--ber);
+  border-radius: 6px;
+  display: block;
+}
+.ag-disclaimer-tag {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ber-dk);
+  margin-bottom: 6px;
+}
+.ag-disclaimer-body {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
 /* ============================================================
    Lugares compactos (no-featured) — solo headline, click para expandir
    ============================================================ */
