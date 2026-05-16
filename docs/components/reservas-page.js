@@ -1140,6 +1140,16 @@ const ReservasPageApp = () => {
     document.documentElement.lang = lang;
     document.title = lang === 'es' ? 'Reservas · Hestía Your Home · Vera Playa' : 'Book · Hestía Your Home · Vera Playa';
   }, [lang]);
+
+  // Abrir modal de ventajas directamente si se llega con #ventajas en la URL
+  React.useEffect(() => {
+    if (window.location.hash === '#ventajas') {
+      const t = setTimeout(() => {
+        window.dispatchEvent(new Event('hestia:open-direct-perks'));
+      }, 400);
+      return () => clearTimeout(t);
+    }
+  }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Topbar, {
     lang: lang,
     setLang: setLang

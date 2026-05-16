@@ -81,6 +81,7 @@ const NAV_PAGES = {
   noticias:      'noticias.html',
   contacto:      'contacto.html',
   reservas:      'reservas.html',
+  ventajas:      'reservas.html#ventajas',
 };
 
 const isActive = (href) => {
@@ -89,6 +90,43 @@ const isActive = (href) => {
 };
 
 const CTA_CYCLE_DURATION = 80; // 8 colors × 10s
+
+// Sección plegable "Acceso para huéspedes" en el menú móvil.
+// Al pulsar muestra los enlaces a las guías de cada apartamento.
+const MnGuestSection = ({ t, lang, NavLink, NAV_PAGES }) => {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div className="mn-guests-section">
+      <button
+        type="button"
+        className={`mn-guests-btn${open ? ' open' : ''}`}
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+      >
+        <span className="mn-guests-icon" aria-hidden="true">🔑</span>
+        <span>{t.mn_guests}</span>
+        <span className={`mn-guests-chev${open ? ' open' : ''}`} aria-hidden="true">↓</span>
+      </button>
+      {open && (
+        <div className="mn-guests-body">
+          <div className="mn-guests-label eyebrow">{t.mn_guide}</div>
+          <NavLink href={NAV_PAGES.mar} className="mn-guest-apt mn-vm">
+            <span className="mn-guest-dot" aria-hidden="true"/>
+            <span>Hestía <em>Mar</em></span>
+          </NavLink>
+          <NavLink href={NAV_PAGES.thalassa} className="mn-guest-apt mn-vt">
+            <span className="mn-guest-dot" aria-hidden="true"/>
+            <span>Hestía <em>Thalassa</em></span>
+          </NavLink>
+          <NavLink href={NAV_PAGES.salinas} className="mn-guest-apt mn-vs">
+            <span className="mn-guest-dot" aria-hidden="true"/>
+            <span>Hestía <em>Salinas</em></span>
+          </NavLink>
+        </div>
+      )}
+    </div>
+  );
+};
 
 const Header = ({ mode, scrolled, lang }) => {
   const t = COPY[lang];
@@ -244,6 +282,12 @@ const Header = ({ mode, scrolled, lang }) => {
               <span className="mn-name">{t.nav[8]}</span>
             </NavLink>
           </div>
+          <div className="mn-sep"/>
+          <NavLink href={NAV_PAGES.ventajas} className="mn-ventajas">
+            <span className="mn-ventajas-icon" aria-hidden="true">✓</span>
+            <span>{t.mn_ventajas}</span>
+          </NavLink>
+          <MnGuestSection t={t} lang={lang} NavLink={NavLink} NAV_PAGES={NAV_PAGES} />
           <div className="mn-sep"/>
           <NavLink href={NAV_PAGES.nosotros} className="mn-page">{t.nav[4]}</NavLink>
           <NavLink href={NAV_PAGES.opiniones} className="mn-page">{t.nav[5]}</NavLink>
