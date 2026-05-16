@@ -1269,7 +1269,7 @@ const GUIDE_BY_APT = {
           'Cuidado con el aire acondicionado por la noche y las corrientes de aire.',
           'Ponte el despertador un día no muy nublado para ver el amanecer.',
         ]},
-        { id: 'banos', title: 'Mis baños', body: 'Mis dos baños: uno con bañera, hidromasaje y cromoterapia en el espejo, y otro con ducha hidromasaje. Productos básicos para tus primeros días, aromas, velas, secador, botiquín y más.', recs: [
+        { id: 'banos', title: 'Mis baños', body: 'Mis dos baños: uno con columna de hidroterapia y espejo de cromoterapia, y otro con ducha y luz de colores. Productos básicos para tus primeros días, aromas, velas, secador, botiquín y más.', recs: [
           'Haz un uso prudente y responsable del agua. El agua es vida.',
           'Las toallas del baño no son para la playa ni para la piscina.',
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
@@ -1309,7 +1309,7 @@ const GUIDE_BY_APT = {
           'Watch out for night-time A/C and drafts.',
           'Set the alarm one clear morning to catch the sunrise.',
         ]},
-        { id: 'banos', title: 'My bathrooms', body: 'My two bathrooms: one with bathtub, hydromassage and chromotherapy mirror, and another with a hydromassage shower. Basic products for your first days, plus scents, candles, hairdryer, first-aid kit and more.', recs: [
+        { id: 'banos', title: 'My bathrooms', body: 'My two bathrooms: one with a hydrotherapy column and chromotherapy mirror, the other with a shower and colour lighting. Basic products for your first days, plus scents, candles, hairdryer, first-aid kit and more.', recs: [
           'Use water responsibly. Water is life.',
           'Bathroom towels are not for the beach or the pool.',
           'Be careful with creams and make-up — they damage textiles.',
