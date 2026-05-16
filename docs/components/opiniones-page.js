@@ -302,33 +302,34 @@ const ReviewCard = ({
   })));
 };
 
-// Filtros: todas | Booking | Airbnb | Google | Web.
-// Por defecto muestra "highlights" + recientes; expandible al resto.
+// Reviews paginadas: 3 por "página", flechas prev/next, sin scroll vertical infinito.
 // ============================================================
+const CARDS_PER_PAGE = 3;
 const OpinionesTestimonials = ({
   lang
 }) => {
   const t = OPINIONES_COPY[lang];
   const all = window.REVIEWS && Array.isArray(window.REVIEWS.items) ? window.REVIEWS.items.filter(r => r.status === 'published') : [];
-  const [filter, setFilter] = React.useState('all'); // 'all'|'booking'|'airbnb'|'google'|'web'
-  const [aptFilter, setAptFilter] = React.useState('all'); // 'all'|'vm'|'vt'|'vs'
-  const [expanded, setExpanded] = React.useState(false);
+  const [filter, setFilter] = React.useState('all');
+  const [aptFilter, setAptFilter] = React.useState('all');
+  const [page, setPage] = React.useState(0);
+  const changeFilter = src => _vt(() => {
+    setFilter(src);
+    setPage(0);
+  });
+  const changeApt = apt => _vt(() => {
+    setAptFilter(apt);
+    setPage(0);
+  });
 
-  // Filtrado combinado: por fuente Y por apartamento.
+  // Filtrado: fuente + apartamento. Highlights primero, luego por fecha desc.
   const filtered = all.filter(r => filter === 'all' || r.source === filter).filter(r => aptFilter === 'all' || r.apt === aptFilter || r.apt === 'all');
+  const visible = [...filtered.filter(r => r.highlight).sort((a, b) => (b.date || '').localeCompare(a.date || '')), ...filtered.filter(r => !r.highlight).sort((a, b) => (b.date || '').localeCompare(a.date || ''))];
+  const totalPages = Math.max(1, Math.ceil(visible.length / CARDS_PER_PAGE));
+  const safePage = Math.min(page, totalPages - 1);
+  const paginated = visible.slice(safePage * CARDS_PER_PAGE, (safePage + 1) * CARDS_PER_PAGE);
 
-  // Agrupación visible:
-  // - Highlights: marcadas como destacadas (las "más relevantes").
-  // - Recientes: las 6 más nuevas que NO sean highlights.
-  // - Resto: todas las demás cuando se expande.
-  const highlights = filtered.filter(r => r.highlight).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-  const nonHL = filtered.filter(r => !r.highlight).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-  const recent = nonHL.slice(0, 6);
-  const rest = nonHL.slice(6);
-  const visible = expanded ? [...highlights, ...recent, ...rest] : [...highlights, ...recent];
-
-  // Cuenta por filtro de fuente (respeta el filtro de apartamento activo
-  // — así los contadores reflejan lo que verá el usuario al hacer click).
+  // Contadores de tabs (respetan el filtro cruzado).
   const inApt = aptFilter === 'all' ? all : all.filter(r => r.apt === aptFilter || r.apt === 'all');
   const counts = {
     all: inApt.length,
@@ -337,7 +338,6 @@ const OpinionesTestimonials = ({
     google: inApt.filter(r => r.source === 'google').length,
     web: inApt.filter(r => r.source === 'web').length
   };
-  // Counts por apartamento (respetan el filtro de fuente activo).
   const inSrc = filter === 'all' ? all : all.filter(r => r.source === filter);
   const aptCounts = {
     all: inSrc.length,
@@ -415,10 +415,7 @@ const OpinionesTestimonials = ({
     role: "tab",
     "aria-selected": filter === tab.id,
     className: `opiniones-tab${filter === tab.id ? ' is-active' : ''}`,
-    onClick: () => _vt(() => {
-      setFilter(tab.id);
-      setExpanded(false);
-    })
+    onClick: () => changeFilter(tab.id)
   }, lang === 'es' ? tab.es : tab.en, /*#__PURE__*/React.createElement("span", {
     className: "opiniones-tab-count"
   }, "(", counts[tab.id], ")")))), /*#__PURE__*/React.createElement("div", {
@@ -434,35 +431,33 @@ const OpinionesTestimonials = ({
     style: {
       '--apt-accent': tab.accent
     },
-    onClick: () => _vt(() => {
-      setAptFilter(tab.id);
-      setExpanded(false);
-    })
+    onClick: () => changeApt(tab.id)
   }, lang === 'es' ? tab.es : tab.en, /*#__PURE__*/React.createElement("span", {
     className: "opiniones-tab-count"
   }, "(", aptCounts[tab.id], ")")))), visible.length === 0 ? /*#__PURE__*/React.createElement("p", {
     className: "opiniones-empty"
-  }, lang === 'es' ? 'Aún no hay opiniones para este filtro.' : 'No reviews yet for this filter.') : /*#__PURE__*/React.createElement(React.Fragment, null, highlights.length > 0 && filter === 'all' && aptFilter === 'all' && /*#__PURE__*/React.createElement("div", {
-    className: "opiniones-section-label reveal"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "osl-star",
-    "aria-hidden": "true"
-  }, "\u2726"), lang === 'es' ? 'Más relevantes' : 'Most relevant'), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Aún no hay opiniones para este filtro.' : 'No reviews yet for this filter.') : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "testimonials-grid"
-  }, visible.map(rev => /*#__PURE__*/React.createElement(ReviewCard, {
+  }, paginated.map(rev => /*#__PURE__*/React.createElement(ReviewCard, {
     key: rev.id,
     rev: rev,
     lang: lang,
     fmtDate: fmtDate
-  }))), rest.length > 0 && /*#__PURE__*/React.createElement("div", {
-    className: "opiniones-expand-wrap reveal"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "tc-nav"
   }, /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: "opiniones-expand-btn",
-    onClick: () => setExpanded(e => !e)
-  }, expanded ? lang === 'es' ? `Mostrar menos` : 'Show less' : lang === 'es' ? `Ver todas (+${rest.length})` : `See all (+${rest.length})`, /*#__PURE__*/React.createElement("span", {
-    "aria-hidden": "true"
-  }, expanded ? '↑' : '↓'))))));
+    className: "tc-arrow",
+    onClick: () => setPage(p => Math.max(0, p - 1)),
+    disabled: safePage === 0,
+    "aria-label": lang === 'es' ? 'Anteriores' : 'Previous'
+  }, "\u2190"), /*#__PURE__*/React.createElement("span", {
+    className: "tc-counter"
+  }, safePage * CARDS_PER_PAGE + 1, "\u2013", Math.min((safePage + 1) * CARDS_PER_PAGE, visible.length), ' ', "/", ' ', visible.length), /*#__PURE__*/React.createElement("button", {
+    className: "tc-arrow",
+    onClick: () => setPage(p => Math.min(totalPages - 1, p + 1)),
+    disabled: safePage === totalPages - 1,
+    "aria-label": lang === 'es' ? 'Siguientes' : 'Next'
+  }, "\u2192")))));
 };
 const OpinionesPageApp = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
