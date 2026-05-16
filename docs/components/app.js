@@ -139,6 +139,8 @@ const App = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement(RatingsMarquee, {
     lang: lang
+  }), /*#__PURE__*/React.createElement(HomeGuideTeaser, {
+    lang: lang
   }), /*#__PURE__*/React.createElement(QuickFAQ, {
     lang: lang,
     pageId: "home"

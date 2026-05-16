@@ -3195,4 +3195,71 @@ const WidgetStack = ({ lang }) => {
   );
 };
 
-Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin, WidgetGuestAccess, WidgetTopRecs, TOP_RECS });
+// ================================================================
+// HomeGuideTeaser — bloque "La guía completa de Hestía" para la home.
+// Mismo lenguaje visual que AptGuideGate (en la apt-page) pero sin
+// referencia a un apartamento concreto. El CTA abre GuestAccessModal
+// (mismo modal que el botón Acceso huéspedes) para pedir apto + PIN.
+// ================================================================
+const HomeGuideTeaser = ({ lang }) => {
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const t = lang === 'es' ? {
+    eyebrow: 'Guía del huésped',
+    title_a: 'La guía completa de ',
+    title_em: 'Hestía',
+    desc: <>No es un folleto: es la <strong>superguía que nos habría gustado encontrar a nosotros</strong> cuando llegamos por primera vez a Vera. Veintidós capítulos con todo lo que necesitas para vivir tu estancia — desde cómo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense.</>,
+    stats: [
+      <><strong>22 capítulos</strong> sobre tu Hestía y el entorno</>,
+      <><strong>230+ lugares curados</strong> — restaurantes, playas, bares, bodegas, mercados, pescaderías…</>,
+      <><strong>48 planes de día completo</strong> con horarios, rutas y reservas</>,
+      <><strong>Calendario anual</strong> de fiestas patronales y eventos</>,
+      <><strong>Servicios a mano</strong> — centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías y residencias para mascotas…</>,
+      <><strong>Teléfonos útiles</strong> y nuestro contacto directo antes, durante y después de tu estancia</>,
+    ],
+    foot: 'Web interactiva + PDF descargable de 40 páginas. Reservada para huéspedes con PIN.',
+    cta: 'Solo para huéspedes',
+  } : {
+    eyebrow: 'Guest guide',
+    title_a: 'The complete ',
+    title_em: 'Hestía',
+    title_b: ' guide',
+    desc: <>This isn&apos;t a leaflet: it&apos;s the <strong>super-guide we wish we&apos;d had ourselves</strong> the first time we arrived in Vera. Twenty-two chapters with everything you need for your stay — from how to get here from any of the five nearest airports to the corners only locals from the Levante know.</>,
+    stats: [
+      <><strong>22 chapters</strong> on your Hestía and the area</>,
+      <><strong>230+ curated spots</strong> — restaurants, beaches, bars, wineries, markets, fishmongers…</>,
+      <><strong>48 full-day itineraries</strong> with timing, routes and bookings</>,
+      <><strong>Annual calendar</strong> of festivals and local events</>,
+      <><strong>Everything within reach</strong> — health centres, 24 h vets, pharmacies, physio clinics, pet boarding & daycare…</>,
+      <><strong>Useful phones</strong> and our direct line before, during and after your stay</>,
+    ],
+    foot: 'Interactive web + 40-page downloadable PDF. Reserved for guests with a PIN.',
+    cta: 'Guests only',
+  };
+  return (
+    <>
+      <section className="apt-guide-gate apt-guide-gate-home">
+        <div className="apt-guide-gate-inner">
+          <span className="apt-guide-gate-eyebrow">{t.eyebrow}</span>
+          <h2 className="apt-guide-gate-title">
+            {t.title_a}<em>{t.title_em}</em>{t.title_b || ''}
+          </h2>
+          <p className="apt-guide-gate-desc">{t.desc}</p>
+          <ul className="apt-guide-gate-stats">
+            {t.stats.map((s, i) => <li key={i}>{s}</li>)}
+          </ul>
+          <p className="apt-guide-gate-foot">{t.foot}</p>
+          <button className="apt-guide-gate-btn" onClick={() => setModalOpen(true)}>
+            <span>{t.cta}</span>
+            <span className="apt-guide-gate-arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+      </section>
+      {modalOpen && ReactDOM.createPortal(
+        <GuestAccessModal lang={lang} onClose={() => setModalOpen(false)} />,
+        document.body
+      )}
+    </>
+  );
+};
+
+Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin, WidgetGuestAccess, WidgetTopRecs, TOP_RECS, HomeGuideTeaser });
