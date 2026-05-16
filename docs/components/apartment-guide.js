@@ -149,7 +149,7 @@ const SECTION_CATS = {
   'mar-playas': ['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
   actividades: ['activity', 'sport', 'bodega'],
   mercados: ['market'],
-  salud: ['health', 'vet', 'physio', 'pharmacy'],
+  salud: ['health', 'vet', 'pet-board', 'physio', 'pharmacy'],
   movilidad: ['fuel', 'ev-charge']
 };
 
@@ -246,6 +246,12 @@ const CATEGORIES = [{
   en: 'Physiotherapy',
   color: 'var(--vio)',
   icon: '💆'
+}, {
+  id: 'pet-board',
+  es: 'Guarderías y residencias de animales',
+  en: 'Pet boarding & daycare',
+  color: 'var(--vt2)',
+  icon: '🐾'
 }, {
   id: 'bodega',
   es: 'Bodegas y enoturismo',
@@ -1335,6 +1341,43 @@ const PLACES = [
   url: 'https://www.google.com/maps/search/?api=1&query=Clinica+Veterinaria+Costa+Indalo+Mojacar',
   lat: 37.1380,
   lng: -1.8500
+},
+// ==========================================================
+// GUARDERIAS / RESIDENCIAS PARA ANIMALES — verificados mayo 2026.
+// Si vas a hacer una excursión que no admite mascotas (parques
+// naturales con restricciones, museos, restaurantes pijos),
+// estas tres son las opciones cercanas.
+// ==========================================================
+{
+  id: 'pet-vera',
+  name: 'Hotel Residencia Canina-Felina Vera (Llanos de Rosa)',
+  desc: 'Más de 35 años cuidando perros y gatos. Parcelas individuales, paseos diarios, atención personalizada según el carácter de cada animal. También educación canina a domicilio.',
+  tip: 'Llama con 1-2 días de antelación en temporada alta. Reserva mínima 1 noche; aceptan estancia de día.',
+  cat: 'pet-board',
+  url: 'https://www.hotelcaninovera.es/',
+  lat: 37.2480,
+  lng: -1.8400,
+  featured: true,
+  featuredOrder: 1,
+  rating: 4.7
+}, {
+  id: 'pet-mojacar',
+  name: 'Residencia Canina Mojácar',
+  desc: 'Más de 15 años. Tres parcelas amplias para que los perros corran y socialicen. Especializada en estancias cortas (un día de excursión) y largas (vacaciones).',
+  cat: 'pet-board',
+  url: 'https://www.residenciacaninamojacar.com/',
+  lat: 37.1350,
+  lng: -1.8550,
+  rating: 4.6
+}, {
+  id: 'pet-garrucha',
+  name: 'Centro Canino Loma de Vera (Garrucha)',
+  desc: 'Residencia, hotel y guardería de día. Acoge incluso perros con problemas de salud. Trato cercano, recomendado en los foros locales.',
+  cat: 'pet-board',
+  url: 'https://www.bydeperros.com/residencias/residencia-centro-canino-loma-de-vera-1048.html',
+  lat: 37.1810,
+  lng: -1.8290,
+  rating: 4.5
 },
 // ==========================================================
 // FISIOTERAPIA — verificados mayo 2026.
@@ -4444,6 +4487,128 @@ const ICONIC_DISHES = [{
   where_es: 'Panaderías de Murcia capital (Bonache es el referente). En la zona: panaderías de Águilas y Mazarrón.',
   where_en: 'Murcia city bakeries (Bonache is the reference). In the area: bakeries in Águilas and Mazarrón.',
   extLink: 'https://www.google.com/maps/search/?api=1&query=Pastel+de+carne+Murcia'
+}, {
+  id: 'tabernero',
+  icon: '🍞',
+  name_es: 'Tabernero almeriense',
+  name_en: 'Tabernero (Almerían pisto-tapa)',
+  region_es: 'Almería · tapa',
+  region_en: 'Almería · tapa',
+  desc_es: 'Sofrito de cebolla, pimiento verde y tomate con un punto picante (a veces con magra de cerdo), servido sobre pan tostado como tapa. La hermana almeriense del pisto, identidad pura de bar de barrio.',
+  desc_en: 'Sofrito of onion, green pepper and tomato with a spicy kick (sometimes with pork), served over toasted bread as a tapa. The Almerían cousin of pisto, pure neighbourhood-bar identity.',
+  tip_es: 'Origen: Bar El Disloque (Calle Terriza, Almería capital). Pide caña con tabernero — la tapa va incluida.',
+  tip_en: 'Origin: Bar El Disloque (Calle Terriza, Almería city). Order a beer with tabernero — the tapa comes free.',
+  placeIds: ['casa-egea', 'regio-restaurante']
+}, {
+  id: 'ajo-colorao',
+  icon: '🌶️',
+  name_es: 'Ajo colorao con raya',
+  name_en: 'Red garlic stew with stingray',
+  region_es: 'Levante almeriense',
+  region_en: 'Levante almeriense',
+  desc_es: 'Guiso espeso de patata, raya, pimiento rojo seco (ñora) y mucho ajo. Plato emblemático de Terraza Carmona — receta rescatada de la cocina almeriense tradicional.',
+  desc_en: 'Thick stew of potato, stingray, dried red pepper (ñora) and lots of garlic. A signature dish at Terraza Carmona — a recipe rescued from traditional Almerían cuisine.',
+  placeIds: ['terraza-carmona']
+}, {
+  id: 'olla-col',
+  icon: '🥬',
+  name_es: 'Olla de col (berza almeriense)',
+  name_en: 'Cabbage stew (Almerían berza)',
+  region_es: 'Almería · invierno',
+  region_en: 'Almería · winter',
+  desc_es: 'La berza de aquí: col, garbanzos, habichuelas, costilla, chorizo y morcilla. Cocida lentamente — un plato que se come con cuchara grande y pan para mojar.',
+  desc_en: 'The local "berza": cabbage, chickpeas, white beans, pork ribs, chorizo and blood sausage. Slow-cooked — eat with a big spoon and bread to mop up.',
+  placeIds: ['terraza-carmona', 'regio-restaurante', 'casa-egea']
+}, {
+  id: 'guiso-pelotas',
+  icon: '🥣',
+  name_es: 'Guiso de pelotas',
+  name_en: 'Almerían meatball stew',
+  region_es: 'Almería',
+  region_en: 'Almería',
+  desc_es: 'Albóndigas de carne picada y miga de pan, hechas a mano y cocidas en un caldo con verduras y azafrán. Plato de domingo en casa almeriense.',
+  desc_en: 'Hand-rolled meatballs with bread crumb, simmered in a broth with vegetables and saffron. A Sunday dish in Almerían homes.',
+  placeIds: ['terraza-carmona']
+}, {
+  id: 'caldo-pimenton',
+  icon: '🍵',
+  name_es: 'Caldo pimentón',
+  name_en: 'Paprika broth (caldo pimentón)',
+  region_es: 'Levante almeriense',
+  region_en: 'Levante almeriense',
+  desc_es: 'Caldo aclarado con pimentón, patatas, pescados de roca y all-i-oli. Es la base del caldero pero servido en plato hondo — más ligero, más marinero.',
+  desc_en: 'Light paprika broth with potatoes, rockfish and garlic mayo. The base of caldero served as a soup — lighter, more maritime.',
+  placeIds: ['terraza-carmona', 'almejero']
+}, {
+  id: 'choto-ajillo',
+  icon: '🐐',
+  name_es: 'Choto al ajillo',
+  name_en: 'Garlic kid (baby goat)',
+  region_es: 'Almería interior · Alpujarra',
+  region_en: 'Almería interior · Alpujarra',
+  desc_es: 'Cabrito lechal troceado y salteado con mucho ajo, vino blanco y guindilla. Plato de la sierra almeriense — pídelo con patatas a lo pobre.',
+  desc_en: 'Milk-fed kid sautéed with lots of garlic, white wine and chilli. A mountain dish from inland Almería — order with "patatas a lo pobre".',
+  tip_es: 'Lo bordan en los restaurantes de los pueblos del interior (Vélez-Rubio, Vélez-Blanco, Gérgal).',
+  tip_en: 'Best in inland-village restaurants (Vélez-Rubio, Vélez-Blanco, Gérgal).',
+  placeIds: ['regio-restaurante', 'casa-egea']
+}, {
+  id: 'marrana-pulpo',
+  icon: '🐙',
+  name_es: 'Marraná de pulpo',
+  name_en: 'Octopus marraná',
+  region_es: 'Cabo de Gata · Carboneras',
+  region_en: 'Cabo de Gata · Carboneras',
+  desc_es: 'Pulpo seco al sol, asado a la brasa y desmenuzado con aceite, pimentón y patata cocida. Plato de pescadores del Cabo de Gata, sabor profundamente marino.',
+  desc_en: 'Sun-dried octopus, grilled and pulled with oil, paprika and boiled potato. A Cabo de Gata fishermen\'s dish — deeply maritime flavour.',
+  tip_es: 'Difícil de encontrar fuera de Carboneras y Cabo de Gata. Llama antes para confirmar que lo tienen.',
+  tip_en: 'Hard to find outside Carboneras and Cabo de Gata. Call ahead to confirm they have it.',
+  extLink: 'https://www.google.com/maps/search/?api=1&query=Marran%C3%A1+pulpo+Cabo+de+Gata'
+}, {
+  id: 'zarangollo',
+  icon: '🍳',
+  name_es: 'Zarangollo murciano',
+  name_en: 'Zarangollo (Murcian courgette)',
+  region_es: 'Murcia · tapa',
+  region_en: 'Murcia · tapa',
+  desc_es: 'Calabacín y cebolla pochados muy lentos con huevo revuelto por encima. Tapa básica de huerta murciana — simple y adictiva.',
+  desc_en: 'Slow-cooked courgette and onion with scrambled egg on top. A basic Murcian-huerta tapa — simple and addictive.',
+  where_es: 'Bares de tapas de Murcia capital y de Cartagena. En la zona: cualquier bar del Mar Menor.',
+  where_en: 'Tapas bars in Murcia city and Cartagena. In the area: any Mar Menor bar.',
+  extLink: 'https://www.google.com/maps/search/?api=1&query=Zarangollo+Murcia'
+}, {
+  id: 'ensalada-murciana',
+  icon: '🥗',
+  name_es: 'Ensalada murciana (moje)',
+  name_en: 'Murcian salad (moje)',
+  region_es: 'Murcia · tapa',
+  region_en: 'Murcia · tapa',
+  desc_es: 'Tomate de conserva, atún, cebolla, huevo cocido y aceitunas negras. Sencillísima, sabor concentrado — la ensalada de la huerta murciana.',
+  desc_en: 'Tinned tomato, tuna, onion, hard-boiled egg and black olives. Dead simple, intense flavour — the salad of the Murcian huerta.',
+  where_es: 'Cualquier bar de Murcia o Mar Menor. Pídela en pan tostado como "moje" — la versión tapa.',
+  where_en: 'Any bar in Murcia or Mar Menor. Ask for it on toasted bread as "moje" — the tapa version.',
+  extLink: 'https://www.google.com/maps/search/?api=1&query=Ensalada+murciana'
+}, {
+  id: 'arroz-conejo-caracoles',
+  icon: '🐌',
+  name_es: 'Arroz con conejo y caracoles',
+  name_en: 'Rice with rabbit and snails',
+  region_es: 'Murcia · huerta',
+  region_en: 'Murcia · huerta',
+  desc_es: 'Arroz seco cocinado en paella con conejo de campo, caracoles serranos, ajos tiernos y romero. El arroz dominguero del interior murciano.',
+  desc_en: 'Dry paella rice with country rabbit, mountain snails, green garlic and rosemary. The Sunday paella of inland Murcia.',
+  where_es: 'Restaurantes tradicionales de Murcia, Lorca, Caravaca y Yecla. Plato de mediodía — los buenos no lo hacen por la noche.',
+  where_en: 'Traditional restaurants in Murcia, Lorca, Caravaca and Yecla. A lunchtime dish — the good places don\'t make it at night.',
+  extLink: 'https://www.google.com/maps/search/?api=1&query=Arroz+conejo+caracoles+Murcia'
+}, {
+  id: 'torticas-avio',
+  icon: '🥞',
+  name_es: 'Torticas de avío',
+  name_en: 'Avío flatbreads',
+  region_es: 'Almería interior',
+  region_en: 'Inland Almería',
+  desc_es: 'Pan plano de harina, aceite y agua, cocido en la sartén y servido con el "avío" (sobras de matanza, chorizo, panceta) o con miel. Pan-tapa del campo almeriense.',
+  desc_en: 'Flat bread of flour, oil and water, pan-cooked and served with "avío" (cured-pork leftovers, chorizo, pancetta) or honey. Almerían country bread-tapa.',
+  placeIds: ['terraza-carmona']
 }];
 
 // Etiquetas de cada tema con icono y color
@@ -7875,7 +8040,7 @@ const AptGuideView = ({
     className: "ag-h2"
   }, lang === 'es' ? 'Salud y servicios' : 'Health & services'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, lang === 'es' ? 'Lo que necesitas si algo se tuerce: centros de salud, hospital de referencia, farmacias, veterinarios (incluyendo 24 h) y centros de fisioterapia y osteopatía.' : 'What you need if something goes wrong: health centres, reference hospital, pharmacies, vets (including 24 h) and physiotherapy / osteopathy clinics.'), SECTION_CATS.salud.map(catId => {
+  }, lang === 'es' ? 'Servicios para tenerlo todo a mano: centros de salud, veterinarios (incluyendo 24 h), guarderías y residencias para mascotas, farmacias y fisioterapeutas.' : 'Everything within reach: health centres, vets (including 24 h), pet boarding and daycare, pharmacies and physiotherapy clinics.'), SECTION_CATS.salud.map(catId => {
     const cat = CATEGORIES.find(c => c.id === catId);
     if (!cat) return null;
     const inCat = PLACES.filter(p => p.cat === catId);
@@ -8032,7 +8197,7 @@ const AptGuideGate = ({
     className: "apt-guide-gate-desc"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "No es un folleto: es la ", /*#__PURE__*/React.createElement("strong", null, "supergu\xEDa que nos habr\xEDa gustado encontrar a nosotros"), " cuando llegamos por primera vez a Vera. Veintid\xF3s cap\xEDtulos con todo lo que necesitas para vivir tu estancia \u2014 desde c\xF3mo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense.") : /*#__PURE__*/React.createElement(React.Fragment, null, "This isn't a leaflet: it's the ", /*#__PURE__*/React.createElement("strong", null, "super-guide we wish we'd had ourselves"), " the first time we arrived in Vera. Twenty-two chapters with everything you need for your stay \u2014 from how to get here from any of the five nearest airports to the corners only locals from the Levante know.")), /*#__PURE__*/React.createElement("ul", {
     className: "apt-guide-gate-stats"
-  }, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("strong", null, "22"), " ", lang === 'es' ? 'capítulos sobre tu Hestía y el entorno' : 'chapters on your Hestía and the area'), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("strong", null, "230+"), " ", lang === 'es' ? 'lugares curados: restaurantes, playas, bares, bodegas, mercados, pescaderías…' : 'curated spots: restaurants, beaches, bars, wineries, markets, fishmongers…'), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("strong", null, "48"), " ", lang === 'es' ? 'planes de día completo' : 'full-day itineraries'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Annual calendar"), " of festivals and local events")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Centros de salud, ", /*#__PURE__*/React.createElement("strong", null, "veterinarios 24 h"), ", fisioterapia, farmacias") : /*#__PURE__*/React.createElement(React.Fragment, null, "Health centres, ", /*#__PURE__*/React.createElement("strong", null, "24 h vets"), ", physio clinics, pharmacies")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tel\xE9fonos \xFAtiles y nuestro contacto directo, ", /*#__PURE__*/React.createElement("strong", null, "antes, durante y despu\xE9s"), " de tu estancia") : /*#__PURE__*/React.createElement(React.Fragment, null, "Useful phones and our direct line, ", /*#__PURE__*/React.createElement("strong", null, "before, during and after"), " your stay"))), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("strong", null, "22"), " ", lang === 'es' ? 'capítulos sobre tu Hestía y el entorno' : 'chapters on your Hestía and the area'), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("strong", null, "230+"), " ", lang === 'es' ? 'lugares curados: restaurantes, playas, bares, bodegas, mercados, pescaderías…' : 'curated spots: restaurants, beaches, bars, wineries, markets, fishmongers…'), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("strong", null, "48"), " ", lang === 'es' ? 'planes de día completo' : 'full-day itineraries'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Annual calendar"), " of festivals and local events")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Servicios para tenerlo todo a mano: centros de salud, ", /*#__PURE__*/React.createElement("strong", null, "veterinarios 24 h"), ", farmacias, fisioterapeutas, ", /*#__PURE__*/React.createElement("strong", null, "guarder\xEDas y residencias para mascotas"), "\u2026") : /*#__PURE__*/React.createElement(React.Fragment, null, "Everything within reach: health centres, ", /*#__PURE__*/React.createElement("strong", null, "24 h vets"), ", pharmacies, physio clinics, ", /*#__PURE__*/React.createElement("strong", null, "pet boarding & daycare"), "\u2026")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tel\xE9fonos \xFAtiles y nuestro contacto directo, ", /*#__PURE__*/React.createElement("strong", null, "antes, durante y despu\xE9s"), " de tu estancia") : /*#__PURE__*/React.createElement(React.Fragment, null, "Useful phones and our direct line, ", /*#__PURE__*/React.createElement("strong", null, "before, during and after"), " your stay"))), /*#__PURE__*/React.createElement("p", {
     className: "apt-guide-gate-foot"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Web interactiva + PDF descargable de 40 p\xE1ginas. Reservada para hu\xE9spedes con PIN.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Interactive web + 40-page downloadable PDF. Reserved for guests with a PIN.")), /*#__PURE__*/React.createElement("button", {
     className: "apt-guide-gate-btn",
