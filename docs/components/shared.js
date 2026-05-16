@@ -3565,19 +3565,40 @@ const DirectBookingPerks = ({
   // porque sino aparecían DOS modales superpuestos en home/apt y al
   // cerrar uno el otro quedaba bloqueando la página.
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
-    className: "dbt-band"
-  }, /*#__PURE__*/React.createElement("div", {
+    className: "dbt-band dbt-band-animated"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "dbt-spark dbt-spark-1",
+    "aria-hidden": "true"
+  }, "\u2726"), /*#__PURE__*/React.createElement("span", {
+    className: "dbt-spark dbt-spark-2",
+    "aria-hidden": "true"
+  }, "\u2726"), /*#__PURE__*/React.createElement("span", {
+    className: "dbt-spark dbt-spark-3",
+    "aria-hidden": "true"
+  }, "\u2726"), /*#__PURE__*/React.createElement("span", {
+    className: "dbt-spark dbt-spark-4",
+    "aria-hidden": "true"
+  }, "\u2726"), /*#__PURE__*/React.createElement("span", {
+    className: "dbt-spark dbt-spark-5",
+    "aria-hidden": "true"
+  }, "\u2726"), /*#__PURE__*/React.createElement("div", {
     className: "container dbt-inner"
   }, /*#__PURE__*/React.createElement("span", {
     className: "eyebrow dbt-eyebrow"
-  }, lang === 'es' ? 'Reserva directa' : 'Direct booking'), /*#__PURE__*/React.createElement("h3", {
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "dbt-eyebrow-dot",
+    "aria-hidden": "true"
+  }), lang === 'es' ? 'Reserva directa' : 'Direct booking'), /*#__PURE__*/React.createElement("h3", {
     className: "dbt-title"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Reserva directa, ", /*#__PURE__*/React.createElement("em", null, "siempre"), " mejor.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Booking direct is ", /*#__PURE__*/React.createElement("em", null, "always"), " better.")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "dbt-btn",
     onClick: () => setOpen(true),
     "aria-haspopup": "dialog"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "dbt-btn-pulse",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'), /*#__PURE__*/React.createElement("span", {
     className: "dbt-arrow",
     "aria-hidden": "true"
   }, "\u2192")))), open && /*#__PURE__*/React.createElement(DirectBookingModal, {

@@ -2476,9 +2476,15 @@ const DirectBookingPerks = ({ lang }) => {
   // cerrar uno el otro quedaba bloqueando la página.
   return (
     <>
-      <section className="dbt-band">
+      <section className="dbt-band dbt-band-animated">
+        <span className="dbt-spark dbt-spark-1" aria-hidden="true">✦</span>
+        <span className="dbt-spark dbt-spark-2" aria-hidden="true">✦</span>
+        <span className="dbt-spark dbt-spark-3" aria-hidden="true">✦</span>
+        <span className="dbt-spark dbt-spark-4" aria-hidden="true">✦</span>
+        <span className="dbt-spark dbt-spark-5" aria-hidden="true">✦</span>
         <div className="container dbt-inner">
           <span className="eyebrow dbt-eyebrow">
+            <span className="dbt-eyebrow-dot" aria-hidden="true"></span>
             {lang === 'es' ? 'Reserva directa' : 'Direct booking'}
           </span>
           <h3 className="dbt-title">
@@ -2492,6 +2498,7 @@ const DirectBookingPerks = ({ lang }) => {
             onClick={() => setOpen(true)}
             aria-haspopup="dialog"
           >
+            <span className="dbt-btn-pulse" aria-hidden="true"></span>
             <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
             <span className="dbt-arrow" aria-hidden="true">→</span>
           </button>

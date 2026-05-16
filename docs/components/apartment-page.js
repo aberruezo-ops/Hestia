@@ -1001,6 +1001,33 @@ const AptStickyBar = ({
       document.documentElement.style.removeProperty('--apt-sticky-h');
     };
   }, []);
+
+  // iOS Safari: position:fixed con bottom:0 se desancla durante el
+  // scroll de momentum (la barra "sube" con el contenido en vez de
+  // quedarse pegada al borde inferior visible). Solución: anclar el
+  // bottom de la barra al bottom del visualViewport (la API que sí
+  // refleja el área realmente visible, descontando URL bar, teclado,
+  // etc). Aplicamos un offset por variable CSS.
+  React.useEffect(() => {
+    if (!ref.current) return;
+    const vv = window.visualViewport;
+    if (!vv) return;
+    const el = ref.current;
+    const reposition = () => {
+      // Distancia entre el bottom del layout viewport (window.innerHeight)
+      // y el bottom del visual viewport. En iOS suele ser >0 cuando la URL
+      // bar/toolbar está visible o cuando aparece el teclado.
+      const gap = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      el.style.setProperty('--asb-vv-gap', `${gap}px`);
+    };
+    reposition();
+    vv.addEventListener('resize', reposition);
+    vv.addEventListener('scroll', reposition);
+    return () => {
+      vv.removeEventListener('resize', reposition);
+      vv.removeEventListener('scroll', reposition);
+    };
+  }, []);
   return /*#__PURE__*/React.createElement("div", {
     ref: ref,
     className: `apt-sticky-bar${scrolled ? ' asb-visible' : ''}`

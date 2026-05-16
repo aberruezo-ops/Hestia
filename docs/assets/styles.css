@@ -5283,9 +5283,14 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 /* --- Apartment sticky booking bar --- */
 .apt-sticky-bar {
   position: fixed;
-  /* inset short-hand: top=auto, right=0, bottom=0, left=0 — más robusto que
-     bottom/left/right por separado en algunos motores. */
-  inset: auto 0 0 0;
+  left: 0;
+  right: 0;
+  /* bottom anclado al visual viewport via JS (--asb-vv-gap). En iOS
+     Safari, position:fixed con bottom:0 se desancla durante el scroll
+     de momentum y aparece la barra "subiendo" por la pantalla. Usando
+     visualViewport.height obtenemos el bottom REAL del área visible
+     y la barra queda pegada al borde inferior en todo momento. */
+  bottom: var(--asb-vv-gap, 0px);
   z-index: 200;
   background: var(--ber);
   border-top: 1px solid rgba(240,232,213,.12);
@@ -5298,8 +5303,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
      ningún botón quede bajo la zona reservada */
   padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   transform: translateY(100%);
-  transition: transform .35s cubic-bezier(.4,0,.2,1);
-  will-change: transform;
+  transition: transform .35s cubic-bezier(.4,0,.2,1),
+              bottom .15s linear;
 }
 .apt-sticky-bar.asb-visible { transform: translateY(0); }
 
@@ -11711,6 +11716,7 @@ footer,
   border-bottom: 1px solid color-mix(in srgb, var(--sol) 30%, transparent);
   position: relative;
   isolation: isolate;
+  overflow: hidden;
 }
 /* Elemento decorativo: dos comillas serif tenues en el fondo */
 .dbt-band::before {
@@ -11721,6 +11727,116 @@ footer,
     radial-gradient(circle at 88% 50%, color-mix(in srgb, var(--ber) 8%, transparent), transparent 80px);
   pointer-events: none;
   z-index: -1;
+}
+
+/* ============================================================
+   Reserva directa · banda animada — hace que la sección llame
+   la atención sin saturar.
+   Animaciones (todas respetan prefers-reduced-motion):
+     · gradient sweep:  el aura dorada superior se desplaza
+       suavemente de izquierda a derecha y vuelve.
+     · sparkles:        cinco asteriscos serif flotan en bucle
+       en posiciones distintas y con tempos distintos.
+     · eyebrow dot:     punto que late.
+     · em underline:    'siempre' lleva un subrayado que se
+       dibuja en bucle.
+     · button pulse:    halo dorado que pulsa alrededor del
+       botón CTA cada 2.6 s.
+   ============================================================ */
+@keyframes dbt-bg-sweep {
+  0%   { background-position: 50% 0%, 0 0; }
+  50%  { background-position: 60% 0%, 0 0; }
+  100% { background-position: 40% 0%, 0 0; }
+}
+@keyframes dbt-spark-float {
+  0%, 100% { transform: translateY(0) rotate(0deg);   opacity: .55; }
+  50%      { transform: translateY(-14px) rotate(180deg); opacity: 1; }
+}
+@keyframes dbt-pulse-dot {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(1.6); opacity: .35; }
+}
+@keyframes dbt-underline-draw {
+  0%, 12%   { transform: scaleX(0); transform-origin: left center; }
+  55%       { transform: scaleX(1); transform-origin: left center; }
+  56%       { transform-origin: right center; }
+  88%, 100% { transform: scaleX(0); transform-origin: right center; }
+}
+@keyframes dbt-btn-pulse {
+  0%   { transform: scale(1);   opacity: .55; }
+  70%  { transform: scale(1.4); opacity: 0; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+.dbt-band-animated {
+  background-size: 1100px 320px, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
+  animation: dbt-bg-sweep 9s ease-in-out infinite;
+}
+.dbt-spark {
+  position: absolute;
+  font-family: var(--serif);
+  font-size: 18px;
+  color: color-mix(in srgb, var(--sol) 70%, var(--ber-dk));
+  opacity: .55;
+  pointer-events: none;
+  will-change: transform, opacity;
+  z-index: 0;
+}
+.dbt-spark-1 { top: 18%; left: 8%;  font-size: 22px; animation: dbt-spark-float 5.0s ease-in-out infinite; }
+.dbt-spark-2 { top: 68%; left: 14%; font-size: 14px; animation: dbt-spark-float 6.4s ease-in-out -1.2s infinite; color: color-mix(in srgb, var(--ber) 60%, var(--ber-dk)); }
+.dbt-spark-3 { top: 26%; right: 12%; font-size: 16px; animation: dbt-spark-float 5.8s ease-in-out -2.6s infinite; }
+.dbt-spark-4 { top: 74%; right: 9%;  font-size: 20px; animation: dbt-spark-float 7.2s ease-in-out -3.4s infinite; color: color-mix(in srgb, var(--sol) 80%, transparent); }
+.dbt-spark-5 { top: 50%; left: 50%; transform: translateX(-50%); font-size: 12px; animation: dbt-spark-float 4.6s ease-in-out -0.6s infinite; opacity: .35; }
+
+.dbt-eyebrow {
+  position: relative;
+  z-index: 1;
+}
+.dbt-eyebrow-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 50%;
+  background: var(--sol);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--sol) 30%, transparent);
+  animation: dbt-pulse-dot 1.8s ease-in-out infinite;
+}
+.dbt-title em {
+  position: relative;
+}
+.dbt-title em::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -4px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--sol), var(--ber));
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: dbt-underline-draw 5.2s ease-in-out infinite;
+}
+.dbt-btn { position: relative; overflow: visible; isolation: isolate; }
+.dbt-btn-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 10px 0 10px 0;
+  background: transparent;
+  border: 2px solid color-mix(in srgb, var(--sol) 70%, transparent);
+  pointer-events: none;
+  z-index: -1;
+  animation: dbt-btn-pulse 2.6s cubic-bezier(.4,0,.2,1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dbt-band-animated { animation: none; }
+  .dbt-spark,
+  .dbt-eyebrow-dot,
+  .dbt-title em::after,
+  .dbt-btn-pulse { animation: none; }
+  .dbt-title em::after { transform: scaleX(1); opacity: .5; }
+  .dbt-spark { display: none; }
 }
 .dbt-inner { max-width: 720px; margin: 0 auto; }
 .dbt-eyebrow {
@@ -16831,6 +16947,63 @@ img[src*="apt-vt-gallery-"] {
 .ag-airport-notes {
   font-size: 12.5px;
   line-height: 1.5;
+  color: var(--ink);
+}
+
+/* Estaciones: mismo layout que aeropuertos pero con badge en lugar
+   de código IATA. Bordes de color por tipo (bus = albero · tren =
+   ber teal) para distinguir de un vistazo. */
+.ag-station-bus { border-left-color: var(--alb, #9E7A2C); }
+.ag-station-trn { border-left-color: var(--vt2, #3AAABB); }
+.ag-station-badge {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 4px 6px;
+  border-radius: 4px;
+  align-self: center;
+  color: #fff;
+  text-align: center;
+  line-height: 1;
+}
+.ag-station-bus .ag-station-badge { background: var(--alb, #9E7A2C); }
+.ag-station-trn .ag-station-badge { background: var(--vt2, #3AAABB); }
+
+/* Curiosidad del AVE Vera-Almanzora — bloque destacado con un
+   gradiente sutil y un acento que sugiere modernidad sin romper
+   la paleta del guide. */
+.ag-ave-curiosity {
+  margin: 16px 0 6px;
+  padding: 16px 20px 18px;
+  background:
+    linear-gradient(135deg,
+      color-mix(in srgb, var(--vt2, #3AAABB) 14%, transparent),
+      color-mix(in srgb, var(--ber) 10%, transparent));
+  border: 1px solid color-mix(in srgb, var(--vt2, #3AAABB) 35%, transparent);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+}
+.ag-ave-curiosity::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; height: 3px; width: 100%;
+  background: linear-gradient(90deg, var(--vt2, #3AAABB), var(--ber));
+}
+.ag-ave-curiosity-eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ber-dk);
+  margin-bottom: 6px;
+}
+.ag-ave-curiosity-text {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
   color: var(--ink);
 }
 .ag-checkin-garbage {
