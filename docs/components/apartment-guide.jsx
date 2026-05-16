@@ -796,6 +796,17 @@ const GUIDE_SHARED = {
         { name: 'Málaga · Costa del Sol',   code: 'AGP', km: 295, time: '3 h 15', notes: 'El mejor conectado de Andalucía (Lufthansa, KLM, vuelos largos). Solo lo eligen si los demás no encajan en horario.' },
       ],
       airportsTip: 'Coche de alquiler: lo más práctico desde cualquiera de los cinco. Si llegas a Almería sin coche, hay autobús ALSA Almería → Vera (~2 h con paradas) o taxi/VTC (~80 €). Pregúntanos antes y te orientamos según tu caso.',
+      stationsTitle: 'Estaciones de autobús y tren',
+      stationsIntro: 'Si vienes en transporte público, estas son las opciones reales. La estación de autobús de Vera está a 5-10 min en taxi desde Hestía; el tren obliga a hacer transbordo en Almería capital o Murcia.',
+      stations: [
+        { type: 'BUS', name: 'Estación de Autobuses de Vera',     km: 4,  time: '5-10 min', notes: 'Ctra. de Águilas, s/n · ALSA. Líneas a Almería, Murcia, Cuevas del Almanzora, Mojácar y Águilas. Tel. 950 39 09 25.' },
+        { type: 'BUS', name: 'Estación de Autobuses de Almería',  km: 95, time: '1 h',      notes: 'Estación Intermodal Almería (Plaza de la Estación). ALSA y compañías locales. Conexión con el aeropuerto LEI vía línea 30 (Surbus).' },
+        { type: 'BUS', name: 'Estación de Autobuses de Murcia',   km: 145,time: '1 h 30',   notes: 'Plaza de la Industria. ALSA con conexiones a toda la costa levantina y al aeropuerto RMU.' },
+        { type: 'TRN', name: 'Estación de tren de Almería',       km: 95, time: '1 h',      notes: 'Estación Intermodal (comparte edificio con la de buses). Cercanías y media distancia a Granada, Sevilla, Madrid (Talgo nocturno). Sin AVE todavía.' },
+        { type: 'TRN', name: 'Estación de tren de Murcia · Carmen', km: 145, time: '1 h 30', notes: 'AVE Murcia ↔ Madrid (en obras desde 2022; tramo Murcia-Almería en ejecución). Combinable con Renfe Cercanías al aeropuerto RMU.' },
+      ],
+      stationsAveTitle: '¿Sabías? · La estación AVE Vera-Almanzora',
+      stationsAve: 'Adif Alta Velocidad está construyendo una estación de AVE al sur del término municipal de Vera, parte del corredor Mediterráneo Murcia-Almería. Cuando entre en servicio (previsto a partir de 2027), Vera quedará a menos de 1 hora de Murcia y conectada por alta velocidad con Madrid y el resto del corredor mediterráneo. Estamos a 15-20 minutos en coche.',
       modalitiesTitle: 'Dos modalidades de check-in',
       modalities: [
         { tag: 'Autónoma', body: 'Llegas y entras directamente. Fran te pasa por mensaje el código de la urbanización, el acceso a la caja-llaves y las instrucciones paso a paso. Útil si vienes con vuelo nocturno o si prefieres tu ritmo.' },
@@ -988,6 +999,17 @@ const GUIDE_SHARED = {
         { name: 'Málaga · Costa del Sol',   code: 'AGP', km: 295, time: '3 h 15', notes: 'Best-connected in Andalusia (Lufthansa, KLM, long-haul). Only worth it if others do not fit your schedule.' },
       ],
       airportsTip: 'Rental car: most practical from any of the five. If you land in Almería without a car, there is an ALSA bus Almería → Vera (~2 h with stops) or taxi/VTC (~€80). Ask us beforehand and we will help you plan based on your case.',
+      stationsTitle: 'Bus and train stations',
+      stationsIntro: 'If you arrive by public transport, these are the real options. Vera bus station is a 5-10 min taxi from Hestía; the train requires a transfer at Almería city or Murcia.',
+      stations: [
+        { type: 'BUS', name: 'Vera bus station',         km: 4,   time: '5-10 min', notes: 'Ctra. de Águilas, s/n · ALSA. Routes to Almería, Murcia, Cuevas del Almanzora, Mojácar and Águilas. Tel. +34 950 39 09 25.' },
+        { type: 'BUS', name: 'Almería bus station',      km: 95,  time: '1 h',      notes: 'Almería Intermodal Station (Plaza de la Estación). ALSA and local operators. Connects with LEI airport via line 30 (Surbus).' },
+        { type: 'BUS', name: 'Murcia bus station',       km: 145, time: '1 h 30',   notes: 'Plaza de la Industria. ALSA with connections along the Levante coast and to RMU airport.' },
+        { type: 'TRN', name: 'Almería train station',    km: 95,  time: '1 h',      notes: 'Intermodal Station (shared with the bus terminal). Cercanías and medium-distance services to Granada, Seville and Madrid (overnight Talgo). No AVE service yet.' },
+        { type: 'TRN', name: 'Murcia · Carmen train station', km: 145, time: '1 h 30', notes: 'AVE Murcia ↔ Madrid (under construction since 2022; the Murcia-Almería leg is in progress). Combine with Renfe Cercanías to RMU airport.' },
+      ],
+      stationsAveTitle: 'Did you know? · The future Vera-Almanzora AVE station',
+      stationsAve: 'Adif Alta Velocidad is building an AVE high-speed station south of Vera, as part of the Murcia-Almería Mediterranean corridor. Once in service (expected from 2027 onwards), Vera will be less than an hour from Murcia and connected via high-speed rail to Madrid and the entire Mediterranean corridor. We are a 15-20 min drive away.',
       modalitiesTitle: 'Two check-in options',
       modalities: [
         { tag: 'Self check-in', body: 'You arrive and let yourself in. Fran sends you the gate code, lockbox access and step-by-step instructions by message. Handy for late flights or if you prefer your own pace.' },
@@ -3750,6 +3772,35 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                   ))}
                 </div>
                 <p className="ag-para ag-para-note">{s.checkin.airportsTip}</p>
+              </>
+            )}
+
+            {s.checkin.stations && (
+              <>
+                <h3 className="ag-h3">{s.checkin.stationsTitle}</h3>
+                <p className="ag-para">{s.checkin.stationsIntro}</p>
+                <div className="ag-airports">
+                  {s.checkin.stations.map((st, i) => (
+                    <div key={i} className={`ag-airport ag-station ag-station-${st.type.toLowerCase()}`}>
+                      <span className="ag-airport-code ag-station-badge">{st.type}</span>
+                      <div className="ag-airport-main">
+                        <div className="ag-airport-name">{st.name}</div>
+                        <div className="ag-airport-meta">
+                          <span className="ag-airport-km">{st.km} km</span>
+                          <span className="ag-airport-sep">·</span>
+                          <span className="ag-airport-time">{st.time}</span>
+                        </div>
+                        <div className="ag-airport-notes">{st.notes}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {s.checkin.stationsAve && (
+                  <div className="ag-ave-curiosity">
+                    <div className="ag-ave-curiosity-eyebrow">{s.checkin.stationsAveTitle}</div>
+                    <p className="ag-ave-curiosity-text">{s.checkin.stationsAve}</p>
+                  </div>
+                )}
               </>
             )}
 
