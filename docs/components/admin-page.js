@@ -2460,7 +2460,11 @@ const ReservasTab = ({
     className: "rv-block-rows"
   }, byApt.map(b => /*#__PURE__*/React.createElement("div", {
     key: b.apt,
-    className: "rv-block-row"
+    className: "rv-block-row rv-block-row-apt",
+    "data-apt": b.apt,
+    style: {
+      '--apt-c': APT_COLOR[b.apt]
+    }
   }, /*#__PURE__*/React.createElement("span", {
     className: "rv-apt-chip",
     style: {
@@ -2566,6 +2570,10 @@ const ReservasTab = ({
     return /*#__PURE__*/React.createElement("tr", {
       key: idx,
       className: `rv-row rv-row-${status}${isSel ? ' is-selected' : ''}`,
+      "data-apt": r.apt,
+      style: {
+        '--apt-c': APT_COLOR[r.apt] || 'transparent'
+      },
       onClick: () => openRow(idx)
     }, /*#__PURE__*/React.createElement("td", {
       className: `rv-status rv-status-${status}`,
@@ -2592,12 +2600,16 @@ const ReservasTab = ({
     className: "rv-edit-backdrop",
     onClick: cancelDraft
   }), /*#__PURE__*/React.createElement("aside", {
-    className: "rv-edit-panel"
+    className: "rv-edit-panel",
+    "data-apt": draft.apt,
+    style: {
+      '--apt-c': APT_COLOR[draft.apt] || '#3D1A35'
+    }
   }, /*#__PURE__*/React.createElement("header", {
     className: "rv-edit-head"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-eyebrow"
-  }, selectedIdx < reservas.length ? 'Editar reserva' : 'Nueva reserva'), /*#__PURE__*/React.createElement("h3", null, draft.responsable || '(sin nombre)')), /*#__PURE__*/React.createElement("button", {
+  }, selectedIdx < reservas.length ? 'Editar reserva' : 'Nueva reserva', " \xB7 ", APT_NAMES[draft.apt] || ''), /*#__PURE__*/React.createElement("h3", null, draft.responsable || '(sin nombre)')), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "rv-edit-close",
     onClick: cancelDraft,

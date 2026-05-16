@@ -16909,6 +16909,15 @@ img[src*="apt-vt-gallery-"] {
   align-items: center;
   gap: 10px;
   font-size: 12.5px;
+  padding: 4px 8px;
+  border-radius: 3px;
+}
+/* Bloque por apartamento — fondo translúcido con el color del
+   apt (Mar berenjena, Thalassa teal, Salinas vermillón). */
+.rv-block-row-apt {
+  background: color-mix(in srgb, var(--apt-c, transparent) 8%, transparent);
+  border-left: 3px solid var(--apt-c, transparent);
+  padding-left: 10px;
 }
 .rv-block-row-meta { font-size: 11px; color: var(--ink-soft); }
 .rv-block-row-val { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--ber-dk); }
@@ -16993,9 +17002,22 @@ img[src*="apt-vt-gallery-"] {
 }
 .rv-table td.num, .rv-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
 
-.rv-row { cursor: pointer; transition: background 0.12s ease; }
-.rv-row:hover { background: rgba(255, 251, 244, 0.85); }
-.rv-row.is-selected { background: rgba(58, 170, 187, 0.10); }
+.rv-row {
+  cursor: pointer;
+  transition: background 0.12s ease, box-shadow 0.12s ease;
+  position: relative;
+  /* Barra de color izquierda según apartamento (Mar berenjena,
+     Thalassa teal, Salinas vermillón) — visible siempre al
+     inicio de cada fila para identificar el apt de un vistazo. */
+  box-shadow: inset 4px 0 0 0 var(--apt-c, transparent);
+}
+.rv-row:hover {
+  background: color-mix(in srgb, var(--apt-c, var(--ber)) 6%, #FFFBF4);
+}
+.rv-row.is-selected {
+  background: color-mix(in srgb, var(--apt-c, var(--sol)) 12%, #FFFBF4);
+  box-shadow: inset 6px 0 0 0 var(--apt-c, var(--sol));
+}
 .rv-row-past { opacity: 0.55; }
 
 .rv-status-th { width: 24px; padding: 0 !important; }
@@ -17062,8 +17084,11 @@ img[src*="apt-vt-gallery-"] {
   align-items: flex-start;
   justify-content: space-between;
   padding: 16px 20px;
-  background: var(--ber);
+  background: var(--apt-c, var(--ber));
   color: #FFFBF4;
+  /* Gradiente sutil hacia berenjena para todos los apts —
+     mantiene la marca incluso cuando es Thalassa (teal). */
+  background-image: linear-gradient(135deg, var(--apt-c, var(--ber)) 0%, color-mix(in srgb, var(--apt-c, var(--ber)) 75%, #2A0F2E) 100%);
 }
 .rv-edit-head h3 {
   margin: 2px 0 0;
