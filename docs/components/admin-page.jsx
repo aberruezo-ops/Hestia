@@ -1386,9 +1386,262 @@ info@hestiayourhome.com · +34 620 316 370`;
   );
 };
 
+// ============================================================
+// ReservasTab — pestaña de reservas.
+// Lee data-private/reservas.json (zona privada del repo, no
+// publicada en docs/) vía la API de GitHub con el PAT del usuario.
+// Permite filtrar, ver resumen, editar inline una reserva, y
+// guardar el JSON de vuelta.
+// La sincronización en vivo con Google Sheets requiere setup
+// adicional documentado en data-private/SETUP-SHEETS-SYNC.md.
+// ============================================================
+const RESERVAS_PATH = 'data-private/reservas.json';
+
+const ReservasTab = ({ token }) => {
+  const [data,      setData]      = React.useState(null);
+  const [sha,       setSha]       = React.useState(null);
+  const [loading,   setLoading]   = React.useState(false);
+  const [error,     setError]     = React.useState(null);
+  const [success,   setSuccess]   = React.useState(null);
+  const [filterApt, setFilterApt] = React.useState('all');
+  const [filterCanal, setFilterCanal] = React.useState('all');
+  const [editIdx,   setEditIdx]   = React.useState(-1);
+
+  // Carga inicial del JSON desde GitHub
+  React.useEffect(() => {
+    if (!token) return;
+    setLoading(true);
+    fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token) })
+      .then(r => r.json())
+      .then(j => {
+        if (j.message) throw new Error(j.message);
+        setSha(j.sha);
+        const json = JSON.parse(b64DecodeUtf8(j.content));
+        setData(json);
+      })
+      .catch(e => setError('Error cargando reservas: ' + e.message))
+      .finally(() => setLoading(false));
+  }, [token]);
+
+  if (!data && !loading && !error) return null;
+  if (loading && !data) return <div className="pe-card"><h2>🗓️ Reservas</h2><p>Cargando…</p></div>;
+
+  const reservas = (data && data.reservas) || [];
+  const APT_NAMES = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
+  const APT_COLOR = { vm: '#3D1A35', vt: '#3AAABB', vs: '#8A4A24' };
+
+  // Filtros
+  const filtered = reservas.filter(r => {
+    if (filterApt !== 'all' && r.apt !== filterApt) return true && false;
+    if (filterCanal !== 'all' && (r.canal || '').toLowerCase().trim() !== filterCanal) return false;
+    return true;
+  }).filter(r => filterApt === 'all' || r.apt === filterApt);
+
+  // Resumen
+  const today = new Date().toISOString().slice(0,10);
+  const ingresoTotal = reservas.reduce((s,r) => s + (r.ingreso_total || 0), 0);
+  const ingresoFuturo = reservas.filter(r => r.salida && r.salida >= today)
+    .reduce((s,r) => s + (r.ingreso_total || 0), 0);
+  const byApt = ['vm','vt','vs'].map(apt => {
+    const list = reservas.filter(r => r.apt === apt);
+    return { apt, count: list.length, sum: list.reduce((s,r) => s + (r.ingreso_total || 0), 0) };
+  });
+  const byCanal = {};
+  reservas.forEach(r => {
+    const c = (r.canal || '—').trim() || '—';
+    if (!byCanal[c]) byCanal[c] = { count: 0, sum: 0 };
+    byCanal[c].count++;
+    byCanal[c].sum += r.ingreso_total || 0;
+  });
+
+  // Próximos check-ins (siguientes 14 días)
+  const in14 = (() => { const d = new Date(); d.setDate(d.getDate() + 14); return d.toISOString().slice(0,10); })();
+  const proximos = reservas
+    .filter(r => r.entrada && r.entrada >= today && r.entrada <= in14)
+    .sort((a,b) => a.entrada.localeCompare(b.entrada));
+
+  const canales = Array.from(new Set(reservas.map(r => (r.canal || '').trim()).filter(Boolean)));
+
+  const saveReservas = async (newReservas) => {
+    setError(null); setSuccess(null);
+    const newData = { ...data, reservas: newReservas, updatedAt: new Date().toISOString(), count: newReservas.length };
+    try {
+      const body = {
+        message: `chore(reservas): update via /p-edit · ${new Date().toISOString().slice(0,16).replace('T',' ')}`,
+        content: b64EncodeUtf8(JSON.stringify(newData, null, 2)),
+        sha,
+        branch: BRANCH,
+      };
+      const r = await fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}`, {
+        method: 'PUT', headers: apiHeaders(token), body: JSON.stringify(body)
+      });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.message || 'Error desconocido');
+      setSha(j.content.sha);
+      setData(newData);
+      setSuccess('Reservas guardadas en data-private/reservas.json ✓');
+      setEditIdx(-1);
+    } catch (e) {
+      setError('Error guardando: ' + e.message);
+    }
+  };
+
+  const updateRow = (idx, patch) => {
+    const nr = [...reservas];
+    nr[idx] = { ...nr[idx], ...patch };
+    saveReservas(nr);
+  };
+  const deleteRow = (idx) => {
+    if (!confirm(`¿Borrar reserva de ${reservas[idx].responsable}?`)) return;
+    const nr = reservas.filter((_, i) => i !== idx);
+    saveReservas(nr);
+  };
+  const addRow = () => {
+    const nr = [{
+      apt: 'vm', responsable: '', telefono: null, huespedes: 2, menores_12: null,
+      cuna_trona: null, mascota: false, dni_enviado: false, noches: null,
+      entrada: today, salida: today, cancelacion: 'Cancelable 14', canal: 'Directo',
+      contactado: 'Alex', f_reserva: today, ingreso_total: 0, reserva: 0,
+      pago_previo: 0, al_checkin: 0, comision: 0, renta: 0, fianza: false,
+      gasto_limpieza: 0, pagos_leila: 0, bai: 0, observaciones: '',
+      rentabilidad_pct: null, precio_neto_noche: null, precio_bruto_noche: null,
+    }, ...reservas];
+    saveReservas(nr);
+    setEditIdx(0);
+  };
+
+  const fmtEur = n => (n == null) ? '—' : `${n.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2})} €`;
+  const fmtDate = d => d || '—';
+
+  return (
+    <>
+      {error   && <div className="pe-error">{error}</div>}
+      {success && <div className="pe-success">{success}</div>}
+
+      <div className="pe-card">
+        <h2>🗓️ Reservas <span className="rv-count">· {reservas.length} · actualizado {data.updatedAt ? data.updatedAt.slice(0,10) : '—'}</span></h2>
+        <p className="pe-help">
+          Datos sincronizados desde la hoja "Hestía - Reservas" de Google Drive. Snapshot en
+          <code> data-private/reservas.json</code> (fuera de la web pública).
+          Para sincronización en vivo con el Sheet, ver <code>data-private/SETUP-SHEETS-SYNC.md</code>.
+        </p>
+
+        {/* Resumen */}
+        <div className="rv-stats">
+          <div className="rv-stat"><span className="rv-stat-label">Ingreso total</span><span className="rv-stat-val">{fmtEur(ingresoTotal)}</span></div>
+          <div className="rv-stat"><span className="rv-stat-label">Aún por llegar</span><span className="rv-stat-val">{fmtEur(ingresoFuturo)}</span></div>
+          {byApt.map(b => (
+            <div key={b.apt} className="rv-stat" style={{borderLeftColor: APT_COLOR[b.apt]}}>
+              <span className="rv-stat-label">{APT_NAMES[b.apt]} · {b.count}</span>
+              <span className="rv-stat-val">{fmtEur(b.sum)}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="rv-stats rv-stats-canal">
+          {Object.entries(byCanal).map(([c, v]) => (
+            <div key={c} className="rv-stat rv-stat-small">
+              <span className="rv-stat-label">{c}</span>
+              <span className="rv-stat-val">{v.count} · {fmtEur(v.sum)}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Próximos */}
+        {proximos.length > 0 && (
+          <div className="rv-proximos">
+            <h3>Próximos check-ins (14 días)</h3>
+            <ul>
+              {proximos.map((r, i) => (
+                <li key={i}>
+                  <span className="rv-prox-date">{fmtDate(r.entrada)}</span>
+                  <span className="rv-apt-chip" style={{background: APT_COLOR[r.apt]}}>{APT_NAMES[r.apt] || r.apt}</span>
+                  <span className="rv-prox-name">{r.responsable}</span>
+                  <span className="rv-prox-meta">{r.huespedes} pax · {r.noches} noches · {r.canal}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Filtros + acciones */}
+        <div className="rv-toolbar">
+          <label>Apartamento
+            <select value={filterApt} onChange={e => setFilterApt(e.target.value)}>
+              <option value="all">Todos</option>
+              {Object.entries(APT_NAMES).map(([k,v]) => <option key={k} value={k}>{v}</option>)}
+            </select>
+          </label>
+          <label>Canal
+            <select value={filterCanal} onChange={e => setFilterCanal(e.target.value)}>
+              <option value="all">Todos</option>
+              {canales.map(c => <option key={c} value={c.toLowerCase()}>{c}</option>)}
+            </select>
+          </label>
+          <button type="button" className="pe-btn pe-btn-primary" onClick={addRow}>+ Nueva reserva</button>
+        </div>
+
+        {/* Tabla */}
+        <div className="rv-table-wrap">
+          <table className="rv-table">
+            <thead><tr>
+              <th>Apt</th><th>Huésped</th><th>Entrada</th><th>Salida</th>
+              <th className="num">Noches</th><th className="num">Pax</th>
+              <th>Canal</th><th>Cancelación</th>
+              <th className="num">Ingreso</th><th className="num">Comisión</th><th className="num">BAI</th>
+              <th>Estado</th><th></th>
+            </tr></thead>
+            <tbody>
+              {filtered.map((r, idxOrig) => {
+                const idx = reservas.indexOf(r);
+                const isEdit = idx === editIdx;
+                const past = r.salida && r.salida < today;
+                const onUpd = (field) => e => updateRow(idx, { [field]: e.target.value });
+                return isEdit ? (
+                  <tr key={idx} className="rv-edit">
+                    <td><select defaultValue={r.apt} onBlur={onUpd('apt')}>{Object.keys(APT_NAMES).map(k => <option key={k} value={k}>{APT_NAMES[k]}</option>)}</select></td>
+                    <td><input defaultValue={r.responsable} onBlur={onUpd('responsable')} /></td>
+                    <td><input type="date" defaultValue={r.entrada || ''} onBlur={onUpd('entrada')} /></td>
+                    <td><input type="date" defaultValue={r.salida || ''} onBlur={onUpd('salida')} /></td>
+                    <td className="num"><input type="number" defaultValue={r.noches || 0} onBlur={e => updateRow(idx, { noches: Number(e.target.value) })} /></td>
+                    <td className="num"><input type="number" defaultValue={r.huespedes || 0} onBlur={e => updateRow(idx, { huespedes: Number(e.target.value) })} /></td>
+                    <td><input defaultValue={r.canal || ''} onBlur={onUpd('canal')} /></td>
+                    <td><input defaultValue={r.cancelacion || ''} onBlur={onUpd('cancelacion')} /></td>
+                    <td className="num"><input type="number" step="0.01" defaultValue={r.ingreso_total || 0} onBlur={e => updateRow(idx, { ingreso_total: Number(e.target.value) })} /></td>
+                    <td className="num"><input type="number" step="0.01" defaultValue={r.comision || 0} onBlur={e => updateRow(idx, { comision: Number(e.target.value) })} /></td>
+                    <td className="num"><input type="number" step="0.01" defaultValue={r.bai || 0} onBlur={e => updateRow(idx, { bai: Number(e.target.value) })} /></td>
+                    <td>{past ? '✓' : '◷'}</td>
+                    <td><button type="button" className="pe-btn pe-btn-ghost" onClick={() => setEditIdx(-1)}>OK</button> <button type="button" className="pe-btn pe-btn-ghost" onClick={() => deleteRow(idx)}>🗑</button></td>
+                  </tr>
+                ) : (
+                  <tr key={idx} className={past ? 'rv-past' : ''}>
+                    <td><span className="rv-apt-chip" style={{background: APT_COLOR[r.apt]}}>{APT_NAMES[r.apt] || r.apt}</span></td>
+                    <td>{r.responsable}{r.mascota ? ' 🐾' : ''}{r.cuna_trona ? ' 👶' : ''}</td>
+                    <td>{fmtDate(r.entrada)}</td>
+                    <td>{fmtDate(r.salida)}</td>
+                    <td className="num">{r.noches || '—'}</td>
+                    <td className="num">{r.huespedes || '—'}</td>
+                    <td>{r.canal || '—'}</td>
+                    <td className="rv-tiny">{r.cancelacion || '—'}</td>
+                    <td className="num">{fmtEur(r.ingreso_total)}</td>
+                    <td className="num">{fmtEur(r.comision)}</td>
+                    <td className="num">{fmtEur(r.bai)}</td>
+                    <td>{past ? '✓' : (r.entrada && r.entrada <= today ? '🏠' : '◷')}</td>
+                    <td><button type="button" className="pe-btn pe-btn-ghost" onClick={() => setEditIdx(idx)}>✏️</button></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
+  );
+};
+
 const AdminApp = () => {
   const [phase,    setPhase]    = React.useState('login');
-  const [mode,     setMode]     = React.useState('pricing');  // 'pricing' | 'reviews' | 'analytics' | 'contract'
+  const [mode,     setMode]     = React.useState('pricing');  // 'pricing' | 'reviews' | 'analytics' | 'contract' | 'reservas'
   const [token,    setToken]    = React.useState('');
   const [data,     setData]     = React.useState(null);
   const [sha,      setSha]      = React.useState(null);
@@ -1782,12 +2035,17 @@ const AdminApp = () => {
           onClick={() => { setMode('contract'); setError(null); setSuccess(null); }}>
           📄 Contrato
         </button>
+        <button type="button"
+          className={`pe-tab${mode === 'reservas' ? ' is-active' : ''}`}
+          onClick={() => { setMode('reservas'); setError(null); setSuccess(null); }}>
+          🗓️ Reservas
+        </button>
       </div>
 
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} /> : mode === 'reservas' ? <ReservasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>
