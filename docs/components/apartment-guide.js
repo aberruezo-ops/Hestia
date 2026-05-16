@@ -4100,14 +4100,37 @@ const DishesGuide = ({
   lang
 }) => {
   if (!Array.isArray(ICONIC_DISHES) || ICONIC_DISHES.length === 0) return null;
+  const [open, setOpen] = React.useState(false);
   const placeById = id => PLACES.find(p => p.id === id);
   return /*#__PURE__*/React.createElement("div", {
-    className: "ag-dishes"
-  }, /*#__PURE__*/React.createElement("h3", {
-    className: "ag-h3 ag-dishes-title"
-  }, lang === 'es' ? 'Platos típicos · pídelos por nombre' : 'Iconic dishes · order them by name'), /*#__PURE__*/React.createElement("p", {
-    className: "ag-para ag-dishes-intro"
-  }, lang === 'es' ? 'Una selección de lo que merece la pena probar en la zona — entre Almería y Murcia — con los sitios concretos donde lo bordan.' : 'A short list of what is worth trying in the area — between Almería and Murcia — with the specific spots that nail each dish.'), /*#__PURE__*/React.createElement("div", {
+    className: `ag-cat-group${open ? ' is-open' : ''}`,
+    style: {
+      marginBottom: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "ag-cat-h",
+    onClick: () => setOpen(o => !o),
+    "aria-expanded": open
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-cat-dot",
+    style: {
+      background: 'var(--apt-accent)'
+    },
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-cat-icon"
+  }, "\uD83C\uDF7D\uFE0F")), /*#__PURE__*/React.createElement("span", {
+    className: "ag-cat-label"
+  }, lang === 'es' ? 'Platos típicos' : 'Iconic dishes'), /*#__PURE__*/React.createElement("span", {
+    className: "ag-cat-count"
+  }, ICONIC_DISHES.length), /*#__PURE__*/React.createElement("span", {
+    className: `ag-cat-chev${open ? ' open' : ''}`,
+    "aria-hidden": "true"
+  }, "\u2193")), /*#__PURE__*/React.createElement("div", {
+    className: "ag-cat-body",
+    "aria-hidden": !open
+  }, /*#__PURE__*/React.createElement("div", {
     className: "ag-dishes-grid"
   }, ICONIC_DISHES.map(d => {
     const name = lang === 'es' ? d.name_es : d.name_en;
@@ -4162,7 +4185,7 @@ const DishesGuide = ({
     }, lang === 'es' ? 'mapa' : 'map', " ", /*#__PURE__*/React.createElement("span", {
       "aria-hidden": "true"
     }, "\u2197")))));
-  })));
+  }))));
 };
 
 // ================================================================
