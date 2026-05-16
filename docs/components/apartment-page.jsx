@@ -160,6 +160,18 @@ const APT_DATA = {
 const APT_EQUIP = {
   vm: {
     area: 77, guests: 6, bedrooms: 2, bathrooms: 2,
+    daily_es: {
+      eyebrow: 'Tu día en Hestía Mar',
+      morning: 'Te despiertas con el mar a 300 metros y la luz que entra por la terraza de esquina. Cocina con desayuno, sales a la piscina y al jacuzzi del jardín sin coger el coche.',
+      core: 'La casa funciona con A/C por conductos, fibra y Smart TV con Prime, HBO, Sky y Pluto. La cocina está completa (lavavajillas, lavadora y secadora). Dos baños con bañera de hidromasaje y ducha con cromoterapia.',
+      behind: 'Antes de que llegues: sábanas de 200 hilos planchadas, toallas de 600 g/m² para baño y playa, kit de bienvenida con producto local, sombrilla preparada, cuna y trona montadas si las pediste. El A/C ajustado a la estación y el botiquín revisado.',
+    },
+    daily_en: {
+      eyebrow: 'A day at Hestía Mar',
+      morning: 'You wake up to the sea 300 m away and the light pouring in from the corner terrace. Breakfast in the kitchen, then the pool and jacuzzi in the garden — no need to take the car.',
+      core: 'The flat runs on ducted A/C, fibre Wi-Fi and a Smart TV with Prime, HBO, Sky and Pluto. Full kitchen (dishwasher, washer & dryer). Two bathrooms with hydro-massage bath and chromotherapy shower.',
+      behind: 'Before you arrive: 200-thread sheets ironed, 600 g/m² towels for bath and beach, a welcome kit with local produce, beach umbrella ready, cot and high chair set up if you booked them. A/C tuned to the season, first-aid kit checked.',
+    },
     es: {
       terrace: 'Terraza 20m² esquina',
       icons: [
@@ -191,6 +203,18 @@ const APT_EQUIP = {
   },
   vt: {
     area: 85, guests: 6, bedrooms: 2, bathrooms: 2,
+    daily_es: {
+      eyebrow: 'Tu día en Hestía Thalassa',
+      morning: 'El Mediterráneo enmarcado en la terraza de 18 m² del ático. Cafetera Nespresso y desayuno con vistas. Bajas a las tres piscinas — una climatizada todo el año — sin salir de la urbanización.',
+      core: 'SPA con sauna, gimnasio y pista de tenis a tu disposición (SPA en otoño-invierno-primavera; gimnasio también en verano). Smart TV con Prime, HBO, Sky y Pluto. Dos baños en suite con columnas de hidromasaje. Cocina alto standing.',
+      behind: 'Cada llegada: sábanas de 200 hilos planchadas, toallas de 600 g/m², nórdicos de plumas, kit de bienvenida con producto local. Las zonas comunes (SPA, piscinas, gimnasio) las mantiene la urbanización; el ático lo dejamos listo nosotros — A/C calibrado, cafetera cargada y aromas preparados.',
+    },
+    daily_en: {
+      eyebrow: 'A day at Hestía Thalassa',
+      morning: 'The Mediterranean framed by the 18 m² penthouse terrace. Nespresso machine, breakfast with a view, and three pools waiting downstairs — one heated year-round — all without leaving the complex.',
+      core: 'Spa with sauna, gym and tennis court at your disposal (Spa open autumn-winter-spring; gym also in summer). Smart TV with Prime, HBO, Sky and Pluto. Two en-suite bathrooms with hydro-massage columns. High-end kitchen.',
+      behind: 'Every arrival: 200-thread sheets ironed, 600 g/m² towels, down duvets, a welcome kit with local produce. The complex maintains the shared areas (spa, pools, gym); we leave the penthouse fully prepped — A/C tuned, coffee machine loaded, aromas in place.',
+    },
     es: {
       terrace: 'Terraza 18m² vistas al mar',
       icons: [
@@ -226,6 +250,18 @@ const APT_EQUIP = {
   },
   vs: {
     area: 80, guests: 6, bedrooms: 2, bathrooms: 2,
+    daily_es: {
+      eyebrow: 'Tu día en Hestía Salinas',
+      morning: 'La luz dorada de las Salinas de Puerto Rey — único humedal protegido a 2 minutos — entra por la terraza grande de 18 m². Café y desayuno al sol; luego paseas hasta la playa o cruzas al jardín de los riachuelos.',
+      core: 'Dos terrazas: la de 18 m² para sol y luna, la de 14 m² para el atardecer. Piscina, gimnasio y pista de tenis en la urbanización. Smart TV 55" con Ambilight, Prime/HBO/Sky/Pluto, cocina completa y A/C frío-calor.',
+      behind: 'Antes de tu llegada: sábanas de 200 hilos planchadas, toallas de 600 g/m², nórdicos de plumas más alternativa antialérgica en el dormitorio principal, cuna y trona si las pediste, sombrilla preparada. La cafetera Nespresso cargada y los aromas elegidos según la estación.',
+    },
+    daily_en: {
+      eyebrow: 'A day at Hestía Salinas',
+      morning: 'Golden light from Puerto Rey salt flats — the only protected wetland 2 minutes away — pours in through the 18 m² main terrace. Coffee and breakfast in the sun; then a walk to the beach or across to the streams in the garden.',
+      core: 'Two terraces: the 18 m² for sun and moon, the 14 m² for sunset. Pool, gym and tennis court in the complex. 55" Ambilight Smart TV, Prime/HBO/Sky/Pluto, full kitchen and heat-cool A/C.',
+      behind: 'Before you arrive: 200-thread sheets ironed, 600 g/m² towels, down duvets plus a hypoallergenic alternative in the master bedroom, cot and high chair if you booked them, beach umbrella ready. Nespresso machine loaded and aromas chosen by season.',
+    },
     es: {
       terrace: '2 terrazas 18m² + 14m²',
       icons: [
@@ -286,9 +322,42 @@ const AptEquipamiento = ({ apt, lang }) => {
     .map(cat => ({ ...cat, items: d.icons.filter(([, lbl]) => categorize(lbl) === cat.key) }))
     .filter(cat => cat.items.length > 0);
 
+  // Narrativa "Tu día en Hestía Mar/Thalassa/Salinas" — cuenta el día
+  // del huésped (mañana, lo que tiene a su disposición, y el trabajo
+  // de preparación que va detrás de cada llegada).
+  const daily = equip[`daily_${lang}`];
+
   return (
     <section className="apt-equip">
       <div className="container">
+        {daily && (
+          <div className="apt-day" style={{ '--apt-accent': accent }}>
+            <div className="eyebrow apt-day-eyebrow">{daily.eyebrow}</div>
+            <div className="apt-day-grid">
+              <div className="apt-day-card apt-day-card-morning">
+                <div className="apt-day-card-tag">
+                  <span className="apt-day-card-num">01</span>
+                  <span className="apt-day-card-tlabel">{lang === 'es' ? 'cada mañana' : 'every morning'}</span>
+                </div>
+                <p className="apt-day-card-text">{daily.morning}</p>
+              </div>
+              <div className="apt-day-card apt-day-card-core">
+                <div className="apt-day-card-tag">
+                  <span className="apt-day-card-num">02</span>
+                  <span className="apt-day-card-tlabel">{lang === 'es' ? 'lo que tienes' : 'what you get'}</span>
+                </div>
+                <p className="apt-day-card-text">{daily.core}</p>
+              </div>
+              <div className="apt-day-card apt-day-card-behind">
+                <div className="apt-day-card-tag">
+                  <span className="apt-day-card-num">03</span>
+                  <span className="apt-day-card-tlabel">{lang === 'es' ? 'el trabajo detrás' : 'work behind the scenes'}</span>
+                </div>
+                <p className="apt-day-card-text">{daily.behind}</p>
+              </div>
+            </div>
+          </div>
+        )}
         <div className="eyebrow apt-equip-eyebrow">
           {lang === 'es' ? 'Equipamiento · de un vistazo' : 'Amenities · at a glance'}
         </div>
