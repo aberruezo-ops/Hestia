@@ -32,6 +32,7 @@ const APT_CONTRACT_DATA = {
   vm: {
     name: 'Hestía Vera Mar',
     shortName: 'Mar',
+    heroPhoto: 'assets/apt-vm-gallery-1.jpg',
     direccion: 'Apto. 1A, del portal 14, edificio 3, en la urbanización Paraíso Playa, en C/ Islas Canarias, 7',
     plazaGaraje: '160',
     zonaObras: 'enfrente',
@@ -41,6 +42,7 @@ const APT_CONTRACT_DATA = {
   vt: {
     name: 'Hestía Vera Thalassa',
     shortName: 'Thalassa',
+    heroPhoto: 'assets/apt-vt-gallery-01.jpg',
     direccion: 'Apto. 11, planta 5ª, escalera 13, en la urbanización Thalassa, en C/ Tomillo 2',
     plazaGaraje: '163',
     zonaObras: 'cercanas',
@@ -50,6 +52,7 @@ const APT_CONTRACT_DATA = {
   vs: {
     name: 'Hestía Vera Salinas',
     shortName: 'Salinas',
+    heroPhoto: 'assets/apt-vs-gallery-1.jpg',
     direccion: 'Apto. 7, planta 1ª, bloque 22, en la urbanización Pueblo Salinas, en C/ Alcazaba 115',
     plazaGaraje: '290',
     zonaObras: 'cercanas',
@@ -1314,37 +1317,330 @@ const ContractTab = ({
         <td>${e.unit === 'noche' ? 'por noche' : e.unit === 'estancia' ? 'por estancia' : e.unit === 'hora' ? 'por hora' : 'por ' + e.unit}</td>
       </tr>`;
     }).join('');
+    const origin = typeof window !== 'undefined' && window.location && window.location.origin || '';
+    const baseDir = typeof window !== 'undefined' && window.location && window.location.pathname ? window.location.pathname.replace(/[^\/]+$/, '') : '/';
+    const assetUrl = p => `${origin}${baseDir}${p}`.replace(/([^:])\/+/g, '$1/');
+    const logoUrl = assetUrl('assets/logo-hestia-brand.png');
+    const heroUrl = assetUrl(a.heroPhoto);
     return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
-<title>Contrato · ${a.shortName} · ${nombre}</title>
+<title>Contrato · Hestía Vera ${a.shortName} · ${nombre}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  @page { size: A4; margin: 18mm 18mm; }
-  body { font-family: Georgia, 'Times New Roman', serif; color: #222; font-size: 11pt; line-height: 1.55; max-width: 174mm; margin: 0 auto; padding: 6mm 0; }
-  h1 { font-size: 16pt; text-align: center; letter-spacing: 0.04em; margin: 0 0 4mm; }
-  .lugar { text-align: center; font-style: italic; margin: 0 0 8mm; }
-  h2 { font-size: 12pt; margin: 6mm 0 2mm; letter-spacing: 0.06em; }
-  h3 { font-size: 11pt; margin: 4mm 0 1mm; text-transform: uppercase; letter-spacing: 0.04em; color: #444; }
-  p { margin: 1.5mm 0; text-align: justify; }
-  ul, ol { margin: 1mm 0 2mm 6mm; padding: 0; }
-  li { margin: 0.5mm 0; }
-  table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; font-size: 10pt; }
-  th, td { text-align: left; padding: 1.5mm 2mm; border-bottom: 0.3pt solid #ccc; }
-  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  td .ed { color: #666; font-size: 9pt; }
-  .firmas { margin-top: 10mm; display: grid; grid-template-columns: 1fr 1fr; gap: 10mm; }
-  .firma { padding-top: 18mm; border-top: 0.5pt solid #888; font-size: 10pt; }
-  .firma strong { display: block; margin-bottom: 1mm; }
-  @media print { body { padding: 0; } button { display: none; } }
-  .print-bar { position: fixed; top: 10px; right: 10px; background: #fff; padding: 8px; border: 1px solid #ccc; border-radius: 4px; z-index: 100; }
-  .print-bar button { font-size: 14px; padding: 6px 14px; cursor: pointer; }
+  :root {
+    --ber: #3D1A35;
+    --ber-dk: #2A0F2E;
+    --ber-lt: #4E2446;
+    --sol: #3AAABB;
+    --vt: #B86A3C;
+    --vt-dk: #8A4A24;
+    --arena: #F0E8D5;
+    --arena-dk: #E4D9BE;
+    --ink-soft: #5B4A56;
+  }
+  @page {
+    size: A4;
+    margin: 16mm 16mm 22mm 16mm;
+    @bottom-left {
+      content: "Hestía Your Home · info@hestiayourhome.com · +34 620 316 370";
+      font-family: 'Lora', Georgia, serif;
+      font-size: 8pt;
+      color: #4E2446;
+      padding-bottom: 4mm;
+    }
+    @bottom-center {
+      content: "✦";
+      color: #3AAABB;
+      font-size: 10pt;
+      padding-bottom: 4mm;
+    }
+    @bottom-right {
+      content: "Página " counter(page) " de " counter(pages);
+      font-family: 'Lora', Georgia, serif;
+      font-size: 8.5pt;
+      font-weight: 600;
+      color: #3D1A35;
+      padding-bottom: 4mm;
+    }
+  }
+  /* Cabecera de marca al inicio (página 1) */
+  .brand-header {
+    display: flex;
+    align-items: center;
+    gap: 4mm;
+    padding-bottom: 3mm;
+    margin-bottom: 4mm;
+    border-bottom: 0.5pt solid var(--ber);
+  }
+  .brand-header-logo { width: 12mm; height: 12mm; object-fit: contain; }
+  .brand-header-text { flex: 1; line-height: 1.2; }
+  .brand-header-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 14pt;
+    font-weight: 700;
+    color: var(--ber);
+    letter-spacing: 0.04em;
+  }
+  .brand-header-sub {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 9pt;
+    color: var(--ber-lt);
+    font-style: italic;
+    margin-top: 0.5mm;
+  }
+  .brand-header-apt {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 9pt;
+    font-weight: 600;
+    color: var(--sol);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: right;
+  }
+
+  body {
+    font-family: 'Lora', Georgia, serif;
+    color: var(--ber);
+    font-size: 10.5pt;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  /* Hero con foto + título grande (solo página 1) */
+  .hero {
+    position: relative;
+    width: 178mm;
+    height: 50mm;
+    margin: 0 0 6mm;
+    overflow: hidden;
+    border-radius: 1.5mm;
+    background: linear-gradient(135deg, var(--ber) 0%, var(--ber-lt) 100%);
+    page-break-inside: avoid;
+  }
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.88;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(170deg, rgba(42,15,46,0.10) 0%, rgba(42,15,46,0.45) 60%, rgba(42,15,46,0.78) 100%);
+  }
+  .hero-text {
+    position: absolute;
+    left: 6mm;
+    bottom: 4mm;
+    right: 6mm;
+    color: var(--arena);
+  }
+  .hero-eyebrow {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 8pt;
+    font-style: italic;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--arena-dk);
+    opacity: 0.85;
+    margin: 0 0 1mm;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22pt;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+  }
+  .hero-meta {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 9pt;
+    margin-top: 2mm;
+    color: var(--arena-dk);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16pt;
+    font-weight: 700;
+    color: var(--ber-dk);
+    text-align: center;
+    letter-spacing: 0.04em;
+    margin: 0 0 2mm;
+  }
+  .lugar {
+    text-align: center;
+    font-style: italic;
+    color: var(--ber-lt);
+    margin: 0 0 6mm;
+    font-size: 10pt;
+  }
+  h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 13pt;
+    font-weight: 700;
+    color: var(--ber);
+    letter-spacing: 0.04em;
+    margin: 6mm 0 2mm;
+    padding-bottom: 1mm;
+    border-bottom: 0.5pt solid var(--sol);
+  }
+  h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--vt-dk);
+    margin: 4mm 0 1mm;
+    letter-spacing: 0.02em;
+  }
+  h3::before {
+    content: "✦  ";
+    color: var(--sol);
+    font-weight: 400;
+  }
+  p {
+    margin: 1.5mm 0;
+    text-align: justify;
+    color: var(--ber);
+  }
+  p strong { color: var(--ber-dk); }
+  p em { color: var(--ber-lt); }
+  ul, ol { margin: 1mm 0 2mm 6mm; padding: 0; color: var(--ber); }
+  li { margin: 0.8mm 0; }
+  li::marker { color: var(--sol); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2mm 0 4mm;
+    font-size: 9.5pt;
+  }
+  th {
+    text-align: left;
+    padding: 2mm 2.5mm;
+    background: var(--ber);
+    color: var(--arena);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 600;
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  td {
+    padding: 1.8mm 2.5mm;
+    border-bottom: 0.3pt solid var(--arena-dk);
+    color: var(--ber);
+  }
+  tr:nth-child(even) td { background: rgba(240,232,213,0.40); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 600; color: var(--ber-dk); }
+  td .ed { color: var(--ber-lt); font-size: 8.5pt; font-style: italic; }
+
+  /* Cifras destacadas (renta, prereserva, fianza) */
+  .key-num { color: var(--vt-dk); font-weight: 700; }
+
+  .firmas {
+    margin-top: 12mm;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10mm;
+    page-break-inside: avoid;
+  }
+  .firma {
+    padding-top: 18mm;
+    border-top: 1pt solid var(--sol);
+    font-size: 9.5pt;
+    color: var(--ber);
+  }
+  .firma strong {
+    display: block;
+    margin-bottom: 1mm;
+    font-family: 'Playfair Display', Georgia, serif;
+    color: var(--ber-dk);
+    font-size: 10.5pt;
+  }
+  .firma em {
+    color: var(--ber-lt);
+    font-weight: normal;
+  }
+
+  /* Bloque ornamental al final */
+  .closing {
+    margin-top: 8mm;
+    padding: 5mm;
+    background: var(--arena);
+    border-left: 3pt solid var(--sol);
+    border-radius: 1mm;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    color: var(--ber);
+    text-align: center;
+    font-size: 10.5pt;
+    page-break-inside: avoid;
+  }
+  .closing-sign {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--vt-dk);
+    margin-top: 2mm;
+    font-size: 9.5pt;
+  }
+
+  @media print {
+    body { margin: 0; }
+    .print-bar { display: none; }
+  }
+  .print-bar {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: var(--arena);
+    border: 1pt solid var(--ber);
+    border-radius: 4px;
+    padding: 6px 10px;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(61,26,53,0.15);
+  }
+  .print-bar button {
+    background: var(--ber);
+    color: var(--arena);
+    border: none;
+    border-radius: 3px;
+    font-family: 'Lora', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 16px;
+    cursor: pointer;
+  }
+  .print-bar button:hover { background: var(--ber-lt); }
 </style></head>
 <body>
-<div class="print-bar"><button onclick="window.print()">🖨️ Imprimir / Guardar como PDF</button></div>
+<div class="print-bar"><button onclick="window.print()">Imprimir / Guardar como PDF</button></div>
 
-<h1>CONTRATO DE ARRENDAMIENTO POR TEMPORADA</h1>
+<div class="brand-header">
+  <img src="${logoUrl}" alt="Hestía" class="brand-header-logo">
+  <div class="brand-header-text">
+    <div class="brand-header-name">HESTÍA</div>
+    <div class="brand-header-sub">your home — contrato de arrendamiento</div>
+  </div>
+  <div class="brand-header-apt">Hestía Vera ${a.shortName}</div>
+</div>
+
+<div class="hero">
+  <img src="${heroUrl}" alt="${a.name}" class="hero-img" onerror="this.style.display='none'">
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <div class="hero-eyebrow">contrato de arrendamiento por temporada</div>
+    <h1 class="hero-title" style="text-align:left;color:var(--arena);margin:0">${a.name}</h1>
+    <div class="hero-meta">${fechaEntradaStr} → ${fechaSalidaStr} · ${nochesL} (${noches}) noches · ${huespedes} huésped${huespedes !== 1 ? 'es' : ''}${mascotaTexto}</div>
+  </div>
+</div>
+
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
 
-<h2>REUNIDOS</h2>
+<h2>Reunidos</h2>
 <p>Por una parte, <strong>D. Alejandro Berruezo Márquez</strong> y <strong>D. Francisco Javier Moral Arévalo</strong>, mayores de edad, y con domicilio a efectos de notificaciones en Avenida de la Constitución 38, 1A, 28821 de Coslada, Madrid, con DNI. 02646392N y 75018031N, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ES2114650100911726525059.</p>
 <p><em>(De ahora en adelante, "Los Propietarios".)</em></p>
 <p>De otra parte, <strong>D./Dña. ${nombre.toUpperCase()}</strong>, mayor de edad, con domicilio a efectos de notificaciones en: <strong>${domicilio || '____________'}</strong>, con Documento Nacional de Identidad: <strong>${dni || '____________'}</strong>, y con teléfono: <strong>${telefono || '____________'}</strong>.</p>
@@ -1674,16 +1970,31 @@ const ReservasTab = ({
 
   // Carga inicial del JSON desde GitHub
   React.useEffect(() => {
-    if (!token) return;
+    if (!token) {
+      console.warn('[Reservas] No token, skipping fetch');
+      return;
+    }
+    console.log('[Reservas] Fetching', `${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`);
     setLoading(true);
     fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
       headers: apiHeaders(token)
-    }).then(r => r.json()).then(j => {
-      if (j.message) throw new Error(j.message);
+    }).then(r => {
+      console.log('[Reservas] HTTP status', r.status);
+      return r.json();
+    }).then(j => {
+      if (j.message) {
+        console.error('[Reservas] GitHub API error:', j);
+        throw new Error(`${j.message} (status response)`);
+      }
+      if (!j.content) throw new Error('Respuesta sin contenido (¿el fichero existe en ' + RESERVAS_PATH + '?)');
       setSha(j.sha);
       const json = JSON.parse(b64ToUtf8(j.content));
+      console.log('[Reservas] Loaded', json.reservas?.length, 'reservations');
       setData(json);
-    }).catch(e => setError('Error cargando reservas: ' + e.message)).finally(() => setLoading(false));
+    }).catch(e => {
+      console.error('[Reservas] Fetch failed:', e);
+      setError('Error cargando reservas: ' + e.message + ' — abre la consola (F12) para más detalle.');
+    }).finally(() => setLoading(false));
   }, [token]);
   if (loading) return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
