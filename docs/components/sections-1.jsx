@@ -30,6 +30,14 @@ const HERO_VIDEOS = [
     poster: 'assets/hero-terrace-night.jpg',
     mood: 'warm',
     alt: 'Atardecer aéreo sobre la playa' },
+  { src: 'assets/Videoshome/hero-cala-rocosa.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'night',
+    alt: 'Cala rocosa con agua cristalina · cenital' },
+  { src: 'assets/Videoshome/hero-playa-aerea-turquesa.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'teal',
+    alt: 'Playa aérea · arena dorada y agua turquesa' },
   // Para añadir un vídeo: súbelo a docs/assets/Videoshome/ y añade
   // una entrada con la misma forma. Para hacerlo circular, procesa
   // con ffmpeg crossfade end→start (ver scripts/build-pdf.mjs para

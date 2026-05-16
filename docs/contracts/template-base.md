@@ -10,6 +10,12 @@ Esta es la plantilla cerrada que rellena el generador de `/p-edit.html → 📄 
 5. **Texto COVID-19**: eliminado.
 6. **Plazas de garaje**: Mar = 160 · Thalassa = 163 · Salinas = 290.
 7. **Servicios adicionales**: tabla al final del contrato sincronizada con `docs/data/prices.json` (la misma que ve el cliente en la web y editas en `/p-edit`).
+8. **Fecha de firma**: se rellena automáticamente con la fecha del día en que se genera el contrato (`new Date()` en el navegador). Editable en el formulario por si quieres antedatar o postdatar.
+9. **Entrega al cliente**: en vez de un botón "Descargar PDF", el botón será **"Generar y enviar por correo"**. Al pulsarlo:
+    a) Se descarga el PDF en tu equipo automáticamente.
+    b) Se abre tu cliente de correo (`mailto:`) con destinatario = email del huésped, asunto y cuerpo prerrellenados (ver borrador al final del documento).
+    c) Tú adjuntas el PDF descargado al borrador y lo envías.
+    *(Limitación técnica: `mailto:` no permite adjuntar archivos automáticamente desde el navegador — por eso el flujo es descarga + adjuntar manual.)*
 
 ---
 
@@ -219,3 +225,62 @@ Por favor, deja los cojines de la terraza en el interior si hay viento, lluvia o
 | **Fecha del contrato (firma)** | date (hoy por defecto) | `{{FECHA_FIRMA}}` |
 
 El generador convertirá automáticamente cifras a letras (`630 → SEISCIENTOS TREINTA`) usando una librería en JS, y calculará el `{{REMANENTE_NUM}}` como `precio_total − prereserva`.
+
+---
+
+## Borrador del correo de envío
+
+Cuando pulses "Generar y enviar por correo", se descargará el PDF y se abrirá tu cliente de correo con esto prerrellenado:
+
+### Asunto
+```
+Contrato de reserva · Hestía Vera {{APARTAMENTO_CORTO}} · {{FECHA_ENTRADA}} → {{FECHA_SALIDA}}
+```
+*(Apartamento corto: Mar / Thalassa / Salinas.)*
+
+### Destinatario
+```
+{{EMAIL_ARRENDATARIO}}
+```
+
+### Cuerpo
+
+> Estimado/a **{{NOMBRE_ARRENDATARIO}}**,
+>
+> ¡Muchas gracias por tu interés en Hestía! Adjunto encontrarás el contrato de arrendamiento para tu estancia en **Hestía Vera {{APARTAMENTO_CORTO}}** del **{{FECHA_ENTRADA}}** al **{{FECHA_SALIDA}}**.
+>
+> Para confirmar tu reserva necesitamos que nos hagas llegar:
+>
+> 1. **El contrato firmado** por todas las partes (puedes contestar a este correo con el PDF firmado adjunto).
+> 2. **El DNI o pasaporte** de cada huésped mayor de 16 años.
+> 3. **El justificante de la prereserva** de **{{PRERESERVA_NUM}} €**, ingresada por transferencia a la cuenta `ES2114650100911726525059` o BIZUM al teléfono `+34 620 316 370`.
+>
+> El remanente de **{{REMANENTE_NUM}} €** se abona en efectivo el día de la llegada, en el momento del check-in.
+>
+> Recibida toda la documentación, tu reserva quedará confirmada y te escribiremos unos días antes de tu llegada para coordinar el check-in (autónomo o presencial, lo que te encaje mejor).
+>
+> Si tienes cualquier duda, escríbenos sin problema.
+>
+> Un abrazo,
+> **Alex y Fran** · Hestía
+> `info@hestiayourhome.com` · `+34 620 316 370`
+
+### Recordatorio al final del cuerpo (para tu yo del futuro al enviar)
+
+> **Recuerda adjuntar el PDF que se acaba de descargar (`Hestia-{{APARTAMENTO_CORTO}}-Contrato-{{NOMBRE_ARRENDATARIO}}-{{FECHA_ENTRADA}}.pdf`) antes de pulsar Enviar.**
+
+Este recordatorio NO se incluye en el correo al cliente — aparece como aviso/toast en `/p-edit` después de la descarga.
+
+---
+
+## Resumen del flujo en `/p-edit.html → 📄 Contrato`
+
+1. Rellenas el formulario (apartamento, datos del huésped, fechas, importes, política, fianza).
+2. Pulsas **Generar y enviar por correo**.
+3. El navegador:
+    a. Genera el PDF a partir de la plantilla con los valores sustituidos.
+    b. Lo descarga automáticamente como `Hestia-{apt}-Contrato-{nombre}-{fecha}.pdf`.
+    c. Abre tu cliente de correo con destinatario, asunto y cuerpo ya hechos.
+4. Tú arrastras el PDF al borrador y pulsas Enviar.
+
+Tiempo total estimado por contrato: **< 30 segundos** una vez tengas los datos del huésped a mano.
