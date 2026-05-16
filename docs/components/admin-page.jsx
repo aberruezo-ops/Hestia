@@ -1416,26 +1416,27 @@ const ReservasTab = ({ token }) => {
       .then(j => {
         if (j.message) throw new Error(j.message);
         setSha(j.sha);
-        const json = JSON.parse(b64DecodeUtf8(j.content));
+        const json = JSON.parse(b64ToUtf8(j.content));
         setData(json);
       })
       .catch(e => setError('Error cargando reservas: ' + e.message))
       .finally(() => setLoading(false));
   }, [token]);
 
-  if (!data && !loading && !error) return null;
-  if (loading && !data) return <div className="pe-card"><h2>🗓️ Reservas</h2><p>Cargando…</p></div>;
+  if (loading) return <div className="pe-card"><h2>🗓️ Reservas</h2><p>Cargando…</p></div>;
+  if (!data && error) return <div className="pe-error">{error}</div>;
+  if (!data) return <div className="pe-card"><h2>🗓️ Reservas</h2><p className="pe-help">Esperando autenticación…</p></div>;
 
   const reservas = (data && data.reservas) || [];
   const APT_NAMES = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
   const APT_COLOR = { vm: '#3D1A35', vt: '#3AAABB', vs: '#8A4A24' };
 
-  // Filtros
+  // Filtros (apartamento + canal)
   const filtered = reservas.filter(r => {
-    if (filterApt !== 'all' && r.apt !== filterApt) return true && false;
+    if (filterApt !== 'all' && r.apt !== filterApt) return false;
     if (filterCanal !== 'all' && (r.canal || '').toLowerCase().trim() !== filterCanal) return false;
     return true;
-  }).filter(r => filterApt === 'all' || r.apt === filterApt);
+  });
 
   // Resumen
   const today = new Date().toISOString().slice(0,10);
@@ -1468,7 +1469,7 @@ const ReservasTab = ({ token }) => {
     try {
       const body = {
         message: `chore(reservas): update via /p-edit · ${new Date().toISOString().slice(0,16).replace('T',' ')}`,
-        content: b64EncodeUtf8(JSON.stringify(newData, null, 2)),
+        content: utf8ToB64(JSON.stringify(newData, null, 2)),
         sha,
         branch: BRANCH,
       };
