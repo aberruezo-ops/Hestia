@@ -1780,94 +1780,213 @@ info@hestiayourhome.com · +34 620 316 370`;
 };
 
 // ============================================================
-// ReservasTab — pestaña de reservas.
-// Lee data-private/reservas.json (zona privada del repo, no
-// publicada en docs/) vía la API de GitHub con el PAT del usuario.
-// Permite filtrar, ver resumen, editar inline una reserva, y
-// guardar el JSON de vuelta.
-// La sincronización en vivo con Google Sheets requiere setup
-// adicional documentado en data-private/SETUP-SHEETS-SYNC.md.
+// ReservasTab — pestaña de reservas (v2).
+//
+// Lee data-private/reservas.json vía la API de GitHub con el PAT
+// del usuario. La carpeta data-private/ vive FUERA de docs/, por
+// lo que GitHub Pages no la sirve.
+//
+// UX:
+//   · Dashboard arriba con KPIs del año actual y comparativa con
+//     el resto de años disponibles en el JSON.
+//   · Bloque de próximos check-ins y check-ins actuales destacado.
+//   · Tabla compacta: click en fila → panel deslizante a la
+//     derecha con TODOS los campos de la reserva.
+//   · Auto-cálculo de noches, comisión sugerida, BAI,
+//     rentabilidad %, y precio neto/bruto por noche.
+//   · Indicador visual al inicio de cada fila para reservas en
+//     curso (🏠) y próximas (⏰).
+//
+// Sincronización con Google Sheets: ver data-private/SETUP-SHEETS-SYNC.md.
 // ============================================================
 const RESERVAS_PATH = 'data-private/reservas.json';
 
-const ReservasTab = ({ token }) => {
-  const [data,      setData]      = React.useState(null);
-  const [sha,       setSha]       = React.useState(null);
-  const [loading,   setLoading]   = React.useState(false);
-  const [error,     setError]     = React.useState(null);
-  const [success,   setSuccess]   = React.useState(null);
-  const [filterApt, setFilterApt] = React.useState('all');
-  const [filterCanal, setFilterCanal] = React.useState('all');
-  const [editIdx,   setEditIdx]   = React.useState(-1);
+const APT_NAMES   = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
+const APT_COLOR   = { vm: '#3D1A35', vt: '#3AAABB', vs: '#8A4A24' };
 
-  // Carga inicial del JSON desde GitHub
+// Tasas de comisión por defecto (% sobre ingreso_total). Editable
+// por reserva: la UI los usa solo como sugerencia inicial cuando
+// se cambia el canal de una nueva reserva.
+const COMMISSION_RATES = {
+  airbnb:   0.149,
+  booking:  0.187,
+  directo:  0,
+  avaibook: 0,
+};
+
+function getCanalKey(canal) {
+  if (!canal) return 'directo';
+  const k = canal.toLowerCase().trim();
+  if (k.includes('airbnb'))  return 'airbnb';
+  if (k.includes('booking')) return 'booking';
+  if (k.includes('avaibook'))return 'avaibook';
+  return 'directo';
+}
+
+// Devuelve la reserva con todos los campos derivados recalculados
+// a partir de las fuentes (entrada, salida, ingreso_total,
+// comision, gasto_limpieza, canal). Mantiene los campos editables
+// que ya tuvieran valor.
+function calcDerived(r) {
+  const out = { ...r };
+
+  // 1. Noches = (salida - entrada) en días.
+  if (out.entrada && out.salida) {
+    const e = new Date(out.entrada);
+    const s = new Date(out.salida);
+    const days = Math.round((s.getTime() - e.getTime()) / 86400000);
+    if (days > 0) out.noches = days;
+  }
+
+  const ingreso = Number(out.ingreso_total) || 0;
+  const com     = Number(out.comision)      || 0;
+  const gasto   = Number(out.gasto_limpieza) || 0;
+
+  // 2. BAI = ingreso_total − comision − gasto_limpieza.
+  out.bai = Math.round((ingreso - com - gasto) * 100) / 100;
+
+  // 3. Rentabilidad = BAI / ingreso_total.
+  out.rentabilidad_pct = ingreso > 0 ? Math.round((out.bai / ingreso) * 10000) / 10000 : null;
+
+  // 4. Precios por noche.
+  const noches = Number(out.noches) || 0;
+  if (noches > 0 && ingreso > 0) {
+    out.precio_bruto_noche = Math.round((ingreso / noches) * 100) / 100;
+    out.precio_neto_noche  = Math.round((out.bai  / noches) * 100) / 100;
+  } else {
+    out.precio_bruto_noche = null;
+    out.precio_neto_noche  = null;
+  }
+
+  return out;
+}
+
+function reservaStatus(r, todayStr) {
+  if (!r.entrada || !r.salida) return 'unknown';
+  if (r.salida  <= todayStr) return 'past';
+  if (r.entrada >  todayStr) return 'upcoming';
+  return 'staying';
+}
+
+const fmtEur = n => (n == null || isNaN(n))
+  ? '—'
+  : `${Number(n).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
+const fmtPct = n => (n == null || isNaN(n))
+  ? '—'
+  : `${(Number(n) * 100).toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %`;
+const fmtDate = d => d || '—';
+const fmtDelta = (cur, prev) => {
+  if (prev == null || prev === 0) return '';
+  const diff = ((cur - prev) / Math.abs(prev)) * 100;
+  const sign = diff >= 0 ? '+' : '';
+  return `${sign}${diff.toFixed(1)} %`;
+};
+
+const ReservasTab = ({ token }) => {
+  const [data,        setData]        = React.useState(null);
+  const [sha,         setSha]         = React.useState(null);
+  const [loading,     setLoading]     = React.useState(false);
+  const [error,       setError]       = React.useState(null);
+  const [success,     setSuccess]     = React.useState(null);
+  const [filterApt,   setFilterApt]   = React.useState('all');
+  const [filterCanal, setFilterCanal] = React.useState('all');
+  const [filterStatus,setFilterStatus]= React.useState('all');
+  const [selectedIdx, setSelectedIdx] = React.useState(-1);
+  const [draft,       setDraft]       = React.useState(null);
+
+  // Carga inicial del JSON desde GitHub.
   React.useEffect(() => {
-    if (!token) { console.warn('[Reservas] No token, skipping fetch'); return; }
-    console.log('[Reservas] Fetching', `${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`);
+    if (!token) return;
     setLoading(true);
     fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token) })
-      .then(r => {
-        console.log('[Reservas] HTTP status', r.status);
-        return r.json();
-      })
+      .then(r => r.json())
       .then(j => {
-        if (j.message) {
-          console.error('[Reservas] GitHub API error:', j);
-          throw new Error(`${j.message} (status response)`);
-        }
-        if (!j.content) throw new Error('Respuesta sin contenido (¿el fichero existe en ' + RESERVAS_PATH + '?)');
+        if (j.message) throw new Error(j.message);
         setSha(j.sha);
-        const json = JSON.parse(b64ToUtf8(j.content));
-        console.log('[Reservas] Loaded', json.reservas?.length, 'reservations');
-        setData(json);
+        setData(JSON.parse(b64ToUtf8(j.content)));
       })
-      .catch(e => {
-        console.error('[Reservas] Fetch failed:', e);
-        setError('Error cargando reservas: ' + e.message + ' — abre la consola (F12) para más detalle.');
-      })
+      .catch(e => setError('Error cargando reservas: ' + e.message + ' — F12 para detalle.'))
       .finally(() => setLoading(false));
   }, [token]);
 
-  if (loading) return <div className="pe-card"><h2>🗓️ Reservas</h2><p>Cargando…</p></div>;
-  if (!data && error) return <div className="pe-error">{error}</div>;
-  if (!data) return <div className="pe-card"><h2>🗓️ Reservas</h2><p className="pe-help">Esperando autenticación…</p></div>;
+  if (loading)              return <div className="pe-card"><h2>🗓️ Reservas</h2><p>Cargando…</p></div>;
+  if (!data && error)       return <div className="pe-error">{error}</div>;
+  if (!data)                return <div className="pe-card"><h2>🗓️ Reservas</h2><p className="pe-help">Esperando autenticación…</p></div>;
 
   const reservas = (data && data.reservas) || [];
-  const APT_NAMES = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
-  const APT_COLOR = { vm: '#3D1A35', vt: '#3AAABB', vs: '#8A4A24' };
+  const today    = new Date().toISOString().slice(0, 10);
 
-  // Filtros (apartamento + canal)
-  const filtered = reservas.filter(r => {
-    if (filterApt !== 'all' && r.apt !== filterApt) return false;
-    if (filterCanal !== 'all' && (r.canal || '').toLowerCase().trim() !== filterCanal) return false;
-    return true;
-  });
-
-  // Resumen
-  const today = new Date().toISOString().slice(0,10);
-  const ingresoTotal = reservas.reduce((s,r) => s + (r.ingreso_total || 0), 0);
-  const ingresoFuturo = reservas.filter(r => r.salida && r.salida >= today)
-    .reduce((s,r) => s + (r.ingreso_total || 0), 0);
-  const byApt = ['vm','vt','vs'].map(apt => {
-    const list = reservas.filter(r => r.apt === apt);
-    return { apt, count: list.length, sum: list.reduce((s,r) => s + (r.ingreso_total || 0), 0) };
-  });
-  const byCanal = {};
+  // --- Agrupación por año (entrada). Cuando solo hay un año la
+  // comparativa muestra '—' en la columna de variación. ---
+  const yearOf = r => (r.entrada || r.f_reserva || '').slice(0, 4);
+  const currentYear = String(new Date().getFullYear());
+  const dataYear    = data.year ? String(data.year) : currentYear;
+  const byYear      = {};
   reservas.forEach(r => {
-    const c = (r.canal || '—').trim() || '—';
-    if (!byCanal[c]) byCanal[c] = { count: 0, sum: 0 };
-    byCanal[c].count++;
-    byCanal[c].sum += r.ingreso_total || 0;
+    const y = yearOf(r);
+    if (!y) return;
+    (byYear[y] = byYear[y] || []).push(r);
+  });
+  const allYears = Object.keys(byYear).sort();
+  const focusYear   = byYear[dataYear] ? dataYear : (allYears[allYears.length - 1] || currentYear);
+  const focusList   = byYear[focusYear] || [];
+  const otherList   = Object.entries(byYear)
+    .filter(([y]) => y !== focusYear)
+    .flatMap(([, v]) => v);
+
+  // --- KPIs por bloque ---
+  const sum = (list, key) => list.reduce((a, r) => a + (Number(r[key]) || 0), 0);
+  const avg = (list, key) => {
+    const valid = list.filter(r => r[key] != null && !isNaN(r[key]));
+    return valid.length ? sum(valid, key) / valid.length : 0;
+  };
+  const kpis = (list) => ({
+    reservas:        list.length,
+    ingreso:         sum(list, 'ingreso_total'),
+    bai:             sum(list, 'bai'),
+    comision:        sum(list, 'comision'),
+    gasto_limpieza:  sum(list, 'gasto_limpieza'),
+    noches:          sum(list, 'noches'),
+    margen:          avg(list, 'rentabilidad_pct'),
+    precio_bruto:    avg(list, 'precio_bruto_noche'),
+  });
+  const kFocus = kpis(focusList);
+  const kOther = kpis(otherList);
+
+  // KPIs por apartamento (sólo año focal)
+  const byApt = ['vm', 'vt', 'vs'].map(apt => {
+    const list = focusList.filter(r => r.apt === apt);
+    return { apt, ...kpis(list) };
   });
 
-  // Próximos check-ins (siguientes 14 días)
-  const in14 = (() => { const d = new Date(); d.setDate(d.getDate() + 14); return d.toISOString().slice(0,10); })();
-  const proximos = reservas
-    .filter(r => r.entrada && r.entrada >= today && r.entrada <= in14)
-    .sort((a,b) => a.entrada.localeCompare(b.entrada));
+  // KPIs por canal (sólo año focal)
+  const byCanal = {};
+  focusList.forEach(r => {
+    const c = (r.canal || '—').trim() || '—';
+    if (!byCanal[c]) byCanal[c] = { count: 0, sum: 0, bai: 0 };
+    byCanal[c].count++;
+    byCanal[c].sum += Number(r.ingreso_total) || 0;
+    byCanal[c].bai += Number(r.bai)           || 0;
+  });
 
-  const canales = Array.from(new Set(reservas.map(r => (r.canal || '').trim()).filter(Boolean)));
+  // --- Próximas y en estancia ---
+  const enEstancia = reservas.filter(r => reservaStatus(r, today) === 'staying')
+    .sort((a, b) => a.salida.localeCompare(b.salida));
+  const proximas = reservas.filter(r => reservaStatus(r, today) === 'upcoming')
+    .sort((a, b) => a.entrada.localeCompare(b.entrada))
+    .slice(0, 8);
 
+  // --- Filtros visibles ---
+  const filtered = reservas.filter(r => {
+    if (filterApt   !== 'all' && r.apt !== filterApt) return false;
+    if (filterCanal !== 'all' && getCanalKey(r.canal) !== filterCanal) return false;
+    if (filterStatus!== 'all' && reservaStatus(r, today) !== filterStatus) return false;
+    return true;
+  }).sort((a, b) => (a.entrada || '').localeCompare(b.entrada || ''));
+
+  const canalKeys = Array.from(new Set(reservas.map(r => getCanalKey(r.canal))));
+
+  // --- Acciones ---
   const saveReservas = async (newReservas) => {
     setError(null); setSuccess(null);
     const newData = { ...data, reservas: newReservas, updatedAt: new Date().toISOString(), count: newReservas.length };
@@ -1885,92 +2004,176 @@ const ReservasTab = ({ token }) => {
       if (!r.ok) throw new Error(j.message || 'Error desconocido');
       setSha(j.content.sha);
       setData(newData);
-      setSuccess('Reservas guardadas en data-private/reservas.json ✓');
-      setEditIdx(-1);
+      setSuccess('Reservas guardadas ✓');
+      setSelectedIdx(-1);
+      setDraft(null);
     } catch (e) {
       setError('Error guardando: ' + e.message);
     }
   };
 
-  const updateRow = (idx, patch) => {
-    const nr = [...reservas];
-    nr[idx] = { ...nr[idx], ...patch };
-    saveReservas(nr);
+  const openRow = (idx) => {
+    setSelectedIdx(idx);
+    setDraft({ ...reservas[idx] });
   };
-  const deleteRow = (idx) => {
-    if (!confirm(`¿Borrar reserva de ${reservas[idx].responsable}?`)) return;
-    const nr = reservas.filter((_, i) => i !== idx);
-    saveReservas(nr);
-  };
-  const addRow = () => {
-    const nr = [{
-      apt: 'vm', responsable: '', telefono: null, huespedes: 2, menores_12: null,
-      cuna_trona: null, mascota: false, dni_enviado: false, noches: null,
-      entrada: today, salida: today, cancelacion: 'Cancelable 14', canal: 'Directo',
-      contactado: 'Alex', f_reserva: today, ingreso_total: 0, reserva: 0,
-      pago_previo: 0, al_checkin: 0, comision: 0, renta: 0, fianza: false,
-      gasto_limpieza: 0, pagos_leila: 0, bai: 0, observaciones: '',
+  const newRow = () => {
+    const empty = {
+      apt: 'vm', responsable: '', telefono: null, huespedes: 2,
+      menores_12: null, cuna_trona: null, mascota: false, dni_enviado: false,
+      noches: null, entrada: today, salida: today,
+      cancelacion: 'Cancelable 14', canal: 'Directo', contactado: 'Alex',
+      f_reserva: today, ingreso_total: 0, reserva: 0, pago_previo: 0,
+      al_checkin: 0, comision: 0, renta: 0, fianza: false,
+      gasto_limpieza: 80, pagos_leila: 0, bai: 0, observaciones: '',
       rentabilidad_pct: null, precio_neto_noche: null, precio_bruto_noche: null,
-    }, ...reservas];
-    saveReservas(nr);
-    setEditIdx(0);
+    };
+    setSelectedIdx(reservas.length);
+    setDraft(empty);
   };
 
-  const fmtEur = n => (n == null) ? '—' : `${n.toLocaleString('es-ES', {minimumFractionDigits: 2, maximumFractionDigits: 2})} €`;
-  const fmtDate = d => d || '—';
+  // Edita un campo del draft. Si tocas algo que afecta a derivados
+  // (entrada/salida/ingreso/comision/gasto/canal), recalculamos.
+  const updateDraft = (field, value) => {
+    setDraft(prev => {
+      let next = { ...prev, [field]: value };
+      // Sugerencia de comisión al cambiar canal en reserva nueva.
+      if (field === 'canal') {
+        const rate = COMMISSION_RATES[getCanalKey(value)] ?? 0;
+        if (next.ingreso_total) {
+          next.comision = Math.round(next.ingreso_total * rate * 100) / 100;
+        }
+      }
+      // Si cambia ingreso_total, ajustamos comisión solo si la
+      // anterior coincidía con un múltiplo del canal (heurística:
+      // si era 0 o seguía la tasa). Para no ser invasivos, NO
+      // ajustamos comisión automáticamente; solo cuando se cambia
+      // el canal. El usuario edita la comisión a mano si quiere.
+      next = calcDerived(next);
+      return next;
+    });
+  };
 
+  const saveDraft = () => {
+    if (!draft) return;
+    const cleaned = calcDerived(draft);
+    const nr = [...reservas];
+    if (selectedIdx >= 0 && selectedIdx < reservas.length) {
+      nr[selectedIdx] = cleaned;
+    } else {
+      nr.push(cleaned);
+    }
+    saveReservas(nr);
+  };
+
+  const cancelDraft = () => {
+    setSelectedIdx(-1);
+    setDraft(null);
+  };
+
+  const deleteRow = () => {
+    if (selectedIdx < 0 || selectedIdx >= reservas.length) return;
+    if (!confirm(`¿Borrar reserva de ${reservas[selectedIdx].responsable}?`)) return;
+    const nr = reservas.filter((_, i) => i !== selectedIdx);
+    saveReservas(nr);
+  };
+
+  // --- KPI Card helper ---
+  const KpiCard = ({ label, value, sub, accent }) => (
+    <div className="rv-kpi" style={accent ? {borderLeftColor: accent} : null}>
+      <div className="rv-kpi-label">{label}</div>
+      <div className="rv-kpi-value">{value}</div>
+      {sub && <div className="rv-kpi-sub">{sub}</div>}
+    </div>
+  );
+
+  // ============================================================
+  // Render
+  // ============================================================
   return (
     <>
       {error   && <div className="pe-error">{error}</div>}
       {success && <div className="pe-success">{success}</div>}
 
-      <div className="pe-card">
-        <h2>🗓️ Reservas <span className="rv-count">· {reservas.length} · actualizado {data.updatedAt ? data.updatedAt.slice(0,10) : '—'}</span></h2>
-        <p className="pe-help">
-          Datos sincronizados desde la hoja "Hestía - Reservas" de Google Drive. Snapshot en
-          <code> data-private/reservas.json</code> (fuera de la web pública).
-          Para sincronización en vivo con el Sheet, ver <code>data-private/SETUP-SHEETS-SYNC.md</code>.
-        </p>
-
-        {/* Resumen */}
-        <div className="rv-stats">
-          <div className="rv-stat"><span className="rv-stat-label">Ingreso total</span><span className="rv-stat-val">{fmtEur(ingresoTotal)}</span></div>
-          <div className="rv-stat"><span className="rv-stat-label">Aún por llegar</span><span className="rv-stat-val">{fmtEur(ingresoFuturo)}</span></div>
-          {byApt.map(b => (
-            <div key={b.apt} className="rv-stat" style={{borderLeftColor: APT_COLOR[b.apt]}}>
-              <span className="rv-stat-label">{APT_NAMES[b.apt]} · {b.count}</span>
-              <span className="rv-stat-val">{fmtEur(b.sum)}</span>
-            </div>
-          ))}
+      <div className="pe-card rv-card">
+        <div className="rv-head">
+          <h2>🗓️ Reservas <span className="rv-count">· {reservas.length} reservas · año {focusYear}{otherList.length ? ` (vs ${otherList.length} de otros años)` : ''} · actualizado {data.updatedAt ? data.updatedAt.slice(0,10) : '—'}</span></h2>
+          <button type="button" className="pe-btn pe-btn-primary" onClick={newRow}>+ Nueva</button>
         </div>
 
-        <div className="rv-stats rv-stats-canal">
-          {Object.entries(byCanal).map(([c, v]) => (
-            <div key={c} className="rv-stat rv-stat-small">
-              <span className="rv-stat-label">{c}</span>
-              <span className="rv-stat-val">{v.count} · {fmtEur(v.sum)}</span>
-            </div>
-          ))}
+        {/* ───── Dashboard año actual vs resto ───── */}
+        <div className="rv-dashboard">
+          <KpiCard label="Reservas" value={kFocus.reservas} sub={otherList.length ? `vs ${kOther.reservas} otros años (${fmtDelta(kFocus.reservas, kOther.reservas)})` : 'único año en datos'} />
+          <KpiCard label="Ingreso total" accent="#3AAABB" value={fmtEur(kFocus.ingreso)} sub={otherList.length ? `vs ${fmtEur(kOther.ingreso)} (${fmtDelta(kFocus.ingreso, kOther.ingreso)})` : null} />
+          <KpiCard label="BAI (beneficio)" accent="#6B7A3A" value={fmtEur(kFocus.bai)} sub={otherList.length ? `vs ${fmtEur(kOther.bai)} (${fmtDelta(kFocus.bai, kOther.bai)})` : null} />
+          <KpiCard label="Comisiones" accent="#B86A3C" value={fmtEur(kFocus.comision)} sub={otherList.length ? `vs ${fmtEur(kOther.comision)} (${fmtDelta(kFocus.comision, kOther.comision)})` : null} />
+          <KpiCard label="Noches reservadas" value={kFocus.noches} sub={otherList.length ? `vs ${kOther.noches} (${fmtDelta(kFocus.noches, kOther.noches)})` : null} />
+          <KpiCard label="Margen medio" value={fmtPct(kFocus.margen)} sub={otherList.length ? `vs ${fmtPct(kOther.margen)}` : null} />
+          <KpiCard label="Precio bruto/noche" value={fmtEur(kFocus.precio_bruto)} sub={otherList.length ? `vs ${fmtEur(kOther.precio_bruto)}` : null} />
+          <KpiCard label="Gasto limpieza" accent="#7A5A23" value={fmtEur(kFocus.gasto_limpieza)} sub={otherList.length ? `vs ${fmtEur(kOther.gasto_limpieza)}` : null} />
         </div>
 
-        {/* Próximos */}
-        {proximos.length > 0 && (
-          <div className="rv-proximos">
-            <h3>Próximos check-ins (14 días)</h3>
+        {/* Subrejilla: por apartamento + por canal */}
+        <div className="rv-dashboard-2">
+          <div className="rv-block">
+            <div className="rv-block-h">Por apartamento</div>
+            <div className="rv-block-rows">
+              {byApt.map(b => (
+                <div key={b.apt} className="rv-block-row">
+                  <span className="rv-apt-chip" style={{background: APT_COLOR[b.apt]}}>{APT_NAMES[b.apt]}</span>
+                  <span className="rv-block-row-meta">{b.reservas} reservas · {b.noches} noches</span>
+                  <span className="rv-block-row-val">{fmtEur(b.ingreso)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="rv-block">
+            <div className="rv-block-h">Por canal</div>
+            <div className="rv-block-rows">
+              {Object.entries(byCanal).map(([c, v]) => (
+                <div key={c} className="rv-block-row">
+                  <span className="rv-canal-tag">{c}</span>
+                  <span className="rv-block-row-meta">{v.count} reservas · BAI {fmtEur(v.bai)}</span>
+                  <span className="rv-block-row-val">{fmtEur(v.sum)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ───── En estancia (ahora) ───── */}
+        {enEstancia.length > 0 && (
+          <div className="rv-now rv-banner-staying">
+            <h3>🏠 En Hestía ahora mismo · {enEstancia.length}</h3>
             <ul>
-              {proximos.map((r, i) => (
+              {enEstancia.map((r, i) => (
                 <li key={i}>
-                  <span className="rv-prox-date">{fmtDate(r.entrada)}</span>
-                  <span className="rv-apt-chip" style={{background: APT_COLOR[r.apt]}}>{APT_NAMES[r.apt] || r.apt}</span>
-                  <span className="rv-prox-name">{r.responsable}</span>
-                  <span className="rv-prox-meta">{r.huespedes} pax · {r.noches} noches · {r.canal}</span>
+                  <span className="rv-apt-chip" style={{background: APT_COLOR[r.apt]}}>{APT_NAMES[r.apt]}</span>
+                  <strong>{r.responsable}</strong>
+                  <span className="rv-prox-meta">salida {fmtDate(r.salida)} · {r.huespedes} pax · {r.canal}</span>
                 </li>
               ))}
             </ul>
           </div>
         )}
 
-        {/* Filtros + acciones */}
+        {/* ───── Próximas (8) ───── */}
+        {proximas.length > 0 && (
+          <div className="rv-now rv-banner-upcoming">
+            <h3>⏰ Próximos check-ins · {proximas.length}{reservas.filter(r => reservaStatus(r, today) === 'upcoming').length > proximas.length ? ` (de ${reservas.filter(r => reservaStatus(r, today) === 'upcoming').length})` : ''}</h3>
+            <ul>
+              {proximas.map((r, i) => (
+                <li key={i}>
+                  <span className="rv-prox-date">{fmtDate(r.entrada)}</span>
+                  <span className="rv-apt-chip" style={{background: APT_COLOR[r.apt]}}>{APT_NAMES[r.apt]}</span>
+                  <strong>{r.responsable}</strong>
+                  <span className="rv-prox-meta">{r.huespedes} pax · {r.noches}n · {r.canal}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* ───── Filtros ───── */}
         <div className="rv-toolbar">
           <label>Apartamento
             <select value={filterApt} onChange={e => setFilterApt(e.target.value)}>
@@ -1981,46 +2184,39 @@ const ReservasTab = ({ token }) => {
           <label>Canal
             <select value={filterCanal} onChange={e => setFilterCanal(e.target.value)}>
               <option value="all">Todos</option>
-              {canales.map(c => <option key={c} value={c.toLowerCase()}>{c}</option>)}
+              {canalKeys.map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
             </select>
           </label>
-          <button type="button" className="pe-btn pe-btn-primary" onClick={addRow}>+ Nueva reserva</button>
+          <label>Estado
+            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
+              <option value="all">Todas</option>
+              <option value="staying">En estancia</option>
+              <option value="upcoming">Próximas</option>
+              <option value="past">Pasadas</option>
+            </select>
+          </label>
+          <span className="rv-hint">Click en una fila para editarla →</span>
         </div>
 
-        {/* Tabla */}
+        {/* ───── Tabla ───── */}
         <div className="rv-table-wrap">
           <table className="rv-table">
             <thead><tr>
+              <th className="rv-status-th"></th>
               <th>Apt</th><th>Huésped</th><th>Entrada</th><th>Salida</th>
               <th className="num">Noches</th><th className="num">Pax</th>
-              <th>Canal</th><th>Cancelación</th>
-              <th className="num">Ingreso</th><th className="num">Comisión</th><th className="num">BAI</th>
-              <th>Estado</th><th></th>
+              <th>Canal</th>
+              <th className="num">Ingreso</th><th className="num">Comisión</th><th className="num">BAI</th><th className="num">%</th>
             </tr></thead>
             <tbody>
-              {filtered.map((r, idxOrig) => {
+              {filtered.map(r => {
                 const idx = reservas.indexOf(r);
-                const isEdit = idx === editIdx;
-                const past = r.salida && r.salida < today;
-                const onUpd = (field) => e => updateRow(idx, { [field]: e.target.value });
-                return isEdit ? (
-                  <tr key={idx} className="rv-edit">
-                    <td><select defaultValue={r.apt} onBlur={onUpd('apt')}>{Object.keys(APT_NAMES).map(k => <option key={k} value={k}>{APT_NAMES[k]}</option>)}</select></td>
-                    <td><input defaultValue={r.responsable} onBlur={onUpd('responsable')} /></td>
-                    <td><input type="date" defaultValue={r.entrada || ''} onBlur={onUpd('entrada')} /></td>
-                    <td><input type="date" defaultValue={r.salida || ''} onBlur={onUpd('salida')} /></td>
-                    <td className="num"><input type="number" defaultValue={r.noches || 0} onBlur={e => updateRow(idx, { noches: Number(e.target.value) })} /></td>
-                    <td className="num"><input type="number" defaultValue={r.huespedes || 0} onBlur={e => updateRow(idx, { huespedes: Number(e.target.value) })} /></td>
-                    <td><input defaultValue={r.canal || ''} onBlur={onUpd('canal')} /></td>
-                    <td><input defaultValue={r.cancelacion || ''} onBlur={onUpd('cancelacion')} /></td>
-                    <td className="num"><input type="number" step="0.01" defaultValue={r.ingreso_total || 0} onBlur={e => updateRow(idx, { ingreso_total: Number(e.target.value) })} /></td>
-                    <td className="num"><input type="number" step="0.01" defaultValue={r.comision || 0} onBlur={e => updateRow(idx, { comision: Number(e.target.value) })} /></td>
-                    <td className="num"><input type="number" step="0.01" defaultValue={r.bai || 0} onBlur={e => updateRow(idx, { bai: Number(e.target.value) })} /></td>
-                    <td>{past ? '✓' : '◷'}</td>
-                    <td><button type="button" className="pe-btn pe-btn-ghost" onClick={() => setEditIdx(-1)}>OK</button> <button type="button" className="pe-btn pe-btn-ghost" onClick={() => deleteRow(idx)}>🗑</button></td>
-                  </tr>
-                ) : (
-                  <tr key={idx} className={past ? 'rv-past' : ''}>
+                const status = reservaStatus(r, today);
+                const statusIcon = status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
+                const isSel = idx === selectedIdx;
+                return (
+                  <tr key={idx} className={`rv-row rv-row-${status}${isSel ? ' is-selected' : ''}`} onClick={() => openRow(idx)}>
+                    <td className={`rv-status rv-status-${status}`} title={status}>{statusIcon}</td>
                     <td><span className="rv-apt-chip" style={{background: APT_COLOR[r.apt]}}>{APT_NAMES[r.apt] || r.apt}</span></td>
                     <td>{r.responsable}{r.mascota ? ' 🐾' : ''}{r.cuna_trona ? ' 👶' : ''}</td>
                     <td>{fmtDate(r.entrada)}</td>
@@ -2028,12 +2224,10 @@ const ReservasTab = ({ token }) => {
                     <td className="num">{r.noches || '—'}</td>
                     <td className="num">{r.huespedes || '—'}</td>
                     <td>{r.canal || '—'}</td>
-                    <td className="rv-tiny">{r.cancelacion || '—'}</td>
                     <td className="num">{fmtEur(r.ingreso_total)}</td>
                     <td className="num">{fmtEur(r.comision)}</td>
                     <td className="num">{fmtEur(r.bai)}</td>
-                    <td>{past ? '✓' : (r.entrada && r.entrada <= today ? '🏠' : '◷')}</td>
-                    <td><button type="button" className="pe-btn pe-btn-ghost" onClick={() => setEditIdx(idx)}>✏️</button></td>
+                    <td className="num">{fmtPct(r.rentabilidad_pct)}</td>
                   </tr>
                 );
               })}
@@ -2041,9 +2235,195 @@ const ReservasTab = ({ token }) => {
           </table>
         </div>
       </div>
+
+      {/* ───── Panel deslizante de edición ───── */}
+      {draft && (
+        <>
+          <div className="rv-edit-backdrop" onClick={cancelDraft} />
+          <aside className="rv-edit-panel">
+            <header className="rv-edit-head">
+              <div>
+                <div className="rv-edit-eyebrow">{selectedIdx < reservas.length ? 'Editar reserva' : 'Nueva reserva'}</div>
+                <h3>{draft.responsable || '(sin nombre)'}</h3>
+              </div>
+              <button type="button" className="rv-edit-close" onClick={cancelDraft} aria-label="Cerrar">×</button>
+            </header>
+
+            <div className="rv-edit-body">
+              <fieldset><legend>Estancia</legend>
+                <div className="rv-field">
+                  <label>Apartamento</label>
+                  <select value={draft.apt || ''} onChange={e => updateDraft('apt', e.target.value)}>
+                    {Object.entries(APT_NAMES).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
+                  </select>
+                </div>
+                <div className="rv-field">
+                  <label>Huésped (responsable)</label>
+                  <input value={draft.responsable || ''} onChange={e => updateDraft('responsable', e.target.value)} placeholder="Nombre completo" />
+                </div>
+                <div className="rv-row2">
+                  <div className="rv-field">
+                    <label>Teléfono</label>
+                    <input value={draft.telefono || ''} onChange={e => updateDraft('telefono', e.target.value)} placeholder="+34 600 000 000" />
+                  </div>
+                  <div className="rv-field">
+                    <label>DNI enviado</label>
+                    <select value={draft.dni_enviado === true ? 'si' : draft.dni_enviado === false ? 'no' : ''}
+                      onChange={e => updateDraft('dni_enviado', e.target.value === 'si' ? true : e.target.value === 'no' ? false : null)}>
+                      <option value="">—</option>
+                      <option value="si">Sí</option>
+                      <option value="no">No</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="rv-row3">
+                  <div className="rv-field">
+                    <label>Entrada</label>
+                    <input type="date" value={draft.entrada || ''} onChange={e => updateDraft('entrada', e.target.value)} />
+                  </div>
+                  <div className="rv-field">
+                    <label>Salida</label>
+                    <input type="date" value={draft.salida || ''} onChange={e => updateDraft('salida', e.target.value)} />
+                  </div>
+                  <div className="rv-field">
+                    <label>Noches <span className="rv-calc">calculado</span></label>
+                    <input value={draft.noches != null ? draft.noches : ''} readOnly className="rv-readonly" />
+                  </div>
+                </div>
+                <div className="rv-row3">
+                  <div className="rv-field">
+                    <label>Huéspedes</label>
+                    <input type="number" min="1" value={draft.huespedes || 0} onChange={e => updateDraft('huespedes', Number(e.target.value))} />
+                  </div>
+                  <div className="rv-field">
+                    <label>{'<12 años'}</label>
+                    <input type="number" min="0" value={draft.menores_12 || 0} onChange={e => updateDraft('menores_12', Number(e.target.value))} />
+                  </div>
+                  <div className="rv-field">
+                    <label>Cuna / trona</label>
+                    <select value={draft.cuna_trona === true ? 'si' : draft.cuna_trona === false ? 'no' : ''}
+                      onChange={e => updateDraft('cuna_trona', e.target.value === 'si' ? true : e.target.value === 'no' ? false : null)}>
+                      <option value="">—</option>
+                      <option value="si">Sí</option>
+                      <option value="no">No</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="rv-field">
+                  <label>Mascota</label>
+                  <select value={draft.mascota ? 'si' : 'no'} onChange={e => updateDraft('mascota', e.target.value === 'si')}>
+                    <option value="no">No</option>
+                    <option value="si">Sí</option>
+                  </select>
+                </div>
+              </fieldset>
+
+              <fieldset><legend>Canal y cancelación</legend>
+                <div className="rv-row2">
+                  <div className="rv-field">
+                    <label>Canal</label>
+                    <select value={draft.canal || 'Directo'} onChange={e => updateDraft('canal', e.target.value)}>
+                      <option value="Directo">Directo</option>
+                      <option value="Airbnb">Airbnb</option>
+                      <option value="Booking">Booking</option>
+                      <option value="Avaibook">Avaibook</option>
+                    </select>
+                  </div>
+                  <div className="rv-field">
+                    <label>Política cancelación</label>
+                    <select value={draft.cancelacion || 'Cancelable 14'} onChange={e => updateDraft('cancelacion', e.target.value)}>
+                      <option value="Cancelable 7">Cancelable 7 días</option>
+                      <option value="Cancelable 14">Cancelable 14 días</option>
+                      <option value="Cancelable 30">Cancelable 30 días</option>
+                      <option value="Cancelable 60">Cancelable 60 días</option>
+                      <option value="Semiestricta">Semiestricta</option>
+                      <option value="No reembolsable">No reembolsable</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="rv-row2">
+                  <div className="rv-field">
+                    <label>Fecha reserva</label>
+                    <input type="date" value={draft.f_reserva || ''} onChange={e => updateDraft('f_reserva', e.target.value)} />
+                  </div>
+                  <div className="rv-field">
+                    <label>Contactado por</label>
+                    <select value={draft.contactado || ''} onChange={e => updateDraft('contactado', e.target.value)}>
+                      <option value="">—</option>
+                      <option value="Alex">Alex</option>
+                      <option value="Fran">Fran</option>
+                    </select>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset><legend>Importes</legend>
+                <div className="rv-field">
+                  <label>Ingreso total bruto</label>
+                  <input type="number" step="0.01" value={draft.ingreso_total || 0} onChange={e => updateDraft('ingreso_total', Number(e.target.value))} />
+                </div>
+                <div className="rv-row2">
+                  <div className="rv-field">
+                    <label>Comisión <span className="rv-hint-inline">tasa {getCanalKey(draft.canal)}: {((COMMISSION_RATES[getCanalKey(draft.canal)] ?? 0)*100).toFixed(1)}%</span></label>
+                    <input type="number" step="0.01" value={draft.comision || 0} onChange={e => updateDraft('comision', Number(e.target.value))} />
+                  </div>
+                  <div className="rv-field">
+                    <label>Gasto limpieza</label>
+                    <input type="number" step="0.01" value={draft.gasto_limpieza || 0} onChange={e => updateDraft('gasto_limpieza', Number(e.target.value))} />
+                  </div>
+                </div>
+                <div className="rv-row2">
+                  <div className="rv-field">
+                    <label>Pago previo</label>
+                    <input type="number" step="0.01" value={draft.pago_previo || 0} onChange={e => updateDraft('pago_previo', Number(e.target.value))} />
+                  </div>
+                  <div className="rv-field">
+                    <label>Al check-in</label>
+                    <input type="number" step="0.01" value={draft.al_checkin || 0} onChange={e => updateDraft('al_checkin', Number(e.target.value))} />
+                  </div>
+                </div>
+                <div className="rv-field">
+                  <label>Fianza tomada</label>
+                  <select value={draft.fianza ? 'si' : 'no'} onChange={e => updateDraft('fianza', e.target.value === 'si')}>
+                    <option value="no">No</option>
+                    <option value="si">Sí (300 €)</option>
+                  </select>
+                </div>
+
+                <div className="rv-calc-block">
+                  <div className="rv-calc-block-title">Calculado automáticamente</div>
+                  <div className="rv-calc-grid">
+                    <div><span>BAI</span><strong>{fmtEur(draft.bai)}</strong></div>
+                    <div><span>Rentabilidad</span><strong>{fmtPct(draft.rentabilidad_pct)}</strong></div>
+                    <div><span>Bruto/noche</span><strong>{fmtEur(draft.precio_bruto_noche)}</strong></div>
+                    <div><span>Neto/noche</span><strong>{fmtEur(draft.precio_neto_noche)}</strong></div>
+                  </div>
+                </div>
+              </fieldset>
+
+              <fieldset><legend>Observaciones</legend>
+                <div className="rv-field">
+                  <textarea rows="3" value={draft.observaciones || ''} onChange={e => updateDraft('observaciones', e.target.value)} placeholder="Notas internas, peticiones especiales, etc."></textarea>
+                </div>
+              </fieldset>
+            </div>
+
+            <footer className="rv-edit-foot">
+              {selectedIdx >= 0 && selectedIdx < reservas.length && (
+                <button type="button" className="pe-btn pe-btn-ghost rv-btn-danger" onClick={deleteRow}>🗑 Borrar</button>
+              )}
+              <div className="rv-edit-foot-right">
+                <button type="button" className="pe-btn pe-btn-ghost" onClick={cancelDraft}>Cancelar</button>
+                <button type="button" className="pe-btn pe-btn-primary" onClick={saveDraft}>Guardar</button>
+              </div>
+            </footer>
+          </aside>
+        </>
+      )}
     </>
   );
 };
+
 
 const AdminApp = () => {
   const [phase,    setPhase]    = React.useState('login');

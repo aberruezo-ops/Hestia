@@ -50,7 +50,6 @@ const GUIDE_SECTIONS = [
   { id: 'bienvenida',   es: 'Bienvenida',       en: 'Welcome' },
   { id: 'llegada',      es: 'Llegada y salida', en: 'Arrival & departure' },
   { id: 'wifi',         es: 'Mi WiFi',          en: 'My WiFi' },
-  { id: 'proposito',    es: '¿Por qué Hestía?', en: 'Why Hestía?' },
   { id: 'limpieza',     es: 'Limpieza',         en: 'Cleaning' },
   { id: 'salon',        es: 'Mi salón',         en: 'My living room' },
   { id: 'cocina',       es: 'Mi cocina',        en: 'My kitchen' },
@@ -736,19 +735,15 @@ const GUIDE_SHARED = {
       title: 'Bienvenido a tu Hestía',
       paras: [
         'Si lees esto, tu reserva está más que confirmada — y no sabes la ilusión que nos hace tenerte aquí.',
-        'Hemos puesto cariño en cada detalle de Hestía. Esperamos estar a la altura.',
+        'Hestía no es lujo. Tampoco es un alquiler vacacional al uso. Es nuestro hogar, y durante los próximos días queremos que también sea el tuyo. Por eso hemos puesto cariño en cada detalle de esta casa: porque es exactamente lo que a nosotros nos gusta encontrar cuando viajamos.',
         'Ya estés preparando el viaje, viviendo tus días aquí, o de vuelta a casa con la maleta a medio deshacer: todo lo que esté en nuestra mano, antes, durante o después de tu estancia, lo haremos. Sin dudarlo. Para eso estamos.',
         'Ahora descansa, relájate y descubre tu hogar lejos de tu casa.',
       ],
       sign: 'Con cariño,',
       signer: 'Fran y Alex',
-      whyTitle: '¿Por qué Hestía?',
-      whyParas: [
-        'Hestía no es lujo. Tampoco es un alquiler vacacional al uso. Es nuestro hogar — y queremos que también sea el tuyo durante tu estancia.',
-        'La historia completa (de dónde viene el nombre, por qué empezamos, qué buscamos cuando viajamos nosotros) está contada con detalle en la web.',
-      ],
-      whyLinkLabel: 'Leer la historia completa de Hestía',
-      whyLinkHref: '/porque-hestia.html',
+      pdNote: 'Si te interesa la historia completa — de dónde viene el nombre, por qué empezamos este proyecto, qué buscamos cuando viajamos nosotros — la contamos con detalle en la web:',
+      pdLinkLabel: 'Por qué creamos Hestía',
+      pdLinkHref: 'https://aberruezo-ops.github.io/Hestia/porque-hestia.html',
     },
     checkin: {
       title: 'Llegada y salida',
@@ -972,19 +967,15 @@ const GUIDE_SHARED = {
       title: 'Welcome to your Hestía',
       paras: [
         'If you\'re reading this, your booking is more than confirmed — and we couldn\'t be more thrilled to have you with us.',
-        'We\'ve put care into every detail of this Hestía. We hope to live up to it.',
+        'Hestía is not luxury. It is not a standard holiday rental either. It is our home, and over the coming days we want it to be yours too. That is why we have put care into every detail of this place: because it is exactly what we like to find when we travel ourselves.',
         'Whether you\'re still planning the trip, living your days here, or back home with a half-unpacked suitcase: anything in our hands, before, during or after your stay, we\'ll do it. No hesitation. That\'s what we\'re here for.',
         'Now rest, relax, and discover your home away from home.',
       ],
       sign: 'With love,',
       signer: 'Fran & Alex',
-      whyTitle: 'Why Hestía?',
-      whyParas: [
-        'Hestía is not luxury. It is not a standard holiday rental either. It is our home — and we want it to be yours too during your stay.',
-        'The full story (where the name comes from, why we started, what we look for when we travel ourselves) is told in detail on the website.',
-      ],
-      whyLinkLabel: 'Read the full Hestía story',
-      whyLinkHref: '/porque-hestia.html',
+      pdNote: 'If you would like the full story — where the name comes from, why we started this project, what we look for when we travel ourselves — we tell it in detail on the website:',
+      pdLinkLabel: 'Why we created Hestía',
+      pdLinkHref: 'https://aberruezo-ops.github.io/Hestia/porque-hestia.html',
     },
     name: null,
     why: null,
@@ -3615,14 +3606,13 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <p className="ag-sign">{s.welcome.sign}</p>
             <p className="ag-signer">{s.welcome.signer}</p>
 
-            {s.welcome.whyTitle && (
-              <div className="ag-welcome-why">
-                <h3 className="ag-h3">{s.welcome.whyTitle}</h3>
-                {s.welcome.whyParas.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
-                <a className="ag-welcome-why-link" href={s.welcome.whyLinkHref}>
-                  {s.welcome.whyLinkLabel} →
+            {s.welcome.pdNote && (
+              <p className="ag-welcome-pd">
+                <span className="ag-welcome-pd-tag">P.D.</span> {s.welcome.pdNote}{' '}
+                <a className="ag-welcome-pd-link" href={s.welcome.pdLinkHref} target="_blank" rel="noopener">
+                  {s.welcome.pdLinkLabel} →
                 </a>
-              </div>
+              </p>
             )}
           </section>
 
