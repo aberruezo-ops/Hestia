@@ -434,6 +434,28 @@ section.no-break {
   color: var(--ber-dk);
   margin-top: 3pt;
 }
+.welcome-why {
+  margin-top: 8mm;
+  padding: 4mm 5mm 4mm 6mm;
+  background: rgba(232, 194, 107, 0.08);
+  border-left: 1pt solid #3AAABB;
+  break-inside: avoid;
+}
+.welcome-why h3 {
+  margin: 0 0 2mm;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13pt;
+  font-weight: 600;
+  color: var(--apt-c-dk);
+}
+.welcome-why p { font-size: 9.5pt; line-height: 1.5; margin: 1.5mm 0; }
+.welcome-why-link {
+  margin-top: 3mm !important;
+  font-style: italic;
+  font-size: 9pt;
+  color: var(--apt-c-dk);
+}
+.welcome-why-link strong { font-style: normal; }
 .welcome-photo {
   margin: 14mm 0 0;
   break-inside: avoid;
@@ -1524,6 +1546,9 @@ function renderCover(aptId, lang, aptData, byApt) {
 
 function renderWelcome(shared, aptData, lang) {
   const w = shared.welcome;
+  // URL absoluta hacia la web pública (no se navega desde el PDF
+  // pero queda visible como texto para que el huésped lo escriba).
+  const linkText = w.whyLinkHref ? `hestiayourhome.com${w.whyLinkHref}` : '';
   return `
   <section class="welcome compact">
     ${sectionMark(aptData, lang)}
@@ -1534,6 +1559,14 @@ function renderWelcome(shared, aptData, lang) {
     ${w.paras.map(p => `<p>${esc(p)}</p>`).join('\n')}
     <div class="welcome-sign">${esc(w.sign)}</div>
     <div class="welcome-signer">${esc(w.signer)}</div>
+
+    ${w.whyTitle ? `
+      <div class="welcome-why">
+        <h3>${esc(w.whyTitle)}</h3>
+        ${w.whyParas.map(p => `<p>${esc(p)}</p>`).join('\n')}
+        <p class="welcome-why-link">${esc(w.whyLinkLabel)} → <strong>${esc(linkText)}</strong></p>
+      </div>
+    ` : ''}
   </section>`;
 }
 
