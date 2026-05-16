@@ -72,10 +72,6 @@ const GUIDE_SECTIONS = [{
   es: 'Mi WiFi',
   en: 'My WiFi'
 }, {
-  id: 'nombre',
-  es: 'Nuestro nombre',
-  en: 'Our name'
-}, {
   id: 'proposito',
   es: '¿Por qué Hestía?',
   en: 'Why Hestía?'
@@ -2993,13 +2989,10 @@ const GUIDE_SHARED = {
       garbageTitle: 'Basura y reciclaje',
       garbageBody: 'Por normativa municipal, los contenedores de basura y reciclaje están SIEMPRE fuera de la urbanización (no dentro). Te recomendamos aprovechar la salida del día siguiente, o cualquier viaje en coche, para tirarlas de paso. Te agradeceríamos enormemente que no la dejes en los descansillos del edificio ni dentro de Hestía — atrae bichos y el equipo de limpieza no las recoge.'
     },
-    name: {
-      title: 'Nuestro nombre',
-      paras: ['En la mitología griega, Hestía (en griego, Ἑστία) es la diosa del hogar, es decir, del fuego que da calor y vida a los hogares.', 'Es una diosa pacífica y eso es lo que os deseamos en vuestra estancia: tranquilidad y descanso. No podíamos llamarnos de otra manera…']
-    },
+    name: null,
     why: {
-      title: '¿Por qué hemos creado Hestía?',
-      paras: ['Hestía no es lujo. Tampoco es un alquiler vacacional al uso. Se trata más bien de hogares, de alojamientos de calidad, con la intención de que os sintáis como en vuestra propia casa, creados con nuestro mayor cariño, esfuerzo y dedicación.', 'Todo ello para que disfrutéis de vuestras merecidas vacaciones, sin preocuparos de nada, en un entorno cálido, bien decorado y cómodo. Hestía es lo que a nosotros nos gustaría encontrar cuando viajamos.']
+      title: '¿Por qué Hestía?',
+      paras: ['Hestía no es lujo. Tampoco es un alquiler vacacional al uso. Es nuestro hogar — y queremos que también sea el tuyo durante tu estancia.', 'La historia completa (de dónde viene el nombre, por qué empezamos, qué buscamos cuando viajamos nosotros) está contada con detalle en la web, en la sección "Por qué Hestía" → hestiayourhome.com/porque-hestia']
     },
     cleaning: {
       title: 'Protocolo de limpieza',
@@ -3279,13 +3272,10 @@ const GUIDE_SHARED = {
       sign: 'With love,',
       signer: 'Fran & Alex'
     },
-    name: {
-      title: 'Our name',
-      paras: ['In Greek mythology, Hestia (Ἑστία) is the goddess of home — of the fireplace that warms and gives life to our homes.', 'She is a peaceful goddess and that is exactly what we wish for your stay: rest and relaxation. We could not have any other name.']
-    },
+    name: null,
     why: {
-      title: 'Why have we created Hestía?',
-      paras: ['Hestía is not luxury. It is not a typical holiday rental either. Rather, it is high-quality accommodation for you to feel at home away from home, built with our deepest care, effort and dedication.', 'All so that you can enjoy the holiday you deserve, free of worries, in a warm, well-decorated and comfortable place. Hestía is exactly what we would like to find every time we travel.']
+      title: 'Why Hestía?',
+      paras: ['Hestía is not luxury. It is not a standard holiday rental either. It is our home — and we want it to be yours too during your stay.', 'The full story (where the name comes from, why we started, what we look for when we travel ourselves) is told in detail on the website, in the "Why Hestía" section → hestiayourhome.com/porque-hestia']
     },
     cleaning: {
       title: 'Cleaning protocol',
@@ -7568,21 +7558,11 @@ const AptGuideView = ({
   }, s.wifi.passValue)), /*#__PURE__*/React.createElement("p", {
     className: "ag-wifi-note"
   }, s.wifi.note))), /*#__PURE__*/React.createElement("section", {
-    id: "ag-nombre",
-    className: "ag-section"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-section-num"
-  }, "04"), /*#__PURE__*/React.createElement("h2", {
-    className: "ag-h2"
-  }, s.name.title), s.name.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
-    key: i,
-    className: "ag-para"
-  }, p))), /*#__PURE__*/React.createElement("section", {
     id: "ag-proposito",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "05"), /*#__PURE__*/React.createElement("h2", {
+  }, "04"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.why.title), s.why.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
@@ -7592,7 +7572,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "06"), /*#__PURE__*/React.createElement("h2", {
+  }, "05"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.cleaning.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7609,7 +7589,7 @@ const AptGuideView = ({
     className: "ag-section ag-section-rules"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "07"), /*#__PURE__*/React.createElement("h2", {
+  }, "06"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.rules.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7633,7 +7613,7 @@ const AptGuideView = ({
     className: `ag-section ag-room ag-room-${room.id}`
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, String(idx + 8).padStart(2, '0')), /*#__PURE__*/React.createElement("h2", {
+  }, String(idx + 7).padStart(2, '0')), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, room.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-lead"
@@ -7656,7 +7636,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "14"), /*#__PURE__*/React.createElement("h2", {
+  }, "13"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.surroundings.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7703,7 +7683,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "15"), /*#__PURE__*/React.createElement("h2", {
+  }, "14"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Sabores' : 'Tastes'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7725,7 +7705,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "16"), /*#__PURE__*/React.createElement("h2", {
+  }, "15"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7747,7 +7727,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "17"), /*#__PURE__*/React.createElement("h2", {
+  }, "16"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Mar y playas' : 'Sea & beaches'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7770,7 +7750,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "18"), /*#__PURE__*/React.createElement("h2", {
+  }, "17"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Actividades y planes' : 'Activities & plans'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7792,7 +7772,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "19"), /*#__PURE__*/React.createElement("h2", {
+  }, "18"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Mercados y compras' : 'Markets & shops'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7812,7 +7792,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "20"), /*#__PURE__*/React.createElement("h2", {
+  }, "19"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Salud y servicios' : 'Health & services'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7832,7 +7812,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "21"), /*#__PURE__*/React.createElement("h2", {
+  }, "20"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7858,7 +7838,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "22"), /*#__PURE__*/React.createElement("h2", {
+  }, "21"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.phones.title), /*#__PURE__*/React.createElement("table", {
     className: "ag-phones-table"
@@ -7871,7 +7851,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "23"), /*#__PURE__*/React.createElement("h2", {
+  }, "22"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.feedback.title), s.feedback.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
