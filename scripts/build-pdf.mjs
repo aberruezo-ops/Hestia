@@ -1511,7 +1511,7 @@ function renderPlacesRich(PLACES, CATEGORIES, aptData, lang) {
   // Categorías que valen la pena imprimir en el PDF (no incluimos los Hestía,
   // ni "home", para no duplicar). Orden editorial: comer → beber → playas →
   // mercados → celíaco → actividades → pescaderías.
-  const CAT_ORDER = ['restaurant', 'bar', 'beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog', 'market', 'celiac', 'activity', 'fish', 'super', 'town', 'culture'];
+  const CAT_ORDER = ['restaurant', 'bar', 'beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog', 'market', 'celiac', 'activity', 'fish', 'super', 'fuel', 'ev-charge', 'town', 'culture'];
   const catsById = new Map(CATEGORIES.map(c => [c.id, c]));
 
   const byCat = {};
