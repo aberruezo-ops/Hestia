@@ -2083,10 +2083,20 @@ const APT_NAMES = {
   vt: 'Thalassa',
   vs: 'Salinas'
 };
+// Colores reales de marca (Hestía brandbook):
+//   Mar      → #6B7A3A verde olivo (olivar de Vera Playa)
+//   Thalassa → #B86A3C teja        (Desierto de Tabernas)
+//   Salinas  → #D4A84A albero      (amarillo del amanecer)
 const APT_COLOR = {
-  vm: '#3D1A35',
-  vt: '#3AAABB',
-  vs: '#8A4A24'
+  vm: '#6B7A3A',
+  vt: '#B86A3C',
+  vs: '#D4A84A'
+};
+// Albero es claro: el chip necesita texto oscuro para legibilidad.
+const APT_TEXT = {
+  vm: '#FFFBF4',
+  vt: '#FFFBF4',
+  vs: '#3D1A35'
 };
 
 // Tasas de comisión por defecto (% sobre ingreso_total). Editable
@@ -2107,6 +2117,18 @@ function getCanalKey(canal) {
   return 'directo';
 }
 
+// Auto-calculo del gasto de limpieza según regla de negocio:
+//   · 90 € si la entrada cae en julio o agosto
+//   · 90 € si la estancia es de más de 10 noches
+//   · 80 € en cualquier otro caso
+function autoLimpieza(entrada, noches) {
+  if (!entrada) return 80;
+  const mes = parseInt(entrada.slice(5, 7));
+  if (mes === 7 || mes === 8) return 90;
+  if ((noches || 0) > 10) return 90;
+  return 80;
+}
+
 // Devuelve la reserva con todos los campos derivados recalculados
 // a partir de las fuentes (entrada, salida, ingreso_total,
 // comision, gasto_limpieza, canal). Mantiene los campos editables
@@ -2123,11 +2145,18 @@ function calcDerived(r) {
     const days = Math.round((s.getTime() - e.getTime()) / 86400000);
     if (days > 0) out.noches = days;
   }
+
+  // 2. Gasto limpieza autocalculado salvo override manual (cuando
+  // el usuario marca _limpieza_manual=true en el draft, respeta el
+  // valor ya introducido). Por defecto aplicamos la regla.
+  if (!r._limpieza_manual) {
+    out.gasto_limpieza = autoLimpieza(out.entrada, out.noches);
+  }
   const ingreso = Number(out.ingreso_total) || 0;
   const com = Number(out.comision) || 0;
   const gasto = Number(out.gasto_limpieza) || 0;
 
-  // 2. BAI = ingreso_total − comision − gasto_limpieza.
+  // 3. BAI = ingreso_total − comision − gasto_limpieza.
   out.bai = Math.round((ingreso - com - gasto) * 100) / 100;
 
   // 3. Rentabilidad = BAI / ingreso_total.
@@ -2234,7 +2263,11 @@ const ReservasTab = ({
     const comision = sum(list, 'comision');
     const limpieza = sum(list, 'gasto_limpieza');
     const neto = sum(list, 'bai');
+    const renta = sum(list, 'renta');
     const noches = sum(list, 'noches');
+    // Precio bruto por noche: usar el pre-calculado del Sheet
+    // (precio_bruto_noche). Filtramos nulos y ceros para min/max.
+    const preciosNoche = list.map(r => Number(r.precio_bruto_noche)).filter(p => p > 0 && Number.isFinite(p));
     return {
       reservas: list.length,
       noches,
@@ -2242,9 +2275,13 @@ const ReservasTab = ({
       comision,
       limpieza,
       neto,
-      margen: bruto ? neto / bruto : 0,
+      renta,
+      rentabilidad: bruto ? neto / bruto : 0,
+      comisionPct: bruto ? comision / bruto : 0,
       brutoPorNoche: noches ? bruto / noches : 0,
-      netoPorNoche: noches ? neto / noches : 0
+      netoPorNoche: noches ? neto / noches : 0,
+      minNoche: preciosNoche.length ? Math.min(...preciosNoche) : 0,
+      maxNoche: preciosNoche.length ? Math.max(...preciosNoche) : 0
     };
   };
   const kFocus = yearMetrics(focusList);
@@ -2381,14 +2418,24 @@ const ReservasTab = ({
           next.comision = Math.round(next.ingreso_total * rate * 100) / 100;
         }
       }
-      // Si cambia ingreso_total, ajustamos comisión solo si la
-      // anterior coincidía con un múltiplo del canal (heurística:
-      // si era 0 o seguía la tasa). Para no ser invasivos, NO
-      // ajustamos comisión automáticamente; solo cuando se cambia
-      // el canal. El usuario edita la comisión a mano si quiere.
+      // Si el usuario edita la limpieza directamente, marcamos
+      // _limpieza_manual=true para que el auto-cálculo no la
+      // sobrescriba al cambiar entrada/salida.
+      if (field === 'gasto_limpieza') {
+        next._limpieza_manual = true;
+      }
       next = calcDerived(next);
       return next;
     });
+  };
+
+  // Restaura el auto-cálculo de limpieza desactivando el flag
+  // de override manual.
+  const resetLimpiezaAuto = () => {
+    setDraft(prev => calcDerived({
+      ...prev,
+      _limpieza_manual: false
+    }));
   };
   const saveDraft = () => {
     if (!draft) return;
@@ -2472,11 +2519,13 @@ const ReservasTab = ({
     className: "num"
   }, "Neto (BAI)"), /*#__PURE__*/React.createElement("th", {
     className: "num"
-  }, "Margen"), /*#__PURE__*/React.createElement("th", {
+  }, "Rentabilidad"), /*#__PURE__*/React.createElement("th", {
     className: "num"
-  }, "\u20AC/noche bruto"), /*#__PURE__*/React.createElement("th", {
+  }, "\u20AC/noche medio"), /*#__PURE__*/React.createElement("th", {
     className: "num"
-  }, "\u20AC/noche neto"))), /*#__PURE__*/React.createElement("tbody", null, allYears.map(y => {
+  }, "\u20AC/noche m\xEDn"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "\u20AC/noche m\xE1x"))), /*#__PURE__*/React.createElement("tbody", null, allYears.map(y => {
     const m = yearMetrics(byYear[y]);
     const isFocus = y === focusYear;
     return /*#__PURE__*/React.createElement("tr", {
@@ -2497,11 +2546,13 @@ const ReservasTab = ({
       className: "num"
     }, /*#__PURE__*/React.createElement("strong", null, fmtEur(m.neto))), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, fmtPct(m.margen)), /*#__PURE__*/React.createElement("td", {
+    }, /*#__PURE__*/React.createElement("strong", null, fmtPct(m.rentabilidad))), /*#__PURE__*/React.createElement("td", {
       className: "num"
     }, fmtEur(m.brutoPorNoche)), /*#__PURE__*/React.createElement("td", {
-      className: "num"
-    }, fmtEur(m.netoPorNoche)));
+      className: "num rv-yearly-min"
+    }, m.minNoche ? fmtEur(m.minNoche) : '—'), /*#__PURE__*/React.createElement("td", {
+      className: "num rv-yearly-max"
+    }, m.maxNoche ? fmtEur(m.maxNoche) : '—'));
   }))))), /*#__PURE__*/React.createElement("div", {
     className: "rv-dashboard"
   }, /*#__PURE__*/React.createElement(KpiCard, {
@@ -2510,28 +2561,36 @@ const ReservasTab = ({
     sub: `${kFocus.noches} noches`
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "Bruto",
-    accent: "#3AAABB",
+    accent: "#B86A3C",
     value: fmtEur(kFocus.bruto),
-    sub: `${fmtEur(kFocus.brutoPorNoche)}/noche`
+    sub: `${fmtEur(kFocus.brutoPorNoche)}/noche medio`
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "Comisiones",
-    accent: "#B86A3C",
+    accent: "#D4A84A",
     value: fmtEur(kFocus.comision),
-    sub: kFocus.bruto ? `${fmtPct(kFocus.comision / kFocus.bruto)} del bruto` : null
+    sub: kFocus.bruto ? `${fmtPct(kFocus.comisionPct)} del bruto` : null
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "Limpieza",
-    accent: "#7A5A23",
     value: fmtEur(kFocus.limpieza),
     sub: kFocus.bruto ? `${fmtPct(kFocus.limpieza / kFocus.bruto)} del bruto` : null
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "Neto (BAI)",
     accent: "#6B7A3A",
     value: fmtEur(kFocus.neto),
-    sub: `${fmtEur(kFocus.netoPorNoche)}/noche`
+    sub: `${fmtEur(kFocus.netoPorNoche)}/noche neto`
   }), /*#__PURE__*/React.createElement(KpiCard, {
-    label: "Margen",
-    value: fmtPct(kFocus.margen),
+    label: "Rentabilidad",
+    accent: "#6B7A3A",
+    value: fmtPct(kFocus.rentabilidad),
     sub: "neto / bruto"
+  }), /*#__PURE__*/React.createElement(KpiCard, {
+    label: "\u20AC/noche m\xEDn",
+    value: kFocus.minNoche ? fmtEur(kFocus.minNoche) : '—',
+    sub: "reserva m\xE1s barata"
+  }), /*#__PURE__*/React.createElement(KpiCard, {
+    label: "\u20AC/noche m\xE1x",
+    value: kFocus.maxNoche ? fmtEur(kFocus.maxNoche) : '—',
+    sub: "reserva m\xE1s cara"
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-dashboard-2"
   }, /*#__PURE__*/React.createElement("div", {
@@ -2550,7 +2609,8 @@ const ReservasTab = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "rv-apt-chip",
     style: {
-      background: APT_COLOR[b.apt]
+      background: APT_COLOR[b.apt],
+      color: APT_TEXT[b.apt]
     }
   }, APT_NAMES[b.apt]), /*#__PURE__*/React.createElement("span", {
     className: "rv-block-row-meta"
@@ -2578,7 +2638,8 @@ const ReservasTab = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "rv-apt-chip",
     style: {
-      background: APT_COLOR[r.apt]
+      background: APT_COLOR[r.apt],
+      color: APT_TEXT[r.apt]
     }
   }, APT_NAMES[r.apt]), /*#__PURE__*/React.createElement("strong", null, r.responsable), /*#__PURE__*/React.createElement("span", {
     className: "rv-prox-meta"
@@ -2591,7 +2652,8 @@ const ReservasTab = ({
   }, fmtDate(r.entrada)), /*#__PURE__*/React.createElement("span", {
     className: "rv-apt-chip",
     style: {
-      background: APT_COLOR[r.apt]
+      background: APT_COLOR[r.apt],
+      color: APT_TEXT[r.apt]
     }
   }, APT_NAMES[r.apt]), /*#__PURE__*/React.createElement("strong", null, r.responsable), /*#__PURE__*/React.createElement("span", {
     className: "rv-prox-meta"
@@ -2663,7 +2725,8 @@ const ReservasTab = ({
     }, statusIcon), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
       className: "rv-apt-chip",
       style: {
-        background: APT_COLOR[r.apt]
+        background: APT_COLOR[r.apt],
+        color: APT_TEXT[r.apt]
       }
     }, APT_NAMES[r.apt] || r.apt)), /*#__PURE__*/React.createElement("td", null, r.responsable, r.mascota ? ' 🐾' : '', r.cuna_trona ? ' 👶' : ''), /*#__PURE__*/React.createElement("td", null, fmtDate(r.entrada)), /*#__PURE__*/React.createElement("td", null, fmtDate(r.salida)), /*#__PURE__*/React.createElement("td", {
       className: "num"
@@ -2860,7 +2923,13 @@ const ReservasTab = ({
     onChange: e => updateDraft('comision', Number(e.target.value))
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Gasto limpieza"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "Gasto limpieza", draft._limpieza_manual ? /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "rv-mini-link",
+    onClick: resetLimpiezaAuto
+  }, "\u21BB auto") : /*#__PURE__*/React.createElement("span", {
+    className: "rv-hint-inline"
+  }, "auto (jul/ago o >10n: 90 \u20AC \xB7 resto: 80 \u20AC)")), /*#__PURE__*/React.createElement("input", {
     type: "number",
     step: "0.01",
     value: draft.gasto_limpieza || 0,
@@ -2896,7 +2965,26 @@ const ReservasTab = ({
     className: "rv-calc-block-title"
   }, "Calculado autom\xE1ticamente"), /*#__PURE__*/React.createElement("div", {
     className: "rv-calc-grid"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "BAI"), /*#__PURE__*/React.createElement("strong", null, fmtEur(draft.bai))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Rentabilidad"), /*#__PURE__*/React.createElement("strong", null, fmtPct(draft.rentabilidad_pct))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Bruto/noche"), /*#__PURE__*/React.createElement("strong", null, fmtEur(draft.precio_bruto_noche))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Neto/noche"), /*#__PURE__*/React.createElement("strong", null, fmtEur(draft.precio_neto_noche)))))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Observaciones"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Noches"), /*#__PURE__*/React.createElement("strong", null, draft.noches || '—')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "BAI"), /*#__PURE__*/React.createElement("strong", null, fmtEur(draft.bai))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Rentabilidad"), /*#__PURE__*/React.createElement("strong", null, fmtPct(draft.rentabilidad_pct))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Bruto/noche"), /*#__PURE__*/React.createElement("strong", null, fmtEur(draft.precio_bruto_noche))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Neto/noche"), /*#__PURE__*/React.createElement("strong", null, fmtEur(draft.precio_neto_noche))), (() => {
+    const renta = Math.max(0, (Number(draft.ingreso_total) || 0) - (Number(draft.al_checkin) || 0));
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Renta declarable", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", {
+      className: "rv-calc-em"
+    }, "ingreso \u2212 cash checkin")), /*#__PURE__*/React.createElement("strong", null, fmtEur(renta)));
+  })(), (() => {
+    const eurHuespNoche = draft.noches > 0 && draft.huespedes > 0 && draft.ingreso_total > 0 ? draft.ingreso_total / draft.noches / draft.huespedes : null;
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "\u20AC/hu\xE9sped/noche"), /*#__PURE__*/React.createElement("strong", null, fmtEur(eurHuespNoche)));
+  })(), (() => {
+    if (!draft.entrada || !draft.f_reserva) return null;
+    const dE = new Date(draft.entrada);
+    const dF = new Date(draft.f_reserva);
+    const dias = Math.round((dE.getTime() - dF.getTime()) / 86400000);
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Antelaci\xF3n"), /*#__PURE__*/React.createElement("strong", null, dias, " d\xEDas"));
+  })(), (() => {
+    const ingreso = Number(draft.ingreso_total) || 0;
+    const com = Number(draft.comision) || 0;
+    const pct = ingreso > 0 ? com / ingreso : 0;
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Comisi\xF3n efectiva"), /*#__PURE__*/React.createElement("strong", null, fmtPct(pct)));
+  })()))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Observaciones"), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("textarea", {
     rows: "3",
