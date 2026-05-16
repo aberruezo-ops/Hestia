@@ -143,7 +143,8 @@ const NAV_PAGES = {
   opiniones: 'opiniones.html',
   noticias: 'noticias.html',
   contacto: 'contacto.html',
-  reservas: 'reservas.html'
+  reservas: 'reservas.html',
+  ventajas: 'reservas.html#ventajas'
 };
 const isActive = href => {
   const current = window.location.pathname.split('/').pop() || 'index.html';
@@ -151,6 +152,52 @@ const isActive = href => {
 };
 const CTA_CYCLE_DURATION = 80; // 8 colors × 10s
 
+// Sección plegable "Acceso para huéspedes" en el menú móvil.
+// Al pulsar muestra los enlaces a las guías de cada apartamento.
+const MnGuestSection = ({
+  t,
+  lang,
+  NavLink,
+  NAV_PAGES
+}) => {
+  const [open, setOpen] = React.useState(false);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "mn-guests-section"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `mn-guests-btn${open ? ' open' : ''}`,
+    onClick: () => setOpen(o => !o),
+    "aria-expanded": open
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "mn-guests-icon",
+    "aria-hidden": "true"
+  }, "\uD83D\uDD11"), /*#__PURE__*/React.createElement("span", null, t.mn_guests), /*#__PURE__*/React.createElement("span", {
+    className: `mn-guests-chev${open ? ' open' : ''}`,
+    "aria-hidden": "true"
+  }, "\u2193")), open && /*#__PURE__*/React.createElement("div", {
+    className: "mn-guests-body"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "mn-guests-label eyebrow"
+  }, t.mn_guide), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.mar,
+    className: "mn-guest-apt mn-vm"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "mn-guest-dot",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", null, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Mar"))), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.thalassa,
+    className: "mn-guest-apt mn-vt"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "mn-guest-dot",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", null, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Thalassa"))), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.salinas,
+    className: "mn-guest-apt mn-vs"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "mn-guest-dot",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", null, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Salinas")))));
+};
 const Header = ({
   mode,
   scrolled,
@@ -351,6 +398,19 @@ const Header = ({
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "mn-name"
   }, t.nav[8]))), /*#__PURE__*/React.createElement("div", {
+    className: "mn-sep"
+  }), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.ventajas,
+    className: "mn-ventajas"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "mn-ventajas-icon",
+    "aria-hidden": "true"
+  }, "\u2713"), /*#__PURE__*/React.createElement("span", null, t.mn_ventajas)), /*#__PURE__*/React.createElement(MnGuestSection, {
+    t: t,
+    lang: lang,
+    NavLink: NavLink,
+    NAV_PAGES: NAV_PAGES
+  }), /*#__PURE__*/React.createElement("div", {
     className: "mn-sep"
   }), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.nosotros,

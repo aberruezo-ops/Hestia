@@ -9286,6 +9286,100 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .mn-why .mn-num { color: #D42B80; font-size: 14px; }
 
+/* Ventajas de reserva directa — link móvil */
+.mn-ventajas {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  text-decoration: none;
+  color: var(--sol-lt, #E8C26B);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(232, 194, 107, 0.08);
+  border: 1px solid rgba(232, 194, 107, 0.2);
+  border-radius: 6px;
+  margin: 4px 0;
+}
+.mn-ventajas:hover { background: rgba(232, 194, 107, 0.15); }
+.mn-ventajas-icon {
+  font-style: normal;
+  font-size: 15px;
+  color: var(--sol-lt, #E8C26B);
+  line-height: 1;
+}
+
+/* Acceso para huéspedes — sección plegable móvil */
+.mn-guests-section { margin: 4px 0; }
+.mn-guests-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  padding: 11px 16px;
+  cursor: pointer;
+  color: var(--arena, #F0E8D5);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: left;
+}
+.mn-guests-btn:hover { background: rgba(255,255,255,0.10); }
+.mn-guests-btn.open { border-color: rgba(255,255,255,0.22); }
+.mn-guests-icon { font-style: normal; font-size: 15px; line-height: 1; }
+.mn-guests-chev {
+  margin-left: auto;
+  font-size: 13px;
+  opacity: .6;
+  transition: transform .2s ease;
+}
+.mn-guests-chev.open { transform: rotate(180deg); }
+.mn-guests-body {
+  padding: 8px 0 4px 16px;
+  border-left: 1px solid rgba(255,255,255,0.1);
+  margin-left: 16px;
+  margin-top: 4px;
+}
+.mn-guests-label {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: rgba(240,232,213,.5);
+  text-transform: uppercase;
+  padding-bottom: 6px;
+}
+.mn-guest-apt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  text-decoration: none;
+  color: rgba(240,232,213,.8);
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: .01em;
+}
+.mn-guest-apt em { font-style: italic; font-weight: 600; }
+.mn-guest-apt:hover { color: #fff; }
+.mn-guest-apt.mn-vm em { color: var(--vm, #6BBECD); }
+.mn-guest-apt.mn-vt em { color: var(--vt, #27A059); }
+.mn-guest-apt.mn-vs em { color: var(--vs, #8B3E7E); }
+.mn-guest-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .5;
+  flex-shrink: 0;
+}
+
 /* ─── Forma corporativa + armonía perfecta de esquinas ──────────────────────
    Principio: la sección A tiene z-index mayor que B y se extiende 32 px
    hacia abajo (margin-bottom: -32px). Así son visibles AMBAS esquinas:

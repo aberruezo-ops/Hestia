@@ -1119,6 +1119,16 @@ const ReservasPageApp = () => {
       : 'Book · Hestía Your Home · Vera Playa';
   }, [lang]);
 
+  // Abrir modal de ventajas directamente si se llega con #ventajas en la URL
+  React.useEffect(() => {
+    if (window.location.hash === '#ventajas') {
+      const t = setTimeout(() => {
+        window.dispatchEvent(new Event('hestia:open-direct-perks'));
+      }, 400);
+      return () => clearTimeout(t);
+    }
+  }, []);
+
   return (
     <>
       <Topbar lang={lang} setLang={setLang} />
