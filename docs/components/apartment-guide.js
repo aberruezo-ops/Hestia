@@ -64,6 +64,10 @@ const GUIDE_SECTIONS = [{
   es: 'Bienvenida',
   en: 'Welcome'
 }, {
+  id: 'llegada',
+  es: 'Llegada y salida',
+  en: 'Arrival & departure'
+}, {
   id: 'wifi',
   es: 'Mi WiFi',
   en: 'My WiFi'
@@ -2768,6 +2772,23 @@ const GUIDE_SHARED = {
       sign: 'Con cariño,',
       signer: 'Fran y Alex'
     },
+    checkin: {
+      title: 'Llegada y salida',
+      intro: 'Lo tienes todo cubierto: Fran te escribirá unos días antes de tu llegada para acordar la modalidad que mejor te encaje y los detalles concretos (dirección exacta, código del portal, cómo entrar). No tienes de qué preocuparte — solo decirle a qué hora aproximada llegas.',
+      modalitiesTitle: 'Dos modalidades de check-in',
+      modalities: [{
+        tag: 'Autónoma',
+        body: 'Llegas y entras directamente. Fran te pasa por mensaje el código de la urbanización, el acceso a la caja-llaves y las instrucciones paso a paso. Útil si vienes con vuelo nocturno o si prefieres tu ritmo.'
+      }, {
+        tag: 'Presencial',
+        body: 'Te recibe Fran en persona, te enseña la casa y te resuelve cualquier duda en el momento. Horario de recepción presencial: 15:00 – 21:00. Si tu llegada cae fuera, pasamos a la modalidad autónoma sin más.'
+      }],
+      garageTitle: 'Plaza de garaje',
+      garageIntro: 'Todos los apartamentos llevan plaza de garaje incluida en la urbanización Pueblo Salinas. La plaza que te corresponde según tu Hestía es:',
+      garageNote: 'A confirmar con Fran antes de tu llegada — alguna semana puede haber rotación por mantenimiento.',
+      checkoutTitle: 'Check-out',
+      checkoutBody: 'La salida es siempre antes de las 11:00. Deja las llaves donde Fran te indique (caja-llaves o entrega presencial, según hayas entrado). La basura, en los contenedores de la urbanización; las toallas y sábanas, sobre la cama — del resto se encarga el equipo de limpieza.'
+    },
     name: {
       title: 'Nuestro nombre',
       paras: ['En la mitología griega, Hestía (en griego, Ἑστία) es la diosa del hogar, es decir, del fuego que da calor y vida a los hogares.', 'Es una diosa pacífica y eso es lo que os deseamos en vuestra estancia: tranquilidad y descanso. No podíamos llamarnos de otra manera…']
@@ -2995,6 +3016,23 @@ const GUIDE_SHARED = {
     }
   },
   en: {
+    checkin: {
+      title: 'Arrival & departure',
+      intro: 'You are covered: Fran will message you a few days before your arrival to agree on the option that suits you best and share the specifics (exact address, gate code, how to get in). Nothing to worry about — just let him know your approximate arrival time.',
+      modalitiesTitle: 'Two check-in options',
+      modalities: [{
+        tag: 'Self check-in',
+        body: 'You arrive and let yourself in. Fran sends you the gate code, lockbox access and step-by-step instructions by message. Handy for late flights or if you prefer your own pace.'
+      }, {
+        tag: 'In-person check-in',
+        body: 'Fran greets you, shows you around and answers anything on the spot. In-person reception hours: 15:00 – 21:00. If your arrival falls outside that window, we switch to self check-in — no problem.'
+      }],
+      garageTitle: 'Garage spot',
+      garageIntro: 'Every apartment comes with an included garage spot in the Pueblo Salinas complex. The spot assigned to your Hestía is:',
+      garageNote: 'Confirm with Fran before arrival — occasional rotation for maintenance.',
+      checkoutTitle: 'Check-out',
+      checkoutBody: 'Check-out is always before 11:00. Leave the keys wherever Fran tells you (lockbox or in-person, depending on how you arrived). Bin bags go in the complex containers; towels and sheets stay on the bed — the cleaning team handles the rest.'
+    },
     welcome: {
       title: 'Welcome to your Hestía',
       paras: ['If you\'re reading this, your booking is more than confirmed — and we couldn\'t be more thrilled to have you with us.', 'We\'ve put care into every detail of this Hestía. We hope to live up to it.', 'Whether you\'re still planning the trip, living your days here, or back home with a half-unpacked suitcase: anything in our hands, before, during or after your stay, we\'ll do it. No hesitation. That\'s what we\'re here for.', 'Now rest, relax, and discover your home away from home.'],
@@ -3234,6 +3272,7 @@ const GUIDE_BY_APT = {
   // Hestía Vera Mar
   vm: {
     pdf: 'downloads/Hestia-Mar-Guia.pdf',
+    garageSpot: '160',
     es: {
       cover_tagline: 'El campo de olivos llega al mar. Donde el descanso encuentra su raíz.',
       rooms: [{
@@ -3306,6 +3345,7 @@ const GUIDE_BY_APT = {
   // Hestía Vera Thalassa
   vt: {
     pdf: 'downloads/Hestia-Thalassa-Guia.pdf',
+    garageSpot: '163',
     es: {
       cover_tagline: 'Ático sobre el mar y el Salar de los Canos. Donde el horizonte se ensancha.',
       rooms: [{
@@ -3378,6 +3418,7 @@ const GUIDE_BY_APT = {
   // Hestía Vera Salinas
   vs: {
     pdf: 'downloads/Hestia-Salinas-Guia.pdf',
+    garageSpot: '290',
     es: {
       cover_tagline: 'Junto a las salinas. Donde la luz se queda más tiempo.',
       rooms: [{
@@ -7090,12 +7131,52 @@ const AptGuideView = ({
     className: "ag-sign"
   }, s.welcome.sign), /*#__PURE__*/React.createElement("p", {
     className: "ag-signer"
-  }, s.welcome.signer)), /*#__PURE__*/React.createElement("section", {
+  }, s.welcome.signer)), s.checkin && /*#__PURE__*/React.createElement("section", {
+    id: "ag-llegada",
+    className: "ag-section ag-section-checkin"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-section-num"
+  }, "02"), /*#__PURE__*/React.createElement("h2", {
+    className: "ag-h2"
+  }, s.checkin.title), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para ag-para-lead"
+  }, s.checkin.intro), /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, s.checkin.modalitiesTitle), /*#__PURE__*/React.createElement("div", {
+    className: "ag-checkin-modes"
+  }, s.checkin.modalities.map((m, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "ag-checkin-mode"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-checkin-mode-tag"
+  }, m.tag), /*#__PURE__*/React.createElement("p", {
+    className: "ag-checkin-mode-body"
+  }, m.body)))), /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, s.checkin.garageTitle), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, s.checkin.garageIntro), /*#__PURE__*/React.createElement("div", {
+    className: "ag-checkin-garage"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-checkin-garage-apt"
+  }, apt.name), /*#__PURE__*/React.createElement("span", {
+    className: "ag-checkin-garage-sep"
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+    className: "ag-checkin-garage-label"
+  }, lang === 'es' ? 'Plaza' : 'Spot'), /*#__PURE__*/React.createElement("span", {
+    className: "ag-checkin-garage-num"
+  }, aptInfo.garageSpot || '—')), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para ag-para-note"
+  }, s.checkin.garageNote), /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, s.checkin.checkoutTitle), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, s.checkin.checkoutBody)), /*#__PURE__*/React.createElement("section", {
     id: "ag-wifi",
     className: "ag-section ag-section-wifi"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "02"), /*#__PURE__*/React.createElement("h2", {
+  }, "03"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.wifi.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-lead"
@@ -7120,7 +7201,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "03"), /*#__PURE__*/React.createElement("h2", {
+  }, "04"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.name.title), s.name.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
@@ -7130,7 +7211,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "04"), /*#__PURE__*/React.createElement("h2", {
+  }, "05"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.why.title), s.why.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
@@ -7140,7 +7221,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "05"), /*#__PURE__*/React.createElement("h2", {
+  }, "06"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.cleaning.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7157,7 +7238,7 @@ const AptGuideView = ({
     className: "ag-section ag-section-rules"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "06"), /*#__PURE__*/React.createElement("h2", {
+  }, "07"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.rules.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7181,7 +7262,7 @@ const AptGuideView = ({
     className: `ag-section ag-room ag-room-${room.id}`
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, String(idx + 7).padStart(2, '0')), /*#__PURE__*/React.createElement("h2", {
+  }, String(idx + 8).padStart(2, '0')), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, room.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-lead"
@@ -7204,7 +7285,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "13"), /*#__PURE__*/React.createElement("h2", {
+  }, "14"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.surroundings.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7251,7 +7332,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "14"), /*#__PURE__*/React.createElement("h2", {
+  }, "15"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Sabores' : 'Tastes'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7273,7 +7354,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "15"), /*#__PURE__*/React.createElement("h2", {
+  }, "16"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7293,7 +7374,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "16"), /*#__PURE__*/React.createElement("h2", {
+  }, "17"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Mar y playas' : 'Sea & beaches'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7316,7 +7397,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "17"), /*#__PURE__*/React.createElement("h2", {
+  }, "18"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Actividades y planes' : 'Activities & plans'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7338,7 +7419,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "18"), /*#__PURE__*/React.createElement("h2", {
+  }, "19"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Mercados y compras' : 'Markets & shops'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7358,7 +7439,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "19"), /*#__PURE__*/React.createElement("h2", {
+  }, "20"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7384,7 +7465,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "20"), /*#__PURE__*/React.createElement("h2", {
+  }, "21"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.phones.title), /*#__PURE__*/React.createElement("table", {
     className: "ag-phones-table"
@@ -7397,7 +7478,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "21"), /*#__PURE__*/React.createElement("h2", {
+  }, "22"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.feedback.title), s.feedback.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,

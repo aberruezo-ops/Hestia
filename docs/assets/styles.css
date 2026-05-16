@@ -10871,6 +10871,82 @@ footer,
   color: var(--ink-soft);
 }
 
+/* Sección de Llegada y salida (check-in) */
+.ag-section-checkin .ag-h3 {
+  margin-top: 24px;
+  margin-bottom: 10px;
+}
+.ag-checkin-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 8px 0 8px;
+}
+@media (max-width: 720px) {
+  .ag-checkin-modes { grid-template-columns: 1fr; }
+}
+.ag-checkin-mode {
+  padding: 14px 16px;
+  border: 1px solid rgba(0,0,0,0.10);
+  border-radius: 8px;
+  background: rgba(255, 251, 244, 0.6);
+}
+.ag-checkin-mode-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--vt-dk);
+  background: rgba(58, 170, 187, 0.14);
+  padding: 3px 8px;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+.ag-checkin-mode-body {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.ag-checkin-garage {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(232, 194, 107, 0.18);
+  border-left: 4px solid var(--sol);
+  border-radius: 6px;
+  margin: 6px 0 10px;
+}
+.ag-checkin-garage-apt {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 14px;
+}
+.ag-checkin-garage-sep {
+  color: var(--ink-soft);
+}
+.ag-checkin-garage-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ber-dk);
+}
+.ag-checkin-garage-num {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ber-dk);
+  font-variant-numeric: tabular-nums;
+}
+.ag-para-note {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin-top: -4px;
+}
+
 /* Platos típicos — bloque al inicio de Sabores */
 .ag-dishes {
   margin: 28px 0 36px;
