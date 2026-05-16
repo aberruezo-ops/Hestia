@@ -132,6 +132,10 @@ const GUIDE_SECTIONS = [{
   es: 'Mercados y compras',
   en: 'Markets & shops'
 }, {
+  id: 'salud',
+  es: 'Salud y servicios',
+  en: 'Health & services'
+}, {
   id: 'movilidad',
   es: 'Gasolineras y carga eléctrica',
   en: 'Fuel & EV charging'
@@ -151,8 +155,9 @@ const SECTION_CATS = {
   sabores: ['restaurant', 'bar', 'fish', 'super', 'celiac'],
   pueblos: ['town', 'culture', 'bookshop'],
   'mar-playas': ['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
-  actividades: ['activity', 'sport'],
+  actividades: ['activity', 'sport', 'bodega'],
   mercados: ['market'],
+  salud: ['health', 'vet', 'physio', 'pharmacy'],
   movilidad: ['fuel', 'ev-charge']
 };
 
@@ -231,6 +236,30 @@ const CATEGORIES = [{
   en: 'Pharmacies',
   color: 'var(--alb)',
   icon: '💊'
+}, {
+  id: 'health',
+  es: 'Centros de salud y urgencias',
+  en: 'Health centres & ER',
+  color: 'var(--err)',
+  icon: '🏥'
+}, {
+  id: 'vet',
+  es: 'Veterinarios',
+  en: 'Vets',
+  color: 'var(--vm)',
+  icon: '🩺'
+}, {
+  id: 'physio',
+  es: 'Fisioterapia',
+  en: 'Physiotherapy',
+  color: 'var(--vio)',
+  icon: '💆'
+}, {
+  id: 'bodega',
+  es: 'Bodegas y enoturismo',
+  en: 'Wineries & wine tours',
+  color: 'var(--ber)',
+  icon: '🍷'
 }, {
   id: 'health',
   es: 'Centros de salud',
@@ -1236,6 +1265,145 @@ const PLACES = [
   url: 'https://goo.gl/maps/GaRHGscDhErp9kBG7',
   lat: 37.2260,
   lng: -1.7985
+},
+// ==========================================================
+// CENTROS DE SALUD Y URGENCIAS — verificados mayo 2026 vía
+// sspa.juntadeandalucia.es. El Área de Gestión Sanitaria Norte
+// de Almería cubre Vera, Garrucha, Mojácar y comarca; hospital
+// de referencia en Huércal-Overa. La base 061 de Vera Playa
+// funciona como urgencias de zona.
+// ==========================================================
+{
+  id: 'cs-vera',
+  name: 'Centro de Salud de Vera (base 061)',
+  desc: 'Centro de salud y base de urgencias 061 que cubre Vera, Garrucha, Mojácar, Turre, Pulpí, Los Gallardos y Cuevas del Almanzora. Es la primera referencia ante cualquier urgencia que no requiera hospital.',
+  tip: 'Teléfono de cita previa: 902 505 060. Urgencias 24h: 061 (gratuito desde móvil).',
+  cat: 'health',
+  url: 'https://www.google.com/maps/search/?api=1&query=Centro+de+Salud+Vera+Almeria',
+  lat: 37.2480,
+  lng: -1.8620,
+  featured: true,
+  featuredOrder: 1
+}, {
+  id: 'cs-garrucha',
+  name: 'Centro de Salud de Garrucha',
+  desc: 'Consultorio principal de Garrucha. Atención primaria. Para urgencias fuera de horario derivan al centro de Vera o al 061.',
+  cat: 'health',
+  url: 'https://www.google.com/maps/search/?api=1&query=Centro+de+Salud+Garrucha',
+  lat: 37.1815,
+  lng: -1.8240
+}, {
+  id: 'cs-mojacar-playa',
+  name: 'Centro de Salud de Mojácar Playa',
+  desc: 'Consultorio en Mojácar Playa. Atención primaria en horario diurno.',
+  cat: 'health',
+  url: 'https://www.google.com/maps/search/?api=1&query=Centro+de+Salud+Mojacar+Playa',
+  lat: 37.1380,
+  lng: -1.8550
+}, {
+  id: 'hospital-huercal',
+  name: 'Hospital La Inmaculada (Huércal-Overa)',
+  desc: 'Hospital comarcal de referencia. Urgencias 24h, ingreso y especialidades. Distancia: ~30 min en coche desde Vera Playa por la A-7.',
+  tip: 'Urgencias: 950 17 53 06. Centralita: 950 02 91 00.',
+  cat: 'health',
+  url: 'https://www.google.com/maps/search/?api=1&query=Hospital+La+Inmaculada+Huercal+Overa',
+  lat: 37.3870,
+  lng: -1.9450,
+  featured: true,
+  featuredOrder: 2
+},
+// ==========================================================
+// VETERINARIOS — verificados mayo 2026.
+// ==========================================================
+{
+  id: 'vet-garrucha',
+  name: 'Clínica Veterinaria Garrucha (24h)',
+  desc: 'Servicio de urgencias 24 h. Equipos de radiología, ecografía, endoscopia. La opción más rápida desde Vera Playa.',
+  tip: 'Urgencias 24h: 619 23 60 59. Centralita: 950 13 22 00. Paseo del Malecón 204.',
+  cat: 'vet',
+  url: 'https://www.google.com/maps/search/?api=1&query=Clinica+Veterinaria+Garrucha+Malecon',
+  lat: 37.1815,
+  lng: -1.8225,
+  featured: true,
+  featuredOrder: 1,
+  rating: 4.6
+}, {
+  id: 'vet-vera-plaza',
+  name: 'Vet Care Vera Plaza',
+  desc: 'Clínica veterinaria en Vera Playa con horario regular de lunes a sábado.',
+  cat: 'vet',
+  url: 'https://www.vetcareveraplaza.com/',
+  lat: 37.2270,
+  lng: -1.7970
+}, {
+  id: 'vet-mojacar',
+  name: 'Clínica Veterinaria Costa Índalo (Mojácar)',
+  desc: 'Servicio de urgencias 24h (nocturno y festivos). Cirugía de urgencias y múltiples especialidades.',
+  cat: 'vet',
+  url: 'https://www.google.com/maps/search/?api=1&query=Clinica+Veterinaria+Costa+Indalo+Mojacar',
+  lat: 37.1380,
+  lng: -1.8500
+},
+// ==========================================================
+// FISIOTERAPIA — verificados mayo 2026.
+// ==========================================================
+{
+  id: 'fisio-vera-salud',
+  name: 'Centro de Fisioterapia Vera Salud (Garrucha)',
+  desc: 'Centro especializado desde 2003. Fisioterapia, osteopatía, terapia manual y nutrición ortomolecular. Una de las referencias del Levante almeriense.',
+  tip: 'Teléfono: 950 13 27 65. C/ del Mar 4, urbanización La Solana, Garrucha.',
+  cat: 'physio',
+  url: 'https://www.verasaludosteopatia.com/',
+  lat: 37.1820,
+  lng: -1.8240,
+  featured: true,
+  featuredOrder: 1,
+  rating: 4.7
+}, {
+  id: 'fisio-vitea',
+  name: 'Vitea Fisioterapia (Vera)',
+  desc: 'Centro de fisioterapia en Vera con 5/5 en valoraciones. Holistic Center.',
+  tip: 'Teléfono: 663 024 255. Pje. Saturno 9, Vera pueblo.',
+  cat: 'physio',
+  url: 'https://holisticcenter.es/vitea-fisioterapia/',
+  lat: 37.2495,
+  lng: -1.8625,
+  rating: 5.0
+}, {
+  id: 'fisio-vane',
+  name: 'Clínica de Fisioterapia Vane (Garrucha)',
+  desc: 'Fisioterapia en Garrucha. 5/5 en valoraciones.',
+  cat: 'physio',
+  url: 'https://www.google.com/maps/search/?api=1&query=Clinica+Fisioterapia+Vane+Garrucha+Moratin',
+  lat: 37.1810,
+  lng: -1.8235,
+  rating: 5.0
+}, {
+  id: 'fisio-rehab-vera',
+  name: 'Centro de Rehabilitación Vera',
+  desc: 'Centro de rehabilitación con fisioterapia en Vera pueblo.',
+  cat: 'physio',
+  url: 'https://www.google.com/maps/search/?api=1&query=Centro+Rehabilitacion+Vera+Villar',
+  lat: 37.2490,
+  lng: -1.8635
+},
+// ==========================================================
+// BODEGAS Y ENOTURISMO — verificados mayo 2026 vía
+// bodegasierraalmagrera.com y enoturismospain.com.
+// ==========================================================
+{
+  id: 'bodega-sierra-almagrera',
+  name: 'Bodega Sierra Almagrera',
+  desc: 'La única bodega del Levante almeriense con visitas. En Burjulú (Cuevas del Almanzora), a 350 m de altitud, rodeada por la Sierra de Almagrera. Hacen tintos y blancos en una zona donde la cultura argárica ya producía vino hace 4.000 años. Distancia: ~25 min en coche desde Vera Playa.',
+  specialty: 'Visita guiada al viñedo + bodega + cata de 3-4 vinos (sus referencias destacadas son monovarietales de Syrah, Cabernet y Moscatel).',
+  tip: 'Reserva imprescindible. Cierran agosto algunos días — confirma. Combínalo con visita a Cuevas del Almanzora pueblo y al castillo del Marqués de los Vélez.',
+  cat: 'bodega',
+  url: 'https://bodegasierraalmagrera.com/',
+  lat: 37.3680,
+  lng: -1.8120,
+  featured: true,
+  featuredOrder: 1,
+  rating: 4.7
 }, {
   id: 'cs-vera',
   name: 'Centro de Salud de Vera',
@@ -2775,6 +2943,40 @@ const GUIDE_SHARED = {
     checkin: {
       title: 'Llegada y salida',
       intro: 'Lo tienes todo cubierto: Fran te escribirá unos días antes de tu llegada para acordar la modalidad que mejor te encaje y los detalles concretos (dirección exacta, código del portal, cómo entrar). No tienes de qué preocuparte — solo decirle a qué hora aproximada llegas.',
+      airportsTitle: 'Aeropuertos cercanos',
+      airportsIntro: 'Vera Playa tiene cinco aeropuertos en su radio razonable. El más cómodo depende de tu vuelo y tu paciencia con la carretera. Tiempos aproximados en coche por la AP-7 / A-7:',
+      airports: [{
+        name: 'Almería',
+        code: 'LEI',
+        km: 95,
+        time: '1 h',
+        notes: 'El más cercano. Vuelos sobre todo Madrid, Barcelona, UK y centro Europa. Pista corta.'
+      }, {
+        name: 'Murcia · Corvera',
+        code: 'RMU',
+        km: 130,
+        time: '1 h 25',
+        notes: 'Murcia (sustituyó a San Javier en 2019). Mucha conexión con Reino Unido (TUI, Ryanair).'
+      }, {
+        name: 'Alicante · Elche',
+        code: 'ALC',
+        km: 175,
+        time: '1 h 50',
+        notes: 'El más conectado del Mediterráneo: 100+ destinos. Si no hay vuelo a Almería, suele ser la mejor opción.'
+      }, {
+        name: 'Granada · F. García Lorca',
+        code: 'GRX',
+        km: 215,
+        time: '2 h 30',
+        notes: 'Útil si combinas con visita a Granada (Alhambra). Pocas conexiones internacionales.'
+      }, {
+        name: 'Málaga · Costa del Sol',
+        code: 'AGP',
+        km: 295,
+        time: '3 h 15',
+        notes: 'El mejor conectado de Andalucía (Lufthansa, KLM, vuelos largos). Solo lo eligen si los demás no encajan en horario.'
+      }],
+      airportsTip: 'Coche de alquiler: lo más práctico desde cualquiera de los cinco. Si llegas a Almería sin coche, hay autobús ALSA Almería → Vera (~2 h con paradas) o taxi/VTC (~80 €). Pregúntanos antes y te orientamos según tu caso.',
       modalitiesTitle: 'Dos modalidades de check-in',
       modalities: [{
         tag: 'Autónoma',
@@ -2787,7 +2989,9 @@ const GUIDE_SHARED = {
       garageIntro: 'Todos los apartamentos llevan plaza de garaje incluida en la urbanización Pueblo Salinas. La plaza que te corresponde según tu Hestía es:',
       garageNote: 'A confirmar con Fran antes de tu llegada — alguna semana puede haber rotación por mantenimiento.',
       checkoutTitle: 'Check-out',
-      checkoutBody: 'La salida es siempre antes de las 11:00. Deja las llaves donde Fran te indique (caja-llaves o entrega presencial, según hayas entrado). La basura, en los contenedores de la urbanización; las toallas y sábanas, sobre la cama — del resto se encarga el equipo de limpieza.'
+      checkoutBody: 'La salida es siempre antes de las 11:00. Deja las llaves donde Fran te indique (caja-llaves o entrega presencial, según hayas entrado). Las toallas y sábanas, sobre la cama — del resto se encarga el equipo de limpieza.',
+      garbageTitle: 'Basura y reciclaje',
+      garbageBody: 'Por normativa municipal, los contenedores de basura y reciclaje están SIEMPRE fuera de la urbanización (no dentro). Te recomendamos aprovechar la salida del día siguiente, o cualquier viaje en coche, para tirarlas de paso. Te agradeceríamos enormemente que no la dejes en los descansillos del edificio ni dentro de Hestía — atrae bichos y el equipo de limpieza no las recoge.'
     },
     name: {
       title: 'Nuestro nombre',
@@ -3019,6 +3223,40 @@ const GUIDE_SHARED = {
     checkin: {
       title: 'Arrival & departure',
       intro: 'You are covered: Fran will message you a few days before your arrival to agree on the option that suits you best and share the specifics (exact address, gate code, how to get in). Nothing to worry about — just let him know your approximate arrival time.',
+      airportsTitle: 'Nearest airports',
+      airportsIntro: 'Vera Playa has five airports within reasonable range. Which one is best depends on your flight options and how much road you want to drive. Approximate driving times via AP-7 / A-7:',
+      airports: [{
+        name: 'Almería',
+        code: 'LEI',
+        km: 95,
+        time: '1 h',
+        notes: 'The closest. Flights mostly Madrid, Barcelona, UK and central Europe. Short runway.'
+      }, {
+        name: 'Murcia · Corvera',
+        code: 'RMU',
+        km: 130,
+        time: '1 h 25',
+        notes: 'Murcia (replaced San Javier in 2019). Lots of UK connections (TUI, Ryanair).'
+      }, {
+        name: 'Alicante · Elche',
+        code: 'ALC',
+        km: 175,
+        time: '1 h 50',
+        notes: 'Best-connected on the Mediterranean: 100+ destinations. If no Almería flight, usually the best alternative.'
+      }, {
+        name: 'Granada · F. García Lorca',
+        code: 'GRX',
+        km: 215,
+        time: '2 h 30',
+        notes: 'Worth it if you combine with visiting Granada (Alhambra). Few international connections.'
+      }, {
+        name: 'Málaga · Costa del Sol',
+        code: 'AGP',
+        km: 295,
+        time: '3 h 15',
+        notes: 'Best-connected in Andalusia (Lufthansa, KLM, long-haul). Only worth it if others do not fit your schedule.'
+      }],
+      airportsTip: 'Rental car: most practical from any of the five. If you land in Almería without a car, there is an ALSA bus Almería → Vera (~2 h with stops) or taxi/VTC (~€80). Ask us beforehand and we will help you plan based on your case.',
       modalitiesTitle: 'Two check-in options',
       modalities: [{
         tag: 'Self check-in',
@@ -3031,7 +3269,9 @@ const GUIDE_SHARED = {
       garageIntro: 'Every apartment comes with an included garage spot in the Pueblo Salinas complex. The spot assigned to your Hestía is:',
       garageNote: 'Confirm with Fran before arrival — occasional rotation for maintenance.',
       checkoutTitle: 'Check-out',
-      checkoutBody: 'Check-out is always before 11:00. Leave the keys wherever Fran tells you (lockbox or in-person, depending on how you arrived). Bin bags go in the complex containers; towels and sheets stay on the bed — the cleaning team handles the rest.'
+      checkoutBody: 'Check-out is always before 11:00. Leave the keys wherever Fran tells you (lockbox or in-person, depending on how you arrived). Towels and sheets stay on the bed — the cleaning team handles the rest.',
+      garbageTitle: 'Rubbish & recycling',
+      garbageBody: 'By local regulation, rubbish and recycling bins are ALWAYS outside the complex (never inside). We recommend dropping off bin bags on your way out the next day, or on any car trip. We would really appreciate it if you do not leave them on the building landings or inside Hestía — it attracts pests and the cleaning team will not collect them.'
     },
     welcome: {
       title: 'Welcome to your Hestía',
@@ -3377,7 +3617,7 @@ const GUIDE_BY_APT = {
         id: 'urbanizacion',
         title: 'Mi urbanización',
         body: 'Mi urbanización tiene SPA comunitario (sauna y gimnasio), piscina y pistas de pádel. El SPA está abierto en otoño, invierno y primavera; en verano solo el gimnasio. Tu plaza subterránea te espera junto al ascensor.',
-        recs: ['El SPA es comunitario y de uso por turnos — pregúntanos por la disponibilidad.', 'Las pistas de pádel son comunitarias y se reservan en recepción.', 'Respeta las zonas comunes y las normas de la urbanización.', 'No utilices en la piscina las toallas de casa.']
+        recs: ['El SPA es comunitario y de uso por turnos — pregúntanos por la disponibilidad.', 'Las pistas de pádel se reservan a través de la conserjería de la urbanización. Si las necesitas, pídenos el teléfono y te lo pasamos al momento.', 'Respeta las zonas comunes y las normas de la urbanización.', 'No utilices en la piscina las toallas de casa.']
       }]
     },
     en: {
@@ -3411,7 +3651,7 @@ const GUIDE_BY_APT = {
         id: 'urbanizacion',
         title: 'My complex',
         body: 'My complex has a shared SPA (sauna and gym), pool and padel courts. The SPA opens in autumn, winter and spring; only the gym stays open in summer. Your underground parking space is right by the lift.',
-        recs: ['The SPA is shared by slots — ask us for availability.', 'Padel courts are shared and booked at reception.', 'Respect the common areas and the complex rules.', 'Do not take house towels to the pool.']
+        recs: ['The SPA is shared by slots — ask us for availability.', 'Padel courts are booked through the complex concierge desk. If you need one, ask us and we will pass you the phone number right away.', 'Respect the common areas and the complex rules.', 'Do not take house towels to the pool.']
       }]
     }
   },
@@ -3451,7 +3691,7 @@ const GUIDE_BY_APT = {
         title: 'Mi urbanización',
         body: 'Mi urbanización es textil — para olvidarse del mundo y cerca de todo. Tu plaza subterránea es la nº 290. Tienes entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), acceso peatonal desde la urbanización, piscina y pistas deportivas. Hestía Vera Salinas está en bloque 22, planta 1, puerta 7.',
         points: ['Entrada y salida a la urbanización controlada por código.', 'Acceso/barrera a la zona 2, donde está Hestía.', 'Plaza de garaje de Hestía. Número 290.', 'Acceso peatonal a Hestía desde la urbanización.', 'Hestía Vera Salinas. Bloque 22, planta 1, apartamento 7.', 'Piscina.', 'Pistas deportivas.'],
-        recs: ['La urbanización merece la pena recorrerla. Los jardines, los riachuelos, las aves, otros pequeños animales, el desierto alrededor. Es un lugar sin igual, para disfrutar con los más pequeños con toda la tranquilidad de un recinto cerrado.', 'Cuida las plantas y la limpieza de la urbanización.', 'Respeta las zonas comunes y las normas de la urbanización.', 'Respeta a los vecinos.', 'Llama a Conserjería para reservar cualquier espacio común.']
+        recs: ['La urbanización merece la pena recorrerla. Los jardines, los riachuelos, las aves, otros pequeños animales, el desierto alrededor. Es un lugar sin igual, para disfrutar con los más pequeños con toda la tranquilidad de un recinto cerrado.', 'Cuida las plantas y la limpieza de la urbanización.', 'Respeta las zonas comunes y las normas de la urbanización.', 'Respeta a los vecinos.', 'Las pistas deportivas (pádel y demás) se reservan a través de la conserjería de la urbanización. Si las necesitas, pídenos el teléfono y te lo pasamos al momento.', 'Llama a Conserjería para reservar cualquier espacio común.']
       }]
     },
     en: {
@@ -3486,7 +3726,7 @@ const GUIDE_BY_APT = {
         title: 'My complex',
         body: 'My complex is textile-free — to forget the world while staying near everything. Your underground parking space is nº 290. Code-controlled entrance, barrier to zone 2 (where Hestía is), pedestrian access from the complex, swimming pool and sports courts. Hestía Vera Salinas is at block 22, floor 1, unit 7.',
         points: ['Entrance and exit to the complex controlled by code.', 'Access/barrier to zone 2, where Hestía is.', 'Hestía parking space. Number 290.', 'Pedestrian access to Hestía from the complex.', 'Hestía Vera Salinas. Block 22, floor 1, apartment 7.', 'Swimming pool.', 'Sports courts.'],
-        recs: ['The complex is worth exploring. The gardens, streams, birds, small animals, the surrounding desert — a place without equal, perfect for kids with the calm of a closed area.', 'Take care of the plants and the cleanliness of the complex.', 'Respect the common areas and the complex rules.', 'Respect the neighbours.', 'Call the concierge to reserve any common space.']
+        recs: ['The complex is worth exploring. The gardens, streams, birds, small animals, the surrounding desert — a place without equal, perfect for kids with the calm of a closed area.', 'Take care of the plants and the cleanliness of the complex.', 'Respect the common areas and the complex rules.', 'Respect the neighbours.', 'Sports courts (padel and others) are booked through the complex concierge desk. If you need one, ask us and we will pass you the phone number right away.', 'Call the concierge to reserve any common space.']
       }]
     }
   }
@@ -3675,6 +3915,104 @@ const DishesGuide = ({
     }, lang === 'es' ? 'mapa' : 'map', " ", /*#__PURE__*/React.createElement("span", {
       "aria-hidden": "true"
     }, "\u2197")))));
+  })));
+};
+
+// ================================================================
+// EventsCalendar — calendario consolidado de fiestas patronales y
+// eventos por mes. Escanea PLACES (filtra los que tienen events[])
+// y agrupa por mes detectado en el string 'when' (libre, p.ej.
+// "2.ª semana de junio", "28-29 de agosto", "última semana de
+// abril", "carnaval febrero"). Renderiza como grid 12 meses.
+// ================================================================
+const MONTHS_ES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+function monthIndexFromWhen(when) {
+  if (!when) return -1;
+  const lower = when.toLowerCase();
+  for (let i = 0; i < MONTHS_ES.length; i++) {
+    if (lower.includes(MONTHS_ES[i])) return i;
+  }
+  // detectar formato numérico "DD/MM" o "DD-MM"
+  const m = lower.match(/(\d{1,2})[\/\-](\d{1,2})/);
+  if (m) {
+    const mo = parseInt(m[2], 10);
+    if (mo >= 1 && mo <= 12) return mo - 1;
+  }
+  return -1;
+}
+const EventsCalendar = ({
+  lang
+}) => {
+  // Aplana todos los eventos con referencia al lugar de origen
+  const all = [];
+  PLACES.forEach(p => {
+    if (Array.isArray(p.events)) {
+      p.events.forEach(e => {
+        const mi = monthIndexFromWhen(e.when);
+        if (mi >= 0) all.push({
+          ...e,
+          place: p.name,
+          placeId: p.id,
+          monthIdx: mi
+        });
+      });
+    }
+  });
+  if (all.length === 0) return null;
+  // Agrupa por mes
+  const byMonth = Array.from({
+    length: 12
+  }, () => []);
+  all.forEach(e => byMonth[e.monthIdx].push(e));
+  const today = new Date();
+  const currentMonth = today.getMonth();
+  const MONTHS = lang === 'es' ? MONTHS_ES : MONTHS_EN;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "ag-calendar"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, lang === 'es' ? 'Eventos y fiestas patronales · año a vista de pájaro' : 'Events & patron-saint festivals · year at a glance'), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, lang === 'es' ? 'Calendario consolidado de fiestas y eventos de los pueblos del entorno. Si vienes en estas fechas, vale la pena coincidir.' : 'Consolidated calendar of festivals and events from the surrounding villages. If you visit on these dates, it is worth timing your trip with them.'), /*#__PURE__*/React.createElement("div", {
+    className: "ag-calendar-grid"
+  }, MONTHS.map((mname, mi) => {
+    const evs = byMonth[mi];
+    const isCurrent = mi === currentMonth;
+    const isEmpty = evs.length === 0;
+    return /*#__PURE__*/React.createElement("div", {
+      key: mi,
+      className: `ag-cal-month${isCurrent ? ' is-current' : ''}${isEmpty ? ' is-empty' : ''}`,
+      "data-month": mname
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "ag-cal-month-head"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-cal-month-num"
+    }, String(mi + 1).padStart(2, '0')), /*#__PURE__*/React.createElement("span", {
+      className: "ag-cal-month-name"
+    }, mname.charAt(0).toUpperCase() + mname.slice(1)), evs.length > 0 && /*#__PURE__*/React.createElement("span", {
+      className: "ag-cal-month-count"
+    }, evs.length)), evs.length > 0 ? /*#__PURE__*/React.createElement("ul", {
+      className: "ag-cal-events"
+    }, evs.map((e, i) => /*#__PURE__*/React.createElement("li", {
+      key: i,
+      className: "ag-cal-event"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "ag-cal-event-name"
+    }, e.name), /*#__PURE__*/React.createElement("div", {
+      className: "ag-cal-event-meta"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-cal-event-when"
+    }, e.when), /*#__PURE__*/React.createElement("span", {
+      className: "ag-cal-event-dot",
+      "aria-hidden": "true"
+    }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+      className: "ag-cal-event-place"
+    }, e.place)), e.d && /*#__PURE__*/React.createElement("div", {
+      className: "ag-cal-event-desc"
+    }, e.d)))) : /*#__PURE__*/React.createElement("div", {
+      className: "ag-cal-empty"
+    }, lang === 'es' ? 'Sin eventos destacados' : 'No featured events'));
   })));
 };
 const CatGroup = ({
@@ -7140,7 +7478,34 @@ const AptGuideView = ({
     className: "ag-h2"
   }, s.checkin.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-lead"
-  }, s.checkin.intro), /*#__PURE__*/React.createElement("h3", {
+  }, s.checkin.intro), s.checkin.airports && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, s.checkin.airportsTitle), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, s.checkin.airportsIntro), /*#__PURE__*/React.createElement("div", {
+    className: "ag-airports"
+  }, s.checkin.airports.map((a, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "ag-airport"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-airport-code"
+  }, a.code), /*#__PURE__*/React.createElement("div", {
+    className: "ag-airport-main"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-airport-name"
+  }, a.name), /*#__PURE__*/React.createElement("div", {
+    className: "ag-airport-meta"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-airport-km"
+  }, a.km, " km"), /*#__PURE__*/React.createElement("span", {
+    className: "ag-airport-sep"
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+    className: "ag-airport-time"
+  }, a.time)), /*#__PURE__*/React.createElement("div", {
+    className: "ag-airport-notes"
+  }, a.notes))))), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para ag-para-note"
+  }, s.checkin.airportsTip)), /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"
   }, s.checkin.modalitiesTitle), /*#__PURE__*/React.createElement("div", {
     className: "ag-checkin-modes"
@@ -7171,7 +7536,13 @@ const AptGuideView = ({
     className: "ag-h3"
   }, s.checkin.checkoutTitle), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, s.checkin.checkoutBody)), /*#__PURE__*/React.createElement("section", {
+  }, s.checkin.checkoutBody), s.checkin.garbageBody && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, s.checkin.garbageTitle), /*#__PURE__*/React.createElement("div", {
+    className: "ag-checkin-garbage"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, s.checkin.garbageBody)))), /*#__PURE__*/React.createElement("section", {
     id: "ag-wifi",
     className: "ag-section ag-section-wifi"
   }, /*#__PURE__*/React.createElement("span", {
@@ -7358,7 +7729,9 @@ const AptGuideView = ({
     className: "ag-h2"
   }, lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, lang === 'es' ? 'Pueblos blancos, castillos, yacimientos y festivales. Cada lugar con sus atractivos principales, recomendaciones y las fiestas que merece la pena coincidir.' : 'White villages, castles, archaeological sites and festivals. Each place with its highlights, recommendations and festivals worth timing your visit with.'), SECTION_CATS.pueblos.map(catId => {
+  }, lang === 'es' ? 'Pueblos blancos, castillos, yacimientos y festivales. Cada lugar con sus atractivos principales, recomendaciones y las fiestas que merece la pena coincidir.' : 'White villages, castles, archaeological sites and festivals. Each place with its highlights, recommendations and festivals worth timing your visit with.'), /*#__PURE__*/React.createElement(EventsCalendar, {
+    lang: lang
+  }), SECTION_CATS.pueblos.map(catId => {
     const cat = CATEGORIES.find(c => c.id === catId);
     if (!cat) return null;
     const inCat = PLACES.filter(p => p.cat === catId);
@@ -7435,11 +7808,31 @@ const AptGuideView = ({
       lang: lang
     });
   })), /*#__PURE__*/React.createElement("section", {
-    id: "ag-movilidad",
+    id: "ag-salud",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
   }, "20"), /*#__PURE__*/React.createElement("h2", {
+    className: "ag-h2"
+  }, lang === 'es' ? 'Salud y servicios' : 'Health & services'), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, lang === 'es' ? 'Lo que necesitas si algo se tuerce: centros de salud, hospital de referencia, farmacias, veterinarios (incluyendo 24 h) y centros de fisioterapia y osteopatía.' : 'What you need if something goes wrong: health centres, reference hospital, pharmacies, vets (including 24 h) and physiotherapy / osteopathy clinics.'), SECTION_CATS.salud.map(catId => {
+    const cat = CATEGORIES.find(c => c.id === catId);
+    if (!cat) return null;
+    const inCat = PLACES.filter(p => p.cat === catId);
+    if (!inCat.length) return null;
+    return /*#__PURE__*/React.createElement(CatGroup, {
+      key: catId,
+      cat: cat,
+      places: inCat,
+      lang: lang
+    });
+  })), /*#__PURE__*/React.createElement("section", {
+    id: "ag-movilidad",
+    className: "ag-section"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-section-num"
+  }, "21"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -7465,7 +7858,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "21"), /*#__PURE__*/React.createElement("h2", {
+  }, "22"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.phones.title), /*#__PURE__*/React.createElement("table", {
     className: "ag-phones-table"
@@ -7478,7 +7871,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "22"), /*#__PURE__*/React.createElement("h2", {
+  }, "23"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.feedback.title), s.feedback.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,

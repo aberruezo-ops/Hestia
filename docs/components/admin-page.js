@@ -1681,14 +1681,21 @@ const ReservasTab = ({
     }).then(r => r.json()).then(j => {
       if (j.message) throw new Error(j.message);
       setSha(j.sha);
-      const json = JSON.parse(b64DecodeUtf8(j.content));
+      const json = JSON.parse(b64ToUtf8(j.content));
       setData(json);
     }).catch(e => setError('Error cargando reservas: ' + e.message)).finally(() => setLoading(false));
   }, [token]);
-  if (!data && !loading && !error) return null;
-  if (loading && !data) return /*#__PURE__*/React.createElement("div", {
+  if (loading) return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDDD3\uFE0F Reservas"), /*#__PURE__*/React.createElement("p", null, "Cargando\u2026"));
+  if (!data && error) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-error"
+  }, error);
+  if (!data) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDDD3\uFE0F Reservas"), /*#__PURE__*/React.createElement("p", {
+    className: "pe-help"
+  }, "Esperando autenticaci\xF3n\u2026"));
   const reservas = data && data.reservas || [];
   const APT_NAMES = {
     vm: 'Mar',
@@ -1701,12 +1708,12 @@ const ReservasTab = ({
     vs: '#8A4A24'
   };
 
-  // Filtros
+  // Filtros (apartamento + canal)
   const filtered = reservas.filter(r => {
-    if (filterApt !== 'all' && r.apt !== filterApt) return true && false;
+    if (filterApt !== 'all' && r.apt !== filterApt) return false;
     if (filterCanal !== 'all' && (r.canal || '').toLowerCase().trim() !== filterCanal) return false;
     return true;
-  }).filter(r => filterApt === 'all' || r.apt === filterApt);
+  });
 
   // Resumen
   const today = new Date().toISOString().slice(0, 10);
@@ -1751,7 +1758,7 @@ const ReservasTab = ({
     try {
       const body = {
         message: `chore(reservas): update via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
-        content: b64EncodeUtf8(JSON.stringify(newData, null, 2)),
+        content: utf8ToB64(JSON.stringify(newData, null, 2)),
         sha,
         branch: BRANCH
       };

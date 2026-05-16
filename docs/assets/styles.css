@@ -16600,3 +16600,143 @@ img[src*="apt-vt-gallery-"] {
 .rv-table tr.rv-past { opacity: 0.55; }
 .rv-table tr.rv-edit input, .rv-table tr.rv-edit select { width: 100%; padding: 2px 4px; font-size: 11.5px; }
 .rv-tiny { font-size: 11px; color: var(--ink-soft); }
+
+/* ============================================================
+   Sección Llegada · Aeropuertos + Basura
+   ============================================================ */
+.ag-airports {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin: 8px 0 6px;
+}
+.ag-airport {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255, 251, 244, 0.6);
+  border: 1px solid rgba(61,26,53,.08);
+  border-left: 4px solid var(--vt);
+  border-radius: 6px;
+}
+.ag-airport-code {
+  font-family: var(--mono, monospace);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--vt-dk);
+  align-self: center;
+  text-align: center;
+}
+.ag-airport-name {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.ag-airport-meta {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+  margin: 2px 0 4px;
+}
+.ag-airport-km, .ag-airport-time { font-weight: 600; color: var(--ber-dk); }
+.ag-airport-sep { margin: 0 6px; color: var(--ink-soft); }
+.ag-airport-notes {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.ag-checkin-garbage {
+  margin-top: 4px;
+  padding: 10px 14px;
+  background: rgba(106, 122, 58, 0.08);
+  border-left: 4px solid #6B7A3A;
+  border-radius: 6px;
+}
+.ag-checkin-garbage p { margin: 0; }
+
+/* ============================================================
+   Calendario consolidado de eventos
+   ============================================================ */
+.ag-calendar { margin: 24px 0 28px; }
+.ag-calendar .ag-h3 { margin-bottom: 4px; }
+.ag-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+@media (max-width: 900px) { .ag-calendar-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) { .ag-calendar-grid { grid-template-columns: 1fr; } }
+.ag-cal-month {
+  background: rgba(255, 251, 244, 0.6);
+  border: 1px solid rgba(61,26,53,.10);
+  border-radius: 6px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ag-cal-month.is-current {
+  border-color: var(--sol);
+  border-width: 2px;
+  background: rgba(232, 194, 107, 0.12);
+}
+.ag-cal-month.is-empty {
+  opacity: 0.45;
+}
+.ag-cal-month-head {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.ag-cal-month-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.ag-cal-month-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  text-transform: capitalize;
+}
+.ag-cal-month-count {
+  margin-left: auto;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 1px 6px;
+  background: var(--vt);
+  color: #fff;
+  border-radius: 9px;
+}
+.ag-cal-events { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.ag-cal-event {
+  padding: 8px 10px;
+  border-left: 3px solid var(--vt);
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 0 4px 4px 0;
+}
+.ag-cal-event-name {
+  font-weight: 600;
+  font-size: 12.5px;
+  color: var(--ink);
+}
+.ag-cal-event-meta {
+  font-size: 11px;
+  color: var(--ink-soft);
+  margin: 2px 0 4px;
+}
+.ag-cal-event-place { font-style: italic; }
+.ag-cal-event-dot { margin: 0 4px; }
+.ag-cal-event-desc { font-size: 11.5px; color: var(--ink-soft); line-height: 1.4; }
+.ag-cal-empty {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-style: italic;
+}

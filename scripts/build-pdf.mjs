@@ -1018,6 +1018,29 @@ section.no-break {
   color: var(--ink-soft);
   margin-top: 0;
 }
+.airports-table { width: 100%; border-collapse: collapse; margin: 2mm 0 3mm; font-size: 9pt; }
+.airports-table th, .airports-table td { padding: 1.2mm 2mm; border-bottom: 0.3pt solid rgba(0,0,0,.15); text-align: left; vertical-align: top; }
+.airports-table th { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.04em; color: var(--apt-c-dk); background: rgba(255,251,244,.6); }
+.airports-table td.num, .airports-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.ap-code { font-family: monospace; font-weight: 700; color: var(--apt-c-dk); }
+.ap-notes { font-size: 8.5pt; color: var(--ink); line-height: 1.4; }
+.checkin-garbage { padding: 2mm 3mm; background: rgba(106,122,58,.08); border-left: 1pt solid #6B7A3A; border-radius: 1mm; margin-top: 1.5mm; }
+.checkin-garbage p { margin: 0; font-size: 9pt; }
+
+.events-cal { margin: 5mm 0 6mm; page-break-inside: auto; }
+.events-cal h3 { margin: 0 0 1.5mm; font-size: 12pt; color: var(--apt-c-dk); }
+.events-cal > p { font-size: 9.5pt; color: var(--ink-soft); margin: 0 0 3mm; }
+.events-cal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+.events-cal-month { border: 0.5pt solid rgba(0,0,0,.15); border-radius: 1.5mm; padding: 2mm 3mm; background: rgba(255,251,244,.5); page-break-inside: avoid; }
+.events-cal-head { display: flex; align-items: baseline; gap: 1.5mm; margin-bottom: 1mm; border-bottom: 0.3pt solid rgba(0,0,0,.1); padding-bottom: 1mm; }
+.events-cal-num { font-size: 8pt; color: var(--ink-soft); font-weight: 700; }
+.events-cal-name { font-size: 11pt; font-weight: 600; text-transform: capitalize; color: var(--apt-c-dk); }
+.events-cal-month ul { list-style: none; margin: 0; padding: 0; }
+.events-cal-month li { padding: 1mm 0 1.5mm; border-bottom: 0.2pt dotted rgba(0,0,0,.1); }
+.events-cal-month li:last-child { border-bottom: none; }
+.events-cal-name-row { font-size: 9pt; }
+.events-cal-meta { font-size: 8pt; color: var(--ink-soft); }
+.events-cal-desc { font-size: 8pt; color: var(--ink); line-height: 1.4; margin-top: 0.5mm; }
 
 .dishes-section {
   margin: 6mm 0 8mm;
@@ -1509,6 +1532,24 @@ function renderCheckin(shared, aptData, aptGuide, lang) {
     </div>
     <p class="checkin-intro">${esc(c.intro)}</p>
 
+    ${c.airports ? `
+    <h3 class="checkin-h3">${esc(c.airportsTitle)}</h3>
+    <p>${esc(c.airportsIntro)}</p>
+    <table class="airports-table">
+      <thead><tr><th>Código</th><th>Aeropuerto</th><th class="num">km</th><th class="num">Tiempo</th><th>Notas</th></tr></thead>
+      <tbody>
+        ${c.airports.map(a => `<tr>
+          <td class="ap-code">${esc(a.code)}</td>
+          <td><strong>${esc(a.name)}</strong></td>
+          <td class="num">${a.km}</td>
+          <td class="num">${esc(a.time)}</td>
+          <td class="ap-notes">${esc(a.notes)}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    <p class="checkin-note"><em>${esc(c.airportsTip)}</em></p>
+    ` : ''}
+
     <h3 class="checkin-h3">${esc(c.modalitiesTitle)}</h3>
     <div class="checkin-modes">
       ${c.modalities.map(m => `
@@ -1530,7 +1571,59 @@ function renderCheckin(shared, aptData, aptGuide, lang) {
 
     <h3 class="checkin-h3">${esc(c.checkoutTitle)}</h3>
     <p>${esc(c.checkoutBody)}</p>
+
+    ${c.garbageBody ? `
+    <h3 class="checkin-h3">${esc(c.garbageTitle)}</h3>
+    <div class="checkin-garbage"><p>${esc(c.garbageBody)}</p></div>
+    ` : ''}
   </section>`;
+}
+
+// Calendario consolidado de eventos por mes (escanea PLACES.events)
+function renderEventsCalendar(PLACES, lang) {
+  if (!Array.isArray(PLACES)) return '';
+  const MONTHS_ES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const MONTHS = lang === 'es' ? MONTHS_ES : MONTHS_EN;
+  function monthIdx(when) {
+    if (!when) return -1;
+    const lower = when.toLowerCase();
+    for (let i = 0; i < MONTHS_ES.length; i++) if (lower.includes(MONTHS_ES[i])) return i;
+    const m = lower.match(/(\d{1,2})[\/\-](\d{1,2})/);
+    if (m) { const mo = parseInt(m[2], 10); if (mo >= 1 && mo <= 12) return mo - 1; }
+    return -1;
+  }
+  const all = [];
+  PLACES.forEach(p => {
+    if (Array.isArray(p.events)) p.events.forEach(e => {
+      const mi = monthIdx(e.when);
+      if (mi >= 0) all.push({ ...e, place: p.name, monthIdx: mi });
+    });
+  });
+  if (all.length === 0) return '';
+  const byMonth = Array.from({ length: 12 }, () => []);
+  all.forEach(e => byMonth[e.monthIdx].push(e));
+  return `
+    <div class="events-cal">
+      <h3>${lang === 'es' ? 'Eventos y fiestas patronales · año a vista de pájaro' : 'Events & patron-saint festivals · year at a glance'}</h3>
+      <p>${lang === 'es' ? 'Calendario consolidado de fiestas y eventos de los pueblos del entorno.' : 'Consolidated calendar of festivals and events from the surrounding villages.'}</p>
+      <div class="events-cal-grid">
+        ${MONTHS.map((mname, mi) => {
+          const evs = byMonth[mi];
+          if (evs.length === 0) return '';
+          return `<div class="events-cal-month">
+            <div class="events-cal-head"><span class="events-cal-num">${String(mi+1).padStart(2,'0')}</span> <span class="events-cal-name">${esc(mname.charAt(0).toUpperCase() + mname.slice(1))}</span></div>
+            <ul>
+              ${evs.map(e => `<li>
+                <div class="events-cal-name-row"><strong>${esc(e.name)}</strong></div>
+                <div class="events-cal-meta">${esc(e.when)} · <em>${esc(e.place)}</em></div>
+                ${e.d ? `<div class="events-cal-desc">${esc(e.d)}</div>` : ''}
+              </li>`).join('')}
+            </ul>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
 }
 
 function renderWifi(shared, aptData, lang) {
@@ -1799,7 +1892,7 @@ function renderPlacesRich(PLACES, CATEGORIES, aptData, lang) {
   // Categorías que valen la pena imprimir en el PDF (no incluimos los Hestía,
   // ni "home", para no duplicar). Orden editorial: comer → beber → playas →
   // mercados → celíaco → actividades → pescaderías.
-  const CAT_ORDER = ['restaurant', 'bar', 'beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog', 'market', 'celiac', 'activity', 'sport', 'fish', 'super', 'fuel', 'ev-charge', 'town', 'culture'];
+  const CAT_ORDER = ['restaurant', 'bar', 'beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog', 'market', 'celiac', 'activity', 'sport', 'bodega', 'fish', 'super', 'fuel', 'ev-charge', 'health', 'vet', 'physio', 'pharmacy', 'town', 'culture'];
   const catsById = new Map(CATEGORIES.map(c => [c.id, c]));
 
   const byCat = {};
@@ -2155,6 +2248,7 @@ ${guide[lang].rooms.map(room =>
 ).join('\n')}
 ${renderSurroundings(shared, apt, lang)}
 ${renderIconicDishes(data.ICONIC_DISHES, data.PLACES, apt, lang)}
+${renderEventsCalendar(data.PLACES, lang)}
 ${renderPlacesRich(data.PLACES, data.CATEGORIES, apt, lang)}
 ${renderDayPlans(data.DAY_PLANS, apt, lang)}
 ${renderPhones(shared, apt, lang)}
