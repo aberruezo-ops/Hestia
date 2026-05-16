@@ -4306,44 +4306,214 @@ const EventsCalendar = ({
   }))));
 };
 
-// LugaresSection — tabla ultra-compacta de lugares de interés.
-// Una fila por lugar: nombre · dist · nota · [📍 Cómo llegar] [🌐 Web]
+// GEMS — lugares curiosos, bellos y únicos que no aparecen en ninguna otra
+// sección de la guía (sin playas, restaurantes, pueblos ni actividades).
+const GEMS = [{
+  id: 'g-salinas',
+  icon: '🦩',
+  name: {
+    es: 'Salinas de Cabo de Gata',
+    en: 'Cabo de Gata Salt Flats'
+  },
+  dist: '55 km · 45 min',
+  note: {
+    es: 'Laguna rosa con cientos de flamencos al atardecer. El reflejo del cielo sobre la sal es irreal — la foto más sorprendente de Almería.',
+    en: 'Pink lagoon with hundreds of flamingos at sunset. The sky reflected in the salt is surreal — Almería\'s most surprising shot.'
+  },
+  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.7780,-2.2100',
+  web: 'https://www.juntadeandalucia.es/medioambiente/portal/landing-page-mapa-espacios-naturales/_blank/15006'
+}, {
+  id: 'g-arrecife',
+  icon: '🌋',
+  name: {
+    es: 'Arrecife de las Sirenas',
+    en: 'Arrecife de las Sirenas'
+  },
+  dist: '55 km · 45 min',
+  note: {
+    es: 'Escollos volcánicos negros emergiendo del Mediterráneo turquesa, junto al faro de Cabo de Gata. La imagen más icónica de la costa almeriense.',
+    en: 'Black volcanic rocks rising from turquoise sea beside Cabo de Gata lighthouse. The most iconic image of the Almería coast.'
+  },
+  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.7280,-2.1890',
+  web: 'https://www.parquenaturalcabodegata.com/lugares/faro-de-cabo-de-gata/'
+}, {
+  id: 'g-cortijo-fraile',
+  icon: '🎭',
+  name: {
+    es: 'Cortijo del Fraile',
+    en: 'Cortijo del Fraile'
+  },
+  dist: '50 km · 40 min',
+  note: {
+    es: 'Ruinas del cortijo donde ocurrió el crimen real que inspiró "Bodas de Sangre" de Lorca. Silencio absoluto, muros de adobe y una historia que eriza la piel.',
+    en: 'Ruins of the farmhouse where the real crime inspiring Lorca\'s "Blood Wedding" took place. Adobe walls, silence and a story that raises goosebumps.'
+  },
+  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.8830,-2.0800',
+  web: 'https://www.tugasa.com/ficha-enclave/cortijo-del-fraile/'
+}, {
+  id: 'g-isleta',
+  icon: '🎣',
+  name: {
+    es: 'La Isleta del Moro',
+    en: 'La Isleta del Moro'
+  },
+  dist: '60 km · 50 min',
+  note: {
+    es: 'El pueblo pesquero más auténtico y fotogénico del Parque. Casas encaladas, barcas de colores y silencio. Una postal que todavía existe de verdad.',
+    en: 'The most authentic and photogenic fishing village in the Park. Whitewashed houses, coloured boats and silence. A real postcard that still exists.'
+  },
+  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.9060,-2.0250',
+  web: 'https://www.parquenaturalcabodegata.com/pueblos/la-isleta-del-moro/'
+}, {
+  id: 'g-rodalquilar',
+  icon: '⛏️',
+  name: {
+    es: 'Minas de Oro de Rodalquilar',
+    en: 'Rodalquilar Gold Mines'
+  },
+  dist: '65 km · 55 min',
+  note: {
+    es: 'Minas de oro decimonónicas abandonadas en pleno Parque Natural. Edificios industriales art-decó oxidados por el salitre. Perturbadoras y espectaculares.',
+    en: '19th-century gold mines abandoned inside the Natural Park. Art Deco industrial buildings eaten by salt air. Haunting and spectacular.'
+  },
+  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.8470,-2.0360',
+  web: 'https://www.parquenaturalcabodegata.com/lugares/minas-de-rodalquilar/'
+}, {
+  id: 'g-escullos',
+  icon: '🏰',
+  name: {
+    es: 'Castillo de Los Escullos',
+    en: 'Los Escullos Castle'
+  },
+  dist: '55 km · 45 min',
+  note: {
+    es: 'Fortaleza costera del s. XVIII en una cala volcánica casi virgen. El castillo emerge del agua como sacado de una novela de piratas.',
+    en: '18th-century coastal fortress on a near-virgin volcanic cove. The castle rises from the water like something from a pirate novel.'
+  },
+  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.8810,-2.0600',
+  web: null
+}, {
+  id: 'g-villaricos',
+  icon: '⚱️',
+  name: {
+    es: 'Baria · Villaricos',
+    en: 'Baria · Villaricos'
+  },
+  dist: '10 km · 12 min',
+  note: {
+    es: 'Ciudad fenicio-romana (s. VI a.C.) a pie de playa, a 10 minutos de Hestía. Hay murallas, factorías de garum y una necrópolis. Casi sin señalizar — busca los carteles verdes.',
+    en: 'Phoenician-Roman city (6th c. BC) right by the beach, 10 min from Hestía. Walls, garum factories and a necropolis remain. Barely signposted — look for the green signs.'
+  },
+  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.2440,-1.8920',
+  web: 'https://www.museoarqueologicoalmeria.com/'
+}, {
+  id: 'g-pozo-frailes',
+  icon: '💨',
+  name: {
+    es: 'El Pozo de los Frailes',
+    en: 'El Pozo de los Frailes'
+  },
+  dist: '55 km · 45 min',
+  note: {
+    es: 'Noria morisca, aljibe y el único molino de viento en funcionamiento del Cabo de Gata. Bucólico, fuera del circuito turístico y sin ningún cartel de bienvenida.',
+    en: 'Moorish waterwheel, cistern and the only working windmill in Cabo de Gata. Bucolic, off the tourist circuit and with no welcome sign.'
+  },
+  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.8290,-2.1430',
+  web: null
+}, {
+  id: 'g-molinos',
+  icon: '🌿',
+  name: {
+    es: 'Molinos del Río Aguas',
+    en: 'Río Aguas Mills'
+  },
+  dist: '80 km · 1h',
+  note: {
+    es: 'Molinos medievales en un cañón kárstico donde el río Aguas brota en pleno desierto. Palmitos, cañas, silencio y la sensación de estar en otro tiempo.',
+    en: 'Medieval mills in a karst canyon where the Río Aguas springs from the desert. Dwarf palms, reeds, silence and the feeling of being in another era.'
+  },
+  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.0690,-2.0780',
+  web: null
+}, {
+  id: 'g-vera-historica',
+  icon: '🏯',
+  name: {
+    es: 'Vera histórica',
+    en: 'Historic Vera'
+  },
+  dist: '5 km · 8 min',
+  note: {
+    es: 'Pueblo rehecho en el s. XV tras el terremoto de 1518. La Colegiata, las plazas adoquinadas y la vida andaluza tranquila a 10 minutos de la playa.',
+    en: 'Town rebuilt in the 15th c. after the 1518 earthquake. The Collegiate Church, cobbled squares and quiet Andalusian life just 10 minutes from the beach.'
+  },
+  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.2530,-1.8640',
+  web: null
+}, {
+  id: 'g-starlight',
+  icon: '🔭',
+  name: {
+    es: 'Cielo oscuro · Reserva Starlight',
+    en: 'Dark Sky · Starlight Reserve'
+  },
+  dist: '20 km · 20 min',
+  note: {
+    es: 'La comarca es Reserva Starlight. El interior de Mojácar (Turre, Bédar, Cabrera) ofrece noches sin contaminación lumínica — la Vía Láctea a simple vista.',
+    en: 'The area holds Starlight Reserve status. Inland Mojácar (Turre, Bédar, Cabrera) gives unpolluted nights — the Milky Way visible to the naked eye.'
+  },
+  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.1130,-1.9510',
+  web: 'https://www.fundacion-starlight.org/'
+}, {
+  id: 'g-entinas',
+  icon: '🌊',
+  name: {
+    es: 'Punta Entinas-Sabinal',
+    en: 'Punta Entinas-Sabinal'
+  },
+  dist: '120 km · 1h 20min',
+  note: {
+    es: 'Dunas fósiles, pinar y laguna con flamencos en el punto más al sur de la provincia de Granada. El fin del mundo en el buen sentido.',
+    en: 'Fossil dunes, pine forest and flamingo lagoon at the southernmost tip of Granada province. The end of the world in the best sense.'
+  },
+  gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/36.6750,-2.9820',
+  web: 'https://www.juntadeandalucia.es/medioambiente/portal/landing-page-mapa-espacios-naturales/_blank/85760'
+}];
+
+// LugaresSection — grid de tarjetas de lugares curiosos, bellos y únicos.
 const LugaresSection = ({
   lang
-}) => {
-  const lugares = PLACES.filter(p => p.cat === 'culture');
-  if (!lugares.length) return null;
-  return /*#__PURE__*/React.createElement("table", {
-    className: "ag-lugares-table"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, lang === 'es' ? 'Lugar' : 'Place'), /*#__PURE__*/React.createElement("th", null, lang === 'es' ? 'Dist.' : 'Dist.'), /*#__PURE__*/React.createElement("th", null, lang === 'es' ? 'Nota' : 'Note'), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, lugares.map(p => {
-    const mapsHref = p.gmaps || `https://www.google.com/maps/dir/Vera+Playa,Almería/${p.lat},${p.lng}`;
-    return /*#__PURE__*/React.createElement("tr", {
-      key: p.id
-    }, /*#__PURE__*/React.createElement("td", {
-      className: "ag-lt-name"
-    }, p.name), /*#__PURE__*/React.createElement("td", {
-      className: "ag-lt-dist",
-      nowrap: "true"
-    }, p.dist, p.how ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
-      className: "ag-lt-how"
-    }, p.how)) : null), /*#__PURE__*/React.createElement("td", {
-      className: "ag-lt-note"
-    }, p.note), /*#__PURE__*/React.createElement("td", {
-      className: "ag-lt-links",
-      nowrap: "true"
-    }, /*#__PURE__*/React.createElement("a", {
-      href: mapsHref,
-      target: "_blank",
-      rel: "noopener",
-      className: "ag-lt-btn ag-lt-map"
-    }, "\uD83D\uDCCD"), p.web && /*#__PURE__*/React.createElement("a", {
-      href: p.web,
-      target: "_blank",
-      rel: "noopener",
-      className: "ag-lt-btn ag-lt-web"
-    }, "\uD83C\uDF10")));
-  })));
-};
+}) => /*#__PURE__*/React.createElement("div", {
+  className: "ag-gems-grid"
+}, GEMS.map(g => {
+  const name = lang === 'es' ? g.name.es : g.name.en;
+  const note = lang === 'es' ? g.note.es : g.note.en;
+  return /*#__PURE__*/React.createElement("article", {
+    key: g.id,
+    className: "ag-gem-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-gem-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-gem-icon",
+    "aria-hidden": "true"
+  }, g.icon), /*#__PURE__*/React.createElement("span", {
+    className: "ag-gem-dist"
+  }, g.dist)), /*#__PURE__*/React.createElement("h4", {
+    className: "ag-gem-name"
+  }, name), /*#__PURE__*/React.createElement("p", {
+    className: "ag-gem-note"
+  }, note), /*#__PURE__*/React.createElement("div", {
+    className: "ag-gem-links"
+  }, /*#__PURE__*/React.createElement("a", {
+    href: g.gmaps,
+    target: "_blank",
+    rel: "noopener",
+    className: "ag-gem-btn ag-gem-map"
+  }, "\uD83D\uDCCD ", lang === 'es' ? 'Cómo llegar' : 'Directions'), g.web && /*#__PURE__*/React.createElement("a", {
+    href: g.web,
+    target: "_blank",
+    rel: "noopener",
+    className: "ag-gem-btn ag-gem-web"
+  }, "\uD83C\uDF10 ", lang === 'es' ? 'Más info' : 'More info')));
+}));
 const CatGroup = ({
   cat,
   places,
@@ -8232,7 +8402,7 @@ const AptGuideView = ({
     className: "ag-h2"
   }, lang === 'es' ? 'Lugares de interés' : 'Places of interest'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, lang === 'es' ? 'Geoda, cuevas, desierto, yacimientos, acuarios. Cómo llegar desde Hestía, cuánto se tarda y dónde leer más sobre cada uno.' : 'Geode, caves, desert, archaeological sites, aquariums. How to get there from Hestía, journey time and where to read more about each.'), /*#__PURE__*/React.createElement(LugaresSection, {
+  }, lang === 'es' ? 'Curiosidades, paisajes que sorprenden y rincones que no salen en ninguna otra sección de esta guía. Nada de restaurantes ni playas — solo lugares que merece la pena conocer por sí mismos.' : 'Curiosities, surprising landscapes and corners that appear nowhere else in this guide. No restaurants, no beaches — just places worth knowing for their own sake.'), /*#__PURE__*/React.createElement(LugaresSection, {
     lang: lang
   })), /*#__PURE__*/React.createElement("section", {
     id: "ag-sabores",
