@@ -3556,7 +3556,11 @@ const DirectBookingModal = ({
     "aria-label": `${i + 1} / ${len}`
   }))), /*#__PURE__*/React.createElement("div", {
     className: "dbm-counter"
-  }, idx + 1, " / ", len)));
+  }, idx + 1, " / ", len), /*#__PURE__*/React.createElement("a", {
+    href: "reservas.html",
+    className: "dbm-cta",
+    onClick: onClose
+  }, lang === 'es' ? 'Reservar ahora' : 'Book now')));
 };
 
 // Banda compacta + trigger. Se coloca encima del calendario en cada
