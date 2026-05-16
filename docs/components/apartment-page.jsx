@@ -824,6 +824,7 @@ const AptGuideDownload = ({ apt, lang }) => {
 
   return (
     <section
+      id="guide"
       className="apt-guide"
       data-apt={apt.id}
       style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}

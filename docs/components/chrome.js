@@ -360,7 +360,7 @@ const Header = ({
     onClick: () => setMobileOpen(o => !o),
     "aria-label": mobileOpen ? 'Cerrar menú' : 'Abrir menú',
     "aria-expanded": mobileOpen
-  }, mobileOpen ? /*#__PURE__*/React.createElement(IconClose, null) : /*#__PURE__*/React.createElement(IconHamburger, null)))), "// Men\xFA m\xF3vil redise\xF1ado: apartamentos en fila (nombre + \uD83D\uDD11), mid-row pills, secondary horizontal", /*#__PURE__*/React.createElement("div", {
+  }, mobileOpen ? /*#__PURE__*/React.createElement(IconClose, null) : /*#__PURE__*/React.createElement(IconHamburger, null)))), /*#__PURE__*/React.createElement("div", {
     className: `mobile-menu ${mobileOpen ? 'open' : ''}`,
     "aria-hidden": !mobileOpen
   }, /*#__PURE__*/React.createElement("nav", {
@@ -378,10 +378,11 @@ const Header = ({
     className: "mn-num"
   }, "01"), /*#__PURE__*/React.createElement("span", {
     className: "mn-name"
-  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Mar"))), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.mar,
+  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Mar"))), /*#__PURE__*/React.createElement("a", {
+    href: "mar.html#guide",
     className: "mn-apt-guide mn-vm",
-    title: lang === 'es' ? 'Guía del huésped' : 'Guest guide'
+    title: lang === 'es' ? 'Guía del huésped' : 'Guest guide',
+    onClick: close
   }, "\uD83D\uDD11")), /*#__PURE__*/React.createElement("div", {
     className: "mn-apt-row mn-vt"
   }, /*#__PURE__*/React.createElement(NavLink, {
@@ -391,10 +392,11 @@ const Header = ({
     className: "mn-num"
   }, "02"), /*#__PURE__*/React.createElement("span", {
     className: "mn-name"
-  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Thalassa"))), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.thalassa,
+  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Thalassa"))), /*#__PURE__*/React.createElement("a", {
+    href: "thalassa.html#guide",
     className: "mn-apt-guide mn-vt",
-    title: lang === 'es' ? 'Guía del huésped' : 'Guest guide'
+    title: lang === 'es' ? 'Guía del huésped' : 'Guest guide',
+    onClick: close
   }, "\uD83D\uDD11")), /*#__PURE__*/React.createElement("div", {
     className: "mn-apt-row mn-vs"
   }, /*#__PURE__*/React.createElement(NavLink, {
@@ -404,10 +406,11 @@ const Header = ({
     className: "mn-num"
   }, "03"), /*#__PURE__*/React.createElement("span", {
     className: "mn-name"
-  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Salinas"))), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.salinas,
+  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Salinas"))), /*#__PURE__*/React.createElement("a", {
+    href: "salinas.html#guide",
     className: "mn-apt-guide mn-vs",
-    title: lang === 'es' ? 'Guía del huésped' : 'Guest guide'
+    title: lang === 'es' ? 'Guía del huésped' : 'Guest guide',
+    onClick: close
   }, "\uD83D\uDD11"))), /*#__PURE__*/React.createElement("div", {
     className: "mn-sep"
   }), /*#__PURE__*/React.createElement(NavLink, {
