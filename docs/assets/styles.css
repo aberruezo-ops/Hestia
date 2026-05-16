@@ -17095,6 +17095,146 @@ img[src*="apt-vt-gallery-"] {
   line-height: 1.4;
 }
 
+/* Acordeón de meses ---------------------------------------- */
+.ag-cal-months {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 14px;
+}
+.ag-cal-month {
+  border: 1px solid rgba(61,26,53,.09);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.ag-cal-month.is-current-month {
+  border-color: var(--sol);
+  box-shadow: 0 0 0 1px rgba(232,194,107,.25);
+}
+.ag-cal-month-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: rgba(255,251,244,.7);
+  border: none;
+  padding: 10px 14px;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ber-dk);
+  letter-spacing: .02em;
+}
+.ag-cal-month.is-current-month .ag-cal-month-btn {
+  background: rgba(232,194,107,.12);
+}
+.ag-cal-month-btn:hover { background: rgba(232,194,107,.10); }
+.ag-cal-month-name { flex: 1 1 0; }
+.ag-cal-month-count {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--vt);
+  color: #fff;
+  padding: 2px 7px;
+  border-radius: 20px;
+  min-width: 22px;
+  text-align: center;
+}
+.ag-cal-month.is-current-month .ag-cal-month-count { background: var(--sol); color: var(--ber-dk); }
+.ag-cal-month-chev {
+  font-size: 13px;
+  color: var(--ink-soft);
+  transition: transform .18s ease;
+}
+.ag-cal-month-chev.open { transform: rotate(180deg); }
+.ag-cal-month-body {
+  padding: 10px 12px 14px;
+  border-top: 1px solid rgba(61,26,53,.07);
+}
+.ag-cal-month-body[aria-hidden="true"] { display: none; }
+
+/* ============================================================
+   Lugares de interés — lista compacta
+   ============================================================ */
+.ag-lugares-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.ag-lugar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(61,26,53,.07);
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+.ag-lugar:last-child { border-bottom: none; }
+.ag-lugar-name {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ber-dk);
+  flex-shrink: 0;
+}
+.ag-lugar-dist {
+  font-size: 12px;
+  color: var(--ink-soft);
+  background: rgba(61,26,53,.05);
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.ag-lugar-note {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  flex: 1 1 100%;
+}
+.ag-lugar-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1 1 100%;
+  margin-top: 2px;
+}
+.ag-lugar-link-guide,
+.ag-lugar-link-plan,
+.ag-lugar-link-ext {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 4px;
+  text-decoration: none;
+  letter-spacing: .02em;
+}
+.ag-lugar-link-guide {
+  color: var(--vt);
+  background: rgba(var(--vt-rgb, 39,115,89),.08);
+  border: 1px solid rgba(39,115,89,.2);
+}
+.ag-lugar-link-guide:hover { background: rgba(39,115,89,.15); }
+.ag-lugar-link-plan {
+  color: var(--vs);
+  background: rgba(61,26,53,.05);
+  border: 1px solid rgba(61,26,53,.12);
+}
+.ag-lugar-link-plan:hover { background: rgba(61,26,53,.10); }
+.ag-lugar-link-ext {
+  color: var(--ber);
+  background: rgba(181,69,71,.06);
+  border: 1px solid rgba(181,69,71,.18);
+}
+.ag-lugar-link-ext:hover { background: rgba(181,69,71,.12); }
+
 /* ============================================================
    P.D. al final de la Bienvenida (sec 01) con link a /porque-hestia
    ============================================================ */

@@ -58,6 +58,7 @@ const GUIDE_SECTIONS = [
   { id: 'terraza',      es: 'Mi terraza',       en: 'My terrace' },
   { id: 'urbanizacion', es: 'Mi urbanización',  en: 'My complex' },
   { id: 'alrededores',  es: 'Alrededores',      en: 'Surroundings' },
+  { id: 'lugares',      es: 'Lugares de interés', en: 'Places of interest' },
   { id: 'sabores',      es: 'Sabores',          en: 'Tastes' },
   { id: 'pueblos',      es: 'Pueblos y cultura', en: 'Towns & culture' },
   { id: 'mar-playas',   es: 'Mar y playas',     en: 'Sea & beaches' },
@@ -73,7 +74,7 @@ const GUIDE_SECTIONS = [
 // El bloque 'alrededores' queda solo con intro/mapa/fuentes oficiales.
 const SECTION_CATS = {
   sabores:     ['restaurant', 'bar', 'fish', 'super', 'celiac'],
-  pueblos:     ['town', 'culture', 'bookshop'],
+  pueblos:     ['town', 'bookshop'],
   'mar-playas':['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
   actividades: ['activity', 'sport', 'bodega'],
   mercados:    ['market'],
@@ -607,16 +608,55 @@ const PLACES = [
     ], cat: 'town', lat: 38.6125, lng: -1.1170 },
   { id: 't-cuevas-velez', name: 'Cuevas de los Letreros (Vélez-Blanco)', desc: 'Abrigo rupestre con pinturas neolíticas. Aquí se descubrió el Indalo, símbolo de Almería.', best: 'Las pinturas rupestres (4.000-7.000 a.C.) Patrimonio de la Humanidad UNESCO — antílopes, brujos y el Indalo original.', tip: 'Visita guiada obligatoria. Reserva en la Oficina de Turismo de Vélez-Blanco (teléfono 950 415 354).', cat: 'town', lat: 37.6920, lng: -2.0960 },
 
-  // Lugares de interés
-  // Lugares de interés
-  { id: 'geoda-pulpi',    name: 'Geoda de Pulpí',          cat: 'culture', url: 'https://www.geodapulpi.es', lat: 37.4083, lng: -1.7635 },
-  { id: 'cuevas-sorbas',  name: 'Cuevas de Sorbas',        cat: 'culture', url: 'https://www.cuevasdesorbas.com/', lat: 37.1070, lng: -2.0820 },
-  { id: 'laguna',         name: 'Laguna de Puerto Rey',    cat: 'culture', lat: 37.2110, lng: -1.7770 },
-  { id: 'el-argar',       name: 'Yacimiento prehistórico de El Argar', desc: 'Antas.', cat: 'culture', url: 'https://maps.app.goo.gl/dyCfYS3L8qruFVPD9', lat: 37.2440, lng: -1.8920 },
-  { id: 'tabernas',       name: 'Desierto de Tabernas',    cat: 'culture', url: 'https://www.tabernas.es/', lat: 37.0410, lng: -2.3890 },
-  { id: 'minihollywood',  name: 'MiniHollywood (Oasys)',   cat: 'culture', url: 'https://www.oasysparquetematico.com/', lat: 37.0050, lng: -2.4750 },
-  { id: 'aquarium',       name: 'Aquarium Costa de Almería', cat: 'culture', url: 'https://www.aquariumcostadealmeria.com/', lat: 36.7674, lng: -2.6094 },
-  { id: 'mariposario',    name: 'Mariposario de Almería',  cat: 'culture', url: 'https://g.co/kgs/meY7kj', lat: 36.7641, lng: -2.6109 },
+  // Lugares de interés — dist desde Vera Playa · guideAnchor: ancla en la guía · planId: itinerario del día
+  { id: 'laguna',         name: 'Laguna de Puerto Rey',
+    cat: 'culture',
+    dist: '~3 km · 5 min', how: '🚗 o 🚶',
+    note: 'Espacio natural junto a Vera Playa · flamencos, aves acuáticas y sendero de ribera.',
+    guideAnchor: '#ag-alrededores',
+    url: 'https://www.google.com/maps/search/?api=1&query=Laguna+Puerto+Rey+Vera+Almeria', lat: 37.2110, lng: -1.7770 },
+  { id: 'el-argar',       name: 'Yacimiento El Argar',
+    cat: 'culture',
+    dist: '~25 km · 25 min', how: '🚗',
+    note: 'Antas. Yacimiento de la Edad del Bronce (2200-1550 a.C.) que da nombre a la cultura argárica.',
+    guideAnchor: '#ag-pueblos', guideNote: 'Cuevas del Almanzora',
+    url: 'https://maps.app.goo.gl/dyCfYS3L8qruFVPD9', lat: 37.2440, lng: -1.8920 },
+  { id: 'geoda-pulpi',    name: 'Geoda de Pulpí',
+    cat: 'culture',
+    dist: '~60 km · 45 min', how: '🚗',
+    note: 'Segunda geoda más grande del mundo (8 m). Visita guiada obligatoria · grupos de 8 máx · pozo a 50 m.',
+    guideAnchor: '#ag-pueblos', guideNote: 'Pulpí', planId: 'plan-geoda-pulpi',
+    url: 'https://www.geodapulpi.es', lat: 37.4083, lng: -1.7635 },
+  { id: 'cuevas-sorbas',  name: 'Cuevas de Sorbas',
+    cat: 'culture',
+    dist: '~75 km · 55 min', how: '🚗',
+    note: 'Karst en yeso único en Europa. Visita guiada · 3 niveles de dificultad.',
+    guideAnchor: '#ag-pueblos', guideNote: 'Sorbas', planId: 'plan-vera-sorbas-tabernas',
+    url: 'https://www.cuevasdesorbas.com/', lat: 37.1070, lng: -2.0820 },
+  { id: 'tabernas',       name: 'Desierto de Tabernas',
+    cat: 'culture',
+    dist: '~110 km · 1 h 15 min', how: '🚗',
+    note: 'Único desierto de Europa · escenario de 500+ películas, incluido El bueno, el feo y el malo.',
+    guideAnchor: '#ag-pueblos', guideNote: 'Tabernas', planId: 'plan-vera-sorbas-tabernas',
+    url: 'https://www.tabernas.es/', lat: 37.0410, lng: -2.3890 },
+  { id: 'minihollywood',  name: 'MiniHollywood (Oasys)',
+    cat: 'culture',
+    dist: '~115 km · 1 h 20 min', how: '🚗',
+    note: 'Parque temático del Oeste · espectáculos de dobles · zoo safari · ideal con niños.',
+    guideAnchor: '#ag-actividades', guideNote: 'Itinerario día completo', planId: 'plan-mini-hollywood',
+    url: 'https://www.oasysparquetematico.com/', lat: 37.0050, lng: -2.4750 },
+  { id: 'aquarium',       name: 'Aquarium Costa de Almería',
+    cat: 'culture',
+    dist: '~110 km · 1 h 15 min', how: '🚗',
+    note: 'Roquetas de Mar. El mayor de la costa almeriense · 4.000 ejemplares de 300 especies.',
+    guideAnchor: '#ag-pueblos', guideNote: 'Roquetas de Mar',
+    url: 'https://www.aquariumcostadealmeria.com/', lat: 36.7674, lng: -2.6094 },
+  { id: 'mariposario',    name: 'Mariposario de Almería',
+    cat: 'culture',
+    dist: '~110 km · 1 h 15 min', how: '🚗',
+    note: 'Almería capital. Jardín interior climatizado con mariposas tropicales vivas en vuelo libre.',
+    guideAnchor: '#ag-pueblos', guideNote: 'Almería capital',
+    url: 'https://g.co/kgs/meY7kj', lat: 36.7641, lng: -2.6109 },
 
   // Playas (orden geográfico: norte → Vera → Cabo de Gata → Almería → Adra).
   // Cada entrada lleva rating (estrellas Google), services (qué tiene)
@@ -785,7 +825,7 @@ const GUIDE_SHARED = {
     },
     checkin: {
       title: 'Llegada y salida',
-      intro: 'Lo tienes todo cubierto: Fran te escribirá unos días antes de tu llegada para acordar la modalidad que mejor te encaje y los detalles concretos (dirección exacta, código del portal, cómo entrar). No tienes de qué preocuparte — solo decirle a qué hora aproximada llegas.',
+      intro: 'Lo tienes todo cubierto: Fran te escribirá unos días antes de tu llegada para acordar la modalidad que mejor te encaje y compartirte los detalles. Llegues como llegues — en avión, bus o coche propio — te mandamos las indicaciones exactas para llegar en coche hasta la puerta de Hestía y te acompañamos a distancia hasta que estés dentro. No tienes que preocuparte de nada, solo dile a Fran a qué hora aproximada llegas.',
       airportsTitle: 'Aeropuertos cercanos',
       airportsIntro: 'Vera Playa tiene cinco aeropuertos en su radio razonable. El más cómodo depende de tu vuelo y tu paciencia con la carretera. Tiempos aproximados en coche por la AP-7 / A-7:',
       airports: [
@@ -988,7 +1028,7 @@ const GUIDE_SHARED = {
   en: {
     checkin: {
       title: 'Arrival & departure',
-      intro: 'You are covered: Fran will message you a few days before your arrival to agree on the option that suits you best and share the specifics (exact address, gate code, how to get in). Nothing to worry about — just let him know your approximate arrival time.',
+      intro: 'You are covered: Fran will message you a few days before your arrival to agree on the option that suits you best and share the specifics. However you travel — by plane, bus or car — we send you exact directions to drive right to the front door and we are with you every step of the way until you are in. Nothing to worry about — just let Fran know your approximate arrival time.',
       airportsTitle: 'Nearest airports',
       airportsIntro: 'Vera Playa has five airports within reasonable range. Which one is best depends on your flight options and how much road you want to drive. Approximate driving times via AP-7 / A-7:',
       airports: [
@@ -1702,9 +1742,43 @@ function monthIndexFromWhen(when) {
   return -1;
 }
 
+const EventMonthGroup = ({ monthIdx, events, lang, defaultOpen }) => {
+  const [open, setOpen] = React.useState(defaultOpen);
+  const MONTHS = lang === 'es' ? MONTHS_ES : MONTHS_EN;
+  const name = MONTHS[monthIdx];
+  const label = name.charAt(0).toUpperCase() + name.slice(1);
+  const regionOf = (place) => /Murcia/i.test(place) ? 'murcia' : 'almeria';
+  return (
+    <div className={`ag-cal-month${open ? ' is-open' : ''}${defaultOpen ? ' is-current-month' : ''}`}>
+      <button type="button" className="ag-cal-month-btn" onClick={() => setOpen(o => !o)} aria-expanded={open}>
+        <span className="ag-cal-month-name">{label}</span>
+        <span className="ag-cal-month-count">{events.length}</span>
+        <span className={`ag-cal-month-chev${open ? ' open' : ''}`} aria-hidden="true">↓</span>
+      </button>
+      <div className="ag-cal-month-body" aria-hidden={!open}>
+        <div className="ag-cal-cards">
+          {events.map((e, i) => {
+            const isStar = /⭐/.test(e.d || '');
+            const region = regionOf(e.place);
+            return (
+              <article key={i} className={`ag-cal-card${isStar ? ' is-star' : ''}`} data-region={region}>
+                <header className="ag-cal-card-head">
+                  <span className="ag-cal-card-when">{e.when}</span>
+                  {isStar && <span className="ag-cal-card-star" title={lang === 'es' ? 'Interés turístico internacional' : 'International tourist interest'}>★</span>}
+                </header>
+                <h4 className="ag-cal-card-name">{e.name}</h4>
+                <div className="ag-cal-card-place">{e.place}</div>
+                {e.d && <p className="ag-cal-card-desc">{e.d.replace(/^⭐\s*/, '')}</p>}
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const EventsCalendar = ({ lang }) => {
-  // Aplana todos los eventos con referencia al lugar de origen y
-  // los ordena cronológicamente por mes detectado.
   const all = [];
   PLACES.forEach(p => {
     if (Array.isArray(p.events)) {
@@ -1715,16 +1789,13 @@ const EventsCalendar = ({ lang }) => {
     }
   });
   if (all.length === 0) return null;
-  all.sort((a, b) => a.monthIdx - b.monthIdx);
-  const today = new Date();
-  const currentMonth = today.getMonth();
-  const MONTHS = lang === 'es' ? MONTHS_ES : MONTHS_EN;
-  // Etiqueta el origen del evento (almería · murcia · regional)
-  // para que el chip de la card use color y texto adecuados.
-  const regionOf = (place) => {
-    if (/Murcia/i.test(place)) return 'murcia';
-    return 'almeria';
-  };
+  const currentMonth = new Date().getMonth();
+  const byMonth = {};
+  all.forEach(e => {
+    if (!byMonth[e.monthIdx]) byMonth[e.monthIdx] = [];
+    byMonth[e.monthIdx].push(e);
+  });
+  const monthKeys = Object.keys(byMonth).map(Number).sort((a, b) => a - b);
   return (
     <div className="ag-calendar">
       <h3 className="ag-h3">
@@ -1732,32 +1803,61 @@ const EventsCalendar = ({ lang }) => {
       </h3>
       <p className="ag-para">
         {lang === 'es'
-          ? 'Calendario consolidado de fiestas y eventos de los pueblos del entorno (Almería + Murcia). Si vienes en estas fechas, vale la pena coincidir.'
-          : 'Consolidated calendar of festivals and events from the surrounding villages (Almería + Murcia). If you visit on these dates, it is worth timing your trip with them.'}
+          ? 'Calendario consolidado de fiestas y eventos de los pueblos del entorno (Almería + Murcia). El mes actual aparece desplegado; el resto se abren al pinchar.'
+          : 'Consolidated calendar of festivals and events from the surrounding villages (Almería + Murcia). Current month is open by default; click any other to expand.'}
       </p>
-      <div className="ag-cal-cards">
-        {all.map((e, i) => {
-          const isCurrent = e.monthIdx === currentMonth;
-          const isStar = /⭐/.test(e.d || '');
-          const region = regionOf(e.place);
-          return (
-            <article key={i}
-              className={`ag-cal-card${isCurrent ? ' is-current' : ''}${isStar ? ' is-star' : ''}`}
-              data-region={region}
-            >
-              <header className="ag-cal-card-head">
-                <span className="ag-cal-card-month">{MONTHS[e.monthIdx].slice(0,3).toUpperCase()}</span>
-                <span className="ag-cal-card-when">{e.when}</span>
-                {isStar && <span className="ag-cal-card-star" title={lang === 'es' ? 'Interés turístico internacional' : 'International tourist interest'}>★</span>}
-              </header>
-              <h4 className="ag-cal-card-name">{e.name}</h4>
-              <div className="ag-cal-card-place">{e.place}</div>
-              {e.d && <p className="ag-cal-card-desc">{e.d.replace(/^⭐\s*/, '')}</p>}
-            </article>
-          );
-        })}
+      <div className="ag-cal-months">
+        {monthKeys.map(mi => (
+          <EventMonthGroup
+            key={mi}
+            monthIdx={mi}
+            events={byMonth[mi]}
+            lang={lang}
+            defaultOpen={mi === currentMonth}
+          />
+        ))}
       </div>
     </div>
+  );
+};
+
+// LugaresSection — lista compacta de lugares de interés (cat: 'culture').
+// Cada entrada es una línea: nombre · distancia · nota · enlace guía · enlace externo.
+const LugaresSection = ({ lang }) => {
+  const lugares = PLACES.filter(p => p.cat === 'culture');
+  if (!lugares.length) return null;
+  return (
+    <ul className="ag-lugares-list">
+      {lugares.map(p => {
+        const mapHref = p.url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Almería')}`;
+        return (
+          <li key={p.id} className="ag-lugar">
+            <span className="ag-lugar-name">{p.name}</span>
+            {p.dist && (
+              <span className="ag-lugar-dist">{p.how} {p.dist}</span>
+            )}
+            {p.note && <span className="ag-lugar-note">{p.note}</span>}
+            <span className="ag-lugar-links">
+              {p.guideAnchor && (
+                <a href={p.guideAnchor} className="ag-lugar-link-guide">
+                  {lang === 'es'
+                    ? (p.guideNote ? `En guía → ${p.guideNote}` : 'En la guía')
+                    : (p.guideNote ? `In guide → ${p.guideNote}` : 'In guide')}
+                </a>
+              )}
+              {p.planId && (
+                <a href={`#${p.planId}`} className="ag-lugar-link-plan">
+                  {lang === 'es' ? 'Itinerario ↓' : 'Itinerary ↓'}
+                </a>
+              )}
+              <a href={mapHref} target="_blank" rel="noopener" className="ag-lugar-link-ext">
+                {lang === 'es' ? 'Cómo llegar ↗' : 'Directions ↗'}
+              </a>
+            </span>
+          </li>
+        );
+      })}
+    </ul>
   );
 };
 
@@ -3950,9 +4050,21 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             )}
           </section>
 
+          {/* Lugares de interés */}
+          <section id="ag-lugares" className="ag-section">
+            <span className="ag-section-num">13</span>
+            <h2 className="ag-h2">{lang === 'es' ? 'Lugares de interés' : 'Places of interest'}</h2>
+            <p className="ag-para">
+              {lang === 'es'
+                ? 'Geoda, cuevas, desierto, yacimientos, acuarios. Cómo llegar desde Hestía, cuánto se tarda y dónde leer más sobre cada uno.'
+                : 'Geode, caves, desert, archaeological sites, aquariums. How to get there from Hestía, journey time and where to read more about each.'}
+            </p>
+            <LugaresSection lang={lang} />
+          </section>
+
           {/* Sabores · comer y beber */}
           <section id="ag-sabores" className="ag-section">
-            <span className="ag-section-num">13</span>
+            <span className="ag-section-num">14</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Sabores' : 'Tastes'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3973,7 +4085,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Pueblos y cultura */}
           <section id="ag-pueblos" className="ag-section">
-            <span className="ag-section-num">14</span>
+            <span className="ag-section-num">15</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -3994,7 +4106,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Mar y playas */}
           <section id="ag-mar-playas" className="ag-section">
-            <span className="ag-section-num">15</span>
+            <span className="ag-section-num">16</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mar y playas' : 'Sea & beaches'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -4013,7 +4125,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Actividades y planes de día */}
           <section id="ag-actividades" className="ag-section">
-            <span className="ag-section-num">16</span>
+            <span className="ag-section-num">17</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Actividades y planes' : 'Activities & plans'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -4032,7 +4144,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Mercados y compras */}
           <section id="ag-mercados" className="ag-section">
-            <span className="ag-section-num">17</span>
+            <span className="ag-section-num">18</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mercados y compras' : 'Markets & shops'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -4050,7 +4162,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Salud y servicios · centros de salud, vets, fisio, farmacias */}
           <section id="ag-salud" className="ag-section">
-            <span className="ag-section-num">18</span>
+            <span className="ag-section-num">19</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Salud y servicios' : 'Health & services'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -4068,7 +4180,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Movilidad · gasolineras y carga eléctrica */}
           <section id="ag-movilidad" className="ag-section">
-            <span className="ag-section-num">19</span>
+            <span className="ag-section-num">20</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'}</h2>
             <p className="ag-para">
               {lang === 'es'
