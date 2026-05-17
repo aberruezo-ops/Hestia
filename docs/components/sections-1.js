@@ -135,26 +135,7 @@ const Hero = ({
       document.removeEventListener('visibilitychange', onVisible);
     };
   }, []);
-  return /*#__PURE__*/React.createElement("section", {
-    id: "top",
-    className: `hero mood-${pick.mood}`,
-    "data-screen-label": "01 Hero",
-    "data-hero-video": pick.src
-  }, /*#__PURE__*/React.createElement("video", {
-    ref: bgVideoRef,
-    className: "hero-bg-video",
-    autoPlay: true,
-    muted: true,
-    loop: true,
-    playsInline: true,
-    preload: "auto",
-    poster: pick.poster,
-    "aria-label": pick.alt,
-    key: pick.src
-  }, /*#__PURE__*/React.createElement("source", {
-    src: `${pick.src}?v=${VIDEO_V}`,
-    type: "video/mp4"
-  })), /*#__PURE__*/React.createElement("div", {
+  const vitruvio = ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
     className: `hero-vitruvio${vitMin ? ' hv-min' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-box",
@@ -177,7 +158,27 @@ const Hero = ({
     className: "hv-toggle",
     onClick: toggleVit,
     "aria-label": vitMin ? lang === 'es' ? 'Expandir animacion' : 'Expand animation' : lang === 'es' ? 'Minimizar' : 'Minimise'
-  }, vitMin ? '+' : '-')), /*#__PURE__*/React.createElement("div", {
+  }, vitMin ? '+' : '-')), document.body);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
+    id: "top",
+    className: `hero mood-${pick.mood}`,
+    "data-screen-label": "01 Hero",
+    "data-hero-video": pick.src
+  }, /*#__PURE__*/React.createElement("video", {
+    ref: bgVideoRef,
+    className: "hero-bg-video",
+    autoPlay: true,
+    muted: true,
+    loop: true,
+    playsInline: true,
+    preload: "auto",
+    poster: pick.poster,
+    "aria-label": pick.alt,
+    key: pick.src
+  }, /*#__PURE__*/React.createElement("source", {
+    src: `${pick.src}?v=${VIDEO_V}`,
+    type: "video/mp4"
+  })), /*#__PURE__*/React.createElement("div", {
     className: "hero-content"
   }, /*#__PURE__*/React.createElement("div", {
     className: "wordmark hero-wordmark"
@@ -235,7 +236,7 @@ const Hero = ({
     "aria-hidden": "true"
   }, "\xB7"), /*#__PURE__*/React.createElement("span", null, "Mar Mediterr\xE1neo")), /*#__PURE__*/React.createElement("span", {
     className: "hide-mobile hero-meta-province"
-  }, "Almer\xEDa \xB7 Andaluc\xEDa")));
+  }, "Almer\xEDa \xB7 Andaluc\xEDa"))), vitruvio);
 };
 
 // --- BRIDGE (transición día/noche) ---
