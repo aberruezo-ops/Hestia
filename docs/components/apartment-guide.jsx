@@ -2861,8 +2861,8 @@ const TAPAS_ROUTES = [
       { name: 'Bar El Chele', what_es: 'Taberna de barrio con ambiente de toda la vida. Conocida entre los almerienses por su barra informal y tapas generosas. Sin pretensiones, todo es producto.', what_en: 'Neighbourhood tavern with a timeless atmosphere. Known among Almería locals for its unpretentious bar counter and generous tapas. No frills, all produce.' },
       { name: 'La Mala', what_es: 'Barra con buena rotación de tapas. Conocida por sus croquetas y el jamón en lonchas finas. Ambiente animado y clientela local.', what_en: 'Bar counter with a good tapa rotation. Known for croquettes and thinly sliced jamón. Lively atmosphere and local crowd.' },
     ],
-    tip_es: 'Pide siempre "una caña" y no un tercio — la caña va con tapa, el tercio a veces no. Elige tú la tapa cuando te la ofrezcan, no te quedes con la que pongan por defecto.',
-    tip_en: 'Always order "una caña" (small draft) not a bottle — the caña always comes with a tapa. When offered, choose your own tapa rather than accepting the default.' },
+    tip_es: 'Pide siempre "una caña" y no un tercio — la caña va con tapa, el tercio a veces no. Elige tú la tapa cuando te la ofrezcan, no te quedes con la que pongan por defecto. Y recuerda: en los alrededores del casco antiguo hay innumerables opciones tan buenas o mejores que estas — recorrer sus calles es una experiencia para todos los sentidos.',
+    tip_en: 'Always order "una caña" (small draft) not a bottle — the caña always comes with a tapa. When offered, choose your own tapa rather than accepting the default. And remember: the streets around the old quarter are packed with options just as good or better than these — wandering through them is a feast for all the senses.' },
 
   { id: 'tapas-aguilas',
     city_es: 'Águilas (litoral Murcia)', city_en: 'Águilas (Murcia coast)',
