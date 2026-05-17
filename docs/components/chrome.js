@@ -201,7 +201,9 @@ const MnGuestSection = ({
 const Header = ({
   mode,
   scrolled,
-  lang
+  lang,
+  vitMin,
+  toggleVit
 }) => {
   const t = COPY[lang];
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -322,7 +324,9 @@ const Header = ({
     href: NAV_PAGES.salinas
   }, t.nav[3]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.porqueHestia
-  }, t.nav[8])), /*#__PURE__*/React.createElement("a", {
+  }, t.nav[8])), /*#__PURE__*/React.createElement("div", {
+    className: "brand-center"
+  }, /*#__PURE__*/React.createElement("a", {
     href: "index.html",
     className: "brand-lockup",
     "aria-label": "Hest\xEDa \u2014 Inicio"
@@ -338,7 +342,12 @@ const Header = ({
     className: "wordmark"
   }, "HEST\xCDA"), /*#__PURE__*/React.createElement("span", {
     className: "your-home"
-  }, "your home!")), /*#__PURE__*/React.createElement("div", {
+  }, "your home!")), vitMin && toggleVit && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "hv-logo-btn",
+    onClick: toggleVit,
+    "aria-label": lang === 'es' ? 'Expandir animación Vitruvio' : 'Expand Vitruvio animation'
+  }, "+")), /*#__PURE__*/React.createElement("div", {
     className: "nav-right-area"
   }, /*#__PURE__*/React.createElement("nav", {
     className: "desktop-nav nav-right"

@@ -606,6 +606,31 @@ p  { line-height: 1.65; font-weight: 300; }
   .header nav .cta .cta-text { transform: none; transition: none; }
 }
 
+.brand-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hv-logo-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--ber-dk);
+  color: var(--arena);
+  border: 1.5px solid rgba(240,232,213,0.45);
+  font-size: 19px;
+  font-weight: 300;
+  font-family: var(--sans);
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: transform 0.2s, opacity 0.2s;
+}
+@media (hover: hover) { .hv-logo-btn:hover { transform: scale(1.18); opacity: 1; } }
 .brand-lockup {
   display: flex; flex-direction: column; align-items: center; gap: 4px;
   line-height: 1;
