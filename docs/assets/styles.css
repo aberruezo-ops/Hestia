@@ -17189,6 +17189,133 @@ img[src*="apt-vt-gallery-"] {
   line-height: 1.55;
   color: var(--ink);
 }
+
+/* Bloque "llegar en coche" — destaca la acompañación a distancia
+   sin importar el medio de llegada. */
+.ag-car-block {
+  margin-top: 24px;
+}
+.ag-car-accompany {
+  background: rgba(58, 170, 187, 0.08);
+  border-left: 4px solid var(--vt2, #3AAABB);
+  border-radius: 0 6px 6px 0;
+  padding: 12px 16px 14px 14px;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.ag-car-icon {
+  display: inline-block;
+  margin-right: 8px;
+  color: var(--vt2, #3AAABB);
+  font-weight: 700;
+}
+
+/* ============================================================
+   Atlas de Lugares de interés · sección 13
+   Cada subcategoría es un bloque con título + lista densa. Cada
+   ítem en una sola línea: nombre (con link externo), desc, km,
+   cómo llegar y opcional anchor a otra sección de la guía.
+   ============================================================ */
+.ag-poi-atlas {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  margin-top: 14px;
+}
+.ag-poi-cat {
+  border-top: 2px solid color-mix(in srgb, var(--apt-accent, var(--sol)) 30%, transparent);
+  padding-top: 14px;
+}
+.ag-poi-cat-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 12px;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--ber-dk);
+}
+.ag-poi-cat-icon {
+  font-size: 18px;
+}
+.ag-poi-cat-count {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  background: var(--apt-accent, var(--sol));
+  color: var(--ber-dk);
+  border-radius: 9px;
+}
+.ag-poi-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.ag-poi-row {
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(61,26,53,.06);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+}
+.ag-poi-row:last-child { border-bottom: none; }
+.ag-poi-row-main {
+  font-size: 14px;
+  line-height: 1.4;
+}
+.ag-poi-name {
+  font-weight: 600;
+  color: var(--ber-dk);
+  text-decoration: none;
+  border-bottom: 1px dotted color-mix(in srgb, var(--ber-dk) 35%, transparent);
+}
+.ag-poi-name:hover {
+  color: var(--apt-accent, var(--sol));
+  border-bottom-color: var(--apt-accent, var(--sol));
+}
+.ag-poi-desc {
+  color: var(--ink);
+}
+.ag-poi-row-meta {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+.ag-poi-km {
+  font-weight: 700;
+  color: var(--apt-accent, var(--sol));
+}
+.ag-poi-sep {
+  margin: 0 6px;
+  opacity: 0.5;
+}
+.ag-poi-how {
+  font-style: italic;
+}
+.ag-poi-anchor {
+  color: var(--vt2, #3AAABB);
+  text-decoration: none;
+  font-weight: 600;
+}
+.ag-poi-anchor:hover { text-decoration: underline; }
+@media (min-width: 700px) {
+  .ag-poi-row {
+    grid-template-columns: 1fr auto;
+    gap: 18px;
+    align-items: baseline;
+  }
+  .ag-poi-row-meta {
+    text-align: right;
+    max-width: 50%;
+  }
+}
 .ag-checkin-garbage {
   margin-top: 4px;
   padding: 10px 14px;
@@ -17204,9 +17331,89 @@ img[src*="apt-vt-gallery-"] {
 .ag-calendar { margin: 24px 0 28px; }
 .ag-calendar .ag-h3 { margin-bottom: 4px; }
 
-/* Calendario de eventos · cards horizontales wrap (antes 12 columnas
-   apiladas verticalmente, demasiado largo). Cada evento es una card
-   independiente; la grid auto-fit pone las que quepan por fila. */
+/* Calendario de eventos · acordeón por meses. Cada mes con eventos
+   es un <details>. El mes actual viene `open` por defecto; el resto
+   plegados. Al expandir se muestran las cards en grid wrap. */
+.ag-cal-months {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 18px;
+}
+.ag-cal-month-acc {
+  background: rgba(255, 251, 244, 0.5);
+  border: 1px solid rgba(61,26,53,.10);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: background .2s ease;
+}
+.ag-cal-month-acc.is-current {
+  background: rgba(232, 194, 107, 0.10);
+  border-color: color-mix(in srgb, var(--sol) 40%, transparent);
+}
+.ag-cal-month-acc[open] {
+  background: rgba(255, 251, 244, 0.75);
+}
+.ag-cal-month-acc.is-current[open] {
+  background: rgba(232, 194, 107, 0.12);
+}
+.ag-cal-month-summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 12px 16px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  user-select: none;
+}
+.ag-cal-month-summary::-webkit-details-marker { display: none; }
+.ag-cal-month-num {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.ag-cal-month-name {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--ber-dk);
+  text-transform: capitalize;
+}
+.ag-cal-month-count {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 2px 8px;
+  background: var(--vt);
+  color: #fff;
+  border-radius: 9px;
+}
+.ag-cal-month-now {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  background: var(--sol);
+  color: var(--ber-dk);
+  border-radius: 9px;
+}
+.ag-cal-month-chev {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--ink-soft);
+  transition: transform .2s ease;
+}
+.ag-cal-month-acc[open] .ag-cal-month-chev {
+  transform: rotate(180deg);
+}
+.ag-cal-month-acc .ag-cal-cards {
+  padding: 4px 16px 16px;
+}
+
 .ag-cal-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
