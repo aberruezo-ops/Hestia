@@ -12,6 +12,7 @@ const APT_DATA = {
     slug: 'mar',
     license: 'VFT/AL/01580',
     name_short: 'Mar',
+    vimeo_id: '1192955159',
     accent: '#6B7A3A',
     accent2: '#8B9A52',
     accent_dk: '#4A5628',
@@ -42,6 +43,7 @@ const APT_DATA = {
     slug: 'thalassa',
     license: 'VFT/AL/05535',
     name_short: 'Thalassa',
+    vimeo_id: '1192955160',
     accent: '#8A4A24',
     accent2: '#B86A3C',
     accent_dk: '#6E3A1C',
@@ -73,6 +75,7 @@ const APT_DATA = {
     slug: 'salinas',
     license: 'VTF/AL/07056',
     name_short: 'Salinas',
+    vimeo_id: '1192955161',
     accent: '#9E7A2C',
     accent2: '#D4A84A',
     accent_dk: '#7A5E1A',
@@ -729,6 +732,57 @@ const GalleryCarousel = ({
     className: "gc-lb-counter"
   }, cur + 1, " / ", n)));
 };
+const AptVideoTour = ({
+  apt,
+  lang
+}) => {
+  const [playing, setPlaying] = React.useState(false);
+  if (!apt.vimeo_id) return null;
+  const accentHex = apt.accent.replace('#', '');
+  const label = lang === 'es' ? 'Reproducir visita virtual' : 'Play virtual tour';
+  return /*#__PURE__*/React.createElement("section", {
+    className: "apt-video-tour",
+    style: {
+      '--apt-accent': apt.accent
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "eyebrow apt-vt-eyebrow"
+  }, lang === 'es' ? 'Visita virtual' : 'Virtual tour'), /*#__PURE__*/React.createElement("h2", {
+    className: "apt-vt-title"
+  }, lang === 'es' ? `Recorre ${apt[lang].name}` : `Tour ${apt[lang].name}`), /*#__PURE__*/React.createElement("div", {
+    className: "apt-vt-wrap"
+  }, playing ? /*#__PURE__*/React.createElement("iframe", {
+    className: "apt-vt-iframe",
+    src: `https://player.vimeo.com/video/${apt.vimeo_id}?autoplay=1&dnt=1&color=${accentHex}&title=0&byline=0&portrait=0`,
+    allow: "autoplay; fullscreen; picture-in-picture",
+    allowFullScreen: true,
+    title: apt[lang].name
+  }) : /*#__PURE__*/React.createElement("button", {
+    className: "apt-vt-poster",
+    onClick: () => setPlaying(true),
+    "aria-label": label
+  }, /*#__PURE__*/React.createElement("img", {
+    src: apt.hero_img,
+    alt: "",
+    className: "apt-vt-poster-img",
+    loading: "lazy"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "apt-vt-overlay",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "apt-vt-play",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 24 24",
+    fill: "white",
+    width: "36",
+    height: "36"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M8 5v14l11-7z"
+  })))))));
+};
 const AptPageGallery = ({
   apt,
   lang
@@ -1159,6 +1213,9 @@ const ApartmentPageApp = () => {
     apt: apt,
     lang: lang
   }), /*#__PURE__*/React.createElement(AptPageGallery, {
+    apt: apt,
+    lang: lang
+  }), /*#__PURE__*/React.createElement(AptVideoTour, {
     apt: apt,
     lang: lang
   }), /*#__PURE__*/React.createElement(AptEquipamiento, {
