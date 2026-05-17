@@ -333,21 +333,18 @@ const Header = ({ mode, scrolled, lang }) => {
                 <span className="mn-num">01</span>
                 <span className="mn-name">Hestía <em>Mar</em></span>
               </NavLink>
-              <a href="mar.html#guide" className="mn-apt-guide mn-vm" title={lang === 'es' ? 'Guía del huésped' : 'Guest guide'} onClick={close}>🔑</a>
             </div>
             <div className="mn-apt-row mn-vt">
               <NavLink href={NAV_PAGES.thalassa} className="mn-apt-link">
                 <span className="mn-num">02</span>
                 <span className="mn-name">Hestía <em>Thalassa</em></span>
               </NavLink>
-              <a href="thalassa.html#guide" className="mn-apt-guide mn-vt" title={lang === 'es' ? 'Guía del huésped' : 'Guest guide'} onClick={close}>🔑</a>
             </div>
             <div className="mn-apt-row mn-vs">
               <NavLink href={NAV_PAGES.salinas} className="mn-apt-link">
                 <span className="mn-num">03</span>
                 <span className="mn-name">Hestía <em>Salinas</em></span>
               </NavLink>
-              <a href="salinas.html#guide" className="mn-apt-guide mn-vs" title={lang === 'es' ? 'Guía del huésped' : 'Guest guide'} onClick={close}>🔑</a>
             </div>
           </div>
           <div className="mn-sep"/>

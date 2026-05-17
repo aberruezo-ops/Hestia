@@ -449,12 +449,7 @@ const Header = ({
     className: "mn-num"
   }, "01"), /*#__PURE__*/React.createElement("span", {
     className: "mn-name"
-  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Mar"))), /*#__PURE__*/React.createElement("a", {
-    href: "mar.html#guide",
-    className: "mn-apt-guide mn-vm",
-    title: lang === 'es' ? 'Guía del huésped' : 'Guest guide',
-    onClick: close
-  }, "\uD83D\uDD11")), /*#__PURE__*/React.createElement("div", {
+  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Mar")))), /*#__PURE__*/React.createElement("div", {
     className: "mn-apt-row mn-vt"
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.thalassa,
@@ -463,12 +458,7 @@ const Header = ({
     className: "mn-num"
   }, "02"), /*#__PURE__*/React.createElement("span", {
     className: "mn-name"
-  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Thalassa"))), /*#__PURE__*/React.createElement("a", {
-    href: "thalassa.html#guide",
-    className: "mn-apt-guide mn-vt",
-    title: lang === 'es' ? 'Guía del huésped' : 'Guest guide',
-    onClick: close
-  }, "\uD83D\uDD11")), /*#__PURE__*/React.createElement("div", {
+  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Thalassa")))), /*#__PURE__*/React.createElement("div", {
     className: "mn-apt-row mn-vs"
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.salinas,
@@ -477,12 +467,7 @@ const Header = ({
     className: "mn-num"
   }, "03"), /*#__PURE__*/React.createElement("span", {
     className: "mn-name"
-  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Salinas"))), /*#__PURE__*/React.createElement("a", {
-    href: "salinas.html#guide",
-    className: "mn-apt-guide mn-vs",
-    title: lang === 'es' ? 'Guía del huésped' : 'Guest guide',
-    onClick: close
-  }, "\uD83D\uDD11"))), /*#__PURE__*/React.createElement("div", {
+  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Salinas"))))), /*#__PURE__*/React.createElement("div", {
     className: "mn-sep"
   }), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.porqueHestia,
