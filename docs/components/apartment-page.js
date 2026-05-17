@@ -732,32 +732,53 @@ const GalleryCarousel = ({
     className: "gc-lb-counter"
   }, cur + 1, " / ", n)));
 };
-const AptVideoTour = ({
+const AptVideoDesc = ({
   apt,
   lang
 }) => {
   if (!apt.vimeo_id) return null;
+  const d = apt[lang];
   const accentHex = apt.accent.replace('#', '');
+  const reservasHref = `reservas.html?apt=${apt.id}`;
+  const guideHref = `${apt.slug}.html#guide`;
   return /*#__PURE__*/React.createElement("section", {
-    className: "apt-video-tour",
+    className: "apt-video-desc",
     style: {
       '--apt-accent': apt.accent
     }
   }, /*#__PURE__*/React.createElement("div", {
-    className: "container"
+    className: "avd-inner"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "avd-video-col"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "eyebrow apt-vt-eyebrow"
-  }, lang === 'es' ? 'Visita virtual' : 'Virtual tour'), /*#__PURE__*/React.createElement("h2", {
-    className: "apt-vt-title"
-  }, lang === 'es' ? `Recorre ${apt[lang].name}` : `Tour ${apt[lang].name}`), /*#__PURE__*/React.createElement("div", {
-    className: "apt-vt-wrap"
+    className: "eyebrow avd-eyebrow"
+  }, lang === 'es' ? 'Visita virtual' : 'Virtual tour'), /*#__PURE__*/React.createElement("div", {
+    className: "avd-iframe-wrap"
   }, /*#__PURE__*/React.createElement("iframe", {
-    className: "apt-vt-iframe",
+    className: "avd-iframe",
     src: `https://player.vimeo.com/video/${apt.vimeo_id}?autoplay=1&muted=1&dnt=1&color=${accentHex}&title=0&byline=0&portrait=0`,
     allow: "autoplay; fullscreen; picture-in-picture",
     allowFullScreen: true,
-    title: apt[lang].name
-  }))));
+    title: d.name
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "avd-text-col"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "avd-concept"
+  }, d.concept), /*#__PURE__*/React.createElement("p", {
+    className: "avd-desc"
+  }, d.desc), /*#__PURE__*/React.createElement("p", {
+    className: "avd-desc2"
+  }, d.desc2), /*#__PURE__*/React.createElement("div", {
+    className: "avd-cta-row"
+  }, /*#__PURE__*/React.createElement("a", {
+    href: reservasHref,
+    className: "btn btn-primary"
+  }, lang === 'es' ? 'Reservar' : 'Book', " ", /*#__PURE__*/React.createElement("span", {
+    className: "arrow"
+  }, "\u2192")), /*#__PURE__*/React.createElement("a", {
+    href: guideHref,
+    className: "btn btn-ghost"
+  }, lang === 'es' ? 'Guia del apartamento' : 'Apartment guide')))));
 };
 const AptPageGallery = ({
   apt,
@@ -1183,15 +1204,10 @@ const ApartmentPageApp = () => {
   }), /*#__PURE__*/React.createElement(TrustStrip, {
     apt: apt,
     lang: lang
-  }), /*#__PURE__*/React.createElement(FraseHogar, {
-    lang: lang
-  }), /*#__PURE__*/React.createElement(AptPageDesc, {
+  }), /*#__PURE__*/React.createElement(AptVideoDesc, {
     apt: apt,
     lang: lang
   }), /*#__PURE__*/React.createElement(AptPageGallery, {
-    apt: apt,
-    lang: lang
-  }), /*#__PURE__*/React.createElement(AptVideoTour, {
     apt: apt,
     lang: lang
   }), /*#__PURE__*/React.createElement(AptEquipamiento, {
