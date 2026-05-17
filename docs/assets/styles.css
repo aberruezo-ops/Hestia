@@ -1757,7 +1757,8 @@ body.apt-bar-shown .cookies {
   /* pointer-events en el padre debe ser auto para que el hover CSS funcione */
   pointer-events: none;
   transition: top 0.55s cubic-bezier(0.23, 1, 0.32, 1),
-              width 0.55s cubic-bezier(0.23, 1, 0.32, 1);
+              width 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+              opacity 0.4s ease;
 }
 .hv-box {
   width: 100%;
@@ -1800,6 +1801,12 @@ body.apt-bar-shown .cookies {
 }
 @media (hover: hover) {
   .hv-toggle:hover { transform: scale(1.18); }
+}
+/* Ocultar cuando el hero sale de pantalla (para no solapar contenido) */
+.hv-offhero {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
 }
 /* Estado minimizado — se desliza a la zona de cabecera */
 .hv-min {
