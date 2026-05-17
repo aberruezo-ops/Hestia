@@ -671,10 +671,8 @@ const GalleryCarousel = ({ imgs, captions }) => {
 };
 
 const AptVideoTour = ({ apt, lang }) => {
-  const [playing, setPlaying] = React.useState(false);
   if (!apt.vimeo_id) return null;
   const accentHex = apt.accent.replace('#', '');
-  const label = lang === 'es' ? 'Reproducir visita virtual' : 'Play virtual tour';
   return (
     <section className="apt-video-tour" style={{ '--apt-accent': apt.accent }}>
       <div className="container">
@@ -683,25 +681,13 @@ const AptVideoTour = ({ apt, lang }) => {
           {lang === 'es' ? `Recorre ${apt[lang].name}` : `Tour ${apt[lang].name}`}
         </h2>
         <div className="apt-vt-wrap">
-          {playing ? (
-            <iframe
-              className="apt-vt-iframe"
-              src={`https://player.vimeo.com/video/${apt.vimeo_id}?autoplay=1&dnt=1&color=${accentHex}&title=0&byline=0&portrait=0`}
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-              title={apt[lang].name}
-            />
-          ) : (
-            <button className="apt-vt-poster" onClick={() => setPlaying(true)} aria-label={label}>
-              <img src={apt.hero_img} alt="" className="apt-vt-poster-img" loading="lazy" />
-              <div className="apt-vt-overlay" aria-hidden="true" />
-              <div className="apt-vt-play" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="white" width="36" height="36">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </div>
-            </button>
-          )}
+          <iframe
+            className="apt-vt-iframe"
+            src={`https://player.vimeo.com/video/${apt.vimeo_id}?autoplay=1&muted=1&dnt=1&color=${accentHex}&title=0&byline=0&portrait=0`}
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+            title={apt[lang].name}
+          />
         </div>
       </div>
     </section>
