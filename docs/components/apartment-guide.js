@@ -363,6 +363,15 @@ const PLACES = [
   lat: 37.2235,
   lng: -1.7975
 }, {
+  id: 'superberruezo',
+  name: 'Supermercados Berruezo (Vera Playa)',
+  desc: 'Supermercado local bien surtido en Vera Playa. Producto fresco, carnicería propia y trato cercano. Buenos precios en fruta y verdura de la huerta almeriense.',
+  cat: 'super',
+  url: 'https://maps.app.goo.gl/bh8A2eUZEn1bWaM16',
+  lat: 37.2270,
+  lng: -1.7980,
+  featured: true
+}, {
   id: 'consum',
   name: 'Consum (Vera Playa)',
   desc: 'Supermercado mediano a 5 min en coche. Sorpresa: tiene un buen surtido de productos británicos (cereales, salsas, té, alubias Heinz) por la afluencia inglesa de la zona.',
