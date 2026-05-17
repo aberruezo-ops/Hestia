@@ -128,11 +128,32 @@ const MnGuestSection = ({ t, lang, NavLink, NAV_PAGES }) => {
   );
 };
 
-const Header = ({ mode, scrolled, lang, vitMin, toggleVit }) => {
+const Header = ({ mode, scrolled, lang }) => {
   const t = COPY[lang];
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const close = () => setMobileOpen(false);
   React.useEffect(() => { close(); }, [lang]);
+
+  // vitMin: se lee de sessionStorage para funcionar en cualquier página
+  const [vitMin, setVitMin] = React.useState(() => {
+    try { return sessionStorage.getItem('hestia-vit-min') === '1'; } catch (_) { return false; }
+  });
+  React.useEffect(() => {
+    const sync = () => {
+      try { setVitMin(sessionStorage.getItem('hestia-vit-min') === '1'); } catch (_) {}
+    };
+    window.addEventListener('hestia-vit-change', sync);
+    return () => window.removeEventListener('hestia-vit-change', sync);
+  }, []);
+
+  const expandVit = () => {
+    try { sessionStorage.setItem('hestia-vit-min', '0'); } catch (_) {}
+    window.dispatchEvent(new CustomEvent('hestia-vit-change'));
+    // Si no estamos en la home, navegar allí para que se vea el vitruvio
+    if (!document.querySelector('.hero')) {
+      window.location.href = 'index.html';
+    }
+  };
 
   // Sync animation across page navigations using absolute time
   React.useEffect(() => {
@@ -244,8 +265,8 @@ const Header = ({ mode, scrolled, lang, vitMin, toggleVit }) => {
             <span className="wordmark">HESTÍA</span>
             <span className="your-home">your home!</span>
           </a>
-          {vitMin && toggleVit && (
-            <button type="button" className="hv-logo-btn" onClick={toggleVit}
+          {vitMin && (
+            <button type="button" className="hv-logo-btn" onClick={expandVit}
               aria-label={lang === 'es' ? 'Expandir animación Vitruvio' : 'Expand Vitruvio animation'}>
               +
             </button>
