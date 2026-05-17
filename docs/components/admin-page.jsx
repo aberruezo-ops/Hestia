@@ -1890,6 +1890,196 @@ const fmtDelta = (cur, prev) => {
   return `${sign}${diff.toFixed(1)} %`;
 };
 
+const LeilaTab = ({ token }) => {
+  const [data,    setData]    = React.useState(null);
+  const [sha,     setSha]     = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+  const [loadErr, setLoadErr] = React.useState(null);
+  const [saving,  setSaving]  = React.useState(false);
+  const [saveMsg, setSaveMsg] = React.useState(null);
+  const [edits,   setEdits]   = React.useState({});
+  const currentYear = String(new Date().getFullYear());
+  const [focusYear, setFocusYear] = React.useState(currentYear);
+
+  React.useEffect(() => {
+    setLoading(true);
+    fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token) })
+      .then(r => r.json())
+      .then(j => {
+        if (j.message) throw new Error(j.message);
+        setSha(j.sha);
+        setData(JSON.parse(b64ToUtf8(j.content)));
+      })
+      .catch(e => setLoadErr('Error cargando reservas: ' + e.message))
+      .finally(() => setLoading(false));
+  }, [token]);
+
+  const save = async () => {
+    if (!data || !sha || Object.keys(edits).length === 0) return;
+    setSaving(true); setSaveMsg(null);
+    try {
+      const next = { ...data, reservas: data.reservas.map((r, i) =>
+        edits[i] !== undefined ? { ...r, pagos_leila: Number(edits[i]) || 0 } : r
+      )};
+      const res = await fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}`, {
+        method: 'PUT',
+        headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Update pagos_leila', content: utf8ToB64(JSON.stringify(next, null, 2)), sha, branch: BRANCH }),
+      });
+      const j = await res.json();
+      if (j.message && !j.content) throw new Error(j.message);
+      setSha(j.content.sha); setData(next); setEdits({});
+      setSaveMsg('Guardado correctamente.');
+    } catch (e) {
+      setSaveMsg('Error al guardar: ' + e.message);
+    } finally { setSaving(false); }
+  };
+
+  if (loading) return <div className="pe-card"><p>Cargando…</p></div>;
+  if (loadErr) return <div className="pe-error">{loadErr}</div>;
+  if (!data)   return null;
+
+  const reservas = data.reservas || [];
+  const APT_LABEL = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
+  const MES_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const fmtE = n => (n == null || n === 0) ? '—' : `${n} €`;
+  const fmtBal = n => n > 0 ? `Hestía debe ${n} €` : n < 0 ? `Leila devuelve ${Math.abs(n)} €` : 'Saldado';
+
+  const allYears = [...new Set(reservas.map(r => (r.entrada || '').slice(0, 4)).filter(Boolean))].sort();
+
+  const yearRows = reservas.map((r, i) => ({ ...r, _idx: i }))
+    .filter(r => (r.entrada || '').startsWith(focusYear));
+
+  const byMonth = {};
+  yearRows.forEach(r => {
+    const m = (r.entrada || '').slice(5, 7);
+    if (m) (byMonth[m] = byMonth[m] || []).push(r);
+  });
+  const months = Object.keys(byMonth).sort();
+
+  let cumBal = 0;
+  let yrTarifa = 0, yrCobrado = 0;
+
+  return (
+    <div className="pe-card">
+      <div className="leila-hdr">
+        <h2 style={{ margin: 0 }}>Pagos · Leila</h2>
+        <div className="leila-year-row">
+          {allYears.map(y => (
+            <button key={y} type="button"
+              className={`leila-yr-btn${y === focusYear ? ' active' : ''}`}
+              onClick={() => { setFocusYear(y); setEdits({}); setSaveMsg(null); }}>
+              {y}
+            </button>
+          ))}
+        </div>
+        {Object.keys(edits).length > 0 && (
+          <button type="button" className="pe-btn pe-btn-primary" onClick={save} disabled={saving}>
+            {saving ? 'Guardando…' : `Guardar cambios (${Object.keys(edits).length})`}
+          </button>
+        )}
+      </div>
+      {saveMsg && <div className={saveMsg.startsWith('Error') ? 'pe-error' : 'pe-success'} style={{ marginTop: 8 }}>{saveMsg}</div>}
+
+      {months.length === 0 && <p className="pe-help" style={{ marginTop: 16 }}>Sin reservas con entrada en {focusYear}.</p>}
+
+      {months.map(m => {
+        const rows = byMonth[m];
+        const mTarifa  = rows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
+        const mCobrado = rows.reduce((s, r) => {
+          const v = edits[r._idx] !== undefined ? Number(edits[r._idx]) : (Number(r.pagos_leila) || 0);
+          return s + v;
+        }, 0);
+        const mBal = mTarifa - mCobrado;
+        cumBal += mBal; yrTarifa += mTarifa; yrCobrado += mCobrado;
+
+        return (
+          <div key={m} className="leila-month-block">
+            <div className="leila-month-hdr">
+              <span className="leila-month-name">{MES_ES[parseInt(m, 10) - 1]} {focusYear}</span>
+              <span className="leila-month-kpis">
+                <span>Tarifa total: <strong>{mTarifa} €</strong></span>
+                <span>Cobró huésped: <strong>{mCobrado} €</strong></span>
+                <span className={mBal > 0 ? 'leila-owe' : mBal < 0 ? 'leila-over' : ''}><strong>{fmtBal(mBal)}</strong></span>
+              </span>
+            </div>
+            <table className="leila-table">
+              <thead>
+                <tr>
+                  <th>Apt</th>
+                  <th>Huésped</th>
+                  <th>Entrada</th>
+                  <th className="num">Noches</th>
+                  <th className="num">Tarifa Leila</th>
+                  <th className="num">Cobró huésped</th>
+                  <th className="num">Debe Hestía</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map(r => {
+                  const tarifa  = Number(r.gasto_limpieza) || 0;
+                  const cobrado = edits[r._idx] !== undefined ? Number(edits[r._idx]) : (Number(r.pagos_leila) || 0);
+                  const pend    = tarifa - cobrado;
+                  return (
+                    <tr key={r._idx}>
+                      <td className="leila-apt">{APT_LABEL[r.apt] || r.apt}</td>
+                      <td className="leila-guest">{r.responsable || '—'}</td>
+                      <td>{r.entrada}</td>
+                      <td className="num">{r.noches || '—'}</td>
+                      <td className="num">{tarifa} €</td>
+                      <td className="num">
+                        <input
+                          type="number" step="1" min="0"
+                          className="leila-cobro-input"
+                          value={edits[r._idx] !== undefined ? edits[r._idx] : (r.pagos_leila || 0)}
+                          onChange={e => setEdits(prev => ({ ...prev, [r._idx]: e.target.value }))}
+                        />
+                      </td>
+                      <td className={`num ${pend > 0 ? 'leila-owe' : pend < 0 ? 'leila-over' : 'leila-ok'}`}>
+                        {pend === 0 ? '—' : `${pend > 0 ? '' : '−'}${Math.abs(pend)} €`}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+              <tfoot>
+                <tr className="leila-foot-row">
+                  <td colSpan="4"></td>
+                  <td className="num">{mTarifa} €</td>
+                  <td className="num">{mCobrado > 0 ? `${mCobrado} €` : '—'}</td>
+                  <td className={`num ${mBal > 0 ? 'leila-owe' : mBal < 0 ? 'leila-over' : 'leila-ok'}`}>
+                    {mBal === 0 ? '—' : `${mBal > 0 ? '' : '−'}${Math.abs(mBal)} €`}
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+            <div className="leila-cum-row">
+              Saldo acumulado {focusYear}:{' '}
+              <strong className={cumBal > 0 ? 'leila-owe' : cumBal < 0 ? 'leila-over' : ''}>
+                {fmtBal(cumBal)}
+              </strong>
+            </div>
+          </div>
+        );
+      })}
+
+      {months.length > 1 && (() => {
+        const yrBal = yrTarifa - yrCobrado;
+        return (
+          <div className="leila-year-total">
+            <span>Total {focusYear}</span>
+            <span>Tarifa: <strong>{yrTarifa} €</strong></span>
+            <span>Cobró huésped: <strong>{yrCobrado} €</strong></span>
+            <span className={yrBal > 0 ? 'leila-owe' : yrBal < 0 ? 'leila-over' : ''}>
+              Balance: <strong>{fmtBal(yrBal)}</strong>
+            </span>
+          </div>
+        );
+      })()}
+    </div>
+  );
+};
+
 const ReservasTab = ({ token }) => {
   const [data,        setData]        = React.useState(null);
   const [sha,         setSha]         = React.useState(null);
@@ -2938,12 +3128,17 @@ const AdminApp = () => {
           onClick={() => { setMode('reservas'); setError(null); setSuccess(null); }}>
           🗓️ Reservas
         </button>
+        <button type="button"
+          className={`pe-tab${mode === 'leila' ? ' is-active' : ''}`}
+          onClick={() => { setMode('leila'); setError(null); setSuccess(null); }}>
+          💳 Leila
+        </button>
       </div>
 
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} /> : mode === 'reservas' ? <ReservasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} /> : mode === 'reservas' ? <ReservasTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>

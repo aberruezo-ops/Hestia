@@ -2194,6 +2194,214 @@ const fmtDelta = (cur, prev) => {
   const sign = diff >= 0 ? '+' : '';
   return `${sign}${diff.toFixed(1)} %`;
 };
+const LeilaTab = ({
+  token
+}) => {
+  const [data, setData] = React.useState(null);
+  const [sha, setSha] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+  const [loadErr, setLoadErr] = React.useState(null);
+  const [saving, setSaving] = React.useState(false);
+  const [saveMsg, setSaveMsg] = React.useState(null);
+  const [edits, setEdits] = React.useState({});
+  const currentYear = String(new Date().getFullYear());
+  const [focusYear, setFocusYear] = React.useState(currentYear);
+  React.useEffect(() => {
+    setLoading(true);
+    fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
+      headers: apiHeaders(token)
+    }).then(r => r.json()).then(j => {
+      if (j.message) throw new Error(j.message);
+      setSha(j.sha);
+      setData(JSON.parse(b64ToUtf8(j.content)));
+    }).catch(e => setLoadErr('Error cargando reservas: ' + e.message)).finally(() => setLoading(false));
+  }, [token]);
+  const save = async () => {
+    if (!data || !sha || Object.keys(edits).length === 0) return;
+    setSaving(true);
+    setSaveMsg(null);
+    try {
+      const next = {
+        ...data,
+        reservas: data.reservas.map((r, i) => edits[i] !== undefined ? {
+          ...r,
+          pagos_leila: Number(edits[i]) || 0
+        } : r)
+      };
+      const res = await fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}`, {
+        method: 'PUT',
+        headers: {
+          ...apiHeaders(token),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: 'Update pagos_leila',
+          content: utf8ToB64(JSON.stringify(next, null, 2)),
+          sha,
+          branch: BRANCH
+        })
+      });
+      const j = await res.json();
+      if (j.message && !j.content) throw new Error(j.message);
+      setSha(j.content.sha);
+      setData(next);
+      setEdits({});
+      setSaveMsg('Guardado correctamente.');
+    } catch (e) {
+      setSaveMsg('Error al guardar: ' + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+  if (loading) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("p", null, "Cargando\u2026"));
+  if (loadErr) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-error"
+  }, loadErr);
+  if (!data) return null;
+  const reservas = data.reservas || [];
+  const APT_LABEL = {
+    vm: 'Mar',
+    vt: 'Thalassa',
+    vs: 'Salinas'
+  };
+  const MES_ES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  const fmtE = n => n == null || n === 0 ? '—' : `${n} €`;
+  const fmtBal = n => n > 0 ? `Hestía debe ${n} €` : n < 0 ? `Leila devuelve ${Math.abs(n)} €` : 'Saldado';
+  const allYears = [...new Set(reservas.map(r => (r.entrada || '').slice(0, 4)).filter(Boolean))].sort();
+  const yearRows = reservas.map((r, i) => ({
+    ...r,
+    _idx: i
+  })).filter(r => (r.entrada || '').startsWith(focusYear));
+  const byMonth = {};
+  yearRows.forEach(r => {
+    const m = (r.entrada || '').slice(5, 7);
+    if (m) (byMonth[m] = byMonth[m] || []).push(r);
+  });
+  const months = Object.keys(byMonth).sort();
+  let cumBal = 0;
+  let yrTarifa = 0,
+    yrCobrado = 0;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "leila-hdr"
+  }, /*#__PURE__*/React.createElement("h2", {
+    style: {
+      margin: 0
+    }
+  }, "Pagos \xB7 Leila"), /*#__PURE__*/React.createElement("div", {
+    className: "leila-year-row"
+  }, allYears.map(y => /*#__PURE__*/React.createElement("button", {
+    key: y,
+    type: "button",
+    className: `leila-yr-btn${y === focusYear ? ' active' : ''}`,
+    onClick: () => {
+      setFocusYear(y);
+      setEdits({});
+      setSaveMsg(null);
+    }
+  }, y))), Object.keys(edits).length > 0 && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-primary",
+    onClick: save,
+    disabled: saving
+  }, saving ? 'Guardando…' : `Guardar cambios (${Object.keys(edits).length})`)), saveMsg && /*#__PURE__*/React.createElement("div", {
+    className: saveMsg.startsWith('Error') ? 'pe-error' : 'pe-success',
+    style: {
+      marginTop: 8
+    }
+  }, saveMsg), months.length === 0 && /*#__PURE__*/React.createElement("p", {
+    className: "pe-help",
+    style: {
+      marginTop: 16
+    }
+  }, "Sin reservas con entrada en ", focusYear, "."), months.map(m => {
+    const rows = byMonth[m];
+    const mTarifa = rows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
+    const mCobrado = rows.reduce((s, r) => {
+      const v = edits[r._idx] !== undefined ? Number(edits[r._idx]) : Number(r.pagos_leila) || 0;
+      return s + v;
+    }, 0);
+    const mBal = mTarifa - mCobrado;
+    cumBal += mBal;
+    yrTarifa += mTarifa;
+    yrCobrado += mCobrado;
+    return /*#__PURE__*/React.createElement("div", {
+      key: m,
+      className: "leila-month-block"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "leila-month-hdr"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "leila-month-name"
+    }, MES_ES[parseInt(m, 10) - 1], " ", focusYear), /*#__PURE__*/React.createElement("span", {
+      className: "leila-month-kpis"
+    }, /*#__PURE__*/React.createElement("span", null, "Tarifa total: ", /*#__PURE__*/React.createElement("strong", null, mTarifa, " \u20AC")), /*#__PURE__*/React.createElement("span", null, "Cobr\xF3 hu\xE9sped: ", /*#__PURE__*/React.createElement("strong", null, mCobrado, " \u20AC")), /*#__PURE__*/React.createElement("span", {
+      className: mBal > 0 ? 'leila-owe' : mBal < 0 ? 'leila-over' : ''
+    }, /*#__PURE__*/React.createElement("strong", null, fmtBal(mBal))))), /*#__PURE__*/React.createElement("table", {
+      className: "leila-table"
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Hu\xE9sped"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Noches"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Tarifa Leila"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Cobr\xF3 hu\xE9sped"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Debe Hest\xEDa"))), /*#__PURE__*/React.createElement("tbody", null, rows.map(r => {
+      const tarifa = Number(r.gasto_limpieza) || 0;
+      const cobrado = edits[r._idx] !== undefined ? Number(edits[r._idx]) : Number(r.pagos_leila) || 0;
+      const pend = tarifa - cobrado;
+      return /*#__PURE__*/React.createElement("tr", {
+        key: r._idx
+      }, /*#__PURE__*/React.createElement("td", {
+        className: "leila-apt"
+      }, APT_LABEL[r.apt] || r.apt), /*#__PURE__*/React.createElement("td", {
+        className: "leila-guest"
+      }, r.responsable || '—'), /*#__PURE__*/React.createElement("td", null, r.entrada), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, r.noches || '—'), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, tarifa, " \u20AC"), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, /*#__PURE__*/React.createElement("input", {
+        type: "number",
+        step: "1",
+        min: "0",
+        className: "leila-cobro-input",
+        value: edits[r._idx] !== undefined ? edits[r._idx] : r.pagos_leila || 0,
+        onChange: e => setEdits(prev => ({
+          ...prev,
+          [r._idx]: e.target.value
+        }))
+      })), /*#__PURE__*/React.createElement("td", {
+        className: `num ${pend > 0 ? 'leila-owe' : pend < 0 ? 'leila-over' : 'leila-ok'}`
+      }, pend === 0 ? '—' : `${pend > 0 ? '' : '−'}${Math.abs(pend)} €`));
+    })), /*#__PURE__*/React.createElement("tfoot", null, /*#__PURE__*/React.createElement("tr", {
+      className: "leila-foot-row"
+    }, /*#__PURE__*/React.createElement("td", {
+      colSpan: "4"
+    }), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, mTarifa, " \u20AC"), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, mCobrado > 0 ? `${mCobrado} €` : '—'), /*#__PURE__*/React.createElement("td", {
+      className: `num ${mBal > 0 ? 'leila-owe' : mBal < 0 ? 'leila-over' : 'leila-ok'}`
+    }, mBal === 0 ? '—' : `${mBal > 0 ? '' : '−'}${Math.abs(mBal)} €`)))), /*#__PURE__*/React.createElement("div", {
+      className: "leila-cum-row"
+    }, "Saldo acumulado ", focusYear, ":", ' ', /*#__PURE__*/React.createElement("strong", {
+      className: cumBal > 0 ? 'leila-owe' : cumBal < 0 ? 'leila-over' : ''
+    }, fmtBal(cumBal))));
+  }), months.length > 1 && (() => {
+    const yrBal = yrTarifa - yrCobrado;
+    return /*#__PURE__*/React.createElement("div", {
+      className: "leila-year-total"
+    }, /*#__PURE__*/React.createElement("span", null, "Total ", focusYear), /*#__PURE__*/React.createElement("span", null, "Tarifa: ", /*#__PURE__*/React.createElement("strong", null, yrTarifa, " \u20AC")), /*#__PURE__*/React.createElement("span", null, "Cobr\xF3 hu\xE9sped: ", /*#__PURE__*/React.createElement("strong", null, yrCobrado, " \u20AC")), /*#__PURE__*/React.createElement("span", {
+      className: yrBal > 0 ? 'leila-owe' : yrBal < 0 ? 'leila-over' : ''
+    }, "Balance: ", /*#__PURE__*/React.createElement("strong", null, fmtBal(yrBal))));
+  })());
+};
 const ReservasTab = ({
   token
 }) => {
@@ -3442,13 +3650,23 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDDD3\uFE0F Reservas")), success && /*#__PURE__*/React.createElement("div", {
+  }, "\uD83D\uDDD3\uFE0F Reservas"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'leila' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('leila');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCB3 Leila")), success && /*#__PURE__*/React.createElement("div", {
     className: "pe-success"
   }, success), error && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
   }, error), mode === 'analytics' ? /*#__PURE__*/React.createElement(AnalyticsTab, null) : mode === 'contract' ? /*#__PURE__*/React.createElement(ContractTab, {
     pricesData: data
   }) : mode === 'reservas' ? /*#__PURE__*/React.createElement(ReservasTab, {
+    token: token
+  }) : mode === 'leila' ? /*#__PURE__*/React.createElement(LeilaTab, {
     token: token
   }) : mode === 'reviews' ? renderReviewsTab() : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
