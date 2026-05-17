@@ -227,16 +227,52 @@ const Header = ({
     window.addEventListener('hestia-vit-change', sync);
     return () => window.removeEventListener('hestia-vit-change', sync);
   }, []);
+  const toggleVit = () => {
+    const next = !vitMin;
+    setVitMin(next);
+    try {
+      sessionStorage.setItem('hestia-vit-min', next ? '1' : '0');
+    } catch (_) {}
+    window.dispatchEvent(new CustomEvent('hestia-vit-change'));
+  };
   const expandVit = () => {
+    setVitMin(false);
     try {
       sessionStorage.setItem('hestia-vit-min', '0');
     } catch (_) {}
     window.dispatchEvent(new CustomEvent('hestia-vit-change'));
-    // Si no estamos en la home, navegar allí para que se vea el vitruvio
-    if (!document.querySelector('.hero')) {
-      window.location.href = 'index.html';
-    }
   };
+  const [heroVisible, setHeroVisible] = React.useState(true);
+  React.useEffect(() => {
+    const hero = document.querySelector('.hero');
+    if (!hero || !window.IntersectionObserver) return;
+    const obs = new IntersectionObserver(([entry]) => setHeroVisible(entry.isIntersecting), {
+      threshold: 0.05
+    });
+    obs.observe(hero);
+    return () => obs.disconnect();
+  }, []);
+  const vitHidden = !heroVisible;
+  const vitruvio = vitMin ? null : ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+    className: `hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hv-box",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("video", {
+    autoPlay: true,
+    muted: true,
+    loop: true,
+    playsInline: true,
+    preload: "auto"
+  }, /*#__PURE__*/React.createElement("source", {
+    src: "assets/hestia-vitruvio.mp4",
+    type: "video/mp4"
+  }))), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "hv-toggle",
+    onClick: toggleVit,
+    "aria-label": lang === 'es' ? 'Minimizar' : 'Minimise'
+  }, "-")), document.body);
 
   // Sync animation across page navigations using absolute time
   React.useEffect(() => {
@@ -395,7 +431,7 @@ const Header = ({
     onClick: () => setMobileOpen(o => !o),
     "aria-label": mobileOpen ? 'Cerrar menú' : 'Abrir menú',
     "aria-expanded": mobileOpen
-  }, mobileOpen ? /*#__PURE__*/React.createElement(IconClose, null) : /*#__PURE__*/React.createElement(IconHamburger, null)))), /*#__PURE__*/React.createElement("div", {
+  }, mobileOpen ? /*#__PURE__*/React.createElement(IconClose, null) : /*#__PURE__*/React.createElement(IconHamburger, null)))), vitruvio, /*#__PURE__*/React.createElement("div", {
     className: `mobile-menu ${mobileOpen ? 'open' : ''}`,
     "aria-hidden": !mobileOpen
   }, /*#__PURE__*/React.createElement("nav", {

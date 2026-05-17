@@ -64,12 +64,9 @@ const HERO_VIDEOS = [
 ];
 
 // --- HERO cinematográfico ---
-const Hero = ({ lang, onScrollDown, vitMin, toggleVit }) => {
+const Hero = ({ lang, onScrollDown }) => {
   const t = COPY[lang];
   const bgVideoRef = React.useRef(null);
-  const sectionRef = React.useRef(null);
-  // Ocultar vitruvio expandido cuando el hero deja de ser visible en pantalla
-  const [heroVisible, setHeroVisible] = React.useState(true);
 
   // Elige un vídeo distinto en cada visita a la home dentro de la misma sesión.
   // Nunca repite hasta haber agotado todos; al reiniciar el ciclo evita
@@ -102,43 +99,8 @@ const Hero = ({ lang, onScrollDown, vitMin, toggleVit }) => {
     return () => { document.removeEventListener('visibilitychange', onVisible); };
   }, []);
 
-  React.useEffect(() => {
-    const el = sectionRef.current;
-    if (!el || !window.IntersectionObserver) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setHeroVisible(entry.isIntersecting),
-      { threshold: 0.05 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  // Ocultar cuando el hero deja de ser visible y el vitruvio está expandido
-  const vitHidden = !heroVisible;
-  // Cuando minimizado, el header renderiza el círculo +; aquí solo mostramos el expandido
-  const vitruvio = vitMin ? null : ReactDOM.createPortal(
-    <div className={`hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`}>
-      <div className="hv-box" aria-hidden="true">
-        <video autoPlay muted loop playsInline preload="auto">
-          <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
-        </video>
-      </div>
-      <button
-        type="button"
-        className="hv-toggle"
-        onClick={toggleVit}
-        aria-label={lang === 'es' ? 'Minimizar' : 'Minimise'}
-      >
-        -
-      </button>
-    </div>,
-    document.body
-  );
-
   return (
-    <>
     <section
-      ref={sectionRef}
       id="top"
       className={`hero mood-${pick.mood}`}
       data-screen-label="01 Hero"
@@ -194,8 +156,6 @@ const Hero = ({ lang, onScrollDown, vitMin, toggleVit }) => {
         <span className="hide-mobile hero-meta-province">Almería · Andalucía</span>
       </div>
     </section>
-    {vitruvio}
-    </>
   );
 };
 

@@ -146,14 +146,47 @@ const Header = ({ mode, scrolled, lang }) => {
     return () => window.removeEventListener('hestia-vit-change', sync);
   }, []);
 
+  const toggleVit = () => {
+    const next = !vitMin;
+    setVitMin(next);
+    try { sessionStorage.setItem('hestia-vit-min', next ? '1' : '0'); } catch (_) {}
+    window.dispatchEvent(new CustomEvent('hestia-vit-change'));
+  };
   const expandVit = () => {
+    setVitMin(false);
     try { sessionStorage.setItem('hestia-vit-min', '0'); } catch (_) {}
     window.dispatchEvent(new CustomEvent('hestia-vit-change'));
-    // Si no estamos en la home, navegar allí para que se vea el vitruvio
-    if (!document.querySelector('.hero')) {
-      window.location.href = 'index.html';
-    }
   };
+  const [heroVisible, setHeroVisible] = React.useState(true);
+  React.useEffect(() => {
+    const hero = document.querySelector('.hero');
+    if (!hero || !window.IntersectionObserver) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setHeroVisible(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    obs.observe(hero);
+    return () => obs.disconnect();
+  }, []);
+  const vitHidden = !heroVisible;
+  const vitruvio = vitMin ? null : ReactDOM.createPortal(
+    <div className={`hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`}>
+      <div className="hv-box" aria-hidden="true">
+        <video autoPlay muted loop playsInline preload="auto">
+          <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
+        </video>
+      </div>
+      <button
+        type="button"
+        className="hv-toggle"
+        onClick={toggleVit}
+        aria-label={lang === 'es' ? 'Minimizar' : 'Minimise'}
+      >
+        -
+      </button>
+    </div>,
+    document.body
+  );
 
   // Sync animation across page navigations using absolute time
   React.useEffect(() => {
@@ -290,6 +323,7 @@ const Header = ({ mode, scrolled, lang }) => {
           </button>
         </div>
       </header>
+      {vitruvio}
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
         <nav className="mobile-nav">
           <div className="mn-label eyebrow">{lang === 'es' ? 'Apartamentos' : 'Apartments'}</div>
