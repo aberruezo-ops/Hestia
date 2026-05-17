@@ -77,15 +77,10 @@ const HERO_VIDEOS = [{
 // --- HERO cinematográfico ---
 const Hero = ({
   lang,
-  onScrollDown,
-  vitMin,
-  toggleVit
+  onScrollDown
 }) => {
   const t = COPY[lang];
   const bgVideoRef = React.useRef(null);
-  const sectionRef = React.useRef(null);
-  // Ocultar vitruvio expandido cuando el hero deja de ser visible en pantalla
-  const [heroVisible, setHeroVisible] = React.useState(true);
 
   // Elige un vídeo distinto en cada visita a la home dentro de la misma sesión.
   // Nunca repite hasta haber agotado todos; al reiniciar el ciclo evita
@@ -126,41 +121,7 @@ const Hero = ({
       document.removeEventListener('visibilitychange', onVisible);
     };
   }, []);
-  React.useEffect(() => {
-    const el = sectionRef.current;
-    if (!el || !window.IntersectionObserver) return;
-    const obs = new IntersectionObserver(([entry]) => setHeroVisible(entry.isIntersecting), {
-      threshold: 0.05
-    });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  // Ocultar cuando el hero deja de ser visible y el vitruvio está expandido
-  const vitHidden = !heroVisible;
-  // Cuando minimizado, el header renderiza el círculo +; aquí solo mostramos el expandido
-  const vitruvio = vitMin ? null : ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
-    className: `hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "hv-box",
-    "aria-hidden": "true"
-  }, /*#__PURE__*/React.createElement("video", {
-    autoPlay: true,
-    muted: true,
-    loop: true,
-    playsInline: true,
-    preload: "auto"
-  }, /*#__PURE__*/React.createElement("source", {
-    src: "assets/hestia-vitruvio.mp4",
-    type: "video/mp4"
-  }))), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: "hv-toggle",
-    onClick: toggleVit,
-    "aria-label": lang === 'es' ? 'Minimizar' : 'Minimise'
-  }, "-")), document.body);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
-    ref: sectionRef,
+  return /*#__PURE__*/React.createElement("section", {
     id: "top",
     className: `hero mood-${pick.mood}`,
     "data-screen-label": "01 Hero",
@@ -237,7 +198,7 @@ const Hero = ({
     "aria-hidden": "true"
   }, "\xB7"), /*#__PURE__*/React.createElement("span", null, "Mar Mediterr\xE1neo")), /*#__PURE__*/React.createElement("span", {
     className: "hide-mobile hero-meta-province"
-  }, "Almer\xEDa \xB7 Andaluc\xEDa"))), vitruvio);
+  }, "Almer\xEDa \xB7 Andaluc\xEDa")));
 };
 
 // --- BRIDGE (transición día/noche) ---

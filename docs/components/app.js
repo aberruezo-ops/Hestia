@@ -67,31 +67,6 @@ const App = () => {
     scrolled
   } = useScrollMode();
   useReveal();
-  const [vitMin, setVitMin] = React.useState(() => {
-    try {
-      return sessionStorage.getItem('hestia-vit-min') === '1';
-    } catch (_) {
-      return false;
-    }
-  });
-  const toggleVit = () => {
-    const next = !vitMin;
-    setVitMin(next);
-    try {
-      sessionStorage.setItem('hestia-vit-min', next ? '1' : '0');
-    } catch (_) {}
-    window.dispatchEvent(new CustomEvent('hestia-vit-change'));
-  };
-  // Sync cuando el Header de esta misma página dispara expandVit
-  React.useEffect(() => {
-    const sync = () => {
-      try {
-        setVitMin(sessionStorage.getItem('hestia-vit-min') === '1');
-      } catch (_) {}
-    };
-    window.addEventListener('hestia-vit-change', sync);
-    return () => window.removeEventListener('hestia-vit-change', sync);
-  }, []);
   React.useEffect(() => {
     localStorage.setItem('hestia-lang', lang);
     document.documentElement.lang = lang;
@@ -143,9 +118,7 @@ const App = () => {
     scrolled: scrolled,
     lang: lang
   }), /*#__PURE__*/React.createElement("main", null, /*#__PURE__*/React.createElement(Hero, {
-    lang: lang,
-    vitMin: vitMin,
-    toggleVit: toggleVit
+    lang: lang
   }), /*#__PURE__*/React.createElement(FraseHogar, {
     lang: lang
   }), /*#__PURE__*/React.createElement(HomeSearch, {
