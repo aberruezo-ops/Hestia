@@ -4493,6 +4493,76 @@ const DishesGuide = ({
 };
 
 // ================================================================
+// TapasRoutes — rutas de tapas por localidad. Acordeón por ciudad.
+// Se renderiza en Sabores después de DishesGuide.
+// ================================================================
+const TapasRoutes = ({
+  lang
+}) => {
+  if (!Array.isArray(TAPAS_ROUTES) || TAPAS_ROUTES.length === 0) return null;
+  const [openId, setOpenId] = React.useState(null);
+  const toggle = id => setOpenId(prev => prev === id ? null : id);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "ag-cat-group",
+    style: {
+      marginBottom: '8px'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-cat-h ag-cat-h--static"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-cat-dot",
+    style: {
+      background: 'var(--apt-accent)'
+    },
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-cat-icon"
+  }, "\uD83D\uDDFA\uFE0F")), /*#__PURE__*/React.createElement("span", {
+    className: "ag-cat-label"
+  }, lang === 'es' ? 'Rutas de tapas' : 'Tapas routes'), /*#__PURE__*/React.createElement("span", {
+    className: "ag-cat-count"
+  }, TAPAS_ROUTES.length)), /*#__PURE__*/React.createElement("div", {
+    className: "ag-tapas-routes"
+  }, TAPAS_ROUTES.map(route => {
+    const isOpen = openId === route.id;
+    const city = lang === 'es' ? route.city_es : route.city_en;
+    const intro = lang === 'es' ? route.intro_es : route.intro_en;
+    const tip = lang === 'es' ? route.tip_es : route.tip_en;
+    return /*#__PURE__*/React.createElement("div", {
+      key: route.id,
+      className: `ag-tapas-route${isOpen ? ' is-open' : ''}`
+    }, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "ag-tapas-route-btn",
+      onClick: () => toggle(route.id),
+      "aria-expanded": isOpen
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-tapas-route-city"
+    }, city), /*#__PURE__*/React.createElement("span", {
+      className: `ag-cat-chev${isOpen ? ' open' : ''}`,
+      "aria-hidden": "true"
+    }, "\u2193")), isOpen && /*#__PURE__*/React.createElement("div", {
+      className: "ag-tapas-route-body"
+    }, /*#__PURE__*/React.createElement("p", {
+      className: "ag-tapas-intro"
+    }, intro), /*#__PURE__*/React.createElement("ol", {
+      className: "ag-tapas-stops"
+    }, route.stops.map((stop, i) => /*#__PURE__*/React.createElement("li", {
+      key: i,
+      className: "ag-tapas-stop"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-tapas-stop-name"
+    }, stop.name), /*#__PURE__*/React.createElement("span", {
+      className: "ag-tapas-stop-what"
+    }, lang === 'es' ? stop.what_es : stop.what_en)))), tip && /*#__PURE__*/React.createElement("p", {
+      className: "ag-tapas-tip"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-dish-tip-tag"
+    }, lang === 'es' ? 'Tip:' : 'Tip:'), " ", tip)));
+  })));
+};
+
+// ================================================================
 // EventsCalendar — calendario consolidado de fiestas patronales y
 // eventos por mes. Escanea PLACES (filtra los que tienen events[])
 // y agrupa por mes detectado en el string 'when' (libre, p.ej.
@@ -5712,6 +5782,218 @@ const ICONIC_DISHES = [{
   desc_es: 'Pan plano de harina, aceite y agua, cocido en la sartén y servido con el "avío" (sobras de matanza, chorizo, panceta) o con miel. Pan-tapa del campo almeriense.',
   desc_en: 'Flat bread of flour, oil and water, pan-cooked and served with "avío" (cured-pork leftovers, chorizo, pancetta) or honey. Almerían country bread-tapa.',
   placeIds: ['terraza-carmona']
+}];
+
+// TAPAS_ROUTES — rutas de tapas por localidad. Se renderizan en Sabores.
+const TAPAS_ROUTES = [{
+  id: 'tapas-vera-playa',
+  city_es: 'Vera Playa',
+  city_en: 'Vera Playa',
+  intro_es: 'El paseo marítimo de Vera Playa tiene varios chiringuitos y terrazas donde el tapeo es informal y relajado: ideal para la tarde-noche después del baño.',
+  intro_en: 'Vera Playa\'s promenade has chiringuitos and terraces for an easy, relaxed tapas crawl — perfect for an evening after the beach.',
+  stops: [{
+    name: 'Chiringuito Maruja',
+    what_es: 'Pescaíto frito y sardinas al espeto. Caña + tapa a precio de chiringuito.',
+    what_en: 'Fried fish and espeto sardines. Affordable beachside tapas.'
+  }, {
+    name: 'Bares del paseo marítimo',
+    what_es: 'Chopitos fritos, boquerones en vinagre, croquetas caseras. Pide siempre lo del día.',
+    what_en: 'Fried squid rings, marinated anchovies, home-made croquettes. Always ask for the daily special.'
+  }, {
+    name: 'Terraza con vistas al mar',
+    what_es: 'Para acabar: tinto de verano o granizado de limón y disfrutar de la puesta de sol.',
+    what_en: 'To finish: red wine with lemon or granizado, watching the sunset.'
+  }],
+  tip_es: 'Los chiringuitos de playa tienen horarios variables según temporada — en julio y agosto abren hasta las 00:00; fuera de verano cierran sobre las 22:00.',
+  tip_en: 'Beach chiringuitos have seasonal hours — July and August until midnight; outside summer they close around 22:00.'
+}, {
+  id: 'tapas-vera-pueblo',
+  city_es: 'Vera pueblo',
+  city_en: 'Vera village',
+  intro_es: 'A 10 min en coche, Vera pueblo es la ruta de tapas clásica de la comarca. Bares de barrio con tapa de verdad y ambiente local.',
+  intro_en: '10 min by car, Vera village is the area\'s classic tapas crawl. Neighbourhood bars with real tapas and a local crowd.',
+  stops: [{
+    name: 'Bar Las Vegas',
+    what_es: 'Primera parada: cerveza fría + tapa de chocos fritos o gambas al ajillo. ~3 €.',
+    what_en: 'First stop: cold beer + fried squid or garlic prawns tapa. ~€3.'
+  }, {
+    name: 'Bodega El Choto',
+    what_es: 'Vinos locales almerienses y murcianos. Tapa de carne (lomo, morcilla). Ambiente de taberna.',
+    what_en: 'Local Almería and Murcia wines. Meat tapa (loin, blood sausage). Tavern atmosphere.'
+  }, {
+    name: 'Bar Pasaje',
+    what_es: 'Ración para compartir: pulpo a la gallega o jamón ibérico. Mesa fuera en verano.',
+    what_en: 'Sharing platter: Galician octopus or Iberian ham. Outdoor table in summer.'
+  }, {
+    name: 'Heladería La Ibense',
+    what_es: 'Cierre perfecto: helado artesanal de turrón, chocolate al ron o mantecado.',
+    what_en: 'Perfect ending: artisan turrón, rum chocolate or mantecado ice cream.'
+  }],
+  tip_es: 'En Andalucía la tapa viene con la consumición — aquí aún se mantiene esa costumbre. Lleva efectivo: los bares pequeños no siempre cobran con tarjeta.',
+  tip_en: 'In Andalusia the tapa comes free with the drink — this tradition still holds here. Bring cash: small bars don\'t always take cards.'
+}, {
+  id: 'tapas-garrucha',
+  city_es: 'Garrucha',
+  city_en: 'Garrucha',
+  intro_es: 'Puerto pesquero activo con una de las mejores gambas rojas del Mediterráneo. La ruta de tapas de Garrucha gira en torno al puerto: marisco sobre la marcha, vistas a las barcas y bodegas donde se conoce al pescador de nombre.',
+  intro_en: 'Active fishing port with some of the best red prawns in the Mediterranean. The Garrucha tapas route revolves around the port: fresh shellfish on the go, views of the fishing boats and bars where the fishermen are regulars.',
+  stops: [{
+    name: 'Los Lebreros (puerto)',
+    what_es: 'Empezar al caer la tarde: caña, camarones crudos y quisquilla viva. Llegar sobre las 19:00 cuando atracan los barcos.',
+    what_en: 'Start at sundown: beer, raw camarones and live quisquilla prawns. Arrive around 19:00 when the boats dock.'
+  }, {
+    name: 'Rincón del Puerto',
+    what_es: 'Junto a la lonja. Gamba roja a la plancha — pedirla sin más, no necesita nada. El punto de cocción es clave: vuelta y vuelta.',
+    what_en: 'Next to the fish market. Grilled red prawns — order them plain, they need nothing else. The cooking point is everything: just seared.'
+  }, {
+    name: 'El Almejero',
+    what_es: 'Si queréis sentaros a cenar: arroz caldoso de bogavante o almejas a la marinera. Bib Gourmand.',
+    what_en: 'If you want a sit-down dinner: caldoso lobster rice or clams marinera. Bib Gourmand.'
+  }, {
+    name: 'La Trattoria da Marco',
+    what_es: 'Alternativa sin mariscos: pizza calzone auténtica o pasta carbonara italiana.',
+    what_en: 'Non-seafood alternative: authentic pizza calzone or Italian carbonara.'
+  }],
+  tip_es: 'La lonja de Garrucha subasta el pescado a las 17:00 los días laborables. Pasate antes de cenar a ver el espectáculo desde la cristalera.',
+  tip_en: 'Garrucha\'s fish auction runs at 17:00 on weekdays. Stop by before dinner to watch through the glass.'
+}, {
+  id: 'tapas-mojacar',
+  city_es: 'Mojácar',
+  city_en: 'Mojácar',
+  intro_es: 'Mojácar tiene dos caras: el pueblo blanco encaramado a la sierra y la playa. La ruta de tapas más especial es la del pueblo, con terrazas sobre el valle; la playa tiene bares más informales pero con buena materia prima.',
+  intro_en: 'Mojácar has two sides: the white hilltop village and the beach. The most memorable tapas route is in the village, with terraces overlooking the valley; the beach has more casual bars but solid produce.',
+  stops: [{
+    name: "Tito's (Pueblo)",
+    what_es: 'Primera parada en el pueblo: rabo de toro, croquetas de jamón y atún encebollado. Reserva con antelación en verano.',
+    what_en: 'First village stop: oxtail stew, jamón croquettes and tuna with onion. Book ahead in summer.'
+  }, {
+    name: 'Cantares (Plaza Nueva)',
+    what_es: 'Terraza con vistas al valle. Vermut con tapa, tabla ibérica. El atardecer aquí vale el viaje.',
+    what_en: 'Terrace with valley views. Vermouth with tapa, Iberian charcuterie board. The sunset view is worth the trip.'
+  }, {
+    name: 'Mandala (Pueblo)',
+    what_es: 'Coctelería de autor para cerrar: gin tonics premium y mezcales de calidad.',
+    what_en: 'Craft cocktail bar to close: premium gin tonics and quality mezcals.'
+  }, {
+    name: 'Cabo Norte (Playa)',
+    what_es: 'En la playa: gambas al ajillo imprescindibles, pulpo a la gallega y croquetas caseras. Buena relación calidad-precio.',
+    what_en: 'At the beach: essential garlic prawns, Galician octopus and home-made croquettes. Good value.'
+  }],
+  tip_es: 'El pueblo se apararca abajo y se sube andando — los callejones empinados son parte de la experiencia. En verano lleva calzado cómodo.',
+  tip_en: 'Park below the village and walk up — the steep lanes are part of the experience. In summer wear comfortable shoes.'
+}, {
+  id: 'tapas-cabo-gata',
+  city_es: 'Cabo de Gata · San José',
+  city_en: 'Cabo de Gata · San José',
+  intro_es: 'San José es la capital del Parque Natural. Pocos bares pero de calidad, con producto del mar a metros de donde se pesca. El tapeo aquí es tranquilo y con sabor a costa virgen.',
+  intro_en: 'San José is the gateway to the Natural Park. Few bars but good ones, with seafood from waters metres away. Tapas here are unhurried, with the feel of an unspoilt coast.',
+  stops: [{
+    name: 'Bar Sahara (San José)',
+    what_es: 'Ambiente de pueblo pesquero: cervezas artesanas, tapas marineras y música en vivo algunos días.',
+    what_en: 'Fishing-village atmosphere: craft beers, seafood tapas and occasional live music.'
+  }, {
+    name: 'La Ola (San José)',
+    what_es: 'A pie de mar: pulpo a la brasa, tartar de atún y arroces. Para comer más despacio con vistas al puerto.',
+    what_en: 'Beachfront: grilled octopus, tuna tartare and rice dishes. For a relaxed lunch with port views.'
+  }, {
+    name: 'Chiringuitos de Las Negras o Agua Amarga',
+    what_es: 'Si exploráis las calas: los chiringuitos de Las Negras y Agua Amarga tienen cocina local sencilla y directa, de temporada.',
+    what_en: 'If you explore the coves: Las Negras and Agua Amarga chiringuitos have simple, direct seasonal local cooking.'
+  }],
+  tip_es: 'Los bares de San José se llenan en verano. Llega sobre las 13:30 o espera al 20:30 para evitar esperas. Fuera de temporada, confirma antes si abren.',
+  tip_en: 'San José bars fill up in summer. Arrive around 13:30 or wait until 20:30 to avoid queues. Out of season, call ahead to confirm they\'re open.'
+}, {
+  id: 'tapas-almeria-capital',
+  city_es: 'Almería capital',
+  city_en: 'Almería city',
+  intro_es: 'Almería tiene una de las tradiciones de tapas más generosas de España: con cada caña te traen una tapa gratis a elegir. El casco histórico (entre la Alcazaba y la Plaza Vieja) concentra las tabernas míticas.',
+  intro_en: 'Almería has one of Spain\'s most generous tapas traditions: every drink comes with a free tapa of your choice. The historic quarter (between the Alcazaba and Plaza Vieja) is home to the legendary taverns.',
+  stops: [{
+    name: 'Casa Puga',
+    what_es: 'Taberna fundada en 1870. Imprescindible: caracoles, ensaladilla y tortilla del Sacromonte. Sin reservas — llega antes de las 13:30 o a las 20:00.',
+    what_en: 'Tavern founded in 1870. Unmissable: snails, ensaladilla and Sacromonte omelette. No bookings — arrive before 13:30 or at 20:00.'
+  }, {
+    name: 'La Mala',
+    what_es: 'Taberna pequeña con buena rotación de tapas. Famosa por sus croquetas y el jamón en lonchas finas.',
+    what_en: 'Small tavern with a good tapa rotation. Famous for croquettes and thinly sliced jamón.'
+  }, {
+    name: 'El Quinto Toro',
+    what_es: 'Clásico del centro. Rabo de toro y albóndigas en salsa — tapas de guiso contundente.',
+    what_en: 'Downtown classic. Oxtail and meatballs in sauce — hearty stewed tapas.'
+  }, {
+    name: 'Los Diamantes',
+    what_es: 'Para los fritos: boquerones, chocos y gambas rebozadas. La fritura almeriense en su versión más pura.',
+    what_en: 'For the fried food: anchovies, squid and battered prawns. Almerían frying at its purest.'
+  }],
+  tip_es: 'Pide siempre "una caña" y no un tercio — la caña va con tapa, el tercio a veces no. Elige tú la tapa cuando te la ofrezcan, no te quedes con la que pongan por defecto.',
+  tip_en: 'Always order "una caña" (small draft) not a bottle — the caña always comes with a tapa. When offered, choose your own tapa rather than accepting the default.'
+}, {
+  id: 'tapas-aguilas',
+  city_es: 'Águilas (litoral Murcia)',
+  city_en: 'Águilas (Murcia coast)',
+  intro_es: 'Puerto pesquero murciano a 50 min de Vera Playa. Aguas transparentes, calas protegidas y una cultura de tapas de puerto que mezcla lo almeriense con lo murciano.',
+  intro_en: 'Murcian fishing port 50 min from Vera Playa. Clear waters, sheltered coves and a port tapas culture mixing Almerían and Murcian flavours.',
+  stops: [{
+    name: 'Zona del puerto (paseo La Explanada)',
+    what_es: 'La ruta empieza en el paseo del puerto: bares con terraza sobre el agua, mariscos frescos y tapa marinera clásica. Pide quisquilla y langostinos de la costa.',
+    what_en: 'Start at the harbour promenade: terrace bars over the water, fresh shellfish and classic marinera tapa. Order quisquilla and local langostinos.'
+  }, {
+    name: 'Mercado Municipal de Águilas',
+    what_es: 'Por la mañana: olivas aderezadas, queso fresco de cabra y embutido del campo. El ambiente del mercado ya vale el viaje.',
+    what_en: 'Morning stop: marinated olives, fresh goat\'s cheese and cured meats. The market atmosphere alone is worth the visit.'
+  }, {
+    name: 'Bares del casco antiguo',
+    what_es: 'Zona de la plaza: bares con tapa incluida en la consumición — herencia murciana. Pide vino DOP Bullas (el más cercano) o un vermut de grifo.',
+    what_en: 'Old town square bars: tapa included with every drink — Murcian tradition. Order DOP Bullas wine (the closest DO) or a draft vermouth.'
+  }],
+  tip_es: 'Águilas celebra uno de los Carnavales más espectaculares del Mediterráneo en febrero — si coincides, es plan aparte.',
+  tip_en: 'Águilas hosts one of the Mediterranean\'s most spectacular Carnivals in February — if you time it right, that\'s a whole other experience.'
+}, {
+  id: 'tapas-mazarron-cartagena',
+  city_es: 'Mazarrón y Cartagena',
+  city_en: 'Mazarrón and Cartagena',
+  intro_es: 'Dos pueblos del litoral murciano con identidad propia. Mazarrón es el Puerto pesquero tranquilo; Cartagena, ciudad romana con una de las rutas de tapas más particulares del sur de España (la marinera la inventaron aquí).',
+  intro_en: 'Two Murcian coastal towns with their own identity. Mazarrón is the quiet fishing port; Cartagena is a Roman city with one of the most distinctive tapas routes in southern Spain (they invented the marinera here).',
+  stops: [{
+    name: 'Puerto de Mazarrón · freidurías y marisquerías',
+    what_es: 'Puerto pesquero activo. Pescaíto frito directo de la lonja, caldero del Mar Menor (arroz con pescado de roca) y camarones frescos. Sin pretensiones, todo producto.',
+    what_en: 'Active fishing port. Freshly fried fish from the daily catch, Mar Menor caldero (rock fish rice) and fresh camarones. Unpretentious, all about the produce.'
+  }, {
+    name: 'Cartagena · La Marquesita',
+    what_es: 'La marinera: boquerón en vinagre sobre rosquilla con oliva — invento 100% cartagenero. La Marquesita es la referencia. ~25 €/persona con vino.',
+    what_en: 'The marinera: marinated anchovy on a rosquilla ring with olive — 100% Cartagena invention. La Marquesita is the benchmark. ~€25/person with wine.'
+  }, {
+    name: 'Cartagena · Calle Mayor y Barrio del Foro Romano',
+    what_es: 'Paseo entre bares: zona de tapeo de toda la vida con vistas al Teatro Romano. Los Columbares (Plaza San Sebastián) para vermut y marineras adicionales.',
+    what_en: 'Bar-to-bar walk with views of the Roman Theatre. Los Columbares (Plaza San Sebastián) for vermouth and more marineras.'
+  }],
+  tip_es: 'En Cartagena di siempre "marinera" no "montadito" — son distintos y la marinera es mucho mejor. Y pide media ración si quieres comer más de un sitio.',
+  tip_en: 'In Cartagena always say "marinera" not "montadito" — they\'re different and the marinera is far better. Order a media ración if you want to eat at more than one bar.'
+}, {
+  id: 'tapas-murcia-capital',
+  city_es: 'Murcia capital',
+  city_en: 'Murcia city',
+  intro_es: 'Murcia capital (1 h 30 min) tiene una de las culturas de tapas más vibrantes del Levante: mezcla de producto murciano (huerta, Mar Menor, cerdo ibérico) con ambiente universitario y precios razonables.',
+  intro_en: 'Murcia city (1 h 30 min) has one of the Levante\'s most vibrant tapas cultures: a mix of Murcian produce (market garden, Mar Menor, Iberian pork) with a lively university atmosphere and reasonable prices.',
+  stops: [{
+    name: 'Plaza de las Flores y Calle Trapería',
+    what_es: 'El epicentro del tapeo murciano. La plaza tiene terrazas animadas; la Trapería, la calle comercial más antigua, bares de azulejo y madera. Pide zarangollo (huevo revuelto con calabacín y cebolla) y pasteles de carne (empanadillas rellenas de carne picada especiada).',
+    what_en: 'Murcia\'s tapas epicentre. The square has lively terraces; Trapería, the oldest shopping street, has tiled and wood-panelled bars. Order zarangollo (scrambled egg with courgette and onion) and pasteles de carne (small spiced meat pies).'
+  }, {
+    name: 'Barrio del Carmen · Calle San Nicolás',
+    what_es: 'Zona de bodegas y bares de toda la vida. Marinera, michirones (habas secas guisadas con chorizo) y morcilla con arroz. Vino de Jumilla o Bullas por copas a buen precio.',
+    what_en: 'Traditional bodegas and neighbourhood bars. Marinera, michirones (dried beans stewed with chorizo) and blood sausage with rice. Jumilla or Bullas wine by the glass at good prices.'
+  }, {
+    name: 'Mercado de Verónicas',
+    what_es: 'El mercado central de Murcia: paradas de queso, fruta de huerta, pimentón murciano (de Espinardo) y longaniza de Pascua. Abre de mañana — ideal para el aperitivo de las 12:00.',
+    what_en: 'Murcia\'s central market: cheese stalls, garden produce, Murcian paprika (from Espinardo) and longaniza de Pascua sausage. Opens in the morning — ideal for a 12:00 aperitif.'
+  }, {
+    name: 'Bodegón El Corral o El Pasaje',
+    what_es: 'Para cerrar con una ración completa: caldero de Mar Menor (si lo tienen en temporada), paparajotes (hojas de limonero rebozadas en azúcar — postre murciano único) y un chato de Monastrell.',
+    what_en: 'To close with a full dish: Mar Menor caldero (if in season), paparajotes (lemon-leaf fritters in sugar — unique Murcian dessert) and a glass of Monastrell.'
+  }],
+  tip_es: 'Murcia a 1h30 es viaje de día completo. Combínalo con el Museo Arqueológico (Romano) por la mañana y el tapeo por la tarde-noche. Aparca en el centro histórico (parkings de la Catedral o San Esteban).',
+  tip_en: 'Murcia at 1h30 min is a full-day trip. Pair it with the Archaeological Museum in the morning and tapas in the afternoon. Park in the historic centre (Catedral or San Esteban car parks).'
 }];
 
 // Etiquetas de cada tema con icono y color
@@ -9142,6 +9424,8 @@ const AptGuideView = ({
   }, lang === 'es' ? 'Sabores' : 'Tastes'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
   }, lang === 'es' ? 'Restaurantes, bares y lugares para comprar. Nuestras recomendaciones, lo que pediríamos en cada sitio y dónde ir cuando apriete el hambre.' : 'Restaurants, bars and places to shop. Our recommendations, what we would order at each spot and where to go when hunger strikes.'), /*#__PURE__*/React.createElement(DishesGuide, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(TapasRoutes, {
     lang: lang
   }), SECTION_CATS.sabores.map(catId => {
     const cat = CATEGORIES.find(c => c.id === catId);
