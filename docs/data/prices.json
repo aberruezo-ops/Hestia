@@ -1,7 +1,7 @@
 {
   "_doc": "Hestía pricing source of truth. Edited via /admin.html (GitHub PAT). Read by web at runtime via fetch('data/prices.json'). All dates are local Europe/Madrid (no timezone offsets).",
   "version": 1,
-  "updatedAt": "2026-05-12T12:42:43.112Z",
+  "updatedAt": "2026-05-17T16:17:22.270Z",
   "currency": "EUR",
   "apts": {
     "vm": {
@@ -12,7 +12,7 @@
     "vt": {
       "name": "Hestía Vera Thalassa",
       "vft": "VFT/AL/05535",
-      "base": 86
+      "base": 85
     },
     "vs": {
       "name": "Hestía Vera Salinas",
