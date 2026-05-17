@@ -91,11 +91,25 @@ const Hero = ({
     } catch (_) {}
   };
 
-  // Elegimos el vídeo una sola vez al montar (no en cada render),
-  // para que el componente no haga "flicker" si algo re-renderiza.
+  // Elige un vídeo distinto en cada visita a la home dentro de la misma sesión.
+  // Nunca repite hasta haber agotado todos; al reiniciar el ciclo evita
+  // mostrar el último vídeo otra vez. Persiste en sessionStorage.
   const pick = React.useMemo(() => {
-    const i = Math.floor(Math.random() * HERO_VIDEOS.length);
-    return HERO_VIDEOS[i] || HERO_VIDEOS[0];
+    try {
+      const n = HERO_VIDEOS.length;
+      const raw = sessionStorage.getItem('hestia-hero-seen');
+      const seen = raw ? JSON.parse(raw) : [];
+      const allIdx = HERO_VIDEOS.map((_, i) => i);
+      const available = allIdx.filter(i => !seen.includes(i));
+      // Si ya se vieron todos, reinicia excluyendo el último mostrado
+      const pool = available.length > 0 ? available : allIdx.filter(i => i !== seen[seen.length - 1]);
+      const idx = pool[Math.floor(Math.random() * pool.length)];
+      const nextSeen = available.length > 0 ? [...seen, idx] : [idx];
+      sessionStorage.setItem('hestia-hero-seen', JSON.stringify(nextSeen));
+      return HERO_VIDEOS[idx];
+    } catch (_) {
+      return HERO_VIDEOS[Math.floor(Math.random() * HERO_VIDEOS.length)];
+    }
   }, []);
   React.useEffect(() => {
     // Force autoplay — declarative autoPlay can be blocked on mobile
