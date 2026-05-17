@@ -34,7 +34,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,opsz,wght@0,5..1200,400..900;1,5..1200,400..900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="assets/styles.css?v=341"/>
+  <link rel="stylesheet" href="assets/styles.css?v=342"/>
   <script type="application/ld+json">
   {
   "@context": "https://schema.org",
@@ -90,10 +90,12 @@
   }
 
   loadComponents().catch(err => {
-    document.getElementById('root').innerHTML =
-      `<div style="padding:40px;font-family:sans-serif;color:#c00">
-        <b>Error loading components:</b><br>${err.message}
-      </div>`;
+    const _errRoot = document.getElementById('root');
+    const _errDiv = document.createElement('div');
+    _errDiv.style.cssText = 'padding:40px;font-family:sans-serif;color:#c00';
+    _errDiv.innerHTML = '<b>Error loading components:</b><br>';
+    _errDiv.appendChild(document.createTextNode(err.message));
+    _errRoot.replaceChildren(_errDiv);
     console.error(err);
   });
 </script>

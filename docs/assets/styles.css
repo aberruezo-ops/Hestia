@@ -14235,6 +14235,19 @@ a.cta-wa-btn::before,
   color: var(--ink-soft);
   font-style: italic;
 }
+.eo-help-warn {
+  color: #b85a00;
+}
+/* Honeypot: fuera del viewport — bots lo ven, humanos no */
+.eo-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+  tabindex: -1;
+}
 .eo-err {
   font-size: 12px;
   color: var(--err);
