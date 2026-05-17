@@ -64,21 +64,12 @@ const HERO_VIDEOS = [
 ];
 
 // --- HERO cinematográfico ---
-const Hero = ({ lang, onScrollDown }) => {
+const Hero = ({ lang, onScrollDown, vitMin, toggleVit }) => {
   const t = COPY[lang];
   const bgVideoRef = React.useRef(null);
   const sectionRef = React.useRef(null);
-  const [vitMin, setVitMin] = React.useState(() => {
-    try { return sessionStorage.getItem('hestia-vit-min') === '1'; } catch (_) { return false; }
-  });
   // Ocultar vitruvio expandido cuando el hero deja de ser visible en pantalla
   const [heroVisible, setHeroVisible] = React.useState(true);
-
-  const toggleVit = () => {
-    const next = !vitMin;
-    setVitMin(next);
-    try { sessionStorage.setItem('hestia-vit-min', next ? '1' : '0'); } catch (_) {}
-  };
 
   // Elige un vídeo distinto en cada visita a la home dentro de la misma sesión.
   // Nunca repite hasta haber agotado todos; al reiniciar el ciclo evita
@@ -122,13 +113,12 @@ const Hero = ({ lang, onScrollDown }) => {
     return () => obs.disconnect();
   }, []);
 
-  // Cuando el hero deja de ser visible y el vitruvio no está minimizado,
-  // se oculta para no solaparse con el contenido siguiente.
-  const vitHidden = !heroVisible && !vitMin;
-  const vitruvio = ReactDOM.createPortal(
-    <div className={`hero-vitruvio${vitMin ? ' hv-min' : ''}${vitHidden ? ' hv-offhero' : ''}`}>
-      <div className="hv-box" aria-hidden="true" onClick={vitMin ? toggleVit : undefined}
-           style={vitMin ? { cursor: 'pointer' } : undefined}>
+  // Ocultar cuando el hero deja de ser visible y el vitruvio está expandido
+  const vitHidden = !heroVisible;
+  // Cuando minimizado, el header renderiza el círculo +; aquí solo mostramos el expandido
+  const vitruvio = vitMin ? null : ReactDOM.createPortal(
+    <div className={`hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`}>
+      <div className="hv-box" aria-hidden="true">
         <video autoPlay muted loop playsInline preload="auto">
           <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
         </video>
@@ -137,11 +127,9 @@ const Hero = ({ lang, onScrollDown }) => {
         type="button"
         className="hv-toggle"
         onClick={toggleVit}
-        aria-label={vitMin
-          ? (lang === 'es' ? 'Expandir animacion' : 'Expand animation')
-          : (lang === 'es' ? 'Minimizar' : 'Minimise')}
+        aria-label={lang === 'es' ? 'Minimizar' : 'Minimise'}
       >
-        {vitMin ? '+' : '-'}
+        -
       </button>
     </div>,
     document.body

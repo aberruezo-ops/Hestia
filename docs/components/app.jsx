@@ -68,6 +68,15 @@ const App = () => {
   const { mode, scrolled } = useScrollMode();
   useReveal();
 
+  const [vitMin, setVitMin] = React.useState(() => {
+    try { return sessionStorage.getItem('hestia-vit-min') === '1'; } catch (_) { return false; }
+  });
+  const toggleVit = () => {
+    const next = !vitMin;
+    setVitMin(next);
+    try { sessionStorage.setItem('hestia-vit-min', next ? '1' : '0'); } catch (_) {}
+  };
+
   React.useEffect(() => {
     localStorage.setItem('hestia-lang', lang);
     document.documentElement.lang = lang;
@@ -105,9 +114,9 @@ const App = () => {
     <>
       {!introOver && <VideoIntro lang={lang} onDone={() => setIntroOver(true)} />}
       <Topbar lang={lang} setLang={setLang} />
-      <Header mode={mode} scrolled={scrolled} lang={lang} />
+      <Header mode={mode} scrolled={scrolled} lang={lang} vitMin={vitMin} toggleVit={toggleVit} />
       <main>
-        <Hero lang={lang} />
+        <Hero lang={lang} vitMin={vitMin} toggleVit={toggleVit} />
         <FraseHogar lang={lang} />
         <HomeSearch lang={lang} />
         <Apartments lang={lang} />

@@ -128,7 +128,7 @@ const MnGuestSection = ({ t, lang, NavLink, NAV_PAGES }) => {
   );
 };
 
-const Header = ({ mode, scrolled, lang }) => {
+const Header = ({ mode, scrolled, lang, vitMin, toggleVit }) => {
   const t = COPY[lang];
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const close = () => setMobileOpen(false);
@@ -236,13 +236,21 @@ const Header = ({ mode, scrolled, lang }) => {
           <NavLink href={NAV_PAGES.salinas}>{t.nav[3]}</NavLink>
           <NavLink href={NAV_PAGES.porqueHestia}>{t.nav[8]}</NavLink>
         </nav>
-        <a href="index.html" className="brand-lockup" aria-label="Hestía — Inicio">
-          <span className="hestia-logo-mark" aria-hidden="true">
-            <img decoding="async" src="assets/logo-teal-transparent.png" alt="" className="hestia-logo"/>
-          </span>
-          <span className="wordmark">HESTÍA</span>
-          <span className="your-home">your home!</span>
-        </a>
+        <div className="brand-center">
+          <a href="index.html" className="brand-lockup" aria-label="Hestía — Inicio">
+            <span className="hestia-logo-mark" aria-hidden="true">
+              <img decoding="async" src="assets/logo-teal-transparent.png" alt="" className="hestia-logo"/>
+            </span>
+            <span className="wordmark">HESTÍA</span>
+            <span className="your-home">your home!</span>
+          </a>
+          {vitMin && toggleVit && (
+            <button type="button" className="hv-logo-btn" onClick={toggleVit}
+              aria-label={lang === 'es' ? 'Expandir animación Vitruvio' : 'Expand Vitruvio animation'}>
+              +
+            </button>
+          )}
+        </div>
         <div className="nav-right-area">
           <nav className="desktop-nav nav-right">
             <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
