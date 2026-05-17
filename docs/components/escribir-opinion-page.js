@@ -122,8 +122,10 @@ const EscribirOpinionForm = ({
   const [email, setEmail] = React.useState('');
   const [date, setDate] = React.useState('');
   const [text, setText] = React.useState('');
+  const [honeypot, setHoneypot] = React.useState('');
   const [phase, setPhase] = React.useState('idle'); // idle | sending | success | error
   const [errors, setErrors] = React.useState({});
+  const TEXT_MAX = 3000;
   const validate = () => {
     const e = {};
     if (!apt) e.apt = t.val_apt;
@@ -134,13 +136,17 @@ const EscribirOpinionForm = ({
       e.pin = t.val_pin_match;
     }
     if (!name.trim()) e.name = t.val_name;
+    if (name.trim().length > 100) e.name = t.val_name;
     if (!/\S+@\S+\.\S+/.test(email)) e.email = t.val_email;
     if (text.trim().length < 30) e.text = t.val_text;
+    if (text.trim().length > TEXT_MAX) e.text = t.val_text;
     setErrors(e);
     return Object.keys(e).length === 0;
   };
   const submit = async ev => {
     ev.preventDefault();
+    // Honeypot: si el campo invisible tiene valor, es un bot
+    if (honeypot) return;
     if (!validate()) return;
     setPhase('sending');
     const aptName = {
@@ -354,12 +360,22 @@ const EscribirOpinionForm = ({
         text: undefined
       }));
     },
-    placeholder: t.text_ph
+    placeholder: t.text_ph,
+    maxLength: TEXT_MAX
   }), /*#__PURE__*/React.createElement("span", {
-    className: "eo-help"
-  }, text.length, " / 30"), errors.text && /*#__PURE__*/React.createElement("span", {
+    className: `eo-help${text.length > TEXT_MAX - 200 ? ' eo-help-warn' : ''}`
+  }, text.length, " / ", TEXT_MAX), errors.text && /*#__PURE__*/React.createElement("span", {
     className: "eo-err"
-  }, errors.text)), /*#__PURE__*/React.createElement("div", {
+  }, errors.text)), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    name: "botcheck",
+    className: "eo-honeypot",
+    value: honeypot,
+    onChange: e => setHoneypot(e.target.value),
+    tabIndex: "-1",
+    autoComplete: "off",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "eo-actions"
   }, /*#__PURE__*/React.createElement("button", {
     type: "submit",
