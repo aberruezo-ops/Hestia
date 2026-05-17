@@ -1750,7 +1750,7 @@ body.apt-bar-shown .cookies {
 .hero-vitruvio {
   position: fixed;
   /* "top" en ambos estados para que la transición CSS funcione */
-  top: calc(100vh - 70px - clamp(200px, 22vw, 280px));
+  top: calc(100vh - 108px - clamp(200px, 22vw, 280px));
   left: var(--page-pad);
   width: clamp(200px, 22vw, 280px);
   z-index: 150;
