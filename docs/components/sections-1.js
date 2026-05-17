@@ -76,6 +76,20 @@ const Hero = ({
 }) => {
   const t = COPY[lang];
   const bgVideoRef = React.useRef(null);
+  const [vitMin, setVitMin] = React.useState(() => {
+    try {
+      return sessionStorage.getItem('hestia-vit-min') === '1';
+    } catch (_) {
+      return false;
+    }
+  });
+  const toggleVit = () => {
+    const next = !vitMin;
+    setVitMin(next);
+    try {
+      sessionStorage.setItem('hestia-vit-min', next ? '1' : '0');
+    } catch (_) {}
+  };
 
   // Elegimos el vídeo una sola vez al montar (no en cada render),
   // para que el componente no haga "flicker" si algo re-renderiza.
@@ -122,8 +136,14 @@ const Hero = ({
     src: `${pick.src}?v=${VIDEO_V}`,
     type: "video/mp4"
   })), /*#__PURE__*/React.createElement("div", {
-    className: "hero-vitruvio",
-    "aria-hidden": "true"
+    className: `hero-vitruvio${vitMin ? ' hv-min' : ''}`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hv-box",
+    "aria-hidden": "true",
+    onClick: vitMin ? toggleVit : undefined,
+    style: vitMin ? {
+      cursor: 'pointer'
+    } : undefined
   }, /*#__PURE__*/React.createElement("video", {
     autoPlay: true,
     muted: true,
@@ -133,7 +153,12 @@ const Hero = ({
   }, /*#__PURE__*/React.createElement("source", {
     src: "assets/hestia-vitruvio.mp4",
     type: "video/mp4"
-  }))), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "hv-toggle",
+    onClick: toggleVit,
+    "aria-label": vitMin ? lang === 'es' ? 'Expandir animacion' : 'Expand animation' : lang === 'es' ? 'Minimizar' : 'Minimise'
+  }, vitMin ? '+' : '-')), /*#__PURE__*/React.createElement("div", {
     className: "hero-content"
   }, /*#__PURE__*/React.createElement("div", {
     className: "wordmark hero-wordmark"
