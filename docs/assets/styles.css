@@ -5860,6 +5860,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .gc-slide img {
   width: 100%; height: 100%;
   object-fit: cover;
+  object-position: top center;
   display: block;
   transition: transform .8s ease;
 }
