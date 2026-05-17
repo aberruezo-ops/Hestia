@@ -81,6 +81,7 @@ const Hero = ({
 }) => {
   const t = COPY[lang];
   const bgVideoRef = React.useRef(null);
+  const sectionRef = React.useRef(null);
   const [vitMin, setVitMin] = React.useState(() => {
     try {
       return sessionStorage.getItem('hestia-vit-min') === '1';
@@ -88,6 +89,8 @@ const Hero = ({
       return false;
     }
   });
+  // Ocultar vitruvio expandido cuando el hero deja de ser visible en pantalla
+  const [heroVisible, setHeroVisible] = React.useState(true);
   const toggleVit = () => {
     const next = !vitMin;
     setVitMin(next);
@@ -135,8 +138,21 @@ const Hero = ({
       document.removeEventListener('visibilitychange', onVisible);
     };
   }, []);
+  React.useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || !window.IntersectionObserver) return;
+    const obs = new IntersectionObserver(([entry]) => setHeroVisible(entry.isIntersecting), {
+      threshold: 0.05
+    });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  // Cuando el hero deja de ser visible y el vitruvio no está minimizado,
+  // se oculta para no solaparse con el contenido siguiente.
+  const vitHidden = !heroVisible && !vitMin;
   const vitruvio = ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
-    className: `hero-vitruvio${vitMin ? ' hv-min' : ''}`
+    className: `hero-vitruvio${vitMin ? ' hv-min' : ''}${vitHidden ? ' hv-offhero' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-box",
     "aria-hidden": "true",
@@ -160,6 +176,7 @@ const Hero = ({
     "aria-label": vitMin ? lang === 'es' ? 'Expandir animacion' : 'Expand animation' : lang === 'es' ? 'Minimizar' : 'Minimise'
   }, vitMin ? '+' : '-')), document.body);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
+    ref: sectionRef,
     id: "top",
     className: `hero mood-${pick.mood}`,
     "data-screen-label": "01 Hero",
