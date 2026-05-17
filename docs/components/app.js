@@ -67,6 +67,20 @@ const App = () => {
     scrolled
   } = useScrollMode();
   useReveal();
+  const [vitMin, setVitMin] = React.useState(() => {
+    try {
+      return sessionStorage.getItem('hestia-vit-min') === '1';
+    } catch (_) {
+      return false;
+    }
+  });
+  const toggleVit = () => {
+    const next = !vitMin;
+    setVitMin(next);
+    try {
+      sessionStorage.setItem('hestia-vit-min', next ? '1' : '0');
+    } catch (_) {}
+  };
   React.useEffect(() => {
     localStorage.setItem('hestia-lang', lang);
     document.documentElement.lang = lang;
@@ -116,9 +130,13 @@ const App = () => {
   }), /*#__PURE__*/React.createElement(Header, {
     mode: mode,
     scrolled: scrolled,
-    lang: lang
+    lang: lang,
+    vitMin: vitMin,
+    toggleVit: toggleVit
   }), /*#__PURE__*/React.createElement("main", null, /*#__PURE__*/React.createElement(Hero, {
-    lang: lang
+    lang: lang,
+    vitMin: vitMin,
+    toggleVit: toggleVit
   }), /*#__PURE__*/React.createElement(FraseHogar, {
     lang: lang
   }), /*#__PURE__*/React.createElement(HomeSearch, {
