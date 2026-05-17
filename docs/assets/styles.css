@@ -5527,6 +5527,80 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 
 /* ================================================================
+   APT VIDEO + DESCRIPCION — sección combinada
+   ================================================================ */
+.apt-video-desc {
+  background: var(--ber-dk);
+  padding: 72px var(--page-pad);
+}
+.avd-inner {
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  gap: 56px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+}
+.avd-eyebrow {
+  color: var(--apt-accent);
+  display: block;
+  margin-bottom: 20px;
+}
+.avd-iframe-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px 0 12px 0;
+  overflow: hidden;
+  background: #000;
+}
+.avd-iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.avd-concept {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(22px, 2.4vw, 34px);
+  line-height: 1.3;
+  color: var(--arena);
+  margin: 0 0 24px;
+}
+.avd-desc {
+  font-family: var(--serif);
+  font-size: clamp(16px, 1.3vw, 18px);
+  line-height: 1.7;
+  font-weight: 300;
+  color: var(--arena);
+  opacity: 0.85;
+  margin: 0 0 16px;
+}
+.avd-desc2 {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(240,232,213,.6);
+  margin: 0;
+}
+.avd-cta-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+@media (max-width: 820px) {
+  .avd-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .apt-video-desc {
+    padding: 48px var(--page-pad);
+  }
+}
+
+/* ================================================================
    EQUIPAMIENTO — sección de iconos y características
    ================================================================ */
 .apt-equip {

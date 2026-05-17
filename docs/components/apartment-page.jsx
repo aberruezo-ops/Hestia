@@ -670,24 +670,39 @@ const GalleryCarousel = ({ imgs, captions }) => {
   );
 };
 
-const AptVideoTour = ({ apt, lang }) => {
+const AptVideoDesc = ({ apt, lang }) => {
   if (!apt.vimeo_id) return null;
+  const d = apt[lang];
   const accentHex = apt.accent.replace('#', '');
+  const reservasHref = `reservas.html?apt=${apt.id}`;
+  const guideHref = `${apt.slug}.html#guide`;
   return (
-    <section className="apt-video-tour" style={{ '--apt-accent': apt.accent }}>
-      <div className="container">
-        <span className="eyebrow apt-vt-eyebrow">{lang === 'es' ? 'Visita virtual' : 'Virtual tour'}</span>
-        <h2 className="apt-vt-title">
-          {lang === 'es' ? `Recorre ${apt[lang].name}` : `Tour ${apt[lang].name}`}
-        </h2>
-        <div className="apt-vt-wrap">
-          <iframe
-            className="apt-vt-iframe"
-            src={`https://player.vimeo.com/video/${apt.vimeo_id}?autoplay=1&muted=1&dnt=1&color=${accentHex}&title=0&byline=0&portrait=0`}
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
-            title={apt[lang].name}
-          />
+    <section className="apt-video-desc" style={{ '--apt-accent': apt.accent }}>
+      <div className="avd-inner">
+        <div className="avd-video-col">
+          <span className="eyebrow avd-eyebrow">{lang === 'es' ? 'Visita virtual' : 'Virtual tour'}</span>
+          <div className="avd-iframe-wrap">
+            <iframe
+              className="avd-iframe"
+              src={`https://player.vimeo.com/video/${apt.vimeo_id}?autoplay=1&muted=1&dnt=1&color=${accentHex}&title=0&byline=0&portrait=0`}
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              title={d.name}
+            />
+          </div>
+        </div>
+        <div className="avd-text-col">
+          <p className="avd-concept">{d.concept}</p>
+          <p className="avd-desc">{d.desc}</p>
+          <p className="avd-desc2">{d.desc2}</p>
+          <div className="avd-cta-row">
+            <a href={reservasHref} className="btn btn-primary">
+              {lang === 'es' ? 'Reservar' : 'Book'} <span className="arrow">&#8594;</span>
+            </a>
+            <a href={guideHref} className="btn btn-ghost">
+              {lang === 'es' ? 'Guia del apartamento' : 'Apartment guide'}
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -1084,10 +1099,8 @@ const ApartmentPageApp = () => {
           <>
             <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
             <TrustStrip apt={apt} lang={lang} />
-            <FraseHogar lang={lang} />
-            <AptPageDesc apt={apt} lang={lang} />
+            <AptVideoDesc apt={apt} lang={lang} />
             <AptPageGallery apt={apt} lang={lang} />
-            <AptVideoTour apt={apt} lang={lang} />
             <AptEquipamiento apt={apt} lang={lang} />
             <AptFloorPlan apt={apt} lang={lang} />
             <DirectBookingPerks lang={lang} />
