@@ -99,6 +99,12 @@ const Hero = ({ lang, onScrollDown }) => {
       >
         <source src={`${pick.src}?v=${VIDEO_V}`} type="video/mp4"/>
       </video>
+      {/* Animación Vitruvio — decorativa, esquina inferior izquierda */}
+      <div className="hero-vitruvio" aria-hidden="true">
+        <video autoPlay muted loop playsInline preload="auto">
+          <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
+        </video>
+      </div>
       <div className="hero-content">
         <div className="wordmark hero-wordmark">HESTÍA</div>
         <div className="your-home hero-yourhome">your home!</div>

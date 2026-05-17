@@ -1746,6 +1746,29 @@ body.apt-bar-shown .cookies {
   pointer-events: none;
   z-index: 0;
 }
+/* Animación Vitruvio — esquina inferior izquierda del hero */
+.hero-vitruvio {
+  position: absolute;
+  left: var(--page-pad);
+  bottom: 70px;
+  width: clamp(200px, 22vw, 280px);
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 14px 0 14px 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.72;
+}
+.hero-vitruvio video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+@media (max-width: 900px) {
+  .hero-vitruvio { display: none; }
+}
+
 .hero-wordmark {
   font-size: clamp(14px, 1.3vw, 18px);
   margin-top: 4px;

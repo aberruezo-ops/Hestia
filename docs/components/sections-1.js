@@ -122,6 +122,18 @@ const Hero = ({
     src: `${pick.src}?v=${VIDEO_V}`,
     type: "video/mp4"
   })), /*#__PURE__*/React.createElement("div", {
+    className: "hero-vitruvio",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("video", {
+    autoPlay: true,
+    muted: true,
+    loop: true,
+    playsInline: true,
+    preload: "auto"
+  }, /*#__PURE__*/React.createElement("source", {
+    src: "assets/hestia-vitruvio.mp4",
+    type: "video/mp4"
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "hero-content"
   }, /*#__PURE__*/React.createElement("div", {
     className: "wordmark hero-wordmark"
