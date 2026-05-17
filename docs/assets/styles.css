@@ -223,7 +223,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--topbar-h, 36px) + 90px); }
 
 body {
   margin: 0;
@@ -1753,7 +1753,7 @@ body.apt-bar-shown .cookies {
   top: calc(100vh - 130px - clamp(200px, 22vw, 280px));
   left: clamp(8px, 1.2vw, 20px);
   width: clamp(200px, 22vw, 280px);
-  z-index: 150;
+  z-index: 1000;
   /* pointer-events en el padre debe ser auto para que el hover CSS funcione */
   pointer-events: none;
   transition: top 0.55s cubic-bezier(0.23, 1, 0.32, 1),
@@ -11488,6 +11488,89 @@ footer,
   color: var(--vt-dk);
   text-decoration: underline;
   font-weight: 500;
+}
+
+/* ============================================================
+   Rutas de tapas — acordeón por ciudad en sección Sabores
+   ============================================================ */
+.ag-cat-h--static {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: color-mix(in srgb, var(--apt-accent) 6%, transparent);
+  border-radius: 10px 10px 0 0;
+  cursor: default;
+}
+.ag-tapas-routes {
+  border: 1px solid color-mix(in srgb, var(--apt-accent) 18%, transparent);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
+}
+.ag-tapas-route { border-bottom: 1px solid color-mix(in srgb, var(--apt-accent) 12%, transparent); }
+.ag-tapas-route:last-child { border-bottom: none; }
+.ag-tapas-route-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: left;
+  transition: background 0.15s;
+}
+.ag-tapas-route-btn:hover { background: color-mix(in srgb, var(--apt-accent) 5%, transparent); }
+.ag-tapas-route.is-open .ag-tapas-route-btn { background: color-mix(in srgb, var(--apt-accent) 8%, transparent); }
+.ag-tapas-route-city { flex: 1; }
+.ag-tapas-route-body { padding: 0 16px 16px; }
+.ag-tapas-intro {
+  font-size: 0.88rem;
+  color: var(--ink-60);
+  margin: 0 0 12px;
+  line-height: 1.55;
+}
+.ag-tapas-stops {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ag-tapas-stop {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--apt-accent) 5%, white);
+  border-radius: 8px;
+  border-left: 3px solid color-mix(in srgb, var(--apt-accent) 50%, transparent);
+}
+.ag-tapas-stop-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.ag-tapas-stop-what {
+  font-size: 0.84rem;
+  color: var(--ink-60);
+  line-height: 1.5;
+}
+.ag-tapas-tip {
+  font-size: 0.84rem;
+  color: var(--ink-60);
+  background: color-mix(in srgb, var(--apt-accent) 7%, transparent);
+  border-radius: 8px;
+  padding: 9px 12px;
+  margin: 0;
+  line-height: 1.5;
 }
 
 /* ============================================================
