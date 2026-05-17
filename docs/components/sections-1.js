@@ -651,13 +651,13 @@ const Compare = ({
   }, {
     label: 'Piscina',
     vm: 'Comunitaria',
-    vt: 'Comunitaria + pádel',
-    vs: '3 piscinas'
+    vt: 'Comunitaria + jacuzzi',
+    vs: 'Comunitaria + pistas de pádel'
   }, {
     label: 'Extra ⭑',
     vm: 'Jacuzzi comunitario',
-    vt: 'SPA comunitario + sauna',
-    vs: 'Parque Natural Salinas'
+    vt: 'Minigim · piscina climatizada + minispa (otoño-prim.)',
+    vs: 'Gimnasio · sauna · Parque Natural Salinas'
   }, {
     label: 'Playa',
     vm: '300 m',
@@ -668,6 +668,21 @@ const Compare = ({
     vm: 'Sí · petición + suplem.',
     vt: 'Sí · petición + suplem.',
     vs: 'Sí · petición + suplem.'
+  }, {
+    label: 'Ideal para',
+    vm: 'Practicidad · todo a mano',
+    vt: 'Las mejores vistas',
+    vs: 'Paz · jardines · naturaleza'
+  }, {
+    label: 'Superguía',
+    vm: '✓ Incluida',
+    vt: '✓ Incluida',
+    vs: '✓ Incluida'
+  }, {
+    label: 'Trato',
+    vm: '✓ Personalizado',
+    vt: '✓ Personalizado',
+    vs: '✓ Personalizado'
   }, {
     label: 'Valoración',
     vm: /*#__PURE__*/React.createElement(React.Fragment, null, "9.8 ", /*#__PURE__*/React.createElement("span", {
@@ -698,23 +713,38 @@ const Compare = ({
   }, {
     label: 'Pool',
     vm: 'Shared',
-    vt: 'Shared + padel',
-    vs: '3 pools'
+    vt: 'Shared + jacuzzi',
+    vs: 'Shared + padel courts'
   }, {
     label: 'Extra ⭑',
     vm: 'Shared jacuzzi',
-    vt: 'Shared SPA + sauna',
-    vs: 'Salt-flat nature park'
+    vt: 'Mini-gym · heated pool + mini-spa (off-peak)',
+    vs: 'Gym · sauna · salt-flat nature park'
   }, {
     label: 'Beach',
     vm: '300 m',
-    vt: '1,5 km',
+    vt: '1.5 km',
     vs: '900 m'
   }, {
     label: 'Pets',
     vm: 'Yes · request + suppl.',
     vt: 'Yes · request + suppl.',
     vs: 'Yes · request + suppl.'
+  }, {
+    label: 'Ideal for',
+    vm: 'Practicality · everything close',
+    vt: 'Best views in the complex',
+    vs: 'Peace · gardens · nature'
+  }, {
+    label: 'Guide',
+    vm: '✓ Included',
+    vt: '✓ Included',
+    vs: '✓ Included'
+  }, {
+    label: 'Care',
+    vm: '✓ Personal service',
+    vt: '✓ Personal service',
+    vs: '✓ Personal service'
   }, {
     label: 'Rating',
     vm: /*#__PURE__*/React.createElement(React.Fragment, null, "9.8 ", /*#__PURE__*/React.createElement("span", {
