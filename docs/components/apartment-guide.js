@@ -104,6 +104,10 @@ const GUIDE_SECTIONS = [{
   es: 'Alrededores',
   en: 'Surroundings'
 }, {
+  id: 'lugares',
+  es: 'Lugares de interés',
+  en: 'Places of interest'
+}, {
   id: 'sabores',
   es: 'Sabores',
   en: 'Tastes'
@@ -3467,6 +3471,9 @@ const GUIDE_SHARED = {
       }],
       stationsAveTitle: '¿Sabías? · La estación AVE Vera-Almanzora',
       stationsAve: 'Adif Alta Velocidad está construyendo una estación de AVE al sur del término municipal de Vera, parte del corredor Mediterráneo Murcia-Almería. Cuando entre en servicio (previsto a partir de 2027), Vera quedará a menos de 1 hora de Murcia y conectada por alta velocidad con Madrid y el resto del corredor mediterráneo. Estamos a 15-20 minutos en coche.',
+      carTitle: 'Y por supuesto, en coche · hasta la puerta',
+      carText: 'Si conduces, llegas directamente a la puerta de Hestía. Te enviamos la mejor ruta según tu origen, el código de acceso a la urbanización y la plaza de garaje cubierta exacta. No improvisas nada.',
+      carAccompany: 'Sea cual sea tu forma de llegar — coche, vuelo + alquiler, bus, tren, o combinación — nosotros te acompañamos en la distancia desde que confirmas la reserva. WhatsApp, llamada o email, en tu idioma, hasta que estás dentro y cómodo. Y mientras dura la estancia.',
       modalitiesTitle: 'Dos modalidades de check-in',
       modalities: [{
         tag: 'Autónoma',
@@ -3784,6 +3791,9 @@ const GUIDE_SHARED = {
       }],
       stationsAveTitle: 'Did you know? · The future Vera-Almanzora AVE station',
       stationsAve: 'Adif Alta Velocidad is building an AVE high-speed station south of Vera, as part of the Murcia-Almería Mediterranean corridor. Once in service (expected from 2027 onwards), Vera will be less than an hour from Murcia and connected via high-speed rail to Madrid and the entire Mediterranean corridor. We are a 15-20 min drive away.',
+      carTitle: 'And of course, by car · door-to-door',
+      carText: 'If you drive, you arrive straight at Hestía\'s door. We send you the best route from your starting point, the gated-community access code and the exact covered garage spot. Nothing left to chance.',
+      carAccompany: 'Whichever way you arrive — car, flight + rental, bus, train, or combination — we accompany you from a distance the moment you confirm your booking. WhatsApp, call or email, in your language, until you are inside and comfortable. And throughout the whole stay.',
       modalitiesTitle: 'Two check-in options',
       modalities: [{
         tag: 'Self check-in',
@@ -4589,6 +4599,626 @@ const EventsCalendar = ({
     lang: lang,
     defaultOpen: mi === currentMonth
   }))));
+};
+
+// ================================================================
+// PLACES_OF_INTEREST · atlas estructurado por sub-categoría
+// ================================================================
+// Cada entrada es UNA LÍNEA: nombre, distancia, cómo llegar muy breve,
+// link externo (web oficial preferible) y opcionalmente `anchor` a
+// otra sección de la guía donde el lugar se describe a fondo.
+//
+// La idea: este atlas es el ÍNDICE. El detalle vive en pueblos /
+// actividades / mar-playas, donde el lugar forma parte de un
+// itinerario o se describe en contexto.
+const PLACES_OF_INTEREST = [
+// --- Yacimientos arqueológicos ---
+{
+  subcat: 'yacimientos',
+  name_es: 'Los Millares',
+  name_en: 'Los Millares',
+  km: 110,
+  comoLlegar_es: 'AP-7 hasta Almería, salida 460 → A-92 dirección Guadix → salida Santa Fe de Mondújar.',
+  url: 'https://www.museosdeandalucia.es/web/conjuntoarqueologicolosmillares',
+  desc_es: 'Poblado calcolítico (3200-2200 a.C.), uno de los más importantes de Europa.',
+  desc_en: 'Chalcolithic settlement (3200-2200 BC), one of the most important in Europe.'
+}, {
+  subcat: 'yacimientos',
+  name_es: 'Yacimiento de El Argar',
+  name_en: 'El Argar archaeological site',
+  km: 12,
+  comoLlegar_es: 'AP-7 salida 545 Antas; el cerro de El Argar está a las afueras del pueblo.',
+  desc_es: 'Yacimiento epónimo de la Cultura del Argar (Edad del Bronce, 2200-1550 a.C.).',
+  desc_en: 'Eponymous site of the Argaric culture (Bronze Age, 2200-1550 BC).'
+}, {
+  subcat: 'yacimientos',
+  name_es: 'Villaricos (Baria fenicio-romana)',
+  name_en: 'Villaricos (Phoenician-Roman Baria)',
+  km: 18,
+  comoLlegar_es: 'A-332 hacia Cuevas del Almanzora y desvío a Villaricos en la costa.',
+  url: 'https://www.museosdeandalucia.es/web/museodealmeria',
+  desc_es: 'Antigua colonia fenicia y ciudad romana de Baria, con necrópolis púnica visitable.',
+  desc_en: 'Former Phoenician colony and Roman city of Baria, with a visitable Punic necropolis.'
+}, {
+  subcat: 'yacimientos',
+  name_es: 'Yacimiento de Tagilis (Tíjola)',
+  name_en: 'Tagilis archaeological site (Tíjola)',
+  km: 90,
+  comoLlegar_es: 'AP-7 + A-334 dirección Baza-Tíjola; el yacimiento está junto a la pedanía de Tíjola la Vieja.',
+  desc_es: 'Ciudad ibero-romana en el Almanzora medio, con muralla y restos de termas.',
+  desc_en: 'Ibero-Roman town in the middle Almanzora valley, with walls and bath remains.'
+}, {
+  subcat: 'yacimientos',
+  name_es: 'Necrópolis megalítica de Gorafe',
+  name_en: 'Gorafe megalithic necropolis',
+  km: 160,
+  comoLlegar_es: 'AP-7 + A-92 dirección Guadix, salida Gorafe; pistas señalizadas hacia los dólmenes.',
+  desc_es: 'Más de 240 dólmenes neolíticos en el Geoparque de Granada.',
+  desc_en: 'Over 240 Neolithic dolmens in the Granada Geopark.'
+}, {
+  subcat: 'yacimientos',
+  name_es: 'Cerro de Montecristo (Adra)',
+  name_en: 'Cerro de Montecristo (Adra)',
+  km: 160,
+  comoLlegar_es: 'AP-7 dirección Málaga, salida Adra; yacimiento en el casco urbano.',
+  desc_es: 'Restos de la antigua Abdera fenicia y romana, junto al mar de Adra.',
+  desc_en: 'Remains of the ancient Phoenician and Roman Abdera, by the sea at Adra.'
+},
+// --- Castillos y fortalezas ---
+{
+  subcat: 'castillos',
+  name_es: 'Castillo de San Juan de los Terreros',
+  name_en: 'San Juan de los Terreros Castle',
+  km: 25,
+  comoLlegar_es: 'AP-7 salida 537 Pulpí, hacia la costa por AL-7107.',
+  url: 'https://www.pulpi.es/',
+  desc_es: 'Fortaleza costera del s. XVIII frente a las islas de Terreros y Negra.',
+  desc_en: '18th-century coastal fort facing Terreros and Negra islands.'
+}, {
+  subcat: 'castillos',
+  name_es: 'Castillo-fortaleza de Vera',
+  name_en: 'Vera Castle-fortress',
+  km: 9,
+  comoLlegar_es: 'AP-7 salida 540 Vera; en el casco histórico de Vera pueblo.',
+  url: 'https://www.vera.es/',
+  desc_es: 'Restos del castillo medieval y la iglesia-fortaleza tras el terremoto de 1518.',
+  desc_en: 'Remains of the medieval castle and fortress-church after the 1518 earthquake.',
+  anchor: 'ag-pueblos'
+}, {
+  subcat: 'castillos',
+  name_es: 'Castillo del Marqués de los Vélez (Cuevas del Almanzora)',
+  name_en: 'Marqués de los Vélez Castle (Cuevas del Almanzora)',
+  km: 22,
+  comoLlegar_es: 'A-332 hacia Cuevas del Almanzora; está en el centro del pueblo.',
+  url: 'https://www.cuevasdelalmanzora.es/',
+  desc_es: 'Castillo renacentista del s. XVI, hoy museo y biblioteca municipal.',
+  desc_en: '16th-century Renaissance castle, now a municipal museum and library.',
+  anchor: 'ag-pueblos'
+}, {
+  subcat: 'castillos',
+  name_es: 'Castillo de San Juan de las Águilas',
+  name_en: 'San Juan Castle (Águilas)',
+  km: 40,
+  comoLlegar_es: 'AP-7 dirección Murcia, salida Águilas; sobre el cerro que domina la bahía.',
+  url: 'https://www.aguilas.es/',
+  desc_es: 'Fortín del s. XVIII sobre el puerto de Águilas, con vistas a la bahía.',
+  desc_en: '18th-century fort above Águilas harbour, with views over the bay.',
+  anchor: 'ag-pueblos'
+}, {
+  subcat: 'castillos',
+  name_es: 'Castillo de Vélez-Blanco',
+  name_en: 'Vélez-Blanco Castle',
+  km: 110,
+  comoLlegar_es: 'AP-7 + A-7 + A-317 dirección Vélez-Rubio/Vélez-Blanco (zona norte de Almería).',
+  url: 'https://www.velezblanco.es/',
+  desc_es: 'Castillo renacentista del s. XVI, joya del primer Renacimiento español.',
+  desc_en: '16th-century Renaissance castle, a jewel of early Spanish Renaissance.',
+  anchor: 'ag-pueblos'
+}, {
+  subcat: 'castillos',
+  name_es: 'Fortaleza del Sol (Castillo de Lorca)',
+  name_en: 'Fortress of the Sun (Lorca Castle)',
+  km: 75,
+  comoLlegar_es: 'AP-7 dirección Murcia, salida Lorca centro; subida señalizada al castillo.',
+  url: 'https://lorcatallerdeltiempo.com/',
+  desc_es: 'Gran castillo medieval con torres del Espolón y Alfonsina, hoy parque temático.',
+  desc_en: 'Large medieval castle with Espolón and Alfonsina towers, now a heritage park.',
+  anchor: 'ag-pueblos'
+}, {
+  subcat: 'castillos',
+  name_es: 'Castillo de la Concepción (Cartagena)',
+  name_en: 'Concepción Castle (Cartagena)',
+  km: 115,
+  comoLlegar_es: 'AP-7 dirección Murcia y Cartagena; en lo alto del casco histórico, con ascensor panorámico.',
+  url: 'https://www.cartagenapuertodeculturas.com/',
+  desc_es: 'Castillo medieval sobre Cartagena, con centro de interpretación de la ciudad.',
+  desc_en: 'Medieval castle above Cartagena, with the city interpretation centre.',
+  anchor: 'ag-pueblos'
+}, {
+  subcat: 'castillos',
+  name_es: 'Castillo de Tabernas',
+  name_en: 'Tabernas Castle',
+  km: 95,
+  comoLlegar_es: 'AP-7 hasta Almería + A-92 dirección Guadix, salida Tabernas.',
+  desc_es: 'Castillo nazarí del s. XI sobre un cerro en pleno desierto de Tabernas.',
+  desc_en: '11th-century Nasrid castle on a hill in the heart of the Tabernas desert.'
+}, {
+  subcat: 'castillos',
+  name_es: 'Castillo de Gérgal',
+  name_en: 'Gérgal Castle',
+  km: 110,
+  comoLlegar_es: 'AP-7 + A-92 dirección Guadix, salida Gérgal.',
+  desc_es: 'Castillo del s. XVI restaurado, de propiedad privada, perfil muy fotogénico.',
+  desc_en: 'Restored 16th-century privately owned castle with a very photogenic profile.'
+}, {
+  subcat: 'castillos',
+  name_es: 'Castillo de Mojácar la Vieja',
+  name_en: 'Mojácar la Vieja castle hill',
+  km: 18,
+  comoLlegar_es: 'AP-7 salida 555 Mojácar/Turre; sendero desde el cruce de Mojácar.',
+  desc_es: 'Restos del primitivo asentamiento andalusí sobre el cerro frente a Mojácar pueblo.',
+  desc_en: 'Remains of the original Andalusi settlement on the hill facing Mojácar village.'
+},
+// --- Patrimonio islámico ---
+{
+  subcat: 'islamico',
+  name_es: 'Alcazaba de Almería',
+  name_en: 'Alcazaba of Almería',
+  km: 90,
+  comoLlegar_es: 'AP-7 hasta Almería capital, salida 460; en el casco histórico.',
+  url: 'https://www.juntadeandalucia.es/cultura/enclaves/conjunto-monumental-de-la-alcazaba-de-almeria',
+  desc_es: 'Segunda mayor fortaleza musulmana de España, fundada en el s. X por Abderramán III.',
+  desc_en: 'Second largest Muslim fortress in Spain, founded in the 10th c. by Abd al-Rahman III.',
+  anchor: 'ag-pueblos'
+}, {
+  subcat: 'islamico',
+  name_es: 'Aljibes árabes de Jayrán (Almería)',
+  name_en: 'Jayrán Arab cisterns (Almería)',
+  km: 90,
+  comoLlegar_es: 'Almería capital, calle Tenor Iribarne, junto al Centro Andaluz de Flamenco.',
+  desc_es: 'Aljibes del s. XI que abastecían a la medina almeriense, hoy peña flamenca visitable.',
+  desc_en: '11th-century cisterns that supplied the medina, now a visitable flamenco hall.'
+}, {
+  subcat: 'islamico',
+  name_es: 'Murallas de Jayrán (Almería)',
+  name_en: 'Walls of Jayrán (Almería)',
+  km: 90,
+  comoLlegar_es: 'Almería capital, suben desde la Alcazaba por el cerro de San Cristóbal.',
+  desc_es: 'Lienzo de muralla del s. XI mandado construir por el rey taifa Jayrán.',
+  desc_en: '11th-century wall section commissioned by the Taifa king Jayrán.'
+}, {
+  subcat: 'islamico',
+  name_es: 'Baños árabes de Alhama de Almería',
+  name_en: 'Arab baths of Alhama de Almería',
+  km: 110,
+  comoLlegar_es: 'AP-7 + A-92 dirección Guadix, salida Alhama de Almería.',
+  desc_es: 'Baños del s. XII conservados bajo el balneario actual.',
+  desc_en: '12th-century baths preserved beneath the current spa.'
+},
+// --- Patrimonio romano ---
+{
+  subcat: 'romano',
+  name_es: 'Teatro Romano de Cartagena',
+  name_en: 'Roman Theatre of Cartagena',
+  km: 115,
+  comoLlegar_es: 'AP-7 dirección Murcia/Cartagena; museo junto al Ayuntamiento.',
+  url: 'https://www.teatroromanocartagena.org/',
+  desc_es: 'Teatro romano del s. I a.C. con museo diseñado por Rafael Moneo.',
+  desc_en: '1st-century BC Roman theatre with a museum designed by Rafael Moneo.',
+  anchor: 'ag-pueblos'
+}, {
+  subcat: 'romano',
+  name_es: 'Barrio del Foro Romano (Molinete)',
+  name_en: 'Roman Forum Quarter (Molinete)',
+  km: 115,
+  comoLlegar_es: 'Cartagena, cerro del Molinete en pleno casco histórico.',
+  url: 'https://www.cartagenapuertodeculturas.com/',
+  desc_es: 'Conjunto arqueológico con foro, curia y termas romanas musealizadas.',
+  desc_en: 'Archaeological site with forum, curia and Roman baths under cover.'
+}, {
+  subcat: 'romano',
+  name_es: 'Decumano Romano de Cartagena',
+  name_en: 'Roman Decumanus of Cartagena',
+  km: 115,
+  comoLlegar_es: 'Cartagena, calle Honda, en el casco histórico.',
+  url: 'https://www.cartagenapuertodeculturas.com/',
+  desc_es: 'Tramo de la calzada principal romana y termas asociadas.',
+  desc_en: 'Section of the main Roman road and associated baths.'
+}, {
+  subcat: 'romano',
+  name_es: 'Anfiteatro Romano de Cartagena',
+  name_en: 'Roman Amphitheatre of Cartagena',
+  km: 115,
+  comoLlegar_es: 'Cartagena, junto a la plaza de toros, sobre el cerro de la Concepción.',
+  desc_es: 'Anfiteatro del s. I parcialmente visible bajo la plaza de toros del s. XIX.',
+  desc_en: '1st-century amphitheatre partially visible beneath the 19th-century bullring.'
+}, {
+  subcat: 'romano',
+  name_es: 'Casa de la Fortuna (Cartagena)',
+  name_en: 'House of Fortune (Cartagena)',
+  km: 115,
+  comoLlegar_es: 'Cartagena, Plaza Risueño, en el casco histórico.',
+  url: 'https://www.cartagenapuertodeculturas.com/',
+  desc_es: 'Domus romana del s. I a.C. con pinturas murales y pavimentos originales.',
+  desc_en: '1st-century BC Roman domus with original wall paintings and floors.'
+}, {
+  subcat: 'romano',
+  name_es: 'Yacimiento romano de Villaricos',
+  name_en: 'Roman site of Villaricos',
+  km: 18,
+  comoLlegar_es: 'A-332 a Cuevas del Almanzora y desvío a Villaricos.',
+  desc_es: 'Restos de la Baria romana sobre la fenicia: factoría de salazones y necrópolis.',
+  desc_en: 'Roman Baria over the Phoenician town: salting factory and necropolis.'
+},
+// --- Cuevas y geología ---
+{
+  subcat: 'cuevas',
+  name_es: 'Geoda Gigante de Pulpí',
+  name_en: 'Giant Geode of Pulpí',
+  km: 30,
+  comoLlegar_es: 'AP-7 salida 537 Pulpí; mina Rica señalizada desde Pilar de Jaravía.',
+  url: 'https://geodapulpi.es/',
+  desc_es: 'Geoda de cristales de yeso de 8 m, la mayor de Europa visitable.',
+  desc_en: '8-metre gypsum crystal geode, the largest visitable in Europe.',
+  anchor: 'ag-actividades'
+}, {
+  subcat: 'cuevas',
+  name_es: 'Karst en Yesos de Sorbas (Cuevas)',
+  name_en: 'Sorbas Gypsum Karst (caves)',
+  km: 50,
+  comoLlegar_es: 'AP-7 salida 494 Sorbas; centro de visitantes en Cariatiz.',
+  url: 'https://www.cuevasdesorbas.com/',
+  desc_es: 'Paraje natural con cuevas y formaciones de yeso únicas, con visitas guiadas.',
+  desc_en: 'Natural reserve with unique gypsum caves and formations, with guided tours.',
+  anchor: 'ag-actividades'
+}, {
+  subcat: 'cuevas',
+  name_es: 'Cueva de los Letreros (Vélez-Blanco)',
+  name_en: 'Cave of Los Letreros (Vélez-Blanco)',
+  km: 105,
+  comoLlegar_es: 'AP-7 + A-7 + A-317 a Vélez-Blanco; visita con guía desde el pueblo.',
+  desc_es: 'Abrigo con pinturas rupestres Patrimonio Mundial, incluyendo el Indalo.',
+  desc_en: 'Rock shelter with World Heritage cave paintings, including the Indalo figure.'
+}, {
+  subcat: 'cuevas',
+  name_es: 'Cuevas de Almanzora (casas-cueva)',
+  name_en: 'Almanzora cave dwellings',
+  km: 22,
+  comoLlegar_es: 'A-332 a Cuevas del Almanzora; barrio de cuevas en el casco urbano.',
+  desc_es: 'Barrio histórico de viviendas excavadas en la roca, algunas habitadas.',
+  desc_en: 'Historic district of rock-cut dwellings, some still inhabited.'
+}, {
+  subcat: 'cuevas',
+  name_es: 'Mesa Roldán (Carboneras)',
+  name_en: 'Mesa Roldán (Carboneras)',
+  km: 50,
+  comoLlegar_es: 'AP-7 salida 494 + AL-5106 a Carboneras; pista al faro y a la mesa.',
+  desc_es: 'Volcán fósil de cima plana con vistas a la playa de los Muertos.',
+  desc_en: 'Flat-topped fossil volcano with views over Playa de los Muertos.'
+}, {
+  subcat: 'cuevas',
+  name_es: 'Gredas de Bolnuevo (Mazarrón)',
+  name_en: 'Bolnuevo erosions (Mazarrón)',
+  km: 80,
+  comoLlegar_es: 'AP-7 dirección Murcia, salida Mazarrón; junto a la playa de Bolnuevo.',
+  desc_es: 'Formaciones de arenisca esculpidas por la erosión, paisaje lunar junto al mar.',
+  desc_en: 'Wind-sculpted sandstone formations, a lunar landscape by the sea.',
+  anchor: 'ag-pueblos'
+}, {
+  subcat: 'cuevas',
+  name_es: 'Desierto de Tabernas',
+  name_en: 'Tabernas Desert',
+  km: 95,
+  comoLlegar_es: 'AP-7 + A-92 dirección Guadix; miradores en la N-340A.',
+  desc_es: 'Único desierto semiárido de Europa continental, paisaje de westerns.',
+  desc_en: 'The only semi-arid desert in mainland Europe, a western film landscape.',
+  anchor: 'ag-actividades'
+},
+// --- Faros y miradores ---
+{
+  subcat: 'faros',
+  name_es: 'Faro de Mesa Roldán (Carboneras)',
+  name_en: 'Mesa Roldán Lighthouse (Carboneras)',
+  km: 50,
+  comoLlegar_es: 'AP-7 salida 494 a Carboneras; pista hasta el faro sobre la mesa volcánica.',
+  desc_es: 'Faro de 1863 sobre acantilado, escenario de Juego de Tronos.',
+  desc_en: '1863 lighthouse on a cliff, a Game of Thrones filming location.'
+}, {
+  subcat: 'faros',
+  name_es: 'Faro de Cabo de Gata',
+  name_en: 'Cabo de Gata Lighthouse',
+  km: 100,
+  comoLlegar_es: 'AP-7 salida 467 + AL-3115 atravesando las salinas hasta el cabo.',
+  desc_es: 'Faro en el extremo sureste peninsular, junto al Arrecife de las Sirenas.',
+  desc_en: 'Lighthouse at the southeasternmost tip of the peninsula, next to the Mermaids Reef.',
+  anchor: 'ag-mar-playas'
+}, {
+  subcat: 'faros',
+  name_es: 'Faro de la Polacra (Cabo de Gata)',
+  name_en: 'La Polacra Lighthouse (Cabo de Gata)',
+  km: 80,
+  comoLlegar_es: 'AP-7 + A-7 a Níjar; pista desde Rodalquilar/La Isleta del Moro.',
+  desc_es: 'Faro a 281 m sobre el mar, uno de los más altos de España.',
+  desc_en: 'Lighthouse 281 m above the sea, one of the tallest in Spain.'
+}, {
+  subcat: 'faros',
+  name_es: 'Faro de Garrucha',
+  name_en: 'Garrucha Lighthouse',
+  km: 10,
+  comoLlegar_es: 'AL-7107 dirección Garrucha; en el extremo sur del puerto.',
+  desc_es: 'Faro decimonónico junto al puerto pesquero de Garrucha.',
+  desc_en: '19th-century lighthouse next to Garrucha fishing port.'
+}, {
+  subcat: 'faros',
+  name_es: 'Mirador de la Amatista (Cabo de Gata)',
+  name_en: 'La Amatista Viewpoint (Cabo de Gata)',
+  km: 75,
+  comoLlegar_es: 'A-7 a Carboneras y carretera de la costa AL-5106 hacia La Isleta.',
+  desc_es: 'Mirador sobre acantilados volcánicos con vistas a la costa de Níjar.',
+  desc_en: 'Cliff-top viewpoint over volcanic coast facing Níjar shoreline.'
+}, {
+  subcat: 'faros',
+  name_es: 'Mirador del Arrecife de las Sirenas',
+  name_en: 'Mermaids Reef Viewpoint',
+  km: 100,
+  comoLlegar_es: 'Junto al Faro de Cabo de Gata, al final de la AL-3115.',
+  desc_es: 'Mirador sobre rocas volcánicas donde según la leyenda cantaban las sirenas.',
+  desc_en: 'Viewpoint over volcanic rocks where legend says the mermaids sang.',
+  anchor: 'ag-mar-playas'
+}, {
+  subcat: 'faros',
+  name_es: 'Mirador de la Granatilla (Carboneras)',
+  name_en: 'La Granatilla Viewpoint (Carboneras)',
+  km: 45,
+  comoLlegar_es: 'AP-7 salida 494 a Carboneras; pista costera al sur del pueblo.',
+  desc_es: 'Mirador sobre la costa virgen entre Carboneras y Mesa Roldán.',
+  desc_en: 'Viewpoint over the unspoilt coast between Carboneras and Mesa Roldán.'
+},
+// --- Naturaleza singular ---
+{
+  subcat: 'naturaleza',
+  name_es: 'Salinas de Cabo de Gata',
+  name_en: 'Cabo de Gata Salt Pans',
+  km: 95,
+  comoLlegar_es: 'AP-7 salida 467 + AL-3115 dirección Cabo de Gata; observatorios señalizados.',
+  url: 'https://www.juntadeandalucia.es/medioambiente/portal/areas-tematicas/espacios-protegidos/renpa/parque-natural-cabo-de-gata-nijar',
+  desc_es: 'Humedal con flamencos rosas y más de 100 especies de aves.',
+  desc_en: 'Wetland with pink flamingos and over 100 bird species.',
+  anchor: 'ag-mar-playas'
+}, {
+  subcat: 'naturaleza',
+  name_es: 'Punta Entinas-Sabinar',
+  name_en: 'Punta Entinas-Sabinar Reserve',
+  km: 165,
+  comoLlegar_es: 'AP-7 + A-7 dirección Roquetas/El Ejido, salida Almerimar.',
+  desc_es: 'Paraje natural con dunas, salinas y avifauna entre Roquetas y Almerimar.',
+  desc_en: 'Natural reserve with dunes, salt pans and birdlife between Roquetas and Almerimar.'
+}, {
+  subcat: 'naturaleza',
+  name_es: 'Observatorio de Calar Alto (Gérgal)',
+  name_en: 'Calar Alto Observatory (Gérgal)',
+  km: 130,
+  comoLlegar_es: 'AP-7 + A-92 salida Gérgal; pista de montaña a 2168 m.',
+  url: 'https://www.caha.es/',
+  desc_es: 'Observatorio hispano-alemán con visitas guiadas, el mayor del continente europeo.',
+  desc_en: 'Spanish-German observatory with guided tours, the largest in continental Europe.',
+  anchor: 'ag-actividades'
+}, {
+  subcat: 'naturaleza',
+  name_es: 'Sierra Cabrera',
+  name_en: 'Sierra Cabrera',
+  km: 15,
+  comoLlegar_es: 'AP-7 salida 555 hacia Turre; pistas hacia Cortijo Cabrera.',
+  desc_es: 'Sierra litoral entre Mojácar y Turre, con senderos y miradores al mar.',
+  desc_en: 'Coastal mountains between Mojácar and Turre, with trails and sea viewpoints.',
+  anchor: 'ag-actividades'
+}, {
+  subcat: 'naturaleza',
+  name_es: 'Playa de los Muertos (Carboneras)',
+  name_en: 'Playa de los Muertos (Carboneras)',
+  km: 50,
+  comoLlegar_es: 'AP-7 salida 494 a Carboneras; aparcamiento sobre el acantilado, bajada a pie 20 min.',
+  desc_es: 'Cala de cantos blancos y agua turquesa, considerada de las mejores de España.',
+  desc_en: 'White pebble cove with turquoise water, often ranked among Spain\'s best beaches.',
+  anchor: 'ag-mar-playas'
+}, {
+  subcat: 'naturaleza',
+  name_es: 'Parque Natural Sierra María-Los Vélez',
+  name_en: 'Sierra María-Los Vélez Natural Park',
+  km: 110,
+  comoLlegar_es: 'AP-7 + A-7 + A-317 hasta Vélez-Blanco/María.',
+  url: 'https://www.juntadeandalucia.es/medioambiente/portal/areas-tematicas/espacios-protegidos/renpa/parque-natural-sierra-maria-los-velez',
+  desc_es: 'Sierra de montaña media con bosques de pino laricio y rapaces.',
+  desc_en: 'Mid-mountain range with black pine forests and raptors.'
+}, {
+  subcat: 'naturaleza',
+  name_es: 'Isla de Terreros y Negra (Pulpí)',
+  name_en: 'Terreros and Negra Islands (Pulpí)',
+  km: 25,
+  comoLlegar_es: 'AP-7 salida 537 Pulpí, hasta San Juan de los Terreros; visibles desde la playa.',
+  desc_es: 'Pequeños islotes volcánicos frente a San Juan de los Terreros.',
+  desc_en: 'Small volcanic islets off San Juan de los Terreros beach.'
+},
+// --- Atracciones familiares ---
+{
+  subcat: 'familia',
+  name_es: 'Oasys MiniHollywood (Tabernas)',
+  name_en: 'Oasys MiniHollywood (Tabernas)',
+  km: 90,
+  comoLlegar_es: 'AP-7 + A-92 salida 376, sobre la N-340A en pleno desierto.',
+  url: 'https://www.oasysparquetematico.com/',
+  desc_es: 'Poblado del oeste con espectáculos, reserva zoológica y piscinas.',
+  desc_en: 'Western town with shows, zoo reserve and swimming pools.',
+  anchor: 'ag-actividades'
+}, {
+  subcat: 'familia',
+  name_es: 'Fort Bravo / Texas Hollywood (Tabernas)',
+  name_en: 'Fort Bravo / Texas Hollywood (Tabernas)',
+  km: 90,
+  comoLlegar_es: 'AP-7 + A-92 salida Tabernas; señalizado desde la N-340A.',
+  url: 'https://fortbravo.es/',
+  desc_es: 'Set de cine con poblado mexicano, fuerte y campamento indio.',
+  desc_en: 'Film set with Mexican village, fort and Native American camp.',
+  anchor: 'ag-actividades'
+}, {
+  subcat: 'familia',
+  name_es: 'Western Leone (Tabernas)',
+  name_en: 'Western Leone (Tabernas)',
+  km: 90,
+  comoLlegar_es: 'AP-7 + A-92 dirección Guadix; señalizado en la N-340A.',
+  desc_es: 'Set de rodaje de "Hasta que llegó su hora" de Sergio Leone.',
+  desc_en: 'Original set of Sergio Leone\'s "Once Upon a Time in the West".'
+}, {
+  subcat: 'familia',
+  name_es: 'Aquarium Costa de Almería (Roquetas)',
+  name_en: 'Aquarium Costa de Almería (Roquetas)',
+  km: 165,
+  comoLlegar_es: 'AP-7 + A-7 dirección Roquetas de Mar.',
+  url: 'https://www.aquariumcostadealmeria.com/',
+  desc_es: 'Acuario con tiburones, mantarrayas y tanques mediterráneos.',
+  desc_en: 'Aquarium with sharks, rays and Mediterranean tanks.'
+}, {
+  subcat: 'familia',
+  name_es: 'Mariposario de Vícar',
+  name_en: 'Vícar Butterfly Park',
+  km: 155,
+  comoLlegar_es: 'AP-7 + A-7 dirección El Ejido, salida Vícar.',
+  desc_es: 'Mariposario tropical con cientos de especies en vuelo libre.',
+  desc_en: 'Tropical butterfly park with hundreds of free-flying species.'
+}, {
+  subcat: 'familia',
+  name_es: 'Parque de las Familias (Almería capital)',
+  name_en: 'Parque de las Familias (Almería)',
+  km: 90,
+  comoLlegar_es: 'AP-7 salida 460 a Almería; junto al paseo marítimo del Zapillo.',
+  desc_es: 'Gran parque urbano frente al mar con zonas de juegos y patinaje.',
+  desc_en: 'Large seafront urban park with play areas and skating zones.'
+}, {
+  subcat: 'familia',
+  name_es: 'Refugios de la Guerra Civil (Almería capital)',
+  name_en: 'Spanish Civil War Shelters (Almería)',
+  km: 90,
+  comoLlegar_es: 'Almería centro, Plaza Manuel Pérez García; visita guiada con reserva.',
+  url: 'https://www.turismodealmeria.org/',
+  desc_es: 'Más de 4 km de túneles subterráneos visitables de la Guerra Civil.',
+  desc_en: 'Over 4 km of visitable Civil War underground tunnels.'
+}, {
+  subcat: 'familia',
+  name_es: 'Museo ARQUA (Cartagena)',
+  name_en: 'ARQUA Museum (Cartagena)',
+  km: 115,
+  comoLlegar_es: 'AP-7 dirección Cartagena; junto al puerto, frente al edificio del Ayuntamiento.',
+  url: 'https://www.cultura.gob.es/mnarqua/',
+  desc_es: 'Museo Nacional de Arqueología Subacuática con el tesoro de la fragata Mercedes.',
+  desc_en: 'National Museum of Underwater Archaeology with the Mercedes frigate treasure.'
+}, {
+  subcat: 'familia',
+  name_es: 'Terra Natura Murcia',
+  name_en: 'Terra Natura Murcia',
+  km: 140,
+  comoLlegar_es: 'AP-7 dirección Murcia capital; zona oeste de la ciudad.',
+  url: 'https://www.terranatura.com/murcia/',
+  desc_es: 'Parque zoológico con más de 300 animales en hábitats naturalizados.',
+  desc_en: 'Zoological park with over 300 animals in naturalised habitats.'
+}];
+const SUBCATS = [{
+  id: 'yacimientos',
+  es: 'Yacimientos arqueológicos',
+  en: 'Archaeological sites',
+  icon: '🏺'
+}, {
+  id: 'castillos',
+  es: 'Castillos y fortalezas',
+  en: 'Castles & fortresses',
+  icon: '🏰'
+}, {
+  id: 'islamico',
+  es: 'Patrimonio islámico',
+  en: 'Islamic heritage',
+  icon: '☪'
+}, {
+  id: 'romano',
+  es: 'Patrimonio romano',
+  en: 'Roman heritage',
+  icon: '🏛️'
+}, {
+  id: 'cuevas',
+  es: 'Cuevas y geología',
+  en: 'Caves & geology',
+  icon: '🕳️'
+}, {
+  id: 'faros',
+  es: 'Faros y miradores',
+  en: 'Lighthouses & viewpoints',
+  icon: '🗼'
+}, {
+  id: 'naturaleza',
+  es: 'Naturaleza singular',
+  en: 'Singular nature',
+  icon: '🌿'
+}, {
+  id: 'familia',
+  es: 'Atracciones familiares',
+  en: 'Family attractions',
+  icon: '🎢'
+}];
+const PlacesOfInterestAtlas = ({
+  lang
+}) => {
+  if (!PLACES_OF_INTEREST || PLACES_OF_INTEREST.length === 0) {
+    return /*#__PURE__*/React.createElement("p", {
+      className: "ag-para ag-para-note"
+    }, lang === 'es' ? 'Atlas en preparación — estamos curando la lista. Disponible muy pronto.' : 'Atlas in preparation — we are curating the list. Available very soon.');
+  }
+  return /*#__PURE__*/React.createElement("div", {
+    className: "ag-poi-atlas"
+  }, SUBCATS.map(sc => {
+    const items = PLACES_OF_INTEREST.filter(p => p.subcat === sc.id);
+    if (items.length === 0) return null;
+    return /*#__PURE__*/React.createElement("div", {
+      key: sc.id,
+      className: "ag-poi-cat"
+    }, /*#__PURE__*/React.createElement("h3", {
+      className: "ag-poi-cat-title"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-poi-cat-icon",
+      "aria-hidden": "true"
+    }, sc.icon), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? sc.es : sc.en), /*#__PURE__*/React.createElement("span", {
+      className: "ag-poi-cat-count"
+    }, items.length)), /*#__PURE__*/React.createElement("ul", {
+      className: "ag-poi-list"
+    }, items.map((p, i) => {
+      const name = lang === 'es' ? p.name_es : p.name_en || p.name_es;
+      const desc = lang === 'es' ? p.desc_es : p.desc_en || p.desc_es;
+      const url = p.url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`;
+      return /*#__PURE__*/React.createElement("li", {
+        key: i,
+        className: "ag-poi-row"
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "ag-poi-row-main"
+      }, /*#__PURE__*/React.createElement("a", {
+        className: "ag-poi-name",
+        href: url,
+        target: "_blank",
+        rel: "noopener noreferrer"
+      }, name), desc && /*#__PURE__*/React.createElement("span", {
+        className: "ag-poi-desc"
+      }, " \u2014 ", desc)), /*#__PURE__*/React.createElement("div", {
+        className: "ag-poi-row-meta"
+      }, /*#__PURE__*/React.createElement("span", {
+        className: "ag-poi-km"
+      }, p.km, " km"), /*#__PURE__*/React.createElement("span", {
+        className: "ag-poi-sep"
+      }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+        className: "ag-poi-how"
+      }, lang === 'es' ? p.comoLlegar_es || p.comoLlegar_en : p.comoLlegar_en || p.comoLlegar_es), p.anchor && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+        className: "ag-poi-sep"
+      }, "\xB7"), /*#__PURE__*/React.createElement("a", {
+        className: "ag-poi-anchor",
+        href: `#${p.anchor}`
+      }, lang === 'es' ? 'ver en la guía' : 'see in the guide', " \u2193"))));
+    })));
+  }));
 };
 const CatGroup = ({
   cat,
@@ -8298,7 +8928,18 @@ const AptGuideView = ({
     className: "ag-ave-curiosity-eyebrow"
   }, s.checkin.stationsAveTitle), /*#__PURE__*/React.createElement("p", {
     className: "ag-ave-curiosity-text"
-  }, s.checkin.stationsAve))), /*#__PURE__*/React.createElement("h3", {
+  }, s.checkin.stationsAve))), s.checkin.carTitle && /*#__PURE__*/React.createElement("div", {
+    className: "ag-car-block"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, s.checkin.carTitle), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, s.checkin.carText), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para ag-car-accompany"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-car-icon",
+    "aria-hidden": "true"
+  }, "\u2726"), s.checkin.carAccompany)), /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"
   }, s.checkin.modalitiesTitle), /*#__PURE__*/React.createElement("div", {
     className: "ag-checkin-modes"
@@ -8472,11 +9113,22 @@ const AptGuideView = ({
     className: "ag-sites-arrow",
     "aria-hidden": "true"
   }, "\u2197"), l.label))))))))), /*#__PURE__*/React.createElement("section", {
-    id: "ag-sabores",
+    id: "ag-lugares",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
   }, "13"), /*#__PURE__*/React.createElement("h2", {
+    className: "ag-h2"
+  }, lang === 'es' ? 'Lugares de interés' : 'Places of interest'), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, lang === 'es' ? 'Hay cientos. Esto es un atlas — los imprescindibles del Levante almeriense y la Región de Murcia, organizados por tipo. Cada línea tiene la distancia, cómo llegar y un enlace donde puedes leer más. Cuando un lugar forma parte de un itinerario o se describe mejor en otra sección, te llevamos allí.' : 'There are hundreds. This is an atlas — the must-sees of the Almería Levante and Murcia Region, sorted by type. Each line includes the distance, how to get there, and a link to read more. When a place is part of an itinerary or described in detail in another section, we point you there.'), /*#__PURE__*/React.createElement(PlacesOfInterestAtlas, {
+    lang: lang
+  })), /*#__PURE__*/React.createElement("section", {
+    id: "ag-sabores",
+    className: "ag-section"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-section-num"
+  }, "14"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Sabores' : 'Tastes'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -8498,7 +9150,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "14"), /*#__PURE__*/React.createElement("h2", {
+  }, "15"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -8520,7 +9172,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "15"), /*#__PURE__*/React.createElement("h2", {
+  }, "16"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Mar y playas' : 'Sea & beaches'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -8543,7 +9195,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "16"), /*#__PURE__*/React.createElement("h2", {
+  }, "17"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Planes y excursiones' : 'Things to do'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -8565,7 +9217,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "17"), /*#__PURE__*/React.createElement("h2", {
+  }, "18"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Mercados y compras' : 'Markets & shops'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -8585,7 +9237,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "18"), /*#__PURE__*/React.createElement("h2", {
+  }, "19"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Salud y servicios' : 'Health & services'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -8605,7 +9257,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "19"), /*#__PURE__*/React.createElement("h2", {
+  }, "20"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -8631,7 +9283,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "20"), /*#__PURE__*/React.createElement("h2", {
+  }, "21"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.phones.title), /*#__PURE__*/React.createElement("table", {
     className: "ag-phones-table"
@@ -8644,7 +9296,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "21"), /*#__PURE__*/React.createElement("h2", {
+  }, "22"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.feedback.title), s.feedback.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
