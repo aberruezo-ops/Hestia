@@ -53,6 +53,10 @@ const HERO_VIDEOS = [
     poster: 'assets/hero-terrace-night.jpg',
     mood: 'teal',
     alt: 'Cala aérea · arena dorada y agua azul intenso' },
+  { src: 'assets/Videoshome/hero-piscina-verano.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'teal',
+    alt: 'Piscina en verano' },
   // Para añadir un vídeo: súbelo a docs/assets/Videoshome/ y añade
   // una entrada con la misma forma. Para hacerlo circular, procesa
   // con ffmpeg crossfade end→start (ver scripts/build-pdf.mjs para
