@@ -132,6 +132,7 @@ const PLACES = [
 
   // Supermercados
   { id: 'coviran',        name: 'Covirán', desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa. Para básicos sin coger el coche.', cat: 'super', lat: 37.2235, lng: -1.7975 },
+  { id: 'superberruezo', name: 'Supermercados Berruezo (Vera Playa)', desc: 'Supermercado local bien surtido en Vera Playa. Producto fresco, carnicería propia y trato cercano. Buenos precios en fruta y verdura de la huerta almeriense.', cat: 'super', url: 'https://maps.app.goo.gl/bh8A2eUZEn1bWaM16', lat: 37.2270, lng: -1.7980, featured: true },
   { id: 'consum',         name: 'Consum (Vera Playa)', desc: 'Supermercado mediano a 5 min en coche. Sorpresa: tiene un buen surtido de productos británicos (cereales, salsas, té, alubias Heinz) por la afluencia inglesa de la zona.', specialty: 'estantería de productos UK — Marmite, Yorkshire Tea, baked beans, salsas Branston, mince pies en Navidad.', cat: 'super', url: 'https://goo.gl/maps/h6UvnBe3ATHpsPXbA', lat: 37.2200, lng: -1.8090, featured: true },
   { id: 'mercadona',      name: 'Mercadona Vera Playa', desc: 'Mercadona estándar a 5 min en coche. El más completo de la zona.', cat: 'super', url: 'https://goo.gl/maps/axi9Lb9xLp8yuVUR8', lat: 37.2360, lng: -1.7935, featured: true },
   { id: 'super-vera',     name: 'Vera pueblo (Dia · Lidl · Mercadona)', desc: 'Supermercados grandes en Vera pueblo, a 10 min en coche.', cat: 'super', lat: 37.2491, lng: -1.8639, featured: true },
