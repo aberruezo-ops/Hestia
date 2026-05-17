@@ -108,7 +108,30 @@ const Hero = ({ lang, onScrollDown }) => {
     return () => { document.removeEventListener('visibilitychange', onVisible); };
   }, []);
 
+  const vitruvio = ReactDOM.createPortal(
+    <div className={`hero-vitruvio${vitMin ? ' hv-min' : ''}`}>
+      <div className="hv-box" aria-hidden="true" onClick={vitMin ? toggleVit : undefined}
+           style={vitMin ? { cursor: 'pointer' } : undefined}>
+        <video autoPlay muted loop playsInline preload="auto">
+          <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
+        </video>
+      </div>
+      <button
+        type="button"
+        className="hv-toggle"
+        onClick={toggleVit}
+        aria-label={vitMin
+          ? (lang === 'es' ? 'Expandir animacion' : 'Expand animation')
+          : (lang === 'es' ? 'Minimizar' : 'Minimise')}
+      >
+        {vitMin ? '+' : '-'}
+      </button>
+    </div>,
+    document.body
+  );
+
   return (
+    <>
     <section
       id="top"
       className={`hero mood-${pick.mood}`}
@@ -127,25 +150,6 @@ const Hero = ({ lang, onScrollDown }) => {
       >
         <source src={`${pick.src}?v=${VIDEO_V}`} type="video/mp4"/>
       </video>
-      {/* Animación Vitruvio — decorativa, minimizable a la cabecera */}
-      <div className={`hero-vitruvio${vitMin ? ' hv-min' : ''}`}>
-        <div className="hv-box" aria-hidden="true" onClick={vitMin ? toggleVit : undefined}
-             style={vitMin ? { cursor: 'pointer' } : undefined}>
-          <video autoPlay muted loop playsInline preload="auto">
-            <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
-          </video>
-        </div>
-        <button
-          type="button"
-          className="hv-toggle"
-          onClick={toggleVit}
-          aria-label={vitMin
-            ? (lang === 'es' ? 'Expandir animacion' : 'Expand animation')
-            : (lang === 'es' ? 'Minimizar' : 'Minimise')}
-        >
-          {vitMin ? '+' : '-'}
-        </button>
-      </div>
       <div className="hero-content">
         <div className="wordmark hero-wordmark">HESTÍA</div>
         <div className="your-home hero-yourhome">your home!</div>
@@ -184,6 +188,8 @@ const Hero = ({ lang, onScrollDown }) => {
         <span className="hide-mobile hero-meta-province">Almería · Andalucía</span>
       </div>
     </section>
+    {vitruvio}
+    </>
   );
 };
 
