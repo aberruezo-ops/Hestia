@@ -5786,23 +5786,6 @@ const ICONIC_DISHES = [{
 
 // TAPAS_ROUTES — rutas de tapas por localidad. Se renderizan en Sabores.
 const TAPAS_ROUTES = [{
-  id: 'tapas-vera-playa',
-  city_es: 'Vera Playa',
-  city_en: 'Vera Playa',
-  intro_es: 'El paseo marítimo de Vera Playa tiene chiringuitos y bares de tapas donde el tapeo es informal y relajado: ideal para la tarde-noche después del baño.',
-  intro_en: 'Vera Playa\'s promenade has chiringuitos and tapas bars for an easy, relaxed evening crawl — perfect after the beach.',
-  stops: [{
-    name: 'La Jovita Playa Tapas (Las Marinas)',
-    what_es: 'Bar de tapas a pie de playa con buenas valoraciones. Pescaíto frito, gambas a la plancha y tapas del día a buen precio. Abre a partir del mediodía.',
-    what_en: 'Well-rated tapas bar right on the beachfront. Fried fish, griddled prawns and daily tapas at a good price. Opens from midday.'
-  }, {
-    name: 'Terrazas del paseo marítimo',
-    what_es: 'Para cerrar: tinto de verano o granizado de limón con la puesta de sol. Las terrazas aguantan hasta la medianoche en temporada alta.',
-    what_en: 'To close: red wine with lemon or granizado watching the sunset. Promenade terraces stay open until midnight in high season.'
-  }],
-  tip_es: 'Los chiringuitos de playa tienen horarios variables según temporada — en julio y agosto abren hasta las 00:00; fuera de verano cierran sobre las 22:00.',
-  tip_en: 'Beach chiringuitos have seasonal hours — July and August until midnight; outside summer they close around 22:00.'
-}, {
   id: 'tapas-vera-pueblo',
   city_es: 'Vera pueblo',
   city_en: 'Vera village',
