@@ -1750,10 +1750,11 @@ body.apt-bar-shown .cookies {
 .hero-vitruvio {
   position: fixed;
   /* "top" en ambos estados para que la transición CSS funcione */
-  top: calc(100vh - 108px - clamp(200px, 22vw, 280px));
-  left: var(--page-pad);
+  top: calc(100vh - 130px - clamp(200px, 22vw, 280px));
+  left: clamp(8px, 1.2vw, 20px);
   width: clamp(200px, 22vw, 280px);
   z-index: 150;
+  /* pointer-events en el padre debe ser auto para que el hover CSS funcione */
   pointer-events: none;
   transition: top 0.55s cubic-bezier(0.23, 1, 0.32, 1),
               width 0.55s cubic-bezier(0.23, 1, 0.32, 1);
@@ -1793,10 +1794,10 @@ body.apt-bar-shown .cookies {
   align-items: center;
   justify-content: center;
   pointer-events: auto;
-  opacity: 0;
-  transition: opacity 0.2s, transform 0.2s;
+  /* Siempre visible — el padre tiene pointer-events:none y :hover no dispara */
+  opacity: 1;
+  transition: transform 0.2s;
 }
-.hero-vitruvio:hover .hv-toggle { opacity: 1; }
 @media (hover: hover) {
   .hv-toggle:hover { transform: scale(1.18); }
 }
