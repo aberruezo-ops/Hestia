@@ -7,6 +7,7 @@ const APT_DATA = {
   vm: {
     id: 'vm', num: '01', slug: 'mar', license: 'VFT/AL/01580',
     name_short: 'Mar',
+    vimeo_id: '1192955159',
     accent: '#6B7A3A', accent2: '#8B9A52', accent_dk: '#4A5628',
     hero_img: 'assets/apt-vs.jpg',
     bedroom_img: 'assets/apt-vm-gallery-10.jpg',
@@ -58,6 +59,7 @@ const APT_DATA = {
   vt: {
     id: 'vt', num: '02', slug: 'thalassa', license: 'VFT/AL/05535',
     name_short: 'Thalassa',
+    vimeo_id: '1192955160',
     accent: '#8A4A24', accent2: '#B86A3C', accent_dk: '#6E3A1C',
     hero_img: 'assets/apt-vt-4.jpg',
     bedroom_img: 'assets/apt-vt-gallery-02.jpg',
@@ -101,6 +103,7 @@ const APT_DATA = {
   vs: {
     id: 'vs', num: '03', slug: 'salinas', license: 'VTF/AL/07056',
     name_short: 'Salinas',
+    vimeo_id: '1192955161',
     accent: '#9E7A2C', accent2: '#D4A84A', accent_dk: '#7A5E1A',
     hero_img: 'assets/apt-vm.jpg',
     bedroom_img: 'assets/apt-vs-gallery-21.jpg',
@@ -667,6 +670,44 @@ const GalleryCarousel = ({ imgs, captions }) => {
   );
 };
 
+const AptVideoTour = ({ apt, lang }) => {
+  const [playing, setPlaying] = React.useState(false);
+  if (!apt.vimeo_id) return null;
+  const accentHex = apt.accent.replace('#', '');
+  const label = lang === 'es' ? 'Reproducir visita virtual' : 'Play virtual tour';
+  return (
+    <section className="apt-video-tour" style={{ '--apt-accent': apt.accent }}>
+      <div className="container">
+        <span className="eyebrow apt-vt-eyebrow">{lang === 'es' ? 'Visita virtual' : 'Virtual tour'}</span>
+        <h2 className="apt-vt-title">
+          {lang === 'es' ? `Recorre ${apt[lang].name}` : `Tour ${apt[lang].name}`}
+        </h2>
+        <div className="apt-vt-wrap">
+          {playing ? (
+            <iframe
+              className="apt-vt-iframe"
+              src={`https://player.vimeo.com/video/${apt.vimeo_id}?autoplay=1&dnt=1&color=${accentHex}&title=0&byline=0&portrait=0`}
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              title={apt[lang].name}
+            />
+          ) : (
+            <button className="apt-vt-poster" onClick={() => setPlaying(true)} aria-label={label}>
+              <img src={apt.hero_img} alt="" className="apt-vt-poster-img" loading="lazy" />
+              <div className="apt-vt-overlay" aria-hidden="true" />
+              <div className="apt-vt-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="white" width="36" height="36">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </div>
+            </button>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const AptPageGallery = ({ apt, lang }) => {
   const d = apt[lang];
   const captions = d.gallery_captions;
@@ -1060,6 +1101,7 @@ const ApartmentPageApp = () => {
             <FraseHogar lang={lang} />
             <AptPageDesc apt={apt} lang={lang} />
             <AptPageGallery apt={apt} lang={lang} />
+            <AptVideoTour apt={apt} lang={lang} />
             <AptEquipamiento apt={apt} lang={lang} />
             <AptFloorPlan apt={apt} lang={lang} />
             <DirectBookingPerks lang={lang} />
