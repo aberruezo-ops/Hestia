@@ -151,7 +151,7 @@ const Wordmark = ({
 // Copy diccionario ES/EN
 const COPY = {
   es: {
-    nav: ['Inicio', 'Hestía Mar', 'Hestía Thalassa', 'Hestía Salinas', 'Nosotros', 'Opiniones', 'Contacto', 'Noticias', 'Por qué Hestía'],
+    nav: ['Inicio', 'Hestía Mar', 'Hestía Thalassa', 'Hestía Salinas', 'Nosotros', 'Opiniones', 'Contacto', 'Noticias', '¿Por qué Hestía?'],
     cta_nav: 'Reserva',
     mn_ventajas: 'Ventajas de reserva directa',
     mn_guests: 'Acceso para huéspedes',
@@ -461,7 +461,7 @@ const QUICK_FAQ = {
   vm: {
     es: [{
       q: '¿Por qué elegiría Hestía Mar sobre los otros dos?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Mar es planta primera, con acceso al jard\xEDn y a la piscina comunitaria. Al ser de esquina da a tres calles distintas: hacia el mar, hacia los lados y hacia la zona de entrada \u2014 lo que permite ventilaci\xF3n cruzada natural en todas las estancias. La terraza de 20m\xB2 est\xE1 orientada al amanecer, pero desde ella ves el ciclo solar completo. El m\xE1s \xEDntimo y sereno de los tres.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Mar es planta primera, con acceso al jard\xEDn y a la piscina comunitaria. Al ser de esquina da a tres calles distintas: hacia el mar, hacia los lados y hacia la zona de entrada \u2014 lo que permite ventilaci\xF3n cruzada natural en todas las estancias. La terraza de 20m\xB2 est\xE1 orientada al amanecer, pero desde ella ves el ciclo solar completo. El m\xE1s cercano a la playa de los tres.")
     }, {
       q: '¿Puedo traer a mi perro (o gato)?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED, las mascotas son bienvenidas en los tres, siempre bajo petici\xF3n previa y con suplemento. Solo pedimos que se respeten unas condiciones b\xE1sicas y sensatas: dentro de Hest\xEDa, en las zonas comunes de la urbanizaci\xF3n y en los espacios p\xFAblicos. Av\xEDsanos al reservar.")
@@ -474,7 +474,7 @@ const QUICK_FAQ = {
     }],
     en: [{
       q: 'Why would I choose Hestía Mar over the other two?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Mar is on the first floor, with access to the garden and shared pool. As a corner unit facing three different streets \u2014 sea side, lateral and entrance \u2014 it has natural cross-ventilation throughout. The 20m\xB2 terrace faces the sunrise, but from it you can follow the entire arc of the sun. The most intimate and serene of the three.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Mar is on the first floor, with access to the garden and shared pool. As a corner unit facing three different streets \u2014 sea side, lateral and entrance \u2014 it has natural cross-ventilation throughout. The 20m\xB2 terrace faces the sunrise, but from it you can follow the entire arc of the sun. The closest to the beach of the three.")
     }, {
       q: 'Can I bring my dog (or cat)?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes, pets are welcome in all three Hest\xEDas, always on request and with a supplement. We simply ask that basic conditions are respected: inside the Hest\xEDa, in the communal areas of the complex, and in public spaces. Let us know when booking.")
@@ -517,26 +517,26 @@ const QUICK_FAQ = {
   vs: {
     es: [{
       q: '¿Por qué elegiría Hestía Salinas sobre los otros dos?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Salinas es el m\xE1s luminoso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de p\xE1del comunitarios, y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina con acceso peatonal directo. La luz dorada de Almer\xEDa llena cada habitaci\xF3n \u2014 y la naturaleza empieza donde termina la acera.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Salinas es el m\xE1s espacioso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de p\xE1del comunitarios, y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina con acceso peatonal directo. La luz dorada de Almer\xEDa llena cada habitaci\xF3n \u2014 y la naturaleza empieza donde termina la acera.")
     }, {
       q: '¿Qué son las Salinas de Puerto Rey?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Un Parque Natural a pocos metros, con flamencos, aves migratorias y una luz dorada al amanecer \xFAnica en Europa. Una de las razones por las que Salinas tiene algo que los dem\xE1s no tienen.")
     }, {
       q: '¿Hay de verdad tres piscinas?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED. La urbanizaci\xF3n tiene tres piscinas comunitarias \u2014 no una sola dividida, sino tres zonas diferenciadas con orientaciones distintas. Adem\xE1s hay gimnasio y sauna comunitarios (abiertos todo el a\xF1o) y pistas de p\xE1del. Una de las urbanizaciones mejor equipadas de Vera Playa.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED. La urbanizaci\xF3n tiene tres piscinas comunitarias \u2014 no una sola dividida, sino tres zonas diferenciadas con orientaciones distintas. Adem\xE1s hay gimnasio y sauna comunitarios (el gimnasio abierto todo el a\xF1o; la sauna, solo fuera de temporada de verano) y pistas de p\xE1del. Una de las urbanizaciones mejor equipadas de Vera Playa.")
     }, {
       q: '¿Puedo traer mascotas?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED, en los tres. Siempre bajo petici\xF3n previa y con suplemento, respetando unas condiciones b\xE1sicas dentro de Hest\xEDa, en las zonas comunes y en los espacios p\xFAblicos.")
     }],
     en: [{
       q: 'Why would I choose Hestía Salinas over the other two?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Salinas is the brightest of the three. Two terraces, three pools, a communal gym, sauna and padel courts, and the Puerto Rey Salt-flat Nature Park around the corner with direct pedestrian access. Almer\xEDa's golden afternoon light fills every room \u2014 and nature begins where the pavement ends.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Salinas is the most spacious of the three. Two terraces, three pools, a communal gym, sauna and padel courts, and the Puerto Rey Salt-flat Nature Park around the corner with direct pedestrian access. Almer\xEDa's golden afternoon light fills every room \u2014 and nature begins where the pavement ends.")
     }, {
       q: 'What is the Puerto Rey Nature Park?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "A natural park a few metres away, with flamingos, migratory birds and a golden light at sunrise unique in Europe. One of the reasons Salinas has something the others don't.")
     }, {
       q: 'Are there really three pools?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes. The complex has three community pools \u2014 not one divided, but three separate areas with different orientations. There is also a communal gym and sauna (open year-round) and padel courts. One of the best-equipped complexes in Vera Playa.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes. The complex has three community pools \u2014 not one divided, but three separate areas with different orientations. There is also a communal gym and sauna (gym open all year; sauna closed in summer) and padel courts. One of the best-equipped complexes in Vera Playa.")
     }, {
       q: 'Can I bring pets?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes, in all three Hest\xEDas. Always on request and with a supplement, as long as basic conditions are respected inside the Hest\xEDa, in the communal areas and in public spaces.")
@@ -2499,7 +2499,7 @@ const StickyFacts = ({
     return () => clearInterval(t);
   }, [open]);
   const item = pool[idx];
-  const label = lang === 'es' ? '¿Sabías que?' : 'Did you know?';
+  const label = lang === 'es' ? '¿Sabías que…?' : 'Did you know?';
   return /*#__PURE__*/React.createElement("div", {
     className: `sticky-facts ${open ? '' : 'sf-closed'}${pastHero && !searchActive ? '' : ' sf-hidden'}`,
     onClick: !open ? () => setOpen(true) : undefined
@@ -2512,7 +2512,7 @@ const StickyFacts = ({
       textTransform: 'uppercase',
       fontWeight: 400
     }
-  }, lang === 'es' ? '¿Sabías que?' : 'Did you know?'), /*#__PURE__*/React.createElement("button", {
+  }, lang === 'es' ? '¿Sabías que…?' : 'Did you know?'), /*#__PURE__*/React.createElement("button", {
     className: "sf-toggle",
     onClick: () => setOpen(true),
     "aria-label": "Expandir"
@@ -3822,7 +3822,7 @@ const WidgetSabiasQue = ({
   if (min) {
     return /*#__PURE__*/React.createElement(WidgetMiniPill, {
       icon: "?",
-      label: lang === 'es' ? '¿Sabías que?' : 'Did you know?',
+      label: lang === 'es' ? '¿Sabías que…?' : 'Did you know?',
       ariaLabel: lang === 'es' ? 'Restaurar curiosidades' : 'Restore did-you-know',
       onClick: () => setMin(false),
       className: "widget-mini-sabias"
@@ -3831,7 +3831,7 @@ const WidgetSabiasQue = ({
   const item = pool[idx];
   return /*#__PURE__*/React.createElement("section", {
     className: "widget-card widget-sabias",
-    "aria-label": lang === 'es' ? 'Sabías que' : 'Did you know'
+    "aria-label": lang === 'es' ? '¿Sabías que…?' : 'Did you know'
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "widget-min-btn",
@@ -3842,7 +3842,7 @@ const WidgetSabiasQue = ({
     className: `sf-body ${visible ? 'sf-in' : 'sf-out'}`
   }, /*#__PURE__*/React.createElement("span", {
     className: "sf-label"
-  }, lang === 'es' ? '¿Sabías que?' : 'Did you know?'), /*#__PURE__*/React.createElement("span", {
+  }, lang === 'es' ? '¿Sabías que…?' : 'Did you know?'), /*#__PURE__*/React.createElement("span", {
     className: "sf-text"
   }, item[lang])), /*#__PURE__*/React.createElement("div", {
     className: "sf-nav"
@@ -4367,7 +4367,7 @@ const HomeGuideTeaser = ({
     title_a: 'La guía completa de ',
     title_em: 'Hestía',
     desc: /*#__PURE__*/React.createElement(React.Fragment, null, "No es un folleto: es la ", /*#__PURE__*/React.createElement("strong", null, "supergu\xEDa que nos habr\xEDa gustado encontrar a nosotros"), " cuando llegamos por primera vez a Vera. Veintid\xF3s cap\xEDtulos con todo lo que necesitas para vivir tu estancia \u2014 desde c\xF3mo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense."),
-    stats: [/*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 cap\xEDtulos"), " sobre tu Hest\xEDa y el entorno"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "230+ lugares curados"), " \u2014 restaurantes, playas, bares, bodegas, mercados, pescader\xEDas\u2026"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 planes de d\xEDa completo"), " con horarios, rutas y reservas"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Servicios a mano"), " \u2014 centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarder\xEDas y residencias para mascotas\u2026"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Tel\xE9fonos \xFAtiles"), " y nuestro contacto directo antes, durante y despu\xE9s de tu estancia")],
+    stats: [/*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 cap\xEDtulos"), " sobre tu Hest\xEDa y el entorno"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "M\xE1s de 230 recomendaciones"), " \u2014 restaurantes, playas, bares, bodegas, mercados, pescader\xEDas\u2026"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 planes de d\xEDa completo"), " con horarios, rutas y reservas"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Servicios a mano"), " \u2014 centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarder\xEDas y residencias para mascotas\u2026"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Tel\xE9fonos \xFAtiles"), " y nuestro contacto directo antes, durante y despu\xE9s de tu estancia")],
     foot: 'Web interactiva + PDF descargable de 40 páginas. Reservada para huéspedes con PIN.',
     cta: 'Solo para huéspedes'
   } : {

@@ -572,7 +572,7 @@ const AptCalendar = ({
     className: "avail-title"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Elige tus fechas."), " Tu Hest\xEDa te espera.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Pick your dates."), " Your Hest\xEDa is waiting.")), /*#__PURE__*/React.createElement("p", {
     className: "avail-sub"
-  }, lang === 'es' ? 'Calendario sincronizado desde Booking.com y Airbnb. Selecciona entrada y salida para solicitar precio directamente a Alex.' : 'Calendar synced from Booking.com and Airbnb. Select check-in and check-out to request a price directly from Alex.')), isDemo && /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Calendario sincronizado desde Booking.com y Airbnb. Selecciona entrada y salida para solicitarnos precio.' : 'Calendar synced from Booking.com and Airbnb. Select check-in and check-out to request a price directly from us.')), isDemo && /*#__PURE__*/React.createElement("div", {
     className: "avail-demo"
   }, lang === 'es' ? '⚡ Datos de ejemplo · La sincronización en tiempo real se activará en breve' : '⚡ Sample data · Live sync will be activated shortly'), !isDemo && hasSyncError && /*#__PURE__*/React.createElement("div", {
     className: "avail-sync-err"
