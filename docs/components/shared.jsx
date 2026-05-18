@@ -2310,6 +2310,7 @@ if (typeof document !== 'undefined') {
 // useSectionGlow — barra fija en la parte superior del viewport que anima
 // con el color de la paleta cada vez que una nueva sección entra al scroll.
 // Oscuro → buganvilla (#D42B80), crema → turquesa (#1BC8D8).
+// Usa Web Animations API para reiniciar la animación de forma fiable.
 const useSectionGlow = () => {
   React.useEffect(() => {
     const bar = document.createElement('div');
@@ -2317,15 +2318,17 @@ const useSectionGlow = () => {
     document.body.appendChild(bar);
 
     const COLORS = { dark: '#D42B80', cream: '#1BC8D8' };
-    let tid = null;
+    let currentAnim = null;
 
     const trigger = (color) => {
-      if (tid) clearTimeout(tid);
-      bar.classList.remove('sgt-running');
+      if (currentAnim) { currentAnim.cancel(); currentAnim = null; }
       bar.style.setProperty('--sgt-color', color);
-      void bar.offsetWidth; // force reflow so animation restarts
-      bar.classList.add('sgt-running');
-      tid = setTimeout(() => bar.classList.remove('sgt-running'), 1100);
+      currentAnim = bar.animate([
+        { transform: 'scaleX(0)', opacity: 1 },
+        { transform: 'scaleX(1)', opacity: 1, offset: 0.52 },
+        { transform: 'scaleX(1)', opacity: 0 },
+      ], { duration: 1050, easing: 'cubic-bezier(.16,.84,.44,1)' });
+      currentAnim.addEventListener('finish', () => { currentAnim = null; });
     };
 
     const sections = document.querySelectorAll('section.section-dark, section.section-cream');
@@ -2337,10 +2340,14 @@ const useSectionGlow = () => {
           io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.06 });
+    }, { threshold: 0.06, rootMargin: '0px 0px -60px 0px' });
 
     sections.forEach(s => io.observe(s));
-    return () => { io.disconnect(); bar.remove(); if (tid) clearTimeout(tid); };
+    return () => {
+      io.disconnect();
+      if (currentAnim) currentAnim.cancel();
+      bar.remove();
+    };
   }, []);
 };
 

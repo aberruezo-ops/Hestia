@@ -184,6 +184,9 @@ const Header = ({ mode, scrolled, lang }) => {
       >
         -
       </button>
+      <a href="porque-hestia.html" className="hv-brand-btn">
+        {lang === 'es' ? 'Nuestra marca →' : 'Our brand →'}
+      </a>
     </div>,
     document.body
   );

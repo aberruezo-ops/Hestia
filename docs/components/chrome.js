@@ -272,7 +272,10 @@ const Header = ({
     className: "hv-toggle",
     onClick: toggleVit,
     "aria-label": lang === 'es' ? 'Minimizar' : 'Minimise'
-  }, "-")), document.body);
+  }, "-"), /*#__PURE__*/React.createElement("a", {
+    href: "porque-hestia.html",
+    className: "hv-brand-btn"
+  }, lang === 'es' ? 'Nuestra marca →' : 'Our brand →')), document.body);
 
   // Sync animation across page navigations using absolute time
   React.useEffect(() => {

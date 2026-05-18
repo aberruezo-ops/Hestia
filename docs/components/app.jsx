@@ -3,68 +3,8 @@
 // useScrollMode y useReveal viven en shared.jsx
 // ================================================================
 
-const VideoIntro = ({ lang, onDone }) => {
-  const boxRef    = React.useRef(null);
-  const videoRef  = React.useRef(null);
-  const exitedRef = React.useRef(false);
-
-  const doExit = (fast = false) => {
-    if (exitedRef.current) return;
-    exitedRef.current = true;
-    const box = boxRef.current;
-    if (box) {
-      box.style.transition = `opacity ${fast ? 0.4 : 5}s ease`;
-      box.style.opacity    = '0';
-    }
-    setTimeout(() => {
-      sessionStorage.setItem('hestia-intro', '1');
-      onDone();
-    }, fast ? 400 : 5000);
-  };
-
-  React.useEffect(() => {
-    const v = videoRef.current;
-    if (v) v.play().catch(() => setTimeout(doExit, 200));
-    // Safety bail-out only for total failure — 90s is well beyond any video length
-    const bail = setTimeout(doExit, 90000);
-    return () => clearTimeout(bail);
-  }, []);
-
-  return (
-    <div ref={boxRef} className="vintro">
-      <div className="vintro-box">
-        <video
-          ref={videoRef}
-          className="vintro-video"
-          autoPlay muted playsInline
-          onEnded={doExit}
-          onError={doExit}
-        >
-          <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
-        </video>
-        <div className="vintro-actions">
-          <a
-            className="vintro-cta"
-            href="porque-hestia.html"
-            onClick={() => sessionStorage.setItem('hestia-intro', '1')}
-          >
-            {lang === 'es' ? 'Conocer nuestra marca →' : 'About our brand →'}
-          </a>
-          <button className="vintro-skip" onClick={() => doExit(true)}>
-            {lang === 'es' ? 'Saltar →' : 'Skip →'}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const App = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
-  const [introOver, setIntroOver] = React.useState(() =>
-    !!sessionStorage.getItem('hestia-intro') ||
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  );
   const { mode, scrolled } = useScrollMode();
   useReveal();
 
@@ -104,7 +44,6 @@ const App = () => {
 
   return (
     <>
-      {!introOver && <VideoIntro lang={lang} onDone={() => setIntroOver(true)} />}
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main>

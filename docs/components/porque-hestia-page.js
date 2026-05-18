@@ -34,7 +34,7 @@ const PORQUE_COPY = {
     name_quote: '«El primer día que lo dijimos en voz alta supimos que era el único nombre posible.»',
     name_quote_attr: '— Fran Moral',
     values_eyebrow: 'Nuestros valores',
-    values_title: /*#__PURE__*/React.createElement(React.Fragment, null, "HESTIA, una palabra", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "y seis maneras de habitarla.")),
+    values_title: /*#__PURE__*/React.createElement(React.Fragment, null, "HEST\xCDA, una palabra", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "y seis maneras de habitarla.")),
     values_lede: 'El nombre que recibimos de la diosa griega no es solo símbolo: es una guía. Cada letra de Hestía nombra un valor que practicamos a diario. Seis ideas que se suman en una sola: la confianza.',
     values: [{
       letter: 'H',
@@ -110,7 +110,7 @@ const PORQUE_COPY = {
     name_quote: '"The first time we said it aloud, we knew it was the only possible name."',
     name_quote_attr: '— Fran Moral',
     values_eyebrow: 'Our values',
-    values_title: /*#__PURE__*/React.createElement(React.Fragment, null, "HESTIA, one word", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "and six ways to inhabit it.")),
+    values_title: /*#__PURE__*/React.createElement(React.Fragment, null, "HEST\xCDA, one word", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "and six ways to inhabit it.")),
     values_lede: 'The name we received from the Greek goddess is not only a symbol: it is a guide. Every letter of Hestía names a value we practice every day. Six ideas that add up to one: trust.',
     values: [{
       letter: 'H',
