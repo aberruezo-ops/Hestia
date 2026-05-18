@@ -443,5 +443,10 @@
   "bookingHorizon": {
     "lastCheckinDate": "2027-03-20",
     "reason": "Cierre antes de Semana Santa 2027 (Domingo de Ramos: 2027-03-21)"
+  },
+  "manual_blocks": {
+    "vm": [],
+    "vt": [],
+    "vs": []
   }
 }
