@@ -1894,13 +1894,13 @@ body.apt-bar-shown .cookies {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 7px 6px 8px;
-  opacity: 0.82;
+  padding: 8px 6px 9px;
+  opacity: 0.85;
   pointer-events: auto;
   transition: opacity 0.2s;
-  background: rgba(42,15,46,0.72);
+  background: var(--ber-dk);
+  border-top: 1px solid rgba(240,232,213,0.12);
   border-radius: 0 0 10px 0;
-  box-shadow: 0 4px 14px rgba(42,15,46,0.3);
 }
 @media (hover: hover) { .hv-brand-btn:hover { opacity: 1; } }
 @media (max-width: 900px) { .hv-brand-btn { display: none !important; } }
@@ -9780,6 +9780,104 @@ html:has(.hero),
 html:has(.apt-page-hero) {
   background: var(--ink);
 }
+
+/* ── Secciones secundarias — stacking completo (todos los inner pages) ──────
+   Estas secciones no estaban en el sistema de overlap y exponían el fondo
+   crema del body (≈ #FAF6F0) en las esquinas redondeadas de secciones oscuras.
+   Se añaden border-radius + margin-bottom + z-index + padding-top compensado. */
+
+/* Secciones sin .section-* class — necesitan border-radius explícito */
+.nos-intro,
+.porque-logo,
+.nosotros-team,
+.contacto-persons,
+.contacto-faq,
+.opiniones-quotes-marquee,
+.opiniones-testimonials,
+.noticias-voz,
+.apt-trust-strip,
+.apt-video-desc,
+.apt-equip,
+.dbt-band,
+.apt-avail,
+.apt-page-others {
+  border-radius: 32px 0 32px 0;
+  position: relative;
+  margin-bottom: -32px;
+}
+
+/* Secciones con .section-* — ya tienen border-radius, solo faltan overlap */
+.nos-why,
+.nos-colores,
+.nos-viajero,
+.pq-valores,
+.pq-crosslink,
+.contacto-address,
+.opiniones-platforms,
+.noticias-territorio,
+.apt-floorplan { margin-bottom: -32px; }
+
+/* Z-index decreciente por posición en página (reutilizable entre páginas
+   distintas — valores en el rango 40-49, same as home, no conflict) */
+.nos-intro,
+.contacto-persons,
+.opiniones-platforms,
+.noticias-voz,
+.apt-trust-strip { z-index: 49; }
+
+.porque-logo,
+.contacto-address,
+.opiniones-quotes-marquee,
+.noticias-territorio,
+.apt-video-desc { z-index: 48; }
+
+.nos-why,
+.nosotros-team,
+.contacto-faq,
+.opiniones-testimonials { z-index: 47; }
+
+.nos-colores,
+.apt-equip { z-index: 46; }
+
+.nos-viajero,
+.apt-floorplan { z-index: 45; }
+
+.pq-valores,
+.dbt-band { z-index: 44; }
+
+.apt-avail { z-index: 43; }
+
+.apt-page-others { z-index: 42; }
+
+.pq-crosslink { z-index: 40; }
+
+/* Compensación padding-top (+32px para recuperar el espacio solapado) */
+.nos-intro      { padding-top: calc(96px  + 32px); }
+.porque-logo    { padding-top: calc(96px  + 32px); }
+.nos-why        { padding-top: calc(96px  + 32px); }
+.nos-colores    { padding-top: calc(96px  + 32px); }
+.nos-viajero    { padding-top: calc(96px  + 32px); }
+.pq-valores     { padding-top: 32px; }
+.pq-crosslink   { padding-top: calc(72px  + 32px); }
+.nosotros-team  { padding-top: calc(96px  + 32px); }
+.contacto-persons { padding-top: calc(96px + 32px); }
+.contacto-address { padding-top: calc(80px + 32px); }
+.contacto-faq   { padding-top: calc(80px  + 32px); }
+.opiniones-platforms    { padding-top: calc(80px + 32px); }
+.opiniones-quotes-marquee { padding-top: calc(18px + 32px); }
+.opiniones-testimonials { padding-top: calc(96px + 32px); }
+.noticias-voz        { padding-top: calc(90px + 32px); }
+.noticias-territorio { padding-top: calc(90px + 32px); }
+.apt-trust-strip { padding-top: calc(18px + 32px); }
+.apt-video-desc  { padding-top: calc(72px + 32px); }
+.apt-equip       { padding-top: calc(72px + 32px); }
+.apt-floorplan   { padding-top: calc(80px + 32px); }
+.dbt-band        { padding-top: calc(56px + 32px); }
+.apt-avail       { padding-top: calc(90px + 32px); }
+.apt-page-others { padding-top: calc(96px + 32px); }
+
+/* apt-page-gallery: reordenado de z-index 48→47 para caber apt-video-desc en 48 */
+.apt-page-gallery { z-index: 47; }
 
 /* ── Capa GPU: recorte border-radius correcto en Chromium/WebKit ─────────────
    overflow:hidden + border-radius en el mismo elemento puede no recortar el

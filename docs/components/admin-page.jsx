@@ -3320,17 +3320,12 @@ const AdminApp = () => {
           onClick={() => { setMode('leila'); setError(null); setSuccess(null); }}>
           💳 Leila
         </button>
-        <button type="button"
-          className={`pe-tab${mode === 'bloques' ? ' is-active' : ''}`}
-          onClick={() => { setMode('bloques'); setError(null); setSuccess(null); }}>
-          🔒 Bloqueos
-        </button>
       </div>
 
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} /> : mode === 'reservas' ? <ReservasTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'bloques' ? <BloquesTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} /> : mode === 'reservas' ? <ReservasTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>
