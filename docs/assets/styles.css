@@ -7893,6 +7893,36 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   display: flex;
   gap: 20px;
   align-items: flex-start;
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.nos-color-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--nc, #2A0F2E);
+  clip-path: circle(0% at 30px 30px);
+  transition: clip-path 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 0;
+}
+.nos-color-card > * { position: relative; z-index: 1; }
+.nos-color-hex,
+.nos-color-name,
+.nos-color-story { transition: color 0.3s, opacity 0.3s; }
+@media (hover: hover) {
+  .nos-color-card:hover::before { clip-path: circle(200% at 30px 30px); }
+  .nos-color-card:hover .nos-color-hex { color: rgba(255,255,255,0.65); opacity: 1; }
+  .nos-color-card:hover .nos-color-name { color: rgba(255,255,255,0.95); }
+  .nos-color-card:hover .nos-color-story { color: rgba(255,255,255,0.82); opacity: 1; }
+  .nos-color-card:hover .nos-color-swatch {
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 4px 14px rgba(0,0,0,0.22);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nos-color-card::before { transition: none; }
+  .nos-color-hex, .nos-color-name, .nos-color-story { transition: none; }
 }
 .nos-color-swatch {
   width: 60px;

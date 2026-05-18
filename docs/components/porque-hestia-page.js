@@ -598,7 +598,8 @@ const PorqueColores = ({
     key: i,
     className: "nos-color-card reveal",
     style: {
-      transitionDelay: `${i * 0.09}s`
+      transitionDelay: `${i * 0.09}s`,
+      '--nc': c.hex
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "nos-color-swatch",
