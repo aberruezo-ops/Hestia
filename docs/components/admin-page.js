@@ -2471,7 +2471,26 @@ const LeilaTab = ({
     if (m) (byMonth[m] = byMonth[m] || []).push(r);
   });
   const visibleMonths = focusMonth === 'all' ? allMonths : allMonths.filter(m => m === focusMonth);
-  let acumRun = 0;
+
+  // Pre-compute cross-month running carry: for each month, the balance
+  // entering that month = sum of all previous months' (efectivo - limpieza - liquidación).
+  const monthCarry = {};
+  {
+    let carry = 0;
+    allMonths.forEach(m => {
+      monthCarry[m] = carry;
+      const mKey = `${focusYear}-${m}`;
+      const mRows = byMonth[m] || [];
+      const mEf = mRows.reduce((s, r) => {
+        const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : Number(r.efectivo_leila) || 0;
+        return s + v;
+      }, 0);
+      const mTa = mRows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
+      const liqE = liquidaciones.find(l => l.mes === mKey);
+      const liqV = editsLiquid[mKey] !== undefined ? Number(editsLiquid[mKey]) || 0 : liqE ? liqE.importe : 0;
+      carry = carry + mEf - mTa - liqV;
+    });
+  }
   let yrTarifa = 0,
     yrEfectivo = 0,
     yrLiquid = 0;
@@ -2536,13 +2555,13 @@ const LeilaTab = ({
     yrTarifa += mTarifa;
     yrEfectivo += mEfectivo;
     yrLiquid += liqVal;
-    let mAcum = 0;
+    let mAcum = monthCarry[m] ?? 0;
     const rowAcums = rows.map(r => {
       const ef = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : Number(r.efectivo_leila) || 0;
       mAcum += ef - (Number(r.gasto_limpieza) || 0);
       return mAcum;
     });
-    acumRun += mEfectivo - mTarifa - liqVal;
+    const acumAfterMonth = mAcum - liqVal;
     return /*#__PURE__*/React.createElement("div", {
       key: m,
       className: "leila-month-block"
@@ -2640,9 +2659,9 @@ const LeilaTab = ({
       }))
     })), /*#__PURE__*/React.createElement("div", {
       className: "leila-cum-row"
-    }, "Saldo acumulado ", focusYear, ":", ' ', /*#__PURE__*/React.createElement("strong", {
-      className: acumRun > 0 ? 'leila-owe' : acumRun < 0 ? 'leila-over' : ''
-    }, acumRun === 0 ? 'Saldado' : `${acumRun > 0 ? '+' : ''}${acumRun} €`)));
+    }, "Saldo acumulado al cierre de ", MES_FULL[parseInt(m, 10) - 1], ":", ' ', /*#__PURE__*/React.createElement("strong", {
+      className: acumAfterMonth > 0 ? 'leila-owe' : acumAfterMonth < 0 ? 'leila-over' : ''
+    }, acumAfterMonth === 0 ? 'Saldado' : `${acumAfterMonth > 0 ? '+' : ''}${acumAfterMonth} €`)));
   }), visibleMonths.length > 1 && (() => {
     const yrNeto = yrEfectivo - yrTarifa;
     const yrBal = yrNeto - yrLiquid;

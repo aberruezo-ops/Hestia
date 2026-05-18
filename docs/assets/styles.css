@@ -334,9 +334,18 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 .tl-dot {
   width: 5px; height: 5px; border-radius: 50%;
-  background: #25D366;
+  background: rgba(37,211,102,0.3);
   flex-shrink: 0;
-  transition: transform .25s ease, box-shadow .25s ease;
+  transition: transform .25s ease, box-shadow .25s ease, background .3s ease;
+}
+.tl-dot--on {
+  background: #25D366;
+  box-shadow: 0 0 6px rgba(37,211,102,.65);
+  animation: tl-dot-pulse 2.6s ease-in-out infinite;
+}
+@keyframes tl-dot-pulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(37,211,102,.5); }
+  50%       { box-shadow: 0 0 10px rgba(37,211,102,.95); }
 }
 .topbar-link.email .tl-dot { background: var(--sol-h); }
 .tl-num { opacity: 0.65; font-size: 11px; }
@@ -344,23 +353,22 @@ p  { line-height: 1.65; font-weight: 300; }
   opacity: 1;
   color: var(--sol-lt);
 }
-@media (hover: none) {
-  .topbar-link { opacity: 1; }
+.topbar-link.tl-active {
+  opacity: 1;
+  color: var(--sol-lt);
 }
-@media (hover: hover) {
-  .topbar-link:hover {
-    opacity: 1;
-    color: var(--sol-lt);
-    background: rgba(111,196,209,.13);
-    box-shadow: 0 0 0 1px rgba(111,196,209,.2);
-  }
-  .topbar-link:hover .tl-dot {
-    transform: scale(1.5);
-    box-shadow: 0 0 6px rgba(37,211,102,.6);
-  }
-  .topbar-link.email:hover .tl-dot {
-    box-shadow: 0 0 6px rgba(240,200,100,.5);
-  }
+.topbar-link:hover {
+  opacity: 1;
+  color: var(--sol-lt);
+  background: rgba(111,196,209,.13);
+  box-shadow: 0 0 0 1px rgba(111,196,209,.2);
+}
+.topbar-link:hover .tl-dot {
+  transform: scale(1.5);
+  box-shadow: 0 0 8px rgba(37,211,102,.8);
+}
+.topbar-link.email:hover .tl-dot {
+  box-shadow: 0 0 6px rgba(240,200,100,.5);
 }
 
 .topbar .lang button {
@@ -380,10 +388,8 @@ p  { line-height: 1.65; font-weight: 300; }
   transition: opacity .3s ease;
   border-radius: inherit;
 }
-@media (hover: hover) {
-  .topbar .lang button:hover { opacity: 0.85; color: var(--sol-lt); }
-  .topbar .lang button:hover::after { opacity: 1; }
-}
+.topbar .lang button:hover { opacity: 0.85; color: var(--sol-lt); }
+.topbar .lang button:hover::after { opacity: 1; }
 .topbar .lang button.active { opacity: 1; color: var(--sol-lt); font-weight: 500; }
 .topbar .lang button.active::after { opacity: 1; }
 .topbar .lang .divider { opacity: 0.55; }
@@ -1843,15 +1849,18 @@ body.apt-bar-shown .cookies {
               width 0.55s cubic-bezier(0.23, 1, 0.32, 1),
               opacity 0.4s ease;
 }
+.hv-inner {
+  width: 100%;
+  border-radius: 14px 0 14px 0;
+  overflow: hidden;
+}
 .hv-box {
   width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  border-radius: 14px 0 14px 0;
   background: #000;
   opacity: 0.72;
-  transition: border-radius 0.55s cubic-bezier(0.23, 1, 0.32, 1),
-              opacity 0.4s;
+  transition: opacity 0.4s;
 }
 .hv-box video {
   width: 100%;
@@ -1888,20 +1897,19 @@ body.apt-bar-shown .cookies {
 .hv-brand-btn {
   display: block;
   text-align: center;
-  color: var(--ber-dk);
+  color: var(--arena);
   font-size: 11px;
   font-family: var(--sans);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 8px 6px 9px;
-  opacity: 0.92;
+  padding: 9px 6px 10px;
+  opacity: 0.88;
   pointer-events: auto;
-  transition: opacity 0.2s;
-  background: var(--crema);
-  border-radius: 0 0 10px 0;
+  transition: opacity 0.2s, background 0.2s;
+  background: var(--ber-dk);
 }
-@media (hover: hover) { .hv-brand-btn:hover { opacity: 1; } }
+@media (hover: hover) { .hv-brand-btn:hover { opacity: 1; background: rgba(62,22,58,0.96); } }
 @media (max-width: 900px) { .hv-brand-btn { display: none !important; } }
 
 /* Ocultar cuando el hero sale de pantalla (para no solapar contenido) */
@@ -1917,8 +1925,10 @@ body.apt-bar-shown .cookies {
   width: 36px;
   pointer-events: auto;
 }
-.hv-min .hv-box {
+.hv-min .hv-inner {
   border-radius: 0 0 8px 0;
+}
+.hv-min .hv-box {
   opacity: 0.9;
 }
 .hv-min .hv-toggle {
