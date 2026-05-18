@@ -2359,6 +2359,7 @@ const LeilaTab = ({
   const [editsEfectivo, setEditsEfectivo] = React.useState({});
   const [editsLiquid, setEditsLiquid] = React.useState({});
   const [editsLiquidDate, setEditsLiquidDate] = React.useState({});
+  const [editsSaldoInicial, setEditsSaldoInicial] = React.useState({});
   const currentYear = String(new Date().getFullYear());
   const [focusYear, setFocusYear] = React.useState(currentYear);
   const [focusMonth, setFocusMonth] = React.useState('all');
@@ -2372,7 +2373,7 @@ const LeilaTab = ({
       setData(JSON.parse(b64ToUtf8(j.content)));
     }).catch(e => setLoadErr('Error cargando reservas: ' + e.message)).finally(() => setLoading(false));
   }, [token]);
-  const hasEdits = Object.keys(editsEfectivo).length > 0 || Object.keys(editsLiquid).length > 0 || Object.keys(editsLiquidDate).length > 0;
+  const hasEdits = Object.keys(editsEfectivo).length > 0 || Object.keys(editsLiquid).length > 0 || Object.keys(editsLiquidDate).length > 0 || Object.keys(editsSaldoInicial).length > 0;
   const save = async () => {
     if (!data || !sha || !hasEdits) return;
     setSaving(true);
@@ -2411,10 +2412,18 @@ const LeilaTab = ({
           fecha_sync: dateVal || undefined
         };
       });
+      let updSaldoInicial = {
+        ...(data.leila_saldo_inicial || {})
+      };
+      Object.entries(editsSaldoInicial).forEach(([yr, val]) => {
+        const v = Number(val) || 0;
+        if (v !== 0) updSaldoInicial[yr] = v;else delete updSaldoInicial[yr];
+      });
       const next = {
         ...data,
         reservas: updReservas,
-        leila_pagos_a_hestia: updLiquid
+        leila_pagos_a_hestia: updLiquid,
+        leila_saldo_inicial: updSaldoInicial
       };
       const res = await fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}`, {
         method: 'PUT',
@@ -2436,6 +2445,7 @@ const LeilaTab = ({
       setEditsEfectivo({});
       setEditsLiquid({});
       setEditsLiquidDate({});
+      setEditsSaldoInicial({});
       setSaveMsg('Guardado correctamente.');
     } catch (e) {
       setSaveMsg('Error al guardar: ' + e.message);
@@ -2452,6 +2462,7 @@ const LeilaTab = ({
   if (!data) return null;
   const reservas = data.reservas || [];
   const liquidaciones = data.leila_pagos_a_hestia || [];
+  const saldosIniciales = data.leila_saldo_inicial || {};
   const APT_LABEL = {
     vm: 'Mar',
     vt: 'Thalassa',
@@ -2472,11 +2483,14 @@ const LeilaTab = ({
   });
   const visibleMonths = focusMonth === 'all' ? allMonths : allMonths.filter(m => m === focusMonth);
 
+  // Saldo inicial del año (arrastrado del año anterior).
+  const saldoInicialYear = editsSaldoInicial[focusYear] !== undefined ? Number(editsSaldoInicial[focusYear]) || 0 : Number(saldosIniciales[focusYear]) || 0;
+
   // Pre-compute cross-month running carry: for each month, the balance
-  // entering that month = sum of all previous months' (efectivo - limpieza - liquidación).
+  // entering that month = saldo inicial + sum of all previous months' net.
   const monthCarry = {};
   {
-    let carry = 0;
+    let carry = saldoInicialYear;
     allMonths.forEach(m => {
       monthCarry[m] = carry;
       const mKey = `${focusYear}-${m}`;
@@ -2514,6 +2528,7 @@ const LeilaTab = ({
       setEditsEfectivo({});
       setEditsLiquid({});
       setEditsLiquidDate({});
+      setEditsSaldoInicial({});
       setSaveMsg(null);
     }
   }, y)), /*#__PURE__*/React.createElement("select", {
@@ -2525,7 +2540,26 @@ const LeilaTab = ({
   }, "Todos los meses"), allMonths.map(m => /*#__PURE__*/React.createElement("option", {
     key: m,
     value: m
-  }, MES_FULL[parseInt(m, 10) - 1])))), hasEdits && /*#__PURE__*/React.createElement("button", {
+  }, MES_FULL[parseInt(m, 10) - 1])))), /*#__PURE__*/React.createElement("div", {
+    className: "leila-saldo-row"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "leila-saldo-label",
+    htmlFor: "leila-saldo-inicial"
+  }, "Saldo arrastrado de ", Number(focusYear) - 1), /*#__PURE__*/React.createElement("input", {
+    id: "leila-saldo-inicial",
+    type: "number",
+    step: "0.01",
+    className: "leila-saldo-input",
+    value: editsSaldoInicial[focusYear] !== undefined ? editsSaldoInicial[focusYear] : saldoInicialYear,
+    onChange: e => setEditsSaldoInicial(p => ({
+      ...p,
+      [focusYear]: e.target.value
+    }))
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "leila-saldo-unit"
+  }, "\u20AC"), saldoInicialYear !== 0 && /*#__PURE__*/React.createElement("span", {
+    className: "leila-saldo-hint"
+  }, saldoInicialYear > 0 ? `Leila debe ${saldoInicialYear}€ al entrar el año` : `Hestía debe ${Math.abs(saldoInicialYear)}€ al entrar el año`)), hasEdits && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-primary",
     onClick: save,
