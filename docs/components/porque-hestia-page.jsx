@@ -9,11 +9,11 @@ const PORQUE_COPY = {
     sub: 'La historia de un nombre, una diosa y tres Hestías en Vera Playa.',
 
     origin_eyebrow: 'El origen',
-    origin_title: (<>No empezó como un negocio.<br/><em>Empezó como una convicción.</em></>),
+    origin_title: (<>No empezó como un negocio,<br/><em>empezó como una convicción.</em></>),
     origin_p1: '2016. Alex y Fran tienen tres viviendas en Vera Playa. Podrían haberlas puesto en una plataforma, cobrado la comisión y desconectado el teléfono. Lo contrario es más difícil y más lento — y es exactamente lo que decidieron hacer.',
     origin_p2: 'Hestía nació de una pregunta: ¿qué pasaría si el alquiler de vacaciones que usas te hiciera sentir en casa de verdad? No solo limpio y funcional. En casa — con historia, con carácter, con alguien al otro lado que sabe tu nombre.',
-    origin_p3: 'Un ingeniero informático y un filólogo clásico con décadas en Vera Playa. El uno observa y construye; el otro nombra y cuida. Juntos transformaron tres viviendas en los tres — tres hogares con alma propia. Sin oficina. Sin recepción. Con el teléfono siempre encendido.',
-    origin_quote: '«Lo más difícil no fue crear Hestía. Fue convencernos de que merecía la pena intentarlo de otra manera.»',
+    origin_p3: 'Un ingeniero informático y un filólogo clásico con décadas en Vera Playa. El uno observa y construye; el otro nombra y cuida. Juntos transformaron las tres viviendas en tres hogares con alma propia. Sin oficina. Sin recepción. Con el teléfono siempre encendido.',
+    origin_quote: '«Lo más difícil no fue crear Hestía, fue convencernos de que merecía la pena intentarlo de otra manera.»',
     origin_quote_attr: '— Alex Berruezo',
 
     logo_eyebrow: 'El símbolo',
@@ -31,8 +31,8 @@ const PORQUE_COPY = {
     name_title: (<>Hestía: la diosa del hogar.<br/><em>No de las guerras. Del fuego de casa.</em></>),
     name_p1: 'En la mitología griega, Hestía era la primogénita de los Titanes — la primera en ser devorada por Cronos y la última en ser liberada. Mientras los demás dioses del Olimpo peleaban por la guerra, el amor o el poder, Hestía guardaba la llama. Era la diosa del hogar, del fuego sagrado, del centro de la casa.',
     name_p2: 'En la antigua Grecia, el hogar no era solo un lugar físico: era el fuego que lo hacía vivir. Antes de salir de viaje y al volver, se honraba la llama. La llama que guarda Hestía. Ese fuego era lo que convertía una casa en hogar.',
-    name_p3: 'Fran es filólogo clásico — conoce los nombres griegos desde dentro. Cuando llegó el momento de bautizar el proyecto, la respuesta ya existía. Hestía: la que transforma un lugar en hogar. La que guarda el fuego que da bienvenida. Exactamente lo que intentamos ser.',
-    name_quote: '«El primer día que lo dijimos en voz alta, supimos que era el único nombre posible.»',
+    name_p3: 'Fran es filólogo clásico — conoce los nombres griegos desde dentro. Cuando llegó el momento de bautizar el proyecto, la respuesta ya existía: Hestía, la que transforma un lugar en hogar, la que guarda el fuego que da la bienvenida. Eso es precisamente lo que intentamos ser.',
+    name_quote: '«El primer día que lo dijimos en voz alta supimos que era el único nombre posible.»',
     name_quote_attr: '— Fran Moral',
 
     values_eyebrow: 'Nuestros valores',

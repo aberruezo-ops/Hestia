@@ -349,7 +349,7 @@ const Header = ({ mode, scrolled, lang }) => {
           </div>
           <div className="mn-sep"/>
           <NavLink href={NAV_PAGES.porqueHestia} className="mn-mid-why mn-mid-why-full">
-            → {lang === 'es' ? 'Por qué Hestía' : 'Why Hestía'}
+            → {lang === 'es' ? '¿Por qué Hestía?' : 'Why Hestía?'}
           </NavLink>
           <div className="mn-sep"/>
           <div className="mn-pages-row">
