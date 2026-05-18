@@ -7908,14 +7908,13 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .nos-color-hex,
 .nos-color-name,
 .nos-color-story { transition: color 0.3s, opacity 0.3s; }
-@media (hover: hover) {
-  .nos-color-card:hover::before { clip-path: circle(200% at 30px 30px); }
-  .nos-color-card:hover .nos-color-hex { color: rgba(255,255,255,0.65); opacity: 1; }
-  .nos-color-card:hover .nos-color-name { color: rgba(255,255,255,0.95); }
-  .nos-color-card:hover .nos-color-story { color: rgba(255,255,255,0.82); opacity: 1; }
-  .nos-color-card:hover .nos-color-swatch {
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 4px 14px rgba(0,0,0,0.22);
-  }
+.nos-color-card { cursor: pointer; }
+.nos-color-card:hover::before { clip-path: circle(200% at 30px 30px); }
+.nos-color-card:hover .nos-color-hex { color: rgba(255,255,255,0.65); opacity: 1; }
+.nos-color-card:hover .nos-color-name { color: rgba(255,255,255,0.95); }
+.nos-color-card:hover .nos-color-story { color: rgba(255,255,255,0.82); opacity: 1; }
+.nos-color-card:hover .nos-color-swatch {
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 4px 14px rgba(0,0,0,0.22);
 }
 @media (prefers-reduced-motion: reduce) {
   .nos-color-card::before { transition: none; }
