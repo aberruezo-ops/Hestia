@@ -22,11 +22,12 @@ except ImportError:
     print("Missing deps — run: pip install requests icalendar")
     sys.exit(1)
 
-APTS      = ["vm", "vt", "vs"]
-SOURCES   = ["airbnb", "booking"]
-LOOKAHEAD = 548   # ~18 months
-OUTPUT    = Path(__file__).parents[2] / "docs" / "assets" / "availability.json"
-DEBUG_DIR = Path(__file__).parents[2] / "docs" / "assets" / "ical-debug"
+APTS        = ["vm", "vt", "vs"]
+SOURCES     = ["airbnb", "booking"]
+LOOKAHEAD   = 548   # ~18 months
+OUTPUT      = Path(__file__).parents[2] / "docs" / "assets" / "availability.json"
+PRICES_JSON = Path(__file__).parents[2] / "docs" / "data" / "prices.json"
+DEBUG_DIR   = Path(__file__).parents[2] / "docs" / "assets" / "ical-debug"
 
 HEADERS = {
     "User-Agent":      "CalendarStore/6.0 (1190; OS X 14.4) dataaccessd/1.0",
@@ -173,6 +174,22 @@ def merge(ranges: list[dict]) -> list[dict]:
     return m
 
 
+def load_manual_blocks() -> dict[str, list[dict]]:
+    """Load manual_blocks from prices.json (direct bookings not in iCal feeds)."""
+    try:
+        prices = json.loads(PRICES_JSON.read_text(encoding="utf-8"))
+        mb = prices.get("manual_blocks", {})
+        count = sum(len(v) for v in mb.values())
+        print(f"Manual blocks from prices.json: {count} total")
+        for apt, blocks in mb.items():
+            for b in blocks:
+                print(f"  {apt}: {b.get('start')} → {b.get('end')}  {b.get('note','')}")
+        return mb
+    except Exception as e:
+        print(f"Warning: could not load manual blocks from prices.json: {e}")
+        return {}
+
+
 def main() -> None:
     today  = date.today().isoformat()
     cutoff = (date.today() + timedelta(days=LOOKAHEAD)).isoformat()
@@ -180,6 +197,9 @@ def main() -> None:
     any_ok = False
 
     print(f"Sync — today={today}  cutoff={cutoff}  lookahead={LOOKAHEAD}d\n")
+
+    manual_blocks = load_manual_blocks()
+    print()
 
     for apt in APTS:
         all_ranges   = []
@@ -211,6 +231,16 @@ def main() -> None:
             all_ranges.extend(future)
             print(f"    ✓ {len(raw)} events — {len(future)} kept, "
                   f"{len(past)} past, {len(far)} beyond lookahead ({cutoff})")
+
+        # Merge manual blocks (direct bookings not in iCal feeds)
+        apt_manual = [
+            {"start": b["start"], "end": b["end"]}
+            for b in manual_blocks.get(apt, [])
+            if b.get("start") and b.get("end") and b["end"] > today and b["start"] <= cutoff
+        ]
+        if apt_manual:
+            print(f"  {apt}: adding {len(apt_manual)} manual block(s)")
+            all_ranges.extend(apt_manual)
 
         merged = merge(all_ranges)
         result[apt] = {

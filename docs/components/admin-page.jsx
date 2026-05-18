@@ -1890,6 +1890,118 @@ const fmtDelta = (cur, prev) => {
   return `${sign}${diff.toFixed(1)} %`;
 };
 
+// ── BloquesTab ── manual blocked ranges for direct bookings ──────────────────
+const BloquesTab = ({ token }) => {
+  const [pData,   setPData]   = React.useState(null);
+  const [sha,     setSha]     = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+  const [loadErr, setLoadErr] = React.useState(null);
+  const [saving,  setSaving]  = React.useState(false);
+  const [saveMsg, setSaveMsg] = React.useState(null);
+  const [blocks,  setBlocks]  = React.useState(null);
+
+  React.useEffect(() => {
+    setLoading(true);
+    fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, { headers: apiHeaders(token) })
+      .then(r => r.json())
+      .then(j => {
+        if (j.message) throw new Error(j.message);
+        setSha(j.sha);
+        const parsed = JSON.parse(b64ToUtf8(j.content));
+        setPData(parsed);
+        setBlocks(parsed.manual_blocks || { vm: [], vt: [], vs: [] });
+      })
+      .catch(e => setLoadErr('Error cargando precios: ' + e.message))
+      .finally(() => setLoading(false));
+  }, [token]);
+
+  const save = async () => {
+    if (!pData || !sha) return;
+    setSaving(true); setSaveMsg(null);
+    try {
+      const next = { ...pData, manual_blocks: blocks };
+      const res = await fetch(`${API}/repos/${REPO}/contents/${PATH}`, {
+        method: 'PUT',
+        headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: 'admin: update manual_blocks',
+          content: utf8ToB64(JSON.stringify(next, null, 2)),
+          sha,
+          branch: BRANCH,
+        }),
+      });
+      const j = await res.json();
+      if (j.message && !j.content) throw new Error(j.message);
+      setSha(j.content.sha); setPData(next);
+      setSaveMsg('Guardado. El próximo sync iCal (≤4 h) integrará estos bloqueos en el calendario público.');
+    } catch (e) {
+      setSaveMsg('Error al guardar: ' + e.message);
+    } finally { setSaving(false); }
+  };
+
+  const addBlock = (apt) =>
+    setBlocks(b => ({ ...b, [apt]: [...(b[apt] || []), { start: '', end: '', note: '' }] }));
+
+  const removeBlock = (apt, idx) =>
+    setBlocks(b => ({ ...b, [apt]: b[apt].filter((_, i) => i !== idx) }));
+
+  const updateBlock = (apt, idx, field, val) =>
+    setBlocks(b => ({ ...b, [apt]: b[apt].map((r, i) => i === idx ? { ...r, [field]: val } : r) }));
+
+  if (loading) return <div className="pe-card"><p>Cargando…</p></div>;
+  if (loadErr) return <div className="pe-error">{loadErr}</div>;
+  if (!blocks)  return null;
+
+  const APTS_BLK = [
+    { id: 'vm', label: 'Hestía Vera Mar' },
+    { id: 'vt', label: 'Hestía Vera Thalassa' },
+    { id: 'vs', label: 'Hestía Vera Salinas' },
+  ];
+
+  return (
+    <div className="pe-card">
+      <h2 className="pe-section-title">Bloqueos manuales de calendario</h2>
+      <p className="blk-desc">
+        Reservas directas y fechas cerradas que <strong>no aparecen en los feeds de Airbnb/Booking</strong>.
+        El sync iCal automático (cada 4 h) las integra en el calendario público junto con las reservas de plataformas.
+      </p>
+
+      {APTS_BLK.map(({ id, label }) => (
+        <div key={id} className="blk-apt-block">
+          <h3 className="blk-apt-name">{label}</h3>
+          {(blocks[id] || []).length === 0 ? (
+            <p className="blk-empty">Sin bloqueos manuales</p>
+          ) : (
+            <table className="blk-table">
+              <thead>
+                <tr><th>Entrada</th><th>Salida</th><th>Nota / huésped</th><th></th></tr>
+              </thead>
+              <tbody>
+                {(blocks[id] || []).map((r, i) => (
+                  <tr key={i}>
+                    <td><input type="date" value={r.start} onChange={e => updateBlock(id, i, 'start', e.target.value)} className="blk-date-input" /></td>
+                    <td><input type="date" value={r.end}   onChange={e => updateBlock(id, i, 'end',   e.target.value)} className="blk-date-input" /></td>
+                    <td><input type="text" value={r.note || ''} onChange={e => updateBlock(id, i, 'note', e.target.value)} className="blk-note-input" placeholder="Huésped / motivo" /></td>
+                    <td><button className="blk-del" onClick={() => removeBlock(id, i)} title="Eliminar">×</button></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
+          <button className="blk-add" onClick={() => addBlock(id)}>+ Añadir bloqueo</button>
+        </div>
+      ))}
+
+      <div className="pe-actions" style={{ marginTop: '1.5rem' }}>
+        <button className="btn btn-primary" onClick={save} disabled={saving}>
+          {saving ? 'Guardando…' : 'Guardar bloqueos'}
+        </button>
+        {saveMsg && <span className={`pe-save-msg${saveMsg.startsWith('Error') ? ' pe-err' : ''}`}>{saveMsg}</span>}
+      </div>
+    </div>
+  );
+};
+
 const LeilaTab = ({ token }) => {
   const [data,    setData]    = React.useState(null);
   const [sha,     setSha]     = React.useState(null);
@@ -3133,12 +3245,17 @@ const AdminApp = () => {
           onClick={() => { setMode('leila'); setError(null); setSuccess(null); }}>
           💳 Leila
         </button>
+        <button type="button"
+          className={`pe-tab${mode === 'bloques' ? ' is-active' : ''}`}
+          onClick={() => { setMode('bloques'); setError(null); setSuccess(null); }}>
+          🔒 Bloqueos
+        </button>
       </div>
 
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} /> : mode === 'reservas' ? <ReservasTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} /> : mode === 'reservas' ? <ReservasTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'bloques' ? <BloquesTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>
