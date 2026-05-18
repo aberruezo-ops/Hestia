@@ -2,7 +2,7 @@
   "_doc": "Snapshot multi-año de la hoja \"Hestía - Reservas\" (Google Drive). Estructura years[YYYY].reservas + reservas (todas con year añadido). Generado vía MCP. Importes EUR. Fechas ISO YYYY-MM-DD.",
   "source": "gdrive://1dWJPG-GxAyHWbRPbSLpp3mTe11bYVA1VaJhKEytUygg",
   "sourceTitle": "Hestía - Reservas",
-  "updatedAt": "2026-05-16T16:05:07.289Z",
+  "updatedAt": "2026-05-18T20:12:02Z",
   "count": 305,
   "years": {
     "2020": {
@@ -16872,7 +16872,8 @@
       "rentabilidad_pct": 0.8964,
       "precio_neto_noche": 98.84,
       "precio_bruto_noche": 110.26,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 50.0
     },
     {
       "apt": "vs",
@@ -16904,7 +16905,8 @@
       "rentabilidad_pct": 0.7767000000000001,
       "precio_neto_noche": 50.24,
       "precio_bruto_noche": 64.69,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vm",
@@ -16936,7 +16938,8 @@
       "rentabilidad_pct": 0.6787000000000001,
       "precio_neto_noche": 43.21,
       "precio_bruto_noche": 63.67,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vt",
@@ -16968,7 +16971,8 @@
       "rentabilidad_pct": 0.7094,
       "precio_neto_noche": 42.39,
       "precio_bruto_noche": 59.75,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vm",
@@ -17000,7 +17004,8 @@
       "rentabilidad_pct": 0.6454000000000001,
       "precio_neto_noche": 60.66,
       "precio_bruto_noche": 93.99,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vs",
@@ -17032,7 +17037,8 @@
       "rentabilidad_pct": 0.8367,
       "precio_neto_noche": 58.57,
       "precio_bruto_noche": 70,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 350.0
     },
     {
       "apt": "vt",
@@ -17064,7 +17070,8 @@
       "rentabilidad_pct": 0.875,
       "precio_neto_noche": 70,
       "precio_bruto_noche": 80,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 500.0
     },
     {
       "apt": "vm",
@@ -17096,7 +17103,8 @@
       "rentabilidad_pct": 0.6694,
       "precio_neto_noche": 78.38,
       "precio_bruto_noche": 117.09,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vt",
@@ -17128,7 +17136,8 @@
       "rentabilidad_pct": 0.6229,
       "precio_neto_noche": 63.69,
       "precio_bruto_noche": 102.25,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vs",
@@ -17160,7 +17169,8 @@
       "rentabilidad_pct": 0.6992,
       "precio_neto_noche": 56.65,
       "precio_bruto_noche": 81.01,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vt",
@@ -17192,7 +17202,8 @@
       "rentabilidad_pct": 0.5832,
       "precio_neto_noche": 99.15,
       "precio_bruto_noche": 170,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vt",
@@ -17224,7 +17235,8 @@
       "rentabilidad_pct": 0.8128,
       "precio_neto_noche": 52.95,
       "precio_bruto_noche": 65.14,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vm",
@@ -17256,7 +17268,8 @@
       "rentabilidad_pct": 0.8548,
       "precio_neto_noche": 67.26,
       "precio_bruto_noche": 78.69,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 350.0
     },
     {
       "apt": "vm",
@@ -17288,7 +17301,8 @@
       "rentabilidad_pct": 0.6825,
       "precio_neto_noche": 43,
       "precio_bruto_noche": 63,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 750.0
     },
     {
       "apt": "vs",
@@ -17320,7 +17334,8 @@
       "rentabilidad_pct": 0.8667,
       "precio_neto_noche": 104,
       "precio_bruto_noche": 120,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 400.0
     },
     {
       "apt": "vm",
@@ -17352,7 +17367,8 @@
       "rentabilidad_pct": 0.9024,
       "precio_neto_noche": 105.71,
       "precio_bruto_noche": 117.14,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 500.0
     },
     {
       "apt": "vt",
@@ -17384,7 +17400,8 @@
       "rentabilidad_pct": 0.8856999999999999,
       "precio_neto_noche": 77.5,
       "precio_bruto_noche": 87.5,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 700.0
     },
     {
       "apt": "vs",
@@ -17416,7 +17433,8 @@
       "rentabilidad_pct": 0.8367,
       "precio_neto_noche": 82,
       "precio_bruto_noche": 98,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 300.0
     },
     {
       "apt": "vm",
@@ -17448,7 +17466,8 @@
       "rentabilidad_pct": 0.9538,
       "precio_neto_noche": 143.08,
       "precio_bruto_noche": 150,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1150.0
     },
     {
       "apt": "vs",
@@ -17480,7 +17499,8 @@
       "rentabilidad_pct": 0.9438,
       "precio_neto_noche": 125.83,
       "precio_bruto_noche": 133.33,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1000.0
     },
     {
       "apt": "vt",
@@ -17512,7 +17532,8 @@
       "rentabilidad_pct": 0.82,
       "precio_neto_noche": 51.25,
       "precio_bruto_noche": 62.5,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vm",
@@ -17544,7 +17565,8 @@
       "rentabilidad_pct": 0.925,
       "precio_neto_noche": 158.57,
       "precio_bruto_noche": 171.43,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1000.0
     },
     {
       "apt": "vt",
@@ -17576,7 +17598,8 @@
       "rentabilidad_pct": 0.7028,
       "precio_neto_noche": 92.34,
       "precio_bruto_noche": 131.38,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vs",
@@ -17608,7 +17631,8 @@
       "rentabilidad_pct": 0.9338,
       "precio_neto_noche": 141.11,
       "precio_bruto_noche": 151.11,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1080.0
     },
     {
       "apt": "vm",
@@ -17640,7 +17664,8 @@
       "rentabilidad_pct": 0.9571,
       "precio_neto_noche": 182.73,
       "precio_bruto_noche": 190.91,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1700.0
     },
     {
       "apt": "vt",
@@ -17672,7 +17697,8 @@
       "rentabilidad_pct": 0.6951,
       "precio_neto_noche": 102.64,
       "precio_bruto_noche": 147.66,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vs",
@@ -17704,7 +17730,8 @@
       "rentabilidad_pct": 0.9370999999999999,
       "precio_neto_noche": 191.43,
       "precio_bruto_noche": 204.29,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1100.0
     },
     {
       "apt": "vt",
@@ -17736,7 +17763,8 @@
       "rentabilidad_pct": 0.6481999999999999,
       "precio_neto_noche": 115.21,
       "precio_bruto_noche": 177.73,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vt",
@@ -17768,7 +17796,8 @@
       "rentabilidad_pct": 0.9558,
       "precio_neto_noche": 176.82,
       "precio_bruto_noche": 185,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1700.0
     },
     {
       "apt": "vm",
@@ -17800,7 +17829,8 @@
       "rentabilidad_pct": 0.9286,
       "precio_neto_noche": 167.14,
       "precio_bruto_noche": 180,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1000.0
     },
     {
       "apt": "vs",
@@ -17832,7 +17862,8 @@
       "rentabilidad_pct": 0.9353,
       "precio_neto_noche": 185.71,
       "precio_bruto_noche": 198.57,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1200.0
     },
     {
       "apt": "vm",
@@ -17864,7 +17895,8 @@
       "rentabilidad_pct": 0.9538,
       "precio_neto_noche": 186,
       "precio_bruto_noche": 195,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1750.0
     },
     {
       "apt": "vt",
@@ -17896,7 +17928,8 @@
       "rentabilidad_pct": 0.9427,
       "precio_neto_noche": 185,
       "precio_bruto_noche": 196.25,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1350.0
     },
     {
       "apt": "vs",
@@ -17928,7 +17961,8 @@
       "rentabilidad_pct": 0.9719,
       "precio_neto_noche": 155.5,
       "precio_bruto_noche": 160,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 2400.0
     },
     {
       "apt": "vt",
@@ -17960,7 +17994,8 @@
       "rentabilidad_pct": 0.9268000000000001,
       "precio_neto_noche": 190,
       "precio_bruto_noche": 205,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1030.0
     },
     {
       "apt": "vm",
@@ -17992,7 +18027,8 @@
       "rentabilidad_pct": 0.925,
       "precio_neto_noche": 158.57,
       "precio_bruto_noche": 171.43,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1000.0
     },
     {
       "apt": "vt",
@@ -18024,7 +18060,8 @@
       "rentabilidad_pct": 0.9357,
       "precio_neto_noche": 187.14,
       "precio_bruto_noche": 200,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 1100.0
     },
     {
       "apt": "vm",
@@ -18056,7 +18093,8 @@
       "rentabilidad_pct": 0.9308,
       "precio_neto_noche": 172.86,
       "precio_bruto_noche": 185.71,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 900.0
     },
     {
       "apt": "vs",
@@ -18088,7 +18126,8 @@
       "rentabilidad_pct": 0.9526,
       "precio_neto_noche": 56.56,
       "precio_bruto_noche": 59.38,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vt",
@@ -18120,7 +18159,8 @@
       "rentabilidad_pct": 0.8976999999999999,
       "precio_neto_noche": 98.75,
       "precio_bruto_noche": 110,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 600.0
     },
     {
       "apt": "vm",
@@ -18152,7 +18192,8 @@
       "rentabilidad_pct": 0.7265,
       "precio_neto_noche": 89.67,
       "precio_bruto_noche": 123.43,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vt",
@@ -18184,7 +18225,8 @@
       "rentabilidad_pct": 0.9048,
       "precio_neto_noche": 58.46,
       "precio_bruto_noche": 64.62,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 740.0
     },
     {
       "apt": "vm",
@@ -18216,7 +18258,8 @@
       "rentabilidad_pct": 0.8491,
       "precio_neto_noche": 64.29,
       "precio_bruto_noche": 75.71,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 330.0
     },
     {
       "apt": "vs",
@@ -18248,7 +18291,8 @@
       "rentabilidad_pct": 0.8234999999999999,
       "precio_neto_noche": 52.5,
       "precio_bruto_noche": 63.75,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vt",
@@ -18280,7 +18324,8 @@
       "rentabilidad_pct": 0.7313,
       "precio_neto_noche": 54.88,
       "precio_bruto_noche": 75.05,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vs",
@@ -18312,7 +18357,8 @@
       "rentabilidad_pct": 0.7151000000000001,
       "precio_neto_noche": 62.37,
       "precio_bruto_noche": 87.23,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vm",
@@ -18344,7 +18390,8 @@
       "rentabilidad_pct": 0.6704000000000001,
       "precio_neto_noche": 51.71,
       "precio_bruto_noche": 77.14,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vs",
@@ -18376,7 +18423,8 @@
       "rentabilidad_pct": 0.6536,
       "precio_neto_noche": 45.7,
       "precio_bruto_noche": 69.92,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vt",
@@ -18408,7 +18456,8 @@
       "rentabilidad_pct": 0.8332999999999999,
       "precio_neto_noche": 57.14,
       "precio_bruto_noche": 68.57,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 480.0
     },
     {
       "apt": "vm",
@@ -18440,7 +18489,8 @@
       "rentabilidad_pct": 0.6247,
       "precio_neto_noche": 51.77,
       "precio_bruto_noche": 82.87,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vt",
@@ -18472,7 +18522,8 @@
       "rentabilidad_pct": 0.7304,
       "precio_neto_noche": 74.99,
       "precio_bruto_noche": 102.67,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vt",
@@ -18504,7 +18555,8 @@
       "rentabilidad_pct": 0.7306,
       "precio_neto_noche": 72.33,
       "precio_bruto_noche": 99,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 200.0
     },
     {
       "apt": "vt",
@@ -18536,7 +18588,8 @@
       "rentabilidad_pct": 0.7965000000000001,
       "precio_neto_noche": 43.69,
       "precio_bruto_noche": 54.86,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 0.0
     },
     {
       "apt": "vs",
@@ -18568,7 +18621,8 @@
       "rentabilidad_pct": 0.9181999999999999,
       "precio_neto_noche": 45.91,
       "precio_bruto_noche": 50,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 900.0
     },
     {
       "apt": "vt",
@@ -18600,7 +18654,8 @@
       "rentabilidad_pct": 0.9048,
       "precio_neto_noche": 95,
       "precio_bruto_noche": 105,
-      "year": 2025
+      "year": 2025,
+      "efectivo_leila": 620.0
     },
     {
       "apt": "vt",
