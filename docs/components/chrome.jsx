@@ -170,24 +170,26 @@ const Header = ({ mode, scrolled, lang }) => {
   }, []);
   const vitHidden = !heroVisible;
   const vitruvio = vitMin ? null : ReactDOM.createPortal(
-    <div className={`hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`}>
-      <div className="hv-box" aria-hidden="true">
-        <video autoPlay muted loop playsInline preload="auto">
-          <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
-        </video>
+    <>
+      <div className={`hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`}>
+        <div className="hv-box" aria-hidden="true">
+          <video autoPlay muted loop playsInline preload="auto">
+            <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
+          </video>
+        </div>
+        <button
+          type="button"
+          className="hv-toggle"
+          onClick={toggleVit}
+          aria-label={lang === 'es' ? 'Minimizar' : 'Minimise'}
+        >
+          -
+        </button>
       </div>
-      <button
-        type="button"
-        className="hv-toggle"
-        onClick={toggleVit}
-        aria-label={lang === 'es' ? 'Minimizar' : 'Minimise'}
-      >
-        -
-      </button>
       <a href="porque-hestia.html" className="hv-brand-btn">
         {lang === 'es' ? 'Nuestra marca →' : 'Our brand →'}
       </a>
-    </div>,
+    </>,
     document.body
   );
 
