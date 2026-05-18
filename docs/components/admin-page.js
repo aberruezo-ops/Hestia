@@ -2459,11 +2459,11 @@ const LeilaTab = ({
   };
   const MES_FULL = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   const fmtBal = n => n > 0 ? `Leila debe ${n} €` : n < 0 ? `Hestía debe ${Math.abs(n)} €` : 'Saldado';
-  const allYears = [...new Set(reservas.map(r => (r.entrada || '').slice(0, 4)).filter(Boolean))].sort();
+  const allYears = [...new Set(reservas.map(r => String(r.year || '')).filter(Boolean))].sort().filter(y => y >= '2025');
   const yearRows = reservas.map((r, i) => ({
     ...r,
     _idx: i
-  })).filter(r => (r.entrada || '').startsWith(focusYear));
+  })).filter(r => String(r.year || '') === focusYear);
   const allMonths = [...new Set(yearRows.map(r => (r.entrada || '').slice(5, 7)).filter(Boolean))].sort();
   const byMonth = {};
   yearRows.forEach(r => {
@@ -2492,9 +2492,9 @@ const LeilaTab = ({
     onClick: () => {
       setFocusYear(y);
       setFocusMonth('all');
-      setEditsPagados({});
       setEditsEfectivo({});
       setEditsLiquid({});
+      setEditsLiquidDate({});
       setSaveMsg(null);
     }
   }, y)), /*#__PURE__*/React.createElement("select", {
