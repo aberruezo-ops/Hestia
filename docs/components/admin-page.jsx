@@ -2009,9 +2009,9 @@ const LeilaTab = ({ token }) => {
   const [loadErr, setLoadErr] = React.useState(null);
   const [saving,  setSaving]  = React.useState(false);
   const [saveMsg, setSaveMsg] = React.useState(null);
-  const [editsPagados,  setEditsPagados]  = React.useState({});
-  const [editsEfectivo, setEditsEfectivo] = React.useState({});
-  const [editsLiquid,   setEditsLiquid]   = React.useState({});
+  const [editsEfectivo,   setEditsEfectivo]   = React.useState({});
+  const [editsLiquid,     setEditsLiquid]     = React.useState({});
+  const [editsLiquidDate, setEditsLiquidDate] = React.useState({});
   const currentYear = String(new Date().getFullYear());
   const [focusYear,  setFocusYear]  = React.useState(currentYear);
   const [focusMonth, setFocusMonth] = React.useState('all');
@@ -2029,9 +2029,9 @@ const LeilaTab = ({ token }) => {
       .finally(() => setLoading(false));
   }, [token]);
 
-  const hasEdits = Object.keys(editsPagados).length > 0 ||
-                   Object.keys(editsEfectivo).length > 0 ||
-                   Object.keys(editsLiquid).length > 0;
+  const hasEdits = Object.keys(editsEfectivo).length > 0 ||
+                   Object.keys(editsLiquid).length > 0 ||
+                   Object.keys(editsLiquidDate).length > 0;
 
   const save = async () => {
     if (!data || !sha || !hasEdits) return;
@@ -2039,7 +2039,6 @@ const LeilaTab = ({ token }) => {
     try {
       const updReservas = data.reservas.map((r, i) => {
         const out = { ...r };
-        if (editsPagados[i]  !== undefined) out.pagos_leila    = Number(editsPagados[i])  || 0;
         if (editsEfectivo[i] !== undefined) out.efectivo_leila = Number(editsEfectivo[i]) || 0;
         return out;
       });
@@ -2047,20 +2046,28 @@ const LeilaTab = ({ token }) => {
       Object.entries(editsLiquid).forEach(([ym, val]) => {
         const v = Number(val) || 0;
         const idx = updLiquid.findIndex(l => l.mes === ym);
-        if (v === 0 && idx >= 0)  { updLiquid.splice(idx, 1); }
-        else if (v > 0 && idx >= 0) { updLiquid[idx] = { ...updLiquid[idx], importe: v }; }
-        else if (v > 0)             { updLiquid.push({ mes: ym, importe: v }); }
+        const dateVal = editsLiquidDate[ym] ?? (idx >= 0 ? updLiquid[idx].fecha_sync : undefined);
+        const entry = { mes: ym, importe: v };
+        if (dateVal) entry.fecha_sync = dateVal;
+        if (v === 0 && idx >= 0)    { updLiquid.splice(idx, 1); }
+        else if (v > 0 && idx >= 0) { updLiquid[idx] = entry; }
+        else if (v > 0)             { updLiquid.push(entry); }
+      });
+      Object.entries(editsLiquidDate).forEach(([ym, dateVal]) => {
+        if (editsLiquid[ym] !== undefined) return;
+        const idx = updLiquid.findIndex(l => l.mes === ym);
+        if (idx >= 0) updLiquid[idx] = { ...updLiquid[idx], fecha_sync: dateVal || undefined };
       });
       const next = { ...data, reservas: updReservas, leila_pagos_a_hestia: updLiquid };
       const res = await fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}`, {
         method: 'PUT',
         headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: 'Update Leila: pagos + liquidaciones', content: utf8ToB64(JSON.stringify(next, null, 2)), sha, branch: BRANCH }),
+        body: JSON.stringify({ message: 'Update Leila: efectivo + liquidaciones', content: utf8ToB64(JSON.stringify(next, null, 2)), sha, branch: BRANCH }),
       });
       const j = await res.json();
       if (j.message && !j.content) throw new Error(j.message);
       setSha(j.content.sha); setData(next);
-      setEditsPagados({}); setEditsEfectivo({}); setEditsLiquid({});
+      setEditsEfectivo({}); setEditsLiquid({}); setEditsLiquidDate({});
       setSaveMsg('Guardado correctamente.');
     } catch (e) {
       setSaveMsg('Error al guardar: ' + e.message);
@@ -2075,7 +2082,7 @@ const LeilaTab = ({ token }) => {
   const liquidaciones = data.leila_pagos_a_hestia || [];
   const APT_LABEL = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
   const MES_FULL = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  const fmtBal = n => n > 0 ? `Hestía debe ${n} €` : n < 0 ? `Leila devuelve ${Math.abs(n)} €` : 'Saldado';
+  const fmtBal = n => n > 0 ? `Leila debe ${n} €` : n < 0 ? `Hestía debe ${Math.abs(n)} €` : 'Saldado';
 
   const allYears = [...new Set(reservas.map(r => (r.entrada || '').slice(0, 4)).filter(Boolean))].sort();
   const yearRows = reservas.map((r, i) => ({ ...r, _idx: i }))
@@ -2089,8 +2096,8 @@ const LeilaTab = ({ token }) => {
   });
   const visibleMonths = focusMonth === 'all' ? allMonths : allMonths.filter(m => m === focusMonth);
 
-  let cumBal = 0;
-  let yrTarifa = 0, yrPagado = 0, yrLiquid = 0;
+  let acumRun = 0;
+  let yrTarifa = 0, yrEfectivo = 0, yrLiquid = 0;
 
   return (
     <div className="pe-card">
@@ -2128,26 +2135,37 @@ const LeilaTab = ({ token }) => {
       {visibleMonths.map(m => {
         const rows = byMonth[m] || [];
         const mKey = `${focusYear}-${m}`;
-        const mTarifa = rows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
-        const mPagado = rows.reduce((s, r) => {
-          const v = editsPagados[r._idx] !== undefined ? Number(editsPagados[r._idx]) : (Number(r.pagos_leila) || 0);
+        const mTarifa   = rows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
+        const mEfectivo = rows.reduce((s, r) => {
+          const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila) || 0);
           return s + v;
         }, 0);
-        const liqEntry = liquidaciones.find(l => l.mes === mKey);
-        const liqVal = editsLiquid[mKey] !== undefined
+        const liqEntry  = liquidaciones.find(l => l.mes === mKey);
+        const liqVal    = editsLiquid[mKey] !== undefined
           ? (Number(editsLiquid[mKey]) || 0)
           : (liqEntry ? liqEntry.importe : 0);
-        const mPendReservas = mTarifa - mPagado;
-        const mBal = mPendReservas - liqVal;
-        cumBal += mBal; yrTarifa += mTarifa; yrPagado += mPagado; yrLiquid += liqVal;
+        const liqDate   = editsLiquidDate[mKey] !== undefined
+          ? editsLiquidDate[mKey]
+          : (liqEntry ? (liqEntry.fecha_sync || '') : '');
+        const mBal = (mEfectivo - mTarifa) - liqVal;
+        yrTarifa += mTarifa; yrEfectivo += mEfectivo; yrLiquid += liqVal;
+
+        let mAcum = 0;
+        const rowAcums = rows.map(r => {
+          const ef = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila) || 0);
+          mAcum += ef - (Number(r.gasto_limpieza) || 0);
+          return mAcum;
+        });
+        acumRun += mEfectivo - mTarifa - liqVal;
 
         return (
           <div key={m} className="leila-month-block">
             <div className="leila-month-hdr">
               <span className="leila-month-name">{MES_FULL[parseInt(m, 10) - 1]} {focusYear}</span>
               <span className="leila-month-kpis">
+                <span>Efectivo: <strong>{mEfectivo} €</strong></span>
                 <span>Limpieza: <strong>{mTarifa} €</strong></span>
-                <span>Pagado a Leila: <strong>{mPagado} €</strong></span>
+                <span>Neto mes: <strong>{mEfectivo - mTarifa} €</strong></span>
                 {liqVal > 0 && <span>Leila pagó: <strong>{liqVal} €</strong></span>}
                 <span className={mBal > 0 ? 'leila-owe' : mBal < 0 ? 'leila-over' : ''}><strong>{fmtBal(mBal)}</strong></span>
               </span>
@@ -2161,17 +2179,15 @@ const LeilaTab = ({ token }) => {
                     <th>Entrada · Salida</th>
                     <th className="num">Noches</th>
                     <th className="num">Limpieza</th>
-                    <th className="num">Pagado</th>
                     <th className="num">Efectivo</th>
-                    <th className="num">Pendiente</th>
+                    <th className="num">Acumulado</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.map(r => {
+                  {rows.map((r, ri) => {
                     const tarifa   = Number(r.gasto_limpieza) || 0;
-                    const pagado   = editsPagados[r._idx]  !== undefined ? Number(editsPagados[r._idx])  : (Number(r.pagos_leila)    || 0);
                     const efectivo = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila) || 0);
-                    const pend     = tarifa - pagado;
+                    const acum     = rowAcums[ri];
                     return (
                       <tr key={r._idx}>
                         <td className="leila-apt">{APT_LABEL[r.apt] || r.apt}</td>
@@ -2181,18 +2197,13 @@ const LeilaTab = ({ token }) => {
                         <td className="num">{tarifa} €</td>
                         <td className="num">
                           <input type="number" step="1" min="0" className="leila-cobro-input"
-                            value={pagado}
-                            onChange={e => setEditsPagados(prev => ({ ...prev, [r._idx]: e.target.value }))}
-                          />
-                        </td>
-                        <td className="num">
-                          <input type="number" step="1" min="0" className="leila-cobro-input"
-                            value={efectivo}
+                            value={efectivo || ''}
+                            placeholder="0"
                             onChange={e => setEditsEfectivo(prev => ({ ...prev, [r._idx]: e.target.value }))}
                           />
                         </td>
-                        <td className={`num ${pend > 0 ? 'leila-owe' : pend < 0 ? 'leila-over' : 'leila-ok'}`}>
-                          {pend === 0 ? '—' : `${pend > 0 ? '' : '−'}${Math.abs(pend)} €`}
+                        <td className={`num ${acum > 0 ? 'leila-owe' : acum < 0 ? 'leila-over' : 'leila-ok'}`}>
+                          {acum === 0 ? '—' : `${acum > 0 ? '+' : ''}${acum} €`}
                         </td>
                       </tr>
                     );
@@ -2202,10 +2213,9 @@ const LeilaTab = ({ token }) => {
                   <tr className="leila-foot-row">
                     <td colSpan="4"/>
                     <td className="num">{mTarifa} €</td>
-                    <td className="num">{mPagado > 0 ? `${mPagado} €` : '—'}</td>
-                    <td className="num"/>
-                    <td className={`num ${mPendReservas > 0 ? 'leila-owe' : mPendReservas < 0 ? 'leila-over' : 'leila-ok'}`}>
-                      {mPendReservas === 0 ? '—' : `${mPendReservas > 0 ? '' : '−'}${Math.abs(mPendReservas)} €`}
+                    <td className="num">{mEfectivo > 0 ? `${mEfectivo} €` : '—'}</td>
+                    <td className={`num ${(mEfectivo - mTarifa) > 0 ? 'leila-owe' : (mEfectivo - mTarifa) < 0 ? 'leila-over' : 'leila-ok'}`}>
+                      {(mEfectivo - mTarifa) === 0 ? '—' : `${(mEfectivo - mTarifa) > 0 ? '+' : ''}${mEfectivo - mTarifa} €`}
                     </td>
                   </tr>
                 </tfoot>
@@ -2220,12 +2230,17 @@ const LeilaTab = ({ token }) => {
                 onChange={e => setEditsLiquid(prev => ({ ...prev, [mKey]: e.target.value }))}
               />
               <span className="leila-liquid-eur">€</span>
+              <label className="leila-liquid-lbl" style={{ marginLeft: 16 }}>Fecha sync:</label>
+              <input type="date" className="leila-cobro-input leila-sync-date"
+                value={liqDate}
+                onChange={e => setEditsLiquidDate(prev => ({ ...prev, [mKey]: e.target.value }))}
+              />
             </div>
 
             <div className="leila-cum-row">
               Saldo acumulado {focusYear}:{' '}
-              <strong className={cumBal > 0 ? 'leila-owe' : cumBal < 0 ? 'leila-over' : ''}>
-                {fmtBal(cumBal)}
+              <strong className={acumRun > 0 ? 'leila-owe' : acumRun < 0 ? 'leila-over' : ''}>
+                {acumRun === 0 ? 'Saldado' : `${acumRun > 0 ? '+' : ''}${acumRun} €`}
               </strong>
             </div>
           </div>
@@ -2233,13 +2248,15 @@ const LeilaTab = ({ token }) => {
       })}
 
       {visibleMonths.length > 1 && (() => {
-        const yrBal = yrTarifa - yrPagado - yrLiquid;
+        const yrNeto = yrEfectivo - yrTarifa;
+        const yrBal  = yrNeto - yrLiquid;
         return (
           <div className="leila-year-total">
             <span>Total {focusYear}</span>
+            <span>Efectivo: <strong>{yrEfectivo} €</strong></span>
             <span>Limpieza: <strong>{yrTarifa} €</strong></span>
-            <span>Pagado: <strong>{yrPagado} €</strong></span>
-            {yrLiquid > 0 && <span>Leila pagó: <strong>{yrLiquid} €</strong></span>}
+            <span>Neto: <strong className={yrNeto > 0 ? 'leila-owe' : yrNeto < 0 ? 'leila-over' : ''}>{yrNeto > 0 ? '+' : ''}{yrNeto} €</strong></span>
+            {yrLiquid > 0 && <span>Liquidado: <strong>{yrLiquid} €</strong></span>}
             <span className={yrBal > 0 ? 'leila-owe' : yrBal < 0 ? 'leila-over' : ''}>
               Balance: <strong>{fmtBal(yrBal)}</strong>
             </span>

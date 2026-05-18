@@ -9742,6 +9742,10 @@ body:has(.hero),
 body:has(.apt-page-hero) {
   background: var(--ink);
 }
+html:has(.hero),
+html:has(.apt-page-hero) {
+  background: var(--ink);
+}
 
 /* ── Capa GPU: recorte border-radius correcto en Chromium/WebKit ─────────────
    overflow:hidden + border-radius en el mismo elemento puede no recortar el
@@ -18602,6 +18606,7 @@ img[src*="apt-vt-gallery-"] {
   border-radius: 4px; font-size: 13px; text-align: right; background: #fff;
 }
 .leila-cobro-input:focus { outline: 2px solid var(--ber); border-color: transparent; }
+.leila-sync-date { width: 130px; text-align: left; }
 .leila-owe { color: #B23A2B; }
 .leila-over { color: #2B7A2B; }
 .leila-ok { color: var(--ink-soft); }
