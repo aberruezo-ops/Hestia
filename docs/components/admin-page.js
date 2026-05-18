@@ -3911,15 +3911,7 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCB3 Leila"), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: `pe-tab${mode === 'bloques' ? ' is-active' : ''}`,
-    onClick: () => {
-      setMode('bloques');
-      setError(null);
-      setSuccess(null);
-    }
-  }, "\uD83D\uDD12 Bloqueos")), success && /*#__PURE__*/React.createElement("div", {
+  }, "\uD83D\uDCB3 Leila")), success && /*#__PURE__*/React.createElement("div", {
     className: "pe-success"
   }, success), error && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
@@ -3928,8 +3920,6 @@ const AdminApp = () => {
   }) : mode === 'reservas' ? /*#__PURE__*/React.createElement(ReservasTab, {
     token: token
   }) : mode === 'leila' ? /*#__PURE__*/React.createElement(LeilaTab, {
-    token: token
-  }) : mode === 'bloques' ? /*#__PURE__*/React.createElement(BloquesTab, {
     token: token
   }) : mode === 'reviews' ? renderReviewsTab() : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
