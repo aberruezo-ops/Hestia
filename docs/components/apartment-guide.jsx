@@ -5036,7 +5036,7 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
 
           <ul className="apt-guide-gate-stats">
             <li>{lang === 'es' ? <><strong>22 capítulos</strong> sobre tu Hestía y el entorno</> : <><strong>22 chapters</strong> on your Hestía and the area</>}</li>
-            <li>{lang === 'es' ? <><strong>230+ lugares curados</strong> — restaurantes, playas, bares, bodegas, mercados, pescaderías…</> : <><strong>230+ curated spots</strong> — restaurants, beaches, bars, wineries, markets, fishmongers…</>}</li>
+            <li>{lang === 'es' ? <><strong>Más de 230 recomendaciones</strong> — restaurantes, playas, bares, bodegas, mercados, pescaderías…</> : <><strong>More than 230 recommendations</strong> — restaurants, beaches, bars, wineries, markets, fishmongers…</>}</li>
             <li>{lang === 'es' ? <><strong>48 planes de día completo</strong> con horarios, rutas y reservas</> : <><strong>48 full-day itineraries</strong> with timing, routes and bookings</>}</li>
             <li>{lang === 'es' ? <><strong>Calendario anual</strong> de fiestas patronales y eventos</> : <><strong>Annual calendar</strong> of festivals and local events</>}</li>
             <li>{lang === 'es' ? <><strong>Servicios a mano</strong> — centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías y residencias para mascotas…</> : <><strong>Everything within reach</strong> — health centres, 24 h vets, pharmacies, physio clinics, pet boarding & daycare…</>}</li>

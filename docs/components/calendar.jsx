@@ -551,8 +551,8 @@ const AptCalendar = ({ aptId, lang, accent }) => {
         </h2>
         <p className="avail-sub">
           {lang === 'es'
-            ? 'Calendario sincronizado desde Booking.com y Airbnb. Selecciona entrada y salida para solicitar precio directamente a Alex.'
-            : 'Calendar synced from Booking.com and Airbnb. Select check-in and check-out to request a price directly from Alex.'}
+            ? 'Calendario sincronizado desde Booking.com y Airbnb. Selecciona entrada y salida para solicitarnos precio.'
+            : 'Calendar synced from Booking.com and Airbnb. Select check-in and check-out to request a price directly from us.'}
         </p>
       </div>
 
