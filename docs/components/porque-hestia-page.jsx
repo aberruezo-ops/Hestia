@@ -479,7 +479,7 @@ const PorqueColores = ({ lang }) => (
         {BRAND_PALETTE.map((c, i) => {
           const d = c[lang];
           return (
-            <div key={i} className="nos-color-card reveal" style={{ transitionDelay: `${i * 0.09}s` }}>
+            <div key={i} className="nos-color-card reveal" style={{ transitionDelay: `${i * 0.09}s`, '--nc': c.hex }}>
               <div className="nos-color-swatch" style={{ background: c.hex }}/>
               <div>
                 <div className="nos-color-hex">{c.hex}</div>
