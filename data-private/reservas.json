@@ -16873,7 +16873,7 @@
       "precio_neto_noche": 98.84,
       "precio_bruto_noche": 110.26,
       "year": 2025,
-      "efectivo_leila": 50.0
+      "efectivo_leila": 50
     },
     {
       "apt": "vs",
@@ -16906,7 +16906,7 @@
       "precio_neto_noche": 50.24,
       "precio_bruto_noche": 64.69,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vm",
@@ -16939,7 +16939,7 @@
       "precio_neto_noche": 43.21,
       "precio_bruto_noche": 63.67,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -16972,7 +16972,7 @@
       "precio_neto_noche": 42.39,
       "precio_bruto_noche": 59.75,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vm",
@@ -17005,7 +17005,7 @@
       "precio_neto_noche": 60.66,
       "precio_bruto_noche": 93.99,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vs",
@@ -17038,7 +17038,7 @@
       "precio_neto_noche": 58.57,
       "precio_bruto_noche": 70,
       "year": 2025,
-      "efectivo_leila": 350.0
+      "efectivo_leila": 350
     },
     {
       "apt": "vt",
@@ -17071,7 +17071,7 @@
       "precio_neto_noche": 70,
       "precio_bruto_noche": 80,
       "year": 2025,
-      "efectivo_leila": 500.0
+      "efectivo_leila": 500
     },
     {
       "apt": "vm",
@@ -17104,7 +17104,7 @@
       "precio_neto_noche": 78.38,
       "precio_bruto_noche": 117.09,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -17137,7 +17137,7 @@
       "precio_neto_noche": 63.69,
       "precio_bruto_noche": 102.25,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vs",
@@ -17170,7 +17170,7 @@
       "precio_neto_noche": 56.65,
       "precio_bruto_noche": 81.01,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -17203,7 +17203,7 @@
       "precio_neto_noche": 99.15,
       "precio_bruto_noche": 170,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -17236,7 +17236,7 @@
       "precio_neto_noche": 52.95,
       "precio_bruto_noche": 65.14,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vm",
@@ -17269,7 +17269,7 @@
       "precio_neto_noche": 67.26,
       "precio_bruto_noche": 78.69,
       "year": 2025,
-      "efectivo_leila": 350.0
+      "efectivo_leila": 350
     },
     {
       "apt": "vm",
@@ -17302,7 +17302,7 @@
       "precio_neto_noche": 43,
       "precio_bruto_noche": 63,
       "year": 2025,
-      "efectivo_leila": 750.0
+      "efectivo_leila": 750
     },
     {
       "apt": "vs",
@@ -17335,7 +17335,7 @@
       "precio_neto_noche": 104,
       "precio_bruto_noche": 120,
       "year": 2025,
-      "efectivo_leila": 400.0
+      "efectivo_leila": 400
     },
     {
       "apt": "vm",
@@ -17368,7 +17368,7 @@
       "precio_neto_noche": 105.71,
       "precio_bruto_noche": 117.14,
       "year": 2025,
-      "efectivo_leila": 500.0
+      "efectivo_leila": 500
     },
     {
       "apt": "vt",
@@ -17401,7 +17401,7 @@
       "precio_neto_noche": 77.5,
       "precio_bruto_noche": 87.5,
       "year": 2025,
-      "efectivo_leila": 700.0
+      "efectivo_leila": 700
     },
     {
       "apt": "vs",
@@ -17434,7 +17434,7 @@
       "precio_neto_noche": 82,
       "precio_bruto_noche": 98,
       "year": 2025,
-      "efectivo_leila": 300.0
+      "efectivo_leila": 300
     },
     {
       "apt": "vm",
@@ -17467,7 +17467,7 @@
       "precio_neto_noche": 143.08,
       "precio_bruto_noche": 150,
       "year": 2025,
-      "efectivo_leila": 1150.0
+      "efectivo_leila": 1150
     },
     {
       "apt": "vs",
@@ -17500,7 +17500,7 @@
       "precio_neto_noche": 125.83,
       "precio_bruto_noche": 133.33,
       "year": 2025,
-      "efectivo_leila": 1000.0
+      "efectivo_leila": 1000
     },
     {
       "apt": "vt",
@@ -17533,7 +17533,7 @@
       "precio_neto_noche": 51.25,
       "precio_bruto_noche": 62.5,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vm",
@@ -17566,7 +17566,7 @@
       "precio_neto_noche": 158.57,
       "precio_bruto_noche": 171.43,
       "year": 2025,
-      "efectivo_leila": 1000.0
+      "efectivo_leila": 1000
     },
     {
       "apt": "vt",
@@ -17599,7 +17599,7 @@
       "precio_neto_noche": 92.34,
       "precio_bruto_noche": 131.38,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vs",
@@ -17632,7 +17632,7 @@
       "precio_neto_noche": 141.11,
       "precio_bruto_noche": 151.11,
       "year": 2025,
-      "efectivo_leila": 1080.0
+      "efectivo_leila": 1080
     },
     {
       "apt": "vm",
@@ -17665,7 +17665,7 @@
       "precio_neto_noche": 182.73,
       "precio_bruto_noche": 190.91,
       "year": 2025,
-      "efectivo_leila": 1700.0
+      "efectivo_leila": 1700
     },
     {
       "apt": "vt",
@@ -17698,7 +17698,7 @@
       "precio_neto_noche": 102.64,
       "precio_bruto_noche": 147.66,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vs",
@@ -17731,7 +17731,7 @@
       "precio_neto_noche": 191.43,
       "precio_bruto_noche": 204.29,
       "year": 2025,
-      "efectivo_leila": 1100.0
+      "efectivo_leila": 1100
     },
     {
       "apt": "vt",
@@ -17764,7 +17764,7 @@
       "precio_neto_noche": 115.21,
       "precio_bruto_noche": 177.73,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -17797,7 +17797,7 @@
       "precio_neto_noche": 176.82,
       "precio_bruto_noche": 185,
       "year": 2025,
-      "efectivo_leila": 1700.0
+      "efectivo_leila": 1700
     },
     {
       "apt": "vm",
@@ -17830,7 +17830,7 @@
       "precio_neto_noche": 167.14,
       "precio_bruto_noche": 180,
       "year": 2025,
-      "efectivo_leila": 1000.0
+      "efectivo_leila": 1000
     },
     {
       "apt": "vs",
@@ -17863,7 +17863,7 @@
       "precio_neto_noche": 185.71,
       "precio_bruto_noche": 198.57,
       "year": 2025,
-      "efectivo_leila": 1200.0
+      "efectivo_leila": 1200
     },
     {
       "apt": "vm",
@@ -17896,7 +17896,7 @@
       "precio_neto_noche": 186,
       "precio_bruto_noche": 195,
       "year": 2025,
-      "efectivo_leila": 1750.0
+      "efectivo_leila": 1750
     },
     {
       "apt": "vt",
@@ -17929,7 +17929,7 @@
       "precio_neto_noche": 185,
       "precio_bruto_noche": 196.25,
       "year": 2025,
-      "efectivo_leila": 1350.0
+      "efectivo_leila": 1350
     },
     {
       "apt": "vs",
@@ -17962,7 +17962,7 @@
       "precio_neto_noche": 155.5,
       "precio_bruto_noche": 160,
       "year": 2025,
-      "efectivo_leila": 2400.0
+      "efectivo_leila": 2400
     },
     {
       "apt": "vt",
@@ -17995,7 +17995,7 @@
       "precio_neto_noche": 190,
       "precio_bruto_noche": 205,
       "year": 2025,
-      "efectivo_leila": 1030.0
+      "efectivo_leila": 1030
     },
     {
       "apt": "vm",
@@ -18028,7 +18028,7 @@
       "precio_neto_noche": 158.57,
       "precio_bruto_noche": 171.43,
       "year": 2025,
-      "efectivo_leila": 1000.0
+      "efectivo_leila": 1000
     },
     {
       "apt": "vt",
@@ -18061,7 +18061,7 @@
       "precio_neto_noche": 187.14,
       "precio_bruto_noche": 200,
       "year": 2025,
-      "efectivo_leila": 1100.0
+      "efectivo_leila": 1100
     },
     {
       "apt": "vm",
@@ -18094,7 +18094,7 @@
       "precio_neto_noche": 172.86,
       "precio_bruto_noche": 185.71,
       "year": 2025,
-      "efectivo_leila": 900.0
+      "efectivo_leila": 900
     },
     {
       "apt": "vs",
@@ -18127,7 +18127,7 @@
       "precio_neto_noche": 56.56,
       "precio_bruto_noche": 59.38,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -18160,7 +18160,7 @@
       "precio_neto_noche": 98.75,
       "precio_bruto_noche": 110,
       "year": 2025,
-      "efectivo_leila": 600.0
+      "efectivo_leila": 600
     },
     {
       "apt": "vm",
@@ -18193,7 +18193,7 @@
       "precio_neto_noche": 89.67,
       "precio_bruto_noche": 123.43,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -18226,7 +18226,7 @@
       "precio_neto_noche": 58.46,
       "precio_bruto_noche": 64.62,
       "year": 2025,
-      "efectivo_leila": 740.0
+      "efectivo_leila": 740
     },
     {
       "apt": "vm",
@@ -18259,7 +18259,7 @@
       "precio_neto_noche": 64.29,
       "precio_bruto_noche": 75.71,
       "year": 2025,
-      "efectivo_leila": 330.0
+      "efectivo_leila": 330
     },
     {
       "apt": "vs",
@@ -18292,7 +18292,7 @@
       "precio_neto_noche": 52.5,
       "precio_bruto_noche": 63.75,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -18325,7 +18325,7 @@
       "precio_neto_noche": 54.88,
       "precio_bruto_noche": 75.05,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vs",
@@ -18358,7 +18358,7 @@
       "precio_neto_noche": 62.37,
       "precio_bruto_noche": 87.23,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vm",
@@ -18391,7 +18391,7 @@
       "precio_neto_noche": 51.71,
       "precio_bruto_noche": 77.14,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vs",
@@ -18424,7 +18424,7 @@
       "precio_neto_noche": 45.7,
       "precio_bruto_noche": 69.92,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -18457,7 +18457,7 @@
       "precio_neto_noche": 57.14,
       "precio_bruto_noche": 68.57,
       "year": 2025,
-      "efectivo_leila": 480.0
+      "efectivo_leila": 480
     },
     {
       "apt": "vm",
@@ -18490,7 +18490,7 @@
       "precio_neto_noche": 51.77,
       "precio_bruto_noche": 82.87,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -18523,7 +18523,7 @@
       "precio_neto_noche": 74.99,
       "precio_bruto_noche": 102.67,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -18556,7 +18556,7 @@
       "precio_neto_noche": 72.33,
       "precio_bruto_noche": 99,
       "year": 2025,
-      "efectivo_leila": 200.0
+      "efectivo_leila": 200
     },
     {
       "apt": "vt",
@@ -18589,7 +18589,7 @@
       "precio_neto_noche": 43.69,
       "precio_bruto_noche": 54.86,
       "year": 2025,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vs",
@@ -18622,7 +18622,7 @@
       "precio_neto_noche": 45.91,
       "precio_bruto_noche": 50,
       "year": 2025,
-      "efectivo_leila": 900.0
+      "efectivo_leila": 900
     },
     {
       "apt": "vt",
@@ -18655,7 +18655,7 @@
       "precio_neto_noche": 95,
       "precio_bruto_noche": 105,
       "year": 2025,
-      "efectivo_leila": 620.0
+      "efectivo_leila": 620
     },
     {
       "apt": "vt",
@@ -18688,7 +18688,7 @@
       "precio_neto_noche": 44.39,
       "precio_bruto_noche": 54.86,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vm",
@@ -18721,7 +18721,7 @@
       "precio_neto_noche": 42.86,
       "precio_bruto_noche": 46.07,
       "year": 2026,
-      "efectivo_leila": 1290.0
+      "efectivo_leila": 1290
     },
     {
       "apt": "vs",
@@ -18754,7 +18754,7 @@
       "precio_neto_noche": 34.3,
       "precio_bruto_noche": 46.18,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -18787,7 +18787,7 @@
       "precio_neto_noche": 57.18,
       "precio_bruto_noche": 77.06,
       "year": 2026,
-      "efectivo_leila": 50.0
+      "efectivo_leila": 50
     },
     {
       "apt": "vm",
@@ -18820,7 +18820,7 @@
       "precio_neto_noche": 53.86,
       "precio_bruto_noche": 73.16,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vs",
@@ -18853,7 +18853,7 @@
       "precio_neto_noche": 64.22,
       "precio_bruto_noche": 73.11,
       "year": 2026,
-      "efectivo_leila": 400.0
+      "efectivo_leila": 400
     },
     {
       "apt": "vs",
@@ -18886,7 +18886,7 @@
       "precio_neto_noche": 45.71,
       "precio_bruto_noche": 57.14,
       "year": 2026,
-      "efectivo_leila": 400.0
+      "efectivo_leila": 400
     },
     {
       "apt": "vt",
@@ -18919,7 +18919,7 @@
       "precio_neto_noche": 95.93,
       "precio_bruto_noche": 131.4,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vs",
@@ -18952,7 +18952,7 @@
       "precio_neto_noche": 0,
       "precio_bruto_noche": 8.18,
       "year": 2026,
-      "efectivo_leila": 90.0
+      "efectivo_leila": 90
     },
     {
       "apt": "vs",
@@ -18985,7 +18985,7 @@
       "precio_neto_noche": 58.94,
       "precio_bruto_noche": 76.88,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vm",
@@ -19018,7 +19018,7 @@
       "precio_neto_noche": 107.94,
       "precio_bruto_noche": 119.37,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vm",
@@ -19051,7 +19051,7 @@
       "precio_neto_noche": 70.71,
       "precio_bruto_noche": 82.14,
       "year": 2026,
-      "efectivo_leila": 475.0
+      "efectivo_leila": 475
     },
     {
       "apt": "vt",
@@ -19084,7 +19084,7 @@
       "precio_neto_noche": 87.14,
       "precio_bruto_noche": 100,
       "year": 2026,
-      "efectivo_leila": 560.0
+      "efectivo_leila": 560
     },
     {
       "apt": "vm",
@@ -19117,7 +19117,7 @@
       "precio_neto_noche": 95.71,
       "precio_bruto_noche": 107.14,
       "year": 2026,
-      "efectivo_leila": 550.0
+      "efectivo_leila": 550
     },
     {
       "apt": "vt",
@@ -19150,7 +19150,7 @@
       "precio_neto_noche": null,
       "precio_bruto_noche": null,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vm",
@@ -19183,7 +19183,7 @@
       "precio_neto_noche": 77.14,
       "precio_bruto_noche": 90,
       "year": 2026,
-      "efectivo_leila": 500.0
+      "efectivo_leila": 500
     },
     {
       "apt": "vm",
@@ -19216,7 +19216,7 @@
       "precio_neto_noche": 175.71,
       "precio_bruto_noche": 188.57,
       "year": 2026,
-      "efectivo_leila": 1000.0
+      "efectivo_leila": 1000
     },
     {
       "apt": "vt",
@@ -19249,7 +19249,7 @@
       "precio_neto_noche": 158.33,
       "precio_bruto_noche": 165.83,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vm",
@@ -19282,7 +19282,7 @@
       "precio_neto_noche": 182.68,
       "precio_bruto_noche": 240.67,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -19315,7 +19315,7 @@
       "precio_neto_noche": 188.57,
       "precio_bruto_noche": 201.43,
       "year": 2026,
-      "efectivo_leila": 1110.0
+      "efectivo_leila": 1110
     },
     {
       "apt": "vs",
@@ -19348,7 +19348,7 @@
       "precio_neto_noche": 254.28,
       "precio_bruto_noche": 260.28,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vm",
@@ -19381,7 +19381,7 @@
       "precio_neto_noche": 223.75,
       "precio_bruto_noche": 235,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vs",
@@ -19414,7 +19414,7 @@
       "precio_neto_noche": 225.39,
       "precio_bruto_noche": 238.25,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vm",
@@ -19447,7 +19447,7 @@
       "precio_neto_noche": 206.52,
       "precio_bruto_noche": 221.52,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -19480,7 +19480,7 @@
       "precio_neto_noche": 183.37,
       "precio_bruto_noche": 244.17,
       "year": 2026,
-      "efectivo_leila": 1000.0
+      "efectivo_leila": 1000
     },
     {
       "apt": "vm",
@@ -19513,7 +19513,7 @@
       "precio_neto_noche": 209.08,
       "precio_bruto_noche": 224.08,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vt",
@@ -19546,7 +19546,7 @@
       "precio_neto_noche": null,
       "precio_bruto_noche": null,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vm",
@@ -19579,7 +19579,7 @@
       "precio_neto_noche": 77.14,
       "precio_bruto_noche": 88.57,
       "year": 2026,
-      "efectivo_leila": 620.0
+      "efectivo_leila": 620
     },
     {
       "apt": "vm",
@@ -19612,7 +19612,7 @@
       "precio_neto_noche": 77.54,
       "precio_bruto_noche": 104,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
     },
     {
       "apt": "vs",
@@ -19645,7 +19645,14 @@
       "precio_neto_noche": 118.64,
       "precio_bruto_noche": 130.07,
       "year": 2026,
-      "efectivo_leila": 0.0
+      "efectivo_leila": 0
+    }
+  ],
+  "leila_pagos_a_hestia": [
+    {
+      "mes": "2026-03",
+      "importe": 2550,
+      "fecha_sync": "2026-03-29"
     }
   ]
 }
