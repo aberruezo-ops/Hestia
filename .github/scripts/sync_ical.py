@@ -309,8 +309,13 @@ def main() -> None:
             print(f"    errors: {d['fetch_errors']}")
 
     if not any_ok:
-        print("\n⚠ WARNING: No iCal feed fetched — all sources failed or unconfigured.")
-        sys.exit(1)
+        print("\n⚠  WARNING: No iCal feed fetched — all sources failed or unconfigured.")
+        if OUTPUT.exists():
+            print("Keeping existing availability.json unchanged (stale data is better than none).")
+            sys.exit(0)
+        else:
+            print("No existing availability.json to fall back on — aborting.")
+            sys.exit(1)
 
 
 if __name__ == "__main__":
