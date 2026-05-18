@@ -1886,10 +1886,6 @@ body.apt-bar-shown .cookies {
   .hv-toggle:hover { transform: scale(1.18); }
 }
 .hv-brand-btn {
-  position: fixed;
-  left: clamp(8px, 1.2vw, 20px);
-  bottom: 105px;   /* sits just below the video widget whose bottom is ~130px from viewport bottom */
-  width: clamp(200px, 22vw, 280px);
   display: block;
   text-align: center;
   color: var(--arena);
@@ -1898,11 +1894,13 @@ body.apt-bar-shown .cookies {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 7px 4px 6px;
-  opacity: 0.75;
+  padding: 7px 6px 8px;
+  opacity: 0.82;
   pointer-events: auto;
-  z-index: 1001;
   transition: opacity 0.2s;
+  background: rgba(42,15,46,0.72);
+  border-radius: 0 0 10px 0;
+  box-shadow: 0 4px 14px rgba(42,15,46,0.3);
 }
 @media (hover: hover) { .hv-brand-btn:hover { opacity: 1; } }
 @media (max-width: 900px) { .hv-brand-btn { display: none !important; } }
