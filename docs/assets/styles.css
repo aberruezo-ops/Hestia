@@ -5824,7 +5824,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .apt-day-card-tlabel {
   font-family: var(--sans);
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -5843,7 +5843,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .apt-equip-eyebrow {
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: .18em;
   text-transform: uppercase;
   color: rgba(42,15,46,.42);
@@ -5876,7 +5876,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .aes-lbl {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: rgba(42,15,46,.4);
@@ -5896,7 +5896,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .aei-icon { font-size: 17px; flex-shrink: 0; line-height: 1; }
 .aei-label {
   font-family: var(--sans);
-  font-size: 11.5px;
+  font-size: 13px;
   color: rgba(42,15,46,.65);
   line-height: 1.35;
 }

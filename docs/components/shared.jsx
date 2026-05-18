@@ -79,7 +79,7 @@ const Wordmark = ({ size = 14, color }) => (
 // Copy diccionario ES/EN
 const COPY = {
   es: {
-    nav: ['Inicio', 'Hestía Mar', 'Hestía Thalassa', 'Hestía Salinas', 'Nosotros', 'Opiniones', 'Contacto', 'Noticias', 'Por qué Hestía'],
+    nav: ['Inicio', 'Hestía Mar', 'Hestía Thalassa', 'Hestía Salinas', 'Nosotros', 'Opiniones', 'Contacto', 'Noticias', '¿Por qué Hestía?'],
     cta_nav: 'Reserva',
     mn_ventajas: 'Ventajas de reserva directa',
     mn_guests: 'Acceso para huéspedes',
@@ -309,7 +309,7 @@ const QUICK_FAQ = {
   vm: {
     es: [
       { q: '¿Por qué elegiría Hestía Mar sobre los otros dos?',
-        a: <>Mar es planta primera, con acceso al jardín y a la piscina comunitaria. Al ser de esquina da a tres calles distintas: hacia el mar, hacia los lados y hacia la zona de entrada — lo que permite ventilación cruzada natural en todas las estancias. La terraza de 20m² está orientada al amanecer, pero desde ella ves el ciclo solar completo. El más íntimo y sereno de los tres.</> },
+        a: <>Mar es planta primera, con acceso al jardín y a la piscina comunitaria. Al ser de esquina da a tres calles distintas: hacia el mar, hacia los lados y hacia la zona de entrada — lo que permite ventilación cruzada natural en todas las estancias. La terraza de 20m² está orientada al amanecer, pero desde ella ves el ciclo solar completo. El más cercano a la playa de los tres.</> },
       { q: '¿Puedo traer a mi perro (o gato)?',
         a: <>Sí, las mascotas son bienvenidas en los tres, siempre bajo petición previa y con suplemento. Solo pedimos que se respeten unas condiciones básicas y sensatas: dentro de Hestía, en las zonas comunes de la urbanización y en los espacios públicos. Avísanos al reservar.</> },
       { q: '¿El jacuzzi está disponible durante mi estancia?',
@@ -319,7 +319,7 @@ const QUICK_FAQ = {
     ],
     en: [
       { q: 'Why would I choose Hestía Mar over the other two?',
-        a: <>Mar is on the first floor, with access to the garden and shared pool. As a corner unit facing three different streets — sea side, lateral and entrance — it has natural cross-ventilation throughout. The 20m² terrace faces the sunrise, but from it you can follow the entire arc of the sun. The most intimate and serene of the three.</> },
+        a: <>Mar is on the first floor, with access to the garden and shared pool. As a corner unit facing three different streets — sea side, lateral and entrance — it has natural cross-ventilation throughout. The 20m² terrace faces the sunrise, but from it you can follow the entire arc of the sun. The closest to the beach of the three.</> },
       { q: 'Can I bring my dog (or cat)?',
         a: <>Yes, pets are welcome in all three Hestías, always on request and with a supplement. We simply ask that basic conditions are respected: inside the Hestía, in the communal areas of the complex, and in public spaces. Let us know when booking.</> },
       { q: 'Is the jacuzzi available during my stay?',
@@ -353,21 +353,21 @@ const QUICK_FAQ = {
   vs: {
     es: [
       { q: '¿Por qué elegiría Hestía Salinas sobre los otros dos?',
-        a: <>Salinas es el más luminoso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de pádel comunitarios, y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina con acceso peatonal directo. La luz dorada de Almería llena cada habitación — y la naturaleza empieza donde termina la acera.</> },
+        a: <>Salinas es el más espacioso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de pádel comunitarios, y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina con acceso peatonal directo. La luz dorada de Almería llena cada habitación — y la naturaleza empieza donde termina la acera.</> },
       { q: '¿Qué son las Salinas de Puerto Rey?',
         a: <>Un Parque Natural a pocos metros, con flamencos, aves migratorias y una luz dorada al amanecer única en Europa. Una de las razones por las que Salinas tiene algo que los demás no tienen.</> },
       { q: '¿Hay de verdad tres piscinas?',
-        a: <>Sí. La urbanización tiene tres piscinas comunitarias — no una sola dividida, sino tres zonas diferenciadas con orientaciones distintas. Además hay gimnasio y sauna comunitarios (abiertos todo el año) y pistas de pádel. Una de las urbanizaciones mejor equipadas de Vera Playa.</> },
+        a: <>Sí. La urbanización tiene tres piscinas comunitarias — no una sola dividida, sino tres zonas diferenciadas con orientaciones distintas. Además hay gimnasio y sauna comunitarios (el gimnasio abierto todo el año; la sauna, solo fuera de temporada de verano) y pistas de pádel. Una de las urbanizaciones mejor equipadas de Vera Playa.</> },
       { q: '¿Puedo traer mascotas?',
         a: <>Sí, en los tres. Siempre bajo petición previa y con suplemento, respetando unas condiciones básicas dentro de Hestía, en las zonas comunes y en los espacios públicos.</> },
     ],
     en: [
       { q: 'Why would I choose Hestía Salinas over the other two?',
-        a: <>Salinas is the brightest of the three. Two terraces, three pools, a communal gym, sauna and padel courts, and the Puerto Rey Salt-flat Nature Park around the corner with direct pedestrian access. Almería's golden afternoon light fills every room — and nature begins where the pavement ends.</> },
+        a: <>Salinas is the most spacious of the three. Two terraces, three pools, a communal gym, sauna and padel courts, and the Puerto Rey Salt-flat Nature Park around the corner with direct pedestrian access. Almería's golden afternoon light fills every room — and nature begins where the pavement ends.</> },
       { q: 'What is the Puerto Rey Nature Park?',
         a: <>A natural park a few metres away, with flamingos, migratory birds and a golden light at sunrise unique in Europe. One of the reasons Salinas has something the others don't.</> },
       { q: 'Are there really three pools?',
-        a: <>Yes. The complex has three community pools — not one divided, but three separate areas with different orientations. There is also a communal gym and sauna (open year-round) and padel courts. One of the best-equipped complexes in Vera Playa.</> },
+        a: <>Yes. The complex has three community pools — not one divided, but three separate areas with different orientations. There is also a communal gym and sauna (gym open all year; sauna closed in summer) and padel courts. One of the best-equipped complexes in Vera Playa.</> },
       { q: 'Can I bring pets?',
         a: <>Yes, in all three Hestías. Always on request and with a supplement, as long as basic conditions are respected inside the Hestía, in the communal areas and in public spaces.</> },
     ],
@@ -1669,14 +1669,14 @@ const StickyFacts = ({ lang }) => {
   }, [open]);
 
   const item  = pool[idx];
-  const label = lang === 'es' ? '¿Sabías que?' : 'Did you know?';
+  const label = lang === 'es' ? '¿Sabías que…?' : 'Did you know?';
 
   return (
     <div className={`sticky-facts ${open ? '' : 'sf-closed'}${(pastHero && !searchActive) ? '' : ' sf-hidden'}`} onClick={!open ? () => setOpen(true) : undefined}>
       {!open ? (
         <>
           <span style={{ fontSize: 14, color: 'var(--sol-lt)', fontFamily: 'var(--sans)', letterSpacing: '.12em', textTransform: 'uppercase', fontWeight: 400 }}>
-            {lang === 'es' ? '¿Sabías que?' : 'Did you know?'}
+            {lang === 'es' ? '¿Sabías que…?' : 'Did you know?'}
           </span>
           <button className="sf-toggle" onClick={() => setOpen(true)} aria-label="Expandir">＋</button>
         </>
@@ -2726,7 +2726,7 @@ const WidgetSabiasQue = ({ lang }) => {
     return (
       <WidgetMiniPill
         icon="?"
-        label={lang === 'es' ? '¿Sabías que?' : 'Did you know?'}
+        label={lang === 'es' ? '¿Sabías que…?' : 'Did you know?'}
         ariaLabel={lang === 'es' ? 'Restaurar curiosidades' : 'Restore did-you-know'}
         onClick={() => setMin(false)}
         className="widget-mini-sabias"
@@ -2735,7 +2735,7 @@ const WidgetSabiasQue = ({ lang }) => {
   }
   const item = pool[idx];
   return (
-    <section className="widget-card widget-sabias" aria-label={lang === 'es' ? 'Sabías que' : 'Did you know'}>
+    <section className="widget-card widget-sabias" aria-label={lang === 'es' ? '¿Sabías que…?' : 'Did you know'}>
       <button
         type="button"
         className="widget-min-btn"
@@ -2744,7 +2744,7 @@ const WidgetSabiasQue = ({ lang }) => {
         onClick={() => setMin(true)}
       >−</button>
       <div className={`sf-body ${visible ? 'sf-in' : 'sf-out'}`}>
-        <span className="sf-label">{lang === 'es' ? '¿Sabías que?' : 'Did you know?'}</span>
+        <span className="sf-label">{lang === 'es' ? '¿Sabías que…?' : 'Did you know?'}</span>
         <span className="sf-text">{item[lang]}</span>
       </div>
       <div className="sf-nav">
@@ -3223,7 +3223,7 @@ const HomeGuideTeaser = ({ lang }) => {
     desc: <>No es un folleto: es la <strong>superguía que nos habría gustado encontrar a nosotros</strong> cuando llegamos por primera vez a Vera. Veintidós capítulos con todo lo que necesitas para vivir tu estancia — desde cómo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense.</>,
     stats: [
       <><strong>22 capítulos</strong> sobre tu Hestía y el entorno</>,
-      <><strong>230+ lugares curados</strong> — restaurantes, playas, bares, bodegas, mercados, pescaderías…</>,
+      <><strong>Más de 230 recomendaciones</strong> — restaurantes, playas, bares, bodegas, mercados, pescaderías…</>,
       <><strong>48 planes de día completo</strong> con horarios, rutas y reservas</>,
       <><strong>Calendario anual</strong> de fiestas patronales y eventos</>,
       <><strong>Servicios a mano</strong> — centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías y residencias para mascotas…</>,

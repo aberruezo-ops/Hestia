@@ -472,7 +472,7 @@ const Header = ({
   }), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.porqueHestia,
     className: "mn-mid-why mn-mid-why-full"
-  }, "\u2192 ", lang === 'es' ? 'Por qué Hestía' : 'Why Hestía'), /*#__PURE__*/React.createElement("div", {
+  }, "\u2192 ", lang === 'es' ? '¿Por qué Hestía?' : 'Why Hestía?'), /*#__PURE__*/React.createElement("div", {
     className: "mn-sep"
   }), /*#__PURE__*/React.createElement("div", {
     className: "mn-pages-row"
