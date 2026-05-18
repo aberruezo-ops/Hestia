@@ -36,7 +36,7 @@ const PORQUE_COPY = {
     name_quote_attr: '— Fran Moral',
 
     values_eyebrow: 'Nuestros valores',
-    values_title: (<>HESTIA, una palabra<br/><em>y seis maneras de habitarla.</em></>),
+    values_title: (<>HESTÍA, una palabra<br/><em>y seis maneras de habitarla.</em></>),
     values_lede: 'El nombre que recibimos de la diosa griega no es solo símbolo: es una guía. Cada letra de Hestía nombra un valor que practicamos a diario. Seis ideas que se suman en una sola: la confianza.',
     values: [
       { letter: 'H', name: 'Hospitalidad', desc: 'La llama que recibe. Hestía es la diosa del hogar y guarda el fuego de bienvenida — el que se honra al partir y al volver. Tu estancia empieza el día que reservas y no termina cuando te marchas: termina el día que quieres volver.' },
@@ -93,7 +93,7 @@ const PORQUE_COPY = {
     name_quote_attr: '— Fran Moral',
 
     values_eyebrow: 'Our values',
-    values_title: (<>HESTIA, one word<br/><em>and six ways to inhabit it.</em></>),
+    values_title: (<>HESTÍA, one word<br/><em>and six ways to inhabit it.</em></>),
     values_lede: 'The name we received from the Greek goddess is not only a symbol: it is a guide. Every letter of Hestía names a value we practice every day. Six ideas that add up to one: trust.',
     values: [
       { letter: 'H', name: 'Hospitality',  desc: 'The flame that welcomes. Hestía is the goddess of the hearth — keeper of the fire honoured when leaving and returning. Your stay begins the day you book and does not end when you leave: it ends the day you want to come back.' },
