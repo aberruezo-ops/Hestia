@@ -2152,72 +2152,74 @@ const LeilaTab = ({ token }) => {
                 <span className={mBal > 0 ? 'leila-owe' : mBal < 0 ? 'leila-over' : ''}><strong>{fmtBal(mBal)}</strong></span>
               </span>
             </div>
-            <table className="leila-table">
-              <thead>
-                <tr>
-                  <th>Apt</th>
-                  <th>Huésped</th>
-                  <th>Entrada · Salida</th>
-                  <th className="num">Noches</th>
-                  <th className="num">Limpieza</th>
-                  <th className="num">Pagado</th>
-                  <th className="num">Efectivo</th>
-                  <th className="num">Pendiente</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rows.map(r => {
-                  const tarifa   = Number(r.gasto_limpieza) || 0;
-                  const pagado   = editsPagados[r._idx]  !== undefined ? Number(editsPagados[r._idx])  : (Number(r.pagos_leila)    || 0);
-                  const efectivo = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila) || 0);
-                  const pend     = tarifa - pagado;
-                  return (
-                    <tr key={r._idx}>
-                      <td className="leila-apt">{APT_LABEL[r.apt] || r.apt}</td>
-                      <td className="leila-guest">{r.responsable || '—'}</td>
-                      <td className="leila-dates">{r.entrada}{r.salida ? ` · ${r.salida}` : ''}</td>
-                      <td className="num">{r.noches || '—'}</td>
-                      <td className="num">{tarifa} €</td>
-                      <td className="num">
-                        <input type="number" step="1" min="0" className="leila-cobro-input"
-                          value={pagado}
-                          onChange={e => setEditsPagados(prev => ({ ...prev, [r._idx]: e.target.value }))}
-                        />
-                      </td>
-                      <td className="num">
-                        <input type="number" step="1" min="0" className="leila-cobro-input"
-                          value={efectivo}
-                          onChange={e => setEditsEfectivo(prev => ({ ...prev, [r._idx]: e.target.value }))}
-                        />
-                      </td>
-                      <td className={`num ${pend > 0 ? 'leila-owe' : pend < 0 ? 'leila-over' : 'leila-ok'}`}>
-                        {pend === 0 ? '—' : `${pend > 0 ? '' : '−'}${Math.abs(pend)} €`}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-              <tfoot>
-                <tr className="leila-foot-row">
-                  <td colSpan="4"/>
-                  <td className="num">{mTarifa} €</td>
-                  <td className="num">{mPagado > 0 ? `${mPagado} €` : '—'}</td>
-                  <td className="num"/>
-                  <td className={`num ${mPendReservas > 0 ? 'leila-owe' : mPendReservas < 0 ? 'leila-over' : 'leila-ok'}`}>
-                    {mPendReservas === 0 ? '—' : `${mPendReservas > 0 ? '' : '−'}${Math.abs(mPendReservas)} €`}
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
+            <div className="leila-table-wrap">
+              <table className="leila-table">
+                <thead>
+                  <tr>
+                    <th>Apt</th>
+                    <th>Huésped</th>
+                    <th>Entrada · Salida</th>
+                    <th className="num">Noches</th>
+                    <th className="num">Limpieza</th>
+                    <th className="num">Pagado</th>
+                    <th className="num">Efectivo</th>
+                    <th className="num">Pendiente</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map(r => {
+                    const tarifa   = Number(r.gasto_limpieza) || 0;
+                    const pagado   = editsPagados[r._idx]  !== undefined ? Number(editsPagados[r._idx])  : (Number(r.pagos_leila)    || 0);
+                    const efectivo = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila) || 0);
+                    const pend     = tarifa - pagado;
+                    return (
+                      <tr key={r._idx}>
+                        <td className="leila-apt">{APT_LABEL[r.apt] || r.apt}</td>
+                        <td className="leila-guest">{r.responsable || '—'}</td>
+                        <td className="leila-dates">{r.entrada}{r.salida ? ` · ${r.salida}` : ''}</td>
+                        <td className="num">{r.noches || '—'}</td>
+                        <td className="num">{tarifa} €</td>
+                        <td className="num">
+                          <input type="number" step="1" min="0" className="leila-cobro-input"
+                            value={pagado}
+                            onChange={e => setEditsPagados(prev => ({ ...prev, [r._idx]: e.target.value }))}
+                          />
+                        </td>
+                        <td className="num">
+                          <input type="number" step="1" min="0" className="leila-cobro-input"
+                            value={efectivo}
+                            onChange={e => setEditsEfectivo(prev => ({ ...prev, [r._idx]: e.target.value }))}
+                          />
+                        </td>
+                        <td className={`num ${pend > 0 ? 'leila-owe' : pend < 0 ? 'leila-over' : 'leila-ok'}`}>
+                          {pend === 0 ? '—' : `${pend > 0 ? '' : '−'}${Math.abs(pend)} €`}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+                <tfoot>
+                  <tr className="leila-foot-row">
+                    <td colSpan="4"/>
+                    <td className="num">{mTarifa} €</td>
+                    <td className="num">{mPagado > 0 ? `${mPagado} €` : '—'}</td>
+                    <td className="num"/>
+                    <td className={`num ${mPendReservas > 0 ? 'leila-owe' : mPendReservas < 0 ? 'leila-over' : 'leila-ok'}`}>
+                      {mPendReservas === 0 ? '—' : `${mPendReservas > 0 ? '' : '−'}${Math.abs(mPendReservas)} €`}
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
 
             <div className="leila-liquid-row">
-              <label className="leila-liquid-lbl">Leila pagó a Hestía:</label>
+              <label className="leila-liquid-lbl">Leila pagó a Hestía en {MES_FULL[parseInt(m, 10) - 1]}:</label>
               <input type="number" step="1" min="0" className="leila-cobro-input"
                 value={liqVal || ''}
                 placeholder="0"
                 onChange={e => setEditsLiquid(prev => ({ ...prev, [mKey]: e.target.value }))}
               />
-              <span className="leila-liquid-hint">€ — se descuenta del saldo pendiente</span>
+              <span className="leila-liquid-eur">€</span>
             </div>
 
             <div className="leila-cum-row">
