@@ -58,6 +58,7 @@ jobs:
           git config user.name  "hestia-bot"
           git config user.email "bot@hestiayourhome.com"
           git add docs/assets/availability.json
+          git add docs/assets/ical-debug/ 2>/dev/null || true
           if ! git diff --staged --quiet; then
             git commit -m "chore: sync availability data [skip ci]"
             git push
