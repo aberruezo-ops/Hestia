@@ -2541,7 +2541,9 @@ const LeilaTab = ({
       className: "leila-month-kpis"
     }, /*#__PURE__*/React.createElement("span", null, "Limpieza: ", /*#__PURE__*/React.createElement("strong", null, mTarifa, " \u20AC")), /*#__PURE__*/React.createElement("span", null, "Pagado a Leila: ", /*#__PURE__*/React.createElement("strong", null, mPagado, " \u20AC")), liqVal > 0 && /*#__PURE__*/React.createElement("span", null, "Leila pag\xF3: ", /*#__PURE__*/React.createElement("strong", null, liqVal, " \u20AC")), /*#__PURE__*/React.createElement("span", {
       className: mBal > 0 ? 'leila-owe' : mBal < 0 ? 'leila-over' : ''
-    }, /*#__PURE__*/React.createElement("strong", null, fmtBal(mBal))))), /*#__PURE__*/React.createElement("table", {
+    }, /*#__PURE__*/React.createElement("strong", null, fmtBal(mBal))))), /*#__PURE__*/React.createElement("div", {
+      className: "leila-table-wrap"
+    }, /*#__PURE__*/React.createElement("table", {
       className: "leila-table"
     }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Hu\xE9sped"), /*#__PURE__*/React.createElement("th", null, "Entrada \xB7 Salida"), /*#__PURE__*/React.createElement("th", {
       className: "num"
@@ -2609,11 +2611,11 @@ const LeilaTab = ({
       className: "num"
     }), /*#__PURE__*/React.createElement("td", {
       className: `num ${mPendReservas > 0 ? 'leila-owe' : mPendReservas < 0 ? 'leila-over' : 'leila-ok'}`
-    }, mPendReservas === 0 ? '—' : `${mPendReservas > 0 ? '' : '−'}${Math.abs(mPendReservas)} €`)))), /*#__PURE__*/React.createElement("div", {
+    }, mPendReservas === 0 ? '—' : `${mPendReservas > 0 ? '' : '−'}${Math.abs(mPendReservas)} €`))))), /*#__PURE__*/React.createElement("div", {
       className: "leila-liquid-row"
     }, /*#__PURE__*/React.createElement("label", {
       className: "leila-liquid-lbl"
-    }, "Leila pag\xF3 a Hest\xEDa:"), /*#__PURE__*/React.createElement("input", {
+    }, "Leila pag\xF3 a Hest\xEDa en ", MES_FULL[parseInt(m, 10) - 1], ":"), /*#__PURE__*/React.createElement("input", {
       type: "number",
       step: "1",
       min: "0",
@@ -2625,8 +2627,8 @@ const LeilaTab = ({
         [mKey]: e.target.value
       }))
     }), /*#__PURE__*/React.createElement("span", {
-      className: "leila-liquid-hint"
-    }, "\u20AC \u2014 se descuenta del saldo pendiente")), /*#__PURE__*/React.createElement("div", {
+      className: "leila-liquid-eur"
+    }, "\u20AC")), /*#__PURE__*/React.createElement("div", {
       className: "leila-cum-row"
     }, "Saldo acumulado ", focusYear, ":", ' ', /*#__PURE__*/React.createElement("strong", {
       className: cumBal > 0 ? 'leila-owe' : cumBal < 0 ? 'leila-over' : ''

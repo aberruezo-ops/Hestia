@@ -18536,43 +18536,74 @@ img[src*="apt-vt-gallery-"] {
 .rv-btn-danger:hover { background: rgba(178,58,43,0.10); }
 
 /* ── Leila tab ── */
-.leila-hdr { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
-.leila-year-row { display: flex; gap: 6px; }
+.leila-hdr { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+.leila-year-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .leila-yr-btn {
   padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(61,26,53,0.25);
   background: transparent; color: var(--ber); font-size: 13px; cursor: pointer;
 }
 .leila-yr-btn.active { background: var(--ber); color: var(--arena); border-color: var(--ber); }
-.leila-month-block { margin-bottom: 28px; }
-.leila-month-hdr {
-  display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
-  padding: 8px 0; border-bottom: 2px solid rgba(61,26,53,0.12); margin-bottom: 0;
+.leila-month-block {
+  margin-bottom: 24px;
+  border: 1px solid rgba(61,26,53,0.12);
+  border-radius: 10px;
+  overflow: hidden;
 }
-.leila-month-name { font-size: 15px; font-weight: 600; color: var(--ber); min-width: 140px; }
-.leila-month-kpis { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--ink-soft); }
-.leila-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 0; }
-.leila-table th {
-  padding: 7px 10px; text-align: left; font-size: 11px;
-  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft);
+.leila-month-hdr {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 12px 16px 10px;
+  background: rgba(61,26,53,0.04);
   border-bottom: 1px solid rgba(61,26,53,0.10);
 }
-.leila-table td { padding: 7px 10px; border-bottom: 1px solid rgba(61,26,53,0.06); vertical-align: middle; }
+.leila-month-name {
+  font-size: 15px; font-weight: 700; color: var(--ber);
+  border-left: 3px solid var(--ber); padding-left: 8px;
+}
+.leila-month-kpis {
+  display: flex; gap: 0; flex-wrap: wrap;
+  font-size: 13px; color: var(--ink-soft);
+}
+.leila-month-kpis > span {
+  padding: 0 14px 0 0; margin-right: 14px;
+  border-right: 1px solid rgba(61,26,53,0.15);
+}
+.leila-month-kpis > span:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+.leila-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.leila-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 0; }
+.leila-table th {
+  padding: 8px 12px; text-align: left; font-size: 11px;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft);
+  background: rgba(61,26,53,0.02);
+  border-bottom: 1px solid rgba(61,26,53,0.10);
+}
+.leila-table td { padding: 8px 12px; border-bottom: 1px solid rgba(61,26,53,0.06); vertical-align: middle; }
 .leila-table .num { text-align: right; }
-.leila-table tfoot td { border-top: 1px solid rgba(61,26,53,0.15); border-bottom: none; font-weight: 600; }
-.leila-apt { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
-.leila-guest { max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.leila-table tfoot td { border-top: 2px solid rgba(61,26,53,0.12); border-bottom: none; font-weight: 600; background: rgba(61,26,53,0.03); }
+.leila-apt { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); white-space: nowrap; }
+.leila-guest { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .leila-cobro-input {
-  width: 70px; padding: 3px 6px; border: 1px solid rgba(61,26,53,0.25);
-  border-radius: 4px; font-size: 13px; text-align: right; background: var(--arena);
+  width: 72px; padding: 4px 6px; border: 1px solid rgba(61,26,53,0.25);
+  border-radius: 4px; font-size: 13px; text-align: right; background: #fff;
 }
 .leila-cobro-input:focus { outline: 2px solid var(--ber); border-color: transparent; }
 .leila-owe { color: #B23A2B; }
 .leila-over { color: #2B7A2B; }
 .leila-ok { color: var(--ink-soft); }
 .leila-foot-row td { background: rgba(61,26,53,0.04); }
+.leila-liquid-row {
+  display: flex; align-items: center; justify-content: flex-end; gap: 10px;
+  padding: 9px 12px;
+  background: rgba(58,170,187,0.06);
+  border-top: 1px solid rgba(58,170,187,0.18);
+}
+.leila-liquid-lbl { font-size: 13px; font-weight: 500; color: var(--ink); white-space: nowrap; }
+.leila-liquid-eur { font-size: 13px; color: var(--ink-soft); }
+.leila-liquid-hint { font-size: 12px; color: var(--ink-soft); }
 .leila-cum-row {
-  text-align: right; font-size: 12px; color: var(--ink-soft);
-  padding: 6px 10px 0; margin-bottom: 4px;
+  text-align: right; font-size: 13px; font-weight: 500; color: var(--ink);
+  padding: 8px 12px;
+  background: rgba(61,26,53,0.02);
+  border-top: 1px solid rgba(61,26,53,0.08);
 }
 .leila-year-total {
   display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
@@ -18585,13 +18616,6 @@ img[src*="apt-vt-gallery-"] {
   border-radius: 6px; background: #fff; color: var(--ink); cursor: pointer;
 }
 .leila-dates { font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
-.leila-liquid-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 12px; background: rgba(61,26,53,0.03);
-  border-radius: 6px; margin-top: 8px;
-}
-.leila-liquid-lbl { font-size: 13px; font-weight: 500; color: var(--ink); white-space: nowrap; }
-.leila-liquid-hint { font-size: 12px; color: var(--ink-soft); }
 
 /* ── BloquesTab ─────────────────────────────────────────────── */
 .blk-desc { font-size: 14px; color: var(--gris2); margin-bottom: 24px; line-height: 1.5; }
