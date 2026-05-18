@@ -1888,18 +1888,17 @@ body.apt-bar-shown .cookies {
 .hv-brand-btn {
   display: block;
   text-align: center;
-  color: var(--arena);
+  color: var(--ber-dk);
   font-size: 11px;
   font-family: var(--sans);
   letter-spacing: 0.1em;
   text-transform: uppercase;
   text-decoration: none;
   padding: 8px 6px 9px;
-  opacity: 0.85;
+  opacity: 0.92;
   pointer-events: auto;
   transition: opacity 0.2s;
-  background: var(--ber-dk);
-  border-top: 1px solid rgba(240,232,213,0.12);
+  background: var(--crema);
   border-radius: 0 0 10px 0;
 }
 @media (hover: hover) { .hv-brand-btn:hover { opacity: 1; } }
