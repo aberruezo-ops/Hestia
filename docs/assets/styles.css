@@ -138,7 +138,7 @@
   .vintro-box { border-radius: 8px 0 8px 0; }
   .vintro-actions { bottom: 12px; right: 12px; gap: 8px; }
   .vintro-cta,
-  .vintro-skip { padding: 8px 14px; font-size: 10px; }
+  .vintro-skip { padding: 8px 14px; font-size: 11px; }
 }
 
 :root {
@@ -906,7 +906,7 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 .mn-label {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -1024,7 +1024,7 @@ p  { line-height: 1.65; font-weight: 300; }
   justify-content: center;
   padding: 7px 8px;
   font-family: var(--sans);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.07em;
   text-transform: uppercase;
@@ -1050,7 +1050,7 @@ p  { line-height: 1.65; font-weight: 300; }
 .mn-page {
   font-family: var(--sans);
   font-weight: 300;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: var(--arena);
@@ -1097,7 +1097,7 @@ p  { line-height: 1.65; font-weight: 300; }
   align-items: center;
   gap: 6px;
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.04em;
   color: rgba(240,232,213,.32);
   transition: color .2s;
@@ -1943,7 +1943,7 @@ body.apt-bar-shown .cookies {
   opacity: 0.9;
 }
 .hero-yourhome {
-  font-size: clamp(9px, 0.85vw, 12px);
+  font-size: clamp(11px, 0.85vw, 12px);
   margin-top: 2px;
   margin-bottom: 40px;
   color: var(--arena);
@@ -2053,7 +2053,7 @@ body.apt-bar-shown .cookies {
 }
 .hero-proof-item > .hero-proof-name {
   opacity: 0.6;
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
 }
@@ -2065,7 +2065,7 @@ body.apt-bar-shown .cookies {
 }
 .hero-proof-platform {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: rgba(240,232,213,.38);
@@ -2193,7 +2193,7 @@ body.apt-bar-shown .cookies {
 }
 .chip-label span {
   font-family: var(--sans);
-  font-size: 9px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   white-space: nowrap;
@@ -2484,7 +2484,7 @@ body.apt-bar-shown .cookies {
   margin: 14px 0 4px;
 }
 .apb-label {
-  font-family: var(--sans); font-size: 10px; letter-spacing: .14em;
+  font-family: var(--sans); font-size: 11px; letter-spacing: .14em;
   text-transform: uppercase; opacity: .65;
 }
 .apb-price {
@@ -2492,7 +2492,7 @@ body.apt-bar-shown .cookies {
   color: var(--crema); line-height: 1;
 }
 .apb-per {
-  font-family: var(--sans); font-size: 10px; opacity: .55; letter-spacing: .04em;
+  font-family: var(--sans); font-size: 11px; opacity: .55; letter-spacing: .04em;
 }
 .apb-match {
   display: block;
@@ -2537,7 +2537,7 @@ body.apt-bar-shown .cookies {
   z-index: 3;
   font-family: var(--sans);
   font-weight: 300;
-  font-size: 10px; letter-spacing: 0.26em;
+  font-size: 11px; letter-spacing: 0.26em;
   text-transform: uppercase;
   opacity: 0.7;
 }
@@ -2624,7 +2624,7 @@ body.apt-bar-shown .cookies {
 .compare-grid .head.vs { color: var(--vs-dk); }
 .compare-grid .head .apt-tag {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   font-style: normal;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -2652,7 +2652,7 @@ body.apt-bar-shown .cookies {
   font-weight: 300;
 }
 .compare-grid .rate .rate-sub {
-  font-family: var(--sans); font-size: 10px; letter-spacing: 0.16em;
+  font-family: var(--sans); font-size: 11px; letter-spacing: 0.16em;
   text-transform: uppercase; opacity: 0.5; margin-left: 6px; font-weight: 400;
 }
 
@@ -3446,7 +3446,7 @@ footer .footer-brand .addr {
   align-items: center;
   gap: 9px;
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: rgba(240,232,213,0.45);
@@ -3697,7 +3697,7 @@ footer .footer-brand .addr {
 }
 .avail-srcs { display: flex; gap: 6px; }
 .avail-src {
-  font-family: var(--sans); font-size: 10px;
+  font-family: var(--sans); font-size: 11px;
   letter-spacing: .1em; text-transform: uppercase;
   padding: 3px 9px; border-radius: 10px 0 10px 0; border: 1px solid;
 }
@@ -3813,7 +3813,7 @@ footer .footer-brand .addr {
 .req-date-col { display: flex; flex-direction: column; gap: 4px; }
 .req-date-col--r { text-align: right; }
 .req-date-lbl {
-  font-family: var(--sans); font-size: 10px;
+  font-family: var(--sans); font-size: 11px;
   letter-spacing: .14em; text-transform: uppercase;
   color: rgba(42,15,46,.45);
 }
@@ -3831,7 +3831,7 @@ footer .footer-brand .addr {
   color: var(--req-accent, var(--sol)); line-height: 1;
 }
 .req-nights-lbl {
-  font-family: var(--sans); font-size: 10px;
+  font-family: var(--sans); font-size: 11px;
   letter-spacing: .12em; text-transform: uppercase;
   color: rgba(42,15,46,.45);
 }
@@ -4367,7 +4367,7 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
   margin-bottom: 4px;
 }
 .price-ref-label {
-  font-size: 10px;
+  font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--ber);
@@ -4590,7 +4590,7 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
    RESPONSIVE
    ============================================================ */
 @media (max-width: 900px) {
-  .topbar .contacts { font-size: 10px; gap: 10px; }
+  .topbar .contacts { font-size: 11px; gap: 10px; }
   .topbar .contacts .hide-mobile { display: none; }
   .header { display: flex; justify-content: space-between; align-items: center; gap: 0; }
   .header nav.desktop-nav { display: none; }
@@ -4627,7 +4627,7 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
   .lang-full { display: none; }
   .lang-abbr { display: inline; }
   /* Phones: smaller */
-  .tl-num { font-size: 10px; letter-spacing: 0; }
+  .tl-num { font-size: 11px; letter-spacing: 0; }
   .topbar .contacts { gap: 4px; }
 }
 
@@ -5628,7 +5628,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .asb-name {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .24em;
   text-transform: uppercase;
   color: var(--arena);
@@ -5688,7 +5688,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .apt-sticky-bar { padding-right: 40px; }
 @media (max-width: 480px) {
   .asb-price { font-size: 17px; }
-  .asb-match { font-size: 10px; }
+  .asb-match { font-size: 11px; }
   .apt-sticky-bar { padding: 10px 40px 10px 16px; }
 }
 
@@ -5929,7 +5929,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .apt-equip-cat { }
 .aec-label {
   font-family: var(--sans);
-  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+  font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
   font-weight: 500;
   margin-bottom: 20px;
   padding-bottom: 10px;
@@ -6152,7 +6152,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   bottom: 0; left: 0; right: 0;
   padding: 40px 70px 14px 16px;
   background: linear-gradient(to top, rgba(42,15,46,.72), transparent);
-  font-size: 10px;
+  font-size: 11px;
   font-family: var(--sans);
   letter-spacing: 0.10em;
   text-transform: uppercase;
@@ -6166,7 +6166,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .gc-counter {
   position: absolute;
   top: 12px; left: 16px;
-  font-size: 10px;
+  font-size: 11px;
   font-family: var(--sans);
   letter-spacing: 0.12em;
   color: rgba(240,232,213,.55);
@@ -7907,7 +7907,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .nos-color-hex {
   font-family: 'Courier New', monospace;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ber);
@@ -7962,7 +7962,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .bg-ls-var {
   font-family: 'Courier New', monospace;
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: .08em;
   color: rgba(250,246,240,.65);
   line-height: 1;
@@ -7970,7 +7970,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .bg-ls-info { flex: 1; }
 .bg-ls-hex {
   font-family: 'Courier New', monospace;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--ber);
@@ -8832,7 +8832,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .hs-nights-lbl {
   font-family: var(--sans);
-  font-size: 10px; font-weight: 500;
+  font-size: 11px; font-weight: 500;
   letter-spacing: .1em; text-transform: uppercase;
   margin-top: 2px;
 }
@@ -9159,7 +9159,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .hs-pb-direct { display: flex; flex-direction: column; gap: 2px; }
 .hs-pb-lbl {
-  font-size: 10px; text-transform: uppercase; letter-spacing: .14em;
+  font-size: 11px; text-transform: uppercase; letter-spacing: .14em;
   color: rgba(240,232,213,.5); font-family: var(--sans);
 }
 .hs-pb-total {
@@ -9169,7 +9169,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .hs-pb-avg { font-size: 12px; color: rgba(240,232,213,.6); }
 .hs-pb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; }
 .hs-pb-ref { display: flex; flex-direction: column; align-items: flex-end; }
-.hs-pb-ref-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: .12em; color: rgba(240,232,213,.4); }
+.hs-pb-ref-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: rgba(240,232,213,.4); }
 .hs-pb-ref-val {
   font-size: 16px; color: rgba(240,232,213,.38);
   text-decoration: line-through; font-family: var(--serif);
@@ -9329,7 +9329,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .hscal-sel-item { display: flex; flex-direction: column; gap: 2px; }
 .hscal-sel-lbl {
   font-family: var(--sans);
-  font-size: 10px; font-weight: 500;
+  font-size: 11px; font-weight: 500;
   letter-spacing: .12em; text-transform: uppercase;
   color: rgba(240,232,213,.4);
 }
@@ -9504,7 +9504,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .voz-block-label {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -9582,7 +9582,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .noticias-tag {
   display: inline-block;
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -10406,7 +10406,7 @@ footer,
 }
 .ag-nav-label {
   display: block;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
   color: var(--apt-accent);
@@ -11754,7 +11754,7 @@ footer,
   font-variant-numeric: tabular-nums;
 }
 .ag-place-compact-chev {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--ink-soft);
   transition: transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
   margin-left: 4px;
@@ -12529,7 +12529,7 @@ footer,
 .dbm-stat-label {
   display: block;
   margin-top: 4px;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
   color: var(--ink-soft);
@@ -12779,7 +12779,7 @@ footer,
   transform: translateY(-2px);
 }
 .ag-top5-photo-icon { font-size: 22px; line-height: 1; }
-.ag-top5-photo-label { font-size: 9px; }
+.ag-top5-photo-label { font-size: 11px; }
 .ag-top5-text {
   display: flex;
   flex-direction: column;
@@ -12976,7 +12976,7 @@ footer,
 }
 .dp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
 .dp-tag {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--apt-accent);
@@ -13045,7 +13045,7 @@ footer,
   display: flex; flex-direction: column; gap: 4px;
 }
 .dp-tip-label {
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--ber-dk);
@@ -13164,7 +13164,7 @@ footer,
   display: block;
   margin-bottom: 8px;
   color: var(--sol);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .18em;
 }
 .ads-title {
@@ -13203,7 +13203,7 @@ footer,
   font-variant-numeric: tabular-nums;
 }
 .ads-stat span {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
   color: var(--arena);
@@ -13567,7 +13567,7 @@ body[data-apt="salinas"] .widget-cta:hover {
 }
 .widget-recs .tr-map {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
   font-weight: 600;
@@ -14371,7 +14371,7 @@ body.apt-bar-shown .widget-stack {
 }
 .testimonial-source {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
   font-weight: 600;
@@ -14729,7 +14729,7 @@ a.cta-wa-btn::before,
   border-radius: 4px;
   background: var(--warn);
   color: white;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
 }
@@ -14773,7 +14773,7 @@ a.cta-wa-btn::before,
 }
 .pe-rev-status {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
   font-weight: 600;
@@ -14783,7 +14783,7 @@ a.cta-wa-btn::before,
 }
 .pe-rev-source-badge {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
   font-weight: 600;
@@ -16309,7 +16309,7 @@ img[src*="apt-vt-gallery-"] {
   width: fit-content;
   padding: 3px 10px;
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 700;
@@ -16397,7 +16397,7 @@ img[src*="apt-vt-gallery-"] {
   margin: 0 0 12px;
 }
 .pe-table-events { width: 100%; font-size: 12px; }
-.pe-table-events th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(42,15,46,0.60); }
+.pe-table-events th { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: rgba(42,15,46,0.60); }
 .pe-ev-ts { white-space: nowrap; color: rgba(42,15,46,0.60); width: 120px; }
 .pe-ev-name {
   font-weight: 600;
@@ -16477,7 +16477,7 @@ img[src*="apt-vt-gallery-"] {
 }
 @media (max-width: 700px) { .pe-cf-cols { grid-template-columns: 1fr; } }
 .pe-cf-col-title {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.13em;
@@ -16566,7 +16566,7 @@ img[src*="apt-vt-gallery-"] {
   border-radius: 12px;
 }
 .pe-cf-banner-eyebrow {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.16em;
   color: rgba(244,128,32,0.85);
@@ -16630,7 +16630,7 @@ img[src*="apt-vt-gallery-"] {
 }
 .apt-trust-l {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -16745,7 +16745,7 @@ img[src*="apt-vt-gallery-"] {
   text-align: center;
 }
 .pe-rev-row-summary .pe-rev-status {
-  font-size: 9px;
+  font-size: 11px;
   padding: 2px 6px;
   border-radius: 4px;
   color: #fff;
@@ -16754,7 +16754,7 @@ img[src*="apt-vt-gallery-"] {
   text-align: center;
 }
 .pe-rev-row-summary .pe-rev-source-badge {
-  font-size: 9px;
+  font-size: 11px;
   padding: 2px 6px;
   border-radius: 4px;
   letter-spacing: 0.04em;
@@ -16763,7 +16763,7 @@ img[src*="apt-vt-gallery-"] {
   white-space: nowrap;
 }
 .pe-rev-apt-badge {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--ber-dk);
   background: color-mix(in srgb, var(--ber) 8%, transparent);
@@ -16787,7 +16787,7 @@ img[src*="apt-vt-gallery-"] {
   white-space: nowrap;
 }
 .pe-rev-country-cell {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--ink-soft);
   letter-spacing: 0.08em;
   font-weight: 600;
@@ -17162,7 +17162,7 @@ img[src*="apt-vt-gallery-"] {
   border-color: var(--theme-color);
 }
 .dp-theme-clear {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.10em;
   text-transform: uppercase;
@@ -17225,7 +17225,7 @@ img[src*="apt-vt-gallery-"] {
 }
 .dp-step-rating small {
   font-weight: 400;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   opacity: 0.7;
@@ -17550,7 +17550,7 @@ img[src*="apt-vt-gallery-"] {
 .ag-station-trn { border-left-color: var(--vt2, #3AAABB); }
 .ag-station-badge {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.14em;
   padding: 4px 6px;
@@ -17802,7 +17802,7 @@ img[src*="apt-vt-gallery-"] {
   border-radius: 9px;
 }
 .ag-cal-month-now {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -17857,7 +17857,7 @@ img[src*="apt-vt-gallery-"] {
   gap: 8px;
 }
 .ag-cal-card-month {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: .08em;
   color: #fff;
@@ -17988,7 +17988,7 @@ img[src*="apt-vt-gallery-"] {
 .ag-gem-icon { font-size: 20px; line-height: 1; flex-shrink: 0; }
 .ag-gem-dist {
   font-family: var(--sans);
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.03em;
   color: var(--apt-accent);
   opacity: 0.75;
@@ -18114,7 +18114,7 @@ img[src*="apt-vt-gallery-"] {
 .rv-yearly-max { color: #B86A3C; font-weight: 600; }
 .rv-mini-link {
   margin-left: 8px;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: .06em;
   text-transform: uppercase;
   background: transparent;
@@ -18126,7 +18126,7 @@ img[src*="apt-vt-gallery-"] {
 }
 .rv-mini-link:hover { background: rgba(58,170,187,.12); }
 .rv-calc-em {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--ink-soft);
   font-style: normal;
   display: inline-block;
@@ -18533,7 +18533,7 @@ img[src*="apt-vt-gallery-"] {
   border-radius: 0 3px 3px 0;
 }
 .rv-calc-block-title {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
