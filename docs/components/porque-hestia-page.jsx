@@ -530,6 +530,7 @@ const PorquePageApp = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
   const { mode, scrolled } = useScrollMode();
   useReveal();
+  useSectionGlow();
 
   React.useEffect(() => {
     localStorage.setItem('hestia-lang', lang);

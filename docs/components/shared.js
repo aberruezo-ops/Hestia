@@ -3203,6 +3203,48 @@ if (typeof document !== 'undefined') {
     _initVideoFadeLoop();
   }
 }
+
+// useSectionGlow — barra fija en la parte superior del viewport que anima
+// con el color de la paleta cada vez que una nueva sección entra al scroll.
+// Oscuro → buganvilla (#D42B80), crema → turquesa (#1BC8D8).
+const useSectionGlow = () => {
+  React.useEffect(() => {
+    const bar = document.createElement('div');
+    bar.className = 'sgt-bar';
+    document.body.appendChild(bar);
+    const COLORS = {
+      dark: '#D42B80',
+      cream: '#1BC8D8'
+    };
+    let tid = null;
+    const trigger = color => {
+      if (tid) clearTimeout(tid);
+      bar.classList.remove('sgt-running');
+      bar.style.setProperty('--sgt-color', color);
+      void bar.offsetWidth; // force reflow so animation restarts
+      bar.classList.add('sgt-running');
+      tid = setTimeout(() => bar.classList.remove('sgt-running'), 1100);
+    };
+    const sections = document.querySelectorAll('section.section-dark, section.section-cream');
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !e.target.dataset.sgtFired) {
+          e.target.dataset.sgtFired = '1';
+          trigger(e.target.classList.contains('section-dark') ? COLORS.dark : COLORS.cream);
+          io.unobserve(e.target);
+        }
+      });
+    }, {
+      threshold: 0.06
+    });
+    sections.forEach(s => io.observe(s));
+    return () => {
+      io.disconnect();
+      bar.remove();
+      if (tid) clearTimeout(tid);
+    };
+  }, []);
+};
 Object.assign(window, {
   HestiaLogoMark,
   WatermarkBadge,
@@ -3210,6 +3252,7 @@ Object.assign(window, {
   COPY,
   useScrollMode,
   useReveal,
+  useSectionGlow,
   BRIDGE_PALETTE,
   QuickFAQ,
   SabiasQue,

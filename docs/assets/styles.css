@@ -18633,3 +18633,27 @@ img[src*="apt-vt-gallery-"] {
 .blk-del:hover { color: #b91c1c; }
 .blk-add { background: none; border: 1px dashed var(--borde); border-radius: 6px; color: var(--gris2); font-size: 13px; padding: 5px 12px; cursor: pointer; margin-top: 4px; }
 .blk-add:hover { border-color: var(--ber); color: var(--ber); }
+
+/* ── Section Glow Transition (useSectionGlow) ───────────────── */
+.sgt-bar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 2px;
+  background: var(--sgt-color, #1BC8D8);
+  box-shadow: 0 0 18px 5px var(--sgt-color, #1BC8D8),
+              0 0 48px 10px var(--sgt-color, #1BC8D8);
+  z-index: 9999;
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: center;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.sgt-bar.sgt-running {
+  animation: sgt-sweep 1.05s cubic-bezier(.16,.84,.44,1) forwards;
+}
+@keyframes sgt-sweep {
+  0%   { transform: scaleX(0); opacity: 1; }
+  52%  { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(1); opacity: 0; }
+}
