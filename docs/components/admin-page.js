@@ -2356,9 +2356,12 @@ const LeilaTab = ({
   const [loadErr, setLoadErr] = React.useState(null);
   const [saving, setSaving] = React.useState(false);
   const [saveMsg, setSaveMsg] = React.useState(null);
-  const [edits, setEdits] = React.useState({});
+  const [editsPagados, setEditsPagados] = React.useState({});
+  const [editsEfectivo, setEditsEfectivo] = React.useState({});
+  const [editsLiquid, setEditsLiquid] = React.useState({});
   const currentYear = String(new Date().getFullYear());
   const [focusYear, setFocusYear] = React.useState(currentYear);
+  const [focusMonth, setFocusMonth] = React.useState('all');
   React.useEffect(() => {
     setLoading(true);
     fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
@@ -2369,17 +2372,42 @@ const LeilaTab = ({
       setData(JSON.parse(b64ToUtf8(j.content)));
     }).catch(e => setLoadErr('Error cargando reservas: ' + e.message)).finally(() => setLoading(false));
   }, [token]);
+  const hasEdits = Object.keys(editsPagados).length > 0 || Object.keys(editsEfectivo).length > 0 || Object.keys(editsLiquid).length > 0;
   const save = async () => {
-    if (!data || !sha || Object.keys(edits).length === 0) return;
+    if (!data || !sha || !hasEdits) return;
     setSaving(true);
     setSaveMsg(null);
     try {
+      const updReservas = data.reservas.map((r, i) => {
+        const out = {
+          ...r
+        };
+        if (editsPagados[i] !== undefined) out.pagos_leila = Number(editsPagados[i]) || 0;
+        if (editsEfectivo[i] !== undefined) out.efectivo_leila = Number(editsEfectivo[i]) || 0;
+        return out;
+      });
+      let updLiquid = [...(data.leila_pagos_a_hestia || [])];
+      Object.entries(editsLiquid).forEach(([ym, val]) => {
+        const v = Number(val) || 0;
+        const idx = updLiquid.findIndex(l => l.mes === ym);
+        if (v === 0 && idx >= 0) {
+          updLiquid.splice(idx, 1);
+        } else if (v > 0 && idx >= 0) {
+          updLiquid[idx] = {
+            ...updLiquid[idx],
+            importe: v
+          };
+        } else if (v > 0) {
+          updLiquid.push({
+            mes: ym,
+            importe: v
+          });
+        }
+      });
       const next = {
         ...data,
-        reservas: data.reservas.map((r, i) => edits[i] !== undefined ? {
-          ...r,
-          pagos_leila: Number(edits[i]) || 0
-        } : r)
+        reservas: updReservas,
+        leila_pagos_a_hestia: updLiquid
       };
       const res = await fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}`, {
         method: 'PUT',
@@ -2388,7 +2416,7 @@ const LeilaTab = ({
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          message: 'Update pagos_leila',
+          message: 'Update Leila: pagos + liquidaciones',
           content: utf8ToB64(JSON.stringify(next, null, 2)),
           sha,
           branch: BRANCH
@@ -2398,7 +2426,9 @@ const LeilaTab = ({
       if (j.message && !j.content) throw new Error(j.message);
       setSha(j.content.sha);
       setData(next);
-      setEdits({});
+      setEditsPagados({});
+      setEditsEfectivo({});
+      setEditsLiquid({});
       setSaveMsg('Guardado correctamente.');
     } catch (e) {
       setSaveMsg('Error al guardar: ' + e.message);
@@ -2414,28 +2444,30 @@ const LeilaTab = ({
   }, loadErr);
   if (!data) return null;
   const reservas = data.reservas || [];
+  const liquidaciones = data.leila_pagos_a_hestia || [];
   const APT_LABEL = {
     vm: 'Mar',
     vt: 'Thalassa',
     vs: 'Salinas'
   };
-  const MES_ES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-  const fmtE = n => n == null || n === 0 ? '—' : `${n} €`;
+  const MES_FULL = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   const fmtBal = n => n > 0 ? `Hestía debe ${n} €` : n < 0 ? `Leila devuelve ${Math.abs(n)} €` : 'Saldado';
   const allYears = [...new Set(reservas.map(r => (r.entrada || '').slice(0, 4)).filter(Boolean))].sort();
   const yearRows = reservas.map((r, i) => ({
     ...r,
     _idx: i
   })).filter(r => (r.entrada || '').startsWith(focusYear));
+  const allMonths = [...new Set(yearRows.map(r => (r.entrada || '').slice(5, 7)).filter(Boolean))].sort();
   const byMonth = {};
   yearRows.forEach(r => {
     const m = (r.entrada || '').slice(5, 7);
     if (m) (byMonth[m] = byMonth[m] || []).push(r);
   });
-  const months = Object.keys(byMonth).sort();
+  const visibleMonths = focusMonth === 'all' ? allMonths : allMonths.filter(m => m === focusMonth);
   let cumBal = 0;
   let yrTarifa = 0,
-    yrCobrado = 0;
+    yrPagado = 0,
+    yrLiquid = 0;
   return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("div", {
@@ -2452,35 +2484,52 @@ const LeilaTab = ({
     className: `leila-yr-btn${y === focusYear ? ' active' : ''}`,
     onClick: () => {
       setFocusYear(y);
-      setEdits({});
+      setFocusMonth('all');
+      setEditsPagados({});
+      setEditsEfectivo({});
+      setEditsLiquid({});
       setSaveMsg(null);
     }
-  }, y))), Object.keys(edits).length > 0 && /*#__PURE__*/React.createElement("button", {
+  }, y)), /*#__PURE__*/React.createElement("select", {
+    className: "leila-month-sel",
+    value: focusMonth,
+    onChange: e => setFocusMonth(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "Todos los meses"), allMonths.map(m => /*#__PURE__*/React.createElement("option", {
+    key: m,
+    value: m
+  }, MES_FULL[parseInt(m, 10) - 1])))), hasEdits && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-primary",
     onClick: save,
     disabled: saving
-  }, saving ? 'Guardando…' : `Guardar cambios (${Object.keys(edits).length})`)), saveMsg && /*#__PURE__*/React.createElement("div", {
+  }, saving ? 'Guardando…' : 'Guardar cambios')), saveMsg && /*#__PURE__*/React.createElement("div", {
     className: saveMsg.startsWith('Error') ? 'pe-error' : 'pe-success',
     style: {
       marginTop: 8
     }
-  }, saveMsg), months.length === 0 && /*#__PURE__*/React.createElement("p", {
+  }, saveMsg), visibleMonths.length === 0 && /*#__PURE__*/React.createElement("p", {
     className: "pe-help",
     style: {
       marginTop: 16
     }
-  }, "Sin reservas con entrada en ", focusYear, "."), months.map(m => {
-    const rows = byMonth[m];
+  }, "Sin reservas en ", focusYear, "."), visibleMonths.map(m => {
+    const rows = byMonth[m] || [];
+    const mKey = `${focusYear}-${m}`;
     const mTarifa = rows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
-    const mCobrado = rows.reduce((s, r) => {
-      const v = edits[r._idx] !== undefined ? Number(edits[r._idx]) : Number(r.pagos_leila) || 0;
+    const mPagado = rows.reduce((s, r) => {
+      const v = editsPagados[r._idx] !== undefined ? Number(editsPagados[r._idx]) : Number(r.pagos_leila) || 0;
       return s + v;
     }, 0);
-    const mBal = mTarifa - mCobrado;
+    const liqEntry = liquidaciones.find(l => l.mes === mKey);
+    const liqVal = editsLiquid[mKey] !== undefined ? Number(editsLiquid[mKey]) || 0 : liqEntry ? liqEntry.importe : 0;
+    const mPendReservas = mTarifa - mPagado;
+    const mBal = mPendReservas - liqVal;
     cumBal += mBal;
     yrTarifa += mTarifa;
-    yrCobrado += mCobrado;
+    yrPagado += mPagado;
+    yrLiquid += liqVal;
     return /*#__PURE__*/React.createElement("div", {
       key: m,
       className: "leila-month-block"
@@ -2488,31 +2537,36 @@ const LeilaTab = ({
       className: "leila-month-hdr"
     }, /*#__PURE__*/React.createElement("span", {
       className: "leila-month-name"
-    }, MES_ES[parseInt(m, 10) - 1], " ", focusYear), /*#__PURE__*/React.createElement("span", {
+    }, MES_FULL[parseInt(m, 10) - 1], " ", focusYear), /*#__PURE__*/React.createElement("span", {
       className: "leila-month-kpis"
-    }, /*#__PURE__*/React.createElement("span", null, "Tarifa total: ", /*#__PURE__*/React.createElement("strong", null, mTarifa, " \u20AC")), /*#__PURE__*/React.createElement("span", null, "Cobr\xF3 hu\xE9sped: ", /*#__PURE__*/React.createElement("strong", null, mCobrado, " \u20AC")), /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement("span", null, "Limpieza: ", /*#__PURE__*/React.createElement("strong", null, mTarifa, " \u20AC")), /*#__PURE__*/React.createElement("span", null, "Pagado a Leila: ", /*#__PURE__*/React.createElement("strong", null, mPagado, " \u20AC")), liqVal > 0 && /*#__PURE__*/React.createElement("span", null, "Leila pag\xF3: ", /*#__PURE__*/React.createElement("strong", null, liqVal, " \u20AC")), /*#__PURE__*/React.createElement("span", {
       className: mBal > 0 ? 'leila-owe' : mBal < 0 ? 'leila-over' : ''
     }, /*#__PURE__*/React.createElement("strong", null, fmtBal(mBal))))), /*#__PURE__*/React.createElement("table", {
       className: "leila-table"
-    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Hu\xE9sped"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", {
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Hu\xE9sped"), /*#__PURE__*/React.createElement("th", null, "Entrada \xB7 Salida"), /*#__PURE__*/React.createElement("th", {
       className: "num"
     }, "Noches"), /*#__PURE__*/React.createElement("th", {
       className: "num"
-    }, "Tarifa Leila"), /*#__PURE__*/React.createElement("th", {
+    }, "Limpieza"), /*#__PURE__*/React.createElement("th", {
       className: "num"
-    }, "Cobr\xF3 hu\xE9sped"), /*#__PURE__*/React.createElement("th", {
+    }, "Pagado"), /*#__PURE__*/React.createElement("th", {
       className: "num"
-    }, "Debe Hest\xEDa"))), /*#__PURE__*/React.createElement("tbody", null, rows.map(r => {
+    }, "Efectivo"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Pendiente"))), /*#__PURE__*/React.createElement("tbody", null, rows.map(r => {
       const tarifa = Number(r.gasto_limpieza) || 0;
-      const cobrado = edits[r._idx] !== undefined ? Number(edits[r._idx]) : Number(r.pagos_leila) || 0;
-      const pend = tarifa - cobrado;
+      const pagado = editsPagados[r._idx] !== undefined ? Number(editsPagados[r._idx]) : Number(r.pagos_leila) || 0;
+      const efectivo = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : Number(r.efectivo_leila) || 0;
+      const pend = tarifa - pagado;
       return /*#__PURE__*/React.createElement("tr", {
         key: r._idx
       }, /*#__PURE__*/React.createElement("td", {
         className: "leila-apt"
       }, APT_LABEL[r.apt] || r.apt), /*#__PURE__*/React.createElement("td", {
         className: "leila-guest"
-      }, r.responsable || '—'), /*#__PURE__*/React.createElement("td", null, r.entrada), /*#__PURE__*/React.createElement("td", {
+      }, r.responsable || '—'), /*#__PURE__*/React.createElement("td", {
+        className: "leila-dates"
+      }, r.entrada, r.salida ? ` · ${r.salida}` : ''), /*#__PURE__*/React.createElement("td", {
         className: "num"
       }, r.noches || '—'), /*#__PURE__*/React.createElement("td", {
         className: "num"
@@ -2523,8 +2577,20 @@ const LeilaTab = ({
         step: "1",
         min: "0",
         className: "leila-cobro-input",
-        value: edits[r._idx] !== undefined ? edits[r._idx] : r.pagos_leila || 0,
-        onChange: e => setEdits(prev => ({
+        value: pagado,
+        onChange: e => setEditsPagados(prev => ({
+          ...prev,
+          [r._idx]: e.target.value
+        }))
+      })), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, /*#__PURE__*/React.createElement("input", {
+        type: "number",
+        step: "1",
+        min: "0",
+        className: "leila-cobro-input",
+        value: efectivo,
+        onChange: e => setEditsEfectivo(prev => ({
           ...prev,
           [r._idx]: e.target.value
         }))
@@ -2539,18 +2605,37 @@ const LeilaTab = ({
       className: "num"
     }, mTarifa, " \u20AC"), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, mCobrado > 0 ? `${mCobrado} €` : '—'), /*#__PURE__*/React.createElement("td", {
-      className: `num ${mBal > 0 ? 'leila-owe' : mBal < 0 ? 'leila-over' : 'leila-ok'}`
-    }, mBal === 0 ? '—' : `${mBal > 0 ? '' : '−'}${Math.abs(mBal)} €`)))), /*#__PURE__*/React.createElement("div", {
+    }, mPagado > 0 ? `${mPagado} €` : '—'), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }), /*#__PURE__*/React.createElement("td", {
+      className: `num ${mPendReservas > 0 ? 'leila-owe' : mPendReservas < 0 ? 'leila-over' : 'leila-ok'}`
+    }, mPendReservas === 0 ? '—' : `${mPendReservas > 0 ? '' : '−'}${Math.abs(mPendReservas)} €`)))), /*#__PURE__*/React.createElement("div", {
+      className: "leila-liquid-row"
+    }, /*#__PURE__*/React.createElement("label", {
+      className: "leila-liquid-lbl"
+    }, "Leila pag\xF3 a Hest\xEDa:"), /*#__PURE__*/React.createElement("input", {
+      type: "number",
+      step: "1",
+      min: "0",
+      className: "leila-cobro-input",
+      value: liqVal || '',
+      placeholder: "0",
+      onChange: e => setEditsLiquid(prev => ({
+        ...prev,
+        [mKey]: e.target.value
+      }))
+    }), /*#__PURE__*/React.createElement("span", {
+      className: "leila-liquid-hint"
+    }, "\u20AC \u2014 se descuenta del saldo pendiente")), /*#__PURE__*/React.createElement("div", {
       className: "leila-cum-row"
     }, "Saldo acumulado ", focusYear, ":", ' ', /*#__PURE__*/React.createElement("strong", {
       className: cumBal > 0 ? 'leila-owe' : cumBal < 0 ? 'leila-over' : ''
     }, fmtBal(cumBal))));
-  }), months.length > 1 && (() => {
-    const yrBal = yrTarifa - yrCobrado;
+  }), visibleMonths.length > 1 && (() => {
+    const yrBal = yrTarifa - yrPagado - yrLiquid;
     return /*#__PURE__*/React.createElement("div", {
       className: "leila-year-total"
-    }, /*#__PURE__*/React.createElement("span", null, "Total ", focusYear), /*#__PURE__*/React.createElement("span", null, "Tarifa: ", /*#__PURE__*/React.createElement("strong", null, yrTarifa, " \u20AC")), /*#__PURE__*/React.createElement("span", null, "Cobr\xF3 hu\xE9sped: ", /*#__PURE__*/React.createElement("strong", null, yrCobrado, " \u20AC")), /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement("span", null, "Total ", focusYear), /*#__PURE__*/React.createElement("span", null, "Limpieza: ", /*#__PURE__*/React.createElement("strong", null, yrTarifa, " \u20AC")), /*#__PURE__*/React.createElement("span", null, "Pagado: ", /*#__PURE__*/React.createElement("strong", null, yrPagado, " \u20AC")), yrLiquid > 0 && /*#__PURE__*/React.createElement("span", null, "Leila pag\xF3: ", /*#__PURE__*/React.createElement("strong", null, yrLiquid, " \u20AC")), /*#__PURE__*/React.createElement("span", {
       className: yrBal > 0 ? 'leila-owe' : yrBal < 0 ? 'leila-over' : ''
     }, "Balance: ", /*#__PURE__*/React.createElement("strong", null, fmtBal(yrBal))));
   })());
