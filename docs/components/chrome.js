@@ -253,7 +253,7 @@ const Header = ({
     return () => obs.disconnect();
   }, []);
   const vitHidden = !heroVisible;
-  const vitruvio = vitMin ? null : ReactDOM.createPortal(/*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  const vitruvio = vitMin ? null : ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
     className: `hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-box",
@@ -272,7 +272,7 @@ const Header = ({
     className: "hv-toggle",
     onClick: toggleVit,
     "aria-label": lang === 'es' ? 'Minimizar' : 'Minimise'
-  }, "-")), /*#__PURE__*/React.createElement("a", {
+  }, "-"), /*#__PURE__*/React.createElement("a", {
     href: "porque-hestia.html",
     className: "hv-brand-btn"
   }, lang === 'es' ? 'Nuestra marca →' : 'Our brand →')), document.body);
