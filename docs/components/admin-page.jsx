@@ -17,6 +17,10 @@ const CF_WORKER_URL = 'https://little-night-9399.hestia-vera-almeria.workers.dev
 const CF_ACCOUNT    = 'ccb910d549f39e3bad5d89e33315d57e';
 const CF_SITE_TAG   = '770c05669c6b45ea8f1026576fe7dcce';
 
+// URL del Worker de Cloudflare que escribe en Google Sheets.
+// Déjalo vacío hasta completar SETUP-SHEETS-SYNC.md.
+const SHEETS_WORKER_URL = '';
+
 const apiHeaders = (token) => ({
   'Authorization': `Bearer ${token}`,
   'Accept':        'application/vnd.github+json',
@@ -2009,6 +2013,8 @@ const LeilaTab = ({ token }) => {
   const [loadErr, setLoadErr] = React.useState(null);
   const [saving,  setSaving]  = React.useState(false);
   const [saveMsg, setSaveMsg] = React.useState(null);
+  const [syncing, setSyncing] = React.useState(false);
+  const [syncMsg, setSyncMsg] = React.useState(null);
   const [editsEfectivo,     setEditsEfectivo]     = React.useState({});
   const [editsLiquid,       setEditsLiquid]       = React.useState({});
   const [editsLiquidDate,   setEditsLiquidDate]   = React.useState({});
@@ -2017,7 +2023,7 @@ const LeilaTab = ({ token }) => {
   const [focusYear,  setFocusYear]  = React.useState(currentYear);
   const [focusMonth, setFocusMonth] = React.useState('all');
 
-  React.useEffect(() => {
+  const loadData = React.useCallback(() => {
     setLoading(true);
     fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token) })
       .then(r => r.json())
@@ -2029,6 +2035,31 @@ const LeilaTab = ({ token }) => {
       .catch(e => setLoadErr('Error cargando reservas: ' + e.message))
       .finally(() => setLoading(false));
   }, [token]);
+
+  React.useEffect(() => {
+    loadData();
+    const interval = setInterval(loadData, 4 * 60 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [loadData]);
+
+  const copyToSheets = async (currentData) => {
+    if (!SHEETS_WORKER_URL) {
+      setSyncMsg('Sync con Google Sheets no configurado — ver SETUP-SHEETS-SYNC.md');
+      return;
+    }
+    setSyncing(true); setSyncMsg(null);
+    try {
+      const res = await fetch(SHEETS_WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(currentData),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setSyncMsg('Datos copiados al Excel correctamente.');
+    } catch (e) {
+      setSyncMsg('Error al copiar al Excel: ' + e.message);
+    } finally { setSyncing(false); }
+  };
 
   const hasEdits = Object.keys(editsEfectivo).length > 0 ||
                    Object.keys(editsLiquid).length > 0 ||
@@ -2176,8 +2207,17 @@ const LeilaTab = ({ token }) => {
             {saving ? 'Guardando…' : 'Guardar cambios'}
           </button>
         )}
+        <div className="leila-sync-row">
+          <button type="button" className="pe-btn pe-btn-ghost" onClick={loadData} disabled={loading}>
+            {loading ? 'Recargando…' : 'Releer el Excel de reservas'}
+          </button>
+          <button type="button" className="pe-btn pe-btn-ghost" onClick={() => data && copyToSheets(data)} disabled={syncing || !data}>
+            {syncing ? 'Copiando…' : 'Copiar datos en el Excel de reservas'}
+          </button>
+        </div>
       </div>
       {saveMsg && <div className={saveMsg.startsWith('Error') ? 'pe-error' : 'pe-success'} style={{ marginTop: 8 }}>{saveMsg}</div>}
+      {syncMsg && <div className={syncMsg.startsWith('Error') ? 'pe-error' : 'pe-success'} style={{ marginTop: 8 }}>{syncMsg}</div>}
 
       {visibleMonths.length === 0 && <p className="pe-help" style={{ marginTop: 16 }}>Sin reservas en {focusYear}.</p>}
 
@@ -2322,6 +2362,8 @@ const ReservasTab = ({ token }) => {
   const [loading,     setLoading]     = React.useState(false);
   const [error,       setError]       = React.useState(null);
   const [success,     setSuccess]     = React.useState(null);
+  const [syncing,     setSyncing]     = React.useState(false);
+  const [syncMsg,     setSyncMsg]     = React.useState(null);
   const [filterApt,   setFilterApt]   = React.useState('all');
   const [filterCanal, setFilterCanal] = React.useState('all');
   const [filterStatus,setFilterStatus]= React.useState('all');
@@ -2329,8 +2371,7 @@ const ReservasTab = ({ token }) => {
   const [draft,       setDraft]       = React.useState(null);
   const [focusYearOverride, setFocusYearOverride] = React.useState(null);
 
-  // Carga inicial del JSON desde GitHub.
-  React.useEffect(() => {
+  const loadData = React.useCallback(() => {
     if (!token) return;
     setLoading(true);
     fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token) })
@@ -2343,6 +2384,31 @@ const ReservasTab = ({ token }) => {
       .catch(e => setError('Error cargando reservas: ' + e.message + ' — F12 para detalle.'))
       .finally(() => setLoading(false));
   }, [token]);
+
+  React.useEffect(() => {
+    loadData();
+    const interval = setInterval(loadData, 4 * 60 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [loadData]);
+
+  const copyToSheets = async (currentData) => {
+    if (!SHEETS_WORKER_URL) {
+      setSyncMsg('Sync con Google Sheets no configurado — ver SETUP-SHEETS-SYNC.md');
+      return;
+    }
+    setSyncing(true); setSyncMsg(null);
+    try {
+      const res = await fetch(SHEETS_WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(currentData),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setSyncMsg('Datos copiados al Excel correctamente.');
+    } catch (e) {
+      setSyncMsg('Error al copiar al Excel: ' + e.message);
+    } finally { setSyncing(false); }
+  };
 
   if (loading)              return <div className="pe-card"><h2>🗓️ Reservas</h2><p>Cargando…</p></div>;
   if (!data && error)       return <div className="pe-error">{error}</div>;
@@ -2550,11 +2616,20 @@ const ReservasTab = ({ token }) => {
     <>
       {error   && <div className="pe-error">{error}</div>}
       {success && <div className="pe-success">{success}</div>}
+      {syncMsg && <div className={syncMsg.startsWith('Error') ? 'pe-error' : 'pe-success'}>{syncMsg}</div>}
 
       <div className="pe-card rv-card">
         <div className="rv-head">
           <h2>🗓️ Reservas <span className="rv-count">· año {focusYear} · {focusList.length} reservas · actualizado {data.updatedAt ? data.updatedAt.slice(0,10) : '—'}</span></h2>
-          <button type="button" className="pe-btn pe-btn-primary" onClick={newRow}>+ Nueva</button>
+          <div className="rv-head-actions">
+            <button type="button" className="pe-btn pe-btn-ghost" onClick={loadData} disabled={loading}>
+              {loading ? 'Recargando…' : 'Releer el Excel de reservas'}
+            </button>
+            <button type="button" className="pe-btn pe-btn-ghost" onClick={() => copyToSheets(data)} disabled={syncing}>
+              {syncing ? 'Copiando…' : 'Copiar datos en el Excel de reservas'}
+            </button>
+            <button type="button" className="pe-btn pe-btn-primary" onClick={newRow}>+ Nueva</button>
+          </div>
         </div>
 
         {/* ───── Dashboard multi-año (cabecera) ─────
