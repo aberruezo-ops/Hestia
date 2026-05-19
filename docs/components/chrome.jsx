@@ -189,7 +189,7 @@ const Header = ({ mode, scrolled, lang }) => {
 
   // Banner de lanzamiento — siempre en la home, fondo blanco
   const launchBanner = showBanner ? ReactDOM.createPortal(
-    <div className={`hero-vitruvio hero-vitruvio--launch${vitHidden ? ' hv-offhero' : ''}`}>
+    <div className="hero-vitruvio hero-vitruvio--launch">
       <div className="hv-launch-card">
         <div className="hv-inner">
           <div className="hv-box">
