@@ -59,7 +59,7 @@ const PORQUE_COPY = {
 
     evol_eyebrow: 'La transformación',
     evol_title: (<>Casi diez años después,<br/><em>una marca a la altura de lo que hemos construido.</em></>),
-    evol_p1: 'Hestía empezó con un logo sencillo — el tejado rojo que nos acompañó durante casi una década y que llevamos con orgullo. Pero llegó un momento en que sentimos que la marca tenía que evolucionar. No para alejarnos de lo que somos, sino para expresarlo mejor.',
+    evol_p1: 'Hestía empezó con un logo sencillo — el tejado que nos acompañó durante casi una década y que llevamos con orgullo. Pero llegó un momento en que sentimos que la marca tenía que evolucionar. No para alejarnos de lo que somos, sino para expresarlo mejor.',
     evol_p2: 'Queríamos algo más sólido, más expresivo. Un símbolo que dijera desde el primer vistazo que detrás de Hestía hay intención, identidad y raíces. Que no somos un producto más en una plataforma: somos un proyecto con historia, con nombre propio y con un lugar en el mapa.',
     evol_p3: 'Y en esa nueva H — las curvas que forman la hoja de olivo y la cresta de ola — hay también, si miras bien, la silueta de un tejado. No es casualidad. Es el guiño al logo que durante años nos dio tantas satisfacciones: llevamos lo que fuimos dentro de lo que somos.',
 
