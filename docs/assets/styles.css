@@ -1902,6 +1902,10 @@ body.apt-bar-shown .cookies {
   .hv-toggle:hover { transform: scale(1.18); }
 }
 .hv-brand-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: block;
   text-align: center;
   color: var(--arena);
