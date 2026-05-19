@@ -457,6 +457,7 @@ const HomeLaunchBanner = ({ lang }) => {
     setTimeout(() => {
       setShow(false);
       try { sessionStorage.setItem('hestia-launch-banner-v1', '1'); } catch (_) {}
+      window.dispatchEvent(new CustomEvent('hestia-banner-dismissed'));
     }, 400);
   }, []);
 

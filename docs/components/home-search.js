@@ -491,6 +491,7 @@ const HomeLaunchBanner = ({
       try {
         sessionStorage.setItem('hestia-launch-banner-v1', '1');
       } catch (_) {}
+      window.dispatchEvent(new CustomEvent('hestia-banner-dismissed'));
     }, 400);
   }, []);
   React.useEffect(() => {
