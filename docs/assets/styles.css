@@ -356,7 +356,7 @@ p  { line-height: 1.65; font-weight: 300; }
   88.89% { background: #2A0F2E; box-shadow: 0 0 6px rgba(123,59,107,.8); }
 }
 .topbar-link.email .tl-dot { animation: none; background: var(--sol-h); }
-.tl-num { opacity: 0.65; font-size: 11px; }
+.tl-num { opacity: 0.65; font-size: 11px; white-space: nowrap; }
 .topbar-link:focus-visible {
   opacity: 1;
   color: var(--sol-lt);
@@ -1597,9 +1597,12 @@ section {
    transform de padres. z-index altísimo para ir por encima de Tawk. */
 .cookies {
   position: fixed;
-  left: 50%;
+  left: 0;
+  right: 0;
   bottom: 24px;
-  width: min(560px, calc(100vw - 24px));
+  width: min(560px, calc(100% - 24px));
+  margin-left: auto;
+  margin-right: auto;
   background-color: #2A0F2E !important;            /* ber-dk literal */
   background-image: none !important;
   color: #F0E8D5 !important;                        /* arena literal */
@@ -1615,7 +1618,6 @@ section {
   gap: 14px;
   flex-wrap: wrap;
   justify-content: center;
-  transform: translate(-50%, 0);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
