@@ -149,18 +149,14 @@ const Header = ({ mode, scrolled, lang }) => {
     return () => window.removeEventListener('hestia-vit-change', sync);
   }, []);
 
-  // Launch banner — reemplaza el Vitruvio en la home la primera visita
+  // Launch banner — siempre en la home (Vitruvio desactivado en home de momento)
   const [showBanner, setShowBanner] = React.useState(() => {
     try {
       const page = window.location.pathname.split('/').pop();
-      const isHome = page === '' || page === 'index.html';
-      return isHome && sessionStorage.getItem('hestia-launch-banner-v1') !== '1';
+      return page === '' || page === 'index.html';
     } catch (_) { return false; }
   });
-  const dismissBanner = React.useCallback(() => {
-    setShowBanner(false);
-    try { sessionStorage.setItem('hestia-launch-banner-v1', '1'); } catch (_) {}
-  }, []);
+  const dismissBanner = React.useCallback(() => { setShowBanner(false); }, []);
   React.useEffect(() => {
     if (!showBanner) return;
     const onScroll = () => dismissBanner();
@@ -192,20 +188,27 @@ const Header = ({ mode, scrolled, lang }) => {
   }, []);
   const vitHidden = !heroVisible;
 
-  // Banner de lanzamiento — ocupa el hueco del Vitruvio la primera visita
+  // Vitruvio desactivado en la home de momento
+  const isHomePage = (() => {
+    try { const p = window.location.pathname.split('/').pop(); return p === '' || p === 'index.html'; } catch (_) { return false; }
+  })();
+
+  // Banner de lanzamiento — siempre en la home, fondo blanco
   const launchBanner = showBanner ? ReactDOM.createPortal(
     <div className={`hero-vitruvio hero-vitruvio--launch${vitHidden ? ' hv-offhero' : ''}`}>
-      <div className="hv-inner">
-        <div className="hv-box">
-          <video autoPlay muted loop playsInline preload="auto">
-            <source src="assets/gemini_generated_video_7C740615.mp4" type="video/mp4"/>
-          </video>
+      <div className="hv-launch-card">
+        <div className="hv-inner">
+          <div className="hv-box">
+            <video autoPlay muted loop playsInline preload="auto">
+              <source src="assets/gemini_generated_video_7C740615.mp4" type="video/mp4"/>
+            </video>
+          </div>
         </div>
-      </div>
-      <div className="hv-launch-text">
-        {lang === 'es'
-          ? <>Estrenamos imagen, pero seguimos con la misma ilusión que hace 10 años.<br/><strong>Hestía — Más que un alquiler, ¡tu hogar!</strong></>
-          : <>New look, same passion as 10 years ago.<br/><strong>Hestía — More than a rental, your home!</strong></>}
+        <div className="hv-launch-text">
+          {lang === 'es'
+            ? <>Estrenamos imagen, pero seguimos con la misma ilusión que hace 10 años.<br/><strong>Hestía — Más que un alquiler, ¡tu hogar!</strong></>
+            : <>New look, same passion as 10 years ago.<br/><strong>Hestía — More than a rental, your home!</strong></>}
+        </div>
       </div>
       <button
         type="button"
@@ -219,7 +222,8 @@ const Header = ({ mode, scrolled, lang }) => {
     document.body
   ) : null;
 
-  const vitruvio = (!showBanner && !vitMin) ? ReactDOM.createPortal(
+  // Vitruvio — no se muestra en la home
+  const vitruvio = (!isHomePage && !vitMin) ? ReactDOM.createPortal(
     <div className={`hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`}>
       <div className="hv-inner">
         <div className="hv-box">

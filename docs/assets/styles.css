@@ -1955,14 +1955,30 @@ body.apt-bar-shown .cookies {
 }
 @media (max-width: 900px) {
   .hero-vitruvio { display: none; }
+  /* El banner de lanzamiento sí se muestra en móvil */
+  .hero-vitruvio--launch { display: block; }
 }
 
-/* --- Launch banner — en el hueco del Vitruvio la primera visita ------- */
+/* --- Launch banner — fondo blanco, texto berenjena -------------------- */
+.hv-launch-card {
+  border-radius: 14px 0 14px 0;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 8px 36px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
+}
+.hero-vitruvio--launch .hv-inner {
+  border-radius: 0;
+  overflow: hidden;
+}
+.hero-vitruvio--launch .hv-box {
+  opacity: 1;
+  border-radius: 0;
+}
 .hv-launch-text {
-  background: var(--ber-dk);
-  border-radius: 0 0 14px 0;
-  padding: 11px 13px 13px;
-  color: var(--arena);
+  background: transparent;
+  border-radius: 0;
+  padding: 12px 14px 15px;
+  color: var(--ber-dk);
   font-family: var(--sans);
   font-size: 11px;
   line-height: 1.5;
@@ -1973,10 +1989,9 @@ body.apt-bar-shown .cookies {
   display: block;
   margin-top: 5px;
   font-family: var(--serif);
-  font-size: 12px;
-  color: #fff;
+  font-size: 12.5px;
+  color: var(--ber-dk);
 }
-/* En móvil el banner ocupa todo el ancho, igual que el banner anterior */
 @media (max-width: 900px) {
   .hero-vitruvio--launch {
     left: 12px;
@@ -1985,16 +2000,9 @@ body.apt-bar-shown .cookies {
     top: auto;
     bottom: 16px;
   }
-  .hero-vitruvio--launch .hv-box {
-    aspect-ratio: 16 / 9;
-  }
-  .hero-vitruvio--launch .hv-inner {
-    border-radius: 12px 0 0 0;
-  }
-  .hv-launch-text {
-    border-radius: 0 0 12px 0;
-    font-size: 12px;
-  }
+  .hero-vitruvio--launch .hv-box { aspect-ratio: 16 / 9; }
+  .hv-launch-card { border-radius: 12px 0 12px 0; }
+  .hv-launch-text { font-size: 12px; }
   .hv-launch-text strong { font-size: 13px; }
 }
 
@@ -7153,6 +7161,10 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   width: 100%;
   display: block;
   object-fit: cover;
+  aspect-ratio: 1 / 1; /* vitruvio es cuadrado; los demás usan el ratio intrínseco */
+}
+.pq-evolucion .porque-logo-video video {
+  aspect-ratio: 16 / 9;
 }
 .porque-logo-text p {
   font-size: 17px;
@@ -16255,6 +16267,8 @@ a:focus-visible,
   color: var(--ber-dk);
   padding: clamp(80px, 12vw, 140px) var(--page-pad) clamp(64px, 10vw, 120px);
   min-height: calc(100vh - var(--topbar-h, 50px));
+  background-image: radial-gradient(ellipse 60% 40% at 80% 20%, rgba(58,170,187,.07) 0%, transparent 70%),
+                    radial-gradient(ellipse 50% 60% at 10% 80%, rgba(123,59,107,.06) 0%, transparent 70%);
 }
 .mapa-inner { max-width: 1100px; margin: 0 auto; }
 .mapa-eyebrow {
@@ -16286,16 +16300,40 @@ a:focus-visible,
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: clamp(32px, 4vw, 56px);
 }
+.mapa-section {
+  background: rgba(255,255,255,0.55);
+  border-radius: 16px 0 16px 0;
+  padding: 28px 24px 32px;
+  border: 1px solid rgba(42,15,46,0.08);
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.35s cubic-bezier(0.22,1,0.36,1),
+              background 0.25s ease;
+}
+@media (hover: hover) {
+  .mapa-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 48px rgba(42,15,46,0.1);
+    background: rgba(255,255,255,0.85);
+  }
+}
 .mapa-section-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
   font-family: var(--sans);
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #176E80;
-  margin: 0 0 18px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(42, 15, 46, 0.14);
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(42,15,46,0.12);
+}
+.mapa-section-num {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.4;
+  font-size: 10px;
 }
 .mapa-list { list-style: none; padding: 0; margin: 0; }
 .mapa-item { margin-bottom: 22px; }
@@ -16310,29 +16348,27 @@ a:focus-visible,
   font-size: clamp(18px, 1.6vw, 22px);
   font-weight: 500;
   letter-spacing: -0.005em;
-  transition: color .2s ease, transform .25s var(--ease-out, ease);
+  background: linear-gradient(#176E80, #176E80) no-repeat 0 100%;
+  background-size: 0 1.5px;
+  transition: color .2s ease, background-size .35s ease;
   margin-bottom: 4px;
 }
-.mapa-link::after {
-  content: '';
-  display: block;
-  height: 1.5px;
-  width: 0;
-  background: #3AAABB;
-  transition: width .35s ease;
+.mapa-link:hover {
+  color: #176E80;
+  background-size: 100% 1.5px;
 }
-.mapa-link:hover { color: #176E80; }
-.mapa-link:hover .mapa-link-arrow { transform: translateX(4px); }
+.mapa-link:hover .mapa-link-arrow { transform: translateX(5px); }
 .mapa-link-arrow {
-  font-size: 16px;
+  font-size: 15px;
   color: #3AAABB;
-  transition: transform .25s ease;
+  transition: transform .28s cubic-bezier(0.22,1,0.36,1);
+  display: inline-block;
 }
 .mapa-desc {
   margin: 0;
-  font-size: 14px;
+  font-size: 13.5px;
   line-height: 1.55;
-  color: rgba(42, 15, 46, 0.72);
+  color: rgba(42,15,46,0.65);
   max-width: 38ch;
 }
 

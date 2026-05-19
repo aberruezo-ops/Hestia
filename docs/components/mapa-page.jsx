@@ -92,16 +92,19 @@ const MapaPage = ({ lang }) => {
   return (
     <section className="mapa-page">
       <div className="container mapa-inner">
-        <div className="eyebrow mapa-eyebrow">{t.eyebrow}</div>
-        <h1 className="mapa-title">{t.title}</h1>
-        <p className="mapa-sub">{t.sub}</p>
+        <div className="eyebrow mapa-eyebrow reveal">{t.eyebrow}</div>
+        <h1 className="mapa-title reveal" style={{ transitionDelay: '60ms' }}>{t.title}</h1>
+        <p className="mapa-sub reveal" style={{ transitionDelay: '120ms' }}>{t.sub}</p>
         <div className="mapa-grid">
           {t.sections.map((sec, i) => (
-            <div key={i} className="mapa-section reveal" style={{ transitionDelay: `${i * 60}ms` }}>
-              <h2 className="mapa-section-title">{sec.title}</h2>
+            <div key={i} className="mapa-section reveal" style={{ transitionDelay: `${200 + i * 80}ms` }}>
+              <h2 className="mapa-section-title">
+                <span className="mapa-section-num">{String(i + 1).padStart(2, '0')}</span>
+                {sec.title}
+              </h2>
               <ul className="mapa-list">
-                {sec.items.map((it) => (
-                  <li key={it.href} className="mapa-item">
+                {sec.items.map((it, j) => (
+                  <li key={it.href} className="mapa-item reveal" style={{ transitionDelay: `${280 + i * 80 + j * 45}ms` }}>
                     <a className="mapa-link" href={it.href}>
                       <span className="mapa-link-label">{it.label}</span>
                       <span className="mapa-link-arrow" aria-hidden="true">→</span>
