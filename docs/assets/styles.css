@@ -2025,8 +2025,15 @@ body.apt-bar-shown .cookies {
   margin-top: 7px;
   opacity: 1;
 }
-@media (max-width: 500px) {
-  .hlb { bottom: 16px; right: 16px; width: 240px; }
+@media (max-width: 600px) {
+  .hlb {
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    width: auto;
+    border-radius: 16px;
+  }
+  .hlb-video { aspect-ratio: 16 / 9; }
 }
 
 .hero-wordmark {
