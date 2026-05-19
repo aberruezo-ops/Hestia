@@ -1857,6 +1857,7 @@ body.apt-bar-shown .cookies {
               opacity 0.4s ease;
 }
 .hv-inner {
+  position: relative;
   width: 100%;
   border-radius: 14px 0 14px 0;
   overflow: hidden;
