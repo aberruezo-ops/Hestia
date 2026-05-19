@@ -472,6 +472,55 @@ const HsResultCard = ({
   }, "WhatsApp \u2192"))));
 };
 
+// ---- Floating launch banner ----
+const HomeLaunchBanner = ({
+  lang
+}) => {
+  const [show, setShow] = React.useState(() => {
+    try {
+      return sessionStorage.getItem('hestia-launch-banner-v1') !== '1';
+    } catch (_) {
+      return true;
+    }
+  });
+  const [leaving, setLeaving] = React.useState(false);
+  const dismiss = React.useCallback(() => {
+    setLeaving(true);
+    setTimeout(() => {
+      setShow(false);
+      try {
+        sessionStorage.setItem('hestia-launch-banner-v1', '1');
+      } catch (_) {}
+      window.dispatchEvent(new CustomEvent('hestia-banner-dismissed'));
+    }, 400);
+  }, []);
+  React.useEffect(() => {
+    if (!show) return;
+    const t = setTimeout(dismiss, 8000);
+    return () => clearTimeout(t);
+  }, []);
+  if (!show) return null;
+  return /*#__PURE__*/React.createElement("div", {
+    className: `hlb${leaving ? ' hlb--out' : ''}`
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "hlb-close",
+    onClick: dismiss,
+    "aria-label": "Cerrar"
+  }, "\xD7"), /*#__PURE__*/React.createElement("video", {
+    className: "hlb-video",
+    autoPlay: true,
+    muted: true,
+    loop: true,
+    playsInline: true,
+    preload: "auto"
+  }, /*#__PURE__*/React.createElement("source", {
+    src: "assets/gemini_generated_video_7C740615.mp4",
+    type: "video/mp4"
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "hlb-text"
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Estrenamos imagen, pero seguimos con la misma ilusi\xF3n que hace 10 a\xF1os.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 M\xE1s que un alquiler, \xA1tu hogar!")) : /*#__PURE__*/React.createElement(React.Fragment, null, "New look, same passion as 10 years ago.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 More than a rental, your home!"))));
+};
+
 // ---- Main search widget ----
 const HomeSearch = ({
   lang
@@ -705,7 +754,9 @@ const HomeSearch = ({
     className: "btn btn-ghost hs-notify-btn",
     target: "_blank",
     rel: "noopener"
-  }, lang === 'es' ? 'Avisadme por WhatsApp →' : 'Notify me via WhatsApp →'))));
+  }, lang === 'es' ? 'Avisadme por WhatsApp →' : 'Notify me via WhatsApp →'))), /*#__PURE__*/React.createElement(HomeLaunchBanner, {
+    lang: lang
+  }));
 };
 Object.assign(window, {
   HomeSearch
