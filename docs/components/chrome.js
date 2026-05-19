@@ -229,21 +229,17 @@ const Header = ({
     return () => window.removeEventListener('hestia-vit-change', sync);
   }, []);
 
-  // Launch banner — reemplaza el Vitruvio en la home la primera visita
+  // Launch banner — siempre en la home (Vitruvio desactivado en home de momento)
   const [showBanner, setShowBanner] = React.useState(() => {
     try {
       const page = window.location.pathname.split('/').pop();
-      const isHome = page === '' || page === 'index.html';
-      return isHome && sessionStorage.getItem('hestia-launch-banner-v1') !== '1';
+      return page === '' || page === 'index.html';
     } catch (_) {
       return false;
     }
   });
   const dismissBanner = React.useCallback(() => {
     setShowBanner(false);
-    try {
-      sessionStorage.setItem('hestia-launch-banner-v1', '1');
-    } catch (_) {}
   }, []);
   React.useEffect(() => {
     if (!showBanner) return;
@@ -281,9 +277,21 @@ const Header = ({
   }, []);
   const vitHidden = !heroVisible;
 
-  // Banner de lanzamiento — ocupa el hueco del Vitruvio la primera visita
+  // Vitruvio desactivado en la home de momento
+  const isHomePage = (() => {
+    try {
+      const p = window.location.pathname.split('/').pop();
+      return p === '' || p === 'index.html';
+    } catch (_) {
+      return false;
+    }
+  })();
+
+  // Banner de lanzamiento — siempre en la home, fondo blanco
   const launchBanner = showBanner ? ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
     className: `hero-vitruvio hero-vitruvio--launch${vitHidden ? ' hv-offhero' : ''}`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hv-launch-card"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-inner"
   }, /*#__PURE__*/React.createElement("div", {
@@ -299,13 +307,15 @@ const Header = ({
     type: "video/mp4"
   })))), /*#__PURE__*/React.createElement("div", {
     className: "hv-launch-text"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Estrenamos imagen, pero seguimos con la misma ilusi\xF3n que hace 10 a\xF1os.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 M\xE1s que un alquiler, \xA1tu hogar!")) : /*#__PURE__*/React.createElement(React.Fragment, null, "New look, same passion as 10 years ago.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 More than a rental, your home!"))), /*#__PURE__*/React.createElement("button", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Estrenamos imagen, pero seguimos con la misma ilusi\xF3n que hace 10 a\xF1os.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 M\xE1s que un alquiler, \xA1tu hogar!")) : /*#__PURE__*/React.createElement(React.Fragment, null, "New look, same passion as 10 years ago.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 More than a rental, your home!")))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hv-toggle",
     onClick: dismissBanner,
     "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
   }, "\xD7")), document.body) : null;
-  const vitruvio = !showBanner && !vitMin ? ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+
+  // Vitruvio — no se muestra en la home
+  const vitruvio = !isHomePage && !vitMin ? ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
     className: `hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-inner"
