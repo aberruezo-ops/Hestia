@@ -1957,83 +1957,45 @@ body.apt-bar-shown .cookies {
   .hero-vitruvio { display: none; }
 }
 
-/* --- HomeLaunchBanner — floating brand launch promo ---------- */
-.hlb {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 1200;
-  width: 272px;
+/* --- Launch banner — en el hueco del Vitruvio la primera visita ------- */
+.hv-launch-text {
   background: var(--ber-dk);
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
-  animation: hlb-in 0.45s cubic-bezier(0.22,1,0.36,1) both;
-}
-@keyframes hlb-in {
-  from { opacity: 0; transform: translateY(24px) scale(0.96); }
-  to   { opacity: 1; transform: translateY(0)   scale(1);     }
-}
-.hlb--out {
-  animation: hlb-out 0.4s cubic-bezier(0.4,0,1,1) both;
-}
-@keyframes hlb-out {
-  from { opacity: 1; transform: translateY(0)   scale(1);    }
-  to   { opacity: 0; transform: translateY(16px) scale(0.95); }
-}
-.hlb-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 2;
-  background: rgba(0,0,0,0.55);
-  border: none;
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  color: var(--arena);
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.15s;
-}
-.hlb-close:hover { background: rgba(0,0,0,0.8); }
-.hlb-video {
-  width: 100%;
-  display: block;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-}
-.hlb-text {
-  padding: 14px 18px 18px;
+  border-radius: 0 0 14px 0;
+  padding: 11px 13px 13px;
   color: var(--arena);
   font-family: var(--sans);
-  font-size: 12.5px;
-  line-height: 1.55;
-  margin: 0;
+  font-size: 11px;
+  line-height: 1.5;
   text-align: center;
-  opacity: 0.9;
+  pointer-events: auto;
 }
-.hlb-text strong {
-  font-family: var(--serif);
-  font-size: 13.5px;
-  color: #fff;
+.hv-launch-text strong {
   display: block;
-  margin-top: 7px;
-  opacity: 1;
+  margin-top: 5px;
+  font-family: var(--serif);
+  font-size: 12px;
+  color: #fff;
 }
-@media (max-width: 600px) {
-  .hlb {
-    bottom: 16px;
-    left: 16px;
-    right: 16px;
+/* En móvil el banner ocupa todo el ancho, igual que el banner anterior */
+@media (max-width: 900px) {
+  .hero-vitruvio--launch {
+    left: 12px;
+    right: 12px;
     width: auto;
-    border-radius: 16px;
+    top: auto;
+    bottom: 16px;
   }
-  .hlb-video { aspect-ratio: 16 / 9; }
+  .hero-vitruvio--launch .hv-box {
+    aspect-ratio: 16 / 9;
+  }
+  .hero-vitruvio--launch .hv-inner {
+    border-radius: 12px 0 0 0;
+  }
+  .hv-launch-text {
+    border-radius: 0 0 12px 0;
+    font-size: 12px;
+  }
+  .hv-launch-text strong { font-size: 13px; }
 }
 
 .hero-wordmark {
