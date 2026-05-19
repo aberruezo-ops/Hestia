@@ -157,26 +157,37 @@ const MapaPage = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "container mapa-inner"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "eyebrow mapa-eyebrow"
+    className: "eyebrow mapa-eyebrow reveal"
   }, t.eyebrow), /*#__PURE__*/React.createElement("h1", {
-    className: "mapa-title"
+    className: "mapa-title reveal",
+    style: {
+      transitionDelay: '60ms'
+    }
   }, t.title), /*#__PURE__*/React.createElement("p", {
-    className: "mapa-sub"
+    className: "mapa-sub reveal",
+    style: {
+      transitionDelay: '120ms'
+    }
   }, t.sub), /*#__PURE__*/React.createElement("div", {
     className: "mapa-grid"
   }, t.sections.map((sec, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
     className: "mapa-section reveal",
     style: {
-      transitionDelay: `${i * 60}ms`
+      transitionDelay: `${200 + i * 80}ms`
     }
   }, /*#__PURE__*/React.createElement("h2", {
     className: "mapa-section-title"
-  }, sec.title), /*#__PURE__*/React.createElement("ul", {
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "mapa-section-num"
+  }, String(i + 1).padStart(2, '0')), sec.title), /*#__PURE__*/React.createElement("ul", {
     className: "mapa-list"
-  }, sec.items.map(it => /*#__PURE__*/React.createElement("li", {
+  }, sec.items.map((it, j) => /*#__PURE__*/React.createElement("li", {
     key: it.href,
-    className: "mapa-item"
+    className: "mapa-item reveal",
+    style: {
+      transitionDelay: `${280 + i * 80 + j * 45}ms`
+    }
   }, /*#__PURE__*/React.createElement("a", {
     className: "mapa-link",
     href: it.href
