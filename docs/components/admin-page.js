@@ -2369,14 +2369,21 @@ const LeilaTab = ({
   const currentYear = String(new Date().getFullYear());
   const [focusYear, setFocusYear] = React.useState(currentYear);
   const [focusMonth, setFocusMonth] = React.useState('all');
+  const [loadedAt, setLoadedAt] = React.useState(null);
   const loadData = React.useCallback(() => {
     setLoading(true);
+    setLoadErr(null);
     fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
-      headers: apiHeaders(token)
+      headers: apiHeaders(token),
+      cache: 'no-store'
     }).then(r => r.json()).then(j => {
       if (j.message) throw new Error(j.message);
       setSha(j.sha);
       setData(JSON.parse(b64ToUtf8(j.content)));
+      setLoadedAt(new Date().toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit'
+      }));
     }).catch(e => setLoadErr('Error cargando reservas: ' + e.message)).finally(() => setLoading(false));
   }, [token]);
   React.useEffect(() => {
@@ -2491,8 +2498,17 @@ const LeilaTab = ({
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("p", null, "Cargando\u2026"));
   if (loadErr) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
-  }, loadErr);
+  }, loadErr), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    style: {
+      marginTop: 12
+    },
+    onClick: loadData
+  }, "Reintentar"));
   if (!data) return null;
   const reservas = data.reservas || [];
   const liquidaciones = data.leila_pagos_a_hestia || [];
@@ -2610,7 +2626,9 @@ const LeilaTab = ({
     className: "pe-btn pe-btn-ghost",
     onClick: () => data && copyToSheets(data),
     disabled: syncing || !data
-  }, syncing ? 'Copiando…' : 'Copiar datos en el Excel de reservas'))), saveMsg && /*#__PURE__*/React.createElement("div", {
+  }, syncing ? 'Copiando…' : 'Copiar datos en el Excel de reservas'), loadedAt && /*#__PURE__*/React.createElement("span", {
+    className: "leila-loaded-at"
+  }, "Actualizado ", loadedAt))), saveMsg && /*#__PURE__*/React.createElement("div", {
     className: saveMsg.startsWith('Error') ? 'pe-error' : 'pe-success',
     style: {
       marginTop: 8
@@ -2775,15 +2793,22 @@ const ReservasTab = ({
   const [selectedIdx, setSelectedIdx] = React.useState(-1);
   const [draft, setDraft] = React.useState(null);
   const [focusYearOverride, setFocusYearOverride] = React.useState(null);
+  const [loadedAt, setLoadedAt] = React.useState(null);
   const loadData = React.useCallback(() => {
     if (!token) return;
     setLoading(true);
+    setError(null);
     fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
-      headers: apiHeaders(token)
+      headers: apiHeaders(token),
+      cache: 'no-store'
     }).then(r => r.json()).then(j => {
       if (j.message) throw new Error(j.message);
       setSha(j.sha);
       setData(JSON.parse(b64ToUtf8(j.content)));
+      setLoadedAt(new Date().toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit'
+      }));
     }).catch(e => setError('Error cargando reservas: ' + e.message + ' — F12 para detalle.')).finally(() => setLoading(false));
   }, [token]);
   React.useEffect(() => {
@@ -3030,9 +3055,27 @@ const ReservasTab = ({
       _limpieza_manual: false
     }));
   };
+
+  // Devuelve la reserva que solapa con `r` (excluyendo el índice `skipIdx`).
+  // Solapar = el check-in de una es estrictamente antes del check-out de la
+  // otra Y viceversa. Que coincida check-out con check-in está permitido.
+  const findOverlap = (r, skipIdx) => {
+    if (!r.entrada || !r.salida || !r.apt) return null;
+    return reservas.find((other, i) => {
+      if (i === skipIdx) return false;
+      if (other.apt !== r.apt) return false;
+      if (!other.entrada || !other.salida) return false;
+      return r.entrada < other.salida && r.salida > other.entrada;
+    }) || null;
+  };
   const saveDraft = () => {
     if (!draft) return;
     const cleaned = calcDerived(draft);
+    const overlap = findOverlap(cleaned, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
+    if (overlap) {
+      setError(`Solape de fechas: la reserva de ${overlap.responsable || '—'} (${overlap.entrada} → ${overlap.salida}) en ${overlap.apt?.toUpperCase() || '—'} se superpone con estas fechas. Corrige antes de guardar.`);
+      return;
+    }
     const nr = [...reservas];
     if (selectedIdx >= 0 && selectedIdx < reservas.length) {
       nr[selectedIdx] = cleaned;
@@ -3093,7 +3136,9 @@ const ReservasTab = ({
     className: "pe-btn pe-btn-ghost",
     onClick: loadData,
     disabled: loading
-  }, loading ? 'Recargando…' : 'Releer el Excel de reservas'), /*#__PURE__*/React.createElement("button", {
+  }, loading ? 'Recargando…' : 'Releer el Excel de reservas'), loadedAt && /*#__PURE__*/React.createElement("span", {
+    className: "leila-loaded-at"
+  }, "Actualizado ", loadedAt), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost",
     onClick: () => copyToSheets(data),
@@ -3598,7 +3643,12 @@ const ReservasTab = ({
     value: draft.observaciones || '',
     onChange: e => updateDraft('observaciones', e.target.value),
     placeholder: "Notas internas, peticiones especiales, etc."
-  })))), /*#__PURE__*/React.createElement("footer", {
+  })))), (() => {
+    const liveOverlap = draft && findOverlap(draft, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
+    return liveOverlap ? /*#__PURE__*/React.createElement("div", {
+      className: "rv-overlap-warn"
+    }, "\u26A0 Solape con ", liveOverlap.responsable || '—', " (", liveOverlap.entrada, " \u2192 ", liveOverlap.salida, ") en ", liveOverlap.apt?.toUpperCase() || '—') : null;
+  })(), /*#__PURE__*/React.createElement("footer", {
     className: "rv-edit-foot"
   }, selectedIdx >= 0 && selectedIdx < reservas.length && /*#__PURE__*/React.createElement("button", {
     type: "button",
