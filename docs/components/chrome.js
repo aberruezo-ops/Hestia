@@ -213,6 +213,7 @@ const Header = ({
   // vitMin: se lee de sessionStorage para funcionar en cualquier página
   const [vitMin, setVitMin] = React.useState(() => {
     try {
+      if (window.location.pathname.split('/').pop() === 'porque-hestia.html') return true;
       return sessionStorage.getItem('hestia-vit-min') === '1';
     } catch (_) {
       return false;
