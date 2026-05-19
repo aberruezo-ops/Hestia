@@ -213,7 +213,12 @@ const Header = ({
   // vitMin: se lee de sessionStorage para funcionar en cualquier página
   const [vitMin, setVitMin] = React.useState(() => {
     try {
-      if (window.location.pathname.split('/').pop() === 'porque-hestia.html') return true;
+      const page = window.location.pathname.split('/').pop();
+      if (page === 'porque-hestia.html') return true;
+      // En la home, minimizar mientras el banner de lanzamiento no se haya visto
+      if (page === '' || page === 'index.html') {
+        if (sessionStorage.getItem('hestia-launch-banner-v1') !== '1') return true;
+      }
       return sessionStorage.getItem('hestia-vit-min') === '1';
     } catch (_) {
       return false;
@@ -225,8 +230,15 @@ const Header = ({
         setVitMin(sessionStorage.getItem('hestia-vit-min') === '1');
       } catch (_) {}
     };
+    const onBannerDone = () => {
+      setVitMin(false);
+    };
     window.addEventListener('hestia-vit-change', sync);
-    return () => window.removeEventListener('hestia-vit-change', sync);
+    window.addEventListener('hestia-banner-dismissed', onBannerDone);
+    return () => {
+      window.removeEventListener('hestia-vit-change', sync);
+      window.removeEventListener('hestia-banner-dismissed', onBannerDone);
+    };
   }, []);
   const toggleVit = () => {
     const next = !vitMin;
