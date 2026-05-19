@@ -1863,6 +1863,7 @@ body.apt-bar-shown .cookies {
   overflow: hidden;
 }
 .hv-box {
+  position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
@@ -1902,7 +1903,7 @@ body.apt-bar-shown .cookies {
 @media (hover: hover) {
   .hv-toggle:hover { transform: scale(1.18); }
 }
-.hv-brand-btn {
+.hv-box-link {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -1912,17 +1913,16 @@ body.apt-bar-shown .cookies {
   color: var(--arena);
   font-size: 11px;
   font-family: var(--sans);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
   text-decoration: none;
-  padding: 9px 6px 10px;
-  opacity: 0.88;
+  padding: 8px 6px 9px;
+  background: rgba(42,15,46,0.72);
   pointer-events: auto;
-  transition: opacity 0.2s, background 0.2s;
-  background: var(--ber-dk);
+  transition: background 0.2s;
 }
-@media (hover: hover) { .hv-brand-btn:hover { opacity: 1; background: rgba(62,22,58,0.96); } }
-@media (max-width: 900px) { .hv-brand-btn { display: none !important; } }
+@media (hover: hover) { .hv-box-link:hover { background: rgba(42,15,46,0.92); } }
+@media (max-width: 900px) { .hv-box-link { display: none; } }
 
 /* Ocultar cuando el hero sale de pantalla (para no solapar contenido) */
 .hv-offhero {

@@ -258,8 +258,7 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-inner"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "hv-box",
-    "aria-hidden": "true"
+    className: "hv-box"
   }, /*#__PURE__*/React.createElement("video", {
     autoPlay: true,
     muted: true,
@@ -269,10 +268,10 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("source", {
     src: "assets/hestia-vitruvio.mp4",
     type: "video/mp4"
-  }))), /*#__PURE__*/React.createElement("a", {
+  })), /*#__PURE__*/React.createElement("a", {
     href: "porque-hestia.html",
-    className: "hv-brand-btn"
-  }, lang === 'es' ? 'Nuestra marca →' : 'Our brand →')), /*#__PURE__*/React.createElement("button", {
+    className: "hv-box-link"
+  }, lang === 'es' ? 'nuestra marca' : 'our brand'))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hv-toggle",
     onClick: toggleVit,

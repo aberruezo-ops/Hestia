@@ -172,14 +172,14 @@ const Header = ({ mode, scrolled, lang }) => {
   const vitruvio = vitMin ? null : ReactDOM.createPortal(
     <div className={`hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`}>
       <div className="hv-inner">
-        <div className="hv-box" aria-hidden="true">
+        <div className="hv-box">
           <video autoPlay muted loop playsInline preload="auto">
             <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
           </video>
+          <a href="porque-hestia.html" className="hv-box-link">
+            {lang === 'es' ? 'nuestra marca' : 'our brand'}
+          </a>
         </div>
-        <a href="porque-hestia.html" className="hv-brand-btn">
-          {lang === 'es' ? 'Nuestra marca →' : 'Our brand →'}
-        </a>
       </div>
       <button
         type="button"
