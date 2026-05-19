@@ -241,15 +241,6 @@ const Header = ({
   const dismissBanner = React.useCallback(() => {
     setShowBanner(false);
   }, []);
-  React.useEffect(() => {
-    if (!showBanner) return;
-    const onScroll = () => dismissBanner();
-    window.addEventListener('scroll', onScroll, {
-      once: true,
-      passive: true
-    });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [showBanner]);
   const toggleVit = () => {
     const next = !vitMin;
     setVitMin(next);
@@ -289,7 +280,7 @@ const Header = ({
 
   // Banner de lanzamiento — siempre en la home, fondo blanco
   const launchBanner = showBanner ? ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
-    className: `hero-vitruvio hero-vitruvio--launch${vitHidden ? ' hv-offhero' : ''}`
+    className: "hero-vitruvio hero-vitruvio--launch"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-launch-card"
   }, /*#__PURE__*/React.createElement("div", {
