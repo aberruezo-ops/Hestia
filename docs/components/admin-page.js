@@ -18,6 +18,10 @@ const API = 'https://api.github.com';
 const CF_WORKER_URL = 'https://little-night-9399.hestia-vera-almeria.workers.dev/';
 const CF_ACCOUNT = 'ccb910d549f39e3bad5d89e33315d57e';
 const CF_SITE_TAG = '770c05669c6b45ea8f1026576fe7dcce';
+
+// URL del Worker de Cloudflare que escribe en Google Sheets.
+// Déjalo vacío hasta completar SETUP-SHEETS-SYNC.md.
+const SHEETS_WORKER_URL = '';
 const apiHeaders = token => ({
   'Authorization': `Bearer ${token}`,
   'Accept': 'application/vnd.github+json',
@@ -2356,6 +2360,8 @@ const LeilaTab = ({
   const [loadErr, setLoadErr] = React.useState(null);
   const [saving, setSaving] = React.useState(false);
   const [saveMsg, setSaveMsg] = React.useState(null);
+  const [syncing, setSyncing] = React.useState(false);
+  const [syncMsg, setSyncMsg] = React.useState(null);
   const [editsEfectivo, setEditsEfectivo] = React.useState({});
   const [editsLiquid, setEditsLiquid] = React.useState({});
   const [editsLiquidDate, setEditsLiquidDate] = React.useState({});
@@ -2363,7 +2369,7 @@ const LeilaTab = ({
   const currentYear = String(new Date().getFullYear());
   const [focusYear, setFocusYear] = React.useState(currentYear);
   const [focusMonth, setFocusMonth] = React.useState('all');
-  React.useEffect(() => {
+  const loadData = React.useCallback(() => {
     setLoading(true);
     fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
       headers: apiHeaders(token)
@@ -2373,6 +2379,34 @@ const LeilaTab = ({
       setData(JSON.parse(b64ToUtf8(j.content)));
     }).catch(e => setLoadErr('Error cargando reservas: ' + e.message)).finally(() => setLoading(false));
   }, [token]);
+  React.useEffect(() => {
+    loadData();
+    const interval = setInterval(loadData, 4 * 60 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [loadData]);
+  const copyToSheets = async currentData => {
+    if (!SHEETS_WORKER_URL) {
+      setSyncMsg('Sync con Google Sheets no configurado — ver SETUP-SHEETS-SYNC.md');
+      return;
+    }
+    setSyncing(true);
+    setSyncMsg(null);
+    try {
+      const res = await fetch(SHEETS_WORKER_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(currentData)
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setSyncMsg('Datos copiados al Excel correctamente.');
+    } catch (e) {
+      setSyncMsg('Error al copiar al Excel: ' + e.message);
+    } finally {
+      setSyncing(false);
+    }
+  };
   const hasEdits = Object.keys(editsEfectivo).length > 0 || Object.keys(editsLiquid).length > 0 || Object.keys(editsLiquidDate).length > 0 || Object.keys(editsSaldoInicial).length > 0;
   const save = async () => {
     if (!data || !sha || !hasEdits) return;
@@ -2564,12 +2598,29 @@ const LeilaTab = ({
     className: "pe-btn pe-btn-primary",
     onClick: save,
     disabled: saving
-  }, saving ? 'Guardando…' : 'Guardar cambios')), saveMsg && /*#__PURE__*/React.createElement("div", {
+  }, saving ? 'Guardando…' : 'Guardar cambios'), /*#__PURE__*/React.createElement("div", {
+    className: "leila-sync-row"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    onClick: loadData,
+    disabled: loading
+  }, loading ? 'Recargando…' : 'Releer el Excel de reservas'), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    onClick: () => data && copyToSheets(data),
+    disabled: syncing || !data
+  }, syncing ? 'Copiando…' : 'Copiar datos en el Excel de reservas'))), saveMsg && /*#__PURE__*/React.createElement("div", {
     className: saveMsg.startsWith('Error') ? 'pe-error' : 'pe-success',
     style: {
       marginTop: 8
     }
-  }, saveMsg), visibleMonths.length === 0 && /*#__PURE__*/React.createElement("p", {
+  }, saveMsg), syncMsg && /*#__PURE__*/React.createElement("div", {
+    className: syncMsg.startsWith('Error') ? 'pe-error' : 'pe-success',
+    style: {
+      marginTop: 8
+    }
+  }, syncMsg), visibleMonths.length === 0 && /*#__PURE__*/React.createElement("p", {
     className: "pe-help",
     style: {
       marginTop: 16
@@ -2716,15 +2767,15 @@ const ReservasTab = ({
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
   const [success, setSuccess] = React.useState(null);
+  const [syncing, setSyncing] = React.useState(false);
+  const [syncMsg, setSyncMsg] = React.useState(null);
   const [filterApt, setFilterApt] = React.useState('all');
   const [filterCanal, setFilterCanal] = React.useState('all');
   const [filterStatus, setFilterStatus] = React.useState('all');
   const [selectedIdx, setSelectedIdx] = React.useState(-1);
   const [draft, setDraft] = React.useState(null);
   const [focusYearOverride, setFocusYearOverride] = React.useState(null);
-
-  // Carga inicial del JSON desde GitHub.
-  React.useEffect(() => {
+  const loadData = React.useCallback(() => {
     if (!token) return;
     setLoading(true);
     fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
@@ -2735,6 +2786,34 @@ const ReservasTab = ({
       setData(JSON.parse(b64ToUtf8(j.content)));
     }).catch(e => setError('Error cargando reservas: ' + e.message + ' — F12 para detalle.')).finally(() => setLoading(false));
   }, [token]);
+  React.useEffect(() => {
+    loadData();
+    const interval = setInterval(loadData, 4 * 60 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [loadData]);
+  const copyToSheets = async currentData => {
+    if (!SHEETS_WORKER_URL) {
+      setSyncMsg('Sync con Google Sheets no configurado — ver SETUP-SHEETS-SYNC.md');
+      return;
+    }
+    setSyncing(true);
+    setSyncMsg(null);
+    try {
+      const res = await fetch(SHEETS_WORKER_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(currentData)
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setSyncMsg('Datos copiados al Excel correctamente.');
+    } catch (e) {
+      setSyncMsg('Error al copiar al Excel: ' + e.message);
+    } finally {
+      setSyncing(false);
+    }
+  };
   if (loading) return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDDD3\uFE0F Reservas"), /*#__PURE__*/React.createElement("p", null, "Cargando\u2026"));
@@ -2999,17 +3078,31 @@ const ReservasTab = ({
     className: "pe-error"
   }, error), success && /*#__PURE__*/React.createElement("div", {
     className: "pe-success"
-  }, success), /*#__PURE__*/React.createElement("div", {
+  }, success), syncMsg && /*#__PURE__*/React.createElement("div", {
+    className: syncMsg.startsWith('Error') ? 'pe-error' : 'pe-success'
+  }, syncMsg), /*#__PURE__*/React.createElement("div", {
     className: "pe-card rv-card"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-head"
   }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDDD3\uFE0F Reservas ", /*#__PURE__*/React.createElement("span", {
     className: "rv-count"
-  }, "\xB7 a\xF1o ", focusYear, " \xB7 ", focusList.length, " reservas \xB7 actualizado ", data.updatedAt ? data.updatedAt.slice(0, 10) : '—')), /*#__PURE__*/React.createElement("button", {
+  }, "\xB7 a\xF1o ", focusYear, " \xB7 ", focusList.length, " reservas \xB7 actualizado ", data.updatedAt ? data.updatedAt.slice(0, 10) : '—')), /*#__PURE__*/React.createElement("div", {
+    className: "rv-head-actions"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    onClick: loadData,
+    disabled: loading
+  }, loading ? 'Recargando…' : 'Releer el Excel de reservas'), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    onClick: () => copyToSheets(data),
+    disabled: syncing
+  }, syncing ? 'Copiando…' : 'Copiar datos en el Excel de reservas'), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-primary",
     onClick: newRow
-  }, "+ Nueva")), allYears.length > 1 && /*#__PURE__*/React.createElement("div", {
+  }, "+ Nueva"))), allYears.length > 1 && /*#__PURE__*/React.createElement("div", {
     className: "rv-yearly"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-yearly-h"
