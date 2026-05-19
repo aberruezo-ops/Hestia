@@ -157,12 +157,6 @@ const Header = ({ mode, scrolled, lang }) => {
     } catch (_) { return false; }
   });
   const dismissBanner = React.useCallback(() => { setShowBanner(false); }, []);
-  React.useEffect(() => {
-    if (!showBanner) return;
-    const onScroll = () => dismissBanner();
-    window.addEventListener('scroll', onScroll, { once: true, passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [showBanner]);
 
   const toggleVit = () => {
     const next = !vitMin;
