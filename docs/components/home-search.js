@@ -666,7 +666,7 @@ const HomeSearch = ({
     className: "hs-trust"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? '🔒 Sin comisiones' : '🔒 No fees'), /*#__PURE__*/React.createElement("span", {
     className: "hs-trust-dot"
-  }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? '✓ Alex confirma en 24h' : '✓ Alex replies in 24h'), /*#__PURE__*/React.createElement("span", {
+  }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? '✓ Te confirmamos en 24h' : '✓ We confirm in 24h'), /*#__PURE__*/React.createElement("span", {
     className: "hs-trust-dot"
   }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Solo 3 Hestías' : 'Only 3 Hestías'))), results && /*#__PURE__*/React.createElement("div", {
     className: "hs-results",
