@@ -57,6 +57,12 @@ const PORQUE_COPY = {
       { icon: '🔄', t: 'Vuelve. Y trae a alguien.', d: 'Cuando encuentra un lugar donde se ha sentido en casa, vuelve. Y convierte a otros en huéspedes colaborativos.' },
     ],
 
+    evol_eyebrow: 'La transformación',
+    evol_title: (<>Casi diez años después,<br/><em>una marca a la altura de lo que hemos construido.</em></>),
+    evol_p1: 'Hestía empezó con un logo sencillo — el tejado rojo que nos acompañó durante casi una década y que llevamos con orgullo. Pero llegó un momento en que sentimos que la marca tenía que evolucionar. No para alejarnos de lo que somos, sino para expresarlo mejor.',
+    evol_p2: 'Queríamos algo más sólido, más expresivo. Un símbolo que dijera desde el primer vistazo que detrás de Hestía hay intención, identidad y raíces. Que no somos un producto más en una plataforma: somos un proyecto con historia, con nombre propio y con un lugar en el mapa.',
+    evol_p3: 'Y en esa nueva H — las curvas que forman la hoja de olivo y la cresta de ola — hay también, si miras bien, la silueta de un tejado. No es casualidad. Es el guiño al logo que durante años nos dio tantas satisfacciones: llevamos lo que fuimos dentro de lo que somos.',
+
     crosslink_label: 'Conoce a Alex y Fran',
     crosslink_text: 'Ver quiénes somos →',
   },
@@ -113,6 +119,12 @@ const PORQUE_COPY = {
       { icon: '🌿', t: "They don't just stay: they contribute.", d: 'They recommend the local bar, respect the quiet of the afternoon, leave their surroundings better than they found them.' },
       { icon: '🔄', t: 'They come back. And bring someone.', d: "When they find a place where they felt at home, they return — and turn others into collaborative guests too." },
     ],
+
+    evol_eyebrow: 'The transformation',
+    evol_title: (<>Nearly ten years on,<br/><em>a brand to match what we've built.</em></>),
+    evol_p1: 'Hestía began with a simple logo — the red rooftop that accompanied us for nearly a decade, carried with pride. But a moment came when we felt the brand had to evolve. Not to move away from what we are, but to express it more clearly.',
+    evol_p2: 'We wanted something more solid, more expressive. A symbol that showed at a glance that behind Hestía there is intention, identity and roots. That we are not another listing on a platform: we are a project with a history, a proper name, and a place on the map.',
+    evol_p3: 'And in that new H — the curves that form the olive leaf and the wave crest — there is also, if you look carefully, the silhouette of a rooftop. That was no accident. It is a nod to the logo that served us so well for years: we carry what we were inside what we are.',
 
     crosslink_label: 'Meet Alex and Fran',
     crosslink_text: 'Who we are →',
@@ -241,6 +253,36 @@ const PorqueLogo = ({ lang }) => {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const PorqueEvolucion = ({ lang }) => {
+  const t = PORQUE_COPY[lang];
+  const vidRef = React.useRef(null);
+  React.useEffect(() => {
+    if (vidRef.current) {
+      vidRef.current.playbackRate = 0.8;
+      vidRef.current.play().catch(() => {});
+    }
+  }, []);
+  return (
+    <section className="pq-evolucion section-dark">
+      <div className="container">
+        <div className="eyebrow">{t.evol_eyebrow}</div>
+        <h2 className="reveal">{t.evol_title}</h2>
+        <div className="porque-logo-inner">
+          <div className="porque-logo-video reveal">
+            <video ref={vidRef} src="assets/gemini_generated_video_7C740615.mp4"
+              muted loop playsInline preload="auto" aria-hidden="true"/>
+          </div>
+          <div className="porque-logo-text">
+            <p className="reveal">{t.evol_p1}</p>
+            <p className="reveal delay-1">{t.evol_p2}</p>
+            <p className="reveal delay-2">{t.evol_p3}</p>
           </div>
         </div>
       </div>
@@ -562,6 +604,7 @@ const PorquePageApp = () => {
         <PorqueHero lang={lang} />
         <PorqueOrigen lang={lang} />
         <PorqueLogo lang={lang} />
+        <PorqueEvolucion lang={lang} />
         <PorqueNombre lang={lang} />
         <PorqueValores lang={lang} />
         <PorqueColores lang={lang} />
