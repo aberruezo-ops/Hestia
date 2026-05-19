@@ -2359,6 +2359,7 @@ const LeilaTab = ({
   const [editsEfectivo, setEditsEfectivo] = React.useState({});
   const [editsLiquid, setEditsLiquid] = React.useState({});
   const [editsLiquidDate, setEditsLiquidDate] = React.useState({});
+  const [editsSaldoInicial, setEditsSaldoInicial] = React.useState({});
   const currentYear = String(new Date().getFullYear());
   const [focusYear, setFocusYear] = React.useState(currentYear);
   const [focusMonth, setFocusMonth] = React.useState('all');
@@ -2372,7 +2373,7 @@ const LeilaTab = ({
       setData(JSON.parse(b64ToUtf8(j.content)));
     }).catch(e => setLoadErr('Error cargando reservas: ' + e.message)).finally(() => setLoading(false));
   }, [token]);
-  const hasEdits = Object.keys(editsEfectivo).length > 0 || Object.keys(editsLiquid).length > 0 || Object.keys(editsLiquidDate).length > 0;
+  const hasEdits = Object.keys(editsEfectivo).length > 0 || Object.keys(editsLiquid).length > 0 || Object.keys(editsLiquidDate).length > 0 || Object.keys(editsSaldoInicial).length > 0;
   const save = async () => {
     if (!data || !sha || !hasEdits) return;
     setSaving(true);
@@ -2411,10 +2412,18 @@ const LeilaTab = ({
           fecha_sync: dateVal || undefined
         };
       });
+      let updSaldoInicial = {
+        ...(data.leila_saldo_inicial || {})
+      };
+      Object.entries(editsSaldoInicial).forEach(([yr, val]) => {
+        const v = Number(val) || 0;
+        if (v !== 0) updSaldoInicial[yr] = v;else delete updSaldoInicial[yr];
+      });
       const next = {
         ...data,
         reservas: updReservas,
-        leila_pagos_a_hestia: updLiquid
+        leila_pagos_a_hestia: updLiquid,
+        leila_saldo_inicial: updSaldoInicial
       };
       const res = await fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}`, {
         method: 'PUT',
@@ -2436,6 +2445,7 @@ const LeilaTab = ({
       setEditsEfectivo({});
       setEditsLiquid({});
       setEditsLiquidDate({});
+      setEditsSaldoInicial({});
       setSaveMsg('Guardado correctamente.');
     } catch (e) {
       setSaveMsg('Error al guardar: ' + e.message);
@@ -2452,6 +2462,7 @@ const LeilaTab = ({
   if (!data) return null;
   const reservas = data.reservas || [];
   const liquidaciones = data.leila_pagos_a_hestia || [];
+  const saldosIniciales = data.leila_saldo_inicial || {};
   const APT_LABEL = {
     vm: 'Mar',
     vt: 'Thalassa',
@@ -2471,7 +2482,29 @@ const LeilaTab = ({
     if (m) (byMonth[m] = byMonth[m] || []).push(r);
   });
   const visibleMonths = focusMonth === 'all' ? allMonths : allMonths.filter(m => m === focusMonth);
-  let acumRun = 0;
+
+  // Saldo inicial del año (arrastrado del año anterior).
+  const saldoInicialYear = editsSaldoInicial[focusYear] !== undefined ? Number(editsSaldoInicial[focusYear]) || 0 : Number(saldosIniciales[focusYear]) || 0;
+
+  // Pre-compute cross-month running carry: for each month, the balance
+  // entering that month = saldo inicial + sum of all previous months' net.
+  const monthCarry = {};
+  {
+    let carry = saldoInicialYear;
+    allMonths.forEach(m => {
+      monthCarry[m] = carry;
+      const mKey = `${focusYear}-${m}`;
+      const mRows = byMonth[m] || [];
+      const mEf = mRows.reduce((s, r) => {
+        const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : Number(r.efectivo_leila) || 0;
+        return s + v;
+      }, 0);
+      const mTa = mRows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
+      const liqE = liquidaciones.find(l => l.mes === mKey);
+      const liqV = editsLiquid[mKey] !== undefined ? Number(editsLiquid[mKey]) || 0 : liqE ? liqE.importe : 0;
+      carry = carry + mEf - mTa - liqV;
+    });
+  }
   let yrTarifa = 0,
     yrEfectivo = 0,
     yrLiquid = 0;
@@ -2495,6 +2528,7 @@ const LeilaTab = ({
       setEditsEfectivo({});
       setEditsLiquid({});
       setEditsLiquidDate({});
+      setEditsSaldoInicial({});
       setSaveMsg(null);
     }
   }, y)), /*#__PURE__*/React.createElement("select", {
@@ -2506,7 +2540,26 @@ const LeilaTab = ({
   }, "Todos los meses"), allMonths.map(m => /*#__PURE__*/React.createElement("option", {
     key: m,
     value: m
-  }, MES_FULL[parseInt(m, 10) - 1])))), hasEdits && /*#__PURE__*/React.createElement("button", {
+  }, MES_FULL[parseInt(m, 10) - 1])))), /*#__PURE__*/React.createElement("div", {
+    className: "leila-saldo-row"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "leila-saldo-label",
+    htmlFor: "leila-saldo-inicial"
+  }, "Saldo arrastrado de ", Number(focusYear) - 1), /*#__PURE__*/React.createElement("input", {
+    id: "leila-saldo-inicial",
+    type: "number",
+    step: "0.01",
+    className: "leila-saldo-input",
+    value: editsSaldoInicial[focusYear] !== undefined ? editsSaldoInicial[focusYear] : saldoInicialYear,
+    onChange: e => setEditsSaldoInicial(p => ({
+      ...p,
+      [focusYear]: e.target.value
+    }))
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "leila-saldo-unit"
+  }, "\u20AC"), saldoInicialYear !== 0 && /*#__PURE__*/React.createElement("span", {
+    className: "leila-saldo-hint"
+  }, saldoInicialYear > 0 ? `Leila debe ${saldoInicialYear}€ al entrar el año` : `Hestía debe ${Math.abs(saldoInicialYear)}€ al entrar el año`)), hasEdits && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-primary",
     onClick: save,
@@ -2536,13 +2589,13 @@ const LeilaTab = ({
     yrTarifa += mTarifa;
     yrEfectivo += mEfectivo;
     yrLiquid += liqVal;
-    let mAcum = 0;
+    let mAcum = monthCarry[m] ?? 0;
     const rowAcums = rows.map(r => {
       const ef = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : Number(r.efectivo_leila) || 0;
       mAcum += ef - (Number(r.gasto_limpieza) || 0);
       return mAcum;
     });
-    acumRun += mEfectivo - mTarifa - liqVal;
+    const acumAfterMonth = mAcum - liqVal;
     return /*#__PURE__*/React.createElement("div", {
       key: m,
       className: "leila-month-block"
@@ -2640,9 +2693,9 @@ const LeilaTab = ({
       }))
     })), /*#__PURE__*/React.createElement("div", {
       className: "leila-cum-row"
-    }, "Saldo acumulado ", focusYear, ":", ' ', /*#__PURE__*/React.createElement("strong", {
-      className: acumRun > 0 ? 'leila-owe' : acumRun < 0 ? 'leila-over' : ''
-    }, acumRun === 0 ? 'Saldado' : `${acumRun > 0 ? '+' : ''}${acumRun} €`)));
+    }, "Saldo acumulado al cierre de ", MES_FULL[parseInt(m, 10) - 1], ":", ' ', /*#__PURE__*/React.createElement("strong", {
+      className: acumAfterMonth > 0 ? 'leila-owe' : acumAfterMonth < 0 ? 'leila-over' : ''
+    }, acumAfterMonth === 0 ? 'Saldado' : `${acumAfterMonth > 0 ? '+' : ''}${acumAfterMonth} €`)));
   }), visibleMonths.length > 1 && (() => {
     const yrNeto = yrEfectivo - yrTarifa;
     const yrBal = yrNeto - yrLiquid;

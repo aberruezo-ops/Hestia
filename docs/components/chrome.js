@@ -13,12 +13,12 @@ const Topbar = ({
   className: "contacts"
 }, /*#__PURE__*/React.createElement("a", {
   href: "https://wa.me/34620316370",
-  className: "topbar-link",
+  className: `topbar-link${lang === 'es' ? ' tl-active' : ''}`,
   target: "_blank",
   rel: "noopener",
   "aria-label": "WhatsApp Alex"
 }, /*#__PURE__*/React.createElement("span", {
-  className: "tl-dot"
+  className: `tl-dot${lang === 'es' ? ' tl-dot--on' : ''}`
 }), /*#__PURE__*/React.createElement("span", {
   className: "tl-who hide-mobile"
 }, "Alex"), /*#__PURE__*/React.createElement("span", {
@@ -29,12 +29,12 @@ const Topbar = ({
   className: "sep"
 }, "\xB7"), /*#__PURE__*/React.createElement("a", {
   href: "https://wa.me/34654138251",
-  className: "topbar-link",
+  className: `topbar-link${lang === 'en' ? ' tl-active' : ''}`,
   target: "_blank",
   rel: "noopener",
   "aria-label": "WhatsApp Fran"
 }, /*#__PURE__*/React.createElement("span", {
-  className: "tl-dot"
+  className: `tl-dot${lang === 'en' ? ' tl-dot--on' : ''}`
 }), /*#__PURE__*/React.createElement("span", {
   className: "tl-who hide-mobile"
 }, "Fran"), /*#__PURE__*/React.createElement("span", {
@@ -256,8 +256,9 @@ const Header = ({
   const vitruvio = vitMin ? null : ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
     className: `hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
-    className: "hv-box",
-    "aria-hidden": "true"
+    className: "hv-inner"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hv-box"
   }, /*#__PURE__*/React.createElement("video", {
     autoPlay: true,
     muted: true,
@@ -267,15 +268,15 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("source", {
     src: "assets/hestia-vitruvio.mp4",
     type: "video/mp4"
-  }))), /*#__PURE__*/React.createElement("button", {
+  })), /*#__PURE__*/React.createElement("a", {
+    href: "porque-hestia.html",
+    className: "hv-box-link"
+  }, lang === 'es' ? 'nuestra marca' : 'our brand'))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hv-toggle",
     onClick: toggleVit,
     "aria-label": lang === 'es' ? 'Minimizar' : 'Minimise'
-  }, "-"), /*#__PURE__*/React.createElement("a", {
-    href: "porque-hestia.html",
-    className: "hv-brand-btn"
-  }, lang === 'es' ? 'Nuestra marca →' : 'Our brand →')), document.body);
+  }, "-")), document.body);
 
   // Sync animation across page navigations using absolute time
   React.useEffect(() => {

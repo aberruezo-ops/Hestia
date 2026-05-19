@@ -191,15 +191,15 @@ const COPY = {
     fran_role: 'Estancia · Mientras estás aquí',
     fran_quote: '«If anything breaks, calls, or changes — I am here. Your stay, my job.»',
     manifest_eyebrow: 'El viajero que hace hogar',
-    manifest_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hest\xEDa no se visita. ", /*#__PURE__*/React.createElement("em", null, "Se vive \u2014 y se cuida para quien venga despu\xE9s.")),
+    manifest_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hest\xEDa no se visita, ", /*#__PURE__*/React.createElement("em", null, "se vive \u2014 y se cuida para quien venga despu\xE9s.")),
     manifest_lead_1: 'No vienes a hacer turismo. Vienes a cocinar tu desayuno, a leer en la terraza, a seguir tu ritmo. Esto no es un hotel — durante tu estancia, es tu casa.',
     manifest_lead_2: 'Y porque es tu casa, te pedimos lo que se le pide a quien quiere su hogar: que lo cuides. Que lo dejes listo. Para quien venga detrás, será su casa entonces — igual que es la tuya ahora.',
     manifest_principles_eyebrow: 'Cuatro maneras de cuidar lo que es tuyo por unos días',
     manifest_p1: 'Agradecemos que repongas lo que uses.',
     manifest_p2: 'Si algo se estropea, nos gustaría saberlo.',
     manifest_p3: 'Intenta cuidarlo como si fuera tu propio hogar.',
-    manifest_p4: 'Y nosotros también ponemos de nuestra parte.',
-    manifest_quote: '«Deja esto como te hubiera gustado encontrarlo. Porque alguien, antes que tú, lo hizo.»',
+    manifest_p4: 'Nosotros también ponemos todo de nuestra parte.',
+    manifest_quote: '«Deja esto como te hubiera gustado encontrarlo. Alguien antes que tú también lo hizo.»',
     ratings_eyebrow: 'Lo que dicen de nosotros',
     ratings_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Diez a\xF1os puntuando ", /*#__PURE__*/React.createElement("em", null, "casi perfecto.")),
     ratings_sub: 'No es un eslogan. Son cifras verificadas por las plataformas, escritas por las familias que han dormido aquí.',
@@ -545,9 +545,7 @@ const QUICK_FAQ = {
   nosotros: {
     es: [{
       q: '¿Desde cuándo lo hacéis vosotros mismos?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Desde 2016. En diez a\xF1os hemos recibido a m\xE1s de 600 familias. Nunca hemos externalizado la gesti\xF3n: seguimos limpiando, respondiendo y eligiendo las toallas nosotros. ", /*#__PURE__*/React.createElement("a", {
-        href: "nosotros.html"
-      }, "Conoce nuestra historia."))
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Desde 2016. En diez a\xF1os hemos recibido a m\xE1s de 600 familias. Nunca hemos externalizado la gesti\xF3n: nosotros gestionamos, nosotros cuidamos.")
     }, {
       q: '¿Por qué se llaman así cada Hestía?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Hest\xEDa era la diosa griega del hogar \u2014 la diosa pac\xEDfica, la que guardaba el fuego de casa. Eso es lo que intentamos hacer: que Hest\xEDa deje de ser un sitio donde dormir y se convierta en un lugar donde quedarse.")
@@ -556,11 +554,7 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "No. Somos Alex y Fran. No hay agencia, no hay gestor, no hay centralita. Cuando nos escribes, nos escribes a nosotros directamente.")
     }, {
       q: '¿Qué pasa si algo falla durante mi estancia?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Fran se encarga de tu estancia: est\xE1 aqu\xED mientras est\xE1s aqu\xED. Responde r\xE1pido, va en persona y resuelve sin esperar a que abra ninguna oficina. Su n\xFAmero: ", /*#__PURE__*/React.createElement("a", {
-        href: "https://wa.me/34654138251",
-        target: "_blank",
-        rel: "noopener"
-      }, "WhatsApp Fran"), ".")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Fran se encarga de tu estancia, est\xE1 pendiente de ti, de vosotros. Responde r\xE1pido y resuelve con la mayor celeridad y eficacia posibles.")
     }],
     en: [{
       q: 'How long have you been managing the Hestías yourselves?',
@@ -591,7 +585,7 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED, desde 2018 de forma ininterrumpida. El estatus Superhost se revisa cada trimestre y requiere mantener puntuaci\xF3n m\xE1xima y tiempo de respuesta alto de forma continua. No es un t\xEDtulo que se queda para siempre.")
     }, {
       q: '¿Qué es lo que más valoran los huéspedes?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "La atenci\xF3n personal de Alex y Fran, la limpieza y el estado de cada Hest\xEDa, y la ubicaci\xF3n. Y que cuando algo falla, se resuelve de verdad \u2014 no se pone una excusa.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "La atenci\xF3n personal de Alex y Fran, la limpieza y el estado de cada Hest\xEDa. Y que cuando algo falla buscan soluciones en el momento.")
     }, {
       q: '¿Cómo dejo una reseña tras mi estancia?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "En Booking.com, Airbnb o Google Maps, seg\xFAn donde hayas reservado. Tambi\xE9n puedes escribirnos directamente \u2014 nos alegra saber c\xF3mo fue la experiencia.")
