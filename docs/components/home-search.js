@@ -500,7 +500,7 @@ const HomeLaunchBanner = ({
     return () => clearTimeout(t);
   }, []);
   if (!show) return null;
-  return /*#__PURE__*/React.createElement("div", {
+  return ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
     className: `hlb${leaving ? ' hlb--out' : ''}`
   }, /*#__PURE__*/React.createElement("button", {
     className: "hlb-close",
@@ -518,7 +518,7 @@ const HomeLaunchBanner = ({
     type: "video/mp4"
   })), /*#__PURE__*/React.createElement("p", {
     className: "hlb-text"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Estrenamos imagen, pero seguimos con la misma ilusi\xF3n que hace 10 a\xF1os.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 M\xE1s que un alquiler, \xA1tu hogar!")) : /*#__PURE__*/React.createElement(React.Fragment, null, "New look, same passion as 10 years ago.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 More than a rental, your home!"))));
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Estrenamos imagen, pero seguimos con la misma ilusi\xF3n que hace 10 a\xF1os.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 M\xE1s que un alquiler, \xA1tu hogar!")) : /*#__PURE__*/React.createElement(React.Fragment, null, "New look, same passion as 10 years ago.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 More than a rental, your home!")))), document.body);
 };
 
 // ---- Main search widget ----

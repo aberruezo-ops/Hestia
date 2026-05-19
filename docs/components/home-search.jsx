@@ -469,7 +469,7 @@ const HomeLaunchBanner = ({ lang }) => {
 
   if (!show) return null;
 
-  return (
+  return ReactDOM.createPortal(
     <div className={`hlb${leaving ? ' hlb--out' : ''}`}>
       <button className="hlb-close" onClick={dismiss} aria-label="Cerrar">×</button>
       <video className="hlb-video" autoPlay muted loop playsInline preload="auto">
@@ -480,7 +480,8 @@ const HomeLaunchBanner = ({ lang }) => {
           ? <>Estrenamos imagen, pero seguimos con la misma ilusión que hace 10 años.<br/><strong>Hestía — Más que un alquiler, ¡tu hogar!</strong></>
           : <>New look, same passion as 10 years ago.<br/><strong>Hestía — More than a rental, your home!</strong></>}
       </p>
-    </div>
+    </div>,
+    document.body
   );
 };
 
