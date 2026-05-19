@@ -213,12 +213,7 @@ const Header = ({
   // vitMin: se lee de sessionStorage para funcionar en cualquier página
   const [vitMin, setVitMin] = React.useState(() => {
     try {
-      const page = window.location.pathname.split('/').pop();
-      if (page === 'porque-hestia.html') return true;
-      // En la home, minimizar mientras el banner de lanzamiento no se haya visto
-      if (page === '' || page === 'index.html') {
-        if (sessionStorage.getItem('hestia-launch-banner-v1') !== '1') return true;
-      }
+      if (window.location.pathname.split('/').pop() === 'porque-hestia.html') return true;
       return sessionStorage.getItem('hestia-vit-min') === '1';
     } catch (_) {
       return false;
@@ -230,16 +225,35 @@ const Header = ({
         setVitMin(sessionStorage.getItem('hestia-vit-min') === '1');
       } catch (_) {}
     };
-    const onBannerDone = () => {
-      setVitMin(false);
-    };
     window.addEventListener('hestia-vit-change', sync);
-    window.addEventListener('hestia-banner-dismissed', onBannerDone);
-    return () => {
-      window.removeEventListener('hestia-vit-change', sync);
-      window.removeEventListener('hestia-banner-dismissed', onBannerDone);
-    };
+    return () => window.removeEventListener('hestia-vit-change', sync);
   }, []);
+
+  // Launch banner — reemplaza el Vitruvio en la home la primera visita
+  const [showBanner, setShowBanner] = React.useState(() => {
+    try {
+      const page = window.location.pathname.split('/').pop();
+      const isHome = page === '' || page === 'index.html';
+      return isHome && sessionStorage.getItem('hestia-launch-banner-v1') !== '1';
+    } catch (_) {
+      return false;
+    }
+  });
+  const dismissBanner = React.useCallback(() => {
+    setShowBanner(false);
+    try {
+      sessionStorage.setItem('hestia-launch-banner-v1', '1');
+    } catch (_) {}
+  }, []);
+  React.useEffect(() => {
+    if (!showBanner) return;
+    const onScroll = () => dismissBanner();
+    window.addEventListener('scroll', onScroll, {
+      once: true,
+      passive: true
+    });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [showBanner]);
   const toggleVit = () => {
     const next = !vitMin;
     setVitMin(next);
@@ -266,7 +280,32 @@ const Header = ({
     return () => obs.disconnect();
   }, []);
   const vitHidden = !heroVisible;
-  const vitruvio = vitMin ? null : ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+
+  // Banner de lanzamiento — ocupa el hueco del Vitruvio la primera visita
+  const launchBanner = showBanner ? ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+    className: `hero-vitruvio hero-vitruvio--launch${vitHidden ? ' hv-offhero' : ''}`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hv-inner"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hv-box"
+  }, /*#__PURE__*/React.createElement("video", {
+    autoPlay: true,
+    muted: true,
+    loop: true,
+    playsInline: true,
+    preload: "auto"
+  }, /*#__PURE__*/React.createElement("source", {
+    src: "assets/gemini_generated_video_7C740615.mp4",
+    type: "video/mp4"
+  })))), /*#__PURE__*/React.createElement("div", {
+    className: "hv-launch-text"
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Estrenamos imagen, pero seguimos con la misma ilusi\xF3n que hace 10 a\xF1os.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 M\xE1s que un alquiler, \xA1tu hogar!")) : /*#__PURE__*/React.createElement(React.Fragment, null, "New look, same passion as 10 years ago.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 More than a rental, your home!"))), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "hv-toggle",
+    onClick: dismissBanner,
+    "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
+  }, "\xD7")), document.body) : null;
+  const vitruvio = !showBanner && !vitMin ? ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
     className: `hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-inner"
@@ -284,12 +323,12 @@ const Header = ({
   })), /*#__PURE__*/React.createElement("a", {
     href: "porque-hestia.html",
     className: "hv-box-link"
-  }, lang === 'es' ? 'nuestra marca' : 'our brand'))), /*#__PURE__*/React.createElement("button", {
+  }, lang === 'es' ? 'Nuestra marca' : 'Our brand'))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hv-toggle",
     onClick: toggleVit,
     "aria-label": lang === 'es' ? 'Minimizar' : 'Minimise'
-  }, "-")), document.body);
+  }, "-")), document.body) : null;
 
   // Sync animation across page navigations using absolute time
   React.useEffect(() => {
@@ -448,7 +487,7 @@ const Header = ({
     onClick: () => setMobileOpen(o => !o),
     "aria-label": mobileOpen ? 'Cerrar menú' : 'Abrir menú',
     "aria-expanded": mobileOpen
-  }, mobileOpen ? /*#__PURE__*/React.createElement(IconClose, null) : /*#__PURE__*/React.createElement(IconHamburger, null)))), vitruvio, /*#__PURE__*/React.createElement("div", {
+  }, mobileOpen ? /*#__PURE__*/React.createElement(IconClose, null) : /*#__PURE__*/React.createElement(IconHamburger, null)))), launchBanner, vitruvio, /*#__PURE__*/React.createElement("div", {
     className: `mobile-menu ${mobileOpen ? 'open' : ''}`,
     "aria-hidden": !mobileOpen
   }, /*#__PURE__*/React.createElement("nav", {
