@@ -136,8 +136,9 @@ const OpinionesQuotesMarquee = ({ lang }) => {
   // de la review para no mezclar.
   const quotes = all
     .map(r => {
-      const txt = (r.text || '').split(/[.!?]/)[0].trim();
-      return { txt, name: r.name, apt: r.apt, lang: r.lang };
+      const m = (r.text || '').match(/^[^.!?]*[.!?]/);
+      const txt = m ? m[0].trim() : '';
+      return { txt, name: r.name.split(' ')[0], apt: r.apt, lang: r.lang };
     })
     .filter(q => q.txt.length > 25 && q.txt.length < 100 && q.lang === lang)
     .slice(0, 14);
@@ -198,7 +199,7 @@ const ReviewCard = ({ rev, lang, fmtDate }) => {
       )}
       <footer className="testimonial-foot">
         <div className="testimonial-foot-left">
-          <span className="testimonial-name">{rev.name}</span>
+          <span className="testimonial-name">{rev.name.split(' ')[0]}</span>
           <span className="testimonial-year">{fmtDate(rev.date)}</span>
         </div>
         <Stars count={stars}/>
