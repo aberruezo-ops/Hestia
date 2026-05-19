@@ -444,47 +444,6 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
   );
 };
 
-// ---- Floating launch banner ----
-const HomeLaunchBanner = ({ lang }) => {
-  const [show, setShow] = React.useState(() => {
-    try { return sessionStorage.getItem('hestia-launch-banner-v1') !== '1'; }
-    catch (_) { return true; }
-  });
-  const [leaving, setLeaving] = React.useState(false);
-
-  const dismiss = React.useCallback(() => {
-    setLeaving(true);
-    setTimeout(() => {
-      setShow(false);
-      try { sessionStorage.setItem('hestia-launch-banner-v1', '1'); } catch (_) {}
-      window.dispatchEvent(new CustomEvent('hestia-banner-dismissed'));
-    }, 400);
-  }, []);
-
-  React.useEffect(() => {
-    if (!show) return;
-    const t = setTimeout(dismiss, 8000);
-    return () => clearTimeout(t);
-  }, []);
-
-  if (!show) return null;
-
-  return ReactDOM.createPortal(
-    <div className={`hlb${leaving ? ' hlb--out' : ''}`}>
-      <button className="hlb-close" onClick={dismiss} aria-label="Cerrar">×</button>
-      <video className="hlb-video" autoPlay muted loop playsInline preload="auto">
-        <source src="assets/gemini_generated_video_7C740615.mp4" type="video/mp4"/>
-      </video>
-      <p className="hlb-text">
-        {lang === 'es'
-          ? <>Estrenamos imagen, pero seguimos con la misma ilusión que hace 10 años.<br/><strong>Hestía — Más que un alquiler, ¡tu hogar!</strong></>
-          : <>New look, same passion as 10 years ago.<br/><strong>Hestía — More than a rental, your home!</strong></>}
-      </p>
-    </div>,
-    document.body
-  );
-};
-
 // ---- Main search widget ----
 const HomeSearch = ({ lang }) => {
   const [avail,   setAvail  ] = React.useState(null);
@@ -763,7 +722,6 @@ const HomeSearch = ({ lang }) => {
         </div>
 
       </div>
-      <HomeLaunchBanner lang={lang} />
     </section>
   );
 };

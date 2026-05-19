@@ -137,12 +137,7 @@ const Header = ({ mode, scrolled, lang }) => {
   // vitMin: se lee de sessionStorage para funcionar en cualquier página
   const [vitMin, setVitMin] = React.useState(() => {
     try {
-      const page = window.location.pathname.split('/').pop();
-      if (page === 'porque-hestia.html') return true;
-      // En la home, minimizar mientras el banner de lanzamiento no se haya visto
-      if (page === '' || page === 'index.html') {
-        if (sessionStorage.getItem('hestia-launch-banner-v1') !== '1') return true;
-      }
+      if (window.location.pathname.split('/').pop() === 'porque-hestia.html') return true;
       return sessionStorage.getItem('hestia-vit-min') === '1';
     } catch (_) { return false; }
   });
@@ -150,14 +145,28 @@ const Header = ({ mode, scrolled, lang }) => {
     const sync = () => {
       try { setVitMin(sessionStorage.getItem('hestia-vit-min') === '1'); } catch (_) {}
     };
-    const onBannerDone = () => { setVitMin(false); };
     window.addEventListener('hestia-vit-change', sync);
-    window.addEventListener('hestia-banner-dismissed', onBannerDone);
-    return () => {
-      window.removeEventListener('hestia-vit-change', sync);
-      window.removeEventListener('hestia-banner-dismissed', onBannerDone);
-    };
+    return () => window.removeEventListener('hestia-vit-change', sync);
   }, []);
+
+  // Launch banner — reemplaza el Vitruvio en la home la primera visita
+  const [showBanner, setShowBanner] = React.useState(() => {
+    try {
+      const page = window.location.pathname.split('/').pop();
+      const isHome = page === '' || page === 'index.html';
+      return isHome && sessionStorage.getItem('hestia-launch-banner-v1') !== '1';
+    } catch (_) { return false; }
+  });
+  const dismissBanner = React.useCallback(() => {
+    setShowBanner(false);
+    try { sessionStorage.setItem('hestia-launch-banner-v1', '1'); } catch (_) {}
+  }, []);
+  React.useEffect(() => {
+    if (!showBanner) return;
+    const onScroll = () => dismissBanner();
+    window.addEventListener('scroll', onScroll, { once: true, passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [showBanner]);
 
   const toggleVit = () => {
     const next = !vitMin;
@@ -182,7 +191,35 @@ const Header = ({ mode, scrolled, lang }) => {
     return () => obs.disconnect();
   }, []);
   const vitHidden = !heroVisible;
-  const vitruvio = vitMin ? null : ReactDOM.createPortal(
+
+  // Banner de lanzamiento — ocupa el hueco del Vitruvio la primera visita
+  const launchBanner = showBanner ? ReactDOM.createPortal(
+    <div className={`hero-vitruvio hero-vitruvio--launch${vitHidden ? ' hv-offhero' : ''}`}>
+      <div className="hv-inner">
+        <div className="hv-box">
+          <video autoPlay muted loop playsInline preload="auto">
+            <source src="assets/gemini_generated_video_7C740615.mp4" type="video/mp4"/>
+          </video>
+        </div>
+      </div>
+      <div className="hv-launch-text">
+        {lang === 'es'
+          ? <>Estrenamos imagen, pero seguimos con la misma ilusión que hace 10 años.<br/><strong>Hestía — Más que un alquiler, ¡tu hogar!</strong></>
+          : <>New look, same passion as 10 years ago.<br/><strong>Hestía — More than a rental, your home!</strong></>}
+      </div>
+      <button
+        type="button"
+        className="hv-toggle"
+        onClick={dismissBanner}
+        aria-label={lang === 'es' ? 'Cerrar' : 'Close'}
+      >
+        ×
+      </button>
+    </div>,
+    document.body
+  ) : null;
+
+  const vitruvio = (!showBanner && !vitMin) ? ReactDOM.createPortal(
     <div className={`hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`}>
       <div className="hv-inner">
         <div className="hv-box">
@@ -190,7 +227,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
           </video>
           <a href="porque-hestia.html" className="hv-box-link">
-            {lang === 'es' ? 'nuestra marca' : 'our brand'}
+            {lang === 'es' ? 'Nuestra marca' : 'Our brand'}
           </a>
         </div>
       </div>
@@ -204,7 +241,7 @@ const Header = ({ mode, scrolled, lang }) => {
       </button>
     </div>,
     document.body
-  );
+  ) : null;
 
   // Sync animation across page navigations using absolute time
   React.useEffect(() => {
@@ -341,6 +378,7 @@ const Header = ({ mode, scrolled, lang }) => {
           </button>
         </div>
       </header>
+      {launchBanner}
       {vitruvio}
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
         <nav className="mobile-nav">
