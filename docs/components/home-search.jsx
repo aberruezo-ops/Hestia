@@ -645,7 +645,7 @@ const HomeSearch = ({ lang }) => {
           <div className="hs-trust">
             <span>{lang === 'es' ? '🔒 Sin comisiones' : '🔒 No fees'}</span>
             <span className="hs-trust-dot"/>
-            <span>{lang === 'es' ? '✓ Alex confirma en 24h' : '✓ Alex replies in 24h'}</span>
+            <span>{lang === 'es' ? '✓ Te confirmamos en 24h' : '✓ We confirm in 24h'}</span>
             <span className="hs-trust-dot"/>
             <span>{lang === 'es' ? 'Solo 3 Hestías' : 'Only 3 Hestías'}</span>
           </div>
