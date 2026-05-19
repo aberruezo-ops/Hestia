@@ -214,10 +214,11 @@ const OpinionesQuotesMarquee = ({
   // oración de cada review que entre en el límite. Filtramos por idioma
   // de la review para no mezclar.
   const quotes = all.map(r => {
-    const txt = (r.text || '').split(/[.!?]/)[0].trim();
+    const m = (r.text || '').match(/^[^.!?]*[.!?]/);
+    const txt = m ? m[0].trim() : '';
     return {
       txt,
-      name: r.name,
+      name: r.name.split(' ')[0],
       apt: r.apt,
       lang: r.lang
     };
@@ -295,7 +296,7 @@ const ReviewCard = ({
     className: "testimonial-foot-left"
   }, /*#__PURE__*/React.createElement("span", {
     className: "testimonial-name"
-  }, rev.name), /*#__PURE__*/React.createElement("span", {
+  }, rev.name.split(' ')[0]), /*#__PURE__*/React.createElement("span", {
     className: "testimonial-year"
   }, fmtDate(rev.date))), /*#__PURE__*/React.createElement(Stars, {
     count: stars

@@ -2009,9 +2009,10 @@ const LeilaTab = ({ token }) => {
   const [loadErr, setLoadErr] = React.useState(null);
   const [saving,  setSaving]  = React.useState(false);
   const [saveMsg, setSaveMsg] = React.useState(null);
-  const [editsEfectivo,   setEditsEfectivo]   = React.useState({});
-  const [editsLiquid,     setEditsLiquid]     = React.useState({});
-  const [editsLiquidDate, setEditsLiquidDate] = React.useState({});
+  const [editsEfectivo,     setEditsEfectivo]     = React.useState({});
+  const [editsLiquid,       setEditsLiquid]       = React.useState({});
+  const [editsLiquidDate,   setEditsLiquidDate]   = React.useState({});
+  const [editsSaldoInicial, setEditsSaldoInicial] = React.useState({});
   const currentYear = String(new Date().getFullYear());
   const [focusYear,  setFocusYear]  = React.useState(currentYear);
   const [focusMonth, setFocusMonth] = React.useState('all');
@@ -2031,7 +2032,8 @@ const LeilaTab = ({ token }) => {
 
   const hasEdits = Object.keys(editsEfectivo).length > 0 ||
                    Object.keys(editsLiquid).length > 0 ||
-                   Object.keys(editsLiquidDate).length > 0;
+                   Object.keys(editsLiquidDate).length > 0 ||
+                   Object.keys(editsSaldoInicial).length > 0;
 
   const save = async () => {
     if (!data || !sha || !hasEdits) return;
@@ -2058,7 +2060,13 @@ const LeilaTab = ({ token }) => {
         const idx = updLiquid.findIndex(l => l.mes === ym);
         if (idx >= 0) updLiquid[idx] = { ...updLiquid[idx], fecha_sync: dateVal || undefined };
       });
-      const next = { ...data, reservas: updReservas, leila_pagos_a_hestia: updLiquid };
+      let updSaldoInicial = { ...(data.leila_saldo_inicial || {}) };
+      Object.entries(editsSaldoInicial).forEach(([yr, val]) => {
+        const v = Number(val) || 0;
+        if (v !== 0) updSaldoInicial[yr] = v;
+        else delete updSaldoInicial[yr];
+      });
+      const next = { ...data, reservas: updReservas, leila_pagos_a_hestia: updLiquid, leila_saldo_inicial: updSaldoInicial };
       const res = await fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}`, {
         method: 'PUT',
         headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
@@ -2067,7 +2075,7 @@ const LeilaTab = ({ token }) => {
       const j = await res.json();
       if (j.message && !j.content) throw new Error(j.message);
       setSha(j.content.sha); setData(next);
-      setEditsEfectivo({}); setEditsLiquid({}); setEditsLiquidDate({});
+      setEditsEfectivo({}); setEditsLiquid({}); setEditsLiquidDate({}); setEditsSaldoInicial({});
       setSaveMsg('Guardado correctamente.');
     } catch (e) {
       setSaveMsg('Error al guardar: ' + e.message);
@@ -2080,6 +2088,7 @@ const LeilaTab = ({ token }) => {
 
   const reservas = data.reservas || [];
   const liquidaciones = data.leila_pagos_a_hestia || [];
+  const saldosIniciales = data.leila_saldo_inicial || {};
   const APT_LABEL = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
   const MES_FULL = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
   const fmtBal = n => n > 0 ? `Leila debe ${n} €` : n < 0 ? `Hestía debe ${Math.abs(n)} €` : 'Saldado';
@@ -2096,7 +2105,30 @@ const LeilaTab = ({ token }) => {
   });
   const visibleMonths = focusMonth === 'all' ? allMonths : allMonths.filter(m => m === focusMonth);
 
-  let acumRun = 0;
+  // Saldo inicial del año (arrastrado del año anterior).
+  const saldoInicialYear = editsSaldoInicial[focusYear] !== undefined
+    ? (Number(editsSaldoInicial[focusYear]) || 0)
+    : (Number(saldosIniciales[focusYear]) || 0);
+
+  // Pre-compute cross-month running carry: for each month, the balance
+  // entering that month = saldo inicial + sum of all previous months' net.
+  const monthCarry = {};
+  {
+    let carry = saldoInicialYear;
+    allMonths.forEach(m => {
+      monthCarry[m] = carry;
+      const mKey = `${focusYear}-${m}`;
+      const mRows = byMonth[m] || [];
+      const mEf = mRows.reduce((s, r) => {
+        const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila) || 0);
+        return s + v;
+      }, 0);
+      const mTa = mRows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
+      const liqE = liquidaciones.find(l => l.mes === mKey);
+      const liqV = editsLiquid[mKey] !== undefined ? (Number(editsLiquid[mKey]) || 0) : (liqE ? liqE.importe : 0);
+      carry = carry + mEf - mTa - liqV;
+    });
+  }
   let yrTarifa = 0, yrEfectivo = 0, yrLiquid = 0;
 
   return (
@@ -2109,7 +2141,7 @@ const LeilaTab = ({ token }) => {
               className={`leila-yr-btn${y === focusYear ? ' active' : ''}`}
               onClick={() => {
                 setFocusYear(y); setFocusMonth('all');
-                setEditsEfectivo({}); setEditsLiquid({}); setEditsLiquidDate({});
+                setEditsEfectivo({}); setEditsLiquid({}); setEditsLiquidDate({}); setEditsSaldoInicial({});
                 setSaveMsg(null);
               }}>
               {y}
@@ -2121,6 +2153,23 @@ const LeilaTab = ({ token }) => {
               <option key={m} value={m}>{MES_FULL[parseInt(m, 10) - 1]}</option>
             ))}
           </select>
+        </div>
+        <div className="leila-saldo-row">
+          <label className="leila-saldo-label" htmlFor="leila-saldo-inicial">
+            Saldo arrastrado de {Number(focusYear) - 1}
+          </label>
+          <input
+            id="leila-saldo-inicial"
+            type="number"
+            step="0.01"
+            className="leila-saldo-input"
+            value={editsSaldoInicial[focusYear] !== undefined ? editsSaldoInicial[focusYear] : saldoInicialYear}
+            onChange={e => setEditsSaldoInicial(p => ({ ...p, [focusYear]: e.target.value }))}
+          />
+          <span className="leila-saldo-unit">€</span>
+          {saldoInicialYear !== 0 && (
+            <span className="leila-saldo-hint">{saldoInicialYear > 0 ? `Leila debe ${saldoInicialYear}€ al entrar el año` : `Hestía debe ${Math.abs(saldoInicialYear)}€ al entrar el año`}</span>
+          )}
         </div>
         {hasEdits && (
           <button type="button" className="pe-btn pe-btn-primary" onClick={save} disabled={saving}>
@@ -2150,13 +2199,13 @@ const LeilaTab = ({ token }) => {
         const mBal = (mEfectivo - mTarifa) - liqVal;
         yrTarifa += mTarifa; yrEfectivo += mEfectivo; yrLiquid += liqVal;
 
-        let mAcum = 0;
+        let mAcum = monthCarry[m] ?? 0;
         const rowAcums = rows.map(r => {
           const ef = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila) || 0);
           mAcum += ef - (Number(r.gasto_limpieza) || 0);
           return mAcum;
         });
-        acumRun += mEfectivo - mTarifa - liqVal;
+        const acumAfterMonth = mAcum - liqVal;
 
         return (
           <div key={m} className="leila-month-block">
@@ -2238,9 +2287,9 @@ const LeilaTab = ({ token }) => {
             </div>
 
             <div className="leila-cum-row">
-              Saldo acumulado {focusYear}:{' '}
-              <strong className={acumRun > 0 ? 'leila-owe' : acumRun < 0 ? 'leila-over' : ''}>
-                {acumRun === 0 ? 'Saldado' : `${acumRun > 0 ? '+' : ''}${acumRun} €`}
+              Saldo acumulado al cierre de {MES_FULL[parseInt(m, 10) - 1]}:{' '}
+              <strong className={acumAfterMonth > 0 ? 'leila-owe' : acumAfterMonth < 0 ? 'leila-over' : ''}>
+                {acumAfterMonth === 0 ? 'Saldado' : `${acumAfterMonth > 0 ? '+' : ''}${acumAfterMonth} €`}
               </strong>
             </div>
           </div>

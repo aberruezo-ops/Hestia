@@ -334,34 +334,49 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 .tl-dot {
   width: 5px; height: 5px; border-radius: 50%;
-  background: #25D366;
   flex-shrink: 0;
-  transition: transform .25s ease, box-shadow .25s ease;
+  transition: transform .25s ease;
+  animation: tl-dot-rainbow 27s steps(9, end) infinite;
 }
-.topbar-link.email .tl-dot { background: var(--sol-h); }
+/* Active-language dot: slightly larger and brighter while still cycling colours */
+.tl-dot--on {
+  transform: scale(1.4);
+  filter: brightness(1.25);
+}
+/* 9 Hestía palette colours, 3 s each = 27 s full cycle */
+@keyframes tl-dot-rainbow {
+  0%     { background: #F0E8D5; box-shadow: 0 0 4px rgba(240,232,213,.5); }
+  11.11% { background: #1BC8D8; box-shadow: 0 0 4px rgba(27,200,216,.6); }
+  22.22% { background: #D42B80; box-shadow: 0 0 4px rgba(212,43,128,.6); }
+  33.33% { background: #D4A84A; box-shadow: 0 0 4px rgba(212,168,74,.6); }
+  44.44% { background: #6B7A3A; box-shadow: 0 0 4px rgba(107,122,58,.6); }
+  55.56% { background: #C8975A; box-shadow: 0 0 4px rgba(200,151,90,.6); }
+  66.67% { background: #8B4A1E; box-shadow: 0 0 5px rgba(139,74,30,.7); }
+  77.78% { background: #7B3B6B; box-shadow: 0 0 5px rgba(123,59,107,.7); }
+  88.89% { background: #2A0F2E; box-shadow: 0 0 6px rgba(123,59,107,.8); }
+}
+.topbar-link.email .tl-dot { animation: none; background: var(--sol-h); }
 .tl-num { opacity: 0.65; font-size: 11px; }
 .topbar-link:focus-visible {
   opacity: 1;
   color: var(--sol-lt);
 }
+.topbar-link.tl-active {
+  opacity: 1;
+  color: var(--sol-lt);
+}
+/* Touch devices: all links fully visible (no hover to activate them) */
 @media (hover: none) {
   .topbar-link { opacity: 1; }
 }
-@media (hover: hover) {
-  .topbar-link:hover {
-    opacity: 1;
-    color: var(--sol-lt);
-    background: rgba(111,196,209,.13);
-    box-shadow: 0 0 0 1px rgba(111,196,209,.2);
-  }
-  .topbar-link:hover .tl-dot {
-    transform: scale(1.5);
-    box-shadow: 0 0 6px rgba(37,211,102,.6);
-  }
-  .topbar-link.email:hover .tl-dot {
-    box-shadow: 0 0 6px rgba(240,200,100,.5);
-  }
+.topbar-link:hover {
+  opacity: 1;
+  color: var(--sol-lt);
+  background: rgba(111,196,209,.13);
+  box-shadow: 0 0 0 1px rgba(111,196,209,.2);
 }
+.topbar-link:hover .tl-dot { transform: scale(1.5); }
+.topbar-link.email:hover .tl-dot { transform: scale(1.3); }
 
 .topbar .lang button {
   padding: 4px 9px;
@@ -380,10 +395,8 @@ p  { line-height: 1.65; font-weight: 300; }
   transition: opacity .3s ease;
   border-radius: inherit;
 }
-@media (hover: hover) {
-  .topbar .lang button:hover { opacity: 0.85; color: var(--sol-lt); }
-  .topbar .lang button:hover::after { opacity: 1; }
-}
+.topbar .lang button:hover { opacity: 0.85; color: var(--sol-lt); }
+.topbar .lang button:hover::after { opacity: 1; }
 .topbar .lang button.active { opacity: 1; color: var(--sol-lt); font-weight: 500; }
 .topbar .lang button.active::after { opacity: 1; }
 .topbar .lang .divider { opacity: 0.55; }
@@ -1107,8 +1120,8 @@ p  { line-height: 1.65; font-weight: 300; }
 .mn-contacts .tl-dot {
   width: 5px; height: 5px;
   border-radius: 50%;
-  background: #25D366;
   flex-shrink: 0;
+  animation: tl-dot-rainbow 27s steps(9, end) infinite;
 }
 
 /* -------- Floating chat -------- */
@@ -1843,15 +1856,20 @@ body.apt-bar-shown .cookies {
               width 0.55s cubic-bezier(0.23, 1, 0.32, 1),
               opacity 0.4s ease;
 }
+.hv-inner {
+  position: relative;
+  width: 100%;
+  border-radius: 14px 0 14px 0;
+  overflow: hidden;
+}
 .hv-box {
+  position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  border-radius: 14px 0 14px 0;
   background: #000;
   opacity: 0.72;
-  transition: border-radius 0.55s cubic-bezier(0.23, 1, 0.32, 1),
-              opacity 0.4s;
+  transition: opacity 0.4s;
 }
 .hv-box video {
   width: 100%;
@@ -1885,24 +1903,26 @@ body.apt-bar-shown .cookies {
 @media (hover: hover) {
   .hv-toggle:hover { transform: scale(1.18); }
 }
-.hv-brand-btn {
+.hv-box-link {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: block;
   text-align: center;
-  color: var(--ber-dk);
+  color: var(--arena);
   font-size: 11px;
   font-family: var(--sans);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
   text-decoration: none;
   padding: 8px 6px 9px;
-  opacity: 0.92;
+  background: rgba(42,15,46,0.72);
   pointer-events: auto;
-  transition: opacity 0.2s;
-  background: var(--crema);
-  border-radius: 0 0 10px 0;
+  transition: background 0.2s;
 }
-@media (hover: hover) { .hv-brand-btn:hover { opacity: 1; } }
-@media (max-width: 900px) { .hv-brand-btn { display: none !important; } }
+@media (hover: hover) { .hv-box-link:hover { background: rgba(42,15,46,0.92); } }
+@media (max-width: 900px) { .hv-box-link { display: none; } }
 
 /* Ocultar cuando el hero sale de pantalla (para no solapar contenido) */
 .hv-offhero {
@@ -1917,8 +1937,10 @@ body.apt-bar-shown .cookies {
   width: 36px;
   pointer-events: auto;
 }
-.hv-min .hv-box {
+.hv-min .hv-inner {
   border-radius: 0 0 8px 0;
+}
+.hv-min .hv-box {
   opacity: 0.9;
 }
 .hv-min .hv-toggle {
@@ -7890,34 +7912,55 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   display: flex;
   gap: 20px;
   align-items: flex-start;
+  padding: 20px 22px;
   position: relative;
-  border-radius: 14px;
+  border-radius: 20px 0 20px 0;
   overflow: hidden;
   isolation: isolate;
+  cursor: pointer;
 }
+/* Hover fill — sweeps in from top-left using corporate corner shape */
 .nos-color-card::before {
   content: '';
   position: absolute;
   inset: 0;
   background: var(--nc, #2A0F2E);
-  clip-path: circle(0% at 30px 30px);
-  transition: clip-path 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  clip-path: inset(0 100% 100% 0 round 20px 0 20px 0);
+  transition: clip-path 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 0;
 }
+.nos-color-card:hover::before { clip-path: inset(0 0 0 0 round 20px 0 20px 0); }
+/* Crystalline idle glow — soft radial pulse of each card's own colour */
+.nos-color-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 70% at 28% 38%, var(--nc, #2A0F2E) 0%, transparent 68%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: inherit;
+  animation: nos-crystal-glow 4.2s ease-in-out infinite;
+  animation-delay: var(--crystal-delay, 0s);
+}
+@keyframes nos-crystal-glow {
+  0%, 100% { opacity: 0; }
+  50%       { opacity: 0.13; }
+}
+.nos-color-card:hover::after { animation: none; opacity: 0; }
 .nos-color-card > * { position: relative; z-index: 1; }
 .nos-color-hex,
 .nos-color-name,
 .nos-color-story { transition: color 0.3s, opacity 0.3s; }
-.nos-color-card { cursor: pointer; }
-.nos-color-card:hover::before { clip-path: circle(200% at 30px 30px); }
-.nos-color-card:hover .nos-color-hex { color: rgba(255,255,255,0.65); opacity: 1; }
-.nos-color-card:hover .nos-color-name { color: rgba(255,255,255,0.95); }
-.nos-color-card:hover .nos-color-story { color: rgba(255,255,255,0.82); opacity: 1; }
+.nos-color-card:hover .nos-color-hex { color: var(--nc-text-soft, rgba(255,255,255,0.65)); opacity: 1; }
+.nos-color-card:hover .nos-color-name { color: var(--nc-text, rgba(255,255,255,0.95)); }
+.nos-color-card:hover .nos-color-story { color: var(--nc-text, rgba(255,255,255,0.95)); opacity: 0.85; }
 .nos-color-card:hover .nos-color-swatch {
   box-shadow: 0 0 0 2px rgba(255,255,255,0.4), 0 4px 14px rgba(0,0,0,0.22);
 }
 @media (prefers-reduced-motion: reduce) {
   .nos-color-card::before { transition: none; }
+  .nos-color-card::after { animation: none; }
   .nos-color-hex, .nos-color-name, .nos-color-story { transition: none; }
 }
 .nos-color-swatch {
@@ -9722,10 +9765,17 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .team,
 .manifest,
 .ratings,
+.ratings-marquee,
 .quick-faq,
+.direct-perks-teaser,
 .contact-cta,
 .apt-page-desc,
-.apt-page-gallery {
+.apt-page-gallery,
+.opiniones-share-cta,
+.eo-form-sec,
+.mapa-page,
+.bridge,
+.gallery {
   border-radius: 32px 0 32px 0;
   position: relative;
   margin-bottom: -32px;
@@ -9742,32 +9792,43 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 
 /* ── z-index decreciente: A siempre encima de B ── */
-.frase-hogar      { z-index: 49; }
-.home-search      { z-index: 48; }
-.apartments-intro { z-index: 47; }
-.compare          { z-index: 46; }
-.counters         { z-index: 45; }
-.team             { z-index: 44; }
-.manifest         { z-index: 43; }
-.ratings          { z-index: 42; }
-.quick-faq        { z-index: 41; }
-.contact-cta      { z-index: 40; }
-.apt-page-desc    { z-index: 49; }
-.apt-page-gallery { z-index: 48; }
+.frase-hogar          { z-index: 49; }
+.home-search          { z-index: 48; }
+.apartments-intro     { z-index: 47; }
+.compare              { z-index: 46; }
+.counters             { z-index: 45; }
+.team                 { z-index: 44; }
+.manifest             { z-index: 43; }
+.ratings              { z-index: 42; }
+.ratings-marquee      { z-index: 41; }
+.quick-faq            { z-index: 40; }
+.direct-perks-teaser  { z-index: 40; }
+.contact-cta          { z-index: 40; }
+.apt-page-desc        { z-index: 49; }
+.apt-page-gallery     { z-index: 48; }
+.opiniones-share-cta  { z-index: 46; }
+.eo-form-sec          { z-index: 49; }
+.mapa-page            { z-index: 50; }
+.bridge               { z-index: 49; }
+.gallery              { z-index: 49; }
 
 /* ── Compensación de padding-top en B (original + 32 px) ── */
-.frase-hogar      { padding-top: calc(clamp(22px,  3vw,  36px)  + 32px); }
-.home-search      { padding-top: calc(80px                       + 32px); }
-.apartments-intro { padding-top: calc(clamp(100px, 10vw, 160px) + 32px); }
-.compare          { padding-top: 32px; }
-.counters         { padding-top: calc(clamp(80px,  10vw, 140px) + 32px); }
-.team             { padding-top: calc(clamp(100px, 12vw, 200px) + 32px); }
-.manifest         { padding-top: calc(clamp(100px, 10vw, 160px) + 32px); }
-.ratings          { padding-top: calc(clamp(90px,  10vw, 140px) + 32px); }
-.quick-faq        { padding-top: calc(72px                       + 32px); }
-.contact-cta      { padding-top: calc(clamp(100px, 12vw, 180px) + 32px); }
-.apt-page-desc    { padding-top: calc(80px                       + 32px); }
-.apt-page-gallery { padding-top: calc(80px                       + 32px); }
+.frase-hogar         { padding-top: calc(clamp(22px,  3vw,  36px)  + 32px); }
+.home-search         { padding-top: calc(80px                       + 32px); }
+.apartments-intro    { padding-top: calc(clamp(100px, 10vw, 160px) + 32px); }
+.compare             { padding-top: 32px; }
+.counters            { padding-top: calc(clamp(80px,  10vw, 140px) + 32px); }
+.team                { padding-top: calc(clamp(100px, 12vw, 200px) + 32px); }
+.manifest            { padding-top: calc(clamp(100px, 10vw, 160px) + 32px); }
+.ratings             { padding-top: calc(clamp(90px,  10vw, 140px) + 32px); }
+.ratings-marquee     { padding-top: calc(16px                       + 32px); }
+.quick-faq           { padding-top: calc(72px                       + 32px); }
+.direct-perks-teaser { padding-top: calc(clamp(20px, 3vw,  36px)  + 32px); }
+.contact-cta         { padding-top: calc(clamp(100px, 12vw, 180px) + 32px); }
+.apt-page-desc       { padding-top: calc(80px                       + 32px); }
+.apt-page-gallery    { padding-top: calc(80px                       + 32px); }
+.opiniones-share-cta { padding-top: calc(clamp(56px, 8vw,  88px)  + 32px); }
+.eo-form-sec         { padding-top: calc(clamp(56px, 8vw,  96px)  + 32px); }
 
 /* Body oscuro: la primera y última sección también quedan limpias */
 body:has(.hero),
@@ -9877,6 +9938,14 @@ html:has(.apt-page-hero) {
 /* apt-page-gallery: reordenado de z-index 48→47 para caber apt-video-desc en 48 */
 .apt-page-gallery { z-index: 47; }
 
+/* ── Correcciones z-index por página ──────────────────────────────────────────
+   .nos-why y .nosotros-team comparten z-47: en la página nosotros, nos-why
+   debe quedar por encima (está antes en el DOM).
+   En porque-hestia, pq-valores (antes que nos-colores) necesita z > 46. */
+body:has(.nosotros-hero) .nos-why    { z-index: 48; }
+body:has(.porque-hero)  .pq-valores  { z-index: 46; }
+body:has(.porque-hero)  .nos-colores { z-index: 45; }
+
 /* ── Capa GPU: recorte border-radius correcto en Chromium/WebKit ─────────────
    overflow:hidden + border-radius en el mismo elemento puede no recortar el
    fondo propio en algunos navegadores. translateZ(0) fuerza composición GPU
@@ -9884,7 +9953,8 @@ html:has(.apt-page-hero) {
    para que el color de la sección siguiente sea visible.                      */
 .hero, .apt-page-hero, .page-hero,
 .home-search, .counters, .manifest,
-.contact-cta, .contacto-hero {
+.contact-cta, .contacto-hero,
+.ratings-marquee, .direct-perks-teaser, .opiniones-share-cta {
   transform: translateZ(0);
   backface-visibility: hidden;
 }
@@ -18686,8 +18756,22 @@ img[src*="apt-vt-gallery-"] {
 .rv-btn-danger:hover { background: rgba(178,58,43,0.10); }
 
 /* ── Leila tab ── */
-.leila-hdr { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+.leila-hdr { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
 .leila-year-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.leila-saldo-row {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 16px; padding: 8px 12px;
+  background: rgba(61,26,53,0.04); border-radius: 8px;
+  border: 1px solid rgba(61,26,53,0.12);
+}
+.leila-saldo-label { font-size: 12px; color: var(--ink-soft); letter-spacing: .02em; }
+.leila-saldo-input {
+  width: 90px; padding: 4px 8px; border-radius: 6px;
+  border: 1px solid rgba(61,26,53,0.25); font-size: 13px;
+  background: #fff; color: var(--ber); text-align: right;
+}
+.leila-saldo-unit { font-size: 13px; color: var(--ink-soft); }
+.leila-saldo-hint { font-size: 11px; color: var(--ber); opacity: .7; margin-left: 4px; }
 .leila-yr-btn {
   padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(61,26,53,0.25);
   background: transparent; color: var(--ber); font-size: 13px; cursor: pointer;

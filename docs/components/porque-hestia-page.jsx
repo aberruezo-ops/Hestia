@@ -478,8 +478,22 @@ const PorqueColores = ({ lang }) => (
       <div className="nos-colores-grid">
         {BRAND_PALETTE.map((c, i) => {
           const d = c[lang];
+          // Relative luminance (sRGB) — dark colours get light text, light ones get dark.
+          const hex = c.hex.replace('#', '');
+          const r = parseInt(hex.slice(0,2),16)/255, g = parseInt(hex.slice(2,4),16)/255, b = parseInt(hex.slice(4,6),16)/255;
+          const lum = 0.2126*(r>0.04045?((r+0.055)/1.055)**2.4:r/12.92)
+                    + 0.7152*(g>0.04045?((g+0.055)/1.055)**2.4:g/12.92)
+                    + 0.0722*(b>0.04045?((b+0.055)/1.055)**2.4:b/12.92);
+          const ncText     = lum > 0.18 ? 'rgba(42,15,46,0.95)'  : 'rgba(255,255,255,0.95)';
+          const ncTextSoft = lum > 0.18 ? 'rgba(42,15,46,0.6)'   : 'rgba(255,255,255,0.65)';
           return (
-            <div key={i} className="nos-color-card reveal" style={{ transitionDelay: `${i * 0.09}s`, '--nc': c.hex }}>
+            <div key={i} className="nos-color-card reveal" style={{
+              transitionDelay: `${i * 0.09}s`,
+              '--nc': c.hex,
+              '--nc-text': ncText,
+              '--nc-text-soft': ncTextSoft,
+              '--crystal-delay': `${i * 0.47}s`,
+            }}>
               <div className="nos-color-swatch" style={{ background: c.hex }}/>
               <div>
                 <div className="nos-color-hex">{c.hex}</div>
