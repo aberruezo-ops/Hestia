@@ -1960,6 +1960,10 @@ body.apt-bar-shown .cookies {
 }
 
 /* --- Launch banner — fondo blanco, texto berenjena -------------------- */
+/* Sube el banner respecto al vitruvio normal para no tapar coordenadas */
+.hero-vitruvio--launch {
+  top: calc(100vh - 230px - clamp(200px, 22vw, 280px));
+}
 .hv-launch-card {
   border-radius: 14px 0 14px 0;
   overflow: hidden;
