@@ -18383,6 +18383,7 @@ img[src*="apt-vt-gallery-"] {
 .rv-head h2 { margin: 0; }
 .rv-head .rv-count { font-size: 12px; color: var(--ink-soft); font-weight: 400; }
 .rv-head-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.rv-head-actions .leila-loaded-at { font-size: 11px; color: var(--ink-soft); }
 
 /* --- Dashboard KPI cards --- */
 .rv-dashboard {
@@ -18843,10 +18844,18 @@ img[src*="apt-vt-gallery-"] {
 .rv-edit-foot-right { display: flex; gap: 8px; }
 .rv-btn-danger { color: #B23A2B; }
 .rv-btn-danger:hover { background: rgba(178,58,43,0.10); }
+.rv-overlap-warn {
+  margin: 0 20px 4px;
+  padding: 8px 12px;
+  background: #fff3cd; color: #7a5a00;
+  border-left: 3px solid #e6a800;
+  border-radius: 4px; font-size: 12px; font-weight: 500;
+}
 
 /* ── Leila tab ── */
 .leila-hdr { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
-.leila-sync-row { display: flex; gap: 8px; flex-wrap: wrap; width: 100%; margin-top: 4px; }
+.leila-sync-row { display: flex; gap: 8px; flex-wrap: wrap; width: 100%; margin-top: 4px; align-items: center; }
+.leila-loaded-at { font-size: 11px; color: var(--ink-soft); }
 .leila-year-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .leila-saldo-row {
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
