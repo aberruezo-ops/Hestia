@@ -6,15 +6,15 @@ const Topbar = ({ lang, setLang }) => (
   <>
     <div className="topbar">
       <div className="contacts">
-        <a href="https://wa.me/34620316370" className="topbar-link" target="_blank" rel="noopener" aria-label="WhatsApp Alex">
-          <span className="tl-dot"/>
+        <a href="https://wa.me/34620316370" className={`topbar-link${lang === 'es' ? ' tl-active' : ''}`} target="_blank" rel="noopener" aria-label="WhatsApp Alex">
+          <span className={`tl-dot${lang === 'es' ? ' tl-dot--on' : ''}`}/>
           <span className="tl-who hide-mobile">Alex</span>
           <span className="tl-mode hide-mobile">🇪🇸 Español</span>
           <span className="tl-num">+34 620 316 370</span>
         </a>
         <span className="sep">·</span>
-        <a href="https://wa.me/34654138251" className="topbar-link" target="_blank" rel="noopener" aria-label="WhatsApp Fran">
-          <span className="tl-dot"/>
+        <a href="https://wa.me/34654138251" className={`topbar-link${lang === 'en' ? ' tl-active' : ''}`} target="_blank" rel="noopener" aria-label="WhatsApp Fran">
+          <span className={`tl-dot${lang === 'en' ? ' tl-dot--on' : ''}`}/>
           <span className="tl-who hide-mobile">Fran</span>
           <span className="tl-mode hide-mobile">🇬🇧 English</span>
           <span className="tl-num">+34 654 138 251</span>
@@ -171,10 +171,15 @@ const Header = ({ mode, scrolled, lang }) => {
   const vitHidden = !heroVisible;
   const vitruvio = vitMin ? null : ReactDOM.createPortal(
     <div className={`hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`}>
-      <div className="hv-box" aria-hidden="true">
-        <video autoPlay muted loop playsInline preload="auto">
-          <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
-        </video>
+      <div className="hv-inner">
+        <div className="hv-box">
+          <video autoPlay muted loop playsInline preload="auto">
+            <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
+          </video>
+          <a href="porque-hestia.html" className="hv-box-link">
+            {lang === 'es' ? 'nuestra marca' : 'our brand'}
+          </a>
+        </div>
       </div>
       <button
         type="button"
@@ -184,9 +189,6 @@ const Header = ({ mode, scrolled, lang }) => {
       >
         -
       </button>
-      <a href="porque-hestia.html" className="hv-brand-btn">
-        {lang === 'es' ? 'Nuestra marca →' : 'Our brand →'}
-      </a>
     </div>,
     document.body
   );
