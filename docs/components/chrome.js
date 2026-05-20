@@ -280,6 +280,14 @@ const Header = ({
   })();
 
   // Banner de lanzamiento — siempre en la home, fondo blanco
+  const launchVidRef = React.useRef(null);
+  const replayLaunch = () => {
+    setLaunchEnded(false);
+    if (launchVidRef.current) {
+      launchVidRef.current.currentTime = 0;
+      launchVidRef.current.play().catch(() => {});
+    }
+  };
   const launchBanner = showBanner ? ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
     className: "hero-vitruvio hero-vitruvio--launch"
   }, /*#__PURE__*/React.createElement("div", {
@@ -289,6 +297,7 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-box"
   }, /*#__PURE__*/React.createElement("video", {
+    ref: launchVidRef,
     autoPlay: true,
     muted: true,
     playsInline: true,
@@ -297,11 +306,22 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("source", {
     src: "assets/gemini_generated_video_7C740615.mp4",
     type: "video/mp4"
-  })))), /*#__PURE__*/React.createElement("div", {
+  })), launchEnded && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "hv-replay",
+    onClick: replayLaunch,
+    "aria-label": lang === 'es' ? 'Volver a ver' : 'Replay'
+  }, "\u21BA"))), /*#__PURE__*/React.createElement("div", {
     className: `hv-launch-text${launchEnded ? ' hv-launch-text--visible' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-launch-text-inner"
-  }, lang === 'es' ? 'Hestía — Más que un alquiler, ¡tu hogar!' : 'Hestía — More than a rental, your home!'))), /*#__PURE__*/React.createElement("button", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Nuestra marca evoluciona, nuestra ilusi\xF3n contin\xFAa."), ' ', /*#__PURE__*/React.createElement("a", {
+    href: "porque-hestia.html",
+    className: "hv-launch-link"
+  }, "Saber m\xE1s \u2192")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Our brand evolves, our passion endures."), ' ', /*#__PURE__*/React.createElement("a", {
+    href: "porque-hestia.html",
+    className: "hv-launch-link"
+  }, "Learn more \u2192"))))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hv-toggle",
     onClick: dismissBanner,
