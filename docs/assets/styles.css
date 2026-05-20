@@ -9856,6 +9856,54 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   position: relative;
 }
 
+/* ── Línea divisora animada entre secciones ──────────────────────────────────
+   Aparece en bottom: 0 de cada sección — justo en la costura visual donde
+   la sección A (z-index mayor) termina y asoma B por debajo.
+   El gradiente viaja de izquierda a derecha y cicla por los colores de marca.
+   background-size: 300% → 3 repeticiones del patrón; la animación avanza
+   background-position de 0% a 100% formando un bucle continuo sin saltos. */
+@keyframes section-line-flow {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 100% 0%; }
+}
+.section-night::after,
+.section-dark::after,
+.section-violet::after,
+.section-day::after,
+.section-cream::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent  0%,
+    #3AAABB      8%,
+    #D4A84A     24%,
+    #B86A3C     40%,
+    #4E2446     56%,
+    #3AAABB     72%,
+    #D4A84A     88%,
+    transparent 100%
+  );
+  background-size: 300% 100%;
+  animation: section-line-flow 9s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+@media (prefers-reduced-motion: reduce) {
+  .section-night::after,
+  .section-dark::after,
+  .section-violet::after,
+  .section-day::after,
+  .section-cream::after {
+    animation: none;
+    background: linear-gradient(90deg, transparent 0%, #3AAABB 15%, #D4A84A 50%, #B86A3C 85%, transparent 100%);
+  }
+}
+
 /* ── z-index decreciente: A siempre encima de B ── */
 .frase-hogar          { z-index: 49; }
 .home-search          { z-index: 48; }
