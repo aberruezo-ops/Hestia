@@ -111,7 +111,7 @@ const Hero = ({ lang, onScrollDown }) => {
         ref={bgVideoRef}
         className="hero-bg-video"
         autoPlay muted loop playsInline
-        preload="auto"
+        preload="none"
         poster={pick.poster}
         aria-label={pick.alt}
         key={pick.src}
