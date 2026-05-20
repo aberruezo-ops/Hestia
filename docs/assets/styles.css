@@ -1979,22 +1979,28 @@ body.apt-bar-shown .cookies {
   border-radius: 0;
 }
 .hv-launch-text {
-  background: transparent;
-  border-radius: 0;
-  padding: 12px 14px 15px;
-  color: var(--ber-dk);
-  font-family: var(--sans);
-  font-size: 11px;
-  line-height: 1.5;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hv-launch-text--visible {
+  max-height: 80px;
+}
+.hv-launch-text-inner {
+  padding: 11px 14px 14px;
   text-align: center;
+  font-family: var(--serif);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--ber-dk);
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 0.8s ease 0.25s, transform 0.65s ease 0.25s;
   pointer-events: auto;
 }
-.hv-launch-text strong {
-  display: block;
-  margin-top: 5px;
-  font-family: var(--serif);
-  font-size: 12.5px;
-  color: var(--ber-dk);
+.hv-launch-text--visible .hv-launch-text-inner {
+  opacity: 1;
+  transform: translateY(0);
 }
 @media (max-width: 900px) {
   .hero-vitruvio--launch {
@@ -2006,8 +2012,7 @@ body.apt-bar-shown .cookies {
   }
   .hero-vitruvio--launch .hv-box { aspect-ratio: 16 / 9; }
   .hv-launch-card { border-radius: 12px 0 12px 0; }
-  .hv-launch-text { font-size: 12px; }
-  .hv-launch-text strong { font-size: 13px; }
+  .hv-launch-text-inner { font-size: 12px; }
 }
 
 .hero-wordmark {

@@ -156,6 +156,7 @@ const Header = ({ mode, scrolled, lang }) => {
       return page === '' || page === 'index.html';
     } catch (_) { return false; }
   });
+  const [launchEnded, setLaunchEnded] = React.useState(false);
   const dismissBanner = React.useCallback(() => { setShowBanner(false); }, []);
 
   const toggleVit = () => {
@@ -193,15 +194,18 @@ const Header = ({ mode, scrolled, lang }) => {
       <div className="hv-launch-card">
         <div className="hv-inner">
           <div className="hv-box">
-            <video autoPlay muted loop playsInline preload="auto">
+            <video autoPlay muted playsInline preload="auto"
+                   onEnded={() => setLaunchEnded(true)}>
               <source src="assets/gemini_generated_video_7C740615.mp4" type="video/mp4"/>
             </video>
           </div>
         </div>
-        <div className="hv-launch-text">
-          {lang === 'es'
-            ? <>Estrenamos imagen, pero seguimos con la misma ilusión que hace 10 años.<br/><strong>Hestía — Más que un alquiler, ¡tu hogar!</strong></>
-            : <>New look, same passion as 10 years ago.<br/><strong>Hestía — More than a rental, your home!</strong></>}
+        <div className={`hv-launch-text${launchEnded ? ' hv-launch-text--visible' : ''}`}>
+          <div className="hv-launch-text-inner">
+            {lang === 'es'
+              ? 'Hestía — Más que un alquiler, ¡tu hogar!'
+              : 'Hestía — More than a rental, your home!'}
+          </div>
         </div>
       </div>
       <button
