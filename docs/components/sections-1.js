@@ -184,7 +184,7 @@ const Hero = ({
     className: "hero-proof-name"
   }, "Salinas")), /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-platform"
-  }, lang === 'es' ? 'Booking · Airbnb · Google' : 'Booking · Airbnb · Google'))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Media · Booking · Airbnb · web' : 'Average · Booking · Airbnb · site'))), /*#__PURE__*/React.createElement("div", {
     className: "hero-meta"
   }, /*#__PURE__*/React.createElement("span", {
     className: "hero-meta-coords"
