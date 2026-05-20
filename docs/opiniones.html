@@ -122,13 +122,11 @@
     } catch (e) { console.warn('reviews.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      await new Promise((resolve, reject) => {
-        const el = document.createElement('script');
-        el.src = file + '?t=' + Date.now();
-        el.onload = resolve;
-        el.onerror = () => reject(new Error(`Failed to load ${file}`));
-        document.head.appendChild(el);
-      });
+      const res = await fetch(file + '?t=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
+      const code = await res.text();
+      // eslint-disable-next-line no-eval
+      eval(code);
     }
   }
 
