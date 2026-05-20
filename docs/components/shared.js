@@ -293,11 +293,17 @@ const useScrollMode = () => {
   const [mode, setMode] = React.useState('night');
   const [scrolled, setScrolled] = React.useState(false);
 
-  // Keep --topbar-h in sync with the actual rendered topbar height
+  // Keep --topbar-h, --header-h, --chrome-h in sync with real rendered heights
   React.useEffect(() => {
     const sync = () => {
-      const el = document.querySelector('.topbar');
-      if (el) document.documentElement.style.setProperty('--topbar-h', el.offsetHeight + 'px');
+      const root = document.documentElement;
+      const tb = document.querySelector('.topbar');
+      const hd = document.querySelector('.header');
+      const tbH = tb ? tb.offsetHeight : 36;
+      const hdH = hd ? hd.offsetHeight : 80;
+      root.style.setProperty('--topbar-h', tbH + 'px');
+      root.style.setProperty('--header-h', hdH + 'px');
+      root.style.setProperty('--chrome-h', tbH + hdH + 'px');
     };
     sync();
     window.addEventListener('resize', sync);
