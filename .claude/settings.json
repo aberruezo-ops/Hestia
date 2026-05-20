@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // \"\"' | grep -q '\\.jsx$' && cd /home/user/Hestia && node scripts/build-jsx.js 2>&1 || true",
+            "statusMessage": "Compilando JSX…"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // \"\"' | grep -q 'styles\\.css' && { CURR=$(grep -oE 'styles\\.css\\?v=[0-9]+' /home/user/Hestia/docs/index.html | grep -oE '[0-9]+$' | head -1); NEXT=$((CURR + 1)); find /home/user/Hestia/docs -maxdepth 1 -name '*.html' -exec sed -i \"s/styles\\.css?v=$CURR/styles.css?v=$NEXT/g\" {} \\;; echo \"CSS v$CURR → v$NEXT en $(find /home/user/Hestia/docs -maxdepth 1 -name '*.html' | wc -l) HTMLs\"; } || true",
+            "statusMessage": "Subiendo versión CSS…"
+          }
+        ]
+      }
+    ]
+  }
+}
