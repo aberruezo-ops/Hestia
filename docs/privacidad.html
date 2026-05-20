@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-  <meta http-equiv="Pragma" content="no-cache"/>
-  <meta http-equiv="Expires" content="0"/>
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"/>
+  <meta charset="UTF-8"/>  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"/>
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -36,8 +32,8 @@
 <body>
 <div id="root"></div>
 
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react.development.js'"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react-dom.development.js'"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react.development.js'"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react-dom.development.js'"></script>
 <script>
   window.__LEGAL__ = 'privacidad';
   const __PRM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -58,11 +54,13 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?t=' + Date.now(), { cache: 'no-store' });
-      if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
-      const code = await res.text();
-      // eslint-disable-next-line no-eval
-      eval(code);
+      await new Promise((resolve, reject) => {
+        const el = document.createElement('script');
+        el.src = file + '?t=' + Date.now();
+        el.onload = resolve;
+        el.onerror = () => reject(new Error(`Failed to load ${file}`));
+        document.head.appendChild(el);
+      });
     }
   }
 

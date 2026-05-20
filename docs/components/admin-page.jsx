@@ -1093,6 +1093,7 @@ const ContractTab = ({ pricesData }) => {
     && diasCancelacion > 0;
 
   const buildContractHTML = () => {
+    const escHtml = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     const a = aptInfo;
     const fechaFirmaStr  = fmtFechaEs(fechaFirma);
     const fechaEntradaStr = fmtFechaCorta(fechaEntrada);
@@ -1134,7 +1135,7 @@ const ContractTab = ({ pricesData }) => {
     return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
 <base href="${origin}${baseDir}">
-<title>Contrato · Hestía Vera ${a.shortName} · ${nombre}</title>
+<title>Contrato · Hestía Vera ${a.shortName} · ${escHtml(nombre)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -1525,7 +1526,7 @@ const ContractTab = ({ pricesData }) => {
 <h2>Reunidos</h2>
 <p>Por una parte, <strong>D. Alejandro Berruezo Márquez</strong> y <strong>D. Francisco Javier Moral Arévalo</strong>, mayores de edad, y con domicilio a efectos de notificaciones en Avenida de la Constitución 38, 1A, 28821 de Coslada, Madrid, con DNI. 02646392N y 75018031N, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ES2114650100911726525059.</p>
 <p><em>(De ahora en adelante, "Los Propietarios".)</em></p>
-<p>De otra parte, <strong>D./Dña. ${nombre.toUpperCase()}</strong>, mayor de edad, con domicilio a efectos de notificaciones en: ${domicilio ? `<strong>${domicilio}</strong>` : '<span class="blank-line long" aria-label="dirección a rellenar"></span>'}, con Documento Nacional de Identidad: ${dni ? `<strong>${dni}</strong>` : '<span class="blank-line short" aria-label="DNI a rellenar"></span>'}, y con teléfono: ${telefono ? `<strong>${telefono}</strong>` : '<span class="blank-line short" aria-label="teléfono a rellenar"></span>'}.</p>
+<p>De otra parte, <strong>D./Dña. ${escHtml(nombre.toUpperCase())}</strong>, mayor de edad, con domicilio a efectos de notificaciones en: ${domicilio ? `<strong>${escHtml(domicilio)}</strong>` : '<span class="blank-line long" aria-label="dirección a rellenar"></span>'}, con Documento Nacional de Identidad: ${dni ? `<strong>${escHtml(dni)}</strong>` : '<span class="blank-line short" aria-label="DNI a rellenar"></span>'}, y con teléfono: ${telefono ? `<strong>${escHtml(telefono)}</strong>` : '<span class="blank-line short" aria-label="teléfono a rellenar"></span>'}.</p>
 <p><em>(en adelante, "la Parte Arrendataria".)</em></p>
 <p>Ambas partes se reconocen capacidad legal suficiente para este acto y libremente,</p>
 
@@ -1609,7 +1610,7 @@ ${clausulaFianza}
   </div>
   <div class="firma">
     <strong>La Parte Arrendataria</strong><br>
-    Fdo.: <strong>${nombre.toUpperCase()}</strong>
+    Fdo.: <strong>${escHtml(nombre.toUpperCase())}</strong>
   </div>
 </div>
 

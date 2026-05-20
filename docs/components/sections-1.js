@@ -133,7 +133,7 @@ const Hero = ({
     muted: true,
     loop: true,
     playsInline: true,
-    preload: "auto",
+    preload: "none",
     poster: pick.poster,
     "aria-label": pick.alt,
     key: pick.src
