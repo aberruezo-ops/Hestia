@@ -103,7 +103,7 @@ const PORQUE_COPY = {
     values_lede: 'The name we received from the Greek goddess is not only a symbol: it is a guide. Every letter of Hestía names a value we practice every day. Six ideas that add up to one: trust.',
     values: [
       { letter: 'H', name: 'Hospitality',  desc: 'The flame that welcomes. Hestía is the goddess of the hearth — keeper of the fire honoured when leaving and returning. Your stay begins the day you book and does not end when you leave: it ends the day you want to come back.' },
-      { letter: 'E', name: 'Empathy',      desc: 'People, not clients. Alex in Spanish, Fran in English. We know your name before you cross the door and what you need — because you tell us, and because we listen. No forms. No intermediaries.' },
+      { letter: 'E', name: 'Listening',    desc: 'People, not clients. Alex in Spanish, Fran in English. We know your name before you cross the door and what you need — because you tell us, and because we listen. No forms. No intermediaries.' },
       { letter: 'S', name: 'Simplicity',   desc: 'No reception. No office. The essentials done with care: three keys, three homes, two people on the phone. Anything more is in the way.' },
       { letter: 'T', name: 'Transparency', desc: 'No small print. Clear prices, real photos, distances measured in metres. If something is missing, we say so. If something breaks, we fix it. What you see is what is there.' },
       { letter: 'I', name: 'Integrity',    desc: 'What we promise at booking is what we hand over when the door opens. We design every Hestía as if it were our own home — because in a way it is. The neatly placed cushion, the waiting coffee, the folded towel: the detail that changes everything.' },

@@ -123,7 +123,7 @@ const PORQUE_COPY = {
       desc: 'The flame that welcomes. Hestía is the goddess of the hearth — keeper of the fire honoured when leaving and returning. Your stay begins the day you book and does not end when you leave: it ends the day you want to come back.'
     }, {
       letter: 'E',
-      name: 'Empathy',
+      name: 'Listening',
       desc: 'People, not clients. Alex in Spanish, Fran in English. We know your name before you cross the door and what you need — because you tell us, and because we listen. No forms. No intermediaries.'
     }, {
       letter: 'S',
