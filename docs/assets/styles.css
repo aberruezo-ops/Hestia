@@ -223,7 +223,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--topbar-h, 36px) + 90px); }
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--chrome-h, 116px) + 16px); }
 
 body {
   margin: 0;
@@ -9525,7 +9525,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   background: var(--ber-dk);
   display: flex;
   align-items: center;
-  padding: 140px var(--page-pad) 80px;
+  padding: calc(var(--chrome-h, 116px) + 24px) var(--page-pad) 80px;
   position: relative;
   overflow: hidden;
 }
@@ -9775,7 +9775,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   .noticias-terr-grid { grid-template-columns: 1fr; gap: 40px; }
 }
 @media (max-width: 600px) {
-  .noticias-hero { padding-top: 120px; padding-bottom: 60px; }
+  .noticias-hero { padding-top: calc(var(--chrome-h, 116px) + 16px); padding-bottom: 60px; }
   .noticias-voz, .noticias-territorio, .noticias-next { padding: 60px var(--page-pad); }
 }
 
@@ -16269,8 +16269,8 @@ a:focus-visible,
 .mapa-page {
   background: var(--crema);
   color: var(--ber-dk);
-  padding: clamp(80px, 12vw, 140px) var(--page-pad) clamp(64px, 10vw, 120px);
-  min-height: calc(100vh - var(--topbar-h, 50px));
+  padding: calc(var(--chrome-h, 116px) + 40px) var(--page-pad) clamp(64px, 10vw, 120px);
+  min-height: calc(100vh - var(--chrome-h, 116px));
   background-image: radial-gradient(ellipse 60% 40% at 80% 20%, rgba(58,170,187,.07) 0%, transparent 70%),
                     radial-gradient(ellipse 50% 60% at 10% 80%, rgba(123,59,107,.06) 0%, transparent 70%);
 }
