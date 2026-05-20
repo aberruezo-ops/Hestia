@@ -329,6 +329,16 @@ const useScrollMode = () => {
 };
 const useReveal = () => {
   React.useEffect(() => {
+    // Marcar automáticamente las secciones con fondo corporativo para la
+    // animación de entrada (border-radius + blur). Se excluyen heros y
+    // secciones que ya están en el viewport al cargar (first-child visible).
+    const BG_CLASSES = ['section-night', 'section-dark', 'section-violet', 'section-day', 'section-cream'];
+    document.querySelectorAll(BG_CLASSES.map(c => `.${c}`).join(',')).forEach(el => {
+      if (!el.classList.contains('reveal-section') && !el.closest('.hero, .apt-page-hero, .page-hero')) {
+        el.classList.add('reveal-section');
+      }
+    });
+    const SELECTOR = '.reveal:not(.in), .reveal-section:not(.in)';
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
@@ -337,17 +347,14 @@ const useReveal = () => {
         }
       });
     }, {
-      threshold: 0.15
+      threshold: 0.08
     });
-    // Observa los .reveal presentes en el primer render.
-    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
-    // Y los que aparezcan después (filtros, tabs, expansiones…) vía
-    // MutationObserver. Sin esto, una card .reveal añadida tras un
-    // setState quedaría con opacity:0 para siempre.
+    document.querySelectorAll(SELECTOR).forEach(el => io.observe(el));
     const observe = node => {
       if (!(node instanceof Element)) return;
-      if (node.classList && node.classList.contains('reveal') && !node.classList.contains('in')) io.observe(node);
-      node.querySelectorAll && node.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+      const isReveal = node.classList && (node.classList.contains('reveal') || node.classList.contains('reveal-section')) && !node.classList.contains('in');
+      if (isReveal) io.observe(node);
+      node.querySelectorAll && node.querySelectorAll(SELECTOR).forEach(el => io.observe(el));
     };
     const mo = new MutationObserver(mutations => {
       mutations.forEach(m => m.addedNodes.forEach(observe));
