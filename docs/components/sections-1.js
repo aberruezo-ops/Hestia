@@ -633,7 +633,7 @@ const Compare = ({
   }, {
     label: 'Piscina',
     vm: 'Comunitaria',
-    vt: 'Comunitaria + jacuzzi',
+    vt: '2 ext. + jacuzzi',
     vs: 'Comunitaria + pistas de pádel'
   }, {
     label: 'Extra ⭑',
@@ -695,7 +695,7 @@ const Compare = ({
   }, {
     label: 'Pool',
     vm: 'Shared',
-    vt: 'Shared + jacuzzi',
+    vt: '2 outdoor + jacuzzi',
     vs: 'Shared + padel courts'
   }, {
     label: 'Extra ⭑',

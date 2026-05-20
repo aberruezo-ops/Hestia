@@ -648,7 +648,7 @@ const FloatingChat = ({
     id: "float-chat-title"
   }, lang === 'es' ? 'Hablemos.' : 'Let\'s talk.'), /*#__PURE__*/React.createElement("p", {
     className: "small"
-  }, lang === 'es' ? 'Te responde una persona. En minutos, no en días.' : 'A real person replies. In minutes, not days.'), persons.map(p => /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Te responde una persona real. En minutos, no en días.' : 'A real person replies. In minutes, not days.'), persons.map(p => /*#__PURE__*/React.createElement("div", {
     className: "contact-person",
     key: p.id
   }, /*#__PURE__*/React.createElement("div", {
@@ -708,7 +708,7 @@ const Cookies = ({
   React.useEffect(() => {
     const k = localStorage.getItem('hestia-cookies');
     if (!k) {
-      const t = setTimeout(() => setVisible(true), 1400);
+      const t = setTimeout(() => setVisible(true), 800);
       return () => clearTimeout(t);
     }
   }, []);

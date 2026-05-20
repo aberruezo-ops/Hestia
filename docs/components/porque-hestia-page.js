@@ -232,11 +232,11 @@ const BRAND_PALETTE = [{
   hex: '#D4A84A',
   es: {
     name: 'Sol almeriense',
-    story: 'La luz de la tarde en verano. Trescientos días al año, este es el color que baña las terrazas de Hestía a las seis. No amarillo. Oro viejo.'
+    story: 'La luz de la tarde en verano. Más de 320 días al año, este es el color que baña las terrazas de Hestía a las seis. No amarillo. Oro viejo.'
   },
   en: {
     name: 'Almería sun',
-    story: "Afternoon light in summer. Three hundred days a year, this is the colour washing Hestía's terraces at six. Not yellow. Old gold."
+    story: "Afternoon light in summer. More than 320 days a year, this is the colour washing Hestía's terraces at six. Not yellow. Old gold."
   }
 }, {
   hex: '#8B4A1E',
