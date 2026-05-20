@@ -2375,6 +2375,7 @@ const ReservasTab = ({ token }) => {
   const [selectedIdx, setSelectedIdx] = React.useState(-1);
   const [draft,       setDraft]       = React.useState(null);
   const [focusYearOverride, setFocusYearOverride] = React.useState(null);
+  const [focusMonth,        setFocusMonth]        = React.useState('all');
 
   const [loadedAt, setLoadedAt] = React.useState(null);
 
@@ -2441,6 +2442,15 @@ const ReservasTab = ({ token }) => {
   const defaultFocus = byYear[currentYear] ? currentYear : (allYears[allYears.length - 1] || currentYear);
   const focusYear = focusYearOverride && byYear[focusYearOverride] ? focusYearOverride : defaultFocus;
   const focusList = byYear[focusYear] || [];
+
+  const MES_FULL = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const allMonths = [...new Set(focusList.map(r => (r.entrada || '').slice(5, 7)).filter(Boolean))].sort();
+  const byMonth = {};
+  focusList.forEach(r => {
+    const m = (r.entrada || '').slice(5, 7);
+    if (m) (byMonth[m] = byMonth[m] || []).push(r);
+  });
+  const visibleMonths = focusMonth === 'all' ? allMonths : allMonths.filter(m => m === focusMonth);
 
   // --- Métricas consistentes año a año ---
   // Bruto = ingreso_total (lo que paga el huésped al canal).
@@ -2692,7 +2702,7 @@ const ReservasTab = ({ token }) => {
                     return (
                       <tr key={y}
                           className={`rv-yearly-row${isFocus ? ' is-focus' : ''}`}
-                          onClick={() => setFocusYearOverride(y)}>
+                          onClick={() => { setFocusYearOverride(y); setFocusMonth('all'); }}>
                         <td><strong>{y}</strong></td>
                         <td className="num">{m.reservas}</td>
                         <td className="num">{m.noches}</td>
@@ -2788,6 +2798,12 @@ const ReservasTab = ({ token }) => {
 
         {/* ───── Filtros ───── */}
         <div className="rv-toolbar">
+          <label>Mes
+            <select value={focusMonth} onChange={e => setFocusMonth(e.target.value)}>
+              <option value="all">Todos los meses</option>
+              {allMonths.map(m => <option key={m} value={m}>{MES_FULL[parseInt(m, 10) - 1]}</option>)}
+            </select>
+          </label>
           <label>Apartamento
             <select value={filterApt} onChange={e => setFilterApt(e.target.value)}>
               <option value="all">Todos</option>
@@ -2811,44 +2827,77 @@ const ReservasTab = ({ token }) => {
           <span className="rv-hint">Click en una fila para editarla →</span>
         </div>
 
-        {/* ───── Tabla ───── */}
-        <div className="rv-table-wrap">
-          <table className="rv-table">
-            <thead><tr>
-              <th className="rv-status-th"></th>
-              <th>Apt</th><th>Huésped</th><th>Entrada</th><th>Salida</th>
-              <th className="num">Noches</th><th className="num">Pax</th>
-              <th>Canal</th>
-              <th className="num">Ingreso</th><th className="num">Comisión</th><th className="num">BAI</th><th className="num">%</th>
-            </tr></thead>
-            <tbody>
-              {filtered.map(r => {
-                const idx = reservas.indexOf(r);
-                const status = reservaStatus(r, today);
-                const statusIcon = status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
-                const isSel = idx === selectedIdx;
-                return (
-                  <tr key={idx} className={`rv-row rv-row-${status}${isSel ? ' is-selected' : ''}`}
-                    data-apt={r.apt} style={{'--apt-c': APT_COLOR[r.apt] || 'transparent'}}
-                    onClick={() => openRow(idx)}>
-                    <td className={`rv-status rv-status-${status}`} title={status}>{statusIcon}</td>
-                    <td><span className="rv-apt-chip" style={{background: APT_COLOR[r.apt], color: APT_TEXT[r.apt]}}>{APT_NAMES[r.apt] || r.apt}</span></td>
-                    <td>{r.responsable}{r.mascota ? ' 🐾' : ''}{r.cuna_trona ? ' 👶' : ''}</td>
-                    <td>{fmtDate(r.entrada)}</td>
-                    <td>{fmtDate(r.salida)}</td>
-                    <td className="num">{r.noches || '—'}</td>
-                    <td className="num">{r.huespedes || '—'}</td>
-                    <td>{r.canal || '—'}</td>
-                    <td className="num">{fmtEur(r.ingreso_total)}</td>
-                    <td className="num">{fmtEur(r.comision)}</td>
-                    <td className="num">{fmtEur(r.bai)}</td>
-                    <td className="num">{fmtPct(r.rentabilidad_pct)}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        {/* ───── Tablas por mes ───── */}
+        {visibleMonths.length === 0 && <p className="pe-help" style={{ marginTop: 16 }}>Sin reservas en {focusYear}.</p>}
+
+        {visibleMonths.map(m => {
+          const mRows = filtered.filter(r => (r.entrada || '').slice(5, 7) === m);
+          if (mRows.length === 0) return null;
+          const mBruto   = mRows.reduce((s, r) => s + (Number(r.ingreso_total) || 0), 0);
+          const mComis   = mRows.reduce((s, r) => s + (Number(r.comision) || 0), 0);
+          const mBai     = mRows.reduce((s, r) => s + (Number(r.bai) || 0), 0);
+          const mNoches  = mRows.reduce((s, r) => s + (Number(r.noches) || 0), 0);
+          return (
+            <div key={m} className="leila-month-block">
+              <div className="leila-month-hdr">
+                <span className="leila-month-name">{MES_FULL[parseInt(m, 10) - 1]} {focusYear}</span>
+                <span className="leila-month-kpis">
+                  <span>{mRows.length} reserva{mRows.length !== 1 ? 's' : ''}</span>
+                  <span>{mNoches} noches</span>
+                  <span>Bruto: <strong>{fmtEur(mBruto)}</strong></span>
+                  <span>BAI: <strong>{fmtEur(mBai)}</strong></span>
+                  <span>{mBruto ? fmtPct(mBai / mBruto) : '—'}</span>
+                </span>
+              </div>
+              <div className="rv-table-wrap">
+                <table className="rv-table">
+                  <thead><tr>
+                    <th className="rv-status-th"></th>
+                    <th>Apt</th><th>Huésped</th><th>Entrada</th><th>Salida</th>
+                    <th className="num">Noches</th><th className="num">Pax</th>
+                    <th>Canal</th>
+                    <th className="num">Ingreso</th><th className="num">Comisión</th><th className="num">BAI</th><th className="num">%</th>
+                  </tr></thead>
+                  <tbody>
+                    {mRows.map(r => {
+                      const idx = reservas.indexOf(r);
+                      const status = reservaStatus(r, today);
+                      const statusIcon = status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
+                      const isSel = idx === selectedIdx;
+                      return (
+                        <tr key={idx} className={`rv-row rv-row-${status}${isSel ? ' is-selected' : ''}`}
+                          data-apt={r.apt} style={{'--apt-c': APT_COLOR[r.apt] || 'transparent'}}
+                          onClick={() => openRow(idx)}>
+                          <td className={`rv-status rv-status-${status}`} title={status}>{statusIcon}</td>
+                          <td><span className="rv-apt-chip" style={{background: APT_COLOR[r.apt], color: APT_TEXT[r.apt]}}>{APT_NAMES[r.apt] || r.apt}</span></td>
+                          <td>{r.responsable}{r.mascota ? ' 🐾' : ''}{r.cuna_trona ? ' 👶' : ''}</td>
+                          <td>{fmtDate(r.entrada)}</td>
+                          <td>{fmtDate(r.salida)}</td>
+                          <td className="num">{r.noches || '—'}</td>
+                          <td className="num">{r.huespedes || '—'}</td>
+                          <td>{r.canal || '—'}</td>
+                          <td className="num">{fmtEur(r.ingreso_total)}</td>
+                          <td className="num">{fmtEur(r.comision)}</td>
+                          <td className="num">{fmtEur(r.bai)}</td>
+                          <td className="num">{fmtPct(r.rentabilidad_pct)}</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                  <tfoot>
+                    <tr className="rv-month-foot">
+                      <td colSpan="8"/>
+                      <td className="num"><strong>{fmtEur(mBruto)}</strong></td>
+                      <td className="num">{fmtEur(mComis)}</td>
+                      <td className="num"><strong>{fmtEur(mBai)}</strong></td>
+                      <td className="num">{mBruto ? fmtPct(mBai / mBruto) : '—'}</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       {/* ───── Panel deslizante de edición ───── */}
