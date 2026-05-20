@@ -189,7 +189,7 @@ const COPY = {
     alex_role: 'Reserva · Antes de tu llegada',
     alex_quote: '«A ti, antes de que llegues, te lo cuento todo. Después, cuando te vayas, te echaré de menos.»',
     fran_role: 'Estancia · Mientras estás aquí',
-    fran_quote: '«If anything breaks, calls, or changes — I am here. Your stay, my job.»',
+    fran_quote: '«Si algo falla, cambia o necesita atención — estoy aquí. Tu estancia, mi trabajo.»',
     manifest_eyebrow: 'El viajero que hace hogar',
     manifest_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hest\xEDa no se visita, ", /*#__PURE__*/React.createElement("em", null, "se vive \u2014 y se cuida para quien venga despu\xE9s.")),
     manifest_lead_1: 'No vienes a hacer turismo. Vienes a cocinar tu desayuno, a leer en la terraza, a seguir tu ritmo. Esto no es un hotel — durante tu estancia, es tu casa.',

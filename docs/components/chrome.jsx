@@ -489,7 +489,7 @@ const FloatingChat = ({ lang }) => {
         <h4 id="float-chat-title">{lang === 'es' ? 'Hablemos.' : 'Let\'s talk.'}</h4>
         <p className="small">
           {lang === 'es'
-            ? 'Te responde una persona. En minutos, no en días.'
+            ? 'Te responde una persona real. En minutos, no en días.'
             : 'A real person replies. In minutes, not days.'}
         </p>
         {persons.map(p => (
@@ -536,7 +536,7 @@ const Cookies = ({ lang }) => {
   React.useEffect(() => {
     const k = localStorage.getItem('hestia-cookies');
     if (!k) {
-      const t = setTimeout(() => setVisible(true), 1400);
+      const t = setTimeout(() => setVisible(true), 800);
       return () => clearTimeout(t);
     }
   }, []);
