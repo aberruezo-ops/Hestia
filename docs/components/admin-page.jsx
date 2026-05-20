@@ -1091,7 +1091,7 @@ const ContractTab = ({ pricesData }) => {
     && Number(prereserva) <= Number(precioTotal)
     && diasCancelacion > 0;
 
-  const buildContractHTML = () => {
+  const buildContractHTML = (heroDataUrl) => {
     const a = aptInfo;
     const fechaFirmaStr  = fmtFechaEs(fechaFirma);
     const fechaEntradaStr = fmtFechaCorta(fechaEntrada);
@@ -1129,7 +1129,7 @@ const ContractTab = ({ pricesData }) => {
       : '/';
     const assetUrl = (p) => `${origin}${baseDir}${p}`.replace(/([^:])\/+/g, '$1/');
     const logoUrl = assetUrl('assets/logo-hestia-brand.png');
-    const heroUrl = assetUrl(a.heroPhoto);
+    const heroUrl = heroDataUrl || assetUrl(a.heroPhoto);
     return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
 <base href="${origin}${baseDir}">
@@ -1300,6 +1300,24 @@ const ContractTab = ({ pricesData }) => {
     font-size: 9pt;
     margin-top: 2mm;
     color: var(--arena-dk);
+  }
+
+  /* Marca de agua — aparece en todas las páginas del PDF */
+  .wm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 320pt;
+    font-weight: 700;
+    color: rgba(61, 26, 53, 0.055);
+    z-index: -1;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   h1 {
@@ -1490,6 +1508,7 @@ const ContractTab = ({ pricesData }) => {
   .print-bar button:hover { background: var(--ber-lt); }
 </style></head>
 <body>
+<div class="wm" aria-hidden="true">H</div>
 <div class="print-bar">
   <h4>Ajustes recomendados</h4>
   <ul>
@@ -1640,13 +1659,31 @@ Alex y Fran · Hestía
 info@hestiayourhome.com · +34 620 316 370`;
   };
 
-  const onGenerar = () => {
+  const onGenerar = async () => {
     if (!formOk()) {
       alert('Faltan campos por rellenar. Comprueba que el huésped tiene nombre, fechas y precio total > 0, y que la prereserva no supere el total.');
       return;
     }
+    // Pre-cargar la foto del apartamento como data URI para que el PDF
+    // la incluya aunque el navegador corte la carga de red al imprimir.
+    let heroDataUrl = null;
+    try {
+      const origin = (typeof window !== 'undefined' && window.location && window.location.origin) || '';
+      const baseDir = (typeof window !== 'undefined' && window.location && window.location.pathname)
+        ? window.location.pathname.replace(/[^\/]+$/, '') : '/';
+      const heroAbsUrl = `${origin}${baseDir}${aptInfo.heroPhoto}`.replace(/([^:])\/+/g, '$1/');
+      const resp = await fetch(heroAbsUrl);
+      if (resp.ok) {
+        const blob = await resp.blob();
+        heroDataUrl = await new Promise(res => {
+          const reader = new FileReader();
+          reader.onload = () => res(reader.result);
+          reader.readAsDataURL(blob);
+        });
+      }
+    } catch (_) { /* sigue con URL normal si hay error de red */ }
     // 1. Abrir ventana con el contrato (auto-print después de un momento)
-    const html = buildContractHTML();
+    const html = buildContractHTML(heroDataUrl);
     const w = window.open('', '_blank');
     if (w) {
       w.document.open();
