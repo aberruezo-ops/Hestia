@@ -17,18 +17,23 @@ const LEGAL_COPY = {
         h: 'Cookies que utilizamos',
         items: [{
           name: 'hestia-lang',
-          type: 'Preferencia',
+          type: 'Preferencia · Técnica',
           duration: 'Permanente',
-          desc: 'Recuerda el idioma que elegiste (ES/EN).'
+          desc: 'Recuerda el idioma que elegiste (ES/EN). Necesaria para mostrar el contenido en tu idioma.'
         }, {
           name: 'hestia-cookies',
-          type: 'Consentimiento',
+          type: 'Consentimiento · Técnica',
           duration: 'Permanente',
           desc: 'Guarda tu elección sobre esta política de cookies.'
+        }, {
+          name: 'Cloudflare Analytics (beacon.min.js)',
+          type: 'Analítica',
+          duration: 'Sin cookie propia',
+          desc: 'Script de medición de visitas de forma agregada y anónima. Solo se carga si aceptas las cookies analíticas. No recoge IPs ni datos personales identificables.'
         }]
       }, {
-        h: 'Cookies de terceros',
-        p: 'Este sitio no usa Google Analytics, píxeles de seguimiento ni publicidad. No hay cookies de terceros. Los enlaces a WhatsApp y correo electrónico abren aplicaciones externas pero no colocan cookies en tu dispositivo.'
+        h: 'Scripts de terceros',
+        p: 'Este sitio no usa Google Analytics, píxeles publicitarios ni cookies de seguimiento de terceros. Sí utilizamos Cloudflare Web Analytics (cloudflare.com): un servicio de analítica que no identifica usuarios individuales ni usa cookies de seguimiento. El script solo se carga si aceptas las cookies analíticas. Si eliges "Solo esenciales", no se ejecuta ningún script de analítica.'
       }, {
         h: 'Cómo gestionar las cookies',
         p: 'Puedes eliminar o bloquear las cookies desde la configuración de tu navegador. Si eliminas "hestia-lang", la web volverá al idioma por defecto. Si eliminas "hestia-cookies", verás de nuevo el aviso de cookies.'
@@ -47,18 +52,23 @@ const LEGAL_COPY = {
         h: 'Cookies we use',
         items: [{
           name: 'hestia-lang',
-          type: 'Preference',
+          type: 'Preference · Technical',
           duration: 'Permanent',
-          desc: 'Remembers the language you chose (ES/EN).'
+          desc: 'Remembers the language you chose (ES/EN). Required to display content in your language.'
         }, {
           name: 'hestia-cookies',
-          type: 'Consent',
+          type: 'Consent · Technical',
           duration: 'Permanent',
           desc: 'Stores your choice about this cookie policy.'
+        }, {
+          name: 'Cloudflare Analytics (beacon.min.js)',
+          type: 'Analytics',
+          duration: 'No cookie',
+          desc: 'Aggregated and anonymous visit measurement script. Only loads if you accept analytics cookies. Does not collect IPs or personally identifiable data.'
         }]
       }, {
-        h: 'Third-party cookies',
-        p: 'This site does not use Google Analytics, tracking pixels or advertising. There are no third-party cookies. Links to WhatsApp and email open external applications but do not place cookies on your device.'
+        h: 'Third-party scripts',
+        p: 'This site does not use Google Analytics, advertising pixels or third-party tracking cookies. We do use Cloudflare Web Analytics (cloudflare.com): an analytics service that does not identify individual users or use tracking cookies. The script only loads if you accept analytics cookies. If you choose "Only essential", no analytics script runs.'
       }, {
         h: 'How to manage cookies',
         p: 'You can delete or block cookies from your browser settings. If you delete "hestia-lang", the site will revert to the default language. If you delete "hestia-cookies", the cookie notice will appear again.'
@@ -77,10 +87,13 @@ const LEGAL_COPY = {
         p: 'Alex Berruezo y Francisco Moral, propietarios de Hestía Your Home. Dirección: Calle Islas Canarias 7, 04621 Vera Playa, Almería. Email: info@hestiayourhome.com.'
       }, {
         h: 'Datos que recogemos',
-        p: 'Solo recogemos los datos que tú nos proporcionas voluntariamente al escribirnos por WhatsApp, teléfono o email para reservar o consultar. No existen formularios de captación de datos en esta web.'
+        p: 'Recogemos los datos que tú nos proporcionas voluntariamente a través de: (1) el formulario de reservas — nombre y teléfono o email, enviados directamente a nuestro WhatsApp o correo; (2) el formulario de opiniones — nombre de firma, email y texto de tu experiencia, enviados mediante Web3Forms (api.web3forms.com); (3) comunicación directa por WhatsApp, teléfono o email.'
+      }, {
+        h: 'Encargados del tratamiento',
+        p: 'El formulario de opiniones utiliza Web3Forms (Singular Bits LLC, api.web3forms.com) que recibe y reenvía el mensaje a nuestro email sin almacenarlo de forma permanente. Las analíticas del sitio son procesadas por Cloudflare Web Analytics (Cloudflare, Inc., cloudflare.com), que no recoge IPs ni datos personales identificables. Ambos proveedores tienen sede en EE.UU.; el tratamiento se realiza con las garantías adecuadas conforme al art. 46 RGPD.'
       }, {
         h: 'Finalidad del tratamiento',
-        p: 'Gestionamos los datos de contacto exclusivamente para responder a tu consulta o gestionar tu reserva. No usamos los datos para ningún otro fin ni los cedemos a terceros.'
+        p: 'Gestionamos los datos de contacto exclusivamente para responder a tu consulta, gestionar tu reserva o publicar tu opinión (previa revisión). No usamos los datos para ningún otro fin.'
       }, {
         h: 'Base legal',
         p: 'El tratamiento se basa en tu consentimiento explícito al ponerte en contacto con nosotros (art. 6.1.a RGPD) y en la ejecución del contrato de arrendamiento (art. 6.1.b RGPD).'
@@ -89,10 +102,10 @@ const LEGAL_COPY = {
         p: 'Conservamos los datos durante el tiempo necesario para gestionar la relación contigo y cumplir con las obligaciones legales derivadas del alquiler turístico (hasta 5 años según normativa fiscal).'
       }, {
         h: 'Tus derechos',
-        p: 'Puedes ejercer tus derechos de acceso, rectificación, supresión, limitación y portabilidad escribiéndonos a info@hestiayourhome.com. También puedes presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).'
+        p: 'Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiéndonos a info@hestiayourhome.com. No tomamos decisiones automatizadas sobre tu persona. También puedes presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).'
       }, {
         h: 'Seguridad',
-        p: 'Esta web no almacena datos personales en servidores propios. Las comunicaciones a través de WhatsApp se rigen por la política de privacidad de Meta. Las comunicaciones por email se rigen por la política de tu proveedor de correo.'
+        p: 'Esta web no almacena datos personales en servidores propios. Las comunicaciones a través de WhatsApp se rigen por la política de privacidad de Meta Platforms, Inc. Las comunicaciones por email se rigen por la política de tu proveedor de correo.'
       }]
     },
     en: {
@@ -103,10 +116,13 @@ const LEGAL_COPY = {
         p: 'Alex Berruezo and Francisco Moral, owners of Hestía Your Home. Address: Calle Islas Canarias 7, 04621 Vera Playa, Almería, Spain. Email: info@hestiayourhome.com.'
       }, {
         h: 'Data we collect',
-        p: 'We only collect data that you voluntarily provide when writing to us via WhatsApp, phone or email to book or enquire. There are no data capture forms on this website.'
+        p: 'We collect data you voluntarily provide through: (1) the booking form — name and phone or email, sent directly to our WhatsApp or inbox; (2) the review form — display name, email and your experience text, sent via Web3Forms (api.web3forms.com); (3) direct contact via WhatsApp, phone or email.'
+      }, {
+        h: 'Data processors',
+        p: 'The review form uses Web3Forms (Singular Bits LLC, api.web3forms.com), which receives and forwards the message to our email without permanent storage. Site analytics are handled by Cloudflare Web Analytics (Cloudflare, Inc., cloudflare.com), which does not collect IPs or personally identifiable data. Both providers are based in the US; processing is carried out with appropriate safeguards under Art. 46 GDPR.'
       }, {
         h: 'Purpose of processing',
-        p: 'We use contact data exclusively to respond to your enquiry or manage your booking. We do not use the data for any other purpose or share it with third parties.'
+        p: 'We use contact data exclusively to respond to your enquiry, manage your booking, or publish your review (subject to approval). We do not use the data for any other purpose.'
       }, {
         h: 'Legal basis',
         p: 'Processing is based on your explicit consent when contacting us (Art. 6.1.a GDPR) and on the performance of the rental contract (Art. 6.1.b GDPR).'
@@ -115,10 +131,10 @@ const LEGAL_COPY = {
         p: 'We retain data for the time necessary to manage the relationship and comply with legal obligations arising from holiday rentals (up to 5 years under tax regulations).'
       }, {
         h: 'Your rights',
-        p: 'You can exercise your rights of access, rectification, erasure, restriction and portability by writing to info@hestiayourhome.com. You may also lodge a complaint with the Spanish Data Protection Agency (www.aepd.es).'
+        p: 'You can exercise your rights of access, rectification, erasure, objection, restriction and portability by writing to info@hestiayourhome.com. We do not make automated decisions about you. You may also lodge a complaint with the Spanish Data Protection Agency (www.aepd.es).'
       }, {
         h: 'Security',
-        p: 'This website does not store personal data on its own servers. WhatsApp communications are governed by Meta\'s privacy policy. Email communications are governed by your email provider\'s policy.'
+        p: 'This website does not store personal data on its own servers. WhatsApp communications are governed by Meta Platforms, Inc. privacy policy. Email communications are governed by your email provider\'s policy.'
       }]
     }
   }
@@ -188,7 +204,7 @@ const LegalContent = ({
     opacity: 0.5,
     fontSize: 13
   }
-}, lang === 'es' ? `Última actualización: ${new Date().getFullYear()}` : `Last updated: ${new Date().getFullYear()}`)))));
+}, lang === 'es' ? 'Última actualización: mayo de 2026' : 'Last updated: May 2026')))));
 const LegalPageApp = () => {
   const type = window.__LEGAL__ || 'privacidad';
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');

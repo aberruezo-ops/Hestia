@@ -14892,6 +14892,12 @@ a.cta-wa-btn::before,
   font-weight: 500;
 }
 
+.eo-consent-field { margin-top: 8px; }
+.eo-consent-label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; font-size: 13px; line-height: 1.5; color: var(--ber-dk); }
+.eo-consent-check { margin-top: 2px; flex-shrink: 0; accent-color: var(--teal); width: 16px; height: 16px; cursor: pointer; }
+.eo-consent-label a { color: inherit; text-decoration: underline; }
+.rf-privacy-note { font-size: 12px; color: var(--ber-dk); opacity: 0.65; margin-bottom: 12px; }
+.rf-privacy-note a { color: inherit; }
 .eo-actions { display: flex; justify-content: flex-end; }
 .eo-submit { min-width: 220px; justify-content: center; }
 .eo-error-msg {

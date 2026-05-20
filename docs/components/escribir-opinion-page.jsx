@@ -40,6 +40,7 @@ const ESCRIBIR_COPY = {
     success_extra: 'Si te animas, también puedes dejarla en Booking.com, Airbnb o Google Maps — son las plataformas en las que la verán otros viajeros.',
     success_back: '← Volver a Opiniones',
     error_generic: 'No hemos podido enviar tu opinión. Inténtalo de nuevo en un minuto, o escríbenos por WhatsApp.',
+    val_consent: 'Debes aceptar la política de privacidad para enviar tu opinión.',
     val_name: 'Cuéntanos tu nombre',
     val_email: 'Email no válido',
     val_text: 'Escribe al menos 30 caracteres',
@@ -74,6 +75,7 @@ const ESCRIBIR_COPY = {
     success_extra: 'If you feel like it, you can also post it on Booking.com, Airbnb or Google Maps — those are where other travellers will see it.',
     success_back: '← Back to Reviews',
     error_generic: 'We could not send your review. Try again in a minute, or message us on WhatsApp.',
+    val_consent: 'You must accept the privacy policy to send your review.',
     val_name: 'Please tell us your name',
     val_email: 'Invalid email',
     val_text: 'Write at least 30 characters',
@@ -116,6 +118,7 @@ const EscribirOpinionForm = ({ lang }) => {
   const [date,   setDate]   = React.useState('');
   const [text,   setText]   = React.useState('');
   const [honeypot, setHoneypot] = React.useState('');
+  const [consent, setConsent] = React.useState(false);
   const [phase,  setPhase]  = React.useState('idle');  // idle | sending | success | error
   const [errors, setErrors] = React.useState({});
 
@@ -135,6 +138,7 @@ const EscribirOpinionForm = ({ lang }) => {
     if (!/\S+@\S+\.\S+/.test(email)) e.email = t.val_email;
     if (text.trim().length < 30) e.text = t.val_text;
     if (text.trim().length > TEXT_MAX) e.text = t.val_text;
+    if (!consent) e.consent = t.val_consent;
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -312,6 +316,24 @@ const EscribirOpinionForm = ({ lang }) => {
             autoComplete="off"
             aria-hidden="true"
           />
+
+          {/* Consentimiento RGPD */}
+          <div className="eo-field eo-consent-field">
+            <label className="eo-consent-label">
+              <input
+                type="checkbox"
+                className="eo-consent-check"
+                checked={consent}
+                onChange={e => { setConsent(e.target.checked); setErrors(er => ({ ...er, consent: undefined })); }}
+              />
+              <span>
+                {lang === 'es'
+                  ? <><a href="privacidad.html" target="_blank" rel="noopener">He leído y acepto la política de privacidad.</a> Entiendo que mis datos (nombre y email) serán utilizados para publicar mi opinión y procesados por Web3Forms para su envío.</>
+                  : <><a href="privacidad.html" target="_blank" rel="noopener">I have read and accept the privacy policy.</a> I understand my data (name and email) will be used to publish my review and processed by Web3Forms for delivery.</>}
+              </span>
+            </label>
+            {errors.consent && <span className="eo-err">{errors.consent}</span>}
+          </div>
 
           {/* Submit */}
           <div className="eo-actions">

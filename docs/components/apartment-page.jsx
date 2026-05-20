@@ -214,9 +214,9 @@ const APT_EQUIP = {
       behind: 'Every arrival: 200-thread sheets ironed, 600 g/m² towels, down duvets, a welcome kit. The complex maintains the shared areas (spa, pools, gym); we leave the penthouse fully prepped — A/C tuned, coffee machine loaded, aromas in place.',
     },
     es: {
-      terrace: '2 terrazas · delantera 20m² + trasera',
+      terrace: '2 terrazas · delantera 18m² + trasera',
       icons: [
-        ['🌊', 'Mar · Laguna · Pueblo'], ['☀️', 'Terraza delantera 20m² · vistas al mar'], ['🌅', 'Terraza trasera'], ['🏊', '3 Piscinas'],
+        ['🌊', 'Mar · Laguna · Pueblo'], ['☀️', 'Terraza delantera 18m² · vistas al mar'], ['🌅', 'Terraza trasera'], ['🏊', '3 Piscinas'],
         ['🌡', 'Piscina climatizada'], ['♨️', 'Jacuzzi'], ['💪', 'Gimnasio'],
         ['🧖', 'Sauna'], ['🎾', 'Pista de tenis'], ['🌿', 'Jardines · Columpios'],
         ['📺', 'Smart TV 55"'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'WIFI fibra'],
@@ -230,10 +230,10 @@ const APT_EQUIP = {
       ],
     },
     en: {
-      terrace: '2 terraces · front 20m² + rear',
+      terrace: '2 terraces · front 18m² + rear',
       icons: [
-        ['🌊', 'Sea · Lagoon · Village'], ['☀️', 'Front terrace 20m² · sea views'], ['🌅', 'Rear terrace'], ['🏊', '3 Swimming pools'],
-        ['🌡', 'Heated pool (year-round)'], ['♨️', 'Jacuzzi'], ['💪', 'Gym'],
+        ['🌊', 'Sea · Lagoon · Village'], ['☀️', 'Front terrace 18m² · sea views'], ['🌅', 'Rear terrace'], ['🏊', '3 Swimming pools'],
+        ['🌡', 'Heated pool (autumn–spring)'], ['♨️', 'Jacuzzi'], ['💪', 'Gym'],
         ['🧖', 'Sauna'], ['🎾', 'Tennis court'], ['🌿', 'Gardens · Swings'],
         ['📺', '55" Smart TV'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'Fibre WIFI'],
         ['❄️', 'A/C lounge & bedrooms'], ['🍳', 'Full premium kitchen'], ['🍽', 'Dishwasher'],

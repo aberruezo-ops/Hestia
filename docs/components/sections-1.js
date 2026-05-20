@@ -638,7 +638,7 @@ const Compare = ({
   }, {
     label: 'Extra ⭑',
     vm: 'Jacuzzi comunitario',
-    vt: 'Minigim · piscina climatizada + minispa (otoño-prim.)',
+    vt: 'Minigim · piscina climatizada + minispa (otoño-primavera)',
     vs: 'Gimnasio · sauna · Parque Natural Salinas'
   }, {
     label: 'Playa',
@@ -700,7 +700,7 @@ const Compare = ({
   }, {
     label: 'Extra ⭑',
     vm: 'Shared jacuzzi',
-    vt: 'Mini-gym · heated pool + mini-spa (off-peak)',
+    vt: 'Mini-gym · heated pool + mini-spa (autumn–spring)',
     vs: 'Gym · sauna · salt-flat nature park'
   }, {
     label: 'Beach',

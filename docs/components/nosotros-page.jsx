@@ -9,7 +9,7 @@ const NOSOTROS_COPY = {
     sub: 'Las personas detrás de Hestía y su vínculo con Almería.',
 
     intro_title: (<>No somos una empresa.<em>Somos dos personas.</em></>),
-    intro_p1: 'Nos conocisteis cuando reservasteis, o quizás ahora mismo es la primera vez. Da igual. Lo importante es que detrás de Hestía no hay una plataforma, ni un gestor, ni una oficina. Estamos nosotros: Alex y Fran. Dos personas reales que cogen el teléfono, que conocen vuestro nombre y que se ocupan de que cuando llegáis.',
+    intro_p1: 'Nos conocisteis cuando reservasteis, o quizás ahora mismo es la primera vez. Da igual. Lo importante es que detrás de Hestía no hay una plataforma, ni un gestor, ni una oficina. Estamos nosotros: Alex y Fran. Dos personas reales que cogen el teléfono, que conocen vuestro nombre y que se ocupan de que cuando llegáis, todo esté exactamente como tiene que estar.',
     intro_p2: 'Alex se ocupa de la reserva y de todo lo que pasa antes de tu llegada. Fran se ocupa de la estancia y de todo lo que pasa una vez aquí. Llevamos desde 2016 transformando cada Hestía en algo que vosotros también podéis llamar "hogar" durante unos días, si finalmente os animáis a venir.',
     intro_quote: '«El hogar no es un lugar, es un sentimiento.»',
     intro_quote_attr: '— Cecelia Ahearn',

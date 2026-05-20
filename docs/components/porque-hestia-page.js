@@ -79,7 +79,7 @@ const PORQUE_COPY = {
       d: 'Cuando encuentra un lugar donde se ha sentido en casa, vuelve. Y convierte a otros en huéspedes colaborativos.'
     }],
     evol_eyebrow: 'La transformación',
-    evol_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Casi diez a\xF1os despu\xE9s,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "una marca a la altura de lo que hemos construido.")),
+    evol_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Diez a\xF1os despu\xE9s,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "una marca a la altura de lo que hemos construido.")),
     evol_p1: 'Hestía empezó con un logo sencillo — el tejado que nos acompañó durante casi una década y que llevamos con orgullo. Pero llegó un momento en que sentimos que la marca tenía que evolucionar. No para alejarnos de lo que somos, sino para expresarlo mejor.',
     evol_p2: 'Queríamos algo más sólido, más expresivo. Un símbolo que dijera desde el primer vistazo que detrás de Hestía hay intención, identidad y raíces. Que no somos un producto más en una plataforma: somos un proyecto con historia, con nombre propio y con un lugar en el mapa.',
     evol_p3: 'Y en esa nueva H — las curvas que forman la hoja de olivo y la cresta de ola — hay también, si miras bien, la silueta de un tejado. No es casualidad. Es el guiño al logo que durante años nos dio tantas satisfacciones: llevamos lo que fuimos dentro de lo que somos.',
@@ -160,7 +160,7 @@ const PORQUE_COPY = {
       d: "When they find a place where they felt at home, they return — and turn others into collaborative guests too."
     }],
     evol_eyebrow: 'The transformation',
-    evol_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Nearly ten years on,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "a brand to match what we've built.")),
+    evol_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Ten years on,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "a brand to match what we've built.")),
     evol_p1: 'Hestía began with a simple logo — the red rooftop that accompanied us for nearly a decade, carried with pride. But a moment came when we felt the brand had to evolve. Not to move away from what we are, but to express it more clearly.',
     evol_p2: 'We wanted something more solid, more expressive. A symbol that showed at a glance that behind Hestía there is intention, identity and roots. That we are not another listing on a platform: we are a project with a history, a proper name, and a place on the map.',
     evol_p3: 'And in that new H — the curves that form the olive leaf and the wave crest — there is also, if you look carefully, the silhouette of a rooftop. That was no accident. It is a nod to the logo that served us so well for years: we carry what we were inside what we are.',

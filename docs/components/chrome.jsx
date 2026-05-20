@@ -397,7 +397,7 @@ const Header = ({ mode, scrolled, lang }) => {
       {vitruvio}
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
         <nav className="mobile-nav">
-          <div className="mn-label eyebrow">{lang === 'es' ? 'Apartamentos' : 'Apartments'}</div>
+          <div className="mn-label eyebrow">{lang === 'es' ? 'Hestías' : 'Hestías'}</div>
           <div className="mn-apts-grid">
             <div className="mn-apt-row mn-vm">
               <NavLink href={NAV_PAGES.mar} className="mn-apt-link">
@@ -551,8 +551,20 @@ const Cookies = ({ lang }) => {
     window.addEventListener('hestia:cookies-reopen', reopen);
     return () => window.removeEventListener('hestia:cookies-reopen', reopen);
   }, []);
+  const loadBeacon = () => {
+    if (document.querySelector('script[data-cf-beacon]')) return;
+    const s = document.createElement('script');
+    s.defer = true;
+    s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    s.setAttribute('data-cf-beacon', '{"token":"770c05669c6b45ea8f1026576fe7dcce"}');
+    document.head.appendChild(s);
+  };
+  React.useEffect(() => {
+    if (localStorage.getItem('hestia-cookies') === 'accept') loadBeacon();
+  }, []);
   const close = (mode) => {
     localStorage.setItem('hestia-cookies', mode);
+    if (mode === 'accept') loadBeacon();
     setVisible(false);
   };
   return (
@@ -560,8 +572,8 @@ const Cookies = ({ lang }) => {
       <h5>{lang === 'es' ? 'Cookies necesarias' : 'Cookie notice'}</h5>
       <p>
         {lang === 'es'
-          ? 'Usamos cookies para que la web funcione. Puedes elegir.'
-          : 'We use cookies to make this site work. You can choose.'}
+          ? <>Usamos cookies de preferencia (idioma) y Cloudflare Analytics para medir visitas de forma anónima. <a href="cookies.html">Más info</a>.</>
+          : <>We use preference cookies (language) and Cloudflare Analytics to measure visits anonymously. <a href="cookies.html">More info</a>.</>}
       </p>
       <div className="cookies-btns">
         <button className="essential" onClick={() => close('essential')}>
