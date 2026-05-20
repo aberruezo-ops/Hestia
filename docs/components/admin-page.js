@@ -21,8 +21,8 @@ const CF_ACCOUNT = 'ccb910d549f39e3bad5d89e33315d57e';
 const CF_SITE_TAG = '770c05669c6b45ea8f1026576fe7dcce';
 
 // URL del Worker de Cloudflare que escribe en Google Sheets.
-// Déjalo vacío hasta completar SETUP-SHEETS-SYNC.md.
-const SHEETS_WORKER_URL = '';
+// Despliega workers/sheets-sync/ y pega la URL aquí.
+const SHEETS_WORKER_URL = 'https://hestia-sheets-sync.SUSTITUIR.workers.dev';
 const apiHeaders = token => ({
   'Authorization': `Bearer ${token}`,
   'Accept': 'application/vnd.github+json',
