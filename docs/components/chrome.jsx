@@ -189,22 +189,35 @@ const Header = ({ mode, scrolled, lang }) => {
   })();
 
   // Banner de lanzamiento — siempre en la home, fondo blanco
+  const launchVidRef = React.useRef(null);
+  const replayLaunch = () => {
+    setLaunchEnded(false);
+    if (launchVidRef.current) { launchVidRef.current.currentTime = 0; launchVidRef.current.play().catch(() => {}); }
+  };
   const launchBanner = showBanner ? ReactDOM.createPortal(
     <div className="hero-vitruvio hero-vitruvio--launch">
       <div className="hv-launch-card">
         <div className="hv-inner">
           <div className="hv-box">
-            <video autoPlay muted playsInline preload="auto"
+            <video ref={launchVidRef} autoPlay muted playsInline preload="auto"
                    onEnded={() => setLaunchEnded(true)}>
               <source src="assets/gemini_generated_video_7C740615.mp4" type="video/mp4"/>
             </video>
+            {launchEnded && (
+              <button type="button" className="hv-replay" onClick={replayLaunch}
+                      aria-label={lang === 'es' ? 'Volver a ver' : 'Replay'}>
+                ↺
+              </button>
+            )}
           </div>
         </div>
         <div className={`hv-launch-text${launchEnded ? ' hv-launch-text--visible' : ''}`}>
           <div className="hv-launch-text-inner">
             {lang === 'es'
-              ? 'Hestía — Más que un alquiler, ¡tu hogar!'
-              : 'Hestía — More than a rental, your home!'}
+              ? <><em>Nuestra marca evoluciona, nuestra ilusión continúa.</em>{' '}
+                  <a href="porque-hestia.html" className="hv-launch-link">Saber más →</a></>
+              : <><em>Our brand evolves, our passion endures.</em>{' '}
+                  <a href="porque-hestia.html" className="hv-launch-link">Learn more →</a></>}
           </div>
         </div>
       </div>
