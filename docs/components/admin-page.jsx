@@ -6,7 +6,8 @@
 // Tabs: [ Pricing ] [ Reviews ]
 // ============================================================
 
-const REPO   = 'aberruezo-ops/hestia';
+const REPO         = 'aberruezo-ops/hestia';
+const PRIVATE_REPO = 'aberruezo-ops/hestia-data';
 const PATH         = 'docs/data/prices.json';
 const REVIEWS_PATH = 'docs/data/reviews.json';
 const BRANCH = 'main';
@@ -1786,7 +1787,7 @@ info@hestiayourhome.com · +34 620 316 370`;
 //
 // Sincronización con Google Sheets: ver data-private/SETUP-SHEETS-SYNC.md.
 // ============================================================
-const RESERVAS_PATH = 'data-private/reservas.json';
+const RESERVAS_PATH = 'reservas.json';
 
 const APT_NAMES   = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
 // Colores reales de marca (Hestía brandbook):
@@ -2028,7 +2029,7 @@ const LeilaTab = ({ token }) => {
   const loadData = React.useCallback(() => {
     setLoading(true);
     setLoadErr(null);
-    fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' })
+    fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' })
       .then(r => r.json())
       .then(j => {
         if (j.message) throw new Error(j.message);
@@ -2102,7 +2103,7 @@ const LeilaTab = ({ token }) => {
         else delete updSaldoInicial[yr];
       });
       const next = { ...data, reservas: updReservas, leila_pagos_a_hestia: updLiquid, leila_saldo_inicial: updSaldoInicial };
-      const res = await fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}`, {
+      const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
         method: 'PUT',
         headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: 'Update Leila: efectivo + liquidaciones', content: utf8ToB64(JSON.stringify(next, null, 2)), sha, branch: BRANCH }),
@@ -2382,7 +2383,7 @@ const ReservasTab = ({ token }) => {
     if (!token) return;
     setLoading(true);
     setError(null);
-    fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' })
+    fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' })
       .then(r => r.json())
       .then(j => {
         if (j.message) throw new Error(j.message);
@@ -2522,7 +2523,7 @@ const ReservasTab = ({ token }) => {
         sha,
         branch: BRANCH,
       };
-      const r = await fetch(`${API}/repos/${REPO}/contents/${RESERVAS_PATH}`, {
+      const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
         method: 'PUT', headers: apiHeaders(token), body: JSON.stringify(body)
       });
       const j = await r.json();
