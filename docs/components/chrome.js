@@ -518,7 +518,7 @@ const Header = ({
     className: "mobile-nav"
   }, /*#__PURE__*/React.createElement("div", {
     className: "mn-label eyebrow"
-  }, lang === 'es' ? 'Apartamentos' : 'Apartments'), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Hestías' : 'Hestías'), /*#__PURE__*/React.createElement("div", {
     className: "mn-apts-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "mn-apt-row mn-vm"
@@ -723,13 +723,29 @@ const Cookies = ({
     window.addEventListener('hestia:cookies-reopen', reopen);
     return () => window.removeEventListener('hestia:cookies-reopen', reopen);
   }, []);
+  const loadBeacon = () => {
+    if (document.querySelector('script[data-cf-beacon]')) return;
+    const s = document.createElement('script');
+    s.defer = true;
+    s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    s.setAttribute('data-cf-beacon', '{"token":"770c05669c6b45ea8f1026576fe7dcce"}');
+    document.head.appendChild(s);
+  };
+  React.useEffect(() => {
+    if (localStorage.getItem('hestia-cookies') === 'accept') loadBeacon();
+  }, []);
   const close = mode => {
     localStorage.setItem('hestia-cookies', mode);
+    if (mode === 'accept') loadBeacon();
     setVisible(false);
   };
   return /*#__PURE__*/React.createElement("div", {
     className: `cookies ${visible ? 'show' : ''}`
-  }, /*#__PURE__*/React.createElement("h5", null, lang === 'es' ? 'Cookies necesarias' : 'Cookie notice'), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? 'Usamos cookies para que la web funcione. Puedes elegir.' : 'We use cookies to make this site work. You can choose.'), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h5", null, lang === 'es' ? 'Cookies necesarias' : 'Cookie notice'), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Usamos cookies de preferencia (idioma) y Cloudflare Analytics para medir visitas de forma an\xF3nima. ", /*#__PURE__*/React.createElement("a", {
+    href: "cookies.html"
+  }, "M\xE1s info"), ".") : /*#__PURE__*/React.createElement(React.Fragment, null, "We use preference cookies (language) and Cloudflare Analytics to measure visits anonymously. ", /*#__PURE__*/React.createElement("a", {
+    href: "cookies.html"
+  }, "More info"), ".")), /*#__PURE__*/React.createElement("div", {
     className: "cookies-btns"
   }, /*#__PURE__*/React.createElement("button", {
     className: "essential",

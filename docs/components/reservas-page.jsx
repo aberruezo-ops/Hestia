@@ -1032,6 +1032,11 @@ const ReservasForm = ({ lang }) => {
                   onChange={e => setComments(e.target.value)}/>
               </div>
               <div className="rf-step-actions">
+                <p className="rf-privacy-note">
+                  {lang === 'es'
+                    ? <><small>Al enviar aceptas nuestra <a href="privacidad.html" target="_blank" rel="noopener">política de privacidad</a>. Tus datos se usarán únicamente para gestionar esta solicitud de reserva.</small></>
+                    : <><small>By sending you accept our <a href="privacidad.html" target="_blank" rel="noopener">privacy policy</a>. Your data will only be used to manage this booking request.</small></>}
+                </p>
                 <button
                   type="submit"
                   className={`btn btn-primary reservas-submit${!channelValid ? ' req-btn-dis' : ''}`}
