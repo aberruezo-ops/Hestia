@@ -238,6 +238,7 @@ const Header = ({
       return false;
     }
   });
+  const [launchEnded, setLaunchEnded] = React.useState(false);
   const dismissBanner = React.useCallback(() => {
     setShowBanner(false);
   }, []);
@@ -290,15 +291,17 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("video", {
     autoPlay: true,
     muted: true,
-    loop: true,
     playsInline: true,
-    preload: "auto"
+    preload: "auto",
+    onEnded: () => setLaunchEnded(true)
   }, /*#__PURE__*/React.createElement("source", {
     src: "assets/gemini_generated_video_7C740615.mp4",
     type: "video/mp4"
   })))), /*#__PURE__*/React.createElement("div", {
-    className: "hv-launch-text"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Estrenamos imagen, pero seguimos con la misma ilusi\xF3n que hace 10 a\xF1os.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 M\xE1s que un alquiler, \xA1tu hogar!")) : /*#__PURE__*/React.createElement(React.Fragment, null, "New look, same passion as 10 years ago.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 More than a rental, your home!")))), /*#__PURE__*/React.createElement("button", {
+    className: `hv-launch-text${launchEnded ? ' hv-launch-text--visible' : ''}`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hv-launch-text-inner"
+  }, lang === 'es' ? 'Hestía — Más que un alquiler, ¡tu hogar!' : 'Hestía — More than a rental, your home!'))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hv-toggle",
     onClick: dismissBanner,
