@@ -2740,6 +2740,14 @@ const LeilaTab = ({
       className: "num"
     }, "Noches"), /*#__PURE__*/React.createElement("th", {
       className: "num"
+    }, "Bruto"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "BAI"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Rent."), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "\u20AC/noche"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
     }, "Limpieza"), /*#__PURE__*/React.createElement("th", {
       className: "num"
     }, "Efectivo"), /*#__PURE__*/React.createElement("th", {
@@ -2759,6 +2767,14 @@ const LeilaTab = ({
       }, r.entrada, r.salida ? ` · ${r.salida}` : ''), /*#__PURE__*/React.createElement("td", {
         className: "num"
       }, r.noches || '—'), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, r.ingreso_total != null ? `${r.ingreso_total} €` : '—'), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, r.bai != null ? `${r.bai} €` : '—'), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, r.rentabilidad_pct != null ? `${Math.round(r.rentabilidad_pct * 1000) / 10} %` : '—'), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, r.precio_bruto_noche != null ? `${r.precio_bruto_noche} €` : '—'), /*#__PURE__*/React.createElement("td", {
         className: "num"
       }, tarifa, " \u20AC"), /*#__PURE__*/React.createElement("td", {
         className: "num"
@@ -2780,6 +2796,12 @@ const LeilaTab = ({
       className: "leila-foot-row"
     }, /*#__PURE__*/React.createElement("td", {
       colSpan: "4"
+    }), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, rows.reduce((s, r) => s + (Number(r.ingreso_total) || 0), 0), " \u20AC"), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, rows.reduce((s, r) => s + (Number(r.bai) || 0), 0), " \u20AC"), /*#__PURE__*/React.createElement("td", {
+      colSpan: "2"
     }), /*#__PURE__*/React.createElement("td", {
       className: "num"
     }, mTarifa, " \u20AC"), /*#__PURE__*/React.createElement("td", {

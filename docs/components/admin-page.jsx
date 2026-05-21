@@ -2332,6 +2332,10 @@ const LeilaTab = ({ token }) => {
                     <th>Huésped</th>
                     <th>Entrada · Salida</th>
                     <th className="num">Noches</th>
+                    <th className="num">Bruto</th>
+                    <th className="num">BAI</th>
+                    <th className="num">Rent.</th>
+                    <th className="num">€/noche</th>
                     <th className="num">Limpieza</th>
                     <th className="num">Efectivo</th>
                     <th className="num">Acumulado</th>
@@ -2348,6 +2352,10 @@ const LeilaTab = ({ token }) => {
                         <td className="leila-guest">{r.responsable || '—'}</td>
                         <td className="leila-dates">{r.entrada}{r.salida ? ` · ${r.salida}` : ''}</td>
                         <td className="num">{r.noches || '—'}</td>
+                        <td className="num">{r.ingreso_total != null ? `${r.ingreso_total} €` : '—'}</td>
+                        <td className="num">{r.bai != null ? `${r.bai} €` : '—'}</td>
+                        <td className="num">{r.rentabilidad_pct != null ? `${Math.round(r.rentabilidad_pct * 1000) / 10} %` : '—'}</td>
+                        <td className="num">{r.precio_bruto_noche != null ? `${r.precio_bruto_noche} €` : '—'}</td>
                         <td className="num">{tarifa} €</td>
                         <td className="num">
                           <input type="number" step="1" min="0" className="leila-cobro-input"
@@ -2366,6 +2374,9 @@ const LeilaTab = ({ token }) => {
                 <tfoot>
                   <tr className="leila-foot-row">
                     <td colSpan="4"/>
+                    <td className="num">{rows.reduce((s,r) => s + (Number(r.ingreso_total)||0), 0)} €</td>
+                    <td className="num">{rows.reduce((s,r) => s + (Number(r.bai)||0), 0)} €</td>
+                    <td colSpan="2"/>
                     <td className="num">{mTarifa} €</td>
                     <td className="num">{mEfectivo > 0 ? `${mEfectivo} €` : '—'}</td>
                     <td className={`num ${(mEfectivo - mTarifa) > 0 ? 'leila-owe' : (mEfectivo - mTarifa) < 0 ? 'leila-over' : 'leila-ok'}`}>
