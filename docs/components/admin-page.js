@@ -2149,6 +2149,25 @@ const COMMISSION_RATES = {
   directo: 0,
   avaibook: 0
 };
+function exportReservasCSV(reservas, year) {
+  const cols = ['apt', 'responsable', 'telefono', 'huespedes', 'menores_12', 'cuna_trona', 'mascota', 'dni_enviado', 'noches', 'entrada', 'salida', 'cancelacion', 'canal', 'contactado', 'f_reserva', 'ingreso_total', 'reserva', 'pago_previo', 'al_checkin', 'comision', 'renta', 'fianza', 'gasto_limpieza', 'pagos_leila', 'bai', 'rentabilidad_pct', 'precio_bruto_noche', 'precio_neto_noche', 'observaciones'];
+  const esc = v => {
+    if (v == null) return '';
+    const s = String(v);
+    return s.includes(',') || s.includes('"') || s.includes('\n') ? `"${s.replace(/"/g, '""')}"` : s;
+  };
+  const rows = [cols.join(',')];
+  reservas.forEach(r => rows.push(cols.map(c => esc(r[c])).join(',')));
+  const blob = new Blob([rows.join('\r\n')], {
+    type: 'text/csv;charset=utf-8;'
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `reservas-${year}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
 function getCanalKey(canal) {
   if (!canal) return 'directo';
   const k = canal.toLowerCase().trim();
@@ -2583,7 +2602,7 @@ const LeilaTab = ({
       const mKey = `${focusYear}-${m}`;
       const mRows = byMonth[m] || [];
       const mEf = mRows.reduce((s, r) => {
-        const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : Number(r.efectivo_leila) || 0;
+        const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : Number(r.efectivo_leila ?? r.pagos_leila) || 0;
         return s + v;
       }, 0);
       const mTa = mRows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
@@ -2658,12 +2677,12 @@ const LeilaTab = ({
     className: "pe-btn pe-btn-ghost",
     onClick: loadData,
     disabled: loading
-  }, loading ? 'Recargando…' : 'Releer el Excel de reservas'), /*#__PURE__*/React.createElement("button", {
+  }, loading ? 'Recargando…' : 'Recargar'), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost",
-    onClick: () => data && copyToSheets(data),
-    disabled: syncing || !data
-  }, syncing ? 'Copiando…' : 'Copiar datos en el Excel de reservas'), loadedAt && /*#__PURE__*/React.createElement("span", {
+    onClick: () => data && exportReservasCSV((data.reservas || []).filter(r => String(r.year || '') === focusYear), focusYear),
+    disabled: !data
+  }, "Exportar CSV"), loadedAt && /*#__PURE__*/React.createElement("span", {
     className: "leila-loaded-at"
   }, "Actualizado ", loadedAt))), saveMsg && /*#__PURE__*/React.createElement("div", {
     className: saveMsg.startsWith('Error') ? 'pe-error' : 'pe-success',
@@ -2685,7 +2704,7 @@ const LeilaTab = ({
     const mKey = `${focusYear}-${m}`;
     const mTarifa = rows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
     const mEfectivo = rows.reduce((s, r) => {
-      const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : Number(r.efectivo_leila) || 0;
+      const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : Number(r.efectivo_leila ?? r.pagos_leila) || 0;
       return s + v;
     }, 0);
     const liqEntry = liquidaciones.find(l => l.mes === mKey);
@@ -2697,7 +2716,7 @@ const LeilaTab = ({
     yrLiquid += liqVal;
     let mAcum = monthCarry[m] ?? 0;
     const rowAcums = rows.map(r => {
-      const ef = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : Number(r.efectivo_leila) || 0;
+      const ef = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : Number(r.efectivo_leila ?? r.pagos_leila) || 0;
       mAcum += ef - (Number(r.gasto_limpieza) || 0);
       return mAcum;
     });
@@ -2727,7 +2746,7 @@ const LeilaTab = ({
       className: "num"
     }, "Acumulado"))), /*#__PURE__*/React.createElement("tbody", null, rows.map((r, ri) => {
       const tarifa = Number(r.gasto_limpieza) || 0;
-      const efectivo = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : Number(r.efectivo_leila) || 0;
+      const efectivo = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : Number(r.efectivo_leila ?? r.pagos_leila) || 0;
       const acum = rowAcums[ri];
       return /*#__PURE__*/React.createElement("tr", {
         key: r._idx
@@ -3182,14 +3201,14 @@ const ReservasTab = ({
     className: "pe-btn pe-btn-ghost",
     onClick: loadData,
     disabled: loading
-  }, loading ? 'Recargando…' : 'Releer el Excel de reservas'), loadedAt && /*#__PURE__*/React.createElement("span", {
+  }, loading ? 'Recargando…' : 'Recargar'), loadedAt && /*#__PURE__*/React.createElement("span", {
     className: "leila-loaded-at"
   }, "Actualizado ", loadedAt), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost",
-    onClick: () => copyToSheets(data),
-    disabled: syncing
-  }, syncing ? 'Copiando…' : 'Copiar datos en el Excel de reservas'), /*#__PURE__*/React.createElement("button", {
+    onClick: () => data && exportReservasCSV(focusList, focusYear),
+    disabled: !data
+  }, "Exportar CSV"), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-primary",
     onClick: newRow
