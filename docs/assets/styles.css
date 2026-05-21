@@ -6318,6 +6318,26 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   z-index: 2;
   pointer-events: none;
 }
+.gc-prev, .gc-next {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  background: rgba(42,15,46,.5);
+  border: none;
+  color: var(--arena);
+  font-size: 32px;
+  padding: 18px 13px;
+  cursor: pointer;
+  line-height: 1;
+  z-index: 3;
+  opacity: 0.45;
+  transition: opacity .2s, background .2s;
+}
+.gc-prev { left: 0; border-radius: 0 12px 12px 0; }
+.gc-next { right: 0; border-radius: 12px 0 0 12px; }
+.gc-prev:hover, .gc-next:hover { opacity: 1; background: rgba(42,15,46,.75); }
+@media (hover: none) {
+  .gc-prev, .gc-next { opacity: 0.6; }
+}
 .gc-thumbs {
   display: flex;
   gap: 6px;
