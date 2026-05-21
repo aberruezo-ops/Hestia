@@ -248,7 +248,7 @@ const ReviewQuote = ({
     className: "rf-quote-meta"
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-quote-name"
-  }, r.name), /*#__PURE__*/React.createElement("span", {
+  }, r.name.split(' ')[0]), /*#__PURE__*/React.createElement("span", {
     className: "rf-quote-sep"
   }, "\xB7"), /*#__PURE__*/React.createElement("span", {
     className: "rf-quote-date"
