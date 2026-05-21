@@ -1809,6 +1809,25 @@ const COMMISSION_RATES = {
   avaibook: 0,
 };
 
+function exportReservasExcel(reservas, year) {
+  const cols = [
+    'apt','responsable','telefono','huespedes','menores_12','cuna_trona','mascota',
+    'dni_enviado','noches','entrada','salida','cancelacion','canal','contactado',
+    'f_reserva','ingreso_total','reserva','pago_previo','al_checkin','comision',
+    'renta','fianza','gasto_limpieza','pagos_leila','efectivo_leila','bai',
+    'rentabilidad_pct','precio_bruto_noche','precio_neto_noche','observaciones',
+  ];
+  const esc = v => {
+    if (v == null) return '';
+    const s = String(v);
+    return s.includes(',') || s.includes('"') || s.includes('\n') ? `"${s.replace(/"/g,'""')}"` : s;
+  };
+  const rows = [cols.join(','), ...reservas.map(r => cols.map(c => esc(r[c])).join(','))];
+  const blob = new Blob(['﻿' + rows.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: `reservas-${year}.csv` });
+  a.click(); URL.revokeObjectURL(a.href);
+}
+
 function getCanalKey(canal) {
   if (!canal) return 'directo';
   const k = canal.toLowerCase().trim();
@@ -2157,7 +2176,7 @@ const LeilaTab = ({ token }) => {
       const mKey = `${focusYear}-${m}`;
       const mRows = byMonth[m] || [];
       const mEf = mRows.reduce((s, r) => {
-        const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila) || 0);
+        const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila ?? r.pagos_leila) || 0);
         return s + v;
       }, 0);
       const mTa = mRows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
@@ -2215,10 +2234,10 @@ const LeilaTab = ({ token }) => {
         )}
         <div className="leila-sync-row">
           <button type="button" className="pe-btn pe-btn-ghost" onClick={loadData} disabled={loading}>
-            {loading ? 'Recargando…' : 'Releer el Excel de reservas'}
+            {loading ? 'Recargando…' : 'Recargar'}
           </button>
-          <button type="button" className="pe-btn pe-btn-ghost" onClick={() => data && copyToSheets(data)} disabled={syncing || !data}>
-            {syncing ? 'Copiando…' : 'Copiar datos en el Excel de reservas'}
+          <button type="button" className="pe-btn pe-btn-ghost" onClick={() => data && exportReservasExcel((data.reservas || []).filter(r => String(r.year || '') === focusYear), focusYear)} disabled={!data}>
+            Exportar Excel
           </button>
           {loadedAt && <span className="leila-loaded-at">Actualizado {loadedAt}</span>}
         </div>
@@ -2233,7 +2252,7 @@ const LeilaTab = ({ token }) => {
         const mKey = `${focusYear}-${m}`;
         const mTarifa   = rows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
         const mEfectivo = rows.reduce((s, r) => {
-          const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila) || 0);
+          const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila ?? r.pagos_leila) || 0);
           return s + v;
         }, 0);
         const liqEntry  = liquidaciones.find(l => l.mes === mKey);
@@ -2248,7 +2267,7 @@ const LeilaTab = ({ token }) => {
 
         let mAcum = monthCarry[m] ?? 0;
         const rowAcums = rows.map(r => {
-          const ef = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila) || 0);
+          const ef = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila ?? r.pagos_leila) || 0);
           mAcum += ef - (Number(r.gasto_limpieza) || 0);
           return mAcum;
         });
@@ -2282,7 +2301,7 @@ const LeilaTab = ({ token }) => {
                 <tbody>
                   {rows.map((r, ri) => {
                     const tarifa   = Number(r.gasto_limpieza) || 0;
-                    const efectivo = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila) || 0);
+                    const efectivo = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila ?? r.pagos_leila) || 0);
                     const acum     = rowAcums[ri];
                     return (
                       <tr key={r._idx}>
@@ -2652,11 +2671,11 @@ const ReservasTab = ({ token }) => {
           <h2>🗓️ Reservas <span className="rv-count">· año {focusYear} · {focusList.length} reservas · actualizado {data.updatedAt ? data.updatedAt.slice(0,10) : '—'}</span></h2>
           <div className="rv-head-actions">
             <button type="button" className="pe-btn pe-btn-ghost" onClick={loadData} disabled={loading}>
-              {loading ? 'Recargando…' : 'Releer el Excel de reservas'}
+              {loading ? 'Recargando…' : 'Recargar'}
             </button>
             {loadedAt && <span className="leila-loaded-at">Actualizado {loadedAt}</span>}
-            <button type="button" className="pe-btn pe-btn-ghost" onClick={() => copyToSheets(data)} disabled={syncing}>
-              {syncing ? 'Copiando…' : 'Copiar datos en el Excel de reservas'}
+            <button type="button" className="pe-btn pe-btn-ghost" onClick={() => data && exportReservasExcel(focusList, focusYear)} disabled={!data}>
+              Exportar Excel
             </button>
             <button type="button" className="pe-btn pe-btn-primary" onClick={newRow}>+ Nueva</button>
           </div>
