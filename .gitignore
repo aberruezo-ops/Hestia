@@ -22,4 +22,6 @@ fresh_*.png
 node_modules/
 package-lock.json
 package.json
+
+# Datos privados de huéspedes — nunca commitear
 data-private/

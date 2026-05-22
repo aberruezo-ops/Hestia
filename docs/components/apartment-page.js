@@ -532,7 +532,8 @@ const AptPageDesc = ({
 // --- Galería carousel ---
 const GalleryCarousel = ({
   imgs,
-  captions
+  captions,
+  lang = 'es'
 }) => {
   const n = imgs.length;
   const [cur, setCur] = React.useState(0);
@@ -540,6 +541,7 @@ const GalleryCarousel = ({
   const thumbsRef = React.useRef(null);
   const timerRef = React.useRef(null);
   const pausedRef = React.useRef(false);
+  const lbCloseRef = React.useRef(null);
 
   // Smart object-position per photo — calculated from edge centroid.
   // Loaded from data/photo-positions.json (cargado en window.PHOTO_POS).
@@ -564,13 +566,30 @@ const GalleryCarousel = ({
     return () => clearInterval(timerRef.current);
   }, [cur, n]);
 
-  // Keyboard navigation for lightbox
+  // Keyboard navigation + focus trap for lightbox
   React.useEffect(() => {
     if (!lightbox) return;
+    lbCloseRef.current && lbCloseRef.current.focus();
+    const FOCUSABLE = 'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])';
     const onKey = e => {
       if (e.key === 'ArrowRight') stepTo((cur + 1) % n);
       if (e.key === 'ArrowLeft') stepTo((cur - 1 + n) % n);
       if (e.key === 'Escape') setLightbox(false);
+      if (e.key === 'Tab') {
+        const el = document.querySelector('.gc-lightbox');
+        if (!el) return;
+        const nodes = [...el.querySelectorAll(FOCUSABLE)];
+        if (!nodes.length) return;
+        const first = nodes[0],
+          last = nodes[nodes.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -673,14 +692,14 @@ const GalleryCarousel = ({
       e.stopPropagation();
       go((cur - 1 + n) % n);
     },
-    "aria-label": "Anterior"
+    "aria-label": lang === 'es' ? 'Anterior' : 'Previous'
   }, "\u2039"), /*#__PURE__*/React.createElement("button", {
     className: "gc-next",
     onClick: e => {
       e.stopPropagation();
       go((cur + 1) % n);
     },
-    "aria-label": "Siguiente"
+    "aria-label": lang === 'es' ? 'Siguiente' : 'Next'
   }, "\u203A")), /*#__PURE__*/React.createElement("div", {
     className: "gc-thumbs",
     ref: thumbsRef
@@ -710,16 +729,17 @@ const GalleryCarousel = ({
     "aria-modal": "true",
     "aria-label": "Galer\xEDa de fotos"
   }, /*#__PURE__*/React.createElement("button", {
+    ref: lbCloseRef,
     className: "gc-lb-close",
     onClick: closeLightbox,
-    "aria-label": "Cerrar"
+    "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
   }, "\u2715"), /*#__PURE__*/React.createElement("button", {
     className: "gc-lb-prev",
     onClick: e => {
       e.stopPropagation();
       setCur(i => (i - 1 + n) % n);
     },
-    "aria-label": "Anterior"
+    "aria-label": lang === 'es' ? 'Anterior' : 'Previous'
   }, "\u2039"), /*#__PURE__*/React.createElement("picture", {
     className: "gc-lb-pic"
   }, /*#__PURE__*/React.createElement("source", {
@@ -737,7 +757,7 @@ const GalleryCarousel = ({
       e.stopPropagation();
       setCur(i => (i + 1) % n);
     },
-    "aria-label": "Siguiente"
+    "aria-label": lang === 'es' ? 'Siguiente' : 'Next'
   }, "\u203A"), /*#__PURE__*/React.createElement("div", {
     className: "gc-lb-caption"
   }, captions[cur]), /*#__PURE__*/React.createElement("div", {
@@ -805,7 +825,8 @@ const AptPageGallery = ({
     className: "apt-gallery-eyebrow eyebrow"
   }, lang === 'es' ? 'Galería de fotos' : 'Photo gallery'), imgs ? /*#__PURE__*/React.createElement(GalleryCarousel, {
     imgs: imgs,
-    captions: captions
+    captions: captions,
+    lang: lang
   }) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "apt-gallery-grid"
   }, captions.map((cap, i) => /*#__PURE__*/React.createElement(PhotoPlaceholder, {
@@ -1131,6 +1152,41 @@ const ApartmentPageApp = () => {
     document.documentElement.lang = lang;
     document.title = `${apt[lang].name} · Hestía Your Home · Vera Playa`;
   }, [lang]);
+  React.useEffect(() => {
+    const items = window.REVIEWS && window.REVIEWS.items || [];
+    const aptReviews = items.filter(r => r.status === 'published' && (r.apt === apt.id || r.apt === 'all')).sort((a, b) => (b.highlight ? 1 : 0) - (a.highlight ? 1 : 0)).slice(0, 10);
+    if (!aptReviews.length) return;
+    const pageUrl = `https://www.hestiayourhome.com/${apt.slug}.html`;
+    const schemaItems = aptReviews.map(r => ({
+      '@context': 'https://schema.org',
+      '@type': 'Review',
+      'author': {
+        '@type': 'Person',
+        'name': r.name && r.name !== '?' ? r.name : 'Verified Guest'
+      },
+      'datePublished': r.date,
+      'reviewBody': r.text,
+      'reviewRating': {
+        '@type': 'Rating',
+        'ratingValue': r.source === 'booking' ? r.rating / 2 : r.rating,
+        'bestRating': 5,
+        'worstRating': 1
+      },
+      'itemReviewed': {
+        '@type': 'Accommodation',
+        '@id': `${pageUrl}#accommodation`
+      }
+    }));
+    const el = document.createElement('script');
+    el.type = 'application/ld+json';
+    el.id = 'apt-review-schema';
+    el.textContent = JSON.stringify(schemaItems);
+    document.head.appendChild(el);
+    return () => {
+      const s = document.getElementById('apt-review-schema');
+      if (s) s.remove();
+    };
+  }, [apt.id, apt.slug]);
 
   // Marca el body con dos clases:
   //  · has-apt-sticky → la página tiene barra sticky (siempre, en apt page)

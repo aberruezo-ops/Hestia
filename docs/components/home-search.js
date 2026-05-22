@@ -644,15 +644,18 @@ const HomeSearch = ({
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hs-cnt-btn",
+    "aria-label": lang === 'es' ? 'Reducir huéspedes' : 'Fewer guests',
     onClick: () => setGuests(g => Math.max(1, g - 1))
   }, "\u2212"), /*#__PURE__*/React.createElement("span", {
     className: "hs-cnt-num"
   }, guests), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hs-cnt-btn",
+    "aria-label": lang === 'es' ? 'Añadir huésped' : 'Add guest',
     onClick: () => setGuests(g => Math.min(6, g + 1))
   }, "+")))), formErr && /*#__PURE__*/React.createElement("div", {
-    className: "hs-form-err"
+    className: "hs-form-err",
+    role: "alert"
   }, formErr), /*#__PURE__*/React.createElement("div", {
     className: "hs-submit-row"
   }, /*#__PURE__*/React.createElement("button", {
