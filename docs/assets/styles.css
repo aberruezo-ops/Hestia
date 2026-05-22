@@ -2693,6 +2693,50 @@ body.apt-bar-shown .cookies {
   transition: background .3s;
 }
 .apt-scroll-progress .seg.active { background: var(--ber); }
+.seg-label { display: none; }
+
+/* Vignette derecha: indica que hay más contenido al deslizar */
+.apartments-scroll::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 60px; /* deja los dots visibles */
+  width: 72px;
+  background: linear-gradient(to left, var(--arena) 20%, transparent);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity .4s;
+}
+@media (hover: none) and (pointer: coarse) {
+  .apartments-scroll::after { opacity: 1; }
+  .apartments-scroll.scrolled::after { opacity: 0; }
+
+  .apt-scroll-progress {
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .apt-scroll-progress .seg {
+    width: auto;
+    height: auto;
+    padding: 8px 18px;
+    border-radius: 10px 0 10px 0;
+    background: rgba(61, 26, 53, 0.10);
+    color: var(--ber-dk);
+    transition: background .25s, color .25s;
+  }
+  .apt-scroll-progress .seg.active {
+    background: var(--ber);
+    color: var(--crema);
+  }
+  .seg-label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+}
 
 /* ============================================================
    COMPARADOR

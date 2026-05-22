@@ -459,6 +459,7 @@ const Apartments = ({
   const trackRef = React.useRef(null);
   const [activeIdx, setActiveIdx] = React.useState(0);
   const [bookingApt, setBookingApt] = React.useState(null);
+  const [hasScrolled, setHasScrolled] = React.useState(false);
 
   // Precios "desde / hasta" mostrados son el base de prices.json
   // (lo que el admin ve en /p-edit.html). Sin aplicar directDiscount —
@@ -478,6 +479,7 @@ const Apartments = ({
   const handleScroll = () => {
     const track = trackRef.current;
     if (!track) return;
+    setHasScrolled(true);
     const children = track.querySelectorAll('.apt-card');
     const trackRect = track.getBoundingClientRect();
     const center = trackRect.left + trackRect.width / 2;
@@ -553,7 +555,7 @@ const Apartments = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
   }, t.apts_eyebrow), /*#__PURE__*/React.createElement("h2", null, t.apts_title), /*#__PURE__*/React.createElement("p", null, t.apts_sub)), /*#__PURE__*/React.createElement("div", {
-    className: "apartments-scroll"
+    className: `apartments-scroll${hasScrolled ? ' scrolled' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "apartments-track",
     ref: trackRef,
@@ -624,11 +626,14 @@ const Apartments = ({
     }, lang === 'es' ? 'Reservar →' : 'Book →'))));
   })), /*#__PURE__*/React.createElement("div", {
     className: "apt-scroll-progress"
-  }, APARTMENTS.map((_, i) => /*#__PURE__*/React.createElement("div", {
+  }, APARTMENTS.map((a, i) => /*#__PURE__*/React.createElement("button", {
     key: i,
     className: `seg ${i === activeIdx ? 'active' : ''}`,
-    onClick: () => goTo(i)
-  })))), bookingApt && /*#__PURE__*/React.createElement(HomeBookingModal, {
+    onClick: () => goTo(i),
+    "aria-label": a.name
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "seg-label"
+  }, a.name.replace('Hestía ', '')))))), bookingApt && /*#__PURE__*/React.createElement(HomeBookingModal, {
     apt: bookingApt,
     lang: lang,
     onClose: () => setBookingApt(null)
