@@ -555,16 +555,20 @@ const Cookies = ({ lang }) => {
     if (document.querySelector('script[data-cf-beacon]')) return;
     const s = document.createElement('script');
     s.defer = true;
-    s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
-    s.setAttribute('data-cf-beacon', '{"token":"770c05669c6b45ea8f1026576fe7dcce"}');
+    // Proxy propio para evitar ad-blockers (cloudflareinsights.com está bloqueado).
+    // Worker: workers/analytics-proxy — desplegado en hestia-analytics.hestia-vera-almeria.workers.dev
+    s.src = 'https://hestia-analytics.hestia-vera-almeria.workers.dev/s.js';
+    s.setAttribute('data-cf-beacon',
+      '{"token":"770c05669c6b45ea8f1026576fe7dcce",' +
+      '"endpoint":"https://hestia-analytics.hestia-vera-almeria.workers.dev/r",' +
+      '"spa":true}');
     document.head.appendChild(s);
   };
-  React.useEffect(() => {
-    if (localStorage.getItem('hestia-cookies') === 'accept') loadBeacon();
-  }, []);
+  // CF Web Analytics es cookieless (sin IPs ni datos personales) → carga siempre,
+  // sin esperar consentimiento de cookies.
+  React.useEffect(() => { loadBeacon(); }, []);
   const close = (mode) => {
     localStorage.setItem('hestia-cookies', mode);
-    if (mode === 'accept') loadBeacon();
     setVisible(false);
   };
   return (
@@ -572,8 +576,8 @@ const Cookies = ({ lang }) => {
       <h5>{lang === 'es' ? 'Cookies necesarias' : 'Cookie notice'}</h5>
       <p>
         {lang === 'es'
-          ? <>Usamos cookies de preferencia (idioma) y Cloudflare Analytics para medir visitas de forma anónima. <a href="cookies.html">Más info</a>.</>
-          : <>We use preference cookies (language) and Cloudflare Analytics to measure visits anonymously. <a href="cookies.html">More info</a>.</>}
+          ? <>Usamos una cookie de preferencia (idioma). Las visitas se miden de forma anónima y sin cookies. <a href="cookies.html">Más info</a>.</>
+          : <>We use a preference cookie (language). Visits are measured anonymously and without cookies. <a href="cookies.html">More info</a>.</>}
       </p>
       <div className="cookies-btns">
         <button className="essential" onClick={() => close('essential')}>
