@@ -274,6 +274,7 @@ h1, h2, h3, h4 {
   margin: 0;
   line-height: 1.08;
   letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 h1 { font-size: clamp(44px, 7vw, 104px); }
 h2 { font-size: clamp(36px, 5vw, 72px); }
@@ -368,6 +369,16 @@ p  { line-height: 1.65; font-weight: 300; }
 /* Touch devices: all links fully visible (no hover to activate them) */
 @media (hover: none) {
   .topbar-link { opacity: 1; }
+}
+@media (hover: none) and (pointer: coarse) {
+  .topbar-link {
+    padding: 10px 12px;
+    min-height: 44px;
+  }
+  .topbar .lang button {
+    padding: 10px 12px;
+    min-height: 44px;
+  }
 }
 .topbar-link:hover {
   opacity: 1;
@@ -966,6 +977,10 @@ p  { line-height: 1.65; font-weight: 300; }
   transition: background .2s;
 }
 .mn-apt-guide:hover { background: rgba(255,255,255,0.13); }
+@media (hover: none) and (pointer: coarse) {
+  .mn-apt-link { padding: 12px 8px 12px 0; min-height: 44px; }
+  .mn-apt-guide { width: 44px; height: 44px; }
+}
 
 .mn-num {
   font-family: var(--serif);
@@ -9021,7 +9036,6 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   color-scheme: dark;
 }
 .hs-input:focus {
-  outline: none;
   border-color: rgba(240,232,213,.4);
 }
 
@@ -12495,7 +12509,7 @@ footer,
   color: var(--ber-dk);
   transition: border-color .15s ease;
 }
-.pe-input:focus { outline: none; border-color: var(--ber); }
+.pe-input:focus { border-color: var(--ber); }
 .pe-input-num { font-variant-numeric: tabular-nums; }
 .pe-input-row { display: flex; align-items: center; gap: 8px; }
 .pe-suffix { font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
@@ -12509,7 +12523,7 @@ footer,
   font-size: 12px; line-height: 1.45;
   resize: vertical; min-height: 320px;
 }
-.pe-textarea:focus { outline: none; border-color: var(--ber); }
+.pe-textarea:focus { border-color: var(--ber); }
 .pe-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .pe-table th, .pe-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid rgba(61,26,53,.08); }
 .pe-table th { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
