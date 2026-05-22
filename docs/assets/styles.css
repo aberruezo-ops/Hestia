@@ -16509,7 +16509,8 @@ video[loop].is-fading { opacity: 0; }
    para que la cara quede en primer plano — más calidez, contraste
    y saturación. La cara está al ~49% de la imagen por restricción
    del recorte (la foto original tiene mucho fondo arriba), por lo
-   que transform-origin: 48% 75% la sitúa al ~35% del encuadre.
+   que transform-origin: 48% 85% la sitúa al ~40% del encuadre
+   (scale 1.25 para dejar camiseta visible en la parte baja).
    Se excluyen los avatares circulares del chat (.avatar-img),
    que tienen su propio tratamiento.
    ============================================================ */
@@ -16518,8 +16519,8 @@ img[src$="photo-alex.jpg"]:not(.avatar-img) {
   object-position: 48% 49%;
   width: 100%;
   height: 100%;
-  transform: scale(1.55);
-  transform-origin: 48% 75%;
+  transform: scale(1.25);
+  transform-origin: 48% 85%;
   filter:
     brightness(1.05)
     contrast(1.10)
@@ -16529,7 +16530,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img) {
               filter   .7s cubic-bezier(.2, .8, .2, 1);
 }
 img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
-  transform: scale(1.66);
+  transform: scale(1.35);
   filter:
     brightness(1.09)
     contrast(1.14)
