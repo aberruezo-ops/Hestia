@@ -6996,15 +6996,6 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   object-position: center top;
   display: block;
 }
-/* La foto de Fran es más vertical que la de Alex (925×2000 vs ratio
-   estándar). object-position: center top dejaba ver sólo el techo y
-   la pared. Bajamos hasta 38 % para encuadrar cabeza y hombros, y
-   subimos un poco el ancho del contenedor para dejarle aire alrededor. */
-.nosotros-person.nosotros-fran .portrait,
-.nosotros-person:has(img[src*="photo-fran"]) .portrait {
-  max-width: 240px;
-  aspect-ratio: 4 / 5;
-}
 .nosotros-person .portrait img[src*="photo-fran"] {
   object-position: center 20%;
 }
