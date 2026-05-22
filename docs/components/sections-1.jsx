@@ -344,6 +344,7 @@ const Apartments = ({ lang }) => {
   const trackRef = React.useRef(null);
   const [activeIdx,  setActiveIdx ] = React.useState(0);
   const [bookingApt, setBookingApt] = React.useState(null);
+  const [hasScrolled, setHasScrolled] = React.useState(false);
 
   // Precios "desde / hasta" mostrados son el base de prices.json
   // (lo que el admin ve en /p-edit.html). Sin aplicar directDiscount —
@@ -365,6 +366,7 @@ const Apartments = ({ lang }) => {
   const handleScroll = () => {
     const track = trackRef.current;
     if (!track) return;
+    setHasScrolled(true);
     const children = track.querySelectorAll('.apt-card');
     const trackRect = track.getBoundingClientRect();
     const center = trackRect.left + trackRect.width / 2;
@@ -436,7 +438,7 @@ const Apartments = ({ lang }) => {
         <h2>{t.apts_title}</h2>
         <p>{t.apts_sub}</p>
       </section>
-      <div className="apartments-scroll">
+      <div className={`apartments-scroll${hasScrolled ? ' scrolled' : ''}`}>
         <div className="apartments-track" ref={trackRef} onScroll={handleScroll}>
           {APARTMENTS.map((a, i) => {
             const minPrice = aptMinPrice(a.id);
@@ -488,12 +490,15 @@ const Apartments = ({ lang }) => {
           })}
         </div>
         <div className="apt-scroll-progress">
-          {APARTMENTS.map((_, i) => (
-            <div
+          {APARTMENTS.map((a, i) => (
+            <button
               key={i}
               className={`seg ${i === activeIdx ? 'active' : ''}`}
               onClick={() => goTo(i)}
-            />
+              aria-label={a.name}
+            >
+              <span className="seg-label">{a.name.replace('Hestía ', '')}</span>
+            </button>
           ))}
         </div>
       </div>
