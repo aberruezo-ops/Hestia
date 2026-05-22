@@ -1,0 +1,13 @@
+name               = "hestia-analytics"
+main               = "index.js"
+compatibility_date = "2024-09-23"
+workers_dev        = true
+
+# Una vez desplegado, el Worker estará en:
+#   https://hestia-analytics.hestia-vera-almeria.workers.dev
+#
+# Para desplegar:
+#   cd workers/analytics-proxy
+#   wrangler deploy
+#
+# No se necesitan KV namespaces ni secretos.
