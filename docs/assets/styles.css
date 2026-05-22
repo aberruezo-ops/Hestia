@@ -1235,21 +1235,13 @@ body.apt-bar-shown .float-chat {
    pulida y consistente con el tratamiento en el resto de la web. */
 .float-chat .contact-row .avatar-img-alex {
   object-position: 48% 49%;
-  transform: scale(1.75);
+  transform: scale(1.1);
   transform-origin: 48% 49%;
-  filter:
-    brightness(1.06)
-    contrast(1.12)
-    saturate(1.20);
 }
-/* Fran (925×2000) — la foto original es más close-up que la de Alex.
-   Para que se vea a la misma distancia (más "alejado", mostrando algo
-   de hombros + cuello como Alex), bajamos el zoom a 1.05 y subimos un
-   poco object-position para que la cabeza quede arriba del círculo. */
 .float-chat .contact-row .avatar-img-fran {
-  object-position: 50% 28%;
-  transform: scale(1.05);
-  transform-origin: 50% 28%;
+  object-position: 50% 15%;
+  transform: scale(1.0);
+  transform-origin: 50% 15%;
 }
 .float-chat .contact-row .info { line-height: 1.3; }
 .float-chat .contact-row .info .name { font-weight: 500; }
@@ -1335,18 +1327,17 @@ body.apt-bar-shown .float-chat {
 }
 .float-chat .contact-person .cp-btn svg { display: block; }
 
-/* Alex (840×1120) avatar 52px — escala 1.75, encuadre en (~48%, ~49%). */
+/* Alex (840×1120) avatar — escala 1.1, cara centrada. */
 .float-chat .contact-person .avatar-img-alex {
   object-position: 48% 49%;
-  transform: scale(1.75);
+  transform: scale(1.1);
   transform-origin: 48% 49%;
-  filter: brightness(1.06) contrast(1.12) saturate(1.20);
 }
-/* Fran (925×2000) — close-up natural, escala 1.05. */
+/* Fran (925×2000) — sin zoom extra, muestra cabeza + hombros. */
 .float-chat .contact-person .avatar-img-fran {
-  object-position: 50% 28%;
-  transform: scale(1.05);
-  transform-origin: 50% 28%;
+  object-position: 50% 15%;
+  transform: scale(1.0);
+  transform-origin: 50% 15%;
 }
 .float-chat .contact-row.contact-email {
   border-top: 1px solid rgba(61, 26, 53, 0.08);
@@ -16502,17 +16493,13 @@ video[loop].is-fading { opacity: 0; }
 }
 
 /* ============================================================
-   ALEX · close-up + wow filter consistente en toda la web
+   ALEX · encuadre natural en nosotros + contacto
    ────────────────────────────────────────────────────────────
-   La foto actual (840×1120) tiene a Alex en plano medio exterior.
-   Aquí la zoom-cropeamos vía object-position + transform: scale
-   para que la cara quede en primer plano — más calidez, contraste
-   y saturación. La cara está al ~49% de la imagen por restricción
-   del recorte (la foto original tiene mucho fondo arriba), por lo
-   que transform-origin: 48% 85% la sitúa al ~40% del encuadre
-   (scale 1.25 para dejar camiseta visible en la parte baja).
-   Se excluyen los avatares circulares del chat (.avatar-img),
-   que tienen su propio tratamiento.
+   La cara está al ~49% del crop (mucho fondo de árboles arriba).
+   scale 1.25 + transform-origin 85% sitúa la cara al ~40% del
+   encuadre visible y deja camiseta en la parte baja.
+   Sin filtros de color — colores naturales de la foto original.
+   Se excluyen avatares circulares del chat (.avatar-img).
    ============================================================ */
 img[src$="photo-alex.jpg"]:not(.avatar-img) {
   object-fit: cover;
@@ -16521,21 +16508,13 @@ img[src$="photo-alex.jpg"]:not(.avatar-img) {
   height: 100%;
   transform: scale(1.25);
   transform-origin: 48% 85%;
-  filter:
-    brightness(1.05)
-    contrast(1.10)
-    saturate(1.18)
-    drop-shadow(0 10px 24px rgba(42, 15, 46, 0.22));
+  filter: drop-shadow(0 10px 24px rgba(42, 15, 46, 0.18));
   transition: transform .7s cubic-bezier(.2, .8, .2, 1),
               filter   .7s cubic-bezier(.2, .8, .2, 1);
 }
 img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   transform: scale(1.35);
-  filter:
-    brightness(1.09)
-    contrast(1.14)
-    saturate(1.26)
-    drop-shadow(0 14px 32px rgba(42, 15, 46, 0.32));
+  filter: drop-shadow(0 14px 32px rgba(42, 15, 46, 0.26));
 }
 
 /* Asegura que el contenedor recorta el scale (overflow hidden) */
