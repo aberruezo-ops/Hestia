@@ -58,7 +58,7 @@ const PORQUE_COPY = {
     ],
 
     evol_eyebrow: 'La transformación',
-    evol_title: (<>Casi diez años después,<br/><em>una marca a la altura de lo que hemos construido.</em></>),
+    evol_title: (<>Diez años después,<br/><em>una marca a la altura de lo que hemos construido.</em></>),
     evol_p1: 'Hestía empezó con un logo sencillo — el tejado que nos acompañó durante casi una década y que llevamos con orgullo. Pero llegó un momento en que sentimos que la marca tenía que evolucionar. No para alejarnos de lo que somos, sino para expresarlo mejor.',
     evol_p2: 'Queríamos algo más sólido, más expresivo. Un símbolo que dijera desde el primer vistazo que detrás de Hestía hay intención, identidad y raíces. Que no somos un producto más en una plataforma: somos un proyecto con historia, con nombre propio y con un lugar en el mapa.',
     evol_p3: 'Y en esa nueva H — las curvas que forman la hoja de olivo y la cresta de ola — hay también, si miras bien, la silueta de un tejado. No es casualidad. Es el guiño al logo que durante años nos dio tantas satisfacciones: llevamos lo que fuimos dentro de lo que somos.',
@@ -103,7 +103,7 @@ const PORQUE_COPY = {
     values_lede: 'The name we received from the Greek goddess is not only a symbol: it is a guide. Every letter of Hestía names a value we practice every day. Six ideas that add up to one: trust.',
     values: [
       { letter: 'H', name: 'Hospitality',  desc: 'The flame that welcomes. Hestía is the goddess of the hearth — keeper of the fire honoured when leaving and returning. Your stay begins the day you book and does not end when you leave: it ends the day you want to come back.' },
-      { letter: 'E', name: 'Empathy',      desc: 'People, not clients. Alex in Spanish, Fran in English. We know your name before you cross the door and what you need — because you tell us, and because we listen. No forms. No intermediaries.' },
+      { letter: 'E', name: 'Listening',    desc: 'People, not clients. Alex in Spanish, Fran in English. We know your name before you cross the door and what you need — because you tell us, and because we listen. No forms. No intermediaries.' },
       { letter: 'S', name: 'Simplicity',   desc: 'No reception. No office. The essentials done with care: three keys, three homes, two people on the phone. Anything more is in the way.' },
       { letter: 'T', name: 'Transparency', desc: 'No small print. Clear prices, real photos, distances measured in metres. If something is missing, we say so. If something breaks, we fix it. What you see is what is there.' },
       { letter: 'I', name: 'Integrity',    desc: 'What we promise at booking is what we hand over when the door opens. We design every Hestía as if it were our own home — because in a way it is. The neatly placed cushion, the waiting coffee, the folded towel: the detail that changes everything.' },
@@ -121,7 +121,7 @@ const PORQUE_COPY = {
     ],
 
     evol_eyebrow: 'The transformation',
-    evol_title: (<>Nearly ten years on,<br/><em>a brand to match what we've built.</em></>),
+    evol_title: (<>Ten years on,<br/><em>a brand to match what we've built.</em></>),
     evol_p1: 'Hestía began with a simple logo — the red rooftop that accompanied us for nearly a decade, carried with pride. But a moment came when we felt the brand had to evolve. Not to move away from what we are, but to express it more clearly.',
     evol_p2: 'We wanted something more solid, more expressive. A symbol that showed at a glance that behind Hestía there is intention, identity and roots. That we are not another listing on a platform: we are a project with a history, a proper name, and a place on the map.',
     evol_p3: 'And in that new H — the curves that form the olive leaf and the wave crest — there is also, if you look carefully, the silhouette of a rooftop. That was no accident. It is a nod to the logo that served us so well for years: we carry what we were inside what we are.',
@@ -157,8 +157,8 @@ const BRAND_PALETTE = [
     en: { name: 'Ochre', story: 'Almería earth. The whitewashed wall at eight in the morning. The colour Almería has carried since antiquity: clay, ceramics, dry esparto grass.' },
   },
   { hex: '#D4A84A',
-    es: { name: 'Sol almeriense', story: 'La luz de la tarde en verano. Trescientos días al año, este es el color que baña las terrazas de Hestía a las seis. No amarillo. Oro viejo.' },
-    en: { name: 'Almería sun', story: "Afternoon light in summer. Three hundred days a year, this is the colour washing Hestía's terraces at six. Not yellow. Old gold." },
+    es: { name: 'Sol almeriense', story: 'La luz de la tarde en verano. Más de 320 días al año, este es el color que baña las terrazas de Hestía a las seis. No amarillo. Oro viejo.' },
+    en: { name: 'Almería sun', story: "Afternoon light in summer. More than 320 days a year, this is the colour washing Hestía's terraces at six. Not yellow. Old gold." },
   },
   { hex: '#8B4A1E',
     es: { name: 'Siena', story: 'El crepúsculo sobre el Mediterráneo. Cuando el sol toca el agua el cielo se vuelve de este color exacto — naranja rojizo, cálido, irrepetible.' },

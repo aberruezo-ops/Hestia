@@ -48,25 +48,25 @@ const APT_DATA = {
     accent2: '#B86A3C',
     accent_dk: '#6E3A1C',
     hero_img: 'assets/apt-vt-4.jpg',
-    bedroom_img: 'assets/apt-vt-gallery-02.jpg',
+    bedroom_img: 'assets/apt-vt-gallery-03.jpg',
     floorplan_img: 'assets/IMG_1121.png',
     others: ['vm', 'vs'],
-    gallery_imgs: ['assets/apt-vt-gallery-01.jpg', 'assets/apt-vt-gallery-02.jpg', 'assets/apt-vt-gallery-03.jpg', 'assets/apt-vt-gallery-04.jpg', 'assets/apt-vt-gallery-05.jpg', 'assets/apt-vt-gallery-06.jpg', 'assets/apt-vt-gallery-07.jpg', 'assets/apt-vt-gallery-08.jpg', 'assets/apt-vt-gallery-09.jpg', 'assets/apt-vt-gallery-10.jpg', 'assets/apt-vt-gallery-11.jpg', 'assets/apt-vt-gallery-12.jpg', 'assets/apt-vt-gallery-13.jpg', 'assets/apt-vt-gallery-14.jpg', 'assets/apt-vt-gallery-16.jpg'],
+    gallery_imgs: ['assets/apt-vt-gallery-01.jpg', 'assets/apt-vt-gallery-03.jpg', 'assets/apt-vt-gallery-04.jpg', 'assets/apt-vt-gallery-05.jpg', 'assets/apt-vt-gallery-06.jpg', 'assets/apt-vt-gallery-07.jpg', 'assets/apt-vt-gallery-08.jpg', 'assets/apt-vt-gallery-09.jpg', 'assets/apt-vt-gallery-10.jpg', 'assets/apt-vt-gallery-11.jpg', 'assets/apt-vt-gallery-12.jpg', 'assets/apt-vt-gallery-13.jpg', 'assets/apt-vt-gallery-14.jpg', 'assets/apt-vt-gallery-16.jpg', 'assets/apt-vt-gallery-17.jpg', 'assets/apt-vt-gallery-18.jpg', 'assets/apt-vt-gallery-19.jpg', 'assets/apt-vt-gallery-20.jpg', 'assets/apt-vt-gallery-21.jpg'],
     es: {
       name: 'Hestía Thalassa',
       concept: 'El ático sobre el Mediterráneo y el Salar de los Canos.',
       desc: 'Hestía Thalassa es el ático, el más elevado de los tres. Desde su terraza panorámica se ve el Mediterráneo y, hacia el interior, el Salar de los Canos — un paisaje árido y de gran belleza que cambia con la luz del día. El punto más abierto y luminoso de toda la urbanización.',
       desc2: 'El ático tiene una planta abierta y una terraza con vistas al mar. La urbanización cuenta con piscina comunitaria con jacuzzi, minigim, y un minispa con piscina climatizada abierto en otoño, invierno y primavera.',
-      features: ['6 plazas + bebé · 2 habitaciones', 'Ático — el piso más alto de la urbanización', 'Terraza panorámica · vistas al mar y al Salar de los Canos', 'Piscina comunitaria + jacuzzi', 'Minigim · piscina climatizada + minispa (otoño-primavera)', '1,5 km de la playa', 'Mascotas · petición previa · suplemento', 'Aire acondicionado frío/calor', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'WiFi fibra óptica · Amazon Alexa', 'Lavadora · lavavajillas · nevera · microondas', 'Cafetera de cápsulas + espresso · batidora · plancha', 'Cama matrimonial 150 cm · colchón viscoelástico', 'Toallas 100% algodón 200 hilos · nórdicos de plumas'],
-      gallery_captions: ['Terraza · atardecer dorado y vistas al Mediterráneo', 'Dormitorio principal · pared turquesa y doble mesita', 'Dormitorio principal · cojines bordados y detalle', 'Dormitorio 2 · cabeceros rojos y cojines de colores', 'Salón · vistas al atardecer desde la ventana', 'Comedor · mesa extensible y lámparas negras', 'Baño 1 · mosaico azul y suelo hidráulico', 'Entrada · mueble artesanal y espejo geométrico', 'Terraza · zona chill out bajo el toldo', 'Salón · sofá y planta tropical', 'Terraza · vistas panorámicas y puesta de sol', 'Dormitorio 2 · cabeceros granate y luz cálida de noche', 'Dormitorio 2 · vista frontal · cojines abstractos azul-índigo', 'Baño 2 · ducha de obra con mampara y mosaico amarillo', 'Baño 2 · grifería negra y detalle de la flor seca']
+      features: ['6 plazas + bebé · 2 habitaciones', 'Ático — el piso más alto de la urbanización', 'Terraza panorámica · vistas al mar y al Salar de los Canos', '2 piscinas exteriores comunitarias + jacuzzi', 'Minigim · piscina climatizada + minispa (otoño-primavera)', '1,5 km de la playa', 'Mascotas · petición previa · suplemento', 'Aire acondicionado frío/calor', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'WiFi fibra óptica · Amazon Alexa', 'Lavadora · lavavajillas · nevera · microondas', 'Cafetera de cápsulas + espresso · batidora · plancha', 'Cama matrimonial 150 cm · colchón viscoelástico', 'Toallas 100% algodón 200 hilos · nórdicos de plumas'],
+      gallery_captions: ['Terraza · atardecer dorado y vistas al Mediterráneo', 'Dormitorio principal · cojines bordados y detalle', 'Dormitorio 2 · cabeceros rojos y cojines de colores', 'Salón · vistas al atardecer desde la ventana', 'Comedor · mesa extensible y lámparas negras', 'Baño 1 · mosaico azul y suelo hidráulico', 'Entrada · mueble artesanal y espejo geométrico', 'Terraza · zona chill out bajo el toldo', 'Salón · sofá y planta tropical', 'Terraza · vistas panorámicas y puesta de sol', 'Dormitorio 2 · cabeceros granate y luz cálida de noche', 'Dormitorio 2 · vista frontal · cojines abstractos azul-índigo', 'Baño 2 · ducha de obra con mampara y mosaico amarillo', 'Baño 2 · grifería negra y detalle de la flor seca', 'Terraza · velada nocturna y ambiente cálido', 'Piscina · vistas aéreas y Mediterráneo al fondo', 'Cocina · encimera gris y azulejos ocres', 'Salón · comedor con luz cálida y acceso a terraza', 'Baño · lavabo sobre mueble negro y espejo redondo']
     },
     en: {
       name: 'Hestía Thalassa',
       concept: 'The penthouse above the Mediterranean and the Salar de los Canos.',
       desc: 'Hestía Thalassa is the penthouse — the highest of the three. From its panoramic terrace you look out over the Mediterranean and, inland, the Salar de los Canos: an arid, dramatically beautiful landscape that shifts with the light throughout the day.',
       desc2: 'The penthouse is laid out as a single open floor with a terrace and sea views. The complex has a shared pool with jacuzzi, a mini-gym, and a mini-spa with heated pool open in autumn, winter and spring.',
-      features: ['6 guests + baby · 2 bedrooms', 'Penthouse — highest floor in the complex', 'Panoramic terrace · sea & Salar de los Canos views', 'Shared pool + jacuzzi', 'Mini-gym · heated pool + mini-spa (autumn–spring)', '1.5 km from the beach', 'Pets · on request · supplement', 'A/C heating & cooling', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'Fibre WiFi · Amazon Alexa', 'Washer · dishwasher · fridge · microwave', 'Capsule + espresso coffee maker · blender · iron', 'Double bed 150 cm · memory foam mattress', '100% cotton 200-thread towels · down duvets'],
-      gallery_captions: ['Terrace · golden sunset & Mediterranean views', 'Master bedroom · turquoise wall & twin bedside tables', 'Master bedroom · embroidered cushions detail', 'Bedroom 2 · red velvet headboards & colourful pillows', 'Living room · sunset views through the window', 'Dining area · extendable table & black pendants', 'Bathroom 1 · blue mosaic & patterned floor tiles', 'Entrance · artisan cabinet & geometric mirror', 'Terrace · chill-out seating under the awning', 'Living room · sofa & tropical plant', 'Terrace · panoramic views & golden hour', 'Bedroom 2 · burgundy headboards & warm night light', 'Bedroom 2 · front view · indigo-blue abstract cushions', 'Bathroom 2 · walk-in shower with yellow mosaic', 'Bathroom 2 · matte-black tap & dried-flower detail']
+      features: ['6 guests + baby · 2 bedrooms', 'Penthouse — highest floor in the complex', 'Panoramic terrace · sea & Salar de los Canos views', '2 outdoor shared pools + jacuzzi', 'Mini-gym · heated pool + mini-spa (autumn–spring)', '1.5 km from the beach', 'Pets · on request · supplement', 'A/C heating & cooling', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'Fibre WiFi · Amazon Alexa', 'Washer · dishwasher · fridge · microwave', 'Capsule + espresso coffee maker · blender · iron', 'Double bed 150 cm · memory foam mattress', '100% cotton 200-thread towels · down duvets'],
+      gallery_captions: ['Terrace · golden sunset & Mediterranean views', 'Master bedroom · embroidered cushions detail', 'Bedroom 2 · red velvet headboards & colourful pillows', 'Living room · sunset views through the window', 'Dining area · extendable table & black pendants', 'Bathroom 1 · blue mosaic & patterned floor tiles', 'Entrance · artisan cabinet & geometric mirror', 'Terrace · chill-out seating under the awning', 'Living room · sofa & tropical plant', 'Terrace · panoramic views & golden hour', 'Bedroom 2 · burgundy headboards & warm night light', 'Bedroom 2 · front view · indigo-blue abstract cushions', 'Bathroom 2 · walk-in shower with yellow mosaic', 'Bathroom 2 · matte-black tap & dried-flower detail', 'Terrace · warm evening ambience', 'Pool · aerial view & Mediterranean on the horizon', 'Kitchen · grey countertop & ochre tiles', 'Living room · warm-lit dining area & terrace access', 'Bathroom · vessel sink on black unit & round mirror']
     }
   },
   vs: {
@@ -169,12 +169,12 @@ const APT_EQUIP = {
       behind: 'Every arrival: 200-thread sheets ironed, 600 g/m² towels, down duvets, a welcome kit. The complex maintains the shared areas (spa, pools, gym); we leave the penthouse fully prepped — A/C tuned, coffee machine loaded, aromas in place.'
     },
     es: {
-      terrace: '2 terrazas · delantera 20m² + trasera',
-      icons: [['🌊', 'Mar · Laguna · Pueblo'], ['☀️', 'Terraza delantera 20m² · vistas al mar'], ['🌅', 'Terraza trasera'], ['🏊', '3 Piscinas'], ['🌡', 'Piscina climatizada'], ['♨️', 'Jacuzzi'], ['💪', 'Gimnasio'], ['🧖', 'Sauna'], ['🎾', 'Pista de tenis'], ['🌿', 'Jardines · Columpios'], ['📺', 'Smart TV 55"'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'WIFI fibra'], ['❄️', 'A/C salón y dormitorios'], ['🍳', 'Cocina completa · alto standing'], ['🍽', 'Lavavajillas'], ['🧺', 'Lavadora · alta gama'], ['☕', 'Nespresso + cafetera goteo'], ['🛁', 'Dos baños · en suite'], ['🚿', 'Columnas de hidromasaje'], ['🚗', 'Garaje interior'], ['🩹', 'Botiquín'], ['🎁', 'Kit de bienvenida'], ['☂️', 'Sombrilla playa'], ['🛏', 'Sábanas 200 hilos · algodón peinado'], ['🧴', 'Toallas 600g/m²'], ['🌺', 'Nórdicos de plumas'], ['🪔', 'Hidroterapia · aromas'], ['🧻', 'Tendedero']]
+      terrace: '2 terrazas · delantera 18m² + trasera',
+      icons: [['🌊', 'Mar · Laguna · Pueblo'], ['☀️', 'Terraza delantera 18m² · vistas al mar'], ['🌅', 'Terraza trasera'], ['🏊', '3 Piscinas'], ['🌡', 'Piscina climatizada'], ['♨️', 'Jacuzzi'], ['💪', 'Gimnasio'], ['🧖', 'Sauna'], ['🎾', 'Pista de tenis'], ['🌿', 'Jardines · Columpios'], ['📺', 'Smart TV 55"'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'WIFI fibra'], ['❄️', 'A/C salón y dormitorios'], ['🍳', 'Cocina completa · alto standing'], ['🍽', 'Lavavajillas'], ['🧺', 'Lavadora · alta gama'], ['☕', 'Nespresso + cafetera goteo'], ['🛁', 'Dos baños · en suite'], ['🚿', 'Columnas de hidromasaje'], ['🚗', 'Garaje interior'], ['🩹', 'Botiquín'], ['🎁', 'Kit de bienvenida'], ['☂️', 'Sombrilla playa'], ['🛏', 'Sábanas 200 hilos · algodón peinado'], ['🧴', 'Toallas 600g/m²'], ['🌺', 'Nórdicos de plumas'], ['🪔', 'Hidroterapia · aromas'], ['🧻', 'Tendedero']]
     },
     en: {
-      terrace: '2 terraces · front 20m² + rear',
-      icons: [['🌊', 'Sea · Lagoon · Village'], ['☀️', 'Front terrace 20m² · sea views'], ['🌅', 'Rear terrace'], ['🏊', '3 Swimming pools'], ['🌡', 'Heated pool (year-round)'], ['♨️', 'Jacuzzi'], ['💪', 'Gym'], ['🧖', 'Sauna'], ['🎾', 'Tennis court'], ['🌿', 'Gardens · Swings'], ['📺', '55" Smart TV'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'Fibre WIFI'], ['❄️', 'A/C lounge & bedrooms'], ['🍳', 'Full premium kitchen'], ['🍽', 'Dishwasher'], ['🧺', 'Washing machine · premium'], ['☕', 'Nespresso + drip coffee maker'], ['🛁', 'Two en-suite bathrooms'], ['🚿', 'Hydro-massage columns'], ['🚗', 'Indoor garage'], ['🩹', 'First-aid kit'], ['🎁', 'Welcome kit'], ['☂️', 'Beach umbrella'], ['🛏', '200-thread combed cotton sheets'], ['🧴', 'Bath towels 600g/m²'], ['🌺', 'Down duvets'], ['🪔', 'Hydrotherapy · aromas'], ['🧻', 'Drying rack']]
+      terrace: '2 terraces · front 18m² + rear',
+      icons: [['🌊', 'Sea · Lagoon · Village'], ['☀️', 'Front terrace 18m² · sea views'], ['🌅', 'Rear terrace'], ['🏊', '3 Swimming pools'], ['🌡', 'Heated pool (autumn–spring)'], ['♨️', 'Jacuzzi'], ['💪', 'Gym'], ['🧖', 'Sauna'], ['🎾', 'Tennis court'], ['🌿', 'Gardens · Swings'], ['📺', '55" Smart TV'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'Fibre WIFI'], ['❄️', 'A/C lounge & bedrooms'], ['🍳', 'Full premium kitchen'], ['🍽', 'Dishwasher'], ['🧺', 'Washing machine · premium'], ['☕', 'Nespresso + drip coffee maker'], ['🛁', 'Two en-suite bathrooms'], ['🚿', 'Hydro-massage columns'], ['🚗', 'Indoor garage'], ['🩹', 'First-aid kit'], ['🎁', 'Welcome kit'], ['☂️', 'Beach umbrella'], ['🛏', '200-thread combed cotton sheets'], ['🧴', 'Bath towels 600g/m²'], ['🌺', 'Down duvets'], ['🪔', 'Hydrotherapy · aromas'], ['🧻', 'Drying rack']]
     }
   },
   vs: {
@@ -667,7 +667,21 @@ const GalleryCarousel = ({
     className: "gc-counter"
   }, cur + 1, " / ", n), /*#__PURE__*/React.createElement("div", {
     className: "gc-zoom-hint"
-  }, "\u2922"))), /*#__PURE__*/React.createElement("div", {
+  }, "\u2922")), /*#__PURE__*/React.createElement("button", {
+    className: "gc-prev",
+    onClick: e => {
+      e.stopPropagation();
+      go((cur - 1 + n) % n);
+    },
+    "aria-label": "Anterior"
+  }, "\u2039"), /*#__PURE__*/React.createElement("button", {
+    className: "gc-next",
+    onClick: e => {
+      e.stopPropagation();
+      go((cur + 1) % n);
+    },
+    "aria-label": "Siguiente"
+  }, "\u203A")), /*#__PURE__*/React.createElement("div", {
     className: "gc-thumbs",
     ref: thumbsRef
   }, imgs.map((src, i) => /*#__PURE__*/React.createElement("button", {

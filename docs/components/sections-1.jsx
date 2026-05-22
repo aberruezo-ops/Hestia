@@ -111,7 +111,7 @@ const Hero = ({ lang, onScrollDown }) => {
         ref={bgVideoRef}
         className="hero-bg-video"
         autoPlay muted loop playsInline
-        preload="auto"
+        preload="none"
         poster={pick.poster}
         aria-label={pick.alt}
         key={pick.src}
@@ -141,7 +141,7 @@ const Hero = ({ lang, onScrollDown }) => {
           <span className="hero-proof-item">★ 10 <span className="hero-proof-name">Thalassa</span></span>
           <span className="hero-proof-dot"/>
           <span className="hero-proof-item">★ 9.9 <span className="hero-proof-name">Salinas</span></span>
-          <span className="hero-proof-platform">{lang === 'es' ? 'Booking · Airbnb · Google' : 'Booking · Airbnb · Google'}</span>
+          <span className="hero-proof-platform">{lang === 'es' ? 'Media · Booking · Airbnb · web' : 'Average · Booking · Airbnb · site'}</span>
         </div>
       </div>
       <div className="hero-meta">
@@ -492,8 +492,8 @@ const Compare = ({ lang }) => {
     { label: 'Concepto',      vm: 'El mar desde los olivos', vt: 'Ático · mar y Salar de los Canos', vs: 'Amanecer sobre las salinas' },
     { label: 'Plazas',        vm: '6 + bebé · 2 hab.', vt: '6 + bebé · 2 hab.', vs: '6 + bebé · 2 hab.' },
     { label: 'Terraza',       vm: 'Esquina 20m² · mar', vt: 'Panorámica · mar + salar', vs: 'Dos terrazas' },
-    { label: 'Piscina',       vm: 'Comunitaria', vt: 'Comunitaria + jacuzzi', vs: 'Comunitaria + pistas de pádel' },
-    { label: 'Extra ⭑',       vm: 'Jacuzzi comunitario', vt: 'Minigim · piscina climatizada + minispa (otoño-prim.)', vs: 'Gimnasio · sauna · Parque Natural Salinas' },
+    { label: 'Piscina',       vm: 'Comunitaria', vt: '2 ext. + jacuzzi', vs: 'Comunitaria + pistas de pádel' },
+    { label: 'Extra ⭑',       vm: 'Jacuzzi comunitario', vt: 'Minigim · piscina climatizada + minispa (otoño-primavera)', vs: 'Gimnasio · sauna · Parque Natural Salinas' },
     { label: 'Playa',         vm: '300 m', vt: '1,5 km', vs: '900 m' },
     { label: 'Mascotas',      vm: 'Sí · petición + suplem.', vt: 'Sí · petición + suplem.', vs: 'Sí · petición + suplem.' },
     { label: 'Ideal para',    vm: 'Practicidad · todo a mano', vt: 'Las mejores vistas', vs: 'Paz · jardines · naturaleza' },
@@ -504,8 +504,8 @@ const Compare = ({ lang }) => {
     { label: 'Concept',       vm: 'Sea through the olive grove', vt: 'Penthouse · sea & Salar de los Canos', vs: 'Sunrise over the salt flats' },
     { label: 'Guests',        vm: '6 + baby · 2 bed.', vt: '6 + baby · 2 bed.', vs: '6 + baby · 2 bed.' },
     { label: 'Terrace',       vm: 'Corner 20m² · sea', vt: 'Panoramic · sea + salt flats', vs: 'Two terraces' },
-    { label: 'Pool',          vm: 'Shared', vt: 'Shared + jacuzzi', vs: 'Shared + padel courts' },
-    { label: 'Extra ⭑',       vm: 'Shared jacuzzi', vt: 'Mini-gym · heated pool + mini-spa (off-peak)', vs: 'Gym · sauna · salt-flat nature park' },
+    { label: 'Pool',          vm: 'Shared', vt: '2 outdoor + jacuzzi', vs: 'Shared + padel courts' },
+    { label: 'Extra ⭑',       vm: 'Shared jacuzzi', vt: 'Mini-gym · heated pool + mini-spa (autumn–spring)', vs: 'Gym · sauna · salt-flat nature park' },
     { label: 'Beach',         vm: '300 m', vt: '1.5 km', vs: '900 m' },
     { label: 'Pets',          vm: 'Yes · request + suppl.', vt: 'Yes · request + suppl.', vs: 'Yes · request + suppl.' },
     { label: 'Ideal for',     vm: 'Practicality · everything close', vt: 'Best views in the complex', vs: 'Peace · gardens · nature' },

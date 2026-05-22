@@ -1,0 +1,17 @@
+{
+  "name": "Hestía Admin",
+  "short_name": "Hestía",
+  "description": "Panel de administración · Hestía Your Home",
+  "start_url": "/p-edit.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#2A0F2E",
+  "theme_color": "#2A0F2E",
+  "lang": "es",
+  "icons": [
+    { "src": "assets/pwa-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/pwa-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

@@ -1022,7 +1022,17 @@ const ReservasForm = ({
     onChange: e => setComments(e.target.value)
   })), /*#__PURE__*/React.createElement("div", {
     className: "rf-step-actions"
-  }, /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "rf-privacy-note"
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("small", null, "Al enviar aceptas nuestra ", /*#__PURE__*/React.createElement("a", {
+    href: "privacidad.html",
+    target: "_blank",
+    rel: "noopener"
+  }, "pol\xEDtica de privacidad"), ". Tus datos se usar\xE1n \xFAnicamente para gestionar esta solicitud de reserva.")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("small", null, "By sending you accept our ", /*#__PURE__*/React.createElement("a", {
+    href: "privacidad.html",
+    target: "_blank",
+    rel: "noopener"
+  }, "privacy policy"), ". Your data will only be used to manage this booking request."))), /*#__PURE__*/React.createElement("button", {
     type: "submit",
     className: `btn btn-primary reservas-submit${!channelValid ? ' req-btn-dis' : ''}`,
     "aria-disabled": !channelValid

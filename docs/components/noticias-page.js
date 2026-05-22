@@ -321,7 +321,7 @@ const NoticiasPage = ({
     className: "eyebrow noticias-voz-eyebrow"
   }, lang === 'es' ? 'La Voz de Hestía' : 'The Voice of Hestía'), /*#__PURE__*/React.createElement("h2", {
     className: "noticias-voz-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Recomendaciones y curiosidades", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "de este mes")) : /*#__PURE__*/React.createElement(React.Fragment, null, "This month\\'s recommendations", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "and curiosities"))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Recomendaciones y curiosidades", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "de este mes")) : /*#__PURE__*/React.createElement(React.Fragment, null, "This month's recommendations", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "and curiosities"))), /*#__PURE__*/React.createElement("div", {
     className: "voz-grid"
   }, N.voz.map((item, i) => /*#__PURE__*/React.createElement(VozCard, {
     key: i,
@@ -335,7 +335,7 @@ const NoticiasPage = ({
     className: "eyebrow noticias-terr-eyebrow"
   }, lang === 'es' ? 'Noticias del territorio' : 'Territory news'), /*#__PURE__*/React.createElement("h2", {
     className: "noticias-terr-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Qu\xE9 pasa este mes", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "a tu alrededor")) : /*#__PURE__*/React.createElement(React.Fragment, null, "What\\'s happening this month", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "around you"))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Qu\xE9 pasa este mes", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "a tu alrededor")) : /*#__PURE__*/React.createElement(React.Fragment, null, "What's happening this month", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "around you"))), /*#__PURE__*/React.createElement("div", {
     className: "noticias-terr-grid"
   }, N.territorio.map((cat, ci) => /*#__PURE__*/React.createElement("div", {
     key: ci,
