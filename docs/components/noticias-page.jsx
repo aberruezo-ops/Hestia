@@ -247,7 +247,7 @@ const NoticiasPage = ({ lang }) => {
           <h2 className="noticias-voz-title">
             {lang === 'es'
               ? <>Recomendaciones y curiosidades<br/><em>de este mes</em></>
-              : <>This month\'s recommendations<br/><em>and curiosities</em></>}
+              : <>{"This month's recommendations"}<br/><em>and curiosities</em></>}
           </h2>
           <div className="voz-grid">
             {N.voz.map((item, i) => (
@@ -266,7 +266,7 @@ const NoticiasPage = ({ lang }) => {
           <h2 className="noticias-terr-title">
             {lang === 'es'
               ? <>Qué pasa este mes<br/><em>a tu alrededor</em></>
-              : <>What\'s happening this month<br/><em>around you</em></>}
+              : <>{"What's happening this month"}<br/><em>around you</em></>}
           </h2>
           <div className="noticias-terr-grid">
             {N.territorio.map((cat, ci) => (

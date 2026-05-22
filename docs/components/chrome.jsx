@@ -156,6 +156,7 @@ const Header = ({ mode, scrolled, lang }) => {
       return page === '' || page === 'index.html';
     } catch (_) { return false; }
   });
+  const [launchEnded, setLaunchEnded] = React.useState(false);
   const dismissBanner = React.useCallback(() => { setShowBanner(false); }, []);
 
   const toggleVit = () => {
@@ -188,20 +189,36 @@ const Header = ({ mode, scrolled, lang }) => {
   })();
 
   // Banner de lanzamiento — siempre en la home, fondo blanco
+  const launchVidRef = React.useRef(null);
+  const replayLaunch = () => {
+    setLaunchEnded(false);
+    if (launchVidRef.current) { launchVidRef.current.currentTime = 0; launchVidRef.current.play().catch(() => {}); }
+  };
   const launchBanner = showBanner ? ReactDOM.createPortal(
     <div className="hero-vitruvio hero-vitruvio--launch">
       <div className="hv-launch-card">
         <div className="hv-inner">
           <div className="hv-box">
-            <video autoPlay muted loop playsInline preload="auto">
+            <video ref={launchVidRef} autoPlay muted playsInline preload="auto"
+                   onEnded={() => setLaunchEnded(true)}>
               <source src="assets/gemini_generated_video_7C740615.mp4" type="video/mp4"/>
             </video>
+            {launchEnded && (
+              <button type="button" className="hv-replay" onClick={replayLaunch}
+                      aria-label={lang === 'es' ? 'Volver a ver' : 'Replay'}>
+                ↺
+              </button>
+            )}
           </div>
         </div>
-        <div className="hv-launch-text">
-          {lang === 'es'
-            ? <>Estrenamos imagen, pero seguimos con la misma ilusión que hace 10 años.<br/><strong>Hestía — Más que un alquiler, ¡tu hogar!</strong></>
-            : <>New look, same passion as 10 years ago.<br/><strong>Hestía — More than a rental, your home!</strong></>}
+        <div className={`hv-launch-text${launchEnded ? ' hv-launch-text--visible' : ''}`}>
+          <div className="hv-launch-text-inner">
+            {lang === 'es'
+              ? <><em>Nuestra marca evoluciona, nuestra ilusión continúa.</em>{' '}
+                  <a href="porque-hestia.html" className="hv-launch-link">Saber más →</a></>
+              : <><em>Our brand evolves, our passion endures.</em>{' '}
+                  <a href="porque-hestia.html" className="hv-launch-link">Learn more →</a></>}
+          </div>
         </div>
       </div>
       <button
@@ -380,7 +397,7 @@ const Header = ({ mode, scrolled, lang }) => {
       {vitruvio}
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
         <nav className="mobile-nav">
-          <div className="mn-label eyebrow">{lang === 'es' ? 'Apartamentos' : 'Apartments'}</div>
+          <div className="mn-label eyebrow">{lang === 'es' ? 'Hestías' : 'Hestías'}</div>
           <div className="mn-apts-grid">
             <div className="mn-apt-row mn-vm">
               <NavLink href={NAV_PAGES.mar} className="mn-apt-link">
@@ -472,7 +489,7 @@ const FloatingChat = ({ lang }) => {
         <h4 id="float-chat-title">{lang === 'es' ? 'Hablemos.' : 'Let\'s talk.'}</h4>
         <p className="small">
           {lang === 'es'
-            ? 'Te responde una persona. En minutos, no en días.'
+            ? 'Te responde una persona real. En minutos, no en días.'
             : 'A real person replies. In minutes, not days.'}
         </p>
         {persons.map(p => (
@@ -519,7 +536,7 @@ const Cookies = ({ lang }) => {
   React.useEffect(() => {
     const k = localStorage.getItem('hestia-cookies');
     if (!k) {
-      const t = setTimeout(() => setVisible(true), 1400);
+      const t = setTimeout(() => setVisible(true), 800);
       return () => clearTimeout(t);
     }
   }, []);
@@ -534,8 +551,20 @@ const Cookies = ({ lang }) => {
     window.addEventListener('hestia:cookies-reopen', reopen);
     return () => window.removeEventListener('hestia:cookies-reopen', reopen);
   }, []);
+  const loadBeacon = () => {
+    if (document.querySelector('script[data-cf-beacon]')) return;
+    const s = document.createElement('script');
+    s.defer = true;
+    s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    s.setAttribute('data-cf-beacon', '{"token":"770c05669c6b45ea8f1026576fe7dcce"}');
+    document.head.appendChild(s);
+  };
+  React.useEffect(() => {
+    if (localStorage.getItem('hestia-cookies') === 'accept') loadBeacon();
+  }, []);
   const close = (mode) => {
     localStorage.setItem('hestia-cookies', mode);
+    if (mode === 'accept') loadBeacon();
     setVisible(false);
   };
   return (
@@ -543,8 +572,8 @@ const Cookies = ({ lang }) => {
       <h5>{lang === 'es' ? 'Cookies necesarias' : 'Cookie notice'}</h5>
       <p>
         {lang === 'es'
-          ? 'Usamos cookies para que la web funcione. Puedes elegir.'
-          : 'We use cookies to make this site work. You can choose.'}
+          ? <>Usamos cookies de preferencia (idioma) y Cloudflare Analytics para medir visitas de forma anónima. <a href="cookies.html">Más info</a>.</>
+          : <>We use preference cookies (language) and Cloudflare Analytics to measure visits anonymously. <a href="cookies.html">More info</a>.</>}
       </p>
       <div className="cookies-btns">
         <button className="essential" onClick={() => close('essential')}>

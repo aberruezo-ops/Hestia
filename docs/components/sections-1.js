@@ -133,7 +133,7 @@ const Hero = ({
     muted: true,
     loop: true,
     playsInline: true,
-    preload: "auto",
+    preload: "none",
     poster: pick.poster,
     "aria-label": pick.alt,
     key: pick.src
@@ -184,7 +184,7 @@ const Hero = ({
     className: "hero-proof-name"
   }, "Salinas")), /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-platform"
-  }, lang === 'es' ? 'Booking · Airbnb · Google' : 'Booking · Airbnb · Google'))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Media · Booking · Airbnb · web' : 'Average · Booking · Airbnb · site'))), /*#__PURE__*/React.createElement("div", {
     className: "hero-meta"
   }, /*#__PURE__*/React.createElement("span", {
     className: "hero-meta-coords"
@@ -633,12 +633,12 @@ const Compare = ({
   }, {
     label: 'Piscina',
     vm: 'Comunitaria',
-    vt: 'Comunitaria + jacuzzi',
+    vt: '2 ext. + jacuzzi',
     vs: 'Comunitaria + pistas de pádel'
   }, {
     label: 'Extra ⭑',
     vm: 'Jacuzzi comunitario',
-    vt: 'Minigim · piscina climatizada + minispa (otoño-prim.)',
+    vt: 'Minigim · piscina climatizada + minispa (otoño-primavera)',
     vs: 'Gimnasio · sauna · Parque Natural Salinas'
   }, {
     label: 'Playa',
@@ -695,12 +695,12 @@ const Compare = ({
   }, {
     label: 'Pool',
     vm: 'Shared',
-    vt: 'Shared + jacuzzi',
+    vt: '2 outdoor + jacuzzi',
     vs: 'Shared + padel courts'
   }, {
     label: 'Extra ⭑',
     vm: 'Shared jacuzzi',
-    vt: 'Mini-gym · heated pool + mini-spa (off-peak)',
+    vt: 'Mini-gym · heated pool + mini-spa (autumn–spring)',
     vs: 'Gym · sauna · salt-flat nature park'
   }, {
     label: 'Beach',

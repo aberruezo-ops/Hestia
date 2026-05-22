@@ -238,6 +238,7 @@ const Header = ({
       return false;
     }
   });
+  const [launchEnded, setLaunchEnded] = React.useState(false);
   const dismissBanner = React.useCallback(() => {
     setShowBanner(false);
   }, []);
@@ -279,6 +280,14 @@ const Header = ({
   })();
 
   // Banner de lanzamiento — siempre en la home, fondo blanco
+  const launchVidRef = React.useRef(null);
+  const replayLaunch = () => {
+    setLaunchEnded(false);
+    if (launchVidRef.current) {
+      launchVidRef.current.currentTime = 0;
+      launchVidRef.current.play().catch(() => {});
+    }
+  };
   const launchBanner = showBanner ? ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
     className: "hero-vitruvio hero-vitruvio--launch"
   }, /*#__PURE__*/React.createElement("div", {
@@ -288,17 +297,31 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-box"
   }, /*#__PURE__*/React.createElement("video", {
+    ref: launchVidRef,
     autoPlay: true,
     muted: true,
-    loop: true,
     playsInline: true,
-    preload: "auto"
+    preload: "auto",
+    onEnded: () => setLaunchEnded(true)
   }, /*#__PURE__*/React.createElement("source", {
     src: "assets/gemini_generated_video_7C740615.mp4",
     type: "video/mp4"
-  })))), /*#__PURE__*/React.createElement("div", {
-    className: "hv-launch-text"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Estrenamos imagen, pero seguimos con la misma ilusi\xF3n que hace 10 a\xF1os.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 M\xE1s que un alquiler, \xA1tu hogar!")) : /*#__PURE__*/React.createElement(React.Fragment, null, "New look, same passion as 10 years ago.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("strong", null, "Hest\xEDa \u2014 More than a rental, your home!")))), /*#__PURE__*/React.createElement("button", {
+  })), launchEnded && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "hv-replay",
+    onClick: replayLaunch,
+    "aria-label": lang === 'es' ? 'Volver a ver' : 'Replay'
+  }, "\u21BA"))), /*#__PURE__*/React.createElement("div", {
+    className: `hv-launch-text${launchEnded ? ' hv-launch-text--visible' : ''}`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hv-launch-text-inner"
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Nuestra marca evoluciona, nuestra ilusi\xF3n contin\xFAa."), ' ', /*#__PURE__*/React.createElement("a", {
+    href: "porque-hestia.html",
+    className: "hv-launch-link"
+  }, "Saber m\xE1s \u2192")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Our brand evolves, our passion endures."), ' ', /*#__PURE__*/React.createElement("a", {
+    href: "porque-hestia.html",
+    className: "hv-launch-link"
+  }, "Learn more \u2192"))))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hv-toggle",
     onClick: dismissBanner,
@@ -495,7 +518,7 @@ const Header = ({
     className: "mobile-nav"
   }, /*#__PURE__*/React.createElement("div", {
     className: "mn-label eyebrow"
-  }, lang === 'es' ? 'Apartamentos' : 'Apartments'), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Hestías' : 'Hestías'), /*#__PURE__*/React.createElement("div", {
     className: "mn-apts-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "mn-apt-row mn-vm"
@@ -625,7 +648,7 @@ const FloatingChat = ({
     id: "float-chat-title"
   }, lang === 'es' ? 'Hablemos.' : 'Let\'s talk.'), /*#__PURE__*/React.createElement("p", {
     className: "small"
-  }, lang === 'es' ? 'Te responde una persona. En minutos, no en días.' : 'A real person replies. In minutes, not days.'), persons.map(p => /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Te responde una persona real. En minutos, no en días.' : 'A real person replies. In minutes, not days.'), persons.map(p => /*#__PURE__*/React.createElement("div", {
     className: "contact-person",
     key: p.id
   }, /*#__PURE__*/React.createElement("div", {
@@ -685,7 +708,7 @@ const Cookies = ({
   React.useEffect(() => {
     const k = localStorage.getItem('hestia-cookies');
     if (!k) {
-      const t = setTimeout(() => setVisible(true), 1400);
+      const t = setTimeout(() => setVisible(true), 800);
       return () => clearTimeout(t);
     }
   }, []);
@@ -700,13 +723,29 @@ const Cookies = ({
     window.addEventListener('hestia:cookies-reopen', reopen);
     return () => window.removeEventListener('hestia:cookies-reopen', reopen);
   }, []);
+  const loadBeacon = () => {
+    if (document.querySelector('script[data-cf-beacon]')) return;
+    const s = document.createElement('script');
+    s.defer = true;
+    s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    s.setAttribute('data-cf-beacon', '{"token":"770c05669c6b45ea8f1026576fe7dcce"}');
+    document.head.appendChild(s);
+  };
+  React.useEffect(() => {
+    if (localStorage.getItem('hestia-cookies') === 'accept') loadBeacon();
+  }, []);
   const close = mode => {
     localStorage.setItem('hestia-cookies', mode);
+    if (mode === 'accept') loadBeacon();
     setVisible(false);
   };
   return /*#__PURE__*/React.createElement("div", {
     className: `cookies ${visible ? 'show' : ''}`
-  }, /*#__PURE__*/React.createElement("h5", null, lang === 'es' ? 'Cookies necesarias' : 'Cookie notice'), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? 'Usamos cookies para que la web funcione. Puedes elegir.' : 'We use cookies to make this site work. You can choose.'), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h5", null, lang === 'es' ? 'Cookies necesarias' : 'Cookie notice'), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Usamos cookies de preferencia (idioma) y Cloudflare Analytics para medir visitas de forma an\xF3nima. ", /*#__PURE__*/React.createElement("a", {
+    href: "cookies.html"
+  }, "M\xE1s info"), ".") : /*#__PURE__*/React.createElement(React.Fragment, null, "We use preference cookies (language) and Cloudflare Analytics to measure visits anonymously. ", /*#__PURE__*/React.createElement("a", {
+    href: "cookies.html"
+  }, "More info"), ".")), /*#__PURE__*/React.createElement("div", {
     className: "cookies-btns"
   }, /*#__PURE__*/React.createElement("button", {
     className: "essential",

@@ -251,7 +251,13 @@ const ContactoPersons = ({
   }, /*#__PURE__*/React.createElement("a", {
     href: "mailto:info@hestiayourhome.com",
     className: "btn btn-ghost-dark"
-  }, "\u2709 info@hestiayourhome.com"))));
+  }, "\u2709 info@hestiayourhome.com")), /*#__PURE__*/React.createElement("p", {
+    className: "contacto-privacy-note"
+  }, lang === 'es' ? /*#__PURE__*/React.createElement("small", null, "Al contactarnos, tus datos se tratar\xE1n conforme a nuestra ", /*#__PURE__*/React.createElement("a", {
+    href: "privacidad.html"
+  }, "pol\xEDtica de privacidad"), ".") : /*#__PURE__*/React.createElement("small", null, "When you contact us, your data will be handled in accordance with our ", /*#__PURE__*/React.createElement("a", {
+    href: "privacidad.html"
+  }, "privacy policy"), "."))));
 };
 const ContactoAddress = ({
   lang

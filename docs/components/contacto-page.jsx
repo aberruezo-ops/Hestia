@@ -176,6 +176,11 @@ const ContactoPersons = ({ lang }) => {
             ✉ info@hestiayourhome.com
           </a>
         </div>
+        <p className="contacto-privacy-note">
+          {lang === 'es'
+            ? <small>Al contactarnos, tus datos se tratarán conforme a nuestra <a href="privacidad.html">política de privacidad</a>.</small>
+            : <small>When you contact us, your data will be handled in accordance with our <a href="privacidad.html">privacy policy</a>.</small>}
+        </p>
       </div>
     </section>
   );

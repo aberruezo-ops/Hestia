@@ -9,14 +9,14 @@ const NOSOTROS_COPY = {
     sub: 'Las personas detrás de Hestía y su vínculo con Almería.',
 
     intro_title: (<>No somos una empresa.<em>Somos dos personas.</em></>),
-    intro_p1: 'Nos conocisteis cuando reservasteis, o quizás ahora mismo es la primera vez. Da igual. Lo importante es que detrás de Hestía no hay una plataforma, ni un gestor, ni una oficina. Estamos nosotros: Alex y Fran. Dos personas reales que cogen el teléfono, que conocen vuestro nombre y que se ocupan de que cuando llegáis.',
+    intro_p1: 'Nos conocisteis cuando reservasteis, o quizás ahora mismo es la primera vez. Da igual. Lo importante es que detrás de Hestía no hay una plataforma, ni un gestor, ni una oficina. Estamos nosotros: Alex y Fran. Dos personas reales que cogen el teléfono, que conocen vuestro nombre y que se ocupan de que cuando llegáis, todo esté exactamente como tiene que estar.',
     intro_p2: 'Alex se ocupa de la reserva y de todo lo que pasa antes de tu llegada. Fran se ocupa de la estancia y de todo lo que pasa una vez aquí. Llevamos desde 2016 transformando cada Hestía en algo que vosotros también podéis llamar "hogar" durante unos días, si finalmente os animáis a venir.',
     intro_quote: '«El hogar no es un lugar, es un sentimiento.»',
     intro_quote_attr: '— Cecelia Ahearn',
 
     almeria_eyebrow: 'Nuestro vínculo con Almería',
     almeria_title: (<>Vera Playa no es donde trabajamos,<br/><em>es donde vivimos.</em></>),
-    almeria_p1: 'Hay lugares que escoges y lugares que te eligen. Almería fue lo segundo. Vera Playa llegó a nuestras vidas antes de que supiéramos lo que íbamos a construir aquí. La playa más larga de la costa, el azul más limpio del Mediterráneo, trescientos días de sol al año y una forma de vivir que todavía no ha perdido el pulso de lo auténtico.',
+    almeria_p1: 'Hay lugares que escoges y lugares que te eligen. Almería fue lo segundo. Vera Playa llegó a nuestras vidas antes de que supiéramos lo que íbamos a construir aquí. La playa más larga de la costa, el azul más limpio del Mediterráneo, más de 320 días de sol al año y una forma de vivir que todavía no ha perdido el pulso de lo auténtico.',
     almeria_p2: 'La provincia más soleada de Europa no es la más conocida. Y precisamente eso la protege. En Almería el turismo todavía convive con la vida real: el bar de toda la vida, los pescadores de la mañana, el mercado del jueves. Llevamos más de una década aquí. Y cada Hestía mira al mismo Mediterráneo.',
     almeria_p3: 'Vera Playa es conocida por sus kilómetros de costa protegida, por su playa naturista — una de las más grandes de Europa — y por la tranquilidad de una localidad que sabe lo que tiene sin necesitar demostrarlo. No vendemos Almería porque sea nuestra oficina, sino porque es nuestra casa.',
     almeria_quote: '«Almería tiene la luz más honesta que conozco. No engaña. Lo que ves es lo que es.»',
@@ -32,7 +32,7 @@ const NOSOTROS_COPY = {
     fran_eyebrow: '02 · Estancia · Mientras estás aquí',
     fran_lang: '🇬🇧 English',
     fran_name: 'Fran Moral',
-    fran_bio: 'Yo entro en escena cuando ya tienes tu reserva. Te ayudo a preparar tus vacaciones, te atiendo durante tu estancia (para cualquier imprevisto o necesidad) y te deseo buen viaje a tu salida.',
+    fran_bio: 'Yo entro en escena cuando ya tienes tu reserva. Te atiendo durante tu estancia — para que nada falle, para que lo que necesites llegue, para resolver cualquier cosa en persona y a tiempo. Mi trabajo es que te vayas ya pensando en volver.',
     fran_quote: '«If anything breaks, calls, or changes — I am here. Your stay, my job.»',
 
     manifest_cta: 'Reservar ahora →',
@@ -53,7 +53,7 @@ const NOSOTROS_COPY = {
 
     almeria_eyebrow: 'Our bond with Almería',
     almeria_title: (<>Vera Playa isn't where we work.<br/><em>It's where we live.</em></>),
-    almeria_p1: 'There are places you choose, and places that choose you. Almería was the second. Vera Playa entered our lives before we knew what we were going to build here. The longest beach on the coast, the clearest blue in the Mediterranean, three hundred days of sun a year, and a way of living that has not yet lost its authentic pulse.',
+    almeria_p1: 'There are places you choose, and places that choose you. Almería was the second. Vera Playa entered our lives before we knew what we were going to build here. The longest beach on the coast, the clearest blue in the Mediterranean, more than 320 days of sun a year, and a way of living that has not yet lost its authentic pulse.',
     almeria_p2: "Europe's sunniest province is not its most famous. And that is precisely what protects it. In Almería, tourism still coexists with real life: the neighbourhood bar that has always been there, the morning fishermen, the Thursday market. We have been here for over a decade. And every Hestía looks out at the same Mediterranean.",
     almeria_p3: 'Vera Playa is known for its kilometres of protected coastline, its naturist beach — one of the largest in Europe — and the calm of a town that knows what it has without needing to prove it. We do not promote Almería because it is our office. We champion it because it is our home.',
     almeria_quote: '"Almería has the most honest light I know. It does not deceive. What you see is what it is."',
@@ -163,7 +163,7 @@ const NosotrosTeam = ({ lang }) => {
           <div className="nosotros-person reveal">
             <div className="portrait">
               <img decoding="async" src="assets/photo-alex.jpg" alt="Alex Berruezo"
-                width="731" height="1014"
+                width="840" height="1120"
                 loading="lazy"
                 onError={e => { e.currentTarget.style.display='none'; e.currentTarget.nextSibling && (e.currentTarget.nextSibling.style.display='block'); }}/>
               <WatermarkBadge size={28} pos={{ bottom: 8, right: 8 }}/>

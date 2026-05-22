@@ -6,8 +6,8 @@
 // Tabs: [ Pricing ] [ Reviews ]
 // ============================================================
 
-const REPO      = 'aberruezo-ops/hestia';
-const DATA_REPO = 'aberruezo-ops/hestia-data';
+const REPO         = 'aberruezo-ops/hestia';
+const PRIVATE_REPO = 'aberruezo-ops/hestia-data';
 const PATH         = 'docs/data/prices.json';
 const REVIEWS_PATH = 'docs/data/reviews.json';
 const BRANCH = 'main';
@@ -19,8 +19,8 @@ const CF_ACCOUNT    = 'ccb910d549f39e3bad5d89e33315d57e';
 const CF_SITE_TAG   = '770c05669c6b45ea8f1026576fe7dcce';
 
 // URL del Worker de Cloudflare que escribe en Google Sheets.
-// Déjalo vacío hasta completar SETUP-SHEETS-SYNC.md.
-const SHEETS_WORKER_URL = '';
+// Despliega workers/sheets-sync/ y pega la URL aquí.
+const SHEETS_WORKER_URL = 'https://hestia-sheets-sync.SUSTITUIR.workers.dev';
 
 const apiHeaders = (token) => ({
   'Authorization': `Bearer ${token}`,
@@ -863,6 +863,414 @@ const NewReviewForm = ({ onAdd, onCancel }) => {
 };
 
 // ============================================================
+// DashboardTab — resumen histórico + live 2026
+// ============================================================
+
+const dashFmtMoney = v => v >= 1000
+  ? (v / 1000).toFixed(1).replace(/\.0$/, '') + 'k€'
+  : Math.round(v) + '€';
+const dashFmtPct = v => v.toFixed(1) + '%';
+
+const CANAL_COLORS = {
+  Directo: '#1BC8D8',
+  Booking: '#E67E22',
+  Airbnb:  '#E74C3C',
+  Otro:    '#888888',
+};
+
+function compute2026Stats(reservas) {
+  const active = reservas.filter(r => {
+    const c = (r.cancelacion || '').trim().toUpperCase();
+    return c !== 'CANCELADA';
+  });
+  const cancelled = reservas.length - active.length;
+  const noches    = active.reduce((s, r) => s + (r.noches || 0), 0);
+  const ingresos  = active.reduce((s, r) => s + (r.ingreso_total || 0), 0);
+  const bai       = active.reduce((s, r) => s + (r.bai || 0), 0);
+  const rents     = active.filter(r => r.rent_pct != null).map(r => r.rent_pct);
+  const rent_pct  = rents.length ? rents.reduce((a, b) => a + b, 0) / rents.length : 0;
+  const precios   = active.filter(r => r.precio_bruto_noche != null).map(r => r.precio_bruto_noche);
+  const precio_noche = precios.length ? precios.reduce((a, b) => a + b, 0) / precios.length : 0;
+
+  const canales = {};
+  active.forEach(r => {
+    const c = r.canal || 'Otro';
+    canales[c] = (canales[c] || 0) + 1;
+  });
+
+  const apts = { vm: 0, vt: 0, vs: 0 };
+  active.forEach(r => {
+    const a = (r.apt || '').toLowerCase();
+    if (a in apts) apts[a]++;
+    else apts.vs = (apts.vs || 0) + 1;
+  });
+
+  const monthly_ingresos = {};
+  const monthly_res = {};
+  active.forEach(r => {
+    if (!r.entrada) return;
+    const key = r.entrada.slice(0, 7);
+    monthly_ingresos[key] = (monthly_ingresos[key] || 0) + (r.ingreso_total || 0);
+    monthly_res[key]      = (monthly_res[key] || 0) + 1;
+  });
+
+  return {
+    reservas:   active.length,
+    canceladas: cancelled,
+    noches,
+    ingresos,
+    bai,
+    rent_pct,
+    precio_noche,
+    canales,
+    apts,
+    monthly_ingresos,
+    monthly_res,
+    partial: false,
+  };
+}
+
+function BarChart({ years, yearData }) {
+  const W = 600; const H = 200; const PAD = { t: 28, r: 12, b: 28, l: 52 };
+  const inner = { w: W - PAD.l - PAD.r, h: H - PAD.t - PAD.b };
+  const maxVal = Math.max(...years.flatMap(y => [yearData[y].ingresos, yearData[y].bai]), 1);
+  const barGroup = inner.w / years.length;
+  const bw = Math.min(barGroup * 0.38, 28);
+  const gap = bw * 0.25;
+  const scaleY = v => inner.h - (v / maxVal) * inner.h;
+
+  return (
+    React.createElement('svg', { viewBox: `0 0 ${W} ${H}`, className: 'dash-chart-svg', 'aria-label': 'Ingresos y BAI por año' },
+      React.createElement('g', { transform: `translate(${PAD.l},${PAD.t})` },
+        [0, 0.25, 0.5, 0.75, 1].map(f => {
+          const y = inner.h * (1 - f);
+          return React.createElement('g', { key: f },
+            React.createElement('line', { x1: 0, x2: inner.w, y1: y, y2: y, stroke: 'rgba(255,255,255,0.07)', strokeWidth: 1 }),
+            React.createElement('text', { x: -6, y: y + 4, textAnchor: 'end', fontSize: 9, fill: 'rgba(255,255,255,0.4)' },
+              dashFmtMoney(maxVal * f))
+          );
+        }),
+        years.map((yr, i) => {
+          const d = yearData[yr];
+          const cx = i * barGroup + barGroup / 2;
+          const x1 = cx - gap / 2 - bw;
+          const x2 = cx + gap / 2;
+          const hI = (d.ingresos / maxVal) * inner.h;
+          const hB = (d.bai / maxVal) * inner.h;
+          const isPartial = d.partial;
+          return React.createElement('g', { key: yr },
+            React.createElement('rect', {
+              x: x1, y: scaleY(d.ingresos), width: bw, height: hI,
+              fill: 'rgba(212,168,74,0.55)',
+              stroke: isPartial ? 'rgba(212,168,74,0.4)' : 'none',
+              strokeDasharray: isPartial ? '3 2' : 'none',
+              rx: 2,
+            },
+              React.createElement('title', null, `${yr} Ingresos: ${dashFmtMoney(d.ingresos)}`)
+            ),
+            React.createElement('rect', {
+              x: x2, y: scaleY(d.bai), width: bw, height: hB,
+              fill: '#1BC8D8',
+              opacity: isPartial ? 0.5 : 0.85,
+              rx: 2,
+            },
+              React.createElement('title', null, `${yr} BAI: ${dashFmtMoney(d.bai)}`)
+            ),
+            React.createElement('text', { x: x1 + bw / 2, y: scaleY(d.ingresos) - 3, textAnchor: 'middle', fontSize: 8, fill: '#D4A84A' },
+              dashFmtMoney(d.ingresos)),
+            React.createElement('text', { x: x2 + bw / 2, y: scaleY(d.bai) - 3, textAnchor: 'middle', fontSize: 8, fill: '#1BC8D8' },
+              dashFmtMoney(d.bai)),
+            React.createElement('text', { x: cx, y: inner.h + 14, textAnchor: 'middle', fontSize: 10, fill: 'rgba(255,255,255,0.6)' }, yr),
+            isPartial && React.createElement('text', { x: cx, y: inner.h + 24, textAnchor: 'middle', fontSize: 8, fill: 'rgba(255,255,255,0.3)' }, '*')
+          );
+        })
+      )
+    )
+  );
+}
+
+function LineChart({ years, getData, color, label, format }) {
+  const W = 340; const H = 160; const PAD = { t: 24, r: 16, b: 24, l: 48 };
+  const inner = { w: W - PAD.l - PAD.r, h: H - PAD.t - PAD.b };
+  const vals  = years.map(getData);
+  const maxV  = Math.max(...vals, 1);
+  const minV  = Math.min(...vals, 0);
+  const range = maxV - minV || 1;
+  const xStep = inner.w / (years.length - 1 || 1);
+  const toX   = i => i * xStep;
+  const toY   = v => inner.h - ((v - minV) / range) * inner.h;
+  const pts   = vals.map((v, i) => `${toX(i)},${toY(v)}`).join(' ');
+
+  return (
+    React.createElement('svg', { viewBox: `0 0 ${W} ${H}`, className: 'dash-chart-svg', 'aria-label': label },
+      React.createElement('g', { transform: `translate(${PAD.l},${PAD.t})` },
+        [0, 0.5, 1].map(f => {
+          const y = inner.h * (1 - f);
+          return React.createElement('g', { key: f },
+            React.createElement('line', { x1: 0, x2: inner.w, y1: y, y2: y, stroke: 'rgba(255,255,255,0.06)', strokeWidth: 1 }),
+            React.createElement('text', { x: -6, y: y + 4, textAnchor: 'end', fontSize: 8, fill: 'rgba(255,255,255,0.35)' },
+              format(minV + range * f))
+          );
+        }),
+        React.createElement('polyline', { points: pts, fill: 'none', stroke: color, strokeWidth: 2 }),
+        vals.map((v, i) => React.createElement('g', { key: years[i] },
+          React.createElement('circle', { cx: toX(i), cy: toY(v), r: 3, fill: color }),
+          React.createElement('title', null, `${years[i]}: ${format(v)}`),
+          React.createElement('text', { x: toX(i), y: toY(v) - 7, textAnchor: 'middle', fontSize: 8, fill: color },
+            format(v)),
+          React.createElement('text', { x: toX(i), y: inner.h + 14, textAnchor: 'middle', fontSize: 9, fill: 'rgba(255,255,255,0.5)' }, years[i])
+        ))
+      )
+    )
+  );
+}
+
+function StackedBarChart({ years, yearData }) {
+  const W = 380; const H = 180; const PAD = { t: 16, r: 12, b: 28, l: 8 };
+  const inner = { w: W - PAD.l - PAD.r, h: H - PAD.t - PAD.b };
+  const barW  = Math.min(inner.w / years.length * 0.7, 36);
+
+  const knownCanals = ['Directo', 'Booking', 'Airbnb', 'Otro'];
+
+  return (
+    React.createElement('div', { className: 'dash-chart-box' },
+      React.createElement('svg', { viewBox: `0 0 ${W} ${H}`, className: 'dash-chart-svg', 'aria-label': 'Mix canales por año' },
+        React.createElement('g', { transform: `translate(${PAD.l},${PAD.t})` },
+          years.map((yr, i) => {
+            const d = yearData[yr];
+            const total = Object.values(d.canales || {}).reduce((a, b) => a + b, 0) || 1;
+            const cx = (i + 0.5) * (inner.w / years.length);
+            let yOff = inner.h;
+            const bars = [];
+            const canals = { ...d.canales };
+            knownCanals.forEach(c => {
+              if (!(c in canals)) return;
+              const pct = canals[c] / total;
+              const h   = pct * inner.h;
+              yOff -= h;
+              bars.push(
+                React.createElement('rect', {
+                  key: c,
+                  x: cx - barW / 2, y: yOff, width: barW, height: h,
+                  fill: CANAL_COLORS[c] || CANAL_COLORS.Otro,
+                  opacity: 0.85,
+                },
+                  React.createElement('title', null, `${yr} ${c}: ${dashFmtPct(pct * 100)}`)
+                )
+              );
+            });
+            const otherKeys = Object.keys(canals).filter(k => !knownCanals.includes(k));
+            otherKeys.forEach(c => {
+              const pct = canals[c] / total;
+              const h   = pct * inner.h;
+              yOff -= h;
+              bars.push(
+                React.createElement('rect', {
+                  key: c,
+                  x: cx - barW / 2, y: yOff, width: barW, height: h,
+                  fill: CANAL_COLORS.Otro,
+                  opacity: 0.85,
+                },
+                  React.createElement('title', null, `${yr} ${c}: ${dashFmtPct(pct * 100)}`)
+                )
+              );
+            });
+            return React.createElement('g', { key: yr },
+              ...bars,
+              React.createElement('text', { x: cx, y: inner.h + 14, textAnchor: 'middle', fontSize: 10, fill: 'rgba(255,255,255,0.6)' }, yr)
+            );
+          })
+        )
+      ),
+      React.createElement('div', { className: 'dash-legend' },
+        knownCanals.map(c =>
+          React.createElement('span', { key: c, className: 'dash-legend-item' },
+            React.createElement('span', { style: { background: CANAL_COLORS[c], display: 'inline-block', width: 10, height: 10, borderRadius: 2, marginRight: 4 } }),
+            c
+          )
+        )
+      )
+    )
+  );
+}
+
+function ReservasNochesChart({ years, yearData }) {
+  const W = 260; const H = 180; const PAD = { t: 24, r: 8, b: 28, l: 44 };
+  const inner = { w: W - PAD.l - PAD.r, h: H - PAD.t - PAD.b };
+  const maxRes    = Math.max(...years.map(y => yearData[y].reservas), 1);
+  const maxNoches = Math.max(...years.map(y => yearData[y].noches), 1);
+  const barGroup  = inner.w / years.length;
+  const bw        = Math.min(barGroup * 0.38, 20);
+  const gap       = bw * 0.25;
+
+  return (
+    React.createElement('svg', { viewBox: `0 0 ${W} ${H}`, className: 'dash-chart-svg', 'aria-label': 'Reservas y noches por año' },
+      React.createElement('g', { transform: `translate(${PAD.l},${PAD.t})` },
+        years.map((yr, i) => {
+          const d   = yearData[yr];
+          const cx  = i * barGroup + barGroup / 2;
+          const x1  = cx - gap / 2 - bw;
+          const x2  = cx + gap / 2;
+          const hR  = (d.reservas / maxRes) * inner.h;
+          const hN  = (d.noches / maxNoches) * inner.h;
+          return React.createElement('g', { key: yr },
+            React.createElement('rect', {
+              x: x1, y: inner.h - hR, width: bw, height: hR,
+              fill: 'rgba(212,168,74,0.75)', rx: 2,
+            },
+              React.createElement('title', null, `${yr} Reservas: ${d.reservas}`)
+            ),
+            React.createElement('rect', {
+              x: x2, y: inner.h - hN, width: bw, height: hN,
+              fill: 'rgba(27,200,216,0.45)', rx: 2,
+            },
+              React.createElement('title', null, `${yr} Noches: ${d.noches}`)
+            ),
+            React.createElement('text', { x: cx, y: inner.h + 14, textAnchor: 'middle', fontSize: 10, fill: 'rgba(255,255,255,0.6)' }, yr)
+          );
+        })
+      )
+    )
+  );
+}
+
+const DashboardTab = ({ token }) => {
+  const [yearData, setYearData] = React.useState(null);
+  const [loading,  setLoading]  = React.useState(true);
+  const [error,    setError]    = React.useState(null);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      setLoading(true);
+      setError(null);
+      try {
+        const [histRes, liveRes] = await Promise.all([
+          fetch('data/dashboard-historico.json'),
+          token
+            ? fetch(`https://api.github.com/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
+                headers: { Authorization: `token ${token}` },
+              })
+            : Promise.resolve(null),
+        ]);
+
+        if (!histRes.ok) throw new Error('No se pudo cargar el histórico');
+        const hist = await histRes.json();
+
+        let live2026 = null;
+        if (liveRes) {
+          if (!liveRes.ok) throw new Error('Error cargando reservas 2026 (' + liveRes.status + ')');
+          const raw  = await liveRes.json();
+          const json = JSON.parse(atob(raw.content.replace(/\n/g, '')));
+          live2026   = compute2026Stats(json.reservas || []);
+        }
+
+        if (cancelled) return;
+        const combined = { ...hist.years };
+        if (live2026) combined['2026'] = live2026;
+        setYearData(combined);
+      } catch (e) {
+        if (!cancelled) setError(e.message);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    load();
+    return () => { cancelled = true; };
+  }, [token]);
+
+  if (loading) return React.createElement('div', { className: 'dash-loading' }, 'Cargando dashboard...');
+  if (error)   return React.createElement('div', { className: 'pe-error' }, 'Error: ', error);
+  if (!yearData) return null;
+
+  const years = Object.keys(yearData).sort();
+
+  const totalIngresos = years.reduce((s, y) => s + (yearData[y].ingresos || 0), 0);
+  const totalBai      = years.reduce((s, y) => s + (yearData[y].bai || 0), 0);
+  const totalRes      = years.reduce((s, y) => s + (yearData[y].reservas || 0), 0);
+  const avgRent       = years.reduce((s, y) => s + (yearData[y].rent_pct || 0), 0) / years.length;
+  const avgPrecio     = years.reduce((s, y) => s + (yearData[y].precio_noche || 0), 0) / years.length;
+
+  const hasPartial = years.some(y => yearData[y].partial);
+
+  return React.createElement('div', { className: 'dash-wrap' },
+    React.createElement('div', { className: 'dash-kpis' },
+      React.createElement('div', { className: 'dash-kpi' },
+        React.createElement('span', { className: 'dash-kpi-label' }, 'Ingresos acumulados'),
+        React.createElement('span', { className: 'dash-kpi-value', style: { color: '#D4A84A' } }, dashFmtMoney(totalIngresos))
+      ),
+      React.createElement('div', { className: 'dash-kpi' },
+        React.createElement('span', { className: 'dash-kpi-label' }, 'BAI acumulado'),
+        React.createElement('span', { className: 'dash-kpi-value', style: { color: '#1BC8D8' } }, dashFmtMoney(totalBai))
+      ),
+      React.createElement('div', { className: 'dash-kpi' },
+        React.createElement('span', { className: 'dash-kpi-label' }, 'Rentabilidad media'),
+        React.createElement('span', { className: 'dash-kpi-value' }, dashFmtPct(avgRent))
+      ),
+      React.createElement('div', { className: 'dash-kpi' },
+        React.createElement('span', { className: 'dash-kpi-label' }, 'Precio/noche medio'),
+        React.createElement('span', { className: 'dash-kpi-value' }, dashFmtMoney(avgPrecio))
+      ),
+      React.createElement('div', { className: 'dash-kpi' },
+        React.createElement('span', { className: 'dash-kpi-label' }, 'Total reservas'),
+        React.createElement('span', { className: 'dash-kpi-value' }, totalRes)
+      )
+    ),
+
+    React.createElement('div', { className: 'dash-section' },
+      React.createElement('h3', { className: 'dash-section-title' }, 'Ingresos y BAI por año'),
+      React.createElement(BarChart, { years, yearData })
+    ),
+
+    React.createElement('div', { className: 'dash-charts-row' },
+      React.createElement('div', { className: 'dash-chart-box', style: { flex: 1 } },
+        React.createElement('h4', { className: 'dash-chart-title' }, 'Precio medio / noche'),
+        React.createElement(LineChart, {
+          years,
+          getData:  y => yearData[y].precio_noche || 0,
+          color:    '#D4A84A',
+          label:    'Precio medio por noche',
+          format:   dashFmtMoney,
+        })
+      ),
+      React.createElement('div', { className: 'dash-chart-box', style: { flex: 1 } },
+        React.createElement('h4', { className: 'dash-chart-title' }, 'Rentabilidad %'),
+        React.createElement(LineChart, {
+          years,
+          getData:  y => yearData[y].rent_pct || 0,
+          color:    '#1BC8D8',
+          label:    'Rentabilidad por año',
+          format:   dashFmtPct,
+        })
+      )
+    ),
+
+    React.createElement('div', { className: 'dash-charts-row' },
+      React.createElement('div', { className: 'dash-chart-box', style: { flex: 6 } },
+        React.createElement('h4', { className: 'dash-chart-title' }, 'Mix canales (% apilado por año)'),
+        React.createElement(StackedBarChart, { years, yearData })
+      ),
+      React.createElement('div', { className: 'dash-chart-box', style: { flex: 4 } },
+        React.createElement('h4', { className: 'dash-chart-title' }, 'Reservas y noches por año'),
+        React.createElement(ReservasNochesChart, { years, yearData }),
+        React.createElement('div', { className: 'dash-legend' },
+          React.createElement('span', { className: 'dash-legend-item' },
+            React.createElement('span', { style: { background: 'rgba(212,168,74,0.75)', display: 'inline-block', width: 10, height: 10, borderRadius: 2, marginRight: 4 } }),
+            'Reservas'
+          ),
+          React.createElement('span', { className: 'dash-legend-item' },
+            React.createElement('span', { style: { background: 'rgba(27,200,216,0.45)', display: 'inline-block', width: 10, height: 10, borderRadius: 2, marginRight: 4 } }),
+            'Noches'
+          )
+        )
+      )
+    ),
+
+    hasPartial && React.createElement('p', { className: 'dash-footnote' }, '* 2020 y 2021: datos incompletos (temporada parcial)')
+  );
+};
+
+// ============================================================
 // AnalyticsTab — datos en vivo de Cloudflare Web Analytics
 // (vía Worker proxy para sortear CORS) + funnel local.
 // ============================================================
@@ -1092,7 +1500,8 @@ const ContractTab = ({ pricesData }) => {
     && Number(prereserva) <= Number(precioTotal)
     && diasCancelacion > 0;
 
-  const buildContractHTML = (heroDataUrl) => {
+const buildContractHTML = (heroDataUrl) => {
+    const escHtml = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     const a = aptInfo;
     const fechaFirmaStr  = fmtFechaEs(fechaFirma);
     const fechaEntradaStr = fmtFechaCorta(fechaEntrada);
@@ -1134,7 +1543,7 @@ const ContractTab = ({ pricesData }) => {
     return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
 <base href="${origin}${baseDir}">
-<title>Contrato · Hestía Vera ${a.shortName} · ${nombre}</title>
+<title>Contrato · Hestía Vera ${a.shortName} · ${escHtml(nombre)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
@@ -1544,7 +1953,7 @@ const ContractTab = ({ pricesData }) => {
 <h2>Reunidos</h2>
 <p>Por una parte, <strong>D. Alejandro Berruezo Márquez</strong> y <strong>D. Francisco Javier Moral Arévalo</strong>, mayores de edad, y con domicilio a efectos de notificaciones en Avenida de la Constitución 38, 1A, 28821 de Coslada, Madrid, con DNI. ***DNI-RETIRADO*** y ***DNI-RETIRADO***, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ***IBAN-RETIRADO***.</p>
 <p><em>(De ahora en adelante, "Los Propietarios".)</em></p>
-<p>De otra parte, <strong>D./Dña. ${nombre.toUpperCase()}</strong>, mayor de edad, con domicilio a efectos de notificaciones en: ${domicilio ? `<strong>${domicilio}</strong>` : '<span class="blank-line long" aria-label="dirección a rellenar"></span>'}, con Documento Nacional de Identidad: ${dni ? `<strong>${dni}</strong>` : '<span class="blank-line short" aria-label="DNI a rellenar"></span>'}, y con teléfono: ${telefono ? `<strong>${telefono}</strong>` : '<span class="blank-line short" aria-label="teléfono a rellenar"></span>'}.</p>
+<p>De otra parte, <strong>D./Dña. ${escHtml(nombre.toUpperCase())}</strong>, mayor de edad, con domicilio a efectos de notificaciones en: ${domicilio ? `<strong>${escHtml(domicilio)}</strong>` : '<span class="blank-line long" aria-label="dirección a rellenar"></span>'}, con Documento Nacional de Identidad: ${dni ? `<strong>${escHtml(dni)}</strong>` : '<span class="blank-line short" aria-label="DNI a rellenar"></span>'}, y con teléfono: ${telefono ? `<strong>${escHtml(telefono)}</strong>` : '<span class="blank-line short" aria-label="teléfono a rellenar"></span>'}.</p>
 <p><em>(en adelante, "la Parte Arrendataria".)</em></p>
 <p>Ambas partes se reconocen capacidad legal suficiente para este acto y libremente,</p>
 
@@ -1628,7 +2037,7 @@ ${clausulaFianza}
   </div>
   <div class="firma">
     <strong>La Parte Arrendataria</strong><br>
-    Fdo.: <strong>${nombre.toUpperCase()}</strong>
+    Fdo.: <strong>${escHtml(nombre.toUpperCase())}</strong>
   </div>
 </div>
 
@@ -1721,7 +2130,7 @@ info@hestiayourhome.com · +34 620 316 370`;
     setTimeout(() => {
       const subject = `Contrato de reserva · Hestía Vera ${aptInfo.shortName} · ${fmtFechaCorta(fechaEntrada)} → ${fmtFechaCorta(fechaSalida)}`;
       const body = buildEmailBody();
-      const mailto = `mailto:${encodeURIComponent(email || '')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const mailto = `mailto:${email || ''}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       window.location.href = mailto;
     }, 1500);
   };
@@ -1845,26 +2254,23 @@ const COMMISSION_RATES = {
   avaibook: 0,
 };
 
-function exportReservasCSV(reservas, year) {
+function exportReservasExcel(reservas, year) {
   const cols = [
     'apt','responsable','telefono','huespedes','menores_12','cuna_trona','mascota',
     'dni_enviado','noches','entrada','salida','cancelacion','canal','contactado',
     'f_reserva','ingreso_total','reserva','pago_previo','al_checkin','comision',
-    'renta','fianza','gasto_limpieza','pagos_leila','bai','rentabilidad_pct',
-    'precio_bruto_noche','precio_neto_noche','observaciones',
+'renta','fianza','gasto_limpieza','pagos_leila','efectivo_leila','bai',
+    'rentabilidad_pct','precio_bruto_noche','precio_neto_noche','observaciones',
   ];
   const esc = v => {
     if (v == null) return '';
     const s = String(v);
-    return s.includes(',') || s.includes('"') || s.includes('\n') ? `"${s.replace(/"/g, '""')}"` : s;
+return s.includes(',') || s.includes('"') || s.includes('\n') ? `"${s.replace(/"/g,'""')}"` : s;
   };
-  const rows = [cols.join(',')];
-  reservas.forEach(r => rows.push(cols.map(c => esc(r[c])).join(',')));
-  const blob = new Blob([rows.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = `reservas-${year}.csv`; a.click();
-  URL.revokeObjectURL(url);
+  const rows = [cols.join(','), ...reservas.map(r => cols.map(c => esc(r[c])).join(','))];
+  const blob = new Blob(['﻿' + rows.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: `reservas-${year}.csv` });
+  a.click(); URL.revokeObjectURL(a.href);
 }
 
 function getCanalKey(canal) {
@@ -2088,7 +2494,7 @@ const LeilaTab = ({ token }) => {
   const loadData = React.useCallback(() => {
     setLoading(true);
     setLoadErr(null);
-    fetch(`${API}/repos/${DATA_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' })
+fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' })
       .then(r => r.json())
       .then(j => {
         if (j.message) throw new Error(j.message);
@@ -2162,7 +2568,7 @@ const LeilaTab = ({ token }) => {
         else delete updSaldoInicial[yr];
       });
       const next = { ...data, reservas: updReservas, leila_pagos_a_hestia: updLiquid, leila_saldo_inicial: updSaldoInicial };
-      const res = await fetch(`${API}/repos/${DATA_REPO}/contents/${RESERVAS_PATH}`, {
+const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
         method: 'PUT',
         headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: 'Update Leila: efectivo + liquidaciones', content: utf8ToB64(JSON.stringify(next, null, 2)), sha, branch: BRANCH }),
@@ -2275,8 +2681,8 @@ const LeilaTab = ({ token }) => {
           <button type="button" className="pe-btn pe-btn-ghost" onClick={loadData} disabled={loading}>
             {loading ? 'Recargando…' : 'Recargar'}
           </button>
-          <button type="button" className="pe-btn pe-btn-ghost" onClick={() => data && exportReservasCSV((data.reservas || []).filter(r => String(r.year || '') === focusYear), focusYear)} disabled={!data}>
-            Exportar CSV
+<button type="button" className="pe-btn pe-btn-ghost" onClick={() => data && exportReservasExcel((data.reservas || []).filter(r => String(r.year || '') === focusYear), focusYear)} disabled={!data}>
+            Exportar Excel
           </button>
           {loadedAt && <span className="leila-loaded-at">Actualizado {loadedAt}</span>}
         </div>
@@ -2454,7 +2860,7 @@ const ReservasTab = ({ token }) => {
     if (!token) return;
     setLoading(true);
     setError(null);
-    fetch(`${API}/repos/${DATA_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' })
+fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' })
       .then(r => r.json())
       .then(j => {
         if (j.message) throw new Error(j.message);
@@ -2603,7 +3009,7 @@ const ReservasTab = ({ token }) => {
         sha,
         branch: BRANCH,
       };
-      const r = await fetch(`${API}/repos/${DATA_REPO}/contents/${RESERVAS_PATH}`, {
+const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
         method: 'PUT', headers: apiHeaders(token), body: JSON.stringify(body)
       });
       const j = await r.json();
@@ -2669,10 +3075,17 @@ const ReservasTab = ({ token }) => {
   // Devuelve la reserva que solapa con `r` (excluyendo el índice `skipIdx`).
   // Solapar = el check-in de una es estrictamente antes del check-out de la
   // otra Y viceversa. Que coincida check-out con check-in está permitido.
+  const isCancelada = r => {
+    const c = (r.cancelacion || '').trim().toUpperCase();
+    return c === 'CANCELADA' || c === 'CANCELADO';
+  };
+
   const findOverlap = (r, skipIdx) => {
     if (!r.entrada || !r.salida || !r.apt) return null;
+    if (isCancelada(r)) return null;
     return reservas.find((other, i) => {
       if (i === skipIdx) return false;
+      if (isCancelada(other)) return false;
       if (other.apt !== r.apt) return false;
       if (!other.entrada || !other.salida) return false;
       return r.entrada < other.salida && r.salida > other.entrada;
@@ -2734,8 +3147,8 @@ const ReservasTab = ({ token }) => {
               {loading ? 'Recargando…' : 'Recargar'}
             </button>
             {loadedAt && <span className="leila-loaded-at">Actualizado {loadedAt}</span>}
-            <button type="button" className="pe-btn pe-btn-ghost" onClick={() => data && exportReservasCSV(focusList, focusYear)} disabled={!data}>
-              Exportar CSV
+<button type="button" className="pe-btn pe-btn-ghost" onClick={() => data && exportReservasExcel(focusList, focusYear)} disabled={!data}>
+              Exportar Excel
             </button>
             <button type="button" className="pe-btn pe-btn-primary" onClick={newRow}>+ Nueva</button>
           </div>
@@ -3601,12 +4014,17 @@ const AdminApp = () => {
           onClick={() => { setMode('leila'); setError(null); setSuccess(null); }}>
           💳 Leila
         </button>
+        <button type="button"
+          className={`pe-tab${mode === 'dashboard' ? ' is-active' : ''}`}
+          onClick={() => { setMode('dashboard'); setError(null); setSuccess(null); }}>
+          📊 Dashboard
+        </button>
       </div>
 
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} /> : mode === 'reservas' ? <ReservasTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} /> : mode === 'reservas' ? <ReservasTab token={token} /> : mode === 'dashboard' ? <DashboardTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>

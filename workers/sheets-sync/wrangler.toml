@@ -1,0 +1,16 @@
+name            = "hestia-sheets-sync"
+main            = "index.js"
+compatibility_date = "2024-09-23"
+workers_dev     = true
+
+# Binding al KV namespace para rate limiting.
+# Crear el namespace antes de desplegar:
+#   wrangler kv namespace create RATE_KV
+# Pegar el id que devuelve en el campo id de abajo.
+[[kv_namespaces]]
+binding = "RATE_KV"
+id      = "PLACEHOLDER_SUSTITUIR_CON_ID_REAL"
+
+# Secreto GCP_SA_KEY — NO se pone aquí, se añade con:
+#   wrangler secret put GCP_SA_KEY
+# y pegas el contenido completo del JSON del service account de GCP.

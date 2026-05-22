@@ -99,7 +99,7 @@ const COPY = {
     apts_title: (<>Tres atmósferas, <em>una misma casa.</em></>),
     apts_sub: 'Cada uno toma su color del paisaje que lo rodea. Tres hogares — elige el tuyo, o ven tres veces.',
     apt_01_concept: 'El campo de olivos llega al mar',
-    apt_02_concept: 'El ático sobre el mar y el Salar de los Canos',
+    apt_02_concept: 'El ático sobre el Mediterráneo y el Salar de los Canos',
     apt_03_concept: 'El amarillo albero del amanecer sobre las salinas',
     apt_cta: 'Ver Hestía',
     compare_eyebrow: 'Compara · Elige · Reserva',
@@ -117,7 +117,7 @@ const COPY = {
     alex_role: 'Reserva · Antes de tu llegada',
     alex_quote: '«A ti, antes de que llegues, te lo cuento todo. Después, cuando te vayas, te echaré de menos.»',
     fran_role: 'Estancia · Mientras estás aquí',
-    fran_quote: '«If anything breaks, calls, or changes — I am here. Your stay, my job.»',
+    fran_quote: '«Si algo falla, cambia o necesita atención — estoy aquí. Tu estancia, mi trabajo.»',
     manifest_eyebrow: 'El viajero que hace hogar',
     manifest_title: (<>Hestía no se visita, <em>se vive — y se cuida para quien venga después.</em></>),
     manifest_lead_1: 'No vienes a hacer turismo. Vienes a cocinar tu desayuno, a leer en la terraza, a seguir tu ritmo. Esto no es un hotel — durante tu estancia, es tu casa.',
@@ -167,7 +167,7 @@ const COPY = {
     apts_title: (<>Three moods, <em>one same home.</em></>),
     apts_sub: 'Each one borrows its colour from the landscape around it. Three homes — choose yours, or come three times.',
     apt_01_concept: 'Where the olive grove meets the sea',
-    apt_02_concept: 'Penthouse above the sea and the Salar de los Canos',
+    apt_02_concept: 'Penthouse above the Mediterranean and the Salar de los Canos',
     apt_03_concept: 'Ochre yellow, sunrise over the salt flats',
     apt_cta: 'See Hestía',
     compare_eyebrow: 'Compare · Choose · Book',
@@ -254,20 +254,28 @@ const useScrollMode = () => {
 
 const useReveal = () => {
   React.useEffect(() => {
+    // Marcar automáticamente las secciones con fondo corporativo para la
+    // animación de entrada (border-radius + blur). Se excluyen heros y
+    // secciones que ya están en el viewport al cargar (first-child visible).
+    const BG_CLASSES = ['section-night','section-dark','section-violet','section-day','section-cream'];
+    document.querySelectorAll(BG_CLASSES.map(c => `.${c}`).join(',')).forEach(el => {
+      if (!el.classList.contains('reveal-section') && !el.closest('.hero, .apt-page-hero, .page-hero')) {
+        el.classList.add('reveal-section');
+      }
+    });
+
+    const SELECTOR = '.reveal:not(.in), .reveal-section:not(.in)';
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.15 });
-    // Observa los .reveal presentes en el primer render.
-    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
-    // Y los que aparezcan después (filtros, tabs, expansiones…) vía
-    // MutationObserver. Sin esto, una card .reveal añadida tras un
-    // setState quedaría con opacity:0 para siempre.
+    }, { threshold: 0.08 });
+    document.querySelectorAll(SELECTOR).forEach(el => io.observe(el));
     const observe = (node) => {
       if (!(node instanceof Element)) return;
-      if (node.classList && node.classList.contains('reveal') && !node.classList.contains('in')) io.observe(node);
-      node.querySelectorAll && node.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+      const isReveal = node.classList && (node.classList.contains('reveal') || node.classList.contains('reveal-section')) && !node.classList.contains('in');
+      if (isReveal) io.observe(node);
+      node.querySelectorAll && node.querySelectorAll(SELECTOR).forEach(el => io.observe(el));
     };
     const mo = new MutationObserver((mutations) => {
       mutations.forEach(m => m.addedNodes.forEach(observe));
