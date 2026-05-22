@@ -1887,7 +1887,7 @@ const ContractTab = ({
   // Lista de extras (tabla cláusula novena) — leídos de prices.json.
   const extras = pricesData && pricesData.rules && pricesData.rules.extras || [];
   const formOk = () => apt && nombre && fechaEntrada && fechaSalida && noches > 0 && huespedes >= 1 && Number(precioTotal) > 0 && Number(prereserva) >= 0 && Number(prereserva) <= Number(precioTotal) && diasCancelacion > 0;
-  const buildContractHTML = () => {
+  const buildContractHTML = heroDataUrl => {
     const escHtml = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const a = aptInfo;
     const fechaFirmaStr = fmtFechaEs(fechaFirma);
@@ -1918,7 +1918,7 @@ const ContractTab = ({
     const baseDir = typeof window !== 'undefined' && window.location && window.location.pathname ? window.location.pathname.replace(/[^\/]+$/, '') : '/';
     const assetUrl = p => `${origin}${baseDir}${p}`.replace(/([^:])\/+/g, '$1/');
     const logoUrl = assetUrl('assets/logo-hestia-brand.png');
-    const heroUrl = assetUrl(a.heroPhoto);
+    const heroUrl = heroDataUrl || assetUrl(a.heroPhoto);
     return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
 <base href="${origin}${baseDir}">
@@ -2089,6 +2089,24 @@ const ContractTab = ({
     font-size: 9pt;
     margin-top: 2mm;
     color: var(--arena-dk);
+  }
+
+  /* Marca de agua — aparece en todas las páginas del PDF */
+  .wm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 320pt;
+    font-weight: 700;
+    color: rgba(61, 26, 53, 0.055);
+    z-index: -1;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
   h1 {
@@ -2279,6 +2297,7 @@ const ContractTab = ({
   .print-bar button:hover { background: var(--ber-lt); }
 </style></head>
 <body>
+<div class="wm" aria-hidden="true">H</div>
 <div class="print-bar">
   <h4>Ajustes recomendados</h4>
   <ul>
@@ -2427,13 +2446,30 @@ Un abrazo,
 Alex y Fran · Hestía
 info@hestiayourhome.com · +34 620 316 370`;
   };
-  const onGenerar = () => {
+  const onGenerar = async () => {
     if (!formOk()) {
       alert('Faltan campos por rellenar. Comprueba que el huésped tiene nombre, fechas y precio total > 0, y que la prereserva no supere el total.');
       return;
     }
+    // Pre-cargar la foto del apartamento como data URI para que el PDF
+    // la incluya aunque el navegador corte la carga de red al imprimir.
+    let heroDataUrl = null;
+    try {
+      const origin = typeof window !== 'undefined' && window.location && window.location.origin || '';
+      const baseDir = typeof window !== 'undefined' && window.location && window.location.pathname ? window.location.pathname.replace(/[^\/]+$/, '') : '/';
+      const heroAbsUrl = `${origin}${baseDir}${aptInfo.heroPhoto}`.replace(/([^:])\/+/g, '$1/');
+      const resp = await fetch(heroAbsUrl);
+      if (resp.ok) {
+        const blob = await resp.blob();
+        heroDataUrl = await new Promise(res => {
+          const reader = new FileReader();
+          reader.onload = () => res(reader.result);
+          reader.readAsDataURL(blob);
+        });
+      }
+    } catch (_) {/* sigue con URL normal si hay error de red */}
     // 1. Abrir ventana con el contrato (auto-print después de un momento)
-    const html = buildContractHTML();
+    const html = buildContractHTML(heroDataUrl);
     const w = window.open('', '_blank');
     if (w) {
       w.document.open();
@@ -3274,6 +3310,14 @@ const LeilaTab = ({
       className: "num"
     }, "Noches"), /*#__PURE__*/React.createElement("th", {
       className: "num"
+    }, "Bruto"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "BAI"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Rent."), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "\u20AC/noche"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
     }, "Limpieza"), /*#__PURE__*/React.createElement("th", {
       className: "num"
     }, "Efectivo"), /*#__PURE__*/React.createElement("th", {
@@ -3293,6 +3337,14 @@ const LeilaTab = ({
       }, r.entrada, r.salida ? ` · ${r.salida}` : ''), /*#__PURE__*/React.createElement("td", {
         className: "num"
       }, r.noches || '—'), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, r.ingreso_total != null ? `${r.ingreso_total} €` : '—'), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, r.bai != null ? `${r.bai} €` : '—'), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, r.rentabilidad_pct != null ? `${Math.round(r.rentabilidad_pct * 1000) / 10} %` : '—'), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, r.precio_bruto_noche != null ? `${r.precio_bruto_noche} €` : '—'), /*#__PURE__*/React.createElement("td", {
         className: "num"
       }, tarifa, " \u20AC"), /*#__PURE__*/React.createElement("td", {
         className: "num"
@@ -3314,6 +3366,12 @@ const LeilaTab = ({
       className: "leila-foot-row"
     }, /*#__PURE__*/React.createElement("td", {
       colSpan: "4"
+    }), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, rows.reduce((s, r) => s + (Number(r.ingreso_total) || 0), 0), " \u20AC"), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, rows.reduce((s, r) => s + (Number(r.bai) || 0), 0), " \u20AC"), /*#__PURE__*/React.createElement("td", {
+      colSpan: "2"
     }), /*#__PURE__*/React.createElement("td", {
       className: "num"
     }, mTarifa, " \u20AC"), /*#__PURE__*/React.createElement("td", {
@@ -3383,6 +3441,7 @@ const ReservasTab = ({
   const [selectedIdx, setSelectedIdx] = React.useState(-1);
   const [draft, setDraft] = React.useState(null);
   const [focusYearOverride, setFocusYearOverride] = React.useState(null);
+  const [focusMonth, setFocusMonth] = React.useState('all');
   const [loadedAt, setLoadedAt] = React.useState(null);
   const loadData = React.useCallback(() => {
     if (!token) return;
@@ -3458,6 +3517,14 @@ const ReservasTab = ({
   const defaultFocus = byYear[currentYear] ? currentYear : allYears[allYears.length - 1] || currentYear;
   const focusYear = focusYearOverride && byYear[focusYearOverride] ? focusYearOverride : defaultFocus;
   const focusList = byYear[focusYear] || [];
+  const MES_FULL = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  const allMonths = [...new Set(focusList.map(r => (r.entrada || '').slice(5, 7)).filter(Boolean))].sort();
+  const byMonth = {};
+  focusList.forEach(r => {
+    const m = (r.entrada || '').slice(5, 7);
+    if (m) (byMonth[m] = byMonth[m] || []).push(r);
+  });
+  const visibleMonths = focusMonth === 'all' ? allMonths : allMonths.filter(m => m === focusMonth);
 
   // --- Métricas consistentes año a año ---
   // Bruto = ingreso_total (lo que paga el huésped al canal).
@@ -3779,7 +3846,10 @@ const ReservasTab = ({
     return /*#__PURE__*/React.createElement("tr", {
       key: y,
       className: `rv-yearly-row${isFocus ? ' is-focus' : ''}`,
-      onClick: () => setFocusYearOverride(y)
+      onClick: () => {
+        setFocusYearOverride(y);
+        setFocusMonth('all');
+      }
     }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, y)), /*#__PURE__*/React.createElement("td", {
       className: "num"
     }, m.reservas), /*#__PURE__*/React.createElement("td", {
@@ -3907,7 +3977,15 @@ const ReservasTab = ({
     className: "rv-prox-meta"
   }, r.huespedes, " pax \xB7 ", r.noches, "n \xB7 ", r.canal))))), /*#__PURE__*/React.createElement("div", {
     className: "rv-toolbar"
-  }, /*#__PURE__*/React.createElement("label", null, "Apartamento", /*#__PURE__*/React.createElement("select", {
+  }, /*#__PURE__*/React.createElement("label", null, "Mes", /*#__PURE__*/React.createElement("select", {
+    value: focusMonth,
+    onChange: e => setFocusMonth(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "Todos los meses"), allMonths.map(m => /*#__PURE__*/React.createElement("option", {
+    key: m,
+    value: m
+  }, MES_FULL[parseInt(m, 10) - 1])))), /*#__PURE__*/React.createElement("label", null, "Apartamento", /*#__PURE__*/React.createElement("select", {
     value: filterApt,
     onChange: e => setFilterApt(e.target.value)
   }, /*#__PURE__*/React.createElement("option", {
@@ -3936,60 +4014,94 @@ const ReservasTab = ({
     value: "past"
   }, "Pasadas"))), /*#__PURE__*/React.createElement("span", {
     className: "rv-hint"
-  }, "Click en una fila para editarla \u2192")), /*#__PURE__*/React.createElement("div", {
-    className: "rv-table-wrap"
-  }, /*#__PURE__*/React.createElement("table", {
-    className: "rv-table"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
-    className: "rv-status-th"
-  }), /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Hu\xE9sped"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", {
-    className: "num"
-  }, "Noches"), /*#__PURE__*/React.createElement("th", {
-    className: "num"
-  }, "Pax"), /*#__PURE__*/React.createElement("th", null, "Canal"), /*#__PURE__*/React.createElement("th", {
-    className: "num"
-  }, "Ingreso"), /*#__PURE__*/React.createElement("th", {
-    className: "num"
-  }, "Comisi\xF3n"), /*#__PURE__*/React.createElement("th", {
-    className: "num"
-  }, "BAI"), /*#__PURE__*/React.createElement("th", {
-    className: "num"
-  }, "%"))), /*#__PURE__*/React.createElement("tbody", null, filtered.map(r => {
-    const idx = reservas.indexOf(r);
-    const status = reservaStatus(r, today);
-    const statusIcon = status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
-    const isSel = idx === selectedIdx;
-    return /*#__PURE__*/React.createElement("tr", {
-      key: idx,
-      className: `rv-row rv-row-${status}${isSel ? ' is-selected' : ''}`,
-      "data-apt": r.apt,
-      style: {
-        '--apt-c': APT_COLOR[r.apt] || 'transparent'
-      },
-      onClick: () => openRow(idx)
+  }, "Click en una fila para editarla \u2192")), visibleMonths.length === 0 && /*#__PURE__*/React.createElement("p", {
+    className: "pe-help",
+    style: {
+      marginTop: 16
+    }
+  }, "Sin reservas en ", focusYear, "."), visibleMonths.map(m => {
+    const mRows = filtered.filter(r => (r.entrada || '').slice(5, 7) === m);
+    if (mRows.length === 0) return null;
+    const mBruto = mRows.reduce((s, r) => s + (Number(r.ingreso_total) || 0), 0);
+    const mComis = mRows.reduce((s, r) => s + (Number(r.comision) || 0), 0);
+    const mBai = mRows.reduce((s, r) => s + (Number(r.bai) || 0), 0);
+    const mNoches = mRows.reduce((s, r) => s + (Number(r.noches) || 0), 0);
+    return /*#__PURE__*/React.createElement("div", {
+      key: m,
+      className: "leila-month-block"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "leila-month-hdr"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "leila-month-name"
+    }, MES_FULL[parseInt(m, 10) - 1], " ", focusYear), /*#__PURE__*/React.createElement("span", {
+      className: "leila-month-kpis"
+    }, /*#__PURE__*/React.createElement("span", null, mRows.length, " reserva", mRows.length !== 1 ? 's' : ''), /*#__PURE__*/React.createElement("span", null, mNoches, " noches"), /*#__PURE__*/React.createElement("span", null, "Bruto: ", /*#__PURE__*/React.createElement("strong", null, fmtEur(mBruto))), /*#__PURE__*/React.createElement("span", null, "BAI: ", /*#__PURE__*/React.createElement("strong", null, fmtEur(mBai))), /*#__PURE__*/React.createElement("span", null, mBruto ? fmtPct(mBai / mBruto) : '—'))), /*#__PURE__*/React.createElement("div", {
+      className: "rv-table-wrap"
+    }, /*#__PURE__*/React.createElement("table", {
+      className: "rv-table"
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+      className: "rv-status-th"
+    }), /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Hu\xE9sped"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Noches"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Pax"), /*#__PURE__*/React.createElement("th", null, "Canal"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Ingreso"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Comisi\xF3n"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "BAI"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "%"))), /*#__PURE__*/React.createElement("tbody", null, mRows.map(r => {
+      const idx = reservas.indexOf(r);
+      const status = reservaStatus(r, today);
+      const statusIcon = status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
+      const isSel = idx === selectedIdx;
+      return /*#__PURE__*/React.createElement("tr", {
+        key: idx,
+        className: `rv-row rv-row-${status}${isSel ? ' is-selected' : ''}`,
+        "data-apt": r.apt,
+        style: {
+          '--apt-c': APT_COLOR[r.apt] || 'transparent'
+        },
+        onClick: () => openRow(idx)
+      }, /*#__PURE__*/React.createElement("td", {
+        className: `rv-status rv-status-${status}`,
+        title: status
+      }, statusIcon), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+        className: "rv-apt-chip",
+        style: {
+          background: APT_COLOR[r.apt],
+          color: APT_TEXT[r.apt]
+        }
+      }, APT_NAMES[r.apt] || r.apt)), /*#__PURE__*/React.createElement("td", null, r.responsable, r.mascota ? ' 🐾' : '', r.cuna_trona ? ' 👶' : ''), /*#__PURE__*/React.createElement("td", null, fmtDate(r.entrada)), /*#__PURE__*/React.createElement("td", null, fmtDate(r.salida)), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, r.noches || '—'), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, r.huespedes || '—'), /*#__PURE__*/React.createElement("td", null, r.canal || '—'), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, fmtEur(r.ingreso_total)), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, fmtEur(r.comision)), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, fmtEur(r.bai)), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, fmtPct(r.rentabilidad_pct)));
+    })), /*#__PURE__*/React.createElement("tfoot", null, /*#__PURE__*/React.createElement("tr", {
+      className: "rv-month-foot"
     }, /*#__PURE__*/React.createElement("td", {
-      className: `rv-status rv-status-${status}`,
-      title: status
-    }, statusIcon), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
-      className: "rv-apt-chip",
-      style: {
-        background: APT_COLOR[r.apt],
-        color: APT_TEXT[r.apt]
-      }
-    }, APT_NAMES[r.apt] || r.apt)), /*#__PURE__*/React.createElement("td", null, r.responsable, r.mascota ? ' 🐾' : '', r.cuna_trona ? ' 👶' : ''), /*#__PURE__*/React.createElement("td", null, fmtDate(r.entrada)), /*#__PURE__*/React.createElement("td", null, fmtDate(r.salida)), /*#__PURE__*/React.createElement("td", {
+      colSpan: "8"
+    }), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, r.noches || '—'), /*#__PURE__*/React.createElement("td", {
+    }, /*#__PURE__*/React.createElement("strong", null, fmtEur(mBruto))), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, r.huespedes || '—'), /*#__PURE__*/React.createElement("td", null, r.canal || '—'), /*#__PURE__*/React.createElement("td", {
+    }, fmtEur(mComis)), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, fmtEur(r.ingreso_total)), /*#__PURE__*/React.createElement("td", {
+    }, /*#__PURE__*/React.createElement("strong", null, fmtEur(mBai))), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, fmtEur(r.comision)), /*#__PURE__*/React.createElement("td", {
-      className: "num"
-    }, fmtEur(r.bai)), /*#__PURE__*/React.createElement("td", {
-      className: "num"
-    }, fmtPct(r.rentabilidad_pct)));
-  }))))), draft && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    }, mBruto ? fmtPct(mBai / mBruto) : '—'))))));
+  })), draft && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-backdrop",
     onClick: cancelDraft
   }), /*#__PURE__*/React.createElement("aside", {

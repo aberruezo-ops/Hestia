@@ -133,7 +133,7 @@ const Hero = ({
     muted: true,
     loop: true,
     playsInline: true,
-    preload: "none",
+    preload: "metadata",
     poster: pick.poster,
     "aria-label": pick.alt,
     key: pick.src
@@ -267,6 +267,7 @@ const HomeBookingModal = ({
   const [email, setEmail] = React.useState('');
   const [phone, setPhone] = React.useState('');
   const [msg, setMsg] = React.useState('');
+  const cardRef = React.useRef(null);
   const valid = name.trim().length > 0 && /\S+@\S+/.test(email);
   const waNum = lang === 'es' ? '34620316370' : '34654138251';
   const buildWaMsg = () => {
@@ -280,14 +281,36 @@ const HomeBookingModal = ({
   const mailSubj = lang === 'es' ? `Consulta reserva — ${apt.name}` : `Booking enquiry — ${apt.name}`;
   const mailBody = lang === 'es' ? `Nombre: ${name}\nEmail: ${email}\nTeléfono: ${phone || '—'}\nHestía: ${apt.name}\n\n${msg || '(sin mensaje adicional)'}` : `Name: ${name}\nEmail: ${email}\nPhone: ${phone || '—'}\nHestía: ${apt.name}\n\n${msg || '(no additional message)'}`;
   React.useEffect(() => {
-    const esc = e => {
-      if (e.key === 'Escape') onClose();
+    const FOCUSABLE = 'button:not([disabled]), a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const card = cardRef.current;
+    if (card) {
+      const first = card.querySelector(FOCUSABLE);
+      if (first) first.focus();
+    }
+    const onKey = e => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      if (e.key === 'Tab' && card) {
+        const nodes = [...card.querySelectorAll(FOCUSABLE)];
+        if (!nodes.length) return;
+        const first = nodes[0],
+          last = nodes[nodes.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     };
-    document.addEventListener('keydown', esc);
+    document.addEventListener('keydown', onKey);
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
-      document.removeEventListener('keydown', esc);
+      document.removeEventListener('keydown', onKey);
       document.body.style.overflow = prev;
     };
   }, []);
@@ -325,6 +348,7 @@ const HomeBookingModal = ({
     "aria-labelledby": "hbm-apt-title"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hbm-card",
+    ref: cardRef,
     onClick: e => e.stopPropagation()
   }, /*#__PURE__*/React.createElement("button", {
     className: "hbm-close",

@@ -257,7 +257,7 @@ const ReviewQuote = ({ apt, lang }) => {
       <div className="rf-quote-mark" aria-hidden="true">“</div>
       <p className="rf-quote-text">{r.text}</p>
       <div className="rf-quote-meta">
-        <span className="rf-quote-name">{r.name}</span>
+        <span className="rf-quote-name">{r.name.split(' ')[0]}</span>
         <span className="rf-quote-sep">·</span>
         <span className="rf-quote-date">{mo}/{yr}</span>
         {aptLbl && <><span className="rf-quote-sep">·</span><span className="rf-quote-apt">Hestía {aptLbl}</span></>}

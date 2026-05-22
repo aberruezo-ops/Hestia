@@ -617,9 +617,11 @@ const HomeSearch = ({ lang }) => {
               </label>
               <div className="hs-counter">
                 <button type="button" className="hs-cnt-btn"
+                  aria-label={lang === 'es' ? 'Reducir huéspedes' : 'Fewer guests'}
                   onClick={() => setGuests(g => Math.max(1, g - 1))}>−</button>
                 <span className="hs-cnt-num">{guests}</span>
                 <button type="button" className="hs-cnt-btn"
+                  aria-label={lang === 'es' ? 'Añadir huésped' : 'Add guest'}
                   onClick={() => setGuests(g => Math.min(6, g + 1))}>+</button>
               </div>
             </div>
@@ -627,7 +629,7 @@ const HomeSearch = ({ lang }) => {
 
           {/* Error */}
           {formErr && (
-            <div className="hs-form-err">{formErr}</div>
+            <div className="hs-form-err" role="alert">{formErr}</div>
           )}
 
           {/* Submit */}
