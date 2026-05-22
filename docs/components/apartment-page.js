@@ -1131,6 +1131,41 @@ const ApartmentPageApp = () => {
     document.documentElement.lang = lang;
     document.title = `${apt[lang].name} · Hestía Your Home · Vera Playa`;
   }, [lang]);
+  React.useEffect(() => {
+    const items = window.REVIEWS && window.REVIEWS.items || [];
+    const aptReviews = items.filter(r => r.status === 'published' && (r.apt === apt.id || r.apt === 'all')).sort((a, b) => (b.highlight ? 1 : 0) - (a.highlight ? 1 : 0)).slice(0, 10);
+    if (!aptReviews.length) return;
+    const pageUrl = `https://www.hestiayourhome.com/${apt.slug}.html`;
+    const schemaItems = aptReviews.map(r => ({
+      '@context': 'https://schema.org',
+      '@type': 'Review',
+      'author': {
+        '@type': 'Person',
+        'name': r.name && r.name !== '?' ? r.name : 'Verified Guest'
+      },
+      'datePublished': r.date,
+      'reviewBody': r.text,
+      'reviewRating': {
+        '@type': 'Rating',
+        'ratingValue': r.source === 'booking' ? r.rating / 2 : r.rating,
+        'bestRating': 5,
+        'worstRating': 1
+      },
+      'itemReviewed': {
+        '@type': 'Accommodation',
+        '@id': `${pageUrl}#accommodation`
+      }
+    }));
+    const el = document.createElement('script');
+    el.type = 'application/ld+json';
+    el.id = 'apt-review-schema';
+    el.textContent = JSON.stringify(schemaItems);
+    document.head.appendChild(el);
+    return () => {
+      const s = document.getElementById('apt-review-schema');
+      if (s) s.remove();
+    };
+  }, [apt.id, apt.slug]);
 
   // Marca el body con dos clases:
   //  · has-apt-sticky → la página tiene barra sticky (siempre, en apt page)
