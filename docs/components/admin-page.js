@@ -1584,7 +1584,7 @@ const DashboardTab = ({
     getData: y => yearData[y].rent_pct || 0,
     color: '#1BC8D8',
     label: 'Rentabilidad por año',
-    format: fmtPct
+    format: dashFmtPct
   }))), React.createElement('div', {
     className: 'dash-charts-row'
   }, React.createElement('div', {
@@ -3649,10 +3649,16 @@ const ReservasTab = ({
   // Devuelve la reserva que solapa con `r` (excluyendo el índice `skipIdx`).
   // Solapar = el check-in de una es estrictamente antes del check-out de la
   // otra Y viceversa. Que coincida check-out con check-in está permitido.
+  const isCancelada = r => {
+    const c = (r.cancelacion || '').trim().toUpperCase();
+    return c === 'CANCELADA' || c === 'CANCELADO';
+  };
   const findOverlap = (r, skipIdx) => {
     if (!r.entrada || !r.salida || !r.apt) return null;
+    if (isCancelada(r)) return null;
     return reservas.find((other, i) => {
       if (i === skipIdx) return false;
+      if (isCancelada(other)) return false;
       if (other.apt !== r.apt) return false;
       if (!other.entrada || !other.salida) return false;
       return r.entrada < other.salida && r.salida > other.entrada;
