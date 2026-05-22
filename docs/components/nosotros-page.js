@@ -204,8 +204,8 @@ const NosotrosTeam = ({
     decoding: "async",
     src: "assets/photo-alex.jpg",
     alt: "Alex Berruezo",
-    width: "1179",
-    height: "1440",
+    width: "840",
+    height: "1120",
     loading: "lazy",
     onError: e => {
       e.currentTarget.style.display = 'none';
