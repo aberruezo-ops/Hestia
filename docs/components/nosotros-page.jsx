@@ -163,7 +163,7 @@ const NosotrosTeam = ({ lang }) => {
           <div className="nosotros-person reveal">
             <div className="portrait">
               <img decoding="async" src="assets/photo-alex.jpg" alt="Alex Berruezo"
-                width="731" height="1014"
+                width="1179" height="1440"
                 loading="lazy"
                 onError={e => { e.currentTarget.style.display='none'; e.currentTarget.nextSibling && (e.currentTarget.nextSibling.style.display='block'); }}/>
               <WatermarkBadge size={28} pos={{ bottom: 8, right: 8 }}/>
