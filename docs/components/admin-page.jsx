@@ -1467,23 +1467,24 @@ const AnalyticsTab = () => {
 //   2) mailto: con el correo del huésped, asunto y cuerpo
 //      prerrellenados (el usuario adjunta el PDF descargado).
 // ============================================================
-const ContractTab = ({ pricesData }) => {
-  // Estado del formulario
+const ContractTab = ({ pricesData, prefill }) => {
+  // Estado del formulario — usa prefill si llega desde Reservas
   const today = new Date().toISOString().slice(0,10);
-  const [apt, setApt]                 = React.useState('vm');
-  const [nombre, setNombre]           = React.useState('');
-  const [domicilio, setDomicilio]     = React.useState('');
-  const [dni, setDni]                 = React.useState('');
-  const [telefono, setTelefono]       = React.useState('');
-  const [email, setEmail]             = React.useState('');
-  const [fechaEntrada, setFechaEntrada] = React.useState('');
-  const [fechaSalida, setFechaSalida]   = React.useState('');
-  const [huespedes, setHuespedes]     = React.useState(2);
-  const [mascota, setMascota]         = React.useState(false);
-  const [precioTotal, setPrecioTotal] = React.useState('');
-  const [prereserva, setPrereserva]   = React.useState('');
+  const p = prefill || {};
+  const [apt, setApt]                 = React.useState(p.apt || 'vm');
+  const [nombre, setNombre]           = React.useState(p.responsable || '');
+  const [domicilio, setDomicilio]     = React.useState(p.direccion || '');
+  const [dni, setDni]                 = React.useState(p.dni || '');
+  const [telefono, setTelefono]       = React.useState(p.telefono || '');
+  const [email, setEmail]             = React.useState(p.email || '');
+  const [fechaEntrada, setFechaEntrada] = React.useState(p.entrada || '');
+  const [fechaSalida, setFechaSalida]   = React.useState(p.salida || '');
+  const [huespedes, setHuespedes]     = React.useState(p.huespedes || 2);
+  const [mascota, setMascota]         = React.useState(p.mascota || false);
+  const [precioTotal, setPrecioTotal] = React.useState(p.ingreso_total != null ? String(p.ingreso_total) : '');
+  const [prereserva, setPrereserva]   = React.useState(p.reserva != null ? String(p.reserva) : '');
   const [diasCancelacion, setDiasCancelacion] = React.useState(14);
-  const [fianza, setFianza]           = React.useState(false);
+  const [fianza, setFianza]           = React.useState(p.fianza || false);
   const [fechaFirma, setFechaFirma]   = React.useState(today);
 
   const aptInfo = APT_CONTRACT_DATA[apt];
@@ -2327,7 +2328,14 @@ function calcDerived(r) {
   // 3. Rentabilidad = BAI / ingreso_total.
   out.rentabilidad_pct = ingreso > 0 ? Math.round((out.bai / ingreso) * 10000) / 10000 : null;
 
-  // 4. Precios por noche.
+  // 4. Efectivo al check-in = ingreso_total − señal − pago_previo (salvo override).
+  if (!r._checkin_manual) {
+    out.al_checkin = Math.max(0,
+      (Number(out.ingreso_total)||0) - (Number(out.reserva)||0) - (Number(out.pago_previo)||0)
+    );
+  }
+
+  // 5. Precios por noche.
   const noches = Number(out.noches) || 0;
   if (noches > 0 && ingreso > 0) {
     out.precio_bruto_noche = Math.round((ingreso / noches) * 100) / 100;
@@ -3055,7 +3063,7 @@ const PrereservasTab = ({ token }) => {
   );
 };
 
-const ReservasTab = ({ token }) => {
+const ReservasTab = ({ token, onOpenContract }) => {
   const [data,        setData]        = React.useState(null);
   const [sha,         setSha]         = React.useState(null);
   const [loading,     setLoading]     = React.useState(false);
@@ -3574,10 +3582,11 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                     {mRows.map(r => {
                       const idx = reservas.indexOf(r);
                       const status = reservaStatus(r, today);
-                      const statusIcon = status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
+                      const cancelada = isCancelada(r);
+                      const statusIcon = cancelada ? '✗' : status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
                       const isSel = idx === selectedIdx;
                       return (
-                        <tr key={idx} className={`rv-row rv-row-${status}${isSel ? ' is-selected' : ''}`}
+                        <tr key={idx} className={`rv-row rv-row-${status}${isSel ? ' is-selected' : ''}${cancelada ? ' rv-row-cancelada' : ''}`}
                           data-apt={r.apt} style={{'--apt-c': APT_COLOR[r.apt] || 'transparent'}}
                           onClick={() => openRow(idx)}>
                           <td className={`rv-status rv-status-${status}`} title={status}>{statusIcon}</td>
@@ -3652,6 +3661,16 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                     </select>
                   </div>
                 </div>
+                <div className="rv-row2">
+                  <div className="rv-field">
+                    <label>DNI / pasaporte</label>
+                    <input value={draft.dni || ''} onChange={e => updateDraft('dni', e.target.value)} placeholder="12345678A" />
+                  </div>
+                  <div className="rv-field">
+                    <label>Dirección postal</label>
+                    <input value={draft.direccion || ''} onChange={e => updateDraft('direccion', e.target.value)} placeholder="Calle, nº, ciudad" />
+                  </div>
+                </div>
                 <div className="rv-row3">
                   <div className="rv-field">
                     <label>Entrada</label>
@@ -3706,7 +3725,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                     </select>
                   </div>
                   <div className="rv-field">
-                    <label>Política cancelación</label>
+                    <label>Estado / política cancelación</label>
                     <select value={draft.cancelacion || 'Cancelable 14'} onChange={e => updateDraft('cancelacion', e.target.value)}>
                       <option value="Cancelable 7">Cancelable 7 días</option>
                       <option value="Cancelable 14">Cancelable 14 días</option>
@@ -3714,6 +3733,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                       <option value="Cancelable 60">Cancelable 60 días</option>
                       <option value="Semiestricta">Semiestricta</option>
                       <option value="No reembolsable">No reembolsable</option>
+                      <option value="CANCELADA" style={{ color: '#999' }}>— Cancelada —</option>
                     </select>
                   </div>
                 </div>
@@ -3752,14 +3772,24 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                     <input type="number" step="0.01" value={draft.gasto_limpieza || 0} onChange={e => updateDraft('gasto_limpieza', Number(e.target.value))} />
                   </div>
                 </div>
-                <div className="rv-row2">
+                <div className="rv-row3">
+                  <div className="rv-field">
+                    <label>Señal</label>
+                    <input type="number" step="0.01" value={draft.reserva || 0} onChange={e => updateDraft('reserva', Number(e.target.value))} />
+                  </div>
                   <div className="rv-field">
                     <label>Pago previo</label>
                     <input type="number" step="0.01" value={draft.pago_previo || 0} onChange={e => updateDraft('pago_previo', Number(e.target.value))} />
                   </div>
                   <div className="rv-field">
-                    <label>Al check-in</label>
-                    <input type="number" step="0.01" value={draft.al_checkin || 0} onChange={e => updateDraft('al_checkin', Number(e.target.value))} />
+                    <label>Efectivo check-in
+                      {draft._checkin_manual
+                        ? <button type="button" className="rv-mini-link" onClick={() => setDraft(p => calcDerived({...p, _checkin_manual: false}))}>↻ auto</button>
+                        : <span className="rv-calc"> calculado</span>}
+                    </label>
+                    {draft._checkin_manual
+                      ? <input type="number" step="0.01" value={draft.al_checkin || 0} onChange={e => updateDraft('al_checkin', Number(e.target.value))} />
+                      : <input readOnly className="rv-readonly" value={fmtEur(draft.al_checkin)} />}
                   </div>
                 </div>
                 <div className="rv-field">
@@ -3824,6 +3854,12 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                 <button type="button" className="pe-btn pe-btn-ghost rv-btn-danger" onClick={deleteRow}>🗑 Borrar</button>
               )}
               <div className="rv-edit-foot-right">
+                {onOpenContract && (
+                  <button type="button" className="pe-btn pe-btn-ghost" title="Abrir en el generador de contratos"
+                    onClick={() => { saveDraft(); onOpenContract(draft); }}>
+                    📄 Contrato
+                  </button>
+                )}
                 {selectedIdx >= 0 && selectedIdx < reservas.length && (
                   <button type="button" className="pe-btn pe-btn-ghost" onClick={duplicateRow} title="Crea una nueva reserva con estos mismos datos">Duplicar</button>
                 )}
@@ -3841,7 +3877,8 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
 
 const AdminApp = () => {
   const [phase,    setPhase]    = React.useState('login');
-  const [mode,     setMode]     = React.useState('pricing');  // 'pricing' | 'reviews' | 'analytics' | 'contract' | 'reservas'
+  const [mode,     setMode]     = React.useState('pricing');
+  const [contractPrefill, setContractPrefill] = React.useState(null);
   const [token,    setToken]    = React.useState('');
   const [data,     setData]     = React.useState(null);
   const [sha,      setSha]      = React.useState(null);
@@ -4260,7 +4297,7 @@ const AdminApp = () => {
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} /> : mode === 'prereservas' ? <PrereservasTab token={token} /> : mode === 'reservas' ? <ReservasTab token={token} /> : mode === 'dashboard' ? <DashboardTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} /> : mode === 'prereservas' ? <PrereservasTab token={token} /> : mode === 'reservas' ? <ReservasTab token={token} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'dashboard' ? <DashboardTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>

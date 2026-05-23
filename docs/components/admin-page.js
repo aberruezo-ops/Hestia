@@ -1861,24 +1861,26 @@ const AnalyticsTab = () => {
 //      prerrellenados (el usuario adjunta el PDF descargado).
 // ============================================================
 const ContractTab = ({
-  pricesData
+  pricesData,
+  prefill
 }) => {
-  // Estado del formulario
+  // Estado del formulario — usa prefill si llega desde Reservas
   const today = new Date().toISOString().slice(0, 10);
-  const [apt, setApt] = React.useState('vm');
-  const [nombre, setNombre] = React.useState('');
-  const [domicilio, setDomicilio] = React.useState('');
-  const [dni, setDni] = React.useState('');
-  const [telefono, setTelefono] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [fechaEntrada, setFechaEntrada] = React.useState('');
-  const [fechaSalida, setFechaSalida] = React.useState('');
-  const [huespedes, setHuespedes] = React.useState(2);
-  const [mascota, setMascota] = React.useState(false);
-  const [precioTotal, setPrecioTotal] = React.useState('');
-  const [prereserva, setPrereserva] = React.useState('');
+  const p = prefill || {};
+  const [apt, setApt] = React.useState(p.apt || 'vm');
+  const [nombre, setNombre] = React.useState(p.responsable || '');
+  const [domicilio, setDomicilio] = React.useState(p.direccion || '');
+  const [dni, setDni] = React.useState(p.dni || '');
+  const [telefono, setTelefono] = React.useState(p.telefono || '');
+  const [email, setEmail] = React.useState(p.email || '');
+  const [fechaEntrada, setFechaEntrada] = React.useState(p.entrada || '');
+  const [fechaSalida, setFechaSalida] = React.useState(p.salida || '');
+  const [huespedes, setHuespedes] = React.useState(p.huespedes || 2);
+  const [mascota, setMascota] = React.useState(p.mascota || false);
+  const [precioTotal, setPrecioTotal] = React.useState(p.ingreso_total != null ? String(p.ingreso_total) : '');
+  const [prereserva, setPrereserva] = React.useState(p.reserva != null ? String(p.reserva) : '');
   const [diasCancelacion, setDiasCancelacion] = React.useState(14);
-  const [fianza, setFianza] = React.useState(false);
+  const [fianza, setFianza] = React.useState(p.fianza || false);
   const [fechaFirma, setFechaFirma] = React.useState(today);
   const aptInfo = APT_CONTRACT_DATA[apt];
   const noches = diffNoches(fechaEntrada, fechaSalida);
@@ -2793,7 +2795,12 @@ function calcDerived(r) {
   // 3. Rentabilidad = BAI / ingreso_total.
   out.rentabilidad_pct = ingreso > 0 ? Math.round(out.bai / ingreso * 10000) / 10000 : null;
 
-  // 4. Precios por noche.
+  // 4. Efectivo al check-in = ingreso_total − señal − pago_previo (salvo override).
+  if (!r._checkin_manual) {
+    out.al_checkin = Math.max(0, (Number(out.ingreso_total) || 0) - (Number(out.reserva) || 0) - (Number(out.pago_previo) || 0));
+  }
+
+  // 5. Precios por noche.
   const noches = Number(out.noches) || 0;
   if (noches > 0 && ingreso > 0) {
     out.precio_bruto_noche = Math.round(ingreso / noches * 100) / 100;
@@ -3815,7 +3822,8 @@ const PrereservasTab = ({
   }, "\u2715"))))))));
 };
 const ReservasTab = ({
-  token
+  token,
+  onOpenContract
 }) => {
   const [data, setData] = React.useState(null);
   const [sha, setSha] = React.useState(null);
@@ -4463,11 +4471,12 @@ const ReservasTab = ({
     }, "%"))), /*#__PURE__*/React.createElement("tbody", null, mRows.map(r => {
       const idx = reservas.indexOf(r);
       const status = reservaStatus(r, today);
-      const statusIcon = status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
+      const cancelada = isCancelada(r);
+      const statusIcon = cancelada ? '✗' : status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
       const isSel = idx === selectedIdx;
       return /*#__PURE__*/React.createElement("tr", {
         key: idx,
-        className: `rv-row rv-row-${status}${isSel ? ' is-selected' : ''}`,
+        className: `rv-row rv-row-${status}${isSel ? ' is-selected' : ''}${cancelada ? ' rv-row-cancelada' : ''}`,
         "data-apt": r.apt,
         style: {
           '--apt-c': APT_COLOR[r.apt] || 'transparent'
@@ -4562,6 +4571,20 @@ const ReservasTab = ({
   }, "S\xED"), /*#__PURE__*/React.createElement("option", {
     value: "no"
   }, "No")))), /*#__PURE__*/React.createElement("div", {
+    className: "rv-row2"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rv-field"
+  }, /*#__PURE__*/React.createElement("label", null, "DNI / pasaporte"), /*#__PURE__*/React.createElement("input", {
+    value: draft.dni || '',
+    onChange: e => updateDraft('dni', e.target.value),
+    placeholder: "12345678A"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "rv-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Direcci\xF3n postal"), /*#__PURE__*/React.createElement("input", {
+    value: draft.direccion || '',
+    onChange: e => updateDraft('direccion', e.target.value),
+    placeholder: "Calle, n\xBA, ciudad"
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "rv-row3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
@@ -4636,7 +4659,7 @@ const ReservasTab = ({
     value: "Avaibook"
   }, "Avaibook"))), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Pol\xEDtica cancelaci\xF3n"), /*#__PURE__*/React.createElement("select", {
+  }, /*#__PURE__*/React.createElement("label", null, "Estado / pol\xEDtica cancelaci\xF3n"), /*#__PURE__*/React.createElement("select", {
     value: draft.cancelacion || 'Cancelable 14',
     onChange: e => updateDraft('cancelacion', e.target.value)
   }, /*#__PURE__*/React.createElement("option", {
@@ -4651,7 +4674,12 @@ const ReservasTab = ({
     value: "Semiestricta"
   }, "Semiestricta"), /*#__PURE__*/React.createElement("option", {
     value: "No reembolsable"
-  }, "No reembolsable")))), /*#__PURE__*/React.createElement("div", {
+  }, "No reembolsable"), /*#__PURE__*/React.createElement("option", {
+    value: "CANCELADA",
+    style: {
+      color: '#999'
+    }
+  }, "\u2014 Cancelada \u2014")))), /*#__PURE__*/React.createElement("div", {
     className: "rv-row2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
@@ -4702,8 +4730,15 @@ const ReservasTab = ({
     value: draft.gasto_limpieza || 0,
     onChange: e => updateDraft('gasto_limpieza', Number(e.target.value))
   }))), /*#__PURE__*/React.createElement("div", {
-    className: "rv-row2"
+    className: "rv-row3"
   }, /*#__PURE__*/React.createElement("div", {
+    className: "rv-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    step: "0.01",
+    value: draft.reserva || 0,
+    onChange: e => updateDraft('reserva', Number(e.target.value))
+  })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Pago previo"), /*#__PURE__*/React.createElement("input", {
     type: "number",
@@ -4712,11 +4747,24 @@ const ReservasTab = ({
     onChange: e => updateDraft('pago_previo', Number(e.target.value))
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Al check-in"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "Efectivo check-in", draft._checkin_manual ? /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "rv-mini-link",
+    onClick: () => setDraft(p => calcDerived({
+      ...p,
+      _checkin_manual: false
+    }))
+  }, "\u21BB auto") : /*#__PURE__*/React.createElement("span", {
+    className: "rv-calc"
+  }, " calculado")), draft._checkin_manual ? /*#__PURE__*/React.createElement("input", {
     type: "number",
     step: "0.01",
     value: draft.al_checkin || 0,
     onChange: e => updateDraft('al_checkin', Number(e.target.value))
+  }) : /*#__PURE__*/React.createElement("input", {
+    readOnly: true,
+    className: "rv-readonly",
+    value: fmtEur(draft.al_checkin)
   }))), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Fianza tomada"), /*#__PURE__*/React.createElement("select", {
@@ -4771,7 +4819,15 @@ const ReservasTab = ({
     onClick: deleteRow
   }, "\uD83D\uDDD1 Borrar"), /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-foot-right"
-  }, selectedIdx >= 0 && selectedIdx < reservas.length && /*#__PURE__*/React.createElement("button", {
+  }, onOpenContract && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    title: "Abrir en el generador de contratos",
+    onClick: () => {
+      saveDraft();
+      onOpenContract(draft);
+    }
+  }, "\uD83D\uDCC4 Contrato"), selectedIdx >= 0 && selectedIdx < reservas.length && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost",
     onClick: duplicateRow,
@@ -4788,7 +4844,8 @@ const ReservasTab = ({
 };
 const AdminApp = () => {
   const [phase, setPhase] = React.useState('login');
-  const [mode, setMode] = React.useState('pricing'); // 'pricing' | 'reviews' | 'analytics' | 'contract' | 'reservas'
+  const [mode, setMode] = React.useState('pricing');
+  const [contractPrefill, setContractPrefill] = React.useState(null);
   const [token, setToken] = React.useState('');
   const [data, setData] = React.useState(null);
   const [sha, setSha] = React.useState(null);
@@ -5248,11 +5305,16 @@ const AdminApp = () => {
   }, success), error && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
   }, error), mode === 'analytics' ? /*#__PURE__*/React.createElement(AnalyticsTab, null) : mode === 'contract' ? /*#__PURE__*/React.createElement(ContractTab, {
-    pricesData: data
+    pricesData: data,
+    prefill: contractPrefill
   }) : mode === 'prereservas' ? /*#__PURE__*/React.createElement(PrereservasTab, {
     token: token
   }) : mode === 'reservas' ? /*#__PURE__*/React.createElement(ReservasTab, {
-    token: token
+    token: token,
+    onOpenContract: r => {
+      setContractPrefill(r);
+      setMode('contract');
+    }
   }) : mode === 'dashboard' ? /*#__PURE__*/React.createElement(DashboardTab, {
     token: token
   }) : mode === 'leila' ? /*#__PURE__*/React.createElement(LeilaTab, {
