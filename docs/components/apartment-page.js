@@ -50,6 +50,10 @@ const APT_DATA = {
     hero_img: 'assets/apt-vt-4.jpg',
     bedroom_img: 'assets/apt-vt-gallery-03.jpg',
     floorplan_img: 'assets/IMG_1121.png',
+    floorplan_subtitle_es: 'distribución del ático.',
+    floorplan_subtitle_en: 'penthouse layout.',
+    floorplan_desc_es: 'Thalassa ocupa toda la planta del ático en una sola crujía: salón con terraza panorámica, cocina abierta, dos dormitorios, dos baños y vistas al Mediterráneo y al Salar de los Canos.',
+    floorplan_desc_en: 'Thalassa takes up the entire top floor in a single open plan: living room with panoramic terrace, open kitchen, two bedrooms, two bathrooms and views over the Mediterranean and the Salar de los Canos.',
     others: ['vm', 'vs'],
     gallery_imgs: ['assets/apt-vt-gallery-01.jpg', 'assets/apt-vt-gallery-03.jpg', 'assets/apt-vt-gallery-04.jpg', 'assets/apt-vt-gallery-05.jpg', 'assets/apt-vt-gallery-06.jpg', 'assets/apt-vt-gallery-07.jpg', 'assets/apt-vt-gallery-08.jpg', 'assets/apt-vt-gallery-09.jpg', 'assets/apt-vt-gallery-10.jpg', 'assets/apt-vt-gallery-11.jpg', 'assets/apt-vt-gallery-12.jpg', 'assets/apt-vt-gallery-13.jpg', 'assets/apt-vt-gallery-14.jpg', 'assets/apt-vt-gallery-16.jpg', 'assets/apt-vt-gallery-17.jpg', 'assets/apt-vt-gallery-18.jpg', 'assets/apt-vt-gallery-19.jpg', 'assets/apt-vt-gallery-20.jpg', 'assets/apt-vt-gallery-21.jpg'],
     es: {
@@ -81,6 +85,11 @@ const APT_DATA = {
     accent_dk: '#7A5E1A',
     hero_img: 'assets/apt-vm.jpg',
     bedroom_img: 'assets/apt-vs-gallery-21.jpg',
+    floorplan_img: 'assets/apt-vs-plano.jpg',
+    floorplan_subtitle_es: 'distribución en planta.',
+    floorplan_subtitle_en: 'floor layout.',
+    floorplan_desc_es: 'Salinas se distribuye en planta baja con acceso a jardín: salón-comedor, cocina equipada, dos dormitorios, dos baños y dos terrazas — la principal al sur con vistas a la urbanización y al Parque Natural de las Salinas de Puerto Rey.',
+    floorplan_desc_en: 'Salinas is a ground-floor apartment with garden access: living and dining room, equipped kitchen, two bedrooms, two bathrooms and two terraces — the main one faces south with views over the complex and the Puerto Rey Salt-flat Nature Park.',
     others: ['vm', 'vt'],
     gallery_imgs: ['assets/apt-vs-gallery-2.jpg',
     // recibidor
@@ -896,6 +905,8 @@ const AptFloorPlan = ({
   lang
 }) => {
   if (!apt.floorplan_img) return null;
+  const subtitle = lang === 'es' ? apt.floorplan_subtitle_es || 'distribución en planta.' : apt.floorplan_subtitle_en || 'floor layout.';
+  const desc = lang === 'es' ? apt.floorplan_desc_es : apt.floorplan_desc_en;
   return /*#__PURE__*/React.createElement("section", {
     className: "apt-floorplan section-cream"
   }, /*#__PURE__*/React.createElement("div", {
@@ -904,17 +915,22 @@ const AptFloorPlan = ({
     className: "eyebrow apt-fp-eyebrow"
   }, lang === 'es' ? 'Distribución de Hestía' : 'Hestía layout'), /*#__PURE__*/React.createElement("h2", {
     className: "apt-fp-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, apt.name_short, ", ", /*#__PURE__*/React.createElement("em", null, "distribuci\xF3n del \xE1tico.")) : /*#__PURE__*/React.createElement(React.Fragment, null, apt.name_short, ", ", /*#__PURE__*/React.createElement("em", null, "penthouse layout."))), /*#__PURE__*/React.createElement("p", {
+  }, apt.name_short, ", ", /*#__PURE__*/React.createElement("em", null, subtitle)), desc && /*#__PURE__*/React.createElement("p", {
     className: "apt-fp-desc"
-  }, lang === 'es' ? 'El ático Thalassa se distribuye en una sola planta: salón, cocina, dos dormitorios, dos baños y terraza panorámica con vistas al mar y al Salar de los Canos.' : 'The Thalassa penthouse is laid out as a single open floor: living room, kitchen, two bedrooms, two bathrooms and a panoramic terrace with sea and Salar de los Canos views.'), /*#__PURE__*/React.createElement("div", {
+  }, desc), /*#__PURE__*/React.createElement("div", {
     className: "apt-fp-img-wrap reveal"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "apt-fp-watermark-wrap"
   }, /*#__PURE__*/React.createElement("img", {
     decoding: "async",
     src: apt.floorplan_img,
     alt: lang === 'es' ? `Plano de ${apt[lang].name}` : `Floor plan of ${apt[lang].name}`,
     className: "apt-fp-img",
     loading: "lazy"
-  }))));
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "apt-fp-watermark",
+    "aria-hidden": "true"
+  }, "HEST\xCDA")))));
 };
 
 // --- Descarga de guía protegida por PIN ---
