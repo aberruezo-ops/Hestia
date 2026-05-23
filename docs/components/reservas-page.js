@@ -679,7 +679,31 @@ const ReservasForm = ({
     className: "reservas-form-title"
   }, t.form_title), /*#__PURE__*/React.createElement("div", {
     className: "reservas-form-sub"
-  }, t.form_sub), /*#__PURE__*/React.createElement("section", {
+  }, t.form_sub), /*#__PURE__*/React.createElement("div", {
+    className: "rf-progress",
+    "aria-label": lang === 'es' ? `Paso ${step} de 3` : `Step ${step} of 3`
+  }, [{
+    n: 1,
+    label: lang === 'es' ? 'Datos' : 'Details'
+  }, {
+    n: 2,
+    label: lang === 'es' ? 'Precio' : 'Price'
+  }, {
+    n: 3,
+    label: lang === 'es' ? 'Envío' : 'Send'
+  }].map((s, i) => /*#__PURE__*/React.createElement(React.Fragment, {
+    key: s.n
+  }, /*#__PURE__*/React.createElement("div", {
+    className: `rf-ps${step === s.n ? ' rps-act' : step > s.n ? ' rps-done' : ' rps-pend'}`
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-ps-n",
+    "aria-current": step === s.n ? 'step' : undefined
+  }, step > s.n ? '✓' : s.n), /*#__PURE__*/React.createElement("span", {
+    className: "rf-ps-lbl"
+  }, s.label)), i < 2 && /*#__PURE__*/React.createElement("span", {
+    className: `rf-ps-line${step > s.n ? ' rps-done' : ''}`,
+    "aria-hidden": "true"
+  })))), /*#__PURE__*/React.createElement("section", {
     id: "rf-step-1",
     className: `rf-step rf-step-1 ${step === 1 ? 'is-open' : 'is-collapsed'}`,
     "aria-current": step === 1 ? 'step' : undefined

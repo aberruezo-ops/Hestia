@@ -15804,6 +15804,106 @@ a:focus-visible,
 }
 .rf-status-unknown .rf-status-icon { background: var(--sol-h); color: white; }
 
+/* ── Progress indicator — /reservas ─────────────────────────────── */
+.rf-progress {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid color-mix(in srgb, var(--ber) 10%, transparent);
+}
+.rf-ps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+  min-width: 0;
+}
+.rf-ps-n {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: background .25s, color .25s, border-color .25s;
+}
+.rps-pend .rf-ps-n {
+  border: 2px solid color-mix(in srgb, var(--ber) 18%, transparent);
+  color: color-mix(in srgb, var(--ber) 32%, transparent);
+}
+.rps-act .rf-ps-n {
+  background: var(--ber);
+  color: #fff;
+}
+.rps-done .rf-ps-n {
+  background: var(--sol);
+  color: var(--ber-dk);
+  font-size: 15px;
+}
+.rf-ps-lbl {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.3;
+  padding: 0 4px;
+  color: var(--ber);
+  opacity: 0.38;
+  transition: opacity .25s;
+}
+.rps-act .rf-ps-lbl { opacity: 0.90; }
+.rps-done .rf-ps-lbl { opacity: 0.60; }
+.rf-ps-line {
+  flex: 0 0 20px;
+  height: 2px;
+  background: color-mix(in srgb, var(--ber) 12%, transparent);
+  margin-top: 15px;
+  border-radius: 2px;
+  transition: background .25s;
+}
+.rf-ps-line.rps-done { background: color-mix(in srgb, var(--sol) 55%, transparent); }
+
+/* Desktop: el indicador es sutil — ya tienen espacio para ver los pasos */
+@media (min-width: 641px) {
+  .rf-progress { margin-bottom: 24px; padding-bottom: 20px; }
+  .rf-ps-n { width: 26px; height: 26px; font-size: 12px; }
+  .rps-done .rf-ps-n { font-size: 13px; }
+}
+
+/* Mobile: ocultar pasos bloqueados, mostrar solo el activo y los completados */
+@media (max-width: 640px) {
+  .rf-step.is-locked { display: none; }
+
+  .reservas-form-sub { display: none; }
+
+  .rf-step { padding: 28px 0; }
+  .rf-step:first-of-type { padding-top: 0; }
+
+  /* Paso completado: fondo suave, sin borde superior */
+  .rf-step.is-collapsed {
+    padding: 12px 0 16px;
+    border-top-color: color-mix(in srgb, var(--sol) 22%, transparent);
+  }
+  .rf-step.is-collapsed .rf-step-head { flex-wrap: wrap; row-gap: 8px; }
+
+  /* Más aire entre fields */
+  .form-field { gap: 8px; }
+  .form-field label { font-size: 11px; }
+
+  /* Botón de avanzar ocupa todo el ancho */
+  .rf-step-actions { margin-top: 28px; }
+  .rf-step-actions .btn { flex-basis: 100%; }
+}
+
 /* Canal tabs (step 3) */
 .rf-channel-label {
   font-size: 11px;

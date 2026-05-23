@@ -662,6 +662,23 @@ const ReservasForm = ({ lang }) => {
       <h2 className="reservas-form-title">{t.form_title}</h2>
       <div className="reservas-form-sub">{t.form_sub}</div>
 
+      {/* Progress indicator — visible en móvil, sutil en desktop */}
+      <div className="rf-progress" aria-label={lang === 'es' ? `Paso ${step} de 3` : `Step ${step} of 3`}>
+        {[
+          { n: 1, label: lang === 'es' ? 'Datos'  : 'Details' },
+          { n: 2, label: lang === 'es' ? 'Precio'  : 'Price'   },
+          { n: 3, label: lang === 'es' ? 'Envío'   : 'Send'    },
+        ].map((s, i) => (
+          <React.Fragment key={s.n}>
+            <div className={`rf-ps${step === s.n ? ' rps-act' : step > s.n ? ' rps-done' : ' rps-pend'}`}>
+              <span className="rf-ps-n" aria-current={step === s.n ? 'step' : undefined}>{step > s.n ? '✓' : s.n}</span>
+              <span className="rf-ps-lbl">{s.label}</span>
+            </div>
+            {i < 2 && <span className={`rf-ps-line${step > s.n ? ' rps-done' : ''}`} aria-hidden="true"/>}
+          </React.Fragment>
+        ))}
+      </div>
+
       {/* SECTION 1 — DATOS */}
       <section
         id="rf-step-1"
