@@ -11,6 +11,11 @@ const APT_DATA = {
     accent: '#6B7A3A', accent2: '#8B9A52', accent_dk: '#4A5628',
     hero_img: 'assets/apt-vs.jpg',
     bedroom_img: 'assets/apt-vm-gallery-10.jpg',
+    floorplan_img: 'assets/apt-vm-plano.jpg',
+    floorplan_subtitle_es: 'distribución en planta.',
+    floorplan_subtitle_en: 'floor layout.',
+    floorplan_desc_es: 'Mar se distribuye en primera planta con terraza de esquina: salón-comedor abierto, cocina equipada, dos dormitorios y dos baños. La terraza en esquina recibe luz desde el amanecer hasta el atardecer.',
+    floorplan_desc_en: 'Mar is on the first floor with a corner terrace: open living and dining room, equipped kitchen, two bedrooms and two bathrooms. The corner terrace catches light from sunrise to sunset.',
     others: ['vt', 'vs'],
     gallery_imgs: [
       'assets/apt-vm-gallery-1.jpg',
@@ -821,7 +826,9 @@ const AptFloorPlan = ({ apt, lang }) => {
               className="apt-fp-img"
               loading="lazy"
             />
-            <div className="apt-fp-watermark" aria-hidden="true">HESTÍA</div>
+            <div className="apt-fp-watermark" aria-hidden="true">
+              <img src="assets/logo-hestia-brand.png" alt="" className="apt-fp-watermark-logo" />
+            </div>
           </div>
         </div>
       </div>

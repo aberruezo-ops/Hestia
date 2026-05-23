@@ -6183,13 +6183,12 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   justify-content: center;
   pointer-events: none;
   user-select: none;
-  font-family: var(--serif);
-  font-size: clamp(3.5rem, 12vw, 8rem);
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: var(--ber-dk);
-  opacity: 0.18;
-  transform: rotate(-22deg);
+}
+.apt-fp-watermark-logo {
+  width: clamp(160px, 35%, 280px);
+  height: auto;
+  opacity: 0.22;
+  display: block;
 }
 .apt-fp-img {
   width: 100%;

@@ -18,6 +18,11 @@ const APT_DATA = {
     accent_dk: '#4A5628',
     hero_img: 'assets/apt-vs.jpg',
     bedroom_img: 'assets/apt-vm-gallery-10.jpg',
+    floorplan_img: 'assets/apt-vm-plano.jpg',
+    floorplan_subtitle_es: 'distribución en planta.',
+    floorplan_subtitle_en: 'floor layout.',
+    floorplan_desc_es: 'Mar se distribuye en primera planta con terraza de esquina: salón-comedor abierto, cocina equipada, dos dormitorios y dos baños. La terraza en esquina recibe luz desde el amanecer hasta el atardecer.',
+    floorplan_desc_en: 'Mar is on the first floor with a corner terrace: open living and dining room, equipped kitchen, two bedrooms and two bathrooms. The corner terrace catches light from sunrise to sunset.',
     others: ['vt', 'vs'],
     gallery_imgs: ['assets/apt-vm-gallery-1.jpg', 'assets/apt-vm-gallery-2.jpg', 'assets/apt-vm-gallery-3.jpg', 'assets/apt-vm-gallery-4.jpg', 'assets/apt-vm-gallery-5.jpg', 'assets/apt-vm-gallery-6.jpg', 'assets/apt-vm-gallery-7.jpg', 'assets/apt-vm-gallery-8.jpg', 'assets/apt-vm-gallery-9.jpg', 'assets/apt-vm-gallery-10.jpg', 'assets/apt-vm-gallery-11.jpg', 'assets/apt-vm-gallery-13.jpg', 'assets/apt-vm-gallery-14.jpg', 'assets/apt-vm-gallery-15.jpg', 'assets/apt-vm-gallery-16.jpg', 'assets/apt-vm-gallery-17.jpg', 'assets/apt-vm-gallery-18.jpg', 'assets/apt-vm-gallery-19.jpg', 'assets/apt-vm-gallery-20.jpg', 'assets/apt-vm-gallery-21.jpg', 'assets/apt-vm-gallery-22.jpg', 'assets/apt-vm-gallery-23.jpg', 'assets/apt-vm-gallery-24.jpg', 'assets/apt-vm-gallery-25.jpg'],
     es: {
@@ -930,7 +935,11 @@ const AptFloorPlan = ({
   }), /*#__PURE__*/React.createElement("div", {
     className: "apt-fp-watermark",
     "aria-hidden": "true"
-  }, "HEST\xCDA")))));
+  }, /*#__PURE__*/React.createElement("img", {
+    src: "assets/logo-hestia-brand.png",
+    alt: "",
+    className: "apt-fp-watermark-logo"
+  }))))));
 };
 
 // --- Descarga de guía protegida por PIN ---
