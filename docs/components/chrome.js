@@ -884,11 +884,63 @@ const Footer = ({
     href: "https://wa.me/34654138251"
   }, "\uD83C\uDDEC\uD83C\uDDE7 Fran \xB7 WhatsApp")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "mailto:info@hestiayourhome.com"
-  }, "info@hestiayourhome.com"))))), /*#__PURE__*/React.createElement("div", {
+  }, "info@hestiayourhome.com"))))), /*#__PURE__*/React.createElement(FooterNewsletter, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement("div", {
     className: "footer-bottom"
   }, /*#__PURE__*/React.createElement("div", null, "\xA9 ", new Date().getFullYear(), " HEST\xCDA YOUR HOME \xB7 Alex Berruezo & Fran Moral"), /*#__PURE__*/React.createElement("div", {
     className: "licences"
   }, "VFT/AL/01580 \xB7 VFT/AL/05535 \xB7 VTF/AL/07056")));
+};
+const FooterNewsletter = ({
+  lang
+}) => {
+  const [email, setEmail] = React.useState('');
+  const [state, setState] = React.useState('idle');
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const raw = email.trim();
+    if (!raw.includes('@') || !raw.includes('.')) return;
+    setState('sending');
+    try {
+      const fd = new FormData();
+      fd.append('access_key', '95a86784-6d6a-496f-9830-15759c0a3cff');
+      fd.append('subject', `Hestía · Newsletter · ${raw}`);
+      fd.append('from_name', raw);
+      fd.append('email', raw);
+      fd.append('message', `Nueva suscripción al newsletter.\nEmail: ${raw}`);
+      await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: fd
+      });
+      setState('sent');
+    } catch (_) {
+      setState('idle');
+    }
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "footer-newsletter"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "footer-nl-label eyebrow"
+  }, lang === 'es' ? 'Ofertas directas · sin intermediarios' : 'Direct offers · no middleman'), state === 'sent' ? /*#__PURE__*/React.createElement("p", {
+    className: "footer-nl-ok"
+  }, lang === 'es' ? 'Te avisamos. Gracias!' : 'You\'re on the list. Thanks!') : /*#__PURE__*/React.createElement("form", {
+    className: "footer-nl-form",
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "email",
+    className: "footer-nl-input",
+    placeholder: lang === 'es' ? 'tu@email.com' : 'your@email.com',
+    value: email,
+    onChange: e => setEmail(e.target.value),
+    required: true,
+    maxLength: 120,
+    "aria-label": lang === 'es' ? 'Email para newsletter' : 'Newsletter email'
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    className: "footer-nl-btn",
+    disabled: state === 'sending'
+  }, state === 'sending' ? '…' : lang === 'es' ? 'Suscribir' : 'Subscribe')));
 };
 Object.assign(window, {
   Topbar,
