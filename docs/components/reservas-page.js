@@ -6,7 +6,7 @@
 
 const RESERVAS_COPY = {
   es: {
-    eyebrow: 'Mejor precio garantizado · Sin intermediarios',
+    eyebrow: 'Si encuentras un precio mejor, te lo mejoramos · Sin intermediarios',
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Reserva tu", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "hogar en Vera.")),
     sub: 'Escríbenos directamente. Alex o Fran confirman en menos de 24 horas.',
     form_title: 'Solicitar reserva',
@@ -63,7 +63,7 @@ const RESERVAS_COPY = {
     guarantee_items: ['Precio igual o mejor que cualquier plataforma', 'Sin comisiones de intermediarios', 'Alex o Fran responden personalmente', 'Confirmación en menos de 24 horas', 'Flexibilidad real en cambios y cancelaciones']
   },
   en: {
-    eyebrow: 'Best price guaranteed · No middlemen',
+    eyebrow: 'Find a better price? We\'ll beat it · No middlemen',
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Book your", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "home in Vera.")),
     sub: 'Write to us directly. Alex or Fran confirm within 24 hours.',
     form_title: 'Request a booking',
@@ -167,7 +167,7 @@ const PricePreview = ({
     className: "price-right-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-badge"
-  }, lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guarantee'), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '✓ ¿Precio mejor? Te lo mejoramos' : '✓ Better price? We\'ll beat it'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
   }, lang === 'es' ? 'Si encuentras un precio mejor, te lo mejoramos.' : 'See a better price elsewhere? We\'ll beat it.'))), /*#__PURE__*/React.createElement("div", {
     className: "price-breakdown"
@@ -1133,7 +1133,7 @@ const ReservasAside = ({
     className: "rg-title"
   }, t.guarantee_title), /*#__PURE__*/React.createElement("p", {
     className: "rg-lede"
-  }, lang === 'es' ? 'Mejor precio garantizado · sin comisiones · respuesta humana en menos de 24 h.' : 'Best price guaranteed · no commissions · human reply within 24 h.'), /*#__PURE__*/React.createElement("button", {
+  }, lang === 'es' ? 'Si encuentras un precio mejor, te lo mejoramos · sin comisiones · respuesta humana en menos de 24 h.' : 'Find a better price anywhere? We\'ll beat it · no commissions · human reply within 24 h.'), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "rg-cta",
     onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks')),

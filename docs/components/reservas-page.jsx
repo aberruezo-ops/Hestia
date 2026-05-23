@@ -4,7 +4,7 @@
 
 const RESERVAS_COPY = {
   es: {
-    eyebrow: 'Mejor precio garantizado · Sin intermediarios',
+    eyebrow: 'Si encuentras un precio mejor, te lo mejoramos · Sin intermediarios',
     title: (<>Reserva tu<br/><em>hogar en Vera.</em></>),
     sub: 'Escríbenos directamente. Alex o Fran confirman en menos de 24 horas.',
     form_title: 'Solicitar reserva',
@@ -67,7 +67,7 @@ const RESERVAS_COPY = {
     ],
   },
   en: {
-    eyebrow: 'Best price guaranteed · No middlemen',
+    eyebrow: 'Find a better price? We\'ll beat it · No middlemen',
     title: (<>Book your<br/><em>home in Vera.</em></>),
     sub: 'Write to us directly. Alex or Fran confirm within 24 hours.',
     form_title: 'Request a booking',
@@ -166,7 +166,7 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
         </div>
         <div className="price-right-col">
           <div className="price-guarantee-badge">
-            {lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guarantee'}
+            {lang === 'es' ? '✓ ¿Precio mejor? Te lo mejoramos' : '✓ Better price? We\'ll beat it'}
           </div>
           <div className="price-guarantee-sub">
             {lang === 'es'
@@ -1095,8 +1095,8 @@ const ReservasAside = ({ lang }) => {
         <div className="rg-title">{t.guarantee_title}</div>
         <p className="rg-lede">
           {lang === 'es'
-            ? 'Mejor precio garantizado · sin comisiones · respuesta humana en menos de 24 h.'
-            : 'Best price guaranteed · no commissions · human reply within 24 h.'}
+            ? 'Si encuentras un precio mejor, te lo mejoramos · sin comisiones · respuesta humana en menos de 24 h.'
+            : 'Find a better price anywhere? We\'ll beat it · no commissions · human reply within 24 h.'}
         </p>
         <button
           type="button"
