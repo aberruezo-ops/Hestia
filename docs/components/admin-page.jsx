@@ -3114,6 +3114,12 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
     setDraft(null);
   };
 
+  const duplicateRow = () => {
+    if (!draft) return;
+    setSelectedIdx(reservas.length);
+    setDraft(calcDerived({ ...draft, f_reserva: today, observaciones: (draft.observaciones ? draft.observaciones + ' · Duplicada' : 'Duplicada') }));
+  };
+
   const deleteRow = () => {
     if (selectedIdx < 0 || selectedIdx >= reservas.length) return;
     if (!confirm(`¿Borrar reserva de ${reservas[selectedIdx].responsable}?`)) return;
@@ -3282,6 +3288,11 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
 
         {/* ───── Filtros ───── */}
         <div className="rv-toolbar">
+          <label>Año
+            <select value={focusYear} onChange={e => { setFocusYearOverride(e.target.value); setFocusMonth('all'); }}>
+              {allYears.slice().reverse().map(y => <option key={y} value={y}>{y}</option>)}
+            </select>
+          </label>
           <label>Mes
             <select value={focusMonth} onChange={e => setFocusMonth(e.target.value)}>
               <option value="all">Todos los meses</option>
@@ -3596,6 +3607,9 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                 <button type="button" className="pe-btn pe-btn-ghost rv-btn-danger" onClick={deleteRow}>🗑 Borrar</button>
               )}
               <div className="rv-edit-foot-right">
+                {selectedIdx >= 0 && selectedIdx < reservas.length && (
+                  <button type="button" className="pe-btn pe-btn-ghost" onClick={duplicateRow} title="Crea una nueva reserva con estos mismos datos">Duplicar</button>
+                )}
                 <button type="button" className="pe-btn pe-btn-ghost" onClick={cancelDraft}>Cancelar</button>
                 <button type="button" className="pe-btn pe-btn-primary" onClick={saveDraft}>Guardar</button>
               </div>
