@@ -67,6 +67,8 @@ const App = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement(Apartments, {
     lang: lang
+  }), /*#__PURE__*/React.createElement(LastMinuteStrip, {
+    lang: lang
   }), /*#__PURE__*/React.createElement(DirectBookingPerks, {
     lang: lang
   }), /*#__PURE__*/React.createElement(Compare, {

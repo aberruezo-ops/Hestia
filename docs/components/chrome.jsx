@@ -674,11 +674,65 @@ const Footer = ({ lang }) => {
           </ul>
         </div>
       </div>
+      <FooterNewsletter lang={lang} />
       <div className="footer-bottom">
         <div>© {new Date().getFullYear()} HESTÍA YOUR HOME · Alex Berruezo & Fran Moral</div>
         <div className="licences">VFT/AL/01580 · VFT/AL/05535 · VTF/AL/07056</div>
       </div>
     </footer>
+  );
+};
+
+const FooterNewsletter = ({ lang }) => {
+  const [email, setEmail] = React.useState('');
+  const [state, setState] = React.useState('idle');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const raw = email.trim();
+    if (!raw.includes('@') || !raw.includes('.')) return;
+    setState('sending');
+    try {
+      const fd = new FormData();
+      fd.append('access_key', '95a86784-6d6a-496f-9830-15759c0a3cff');
+      fd.append('subject', `Hestía · Newsletter · ${raw}`);
+      fd.append('from_name', raw);
+      fd.append('email', raw);
+      fd.append('message', `Nueva suscripción al newsletter.\nEmail: ${raw}`);
+      await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+      setState('sent');
+    } catch (_) {
+      setState('idle');
+    }
+  };
+
+  return (
+    <div className="footer-newsletter">
+      <span className="footer-nl-label eyebrow">
+        {lang === 'es' ? 'Ofertas directas · sin intermediarios' : 'Direct offers · no middleman'}
+      </span>
+      {state === 'sent' ? (
+        <p className="footer-nl-ok">
+          {lang === 'es' ? 'Te avisamos. Gracias!' : 'You\'re on the list. Thanks!'}
+        </p>
+      ) : (
+        <form className="footer-nl-form" onSubmit={handleSubmit}>
+          <input
+            type="email"
+            className="footer-nl-input"
+            placeholder={lang === 'es' ? 'tu@email.com' : 'your@email.com'}
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
+            maxLength={120}
+            aria-label={lang === 'es' ? 'Email para newsletter' : 'Newsletter email'}
+          />
+          <button type="submit" className="footer-nl-btn" disabled={state === 'sending'}>
+            {state === 'sending' ? '…' : (lang === 'es' ? 'Suscribir' : 'Subscribe')}
+          </button>
+        </form>
+      )}
+    </div>
   );
 };
 
