@@ -744,7 +744,7 @@ const ReservasForm = ({
     lang: lang
   }), !apt && /*#__PURE__*/React.createElement("p", {
     className: "form-help-note"
-  }, lang === 'es' ? '↑ Selecciona primero una Hestía para ver las fechas bloqueadas.' : '↑ Pick a Hestía first to see blocked dates.')), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '↑ Selecciona primero un Hestía para ver las fechas bloqueadas.' : '↑ Pick a Hestía first to see blocked dates.')), /*#__PURE__*/React.createElement("div", {
     className: "form-field full"
   }, /*#__PURE__*/React.createElement("label", null, t.f_guests), /*#__PURE__*/React.createElement("div", {
     className: "rf-chip-row",
