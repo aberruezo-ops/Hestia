@@ -466,8 +466,11 @@ const HomeSearch = ({ lang }) => {
   // /reservas para no duplicar trabajo. Aquí solo huéspedes + fechas.
 
   // Results
-  const [results,  setResults ] = React.useState(null);
-  const [formErr,  setFormErr ] = React.useState('');
+  const [results,     setResults    ] = React.useState(null);
+  const [formErr,     setFormErr    ] = React.useState('');
+  const [notifyName,  setNotifyName ] = React.useState('');
+  const [notifyEmail, setNotifyEmail] = React.useState('');
+  const [notifyState, setNotifyState] = React.useState('idle');
 
   const today = new Date().toISOString().slice(0, 10);
 
@@ -548,7 +551,32 @@ const HomeSearch = ({ lang }) => {
   const handleReset = () => {
     setResults(null);
     setFormErr('');
+    setNotifyState('idle');
     window.dispatchEvent(new CustomEvent('hs-results-change', { detail: false }));
+  };
+
+  const handleNotify = async (e) => {
+    e.preventDefault();
+    const rawEmail = notifyEmail.trim();
+    if (!rawEmail.includes('@') || !rawEmail.includes('.')) return;
+    setNotifyState('sending');
+    try {
+      const fd = new FormData();
+      fd.append('access_key', '95a86784-6d6a-496f-9830-15759c0a3cff');
+      fd.append('subject', `Hestía · Avísame · ${checkin || '?'} – ${checkout || '?'}`);
+      fd.append('from_name', notifyName.trim() || rawEmail);
+      fd.append('email', rawEmail);
+      fd.append('message', [
+        `Nombre: ${notifyName.trim() || '(no indicado)'}`,
+        `Email: ${rawEmail}`,
+        `Fechas: ${checkin || '?'} – ${checkout || '?'}`,
+        `Apartamento: ${apt || 'cualquiera'}`,
+      ].join('\n'));
+      await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+      setNotifyState('sent');
+    } catch (_) {
+      setNotifyState('idle');
+    }
   };
 
   return (
@@ -707,20 +735,60 @@ const HomeSearch = ({ lang }) => {
 
         {/* Notify me */}
         <div className="hs-notify">
-          <p className="hs-notify-text">
-            {lang === 'es'
-              ? '¿Tus fechas están ocupadas? Avísanos y te escribimos si se libera algo — cancelaciones, aperturas de calendario…'
-              : 'Are your dates taken? Let us know and we\'ll reach out if something opens up — cancellations, new slots…'}
-          </p>
-          <a
-            href={lang === 'es'
-              ? 'https://wa.me/34620316370?text=Hola%2C%20me%20interesan%20vuestros%20Hest%C3%ADas%20pero%20mis%20fechas%20est%C3%A1n%20ocupadas.%20%C2%BFPod%C3%A9is%20avisarme%20si%20se%20libera%20algo%3F'
-              : 'https://wa.me/34620316370?text=Hi%2C%20I%27m%20interested%20in%20your%20Hest%C3%ADas%20but%20my%20dates%20are%20taken.%20Could%20you%20let%20me%20know%20if%20something%20becomes%20available%3F'}
-            className="btn btn-ghost hs-notify-btn"
-            target="_blank" rel="noopener"
-          >
-            {lang === 'es' ? 'Avisadme por WhatsApp →' : 'Notify me via WhatsApp →'}
-          </a>
+          {results && results.length > 0 && results.every(r => r.available === false) ? (
+            <>
+              <p className="hs-notify-text">
+                {lang === 'es'
+                  ? 'Déjanos tu email y te avisamos si esas fechas se liberan — cancelaciones, ventanas nuevas…'
+                  : 'Leave your email and we\'ll let you know if those dates open up — cancellations, new slots…'}
+              </p>
+              {notifyState === 'sent' ? (
+                <p className="hs-notify-ok">
+                  {lang === 'es' ? 'Anotado. Te escribimos si se libera algo.' : 'Got it. We\'ll write if something opens up.'}
+                </p>
+              ) : (
+                <form className="hs-notify-form" onSubmit={handleNotify}>
+                  <input
+                    type="text"
+                    className="hs-notify-field"
+                    placeholder={lang === 'es' ? 'Nombre' : 'Name'}
+                    value={notifyName}
+                    onChange={e => setNotifyName(e.target.value)}
+                    maxLength={60}
+                  />
+                  <input
+                    type="email"
+                    className="hs-notify-field"
+                    placeholder={lang === 'es' ? 'tu@email.com' : 'your@email.com'}
+                    value={notifyEmail}
+                    onChange={e => setNotifyEmail(e.target.value)}
+                    required
+                    maxLength={120}
+                  />
+                  <button type="submit" className="hs-notify-submit" disabled={notifyState === 'sending'}>
+                    {notifyState === 'sending' ? '…' : (lang === 'es' ? 'Avísame →' : 'Notify me →')}
+                  </button>
+                </form>
+              )}
+            </>
+          ) : (
+            <>
+              <p className="hs-notify-text">
+                {lang === 'es'
+                  ? '¿Tus fechas están ocupadas? Avísanos y te escribimos si se libera algo — cancelaciones, aperturas de calendario…'
+                  : 'Are your dates taken? Let us know and we\'ll reach out if something opens up — cancellations, new slots…'}
+              </p>
+              <a
+                href={lang === 'es'
+                  ? 'https://wa.me/34620316370?text=Hola%2C%20me%20interesan%20vuestros%20Hest%C3%ADas%20pero%20mis%20fechas%20est%C3%A1n%20ocupadas.%20%C2%BFPod%C3%A9is%20avisarme%20si%20se%20libera%20algo%3F'
+                  : 'https://wa.me/34620316370?text=Hi%2C%20I%27m%20interested%20in%20your%20Hest%C3%ADas%20but%20my%20dates%20are%20taken.%20Could%20you%20let%20me%20know%20if%20something%20becomes%20available%3F'}
+                className="btn btn-ghost hs-notify-btn"
+                target="_blank" rel="noopener"
+              >
+                {lang === 'es' ? 'Avisadme por WhatsApp →' : 'Notify me via WhatsApp →'}
+              </a>
+            </>
+          )}
         </div>
 
       </div>

@@ -590,4 +590,97 @@ const Compare = ({ lang }) => {
   );
 };
 
-Object.assign(window, { Hero, Bridge, Apartments, Compare, APARTMENTS });
+// ================================================================
+// LAST MINUTE STRIP — huecos disponibles en los próximos 45 días
+// ================================================================
+const LastMinuteStrip = ({ lang }) => {
+  const [slots, setSlots] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data) return;
+        const todayStr = new Date().toISOString().slice(0, 10);
+        const horizon = new Date();
+        horizon.setDate(horizon.getDate() + 45);
+        const horizonStr = horizon.toISOString().slice(0, 10);
+
+        const found = [];
+        for (const apt of APARTMENTS) {
+          const blocked = data[apt.id]?.blocked || [];
+          const sorted = blocked
+            .filter(b => b.end > todayStr && b.start < horizonStr)
+            .sort((a, b) => a.start.localeCompare(b.start));
+
+          let cursor = todayStr;
+          for (const block of sorted) {
+            if (block.start > cursor) {
+              const nights = Math.round(
+                (new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000
+              );
+              if (nights >= 2) found.push({ apt, checkin: cursor, checkout: block.start, nights });
+            }
+            if (block.end > cursor) cursor = block.end;
+          }
+          if (cursor < horizonStr) {
+            const nights = Math.round(
+              (new Date(horizonStr + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000
+            );
+            if (nights >= 2) found.push({ apt, checkin: cursor, checkout: horizonStr, nights });
+          }
+        }
+        found.sort((a, b) => a.checkin.localeCompare(b.checkin));
+        setSlots(found.slice(0, 5));
+      })
+      .catch(() => {});
+  }, []);
+
+  if (!slots.length) return null;
+
+  const MONTHS_ES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const MONTHS_EN = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const fmtDate = (ds) => {
+    const d = new Date(ds + 'T12:00:00Z');
+    const m = lang === 'es' ? MONTHS_ES[d.getUTCMonth()] : MONTHS_EN[d.getUTCMonth()];
+    return `${d.getUTCDate()} ${m}`;
+  };
+
+  const APT_COLOR = { vm: '#3AAABB', vt: '#7B5FDC', vs: '#E0826F' };
+
+  const getMinPrice = (aptId) => {
+    const tbl = HESTIA_PRICES[aptId];
+    if (!tbl) return null;
+    return Math.min(...tbl.base.slice(1));
+  };
+
+  return (
+    <section className="lm-strip" aria-label={lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'}>
+      <div className="lm-inner">
+        <span className="lm-eyebrow eyebrow">
+          {lang === 'es' ? 'Últimas plazas · próximas 6 semanas' : 'Last minute · next 6 weeks'}
+        </span>
+        <div className="lm-slots">
+          {slots.map((slot, i) => {
+            const minPrice = getMinPrice(slot.apt.id);
+            const color = APT_COLOR[slot.apt.id];
+            const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
+            return (
+              <a key={i} href={url} className="lm-slot" style={{ '--lm-color': color }}>
+                <span className="lm-apt">{slot.apt.name.replace('Hestía ', '')}</span>
+                <span className="lm-dates">{fmtDate(slot.checkin)} – {fmtDate(slot.checkout)}</span>
+                <span className="lm-nights">{slot.nights}{lang === 'es' ? 'n' : 'd'}</span>
+                {minPrice && <span className="lm-price">desde {minPrice}€/n</span>}
+              </a>
+            );
+          })}
+        </div>
+        <a href="reservas.html" className="lm-cta">
+          {lang === 'es' ? 'Ver disponibilidad completa →' : 'See full availability →'}
+        </a>
+      </div>
+    </section>
+  );
+};
+
+Object.assign(window, { Hero, Bridge, Apartments, Compare, APARTMENTS, LastMinuteStrip });
