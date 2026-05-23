@@ -3751,6 +3751,15 @@ const ReservasTab = ({
     setSelectedIdx(-1);
     setDraft(null);
   };
+  const duplicateRow = () => {
+    if (!draft) return;
+    setSelectedIdx(reservas.length);
+    setDraft(calcDerived({
+      ...draft,
+      f_reserva: today,
+      observaciones: draft.observaciones ? draft.observaciones + ' · Duplicada' : 'Duplicada'
+    }));
+  };
   const deleteRow = () => {
     if (selectedIdx < 0 || selectedIdx >= reservas.length) return;
     if (!confirm(`¿Borrar reserva de ${reservas[selectedIdx].responsable}?`)) return;
@@ -3977,7 +3986,16 @@ const ReservasTab = ({
     className: "rv-prox-meta"
   }, r.huespedes, " pax \xB7 ", r.noches, "n \xB7 ", r.canal))))), /*#__PURE__*/React.createElement("div", {
     className: "rv-toolbar"
-  }, /*#__PURE__*/React.createElement("label", null, "Mes", /*#__PURE__*/React.createElement("select", {
+  }, /*#__PURE__*/React.createElement("label", null, "A\xF1o", /*#__PURE__*/React.createElement("select", {
+    value: focusYear,
+    onChange: e => {
+      setFocusYearOverride(e.target.value);
+      setFocusMonth('all');
+    }
+  }, allYears.slice().reverse().map(y => /*#__PURE__*/React.createElement("option", {
+    key: y,
+    value: y
+  }, y)))), /*#__PURE__*/React.createElement("label", null, "Mes", /*#__PURE__*/React.createElement("select", {
     value: focusMonth,
     onChange: e => setFocusMonth(e.target.value)
   }, /*#__PURE__*/React.createElement("option", {
@@ -4364,7 +4382,12 @@ const ReservasTab = ({
     onClick: deleteRow
   }, "\uD83D\uDDD1 Borrar"), /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-foot-right"
-  }, /*#__PURE__*/React.createElement("button", {
+  }, selectedIdx >= 0 && selectedIdx < reservas.length && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    onClick: duplicateRow,
+    title: "Crea una nueva reserva con estos mismos datos"
+  }, "Duplicar"), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost",
     onClick: cancelDraft
