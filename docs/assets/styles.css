@@ -3233,7 +3233,7 @@ body.apt-bar-shown .cookies {
   border-top: 1px solid rgba(240, 232, 213, 0.10);
   border-bottom: 1px solid rgba(240, 232, 213, 0.10);
   overflow: hidden;
-  padding: 16px 0;
+  padding: 16px 0 52px; /* +32px bottom compensa que home-search (z:48) cubre el overlap */
   position: relative;
 }
 .ratings-marquee::before,
@@ -10070,7 +10070,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .team                { padding-top: calc(clamp(100px, 12vw, 200px) + 32px); }
 .manifest            { padding-top: calc(clamp(100px, 10vw, 160px) + 32px); }
 .ratings             { padding-top: calc(clamp(90px,  10vw, 140px) + 32px); }
-.ratings-marquee     { padding-top: calc(16px                       + 32px); }
+.ratings-marquee     { padding-top: calc(16px + 32px); padding-bottom: 52px; }
 .quick-faq           { padding-top: calc(72px                       + 32px); }
 .direct-perks-teaser { padding-top: calc(clamp(20px, 3vw,  36px)  + 32px); }
 .contact-cta         { padding-top: calc(clamp(100px, 12vw, 180px) + 32px); }
