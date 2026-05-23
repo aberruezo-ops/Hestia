@@ -2690,6 +2690,7 @@ info@hestiayourhome.com · +34 620 316 370`;
 // Sincronización con Google Sheets: ver data-private/SETUP-SHEETS-SYNC.md.
 // ============================================================
 const RESERVAS_PATH = 'reservas.json';
+const PRERESERVAS_PATH = 'docs/data/prereservas.json';
 const APT_NAMES = {
   vm: 'Mar',
   vt: 'Thalassa',
@@ -3424,6 +3425,394 @@ const LeilaTab = ({
       className: yrBal > 0 ? 'leila-owe' : yrBal < 0 ? 'leila-over' : ''
     }, "Balance: ", /*#__PURE__*/React.createElement("strong", null, fmtBal(yrBal))));
   })());
+};
+
+// ── PrereservasTab ─────────────────────────────────────────────────────────────
+// Borradores de reserva almacenados en docs/data/prereservas.json (repo público).
+// El botón "→ Reservas" escribe en reservas.json del repo privado y elimina el
+// borrador de la lista pública en el mismo flujo.
+const PrereservasTab = ({
+  token
+}) => {
+  const [items, setItems] = React.useState(null);
+  const [sha, setSha] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+  const [msg, setMsg] = React.useState(null);
+  const [isErr, setIsErr] = React.useState(false);
+  const [syncing, setSyncing] = React.useState(null);
+  const [showForm, setShowForm] = React.useState(false);
+  const emptyForm = {
+    apt: 'vm',
+    responsable: '',
+    telefono: '',
+    huespedes: 2,
+    menores_12: 0,
+    entrada: '',
+    salida: '',
+    ingreso_total: '',
+    reserva: '',
+    canal: 'directo',
+    observaciones: ''
+  };
+  const [form, setForm] = React.useState(emptyForm);
+  const load = () => {
+    setLoading(true);
+    setMsg(null);
+    fetch(`${API}/repos/${REPO}/contents/${PRERESERVAS_PATH}?ref=${BRANCH}`, {
+      headers: apiHeaders(token)
+    }).then(r => {
+      if (r.status === 404) return {
+        sha: null,
+        items: []
+      };
+      return r.json().then(j => ({
+        sha: j.sha,
+        items: JSON.parse(b64ToUtf8(j.content)).prereservas || []
+      }));
+    }).then(({
+      sha,
+      items
+    }) => {
+      setSha(sha);
+      setItems(items);
+    }).catch(e => {
+      setIsErr(true);
+      setMsg('Error cargando prereservas: ' + e.message);
+      setItems([]);
+    }).finally(() => setLoading(false));
+  };
+  React.useEffect(load, [token]);
+  const saveList = async (newItems, currentSha) => {
+    const body = JSON.stringify({
+      message: `chore(prereservas): update via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
+      content: utf8ToB64(JSON.stringify({
+        prereservas: newItems
+      }, null, 2) + '\n'),
+      ...(currentSha ? {
+        sha: currentSha
+      } : {}),
+      branch: BRANCH
+    });
+    const res = await fetch(`${API}/repos/${REPO}/contents/${PRERESERVAS_PATH}`, {
+      method: 'PUT',
+      headers: {
+        ...apiHeaders(token),
+        'Content-Type': 'application/json'
+      },
+      body
+    });
+    if (!res.ok) throw new Error('Error guardando prereservas (' + res.status + ')');
+    return (await res.json()).content.sha;
+  };
+  const addPrereserva = async () => {
+    if (!form.responsable.trim() || !form.entrada || !form.salida || !form.ingreso_total) {
+      setIsErr(true);
+      setMsg('Faltan campos: nombre, fechas e importe.');
+      return;
+    }
+    const newItem = {
+      id: 'pr-' + Date.now(),
+      createdAt: new Date().toISOString(),
+      ...form,
+      huespedes: Number(form.huespedes) || 2,
+      menores_12: Number(form.menores_12) || 0,
+      ingreso_total: Number(form.ingreso_total),
+      reserva: Number(form.reserva) || 0
+    };
+    try {
+      const newSha = await saveList([newItem, ...(items || [])], sha);
+      setItems(prev => [newItem, ...(prev || [])]);
+      setSha(newSha);
+      setForm(emptyForm);
+      setShowForm(false);
+      setIsErr(false);
+      setMsg('Prereserva guardada.');
+    } catch (e) {
+      setIsErr(true);
+      setMsg(e.message);
+    }
+  };
+  const deleteItem = async id => {
+    if (!confirm('¿Eliminar esta prereserva?')) return;
+    const newItems = items.filter(r => r.id !== id);
+    try {
+      const newSha = await saveList(newItems, sha);
+      setItems(newItems);
+      setSha(newSha);
+      setIsErr(false);
+      setMsg('Prereserva eliminada.');
+    } catch (e) {
+      setIsErr(true);
+      setMsg(e.message);
+    }
+  };
+  const syncItem = async pr => {
+    setSyncing(pr.id);
+    setMsg(null);
+    try {
+      // 1. Leer reservas.json del repo privado
+      const rRes = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
+        headers: apiHeaders(token)
+      });
+      if (!rRes.ok) throw new Error('No se pudo leer reservas.json (' + rRes.status + ')');
+      const rFile = await rRes.json();
+      const rData = JSON.parse(b64ToUtf8(rFile.content));
+      // 2. Construir reserva con campos derivados
+      const newRes = calcDerived({
+        apt: pr.apt,
+        responsable: pr.responsable,
+        telefono: pr.telefono || '',
+        huespedes: Number(pr.huespedes) || 2,
+        menores_12: Number(pr.menores_12) || 0,
+        cuna_trona: pr.cuna_trona || false,
+        mascota: pr.mascota || false,
+        dni_enviado: false,
+        entrada: pr.entrada,
+        salida: pr.salida,
+        cancelacion: '',
+        canal: pr.canal || 'directo',
+        contactado: false,
+        f_reserva: new Date().toISOString().slice(0, 10),
+        ingreso_total: Number(pr.ingreso_total) || 0,
+        reserva: Number(pr.reserva) || 0,
+        pago_previo: 0,
+        al_checkin: 0,
+        comision: 0,
+        fianza: 0,
+        pagos_leila: 0,
+        efectivo_leila: 0,
+        observaciones: pr.observaciones || ''
+      });
+      // 3. Añadir y guardar en repo privado
+      const updated = {
+        ...rData,
+        reservas: [...(rData.reservas || []), newRes],
+        updatedAt: new Date().toISOString()
+      };
+      const rPut = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
+        method: 'PUT',
+        headers: {
+          ...apiHeaders(token),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: `feat(reservas): ${pr.responsable} ${pr.entrada}–${pr.salida} via prereserva`,
+          content: utf8ToB64(JSON.stringify(updated, null, 2) + '\n'),
+          sha: rFile.sha,
+          branch: BRANCH
+        })
+      });
+      if (!rPut.ok) throw new Error('Error escribiendo reservas.json (' + rPut.status + ')');
+      // 4. Borrar de prereservas
+      const newItems = items.filter(r => r.id !== pr.id);
+      const newSha = await saveList(newItems, sha);
+      setItems(newItems);
+      setSha(newSha);
+      setIsErr(false);
+      setMsg(`✓ ${pr.responsable} añadida a Reservas.`);
+    } catch (e) {
+      setIsErr(true);
+      setMsg(e.message);
+    } finally {
+      setSyncing(null);
+    }
+  };
+  const noches = pr => pr.entrada && pr.salida ? Math.round((new Date(pr.salida) - new Date(pr.entrada)) / 86400000) : '—';
+  if (loading) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-loading"
+  }, "Cargando prereservas\u2026");
+  return /*#__PURE__*/React.createElement("div", {
+    className: "pe-tab-content"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: 16
+    }
+  }, /*#__PURE__*/React.createElement("h2", {
+    style: {
+      margin: 0
+    }
+  }, "Prereservas pendientes"), /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-primary",
+    onClick: () => setShowForm(v => !v)
+  }, showForm ? 'Cancelar' : '+ Nueva')), msg && /*#__PURE__*/React.createElement("div", {
+    className: isErr ? 'pe-error' : 'pe-success',
+    style: {
+      marginBottom: 16
+    }
+  }, msg), showForm && /*#__PURE__*/React.createElement("div", {
+    className: "pe-card",
+    style: {
+      background: 'rgba(0,0,0,.04)',
+      marginBottom: 24
+    }
+  }, /*#__PURE__*/React.createElement("h3", {
+    style: {
+      marginTop: 0
+    }
+  }, "Nueva prereserva"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-grid"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Apartamento"), /*#__PURE__*/React.createElement("select", {
+    value: form.apt,
+    onChange: e => setForm(f => ({
+      ...f,
+      apt: e.target.value
+    })),
+    className: "pe-input"
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "vm"
+  }, "Mar"), /*#__PURE__*/React.createElement("option", {
+    value: "vt"
+  }, "Thalassa"), /*#__PURE__*/React.createElement("option", {
+    value: "vs"
+  }, "Salinas"))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Canal"), /*#__PURE__*/React.createElement("select", {
+    value: form.canal,
+    onChange: e => setForm(f => ({
+      ...f,
+      canal: e.target.value
+    })),
+    className: "pe-input"
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "directo"
+  }, "Directo"), /*#__PURE__*/React.createElement("option", {
+    value: "airbnb"
+  }, "Airbnb"), /*#__PURE__*/React.createElement("option", {
+    value: "booking"
+  }, "Booking"), /*#__PURE__*/React.createElement("option", {
+    value: "avaibook"
+  }, "Avaibook"))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Responsable *"), /*#__PURE__*/React.createElement("input", {
+    className: "pe-input",
+    value: form.responsable,
+    onChange: e => setForm(f => ({
+      ...f,
+      responsable: e.target.value
+    })),
+    placeholder: "Nombre y apellidos"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Tel\xE9fono"), /*#__PURE__*/React.createElement("input", {
+    className: "pe-input",
+    value: form.telefono,
+    onChange: e => setForm(f => ({
+      ...f,
+      telefono: e.target.value
+    })),
+    placeholder: "+34 600 000 000"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Entrada *"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    className: "pe-input",
+    value: form.entrada,
+    onChange: e => setForm(f => ({
+      ...f,
+      entrada: e.target.value
+    }))
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Salida *"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    className: "pe-input",
+    value: form.salida,
+    onChange: e => setForm(f => ({
+      ...f,
+      salida: e.target.value
+    }))
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9spedes"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    max: "8",
+    className: "pe-input pe-input-num",
+    value: form.huespedes,
+    onChange: e => setForm(f => ({
+      ...f,
+      huespedes: e.target.value
+    }))
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Importe total (\u20AC) *"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    className: "pe-input pe-input-num",
+    value: form.ingreso_total,
+    onChange: e => setForm(f => ({
+      ...f,
+      ingreso_total: e.target.value
+    })),
+    placeholder: "1200"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al (\u20AC)"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    className: "pe-input pe-input-num",
+    value: form.reserva,
+    onChange: e => setForm(f => ({
+      ...f,
+      reserva: e.target.value
+    })),
+    placeholder: "300"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field",
+    style: {
+      gridColumn: '1/-1'
+    }
+  }, /*#__PURE__*/React.createElement("label", null, "Observaciones"), /*#__PURE__*/React.createElement("input", {
+    className: "pe-input",
+    value: form.observaciones,
+    onChange: e => setForm(f => ({
+      ...f,
+      observaciones: e.target.value
+    })),
+    placeholder: "Notas libres\u2026"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-actions"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-primary",
+    onClick: addPrereserva
+  }, "Guardar prereserva"))), items && items.length === 0 ? /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint"
+  }, "No hay prereservas pendientes.") : items && /*#__PURE__*/React.createElement("table", {
+    className: "pe-table"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Hu\xE9sped"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", null, "N"), /*#__PURE__*/React.createElement("th", null, "Total"), /*#__PURE__*/React.createElement("th", null, "Se\xF1al"), /*#__PURE__*/React.createElement("th", null, "Canal"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, items.map(pr => /*#__PURE__*/React.createElement("tr", {
+    key: pr.id
+  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "res-apt-chip",
+    style: {
+      background: APT_COLOR[pr.apt],
+      color: APT_TEXT[pr.apt]
+    }
+  }, APT_NAMES[pr.apt] || pr.apt)), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", null, pr.responsable), pr.telefono && /*#__PURE__*/React.createElement("div", {
+    className: "pe-hint"
+  }, pr.telefono)), /*#__PURE__*/React.createElement("td", null, fmtDate(pr.entrada)), /*#__PURE__*/React.createElement("td", null, fmtDate(pr.salida)), /*#__PURE__*/React.createElement("td", null, noches(pr)), /*#__PURE__*/React.createElement("td", null, fmtEur(pr.ingreso_total)), /*#__PURE__*/React.createElement("td", null, pr.reserva ? fmtEur(pr.reserva) : '—'), /*#__PURE__*/React.createElement("td", {
+    className: "pe-hint"
+  }, pr.canal || '—'), /*#__PURE__*/React.createElement("td", {
+    style: {
+      whiteSpace: 'nowrap'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-primary",
+    style: {
+      marginRight: 6
+    },
+    disabled: !!syncing,
+    onClick: () => syncItem(pr)
+  }, syncing === pr.id ? '…' : '→ Reservas'), /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-ghost",
+    onClick: () => deleteItem(pr.id)
+  }, "\u2715"))))))));
 };
 const ReservasTab = ({
   token
@@ -4824,6 +5213,14 @@ const AdminApp = () => {
     }
   }, "\uD83D\uDCC4 Contrato"), /*#__PURE__*/React.createElement("button", {
     type: "button",
+    className: `pe-tab${mode === 'prereservas' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('prereservas');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCCB Prereservas"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
     className: `pe-tab${mode === 'reservas' ? ' is-active' : ''}`,
     onClick: () => {
       setMode('reservas');
@@ -4852,6 +5249,8 @@ const AdminApp = () => {
     className: "pe-error"
   }, error), mode === 'analytics' ? /*#__PURE__*/React.createElement(AnalyticsTab, null) : mode === 'contract' ? /*#__PURE__*/React.createElement(ContractTab, {
     pricesData: data
+  }) : mode === 'prereservas' ? /*#__PURE__*/React.createElement(PrereservasTab, {
+    token: token
   }) : mode === 'reservas' ? /*#__PURE__*/React.createElement(ReservasTab, {
     token: token
   }) : mode === 'dashboard' ? /*#__PURE__*/React.createElement(DashboardTab, {

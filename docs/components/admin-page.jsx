@@ -2233,7 +2233,8 @@ info@hestiayourhome.com · +34 620 316 370`;
 //
 // Sincronización con Google Sheets: ver data-private/SETUP-SHEETS-SYNC.md.
 // ============================================================
-const RESERVAS_PATH = 'reservas.json';
+const RESERVAS_PATH    = 'reservas.json';
+const PRERESERVAS_PATH = 'docs/data/prereservas.json';
 
 const APT_NAMES   = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
 // Colores reales de marca (Hestía brandbook):
@@ -2834,6 +2835,222 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
           </div>
         );
       })()}
+    </div>
+  );
+};
+
+// ── PrereservasTab ─────────────────────────────────────────────────────────────
+// Borradores de reserva almacenados en docs/data/prereservas.json (repo público).
+// El botón "→ Reservas" escribe en reservas.json del repo privado y elimina el
+// borrador de la lista pública en el mismo flujo.
+const PrereservasTab = ({ token }) => {
+  const [items,   setItems]   = React.useState(null);
+  const [sha,     setSha]     = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+  const [msg,     setMsg]     = React.useState(null);
+  const [isErr,   setIsErr]   = React.useState(false);
+  const [syncing, setSyncing] = React.useState(null);
+  const [showForm, setShowForm] = React.useState(false);
+
+  const emptyForm = { apt: 'vm', responsable: '', telefono: '', huespedes: 2,
+    menores_12: 0, entrada: '', salida: '', ingreso_total: '', reserva: '',
+    canal: 'directo', observaciones: '' };
+  const [form, setForm] = React.useState(emptyForm);
+
+  const load = () => {
+    setLoading(true); setMsg(null);
+    fetch(`${API}/repos/${REPO}/contents/${PRERESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token) })
+      .then(r => {
+        if (r.status === 404) return { sha: null, items: [] };
+        return r.json().then(j => ({ sha: j.sha, items: JSON.parse(b64ToUtf8(j.content)).prereservas || [] }));
+      })
+      .then(({ sha, items }) => { setSha(sha); setItems(items); })
+      .catch(e => { setIsErr(true); setMsg('Error cargando prereservas: ' + e.message); setItems([]); })
+      .finally(() => setLoading(false));
+  };
+  React.useEffect(load, [token]);
+
+  const saveList = async (newItems, currentSha) => {
+    const body = JSON.stringify({
+      message: `chore(prereservas): update via /p-edit · ${new Date().toISOString().slice(0,16).replace('T',' ')}`,
+      content: utf8ToB64(JSON.stringify({ prereservas: newItems }, null, 2) + '\n'),
+      ...(currentSha ? { sha: currentSha } : {}),
+      branch: BRANCH,
+    });
+    const res = await fetch(`${API}/repos/${REPO}/contents/${PRERESERVAS_PATH}`, {
+      method: 'PUT', headers: { ...apiHeaders(token), 'Content-Type': 'application/json' }, body,
+    });
+    if (!res.ok) throw new Error('Error guardando prereservas (' + res.status + ')');
+    return (await res.json()).content.sha;
+  };
+
+  const addPrereserva = async () => {
+    if (!form.responsable.trim() || !form.entrada || !form.salida || !form.ingreso_total) {
+      setIsErr(true); setMsg('Faltan campos: nombre, fechas e importe.'); return;
+    }
+    const newItem = { id: 'pr-' + Date.now(), createdAt: new Date().toISOString(),
+      ...form, huespedes: Number(form.huespedes)||2, menores_12: Number(form.menores_12)||0,
+      ingreso_total: Number(form.ingreso_total), reserva: Number(form.reserva)||0 };
+    try {
+      const newSha = await saveList([newItem, ...(items||[])], sha);
+      setItems(prev => [newItem, ...(prev||[])]); setSha(newSha);
+      setForm(emptyForm); setShowForm(false); setIsErr(false); setMsg('Prereserva guardada.');
+    } catch(e) { setIsErr(true); setMsg(e.message); }
+  };
+
+  const deleteItem = async (id) => {
+    if (!confirm('¿Eliminar esta prereserva?')) return;
+    const newItems = items.filter(r => r.id !== id);
+    try {
+      const newSha = await saveList(newItems, sha);
+      setItems(newItems); setSha(newSha); setIsErr(false); setMsg('Prereserva eliminada.');
+    } catch(e) { setIsErr(true); setMsg(e.message); }
+  };
+
+  const syncItem = async (pr) => {
+    setSyncing(pr.id); setMsg(null);
+    try {
+      // 1. Leer reservas.json del repo privado
+      const rRes = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token) });
+      if (!rRes.ok) throw new Error('No se pudo leer reservas.json (' + rRes.status + ')');
+      const rFile = await rRes.json();
+      const rData = JSON.parse(b64ToUtf8(rFile.content));
+      // 2. Construir reserva con campos derivados
+      const newRes = calcDerived({
+        apt: pr.apt, responsable: pr.responsable, telefono: pr.telefono||'',
+        huespedes: Number(pr.huespedes)||2, menores_12: Number(pr.menores_12)||0,
+        cuna_trona: pr.cuna_trona||false, mascota: pr.mascota||false,
+        dni_enviado: false, entrada: pr.entrada, salida: pr.salida,
+        cancelacion: '', canal: pr.canal||'directo', contactado: false,
+        f_reserva: new Date().toISOString().slice(0,10),
+        ingreso_total: Number(pr.ingreso_total)||0, reserva: Number(pr.reserva)||0,
+        pago_previo: 0, al_checkin: 0, comision: 0, fianza: 0,
+        pagos_leila: 0, efectivo_leila: 0, observaciones: pr.observaciones||'',
+      });
+      // 3. Añadir y guardar en repo privado
+      const updated = { ...rData, reservas: [...(rData.reservas||[]), newRes], updatedAt: new Date().toISOString() };
+      const rPut = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
+        method: 'PUT',
+        headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: `feat(reservas): ${pr.responsable} ${pr.entrada}–${pr.salida} via prereserva`,
+          content: utf8ToB64(JSON.stringify(updated, null, 2) + '\n'),
+          sha: rFile.sha, branch: BRANCH,
+        }),
+      });
+      if (!rPut.ok) throw new Error('Error escribiendo reservas.json (' + rPut.status + ')');
+      // 4. Borrar de prereservas
+      const newItems = items.filter(r => r.id !== pr.id);
+      const newSha = await saveList(newItems, sha);
+      setItems(newItems); setSha(newSha);
+      setIsErr(false); setMsg(`✓ ${pr.responsable} añadida a Reservas.`);
+    } catch(e) { setIsErr(true); setMsg(e.message); }
+    finally { setSyncing(null); }
+  };
+
+  const noches = (pr) => pr.entrada && pr.salida
+    ? Math.round((new Date(pr.salida) - new Date(pr.entrada)) / 86400000) : '—';
+
+  if (loading) return <div className="pe-loading">Cargando prereservas…</div>;
+
+  return (
+    <div className="pe-tab-content">
+      <div className="pe-card">
+        <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:16 }}>
+          <h2 style={{ margin:0 }}>Prereservas pendientes</h2>
+          <button className="pe-btn pe-btn-primary" onClick={() => setShowForm(v => !v)}>
+            {showForm ? 'Cancelar' : '+ Nueva'}
+          </button>
+        </div>
+        {msg && <div className={isErr ? 'pe-error' : 'pe-success'} style={{ marginBottom:16 }}>{msg}</div>}
+
+        {showForm && (
+          <div className="pe-card" style={{ background:'rgba(0,0,0,.04)', marginBottom:24 }}>
+            <h3 style={{ marginTop:0 }}>Nueva prereserva</h3>
+            <div className="pe-grid">
+              <div className="pe-field">
+                <label>Apartamento</label>
+                <select value={form.apt} onChange={e => setForm(f=>({...f,apt:e.target.value}))} className="pe-input">
+                  <option value="vm">Mar</option><option value="vt">Thalassa</option><option value="vs">Salinas</option>
+                </select>
+              </div>
+              <div className="pe-field">
+                <label>Canal</label>
+                <select value={form.canal} onChange={e => setForm(f=>({...f,canal:e.target.value}))} className="pe-input">
+                  <option value="directo">Directo</option><option value="airbnb">Airbnb</option>
+                  <option value="booking">Booking</option><option value="avaibook">Avaibook</option>
+                </select>
+              </div>
+              <div className="pe-field">
+                <label>Responsable *</label>
+                <input className="pe-input" value={form.responsable} onChange={e => setForm(f=>({...f,responsable:e.target.value}))} placeholder="Nombre y apellidos" />
+              </div>
+              <div className="pe-field">
+                <label>Teléfono</label>
+                <input className="pe-input" value={form.telefono} onChange={e => setForm(f=>({...f,telefono:e.target.value}))} placeholder="+34 600 000 000" />
+              </div>
+              <div className="pe-field">
+                <label>Entrada *</label>
+                <input type="date" className="pe-input" value={form.entrada} onChange={e => setForm(f=>({...f,entrada:e.target.value}))} />
+              </div>
+              <div className="pe-field">
+                <label>Salida *</label>
+                <input type="date" className="pe-input" value={form.salida} onChange={e => setForm(f=>({...f,salida:e.target.value}))} />
+              </div>
+              <div className="pe-field">
+                <label>Huéspedes</label>
+                <input type="number" min="1" max="8" className="pe-input pe-input-num" value={form.huespedes} onChange={e => setForm(f=>({...f,huespedes:e.target.value}))} />
+              </div>
+              <div className="pe-field">
+                <label>Importe total (€) *</label>
+                <input type="number" min="0" className="pe-input pe-input-num" value={form.ingreso_total} onChange={e => setForm(f=>({...f,ingreso_total:e.target.value}))} placeholder="1200" />
+              </div>
+              <div className="pe-field">
+                <label>Señal (€)</label>
+                <input type="number" min="0" className="pe-input pe-input-num" value={form.reserva} onChange={e => setForm(f=>({...f,reserva:e.target.value}))} placeholder="300" />
+              </div>
+              <div className="pe-field" style={{ gridColumn:'1/-1' }}>
+                <label>Observaciones</label>
+                <input className="pe-input" value={form.observaciones} onChange={e => setForm(f=>({...f,observaciones:e.target.value}))} placeholder="Notas libres…" />
+              </div>
+            </div>
+            <div className="pe-actions">
+              <button className="pe-btn pe-btn-primary" onClick={addPrereserva}>Guardar prereserva</button>
+            </div>
+          </div>
+        )}
+
+        {items && items.length === 0 ? (
+          <p className="pe-hint">No hay prereservas pendientes.</p>
+        ) : items && (
+          <table className="pe-table">
+            <thead>
+              <tr><th>Apt</th><th>Huésped</th><th>Entrada</th><th>Salida</th><th>N</th><th>Total</th><th>Señal</th><th>Canal</th><th></th></tr>
+            </thead>
+            <tbody>
+              {items.map(pr => (
+                <tr key={pr.id}>
+                  <td><span className="res-apt-chip" style={{ background:APT_COLOR[pr.apt], color:APT_TEXT[pr.apt] }}>{APT_NAMES[pr.apt]||pr.apt}</span></td>
+                  <td><div>{pr.responsable}</div>{pr.telefono && <div className="pe-hint">{pr.telefono}</div>}</td>
+                  <td>{fmtDate(pr.entrada)}</td>
+                  <td>{fmtDate(pr.salida)}</td>
+                  <td>{noches(pr)}</td>
+                  <td>{fmtEur(pr.ingreso_total)}</td>
+                  <td>{pr.reserva ? fmtEur(pr.reserva) : '—'}</td>
+                  <td className="pe-hint">{pr.canal||'—'}</td>
+                  <td style={{ whiteSpace:'nowrap' }}>
+                    <button className="pe-btn pe-btn-primary" style={{ marginRight:6 }}
+                      disabled={!!syncing} onClick={() => syncItem(pr)}>
+                      {syncing === pr.id ? '…' : '→ Reservas'}
+                    </button>
+                    <button className="pe-btn pe-btn-ghost" onClick={() => deleteItem(pr.id)}>✕</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 };
@@ -4019,6 +4236,11 @@ const AdminApp = () => {
           📄 Contrato
         </button>
         <button type="button"
+          className={`pe-tab${mode === 'prereservas' ? ' is-active' : ''}`}
+          onClick={() => { setMode('prereservas'); setError(null); setSuccess(null); }}>
+          📋 Prereservas
+        </button>
+        <button type="button"
           className={`pe-tab${mode === 'reservas' ? ' is-active' : ''}`}
           onClick={() => { setMode('reservas'); setError(null); setSuccess(null); }}>
           🗓️ Reservas
@@ -4038,7 +4260,7 @@ const AdminApp = () => {
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} /> : mode === 'reservas' ? <ReservasTab token={token} /> : mode === 'dashboard' ? <DashboardTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} /> : mode === 'prereservas' ? <PrereservasTab token={token} /> : mode === 'reservas' ? <ReservasTab token={token} /> : mode === 'dashboard' ? <DashboardTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>
