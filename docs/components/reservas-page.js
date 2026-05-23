@@ -565,6 +565,11 @@ const ReservasForm = ({
   };
   const goToStep3 = () => {
     setStep(3);
+    if (typeof _hestiaTrack === 'function') _hestiaTrack('booking_step3', {
+      apt: apt || 'all',
+      checkin,
+      checkout
+    });
     setTimeout(() => {
       document.getElementById('rf-step-3')?.scrollIntoView({
         behavior: 'smooth',
