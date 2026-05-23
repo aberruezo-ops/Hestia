@@ -121,7 +121,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
             </div>
             <div className="price-right-col">
               <div className="price-guarantee-badge">
-                {lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guarantee'}
+                {lang === 'es' ? '✓ ¿Precio mejor? Te lo mejoramos' : '✓ Better price? We\'ll beat it'}
               </div>
               <div className="price-guarantee-sub">
                 {lang === 'es'
