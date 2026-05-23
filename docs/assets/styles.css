@@ -5890,8 +5890,11 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   .asb-info {
     flex: 1 1 100%;
     order: 1;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
   }
-  .asb-price { font-size: 17px; }
+  .asb-price { font-size: 17px; display: inline; }
   .asb-match { font-size: 11px; }
   .asb-cta {
     flex: 1 1 auto;
