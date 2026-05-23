@@ -115,7 +115,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
         <div className="price-engine">
           <div className="price-main-row">
             <div className="price-direct-block">
-              <span className="price-label-sm">{lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to'}</span>
+              <span className="price-label-sm">{lang === 'es' ? 'Precio directo' : 'Direct price'}</span>
               <span className="price-direct-total">{fmt(calc.directTotal)}</span>
               <span className="price-avg-night">{fmt(calc.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</span>
             </div>
@@ -141,6 +141,14 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
                 <span>−{fmt(calc.stayDiscAmt)}</span>
               </div>
             )}
+            {calc.guestSuppAmt > 0 && (
+              <div className="price-line">
+                <span>{lang === 'es'
+                  ? `${calc.guests} huéspedes · +${calc.guestSuppPerNight} €/noche`
+                  : `${calc.guests} guests · +${calc.guestSuppPerNight} €/night`}</span>
+                <span>+{fmt(calc.guestSuppAmt)}</span>
+              </div>
+            )}
             {calc.petAmt > 0 && (
               <div className="price-line">
                 <span>{lang === 'es' ? 'Suplemento mascota (10 €/noche · máx. 50 €)' : 'Pet supplement (10 €/night · max 50 €)'}</span>
@@ -148,13 +156,10 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
               </div>
             )}
             <div className="price-line price-line-total">
-              <span>{lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'}</span>
+              <span>{lang === 'es' ? 'Total estimado' : 'Estimated total'}</span>
               <span>{fmt(calc.directTotal)}</span>
             </div>
           </div>
-          <p className="price-note">{lang === 'es'
-            ? '* Precio máximo orientativo. Si ves un precio mejor en cualquier plataforma, te lo mejoramos. Cuéntanos de ti y los tuyos — casi siempre podemos ajustar.'
-            : '* Indicative maximum price. If you find a better price anywhere, we\'ll beat it. Tell us about your situation — we can almost always adjust.'}</p>
         </div>
       )}
 

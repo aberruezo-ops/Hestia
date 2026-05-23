@@ -160,7 +160,7 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
     <div className="price-engine price-engine-form">
       <div className="price-main-row">
         <div className="price-direct-block">
-          <span className="price-label-sm">{lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to'}</span>
+          <span className="price-label-sm">{lang === 'es' ? 'Precio directo' : 'Direct price'}</span>
           <span className="price-direct-total">{fmt(grandTotal)}</span>
           <span className="price-avg-night">{fmt(grandAvg)}{lang === 'es' ? '/noche' : '/night'}</span>
         </div>
@@ -170,8 +170,8 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
           </div>
           <div className="price-guarantee-sub">
             {lang === 'es'
-              ? 'Si encuentras un precio mejor, te lo mejoramos.'
-              : 'See a better price elsewhere? We\'ll beat it.'}
+              ? 'Reserva directa — sin comisiones de plataformas.'
+              : 'Book direct — no platform commissions.'}
           </div>
         </div>
       </div>
@@ -186,8 +186,14 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
             <span>−{fmt(calc.stayDiscAmt)}</span>
           </div>
         )}
-        {/* El suplemento por número de huéspedes se incluye en directTotal
-            pero no se muestra como línea separada — pedido del usuario. */}
+        {calc.guestSuppAmt > 0 && (
+          <div className="price-line">
+            <span>{lang === 'es'
+              ? `${calc.guests} huéspedes · +${calc.guestSuppPerNight} €/noche`
+              : `${calc.guests} guests · +${calc.guestSuppPerNight} €/night`}</span>
+            <span>+{fmt(calc.guestSuppAmt)}</span>
+          </div>
+        )}
         {calc.petAmt > 0 && (
           <div className="price-line">
             <span>{lang === 'es' ? `Suplemento mascota (10 €/noche · máx. 50 €)` : `Pet supplement (10 €/night · max 50 €)`}</span>
@@ -214,13 +220,13 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
           );
         })}
         <div className="price-line price-line-total">
-          <span>{lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'}</span>
+          <span>{lang === 'es' ? 'Total estimado' : 'Estimated total'}</span>
           <span>{fmt(grandTotal)}</span>
         </div>
       </div>
       <p className="price-note">{lang === 'es'
-        ? '* Precio máximo orientativo. Si ves un precio mejor en cualquier plataforma, te lo mejoramos. Cuéntanos de ti y los tuyos — casi siempre podemos ajustar.'
-        : '* Indicative maximum price. If you find a better price anywhere, we\'ll beat it. Tell us about your situation — we can almost always adjust.'}</p>
+        ? '* Precio orientativo. Si encuentras precio mejor en cualquier plataforma, te lo mejoramos.'
+        : '* Indicative price. Find a better price anywhere — we\'ll beat it.'}</p>
     </div>
   );
 };
@@ -561,15 +567,17 @@ const ReservasForm = ({ lang }) => {
           ? `\n💰 PRECIO ESTIMADO DIRECTO\n` +
             `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` +
             (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') +
+            (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') +
             (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') +
             (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-            `   ✓ Mejor precio garantizado · si encuentras un precio mejor, te lo mejoramos\n`
+            `   ✓ Si encuentras precio mejor, te lo mejoramos\n`
           : `\n💰 ESTIMATED DIRECT PRICE\n` +
             `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` +
             (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') +
+            (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') +
             (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') +
             (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-            `   ✓ Best price guarantee · if you find a better price, we'll beat it\n`)
+            `   ✓ Find a better price anywhere — we'll beat it\n`)
       : '';
     const lines = lang === 'es'
       ? [

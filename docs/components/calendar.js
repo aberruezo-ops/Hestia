@@ -125,7 +125,7 @@ const RequestPanel = ({
     className: "price-direct-block"
   }, /*#__PURE__*/React.createElement("span", {
     className: "price-label-sm"
-  }, lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to'), /*#__PURE__*/React.createElement("span", {
+  }, lang === 'es' ? 'Precio directo' : 'Direct price'), /*#__PURE__*/React.createElement("span", {
     className: "price-direct-total"
   }, fmt(calc.directTotal)), /*#__PURE__*/React.createElement("span", {
     className: "price-avg-night"
@@ -141,13 +141,13 @@ const RequestPanel = ({
     className: "price-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `${calc.nights} noches × precio variable` : `${calc.nights} nights × variable rate`), /*#__PURE__*/React.createElement("span", null, fmt(calc.baseTotal))), calc.stayD && /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-disc"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.guestSuppAmt > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "price-line"
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `${calc.guests} huéspedes · +${calc.guestSuppPerNight} €/noche` : `${calc.guests} guests · +${calc.guestSuppPerNight} €/night`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.guestSuppAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
     className: "price-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Suplemento mascota (10 €/noche · máx. 50 €)' : 'Pet supplement (10 €/night · max 50 €)'), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-total"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'), /*#__PURE__*/React.createElement("span", null, fmt(calc.directTotal)))), /*#__PURE__*/React.createElement("p", {
-    className: "price-note"
-  }, lang === 'es' ? '* Precio máximo orientativo. Si ves un precio mejor en cualquier plataforma, te lo mejoramos. Cuéntanos de ti y los tuyos — casi siempre podemos ajustar.' : '* Indicative maximum price. If you find a better price anywhere, we\'ll beat it. Tell us about your situation — we can almost always adjust.')), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Total estimado' : 'Estimated total'), /*#__PURE__*/React.createElement("span", null, fmt(calc.directTotal))))), /*#__PURE__*/React.createElement("div", {
     className: "req-guests"
   }, /*#__PURE__*/React.createElement("span", {
     className: "req-guests-lbl"
