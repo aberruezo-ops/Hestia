@@ -5804,14 +5804,10 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .asb-perks:active { transform: scale(.97); }
 .asb-perks-icon { color: #6FC4D1; font-size: 12px; opacity: .9; }
 @media (max-width: 540px) {
-  /* En pantallas estrechas mantenemos el chip pero ocultamos el texto
-     largo "✓ ¿mejor precio?…" del .asb-match para no saturar. */
   .apt-sticky-bar .asb-match { display: none; }
   .asb-perks { padding: 7px 10px; font-size: 12px; }
 }
 @media (min-width: 900px) {
-  /* En desktop el widget-card "Reserva directa" del WidgetStack ya
-     ofrece el botón a la derecha — el chip de la sticky es redundante. */
   .asb-perks { display: none; }
 }
 
@@ -5883,9 +5879,27 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .apt-sticky-bar { padding-right: 40px; }
 @media (max-width: 480px) {
+  /* Dos filas en móvil: info arriba, botones abajo — evita que el precio
+     quede aplastado entre los dos CTAs en pantallas estrechas. */
+  .apt-sticky-bar {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    padding: 10px 40px 12px 16px;
+    align-items: center;
+  }
+  .asb-info {
+    flex: 1 1 100%;
+    order: 1;
+  }
   .asb-price { font-size: 17px; }
   .asb-match { font-size: 11px; }
-  .apt-sticky-bar { padding: 10px 40px 10px 16px; }
+  .asb-cta {
+    flex: 1 1 auto;
+    order: 2;
+    text-align: center;
+    justify-content: center;
+  }
+  .asb-perks { order: 3; }
 }
 
 /* --- Descripción + Features --- */
