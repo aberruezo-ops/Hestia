@@ -722,7 +722,7 @@ const ReservasForm = ({ lang }) => {
               {!apt && (
                 <p className="form-help-note">
                   {lang === 'es'
-                    ? '↑ Selecciona primero una Hestía para ver las fechas bloqueadas.'
+                    ? '↑ Selecciona primero un Hestía para ver las fechas bloqueadas.'
                     : '↑ Pick a Hestía first to see blocked dates.'}
                 </p>
               )}
