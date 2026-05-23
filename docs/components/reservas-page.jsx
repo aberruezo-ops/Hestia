@@ -327,7 +327,7 @@ const ReservasForm = ({ lang }) => {
   const [apt, setApt]           = React.useState('');
   const [checkin, setCheckin]   = React.useState('');
   const [checkout, setCheckout] = React.useState('');
-  const [guests, setGuests]     = React.useState('');
+  const [guests, setGuests]     = React.useState(lang === 'es' ? '4 huéspedes' : '4 guests');
   const [pets, setPets]         = React.useState('no');
   const [baby, setBaby]         = React.useState('no');
   // extrasSel: { [id]: qty }. 0/missing = no seleccionado.

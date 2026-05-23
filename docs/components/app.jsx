@@ -49,6 +49,7 @@ const App = () => {
       <main>
         <Hero lang={lang} />
         <FraseHogar lang={lang} />
+        <RatingsMarquee lang={lang} />
         <HomeSearch lang={lang} />
         <Apartments lang={lang} />
         <LastMinuteStrip lang={lang} />
@@ -58,7 +59,6 @@ const App = () => {
         <Team lang={lang} />
         <Manifest lang={lang} />
         <Ratings lang={lang} />
-        <RatingsMarquee lang={lang} />
         <HomeGuideTeaser lang={lang} />
         <QuickFAQ lang={lang} pageId="home" />
         <ContactCTA lang={lang} availHref="#buscar" />

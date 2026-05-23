@@ -63,6 +63,8 @@ const App = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement(FraseHogar, {
     lang: lang
+  }), /*#__PURE__*/React.createElement(RatingsMarquee, {
+    lang: lang
   }), /*#__PURE__*/React.createElement(HomeSearch, {
     lang: lang
   }), /*#__PURE__*/React.createElement(Apartments, {
@@ -80,8 +82,6 @@ const App = () => {
   }), /*#__PURE__*/React.createElement(Manifest, {
     lang: lang
   }), /*#__PURE__*/React.createElement(Ratings, {
-    lang: lang
-  }), /*#__PURE__*/React.createElement(RatingsMarquee, {
     lang: lang
   }), /*#__PURE__*/React.createElement(HomeGuideTeaser, {
     lang: lang
