@@ -68,35 +68,36 @@ const Hero = ({ lang, onScrollDown }) => {
   const t = COPY[lang];
   const bgVideoRef = React.useRef(null);
 
-  // Elige un vídeo distinto en cada visita a la home dentro de la misma sesión.
-  // Nunca repite hasta haber agotado todos; al reiniciar el ciclo evita
-  // mostrar el último vídeo otra vez. Persiste en sessionStorage.
-  const pick = React.useMemo(() => {
-    try {
-      const n = HERO_VIDEOS.length;
-      const raw = sessionStorage.getItem('hestia-hero-seen');
-      const seen = raw ? JSON.parse(raw) : [];
-      const allIdx = HERO_VIDEOS.map((_, i) => i);
-      const available = allIdx.filter(i => !seen.includes(i));
-      // Si ya se vieron todos, reinicia excluyendo el último mostrado
-      const pool = available.length > 0 ? available
-        : allIdx.filter(i => i !== seen[seen.length - 1]);
-      const idx = pool[Math.floor(Math.random() * pool.length)];
-      const nextSeen = available.length > 0 ? [...seen, idx] : [idx];
-      sessionStorage.setItem('hestia-hero-seen', JSON.stringify(nextSeen));
-      return HERO_VIDEOS[idx];
-    } catch (_) {
-      return HERO_VIDEOS[Math.floor(Math.random() * HERO_VIDEOS.length)];
+  // Playlist aleatoria: mezcla Fisher-Yates una vez por sesión (useMemo
+  // se ejecuta solo en el montaje, es decir, una vez por carga de página).
+  // El orden cambia en cada sesión sin necesidad de sessionStorage.
+  const playlist = React.useMemo(() => {
+    const a = [...HERO_VIDEOS];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
     }
+    return a;
   }, []);
+  const [vidIdx, setVidIdx] = React.useState(0);
+  const pick = playlist[vidIdx];
 
+  // Arranca reproducción al montar y al cambiar de clip (key remonta el <video>)
   React.useEffect(() => {
-    // Force autoplay — declarative autoPlay can be blocked on mobile
-    const tryPlay = (el) => { if (el) { el.muted = true; el.play().catch(() => {}); } };
-    tryPlay(bgVideoRef.current);
-    const onVisible = () => { if (!document.hidden) { tryPlay(bgVideoRef.current); } };
+    const el = bgVideoRef.current;
+    if (el) { el.muted = true; el.play().catch(() => {}); }
+  }, [vidIdx]);
+
+  // Reanuda si el usuario vuelve a la pestaña
+  React.useEffect(() => {
+    const onVisible = () => {
+      if (!document.hidden && bgVideoRef.current) {
+        bgVideoRef.current.muted = true;
+        bgVideoRef.current.play().catch(() => {});
+      }
+    };
     document.addEventListener('visibilitychange', onVisible);
-    return () => { document.removeEventListener('visibilitychange', onVisible); };
+    return () => document.removeEventListener('visibilitychange', onVisible);
   }, []);
 
   return (
@@ -106,15 +107,16 @@ const Hero = ({ lang, onScrollDown }) => {
       data-screen-label="01 Hero"
       data-hero-video={pick.src}
     >
-      {/* Vídeo de fondo — elegido al azar de HERO_VIDEOS */}
+      {/* Vídeo de fondo — playlist aleatoria, avanza al siguiente al terminar */}
       <video
         ref={bgVideoRef}
         className="hero-bg-video"
-        autoPlay muted loop playsInline
+        autoPlay muted playsInline
         preload="metadata"
         poster={pick.poster}
         aria-label={pick.alt}
         key={pick.src}
+        onEnded={() => setVidIdx(i => (i + 1) % playlist.length)}
       >
         <source src={`${pick.src}?v=${VIDEO_V}`} type="video/mp4"/>
       </video>
