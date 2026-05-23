@@ -159,7 +159,7 @@ const PricePreview = ({
     className: "price-direct-block"
   }, /*#__PURE__*/React.createElement("span", {
     className: "price-label-sm"
-  }, lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to'), /*#__PURE__*/React.createElement("span", {
+  }, lang === 'es' ? 'Precio directo' : 'Direct price'), /*#__PURE__*/React.createElement("span", {
     className: "price-direct-total"
   }, fmt(grandTotal)), /*#__PURE__*/React.createElement("span", {
     className: "price-avg-night"
@@ -169,13 +169,15 @@ const PricePreview = ({
     className: "price-guarantee-badge"
   }, lang === 'es' ? '✓ ¿Precio mejor? Te lo mejoramos' : '✓ Better price? We\'ll beat it'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
-  }, lang === 'es' ? 'Si encuentras un precio mejor, te lo mejoramos.' : 'See a better price elsewhere? We\'ll beat it.'))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Reserva directa — sin comisiones de plataformas.' : 'Book direct — no platform commissions.'))), /*#__PURE__*/React.createElement("div", {
     className: "price-breakdown"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `${calc.nights} noches` : `${calc.nights} nights`), /*#__PURE__*/React.createElement("span", null, fmt(calc.baseTotal))), calc.stayD && /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-disc"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.guestSuppAmt > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "price-line"
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `${calc.guests} huéspedes · +${calc.guestSuppPerNight} €/noche` : `${calc.guests} guests · +${calc.guestSuppPerNight} €/night`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.guestSuppAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
     className: "price-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento mascota (10 €/noche · máx. 50 €)` : `Pet supplement (10 €/night · max 50 €)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), extras.map(ex => {
     const u = ex.units || 1;
@@ -195,9 +197,9 @@ const PricePreview = ({
     }, /*#__PURE__*/React.createElement("span", null, ex.label, detail), /*#__PURE__*/React.createElement("span", null, "+", fmt(ex.amount)));
   }), /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-total"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'), /*#__PURE__*/React.createElement("span", null, fmt(grandTotal)))), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Total estimado' : 'Estimated total'), /*#__PURE__*/React.createElement("span", null, fmt(grandTotal)))), /*#__PURE__*/React.createElement("p", {
     className: "price-note"
-  }, lang === 'es' ? '* Precio máximo orientativo. Si ves un precio mejor en cualquier plataforma, te lo mejoramos. Cuéntanos de ti y los tuyos — casi siempre podemos ajustar.' : '* Indicative maximum price. If you find a better price anywhere, we\'ll beat it. Tell us about your situation — we can almost always adjust.'));
+  }, lang === 'es' ? '* Precio orientativo. Si encuentras precio mejor en cualquier plataforma, te lo mejoramos.' : '* Indicative price. Find a better price anywhere — we\'ll beat it.'));
 };
 
 // ReviewQuote — cita rotando de una reseña real verificada en el
@@ -616,7 +618,7 @@ const ReservasForm = ({
     const babyText = baby === 'yes' ? lang === 'es' ? 'Sí' : 'Yes' : 'No';
     const grandTotal = calc ? calc.directTotal + extrasTotal : 0;
     const grandAvg = calc ? Math.round(grandTotal / calc.nights) : 0;
-    const priceBlock = calc ? lang === 'es' ? `\n💰 PRECIO ESTIMADO DIRECTO\n` + `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` + (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Mejor precio garantizado · si encuentras un precio mejor, te lo mejoramos\n` : `\n💰 ESTIMATED DIRECT PRICE\n` + `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` + (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Best price guarantee · if you find a better price, we'll beat it\n` : '';
+    const priceBlock = calc ? lang === 'es' ? `\n💰 PRECIO ESTIMADO DIRECTO\n` + `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` + (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Si encuentras precio mejor, te lo mejoramos\n` : `\n💰 ESTIMATED DIRECT PRICE\n` + `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` + (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Find a better price anywhere — we'll beat it\n` : '';
     const lines = lang === 'es' ? [`¡Hola! Quiero hacer una consulta de reserva.\n`, `Hestía: ${aptNames[apt] || apt || '—'}`, `Nombre: ${name}`, channel === 'whatsapp' ? `Teléfono: ${tel}` : `Email: ${email}`, `Entrada: ${checkin}`, `Salida: ${checkout}`, `Huéspedes: ${guests}`, `Mascota: ${petsText}`, `Bebé: ${babyText}${extrasText}${priceBlock}`, `Comentarios: ${comments || '—'}`] : [`Hello! I'd like to enquire about a booking.\n`, `Hestía: ${aptNames[apt] || apt || '—'}`, `Name: ${name}`, channel === 'whatsapp' ? `Phone: ${tel}` : `Email: ${email}`, `Check-in: ${checkin}`, `Check-out: ${checkout}`, `Guests: ${guests}`, `Pet: ${petsText}`, `Baby: ${babyText}${extrasText}${priceBlock}`, `Comments: ${comments || '—'}`];
     return lines.join('\n');
   };
