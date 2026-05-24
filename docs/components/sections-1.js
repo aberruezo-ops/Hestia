@@ -82,44 +82,39 @@ const Hero = ({
   const t = COPY[lang];
   const bgVideoRef = React.useRef(null);
 
-  // Elige un vídeo distinto en cada visita a la home dentro de la misma sesión.
-  // Nunca repite hasta haber agotado todos; al reiniciar el ciclo evita
-  // mostrar el último vídeo otra vez. Persiste en sessionStorage.
-  const pick = React.useMemo(() => {
-    try {
-      const n = HERO_VIDEOS.length;
-      const raw = sessionStorage.getItem('hestia-hero-seen');
-      const seen = raw ? JSON.parse(raw) : [];
-      const allIdx = HERO_VIDEOS.map((_, i) => i);
-      const available = allIdx.filter(i => !seen.includes(i));
-      // Si ya se vieron todos, reinicia excluyendo el último mostrado
-      const pool = available.length > 0 ? available : allIdx.filter(i => i !== seen[seen.length - 1]);
-      const idx = pool[Math.floor(Math.random() * pool.length)];
-      const nextSeen = available.length > 0 ? [...seen, idx] : [idx];
-      sessionStorage.setItem('hestia-hero-seen', JSON.stringify(nextSeen));
-      return HERO_VIDEOS[idx];
-    } catch (_) {
-      return HERO_VIDEOS[Math.floor(Math.random() * HERO_VIDEOS.length)];
+  // Playlist aleatoria: mezcla Fisher-Yates una vez por sesión (useMemo
+  // se ejecuta solo en el montaje, es decir, una vez por carga de página).
+  // El orden cambia en cada sesión sin necesidad de sessionStorage.
+  const playlist = React.useMemo(() => {
+    const a = [...HERO_VIDEOS];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
     }
+    return a;
   }, []);
+  const [vidIdx, setVidIdx] = React.useState(0);
+  const pick = playlist[vidIdx];
+
+  // Arranca reproducción al montar y al cambiar de clip (key remonta el <video>)
   React.useEffect(() => {
-    // Force autoplay — declarative autoPlay can be blocked on mobile
-    const tryPlay = el => {
-      if (el) {
-        el.muted = true;
-        el.play().catch(() => {});
-      }
-    };
-    tryPlay(bgVideoRef.current);
+    const el = bgVideoRef.current;
+    if (el) {
+      el.muted = true;
+      el.play().catch(() => {});
+    }
+  }, [vidIdx]);
+
+  // Reanuda si el usuario vuelve a la pestaña
+  React.useEffect(() => {
     const onVisible = () => {
-      if (!document.hidden) {
-        tryPlay(bgVideoRef.current);
+      if (!document.hidden && bgVideoRef.current) {
+        bgVideoRef.current.muted = true;
+        bgVideoRef.current.play().catch(() => {});
       }
     };
     document.addEventListener('visibilitychange', onVisible);
-    return () => {
-      document.removeEventListener('visibilitychange', onVisible);
-    };
+    return () => document.removeEventListener('visibilitychange', onVisible);
   }, []);
   return /*#__PURE__*/React.createElement("section", {
     id: "top",
@@ -131,12 +126,12 @@ const Hero = ({
     className: "hero-bg-video",
     autoPlay: true,
     muted: true,
-    loop: true,
     playsInline: true,
     preload: "metadata",
     poster: pick.poster,
     "aria-label": pick.alt,
-    key: pick.src
+    key: pick.src,
+    onEnded: () => setVidIdx(i => (i + 1) % playlist.length)
   }, /*#__PURE__*/React.createElement("source", {
     src: `${pick.src}?v=${VIDEO_V}`,
     type: "video/mp4"
@@ -459,6 +454,7 @@ const Apartments = ({
   const trackRef = React.useRef(null);
   const [activeIdx, setActiveIdx] = React.useState(0);
   const [bookingApt, setBookingApt] = React.useState(null);
+  const [hasScrolled, setHasScrolled] = React.useState(false);
 
   // Precios "desde / hasta" mostrados son el base de prices.json
   // (lo que el admin ve en /p-edit.html). Sin aplicar directDiscount —
@@ -478,6 +474,7 @@ const Apartments = ({
   const handleScroll = () => {
     const track = trackRef.current;
     if (!track) return;
+    setHasScrolled(true);
     const children = track.querySelectorAll('.apt-card');
     const trackRect = track.getBoundingClientRect();
     const center = trackRect.left + trackRect.width / 2;
@@ -553,7 +550,7 @@ const Apartments = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
   }, t.apts_eyebrow), /*#__PURE__*/React.createElement("h2", null, t.apts_title), /*#__PURE__*/React.createElement("p", null, t.apts_sub)), /*#__PURE__*/React.createElement("div", {
-    className: "apartments-scroll"
+    className: `apartments-scroll${hasScrolled ? ' scrolled' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "apartments-track",
     ref: trackRef,
@@ -624,11 +621,14 @@ const Apartments = ({
     }, lang === 'es' ? 'Reservar →' : 'Book →'))));
   })), /*#__PURE__*/React.createElement("div", {
     className: "apt-scroll-progress"
-  }, APARTMENTS.map((_, i) => /*#__PURE__*/React.createElement("div", {
+  }, APARTMENTS.map((a, i) => /*#__PURE__*/React.createElement("button", {
     key: i,
     className: `seg ${i === activeIdx ? 'active' : ''}`,
-    onClick: () => goTo(i)
-  })))), bookingApt && /*#__PURE__*/React.createElement(HomeBookingModal, {
+    onClick: () => goTo(i),
+    "aria-label": a.name
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "seg-label"
+  }, a.name.replace('Hestía ', '')))))), bookingApt && /*#__PURE__*/React.createElement(HomeBookingModal, {
     apt: bookingApt,
     lang: lang,
     onClose: () => setBookingApt(null)

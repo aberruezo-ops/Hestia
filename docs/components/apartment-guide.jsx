@@ -1717,7 +1717,7 @@ const GUIDE_BY_APT = {
 // ================================================================
 const GuideMap = ({ lang, apt }) => {
   // Si tenemos el apt actual, centramos el embed en las coords concretas
-  // de esa Hestía. Si no, generic Vera Playa.
+  // de ese Hestía. Si no, generic Vera Playa.
   const home = apt && PLACES.find(p => p.id === `hestia-${apt.slug}`);
   const src = home
     ? `https://maps.google.com/maps?q=${home.lat},${home.lng}&z=15&output=embed`

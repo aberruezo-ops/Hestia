@@ -2693,6 +2693,50 @@ body.apt-bar-shown .cookies {
   transition: background .3s;
 }
 .apt-scroll-progress .seg.active { background: var(--ber); }
+.seg-label { display: none; }
+
+/* Vignette derecha: indica que hay más contenido al deslizar */
+.apartments-scroll::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 60px; /* deja los dots visibles */
+  width: 72px;
+  background: linear-gradient(to left, var(--arena) 20%, transparent);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity .4s;
+}
+@media (hover: none) and (pointer: coarse) {
+  .apartments-scroll::after { opacity: 1; }
+  .apartments-scroll.scrolled::after { opacity: 0; }
+
+  .apt-scroll-progress {
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .apt-scroll-progress .seg {
+    width: auto;
+    height: auto;
+    padding: 8px 18px;
+    border-radius: 10px 0 10px 0;
+    background: rgba(61, 26, 53, 0.10);
+    color: var(--ber-dk);
+    transition: background .25s, color .25s;
+  }
+  .apt-scroll-progress .seg.active {
+    background: var(--ber);
+    color: var(--crema);
+  }
+  .seg-label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+}
 
 /* ============================================================
    COMPARADOR
@@ -3189,7 +3233,7 @@ body.apt-bar-shown .cookies {
   border-top: 1px solid rgba(240, 232, 213, 0.10);
   border-bottom: 1px solid rgba(240, 232, 213, 0.10);
   overflow: hidden;
-  padding: 16px 0;
+  padding: 16px 0 52px; /* +32px bottom compensa que home-search (z:48) cubre el overlap */
   position: relative;
 }
 .ratings-marquee::before,
@@ -5760,14 +5804,10 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .asb-perks:active { transform: scale(.97); }
 .asb-perks-icon { color: #6FC4D1; font-size: 12px; opacity: .9; }
 @media (max-width: 540px) {
-  /* En pantallas estrechas mantenemos el chip pero ocultamos el texto
-     largo "✓ ¿mejor precio?…" del .asb-match para no saturar. */
   .apt-sticky-bar .asb-match { display: none; }
   .asb-perks { padding: 7px 10px; font-size: 12px; }
 }
 @media (min-width: 900px) {
-  /* En desktop el widget-card "Reserva directa" del WidgetStack ya
-     ofrece el botón a la derecha — el chip de la sticky es redundante. */
   .asb-perks { display: none; }
 }
 
@@ -5839,9 +5879,30 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .apt-sticky-bar { padding-right: 40px; }
 @media (max-width: 480px) {
-  .asb-price { font-size: 17px; }
+  /* Dos filas en móvil: info arriba, botones abajo — evita que el precio
+     quede aplastado entre los dos CTAs en pantallas estrechas. */
+  .apt-sticky-bar {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    padding: 10px 40px 12px 16px;
+    align-items: center;
+  }
+  .asb-info {
+    flex: 1 1 100%;
+    order: 1;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .asb-price { font-size: 17px; display: inline; }
   .asb-match { font-size: 11px; }
-  .apt-sticky-bar { padding: 10px 40px 10px 16px; }
+  .asb-cta {
+    flex: 1 1 auto;
+    order: 2;
+    text-align: center;
+    justify-content: center;
+  }
+  .asb-perks { order: 3; }
 }
 
 /* --- Descripción + Features --- */
@@ -6127,6 +6188,24 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   border-radius: 20px 0 20px 0;
   overflow: hidden;
   background: #fff;
+}
+.apt-fp-watermark-wrap {
+  position: relative;
+}
+.apt-fp-watermark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+}
+.apt-fp-watermark-logo {
+  width: clamp(160px, 35%, 280px);
+  height: auto;
+  opacity: 0.22;
+  display: block;
 }
 .apt-fp-img {
   width: 100%;
@@ -10026,7 +10105,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .team                { padding-top: calc(clamp(100px, 12vw, 200px) + 32px); }
 .manifest            { padding-top: calc(clamp(100px, 10vw, 160px) + 32px); }
 .ratings             { padding-top: calc(clamp(90px,  10vw, 140px) + 32px); }
-.ratings-marquee     { padding-top: calc(16px                       + 32px); }
+.ratings-marquee     { padding-top: calc(16px + 32px); padding-bottom: 52px; }
 .quick-faq           { padding-top: calc(72px                       + 32px); }
 .direct-perks-teaser { padding-top: calc(clamp(20px, 3vw,  36px)  + 32px); }
 .contact-cta         { padding-top: calc(clamp(100px, 12vw, 180px) + 32px); }
@@ -12583,15 +12662,26 @@ footer,
 }
 .pe-help ol { margin: 6px 0 0 18px; padding: 0; }
 .pe-help code { background: rgba(61,26,53,.06); padding: 1px 5px; border-radius: 3px; }
+.pe-help summary { cursor: pointer; font-weight: 600; color: var(--ink-soft); user-select: none; }
+.pe-login-card { max-width: 420px; margin: 6vh auto 0; }
+.pe-login-title { font-family: var(--serif); font-size: 26px; font-weight: 400; margin: 0 0 20px; letter-spacing: .01em; }
+.pe-login-form { display: flex; flex-direction: column; gap: 12px; }
+.pe-login-input { font-size: 15px !important; padding: 13px 14px !important; letter-spacing: .03em; }
+.pe-login-btn { width: 100%; padding: 13px !important; justify-content: center; }
+.pe-loading-card { text-align: center; }
+.pe-loading-msg { color: var(--ink-soft); font-size: 14px; margin: 0; }
 .pe-lbl {
   display: block; font-size: 11px; letter-spacing: .14em;
   text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px;
 }
 @media (max-width: 600px) {
-  .pe-shell { padding: 18px 12px 60px; }
+  .pe-shell { padding: 14px 12px 60px; }
   .pe-card { padding: 18px 16px; }
-  .pe-topbar { flex-direction: column; align-items: flex-start; gap: 6px; }
-  .pe-topbar .pe-meta { margin-left: 0; }
+  .pe-topbar { padding: 10px 14px; margin-bottom: 14px; gap: 8px; }
+  .pe-topbar .pe-meta { display: none; }
+}
+@media (max-width: 500px) {
+  .pe-shell { padding: 10px 10px 60px; }
 }
 
 /* ================================================================
@@ -15235,6 +15325,11 @@ a.cta-wa-btn::before,
   }
   .pe-tabs::-webkit-scrollbar { display: none; }
 }
+@media (max-width: 500px) {
+  .pe-tab { padding: 10px 12px; gap: 0; font-size: 18px; }
+  .pe-tab-label { display: none; }
+  .pe-tab-badge { font-size: 10px; min-width: 18px; height: 18px; }
+}
 .pe-tab {
   display: inline-flex;
   align-items: center;
@@ -15759,6 +15854,106 @@ a:focus-visible,
   border: 1px solid color-mix(in srgb, var(--sol) 18%, transparent);
 }
 .rf-status-unknown .rf-status-icon { background: var(--sol-h); color: white; }
+
+/* ── Progress indicator — /reservas ─────────────────────────────── */
+.rf-progress {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid color-mix(in srgb, var(--ber) 10%, transparent);
+}
+.rf-ps {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+  min-width: 0;
+}
+.rf-ps-n {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: background .25s, color .25s, border-color .25s;
+}
+.rps-pend .rf-ps-n {
+  border: 2px solid color-mix(in srgb, var(--ber) 18%, transparent);
+  color: color-mix(in srgb, var(--ber) 32%, transparent);
+}
+.rps-act .rf-ps-n {
+  background: var(--ber);
+  color: #fff;
+}
+.rps-done .rf-ps-n {
+  background: var(--sol);
+  color: var(--ber-dk);
+  font-size: 15px;
+}
+.rf-ps-lbl {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.3;
+  padding: 0 4px;
+  color: var(--ber);
+  opacity: 0.38;
+  transition: opacity .25s;
+}
+.rps-act .rf-ps-lbl { opacity: 0.90; }
+.rps-done .rf-ps-lbl { opacity: 0.60; }
+.rf-ps-line {
+  flex: 0 0 20px;
+  height: 2px;
+  background: color-mix(in srgb, var(--ber) 12%, transparent);
+  margin-top: 15px;
+  border-radius: 2px;
+  transition: background .25s;
+}
+.rf-ps-line.rps-done { background: color-mix(in srgb, var(--sol) 55%, transparent); }
+
+/* Desktop: el indicador es sutil — ya tienen espacio para ver los pasos */
+@media (min-width: 641px) {
+  .rf-progress { margin-bottom: 24px; padding-bottom: 20px; }
+  .rf-ps-n { width: 26px; height: 26px; font-size: 12px; }
+  .rps-done .rf-ps-n { font-size: 13px; }
+}
+
+/* Mobile: ocultar pasos bloqueados, mostrar solo el activo y los completados */
+@media (max-width: 640px) {
+  .rf-step.is-locked { display: none; }
+
+  .reservas-form-sub { display: none; }
+
+  .rf-step { padding: 28px 0; }
+  .rf-step:first-of-type { padding-top: 0; }
+
+  /* Paso completado: fondo suave, sin borde superior */
+  .rf-step.is-collapsed {
+    padding: 12px 0 16px;
+    border-top-color: color-mix(in srgb, var(--sol) 22%, transparent);
+  }
+  .rf-step.is-collapsed .rf-step-head { flex-wrap: wrap; row-gap: 8px; }
+
+  /* Más aire entre fields */
+  .form-field { gap: 8px; }
+  .form-field label { font-size: 11px; }
+
+  /* Botón de avanzar ocupa todo el ancho */
+  .rf-step-actions { margin-top: 28px; }
+  .rf-step-actions .btn { flex-basis: 100%; }
+}
 
 /* Canal tabs (step 3) */
 .rf-channel-label {
@@ -17151,7 +17346,7 @@ img[src*="apt-vt-gallery-"] {
 .pe-rev-row-summary {
   width: 100%;
   display: grid;
-  grid-template-columns: 14px 48px 64px 38px 64px 1.2fr 24px 60px 2fr;
+  grid-template-columns: 14px 48px 64px 38px 64px 1.2fr 24px 60px auto 2fr;
   gap: 8px;
   align-items: center;
   padding: 10px 14px;
@@ -17244,24 +17439,26 @@ img[src*="apt-vt-gallery-"] {
 .pe-rev-row.pe-rev-pending {
   border-left: 3px solid var(--warn, #C8975A);
 }
+.pe-rev-approve-btn {
+  font-size: 11px; padding: 2px 8px; line-height: 1.4;
+  background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7;
+  border-radius: 4px; cursor: pointer; white-space: nowrap;
+  font-weight: 600; flex-shrink: 0;
+}
+.pe-rev-approve-btn:hover { background: #c8e6c9; }
 .pe-rev-row-body {
   padding: 16px 18px 18px;
 }
 @media (max-width: 720px) {
   .pe-rev-row-summary {
-    grid-template-columns: 14px 1fr auto auto;
-    grid-template-rows: auto auto;
-    gap: 6px 10px;
-  }
-  .pe-rev-status, .pe-rev-source-badge, .pe-rev-apt-badge, .pe-rev-rating-cell {
-    grid-row: 1;
-  }
-  .pe-rev-name-cell {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    font-size: 13px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px 8px;
   }
   .pe-rev-date-cell, .pe-rev-country-cell, .pe-rev-snippet { display: none; }
+  .pe-rev-name-cell { order: 10; width: 100%; font-size: 13px; min-width: 0; }
+  .pe-rev-approve-btn { order: 9; margin-left: auto; }
 }
 
 /* ============================================================
@@ -18740,8 +18937,34 @@ img[src*="apt-vt-gallery-"] {
   border-left: 3px solid var(--sol);
 }
 .rv-banner-upcoming h3 { color: var(--ber-dk); }
+.rv-banner-alert {
+  background: rgba(230, 90, 56, 0.07);
+  border-left: 3px solid #e65a38;
+}
+.rv-banner-alert h3 { color: #c0441e; }
 .rv-prox-date { font-weight: 600; font-variant-numeric: tabular-nums; min-width: 90px; }
-.rv-prox-meta { color: var(--ink-soft); font-size: 12px; margin-left: auto; }
+.rv-prox-meta { color: var(--ink-soft); font-size: 12px; }
+.rv-prox-days-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 34px; height: 20px; padding: 0 5px;
+  background: #e65a38; color: #fff;
+  border-radius: 10px; font-size: 11px; font-weight: 700;
+  flex-shrink: 0;
+}
+.rv-wa-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-left: auto; flex-shrink: 0;
+  padding: 4px 10px; border-radius: 16px;
+  background: #25d366; color: #fff;
+  font-size: 11px; font-weight: 600;
+  text-decoration: none; white-space: nowrap;
+  transition: background .15s;
+}
+.rv-wa-btn:hover { background: #1da851; }
+@media (max-width: 480px) {
+  .rv-prox-meta { display: none; }
+  .rv-wa-btn { padding: 4px 8px; font-size: 10px; }
+}
 
 /* --- Toolbar de filtros --- */
 .rv-toolbar {
@@ -18794,6 +19017,9 @@ img[src*="apt-vt-gallery-"] {
   box-shadow: inset 6px 0 0 0 var(--apt-c, var(--sol));
 }
 .rv-row-past { opacity: 0.55; }
+.rv-row-cancelada { opacity: 0.38; color: #888 !important; }
+.rv-row-cancelada td { text-decoration: line-through; color: #888 !important; }
+.rv-row-cancelada .rv-apt-chip { filter: grayscale(1); opacity: 0.5; }
 .rv-month-foot td { border-top: 2px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); font-size: 12px; }
 
 .rv-status-th { width: 24px; padding: 0 !important; }
@@ -18851,6 +19077,7 @@ img[src*="apt-vt-gallery-"] {
   z-index: 999;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   animation: rvSlideIn 0.20s ease;
 }
 @keyframes rvSlideIn { from { transform: translateX(100%) } to { transform: translateX(0) } }
@@ -18893,7 +19120,7 @@ img[src*="apt-vt-gallery-"] {
 }
 .rv-edit-close:hover { background: rgba(255,251,244,0.15); }
 
-.rv-edit-body { flex: 1; overflow-y: auto; padding: 16px 20px 24px; }
+.rv-edit-body { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 16px 20px 24px; }
 .rv-edit-body fieldset {
   border: none;
   margin: 0 0 18px;
@@ -18961,6 +19188,14 @@ img[src*="apt-vt-gallery-"] {
 
 .rv-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .rv-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+@media (max-width: 560px) {
+  .rv-row2 { grid-template-columns: 1fr; }
+  .rv-row3 { grid-template-columns: 1fr 1fr; }
+  .rv-calc-grid { grid-template-columns: 1fr; }
+  .rv-edit-foot { flex-wrap: wrap; gap: 8px; padding: 10px 14px; }
+  .rv-edit-foot-right { flex-wrap: wrap; justify-content: flex-end; }
+  .rv-edit-foot .pe-btn { padding: 8px 12px; font-size: 11px; }
+}
 
 .rv-calc-block {
   margin-top: 10px;
@@ -19007,6 +19242,8 @@ img[src*="apt-vt-gallery-"] {
 }
 .rv-ical-btn:hover { opacity: 1; background: rgba(0,0,0,.06); }
 
+.rv-contrato-block { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 4px 0; }
+.rv-contrato-fname { font-size: 12px; color: var(--ink); font-weight: 500; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rv-overlap-warn {
   margin: 0 20px 4px;
   padding: 8px 12px;

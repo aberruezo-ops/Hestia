@@ -437,7 +437,7 @@ const HsResultCard = ({
     className: "hs-pb-right"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-badge"
-  }, lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guarantee'), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '✓ ¿Precio mejor? Te lo mejoramos' : '✓ Better price? We\'ll beat it'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
   }, lang === 'es' ? 'Si encuentras un precio mejor, te lo mejoramos.' : 'See a better price elsewhere? We\'ll beat it.'))), /*#__PURE__*/React.createElement("div", {
     className: "hs-pb-breakdown"
