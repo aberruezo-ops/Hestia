@@ -1916,25 +1916,29 @@ const ContractTab = ({
     return new Promise(resolve => {
       const img = new Image();
       img.onload = () => {
-        const W = 1400,
-          H = 366; // 210:55 ratio
+        // W/H = 2100/550 = 210/55 exactly — same ratio as jsPDF target
+        const W = 2100,
+          H = 550;
         const c = document.createElement('canvas');
         c.width = W;
         c.height = H;
         const ctx = c.getContext('2d');
         const srcAR = img.naturalWidth / img.naturalHeight;
-        const tgtAR = W / H;
+        const tgtAR = W / H; // 3.818:1
         let sx, sy, sw, sh;
         if (srcAR > tgtAR) {
+          // landscape wider than target: crop sides equally
           sh = img.naturalHeight;
           sw = sh * tgtAR;
           sx = (img.naturalWidth - sw) / 2;
           sy = 0;
         } else {
-          sw = img.naturalWidth;
+          // portrait: take central 90% of width to avoid edge elements,
+          // then crop height at 20% from top (upper portion of room)
+          sw = img.naturalWidth * 0.9;
           sh = sw / tgtAR;
-          sx = 0;
-          sy = (img.naturalHeight - sh) * 0.25;
+          sx = (img.naturalWidth - sw) / 2;
+          sy = Math.max(0, (img.naturalHeight - sh) * 0.2);
         }
         ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
         resolve(c.toDataURL('image/jpeg', 0.92));
@@ -2210,15 +2214,8 @@ const ContractTab = ({
 </div>
 
 <div id="pdf-content">
-<div class="hero">
-  ${heroUrl ? `<img src="${heroUrl}" style="position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0.88">` : ''}
-  <div class="hero-overlay"></div>
-  <div class="hero-text">
-    <p class="hero-eyebrow">contrato de arrendamiento por temporada</p>
-    <p class="hero-title">HESTÍA</p>
-    <p class="hero-meta">Vera ${a.shortName} · ${fechaEntradaStr} → ${fechaSalidaStr}</p>
-  </div>
-</div>
+<!-- Spacer for page-1 hero: bar(18mm) + hero(55mm) − MARG_TOP(30mm) = 43mm -->
+<div style="height:43mm;line-height:0;font-size:0"> </div>
 <div id="contract-body">
 
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
@@ -2334,13 +2331,14 @@ ${clausulaFianza}
   var WM   = ${JSON.stringify(wmDataUrl || '')};
   var FILE = ${JSON.stringify(pdfFilename)};
   var APT   = ${JSON.stringify('Vera ' + a.shortName)};
+  var META  = ${JSON.stringify(noches + ' noches · ' + huespedes + ' huéspedes')};
   var DATES = ${JSON.stringify(fechaEntradaStr + ' → ' + fechaSalidaStr)};
 
   async function generate() {
     try { await document.fonts.ready; } catch(e) {}
     var el = document.getElementById('pdf-content');
     // margin: [top, right, bottom, left] — top/bottom leave room for jsPDF header/footer
-    var MARG_TOP = 28, MARG_BOT = 22;
+    var MARG_TOP = 30, MARG_BOT = 24;
     var opt = {
       margin: [MARG_TOP, 0, MARG_BOT, 0],
       filename: FILE,
@@ -2370,8 +2368,36 @@ ${clausulaFianza}
         } catch(e) {}
       }
 
-      /* ── Cabecera compacta (todas las páginas) ───────────── */
       var hH = 18;
+
+      /* ── Portada: foto + overlay + texto (sólo página 1) ─── */
+      if (i === 1) {
+        if (HERO) {
+          try { pdf.addImage(HERO, 'JPEG', 0, hH, pW, 55); } catch(e) {}
+          pdf.saveGraphicsState();
+          pdf.setGState(pdf.GState({ opacity: 0.48 }));
+          pdf.setFillColor(42, 15, 46);
+          pdf.rect(0, hH, pW, 55, 'F');
+          pdf.restoreGraphicsState();
+        } else {
+          pdf.setFillColor(42, 15, 46);
+          pdf.rect(0, hH, pW, 55, 'F');
+        }
+        pdf.setFont('helvetica', 'italic');
+        pdf.setFontSize(7);
+        pdf.setTextColor(228, 217, 190);
+        pdf.text('contrato de arrendamiento por temporada', 8, hH + 34);
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(16);
+        pdf.setTextColor(240, 232, 213);
+        pdf.text('Hestía · ' + APT, 8, hH + 43);
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(8);
+        pdf.setTextColor(228, 217, 190);
+        pdf.text(DATES + '  ·  ' + META, 8, hH + 51);
+      }
+
+      /* ── Barra compacta (todas las páginas, encima del hero) */
       pdf.setFillColor(42, 15, 46);
       pdf.rect(0, 0, pW, hH, 'F');
       if (LOGO) {
