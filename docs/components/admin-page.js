@@ -4055,7 +4055,7 @@ const ReservasTab = ({
   const buildWALink = r => {
     const apt = APT_NAMES[r.apt] || r.apt;
     const dias = Math.round((new Date(r.entrada) - new Date(today)) / 86400000);
-    const lines = [`🏠 *Reserva en ${dias} día${dias !== 1 ? 's' : ''} · ${apt}*`, `👤 ${r.responsable || '—'}`, `📅 Entrada: ${fmtDate(r.entrada)}`, `📅 Salida:  ${fmtDate(r.salida)}`, `🌙 ${r.noches || '—'} noches · ${r.huespedes || '—'} pax`, r.canal ? `📲 Canal: ${r.canal}` : '', r.ingreso_total ? `💶 Total: ${fmtEur(r.ingreso_total)}` : '', r.bai ? `📈 BAI: ${fmtEur(r.bai)}` : '', r.mascota ? '🐾 Trae mascota' : '', r.cuna_trona ? '👶 Necesita cuna/trona' : '', r.observaciones ? `📝 ${r.observaciones}` : ''].filter(Boolean).join('\n');
+    const lines = [`🏠 *Reserva en ${dias} día${dias !== 1 ? 's' : ''} · ${apt}*`, `👤 ${r.responsable || '—'}`, r.telefono ? `📞 ${r.telefono}` : '', `📅 Entrada: ${fmtDate(r.entrada)}`, `📅 Salida:  ${fmtDate(r.salida)}`, `🌙 ${r.noches || '—'} noches · ${r.huespedes || '—'} pax`, r.canal ? `📲 Canal: ${r.canal}` : '', r.ingreso_total ? `💶 Total: ${fmtEur(r.ingreso_total)}` : '', r.bai ? `📈 BAI: ${fmtEur(r.bai)}` : '', r.mascota ? '🐾 Trae mascota' : '', r.cuna_trona ? '👶 Necesita cuna/trona' : '', r.observaciones ? `📝 ${r.observaciones}` : ''].filter(Boolean).join('\n');
     return `https://wa.me/34654138251?text=${encodeURIComponent(lines)}`;
   };
 

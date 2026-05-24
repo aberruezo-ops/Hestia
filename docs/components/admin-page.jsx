@@ -3254,6 +3254,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
     const lines = [
       `🏠 *Reserva en ${dias} día${dias !== 1 ? 's' : ''} · ${apt}*`,
       `👤 ${r.responsable || '—'}`,
+      r.telefono    ? `📞 ${r.telefono}` : '',
       `📅 Entrada: ${fmtDate(r.entrada)}`,
       `📅 Salida:  ${fmtDate(r.salida)}`,
       `🌙 ${r.noches || '—'} noches · ${r.huespedes || '—'} pax`,
