@@ -5210,37 +5210,39 @@ const AdminApp = () => {
     return /*#__PURE__*/React.createElement("div", {
       className: "pe-shell"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "pe-card"
-    }, /*#__PURE__*/React.createElement("h1", null, "Hest\xEDa \xB7 Pricing Edit"), /*#__PURE__*/React.createElement("p", {
-      className: "pe-lede"
-    }, "Edici\xF3n segura de ", /*#__PURE__*/React.createElement("code", null, PATH), ". Pega tu Personal Access Token de GitHub con permiso ", /*#__PURE__*/React.createElement("code", null, "contents: write"), " sobre ", /*#__PURE__*/React.createElement("code", null, REPO), ". El token vive solo en memoria del navegador \u2014 no se persiste."), /*#__PURE__*/React.createElement("form", {
-      onSubmit: login
-    }, /*#__PURE__*/React.createElement("label", {
-      className: "pe-lbl"
-    }, "Personal Access Token"), /*#__PURE__*/React.createElement("input", {
+      className: "pe-card pe-login-card"
+    }, /*#__PURE__*/React.createElement("h1", {
+      className: "pe-login-title"
+    }, "Hest\xEDa Admin"), /*#__PURE__*/React.createElement("form", {
+      onSubmit: login,
+      className: "pe-login-form"
+    }, /*#__PURE__*/React.createElement("input", {
       type: "password",
+      autoFocus: true,
       autoComplete: "off",
       spellCheck: "false",
       value: token,
       onChange: e => setToken(e.target.value),
-      placeholder: "ghp_\u2026 o github_pat_\u2026",
-      className: "pe-input pe-mono",
+      placeholder: "github_pat_\u2026",
+      className: "pe-input pe-mono pe-login-input",
       required: true
     }), /*#__PURE__*/React.createElement("button", {
       type: "submit",
-      className: "pe-btn pe-btn-primary"
+      className: "pe-btn pe-btn-primary pe-login-btn"
     }, "Entrar"), error && /*#__PURE__*/React.createElement("div", {
       className: "pe-error"
-    }, error)), /*#__PURE__*/React.createElement("div", {
+    }, error)), /*#__PURE__*/React.createElement("details", {
       className: "pe-help"
-    }, /*#__PURE__*/React.createElement("strong", null, "\xBFC\xF3mo crear el PAT?"), /*#__PURE__*/React.createElement("ol", null, /*#__PURE__*/React.createElement("li", null, "GitHub \u2192 Settings \u2192 Developer settings \u2192 Personal access tokens \u2192 ", /*#__PURE__*/React.createElement("em", null, "Fine-grained tokens"), "."), /*#__PURE__*/React.createElement("li", null, "Repository access \u2192 Only select repositories \u2192 ", /*#__PURE__*/React.createElement("code", null, REPO), "."), /*#__PURE__*/React.createElement("li", null, "Repository permissions \u2192 ", /*#__PURE__*/React.createElement("strong", null, "Contents: Read and write"), "."), /*#__PURE__*/React.createElement("li", null, "Generate, copia el token (empieza por ", /*#__PURE__*/React.createElement("code", null, "github_pat_"), ") y p\xE9galo aqu\xED.")))));
+    }, /*#__PURE__*/React.createElement("summary", null, "\xBFC\xF3mo obtener el token?"), /*#__PURE__*/React.createElement("ol", null, /*#__PURE__*/React.createElement("li", null, "GitHub \u2192 Settings \u2192 Developer settings \u2192 Fine-grained tokens."), /*#__PURE__*/React.createElement("li", null, "Repository: ", /*#__PURE__*/React.createElement("code", null, REPO), " \xB7 Permisos: ", /*#__PURE__*/React.createElement("strong", null, "Contents: write"), "."), /*#__PURE__*/React.createElement("li", null, "Copia el token y p\xE9galo arriba.")))));
   }
   if (phase === 'loading' || phase === 'saving') {
     return /*#__PURE__*/React.createElement("div", {
       className: "pe-shell"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "pe-card"
-    }, /*#__PURE__*/React.createElement("p", null, phase === 'loading' ? 'Autenticando y cargando…' : 'Guardando…')));
+      className: "pe-card pe-login-card pe-loading-card"
+    }, /*#__PURE__*/React.createElement("p", {
+      className: "pe-loading-msg"
+    }, phase === 'loading' ? '⏳ Autenticando…' : '⏳ Guardando…')));
   }
 
   // ---- Reviews — listado y filtros ----
@@ -5391,7 +5393,9 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCB0 Pricing"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDCB0", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Pricing")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'reviews' ? ' is-active' : ''}`,
     onClick: () => {
@@ -5399,7 +5403,9 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\u2B50 Reviews", reviewsData && (() => {
+  }, "\u2B50", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Reviews"), reviewsData && (() => {
     const pending = (reviewsData.items || []).filter(r => r.status === 'pending').length;
     return pending > 0 ? /*#__PURE__*/React.createElement("span", {
       className: "pe-tab-badge"
@@ -5412,7 +5418,9 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCCA Anal\xEDtica"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDCCA", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Anal\xEDtica")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'contract' ? ' is-active' : ''}`,
     onClick: () => {
@@ -5420,7 +5428,9 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCC4 Contrato"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDCC4", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Contrato")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'prereservas' ? ' is-active' : ''}`,
     onClick: () => {
@@ -5428,7 +5438,9 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCCB Prereservas"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDCCB", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Prereservas")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'reservas' ? ' is-active' : ''}`,
     onClick: () => {
@@ -5436,7 +5448,9 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDDD3\uFE0F Reservas"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDDD3\uFE0F", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Reservas")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'leila' ? ' is-active' : ''}`,
     onClick: () => {
@@ -5444,7 +5458,9 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCB3 Leila"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDCB3", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Leila")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'dashboard' ? ' is-active' : ''}`,
     onClick: () => {
@@ -5452,7 +5468,9 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCCA Dashboard")), success && /*#__PURE__*/React.createElement("div", {
+  }, "\uD83D\uDCCA", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Dashboard"))), success && /*#__PURE__*/React.createElement("div", {
     className: "pe-success"
   }, success), error && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
