@@ -4164,44 +4164,44 @@ const AdminApp = () => {
   if (phase === 'login') {
     return (
       <div className="pe-shell">
-        <div className="pe-card">
-          <h1>Hestía · Pricing Edit</h1>
-          <p className="pe-lede">
-            Edición segura de <code>{PATH}</code>. Pega tu Personal Access Token de GitHub
-            con permiso <code>contents: write</code> sobre <code>{REPO}</code>.
-            El token vive solo en memoria del navegador — no se persiste.
-          </p>
-          <form onSubmit={login}>
-            <label className="pe-lbl">Personal Access Token</label>
+        <div className="pe-card pe-login-card">
+          <h1 className="pe-login-title">Hestía Admin</h1>
+          <form onSubmit={login} className="pe-login-form">
             <input
               type="password"
+              autoFocus
               autoComplete="off"
               spellCheck="false"
               value={token}
               onChange={e => setToken(e.target.value)}
-              placeholder="ghp_… o github_pat_…"
-              className="pe-input pe-mono"
+              placeholder="github_pat_…"
+              className="pe-input pe-mono pe-login-input"
               required
             />
-            <button type="submit" className="pe-btn pe-btn-primary">Entrar</button>
+            <button type="submit" className="pe-btn pe-btn-primary pe-login-btn">Entrar</button>
             {error && <div className="pe-error">{error}</div>}
           </form>
-          <div className="pe-help">
-            <strong>¿Cómo crear el PAT?</strong>
+          <details className="pe-help">
+            <summary>¿Cómo obtener el token?</summary>
             <ol>
-              <li>GitHub → Settings → Developer settings → Personal access tokens → <em>Fine-grained tokens</em>.</li>
-              <li>Repository access → Only select repositories → <code>{REPO}</code>.</li>
-              <li>Repository permissions → <strong>Contents: Read and write</strong>.</li>
-              <li>Generate, copia el token (empieza por <code>github_pat_</code>) y pégalo aquí.</li>
+              <li>GitHub → Settings → Developer settings → Fine-grained tokens.</li>
+              <li>Repository: <code>{REPO}</code> · Permisos: <strong>Contents: write</strong>.</li>
+              <li>Copia el token y pégalo arriba.</li>
             </ol>
-          </div>
+          </details>
         </div>
       </div>
     );
   }
 
   if (phase === 'loading' || phase === 'saving') {
-    return <div className="pe-shell"><div className="pe-card"><p>{phase === 'loading' ? 'Autenticando y cargando…' : 'Guardando…'}</p></div></div>;
+    return (
+      <div className="pe-shell">
+        <div className="pe-card pe-login-card pe-loading-card">
+          <p className="pe-loading-msg">{phase === 'loading' ? '⏳ Autenticando…' : '⏳ Guardando…'}</p>
+        </div>
+      </div>
+    );
   }
 
   // ---- Reviews — listado y filtros ----
@@ -4351,12 +4351,12 @@ const AdminApp = () => {
         <button type="button"
           className={`pe-tab${mode === 'pricing' ? ' is-active' : ''}`}
           onClick={() => { setMode('pricing'); setError(null); setSuccess(null); }}>
-          💰 Pricing
+          💰<span className="pe-tab-label"> Pricing</span>
         </button>
         <button type="button"
           className={`pe-tab${mode === 'reviews' ? ' is-active' : ''}`}
           onClick={() => { setMode('reviews'); setError(null); setSuccess(null); }}>
-          ⭐ Reviews
+          ⭐<span className="pe-tab-label"> Reviews</span>
           {reviewsData && (() => {
             const pending = (reviewsData.items || []).filter(r => r.status === 'pending').length;
             return pending > 0 ? <span className="pe-tab-badge">{pending}</span> : null;
@@ -4365,32 +4365,32 @@ const AdminApp = () => {
         <button type="button"
           className={`pe-tab${mode === 'analytics' ? ' is-active' : ''}`}
           onClick={() => { setMode('analytics'); setError(null); setSuccess(null); }}>
-          📊 Analítica
+          📊<span className="pe-tab-label"> Analítica</span>
         </button>
         <button type="button"
           className={`pe-tab${mode === 'contract' ? ' is-active' : ''}`}
           onClick={() => { setMode('contract'); setError(null); setSuccess(null); }}>
-          📄 Contrato
+          📄<span className="pe-tab-label"> Contrato</span>
         </button>
         <button type="button"
           className={`pe-tab${mode === 'prereservas' ? ' is-active' : ''}`}
           onClick={() => { setMode('prereservas'); setError(null); setSuccess(null); }}>
-          📋 Prereservas
+          📋<span className="pe-tab-label"> Prereservas</span>
         </button>
         <button type="button"
           className={`pe-tab${mode === 'reservas' ? ' is-active' : ''}`}
           onClick={() => { setMode('reservas'); setError(null); setSuccess(null); }}>
-          🗓️ Reservas
+          🗓️<span className="pe-tab-label"> Reservas</span>
         </button>
         <button type="button"
           className={`pe-tab${mode === 'leila' ? ' is-active' : ''}`}
           onClick={() => { setMode('leila'); setError(null); setSuccess(null); }}>
-          💳 Leila
+          💳<span className="pe-tab-label"> Leila</span>
         </button>
         <button type="button"
           className={`pe-tab${mode === 'dashboard' ? ' is-active' : ''}`}
           onClick={() => { setMode('dashboard'); setError(null); setSuccess(null); }}>
-          📊 Dashboard
+          📊<span className="pe-tab-label"> Dashboard</span>
         </button>
       </div>
 

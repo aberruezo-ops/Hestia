@@ -12662,15 +12662,26 @@ footer,
 }
 .pe-help ol { margin: 6px 0 0 18px; padding: 0; }
 .pe-help code { background: rgba(61,26,53,.06); padding: 1px 5px; border-radius: 3px; }
+.pe-help summary { cursor: pointer; font-weight: 600; color: var(--ink-soft); user-select: none; }
+.pe-login-card { max-width: 420px; margin: 6vh auto 0; }
+.pe-login-title { font-family: var(--serif); font-size: 26px; font-weight: 400; margin: 0 0 20px; letter-spacing: .01em; }
+.pe-login-form { display: flex; flex-direction: column; gap: 12px; }
+.pe-login-input { font-size: 15px !important; padding: 13px 14px !important; letter-spacing: .03em; }
+.pe-login-btn { width: 100%; padding: 13px !important; justify-content: center; }
+.pe-loading-card { text-align: center; }
+.pe-loading-msg { color: var(--ink-soft); font-size: 14px; margin: 0; }
 .pe-lbl {
   display: block; font-size: 11px; letter-spacing: .14em;
   text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px;
 }
 @media (max-width: 600px) {
-  .pe-shell { padding: 18px 12px 60px; }
+  .pe-shell { padding: 14px 12px 60px; }
   .pe-card { padding: 18px 16px; }
-  .pe-topbar { flex-direction: column; align-items: flex-start; gap: 6px; }
-  .pe-topbar .pe-meta { margin-left: 0; }
+  .pe-topbar { padding: 10px 14px; margin-bottom: 14px; gap: 8px; }
+  .pe-topbar .pe-meta { display: none; }
+}
+@media (max-width: 500px) {
+  .pe-shell { padding: 10px 10px 60px; }
 }
 
 /* ================================================================
@@ -15314,6 +15325,11 @@ a.cta-wa-btn::before,
   }
   .pe-tabs::-webkit-scrollbar { display: none; }
 }
+@media (max-width: 500px) {
+  .pe-tab { padding: 10px 12px; gap: 0; font-size: 18px; }
+  .pe-tab-label { display: none; }
+  .pe-tab-badge { font-size: 10px; min-width: 18px; height: 18px; }
+}
 .pe-tab {
   display: inline-flex;
   align-items: center;
@@ -17330,7 +17346,7 @@ img[src*="apt-vt-gallery-"] {
 .pe-rev-row-summary {
   width: 100%;
   display: grid;
-  grid-template-columns: 14px 48px 64px 38px 64px 1.2fr 24px 60px 2fr;
+  grid-template-columns: 14px 48px 64px 38px 64px 1.2fr 24px 60px auto 2fr;
   gap: 8px;
   align-items: center;
   padding: 10px 14px;
@@ -17435,19 +17451,14 @@ img[src*="apt-vt-gallery-"] {
 }
 @media (max-width: 720px) {
   .pe-rev-row-summary {
-    grid-template-columns: 14px 1fr auto auto;
-    grid-template-rows: auto auto;
-    gap: 6px 10px;
-  }
-  .pe-rev-status, .pe-rev-source-badge, .pe-rev-apt-badge, .pe-rev-rating-cell {
-    grid-row: 1;
-  }
-  .pe-rev-name-cell {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    font-size: 13px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px 8px;
   }
   .pe-rev-date-cell, .pe-rev-country-cell, .pe-rev-snippet { display: none; }
+  .pe-rev-name-cell { order: 10; width: 100%; font-size: 13px; min-width: 0; }
+  .pe-rev-approve-btn { order: 9; margin-left: auto; }
 }
 
 /* ============================================================
