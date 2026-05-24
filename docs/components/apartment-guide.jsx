@@ -51,7 +51,7 @@ const GUIDE_SECTIONS = [
   { id: 'llegada',      es: 'Llegada y salida', en: 'Arrival & departure' },
   { id: 'wifi',         es: 'Mi WiFi',          en: 'My WiFi' },
   { id: 'limpieza',     es: 'Limpieza',         en: 'Cleaning' },
-  { id: 'salon',        es: 'Mi salón',         en: 'My living room' },
+  { id: 'salon',        es: 'Tu salón',         en: 'My living room' },
   { id: 'cocina',       es: 'Mi cocina',        en: 'My kitchen' },
   { id: 'dormitorios',  es: 'Mis dormitorios',  en: 'My bedrooms' },
   { id: 'banos',        es: 'Mis baños',        en: 'My bathrooms' },
@@ -1040,9 +1040,9 @@ const GUIDE_SHARED = {
       ],
       garageTitle: 'Plaza de garaje',
       garageIntro: 'Todos los apartamentos tienen plaza de garaje en la urbanización. En Hestía Mar tu plaza es:',
-      garageNote: 'A confirmar con Fran antes de tu llegada — alguna semana puede haber rotación por mantenimiento.',
+      garageNote: '',
       checkoutTitle: 'Check-out',
-      checkoutBody: 'La salida es siempre antes de las 11:00. Deja las llaves donde Fran te indique (caja-llaves o entrega presencial, según hayas entrado). Las toallas y sábanas, sobre la cama — del resto se encarga el equipo de limpieza.',
+      checkoutBody: 'La salida es siempre antes de las 11:00. Deja las llaves donde Fran te indique (caja-llaves o entrega presencial, según hayas entrado). Las toallas y sábanas sobre la cama; del resto se encarga el equipo de limpieza.',
       garbageTitle: 'Basura y reciclaje',
       garbageBody: 'Por normativa municipal, los contenedores de basura y reciclaje están SIEMPRE fuera de la urbanización (no dentro). Te recomendamos aprovechar la salida del día siguiente, o cualquier viaje en coche, para tirarlas de paso. Te agradeceríamos enormemente que no la dejes en los descansillos del edificio ni dentro de Hestía — atrae bichos y el equipo de limpieza no las recoge.',
     },
@@ -1063,11 +1063,11 @@ const GUIDE_SHARED = {
       intro: 'Estas normas vienen del contrato que firmaste con nosotros. Son sencillas y están pensadas para que tú, los próximos huéspedes y nuestros vecinos disfrutemos de Hestía.',
       items: [
         { icon: '🛒', t: 'Reponed lo que consumáis',
-          d: 'Hestía dispone de productos consumibles. Si gastáis o consumís algo, intentad reponerlo — salvo el kit de bienvenida, que es un pequeño regalo nuestro. Reponed también lo que consumáis fuera de ese kit.' },
+          d: 'Hestía dispone de múltiples productos para facilitar vuestra estancia los primeros días (pastillas de lavavajillas, polvos de lavadora, etc.). Si alguno de estos productos se gasta os agradeceríamos que los repusierais. Queda excluido lo que aparece el kit de bienvenida, pues es un pequeño regalo por nuestra parte.' },
         { icon: '🌿', t: 'Cuidad el medio ambiente',
           d: 'No malgastéis la luz ni el agua. No dejéis el aire acondicionado con las ventanas abiertas o cuando salgáis. Sentíos como en vuestro hogar.' },
         { icon: '🪑', t: 'Recoged la terraza si salís',
-          d: 'Cojines, toldo y plantas — especialmente si hay viento, lluvia o predicción de mal tiempo.' },
+          d: 'Cojines y toldo — especialmente si hay viento, lluvia o predicción de mal tiempo.' },
         { icon: '🛏️', t: 'Cuidad equipamiento y mobiliario',
           d: 'No extraigáis nada de Hestía. Tras vuestra estancia haremos inventario; cualquier deterioro o sustracción será responsabilidad vuestra.' },
         { icon: '🤫', t: 'Respetad el descanso',
@@ -1096,7 +1096,7 @@ const GUIDE_SHARED = {
           d: 'Cualquier incidente con menores en Hestía o en zonas comunes es responsabilidad de sus padres o tutores.' },
         { icon: '🛎️', t: 'Servicios comunes y exterior',
           d: 'Lo que pase fuera de Hestía no es responsabilidad nuestra — pero siempre intentaremos ayudaros.' },
-        { icon: '🧺', t: 'Dejad Hestía limpia y recogida',
+        { icon: '🧺', t: 'Dejad Hestía limpio y recogido',
           d: 'De las sábanas y toallas nos encargamos nosotros. Por favor, no las lavéis con ropa de otro color.' },
       ],
     },
@@ -1186,7 +1186,7 @@ const GUIDE_SHARED = {
       ssidValue: 'Hestía',
       passLabel: 'Contraseña',
       passValue: 'Hestiavera',
-      note: 'Si la contraseña no funciona, la actualizada está en una pegatina pegada al router. El router suele estar cerca del sofá, escondido en algún hueco o al lado de la tele. Avísanos si no lo encuentras y te lo decimos.',
+      note: 'Si la contraseña no funciona, la actualizada está en una pegatina pegada al router. El router suele estar cerca del sofá, escondido en algún hueco o al lado de la tele. Pregúntanos si no lo encuentras.',
     },
     phones: {
       title: 'Teléfonos y datos de utilidad',
@@ -1442,7 +1442,7 @@ const GUIDE_BY_APT = {
     es: {
       cover_tagline: 'El campo de olivos llega al mar. Donde el descanso encuentra su raíz.',
       rooms: [
-        { id: 'salon', title: 'Mi salón', body: 'Mi sofá-cama y mi televisión plana son el rincón perfecto para una tarde de Netflix. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
+        { id: 'salon', title: 'Tu salón', body: 'Mi sofá-cama y mi televisión plana son el rincón perfecto para una tarde de Netflix. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.',
           'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando junto al cuadro del A/C.',
@@ -1528,7 +1528,7 @@ const GUIDE_BY_APT = {
     es: {
       cover_tagline: 'Ático sobre el mar y el Salar de los Canos. Donde el horizonte se ensancha.',
       rooms: [
-        { id: 'salon', title: 'Mi salón', body: 'Mi sofá-cama y mi televisión plana son el sitio perfecto para una sesión de Netflix o HBO. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
+        { id: 'salon', title: 'Tu salón', body: 'Mi sofá-cama y mi televisión plana son el sitio perfecto para una sesión de Netflix o HBO. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en casa.',
           'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de pie con el mando junto al cuadro del A/C.',
@@ -1610,7 +1610,7 @@ const GUIDE_BY_APT = {
     es: {
       cover_tagline: 'Junto a las salinas. Donde la luz se queda más tiempo.',
       rooms: [
-        { id: 'salon', title: 'Mi salón', body: 'Mi sofá-cama y mi televisión con ambilight son el rincón perfecto para una sesión de Netflix. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
+        { id: 'salon', title: 'Tu salón', body: 'Mi sofá-cama y mi televisión con ambilight son el rincón perfecto para una sesión de Netflix. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.',
           'Echa un vistazo a las Normas de uso de Hestía, al final de esta misma guía.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando a la misma.',
