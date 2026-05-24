@@ -1,7 +1,7 @@
 {
   "_doc": "Reviews curadas y de la web. source: 'booking'|'airbnb'|'google'|'web'. apt: 'vm'|'vt'|'vs'|'all'. highlight: true para destacarse en la sección de relevantes. status: 'published'|'pending' (solo published se muestra al público).",
   "version": 1,
-  "updatedAt": "2026-05-24T19:28:44.132Z",
+  "updatedAt": "2026-05-24T19:28:47.907Z",
   "items": [
     {
       "id": "bk-001",
@@ -547,7 +547,7 @@
       "lang": "es",
       "text": "Mi mujer y yo cumplíamos 20 años de casados. Reservé el ático sin decirle dónde íbamos. Llegamos y la cama estaba con sábanas de plumas, había pétalos en el baño y dos botellas de cava en la nevera — todo cortesía de Alex y Fran sin que se lo pidiera. Casi lloramos los dos.",
       "highlight": false,
-      "status": "pending"
+      "status": "published"
     },
     {
       "id": "wb-127",
