@@ -125,6 +125,53 @@ function diffNoches(entradaIso, salidaIso) {
 const utf8ToB64 = (s) => btoa(unescape(encodeURIComponent(s)));
 const b64ToUtf8 = (s) => decodeURIComponent(escape(atob(s.replace(/\n/g, ''))));
 
+// NumInput — resuelve el problema clásico de React con inputs numéricos
+// controlados: imposibilidad de borrar un "0", punto decimal eliminado al vuelo.
+// Mantiene estado string local mientras el campo está activo; solo confirma
+// al parent cuando hay un número válido completo. Selecciona todo al enfocar.
+const NumInput = ({ value, onChange, min, max, step, className, placeholder, disabled, readOnly, style, title }) => {
+  const isDecimal = step != null && String(step).includes('.');
+  const [str, setStr] = React.useState(() => value == null ? '' : String(value));
+  const active = React.useRef(false);
+
+  React.useEffect(() => {
+    if (!active.current) setStr(value == null ? '' : String(value));
+  }, [value]);
+
+  const commit = (v) => {
+    if (v === '' || v === '-' || v === '.' || v.endsWith('.')) return;
+    const n = Number(v);
+    if (!isNaN(n)) onChange(n);
+  };
+
+  return (
+    <input
+      type="text"
+      inputMode={isDecimal ? 'decimal' : 'numeric'}
+      value={str}
+      className={className}
+      placeholder={placeholder ?? '0'}
+      disabled={disabled}
+      readOnly={readOnly}
+      style={style}
+      title={title}
+      onChange={e => {
+        const v = e.target.value;
+        if (!/^-?\d*\.?\d*$/.test(v)) return;
+        setStr(v);
+        commit(v);
+      }}
+      onFocus={e => { active.current = true; e.target.select(); }}
+      onBlur={() => {
+        active.current = false;
+        const n = parseFloat(str);
+        if (isNaN(n) || str === '') { setStr('0'); onChange(0); }
+        else { setStr(String(n)); }
+      }}
+    />
+  );
+};
+
 // ============================================================
 // validateYearCoverage — para un año dado, comprueba que cada
 // día está cubierto por exactamente una temporada/especial. Los
@@ -587,8 +634,8 @@ const ReviewRow = ({ review, onChange, onRemove, onApprove }) => {
             </div>
             <div className="pe-field">
               <label>Rating ({review.source === 'booking' ? '/10' : '/5'})</label>
-              <input type="number" min={0} max={review.source === 'booking' ? 10 : 5} step={0.1}
-                value={review.rating} onChange={e => onChange('rating', Number(e.target.value))} className="pe-input"/>
+              <NumInput min={0} max={review.source === 'booking' ? 10 : 5} step={0.1}
+                value={review.rating} onChange={v => onChange('rating', v)} className="pe-input"/>
             </div>
             <div className="pe-field">
               <label>Idioma</label>
@@ -839,8 +886,8 @@ const NewReviewForm = ({ onAdd, onCancel }) => {
         </div>
         <div className="pe-field">
           <label>Rating ({source === 'booking' ? '/10' : '/5'})</label>
-          <input type="number" min={0} max={source === 'booking' ? 10 : 5} step={0.1}
-            value={rating} onChange={e => setRating(Number(e.target.value))} className="pe-input"/>
+          <NumInput min={0} max={source === 'booking' ? 10 : 5} step={0.1}
+            value={rating} onChange={v => setRating(v)} className="pe-input"/>
         </div>
         <div className="pe-field">
           <label>Idioma</label>
@@ -2164,7 +2211,7 @@ info@hestiayourhome.com · +34 620 316 370`;
             <div className="pe-field"><label>Fecha de entrada *</label><input type="date" value={fechaEntrada} onChange={e => setFechaEntrada(e.target.value)} /></div>
             <div className="pe-field"><label>Fecha de salida *</label><input type="date" value={fechaSalida} onChange={e => setFechaSalida(e.target.value)} /></div>
             <div className="pe-field"><label>Noches (calculado)</label><input type="text" readOnly value={noches} className="ct-readonly" /></div>
-            <div className="pe-field"><label>Nº de huéspedes</label><input type="number" min="1" max="8" value={huespedes} onChange={e => setHuespedes(Number(e.target.value))} /></div>
+            <div className="pe-field"><label>Nº de huéspedes</label><NumInput min="1" max="8" value={huespedes} onChange={v => setHuespedes(v)} /></div>
             <div className="pe-field"><label>¿Mascota?</label>
               <label className="ct-toggle"><input type="checkbox" checked={mascota} onChange={e => setMascota(e.target.checked)} /> <span>Sí, viaja con mascota</span></label>
             </div>
@@ -2174,9 +2221,9 @@ info@hestiayourhome.com · +34 620 316 370`;
         <fieldset>
           <legend>Importes (€)</legend>
           <div className="pe-grid">
-            <div className="pe-field"><label>Precio total *</label><input type="number" min="0" value={precioTotal} onChange={e => setPrecioTotal(e.target.value)} placeholder="630" /></div>
-            <div className="pe-field"><label>Señal / prereserva (Bizum o transf.) *</label><input type="number" min="0" value={prereserva} onChange={e => setPrereserva(e.target.value)} placeholder="130" /></div>
-            <div className="pe-field"><label>Pago previo adicional</label><input type="number" min="0" value={pagoPrevio} onChange={e => setPagoPrevio(e.target.value)} placeholder="0" /></div>
+            <div className="pe-field"><label>Precio total *</label><NumInput step="0.01" min="0" value={precioTotal} onChange={v => setPrecioTotal(v)} placeholder="630" /></div>
+            <div className="pe-field"><label>Señal / prereserva (Bizum o transf.) *</label><NumInput step="0.01" min="0" value={prereserva} onChange={v => setPrereserva(v)} placeholder="130" /></div>
+            <div className="pe-field"><label>Pago previo adicional</label><NumInput step="0.01" min="0" value={pagoPrevio} onChange={v => setPagoPrevio(v)} placeholder="0" /></div>
             <div className="pe-field"><label>Efectivo al check-in (calculado)</label><input type="text" readOnly value={`${remanente} €`} className="ct-readonly" /></div>
           </div>
         </fieldset>
@@ -2184,7 +2231,7 @@ info@hestiayourhome.com · +34 620 316 370`;
         <fieldset>
           <legend>Política</legend>
           <div className="pe-grid">
-            <div className="pe-field"><label>Días de cancelación sin coste *</label><input type="number" min="1" max="60" value={diasCancelacion} onChange={e => setDiasCancelacion(Number(e.target.value))} /></div>
+            <div className="pe-field"><label>Días de cancelación sin coste *</label><NumInput min="1" max="60" value={diasCancelacion} onChange={v => setDiasCancelacion(v)} /></div>
             <div className="pe-field"><label>¿Fianza?</label>
               <label className="ct-toggle"><input type="checkbox" checked={fianza} onChange={e => setFianza(e.target.checked)} /> <span>Sí, 300 € (transferencia 2 días antes)</span></label>
             </div>
@@ -2657,13 +2704,11 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
           <label className="leila-saldo-label" htmlFor="leila-saldo-inicial">
             Saldo arrastrado de {Number(focusYear) - 1}
           </label>
-          <input
-            id="leila-saldo-inicial"
-            type="number"
+          <NumInput
             step="0.01"
             className="leila-saldo-input"
-            value={editsSaldoInicial[focusYear] !== undefined ? editsSaldoInicial[focusYear] : saldoInicialYear}
-            onChange={e => setEditsSaldoInicial(p => ({ ...p, [focusYear]: e.target.value }))}
+            value={editsSaldoInicial[focusYear] !== undefined ? Number(editsSaldoInicial[focusYear]) : saldoInicialYear}
+            onChange={v => setEditsSaldoInicial(p => ({ ...p, [focusYear]: v }))}
           />
           <span className="leila-saldo-unit">€</span>
           {saldoInicialYear !== 0 && (
@@ -2762,10 +2807,10 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
                         <td className="num">{r.precio_bruto_noche != null ? `${r.precio_bruto_noche} €` : '—'}</td>
                         <td className="num">{tarifa} €</td>
                         <td className="num">
-                          <input type="number" step="1" min="0" className="leila-cobro-input"
-                            value={efectivo || ''}
+                          <NumInput step="1" min="0" className="leila-cobro-input"
+                            value={efectivo || 0}
                             placeholder="0"
-                            onChange={e => setEditsEfectivo(prev => ({ ...prev, [r._idx]: e.target.value }))}
+                            onChange={v => setEditsEfectivo(prev => ({ ...prev, [r._idx]: v }))}
                           />
                         </td>
                         <td className={`num ${acum > 0 ? 'leila-owe' : acum < 0 ? 'leila-over' : 'leila-ok'}`}>
@@ -2793,10 +2838,10 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
 
             <div className="leila-liquid-row">
               <label className="leila-liquid-lbl">Leila pagó a Hestía en {MES_FULL[parseInt(m, 10) - 1]}:</label>
-              <input type="number" step="1" min="0" className="leila-cobro-input"
-                value={liqVal || ''}
+              <NumInput step="1" min="0" className="leila-cobro-input"
+                value={liqVal || 0}
                 placeholder="0"
-                onChange={e => setEditsLiquid(prev => ({ ...prev, [mKey]: e.target.value }))}
+                onChange={v => setEditsLiquid(prev => ({ ...prev, [mKey]: v }))}
               />
               <span className="leila-liquid-eur">€</span>
               <label className="leila-liquid-lbl" style={{ marginLeft: 16 }}>Fecha sync:</label>
@@ -2996,15 +3041,15 @@ const PrereservasTab = ({ token }) => {
               </div>
               <div className="pe-field">
                 <label>Huéspedes</label>
-                <input type="number" min="1" max="8" className="pe-input pe-input-num" value={form.huespedes} onChange={e => setForm(f=>({...f,huespedes:e.target.value}))} />
+                <NumInput min="1" max="8" className="pe-input pe-input-num" value={form.huespedes || 0} onChange={v => setForm(f=>({...f,huespedes:v}))} />
               </div>
               <div className="pe-field">
                 <label>Importe total (€) *</label>
-                <input type="number" min="0" className="pe-input pe-input-num" value={form.ingreso_total} onChange={e => setForm(f=>({...f,ingreso_total:e.target.value}))} placeholder="1200" />
+                <NumInput step="0.01" min="0" className="pe-input pe-input-num" value={form.ingreso_total || 0} onChange={v => setForm(f=>({...f,ingreso_total:v}))} placeholder="1200" />
               </div>
               <div className="pe-field">
                 <label>Señal (€)</label>
-                <input type="number" min="0" className="pe-input pe-input-num" value={form.reserva} onChange={e => setForm(f=>({...f,reserva:e.target.value}))} placeholder="300" />
+                <NumInput step="0.01" min="0" className="pe-input pe-input-num" value={form.reserva || 0} onChange={v => setForm(f=>({...f,reserva:v}))} placeholder="300" />
               </div>
               <div className="pe-field" style={{ gridColumn:'1/-1' }}>
                 <label>Observaciones</label>
@@ -3759,11 +3804,11 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                 <div className="rv-row3">
                   <div className="rv-field">
                     <label>Huéspedes</label>
-                    <input type="number" min="1" value={draft.huespedes || 0} onChange={e => updateDraft('huespedes', Number(e.target.value))} />
+                    <NumInput min="1" value={draft.huespedes || 0} onChange={v => updateDraft('huespedes', v)} />
                   </div>
                   <div className="rv-field">
                     <label>{'<12 años'}</label>
-                    <input type="number" min="0" value={draft.menores_12 || 0} onChange={e => updateDraft('menores_12', Number(e.target.value))} />
+                    <NumInput min="0" value={draft.menores_12 || 0} onChange={v => updateDraft('menores_12', v)} />
                   </div>
                   <div className="rv-field">
                     <label>Cuna / trona</label>
@@ -3827,12 +3872,12 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
               <fieldset><legend>Importes</legend>
                 <div className="rv-field">
                   <label>Ingreso total bruto</label>
-                  <input type="number" step="0.01" value={draft.ingreso_total || 0} onChange={e => updateDraft('ingreso_total', Number(e.target.value))} />
+                  <NumInput step="0.01" value={draft.ingreso_total || 0} onChange={v => updateDraft('ingreso_total', v)} />
                 </div>
                 <div className="rv-row2">
                   <div className="rv-field">
                     <label>Comisión <span className="rv-hint-inline">tasa {getCanalKey(draft.canal)}: {((COMMISSION_RATES[getCanalKey(draft.canal)] ?? 0)*100).toFixed(1)}%</span></label>
-                    <input type="number" step="0.01" value={draft.comision || 0} onChange={e => updateDraft('comision', Number(e.target.value))} />
+                    <NumInput step="0.01" value={draft.comision || 0} onChange={v => updateDraft('comision', v)} />
                   </div>
                   <div className="rv-field">
                     <label>Gasto limpieza
@@ -3840,17 +3885,17 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                         ? <button type="button" className="rv-mini-link" onClick={resetLimpiezaAuto}>↻ auto</button>
                         : <span className="rv-hint-inline">auto (jul/ago o &gt;10n: 90 € · resto: 80 €)</span>}
                     </label>
-                    <input type="number" step="0.01" value={draft.gasto_limpieza || 0} onChange={e => updateDraft('gasto_limpieza', Number(e.target.value))} />
+                    <NumInput step="0.01" value={draft.gasto_limpieza || 0} onChange={v => updateDraft('gasto_limpieza', v)} />
                   </div>
                 </div>
                 <div className="rv-row3">
                   <div className="rv-field">
                     <label>Señal</label>
-                    <input type="number" step="0.01" value={draft.reserva || 0} onChange={e => updateDraft('reserva', Number(e.target.value))} />
+                    <NumInput step="0.01" value={draft.reserva || 0} onChange={v => updateDraft('reserva', v)} />
                   </div>
                   <div className="rv-field">
                     <label>Pago previo</label>
-                    <input type="number" step="0.01" value={draft.pago_previo || 0} onChange={e => updateDraft('pago_previo', Number(e.target.value))} />
+                    <NumInput step="0.01" value={draft.pago_previo || 0} onChange={v => updateDraft('pago_previo', v)} />
                   </div>
                   <div className="rv-field">
                     <label>Efectivo check-in
@@ -3859,7 +3904,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                         : <span className="rv-calc"> calculado</span>}
                     </label>
                     {draft._checkin_manual
-                      ? <input type="number" step="0.01" value={draft.al_checkin || 0} onChange={e => updateDraft('al_checkin', Number(e.target.value))} />
+                      ? <NumInput step="0.01" value={draft.al_checkin || 0} onChange={v => updateDraft('al_checkin', v)} />
                       : <input readOnly className="rv-readonly" value={fmtEur(draft.al_checkin)} />}
                   </div>
                 </div>
@@ -4406,10 +4451,10 @@ const AdminApp = () => {
             <div key={id} className="pe-field">
               <label>{apt.name}</label>
               <div className="pe-input-row">
-                <input
-                  type="number" step="1" min="0"
+                <NumInput
+                  step="1" min="0"
                   value={apt.base}
-                  onChange={e => update(`apts.${id}.base`, Number(e.target.value))}
+                  onChange={v => update(`apts.${id}.base`, v)}
                   className="pe-input pe-input-num"
                 />
                 <span className="pe-suffix">€</span>
@@ -4430,10 +4475,10 @@ const AdminApp = () => {
                 {s.label}
               </label>
               <div className="pe-input-row">
-                <input
-                  type="number" step="0.05" min="1"
+                <NumInput
+                  step="0.05" min="1"
                   value={s.multiplier}
-                  onChange={e => update(`seasons.${id}.multiplier`, Number(e.target.value))}
+                  onChange={v => update(`seasons.${id}.multiplier`, v)}
                   className="pe-input pe-input-num"
                 />
                 <span className="pe-suffix">× base</span>
@@ -4451,24 +4496,24 @@ const AdminApp = () => {
         <div className="pe-grid">
           <div className="pe-field">
             <label>Huésped extra (€/noche, desde el 3.º)</label>
-            <input type="number" min="0" step="1"
+            <NumInput step="1" min="0"
               value={data.rules.extraGuestPerNight}
-              onChange={e => update('rules.extraGuestPerNight', Number(e.target.value))}
+              onChange={v => update('rules.extraGuestPerNight', v)}
               className="pe-input pe-input-num" />
           </div>
           <div className="pe-field">
             <label>Estancia mínima (noches)</label>
-            <input type="number" min="1" step="1"
+            <NumInput step="1" min="1"
               value={data.rules.minNights}
-              onChange={e => update('rules.minNights', Number(e.target.value))}
+              onChange={v => update('rules.minNights', v)}
               className="pe-input pe-input-num" />
             <small className="pe-hint">Mínimo por defecto fuera de temporada crítica.</small>
           </div>
           <div className="pe-field">
             <label>Ventana de estancia corta (días)</label>
-            <input type="number" min="0" step="1"
+            <NumInput step="1" min="0"
               value={data.rules.imminentDays}
-              onChange={e => update('rules.imminentDays', Number(e.target.value))}
+              onChange={v => update('rules.imminentDays', v)}
               className="pe-input pe-input-num" />
             <small className="pe-hint">
               Si el check-in es dentro de este número de días, se permite el mínimo
@@ -4477,33 +4522,33 @@ const AdminApp = () => {
           </div>
           <div className="pe-field">
             <label>Mínimo en estancia corta (noches)</label>
-            <input type="number" min="1" max="7" step="1"
+            <NumInput step="1" min="1" max="7"
               value={data.rules.twoNightFloor}
-              onChange={e => update('rules.twoNightFloor', Number(e.target.value))}
+              onChange={v => update('rules.twoNightFloor', v)}
               className="pe-input pe-input-num" />
             <small className="pe-hint">Cuántas noches admitir dentro de la ventana corta. Por defecto 2.</small>
           </div>
           <div className="pe-field">
             <label>Mínimo en temporada crítica (noches)</label>
-            <input type="number" min="1" step="1"
+            <NumInput step="1" min="1"
               value={data.rules.criticalSeasonMinNights}
-              onChange={e => update('rules.criticalSeasonMinNights', Number(e.target.value))}
+              onChange={v => update('rules.criticalSeasonMinNights', v)}
               className="pe-input pe-input-num" />
             <small className="pe-hint">Solo aplica en fechas marcadas como crítica.</small>
           </div>
           <div className="pe-field">
             <label>Descuento reserva directa (0–1)</label>
-            <input type="number" min="0" max="1" step="0.01"
+            <NumInput step="0.01" min="0" max="1"
               value={data.rules.directDiscount}
-              onChange={e => update('rules.directDiscount', Number(e.target.value))}
+              onChange={v => update('rules.directDiscount', v)}
               className="pe-input pe-input-num" />
             <small className="pe-hint">Ej. 0.09 = −9 % vs Booking/Airbnb</small>
           </div>
           <div className="pe-field">
             <label>Suplemento mascota (€/estancia)</label>
-            <input type="number" min="0" step="1"
+            <NumInput step="1" min="0"
               value={data.rules.petFlatFee}
-              onChange={e => update('rules.petFlatFee', Number(e.target.value))}
+              onChange={v => update('rules.petFlatFee', v)}
               className="pe-input pe-input-num" />
           </div>
         </div>
@@ -4531,31 +4576,31 @@ const AdminApp = () => {
             {(data.rules.guestSupplements || []).map((g, i) => (
               <tr key={i}>
                 <td>
-                  <input type="number" min="1" max="10" step="1"
+                  <NumInput step="1" min="1" max="10"
                     value={g.from}
-                    onChange={e => {
+                    onChange={v => {
                       const arr = (data.rules.guestSupplements || []).slice();
-                      arr[i] = { ...arr[i], from: Number(e.target.value) };
+                      arr[i] = { ...arr[i], from: v };
                       update('rules.guestSupplements', arr);
                     }}
                     className="pe-input pe-input-num" />
                 </td>
                 <td>
-                  <input type="number" min="1" max="10" step="1"
+                  <NumInput step="1" min="1" max="10"
                     value={g.to}
-                    onChange={e => {
+                    onChange={v => {
                       const arr = (data.rules.guestSupplements || []).slice();
-                      arr[i] = { ...arr[i], to: Number(e.target.value) };
+                      arr[i] = { ...arr[i], to: v };
                       update('rules.guestSupplements', arr);
                     }}
                     className="pe-input pe-input-num" />
                 </td>
                 <td>
-                  <input type="number" min="0" step="1"
+                  <NumInput step="1" min="0"
                     value={g.perNight}
-                    onChange={e => {
+                    onChange={v => {
                       const arr = (data.rules.guestSupplements || []).slice();
-                      arr[i] = { ...arr[i], perNight: Number(e.target.value) };
+                      arr[i] = { ...arr[i], perNight: v };
                       update('rules.guestSupplements', arr);
                     }}
                     className="pe-input pe-input-num" />
@@ -4646,11 +4691,11 @@ const AdminApp = () => {
                     className="pe-input" />
                 </td>
                 <td>
-                  <input type="number" min="0" step="1"
+                  <NumInput step="1" min="0"
                     value={ex.price}
-                    onChange={e => {
+                    onChange={v => {
                       const arr = (data.rules.extras || []).slice();
-                      arr[i] = { ...arr[i], price: Number(e.target.value) };
+                      arr[i] = { ...arr[i], price: v };
                       update('rules.extras', arr);
                     }}
                     className="pe-input pe-input-num" />
@@ -4719,31 +4764,31 @@ const AdminApp = () => {
             {(data.rules.shortStayPricing || []).map((r, i) => (
               <tr key={i}>
                 <td>
-                  <input type="number" min="1" step="1"
+                  <NumInput step="1" min="1"
                     value={r.nights}
-                    onChange={e => {
+                    onChange={v => {
                       const arr = (data.rules.shortStayPricing || []).slice();
-                      arr[i] = { ...arr[i], nights: Number(e.target.value) };
+                      arr[i] = { ...arr[i], nights: v };
                       update('rules.shortStayPricing', arr);
                     }}
                     className="pe-input pe-input-num" />
                 </td>
                 <td>
-                  <input type="number" min="1" step="1"
+                  <NumInput step="1" min="1"
                     value={r.basedOnNights}
-                    onChange={e => {
+                    onChange={v => {
                       const arr = (data.rules.shortStayPricing || []).slice();
-                      arr[i] = { ...arr[i], basedOnNights: Number(e.target.value) };
+                      arr[i] = { ...arr[i], basedOnNights: v };
                       update('rules.shortStayPricing', arr);
                     }}
                     className="pe-input pe-input-num" />
                 </td>
                 <td>
-                  <input type="number" min="0" step="1"
+                  <NumInput step="1" min="0"
                     value={r.discount}
-                    onChange={e => {
+                    onChange={v => {
                       const arr = (data.rules.shortStayPricing || []).slice();
-                      arr[i] = { ...arr[i], discount: Number(e.target.value) };
+                      arr[i] = { ...arr[i], discount: v };
                       update('rules.shortStayPricing', arr);
                     }}
                     className="pe-input pe-input-num" />
@@ -4786,21 +4831,21 @@ const AdminApp = () => {
             {data.rules.stayDiscounts.map((d, i) => (
               <tr key={i}>
                 <td>
-                  <input type="number" min="1" step="1"
+                  <NumInput step="1" min="1"
                     value={d.minNights}
-                    onChange={e => {
+                    onChange={v => {
                       const arr = data.rules.stayDiscounts.slice();
-                      arr[i] = { ...arr[i], minNights: Number(e.target.value) };
+                      arr[i] = { ...arr[i], minNights: v };
                       update('rules.stayDiscounts', arr);
                     }}
                     className="pe-input pe-input-num" />
                 </td>
                 <td>
-                  <input type="number" min="0" max="1" step="0.01"
+                  <NumInput step="0.01" min="0" max="1"
                     value={d.pct}
-                    onChange={e => {
+                    onChange={v => {
                       const arr = data.rules.stayDiscounts.slice();
-                      arr[i] = { ...arr[i], pct: Number(e.target.value) };
+                      arr[i] = { ...arr[i], pct: v };
                       update('rules.stayDiscounts', arr);
                     }}
                     className="pe-input pe-input-num" />
