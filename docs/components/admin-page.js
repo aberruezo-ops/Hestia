@@ -4031,10 +4031,10 @@ const ReservasTab = ({
     };
   });
 
-  // KPIs por canal (sólo año focal)
+  // KPIs por canal (sólo año focal) — normalizado con getCanalKey
   const byCanal = {};
   focusList.forEach(r => {
-    const c = (r.canal || '—').trim() || '—';
+    const c = getCanalKey(r.canal);
     if (!byCanal[c]) byCanal[c] = {
       count: 0,
       sum: 0,

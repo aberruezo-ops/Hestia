@@ -3229,10 +3229,10 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
     return { apt, reservas: m.reservas, noches: m.noches, ingreso: m.bruto, bai: m.neto };
   });
 
-  // KPIs por canal (sólo año focal)
+  // KPIs por canal (sólo año focal) — normalizado con getCanalKey
   const byCanal = {};
   focusList.forEach(r => {
-    const c = (r.canal || '—').trim() || '—';
+    const c = getCanalKey(r.canal);
     if (!byCanal[c]) byCanal[c] = { count: 0, sum: 0, bai: 0 };
     byCanal[c].count++;
     byCanal[c].sum += Number(r.ingreso_total) || 0;
