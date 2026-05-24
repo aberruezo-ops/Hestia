@@ -3254,15 +3254,16 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
     const lines = [
       `🏠 *Reserva en ${dias} día${dias !== 1 ? 's' : ''} · ${apt}*`,
       `👤 ${r.responsable || '—'}`,
-      r.telefono    ? `📞 ${r.telefono}` : '',
+      r.telefono      ? `📞 ${r.telefono}` : '',
       `📅 Entrada: ${fmtDate(r.entrada)}`,
       `📅 Salida:  ${fmtDate(r.salida)}`,
       `🌙 ${r.noches || '—'} noches · ${r.huespedes || '—'} pax`,
-      r.canal ? `📲 Canal: ${r.canal}` : '',
+      r.canal         ? `📲 Canal: ${r.canal}` : '',
       r.ingreso_total ? `💶 Total: ${fmtEur(r.ingreso_total)}` : '',
-      r.bai         ? `📈 BAI: ${fmtEur(r.bai)}` : '',
-      r.mascota     ? '🐾 Trae mascota' : '',
-      r.cuna_trona  ? '👶 Necesita cuna/trona' : '',
+      r.al_checkin    ? `💵 Efectivo checkin: ${fmtEur(r.al_checkin)}` : '',
+      r.fianza        ? `🔒 Fianza: 300 €` : '',
+      r.mascota       ? '🐾 Trae mascota' : '',
+      r.cuna_trona    ? '👶 Necesita cuna/trona' : '',
       r.observaciones ? `📝 ${r.observaciones}` : '',
     ].filter(Boolean).join('\n');
     return `https://wa.me/34654138251?text=${encodeURIComponent(lines)}`;
@@ -3786,7 +3787,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                     <th>Apt</th><th>Huésped</th><th>Entrada</th><th>Salida</th>
                     <th className="num">Noches</th><th className="num">Pax</th>
                     <th>Canal</th>
-                    <th className="num">Ingreso</th><th className="num">BAI</th><th className="num">Efectivo</th>
+                    <th className="num">Ingreso</th><th className="num">BAI</th><th className="num">Efectivo</th><th className="num">Fianza</th>
                     <th className="rv-ical-th"></th>
                   </tr></thead>
                   <tbody>
@@ -3811,6 +3812,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                           <td className="num">{fmtEur(r.ingreso_total)}</td>
                           <td className="num">{fmtEur(r.bai)}</td>
                           <td className="num">{fmtEur(r.al_checkin)}</td>
+                          <td className="num">{r.fianza ? '300 €' : '—'}</td>
                           <td className="rv-ical-td" onClick={e => e.stopPropagation()}>
                             <button type="button" className="rv-ical-btn" title="Generar alerta de calendario (.ics)"
                               onClick={() => generateCalendarAlert(r)}>🔔</button>
@@ -3825,6 +3827,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                       <td className="num"><strong>{fmtEur(mBruto)}</strong></td>
                       <td className="num"><strong>{fmtEur(mBai)}</strong></td>
                       <td className="num">{fmtEur(mRows.reduce((s,r)=>s+(Number(r.al_checkin)||0),0))}</td>
+                      <td/>
                       <td/>
                     </tr>
                   </tfoot>

@@ -4055,7 +4055,7 @@ const ReservasTab = ({
   const buildWALink = r => {
     const apt = APT_NAMES[r.apt] || r.apt;
     const dias = Math.round((new Date(r.entrada) - new Date(today)) / 86400000);
-    const lines = [`🏠 *Reserva en ${dias} día${dias !== 1 ? 's' : ''} · ${apt}*`, `👤 ${r.responsable || '—'}`, r.telefono ? `📞 ${r.telefono}` : '', `📅 Entrada: ${fmtDate(r.entrada)}`, `📅 Salida:  ${fmtDate(r.salida)}`, `🌙 ${r.noches || '—'} noches · ${r.huespedes || '—'} pax`, r.canal ? `📲 Canal: ${r.canal}` : '', r.ingreso_total ? `💶 Total: ${fmtEur(r.ingreso_total)}` : '', r.bai ? `📈 BAI: ${fmtEur(r.bai)}` : '', r.mascota ? '🐾 Trae mascota' : '', r.cuna_trona ? '👶 Necesita cuna/trona' : '', r.observaciones ? `📝 ${r.observaciones}` : ''].filter(Boolean).join('\n');
+    const lines = [`🏠 *Reserva en ${dias} día${dias !== 1 ? 's' : ''} · ${apt}*`, `👤 ${r.responsable || '—'}`, r.telefono ? `📞 ${r.telefono}` : '', `📅 Entrada: ${fmtDate(r.entrada)}`, `📅 Salida:  ${fmtDate(r.salida)}`, `🌙 ${r.noches || '—'} noches · ${r.huespedes || '—'} pax`, r.canal ? `📲 Canal: ${r.canal}` : '', r.ingreso_total ? `💶 Total: ${fmtEur(r.ingreso_total)}` : '', r.al_checkin ? `💵 Efectivo checkin: ${fmtEur(r.al_checkin)}` : '', r.fianza ? `🔒 Fianza: 300 €` : '', r.mascota ? '🐾 Trae mascota' : '', r.cuna_trona ? '👶 Necesita cuna/trona' : '', r.observaciones ? `📝 ${r.observaciones}` : ''].filter(Boolean).join('\n');
     return `https://wa.me/34654138251?text=${encodeURIComponent(lines)}`;
   };
 
@@ -4673,6 +4673,8 @@ const ReservasTab = ({
     }, "BAI"), /*#__PURE__*/React.createElement("th", {
       className: "num"
     }, "Efectivo"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Fianza"), /*#__PURE__*/React.createElement("th", {
       className: "rv-ical-th"
     }))), /*#__PURE__*/React.createElement("tbody", null, mRows.map(r => {
       const idx = reservas.indexOf(r);
@@ -4708,6 +4710,8 @@ const ReservasTab = ({
       }, fmtEur(r.bai)), /*#__PURE__*/React.createElement("td", {
         className: "num"
       }, fmtEur(r.al_checkin)), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, r.fianza ? '300 €' : '—'), /*#__PURE__*/React.createElement("td", {
         className: "rv-ical-td",
         onClick: e => e.stopPropagation()
       }, /*#__PURE__*/React.createElement("button", {
@@ -4726,7 +4730,7 @@ const ReservasTab = ({
       className: "num"
     }, /*#__PURE__*/React.createElement("strong", null, fmtEur(mBai))), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, fmtEur(mRows.reduce((s, r) => s + (Number(r.al_checkin) || 0), 0))), /*#__PURE__*/React.createElement("td", null))))));
+    }, fmtEur(mRows.reduce((s, r) => s + (Number(r.al_checkin) || 0), 0))), /*#__PURE__*/React.createElement("td", null), /*#__PURE__*/React.createElement("td", null))))));
   })), draft && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-backdrop",
     onClick: cancelDraft
