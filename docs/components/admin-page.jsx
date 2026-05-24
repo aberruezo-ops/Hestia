@@ -1517,6 +1517,36 @@ const ContractTab = ({ pricesData, prefill }) => {
     } catch (_) { return null; }
   };
 
+  // Pre-crop a data URL to the hero aspect ratio (210mm × 55mm ≈ 3.82:1).
+  // html2canvas does not reliably apply object-fit or background-size,
+  // so we crop in JS first and embed the already-cropped image.
+  const cropHero = (rawUrl) => {
+    if (!rawUrl) return Promise.resolve(null);
+    return new Promise(resolve => {
+      const img = new Image();
+      img.onload = () => {
+        const W = 1400, H = 366; // 210:55 ratio
+        const c = document.createElement('canvas');
+        c.width = W; c.height = H;
+        const ctx = c.getContext('2d');
+        const srcAR = img.naturalWidth / img.naturalHeight;
+        const tgtAR = W / H;
+        let sx, sy, sw, sh;
+        if (srcAR > tgtAR) {
+          sh = img.naturalHeight; sw = sh * tgtAR;
+          sx = (img.naturalWidth - sw) / 2; sy = 0;
+        } else {
+          sw = img.naturalWidth; sh = sw / tgtAR;
+          sx = 0; sy = (img.naturalHeight - sh) * 0.25;
+        }
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
+        resolve(c.toDataURL('image/jpeg', 0.92));
+      };
+      img.onerror = () => resolve(rawUrl);
+      img.src = rawUrl;
+    });
+  };
+
 const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
     const escHtml = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     const a = aptInfo;
@@ -1604,8 +1634,6 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
     height: 55mm;
     overflow: hidden;
     background: linear-gradient(135deg, var(--ber) 0%, var(--ber-lt) 100%);
-    background-size: cover;
-    background-position: center 30%;
   }
   .hero-overlay {
     position: absolute;
@@ -1794,7 +1822,8 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
 </div>
 
 <div id="pdf-content">
-<div class="hero" ${heroUrl ? `style="background-image:url('${heroUrl}')"` : ''}>
+<div class="hero">
+  ${heroUrl ? `<img src="${heroUrl}" style="position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0.88">` : ''}
   <div class="hero-overlay"></div>
   <div class="hero-text">
     <p class="hero-eyebrow">contrato de arrendamiento por temporada</p>
@@ -1923,7 +1952,7 @@ ${clausulaFianza}
     try { await document.fonts.ready; } catch(e) {}
     var el = document.getElementById('pdf-content');
     // margin: [top, right, bottom, left] — top/bottom leave room for jsPDF header/footer
-    var MARG_TOP = 26, MARG_BOT = 20;
+    var MARG_TOP = 28, MARG_BOT = 22;
     var opt = {
       margin: [MARG_TOP, 0, MARG_BOT, 0],
       filename: FILE,
@@ -1954,7 +1983,7 @@ ${clausulaFianza}
       }
 
       /* ── Cabecera compacta (todas las páginas) ───────────── */
-      var hH = 20;
+      var hH = 18;
       pdf.setFillColor(42, 15, 46);
       pdf.rect(0, 0, pW, hH, 'F');
       if (LOGO) {
@@ -2045,11 +2074,12 @@ info@hestiayourhome.com · +34 620 316 370`;
     document.body.removeChild(aEl);
 
     // ASYNC — pre-load images as data URIs so they embed correctly in the PDF.
-    const [heroDataUrl, logoDataUrl, wmDataUrl] = await Promise.all([
+    const [heroRaw, logoDataUrl, wmDataUrl] = await Promise.all([
       fetchDataUrl(aptInfo.heroPhoto),
       fetchDataUrl('assets/logo-hestia-brand.png'),
       fetchDataUrl('assets/logo-teal-transparent.png'),
     ]);
+    const heroDataUrl = await cropHero(heroRaw);
 
     // Write contract HTML to the already-opened window.
     const html = buildContractHTML(heroDataUrl, logoDataUrl, wmDataUrl);
