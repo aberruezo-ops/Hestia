@@ -56,7 +56,7 @@ const APT_CONTRACT_DATA = {
   vs: {
     name: 'Hestía Vera Salinas',
     shortName: 'Salinas',
-    heroPhoto: 'assets/apt-vs-gallery-1.jpg',
+    heroPhoto: 'assets/apt-vs-collage-header.jpg',
     direccion: 'Apto. 7, planta 1ª, bloque 22, en la urbanización Pueblo Salinas, en C/ Alcazaba 115',
     plazaGaraje: '290',
     zonaObras: 'cercanas',
@@ -1532,14 +1532,16 @@ const ContractTab = ({ pricesData, prefill }) => {
         const ctx = c.getContext('2d');
         const srcAR = img.naturalWidth / img.naturalHeight;
         const tgtAR = W / H; // 3.818:1
-        let sx, sy, sw, sh;
-        if (srcAR > tgtAR) {
-          // landscape wider than target: crop sides equally
+        let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight;
+        if (Math.abs(srcAR - tgtAR) / tgtAR < 0.02) {
+          // already at target ratio (e.g. pre-built collage) — just resize
+        } else if (srcAR > tgtAR) {
+          // landscape wider: crop sides equally
           sh = img.naturalHeight; sw = sh * tgtAR;
-          sx = (img.naturalWidth - sw) / 2; sy = 0;
+          sx = (img.naturalWidth - sw) / 2;
         } else {
-          // portrait: take central 90% of width to avoid edge elements,
-          // then crop height at 20% from top (upper portion of room)
+          // portrait: take central 90% of width to avoid edge design elements,
+          // crop height at 20% from top (upper portion of room)
           sw = img.naturalWidth * 0.9;
           sh = sw / tgtAR;
           sx = (img.naturalWidth - sw) / 2;
