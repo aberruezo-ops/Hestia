@@ -1,7 +1,7 @@
 {
   "_doc": "Hestía pricing source of truth. Edited via /admin.html (GitHub PAT). Read by web at runtime via fetch('data/prices.json'). All dates are local Europe/Madrid (no timezone offsets).",
   "version": 1,
-  "updatedAt": "2026-05-17T16:17:22.270Z",
+  "updatedAt": "2026-05-24T19:28:29.536Z",
   "currency": "EUR",
   "apts": {
     "vm": {
@@ -109,7 +109,7 @@
         "id": "huespedAdicional",
         "label_es": "Huésped adicional (incluye sábanas y toallas)",
         "label_en": "Extra guest (includes sheets and towels)",
-        "price": 20,
+        "price": 18,
         "unit": "noche"
       },
       {
