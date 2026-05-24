@@ -545,7 +545,8 @@ const todayIso = () => new Date().toISOString().slice(0, 10);
 const ReviewRow = ({
   review,
   onChange,
-  onRemove
+  onRemove,
+  onApprove
 }) => {
   const [expanded, setExpanded] = React.useState(false);
   const sourceMeta = REVIEW_SOURCES.find(s => s.id === review.source) || REVIEW_SOURCES[3];
@@ -587,7 +588,15 @@ const ReviewRow = ({
     className: "pe-rev-country-cell"
   }, review.country || ''), /*#__PURE__*/React.createElement("span", {
     className: "pe-rev-rating-cell"
-  }, ratingLbl, review.highlight ? ' ✦' : ''), /*#__PURE__*/React.createElement("span", {
+  }, ratingLbl, review.highlight ? ' ✦' : ''), isPending && onApprove && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-sm pe-rev-approve-btn",
+    onClick: e => {
+      e.stopPropagation();
+      onApprove(review.id);
+    },
+    title: "Aprobar y publicar ahora"
+  }, "\u2713 Aprobar"), /*#__PURE__*/React.createElement("span", {
     className: "pe-rev-snippet"
   }, snippet, review.text && review.text.length > 110 ? '…' : '')), expanded && /*#__PURE__*/React.createElement("div", {
     className: "pe-rev-row-body"
@@ -5075,14 +5084,14 @@ const AdminApp = () => {
       return next;
     });
   };
-  const saveReviews = async () => {
+  const saveReviewsData = async data => {
     setPhase('saving');
     setError(null);
     setSuccess(null);
     try {
       const merged = {
-        ...reviewsData,
-        version: reviewsData.version || 1,
+        ...data,
+        version: data.version || 1,
         updatedAt: new Date().toISOString()
       };
       const body = JSON.stringify({
@@ -5112,6 +5121,16 @@ const AdminApp = () => {
       setError(err.message);
       setPhase('ready');
     }
+  };
+  const saveReviews = () => saveReviewsData(reviewsData);
+  const quickApprove = async id => {
+    if (!reviewsData) return;
+    const next = JSON.parse(JSON.stringify(reviewsData));
+    const idx = next.items.findIndex(r => r.id === id);
+    if (idx < 0) return;
+    next.items[idx].status = 'published';
+    setReviewsData(next);
+    await saveReviewsData(next);
   };
   const update = (path, value) => {
     setData(prev => {
@@ -5340,7 +5359,8 @@ const AdminApp = () => {
       key: r.id,
       review: r,
       onChange: (key, val) => updateReview(r.id, key, val),
-      onRemove: () => removeReview(r.id)
+      onRemove: () => removeReview(r.id),
+      onApprove: id => quickApprove(id)
     })), /*#__PURE__*/React.createElement("div", {
       className: "pe-actions"
     }, /*#__PURE__*/React.createElement("button", {
