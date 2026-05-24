@@ -2180,8 +2180,15 @@ const ContractTab = ({
 </div>
 
 <div id="pdf-content">
-<!-- Espacio reservado para la cabecera fotográfica de portada (la añade jsPDF sobre la página) -->
-<div style="height:40mm;line-height:0;font-size:0"> </div>
+<div class="hero">
+  ${heroUrl ? `<img class="hero-img" src="${heroUrl}" alt="">` : ''}
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <p class="hero-eyebrow">contrato de arrendamiento por temporada</p>
+    <p class="hero-title">HESTÍA</p>
+    <p class="hero-meta">Vera ${a.shortName} · ${fechaEntradaStr} → ${fechaSalidaStr}</p>
+  </div>
+</div>
 <div id="contract-body">
 
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
@@ -2296,15 +2303,14 @@ ${clausulaFianza}
   var LOGO = ${JSON.stringify(logoDataUrl || '')};
   var WM   = ${JSON.stringify(wmDataUrl || '')};
   var FILE = ${JSON.stringify(pdfFilename)};
-  var APT       = ${JSON.stringify('Vera ' + a.shortName)};
-  var APT_SHORT = ${JSON.stringify(a.shortName)};
-  var DATES     = ${JSON.stringify(fechaEntradaStr + ' → ' + fechaSalidaStr)};
+  var APT   = ${JSON.stringify('Vera ' + a.shortName)};
+  var DATES = ${JSON.stringify(fechaEntradaStr + ' → ' + fechaSalidaStr)};
 
   async function generate() {
     try { await document.fonts.ready; } catch(e) {}
     var el = document.getElementById('pdf-content');
     // margin: [top, right, bottom, left] — top/bottom leave room for jsPDF header/footer
-    var MARG_TOP = 26, MARG_BOT = 20;
+    var MARG_TOP = 22, MARG_BOT = 18;
     var opt = {
       margin: [MARG_TOP, 0, MARG_BOT, 0],
       filename: FILE,
@@ -2334,60 +2340,23 @@ ${clausulaFianza}
         } catch(e) {}
       }
 
-      if (i === 1) {
-        /* ── Cabecera portada: foto grande (primera hoja) ──── */
-        var h1 = 60; // altura de la cabecera de portada en mm
-        if (HERO) {
-          try {
-            pdf.addImage(HERO, 'JPEG', 0, 0, pW, h1);
-            pdf.saveGraphicsState();
-            pdf.setGState(pdf.GState({ opacity: 0.68 }));
-            pdf.setFillColor(42, 15, 46);
-            pdf.rect(0, 0, pW, h1, 'F');
-            pdf.restoreGraphicsState();
-          } catch(e) {
-            pdf.setFillColor(42, 15, 46);
-            pdf.rect(0, 0, pW, h1, 'F');
-          }
-        } else {
-          pdf.setFillColor(42, 15, 46);
-          pdf.rect(0, 0, pW, h1, 'F');
-        }
-        if (LOGO) {
-          try { pdf.addImage(LOGO, 'PNG', 6, h1 / 2 - 9, 16, 16); } catch(e) {}
-        }
-        pdf.setTextColor(240, 232, 213);
-        pdf.setFont('helvetica', 'bold');
-        pdf.setFontSize(20);
-        pdf.text('HESTÍA', 26, h1 / 2 - 4);
-        pdf.setFontSize(12);
-        pdf.text('Vera ' + APT_SHORT, 26, h1 / 2 + 6);
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(8.5);
-        pdf.setTextColor(228, 217, 190);
-        pdf.text('contrato de arrendamiento por temporada', 26, h1 / 2 + 14);
-        pdf.setFontSize(9);
-        pdf.text(DATES, pW - 6, h1 / 2 + 1, { align: 'right' });
-
-      } else {
-        /* ── Cabecera compacta sin foto (resto de páginas) ─── */
-        var h2 = 20;
-        pdf.setFillColor(42, 15, 46);
-        pdf.rect(0, 0, pW, h2, 'F');
-        if (LOGO) {
-          try { pdf.addImage(LOGO, 'PNG', 4, h2 / 2 - 4, 8, 8); } catch(e) {}
-        }
-        pdf.setTextColor(240, 232, 213);
-        pdf.setFont('helvetica', 'bold');
-        pdf.setFontSize(9.5);
-        pdf.text('HESTIA', 14, h2 * 0.62);
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(8);
-        pdf.setTextColor(228, 217, 190);
-        pdf.text('· ' + APT, 30, h2 * 0.62);
-        pdf.setFontSize(7.5);
-        pdf.text(DATES, pW - 5, h2 * 0.62, { align: 'right' });
+      /* ── Cabecera compacta (todas las páginas) ───────────── */
+      var hH = MARG_TOP;
+      pdf.setFillColor(42, 15, 46);
+      pdf.rect(0, 0, pW, hH, 'F');
+      if (LOGO) {
+        try { pdf.addImage(LOGO, 'PNG', 4, hH / 2 - 4, 8, 8); } catch(e) {}
       }
+      pdf.setTextColor(240, 232, 213);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(9.5);
+      pdf.text('HESTIA', 14, hH * 0.62);
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(8);
+      pdf.setTextColor(228, 217, 190);
+      pdf.text('· ' + APT, 30, hH * 0.62);
+      pdf.setFontSize(7.5);
+      pdf.text(DATES, pW - 5, hH * 0.62, { align: 'right' });
 
       /* ── Pie de página (todas las páginas) ───────────────── */
       var footY = pH - 7;
