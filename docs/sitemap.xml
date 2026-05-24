@@ -4,7 +4,7 @@
 
   <url>
     <loc>https://www.hestiayourhome.com/</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/"/>
@@ -14,7 +14,7 @@
 
   <url>
     <loc>https://www.hestiayourhome.com/mar.html</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/mar.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/mar.html"/>
     <changefreq>monthly</changefreq>
@@ -23,7 +23,7 @@
 
   <url>
     <loc>https://www.hestiayourhome.com/thalassa.html</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/thalassa.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/thalassa.html"/>
     <changefreq>monthly</changefreq>
@@ -32,7 +32,7 @@
 
   <url>
     <loc>https://www.hestiayourhome.com/salinas.html</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/salinas.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/salinas.html"/>
     <changefreq>monthly</changefreq>
@@ -41,7 +41,7 @@
 
   <url>
     <loc>https://www.hestiayourhome.com/reservas.html</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/reservas.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/reservas.html"/>
     <changefreq>monthly</changefreq>
@@ -50,7 +50,7 @@
 
   <url>
     <loc>https://www.hestiayourhome.com/opiniones.html</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/opiniones.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/opiniones.html"/>
     <changefreq>monthly</changefreq>
@@ -59,7 +59,7 @@
 
   <url>
     <loc>https://www.hestiayourhome.com/nosotros.html</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/nosotros.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/nosotros.html"/>
     <changefreq>yearly</changefreq>
@@ -68,16 +68,25 @@
 
   <url>
     <loc>https://www.hestiayourhome.com/porque-hestia.html</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/porque-hestia.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/porque-hestia.html"/>
     <changefreq>yearly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/noticias.html</loc>
+    <lastmod>2026-05-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/noticias.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/noticias.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://www.hestiayourhome.com/contacto.html</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/contacto.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/contacto.html"/>
     <changefreq>yearly</changefreq>
@@ -85,21 +94,30 @@
   </url>
 
   <url>
-    <loc>https://www.hestiayourhome.com/noticias.html</loc>
-    <lastmod>2026-05-21</lastmod>
-    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/noticias.html"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/noticias.html"/>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
     <loc>https://www.hestiayourhome.com/mapa.html</loc>
-    <lastmod>2026-05-21</lastmod>
+    <lastmod>2026-05-24</lastmod>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/mapa.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/mapa.html"/>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/privacidad.html</loc>
+    <lastmod>2026-05-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/privacidad.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/privacidad.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/cookies.html</loc>
+    <lastmod>2026-05-24</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/cookies.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/cookies.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 
 </urlset>

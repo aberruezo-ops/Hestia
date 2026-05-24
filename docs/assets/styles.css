@@ -9940,6 +9940,50 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   flex-wrap: wrap;
 }
 
+/* ---- Share strip ---- */
+.noticias-share {
+  padding: 48px var(--page-pad);
+  background: var(--ber-dk);
+}
+.noticias-share-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.noticias-share-text {
+  color: rgba(240,232,213,.75);
+  font-size: 15px;
+  margin: 0;
+}
+.noticias-share-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.noticias-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity .15s;
+  text-decoration: none;
+  border: 1px solid rgba(240,232,213,.25);
+  background: transparent;
+  color: rgba(240,232,213,.9);
+}
+.noticias-share-btn:hover { opacity: .75; }
+.noticias-share-wa { border-color: #25D366; color: #25D366; }
+.noticias-share-x  { border-color: rgba(240,232,213,.4); }
+
 /* Responsive */
 @media (max-width: 900px) {
   .voz-grid { grid-template-columns: 1fr; }
