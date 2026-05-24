@@ -1920,6 +1920,7 @@ const ContractTab = ({
     const baseDir = typeof window !== 'undefined' && window.location && window.location.pathname ? window.location.pathname.replace(/[^\/]+$/, '') : '/';
     const assetUrl = p => `${origin}${baseDir}${p}`.replace(/([^:])\/+/g, '$1/');
     const logoUrl = assetUrl('assets/logo-hestia-brand.png');
+    const wmLogoUrl = assetUrl('assets/logo-teal-transparent.png');
     const heroUrl = heroDataUrl || assetUrl(a.heroPhoto);
     return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
@@ -2099,16 +2100,17 @@ const ContractTab = ({
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(-25deg);
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 320pt;
-    font-weight: 700;
-    color: rgba(61, 26, 53, 0.055);
     z-index: -1;
     pointer-events: none;
     user-select: none;
-    line-height: 1;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+  .wm img {
+    width: 420pt;
+    height: auto;
+    opacity: 0.06;
+    display: block;
   }
 
   h1 {
@@ -2299,7 +2301,7 @@ const ContractTab = ({
   .print-bar button:hover { background: var(--ber-lt); }
 </style></head>
 <body>
-<div class="wm" aria-hidden="true">H</div>
+<div class="wm" aria-hidden="true"><img src="${wmLogoUrl}" alt=""></div>
 <div class="print-bar">
   <h4>Ajustes recomendados</h4>
   <ul>
@@ -2453,8 +2455,24 @@ info@hestiayourhome.com · +34 620 316 370`;
       alert('Faltan campos por rellenar. Comprueba que el huésped tiene nombre, fechas y precio total > 0, y que la prereserva no supere el total.');
       return;
     }
-    // Pre-cargar la foto del apartamento como data URI para que el PDF
-    // la incluya aunque el navegador corte la carga de red al imprimir.
+    // SYNC — must happen inside the user-gesture context, before any await.
+    // Browsers block window.open and mailto navigation triggered asynchronously.
+    const w = window.open('', '_blank');
+    if (!w) {
+      alert('Tu navegador ha bloqueado la ventana emergente. Permite popups en /p-edit.html y vuelve a intentarlo.');
+      return;
+    }
+    const subject = `Contrato de reserva · Hestía Vera ${aptInfo.shortName} · ${fmtFechaCorta(fechaEntrada)} → ${fmtFechaCorta(fechaSalida)}`;
+    const body = buildEmailBody();
+    const mailto = `mailto:${email || ''}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const aEl = Object.assign(document.createElement('a'), {
+      href: mailto
+    });
+    document.body.appendChild(aEl);
+    aEl.click();
+    document.body.removeChild(aEl);
+
+    // ASYNC — pre-load hero photo as data URI so it survives print/save.
     let heroDataUrl = null;
     try {
       const origin = typeof window !== 'undefined' && window.location && window.location.origin || '';
@@ -2470,47 +2488,31 @@ info@hestiayourhome.com · +34 620 316 370`;
         });
       }
     } catch (_) {/* sigue con URL normal si hay error de red */}
-    // 1. Abrir ventana con el contrato (auto-print después de un momento)
+
+    // Write contract HTML to the already-opened window.
     const html = buildContractHTML(heroDataUrl);
-    const w = window.open('', '_blank');
-    if (w) {
-      w.document.open();
-      w.document.write(html);
-      w.document.close();
-      // Esperar a que las imágenes (logo + hero por apt) y las fuentes
-      // (Playfair Display / Lora) carguen antes de invocar print().
-      // Sin esto, el PDF puede salir sin la cabecera de marca ni la
-      // foto del apartamento.
-      const triggerPrint = () => {
-        try {
-          w.focus();
-          w.print();
-        } catch (e) {}
-      };
-      const waitForAssets = () => {
-        try {
-          const imgs = Array.from(w.document.images || []);
-          const imgPromises = imgs.map(img => img.complete && img.naturalWidth > 0 ? Promise.resolve() : new Promise(r => {
-            img.onload = img.onerror = r;
-          }));
-          const fontsReady = w.document.fonts && w.document.fonts.ready || Promise.resolve();
-          Promise.all([...imgPromises, fontsReady]).then(() => setTimeout(triggerPrint, 250)).catch(() => setTimeout(triggerPrint, 1500));
-        } catch (e) {
-          setTimeout(triggerPrint, 1500);
-        }
-      };
-      if (w.document.readyState === 'complete') waitForAssets();else w.addEventListener('load', waitForAssets);
-    } else {
-      alert('Tu navegador ha bloqueado la ventana emergente. Permite popups en /p-edit.html y vuelve a intentarlo.');
-      return;
-    }
-    // 2. Abrir mailto en otra pestaña (después de un instante para no romper la ventana de impresión)
-    setTimeout(() => {
-      const subject = `Contrato de reserva · Hestía Vera ${aptInfo.shortName} · ${fmtFechaCorta(fechaEntrada)} → ${fmtFechaCorta(fechaSalida)}`;
-      const body = buildEmailBody();
-      const mailto = `mailto:${email || ''}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailto;
-    }, 1500);
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+    const triggerPrint = () => {
+      try {
+        w.focus();
+        w.print();
+      } catch (e) {}
+    };
+    const waitForAssets = () => {
+      try {
+        const imgs = Array.from(w.document.images || []);
+        const imgPromises = imgs.map(img => img.complete && img.naturalWidth > 0 ? Promise.resolve() : new Promise(r => {
+          img.onload = img.onerror = r;
+        }));
+        const fontsReady = w.document.fonts && w.document.fonts.ready || Promise.resolve();
+        Promise.all([...imgPromises, fontsReady]).then(() => setTimeout(triggerPrint, 250)).catch(() => setTimeout(triggerPrint, 1500));
+      } catch (e) {
+        setTimeout(triggerPrint, 1500);
+      }
+    };
+    if (w.document.readyState === 'complete') waitForAssets();else w.addEventListener('load', waitForAssets);
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
