@@ -17423,6 +17423,13 @@ img[src*="apt-vt-gallery-"] {
 .pe-rev-row.pe-rev-pending {
   border-left: 3px solid var(--warn, #C8975A);
 }
+.pe-rev-approve-btn {
+  font-size: 11px; padding: 2px 8px; line-height: 1.4;
+  background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7;
+  border-radius: 4px; cursor: pointer; white-space: nowrap;
+  font-weight: 600; flex-shrink: 0;
+}
+.pe-rev-approve-btn:hover { background: #c8e6c9; }
 .pe-rev-row-body {
   padding: 16px 18px 18px;
 }
