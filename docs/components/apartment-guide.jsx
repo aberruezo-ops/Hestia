@@ -52,10 +52,10 @@ const GUIDE_SECTIONS = [
   { id: 'wifi',         es: 'Mi WiFi',          en: 'My WiFi' },
   { id: 'limpieza',     es: 'Limpieza',         en: 'Cleaning' },
   { id: 'salon',        es: 'Tu salón',         en: 'My living room' },
-  { id: 'cocina',       es: 'Mi cocina',        en: 'My kitchen' },
+  { id: 'cocina',       es: 'Tu cocina',        en: 'My kitchen' },
   { id: 'dormitorios',  es: 'Mis dormitorios',  en: 'My bedrooms' },
   { id: 'banos',        es: 'Mis baños',        en: 'My bathrooms' },
-  { id: 'terraza',      es: 'Mi terraza',       en: 'My terrace' },
+  { id: 'terraza',      es: 'Tu terraza',       en: 'My terrace' },
   { id: 'urbanizacion', es: 'Mi urbanización',  en: 'My complex' },
   { id: 'alrededores',  es: 'Alrededores',      en: 'Surroundings' },
   { id: 'lugares',      es: 'Lugares de interés', en: 'Places of interest' },
@@ -1442,18 +1442,18 @@ const GUIDE_BY_APT = {
     es: {
       cover_tagline: 'El campo de olivos llega al mar. Donde el descanso encuentra su raíz.',
       rooms: [
-        { id: 'salon', title: 'Tu salón', body: 'Mi sofá-cama y mi televisión plana son el rincón perfecto para una tarde de Netflix. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
+        { id: 'salon', title: 'Tu salón', body: 'Mi sofá-cama y mi televisión plana son el rincón perfecto para una tarde de peli. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.',
-          'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.',
+          'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de salida a la terraza.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando junto al cuadro del A/C.',
           'Dispones de extintor en el pasillo exterior a Hestía.',
         ]},
-        { id: 'cocina', title: 'Mi cocina', body: 'Mi cocina tiene todo lo que necesitas para sentirte como en casa: mobiliario de calidad, electrodomésticos de alta gama y un set completo de pequeños electrodomésticos y detalles.', recs: [
-          'Los libros de instrucciones de los electrodomésticos se encuentran en los cajones bajo la vitrocerámica.',
+        { id: 'cocina', title: 'Tu cocina', body: 'Tu cocina tiene todo lo que necesitas para sentirte como en casa: mobiliario de calidad, electrodomésticos de alta gama y un set completo de pequeños electrodomésticos y detalles.', recs: [
+          'Los libros de instrucciones de los electrodomésticos se encuentran en el armario que hay sobre el microondas.',
           'Evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.',
           'El agua es potable, aunque quizás prefieras agua embotellada.',
         ]},
-        { id: 'dormitorios', title: 'Mis dormitorios', body: 'Mi dormitorio principal mira al mar y tiene las mejores sábanas y rellenos nórdicos de plumas o sintéticos. Colchones de alta calidad y almohadas de diferentes durezas. En el armario te espera la sombrilla de playa.', recs: [
+        { id: 'dormitorios', title: 'Mis dormitorios', body: 'Tu dormitorio principal mira al mar y tiene las mejores sábanas y rellenos nórdicos de plumas o sintéticos. Colchones de alta calidad y almohadas de diferentes durezas. En el armario te espera la sombrilla de playa.', recs: [
           'Las cremas bronceadoras pueden estropear sábanas, toallas y tapicerías.',
           'Cuidado con el aire acondicionado por la noche y las corrientes de aire.',
           'Ponte el despertador un día no muy nublado para ver el amanecer.',
@@ -1464,7 +1464,7 @@ const GUIDE_BY_APT = {
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
           'Usa la cromoterapia del espejo para crear ambiente — relajante de noche, vibrante por la mañana.',
         ]},
-        { id: 'terraza', title: 'Mi terraza', body: 'Mi terraza tiene las mejores vistas y dos ambientes para cada momento de las vacaciones: día y noche.', recs: [
+        { id: 'terraza', title: 'Tu terraza', body: 'Tu terraza tiene las mejores vistas y dos ambientes para cada momento de las vacaciones: día y noche.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
           'Mientras estés en la terraza apaga o reduce el A/C.',
           'Recoge el toldo y los cojines cuando sople aire, llueva o vayas a salir.',
@@ -1530,16 +1530,16 @@ const GUIDE_BY_APT = {
       rooms: [
         { id: 'salon', title: 'Tu salón', body: 'Mi sofá-cama y mi televisión plana son el sitio perfecto para una sesión de Netflix o HBO. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en casa.',
-          'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.',
+          'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de salida a la terraza.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de pie con el mando junto al cuadro del A/C.',
           'Si necesitas usar la chimenea eléctrica, que sea mientras estés en Hestía.',
         ]},
-        { id: 'cocina', title: 'Mi cocina', body: 'Mi cocina tiene todo lo que necesitas para sentirte como en casa: mobiliario de calidad, electrodomésticos de alta gama y un set completo de pequeños electrodomésticos y detalles.', recs: [
-          'Los libros de instrucciones de los electrodomésticos se encuentran en los cajones bajo la vitrocerámica.',
+        { id: 'cocina', title: 'Tu cocina', body: 'Tu cocina tiene todo lo que necesitas para sentirte como en casa: mobiliario de calidad, electrodomésticos de alta gama y un set completo de pequeños electrodomésticos y detalles.', recs: [
+          'Los libros de instrucciones de los electrodomésticos se encuentran en el armario que hay sobre el microondas.',
           'Evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.',
           'El agua es potable, aunque quizás prefieras agua embotellada.',
         ]},
-        { id: 'dormitorios', title: 'Mis dormitorios', body: 'Mi dormitorio principal mira al mar y a las palmeras de la urbanización. Colchones de alta calidad y almohadas de diferentes durezas. Las mejores sábanas y rellenos nórdicos de plumas o sintéticos.', recs: [
+        { id: 'dormitorios', title: 'Mis dormitorios', body: 'Tu dormitorio principal mira al mar y a las palmeras de la urbanización. Colchones de alta calidad y almohadas de diferentes durezas. Las mejores sábanas y rellenos nórdicos de plumas o sintéticos.', recs: [
           'Las cremas bronceadoras pueden estropear sábanas, toallas y tapicerías.',
           'Cuidado con el aire acondicionado por la noche y las corrientes de aire.',
           'Si tienes la suerte de ver un amanecer despejado desde la terraza, te recordará por qué viniste.',
@@ -1549,7 +1549,7 @@ const GUIDE_BY_APT = {
           'Las toallas del baño no son para la playa ni para la piscina.',
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
         ]},
-        { id: 'terraza', title: 'Mi terraza', body: 'Mi terraza panorámica de 18 m² mira al mar y al Salar de los Canos. El mejor sitio del ático para vivir el ciclo solar completo.', recs: [
+        { id: 'terraza', title: 'Tu terraza', body: 'Tu terraza panorámica de 18 m² mira al mar y al Salar de los Canos. El mejor sitio del ático para vivir el ciclo solar completo.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
           'Mientras estés en la terraza apaga o reduce el A/C.',
           'Recoge el toldo y los cojines cuando sople aire, llueva o vayas a salir.',
@@ -1615,8 +1615,8 @@ const GUIDE_BY_APT = {
           'Echa un vistazo a las Normas de uso de Hestía, al final de esta misma guía.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando a la misma.',
         ]},
-        { id: 'cocina', title: 'Mi cocina', body: 'Mi cocina tiene todo lo que necesitas para sentirte como en casa: mobiliario de calidad, electrodomésticos de alta gama y un set completo de pequeños electrodomésticos y detalles.', recs: [
-          'Los libros de instrucciones de los electrodomésticos se encuentran en los cajones bajo la vitrocerámica.',
+        { id: 'cocina', title: 'Tu cocina', body: 'Tu cocina tiene todo lo que necesitas para sentirte como en casa: mobiliario de calidad, electrodomésticos de alta gama y un set completo de pequeños electrodomésticos y detalles.', recs: [
+          'Los libros de instrucciones de los electrodomésticos se encuentran en el armario que hay sobre el microondas.',
           'Si tienes prisa, evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.',
           'El agua es potable, aunque quizás prefieras agua embotellada.',
         ]},
@@ -1630,7 +1630,7 @@ const GUIDE_BY_APT = {
           'Las toallas del baño no son para la playa ni para la piscina.',
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
         ]},
-        { id: 'terraza', title: 'Mi terraza', body: 'Mi terraza tiene las mejores vistas y dos ambientes para cada momento de las vacaciones.', recs: [
+        { id: 'terraza', title: 'Tu terraza', body: 'Tu terraza tiene las mejores vistas y dos ambientes para cada momento de las vacaciones.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
           'Mientras estés en la terraza apaga o reduce el A/C.',
           'Recoge el toldo y los cojines cuando sople aire o llueva.',
