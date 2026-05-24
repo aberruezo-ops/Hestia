@@ -1087,6 +1087,27 @@ const ApartmentPageApp = () => {
     return () => { const s = document.getElementById('apt-review-schema'); if (s) s.remove(); };
   }, [apt.id, apt.slug]);
 
+  React.useEffect(() => {
+    if (!apt.vimeo_id) return;
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'VideoObject',
+      'name': `Visita virtual · ${apt.es.name}`,
+      'description': apt.es.concept,
+      'thumbnailUrl': `https://www.hestiayourhome.com/${apt.hero_img}`,
+      'uploadDate': '2024-06-01',
+      'duration': 'PT2M',
+      'contentUrl': `https://vimeo.com/${apt.vimeo_id}`,
+      'embedUrl': `https://player.vimeo.com/video/${apt.vimeo_id}`,
+    };
+    const el = document.createElement('script');
+    el.type = 'application/ld+json';
+    el.id = 'apt-video-schema';
+    el.textContent = JSON.stringify(schema);
+    document.head.appendChild(el);
+    return () => { const s = document.getElementById('apt-video-schema'); if (s) s.remove(); };
+  }, [apt.id]);
+
   // Marca el body con dos clases:
   //  · has-apt-sticky → la página tiene barra sticky (siempre, en apt page)
   //  · apt-bar-shown  → la barra está VISIBLE (post-scroll). Cookies y
