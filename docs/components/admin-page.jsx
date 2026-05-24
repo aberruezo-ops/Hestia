@@ -1557,7 +1557,8 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
       ? window.location.pathname.replace(/[^\/]+$/, '')
       : '/';
     const heroUrl = heroDataUrl || '';
-    const pdfFilename = `contrato-hestia-vera-${apt}-${escHtml(nombre.toLowerCase().replace(/\s+/g,'-'))}-${fechaEntrada}.pdf`;
+    const safeName = s => String(s).replace(/\s+/g, '_').replace(/[^\wÀ-ɏ]/g, '');
+    const pdfFilename = `${fechaEntrada}_Hestia_Vera_${a.shortName.replace(/\s+/g,'_')}_contrato_${safeName(nombre)}_${noches}_noches.pdf`;
     return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
 <title>Contrato · Hestía Vera ${a.shortName} · ${escHtml(nombre)}</title>
@@ -1797,15 +1798,8 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
 </div>
 
 <div id="pdf-content">
-<div class="hero">
-  <img src="${heroUrl}" alt="${a.name}" class="hero-img" onerror="this.style.display='none'">
-  <div class="hero-overlay"></div>
-  <div class="hero-text">
-    <div class="hero-eyebrow">contrato de arrendamiento por temporada</div>
-    <h1 class="hero-title" style="text-align:left;color:var(--arena);margin:0">${a.name}</h1>
-    <div class="hero-meta">${fechaEntradaStr} → ${fechaSalidaStr} · ${nochesL} (${noches}) noches · ${huespedes} huésped${huespedes !== 1 ? 'es' : ''}${mascotaTexto}</div>
-  </div>
-</div>
+<!-- Espacio reservado para la cabecera fotográfica de portada (la añade jsPDF sobre la página) -->
+<div style="height:40mm;line-height:0;font-size:0"> </div>
 <div id="contract-body">
 
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
@@ -1920,15 +1914,17 @@ ${clausulaFianza}
   var LOGO = ${JSON.stringify(logoDataUrl || '')};
   var WM   = ${JSON.stringify(wmDataUrl   || '')};
   var FILE = ${JSON.stringify(pdfFilename)};
-  var APT  = ${JSON.stringify('Vera ' + a.shortName)};
-  var DATES = ${JSON.stringify(fechaEntradaStr + ' → ' + fechaSalidaStr)};
+  var APT       = ${JSON.stringify('Vera ' + a.shortName)};
+  var APT_SHORT = ${JSON.stringify(a.shortName)};
+  var DATES     = ${JSON.stringify(fechaEntradaStr + ' → ' + fechaSalidaStr)};
 
   async function generate() {
     try { await document.fonts.ready; } catch(e) {}
     var el = document.getElementById('pdf-content');
-    var hH = 22, fH = 13; // header / footer height mm
+    // margin: [top, right, bottom, left] — top/bottom leave room for jsPDF header/footer
+    var MARG_TOP = 26, MARG_BOT = 20;
     var opt = {
-      margin: [hH, 0, fH, 0],
+      margin: [MARG_TOP, 0, MARG_BOT, 0],
       filename: FILE,
       image: { type: 'jpeg', quality: 0.96 },
       html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false },
@@ -1939,13 +1935,13 @@ ${clausulaFianza}
     await worker.toPdf();
     var pdf = await worker.get('pdf');
     var n = pdf.internal.getNumberOfPages();
-    var pW = pdf.internal.pageSize.getWidth();
-    var pH = pdf.internal.pageSize.getHeight();
+    var pW = pdf.internal.pageSize.getWidth();   // 210 mm
+    var pH = pdf.internal.pageSize.getHeight();  // 297 mm
 
     for (var i = 1; i <= n; i++) {
       pdf.setPage(i);
 
-      /* Watermark — logo centrado con baja opacidad */
+      /* ── Marca de agua (todas las páginas) ───────────────── */
       if (WM) {
         try {
           pdf.saveGraphicsState();
@@ -1956,38 +1952,71 @@ ${clausulaFianza}
         } catch(e) {}
       }
 
-      /* Header — foto del apartamento con overlay oscuro */
-      if (HERO) {
-        try {
-          pdf.addImage(HERO, 'JPEG', 0, 0, pW, hH);
-          pdf.saveGraphicsState();
-          pdf.setGState(pdf.GState({ opacity: 0.74 }));
+      if (i === 1) {
+        /* ── Cabecera portada: foto grande (primera hoja) ──── */
+        var h1 = 60; // altura de la cabecera de portada en mm
+        if (HERO) {
+          try {
+            pdf.addImage(HERO, 'JPEG', 0, 0, pW, h1);
+            pdf.saveGraphicsState();
+            pdf.setGState(pdf.GState({ opacity: 0.68 }));
+            pdf.setFillColor(42, 15, 46);
+            pdf.rect(0, 0, pW, h1, 'F');
+            pdf.restoreGraphicsState();
+          } catch(e) {
+            pdf.setFillColor(42, 15, 46);
+            pdf.rect(0, 0, pW, h1, 'F');
+          }
+        } else {
           pdf.setFillColor(42, 15, 46);
-          pdf.rect(0, 0, pW, hH, 'F');
-          pdf.restoreGraphicsState();
-        } catch(e) {}
-      }
-      if (LOGO) {
-        try { pdf.addImage(LOGO, 'PNG', 4, hH / 2 - 4, 8, 8); } catch(e) {}
-      }
-      pdf.setTextColor(240, 232, 213);
-      pdf.setFont('helvetica', 'bold');
-      pdf.setFontSize(10);
-      pdf.text('HESTIA', 14, hH * 0.64);
-      pdf.setFont('helvetica', 'normal');
-      pdf.setFontSize(8.5);
-      pdf.setTextColor(228, 217, 190);
-      pdf.text('· ' + APT, 31, hH * 0.64);
-      pdf.setFontSize(7.5);
-      pdf.text(DATES, pW - 4, hH * 0.64, { align: 'right' });
+          pdf.rect(0, 0, pW, h1, 'F');
+        }
+        if (LOGO) {
+          try { pdf.addImage(LOGO, 'PNG', 6, h1 / 2 - 9, 16, 16); } catch(e) {}
+        }
+        pdf.setTextColor(240, 232, 213);
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(20);
+        pdf.text('HESTÍA', 26, h1 / 2 - 4);
+        pdf.setFontSize(12);
+        pdf.text('Vera ' + APT_SHORT, 26, h1 / 2 + 6);
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(8.5);
+        pdf.setTextColor(228, 217, 190);
+        pdf.text('contrato de arrendamiento por temporada', 26, h1 / 2 + 14);
+        pdf.setFontSize(9);
+        pdf.text(DATES, pW - 6, h1 / 2 + 1, { align: 'right' });
 
-      /* Footer */
+      } else {
+        /* ── Cabecera compacta sin foto (resto de páginas) ─── */
+        var h2 = 20;
+        pdf.setFillColor(42, 15, 46);
+        pdf.rect(0, 0, pW, h2, 'F');
+        if (LOGO) {
+          try { pdf.addImage(LOGO, 'PNG', 4, h2 / 2 - 4, 8, 8); } catch(e) {}
+        }
+        pdf.setTextColor(240, 232, 213);
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(9.5);
+        pdf.text('HESTIA', 14, h2 * 0.62);
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(8);
+        pdf.setTextColor(228, 217, 190);
+        pdf.text('· ' + APT, 30, h2 * 0.62);
+        pdf.setFontSize(7.5);
+        pdf.text(DATES, pW - 5, h2 * 0.62, { align: 'right' });
+      }
+
+      /* ── Pie de página (todas las páginas) ───────────────── */
+      var footY = pH - 7;
+      pdf.setDrawColor(78, 36, 70);
+      pdf.setLineWidth(0.2);
+      pdf.line(16, footY - 3, pW - 16, footY - 3);
       pdf.setTextColor(78, 36, 70);
       pdf.setFont('helvetica', 'normal');
-      pdf.setFontSize(7.5);
-      pdf.text('Hestia Your Home · info@hestiayourhome.com · +34 620 316 370', 16, pH - 4);
-      pdf.text('❖', pW / 2, pH - 4, { align: 'center' });
-      pdf.text('Pagina ' + i + ' de ' + n, pW - 4, pH - 4, { align: 'right' });
+      pdf.setFontSize(7);
+      pdf.text('Hestia Your Home · info@hestiayourhome.com · +34 620 316 370', 16, footY);
+      pdf.text('Página ' + i + ' de ' + n, pW - 5, footY, { align: 'right' });
     }
 
     await worker.save();
