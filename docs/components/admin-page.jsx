@@ -1604,12 +1604,8 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
     height: 55mm;
     overflow: hidden;
     background: linear-gradient(135deg, var(--ber) 0%, var(--ber-lt) 100%);
-  }
-  .hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.88;
+    background-size: cover;
+    background-position: center 30%;
   }
   .hero-overlay {
     position: absolute;
@@ -1798,8 +1794,7 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
 </div>
 
 <div id="pdf-content">
-<div class="hero">
-  ${heroUrl ? `<img class="hero-img" src="${heroUrl}" alt="">` : ''}
+<div class="hero" ${heroUrl ? `style="background-image:url('${heroUrl}')"` : ''}>
   <div class="hero-overlay"></div>
   <div class="hero-text">
     <p class="hero-eyebrow">contrato de arrendamiento por temporada</p>
@@ -1928,7 +1923,7 @@ ${clausulaFianza}
     try { await document.fonts.ready; } catch(e) {}
     var el = document.getElementById('pdf-content');
     // margin: [top, right, bottom, left] — top/bottom leave room for jsPDF header/footer
-    var MARG_TOP = 22, MARG_BOT = 18;
+    var MARG_TOP = 26, MARG_BOT = 20;
     var opt = {
       margin: [MARG_TOP, 0, MARG_BOT, 0],
       filename: FILE,
@@ -1959,7 +1954,7 @@ ${clausulaFianza}
       }
 
       /* ── Cabecera compacta (todas las páginas) ───────────── */
-      var hH = MARG_TOP;
+      var hH = 20;
       pdf.setFillColor(42, 15, 46);
       pdf.rect(0, 0, pW, hH, 'F');
       if (LOGO) {
