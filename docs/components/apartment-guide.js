@@ -2956,6 +2956,18 @@ const PLACES = [
   lat: 36.9395,
   lng: -2.0000
 }, {
+  id: 'p-raja',
+  name: 'Cala Rajá',
+  desc: 'Entre Agua Amarga y Las Negras. Cala brava de piedra volcánica y agua esmeralda. Una de las más solitarias del parque.',
+  best: 'la pared volcánica negra a pico sobre el agua esmeralda — sin rastro de civilización.',
+  tip: 'Solo para excursionistas en forma: el camino no está señalizado, es largo y sin sombra. Lleva agua, GPS y mucha protección solar.',
+  cat: 'beach-hard',
+  rating: 4.5,
+  services: 'virgen · sin servicios',
+  access: '🚗 hasta Agua Amarga o Las Negras · 🚶 60–90 min por pista / campo a través',
+  lat: 36.9050,
+  lng: -1.9860
+}, {
   id: 'p-negras',
   name: 'Playa de Las Negras',
   desc: 'Pueblo bohemio con cantos rodados negros y agua cristalina. Punto de salida hacia la Cala de San Pedro.',
@@ -2966,6 +2978,30 @@ const PLACES = [
   access: '🚗 parking a la entrada del pueblo · ⛵ taxi-barca a San Pedro',
   lat: 36.8770,
   lng: -2.0030
+}, {
+  id: 'p-carbon',
+  name: 'Cala Carbón',
+  desc: 'Las Negras. Cala de roca volcánica negra y agua cristalina. Solo accesible a pie desde Las Negras por el sendero costero sur.',
+  best: 'el agua turquesa sobre la piedra negra volcánica — uno de los contrastes más fotogénicos del parque.',
+  tip: 'Se encadena bien con Cala del Cuervo: sigue el sendero costero y llegas a las dos en el mismo día.',
+  cat: 'beach-hard',
+  rating: 4.4,
+  services: 'virgen · sin servicios',
+  access: '🚶 45 min desde Las Negras por sendero costero hacia el sur',
+  lat: 36.8680,
+  lng: -2.0050
+}, {
+  id: 'p-cuervo',
+  name: 'Cala del Cuervo',
+  desc: 'Las Negras. Ensenada de roca volcánica entre Las Negras y La Isleta. Aguas salvajes, muy poca gente.',
+  best: 'la soledad absoluta a pocos kilómetros del pueblo — parece el fin del mundo.',
+  tip: 'Lleva calzado de trekking: el litoral es irregular. Algo más al sur que Cala Carbón.',
+  cat: 'beach-hard',
+  rating: 4.3,
+  services: 'virgen · sin servicios',
+  access: '🚶 60 min desde Las Negras por sendero costero hacia el sur',
+  lat: 36.8610,
+  lng: -2.0100
 }, {
   id: 'p-san-pedro',
   name: 'Cala de San Pedro',
@@ -2992,6 +3028,19 @@ const PLACES = [
   lat: 36.8470,
   lng: -2.0230
 }, {
+  id: 'p-escullos',
+  name: 'Playa de los Escullos',
+  desc: 'Los Escullos, Cabo de Gata. Amplia ensenada de arena gris oscura con el Castillo de San Felipe (s. XVIII) al fondo. La más accesible de esta zona del parque.',
+  best: 'el castillo volcánico sobre el acantilado visto desde el agua — pura postal.',
+  tip: 'El Camping Los Escullos está al lado del parking: tienen chiringuito y aseos aunque no te alojes allí.',
+  cat: 'beach',
+  rating: 4.4,
+  services: '🚻 · 🍹 restaurante camping · mínimos en verano',
+  access: '🚗 parking al pie de la playa',
+  url: 'https://www.google.com/maps/search/?api=1&query=Playa+Los+Escullos+Cabo+de+Gata+Almeria',
+  lat: 36.8742,
+  lng: -2.0048
+}, {
   id: 'p-isleta',
   name: 'La Isleta del Moro',
   desc: 'Pueblo pesquero diminuto con calas. Snorkel y comer en La Ola junto al mar.',
@@ -3004,6 +3053,54 @@ const PLACES = [
   url: 'https://maps.google.com?q=Playa+del+Penon+Blanco',
   lat: 36.7970,
   lng: -2.0630
+}, {
+  id: 'p-arena',
+  name: 'Cala Arena',
+  desc: 'San José. Pequeña cala de arena volcánica oscura entre Los Escullos y San José. Virgen, agua transparente, pocas personas.',
+  best: 'la arena oscura volcánica en contraste con el agua turquesa — un rincón muy fotogénico.',
+  tip: 'Poca sombra: ve a primera hora o lleva algo para cubrirte. Se encadena bien con Cala del Bergantín en el mismo sendero.',
+  cat: 'beach-hard',
+  rating: 4.3,
+  services: 'virgen · sin servicios',
+  access: '🚶 40 min desde San José por sendero norte · 🚗 sin acceso a coche',
+  lat: 36.8020,
+  lng: -2.0690
+}, {
+  id: 'p-bergantin',
+  name: 'Cala del Bergantín',
+  desc: 'San José. Cala virgen de roca volcánica a 25 min al norte del pueblo. Agua cristalina, buena para snorkel, muy poca gente.',
+  best: 'el snorkel entre las rocas volcánicas — la posidonia está bien conservada y la fauna marina es abundante.',
+  tip: 'Se llega en 25–30 min andando desde el parking de San José por el sendero norte. Lleva calzado apropiado y gafas de snorkel.',
+  cat: 'beach-hard',
+  rating: 4.4,
+  services: 'virgen · sin servicios',
+  access: '🚶 25–30 min desde San José por sendero norte · 🚗 sin parking al pie',
+  lat: 36.7870,
+  lng: -2.0940
+}, {
+  id: 'p-higuera',
+  name: 'Cala Higuera',
+  desc: 'San José. Cala de piedra y arena virgen a 15 min del pueblo. Agua muy limpia, snorkel entre roca volcánica. De las más fáciles de llegar sin servicios.',
+  best: 'el agua en calma y transparente — perfecta para nadar y hacer snorkel cerca del pueblo.',
+  tip: 'Lleva calzado de agua: la entrada al mar es por roca. Llega antes de las 10 h en verano.',
+  cat: 'beach-hard',
+  rating: 4.4,
+  services: 'virgen · sin servicios',
+  access: '🚶 15 min desde San José por sendero costero',
+  lat: 36.7820,
+  lng: -2.0840
+}, {
+  id: 'p-san-jose',
+  name: 'Playa de San José',
+  desc: 'La playa del pueblo de San José: arena fina, aguas tranquilas y protegidas por el dique. La mejor opción para el primer día o para familias con niños.',
+  best: 'bañarse por la mañana y luego desayunar en el paseo del puerto antes de que llegue el calor del mediodía.',
+  tip: 'En temporada alta, llega antes de las 10:30 para sitio. Fuera de julio-agosto casi la tendrás para ti.',
+  cat: 'beach',
+  rating: 4.3,
+  services: '🚿 🛟 🍹 🛏️ 🚻 ♿',
+  access: '🚗 parking de pago en el pueblo en verano · 🚶 desde el centro del pueblo',
+  lat: 36.7730,
+  lng: -2.1115
 }, {
   id: 'p-genoveses',
   name: 'Playa de los Genoveses',
