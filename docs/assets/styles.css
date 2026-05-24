@@ -19051,6 +19051,7 @@ img[src*="apt-vt-gallery-"] {
   z-index: 999;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   animation: rvSlideIn 0.20s ease;
 }
 @keyframes rvSlideIn { from { transform: translateX(100%) } to { transform: translateX(0) } }
@@ -19093,7 +19094,7 @@ img[src*="apt-vt-gallery-"] {
 }
 .rv-edit-close:hover { background: rgba(255,251,244,0.15); }
 
-.rv-edit-body { flex: 1; overflow-y: auto; padding: 16px 20px 24px; }
+.rv-edit-body { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 16px 20px 24px; }
 .rv-edit-body fieldset {
   border: none;
   margin: 0 0 18px;
@@ -19161,6 +19162,14 @@ img[src*="apt-vt-gallery-"] {
 
 .rv-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .rv-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+@media (max-width: 560px) {
+  .rv-row2 { grid-template-columns: 1fr; }
+  .rv-row3 { grid-template-columns: 1fr 1fr; }
+  .rv-calc-grid { grid-template-columns: 1fr; }
+  .rv-edit-foot { flex-wrap: wrap; gap: 8px; padding: 10px 14px; }
+  .rv-edit-foot-right { flex-wrap: wrap; justify-content: flex-end; }
+  .rv-edit-foot .pe-btn { padding: 8px 12px; font-size: 11px; }
+}
 
 .rv-calc-block {
   margin-top: 10px;
