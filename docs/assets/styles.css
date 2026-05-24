@@ -18997,6 +18997,16 @@ img[src*="apt-vt-gallery-"] {
 .rv-edit-foot-right { display: flex; gap: 8px; }
 .rv-btn-danger { color: #B23A2B; }
 .rv-btn-danger:hover { background: rgba(178,58,43,0.10); }
+.rv-ical-th { width: 28px; padding: 4px 2px; }
+.rv-ical-td { padding: 2px 2px; text-align: center; }
+.rv-ical-btn {
+  background: none; border: none; cursor: pointer;
+  font-size: 14px; padding: 2px 4px; border-radius: 4px;
+  opacity: 0.5; transition: opacity .15s;
+  line-height: 1;
+}
+.rv-ical-btn:hover { opacity: 1; background: rgba(0,0,0,.06); }
+
 .rv-overlap-warn {
   margin: 0 20px 4px;
   padding: 8px 12px;
