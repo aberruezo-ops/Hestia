@@ -165,7 +165,7 @@ const NumInput = ({
     style: style,
     title: title,
     onChange: e => {
-      const v = e.target.value;
+      const v = e.target.value.replace(',', '.'); // iOS locale decimal comma → period
       if (!/^-?\d*\.?\d*$/.test(v)) return;
       setStr(v);
       commit(v);

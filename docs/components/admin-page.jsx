@@ -156,7 +156,7 @@ const NumInput = ({ value, onChange, min, max, step, className, placeholder, dis
       style={style}
       title={title}
       onChange={e => {
-        const v = e.target.value;
+        const v = e.target.value.replace(',', '.');  // iOS locale decimal comma → period
         if (!/^-?\d*\.?\d*$/.test(v)) return;
         setStr(v);
         commit(v);
