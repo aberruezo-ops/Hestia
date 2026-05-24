@@ -1,7 +1,7 @@
 {
   "_doc": "Reviews curadas y de la web. source: 'booking'|'airbnb'|'google'|'web'. apt: 'vm'|'vt'|'vs'|'all'. highlight: true para destacarse en la sección de relevantes. status: 'published'|'pending' (solo published se muestra al público).",
   "version": 1,
-  "updatedAt": "2026-05-24T19:28:47.907Z",
+  "updatedAt": "2026-05-24T19:28:50.773Z",
   "items": [
     {
       "id": "bk-001",
@@ -521,7 +521,7 @@
       "lang": "en",
       "text": "Workation in June. Fibre WiFi was solid, the dining table doubles as a desk with the sea behind the screen, and the A/C in the bedroom let me cool down for sleep. Calls at 9 am with the curtains drawn against the sun, then beach by 18:00. Did this for two weeks. Will repeat.",
       "highlight": false,
-      "status": "pending"
+      "status": "published"
     },
     {
       "id": "wb-125",
