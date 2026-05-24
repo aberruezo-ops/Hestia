@@ -1,7 +1,7 @@
 {
   "_doc": "Reviews curadas y de la web. source: 'booking'|'airbnb'|'google'|'web'. apt: 'vm'|'vt'|'vs'|'all'. highlight: true para destacarse en la sección de relevantes. status: 'published'|'pending' (solo published se muestra al público).",
   "version": 1,
-  "updatedAt": "2026-05-24T19:28:50.773Z",
+  "updatedAt": "2026-05-24T19:28:52.972Z",
   "items": [
     {
       "id": "bk-001",
@@ -287,7 +287,7 @@
       "lang": "en",
       "text": "Came over for the new year with three kids and the in-laws. Mar absorbed all of us without anyone bumping into anyone. The local guide Alex sent ahead saved us a whole afternoon of TripAdvisor scrolling.",
       "highlight": false,
-      "status": "pending"
+      "status": "published"
     },
     {
       "id": "wb-110",
