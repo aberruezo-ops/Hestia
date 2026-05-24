@@ -4670,11 +4670,9 @@ const ReservasTab = ({
       className: "num"
     }, "Ingreso"), /*#__PURE__*/React.createElement("th", {
       className: "num"
-    }, "Comisi\xF3n"), /*#__PURE__*/React.createElement("th", {
-      className: "num"
     }, "BAI"), /*#__PURE__*/React.createElement("th", {
       className: "num"
-    }, "%"), /*#__PURE__*/React.createElement("th", {
+    }, "Efectivo"), /*#__PURE__*/React.createElement("th", {
       className: "rv-ical-th"
     }))), /*#__PURE__*/React.createElement("tbody", null, mRows.map(r => {
       const idx = reservas.indexOf(r);
@@ -4707,11 +4705,9 @@ const ReservasTab = ({
         className: "num"
       }, fmtEur(r.ingreso_total)), /*#__PURE__*/React.createElement("td", {
         className: "num"
-      }, fmtEur(r.comision)), /*#__PURE__*/React.createElement("td", {
-        className: "num"
       }, fmtEur(r.bai)), /*#__PURE__*/React.createElement("td", {
         className: "num"
-      }, fmtPct(r.rentabilidad_pct)), /*#__PURE__*/React.createElement("td", {
+      }, fmtEur(r.al_checkin)), /*#__PURE__*/React.createElement("td", {
         className: "rv-ical-td",
         onClick: e => e.stopPropagation()
       }, /*#__PURE__*/React.createElement("button", {
@@ -4728,11 +4724,9 @@ const ReservasTab = ({
       className: "num"
     }, /*#__PURE__*/React.createElement("strong", null, fmtEur(mBruto))), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, fmtEur(mComis)), /*#__PURE__*/React.createElement("td", {
-      className: "num"
     }, /*#__PURE__*/React.createElement("strong", null, fmtEur(mBai))), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, mBruto ? fmtPct(mBai / mBruto) : '—'), /*#__PURE__*/React.createElement("td", null))))));
+    }, fmtEur(mRows.reduce((s, r) => s + (Number(r.al_checkin) || 0), 0))), /*#__PURE__*/React.createElement("td", null))))));
   })), draft && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-backdrop",
     onClick: cancelDraft

@@ -3786,7 +3786,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                     <th>Apt</th><th>Huésped</th><th>Entrada</th><th>Salida</th>
                     <th className="num">Noches</th><th className="num">Pax</th>
                     <th>Canal</th>
-                    <th className="num">Ingreso</th><th className="num">Comisión</th><th className="num">BAI</th><th className="num">%</th>
+                    <th className="num">Ingreso</th><th className="num">BAI</th><th className="num">Efectivo</th>
                     <th className="rv-ical-th"></th>
                   </tr></thead>
                   <tbody>
@@ -3809,9 +3809,8 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                           <td className="num">{r.huespedes || '—'}</td>
                           <td>{r.canal || '—'}</td>
                           <td className="num">{fmtEur(r.ingreso_total)}</td>
-                          <td className="num">{fmtEur(r.comision)}</td>
                           <td className="num">{fmtEur(r.bai)}</td>
-                          <td className="num">{fmtPct(r.rentabilidad_pct)}</td>
+                          <td className="num">{fmtEur(r.al_checkin)}</td>
                           <td className="rv-ical-td" onClick={e => e.stopPropagation()}>
                             <button type="button" className="rv-ical-btn" title="Generar alerta de calendario (.ics)"
                               onClick={() => generateCalendarAlert(r)}>🔔</button>
@@ -3824,9 +3823,8 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                     <tr className="rv-month-foot">
                       <td colSpan="8"/>
                       <td className="num"><strong>{fmtEur(mBruto)}</strong></td>
-                      <td className="num">{fmtEur(mComis)}</td>
                       <td className="num"><strong>{fmtEur(mBai)}</strong></td>
-                      <td className="num">{mBruto ? fmtPct(mBai / mBruto) : '—'}</td>
+                      <td className="num">{fmtEur(mRows.reduce((s,r)=>s+(Number(r.al_checkin)||0),0))}</td>
                       <td/>
                     </tr>
                   </tfoot>
