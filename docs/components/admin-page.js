@@ -3835,6 +3835,7 @@ const ReservasTab = ({
   const [filterStatus, setFilterStatus] = React.useState('all');
   const [selectedIdx, setSelectedIdx] = React.useState(-1);
   const [draft, setDraft] = React.useState(null);
+  const [contratoStatus, setContratoStatus] = React.useState('idle');
   const [focusYearOverride, setFocusYearOverride] = React.useState(null);
   const [focusMonth, setFocusMonth] = React.useState('all');
   const [loadedAt, setLoadedAt] = React.useState(null);
@@ -3999,7 +4000,9 @@ const ReservasTab = ({
   const canalKeys = Array.from(new Set(focusList.map(r => getCanalKey(r.canal))));
 
   // --- Acciones ---
-  const saveReservas = async newReservas => {
+  const saveReservas = async (newReservas, {
+    keepPanelOpen = false
+  } = {}) => {
     setError(null);
     setSuccess(null);
     const newData = {
@@ -4025,8 +4028,10 @@ const ReservasTab = ({
       setSha(j.content.sha);
       setData(newData);
       setSuccess('Reservas guardadas ✓');
-      setSelectedIdx(-1);
-      setDraft(null);
+      if (!keepPanelOpen) {
+        setSelectedIdx(-1);
+        setDraft(null);
+      }
     } catch (e) {
       setError('Error guardando: ' + e.message);
     }
@@ -4160,6 +4165,101 @@ const ReservasTab = ({
     if (!confirm(`¿Borrar reserva de ${reservas[selectedIdx].responsable}?`)) return;
     const nr = reservas.filter((_, i) => i !== selectedIdx);
     saveReservas(nr);
+  };
+  const handleContratoUpload = async e => {
+    const file = e.target.files && e.target.files[0];
+    if (!file || !draft) return;
+    e.target.value = '';
+    setContratoStatus('uploading');
+    setError(null);
+    try {
+      const apt = (draft.apt || 'apt').toLowerCase();
+      const nombre = (draft.responsable || 'huesped').replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '');
+      const entrada = (draft.entrada || 'fecha').replace(/-/g, '');
+      const aptName = {
+        vm: 'Vera_Mar',
+        vs: 'Vera_Salinas',
+        vb: 'Vera_Brisa'
+      }[apt] || apt;
+      const filename = `${entrada}_Hestia_${aptName}_contrato_${nombre}_firmado.pdf`;
+      const contratoPath = `contratos/${filename}`;
+      const arrayBuf = await file.arrayBuffer();
+      const bytes = new Uint8Array(arrayBuf);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+      const b64 = btoa(binary);
+
+      // Check if file already exists to get its SHA
+      let existingSha;
+      const check = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${contratoPath}?ref=${BRANCH}`, {
+        headers: apiHeaders(token)
+      });
+      if (check.ok) {
+        const cj = await check.json();
+        existingSha = cj.sha;
+      }
+      const putBody = {
+        message: `feat(contratos): adjuntar ${filename}`,
+        content: b64,
+        branch: BRANCH,
+        ...(existingSha ? {
+          sha: existingSha
+        } : {})
+      };
+      const put = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${contratoPath}`, {
+        method: 'PUT',
+        headers: apiHeaders(token),
+        body: JSON.stringify(putBody)
+      });
+      if (!put.ok) {
+        const pj = await put.json();
+        throw new Error(pj.message || 'Error subiendo contrato');
+      }
+      const updatedDraft = {
+        ...draft,
+        contrato_pdf: filename
+      };
+      setDraft(updatedDraft);
+      const nr = [...reservas];
+      const idx = selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1;
+      if (idx >= 0) {
+        nr[idx] = calcDerived(updatedDraft);
+        await saveReservas(nr, {
+          keepPanelOpen: true
+        });
+      }
+      setContratoStatus('idle');
+    } catch (err) {
+      setError('Error adjuntando contrato: ' + err.message);
+      setContratoStatus('idle');
+    }
+  };
+  const handleContratoDownload = async () => {
+    if (!draft || !draft.contrato_pdf) return;
+    const contratoPath = `contratos/${draft.contrato_pdf}`;
+    try {
+      const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${contratoPath}?ref=${BRANCH}`, {
+        headers: apiHeaders(token)
+      });
+      if (!r.ok) throw new Error('No se pudo obtener el contrato');
+      const j = await r.json();
+      const binary = atob(j.content.replace(/\n/g, ''));
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      const blob = new Blob([bytes], {
+        type: 'application/pdf'
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = draft.contrato_pdf;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    } catch (err) {
+      setError('Error descargando contrato: ' + err.message);
+    }
   };
 
   // --- KPI Card helper ---
@@ -4804,7 +4904,41 @@ const ReservasTab = ({
     value: draft.observaciones || '',
     onChange: e => updateDraft('observaciones', e.target.value),
     placeholder: "Notas internas, peticiones especiales, etc."
-  })))), (() => {
+  }))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Contrato firmado"), /*#__PURE__*/React.createElement("div", {
+    className: "rv-contrato-block"
+  }, draft.contrato_pdf ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+    className: "rv-contrato-fname",
+    title: draft.contrato_pdf
+  }, "\uD83D\uDCCE ", draft.contrato_pdf), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    onClick: handleContratoDownload
+  }, "\u2B07 Descargar"), /*#__PURE__*/React.createElement("label", {
+    className: "pe-btn pe-btn-ghost",
+    style: {
+      cursor: 'pointer'
+    }
+  }, "\uD83D\uDD04 Reemplazar", /*#__PURE__*/React.createElement("input", {
+    type: "file",
+    accept: ".pdf",
+    style: {
+      display: 'none'
+    },
+    onChange: handleContratoUpload
+  }))) : /*#__PURE__*/React.createElement("label", {
+    className: "pe-btn pe-btn-ghost",
+    style: {
+      cursor: 'pointer'
+    }
+  }, contratoStatus === 'uploading' ? '⏳ Subiendo…' : '📎 Adjuntar contrato firmado', /*#__PURE__*/React.createElement("input", {
+    type: "file",
+    accept: ".pdf",
+    style: {
+      display: 'none'
+    },
+    onChange: handleContratoUpload,
+    disabled: contratoStatus === 'uploading'
+  }))))), (() => {
     const liveOverlap = draft && findOverlap(draft, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
     return liveOverlap ? /*#__PURE__*/React.createElement("div", {
       className: "rv-overlap-warn"

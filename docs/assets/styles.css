@@ -19179,6 +19179,8 @@ img[src*="apt-vt-gallery-"] {
 .rv-edit-foot-right { display: flex; gap: 8px; }
 .rv-btn-danger { color: #B23A2B; }
 .rv-btn-danger:hover { background: rgba(178,58,43,0.10); }
+.rv-contrato-block { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 4px 0; }
+.rv-contrato-fname { font-size: 12px; color: var(--ink); font-weight: 500; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rv-overlap-warn {
   margin: 0 20px 4px;
   padding: 8px 12px;
