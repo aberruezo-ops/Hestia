@@ -4,7 +4,7 @@
 
 const RESERVAS_COPY = {
   es: {
-    eyebrow: 'Mejor precio garantizado · Sin intermediarios',
+    eyebrow: 'Si encuentras un precio mejor, te lo mejoramos · Sin intermediarios',
     title: (<>Reserva tu<br/><em>hogar en Vera.</em></>),
     sub: 'Escríbenos directamente. Alex o Fran confirman en menos de 24 horas.',
     form_title: 'Solicitar reserva',
@@ -67,7 +67,7 @@ const RESERVAS_COPY = {
     ],
   },
   en: {
-    eyebrow: 'Best price guaranteed · No middlemen',
+    eyebrow: 'Find a better price? We\'ll beat it · No middlemen',
     title: (<>Book your<br/><em>home in Vera.</em></>),
     sub: 'Write to us directly. Alex or Fran confirm within 24 hours.',
     form_title: 'Request a booking',
@@ -160,18 +160,18 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
     <div className="price-engine price-engine-form">
       <div className="price-main-row">
         <div className="price-direct-block">
-          <span className="price-label-sm">{lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to'}</span>
+          <span className="price-label-sm">{lang === 'es' ? 'Precio directo' : 'Direct price'}</span>
           <span className="price-direct-total">{fmt(grandTotal)}</span>
           <span className="price-avg-night">{fmt(grandAvg)}{lang === 'es' ? '/noche' : '/night'}</span>
         </div>
         <div className="price-right-col">
           <div className="price-guarantee-badge">
-            {lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guarantee'}
+            {lang === 'es' ? '✓ ¿Precio mejor? Te lo mejoramos' : '✓ Better price? We\'ll beat it'}
           </div>
           <div className="price-guarantee-sub">
             {lang === 'es'
-              ? 'Si encuentras un precio mejor, te lo mejoramos.'
-              : 'See a better price elsewhere? We\'ll beat it.'}
+              ? 'Reserva directa — sin comisiones de plataformas.'
+              : 'Book direct — no platform commissions.'}
           </div>
         </div>
       </div>
@@ -186,8 +186,14 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
             <span>−{fmt(calc.stayDiscAmt)}</span>
           </div>
         )}
-        {/* El suplemento por número de huéspedes se incluye en directTotal
-            pero no se muestra como línea separada — pedido del usuario. */}
+        {calc.guestSuppAmt > 0 && (
+          <div className="price-line">
+            <span>{lang === 'es'
+              ? `${calc.guests} huéspedes · +${calc.guestSuppPerNight} €/noche`
+              : `${calc.guests} guests · +${calc.guestSuppPerNight} €/night`}</span>
+            <span>+{fmt(calc.guestSuppAmt)}</span>
+          </div>
+        )}
         {calc.petAmt > 0 && (
           <div className="price-line">
             <span>{lang === 'es' ? `Suplemento mascota (10 €/noche · máx. 50 €)` : `Pet supplement (10 €/night · max 50 €)`}</span>
@@ -214,13 +220,13 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
           );
         })}
         <div className="price-line price-line-total">
-          <span>{lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'}</span>
+          <span>{lang === 'es' ? 'Total estimado' : 'Estimated total'}</span>
           <span>{fmt(grandTotal)}</span>
         </div>
       </div>
       <p className="price-note">{lang === 'es'
-        ? '* Precio máximo orientativo. Si ves un precio mejor en cualquier plataforma, te lo mejoramos. Cuéntanos de ti y los tuyos — casi siempre podemos ajustar.'
-        : '* Indicative maximum price. If you find a better price anywhere, we\'ll beat it. Tell us about your situation — we can almost always adjust.'}</p>
+        ? '* Precio orientativo. Si encuentras precio mejor en cualquier plataforma, te lo mejoramos.'
+        : '* Indicative price. Find a better price anywhere — we\'ll beat it.'}</p>
     </div>
   );
 };
@@ -327,7 +333,7 @@ const ReservasForm = ({ lang }) => {
   const [apt, setApt]           = React.useState('');
   const [checkin, setCheckin]   = React.useState('');
   const [checkout, setCheckout] = React.useState('');
-  const [guests, setGuests]     = React.useState('');
+  const [guests, setGuests]     = React.useState(lang === 'es' ? '4 huéspedes' : '4 guests');
   const [pets, setPets]         = React.useState('no');
   const [baby, setBaby]         = React.useState('no');
   // extrasSel: { [id]: qty }. 0/missing = no seleccionado.
@@ -561,15 +567,17 @@ const ReservasForm = ({ lang }) => {
           ? `\n💰 PRECIO ESTIMADO DIRECTO\n` +
             `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` +
             (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') +
+            (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') +
             (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') +
             (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-            `   ✓ Mejor precio garantizado · si encuentras un precio mejor, te lo mejoramos\n`
+            `   ✓ Si encuentras precio mejor, te lo mejoramos\n`
           : `\n💰 ESTIMATED DIRECT PRICE\n` +
             `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` +
             (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') +
+            (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') +
             (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') +
             (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-            `   ✓ Best price guarantee · if you find a better price, we'll beat it\n`)
+            `   ✓ Find a better price anywhere — we'll beat it\n`)
       : '';
     const lines = lang === 'es'
       ? [
@@ -662,6 +670,23 @@ const ReservasForm = ({ lang }) => {
       <h2 className="reservas-form-title">{t.form_title}</h2>
       <div className="reservas-form-sub">{t.form_sub}</div>
 
+      {/* Progress indicator — visible en móvil, sutil en desktop */}
+      <div className="rf-progress" aria-label={lang === 'es' ? `Paso ${step} de 3` : `Step ${step} of 3`}>
+        {[
+          { n: 1, label: lang === 'es' ? 'Datos'  : 'Details' },
+          { n: 2, label: lang === 'es' ? 'Precio'  : 'Price'   },
+          { n: 3, label: lang === 'es' ? 'Envío'   : 'Send'    },
+        ].map((s, i) => (
+          <React.Fragment key={s.n}>
+            <div className={`rf-ps${step === s.n ? ' rps-act' : step > s.n ? ' rps-done' : ' rps-pend'}`}>
+              <span className="rf-ps-n" aria-current={step === s.n ? 'step' : undefined}>{step > s.n ? '✓' : s.n}</span>
+              <span className="rf-ps-lbl">{s.label}</span>
+            </div>
+            {i < 2 && <span className={`rf-ps-line${step > s.n ? ' rps-done' : ''}`} aria-hidden="true"/>}
+          </React.Fragment>
+        ))}
+      </div>
+
       {/* SECTION 1 — DATOS */}
       <section
         id="rf-step-1"
@@ -722,7 +747,7 @@ const ReservasForm = ({ lang }) => {
               {!apt && (
                 <p className="form-help-note">
                   {lang === 'es'
-                    ? '↑ Selecciona primero una Hestía para ver las fechas bloqueadas.'
+                    ? '↑ Selecciona primero un Hestía para ver las fechas bloqueadas.'
                     : '↑ Pick a Hestía first to see blocked dates.'}
                 </p>
               )}
@@ -1095,8 +1120,8 @@ const ReservasAside = ({ lang }) => {
         <div className="rg-title">{t.guarantee_title}</div>
         <p className="rg-lede">
           {lang === 'es'
-            ? 'Mejor precio garantizado · sin comisiones · respuesta humana en menos de 24 h.'
-            : 'Best price guaranteed · no commissions · human reply within 24 h.'}
+            ? 'Si encuentras un precio mejor, te lo mejoramos · sin comisiones · respuesta humana en menos de 24 h.'
+            : 'Find a better price anywhere? We\'ll beat it · no commissions · human reply within 24 h.'}
         </p>
         <button
           type="button"

@@ -57,7 +57,7 @@ const APT_CONTRACT_DATA = {
   vs: {
     name: 'Hestía Vera Salinas',
     shortName: 'Salinas',
-    heroPhoto: 'assets/apt-vs-gallery-1.jpg',
+    heroPhoto: 'assets/apt-vs-collage-header.jpg',
     direccion: 'Apto. 7, planta 1ª, bloque 22, en la urbanización Pueblo Salinas, en C/ Alcazaba 115',
     plazaGaraje: '290',
     zonaObras: 'cercanas',
@@ -125,6 +125,67 @@ function diffNoches(entradaIso, salidaIso) {
 // base64 ↔ utf-8 (atob/btoa no manejan UTF-8 directamente)
 const utf8ToB64 = s => btoa(unescape(encodeURIComponent(s)));
 const b64ToUtf8 = s => decodeURIComponent(escape(atob(s.replace(/\n/g, ''))));
+
+// NumInput — resuelve el problema clásico de React con inputs numéricos
+// controlados: imposibilidad de borrar un "0", punto decimal eliminado al vuelo.
+// Mantiene estado string local mientras el campo está activo; solo confirma
+// al parent cuando hay un número válido completo. Selecciona todo al enfocar.
+const NumInput = ({
+  value,
+  onChange,
+  min,
+  max,
+  step,
+  className,
+  placeholder,
+  disabled,
+  readOnly,
+  style,
+  title
+}) => {
+  const isDecimal = step != null && String(step).includes('.');
+  const [str, setStr] = React.useState(() => value == null ? '' : String(value));
+  const active = React.useRef(false);
+  React.useEffect(() => {
+    if (!active.current) setStr(value == null ? '' : String(value));
+  }, [value]);
+  const commit = v => {
+    if (v === '' || v === '-' || v === '.' || v.endsWith('.')) return;
+    const n = Number(v);
+    if (!isNaN(n)) onChange(n);
+  };
+  return /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    inputMode: isDecimal ? 'decimal' : 'numeric',
+    value: str,
+    className: className,
+    placeholder: placeholder ?? '0',
+    disabled: disabled,
+    readOnly: readOnly,
+    style: style,
+    title: title,
+    onChange: e => {
+      const v = e.target.value.replace(',', '.'); // iOS locale decimal comma → period
+      if (!/^-?\d*\.?\d*$/.test(v)) return;
+      setStr(v);
+      commit(v);
+    },
+    onFocus: e => {
+      active.current = true;
+      e.target.select();
+    },
+    onBlur: () => {
+      active.current = false;
+      const n = parseFloat(str);
+      if (isNaN(n) || str === '') {
+        setStr('0');
+        onChange(0);
+      } else {
+        setStr(String(n));
+      }
+    }
+  });
+};
 
 // ============================================================
 // validateYearCoverage — para un año dado, comprueba que cada
@@ -545,7 +606,8 @@ const todayIso = () => new Date().toISOString().slice(0, 10);
 const ReviewRow = ({
   review,
   onChange,
-  onRemove
+  onRemove,
+  onApprove
 }) => {
   const [expanded, setExpanded] = React.useState(false);
   const sourceMeta = REVIEW_SOURCES.find(s => s.id === review.source) || REVIEW_SOURCES[3];
@@ -587,7 +649,15 @@ const ReviewRow = ({
     className: "pe-rev-country-cell"
   }, review.country || ''), /*#__PURE__*/React.createElement("span", {
     className: "pe-rev-rating-cell"
-  }, ratingLbl, review.highlight ? ' ✦' : ''), /*#__PURE__*/React.createElement("span", {
+  }, ratingLbl, review.highlight ? ' ✦' : ''), isPending && onApprove && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-sm pe-rev-approve-btn",
+    onClick: e => {
+      e.stopPropagation();
+      onApprove(review.id);
+    },
+    title: "Aprobar y publicar ahora"
+  }, "\u2713 Aprobar"), /*#__PURE__*/React.createElement("span", {
     className: "pe-rev-snippet"
   }, snippet, review.text && review.text.length > 110 ? '…' : '')), expanded && /*#__PURE__*/React.createElement("div", {
     className: "pe-rev-row-body"
@@ -653,13 +723,12 @@ const ReviewRow = ({
     className: "pe-input"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Rating (", review.source === 'booking' ? '/10' : '/5', ")"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Rating (", review.source === 'booking' ? '/10' : '/5', ")"), /*#__PURE__*/React.createElement(NumInput, {
     min: 0,
     max: review.source === 'booking' ? 10 : 5,
     step: 0.1,
     value: review.rating,
-    onChange: e => onChange('rating', Number(e.target.value)),
+    onChange: v => onChange('rating', v),
     className: "pe-input"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
@@ -1001,13 +1070,12 @@ const NewReviewForm = ({
     className: "pe-input"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Rating (", source === 'booking' ? '/10' : '/5', ")"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Rating (", source === 'booking' ? '/10' : '/5', ")"), /*#__PURE__*/React.createElement(NumInput, {
     min: 0,
     max: source === 'booking' ? 10 : 5,
     step: 0.1,
     value: rating,
-    onChange: e => setRating(Number(e.target.value)),
+    onChange: v => setRating(v),
     className: "pe-input"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
@@ -1861,40 +1929,106 @@ const AnalyticsTab = () => {
 //      prerrellenados (el usuario adjunta el PDF descargado).
 // ============================================================
 const ContractTab = ({
-  pricesData
+  pricesData,
+  prefill
 }) => {
-  // Estado del formulario
+  // Estado del formulario — usa prefill si llega desde Reservas
   const today = new Date().toISOString().slice(0, 10);
-  const [apt, setApt] = React.useState('vm');
-  const [nombre, setNombre] = React.useState('');
-  const [domicilio, setDomicilio] = React.useState('');
-  const [dni, setDni] = React.useState('');
-  const [telefono, setTelefono] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [fechaEntrada, setFechaEntrada] = React.useState('');
-  const [fechaSalida, setFechaSalida] = React.useState('');
-  const [huespedes, setHuespedes] = React.useState(2);
-  const [mascota, setMascota] = React.useState(false);
-  const [precioTotal, setPrecioTotal] = React.useState('');
-  const [prereserva, setPrereserva] = React.useState('');
-  const [diasCancelacion, setDiasCancelacion] = React.useState(14);
-  const [fianza, setFianza] = React.useState(false);
+  const p = prefill || {};
+  const [apt, setApt] = React.useState(p.apt || 'vm');
+  const [nombre, setNombre] = React.useState(p.responsable || '');
+  const [domicilio, setDomicilio] = React.useState(p.direccion || '');
+  const [dni, setDni] = React.useState(p.dni || '');
+  const [telefono, setTelefono] = React.useState(p.telefono || '');
+  const [email, setEmail] = React.useState(p.email || '');
+  const [fechaEntrada, setFechaEntrada] = React.useState(p.entrada || '');
+  const [fechaSalida, setFechaSalida] = React.useState(p.salida || '');
+  const [huespedes, setHuespedes] = React.useState(p.huespedes || 2);
+  const [mascota, setMascota] = React.useState(p.mascota || false);
+  const [precioTotal, setPrecioTotal] = React.useState(p.ingreso_total != null ? String(p.ingreso_total) : '');
+  const [prereserva, setPrereserva] = React.useState(p.reserva != null ? String(p.reserva) : '');
+  const [pagoPrevio, setPagoPrevio] = React.useState(p.pago_previo != null ? String(p.pago_previo) : '0');
+  const [diasCancelacion, setDiasCancelacion] = React.useState(p.cancelacion ? Number((String(p.cancelacion).match(/\d+/) || [])[0]) || 14 : 14);
+  const [fianza, setFianza] = React.useState(p.fianza || false);
   const [fechaFirma, setFechaFirma] = React.useState(today);
   const aptInfo = APT_CONTRACT_DATA[apt];
   const noches = diffNoches(fechaEntrada, fechaSalida);
-  const remanente = Math.max(0, Number(precioTotal || 0) - Number(prereserva || 0));
+  const remanente = Math.max(0, Number(precioTotal || 0) - Number(prereserva || 0) - Number(pagoPrevio || 0));
 
   // Lista de extras (tabla cláusula novena) — leídos de prices.json.
   const extras = pricesData && pricesData.rules && pricesData.rules.extras || [];
   const formOk = () => apt && nombre && fechaEntrada && fechaSalida && noches > 0 && huespedes >= 1 && Number(precioTotal) > 0 && Number(prereserva) >= 0 && Number(prereserva) <= Number(precioTotal) && diasCancelacion > 0;
-  const buildContractHTML = heroDataUrl => {
+  const fetchDataUrl = async path => {
+    try {
+      const o = typeof window !== 'undefined' && window.location.origin || '';
+      const b = typeof window !== 'undefined' && window.location.pathname ? window.location.pathname.replace(/[^/]+$/, '') : '/';
+      const url = `${o}${b}${path}`.replace(/([^:])\/+/g, '$1/');
+      const resp = await fetch(url);
+      if (!resp.ok) return null;
+      const blob = await resp.blob();
+      return new Promise(res => {
+        const r = new FileReader();
+        r.onload = () => res(r.result);
+        r.readAsDataURL(blob);
+      });
+    } catch (_) {
+      return null;
+    }
+  };
+
+  // Pre-crop a data URL to the hero aspect ratio (210mm × 55mm ≈ 3.82:1).
+  // html2canvas does not reliably apply object-fit or background-size,
+  // so we crop in JS first and embed the already-cropped image.
+  const cropHero = rawUrl => {
+    if (!rawUrl) return Promise.resolve(null);
+    return new Promise(resolve => {
+      const img = new Image();
+      img.onload = () => {
+        // W/H = 2100/550 = 210/55 exactly — same ratio as jsPDF target
+        const W = 2100,
+          H = 550;
+        const c = document.createElement('canvas');
+        c.width = W;
+        c.height = H;
+        const ctx = c.getContext('2d');
+        const srcAR = img.naturalWidth / img.naturalHeight;
+        const tgtAR = W / H; // 3.818:1
+        let sx = 0,
+          sy = 0,
+          sw = img.naturalWidth,
+          sh = img.naturalHeight;
+        if (Math.abs(srcAR - tgtAR) / tgtAR < 0.02) {
+          // already at target ratio (e.g. pre-built collage) — just resize
+        } else if (srcAR > tgtAR) {
+          // landscape wider: crop sides equally
+          sh = img.naturalHeight;
+          sw = sh * tgtAR;
+          sx = (img.naturalWidth - sw) / 2;
+        } else {
+          // portrait: take central 90% of width to avoid edge design elements,
+          // crop height at 20% from top (upper portion of room)
+          sw = img.naturalWidth * 0.9;
+          sh = sw / tgtAR;
+          sx = (img.naturalWidth - sw) / 2;
+          sy = Math.max(0, (img.naturalHeight - sh) * 0.2);
+        }
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
+        resolve(c.toDataURL('image/jpeg', 0.92));
+      };
+      img.onerror = () => resolve(rawUrl);
+      img.src = rawUrl;
+    });
+  };
+  const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
     const escHtml = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const a = aptInfo;
     const fechaFirmaStr = fmtFechaEs(fechaFirma);
     const fechaEntradaStr = fmtFechaCorta(fechaEntrada);
     const fechaSalidaStr = fmtFechaCorta(fechaSalida);
+    const pagoPrevioN = Number(pagoPrevio || 0);
     const precioL = numToSpanish(precioTotal);
     const preL = numToSpanish(prereserva);
+    const prevL = numToSpanish(pagoPrevio);
     const remL = numToSpanish(remanente);
     const huespL = numToSpanish(huespedes);
     const cancelL = numToSpanish(diasCancelacion);
@@ -1916,143 +2050,54 @@ const ContractTab = ({
     }).join('');
     const origin = typeof window !== 'undefined' && window.location && window.location.origin || '';
     const baseDir = typeof window !== 'undefined' && window.location && window.location.pathname ? window.location.pathname.replace(/[^\/]+$/, '') : '/';
-    const assetUrl = p => `${origin}${baseDir}${p}`.replace(/([^:])\/+/g, '$1/');
-    const logoUrl = assetUrl('assets/logo-hestia-brand.png');
-    const heroUrl = heroDataUrl || assetUrl(a.heroPhoto);
+    const heroUrl = heroDataUrl || '';
+    const safeName = s => String(s).replace(/\s+/g, '_').replace(/[^\wÀ-ɏ]/g, '');
+    const pdfFilename = `${fechaEntrada}_Hestia_Vera_${a.shortName.replace(/\s+/g, '_')}_contrato_${safeName(nombre)}_${noches}_noches.pdf`;
     return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
-<base href="${origin}${baseDir}">
 <title>Contrato · Hestía Vera ${a.shortName} · ${escHtml(nombre)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>
 <style>
-  /* Forzar a Chrome/Edge a imprimir los colores de fondo y los
-     degradados de la portada hero. Sin esto, la cabecera con la
-     foto se imprime en blanco al exportar a PDF. */
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
-  }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  @page { size: A4; margin: 0; }
   :root {
-    --ber: #3D1A35;
-    --ber-dk: #2A0F2E;
-    --ber-lt: #4E2446;
-    --sol: #3AAABB;
-    --vt: #B86A3C;
-    --vt-dk: #8A4A24;
-    --arena: #F0E8D5;
-    --arena-dk: #E4D9BE;
-    --ink-soft: #5B4A56;
+    --ber: #3D1A35; --ber-dk: #2A0F2E; --ber-lt: #4E2446;
+    --sol: #3AAABB; --vt: #B86A3C; --vt-dk: #8A4A24;
+    --arena: #F0E8D5; --arena-dk: #E4D9BE;
   }
-  @page {
-    size: A4;
-    margin: 22mm 16mm 22mm 16mm;
-    @top-left {
-      content: "HESTÍA  ·  contrato de arrendamiento";
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 9pt;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      color: #3D1A35;
-      padding-top: 6mm;
-    }
-    @top-right {
-      content: "Hestía Vera ${a.shortName}";
-      font-family: 'Lora', Georgia, serif;
-      font-size: 9pt;
-      font-style: italic;
-      color: #3AAABB;
-      padding-top: 6mm;
-    }
-    @bottom-left {
-      content: "Hestía Your Home  ·  info@hestiayourhome.com  ·  +34 620 316 370";
-      font-family: 'Lora', Georgia, serif;
-      font-size: 8pt;
-      color: #4E2446;
-      padding-bottom: 6mm;
-    }
-    @bottom-center {
-      content: "✦";
-      color: #3AAABB;
-      font-size: 10pt;
-      padding-bottom: 6mm;
-    }
-    @bottom-right {
-      content: "Página " counter(page) " de " counter(pages);
-      font-family: 'Lora', Georgia, serif;
-      font-size: 8.5pt;
-      font-weight: 600;
-      color: #3D1A35;
-      padding-bottom: 6mm;
-    }
+  /* ── Notification bar (excluded from pdf capture) ─── */
+  #gen-bar {
+    position: sticky; top: 0; background: var(--ber-dk); color: var(--arena);
+    padding: 8px 16px; z-index: 9999; font-family: sans-serif; font-size: 13px;
+    display: flex; align-items: center; gap: 12px;
   }
-  @page :first {
-    /* La primera página no necesita header de texto porque ya
-       lleva la cabecera completa de marca con logo y la foto hero. */
-    @top-left   { content: ""; }
-    @top-right  { content: ""; }
+  #gen-bar button {
+    background: var(--sol); color: #fff; border: none; border-radius: 4px;
+    padding: 4px 14px; cursor: pointer; font-size: 12px;
   }
-  /* Cabecera de marca al inicio (página 1) */
-  .brand-header {
-    display: flex;
-    align-items: center;
-    gap: 4mm;
-    padding-bottom: 3mm;
-    margin-bottom: 4mm;
-    border-bottom: 0.5pt solid var(--ber);
-  }
-  .brand-header-logo { width: 12mm; height: 12mm; object-fit: contain; }
-  .brand-header-text { flex: 1; line-height: 1.2; }
-  .brand-header-name {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 14pt;
-    font-weight: 700;
-    color: var(--ber);
-    letter-spacing: 0.04em;
-  }
-  .brand-header-sub {
-    font-family: 'Lora', Georgia, serif;
-    font-size: 9pt;
-    color: var(--ber-lt);
-    font-style: italic;
-    margin-top: 0.5mm;
-  }
-  .brand-header-apt {
-    font-family: 'Lora', Georgia, serif;
-    font-size: 9pt;
-    font-weight: 600;
-    color: var(--sol);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    text-align: right;
-  }
-
+  @media print { #gen-bar { display: none !important; } }
+  /* ── Layout ─────────────────────────────────────────── */
   body {
     font-family: 'Lora', Georgia, serif;
     color: var(--ber);
     font-size: 10.5pt;
     line-height: 1.55;
     margin: 0;
+    margin: 0; padding: 0; background: #fff;
   }
+  #pdf-content { background: #fff; }
+  #contract-body { padding: 5mm 16mm 8mm; }
 
-  /* Hero con foto + título grande (solo página 1) */
+  /* ── Hero (primera página) ───────────────────────────── */
   .hero {
     position: relative;
-    width: 178mm;
-    height: 50mm;
-    margin: 0 0 6mm;
-    overflow: hidden;
-    border-radius: 1.5mm;
-    background: linear-gradient(135deg, var(--ber) 0%, var(--ber-lt) 100%);
-    page-break-inside: avoid;
-  }
-  .hero-img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.88;
+    height: 55mm;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--ber) 0%, var(--ber-lt) 100%);
   }
   .hero-overlay {
     position: absolute;
@@ -2091,24 +2136,7 @@ const ContractTab = ({
     color: var(--arena-dk);
   }
 
-  /* Marca de agua — aparece en todas las páginas del PDF */
-  .wm {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-25deg);
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 320pt;
-    font-weight: 700;
-    color: rgba(61, 26, 53, 0.055);
-    z-index: -1;
-    pointer-events: none;
-    user-select: none;
-    line-height: 1;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
+  /* ── Contract typography ─────────────────────────────── */
   h1 {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 16pt;
@@ -2249,83 +2277,18 @@ const ContractTab = ({
     font-size: 9.5pt;
   }
 
-  @media print {
-    body { margin: 0; }
-    .print-bar { display: none; }
-  }
-  .print-bar {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    max-width: 300px;
-    background: var(--arena);
-    border: 1pt solid var(--ber);
-    border-radius: 6px;
-    padding: 10px 12px;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(61,26,53,0.15);
-    font-family: 'Lora', sans-serif;
-    font-size: 11px;
-    line-height: 1.4;
-    color: var(--ber);
-  }
-  .print-bar h4 {
-    margin: 0 0 4px;
-    font-family: 'Playfair Display', serif;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--ber-dk);
-  }
-  .print-bar ul {
-    margin: 0 0 8px 14px;
-    padding: 0;
-    font-size: 10.5px;
-  }
-  .print-bar ul li { margin: 2px 0; }
-  .print-bar button {
-    background: var(--ber);
-    color: var(--arena);
-    border: none;
-    border-radius: 3px;
-    font-family: 'Lora', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 8px 16px;
-    cursor: pointer;
-    width: 100%;
-  }
-  .print-bar button:hover { background: var(--ber-lt); }
+  @media print { body { margin: 0; } }
 </style></head>
 <body>
-<div class="wm" aria-hidden="true">H</div>
-<div class="print-bar">
-  <h4>Ajustes recomendados</h4>
-  <ul>
-    <li><strong>Gráficos de fondo:</strong> activado</li>
-    <li><strong>Encabezados y pies:</strong> desactivado</li>
-    <li><strong>Márgenes:</strong> predeterminado</li>
-  </ul>
-  <button onclick="window.print()">Imprimir / Guardar como PDF</button>
+<div id="gen-bar">
+  <span id="gen-status">Generando PDF…</span>
+  <button id="gen-fallback" onclick="window.print()" style="display:none">Guardar como PDF (alternativa Ctrl+P)</button>
 </div>
 
-<div class="brand-header">
-  <img src="${logoUrl}" alt="Hestía" class="brand-header-logo">
-  <div class="brand-header-text">
-    <div class="brand-header-name">HESTÍA</div>
-    <div class="brand-header-sub">your home — contrato de arrendamiento</div>
-  </div>
-  <div class="brand-header-apt">Hestía Vera ${a.shortName}</div>
-</div>
-
-<div class="hero">
-  <img src="${heroUrl}" alt="${a.name}" class="hero-img" onerror="this.style.display='none'">
-  <div class="hero-overlay"></div>
-  <div class="hero-text">
-    <div class="hero-eyebrow">contrato de arrendamiento por temporada</div>
-    <h1 class="hero-title" style="text-align:left;color:var(--arena);margin:0">${a.name}</h1>
-    <div class="hero-meta">${fechaEntradaStr} → ${fechaSalidaStr} · ${nochesL} (${noches}) noches · ${huespedes} huésped${huespedes !== 1 ? 'es' : ''}${mascotaTexto}</div>
-  </div>
-</div>
+<div id="pdf-content">
+<!-- Spacer for page-1 hero: bar(18mm) + hero(55mm) − MARG_TOP(30mm) = 43mm -->
+<div style="height:43mm;line-height:0;font-size:0"> </div>
+<div id="contract-body">
 
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
 
@@ -2350,10 +2313,21 @@ ${bloqueAccesibilidad}
 <p>El Propietario cede en arrendamiento de temporada con la duración que se indicará a la Parte Arrendataria, que acepta, la finca descrita.</p>
 
 <h3>Segunda · Renta y fianza</h3>
-<p><strong>2.1</strong> La renta neta es de <strong>${precioL} (${precioTotal}) EUROS</strong> para <strong>${huespL} (${huespedes}) personas${mascotaTexto}</strong>. Este contrato no tendrá validez en los siguientes casos:</p>
+<p><strong>2.1</strong> La renta neta es de <strong>${precioL} (${precioTotal}) EUROS</strong> para <strong>${huespL} (${huespedes}) personas${mascotaTexto}</strong>. El desglose de pagos es el siguiente:</p>
+<table>
+  <thead><tr><th>Concepto</th><th class="num">Importe</th><th>Forma de pago</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Señal / prereserva</strong></td><td class="num">${prereserva} €</td><td>Transferencia a ***IBAN-RETIRADO*** o Bizum a +34 620 316 370</td></tr>
+    ${pagoPrevioN > 0 ? `<tr><td><strong>Pago previo</strong></td><td class="num">${pagoPrevio} €</td><td>Transferencia o Bizum (según acuerdo)</td></tr>` : ''}
+    <tr><td><strong>Remanente (check-in)</strong></td><td class="num">${remanente} €</td><td>Efectivo en el momento del check-in</td></tr>
+    ${fianza ? `<tr><td><strong>Fianza</strong></td><td class="num">300 €</td><td>Transferencia 2 días antes de la llegada — se devuelve al check-out</td></tr>` : ''}
+    <tr style="border-top: 1pt solid var(--ber)"><td><strong>TOTAL</strong></td><td class="num"><strong>${precioTotal} €</strong></td><td></td></tr>
+  </tbody>
+</table>
+<p>Este contrato no tendrá validez en los siguientes casos:</p>
 <ul>
-  <li>Sin el correspondiente justificante de abono en la cuenta ***IBAN-RETIRADO*** o BIZUM al teléfono +34 620 316 370 de la prereserva, es decir, <strong>${preL} (${prereserva}) EUROS</strong>. Deberá ingresarse en el momento de la formalización de este contrato.</li>
-  <li>Sin el correspondiente abono en efectivo del remanente de la estancia, es decir, <strong>${remL} (${remanente}) EUROS</strong>. Deberá pagarse en efectivo en el momento del check-in.</li>
+  <li>Sin el justificante de abono de la señal de <strong>${preL} (${prereserva}) EUROS</strong>, que deberá ingresarse en el momento de la formalización de este contrato.</li>
+  <li>Sin el abono en efectivo del remanente de <strong>${remL} (${remanente}) EUROS</strong> en el momento del check-in.</li>
   <li>Si no se envía el DNI o pasaporte de cada uno de los huéspedes mayores de 16 años, como adjunto al contrato firmado.</li>
   ${lineaFianza}
 </ul>
@@ -2419,7 +2393,124 @@ ${clausulaFianza}
     Fdo.: <strong>${escHtml(nombre.toUpperCase())}</strong>
   </div>
 </div>
+</div><!-- #contract-body -->
+</div><!-- #pdf-content -->
 
+<script>
+(function() {
+  var HERO = ${JSON.stringify(heroDataUrl || '')};
+  var LOGO = ${JSON.stringify(logoDataUrl || '')};
+  var WM   = ${JSON.stringify(wmDataUrl || '')};
+  var FILE = ${JSON.stringify(pdfFilename)};
+  var APT   = ${JSON.stringify('Vera ' + a.shortName)};
+  var META  = ${JSON.stringify(noches + ' noches · ' + huespedes + ' huéspedes')};
+  var DATES = ${JSON.stringify(fechaEntradaStr + ' → ' + fechaSalidaStr)};
+
+  async function generate() {
+    try { await document.fonts.ready; } catch(e) {}
+    var el = document.getElementById('pdf-content');
+    // margin: [top, right, bottom, left] — top/bottom leave room for jsPDF header/footer
+    var MARG_TOP = 30, MARG_BOT = 24;
+    var opt = {
+      margin: [MARG_TOP, 0, MARG_BOT, 0],
+      filename: FILE,
+      image: { type: 'jpeg', quality: 0.96 },
+      html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['css', 'legacy'] }
+    };
+    var worker = html2pdf().set(opt).from(el);
+    await worker.toPdf();
+    var pdf = await worker.get('pdf');
+    var n = pdf.internal.getNumberOfPages();
+    var pW = pdf.internal.pageSize.getWidth();   // 210 mm
+    var pH = pdf.internal.pageSize.getHeight();  // 297 mm
+
+    for (var i = 1; i <= n; i++) {
+      pdf.setPage(i);
+
+      /* ── Marca de agua (todas las páginas) ───────────────── */
+      if (WM) {
+        try {
+          pdf.saveGraphicsState();
+          pdf.setGState(pdf.GState({ opacity: 0.055 }));
+          var wmW = 90, wmH = 63;
+          pdf.addImage(WM, 'PNG', pW / 2 - wmW / 2, pH / 2 - wmH / 2, wmW, wmH, '', 'NONE', 25);
+          pdf.restoreGraphicsState();
+        } catch(e) {}
+      }
+
+      var hH = 18;
+
+      /* ── Portada: foto + overlay + texto (sólo página 1) ─── */
+      if (i === 1) {
+        if (HERO) {
+          try { pdf.addImage(HERO, 'JPEG', 0, hH, pW, 55); } catch(e) {}
+          pdf.saveGraphicsState();
+          pdf.setGState(pdf.GState({ opacity: 0.48 }));
+          pdf.setFillColor(42, 15, 46);
+          pdf.rect(0, hH, pW, 55, 'F');
+          pdf.restoreGraphicsState();
+        } else {
+          pdf.setFillColor(42, 15, 46);
+          pdf.rect(0, hH, pW, 55, 'F');
+        }
+        pdf.setFont('helvetica', 'italic');
+        pdf.setFontSize(7);
+        pdf.setTextColor(228, 217, 190);
+        pdf.text('contrato de arrendamiento por temporada', 8, hH + 34);
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(16);
+        pdf.setTextColor(240, 232, 213);
+        pdf.text('Hestía · ' + APT, 8, hH + 43);
+        pdf.setFont('helvetica', 'normal');
+        pdf.setFontSize(8);
+        pdf.setTextColor(228, 217, 190);
+        pdf.text(DATES + '  ·  ' + META, 8, hH + 51);
+      }
+
+      /* ── Barra compacta (todas las páginas, encima del hero) */
+      pdf.setFillColor(42, 15, 46);
+      pdf.rect(0, 0, pW, hH, 'F');
+      if (LOGO) {
+        try { pdf.addImage(LOGO, 'PNG', 4, hH / 2 - 4, 8, 8); } catch(e) {}
+      }
+      pdf.setTextColor(240, 232, 213);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(9.5);
+      pdf.text('HESTIA', 14, hH * 0.62);
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(8);
+      pdf.setTextColor(228, 217, 190);
+      pdf.text('· ' + APT, 30, hH * 0.62);
+      pdf.setFontSize(7.5);
+      pdf.text(DATES, pW - 5, hH * 0.62, { align: 'right' });
+
+      /* ── Pie de página (todas las páginas) ───────────────── */
+      var footY = pH - 7;
+      pdf.setDrawColor(78, 36, 70);
+      pdf.setLineWidth(0.2);
+      pdf.line(16, footY - 3, pW - 16, footY - 3);
+      pdf.setTextColor(78, 36, 70);
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(7);
+      pdf.text('Hestia Your Home · info@hestiayourhome.com · +34 620 316 370', 16, footY);
+      pdf.text('Página ' + i + ' de ' + n, pW - 5, footY, { align: 'right' });
+    }
+
+    await worker.save();
+    document.getElementById('gen-status').textContent = 'PDF descargado — puedes cerrar esta pestaña o usar Ctrl+P si necesitas imprimirlo.';
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    generate().catch(function(err) {
+      console.error('html2pdf error:', err);
+      document.getElementById('gen-status').textContent = 'Error al generar el PDF. Usa Ctrl+P como alternativa.';
+      document.getElementById('gen-fallback').style.display = '';
+    });
+  });
+})();
+<\/script>
 </body></html>`;
   };
   const buildEmailBody = () => {
@@ -2434,7 +2525,7 @@ Para confirmar tu reserva necesitamos que nos hagas llegar:
 
 1. El contrato firmado por todas las partes (puedes contestar a este correo con el PDF firmado adjunto).
 2. El DNI o pasaporte de cada huésped mayor de 16 años.
-3. El justificante de la prereserva de ${prereserva} €, ingresada por transferencia a la cuenta ***IBAN-RETIRADO*** o BIZUM al teléfono +34 620 316 370.
+3. El justificante de la señal de ${prereserva} €, ingresada por transferencia a la cuenta ***IBAN-RETIRADO*** o Bizum al teléfono +34 620 316 370.${Number(pagoPrevio || 0) > 0 ? `\n4. El justificante del pago previo de ${pagoPrevio} €.` : ''}
 
 El remanente de ${remanente} € se abona en efectivo el día de la llegada, en el momento del check-in.
 
@@ -2451,64 +2542,33 @@ info@hestiayourhome.com · +34 620 316 370`;
       alert('Faltan campos por rellenar. Comprueba que el huésped tiene nombre, fechas y precio total > 0, y que la prereserva no supere el total.');
       return;
     }
-    // Pre-cargar la foto del apartamento como data URI para que el PDF
-    // la incluya aunque el navegador corte la carga de red al imprimir.
-    let heroDataUrl = null;
-    try {
-      const origin = typeof window !== 'undefined' && window.location && window.location.origin || '';
-      const baseDir = typeof window !== 'undefined' && window.location && window.location.pathname ? window.location.pathname.replace(/[^\/]+$/, '') : '/';
-      const heroAbsUrl = `${origin}${baseDir}${aptInfo.heroPhoto}`.replace(/([^:])\/+/g, '$1/');
-      const resp = await fetch(heroAbsUrl);
-      if (resp.ok) {
-        const blob = await resp.blob();
-        heroDataUrl = await new Promise(res => {
-          const reader = new FileReader();
-          reader.onload = () => res(reader.result);
-          reader.readAsDataURL(blob);
-        });
-      }
-    } catch (_) {/* sigue con URL normal si hay error de red */}
-    // 1. Abrir ventana con el contrato (auto-print después de un momento)
-    const html = buildContractHTML(heroDataUrl);
+    // SYNC — must happen inside the user-gesture context, before any await.
+    // Browsers block window.open and mailto navigation triggered asynchronously.
     const w = window.open('', '_blank');
-    if (w) {
-      w.document.open();
-      w.document.write(html);
-      w.document.close();
-      // Esperar a que las imágenes (logo + hero por apt) y las fuentes
-      // (Playfair Display / Lora) carguen antes de invocar print().
-      // Sin esto, el PDF puede salir sin la cabecera de marca ni la
-      // foto del apartamento.
-      const triggerPrint = () => {
-        try {
-          w.focus();
-          w.print();
-        } catch (e) {}
-      };
-      const waitForAssets = () => {
-        try {
-          const imgs = Array.from(w.document.images || []);
-          const imgPromises = imgs.map(img => img.complete && img.naturalWidth > 0 ? Promise.resolve() : new Promise(r => {
-            img.onload = img.onerror = r;
-          }));
-          const fontsReady = w.document.fonts && w.document.fonts.ready || Promise.resolve();
-          Promise.all([...imgPromises, fontsReady]).then(() => setTimeout(triggerPrint, 250)).catch(() => setTimeout(triggerPrint, 1500));
-        } catch (e) {
-          setTimeout(triggerPrint, 1500);
-        }
-      };
-      if (w.document.readyState === 'complete') waitForAssets();else w.addEventListener('load', waitForAssets);
-    } else {
+    if (!w) {
       alert('Tu navegador ha bloqueado la ventana emergente. Permite popups en /p-edit.html y vuelve a intentarlo.');
       return;
     }
-    // 2. Abrir mailto en otra pestaña (después de un instante para no romper la ventana de impresión)
-    setTimeout(() => {
-      const subject = `Contrato de reserva · Hestía Vera ${aptInfo.shortName} · ${fmtFechaCorta(fechaEntrada)} → ${fmtFechaCorta(fechaSalida)}`;
-      const body = buildEmailBody();
-      const mailto = `mailto:${email || ''}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = mailto;
-    }, 1500);
+    const subject = `Contrato de reserva · Hestía Vera ${aptInfo.shortName} · ${fmtFechaCorta(fechaEntrada)} → ${fmtFechaCorta(fechaSalida)}`;
+    const body = buildEmailBody();
+    const mailto = `mailto:${email || ''}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const aEl = Object.assign(document.createElement('a'), {
+      href: mailto
+    });
+    document.body.appendChild(aEl);
+    aEl.click();
+    document.body.removeChild(aEl);
+
+    // ASYNC — pre-load images as data URIs so they embed correctly in the PDF.
+    const [heroRaw, logoDataUrl, wmDataUrl] = await Promise.all([fetchDataUrl(aptInfo.heroPhoto), fetchDataUrl('assets/logo-hestia-brand.png'), fetchDataUrl('assets/logo-teal-transparent.png')]);
+    const heroDataUrl = await cropHero(heroRaw);
+
+    // Write contract HTML to the already-opened window.
+    const html = buildContractHTML(heroDataUrl, logoDataUrl, wmDataUrl);
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+    w.focus();
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
@@ -2594,12 +2654,11 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "ct-readonly"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "N\xBA de hu\xE9spedes"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "N\xBA de hu\xE9spedes"), /*#__PURE__*/React.createElement(NumInput, {
     min: "1",
     max: "8",
     value: huespedes,
-    onChange: e => setHuespedes(Number(e.target.value))
+    onChange: v => setHuespedes(v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
   }, /*#__PURE__*/React.createElement("label", null, "\xBFMascota?"), /*#__PURE__*/React.createElement("label", {
@@ -2612,23 +2671,31 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "pe-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Precio total *"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Precio total *"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
     min: "0",
     value: precioTotal,
-    onChange: e => setPrecioTotal(e.target.value),
+    onChange: v => setPrecioTotal(v),
     placeholder: "630"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Prereserva (Bizum / transferencia) *"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al / prereserva (Bizum o transf.) *"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
     min: "0",
     value: prereserva,
-    onChange: e => setPrereserva(e.target.value),
+    onChange: v => setPrereserva(v),
     placeholder: "130"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Remanente (efectivo en check-in)"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "Pago previo adicional"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
+    min: "0",
+    value: pagoPrevio,
+    onChange: v => setPagoPrevio(v),
+    placeholder: "0"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Efectivo al check-in (calculado)"), /*#__PURE__*/React.createElement("input", {
     type: "text",
     readOnly: true,
     value: `${remanente} €`,
@@ -2637,12 +2704,11 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "pe-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "D\xEDas de cancelaci\xF3n sin coste *"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "D\xEDas de cancelaci\xF3n sin coste *"), /*#__PURE__*/React.createElement(NumInput, {
     min: "1",
     max: "60",
     value: diasCancelacion,
-    onChange: e => setDiasCancelacion(Number(e.target.value))
+    onChange: v => setDiasCancelacion(v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
   }, /*#__PURE__*/React.createElement("label", null, "\xBFFianza?"), /*#__PURE__*/React.createElement("label", {
@@ -2690,6 +2756,7 @@ info@hestiayourhome.com · +34 620 316 370`;
 // Sincronización con Google Sheets: ver data-private/SETUP-SHEETS-SYNC.md.
 // ============================================================
 const RESERVAS_PATH = 'reservas.json';
+const PRERESERVAS_PATH = 'docs/data/prereservas.json';
 const APT_NAMES = {
   vm: 'Mar',
   vt: 'Thalassa',
@@ -2792,7 +2859,12 @@ function calcDerived(r) {
   // 3. Rentabilidad = BAI / ingreso_total.
   out.rentabilidad_pct = ingreso > 0 ? Math.round(out.bai / ingreso * 10000) / 10000 : null;
 
-  // 4. Precios por noche.
+  // 4. Efectivo al check-in = ingreso_total − señal − pago_previo (salvo override).
+  if (!r._checkin_manual) {
+    out.al_checkin = Math.max(0, (Number(out.ingreso_total) || 0) - (Number(out.reserva) || 0) - (Number(out.pago_previo) || 0));
+  }
+
+  // 5. Precios por noche.
   const noches = Number(out.noches) || 0;
   if (noches > 0 && ingreso > 0) {
     out.precio_bruto_noche = Math.round(ingreso / noches * 100) / 100;
@@ -3221,15 +3293,13 @@ const LeilaTab = ({
   }, /*#__PURE__*/React.createElement("label", {
     className: "leila-saldo-label",
     htmlFor: "leila-saldo-inicial"
-  }, "Saldo arrastrado de ", Number(focusYear) - 1), /*#__PURE__*/React.createElement("input", {
-    id: "leila-saldo-inicial",
-    type: "number",
+  }, "Saldo arrastrado de ", Number(focusYear) - 1), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     className: "leila-saldo-input",
-    value: editsSaldoInicial[focusYear] !== undefined ? editsSaldoInicial[focusYear] : saldoInicialYear,
-    onChange: e => setEditsSaldoInicial(p => ({
+    value: editsSaldoInicial[focusYear] !== undefined ? Number(editsSaldoInicial[focusYear]) : saldoInicialYear,
+    onChange: v => setEditsSaldoInicial(p => ({
       ...p,
-      [focusYear]: e.target.value
+      [focusYear]: v
     }))
   }), /*#__PURE__*/React.createElement("span", {
     className: "leila-saldo-unit"
@@ -3348,16 +3418,15 @@ const LeilaTab = ({
         className: "num"
       }, tarifa, " \u20AC"), /*#__PURE__*/React.createElement("td", {
         className: "num"
-      }, /*#__PURE__*/React.createElement("input", {
-        type: "number",
+      }, /*#__PURE__*/React.createElement(NumInput, {
         step: "1",
         min: "0",
         className: "leila-cobro-input",
-        value: efectivo || '',
+        value: efectivo || 0,
         placeholder: "0",
-        onChange: e => setEditsEfectivo(prev => ({
+        onChange: v => setEditsEfectivo(prev => ({
           ...prev,
-          [r._idx]: e.target.value
+          [r._idx]: v
         }))
       })), /*#__PURE__*/React.createElement("td", {
         className: `num ${acum > 0 ? 'leila-owe' : acum < 0 ? 'leila-over' : 'leila-ok'}`
@@ -3382,16 +3451,15 @@ const LeilaTab = ({
       className: "leila-liquid-row"
     }, /*#__PURE__*/React.createElement("label", {
       className: "leila-liquid-lbl"
-    }, "Leila pag\xF3 a Hest\xEDa en ", MES_FULL[parseInt(m, 10) - 1], ":"), /*#__PURE__*/React.createElement("input", {
-      type: "number",
+    }, "Leila pag\xF3 a Hest\xEDa en ", MES_FULL[parseInt(m, 10) - 1], ":"), /*#__PURE__*/React.createElement(NumInput, {
       step: "1",
       min: "0",
       className: "leila-cobro-input",
-      value: liqVal || '',
+      value: liqVal || 0,
       placeholder: "0",
-      onChange: e => setEditsLiquid(prev => ({
+      onChange: v => setEditsLiquid(prev => ({
         ...prev,
-        [mKey]: e.target.value
+        [mKey]: v
       }))
     }), /*#__PURE__*/React.createElement("span", {
       className: "leila-liquid-eur"
@@ -3425,8 +3493,396 @@ const LeilaTab = ({
     }, "Balance: ", /*#__PURE__*/React.createElement("strong", null, fmtBal(yrBal))));
   })());
 };
-const ReservasTab = ({
+
+// ── PrereservasTab ─────────────────────────────────────────────────────────────
+// Borradores de reserva almacenados en docs/data/prereservas.json (repo público).
+// El botón "→ Reservas" escribe en reservas.json del repo privado y elimina el
+// borrador de la lista pública en el mismo flujo.
+const PrereservasTab = ({
   token
+}) => {
+  const [items, setItems] = React.useState(null);
+  const [sha, setSha] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+  const [msg, setMsg] = React.useState(null);
+  const [isErr, setIsErr] = React.useState(false);
+  const [syncing, setSyncing] = React.useState(null);
+  const [showForm, setShowForm] = React.useState(false);
+  const emptyForm = {
+    apt: 'vm',
+    responsable: '',
+    telefono: '',
+    huespedes: 2,
+    menores_12: 0,
+    entrada: '',
+    salida: '',
+    ingreso_total: '',
+    reserva: '',
+    canal: 'directo',
+    observaciones: ''
+  };
+  const [form, setForm] = React.useState(emptyForm);
+  const load = () => {
+    setLoading(true);
+    setMsg(null);
+    fetch(`${API}/repos/${REPO}/contents/${PRERESERVAS_PATH}?ref=${BRANCH}`, {
+      headers: apiHeaders(token)
+    }).then(r => {
+      if (r.status === 404) return {
+        sha: null,
+        items: []
+      };
+      return r.json().then(j => ({
+        sha: j.sha,
+        items: JSON.parse(b64ToUtf8(j.content)).prereservas || []
+      }));
+    }).then(({
+      sha,
+      items
+    }) => {
+      setSha(sha);
+      setItems(items);
+    }).catch(e => {
+      setIsErr(true);
+      setMsg('Error cargando prereservas: ' + e.message);
+      setItems([]);
+    }).finally(() => setLoading(false));
+  };
+  React.useEffect(load, [token]);
+  const saveList = async (newItems, currentSha) => {
+    const body = JSON.stringify({
+      message: `chore(prereservas): update via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
+      content: utf8ToB64(JSON.stringify({
+        prereservas: newItems
+      }, null, 2) + '\n'),
+      ...(currentSha ? {
+        sha: currentSha
+      } : {}),
+      branch: BRANCH
+    });
+    const res = await fetch(`${API}/repos/${REPO}/contents/${PRERESERVAS_PATH}`, {
+      method: 'PUT',
+      headers: {
+        ...apiHeaders(token),
+        'Content-Type': 'application/json'
+      },
+      body
+    });
+    if (!res.ok) throw new Error('Error guardando prereservas (' + res.status + ')');
+    return (await res.json()).content.sha;
+  };
+  const addPrereserva = async () => {
+    if (!form.responsable.trim() || !form.entrada || !form.salida || !form.ingreso_total) {
+      setIsErr(true);
+      setMsg('Faltan campos: nombre, fechas e importe.');
+      return;
+    }
+    const newItem = {
+      id: 'pr-' + Date.now(),
+      createdAt: new Date().toISOString(),
+      ...form,
+      huespedes: Number(form.huespedes) || 2,
+      menores_12: Number(form.menores_12) || 0,
+      ingreso_total: Number(form.ingreso_total),
+      reserva: Number(form.reserva) || 0
+    };
+    try {
+      const newSha = await saveList([newItem, ...(items || [])], sha);
+      setItems(prev => [newItem, ...(prev || [])]);
+      setSha(newSha);
+      setForm(emptyForm);
+      setShowForm(false);
+      setIsErr(false);
+      setMsg('Prereserva guardada.');
+    } catch (e) {
+      setIsErr(true);
+      setMsg(e.message);
+    }
+  };
+  const deleteItem = async id => {
+    if (!confirm('¿Eliminar esta prereserva?')) return;
+    const newItems = items.filter(r => r.id !== id);
+    try {
+      const newSha = await saveList(newItems, sha);
+      setItems(newItems);
+      setSha(newSha);
+      setIsErr(false);
+      setMsg('Prereserva eliminada.');
+    } catch (e) {
+      setIsErr(true);
+      setMsg(e.message);
+    }
+  };
+  const syncItem = async pr => {
+    setSyncing(pr.id);
+    setMsg(null);
+    try {
+      // 1. Leer reservas.json del repo privado
+      const rRes = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
+        headers: apiHeaders(token)
+      });
+      if (!rRes.ok) throw new Error('No se pudo leer reservas.json (' + rRes.status + ')');
+      const rFile = await rRes.json();
+      const rData = JSON.parse(b64ToUtf8(rFile.content));
+      // 2. Construir reserva con campos derivados
+      const newRes = calcDerived({
+        apt: pr.apt,
+        responsable: pr.responsable,
+        telefono: pr.telefono || '',
+        huespedes: Number(pr.huespedes) || 2,
+        menores_12: Number(pr.menores_12) || 0,
+        cuna_trona: pr.cuna_trona || false,
+        mascota: pr.mascota || false,
+        dni_enviado: false,
+        entrada: pr.entrada,
+        salida: pr.salida,
+        cancelacion: '',
+        canal: pr.canal || 'directo',
+        contactado: false,
+        f_reserva: new Date().toISOString().slice(0, 10),
+        ingreso_total: Number(pr.ingreso_total) || 0,
+        reserva: Number(pr.reserva) || 0,
+        pago_previo: 0,
+        al_checkin: 0,
+        comision: 0,
+        fianza: 0,
+        pagos_leila: 0,
+        efectivo_leila: 0,
+        observaciones: pr.observaciones || ''
+      });
+      // 3. Añadir y guardar en repo privado
+      const updated = {
+        ...rData,
+        reservas: [...(rData.reservas || []), newRes],
+        updatedAt: new Date().toISOString()
+      };
+      const rPut = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
+        method: 'PUT',
+        headers: {
+          ...apiHeaders(token),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: `feat(reservas): ${pr.responsable} ${pr.entrada}–${pr.salida} via prereserva`,
+          content: utf8ToB64(JSON.stringify(updated, null, 2) + '\n'),
+          sha: rFile.sha,
+          branch: BRANCH
+        })
+      });
+      if (!rPut.ok) throw new Error('Error escribiendo reservas.json (' + rPut.status + ')');
+      // 4. Borrar de prereservas
+      const newItems = items.filter(r => r.id !== pr.id);
+      const newSha = await saveList(newItems, sha);
+      setItems(newItems);
+      setSha(newSha);
+      setIsErr(false);
+      setMsg(`✓ ${pr.responsable} añadida a Reservas.`);
+    } catch (e) {
+      setIsErr(true);
+      setMsg(e.message);
+    } finally {
+      setSyncing(null);
+    }
+  };
+  const noches = pr => pr.entrada && pr.salida ? Math.round((new Date(pr.salida) - new Date(pr.entrada)) / 86400000) : '—';
+  if (loading) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-loading"
+  }, "Cargando prereservas\u2026");
+  return /*#__PURE__*/React.createElement("div", {
+    className: "pe-tab-content"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: 16
+    }
+  }, /*#__PURE__*/React.createElement("h2", {
+    style: {
+      margin: 0
+    }
+  }, "Prereservas pendientes"), /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-primary",
+    onClick: () => setShowForm(v => !v)
+  }, showForm ? 'Cancelar' : '+ Nueva')), msg && /*#__PURE__*/React.createElement("div", {
+    className: isErr ? 'pe-error' : 'pe-success',
+    style: {
+      marginBottom: 16
+    }
+  }, msg), showForm && /*#__PURE__*/React.createElement("div", {
+    className: "pe-card",
+    style: {
+      background: 'rgba(0,0,0,.04)',
+      marginBottom: 24
+    }
+  }, /*#__PURE__*/React.createElement("h3", {
+    style: {
+      marginTop: 0
+    }
+  }, "Nueva prereserva"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-grid"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Apartamento"), /*#__PURE__*/React.createElement("select", {
+    value: form.apt,
+    onChange: e => setForm(f => ({
+      ...f,
+      apt: e.target.value
+    })),
+    className: "pe-input"
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "vm"
+  }, "Mar"), /*#__PURE__*/React.createElement("option", {
+    value: "vt"
+  }, "Thalassa"), /*#__PURE__*/React.createElement("option", {
+    value: "vs"
+  }, "Salinas"))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Canal"), /*#__PURE__*/React.createElement("select", {
+    value: form.canal,
+    onChange: e => setForm(f => ({
+      ...f,
+      canal: e.target.value
+    })),
+    className: "pe-input"
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "directo"
+  }, "Directo"), /*#__PURE__*/React.createElement("option", {
+    value: "airbnb"
+  }, "Airbnb"), /*#__PURE__*/React.createElement("option", {
+    value: "booking"
+  }, "Booking"), /*#__PURE__*/React.createElement("option", {
+    value: "avaibook"
+  }, "Avaibook"))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Responsable *"), /*#__PURE__*/React.createElement("input", {
+    className: "pe-input",
+    value: form.responsable,
+    onChange: e => setForm(f => ({
+      ...f,
+      responsable: e.target.value
+    })),
+    placeholder: "Nombre y apellidos"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Tel\xE9fono"), /*#__PURE__*/React.createElement("input", {
+    className: "pe-input",
+    value: form.telefono,
+    onChange: e => setForm(f => ({
+      ...f,
+      telefono: e.target.value
+    })),
+    placeholder: "+34 600 000 000"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Entrada *"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    className: "pe-input",
+    value: form.entrada,
+    onChange: e => setForm(f => ({
+      ...f,
+      entrada: e.target.value
+    }))
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Salida *"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    className: "pe-input",
+    value: form.salida,
+    onChange: e => setForm(f => ({
+      ...f,
+      salida: e.target.value
+    }))
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9spedes"), /*#__PURE__*/React.createElement(NumInput, {
+    min: "1",
+    max: "8",
+    className: "pe-input pe-input-num",
+    value: form.huespedes || 0,
+    onChange: v => setForm(f => ({
+      ...f,
+      huespedes: v
+    }))
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Importe total (\u20AC) *"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
+    min: "0",
+    className: "pe-input pe-input-num",
+    value: form.ingreso_total || 0,
+    onChange: v => setForm(f => ({
+      ...f,
+      ingreso_total: v
+    })),
+    placeholder: "1200"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al (\u20AC)"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
+    min: "0",
+    className: "pe-input pe-input-num",
+    value: form.reserva || 0,
+    onChange: v => setForm(f => ({
+      ...f,
+      reserva: v
+    })),
+    placeholder: "300"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field",
+    style: {
+      gridColumn: '1/-1'
+    }
+  }, /*#__PURE__*/React.createElement("label", null, "Observaciones"), /*#__PURE__*/React.createElement("input", {
+    className: "pe-input",
+    value: form.observaciones,
+    onChange: e => setForm(f => ({
+      ...f,
+      observaciones: e.target.value
+    })),
+    placeholder: "Notas libres\u2026"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-actions"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-primary",
+    onClick: addPrereserva
+  }, "Guardar prereserva"))), items && items.length === 0 ? /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint"
+  }, "No hay prereservas pendientes.") : items && /*#__PURE__*/React.createElement("table", {
+    className: "pe-table"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Hu\xE9sped"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", null, "N"), /*#__PURE__*/React.createElement("th", null, "Total"), /*#__PURE__*/React.createElement("th", null, "Se\xF1al"), /*#__PURE__*/React.createElement("th", null, "Canal"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, items.map(pr => /*#__PURE__*/React.createElement("tr", {
+    key: pr.id
+  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "res-apt-chip",
+    style: {
+      background: APT_COLOR[pr.apt],
+      color: APT_TEXT[pr.apt]
+    }
+  }, APT_NAMES[pr.apt] || pr.apt)), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", null, pr.responsable), pr.telefono && /*#__PURE__*/React.createElement("div", {
+    className: "pe-hint"
+  }, pr.telefono)), /*#__PURE__*/React.createElement("td", null, fmtDate(pr.entrada)), /*#__PURE__*/React.createElement("td", null, fmtDate(pr.salida)), /*#__PURE__*/React.createElement("td", null, noches(pr)), /*#__PURE__*/React.createElement("td", null, fmtEur(pr.ingreso_total)), /*#__PURE__*/React.createElement("td", null, pr.reserva ? fmtEur(pr.reserva) : '—'), /*#__PURE__*/React.createElement("td", {
+    className: "pe-hint"
+  }, pr.canal || '—'), /*#__PURE__*/React.createElement("td", {
+    style: {
+      whiteSpace: 'nowrap'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-primary",
+    style: {
+      marginRight: 6
+    },
+    disabled: !!syncing,
+    onClick: () => syncItem(pr)
+  }, syncing === pr.id ? '…' : '→ Reservas'), /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-ghost",
+    onClick: () => deleteItem(pr.id)
+  }, "\u2715"))))))));
+};
+const ReservasTab = ({
+  token,
+  onOpenContract
 }) => {
   const [data, setData] = React.useState(null);
   const [sha, setSha] = React.useState(null);
@@ -3440,6 +3896,7 @@ const ReservasTab = ({
   const [filterStatus, setFilterStatus] = React.useState('all');
   const [selectedIdx, setSelectedIdx] = React.useState(-1);
   const [draft, setDraft] = React.useState(null);
+  const [contratoStatus, setContratoStatus] = React.useState('idle');
   const [focusYearOverride, setFocusYearOverride] = React.useState(null);
   const [focusMonth, setFocusMonth] = React.useState('all');
   const [loadedAt, setLoadedAt] = React.useState(null);
@@ -3590,7 +4047,17 @@ const ReservasTab = ({
 
   // --- Próximas y en estancia (en todos los años, son atemporales) ---
   const enEstancia = reservas.filter(r => reservaStatus(r, today) === 'staying').sort((a, b) => a.salida.localeCompare(b.salida));
-  const proximas = reservas.filter(r => reservaStatus(r, today) === 'upcoming').sort((a, b) => a.entrada.localeCompare(b.entrada)).slice(0, 8);
+  const proximas = reservas.filter(r => {
+    if (reservaStatus(r, today) !== 'upcoming') return false;
+    const diff = (new Date(r.entrada) - new Date(today)) / 86400000;
+    return diff <= 30;
+  }).sort((a, b) => a.entrada.localeCompare(b.entrada));
+  const buildWALink = r => {
+    const apt = APT_NAMES[r.apt] || r.apt;
+    const dias = Math.round((new Date(r.entrada) - new Date(today)) / 86400000);
+    const lines = [`🏠 *Reserva en ${dias} día${dias !== 1 ? 's' : ''} · ${apt}*`, `👤 ${r.responsable || '—'}`, `📅 Entrada: ${fmtDate(r.entrada)}`, `📅 Salida:  ${fmtDate(r.salida)}`, `🌙 ${r.noches || '—'} noches · ${r.huespedes || '—'} pax`, r.canal ? `📲 Canal: ${r.canal}` : '', r.ingreso_total ? `💶 Total: ${fmtEur(r.ingreso_total)}` : '', r.bai ? `📈 BAI: ${fmtEur(r.bai)}` : '', r.mascota ? '🐾 Trae mascota' : '', r.cuna_trona ? '👶 Necesita cuna/trona' : '', r.observaciones ? `📝 ${r.observaciones}` : ''].filter(Boolean).join('\n');
+    return `https://wa.me/34654138251?text=${encodeURIComponent(lines)}`;
+  };
 
   // --- Filtros visibles. El listado SÓLO muestra el año focal
   // (por defecto el actual). Los demás años están en el dashboard
@@ -3604,7 +4071,9 @@ const ReservasTab = ({
   const canalKeys = Array.from(new Set(focusList.map(r => getCanalKey(r.canal))));
 
   // --- Acciones ---
-  const saveReservas = async newReservas => {
+  const saveReservas = async (newReservas, {
+    keepPanelOpen = false
+  } = {}) => {
     setError(null);
     setSuccess(null);
     const newData = {
@@ -3630,8 +4099,10 @@ const ReservasTab = ({
       setSha(j.content.sha);
       setData(newData);
       setSuccess('Reservas guardadas ✓');
-      setSelectedIdx(-1);
-      setDraft(null);
+      if (!keepPanelOpen) {
+        setSelectedIdx(-1);
+        setDraft(null);
+      }
     } catch (e) {
       setError('Error guardando: ' + e.message);
     }
@@ -3793,6 +4264,99 @@ const ReservasTab = ({
     a.download = `alerta_${r.apt}_${r.entrada}.ics`;
     a.click();
     URL.revokeObjectURL(url);
+  };
+  const handleContratoUpload = async e => {
+    const file = e.target.files && e.target.files[0];
+    if (!file || !draft) return;
+    e.target.value = '';
+    setContratoStatus('uploading');
+    setError(null);
+    try {
+      const apt = (draft.apt || 'apt').toLowerCase();
+      const nombre = (draft.responsable || 'huesped').replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '');
+      const entrada = (draft.entrada || 'fecha').replace(/-/g, '');
+      const aptName = {
+        vm: 'Vera_Mar',
+        vs: 'Vera_Salinas',
+        vb: 'Vera_Brisa'
+      }[apt] || apt;
+      const filename = `${entrada}_Hestia_${aptName}_contrato_${nombre}_firmado.pdf`;
+      const contratoPath = `contratos/${filename}`;
+      const arrayBuf = await file.arrayBuffer();
+      const bytes = new Uint8Array(arrayBuf);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+      const b64 = btoa(binary);
+      let existingSha;
+      const check = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${contratoPath}?ref=${BRANCH}`, {
+        headers: apiHeaders(token)
+      });
+      if (check.ok) {
+        const cj = await check.json();
+        existingSha = cj.sha;
+      }
+      const putBody = {
+        message: `feat(contratos): adjuntar ${filename}`,
+        content: b64,
+        branch: BRANCH,
+        ...(existingSha ? {
+          sha: existingSha
+        } : {})
+      };
+      const put = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${contratoPath}`, {
+        method: 'PUT',
+        headers: apiHeaders(token),
+        body: JSON.stringify(putBody)
+      });
+      if (!put.ok) {
+        const pj = await put.json();
+        throw new Error(pj.message || 'Error subiendo contrato');
+      }
+      const updatedDraft = {
+        ...draft,
+        contrato_pdf: filename
+      };
+      setDraft(updatedDraft);
+      const nr = [...reservas];
+      const idx = selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1;
+      if (idx >= 0) {
+        nr[idx] = calcDerived(updatedDraft);
+        await saveReservas(nr, {
+          keepPanelOpen: true
+        });
+      }
+      setContratoStatus('idle');
+    } catch (err) {
+      setError('Error adjuntando contrato: ' + err.message);
+      setContratoStatus('idle');
+    }
+  };
+  const handleContratoDownload = async () => {
+    if (!draft || !draft.contrato_pdf) return;
+    const contratoPath = `contratos/${draft.contrato_pdf}`;
+    try {
+      const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${contratoPath}?ref=${BRANCH}`, {
+        headers: apiHeaders(token)
+      });
+      if (!r.ok) throw new Error('No se pudo obtener el contrato');
+      const j = await r.json();
+      const binary = atob(j.content.replace(/\n/g, ''));
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      const blob = new Blob([bytes], {
+        type: 'application/pdf'
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = draft.contrato_pdf;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    } catch (err) {
+      setError('Error descargando contrato: ' + err.message);
+    }
   };
 
   // --- KPI Card helper ---
@@ -3999,20 +4563,31 @@ const ReservasTab = ({
   }, APT_NAMES[r.apt]), /*#__PURE__*/React.createElement("strong", null, r.responsable), /*#__PURE__*/React.createElement("span", {
     className: "rv-prox-meta"
   }, "salida ", fmtDate(r.salida), " \xB7 ", r.huespedes, " pax \xB7 ", r.canal))))), proximas.length > 0 && /*#__PURE__*/React.createElement("div", {
-    className: "rv-now rv-banner-upcoming"
-  }, /*#__PURE__*/React.createElement("h3", null, "\u23F0 Pr\xF3ximos check-ins \xB7 ", proximas.length, reservas.filter(r => reservaStatus(r, today) === 'upcoming').length > proximas.length ? ` (de ${reservas.filter(r => reservaStatus(r, today) === 'upcoming').length})` : ''), /*#__PURE__*/React.createElement("ul", null, proximas.map((r, i) => /*#__PURE__*/React.createElement("li", {
-    key: i
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "rv-prox-date"
-  }, fmtDate(r.entrada)), /*#__PURE__*/React.createElement("span", {
-    className: "rv-apt-chip",
-    style: {
-      background: APT_COLOR[r.apt],
-      color: APT_TEXT[r.apt]
-    }
-  }, APT_NAMES[r.apt]), /*#__PURE__*/React.createElement("strong", null, r.responsable), /*#__PURE__*/React.createElement("span", {
-    className: "rv-prox-meta"
-  }, r.huespedes, " pax \xB7 ", r.noches, "n \xB7 ", r.canal))))), /*#__PURE__*/React.createElement("div", {
+    className: "rv-now rv-banner-upcoming rv-banner-alert"
+  }, /*#__PURE__*/React.createElement("h3", null, "\u26A0\uFE0F Reservas en menos de 30 d\xEDas \xB7 ", proximas.length), /*#__PURE__*/React.createElement("ul", null, proximas.map((r, i) => {
+    const dias = Math.round((new Date(r.entrada) - new Date(today)) / 86400000);
+    return /*#__PURE__*/React.createElement("li", {
+      key: i
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "rv-prox-days-badge"
+    }, dias, "d"), /*#__PURE__*/React.createElement("span", {
+      className: "rv-prox-date"
+    }, fmtDate(r.entrada)), /*#__PURE__*/React.createElement("span", {
+      className: "rv-apt-chip",
+      style: {
+        background: APT_COLOR[r.apt],
+        color: APT_TEXT[r.apt]
+      }
+    }, APT_NAMES[r.apt]), /*#__PURE__*/React.createElement("strong", null, r.responsable), /*#__PURE__*/React.createElement("span", {
+      className: "rv-prox-meta"
+    }, r.huespedes, " pax \xB7 ", r.noches, "n \xB7 ", r.canal), /*#__PURE__*/React.createElement("a", {
+      href: buildWALink(r),
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "rv-wa-btn",
+      title: "Avisar a Fran por WhatsApp"
+    }, "\uD83D\uDCF2 WhatsApp"));
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "rv-toolbar"
   }, /*#__PURE__*/React.createElement("label", null, "A\xF1o", /*#__PURE__*/React.createElement("select", {
     value: focusYear,
@@ -4104,11 +4679,12 @@ const ReservasTab = ({
     }))), /*#__PURE__*/React.createElement("tbody", null, mRows.map(r => {
       const idx = reservas.indexOf(r);
       const status = reservaStatus(r, today);
-      const statusIcon = status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
+      const cancelada = isCancelada(r);
+      const statusIcon = cancelada ? '✗' : status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
       const isSel = idx === selectedIdx;
       return /*#__PURE__*/React.createElement("tr", {
         key: idx,
-        className: `rv-row rv-row-${status}${isSel ? ' is-selected' : ''}`,
+        className: `rv-row rv-row-${status}${isSel ? ' is-selected' : ''}${cancelada ? ' rv-row-cancelada' : ''}`,
         "data-apt": r.apt,
         style: {
           '--apt-c': APT_COLOR[r.apt] || 'transparent'
@@ -4211,6 +4787,20 @@ const ReservasTab = ({
   }, "S\xED"), /*#__PURE__*/React.createElement("option", {
     value: "no"
   }, "No")))), /*#__PURE__*/React.createElement("div", {
+    className: "rv-row2"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rv-field"
+  }, /*#__PURE__*/React.createElement("label", null, "DNI / pasaporte"), /*#__PURE__*/React.createElement("input", {
+    value: draft.dni || '',
+    onChange: e => updateDraft('dni', e.target.value),
+    placeholder: "12345678A"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "rv-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Direcci\xF3n postal"), /*#__PURE__*/React.createElement("input", {
+    value: draft.direccion || '',
+    onChange: e => updateDraft('direccion', e.target.value),
+    placeholder: "Calle, n\xBA, ciudad"
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "rv-row3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
@@ -4236,18 +4826,16 @@ const ReservasTab = ({
     className: "rv-row3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9spedes"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9spedes"), /*#__PURE__*/React.createElement(NumInput, {
     min: "1",
     value: draft.huespedes || 0,
-    onChange: e => updateDraft('huespedes', Number(e.target.value))
+    onChange: v => updateDraft('huespedes', v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, '<12 años'), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, '<12 años'), /*#__PURE__*/React.createElement(NumInput, {
     min: "0",
     value: draft.menores_12 || 0,
-    onChange: e => updateDraft('menores_12', Number(e.target.value))
+    onChange: v => updateDraft('menores_12', v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Cuna / trona"), /*#__PURE__*/React.createElement("select", {
@@ -4285,7 +4873,7 @@ const ReservasTab = ({
     value: "Avaibook"
   }, "Avaibook"))), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Pol\xEDtica cancelaci\xF3n"), /*#__PURE__*/React.createElement("select", {
+  }, /*#__PURE__*/React.createElement("label", null, "Estado / pol\xEDtica cancelaci\xF3n"), /*#__PURE__*/React.createElement("select", {
     value: draft.cancelacion || 'Cancelable 14',
     onChange: e => updateDraft('cancelacion', e.target.value)
   }, /*#__PURE__*/React.createElement("option", {
@@ -4300,7 +4888,12 @@ const ReservasTab = ({
     value: "Semiestricta"
   }, "Semiestricta"), /*#__PURE__*/React.createElement("option", {
     value: "No reembolsable"
-  }, "No reembolsable")))), /*#__PURE__*/React.createElement("div", {
+  }, "No reembolsable"), /*#__PURE__*/React.createElement("option", {
+    value: "CANCELADA",
+    style: {
+      color: '#999'
+    }
+  }, "\u2014 Cancelada \u2014")))), /*#__PURE__*/React.createElement("div", {
     className: "rv-row2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
@@ -4321,22 +4914,20 @@ const ReservasTab = ({
     value: "Fran"
   }, "Fran"))))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Importes"), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Ingreso total bruto"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Ingreso total bruto"), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.ingreso_total || 0,
-    onChange: e => updateDraft('ingreso_total', Number(e.target.value))
+    onChange: v => updateDraft('ingreso_total', v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-row2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Comisi\xF3n ", /*#__PURE__*/React.createElement("span", {
     className: "rv-hint-inline"
-  }, "tasa ", getCanalKey(draft.canal), ": ", ((COMMISSION_RATES[getCanalKey(draft.canal)] ?? 0) * 100).toFixed(1), "%")), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, "tasa ", getCanalKey(draft.canal), ": ", ((COMMISSION_RATES[getCanalKey(draft.canal)] ?? 0) * 100).toFixed(1), "%")), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.comision || 0,
-    onChange: e => updateDraft('comision', Number(e.target.value))
+    onChange: v => updateDraft('comision', v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Gasto limpieza", draft._limpieza_manual ? /*#__PURE__*/React.createElement("button", {
@@ -4345,27 +4936,43 @@ const ReservasTab = ({
     onClick: resetLimpiezaAuto
   }, "\u21BB auto") : /*#__PURE__*/React.createElement("span", {
     className: "rv-hint-inline"
-  }, "auto (jul/ago o >10n: 90 \u20AC \xB7 resto: 80 \u20AC)")), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, "auto (jul/ago o >10n: 90 \u20AC \xB7 resto: 80 \u20AC)")), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.gasto_limpieza || 0,
-    onChange: e => updateDraft('gasto_limpieza', Number(e.target.value))
+    onChange: v => updateDraft('gasto_limpieza', v)
   }))), /*#__PURE__*/React.createElement("div", {
-    className: "rv-row2"
+    className: "rv-row3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Pago previo"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al"), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
-    value: draft.pago_previo || 0,
-    onChange: e => updateDraft('pago_previo', Number(e.target.value))
+    value: draft.reserva || 0,
+    onChange: v => updateDraft('reserva', v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Al check-in"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Pago previo"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
+    value: draft.pago_previo || 0,
+    onChange: v => updateDraft('pago_previo', v)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "rv-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Efectivo check-in", draft._checkin_manual ? /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "rv-mini-link",
+    onClick: () => setDraft(p => calcDerived({
+      ...p,
+      _checkin_manual: false
+    }))
+  }, "\u21BB auto") : /*#__PURE__*/React.createElement("span", {
+    className: "rv-calc"
+  }, " calculado")), draft._checkin_manual ? /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.al_checkin || 0,
-    onChange: e => updateDraft('al_checkin', Number(e.target.value))
+    onChange: v => updateDraft('al_checkin', v)
+  }) : /*#__PURE__*/React.createElement("input", {
+    readOnly: true,
+    className: "rv-readonly",
+    value: fmtEur(draft.al_checkin)
   }))), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Fianza tomada"), /*#__PURE__*/React.createElement("select", {
@@ -4407,7 +5014,41 @@ const ReservasTab = ({
     value: draft.observaciones || '',
     onChange: e => updateDraft('observaciones', e.target.value),
     placeholder: "Notas internas, peticiones especiales, etc."
-  })))), (() => {
+  }))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Contrato firmado"), /*#__PURE__*/React.createElement("div", {
+    className: "rv-contrato-block"
+  }, draft.contrato_pdf ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+    className: "rv-contrato-fname",
+    title: draft.contrato_pdf
+  }, "\uD83D\uDCCE ", draft.contrato_pdf), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    onClick: handleContratoDownload
+  }, "\u2B07 Descargar"), /*#__PURE__*/React.createElement("label", {
+    className: "pe-btn pe-btn-ghost",
+    style: {
+      cursor: 'pointer'
+    }
+  }, "\uD83D\uDD04 Reemplazar", /*#__PURE__*/React.createElement("input", {
+    type: "file",
+    accept: ".pdf",
+    style: {
+      display: 'none'
+    },
+    onChange: handleContratoUpload
+  }))) : /*#__PURE__*/React.createElement("label", {
+    className: "pe-btn pe-btn-ghost",
+    style: {
+      cursor: 'pointer'
+    }
+  }, contratoStatus === 'uploading' ? '⏳ Subiendo…' : '📎 Adjuntar contrato firmado', /*#__PURE__*/React.createElement("input", {
+    type: "file",
+    accept: ".pdf",
+    style: {
+      display: 'none'
+    },
+    onChange: handleContratoUpload,
+    disabled: contratoStatus === 'uploading'
+  }))))), (() => {
     const liveOverlap = draft && findOverlap(draft, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
     return liveOverlap ? /*#__PURE__*/React.createElement("div", {
       className: "rv-overlap-warn"
@@ -4420,7 +5061,15 @@ const ReservasTab = ({
     onClick: deleteRow
   }, "\uD83D\uDDD1 Borrar"), /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-foot-right"
-  }, selectedIdx >= 0 && selectedIdx < reservas.length && /*#__PURE__*/React.createElement("button", {
+  }, onOpenContract && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    title: "Abrir en el generador de contratos",
+    onClick: () => {
+      saveDraft();
+      onOpenContract(draft);
+    }
+  }, "\uD83D\uDCC4 Contrato"), selectedIdx >= 0 && selectedIdx < reservas.length && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost",
     onClick: duplicateRow,
@@ -4437,7 +5086,8 @@ const ReservasTab = ({
 };
 const AdminApp = () => {
   const [phase, setPhase] = React.useState('login');
-  const [mode, setMode] = React.useState('pricing'); // 'pricing' | 'reviews' | 'analytics' | 'contract' | 'reservas'
+  const [mode, setMode] = React.useState('pricing');
+  const [contractPrefill, setContractPrefill] = React.useState(null);
   const [token, setToken] = React.useState('');
   const [data, setData] = React.useState(null);
   const [sha, setSha] = React.useState(null);
@@ -4535,14 +5185,14 @@ const AdminApp = () => {
       return next;
     });
   };
-  const saveReviews = async () => {
+  const saveReviewsData = async data => {
     setPhase('saving');
     setError(null);
     setSuccess(null);
     try {
       const merged = {
-        ...reviewsData,
-        version: reviewsData.version || 1,
+        ...data,
+        version: data.version || 1,
         updatedAt: new Date().toISOString()
       };
       const body = JSON.stringify({
@@ -4572,6 +5222,16 @@ const AdminApp = () => {
       setError(err.message);
       setPhase('ready');
     }
+  };
+  const saveReviews = () => saveReviewsData(reviewsData);
+  const quickApprove = async id => {
+    if (!reviewsData) return;
+    const next = JSON.parse(JSON.stringify(reviewsData));
+    const idx = next.items.findIndex(r => r.id === id);
+    if (idx < 0) return;
+    next.items[idx].status = 'published';
+    setReviewsData(next);
+    await saveReviewsData(next);
   };
   const update = (path, value) => {
     setData(prev => {
@@ -4651,37 +5311,39 @@ const AdminApp = () => {
     return /*#__PURE__*/React.createElement("div", {
       className: "pe-shell"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "pe-card"
-    }, /*#__PURE__*/React.createElement("h1", null, "Hest\xEDa \xB7 Pricing Edit"), /*#__PURE__*/React.createElement("p", {
-      className: "pe-lede"
-    }, "Edici\xF3n segura de ", /*#__PURE__*/React.createElement("code", null, PATH), ". Pega tu Personal Access Token de GitHub con permiso ", /*#__PURE__*/React.createElement("code", null, "contents: write"), " sobre ", /*#__PURE__*/React.createElement("code", null, REPO), ". El token vive solo en memoria del navegador \u2014 no se persiste."), /*#__PURE__*/React.createElement("form", {
-      onSubmit: login
-    }, /*#__PURE__*/React.createElement("label", {
-      className: "pe-lbl"
-    }, "Personal Access Token"), /*#__PURE__*/React.createElement("input", {
+      className: "pe-card pe-login-card"
+    }, /*#__PURE__*/React.createElement("h1", {
+      className: "pe-login-title"
+    }, "Hest\xEDa Admin"), /*#__PURE__*/React.createElement("form", {
+      onSubmit: login,
+      className: "pe-login-form"
+    }, /*#__PURE__*/React.createElement("input", {
       type: "password",
+      autoFocus: true,
       autoComplete: "off",
       spellCheck: "false",
       value: token,
       onChange: e => setToken(e.target.value),
-      placeholder: "ghp_\u2026 o github_pat_\u2026",
-      className: "pe-input pe-mono",
+      placeholder: "github_pat_\u2026",
+      className: "pe-input pe-mono pe-login-input",
       required: true
     }), /*#__PURE__*/React.createElement("button", {
       type: "submit",
-      className: "pe-btn pe-btn-primary"
+      className: "pe-btn pe-btn-primary pe-login-btn"
     }, "Entrar"), error && /*#__PURE__*/React.createElement("div", {
       className: "pe-error"
-    }, error)), /*#__PURE__*/React.createElement("div", {
+    }, error)), /*#__PURE__*/React.createElement("details", {
       className: "pe-help"
-    }, /*#__PURE__*/React.createElement("strong", null, "\xBFC\xF3mo crear el PAT?"), /*#__PURE__*/React.createElement("ol", null, /*#__PURE__*/React.createElement("li", null, "GitHub \u2192 Settings \u2192 Developer settings \u2192 Personal access tokens \u2192 ", /*#__PURE__*/React.createElement("em", null, "Fine-grained tokens"), "."), /*#__PURE__*/React.createElement("li", null, "Repository access \u2192 Only select repositories \u2192 ", /*#__PURE__*/React.createElement("code", null, REPO), "."), /*#__PURE__*/React.createElement("li", null, "Repository permissions \u2192 ", /*#__PURE__*/React.createElement("strong", null, "Contents: Read and write"), "."), /*#__PURE__*/React.createElement("li", null, "Generate, copia el token (empieza por ", /*#__PURE__*/React.createElement("code", null, "github_pat_"), ") y p\xE9galo aqu\xED.")))));
+    }, /*#__PURE__*/React.createElement("summary", null, "\xBFC\xF3mo obtener el token?"), /*#__PURE__*/React.createElement("ol", null, /*#__PURE__*/React.createElement("li", null, "GitHub \u2192 Settings \u2192 Developer settings \u2192 Fine-grained tokens."), /*#__PURE__*/React.createElement("li", null, "Repository: ", /*#__PURE__*/React.createElement("code", null, REPO), " \xB7 Permisos: ", /*#__PURE__*/React.createElement("strong", null, "Contents: write"), "."), /*#__PURE__*/React.createElement("li", null, "Copia el token y p\xE9galo arriba.")))));
   }
   if (phase === 'loading' || phase === 'saving') {
     return /*#__PURE__*/React.createElement("div", {
       className: "pe-shell"
     }, /*#__PURE__*/React.createElement("div", {
-      className: "pe-card"
-    }, /*#__PURE__*/React.createElement("p", null, phase === 'loading' ? 'Autenticando y cargando…' : 'Guardando…')));
+      className: "pe-card pe-login-card pe-loading-card"
+    }, /*#__PURE__*/React.createElement("p", {
+      className: "pe-loading-msg"
+    }, phase === 'loading' ? '⏳ Autenticando…' : '⏳ Guardando…')));
   }
 
   // ---- Reviews — listado y filtros ----
@@ -4800,7 +5462,8 @@ const AdminApp = () => {
       key: r.id,
       review: r,
       onChange: (key, val) => updateReview(r.id, key, val),
-      onRemove: () => removeReview(r.id)
+      onRemove: () => removeReview(r.id),
+      onApprove: id => quickApprove(id)
     })), /*#__PURE__*/React.createElement("div", {
       className: "pe-actions"
     }, /*#__PURE__*/React.createElement("button", {
@@ -4831,7 +5494,9 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCB0 Pricing"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDCB0", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Pricing")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'reviews' ? ' is-active' : ''}`,
     onClick: () => {
@@ -4839,7 +5504,9 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\u2B50 Reviews", reviewsData && (() => {
+  }, "\u2B50", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Reviews"), reviewsData && (() => {
     const pending = (reviewsData.items || []).filter(r => r.status === 'pending').length;
     return pending > 0 ? /*#__PURE__*/React.createElement("span", {
       className: "pe-tab-badge"
@@ -4852,7 +5519,9 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCCA Anal\xEDtica"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDCCA", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Anal\xEDtica")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'contract' ? ' is-active' : ''}`,
     onClick: () => {
@@ -4860,7 +5529,19 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCC4 Contrato"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDCC4", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Contrato")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'prereservas' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('prereservas');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCCB", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Prereservas")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'reservas' ? ' is-active' : ''}`,
     onClick: () => {
@@ -4868,7 +5549,9 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDDD3\uFE0F Reservas"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDDD3\uFE0F", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Reservas")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'leila' ? ' is-active' : ''}`,
     onClick: () => {
@@ -4876,7 +5559,9 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCB3 Leila"), /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDCB3", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Leila")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'dashboard' ? ' is-active' : ''}`,
     onClick: () => {
@@ -4884,14 +5569,23 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCCA Dashboard")), success && /*#__PURE__*/React.createElement("div", {
+  }, "\uD83D\uDCCA", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Dashboard"))), success && /*#__PURE__*/React.createElement("div", {
     className: "pe-success"
   }, success), error && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
   }, error), mode === 'analytics' ? /*#__PURE__*/React.createElement(AnalyticsTab, null) : mode === 'contract' ? /*#__PURE__*/React.createElement(ContractTab, {
-    pricesData: data
-  }) : mode === 'reservas' ? /*#__PURE__*/React.createElement(ReservasTab, {
+    pricesData: data,
+    prefill: contractPrefill
+  }) : mode === 'prereservas' ? /*#__PURE__*/React.createElement(PrereservasTab, {
     token: token
+  }) : mode === 'reservas' ? /*#__PURE__*/React.createElement(ReservasTab, {
+    token: token,
+    onOpenContract: r => {
+      setContractPrefill(r);
+      setMode('contract');
+    }
   }) : mode === 'dashboard' ? /*#__PURE__*/React.createElement(DashboardTab, {
     token: token
   }) : mode === 'leila' ? /*#__PURE__*/React.createElement(LeilaTab, {
@@ -4905,12 +5599,11 @@ const AdminApp = () => {
     className: "pe-field"
   }, /*#__PURE__*/React.createElement("label", null, apt.name), /*#__PURE__*/React.createElement("div", {
     className: "pe-input-row"
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
     min: "0",
     value: apt.base,
-    onChange: e => update(`apts.${id}.base`, Number(e.target.value)),
+    onChange: v => update(`apts.${id}.base`, v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("span", {
     className: "pe-suffix"
@@ -4930,12 +5623,11 @@ const AdminApp = () => {
     }
   }), s.label), /*#__PURE__*/React.createElement("div", {
     className: "pe-input-row"
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement(NumInput, {
     step: "0.05",
     min: "1",
     value: s.multiplier,
-    onChange: e => update(`seasons.${id}.multiplier`, Number(e.target.value)),
+    onChange: v => update(`seasons.${id}.multiplier`, v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("span", {
     className: "pe-suffix"
@@ -4948,78 +5640,71 @@ const AdminApp = () => {
     className: "pe-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9sped extra (\u20AC/noche, desde el 3.\xBA)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
+  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9sped extra (\u20AC/noche, desde el 3.\xBA)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "0",
     value: data.rules.extraGuestPerNight,
-    onChange: e => update('rules.extraGuestPerNight', Number(e.target.value)),
+    onChange: v => update('rules.extraGuestPerNight', v),
     className: "pe-input pe-input-num"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Estancia m\xEDnima (noches)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "1",
+  }, /*#__PURE__*/React.createElement("label", null, "Estancia m\xEDnima (noches)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "1",
     value: data.rules.minNights,
-    onChange: e => update('rules.minNights', Number(e.target.value)),
+    onChange: v => update('rules.minNights', v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
   }, "M\xEDnimo por defecto fuera de temporada cr\xEDtica.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Ventana de estancia corta (d\xEDas)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
+  }, /*#__PURE__*/React.createElement("label", null, "Ventana de estancia corta (d\xEDas)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "0",
     value: data.rules.imminentDays,
-    onChange: e => update('rules.imminentDays', Number(e.target.value)),
+    onChange: v => update('rules.imminentDays', v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
   }, "Si el check-in es dentro de este n\xFAmero de d\xEDas, se permite el m\xEDnimo de estancia corta (t\xEDpicamente 2 noches). Pon 0 para desactivar.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "M\xEDnimo en estancia corta (noches)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "M\xEDnimo en estancia corta (noches)"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "1",
     min: "1",
     max: "7",
-    step: "1",
     value: data.rules.twoNightFloor,
-    onChange: e => update('rules.twoNightFloor', Number(e.target.value)),
+    onChange: v => update('rules.twoNightFloor', v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
   }, "Cu\xE1ntas noches admitir dentro de la ventana corta. Por defecto 2.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "M\xEDnimo en temporada cr\xEDtica (noches)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "1",
+  }, /*#__PURE__*/React.createElement("label", null, "M\xEDnimo en temporada cr\xEDtica (noches)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "1",
     value: data.rules.criticalSeasonMinNights,
-    onChange: e => update('rules.criticalSeasonMinNights', Number(e.target.value)),
+    onChange: v => update('rules.criticalSeasonMinNights', v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
   }, "Solo aplica en fechas marcadas como cr\xEDtica.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Descuento reserva directa (0\u20131)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Descuento reserva directa (0\u20131)"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
     min: "0",
     max: "1",
-    step: "0.01",
     value: data.rules.directDiscount,
-    onChange: e => update('rules.directDiscount', Number(e.target.value)),
+    onChange: v => update('rules.directDiscount', v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
   }, "Ej. 0.09 = \u22129 % vs Booking/Airbnb")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Suplemento mascota (\u20AC/estancia)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
+  }, /*#__PURE__*/React.createElement("label", null, "Suplemento mascota (\u20AC/estancia)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "0",
     value: data.rules.petFlatFee,
-    onChange: e => update('rules.petFlatFee', Number(e.target.value)),
+    onChange: v => update('rules.petFlatFee', v),
     className: "pe-input pe-input-num"
   })))), /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
@@ -5045,46 +5730,43 @@ const AdminApp = () => {
     }
   }))), /*#__PURE__*/React.createElement("tbody", null, (data.rules.guestSupplements || []).map((g, i) => /*#__PURE__*/React.createElement("tr", {
     key: i
-  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
+    step: "1",
     min: "1",
     max: "10",
-    step: "1",
     value: g.from,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.guestSupplements || []).slice();
       arr[i] = {
         ...arr[i],
-        from: Number(e.target.value)
+        from: v
       };
       update('rules.guestSupplements', arr);
     },
     className: "pe-input pe-input-num"
-  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
+    step: "1",
     min: "1",
     max: "10",
-    step: "1",
     value: g.to,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.guestSupplements || []).slice();
       arr[i] = {
         ...arr[i],
-        to: Number(e.target.value)
+        to: v
       };
       update('rules.guestSupplements', arr);
     },
     className: "pe-input pe-input-num"
-  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "0",
     value: g.perNight,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.guestSupplements || []).slice();
       arr[i] = {
         ...arr[i],
-        perNight: Number(e.target.value)
+        perNight: v
       };
       update('rules.guestSupplements', arr);
     },
@@ -5182,16 +5864,15 @@ const AdminApp = () => {
       update('rules.extras', arr);
     },
     className: "pe-input"
-  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "0",
     value: ex.price,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.extras || []).slice();
       arr[i] = {
         ...arr[i],
-        price: Number(e.target.value)
+        price: v
       };
       update('rules.extras', arr);
     },
@@ -5255,44 +5936,41 @@ const AdminApp = () => {
     className: "pe-table"
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Noches reales"), /*#__PURE__*/React.createElement("th", null, "Calcular como (noches)"), /*#__PURE__*/React.createElement("th", null, "Descuento fijo (\u20AC)"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, (data.rules.shortStayPricing || []).map((r, i) => /*#__PURE__*/React.createElement("tr", {
     key: i
-  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "1",
+  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "1",
     value: r.nights,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.shortStayPricing || []).slice();
       arr[i] = {
         ...arr[i],
-        nights: Number(e.target.value)
+        nights: v
       };
       update('rules.shortStayPricing', arr);
     },
     className: "pe-input pe-input-num"
-  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
+    step: "1",
     min: "1",
-    step: "1",
     value: r.basedOnNights,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.shortStayPricing || []).slice();
       arr[i] = {
         ...arr[i],
-        basedOnNights: Number(e.target.value)
+        basedOnNights: v
       };
       update('rules.shortStayPricing', arr);
     },
     className: "pe-input pe-input-num"
-  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "0",
     value: r.discount,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.shortStayPricing || []).slice();
       arr[i] = {
         ...arr[i],
-        discount: Number(e.target.value)
+        discount: v
       };
       update('rules.shortStayPricing', arr);
     },
@@ -5333,31 +6011,29 @@ const AdminApp = () => {
     className: "pe-table"
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "M\xEDn. noches"), /*#__PURE__*/React.createElement("th", null, "Descuento (0\u20131)"), /*#__PURE__*/React.createElement("th", null, "No aplica en"))), /*#__PURE__*/React.createElement("tbody", null, data.rules.stayDiscounts.map((d, i) => /*#__PURE__*/React.createElement("tr", {
     key: i
-  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "1",
+  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "1",
     value: d.minNights,
-    onChange: e => {
+    onChange: v => {
       const arr = data.rules.stayDiscounts.slice();
       arr[i] = {
         ...arr[i],
-        minNights: Number(e.target.value)
+        minNights: v
       };
       update('rules.stayDiscounts', arr);
     },
     className: "pe-input pe-input-num"
-  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
     min: "0",
     max: "1",
-    step: "0.01",
     value: d.pct,
-    onChange: e => {
+    onChange: v => {
       const arr = data.rules.stayDiscounts.slice();
       arr[i] = {
         ...arr[i],
-        pct: Number(e.target.value)
+        pct: v
       };
       update('rules.stayDiscounts', arr);
     },

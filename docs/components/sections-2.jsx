@@ -281,7 +281,7 @@ const RatingsMarquee = ({ lang }) => {
     '600+ familias desde 2016',
     'Sin comisiones · reserva directa',
     '10 años en Vera Playa',
-    'Mejor precio garantizado',
+    '¿Precio mejor? Te lo mejoramos',
     'Te responde Alex o Fran en <24 h',
   ] : [
     '★ 9.8 · Booking.com',
@@ -290,7 +290,7 @@ const RatingsMarquee = ({ lang }) => {
     '600+ families since 2016',
     'No commissions · direct booking',
     '10 years in Vera Playa',
-    'Best price guaranteed',
+    'Better price? We beat it',
     'Alex or Fran reply within 24 h',
   ];
   // Duplicamos el array para que el loop sea continuo (translateX -50%).

@@ -11,6 +11,11 @@ const APT_DATA = {
     accent: '#6B7A3A', accent2: '#8B9A52', accent_dk: '#4A5628',
     hero_img: 'assets/apt-vs.jpg',
     bedroom_img: 'assets/apt-vm-gallery-10.jpg',
+    floorplan_img: 'assets/apt-vm-plano.jpg',
+    floorplan_subtitle_es: 'distribución en planta.',
+    floorplan_subtitle_en: 'floor layout.',
+    floorplan_desc_es: 'Mar se distribuye en primera planta con terraza de esquina: salón-comedor abierto, cocina equipada, dos dormitorios y dos baños. La terraza en esquina recibe luz desde el amanecer hasta el atardecer.',
+    floorplan_desc_en: 'Mar is on the first floor with a corner terrace: open living and dining room, equipped kitchen, two bedrooms and two bathrooms. The corner terrace catches light from sunrise to sunset.',
     others: ['vt', 'vs'],
     gallery_imgs: [
       'assets/apt-vm-gallery-1.jpg',
@@ -63,6 +68,10 @@ const APT_DATA = {
     hero_img: 'assets/apt-vt-4.jpg',
     bedroom_img: 'assets/apt-vt-gallery-03.jpg',
     floorplan_img: 'assets/IMG_1121.png',
+    floorplan_subtitle_es: 'distribución del ático.',
+    floorplan_subtitle_en: 'penthouse layout.',
+    floorplan_desc_es: 'Thalassa ocupa la tercera planta (desde el garaje) en una sola crujía: salón con terraza panorámica, cocina abierta, dos dormitorios, dos baños y vistas al Mediterráneo y al Salar de los Canos.',
+    floorplan_desc_en: 'Thalassa occupies the third floor (from the garage) in a single open plan: living room with panoramic terrace, open kitchen, two bedrooms, two bathrooms and views over the Mediterranean and the Salar de los Canos.',
     others: ['vm', 'vs'],
     gallery_imgs: [
       'assets/apt-vt-gallery-01.jpg',
@@ -90,7 +99,7 @@ const APT_DATA = {
       concept: 'El ático sobre el Mediterráneo y el Salar de los Canos.',
       desc: 'Hestía Thalassa es el ático, el más elevado de los tres. Desde su terraza panorámica se ve el Mediterráneo y, hacia el interior, el Salar de los Canos — un paisaje árido y de gran belleza que cambia con la luz del día. El punto más abierto y luminoso de toda la urbanización.',
       desc2: 'El ático tiene una planta abierta y una terraza con vistas al mar. La urbanización cuenta con piscina comunitaria con jacuzzi, minigim, y un minispa con piscina climatizada abierto en otoño, invierno y primavera.',
-      features: ['6 plazas + bebé · 2 habitaciones', 'Ático — el piso más alto de la urbanización', 'Terraza panorámica · vistas al mar y al Salar de los Canos', '2 piscinas exteriores comunitarias + jacuzzi', 'Minigim · piscina climatizada + minispa (otoño-primavera)', '1,5 km de la playa', 'Mascotas · petición previa · suplemento', 'Aire acondicionado frío/calor', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'WiFi fibra óptica · Amazon Alexa', 'Lavadora · lavavajillas · nevera · microondas', 'Cafetera de cápsulas + espresso · batidora · plancha', 'Cama matrimonial 150 cm · colchón viscoelástico', 'Toallas 100% algodón 200 hilos · nórdicos de plumas'],
+      features: ['6 plazas + bebé · 2 habitaciones', 'Ático · tercera planta desde el garaje', 'Terraza panorámica · vistas al mar y al Salar de los Canos', '2 piscinas exteriores comunitarias + jacuzzi', 'Minigim · piscina climatizada + minispa (otoño-primavera)', '1,5 km de la playa', 'Mascotas · petición previa · suplemento', 'Aire acondicionado frío/calor', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'WiFi fibra óptica · Amazon Alexa', 'Lavadora · lavavajillas · nevera · microondas', 'Cafetera de cápsulas + espresso · batidora · plancha', 'Cama matrimonial 150 cm · colchón viscoelástico', 'Toallas 100% algodón 200 hilos · nórdicos de plumas'],
       gallery_captions: ['Terraza · atardecer dorado y vistas al Mediterráneo', 'Dormitorio principal · cojines bordados y detalle', 'Dormitorio 2 · cabeceros rojos y cojines de colores', 'Salón · vistas al atardecer desde la ventana', 'Comedor · mesa extensible y lámparas negras', 'Baño 1 · mosaico azul y suelo hidráulico', 'Entrada · mueble artesanal y espejo geométrico', 'Terraza · zona chill out bajo el toldo', 'Salón · sofá y planta tropical', 'Terraza · vistas panorámicas y puesta de sol', 'Dormitorio 2 · cabeceros granate y luz cálida de noche', 'Dormitorio 2 · vista frontal · cojines abstractos azul-índigo', 'Baño 2 · ducha de obra con mampara y mosaico amarillo', 'Baño 2 · grifería negra y detalle de la flor seca', 'Terraza · velada nocturna y ambiente cálido', 'Piscina · vistas aéreas y Mediterráneo al fondo', 'Cocina · encimera gris y azulejos ocres', 'Salón · comedor con luz cálida y acceso a terraza', 'Baño · lavabo sobre mueble negro y espejo redondo'],
     },
     en: {
@@ -98,7 +107,7 @@ const APT_DATA = {
       concept: 'The penthouse above the Mediterranean and the Salar de los Canos.',
       desc: 'Hestía Thalassa is the penthouse — the highest of the three. From its panoramic terrace you look out over the Mediterranean and, inland, the Salar de los Canos: an arid, dramatically beautiful landscape that shifts with the light throughout the day.',
       desc2: 'The penthouse is laid out as a single open floor with a terrace and sea views. The complex has a shared pool with jacuzzi, a mini-gym, and a mini-spa with heated pool open in autumn, winter and spring.',
-      features: ['6 guests + baby · 2 bedrooms', 'Penthouse — highest floor in the complex', 'Panoramic terrace · sea & Salar de los Canos views', '2 outdoor shared pools + jacuzzi', 'Mini-gym · heated pool + mini-spa (autumn–spring)', '1.5 km from the beach', 'Pets · on request · supplement', 'A/C heating & cooling', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'Fibre WiFi · Amazon Alexa', 'Washer · dishwasher · fridge · microwave', 'Capsule + espresso coffee maker · blender · iron', 'Double bed 150 cm · memory foam mattress', '100% cotton 200-thread towels · down duvets'],
+      features: ['6 guests + baby · 2 bedrooms', 'Penthouse · third floor from the garage', 'Panoramic terrace · sea & Salar de los Canos views', '2 outdoor shared pools + jacuzzi', 'Mini-gym · heated pool + mini-spa (autumn–spring)', '1.5 km from the beach', 'Pets · on request · supplement', 'A/C heating & cooling', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'Fibre WiFi · Amazon Alexa', 'Washer · dishwasher · fridge · microwave', 'Capsule + espresso coffee maker · blender · iron', 'Double bed 150 cm · memory foam mattress', '100% cotton 200-thread towels · down duvets'],
       gallery_captions: ['Terrace · golden sunset & Mediterranean views', 'Master bedroom · embroidered cushions detail', 'Bedroom 2 · red velvet headboards & colourful pillows', 'Living room · sunset views through the window', 'Dining area · extendable table & black pendants', 'Bathroom 1 · blue mosaic & patterned floor tiles', 'Entrance · artisan cabinet & geometric mirror', 'Terrace · chill-out seating under the awning', 'Living room · sofa & tropical plant', 'Terrace · panoramic views & golden hour', 'Bedroom 2 · burgundy headboards & warm night light', 'Bedroom 2 · front view · indigo-blue abstract cushions', 'Bathroom 2 · walk-in shower with yellow mosaic', 'Bathroom 2 · matte-black tap & dried-flower detail', 'Terrace · warm evening ambience', 'Pool · aerial view & Mediterranean on the horizon', 'Kitchen · grey countertop & ochre tiles', 'Living room · warm-lit dining area & terrace access', 'Bathroom · vessel sink on black unit & round mirror'],
     },
   },
@@ -109,6 +118,11 @@ const APT_DATA = {
     accent: '#9E7A2C', accent2: '#D4A84A', accent_dk: '#7A5E1A',
     hero_img: 'assets/apt-vm.jpg',
     bedroom_img: 'assets/apt-vs-gallery-21.jpg',
+    floorplan_img: 'assets/apt-vs-floorplan.jpg',
+    floorplan_subtitle_es: 'distribución en planta.',
+    floorplan_subtitle_en: 'floor layout.',
+    floorplan_desc_es: 'Salinas se distribuye en planta primera: salón-comedor, cocina equipada, dos dormitorios, dos baños y dos terrazas — la principal al sur con vistas a los jardines y la piscina de la urbanización.',
+    floorplan_desc_en: 'Salinas is a first-floor apartment: living and dining room, equipped kitchen, two bedrooms, two bathrooms and two terraces — the main one faces south with views over the complex gardens and pool.',
     others: ['vm', 'vt'],
     gallery_imgs: [
       'assets/apt-vs-gallery-2.jpg',    // recibidor
@@ -792,6 +806,8 @@ const AptPageOthers = ({ apt, lang }) => {
 // --- Plano de Hestía (solo si floorplan_img está definido) ---
 const AptFloorPlan = ({ apt, lang }) => {
   if (!apt.floorplan_img) return null;
+  const subtitle = lang === 'es' ? (apt.floorplan_subtitle_es || 'distribución en planta.') : (apt.floorplan_subtitle_en || 'floor layout.');
+  const desc     = lang === 'es' ? apt.floorplan_desc_es : apt.floorplan_desc_en;
   return (
     <section className="apt-floorplan section-cream">
       <div className="container">
@@ -799,22 +815,21 @@ const AptFloorPlan = ({ apt, lang }) => {
           {lang === 'es' ? 'Distribución de Hestía' : 'Hestía layout'}
         </div>
         <h2 className="apt-fp-title">
-          {lang === 'es'
-            ? <>{apt.name_short}, <em>distribución del ático.</em></>
-            : <>{apt.name_short}, <em>penthouse layout.</em></>}
+          {apt.name_short}, <em>{subtitle}</em>
         </h2>
-        <p className="apt-fp-desc">
-          {lang === 'es'
-            ? 'El ático Thalassa se distribuye en una sola planta: salón, cocina, dos dormitorios, dos baños y terraza panorámica con vistas al mar y al Salar de los Canos.'
-            : 'The Thalassa penthouse is laid out as a single open floor: living room, kitchen, two bedrooms, two bathrooms and a panoramic terrace with sea and Salar de los Canos views.'}
-        </p>
+        {desc && <p className="apt-fp-desc">{desc}</p>}
         <div className="apt-fp-img-wrap reveal">
-          <img decoding="async"
-            src={apt.floorplan_img}
-            alt={lang === 'es' ? `Plano de ${apt[lang].name}` : `Floor plan of ${apt[lang].name}`}
-            className="apt-fp-img"
-            loading="lazy"
-          />
+          <div className="apt-fp-watermark-wrap">
+            <img decoding="async"
+              src={apt.floorplan_img}
+              alt={lang === 'es' ? `Plano de ${apt[lang].name}` : `Floor plan of ${apt[lang].name}`}
+              className="apt-fp-img"
+              loading="lazy"
+            />
+            <div className="apt-fp-watermark" aria-hidden="true">
+              <img src="assets/logo-hestia-brand.png" alt="" className="apt-fp-watermark-logo" />
+            </div>
+          </div>
         </div>
       </div>
     </section>
