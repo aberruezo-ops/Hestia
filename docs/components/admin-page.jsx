@@ -1484,7 +1484,9 @@ const ContractTab = ({ pricesData, prefill }) => {
   const [precioTotal, setPrecioTotal] = React.useState(p.ingreso_total != null ? String(p.ingreso_total) : '');
   const [prereserva, setPrereserva]   = React.useState(p.reserva != null ? String(p.reserva) : '');
   const [pagoPrevio, setPagoPrevio]   = React.useState(p.pago_previo != null ? String(p.pago_previo) : '0');
-  const [diasCancelacion, setDiasCancelacion] = React.useState(14);
+  const [diasCancelacion, setDiasCancelacion] = React.useState(
+    p.cancelacion ? (Number((String(p.cancelacion).match(/\d+/) || [])[0]) || 14) : 14
+  );
   const [fianza, setFianza]           = React.useState(p.fianza || false);
   const [fechaFirma, setFechaFirma]   = React.useState(today);
 
@@ -1502,7 +1504,20 @@ const ContractTab = ({ pricesData, prefill }) => {
     && Number(prereserva) <= Number(precioTotal)
     && diasCancelacion > 0;
 
-const buildContractHTML = (heroDataUrl) => {
+  const fetchDataUrl = async (path) => {
+    try {
+      const o = (typeof window !== 'undefined' && window.location.origin) || '';
+      const b = (typeof window !== 'undefined' && window.location.pathname)
+        ? window.location.pathname.replace(/[^/]+$/, '') : '/';
+      const url = `${o}${b}${path}`.replace(/([^:])\/+/g, '$1/');
+      const resp = await fetch(url);
+      if (!resp.ok) return null;
+      const blob = await resp.blob();
+      return new Promise(res => { const r = new FileReader(); r.onload = () => res(r.result); r.readAsDataURL(blob); });
+    } catch (_) { return null; }
+  };
+
+const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
     const escHtml = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     const a = aptInfo;
     const fechaFirmaStr  = fmtFechaEs(fechaFirma);
@@ -1541,81 +1556,53 @@ const buildContractHTML = (heroDataUrl) => {
     const baseDir = (typeof window !== 'undefined' && window.location && window.location.pathname)
       ? window.location.pathname.replace(/[^\/]+$/, '')
       : '/';
-    const assetUrl = (p) => `${origin}${baseDir}${p}`.replace(/([^:])\/+/g, '$1/');
-    const logoUrl = assetUrl('assets/logo-hestia-brand.png');
-    const wmLogoUrl = assetUrl('assets/logo-teal-transparent.png');
-    const heroUrl = heroDataUrl || assetUrl(a.heroPhoto);
+    const heroUrl = heroDataUrl || '';
+    const pdfFilename = `contrato-hestia-vera-${apt}-${escHtml(nombre.toLowerCase().replace(/\s+/g,'-'))}-${fechaEntrada}.pdf`;
     return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
-<base href="${origin}${baseDir}">
 <title>Contrato · Hestía Vera ${a.shortName} · ${escHtml(nombre)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>
 <style>
-  /* Forzar a Chrome/Edge a imprimir los colores de fondo y los
-     degradados de la portada hero. Sin esto, la cabecera con la
-     foto se imprime en blanco al exportar a PDF. */
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-    color-adjust: exact !important;
-  }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  @page { size: A4; margin: 0; }
   :root {
-    --ber: #3D1A35;
-    --ber-dk: #2A0F2E;
-    --ber-lt: #4E2446;
-    --sol: #3AAABB;
-    --vt: #B86A3C;
-    --vt-dk: #8A4A24;
-    --arena: #F0E8D5;
-    --arena-dk: #E4D9BE;
-    --ink-soft: #5B4A56;
+    --ber: #3D1A35; --ber-dk: #2A0F2E; --ber-lt: #4E2446;
+    --sol: #3AAABB; --vt: #B86A3C; --vt-dk: #8A4A24;
+    --arena: #F0E8D5; --arena-dk: #E4D9BE;
   }
-  @page {
-    size: A4;
-    margin: 22mm 16mm 22mm 16mm;
-    @bottom-left {
-      content: "Hestía Your Home  ·  info@hestiayourhome.com  ·  +34 620 316 370";
-      font-family: 'Lora', Georgia, serif;
-      font-size: 8pt;
-      color: #4E2446;
-      padding-bottom: 6mm;
-    }
-    @bottom-center {
-      content: "✦";
-      color: #3AAABB;
-      font-size: 10pt;
-      padding-bottom: 6mm;
-    }
-    @bottom-right {
-      content: "Página " counter(page) " de " counter(pages);
-      font-family: 'Lora', Georgia, serif;
-      font-size: 8.5pt;
-      font-weight: 600;
-      color: #3D1A35;
-      padding-bottom: 6mm;
-    }
+  /* ── Notification bar (excluded from pdf capture) ─── */
+  #gen-bar {
+    position: sticky; top: 0; background: var(--ber-dk); color: var(--arena);
+    padding: 8px 16px; z-index: 9999; font-family: sans-serif; font-size: 13px;
+    display: flex; align-items: center; gap: 12px;
   }
+  #gen-bar button {
+    background: var(--sol); color: #fff; border: none; border-radius: 4px;
+    padding: 4px 14px; cursor: pointer; font-size: 12px;
+  }
+  @media print { #gen-bar { display: none !important; } }
+  /* ── Layout ─────────────────────────────────────────── */
   body {
     font-family: 'Lora', Georgia, serif;
     color: var(--ber);
     font-size: 10.5pt;
     line-height: 1.55;
     margin: 0;
-    padding-top: 20mm;
+    margin: 0; padding: 0; background: #fff;
   }
+  #pdf-content { background: #fff; }
+  #contract-body { padding: 5mm 16mm 8mm; }
 
-  /* Hero con foto + título grande (solo página 1) */
+  /* ── Hero (primera página) ───────────────────────────── */
   .hero {
     position: relative;
-    width: 178mm;
-    height: 50mm;
-    margin: 0 0 6mm;
+    width: 100%;
+    height: 55mm;
     overflow: hidden;
-    border-radius: 1.5mm;
     background: linear-gradient(135deg, var(--ber) 0%, var(--ber-lt) 100%);
-    page-break-inside: avoid;
   }
   .hero-img {
     width: 100%;
@@ -1660,81 +1647,7 @@ const buildContractHTML = (heroDataUrl) => {
     color: var(--arena-dk);
   }
 
-  /* Marca de agua — aparece en todas las páginas del PDF */
-  .wm {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-25deg);
-    z-index: -1;
-    pointer-events: none;
-    user-select: none;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-  .wm img {
-    width: 420pt;
-    height: auto;
-    opacity: 0.06;
-    display: block;
-  }
-
-  /* Cabecera con foto repetida en cada página */
-  .repeat-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 18mm;
-    overflow: hidden;
-    z-index: 10;
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-  .rh-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.55;
-  }
-  .rh-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, rgba(42,15,46,0.88) 0%, rgba(42,15,46,0.72) 60%, rgba(42,15,46,0.60) 100%);
-  }
-  .rh-content {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    padding: 0 5mm;
-    gap: 3mm;
-    color: #F0E8D5;
-  }
-  .rh-logo { width: 10mm; height: 10mm; object-fit: contain; flex-shrink: 0; }
-  .rh-brand {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 11pt;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-  }
-  .rh-sep { color: #3AAABB; font-size: 10pt; }
-  .rh-apt {
-    font-family: 'Lora', Georgia, serif;
-    font-size: 9pt;
-    font-style: italic;
-    color: #E4D9BE;
-  }
-  .rh-spacer { flex: 1; }
-  .rh-dates {
-    font-family: 'Lora', Georgia, serif;
-    font-size: 8.5pt;
-    color: #E4D9BE;
-    white-space: nowrap;
-  }
-
+  /* ── Contract typography ─────────────────────────────── */
   h1 {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 16pt;
@@ -1875,80 +1788,15 @@ const buildContractHTML = (heroDataUrl) => {
     font-size: 9.5pt;
   }
 
-  @media print {
-    body { margin: 0; }
-    .print-bar { display: none; }
-  }
-  .print-bar {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    max-width: 300px;
-    background: var(--arena);
-    border: 1pt solid var(--ber);
-    border-radius: 6px;
-    padding: 10px 12px;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(61,26,53,0.15);
-    font-family: 'Lora', sans-serif;
-    font-size: 11px;
-    line-height: 1.4;
-    color: var(--ber);
-  }
-  .print-bar h4 {
-    margin: 0 0 4px;
-    font-family: 'Playfair Display', serif;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--ber-dk);
-  }
-  .print-bar ul {
-    margin: 0 0 8px 14px;
-    padding: 0;
-    font-size: 10.5px;
-  }
-  .print-bar ul li { margin: 2px 0; }
-  .print-bar button {
-    background: var(--ber);
-    color: var(--arena);
-    border: none;
-    border-radius: 3px;
-    font-family: 'Lora', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 8px 16px;
-    cursor: pointer;
-    width: 100%;
-  }
-  .print-bar button:hover { background: var(--ber-lt); }
+  @media print { body { margin: 0; } }
 </style></head>
 <body>
-<div class="wm" aria-hidden="true"><img src="${wmLogoUrl}" alt=""></div>
-
-<!-- Cabecera con foto del apartamento — se repite en cada página -->
-<div class="repeat-header" aria-hidden="true">
-  <img src="${heroUrl}" alt="" class="rh-img" onerror="this.style.display='none'">
-  <div class="rh-overlay"></div>
-  <div class="rh-content">
-    <img src="${logoUrl}" alt="Hestía" class="rh-logo">
-    <span class="rh-brand">HESTÍA</span>
-    <span class="rh-sep">·</span>
-    <span class="rh-apt">Vera ${a.shortName}</span>
-    <span class="rh-spacer"></span>
-    <span class="rh-dates">${fechaEntradaStr} → ${fechaSalidaStr} · ${noches} noches</span>
-  </div>
+<div id="gen-bar">
+  <span id="gen-status">Generando PDF…</span>
+  <button id="gen-fallback" onclick="window.print()" style="display:none">Guardar como PDF (alternativa Ctrl+P)</button>
 </div>
 
-<div class="print-bar">
-  <h4>Contrato listo</h4>
-  <ul>
-    <li><strong>Gráficos de fondo:</strong> activado</li>
-    <li><strong>Encabezados y pies del navegador:</strong> desactivado</li>
-    <li><strong>Márgenes:</strong> predeterminado</li>
-  </ul>
-  <button onclick="window.print()">Guardar como PDF</button>
-</div>
-
+<div id="pdf-content">
 <div class="hero">
   <img src="${heroUrl}" alt="${a.name}" class="hero-img" onerror="this.style.display='none'">
   <div class="hero-overlay"></div>
@@ -1958,6 +1806,7 @@ const buildContractHTML = (heroDataUrl) => {
     <div class="hero-meta">${fechaEntradaStr} → ${fechaSalidaStr} · ${nochesL} (${noches}) noches · ${huespedes} huésped${huespedes !== 1 ? 'es' : ''}${mascotaTexto}</div>
   </div>
 </div>
+<div id="contract-body">
 
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
 
@@ -2062,7 +1911,98 @@ ${clausulaFianza}
     Fdo.: <strong>${escHtml(nombre.toUpperCase())}</strong>
   </div>
 </div>
+</div><!-- #contract-body -->
+</div><!-- #pdf-content -->
 
+<script>
+(function() {
+  var HERO = ${JSON.stringify(heroDataUrl || '')};
+  var LOGO = ${JSON.stringify(logoDataUrl || '')};
+  var WM   = ${JSON.stringify(wmDataUrl   || '')};
+  var FILE = ${JSON.stringify(pdfFilename)};
+  var APT  = ${JSON.stringify('Vera ' + a.shortName)};
+  var DATES = ${JSON.stringify(fechaEntradaStr + ' → ' + fechaSalidaStr)};
+
+  async function generate() {
+    try { await document.fonts.ready; } catch(e) {}
+    var el = document.getElementById('pdf-content');
+    var hH = 22, fH = 13; // header / footer height mm
+    var opt = {
+      margin: [hH, 0, fH, 0],
+      filename: FILE,
+      image: { type: 'jpeg', quality: 0.96 },
+      html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['css', 'legacy'] }
+    };
+    var worker = html2pdf().set(opt).from(el);
+    await worker.toPdf();
+    var pdf = await worker.get('pdf');
+    var n = pdf.internal.getNumberOfPages();
+    var pW = pdf.internal.pageSize.getWidth();
+    var pH = pdf.internal.pageSize.getHeight();
+
+    for (var i = 1; i <= n; i++) {
+      pdf.setPage(i);
+
+      /* Watermark — logo centrado con baja opacidad */
+      if (WM) {
+        try {
+          pdf.saveGraphicsState();
+          pdf.setGState(pdf.GState({ opacity: 0.055 }));
+          var wmW = 90, wmH = 63;
+          pdf.addImage(WM, 'PNG', pW / 2 - wmW / 2, pH / 2 - wmH / 2, wmW, wmH, '', 'NONE', 25);
+          pdf.restoreGraphicsState();
+        } catch(e) {}
+      }
+
+      /* Header — foto del apartamento con overlay oscuro */
+      if (HERO) {
+        try {
+          pdf.addImage(HERO, 'JPEG', 0, 0, pW, hH);
+          pdf.saveGraphicsState();
+          pdf.setGState(pdf.GState({ opacity: 0.74 }));
+          pdf.setFillColor(42, 15, 46);
+          pdf.rect(0, 0, pW, hH, 'F');
+          pdf.restoreGraphicsState();
+        } catch(e) {}
+      }
+      if (LOGO) {
+        try { pdf.addImage(LOGO, 'PNG', 4, hH / 2 - 4, 8, 8); } catch(e) {}
+      }
+      pdf.setTextColor(240, 232, 213);
+      pdf.setFont('helvetica', 'bold');
+      pdf.setFontSize(10);
+      pdf.text('HESTIA', 14, hH * 0.64);
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(8.5);
+      pdf.setTextColor(228, 217, 190);
+      pdf.text('· ' + APT, 31, hH * 0.64);
+      pdf.setFontSize(7.5);
+      pdf.text(DATES, pW - 4, hH * 0.64, { align: 'right' });
+
+      /* Footer */
+      pdf.setTextColor(78, 36, 70);
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(7.5);
+      pdf.text('Hestia Your Home · info@hestiayourhome.com · +34 620 316 370', 16, pH - 4);
+      pdf.text('❖', pW / 2, pH - 4, { align: 'center' });
+      pdf.text('Pagina ' + i + ' de ' + n, pW - 4, pH - 4, { align: 'right' });
+    }
+
+    await worker.save();
+    document.getElementById('gen-status').textContent = 'PDF descargado — puedes cerrar esta pestaña o usar Ctrl+P si necesitas imprimirlo.';
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    generate().catch(function(err) {
+      console.error('html2pdf error:', err);
+      document.getElementById('gen-status').textContent = 'Error al generar el PDF. Usa Ctrl+P como alternativa.';
+      document.getElementById('gen-fallback').style.display = '';
+    });
+  });
+})();
+<\/script>
 </body></html>`;
   };
 
@@ -2111,26 +2051,15 @@ info@hestiayourhome.com · +34 620 316 370`;
     aEl.click();
     document.body.removeChild(aEl);
 
-    // ASYNC — pre-load hero photo as data URI so it survives print/save.
-    let heroDataUrl = null;
-    try {
-      const origin = (typeof window !== 'undefined' && window.location && window.location.origin) || '';
-      const baseDir = (typeof window !== 'undefined' && window.location && window.location.pathname)
-        ? window.location.pathname.replace(/[^\/]+$/, '') : '/';
-      const heroAbsUrl = `${origin}${baseDir}${aptInfo.heroPhoto}`.replace(/([^:])\/+/g, '$1/');
-      const resp = await fetch(heroAbsUrl);
-      if (resp.ok) {
-        const blob = await resp.blob();
-        heroDataUrl = await new Promise(res => {
-          const reader = new FileReader();
-          reader.onload = () => res(reader.result);
-          reader.readAsDataURL(blob);
-        });
-      }
-    } catch (_) { /* sigue con URL normal si hay error de red */ }
+    // ASYNC — pre-load images as data URIs so they embed correctly in the PDF.
+    const [heroDataUrl, logoDataUrl, wmDataUrl] = await Promise.all([
+      fetchDataUrl(aptInfo.heroPhoto),
+      fetchDataUrl('assets/logo-hestia-brand.png'),
+      fetchDataUrl('assets/logo-teal-transparent.png'),
+    ]);
 
     // Write contract HTML to the already-opened window.
-    const html = buildContractHTML(heroDataUrl);
+    const html = buildContractHTML(heroDataUrl, logoDataUrl, wmDataUrl);
     w.document.open();
     w.document.write(html);
     w.document.close();
