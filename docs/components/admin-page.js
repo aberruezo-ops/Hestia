@@ -1879,12 +1879,13 @@ const ContractTab = ({
   const [mascota, setMascota] = React.useState(p.mascota || false);
   const [precioTotal, setPrecioTotal] = React.useState(p.ingreso_total != null ? String(p.ingreso_total) : '');
   const [prereserva, setPrereserva] = React.useState(p.reserva != null ? String(p.reserva) : '');
+  const [pagoPrevio, setPagoPrevio] = React.useState(p.pago_previo != null ? String(p.pago_previo) : '0');
   const [diasCancelacion, setDiasCancelacion] = React.useState(14);
   const [fianza, setFianza] = React.useState(p.fianza || false);
   const [fechaFirma, setFechaFirma] = React.useState(today);
   const aptInfo = APT_CONTRACT_DATA[apt];
   const noches = diffNoches(fechaEntrada, fechaSalida);
-  const remanente = Math.max(0, Number(precioTotal || 0) - Number(prereserva || 0));
+  const remanente = Math.max(0, Number(precioTotal || 0) - Number(prereserva || 0) - Number(pagoPrevio || 0));
 
   // Lista de extras (tabla cláusula novena) — leídos de prices.json.
   const extras = pricesData && pricesData.rules && pricesData.rules.extras || [];
@@ -1895,8 +1896,10 @@ const ContractTab = ({
     const fechaFirmaStr = fmtFechaEs(fechaFirma);
     const fechaEntradaStr = fmtFechaCorta(fechaEntrada);
     const fechaSalidaStr = fmtFechaCorta(fechaSalida);
+    const pagoPrevioN = Number(pagoPrevio || 0);
     const precioL = numToSpanish(precioTotal);
     const preL = numToSpanish(prereserva);
+    const prevL = numToSpanish(pagoPrevio);
     const remL = numToSpanish(remanente);
     const huespL = numToSpanish(huespedes);
     const cancelL = numToSpanish(diasCancelacion);
@@ -1952,23 +1955,6 @@ const ContractTab = ({
   @page {
     size: A4;
     margin: 22mm 16mm 22mm 16mm;
-    @top-left {
-      content: "HESTÍA  ·  contrato de arrendamiento";
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 9pt;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      color: #3D1A35;
-      padding-top: 6mm;
-    }
-    @top-right {
-      content: "Hestía Vera ${a.shortName}";
-      font-family: 'Lora', Georgia, serif;
-      font-size: 9pt;
-      font-style: italic;
-      color: #3AAABB;
-      padding-top: 6mm;
-    }
     @bottom-left {
       content: "Hestía Your Home  ·  info@hestiayourhome.com  ·  +34 620 316 370";
       font-family: 'Lora', Georgia, serif;
@@ -1991,53 +1977,13 @@ const ContractTab = ({
       padding-bottom: 6mm;
     }
   }
-  @page :first {
-    /* La primera página no necesita header de texto porque ya
-       lleva la cabecera completa de marca con logo y la foto hero. */
-    @top-left   { content: ""; }
-    @top-right  { content: ""; }
-  }
-  /* Cabecera de marca al inicio (página 1) */
-  .brand-header {
-    display: flex;
-    align-items: center;
-    gap: 4mm;
-    padding-bottom: 3mm;
-    margin-bottom: 4mm;
-    border-bottom: 0.5pt solid var(--ber);
-  }
-  .brand-header-logo { width: 12mm; height: 12mm; object-fit: contain; }
-  .brand-header-text { flex: 1; line-height: 1.2; }
-  .brand-header-name {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 14pt;
-    font-weight: 700;
-    color: var(--ber);
-    letter-spacing: 0.04em;
-  }
-  .brand-header-sub {
-    font-family: 'Lora', Georgia, serif;
-    font-size: 9pt;
-    color: var(--ber-lt);
-    font-style: italic;
-    margin-top: 0.5mm;
-  }
-  .brand-header-apt {
-    font-family: 'Lora', Georgia, serif;
-    font-size: 9pt;
-    font-weight: 600;
-    color: var(--sol);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    text-align: right;
-  }
-
   body {
     font-family: 'Lora', Georgia, serif;
     color: var(--ber);
     font-size: 10.5pt;
     line-height: 1.55;
     margin: 0;
+    padding-top: 20mm;
   }
 
   /* Hero con foto + título grande (solo página 1) */
@@ -2111,6 +2057,62 @@ const ContractTab = ({
     height: auto;
     opacity: 0.06;
     display: block;
+  }
+
+  /* Cabecera con foto repetida en cada página */
+  .repeat-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 18mm;
+    overflow: hidden;
+    z-index: 10;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .rh-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+  }
+  .rh-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(42,15,46,0.88) 0%, rgba(42,15,46,0.72) 60%, rgba(42,15,46,0.60) 100%);
+  }
+  .rh-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 5mm;
+    gap: 3mm;
+    color: #F0E8D5;
+  }
+  .rh-logo { width: 10mm; height: 10mm; object-fit: contain; flex-shrink: 0; }
+  .rh-brand {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 11pt;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+  }
+  .rh-sep { color: #3AAABB; font-size: 10pt; }
+  .rh-apt {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 9pt;
+    font-style: italic;
+    color: #E4D9BE;
+  }
+  .rh-spacer { flex: 1; }
+  .rh-dates {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 8.5pt;
+    color: #E4D9BE;
+    white-space: nowrap;
   }
 
   h1 {
@@ -2302,23 +2304,29 @@ const ContractTab = ({
 </style></head>
 <body>
 <div class="wm" aria-hidden="true"><img src="${wmLogoUrl}" alt=""></div>
-<div class="print-bar">
-  <h4>Ajustes recomendados</h4>
-  <ul>
-    <li><strong>Gráficos de fondo:</strong> activado</li>
-    <li><strong>Encabezados y pies:</strong> desactivado</li>
-    <li><strong>Márgenes:</strong> predeterminado</li>
-  </ul>
-  <button onclick="window.print()">Imprimir / Guardar como PDF</button>
+
+<!-- Cabecera con foto del apartamento — se repite en cada página -->
+<div class="repeat-header" aria-hidden="true">
+  <img src="${heroUrl}" alt="" class="rh-img" onerror="this.style.display='none'">
+  <div class="rh-overlay"></div>
+  <div class="rh-content">
+    <img src="${logoUrl}" alt="Hestía" class="rh-logo">
+    <span class="rh-brand">HESTÍA</span>
+    <span class="rh-sep">·</span>
+    <span class="rh-apt">Vera ${a.shortName}</span>
+    <span class="rh-spacer"></span>
+    <span class="rh-dates">${fechaEntradaStr} → ${fechaSalidaStr} · ${noches} noches</span>
+  </div>
 </div>
 
-<div class="brand-header">
-  <img src="${logoUrl}" alt="Hestía" class="brand-header-logo">
-  <div class="brand-header-text">
-    <div class="brand-header-name">HESTÍA</div>
-    <div class="brand-header-sub">your home — contrato de arrendamiento</div>
-  </div>
-  <div class="brand-header-apt">Hestía Vera ${a.shortName}</div>
+<div class="print-bar">
+  <h4>Contrato listo</h4>
+  <ul>
+    <li><strong>Gráficos de fondo:</strong> activado</li>
+    <li><strong>Encabezados y pies del navegador:</strong> desactivado</li>
+    <li><strong>Márgenes:</strong> predeterminado</li>
+  </ul>
+  <button onclick="window.print()">Guardar como PDF</button>
 </div>
 
 <div class="hero">
@@ -2354,10 +2362,21 @@ ${bloqueAccesibilidad}
 <p>El Propietario cede en arrendamiento de temporada con la duración que se indicará a la Parte Arrendataria, que acepta, la finca descrita.</p>
 
 <h3>Segunda · Renta y fianza</h3>
-<p><strong>2.1</strong> La renta neta es de <strong>${precioL} (${precioTotal}) EUROS</strong> para <strong>${huespL} (${huespedes}) personas${mascotaTexto}</strong>. Este contrato no tendrá validez en los siguientes casos:</p>
+<p><strong>2.1</strong> La renta neta es de <strong>${precioL} (${precioTotal}) EUROS</strong> para <strong>${huespL} (${huespedes}) personas${mascotaTexto}</strong>. El desglose de pagos es el siguiente:</p>
+<table>
+  <thead><tr><th>Concepto</th><th class="num">Importe</th><th>Forma de pago</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Señal / prereserva</strong></td><td class="num">${prereserva} €</td><td>Transferencia a ***IBAN-RETIRADO*** o Bizum a +34 620 316 370</td></tr>
+    ${pagoPrevioN > 0 ? `<tr><td><strong>Pago previo</strong></td><td class="num">${pagoPrevio} €</td><td>Transferencia o Bizum (según acuerdo)</td></tr>` : ''}
+    <tr><td><strong>Remanente (check-in)</strong></td><td class="num">${remanente} €</td><td>Efectivo en el momento del check-in</td></tr>
+    ${fianza ? `<tr><td><strong>Fianza</strong></td><td class="num">300 €</td><td>Transferencia 2 días antes de la llegada — se devuelve al check-out</td></tr>` : ''}
+    <tr style="border-top: 1pt solid var(--ber)"><td><strong>TOTAL</strong></td><td class="num"><strong>${precioTotal} €</strong></td><td></td></tr>
+  </tbody>
+</table>
+<p>Este contrato no tendrá validez en los siguientes casos:</p>
 <ul>
-  <li>Sin el correspondiente justificante de abono en la cuenta ***IBAN-RETIRADO*** o BIZUM al teléfono +34 620 316 370 de la prereserva, es decir, <strong>${preL} (${prereserva}) EUROS</strong>. Deberá ingresarse en el momento de la formalización de este contrato.</li>
-  <li>Sin el correspondiente abono en efectivo del remanente de la estancia, es decir, <strong>${remL} (${remanente}) EUROS</strong>. Deberá pagarse en efectivo en el momento del check-in.</li>
+  <li>Sin el justificante de abono de la señal de <strong>${preL} (${prereserva}) EUROS</strong>, que deberá ingresarse en el momento de la formalización de este contrato.</li>
+  <li>Sin el abono en efectivo del remanente de <strong>${remL} (${remanente}) EUROS</strong> en el momento del check-in.</li>
   <li>Si no se envía el DNI o pasaporte de cada uno de los huéspedes mayores de 16 años, como adjunto al contrato firmado.</li>
   ${lineaFianza}
 </ul>
@@ -2438,7 +2457,7 @@ Para confirmar tu reserva necesitamos que nos hagas llegar:
 
 1. El contrato firmado por todas las partes (puedes contestar a este correo con el PDF firmado adjunto).
 2. El DNI o pasaporte de cada huésped mayor de 16 años.
-3. El justificante de la prereserva de ${prereserva} €, ingresada por transferencia a la cuenta ***IBAN-RETIRADO*** o BIZUM al teléfono +34 620 316 370.
+3. El justificante de la señal de ${prereserva} €, ingresada por transferencia a la cuenta ***IBAN-RETIRADO*** o Bizum al teléfono +34 620 316 370.${Number(pagoPrevio || 0) > 0 ? `\n4. El justificante del pago previo de ${pagoPrevio} €.` : ''}
 
 El remanente de ${remanente} € se abona en efectivo el día de la llegada, en el momento del check-in.
 
@@ -2494,25 +2513,7 @@ info@hestiayourhome.com · +34 620 316 370`;
     w.document.open();
     w.document.write(html);
     w.document.close();
-    const triggerPrint = () => {
-      try {
-        w.focus();
-        w.print();
-      } catch (e) {}
-    };
-    const waitForAssets = () => {
-      try {
-        const imgs = Array.from(w.document.images || []);
-        const imgPromises = imgs.map(img => img.complete && img.naturalWidth > 0 ? Promise.resolve() : new Promise(r => {
-          img.onload = img.onerror = r;
-        }));
-        const fontsReady = w.document.fonts && w.document.fonts.ready || Promise.resolve();
-        Promise.all([...imgPromises, fontsReady]).then(() => setTimeout(triggerPrint, 250)).catch(() => setTimeout(triggerPrint, 1500));
-      } catch (e) {
-        setTimeout(triggerPrint, 1500);
-      }
-    };
-    if (w.document.readyState === 'complete') waitForAssets();else w.addEventListener('load', waitForAssets);
+    w.focus();
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
@@ -2624,7 +2625,7 @@ info@hestiayourhome.com · +34 620 316 370`;
     placeholder: "630"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Prereserva (Bizum / transferencia) *"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al / prereserva (Bizum o transf.) *"), /*#__PURE__*/React.createElement("input", {
     type: "number",
     min: "0",
     value: prereserva,
@@ -2632,7 +2633,15 @@ info@hestiayourhome.com · +34 620 316 370`;
     placeholder: "130"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Remanente (efectivo en check-in)"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "Pago previo adicional"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    value: pagoPrevio,
+    onChange: e => setPagoPrevio(e.target.value),
+    placeholder: "0"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Efectivo al check-in (calculado)"), /*#__PURE__*/React.createElement("input", {
     type: "text",
     readOnly: true,
     value: `${remanente} €`,
