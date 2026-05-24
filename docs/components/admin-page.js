@@ -126,6 +126,67 @@ function diffNoches(entradaIso, salidaIso) {
 const utf8ToB64 = s => btoa(unescape(encodeURIComponent(s)));
 const b64ToUtf8 = s => decodeURIComponent(escape(atob(s.replace(/\n/g, ''))));
 
+// NumInput — resuelve el problema clásico de React con inputs numéricos
+// controlados: imposibilidad de borrar un "0", punto decimal eliminado al vuelo.
+// Mantiene estado string local mientras el campo está activo; solo confirma
+// al parent cuando hay un número válido completo. Selecciona todo al enfocar.
+const NumInput = ({
+  value,
+  onChange,
+  min,
+  max,
+  step,
+  className,
+  placeholder,
+  disabled,
+  readOnly,
+  style,
+  title
+}) => {
+  const isDecimal = step != null && String(step).includes('.');
+  const [str, setStr] = React.useState(() => value == null ? '' : String(value));
+  const active = React.useRef(false);
+  React.useEffect(() => {
+    if (!active.current) setStr(value == null ? '' : String(value));
+  }, [value]);
+  const commit = v => {
+    if (v === '' || v === '-' || v === '.' || v.endsWith('.')) return;
+    const n = Number(v);
+    if (!isNaN(n)) onChange(n);
+  };
+  return /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    inputMode: isDecimal ? 'decimal' : 'numeric',
+    value: str,
+    className: className,
+    placeholder: placeholder ?? '0',
+    disabled: disabled,
+    readOnly: readOnly,
+    style: style,
+    title: title,
+    onChange: e => {
+      const v = e.target.value;
+      if (!/^-?\d*\.?\d*$/.test(v)) return;
+      setStr(v);
+      commit(v);
+    },
+    onFocus: e => {
+      active.current = true;
+      e.target.select();
+    },
+    onBlur: () => {
+      active.current = false;
+      const n = parseFloat(str);
+      if (isNaN(n) || str === '') {
+        setStr('0');
+        onChange(0);
+      } else {
+        setStr(String(n));
+      }
+    }
+  });
+};
+
 // ============================================================
 // validateYearCoverage — para un año dado, comprueba que cada
 // día está cubierto por exactamente una temporada/especial. Los
@@ -662,13 +723,12 @@ const ReviewRow = ({
     className: "pe-input"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Rating (", review.source === 'booking' ? '/10' : '/5', ")"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Rating (", review.source === 'booking' ? '/10' : '/5', ")"), /*#__PURE__*/React.createElement(NumInput, {
     min: 0,
     max: review.source === 'booking' ? 10 : 5,
     step: 0.1,
     value: review.rating,
-    onChange: e => onChange('rating', Number(e.target.value)),
+    onChange: v => onChange('rating', v),
     className: "pe-input"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
@@ -1010,13 +1070,12 @@ const NewReviewForm = ({
     className: "pe-input"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Rating (", source === 'booking' ? '/10' : '/5', ")"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Rating (", source === 'booking' ? '/10' : '/5', ")"), /*#__PURE__*/React.createElement(NumInput, {
     min: 0,
     max: source === 'booking' ? 10 : 5,
     step: 0.1,
     value: rating,
-    onChange: e => setRating(Number(e.target.value)),
+    onChange: v => setRating(v),
     className: "pe-input"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
@@ -2595,12 +2654,11 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "ct-readonly"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "N\xBA de hu\xE9spedes"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "N\xBA de hu\xE9spedes"), /*#__PURE__*/React.createElement(NumInput, {
     min: "1",
     max: "8",
     value: huespedes,
-    onChange: e => setHuespedes(Number(e.target.value))
+    onChange: v => setHuespedes(v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
   }, /*#__PURE__*/React.createElement("label", null, "\xBFMascota?"), /*#__PURE__*/React.createElement("label", {
@@ -2613,27 +2671,27 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "pe-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Precio total *"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Precio total *"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
     min: "0",
     value: precioTotal,
-    onChange: e => setPrecioTotal(e.target.value),
+    onChange: v => setPrecioTotal(v),
     placeholder: "630"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al / prereserva (Bizum o transf.) *"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al / prereserva (Bizum o transf.) *"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
     min: "0",
     value: prereserva,
-    onChange: e => setPrereserva(e.target.value),
+    onChange: v => setPrereserva(v),
     placeholder: "130"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Pago previo adicional"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Pago previo adicional"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
     min: "0",
     value: pagoPrevio,
-    onChange: e => setPagoPrevio(e.target.value),
+    onChange: v => setPagoPrevio(v),
     placeholder: "0"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
@@ -2646,12 +2704,11 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "pe-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "D\xEDas de cancelaci\xF3n sin coste *"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "D\xEDas de cancelaci\xF3n sin coste *"), /*#__PURE__*/React.createElement(NumInput, {
     min: "1",
     max: "60",
     value: diasCancelacion,
-    onChange: e => setDiasCancelacion(Number(e.target.value))
+    onChange: v => setDiasCancelacion(v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
   }, /*#__PURE__*/React.createElement("label", null, "\xBFFianza?"), /*#__PURE__*/React.createElement("label", {
@@ -3236,15 +3293,13 @@ const LeilaTab = ({
   }, /*#__PURE__*/React.createElement("label", {
     className: "leila-saldo-label",
     htmlFor: "leila-saldo-inicial"
-  }, "Saldo arrastrado de ", Number(focusYear) - 1), /*#__PURE__*/React.createElement("input", {
-    id: "leila-saldo-inicial",
-    type: "number",
+  }, "Saldo arrastrado de ", Number(focusYear) - 1), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     className: "leila-saldo-input",
-    value: editsSaldoInicial[focusYear] !== undefined ? editsSaldoInicial[focusYear] : saldoInicialYear,
-    onChange: e => setEditsSaldoInicial(p => ({
+    value: editsSaldoInicial[focusYear] !== undefined ? Number(editsSaldoInicial[focusYear]) : saldoInicialYear,
+    onChange: v => setEditsSaldoInicial(p => ({
       ...p,
-      [focusYear]: e.target.value
+      [focusYear]: v
     }))
   }), /*#__PURE__*/React.createElement("span", {
     className: "leila-saldo-unit"
@@ -3363,16 +3418,15 @@ const LeilaTab = ({
         className: "num"
       }, tarifa, " \u20AC"), /*#__PURE__*/React.createElement("td", {
         className: "num"
-      }, /*#__PURE__*/React.createElement("input", {
-        type: "number",
+      }, /*#__PURE__*/React.createElement(NumInput, {
         step: "1",
         min: "0",
         className: "leila-cobro-input",
-        value: efectivo || '',
+        value: efectivo || 0,
         placeholder: "0",
-        onChange: e => setEditsEfectivo(prev => ({
+        onChange: v => setEditsEfectivo(prev => ({
           ...prev,
-          [r._idx]: e.target.value
+          [r._idx]: v
         }))
       })), /*#__PURE__*/React.createElement("td", {
         className: `num ${acum > 0 ? 'leila-owe' : acum < 0 ? 'leila-over' : 'leila-ok'}`
@@ -3397,16 +3451,15 @@ const LeilaTab = ({
       className: "leila-liquid-row"
     }, /*#__PURE__*/React.createElement("label", {
       className: "leila-liquid-lbl"
-    }, "Leila pag\xF3 a Hest\xEDa en ", MES_FULL[parseInt(m, 10) - 1], ":"), /*#__PURE__*/React.createElement("input", {
-      type: "number",
+    }, "Leila pag\xF3 a Hest\xEDa en ", MES_FULL[parseInt(m, 10) - 1], ":"), /*#__PURE__*/React.createElement(NumInput, {
       step: "1",
       min: "0",
       className: "leila-cobro-input",
-      value: liqVal || '',
+      value: liqVal || 0,
       placeholder: "0",
-      onChange: e => setEditsLiquid(prev => ({
+      onChange: v => setEditsLiquid(prev => ({
         ...prev,
-        [mKey]: e.target.value
+        [mKey]: v
       }))
     }), /*#__PURE__*/React.createElement("span", {
       className: "leila-liquid-eur"
@@ -3744,38 +3797,37 @@ const PrereservasTab = ({
     }))
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9spedes"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9spedes"), /*#__PURE__*/React.createElement(NumInput, {
     min: "1",
     max: "8",
     className: "pe-input pe-input-num",
-    value: form.huespedes,
-    onChange: e => setForm(f => ({
+    value: form.huespedes || 0,
+    onChange: v => setForm(f => ({
       ...f,
-      huespedes: e.target.value
+      huespedes: v
     }))
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Importe total (\u20AC) *"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Importe total (\u20AC) *"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
     min: "0",
     className: "pe-input pe-input-num",
-    value: form.ingreso_total,
-    onChange: e => setForm(f => ({
+    value: form.ingreso_total || 0,
+    onChange: v => setForm(f => ({
       ...f,
-      ingreso_total: e.target.value
+      ingreso_total: v
     })),
     placeholder: "1200"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al (\u20AC)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al (\u20AC)"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
     min: "0",
     className: "pe-input pe-input-num",
-    value: form.reserva,
-    onChange: e => setForm(f => ({
+    value: form.reserva || 0,
+    onChange: v => setForm(f => ({
       ...f,
-      reserva: e.target.value
+      reserva: v
     })),
     placeholder: "300"
   })), /*#__PURE__*/React.createElement("div", {
@@ -4717,18 +4769,16 @@ const ReservasTab = ({
     className: "rv-row3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9spedes"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9spedes"), /*#__PURE__*/React.createElement(NumInput, {
     min: "1",
     value: draft.huespedes || 0,
-    onChange: e => updateDraft('huespedes', Number(e.target.value))
+    onChange: v => updateDraft('huespedes', v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, '<12 años'), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, '<12 años'), /*#__PURE__*/React.createElement(NumInput, {
     min: "0",
     value: draft.menores_12 || 0,
-    onChange: e => updateDraft('menores_12', Number(e.target.value))
+    onChange: v => updateDraft('menores_12', v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Cuna / trona"), /*#__PURE__*/React.createElement("select", {
@@ -4807,22 +4857,20 @@ const ReservasTab = ({
     value: "Fran"
   }, "Fran"))))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Importes"), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Ingreso total bruto"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Ingreso total bruto"), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.ingreso_total || 0,
-    onChange: e => updateDraft('ingreso_total', Number(e.target.value))
+    onChange: v => updateDraft('ingreso_total', v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-row2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Comisi\xF3n ", /*#__PURE__*/React.createElement("span", {
     className: "rv-hint-inline"
-  }, "tasa ", getCanalKey(draft.canal), ": ", ((COMMISSION_RATES[getCanalKey(draft.canal)] ?? 0) * 100).toFixed(1), "%")), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, "tasa ", getCanalKey(draft.canal), ": ", ((COMMISSION_RATES[getCanalKey(draft.canal)] ?? 0) * 100).toFixed(1), "%")), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.comision || 0,
-    onChange: e => updateDraft('comision', Number(e.target.value))
+    onChange: v => updateDraft('comision', v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Gasto limpieza", draft._limpieza_manual ? /*#__PURE__*/React.createElement("button", {
@@ -4831,27 +4879,24 @@ const ReservasTab = ({
     onClick: resetLimpiezaAuto
   }, "\u21BB auto") : /*#__PURE__*/React.createElement("span", {
     className: "rv-hint-inline"
-  }, "auto (jul/ago o >10n: 90 \u20AC \xB7 resto: 80 \u20AC)")), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, "auto (jul/ago o >10n: 90 \u20AC \xB7 resto: 80 \u20AC)")), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.gasto_limpieza || 0,
-    onChange: e => updateDraft('gasto_limpieza', Number(e.target.value))
+    onChange: v => updateDraft('gasto_limpieza', v)
   }))), /*#__PURE__*/React.createElement("div", {
     className: "rv-row3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al"), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.reserva || 0,
-    onChange: e => updateDraft('reserva', Number(e.target.value))
+    onChange: v => updateDraft('reserva', v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Pago previo"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Pago previo"), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.pago_previo || 0,
-    onChange: e => updateDraft('pago_previo', Number(e.target.value))
+    onChange: v => updateDraft('pago_previo', v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Efectivo check-in", draft._checkin_manual ? /*#__PURE__*/React.createElement("button", {
@@ -4863,11 +4908,10 @@ const ReservasTab = ({
     }))
   }, "\u21BB auto") : /*#__PURE__*/React.createElement("span", {
     className: "rv-calc"
-  }, " calculado")), draft._checkin_manual ? /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, " calculado")), draft._checkin_manual ? /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.al_checkin || 0,
-    onChange: e => updateDraft('al_checkin', Number(e.target.value))
+    onChange: v => updateDraft('al_checkin', v)
   }) : /*#__PURE__*/React.createElement("input", {
     readOnly: true,
     className: "rv-readonly",
@@ -5498,12 +5542,11 @@ const AdminApp = () => {
     className: "pe-field"
   }, /*#__PURE__*/React.createElement("label", null, apt.name), /*#__PURE__*/React.createElement("div", {
     className: "pe-input-row"
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
     min: "0",
     value: apt.base,
-    onChange: e => update(`apts.${id}.base`, Number(e.target.value)),
+    onChange: v => update(`apts.${id}.base`, v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("span", {
     className: "pe-suffix"
@@ -5523,12 +5566,11 @@ const AdminApp = () => {
     }
   }), s.label), /*#__PURE__*/React.createElement("div", {
     className: "pe-input-row"
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement(NumInput, {
     step: "0.05",
     min: "1",
     value: s.multiplier,
-    onChange: e => update(`seasons.${id}.multiplier`, Number(e.target.value)),
+    onChange: v => update(`seasons.${id}.multiplier`, v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("span", {
     className: "pe-suffix"
@@ -5541,78 +5583,71 @@ const AdminApp = () => {
     className: "pe-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9sped extra (\u20AC/noche, desde el 3.\xBA)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
+  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9sped extra (\u20AC/noche, desde el 3.\xBA)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "0",
     value: data.rules.extraGuestPerNight,
-    onChange: e => update('rules.extraGuestPerNight', Number(e.target.value)),
+    onChange: v => update('rules.extraGuestPerNight', v),
     className: "pe-input pe-input-num"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Estancia m\xEDnima (noches)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "1",
+  }, /*#__PURE__*/React.createElement("label", null, "Estancia m\xEDnima (noches)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "1",
     value: data.rules.minNights,
-    onChange: e => update('rules.minNights', Number(e.target.value)),
+    onChange: v => update('rules.minNights', v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
   }, "M\xEDnimo por defecto fuera de temporada cr\xEDtica.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Ventana de estancia corta (d\xEDas)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
+  }, /*#__PURE__*/React.createElement("label", null, "Ventana de estancia corta (d\xEDas)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "0",
     value: data.rules.imminentDays,
-    onChange: e => update('rules.imminentDays', Number(e.target.value)),
+    onChange: v => update('rules.imminentDays', v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
   }, "Si el check-in es dentro de este n\xFAmero de d\xEDas, se permite el m\xEDnimo de estancia corta (t\xEDpicamente 2 noches). Pon 0 para desactivar.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "M\xEDnimo en estancia corta (noches)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "M\xEDnimo en estancia corta (noches)"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "1",
     min: "1",
     max: "7",
-    step: "1",
     value: data.rules.twoNightFloor,
-    onChange: e => update('rules.twoNightFloor', Number(e.target.value)),
+    onChange: v => update('rules.twoNightFloor', v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
   }, "Cu\xE1ntas noches admitir dentro de la ventana corta. Por defecto 2.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "M\xEDnimo en temporada cr\xEDtica (noches)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "1",
+  }, /*#__PURE__*/React.createElement("label", null, "M\xEDnimo en temporada cr\xEDtica (noches)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "1",
     value: data.rules.criticalSeasonMinNights,
-    onChange: e => update('rules.criticalSeasonMinNights', Number(e.target.value)),
+    onChange: v => update('rules.criticalSeasonMinNights', v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
   }, "Solo aplica en fechas marcadas como cr\xEDtica.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Descuento reserva directa (0\u20131)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("label", null, "Descuento reserva directa (0\u20131)"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
     min: "0",
     max: "1",
-    step: "0.01",
     value: data.rules.directDiscount,
-    onChange: e => update('rules.directDiscount', Number(e.target.value)),
+    onChange: v => update('rules.directDiscount', v),
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
   }, "Ej. 0.09 = \u22129 % vs Booking/Airbnb")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Suplemento mascota (\u20AC/estancia)"), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
+  }, /*#__PURE__*/React.createElement("label", null, "Suplemento mascota (\u20AC/estancia)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "0",
     value: data.rules.petFlatFee,
-    onChange: e => update('rules.petFlatFee', Number(e.target.value)),
+    onChange: v => update('rules.petFlatFee', v),
     className: "pe-input pe-input-num"
   })))), /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
@@ -5638,46 +5673,43 @@ const AdminApp = () => {
     }
   }))), /*#__PURE__*/React.createElement("tbody", null, (data.rules.guestSupplements || []).map((g, i) => /*#__PURE__*/React.createElement("tr", {
     key: i
-  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
+    step: "1",
     min: "1",
     max: "10",
-    step: "1",
     value: g.from,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.guestSupplements || []).slice();
       arr[i] = {
         ...arr[i],
-        from: Number(e.target.value)
+        from: v
       };
       update('rules.guestSupplements', arr);
     },
     className: "pe-input pe-input-num"
-  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
+    step: "1",
     min: "1",
     max: "10",
-    step: "1",
     value: g.to,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.guestSupplements || []).slice();
       arr[i] = {
         ...arr[i],
-        to: Number(e.target.value)
+        to: v
       };
       update('rules.guestSupplements', arr);
     },
     className: "pe-input pe-input-num"
-  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "0",
     value: g.perNight,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.guestSupplements || []).slice();
       arr[i] = {
         ...arr[i],
-        perNight: Number(e.target.value)
+        perNight: v
       };
       update('rules.guestSupplements', arr);
     },
@@ -5775,16 +5807,15 @@ const AdminApp = () => {
       update('rules.extras', arr);
     },
     className: "pe-input"
-  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "0",
     value: ex.price,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.extras || []).slice();
       arr[i] = {
         ...arr[i],
-        price: Number(e.target.value)
+        price: v
       };
       update('rules.extras', arr);
     },
@@ -5848,44 +5879,41 @@ const AdminApp = () => {
     className: "pe-table"
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Noches reales"), /*#__PURE__*/React.createElement("th", null, "Calcular como (noches)"), /*#__PURE__*/React.createElement("th", null, "Descuento fijo (\u20AC)"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, (data.rules.shortStayPricing || []).map((r, i) => /*#__PURE__*/React.createElement("tr", {
     key: i
-  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "1",
+  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "1",
     value: r.nights,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.shortStayPricing || []).slice();
       arr[i] = {
         ...arr[i],
-        nights: Number(e.target.value)
+        nights: v
       };
       update('rules.shortStayPricing', arr);
     },
     className: "pe-input pe-input-num"
-  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
+    step: "1",
     min: "1",
-    step: "1",
     value: r.basedOnNights,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.shortStayPricing || []).slice();
       arr[i] = {
         ...arr[i],
-        basedOnNights: Number(e.target.value)
+        basedOnNights: v
       };
       update('rules.shortStayPricing', arr);
     },
     className: "pe-input pe-input-num"
-  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "0",
     value: r.discount,
-    onChange: e => {
+    onChange: v => {
       const arr = (data.rules.shortStayPricing || []).slice();
       arr[i] = {
         ...arr[i],
-        discount: Number(e.target.value)
+        discount: v
       };
       update('rules.shortStayPricing', arr);
     },
@@ -5926,31 +5954,29 @@ const AdminApp = () => {
     className: "pe-table"
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "M\xEDn. noches"), /*#__PURE__*/React.createElement("th", null, "Descuento (0\u20131)"), /*#__PURE__*/React.createElement("th", null, "No aplica en"))), /*#__PURE__*/React.createElement("tbody", null, data.rules.stayDiscounts.map((d, i) => /*#__PURE__*/React.createElement("tr", {
     key: i
-  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "1",
+  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
+    min: "1",
     value: d.minNights,
-    onChange: e => {
+    onChange: v => {
       const arr = data.rules.stayDiscounts.slice();
       arr[i] = {
         ...arr[i],
-        minNights: Number(e.target.value)
+        minNights: v
       };
       update('rules.stayDiscounts', arr);
     },
     className: "pe-input pe-input-num"
-  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
-    type: "number",
+  })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
     min: "0",
     max: "1",
-    step: "0.01",
     value: d.pct,
-    onChange: e => {
+    onChange: v => {
       const arr = data.rules.stayDiscounts.slice();
       arr[i] = {
         ...arr[i],
-        pct: Number(e.target.value)
+        pct: v
       };
       update('rules.stayDiscounts', arr);
     },
