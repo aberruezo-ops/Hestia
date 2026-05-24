@@ -3242,9 +3242,31 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
   // --- Próximas y en estancia (en todos los años, son atemporales) ---
   const enEstancia = reservas.filter(r => reservaStatus(r, today) === 'staying')
     .sort((a, b) => a.salida.localeCompare(b.salida));
-  const proximas = reservas.filter(r => reservaStatus(r, today) === 'upcoming')
-    .sort((a, b) => a.entrada.localeCompare(b.entrada))
-    .slice(0, 8);
+  const proximas = reservas.filter(r => {
+    if (reservaStatus(r, today) !== 'upcoming') return false;
+    const diff = (new Date(r.entrada) - new Date(today)) / 86400000;
+    return diff <= 30;
+  }).sort((a, b) => a.entrada.localeCompare(b.entrada));
+
+  const buildWALink = (r) => {
+    const apt = APT_NAMES[r.apt] || r.apt;
+    const dias = Math.round((new Date(r.entrada) - new Date(today)) / 86400000);
+    const lines = [
+      `🏠 *Reserva en ${dias} día${dias !== 1 ? 's' : ''} · ${apt}*`,
+      `👤 ${r.responsable || '—'}`,
+      r.telefono    ? `📞 ${r.telefono}` : '',
+      `📅 Entrada: ${fmtDate(r.entrada)}`,
+      `📅 Salida:  ${fmtDate(r.salida)}`,
+      `🌙 ${r.noches || '—'} noches · ${r.huespedes || '—'} pax`,
+      r.canal ? `📲 Canal: ${r.canal}` : '',
+      r.ingreso_total ? `💶 Total: ${fmtEur(r.ingreso_total)}` : '',
+      r.bai         ? `📈 BAI: ${fmtEur(r.bai)}` : '',
+      r.mascota     ? '🐾 Trae mascota' : '',
+      r.cuna_trona  ? '👶 Necesita cuna/trona' : '',
+      r.observaciones ? `📝 ${r.observaciones}` : '',
+    ].filter(Boolean).join('\n');
+    return `https://wa.me/34654138251?text=${encodeURIComponent(lines)}`;
+  };
 
   // --- Filtros visibles. El listado SÓLO muestra el año focal
   // (por defecto el actual). Los demás años están en el dashboard
@@ -3389,6 +3411,73 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
     saveReservas(nr);
   };
 
+  // --- Calendar alert generator ---
+  const generateCalendarAlert = (r) => {
+    if (!r.entrada) return;
+    const [yr, mo, dy] = r.entrada.split('-').map(Number);
+    const dtStamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+
+    const fmtLocal = (date) => {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}${m}${d}T170000`;
+    };
+
+    const d1 = new Date(yr, mo - 1, dy - 7);
+    const d2 = new Date(yr, mo - 1, dy - 1);
+    const apt = APT_NAMES[r.apt] || r.apt;
+    const guest = r.responsable || 'Huésped';
+
+    const ev = (uid, dt, summary) => [
+      'BEGIN:VEVENT',
+      `UID:${uid}`,
+      `DTSTAMP:${dtStamp}`,
+      `DTSTART;TZID=Europe/Madrid:${dt}`,
+      `DTEND;TZID=Europe/Madrid:${dt}`,
+      `SUMMARY:${summary}`,
+      'BEGIN:VALARM',
+      'ACTION:DISPLAY',
+      `DESCRIPTION:${summary}`,
+      'TRIGGER:PT0S',
+      'END:VALARM',
+      'END:VEVENT',
+    ].join('\r\n');
+
+    const ics = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'CALSCALE:GREGORIAN',
+      'PRODID:-//Hestia//Admin//ES',
+      'BEGIN:VTIMEZONE',
+      'TZID:Europe/Madrid',
+      'BEGIN:STANDARD',
+      'DTSTART:19701025T030000',
+      'RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10',
+      'TZOFFSETFROM:+0200',
+      'TZOFFSETTO:+0100',
+      'END:STANDARD',
+      'BEGIN:DAYLIGHT',
+      'DTSTART:19700329T020000',
+      'RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3',
+      'TZOFFSETFROM:+0100',
+      'TZOFFSETTO:+0200',
+      'END:DAYLIGHT',
+      'END:VTIMEZONE',
+      ev(`hestia-7d-${r.entrada}-${r.apt}`, fmtLocal(d1), `🔔 1 semana · ${apt} · ${guest}`),
+      ev(`hestia-1d-${r.entrada}-${r.apt}`, fmtLocal(d2), `🔔 Mañana llega · ${apt} · ${guest}`),
+      'END:VCALENDAR',
+    ].join('\r\n');
+
+    const blob = new Blob([ics], { type: 'text/calendar' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `alerta_${r.apt}_${r.entrada}.ics`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const handleContratoUpload = async (e) => {
     const file = e.target.files && e.target.files[0];
     if (!file || !draft) return;
@@ -3409,7 +3498,6 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
       for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
       const b64 = btoa(binary);
 
-      // Check if file already exists to get its SHA
       let existingSha;
       const check = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${contratoPath}?ref=${BRANCH}`, { headers: apiHeaders(token) });
       if (check.ok) {
@@ -3610,19 +3698,25 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
           </div>
         )}
 
-        {/* ───── Próximas (8) ───── */}
+        {/* ───── Alertas ≤30 días ───── */}
         {proximas.length > 0 && (
-          <div className="rv-now rv-banner-upcoming">
-            <h3>⏰ Próximos check-ins · {proximas.length}{reservas.filter(r => reservaStatus(r, today) === 'upcoming').length > proximas.length ? ` (de ${reservas.filter(r => reservaStatus(r, today) === 'upcoming').length})` : ''}</h3>
+          <div className="rv-now rv-banner-upcoming rv-banner-alert">
+            <h3>⚠️ Reservas en menos de 30 días · {proximas.length}</h3>
             <ul>
-              {proximas.map((r, i) => (
-                <li key={i}>
-                  <span className="rv-prox-date">{fmtDate(r.entrada)}</span>
-                  <span className="rv-apt-chip" style={{background: APT_COLOR[r.apt], color: APT_TEXT[r.apt]}}>{APT_NAMES[r.apt]}</span>
-                  <strong>{r.responsable}</strong>
-                  <span className="rv-prox-meta">{r.huespedes} pax · {r.noches}n · {r.canal}</span>
-                </li>
-              ))}
+              {proximas.map((r, i) => {
+                const dias = Math.round((new Date(r.entrada) - new Date(today)) / 86400000);
+                return (
+                  <li key={i}>
+                    <span className="rv-prox-days-badge">{dias}d</span>
+                    <span className="rv-prox-date">{fmtDate(r.entrada)}</span>
+                    <span className="rv-apt-chip" style={{background: APT_COLOR[r.apt], color: APT_TEXT[r.apt]}}>{APT_NAMES[r.apt]}</span>
+                    <strong>{r.responsable}</strong>
+                    <span className="rv-prox-meta">{r.huespedes} pax · {r.noches}n · {r.canal}</span>
+                    <a href={buildWALink(r)} target="_blank" rel="noopener noreferrer"
+                      className="rv-wa-btn" title="Avisar a Fran por WhatsApp">📲 WhatsApp</a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         )}
@@ -3693,6 +3787,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                     <th className="num">Noches</th><th className="num">Pax</th>
                     <th>Canal</th>
                     <th className="num">Ingreso</th><th className="num">Comisión</th><th className="num">BAI</th><th className="num">%</th>
+                    <th className="rv-ical-th"></th>
                   </tr></thead>
                   <tbody>
                     {mRows.map(r => {
@@ -3717,6 +3812,10 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                           <td className="num">{fmtEur(r.comision)}</td>
                           <td className="num">{fmtEur(r.bai)}</td>
                           <td className="num">{fmtPct(r.rentabilidad_pct)}</td>
+                          <td className="rv-ical-td" onClick={e => e.stopPropagation()}>
+                            <button type="button" className="rv-ical-btn" title="Generar alerta de calendario (.ics)"
+                              onClick={() => generateCalendarAlert(r)}>🔔</button>
+                          </td>
                         </tr>
                       );
                     })}
@@ -3728,6 +3827,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                       <td className="num">{fmtEur(mComis)}</td>
                       <td className="num"><strong>{fmtEur(mBai)}</strong></td>
                       <td className="num">{mBruto ? fmtPct(mBai / mBruto) : '—'}</td>
+                      <td/>
                     </tr>
                   </tfoot>
                 </table>

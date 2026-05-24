@@ -4047,7 +4047,17 @@ const ReservasTab = ({
 
   // --- Próximas y en estancia (en todos los años, son atemporales) ---
   const enEstancia = reservas.filter(r => reservaStatus(r, today) === 'staying').sort((a, b) => a.salida.localeCompare(b.salida));
-  const proximas = reservas.filter(r => reservaStatus(r, today) === 'upcoming').sort((a, b) => a.entrada.localeCompare(b.entrada)).slice(0, 8);
+  const proximas = reservas.filter(r => {
+    if (reservaStatus(r, today) !== 'upcoming') return false;
+    const diff = (new Date(r.entrada) - new Date(today)) / 86400000;
+    return diff <= 30;
+  }).sort((a, b) => a.entrada.localeCompare(b.entrada));
+  const buildWALink = r => {
+    const apt = APT_NAMES[r.apt] || r.apt;
+    const dias = Math.round((new Date(r.entrada) - new Date(today)) / 86400000);
+    const lines = [`🏠 *Reserva en ${dias} día${dias !== 1 ? 's' : ''} · ${apt}*`, `👤 ${r.responsable || '—'}`, r.telefono ? `📞 ${r.telefono}` : '', `📅 Entrada: ${fmtDate(r.entrada)}`, `📅 Salida:  ${fmtDate(r.salida)}`, `🌙 ${r.noches || '—'} noches · ${r.huespedes || '—'} pax`, r.canal ? `📲 Canal: ${r.canal}` : '', r.ingreso_total ? `💶 Total: ${fmtEur(r.ingreso_total)}` : '', r.bai ? `📈 BAI: ${fmtEur(r.bai)}` : '', r.mascota ? '🐾 Trae mascota' : '', r.cuna_trona ? '👶 Necesita cuna/trona' : '', r.observaciones ? `📝 ${r.observaciones}` : ''].filter(Boolean).join('\n');
+    return `https://wa.me/34654138251?text=${encodeURIComponent(lines)}`;
+  };
 
   // --- Filtros visibles. El listado SÓLO muestra el año focal
   // (por defecto el actual). Los demás años están en el dashboard
@@ -4227,6 +4237,34 @@ const ReservasTab = ({
     const nr = reservas.filter((_, i) => i !== selectedIdx);
     saveReservas(nr);
   };
+
+  // --- Calendar alert generator ---
+  const generateCalendarAlert = r => {
+    if (!r.entrada) return;
+    const [yr, mo, dy] = r.entrada.split('-').map(Number);
+    const dtStamp = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    const fmtLocal = date => {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, '0');
+      const d = String(date.getDate()).padStart(2, '0');
+      return `${y}${m}${d}T170000`;
+    };
+    const d1 = new Date(yr, mo - 1, dy - 7);
+    const d2 = new Date(yr, mo - 1, dy - 1);
+    const apt = APT_NAMES[r.apt] || r.apt;
+    const guest = r.responsable || 'Huésped';
+    const ev = (uid, dt, summary) => ['BEGIN:VEVENT', `UID:${uid}`, `DTSTAMP:${dtStamp}`, `DTSTART;TZID=Europe/Madrid:${dt}`, `DTEND;TZID=Europe/Madrid:${dt}`, `SUMMARY:${summary}`, 'BEGIN:VALARM', 'ACTION:DISPLAY', `DESCRIPTION:${summary}`, 'TRIGGER:PT0S', 'END:VALARM', 'END:VEVENT'].join('\r\n');
+    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'CALSCALE:GREGORIAN', 'PRODID:-//Hestia//Admin//ES', 'BEGIN:VTIMEZONE', 'TZID:Europe/Madrid', 'BEGIN:STANDARD', 'DTSTART:19701025T030000', 'RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10', 'TZOFFSETFROM:+0200', 'TZOFFSETTO:+0100', 'END:STANDARD', 'BEGIN:DAYLIGHT', 'DTSTART:19700329T020000', 'RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3', 'TZOFFSETFROM:+0100', 'TZOFFSETTO:+0200', 'END:DAYLIGHT', 'END:VTIMEZONE', ev(`hestia-7d-${r.entrada}-${r.apt}`, fmtLocal(d1), `🔔 1 semana · ${apt} · ${guest}`), ev(`hestia-1d-${r.entrada}-${r.apt}`, fmtLocal(d2), `🔔 Mañana llega · ${apt} · ${guest}`), 'END:VCALENDAR'].join('\r\n');
+    const blob = new Blob([ics], {
+      type: 'text/calendar'
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `alerta_${r.apt}_${r.entrada}.ics`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
   const handleContratoUpload = async e => {
     const file = e.target.files && e.target.files[0];
     if (!file || !draft) return;
@@ -4249,8 +4287,6 @@ const ReservasTab = ({
       let binary = '';
       for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
       const b64 = btoa(binary);
-
-      // Check if file already exists to get its SHA
       let existingSha;
       const check = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${contratoPath}?ref=${BRANCH}`, {
         headers: apiHeaders(token)
@@ -4527,20 +4563,31 @@ const ReservasTab = ({
   }, APT_NAMES[r.apt]), /*#__PURE__*/React.createElement("strong", null, r.responsable), /*#__PURE__*/React.createElement("span", {
     className: "rv-prox-meta"
   }, "salida ", fmtDate(r.salida), " \xB7 ", r.huespedes, " pax \xB7 ", r.canal))))), proximas.length > 0 && /*#__PURE__*/React.createElement("div", {
-    className: "rv-now rv-banner-upcoming"
-  }, /*#__PURE__*/React.createElement("h3", null, "\u23F0 Pr\xF3ximos check-ins \xB7 ", proximas.length, reservas.filter(r => reservaStatus(r, today) === 'upcoming').length > proximas.length ? ` (de ${reservas.filter(r => reservaStatus(r, today) === 'upcoming').length})` : ''), /*#__PURE__*/React.createElement("ul", null, proximas.map((r, i) => /*#__PURE__*/React.createElement("li", {
-    key: i
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "rv-prox-date"
-  }, fmtDate(r.entrada)), /*#__PURE__*/React.createElement("span", {
-    className: "rv-apt-chip",
-    style: {
-      background: APT_COLOR[r.apt],
-      color: APT_TEXT[r.apt]
-    }
-  }, APT_NAMES[r.apt]), /*#__PURE__*/React.createElement("strong", null, r.responsable), /*#__PURE__*/React.createElement("span", {
-    className: "rv-prox-meta"
-  }, r.huespedes, " pax \xB7 ", r.noches, "n \xB7 ", r.canal))))), /*#__PURE__*/React.createElement("div", {
+    className: "rv-now rv-banner-upcoming rv-banner-alert"
+  }, /*#__PURE__*/React.createElement("h3", null, "\u26A0\uFE0F Reservas en menos de 30 d\xEDas \xB7 ", proximas.length), /*#__PURE__*/React.createElement("ul", null, proximas.map((r, i) => {
+    const dias = Math.round((new Date(r.entrada) - new Date(today)) / 86400000);
+    return /*#__PURE__*/React.createElement("li", {
+      key: i
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "rv-prox-days-badge"
+    }, dias, "d"), /*#__PURE__*/React.createElement("span", {
+      className: "rv-prox-date"
+    }, fmtDate(r.entrada)), /*#__PURE__*/React.createElement("span", {
+      className: "rv-apt-chip",
+      style: {
+        background: APT_COLOR[r.apt],
+        color: APT_TEXT[r.apt]
+      }
+    }, APT_NAMES[r.apt]), /*#__PURE__*/React.createElement("strong", null, r.responsable), /*#__PURE__*/React.createElement("span", {
+      className: "rv-prox-meta"
+    }, r.huespedes, " pax \xB7 ", r.noches, "n \xB7 ", r.canal), /*#__PURE__*/React.createElement("a", {
+      href: buildWALink(r),
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "rv-wa-btn",
+      title: "Avisar a Fran por WhatsApp"
+    }, "\uD83D\uDCF2 WhatsApp"));
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "rv-toolbar"
   }, /*#__PURE__*/React.createElement("label", null, "A\xF1o", /*#__PURE__*/React.createElement("select", {
     value: focusYear,
@@ -4627,7 +4674,9 @@ const ReservasTab = ({
       className: "num"
     }, "BAI"), /*#__PURE__*/React.createElement("th", {
       className: "num"
-    }, "%"))), /*#__PURE__*/React.createElement("tbody", null, mRows.map(r => {
+    }, "%"), /*#__PURE__*/React.createElement("th", {
+      className: "rv-ical-th"
+    }))), /*#__PURE__*/React.createElement("tbody", null, mRows.map(r => {
       const idx = reservas.indexOf(r);
       const status = reservaStatus(r, today);
       const cancelada = isCancelada(r);
@@ -4662,7 +4711,15 @@ const ReservasTab = ({
         className: "num"
       }, fmtEur(r.bai)), /*#__PURE__*/React.createElement("td", {
         className: "num"
-      }, fmtPct(r.rentabilidad_pct)));
+      }, fmtPct(r.rentabilidad_pct)), /*#__PURE__*/React.createElement("td", {
+        className: "rv-ical-td",
+        onClick: e => e.stopPropagation()
+      }, /*#__PURE__*/React.createElement("button", {
+        type: "button",
+        className: "rv-ical-btn",
+        title: "Generar alerta de calendario (.ics)",
+        onClick: () => generateCalendarAlert(r)
+      }, "\uD83D\uDD14")));
     })), /*#__PURE__*/React.createElement("tfoot", null, /*#__PURE__*/React.createElement("tr", {
       className: "rv-month-foot"
     }, /*#__PURE__*/React.createElement("td", {
@@ -4675,7 +4732,7 @@ const ReservasTab = ({
       className: "num"
     }, /*#__PURE__*/React.createElement("strong", null, fmtEur(mBai))), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, mBruto ? fmtPct(mBai / mBruto) : '—'))))));
+    }, mBruto ? fmtPct(mBai / mBruto) : '—'), /*#__PURE__*/React.createElement("td", null))))));
   })), draft && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-backdrop",
     onClick: cancelDraft
