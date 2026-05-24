@@ -5084,7 +5084,7 @@ const ReservasTab = ({
 };
 const AdminApp = () => {
   const [phase, setPhase] = React.useState('login');
-  const [mode, setMode] = React.useState('pricing');
+  const [mode, setMode] = React.useState('reservas');
   const [contractPrefill, setContractPrefill] = React.useState(null);
   const [token, setToken] = React.useState('');
   const [data, setData] = React.useState(null);
@@ -5486,6 +5486,36 @@ const AdminApp = () => {
     className: "pe-tabs"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
+    className: `pe-tab${mode === 'reservas' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('reservas');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDDD3\uFE0F", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Reservas")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'prereservas' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('prereservas');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCCB", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Prereservas")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'contract' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('contract');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCC4", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Contrato")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
     className: `pe-tab${mode === 'pricing' ? ' is-active' : ''}`,
     onClick: () => {
       setMode('pricing');
@@ -5511,46 +5541,6 @@ const AdminApp = () => {
     }, pending) : null;
   })()), /*#__PURE__*/React.createElement("button", {
     type: "button",
-    className: `pe-tab${mode === 'analytics' ? ' is-active' : ''}`,
-    onClick: () => {
-      setMode('analytics');
-      setError(null);
-      setSuccess(null);
-    }
-  }, "\uD83D\uDCCA", /*#__PURE__*/React.createElement("span", {
-    className: "pe-tab-label"
-  }, " Anal\xEDtica")), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: `pe-tab${mode === 'contract' ? ' is-active' : ''}`,
-    onClick: () => {
-      setMode('contract');
-      setError(null);
-      setSuccess(null);
-    }
-  }, "\uD83D\uDCC4", /*#__PURE__*/React.createElement("span", {
-    className: "pe-tab-label"
-  }, " Contrato")), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: `pe-tab${mode === 'prereservas' ? ' is-active' : ''}`,
-    onClick: () => {
-      setMode('prereservas');
-      setError(null);
-      setSuccess(null);
-    }
-  }, "\uD83D\uDCCB", /*#__PURE__*/React.createElement("span", {
-    className: "pe-tab-label"
-  }, " Prereservas")), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: `pe-tab${mode === 'reservas' ? ' is-active' : ''}`,
-    onClick: () => {
-      setMode('reservas');
-      setError(null);
-      setSuccess(null);
-    }
-  }, "\uD83D\uDDD3\uFE0F", /*#__PURE__*/React.createElement("span", {
-    className: "pe-tab-label"
-  }, " Reservas")), /*#__PURE__*/React.createElement("button", {
-    type: "button",
     className: `pe-tab${mode === 'leila' ? ' is-active' : ''}`,
     onClick: () => {
       setMode('leila');
@@ -5560,6 +5550,16 @@ const AdminApp = () => {
   }, "\uD83D\uDCB3", /*#__PURE__*/React.createElement("span", {
     className: "pe-tab-label"
   }, " Leila")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'analytics' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('analytics');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCCA", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Anal\xEDtica")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'dashboard' ? ' is-active' : ''}`,
     onClick: () => {

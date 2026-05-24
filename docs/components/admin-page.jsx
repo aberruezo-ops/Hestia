@@ -4114,7 +4114,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
 
 const AdminApp = () => {
   const [phase,    setPhase]    = React.useState('login');
-  const [mode,     setMode]     = React.useState('pricing');
+  const [mode,     setMode]     = React.useState('reservas');
   const [contractPrefill, setContractPrefill] = React.useState(null);
   const [token,    setToken]    = React.useState('');
   const [data,     setData]     = React.useState(null);
@@ -4495,6 +4495,21 @@ const AdminApp = () => {
 
       <div className="pe-tabs">
         <button type="button"
+          className={`pe-tab${mode === 'reservas' ? ' is-active' : ''}`}
+          onClick={() => { setMode('reservas'); setError(null); setSuccess(null); }}>
+          🗓️<span className="pe-tab-label"> Reservas</span>
+        </button>
+        <button type="button"
+          className={`pe-tab${mode === 'prereservas' ? ' is-active' : ''}`}
+          onClick={() => { setMode('prereservas'); setError(null); setSuccess(null); }}>
+          📋<span className="pe-tab-label"> Prereservas</span>
+        </button>
+        <button type="button"
+          className={`pe-tab${mode === 'contract' ? ' is-active' : ''}`}
+          onClick={() => { setMode('contract'); setError(null); setSuccess(null); }}>
+          📄<span className="pe-tab-label"> Contrato</span>
+        </button>
+        <button type="button"
           className={`pe-tab${mode === 'pricing' ? ' is-active' : ''}`}
           onClick={() => { setMode('pricing'); setError(null); setSuccess(null); }}>
           💰<span className="pe-tab-label"> Pricing</span>
@@ -4509,29 +4524,14 @@ const AdminApp = () => {
           })()}
         </button>
         <button type="button"
-          className={`pe-tab${mode === 'analytics' ? ' is-active' : ''}`}
-          onClick={() => { setMode('analytics'); setError(null); setSuccess(null); }}>
-          📊<span className="pe-tab-label"> Analítica</span>
-        </button>
-        <button type="button"
-          className={`pe-tab${mode === 'contract' ? ' is-active' : ''}`}
-          onClick={() => { setMode('contract'); setError(null); setSuccess(null); }}>
-          📄<span className="pe-tab-label"> Contrato</span>
-        </button>
-        <button type="button"
-          className={`pe-tab${mode === 'prereservas' ? ' is-active' : ''}`}
-          onClick={() => { setMode('prereservas'); setError(null); setSuccess(null); }}>
-          📋<span className="pe-tab-label"> Prereservas</span>
-        </button>
-        <button type="button"
-          className={`pe-tab${mode === 'reservas' ? ' is-active' : ''}`}
-          onClick={() => { setMode('reservas'); setError(null); setSuccess(null); }}>
-          🗓️<span className="pe-tab-label"> Reservas</span>
-        </button>
-        <button type="button"
           className={`pe-tab${mode === 'leila' ? ' is-active' : ''}`}
           onClick={() => { setMode('leila'); setError(null); setSuccess(null); }}>
           💳<span className="pe-tab-label"> Leila</span>
+        </button>
+        <button type="button"
+          className={`pe-tab${mode === 'analytics' ? ' is-active' : ''}`}
+          onClick={() => { setMode('analytics'); setError(null); setSuccess(null); }}>
+          📊<span className="pe-tab-label"> Analítica</span>
         </button>
         <button type="button"
           className={`pe-tab${mode === 'dashboard' ? ' is-active' : ''}`}
