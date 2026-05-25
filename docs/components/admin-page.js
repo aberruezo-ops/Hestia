@@ -5066,12 +5066,14 @@ const ReservasTab = ({
     }, "\u26A0 Solape con ", liveOverlap.responsable || '—', " (", liveOverlap.entrada, " \u2192 ", liveOverlap.salida, ") en ", liveOverlap.apt?.toUpperCase() || '—') : null;
   })(), /*#__PURE__*/React.createElement("footer", {
     className: "rv-edit-foot"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rv-edit-foot-secondary"
   }, selectedIdx >= 0 && selectedIdx < reservas.length && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost rv-btn-danger",
     onClick: deleteRow
   }, "\uD83D\uDDD1 Borrar"), /*#__PURE__*/React.createElement("div", {
-    className: "rv-edit-foot-right"
+    className: "rv-edit-foot-aux"
   }, onOpenContract && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost",
@@ -5089,11 +5091,11 @@ const ReservasTab = ({
     type: "button",
     className: "pe-btn pe-btn-ghost",
     onClick: cancelDraft
-  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
+  }, "Cancelar"))), /*#__PURE__*/React.createElement("button", {
     type: "button",
-    className: "pe-btn pe-btn-primary",
+    className: "pe-btn pe-btn-primary rv-edit-foot-save",
     onClick: saveDraft
-  }, "Guardar"))))));
+  }, "Guardar")))));
 };
 const AdminApp = () => {
   const [phase, setPhase] = React.useState('login');

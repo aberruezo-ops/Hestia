@@ -19268,14 +19268,20 @@ img[src*="apt-vt-gallery-"] {
   padding: 12px 16px;
   border-top: 1px solid rgba(61,26,53,.10);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 8px;
   background: #fff;
   flex-shrink: 0;
 }
-.rv-edit-foot-right { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; flex: 1; }
+.rv-edit-foot-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.rv-edit-foot-aux { display: flex; gap: 8px; flex-wrap: wrap; }
+.rv-edit-foot-save { width: 100%; justify-content: center; }
 .rv-btn-danger { color: #B23A2B; }
 .rv-btn-danger:hover { background: rgba(178,58,43,0.10); }
 .rv-ical-th { width: 28px; padding: 4px 2px; }

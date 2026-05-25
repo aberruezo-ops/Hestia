@@ -4095,22 +4095,24 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
             })()}
 
             <footer className="rv-edit-foot">
-              {selectedIdx >= 0 && selectedIdx < reservas.length && (
-                <button type="button" className="pe-btn pe-btn-ghost rv-btn-danger" onClick={deleteRow}>🗑 Borrar</button>
-              )}
-              <div className="rv-edit-foot-right">
-                {onOpenContract && (
-                  <button type="button" className="pe-btn pe-btn-ghost" title="Abrir en el generador de contratos"
-                    onClick={() => { saveDraft(); onOpenContract(draft); }}>
-                    📄 Contrato
-                  </button>
-                )}
+              <div className="rv-edit-foot-secondary">
                 {selectedIdx >= 0 && selectedIdx < reservas.length && (
-                  <button type="button" className="pe-btn pe-btn-ghost" onClick={duplicateRow} title="Crea una nueva reserva con estos mismos datos">Duplicar</button>
+                  <button type="button" className="pe-btn pe-btn-ghost rv-btn-danger" onClick={deleteRow}>🗑 Borrar</button>
                 )}
-                <button type="button" className="pe-btn pe-btn-ghost" onClick={cancelDraft}>Cancelar</button>
-                <button type="button" className="pe-btn pe-btn-primary" onClick={saveDraft}>Guardar</button>
+                <div className="rv-edit-foot-aux">
+                  {onOpenContract && (
+                    <button type="button" className="pe-btn pe-btn-ghost" title="Abrir en el generador de contratos"
+                      onClick={() => { saveDraft(); onOpenContract(draft); }}>
+                      📄 Contrato
+                    </button>
+                  )}
+                  {selectedIdx >= 0 && selectedIdx < reservas.length && (
+                    <button type="button" className="pe-btn pe-btn-ghost" onClick={duplicateRow} title="Crea una nueva reserva con estos mismos datos">Duplicar</button>
+                  )}
+                  <button type="button" className="pe-btn pe-btn-ghost" onClick={cancelDraft}>Cancelar</button>
+                </div>
               </div>
+              <button type="button" className="pe-btn pe-btn-primary rv-edit-foot-save" onClick={saveDraft}>Guardar</button>
             </footer>
           </aside>
         </>
