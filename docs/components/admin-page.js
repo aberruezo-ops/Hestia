@@ -4331,9 +4331,9 @@ const ReservasTab = ({
       setContratoStatus('idle');
     }
   };
-  const handleContratoDownload = async () => {
-    if (!draft || !draft.contrato_pdf) return;
-    const contratoPath = `contratos/${draft.contrato_pdf}`;
+  const downloadContrato = async filename => {
+    if (!filename) return;
+    const contratoPath = `contratos/${filename}`;
     try {
       const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${contratoPath}?ref=${BRANCH}`, {
         headers: apiHeaders(token)
@@ -4349,7 +4349,7 @@ const ReservasTab = ({
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = draft.contrato_pdf;
+      a.download = filename;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -4358,6 +4358,7 @@ const ReservasTab = ({
       setError('Error descargando contrato: ' + err.message);
     }
   };
+  const handleContratoDownload = () => downloadContrato(draft?.contrato_pdf);
 
   // --- KPI Card helper ---
   const KpiCard = ({
@@ -4676,6 +4677,8 @@ const ReservasTab = ({
       className: "num"
     }, "%"), /*#__PURE__*/React.createElement("th", {
       className: "rv-ical-th"
+    }), /*#__PURE__*/React.createElement("th", {
+      className: "rv-ical-th"
     }))), /*#__PURE__*/React.createElement("tbody", null, mRows.map(r => {
       const idx = reservas.indexOf(r);
       const status = reservaStatus(r, today);
@@ -4719,7 +4722,15 @@ const ReservasTab = ({
         className: "rv-ical-btn",
         title: "Generar alerta de calendario (.ics)",
         onClick: () => generateCalendarAlert(r)
-      }, "\uD83D\uDD14")));
+      }, "\uD83D\uDD14")), /*#__PURE__*/React.createElement("td", {
+        className: "rv-ical-td",
+        onClick: e => e.stopPropagation()
+      }, r.contrato_pdf && /*#__PURE__*/React.createElement("button", {
+        type: "button",
+        className: "rv-ical-btn",
+        title: r.contrato_pdf,
+        onClick: () => downloadContrato(r.contrato_pdf)
+      }, "\uD83D\uDCC4")));
     })), /*#__PURE__*/React.createElement("tfoot", null, /*#__PURE__*/React.createElement("tr", {
       className: "rv-month-foot"
     }, /*#__PURE__*/React.createElement("td", {
@@ -4732,7 +4743,7 @@ const ReservasTab = ({
       className: "num"
     }, /*#__PURE__*/React.createElement("strong", null, fmtEur(mBai))), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, mBruto ? fmtPct(mBai / mBruto) : '—'), /*#__PURE__*/React.createElement("td", null))))));
+    }, mBruto ? fmtPct(mBai / mBruto) : '—'), /*#__PURE__*/React.createElement("td", null), /*#__PURE__*/React.createElement("td", null))))));
   })), draft && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-backdrop",
     onClick: cancelDraft
