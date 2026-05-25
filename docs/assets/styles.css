@@ -9940,6 +9940,50 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   flex-wrap: wrap;
 }
 
+/* ---- Share strip ---- */
+.noticias-share {
+  padding: 48px var(--page-pad);
+  background: var(--ber-dk);
+}
+.noticias-share-inner {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.noticias-share-text {
+  color: rgba(240,232,213,.75);
+  font-size: 15px;
+  margin: 0;
+}
+.noticias-share-btns {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.noticias-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity .15s;
+  text-decoration: none;
+  border: 1px solid rgba(240,232,213,.25);
+  background: transparent;
+  color: rgba(240,232,213,.9);
+}
+.noticias-share-btn:hover { opacity: .75; }
+.noticias-share-wa { border-color: #25D366; color: #25D366; }
+.noticias-share-x  { border-color: rgba(240,232,213,.4); }
+
 /* Responsive */
 @media (max-width: 900px) {
   .voz-grid { grid-template-columns: 1fr; }
@@ -19192,9 +19236,7 @@ img[src*="apt-vt-gallery-"] {
   .rv-row2 { grid-template-columns: 1fr; }
   .rv-row3 { grid-template-columns: 1fr 1fr; }
   .rv-calc-grid { grid-template-columns: 1fr; }
-  .rv-edit-foot { flex-wrap: wrap; gap: 8px; padding: 10px 14px; }
-  .rv-edit-foot-right { flex-wrap: wrap; justify-content: flex-end; }
-  .rv-edit-foot .pe-btn { padding: 8px 12px; font-size: 11px; }
+  .rv-edit-foot { padding: 8px 10px; }
 }
 
 .rv-calc-block {
@@ -19222,14 +19264,18 @@ img[src*="apt-vt-gallery-"] {
 .rv-calc-grid strong { color: var(--ber-dk); font-variant-numeric: tabular-nums; }
 
 .rv-edit-foot {
-  padding: 14px 20px;
+  padding: 10px 14px;
   border-top: 1px solid rgba(61,26,53,.10);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 6px;
   background: #fff;
+  flex-shrink: 0;
 }
-.rv-edit-foot-right { display: flex; gap: 8px; }
+.rv-edit-foot-row1 { display: flex; gap: 6px; }
+.rv-edit-foot-row2 { display: flex; gap: 6px; }
+.rv-foot-btn { flex: 1; justify-content: center; padding: 7px 8px; font-size: 11px; }
+.rv-foot-save { flex: 2; }
 .rv-btn-danger { color: #B23A2B; }
 .rv-btn-danger:hover { background: rgba(178,58,43,0.10); }
 .rv-ical-th { width: 28px; padding: 4px 2px; }
@@ -19659,60 +19705,4 @@ img[src*="apt-vt-gallery-"] {
 }
 @media (max-width: 480px) {
   .footer-nl-form { min-width: 0; width: 100%; }
-}
-
-/* ============================================================
-   FacturasTab
-   ============================================================ */
-.fac-card { padding: 20px 24px; }
-.fac-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
-.fac-head h2 { margin: 0; font-size: 18px; display: flex; align-items: center; gap: 8px; }
-.fac-year-badge { font-size: 13px; font-weight: 700; background: var(--ber-dk); color: #fff; border-radius: 10px; padding: 2px 10px; }
-.fac-head-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.fac-year-sel { font-size: 13px; padding: 5px 8px; border: 1px solid var(--border); border-radius: 4px; background: var(--bg-soft); }
-.fac-toolbar { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 14px; }
-.fac-toolbar label { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; }
-.fac-toolbar select { font-size: 13px; padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; }
-.fac-summary { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
-.fac-kpi { background: var(--bg-soft); border-radius: 6px; padding: 10px 14px; min-width: 110px; }
-.fac-kpi span { display: block; font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 2px; }
-.fac-kpi strong { font-size: 16px; font-weight: 700; color: var(--ber-dk); }
-.fac-kpi-accent { background: rgba(61,26,53,.07); border-left: 3px solid var(--ber-dk); }
-.fac-empty { color: var(--ink-soft); font-size: 14px; padding: 24px 0; text-align: center; }
-.fac-table-wrap { overflow-x: auto; margin-bottom: 20px; }
-.fac-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.fac-table th { text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); padding: 6px 8px; border-bottom: 2px solid var(--border); white-space: nowrap; }
-.fac-table th.num { text-align: right; }
-.fac-table td { padding: 8px 8px; border-bottom: 1px solid var(--border-soft, rgba(0,0,0,.06)); vertical-align: middle; }
-.fac-row { cursor: pointer; transition: background .1s; }
-.fac-row:hover { background: rgba(61,26,53,.04); }
-.fac-date { white-space: nowrap; font-size: 12px; color: var(--ink-soft); min-width: 70px; }
-.fac-proveedor strong { display: block; }
-.fac-nif { font-size: 11px; color: var(--ink-soft); display: block; }
-.fac-concepto { max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
-.fac-cat-chip { display: inline-block; background: rgba(61,26,53,.08); color: var(--ber-dk); border-radius: 8px; padding: 2px 8px; font-size: 11px; font-weight: 600; white-space: nowrap; }
-.fac-apt-gen { font-size: 11px; color: var(--ink-soft); }
-.fac-iva { font-size: 12px; color: var(--ink-soft); }
-.fac-deducible { color: #2e7d32; font-weight: 600; }
-.fac-pct { font-size: 10px; font-weight: 400; color: var(--ink-soft); }
-.fac-pdf-btn { background: none; border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; font-size: 11px; cursor: pointer; white-space: nowrap; }
-.fac-pdf-btn:hover { background: var(--bg-soft); }
-.fac-no-pdf { color: var(--ink-soft); font-size: 12px; }
-.fac-del-btn { background: none; border: none; cursor: pointer; font-size: 14px; opacity: .4; padding: 2px 4px; }
-.fac-del-btn:hover { opacity: 1; }
-.fac-actions-cell { text-align: center; }
-.fac-foot td { padding: 8px; font-size: 13px; font-weight: 600; border-top: 2px solid var(--border); }
-.fac-bycat { margin-top: 16px; }
-.fac-bycat h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); margin: 0 0 8px; }
-.fac-bycat-grid { display: flex; flex-direction: column; gap: 4px; }
-.fac-bycat-row { display: flex; align-items: center; gap: 10px; font-size: 13px; padding: 4px 0; border-bottom: 1px dotted rgba(0,0,0,.06); }
-.fac-bycat-n { color: var(--ink-soft); font-size: 12px; min-width: 80px; }
-.fac-bycat-amt { flex: 1; }
-.fac-bycat-total { font-weight: 700; color: var(--ber-dk); min-width: 80px; text-align: right; }
-.fac-edit-panel { width: 400px; }
-@media (max-width: 480px) {
-  .fac-summary { gap: 6px; }
-  .fac-kpi { min-width: 90px; padding: 8px 10px; }
-  .fac-edit-panel { width: 100vw; }
-  .fac-concepto { max-width: 100px; }
 }

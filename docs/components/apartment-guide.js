@@ -77,11 +77,11 @@ const GUIDE_SECTIONS = [{
   en: 'Cleaning'
 }, {
   id: 'salon',
-  es: 'Tu salón',
+  es: 'Mi salón',
   en: 'My living room'
 }, {
   id: 'cocina',
-  es: 'Tu cocina',
+  es: 'Mi cocina',
   en: 'My kitchen'
 }, {
   id: 'dormitorios',
@@ -93,7 +93,7 @@ const GUIDE_SECTIONS = [{
   en: 'My bathrooms'
 }, {
   id: 'terraza',
-  es: 'Tu terraza',
+  es: 'Mi terraza',
   en: 'My terrace'
 }, {
   id: 'urbanizacion',
@@ -2956,6 +2956,18 @@ const PLACES = [
   lat: 36.9395,
   lng: -2.0000
 }, {
+  id: 'p-raja',
+  name: 'Cala Rajá',
+  desc: 'Entre Agua Amarga y Las Negras. Cala brava de piedra volcánica y agua esmeralda. Una de las más solitarias del parque.',
+  best: 'la pared volcánica negra a pico sobre el agua esmeralda — sin rastro de civilización.',
+  tip: 'Solo para excursionistas en forma: el camino no está señalizado, es largo y sin sombra. Lleva agua, GPS y mucha protección solar.',
+  cat: 'beach-hard',
+  rating: 4.5,
+  services: 'virgen · sin servicios',
+  access: '🚗 hasta Agua Amarga o Las Negras · 🚶 60–90 min por pista / campo a través',
+  lat: 36.9050,
+  lng: -1.9860
+}, {
   id: 'p-negras',
   name: 'Playa de Las Negras',
   desc: 'Pueblo bohemio con cantos rodados negros y agua cristalina. Punto de salida hacia la Cala de San Pedro.',
@@ -2966,6 +2978,30 @@ const PLACES = [
   access: '🚗 parking a la entrada del pueblo · ⛵ taxi-barca a San Pedro',
   lat: 36.8770,
   lng: -2.0030
+}, {
+  id: 'p-carbon',
+  name: 'Cala Carbón',
+  desc: 'Las Negras. Cala de roca volcánica negra y agua cristalina. Solo accesible a pie desde Las Negras por el sendero costero sur.',
+  best: 'el agua turquesa sobre la piedra negra volcánica — uno de los contrastes más fotogénicos del parque.',
+  tip: 'Se encadena bien con Cala del Cuervo: sigue el sendero costero y llegas a las dos en el mismo día.',
+  cat: 'beach-hard',
+  rating: 4.4,
+  services: 'virgen · sin servicios',
+  access: '🚶 45 min desde Las Negras por sendero costero hacia el sur',
+  lat: 36.8680,
+  lng: -2.0050
+}, {
+  id: 'p-cuervo',
+  name: 'Cala del Cuervo',
+  desc: 'Las Negras. Ensenada de roca volcánica entre Las Negras y La Isleta. Aguas salvajes, muy poca gente.',
+  best: 'la soledad absoluta a pocos kilómetros del pueblo — parece el fin del mundo.',
+  tip: 'Lleva calzado de trekking: el litoral es irregular. Algo más al sur que Cala Carbón.',
+  cat: 'beach-hard',
+  rating: 4.3,
+  services: 'virgen · sin servicios',
+  access: '🚶 60 min desde Las Negras por sendero costero hacia el sur',
+  lat: 36.8610,
+  lng: -2.0100
 }, {
   id: 'p-san-pedro',
   name: 'Cala de San Pedro',
@@ -2992,6 +3028,19 @@ const PLACES = [
   lat: 36.8470,
   lng: -2.0230
 }, {
+  id: 'p-escullos',
+  name: 'Playa de los Escullos',
+  desc: 'Los Escullos, Cabo de Gata. Amplia ensenada de arena gris oscura con el Castillo de San Felipe (s. XVIII) al fondo. La más accesible de esta zona del parque.',
+  best: 'el castillo volcánico sobre el acantilado visto desde el agua — pura postal.',
+  tip: 'El Camping Los Escullos está al lado del parking: tienen chiringuito y aseos aunque no te alojes allí.',
+  cat: 'beach',
+  rating: 4.4,
+  services: '🚻 · 🍹 restaurante camping · mínimos en verano',
+  access: '🚗 parking al pie de la playa',
+  url: 'https://www.google.com/maps/search/?api=1&query=Playa+Los+Escullos+Cabo+de+Gata+Almeria',
+  lat: 36.8742,
+  lng: -2.0048
+}, {
   id: 'p-isleta',
   name: 'La Isleta del Moro',
   desc: 'Pueblo pesquero diminuto con calas. Snorkel y comer en La Ola junto al mar.',
@@ -3004,6 +3053,54 @@ const PLACES = [
   url: 'https://maps.google.com?q=Playa+del+Penon+Blanco',
   lat: 36.7970,
   lng: -2.0630
+}, {
+  id: 'p-arena',
+  name: 'Cala Arena',
+  desc: 'San José. Pequeña cala de arena volcánica oscura entre Los Escullos y San José. Virgen, agua transparente, pocas personas.',
+  best: 'la arena oscura volcánica en contraste con el agua turquesa — un rincón muy fotogénico.',
+  tip: 'Poca sombra: ve a primera hora o lleva algo para cubrirte. Se encadena bien con Cala del Bergantín en el mismo sendero.',
+  cat: 'beach-hard',
+  rating: 4.3,
+  services: 'virgen · sin servicios',
+  access: '🚶 40 min desde San José por sendero norte · 🚗 sin acceso a coche',
+  lat: 36.8020,
+  lng: -2.0690
+}, {
+  id: 'p-bergantin',
+  name: 'Cala del Bergantín',
+  desc: 'San José. Cala virgen de roca volcánica a 25 min al norte del pueblo. Agua cristalina, buena para snorkel, muy poca gente.',
+  best: 'el snorkel entre las rocas volcánicas — la posidonia está bien conservada y la fauna marina es abundante.',
+  tip: 'Se llega en 25–30 min andando desde el parking de San José por el sendero norte. Lleva calzado apropiado y gafas de snorkel.',
+  cat: 'beach-hard',
+  rating: 4.4,
+  services: 'virgen · sin servicios',
+  access: '🚶 25–30 min desde San José por sendero norte · 🚗 sin parking al pie',
+  lat: 36.7870,
+  lng: -2.0940
+}, {
+  id: 'p-higuera',
+  name: 'Cala Higuera',
+  desc: 'San José. Cala de piedra y arena virgen a 15 min del pueblo. Agua muy limpia, snorkel entre roca volcánica. De las más fáciles de llegar sin servicios.',
+  best: 'el agua en calma y transparente — perfecta para nadar y hacer snorkel cerca del pueblo.',
+  tip: 'Lleva calzado de agua: la entrada al mar es por roca. Llega antes de las 10 h en verano.',
+  cat: 'beach-hard',
+  rating: 4.4,
+  services: 'virgen · sin servicios',
+  access: '🚶 15 min desde San José por sendero costero',
+  lat: 36.7820,
+  lng: -2.0840
+}, {
+  id: 'p-san-jose',
+  name: 'Playa de San José',
+  desc: 'La playa del pueblo de San José: arena fina, aguas tranquilas y protegidas por el dique. La mejor opción para el primer día o para familias con niños.',
+  best: 'bañarse por la mañana y luego desayunar en el paseo del puerto antes de que llegue el calor del mediodía.',
+  tip: 'En temporada alta, llega antes de las 10:30 para sitio. Fuera de julio-agosto casi la tendrás para ti.',
+  cat: 'beach',
+  rating: 4.3,
+  services: '🚿 🛟 🍹 🛏️ 🚻 ♿',
+  access: '🚗 parking de pago en el pueblo en verano · 🚶 desde el centro del pueblo',
+  lat: 36.7730,
+  lng: -2.1115
 }, {
   id: 'p-genoveses',
   name: 'Playa de los Genoveses',
@@ -3401,7 +3498,7 @@ const GUIDE_SHARED = {
   es: {
     welcome: {
       title: 'Bienvenido a tu Hestía',
-      paras: ['Si lees esto, tu reserva está más que confirmada — y no sabes la ilusión que nos hace tenerte aquí.', 'Hestía no es lujo. Tampoco es un alquiler vacacional al uso. Es nuestro hogar, y durante los próximos días queremos que también sea el tuyo. Por eso hemos puesto cariño en cada detalle de esta casa, porque es exactamente lo que a nosotros nos gusta encontrar cuando viajamos.', 'Ya estés preparando el viaje, viviendo tus días aquí o de vuelta a casa con la maleta a medio deshacer, todo lo que esté en nuestra mano, antes, durante o después de tu estancia, lo haremos. Sin dudarlo. Para eso estamos.', 'Ahora descansa, relájate y descubre tu hogar lejos de tu casa.'],
+      paras: ['Si lees esto, tu reserva está más que confirmada — y no sabes la ilusión que nos hace tenerte aquí.', 'Hestía no es lujo. Tampoco es un alquiler vacacional al uso. Es nuestro hogar, y durante los próximos días queremos que también sea el tuyo. Por eso hemos puesto cariño en cada detalle de esta casa: porque es exactamente lo que a nosotros nos gusta encontrar cuando viajamos.', 'Ya estés preparando el viaje, viviendo tus días aquí, o de vuelta a casa con la maleta a medio deshacer: todo lo que esté en nuestra mano, antes, durante o después de tu estancia, lo haremos. Sin dudarlo. Para eso estamos.', 'Ahora descansa, relájate y descubre tu hogar lejos de tu casa.'],
       sign: 'Con cariño,',
       signer: 'Fran y Alex',
       pdNote: 'Si te interesa la historia completa — de dónde viene el nombre, por qué empezamos este proyecto, qué buscamos cuando viajamos nosotros — la contamos con detalle en la web:',
@@ -3412,7 +3509,7 @@ const GUIDE_SHARED = {
       title: 'Llegada y salida',
       intro: 'Lo tienes todo cubierto: Fran te escribirá unos días antes de tu llegada para acordar la modalidad que mejor te encaje y compartirte los detalles. Llegues como llegues — en avión, bus o coche propio — te mandamos las indicaciones exactas para llegar en coche hasta la puerta de Hestía y te acompañamos a distancia hasta que estés dentro. No tienes que preocuparte de nada, solo dile a Fran a qué hora aproximada llegas.',
       airportsTitle: 'Aeropuertos cercanos',
-      airportsIntro: 'Vera Playa tiene cinco aeropuertos en su radio. A continuación, te suministramos los tiempos aproximados en coche por la AP-7 / A-7:',
+      airportsIntro: 'Vera Playa tiene cinco aeropuertos en su radio razonable. El más cómodo depende de tu vuelo y tu paciencia con la carretera. Tiempos aproximados en coche por la AP-7 / A-7:',
       airports: [{
         name: 'Almería',
         code: 'LEI',
@@ -3479,23 +3576,23 @@ const GUIDE_SHARED = {
         notes: 'AVE Murcia ↔ Madrid (en obras desde 2022; tramo Murcia-Almería en ejecución). Combinable con Renfe Cercanías al aeropuerto RMU.'
       }],
       stationsAveTitle: '¿Sabías? · La estación AVE Vera-Almanzora',
-      stationsAve: 'Adif Alta Velocidad está construyendo una estación de AVE al sur del término municipal de Vera, parte del Corredor Mediterráneo Murcia-Almería. Cuando entre en servicio (previsto a partir de 2027), Vera quedará a menos de 1 hora de Murcia y conectada por alta velocidad con Madrid y el resto del Corredor Mediterráneo. Estamos a 15-20 minutos en coche.',
+      stationsAve: 'Adif Alta Velocidad está construyendo una estación de AVE al sur del término municipal de Vera, parte del corredor Mediterráneo Murcia-Almería. Cuando entre en servicio (previsto a partir de 2027), Vera quedará a menos de 1 hora de Murcia y conectada por alta velocidad con Madrid y el resto del corredor mediterráneo. Estamos a 15-20 minutos en coche.',
       carTitle: 'Y por supuesto, en coche · hasta la puerta',
-      carText: 'Si conduces, llegas directamente a la puerta de Hestía. Te enviamos la mejor ruta según tu origen, el código de acceso a la urbanización y la plaza de garaje cubierta exacta.',
-      carAccompany: 'Sea cual sea tu forma de llegar — coche, vuelo + alquiler, bus, tren, o combinación — nosotros te acompañamos en la distancia desde que confirmas la reserva hasta que llegas a tu hogar en Vera.',
+      carText: 'Si conduces, llegas directamente a la puerta de Hestía. Te enviamos la mejor ruta según tu origen, el código de acceso a la urbanización y la plaza de garaje cubierta exacta. No improvisas nada.',
+      carAccompany: 'Sea cual sea tu forma de llegar — coche, vuelo + alquiler, bus, tren, o combinación — nosotros te acompañamos en la distancia desde que confirmas la reserva. WhatsApp, llamada o email, en tu idioma, hasta que estás dentro y cómodo. Y mientras dura la estancia.',
       modalitiesTitle: 'Dos modalidades de check-in',
       modalities: [{
         tag: 'Autónoma',
-        body: 'Llegas y entras directamente. Fran te pasa por mensaje el código de la urbanización, el acceso a la caja-llaves y las instrucciones paso a paso. Útil si vienes con vuelo nocturno o si prefieres ir a tu ritmo.'
+        body: 'Llegas y entras directamente. Fran te pasa por mensaje el código de la urbanización, el acceso a la caja-llaves y las instrucciones paso a paso. Útil si vienes con vuelo nocturno o si prefieres tu ritmo.'
       }, {
         tag: 'Presencial',
-        body: 'Te recibimos en persona, te enseñamos la casa y te resolvemos cualquier duda en el momento. Horario de recepción presencial: 15:00 – 21:00. Si tu llegada es posterior habilitamos la llegada autónoma.'
+        body: 'Te recibe Fran en persona, te enseña la casa y te resuelve cualquier duda en el momento. Horario de recepción presencial: 15:00 – 21:00. Si tu llegada cae fuera, pasamos a la modalidad autónoma sin más.'
       }],
       garageTitle: 'Plaza de garaje',
-      garageIntro: 'Todos los apartamentos tienen plaza de garaje en la urbanización. En Hestía Mar tu plaza es:',
-      garageNote: '',
+      garageIntro: 'Todos los apartamentos llevan plaza de garaje incluida en la urbanización Pueblo Salinas. La plaza que te corresponde según tu Hestía es:',
+      garageNote: 'A confirmar con Fran antes de tu llegada — alguna semana puede haber rotación por mantenimiento.',
       checkoutTitle: 'Check-out',
-      checkoutBody: 'La salida es siempre antes de las 11:00. Deja las llaves donde Fran te indique (caja-llaves o entrega presencial, según hayas entrado). Las toallas y sábanas sobre la cama; del resto se encarga el equipo de limpieza.',
+      checkoutBody: 'La salida es siempre antes de las 11:00. Deja las llaves donde Fran te indique (caja-llaves o entrega presencial, según hayas entrado). Las toallas y sábanas, sobre la cama — del resto se encarga el equipo de limpieza.',
       garbageTitle: 'Basura y reciclaje',
       garbageBody: 'Por normativa municipal, los contenedores de basura y reciclaje están SIEMPRE fuera de la urbanización (no dentro). Te recomendamos aprovechar la salida del día siguiente, o cualquier viaje en coche, para tirarlas de paso. Te agradeceríamos enormemente que no la dejes en los descansillos del edificio ni dentro de Hestía — atrae bichos y el equipo de limpieza no las recoge.'
     },
@@ -3513,7 +3610,7 @@ const GUIDE_SHARED = {
       items: [{
         icon: '🛒',
         t: 'Reponed lo que consumáis',
-        d: 'Hestía dispone de múltiples productos para facilitar vuestra estancia los primeros días (pastillas de lavavajillas, polvos de lavadora, etc.). Si alguno de estos productos se gasta os agradeceríamos que los repusierais. Queda excluido lo que aparece el kit de bienvenida, pues es un pequeño regalo por nuestra parte.'
+        d: 'Hestía dispone de productos consumibles. Si gastáis o consumís algo, intentad reponerlo — salvo el kit de bienvenida, que es un pequeño regalo nuestro. Reponed también lo que consumáis fuera de ese kit.'
       }, {
         icon: '🌿',
         t: 'Cuidad el medio ambiente',
@@ -3521,7 +3618,7 @@ const GUIDE_SHARED = {
       }, {
         icon: '🪑',
         t: 'Recoged la terraza si salís',
-        d: 'Cojines y toldo — especialmente si hay viento, lluvia o predicción de mal tiempo.'
+        d: 'Cojines, toldo y plantas — especialmente si hay viento, lluvia o predicción de mal tiempo.'
       }, {
         icon: '🛏️',
         t: 'Cuidad equipamiento y mobiliario',
@@ -3580,7 +3677,7 @@ const GUIDE_SHARED = {
         d: 'Lo que pase fuera de Hestía no es responsabilidad nuestra — pero siempre intentaremos ayudaros.'
       }, {
         icon: '🧺',
-        t: 'Dejad Hestía limpio y recogido',
+        t: 'Dejad Hestía limpia y recogida',
         d: 'De las sábanas y toallas nos encargamos nosotros. Por favor, no las lavéis con ropa de otro color.'
       }]
     },
@@ -3686,7 +3783,7 @@ const GUIDE_SHARED = {
       ssidValue: 'Hestía',
       passLabel: 'Contraseña',
       passValue: 'Hestiavera',
-      note: 'Si la contraseña no funciona, la actualizada está en una pegatina pegada al router. El router suele estar cerca del sofá, escondido en algún hueco o al lado de la tele. Pregúntanos si no lo encuentras.'
+      note: 'Si la contraseña no funciona, la actualizada está en una pegatina pegada al router. El router suele estar cerca del sofá, escondido en algún hueco o al lado de la tele. Avísanos si no lo encuentras y te lo decimos.'
     },
     phones: {
       title: 'Teléfonos y datos de utilidad',
@@ -4068,18 +4165,18 @@ const GUIDE_BY_APT = {
       cover_tagline: 'El campo de olivos llega al mar. Donde el descanso encuentra su raíz.',
       rooms: [{
         id: 'salon',
-        title: 'Tu salón',
-        body: 'Mi sofá-cama y mi televisión plana son el rincón perfecto para una tarde de peli. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.',
-        recs: ['No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.', 'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de salida a la terraza.', 'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando junto al cuadro del A/C.', 'Dispones de extintor en el pasillo exterior a Hestía.']
+        title: 'Mi salón',
+        body: 'Mi sofá-cama y mi televisión plana son el rincón perfecto para una tarde de Netflix. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.',
+        recs: ['No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.', 'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.', 'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando junto al cuadro del A/C.', 'Dispones de extintor en el pasillo exterior a Hestía.']
       }, {
         id: 'cocina',
-        title: 'Tu cocina',
-        body: 'Tu cocina tiene todo lo que necesitas para sentirte como en casa: mobiliario de calidad, electrodomésticos de alta gama y un set completo de pequeños electrodomésticos y detalles.',
-        recs: ['Los libros de instrucciones de los electrodomésticos se encuentran en el armario que hay sobre el microondas.', 'Evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.', 'El agua es potable, aunque quizás prefieras agua embotellada.']
+        title: 'Mi cocina',
+        body: 'Mi cocina tiene todo lo que necesitas para sentirte como en casa: mobiliario de calidad, electrodomésticos de alta gama y un set completo de pequeños electrodomésticos y detalles.',
+        recs: ['Los libros de instrucciones de los electrodomésticos se encuentran en los cajones bajo la vitrocerámica.', 'Evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.', 'El agua es potable, aunque quizás prefieras agua embotellada.']
       }, {
         id: 'dormitorios',
         title: 'Mis dormitorios',
-        body: 'Tu dormitorio principal mira al mar y tiene las mejores sábanas y rellenos nórdicos de plumas o sintéticos. Colchones de alta calidad y almohadas de diferentes durezas. En el armario te espera la sombrilla de playa.',
+        body: 'Mi dormitorio principal mira al mar y tiene las mejores sábanas y rellenos nórdicos de plumas o sintéticos. Colchones de alta calidad y almohadas de diferentes durezas. En el armario te espera la sombrilla de playa.',
         recs: ['Las cremas bronceadoras pueden estropear sábanas, toallas y tapicerías.', 'Cuidado con el aire acondicionado por la noche y las corrientes de aire.', 'Ponte el despertador un día no muy nublado para ver el amanecer.']
       }, {
         id: 'banos',
@@ -4088,8 +4185,8 @@ const GUIDE_BY_APT = {
         recs: ['Haz un uso prudente y responsable del agua. El agua es vida.', 'Las toallas del baño no son para la playa ni para la piscina.', 'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.', 'Usa la cromoterapia del espejo para crear ambiente — relajante de noche, vibrante por la mañana.']
       }, {
         id: 'terraza',
-        title: 'Tu terraza',
-        body: 'Tu terraza tiene las mejores vistas y dos ambientes para cada momento de las vacaciones: día y noche.',
+        title: 'Mi terraza',
+        body: 'Mi terraza tiene las mejores vistas y dos ambientes para cada momento de las vacaciones: día y noche.',
         recs: ['Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.', 'Mientras estés en la terraza apaga o reduce el A/C.', 'Recoge el toldo y los cojines cuando sople aire, llueva o vayas a salir.', 'Usa velas para crear el ambiente perfecto.']
       }, {
         id: 'urbanizacion',
@@ -4141,18 +4238,18 @@ const GUIDE_BY_APT = {
       cover_tagline: 'Ático sobre el mar y el Salar de los Canos. Donde el horizonte se ensancha.',
       rooms: [{
         id: 'salon',
-        title: 'Tu salón',
+        title: 'Mi salón',
         body: 'Mi sofá-cama y mi televisión plana son el sitio perfecto para una sesión de Netflix o HBO. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.',
-        recs: ['No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en casa.', 'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de salida a la terraza.', 'Amolda a tu gusto el color y tonalidad de la lámpara de pie con el mando junto al cuadro del A/C.', 'Si necesitas usar la chimenea eléctrica, que sea mientras estés en Hestía.']
+        recs: ['No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en casa.', 'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.', 'Amolda a tu gusto el color y tonalidad de la lámpara de pie con el mando junto al cuadro del A/C.', 'Si necesitas usar la chimenea eléctrica, que sea mientras estés en Hestía.']
       }, {
         id: 'cocina',
-        title: 'Tu cocina',
-        body: 'Tu cocina tiene todo lo que necesitas para sentirte como en casa: mobiliario de calidad, electrodomésticos de alta gama y un set completo de pequeños electrodomésticos y detalles.',
-        recs: ['Los libros de instrucciones de los electrodomésticos se encuentran en el armario que hay sobre el microondas.', 'Evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.', 'El agua es potable, aunque quizás prefieras agua embotellada.']
+        title: 'Mi cocina',
+        body: 'Mi cocina tiene todo lo que necesitas para sentirte como en casa: mobiliario de calidad, electrodomésticos de alta gama y un set completo de pequeños electrodomésticos y detalles.',
+        recs: ['Los libros de instrucciones de los electrodomésticos se encuentran en los cajones bajo la vitrocerámica.', 'Evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.', 'El agua es potable, aunque quizás prefieras agua embotellada.']
       }, {
         id: 'dormitorios',
         title: 'Mis dormitorios',
-        body: 'Tu dormitorio principal mira al mar y a las palmeras de la urbanización. Colchones de alta calidad y almohadas de diferentes durezas. Las mejores sábanas y rellenos nórdicos de plumas o sintéticos.',
+        body: 'Mi dormitorio principal mira al mar y a las palmeras de la urbanización. Colchones de alta calidad y almohadas de diferentes durezas. Las mejores sábanas y rellenos nórdicos de plumas o sintéticos.',
         recs: ['Las cremas bronceadoras pueden estropear sábanas, toallas y tapicerías.', 'Cuidado con el aire acondicionado por la noche y las corrientes de aire.', 'Si tienes la suerte de ver un amanecer despejado desde la terraza, te recordará por qué viniste.']
       }, {
         id: 'banos',
@@ -4161,8 +4258,8 @@ const GUIDE_BY_APT = {
         recs: ['Haz un uso prudente y responsable del agua. El agua es vida.', 'Las toallas del baño no son para la playa ni para la piscina.', 'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.']
       }, {
         id: 'terraza',
-        title: 'Tu terraza',
-        body: 'Tu terraza panorámica de 18 m² mira al mar y al Salar de los Canos. El mejor sitio del ático para vivir el ciclo solar completo.',
+        title: 'Mi terraza',
+        body: 'Mi terraza panorámica de 18 m² mira al mar y al Salar de los Canos. El mejor sitio del ático para vivir el ciclo solar completo.',
         recs: ['Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.', 'Mientras estés en la terraza apaga o reduce el A/C.', 'Recoge el toldo y los cojines cuando sople aire, llueva o vayas a salir.', 'Usa velas para crear el ambiente perfecto al atardecer.']
       }, {
         id: 'urbanizacion',
@@ -4214,14 +4311,14 @@ const GUIDE_BY_APT = {
       cover_tagline: 'Junto a las salinas. Donde la luz se queda más tiempo.',
       rooms: [{
         id: 'salon',
-        title: 'Tu salón',
+        title: 'Mi salón',
         body: 'Mi sofá-cama y mi televisión con ambilight son el rincón perfecto para una sesión de Netflix. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.',
         recs: ['No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.', 'Echa un vistazo a las Normas de uso de Hestía, al final de esta misma guía.', 'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando a la misma.']
       }, {
         id: 'cocina',
-        title: 'Tu cocina',
-        body: 'Tu cocina tiene todo lo que necesitas para sentirte como en casa: mobiliario de calidad, electrodomésticos de alta gama y un set completo de pequeños electrodomésticos y detalles.',
-        recs: ['Los libros de instrucciones de los electrodomésticos se encuentran en el armario que hay sobre el microondas.', 'Si tienes prisa, evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.', 'El agua es potable, aunque quizás prefieras agua embotellada.']
+        title: 'Mi cocina',
+        body: 'Mi cocina tiene todo lo que necesitas para sentirte como en casa: mobiliario de calidad, electrodomésticos de alta gama y un set completo de pequeños electrodomésticos y detalles.',
+        recs: ['Los libros de instrucciones de los electrodomésticos se encuentran en los cajones bajo la vitrocerámica.', 'Si tienes prisa, evita el ciclo económico en lavadora y lavavajillas. Si bien ahorra agua, la duración es excesiva.', 'El agua es potable, aunque quizás prefieras agua embotellada.']
       }, {
         id: 'dormitorios',
         title: 'Mis dormitorios',
@@ -4234,8 +4331,8 @@ const GUIDE_BY_APT = {
         recs: ['Haz un uso prudente y responsable del agua. El agua es vida.', 'Las toallas del baño no son para la playa ni para la piscina.', 'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.']
       }, {
         id: 'terraza',
-        title: 'Tu terraza',
-        body: 'Tu terraza tiene las mejores vistas y dos ambientes para cada momento de las vacaciones.',
+        title: 'Mi terraza',
+        body: 'Mi terraza tiene las mejores vistas y dos ambientes para cada momento de las vacaciones.',
         recs: ['Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.', 'Mientras estés en la terraza apaga o reduce el A/C.', 'Recoge el toldo y los cojines cuando sople aire o llueva.', 'Usa velas para crear el ambiente perfecto.']
       }, {
         id: 'urbanizacion',

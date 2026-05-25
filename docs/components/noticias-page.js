@@ -234,6 +234,56 @@ const NOTICIAS = {
   }]
 };
 
+// ── Compartir ─────────────────────────────────────────────────────
+
+const ShareSection = ({
+  lang
+}) => {
+  const [shared, setShared] = React.useState(false);
+  const url = 'https://www.hestiayourhome.com/noticias.html';
+  const title = lang === 'es' ? 'Noticias & Blog de Hestía — Vera Playa, Almería' : 'News & Blog by Hestía — Vera Playa, Almería';
+  const text = lang === 'es' ? 'Noticias mensuales del territorio: Vera Playa, Almería, Andalucía y Murcia.' : 'Monthly news from the territory: Vera Playa, Almería, Andalucía and Murcia.';
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title,
+          text,
+          url
+        });
+        setShared(true);
+      } catch (_) {}
+    } else {
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(title + '\n' + url)}`, '_blank', 'noopener,noreferrer');
+    }
+  };
+  const waHref = `https://api.whatsapp.com/send?text=${encodeURIComponent(title + '\n' + url)}`;
+  const xHref = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
+  return /*#__PURE__*/React.createElement("section", {
+    className: "noticias-share"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "noticias-share-inner"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "noticias-share-text"
+  }, lang === 'es' ? '¿Te ha gustado? Comparte con alguien que vaya a la zona.' : 'Enjoyed it? Share with someone heading to the area.'), /*#__PURE__*/React.createElement("div", {
+    className: "noticias-share-btns"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "noticias-share-btn",
+    onClick: handleShare
+  }, shared ? lang === 'es' ? 'Compartido ✓' : 'Shared ✓' : lang === 'es' ? 'Compartir' : 'Share'), /*#__PURE__*/React.createElement("a", {
+    href: waHref,
+    className: "noticias-share-btn noticias-share-wa",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "WhatsApp"), /*#__PURE__*/React.createElement("a", {
+    href: xHref,
+    className: "noticias-share-btn noticias-share-x",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "X / Twitter"))));
+};
+
 // ── Componentes ───────────────────────────────────────────────────
 
 const VozCard = ({
@@ -355,7 +405,9 @@ const NoticiasPage = ({
     key: ai,
     article: a,
     lang: lang
-  })))))))));
+  })))))))), /*#__PURE__*/React.createElement(ShareSection, {
+    lang: lang
+  }));
 };
 
 // ── App wrapper ────────────────────────────────────────────────────
