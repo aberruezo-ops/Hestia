@@ -19021,7 +19021,7 @@ img[src*="apt-vt-gallery-"] {
 .rv-toolbar label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-soft); }
 .rv-toolbar select { padding: 4px 8px; font-family: inherit; }
 .rv-hint { margin-left: auto; font-size: 12px; color: var(--ink-soft); font-style: italic; }
-.rv-hint-inline { font-size: 12px; color: var(--ink-soft); font-weight: 400; font-style: italic; margin-left: 6px; }
+.rv-hint-inline { display: block; font-size: 11px; color: var(--ink-soft); font-weight: 400; font-style: italic; margin-top: 1px; overflow-wrap: break-word; }
 
 /* --- Tabla principal --- */
 .rv-table-wrap { overflow-x: auto; }
@@ -19232,6 +19232,8 @@ img[src*="apt-vt-gallery-"] {
 
 .rv-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .rv-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.rv-edit-body .rv-row3 { grid-template-columns: 1fr 1fr; }
+.rv-edit-body .rv-field label { overflow-wrap: break-word; word-break: break-word; min-width: 0; }
 @media (max-width: 560px) {
   .rv-row2 { grid-template-columns: 1fr; }
   .rv-row3 { grid-template-columns: 1fr 1fr; }
