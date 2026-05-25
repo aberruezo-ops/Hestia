@@ -3534,9 +3534,9 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
     }
   };
 
-  const handleContratoDownload = async () => {
-    if (!draft || !draft.contrato_pdf) return;
-    const contratoPath = `contratos/${draft.contrato_pdf}`;
+  const downloadContrato = async (filename) => {
+    if (!filename) return;
+    const contratoPath = `contratos/${filename}`;
     try {
       const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${contratoPath}?ref=${BRANCH}`, { headers: apiHeaders(token) });
       if (!r.ok) throw new Error('No se pudo obtener el contrato');
@@ -3547,7 +3547,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
       const blob = new Blob([bytes], { type: 'application/pdf' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = draft.contrato_pdf;
+      a.href = url; a.download = filename;
       document.body.appendChild(a); a.click();
       document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(url), 5000);
@@ -3555,6 +3555,8 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
       setError('Error descargando contrato: ' + err.message);
     }
   };
+
+  const handleContratoDownload = () => downloadContrato(draft?.contrato_pdf);
 
   // --- KPI Card helper ---
   const KpiCard = ({ label, value, sub, accent }) => (
@@ -3788,6 +3790,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                     <th>Canal</th>
                     <th className="num">Ingreso</th><th className="num">Comisión</th><th className="num">BAI</th><th className="num">%</th>
                     <th className="rv-ical-th"></th>
+                    <th className="rv-ical-th"></th>
                   </tr></thead>
                   <tbody>
                     {mRows.map(r => {
@@ -3816,6 +3819,12 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                             <button type="button" className="rv-ical-btn" title="Generar alerta de calendario (.ics)"
                               onClick={() => generateCalendarAlert(r)}>🔔</button>
                           </td>
+                          <td className="rv-ical-td" onClick={e => e.stopPropagation()}>
+                            {r.contrato_pdf && (
+                              <button type="button" className="rv-ical-btn" title={r.contrato_pdf}
+                                onClick={() => downloadContrato(r.contrato_pdf)}>📄</button>
+                            )}
+                          </td>
                         </tr>
                       );
                     })}
@@ -3827,7 +3836,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                       <td className="num">{fmtEur(mComis)}</td>
                       <td className="num"><strong>{fmtEur(mBai)}</strong></td>
                       <td className="num">{mBruto ? fmtPct(mBai / mBruto) : '—'}</td>
-                      <td/>
+                      <td/><td/>
                     </tr>
                   </tfoot>
                 </table>
