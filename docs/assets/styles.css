@@ -19236,8 +19236,7 @@ img[src*="apt-vt-gallery-"] {
   .rv-row2 { grid-template-columns: 1fr; }
   .rv-row3 { grid-template-columns: 1fr 1fr; }
   .rv-calc-grid { grid-template-columns: 1fr; }
-  .rv-edit-foot { flex-wrap: wrap; gap: 8px; padding: 10px 14px; }
-  .rv-edit-foot-right { flex-wrap: wrap; justify-content: flex-end; }
+  .rv-edit-foot { padding: 10px 12px; }
   .rv-edit-foot .pe-btn { padding: 8px 12px; font-size: 11px; }
 }
 
@@ -19266,14 +19265,17 @@ img[src*="apt-vt-gallery-"] {
 .rv-calc-grid strong { color: var(--ber-dk); font-variant-numeric: tabular-nums; }
 
 .rv-edit-foot {
-  padding: 14px 20px;
+  padding: 12px 16px;
   border-top: 1px solid rgba(61,26,53,.10);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
   background: #fff;
+  flex-shrink: 0;
 }
-.rv-edit-foot-right { display: flex; gap: 8px; }
+.rv-edit-foot-right { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; flex: 1; }
 .rv-btn-danger { color: #B23A2B; }
 .rv-btn-danger:hover { background: rgba(178,58,43,0.10); }
 .rv-ical-th { width: 28px; padding: 4px 2px; }
