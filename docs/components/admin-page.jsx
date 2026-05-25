@@ -2517,6 +2517,462 @@ const BloquesTab = ({ token }) => {
   );
 };
 
+// FacturasTab — Gastos deducibles por año / apartamento
+// Datos en PRIVATE_REPO/facturas.json
+// PDFs en PRIVATE_REPO/facturas-pdf/<filename>
+// ============================================================
+
+const FACTURAS_PATH = 'facturas.json';
+const FACTURAS_PDF_DIR = 'facturas-pdf';
+
+const GASTO_CATS = [
+  { key: 'mantenimiento',  label: 'Reparaciones y conservación' },
+  { key: 'limpieza',       label: 'Limpieza y lavandería' },
+  { key: 'suministros',    label: 'Suministros (luz, agua, gas, internet)' },
+  { key: 'seguros',        label: 'Seguros del inmueble' },
+  { key: 'comunidad',      label: 'Gastos de comunidad' },
+  { key: 'gestion',        label: 'Comisiones de gestión / agencias' },
+  { key: 'publicidad',     label: 'Publicidad y marketing' },
+  { key: 'amortizacion',   label: 'Amortización' },
+  { key: 'otros',          label: 'Otros gastos deducibles' },
+];
+
+const IVA_TYPES = [0, 4, 10, 21];
+
+const EMPTY_FACTURA = {
+  fecha: '', proveedor: '', nif: '', concepto: '', categoria: 'mantenimiento',
+  apt: 'general', base: 0, iva_pct: 21, iva: 0, total: 0,
+  deducible_pct: 100, factura_pdf: null, notas: '',
+};
+
+const FacturasTab = ({ token }) => {
+  const [data,        setData]        = React.useState(null);
+  const [sha,         setSha]         = React.useState(null);
+  const [loading,     setLoading]     = React.useState(false);
+  const [saving,      setSaving]      = React.useState(false);
+  const [error,       setError]       = React.useState(null);
+  const [success,     setSuccess]     = React.useState(null);
+  const [focusYear,   setFocusYear]   = React.useState(2026);
+  const [draft,       setDraft]       = React.useState(null);
+  const [editIdx,     setEditIdx]     = React.useState(-1);
+  const [pdfStatus,   setPdfStatus]   = React.useState('idle');
+  const [filterApt,   setFilterApt]   = React.useState('all');
+  const [filterCat,   setFilterCat]   = React.useState('all');
+
+  const facturas = React.useMemo(() => {
+    if (!data) return [];
+    return (data.facturas || []).filter(f => (f.year || new Date(f.fecha).getFullYear()) === focusYear);
+  }, [data, focusYear]);
+
+  const allYears = React.useMemo(() => {
+    if (!data) return [2026];
+    const ys = new Set((data.facturas || []).map(f => f.year || new Date(f.fecha).getFullYear()));
+    if (!ys.size) ys.add(2026);
+    return [...ys].sort((a, b) => b - a);
+  }, [data]);
+
+  const loadData = React.useCallback(() => {
+    if (!token) return;
+    setLoading(true); setError(null);
+    fetch(`${API}/repos/${PRIVATE_REPO}/contents/${FACTURAS_PATH}?ref=${BRANCH}`, {
+      headers: apiHeaders(token), cache: 'no-store',
+    })
+      .then(r => {
+        if (r.status === 404) return null;
+        return r.json();
+      })
+      .then(j => {
+        if (!j) {
+          setData({ facturas: [] }); setSha(null);
+        } else {
+          if (j.message) throw new Error(j.message);
+          setSha(j.sha);
+          setData(JSON.parse(b64ToUtf8(j.content)));
+        }
+      })
+      .catch(e => setError('Error cargando facturas: ' + e.message))
+      .finally(() => setLoading(false));
+  }, [token]);
+
+  React.useEffect(() => { loadData(); }, [loadData]);
+
+  const saveData = async (newFacturas) => {
+    setSaving(true); setError(null); setSuccess(null);
+    const newData = { ...data, facturas: newFacturas, updatedAt: new Date().toISOString() };
+    try {
+      const body = {
+        message: `chore(facturas): update via /p-edit · ${new Date().toISOString().slice(0,16).replace('T',' ')}`,
+        content: utf8ToB64(JSON.stringify(newData, null, 2)),
+        branch: BRANCH,
+        ...(sha ? { sha } : {}),
+      };
+      const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${FACTURAS_PATH}`, {
+        method: 'PUT', headers: apiHeaders(token), body: JSON.stringify(body),
+      });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.message || 'Error guardando');
+      setSha(j.content.sha); setData(newData);
+      setSuccess('Guardado correctamente.');
+      setDraft(null); setEditIdx(-1);
+    } catch (e) { setError(e.message); }
+    finally { setSaving(false); }
+  };
+
+  const calcIva = (base, iva_pct) => Math.round(base * iva_pct) / 100;
+
+  const updateDraft = (field, val) => {
+    setDraft(prev => {
+      const next = { ...prev, [field]: val };
+      if (field === 'base' || field === 'iva_pct') {
+        next.iva   = calcIva(Number(next.base) || 0, Number(next.iva_pct) || 0);
+        next.total = Math.round(((Number(next.base) || 0) + next.iva) * 100) / 100;
+      }
+      return next;
+    });
+  };
+
+  const openNew = () => {
+    const today = new Date().toISOString().slice(0, 10);
+    setDraft({ ...EMPTY_FACTURA, fecha: today, year: focusYear });
+    setEditIdx(-1);
+  };
+
+  const openEdit = (idx) => {
+    const allFacts = data.facturas || [];
+    const globalIdx = allFacts.indexOf(facturas[idx]);
+    setDraft({ ...allFacts[globalIdx] });
+    setEditIdx(globalIdx);
+  };
+
+  const cancelDraft = () => { setDraft(null); setEditIdx(-1); };
+
+  const saveDraft = () => {
+    if (!draft) return;
+    const allFacts = [...(data.facturas || [])];
+    const withYear = { ...draft, year: focusYear };
+    if (editIdx >= 0) allFacts[editIdx] = withYear;
+    else allFacts.push(withYear);
+    saveData(allFacts);
+  };
+
+  const deleteFactura = (idx) => {
+    const allFacts = data.facturas || [];
+    const globalIdx = allFacts.indexOf(facturas[idx]);
+    if (!confirm(`¿Borrar factura de ${facturas[idx].proveedor}?`)) return;
+    const nr = allFacts.filter((_, i) => i !== globalIdx);
+    saveData(nr);
+  };
+
+  const handlePdfUpload = async (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file || !draft) return;
+    e.target.value = '';
+    setPdfStatus('uploading'); setError(null);
+    try {
+      const safeName = (draft.proveedor || 'proveedor').replace(/\s+/g,'_').replace(/[^a-zA-Z0-9_-]/g,'');
+      const safeDate = (draft.fecha || 'fecha').replace(/-/g,'');
+      const filename = `${focusYear}_${safeDate}_${safeName}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;
+      const pdfPath  = `${FACTURAS_PDF_DIR}/${filename}`;
+
+      const buf = await file.arrayBuffer();
+      const bytes = new Uint8Array(buf);
+      let bin = ''; for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+      const b64 = btoa(bin);
+
+      let existingSha;
+      const check = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${pdfPath}?ref=${BRANCH}`, { headers: apiHeaders(token) });
+      if (check.ok) { const cj = await check.json(); existingSha = cj.sha; }
+
+      const put = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${pdfPath}`, {
+        method: 'PUT', headers: apiHeaders(token),
+        body: JSON.stringify({
+          message: `feat(facturas): adjuntar ${filename}`,
+          content: b64, branch: BRANCH,
+          ...(existingSha ? { sha: existingSha } : {}),
+        }),
+      });
+      if (!put.ok) { const pj = await put.json(); throw new Error(pj.message || 'Error subiendo PDF'); }
+      setDraft(d => ({ ...d, factura_pdf: filename }));
+      setPdfStatus('idle');
+    } catch (err) { setError('Error subiendo PDF: ' + err.message); setPdfStatus('idle'); }
+  };
+
+  const handlePdfDownload = async (filename) => {
+    if (!filename) return;
+    try {
+      const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${FACTURAS_PDF_DIR}/${filename}?ref=${BRANCH}`, { headers: apiHeaders(token) });
+      if (!r.ok) throw new Error('No se pudo obtener el PDF');
+      const j = await r.json();
+      const bin = atob(j.content.replace(/\n/g,''));
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    } catch (err) { setError('Error descargando: ' + err.message); }
+  };
+
+  const filtered = facturas.filter(f => {
+    if (filterApt !== 'all' && (f.apt || 'general') !== filterApt) return false;
+    if (filterCat !== 'all' && f.categoria !== filterCat) return false;
+    return true;
+  });
+
+  // Totales para declaración
+  const totBase    = filtered.reduce((s, f) => s + (Number(f.base)  || 0), 0);
+  const totIva     = filtered.reduce((s, f) => s + (Number(f.iva)   || 0), 0);
+  const totTotal   = filtered.reduce((s, f) => s + (Number(f.total) || 0), 0);
+  const totDeducible = filtered.reduce((s, f) => s + Math.round((Number(f.base) || 0) * ((Number(f.deducible_pct) || 100) / 100) * 100) / 100, 0);
+
+  // Por categoría
+  const byCat = {};
+  filtered.forEach(f => {
+    const c = f.categoria || 'otros';
+    if (!byCat[c]) byCat[c] = { base: 0, total: 0, n: 0 };
+    byCat[c].base  += Number(f.base)  || 0;
+    byCat[c].total += Number(f.total) || 0;
+    byCat[c].n++;
+  });
+
+  const aptOptions = [
+    { key: 'general', label: 'General (todas)' },
+    { key: 'vm', label: APT_NAMES.vm },
+    { key: 'vt', label: APT_NAMES.vt },
+    { key: 'vs', label: APT_NAMES.vs },
+  ];
+
+  if (loading) return <div className="pe-card"><p>Cargando facturas…</p></div>;
+
+  return (
+    <div className="pe-card fac-card">
+      {error   && <div className="pe-error">{error}</div>}
+      {success && <div className="pe-success">{success}</div>}
+
+      <div className="fac-head">
+        <h2>🧾 Facturas de gastos
+          <span className="fac-year-badge">{focusYear}</span>
+        </h2>
+        <div className="fac-head-actions">
+          <select value={focusYear} onChange={e => setFocusYear(Number(e.target.value))} className="fac-year-sel">
+            {allYears.map(y => <option key={y} value={y}>{y}</option>)}
+            {!allYears.includes(focusYear) && <option value={focusYear}>{focusYear}</option>}
+          </select>
+          <button type="button" className="pe-btn pe-btn-ghost" onClick={loadData}>Recargar</button>
+          <button type="button" className="pe-btn pe-btn-primary" onClick={openNew}>+ Nueva factura</button>
+        </div>
+      </div>
+
+      {/* Filtros */}
+      <div className="fac-toolbar">
+        <label>Hestía
+          <select value={filterApt} onChange={e => setFilterApt(e.target.value)}>
+            <option value="all">Todas</option>
+            {aptOptions.map(a => <option key={a.key} value={a.key}>{a.label}</option>)}
+          </select>
+        </label>
+        <label>Categoría
+          <select value={filterCat} onChange={e => setFilterCat(e.target.value)}>
+            <option value="all">Todas</option>
+            {GASTO_CATS.map(c => <option key={c.key} value={c.key}>{c.label}</option>)}
+          </select>
+        </label>
+      </div>
+
+      {/* Resumen declaración */}
+      {filtered.length > 0 && (
+        <div className="fac-summary">
+          <div className="fac-kpi"><span>Facturas</span><strong>{filtered.length}</strong></div>
+          <div className="fac-kpi"><span>Base imponible</span><strong>{fmtEur(totBase)}</strong></div>
+          <div className="fac-kpi"><span>IVA soportado</span><strong>{fmtEur(totIva)}</strong></div>
+          <div className="fac-kpi"><span>Total pagado</span><strong>{fmtEur(totTotal)}</strong></div>
+          <div className="fac-kpi fac-kpi-accent"><span>Gasto deducible</span><strong>{fmtEur(totDeducible)}</strong></div>
+        </div>
+      )}
+
+      {/* Tabla */}
+      {filtered.length === 0 ? (
+        <p className="fac-empty">No hay facturas para {focusYear}{filterApt !== 'all' || filterCat !== 'all' ? ' con estos filtros' : ''}. Pulsa "+ Nueva factura" para añadir.</p>
+      ) : (
+        <div className="fac-table-wrap">
+          <table className="fac-table">
+            <thead><tr>
+              <th>Fecha</th>
+              <th>Proveedor</th>
+              <th>Concepto</th>
+              <th>Categoría</th>
+              <th>Hestía</th>
+              <th className="num">Base</th>
+              <th className="num">IVA</th>
+              <th className="num">Total</th>
+              <th className="num">Deducible</th>
+              <th>PDF</th>
+              <th></th>
+            </tr></thead>
+            <tbody>
+              {filtered.map((f, i) => {
+                const deducible = Math.round((Number(f.base)||0) * ((Number(f.deducible_pct)||100)/100) * 100) / 100;
+                const catLabel = (GASTO_CATS.find(c => c.key === f.categoria) || {}).label || f.categoria;
+                const aptLabel = aptOptions.find(a => a.key === (f.apt||'general'))?.label || f.apt;
+                return (
+                  <tr key={i} className="fac-row" onClick={() => openEdit(i)}>
+                    <td className="fac-date">{fmtDate(f.fecha)}</td>
+                    <td className="fac-proveedor">
+                      <strong>{f.proveedor || '—'}</strong>
+                      {f.nif && <span className="fac-nif">{f.nif}</span>}
+                    </td>
+                    <td className="fac-concepto">{f.concepto || '—'}</td>
+                    <td><span className="fac-cat-chip">{catLabel}</span></td>
+                    <td>
+                      {f.apt && f.apt !== 'general'
+                        ? <span className="rv-apt-chip" style={{background: APT_COLOR[f.apt], color: APT_TEXT[f.apt]}}>{APT_NAMES[f.apt]}</span>
+                        : <span className="fac-apt-gen">General</span>}
+                    </td>
+                    <td className="num">{fmtEur(f.base)}</td>
+                    <td className="num fac-iva">{f.iva_pct ? `${f.iva_pct}%` : '—'}</td>
+                    <td className="num"><strong>{fmtEur(f.total)}</strong></td>
+                    <td className="num fac-deducible">{fmtEur(deducible)}{f.deducible_pct < 100 ? <span className="fac-pct"> ({f.deducible_pct}%)</span> : ''}</td>
+                    <td className="fac-pdf-cell" onClick={e => e.stopPropagation()}>
+                      {f.factura_pdf
+                        ? <button type="button" className="fac-pdf-btn" title={f.factura_pdf} onClick={() => handlePdfDownload(f.factura_pdf)}>📎 PDF</button>
+                        : <span className="fac-no-pdf">—</span>}
+                    </td>
+                    <td className="fac-actions-cell" onClick={e => e.stopPropagation()}>
+                      <button type="button" className="fac-del-btn" title="Borrar" onClick={() => deleteFactura(i)}>🗑</button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+            <tfoot>
+              <tr className="fac-foot">
+                <td colSpan="5">Total {filtered.length} factura{filtered.length !== 1 ? 's' : ''}</td>
+                <td className="num"><strong>{fmtEur(totBase)}</strong></td>
+                <td className="num">—</td>
+                <td className="num"><strong>{fmtEur(totTotal)}</strong></td>
+                <td className="num fac-deducible"><strong>{fmtEur(totDeducible)}</strong></td>
+                <td colSpan="2"/>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      )}
+
+      {/* Resumen por categoría */}
+      {Object.keys(byCat).length > 1 && (
+        <div className="fac-bycat">
+          <h3>Por categoría</h3>
+          <div className="fac-bycat-grid">
+            {Object.entries(byCat).sort((a,b) => b[1].base - a[1].base).map(([k, v]) => {
+              const catLabel = (GASTO_CATS.find(c => c.key === k) || {}).label || k;
+              return (
+                <div key={k} className="fac-bycat-row">
+                  <span className="fac-cat-chip">{catLabel}</span>
+                  <span className="fac-bycat-n">{v.n} factura{v.n !== 1 ? 's' : ''}</span>
+                  <span className="fac-bycat-amt">{fmtEur(v.base)} base</span>
+                  <span className="fac-bycat-total">{fmtEur(v.total)}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Panel de edición */}
+      {draft && (
+        <>
+          <div className="rv-edit-backdrop" onClick={cancelDraft} />
+          <aside className="rv-edit-panel fac-edit-panel">
+            <header className="rv-edit-head">
+              <div>
+                <div className="rv-edit-eyebrow">{editIdx >= 0 ? 'Editar factura' : 'Nueva factura'} · {focusYear}</div>
+                <h3>{draft.proveedor || '(sin proveedor)'}</h3>
+              </div>
+              <button type="button" className="rv-edit-close" onClick={cancelDraft}>×</button>
+            </header>
+            <div className="rv-edit-body">
+              <div className="rv-row2">
+                <div className="pe-field"><label>Fecha *</label>
+                  <input type="date" className="pe-input" value={draft.fecha || ''} onChange={e => updateDraft('fecha', e.target.value)} />
+                </div>
+                <div className="pe-field"><label>Hestía</label>
+                  <select className="pe-input" value={draft.apt || 'general'} onChange={e => updateDraft('apt', e.target.value)}>
+                    {aptOptions.map(a => <option key={a.key} value={a.key}>{a.label}</option>)}
+                  </select>
+                </div>
+              </div>
+              <div className="rv-row2">
+                <div className="pe-field"><label>Proveedor *</label>
+                  <input className="pe-input" value={draft.proveedor || ''} onChange={e => updateDraft('proveedor', e.target.value)} placeholder="Ej: Leroy Merlin" />
+                </div>
+                <div className="pe-field"><label>NIF / CIF</label>
+                  <input className="pe-input" value={draft.nif || ''} onChange={e => updateDraft('nif', e.target.value)} placeholder="B12345678" />
+                </div>
+              </div>
+              <div className="pe-field"><label>Concepto *</label>
+                <input className="pe-input" value={draft.concepto || ''} onChange={e => updateDraft('concepto', e.target.value)} placeholder="Descripción del gasto" />
+              </div>
+              <div className="pe-field"><label>Categoría</label>
+                <select className="pe-input" value={draft.categoria || 'otros'} onChange={e => updateDraft('categoria', e.target.value)}>
+                  {GASTO_CATS.map(c => <option key={c.key} value={c.key}>{c.label}</option>)}
+                </select>
+              </div>
+              <div className="rv-row3">
+                <div className="pe-field"><label>Base imponible</label>
+                  <NumInput step="0.01" className="pe-input" value={draft.base || 0} onChange={v => updateDraft('base', v)} />
+                </div>
+                <div className="pe-field"><label>IVA %</label>
+                  <select className="pe-input" value={draft.iva_pct ?? 21} onChange={e => updateDraft('iva_pct', Number(e.target.value))}>
+                    {IVA_TYPES.map(t => <option key={t} value={t}>{t}%{t === 0 ? ' (exento)' : ''}</option>)}
+                  </select>
+                </div>
+                <div className="pe-field"><label>Total</label>
+                  <input className="pe-input" readOnly value={fmtEur(draft.total || 0)} style={{background:'var(--bg-soft)',fontWeight:600}} />
+                </div>
+              </div>
+              <div className="pe-field"><label>% Deducible <span className="rv-hint-inline">100 = deducción total</span></label>
+                <NumInput className="pe-input" value={draft.deducible_pct ?? 100} onChange={v => updateDraft('deducible_pct', Math.min(100, Math.max(0, v)))} min={0} max={100} />
+              </div>
+              <div className="pe-field"><label>Notas</label>
+                <input className="pe-input" value={draft.notas || ''} onChange={e => updateDraft('notas', e.target.value)} placeholder="Opcional" />
+              </div>
+              <fieldset><legend>Factura PDF</legend>
+                <div className="rv-contrato-block">
+                  {draft.factura_pdf ? (
+                    <>
+                      <span className="rv-contrato-fname" title={draft.factura_pdf}>📎 {draft.factura_pdf}</span>
+                      <button type="button" className="pe-btn pe-btn-ghost" onClick={() => handlePdfDownload(draft.factura_pdf)}>⬇ Ver</button>
+                      <label className="pe-btn pe-btn-ghost" style={{cursor:'pointer'}}>
+                        🔄 Cambiar
+                        <input type="file" accept=".pdf,.jpg,.jpeg,.png" style={{display:'none'}} onChange={handlePdfUpload} />
+                      </label>
+                    </>
+                  ) : (
+                    <label className="pe-btn pe-btn-ghost" style={{cursor:'pointer'}}>
+                      {pdfStatus === 'uploading' ? '⏳ Subiendo…' : '📎 Adjuntar factura'}
+                      <input type="file" accept=".pdf,.jpg,.jpeg,.png" style={{display:'none'}} onChange={handlePdfUpload} disabled={pdfStatus === 'uploading'} />
+                    </label>
+                  )}
+                </div>
+              </fieldset>
+            </div>
+            <footer className="rv-edit-foot">
+              {editIdx >= 0 && (
+                <button type="button" className="pe-btn pe-btn-ghost rv-btn-danger" onClick={() => { cancelDraft(); deleteFactura(facturas.indexOf(data.facturas[editIdx])); }}>🗑 Borrar</button>
+              )}
+              <div className="rv-edit-foot-right">
+                <button type="button" className="pe-btn pe-btn-ghost" onClick={cancelDraft}>Cancelar</button>
+                <button type="button" className="pe-btn pe-btn-primary" onClick={saveDraft} disabled={saving}>{saving ? 'Guardando…' : 'Guardar'}</button>
+              </div>
+            </footer>
+          </aside>
+        </>
+      )}
+    </div>
+  );
+};
+
 const LeilaTab = ({ token }) => {
   const [data,    setData]    = React.useState(null);
   const [sha,     setSha]     = React.useState(null);
@@ -3232,7 +3688,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
   // KPIs por canal (sólo año focal)
   const byCanal = {};
   focusList.forEach(r => {
-    const c = (r.canal || '—').trim() || '—';
+    const c = getCanalKey(r.canal);
     if (!byCanal[c]) byCanal[c] = { count: 0, sum: 0, bai: 0 };
     byCanal[c].count++;
     byCanal[c].sum += Number(r.ingreso_total) || 0;
@@ -4503,6 +4959,36 @@ const AdminApp = () => {
 
       <div className="pe-tabs">
         <button type="button"
+          className={`pe-tab${mode === 'reservas' ? ' is-active' : ''}`}
+          onClick={() => { setMode('reservas'); setError(null); setSuccess(null); }}>
+          🗓️<span className="pe-tab-label"> Reservas</span>
+        </button>
+        <button type="button"
+          className={`pe-tab${mode === 'prereservas' ? ' is-active' : ''}`}
+          onClick={() => { setMode('prereservas'); setError(null); setSuccess(null); }}>
+          📋<span className="pe-tab-label"> Prereservas</span>
+        </button>
+        <button type="button"
+          className={`pe-tab${mode === 'leila' ? ' is-active' : ''}`}
+          onClick={() => { setMode('leila'); setError(null); setSuccess(null); }}>
+          💳<span className="pe-tab-label"> Leila</span>
+        </button>
+        <button type="button"
+          className={`pe-tab${mode === 'contract' ? ' is-active' : ''}`}
+          onClick={() => { setMode('contract'); setError(null); setSuccess(null); }}>
+          📄<span className="pe-tab-label"> Contrato</span>
+        </button>
+        <button type="button"
+          className={`pe-tab${mode === 'facturas' ? ' is-active' : ''}`}
+          onClick={() => { setMode('facturas'); setError(null); setSuccess(null); }}>
+          🧾<span className="pe-tab-label"> Facturas</span>
+        </button>
+        <button type="button"
+          className={`pe-tab${mode === 'analytics' ? ' is-active' : ''}`}
+          onClick={() => { setMode('analytics'); setError(null); setSuccess(null); }}>
+          📊<span className="pe-tab-label"> Análisis</span>
+        </button>
+        <button type="button"
           className={`pe-tab${mode === 'pricing' ? ' is-active' : ''}`}
           onClick={() => { setMode('pricing'); setError(null); setSuccess(null); }}>
           💰<span className="pe-tab-label"> Pricing</span>
@@ -4517,31 +5003,6 @@ const AdminApp = () => {
           })()}
         </button>
         <button type="button"
-          className={`pe-tab${mode === 'analytics' ? ' is-active' : ''}`}
-          onClick={() => { setMode('analytics'); setError(null); setSuccess(null); }}>
-          📊<span className="pe-tab-label"> Analítica</span>
-        </button>
-        <button type="button"
-          className={`pe-tab${mode === 'contract' ? ' is-active' : ''}`}
-          onClick={() => { setMode('contract'); setError(null); setSuccess(null); }}>
-          📄<span className="pe-tab-label"> Contrato</span>
-        </button>
-        <button type="button"
-          className={`pe-tab${mode === 'prereservas' ? ' is-active' : ''}`}
-          onClick={() => { setMode('prereservas'); setError(null); setSuccess(null); }}>
-          📋<span className="pe-tab-label"> Prereservas</span>
-        </button>
-        <button type="button"
-          className={`pe-tab${mode === 'reservas' ? ' is-active' : ''}`}
-          onClick={() => { setMode('reservas'); setError(null); setSuccess(null); }}>
-          🗓️<span className="pe-tab-label"> Reservas</span>
-        </button>
-        <button type="button"
-          className={`pe-tab${mode === 'leila' ? ' is-active' : ''}`}
-          onClick={() => { setMode('leila'); setError(null); setSuccess(null); }}>
-          💳<span className="pe-tab-label"> Leila</span>
-        </button>
-        <button type="button"
           className={`pe-tab${mode === 'dashboard' ? ' is-active' : ''}`}
           onClick={() => { setMode('dashboard'); setError(null); setSuccess(null); }}>
           📊<span className="pe-tab-label"> Dashboard</span>
@@ -4551,7 +5012,7 @@ const AdminApp = () => {
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} /> : mode === 'prereservas' ? <PrereservasTab token={token} /> : mode === 'reservas' ? <ReservasTab token={token} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'dashboard' ? <DashboardTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} /> : mode === 'prereservas' ? <PrereservasTab token={token} /> : mode === 'reservas' ? <ReservasTab token={token} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'dashboard' ? <DashboardTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>
