@@ -929,7 +929,8 @@ const LastMinuteStrip = ({
       href: url,
       className: "lm-slot",
       style: {
-        '--lm-color': color
+        '--lm-color': color,
+        '--i': i
       }
     }, /*#__PURE__*/React.createElement("span", {
       className: "lm-apt"
