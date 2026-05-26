@@ -433,7 +433,7 @@ const QUICK_FAQ = {
   reservas: {
     es: [
       { q: '¿Es mejor reservar directo que por Booking o Airbnb?',
-        a: <>Sí. Y si encuentras un precio más bajo en cualquier plataforma, no solo lo igualamos — te lo mejoramos. Sin comisiones, sin intermediarios. <a href="reservas.html">Reserva aquí.</a></> },
+        a: <>Sí. Y si encuentras un precio más bajo en cualquier plataforma, nuestro precio directo es siempre mejor que cualquier plataforma. Sin comisiones, sin intermediarios. <a href="reservas.html">Reserva aquí.</a></> },
       { q: '¿Cuánto tardáis en confirmar la reserva?',
         a: <>Menos de 24 horas. En la mayoría de los casos respondemos el mismo día — y en muchos casos, en menos de una hora.</> },
       { q: '¿Qué pasa si necesito cambiar las fechas?',
@@ -443,7 +443,7 @@ const QUICK_FAQ = {
     ],
     en: [
       { q: 'Is it better to book directly than through Booking or Airbnb?',
-        a: <>Yes. And if you find a lower price on any platform, we don't just match it — we beat it. No commissions, no middlemen. <a href="reservas.html">Book here.</a></> },
+        a: <>Yes. Our direct price is always better than any platform — no exceptions, no middlemen. <a href="reservas.html">Book here.</a></> },
       { q: 'How long does confirmation take?',
         a: <>Under 24 hours. In most cases we reply the same day — and often in under an hour.</> },
       { q: 'What if I need to change my dates?',
@@ -597,8 +597,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'Reserva directo con Hestía: si encuentras un precio más bajo en Booking o Airbnb, no solo lo igualamos — te lo mejoramos. Y hablas con los propietarios, no con una centralita ni un bot.',
-    en: 'Book direct with Hestía: if you find a lower price on Booking or Airbnb, we don\'t just match it — we beat it. And you speak with the owners, not a call centre or a bot.',
+    es: 'Reserva directo con Hestía: nuestro precio es siempre mejor que Booking o Airbnb — sin excepciones. Y hablas con los propietarios, no con una centralita ni un bot.',
+    en: 'Book direct with Hestía: our price is always better than Booking or Airbnb — no exceptions. And you speak with the owners, not a call centre or a bot.',
   },
   {
     type: 'fact',
@@ -2375,7 +2375,7 @@ Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrol
 // ================================================================
 const DIRECT_PERKS = {
   es: [
-    { id:'precio',    icon:'💰', stat:'✓',       t:'Mejoramos cualquier precio.',                     d:'Mejoramos el precio de cualquier plataforma. Y si nos dices un precio mejor que el que te ofrecemos, te lo mejoramos otra vez. Sin discusión, sin letra pequeña.' },
+    { id:'precio',    icon:'💰', stat:'✓',       t:'Mejoramos cualquier precio.',                     d:'Nuestro precio directo es siempre mejor que cualquier plataforma — sin excepciones, sin letra pequeña.' },
     { id:'comision',  icon:'🚫', stat:'0%',      t:'Sin comisiones de plataforma.',                   d:'Las OTAs se quedan una comisión por cada reserva. Reservando directamente, ese coste no existe — pagas el precio real, no el inflado por intermediarios.' },
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Respuesta humana, no un bot.',                    d:'Hablas directamente con Alex o Fran. Casi siempre respondemos en minutos; máximo una hora en horario activo.' },
     { id:'cancel',    icon:'🔓', stat:'✓',       t:'Mejoramos las condiciones de cancelación.',       d:'¿Necesitas algo distinto a la política estándar? Pregúntanos, miramos cada caso. Sin formularios eternos, sin sanciones ocultas.' },
@@ -2386,7 +2386,7 @@ const DIRECT_PERKS = {
     { id:'proceso',   icon:'📜', stat:'20%',     t:'Contrato, prereserva y resto al llegar.',         d:'Te enviamos un borrador de contrato con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelación y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Una pequeña prereserva a convenir — normalmente el 20 % del total — se paga al formalizar el contrato; el resto, al llegar a Hestía. Acusamos recibo de todo (contrato y pago) para darte confianza, garantía y seguridad en cada paso.' },
   ],
   en: [
-    { id:'precio',    icon:'💰', stat:'✓',       t:'We beat any price.',                              d:'We beat any platform price. And if you tell us a lower one than ours, we beat that too. No questions, no small print.' },
+    { id:'precio',    icon:'💰', stat:'✓',       t:'We beat any price.',                              d:'Our direct price is always better than any platform — no exceptions, no small print.' },
     { id:'comision',  icon:'🚫', stat:'0%',      t:'No platform commissions.',                        d:'OTAs keep a commission on every booking. Booking direct, that cost simply does not exist — you pay the real price, not the inflated one.' },
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Human reply, not a bot.',                         d:'You talk directly to Alex or Fran. Usually within minutes; up to an hour during active hours.' },
     { id:'cancel',    icon:'🔓', stat:'✓',       t:'We improve cancellation terms.',                  d:'Need something different from the standard policy? Just ask — we look at each case. No endless forms, no hidden penalties.' },

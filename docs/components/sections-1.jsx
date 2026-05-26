@@ -475,8 +475,8 @@ const Apartments = ({ lang }) => {
                       <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
                       <span className="apb-match">
                         {lang === 'es'
-                          ? '✓ Si encuentras un precio más bajo, te lo mejoramos'
-                          : '✓ Find a lower price — we will beat it'}
+                          ? '✓ Precio directo siempre mejor que cualquier plataforma'
+                          : '✓ Direct price always better than any platform'}
                       </span>
                     </div>
                   )}
