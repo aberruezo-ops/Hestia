@@ -866,9 +866,12 @@ const LastMinuteStrip = ({
       const found = [];
       for (const apt of APARTMENTS) {
         const blocked = data[apt.id]?.blocked || [];
-        const sorted = blocked.filter(b => b.end > todayStr && b.start < horizonStr).sort((a, b) => a.start.localeCompare(b.start));
+        // Incluir todos los bloques futuros, no solo los que empiezan antes del horizonte,
+        // para que el checkout de cada hueco use el inicio real del siguiente bloque.
+        const sorted = blocked.filter(b => b.end > todayStr).sort((a, b) => a.start.localeCompare(b.start));
         let cursor = todayStr;
         for (const block of sorted) {
+          if (cursor >= horizonStr) break;
           if (block.start > cursor) {
             const nights = Math.round((new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
             if (nights >= 2) found.push({
