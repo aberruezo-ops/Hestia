@@ -2859,9 +2859,10 @@ function calcDerived(r) {
   // 3. Rentabilidad = BAI / ingreso_total.
   out.rentabilidad_pct = ingreso > 0 ? Math.round(out.bai / ingreso * 10000) / 10000 : null;
 
-  // 4. Efectivo al check-in = ingreso_total − señal − pago_previo (salvo override).
+  // 4. Efectivo al check-in: 0 para plataformas (ya cobran ellas),
+  //    ingreso_total − señal − pago_previo para reservas directas.
   if (!r._checkin_manual) {
-    out.al_checkin = Math.max(0, (Number(out.ingreso_total) || 0) - (Number(out.reserva) || 0) - (Number(out.pago_previo) || 0));
+    out.al_checkin = getCanalKey(out.canal) === 'directo' ? Math.max(0, (Number(out.ingreso_total) || 0) - (Number(out.reserva) || 0) - (Number(out.pago_previo) || 0)) : 0;
   }
 
   // 5. Precios por noche.
@@ -5610,14 +5611,14 @@ const ReservasTab = ({
     }))
   }, "\u21BB auto") : /*#__PURE__*/React.createElement("span", {
     className: "rv-calc"
-  }, " calculado")), draft._checkin_manual ? /*#__PURE__*/React.createElement(NumInput, {
+  }, " auto")), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.al_checkin || 0,
-    onChange: v => updateDraft('al_checkin', v)
-  }) : /*#__PURE__*/React.createElement("input", {
-    readOnly: true,
-    className: "rv-readonly",
-    value: fmtEur(draft.al_checkin)
+    onChange: v => setDraft(p => ({
+      ...p,
+      al_checkin: v,
+      _checkin_manual: true
+    }))
   }))), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Fianza tomada"), /*#__PURE__*/React.createElement("select", {

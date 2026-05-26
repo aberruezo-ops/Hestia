@@ -19562,10 +19562,26 @@ img[src*="apt-vt-gallery-"] {
   font-size: 10px;
   letter-spacing: 0.12em;
 }
-.lm-cards {
+@keyframes lm-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.lm-marquee-wrap {
+  overflow: hidden;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
+}
+.lm-marquee-track {
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
+  width: max-content;
+  animation: lm-scroll linear infinite;
+}
+.lm-marquee-track:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .lm-marquee-track { animation: none; }
+  .lm-marquee-wrap { -webkit-mask-image: none; mask-image: none; overflow-x: auto; }
 }
 /* Tarjeta de hueco disponible */
 .lm-card {
@@ -19629,8 +19645,7 @@ img[src*="apt-vt-gallery-"] {
 .lm-strip--embedded .lm-inner { max-width: none; }
 
 @media (max-width: 767px) {
-  .lm-cards { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
-  .lm-card { min-width: 138px; flex-shrink: 0; }
+  .lm-card { min-width: 138px; }
 }
 
 /* ============================================================
