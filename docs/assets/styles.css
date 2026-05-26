@@ -19544,8 +19544,8 @@ img[src*="apt-vt-gallery-"] {
    LAST MINUTE STRIP
    ============================================================ */
 @keyframes lm-pop {
-  0%   { opacity: 0; transform: scale(0); }
-  70%  { opacity: 1; transform: scale(1.06); }
+  0%   { opacity: 0; transform: scale(.7); }
+  70%  { opacity: 1; transform: scale(1.05); }
   100% { opacity: 1; transform: scale(1); }
 }
 .lm-strip {
@@ -19555,7 +19555,7 @@ img[src*="apt-vt-gallery-"] {
   border-bottom: 1px solid rgba(240, 232, 213, 0.08);
 }
 @media (prefers-reduced-motion: reduce) {
-  .lm-slot { animation: none !important; }
+  .lm-slot { opacity: 1 !important; animation: none !important; }
 }
 .lm-inner {
   max-width: 900px;
@@ -19590,8 +19590,9 @@ img[src*="apt-vt-gallery-"] {
   letter-spacing: 0.03em;
   transition: background .2s ease;
   white-space: nowrap;
+  opacity: 0;
   transform-origin: center;
-  animation: lm-pop .4s cubic-bezier(.34,1.56,.64,1) both;
+  animation: lm-pop .4s cubic-bezier(.34,1.56,.64,1) forwards;
   animation-delay: calc(var(--i, 0) * 40ms);
 }
 .lm-slot:hover { background: rgba(255, 255, 255, 0.10); }
