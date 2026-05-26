@@ -19543,11 +19543,23 @@ img[src*="apt-vt-gallery-"] {
 /* ============================================================
    LAST MINUTE STRIP
    ============================================================ */
+@keyframes lm-strip-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes lm-slot-in {
+  from { opacity: 0; transform: translateY(6px) scale(.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
 .lm-strip {
   background: var(--ber-dk, #1A0A1E);
   padding: clamp(14px, 2vw, 24px) var(--page-pad);
   border-top: 1px solid rgba(240, 232, 213, 0.08);
   border-bottom: 1px solid rgba(240, 232, 213, 0.08);
+  animation: lm-strip-in .35s cubic-bezier(.23,1,.32,1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lm-strip, .lm-slot { animation: none !important; }
 }
 .lm-inner {
   max-width: 900px;
@@ -19582,6 +19594,8 @@ img[src*="apt-vt-gallery-"] {
   letter-spacing: 0.03em;
   transition: background .2s ease;
   white-space: nowrap;
+  animation: lm-slot-in .3s cubic-bezier(.23,1,.32,1) both;
+  animation-delay: calc(var(--i, 0) * 55ms + 100ms);
 }
 .lm-slot:hover { background: rgba(255, 255, 255, 0.10); }
 .lm-apt { font-weight: 700; color: var(--lm-color, #3AAABB); }

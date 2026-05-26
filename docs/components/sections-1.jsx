@@ -673,7 +673,7 @@ const LastMinuteStrip = ({ lang }) => {
             const color = APT_COLOR[slot.apt.id];
             const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
             return (
-              <a key={i} href={url} className="lm-slot" style={{ '--lm-color': color }}>
+              <a key={i} href={url} className="lm-slot" style={{ '--lm-color': color, '--i': i }}>
                 <span className="lm-apt">{slot.apt.name.replace('Hestía ', '')}</span>
                 <span className="lm-dates">{fmtDate(slot.checkin)} – {fmtDate(slot.checkout)}</span>
                 <span className="lm-nights">{slot.nights}{lang === 'es' ? 'n' : 'd'}</span>
