@@ -19580,13 +19580,7 @@ img[src*="apt-vt-gallery-"] {
   color: var(--cream, #F0E8D5);
   text-decoration: none;
   min-width: 152px;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: background .2s ease, opacity .3s ease, transform .4s cubic-bezier(.34,1.56,.64,1);
-}
-.lm-card--in {
-  opacity: 1;
-  transform: translateY(0);
+  transition: background .2s ease;
 }
 .lm-card:hover { background: rgba(255, 255, 255, 0.09); }
 .lm-card-apt {
@@ -19637,11 +19631,6 @@ img[src*="apt-vt-gallery-"] {
 @media (max-width: 767px) {
   .lm-cards { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
   .lm-card { min-width: 138px; flex-shrink: 0; }
-  .lm-card { transform: translateX(-14px); }
-  .lm-card--in { transform: translateX(0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .lm-card, .lm-card--in { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 /* ============================================================

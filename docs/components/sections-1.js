@@ -854,7 +854,6 @@ const LastMinuteStrip = ({
   embedded = false
 }) => {
   const [slots, setSlots] = React.useState([]);
-  const [animate, setAnimate] = React.useState(false);
   React.useEffect(() => {
     fetch('assets/availability.json?t=' + Date.now(), {
       cache: 'no-store'
@@ -895,18 +894,6 @@ const LastMinuteStrip = ({
       setSlots(found.slice(0, 5));
     }).catch(() => {});
   }, []);
-  React.useEffect(() => {
-    if (slots.length > 0) {
-      // Double rAF guarantees the browser paints the initial state before transition fires
-      let id1 = requestAnimationFrame(() => {
-        let id2 = requestAnimationFrame(() => setAnimate(true));
-        return () => cancelAnimationFrame(id2);
-      });
-      return () => cancelAnimationFrame(id1);
-    } else {
-      setAnimate(false);
-    }
-  }, [slots.length]);
   if (!slots.length) return null;
   const MONTHS_ES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
   const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -942,10 +929,9 @@ const LastMinuteStrip = ({
     return /*#__PURE__*/React.createElement("a", {
       key: i,
       href: url,
-      className: `lm-card${animate ? ' lm-card--in' : ''}`,
+      className: "lm-card",
       style: {
-        '--lm-color': color,
-        transitionDelay: `${i * 80}ms`
+        '--lm-color': color
       }
     }, /*#__PURE__*/React.createElement("span", {
       className: "lm-card-apt"

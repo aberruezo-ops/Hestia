@@ -602,7 +602,6 @@ const Compare = ({ lang }) => {
 // ================================================================
 const LastMinuteStrip = ({ lang, embedded = false }) => {
   const [slots, setSlots] = React.useState([]);
-  const [animate, setAnimate] = React.useState(false);
 
   React.useEffect(() => {
     fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
@@ -644,19 +643,6 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
       .catch(() => {});
   }, []);
 
-  React.useEffect(() => {
-    if (slots.length > 0) {
-      // Double rAF guarantees the browser paints the initial state before transition fires
-      let id1 = requestAnimationFrame(() => {
-        let id2 = requestAnimationFrame(() => setAnimate(true));
-        return () => cancelAnimationFrame(id2);
-      });
-      return () => cancelAnimationFrame(id1);
-    } else {
-      setAnimate(false);
-    }
-  }, [slots.length]);
-
   if (!slots.length) return null;
 
   const MONTHS_ES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
@@ -690,8 +676,8 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
             const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
             const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
             return (
-              <a key={i} href={url} className={`lm-card${animate ? ' lm-card--in' : ''}`}
-                 style={{ '--lm-color': color, transitionDelay: `${i * 80}ms` }}>
+              <a key={i} href={url} className="lm-card"
+                 style={{ '--lm-color': color }}>
                 <span className="lm-card-apt">{aptShort}</span>
                 <span className="lm-card-dates">
                   <span className="lm-card-d1">{fmtDate(slot.checkin)}</span>
