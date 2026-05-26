@@ -897,8 +897,12 @@ const LastMinuteStrip = ({
   }, []);
   React.useEffect(() => {
     if (slots.length > 0) {
-      const id = setTimeout(() => setAnimate(true), 0);
-      return () => clearTimeout(id);
+      // Double rAF guarantees the browser paints the initial state before transition fires
+      let id1 = requestAnimationFrame(() => {
+        let id2 = requestAnimationFrame(() => setAnimate(true));
+        return () => cancelAnimationFrame(id2);
+      });
+      return () => cancelAnimationFrame(id1);
     } else {
       setAnimate(false);
     }
@@ -929,32 +933,39 @@ const LastMinuteStrip = ({
   }, !embedded && /*#__PURE__*/React.createElement("span", {
     className: "lm-eyebrow eyebrow"
   }, lang === 'es' ? 'Huecos disponibles ahora:' : 'Available now:'), /*#__PURE__*/React.createElement("div", {
-    className: "lm-slots"
+    className: "lm-cards"
   }, slots.map((slot, i) => {
     const minPrice = getMinPrice(slot.apt.id);
     const color = APT_COLOR[slot.apt.id];
     const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
+    const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
     return /*#__PURE__*/React.createElement("a", {
       key: i,
       href: url,
-      className: `lm-slot${animate ? ' lm-slot--in' : ''}`,
+      className: `lm-card${animate ? ' lm-card--in' : ''}`,
       style: {
         '--lm-color': color,
-        transitionDelay: `${i * 60}ms`
+        transitionDelay: `${i * 80}ms`
       }
     }, /*#__PURE__*/React.createElement("span", {
-      className: "lm-apt"
-    }, slot.apt.name.replace('Hestía ', '')), /*#__PURE__*/React.createElement("span", {
-      className: "lm-dates"
-    }, fmtDate(slot.checkin), " \u2013 ", fmtDate(slot.checkout)), /*#__PURE__*/React.createElement("span", {
-      className: "lm-nights"
-    }, slot.nights, lang === 'es' ? 'n' : 'd'), minPrice && /*#__PURE__*/React.createElement("span", {
-      className: "lm-price"
-    }, "desde ", minPrice, "\u20AC/n"));
-  })), /*#__PURE__*/React.createElement("a", {
+      className: "lm-card-apt"
+    }, aptShort), /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-dates"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-d1"
+    }, fmtDate(slot.checkin)), /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-sep"
+    }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-d2"
+    }, fmtDate(slot.checkout))), /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-meta"
+    }, slot.nights, " ", lang === 'es' ? 'noches' : 'nights', minPrice && /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-price"
+    }, " \xB7 ", minPrice, "\u20AC/n")));
+  })), !embedded && /*#__PURE__*/React.createElement("a", {
     href: "reservas.html",
     className: "lm-cta"
-  }, lang === 'es' ? 'Ver disponibilidad completa →' : 'See full availability →')));
+  }, lang === 'es' ? 'Ver todo →' : 'See all →')));
 };
 Object.assign(window, {
   Hero,

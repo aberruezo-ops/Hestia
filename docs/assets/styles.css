@@ -19553,81 +19553,95 @@ img[src*="apt-vt-gallery-"] {
   .lm-slot, .lm-slot--in { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 .lm-inner {
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: center;
 }
 .lm-eyebrow {
-  width: 100%;
-  color: rgba(240, 232, 213, 0.55);
+  margin-bottom: 12px;
+  color: rgba(240, 232, 213, 0.50);
+  font-size: 10px;
+  letter-spacing: 0.12em;
 }
-.lm-slots {
+.lm-cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  flex: 1;
-  min-width: 0;
+  gap: 10px;
 }
-.lm-slot {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 13px;
-  border-radius: 8px 0 8px 0;
+/* Tarjeta de hueco disponible */
+.lm-card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 13px 16px 11px;
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--lm-color, #3AAABB);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid var(--lm-color, #3AAABB);
   color: var(--cream, #F0E8D5);
   text-decoration: none;
-  font-size: 12px;
-  letter-spacing: 0.03em;
-  white-space: nowrap;
+  min-width: 152px;
   opacity: 0;
-  transform: scale(0.82);
-  transform-origin: center;
-  transition: background .2s ease, opacity .32s ease, transform .38s cubic-bezier(.34,1.56,.64,1);
+  transform: translateY(10px);
+  transition: background .2s ease, opacity .3s ease, transform .4s cubic-bezier(.34,1.56,.64,1);
 }
-.lm-slot--in {
+.lm-card--in {
   opacity: 1;
-  transform: scale(1);
+  transform: translateY(0);
 }
-.lm-slot:hover { background: rgba(255, 255, 255, 0.10); }
-.lm-apt { font-weight: 700; color: var(--lm-color, #3AAABB); }
-.lm-dates { opacity: 0.85; }
-.lm-nights { opacity: 0.5; font-size: 11px; }
-.lm-price { font-weight: 600; color: var(--lm-color, #3AAABB); }
+.lm-card:hover { background: rgba(255, 255, 255, 0.09); }
+.lm-card-apt {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--lm-color, #3AAABB);
+}
+.lm-card-dates {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.lm-card-sep { opacity: 0.35; font-size: 11px; }
+.lm-card-meta {
+  font-size: 11px;
+  opacity: 0.5;
+  letter-spacing: 0.02em;
+}
+.lm-card-price {
+  color: var(--lm-color, #3AAABB);
+  opacity: 1;
+}
 .lm-cta {
-  font-size: 12px;
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 11px;
   color: var(--cream, #F0E8D5);
-  opacity: 0.55;
+  opacity: 0.45;
   text-decoration: none;
-  white-space: nowrap;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.07em;
   transition: opacity .2s ease;
 }
-.lm-cta:hover { opacity: 1; }
+.lm-cta:hover { opacity: 0.9; }
 
-/* Variante embebida dentro del HomeSearch — sin fondo ni bordes propios */
+/* Variante embebida dentro del HomeSearch */
 .lm-strip--embedded {
   background: transparent;
   border-top: none;
   border-bottom: none;
-  padding: 0 0 8px;
+  padding: 0 0 10px;
 }
 .lm-strip--embedded .lm-inner { max-width: none; }
-.lm-strip--embedded .lm-cta { display: none; }
-
-@media (max-width: 640px) {
-  .lm-slots { width: 100%; }
-  .lm-slot { font-size: 11px; padding: 6px 10px; }
-  .lm-cta { width: 100%; text-align: center; padding-top: 4px; }
-}
 
 @media (max-width: 767px) {
-  .lm-slot { transform: translateX(-14px); }
-  .lm-slot--in { transform: translateX(0); }
+  .lm-cards { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+  .lm-card { min-width: 138px; flex-shrink: 0; }
+  .lm-card { transform: translateX(-14px); }
+  .lm-card--in { transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lm-card, .lm-card--in { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 /* ============================================================

@@ -646,8 +646,12 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
 
   React.useEffect(() => {
     if (slots.length > 0) {
-      const id = setTimeout(() => setAnimate(true), 0);
-      return () => clearTimeout(id);
+      // Double rAF guarantees the browser paints the initial state before transition fires
+      let id1 = requestAnimationFrame(() => {
+        let id2 = requestAnimationFrame(() => setAnimate(true));
+        return () => cancelAnimationFrame(id2);
+      });
+      return () => cancelAnimationFrame(id1);
     } else {
       setAnimate(false);
     }
@@ -679,25 +683,34 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
             {lang === 'es' ? 'Huecos disponibles ahora:' : 'Available now:'}
           </span>
         )}
-        <div className="lm-slots">
+        <div className="lm-cards">
           {slots.map((slot, i) => {
             const minPrice = getMinPrice(slot.apt.id);
             const color = APT_COLOR[slot.apt.id];
             const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
+            const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
             return (
-              <a key={i} href={url} className={`lm-slot${animate ? ' lm-slot--in' : ''}`}
-                 style={{ '--lm-color': color, transitionDelay: `${i * 60}ms` }}>
-                <span className="lm-apt">{slot.apt.name.replace('Hestía ', '')}</span>
-                <span className="lm-dates">{fmtDate(slot.checkin)} – {fmtDate(slot.checkout)}</span>
-                <span className="lm-nights">{slot.nights}{lang === 'es' ? 'n' : 'd'}</span>
-                {minPrice && <span className="lm-price">desde {minPrice}€/n</span>}
+              <a key={i} href={url} className={`lm-card${animate ? ' lm-card--in' : ''}`}
+                 style={{ '--lm-color': color, transitionDelay: `${i * 80}ms` }}>
+                <span className="lm-card-apt">{aptShort}</span>
+                <span className="lm-card-dates">
+                  <span className="lm-card-d1">{fmtDate(slot.checkin)}</span>
+                  <span className="lm-card-sep">→</span>
+                  <span className="lm-card-d2">{fmtDate(slot.checkout)}</span>
+                </span>
+                <span className="lm-card-meta">
+                  {slot.nights} {lang === 'es' ? 'noches' : 'nights'}
+                  {minPrice && <span className="lm-card-price"> · {minPrice}€/n</span>}
+                </span>
               </a>
             );
           })}
         </div>
-        <a href="reservas.html" className="lm-cta">
-          {lang === 'es' ? 'Ver disponibilidad completa →' : 'See full availability →'}
-        </a>
+        {!embedded && (
+          <a href="reservas.html" className="lm-cta">
+            {lang === 'es' ? 'Ver todo →' : 'See all →'}
+          </a>
+        )}
       </div>
     </section>
   );
