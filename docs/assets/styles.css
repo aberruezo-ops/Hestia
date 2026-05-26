@@ -19610,10 +19610,34 @@ img[src*="apt-vt-gallery-"] {
   transition: opacity .2s ease;
 }
 .lm-cta:hover { opacity: 1; }
+
+/* Variante embebida dentro del HomeSearch — sin fondo ni bordes propios */
+.lm-strip--embedded {
+  background: transparent;
+  border-top: none;
+  border-bottom: none;
+  padding: 0 0 8px;
+}
+.lm-strip--embedded .lm-inner { max-width: none; }
+.lm-strip--embedded .lm-cta { display: none; }
+
 @media (max-width: 640px) {
   .lm-slots { width: 100%; }
   .lm-slot { font-size: 11px; padding: 6px 10px; }
   .lm-cta { width: 100%; text-align: center; padding-top: 4px; }
+}
+
+/* Animación móvil: deslizamiento desde la izquierda en lugar de pop */
+@media (max-width: 767px) {
+  @keyframes lm-slide-in {
+    from { opacity: 0; transform: translateX(-18px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .lm-slot {
+    animation-name: lm-slide-in;
+    animation-timing-function: cubic-bezier(.23,1,.32,1);
+    animation-duration: .35s;
+  }
 }
 
 /* ============================================================
