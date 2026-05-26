@@ -136,7 +136,7 @@ const HsDateRange = ({
     if (ok) previewEnd = hover;
   }
   const handleDayClick = ds => {
-    if (ds < today || _isBeyondHorizon(ds)) return;
+    if (ds <= today || _isBeyondHorizon(ds)) return;
     const blk = _isBlkLocal(ds);
     const blkStart = blk && _isBlkStartLocal(ds);
     if (blk && !blkStart) return;
@@ -222,7 +222,7 @@ const HsDateRange = ({
         d
       } = cell;
       const ds = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-      const isPast = ds < today;
+      const isPast = ds <= today;
       const isBeyond = _isBeyondHorizon(ds);
       const isToday = ds === today;
       const isBlk = _isBlkLocal(ds);

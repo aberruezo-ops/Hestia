@@ -4578,7 +4578,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
 
 const AdminApp = () => {
   const [phase,    setPhase]    = React.useState('login');
-  const [mode,     setMode]     = React.useState('pricing');
+  const [mode,     setMode]     = React.useState('reservas');
   const [contractPrefill, setContractPrefill] = React.useState(null);
   const [token,    setToken]    = React.useState('');
   const [data,     setData]     = React.useState(null);
