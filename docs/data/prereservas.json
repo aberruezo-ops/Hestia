@@ -1,3 +1,19 @@
 {
-  "prereservas": []
+  "prereservas": [
+    {
+      "id": "pr-1748304000000",
+      "createdAt": "2026-05-26T22:00:00.000Z",
+      "apt": "vt",
+      "responsable": "Esther Tuerlings",
+      "telefono": "",
+      "huespedes": 2,
+      "menores_12": 0,
+      "entrada": "2026-05-27",
+      "salida": "2026-06-03",
+      "ingreso_total": 506.57,
+      "reserva": 0,
+      "canal": "Airbnb",
+      "observaciones": "No reembolsable. Código puerta sugerido: 2992. Comisión Airbnb: 116,93 €. Limpieza: 60 €."
+    }
+  ]
 }
