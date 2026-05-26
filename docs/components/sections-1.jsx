@@ -602,6 +602,7 @@ const Compare = ({ lang }) => {
 // ================================================================
 const LastMinuteStrip = ({ lang, embedded = false }) => {
   const [slots, setSlots] = React.useState([]);
+  const [animate, setAnimate] = React.useState(false);
 
   React.useEffect(() => {
     fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
@@ -643,6 +644,15 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
       .catch(() => {});
   }, []);
 
+  React.useEffect(() => {
+    if (slots.length > 0) {
+      const id = setTimeout(() => setAnimate(true), 0);
+      return () => clearTimeout(id);
+    } else {
+      setAnimate(false);
+    }
+  }, [slots.length]);
+
   if (!slots.length) return null;
 
   const MONTHS_ES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
@@ -664,16 +674,19 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
   return (
     <section className={`lm-strip${embedded ? ' lm-strip--embedded' : ''}`} aria-label={lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'}>
       <div className="lm-inner">
-        <span className="lm-eyebrow eyebrow">
-          {lang === 'es' ? 'O elige un hueco directamente:' : 'Or pick a slot directly:'}
-        </span>
+        {!embedded && (
+          <span className="lm-eyebrow eyebrow">
+            {lang === 'es' ? 'Huecos disponibles ahora:' : 'Available now:'}
+          </span>
+        )}
         <div className="lm-slots">
           {slots.map((slot, i) => {
             const minPrice = getMinPrice(slot.apt.id);
             const color = APT_COLOR[slot.apt.id];
             const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
             return (
-              <a key={i} href={url} className="lm-slot" style={{ '--lm-color': color, '--i': i }}>
+              <a key={i} href={url} className={`lm-slot${animate ? ' lm-slot--in' : ''}`}
+                 style={{ '--lm-color': color, transitionDelay: `${i * 60}ms` }}>
                 <span className="lm-apt">{slot.apt.name.replace('Hestía ', '')}</span>
                 <span className="lm-dates">{fmtDate(slot.checkin)} – {fmtDate(slot.checkout)}</span>
                 <span className="lm-nights">{slot.nights}{lang === 'es' ? 'n' : 'd'}</span>

@@ -615,9 +615,9 @@ const HomeSearch = ({
     className: "eyebrow hs-eyebrow"
   }, lang === 'es' ? 'Busca tu estancia · Vera Playa' : 'Find your stay · Vera Playa'), /*#__PURE__*/React.createElement("h2", {
     className: "hs-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "\xBFCu\xE1ndo ven\xEDs?"), " Elige fechas y te decimos qu\xE9 hay libre.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "When are you coming?"), " Pick dates and we'll show what's free.")), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement("em", null, "\xBFCu\xE1ndo ven\xEDs?") : /*#__PURE__*/React.createElement("em", null, "When are you coming?")), /*#__PURE__*/React.createElement("p", {
     className: "hs-sub"
-  }, lang === 'es' ? 'Selecciona Hestía — o déjalo en blanco para ver los tres disponibles — y cuéntanos lo que necesitáis.' : 'Choose a Hestía — or leave it blank to see all three — and tell us what you need.')), typeof LastMinuteStrip !== 'undefined' && /*#__PURE__*/React.createElement(LastMinuteStrip, {
+  }, lang === 'es' ? 'Coge uno de nuestros huecos o elige tu Hestía y las fechas que prefieras.' : 'Grab one of our available slots or choose your Hestía and the dates you prefer.')), typeof LastMinuteStrip !== 'undefined' && /*#__PURE__*/React.createElement(LastMinuteStrip, {
     lang: lang,
     embedded: true
   }), /*#__PURE__*/React.createElement("form", {
