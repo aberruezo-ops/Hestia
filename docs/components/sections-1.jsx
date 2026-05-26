@@ -653,7 +653,7 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
     return `${d.getUTCDate()} ${m}`;
   };
 
-  const APT_COLOR = { vm: '#3AAABB', vt: '#7B5FDC', vs: '#E0826F' };
+  const APT_COLOR = { vm: '#3AAABB', vt: '#8A4A24', vs: '#9E7A2C' };
 
   const getMinPrice = (aptId) => {
     const tbl = HESTIA_PRICES[aptId];
