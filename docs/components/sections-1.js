@@ -904,8 +904,8 @@ const LastMinuteStrip = ({
   };
   const APT_COLOR = {
     vm: '#3AAABB',
-    vt: '#7B5FDC',
-    vs: '#E0826F'
+    vt: '#8A4A24',
+    vs: '#9E7A2C'
   };
   const getMinPrice = aptId => {
     const tbl = HESTIA_PRICES[aptId];
