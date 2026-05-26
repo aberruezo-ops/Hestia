@@ -19543,11 +19543,6 @@ img[src*="apt-vt-gallery-"] {
 /* ============================================================
    LAST MINUTE STRIP
    ============================================================ */
-@keyframes lm-pop {
-  0%   { opacity: 0; transform: scale(.7); }
-  70%  { opacity: 1; transform: scale(1.05); }
-  100% { opacity: 1; transform: scale(1); }
-}
 .lm-strip {
   background: var(--ber-dk, #1A0A1E);
   padding: clamp(14px, 2vw, 24px) var(--page-pad);
@@ -19555,7 +19550,7 @@ img[src*="apt-vt-gallery-"] {
   border-bottom: 1px solid rgba(240, 232, 213, 0.08);
 }
 @media (prefers-reduced-motion: reduce) {
-  .lm-slot { opacity: 1 !important; animation: none !important; }
+  .lm-slot, .lm-slot--in { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 .lm-inner {
   max-width: 900px;
@@ -19588,12 +19583,15 @@ img[src*="apt-vt-gallery-"] {
   text-decoration: none;
   font-size: 12px;
   letter-spacing: 0.03em;
-  transition: background .2s ease;
   white-space: nowrap;
   opacity: 0;
+  transform: scale(0.82);
   transform-origin: center;
-  animation: lm-pop .4s cubic-bezier(.34,1.56,.64,1) forwards;
-  animation-delay: calc(var(--i, 0) * 40ms);
+  transition: background .2s ease, opacity .32s ease, transform .38s cubic-bezier(.34,1.56,.64,1);
+}
+.lm-slot--in {
+  opacity: 1;
+  transform: scale(1);
 }
 .lm-slot:hover { background: rgba(255, 255, 255, 0.10); }
 .lm-apt { font-weight: 700; color: var(--lm-color, #3AAABB); }
@@ -19627,17 +19625,9 @@ img[src*="apt-vt-gallery-"] {
   .lm-cta { width: 100%; text-align: center; padding-top: 4px; }
 }
 
-/* Animación móvil: deslizamiento desde la izquierda en lugar de pop */
-@keyframes lm-slide-in {
-  from { opacity: 0; transform: translateX(-18px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
 @media (max-width: 767px) {
-  .lm-slot {
-    animation-name: lm-slide-in;
-    animation-timing-function: cubic-bezier(.23,1,.32,1);
-    animation-duration: .35s;
-  }
+  .lm-slot { transform: translateX(-14px); }
+  .lm-slot--in { transform: translateX(0); }
 }
 
 /* ============================================================

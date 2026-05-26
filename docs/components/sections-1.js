@@ -854,6 +854,7 @@ const LastMinuteStrip = ({
   embedded = false
 }) => {
   const [slots, setSlots] = React.useState([]);
+  const [animate, setAnimate] = React.useState(false);
   React.useEffect(() => {
     fetch('assets/availability.json?t=' + Date.now(), {
       cache: 'no-store'
@@ -894,6 +895,14 @@ const LastMinuteStrip = ({
       setSlots(found.slice(0, 5));
     }).catch(() => {});
   }, []);
+  React.useEffect(() => {
+    if (slots.length > 0) {
+      const id = setTimeout(() => setAnimate(true), 0);
+      return () => clearTimeout(id);
+    } else {
+      setAnimate(false);
+    }
+  }, [slots.length]);
   if (!slots.length) return null;
   const MONTHS_ES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
   const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -917,9 +926,9 @@ const LastMinuteStrip = ({
     "aria-label": lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'
   }, /*#__PURE__*/React.createElement("div", {
     className: "lm-inner"
-  }, /*#__PURE__*/React.createElement("span", {
+  }, !embedded && /*#__PURE__*/React.createElement("span", {
     className: "lm-eyebrow eyebrow"
-  }, lang === 'es' ? 'O elige un hueco directamente:' : 'Or pick a slot directly:'), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Huecos disponibles ahora:' : 'Available now:'), /*#__PURE__*/React.createElement("div", {
     className: "lm-slots"
   }, slots.map((slot, i) => {
     const minPrice = getMinPrice(slot.apt.id);
@@ -928,10 +937,10 @@ const LastMinuteStrip = ({
     return /*#__PURE__*/React.createElement("a", {
       key: i,
       href: url,
-      className: "lm-slot",
+      className: `lm-slot${animate ? ' lm-slot--in' : ''}`,
       style: {
         '--lm-color': color,
-        '--i': i
+        transitionDelay: `${i * 60}ms`
       }
     }, /*#__PURE__*/React.createElement("span", {
       className: "lm-apt"

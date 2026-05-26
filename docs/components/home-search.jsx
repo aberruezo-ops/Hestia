@@ -589,14 +589,12 @@ const HomeSearch = ({ lang }) => {
             {lang === 'es' ? 'Busca tu estancia · Vera Playa' : 'Find your stay · Vera Playa'}
           </div>
           <h2 className="hs-title">
-            {lang === 'es'
-              ? <><em>¿Cuándo venís?</em> Elige fechas y te decimos qué hay libre.</>
-              : <><em>When are you coming?</em> Pick dates and we'll show what's free.</>}
+            {lang === 'es' ? <em>¿Cuándo venís?</em> : <em>When are you coming?</em>}
           </h2>
           <p className="hs-sub">
             {lang === 'es'
-              ? 'Selecciona Hestía — o déjalo en blanco para ver los tres disponibles — y cuéntanos lo que necesitáis.'
-              : 'Choose a Hestía — or leave it blank to see all three — and tell us what you need.'}
+              ? 'Coge uno de nuestros huecos o elige tu Hestía y las fechas que prefieras.'
+              : 'Grab one of our available slots or choose your Hestía and the dates you prefer.'}
           </p>
         </div>
 
