@@ -2364,11 +2364,12 @@ function calcDerived(r) {
   // 3. Rentabilidad = BAI / ingreso_total.
   out.rentabilidad_pct = ingreso > 0 ? Math.round((out.bai / ingreso) * 10000) / 10000 : null;
 
-  // 4. Efectivo al check-in = ingreso_total − señal − pago_previo (salvo override).
+  // 4. Efectivo al check-in: 0 para plataformas (ya cobran ellas),
+  //    ingreso_total − señal − pago_previo para reservas directas.
   if (!r._checkin_manual) {
-    out.al_checkin = Math.max(0,
-      (Number(out.ingreso_total)||0) - (Number(out.reserva)||0) - (Number(out.pago_previo)||0)
-    );
+    out.al_checkin = getCanalKey(out.canal) === 'directo'
+      ? Math.max(0, (Number(out.ingreso_total)||0) - (Number(out.reserva)||0) - (Number(out.pago_previo)||0))
+      : 0;
   }
 
   // 5. Precios por noche.
@@ -4466,11 +4467,10 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                     <label>Efectivo check-in
                       {draft._checkin_manual
                         ? <button type="button" className="rv-mini-link" onClick={() => setDraft(p => calcDerived({...p, _checkin_manual: false}))}>↻ auto</button>
-                        : <span className="rv-calc"> calculado</span>}
+                        : <span className="rv-calc"> auto</span>}
                     </label>
-                    {draft._checkin_manual
-                      ? <NumInput step="0.01" value={draft.al_checkin || 0} onChange={v => updateDraft('al_checkin', v)} />
-                      : <input readOnly className="rv-readonly" value={fmtEur(draft.al_checkin)} />}
+                    <NumInput step="0.01" value={draft.al_checkin || 0}
+                      onChange={v => setDraft(p => ({ ...p, al_checkin: v, _checkin_manual: true }))} />
                   </div>
                 </div>
                 <div className="rv-field">

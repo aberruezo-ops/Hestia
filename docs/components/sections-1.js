@@ -912,22 +912,13 @@ const LastMinuteStrip = ({
     if (!tbl) return null;
     return Math.min(...tbl.base.slice(1));
   };
-  return /*#__PURE__*/React.createElement("section", {
-    className: `lm-strip${embedded ? ' lm-strip--embedded' : ''}`,
-    "aria-label": lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "lm-inner"
-  }, !embedded && /*#__PURE__*/React.createElement("span", {
-    className: "lm-eyebrow eyebrow"
-  }, lang === 'es' ? 'Huecos disponibles ahora:' : 'Available now:'), /*#__PURE__*/React.createElement("div", {
-    className: "lm-cards"
-  }, slots.map((slot, i) => {
+  const renderCard = (slot, key) => {
     const minPrice = getMinPrice(slot.apt.id);
     const color = APT_COLOR[slot.apt.id];
     const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
     const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
     return /*#__PURE__*/React.createElement("a", {
-      key: i,
+      key: key,
       href: url,
       className: "lm-card",
       style: {
@@ -948,10 +939,26 @@ const LastMinuteStrip = ({
     }, slot.nights, " ", lang === 'es' ? 'noches' : 'nights', minPrice && /*#__PURE__*/React.createElement("span", {
       className: "lm-card-price"
     }, " \xB7 ", minPrice, "\u20AC/n")));
-  })), !embedded && /*#__PURE__*/React.createElement("a", {
+  };
+  const dur = `${Math.max(10, slots.length * 5)}s`;
+  return /*#__PURE__*/React.createElement("section", {
+    className: `lm-strip${embedded ? ' lm-strip--embedded' : ''}`,
+    "aria-label": lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lm-inner"
+  }, !embedded && /*#__PURE__*/React.createElement("span", {
+    className: "lm-eyebrow eyebrow"
+  }, lang === 'es' ? 'Huecos disponibles ahora:' : 'Available now:'), /*#__PURE__*/React.createElement("div", {
+    className: "lm-marquee-wrap"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lm-marquee-track",
+    style: {
+      animationDuration: dur
+    }
+  }, slots.map((slot, i) => renderCard(slot, i)), slots.map((slot, i) => renderCard(slot, `d${i}`)))), !embedded && /*#__PURE__*/React.createElement("a", {
     href: "reservas.html",
     className: "lm-cta"
-  }, lang === 'es' ? 'Ver todo →' : 'See all →')));
+  }, lang === 'es' ? 'Ver disponibilidad completa →' : 'See full availability →')));
 };
 Object.assign(window, {
   Hero,

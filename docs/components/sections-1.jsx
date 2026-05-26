@@ -661,6 +661,29 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
     return Math.min(...tbl.base.slice(1));
   };
 
+  const renderCard = (slot, key) => {
+    const minPrice = getMinPrice(slot.apt.id);
+    const color = APT_COLOR[slot.apt.id];
+    const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
+    const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
+    return (
+      <a key={key} href={url} className="lm-card" style={{ '--lm-color': color }}>
+        <span className="lm-card-apt">{aptShort}</span>
+        <span className="lm-card-dates">
+          <span className="lm-card-d1">{fmtDate(slot.checkin)}</span>
+          <span className="lm-card-sep">→</span>
+          <span className="lm-card-d2">{fmtDate(slot.checkout)}</span>
+        </span>
+        <span className="lm-card-meta">
+          {slot.nights} {lang === 'es' ? 'noches' : 'nights'}
+          {minPrice && <span className="lm-card-price"> · {minPrice}€/n</span>}
+        </span>
+      </a>
+    );
+  };
+
+  const dur = `${Math.max(10, slots.length * 5)}s`;
+
   return (
     <section className={`lm-strip${embedded ? ' lm-strip--embedded' : ''}`} aria-label={lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'}>
       <div className="lm-inner">
@@ -669,32 +692,15 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
             {lang === 'es' ? 'Huecos disponibles ahora:' : 'Available now:'}
           </span>
         )}
-        <div className="lm-cards">
-          {slots.map((slot, i) => {
-            const minPrice = getMinPrice(slot.apt.id);
-            const color = APT_COLOR[slot.apt.id];
-            const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
-            const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
-            return (
-              <a key={i} href={url} className="lm-card"
-                 style={{ '--lm-color': color }}>
-                <span className="lm-card-apt">{aptShort}</span>
-                <span className="lm-card-dates">
-                  <span className="lm-card-d1">{fmtDate(slot.checkin)}</span>
-                  <span className="lm-card-sep">→</span>
-                  <span className="lm-card-d2">{fmtDate(slot.checkout)}</span>
-                </span>
-                <span className="lm-card-meta">
-                  {slot.nights} {lang === 'es' ? 'noches' : 'nights'}
-                  {minPrice && <span className="lm-card-price"> · {minPrice}€/n</span>}
-                </span>
-              </a>
-            );
-          })}
+        <div className="lm-marquee-wrap">
+          <div className="lm-marquee-track" style={{ animationDuration: dur }}>
+            {slots.map((slot, i) => renderCard(slot, i))}
+            {slots.map((slot, i) => renderCard(slot, `d${i}`))}
+          </div>
         </div>
         {!embedded && (
           <a href="reservas.html" className="lm-cta">
-            {lang === 'es' ? 'Ver todo →' : 'See all →'}
+            {lang === 'es' ? 'Ver disponibilidad completa →' : 'See full availability →'}
           </a>
         )}
       </div>
