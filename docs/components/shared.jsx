@@ -433,7 +433,7 @@ const QUICK_FAQ = {
   reservas: {
     es: [
       { q: '¿Es mejor reservar directo que por Booking o Airbnb?',
-        a: <>Sí. El precio es igual o mejor que cualquier plataforma, sin comisiones. Y hablas directamente con nosotros, no con un bot ni un formulario automático. <a href="reservas.html">Reserva aquí.</a></> },
+        a: <>Sí. Y si encuentras un precio más bajo en cualquier plataforma, no solo lo igualamos — te lo mejoramos. Sin comisiones, sin intermediarios. <a href="reservas.html">Reserva aquí.</a></> },
       { q: '¿Cuánto tardáis en confirmar la reserva?',
         a: <>Menos de 24 horas. En la mayoría de los casos respondemos el mismo día — y en muchos casos, en menos de una hora.</> },
       { q: '¿Qué pasa si necesito cambiar las fechas?',
@@ -443,7 +443,7 @@ const QUICK_FAQ = {
     ],
     en: [
       { q: 'Is it better to book directly than through Booking or Airbnb?',
-        a: <>Yes. The price is the same or better, with no platform commissions. And you speak directly with us, not a bot or automatic form. <a href="reservas.html">Book here.</a></> },
+        a: <>Yes. And if you find a lower price on any platform, we don't just match it — we beat it. No commissions, no middlemen. <a href="reservas.html">Book here.</a></> },
       { q: 'How long does confirmation take?',
         a: <>Under 24 hours. In most cases we reply the same day — and often in under an hour.</> },
       { q: 'What if I need to change my dates?',
@@ -597,8 +597,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'Al reservar directamente con Hestía, el precio es igual o mejor que en Booking o Airbnb — y hablas con los propietarios, no con una centralita ni un bot.',
-    en: 'Booking directly with Hestía gives you the same price or better than Booking or Airbnb — and you speak with the owners, not a call centre or a bot.',
+    es: 'Reserva directo con Hestía: si encuentras un precio más bajo en Booking o Airbnb, no solo lo igualamos — te lo mejoramos. Y hablas con los propietarios, no con una centralita ni un bot.',
+    en: 'Book direct with Hestía: if you find a lower price on Booking or Airbnb, we don\'t just match it — we beat it. And you speak with the owners, not a call centre or a bot.',
   },
   {
     type: 'fact',

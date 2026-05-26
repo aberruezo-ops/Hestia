@@ -620,7 +620,7 @@ const QUICK_FAQ = {
   reservas: {
     es: [{
       q: '¿Es mejor reservar directo que por Booking o Airbnb?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED. El precio es igual o mejor que cualquier plataforma, sin comisiones. Y hablas directamente con nosotros, no con un bot ni un formulario autom\xE1tico. ", /*#__PURE__*/React.createElement("a", {
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED. Y si encuentras un precio m\xE1s bajo en cualquier plataforma, no solo lo igualamos \u2014 te lo mejoramos. Sin comisiones, sin intermediarios. ", /*#__PURE__*/React.createElement("a", {
         href: "reservas.html"
       }, "Reserva aqu\xED."))
     }, {
@@ -635,7 +635,7 @@ const QUICK_FAQ = {
     }],
     en: [{
       q: 'Is it better to book directly than through Booking or Airbnb?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes. The price is the same or better, with no platform commissions. And you speak directly with us, not a bot or automatic form. ", /*#__PURE__*/React.createElement("a", {
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes. And if you find a lower price on any platform, we don't just match it \u2014 we beat it. No commissions, no middlemen. ", /*#__PURE__*/React.createElement("a", {
         href: "reservas.html"
       }, "Book here."))
     }, {
@@ -772,8 +772,8 @@ const SABIAS_QUE_FACTS = [/* ── Almería y Vera Playa ── */
   en: 'Hestía has held top scores on Booking.com, Airbnb and Google Maps for over ten years — something fewer than 1% of guest accommodations in Spain sustain for that long.'
 }, {
   type: 'fact',
-  es: 'Al reservar directamente con Hestía, el precio es igual o mejor que en Booking o Airbnb — y hablas con los propietarios, no con una centralita ni un bot.',
-  en: 'Booking directly with Hestía gives you the same price or better than Booking or Airbnb — and you speak with the owners, not a call centre or a bot.'
+  es: 'Reserva directo con Hestía: si encuentras un precio más bajo en Booking o Airbnb, no solo lo igualamos — te lo mejoramos. Y hablas con los propietarios, no con una centralita ni un bot.',
+  en: 'Book direct with Hestía: if you find a lower price on Booking or Airbnb, we don\'t just match it — we beat it. And you speak with the owners, not a call centre or a bot.'
 }, {
   type: 'fact',
   es: 'Hestía Thalassa es el único ático de la colección. Desde su terraza panorámica se tienen las vistas más abiertas al Mediterráneo y al Salar de los Canos de toda la urbanización.',
