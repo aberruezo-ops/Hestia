@@ -377,12 +377,12 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
                   </div>
                   <div className="hs-pb-right">
                     <div className="price-guarantee-badge">
-                      {lang === 'es' ? '✓ ¿Precio mejor? Te lo mejoramos' : '✓ Better price? We\'ll beat it'}
+                      {lang === 'es' ? '✓ Precio directo siempre mejor' : '✓ Direct price always better'}
                     </div>
                     <div className="price-guarantee-sub">
                       {lang === 'es'
-                        ? 'Si encuentras un precio mejor, te lo mejoramos.'
-                        : 'See a better price elsewhere? We\'ll beat it.'}
+                        ? 'Precio directo siempre mejor que cualquier plataforma.'
+                        : 'Our direct price is always better than any platform.'}
                     </div>
                   </div>
                 </div>

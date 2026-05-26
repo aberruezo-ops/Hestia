@@ -460,8 +460,8 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
             <span className="app-per">{lang === 'es' ? ' / noche · precio directo' : ' / night · direct price'}</span>
             <span className="app-match">
               {lang === 'es'
-                ? '· Si encuentras un precio más bajo, te lo mejoramos.'
-                : '· Find a lower price anywhere — we will beat it.'}
+                ? '· Precio directo siempre mejor que Booking o Airbnb.'
+                : '· Direct price always better than Booking or Airbnb.'}
             </span>
           </p>
         )}
@@ -1006,7 +1006,7 @@ const AptStickyBar = ({ apt, lang, scrolled }) => {
           <span className="asb-price">
             {lang === 'es' ? `desde ${minP}€/noche` : `from ${minP}€/night`}
             <span className="asb-match" aria-hidden="true">
-              {lang === 'es' ? '✓ ¿mejor precio? te lo mejoramos' : '✓ better price? we beat it'}
+              {lang === 'es' ? '✓ precio directo siempre mejor' : '✓ direct price always better'}
             </span>
           </span>
         )}
