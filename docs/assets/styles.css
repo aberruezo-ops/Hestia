@@ -19628,11 +19628,11 @@ img[src*="apt-vt-gallery-"] {
 }
 
 /* Animación móvil: deslizamiento desde la izquierda en lugar de pop */
+@keyframes lm-slide-in {
+  from { opacity: 0; transform: translateX(-18px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
 @media (max-width: 767px) {
-  @keyframes lm-slide-in {
-    from { opacity: 0; transform: translateX(-18px); }
-    to   { opacity: 1; transform: translateX(0); }
-  }
   .lm-slot {
     animation-name: lm-slide-in;
     animation-timing-function: cubic-bezier(.23,1,.32,1);
