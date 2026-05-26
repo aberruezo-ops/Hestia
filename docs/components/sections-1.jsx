@@ -600,7 +600,7 @@ const Compare = ({ lang }) => {
 // ================================================================
 // LAST MINUTE STRIP — huecos disponibles en los próximos 45 días
 // ================================================================
-const LastMinuteStrip = ({ lang }) => {
+const LastMinuteStrip = ({ lang, embedded = false }) => {
   const [slots, setSlots] = React.useState([]);
 
   React.useEffect(() => {
@@ -662,10 +662,10 @@ const LastMinuteStrip = ({ lang }) => {
   };
 
   return (
-    <section className="lm-strip" aria-label={lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'}>
+    <section className={`lm-strip${embedded ? ' lm-strip--embedded' : ''}`} aria-label={lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'}>
       <div className="lm-inner">
         <span className="lm-eyebrow eyebrow">
-          {lang === 'es' ? 'Últimas plazas · próximas 6 semanas' : 'Last minute · next 6 weeks'}
+          {lang === 'es' ? 'O elige un hueco directamente:' : 'Or pick a slot directly:'}
         </span>
         <div className="lm-slots">
           {slots.map((slot, i) => {

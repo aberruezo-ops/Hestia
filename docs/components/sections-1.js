@@ -850,7 +850,8 @@ const Compare = ({
 // LAST MINUTE STRIP — huecos disponibles en los próximos 45 días
 // ================================================================
 const LastMinuteStrip = ({
-  lang
+  lang,
+  embedded = false
 }) => {
   const [slots, setSlots] = React.useState([]);
   React.useEffect(() => {
@@ -912,13 +913,13 @@ const LastMinuteStrip = ({
     return Math.min(...tbl.base.slice(1));
   };
   return /*#__PURE__*/React.createElement("section", {
-    className: "lm-strip",
+    className: `lm-strip${embedded ? ' lm-strip--embedded' : ''}`,
     "aria-label": lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'
   }, /*#__PURE__*/React.createElement("div", {
     className: "lm-inner"
   }, /*#__PURE__*/React.createElement("span", {
     className: "lm-eyebrow eyebrow"
-  }, lang === 'es' ? 'Últimas plazas · próximas 6 semanas' : 'Last minute · next 6 weeks'), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'O elige un hueco directamente:' : 'Or pick a slot directly:'), /*#__PURE__*/React.createElement("div", {
     className: "lm-slots"
   }, slots.map((slot, i) => {
     const minPrice = getMinPrice(slot.apt.id);

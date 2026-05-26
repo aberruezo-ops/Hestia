@@ -617,7 +617,10 @@ const HomeSearch = ({
     className: "hs-title"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "\xBFCu\xE1ndo ven\xEDs?"), " Elige fechas y te decimos qu\xE9 hay libre.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "When are you coming?"), " Pick dates and we'll show what's free.")), /*#__PURE__*/React.createElement("p", {
     className: "hs-sub"
-  }, lang === 'es' ? 'Selecciona Hestía — o déjalo en blanco para ver los tres disponibles — y cuéntanos lo que necesitáis.' : 'Choose a Hestía — or leave it blank to see all three — and tell us what you need.')), /*#__PURE__*/React.createElement("form", {
+  }, lang === 'es' ? 'Selecciona Hestía — o déjalo en blanco para ver los tres disponibles — y cuéntanos lo que necesitáis.' : 'Choose a Hestía — or leave it blank to see all three — and tell us what you need.')), typeof LastMinuteStrip !== 'undefined' && /*#__PURE__*/React.createElement(LastMinuteStrip, {
+    lang: lang,
+    embedded: true
+  }), /*#__PURE__*/React.createElement("form", {
     className: "hs-form",
     onSubmit: handleSearch,
     noValidate: true
