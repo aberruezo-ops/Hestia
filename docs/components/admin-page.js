@@ -4718,21 +4718,26 @@ const ReservasTab = ({
       updatedAt: new Date().toISOString(),
       count: newReservas.length
     };
-    try {
-      const body = {
-        message: `chore(reservas): update via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
-        content: utf8ToB64(JSON.stringify(newData, null, 2)),
-        sha,
-        branch: BRANCH
-      };
+    const payload = utf8ToB64(JSON.stringify(newData, null, 2));
+    const commitMsg = `chore(reservas): update via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`;
+    const attemptSave = async currentSha => {
       const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
         method: 'PUT',
         headers: apiHeaders(token),
-        body: JSON.stringify(body)
+        body: JSON.stringify({
+          message: commitMsg,
+          content: payload,
+          sha: currentSha,
+          branch: BRANCH
+        })
       });
       const j = await r.json();
       if (!r.ok) throw new Error(j.message || 'Error desconocido');
-      setSha(j.content.sha);
+      return j.content.sha;
+    };
+    try {
+      const newSha = await attemptSave(sha);
+      setSha(newSha);
       setData(newData);
       setSuccess('Reservas guardadas ✓');
       if (!keepPanelOpen) {
@@ -4740,7 +4745,30 @@ const ReservasTab = ({
         setDraft(null);
       }
     } catch (e) {
-      setError('Error guardando: ' + e.message);
+      // SHA desfasada (sync corrió entre carga y guardado): re-fetch y reintento automático
+      if (e.message && e.message.includes('does not match')) {
+        try {
+          const rf = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
+            headers: apiHeaders(token),
+            cache: 'no-store'
+          });
+          const rfj = await rf.json();
+          const freshSha = rfj.sha;
+          setSha(freshSha);
+          const newSha = await attemptSave(freshSha);
+          setSha(newSha);
+          setData(newData);
+          setSuccess('Reservas guardadas ✓');
+          if (!keepPanelOpen) {
+            setSelectedIdx(-1);
+            setDraft(null);
+          }
+        } catch (e2) {
+          setError('Error guardando: ' + e2.message);
+        }
+      } else {
+        setError('Error guardando: ' + e.message);
+      }
     }
   };
   const openRow = idx => {
