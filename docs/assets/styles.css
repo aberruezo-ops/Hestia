@@ -19386,6 +19386,16 @@ img[src*="apt-vt-gallery-"] {
 .rv-foot-save { flex: 2; }
 .rv-btn-danger { color: #B23A2B; }
 .rv-btn-danger:hover { background: rgba(178,58,43,0.10); }
+.rv-btn-cancelar { color: #B23A2B; border: 1px solid rgba(178,58,43,0.35); }
+.rv-btn-cancelar:hover { background: rgba(178,58,43,0.10); }
+.rv-btn-reactivar { color: #2B7A3A; border: 1px solid rgba(43,122,58,0.35); }
+.rv-btn-reactivar:hover { background: rgba(43,122,58,0.10); }
+.pe-topbar-actions { display: flex; align-items: center; gap: 8px; }
+.pe-sync-btn { display: flex; align-items: center; gap: 5px; font-size: 12px; }
+.pe-sync-running { opacity: .7; }
+.pe-sync-ok .pe-sync-icon { color: #2B7A3A; }
+.pe-sync-err .pe-sync-icon { color: #B23A2B; }
+.pe-sync-msg { font-size: 11px; color: var(--ink-soft, #666); max-width: 180px; }
 .rv-ical-th { width: 28px; padding: 4px 2px; }
 .rv-ical-td { padding: 2px 2px; text-align: center; }
 .rv-ical-btn {

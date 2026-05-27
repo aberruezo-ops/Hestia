@@ -2877,6 +2877,7 @@ function calcDerived(r) {
   return out;
 }
 function reservaStatus(r, todayStr) {
+  if (r.cancelada === true || (r.cancelacion || '').trim().toUpperCase() === 'CANCELADA') return 'cancelada';
   if (!r.entrada || !r.salida) return 'unknown';
   if (r.salida <= todayStr) return 'past';
   if (r.entrada > todayStr) return 'upcoming';
@@ -4823,6 +4824,7 @@ const ReservasTab = ({
   // Solapar = el check-in de una es estrictamente antes del check-out de la
   // otra Y viceversa. Que coincida check-out con check-in está permitido.
   const isCancelada = r => {
+    if (r.cancelada === true) return true;
     const c = (r.cancelacion || '').trim().toUpperCase();
     return c === 'CANCELADA' || c === 'CANCELADO';
   };
@@ -5269,7 +5271,9 @@ const ReservasTab = ({
     value: "upcoming"
   }, "Pr\xF3ximas"), /*#__PURE__*/React.createElement("option", {
     value: "past"
-  }, "Pasadas"))), /*#__PURE__*/React.createElement("span", {
+  }, "Pasadas"), /*#__PURE__*/React.createElement("option", {
+    value: "cancelada"
+  }, "Canceladas"))), /*#__PURE__*/React.createElement("span", {
     className: "rv-hint"
   }, "Click en una fila para editarla \u2192")), visibleMonths.length === 0 && /*#__PURE__*/React.createElement("p", {
     className: "pe-help",
@@ -5279,10 +5283,11 @@ const ReservasTab = ({
   }, "Sin reservas en ", focusYear, "."), visibleMonths.map(m => {
     const mRows = filtered.filter(r => (r.entrada || '').slice(5, 7) === m);
     if (mRows.length === 0) return null;
-    const mBruto = mRows.reduce((s, r) => s + (Number(r.ingreso_total) || 0), 0);
-    const mComis = mRows.reduce((s, r) => s + (Number(r.comision) || 0), 0);
-    const mBai = mRows.reduce((s, r) => s + (Number(r.bai) || 0), 0);
-    const mNoches = mRows.reduce((s, r) => s + (Number(r.noches) || 0), 0);
+    const mActive = mRows.filter(r => !isCancelada(r));
+    const mBruto = mActive.reduce((s, r) => s + (Number(r.ingreso_total) || 0), 0);
+    const mComis = mActive.reduce((s, r) => s + (Number(r.comision) || 0), 0);
+    const mBai = mActive.reduce((s, r) => s + (Number(r.bai) || 0), 0);
+    const mNoches = mActive.reduce((s, r) => s + (Number(r.noches) || 0), 0);
     return /*#__PURE__*/React.createElement("div", {
       key: m,
       className: "leila-month-block"
@@ -5520,8 +5525,9 @@ const ReservasTab = ({
   }, "Avaibook"))), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Estado / pol\xEDtica cancelaci\xF3n"), /*#__PURE__*/React.createElement("select", {
-    value: draft.cancelacion || 'Cancelable 14',
-    onChange: e => updateDraft('cancelacion', e.target.value)
+    value: isCancelada(draft || {}) ? '' : draft.cancelacion || 'Cancelable 14',
+    onChange: e => updateDraft('cancelacion', e.target.value),
+    disabled: isCancelada(draft || {})
   }, /*#__PURE__*/React.createElement("option", {
     value: "Cancelable 7"
   }, "Cancelable 7 d\xEDas"), /*#__PURE__*/React.createElement("option", {
@@ -5534,12 +5540,7 @@ const ReservasTab = ({
     value: "Semiestricta"
   }, "Semiestricta"), /*#__PURE__*/React.createElement("option", {
     value: "No reembolsable"
-  }, "No reembolsable"), /*#__PURE__*/React.createElement("option", {
-    value: "CANCELADA",
-    style: {
-      color: '#999'
-    }
-  }, "\u2014 Cancelada \u2014")))), /*#__PURE__*/React.createElement("div", {
+  }, "No reembolsable")))), /*#__PURE__*/React.createElement("div", {
     className: "rv-row2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
@@ -5707,7 +5708,21 @@ const ReservasTab = ({
     type: "button",
     className: "pe-btn pe-btn-ghost rv-foot-btn rv-btn-danger",
     onClick: deleteRow
-  }, "\uD83D\uDDD1 Borrar"), onOpenContract && /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDDD1 Borrar"), draft && (isCancelada(draft) ? /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost rv-foot-btn rv-btn-reactivar",
+    onClick: () => setDraft(p => ({
+      ...p,
+      cancelada: false
+    }))
+  }, "\u21A9 Reactivar") : /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost rv-foot-btn rv-btn-cancelar",
+    onClick: () => setDraft(p => ({
+      ...p,
+      cancelada: true
+    }))
+  }, "\u2717 Cancelar reserva")), onOpenContract && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost rv-foot-btn",
     title: "Abrir en el generador de contratos",
@@ -5749,6 +5764,38 @@ const AdminApp = () => {
   const [filterStatus, setFilterStatus] = React.useState('all');
   const [filterSource, setFilterSource] = React.useState('all');
   const [filterApt, setFilterApt] = React.useState('all');
+  const [syncState, setSyncState] = React.useState('idle');
+  const [syncMsg, setSyncMsg] = React.useState('');
+  const triggerSync = async () => {
+    setSyncState('running');
+    setSyncMsg('');
+    try {
+      const res = await fetch(`${API}/repos/${REPO}/actions/workflows/sync-availability.yml/dispatches`, {
+        method: 'POST',
+        headers: {
+          ...apiHeaders(token),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ref: 'main'
+        })
+      });
+      if (res.status === 204) {
+        setSyncState('ok');
+        setSyncMsg('Sync lanzado — listo en ~1 min');
+        setTimeout(() => setSyncState('idle'), 8000);
+      } else {
+        const body = await res.json().catch(() => ({}));
+        setSyncState('error');
+        setSyncMsg(res.status === 403 ? 'Sin permiso: el PAT necesita scope "workflow"' : `Error ${res.status}: ${body.message || '?'}`);
+        setTimeout(() => setSyncState('idle'), 12000);
+      }
+    } catch (e) {
+      setSyncState('error');
+      setSyncMsg(e.message);
+      setTimeout(() => setSyncState('idle'), 12000);
+    }
+  };
   const login = async e => {
     e.preventDefault();
     setPhase('loading');
@@ -6128,10 +6175,24 @@ const AdminApp = () => {
     className: "pe-topbar"
   }, /*#__PURE__*/React.createElement("span", null, "Hest\xEDa \xB7 Admin"), /*#__PURE__*/React.createElement("span", {
     className: "pe-meta"
-  }, mode === 'pricing' ? `Precios actualizados: ${data.updatedAt || '—'}` : reviewsData ? `${(reviewsData.items || []).length} reviews` : ''), /*#__PURE__*/React.createElement("button", {
+  }, mode === 'pricing' ? `Precios actualizados: ${data.updatedAt || '—'}` : reviewsData ? `${(reviewsData.items || []).length} reviews` : ''), /*#__PURE__*/React.createElement("div", {
+    className: "pe-topbar-actions"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-btn pe-sync-btn${syncState === 'running' ? ' pe-sync-running' : syncState === 'ok' ? ' pe-sync-ok' : syncState === 'error' ? ' pe-sync-err' : ''}`,
+    onClick: triggerSync,
+    disabled: syncState === 'running',
+    title: "Lanza el workflow sync-availability en GitHub Actions"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "pe-sync-icon"
+  }, syncState === 'running' ? '⏳' : syncState === 'ok' ? '✓' : syncState === 'error' ? '✗' : '🔄'), /*#__PURE__*/React.createElement("span", {
+    className: "pe-sync-label"
+  }, syncState === 'running' ? 'Sincronizando…' : syncState === 'ok' ? 'Sincronizado' : syncState === 'error' ? 'Error' : 'Sincronizar')), syncMsg && /*#__PURE__*/React.createElement("span", {
+    className: "pe-sync-msg"
+  }, syncMsg), /*#__PURE__*/React.createElement("button", {
     onClick: logout,
     className: "pe-btn pe-btn-ghost"
-  }, "Cerrar sesi\xF3n")), /*#__PURE__*/React.createElement("div", {
+  }, "Cerrar sesi\xF3n"))), /*#__PURE__*/React.createElement("div", {
     className: "pe-tabs"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
