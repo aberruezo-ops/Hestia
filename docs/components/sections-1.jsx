@@ -658,14 +658,16 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
 
   const APT_COLOR = { vm: '#3AAABB', vt: '#8A4A24', vs: '#9E7A2C' };
 
-  const getMinPrice = (aptId) => {
-    const tbl = HESTIA_PRICES[aptId];
-    if (!tbl) return null;
-    return Math.min(...tbl.base.slice(1));
+  const getStayPrice = (aptId, checkin, checkout) => {
+    try {
+      const r = _calcStay(checkin, checkout, aptId, false, 2);
+      if (!r || !r.directTotal || !r.nights) return null;
+      return Math.round(r.directTotal / r.nights);
+    } catch (_) { return null; }
   };
 
   const renderCard = (slot, key) => {
-    const minPrice = getMinPrice(slot.apt.id);
+    const pricePerNight = getStayPrice(slot.apt.id, slot.checkin, slot.checkout);
     const color = APT_COLOR[slot.apt.id];
     const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
     const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
@@ -679,7 +681,7 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
         </span>
         <span className="lm-card-meta">
           {slot.nights} {lang === 'es' ? 'noches' : 'nights'}
-          {minPrice && <span className="lm-card-price"> · {minPrice}€/n</span>}
+          {pricePerNight && <span className="lm-card-price"> · ~{pricePerNight}€/n</span>}
         </span>
       </a>
     );
