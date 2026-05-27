@@ -4135,7 +4135,8 @@ const LeilaTab = ({
 // El botón "→ Reservas" escribe en reservas.json del repo privado y elimina el
 // borrador de la lista pública en el mismo flujo.
 const PrereservasTab = ({
-  token
+  token,
+  refreshKey
 }) => {
   const [items, setItems] = React.useState(null);
   const [sha, setSha] = React.useState(null);
@@ -4185,6 +4186,9 @@ const PrereservasTab = ({
     }).finally(() => setLoading(false));
   };
   React.useEffect(load, [token]);
+  React.useEffect(() => {
+    if (refreshKey > 0) load();
+  }, [refreshKey]);
   const saveList = async (newItems, currentSha) => {
     const body = JSON.stringify({
       message: `chore(prereservas): update via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
@@ -4518,6 +4522,7 @@ const PrereservasTab = ({
 };
 const ReservasTab = ({
   token,
+  refreshKey,
   onOpenContract
 }) => {
   const [data, setData] = React.useState(null);
@@ -4558,6 +4563,11 @@ const ReservasTab = ({
     const interval = setInterval(loadData, 4 * 60 * 60 * 1000);
     return () => clearInterval(interval);
   }, [loadData]);
+
+  // Reload when parent triggers a sync
+  React.useEffect(() => {
+    if (refreshKey > 0) loadData();
+  }, [refreshKey]);
   const copyToSheets = async currentData => {
     if (!SHEETS_WORKER_URL) {
       setSyncMsg('Sync con Google Sheets no configurado — ver SETUP-SHEETS-SYNC.md');
@@ -5794,6 +5804,32 @@ const AdminApp = () => {
   const [filterApt, setFilterApt] = React.useState('all');
   const [syncState, setSyncState] = React.useState('idle');
   const [syncMsg, setSyncMsg] = React.useState('');
+  const [refreshKey, setRefreshKey] = React.useState(0);
+  const reloadConfig = React.useCallback(async () => {
+    if (!token) return;
+    try {
+      const fr = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, {
+        headers: apiHeaders(token),
+        cache: 'no-store'
+      });
+      if (fr.ok) {
+        const file = await fr.json();
+        setData(JSON.parse(b64ToUtf8(file.content)));
+        setSha(file.sha);
+      }
+    } catch (_) {}
+    try {
+      const fr2 = await fetch(`${API}/repos/${REPO}/contents/${REVIEWS_PATH}?ref=${BRANCH}`, {
+        headers: apiHeaders(token),
+        cache: 'no-store'
+      });
+      if (fr2.ok) {
+        const file2 = await fr2.json();
+        setReviewsData(JSON.parse(b64ToUtf8(file2.content)));
+        setReviewsSha(file2.sha);
+      }
+    } catch (_) {}
+  }, [token]);
   const triggerSync = async () => {
     setSyncState('running');
     setSyncMsg('');
@@ -5810,8 +5846,16 @@ const AdminApp = () => {
       });
       if (res.status === 204) {
         setSyncState('ok');
-        setSyncMsg('Sync lanzado — listo en ~1 min');
-        setTimeout(() => setSyncState('idle'), 8000);
+        setSyncMsg('Sync lanzado — actualizando datos…');
+        // Reload all tab data immediately (fresh SHA) then again when workflow finishes (~65s)
+        setRefreshKey(k => k + 1);
+        reloadConfig();
+        setTimeout(() => {
+          setRefreshKey(k => k + 1);
+          reloadConfig();
+          setSyncMsg('Sync completado');
+          setTimeout(() => setSyncState('idle'), 5000);
+        }, 70000);
       } else {
         const body = await res.json().catch(() => ({}));
         setSyncState('error');
@@ -6325,9 +6369,11 @@ const AdminApp = () => {
     pricesData: data,
     prefill: contractPrefill
   }) : mode === 'prereservas' ? /*#__PURE__*/React.createElement(PrereservasTab, {
-    token: token
+    token: token,
+    refreshKey: refreshKey
   }) : mode === 'reservas' ? /*#__PURE__*/React.createElement(ReservasTab, {
     token: token,
+    refreshKey: refreshKey,
     onOpenContract: r => {
       setContractPrefill(r);
       setMode('contract');
