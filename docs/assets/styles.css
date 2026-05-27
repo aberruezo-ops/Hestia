@@ -1316,7 +1316,7 @@ body.apt-bar-shown .float-chat {
 .float-chat .contact-person .cp-btn {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 6px 11px;
-  border-radius: 999px;
+  border-radius: 8px 0 8px 0;
   font-size: 12px; font-weight: 500;
   text-decoration: none;
   transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
@@ -17348,6 +17348,93 @@ img[src*="apt-vt-gallery-"] {
 }
 
 /* ============================================================
+   AptMiniReviews — 3 citas de huéspedes antes del calendario
+   ============================================================ */
+.apt-mini-reviews {
+  background: var(--crema, #F0E8D5);
+  padding: 52px 32px;
+}
+.amr-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.amr-eyebrow {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--apt-accent, var(--sol));
+  margin: 0 0 24px;
+}
+.amr-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.amr-card {
+  background: #fff;
+  border-radius: 10px 0 10px 0;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 1px 4px rgba(42,15,46,.07);
+}
+.amr-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.amr-stars {
+  color: #C9922A;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.amr-src-lbl {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(42,15,46,.35);
+}
+.amr-text {
+  font-family: var(--serif, Georgia, serif);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink, #2A0F2E);
+  margin: 0;
+  font-style: italic;
+  flex: 1;
+}
+.amr-author {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 4px;
+}
+.amr-flag { font-size: 15px; line-height: 1; }
+.amr-name {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(42,15,46,.65);
+  letter-spacing: .02em;
+}
+@media (max-width: 700px) {
+  .apt-mini-reviews { padding: 36px 20px; }
+  .amr-grid { grid-template-columns: 1fr; gap: 12px; }
+  .amr-card { padding: 16px 18px; }
+  .amr-grid .amr-card:nth-child(n+2) { display: none; }
+}
+@media (min-width: 701px) and (max-width: 900px) {
+  .amr-grid { grid-template-columns: repeat(2, 1fr); }
+  .amr-grid .amr-card:nth-child(3) { display: none; }
+}
+
+/* ============================================================
    AptPriceTeaser — tabla de precios orientativos
    ============================================================ */
 .apt-price-teaser {
@@ -17430,7 +17517,7 @@ img[src*="apt-vt-gallery-"] {
   align-items: center;
   gap: 9px;
   padding: 12px 20px;
-  border-radius: 28px;
+  border-radius: 10px 0 10px 0;
   background: var(--apt-accent, #3AAABB);
   color: #fff;
   font-family: var(--sans);
@@ -19130,7 +19217,7 @@ img[src*="apt-vt-gallery-"] {
 .rv-wa-btn {
   display: inline-flex; align-items: center; gap: 4px;
   margin-left: auto; flex-shrink: 0;
-  padding: 4px 10px; border-radius: 16px;
+  padding: 4px 10px; border-radius: 6px 0 6px 0;
   background: var(--ber-dk, #2A0F2E); color: #fff;
   font-size: 11px; font-weight: 600;
   text-decoration: none; white-space: nowrap;
