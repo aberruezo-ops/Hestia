@@ -179,7 +179,32 @@ const Hero = ({
     className: "hero-proof-name"
   }, "Salinas")), /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-platform"
-  }, lang === 'es' ? 'Media · Booking · Airbnb · web' : 'Average · Booking · Airbnb · site'))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Media · Booking · Airbnb · web' : 'Average · Booking · Airbnb · site')), (() => {
+    const prices = typeof HESTIA_PRICES !== 'undefined' ? HESTIA_PRICES : null;
+    if (!prices) return null;
+    const mins = ['vm', 'vt', 'vs'].map(id => {
+      const tbl = prices[id];
+      if (!tbl) return null;
+      return Math.min(...tbl.base.slice(1));
+    }).filter(Boolean);
+    if (!mins.length) return null;
+    const from = Math.min(...mins);
+    return /*#__PURE__*/React.createElement("div", {
+      className: "hero-price-line"
+    }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+      className: "hpl-from"
+    }, "desde "), /*#__PURE__*/React.createElement("strong", {
+      className: "hpl-price"
+    }, from, "\u20AC"), /*#__PURE__*/React.createElement("span", {
+      className: "hpl-per"
+    }, "/noche \xB7 precio directo garantizado")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+      className: "hpl-from"
+    }, "from "), /*#__PURE__*/React.createElement("strong", {
+      className: "hpl-price"
+    }, from, "\u20AC"), /*#__PURE__*/React.createElement("span", {
+      className: "hpl-per"
+    }, "/night \xB7 guaranteed direct price")));
+  })()), /*#__PURE__*/React.createElement("div", {
     className: "hero-meta"
   }, /*#__PURE__*/React.createElement("span", {
     className: "hero-meta-coords"
@@ -914,13 +939,16 @@ const LastMinuteStrip = ({
     try {
       const r = _calcStay(checkin, checkout, aptId, false, 2);
       if (!r || !r.directTotal || !r.nights) return null;
-      return Math.round(r.directTotal / r.nights);
+      return {
+        total: Math.round(r.directTotal),
+        perNight: Math.round(r.directTotal / r.nights)
+      };
     } catch (_) {
       return null;
     }
   };
   const renderCard = (slot, key) => {
-    const pricePerNight = getStayPrice(slot.apt.id, slot.checkin, slot.checkout);
+    const price = getStayPrice(slot.apt.id, slot.checkin, slot.checkout);
     const color = APT_COLOR[slot.apt.id];
     const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
     const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
@@ -943,9 +971,11 @@ const LastMinuteStrip = ({
       className: "lm-card-d2"
     }, fmtDate(slot.checkout))), /*#__PURE__*/React.createElement("span", {
       className: "lm-card-meta"
-    }, slot.nights, " ", lang === 'es' ? 'noches' : 'nights', pricePerNight && /*#__PURE__*/React.createElement("span", {
-      className: "lm-card-price"
-    }, " \xB7 ~", pricePerNight, "\u20AC/n")));
+    }, slot.nights, " ", lang === 'es' ? 'noches' : 'nights', price && /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-ppn"
+    }, " \xB7 ~", price.perNight, "\u20AC/n")), price && /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-total"
+    }, "~", price.total.toLocaleString('es-ES'), "\u20AC"));
   };
   const dur = `${Math.max(10, slots.length * 5)}s`;
   return /*#__PURE__*/React.createElement("section", {

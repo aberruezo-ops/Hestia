@@ -598,9 +598,6 @@ const HomeSearch = ({ lang }) => {
           </p>
         </div>
 
-        {/* Últimas plazas — huecos disponibles próximas 6 semanas */}
-        {typeof LastMinuteStrip !== 'undefined' && <LastMinuteStrip lang={lang} embedded />}
-
         {/* Form */}
         <form className="hs-form" onSubmit={handleSearch} noValidate>
 

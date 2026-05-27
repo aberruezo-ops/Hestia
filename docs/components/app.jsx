@@ -48,6 +48,7 @@ const App = () => {
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main>
         <Hero lang={lang} />
+        {typeof LastMinuteStrip !== 'undefined' && <LastMinuteStrip lang={lang} />}
         <FraseHogar lang={lang} />
         <RatingsMarquee lang={lang} />
         <HomeSearch lang={lang} />
