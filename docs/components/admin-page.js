@@ -5784,6 +5784,529 @@ const ReservasTab = ({
     onClick: saveDraft
   }, "Guardar"))))));
 };
+
+// ---------------------------------------------------------------
+// HuecosTab — gestión de huecos entre reservas con pricing
+// ---------------------------------------------------------------
+
+const _hcDiff = (a, b) => Math.round((new Date(b + 'T12:00:00Z') - new Date(a + 'T12:00:00Z')) / 86400000);
+const _hcAdd = (ds, n) => {
+  const d = new Date(ds + 'T12:00:00Z');
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+};
+const _hcFmt = ds => {
+  const d = new Date(ds + 'T12:00:00Z');
+  const M = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'][d.getUTCMonth()];
+  return `${d.getUTCDate()} ${M}`;
+};
+
+// Returns the season for a given date using prices.json calendar structure:
+// calendar[year].seasons[season] = [[start, end], ...]
+const _hcSeasonForDate = (ds, calendar) => {
+  const year = ds.slice(0, 4);
+  const yc = calendar && calendar[year];
+  if (!yc || !yc.seasons) return 'baja';
+  for (const [s, ranges] of Object.entries(yc.seasons)) {
+    for (const [from, to] of ranges) {
+      if (ds >= from && ds <= to) return s;
+    }
+  }
+  return 'baja';
+};
+
+// Returns the "worst" (highest-priority) season a gap touches
+const _hcDominantSeason = (start, end, calendar) => {
+  const counts = {};
+  let cur = start;
+  while (cur < end) {
+    const s = _hcSeasonForDate(cur, calendar);
+    counts[s] = (counts[s] || 0) + 1;
+    cur = _hcAdd(cur, 1);
+  }
+  for (const s of ['critica', 'alta', 'media', 'baja']) {
+    if (counts[s]) return s;
+  }
+  return 'baja';
+};
+
+// Extracts gaps between consecutive blocked periods
+const _hcCalcGaps = (blocked, today, horizon) => {
+  if (!blocked || blocked.length === 0) return [];
+  const sorted = [...blocked].sort((a, b) => a.start < b.start ? -1 : 1);
+  const gaps = [];
+  for (let i = 0; i < sorted.length - 1; i++) {
+    const gs = sorted[i].end;
+    const ge = sorted[i + 1].start;
+    if (gs >= ge) continue; // overlap or zero gap
+    if (ge <= today) continue; // entirely in the past
+    if (horizon && gs >= horizon) continue;
+    const nights = _hcDiff(gs, ge);
+    if (nights < 2) continue; // 1-night gaps can't be booked
+    gaps.push({
+      start: gs,
+      end: ge,
+      nights
+    });
+  }
+  return gaps;
+};
+const HC_MAX = {
+  critica: 7,
+  alta: 7,
+  media: 28,
+  baja: 28
+};
+const HC_LBL = {
+  baja: 'T. baja',
+  media: 'T. media',
+  alta: 'T. alta',
+  critica: 'T. crítica'
+};
+const HC_COL = {
+  baja: '#6FC4D1',
+  media: '#B9813E',
+  alta: '#D42B80',
+  critica: '#8A1B1B'
+};
+const HC_APT = {
+  vm: {
+    name: 'Hestía Mar',
+    accent: '#3AAABB'
+  },
+  vt: {
+    name: 'Hestía Thalassa',
+    accent: '#8A4A24'
+  },
+  vs: {
+    name: 'Hestía Salinas',
+    accent: '#9E7A2C'
+  }
+};
+const _hcOvLabel = ov => {
+  if (!ov) return null;
+  if (ov.type === 'discount') return `-${ov.value}%`;
+  if (ov.type === 'increment') return `+${ov.value}%`;
+  if (ov.type === 'fixed') return `${ov.value}€/n`;
+  return 'ajuste';
+};
+const _hcEffPrice = (base, ov) => {
+  if (!ov || ov.type === 'none') return base;
+  if (ov.type === 'discount') return Math.round(base * (1 - ov.value / 100));
+  if (ov.type === 'increment') return Math.round(base * (1 + ov.value / 100));
+  if (ov.type === 'fixed') return ov.value;
+  return base;
+};
+const HuecosTab = ({
+  token,
+  pricesData,
+  onPricesUpdated
+}) => {
+  const [avail, setAvail] = React.useState(null);
+  const [loadErr, setLoadErr] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+  const [saving, setSaving] = React.useState(false);
+  const [saveMsg, setSaveMsg] = React.useState(null);
+  const [filterApt, setFilterApt] = React.useState('all');
+  const [filterProb, setFilterProb] = React.useState(false);
+  const [activeGap, setActiveGap] = React.useState(null);
+  const [dType, setDType] = React.useState('discount');
+  const [dValue, setDValue] = React.useState('');
+  const [dMinN, setDMinN] = React.useState('');
+  const [dNote, setDNote] = React.useState('');
+  const [dLastMin, setDLastMin] = React.useState(false);
+  const today = new Date().toISOString().slice(0, 10);
+  const horizonStr = pricesData && pricesData.bookingHorizon && pricesData.bookingHorizon.lastCheckinDate;
+  const calendar = pricesData && pricesData.calendar || {};
+  const seasons = pricesData && pricesData.seasons || {};
+  const overrides = pricesData && pricesData.gapOverrides || {};
+  React.useEffect(() => {
+    setLoading(true);
+    setLoadErr(null);
+    fetch(`${API}/repos/${REPO}/contents/docs/assets/availability.json?ref=${BRANCH}`, {
+      headers: apiHeaders(token),
+      cache: 'no-store'
+    }).then(r => r.json()).then(j => {
+      if (j.message) throw new Error(j.message);
+      setAvail(JSON.parse(b64ToUtf8(j.content)));
+    }).catch(e => setLoadErr(e.message)).finally(() => setLoading(false));
+  }, [token]);
+  const nightBase = (aptId, season) => {
+    if (!pricesData || !pricesData.apts || !pricesData.seasons) return 0;
+    const base = (pricesData.apts[aptId] || {}).base || 0;
+    const mult = (seasons[season] || {}).multiplier || 1;
+    return Math.round(base * mult);
+  };
+  const allGaps = React.useMemo(() => {
+    if (!avail) return {};
+    const result = {};
+    for (const aptId of ['vm', 'vt', 'vs']) {
+      const aptData = avail[aptId];
+      if (!aptData) {
+        result[aptId] = [];
+        continue;
+      }
+      const raw = _hcCalcGaps(aptData.blocked || [], today, horizonStr);
+      result[aptId] = raw.map(g => {
+        const season = _hcDominantSeason(g.start, g.end, calendar);
+        const maxN = HC_MAX[season] || 28;
+        const overLim = g.nights > maxN;
+        const id = `${aptId}|${g.start}`;
+        const override = overrides[id] || null;
+        const baseN = nightBase(aptId, season);
+        const effN = _hcEffPrice(baseN, override);
+        return {
+          ...g,
+          aptId,
+          season,
+          maxN,
+          overLim,
+          id,
+          override,
+          baseN,
+          effN
+        };
+      });
+    }
+    return result;
+  }, [avail, pricesData]);
+  const openGap = gap => {
+    setActiveGap(gap.id);
+    const ov = gap.override;
+    setDType(ov ? ov.type : 'discount');
+    setDValue(ov && ov.value != null ? String(ov.value) : '');
+    setDMinN(ov && ov.minNights != null ? String(ov.minNights) : '');
+    setDNote(ov && ov.note ? ov.note : '');
+    setDLastMin(!!(ov && ov.lastMinute));
+    setSaveMsg(null);
+  };
+  const closeGap = () => {
+    setActiveGap(null);
+    setSaveMsg(null);
+  };
+  const persistPrices = async (newData, gapId, action) => {
+    setSaving(true);
+    setSaveMsg(null);
+    try {
+      const rf = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, {
+        headers: apiHeaders(token),
+        cache: 'no-store'
+      });
+      const rfj = await rf.json();
+      if (rfj.message) throw new Error(rfj.message);
+      const res = await fetch(`${API}/repos/${REPO}/contents/${PATH}`, {
+        method: 'PUT',
+        headers: {
+          ...apiHeaders(token),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: `chore(huecos): ${action} ${gapId} via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
+          content: utf8ToB64(JSON.stringify(newData, null, 2)),
+          sha: rfj.sha,
+          branch: BRANCH
+        })
+      });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.message || 'Error');
+      onPricesUpdated(newData, j.content.sha);
+      setSaveMsg('Guardado ✓');
+      setActiveGap(null);
+    } catch (e) {
+      setSaveMsg('Error: ' + e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+  const handleSave = gap => {
+    const val = dValue !== '' && dType !== 'none' ? Number(dValue) : null;
+    const minN = dMinN !== '' ? Number(dMinN) : null;
+    const newOv = {
+      apt: gap.aptId,
+      start: gap.start,
+      end: gap.end,
+      nights: gap.nights,
+      type: dType,
+      ...(val !== null && !isNaN(val) ? {
+        value: val
+      } : {}),
+      ...(minN !== null && !isNaN(minN) ? {
+        minNights: minN
+      } : {}),
+      ...(dNote.trim() ? {
+        note: dNote.trim()
+      } : {}),
+      ...(dLastMin ? {
+        lastMinute: true
+      } : {})
+    };
+    const newOvs = {
+      ...(pricesData.gapOverrides || {}),
+      [gap.id]: newOv
+    };
+    persistPrices({
+      ...pricesData,
+      gapOverrides: newOvs
+    }, gap.id, 'set');
+  };
+  const handleClear = gap => {
+    const newOvs = {
+      ...(pricesData.gapOverrides || {})
+    };
+    delete newOvs[gap.id];
+    const newData = {
+      ...pricesData,
+      gapOverrides: newOvs
+    };
+    persistPrices(newData, gap.id, 'clear');
+  };
+  if (loading) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "pe-help"
+  }, "Cargando disponibilidad\u2026"));
+  if (loadErr) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-error"
+  }, loadErr));
+  if (!avail) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "pe-help"
+  }, "Sin datos de disponibilidad."));
+  const aptIds = ['vm', 'vt', 'vs'].filter(id => filterApt === 'all' || filterApt === id);
+  const totalGaps = aptIds.reduce((n, id) => n + (allGaps[id] || []).length, 0);
+  const totalProb = aptIds.reduce((n, id) => n + (allGaps[id] || []).filter(g => g.overLim).length, 0);
+  const totalOvs = aptIds.reduce((n, id) => n + (allGaps[id] || []).filter(g => g.override).length, 0);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card hc-tab"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hc-header"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hc-stats"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "hc-stat"
+  }, totalGaps, " huecos"), totalProb > 0 && /*#__PURE__*/React.createElement("span", {
+    className: "hc-stat hc-stat-warn"
+  }, totalProb, " \u26A0"), totalOvs > 0 && /*#__PURE__*/React.createElement("span", {
+    className: "hc-stat hc-stat-ov"
+  }, totalOvs, " con ajuste")), /*#__PURE__*/React.createElement("div", {
+    className: "hc-filters"
+  }, /*#__PURE__*/React.createElement("select", {
+    className: "pe-input hc-sel",
+    value: filterApt,
+    onChange: e => setFilterApt(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "Todos los apartamentos"), /*#__PURE__*/React.createElement("option", {
+    value: "vm"
+  }, "Hest\xEDa Mar"), /*#__PURE__*/React.createElement("option", {
+    value: "vt"
+  }, "Hest\xEDa Thalassa"), /*#__PURE__*/React.createElement("option", {
+    value: "vs"
+  }, "Hest\xEDa Salinas")), /*#__PURE__*/React.createElement("label", {
+    className: "hc-check"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: filterProb,
+    onChange: e => setFilterProb(e.target.checked)
+  }), "Solo problem\xE1ticos"))), saveMsg && /*#__PURE__*/React.createElement("div", {
+    className: `hc-global-msg${saveMsg.startsWith('Error') ? ' err' : ' ok'}`
+  }, saveMsg), /*#__PURE__*/React.createElement("div", {
+    className: "hc-rules"
+  }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, "Alta / Cr\xEDtica:"), " m\xE1x. 7 noches entre reservas"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, "Media / Baja:"), " m\xE1x. 28 noches entre reservas")), aptIds.map(aptId => {
+    const meta = HC_APT[aptId];
+    let gaps = allGaps[aptId] || [];
+    if (filterProb) gaps = gaps.filter(g => g.overLim);
+    const allAptGaps = allGaps[aptId] || [];
+    return /*#__PURE__*/React.createElement("div", {
+      key: aptId,
+      className: "hc-apt"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "hc-apt-hd",
+      style: {
+        '--hc-accent': meta.accent
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "hc-apt-name"
+    }, meta.name), /*#__PURE__*/React.createElement("span", {
+      className: "hc-apt-meta"
+    }, allAptGaps.length, " huecos", allAptGaps.filter(g => g.overLim).length > 0 && /*#__PURE__*/React.createElement("span", {
+      className: "hc-apt-warn"
+    }, " \xB7 ", allAptGaps.filter(g => g.overLim).length, " \u26A0"), allAptGaps.filter(g => g.override).length > 0 && /*#__PURE__*/React.createElement("span", {
+      className: "hc-apt-ov"
+    }, " \xB7 ", allAptGaps.filter(g => g.override).length, " con ajuste"))), gaps.length === 0 ? /*#__PURE__*/React.createElement("p", {
+      className: "pe-help",
+      style: {
+        margin: '12px 0 20px'
+      }
+    }, filterProb ? 'No hay huecos problemáticos próximos.' : 'No hay huecos detectados próximos.') : /*#__PURE__*/React.createElement("div", {
+      className: "hc-list"
+    }, gaps.map(gap => {
+      const isActive = activeGap === gap.id;
+      const prevEff = dType !== 'none' && dValue !== '' && !isNaN(Number(dValue)) ? _hcEffPrice(gap.baseN, {
+        type: dType,
+        value: Number(dValue)
+      }) : null;
+      return /*#__PURE__*/React.createElement("div", {
+        key: gap.id,
+        className: `hc-row${gap.overLim ? ' hc-over' : ''}${gap.override ? ' hc-has-ov' : ''}${isActive ? ' hc-open' : ''}`
+      }, /*#__PURE__*/React.createElement("div", {
+        className: "hc-row-hd",
+        onClick: () => isActive ? closeGap() : openGap(gap)
+      }, /*#__PURE__*/React.createElement("span", {
+        className: "hc-dates"
+      }, _hcFmt(gap.start), " \u2192 ", _hcFmt(gap.end)), /*#__PURE__*/React.createElement("span", {
+        className: "hc-nights"
+      }, gap.nights, "n"), /*#__PURE__*/React.createElement("span", {
+        className: "hc-sea",
+        style: {
+          color: HC_COL[gap.season]
+        }
+      }, HC_LBL[gap.season]), /*#__PURE__*/React.createElement("span", {
+        className: "hc-price"
+      }, gap.effN !== gap.baseN ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, gap.effN, "\u20AC"), /*#__PURE__*/React.createElement("s", null, gap.baseN, "\u20AC")) : /*#__PURE__*/React.createElement(React.Fragment, null, gap.baseN, "\u20AC"), /*#__PURE__*/React.createElement("span", {
+        className: "hc-per"
+      }, "/n")), /*#__PURE__*/React.createElement("span", {
+        className: "hc-badges"
+      }, gap.overLim && /*#__PURE__*/React.createElement("span", {
+        className: "hc-badge hc-badge-warn"
+      }, "\u26A0 >", gap.maxN, "n"), gap.override && /*#__PURE__*/React.createElement("span", {
+        className: "hc-badge hc-badge-ov"
+      }, _hcOvLabel(gap.override)), gap.override && gap.override.minNights && /*#__PURE__*/React.createElement("span", {
+        className: "hc-badge hc-badge-ov"
+      }, "min ", gap.override.minNights, "n"), gap.override && gap.override.lastMinute && /*#__PURE__*/React.createElement("span", {
+        className: "hc-badge hc-badge-lm"
+      }, "last min."), gap.override && gap.override.note && /*#__PURE__*/React.createElement("span", {
+        className: "hc-badge hc-badge-note",
+        title: gap.override.note
+      }, "nota")), /*#__PURE__*/React.createElement("span", {
+        className: "hc-toggle"
+      }, isActive ? '▲' : '▼')), isActive && /*#__PURE__*/React.createElement("div", {
+        className: "hc-edit",
+        onClick: e => e.stopPropagation()
+      }, gap.overLim && /*#__PURE__*/React.createElement("div", {
+        className: "hc-overlimit-note"
+      }, "Hueco de ", /*#__PURE__*/React.createElement("strong", null, gap.nights, " noches"), " en ", HC_LBL[gap.season].toLowerCase(), " supera el m\xE1ximo de ", /*#__PURE__*/React.createElement("strong", null, gap.maxN, " noches"), ". Considera reducir las noches m\xEDnimas o aplicar un descuento agresivo."), /*#__PURE__*/React.createElement("div", {
+        className: "hc-field"
+      }, /*#__PURE__*/React.createElement("label", {
+        className: "hc-lbl"
+      }, "Ajuste de precio"), /*#__PURE__*/React.createElement("div", {
+        className: "hc-type-row"
+      }, [{
+        v: 'discount',
+        l: 'Descuento %'
+      }, {
+        v: 'fixed',
+        l: 'Precio fijo €/n'
+      }, {
+        v: 'increment',
+        l: 'Incremento %'
+      }, {
+        v: 'none',
+        l: 'Sin ajuste'
+      }].map(({
+        v,
+        l
+      }) => /*#__PURE__*/React.createElement("button", {
+        key: v,
+        type: "button",
+        className: `hc-type-btn${dType === v ? ' is-on' : ''}`,
+        onClick: () => {
+          setDType(v);
+          setDValue('');
+        }
+      }, l)))), dType !== 'none' && /*#__PURE__*/React.createElement("div", {
+        className: "hc-field"
+      }, /*#__PURE__*/React.createElement("label", {
+        className: "hc-lbl"
+      }, dType === 'discount' ? 'Descuento' : dType === 'increment' ? 'Incremento' : 'Precio fijo'), /*#__PURE__*/React.createElement("div", {
+        className: "hc-input-row"
+      }, /*#__PURE__*/React.createElement("input", {
+        type: "number",
+        min: "1",
+        max: dType === 'discount' ? 80 : undefined,
+        className: "pe-input pe-input-num",
+        style: {
+          width: 90
+        },
+        value: dValue,
+        onChange: e => setDValue(e.target.value),
+        placeholder: dType === 'fixed' ? `base ${gap.baseN}` : ''
+      }), /*#__PURE__*/React.createElement("span", {
+        className: "pe-suffix"
+      }, dType === 'fixed' ? '€/n' : '%'), prevEff !== null && prevEff !== gap.baseN && /*#__PURE__*/React.createElement("span", {
+        className: "hc-preview"
+      }, "\u2192 ", /*#__PURE__*/React.createElement("strong", null, prevEff, "\u20AC/n"), dType !== 'fixed' && /*#__PURE__*/React.createElement("span", {
+        className: "hc-total-preview"
+      }, "\xB7 ", prevEff * gap.nights, "\u20AC total (", gap.nights, "n)")))), /*#__PURE__*/React.createElement("div", {
+        className: "hc-field"
+      }, /*#__PURE__*/React.createElement("label", {
+        className: "hc-lbl"
+      }, "Noches m\xEDnimas para este hueco", /*#__PURE__*/React.createElement("span", {
+        className: "hc-opt"
+      }, " (vac\xEDo = regla global)")), /*#__PURE__*/React.createElement("div", {
+        className: "hc-input-row"
+      }, /*#__PURE__*/React.createElement("input", {
+        type: "number",
+        min: "1",
+        max: gap.nights,
+        className: "pe-input pe-input-num",
+        style: {
+          width: 70
+        },
+        value: dMinN,
+        onChange: e => setDMinN(e.target.value),
+        placeholder: "global"
+      }), /*#__PURE__*/React.createElement("span", {
+        className: "pe-suffix"
+      }, "noches"), dMinN && Number(dMinN) < gap.nights && /*#__PURE__*/React.createElement("span", {
+        className: "hc-preview"
+      }, "permite llenar el hueco exacto"))), /*#__PURE__*/React.createElement("div", {
+        className: "hc-field"
+      }, /*#__PURE__*/React.createElement("label", {
+        className: "hc-check-lbl"
+      }, /*#__PURE__*/React.createElement("input", {
+        type: "checkbox",
+        checked: dLastMin,
+        onChange: e => setDLastMin(e.target.checked)
+      }), "Destacar como last minute en la homepage")), /*#__PURE__*/React.createElement("div", {
+        className: "hc-field"
+      }, /*#__PURE__*/React.createElement("label", {
+        className: "hc-lbl"
+      }, "Nota interna", /*#__PURE__*/React.createElement("span", {
+        className: "hc-opt"
+      }, " (solo visible en p-edit)")), /*#__PURE__*/React.createElement("textarea", {
+        rows: 2,
+        className: "pe-input hc-textarea",
+        value: dNote,
+        onChange: e => setDNote(e.target.value),
+        placeholder: "Ej: oferta \xFAltimo momento, confirmar con Alex\u2026"
+      })), /*#__PURE__*/React.createElement("div", {
+        className: "hc-foot"
+      }, saveMsg && /*#__PURE__*/React.createElement("span", {
+        className: `hc-inline-msg${saveMsg.startsWith('Error') ? ' err' : ' ok'}`
+      }, saveMsg), gap.override && /*#__PURE__*/React.createElement("button", {
+        type: "button",
+        className: "pe-btn pe-btn-ghost",
+        disabled: saving,
+        onClick: () => handleClear(gap)
+      }, "Limpiar ajuste"), /*#__PURE__*/React.createElement("button", {
+        type: "button",
+        className: "pe-btn pe-btn-ghost",
+        onClick: closeGap
+      }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
+        type: "button",
+        className: "pe-btn pe-btn-primary",
+        disabled: saving,
+        onClick: () => handleSave(gap)
+      }, saving ? 'Guardando…' : 'Guardar'))));
+    })));
+  }));
+};
+
+// ---------------------------------------------------------------
 const AdminApp = () => {
   const [phase, setPhase] = React.useState('login');
   const [mode, setMode] = React.useState('reservas');
@@ -6338,6 +6861,16 @@ const AdminApp = () => {
     className: "pe-tab-label"
   }, " Pricing")), /*#__PURE__*/React.createElement("button", {
     type: "button",
+    className: `pe-tab${mode === 'huecos' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('huecos');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCC5", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Huecos")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
     className: `pe-tab${mode === 'reviews' ? ' is-active' : ''}`,
     onClick: () => {
       setMode('reviews');
@@ -6365,7 +6898,14 @@ const AdminApp = () => {
     className: "pe-success"
   }, success), error && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
-  }, error), mode === 'analytics' ? /*#__PURE__*/React.createElement(AnalyticsTab, null) : mode === 'contract' ? /*#__PURE__*/React.createElement(ContractTab, {
+  }, error), mode === 'huecos' ? /*#__PURE__*/React.createElement(HuecosTab, {
+    token: token,
+    pricesData: data,
+    onPricesUpdated: (d, s) => {
+      setData(d);
+      setSha(s);
+    }
+  }) : mode === 'analytics' ? /*#__PURE__*/React.createElement(AnalyticsTab, null) : mode === 'contract' ? /*#__PURE__*/React.createElement(ContractTab, {
     pricesData: data,
     prefill: contractPrefill
   }) : mode === 'prereservas' ? /*#__PURE__*/React.createElement(PrereservasTab, {

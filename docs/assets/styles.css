@@ -19894,3 +19894,195 @@ img[src*="apt-vt-gallery-"] {
 @media (max-width: 480px) {
   .footer-nl-form { min-width: 0; width: 100%; }
 }
+
+/* ================================================================
+   HUECOS TAB — gestión de huecos entre reservas con pricing
+   ================================================================ */
+.hc-tab { max-width: 900px; }
+
+.hc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.hc-stats { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.hc-stat {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(42,15,46,.07);
+  border-radius: 20px;
+  padding: 4px 12px;
+}
+.hc-stat-warn { background: rgba(212,43,128,.10); color: #A01E5E; }
+.hc-stat-ov   { background: rgba(58,170,187,.12); color: var(--sol-text, #176E80); }
+
+.hc-filters { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.hc-sel { width: auto; min-width: 180px; }
+.hc-check { display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
+.hc-check input { cursor: pointer; }
+
+.hc-global-msg {
+  margin-bottom: 12px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.hc-global-msg.ok  { background: rgba(43,122,58,.10); color: #1D5E2A; }
+.hc-global-msg.err { background: rgba(178,58,43,.10); color: #8A2010; }
+
+.hc-rules {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 10px 14px;
+  background: rgba(42,15,46,.04);
+  border-left: 3px solid rgba(42,15,46,.15);
+  border-radius: 0 6px 6px 0;
+  font-size: 12px;
+  color: var(--ink-soft, #3D1A35);
+}
+.hc-rules span { display: flex; align-items: center; gap: 6px; }
+
+/* Apartamento block */
+.hc-apt { margin-bottom: 28px; }
+.hc-apt-hd {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--hc-accent, #3AAABB);
+}
+.hc-apt-name {
+  font-family: var(--serif, Georgia, serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--hc-accent, #3AAABB);
+}
+.hc-apt-meta { font-size: 12px; color: rgba(42,15,46,.5); }
+.hc-apt-warn { color: #A01E5E; font-weight: 600; }
+.hc-apt-ov   { color: var(--sol-text, #176E80); }
+
+/* Gap list */
+.hc-list { display: flex; flex-direction: column; gap: 4px; }
+
+.hc-row {
+  border: 1px solid rgba(42,15,46,.10);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color .15s;
+}
+.hc-row:hover { border-color: rgba(42,15,46,.22); }
+.hc-row.hc-over  { border-color: rgba(212,43,128,.35); background: rgba(212,43,128,.03); }
+.hc-row.hc-has-ov { border-color: rgba(58,170,187,.40); background: rgba(58,170,187,.03); }
+.hc-row.hc-open  { border-color: rgba(42,15,46,.30); }
+
+.hc-row-hd {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  user-select: none;
+  flex-wrap: wrap;
+}
+
+.hc-dates { font-size: 13px; font-weight: 600; color: var(--ink); min-width: 110px; }
+.hc-nights { font-size: 12px; color: rgba(42,15,46,.55); min-width: 28px; }
+.hc-sea { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; min-width: 75px; }
+.hc-price { font-size: 13px; color: var(--ink); min-width: 70px; }
+.hc-price strong { color: var(--sol-text, #176E80); }
+.hc-price s { font-size: 11px; color: rgba(42,15,46,.35); margin-left: 4px; text-decoration: line-through; }
+.hc-per { font-size: 10px; color: rgba(42,15,46,.4); margin-left: 1px; }
+
+.hc-badges { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; margin-left: auto; }
+.hc-badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+.hc-badge-warn { background: rgba(212,43,128,.12); color: #A01E5E; }
+.hc-badge-ov   { background: rgba(58,170,187,.14); color: var(--sol-text, #176E80); }
+.hc-badge-lm   { background: rgba(240,190,60,.15); color: #8A6200; }
+.hc-badge-note { background: rgba(42,15,46,.08); color: rgba(42,15,46,.55); }
+.hc-toggle { font-size: 11px; color: rgba(42,15,46,.35); margin-left: 4px; flex-shrink: 0; }
+
+/* Edit panel */
+.hc-edit {
+  padding: 16px 18px 14px;
+  border-top: 1px solid rgba(42,15,46,.08);
+  background: rgba(42,15,46,.02);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.hc-overlimit-note {
+  padding: 10px 14px;
+  background: rgba(212,43,128,.08);
+  border-left: 3px solid rgba(212,43,128,.5);
+  border-radius: 0 6px 6px 0;
+  font-size: 12px;
+  color: #7A1248;
+  line-height: 1.5;
+}
+.hc-field { display: flex; flex-direction: column; gap: 6px; }
+.hc-lbl { font-size: 12px; font-weight: 600; color: rgba(42,15,46,.65); text-transform: uppercase; letter-spacing: .06em; }
+.hc-opt { font-size: 11px; font-weight: 400; text-transform: none; letter-spacing: 0; color: rgba(42,15,46,.4); }
+
+.hc-type-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.hc-type-btn {
+  font-family: var(--sans);
+  font-size: 12px;
+  padding: 6px 14px;
+  border: 1px solid rgba(42,15,46,.18);
+  border-radius: 20px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background .12s, border-color .12s, color .12s;
+}
+.hc-type-btn:hover { background: rgba(42,15,46,.06); }
+.hc-type-btn.is-on { background: var(--ber-dk, #2A0F2E); color: #fff; border-color: var(--ber-dk, #2A0F2E); }
+
+.hc-input-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.hc-preview { font-size: 12px; color: var(--sol-text, #176E80); font-weight: 500; }
+.hc-total-preview { color: rgba(42,15,46,.5); font-weight: 400; }
+
+.hc-check-lbl {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 13px; cursor: pointer; color: var(--ink);
+}
+.hc-check-lbl input { cursor: pointer; }
+
+.hc-textarea { resize: vertical; min-height: 54px; font-size: 13px; }
+
+.hc-foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 4px;
+  flex-wrap: wrap;
+}
+.hc-inline-msg { font-size: 12px; font-weight: 500; margin-right: auto; }
+.hc-inline-msg.ok  { color: #1D5E2A; }
+.hc-inline-msg.err { color: #8A2010; }
+
+@media (max-width: 600px) {
+  .hc-row-hd { gap: 7px; }
+  .hc-dates  { min-width: 90px; font-size: 12px; }
+  .hc-sea    { min-width: 55px; }
+  .hc-badges { margin-left: 0; }
+}
