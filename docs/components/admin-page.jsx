@@ -2386,6 +2386,7 @@ function calcDerived(r) {
 }
 
 function reservaStatus(r, todayStr) {
+  if (r.cancelada === true || (r.cancelacion || '').trim().toUpperCase() === 'CANCELADA') return 'cancelada';
   if (!r.entrada || !r.salida) return 'unknown';
   if (r.salida  <= todayStr) return 'past';
   if (r.entrada >  todayStr) return 'upcoming';
@@ -3817,6 +3818,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
   // Solapar = el check-in de una es estrictamente antes del check-out de la
   // otra Y viceversa. Que coincida check-out con check-in está permitido.
   const isCancelada = r => {
+    if (r.cancelada === true) return true;
     const c = (r.cancelacion || '').trim().toUpperCase();
     return c === 'CANCELADA' || c === 'CANCELADO';
   };
@@ -4211,6 +4213,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
               <option value="staying">En estancia</option>
               <option value="upcoming">Próximas</option>
               <option value="past">Pasadas</option>
+              <option value="cancelada">Canceladas</option>
             </select>
           </label>
           <span className="rv-hint">Click en una fila para editarla →</span>
@@ -4222,10 +4225,11 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
         {visibleMonths.map(m => {
           const mRows = filtered.filter(r => (r.entrada || '').slice(5, 7) === m);
           if (mRows.length === 0) return null;
-          const mBruto   = mRows.reduce((s, r) => s + (Number(r.ingreso_total) || 0), 0);
-          const mComis   = mRows.reduce((s, r) => s + (Number(r.comision) || 0), 0);
-          const mBai     = mRows.reduce((s, r) => s + (Number(r.bai) || 0), 0);
-          const mNoches  = mRows.reduce((s, r) => s + (Number(r.noches) || 0), 0);
+          const mActive  = mRows.filter(r => !isCancelada(r));
+          const mBruto   = mActive.reduce((s, r) => s + (Number(r.ingreso_total) || 0), 0);
+          const mComis   = mActive.reduce((s, r) => s + (Number(r.comision) || 0), 0);
+          const mBai     = mActive.reduce((s, r) => s + (Number(r.bai) || 0), 0);
+          const mNoches  = mActive.reduce((s, r) => s + (Number(r.noches) || 0), 0);
           return (
             <div key={m} className="leila-month-block">
               <div className="leila-month-hdr">
@@ -4408,14 +4412,15 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                   </div>
                   <div className="rv-field">
                     <label>Estado / política cancelación</label>
-                    <select value={draft.cancelacion || 'Cancelable 14'} onChange={e => updateDraft('cancelacion', e.target.value)}>
+                    <select value={isCancelada(draft||{}) ? '' : (draft.cancelacion || 'Cancelable 14')}
+                      onChange={e => updateDraft('cancelacion', e.target.value)}
+                      disabled={isCancelada(draft||{})}>
                       <option value="Cancelable 7">Cancelable 7 días</option>
                       <option value="Cancelable 14">Cancelable 14 días</option>
                       <option value="Cancelable 30">Cancelable 30 días</option>
                       <option value="Cancelable 60">Cancelable 60 días</option>
                       <option value="Semiestricta">Semiestricta</option>
                       <option value="No reembolsable">No reembolsable</option>
-                      <option value="CANCELADA" style={{ color: '#999' }}>— Cancelada —</option>
                     </select>
                   </div>
                 </div>
@@ -4555,6 +4560,13 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
                 {selectedIdx >= 0 && selectedIdx < reservas.length && (
                   <button type="button" className="pe-btn pe-btn-ghost rv-foot-btn rv-btn-danger" onClick={deleteRow}>🗑 Borrar</button>
                 )}
+                {draft && (
+                  isCancelada(draft)
+                    ? <button type="button" className="pe-btn pe-btn-ghost rv-foot-btn rv-btn-reactivar"
+                        onClick={() => setDraft(p => ({ ...p, cancelada: false }))}>↩ Reactivar</button>
+                    : <button type="button" className="pe-btn pe-btn-ghost rv-foot-btn rv-btn-cancelar"
+                        onClick={() => setDraft(p => ({ ...p, cancelada: true }))}>✗ Cancelar reserva</button>
+                )}
                 {onOpenContract && (
                   <button type="button" className="pe-btn pe-btn-ghost rv-foot-btn" title="Abrir en el generador de contratos"
                     onClick={() => { saveDraft(); onOpenContract(draft); }}>📄 Contrato</button>
@@ -4594,6 +4606,36 @@ const AdminApp = () => {
   const [filterStatus, setFilterStatus] = React.useState('all');
   const [filterSource, setFilterSource] = React.useState('all');
   const [filterApt,    setFilterApt]    = React.useState('all');
+  const [syncState, setSyncState] = React.useState('idle');
+  const [syncMsg,   setSyncMsg]   = React.useState('');
+
+  const triggerSync = async () => {
+    setSyncState('running'); setSyncMsg('');
+    try {
+      const res = await fetch(
+        `${API}/repos/${REPO}/actions/workflows/sync-availability.yml/dispatches`,
+        { method: 'POST',
+          headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ref: 'main' }) }
+      );
+      if (res.status === 204) {
+        setSyncState('ok');
+        setSyncMsg('Sync lanzado — listo en ~1 min');
+        setTimeout(() => setSyncState('idle'), 8000);
+      } else {
+        const body = await res.json().catch(() => ({}));
+        setSyncState('error');
+        setSyncMsg(res.status === 403
+          ? 'Sin permiso: el PAT necesita scope "workflow"'
+          : `Error ${res.status}: ${body.message || '?'}`);
+        setTimeout(() => setSyncState('idle'), 12000);
+      }
+    } catch (e) {
+      setSyncState('error'); setSyncMsg(e.message);
+      setTimeout(() => setSyncState('idle'), 12000);
+    }
+  };
+
 
   const login = async (e) => {
     e.preventDefault();
@@ -4954,7 +4996,22 @@ const AdminApp = () => {
           {mode === 'pricing' ? `Precios actualizados: ${data.updatedAt || '—'}` :
            reviewsData ? `${(reviewsData.items || []).length} reviews` : ''}
         </span>
-        <button onClick={logout} className="pe-btn pe-btn-ghost">Cerrar sesión</button>
+        <div className="pe-topbar-actions">
+          <button
+            type="button"
+            className={`pe-btn pe-sync-btn${syncState === 'running' ? ' pe-sync-running' : syncState === 'ok' ? ' pe-sync-ok' : syncState === 'error' ? ' pe-sync-err' : ''}`}
+            onClick={triggerSync}
+            disabled={syncState === 'running'}
+            title="Lanza el workflow sync-availability en GitHub Actions"
+          >
+            <span className="pe-sync-icon">{syncState === 'running' ? '⏳' : syncState === 'ok' ? '✓' : syncState === 'error' ? '✗' : '🔄'}</span>
+            <span className="pe-sync-label">
+              {syncState === 'running' ? 'Sincronizando…' : syncState === 'ok' ? 'Sincronizado' : syncState === 'error' ? 'Error' : 'Sincronizar'}
+            </span>
+          </button>
+          {syncMsg && <span className="pe-sync-msg">{syncMsg}</span>}
+          <button onClick={logout} className="pe-btn pe-btn-ghost">Cerrar sesión</button>
+        </div>
       </div>
 
       <div className="pe-tabs">
