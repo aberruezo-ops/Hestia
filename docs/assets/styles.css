@@ -1323,11 +1323,11 @@ body.apt-bar-shown .float-chat {
   border: 1px solid transparent;
 }
 .float-chat .contact-person .cp-btn-wa {
-  background: #25D366; color: #fff;
-  box-shadow: 0 1px 3px rgba(37, 211, 102, 0.30);
+  background: var(--ber-dk, #2A0F2E); color: #fff;
+  box-shadow: 0 1px 3px rgba(42, 15, 46, 0.30);
 }
 .float-chat .contact-person .cp-btn-wa:hover {
-  background: #20BA5A;
+  background: var(--ber, #3D1A35);
   transform: translateY(-1px);
   box-shadow: 0 3px 8px rgba(37, 211, 102, 0.36);
 }
@@ -10007,7 +10007,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   color: rgba(240,232,213,.9);
 }
 .noticias-share-btn:hover { opacity: .75; }
-.noticias-share-wa { border-color: #25D366; color: #25D366; }
+.noticias-share-wa { border-color: var(--sol, #3AAABB); color: var(--sol, #3AAABB); }
 .noticias-share-x  { border-color: rgba(240,232,213,.4); }
 
 /* Responsive */
@@ -17431,16 +17431,16 @@ img[src*="apt-vt-gallery-"] {
   gap: 9px;
   padding: 12px 20px;
   border-radius: 28px;
-  background: #25D366;
+  background: var(--apt-accent, #3AAABB);
   color: #fff;
   font-family: var(--sans);
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
-  transition: background .15s, transform .15s;
+  transition: background .15s, transform .15s, filter .15s;
   align-self: start;
 }
-.apt-pt-wa-btn:hover { background: #1db954; transform: translateY(-1px); }
+.apt-pt-wa-btn:hover { filter: brightness(0.88); transform: translateY(-1px); }
 .apt-pt-wa-arrow { opacity: .75; }
 @media (max-width: 640px) {
   .apt-price-teaser { padding: 36px 20px; }
@@ -19131,12 +19131,12 @@ img[src*="apt-vt-gallery-"] {
   display: inline-flex; align-items: center; gap: 4px;
   margin-left: auto; flex-shrink: 0;
   padding: 4px 10px; border-radius: 16px;
-  background: #25d366; color: #fff;
+  background: var(--ber-dk, #2A0F2E); color: #fff;
   font-size: 11px; font-weight: 600;
   text-decoration: none; white-space: nowrap;
   transition: background .15s;
 }
-.rv-wa-btn:hover { background: #1da851; }
+.rv-wa-btn:hover { background: var(--ber, #3D1A35); }
 @media (max-width: 480px) {
   .rv-prox-meta { display: none; }
   .rv-wa-btn { padding: 4px 8px; font-size: 10px; }
