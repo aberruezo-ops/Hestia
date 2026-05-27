@@ -469,8 +469,8 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
           <a href={`reservas.html?apt=${apt.id}`} className="btn btn-primary apt-page-reserve-btn">
             {lang === 'es' ? 'Reservar' : 'Book now'} <span className="arrow">→</span>
           </a>
-          <a href="contacto.html" className="btn btn-ghost-light">
-            {lang === 'es' ? 'Más información' : 'More info'}
+          <a href="#apt-avail" className="btn btn-ghost-light">
+            {lang === 'es' ? 'Ver disponibilidad' : 'Check availability'}
           </a>
         </div>
         <p className="apt-page-cancel">
@@ -1178,12 +1178,12 @@ const ApartmentPageApp = () => {
           <>
             <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
             <TrustStrip apt={apt} lang={lang} />
+            <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
             <AptVideoDesc apt={apt} lang={lang} />
             <AptPageGallery apt={apt} lang={lang} />
             <AptEquipamiento apt={apt} lang={lang} />
             <AptFloorPlan apt={apt} lang={lang} />
             <DirectBookingPerks lang={lang} />
-            <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
             {typeof AptGuideGate !== 'undefined' &&
               <AptGuideGate apt={apt} lang={lang} onUnlock={() => _vt(() => setGuideOpen(true))} />}
             <AptPageOthers apt={apt} lang={lang} />

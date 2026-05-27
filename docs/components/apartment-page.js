@@ -467,9 +467,9 @@ const AptPageHero = ({
   }, lang === 'es' ? 'Reservar' : 'Book now', " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
   }, "\u2192")), /*#__PURE__*/React.createElement("a", {
-    href: "contacto.html",
+    href: "#apt-avail",
     className: "btn btn-ghost-light"
-  }, lang === 'es' ? 'Más información' : 'More info')), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? 'Ver disponibilidad' : 'Check availability')), /*#__PURE__*/React.createElement("p", {
     className: "apt-page-cancel"
   }, lang === 'es' ? '✓ Política de cancelación sin competencia' : '✓ Unmatched cancellation policy')));
 };
@@ -1320,6 +1320,10 @@ const ApartmentPageApp = () => {
   }), /*#__PURE__*/React.createElement(TrustStrip, {
     apt: apt,
     lang: lang
+  }), /*#__PURE__*/React.createElement(AptCalendar, {
+    aptId: aptId,
+    lang: lang,
+    accent: apt.accent
   }), /*#__PURE__*/React.createElement(AptVideoDesc, {
     apt: apt,
     lang: lang
@@ -1334,10 +1338,6 @@ const ApartmentPageApp = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement(DirectBookingPerks, {
     lang: lang
-  }), /*#__PURE__*/React.createElement(AptCalendar, {
-    aptId: aptId,
-    lang: lang,
-    accent: apt.accent
   }), typeof AptGuideGate !== 'undefined' && /*#__PURE__*/React.createElement(AptGuideGate, {
     apt: apt,
     lang: lang,
