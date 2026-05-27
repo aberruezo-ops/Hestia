@@ -50,6 +50,24 @@ const _shortDate = (ds, lang) => {
   return `${d.getUTCDate()} ${M.slice(0, 3).toLowerCase()}.`;
 };
 
+// Returns free days Jun–Aug of current year, or null if no badge should show.
+// Shows only Mar–Sep (approaching summer or mid-summer). Hides if ≥42 days free.
+const _summerScarcity = blocked => {
+  const today = new Date();
+  const m = today.getMonth(); // 0-indexed
+  if (m < 2 || m > 8) return null;
+  const y = today.getFullYear();
+  let free = 0;
+  let cur = new Date(`${y}-06-01T12:00:00Z`);
+  const end = new Date(`${y}-08-31T12:00:00Z`);
+  while (cur <= end) {
+    const ds = cur.toISOString().slice(0, 10);
+    if (!_isBlk(ds, blocked)) free++;
+    cur.setUTCDate(cur.getUTCDate() + 1);
+  }
+  return free >= 42 ? null : free;
+};
+
 // ---------------------------------------------------------------
 // RequestPanel — aparece cuando hay fechas seleccionadas
 // ---------------------------------------------------------------
@@ -538,6 +556,8 @@ const AptCalendar = ({
   };
   const sectionStyle = {
     '--apt-accent': accent,
+    '--apt-accent-8': _hexA(accent, 0.08),
+    '--apt-accent-30': _hexA(accent, 0.30),
     '--sel-fill': _hexA(accent, 0.22),
     '--sel-circ': _hexA(accent, 0.90),
     '--prev-fill': _hexA(accent, 0.11),
@@ -573,7 +593,23 @@ const AptCalendar = ({
     className: "avail-title"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Elige tus fechas."), " Tu Hest\xEDa te espera.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Pick your dates."), " Your Hest\xEDa is waiting.")), /*#__PURE__*/React.createElement("p", {
     className: "avail-sub"
-  }, lang === 'es' ? 'Calendario sincronizado desde Booking.com y Airbnb. Selecciona entrada y salida para solicitarnos precio.' : 'Calendar synced from Booking.com and Airbnb. Select check-in and check-out to request a price directly from us.')), isDemo && /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Calendario sincronizado desde Booking.com y Airbnb. Selecciona entrada y salida para solicitarnos precio.' : 'Calendar synced from Booking.com and Airbnb. Select check-in and check-out to request a price directly from us.')), !loading && data && (() => {
+    const free = _summerScarcity(blocked);
+    if (free === null) return null;
+    const wks = Math.round(free / 7);
+    const msg = free <= 7 ? {
+      es: 'Prácticamente completo para este verano',
+      en: 'Almost fully booked this summer'
+    } : {
+      es: `Solo ${wks} semana${wks !== 1 ? 's' : ''} disponible${wks !== 1 ? 's' : ''} este verano`,
+      en: `Only ${wks} week${wks !== 1 ? 's' : ''} left this summer`
+    };
+    return /*#__PURE__*/React.createElement("div", {
+      className: "avail-scarcity"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "avail-scar-dot"
+    }), /*#__PURE__*/React.createElement("span", null, msg[lang]));
+  })(), isDemo && /*#__PURE__*/React.createElement("div", {
     className: "avail-demo"
   }, lang === 'es' ? '⚡ Datos de ejemplo · La sincronización en tiempo real se activará en breve' : '⚡ Sample data · Live sync will be activated shortly'), !isDemo && hasSyncError && /*#__PURE__*/React.createElement("div", {
     className: "avail-sync-err"

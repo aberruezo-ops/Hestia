@@ -3646,6 +3646,32 @@ footer .footer-brand .addr {
   max-width: 48ch;
   margin: 0 auto;
 }
+.avail-scarcity {
+  max-width: 820px;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--apt-accent, var(--sol));
+  border: 1px solid var(--apt-accent-30, rgba(185,129,62,.3));
+  background: var(--apt-accent-8, rgba(185,129,62,.08));
+  border-radius: 10px 0 10px 0;
+  padding: 10px 24px;
+}
+.avail-scar-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--apt-accent, var(--sol));
+  flex-shrink: 0;
+  animation: avail-pulse 2s ease-in-out infinite;
+}
 .avail-demo {
   max-width: 820px;
   margin: 0 auto 32px;
