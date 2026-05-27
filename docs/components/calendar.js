@@ -560,6 +560,7 @@ const AptCalendar = ({
     onDayLeave: () => setHovDay(null)
   };
   return /*#__PURE__*/React.createElement("section", {
+    id: "apt-avail",
     className: "apt-avail",
     style: sectionStyle
   }, /*#__PURE__*/React.createElement("div", {
