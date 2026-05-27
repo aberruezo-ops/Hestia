@@ -51,6 +51,24 @@ const _shortDate = (ds, lang) => {
   return `${d.getUTCDate()} ${M.slice(0,3).toLowerCase()}.`;
 };
 
+// Returns free days Jun–Aug of current year, or null if no badge should show.
+// Shows only Mar–Sep (approaching summer or mid-summer). Hides if ≥42 days free.
+const _summerScarcity = (blocked) => {
+  const today = new Date();
+  const m = today.getMonth(); // 0-indexed
+  if (m < 2 || m > 8) return null;
+  const y = today.getFullYear();
+  let free = 0;
+  let cur = new Date(`${y}-06-01T12:00:00Z`);
+  const end = new Date(`${y}-08-31T12:00:00Z`);
+  while (cur <= end) {
+    const ds = cur.toISOString().slice(0, 10);
+    if (!_isBlk(ds, blocked)) free++;
+    cur.setUTCDate(cur.getUTCDate() + 1);
+  }
+  return free >= 42 ? null : free;
+};
+
 // ---------------------------------------------------------------
 // RequestPanel — aparece cuando hay fechas seleccionadas
 // ---------------------------------------------------------------
@@ -523,11 +541,13 @@ const AptCalendar = ({ aptId, lang, accent }) => {
   };
 
   const sectionStyle = {
-    '--apt-accent': accent,
-    '--sel-fill':   _hexA(accent, 0.22),
-    '--sel-circ':   _hexA(accent, 0.90),
-    '--prev-fill':  _hexA(accent, 0.11),
-    '--prev-circ':  _hexA(accent, 0.48),
+    '--apt-accent':    accent,
+    '--apt-accent-8':  _hexA(accent, 0.08),
+    '--apt-accent-30': _hexA(accent, 0.30),
+    '--sel-fill':      _hexA(accent, 0.22),
+    '--sel-circ':      _hexA(accent, 0.90),
+    '--prev-fill':     _hexA(accent, 0.11),
+    '--prev-circ':     _hexA(accent, 0.48),
   };
 
   const calProps = {
@@ -560,6 +580,22 @@ const AptCalendar = ({ aptId, lang, accent }) => {
             : 'Calendar synced from Booking.com and Airbnb. Select check-in and check-out to request a price directly from us.'}
         </p>
       </div>
+
+      {/* Scarcity badge — shows free weeks remaining in summer */}
+      {!loading && data && (() => {
+        const free = _summerScarcity(blocked);
+        if (free === null) return null;
+        const wks = Math.round(free / 7);
+        const msg = free <= 7
+          ? { es: 'Prácticamente completo para este verano', en: 'Almost fully booked this summer' }
+          : { es: `Solo ${wks} semana${wks !== 1 ? 's' : ''} disponible${wks !== 1 ? 's' : ''} este verano`, en: `Only ${wks} week${wks !== 1 ? 's' : ''} left this summer` };
+        return (
+          <div className="avail-scarcity">
+            <span className="avail-scar-dot"/>
+            <span>{msg[lang]}</span>
+          </div>
+        );
+      })()}
 
       {/* Demo notice */}
       {isDemo && (
