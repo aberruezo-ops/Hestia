@@ -106,7 +106,11 @@ const APT_DATA = {
     // cocina
     'assets/apt-vs-gallery-16.jpg', 'assets/apt-vs-gallery-17.jpg', 'assets/apt-vs-gallery-18.jpg', 'assets/apt-vs-gallery-21.jpg',
     // dormitorio 1
-    'assets/apt-vs-gallery-23.jpg', 'assets/apt-vs-gallery-9.jpg',
+    'assets/apt-vs-gallery-23.jpg', 'assets/apt-vs-gallery-29.jpg',
+    // dormitorio 2 · camas + espejos
+    'assets/apt-vs-gallery-30.jpg',
+    // dormitorio 2 · simétrico
+    'assets/apt-vs-gallery-9.jpg',
     // baño 1
     'assets/apt-vs-gallery-10.jpg', 'assets/apt-vs-gallery-11.jpg',
     // baño principal
@@ -114,7 +118,11 @@ const APT_DATA = {
     // terraza principal
     'assets/apt-vs-gallery-19.jpg', 'assets/apt-vs-gallery-20.jpg', 'assets/apt-vs-gallery-24.jpg', 'assets/apt-vs-gallery-25.jpg', 'assets/apt-vs-gallery-27.jpg', 'assets/apt-vs-gallery-14.jpg',
     // segunda terraza
-    'assets/apt-vs-gallery-28.jpg' // nuevo: rincón lucecitas
+    'assets/apt-vs-gallery-28.jpg',
+    // rincón lucecitas
+    'assets/apt-vs-gallery-31.jpg',
+    // piscina · día
+    'assets/apt-vs-gallery-32.jpg' // piscina · atardecer
     ],
     es: {
       name: 'Hestía Salinas',
@@ -122,7 +130,7 @@ const APT_DATA = {
       desc: 'Hestía Salinas vive en el color albero del amanecer almeriense. Tres piscinas, dos terrazas y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina.',
       desc2: 'A 900 metros del mar y junto al Parque Natural de las Salinas de Puerto Rey. La luz dorada de la tarde llena cada habitación — el privilegio de vivir junto a la naturaleza.',
       features: ['6 plazas + bebé · 2 habitaciones', 'Dos terrazas', '3 piscinas comunitarias · pistas de pádel', 'Gimnasio + sauna comunitarios', 'Parque Natural Salinas de Puerto Rey · acceso peatonal directo', '900 m de la playa', 'Mascotas · petición previa · suplemento', 'Aire acondicionado frío/calor', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'WiFi fibra óptica · Amazon Alexa', 'Lavadora · lavavajillas · nevera · microondas', 'Cafetera de cápsulas + espresso · batidora · plancha', 'Cama matrimonial 150 cm · colchón viscoelástico', 'Toallas 100% algodón 200 hilos · nórdicos de plumas'],
-      gallery_captions: ['Entrada · espejo y pared amarilla', 'Salón-comedor · luz natural y pared albero', 'Salón · sofá mostaza y Smart TV', 'Salón · sofá y sillones turquesa', 'Sofá · detalle y cuadro', 'Salón · vista cenital', 'Salón nocturno · ambiente TV', 'Comedor · mesa y lámpara teal', 'Cocina · campana extractora y encimera', 'Cocina · encimera madera · primer plano', 'Cocina · blanca y completamente equipada', 'Cocina · vista frontal', 'Dormitorio principal · mural olas y edredón teal', 'Dormitorio principal · cama y terraza', 'Baño 1 · lavabo y azulejo azul', 'Baño 1 · ducha y mosaico', 'Baño principal · bañera y bidé', 'Terraza principal · sofás y vistas', 'Terraza pergola · desayuno', 'Terraza · desayuno Hestía', 'Terraza principal · cena romántica nocturna', 'Terraza principal · noche · vistas a la urbanización', 'Terraza principal · atardecer y nubes', 'Segunda terraza · velada romántica', 'Terraza · rincón de relax con lucecitas']
+      gallery_captions: ['Entrada · espejo y pared amarilla', 'Salón-comedor · luz natural y pared albero', 'Salón · sofá mostaza y Smart TV', 'Salón · sofá y sillones turquesa', 'Sofá · detalle y cuadro', 'Salón · vista cenital', 'Salón nocturno · ambiente TV', 'Comedor · mesa y lámpara teal', 'Cocina · campana extractora y encimera', 'Cocina · encimera madera · primer plano', 'Cocina · blanca y completamente equipada', 'Cocina · vista frontal', 'Dormitorio principal · mural olas y edredón teal', 'Dormitorio principal · cama y terraza', 'Dormitorio 2 · camas individuales · espejos redondos', 'Dormitorio 2 · simétrico · mesita de noche', 'Baño 1 · lavabo y azulejo azul', 'Baño 1 · ducha y mosaico', 'Baño principal · bañera y bidé', 'Terraza principal · sofás y vistas', 'Terraza pergola · desayuno', 'Terraza · desayuno Hestía', 'Terraza principal · cena romántica nocturna', 'Terraza principal · noche · vistas a la urbanización', 'Terraza principal · atardecer y nubes', 'Segunda terraza · velada romántica', 'Terraza · rincón de relax con lucecitas', 'Piscina comunitaria · palmeras y edificio', 'Piscina comunitaria · atardecer rosado']
     },
     en: {
       name: 'Hestía Salinas',
@@ -130,7 +138,7 @@ const APT_DATA = {
       desc: 'Hestía Salinas lives in the ochre colour of the Almería sunrise. Three pools, two terraces and the Puerto Rey salt-flat nature park around the corner.',
       desc2: '900 metres from the sea and beside the Puerto Rey Salt-flat Nature Park. Golden afternoon light fills every room — the privilege of living beside unspoilt nature.',
       features: ['6 guests + baby · 2 bedrooms', 'Two terraces', '3 shared pools · padel courts', 'Communal gym + sauna', 'Puerto Rey Salt-flat Nature Park · direct pedestrian access', '900 m from the beach', 'Pets · on request · supplement', 'A/C heating & cooling', 'Smart TV 55" · Prime Video · HBO Max · Skyshowtime', 'Fibre WiFi · Amazon Alexa', 'Washer · dishwasher · fridge · microwave', 'Capsule + espresso coffee maker · blender · iron', 'Double bed 150 cm · memory foam mattress', '100% cotton 200-thread towels · down duvets'],
-      gallery_captions: ['Entrance · mirror & yellow feature wall', 'Living & dining · natural light & ochre wall', 'Living room · mustard sofa & Smart TV', 'Living room · sofa & teal armchairs', 'Sofa · detail & abstract painting', 'Living room · overhead view', 'Evening living room · TV ambience', 'Dining area · table & teal pendant lamp', 'Kitchen · extractor hood & countertop', 'Kitchen · wood counter · low angle', 'Kitchen · fully equipped white', 'Kitchen · frontal view', 'Master bedroom · wave mural & teal blanket', 'Master bedroom · bed & terrace access', 'Bathroom 1 · vessel sink & blue tiles', 'Bathroom 1 · shower & mosaic tiles', 'Main bathroom · bathtub & bidet', 'Main terrace · lounge chairs & views', 'Pergola terrace · morning breakfast', 'Terrace · Hestía breakfast tray', 'Main terrace · romantic candlelit dinner', 'Main terrace · night · complex views', 'Main terrace · sunset & dramatic sky', 'Second terrace · candlelit evening', 'Terrace · cosy corner with fairy lights']
+      gallery_captions: ['Entrance · mirror & yellow feature wall', 'Living & dining · natural light & ochre wall', 'Living room · mustard sofa & Smart TV', 'Living room · sofa & teal armchairs', 'Sofa · detail & abstract painting', 'Living room · overhead view', 'Evening living room · TV ambience', 'Dining area · table & teal pendant lamp', 'Kitchen · extractor hood & countertop', 'Kitchen · wood counter · low angle', 'Kitchen · fully equipped white', 'Kitchen · frontal view', 'Master bedroom · wave mural & teal blanket', 'Master bedroom · bed & terrace access', 'Bedroom 2 · twin beds & round mirrors', 'Bedroom 2 · symmetric · nightstand detail', 'Bathroom 1 · vessel sink & blue tiles', 'Bathroom 1 · shower & mosaic tiles', 'Main bathroom · bathtub & bidet', 'Main terrace · lounge chairs & views', 'Pergola terrace · morning breakfast', 'Terrace · Hestía breakfast tray', 'Main terrace · romantic candlelit dinner', 'Main terrace · night · complex views', 'Main terrace · sunset & dramatic sky', 'Second terrace · candlelit evening', 'Terrace · cosy corner with fairy lights', 'Community pool · palm trees & complex', 'Community pool · sunset glow']
     }
   }
 };
