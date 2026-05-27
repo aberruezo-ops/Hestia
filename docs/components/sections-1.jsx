@@ -475,8 +475,8 @@ const Apartments = ({ lang }) => {
                       <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
                       <span className="apb-match">
                         {lang === 'es'
-                          ? '✓ Si encuentras un precio más bajo, te lo mejoramos'
-                          : '✓ Find a lower price — we will beat it'}
+                          ? '✓ Precio directo siempre mejor que cualquier plataforma'
+                          : '✓ Direct price always better than any platform'}
                       </span>
                     </div>
                   )}
@@ -600,7 +600,7 @@ const Compare = ({ lang }) => {
 // ================================================================
 // LAST MINUTE STRIP — huecos disponibles en los próximos 45 días
 // ================================================================
-const LastMinuteStrip = ({ lang }) => {
+const LastMinuteStrip = ({ lang, embedded = false }) => {
   const [slots, setSlots] = React.useState([]);
 
   React.useEffect(() => {
@@ -616,12 +616,15 @@ const LastMinuteStrip = ({ lang }) => {
         const found = [];
         for (const apt of APARTMENTS) {
           const blocked = data[apt.id]?.blocked || [];
+          // Incluir todos los bloques futuros, no solo los que empiezan antes del horizonte,
+          // para que el checkout de cada hueco use el inicio real del siguiente bloque.
           const sorted = blocked
-            .filter(b => b.end > todayStr && b.start < horizonStr)
+            .filter(b => b.end > todayStr)
             .sort((a, b) => a.start.localeCompare(b.start));
 
           let cursor = todayStr;
           for (const block of sorted) {
+            if (cursor >= horizonStr) break;
             if (block.start > cursor) {
               const nights = Math.round(
                 (new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000
@@ -653,38 +656,58 @@ const LastMinuteStrip = ({ lang }) => {
     return `${d.getUTCDate()} ${m}`;
   };
 
-  const APT_COLOR = { vm: '#3AAABB', vt: '#7B5FDC', vs: '#E0826F' };
+  const APT_COLOR = { vm: '#3AAABB', vt: '#8A4A24', vs: '#9E7A2C' };
 
-  const getMinPrice = (aptId) => {
-    const tbl = HESTIA_PRICES[aptId];
-    if (!tbl) return null;
-    return Math.min(...tbl.base.slice(1));
+  const getStayPrice = (aptId, checkin, checkout) => {
+    try {
+      const r = _calcStay(checkin, checkout, aptId, false, 2);
+      if (!r || !r.directTotal || !r.nights) return null;
+      return Math.round(r.directTotal / r.nights);
+    } catch (_) { return null; }
   };
 
-  return (
-    <section className="lm-strip" aria-label={lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'}>
-      <div className="lm-inner">
-        <span className="lm-eyebrow eyebrow">
-          {lang === 'es' ? 'Últimas plazas · próximas 6 semanas' : 'Last minute · next 6 weeks'}
+  const renderCard = (slot, key) => {
+    const pricePerNight = getStayPrice(slot.apt.id, slot.checkin, slot.checkout);
+    const color = APT_COLOR[slot.apt.id];
+    const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
+    const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
+    return (
+      <a key={key} href={url} className="lm-card" style={{ '--lm-color': color }}>
+        <span className="lm-card-apt">{aptShort}</span>
+        <span className="lm-card-dates">
+          <span className="lm-card-d1">{fmtDate(slot.checkin)}</span>
+          <span className="lm-card-sep">→</span>
+          <span className="lm-card-d2">{fmtDate(slot.checkout)}</span>
         </span>
-        <div className="lm-slots">
-          {slots.map((slot, i) => {
-            const minPrice = getMinPrice(slot.apt.id);
-            const color = APT_COLOR[slot.apt.id];
-            const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
-            return (
-              <a key={i} href={url} className="lm-slot" style={{ '--lm-color': color }}>
-                <span className="lm-apt">{slot.apt.name.replace('Hestía ', '')}</span>
-                <span className="lm-dates">{fmtDate(slot.checkin)} – {fmtDate(slot.checkout)}</span>
-                <span className="lm-nights">{slot.nights}{lang === 'es' ? 'n' : 'd'}</span>
-                {minPrice && <span className="lm-price">desde {minPrice}€/n</span>}
-              </a>
-            );
-          })}
+        <span className="lm-card-meta">
+          {slot.nights} {lang === 'es' ? 'noches' : 'nights'}
+          {pricePerNight && <span className="lm-card-price"> · ~{pricePerNight}€/n</span>}
+        </span>
+      </a>
+    );
+  };
+
+  const dur = `${Math.max(10, slots.length * 5)}s`;
+
+  return (
+    <section className={`lm-strip${embedded ? ' lm-strip--embedded' : ''}`} aria-label={lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'}>
+      <div className="lm-inner">
+        {!embedded && (
+          <span className="lm-eyebrow eyebrow">
+            {lang === 'es' ? 'Huecos disponibles ahora:' : 'Available now:'}
+          </span>
+        )}
+        <div className="lm-marquee-wrap">
+          <div className="lm-marquee-track" style={{ animationDuration: dur }}>
+            {slots.map((slot, i) => renderCard(slot, i))}
+            {slots.map((slot, i) => renderCard(slot, `d${i}`))}
+          </div>
         </div>
-        <a href="reservas.html" className="lm-cta">
-          {lang === 'es' ? 'Ver disponibilidad completa →' : 'See full availability →'}
-        </a>
+        {!embedded && (
+          <a href="reservas.html" className="lm-cta">
+            {lang === 'es' ? 'Ver disponibilidad completa →' : 'See full availability →'}
+          </a>
+        )}
       </div>
     </section>
   );

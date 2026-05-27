@@ -6,7 +6,7 @@
 
 const RESERVAS_COPY = {
   es: {
-    eyebrow: 'Si encuentras un precio mejor, te lo mejoramos · Sin intermediarios',
+    eyebrow: 'Precio directo siempre mejor que Booking o Airbnb · Sin intermediarios',
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Reserva tu", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "hogar en Vera.")),
     sub: 'Escríbenos directamente. Alex o Fran confirman en menos de 24 horas.',
     form_title: 'Solicitar reserva',
@@ -60,10 +60,10 @@ const RESERVAS_COPY = {
     note: 'Al pulsar se abrirá WhatsApp con tu solicitud. Alex o Fran te responden en menos de 24 horas.',
     aside_title: 'Tu solicitud llega a:',
     guarantee_title: 'Reserva directa',
-    guarantee_items: ['Precio igual o mejor que cualquier plataforma', 'Sin comisiones de intermediarios', 'Alex o Fran responden personalmente', 'Confirmación en menos de 24 horas', 'Flexibilidad real en cambios y cancelaciones']
+    guarantee_items: ['Precio directo siempre mejor que cualquier plataforma', 'Sin comisiones de intermediarios', 'Alex o Fran responden personalmente', 'Confirmación en menos de 24 horas', 'Flexibilidad real en cambios y cancelaciones']
   },
   en: {
-    eyebrow: 'Find a better price? We\'ll beat it · No middlemen',
+    eyebrow: 'Direct price always better than Booking or Airbnb · No middlemen',
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Book your", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "home in Vera.")),
     sub: 'Write to us directly. Alex or Fran confirm within 24 hours.',
     form_title: 'Request a booking',
@@ -117,7 +117,7 @@ const RESERVAS_COPY = {
     note: 'Clicking will open WhatsApp with your request. Alex or Fran will reply within 24 hours.',
     aside_title: 'Your request goes to:',
     guarantee_title: 'Direct booking',
-    guarantee_items: ['Same price or better than any platform', 'No platform commissions', 'Alex or Fran reply personally', 'Confirmation within 24 hours', 'Real flexibility on changes and cancellations']
+    guarantee_items: ['Direct price always better than any platform', 'No platform commissions', 'Alex or Fran reply personally', 'Confirmation within 24 hours', 'Real flexibility on changes and cancellations']
   }
 };
 const _resExtrasList = () => {
@@ -167,7 +167,7 @@ const PricePreview = ({
     className: "price-right-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-badge"
-  }, lang === 'es' ? '✓ ¿Precio mejor? Te lo mejoramos' : '✓ Better price? We\'ll beat it'), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '✓ Precio directo siempre mejor' : '✓ Direct price always better'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
   }, lang === 'es' ? 'Reserva directa — sin comisiones de plataformas.' : 'Book direct — no platform commissions.'))), /*#__PURE__*/React.createElement("div", {
     className: "price-breakdown"
@@ -199,7 +199,7 @@ const PricePreview = ({
     className: "price-line price-line-total"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Total estimado' : 'Estimated total'), /*#__PURE__*/React.createElement("span", null, fmt(grandTotal)))), /*#__PURE__*/React.createElement("p", {
     className: "price-note"
-  }, lang === 'es' ? '* Precio orientativo. Si encuentras precio mejor en cualquier plataforma, te lo mejoramos.' : '* Indicative price. Find a better price anywhere — we\'ll beat it.'));
+  }, lang === 'es' ? '* Precio orientativo. El precio directo es siempre mejor que cualquier plataforma.' : '* Indicative price. Our direct price is always better than any platform.'));
 };
 
 // ReviewQuote — cita rotando de una reseña real verificada en el
@@ -618,7 +618,7 @@ const ReservasForm = ({
     const babyText = baby === 'yes' ? lang === 'es' ? 'Sí' : 'Yes' : 'No';
     const grandTotal = calc ? calc.directTotal + extrasTotal : 0;
     const grandAvg = calc ? Math.round(grandTotal / calc.nights) : 0;
-    const priceBlock = calc ? lang === 'es' ? `\n💰 PRECIO ESTIMADO DIRECTO\n` + `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` + (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Si encuentras precio mejor, te lo mejoramos\n` : `\n💰 ESTIMATED DIRECT PRICE\n` + `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` + (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Find a better price anywhere — we'll beat it\n` : '';
+    const priceBlock = calc ? lang === 'es' ? `\n💰 PRECIO ESTIMADO DIRECTO\n` + `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` + (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Precio directo siempre mejor que cualquier plataforma\n` : `\n💰 ESTIMATED DIRECT PRICE\n` + `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` + (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Direct price always better than any platform\n` : '';
     const lines = lang === 'es' ? [`¡Hola! Quiero hacer una consulta de reserva.\n`, `Hestía: ${aptNames[apt] || apt || '—'}`, `Nombre: ${name}`, channel === 'whatsapp' ? `Teléfono: ${tel}` : `Email: ${email}`, `Entrada: ${checkin}`, `Salida: ${checkout}`, `Huéspedes: ${guests}`, `Mascota: ${petsText}`, `Bebé: ${babyText}${extrasText}${priceBlock}`, `Comentarios: ${comments || '—'}`] : [`Hello! I'd like to enquire about a booking.\n`, `Hestía: ${aptNames[apt] || apt || '—'}`, `Name: ${name}`, channel === 'whatsapp' ? `Phone: ${tel}` : `Email: ${email}`, `Check-in: ${checkin}`, `Check-out: ${checkout}`, `Guests: ${guests}`, `Pet: ${petsText}`, `Baby: ${babyText}${extrasText}${priceBlock}`, `Comments: ${comments || '—'}`];
     return lines.join('\n');
   };
@@ -1159,7 +1159,7 @@ const ReservasAside = ({
     className: "rg-title"
   }, t.guarantee_title), /*#__PURE__*/React.createElement("p", {
     className: "rg-lede"
-  }, lang === 'es' ? 'Si encuentras un precio mejor, te lo mejoramos · sin comisiones · respuesta humana en menos de 24 h.' : 'Find a better price anywhere? We\'ll beat it · no commissions · human reply within 24 h.'), /*#__PURE__*/React.createElement("button", {
+  }, lang === 'es' ? 'Precio directo siempre mejor que Booking o Airbnb · sin comisiones · respuesta humana en menos de 24 h.' : 'Direct price always better than Booking or Airbnb · no commissions · human reply within 24 h.'), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "rg-cta",
     onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks')),
