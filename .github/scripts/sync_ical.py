@@ -192,19 +192,23 @@ def load_manual_blocks() -> dict[str, list[dict]]:
 
 
 def load_direct_reservas() -> dict[str, list[dict]]:
-    """Load direct bookings (canal=Directo/Directa) from data-private/reservas.json."""
+    """Load all bookings from data-private/reservas.json regardless of canal.
+
+    We include every canal (not just Directo) because:
+    - Airbnb/Booking reservations entered manually block dates immediately,
+      before the next iCal sync (which runs every 4 h).
+    - Duplicates with iCal data are harmless — merge() deduplicates them.
+    - Skipping non-direct canal was the source of false availability gaps.
+    """
     try:
         if not RESERVAS_JSON.exists():
-            print("  data-private/reservas.json not found — skipping direct bookings")
+            print("  data-private/reservas.json not found — skipping")
             return {}
         data = json.loads(RESERVAS_JSON.read_text(encoding="utf-8"))
         reservas = data.get("reservas", [])
         blocks: dict[str, list[dict]] = {}
         count = 0
         for r in reservas:
-            canal = (r.get("canal") or "").strip().lower()
-            if canal not in ("directo", "directa"):
-                continue
             apt   = r.get("apt", "").strip().lower()
             start = (r.get("entrada") or "").strip()
             end   = (r.get("salida") or "").strip()
@@ -212,13 +216,13 @@ def load_direct_reservas() -> dict[str, list[dict]]:
                 continue
             blocks.setdefault(apt, []).append({"start": start, "end": end})
             count += 1
-        print(f"Direct bookings from reservas.json: {count} total")
+        print(f"Bookings from reservas.json (all canales): {count} total")
         for apt, bl in blocks.items():
             for b in bl:
                 print(f"  {apt}: {b['start']} → {b['end']}")
         return blocks
     except Exception as e:
-        print(f"Warning: could not load direct bookings from reservas.json: {e}")
+        print(f"Warning: could not load bookings from reservas.json: {e}")
         return {}
 
 
@@ -275,14 +279,14 @@ def main() -> None:
             print(f"  {apt}: adding {len(apt_manual)} manual block(s)")
             all_ranges.extend(apt_manual)
 
-        # Merge direct bookings from reservas.json (canal=Directo/Directa)
+        # Merge bookings from reservas.json (all canales — safety net for iCal lag)
         apt_direct = [
             {"start": b["start"], "end": b["end"]}
             for b in direct_blocks.get(apt, [])
             if b["end"] > today and b["start"] <= cutoff
         ]
         if apt_direct:
-            print(f"  {apt}: adding {len(apt_direct)} direct booking block(s)")
+            print(f"  {apt}: adding {len(apt_direct)} booking block(s) from reservas.json")
             all_ranges.extend(apt_direct)
 
         merged = merge(all_ranges)
