@@ -2877,6 +2877,7 @@ function calcDerived(r) {
   return out;
 }
 function reservaStatus(r, todayStr) {
+  if (r.cancelada === true || (r.cancelacion || '').trim().toUpperCase() === 'CANCELADA') return 'cancelada';
   if (!r.entrada || !r.salida) return 'unknown';
   if (r.salida <= todayStr) return 'past';
   if (r.entrada > todayStr) return 'upcoming';
@@ -4823,6 +4824,7 @@ const ReservasTab = ({
   // Solapar = el check-in de una es estrictamente antes del check-out de la
   // otra Y viceversa. Que coincida check-out con check-in está permitido.
   const isCancelada = r => {
+    if (r.cancelada === true) return true;
     const c = (r.cancelacion || '').trim().toUpperCase();
     return c === 'CANCELADA' || c === 'CANCELADO';
   };
@@ -5269,7 +5271,9 @@ const ReservasTab = ({
     value: "upcoming"
   }, "Pr\xF3ximas"), /*#__PURE__*/React.createElement("option", {
     value: "past"
-  }, "Pasadas"))), /*#__PURE__*/React.createElement("span", {
+  }, "Pasadas"), /*#__PURE__*/React.createElement("option", {
+    value: "cancelada"
+  }, "Canceladas"))), /*#__PURE__*/React.createElement("span", {
     className: "rv-hint"
   }, "Click en una fila para editarla \u2192")), visibleMonths.length === 0 && /*#__PURE__*/React.createElement("p", {
     className: "pe-help",
@@ -5279,10 +5283,11 @@ const ReservasTab = ({
   }, "Sin reservas en ", focusYear, "."), visibleMonths.map(m => {
     const mRows = filtered.filter(r => (r.entrada || '').slice(5, 7) === m);
     if (mRows.length === 0) return null;
-    const mBruto = mRows.reduce((s, r) => s + (Number(r.ingreso_total) || 0), 0);
-    const mComis = mRows.reduce((s, r) => s + (Number(r.comision) || 0), 0);
-    const mBai = mRows.reduce((s, r) => s + (Number(r.bai) || 0), 0);
-    const mNoches = mRows.reduce((s, r) => s + (Number(r.noches) || 0), 0);
+    const mActive = mRows.filter(r => !isCancelada(r));
+    const mBruto = mActive.reduce((s, r) => s + (Number(r.ingreso_total) || 0), 0);
+    const mComis = mActive.reduce((s, r) => s + (Number(r.comision) || 0), 0);
+    const mBai = mActive.reduce((s, r) => s + (Number(r.bai) || 0), 0);
+    const mNoches = mActive.reduce((s, r) => s + (Number(r.noches) || 0), 0);
     return /*#__PURE__*/React.createElement("div", {
       key: m,
       className: "leila-month-block"
@@ -5520,8 +5525,9 @@ const ReservasTab = ({
   }, "Avaibook"))), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Estado / pol\xEDtica cancelaci\xF3n"), /*#__PURE__*/React.createElement("select", {
-    value: draft.cancelacion || 'Cancelable 14',
-    onChange: e => updateDraft('cancelacion', e.target.value)
+    value: isCancelada(draft || {}) ? '' : draft.cancelacion || 'Cancelable 14',
+    onChange: e => updateDraft('cancelacion', e.target.value),
+    disabled: isCancelada(draft || {})
   }, /*#__PURE__*/React.createElement("option", {
     value: "Cancelable 7"
   }, "Cancelable 7 d\xEDas"), /*#__PURE__*/React.createElement("option", {
@@ -5534,12 +5540,7 @@ const ReservasTab = ({
     value: "Semiestricta"
   }, "Semiestricta"), /*#__PURE__*/React.createElement("option", {
     value: "No reembolsable"
-  }, "No reembolsable"), /*#__PURE__*/React.createElement("option", {
-    value: "CANCELADA",
-    style: {
-      color: '#999'
-    }
-  }, "\u2014 Cancelada \u2014")))), /*#__PURE__*/React.createElement("div", {
+  }, "No reembolsable")))), /*#__PURE__*/React.createElement("div", {
     className: "rv-row2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
@@ -5707,7 +5708,21 @@ const ReservasTab = ({
     type: "button",
     className: "pe-btn pe-btn-ghost rv-foot-btn rv-btn-danger",
     onClick: deleteRow
-  }, "\uD83D\uDDD1 Borrar"), onOpenContract && /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDDD1 Borrar"), draft && (isCancelada(draft) ? /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost rv-foot-btn rv-btn-reactivar",
+    onClick: () => setDraft(p => ({
+      ...p,
+      cancelada: false
+    }))
+  }, "\u21A9 Reactivar") : /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost rv-foot-btn rv-btn-cancelar",
+    onClick: () => setDraft(p => ({
+      ...p,
+      cancelada: true
+    }))
+  }, "\u2717 Cancelar reserva")), onOpenContract && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost rv-foot-btn",
     title: "Abrir en el generador de contratos",

@@ -19309,6 +19309,10 @@ img[src*="apt-vt-gallery-"] {
 .rv-foot-save { flex: 2; }
 .rv-btn-danger { color: #B23A2B; }
 .rv-btn-danger:hover { background: rgba(178,58,43,0.10); }
+.rv-btn-cancelar { color: #B23A2B; border-color: rgba(178,58,43,0.3) !important; }
+.rv-btn-cancelar:hover { background: rgba(178,58,43,0.08); }
+.rv-btn-reactivar { color: #4A7A3A; border-color: rgba(74,122,58,0.3) !important; }
+.rv-btn-reactivar:hover { background: rgba(74,122,58,0.08); }
 .rv-ical-th { width: 28px; padding: 4px 2px; }
 .rv-ical-td { padding: 2px 2px; text-align: center; }
 .rv-ical-btn {
