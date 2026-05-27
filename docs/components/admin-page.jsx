@@ -4607,6 +4607,450 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
 };
 
 
+// ---------------------------------------------------------------
+// HuecosTab — gestión de huecos entre reservas con pricing
+// ---------------------------------------------------------------
+
+const _hcDiff = (a, b) =>
+  Math.round((new Date(b + 'T12:00:00Z') - new Date(a + 'T12:00:00Z')) / 86400000);
+const _hcAdd = (ds, n) => {
+  const d = new Date(ds + 'T12:00:00Z');
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0, 10);
+};
+const _hcFmt = (ds) => {
+  const d = new Date(ds + 'T12:00:00Z');
+  const M = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][d.getUTCMonth()];
+  return `${d.getUTCDate()} ${M}`;
+};
+
+// Returns the season for a given date using prices.json calendar structure:
+// calendar[year].seasons[season] = [[start, end], ...]
+const _hcSeasonForDate = (ds, calendar) => {
+  const year = ds.slice(0, 4);
+  const yc = calendar && calendar[year];
+  if (!yc || !yc.seasons) return 'baja';
+  for (const [s, ranges] of Object.entries(yc.seasons)) {
+    for (const [from, to] of ranges) {
+      if (ds >= from && ds <= to) return s;
+    }
+  }
+  return 'baja';
+};
+
+// Returns the "worst" (highest-priority) season a gap touches
+const _hcDominantSeason = (start, end, calendar) => {
+  const counts = {};
+  let cur = start;
+  while (cur < end) {
+    const s = _hcSeasonForDate(cur, calendar);
+    counts[s] = (counts[s] || 0) + 1;
+    cur = _hcAdd(cur, 1);
+  }
+  for (const s of ['critica', 'alta', 'media', 'baja']) {
+    if (counts[s]) return s;
+  }
+  return 'baja';
+};
+
+// Extracts gaps between consecutive blocked periods
+const _hcCalcGaps = (blocked, today, horizon) => {
+  if (!blocked || blocked.length === 0) return [];
+  const sorted = [...blocked].sort((a, b) => a.start < b.start ? -1 : 1);
+  const gaps = [];
+  for (let i = 0; i < sorted.length - 1; i++) {
+    const gs = sorted[i].end;
+    const ge = sorted[i + 1].start;
+    if (gs >= ge) continue;            // overlap or zero gap
+    if (ge <= today) continue;         // entirely in the past
+    if (horizon && gs >= horizon) continue;
+    const nights = _hcDiff(gs, ge);
+    if (nights < 2) continue;         // 1-night gaps can't be booked
+    gaps.push({ start: gs, end: ge, nights });
+  }
+  return gaps;
+};
+
+const HC_MAX    = { critica: 7, alta: 7, media: 28, baja: 28 };
+const HC_LBL    = { baja: 'T. baja', media: 'T. media', alta: 'T. alta', critica: 'T. crítica' };
+const HC_COL    = { baja: '#6FC4D1', media: '#B9813E', alta: '#D42B80', critica: '#8A1B1B' };
+const HC_APT    = {
+  vm: { name: 'Hestía Mar',      accent: '#3AAABB' },
+  vt: { name: 'Hestía Thalassa', accent: '#8A4A24' },
+  vs: { name: 'Hestía Salinas',  accent: '#9E7A2C' },
+};
+
+const _hcOvLabel = (ov) => {
+  if (!ov) return null;
+  if (ov.type === 'discount')  return `-${ov.value}%`;
+  if (ov.type === 'increment') return `+${ov.value}%`;
+  if (ov.type === 'fixed')     return `${ov.value}€/n`;
+  return 'ajuste';
+};
+
+const _hcEffPrice = (base, ov) => {
+  if (!ov || ov.type === 'none') return base;
+  if (ov.type === 'discount')  return Math.round(base * (1 - ov.value / 100));
+  if (ov.type === 'increment') return Math.round(base * (1 + ov.value / 100));
+  if (ov.type === 'fixed')     return ov.value;
+  return base;
+};
+
+const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
+  const [avail,      setAvail     ] = React.useState(null);
+  const [loadErr,    setLoadErr   ] = React.useState(null);
+  const [loading,    setLoading   ] = React.useState(true);
+  const [saving,     setSaving    ] = React.useState(false);
+  const [saveMsg,    setSaveMsg   ] = React.useState(null);
+  const [filterApt,  setFilterApt ] = React.useState('all');
+  const [filterProb, setFilterProb] = React.useState(false);
+  const [activeGap,  setActiveGap ] = React.useState(null);
+  const [dType,      setDType     ] = React.useState('discount');
+  const [dValue,     setDValue    ] = React.useState('');
+  const [dMinN,      setDMinN     ] = React.useState('');
+  const [dNote,      setDNote     ] = React.useState('');
+  const [dLastMin,   setDLastMin  ] = React.useState(false);
+
+  const today     = new Date().toISOString().slice(0, 10);
+  const horizonStr = pricesData && pricesData.bookingHorizon && pricesData.bookingHorizon.lastCheckinDate;
+  const calendar   = (pricesData && pricesData.calendar)  || {};
+  const seasons    = (pricesData && pricesData.seasons)   || {};
+  const overrides  = (pricesData && pricesData.gapOverrides) || {};
+
+  React.useEffect(() => {
+    setLoading(true); setLoadErr(null);
+    fetch(`${API}/repos/${REPO}/contents/docs/assets/availability.json?ref=${BRANCH}`,
+      { headers: apiHeaders(token), cache: 'no-store' })
+      .then(r => r.json())
+      .then(j => {
+        if (j.message) throw new Error(j.message);
+        setAvail(JSON.parse(b64ToUtf8(j.content)));
+      })
+      .catch(e => setLoadErr(e.message))
+      .finally(() => setLoading(false));
+  }, [token]);
+
+  const nightBase = (aptId, season) => {
+    if (!pricesData || !pricesData.apts || !pricesData.seasons) return 0;
+    const base = (pricesData.apts[aptId] || {}).base || 0;
+    const mult = (seasons[season] || {}).multiplier || 1;
+    return Math.round(base * mult);
+  };
+
+  const allGaps = React.useMemo(() => {
+    if (!avail) return {};
+    const result = {};
+    for (const aptId of ['vm', 'vt', 'vs']) {
+      const aptData = avail[aptId];
+      if (!aptData) { result[aptId] = []; continue; }
+      const raw = _hcCalcGaps(aptData.blocked || [], today, horizonStr);
+      result[aptId] = raw.map(g => {
+        const season   = _hcDominantSeason(g.start, g.end, calendar);
+        const maxN     = HC_MAX[season] || 28;
+        const overLim  = g.nights > maxN;
+        const id       = `${aptId}|${g.start}`;
+        const override = overrides[id] || null;
+        const baseN    = nightBase(aptId, season);
+        const effN     = _hcEffPrice(baseN, override);
+        return { ...g, aptId, season, maxN, overLim, id, override, baseN, effN };
+      });
+    }
+    return result;
+  }, [avail, pricesData]);
+
+  const openGap = (gap) => {
+    setActiveGap(gap.id);
+    const ov = gap.override;
+    setDType(ov ? ov.type : 'discount');
+    setDValue(ov && ov.value != null ? String(ov.value) : '');
+    setDMinN(ov && ov.minNights != null ? String(ov.minNights) : '');
+    setDNote(ov && ov.note ? ov.note : '');
+    setDLastMin(!!(ov && ov.lastMinute));
+    setSaveMsg(null);
+  };
+  const closeGap = () => { setActiveGap(null); setSaveMsg(null); };
+
+  const persistPrices = async (newData, gapId, action) => {
+    setSaving(true); setSaveMsg(null);
+    try {
+      const rf  = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' });
+      const rfj = await rf.json();
+      if (rfj.message) throw new Error(rfj.message);
+      const res = await fetch(`${API}/repos/${REPO}/contents/${PATH}`, {
+        method: 'PUT',
+        headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: `chore(huecos): ${action} ${gapId} via /p-edit · ${new Date().toISOString().slice(0,16).replace('T',' ')}`,
+          content: utf8ToB64(JSON.stringify(newData, null, 2)),
+          sha: rfj.sha, branch: BRANCH,
+        }),
+      });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.message || 'Error');
+      onPricesUpdated(newData, j.content.sha);
+      setSaveMsg('Guardado ✓');
+      setActiveGap(null);
+    } catch (e) { setSaveMsg('Error: ' + e.message); }
+    finally { setSaving(false); }
+  };
+
+  const handleSave = (gap) => {
+    const val  = dValue !== '' && dType !== 'none' ? Number(dValue) : null;
+    const minN = dMinN  !== '' ? Number(dMinN)  : null;
+    const newOv = {
+      apt: gap.aptId, start: gap.start, end: gap.end, nights: gap.nights, type: dType,
+      ...(val  !== null && !isNaN(val)  ? { value: val }       : {}),
+      ...(minN !== null && !isNaN(minN) ? { minNights: minN }  : {}),
+      ...(dNote.trim()                  ? { note: dNote.trim() } : {}),
+      ...(dLastMin                      ? { lastMinute: true }  : {}),
+    };
+    const newOvs = { ...(pricesData.gapOverrides || {}), [gap.id]: newOv };
+    persistPrices({ ...pricesData, gapOverrides: newOvs }, gap.id, 'set');
+  };
+
+  const handleClear = (gap) => {
+    const newOvs = { ...(pricesData.gapOverrides || {}) };
+    delete newOvs[gap.id];
+    const newData = { ...pricesData, gapOverrides: newOvs };
+    persistPrices(newData, gap.id, 'clear');
+  };
+
+  if (loading) return <div className="pe-card"><p className="pe-help">Cargando disponibilidad…</p></div>;
+  if (loadErr)  return <div className="pe-card"><div className="pe-error">{loadErr}</div></div>;
+  if (!avail)   return <div className="pe-card"><p className="pe-help">Sin datos de disponibilidad.</p></div>;
+
+  const aptIds     = ['vm', 'vt', 'vs'].filter(id => filterApt === 'all' || filterApt === id);
+  const totalGaps  = aptIds.reduce((n, id) => n + (allGaps[id] || []).length, 0);
+  const totalProb  = aptIds.reduce((n, id) => n + (allGaps[id] || []).filter(g => g.overLim).length, 0);
+  const totalOvs   = aptIds.reduce((n, id) => n + (allGaps[id] || []).filter(g => g.override).length, 0);
+
+  return (
+    <div className="pe-card hc-tab">
+
+      {/* ── Cabecera ────────────────────────────────────── */}
+      <div className="hc-header">
+        <div className="hc-stats">
+          <span className="hc-stat">{totalGaps} huecos</span>
+          {totalProb > 0 && <span className="hc-stat hc-stat-warn">{totalProb} ⚠</span>}
+          {totalOvs  > 0 && <span className="hc-stat hc-stat-ov">{totalOvs} con ajuste</span>}
+        </div>
+        <div className="hc-filters">
+          <select className="pe-input hc-sel" value={filterApt} onChange={e => setFilterApt(e.target.value)}>
+            <option value="all">Todos los apartamentos</option>
+            <option value="vm">Hestía Mar</option>
+            <option value="vt">Hestía Thalassa</option>
+            <option value="vs">Hestía Salinas</option>
+          </select>
+          <label className="hc-check">
+            <input type="checkbox" checked={filterProb} onChange={e => setFilterProb(e.target.checked)}/>
+            Solo problemáticos
+          </label>
+        </div>
+      </div>
+
+      {saveMsg && <div className={`hc-global-msg${saveMsg.startsWith('Error') ? ' err' : ' ok'}`}>{saveMsg}</div>}
+
+      {/* ── Regla de negocio visible ────────────────────── */}
+      <div className="hc-rules">
+        <span><strong>Alta / Crítica:</strong> máx. 7 noches entre reservas</span>
+        <span><strong>Media / Baja:</strong> máx. 28 noches entre reservas</span>
+      </div>
+
+      {/* ── Por apartamento ─────────────────────────────── */}
+      {aptIds.map(aptId => {
+        const meta = HC_APT[aptId];
+        let   gaps = (allGaps[aptId] || []);
+        if (filterProb) gaps = gaps.filter(g => g.overLim);
+        const allAptGaps = allGaps[aptId] || [];
+
+        return (
+          <div key={aptId} className="hc-apt">
+            <div className="hc-apt-hd" style={{ '--hc-accent': meta.accent }}>
+              <span className="hc-apt-name">{meta.name}</span>
+              <span className="hc-apt-meta">
+                {allAptGaps.length} huecos
+                {allAptGaps.filter(g => g.overLim).length > 0 &&
+                  <span className="hc-apt-warn"> · {allAptGaps.filter(g => g.overLim).length} ⚠</span>}
+                {allAptGaps.filter(g => g.override).length > 0 &&
+                  <span className="hc-apt-ov"> · {allAptGaps.filter(g => g.override).length} con ajuste</span>}
+              </span>
+            </div>
+
+            {gaps.length === 0 ? (
+              <p className="pe-help" style={{ margin: '12px 0 20px' }}>
+                {filterProb ? 'No hay huecos problemáticos próximos.' : 'No hay huecos detectados próximos.'}
+              </p>
+            ) : (
+              <div className="hc-list">
+                {gaps.map(gap => {
+                  const isActive = activeGap === gap.id;
+                  const prevEff  = dType !== 'none' && dValue !== '' && !isNaN(Number(dValue))
+                    ? _hcEffPrice(gap.baseN, { type: dType, value: Number(dValue) }) : null;
+
+                  return (
+                    <div key={gap.id}
+                      className={`hc-row${gap.overLim ? ' hc-over' : ''}${gap.override ? ' hc-has-ov' : ''}${isActive ? ' hc-open' : ''}`}>
+
+                      {/* Fila principal — siempre visible */}
+                      <div className="hc-row-hd" onClick={() => isActive ? closeGap() : openGap(gap)}>
+                        <span className="hc-dates">
+                          {_hcFmt(gap.start)} → {_hcFmt(gap.end)}
+                        </span>
+                        <span className="hc-nights">{gap.nights}n</span>
+                        <span className="hc-sea" style={{ color: HC_COL[gap.season] }}>
+                          {HC_LBL[gap.season]}
+                        </span>
+                        <span className="hc-price">
+                          {gap.effN !== gap.baseN
+                            ? <><strong>{gap.effN}€</strong><s>{gap.baseN}€</s></>
+                            : <>{gap.baseN}€</>}
+                          <span className="hc-per">/n</span>
+                        </span>
+                        <span className="hc-badges">
+                          {gap.overLim && <span className="hc-badge hc-badge-warn">⚠ &gt;{gap.maxN}n</span>}
+                          {gap.override && <span className="hc-badge hc-badge-ov">{_hcOvLabel(gap.override)}</span>}
+                          {gap.override && gap.override.minNights && <span className="hc-badge hc-badge-ov">min {gap.override.minNights}n</span>}
+                          {gap.override && gap.override.lastMinute && <span className="hc-badge hc-badge-lm">last min.</span>}
+                          {gap.override && gap.override.note && <span className="hc-badge hc-badge-note" title={gap.override.note}>nota</span>}
+                        </span>
+                        <span className="hc-toggle">{isActive ? '▲' : '▼'}</span>
+                      </div>
+
+                      {/* Panel de edición */}
+                      {isActive && (
+                        <div className="hc-edit" onClick={e => e.stopPropagation()}>
+
+                          {gap.overLim && (
+                            <div className="hc-overlimit-note">
+                              Hueco de <strong>{gap.nights} noches</strong> en {HC_LBL[gap.season].toLowerCase()} supera el máximo de <strong>{gap.maxN} noches</strong>.
+                              Considera reducir las noches mínimas o aplicar un descuento agresivo.
+                            </div>
+                          )}
+
+                          {/* Tipo de ajuste */}
+                          <div className="hc-field">
+                            <label className="hc-lbl">Ajuste de precio</label>
+                            <div className="hc-type-row">
+                              {[
+                                { v: 'discount',  l: 'Descuento %' },
+                                { v: 'fixed',     l: 'Precio fijo €/n' },
+                                { v: 'increment', l: 'Incremento %' },
+                                { v: 'none',      l: 'Sin ajuste' },
+                              ].map(({ v, l }) => (
+                                <button key={v} type="button"
+                                  className={`hc-type-btn${dType === v ? ' is-on' : ''}`}
+                                  onClick={() => { setDType(v); setDValue(''); }}>
+                                  {l}
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Valor numérico */}
+                          {dType !== 'none' && (
+                            <div className="hc-field">
+                              <label className="hc-lbl">
+                                {dType === 'discount'  ? 'Descuento' :
+                                 dType === 'increment' ? 'Incremento' : 'Precio fijo'}
+                              </label>
+                              <div className="hc-input-row">
+                                <input type="number" min="1"
+                                  max={dType === 'discount' ? 80 : undefined}
+                                  className="pe-input pe-input-num"
+                                  style={{ width: 90 }}
+                                  value={dValue}
+                                  onChange={e => setDValue(e.target.value)}
+                                  placeholder={dType === 'fixed' ? `base ${gap.baseN}` : ''}/>
+                                <span className="pe-suffix">{dType === 'fixed' ? '€/n' : '%'}</span>
+                                {prevEff !== null && prevEff !== gap.baseN && (
+                                  <span className="hc-preview">
+                                    → <strong>{prevEff}€/n</strong>
+                                    {dType !== 'fixed' && (
+                                      <span className="hc-total-preview">
+                                        · {prevEff * gap.nights}€ total ({gap.nights}n)
+                                      </span>
+                                    )}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Noches mínimas */}
+                          <div className="hc-field">
+                            <label className="hc-lbl">
+                              Noches mínimas para este hueco
+                              <span className="hc-opt"> (vacío = regla global)</span>
+                            </label>
+                            <div className="hc-input-row">
+                              <input type="number" min="1" max={gap.nights}
+                                className="pe-input pe-input-num"
+                                style={{ width: 70 }}
+                                value={dMinN}
+                                onChange={e => setDMinN(e.target.value)}
+                                placeholder="global"/>
+                              <span className="pe-suffix">noches</span>
+                              {dMinN && Number(dMinN) < gap.nights && (
+                                <span className="hc-preview">permite llenar el hueco exacto</span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Last minute */}
+                          <div className="hc-field">
+                            <label className="hc-check-lbl">
+                              <input type="checkbox" checked={dLastMin} onChange={e => setDLastMin(e.target.checked)}/>
+                              Destacar como last minute en la homepage
+                            </label>
+                          </div>
+
+                          {/* Nota interna */}
+                          <div className="hc-field">
+                            <label className="hc-lbl">
+                              Nota interna
+                              <span className="hc-opt"> (solo visible en p-edit)</span>
+                            </label>
+                            <textarea rows={2} className="pe-input hc-textarea"
+                              value={dNote}
+                              onChange={e => setDNote(e.target.value)}
+                              placeholder="Ej: oferta último momento, confirmar con Alex…"/>
+                          </div>
+
+                          {/* Pie */}
+                          <div className="hc-foot">
+                            {saveMsg && (
+                              <span className={`hc-inline-msg${saveMsg.startsWith('Error') ? ' err' : ' ok'}`}>
+                                {saveMsg}
+                              </span>
+                            )}
+                            {gap.override && (
+                              <button type="button" className="pe-btn pe-btn-ghost"
+                                disabled={saving} onClick={() => handleClear(gap)}>
+                                Limpiar ajuste
+                              </button>
+                            )}
+                            <button type="button" className="pe-btn pe-btn-ghost"
+                              onClick={closeGap}>Cancelar</button>
+                            <button type="button" className="pe-btn pe-btn-primary"
+                              disabled={saving} onClick={() => handleSave(gap)}>
+                              {saving ? 'Guardando…' : 'Guardar'}
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+// ---------------------------------------------------------------
 const AdminApp = () => {
   const [phase,    setPhase]    = React.useState('login');
   const [mode,     setMode]     = React.useState('reservas');
@@ -5099,6 +5543,11 @@ const AdminApp = () => {
           💰<span className="pe-tab-label"> Pricing</span>
         </button>
         <button type="button"
+          className={`pe-tab${mode === 'huecos' ? ' is-active' : ''}`}
+          onClick={() => { setMode('huecos'); setError(null); setSuccess(null); }}>
+          📅<span className="pe-tab-label"> Huecos</span>
+        </button>
+        <button type="button"
           className={`pe-tab${mode === 'reviews' ? ' is-active' : ''}`}
           onClick={() => { setMode('reviews'); setError(null); setSuccess(null); }}>
           ⭐<span className="pe-tab-label"> Reviews</span>
@@ -5117,7 +5566,7 @@ const AdminApp = () => {
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'dashboard' ? <DashboardTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'huecos' ? <HuecosTab token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'analytics' ? <AnalyticsTab /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'dashboard' ? <DashboardTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>
