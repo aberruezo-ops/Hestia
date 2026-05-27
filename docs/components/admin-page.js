@@ -2859,9 +2859,10 @@ function calcDerived(r) {
   // 3. Rentabilidad = BAI / ingreso_total.
   out.rentabilidad_pct = ingreso > 0 ? Math.round(out.bai / ingreso * 10000) / 10000 : null;
 
-  // 4. Efectivo al check-in = ingreso_total − señal − pago_previo (salvo override).
+  // 4. Efectivo al check-in: 0 para plataformas (ya cobran ellas),
+  //    ingreso_total − señal − pago_previo para reservas directas.
   if (!r._checkin_manual) {
-    out.al_checkin = Math.max(0, (Number(out.ingreso_total) || 0) - (Number(out.reserva) || 0) - (Number(out.pago_previo) || 0));
+    out.al_checkin = getCanalKey(out.canal) === 'directo' ? Math.max(0, (Number(out.ingreso_total) || 0) - (Number(out.reserva) || 0) - (Number(out.pago_previo) || 0)) : 0;
   }
 
   // 5. Precios por noche.
@@ -3048,6 +3049,640 @@ const BloquesTab = ({
   }, saving ? 'Guardando…' : 'Guardar bloqueos'), saveMsg && /*#__PURE__*/React.createElement("span", {
     className: `pe-save-msg${saveMsg.startsWith('Error') ? ' pe-err' : ''}`
   }, saveMsg)));
+};
+
+// FacturasTab — Gastos deducibles por año / apartamento
+// Datos en PRIVATE_REPO/facturas.json
+// PDFs en PRIVATE_REPO/facturas-pdf/<filename>
+// ============================================================
+
+const FACTURAS_PATH = 'facturas.json';
+const FACTURAS_PDF_DIR = 'facturas-pdf';
+const GASTO_CATS = [{
+  key: 'mantenimiento',
+  label: 'Reparaciones y conservación'
+}, {
+  key: 'limpieza',
+  label: 'Limpieza y lavandería'
+}, {
+  key: 'suministros',
+  label: 'Suministros (luz, agua, gas, internet)'
+}, {
+  key: 'seguros',
+  label: 'Seguros del inmueble'
+}, {
+  key: 'comunidad',
+  label: 'Gastos de comunidad'
+}, {
+  key: 'gestion',
+  label: 'Comisiones de gestión / agencias'
+}, {
+  key: 'publicidad',
+  label: 'Publicidad y marketing'
+}, {
+  key: 'amortizacion',
+  label: 'Amortización'
+}, {
+  key: 'otros',
+  label: 'Otros gastos deducibles'
+}];
+const IVA_TYPES = [0, 4, 10, 21];
+const EMPTY_FACTURA = {
+  fecha: '',
+  proveedor: '',
+  nif: '',
+  concepto: '',
+  categoria: 'mantenimiento',
+  apt: 'general',
+  base: 0,
+  iva_pct: 21,
+  iva: 0,
+  total: 0,
+  deducible_pct: 100,
+  factura_pdf: null,
+  notas: ''
+};
+const FacturasTab = ({
+  token
+}) => {
+  const [data, setData] = React.useState(null);
+  const [sha, setSha] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
+  const [saving, setSaving] = React.useState(false);
+  const [error, setError] = React.useState(null);
+  const [success, setSuccess] = React.useState(null);
+  const [focusYear, setFocusYear] = React.useState(2026);
+  const [draft, setDraft] = React.useState(null);
+  const [editIdx, setEditIdx] = React.useState(-1);
+  const [pdfStatus, setPdfStatus] = React.useState('idle');
+  const [filterApt, setFilterApt] = React.useState('all');
+  const [filterCat, setFilterCat] = React.useState('all');
+  const facturas = React.useMemo(() => {
+    if (!data) return [];
+    return (data.facturas || []).filter(f => (f.year || new Date(f.fecha).getFullYear()) === focusYear);
+  }, [data, focusYear]);
+  const allYears = React.useMemo(() => {
+    if (!data) return [2026];
+    const ys = new Set((data.facturas || []).map(f => f.year || new Date(f.fecha).getFullYear()));
+    if (!ys.size) ys.add(2026);
+    return [...ys].sort((a, b) => b - a);
+  }, [data]);
+  const loadData = React.useCallback(() => {
+    if (!token) return;
+    setLoading(true);
+    setError(null);
+    fetch(`${API}/repos/${PRIVATE_REPO}/contents/${FACTURAS_PATH}?ref=${BRANCH}`, {
+      headers: apiHeaders(token),
+      cache: 'no-store'
+    }).then(r => {
+      if (r.status === 404) return null;
+      return r.json();
+    }).then(j => {
+      if (!j) {
+        setData({
+          facturas: []
+        });
+        setSha(null);
+      } else {
+        if (j.message) throw new Error(j.message);
+        setSha(j.sha);
+        setData(JSON.parse(b64ToUtf8(j.content)));
+      }
+    }).catch(e => setError('Error cargando facturas: ' + e.message)).finally(() => setLoading(false));
+  }, [token]);
+  React.useEffect(() => {
+    loadData();
+  }, [loadData]);
+  const saveData = async newFacturas => {
+    setSaving(true);
+    setError(null);
+    setSuccess(null);
+    const newData = {
+      ...data,
+      facturas: newFacturas,
+      updatedAt: new Date().toISOString()
+    };
+    try {
+      const body = {
+        message: `chore(facturas): update via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
+        content: utf8ToB64(JSON.stringify(newData, null, 2)),
+        branch: BRANCH,
+        ...(sha ? {
+          sha
+        } : {})
+      };
+      const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${FACTURAS_PATH}`, {
+        method: 'PUT',
+        headers: apiHeaders(token),
+        body: JSON.stringify(body)
+      });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.message || 'Error guardando');
+      setSha(j.content.sha);
+      setData(newData);
+      setSuccess('Guardado correctamente.');
+      setDraft(null);
+      setEditIdx(-1);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+  const calcIva = (base, iva_pct) => Math.round(base * iva_pct) / 100;
+  const updateDraft = (field, val) => {
+    setDraft(prev => {
+      const next = {
+        ...prev,
+        [field]: val
+      };
+      if (field === 'base' || field === 'iva_pct') {
+        next.iva = calcIva(Number(next.base) || 0, Number(next.iva_pct) || 0);
+        next.total = Math.round(((Number(next.base) || 0) + next.iva) * 100) / 100;
+      }
+      return next;
+    });
+  };
+  const openNew = () => {
+    const today = new Date().toISOString().slice(0, 10);
+    setDraft({
+      ...EMPTY_FACTURA,
+      fecha: today,
+      year: focusYear
+    });
+    setEditIdx(-1);
+  };
+  const openEdit = idx => {
+    const allFacts = data.facturas || [];
+    const globalIdx = allFacts.indexOf(facturas[idx]);
+    setDraft({
+      ...allFacts[globalIdx]
+    });
+    setEditIdx(globalIdx);
+  };
+  const cancelDraft = () => {
+    setDraft(null);
+    setEditIdx(-1);
+  };
+  const saveDraft = () => {
+    if (!draft) return;
+    const allFacts = [...(data.facturas || [])];
+    const withYear = {
+      ...draft,
+      year: focusYear
+    };
+    if (editIdx >= 0) allFacts[editIdx] = withYear;else allFacts.push(withYear);
+    saveData(allFacts);
+  };
+  const deleteFactura = idx => {
+    const allFacts = data.facturas || [];
+    const globalIdx = allFacts.indexOf(facturas[idx]);
+    if (!confirm(`¿Borrar factura de ${facturas[idx].proveedor}?`)) return;
+    const nr = allFacts.filter((_, i) => i !== globalIdx);
+    saveData(nr);
+  };
+  const handlePdfUpload = async e => {
+    const file = e.target.files && e.target.files[0];
+    if (!file || !draft) return;
+    e.target.value = '';
+    setPdfStatus('uploading');
+    setError(null);
+    try {
+      const safeName = (draft.proveedor || 'proveedor').replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '');
+      const safeDate = (draft.fecha || 'fecha').replace(/-/g, '');
+      const filename = `${focusYear}_${safeDate}_${safeName}_${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+      const pdfPath = `${FACTURAS_PDF_DIR}/${filename}`;
+      const buf = await file.arrayBuffer();
+      const bytes = new Uint8Array(buf);
+      let bin = '';
+      for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]);
+      const b64 = btoa(bin);
+      let existingSha;
+      const check = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${pdfPath}?ref=${BRANCH}`, {
+        headers: apiHeaders(token)
+      });
+      if (check.ok) {
+        const cj = await check.json();
+        existingSha = cj.sha;
+      }
+      const put = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${pdfPath}`, {
+        method: 'PUT',
+        headers: apiHeaders(token),
+        body: JSON.stringify({
+          message: `feat(facturas): adjuntar ${filename}`,
+          content: b64,
+          branch: BRANCH,
+          ...(existingSha ? {
+            sha: existingSha
+          } : {})
+        })
+      });
+      if (!put.ok) {
+        const pj = await put.json();
+        throw new Error(pj.message || 'Error subiendo PDF');
+      }
+      setDraft(d => ({
+        ...d,
+        factura_pdf: filename
+      }));
+      setPdfStatus('idle');
+    } catch (err) {
+      setError('Error subiendo PDF: ' + err.message);
+      setPdfStatus('idle');
+    }
+  };
+  const handlePdfDownload = async filename => {
+    if (!filename) return;
+    try {
+      const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${FACTURAS_PDF_DIR}/${filename}?ref=${BRANCH}`, {
+        headers: apiHeaders(token)
+      });
+      if (!r.ok) throw new Error('No se pudo obtener el PDF');
+      const j = await r.json();
+      const bin = atob(j.content.replace(/\n/g, ''));
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      const blob = new Blob([bytes], {
+        type: 'application/pdf'
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    } catch (err) {
+      setError('Error descargando: ' + err.message);
+    }
+  };
+  const filtered = facturas.filter(f => {
+    if (filterApt !== 'all' && (f.apt || 'general') !== filterApt) return false;
+    if (filterCat !== 'all' && f.categoria !== filterCat) return false;
+    return true;
+  });
+
+  // Totales para declaración
+  const totBase = filtered.reduce((s, f) => s + (Number(f.base) || 0), 0);
+  const totIva = filtered.reduce((s, f) => s + (Number(f.iva) || 0), 0);
+  const totTotal = filtered.reduce((s, f) => s + (Number(f.total) || 0), 0);
+  const totDeducible = filtered.reduce((s, f) => s + Math.round((Number(f.base) || 0) * ((Number(f.deducible_pct) || 100) / 100) * 100) / 100, 0);
+
+  // Por categoría
+  const byCat = {};
+  filtered.forEach(f => {
+    const c = f.categoria || 'otros';
+    if (!byCat[c]) byCat[c] = {
+      base: 0,
+      total: 0,
+      n: 0
+    };
+    byCat[c].base += Number(f.base) || 0;
+    byCat[c].total += Number(f.total) || 0;
+    byCat[c].n++;
+  });
+  const aptOptions = [{
+    key: 'general',
+    label: 'General (todas)'
+  }, {
+    key: 'vm',
+    label: APT_NAMES.vm
+  }, {
+    key: 'vt',
+    label: APT_NAMES.vt
+  }, {
+    key: 'vs',
+    label: APT_NAMES.vs
+  }];
+  if (loading) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("p", null, "Cargando facturas\u2026"));
+  return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card fac-card"
+  }, error && /*#__PURE__*/React.createElement("div", {
+    className: "pe-error"
+  }, error), success && /*#__PURE__*/React.createElement("div", {
+    className: "pe-success"
+  }, success), /*#__PURE__*/React.createElement("div", {
+    className: "fac-head"
+  }, /*#__PURE__*/React.createElement("h2", null, "\uD83E\uDDFE Facturas de gastos", /*#__PURE__*/React.createElement("span", {
+    className: "fac-year-badge"
+  }, focusYear)), /*#__PURE__*/React.createElement("div", {
+    className: "fac-head-actions"
+  }, /*#__PURE__*/React.createElement("select", {
+    value: focusYear,
+    onChange: e => setFocusYear(Number(e.target.value)),
+    className: "fac-year-sel"
+  }, allYears.map(y => /*#__PURE__*/React.createElement("option", {
+    key: y,
+    value: y
+  }, y)), !allYears.includes(focusYear) && /*#__PURE__*/React.createElement("option", {
+    value: focusYear
+  }, focusYear)), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    onClick: loadData
+  }, "Recargar"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-primary",
+    onClick: openNew
+  }, "+ Nueva factura"))), /*#__PURE__*/React.createElement("div", {
+    className: "fac-toolbar"
+  }, /*#__PURE__*/React.createElement("label", null, "Hest\xEDa", /*#__PURE__*/React.createElement("select", {
+    value: filterApt,
+    onChange: e => setFilterApt(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "Todas"), aptOptions.map(a => /*#__PURE__*/React.createElement("option", {
+    key: a.key,
+    value: a.key
+  }, a.label)))), /*#__PURE__*/React.createElement("label", null, "Categor\xEDa", /*#__PURE__*/React.createElement("select", {
+    value: filterCat,
+    onChange: e => setFilterCat(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "Todas"), GASTO_CATS.map(c => /*#__PURE__*/React.createElement("option", {
+    key: c.key,
+    value: c.key
+  }, c.label))))), filtered.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "fac-summary"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "fac-kpi"
+  }, /*#__PURE__*/React.createElement("span", null, "Facturas"), /*#__PURE__*/React.createElement("strong", null, filtered.length)), /*#__PURE__*/React.createElement("div", {
+    className: "fac-kpi"
+  }, /*#__PURE__*/React.createElement("span", null, "Base imponible"), /*#__PURE__*/React.createElement("strong", null, fmtEur(totBase))), /*#__PURE__*/React.createElement("div", {
+    className: "fac-kpi"
+  }, /*#__PURE__*/React.createElement("span", null, "IVA soportado"), /*#__PURE__*/React.createElement("strong", null, fmtEur(totIva))), /*#__PURE__*/React.createElement("div", {
+    className: "fac-kpi"
+  }, /*#__PURE__*/React.createElement("span", null, "Total pagado"), /*#__PURE__*/React.createElement("strong", null, fmtEur(totTotal))), /*#__PURE__*/React.createElement("div", {
+    className: "fac-kpi fac-kpi-accent"
+  }, /*#__PURE__*/React.createElement("span", null, "Gasto deducible"), /*#__PURE__*/React.createElement("strong", null, fmtEur(totDeducible)))), filtered.length === 0 ? /*#__PURE__*/React.createElement("p", {
+    className: "fac-empty"
+  }, "No hay facturas para ", focusYear, filterApt !== 'all' || filterCat !== 'all' ? ' con estos filtros' : '', ". Pulsa \"+ Nueva factura\" para a\xF1adir.") : /*#__PURE__*/React.createElement("div", {
+    className: "fac-table-wrap"
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "fac-table"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Fecha"), /*#__PURE__*/React.createElement("th", null, "Proveedor"), /*#__PURE__*/React.createElement("th", null, "Concepto"), /*#__PURE__*/React.createElement("th", null, "Categor\xEDa"), /*#__PURE__*/React.createElement("th", null, "Hest\xEDa"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Base"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "IVA"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Total"), /*#__PURE__*/React.createElement("th", {
+    className: "num"
+  }, "Deducible"), /*#__PURE__*/React.createElement("th", null, "PDF"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, filtered.map((f, i) => {
+    const deducible = Math.round((Number(f.base) || 0) * ((Number(f.deducible_pct) || 100) / 100) * 100) / 100;
+    const catLabel = (GASTO_CATS.find(c => c.key === f.categoria) || {}).label || f.categoria;
+    const aptLabel = aptOptions.find(a => a.key === (f.apt || 'general'))?.label || f.apt;
+    return /*#__PURE__*/React.createElement("tr", {
+      key: i,
+      className: "fac-row",
+      onClick: () => openEdit(i)
+    }, /*#__PURE__*/React.createElement("td", {
+      className: "fac-date"
+    }, fmtDate(f.fecha)), /*#__PURE__*/React.createElement("td", {
+      className: "fac-proveedor"
+    }, /*#__PURE__*/React.createElement("strong", null, f.proveedor || '—'), f.nif && /*#__PURE__*/React.createElement("span", {
+      className: "fac-nif"
+    }, f.nif)), /*#__PURE__*/React.createElement("td", {
+      className: "fac-concepto"
+    }, f.concepto || '—'), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+      className: "fac-cat-chip"
+    }, catLabel)), /*#__PURE__*/React.createElement("td", null, f.apt && f.apt !== 'general' ? /*#__PURE__*/React.createElement("span", {
+      className: "rv-apt-chip",
+      style: {
+        background: APT_COLOR[f.apt],
+        color: APT_TEXT[f.apt]
+      }
+    }, APT_NAMES[f.apt]) : /*#__PURE__*/React.createElement("span", {
+      className: "fac-apt-gen"
+    }, "General")), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, fmtEur(f.base)), /*#__PURE__*/React.createElement("td", {
+      className: "num fac-iva"
+    }, f.iva_pct ? `${f.iva_pct}%` : '—'), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, /*#__PURE__*/React.createElement("strong", null, fmtEur(f.total))), /*#__PURE__*/React.createElement("td", {
+      className: "num fac-deducible"
+    }, fmtEur(deducible), f.deducible_pct < 100 ? /*#__PURE__*/React.createElement("span", {
+      className: "fac-pct"
+    }, " (", f.deducible_pct, "%)") : ''), /*#__PURE__*/React.createElement("td", {
+      className: "fac-pdf-cell",
+      onClick: e => e.stopPropagation()
+    }, f.factura_pdf ? /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "fac-pdf-btn",
+      title: f.factura_pdf,
+      onClick: () => handlePdfDownload(f.factura_pdf)
+    }, "\uD83D\uDCCE PDF") : /*#__PURE__*/React.createElement("span", {
+      className: "fac-no-pdf"
+    }, "\u2014")), /*#__PURE__*/React.createElement("td", {
+      className: "fac-actions-cell",
+      onClick: e => e.stopPropagation()
+    }, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "fac-del-btn",
+      title: "Borrar",
+      onClick: () => deleteFactura(i)
+    }, "\uD83D\uDDD1")));
+  })), /*#__PURE__*/React.createElement("tfoot", null, /*#__PURE__*/React.createElement("tr", {
+    className: "fac-foot"
+  }, /*#__PURE__*/React.createElement("td", {
+    colSpan: "5"
+  }, "Total ", filtered.length, " factura", filtered.length !== 1 ? 's' : ''), /*#__PURE__*/React.createElement("td", {
+    className: "num"
+  }, /*#__PURE__*/React.createElement("strong", null, fmtEur(totBase))), /*#__PURE__*/React.createElement("td", {
+    className: "num"
+  }, "\u2014"), /*#__PURE__*/React.createElement("td", {
+    className: "num"
+  }, /*#__PURE__*/React.createElement("strong", null, fmtEur(totTotal))), /*#__PURE__*/React.createElement("td", {
+    className: "num fac-deducible"
+  }, /*#__PURE__*/React.createElement("strong", null, fmtEur(totDeducible))), /*#__PURE__*/React.createElement("td", {
+    colSpan: "2"
+  }))))), Object.keys(byCat).length > 1 && /*#__PURE__*/React.createElement("div", {
+    className: "fac-bycat"
+  }, /*#__PURE__*/React.createElement("h3", null, "Por categor\xEDa"), /*#__PURE__*/React.createElement("div", {
+    className: "fac-bycat-grid"
+  }, Object.entries(byCat).sort((a, b) => b[1].base - a[1].base).map(([k, v]) => {
+    const catLabel = (GASTO_CATS.find(c => c.key === k) || {}).label || k;
+    return /*#__PURE__*/React.createElement("div", {
+      key: k,
+      className: "fac-bycat-row"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "fac-cat-chip"
+    }, catLabel), /*#__PURE__*/React.createElement("span", {
+      className: "fac-bycat-n"
+    }, v.n, " factura", v.n !== 1 ? 's' : ''), /*#__PURE__*/React.createElement("span", {
+      className: "fac-bycat-amt"
+    }, fmtEur(v.base), " base"), /*#__PURE__*/React.createElement("span", {
+      className: "fac-bycat-total"
+    }, fmtEur(v.total)));
+  }))), draft && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "rv-edit-backdrop",
+    onClick: cancelDraft
+  }), /*#__PURE__*/React.createElement("aside", {
+    className: "rv-edit-panel fac-edit-panel"
+  }, /*#__PURE__*/React.createElement("header", {
+    className: "rv-edit-head"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+    className: "rv-edit-eyebrow"
+  }, editIdx >= 0 ? 'Editar factura' : 'Nueva factura', " \xB7 ", focusYear), /*#__PURE__*/React.createElement("h3", null, draft.proveedor || '(sin proveedor)')), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "rv-edit-close",
+    onClick: cancelDraft
+  }, "\xD7")), /*#__PURE__*/React.createElement("div", {
+    className: "rv-edit-body"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rv-row2"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Fecha *"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    className: "pe-input",
+    value: draft.fecha || '',
+    onChange: e => updateDraft('fecha', e.target.value)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Hest\xEDa"), /*#__PURE__*/React.createElement("select", {
+    className: "pe-input",
+    value: draft.apt || 'general',
+    onChange: e => updateDraft('apt', e.target.value)
+  }, aptOptions.map(a => /*#__PURE__*/React.createElement("option", {
+    key: a.key,
+    value: a.key
+  }, a.label))))), /*#__PURE__*/React.createElement("div", {
+    className: "rv-row2"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Proveedor *"), /*#__PURE__*/React.createElement("input", {
+    className: "pe-input",
+    value: draft.proveedor || '',
+    onChange: e => updateDraft('proveedor', e.target.value),
+    placeholder: "Ej: Leroy Merlin"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "NIF / CIF"), /*#__PURE__*/React.createElement("input", {
+    className: "pe-input",
+    value: draft.nif || '',
+    onChange: e => updateDraft('nif', e.target.value),
+    placeholder: "B12345678"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Concepto *"), /*#__PURE__*/React.createElement("input", {
+    className: "pe-input",
+    value: draft.concepto || '',
+    onChange: e => updateDraft('concepto', e.target.value),
+    placeholder: "Descripci\xF3n del gasto"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Categor\xEDa"), /*#__PURE__*/React.createElement("select", {
+    className: "pe-input",
+    value: draft.categoria || 'otros',
+    onChange: e => updateDraft('categoria', e.target.value)
+  }, GASTO_CATS.map(c => /*#__PURE__*/React.createElement("option", {
+    key: c.key,
+    value: c.key
+  }, c.label)))), /*#__PURE__*/React.createElement("div", {
+    className: "rv-row3"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Base imponible"), /*#__PURE__*/React.createElement(NumInput, {
+    step: "0.01",
+    className: "pe-input",
+    value: draft.base || 0,
+    onChange: v => updateDraft('base', v)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "IVA %"), /*#__PURE__*/React.createElement("select", {
+    className: "pe-input",
+    value: draft.iva_pct ?? 21,
+    onChange: e => updateDraft('iva_pct', Number(e.target.value))
+  }, IVA_TYPES.map(t => /*#__PURE__*/React.createElement("option", {
+    key: t,
+    value: t
+  }, t, "%", t === 0 ? ' (exento)' : '')))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Total"), /*#__PURE__*/React.createElement("input", {
+    className: "pe-input",
+    readOnly: true,
+    value: fmtEur(draft.total || 0),
+    style: {
+      background: 'var(--bg-soft)',
+      fontWeight: 600
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "% Deducible ", /*#__PURE__*/React.createElement("span", {
+    className: "rv-hint-inline"
+  }, "100 = deducci\xF3n total")), /*#__PURE__*/React.createElement(NumInput, {
+    className: "pe-input",
+    value: draft.deducible_pct ?? 100,
+    onChange: v => updateDraft('deducible_pct', Math.min(100, Math.max(0, v))),
+    min: 0,
+    max: 100
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Notas"), /*#__PURE__*/React.createElement("input", {
+    className: "pe-input",
+    value: draft.notas || '',
+    onChange: e => updateDraft('notas', e.target.value),
+    placeholder: "Opcional"
+  })), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Factura PDF"), /*#__PURE__*/React.createElement("div", {
+    className: "rv-contrato-block"
+  }, draft.factura_pdf ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+    className: "rv-contrato-fname",
+    title: draft.factura_pdf
+  }, "\uD83D\uDCCE ", draft.factura_pdf), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    onClick: () => handlePdfDownload(draft.factura_pdf)
+  }, "\u2B07 Ver"), /*#__PURE__*/React.createElement("label", {
+    className: "pe-btn pe-btn-ghost",
+    style: {
+      cursor: 'pointer'
+    }
+  }, "\uD83D\uDD04 Cambiar", /*#__PURE__*/React.createElement("input", {
+    type: "file",
+    accept: ".pdf,.jpg,.jpeg,.png",
+    style: {
+      display: 'none'
+    },
+    onChange: handlePdfUpload
+  }))) : /*#__PURE__*/React.createElement("label", {
+    className: "pe-btn pe-btn-ghost",
+    style: {
+      cursor: 'pointer'
+    }
+  }, pdfStatus === 'uploading' ? '⏳ Subiendo…' : '📎 Adjuntar factura', /*#__PURE__*/React.createElement("input", {
+    type: "file",
+    accept: ".pdf,.jpg,.jpeg,.png",
+    style: {
+      display: 'none'
+    },
+    onChange: handlePdfUpload,
+    disabled: pdfStatus === 'uploading'
+  }))))), /*#__PURE__*/React.createElement("footer", {
+    className: "rv-edit-foot"
+  }, editIdx >= 0 && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost rv-btn-danger",
+    onClick: () => {
+      cancelDraft();
+      deleteFactura(facturas.indexOf(data.facturas[editIdx]));
+    }
+  }, "\uD83D\uDDD1 Borrar"), /*#__PURE__*/React.createElement("div", {
+    className: "rv-edit-foot-right"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    onClick: cancelDraft
+  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-primary",
+    onClick: saveDraft,
+    disabled: saving
+  }, saving ? 'Guardando…' : 'Guardar'))))));
 };
 const LeilaTab = ({
   token
@@ -4034,7 +4669,7 @@ const ReservasTab = ({
   // KPIs por canal (sólo año focal)
   const byCanal = {};
   focusList.forEach(r => {
-    const c = (r.canal || '—').trim() || '—';
+    const c = getCanalKey(r.canal);
     if (!byCanal[c]) byCanal[c] = {
       count: 0,
       sum: 0,
@@ -4976,14 +5611,14 @@ const ReservasTab = ({
     }))
   }, "\u21BB auto") : /*#__PURE__*/React.createElement("span", {
     className: "rv-calc"
-  }, " calculado")), draft._checkin_manual ? /*#__PURE__*/React.createElement(NumInput, {
+  }, " auto")), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.al_checkin || 0,
-    onChange: v => updateDraft('al_checkin', v)
-  }) : /*#__PURE__*/React.createElement("input", {
-    readOnly: true,
-    className: "rv-readonly",
-    value: fmtEur(draft.al_checkin)
+    onChange: v => setDraft(p => ({
+      ...p,
+      al_checkin: v,
+      _checkin_manual: true
+    }))
   }))), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Fianza tomada"), /*#__PURE__*/React.createElement("select", {
@@ -5067,16 +5702,14 @@ const ReservasTab = ({
   })(), /*#__PURE__*/React.createElement("footer", {
     className: "rv-edit-foot"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "rv-edit-foot-secondary"
+    className: "rv-edit-foot-row1"
   }, selectedIdx >= 0 && selectedIdx < reservas.length && /*#__PURE__*/React.createElement("button", {
     type: "button",
-    className: "pe-btn pe-btn-ghost rv-btn-danger",
+    className: "pe-btn pe-btn-ghost rv-foot-btn rv-btn-danger",
     onClick: deleteRow
-  }, "\uD83D\uDDD1 Borrar"), /*#__PURE__*/React.createElement("div", {
-    className: "rv-edit-foot-aux"
-  }, onOpenContract && /*#__PURE__*/React.createElement("button", {
+  }, "\uD83D\uDDD1 Borrar"), onOpenContract && /*#__PURE__*/React.createElement("button", {
     type: "button",
-    className: "pe-btn pe-btn-ghost",
+    className: "pe-btn pe-btn-ghost rv-foot-btn",
     title: "Abrir en el generador de contratos",
     onClick: () => {
       saveDraft();
@@ -5084,22 +5717,23 @@ const ReservasTab = ({
     }
   }, "\uD83D\uDCC4 Contrato"), selectedIdx >= 0 && selectedIdx < reservas.length && /*#__PURE__*/React.createElement("button", {
     type: "button",
-    className: "pe-btn pe-btn-ghost",
-    onClick: duplicateRow,
-    title: "Crea una nueva reserva con estos mismos datos"
-  }, "Duplicar"), /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-ghost rv-foot-btn",
+    onClick: duplicateRow
+  }, "Duplicar")), /*#__PURE__*/React.createElement("div", {
+    className: "rv-edit-foot-row2"
+  }, /*#__PURE__*/React.createElement("button", {
     type: "button",
-    className: "pe-btn pe-btn-ghost",
+    className: "pe-btn pe-btn-ghost rv-foot-btn",
     onClick: cancelDraft
-  }, "Cancelar"))), /*#__PURE__*/React.createElement("button", {
+  }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
     type: "button",
-    className: "pe-btn pe-btn-primary rv-edit-foot-save",
+    className: "pe-btn pe-btn-primary rv-foot-btn rv-foot-save",
     onClick: saveDraft
-  }, "Guardar")))));
+  }, "Guardar"))))));
 };
 const AdminApp = () => {
   const [phase, setPhase] = React.useState('login');
-  const [mode, setMode] = React.useState('pricing');
+  const [mode, setMode] = React.useState('reservas');
   const [contractPrefill, setContractPrefill] = React.useState(null);
   const [token, setToken] = React.useState('');
   const [data, setData] = React.useState(null);
@@ -5501,6 +6135,66 @@ const AdminApp = () => {
     className: "pe-tabs"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
+    className: `pe-tab${mode === 'reservas' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('reservas');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDDD3\uFE0F", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Reservas")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'prereservas' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('prereservas');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCCB", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Prereservas")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'leila' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('leila');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCB3", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Leila")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'contract' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('contract');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCC4", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Contrato")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'facturas' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('facturas');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83E\uDDFE", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Facturas")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'analytics' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('analytics');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCCA", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " An\xE1lisis")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
     className: `pe-tab${mode === 'pricing' ? ' is-active' : ''}`,
     onClick: () => {
       setMode('pricing');
@@ -5525,56 +6219,6 @@ const AdminApp = () => {
       className: "pe-tab-badge"
     }, pending) : null;
   })()), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: `pe-tab${mode === 'analytics' ? ' is-active' : ''}`,
-    onClick: () => {
-      setMode('analytics');
-      setError(null);
-      setSuccess(null);
-    }
-  }, "\uD83D\uDCCA", /*#__PURE__*/React.createElement("span", {
-    className: "pe-tab-label"
-  }, " Anal\xEDtica")), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: `pe-tab${mode === 'contract' ? ' is-active' : ''}`,
-    onClick: () => {
-      setMode('contract');
-      setError(null);
-      setSuccess(null);
-    }
-  }, "\uD83D\uDCC4", /*#__PURE__*/React.createElement("span", {
-    className: "pe-tab-label"
-  }, " Contrato")), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: `pe-tab${mode === 'prereservas' ? ' is-active' : ''}`,
-    onClick: () => {
-      setMode('prereservas');
-      setError(null);
-      setSuccess(null);
-    }
-  }, "\uD83D\uDCCB", /*#__PURE__*/React.createElement("span", {
-    className: "pe-tab-label"
-  }, " Prereservas")), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: `pe-tab${mode === 'reservas' ? ' is-active' : ''}`,
-    onClick: () => {
-      setMode('reservas');
-      setError(null);
-      setSuccess(null);
-    }
-  }, "\uD83D\uDDD3\uFE0F", /*#__PURE__*/React.createElement("span", {
-    className: "pe-tab-label"
-  }, " Reservas")), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: `pe-tab${mode === 'leila' ? ' is-active' : ''}`,
-    onClick: () => {
-      setMode('leila');
-      setError(null);
-      setSuccess(null);
-    }
-  }, "\uD83D\uDCB3", /*#__PURE__*/React.createElement("span", {
-    className: "pe-tab-label"
-  }, " Leila")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'dashboard' ? ' is-active' : ''}`,
     onClick: () => {
@@ -5602,6 +6246,8 @@ const AdminApp = () => {
   }) : mode === 'dashboard' ? /*#__PURE__*/React.createElement(DashboardTab, {
     token: token
   }) : mode === 'leila' ? /*#__PURE__*/React.createElement(LeilaTab, {
+    token: token
+  }) : mode === 'facturas' ? /*#__PURE__*/React.createElement(FacturasTab, {
     token: token
   }) : mode === 'reviews' ? renderReviewsTab() : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "pe-card"

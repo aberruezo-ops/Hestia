@@ -133,9 +133,9 @@ const RequestPanel = ({
     className: "price-right-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-badge"
-  }, lang === 'es' ? '✓ ¿Precio mejor? Te lo mejoramos' : '✓ Better price? We\'ll beat it'), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '✓ Precio directo siempre mejor' : '✓ Direct price always better'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
-  }, lang === 'es' ? 'Si encuentras un precio mejor, te lo mejoramos.' : 'See a better price elsewhere? We\'ll beat it.'))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Precio directo siempre mejor que cualquier plataforma.' : 'Our direct price is always better than any platform.'))), /*#__PURE__*/React.createElement("div", {
     className: "price-breakdown"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-line"
@@ -199,7 +199,7 @@ const RequestPanel = ({
     y1: "16",
     x2: "12.01",
     y2: "16"
-  })), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Precio m\xE1ximo orientativo."), " Si encuentras un precio m\xE1s bajo te lo mejoramos. En la siguiente pantalla podr\xE1s a\xF1adir extras (cuna, trona, s\xE1banas, mascota\u2026) y dejarnos tus datos. Alex confirma en menos de 24 h.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Maximum indicative price."), " Find a lower price anywhere \u2014 we will beat it. On the next screen you can add extras (cot, high chair, linen, pet\u2026) and leave your details. Alex confirms within 24 h."))), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Precio m\xE1ximo orientativo."), " El precio directo es siempre mejor que cualquier plataforma. En la siguiente pantalla podr\xE1s a\xF1adir extras (cuna, trona, s\xE1banas, mascota\u2026) y dejarnos tus datos. Alex confirma en menos de 24 h.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Maximum indicative price."), " Our direct price is always better than any platform. On the next screen you can add extras (cot, high chair, linen, pet\u2026) and leave your details. Alex confirms within 24 h."))), /*#__PURE__*/React.createElement("div", {
     className: "req-actions req-actions-forward"
   }, /*#__PURE__*/React.createElement("a", {
     href: reservasHref,

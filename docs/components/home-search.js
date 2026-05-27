@@ -136,7 +136,7 @@ const HsDateRange = ({
     if (ok) previewEnd = hover;
   }
   const handleDayClick = ds => {
-    if (ds < today || _isBeyondHorizon(ds)) return;
+    if (ds <= today || _isBeyondHorizon(ds)) return;
     const blk = _isBlkLocal(ds);
     const blkStart = blk && _isBlkStartLocal(ds);
     if (blk && !blkStart) return;
@@ -222,7 +222,7 @@ const HsDateRange = ({
         d
       } = cell;
       const ds = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-      const isPast = ds < today;
+      const isPast = ds <= today;
       const isBeyond = _isBeyondHorizon(ds);
       const isToday = ds === today;
       const isBlk = _isBlkLocal(ds);
@@ -437,9 +437,9 @@ const HsResultCard = ({
     className: "hs-pb-right"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-badge"
-  }, lang === 'es' ? '✓ ¿Precio mejor? Te lo mejoramos' : '✓ Better price? We\'ll beat it'), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '✓ Precio directo siempre mejor' : '✓ Direct price always better'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
-  }, lang === 'es' ? 'Si encuentras un precio mejor, te lo mejoramos.' : 'See a better price elsewhere? We\'ll beat it.'))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Precio directo siempre mejor que cualquier plataforma.' : 'Our direct price is always better than any platform.'))), /*#__PURE__*/React.createElement("div", {
     className: "hs-pb-breakdown"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hs-pb-line"
@@ -615,9 +615,12 @@ const HomeSearch = ({
     className: "eyebrow hs-eyebrow"
   }, lang === 'es' ? 'Busca tu estancia · Vera Playa' : 'Find your stay · Vera Playa'), /*#__PURE__*/React.createElement("h2", {
     className: "hs-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "\xBFCu\xE1ndo ven\xEDs?"), " Elige fechas y te decimos qu\xE9 hay libre.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "When are you coming?"), " Pick dates and we'll show what's free.")), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement("em", null, "\xBFCu\xE1ndo ven\xEDs?") : /*#__PURE__*/React.createElement("em", null, "When are you coming?")), /*#__PURE__*/React.createElement("p", {
     className: "hs-sub"
-  }, lang === 'es' ? 'Selecciona Hestía — o déjalo en blanco para ver los tres disponibles — y cuéntanos lo que necesitáis.' : 'Choose a Hestía — or leave it blank to see all three — and tell us what you need.')), /*#__PURE__*/React.createElement("form", {
+  }, lang === 'es' ? 'Coge uno de nuestros huecos o elige tu Hestía y las fechas que prefieras.' : 'Grab one of our available slots or choose your Hestía and the dates you prefer.')), typeof LastMinuteStrip !== 'undefined' && /*#__PURE__*/React.createElement(LastMinuteStrip, {
+    lang: lang,
+    embedded: true
+  }), /*#__PURE__*/React.createElement("form", {
     className: "hs-form",
     onSubmit: handleSearch,
     noValidate: true

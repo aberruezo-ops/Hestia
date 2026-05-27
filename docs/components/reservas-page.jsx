@@ -4,7 +4,7 @@
 
 const RESERVAS_COPY = {
   es: {
-    eyebrow: 'Si encuentras un precio mejor, te lo mejoramos · Sin intermediarios',
+    eyebrow: 'Precio directo siempre mejor que Booking o Airbnb · Sin intermediarios',
     title: (<>Reserva tu<br/><em>hogar en Vera.</em></>),
     sub: 'Escríbenos directamente. Alex o Fran confirman en menos de 24 horas.',
     form_title: 'Solicitar reserva',
@@ -59,7 +59,7 @@ const RESERVAS_COPY = {
     aside_title: 'Tu solicitud llega a:',
     guarantee_title: 'Reserva directa',
     guarantee_items: [
-      'Precio igual o mejor que cualquier plataforma',
+      'Precio directo siempre mejor que cualquier plataforma',
       'Sin comisiones de intermediarios',
       'Alex o Fran responden personalmente',
       'Confirmación en menos de 24 horas',
@@ -67,7 +67,7 @@ const RESERVAS_COPY = {
     ],
   },
   en: {
-    eyebrow: 'Find a better price? We\'ll beat it · No middlemen',
+    eyebrow: 'Direct price always better than Booking or Airbnb · No middlemen',
     title: (<>Book your<br/><em>home in Vera.</em></>),
     sub: 'Write to us directly. Alex or Fran confirm within 24 hours.',
     form_title: 'Request a booking',
@@ -122,7 +122,7 @@ const RESERVAS_COPY = {
     aside_title: 'Your request goes to:',
     guarantee_title: 'Direct booking',
     guarantee_items: [
-      'Same price or better than any platform',
+      'Direct price always better than any platform',
       'No platform commissions',
       'Alex or Fran reply personally',
       'Confirmation within 24 hours',
@@ -166,7 +166,7 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
         </div>
         <div className="price-right-col">
           <div className="price-guarantee-badge">
-            {lang === 'es' ? '✓ ¿Precio mejor? Te lo mejoramos' : '✓ Better price? We\'ll beat it'}
+            {lang === 'es' ? '✓ Precio directo siempre mejor' : '✓ Direct price always better'}
           </div>
           <div className="price-guarantee-sub">
             {lang === 'es'
@@ -225,8 +225,8 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
         </div>
       </div>
       <p className="price-note">{lang === 'es'
-        ? '* Precio orientativo. Si encuentras precio mejor en cualquier plataforma, te lo mejoramos.'
-        : '* Indicative price. Find a better price anywhere — we\'ll beat it.'}</p>
+        ? '* Precio orientativo. El precio directo es siempre mejor que cualquier plataforma.'
+        : '* Indicative price. Our direct price is always better than any platform.'}</p>
     </div>
   );
 };
@@ -570,14 +570,14 @@ const ReservasForm = ({ lang }) => {
             (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') +
             (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') +
             (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-            `   ✓ Si encuentras precio mejor, te lo mejoramos\n`
+            `   ✓ Precio directo siempre mejor que cualquier plataforma\n`
           : `\n💰 ESTIMATED DIRECT PRICE\n` +
             `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` +
             (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') +
             (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') +
             (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') +
             (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-            `   ✓ Find a better price anywhere — we'll beat it\n`)
+            `   ✓ Direct price always better than any platform\n`)
       : '';
     const lines = lang === 'es'
       ? [
@@ -1120,8 +1120,8 @@ const ReservasAside = ({ lang }) => {
         <div className="rg-title">{t.guarantee_title}</div>
         <p className="rg-lede">
           {lang === 'es'
-            ? 'Si encuentras un precio mejor, te lo mejoramos · sin comisiones · respuesta humana en menos de 24 h.'
-            : 'Find a better price anywhere? We\'ll beat it · no commissions · human reply within 24 h.'}
+            ? 'Precio directo siempre mejor que Booking o Airbnb · sin comisiones · respuesta humana en menos de 24 h.'
+            : 'Direct price always better than Booking or Airbnb · no commissions · human reply within 24 h.'}
         </p>
         <button
           type="button"

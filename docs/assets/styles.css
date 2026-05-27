@@ -3439,7 +3439,7 @@ body.apt-bar-shown .cookies {
 .dpt-btn:active { transform: translateY(0) scale(.98); }
 .dpt-arrow { font-size: 14px; line-height: 1; transition: transform .25s ease; }
 .dpt-btn:hover .dpt-arrow { transform: translateX(3px); }
-@media (max-width: 640px) {
+@media (max-width: 767px) {
   .dpt-inner { flex-direction: column; gap: 14px; text-align: center; }
   .dpt-btn { width: 100%; justify-content: center; box-sizing: border-box; }
 }
@@ -19021,7 +19021,7 @@ img[src*="apt-vt-gallery-"] {
 .rv-toolbar label { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-soft); }
 .rv-toolbar select { padding: 4px 8px; font-family: inherit; }
 .rv-hint { margin-left: auto; font-size: 12px; color: var(--ink-soft); font-style: italic; }
-.rv-hint-inline { font-size: 12px; color: var(--ink-soft); font-weight: 400; font-style: italic; margin-left: 6px; }
+.rv-hint-inline { display: block; font-size: 11px; color: var(--ink-soft); font-weight: 400; font-style: italic; margin-top: 1px; overflow-wrap: break-word; }
 
 /* --- Tabla principal --- */
 .rv-table-wrap { overflow-x: auto; }
@@ -19232,12 +19232,13 @@ img[src*="apt-vt-gallery-"] {
 
 .rv-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .rv-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.rv-edit-body .rv-row3 { grid-template-columns: 1fr 1fr; }
+.rv-edit-body .rv-field label { overflow-wrap: break-word; word-break: break-word; min-width: 0; }
 @media (max-width: 560px) {
   .rv-row2 { grid-template-columns: 1fr; }
   .rv-row3 { grid-template-columns: 1fr 1fr; }
   .rv-calc-grid { grid-template-columns: 1fr; }
-  .rv-edit-foot { padding: 10px 12px; }
-  .rv-edit-foot .pe-btn { padding: 8px 12px; font-size: 11px; }
+  .rv-edit-foot { padding: 8px 10px; }
 }
 
 .rv-calc-block {
@@ -19265,23 +19266,18 @@ img[src*="apt-vt-gallery-"] {
 .rv-calc-grid strong { color: var(--ber-dk); font-variant-numeric: tabular-nums; }
 
 .rv-edit-foot {
-  padding: 12px 16px;
+  padding: 10px 14px;
   border-top: 1px solid rgba(61,26,53,.10);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   background: #fff;
   flex-shrink: 0;
 }
-.rv-edit-foot-secondary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.rv-edit-foot-aux { display: flex; gap: 8px; flex-wrap: wrap; }
-.rv-edit-foot-save { width: 100%; justify-content: center; }
+.rv-edit-foot-row1 { display: flex; gap: 6px; }
+.rv-edit-foot-row2 { display: flex; gap: 6px; }
+.rv-foot-btn { flex: 1; justify-content: center; padding: 7px 8px; font-size: 11px; }
+.rv-foot-save { flex: 2; }
 .rv-btn-danger { color: #B23A2B; }
 .rv-btn-danger:hover { background: rgba(178,58,43,0.10); }
 .rv-ical-th { width: 28px; padding: 4px 2px; }
@@ -19553,59 +19549,103 @@ img[src*="apt-vt-gallery-"] {
   border-top: 1px solid rgba(240, 232, 213, 0.08);
   border-bottom: 1px solid rgba(240, 232, 213, 0.08);
 }
+@media (prefers-reduced-motion: reduce) {
+  .lm-slot, .lm-slot--in { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
 .lm-inner {
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  align-items: center;
 }
 .lm-eyebrow {
+  margin-bottom: 12px;
+  color: rgba(240, 232, 213, 0.50);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+@keyframes lm-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.lm-marquee-wrap {
+  overflow: hidden;
   width: 100%;
-  color: rgba(240, 232, 213, 0.55);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
 }
-.lm-slots {
+.lm-marquee-track {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  flex: 1;
-  min-width: 0;
+  gap: 10px;
+  width: max-content;
+  animation: lm-scroll linear infinite;
 }
-.lm-slot {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 7px 13px;
-  border-radius: 8px 0 8px 0;
+.lm-marquee-track:hover { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .lm-marquee-track { animation: none; }
+  .lm-marquee-wrap { -webkit-mask-image: none; mask-image: none; overflow-x: auto; }
+}
+/* Tarjeta de hueco disponible */
+.lm-card {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 13px 16px 11px;
+  border-radius: 10px;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--lm-color, #3AAABB);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid var(--lm-color, #3AAABB);
   color: var(--cream, #F0E8D5);
   text-decoration: none;
-  font-size: 12px;
-  letter-spacing: 0.03em;
+  min-width: 152px;
   transition: background .2s ease;
-  white-space: nowrap;
 }
-.lm-slot:hover { background: rgba(255, 255, 255, 0.10); }
-.lm-apt { font-weight: 700; color: var(--lm-color, #3AAABB); }
-.lm-dates { opacity: 0.85; }
-.lm-nights { opacity: 0.5; font-size: 11px; }
-.lm-price { font-weight: 600; color: var(--lm-color, #3AAABB); }
+.lm-card:hover { background: rgba(255, 255, 255, 0.09); }
+.lm-card-apt {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--lm-color, #3AAABB);
+}
+.lm-card-dates {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.lm-card-sep { opacity: 0.35; font-size: 11px; }
+.lm-card-meta {
+  font-size: 11px;
+  opacity: 0.5;
+  letter-spacing: 0.02em;
+}
+.lm-card-price {
+  color: var(--lm-color, #3AAABB);
+  opacity: 1;
+}
 .lm-cta {
-  font-size: 12px;
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 11px;
   color: var(--cream, #F0E8D5);
-  opacity: 0.55;
+  opacity: 0.45;
   text-decoration: none;
-  white-space: nowrap;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.07em;
   transition: opacity .2s ease;
 }
-.lm-cta:hover { opacity: 1; }
-@media (max-width: 640px) {
-  .lm-slots { width: 100%; }
-  .lm-slot { font-size: 11px; padding: 6px 10px; }
-  .lm-cta { width: 100%; text-align: center; padding-top: 4px; }
+.lm-cta:hover { opacity: 0.9; }
+
+/* Variante embebida dentro del HomeSearch */
+.lm-strip--embedded {
+  background: transparent;
+  border-top: none;
+  border-bottom: none;
+  padding: 0 0 10px;
+}
+.lm-strip--embedded .lm-inner { max-width: none; }
+
+@media (max-width: 767px) {
+  .lm-card { min-width: 138px; }
 }
 
 /* ============================================================

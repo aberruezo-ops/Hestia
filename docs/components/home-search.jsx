@@ -114,7 +114,7 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
   }
 
   const handleDayClick = (ds) => {
-    if (ds < today || _isBeyondHorizon(ds)) return;
+    if (ds <= today || _isBeyondHorizon(ds)) return;
     const blk      = _isBlkLocal(ds);
     const blkStart = blk && _isBlkStartLocal(ds);
     if (blk && !blkStart) return;
@@ -180,7 +180,7 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
             if (cell.empty) return <div key={cell.k} className="cal-cell cal-empty"/>;
             const { d } = cell;
             const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-            const isPast  = ds < today;
+            const isPast  = ds <= today;
             const isBeyond= _isBeyondHorizon(ds);
             const isToday = ds === today;
             const isBlk   = _isBlkLocal(ds);
@@ -377,12 +377,12 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
                   </div>
                   <div className="hs-pb-right">
                     <div className="price-guarantee-badge">
-                      {lang === 'es' ? '✓ ¿Precio mejor? Te lo mejoramos' : '✓ Better price? We\'ll beat it'}
+                      {lang === 'es' ? '✓ Precio directo siempre mejor' : '✓ Direct price always better'}
                     </div>
                     <div className="price-guarantee-sub">
                       {lang === 'es'
-                        ? 'Si encuentras un precio mejor, te lo mejoramos.'
-                        : 'See a better price elsewhere? We\'ll beat it.'}
+                        ? 'Precio directo siempre mejor que cualquier plataforma.'
+                        : 'Our direct price is always better than any platform.'}
                     </div>
                   </div>
                 </div>
@@ -589,16 +589,17 @@ const HomeSearch = ({ lang }) => {
             {lang === 'es' ? 'Busca tu estancia · Vera Playa' : 'Find your stay · Vera Playa'}
           </div>
           <h2 className="hs-title">
-            {lang === 'es'
-              ? <><em>¿Cuándo venís?</em> Elige fechas y te decimos qué hay libre.</>
-              : <><em>When are you coming?</em> Pick dates and we'll show what's free.</>}
+            {lang === 'es' ? <em>¿Cuándo venís?</em> : <em>When are you coming?</em>}
           </h2>
           <p className="hs-sub">
             {lang === 'es'
-              ? 'Selecciona Hestía — o déjalo en blanco para ver los tres disponibles — y cuéntanos lo que necesitáis.'
-              : 'Choose a Hestía — or leave it blank to see all three — and tell us what you need.'}
+              ? 'Coge uno de nuestros huecos o elige tu Hestía y las fechas que prefieras.'
+              : 'Grab one of our available slots or choose your Hestía and the dates you prefer.'}
           </p>
         </div>
+
+        {/* Últimas plazas — huecos disponibles próximas 6 semanas */}
+        {typeof LastMinuteStrip !== 'undefined' && <LastMinuteStrip lang={lang} embedded />}
 
         {/* Form */}
         <form className="hs-form" onSubmit={handleSearch} noValidate>

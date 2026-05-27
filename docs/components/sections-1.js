@@ -610,7 +610,7 @@ const Apartments = ({
       className: "apb-per"
     }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
       className: "apb-match"
-    }, lang === 'es' ? '✓ Si encuentras un precio más bajo, te lo mejoramos' : '✓ Find a lower price — we will beat it')), /*#__PURE__*/React.createElement("div", {
+    }, lang === 'es' ? '✓ Precio directo siempre mejor que cualquier plataforma' : '✓ Direct price always better than any platform')), /*#__PURE__*/React.createElement("div", {
       className: "apt-ctas"
     }, /*#__PURE__*/React.createElement("a", {
       href: `${a.slug}.html`,
@@ -850,7 +850,8 @@ const Compare = ({
 // LAST MINUTE STRIP — huecos disponibles en los próximos 45 días
 // ================================================================
 const LastMinuteStrip = ({
-  lang
+  lang,
+  embedded = false
 }) => {
   const [slots, setSlots] = React.useState([]);
   React.useEffect(() => {
@@ -865,9 +866,12 @@ const LastMinuteStrip = ({
       const found = [];
       for (const apt of APARTMENTS) {
         const blocked = data[apt.id]?.blocked || [];
-        const sorted = blocked.filter(b => b.end > todayStr && b.start < horizonStr).sort((a, b) => a.start.localeCompare(b.start));
+        // Incluir todos los bloques futuros, no solo los que empiezan antes del horizonte,
+        // para que el checkout de cada hueco use el inicio real del siguiente bloque.
+        const sorted = blocked.filter(b => b.end > todayStr).sort((a, b) => a.start.localeCompare(b.start));
         let cursor = todayStr;
         for (const block of sorted) {
+          if (cursor >= horizonStr) break;
           if (block.start > cursor) {
             const nights = Math.round((new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
             if (nights >= 2) found.push({
@@ -903,44 +907,62 @@ const LastMinuteStrip = ({
   };
   const APT_COLOR = {
     vm: '#3AAABB',
-    vt: '#7B5FDC',
-    vs: '#E0826F'
+    vt: '#8A4A24',
+    vs: '#9E7A2C'
   };
-  const getMinPrice = aptId => {
-    const tbl = HESTIA_PRICES[aptId];
-    if (!tbl) return null;
-    return Math.min(...tbl.base.slice(1));
+  const getStayPrice = (aptId, checkin, checkout) => {
+    try {
+      const r = _calcStay(checkin, checkout, aptId, false, 2);
+      if (!r || !r.directTotal || !r.nights) return null;
+      return Math.round(r.directTotal / r.nights);
+    } catch (_) {
+      return null;
+    }
   };
-  return /*#__PURE__*/React.createElement("section", {
-    className: "lm-strip",
-    "aria-label": lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "lm-inner"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "lm-eyebrow eyebrow"
-  }, lang === 'es' ? 'Últimas plazas · próximas 6 semanas' : 'Last minute · next 6 weeks'), /*#__PURE__*/React.createElement("div", {
-    className: "lm-slots"
-  }, slots.map((slot, i) => {
-    const minPrice = getMinPrice(slot.apt.id);
+  const renderCard = (slot, key) => {
+    const pricePerNight = getStayPrice(slot.apt.id, slot.checkin, slot.checkout);
     const color = APT_COLOR[slot.apt.id];
     const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
+    const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
     return /*#__PURE__*/React.createElement("a", {
-      key: i,
+      key: key,
       href: url,
-      className: "lm-slot",
+      className: "lm-card",
       style: {
         '--lm-color': color
       }
     }, /*#__PURE__*/React.createElement("span", {
-      className: "lm-apt"
-    }, slot.apt.name.replace('Hestía ', '')), /*#__PURE__*/React.createElement("span", {
-      className: "lm-dates"
-    }, fmtDate(slot.checkin), " \u2013 ", fmtDate(slot.checkout)), /*#__PURE__*/React.createElement("span", {
-      className: "lm-nights"
-    }, slot.nights, lang === 'es' ? 'n' : 'd'), minPrice && /*#__PURE__*/React.createElement("span", {
-      className: "lm-price"
-    }, "desde ", minPrice, "\u20AC/n"));
-  })), /*#__PURE__*/React.createElement("a", {
+      className: "lm-card-apt"
+    }, aptShort), /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-dates"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-d1"
+    }, fmtDate(slot.checkin)), /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-sep"
+    }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-d2"
+    }, fmtDate(slot.checkout))), /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-meta"
+    }, slot.nights, " ", lang === 'es' ? 'noches' : 'nights', pricePerNight && /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-price"
+    }, " \xB7 ~", pricePerNight, "\u20AC/n")));
+  };
+  const dur = `${Math.max(10, slots.length * 5)}s`;
+  return /*#__PURE__*/React.createElement("section", {
+    className: `lm-strip${embedded ? ' lm-strip--embedded' : ''}`,
+    "aria-label": lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lm-inner"
+  }, !embedded && /*#__PURE__*/React.createElement("span", {
+    className: "lm-eyebrow eyebrow"
+  }, lang === 'es' ? 'Huecos disponibles ahora:' : 'Available now:'), /*#__PURE__*/React.createElement("div", {
+    className: "lm-marquee-wrap"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lm-marquee-track",
+    style: {
+      animationDuration: dur
+    }
+  }, slots.map((slot, i) => renderCard(slot, i)), slots.map((slot, i) => renderCard(slot, `d${i}`)))), !embedded && /*#__PURE__*/React.createElement("a", {
     href: "reservas.html",
     className: "lm-cta"
   }, lang === 'es' ? 'Ver disponibilidad completa →' : 'See full availability →')));
