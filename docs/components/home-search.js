@@ -617,10 +617,7 @@ const HomeSearch = ({
     className: "hs-title"
   }, lang === 'es' ? /*#__PURE__*/React.createElement("em", null, "\xBFCu\xE1ndo ven\xEDs?") : /*#__PURE__*/React.createElement("em", null, "When are you coming?")), /*#__PURE__*/React.createElement("p", {
     className: "hs-sub"
-  }, lang === 'es' ? 'Coge uno de nuestros huecos o elige tu Hestía y las fechas que prefieras.' : 'Grab one of our available slots or choose your Hestía and the dates you prefer.')), typeof LastMinuteStrip !== 'undefined' && /*#__PURE__*/React.createElement(LastMinuteStrip, {
-    lang: lang,
-    embedded: true
-  }), /*#__PURE__*/React.createElement("form", {
+  }, lang === 'es' ? 'Coge uno de nuestros huecos o elige tu Hestía y las fechas que prefieras.' : 'Grab one of our available slots or choose your Hestía and the dates you prefer.')), /*#__PURE__*/React.createElement("form", {
     className: "hs-form",
     onSubmit: handleSearch,
     noValidate: true

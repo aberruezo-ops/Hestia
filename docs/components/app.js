@@ -61,6 +61,8 @@ const App = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement("main", null, /*#__PURE__*/React.createElement(Hero, {
     lang: lang
+  }), typeof LastMinuteStrip !== 'undefined' && /*#__PURE__*/React.createElement(LastMinuteStrip, {
+    lang: lang
   }), /*#__PURE__*/React.createElement(FraseHogar, {
     lang: lang
   }), /*#__PURE__*/React.createElement(RatingsMarquee, {

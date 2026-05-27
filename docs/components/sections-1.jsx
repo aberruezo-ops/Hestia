@@ -145,6 +145,23 @@ const Hero = ({ lang, onScrollDown }) => {
           <span className="hero-proof-item">★ 9.9 <span className="hero-proof-name">Salinas</span></span>
           <span className="hero-proof-platform">{lang === 'es' ? 'Media · Booking · Airbnb · web' : 'Average · Booking · Airbnb · site'}</span>
         </div>
+        {(() => {
+          const prices = typeof HESTIA_PRICES !== 'undefined' ? HESTIA_PRICES : null;
+          if (!prices) return null;
+          const mins = ['vm','vt','vs'].map(id => {
+            const tbl = prices[id]; if (!tbl) return null;
+            return Math.min(...tbl.base.slice(1));
+          }).filter(Boolean);
+          if (!mins.length) return null;
+          const from = Math.min(...mins);
+          return (
+            <div className="hero-price-line">
+              {lang === 'es'
+                ? <><span className="hpl-from">desde </span><strong className="hpl-price">{from}€</strong><span className="hpl-per">/noche · precio directo garantizado</span></>
+                : <><span className="hpl-from">from </span><strong className="hpl-price">{from}€</strong><span className="hpl-per">/night · guaranteed direct price</span></>}
+            </div>
+          );
+        })()}
       </div>
       <div className="hero-meta">
         <span className="hero-meta-coords">37°11′N · 1°50′W</span>
@@ -662,12 +679,12 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
     try {
       const r = _calcStay(checkin, checkout, aptId, false, 2);
       if (!r || !r.directTotal || !r.nights) return null;
-      return Math.round(r.directTotal / r.nights);
+      return { total: Math.round(r.directTotal), perNight: Math.round(r.directTotal / r.nights) };
     } catch (_) { return null; }
   };
 
   const renderCard = (slot, key) => {
-    const pricePerNight = getStayPrice(slot.apt.id, slot.checkin, slot.checkout);
+    const price = getStayPrice(slot.apt.id, slot.checkin, slot.checkout);
     const color = APT_COLOR[slot.apt.id];
     const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
     const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
@@ -681,8 +698,9 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
         </span>
         <span className="lm-card-meta">
           {slot.nights} {lang === 'es' ? 'noches' : 'nights'}
-          {pricePerNight && <span className="lm-card-price"> · ~{pricePerNight}€/n</span>}
+          {price && <span className="lm-card-ppn"> · ~{price.perNight}€/n</span>}
         </span>
+        {price && <span className="lm-card-total">~{price.total.toLocaleString('es-ES')}€</span>}
       </a>
     );
   };
