@@ -214,6 +214,8 @@ def load_direct_reservas() -> dict[str, list[dict]]:
             end   = (r.get("salida") or "").strip()
             if not apt or not start or not end or apt not in APTS:
                 continue
+            if r.get("cancelada") is True:
+                continue
             blocks.setdefault(apt, []).append({"start": start, "end": end})
             count += 1
         print(f"Bookings from reservas.json (all canales): {count} total")
