@@ -948,6 +948,69 @@ const AptGuideDownload = ({ apt, lang }) => {
   );
 };
 
+// --- Tabla de precios orientativos ---
+// Muestra el rango de precios por temporada como ancla de referencia.
+// El objetivo no es convertir aquí sino generar contacto (WhatsApp)
+// para que el usuario pueda recibir un precio personalizado inferior.
+const AptPriceTeaser = ({ apt, lang }) => {
+  const v2 = window.PRICES_V2;
+  if (!v2 || !v2.apts || !v2.seasons) return null;
+  const base = v2.apts[apt.id] && v2.apts[apt.id].base;
+  if (!base) return null;
+
+  const seasons = [
+    { key: 'baja',    es: 'Temporada baja',    en: 'Low season'   },
+    { key: 'media',   es: 'Temporada media',   en: 'Mid season'   },
+    { key: 'alta',    es: 'Temporada alta',    en: 'High season'  },
+    { key: 'critica', es: 'Temporada crítica', en: 'Peak season'  },
+  ].map(s => {
+    const def = v2.seasons[s.key];
+    if (!def) return null;
+    return { ...s, price: Math.round(base * def.multiplier) };
+  }).filter(Boolean);
+
+  const waMsg = encodeURIComponent(
+    lang === 'es'
+      ? `Hola, me interesa reservar ${apt.es.name}. ¿Podéis indicarme el precio para mis fechas?`
+      : `Hello, I'm interested in ${apt.en.name}. Could you give me a price for my dates?`
+  );
+  const waHref = `https://wa.me/34620316370?text=${waMsg}`;
+
+  return (
+    <section className="apt-price-teaser" style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
+      <div className="apt-pt-inner">
+        <div className="apt-pt-copy">
+          <span className="apt-pt-eyebrow">{lang === 'es' ? 'Precios orientativos' : 'Indicative prices'}</span>
+          <p className="apt-pt-note">
+            {lang === 'es'
+              ? 'Precio máximo de referencia · el precio real suele ser inferior según duración y temporada exacta.'
+              : 'Maximum reference price · actual price is often lower depending on exact dates and duration.'}
+          </p>
+        </div>
+        <div className="apt-pt-table">
+          {seasons.map(s => (
+            <div key={s.key} className={`apt-pt-row apt-pt-${s.key}`}>
+              <span className="apt-pt-season">{lang === 'es' ? s.es : s.en}</span>
+              <span className="apt-pt-price">
+                {lang === 'es' ? 'desde ' : 'from '}
+                <strong>{s.price} €</strong>
+                <span className="apt-pt-per">{lang === 'es' ? '/noche' : '/night'}</span>
+              </span>
+            </div>
+          ))}
+        </div>
+        <a href={waHref} target="_blank" rel="noopener" className="apt-pt-wa-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          {lang === 'es' ? 'Consúltanos precio para tus fechas' : 'Ask us for a price for your dates'}
+          <span className="apt-pt-wa-arrow"> →</span>
+        </a>
+      </div>
+    </section>
+  );
+};
+
 // --- Sticky booking bar ---
 const AptStickyBar = ({ apt, lang, scrolled }) => {
   const ref = React.useRef(null);
@@ -1178,6 +1241,7 @@ const ApartmentPageApp = () => {
           <>
             <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
             <TrustStrip apt={apt} lang={lang} />
+            <AptPriceTeaser apt={apt} lang={lang} />
             <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
             <AptVideoDesc apt={apt} lang={lang} />
             <AptPageGallery apt={apt} lang={lang} />

@@ -17322,6 +17322,112 @@ img[src*="apt-vt-gallery-"] {
 }
 
 /* ============================================================
+   AptPriceTeaser — tabla de precios orientativos
+   ============================================================ */
+.apt-price-teaser {
+  background: color-mix(in srgb, var(--apt-accent) 5%, var(--crema));
+  border-top: 1px solid color-mix(in srgb, var(--apt-accent) 14%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--apt-accent) 14%, transparent);
+  padding: 48px 40px;
+}
+.apt-pt-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 28px 40px;
+  align-items: start;
+}
+.apt-pt-copy {
+  grid-column: 1;
+}
+.apt-pt-table {
+  grid-column: 2;
+  grid-row: 1 / 3;
+}
+.apt-pt-eyebrow {
+  display: block;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--apt-accent);
+  margin-bottom: 12px;
+}
+.apt-pt-note {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0;
+}
+.apt-pt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--apt-accent) 10%, transparent);
+}
+.apt-pt-row:last-child { border-bottom: none; }
+.apt-pt-season {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.apt-pt-price {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.apt-pt-price strong {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--apt-accent);
+  letter-spacing: -0.01em;
+}
+.apt-pt-per {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-left: 2px;
+}
+.apt-pt-critica .apt-pt-season { color: var(--ink); font-weight: 600; }
+.apt-pt-critica .apt-pt-price strong { color: var(--apt-accent-dk, var(--apt-accent)); }
+.apt-pt-wa-btn {
+  grid-column: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 20px;
+  border-radius: 28px;
+  background: #25D366;
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background .15s, transform .15s;
+  align-self: start;
+}
+.apt-pt-wa-btn:hover { background: #1db954; transform: translateY(-1px); }
+.apt-pt-wa-arrow { opacity: .75; }
+@media (max-width: 640px) {
+  .apt-price-teaser { padding: 36px 20px; }
+  .apt-pt-inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    gap: 20px;
+  }
+  .apt-pt-table { grid-column: 1; grid-row: auto; }
+  .apt-pt-wa-btn { grid-column: 1; width: 100%; justify-content: center; box-sizing: border-box; }
+}
+
+/* ============================================================
    /reservas · step 2 · ReviewQuote (cita rotando)
    ============================================================ */
 .rf-quote {
