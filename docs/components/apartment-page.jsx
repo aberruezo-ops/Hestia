@@ -952,6 +952,59 @@ const AptGuideDownload = ({ apt, lang }) => {
   );
 };
 
+// --- Mini reseñas antes del calendario ---
+// 3 citas reales de huéspedes (campo highlight) del mismo apartamento.
+// Idioma preferido = lang de la página; fallback a cualquier idioma.
+const _amrFlag = (cc) => {
+  if (!cc || cc.length !== 2) return '';
+  const b = 0x1F1E6;
+  return String.fromCodePoint(b + cc.toUpperCase().charCodeAt(0) - 65) +
+         String.fromCodePoint(b + cc.toUpperCase().charCodeAt(1) - 65);
+};
+const _amrStars = (r) => Math.round(r.source === 'booking' ? r.rating / 2 : r.rating);
+const _amrSrc   = { booking: 'Booking', airbnb: 'Airbnb', google: 'Google', web: 'Hestía' };
+
+const AptMiniReviews = ({ apt, lang }) => {
+  const all  = (window.REVIEWS && window.REVIEWS.items) || [];
+  const pool = all.filter(r => r.status === 'published' && r.apt === apt.id && r.highlight)
+                  .sort((a, b) => b.date > a.date ? 1 : -1);
+  if (pool.length === 0) return null;
+
+  const inLang = pool.filter(r => r.lang === lang);
+  const picks  = (inLang.length >= 3 ? inLang : pool).slice(0, 3);
+
+  return (
+    <section className="apt-mini-reviews" style={{ '--apt-accent': apt.accent }}>
+      <div className="amr-inner">
+        <p className="amr-eyebrow">
+          {lang === 'es' ? 'Lo que dicen los huéspedes' : 'What guests say'}
+        </p>
+        <div className="amr-grid">
+          {picks.map(r => {
+            const stars = _amrStars(r);
+            const text  = r.text.length > 145 ? r.text.slice(0, 142) + '…' : r.text;
+            return (
+              <div key={r.id} className="amr-card">
+                <div className="amr-top">
+                  <span className="amr-stars" aria-label={`${stars} estrellas`}>
+                    {'★'.repeat(stars)}
+                  </span>
+                  <span className="amr-src-lbl">{_amrSrc[r.source] || r.source}</span>
+                </div>
+                <p className="amr-text">"{text}"</p>
+                <div className="amr-author">
+                  <span className="amr-flag" aria-hidden="true">{_amrFlag(r.country)}</span>
+                  <span className="amr-name">{r.name}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // --- Tabla de precios orientativos ---
 // Muestra el rango de precios por temporada como ancla de referencia.
 // El objetivo no es convertir aquí sino generar contacto (WhatsApp)
@@ -1245,6 +1298,7 @@ const ApartmentPageApp = () => {
           <>
             <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
             <TrustStrip apt={apt} lang={lang} />
+            <AptMiniReviews apt={apt} lang={lang} />
             <AptPriceTeaser apt={apt} lang={lang} />
             <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
             <AptVideoDesc apt={apt} lang={lang} />

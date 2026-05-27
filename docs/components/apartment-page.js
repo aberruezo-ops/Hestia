@@ -1071,6 +1071,67 @@ const AptGuideDownload = ({
   }, status === 'error' ? t.error : status === 'success' ? t.success : t.helper))));
 };
 
+// --- Mini reseñas antes del calendario ---
+// 3 citas reales de huéspedes (campo highlight) del mismo apartamento.
+// Idioma preferido = lang de la página; fallback a cualquier idioma.
+const _amrFlag = cc => {
+  if (!cc || cc.length !== 2) return '';
+  const b = 0x1F1E6;
+  return String.fromCodePoint(b + cc.toUpperCase().charCodeAt(0) - 65) + String.fromCodePoint(b + cc.toUpperCase().charCodeAt(1) - 65);
+};
+const _amrStars = r => Math.round(r.source === 'booking' ? r.rating / 2 : r.rating);
+const _amrSrc = {
+  booking: 'Booking',
+  airbnb: 'Airbnb',
+  google: 'Google',
+  web: 'Hestía'
+};
+const AptMiniReviews = ({
+  apt,
+  lang
+}) => {
+  const all = window.REVIEWS && window.REVIEWS.items || [];
+  const pool = all.filter(r => r.status === 'published' && r.apt === apt.id && r.highlight).sort((a, b) => b.date > a.date ? 1 : -1);
+  if (pool.length === 0) return null;
+  const inLang = pool.filter(r => r.lang === lang);
+  const picks = (inLang.length >= 3 ? inLang : pool).slice(0, 3);
+  return /*#__PURE__*/React.createElement("section", {
+    className: "apt-mini-reviews",
+    style: {
+      '--apt-accent': apt.accent
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "amr-inner"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "amr-eyebrow"
+  }, lang === 'es' ? 'Lo que dicen los huéspedes' : 'What guests say'), /*#__PURE__*/React.createElement("div", {
+    className: "amr-grid"
+  }, picks.map(r => {
+    const stars = _amrStars(r);
+    const text = r.text.length > 145 ? r.text.slice(0, 142) + '…' : r.text;
+    return /*#__PURE__*/React.createElement("div", {
+      key: r.id,
+      className: "amr-card"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "amr-top"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "amr-stars",
+      "aria-label": `${stars} estrellas`
+    }, '★'.repeat(stars)), /*#__PURE__*/React.createElement("span", {
+      className: "amr-src-lbl"
+    }, _amrSrc[r.source] || r.source)), /*#__PURE__*/React.createElement("p", {
+      className: "amr-text"
+    }, "\"", text, "\""), /*#__PURE__*/React.createElement("div", {
+      className: "amr-author"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "amr-flag",
+      "aria-hidden": "true"
+    }, _amrFlag(r.country)), /*#__PURE__*/React.createElement("span", {
+      className: "amr-name"
+    }, r.name)));
+  }))));
+};
+
 // --- Tabla de precios orientativos ---
 // Muestra el rango de precios por temporada como ancla de referencia.
 // El objetivo no es convertir aquí sino generar contacto (WhatsApp)
@@ -1407,6 +1468,9 @@ const ApartmentPageApp = () => {
     scrolled: scrolled,
     mode: mode
   }), /*#__PURE__*/React.createElement(TrustStrip, {
+    apt: apt,
+    lang: lang
+  }), /*#__PURE__*/React.createElement(AptMiniReviews, {
     apt: apt,
     lang: lang
   }), /*#__PURE__*/React.createElement(AptPriceTeaser, {
