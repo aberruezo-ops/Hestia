@@ -5749,6 +5749,38 @@ const AdminApp = () => {
   const [filterStatus, setFilterStatus] = React.useState('all');
   const [filterSource, setFilterSource] = React.useState('all');
   const [filterApt, setFilterApt] = React.useState('all');
+  const [syncState, setSyncState] = React.useState('idle'); // idle | running | ok | error
+  const [syncMsg, setSyncMsg] = React.useState('');
+  const triggerSync = async () => {
+    setSyncState('running');
+    setSyncMsg('');
+    try {
+      const res = await fetch(`${API}/repos/${REPO}/actions/workflows/sync-availability.yml/dispatches`, {
+        method: 'POST',
+        headers: {
+          ...apiHeaders(token),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ref: 'main'
+        })
+      });
+      if (res.status === 204) {
+        setSyncState('ok');
+        setSyncMsg('Sync lanzado — listo en ~1 min');
+        setTimeout(() => setSyncState('idle'), 8000);
+      } else {
+        const body = await res.json().catch(() => ({}));
+        setSyncState('error');
+        setSyncMsg(res.status === 403 ? 'Sin permiso: el PAT necesita scope "workflow"' : `Error ${res.status}: ${body.message || '?'}`);
+        setTimeout(() => setSyncState('idle'), 12000);
+      }
+    } catch (e) {
+      setSyncState('error');
+      setSyncMsg(e.message);
+      setTimeout(() => setSyncState('idle'), 12000);
+    }
+  };
   const login = async e => {
     e.preventDefault();
     setPhase('loading');
@@ -6128,10 +6160,24 @@ const AdminApp = () => {
     className: "pe-topbar"
   }, /*#__PURE__*/React.createElement("span", null, "Hest\xEDa \xB7 Admin"), /*#__PURE__*/React.createElement("span", {
     className: "pe-meta"
-  }, mode === 'pricing' ? `Precios actualizados: ${data.updatedAt || '—'}` : reviewsData ? `${(reviewsData.items || []).length} reviews` : ''), /*#__PURE__*/React.createElement("button", {
+  }, mode === 'pricing' ? `Precios actualizados: ${data.updatedAt || '—'}` : reviewsData ? `${(reviewsData.items || []).length} reviews` : ''), /*#__PURE__*/React.createElement("div", {
+    className: "pe-topbar-actions"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-btn pe-sync-btn${syncState === 'running' ? ' pe-sync-running' : syncState === 'ok' ? ' pe-sync-ok' : syncState === 'error' ? ' pe-sync-err' : ''}`,
+    onClick: triggerSync,
+    disabled: syncState === 'running',
+    title: "Lanza el workflow sync-availability en GitHub Actions"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "pe-sync-icon"
+  }, syncState === 'running' ? '⏳' : syncState === 'ok' ? '✓' : syncState === 'error' ? '✗' : '🔄'), /*#__PURE__*/React.createElement("span", {
+    className: "pe-sync-label"
+  }, syncState === 'running' ? 'Sincronizando…' : syncState === 'ok' ? 'Sincronizado' : syncState === 'error' ? 'Error' : 'Sincronizar')), syncMsg && /*#__PURE__*/React.createElement("span", {
+    className: "pe-sync-msg"
+  }, syncMsg), /*#__PURE__*/React.createElement("button", {
     onClick: logout,
     className: "pe-btn pe-btn-ghost"
-  }, "Cerrar sesi\xF3n")), /*#__PURE__*/React.createElement("div", {
+  }, "Cerrar sesi\xF3n"))), /*#__PURE__*/React.createElement("div", {
     className: "pe-tabs"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
