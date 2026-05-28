@@ -139,12 +139,12 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
             </div>
             <div className="price-right-col">
               <div className="price-guarantee-badge">
-                {lang === 'es' ? '✓ Precio directo siempre mejor' : '✓ Direct price always better'}
+                {lang === 'es' ? '★ Mejor precio garantizado' : '★ Best price guaranteed'}
               </div>
               <div className="price-guarantee-sub">
                 {lang === 'es'
-                  ? 'Precio directo siempre mejor que cualquier plataforma.'
-                  : 'Our direct price is always better than any platform.'}
+                  ? '¿Lo encuentras más barato en Booking o Airbnb? No solo lo igualamos — lo mejoramos.'
+                  : 'Found it cheaper on Booking or Airbnb? We won\'t just match it — we\'ll beat it.'}
               </div>
             </div>
           </div>
@@ -200,12 +200,12 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
         </label>
       </div>
 
-      {/* Disclaimer — pricing y promesa de mejor precio */}
+      {/* Disclaimer — precio orientativo + garantía de mejora */}
       <div className="req-disclaimer">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         <p>{lang === 'es'
-          ? <><strong>Precio máximo orientativo.</strong> El precio directo es siempre mejor que cualquier plataforma. En la siguiente pantalla podrás añadir extras (cuna, trona, sábanas, mascota…) y dejarnos tus datos. Alex confirma en menos de 24 h.</>
-          : <><strong>Maximum indicative price.</strong> Our direct price is always better than any platform. On the next screen you can add extras (cot, high chair, linen, pet…) and leave your details. Alex confirms within 24 h.</>}</p>
+          ? <><strong>Precio máximo orientativo.</strong> Si encuentras este apartamento más barato en Booking, Airbnb o cualquier otra plataforma, escríbenos — no solo lo igualamos, lo mejoramos. En la siguiente pantalla puedes añadir extras (cuna, trona, sábanas, mascota…). Alex confirma en menos de 24 h.</>
+          : <><strong>Maximum indicative price.</strong> Found it cheaper on Booking, Airbnb or any other platform? Write to us — we won't just match it, we'll beat it. On the next screen you can add extras (cot, high chair, linen, pet…). Alex confirms within 24 h.</>}</p>
       </div>
 
       {/* CTA único: avanzar con la reserva → /reservas con prefill */}
