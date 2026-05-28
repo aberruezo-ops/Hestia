@@ -448,5 +448,16 @@
     "vm": [],
     "vt": [],
     "vs": []
+  },
+  "gapOverrides": {
+    "vm|2026-06-27": {
+      "apt": "vm",
+      "start": "2026-06-27",
+      "end": "2026-07-01",
+      "nights": 4,
+      "type": "discount",
+      "value": 6,
+      "lastMinute": true
+    }
   }
 }
