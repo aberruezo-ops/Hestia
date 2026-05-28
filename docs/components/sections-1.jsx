@@ -666,13 +666,41 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
     } catch (_) { return null; }
   };
 
+  // Aplica gapOverride manual o descuento automático pre-julio (10%)
+  const getEffectivePrice = (aptId, checkin, basePerNight) => {
+    const overrides = (window.PRICES_V2 && window.PRICES_V2.gapOverrides) || {};
+    const ov = overrides[`${aptId}|${checkin}`];
+    const y = new Date().getFullYear();
+    const preJuly = checkin < `${y}-07-01`;
+
+    if (ov && ov.type && ov.type !== 'none') {
+      const lm = !!ov.lastMinute;
+      if (ov.type === 'fixed')
+        return { price: ov.value, orig: basePerNight !== ov.value ? basePerNight : null, lm };
+      if (ov.type === 'discount')
+        return { price: Math.round(basePerNight * (1 - ov.value / 100)), orig: basePerNight, lm };
+      if (ov.type === 'increment')
+        return { price: Math.round(basePerNight * (1 + ov.value / 100)), orig: null, lm };
+    }
+
+    // Sin override manual: descuento automático 10% para huecos antes de julio
+    if (preJuly)
+      return { price: Math.round(basePerNight * 0.9), orig: basePerNight, lm: false };
+
+    return { price: basePerNight, orig: null, lm: false };
+  };
+
   const renderCard = (slot, key) => {
-    const pricePerNight = getStayPrice(slot.apt.id, slot.checkin, slot.checkout);
+    const base = getStayPrice(slot.apt.id, slot.checkin, slot.checkout);
+    const { price, orig, lm } = base
+      ? getEffectivePrice(slot.apt.id, slot.checkin, base)
+      : { price: null, orig: null, lm: false };
     const color = APT_COLOR[slot.apt.id];
     const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
     const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
     return (
-      <a key={key} href={url} className="lm-card" style={{ '--lm-color': color }}>
+      <a key={key} href={url} className={`lm-card${lm ? ' lm-card--lm' : ''}`} style={{ '--lm-color': color }}>
+        {lm && <span className="lm-card-lm-badge">{lang === 'es' ? 'ÚLTIMA HORA' : 'LAST MINUTE'}</span>}
         <span className="lm-card-apt">{aptShort}</span>
         <span className="lm-card-dates">
           <span className="lm-card-d1">{fmtDate(slot.checkin)}</span>
@@ -681,7 +709,12 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
         </span>
         <span className="lm-card-meta">
           {slot.nights} {lang === 'es' ? 'noches' : 'nights'}
-          {pricePerNight && <span className="lm-card-price"> · ~{pricePerNight}€/n</span>}
+          {price && (
+            <span className="lm-card-price">
+              {orig && <span className="lm-card-orig"> · <s>{orig}€</s></span>}
+              {' · '}<span className="lm-card-discounted">~{price}€/n</span>
+            </span>
+          )}
         </span>
       </a>
     );
