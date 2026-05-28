@@ -192,7 +192,8 @@ def load_manual_blocks() -> dict[str, list[dict]]:
 
 
 def load_direct_reservas() -> dict[str, list[dict]]:
-    """Load direct bookings (canal=Directo/Directa) from data-private/reservas.json."""
+    """Load direct bookings (canal=Directo/Directa) from data-private/reservas.json.
+    Cancelled reservations are excluded regardless of canal."""
     try:
         if not RESERVAS_JSON.exists():
             print("  data-private/reservas.json not found — skipping direct bookings")
@@ -201,7 +202,13 @@ def load_direct_reservas() -> dict[str, list[dict]]:
         reservas = data.get("reservas", [])
         blocks: dict[str, list[dict]] = {}
         count = 0
+        skipped_cancel = 0
         for r in reservas:
+            # Skip cancelled reservations — they no longer occupy the dates
+            cancelacion = (r.get("cancelacion") or "").strip().upper()
+            if cancelacion in ("CANCELADA", "CANCELADO"):
+                skipped_cancel += 1
+                continue
             canal = (r.get("canal") or "").strip().lower()
             if canal not in ("directo", "directa"):
                 continue
@@ -212,7 +219,7 @@ def load_direct_reservas() -> dict[str, list[dict]]:
                 continue
             blocks.setdefault(apt, []).append({"start": start, "end": end})
             count += 1
-        print(f"Direct bookings from reservas.json: {count} total")
+        print(f"Direct bookings from reservas.json: {count} included, {skipped_cancel} cancelled skipped")
         for apt, bl in blocks.items():
             for b in bl:
                 print(f"  {apt}: {b['start']} → {b['end']}")
