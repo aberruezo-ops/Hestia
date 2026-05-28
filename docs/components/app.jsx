@@ -50,6 +50,7 @@ const App = () => {
         <Hero lang={lang} />
         <FraseHogar lang={lang} />
         <RatingsMarquee lang={lang} />
+        <HomePriceStrip lang={lang} />
         <HomeSearch lang={lang} />
         <Apartments lang={lang} />
         <DirectBookingPerks lang={lang} />

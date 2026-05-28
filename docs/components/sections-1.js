@@ -610,7 +610,7 @@ const Apartments = ({
       className: "apb-per"
     }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
       className: "apb-match"
-    }, lang === 'es' ? '✓ Precio directo siempre mejor que cualquier plataforma' : '✓ Direct price always better than any platform')), /*#__PURE__*/React.createElement("div", {
+    }, lang === 'es' ? '✓ No lo igualamos — lo mejoramos' : '✓ We don\'t match it — we beat it')), /*#__PURE__*/React.createElement("div", {
       className: "apt-ctas"
     }, /*#__PURE__*/React.createElement("a", {
       href: `${a.slug}.html`,
@@ -967,11 +967,74 @@ const LastMinuteStrip = ({
     className: "lm-cta"
   }, lang === 'es' ? 'Ver disponibilidad completa →' : 'See full availability →')));
 };
+
+// ================================================================
+// HOME PRICE STRIP — 3 precios base visibles antes del buscador
+// ================================================================
+const HomePriceStrip = ({
+  lang
+}) => {
+  const APT_META = [{
+    id: 'vm',
+    name: 'Mar',
+    slug: 'mar',
+    accent: '#3AAABB'
+  }, {
+    id: 'vt',
+    name: 'Thalassa',
+    slug: 'thalassa',
+    accent: '#8A4A24'
+  }, {
+    id: 'vs',
+    name: 'Salinas',
+    slug: 'salinas',
+    accent: '#9E7A2C'
+  }];
+  const basePrice = id => {
+    const v2 = window.PRICES_V2;
+    if (v2 && v2.apts && v2.apts[id] && v2.apts[id].base) return v2.apts[id].base;
+    return {
+      vm: 88,
+      vt: 85,
+      vs: 83
+    }[id];
+  };
+  return /*#__PURE__*/React.createElement("section", {
+    className: "hps-strip",
+    "aria-label": lang === 'es' ? 'Precios por apartamento' : 'Prices per apartment'
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hps-inner"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "hps-label eyebrow"
+  }, lang === 'es' ? 'Precio directo · sin intermediarios' : 'Direct price · no middlemen'), /*#__PURE__*/React.createElement("div", {
+    className: "hps-grid"
+  }, APT_META.map(apt => /*#__PURE__*/React.createElement("a", {
+    key: apt.id,
+    href: `${apt.slug}.html`,
+    className: "hps-card",
+    style: {
+      '--hps-accent': apt.accent
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "hps-name"
+  }, "HEST\xCDA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), /*#__PURE__*/React.createElement("span", {
+    className: "hps-price"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "hps-desde"
+  }, lang === 'es' ? 'desde' : 'from'), /*#__PURE__*/React.createElement("span", {
+    className: "hps-amount"
+  }, basePrice(apt.id), "\u20AC"), /*#__PURE__*/React.createElement("span", {
+    className: "hps-per"
+  }, "/noche")), /*#__PURE__*/React.createElement("span", {
+    className: "hps-cta"
+  }, lang === 'es' ? 'Ver apartamento →' : 'View apartment →'))))));
+};
 Object.assign(window, {
   Hero,
   Bridge,
   Apartments,
   Compare,
   APARTMENTS,
-  LastMinuteStrip
+  LastMinuteStrip,
+  HomePriceStrip
 });
