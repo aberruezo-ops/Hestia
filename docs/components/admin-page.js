@@ -4720,6 +4720,77 @@ const ReservasTab = ({
   }).sort((a, b) => (a.entrada || '').localeCompare(b.entrada || ''));
   const canalKeys = Array.from(new Set(focusList.map(r => getCanalKey(r.canal))));
 
+  // --- Sincroniza reservas directas → availability.json (public repo) ---
+  // Se llama después de cada saveReservas para que los bloques directos
+  // aparezcan en el calendario sin esperar al próximo sync de iCal.
+  const _syncDirectToAvailability = async allReservas => {
+    const APTS_LIST = ['vm', 'vt', 'vs'];
+    const _isCxl2 = r => {
+      const c = (r.cancelacion || '').trim().toUpperCase();
+      return c === 'CANCELADA' || c === 'CANCELADO';
+    };
+
+    // Bloques directos: todas las reservas activas, sin importar canal,
+    // porque las de Airbnb/Booking también están en sus iCals y el merge
+    // las deduplica. Incluimos todas para no perder canales fuera de iCal.
+    const directBlocks = Object.fromEntries(APTS_LIST.map(a => [a, []]));
+    for (const r of allReservas) {
+      if (_isCxl2(r)) continue;
+      const apt = (r.apt || '').toLowerCase();
+      if (!APTS_LIST.includes(apt) || !r.entrada || !r.salida) continue;
+      directBlocks[apt].push({
+        start: r.entrada,
+        end: r.salida
+      });
+    }
+    const _mergeSorted = ranges => {
+      if (!ranges.length) return [];
+      const s = [...ranges].sort((a, b) => a.start.localeCompare(b.start));
+      const m = [{
+        ...s[0]
+      }];
+      for (const r of s.slice(1)) {
+        if (r.start <= m[m.length - 1].end) {
+          if (r.end > m[m.length - 1].end) m[m.length - 1].end = r.end;
+        } else {
+          m.push({
+            ...r
+          });
+        }
+      }
+      return m;
+    };
+
+    // Fetch availability.json fresco (con su SHA)
+    const AV_PATH = 'docs/assets/availability.json';
+    const avRes = await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}?ref=${BRANCH}`, {
+      headers: apiHeaders(token),
+      cache: 'no-store'
+    });
+    if (!avRes.ok) return;
+    const avFile = await avRes.json();
+    const avData = JSON.parse(b64ToUtf8(avFile.content));
+
+    // Merge bloques directos con los ya existentes (de iCal)
+    for (const apt of APTS_LIST) {
+      const existing = avData[apt]?.blocked || [];
+      avData[apt] = {
+        ...avData[apt],
+        blocked: _mergeSorted([...existing, ...directBlocks[apt]])
+      };
+    }
+    await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}`, {
+      method: 'PUT',
+      headers: apiHeaders(token),
+      body: JSON.stringify({
+        message: 'chore(availability): sync direct reservations [skip ci]',
+        content: utf8ToB64(JSON.stringify(avData, null, 2)),
+        sha: avFile.sha,
+        branch: BRANCH
+      })
+    });
+  };
+
   // --- Acciones ---
   const saveReservas = async (newReservas, {
     keepPanelOpen = false
@@ -4749,6 +4820,9 @@ const ReservasTab = ({
       if (!r.ok) throw new Error(j.message || 'Error desconocido');
       return j.content.sha;
     };
+    const onSaved = newReservasList => {
+      _syncDirectToAvailability(newReservasList).catch(() => {});
+    };
     try {
       const newSha = await attemptSave(sha);
       setSha(newSha);
@@ -4758,6 +4832,7 @@ const ReservasTab = ({
         setSelectedIdx(-1);
         setDraft(null);
       }
+      onSaved(newReservas);
     } catch (e) {
       // SHA desfasada (sync corrió entre carga y guardado): re-fetch y reintento automático
       if (e.message && e.message.includes('does not match')) {
@@ -4777,6 +4852,7 @@ const ReservasTab = ({
             setSelectedIdx(-1);
             setDraft(null);
           }
+          onSaved(newReservas);
         } catch (e2) {
           setError('Error guardando: ' + e2.message);
         }
