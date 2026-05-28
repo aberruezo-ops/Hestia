@@ -4729,9 +4729,12 @@ const ReservasTab = ({
       const c = (r.cancelacion || '').trim().toUpperCase();
       return c === 'CANCELADA' || c === 'CANCELADO';
     };
+
+    // Solo canal Directo/Directa — Booking/Airbnb los gestiona el iCal automáticamente
+    const _isDirectCanal = r => ['directo', 'directa'].includes((r.canal || '').trim().toLowerCase());
     const newDirect = Object.fromEntries(APTS_LIST.map(a => [a, []]));
     for (const r of allReservas) {
-      if (_isCxl2(r)) continue;
+      if (_isCxl2(r) || !_isDirectCanal(r)) continue;
       const apt = (r.apt || '').toLowerCase();
       if (!APTS_LIST.includes(apt) || !r.entrada || !r.salida) continue;
       newDirect[apt].push({
