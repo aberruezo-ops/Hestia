@@ -37,26 +37,6 @@ jobs:
       - name: Install dependencies
         run: pip install icalendar requests
 
-      - name: Download private reservas.json
-        env:
-          HESTIA_DATA_TOKEN: ${{ secrets.HESTIA_DATA_TOKEN }}
-        run: |
-          if [ -n "$HESTIA_DATA_TOKEN" ]; then
-            mkdir -p data-private
-            STATUS=$(curl -s -o data-private/reservas.json -w "%{http_code}" \
-              -H "Authorization: token $HESTIA_DATA_TOKEN" \
-              -H "Accept: application/vnd.github.v3.raw" \
-              "https://api.github.com/repos/aberruezo-ops/hestia-data/contents/reservas.json")
-            if [ "$STATUS" = "200" ]; then
-              echo "reservas.json downloaded ($(wc -c < data-private/reservas.json) bytes)"
-            else
-              echo "Warning: could not download reservas.json (HTTP $STATUS) — direct bookings skipped"
-              rm -f data-private/reservas.json
-            fi
-          else
-            echo "HESTIA_DATA_TOKEN not set — direct bookings will be skipped"
-          fi
-
       - name: Sync availability data
         env:
           ICAL_VM_AIRBNB:  "https://www.airbnb.com/calendar/ical/17253235.ics?t=884f5a6f50994d7ba0ff70ae0adb6a01&locale=es"
