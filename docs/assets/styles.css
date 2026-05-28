@@ -17353,7 +17353,9 @@ img[src*="apt-vt-gallery-"] {
    AptMiniReviews — 3 citas de huéspedes antes del calendario
    ============================================================ */
 .apt-mini-reviews {
-  background: var(--crema, #F0E8D5);
+  background: color-mix(in srgb, var(--apt-accent) 4%, var(--crema, #FAF6F0));
+  border-top: 1px solid color-mix(in srgb, var(--apt-accent) 12%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--apt-accent) 12%, transparent);
   padding: 52px 32px;
 }
 .amr-inner {
@@ -17366,7 +17368,7 @@ img[src*="apt-vt-gallery-"] {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--apt-accent, var(--sol));
+  color: var(--apt-accent, #3AAABB);
   margin: 0 0 24px;
 }
 .amr-grid {
@@ -17381,7 +17383,7 @@ img[src*="apt-vt-gallery-"] {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  box-shadow: 0 1px 4px rgba(42,15,46,.07);
+  box-shadow: 0 2px 8px rgba(42,15,46,.10);
 }
 .amr-top {
   display: flex;
@@ -17400,13 +17402,13 @@ img[src*="apt-vt-gallery-"] {
   font-weight: 600;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: rgba(42,15,46,.35);
+  color: rgba(42,15,46,.40);
 }
 .amr-text {
   font-family: var(--serif, Georgia, serif);
   font-size: 14px;
   line-height: 1.6;
-  color: var(--ink, #2A0F2E);
+  color: #2A0F2E;
   margin: 0;
   font-style: italic;
   flex: 1;
@@ -17422,7 +17424,7 @@ img[src*="apt-vt-gallery-"] {
   font-family: var(--sans);
   font-size: 12px;
   font-weight: 600;
-  color: rgba(42,15,46,.65);
+  color: rgba(42,15,46,.60);
   letter-spacing: .02em;
 }
 @media (max-width: 700px) {
