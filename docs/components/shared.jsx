@@ -1842,7 +1842,7 @@ const _petCost = (nights) => {
 const _guestSuppPerNight = (guests) => {
   const rules = (window.PRICES_V2 && window.PRICES_V2.rules) || {};
   const supps = Array.isArray(rules.guestSupplements) ? rules.guestSupplements : null;
-  if (!supps || !guests || guests <= 1) return 0;
+  if (!supps || !guests || guests <= 2) return 0;
   let total = 0;
   for (const s of supps) {
     if (typeof s.to === 'number' && s.to <= guests && typeof s.perNight === 'number') {
