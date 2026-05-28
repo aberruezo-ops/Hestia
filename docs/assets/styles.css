@@ -19939,6 +19939,34 @@ img[src*="apt-vt-gallery-"] {
   color: var(--lm-color, #3AAABB);
   opacity: 1;
 }
+.lm-card-orig s {
+  color: rgba(240,232,213,.40);
+  text-decoration: line-through;
+  font-style: normal;
+}
+.lm-card-discounted {
+  color: var(--lm-color, #3AAABB);
+  font-weight: 600;
+}
+/* Badge "ÚLTIMA HORA" */
+.lm-card-lm-badge {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  color: #fff;
+  background: var(--lm-color, #3AAABB);
+  border-radius: 3px 0 3px 0;
+  padding: 2px 6px;
+  margin-bottom: 2px;
+  align-self: flex-start;
+}
+/* Tarjeta con flag lastMinute: borde más marcado */
+.lm-card--lm {
+  border-left-width: 4px;
+  background: rgba(255,255,255,.07);
+}
 .lm-cta {
   display: inline-block;
   margin-top: 14px;
