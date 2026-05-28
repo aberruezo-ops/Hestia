@@ -175,6 +175,25 @@ def merge(ranges: list[dict]) -> list[dict]:
     return m
 
 
+def subtract_ranges(blocked: list[dict], exceptions: list[dict]) -> list[dict]:
+    """Remove exception ranges from blocked ranges (for manually-freed cancelled bookings)."""
+    if not exceptions:
+        return blocked
+    result = list(blocked)
+    for exc in exceptions:
+        next_result = []
+        for b in result:
+            if exc["end"] <= b["start"] or exc["start"] >= b["end"]:
+                next_result.append(b)
+            else:
+                if exc["start"] > b["start"]:
+                    next_result.append({"start": b["start"], "end": exc["start"]})
+                if exc["end"] < b["end"]:
+                    next_result.append({"start": exc["end"], "end": b["end"]})
+        result = next_result
+    return sorted(result, key=lambda x: x["start"])
+
+
 def load_manual_blocks() -> dict[str, list[dict]]:
     """Load manual_blocks from prices.json (direct bookings not in iCal feeds)."""
     try:
@@ -236,9 +255,16 @@ def main() -> None:
 
     print(f"Sync — today={today}  cutoff={cutoff}  lookahead={LOOKAHEAD}d\n")
 
-    manual_blocks  = load_manual_blocks()
-    direct_blocks  = load_direct_reservas()
+    manual_blocks = load_manual_blocks()
     print()
+
+    # Preserve direct and exceptions written by p-edit between syncs
+    prev_avail = {}
+    if OUTPUT.exists():
+        try:
+            prev_avail = json.loads(OUTPUT.read_text(encoding="utf-8"))
+        except Exception:
+            pass
 
     for apt in APTS:
         all_ranges   = []
@@ -281,25 +307,39 @@ def main() -> None:
             print(f"  {apt}: adding {len(apt_manual)} manual block(s)")
             all_ranges.extend(apt_manual)
 
-        # Merge bookings from reservas.json (all canales — safety net for iCal lag)
-        apt_direct = [
-            {"start": b["start"], "end": b["end"]}
-            for b in direct_blocks.get(apt, [])
-            if b["end"] > today and b["start"] <= cutoff
-        ]
-        if apt_direct:
-            print(f"  {apt}: adding {len(apt_direct)} booking block(s) from reservas.json")
-            all_ranges.extend(apt_direct)
+        ical_blocks = merge(all_ranges)
 
-        merged = merge(all_ranges)
+        # Preserve direct (non-cancelled direct-canal reservations set by p-edit)
+        prev_direct = [
+            b for b in prev_avail.get(apt, {}).get("direct", [])
+            if b.get("end", "") > today and b.get("start", "") <= cutoff
+        ]
+
+        # Preserve exceptions (cancelled non-direct reservations set by p-edit)
+        prev_exceptions = [
+            b for b in prev_avail.get(apt, {}).get("exceptions", [])
+            if b.get("end", "") > today
+        ]
+
+        merged        = merge(ical_blocks + prev_direct)
+        final_blocked = subtract_ranges(merged, prev_exceptions)
+
+        if prev_direct:
+            print(f"  {apt}: {len(prev_direct)} direct block(s) from p-edit")
+        if prev_exceptions:
+            print(f"  {apt}: {len(prev_exceptions)} exception(s) applied from p-edit")
+
         result[apt] = {
-            "blocked":      merged,
+            "blocked":      final_blocked,
+            "ical":         ical_blocks,
+            "direct":       prev_direct,
+            "exceptions":   prev_exceptions,
             "updated":      datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
             "sources":      sources_ok,
             "fetch_errors": fetch_errors,
             "demo":         False,
         }
-        print(f"  {apt}: {len(merged)} merged block(s) from {sources_ok or 'none'}\n")
+        print(f"  {apt}: {len(final_blocked)} blocked ({len(ical_blocks)} ical + {len(prev_direct)} direct − {len(prev_exceptions)} exc) from {sources_ok or 'none'}\n")
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT, "w", encoding="utf-8") as fh:
@@ -308,9 +348,12 @@ def main() -> None:
     print(f"Written → {OUTPUT}")
     print("\n── Final blocked ranges ──")
     for apt, d in result.items():
-        print(f"  {apt} ({len(d['blocked'])} blocks):")
+        print(f"  {apt} ({len(d['blocked'])} blocked, {len(d['ical'])} ical, {len(d['direct'])} direct, {len(d['exceptions'])} exc):")
         for b in d["blocked"]:
             print(f"    {b['start']} → {b['end']}")
+        if d["exceptions"]:
+            freed = [e["start"] + "→" + e["end"] for e in d["exceptions"]]
+            print(f"    exceptions freed: {freed}")
         if d["fetch_errors"]:
             print(f"    errors: {d['fetch_errors']}")
 

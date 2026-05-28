@@ -3738,6 +3738,86 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
 
   const canalKeys = Array.from(new Set(focusList.map(r => getCanalKey(r.canal))));
 
+  // Sincroniza availability.json con el estado actual de reservas.json.
+  // Se llama en segundo plano tras cada saveReservas.
+  // — direct:     reservas directas no canceladas → bloquean el calendario
+  // — exceptions: reservas canceladas de cualquier canal → liberan el calendario
+  //               (override sobre lo que venga del iCal de Booking/Airbnb)
+  const _syncDirectToAvailability = async (allReservas) => {
+    const APTS_LIST = ['vm', 'vt', 'vs'];
+    const today2    = new Date().toISOString().slice(0, 10);
+    const _isCxl    = r => r.cancelada === true || ['CANCELADA','CANCELADO'].includes((r.cancelacion||'').trim().toUpperCase());
+    const _isDirect = r => ['directo','directa'].includes((r.canal||'').trim().toLowerCase());
+
+    const newDirect    = Object.fromEntries(APTS_LIST.map(a => [a, []]));
+    const newExceptions = Object.fromEntries(APTS_LIST.map(a => [a, []]));
+    const activePaid   = Object.fromEntries(APTS_LIST.map(a => [a, []])); // non-cancelled non-direct
+
+    for (const r of allReservas) {
+      const apt = (r.apt || '').toLowerCase();
+      if (!APTS_LIST.includes(apt) || !r.entrada || !r.salida) continue;
+      if (r.salida <= today2) continue;
+      if (!_isCxl(r) && _isDirect(r))  newDirect[apt].push({ start: r.entrada, end: r.salida });
+      else if (_isCxl(r) && !_isDirect(r)) newExceptions[apt].push({ start: r.entrada, end: r.salida });
+      else if (!_isCxl(r) && !_isDirect(r)) activePaid[apt].push({ start: r.entrada, end: r.salida });
+    }
+
+    const _merge = (ranges) => {
+      if (!ranges.length) return [];
+      const s = [...ranges].sort((a, b) => a.start.localeCompare(b.start));
+      const m = [{ ...s[0] }];
+      for (const r of s.slice(1)) {
+        if (r.start <= m[m.length-1].end) { if (r.end > m[m.length-1].end) m[m.length-1].end = r.end; }
+        else m.push({ ...r });
+      }
+      return m;
+    };
+
+    const _subtract = (blocked, exceptions) => {
+      let res = [...blocked];
+      for (const exc of exceptions) {
+        const next = [];
+        for (const b of res) {
+          if (exc.end <= b.start || exc.start >= b.end) { next.push(b); continue; }
+          if (exc.start > b.start) next.push({ start: b.start, end: exc.start });
+          if (exc.end   < b.end)   next.push({ start: exc.end,  end: b.end   });
+        }
+        res = next;
+      }
+      return res.sort((a, b) => a.start.localeCompare(b.start));
+    };
+
+    // Trim exceptions so they don't override real active (non-cancelled) paid reservations
+    for (const apt of APTS_LIST) {
+      if (newExceptions[apt].length && activePaid[apt].length)
+        newExceptions[apt] = _subtract(newExceptions[apt], activePaid[apt]);
+    }
+
+    const AV_PATH = 'docs/assets/availability.json';
+    const avRes = await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}?ref=${BRANCH}`, {
+      headers: apiHeaders(token), cache: 'no-store',
+    });
+    if (!avRes.ok) return;
+    const avFile = await avRes.json();
+    const avData = JSON.parse(b64ToUtf8(avFile.content));
+
+    for (const apt of APTS_LIST) {
+      const ical    = avData[apt]?.ical || avData[apt]?.blocked || [];
+      const merged  = _merge([...ical, ...newDirect[apt]]);
+      const blocked = _subtract(merged, newExceptions[apt]);
+      avData[apt] = { ...avData[apt], blocked, ical, direct: newDirect[apt], exceptions: newExceptions[apt], updated: new Date().toISOString() };
+    }
+
+    await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}`, {
+      method: 'PUT', headers: apiHeaders(token),
+      body: JSON.stringify({
+        message: 'chore(availability): sync direct+exceptions [skip ci]',
+        content: utf8ToB64(JSON.stringify(avData, null, 2)),
+        sha: avFile.sha, branch: BRANCH,
+      }),
+    });
+  };
+
   // --- Acciones ---
   const saveReservas = async (newReservas, { keepPanelOpen = false } = {}) => {
     setError(null); setSuccess(null);
@@ -3749,7 +3829,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
         sha,
         branch: BRANCH,
       };
-const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
+      const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
         method: 'PUT', headers: apiHeaders(token), body: JSON.stringify(body)
       });
       const j = await r.json();
@@ -3761,6 +3841,7 @@ const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, 
         setSelectedIdx(-1);
         setDraft(null);
       }
+      _syncDirectToAvailability(newReservas).catch(() => {});
     } catch (e) {
       setError('Error guardando: ' + e.message);
     }
