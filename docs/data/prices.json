@@ -490,6 +490,7 @@
       "end": "2026-06-06",
       "nights": 3,
       "type": "discount",
+      "value": 2,
       "lastMinute": true
     }
   }
