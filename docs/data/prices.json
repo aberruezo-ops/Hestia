@@ -1,7 +1,7 @@
 {
   "_doc": "Hestía pricing source of truth. Edited via /admin.html (GitHub PAT). Read by web at runtime via fetch('data/prices.json'). All dates are local Europe/Madrid (no timezone offsets).",
   "version": 1,
-  "updatedAt": "2026-05-24T20:18:18.245Z",
+  "updatedAt": "2026-05-28T20:52:15.444Z",
   "currency": "EUR",
   "apts": {
     "vm": {
@@ -54,25 +54,25 @@
       {
         "from": 2,
         "to": 3,
-        "perNight": 5,
+        "perNight": 4,
         "label": "2 → 3 huéspedes"
       },
       {
         "from": 3,
         "to": 4,
-        "perNight": 5,
+        "perNight": 4,
         "label": "3 → 4 huéspedes"
       },
       {
         "from": 4,
         "to": 5,
-        "perNight": 10,
+        "perNight": 5,
         "label": "4 → 5 huéspedes"
       },
       {
         "from": 5,
         "to": 6,
-        "perNight": 2,
+        "perNight": 3,
         "label": "5 → 6 huéspedes"
       }
     ],
