@@ -483,6 +483,14 @@
       "nights": 9,
       "type": "discount",
       "value": 15
+    },
+    "vt|2026-06-03": {
+      "apt": "vt",
+      "start": "2026-06-03",
+      "end": "2026-06-06",
+      "nights": 3,
+      "type": "discount",
+      "lastMinute": true
     }
   }
 }
