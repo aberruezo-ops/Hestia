@@ -849,6 +849,36 @@ const Compare = ({
 // ================================================================
 // LAST MINUTE STRIP — huecos disponibles en los próximos 45 días
 // ================================================================
+
+// Máximo de noches permitido por temporada entre dos reservas
+const _LM_MAX = {
+  critica: 7,
+  alta: 7,
+  media: 28,
+  baja: 28
+};
+
+// Devuelve la temporada más restrictiva que toca el rango [checkin, checkout)
+const _lmGapSeason = (checkin, checkout) => {
+  const cal = window.PRICES_V2 && window.PRICES_V2.calendar;
+  if (!cal) return 'baja';
+  const PRIORITY = ['critica', 'alta', 'media', 'baja'];
+  // Años que toca el hueco
+  const y1 = parseInt(checkin.slice(0, 4), 10);
+  const y2 = parseInt(checkout.slice(0, 4), 10);
+  const years = y1 === y2 ? [y1] : [y1, y2];
+  for (const season of PRIORITY) {
+    for (const yr of years) {
+      const ranges = cal[yr] && cal[yr].seasons && cal[yr].seasons[season];
+      if (!ranges) continue;
+      for (const [s, e] of ranges) {
+        // El hueco toca esta temporada si hay solapamiento
+        if (checkin < e && checkout > s) return season;
+      }
+    }
+  }
+  return 'baja';
+};
 const LastMinuteStrip = ({
   lang,
   embedded = false
@@ -874,7 +904,8 @@ const LastMinuteStrip = ({
           if (cursor >= horizonStr) break;
           if (block.start > cursor) {
             const nights = Math.round((new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
-            if (nights >= 2) found.push({
+            const season = _lmGapSeason(cursor, block.start);
+            if (nights >= 2 && nights <= _LM_MAX[season]) found.push({
               apt,
               checkin: cursor,
               checkout: block.start,
@@ -885,7 +916,8 @@ const LastMinuteStrip = ({
         }
         if (cursor < horizonStr) {
           const nights = Math.round((new Date(horizonStr + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
-          if (nights >= 2) found.push({
+          const season = _lmGapSeason(cursor, horizonStr);
+          if (nights >= 2 && nights <= _LM_MAX[season]) found.push({
             apt,
             checkin: cursor,
             checkout: horizonStr,
