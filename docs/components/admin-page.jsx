@@ -932,8 +932,9 @@ const CANAL_COLORS = {
 
 function compute2026Stats(reservas) {
   const active = reservas.filter(r => {
+    if (r.cancelada === true) return false;
     const c = (r.cancelacion || '').trim().toUpperCase();
-    return c !== 'CANCELADA';
+    return c !== 'CANCELADA' && c !== 'CANCELADO';
   });
   const cancelled = reservas.length - active.length;
   const noches    = active.reduce((s, r) => s + (r.noches || 0), 0);
@@ -3655,19 +3656,18 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
   // Excluimos 'renta' (sólo presente 2023+, semántica cambia año a año).
   const sum = (list, key) => list.reduce((a, r) => a + (Number(r[key]) || 0), 0);
   const yearMetrics = (list) => {
-    const bruto    = sum(list, 'ingreso_total');
-    const comision = sum(list, 'comision');
-    const limpieza = sum(list, 'gasto_limpieza');
-    const neto     = sum(list, 'bai');
-    const renta    = sum(list, 'renta');
-    const noches   = sum(list, 'noches');
-    // Precio bruto por noche: usar el pre-calculado del Sheet
-    // (precio_bruto_noche). Filtramos nulos y ceros para min/max.
-    const preciosNoche = list
+    const active = list.filter(r => !isCancelada(r));
+    const bruto    = sum(active, 'ingreso_total');
+    const comision = sum(active, 'comision');
+    const limpieza = sum(active, 'gasto_limpieza');
+    const neto     = sum(active, 'bai');
+    const renta    = sum(active, 'renta');
+    const noches   = sum(active, 'noches');
+    const preciosNoche = active
       .map(r => Number(r.precio_bruto_noche))
       .filter(p => p > 0 && Number.isFinite(p));
     return {
-      reservas:  list.length,
+      reservas:  active.length,
       noches,
       bruto, comision, limpieza, neto, renta,
       rentabilidad:  bruto ? neto / bruto : 0,
@@ -3687,9 +3687,9 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
     return { apt, reservas: m.reservas, noches: m.noches, ingreso: m.bruto, bai: m.neto };
   });
 
-  // KPIs por canal (sólo año focal)
+  // KPIs por canal (sólo año focal, sin canceladas)
   const byCanal = {};
-  focusList.forEach(r => {
+  focusList.filter(r => !isCancelada(r)).forEach(r => {
     const c = getCanalKey(r.canal);
     if (!byCanal[c]) byCanal[c] = { count: 0, sum: 0, bai: 0 };
     byCanal[c].count++;
