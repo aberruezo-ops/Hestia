@@ -482,8 +482,7 @@
       "end": "2026-09-08",
       "nights": 9,
       "type": "discount",
-      "value": 15,
-      "lastMinute": true
+      "value": 15
     }
   }
 }
