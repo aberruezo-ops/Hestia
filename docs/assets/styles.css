@@ -19448,6 +19448,15 @@ img[src*="apt-vt-gallery-"] {
 .blk-del:hover { color: #b91c1c; }
 .blk-add { background: none; border: 1px dashed var(--borde); border-radius: 6px; color: var(--gris2); font-size: 13px; padding: 5px 12px; cursor: pointer; margin-top: 4px; }
 .blk-add:hover { border-color: var(--ber); color: var(--ber); }
+.blk-huecos-panel { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--borde); }
+.blk-huecos-controls { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 16px; }
+.blk-sort-group { display: flex; align-items: center; gap: 6px; }
+.blk-sort-label { font-size: 12px; color: var(--gris2); font-weight: 600; }
+.blk-sort-btn { background: none; border: 1px solid var(--borde); border-radius: 5px; color: var(--gris2); font-size: 12px; padding: 3px 10px; cursor: pointer; transition: border-color .15s, color .15s; }
+.blk-sort-btn:hover { border-color: var(--ber); color: var(--ber); }
+.blk-sort-btn.active { border-color: var(--ber); color: var(--ber); background: color-mix(in srgb, var(--ber) 8%, white); font-weight: 600; }
+.blk-huecos-table td:first-child { display: flex; align-items: center; gap: 7px; }
+.blk-apt-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
 /* ── Section Glow Transition (useSectionGlow) ───────────────── */
 .sgt-bar {

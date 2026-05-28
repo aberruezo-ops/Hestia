@@ -3050,7 +3050,120 @@ const BloquesTab = ({
     disabled: saving
   }, saving ? 'Guardando…' : 'Guardar bloqueos'), saveMsg && /*#__PURE__*/React.createElement("span", {
     className: `pe-save-msg${saveMsg.startsWith('Error') ? ' pe-err' : ''}`
-  }, saveMsg)));
+  }, saveMsg)), /*#__PURE__*/React.createElement(HuecosPanel, null));
+};
+
+// ── HuecosPanel ─────────────────────────────────────────────────────────────
+// Huecos disponibles entre reservas, leídos de availability.json.
+// Ordenables por apartamento o por fecha (asc/desc).
+const HuecosPanel = () => {
+  const [slots, setSlots] = React.useState(null);
+  const [sortBy, setSortBy] = React.useState('date-asc');
+  const [filterApt, setFilterApt] = React.useState('all');
+  React.useEffect(() => {
+    fetch('assets/availability.json?t=' + Date.now(), {
+      cache: 'no-store'
+    }).then(r => r.ok ? r.json() : null).then(data => {
+      if (!data) return;
+      const today = new Date().toISOString().slice(0, 10);
+      const APT_LABELS = {
+        vm: 'Mar',
+        vt: 'Thalassa',
+        vs: 'Salinas'
+      };
+      const found = [];
+      for (const aptId of ['vm', 'vt', 'vs']) {
+        const blocked = (data[aptId]?.blocked || []).filter(b => b.end > today).sort((a, b) => a.start.localeCompare(b.start));
+        let cursor = today;
+        for (const block of blocked) {
+          if (block.start > cursor) {
+            const nights = Math.round((new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
+            if (nights >= 1) found.push({
+              aptId,
+              apt: APT_LABELS[aptId],
+              checkin: cursor,
+              checkout: block.start,
+              nights
+            });
+          }
+          if (block.end > cursor) cursor = block.end;
+        }
+      }
+      setSlots(found);
+    }).catch(() => setSlots([]));
+  }, []);
+  if (slots === null) return null;
+  const visible = slots.filter(s => filterApt === 'all' || s.aptId === filterApt).sort((a, b) => {
+    if (sortBy === 'apt') return a.aptId.localeCompare(b.aptId) || a.checkin.localeCompare(b.checkin);
+    if (sortBy === 'date-desc') return b.checkin.localeCompare(a.checkin);
+    return a.checkin.localeCompare(b.checkin);
+  });
+  const fmtDate = ds => {
+    const d = new Date(ds + 'T12:00:00Z');
+    return d.toLocaleDateString('es-ES', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  };
+  const APT_COLOR = {
+    vm: '#3AAABB',
+    vt: '#8A4A24',
+    vs: '#9E7A2C'
+  };
+  const btnCls = key => `blk-sort-btn${sortBy === key ? ' active' : ''}`;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "blk-huecos-panel"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "blk-apt-name",
+    style: {
+      marginTop: '2rem'
+    }
+  }, "Huecos disponibles"), /*#__PURE__*/React.createElement("div", {
+    className: "blk-huecos-controls"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "blk-sort-group"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "blk-sort-label"
+  }, "Ordenar por:"), /*#__PURE__*/React.createElement("button", {
+    className: btnCls('date-asc'),
+    onClick: () => setSortBy('date-asc')
+  }, "Fecha \u2191"), /*#__PURE__*/React.createElement("button", {
+    className: btnCls('date-desc'),
+    onClick: () => setSortBy('date-desc')
+  }, "Fecha \u2193"), /*#__PURE__*/React.createElement("button", {
+    className: btnCls('apt'),
+    onClick: () => setSortBy('apt')
+  }, "Apartamento")), /*#__PURE__*/React.createElement("div", {
+    className: "blk-sort-group"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "blk-sort-label"
+  }, "Filtrar:"), /*#__PURE__*/React.createElement("button", {
+    className: `blk-sort-btn${filterApt === 'all' ? ' active' : ''}`,
+    onClick: () => setFilterApt('all')
+  }, "Todos"), /*#__PURE__*/React.createElement("button", {
+    className: `blk-sort-btn${filterApt === 'vm' ? ' active' : ''}`,
+    onClick: () => setFilterApt('vm')
+  }, "Mar"), /*#__PURE__*/React.createElement("button", {
+    className: `blk-sort-btn${filterApt === 'vt' ? ' active' : ''}`,
+    onClick: () => setFilterApt('vt')
+  }, "Thalassa"), /*#__PURE__*/React.createElement("button", {
+    className: `blk-sort-btn${filterApt === 'vs' ? ' active' : ''}`,
+    onClick: () => setFilterApt('vs')
+  }, "Salinas"))), visible.length === 0 ? /*#__PURE__*/React.createElement("p", {
+    className: "blk-empty"
+  }, "Sin huecos disponibles") : /*#__PURE__*/React.createElement("table", {
+    className: "blk-table blk-huecos-table"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apartamento"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", null, "Noches"))), /*#__PURE__*/React.createElement("tbody", null, visible.map((s, i) => /*#__PURE__*/React.createElement("tr", {
+    key: i
+  }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "blk-apt-dot",
+    style: {
+      background: APT_COLOR[s.aptId]
+    }
+  }), s.apt), /*#__PURE__*/React.createElement("td", null, fmtDate(s.checkin)), /*#__PURE__*/React.createElement("td", null, fmtDate(s.checkout)), /*#__PURE__*/React.createElement("td", {
+    className: "num"
+  }, s.nights))))));
 };
 
 // FacturasTab — Gastos deducibles por año / apartamento

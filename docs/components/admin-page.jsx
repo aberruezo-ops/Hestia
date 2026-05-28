@@ -2516,6 +2516,105 @@ const BloquesTab = ({ token }) => {
         </button>
         {saveMsg && <span className={`pe-save-msg${saveMsg.startsWith('Error') ? ' pe-err' : ''}`}>{saveMsg}</span>}
       </div>
+
+      <HuecosPanel />
+    </div>
+  );
+};
+
+// ── HuecosPanel ─────────────────────────────────────────────────────────────
+// Huecos disponibles entre reservas, leídos de availability.json.
+// Ordenables por apartamento o por fecha (asc/desc).
+const HuecosPanel = () => {
+  const [slots,   setSlots]   = React.useState(null);
+  const [sortBy,  setSortBy]  = React.useState('date-asc');
+  const [filterApt, setFilterApt] = React.useState('all');
+
+  React.useEffect(() => {
+    fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data) return;
+        const today = new Date().toISOString().slice(0, 10);
+        const APT_LABELS = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
+        const found = [];
+        for (const aptId of ['vm', 'vt', 'vs']) {
+          const blocked = (data[aptId]?.blocked || [])
+            .filter(b => b.end > today)
+            .sort((a, b) => a.start.localeCompare(b.start));
+          let cursor = today;
+          for (const block of blocked) {
+            if (block.start > cursor) {
+              const nights = Math.round(
+                (new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000
+              );
+              if (nights >= 1) found.push({ aptId, apt: APT_LABELS[aptId], checkin: cursor, checkout: block.start, nights });
+            }
+            if (block.end > cursor) cursor = block.end;
+          }
+        }
+        setSlots(found);
+      })
+      .catch(() => setSlots([]));
+  }, []);
+
+  if (slots === null) return null;
+
+  const visible = slots
+    .filter(s => filterApt === 'all' || s.aptId === filterApt)
+    .sort((a, b) => {
+      if (sortBy === 'apt')      return a.aptId.localeCompare(b.aptId) || a.checkin.localeCompare(b.checkin);
+      if (sortBy === 'date-desc') return b.checkin.localeCompare(a.checkin);
+      return a.checkin.localeCompare(b.checkin);
+    });
+
+  const fmtDate = ds => {
+    const d = new Date(ds + 'T12:00:00Z');
+    return d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
+  };
+
+  const APT_COLOR = { vm: '#3AAABB', vt: '#8A4A24', vs: '#9E7A2C' };
+  const btnCls = (key) => `blk-sort-btn${sortBy === key ? ' active' : ''}`;
+
+  return (
+    <div className="blk-huecos-panel">
+      <h3 className="blk-apt-name" style={{ marginTop: '2rem' }}>Huecos disponibles</h3>
+
+      <div className="blk-huecos-controls">
+        <div className="blk-sort-group">
+          <span className="blk-sort-label">Ordenar por:</span>
+          <button className={btnCls('date-asc')}  onClick={() => setSortBy('date-asc')}>Fecha ↑</button>
+          <button className={btnCls('date-desc')} onClick={() => setSortBy('date-desc')}>Fecha ↓</button>
+          <button className={btnCls('apt')}        onClick={() => setSortBy('apt')}>Apartamento</button>
+        </div>
+        <div className="blk-sort-group">
+          <span className="blk-sort-label">Filtrar:</span>
+          <button className={`blk-sort-btn${filterApt==='all'?' active':''}`} onClick={() => setFilterApt('all')}>Todos</button>
+          <button className={`blk-sort-btn${filterApt==='vm'?' active':''}`}  onClick={() => setFilterApt('vm')}>Mar</button>
+          <button className={`blk-sort-btn${filterApt==='vt'?' active':''}`}  onClick={() => setFilterApt('vt')}>Thalassa</button>
+          <button className={`blk-sort-btn${filterApt==='vs'?' active':''}`}  onClick={() => setFilterApt('vs')}>Salinas</button>
+        </div>
+      </div>
+
+      {visible.length === 0 ? (
+        <p className="blk-empty">Sin huecos disponibles</p>
+      ) : (
+        <table className="blk-table blk-huecos-table">
+          <thead>
+            <tr><th>Apartamento</th><th>Entrada</th><th>Salida</th><th>Noches</th></tr>
+          </thead>
+          <tbody>
+            {visible.map((s, i) => (
+              <tr key={i}>
+                <td><span className="blk-apt-dot" style={{ background: APT_COLOR[s.aptId] }} />{s.apt}</td>
+                <td>{fmtDate(s.checkin)}</td>
+                <td>{fmtDate(s.checkout)}</td>
+                <td className="num">{s.nights}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
@@ -4185,6 +4284,9 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
         )}
 
         {/* ───── KPIs del año focal ───── */}
+        {/* TODO: revisar ratios — comisionPct, rentabilidad y brutoPorNoche
+            pueden estar mal cuando hay reservas sin datos de comisión o bai.
+            Verificar con datos reales antes de publicar. */}
         <div className="rv-dashboard">
           <KpiCard label={`Reservas ${focusYear}`} value={kFocus.reservas} sub={`${kFocus.noches} noches`} />
           <KpiCard label="Bruto" accent="#B86A3C" value={fmtEur(kFocus.bruto)} sub={`${fmtEur(kFocus.brutoPorNoche)}/noche medio`} />
