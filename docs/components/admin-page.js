@@ -4729,16 +4729,12 @@ const ReservasTab = ({
       const c = (r.cancelacion || '').trim().toUpperCase();
       return c === 'CANCELADA' || c === 'CANCELADO';
     };
-
-    // Bloques directos: todas las reservas activas, sin importar canal,
-    // porque las de Airbnb/Booking también están en sus iCals y el merge
-    // las deduplica. Incluimos todas para no perder canales fuera de iCal.
-    const directBlocks = Object.fromEntries(APTS_LIST.map(a => [a, []]));
+    const newDirect = Object.fromEntries(APTS_LIST.map(a => [a, []]));
     for (const r of allReservas) {
       if (_isCxl2(r)) continue;
       const apt = (r.apt || '').toLowerCase();
       if (!APTS_LIST.includes(apt) || !r.entrada || !r.salida) continue;
-      directBlocks[apt].push({
+      newDirect[apt].push({
         start: r.entrada,
         end: r.salida
       });
@@ -4770,13 +4766,14 @@ const ReservasTab = ({
     if (!avRes.ok) return;
     const avFile = await avRes.json();
     const avData = JSON.parse(b64ToUtf8(avFile.content));
-
-    // Merge bloques directos con los ya existentes (de iCal)
     for (const apt of APTS_LIST) {
-      const existing = avData[apt]?.blocked || [];
+      const ical = avData[apt]?.ical || avData[apt]?.blocked || [];
+      const newBlocked = _mergeSorted([...ical, ...newDirect[apt]]);
       avData[apt] = {
         ...avData[apt],
-        blocked: _mergeSorted([...existing, ...directBlocks[apt]])
+        blocked: newBlocked,
+        ical,
+        direct: newDirect[apt]
       };
     }
     await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}`, {

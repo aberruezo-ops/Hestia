@@ -27,7 +27,6 @@ SOURCES      = ["airbnb", "booking"]
 LOOKAHEAD    = 548   # ~18 months
 OUTPUT       = Path(__file__).parents[2] / "docs" / "assets" / "availability.json"
 PRICES_JSON  = Path(__file__).parents[2] / "docs" / "data" / "prices.json"
-RESERVAS_JSON= Path(__file__).parents[2] / "data-private" / "reservas.json"
 DEBUG_DIR    = Path(__file__).parents[2] / "docs" / "assets" / "ical-debug"
 
 HEADERS = {
@@ -191,43 +190,6 @@ def load_manual_blocks() -> dict[str, list[dict]]:
         return {}
 
 
-def load_direct_reservas() -> dict[str, list[dict]]:
-    """Load direct bookings (canal=Directo/Directa) from data-private/reservas.json.
-    Cancelled reservations are excluded regardless of canal."""
-    try:
-        if not RESERVAS_JSON.exists():
-            print("  data-private/reservas.json not found — skipping direct bookings")
-            return {}
-        data = json.loads(RESERVAS_JSON.read_text(encoding="utf-8"))
-        reservas = data.get("reservas", [])
-        blocks: dict[str, list[dict]] = {}
-        count = 0
-        skipped_cancel = 0
-        for r in reservas:
-            # Skip cancelled reservations — they no longer occupy the dates
-            cancelacion = (r.get("cancelacion") or "").strip().upper()
-            if cancelacion in ("CANCELADA", "CANCELADO"):
-                skipped_cancel += 1
-                continue
-            canal = (r.get("canal") or "").strip().lower()
-            if canal not in ("directo", "directa"):
-                continue
-            apt   = r.get("apt", "").strip().lower()
-            start = (r.get("entrada") or "").strip()
-            end   = (r.get("salida") or "").strip()
-            if not apt or not start or not end or apt not in APTS:
-                continue
-            blocks.setdefault(apt, []).append({"start": start, "end": end})
-            count += 1
-        print(f"Direct bookings from reservas.json: {count} included, {skipped_cancel} cancelled skipped")
-        for apt, bl in blocks.items():
-            for b in bl:
-                print(f"  {apt}: {b['start']} → {b['end']}")
-        return blocks
-    except Exception as e:
-        print(f"Warning: could not load direct bookings from reservas.json: {e}")
-        return {}
-
 
 def main() -> None:
     today  = date.today().isoformat()
@@ -238,8 +200,14 @@ def main() -> None:
     print(f"Sync — today={today}  cutoff={cutoff}  lookahead={LOOKAHEAD}d\n")
 
     manual_blocks  = load_manual_blocks()
-    direct_blocks  = load_direct_reservas()
     print()
+
+    prev_avail = {}
+    if OUTPUT.exists():
+        try:
+            prev_avail = json.loads(OUTPUT.read_text(encoding="utf-8"))
+        except Exception:
+            pass
 
     for apt in APTS:
         all_ranges   = []
@@ -282,25 +250,20 @@ def main() -> None:
             print(f"  {apt}: adding {len(apt_manual)} manual block(s)")
             all_ranges.extend(apt_manual)
 
-        # Merge direct bookings from reservas.json (canal=Directo/Directa)
-        apt_direct = [
-            {"start": b["start"], "end": b["end"]}
-            for b in direct_blocks.get(apt, [])
-            if b["end"] > today and b["start"] <= cutoff
-        ]
-        if apt_direct:
-            print(f"  {apt}: adding {len(apt_direct)} direct booking block(s)")
-            all_ranges.extend(apt_direct)
+        ical_blocks = merge(all_ranges)
+        prev_direct = prev_avail.get(apt, {}).get("direct", [])
+        final_blocked = merge(ical_blocks + prev_direct)
 
-        merged = merge(all_ranges)
         result[apt] = {
-            "blocked":      merged,
+            "blocked":      final_blocked,
+            "ical":         ical_blocks,
+            "direct":       prev_direct,
             "updated":      datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
             "sources":      sources_ok,
             "fetch_errors": fetch_errors,
             "demo":         False,
         }
-        print(f"  {apt}: {len(merged)} merged block(s) from {sources_ok or 'none'}\n")
+        print(f"  {apt}: {len(final_blocked)} merged block(s) ({len(ical_blocks)} ical + {len(prev_direct)} direct) from {sources_ok or 'none'}\n")
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT, "w", encoding="utf-8") as fh:
