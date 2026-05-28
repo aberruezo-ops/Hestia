@@ -3657,21 +3657,25 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
   // Limpieza = gasto_limpieza (pago a equipo de limpieza).
   // Neto = bai (Beneficio Antes Impuestos, según hoja Hestía).
   // Excluimos 'renta' (sólo presente 2023+, semántica cambia año a año).
+  // Las canceladas nunca se computan en métricas financieras.
+  const _rxlCxl = r => {
+    const c = (r.cancelacion || '').trim().toUpperCase();
+    return c === 'CANCELADA' || c === 'CANCELADO';
+  };
   const sum = (list, key) => list.reduce((a, r) => a + (Number(r[key]) || 0), 0);
   const yearMetrics = (list) => {
-    const bruto    = sum(list, 'ingreso_total');
-    const comision = sum(list, 'comision');
-    const limpieza = sum(list, 'gasto_limpieza');
-    const neto     = sum(list, 'bai');
-    const renta    = sum(list, 'renta');
-    const noches   = sum(list, 'noches');
-    // Precio bruto por noche: usar el pre-calculado del Sheet
-    // (precio_bruto_noche). Filtramos nulos y ceros para min/max.
-    const preciosNoche = list
+    const active = list.filter(r => !_rxlCxl(r));
+    const bruto    = sum(active, 'ingreso_total');
+    const comision = sum(active, 'comision');
+    const limpieza = sum(active, 'gasto_limpieza');
+    const neto     = sum(active, 'bai');
+    const renta    = sum(active, 'renta');
+    const noches   = sum(active, 'noches');
+    const preciosNoche = active
       .map(r => Number(r.precio_bruto_noche))
       .filter(p => p > 0 && Number.isFinite(p));
     return {
-      reservas:  list.length,
+      reservas:  active.length,
       noches,
       bruto, comision, limpieza, neto, renta,
       rentabilidad:  bruto ? neto / bruto : 0,
@@ -3693,7 +3697,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
 
   // KPIs por canal (sólo año focal)
   const byCanal = {};
-  focusList.forEach(r => {
+  focusList.filter(r => !_rxlCxl(r)).forEach(r => {
     const c = getCanalKey(r.canal);
     if (!byCanal[c]) byCanal[c] = { count: 0, sum: 0, bai: 0 };
     byCanal[c].count++;
@@ -4056,7 +4060,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
 
       <div className="pe-card rv-card">
         <div className="rv-head">
-          <h2>🗓️ Reservas <span className="rv-count">· año {focusYear} · {focusList.length} reservas · actualizado {data.updatedAt ? data.updatedAt.slice(0,10) : '—'}</span></h2>
+          <h2>🗓️ Reservas <span className="rv-count">· año {focusYear} · {kFocus.reservas} reservas · actualizado {data.updatedAt ? data.updatedAt.slice(0,10) : '—'}</span></h2>
           <div className="rv-head-actions">
             <button type="button" className="pe-btn pe-btn-ghost" onClick={loadData} disabled={loading}>
               {loading ? 'Recargando…' : 'Recargar'}

@@ -4635,19 +4635,23 @@ const ReservasTab = ({
   // Limpieza = gasto_limpieza (pago a equipo de limpieza).
   // Neto = bai (Beneficio Antes Impuestos, según hoja Hestía).
   // Excluimos 'renta' (sólo presente 2023+, semántica cambia año a año).
+  // Las canceladas nunca se computan en métricas financieras.
+  const _rxlCxl = r => {
+    const c = (r.cancelacion || '').trim().toUpperCase();
+    return c === 'CANCELADA' || c === 'CANCELADO';
+  };
   const sum = (list, key) => list.reduce((a, r) => a + (Number(r[key]) || 0), 0);
   const yearMetrics = list => {
-    const bruto = sum(list, 'ingreso_total');
-    const comision = sum(list, 'comision');
-    const limpieza = sum(list, 'gasto_limpieza');
-    const neto = sum(list, 'bai');
-    const renta = sum(list, 'renta');
-    const noches = sum(list, 'noches');
-    // Precio bruto por noche: usar el pre-calculado del Sheet
-    // (precio_bruto_noche). Filtramos nulos y ceros para min/max.
-    const preciosNoche = list.map(r => Number(r.precio_bruto_noche)).filter(p => p > 0 && Number.isFinite(p));
+    const active = list.filter(r => !_rxlCxl(r));
+    const bruto = sum(active, 'ingreso_total');
+    const comision = sum(active, 'comision');
+    const limpieza = sum(active, 'gasto_limpieza');
+    const neto = sum(active, 'bai');
+    const renta = sum(active, 'renta');
+    const noches = sum(active, 'noches');
+    const preciosNoche = active.map(r => Number(r.precio_bruto_noche)).filter(p => p > 0 && Number.isFinite(p));
     return {
-      reservas: list.length,
+      reservas: active.length,
       noches,
       bruto,
       comision,
@@ -4679,7 +4683,7 @@ const ReservasTab = ({
 
   // KPIs por canal (sólo año focal)
   const byCanal = {};
-  focusList.forEach(r => {
+  focusList.filter(r => !_rxlCxl(r)).forEach(r => {
     const c = getCanalKey(r.canal);
     if (!byCanal[c]) byCanal[c] = {
       count: 0,
@@ -5069,7 +5073,7 @@ const ReservasTab = ({
     className: "rv-head"
   }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDDD3\uFE0F Reservas ", /*#__PURE__*/React.createElement("span", {
     className: "rv-count"
-  }, "\xB7 a\xF1o ", focusYear, " \xB7 ", focusList.length, " reservas \xB7 actualizado ", data.updatedAt ? data.updatedAt.slice(0, 10) : '—')), /*#__PURE__*/React.createElement("div", {
+  }, "\xB7 a\xF1o ", focusYear, " \xB7 ", kFocus.reservas, " reservas \xB7 actualizado ", data.updatedAt ? data.updatedAt.slice(0, 10) : '—')), /*#__PURE__*/React.createElement("div", {
     className: "rv-head-actions"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
