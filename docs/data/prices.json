@@ -442,5 +442,13 @@
     "vm": [],
     "vt": [],
     "vs": []
+  },
+  "specialOffer": {
+    "active": false,
+    "text_es": "",
+    "text_en": "",
+    "cta_es": "Consultar disponibilidad →",
+    "cta_en": "Check availability →",
+    "expires": null
   }
 }
