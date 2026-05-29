@@ -5,6 +5,43 @@
 // useScrollMode y useReveal viven en shared.jsx
 // ================================================================
 
+const OfertaBanner = ({
+  lang
+}) => {
+  const offer = window.PRICES_V2 && window.PRICES_V2.specialOffer;
+  const [dismissed, setDismissed] = React.useState(() => {
+    try {
+      return sessionStorage.getItem('hestia-offer-dismissed') === '1';
+    } catch (_) {
+      return false;
+    }
+  });
+  if (!offer || !offer.active || dismissed) return null;
+  if (offer.expires && new Date().toISOString().slice(0, 10) > offer.expires) return null;
+  const text = lang === 'en' ? offer.text_en || offer.text_es : offer.text_es;
+  const cta = lang === 'en' ? offer.cta_en || offer.cta_es : offer.cta_es;
+  if (!text) return null;
+  const dismiss = () => {
+    try {
+      sessionStorage.setItem('hestia-offer-dismissed', '1');
+    } catch (_) {}
+    setDismissed(true);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "oferta-banner",
+    role: "alert"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "oferta-text"
+  }, text), cta && /*#__PURE__*/React.createElement("a", {
+    href: "reservas.html",
+    className: "oferta-cta"
+  }, cta), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "oferta-close",
+    onClick: dismiss,
+    "aria-label": "Cerrar"
+  }, "\xD7"));
+};
 const App = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
   const {
@@ -62,6 +99,8 @@ const App = () => {
   }), /*#__PURE__*/React.createElement("main", null, /*#__PURE__*/React.createElement(Hero, {
     lang: lang
   }), typeof LastMinuteStrip !== 'undefined' && /*#__PURE__*/React.createElement(LastMinuteStrip, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(OfertaBanner, {
     lang: lang
   }), /*#__PURE__*/React.createElement(FraseHogar, {
     lang: lang

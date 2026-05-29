@@ -2763,6 +2763,14 @@ const APT_NAMES = {
   vt: 'Thalassa',
   vs: 'Salinas'
 };
+// Links directos de reseña de Google Business Profile.
+// Obtener desde GBP → "Solicitar reseñas" → copiar enlace.
+// Formato: https://g.page/r/XXXXXXXXXXXXXXXX/review
+const GOOGLE_REVIEW_LINKS = {
+  vm: '',
+  vt: '',
+  vs: ''
+};
 // Colores reales de marca (Hestía brandbook):
 //   Mar      → #6B7A3A verde olivo (olivar de Vera Playa)
 //   Thalassa → #B86A3C teja        (Desierto de Tabernas)
@@ -3060,6 +3068,18 @@ const HuecosPanel = () => {
   const [slots, setSlots] = React.useState(null);
   const [sortBy, setSortBy] = React.useState('date-asc');
   const [filterApt, setFilterApt] = React.useState('all');
+  const [basePrices, setBasePrices] = React.useState({});
+  React.useEffect(() => {
+    fetch('data/prices.json?t=' + Date.now(), {
+      cache: 'no-store'
+    }).then(r => r.ok ? r.json() : null).then(d => {
+      if (d && d.apts) setBasePrices({
+        vm: d.apts.vm?.base,
+        vt: d.apts.vt?.base,
+        vs: d.apts.vs?.base
+      });
+    }).catch(() => {});
+  }, []);
   React.useEffect(() => {
     fetch('assets/availability.json?t=' + Date.now(), {
       cache: 'no-store'
@@ -3105,6 +3125,13 @@ const HuecosPanel = () => {
     vs: '#9E7A2C'
   };
   const btnCls = key => `blk-sort-btn${sortBy === key ? ' active' : ''}`;
+  const shareHueco = s => {
+    const base = basePrices[s.aptId];
+    const bookingUrl = `https://www.hestiayourhome.com/reservas.html?apt=${s.aptId}&checkin=${s.checkin}&checkout=${s.checkout}`;
+    const lines = [`🏠 Hestía ${s.apt} disponible`, `📅 ${fmtDate(s.checkin)} → ${fmtDate(s.checkout)} · ${s.nights} noches`, base ? `💶 Desde ${base}€/noche · precio directo garantizado` : '', `✓ Sin comisiones · reserva directa:`, bookingUrl].filter(Boolean);
+    const waUrl = `https://wa.me/?text=${encodeURIComponent(lines.join('\n'))}`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
+  };
   return /*#__PURE__*/React.createElement("div", {
     className: "blk-huecos-panel"
   }, /*#__PURE__*/React.createElement("h3", {
@@ -3147,7 +3174,7 @@ const HuecosPanel = () => {
     className: "blk-empty"
   }, "Sin huecos disponibles") : /*#__PURE__*/React.createElement("table", {
     className: "blk-table blk-huecos-table"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apartamento"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", null, "Noches"))), /*#__PURE__*/React.createElement("tbody", null, visible.map((s, i) => /*#__PURE__*/React.createElement("tr", {
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apartamento"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", null, "Noches"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, visible.map((s, i) => /*#__PURE__*/React.createElement("tr", {
     key: i
   }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "blk-apt-dot",
@@ -3156,7 +3183,11 @@ const HuecosPanel = () => {
     }
   }), s.apt), /*#__PURE__*/React.createElement("td", null, fmtDate(s.checkin)), /*#__PURE__*/React.createElement("td", null, fmtDate(s.checkout)), /*#__PURE__*/React.createElement("td", {
     className: "num"
-  }, s.nights))))));
+  }, s.nights), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
+    className: "blk-share-btn",
+    onClick: () => shareHueco(s),
+    title: "Compartir por WhatsApp"
+  }, "\uD83D\uDCE4")))))));
 };
 
 // FacturasTab — Gastos deducibles por año / apartamento
@@ -4147,7 +4178,7 @@ const LeilaTab = ({
         className: "leila-guest"
       }, r.responsable || '—'), /*#__PURE__*/React.createElement("td", {
         className: "leila-dates"
-      }, r.entrada, r.salida ? ` · ${r.salida}` : ''), /*#__PURE__*/React.createElement("td", {
+      }, fmtDate(r.entrada), r.salida ? ` · ${fmtDate(r.salida)}` : ''), /*#__PURE__*/React.createElement("td", {
         className: "num"
       }, r.noches || '—'), /*#__PURE__*/React.createElement("td", {
         className: "num"
@@ -5911,7 +5942,7 @@ const ReservasTab = ({
     const liveOverlap = draft && findOverlap(draft, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
     return liveOverlap ? /*#__PURE__*/React.createElement("div", {
       className: "rv-overlap-warn"
-    }, "\u26A0 Solape con ", liveOverlap.responsable || '—', " (", liveOverlap.entrada, " \u2192 ", liveOverlap.salida, ") en ", liveOverlap.apt?.toUpperCase() || '—') : null;
+    }, "\u26A0 Solape con ", liveOverlap.responsable || '—', " (", fmtDate(liveOverlap.entrada), " \u2192 ", fmtDate(liveOverlap.salida), ") en ", liveOverlap.apt?.toUpperCase() || '—') : null;
   })(), /*#__PURE__*/React.createElement("footer", {
     className: "rv-edit-foot"
   }, /*#__PURE__*/React.createElement("div", {
@@ -5946,7 +5977,21 @@ const ReservasTab = ({
     type: "button",
     className: "pe-btn pe-btn-ghost rv-foot-btn",
     onClick: duplicateRow
-  }, "Duplicar")), /*#__PURE__*/React.createElement("div", {
+  }, "Duplicar"), draft && draft.telefono && draft.salida && draft.salida < today && !isCancelada(draft) && (() => {
+    const apt = APT_NAMES[draft.apt] || draft.apt;
+    const reviewLink = GOOGLE_REVIEW_LINKS[draft.apt] || `https://www.google.com/maps/search/Hestia+${encodeURIComponent(apt)}+Vera+Playa`;
+    const nombre = (draft.responsable || '').split(' ')[0] || 'Hola';
+    const msg = `Hola ${nombre}, ha sido un placer tenerte en Hestía ${apt}. Si tu estancia fue de tu agrado, nos ayudaría muchísimo una reseña en Google: ${reviewLink}\n¡Gracias de corazón! Alex y Fran · Hestía Your Home`;
+    const tel = draft.telefono.replace(/[\s\-().]/g, '');
+    const waUrl = `https://wa.me/${tel.startsWith('+') ? tel.slice(1) : tel.startsWith('00') ? tel.slice(2) : '34' + tel}?text=${encodeURIComponent(msg)}`;
+    return /*#__PURE__*/React.createElement("a", {
+      href: waUrl,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "pe-btn pe-btn-ghost rv-foot-btn",
+      title: "Pedir rese\xF1a Google por WhatsApp"
+    }, "\u2B50 Rese\xF1a");
+  })()), /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-foot-row2"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -6980,6 +7025,69 @@ const AdminApp = () => {
     calErr: calErr,
     seasons: data.seasons
   }), /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("h2", null, "Oferta especial"), /*#__PURE__*/React.createElement("p", {
+    className: "pe-lede"
+  }, "Cuando est\xE1 activa, aparece un banner en la homepage y en la p\xE1gina de reservas. \xDAtil para temporada baja, \xFAltimas plazas o descuentos puntuales."), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field",
+    style: {
+      marginBottom: 12
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 10,
+      cursor: 'pointer'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: !!(data.specialOffer && data.specialOffer.active),
+    onChange: e => update('specialOffer.active', e.target.checked)
+  }), /*#__PURE__*/React.createElement("span", null, "Activar banner de oferta en la web"))), data.specialOffer && data.specialOffer.active && /*#__PURE__*/React.createElement("div", {
+    className: "pe-grid"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Texto del banner (ES)"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    className: "pe-input",
+    value: data.specialOffer.text_es || '',
+    onChange: e => update('specialOffer.text_es', e.target.value),
+    placeholder: "Ej. Tarifa especial de temporada baja \xB7 hasta un 20% menos"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Texto del banner (EN)"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    className: "pe-input",
+    value: data.specialOffer.text_en || '',
+    onChange: e => update('specialOffer.text_en', e.target.value),
+    placeholder: "Ex. Low-season special offer \xB7 up to 20% off"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "CTA (ES)"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    className: "pe-input",
+    value: data.specialOffer.cta_es || '',
+    onChange: e => update('specialOffer.cta_es', e.target.value),
+    placeholder: "Consultar disponibilidad \u2192"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "CTA (EN)"), /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    className: "pe-input",
+    value: data.specialOffer.cta_en || '',
+    onChange: e => update('specialOffer.cta_en', e.target.value),
+    placeholder: "Check availability \u2192"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "V\xE1lido hasta (YYYY-MM-DD)"), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    className: "pe-input",
+    value: data.specialOffer.expires || '',
+    onChange: e => update('specialOffer.expires', e.target.value || null)
+  }), /*#__PURE__*/React.createElement("small", {
+    className: "pe-hint"
+  }, "Opcional. Tras esta fecha el banner desaparece autom\xE1ticamente.")))), /*#__PURE__*/React.createElement("div", {
     className: "pe-actions"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: save,

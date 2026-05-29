@@ -19457,6 +19457,17 @@ img[src*="apt-vt-gallery-"] {
 .blk-sort-btn.active { border-color: var(--ber); color: var(--ber); background: color-mix(in srgb, var(--ber) 8%, white); font-weight: 600; }
 .blk-huecos-table td:first-child { display: flex; align-items: center; gap: 7px; }
 .blk-apt-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.blk-share-btn { background: none; border: 1px solid var(--borde); border-radius: 5px; padding: 3px 8px; cursor: pointer; font-size: 13px; transition: border-color .15s; }
+.blk-share-btn:hover { border-color: var(--ber); }
+
+/* ── Oferta especial · banner homepage ── */
+.oferta-banner { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; background: var(--ber-dk, #2A0F2E); color: #fff; padding: 14px 20px; position: relative; }
+.oferta-text { flex: 1; font-size: 14px; font-weight: 500; min-width: 180px; }
+.oferta-cta { flex-shrink: 0; font-size: 13px; font-weight: 600; color: var(--sol, #D4A84A); text-decoration: underline; white-space: nowrap; }
+.oferta-cta:hover { opacity: .8; }
+.oferta-close { flex-shrink: 0; background: none; border: none; color: rgba(255,255,255,.6); font-size: 20px; line-height: 1; cursor: pointer; padding: 0 4px; }
+.oferta-close:hover { color: #fff; }
+@media (max-width: 480px) { .oferta-banner { gap: 10px; padding: 12px 14px; } .oferta-text { font-size: 13px; } }
 
 /* ── Section Glow Transition (useSectionGlow) ───────────────── */
 .sgt-bar {

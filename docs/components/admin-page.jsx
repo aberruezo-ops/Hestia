@@ -2275,6 +2275,14 @@ const RESERVAS_PATH    = 'reservas.json';
 const PRERESERVAS_PATH = 'docs/data/prereservas.json';
 
 const APT_NAMES   = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
+// Links directos de reseña de Google Business Profile.
+// Obtener desde GBP → "Solicitar reseñas" → copiar enlace.
+// Formato: https://g.page/r/XXXXXXXXXXXXXXXX/review
+const GOOGLE_REVIEW_LINKS = {
+  vm: '',
+  vt: '',
+  vs: '',
+};
 // Colores reales de marca (Hestía brandbook):
 //   Mar      → #6B7A3A verde olivo (olivar de Vera Playa)
 //   Thalassa → #B86A3C teja        (Desierto de Tabernas)
@@ -2529,6 +2537,16 @@ const HuecosPanel = () => {
   const [slots,   setSlots]   = React.useState(null);
   const [sortBy,  setSortBy]  = React.useState('date-asc');
   const [filterApt, setFilterApt] = React.useState('all');
+  const [basePrices, setBasePrices] = React.useState({});
+
+  React.useEffect(() => {
+    fetch('data/prices.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (d && d.apts) setBasePrices({ vm: d.apts.vm?.base, vt: d.apts.vt?.base, vs: d.apts.vs?.base });
+      })
+      .catch(() => {});
+  }, []);
 
   React.useEffect(() => {
     fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
@@ -2573,6 +2591,20 @@ const HuecosPanel = () => {
   const APT_COLOR = { vm: '#3AAABB', vt: '#8A4A24', vs: '#9E7A2C' };
   const btnCls = (key) => `blk-sort-btn${sortBy === key ? ' active' : ''}`;
 
+  const shareHueco = (s) => {
+    const base = basePrices[s.aptId];
+    const bookingUrl = `https://www.hestiayourhome.com/reservas.html?apt=${s.aptId}&checkin=${s.checkin}&checkout=${s.checkout}`;
+    const lines = [
+      `🏠 Hestía ${s.apt} disponible`,
+      `📅 ${fmtDate(s.checkin)} → ${fmtDate(s.checkout)} · ${s.nights} noches`,
+      base ? `💶 Desde ${base}€/noche · precio directo garantizado` : '',
+      `✓ Sin comisiones · reserva directa:`,
+      bookingUrl,
+    ].filter(Boolean);
+    const waUrl = `https://wa.me/?text=${encodeURIComponent(lines.join('\n'))}`;
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="blk-huecos-panel">
       <h3 className="blk-apt-name" style={{ marginTop: '2rem' }}>Huecos disponibles</h3>
@@ -2598,7 +2630,7 @@ const HuecosPanel = () => {
       ) : (
         <table className="blk-table blk-huecos-table">
           <thead>
-            <tr><th>Apartamento</th><th>Entrada</th><th>Salida</th><th>Noches</th></tr>
+            <tr><th>Apartamento</th><th>Entrada</th><th>Salida</th><th>Noches</th><th></th></tr>
           </thead>
           <tbody>
             {visible.map((s, i) => (
@@ -2607,6 +2639,11 @@ const HuecosPanel = () => {
                 <td>{fmtDate(s.checkin)}</td>
                 <td>{fmtDate(s.checkout)}</td>
                 <td className="num">{s.nights}</td>
+                <td>
+                  <button className="blk-share-btn" onClick={() => shareHueco(s)} title="Compartir por WhatsApp">
+                    📤
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -3354,7 +3391,7 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
                       <tr key={r._idx}>
                         <td className="leila-apt">{APT_LABEL[r.apt] || r.apt}</td>
                         <td className="leila-guest">{r.responsable || '—'}</td>
-                        <td className="leila-dates">{r.entrada}{r.salida ? ` · ${r.salida}` : ''}</td>
+                        <td className="leila-dates">{fmtDate(r.entrada)}{r.salida ? ` · ${fmtDate(r.salida)}` : ''}</td>
                         <td className="num">{r.noches || '—'}</td>
                         <td className="num">{r.ingreso_total != null ? `${r.ingreso_total} €` : '—'}</td>
                         <td className="num">{r.bai != null ? `${r.bai} €` : '—'}</td>
@@ -4729,7 +4766,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
               const liveOverlap = draft && findOverlap(draft, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
               return liveOverlap ? (
                 <div className="rv-overlap-warn">
-                  ⚠ Solape con {liveOverlap.responsable || '—'} ({liveOverlap.entrada} → {liveOverlap.salida}) en {liveOverlap.apt?.toUpperCase() || '—'}
+                  ⚠ Solape con {liveOverlap.responsable || '—'} ({fmtDate(liveOverlap.entrada)} → {fmtDate(liveOverlap.salida)}) en {liveOverlap.apt?.toUpperCase() || '—'}
                 </div>
               ) : null;
             })()}
@@ -4753,6 +4790,21 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                 {selectedIdx >= 0 && selectedIdx < reservas.length && (
                   <button type="button" className="pe-btn pe-btn-ghost rv-foot-btn" onClick={duplicateRow}>Duplicar</button>
                 )}
+                {draft && draft.telefono && draft.salida && draft.salida < today && !isCancelada(draft) && (() => {
+                  const apt = APT_NAMES[draft.apt] || draft.apt;
+                  const reviewLink = GOOGLE_REVIEW_LINKS[draft.apt] ||
+                    `https://www.google.com/maps/search/Hestia+${encodeURIComponent(apt)}+Vera+Playa`;
+                  const nombre = (draft.responsable || '').split(' ')[0] || 'Hola';
+                  const msg = `Hola ${nombre}, ha sido un placer tenerte en Hestía ${apt}. Si tu estancia fue de tu agrado, nos ayudaría muchísimo una reseña en Google: ${reviewLink}\n¡Gracias de corazón! Alex y Fran · Hestía Your Home`;
+                  const tel = draft.telefono.replace(/[\s\-().]/g, '');
+                  const waUrl = `https://wa.me/${tel.startsWith('+') ? tel.slice(1) : tel.startsWith('00') ? tel.slice(2) : '34' + tel}?text=${encodeURIComponent(msg)}`;
+                  return (
+                    <a href={waUrl} target="_blank" rel="noopener noreferrer"
+                       className="pe-btn pe-btn-ghost rv-foot-btn" title="Pedir reseña Google por WhatsApp">
+                      ⭐ Reseña
+                    </a>
+                  );
+                })()}
               </div>
               <div className="rv-edit-foot-row2">
                 <button type="button" className="pe-btn pe-btn-ghost rv-foot-btn" onClick={cancelDraft}>Cancelar</button>
@@ -5670,6 +5722,63 @@ const AdminApp = () => {
         calErr={calErr}
         seasons={data.seasons}
       />
+
+      {/* ── Oferta especial ── */}
+      <div className="pe-card">
+        <h2>Oferta especial</h2>
+        <p className="pe-lede">
+          Cuando está activa, aparece un banner en la homepage y en la página de reservas.
+          Útil para temporada baja, últimas plazas o descuentos puntuales.
+        </p>
+        <div className="pe-field" style={{marginBottom: 12}}>
+          <label style={{display:'flex', alignItems:'center', gap: 10, cursor:'pointer'}}>
+            <input type="checkbox"
+              checked={!!(data.specialOffer && data.specialOffer.active)}
+              onChange={e => update('specialOffer.active', e.target.checked)}
+            />
+            <span>Activar banner de oferta en la web</span>
+          </label>
+        </div>
+        {data.specialOffer && data.specialOffer.active && (
+          <div className="pe-grid">
+            <div className="pe-field">
+              <label>Texto del banner (ES)</label>
+              <input type="text" className="pe-input"
+                value={data.specialOffer.text_es || ''}
+                onChange={e => update('specialOffer.text_es', e.target.value)}
+                placeholder="Ej. Tarifa especial de temporada baja · hasta un 20% menos" />
+            </div>
+            <div className="pe-field">
+              <label>Texto del banner (EN)</label>
+              <input type="text" className="pe-input"
+                value={data.specialOffer.text_en || ''}
+                onChange={e => update('specialOffer.text_en', e.target.value)}
+                placeholder="Ex. Low-season special offer · up to 20% off" />
+            </div>
+            <div className="pe-field">
+              <label>CTA (ES)</label>
+              <input type="text" className="pe-input"
+                value={data.specialOffer.cta_es || ''}
+                onChange={e => update('specialOffer.cta_es', e.target.value)}
+                placeholder="Consultar disponibilidad →" />
+            </div>
+            <div className="pe-field">
+              <label>CTA (EN)</label>
+              <input type="text" className="pe-input"
+                value={data.specialOffer.cta_en || ''}
+                onChange={e => update('specialOffer.cta_en', e.target.value)}
+                placeholder="Check availability →" />
+            </div>
+            <div className="pe-field">
+              <label>Válido hasta (YYYY-MM-DD)</label>
+              <input type="date" className="pe-input"
+                value={data.specialOffer.expires || ''}
+                onChange={e => update('specialOffer.expires', e.target.value || null)} />
+              <small className="pe-hint">Opcional. Tras esta fecha el banner desaparece automáticamente.</small>
+            </div>
+          </div>
+        )}
+      </div>
 
       <div className="pe-actions">
         <button onClick={save} disabled={!calOk} className="pe-btn pe-btn-primary">
