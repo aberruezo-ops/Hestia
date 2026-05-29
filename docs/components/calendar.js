@@ -74,9 +74,10 @@ const RequestPanel = ({
   const months_en = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const fmtDate = ds => {
     if (!ds) return '';
-    const d = new Date(ds + 'T12:00:00Z');
-    if (lang === 'es') return `${d.getUTCDate()} de ${months_es[d.getUTCMonth()]} de ${d.getUTCFullYear()}`;
-    return `${months_en[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+    const dd = ds.slice(8, 10),
+      mm = ds.slice(5, 7),
+      yy = ds.slice(2, 4);
+    return lang === 'en' ? `${mm}-${dd}-${yy}` : `${dd}-${mm}-${yy}`;
   };
 
   // CTA "Avanzar con la reserva": navega a /reservas pre-rellenado.

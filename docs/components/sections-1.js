@@ -923,12 +923,12 @@ const LastMinuteStrip = ({
     }).catch(() => {});
   }, []);
   if (!slots.length) return null;
-  const MONTHS_ES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-  const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const fmtDate = ds => {
-    const d = new Date(ds + 'T12:00:00Z');
-    const m = lang === 'es' ? MONTHS_ES[d.getUTCMonth()] : MONTHS_EN[d.getUTCMonth()];
-    return `${d.getUTCDate()} ${m}`;
+    if (!ds) return '';
+    const dd = ds.slice(8, 10),
+      mm = ds.slice(5, 7),
+      yy = ds.slice(2, 4);
+    return lang === 'en' ? `${mm}-${dd}-${yy}` : `${dd}-${mm}-${yy}`;
   };
   const APT_COLOR = {
     vm: '#3AAABB',
