@@ -4730,7 +4730,8 @@ const ReservasTab = ({
   // Bruto = ingreso_total (lo que paga el huésped al canal).
   // Comisiones = lo que se queda Airbnb/Booking/Avaibook.
   // Limpieza = gasto_limpieza (pago a equipo de limpieza).
-  // Neto = bai (Beneficio Antes Impuestos, según hoja Hestía).
+  // Neto = bruto - comision - limpieza (más fiable que sumar 'bai' guardado,
+  //   que puede faltar en reservas antiguas importadas).
   // Excluimos 'renta' (sólo presente 2023+, semántica cambia año a año).
   const sum = (list, key) => list.reduce((a, r) => a + (Number(r[key]) || 0), 0);
   const yearMetrics = list => {
@@ -4738,10 +4739,10 @@ const ReservasTab = ({
     const bruto = sum(active, 'ingreso_total');
     const comision = sum(active, 'comision');
     const limpieza = sum(active, 'gasto_limpieza');
-    const neto = sum(active, 'bai');
+    const neto = Math.round((bruto - comision - limpieza) * 100) / 100;
     const renta = sum(active, 'renta');
     const noches = sum(active, 'noches');
-    const preciosNoche = active.map(r => Number(r.precio_bruto_noche)).filter(p => p > 0 && Number.isFinite(p));
+    const preciosNoche = active.filter(r => Number(r.noches) > 0 && Number(r.ingreso_total) > 0).map(r => Number(r.precio_bruto_noche)).filter(p => p > 0 && Number.isFinite(p));
     return {
       reservas: active.length,
       noches,

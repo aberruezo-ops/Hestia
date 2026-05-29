@@ -3748,7 +3748,8 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
   // Bruto = ingreso_total (lo que paga el huésped al canal).
   // Comisiones = lo que se queda Airbnb/Booking/Avaibook.
   // Limpieza = gasto_limpieza (pago a equipo de limpieza).
-  // Neto = bai (Beneficio Antes Impuestos, según hoja Hestía).
+  // Neto = bruto - comision - limpieza (más fiable que sumar 'bai' guardado,
+  //   que puede faltar en reservas antiguas importadas).
   // Excluimos 'renta' (sólo presente 2023+, semántica cambia año a año).
   const sum = (list, key) => list.reduce((a, r) => a + (Number(r[key]) || 0), 0);
   const yearMetrics = (list) => {
@@ -3756,10 +3757,11 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
     const bruto    = sum(active, 'ingreso_total');
     const comision = sum(active, 'comision');
     const limpieza = sum(active, 'gasto_limpieza');
-    const neto     = sum(active, 'bai');
+    const neto     = Math.round((bruto - comision - limpieza) * 100) / 100;
     const renta    = sum(active, 'renta');
     const noches   = sum(active, 'noches');
     const preciosNoche = active
+      .filter(r => Number(r.noches) > 0 && Number(r.ingreso_total) > 0)
       .map(r => Number(r.precio_bruto_noche))
       .filter(p => p > 0 && Number.isFinite(p));
     return {
@@ -4281,9 +4283,6 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
         )}
 
         {/* ───── KPIs del año focal ───── */}
-        {/* TODO: revisar ratios — comisionPct, rentabilidad y brutoPorNoche
-            pueden estar mal cuando hay reservas sin datos de comisión o bai.
-            Verificar con datos reales antes de publicar. */}
         <div className="rv-dashboard">
           <KpiCard label={`Reservas ${focusYear}`} value={kFocus.reservas} sub={`${kFocus.noches} noches`} />
           <KpiCard label="Bruto" accent="#B86A3C" value={fmtEur(kFocus.bruto)} sub={`${fmtEur(kFocus.brutoPorNoche)}/noche medio`} />
