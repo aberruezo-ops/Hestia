@@ -2812,10 +2812,10 @@ const _drAdj = (ds, n) => {
 const _drDiff = (a, b) => Math.round((new Date(b + 'T12:00:00Z') - new Date(a + 'T12:00:00Z')) / 86400000);
 const _drFmtDate = (ds, lang) => {
   if (!ds) return '';
-  const d = new Date(ds + 'T12:00:00Z');
-  const M = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-  const ME = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  return lang === 'es' ? `${d.getUTCDate()} ${M[d.getUTCMonth()].slice(0, 3).toLowerCase()}. ${d.getUTCFullYear()}` : `${ME[d.getUTCMonth()].slice(0, 3)} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+  const dd = ds.slice(8, 10),
+    mm = ds.slice(5, 7),
+    yy = ds.slice(2, 4);
+  return lang === 'en' ? `${mm}-${dd}-${yy}` : `${dd}-${mm}-${yy}`;
 };
 const _drToday = () => new Date().toISOString().slice(0, 10);
 const DateRangePicker = ({

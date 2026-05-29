@@ -112,7 +112,7 @@ function fmtFechaEs(date) {
 }
 function fmtFechaCorta(date) {
   const d = (typeof date === 'string') ? new Date(date + 'T12:00:00') : date;
-  return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+  return `${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getFullYear()).slice(2)}`;
 }
 function diffNoches(entradaIso, salidaIso) {
   if (!entradaIso || !salidaIso) return 0;
@@ -2400,7 +2400,7 @@ const fmtEur = n => (n == null || isNaN(n))
 const fmtPct = n => (n == null || isNaN(n))
   ? '—'
   : `${(Number(n) * 100).toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %`;
-const fmtDate = d => d || '—';
+const fmtDate = d => d ? `${d.slice(8,10)}-${d.slice(5,7)}-${d.slice(2,4)}` : '—';
 const fmtDelta = (cur, prev) => {
   if (prev == null || prev === 0) return '';
   const diff = ((cur - prev) / Math.abs(prev)) * 100;
@@ -2568,10 +2568,7 @@ const HuecosPanel = () => {
       return a.checkin.localeCompare(b.checkin);
     });
 
-  const fmtDate = ds => {
-    const d = new Date(ds + 'T12:00:00Z');
-    return d.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
-  };
+  const fmtDate = ds => ds ? `${ds.slice(8,10)}-${ds.slice(5,7)}-${ds.slice(2,4)}` : '—';
 
   const APT_COLOR = { vm: '#3AAABB', vt: '#8A4A24', vs: '#9E7A2C' };
   const btnCls = (key) => `blk-sort-btn${sortBy === key ? ' active' : ''}`;
