@@ -9653,6 +9653,30 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .reservas-form-wrap .hscal-sel-lbl    { color: var(--ber); opacity: 0.7; }
 .reservas-form-wrap .hscal-sel-item strong { color: var(--ber-dk); }
 
+/* Tema CLARO para el DateRangePicker dentro de la tarjeta blanca en estancias-largas */
+.lsl-sd-card .cal-month         { background: transparent; border-color: rgba(42,15,46,.08); }
+.lsl-sd-card .cal-mhd           { color: var(--ber-dk); }
+.lsl-sd-card .cal-yr            { color: var(--ber); opacity: 0.55; }
+.lsl-sd-card .cal-wd            { color: var(--ber); opacity: 0.5; }
+.lsl-sd-card .c-n               { color: var(--ber-dk); opacity: 0.85; }
+.lsl-sd-card .cal-cell.past .c-n { color: var(--ber); opacity: 0.25; }
+.lsl-sd-card .cal-cell.blk  .c-n { color: var(--ber-dk); opacity: 0.7; }
+.lsl-sd-card .cal-cell.today:not(.blk) .c-n { color: var(--sol, #3AAABB); font-weight: 600; }
+.lsl-sd-card .cal-cell.in-sel .c-n,
+.lsl-sd-card .cal-cell.sel-s  .c-n,
+.lsl-sd-card .cal-cell.sel-e  .c-n { color: var(--ber-dk); font-weight: 600; opacity: 1; }
+.lsl-sd-card .cal-cell.sel-m  .c-n { color: var(--ber-dk); opacity: 0.7; }
+.lsl-sd-card .cal-cell.prev-s .c-n,
+.lsl-sd-card .cal-cell.prev-e .c-n { color: var(--ber-dk); opacity: 0.85; }
+.lsl-sd-card .cal-cell.prev-m .c-n { color: var(--ber-dk); opacity: 0.5; }
+.lsl-sd-card .avail-nav-lbl         { color: var(--ber-dk); opacity: 0.85; }
+.lsl-sd-card .avail-arr             { color: var(--ber); }
+.lsl-sd-card .hscal-phase-hint      { color: var(--sol-h); }
+.lsl-sd-card .avail-legend          { color: rgba(42,15,46,.4); }
+.lsl-sd-card .leg-dot.lg-av         { border-color: rgba(42,15,46,.25); }
+.lsl-sd-card .avail-upd             { color: rgba(42,15,46,.3); }
+.lsl-sd-card .cal-cell.clickable:hover:not(.in-sel):not(.in-prev) .c-n { color: var(--sol, #3AAABB); }
+
 .hscal-phase-hint {
   font-family: var(--sans);
   font-size: 11px; font-weight: 400;
