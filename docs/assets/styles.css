@@ -20827,3 +20827,5 @@ img[src*="apt-vt-gallery-"] {
   border-top: 1px solid rgba(42,15,46,.10);
 }
 .ls-bk-total-val { font-size: 15px; font-weight: 700; }
+.ls-bk-special   { color: #B85800; font-weight: 600; }
+.ls-cfg-wrap { border: 1px solid rgba(42,15,46,.10); border-radius: 8px; overflow: hidden; }
