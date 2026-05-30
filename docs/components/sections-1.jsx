@@ -695,7 +695,7 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
     return `${d.getUTCDate()} ${m}`;
   };
 
-  const APT_COLOR = { vm: '#3AAABB', vt: '#8A4A24', vs: '#9E7A2C' };
+  const APT_COLOR = { vm: '#3AAABB', vt: '#C87A45', vs: '#C8A040' };
 
   const getStayPrice = (aptId, checkin, checkout) => {
     try {
