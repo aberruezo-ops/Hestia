@@ -136,6 +136,45 @@ const NOTICIAS = {
         es: 'El festival de artes escénicas de Almería capital llena los Reales Alcázares y el Patio de Armas de teatro, danza contemporánea y música clásica. Entradas desde 12 €, muchas actuaciones al aire libre gratuitas. A 1h 15\' de Vera — es una noche perfecta.',
         en: 'Almería\'s performing arts festival fills the Royal Alcazar and its courtyard with theatre, contemporary dance and classical music. Tickets from €12, many outdoor performances free. 1h 15\' from Vera — a perfect evening out.'
       }
+    }, {
+      tag: {
+        es: 'Conciertos',
+        en: 'Concerts'
+      },
+      titulo: {
+        es: 'Siente la Plaza 2026 — Chayanne, Mónica Naranjo y Carlos Rivera en la Plaza de Toros de Almería',
+        en: 'Siente la Plaza 2026 — Chayanne, Mónica Naranjo and Carlos Rivera at Almería bullring'
+      },
+      cuerpo: {
+        es: 'El ciclo de grandes conciertos de la Plaza de Toros de Almería reúne este verano un cartel de primera: Chayanne (8 jul · Bailemos Otra Vez Tour), Antonio Orozco (10 jul), Carlos Rivera (18 jul) y Mónica Naranjo (25 jul). Todos a las 22h. A 1h 15\' de Vera Playa. Entradas en sientelaplaza.com.',
+        en: 'The summer concert series at Almería bullring brings top-tier acts: Chayanne (8 Jul · Bailemos Otra Vez Tour), Antonio Orozco (10 Jul), Carlos Rivera (18 Jul) and Mónica Naranjo (25 Jul). All at 10pm. 1h 15\' from Vera Playa. Tickets at sientelaplaza.com.'
+      }
+    }, {
+      tag: {
+        es: 'Festival',
+        en: 'Festival'
+      },
+      titulo: {
+        es: 'Cooltural Fest — David Bisbal, Hombres G y Rigoberta Bandini del 20 al 23 de agosto',
+        en: 'Cooltural Fest — David Bisbal, Hombres G and Rigoberta Bandini, 20–23 August'
+      },
+      cuerpo: {
+        es: 'El festival indie más inclusivo de Europa vuelve al Recinto Ferial de Almería con cartel histórico: viernes 21 (La M.O.D.A., Lori Meyers, León Benavente, Rusowsky), sábado 22 (Hombres G, Ana Torroja, Rigoberta Bandini, La Pegatina), domingo 23 (David Bisbal, Sidecars). Fiesta de bienvenida gratuita el 20 de agosto en el Parque de las Almadrabillas. 82 artistas en total. coolturalfest.com.',
+        en: 'Europe\'s most inclusive indie festival returns to Almería\'s fairground with a landmark lineup: Friday 21 (La M.O.D.A., Lori Meyers, León Benavente, Rusowsky), Saturday 22 (Hombres G, Ana Torroja, Rigoberta Bandini, La Pegatina), Sunday 23 (David Bisbal, Sidecars). Free welcome party on 20 August at Parque de las Almadrabillas. 82 artists across all stages. coolturalfest.com.'
+      }
+    }, {
+      tag: {
+        es: 'Festival',
+        en: 'Festival'
+      },
+      titulo: {
+        es: 'The Juergas Rock Festival — Pendulum, Celtas Cortos y ska-punk en Adra del 5 al 8 de agosto',
+        en: 'The Juergas Rock Festival — Pendulum, Celtas Cortos and ska-punk in Adra, 5–8 August'
+      },
+      cuerpo: {
+        es: 'A 50 km de Vera Playa, el festival punk-rock-ska de Adra celebra su XIII edición con cartel internacional: Pendulum Live, Dubioza Kolektiv, Narco (30º aniversario), Celtas Cortos, Boikot, Benito Kamelas y Kaotiko. El escenario diurno Agustico es gratuito. thejuergasrockfestival.com.',
+        en: '50km from Vera Playa, Adra\'s punk-rock-ska festival celebrates its 13th edition with an international lineup: Pendulum Live, Dubioza Kolektiv, Narco (30th anniversary), Celtas Cortos, Boikot, Benito Kamelas and Kaotiko. The daytime Agustico stage is free entry. thejuergasrockfestival.com.'
+      }
     }]
   }, {
     cat: {
@@ -216,6 +255,58 @@ const NOTICIAS = {
       cuerpo: {
         es: 'El festival de jazz de la capital murciana ocupa los jardines del Malecón y la plaza de la Catedral con conciertos al aire libre. Entrada libre para la mayoría de actuaciones. Murcia está a 1h 30\' de Vera Playa. Combínalo con una cena de tapas en el Barrio del Carmen.',
         en: 'The Murcia jazz festival fills the Malecón gardens and Cathedral square with open-air concerts. Free entry for most performances. Murcia is 1h 30\' from Vera Playa. Combine with tapas in the Carmen quarter.'
+      }
+    }, {
+      tag: {
+        es: 'Conciertos',
+        en: 'Concerts'
+      },
+      titulo: {
+        es: 'Noches del Malecón — Suede, Romeo Santos, Prince Royce y Nicky Jam en Murcia en julio',
+        en: 'Noches del Malecón — Suede, Romeo Santos, Prince Royce and Nicky Jam in Murcia, July'
+      },
+      cuerpo: {
+        es: 'El ciclo de verano más completo de Murcia capital ocupa varios recintos con un cartel ecléctico: Nicky Jam (10 jul), Suede (22 jul), Wolfmother (23 jul) y Romeo Santos & Prince Royce juntos (28 jul). Aforo de hasta 20.000 personas. Murcia a 1h 30\' de Vera Playa. lasnochesdelmalecon.com.',
+        en: 'Murcia\'s most comprehensive summer concert series spans multiple venues with an eclectic bill: Nicky Jam (10 Jul), Suede (22 Jul), Wolfmother (23 Jul) and Romeo Santos & Prince Royce together (28 Jul). Up to 20,000 capacity. Murcia 1h 30\' from Vera Playa. lasnochesdelmalecon.com.'
+      }
+    }, {
+      tag: {
+        es: 'Festival',
+        en: 'Festival'
+      },
+      titulo: {
+        es: 'La Mar de Músicas — Sílvia Pérez Cruz, Rubén Blades y Judeline en Cartagena del 17 al 25 de julio',
+        en: 'La Mar de Músicas — Sílvia Pérez Cruz, Rubén Blades and Judeline in Cartagena, 17–25 July'
+      },
+      cuerpo: {
+        es: '31ª edición del prestigioso festival de músicas del mundo en Cartagena, dedicada a Ecuador. Cartel: Sílvia Pérez Cruz, Judeline, Maria Arnal, Silvana Estrada, Carminho, Lila Downs, Rodrigo Cuevas y Rubén Blades. 45 conciertos, 21 gratuitos. Cartagena a 1h 15\' de Vera Playa. lamardemusicas.cartagena.es.',
+        en: '31st edition of the prestigious world music festival in Cartagena, with Ecuador as the featured country. Lineup: Sílvia Pérez Cruz, Judeline, Maria Arnal, Silvana Estrada, Carminho, Lila Downs, Rodrigo Cuevas and Rubén Blades. 45 concerts, 21 free. Cartagena 1h 15\' from Vera Playa. lamardemusicas.cartagena.es.'
+      }
+    }, {
+      tag: {
+        es: 'Concierto',
+        en: 'Concert'
+      },
+      titulo: {
+        es: 'Juanes en el Festival Sal de Música — 13 de agosto, San Pedro del Pinatar',
+        en: 'Juanes at Festival Sal de Música — 13 August, San Pedro del Pinatar'
+      },
+      cuerpo: {
+        es: 'Juanes presenta su nuevo disco JuanesTeban en su única fecha española de 2026. El Festival Sal de Música se celebra del 12 al 16 de agosto junto al Mar Menor. San Pedro del Pinatar está a 45 minutos de Vera Playa — de los conciertos más accesibles del verano. sanpedrodelpinatar.servientradas.net.',
+        en: 'Juanes presents his new album JuanesTeban in his only 2026 Spanish date. The Sal de Música Festival runs 12–16 August beside the Mar Menor. San Pedro del Pinatar is 45 minutes from Vera Playa — one of the most accessible big concerts of the summer. sanpedrodelpinatar.servientradas.net.'
+      }
+    }, {
+      tag: {
+        es: 'Festival',
+        en: 'Festival'
+      },
+      titulo: {
+        es: 'Fan Futura Fest — 24 y 25 de julio en Los Alcázares',
+        en: 'Fan Futura Fest — 24–25 July in Los Alcázares'
+      },
+      cuerpo: {
+        es: 'Festival de géneros urbanos y electrónicos en el Parque del Gonio de Los Alcázares, a 45 minutos de Vera Playa. Sexta edición en el Mar Menor con dos días de música. Las entradas generales salen desde 58 €. fanfutura.com.',
+        en: 'Urban and electronic music festival at Parque del Gonio in Los Alcázares, 45 minutes from Vera Playa. Sixth edition on the Mar Menor with two days of music. General tickets from €58. fanfutura.com.'
       }
     }, {
       tag: {
