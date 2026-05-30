@@ -730,4 +730,76 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
   );
 };
 
-Object.assign(window, { Hero, Bridge, Apartments, Compare, APARTMENTS, LastMinuteStrip });
+// ================================================================
+// HOME PRICE STRIP — 3 precios base visibles antes del buscador
+// ================================================================
+const HomePriceStrip = ({ lang }) => {
+  const APT_META = [
+    { id: 'vm', name: 'Mar',      slug: 'mar',      accent: '#3AAABB' },
+    { id: 'vt', name: 'Thalassa', slug: 'thalassa', accent: '#8A4A24' },
+    { id: 'vs', name: 'Salinas',  slug: 'salinas',  accent: '#9E7A2C' },
+  ];
+
+  const basePrice = (id) => {
+    const v2 = window.PRICES_V2;
+    if (v2 && v2.apts && v2.apts[id] && v2.apts[id].base) return v2.apts[id].base;
+    return { vm: 88, vt: 85, vs: 83 }[id];
+  };
+
+  return (
+    <section className="hps-strip" aria-label={lang === 'es' ? 'Precios por apartamento' : 'Prices per apartment'}>
+      <div className="hps-inner">
+        <p className="hps-label eyebrow">
+          {lang === 'es' ? 'Precio directo · sin intermediarios' : 'Direct price · no middlemen'}
+        </p>
+        <div className="hps-grid">
+          {APT_META.map(apt => (
+            <a key={apt.id} href={`${apt.slug}.html`} className="hps-card" style={{ '--hps-accent': apt.accent }}>
+              <span className="hps-name">HESTÍA <strong>{apt.name.toUpperCase()}</strong></span>
+              <span className="hps-price">
+                <span className="hps-desde">{lang === 'es' ? 'desde' : 'from'}</span>
+                <span className="hps-amount">{basePrice(apt.id)}€</span>
+                <span className="hps-per">/noche</span>
+              </span>
+              <span className="hps-cta">{lang === 'es' ? 'Ver apartamento →' : 'View apartment →'}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const LongStayStrip = ({ lang }) => {
+  const es = lang === 'es';
+  return (
+    <section className="lss-strip" aria-label={es ? 'Estancias largas' : 'Long stays'}>
+      <div className="lss-inner">
+        <div className="lss-text">
+          <p className="eyebrow lss-eyebrow">{es ? 'Más de un mes en Vera Playa' : 'More than a month in Vera Playa'}</p>
+          <h2 className="lss-title">
+            {es ? <>Teletrabajo, empresa<br/>o temporada larga.</> : <>Remote work, business<br/>or an extended stay.</>}
+          </h2>
+          <p className="lss-sub">
+            {es
+              ? 'Apartamentos totalmente equipados de septiembre a junio. Precio fijo mensual, sin intermediarios, con contrato.'
+              : 'Fully equipped apartments from September to June. Fixed monthly price, no middlemen, formal contract.'}
+          </p>
+        </div>
+        <div className="lss-right">
+          <div className="lss-pills">
+            <span className="lss-pill">{es ? '29+ noches' : '29+ nights'}</span>
+            <span className="lss-pill">{es ? 'desde 1.390€/mes' : 'from €1,390/month'}</span>
+            <span className="lss-pill">WiFi fibra</span>
+            <span className="lss-pill">{es ? 'Contrato formal' : 'Formal contract'}</span>
+          </div>
+          <a href="estancias-largas.html" className="lss-cta">
+            {es ? 'Ver condiciones y precios →' : 'See conditions and pricing →'}
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+Object.assign(window, { Hero, Bridge, Apartments, Compare, APARTMENTS, LastMinuteStrip, HomePriceStrip, LongStayStrip });

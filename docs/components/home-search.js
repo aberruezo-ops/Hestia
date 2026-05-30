@@ -554,6 +554,9 @@ const HomeSearch = ({
         available: _hsAvail(checkin, checkout, blocked)
       };
     });
+    // Detect long-stay searches (>28 nights, not Jul/Aug)
+    const cinMonth = checkin ? parseInt(checkin.slice(5, 7), 10) : 0;
+    res._isLongStay = nights > 28 && cinMonth !== 7 && cinMonth !== 8;
     setResults(res);
     window.dispatchEvent(new CustomEvent('hs-results-change', {
       detail: true
@@ -715,7 +718,16 @@ const HomeSearch = ({
     checkin: checkin,
     checkout: checkout,
     guests: guests
-  })), results.every(r => r.available === null) && /*#__PURE__*/React.createElement("div", {
+  })), results._isLongStay && /*#__PURE__*/React.createElement("div", {
+    className: "hs-longstay-nudge"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hs-ls-icon"
+  }, "\uD83C\uDFE0"), /*#__PURE__*/React.createElement("div", {
+    className: "hs-ls-body"
+  }, /*#__PURE__*/React.createElement("strong", null, lang === 'es' ? '¿Más de un mes en Vera Playa?' : 'More than a month in Vera Playa?'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? ' Para estancias largas tenemos condiciones especiales: precio mensual fijo, contrato de arrendamiento y trato directo.' : ' For long stays we offer special terms: fixed monthly rate, rental contract and direct deal.')), /*#__PURE__*/React.createElement("a", {
+    href: "estancias-largas.html",
+    className: "hs-ls-cta"
+  }, lang === 'es' ? 'Ver condiciones →' : 'See conditions →')), results.every(r => r.available === null) && /*#__PURE__*/React.createElement("div", {
     className: "hs-no-data"
   }, lang === 'es' ? 'No tenemos datos de disponibilidad en este momento. Escríbenos directamente y te respondemos en menos de 24 h.' : 'We don\'t have availability data right now. Write to us directly and we\'ll reply within 24 h.', ' ', /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370",

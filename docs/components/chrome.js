@@ -144,7 +144,8 @@ const NAV_PAGES = {
   noticias: 'noticias.html',
   contacto: 'contacto.html',
   reservas: 'reservas.html',
-  ventajas: 'reservas.html#ventajas'
+  ventajas: 'reservas.html#ventajas',
+  estanciasLargas: 'estancias-largas.html'
 };
 const isActive = href => {
   const current = window.location.pathname.split('/').pop() || 'index.html';
@@ -502,6 +503,8 @@ const Header = ({
   }, t.nav[5]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.noticias
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.estanciasLargas
+  }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.contacto
   }, t.nav[6]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
@@ -568,6 +571,9 @@ const Header = ({
     href: NAV_PAGES.noticias,
     className: "mn-page"
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.estanciasLargas,
+    className: "mn-page"
+  }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.contacto,
     className: "mn-page"
   }, t.nav[6])), /*#__PURE__*/React.createElement("div", {
@@ -876,6 +882,8 @@ const Footer = ({
   }, t.nav[5])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "noticias.html"
   }, t.nav[7])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "estancias-largas.html"
+  }, t.nav[9])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "contacto.html"
   }, t.nav[6])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "privacidad.html"

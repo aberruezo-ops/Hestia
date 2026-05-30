@@ -1005,11 +1005,109 @@ const LastMinuteStrip = ({
     className: "lm-cta"
   }, lang === 'es' ? 'Ver disponibilidad completa →' : 'See full availability →')));
 };
+
+// ================================================================
+// HOME PRICE STRIP — 3 precios base visibles antes del buscador
+// ================================================================
+const HomePriceStrip = ({
+  lang
+}) => {
+  const APT_META = [{
+    id: 'vm',
+    name: 'Mar',
+    slug: 'mar',
+    accent: '#3AAABB'
+  }, {
+    id: 'vt',
+    name: 'Thalassa',
+    slug: 'thalassa',
+    accent: '#8A4A24'
+  }, {
+    id: 'vs',
+    name: 'Salinas',
+    slug: 'salinas',
+    accent: '#9E7A2C'
+  }];
+  const basePrice = id => {
+    const v2 = window.PRICES_V2;
+    if (v2 && v2.apts && v2.apts[id] && v2.apts[id].base) return v2.apts[id].base;
+    return {
+      vm: 88,
+      vt: 85,
+      vs: 83
+    }[id];
+  };
+  return /*#__PURE__*/React.createElement("section", {
+    className: "hps-strip",
+    "aria-label": lang === 'es' ? 'Precios por apartamento' : 'Prices per apartment'
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hps-inner"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "hps-label eyebrow"
+  }, lang === 'es' ? 'Precio directo · sin intermediarios' : 'Direct price · no middlemen'), /*#__PURE__*/React.createElement("div", {
+    className: "hps-grid"
+  }, APT_META.map(apt => /*#__PURE__*/React.createElement("a", {
+    key: apt.id,
+    href: `${apt.slug}.html`,
+    className: "hps-card",
+    style: {
+      '--hps-accent': apt.accent
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "hps-name"
+  }, "HEST\xCDA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), /*#__PURE__*/React.createElement("span", {
+    className: "hps-price"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "hps-desde"
+  }, lang === 'es' ? 'desde' : 'from'), /*#__PURE__*/React.createElement("span", {
+    className: "hps-amount"
+  }, basePrice(apt.id), "\u20AC"), /*#__PURE__*/React.createElement("span", {
+    className: "hps-per"
+  }, "/noche")), /*#__PURE__*/React.createElement("span", {
+    className: "hps-cta"
+  }, lang === 'es' ? 'Ver apartamento →' : 'View apartment →'))))));
+};
+const LongStayStrip = ({
+  lang
+}) => {
+  const es = lang === 'es';
+  return /*#__PURE__*/React.createElement("section", {
+    className: "lss-strip",
+    "aria-label": es ? 'Estancias largas' : 'Long stays'
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lss-inner"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lss-text"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "eyebrow lss-eyebrow"
+  }, es ? 'Más de un mes en Vera Playa' : 'More than a month in Vera Playa'), /*#__PURE__*/React.createElement("h2", {
+    className: "lss-title"
+  }, es ? /*#__PURE__*/React.createElement(React.Fragment, null, "Teletrabajo, empresa", /*#__PURE__*/React.createElement("br", null), "o temporada larga.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Remote work, business", /*#__PURE__*/React.createElement("br", null), "or an extended stay.")), /*#__PURE__*/React.createElement("p", {
+    className: "lss-sub"
+  }, es ? 'Apartamentos totalmente equipados de septiembre a junio. Precio fijo mensual, sin intermediarios, con contrato.' : 'Fully equipped apartments from September to June. Fixed monthly price, no middlemen, formal contract.')), /*#__PURE__*/React.createElement("div", {
+    className: "lss-right"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lss-pills"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "lss-pill"
+  }, es ? '29+ noches' : '29+ nights'), /*#__PURE__*/React.createElement("span", {
+    className: "lss-pill"
+  }, es ? 'desde 1.390€/mes' : 'from €1,390/month'), /*#__PURE__*/React.createElement("span", {
+    className: "lss-pill"
+  }, "WiFi fibra"), /*#__PURE__*/React.createElement("span", {
+    className: "lss-pill"
+  }, es ? 'Contrato formal' : 'Formal contract')), /*#__PURE__*/React.createElement("a", {
+    href: "estancias-largas.html",
+    className: "lss-cta"
+  }, es ? 'Ver condiciones y precios →' : 'See conditions and pricing →'))));
+};
 Object.assign(window, {
   Hero,
   Bridge,
   Apartments,
   Compare,
   APARTMENTS,
-  LastMinuteStrip
+  LastMinuteStrip,
+  HomePriceStrip,
+  LongStayStrip
 });

@@ -855,6 +855,20 @@ const ReservasForm = ({ lang }) => {
         </header>
         {step >= 2 && (
           <div className="rf-step-body">
+            {/* Long-stay nudge — shown when nights > 28 and month is Sep–Jun */}
+            {nightsSelected > 28 && (() => { const m = checkin ? parseInt(checkin.slice(5,7),10) : 0; return m !== 7 && m !== 8; })() && (
+              <div className="rf-ls-nudge">
+                <div className="rf-ls-nudge-text">
+                  <strong>{lang === 'es' ? '¿Más de un mes?' : 'More than a month?'}</strong>
+                  {' '}{lang === 'es'
+                    ? 'Para estancias largas (29+ noches) tenemos precios mensuales especiales, contrato de arrendamiento y condiciones diferentes.'
+                    : 'For long stays (29+ nights) we have special monthly rates, a rental contract and different terms.'}
+                </div>
+                <a href="estancias-largas.html" className="rf-ls-nudge-cta" target="_blank" rel="noopener">
+                  {lang === 'es' ? 'Ver condiciones de estancia larga →' : 'See long-stay conditions →'}
+                </a>
+              </div>
+            )}
             <ReviewQuote apt={apt} lang={lang} />
             {/* Si no hay apt elegido, mostramos los 3 Hestías con su
                 disponibilidad para las fechas → el huésped elige uno. */}

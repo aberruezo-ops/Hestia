@@ -537,6 +537,9 @@ const HomeSearch = ({ lang }) => {
       const blocked = avail && avail[id] ? avail[id].blocked : null;
       return { ...a, available: _hsAvail(checkin, checkout, blocked) };
     });
+    // Detect long-stay searches (>28 nights, not Jul/Aug)
+    const cinMonth = checkin ? parseInt(checkin.slice(5, 7), 10) : 0;
+    res._isLongStay = nights > 28 && cinMonth !== 7 && cinMonth !== 8;
     setResults(res);
     window.dispatchEvent(new CustomEvent('hs-results-change', { detail: true }));
     if (typeof _hestiaTrack === 'function') _hestiaTrack('search_initiated', { apt: apt || 'all', checkin, checkout, nights });
@@ -711,6 +714,22 @@ const HomeSearch = ({ lang }) => {
                 guests={guests}
               />
             ))}
+
+            {/* Long-stay nudge */}
+            {results._isLongStay && (
+              <div className="hs-longstay-nudge">
+                <div className="hs-ls-icon">🏠</div>
+                <div className="hs-ls-body">
+                  <strong>{lang === 'es' ? '¿Más de un mes en Vera Playa?' : 'More than a month in Vera Playa?'}</strong>
+                  <span>{lang === 'es'
+                    ? ' Para estancias largas tenemos condiciones especiales: precio mensual fijo, contrato de arrendamiento y trato directo.'
+                    : ' For long stays we offer special terms: fixed monthly rate, rental contract and direct deal.'}</span>
+                </div>
+                <a href="estancias-largas.html" className="hs-ls-cta">
+                  {lang === 'es' ? 'Ver condiciones →' : 'See conditions →'}
+                </a>
+              </div>
+            )}
 
             {/* No availability data fallback */}
             {results.every(r => r.available === null) && (
