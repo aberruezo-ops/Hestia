@@ -846,7 +846,19 @@ const ReservasForm = ({
     "aria-hidden": "true"
   }, "\uD83D\uDD12")), step >= 2 && /*#__PURE__*/React.createElement("div", {
     className: "rf-step-body"
-  }, /*#__PURE__*/React.createElement(ReviewQuote, {
+  }, nightsSelected > 28 && (() => {
+    const m = checkin ? parseInt(checkin.slice(5, 7), 10) : 0;
+    return m !== 7 && m !== 8;
+  })() && /*#__PURE__*/React.createElement("div", {
+    className: "rf-ls-nudge"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rf-ls-nudge-text"
+  }, /*#__PURE__*/React.createElement("strong", null, lang === 'es' ? '¿Más de un mes?' : 'More than a month?'), ' ', lang === 'es' ? 'Para estancias largas (29+ noches) tenemos precios mensuales especiales, contrato de arrendamiento y condiciones diferentes.' : 'For long stays (29+ nights) we have special monthly rates, a rental contract and different terms.'), /*#__PURE__*/React.createElement("a", {
+    href: "estancias-largas.html",
+    className: "rf-ls-nudge-cta",
+    target: "_blank",
+    rel: "noopener"
+  }, lang === 'es' ? 'Ver condiciones de estancia larga →' : 'See long-stay conditions →')), /*#__PURE__*/React.createElement(ReviewQuote, {
     apt: apt,
     lang: lang
   }), !apt && availLoaded && /*#__PURE__*/React.createElement("div", {

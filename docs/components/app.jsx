@@ -79,6 +79,7 @@ const App = () => {
         <Apartments lang={lang} />
         <DirectBookingPerks lang={lang} />
         <Compare lang={lang} />
+        {typeof LongStayStrip !== 'undefined' && <LongStayStrip lang={lang} />}
         <Counters lang={lang} />
         <Team lang={lang} />
         <Manifest lang={lang} />
