@@ -473,8 +473,9 @@
       "start": "2026-07-08",
       "end": "2026-07-12",
       "nights": 4,
-      "type": "discount",
-      "value": 5
+      "type": "fixed",
+      "value": 180,
+      "lastMinute": true
     },
     "vm|2026-08-30": {
       "apt": "vm",
