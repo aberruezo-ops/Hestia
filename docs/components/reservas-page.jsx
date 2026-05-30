@@ -174,6 +174,75 @@ const _applyGapOv = (calc, perNight) => {
   return { ...calc, baseTotal, stayD: null, stayDiscAmt: 0, afterStay, directTotal, avgPerNight, isGapOffer: true, gapPerNight: perNight };
 };
 
+// Calcula el total de larga estancia usando tarifas mensuales + flat especial
+const _calcLsTotal = (start, end) => {
+  if (!start || !end || start >= end) return null;
+  const lsCfg  = (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || { specialNightFlat: 80, easterRanges: [] };
+  const flat   = lsCfg.specialNightFlat || 80;
+  const easter = lsCfg.easterRanges || [];
+  const isXmas = (ds) => { const m = +ds.slice(5,7), d = +ds.slice(8,10); return (m===12&&d>=23)||(m===1&&d<=6); };
+  const isEast = (ds) => easter.some(([s,e]) => ds>=s && ds<=e);
+  const adj = (ds, n) => { const dt = new Date(ds+'T12:00:00Z'); dt.setUTCDate(dt.getUTCDate()+n); return dt.toISOString().slice(0,10); };
+  let total = 0, specialN = 0, cur = start;
+  while (cur < end) {
+    const mo = +cur.slice(5,7);
+    if (mo === 7 || mo === 8) return null;
+    const yr = +cur.slice(0,4);
+    const dim = new Date(yr, mo, 0).getDate();
+    const rate = (mo===6||mo===9) ? 1790 : (mo===5||mo===10) ? 1590 : 1450;
+    const special = isXmas(cur) || isEast(cur);
+    total += special ? flat : rate/dim;
+    if (special) specialN++;
+    cur = adj(cur, 1);
+  }
+  return { total: Math.round(total), specialNights: specialN };
+};
+
+const LsInfoBlock = ({ checkin, checkout, calc, lang }) => {
+  const nights = calc ? calc.nights : 0;
+  const regularTotal = calc ? calc.directTotal : 0;
+  const ls = _calcLsTotal(checkin, checkout);
+  if (!ls) return null;
+  const es = lang === 'es';
+  const fmt = n => n.toLocaleString('es-ES') + ' €';
+  const saving = regularTotal - ls.total;
+  return (
+    <div className="rf-ls-info">
+      <div className="rf-ls-info-head">
+        <span className="rf-ls-info-badge">{es ? 'Estancia larga · +28 noches' : 'Long stay · 28+ nights'}</span>
+        <span className="rf-ls-info-title">{es ? 'Tarifas mensuales especiales' : 'Special monthly rates'}</span>
+      </div>
+      <div className="rf-ls-price-row">
+        <div className="rf-ls-price-ls">
+          <span className="rf-ls-price-label">{es ? 'Precio estancia larga' : 'Long-stay price'}</span>
+          <span className="rf-ls-price-val">{fmt(ls.total)}</span>
+          {ls.specialNights > 0 && (
+            <span className="rf-ls-price-note">
+              {es ? `Incluye ${ls.specialNights} ${ls.specialNights===1?'noche':'noches'} especial (80€/n)` : `Includes ${ls.specialNights} special night${ls.specialNights===1?'':'s'} (80€/n)`}
+            </span>
+          )}
+        </div>
+        {saving > 0 && (
+          <div className="rf-ls-price-reg">
+            <span className="rf-ls-price-label">{es ? 'Tarifa corta estancia' : 'Short-stay rate'}</span>
+            <s className="rf-ls-price-striked">{fmt(regularTotal)}</s>
+            <span className="rf-ls-saving">−{fmt(saving)} {es ? 'de ahorro' : 'saved'}</span>
+          </div>
+        )}
+      </div>
+      <ul className="rf-ls-conditions">
+        <li>{es ? 'Contrato de arrendamiento de temporada' : 'Seasonal rental agreement'}</li>
+        <li>{es ? 'Señal del 20% para confirmar · resto a la llegada' : '20% deposit to confirm · balance on arrival'}</li>
+        <li>{es ? `Tarifa mensual (${nights} noches)` : `Monthly rate (${nights} nights)`}</li>
+        <li>{es ? 'Sin comisiones de plataformas' : 'No platform commissions'}</li>
+      </ul>
+      <a href="estancias-largas.html" className="rf-ls-info-link" target="_blank" rel="noopener">
+        {es ? 'Ver todas las condiciones →' : 'See full conditions →'}
+      </a>
+    </div>
+  );
+};
+
 const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] }) => {
   if (!apt || !checkin || !checkout) return null;
   const gn = parseInt(guests, 10) || null;
@@ -893,19 +962,9 @@ const ReservasForm = ({ lang }) => {
         </header>
         {step >= 2 && (
           <div className="rf-step-body">
-            {/* Long-stay nudge — shown when nights > 28 and month is Sep–Jun */}
+            {/* Long-stay info block — shown when nights > 28 and month is Sep–Jun */}
             {nightsSelected > 28 && (() => { const m = checkin ? parseInt(checkin.slice(5,7),10) : 0; return m !== 7 && m !== 8; })() && (
-              <div className="rf-ls-nudge">
-                <div className="rf-ls-nudge-text">
-                  <strong>{lang === 'es' ? '¿Más de un mes?' : 'More than a month?'}</strong>
-                  {' '}{lang === 'es'
-                    ? 'Para estancias largas (29+ noches) tenemos precios mensuales especiales, contrato de arrendamiento y condiciones diferentes.'
-                    : 'For long stays (29+ nights) we have special monthly rates, a rental contract and different terms.'}
-                </div>
-                <a href="estancias-largas.html" className="rf-ls-nudge-cta" target="_blank" rel="noopener">
-                  {lang === 'es' ? 'Ver condiciones de estancia larga →' : 'See long-stay conditions →'}
-                </a>
-              </div>
+              <LsInfoBlock checkin={checkin} checkout={checkout} calc={calc} lang={lang} />
             )}
             <ReviewQuote apt={apt} lang={lang} />
             {/* Si no hay apt elegido, mostramos los 3 Hestías con su

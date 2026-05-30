@@ -171,6 +171,94 @@ const _applyGapOv = (calc, perNight) => {
     gapPerNight: perNight
   };
 };
+
+// Calcula el total de larga estancia usando tarifas mensuales + flat especial
+const _calcLsTotal = (start, end) => {
+  if (!start || !end || start >= end) return null;
+  const lsCfg = window.PRICES_V2 && window.PRICES_V2.longStayConfig || {
+    specialNightFlat: 80,
+    easterRanges: []
+  };
+  const flat = lsCfg.specialNightFlat || 80;
+  const easter = lsCfg.easterRanges || [];
+  const isXmas = ds => {
+    const m = +ds.slice(5, 7),
+      d = +ds.slice(8, 10);
+    return m === 12 && d >= 23 || m === 1 && d <= 6;
+  };
+  const isEast = ds => easter.some(([s, e]) => ds >= s && ds <= e);
+  const adj = (ds, n) => {
+    const dt = new Date(ds + 'T12:00:00Z');
+    dt.setUTCDate(dt.getUTCDate() + n);
+    return dt.toISOString().slice(0, 10);
+  };
+  let total = 0,
+    specialN = 0,
+    cur = start;
+  while (cur < end) {
+    const mo = +cur.slice(5, 7);
+    if (mo === 7 || mo === 8) return null;
+    const yr = +cur.slice(0, 4);
+    const dim = new Date(yr, mo, 0).getDate();
+    const rate = mo === 6 || mo === 9 ? 1790 : mo === 5 || mo === 10 ? 1590 : 1450;
+    const special = isXmas(cur) || isEast(cur);
+    total += special ? flat : rate / dim;
+    if (special) specialN++;
+    cur = adj(cur, 1);
+  }
+  return {
+    total: Math.round(total),
+    specialNights: specialN
+  };
+};
+const LsInfoBlock = ({
+  checkin,
+  checkout,
+  calc,
+  lang
+}) => {
+  const nights = calc ? calc.nights : 0;
+  const regularTotal = calc ? calc.directTotal : 0;
+  const ls = _calcLsTotal(checkin, checkout);
+  if (!ls) return null;
+  const es = lang === 'es';
+  const fmt = n => n.toLocaleString('es-ES') + ' €';
+  const saving = regularTotal - ls.total;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "rf-ls-info"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rf-ls-info-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-ls-info-badge"
+  }, es ? 'Estancia larga · +28 noches' : 'Long stay · 28+ nights'), /*#__PURE__*/React.createElement("span", {
+    className: "rf-ls-info-title"
+  }, es ? 'Tarifas mensuales especiales' : 'Special monthly rates')), /*#__PURE__*/React.createElement("div", {
+    className: "rf-ls-price-row"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rf-ls-price-ls"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-ls-price-label"
+  }, es ? 'Precio estancia larga' : 'Long-stay price'), /*#__PURE__*/React.createElement("span", {
+    className: "rf-ls-price-val"
+  }, fmt(ls.total)), ls.specialNights > 0 && /*#__PURE__*/React.createElement("span", {
+    className: "rf-ls-price-note"
+  }, es ? `Incluye ${ls.specialNights} ${ls.specialNights === 1 ? 'noche' : 'noches'} especial (80€/n)` : `Includes ${ls.specialNights} special night${ls.specialNights === 1 ? '' : 's'} (80€/n)`)), saving > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "rf-ls-price-reg"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "rf-ls-price-label"
+  }, es ? 'Tarifa corta estancia' : 'Short-stay rate'), /*#__PURE__*/React.createElement("s", {
+    className: "rf-ls-price-striked"
+  }, fmt(regularTotal)), /*#__PURE__*/React.createElement("span", {
+    className: "rf-ls-saving"
+  }, "\u2212", fmt(saving), " ", es ? 'de ahorro' : 'saved'))), /*#__PURE__*/React.createElement("ul", {
+    className: "rf-ls-conditions"
+  }, /*#__PURE__*/React.createElement("li", null, es ? 'Contrato de arrendamiento de temporada' : 'Seasonal rental agreement'), /*#__PURE__*/React.createElement("li", null, es ? 'Señal del 20% para confirmar · resto a la llegada' : '20% deposit to confirm · balance on arrival'), /*#__PURE__*/React.createElement("li", null, es ? `Tarifa mensual (${nights} noches)` : `Monthly rate (${nights} nights)`), /*#__PURE__*/React.createElement("li", null, es ? 'Sin comisiones de plataformas' : 'No platform commissions')), /*#__PURE__*/React.createElement("a", {
+    href: "estancias-largas.html",
+    className: "rf-ls-info-link",
+    target: "_blank",
+    rel: "noopener"
+  }, es ? 'Ver todas las condiciones →' : 'See full conditions →'));
+};
 const PricePreview = ({
   apt,
   checkin,
@@ -890,16 +978,12 @@ const ReservasForm = ({
   }, nightsSelected > 28 && (() => {
     const m = checkin ? parseInt(checkin.slice(5, 7), 10) : 0;
     return m !== 7 && m !== 8;
-  })() && /*#__PURE__*/React.createElement("div", {
-    className: "rf-ls-nudge"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "rf-ls-nudge-text"
-  }, /*#__PURE__*/React.createElement("strong", null, lang === 'es' ? '¿Más de un mes?' : 'More than a month?'), ' ', lang === 'es' ? 'Para estancias largas (29+ noches) tenemos precios mensuales especiales, contrato de arrendamiento y condiciones diferentes.' : 'For long stays (29+ nights) we have special monthly rates, a rental contract and different terms.'), /*#__PURE__*/React.createElement("a", {
-    href: "estancias-largas.html",
-    className: "rf-ls-nudge-cta",
-    target: "_blank",
-    rel: "noopener"
-  }, lang === 'es' ? 'Ver condiciones de estancia larga →' : 'See long-stay conditions →')), /*#__PURE__*/React.createElement(ReviewQuote, {
+  })() && /*#__PURE__*/React.createElement(LsInfoBlock, {
+    checkin: checkin,
+    checkout: checkout,
+    calc: calc,
+    lang: lang
+  }), /*#__PURE__*/React.createElement(ReviewQuote, {
     apt: apt,
     lang: lang
   }), !apt && availLoaded && /*#__PURE__*/React.createElement("div", {

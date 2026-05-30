@@ -1092,7 +1092,7 @@ const LongStayStrip = ({
     className: "lss-pill"
   }, es ? '29+ noches' : '29+ nights'), /*#__PURE__*/React.createElement("span", {
     className: "lss-pill"
-  }, es ? 'desde 1.390€/mes' : 'from €1,390/month'), /*#__PURE__*/React.createElement("span", {
+  }, es ? 'desde 1.450€/mes' : 'from €1,450/month'), /*#__PURE__*/React.createElement("span", {
     className: "lss-pill"
   }, "WiFi fibra"), /*#__PURE__*/React.createElement("span", {
     className: "lss-pill"

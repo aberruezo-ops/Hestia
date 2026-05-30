@@ -4884,7 +4884,7 @@ const BULK_PRESETS = [
 ];
 
 // Long-stay monthly rates (€/month). Jul (7) and Aug (8) not offered.
-const LS_RATES = { 1:1390, 2:1390, 3:1390, 4:1390, 5:1690, 6:1790, 9:1790, 10:1690, 11:1390, 12:1390 };
+const LS_RATES = { 1:1450, 2:1450, 3:1450, 4:1450, 5:1590, 6:1790, 9:1790, 10:1590, 11:1450, 12:1450 };
 
 const _isLongStayGap = (gap) => {
   if (gap.nights <= 28) return false;
@@ -4899,8 +4899,7 @@ const _lsIncludesChristmas = (start, end) => {
 };
 
 // Returns a breakdown by calendar month + total.
-// Special nights (Christmas Dec 23–Jan 6, Easter from config) get their
-// nightly rate multiplied by specialMultiplier (default 2).
+// Special nights (Christmas Dec 23–Jan 6, Easter from config) use a flat rate (default 80 €/night).
 const _lsIsChristmasNight = (ds) => {
   const m = parseInt(ds.slice(5, 7), 10);
   const d = parseInt(ds.slice(8, 10), 10);
@@ -4913,7 +4912,7 @@ const _lsIsEasterNight = (ds, easterRanges) => {
 };
 
 const _lsBreakdown = (start, end, lsCfg) => {
-  const multiplier   = (lsCfg && lsCfg.specialMultiplier) || 2;
+  const specialFlat  = (lsCfg && lsCfg.specialNightFlat) || 80;
   const easterRanges = (lsCfg && lsCfg.easterRanges) || [];
   const MO_NAMES = ['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 
@@ -4924,11 +4923,11 @@ const _lsBreakdown = (start, end, lsCfg) => {
     const mo = parseInt(cur.slice(5, 7), 10);
     if (mo === 7 || mo === 8) return null;
     const monthlyRate = (mo === 6 || mo === 9) ? 1790
-                      : (mo === 5 || mo === 10) ? 1690 : 1390;
+                      : (mo === 5 || mo === 10) ? 1590 : 1450;
     const dim         = new Date(yr, mo, 0).getDate();
     const baseNight   = monthlyRate / dim;
     const isSpecial   = _lsIsChristmasNight(cur) || _lsIsEasterNight(cur, easterRanges);
-    const nightCost   = isSpecial ? baseNight * multiplier : baseNight;
+    const nightCost   = isSpecial ? specialFlat : baseNight;
     const key = `${yr}-${String(mo).padStart(2, '0')}`;
     if (!byMonth[key]) byMonth[key] = { label: `${MO_NAMES[mo]} ${yr}`, nights: 0, amount: 0, specialNights: 0, monthlyRate, dim };
     byMonth[key].nights++;
@@ -4939,7 +4938,7 @@ const _lsBreakdown = (start, end, lsCfg) => {
 
   const parts = Object.values(byMonth).map(p => ({ ...p, amount: Math.round(p.amount) }));
   const total = parts.reduce((s, p) => s + p.amount, 0);
-  return { parts, total, multiplier };
+  return { parts, total, specialFlat };
 };
 
 const _hcOvLabel = (ov) => {
@@ -4958,14 +4957,14 @@ const _hcEffPrice = (base, ov) => {
   return base;
 };
 
-// Config panel for long-stay special night multiplier + Easter date ranges
+// Config panel for long-stay special night flat rate + Easter date ranges
 const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
-  const [mult,   setMult  ] = React.useState(String(lsCfg.specialMultiplier || 2));
+  const [flat,   setFlat  ] = React.useState(String(lsCfg.specialNightFlat || 80));
   const [ranges, setRanges] = React.useState(
     (lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n')
   );
   React.useEffect(() => {
-    setMult(String(lsCfg.specialMultiplier || 2));
+    setFlat(String(lsCfg.specialNightFlat || 80));
     setRanges((lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n'));
   }, [lsCfg]);
 
@@ -4974,7 +4973,7 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
       const [s, e] = l.split(/\s+/);
       return s && e ? [s, e] : null;
     }).filter(Boolean);
-    onSave({ specialMultiplier: parseFloat(mult) || 2, easterRanges: parsed });
+    onSave({ specialNightFlat: parseFloat(flat) || 80, easterRanges: parsed });
   };
 
   return (
@@ -4987,12 +4986,12 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
         <div className="hc-bulk-body">
           <div className="hc-bulk-row" style={{ alignItems: 'flex-start' }}>
             <div className="hc-bulk-field">
-              <label className="hc-lbl">Multiplicador noches especiales</label>
+              <label className="hc-lbl">Precio noche especial (€ fijo)</label>
               <div className="hc-input-row">
-                <input type="number" min="1" step="0.1" className="pe-input pe-input-num" style={{ width: 70 }}
-                  value={mult} onChange={e => setMult(e.target.value)}/>
-                <span className="pe-suffix">×</span>
-                <span className="hc-preview">Navidad (23 dic–6 ene) y Semana Santa se cobran a ×{mult} el precio normal de esa noche</span>
+                <input type="number" min="0" step="1" className="pe-input pe-input-num" style={{ width: 70 }}
+                  value={flat} onChange={e => setFlat(e.target.value)}/>
+                <span className="pe-suffix">€/n</span>
+                <span className="hc-preview">Navidad (23 dic–6 ene) y Semana Santa se cobran a {flat}€ fijo por noche</span>
               </div>
             </div>
             <div className="hc-bulk-field" style={{ flex: 1, minWidth: 260 }}>
@@ -5054,7 +5053,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
   const seasons    = (pricesData && pricesData.seasons)   || {};
   const overrides  = (pricesData && pricesData.gapOverrides) || {};
   const gapSplits  = (pricesData && pricesData.gapSplits)    || {};
-  const lsCfg      = (pricesData && pricesData.longStayConfig) || { specialMultiplier: 2, easterRanges: [] };
+  const lsCfg      = (pricesData && pricesData.longStayConfig) || { specialNightFlat: 80, easterRanges: [] };
 
   React.useEffect(() => {
     setLoading(true); setLoadErr(null);
@@ -5714,13 +5713,13 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
           <LsCfgPanel lsCfg={lsCfg} open={lsCfgOpen} setOpen={setLsCfgOpen} onSave={handleSaveLsCfg} saving={saving}/>
 
           <div className="ls-rates">
-            <div className="ls-rates-title">Tarifas base (€ / mes completo) · noches especiales ×{lsCfg.specialMultiplier}</div>
+            <div className="ls-rates-title">Tarifas base (€ / mes completo) · noches especiales {lsCfg.specialNightFlat}€/n fijo</div>
             <div className="ls-rates-grid">
               {[
-                { label: 'Nov – Abr', rate: 1390, note: 'T. baja' },
-                { label: 'Oct · May', rate: 1690, note: '' },
+                { label: 'Nov – Abr', rate: 1450, note: 'T. baja' },
+                { label: 'Oct · May', rate: 1590, note: '' },
                 { label: 'Jun · Sep', rate: 1790, note: '' },
-                { label: `Navidad / S. Santa ×${lsCfg.specialMultiplier}`, note: 'sobre tarifa del mes' },
+                { label: `Navidad / S. Santa ${lsCfg.specialNightFlat}€`, note: 'precio fijo por noche' },
               ].map(r => (
                 <div key={r.label} className="ls-rate-row">
                   <span className="ls-rate-period">{r.label}</span>

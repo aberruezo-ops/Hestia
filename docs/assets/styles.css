@@ -14906,6 +14906,29 @@ body.apt-bar-shown .widget-stack {
   margin-top: 6px;
 }
 
+/* ── Overrides de contraste: price-engine sobre fondo oscuro (apt-avail) ── */
+.apt-avail .price-label-sm {
+  color: rgba(240,232,213,.55);
+  opacity: 1;
+}
+.apt-avail .price-direct-total { color: var(--crema, #FAF6F0); }
+.apt-avail .price-avg-night { color: rgba(240,232,213,.60); opacity: 1; }
+.apt-avail .price-guarantee-sub { color: rgba(240,232,213,.60); }
+.apt-avail .price-breakdown {
+  border-top-color: rgba(240,232,213,.12);
+}
+.apt-avail .price-line { color: rgba(240,232,213,.65); }
+.apt-avail .price-line-disc { color: #F899CC; }
+.apt-avail .price-line-total {
+  color: var(--crema, #FAF6F0);
+  border-top-color: rgba(240,232,213,.15);
+}
+.apt-avail .price-note { color: rgba(240,232,213,.45); opacity: 1; }
+.apt-avail .price-engine {
+  background: rgba(255,255,255,.04);
+  border-color: rgba(240,232,213,.10);
+}
+
 /* Acciones del formulario de reservas: 2 botones (WhatsApp + Email)
    en fila, cada uno se habilita según campos rellenos. */
 .reservas-actions {
@@ -20971,6 +20994,129 @@ img[src*="apt-vt-gallery-"] {
 }
 .rf-ls-nudge-cta:hover { background: rgba(200,122,69,.12); }
 
+/* ── LsInfoBlock · resumen larga estancia en reservas ─────────── */
+.rf-ls-info {
+  background: color-mix(in srgb, var(--ber, #3D1A35) 5%, #fff);
+  border: 1.5px solid color-mix(in srgb, var(--ber, #3D1A35) 20%, transparent);
+  border-left: 4px solid var(--ber, #3D1A35);
+  border-radius: 10px 0 10px 0;
+  padding: 18px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.rf-ls-info-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.rf-ls-info-badge {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  background: var(--ber, #3D1A35);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.rf-ls-info-title {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ber, #3D1A35);
+}
+.rf-ls-price-row {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.rf-ls-price-ls,
+.rf-ls-price-reg {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.rf-ls-price-label {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-soft, #7A5A72);
+}
+.rf-ls-price-val {
+  font-family: var(--serif, Georgia, serif);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ber-dk, #2A0F2E);
+  line-height: 1;
+}
+.rf-ls-price-note {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--ink-soft, #7A5A72);
+}
+.rf-ls-price-striked {
+  font-family: var(--serif, Georgia, serif);
+  font-size: 18px;
+  color: var(--ink-soft, #7A5A72);
+  opacity: .65;
+  text-decoration: line-through;
+  line-height: 1;
+  margin-top: 4px;
+}
+.rf-ls-saving {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: #2A7A3A;
+  background: rgba(42,122,58,.08);
+  border-radius: 4px;
+  padding: 2px 7px;
+  display: inline-block;
+  margin-top: 2px;
+}
+.rf-ls-conditions {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-top: 1px solid rgba(42,15,46,.08);
+  padding-top: 12px;
+}
+.rf-ls-conditions li {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--ink, #3D1A35);
+  padding-left: 16px;
+  position: relative;
+}
+.rf-ls-conditions li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--ber, #3D1A35);
+  font-size: 11px;
+  font-weight: 700;
+}
+.rf-ls-info-link {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ber, #3D1A35);
+  text-decoration: none;
+  opacity: .75;
+  transition: opacity .12s;
+}
+.rf-ls-info-link:hover { opacity: 1; }
+
 /* ── Estancias largas page ───────────────────────────────────── */
 .lsl-hero {
   background: linear-gradient(150deg, var(--ber-dk, #1A0820) 0%, #3D1540 60%, #2A0F2E 100%);
@@ -21155,3 +21301,138 @@ img[src*="apt-vt-gallery-"] {
 .lsl-cta-body { font-size: 15px; color: rgba(255,255,255,.65); margin-bottom: 28px; line-height: 1.6; }
 .lsl-cta-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
 .lsl-cta .lsl-btn-ghost { color: rgba(255,255,255,.65); }
+
+/* ── LsSearch — disponibilidad larga estancia ───────────────── */
+.lsl-search-section { background: color-mix(in srgb, var(--ber, #3D1A35) 4%, var(--crema, #FAF6F0)); }
+.lsl-search-form { margin-bottom: 28px; }
+.lsl-search-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+.lsl-search-field { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 140px; }
+.lsl-search-field--sm { flex: 0 0 90px; min-width: 70px; }
+.lsl-search-lbl {
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-soft, #7A5A72);
+}
+.lsl-search-input {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ber, #3D1A35);
+  background: #fff;
+  border: 1.5px solid rgba(42,15,46,.18);
+  border-radius: 8px 0 8px 0;
+  padding: 9px 12px;
+  outline: none;
+  transition: border-color .15s;
+  width: 100%;
+  box-sizing: border-box;
+}
+.lsl-search-input:focus { border-color: var(--ber, #3D1A35); }
+.lsl-search-btn {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  background: var(--ber, #3D1A35);
+  color: #fff;
+  border: none;
+  border-radius: 10px 0 10px 0;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: background .15s, transform .15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: flex-end;
+}
+.lsl-search-btn:hover:not(:disabled) { background: var(--ber-dk, #2A0F2E); transform: translateY(-1px); }
+.lsl-search-btn:disabled { opacity: .55; cursor: not-allowed; }
+.lsl-search-error {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: #B00020;
+  margin: 10px 0 0;
+  padding: 8px 12px;
+  background: rgba(176,0,32,.06);
+  border-left: 3px solid #B00020;
+  border-radius: 4px;
+}
+.lsl-search-hint {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink-soft, #7A5A72);
+  margin: 8px 0 0;
+}
+.lsl-results {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.lsl-result {
+  background: #fff;
+  border: 1.5px solid color-mix(in srgb, var(--lsl-accent, #3AAABB) 30%, transparent);
+  border-radius: 10px 0 10px 0;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(42,15,46,.07);
+}
+.lsl-result--unavail {
+  background: rgba(42,15,46,.03);
+  border-color: rgba(42,15,46,.10);
+  opacity: .65;
+}
+.lsl-result-apt {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  color: var(--lsl-accent, #3AAABB);
+}
+.lsl-result-apt strong { font-weight: 800; }
+.lsl-result-price { display: flex; align-items: baseline; gap: 8px; }
+.lsl-result-total {
+  font-family: var(--serif, Georgia, serif);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ber, #3D1A35);
+  line-height: 1;
+}
+.lsl-result-nights {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink-soft, #7A5A72);
+}
+.lsl-result-btn {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 9px 18px;
+  background: var(--lsl-accent, #3AAABB);
+  color: #fff;
+  border-radius: 8px 0 8px 0;
+  text-decoration: none;
+  text-align: center;
+  transition: filter .15s, transform .15s;
+}
+.lsl-result-btn:hover { filter: brightness(.88); transform: translateY(-1px); }
+.lsl-result-unavail-msg {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--ink-soft, #7A5A72);
+  font-style: italic;
+}
+@media (max-width: 640px) {
+  .lsl-results { grid-template-columns: 1fr; }
+  .lsl-search-field { flex: 0 0 calc(50% - 6px); }
+  .lsl-search-field--sm { flex: 0 0 calc(50% - 6px); }
+  .lsl-search-btn { width: 100%; justify-content: center; }
+}
