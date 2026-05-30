@@ -77,7 +77,7 @@ const SECTION_CATS = {
   pueblos:     ['town', 'bookshop'],
   'mar-playas':['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
   planes:      ['gem', 'water', 'adventure', 'trek', 'leisure', 'bodega'],
-  mercados:    ['market'],
+  mercados:    ['abasto', 'market'],
   salud:       ['health', 'vet', 'pet-board', 'physio', 'pharmacy'],
   movilidad:   ['fuel', 'ev-charge'],
 };
@@ -110,6 +110,7 @@ const CATEGORIES = [
   { id: 'bodega',      es: 'Bodegas y enoturismo',   en: 'Wineries & wine tours', color: 'var(--ber)',     icon: '🍷' },
   { id: 'town',        es: 'Pueblos',                en: 'Towns',                 color: 'var(--vt-dk)',   icon: '🏘️' },
   { id: 'bookshop',    es: 'Librerías',              en: 'Bookshops',             color: 'var(--sie)',     icon: '📚' },
+  { id: 'abasto',      es: 'Mercados de abastos',    en: 'Covered markets',       color: 'var(--vt-dk)',   icon: '🏪' },
   { id: 'market',      es: 'Mercadillos',            en: 'Street markets',        color: 'var(--vs-dk)',   icon: '🧺' },
   { id: 'fuel',        es: 'Gasolineras',            en: 'Petrol stations',       color: 'var(--ber-lt)',  icon: '⛽' },
   { id: 'ev-charge',   es: 'Puntos de carga eléctrica', en: 'EV charging points', color: 'var(--teal-dk)', icon: '🔌' },
@@ -235,7 +236,7 @@ const PLACES = [
 
   // Pescaderías y lonja
   { id: 'lonja-garrucha', name: 'Lonja de Garrucha (subasta)', desc: 'Una de las lonjas más activas del Mediterráneo español. Subasta diaria de marisco y pescado de barco — se puede ver el espectáculo desde la cristalera.', specialty: 'gamba roja de Garrucha (la mejor del Mediterráneo), quisquilla, conchas finas, gallineta.', tip: 'La subasta es a las 17:00 los días laborables. Llega con tiempo y compra después en las pescaderías de al lado.', cat: 'fish', lat: 37.1810, lng: -1.8240, featured: true },
-  { id: 'mercado-vera',   name: 'Mercado de abastos (Vera pueblo)', desc: 'Mercado tradicional cubierto con frutería, carnicería, pescadería y charcutería. Producto local del día.', specialty: 'producto fresco de la huerta de Almería, carne de la sierra, pescado de la lonja.', tip: 'Sábado por la mañana es cuando más vida tiene — combínalo con el mercadillo exterior.', cat: 'fish', url: 'https://goo.gl/maps/PaEerwZNxAK1kNTS8', lat: 37.2486, lng: -1.8625, featured: true },
+  { id: 'mercado-vera',   name: 'Mercado de abastos (Vera pueblo)', desc: 'Mercado tradicional cubierto con frutería, carnicería, pescadería y charcutería. Producto local del día.', specialty: 'producto fresco de la huerta de Almería, carne de la sierra, pescado de la lonja.', tip: 'Sábado por la mañana es cuando más vida tiene — combínalo con el mercadillo exterior.', cat: 'abasto', url: 'https://goo.gl/maps/PaEerwZNxAK1kNTS8', lat: 37.2486, lng: -1.8625, featured: true },
   { id: 'el-mero',        name: 'Pescadería El Mero (Garrucha)', desc: 'Junto a la lonja. Una de las pescaderías de referencia de Garrucha.', specialty: 'gamba roja recién subastada, lubinas y doradas salvajes, mariscos del día.', cat: 'fish', url: 'https://goo.gl/maps/AdJz6SEyGRvLeToDA', lat: 37.1815, lng: -1.8235, featured: true },
   { id: 'isabel',         name: 'Pescados y Mariscos Isabel (Garrucha)', desc: 'Pescadería pequeña pero con mucho oficio.', specialty: 'pescado para horno (besugo, dorada), pulpo cocido y conserva casera de mojama.', cat: 'fish', url: 'https://goo.gl/maps/RHCieMNkgo3FL8m5A', lat: 37.1820, lng: -1.8240 },
   { id: 'pescados-online',name: 'Pescados Garrucha (online)', desc: 'Servicio de pescado y marisco online — entrega en Vera Playa el mismo día.', specialty: 'gamba roja de Garrucha empacada en hielo, lista para comer o congelar.', tip: 'Útil si quieres llevarte producto a casa al final de la estancia.', cat: 'fish', url: 'https://pescadosgarrucha.es/', lat: 37.1815, lng: -1.8230 },
@@ -245,7 +246,10 @@ const PLACES = [
   { id: 'carniceria-garrucha', name: 'Carnicería Hermanos López (Garrucha)', desc: 'Carnicería con producto local y embutidos curados en la sierra.', specialty: 'morcilla de Vera, jamón ibérico de Las Alpujarras, chorizo casero.', cat: 'fish', lat: 37.1818, lng: -1.8233 },
   { id: 'jamoneria-vera', name: 'Jamonería Sierra Almería (Vera)', desc: 'Especialista en ibéricos y jamones de toda España. Cortan al momento.', specialty: 'jamón ibérico de bellota, lomo embuchado, chorizo cular y caña de lomo.', tip: 'Se puede comprar jamón cortado a cuchillo y envasado al vacío para llevar a casa.', cat: 'fish', lat: 37.2495, lng: -1.8636 },
   { id: 'panaderia-vera', name: 'Panadería La Viña (Vera pueblo)', desc: 'Panadería tradicional con horno de leña.', specialty: 'pan de Cuevas, mollete almeriense, ensaimadas y empanadillas saladas.', tip: 'Llega antes de las 11:00 — el pan de Cuevas se acaba pronto.', cat: 'fish', lat: 37.2491, lng: -1.8637 },
-  { id: 'fruteria-vera',  name: 'Frutería del Mercado (Vera)', desc: 'Frutería y verdulería de la huerta de Almería en el mercado de abastos.', specialty: 'tomates raf, pimientos asar, melones de huerta, naranjas valencianas.', cat: 'fish', lat: 37.2486, lng: -1.8625 },
+  { id: 'fruteria-vera',  name: 'Frutería del Mercado (Vera)', desc: 'Frutería y verdulería de la huerta de Almería en el mercado de abastos.', specialty: 'tomates raf, pimientos asar, melones de huerta, naranjas valencianas.', cat: 'abasto', lat: 37.2486, lng: -1.8625 },
+  { id: 'mercado-garrucha', name: 'Mercado municipal de Garrucha', desc: 'Mercado cubierto pequeño pero animado, a dos pasos de la lonja. Pescado del día directamente del barco, verduras de la huerta levantina y carnicería local.', specialty: 'pescado fresco de la subasta de la lonja, gambas y quisquilla de Garrucha.', tip: 'Mejor a primera hora de la mañana cuando llega el género de la lonja.', cat: 'abasto', lat: 37.1818, lng: -1.8238 },
+  { id: 'mercado-cuevas',  name: 'Mercado de abastos (Cuevas del Almanzora)', desc: 'Mercado cubierto del pueblo. Frutas y verduras del valle del Almanzora, carnicería con cordero de la sierra y charcutería local.', specialty: 'naranja del valle del Almanzora, pimiento morrón seco y embutidos serranos.', tip: 'Se celebra también feria de productores los sábados en la plaza del castillo.', cat: 'abasto', lat: 37.2980, lng: -1.8828 },
+  { id: 'mercado-almeria', name: 'Mercado Central (Almería capital)', desc: 'Mercado modernista de 1892 en pleno centro de Almería. Una de las visitas imprescindibles de la capital: dos plantas llenas de puestos de pescado, marisco, fruta, especias y charcutería.', specialty: 'atún rojo de almadraba, gambas blancas de Almería, especias del norte de África, aceitunas aliñadas.', tip: 'En el piso de arriba hay una galería de bares donde desayunar con los lugareños. Cierra a las 14:00 — llega por la mañana.', cat: 'abasto', url: 'https://maps.app.goo.gl/s7Q8R2vHoXWADzqC8', lat: 36.8393, lng: -2.4637, featured: true },
   { id: 'queseria-velez', name: 'Quesería Los Vélez', desc: 'Quesos artesanos de cabra y oveja de la Sierra de María-Los Vélez.', specialty: 'queso de cabra al romero, oveja semicurado y manchego de los Vélez.', tip: 'Pídelo en queserías de Vera o ve directamente al obrador en Vélez-Rubio.', cat: 'fish', lat: 37.6520, lng: -2.0760 },
 
   // Farmacias y salud

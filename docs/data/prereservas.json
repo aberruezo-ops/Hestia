@@ -1,3 +1,20 @@
 {
-  "prereservas": []
+  "prereservas": [
+    {
+      "id": "pr-1748369400000",
+      "createdAt": "2026-05-27T18:30:00.000Z",
+      "apt": "vm",
+      "responsable": "Carol De Miguel Laorden",
+      "telefono": "+34 655 37 52 89",
+      "huespedes": 4,
+      "menores_12": 2,
+      "entrada": "2026-08-15",
+      "salida": "2026-08-22",
+      "ingreso_total": 1426.74,
+      "reserva": 0,
+      "pago_previo": 0,
+      "canal": "Airbnb",
+      "observaciones": "No reembolsable. Precio habitación 7 noches: 1.729 €. Limpieza: 60 €. Ajuste precio/noche: -32,90 €. Comisión Airbnb: 329,36 € (15,5% + IVA)."
+    }
+  ]
 }
