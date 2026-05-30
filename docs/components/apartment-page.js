@@ -12,7 +12,7 @@ const APT_DATA = {
     slug: 'mar',
     license: 'VFT/AL/01580',
     name_short: 'Mar',
-    vimeo_id: '1192955159',
+    video_src: 'assets/hestia v13 mar clean.mp4',
     accent: '#6B7A3A',
     accent2: '#8B9A52',
     accent_dk: '#4A5628',
@@ -48,7 +48,7 @@ const APT_DATA = {
     slug: 'thalassa',
     license: 'VFT/AL/05535',
     name_short: 'Thalassa',
-    vimeo_id: '1192955160',
+    video_src: 'assets/hestia intro v9 thalassa outro.mp4',
     accent: '#8A4A24',
     accent2: '#B86A3C',
     accent_dk: '#6E3A1C',
@@ -84,7 +84,6 @@ const APT_DATA = {
     slug: 'salinas',
     license: 'VTF/AL/07056',
     name_short: 'Salinas',
-    vimeo_id: '1192955161',
     accent: '#9E7A2C',
     accent2: '#D4A84A',
     accent_dk: '#7A5E1A',
@@ -790,9 +789,8 @@ const AptVideoDesc = ({
   apt,
   lang
 }) => {
-  if (!apt.vimeo_id) return null;
+  if (!apt.video_src) return null;
   const d = apt[lang];
-  const accentHex = apt.accent.replace('#', '');
   const reservasHref = `reservas.html?apt=${apt.id}`;
   const guideHref = `${apt.slug}.html#guide`;
   return /*#__PURE__*/React.createElement("section", {
@@ -808,12 +806,15 @@ const AptVideoDesc = ({
     className: "eyebrow avd-eyebrow"
   }, lang === 'es' ? 'Visita virtual' : 'Virtual tour'), /*#__PURE__*/React.createElement("div", {
     className: "avd-iframe-wrap"
-  }, /*#__PURE__*/React.createElement("iframe", {
+  }, /*#__PURE__*/React.createElement("video", {
     className: "avd-iframe",
-    src: `https://player.vimeo.com/video/${apt.vimeo_id}?autoplay=1&muted=1&dnt=1&color=${accentHex}&title=0&byline=0&portrait=0`,
-    allow: "autoplay; fullscreen; picture-in-picture",
-    allowFullScreen: true,
-    title: d.name
+    src: apt.video_src,
+    autoPlay: true,
+    muted: true,
+    loop: true,
+    playsInline: true,
+    controls: true,
+    poster: apt.hero_img
   }))), /*#__PURE__*/React.createElement("div", {
     className: "avd-text-col"
   }, /*#__PURE__*/React.createElement("p", {
@@ -1363,17 +1364,16 @@ const ApartmentPageApp = () => {
     };
   }, [apt.id, apt.slug]);
   React.useEffect(() => {
-    if (!apt.vimeo_id) return;
+    if (!apt.video_src) return;
     const schema = {
       '@context': 'https://schema.org',
       '@type': 'VideoObject',
       'name': `Visita virtual · ${apt.es.name}`,
       'description': apt.es.concept,
       'thumbnailUrl': `https://www.hestiayourhome.com/${apt.hero_img}`,
-      'uploadDate': '2024-06-01',
+      'uploadDate': '2025-01-01',
       'duration': 'PT2M',
-      'contentUrl': `https://vimeo.com/${apt.vimeo_id}`,
-      'embedUrl': `https://player.vimeo.com/video/${apt.vimeo_id}`
+      'contentUrl': `https://www.hestiayourhome.com/${apt.video_src}`
     };
     const el = document.createElement('script');
     el.type = 'application/ld+json';
