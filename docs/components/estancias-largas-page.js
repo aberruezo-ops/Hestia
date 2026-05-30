@@ -368,10 +368,14 @@ const LsCta = ({
   }, t.cta_mail))));
 };
 const EstanciasLargasPageApp = () => {
-  const [lang, setLang] = React.useState(getLang());
-  const [mode] = React.useState('content');
-  const [scrolled] = React.useState(true);
+  const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
+  const {
+    mode,
+    scrolled
+  } = useScrollMode();
+  useReveal();
   React.useEffect(() => {
+    localStorage.setItem('hestia-lang', lang);
     document.documentElement.lang = lang;
   }, [lang]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Topbar, {

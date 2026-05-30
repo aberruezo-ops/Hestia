@@ -359,7 +359,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <NavLink href={NAV_PAGES.mar}>{t.nav[1]}</NavLink>
           <NavLink href={NAV_PAGES.thalassa}>{t.nav[2]}</NavLink>
           <NavLink href={NAV_PAGES.salinas}>{t.nav[3]}</NavLink>
-          <NavLink href={NAV_PAGES.porqueHestia}>{t.nav[8]}</NavLink>
+          <NavLink href={NAV_PAGES.estanciasLargas}>{t.nav[9]}</NavLink>
         </nav>
         <div className="brand-center">
           <a href="index.html" className="brand-lockup" aria-label="Hestía — Inicio">
@@ -381,8 +381,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
             <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias}>{t.nav[7]}</NavLink>
-            <NavLink href={NAV_PAGES.estanciasLargas}>{t.nav[9]}</NavLink>
-            <NavLink href={NAV_PAGES.contacto}>{t.nav[6]}</NavLink>
+            <NavLink href={NAV_PAGES.porqueHestia}>{t.nav[8]}</NavLink>
             <NavLink href={NAV_PAGES.reservas} className="cta"><span className="cta-text">{t.cta_nav}</span></NavLink>
           </nav>
           <button
@@ -430,7 +429,6 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.opiniones} className="mn-page">{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias} className="mn-page">{t.nav[7]}</NavLink>
             <NavLink href={NAV_PAGES.estanciasLargas} className="mn-page">{t.nav[9]}</NavLink>
-            <NavLink href={NAV_PAGES.contacto} className="mn-page">{t.nav[6]}</NavLink>
           </div>
           <div className="mn-cta-row">
             <NavLink href={NAV_PAGES.reservas} className="mobile-cta">{t.cta_nav} →</NavLink>
@@ -656,7 +654,6 @@ const Footer = ({ lang }) => {
             <li><a href="opiniones.html">{t.nav[5]}</a></li>
             <li><a href="noticias.html">{t.nav[7]}</a></li>
             <li><a href="estancias-largas.html">{t.nav[9]}</a></li>
-            <li><a href="contacto.html">{t.nav[6]}</a></li>
             <li><a href="privacidad.html">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>
             <li><a href="cookies.html">Cookies</a></li>
             <li><a href="mapa.html">{lang === 'es' ? 'Mapa web' : 'Site map'}</a></li>

@@ -466,8 +466,8 @@ const Header = ({
   }, t.nav[2]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.salinas
   }, t.nav[3]), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.porqueHestia
-  }, t.nav[8])), /*#__PURE__*/React.createElement("div", {
+    href: NAV_PAGES.estanciasLargas
+  }, t.nav[9])), /*#__PURE__*/React.createElement("div", {
     className: "brand-center"
   }, /*#__PURE__*/React.createElement("a", {
     href: "index.html",
@@ -503,10 +503,8 @@ const Header = ({
   }, t.nav[5]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.noticias
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.estanciasLargas
-  }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.contacto
-  }, t.nav[6]), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.porqueHestia
+  }, t.nav[8]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
     className: "cta"
   }, /*#__PURE__*/React.createElement("span", {
@@ -573,10 +571,7 @@ const Header = ({
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.estanciasLargas,
     className: "mn-page"
-  }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.contacto,
-    className: "mn-page"
-  }, t.nav[6])), /*#__PURE__*/React.createElement("div", {
+  }, t.nav[9])), /*#__PURE__*/React.createElement("div", {
     className: "mn-cta-row"
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
@@ -884,8 +879,6 @@ const Footer = ({
   }, t.nav[7])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "estancias-largas.html"
   }, t.nav[9])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-    href: "contacto.html"
-  }, t.nav[6])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "privacidad.html"
   }, lang === 'es' ? 'Privacidad' : 'Privacy')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "cookies.html"
