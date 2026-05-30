@@ -287,6 +287,63 @@
       padding: 2px 9px;
     }
 
+    /* Cancellation policy */
+    .bc-cancel {
+      background: var(--ok-bg);
+      border: 1px solid rgba(46,125,82,.22);
+      border-radius: 8px 0 8px 0;
+      padding: 13px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .bc-cancel-header {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--ok);
+      letter-spacing: .01em;
+    }
+    .bc-cancel-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .bc-cancel-row {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 8px;
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      line-height: 1.45;
+    }
+    .bc-cancel-period {
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    /* Contract note */
+    .bc-contract {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      background: rgba(42,15,46,.035);
+      border: 1px solid rgba(42,15,46,.09);
+      border-radius: 8px 0 8px 0;
+      padding: 12px 14px;
+      font-size: 12px;
+      color: var(--ink-soft);
+      line-height: 1.55;
+    }
+    .bc-contract-icon {
+      flex-shrink: 0;
+      margin-top: 1px;
+      color: var(--ink-soft);
+    }
+
     /* ── Payment form ── */
     .payment-card {
       background: white;
@@ -564,6 +621,40 @@
           </div>
         </div>
 
+        <div class="bc-divider"></div>
+
+        <div class="bc-cancel">
+          <div class="bc-cancel-header">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <circle cx="7" cy="7" r="6.5" fill="#2E7D52" fill-opacity=".15" stroke="#2E7D52" stroke-width="1.1"/>
+              <path d="M4 7l2 2 4-4" stroke="#2E7D52" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Cancelación gratuita disponible
+          </div>
+          <div class="bc-cancel-rows">
+            <div class="bc-cancel-row">
+              <span class="bc-cancel-period">+30 días antes</span>
+              <span>Devolución completa de la señal (175 €)</span>
+            </div>
+            <div class="bc-cancel-row">
+              <span class="bc-cancel-period">14 – 30 días</span>
+              <span>50% de la señal devuelta (87,50 €)</span>
+            </div>
+            <div class="bc-cancel-row">
+              <span class="bc-cancel-period">Menos de 14d</span>
+              <span>Señal sin reembolso</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bc-contract">
+          <svg class="bc-contract-icon" width="15" height="15" viewBox="0 0 15 15" fill="none">
+            <rect x=".75" y=".75" width="13.5" height="13.5" rx="2" stroke="currentColor" stroke-width="1.1"/>
+            <path d="M4 5h7M4 7.5h7M4 10h4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+          </svg>
+          <span>Recibirás el <strong style="color:var(--ink)">contrato de arrendamiento</strong> con todos los datos de tu reserva firmado por Hestía antes de realizar el pago.</span>
+        </div>
+
       </div>
     </div>
 
@@ -610,6 +701,7 @@
       <p class="pay-note">
         Recibirás confirmación por email al instante.<br/>
         El resto (<strong>700 €</strong>) se abona a la llegada en efectivo o bizum.
+        Las condiciones completas constan en el contrato enviado previamente.
       </p>
 
       <div class="security-row">
