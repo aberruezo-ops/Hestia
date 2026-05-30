@@ -479,7 +479,9 @@ const Header = ({
     decoding: "async",
     src: "assets/logo-teal-transparent.png",
     alt: "",
-    className: "hestia-logo"
+    className: "hestia-logo",
+    width: "600",
+    height: "600"
   })), /*#__PURE__*/React.createElement("span", {
     className: "wordmark"
   }, "HEST\xCDA"), /*#__PURE__*/React.createElement("span", {
@@ -622,6 +624,8 @@ const FloatingChat = ({
     id: 'alex',
     name: 'Alex',
     photo: 'assets/photo-alex.jpg',
+    photoW: 840,
+    photoH: 1120,
     imgClass: 'avatar-img-alex',
     langLbl: 'Español',
     tel: '+34 620 316 370',
@@ -631,6 +635,8 @@ const FloatingChat = ({
     id: 'fran',
     name: 'Fran',
     photo: 'assets/photo-fran.jpg',
+    photoW: 925,
+    photoH: 2000,
     imgClass: 'avatar-img-fran',
     langLbl: 'English',
     tel: '+34 654 138 251',
@@ -657,6 +663,8 @@ const FloatingChat = ({
     src: p.photo,
     alt: "",
     loading: "lazy",
+    width: p.photoW,
+    height: p.photoH,
     className: `avatar-img ${p.imgClass}`
   })), /*#__PURE__*/React.createElement("div", {
     className: "cp-body"
@@ -770,7 +778,10 @@ const Footer = ({
     decoding: "async",
     src: "assets/logo-teal-transparent.png",
     alt: "Hest\xEDa",
-    className: "hestia-logo"
+    className: "hestia-logo",
+    loading: "lazy",
+    width: "600",
+    height: "600"
   }), /*#__PURE__*/React.createElement("div", {
     className: "wordmark",
     style: {
@@ -919,7 +930,8 @@ const FooterNewsletter = ({
     }
   };
   return /*#__PURE__*/React.createElement("div", {
-    className: "footer-newsletter"
+    className: "footer-newsletter",
+    "aria-live": "polite"
   }, /*#__PURE__*/React.createElement("span", {
     className: "footer-nl-label eyebrow"
   }, lang === 'es' ? 'Ofertas directas · sin intermediarios' : 'Direct offers · no middleman'), state === 'sent' ? /*#__PURE__*/React.createElement("p", {
@@ -935,7 +947,8 @@ const FooterNewsletter = ({
     onChange: e => setEmail(e.target.value),
     required: true,
     maxLength: 120,
-    "aria-label": lang === 'es' ? 'Email para newsletter' : 'Newsletter email'
+    "aria-label": lang === 'es' ? 'Email para newsletter' : 'Newsletter email',
+    spellCheck: false
   }), /*#__PURE__*/React.createElement("button", {
     type: "submit",
     className: "footer-nl-btn",
