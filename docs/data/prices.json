@@ -567,6 +567,14 @@
       "type": "fixed",
       "value": 175,
       "minNights": 6
+    },
+    "vs|2026-09-14": {
+      "apt": "vs",
+      "start": "2026-09-14",
+      "end": "2026-10-25",
+      "nights": 41,
+      "type": "fixed",
+      "value": 100
     }
   },
   "gapSplits": {
