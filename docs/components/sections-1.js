@@ -890,6 +890,25 @@ const LastMinuteStrip = ({
       horizon.setDate(horizon.getDate() + 45);
       const horizonStr = horizon.toISOString().slice(0, 10);
       const found = [];
+      const lmSplits = window.PRICES_V2 && window.PRICES_V2.gapSplits || {};
+
+      // Expands a raw gap into segments (respecting gapSplits) and pushes valid ones to found
+      const pushGap = (apt, gapStart, gapEnd) => {
+        const splitDates = (lmSplits[`${apt.id}|${gapStart}`] || []).filter(d => d > gapStart && d < gapEnd).sort();
+        const points = [gapStart, ...splitDates, gapEnd];
+        for (let i = 0; i < points.length - 1; i++) {
+          const checkin = points[i],
+            checkout = points[i + 1];
+          const nights = Math.round((new Date(checkout + 'T12:00:00Z') - new Date(checkin + 'T12:00:00Z')) / 86400000);
+          const season = _lmGapSeason(checkin, checkout);
+          if (nights >= 2 && nights <= _LM_MAX[season]) found.push({
+            apt,
+            checkin,
+            checkout,
+            nights
+          });
+        }
+      };
       for (const apt of APARTMENTS) {
         const blocked = data[apt.id]?.blocked || [];
         // Incluir todos los bloques futuros, no solo los que empiezan antes del horizonte,
@@ -898,16 +917,7 @@ const LastMinuteStrip = ({
         let cursor = todayStr;
         for (const block of sorted) {
           if (cursor >= horizonStr) break;
-          if (block.start > cursor) {
-            const nights = Math.round((new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
-            const season = _lmGapSeason(cursor, block.start);
-            if (nights >= 2 && nights <= _LM_MAX[season]) found.push({
-              apt,
-              checkin: cursor,
-              checkout: block.start,
-              nights
-            });
-          }
+          if (block.start > cursor) pushGap(apt, cursor, block.start);
           if (block.end > cursor) cursor = block.end;
         }
         if (cursor < horizonStr) {
