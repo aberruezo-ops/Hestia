@@ -84,6 +84,7 @@ const APT_DATA = {
     slug: 'salinas',
     license: 'VTF/AL/07056',
     name_short: 'Salinas',
+    video_src: 'assets/hestia v14 salinas clean.mp4',
     accent: '#9E7A2C',
     accent2: '#D4A84A',
     accent_dk: '#7A5E1A',

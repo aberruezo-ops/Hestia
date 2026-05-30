@@ -114,6 +114,7 @@ const APT_DATA = {
   vs: {
     id: 'vs', num: '03', slug: 'salinas', license: 'VTF/AL/07056',
     name_short: 'Salinas',
+    video_src: 'assets/hestia v14 salinas clean.mp4',
     accent: '#9E7A2C', accent2: '#D4A84A', accent_dk: '#7A5E1A',
     hero_img: 'assets/apt-vm.jpg',
     bedroom_img: 'assets/apt-vs-gallery-21.jpg',
