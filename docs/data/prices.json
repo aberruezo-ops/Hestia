@@ -508,7 +508,10 @@
       "start": "2026-06-28",
       "end": "2026-07-05",
       "nights": 7,
-      "type": "fixed"
+      "type": "fixed",
+      "value": 130,
+      "minNights": 6,
+      "lastMinute": true
     }
   },
   "gapSplits": {
