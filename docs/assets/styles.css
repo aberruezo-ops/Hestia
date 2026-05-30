@@ -20793,3 +20793,37 @@ img[src*="apt-vt-gallery-"] {
 .ls-gap-flags   { flex: 1; }
 .ls-gap-actions { margin-left: auto; }
 .ls-wa-btn      { font-size: 12px; white-space: nowrap; }
+
+/* Breakdown table */
+.ls-breakdown {
+  background: rgba(42,15,46,.03);
+  border: 1px solid rgba(42,15,46,.09);
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 12px;
+}
+.ls-bk-row {
+  display: grid;
+  grid-template-columns: 80px 40px 1fr auto;
+  gap: 6px;
+  align-items: center;
+  padding: 6px 12px;
+  border-bottom: 1px solid rgba(42,15,46,.06);
+}
+.ls-bk-row:last-of-type { border-bottom: none; }
+.ls-bk-period { font-weight: 600; color: var(--ink, #3D1A35); text-transform: capitalize; }
+.ls-bk-nights { color: var(--ink-soft, #7A5A72); }
+.ls-bk-rate   { color: var(--ink-soft, #7A5A72); font-size: 11px; }
+.ls-bk-sub    { font-weight: 600; color: var(--ink, #3D1A35); text-align: right; }
+.ls-bk-total  {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(42,15,46,.05);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink, #3D1A35);
+  border-top: 1px solid rgba(42,15,46,.10);
+}
+.ls-bk-total-val { font-size: 15px; font-weight: 700; }

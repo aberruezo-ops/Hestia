@@ -4898,11 +4898,34 @@ const _lsIncludesChristmas = (start, end) => {
          (start < `${yr}-01-07`     && end > `${yr - 1}-12-20`);
 };
 
-const _lsMonthlyRate = (start, end, easterFlag) => {
-  const m = parseInt(start.slice(5, 7), 10);
-  if (!LS_RATES[m]) return null;
-  if (_lsIncludesChristmas(start, end) || easterFlag) return 1490;
-  return LS_RATES[m];
+// Returns a breakdown by calendar month + total.
+// Each month's daily rate = monthly_rate / days_in_that_month.
+// Christmas (Dec 20–Jan 6) or Easter flag raises baja to 1490€/month.
+const _lsBreakdown = (start, end, easterFlag) => {
+  const hasXmas = _lsIncludesChristmas(start, end);
+  const bajaRate = (hasXmas || easterFlag) ? 1490 : 1390;
+  const MO_NAMES = ['', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+
+  const byMonth = {};
+  let cur = start;
+  while (cur < end) {
+    const yr = parseInt(cur.slice(0, 4), 10);
+    const mo = parseInt(cur.slice(5, 7), 10);
+    if (mo === 7 || mo === 8) return null;
+    const rate = (mo === 6 || mo === 9) ? 1790
+               : (mo === 5 || mo === 10) ? 1690 : bajaRate;
+    const key = `${yr}-${String(mo).padStart(2, '0')}`;
+    if (!byMonth[key]) {
+      const dim = new Date(yr, mo, 0).getDate();
+      byMonth[key] = { label: `${MO_NAMES[mo]} ${yr}`, nights: 0, rate, dim };
+    }
+    byMonth[key].nights++;
+    cur = _hcAdd(cur, 1);
+  }
+
+  const parts = Object.values(byMonth);
+  const total = Math.round(parts.reduce((s, p) => s + (p.rate / p.dim) * p.nights, 0));
+  return { parts, total };
 };
 
 const _hcOvLabel = (ov) => {
@@ -5639,12 +5662,13 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
                 </div>
                 <div className="hc-list">
                   {gaps.map(gap => {
-                    const easter  = !!(lsEaster[gap.id]);
+                    const easter = !!(lsEaster[gap.id]);
+                    const bd     = _lsBreakdown(gap.start, gap.end, easter);
+                    if (!bd) return null;
                     const hasXmas = _lsIncludesChristmas(gap.start, gap.end);
-                    const rate    = _lsMonthlyRate(gap.start, gap.end, easter);
-                    const total   = rate ? Math.round((gap.nights / 30) * rate) : null;
                     const months  = (gap.nights / 30).toFixed(1);
-                    const waMsg   = `Hola 👋\n\nTenemos disponible *${meta.name}* para una estancia larga:\n📅 ${_hcFmt(gap.start)} → ${_hcFmt(gap.end)} (${gap.nights} noches · ~${months} meses)\n💰 ${rate ? rate + '€/mes' : 'consultar'}\nTotal estimado: ~${total ? total + '€' : 'consultar'}\n\nPerfecto para teletrabajo, negocio o vivir una temporada en Vera Playa 🌊\nSin comisiones · trato directo.`;
+                    const bdLines = bd.parts.map(p => `  • ${p.label}: ${p.nights}n × ${p.rate}€/${p.dim}d = ${Math.round((p.rate/p.dim)*p.nights)}€`).join('\n');
+                    const waMsg   = `Hola 👋\n\nTenemos disponible *${meta.name}* para una estancia larga:\n📅 ${_hcFmt(gap.start)} → ${_hcFmt(gap.end)} (${gap.nights} noches · ~${months} meses)\n\nDesglose:\n${bdLines}\n\n💰 *Total: ${bd.total}€*\n\nPerfecto para teletrabajo, negocio o vivir una temporada en Vera Playa 🌊\nSin comisiones · trato directo.`;
                     return (
                       <div key={gap.id} className="ls-gap">
                         <div className="ls-gap-head">
@@ -5653,16 +5677,31 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
                           <span className="ls-gap-months">~{months} meses</span>
                           {hasXmas && <span className="hc-badge hc-badge-warn">Navidad</span>}
                         </div>
-                        <div className="ls-gap-pricing">
-                          <div className="ls-gap-rate">
-                            <span className="ls-gap-rate-val">{rate ? `${rate}€` : '—'}<span className="ls-rate-per">/mes</span></span>
-                            {total && <span className="ls-gap-total">≈ {total}€ total</span>}
+
+                        <div className="ls-breakdown">
+                          {bd.parts.map(p => {
+                            const partTotal = Math.round((p.rate / p.dim) * p.nights);
+                            return (
+                              <div key={p.label} className="ls-bk-row">
+                                <span className="ls-bk-period">{p.label}</span>
+                                <span className="ls-bk-nights">{p.nights}n</span>
+                                <span className="ls-bk-rate">{p.rate}€/{p.dim}d</span>
+                                <span className="ls-bk-sub">= {partTotal}€</span>
+                              </div>
+                            );
+                          })}
+                          <div className="ls-bk-total">
+                            <span>Total estimado</span>
+                            <span className="ls-bk-total-val">{bd.total}€</span>
                           </div>
+                        </div>
+
+                        <div className="ls-gap-pricing">
                           <div className="ls-gap-flags">
                             <label className="hc-check-lbl" style={{ fontSize: 12 }}>
                               <input type="checkbox" checked={easter}
                                 onChange={e => setLsEaster(s => ({ ...s, [gap.id]: e.target.checked }))}/>
-                              Incluye Semana Santa (+100€/mes)
+                              Incluye Semana Santa (+100€/mes en t. baja)
                             </label>
                           </div>
                           <div className="ls-gap-actions">
