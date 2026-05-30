@@ -6226,11 +6226,15 @@ const HuecosTab = ({
   const [dMinN, setDMinN] = React.useState('');
   const [dNote, setDNote] = React.useState('');
   const [dLastMin, setDLastMin] = React.useState(false);
+  const [splitGapId, setSplitGapId] = React.useState(null);
+  const [splitDate, setSplitDate] = React.useState('');
+  const [splitSaving, setSplitSaving] = React.useState(false);
   const today = new Date().toISOString().slice(0, 10);
   const horizonStr = pricesData && pricesData.bookingHorizon && pricesData.bookingHorizon.lastCheckinDate;
   const calendar = pricesData && pricesData.calendar || {};
   const seasons = pricesData && pricesData.seasons || {};
   const overrides = pricesData && pricesData.gapOverrides || {};
+  const gapSplits = pricesData && pricesData.gapSplits || {};
   React.useEffect(() => {
     setLoading(true);
     setLoadErr(null);
@@ -6258,25 +6262,41 @@ const HuecosTab = ({
         continue;
       }
       const raw = _hcCalcGaps(aptData.blocked || [], today, horizonStr);
-      result[aptId] = raw.map(g => {
-        const season = _hcDominantSeason(g.start, g.end, calendar);
-        const maxN = HC_MAX[season] || 28;
-        const overLim = g.nights > maxN;
-        const id = `${aptId}|${g.start}`;
-        const override = overrides[id] || null;
-        const baseN = nightBase(aptId, season);
-        const effN = _hcEffPrice(baseN, override);
-        return {
-          ...g,
-          aptId,
-          season,
-          maxN,
-          overLim,
-          id,
-          override,
-          baseN,
-          effN
-        };
+      result[aptId] = raw.flatMap(g => {
+        const gId = `${aptId}|${g.start}`;
+        const splits = (gapSplits[gId] || []).filter(d => d > g.start && d < g.end).sort();
+        const points = [g.start, ...splits, g.end];
+        return points.slice(0, -1).map((segStart, i) => {
+          const segEnd = points[i + 1];
+          const nights = _hcDiff(segStart, segEnd);
+          const segId = `${aptId}|${segStart}`;
+          const season = _hcDominantSeason(segStart, segEnd, calendar);
+          const maxN = HC_MAX[season] || 28;
+          const override = overrides[segId] || null;
+          const baseN = nightBase(aptId, season);
+          const effN = _hcEffPrice(baseN, override);
+          return {
+            start: segStart,
+            end: segEnd,
+            nights,
+            aptId,
+            id: segId,
+            parentId: gId,
+            parentStart: g.start,
+            parentEnd: g.end,
+            parentNights: g.nights,
+            splitDates: splits,
+            isSegment: splits.length > 0,
+            segIndex: i,
+            segTotal: points.length - 1,
+            season,
+            maxN,
+            overLim: nights > maxN,
+            override,
+            baseN,
+            effN
+          };
+        });
       });
     }
     return result;
@@ -6370,6 +6390,81 @@ const HuecosTab = ({
       gapOverrides: newOvs
     };
     persistPrices(newData, gap.id, 'clear');
+  };
+  const persistSplits = async (newData, parentId, action) => {
+    setSplitSaving(true);
+    setSaveMsg(null);
+    try {
+      const rf = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, {
+        headers: apiHeaders(token),
+        cache: 'no-store'
+      });
+      const rfj = await rf.json();
+      if (rfj.message) throw new Error(rfj.message);
+      const res = await fetch(`${API}/repos/${REPO}/contents/${PATH}`, {
+        method: 'PUT',
+        headers: {
+          ...apiHeaders(token),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: `chore(huecos): ${action} split ${parentId} via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
+          content: utf8ToB64(JSON.stringify(newData, null, 2)),
+          sha: rfj.sha,
+          branch: BRANCH
+        })
+      });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.message || 'Error');
+      onPricesUpdated(newData, j.content.sha);
+      setSplitGapId(null);
+      setSplitDate('');
+      setSaveMsg('Partición guardada ✓');
+    } catch (e) {
+      setSaveMsg('Error: ' + e.message);
+    } finally {
+      setSplitSaving(false);
+    }
+  };
+  const handleAddSplit = gap => {
+    if (!splitDate) return;
+    const {
+      parentId,
+      parentStart,
+      parentEnd
+    } = gap;
+    if (splitDate <= parentStart || splitDate >= parentEnd) return;
+    const existing = (pricesData.gapSplits || {})[parentId] || [];
+    if (existing.includes(splitDate)) return;
+    const newSplits = [...existing, splitDate].sort();
+    persistSplits({
+      ...pricesData,
+      gapSplits: {
+        ...(pricesData.gapSplits || {}),
+        [parentId]: newSplits
+      }
+    }, parentId, 'add');
+  };
+  const handleRemoveSplit = (parentId, date) => {
+    const existing = ((pricesData.gapSplits || {})[parentId] || []).filter(d => d !== date);
+    const newGs = {
+      ...(pricesData.gapSplits || {})
+    };
+    if (existing.length === 0) delete newGs[parentId];else newGs[parentId] = existing;
+    persistSplits({
+      ...pricesData,
+      gapSplits: newGs
+    }, parentId, 'remove');
+  };
+  const handleRemoveAllSplits = parentId => {
+    const newGs = {
+      ...(pricesData.gapSplits || {})
+    };
+    delete newGs[parentId];
+    persistSplits({
+      ...pricesData,
+      gapSplits: newGs
+    }, parentId, 'remove-all');
   };
   if (loading) return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
@@ -6481,7 +6576,9 @@ const HuecosTab = ({
         className: "hc-per"
       }, "/n")), /*#__PURE__*/React.createElement("span", {
         className: "hc-badges"
-      }, gap.overLim && /*#__PURE__*/React.createElement("span", {
+      }, gap.isSegment && /*#__PURE__*/React.createElement("span", {
+        className: "hc-badge hc-badge-seg"
+      }, "seg ", gap.segIndex + 1, "/", gap.segTotal), gap.overLim && /*#__PURE__*/React.createElement("span", {
         className: "hc-badge hc-badge-warn"
       }, "\u26A0 >", gap.maxN, "n"), gap.override && /*#__PURE__*/React.createElement("span", {
         className: "hc-badge hc-badge-ov"
@@ -6595,6 +6692,58 @@ const HuecosTab = ({
         onChange: e => setDNote(e.target.value),
         placeholder: "Ej: oferta \xFAltimo momento, confirmar con Alex\u2026"
       })), /*#__PURE__*/React.createElement("div", {
+        className: "hc-field"
+      }, /*#__PURE__*/React.createElement("label", {
+        className: "hc-lbl"
+      }, "Partir en segmentos", /*#__PURE__*/React.createElement("span", {
+        className: "hc-opt"
+      }, " (cada tramo con oferta independiente)")), gap.splitDates.length > 0 && /*#__PURE__*/React.createElement("div", {
+        className: "hc-split-list"
+      }, gap.splitDates.map(sp => /*#__PURE__*/React.createElement("span", {
+        key: sp,
+        className: "hc-split-chip"
+      }, _hcFmt(sp), /*#__PURE__*/React.createElement("button", {
+        type: "button",
+        className: "hc-split-chip-rm",
+        disabled: splitSaving,
+        onClick: () => handleRemoveSplit(gap.parentId, sp)
+      }, "\xD7"))), /*#__PURE__*/React.createElement("button", {
+        type: "button",
+        className: "pe-btn pe-btn-ghost hc-split-rm-all",
+        disabled: splitSaving,
+        onClick: () => handleRemoveAllSplits(gap.parentId)
+      }, "Quitar todas")), splitGapId === gap.parentId ? /*#__PURE__*/React.createElement("div", {
+        className: "hc-split-add"
+      }, /*#__PURE__*/React.createElement("input", {
+        type: "date",
+        className: "pe-input",
+        style: {
+          width: 'auto'
+        },
+        min: _hcAdd(gap.parentStart, 1),
+        max: _hcAdd(gap.parentEnd, -1),
+        value: splitDate,
+        onChange: e => setSplitDate(e.target.value)
+      }), /*#__PURE__*/React.createElement("button", {
+        type: "button",
+        className: "pe-btn pe-btn-primary",
+        disabled: !splitDate || splitSaving,
+        onClick: () => handleAddSplit(gap)
+      }, splitSaving ? 'Guardando…' : 'Confirmar'), /*#__PURE__*/React.createElement("button", {
+        type: "button",
+        className: "pe-btn pe-btn-ghost",
+        onClick: () => {
+          setSplitGapId(null);
+          setSplitDate('');
+        }
+      }, "Cancelar")) : /*#__PURE__*/React.createElement("button", {
+        type: "button",
+        className: "pe-btn pe-btn-ghost hc-split-btn",
+        onClick: () => {
+          setSplitGapId(gap.parentId);
+          setSplitDate('');
+        }
+      }, "+ A\xF1adir punto de divisi\xF3n")), /*#__PURE__*/React.createElement("div", {
         className: "hc-foot"
       }, saveMsg && /*#__PURE__*/React.createElement("span", {
         className: `hc-inline-msg${saveMsg.startsWith('Error') ? ' err' : ' ok'}`

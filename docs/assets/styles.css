@@ -20482,7 +20482,16 @@ img[src*="apt-vt-gallery-"] {
 .hc-badge-ov   { background: rgba(58,170,187,.14); color: var(--sol-text, #176E80); }
 .hc-badge-lm   { background: rgba(240,190,60,.15); color: #8A6200; }
 .hc-badge-note { background: rgba(42,15,46,.08); color: rgba(42,15,46,.55); }
+.hc-badge-seg  { background: rgba(58,170,187,.12); color: #176E80; }
 .hc-toggle { font-size: 11px; color: rgba(42,15,46,.35); margin-left: 4px; flex-shrink: 0; }
+/* split UI */
+.hc-split-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; align-items: center; }
+.hc-split-chip { display: inline-flex; align-items: center; gap: 2px; background: rgba(58,170,187,.1); border: 1px solid rgba(58,170,187,.25); border-radius: 4px; padding: 3px 8px; font-size: 12px; color: #176E80; }
+.hc-split-chip-rm { background: none; border: 0; color: rgba(42,15,46,.4); cursor: pointer; padding: 0 0 0 4px; font-size: 14px; line-height: 1; }
+.hc-split-chip-rm:hover { color: var(--ink); }
+.hc-split-chip-rm:disabled { opacity: .4; cursor: default; }
+.hc-split-add { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+.hc-split-btn, .hc-split-rm-all { margin-top: 8px; font-size: 11px; }
 
 /* Edit panel */
 .hc-edit {
