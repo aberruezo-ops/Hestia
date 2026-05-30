@@ -519,7 +519,8 @@
       "end": "2026-07-12",
       "nights": 7,
       "type": "fixed",
-      "value": 160
+      "value": 160,
+      "lastMinute": true
     }
   },
   "gapSplits": {
