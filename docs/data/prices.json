@@ -455,8 +455,8 @@
       "start": "2026-06-27",
       "end": "2026-07-01",
       "nights": 4,
-      "type": "discount",
-      "value": 6,
+      "type": "fixed",
+      "value": 140,
       "lastMinute": true
     },
     "vm|2026-05-29": {
