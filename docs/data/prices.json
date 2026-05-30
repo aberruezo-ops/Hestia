@@ -512,6 +512,14 @@
       "value": 130,
       "minNights": 6,
       "lastMinute": true
+    },
+    "vt|2026-07-05": {
+      "apt": "vt",
+      "start": "2026-07-05",
+      "end": "2026-07-12",
+      "nights": 7,
+      "type": "fixed",
+      "value": 160
     }
   },
   "gapSplits": {
