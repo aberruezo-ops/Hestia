@@ -173,7 +173,7 @@ const _applyGapOv = (calc, perNight) => {
 };
 
 // Calcula el total de larga estancia usando tarifas mensuales + flat especial
-const _calcLsTotal = (start, end) => {
+const _calcLsTotal = (start, end, guests, withPets) => {
   if (!start || !end || start >= end) return null;
   const lsCfg = window.PRICES_V2 && window.PRICES_V2.longStayConfig || {
     specialNightFlat: 80,
@@ -181,6 +181,9 @@ const _calcLsTotal = (start, end) => {
   };
   const flat = lsCfg.specialNightFlat || 80;
   const easter = lsCfg.easterRanges || [];
+  const extraGuestPerMo = lsCfg.extraGuestPerMonth || 0;
+  const petPerMo = lsCfg.petPerMonth || 0;
+  const extraGuests = Math.max(0, (guests || 1) - 2);
   const isXmas = ds => {
     const m = +ds.slice(5, 7),
       d = +ds.slice(8, 10);
@@ -203,6 +206,8 @@ const _calcLsTotal = (start, end) => {
     const rate = mo === 6 || mo === 9 ? 1790 : mo === 5 || mo === 10 ? 1590 : 1450;
     const special = isXmas(cur) || isEast(cur);
     total += special ? flat : rate / dim;
+    if (extraGuests > 0) total += extraGuests * extraGuestPerMo / dim;
+    if (withPets) total += petPerMo / dim;
     if (special) specialN++;
     cur = adj(cur, 1);
   }
@@ -215,11 +220,16 @@ const LsInfoBlock = ({
   checkin,
   checkout,
   calc,
+  guests,
+  pets,
   lang
 }) => {
   const nights = calc ? calc.nights : 0;
-  const regularTotal = calc ? calc.directTotal : 0;
-  const ls = _calcLsTotal(checkin, checkout);
+  // regularTotal = undiscounted nightly sum (no stay-discount) for meaningful comparison
+  const regularTotal = calc ? calc.baseTotal + (calc.guestSuppAmt || 0) + (calc.petAmt || 0) : 0;
+  const guestsN = parseInt(guests, 10) || 1;
+  const withPets = pets === 'yes';
+  const ls = _calcLsTotal(checkin, checkout, guestsN, withPets);
   if (!ls) return null;
   const es = lang === 'es';
   const fmt = n => n.toLocaleString('es-ES') + ' €';
@@ -982,6 +992,8 @@ const ReservasForm = ({
     checkin: checkin,
     checkout: checkout,
     calc: calc,
+    guests: guests,
+    pets: pets,
     lang: lang
   }), /*#__PURE__*/React.createElement(ReviewQuote, {
     apt: apt,

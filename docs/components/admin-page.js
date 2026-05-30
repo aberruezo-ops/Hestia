@@ -6359,9 +6359,13 @@ const LsCfgPanel = ({
   saving
 }) => {
   const [flat, setFlat] = React.useState(String(lsCfg.specialNightFlat || 80));
+  const [extraGuest, setExtraGuest] = React.useState(String(lsCfg.extraGuestPerMonth || 60));
+  const [petMonth, setPetMonth] = React.useState(String(lsCfg.petPerMonth || 50));
   const [ranges, setRanges] = React.useState((lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n'));
   React.useEffect(() => {
     setFlat(String(lsCfg.specialNightFlat || 80));
+    setExtraGuest(String(lsCfg.extraGuestPerMonth || 60));
+    setPetMonth(String(lsCfg.petPerMonth || 50));
     setRanges((lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n'));
   }, [lsCfg]);
   const handleSave = () => {
@@ -6371,6 +6375,8 @@ const LsCfgPanel = ({
     }).filter(Boolean);
     onSave({
       specialNightFlat: parseFloat(flat) || 80,
+      extraGuestPerMonth: parseFloat(extraGuest) || 60,
+      petPerMonth: parseFloat(petMonth) || 0,
       easterRanges: parsed
     });
   };
@@ -6387,7 +6393,9 @@ const LsCfgPanel = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-row",
     style: {
-      alignItems: 'flex-start'
+      alignItems: 'flex-start',
+      flexWrap: 'wrap',
+      gap: 16
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-field"
@@ -6410,6 +6418,46 @@ const LsCfgPanel = ({
   }, "\u20AC/n"), /*#__PURE__*/React.createElement("span", {
     className: "hc-preview"
   }, "Navidad (23 dic\u20136 ene) y Semana Santa se cobran a ", flat, "\u20AC fijo por noche"))), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-lbl"
+  }, "Suplemento hu\xE9sped extra (\u20AC/mes)"), /*#__PURE__*/React.createElement("div", {
+    className: "hc-input-row"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    step: "1",
+    className: "pe-input pe-input-num",
+    style: {
+      width: 70
+    },
+    value: extraGuest,
+    onChange: e => setExtraGuest(e.target.value)
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "pe-suffix"
+  }, "\u20AC/mes"), /*#__PURE__*/React.createElement("span", {
+    className: "hc-preview"
+  }, "Base 2 hu\xE9spedes \xB7 cada hu\xE9sped adicional ", extraGuest, "\u20AC/mes"))), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-lbl"
+  }, "Suplemento mascota (\u20AC/mes)"), /*#__PURE__*/React.createElement("div", {
+    className: "hc-input-row"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    step: "1",
+    className: "pe-input pe-input-num",
+    style: {
+      width: 70
+    },
+    value: petMonth,
+    onChange: e => setPetMonth(e.target.value)
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "pe-suffix"
+  }, "\u20AC/mes"), /*#__PURE__*/React.createElement("span", {
+    className: "hc-preview"
+  }, "Se a\xF1ade al total si el hu\xE9sped trae mascota"))), /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-field",
     style: {
       flex: 1,
