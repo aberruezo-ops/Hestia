@@ -152,7 +152,7 @@ const SECTION_CATS = {
   pueblos: ['town', 'bookshop'],
   'mar-playas': ['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
   planes: ['gem', 'water', 'adventure', 'trek', 'leisure', 'bodega'],
-  mercados: ['market'],
+  mercados: ['abasto', 'market'],
   salud: ['health', 'vet', 'pet-board', 'physio', 'pharmacy'],
   movilidad: ['fuel', 'ev-charge']
 };
@@ -304,6 +304,12 @@ const CATEGORIES = [{
   en: 'Bookshops',
   color: 'var(--sie)',
   icon: '📚'
+}, {
+  id: 'abasto',
+  es: 'Mercados de abastos',
+  en: 'Covered markets',
+  color: 'var(--vt-dk)',
+  icon: '🏪'
 }, {
   id: 'market',
   es: 'Mercadillos',
@@ -1169,7 +1175,7 @@ const PLACES = [
   desc: 'Mercado tradicional cubierto con frutería, carnicería, pescadería y charcutería. Producto local del día.',
   specialty: 'producto fresco de la huerta de Almería, carne de la sierra, pescado de la lonja.',
   tip: 'Sábado por la mañana es cuando más vida tiene — combínalo con el mercadillo exterior.',
-  cat: 'fish',
+  cat: 'abasto',
   url: 'https://goo.gl/maps/PaEerwZNxAK1kNTS8',
   lat: 37.2486,
   lng: -1.8625,
@@ -1254,9 +1260,38 @@ const PLACES = [
   name: 'Frutería del Mercado (Vera)',
   desc: 'Frutería y verdulería de la huerta de Almería en el mercado de abastos.',
   specialty: 'tomates raf, pimientos asar, melones de huerta, naranjas valencianas.',
-  cat: 'fish',
+  cat: 'abasto',
   lat: 37.2486,
   lng: -1.8625
+}, {
+  id: 'mercado-garrucha',
+  name: 'Mercado municipal de Garrucha',
+  desc: 'Mercado cubierto pequeño pero animado, a dos pasos de la lonja. Pescado del día directamente del barco, verduras de la huerta levantina y carnicería local.',
+  specialty: 'pescado fresco de la subasta de la lonja, gambas y quisquilla de Garrucha.',
+  tip: 'Mejor a primera hora de la mañana cuando llega el género de la lonja.',
+  cat: 'abasto',
+  lat: 37.1818,
+  lng: -1.8238
+}, {
+  id: 'mercado-cuevas',
+  name: 'Mercado de abastos (Cuevas del Almanzora)',
+  desc: 'Mercado cubierto del pueblo. Frutas y verduras del valle del Almanzora, carnicería con cordero de la sierra y charcutería local.',
+  specialty: 'naranja del valle del Almanzora, pimiento morrón seco y embutidos serranos.',
+  tip: 'Se celebra también feria de productores los sábados en la plaza del castillo.',
+  cat: 'abasto',
+  lat: 37.2980,
+  lng: -1.8828
+}, {
+  id: 'mercado-almeria',
+  name: 'Mercado Central (Almería capital)',
+  desc: 'Mercado modernista de 1892 en pleno centro de Almería. Una de las visitas imprescindibles de la capital: dos plantas llenas de puestos de pescado, marisco, fruta, especias y charcutería.',
+  specialty: 'atún rojo de almadraba, gambas blancas de Almería, especias del norte de África, aceitunas aliñadas.',
+  tip: 'En el piso de arriba hay una galería de bares donde desayunar con los lugareños. Cierra a las 14:00 — llega por la mañana.',
+  cat: 'abasto',
+  url: 'https://maps.app.goo.gl/s7Q8R2vHoXWADzqC8',
+  lat: 36.8393,
+  lng: -2.4637,
+  featured: true
 }, {
   id: 'queseria-velez',
   name: 'Quesería Los Vélez',
