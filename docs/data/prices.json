@@ -548,7 +548,6 @@
       "end": "2026-08-01",
       "nights": 20,
       "type": "fixed",
-      "value": 190,
       "minNights": 6
     }
   },
