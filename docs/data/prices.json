@@ -589,7 +589,9 @@
       "start": "2026-08-17",
       "end": "2026-08-30",
       "nights": 13,
-      "type": "discount"
+      "type": "fixed",
+      "value": 199,
+      "minNights": 6
     }
   },
   "gapSplits": {
