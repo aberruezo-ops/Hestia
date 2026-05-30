@@ -522,6 +522,16 @@
       "type": "fixed",
       "value": 160,
       "lastMinute": true
+    },
+    "vm|2026-05-31": {
+      "apt": "vm",
+      "start": "2026-05-31",
+      "end": "2026-06-13",
+      "nights": 13,
+      "type": "fixed",
+      "value": 90,
+      "minNights": 6,
+      "lastMinute": true
     }
   },
   "gapSplits": {
