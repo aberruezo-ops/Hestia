@@ -10007,6 +10007,86 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   .noticias-voz, .noticias-territorio, .noticias-next { padding: 60px var(--page-pad); }
 }
 
+/* ── Histórico de ediciones ──────────────────────────────────── */
+.noticias-archivo {
+  padding: 80px var(--page-pad, 24px);
+  background: var(--ber-dk);
+  color: var(--arena);
+}
+.noticias-archivo-eyebrow {
+  color: var(--sol-lt);
+  margin-bottom: 12px;
+}
+.noticias-archivo-title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(22px, 3vw, 32px);
+  margin: 0 0 40px;
+  color: var(--crema);
+}
+.archivo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-width: 900px;
+}
+.archivo-item {
+  border-radius: 8px 0 8px 0;
+  overflow: hidden;
+  border: 1px solid rgba(240,232,213,.1);
+  transition: border-color .2s;
+}
+.archivo-item.open {
+  border-color: rgba(58,170,187,.35);
+}
+.archivo-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  background: rgba(255,255,255,.04);
+  color: var(--arena);
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: .03em;
+  cursor: pointer;
+  border: none;
+  transition: background .2s, color .2s;
+  text-align: left;
+}
+.archivo-toggle:hover { background: rgba(255,255,255,.08); color: var(--crema); }
+.archivo-item.open .archivo-toggle { background: rgba(58,170,187,.1); color: var(--sol-lt); }
+.archivo-toggle-label { font-weight: 500; }
+.archivo-toggle-chev {
+  font-size: 13px;
+  opacity: .6;
+  flex-shrink: 0;
+  margin-left: 16px;
+  transition: transform .2s;
+}
+.archivo-content {
+  padding: 40px 24px 48px;
+  background: rgba(0,0,0,.18);
+  border-top: 1px solid rgba(240,232,213,.06);
+}
+.archivo-content .voz-card {
+  background: rgba(255,255,255,.05);
+  border-color: rgba(240,232,213,.1);
+}
+.archivo-content .voz-apt-name,
+.archivo-content .voz-apt-link { color: var(--sol-lt); }
+.archivo-content .noticias-cat { background: rgba(255,255,255,.03); }
+.archivo-content .noticias-titulo { color: var(--crema); }
+.archivo-content .noticias-tag { opacity: .7; }
+.archivo-content .noticias-cuerpo { color: var(--arena); opacity: .85; }
+@media (max-width: 600px) {
+  .noticias-archivo { padding: 60px var(--page-pad); }
+  .archivo-toggle { padding: 16px 18px; font-size: 14px; }
+  .archivo-content { padding: 28px 16px 36px; }
+}
+
 /* ================================================================
    POR QUÉ HESTÍA — crosslink & mobile nav
    ================================================================ */
