@@ -238,10 +238,13 @@ const LsSearch = ({ lang }) => {
     return all;
   }, [availData]);
 
-  const calcLsTotal = (start, end) => {
+  const calcLsTotal = (start, end, guests, withPets) => {
     const lsCfg = (window.PRICES_V2?.longStayConfig) || { specialNightFlat: 80, easterRanges: [] };
-    const flat  = lsCfg.specialNightFlat || 80;
-    const easter = lsCfg.easterRanges || [];
+    const flat              = lsCfg.specialNightFlat   || 80;
+    const easter            = lsCfg.easterRanges        || [];
+    const extraGuestPerMo   = lsCfg.extraGuestPerMonth  || 0;
+    const petPerMo          = lsCfg.petPerMonth         || 0;
+    const extraGuests       = Math.max(0, (guests || 1) - 2);
     const isXmas = (ds) => { const m = +ds.slice(5,7), d = +ds.slice(8,10); return (m===12&&d>=23)||(m===1&&d<=6); };
     const isEast = (ds) => easter.some(([s,e]) => ds>=s && ds<=e);
     let total = 0, cur = start;
@@ -250,6 +253,8 @@ const LsSearch = ({ lang }) => {
       const dim = new Date(yr, mo, 0).getDate();
       const rate = (mo===6||mo===9) ? 1790 : (mo===5||mo===10) ? 1590 : 1450;
       total += (isXmas(cur)||isEast(cur)) ? flat : rate/dim;
+      if (extraGuests > 0) total += extraGuests * extraGuestPerMo / dim;
+      if (withPets)        total += petPerMo / dim;
       cur = _drAdj(cur, 1);
     }
     return Math.round(total);
@@ -259,11 +264,12 @@ const LsSearch = ({ lang }) => {
     if (checkin && checkout && nights >= 29) {
       const mo = +checkin.slice(5, 7);
       if (mo === 7 || mo === 8) { setAvail(null); return; }
-      const lsTotal = calcLsTotal(checkin, checkout);
+      const lsTotal = calcLsTotal(checkin, checkout, guests);
       setAvail(LS_APTS.map(apt => {
         const isAvail = _drAvail(checkin, checkout, availData ? (availData[apt.id]?.blocked || []) : []);
         const regCalc = isAvail ? _calcStay(checkin, checkout, apt.id, false, guests) : null;
-        return { apt, nights, lsTotal, regTotal: regCalc?.directTotal || 0, available: isAvail };
+        const regTotal = regCalc ? regCalc.baseTotal + (regCalc.guestSuppAmt || 0) + (regCalc.petAmt || 0) : 0;
+        return { apt, nights, lsTotal, regTotal, available: isAvail };
       }));
     } else {
       setAvail(null);

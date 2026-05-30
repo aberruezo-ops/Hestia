@@ -4959,12 +4959,16 @@ const _hcEffPrice = (base, ov) => {
 
 // Config panel for long-stay special night flat rate + Easter date ranges
 const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
-  const [flat,   setFlat  ] = React.useState(String(lsCfg.specialNightFlat || 80));
-  const [ranges, setRanges] = React.useState(
+  const [flat,       setFlat      ] = React.useState(String(lsCfg.specialNightFlat   || 80));
+  const [extraGuest, setExtraGuest] = React.useState(String(lsCfg.extraGuestPerMonth || 60));
+  const [petMonth,   setPetMonth  ] = React.useState(String(lsCfg.petPerMonth        || 50));
+  const [ranges,     setRanges    ] = React.useState(
     (lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n')
   );
   React.useEffect(() => {
-    setFlat(String(lsCfg.specialNightFlat || 80));
+    setFlat(String(lsCfg.specialNightFlat   || 80));
+    setExtraGuest(String(lsCfg.extraGuestPerMonth || 60));
+    setPetMonth(String(lsCfg.petPerMonth        || 50));
     setRanges((lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n'));
   }, [lsCfg]);
 
@@ -4973,7 +4977,12 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
       const [s, e] = l.split(/\s+/);
       return s && e ? [s, e] : null;
     }).filter(Boolean);
-    onSave({ specialNightFlat: parseFloat(flat) || 80, easterRanges: parsed });
+    onSave({
+      specialNightFlat:   parseFloat(flat)       || 80,
+      extraGuestPerMonth: parseFloat(extraGuest) || 60,
+      petPerMonth:        parseFloat(petMonth)   || 0,
+      easterRanges:       parsed,
+    });
   };
 
   return (
@@ -4984,7 +4993,7 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
       </button>
       {open && (
         <div className="hc-bulk-body">
-          <div className="hc-bulk-row" style={{ alignItems: 'flex-start' }}>
+          <div className="hc-bulk-row" style={{ alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
             <div className="hc-bulk-field">
               <label className="hc-lbl">Precio noche especial (€ fijo)</label>
               <div className="hc-input-row">
@@ -4992,6 +5001,24 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
                   value={flat} onChange={e => setFlat(e.target.value)}/>
                 <span className="pe-suffix">€/n</span>
                 <span className="hc-preview">Navidad (23 dic–6 ene) y Semana Santa se cobran a {flat}€ fijo por noche</span>
+              </div>
+            </div>
+            <div className="hc-bulk-field">
+              <label className="hc-lbl">Suplemento huésped extra (€/mes)</label>
+              <div className="hc-input-row">
+                <input type="number" min="0" step="1" className="pe-input pe-input-num" style={{ width: 70 }}
+                  value={extraGuest} onChange={e => setExtraGuest(e.target.value)}/>
+                <span className="pe-suffix">€/mes</span>
+                <span className="hc-preview">Base 2 huéspedes · cada huésped adicional {extraGuest}€/mes</span>
+              </div>
+            </div>
+            <div className="hc-bulk-field">
+              <label className="hc-lbl">Suplemento mascota (€/mes)</label>
+              <div className="hc-input-row">
+                <input type="number" min="0" step="1" className="pe-input pe-input-num" style={{ width: 70 }}
+                  value={petMonth} onChange={e => setPetMonth(e.target.value)}/>
+                <span className="pe-suffix">€/mes</span>
+                <span className="hc-preview">Se añade al total si el huésped trae mascota</span>
               </div>
             </div>
             <div className="hc-bulk-field" style={{ flex: 1, minWidth: 260 }}>

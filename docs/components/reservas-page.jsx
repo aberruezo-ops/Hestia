@@ -175,11 +175,14 @@ const _applyGapOv = (calc, perNight) => {
 };
 
 // Calcula el total de larga estancia usando tarifas mensuales + flat especial
-const _calcLsTotal = (start, end) => {
+const _calcLsTotal = (start, end, guests, withPets) => {
   if (!start || !end || start >= end) return null;
-  const lsCfg  = (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || { specialNightFlat: 80, easterRanges: [] };
-  const flat   = lsCfg.specialNightFlat || 80;
-  const easter = lsCfg.easterRanges || [];
+  const lsCfg           = (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || { specialNightFlat: 80, easterRanges: [] };
+  const flat            = lsCfg.specialNightFlat  || 80;
+  const easter          = lsCfg.easterRanges       || [];
+  const extraGuestPerMo = lsCfg.extraGuestPerMonth || 0;
+  const petPerMo        = lsCfg.petPerMonth        || 0;
+  const extraGuests     = Math.max(0, (guests || 1) - 2);
   const isXmas = (ds) => { const m = +ds.slice(5,7), d = +ds.slice(8,10); return (m===12&&d>=23)||(m===1&&d<=6); };
   const isEast = (ds) => easter.some(([s,e]) => ds>=s && ds<=e);
   const adj = (ds, n) => { const dt = new Date(ds+'T12:00:00Z'); dt.setUTCDate(dt.getUTCDate()+n); return dt.toISOString().slice(0,10); };
@@ -192,16 +195,21 @@ const _calcLsTotal = (start, end) => {
     const rate = (mo===6||mo===9) ? 1790 : (mo===5||mo===10) ? 1590 : 1450;
     const special = isXmas(cur) || isEast(cur);
     total += special ? flat : rate/dim;
+    if (extraGuests > 0) total += extraGuests * extraGuestPerMo / dim;
+    if (withPets)        total += petPerMo / dim;
     if (special) specialN++;
     cur = adj(cur, 1);
   }
   return { total: Math.round(total), specialNights: specialN };
 };
 
-const LsInfoBlock = ({ checkin, checkout, calc, lang }) => {
+const LsInfoBlock = ({ checkin, checkout, calc, guests, pets, lang }) => {
   const nights = calc ? calc.nights : 0;
-  const regularTotal = calc ? calc.directTotal : 0;
-  const ls = _calcLsTotal(checkin, checkout);
+  // regularTotal = undiscounted nightly sum (no stay-discount) for meaningful comparison
+  const regularTotal = calc ? (calc.baseTotal + (calc.guestSuppAmt || 0) + (calc.petAmt || 0)) : 0;
+  const guestsN = parseInt(guests, 10) || 1;
+  const withPets = pets === 'yes';
+  const ls = _calcLsTotal(checkin, checkout, guestsN, withPets);
   if (!ls) return null;
   const es = lang === 'es';
   const fmt = n => n.toLocaleString('es-ES') + ' €';
@@ -964,7 +972,7 @@ const ReservasForm = ({ lang }) => {
           <div className="rf-step-body">
             {/* Long-stay info block — shown when nights > 28 and month is Sep–Jun */}
             {nightsSelected > 28 && (() => { const m = checkin ? parseInt(checkin.slice(5,7),10) : 0; return m !== 7 && m !== 8; })() && (
-              <LsInfoBlock checkin={checkin} checkout={checkout} calc={calc} lang={lang} />
+              <LsInfoBlock checkin={checkin} checkout={checkout} calc={calc} guests={guests} pets={pets} lang={lang} />
             )}
             <ReviewQuote apt={apt} lang={lang} />
             {/* Si no hay apt elegido, mostramos los 3 Hestías con su
