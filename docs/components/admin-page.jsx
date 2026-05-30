@@ -4899,12 +4899,23 @@ const _lsIncludesChristmas = (start, end) => {
 };
 
 // Returns a breakdown by calendar month + total.
-// Each month's daily rate = monthly_rate / days_in_that_month.
-// Christmas (Dec 20–Jan 6) or Easter flag raises baja to 1490€/month.
-const _lsBreakdown = (start, end, easterFlag) => {
-  const hasXmas = _lsIncludesChristmas(start, end);
-  const bajaRate = (hasXmas || easterFlag) ? 1490 : 1390;
-  const MO_NAMES = ['', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+// Special nights (Christmas Dec 23–Jan 6, Easter from config) get their
+// nightly rate multiplied by specialMultiplier (default 2).
+const _lsIsChristmasNight = (ds) => {
+  const m = parseInt(ds.slice(5, 7), 10);
+  const d = parseInt(ds.slice(8, 10), 10);
+  return (m === 12 && d >= 23) || (m === 1 && d <= 6);
+};
+
+const _lsIsEasterNight = (ds, easterRanges) => {
+  if (!easterRanges) return false;
+  return easterRanges.some(([s, e]) => ds >= s && ds <= e);
+};
+
+const _lsBreakdown = (start, end, lsCfg) => {
+  const multiplier   = (lsCfg && lsCfg.specialMultiplier) || 2;
+  const easterRanges = (lsCfg && lsCfg.easterRanges) || [];
+  const MO_NAMES = ['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 
   const byMonth = {};
   let cur = start;
@@ -4912,20 +4923,23 @@ const _lsBreakdown = (start, end, easterFlag) => {
     const yr = parseInt(cur.slice(0, 4), 10);
     const mo = parseInt(cur.slice(5, 7), 10);
     if (mo === 7 || mo === 8) return null;
-    const rate = (mo === 6 || mo === 9) ? 1790
-               : (mo === 5 || mo === 10) ? 1690 : bajaRate;
+    const monthlyRate = (mo === 6 || mo === 9) ? 1790
+                      : (mo === 5 || mo === 10) ? 1690 : 1390;
+    const dim         = new Date(yr, mo, 0).getDate();
+    const baseNight   = monthlyRate / dim;
+    const isSpecial   = _lsIsChristmasNight(cur) || _lsIsEasterNight(cur, easterRanges);
+    const nightCost   = isSpecial ? baseNight * multiplier : baseNight;
     const key = `${yr}-${String(mo).padStart(2, '0')}`;
-    if (!byMonth[key]) {
-      const dim = new Date(yr, mo, 0).getDate();
-      byMonth[key] = { label: `${MO_NAMES[mo]} ${yr}`, nights: 0, rate, dim };
-    }
+    if (!byMonth[key]) byMonth[key] = { label: `${MO_NAMES[mo]} ${yr}`, nights: 0, amount: 0, specialNights: 0, monthlyRate, dim };
     byMonth[key].nights++;
+    byMonth[key].amount += nightCost;
+    if (isSpecial) byMonth[key].specialNights++;
     cur = _hcAdd(cur, 1);
   }
 
-  const parts = Object.values(byMonth);
-  const total = Math.round(parts.reduce((s, p) => s + (p.rate / p.dim) * p.nights, 0));
-  return { parts, total };
+  const parts = Object.values(byMonth).map(p => ({ ...p, amount: Math.round(p.amount) }));
+  const total = parts.reduce((s, p) => s + p.amount, 0);
+  return { parts, total, multiplier };
 };
 
 const _hcOvLabel = (ov) => {
@@ -4942,6 +4956,65 @@ const _hcEffPrice = (base, ov) => {
   if (ov.type === 'increment') return Math.round(base * (1 + ov.value / 100));
   if (ov.type === 'fixed')     return ov.value;
   return base;
+};
+
+// Config panel for long-stay special night multiplier + Easter date ranges
+const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
+  const [mult,   setMult  ] = React.useState(String(lsCfg.specialMultiplier || 2));
+  const [ranges, setRanges] = React.useState(
+    (lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n')
+  );
+  React.useEffect(() => {
+    setMult(String(lsCfg.specialMultiplier || 2));
+    setRanges((lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n'));
+  }, [lsCfg]);
+
+  const handleSave = () => {
+    const parsed = ranges.split('\n').map(l => l.trim()).filter(Boolean).map(l => {
+      const [s, e] = l.split(/\s+/);
+      return s && e ? [s, e] : null;
+    }).filter(Boolean);
+    onSave({ specialMultiplier: parseFloat(mult) || 2, easterRanges: parsed });
+  };
+
+  return (
+    <div className="ls-cfg-wrap">
+      <button type="button" className="hc-bulk-toggle" onClick={() => setOpen(o => !o)}>
+        <span>Configuración · noches especiales</span>
+        <span className={`hc-bulk-chev${open ? ' open' : ''}`}>▼</span>
+      </button>
+      {open && (
+        <div className="hc-bulk-body">
+          <div className="hc-bulk-row" style={{ alignItems: 'flex-start' }}>
+            <div className="hc-bulk-field">
+              <label className="hc-lbl">Multiplicador noches especiales</label>
+              <div className="hc-input-row">
+                <input type="number" min="1" step="0.1" className="pe-input pe-input-num" style={{ width: 70 }}
+                  value={mult} onChange={e => setMult(e.target.value)}/>
+                <span className="pe-suffix">×</span>
+                <span className="hc-preview">Navidad (23 dic–6 ene) y Semana Santa se cobran a ×{mult} el precio normal de esa noche</span>
+              </div>
+            </div>
+            <div className="hc-bulk-field" style={{ flex: 1, minWidth: 260 }}>
+              <label className="hc-lbl">
+                Fechas Semana Santa
+                <span className="hc-opt"> (una por línea: YYYY-MM-DD YYYY-MM-DD)</span>
+              </label>
+              <textarea rows={3} className="pe-input hc-textarea"
+                value={ranges} onChange={e => setRanges(e.target.value)}
+                placeholder={'2026-03-26 2026-04-06\n2027-04-08 2027-04-19'}/>
+            </div>
+          </div>
+          <div className="hc-bulk-foot">
+            <span className="hc-bulk-preview">Los cambios afectan al cálculo de todos los huecos en pantalla.</span>
+            <button type="button" className="pe-btn pe-btn-primary" disabled={saving} onClick={handleSave}>
+              {saving ? 'Guardando…' : 'Guardar configuración'}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
@@ -4973,7 +5046,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
   const [bulkLastMin, setBulkLastMin] = React.useState(false);
   const [bulkSaving,  setBulkSaving ] = React.useState(false);
   const [hcView,      setHcView     ] = React.useState('cortos');
-  const [lsEaster,    setLsEaster   ] = React.useState({});
+  const [lsCfgOpen,   setLsCfgOpen  ] = React.useState(false);
 
   const today     = new Date().toISOString().slice(0, 10);
   const horizonStr = pricesData && pricesData.bookingHorizon && pricesData.bookingHorizon.lastCheckinDate;
@@ -4981,6 +5054,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
   const seasons    = (pricesData && pricesData.seasons)   || {};
   const overrides  = (pricesData && pricesData.gapOverrides) || {};
   const gapSplits  = (pricesData && pricesData.gapSplits)    || {};
+  const lsCfg      = (pricesData && pricesData.longStayConfig) || { specialMultiplier: 2, easterRanges: [] };
 
   React.useEffect(() => {
     setLoading(true); setLoadErr(null);
@@ -5151,6 +5225,10 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
     const newGs = { ...(pricesData.gapSplits || {}) };
     delete newGs[parentId];
     persistSplits({ ...pricesData, gapSplits: newGs }, parentId, 'remove-all');
+  };
+
+  const handleSaveLsCfg = (newCfg) => {
+    persistPrices({ ...pricesData, longStayConfig: newCfg }, 'longStayConfig', 'ls-cfg');
   };
 
   const handleQuickUrgent = (gap) => {
@@ -5632,18 +5710,21 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
             </div>
           </div>
 
+          {/* ── Configuración de noches especiales ── */}
+          <LsCfgPanel lsCfg={lsCfg} open={lsCfgOpen} setOpen={setLsCfgOpen} onSave={handleSaveLsCfg} saving={saving}/>
+
           <div className="ls-rates">
-            <div className="ls-rates-title">Tarifas de referencia (€ / mes completo)</div>
+            <div className="ls-rates-title">Tarifas base (€ / mes completo) · noches especiales ×{lsCfg.specialMultiplier}</div>
             <div className="ls-rates-grid">
               {[
                 { label: 'Nov – Abr', rate: 1390, note: 'T. baja' },
                 { label: 'Oct · May', rate: 1690, note: '' },
                 { label: 'Jun · Sep', rate: 1790, note: '' },
-                { label: 'Navidad / Semana Santa', rate: 1490, note: 'sobre T. baja' },
+                { label: `Navidad / S. Santa ×${lsCfg.specialMultiplier}`, note: 'sobre tarifa del mes' },
               ].map(r => (
                 <div key={r.label} className="ls-rate-row">
                   <span className="ls-rate-period">{r.label}</span>
-                  <span className="ls-rate-val">{r.rate}<span className="ls-rate-per">€/mes</span></span>
+                  {r.rate && <span className="ls-rate-val">{r.rate}<span className="ls-rate-per">€/mes</span></span>}
                   {r.note && <span className="ls-rate-note">{r.note}</span>}
                 </div>
               ))}
@@ -5662,56 +5743,48 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
                 </div>
                 <div className="hc-list">
                   {gaps.map(gap => {
-                    const easter = !!(lsEaster[gap.id]);
-                    const bd     = _lsBreakdown(gap.start, gap.end, easter);
+                    const bd      = _lsBreakdown(gap.start, gap.end, lsCfg);
                     if (!bd) return null;
-                    const hasXmas = _lsIncludesChristmas(gap.start, gap.end);
+                    const hasSpec = bd.parts.some(p => p.specialNights > 0);
                     const months  = (gap.nights / 30).toFixed(1);
-                    const bdLines = bd.parts.map(p => `  • ${p.label}: ${p.nights}n × ${p.rate}€/${p.dim}d = ${Math.round((p.rate/p.dim)*p.nights)}€`).join('\n');
-                    const waMsg   = `Hola 👋\n\nTenemos disponible *${meta.name}* para una estancia larga:\n📅 ${_hcFmt(gap.start)} → ${_hcFmt(gap.end)} (${gap.nights} noches · ~${months} meses)\n\nDesglose:\n${bdLines}\n\n💰 *Total: ${bd.total}€*\n\nPerfecto para teletrabajo, negocio o vivir una temporada en Vera Playa 🌊\nSin comisiones · trato directo.`;
+                    const bdLines = bd.parts.map(p =>
+                      `  • ${p.label}: ${p.nights}n${p.specialNights ? ` (${p.specialNights}n ×${bd.multiplier})` : ''} → ${p.amount}€`
+                    ).join('\n');
+                    const waMsg = `Hola 👋\n\nTenemos disponible *${meta.name}* para una estancia larga:\n📅 ${_hcFmt(gap.start)} → ${_hcFmt(gap.end)} (${gap.nights} noches · ~${months} meses)\n\nDesglose:\n${bdLines}\n\n💰 *Total: ${bd.total}€*\n\nPerfecto para teletrabajo, negocio o vivir una temporada en Vera Playa 🌊\nSin comisiones · trato directo.`;
                     return (
                       <div key={gap.id} className="ls-gap">
                         <div className="ls-gap-head">
                           <span className="hc-dates">{_hcFmt(gap.start)} → {_hcFmt(gap.end)}</span>
                           <span className="hc-nights">{gap.nights}n</span>
                           <span className="ls-gap-months">~{months} meses</span>
-                          {hasXmas && <span className="hc-badge hc-badge-warn">Navidad</span>}
+                          {hasSpec && <span className="hc-badge hc-badge-warn">noches especiales</span>}
                         </div>
 
                         <div className="ls-breakdown">
-                          {bd.parts.map(p => {
-                            const partTotal = Math.round((p.rate / p.dim) * p.nights);
-                            return (
-                              <div key={p.label} className="ls-bk-row">
-                                <span className="ls-bk-period">{p.label}</span>
-                                <span className="ls-bk-nights">{p.nights}n</span>
-                                <span className="ls-bk-rate">{p.rate}€/{p.dim}d</span>
-                                <span className="ls-bk-sub">= {partTotal}€</span>
-                              </div>
-                            );
-                          })}
+                          {bd.parts.map(p => (
+                            <div key={p.label} className="ls-bk-row">
+                              <span className="ls-bk-period">{p.label}</span>
+                              <span className="ls-bk-nights">{p.nights}n</span>
+                              <span className="ls-bk-rate">
+                                {p.monthlyRate}€/{p.dim}d
+                                {p.specialNights > 0 && <span className="ls-bk-special"> · {p.specialNights}n×{bd.multiplier}</span>}
+                              </span>
+                              <span className="ls-bk-sub">= {p.amount}€</span>
+                            </div>
+                          ))}
                           <div className="ls-bk-total">
                             <span>Total estimado</span>
                             <span className="ls-bk-total-val">{bd.total}€</span>
                           </div>
                         </div>
 
-                        <div className="ls-gap-pricing">
-                          <div className="ls-gap-flags">
-                            <label className="hc-check-lbl" style={{ fontSize: 12 }}>
-                              <input type="checkbox" checked={easter}
-                                onChange={e => setLsEaster(s => ({ ...s, [gap.id]: e.target.checked }))}/>
-                              Incluye Semana Santa (+100€/mes en t. baja)
-                            </label>
-                          </div>
-                          <div className="ls-gap-actions">
-                            <button type="button" className="pe-btn pe-btn-ghost ls-wa-btn"
-                              onClick={() => navigator.clipboard.writeText(waMsg)
-                                .then(() => { setSaveMsg('Propuesta copiada ✓'); setTimeout(() => setSaveMsg(null), 3000); })
-                                .catch(() => setSaveMsg('Error al copiar'))}>
-                              Copiar propuesta WhatsApp
-                            </button>
-                          </div>
+                        <div className="ls-gap-actions" style={{ display:'flex', justifyContent:'flex-end', paddingTop: 4 }}>
+                          <button type="button" className="pe-btn pe-btn-ghost ls-wa-btn"
+                            onClick={() => navigator.clipboard.writeText(waMsg)
+                              .then(() => { setSaveMsg('Propuesta copiada ✓'); setTimeout(() => setSaveMsg(null), 3000); })
+                              .catch(() => setSaveMsg('Error al copiar'))}>
+                            Copiar propuesta WhatsApp
+                          </button>
                         </div>
                       </div>
                     );

@@ -6285,11 +6285,20 @@ const _lsIncludesChristmas = (start, end) => {
 };
 
 // Returns a breakdown by calendar month + total.
-// Each month's daily rate = monthly_rate / days_in_that_month.
-// Christmas (Dec 20–Jan 6) or Easter flag raises baja to 1490€/month.
-const _lsBreakdown = (start, end, easterFlag) => {
-  const hasXmas = _lsIncludesChristmas(start, end);
-  const bajaRate = hasXmas || easterFlag ? 1490 : 1390;
+// Special nights (Christmas Dec 23–Jan 6, Easter from config) get their
+// nightly rate multiplied by specialMultiplier (default 2).
+const _lsIsChristmasNight = ds => {
+  const m = parseInt(ds.slice(5, 7), 10);
+  const d = parseInt(ds.slice(8, 10), 10);
+  return m === 12 && d >= 23 || m === 1 && d <= 6;
+};
+const _lsIsEasterNight = (ds, easterRanges) => {
+  if (!easterRanges) return false;
+  return easterRanges.some(([s, e]) => ds >= s && ds <= e);
+};
+const _lsBreakdown = (start, end, lsCfg) => {
+  const multiplier = lsCfg && lsCfg.specialMultiplier || 2;
+  const easterRanges = lsCfg && lsCfg.easterRanges || [];
   const MO_NAMES = ['', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
   const byMonth = {};
   let cur = start;
@@ -6297,25 +6306,34 @@ const _lsBreakdown = (start, end, easterFlag) => {
     const yr = parseInt(cur.slice(0, 4), 10);
     const mo = parseInt(cur.slice(5, 7), 10);
     if (mo === 7 || mo === 8) return null;
-    const rate = mo === 6 || mo === 9 ? 1790 : mo === 5 || mo === 10 ? 1690 : bajaRate;
+    const monthlyRate = mo === 6 || mo === 9 ? 1790 : mo === 5 || mo === 10 ? 1690 : 1390;
+    const dim = new Date(yr, mo, 0).getDate();
+    const baseNight = monthlyRate / dim;
+    const isSpecial = _lsIsChristmasNight(cur) || _lsIsEasterNight(cur, easterRanges);
+    const nightCost = isSpecial ? baseNight * multiplier : baseNight;
     const key = `${yr}-${String(mo).padStart(2, '0')}`;
-    if (!byMonth[key]) {
-      const dim = new Date(yr, mo, 0).getDate();
-      byMonth[key] = {
-        label: `${MO_NAMES[mo]} ${yr}`,
-        nights: 0,
-        rate,
-        dim
-      };
-    }
+    if (!byMonth[key]) byMonth[key] = {
+      label: `${MO_NAMES[mo]} ${yr}`,
+      nights: 0,
+      amount: 0,
+      specialNights: 0,
+      monthlyRate,
+      dim
+    };
     byMonth[key].nights++;
+    byMonth[key].amount += nightCost;
+    if (isSpecial) byMonth[key].specialNights++;
     cur = _hcAdd(cur, 1);
   }
-  const parts = Object.values(byMonth);
-  const total = Math.round(parts.reduce((s, p) => s + p.rate / p.dim * p.nights, 0));
+  const parts = Object.values(byMonth).map(p => ({
+    ...p,
+    amount: Math.round(p.amount)
+  }));
+  const total = parts.reduce((s, p) => s + p.amount, 0);
   return {
     parts,
-    total
+    total,
+    multiplier
   };
 };
 const _hcOvLabel = ov => {
@@ -6331,6 +6349,93 @@ const _hcEffPrice = (base, ov) => {
   if (ov.type === 'increment') return Math.round(base * (1 + ov.value / 100));
   if (ov.type === 'fixed') return ov.value;
   return base;
+};
+
+// Config panel for long-stay special night multiplier + Easter date ranges
+const LsCfgPanel = ({
+  lsCfg,
+  open,
+  setOpen,
+  onSave,
+  saving
+}) => {
+  const [mult, setMult] = React.useState(String(lsCfg.specialMultiplier || 2));
+  const [ranges, setRanges] = React.useState((lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n'));
+  React.useEffect(() => {
+    setMult(String(lsCfg.specialMultiplier || 2));
+    setRanges((lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n'));
+  }, [lsCfg]);
+  const handleSave = () => {
+    const parsed = ranges.split('\n').map(l => l.trim()).filter(Boolean).map(l => {
+      const [s, e] = l.split(/\s+/);
+      return s && e ? [s, e] : null;
+    }).filter(Boolean);
+    onSave({
+      specialMultiplier: parseFloat(mult) || 2,
+      easterRanges: parsed
+    });
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "ls-cfg-wrap"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "hc-bulk-toggle",
+    onClick: () => setOpen(o => !o)
+  }, /*#__PURE__*/React.createElement("span", null, "Configuraci\xF3n \xB7 noches especiales"), /*#__PURE__*/React.createElement("span", {
+    className: `hc-bulk-chev${open ? ' open' : ''}`
+  }, "\u25BC")), open && /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-body"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-row",
+    style: {
+      alignItems: 'flex-start'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-lbl"
+  }, "Multiplicador noches especiales"), /*#__PURE__*/React.createElement("div", {
+    className: "hc-input-row"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    step: "0.1",
+    className: "pe-input pe-input-num",
+    style: {
+      width: 70
+    },
+    value: mult,
+    onChange: e => setMult(e.target.value)
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "pe-suffix"
+  }, "\xD7"), /*#__PURE__*/React.createElement("span", {
+    className: "hc-preview"
+  }, "Navidad (23 dic\u20136 ene) y Semana Santa se cobran a \xD7", mult, " el precio normal de esa noche"))), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field",
+    style: {
+      flex: 1,
+      minWidth: 260
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-lbl"
+  }, "Fechas Semana Santa", /*#__PURE__*/React.createElement("span", {
+    className: "hc-opt"
+  }, " (una por l\xEDnea: YYYY-MM-DD YYYY-MM-DD)")), /*#__PURE__*/React.createElement("textarea", {
+    rows: 3,
+    className: "pe-input hc-textarea",
+    value: ranges,
+    onChange: e => setRanges(e.target.value),
+    placeholder: '2026-03-26 2026-04-06\n2027-04-08 2027-04-19'
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-foot"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "hc-bulk-preview"
+  }, "Los cambios afectan al c\xE1lculo de todos los huecos en pantalla."), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-primary",
+    disabled: saving,
+    onClick: handleSave
+  }, saving ? 'Guardando…' : 'Guardar configuración'))));
 };
 const HuecosTab = ({
   token,
@@ -6365,13 +6470,17 @@ const HuecosTab = ({
   const [bulkLastMin, setBulkLastMin] = React.useState(false);
   const [bulkSaving, setBulkSaving] = React.useState(false);
   const [hcView, setHcView] = React.useState('cortos');
-  const [lsEaster, setLsEaster] = React.useState({});
+  const [lsCfgOpen, setLsCfgOpen] = React.useState(false);
   const today = new Date().toISOString().slice(0, 10);
   const horizonStr = pricesData && pricesData.bookingHorizon && pricesData.bookingHorizon.lastCheckinDate;
   const calendar = pricesData && pricesData.calendar || {};
   const seasons = pricesData && pricesData.seasons || {};
   const overrides = pricesData && pricesData.gapOverrides || {};
   const gapSplits = pricesData && pricesData.gapSplits || {};
+  const lsCfg = pricesData && pricesData.longStayConfig || {
+    specialMultiplier: 2,
+    easterRanges: []
+  };
   React.useEffect(() => {
     setLoading(true);
     setLoadErr(null);
@@ -6609,6 +6718,12 @@ const HuecosTab = ({
       ...pricesData,
       gapSplits: newGs
     }, parentId, 'remove-all');
+  };
+  const handleSaveLsCfg = newCfg => {
+    persistPrices({
+      ...pricesData,
+      longStayConfig: newCfg
+    }, 'longStayConfig', 'ls-cfg');
   };
   const handleQuickUrgent = gap => {
     const newOv = {
@@ -7193,11 +7308,17 @@ const HuecosTab = ({
     className: "ls-info"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("strong", null, "Estancias largas \xB7 m\xE1s de 28 noches \xB7 septiembre \u2013 junio"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
     className: "ls-info-sub"
-  }, "Para teletrabajadores, negocios y personas que quieren vivir una temporada en Vera Playa. Sin julio ni agosto."))), /*#__PURE__*/React.createElement("div", {
+  }, "Para teletrabajadores, negocios y personas que quieren vivir una temporada en Vera Playa. Sin julio ni agosto."))), /*#__PURE__*/React.createElement(LsCfgPanel, {
+    lsCfg: lsCfg,
+    open: lsCfgOpen,
+    setOpen: setLsCfgOpen,
+    onSave: handleSaveLsCfg,
+    saving: saving
+  }), /*#__PURE__*/React.createElement("div", {
     className: "ls-rates"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ls-rates-title"
-  }, "Tarifas de referencia (\u20AC / mes completo)"), /*#__PURE__*/React.createElement("div", {
+  }, "Tarifas base (\u20AC / mes completo) \xB7 noches especiales \xD7", lsCfg.specialMultiplier), /*#__PURE__*/React.createElement("div", {
     className: "ls-rates-grid"
   }, [{
     label: 'Nov – Abr',
@@ -7212,15 +7333,14 @@ const HuecosTab = ({
     rate: 1790,
     note: ''
   }, {
-    label: 'Navidad / Semana Santa',
-    rate: 1490,
-    note: 'sobre T. baja'
+    label: `Navidad / S. Santa ×${lsCfg.specialMultiplier}`,
+    note: 'sobre tarifa del mes'
   }].map(r => /*#__PURE__*/React.createElement("div", {
     key: r.label,
     className: "ls-rate-row"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ls-rate-period"
-  }, r.label), /*#__PURE__*/React.createElement("span", {
+  }, r.label), r.rate && /*#__PURE__*/React.createElement("span", {
     className: "ls-rate-val"
   }, r.rate, /*#__PURE__*/React.createElement("span", {
     className: "ls-rate-per"
@@ -7245,12 +7365,11 @@ const HuecosTab = ({
     }, gaps.length, " ", gaps.length === 1 ? 'hueco disponible' : 'huecos disponibles')), /*#__PURE__*/React.createElement("div", {
       className: "hc-list"
     }, gaps.map(gap => {
-      const easter = !!lsEaster[gap.id];
-      const bd = _lsBreakdown(gap.start, gap.end, easter);
+      const bd = _lsBreakdown(gap.start, gap.end, lsCfg);
       if (!bd) return null;
-      const hasXmas = _lsIncludesChristmas(gap.start, gap.end);
+      const hasSpec = bd.parts.some(p => p.specialNights > 0);
       const months = (gap.nights / 30).toFixed(1);
-      const bdLines = bd.parts.map(p => `  • ${p.label}: ${p.nights}n × ${p.rate}€/${p.dim}d = ${Math.round(p.rate / p.dim * p.nights)}€`).join('\n');
+      const bdLines = bd.parts.map(p => `  • ${p.label}: ${p.nights}n${p.specialNights ? ` (${p.specialNights}n ×${bd.multiplier})` : ''} → ${p.amount}€`).join('\n');
       const waMsg = `Hola 👋\n\nTenemos disponible *${meta.name}* para una estancia larga:\n📅 ${_hcFmt(gap.start)} → ${_hcFmt(gap.end)} (${gap.nights} noches · ~${months} meses)\n\nDesglose:\n${bdLines}\n\n💰 *Total: ${bd.total}€*\n\nPerfecto para teletrabajo, negocio o vivir una temporada en Vera Playa 🌊\nSin comisiones · trato directo.`;
       return /*#__PURE__*/React.createElement("div", {
         key: gap.id,
@@ -7263,46 +7382,34 @@ const HuecosTab = ({
         className: "hc-nights"
       }, gap.nights, "n"), /*#__PURE__*/React.createElement("span", {
         className: "ls-gap-months"
-      }, "~", months, " meses"), hasXmas && /*#__PURE__*/React.createElement("span", {
+      }, "~", months, " meses"), hasSpec && /*#__PURE__*/React.createElement("span", {
         className: "hc-badge hc-badge-warn"
-      }, "Navidad")), /*#__PURE__*/React.createElement("div", {
+      }, "noches especiales")), /*#__PURE__*/React.createElement("div", {
         className: "ls-breakdown"
-      }, bd.parts.map(p => {
-        const partTotal = Math.round(p.rate / p.dim * p.nights);
-        return /*#__PURE__*/React.createElement("div", {
-          key: p.label,
-          className: "ls-bk-row"
-        }, /*#__PURE__*/React.createElement("span", {
-          className: "ls-bk-period"
-        }, p.label), /*#__PURE__*/React.createElement("span", {
-          className: "ls-bk-nights"
-        }, p.nights, "n"), /*#__PURE__*/React.createElement("span", {
-          className: "ls-bk-rate"
-        }, p.rate, "\u20AC/", p.dim, "d"), /*#__PURE__*/React.createElement("span", {
-          className: "ls-bk-sub"
-        }, "= ", partTotal, "\u20AC"));
-      }), /*#__PURE__*/React.createElement("div", {
+      }, bd.parts.map(p => /*#__PURE__*/React.createElement("div", {
+        key: p.label,
+        className: "ls-bk-row"
+      }, /*#__PURE__*/React.createElement("span", {
+        className: "ls-bk-period"
+      }, p.label), /*#__PURE__*/React.createElement("span", {
+        className: "ls-bk-nights"
+      }, p.nights, "n"), /*#__PURE__*/React.createElement("span", {
+        className: "ls-bk-rate"
+      }, p.monthlyRate, "\u20AC/", p.dim, "d", p.specialNights > 0 && /*#__PURE__*/React.createElement("span", {
+        className: "ls-bk-special"
+      }, " \xB7 ", p.specialNights, "n\xD7", bd.multiplier)), /*#__PURE__*/React.createElement("span", {
+        className: "ls-bk-sub"
+      }, "= ", p.amount, "\u20AC"))), /*#__PURE__*/React.createElement("div", {
         className: "ls-bk-total"
       }, /*#__PURE__*/React.createElement("span", null, "Total estimado"), /*#__PURE__*/React.createElement("span", {
         className: "ls-bk-total-val"
       }, bd.total, "\u20AC"))), /*#__PURE__*/React.createElement("div", {
-        className: "ls-gap-pricing"
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "ls-gap-flags"
-      }, /*#__PURE__*/React.createElement("label", {
-        className: "hc-check-lbl",
+        className: "ls-gap-actions",
         style: {
-          fontSize: 12
+          display: 'flex',
+          justifyContent: 'flex-end',
+          paddingTop: 4
         }
-      }, /*#__PURE__*/React.createElement("input", {
-        type: "checkbox",
-        checked: easter,
-        onChange: e => setLsEaster(s => ({
-          ...s,
-          [gap.id]: e.target.checked
-        }))
-      }), "Incluye Semana Santa (+100\u20AC/mes en t. baja)")), /*#__PURE__*/React.createElement("div", {
-        className: "ls-gap-actions"
       }, /*#__PURE__*/React.createElement("button", {
         type: "button",
         className: "pe-btn pe-btn-ghost ls-wa-btn",
@@ -7310,7 +7417,7 @@ const HuecosTab = ({
           setSaveMsg('Propuesta copiada ✓');
           setTimeout(() => setSaveMsg(null), 3000);
         }).catch(() => setSaveMsg('Error al copiar'))
-      }, "Copiar propuesta WhatsApp"))));
+      }, "Copiar propuesta WhatsApp")));
     })));
   }), longStayCount === 0 && /*#__PURE__*/React.createElement("p", {
     className: "pe-help",
