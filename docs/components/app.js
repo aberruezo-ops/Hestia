@@ -116,6 +116,8 @@ const App = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement(Compare, {
     lang: lang
+  }), typeof LongStayStrip !== 'undefined' && /*#__PURE__*/React.createElement(LongStayStrip, {
+    lang: lang
   }), /*#__PURE__*/React.createElement(Counters, {
     lang: lang
   }), /*#__PURE__*/React.createElement(Team, {

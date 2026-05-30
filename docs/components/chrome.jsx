@@ -72,16 +72,17 @@ const IconChat = () => (
 );
 
 const NAV_PAGES = {
-  mar:           'mar.html',
-  thalassa:      'thalassa.html',
-  salinas:       'salinas.html',
-  nosotros:      'nosotros.html',
-  porqueHestia:  'porque-hestia.html',
-  opiniones:     'opiniones.html',
-  noticias:      'noticias.html',
-  contacto:      'contacto.html',
-  reservas:      'reservas.html',
-  ventajas:      'reservas.html#ventajas',
+  mar:              'mar.html',
+  thalassa:         'thalassa.html',
+  salinas:          'salinas.html',
+  nosotros:         'nosotros.html',
+  porqueHestia:     'porque-hestia.html',
+  opiniones:        'opiniones.html',
+  noticias:         'noticias.html',
+  contacto:         'contacto.html',
+  reservas:         'reservas.html',
+  ventajas:         'reservas.html#ventajas',
+  estanciasLargas:  'estancias-largas.html',
 };
 
 const isActive = (href) => {
@@ -380,6 +381,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
             <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias}>{t.nav[7]}</NavLink>
+            <NavLink href={NAV_PAGES.estanciasLargas}>{t.nav[9]}</NavLink>
             <NavLink href={NAV_PAGES.contacto}>{t.nav[6]}</NavLink>
             <NavLink href={NAV_PAGES.reservas} className="cta"><span className="cta-text">{t.cta_nav}</span></NavLink>
           </nav>
@@ -427,6 +429,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.nosotros} className="mn-page">{t.nav[4]}</NavLink>
             <NavLink href={NAV_PAGES.opiniones} className="mn-page">{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias} className="mn-page">{t.nav[7]}</NavLink>
+            <NavLink href={NAV_PAGES.estanciasLargas} className="mn-page">{t.nav[9]}</NavLink>
             <NavLink href={NAV_PAGES.contacto} className="mn-page">{t.nav[6]}</NavLink>
           </div>
           <div className="mn-cta-row">
@@ -652,6 +655,7 @@ const Footer = ({ lang }) => {
             <li><a href="porque-hestia.html">{t.nav[8]}</a></li>
             <li><a href="opiniones.html">{t.nav[5]}</a></li>
             <li><a href="noticias.html">{t.nav[7]}</a></li>
+            <li><a href="estancias-largas.html">{t.nav[9]}</a></li>
             <li><a href="contacto.html">{t.nav[6]}</a></li>
             <li><a href="privacidad.html">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>
             <li><a href="cookies.html">Cookies</a></li>

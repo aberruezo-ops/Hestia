@@ -137,7 +137,11 @@ const Hero = ({
     type: "video/mp4"
   })), /*#__PURE__*/React.createElement("div", {
     className: "hero-content"
-  }, /*#__PURE__*/React.createElement("h1", {
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "wordmark hero-wordmark"
+  }, "HEST\xCDA"), /*#__PURE__*/React.createElement("div", {
+    className: "your-home hero-yourhome"
+  }, "your home!"), /*#__PURE__*/React.createElement("h1", {
     className: "hero-title"
   }, t.hero_title_1, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
     className: "it"
@@ -175,7 +179,32 @@ const Hero = ({
     className: "hero-proof-name"
   }, "Salinas")), /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-platform"
-  }, lang === 'es' ? 'Media · Booking · Airbnb · web' : 'Average · Booking · Airbnb · site'))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Media · Booking · Airbnb · web' : 'Average · Booking · Airbnb · site')), (() => {
+    const prices = typeof HESTIA_PRICES !== 'undefined' ? HESTIA_PRICES : null;
+    if (!prices) return null;
+    const mins = ['vm', 'vt', 'vs'].map(id => {
+      const tbl = prices[id];
+      if (!tbl) return null;
+      return Math.min(...tbl.base.slice(1));
+    }).filter(Boolean);
+    if (!mins.length) return null;
+    const from = Math.min(...mins);
+    return /*#__PURE__*/React.createElement("div", {
+      className: "hero-price-line"
+    }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+      className: "hpl-from"
+    }, "desde "), /*#__PURE__*/React.createElement("strong", {
+      className: "hpl-price"
+    }, from, "\u20AC"), /*#__PURE__*/React.createElement("span", {
+      className: "hpl-per"
+    }, "/noche \xB7 precio directo garantizado")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+      className: "hpl-from"
+    }, "from "), /*#__PURE__*/React.createElement("strong", {
+      className: "hpl-price"
+    }, from, "\u20AC"), /*#__PURE__*/React.createElement("span", {
+      className: "hpl-per"
+    }, "/night \xB7 guaranteed direct price")));
+  })()), /*#__PURE__*/React.createElement("div", {
     className: "hero-meta"
   }, /*#__PURE__*/React.createElement("span", {
     className: "hero-meta-coords"
@@ -274,7 +303,7 @@ const HomeBookingModal = ({
   React.useEffect(() => {
     const FOCUSABLE = 'button:not([disabled]), a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     const card = cardRef.current;
-    if (card) {
+    if (card && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       const first = card.querySelector(FOCUSABLE);
       if (first) first.focus();
     }
@@ -364,7 +393,6 @@ const HomeBookingModal = ({
     value: name,
     onChange: e => setName(e.target.value),
     placeholder: lang === 'es' ? 'Tu nombre' : 'Your name',
-    autoFocus: true,
     autoComplete: "name"
   })), /*#__PURE__*/React.createElement("div", {
     className: "hbm-field"
@@ -394,7 +422,7 @@ const HomeBookingModal = ({
     value: msg,
     onChange: e => setMsg(e.target.value),
     rows: 2,
-    placeholder: lang === 'es' ? 'Fechas pensadas, número de personas...' : 'Dates in mind, number of guests...'
+    placeholder: lang === 'es' ? 'Fechas pensadas, número de personas…' : 'Dates in mind, number of guests…'
   }))), !valid && (name.length > 0 || email.length > 0) && /*#__PURE__*/React.createElement("p", {
     className: "hbm-hint"
   }, lang === 'es' ? '✦ Nombre y email requeridos para continuar' : '✦ Name and email required to continue')), /*#__PURE__*/React.createElement("div", {
@@ -423,6 +451,8 @@ const APARTMENTS = [{
   license: 'VFT/AL/01580',
   concept: 'apt_01_concept',
   img: 'assets/apt-vs.jpg',
+  imgW: 1024,
+  imgH: 768,
   meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición']
 }, {
   id: 'vt',
@@ -432,6 +462,8 @@ const APARTMENTS = [{
   license: 'VFT/AL/05535',
   concept: 'apt_02_concept',
   img: 'assets/apt-vt-4.jpg',
+  imgW: 1440,
+  imgH: 1103,
   meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA']
 }, {
   id: 'vs',
@@ -441,6 +473,8 @@ const APARTMENTS = [{
   license: 'VTF/AL/07056',
   concept: 'apt_03_concept',
   img: 'assets/apt-vm.jpg',
+  imgW: 1255,
+  imgH: 1146,
   meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas']
 }];
 const Apartments = ({
@@ -565,7 +599,9 @@ const Apartments = ({
       src: a.img,
       alt: a.name,
       className: "apt-photo",
-      loading: "eager"
+      loading: "eager",
+      width: a.imgW,
+      height: a.imgH
     })), /*#__PURE__*/React.createElement(WatermarkBadge, {
       size: 32,
       pos: {
@@ -606,7 +642,7 @@ const Apartments = ({
       className: "apb-per"
     }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
       className: "apb-match"
-    }, lang === 'es' ? '✓ No lo igualamos — lo mejoramos' : '✓ We don\'t match it — we beat it')), /*#__PURE__*/React.createElement("div", {
+    }, lang === 'es' ? '✓ Precio directo siempre mejor que cualquier plataforma' : '✓ Direct price always better than any platform')), /*#__PURE__*/React.createElement("div", {
       className: "apt-ctas"
     }, /*#__PURE__*/React.createElement("a", {
       href: `${a.slug}.html`,
@@ -845,36 +881,6 @@ const Compare = ({
 // ================================================================
 // LAST MINUTE STRIP — huecos disponibles en los próximos 45 días
 // ================================================================
-
-// Máximo de noches permitido por temporada entre dos reservas
-const _LM_MAX = {
-  critica: 7,
-  alta: 7,
-  media: 28,
-  baja: 28
-};
-
-// Devuelve la temporada más restrictiva que toca el rango [checkin, checkout)
-const _lmGapSeason = (checkin, checkout) => {
-  const cal = window.PRICES_V2 && window.PRICES_V2.calendar;
-  if (!cal) return 'baja';
-  const PRIORITY = ['critica', 'alta', 'media', 'baja'];
-  // Años que toca el hueco
-  const y1 = parseInt(checkin.slice(0, 4), 10);
-  const y2 = parseInt(checkout.slice(0, 4), 10);
-  const years = y1 === y2 ? [y1] : [y1, y2];
-  for (const season of PRIORITY) {
-    for (const yr of years) {
-      const ranges = cal[yr] && cal[yr].seasons && cal[yr].seasons[season];
-      if (!ranges) continue;
-      for (const [s, e] of ranges) {
-        // El hueco toca esta temporada si hay solapamiento
-        if (checkin < e && checkout > s) return season;
-      }
-    }
-  }
-  return 'baja';
-};
 const LastMinuteStrip = ({
   lang,
   embedded = false
@@ -890,25 +896,6 @@ const LastMinuteStrip = ({
       horizon.setDate(horizon.getDate() + 45);
       const horizonStr = horizon.toISOString().slice(0, 10);
       const found = [];
-      const lmSplits = window.PRICES_V2 && window.PRICES_V2.gapSplits || {};
-
-      // Expands a raw gap into segments (respecting gapSplits) and pushes valid ones to found
-      const pushGap = (apt, gapStart, gapEnd) => {
-        const splitDates = (lmSplits[`${apt.id}|${gapStart}`] || []).filter(d => d > gapStart && d < gapEnd).sort();
-        const points = [gapStart, ...splitDates, gapEnd];
-        for (let i = 0; i < points.length - 1; i++) {
-          const checkin = points[i],
-            checkout = points[i + 1];
-          const nights = Math.round((new Date(checkout + 'T12:00:00Z') - new Date(checkin + 'T12:00:00Z')) / 86400000);
-          const season = _lmGapSeason(checkin, checkout);
-          if (nights >= 2 && nights <= _LM_MAX[season]) found.push({
-            apt,
-            checkin,
-            checkout,
-            nights
-          });
-        }
-      };
       for (const apt of APARTMENTS) {
         const blocked = data[apt.id]?.blocked || [];
         // Incluir todos los bloques futuros, no solo los que empiezan antes del horizonte,
@@ -917,13 +904,20 @@ const LastMinuteStrip = ({
         let cursor = todayStr;
         for (const block of sorted) {
           if (cursor >= horizonStr) break;
-          if (block.start > cursor) pushGap(apt, cursor, block.start);
+          if (block.start > cursor) {
+            const nights = Math.round((new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
+            if (nights >= 2) found.push({
+              apt,
+              checkin: cursor,
+              checkout: block.start,
+              nights
+            });
+          }
           if (block.end > cursor) cursor = block.end;
         }
         if (cursor < horizonStr) {
           const nights = Math.round((new Date(horizonStr + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
-          const season = _lmGapSeason(cursor, horizonStr);
-          if (nights >= 2 && nights <= _LM_MAX[season]) found.push({
+          if (nights >= 2) found.push({
             apt,
             checkin: cursor,
             checkout: horizonStr,
@@ -936,89 +930,44 @@ const LastMinuteStrip = ({
     }).catch(() => {});
   }, []);
   if (!slots.length) return null;
-  const MONTHS_ES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-  const MONTHS_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const fmtDate = ds => {
-    const d = new Date(ds + 'T12:00:00Z');
-    const m = lang === 'es' ? MONTHS_ES[d.getUTCMonth()] : MONTHS_EN[d.getUTCMonth()];
-    return `${d.getUTCDate()} ${m}`;
+    if (!ds) return '';
+    return new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : 'es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: '2-digit'
+    }).format(new Date(ds + 'T12:00:00Z'));
   };
   const APT_COLOR = {
     vm: '#3AAABB',
-    vt: '#C87A45',
-    vs: '#C8A040'
+    vt: '#8A4A24',
+    vs: '#9E7A2C'
   };
   const getStayPrice = (aptId, checkin, checkout) => {
     try {
       const r = _calcStay(checkin, checkout, aptId, false, 2);
       if (!r || !r.directTotal || !r.nights) return null;
-      return Math.round(r.directTotal / r.nights);
+      return {
+        total: Math.round(r.directTotal),
+        perNight: Math.round(r.directTotal / r.nights)
+      };
     } catch (_) {
       return null;
     }
   };
-
-  // Aplica gapOverride manual o descuento automático pre-julio (10%)
-  const getEffectivePrice = (aptId, checkin, basePerNight) => {
-    const overrides = window.PRICES_V2 && window.PRICES_V2.gapOverrides || {};
-    const ov = overrides[`${aptId}|${checkin}`];
-    const y = new Date().getFullYear();
-    const preJuly = checkin < `${y}-07-01`;
-    if (ov && ov.type && ov.type !== 'none') {
-      const lm = !!ov.lastMinute;
-      if (ov.type === 'fixed') return {
-        price: ov.value,
-        orig: basePerNight !== ov.value ? basePerNight : null,
-        lm
-      };
-      if (ov.type === 'discount') return {
-        price: Math.round(basePerNight * (1 - ov.value / 100)),
-        orig: basePerNight,
-        lm
-      };
-      if (ov.type === 'increment') return {
-        price: Math.round(basePerNight * (1 + ov.value / 100)),
-        orig: null,
-        lm
-      };
-    }
-
-    // Sin override manual: descuento automático 10% para huecos antes de julio
-    if (preJuly) return {
-      price: Math.round(basePerNight * 0.9),
-      orig: basePerNight,
-      lm: false
-    };
-    return {
-      price: basePerNight,
-      orig: null,
-      lm: false
-    };
-  };
   const renderCard = (slot, key) => {
-    const base = getStayPrice(slot.apt.id, slot.checkin, slot.checkout);
-    const {
-      price,
-      orig,
-      lm
-    } = base ? getEffectivePrice(slot.apt.id, slot.checkin, base) : {
-      price: null,
-      orig: null,
-      lm: false
-    };
+    const price = getStayPrice(slot.apt.id, slot.checkin, slot.checkout);
     const color = APT_COLOR[slot.apt.id];
     const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
     const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
     return /*#__PURE__*/React.createElement("a", {
       key: key,
       href: url,
-      className: `lm-card${lm ? ' lm-card--lm' : ''}`,
+      className: "lm-card",
       style: {
         '--lm-color': color
       }
-    }, lm && /*#__PURE__*/React.createElement("span", {
-      className: "lm-card-lm-badge"
-    }, lang === 'es' ? 'ÚLTIMA HORA' : 'LAST MINUTE'), /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement("span", {
       className: "lm-card-apt"
     }, aptShort), /*#__PURE__*/React.createElement("span", {
       className: "lm-card-dates"
@@ -1031,12 +980,10 @@ const LastMinuteStrip = ({
     }, fmtDate(slot.checkout))), /*#__PURE__*/React.createElement("span", {
       className: "lm-card-meta"
     }, slot.nights, " ", lang === 'es' ? 'noches' : 'nights', price && /*#__PURE__*/React.createElement("span", {
-      className: "lm-card-price"
-    }, orig && /*#__PURE__*/React.createElement("span", {
-      className: "lm-card-orig"
-    }, " \xB7 ", /*#__PURE__*/React.createElement("s", null, orig, "\u20AC")), ' · ', /*#__PURE__*/React.createElement("span", {
-      className: "lm-card-discounted"
-    }, "~", price, "\u20AC/n"))));
+      className: "lm-card-ppn"
+    }, " \xB7 ~", price.perNight, "\u20AC/n")), price && /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-total"
+    }, "~", price.total.toLocaleString('es-ES'), "\u20AC"));
   };
   const dur = `${Math.max(10, slots.length * 5)}s`;
   return /*#__PURE__*/React.createElement("section", {
@@ -1120,6 +1067,40 @@ const HomePriceStrip = ({
     className: "hps-cta"
   }, lang === 'es' ? 'Ver apartamento →' : 'View apartment →'))))));
 };
+const LongStayStrip = ({
+  lang
+}) => {
+  const es = lang === 'es';
+  return /*#__PURE__*/React.createElement("section", {
+    className: "lss-strip",
+    "aria-label": es ? 'Estancias largas' : 'Long stays'
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lss-inner"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lss-text"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "eyebrow lss-eyebrow"
+  }, es ? 'Más de un mes en Vera Playa' : 'More than a month in Vera Playa'), /*#__PURE__*/React.createElement("h2", {
+    className: "lss-title"
+  }, es ? /*#__PURE__*/React.createElement(React.Fragment, null, "Teletrabajo, empresa", /*#__PURE__*/React.createElement("br", null), "o temporada larga.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Remote work, business", /*#__PURE__*/React.createElement("br", null), "or an extended stay.")), /*#__PURE__*/React.createElement("p", {
+    className: "lss-sub"
+  }, es ? 'Apartamentos totalmente equipados de septiembre a junio. Precio fijo mensual, sin intermediarios, con contrato.' : 'Fully equipped apartments from September to June. Fixed monthly price, no middlemen, formal contract.')), /*#__PURE__*/React.createElement("div", {
+    className: "lss-right"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lss-pills"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "lss-pill"
+  }, es ? '29+ noches' : '29+ nights'), /*#__PURE__*/React.createElement("span", {
+    className: "lss-pill"
+  }, es ? 'desde 1.390€/mes' : 'from €1,390/month'), /*#__PURE__*/React.createElement("span", {
+    className: "lss-pill"
+  }, "WiFi fibra"), /*#__PURE__*/React.createElement("span", {
+    className: "lss-pill"
+  }, es ? 'Contrato formal' : 'Formal contract')), /*#__PURE__*/React.createElement("a", {
+    href: "estancias-largas.html",
+    className: "lss-cta"
+  }, es ? 'Ver condiciones y precios →' : 'See conditions and pricing →'))));
+};
 Object.assign(window, {
   Hero,
   Bridge,
@@ -1127,5 +1108,6 @@ Object.assign(window, {
   Compare,
   APARTMENTS,
   LastMinuteStrip,
-  HomePriceStrip
+  HomePriceStrip,
+  LongStayStrip
 });
