@@ -789,7 +789,7 @@ const LongStayStrip = ({ lang }) => {
         <div className="lss-right">
           <div className="lss-pills">
             <span className="lss-pill">{es ? '29+ noches' : '29+ nights'}</span>
-            <span className="lss-pill">{es ? 'desde 1.390€/mes' : 'from €1,390/month'}</span>
+            <span className="lss-pill">{es ? 'desde 1.450€/mes' : 'from €1,450/month'}</span>
             <span className="lss-pill">WiFi fibra</span>
             <span className="lss-pill">{es ? 'Contrato formal' : 'Formal contract'}</span>
           </div>

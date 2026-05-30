@@ -616,7 +616,7 @@
     ]
   },
   "longStayConfig": {
-    "specialMultiplier": 2,
+    "specialNightFlat": 80,
     "easterRanges": [
       [
         "2026-03-26",

@@ -7,7 +7,7 @@ const LS_COPY = {
   es: {
     title: 'Tu base en Vera Playa',
     subtitle: 'Un mes, una temporada, lo que necesites.',
-    sub2: 'Tres apartamentos totalmente equipados para teletrabajadores, empresas y estancias prolongadas. Disponibles de septiembre a junio.',
+    sub2: 'Tres apartamentos totalmente equipados para estancias prolongadas para teletrabajadores, empresas o simplemente porque te apetece vivir un tiempo en un lugar especial con un tiempo privilegiado. Disponibles de septiembre a junio.',
     who_title: 'Para quién es Hestía larga estancia',
     who_1_title: 'Teletrabajador · Nómada digital',
     who_1_body: 'WiFi de fibra, escritorio, silencio y el Mediterráneo a 200 metros. Vera Playa es un destino asequible con 320 días de sol al año.',
@@ -18,17 +18,17 @@ const LS_COPY = {
     includes_title: 'Qué incluye',
     includes: ['WiFi fibra · velocidad simétrica', 'Cocina completamente equipada', 'Ropa de cama y toallas incluidas', 'Terraza privada o con vistas', 'Aire acondicionado y calefacción', 'Parking', 'Sin gastos de agencia · trato directo', 'Contrato de arrendamiento formal', 'Depósito del 20% para confirmar', 'Alex y Fran disponibles siempre'],
     prices_title: 'Tarifas mensuales',
-    prices_note: 'Precio por apartamento completo. Las noches de Navidad (23 dic–6 ene) y Semana Santa se aplica tarifa especial × 2.',
+    prices_note: 'Precio por apartamento completo. Las noches de Navidad (23 dic–6 ene) y Semana Santa tienen tarifa plana de 80 €/noche.',
     months_label: 'Meses',
     rate_label: '€ / mes',
     price_rows: [{
       period: 'Nov · Dic · Ene · Feb · Mar · Abr',
       months: 'T. baja',
-      rate: '1.390'
+      rate: '1.450'
     }, {
       period: 'Oct · May',
       months: '',
-      rate: '1.690'
+      rate: '1.590'
     }, {
       period: 'Jun · Sep',
       months: '',
@@ -65,7 +65,7 @@ const LS_COPY = {
   en: {
     title: 'Your base in Vera Playa',
     subtitle: 'One month, one season, as long as you need.',
-    sub2: 'Three fully equipped apartments for remote workers, businesses and extended stays. Available September to June.',
+    sub2: 'Three fully equipped apartments for extended stays — for remote workers, businesses, or simply because you want to spend time in a special place with exceptional weather. Available September to June.',
     who_title: 'Who is Hestía long stay for?',
     who_1_title: 'Remote worker · Digital nomad',
     who_1_body: 'Fibre WiFi, desk, silence and the Mediterranean 200 metres away. Vera Playa is an affordable destination with 320 sunny days a year.',
@@ -76,17 +76,17 @@ const LS_COPY = {
     includes_title: "What's included",
     includes: ['Fibre WiFi · symmetric speed', 'Fully equipped kitchen', 'Bed linen and towels included', 'Private terrace or sea views', 'Air conditioning and heating', 'Parking', 'No agency fees · direct deal', 'Formal rental contract', '20% deposit to confirm', 'Alex and Fran always available'],
     prices_title: 'Monthly rates',
-    prices_note: 'Full apartment price. Christmas nights (Dec 23–Jan 6) and Easter carry a ×2 surcharge.',
+    prices_note: 'Full apartment price. Christmas nights (Dec 23–Jan 6) and Easter are charged at a flat 80 €/night.',
     months_label: 'Months',
     rate_label: '€ / month',
     price_rows: [{
       period: 'Nov · Dec · Jan · Feb · Mar · Apr',
       months: 'Low season',
-      rate: '1,390'
+      rate: '1,450'
     }, {
       period: 'Oct · May',
       months: '',
-      rate: '1,690'
+      rate: '1,590'
     }, {
       period: 'Jun · Sep',
       months: '',
@@ -165,7 +165,7 @@ const LsHero = ({
     className: "lsl-pill"
   }, lang === 'es' ? 'Sep – Jun' : 'Sep – Jun'), /*#__PURE__*/React.createElement("span", {
     className: "lsl-pill"
-  }, lang === 'es' ? 'desde 1.390€/mes' : 'from €1,390/month'), /*#__PURE__*/React.createElement("span", {
+  }, lang === 'es' ? 'desde 1.450€/mes' : 'from €1,450/month'), /*#__PURE__*/React.createElement("span", {
     className: "lsl-pill"
   }, lang === 'es' ? 'Sin intermediarios' : 'No middlemen')), /*#__PURE__*/React.createElement("div", {
     className: "lsl-hero-ctas"
@@ -282,11 +282,179 @@ const LsPrices = ({
     className: "lsl-pt-tag"
   }, lang === 'es' ? 'tarifa especial' : 'special rate'), /*#__PURE__*/React.createElement("span", {
     className: "lsl-pt-rate"
-  }, "\xD7 2", /*#__PURE__*/React.createElement("span", {
+  }, "80", /*#__PURE__*/React.createElement("span", {
     className: "lsl-pt-unit"
-  }, " ", lang === 'es' ? 'sobre la tarifa del mes' : 'of the monthly rate')))), /*#__PURE__*/React.createElement("p", {
+  }, "\u20AC/noche")))), /*#__PURE__*/React.createElement("p", {
     className: "lsl-prices-min"
   }, t.min_note)));
+};
+const LsSearch = ({
+  lang
+}) => {
+  const today = new Date().toISOString().slice(0, 10);
+  const [checkin, setCheckin] = React.useState('');
+  const [checkout, setCheckout] = React.useState('');
+  const [guests, setGuests] = React.useState(1);
+  const [avail, setAvail] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState('');
+  const es = lang === 'es';
+  const calcLsTotal = (start, end) => {
+    const lsCfg = window.PRICES_V2 && window.PRICES_V2.longStayConfig || {
+      specialNightFlat: 80,
+      easterRanges: []
+    };
+    const flat = lsCfg.specialNightFlat || 80;
+    const easter = lsCfg.easterRanges || [];
+    const isXmas = ds => {
+      const m = +ds.slice(5, 7),
+        d = +ds.slice(8, 10);
+      return m === 12 && d >= 23 || m === 1 && d <= 6;
+    };
+    const isEast = ds => easter.some(([s, e]) => ds >= s && ds <= e);
+    let total = 0,
+      cur = start;
+    while (cur < end) {
+      const yr = +cur.slice(0, 4),
+        mo = +cur.slice(5, 7);
+      const dim = new Date(yr, mo, 0).getDate();
+      const rate = mo === 6 || mo === 9 ? 1790 : mo === 5 || mo === 10 ? 1590 : 1450;
+      total += isXmas(cur) || isEast(cur) ? flat : rate / dim;
+      cur = _drAdj(cur, 1);
+    }
+    return Math.round(total);
+  };
+  const validate = () => {
+    if (!checkin || !checkout) return es ? 'Selecciona las fechas de entrada y salida.' : 'Select check-in and check-out dates.';
+    const nights = _drDiff(checkin, checkout);
+    if (nights < 1) return es ? 'La salida debe ser posterior a la entrada.' : 'Check-out must be after check-in.';
+    if (nights < 29) return es ? `Mínimo 29 noches. Has seleccionado ${nights}.` : `Minimum 29 nights. You selected ${nights}.`;
+    const mo = +checkin.slice(5, 7);
+    if (mo === 7 || mo === 8) return es ? 'No disponible en julio ni agosto.' : 'Not available in July or August.';
+    if (checkin < today) return es ? 'La fecha de entrada no puede ser en el pasado.' : 'Check-in cannot be in the past.';
+    return '';
+  };
+  const handleSearch = async () => {
+    const err = validate();
+    if (err) {
+      setError(err);
+      return;
+    }
+    setError('');
+    setLoading(true);
+    try {
+      const res = await fetch('assets/availability.json?t=' + Date.now(), {
+        cache: 'no-store'
+      });
+      const data = res.ok ? await res.json() : null;
+      const nights = _drDiff(checkin, checkout);
+      const total = calcLsTotal(checkin, checkout);
+      setAvail(LS_APTS.map(apt => ({
+        apt,
+        nights,
+        total,
+        available: _drAvail(checkin, checkout, data ? data[apt.id]?.blocked || [] : [])
+      })));
+    } catch (_) {
+      setError(es ? 'Error al comprobar disponibilidad. Inténtalo de nuevo.' : 'Error checking availability. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+  const fmtDate = ds => {
+    if (!ds) return '';
+    const [y, m, d] = ds.split('-');
+    return es ? `${d}/${m}/${y.slice(2)}` : `${m}/${d}/${y.slice(2)}`;
+  };
+  return /*#__PURE__*/React.createElement("section", {
+    className: "lsl-section lsl-search-section",
+    id: "buscar"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lsl-inner"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "lsl-h2"
+  }, es ? 'Comprobar disponibilidad' : 'Check availability'), /*#__PURE__*/React.createElement("div", {
+    className: "lsl-search-form"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lsl-search-fields"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lsl-search-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "lsl-search-lbl"
+  }, es ? 'Entrada' : 'Check-in'), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    className: "lsl-search-input",
+    value: checkin,
+    min: today,
+    onChange: e => {
+      setCheckin(e.target.value);
+      setAvail(null);
+      setError('');
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "lsl-search-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "lsl-search-lbl"
+  }, es ? 'Salida' : 'Check-out'), /*#__PURE__*/React.createElement("input", {
+    type: "date",
+    className: "lsl-search-input",
+    value: checkout,
+    min: checkin || today,
+    onChange: e => {
+      setCheckout(e.target.value);
+      setAvail(null);
+      setError('');
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "lsl-search-field lsl-search-field--sm"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "lsl-search-lbl"
+  }, es ? 'Personas' : 'Guests'), /*#__PURE__*/React.createElement("select", {
+    className: "lsl-search-input",
+    value: guests,
+    onChange: e => {
+      setGuests(Number(e.target.value));
+      setAvail(null);
+    }
+  }, [1, 2, 3, 4].map(n => /*#__PURE__*/React.createElement("option", {
+    key: n,
+    value: n
+  }, n)))), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "lsl-search-btn",
+    disabled: loading,
+    onClick: handleSearch
+  }, loading ? es ? 'Comprobando…' : 'Checking…' : es ? 'Ver disponibilidad' : 'Check')), error && /*#__PURE__*/React.createElement("p", {
+    className: "lsl-search-error"
+  }, error), checkin && checkout && !error && /*#__PURE__*/React.createElement("p", {
+    className: "lsl-search-hint"
+  }, es ? `${fmtDate(checkin)} → ${fmtDate(checkout)} · ${_drDiff(checkin, checkout)} noches` : `${fmtDate(checkin)} → ${fmtDate(checkout)} · ${_drDiff(checkin, checkout)} nights`)), avail && /*#__PURE__*/React.createElement("div", {
+    className: "lsl-results"
+  }, avail.map(({
+    apt,
+    available,
+    total,
+    nights
+  }) => /*#__PURE__*/React.createElement("div", {
+    key: apt.id,
+    className: `lsl-result${available ? '' : ' lsl-result--unavail'}`,
+    style: {
+      '--lsl-accent': apt.accent
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "lsl-result-apt"
+  }, "HEST\xCDA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), available ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "lsl-result-price"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "lsl-result-total"
+  }, total.toLocaleString('es-ES'), " \u20AC"), /*#__PURE__*/React.createElement("span", {
+    className: "lsl-result-nights"
+  }, nights, " ", es ? 'noches' : 'nights')), /*#__PURE__*/React.createElement("a", {
+    href: `reservas.html?apt=${apt.id}&checkin=${checkin}&checkout=${checkout}&guests=${guests}`,
+    className: "lsl-result-btn"
+  }, es ? 'Reservar →' : 'Book →')) : /*#__PURE__*/React.createElement("span", {
+    className: "lsl-result-unavail-msg"
+  }, es ? 'No disponible' : 'Not available'))))));
 };
 const LsApts = ({
   lang
@@ -394,6 +562,8 @@ const EstanciasLargasPageApp = () => {
   }), /*#__PURE__*/React.createElement(LsIncludes, {
     lang: lang
   }), /*#__PURE__*/React.createElement(LsPrices, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(LsSearch, {
     lang: lang
   }), /*#__PURE__*/React.createElement(LsApts, {
     lang: lang
