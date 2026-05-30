@@ -223,7 +223,11 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--chrome-h, 116px) + 16px); }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--chrome-h, 116px) + 16px);
+  overscroll-behavior: none;
+}
 
 body {
   margin: 0;
@@ -21120,7 +21124,7 @@ img[src*="apt-vt-gallery-"] {
 /* ── Estancias largas page ───────────────────────────────────── */
 .lsl-hero {
   background: linear-gradient(150deg, var(--ber-dk, #1A0820) 0%, #3D1540 60%, #2A0F2E 100%);
-  padding: 80px 24px 72px;
+  padding: calc(var(--chrome-h, 116px) + 48px) 24px 72px;
 }
 .lsl-hero-inner {
   max-width: 740px;
