@@ -4875,6 +4875,14 @@ const HC_APT    = {
   vs: { name: 'Hestía Salinas',  accent: '#9E7A2C' },
 };
 
+const BULK_PRESETS = [
+  { label: 'Última hora (<30d)', icon: '⚡', cfg: { season: 'all', minN: '', maxN: '', maxDays: '30', type: 'discount', value: '20', lm: true,  onlyNew: true  } },
+  { label: 'Larga estancia baja (>28n)',  icon: '🌿', cfg: { season: 'baja',  minN: '29', maxN: '', maxDays: '', type: 'discount', value: '15', lm: false, onlyNew: false } },
+  { label: 'Larga estancia media (>28n)', icon: '🌤', cfg: { season: 'media', minN: '29', maxN: '', maxDays: '', type: 'discount', value: '10', lm: false, onlyNew: false } },
+  { label: 'Alta urgente (<14d)',  icon: '🔥', cfg: { season: 'alta',  minN: '', maxN: '', maxDays: '14', type: 'discount', value: '15', lm: true,  onlyNew: true  } },
+  { label: 'Crítica urgente (<7d)', icon: '🚨', cfg: { season: 'critica', minN: '', maxN: '', maxDays: '7', type: 'discount', value: '25', lm: true, onlyNew: true } },
+];
+
 const _hcOvLabel = (ov) => {
   if (!ov) return null;
   if (ov.type === 'discount')  return `-${ov.value}%`;
@@ -4908,6 +4916,17 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
   const [splitGapId, setSplitGapId] = React.useState(null);
   const [splitDate,  setSplitDate ] = React.useState('');
   const [splitSaving,setSplitSaving] = React.useState(false);
+  const [bulkOpen,    setBulkOpen   ] = React.useState(false);
+  const [bulkApt,     setBulkApt    ] = React.useState('all');
+  const [bulkSeason,  setBulkSeason ] = React.useState('all');
+  const [bulkMinN,    setBulkMinN   ] = React.useState('');
+  const [bulkMaxN,    setBulkMaxN   ] = React.useState('');
+  const [bulkMaxDays, setBulkMaxDays] = React.useState('');
+  const [bulkOnlyNew, setBulkOnlyNew] = React.useState(true);
+  const [bulkType,    setBulkType   ] = React.useState('discount');
+  const [bulkValue,   setBulkValue  ] = React.useState('');
+  const [bulkLastMin, setBulkLastMin] = React.useState(false);
+  const [bulkSaving,  setBulkSaving ] = React.useState(false);
 
   const today     = new Date().toISOString().slice(0, 10);
   const horizonStr = pricesData && pricesData.bookingHorizon && pricesData.bookingHorizon.lastCheckinDate;
@@ -4968,6 +4987,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
             segIndex: i, segTotal: points.length - 1,
             season, maxN, overLim: nights > maxN,
             override, baseN, effN,
+            daysUntil: Math.round((new Date(segStart + 'T12:00:00Z') - new Date(today + 'T12:00:00Z')) / 86400000),
           };
         });
       });
@@ -5079,6 +5099,68 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
     persistSplits({ ...pricesData, gapSplits: newGs }, parentId, 'remove-all');
   };
 
+  const handleQuickUrgent = (gap) => {
+    const newOv = { apt: gap.aptId, start: gap.start, end: gap.end, nights: gap.nights, type: 'discount', value: 20, lastMinute: true };
+    persistPrices({ ...pricesData, gapOverrides: { ...(pricesData.gapOverrides || {}), [gap.id]: newOv } }, gap.id, 'quick-urgent');
+  };
+
+  const bulkMatches = React.useMemo(() => {
+    const flat = ['vm','vt','vs'].flatMap(id => allGaps[id] || []);
+    const validApts = bulkApt === 'all' ? ['vm','vt','vs'] : [bulkApt];
+    return flat.filter(gap => {
+      if (!validApts.includes(gap.aptId)) return false;
+      if (bulkSeason !== 'all' && gap.season !== bulkSeason) return false;
+      if (bulkMinN !== '' && gap.nights < Number(bulkMinN)) return false;
+      if (bulkMaxN !== '' && gap.nights > Number(bulkMaxN)) return false;
+      if (bulkMaxDays !== '' && gap.daysUntil > Number(bulkMaxDays)) return false;
+      if (bulkOnlyNew && gap.override) return false;
+      return true;
+    });
+  }, [allGaps, bulkApt, bulkSeason, bulkMinN, bulkMaxN, bulkMaxDays, bulkOnlyNew]);
+
+  const persistBulk = async (newData, count) => {
+    setBulkSaving(true); setSaveMsg(null);
+    try {
+      const rf  = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' });
+      const rfj = await rf.json();
+      if (rfj.message) throw new Error(rfj.message);
+      const res = await fetch(`${API}/repos/${REPO}/contents/${PATH}`, {
+        method: 'PUT',
+        headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: `chore(huecos): bulk ${count} gaps via /p-edit · ${new Date().toISOString().slice(0,16).replace('T',' ')}`,
+          content: utf8ToB64(JSON.stringify(newData, null, 2)),
+          sha: rfj.sha, branch: BRANCH,
+        }),
+      });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.message || 'Error');
+      onPricesUpdated(newData, j.content.sha);
+      setSaveMsg(`Aplicado a ${count} huecos ✓`);
+      setBulkOpen(false);
+    } catch (e) { setSaveMsg('Error: ' + e.message); }
+    finally { setBulkSaving(false); }
+  };
+
+  const handleBulkApply = () => {
+    if (!bulkMatches.length || !bulkValue) return;
+    const newOvs = { ...(pricesData.gapOverrides || {}) };
+    for (const gap of bulkMatches) {
+      newOvs[gap.id] = {
+        apt: gap.aptId, start: gap.start, end: gap.end, nights: gap.nights,
+        type: bulkType, value: Number(bulkValue),
+        ...(bulkLastMin ? { lastMinute: true } : {}),
+      };
+    }
+    persistBulk({ ...pricesData, gapOverrides: newOvs }, bulkMatches.length);
+  };
+
+  const applyBulkPreset = (cfg) => {
+    setBulkSeason(cfg.season); setBulkMinN(cfg.minN); setBulkMaxN(cfg.maxN);
+    setBulkMaxDays(cfg.maxDays); setBulkType(cfg.type); setBulkValue(cfg.value);
+    setBulkLastMin(cfg.lm); setBulkOnlyNew(cfg.onlyNew);
+  };
+
   if (loading) return <div className="pe-card"><p className="pe-help">Cargando disponibilidad…</p></div>;
   if (loadErr)  return <div className="pe-card"><div className="pe-error">{loadErr}</div></div>;
   if (!avail)   return <div className="pe-card"><p className="pe-help">Sin datos de disponibilidad.</p></div>;
@@ -5118,6 +5200,107 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
       <div className="hc-rules">
         <span><strong>Alta / Crítica:</strong> máx. 7 noches entre reservas</span>
         <span><strong>Media / Baja:</strong> máx. 28 noches entre reservas</span>
+      </div>
+
+      {/* ── Reglas globales (bulk) ──────────────────────── */}
+      <div className="hc-bulk-wrap">
+        <button type="button" className="hc-bulk-toggle" onClick={() => setBulkOpen(o => !o)}>
+          <span>Reglas globales</span>
+          <span className={`hc-bulk-chev${bulkOpen ? ' open' : ''}`}>▼</span>
+        </button>
+        {bulkOpen && (
+          <div className="hc-bulk-body">
+
+            {/* Presets */}
+            <div className="hc-bulk-presets">
+              {BULK_PRESETS.map(p => (
+                <button key={p.label} type="button" className="hc-bulk-preset" onClick={() => applyBulkPreset(p.cfg)}>
+                  {p.icon} {p.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Filtros */}
+            <div className="hc-bulk-fields">
+              <div className="hc-bulk-row">
+                <div className="hc-bulk-field">
+                  <label className="hc-lbl">Apartamento</label>
+                  <select className="pe-input" value={bulkApt} onChange={e => setBulkApt(e.target.value)}>
+                    <option value="all">Todos</option>
+                    <option value="vm">Mar</option>
+                    <option value="vt">Thalassa</option>
+                    <option value="vs">Salinas</option>
+                  </select>
+                </div>
+                <div className="hc-bulk-field">
+                  <label className="hc-lbl">Temporada</label>
+                  <select className="pe-input" value={bulkSeason} onChange={e => setBulkSeason(e.target.value)}>
+                    <option value="all">Todas</option>
+                    <option value="alta">Alta</option>
+                    <option value="critica">Crítica</option>
+                    <option value="media">Media</option>
+                    <option value="baja">Baja</option>
+                  </select>
+                </div>
+                <div className="hc-bulk-field">
+                  <label className="hc-lbl">Noches mín.</label>
+                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMinN} onChange={e => setBulkMinN(e.target.value)} placeholder="—"/>
+                </div>
+                <div className="hc-bulk-field">
+                  <label className="hc-lbl">Noches máx.</label>
+                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMaxN} onChange={e => setBulkMaxN(e.target.value)} placeholder="—"/>
+                </div>
+                <div className="hc-bulk-field">
+                  <label className="hc-lbl">Checkin ≤ Xd</label>
+                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMaxDays} onChange={e => setBulkMaxDays(e.target.value)} placeholder="—"/>
+                </div>
+              </div>
+              <div className="hc-bulk-row">
+                <div className="hc-bulk-field">
+                  <label className="hc-lbl">Ajuste</label>
+                  <select className="pe-input" value={bulkType} onChange={e => { setBulkType(e.target.value); setBulkValue(''); }}>
+                    <option value="discount">Descuento %</option>
+                    <option value="fixed">Precio fijo €/n</option>
+                    <option value="increment">Incremento %</option>
+                  </select>
+                </div>
+                <div className="hc-bulk-field">
+                  <label className="hc-lbl">Valor</label>
+                  <div className="hc-input-row">
+                    <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 80 }} value={bulkValue} onChange={e => setBulkValue(e.target.value)} placeholder="0"/>
+                    <span className="pe-suffix">{bulkType === 'fixed' ? '€/n' : '%'}</span>
+                  </div>
+                </div>
+                <div className="hc-bulk-field hc-bulk-field-check">
+                  <label className="hc-check-lbl">
+                    <input type="checkbox" checked={bulkLastMin} onChange={e => setBulkLastMin(e.target.checked)}/>
+                    Marcar como last minute
+                  </label>
+                </div>
+                <div className="hc-bulk-field hc-bulk-field-check">
+                  <label className="hc-check-lbl">
+                    <input type="checkbox" checked={bulkOnlyNew} onChange={e => setBulkOnlyNew(e.target.checked)}/>
+                    Solo sin ajuste previo
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            {/* Preview + aplicar */}
+            <div className="hc-bulk-foot">
+              <span className="hc-bulk-preview">
+                {bulkMatches.length > 0
+                  ? <>{bulkMatches.length} hueco{bulkMatches.length !== 1 ? 's' : ''}: {bulkMatches.slice(0,6).map(g => `${HC_APT[g.aptId].name.replace('Hestía ','')} ${_hcFmt(g.start)}`).join(', ')}{bulkMatches.length > 6 ? '…' : ''}</>
+                  : 'Ningún hueco coincide.'}
+              </span>
+              <button type="button" className="pe-btn pe-btn-primary"
+                disabled={!bulkMatches.length || !bulkValue || bulkSaving}
+                onClick={handleBulkApply}>
+                {bulkSaving ? 'Aplicando…' : `Aplicar a ${bulkMatches.length} huecos`}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── Por apartamento ─────────────────────────────── */}
@@ -5177,9 +5360,21 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
                           {gap.override && gap.override.minNights && <span className="hc-badge hc-badge-ov">min {gap.override.minNights}n</span>}
                           {gap.override && gap.override.lastMinute && <span className="hc-badge hc-badge-lm">last min.</span>}
                           {gap.override && gap.override.note && <span className="hc-badge hc-badge-note" title={gap.override.note}>nota</span>}
+                          {gap.daysUntil >= 0 && gap.daysUntil <= 30 && <span className="hc-badge hc-badge-urgent">⏱ {gap.daysUntil}d</span>}
                         </span>
                         <span className="hc-toggle">{isActive ? '▲' : '▼'}</span>
                       </div>
+
+                      {/* Botón rápido última hora */}
+                      {gap.daysUntil >= 0 && gap.daysUntil <= 30 && !(gap.override && gap.override.lastMinute) && !isActive && (
+                        <div className="hc-quick-row">
+                          <button type="button" className="hc-quick-lm" disabled={saving}
+                            onClick={() => handleQuickUrgent(gap)}>
+                            ⚡ −20% oferta urgente
+                          </button>
+                          <span className="hc-quick-note">Aplica descuento del 20% y lo destaca en la home como última hora</span>
+                        </div>
+                      )}
 
                       {/* Panel de edición */}
                       {isActive && (

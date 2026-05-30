@@ -6194,6 +6194,72 @@ const HC_APT = {
     accent: '#9E7A2C'
   }
 };
+const BULK_PRESETS = [{
+  label: 'Última hora (<30d)',
+  icon: '⚡',
+  cfg: {
+    season: 'all',
+    minN: '',
+    maxN: '',
+    maxDays: '30',
+    type: 'discount',
+    value: '20',
+    lm: true,
+    onlyNew: true
+  }
+}, {
+  label: 'Larga estancia baja (>28n)',
+  icon: '🌿',
+  cfg: {
+    season: 'baja',
+    minN: '29',
+    maxN: '',
+    maxDays: '',
+    type: 'discount',
+    value: '15',
+    lm: false,
+    onlyNew: false
+  }
+}, {
+  label: 'Larga estancia media (>28n)',
+  icon: '🌤',
+  cfg: {
+    season: 'media',
+    minN: '29',
+    maxN: '',
+    maxDays: '',
+    type: 'discount',
+    value: '10',
+    lm: false,
+    onlyNew: false
+  }
+}, {
+  label: 'Alta urgente (<14d)',
+  icon: '🔥',
+  cfg: {
+    season: 'alta',
+    minN: '',
+    maxN: '',
+    maxDays: '14',
+    type: 'discount',
+    value: '15',
+    lm: true,
+    onlyNew: true
+  }
+}, {
+  label: 'Crítica urgente (<7d)',
+  icon: '🚨',
+  cfg: {
+    season: 'critica',
+    minN: '',
+    maxN: '',
+    maxDays: '7',
+    type: 'discount',
+    value: '25',
+    lm: true,
+    onlyNew: true
+  }
+}];
 const _hcOvLabel = ov => {
   if (!ov) return null;
   if (ov.type === 'discount') return `-${ov.value}%`;
@@ -6229,6 +6295,17 @@ const HuecosTab = ({
   const [splitGapId, setSplitGapId] = React.useState(null);
   const [splitDate, setSplitDate] = React.useState('');
   const [splitSaving, setSplitSaving] = React.useState(false);
+  const [bulkOpen, setBulkOpen] = React.useState(false);
+  const [bulkApt, setBulkApt] = React.useState('all');
+  const [bulkSeason, setBulkSeason] = React.useState('all');
+  const [bulkMinN, setBulkMinN] = React.useState('');
+  const [bulkMaxN, setBulkMaxN] = React.useState('');
+  const [bulkMaxDays, setBulkMaxDays] = React.useState('');
+  const [bulkOnlyNew, setBulkOnlyNew] = React.useState(true);
+  const [bulkType, setBulkType] = React.useState('discount');
+  const [bulkValue, setBulkValue] = React.useState('');
+  const [bulkLastMin, setBulkLastMin] = React.useState(false);
+  const [bulkSaving, setBulkSaving] = React.useState(false);
   const today = new Date().toISOString().slice(0, 10);
   const horizonStr = pricesData && pricesData.bookingHorizon && pricesData.bookingHorizon.lastCheckinDate;
   const calendar = pricesData && pricesData.calendar || {};
@@ -6294,7 +6371,8 @@ const HuecosTab = ({
             overLim: nights > maxN,
             override,
             baseN,
-            effN
+            effN,
+            daysUntil: Math.round((new Date(segStart + 'T12:00:00Z') - new Date(today + 'T12:00:00Z')) / 86400000)
           };
         });
       });
@@ -6466,6 +6544,104 @@ const HuecosTab = ({
       gapSplits: newGs
     }, parentId, 'remove-all');
   };
+  const handleQuickUrgent = gap => {
+    const newOv = {
+      apt: gap.aptId,
+      start: gap.start,
+      end: gap.end,
+      nights: gap.nights,
+      type: 'discount',
+      value: 20,
+      lastMinute: true
+    };
+    persistPrices({
+      ...pricesData,
+      gapOverrides: {
+        ...(pricesData.gapOverrides || {}),
+        [gap.id]: newOv
+      }
+    }, gap.id, 'quick-urgent');
+  };
+  const bulkMatches = React.useMemo(() => {
+    const flat = ['vm', 'vt', 'vs'].flatMap(id => allGaps[id] || []);
+    const validApts = bulkApt === 'all' ? ['vm', 'vt', 'vs'] : [bulkApt];
+    return flat.filter(gap => {
+      if (!validApts.includes(gap.aptId)) return false;
+      if (bulkSeason !== 'all' && gap.season !== bulkSeason) return false;
+      if (bulkMinN !== '' && gap.nights < Number(bulkMinN)) return false;
+      if (bulkMaxN !== '' && gap.nights > Number(bulkMaxN)) return false;
+      if (bulkMaxDays !== '' && gap.daysUntil > Number(bulkMaxDays)) return false;
+      if (bulkOnlyNew && gap.override) return false;
+      return true;
+    });
+  }, [allGaps, bulkApt, bulkSeason, bulkMinN, bulkMaxN, bulkMaxDays, bulkOnlyNew]);
+  const persistBulk = async (newData, count) => {
+    setBulkSaving(true);
+    setSaveMsg(null);
+    try {
+      const rf = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, {
+        headers: apiHeaders(token),
+        cache: 'no-store'
+      });
+      const rfj = await rf.json();
+      if (rfj.message) throw new Error(rfj.message);
+      const res = await fetch(`${API}/repos/${REPO}/contents/${PATH}`, {
+        method: 'PUT',
+        headers: {
+          ...apiHeaders(token),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: `chore(huecos): bulk ${count} gaps via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
+          content: utf8ToB64(JSON.stringify(newData, null, 2)),
+          sha: rfj.sha,
+          branch: BRANCH
+        })
+      });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.message || 'Error');
+      onPricesUpdated(newData, j.content.sha);
+      setSaveMsg(`Aplicado a ${count} huecos ✓`);
+      setBulkOpen(false);
+    } catch (e) {
+      setSaveMsg('Error: ' + e.message);
+    } finally {
+      setBulkSaving(false);
+    }
+  };
+  const handleBulkApply = () => {
+    if (!bulkMatches.length || !bulkValue) return;
+    const newOvs = {
+      ...(pricesData.gapOverrides || {})
+    };
+    for (const gap of bulkMatches) {
+      newOvs[gap.id] = {
+        apt: gap.aptId,
+        start: gap.start,
+        end: gap.end,
+        nights: gap.nights,
+        type: bulkType,
+        value: Number(bulkValue),
+        ...(bulkLastMin ? {
+          lastMinute: true
+        } : {})
+      };
+    }
+    persistBulk({
+      ...pricesData,
+      gapOverrides: newOvs
+    }, bulkMatches.length);
+  };
+  const applyBulkPreset = cfg => {
+    setBulkSeason(cfg.season);
+    setBulkMinN(cfg.minN);
+    setBulkMaxN(cfg.maxN);
+    setBulkMaxDays(cfg.maxDays);
+    setBulkType(cfg.type);
+    setBulkValue(cfg.value);
+    setBulkLastMin(cfg.lm);
+    setBulkOnlyNew(cfg.onlyNew);
+  };
   if (loading) return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("p", {
@@ -6521,7 +6697,166 @@ const HuecosTab = ({
     className: `hc-global-msg${saveMsg.startsWith('Error') ? ' err' : ' ok'}`
   }, saveMsg), /*#__PURE__*/React.createElement("div", {
     className: "hc-rules"
-  }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, "Alta / Cr\xEDtica:"), " m\xE1x. 7 noches entre reservas"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, "Media / Baja:"), " m\xE1x. 28 noches entre reservas")), aptIds.map(aptId => {
+  }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, "Alta / Cr\xEDtica:"), " m\xE1x. 7 noches entre reservas"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, "Media / Baja:"), " m\xE1x. 28 noches entre reservas")), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-wrap"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "hc-bulk-toggle",
+    onClick: () => setBulkOpen(o => !o)
+  }, /*#__PURE__*/React.createElement("span", null, "Reglas globales"), /*#__PURE__*/React.createElement("span", {
+    className: `hc-bulk-chev${bulkOpen ? ' open' : ''}`
+  }, "\u25BC")), bulkOpen && /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-body"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-presets"
+  }, BULK_PRESETS.map(p => /*#__PURE__*/React.createElement("button", {
+    key: p.label,
+    type: "button",
+    className: "hc-bulk-preset",
+    onClick: () => applyBulkPreset(p.cfg)
+  }, p.icon, " ", p.label))), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-fields"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-row"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-lbl"
+  }, "Apartamento"), /*#__PURE__*/React.createElement("select", {
+    className: "pe-input",
+    value: bulkApt,
+    onChange: e => setBulkApt(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "Todos"), /*#__PURE__*/React.createElement("option", {
+    value: "vm"
+  }, "Mar"), /*#__PURE__*/React.createElement("option", {
+    value: "vt"
+  }, "Thalassa"), /*#__PURE__*/React.createElement("option", {
+    value: "vs"
+  }, "Salinas"))), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-lbl"
+  }, "Temporada"), /*#__PURE__*/React.createElement("select", {
+    className: "pe-input",
+    value: bulkSeason,
+    onChange: e => setBulkSeason(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "Todas"), /*#__PURE__*/React.createElement("option", {
+    value: "alta"
+  }, "Alta"), /*#__PURE__*/React.createElement("option", {
+    value: "critica"
+  }, "Cr\xEDtica"), /*#__PURE__*/React.createElement("option", {
+    value: "media"
+  }, "Media"), /*#__PURE__*/React.createElement("option", {
+    value: "baja"
+  }, "Baja"))), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-lbl"
+  }, "Noches m\xEDn."), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    className: "pe-input pe-input-num",
+    style: {
+      width: 70
+    },
+    value: bulkMinN,
+    onChange: e => setBulkMinN(e.target.value),
+    placeholder: "\u2014"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-lbl"
+  }, "Noches m\xE1x."), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    className: "pe-input pe-input-num",
+    style: {
+      width: 70
+    },
+    value: bulkMaxN,
+    onChange: e => setBulkMaxN(e.target.value),
+    placeholder: "\u2014"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-lbl"
+  }, "Checkin \u2264 Xd"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    className: "pe-input pe-input-num",
+    style: {
+      width: 70
+    },
+    value: bulkMaxDays,
+    onChange: e => setBulkMaxDays(e.target.value),
+    placeholder: "\u2014"
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-row"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-lbl"
+  }, "Ajuste"), /*#__PURE__*/React.createElement("select", {
+    className: "pe-input",
+    value: bulkType,
+    onChange: e => {
+      setBulkType(e.target.value);
+      setBulkValue('');
+    }
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "discount"
+  }, "Descuento %"), /*#__PURE__*/React.createElement("option", {
+    value: "fixed"
+  }, "Precio fijo \u20AC/n"), /*#__PURE__*/React.createElement("option", {
+    value: "increment"
+  }, "Incremento %"))), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-lbl"
+  }, "Valor"), /*#__PURE__*/React.createElement("div", {
+    className: "hc-input-row"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "1",
+    className: "pe-input pe-input-num",
+    style: {
+      width: 80
+    },
+    value: bulkValue,
+    onChange: e => setBulkValue(e.target.value),
+    placeholder: "0"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "pe-suffix"
+  }, bulkType === 'fixed' ? '€/n' : '%'))), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field hc-bulk-field-check"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-check-lbl"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: bulkLastMin,
+    onChange: e => setBulkLastMin(e.target.checked)
+  }), "Marcar como last minute")), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field hc-bulk-field-check"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-check-lbl"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "checkbox",
+    checked: bulkOnlyNew,
+    onChange: e => setBulkOnlyNew(e.target.checked)
+  }), "Solo sin ajuste previo")))), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-foot"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "hc-bulk-preview"
+  }, bulkMatches.length > 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, bulkMatches.length, " hueco", bulkMatches.length !== 1 ? 's' : '', ": ", bulkMatches.slice(0, 6).map(g => `${HC_APT[g.aptId].name.replace('Hestía ', '')} ${_hcFmt(g.start)}`).join(', '), bulkMatches.length > 6 ? '…' : '') : 'Ningún hueco coincide.'), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-primary",
+    disabled: !bulkMatches.length || !bulkValue || bulkSaving,
+    onClick: handleBulkApply
+  }, bulkSaving ? 'Aplicando…' : `Aplicar a ${bulkMatches.length} huecos`)))), aptIds.map(aptId => {
     const meta = HC_APT[aptId];
     let gaps = allGaps[aptId] || [];
     if (filterProb) gaps = gaps.filter(g => g.overLim);
@@ -6589,9 +6924,20 @@ const HuecosTab = ({
       }, "last min."), gap.override && gap.override.note && /*#__PURE__*/React.createElement("span", {
         className: "hc-badge hc-badge-note",
         title: gap.override.note
-      }, "nota")), /*#__PURE__*/React.createElement("span", {
+      }, "nota"), gap.daysUntil >= 0 && gap.daysUntil <= 30 && /*#__PURE__*/React.createElement("span", {
+        className: "hc-badge hc-badge-urgent"
+      }, "\u23F1 ", gap.daysUntil, "d")), /*#__PURE__*/React.createElement("span", {
         className: "hc-toggle"
-      }, isActive ? '▲' : '▼')), isActive && /*#__PURE__*/React.createElement("div", {
+      }, isActive ? '▲' : '▼')), gap.daysUntil >= 0 && gap.daysUntil <= 30 && !(gap.override && gap.override.lastMinute) && !isActive && /*#__PURE__*/React.createElement("div", {
+        className: "hc-quick-row"
+      }, /*#__PURE__*/React.createElement("button", {
+        type: "button",
+        className: "hc-quick-lm",
+        disabled: saving,
+        onClick: () => handleQuickUrgent(gap)
+      }, "\u26A1 \u221220% oferta urgente"), /*#__PURE__*/React.createElement("span", {
+        className: "hc-quick-note"
+      }, "Aplica descuento del 20% y lo destaca en la home como \xFAltima hora")), isActive && /*#__PURE__*/React.createElement("div", {
         className: "hc-edit",
         onClick: e => e.stopPropagation()
       }, gap.overLim && /*#__PURE__*/React.createElement("div", {
