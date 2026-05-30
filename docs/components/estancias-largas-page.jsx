@@ -5,7 +5,7 @@ const LS_COPY = {
   es: {
     title:        'Tu base en Vera Playa',
     subtitle:     'Un mes, una temporada, lo que necesites.',
-    sub2:         'Tres apartamentos totalmente equipados para estancias prolongadas para teletrabajadores, empresas o simplemente porque te apetece vivir un tiempo en un lugar especial con un tiempo privilegiado. Disponibles de septiembre a junio.',
+    sub2:         'Tres apartamentos totalmente equipados para estancias prolongadas para teletrabajadores, empresas o simplemente porque te apetece vivir una temporada en un lugar especial con un tiempo, naturaleza y cultura privilegiados.\n\nDisponibles de septiembre a junio.',
     who_title:    'Para quién es Hestía larga estancia',
     who_1_title:  'Teletrabajador · Nómada digital',
     who_1_body:   'WiFi de fibra, escritorio, silencio y el Mediterráneo a 200 metros. Vera Playa es un destino asequible con 320 días de sol al año.',
@@ -119,7 +119,9 @@ const LsHero = ({ lang }) => {
           {lang === 'es' ? 'Estancias largas · Hestía Your Home' : 'Long stays · Hestía Your Home'}
         </p>
         <h1 className="lsl-h1">{t.title}<br/><em>{t.subtitle}</em></h1>
-        <p className="lsl-hero-sub">{t.sub2}</p>
+        {t.sub2.split('\n\n').map((para, i) => (
+          <p key={i} className="lsl-hero-sub">{para}</p>
+        ))}
         <div className="lsl-hero-pills">
           <span className="lsl-pill">29+ {lang === 'es' ? 'noches' : 'nights'}</span>
           <span className="lsl-pill">{lang === 'es' ? 'Sep – Jun' : 'Sep – Jun'}</span>
@@ -219,8 +221,24 @@ const LsSearch = ({ lang }) => {
   const [guests,   setGuests  ] = React.useState(1);
   const [avail,    setAvail   ] = React.useState(null);
   const [loading,  setLoading ] = React.useState(false);
-  const [error,    setError   ] = React.useState('');
+  const [availData, setAvailData] = React.useState(null);
   const es = lang === 'es';
+  const nights = checkin && checkout ? _drDiff(checkin, checkout) : 0;
+
+  React.useEffect(() => {
+    fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => setAvailData(d))
+      .catch(() => {});
+  }, []);
+
+  // Blocked = unión de fechas bloqueadas en los 3 apartamentos (para el calendario)
+  const blockedUnion = React.useMemo(() => {
+    if (!availData) return [];
+    const all = [];
+    LS_APTS.forEach(a => { (availData[a.id]?.blocked || []).forEach(b => all.push(b)); });
+    return all;
+  }, [availData]);
 
   const calcLsTotal = (start, end) => {
     const lsCfg = (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || { specialNightFlat: 80, easterRanges: [] };
@@ -239,81 +257,77 @@ const LsSearch = ({ lang }) => {
     return Math.round(total);
   };
 
-  const validate = () => {
-    if (!checkin || !checkout) return es ? 'Selecciona las fechas de entrada y salida.' : 'Select check-in and check-out dates.';
-    const nights = _drDiff(checkin, checkout);
-    if (nights < 1) return es ? 'La salida debe ser posterior a la entrada.' : 'Check-out must be after check-in.';
-    if (nights < 29) return es ? `Mínimo 29 noches. Has seleccionado ${nights}.` : `Minimum 29 nights. You selected ${nights}.`;
-    const mo = +checkin.slice(5, 7);
-    if (mo === 7 || mo === 8) return es ? 'No disponible en julio ni agosto.' : 'Not available in July or August.';
-    if (checkin < today) return es ? 'La fecha de entrada no puede ser en el pasado.' : 'Check-in cannot be in the past.';
-    return '';
-  };
-
   const handleSearch = async () => {
-    const err = validate();
-    if (err) { setError(err); return; }
-    setError(''); setLoading(true);
+    if (!checkin || !checkout || nights < 29) return;
+    const mo = +checkin.slice(5, 7);
+    if (mo === 7 || mo === 8) return;
+    setLoading(true);
     try {
-      const res  = await fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' });
-      const data = res.ok ? await res.json() : null;
-      const nights = _drDiff(checkin, checkout);
-      const total  = calcLsTotal(checkin, checkout);
+      const data = availData || null;
+      const total = calcLsTotal(checkin, checkout);
       setAvail(LS_APTS.map(apt => ({
         apt, nights, total,
         available: _drAvail(checkin, checkout, data ? (data[apt.id]?.blocked || []) : []),
       })));
-    } catch (_) {
-      setError(es ? 'Error al comprobar disponibilidad. Inténtalo de nuevo.' : 'Error checking availability. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const fmtDate = (ds) => {
-    if (!ds) return '';
-    const [y,m,d] = ds.split('-');
-    return es ? `${d}/${m}/${y.slice(2)}` : `${m}/${d}/${y.slice(2)}`;
-  };
+  // Auto-search when valid dates are selected
+  React.useEffect(() => {
+    if (checkin && checkout && nights >= 29) {
+      const mo = +checkin.slice(5, 7);
+      if (mo !== 7 && mo !== 8) handleSearch();
+      else setAvail(null);
+    } else {
+      setAvail(null);
+    }
+  }, [checkin, checkout]);
+
+  const julAugWarning = checkin && ([7,8].includes(+checkin.slice(5,7)));
 
   return (
     <section className="lsl-section lsl-search-section" id="buscar">
       <div className="lsl-inner">
         <h2 className="lsl-h2">{es ? 'Comprobar disponibilidad' : 'Check availability'}</h2>
-        <div className="lsl-search-form">
-          <div className="lsl-search-fields">
-            <div className="lsl-search-field">
-              <label className="lsl-search-lbl">{es ? 'Entrada' : 'Check-in'}</label>
-              <input type="date" className="lsl-search-input" value={checkin} min={today}
-                onChange={e => { setCheckin(e.target.value); setAvail(null); setError(''); }}/>
-            </div>
-            <div className="lsl-search-field">
-              <label className="lsl-search-lbl">{es ? 'Salida' : 'Check-out'}</label>
-              <input type="date" className="lsl-search-input" value={checkout} min={checkin || today}
-                onChange={e => { setCheckout(e.target.value); setAvail(null); setError(''); }}/>
-            </div>
-            <div className="lsl-search-field lsl-search-field--sm">
-              <label className="lsl-search-lbl">{es ? 'Personas' : 'Guests'}</label>
-              <select className="lsl-search-input" value={guests}
-                onChange={e => { setGuests(Number(e.target.value)); setAvail(null); }}>
-                {[1,2,3,4].map(n => <option key={n} value={n}>{n}</option>)}
-              </select>
-            </div>
-            <button type="button" className="lsl-search-btn" disabled={loading} onClick={handleSearch}>
-              {loading ? (es ? 'Comprobando…' : 'Checking…') : (es ? 'Ver disponibilidad' : 'Check')}
-            </button>
+
+        <div className="lsl-picker-wrap">
+          <DateRangePicker
+            checkin={checkin}
+            checkout={checkout}
+            setCheckin={(d) => { setCheckin(d); setAvail(null); }}
+            setCheckout={(d) => { setCheckout(d); setAvail(null); }}
+            blocked={blockedUnion}
+            lang={lang}
+            accent="var(--ber, #3D1A35)"
+            minNightsOverride={29}
+          />
+        </div>
+
+        <div className="lsl-search-footer">
+          <div className="lsl-search-field lsl-search-field--sm">
+            <label className="lsl-search-lbl">{es ? 'Personas' : 'Guests'}</label>
+            <select className="lsl-search-input" value={guests}
+              onChange={e => { setGuests(Number(e.target.value)); }}>
+              {[1,2,3,4].map(n => <option key={n} value={n}>{n}</option>)}
+            </select>
           </div>
-          {error && <p className="lsl-search-error">{error}</p>}
-          {checkin && checkout && !error && (
-            <p className="lsl-search-hint">
-              {es ? `${fmtDate(checkin)} → ${fmtDate(checkout)} · ${_drDiff(checkin,checkout)} noches` : `${fmtDate(checkin)} → ${fmtDate(checkout)} · ${_drDiff(checkin,checkout)} nights`}
+          {julAugWarning && (
+            <p className="lsl-search-error">
+              {es ? 'No disponible en julio ni agosto.' : 'Not available in July or August.'}
+            </p>
+          )}
+          {checkin && checkout && nights > 0 && nights < 29 && (
+            <p className="lsl-search-error">
+              {es ? `Mínimo 29 noches. Has seleccionado ${nights}.` : `Minimum 29 nights. You selected ${nights}.`}
             </p>
           )}
         </div>
 
         {avail && (
           <div className="lsl-results">
-            {avail.map(({ apt, available, total, nights }) => (
+            {avail.map(({ apt, available, total, nights: n }) => (
               <div key={apt.id} className={`lsl-result${available ? '' : ' lsl-result--unavail'}`}
                    style={{ '--lsl-accent': apt.accent }}>
                 <div className="lsl-result-apt">HESTÍA <strong>{apt.name.toUpperCase()}</strong></div>
@@ -321,7 +335,7 @@ const LsSearch = ({ lang }) => {
                   <>
                     <div className="lsl-result-price">
                       <span className="lsl-result-total">{total.toLocaleString('es-ES')} €</span>
-                      <span className="lsl-result-nights">{nights} {es ? 'noches' : 'nights'}</span>
+                      <span className="lsl-result-nights">{n} {es ? 'noches' : 'nights'}</span>
                     </div>
                     <a href={`reservas.html?apt=${apt.id}&checkin=${checkin}&checkout=${checkout}&guests=${guests}`}
                        className="lsl-result-btn">

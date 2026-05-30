@@ -1967,6 +1967,7 @@ const DateRangePicker = ({
   checkin, checkout, setCheckin, setCheckout,
   blocked, lang, today,
   accent,
+  minNightsOverride,
 }) => {
   const [hover, setHover] = React.useState(null);
   const [drMsg, setDrMsg] = React.useState(null);
@@ -1987,10 +1988,11 @@ const DateRangePicker = ({
   //   4) Excepción 2 noches (twoNightFloor): solo si el check-in cae en
   //      la semana actual (≤ imminentDays) O si el rango rellena
   //      exactamente un hueco entre dos reservas (gap-fill).
+  //   minNightsOverride: fuerza un mínimo absoluto (p.ej. 29 para estancias largas).
   const rules = (window.PRICES_V2 && window.PRICES_V2.rules) || {};
-  const baseMinN     = rules.minNights || 3;
-  const twoNightFloor = rules.twoNightFloor || 2;
-  const criticalMinN = rules.criticalSeasonMinNights || baseMinN;
+  const baseMinN     = minNightsOverride || rules.minNights || 3;
+  const twoNightFloor = minNightsOverride ? minNightsOverride : (rules.twoNightFloor || 2);
+  const criticalMinN = minNightsOverride || rules.criticalSeasonMinNights || baseMinN;
   const imminentD    = rules.imminentDays || 7;
   const _isCriticalDate = (ds) => {
     const v2 = window.PRICES_V2;

@@ -21304,6 +21304,17 @@ img[src*="apt-vt-gallery-"] {
 
 /* ── LsSearch — disponibilidad larga estancia ───────────────── */
 .lsl-search-section { background: color-mix(in srgb, var(--ber, #3D1A35) 4%, var(--crema, #FAF6F0)); }
+.lsl-picker-wrap {
+  max-width: 640px;
+  margin-bottom: 20px;
+}
+.lsl-search-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
 .lsl-search-form { margin-bottom: 28px; }
 .lsl-search-fields {
   display: flex;
