@@ -558,6 +558,15 @@
       "type": "discount",
       "value": 190,
       "minNights": 3
+    },
+    "vs|2026-08-23": {
+      "apt": "vs",
+      "start": "2026-08-23",
+      "end": "2026-09-05",
+      "nights": 13,
+      "type": "fixed",
+      "value": 175,
+      "minNights": 6
     }
   },
   "gapSplits": {
