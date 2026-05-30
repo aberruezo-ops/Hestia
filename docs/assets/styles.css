@@ -19994,6 +19994,16 @@ img[src*="apt-vt-gallery-"] {
 /* ============================================================
    INTELLIGENCE TAB
    ============================================================ */
+/* Dark canvas override — pe-card default is cream, intel needs dark */
+.intel-wrap {
+  background: #1E0A24 !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  color: rgba(255,255,255,0.85);
+}
+.intel-wrap h2,
+.intel-wrap .pe-btn { color: rgba(255,255,255,0.9); }
+.intel-wrap .pe-btn { border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.07); }
+.intel-wrap .pe-btn:hover { background: rgba(255,255,255,0.14); }
 .intel-hd {
   display: flex;
   align-items: center;

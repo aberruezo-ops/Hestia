@@ -945,8 +945,8 @@ const LastMinuteStrip = ({
   };
   const APT_COLOR = {
     vm: '#3AAABB',
-    vt: '#8A4A24',
-    vs: '#9E7A2C'
+    vt: '#C87A45',
+    vs: '#C8A040'
   };
   const getStayPrice = (aptId, checkin, checkout) => {
     try {
