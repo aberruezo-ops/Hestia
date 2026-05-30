@@ -1522,200 +1522,36 @@ function ReservasNochesChart({
     }, yr));
   })));
 }
-const DashboardTab = ({
-  token
-}) => {
-  const [yearData, setYearData] = React.useState(null);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState(null);
-  React.useEffect(() => {
-    let cancelled = false;
-    async function load() {
-      setLoading(true);
-      setError(null);
-      try {
-        const [histRes, liveRes] = await Promise.all([fetch('data/dashboard-historico.json'), token ? fetch(`https://api.github.com/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
-          headers: {
-            Authorization: `token ${token}`
-          }
-        }) : Promise.resolve(null)]);
-        if (!histRes.ok) throw new Error('No se pudo cargar el histórico');
-        const hist = await histRes.json();
-        let live2026 = null;
-        if (liveRes) {
-          if (!liveRes.ok) throw new Error('Error cargando reservas 2026 (' + liveRes.status + ')');
-          const raw = await liveRes.json();
-          const json = JSON.parse(atob(raw.content.replace(/\n/g, '')));
-          live2026 = compute2026Stats(json.reservas || []);
-        }
-        if (cancelled) return;
-        const combined = {
-          ...hist.years
-        };
-        if (live2026) combined['2026'] = live2026;
-        setYearData(combined);
-      } catch (e) {
-        if (!cancelled) setError(e.message);
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-    load();
-    return () => {
-      cancelled = true;
-    };
-  }, [token]);
-  if (loading) return React.createElement('div', {
-    className: 'dash-loading'
-  }, 'Cargando dashboard...');
-  if (error) return React.createElement('div', {
-    className: 'pe-error'
-  }, 'Error: ', error);
-  if (!yearData) return null;
-  const years = Object.keys(yearData).sort();
-  const totalIngresos = years.reduce((s, y) => s + (yearData[y].ingresos || 0), 0);
-  const totalBai = years.reduce((s, y) => s + (yearData[y].bai || 0), 0);
-  const totalRes = years.reduce((s, y) => s + (yearData[y].reservas || 0), 0);
-  const avgRent = years.reduce((s, y) => s + (yearData[y].rent_pct || 0), 0) / years.length;
-  const avgPrecio = years.reduce((s, y) => s + (yearData[y].precio_noche || 0), 0) / years.length;
-  const hasPartial = years.some(y => yearData[y].partial);
-  return React.createElement('div', {
-    className: 'dash-wrap'
-  }, React.createElement('div', {
-    className: 'dash-kpis'
-  }, React.createElement('div', {
-    className: 'dash-kpi'
-  }, React.createElement('span', {
-    className: 'dash-kpi-label'
-  }, 'Ingresos acumulados'), React.createElement('span', {
-    className: 'dash-kpi-value',
-    style: {
-      color: '#D4A84A'
-    }
-  }, dashFmtMoney(totalIngresos))), React.createElement('div', {
-    className: 'dash-kpi'
-  }, React.createElement('span', {
-    className: 'dash-kpi-label'
-  }, 'BAI acumulado'), React.createElement('span', {
-    className: 'dash-kpi-value',
-    style: {
-      color: '#1BC8D8'
-    }
-  }, dashFmtMoney(totalBai))), React.createElement('div', {
-    className: 'dash-kpi'
-  }, React.createElement('span', {
-    className: 'dash-kpi-label'
-  }, 'Rentabilidad media'), React.createElement('span', {
-    className: 'dash-kpi-value'
-  }, dashFmtPct(avgRent))), React.createElement('div', {
-    className: 'dash-kpi'
-  }, React.createElement('span', {
-    className: 'dash-kpi-label'
-  }, 'Precio/noche medio'), React.createElement('span', {
-    className: 'dash-kpi-value'
-  }, dashFmtMoney(avgPrecio))), React.createElement('div', {
-    className: 'dash-kpi'
-  }, React.createElement('span', {
-    className: 'dash-kpi-label'
-  }, 'Total reservas'), React.createElement('span', {
-    className: 'dash-kpi-value'
-  }, totalRes))), React.createElement('div', {
-    className: 'dash-section'
-  }, React.createElement('h3', {
-    className: 'dash-section-title'
-  }, 'Ingresos y BAI por año'), React.createElement(BarChart, {
-    years,
-    yearData
-  })), React.createElement('div', {
-    className: 'dash-charts-row'
-  }, React.createElement('div', {
-    className: 'dash-chart-box',
-    style: {
-      flex: 1
-    }
-  }, React.createElement('h4', {
-    className: 'dash-chart-title'
-  }, 'Precio medio / noche'), React.createElement(LineChart, {
-    years,
-    getData: y => yearData[y].precio_noche || 0,
-    color: '#D4A84A',
-    label: 'Precio medio por noche',
-    format: dashFmtMoney
-  })), React.createElement('div', {
-    className: 'dash-chart-box',
-    style: {
-      flex: 1
-    }
-  }, React.createElement('h4', {
-    className: 'dash-chart-title'
-  }, 'Rentabilidad %'), React.createElement(LineChart, {
-    years,
-    getData: y => yearData[y].rent_pct || 0,
-    color: '#1BC8D8',
-    label: 'Rentabilidad por año',
-    format: dashFmtPct
-  }))), React.createElement('div', {
-    className: 'dash-charts-row'
-  }, React.createElement('div', {
-    className: 'dash-chart-box',
-    style: {
-      flex: 6
-    }
-  }, React.createElement('h4', {
-    className: 'dash-chart-title'
-  }, 'Mix canales (% apilado por año)'), React.createElement(StackedBarChart, {
-    years,
-    yearData
-  })), React.createElement('div', {
-    className: 'dash-chart-box',
-    style: {
-      flex: 4
-    }
-  }, React.createElement('h4', {
-    className: 'dash-chart-title'
-  }, 'Reservas y noches por año'), React.createElement(ReservasNochesChart, {
-    years,
-    yearData
-  }), React.createElement('div', {
-    className: 'dash-legend'
-  }, React.createElement('span', {
-    className: 'dash-legend-item'
-  }, React.createElement('span', {
-    style: {
-      background: 'rgba(212,168,74,0.75)',
-      display: 'inline-block',
-      width: 10,
-      height: 10,
-      borderRadius: 2,
-      marginRight: 4
-    }
-  }), 'Reservas'), React.createElement('span', {
-    className: 'dash-legend-item'
-  }, React.createElement('span', {
-    style: {
-      background: 'rgba(27,200,216,0.45)',
-      display: 'inline-block',
-      width: 10,
-      height: 10,
-      borderRadius: 2,
-      marginRight: 4
-    }
-  }), 'Noches')))), hasPartial && React.createElement('p', {
-    className: 'dash-footnote'
-  }, '* 2020 y 2021: datos incompletos (temporada parcial)'));
-};
 
 // ============================================================
-// AnalyticsTab — datos en vivo de Cloudflare Web Analytics
-// (vía Worker proxy para sortear CORS) + funnel local.
+// IntelligenciaTab — panel unificado: tráfico + negocio + acciones
 // ============================================================
-const AnalyticsTab = () => {
+const IntelligenciaTab = ({
+  token,
+  onNavigate
+}) => {
+  const [days, setDays] = React.useState(30);
   const [cfData, setCfData] = React.useState(null);
+  const [yearData, setYearData] = React.useState(null);
+  const [avail, setAvail] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [cfError, setCfError] = React.useState(null);
-  const [days, setDays] = React.useState(30);
+  const [bizError, setBizError] = React.useState(null);
+  const [open, setOpen] = React.useState({
+    trafico: false,
+    negocio: true,
+    eventos: false
+  });
+  const localEvents = (() => {
+    try {
+      return JSON.parse(localStorage.getItem('_htevt') || '[]');
+    } catch (_) {
+      return [];
+    }
+  })();
+  const fc = {};
+  for (const ev of localEvents) fc[ev.name] = (fc[ev.name] || 0) + 1;
   const fetchCF = React.useCallback(async d => {
-    setLoading(true);
     setCfError(null);
     try {
       const until = new Date().toISOString();
@@ -1732,59 +1568,235 @@ const AnalyticsTab = () => {
         })
       });
       const txt = await res.text();
-      if (!res.ok) throw new Error(`HTTP ${res.status} — ${txt.slice(0, 400)}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       let json;
       try {
         json = JSON.parse(txt);
       } catch (_) {
-        throw new Error(`Respuesta no es JSON: ${txt.slice(0, 200)}`);
+        throw new Error('Respuesta no es JSON');
       }
       if (json.errors?.length) throw new Error(json.errors[0].message);
       if (json.error) throw new Error(json.error);
       setCfData(json.data?.viewer?.accounts?.[0] || null);
     } catch (e) {
       setCfError(e.message);
-    } finally {
-      setLoading(false);
     }
   }, []);
-  React.useEffect(() => {
-    fetchCF(days);
-  }, [days, fetchCF]);
-
-  // Funnel local (localStorage)
-  const localEvents = (() => {
+  const fetchBiz = React.useCallback(async () => {
+    setBizError(null);
     try {
-      return JSON.parse(localStorage.getItem('_htevt') || '[]');
-    } catch (_) {
-      return [];
+      const [histRes, liveRes, availRes] = await Promise.all([fetch('data/dashboard-historico.json'), token ? fetch(`https://api.github.com/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
+        headers: {
+          Authorization: `token ${token}`
+        }
+      }) : Promise.resolve(null), fetch('assets/availability.json')]);
+      if (!histRes.ok) throw new Error('No se pudo cargar el histórico');
+      const hist = await histRes.json();
+      let live2026 = null;
+      if (liveRes && liveRes.ok) {
+        const raw = await liveRes.json();
+        const json = JSON.parse(atob(raw.content.replace(/\n/g, '')));
+        live2026 = compute2026Stats(json.reservas || []);
+      }
+      const combined = {
+        ...hist.years
+      };
+      if (live2026) combined['2026'] = live2026;
+      setYearData(combined);
+      if (availRes.ok) setAvail(await availRes.json());
+    } catch (e) {
+      setBizError(e.message);
     }
-  })();
-  const FUNNEL = [{
-    name: 'search_initiated',
-    label: 'Búsquedas'
-  }, {
-    name: 'dates_selected',
-    label: 'Fechas'
-  }, {
-    name: 'booking_step2',
-    label: 'Formulario'
-  }, {
-    name: 'booking_sent',
-    label: 'Enviados'
-  }];
-  const fc = {};
-  for (const ev of localEvents) fc[ev.name] = (fc[ev.name] || 0) + 1;
-  const fmt = ts => {
-    const d = new Date(ts);
-    return `${d.toLocaleDateString('es-ES')} ${d.toLocaleTimeString('es-ES', {
-      hour: '2-digit',
-      minute: '2-digit'
-    })}`;
-  };
-  const totalPV = cfData ? (cfData.pages || []).reduce((s, r) => s + r.count, 0) : 0;
+  }, [token]);
+  const reload = React.useCallback(() => {
+    setLoading(true);
+    Promise.all([fetchCF(days), fetchBiz()]).finally(() => setLoading(false));
+  }, [days, fetchCF, fetchBiz]);
+  React.useEffect(() => {
+    reload();
+  }, [reload]);
+  const altaFreeInfo = React.useMemo(() => {
+    if (!avail) return null;
+    const today = new Date();
+    const yr = today.getFullYear();
+    const jul1 = new Date(yr, 6, 1);
+    const sep1 = new Date(yr, 8, 1);
+    if (today >= sep1) return null;
+    const start = today > jul1 ? new Date(today) : new Date(jul1);
+    const byApt = {};
+    for (const id of ['vm', 'vt', 'vs']) {
+      const ranges = avail[id]?.blocked || [];
+      let free = 0;
+      for (let d = new Date(start); d < sep1; d.setDate(d.getDate() + 1)) {
+        const ds = d.toISOString().slice(0, 10);
+        if (!ranges.some(b => ds >= b.start && ds < b.end)) free++;
+      }
+      byApt[id] = free;
+    }
+    const total = Object.values(byApt).reduce((a, b) => a + b, 0);
+    return {
+      byApt,
+      total
+    };
+  }, [avail]);
+  const alertas = React.useMemo(() => {
+    const out = [];
+    const sev = {
+      alta: 0,
+      media: 1,
+      baja: 2
+    };
+    const searches = fc['search_initiated'] || 0;
+    const sent = fc['booking_sent'] || 0;
+    if (searches >= 5) {
+      const rate = sent / searches;
+      if (rate < 0.05) {
+        out.push({
+          sev: 'alta',
+          cat: 'Conversión',
+          title: `Conversión búsqueda→reserva: ${Math.round(rate * 100)}%`,
+          desc: `${sent} de ${searches} búsquedas acaban en reserva. Revisa precios, mínimos de estancia y la fricción del formulario.`,
+          tab: 'pricing'
+        });
+      } else if (rate < 0.12) {
+        out.push({
+          sev: 'media',
+          cat: 'Conversión',
+          title: `Conversión al ${Math.round(rate * 100)}% — hay recorrido`,
+          desc: `${sent} reservas de ${searches} búsquedas. Un CTA más directo o un price anchoring más claro podría mejorar el ratio.`
+        });
+      }
+    }
+    if (altaFreeInfo && altaFreeInfo.total > 0) {
+      const names = {
+        vm: 'Mar',
+        vt: 'Thalassa',
+        vs: 'Salinas'
+      };
+      const freeStr = Object.entries(altaFreeInfo.byApt).filter(([, f]) => f > 0).map(([id, f]) => `${names[id]} ${f}d`).join(', ');
+      out.push({
+        sev: altaFreeInfo.total > 14 ? 'alta' : 'media',
+        cat: 'Disponibilidad',
+        title: `${altaFreeInfo.total} días libres en julio/agosto`,
+        desc: `${freeStr}. Considera activar una oferta de última hora o reforzar la visibilidad en ese período.`,
+        tab: 'reservas'
+      });
+    }
+    if (cfData) {
+      const pages = cfData.pages || [];
+      const ctrs = cfData.countries || [];
+      const devs = cfData.devices || [];
+      const totalPV = pages.reduce((s, r) => s + r.count, 0) || 1;
+      const totalCtr = ctrs.reduce((s, r) => s + r.count, 0) || 1;
+      const totalDev = devs.reduce((s, r) => s + r.count, 0) || 1;
+      const noticiasV = pages.filter(p => (p.dimensions.requestPath || '').includes('noticias')).reduce((s, r) => s + r.count, 0);
+      if (noticiasV / totalPV < 0.02) {
+        out.push({
+          sev: 'media',
+          cat: 'SEO',
+          title: 'Blog Noticias invisible en el tráfico',
+          desc: 'Menos del 2% de visitas van al blog. Comparte el artículo mensual en redes y asegúrate de que el enlace esté en la bio de Instagram.'
+        });
+      }
+      const mob = devs.find(d => (d.dimensions.deviceType || '').toLowerCase().includes('mobile'));
+      if (mob && mob.count / totalDev > 0.60) {
+        out.push({
+          sev: 'baja',
+          cat: 'UX Móvil',
+          title: `${Math.round(mob.count / totalDev * 100)}% del tráfico desde móvil`,
+          desc: 'Testea el flujo completo de reserva en iOS y Android con frecuencia.'
+        });
+      }
+      const foreign = ctrs.filter(c => {
+        const n = (c.dimensions.countryName || '').toLowerCase();
+        return !n.includes('spain') && !n.includes('españa');
+      });
+      if (foreign.length && foreign[0].count / totalCtr > 0.12) {
+        const cn = foreign[0].dimensions.countryName || '';
+        const pct = Math.round(foreign[0].count / totalCtr * 100);
+        const anglo = /united kingdom|reino unido|ireland|australia|united states|canada/i.test(cn);
+        out.push({
+          sev: 'media',
+          cat: 'Contenido',
+          title: `${pct}% del tráfico desde ${cn}`,
+          desc: anglo ? 'Tráfico angloparlante significativo. Verifica que el contenido EN esté completo y publícalo en inglés también.' : `Oportunidad con tráfico de ${cn}. Valora si el contenido cubre sus necesidades.`
+        });
+      }
+    }
+    if (yearData?.['2026']) {
+      const d = yearData['2026'];
+      const cans = d.canales || {};
+      const total = Object.values(cans).reduce((a, b) => a + b, 0) || 1;
+      const ota = (cans['Booking'] || 0) + (cans['Airbnb'] || 0);
+      const direct = cans['Directo'] || 0;
+      if (total >= 3 && ota / total > 0.65) {
+        out.push({
+          sev: 'alta',
+          cat: 'Canales',
+          title: `${Math.round(ota / total * 100)}% reservas OTA en 2026`,
+          desc: 'Alta dependencia de Booking/Airbnb. Activa newsletter, redes y WhatsApp directo para reducir comisiones.',
+          tab: 'pricing'
+        });
+      } else if (total >= 3 && direct / total > 0.45) {
+        out.push({
+          sev: 'baja',
+          cat: 'Canales',
+          title: `${Math.round(direct / total * 100)}% reservas directas — buen ratio`,
+          desc: 'Mantén los canales directos activos y sigue priorizando WhatsApp y la reserva sin intermediarios.'
+        });
+      }
+    }
+    if (yearData) {
+      const yrs = Object.keys(yearData).sort().filter(y => !yearData[y].partial);
+      if (yrs.length >= 2) {
+        const last = yearData[yrs[yrs.length - 1]];
+        const prev = yearData[yrs[yrs.length - 2]];
+        if (last.ingresos && prev.ingresos) {
+          const delta = (last.ingresos - prev.ingresos) / prev.ingresos;
+          if (delta < -0.10) {
+            out.push({
+              sev: 'alta',
+              cat: 'Ingresos',
+              title: `Ingresos ${yrs[yrs.length - 1]} caen ${Math.round(-delta * 100)}% vs ${yrs[yrs.length - 2]}`,
+              desc: 'Tendencia negativa. Revisa ocupación, precios y mix de canales para identificar la causa.'
+            });
+          } else if (delta > 0.10) {
+            out.push({
+              sev: 'baja',
+              cat: 'Ingresos',
+              title: `Ingresos crecen ${Math.round(delta * 100)}% vs año anterior`,
+              desc: '¿Hay margen para subir precios en temporada alta sin impactar la ocupación?',
+              tab: 'pricing'
+            });
+          }
+        }
+      }
+    }
+    if (out.length === 0) {
+      out.push({
+        sev: 'baja',
+        cat: 'Estado',
+        title: 'Sin alertas activas',
+        desc: 'Todo parece bien. Sigue monitorizando semanalmente.'
+      });
+    }
+    return out.sort((a, b) => sev[a.sev] - sev[b.sev]);
+  }, [cfData, yearData, altaFreeInfo, fc]);
+  const toggle = key => setOpen(o => ({
+    ...o,
+    [key]: !o[key]
+  }));
+  const totalPV = cfData ? (cfData.pages || []).reduce((s, r) => s + r.count, 0) : null;
   const totalCtr = cfData ? (cfData.countries || []).reduce((s, r) => s + r.count, 0) : 0;
   const totalDev = cfData ? (cfData.devices || []).reduce((s, r) => s + r.count, 0) : 0;
+  const topCtry = cfData ? (cfData.countries || [])[0]?.dimensions?.countryName || '—' : null;
+  const funnConv = (() => {
+    const s = fc['search_initiated'] || 0;
+    const r = fc['booking_sent'] || 0;
+    return s ? Math.round(r / s * 100) + '%' : null;
+  })();
+  const stats26 = yearData?.['2026'];
+  const years = yearData ? Object.keys(yearData).sort() : [];
   const BarRow = ({
     label,
     count,
@@ -1811,11 +1823,40 @@ const AnalyticsTab = () => {
     if (!p || p === '/' || p === '/index.html') return 'Inicio';
     return p.replace(/\.html$/, '').replace(/^\//, '') || p;
   };
+  const FUNNEL_STEPS = [{
+    name: 'search_initiated',
+    label: 'Búsquedas'
+  }, {
+    name: 'dates_selected',
+    label: 'Fechas'
+  }, {
+    name: 'booking_step2',
+    label: 'Formulario'
+  }, {
+    name: 'booking_sent',
+    label: 'Enviados'
+  }];
+  const fmtEvt = ts => {
+    const d = new Date(ts);
+    return `${d.toLocaleDateString('es-ES')} ${d.toLocaleTimeString('es-ES', {
+      hour: '2-digit',
+      minute: '2-digit'
+    })}`;
+  };
+  const SEV_COLOR = {
+    alta: '#E74C3C',
+    media: '#E67E22',
+    baja: '#1BC8D8'
+  };
   return /*#__PURE__*/React.createElement("div", {
-    className: "pe-card pe-analytics"
+    className: "pe-card intel-wrap"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "pe-analytics-hd"
-  }, /*#__PURE__*/React.createElement("h2", null, "Anal\xEDtica"), /*#__PURE__*/React.createElement("div", {
+    className: "intel-hd"
+  }, /*#__PURE__*/React.createElement("h2", {
+    style: {
+      margin: 0
+    }
+  }, "Inteligencia"), /*#__PURE__*/React.createElement("div", {
     className: "pe-period-tabs"
   }, [7, 30, 90].map(d => /*#__PURE__*/React.createElement("button", {
     key: d,
@@ -1825,22 +1866,110 @@ const AnalyticsTab = () => {
   }, d, "d")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-period-tab",
-    onClick: () => fetchCF(days),
+    onClick: reload,
     title: "Recargar"
   }, "\u21BA"))), loading && /*#__PURE__*/React.createElement("div", {
     className: "pe-analytics-loading"
-  }, "Cargando Cloudflare\u2026"), cfError && /*#__PURE__*/React.createElement("div", {
+  }, "Cargando datos\u2026"), cfError && /*#__PURE__*/React.createElement("div", {
     className: "pe-error",
     style: {
-      marginBottom: 16
+      marginBottom: 12
     }
-  }, "CF: ", cfError), !loading && !cfError && cfData && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, "Analytics: ", cfError), bizError && /*#__PURE__*/React.createElement("div", {
+    className: "pe-error",
+    style: {
+      marginBottom: 12
+    }
+  }, "Negocio: ", bizError), !loading && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpis"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi-val",
+    style: {
+      color: '#1BC8D8'
+    }
+  }, totalPV != null ? totalPV.toLocaleString('es-ES') : '—'), /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi-lbl"
+  }, "P\xE1ginas vistas \xB7 ", days, "d")), /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi-val"
+  }, topCtry ?? '—'), /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi-lbl"
+  }, "Pa\xEDs principal")), /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi-val",
+    style: {
+      color: funnConv && parseInt(funnConv) < 5 ? '#E74C3C' : '#D4A84A'
+    }
+  }, funnConv ?? '—'), /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi-lbl"
+  }, "Conversi\xF3n b\xFAsqueda\u2192reserva")), /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi-val",
+    style: {
+      color: '#D4A84A'
+    }
+  }, stats26 ? dashFmtMoney(stats26.ingresos) : '—'), /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi-lbl"
+  }, "Ingresos 2026")), /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi-val"
+  }, stats26 ? stats26.reservas : '—'), /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi-lbl"
+  }, "Reservas 2026")), /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi-val"
+  }, stats26 ? dashFmtMoney(stats26.precio_noche) : '—'), /*#__PURE__*/React.createElement("div", {
+    className: "intel-kpi-lbl"
+  }, "Precio/noche medio 2026"))), /*#__PURE__*/React.createElement("div", {
+    className: "intel-alertas"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "intel-alertas-title"
+  }, "Alertas e ideas de acci\xF3n"), alertas.map((a, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: `intel-alerta sev-${a.sev}`
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "intel-alerta-dot",
+    style: {
+      background: SEV_COLOR[a.sev]
+    }
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "intel-alerta-body"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "intel-alerta-cat"
+  }, a.cat), /*#__PURE__*/React.createElement("div", {
+    className: "intel-alerta-title"
+  }, a.title), /*#__PURE__*/React.createElement("div", {
+    className: "intel-alerta-desc"
+  }, a.desc)), a.tab && onNavigate && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "intel-alerta-btn",
+    onClick: () => onNavigate(a.tab)
+  }, a.tab === 'pricing' ? 'Ver precios' : a.tab === 'reservas' ? 'Ver reservas' : 'Ver')))), /*#__PURE__*/React.createElement("div", {
+    className: "intel-section"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "intel-section-toggle",
+    onClick: () => toggle('trafico')
+  }, /*#__PURE__*/React.createElement("span", null, "Tr\xE1fico web \xB7 ", days, " d\xEDas"), /*#__PURE__*/React.createElement("span", {
+    className: "intel-section-chevron"
+  }, open.trafico ? '▲' : '▼')), open.trafico && /*#__PURE__*/React.createElement("div", {
+    className: "intel-section-content"
+  }, cfError ? /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint"
+  }, "Error al cargar datos de Cloudflare.") : cfData ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-summary"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-stat"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-stat-n"
-  }, totalPV.toLocaleString('es-ES')), /*#__PURE__*/React.createElement("div", {
+  }, (totalPV || 0).toLocaleString('es-ES')), /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-stat-lbl"
   }, "p\xE1ginas vistas \xB7 ", days, "d"))), /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-cols"
@@ -1854,15 +1983,13 @@ const AnalyticsTab = () => {
     key: i,
     label: pathLabel(r.dimensions.requestPath),
     count: r.count,
-    total: totalPV,
+    total: totalPV || 1,
     bold: i === 0
   }))), /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-col-title"
-  }, "Pa\xEDses"), (cfData.countries || []).length === 0 && /*#__PURE__*/React.createElement("p", {
-    className: "pe-hint"
-  }, "\u2014"), (cfData.countries || []).map((r, i) => /*#__PURE__*/React.createElement(BarRow, {
+  }, "Pa\xEDses"), (cfData.countries || []).map((r, i) => /*#__PURE__*/React.createElement(BarRow, {
     key: i,
     label: r.dimensions.countryName || '—',
     count: r.count,
@@ -1872,23 +1999,21 @@ const AnalyticsTab = () => {
     className: "pe-cf-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-col-title"
-  }, "Dispositivos"), (cfData.devices || []).length === 0 && /*#__PURE__*/React.createElement("p", {
-    className: "pe-hint"
-  }, "\u2014"), (cfData.devices || []).map((r, i) => /*#__PURE__*/React.createElement(BarRow, {
+  }, "Dispositivos"), (cfData.devices || []).map((r, i) => /*#__PURE__*/React.createElement(BarRow, {
     key: i,
     label: r.dimensions.deviceType || '—',
     count: r.count,
     total: totalDev,
     bold: i === 0
-  }))))), /*#__PURE__*/React.createElement("div", {
+  })))), /*#__PURE__*/React.createElement("div", {
     className: "pe-analytics-sep"
   }), /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-col-title"
   }, "Funnel de reservas \xB7 este navegador"), /*#__PURE__*/React.createElement("div", {
     className: "pe-funnel"
-  }, FUNNEL.map((step, i) => {
+  }, FUNNEL_STEPS.map((step, i) => {
     const n = fc[step.name] || 0;
-    const prev = i > 0 ? fc[FUNNEL[i - 1].name] || 0 : null;
+    const prev = i > 0 ? fc[FUNNEL_STEPS[i - 1].name] || 0 : null;
     const pct = prev ? Math.round(n / prev * 100) : null;
     return /*#__PURE__*/React.createElement("div", {
       key: step.name,
@@ -1900,12 +2025,118 @@ const AnalyticsTab = () => {
     }, step.label), pct !== null && /*#__PURE__*/React.createElement("div", {
       className: "pe-funnel-conv"
     }, pct, "%"));
-  })), /*#__PURE__*/React.createElement("h3", {
-    className: "pe-analytics-h3",
+  }))) : /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint"
+  }, "Sin datos de Cloudflare."))), /*#__PURE__*/React.createElement("div", {
+    className: "intel-section"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "intel-section-toggle",
+    onClick: () => toggle('negocio')
+  }, /*#__PURE__*/React.createElement("span", null, "Negocio \xB7 hist\xF3rico"), /*#__PURE__*/React.createElement("span", {
+    className: "intel-section-chevron"
+  }, open.negocio ? '▲' : '▼')), open.negocio && /*#__PURE__*/React.createElement("div", {
+    className: "intel-section-content"
+  }, bizError ? /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint"
+  }, "Error al cargar datos de negocio.") : !yearData ? !token ? /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint"
+  }, "Inicia sesi\xF3n con un PAT para ver datos de reservas en directo.") : /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint"
+  }, "Sin datos.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "dash-section"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "dash-section-title"
+  }, "Ingresos y BAI por a\xF1o"), /*#__PURE__*/React.createElement(BarChart, {
+    years: years,
+    yearData: yearData
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "dash-charts-row"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "dash-chart-box",
     style: {
-      marginTop: 20
+      flex: 1
     }
-  }, "\xDAltimos eventos"), localEvents.length === 0 ? /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "dash-chart-title"
+  }, "Precio medio / noche"), /*#__PURE__*/React.createElement(LineChart, {
+    years: years,
+    getData: y => yearData[y].precio_noche || 0,
+    color: "#D4A84A",
+    label: "Precio medio por noche",
+    format: dashFmtMoney
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "dash-chart-box",
+    style: {
+      flex: 1
+    }
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "dash-chart-title"
+  }, "Rentabilidad %"), /*#__PURE__*/React.createElement(LineChart, {
+    years: years,
+    getData: y => yearData[y].rent_pct || 0,
+    color: "#1BC8D8",
+    label: "Rentabilidad por a\xF1o",
+    format: dashFmtPct
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "dash-charts-row"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "dash-chart-box",
+    style: {
+      flex: 6
+    }
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "dash-chart-title"
+  }, "Mix canales"), /*#__PURE__*/React.createElement(StackedBarChart, {
+    years: years,
+    yearData: yearData
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "dash-chart-box",
+    style: {
+      flex: 4
+    }
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "dash-chart-title"
+  }, "Reservas y noches"), /*#__PURE__*/React.createElement(ReservasNochesChart, {
+    years: years,
+    yearData: yearData
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "dash-legend"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "dash-legend-item"
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      background: 'rgba(212,168,74,0.75)',
+      display: 'inline-block',
+      width: 10,
+      height: 10,
+      borderRadius: 2,
+      marginRight: 4
+    }
+  }), "Reservas"), /*#__PURE__*/React.createElement("span", {
+    className: "dash-legend-item"
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      background: 'rgba(27,200,216,0.45)',
+      display: 'inline-block',
+      width: 10,
+      height: 10,
+      borderRadius: 2,
+      marginRight: 4
+    }
+  }), "Noches")))), years.some(y => yearData[y].partial) && /*#__PURE__*/React.createElement("p", {
+    className: "dash-footnote"
+  }, "* Datos parciales en algunos a\xF1os")))), /*#__PURE__*/React.createElement("div", {
+    className: "intel-section"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "intel-section-toggle",
+    onClick: () => toggle('eventos')
+  }, /*#__PURE__*/React.createElement("span", null, "Eventos recientes \xB7 este navegador"), /*#__PURE__*/React.createElement("span", {
+    className: "intel-section-chevron"
+  }, open.eventos ? '▲' : '▼')), open.eventos && /*#__PURE__*/React.createElement("div", {
+    className: "intel-section-content"
+  }, localEvents.length === 0 ? /*#__PURE__*/React.createElement("p", {
     className: "pe-hint"
   }, "Sin eventos registrados todav\xEDa en este navegador.") : /*#__PURE__*/React.createElement("table", {
     className: "pe-table pe-table-events"
@@ -1913,11 +2144,11 @@ const AnalyticsTab = () => {
     key: i
   }, /*#__PURE__*/React.createElement("td", {
     className: "pe-ev-ts"
-  }, fmt(ev.ts)), /*#__PURE__*/React.createElement("td", {
+  }, fmtEvt(ev.ts)), /*#__PURE__*/React.createElement("td", {
     className: "pe-ev-name"
   }, ev.name), /*#__PURE__*/React.createElement("td", {
     className: "pe-ev-data"
-  }, Object.entries(ev).filter(([k]) => k !== 'ts' && k !== 'name').map(([k, v]) => `${k}: ${v}`).join(' · ') || '—'))))));
+  }, Object.entries(ev).filter(([k]) => k !== 'ts' && k !== 'name').map(([k, v]) => `${k}: ${v}`).join(' · ') || '—')))))))));
 };
 
 // ============================================================
@@ -6503,15 +6734,15 @@ const AdminApp = () => {
     className: "pe-tab-label"
   }, " Facturas")), /*#__PURE__*/React.createElement("button", {
     type: "button",
-    className: `pe-tab${mode === 'analytics' ? ' is-active' : ''}`,
+    className: `pe-tab${mode === 'inteligencia' ? ' is-active' : ''}`,
     onClick: () => {
-      setMode('analytics');
+      setMode('inteligencia');
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCCA", /*#__PURE__*/React.createElement("span", {
+  }, "\uD83E\uDDE0", /*#__PURE__*/React.createElement("span", {
     className: "pe-tab-label"
-  }, " An\xE1lisis")), /*#__PURE__*/React.createElement("button", {
+  }, " Inteligencia")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: `pe-tab${mode === 'pricing' ? ' is-active' : ''}`,
     onClick: () => {
@@ -6536,21 +6767,18 @@ const AdminApp = () => {
     return pending > 0 ? /*#__PURE__*/React.createElement("span", {
       className: "pe-tab-badge"
     }, pending) : null;
-  })()), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: `pe-tab${mode === 'dashboard' ? ' is-active' : ''}`,
-    onClick: () => {
-      setMode('dashboard');
-      setError(null);
-      setSuccess(null);
-    }
-  }, "\uD83D\uDCCA", /*#__PURE__*/React.createElement("span", {
-    className: "pe-tab-label"
-  }, " Dashboard"))), success && /*#__PURE__*/React.createElement("div", {
+  })())), success && /*#__PURE__*/React.createElement("div", {
     className: "pe-success"
   }, success), error && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
-  }, error), mode === 'analytics' ? /*#__PURE__*/React.createElement(AnalyticsTab, null) : mode === 'contract' ? /*#__PURE__*/React.createElement(ContractTab, {
+  }, error), mode === 'inteligencia' ? /*#__PURE__*/React.createElement(IntelligenciaTab, {
+    token: token,
+    onNavigate: tab => {
+      setMode(tab);
+      setError(null);
+      setSuccess(null);
+    }
+  }) : mode === 'contract' ? /*#__PURE__*/React.createElement(ContractTab, {
     pricesData: data,
     prefill: contractPrefill
   }) : mode === 'prereservas' ? /*#__PURE__*/React.createElement(PrereservasTab, {
@@ -6561,8 +6789,6 @@ const AdminApp = () => {
       setContractPrefill(r);
       setMode('contract');
     }
-  }) : mode === 'dashboard' ? /*#__PURE__*/React.createElement(DashboardTab, {
-    token: token
   }) : mode === 'leila' ? /*#__PURE__*/React.createElement(LeilaTab, {
     token: token
   }) : mode === 'facturas' ? /*#__PURE__*/React.createElement(FacturasTab, {
