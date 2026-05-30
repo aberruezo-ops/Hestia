@@ -363,7 +363,7 @@ const Header = ({ mode, scrolled, lang }) => {
         <div className="brand-center">
           <a href="index.html" className="brand-lockup" aria-label="Hestía — Inicio">
             <span className="hestia-logo-mark" aria-hidden="true">
-              <img decoding="async" src="assets/logo-teal-transparent.png" alt="" className="hestia-logo"/>
+              <img decoding="async" src="assets/logo-teal-transparent.png" alt="" className="hestia-logo" width="600" height="600"/>
             </span>
             <span className="wordmark">HESTÍA</span>
             <span className="your-home">your home!</span>
@@ -466,6 +466,7 @@ const FloatingChat = ({ lang }) => {
       id: 'alex',
       name: 'Alex',
       photo: 'assets/photo-alex.jpg',
+      photoW: 840, photoH: 1120,
       imgClass: 'avatar-img-alex',
       langLbl: 'Español',
       tel: '+34 620 316 370',
@@ -476,6 +477,7 @@ const FloatingChat = ({ lang }) => {
       id: 'fran',
       name: 'Fran',
       photo: 'assets/photo-fran.jpg',
+      photoW: 925, photoH: 2000,
       imgClass: 'avatar-img-fran',
       langLbl: 'English',
       tel: '+34 654 138 251',
@@ -495,7 +497,7 @@ const FloatingChat = ({ lang }) => {
         {persons.map(p => (
           <div className="contact-person" key={p.id}>
             <div className="avatar avatar-photo">
-              <img src={p.photo} alt="" loading="lazy" className={`avatar-img ${p.imgClass}`}/>
+              <img src={p.photo} alt="" loading="lazy" width={p.photoW} height={p.photoH} className={`avatar-img ${p.imgClass}`}/>
             </div>
             <div className="cp-body">
               <div className="cp-head">
@@ -597,7 +599,7 @@ const Footer = ({ lang }) => {
     <footer>
       <div className="footer-grid">
         <div className="col footer-brand">
-          <img decoding="async" src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo"/>
+          <img decoding="async" src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo" loading="lazy" width="600" height="600"/>
           <div className="wordmark" style={{fontSize: 13, marginBottom: 4}}>HESTÍA</div>
           <div className="your-home" style={{fontSize: 9, marginBottom: 16}}>your home!</div>
           <div className="tagline">
@@ -707,7 +709,7 @@ const FooterNewsletter = ({ lang }) => {
   };
 
   return (
-    <div className="footer-newsletter">
+    <div className="footer-newsletter" aria-live="polite">
       <span className="footer-nl-label eyebrow">
         {lang === 'es' ? 'Ofertas directas · sin intermediarios' : 'Direct offers · no middleman'}
       </span>
@@ -726,6 +728,7 @@ const FooterNewsletter = ({ lang }) => {
             required
             maxLength={120}
             aria-label={lang === 'es' ? 'Email para newsletter' : 'Newsletter email'}
+            spellCheck={false}
           />
           <button type="submit" className="footer-nl-btn" disabled={state === 'sending'}>
             {state === 'sending' ? '…' : (lang === 'es' ? 'Suscribir' : 'Subscribe')}

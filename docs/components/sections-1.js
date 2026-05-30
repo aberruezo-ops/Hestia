@@ -303,7 +303,7 @@ const HomeBookingModal = ({
   React.useEffect(() => {
     const FOCUSABLE = 'button:not([disabled]), a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     const card = cardRef.current;
-    if (card) {
+    if (card && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       const first = card.querySelector(FOCUSABLE);
       if (first) first.focus();
     }
@@ -393,7 +393,6 @@ const HomeBookingModal = ({
     value: name,
     onChange: e => setName(e.target.value),
     placeholder: lang === 'es' ? 'Tu nombre' : 'Your name',
-    autoFocus: true,
     autoComplete: "name"
   })), /*#__PURE__*/React.createElement("div", {
     className: "hbm-field"
@@ -423,7 +422,7 @@ const HomeBookingModal = ({
     value: msg,
     onChange: e => setMsg(e.target.value),
     rows: 2,
-    placeholder: lang === 'es' ? 'Fechas pensadas, número de personas...' : 'Dates in mind, number of guests...'
+    placeholder: lang === 'es' ? 'Fechas pensadas, número de personas…' : 'Dates in mind, number of guests…'
   }))), !valid && (name.length > 0 || email.length > 0) && /*#__PURE__*/React.createElement("p", {
     className: "hbm-hint"
   }, lang === 'es' ? '✦ Nombre y email requeridos para continuar' : '✦ Name and email required to continue')), /*#__PURE__*/React.createElement("div", {
@@ -452,6 +451,8 @@ const APARTMENTS = [{
   license: 'VFT/AL/01580',
   concept: 'apt_01_concept',
   img: 'assets/apt-vs.jpg',
+  imgW: 1024,
+  imgH: 768,
   meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición']
 }, {
   id: 'vt',
@@ -461,6 +462,8 @@ const APARTMENTS = [{
   license: 'VFT/AL/05535',
   concept: 'apt_02_concept',
   img: 'assets/apt-vt-4.jpg',
+  imgW: 1440,
+  imgH: 1103,
   meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA']
 }, {
   id: 'vs',
@@ -470,6 +473,8 @@ const APARTMENTS = [{
   license: 'VTF/AL/07056',
   concept: 'apt_03_concept',
   img: 'assets/apt-vm.jpg',
+  imgW: 1255,
+  imgH: 1146,
   meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas']
 }];
 const Apartments = ({
@@ -594,7 +599,9 @@ const Apartments = ({
       src: a.img,
       alt: a.name,
       className: "apt-photo",
-      loading: "eager"
+      loading: "eager",
+      width: a.imgW,
+      height: a.imgH
     })), /*#__PURE__*/React.createElement(WatermarkBadge, {
       size: 32,
       pos: {
@@ -925,10 +932,11 @@ const LastMinuteStrip = ({
   if (!slots.length) return null;
   const fmtDate = ds => {
     if (!ds) return '';
-    const dd = ds.slice(8, 10),
-      mm = ds.slice(5, 7),
-      yy = ds.slice(2, 4);
-    return lang === 'en' ? `${mm}-${dd}-${yy}` : `${dd}-${mm}-${yy}`;
+    return new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : 'es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: '2-digit'
+    }).format(new Date(ds + 'T12:00:00Z'));
   };
   const APT_COLOR = {
     vm: '#3AAABB',

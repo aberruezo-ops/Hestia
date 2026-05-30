@@ -251,7 +251,7 @@ const HomeBookingModal = ({ apt, lang, onClose }) => {
   React.useEffect(() => {
     const FOCUSABLE = 'button:not([disabled]), a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     const card = cardRef.current;
-    if (card) {
+    if (card && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       const first = card.querySelector(FOCUSABLE);
       if (first) first.focus();
     }
@@ -298,7 +298,7 @@ const HomeBookingModal = ({ apt, lang, onClose }) => {
             <div className="hbm-field">
               <label>{lang === 'es' ? 'Nombre *' : 'Name *'}</label>
               <input value={name} onChange={e => setName(e.target.value)}
-                     placeholder={lang === 'es' ? 'Tu nombre' : 'Your name'} autoFocus autoComplete="name"/>
+                     placeholder={lang === 'es' ? 'Tu nombre' : 'Your name'} autoComplete="name"/>
             </div>
             <div className="hbm-field">
               <label>Email *</label>
@@ -314,7 +314,7 @@ const HomeBookingModal = ({ apt, lang, onClose }) => {
             <div className="hbm-field hbm-field-wide">
               <label>{lang === 'es' ? 'Mensaje' : 'Message'} <span className="hbm-opt">{lang === 'es' ? '(opcional)' : '(optional)'}</span></label>
               <textarea value={msg} onChange={e => setMsg(e.target.value)} rows={2}
-                        placeholder={lang === 'es' ? 'Fechas pensadas, número de personas...' : 'Dates in mind, number of guests...'}/>
+                        placeholder={lang === 'es' ? 'Fechas pensadas, número de personas…' : 'Dates in mind, number of guests…'}/>
             </div>
           </div>
           {!valid && (name.length > 0 || email.length > 0) && (
@@ -348,13 +348,13 @@ const HomeBookingModal = ({ apt, lang, onClose }) => {
 // --- APARTAMENTOS (scroll horizontal) ---
 const APARTMENTS = [
   { id: 'vm', num: '01', name: 'Hestía Mar',      slug: 'mar',      license: 'VFT/AL/01580', concept: 'apt_01_concept',
-    img: 'assets/apt-vs.jpg',
+    img: 'assets/apt-vs.jpg', imgW: 1024, imgH: 768,
     meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición'] },
   { id: 'vt', num: '02', name: 'Hestía Thalassa', slug: 'thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
-    img: 'assets/apt-vt-4.jpg',
+    img: 'assets/apt-vt-4.jpg', imgW: 1440, imgH: 1103,
     meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA'] },
   { id: 'vs', num: '03', name: 'Hestía Salinas',  slug: 'salinas',  license: 'VTF/AL/07056', concept: 'apt_03_concept',
-    img: 'assets/apt-vm.jpg',
+    img: 'assets/apt-vm.jpg', imgW: 1255, imgH: 1146,
     meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas'] },
 ];
 
@@ -465,7 +465,7 @@ const Apartments = ({ lang }) => {
               <div key={a.id} id={`apt-${a.id}`} className={`apt-card ${a.id}`}>
                 <picture>
                   <source srcSet={a.img.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
-                  <img decoding="async" src={a.img} alt={a.name} className="apt-photo" loading="eager"/>
+                  <img decoding="async" src={a.img} alt={a.name} className="apt-photo" loading="eager" width={a.imgW} height={a.imgH}/>
                 </picture>
                 <WatermarkBadge size={32} pos={{ bottom: 72, right: 16 }}/>
                 <div className="apt-wash"/>
@@ -667,8 +667,9 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
 
   const fmtDate = (ds) => {
     if (!ds) return '';
-    const dd = ds.slice(8,10), mm = ds.slice(5,7), yy = ds.slice(2,4);
-    return lang === 'en' ? `${mm}-${dd}-${yy}` : `${dd}-${mm}-${yy}`;
+    return new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : 'es-ES', {
+      day: '2-digit', month: '2-digit', year: '2-digit'
+    }).format(new Date(ds + 'T12:00:00Z'));
   };
 
   const APT_COLOR = { vm: '#3AAABB', vt: '#8A4A24', vs: '#9E7A2C' };
