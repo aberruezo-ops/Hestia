@@ -170,12 +170,12 @@ const LsHero = ({
     className: "lsl-pill"
   }, lang === 'es' ? 'Sin intermediarios' : 'No middlemen')), /*#__PURE__*/React.createElement("div", {
     className: "lsl-hero-ctas"
-  }, /*#__PURE__*/React.createElement("a", {
-    href: "https://wa.me/34620316370",
+  }, /*#__PURE__*/React.createElement("button", {
     className: "lsl-btn-primary",
-    target: "_blank",
-    rel: "noopener"
-  }, lang === 'es' ? 'Consultar disponibilidad →' : 'Check availability →'))));
+    onClick: () => document.getElementById('buscar')?.scrollIntoView({
+      behavior: 'smooth'
+    })
+  }, lang === 'es' ? 'Comprobar disponibilidad ↓' : 'Check availability ↓'))));
 };
 const LsWho = ({
   lang
@@ -292,12 +292,10 @@ const LsPrices = ({
 const LsSearch = ({
   lang
 }) => {
-  const today = new Date().toISOString().slice(0, 10);
   const [checkin, setCheckin] = React.useState('');
   const [checkout, setCheckout] = React.useState('');
   const [guests, setGuests] = React.useState(1);
   const [avail, setAvail] = React.useState(null);
-  const [loading, setLoading] = React.useState(false);
   const [availData, setAvailData] = React.useState(null);
   const es = lang === 'es';
   const nights = checkin && checkout ? _drDiff(checkin, checkout) : 0;
@@ -306,8 +304,6 @@ const LsSearch = ({
       cache: 'no-store'
     }).then(r => r.ok ? r.json() : null).then(d => setAvailData(d)).catch(() => {});
   }, []);
-
-  // Blocked = unión de fechas bloqueadas en los 3 apartamentos (para el calendario)
   const blockedUnion = React.useMemo(() => {
     if (!availData) return [];
     const all = [];
@@ -317,7 +313,7 @@ const LsSearch = ({
     return all;
   }, [availData]);
   const calcLsTotal = (start, end) => {
-    const lsCfg = window.PRICES_V2 && window.PRICES_V2.longStayConfig || {
+    const lsCfg = window.PRICES_V2?.longStayConfig || {
       specialNightFlat: 80,
       easterRanges: []
     };
@@ -341,43 +337,40 @@ const LsSearch = ({
     }
     return Math.round(total);
   };
-  const handleSearch = async () => {
-    if (!checkin || !checkout || nights < 29) return;
-    const mo = +checkin.slice(5, 7);
-    if (mo === 7 || mo === 8) return;
-    setLoading(true);
-    try {
-      const data = availData || null;
-      const total = calcLsTotal(checkin, checkout);
-      setAvail(LS_APTS.map(apt => ({
-        apt,
-        nights,
-        total,
-        available: _drAvail(checkin, checkout, data ? data[apt.id]?.blocked || [] : [])
-      })));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Auto-search when valid dates are selected
   React.useEffect(() => {
     if (checkin && checkout && nights >= 29) {
       const mo = +checkin.slice(5, 7);
-      if (mo !== 7 && mo !== 8) handleSearch();else setAvail(null);
+      if (mo === 7 || mo === 8) {
+        setAvail(null);
+        return;
+      }
+      const lsTotal = calcLsTotal(checkin, checkout);
+      setAvail(LS_APTS.map(apt => {
+        const isAvail = _drAvail(checkin, checkout, availData ? availData[apt.id]?.blocked || [] : []);
+        const regCalc = isAvail ? _calcStay(checkin, checkout, apt.id, false, guests) : null;
+        return {
+          apt,
+          nights,
+          lsTotal,
+          regTotal: regCalc?.directTotal || 0,
+          available: isAvail
+        };
+      }));
     } else {
       setAvail(null);
     }
-  }, [checkin, checkout]);
+  }, [checkin, checkout, guests]);
   const julAugWarning = checkin && [7, 8].includes(+checkin.slice(5, 7));
   return /*#__PURE__*/React.createElement("section", {
-    className: "lsl-section lsl-search-section",
+    className: "lsl-search-dark",
     id: "buscar"
   }, /*#__PURE__*/React.createElement("div", {
     className: "lsl-inner"
   }, /*#__PURE__*/React.createElement("h2", {
-    className: "lsl-h2"
+    className: "lsl-h2 lsl-h2--ondk"
   }, es ? 'Comprobar disponibilidad' : 'Check availability'), /*#__PURE__*/React.createElement("div", {
+    className: "lsl-sd-card"
+  }, /*#__PURE__*/React.createElement("div", {
     className: "lsl-picker-wrap"
   }, /*#__PURE__*/React.createElement(DateRangePicker, {
     checkin: checkin,
@@ -403,9 +396,7 @@ const LsSearch = ({
   }, es ? 'Personas' : 'Guests'), /*#__PURE__*/React.createElement("select", {
     className: "lsl-search-input",
     value: guests,
-    onChange: e => {
-      setGuests(Number(e.target.value));
-    }
+    onChange: e => setGuests(Number(e.target.value))
   }, [1, 2, 3, 4].map(n => /*#__PURE__*/React.createElement("option", {
     key: n,
     value: n
@@ -413,12 +404,13 @@ const LsSearch = ({
     className: "lsl-search-error"
   }, es ? 'No disponible en julio ni agosto.' : 'Not available in July or August.'), checkin && checkout && nights > 0 && nights < 29 && /*#__PURE__*/React.createElement("p", {
     className: "lsl-search-error"
-  }, es ? `Mínimo 29 noches. Has seleccionado ${nights}.` : `Minimum 29 nights. You selected ${nights}.`)), avail && /*#__PURE__*/React.createElement("div", {
+  }, es ? `Mínimo 29 noches. Has seleccionado ${nights}.` : `Minimum 29 nights. You selected ${nights}.`))), avail && /*#__PURE__*/React.createElement("div", {
     className: "lsl-results"
   }, avail.map(({
     apt,
     available,
-    total,
+    lsTotal,
+    regTotal,
     nights: n
   }) => /*#__PURE__*/React.createElement("div", {
     key: apt.id,
@@ -429,15 +421,19 @@ const LsSearch = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "lsl-result-apt"
   }, "HEST\xCDA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), available ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "lsl-result-price"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "lsl-result-total"
-  }, total.toLocaleString('es-ES'), " \u20AC"), /*#__PURE__*/React.createElement("span", {
+    className: "lsl-result-prices"
+  }, regTotal > lsTotal && /*#__PURE__*/React.createElement("span", {
+    className: "lsl-result-reg"
+  }, regTotal.toLocaleString('es-ES'), " \u20AC"), /*#__PURE__*/React.createElement("span", {
+    className: "lsl-result-ls"
+  }, lsTotal.toLocaleString('es-ES'), " \u20AC"), /*#__PURE__*/React.createElement("span", {
     className: "lsl-result-nights"
-  }, n, " ", es ? 'noches' : 'nights')), /*#__PURE__*/React.createElement("a", {
+  }, n, " ", es ? 'noches' : 'nights')), regTotal > lsTotal && /*#__PURE__*/React.createElement("div", {
+    className: "lsl-result-saving"
+  }, es ? `Ahorras ${(regTotal - lsTotal).toLocaleString('es-ES')} €` : `Save ${(regTotal - lsTotal).toLocaleString('es-ES')} €`), /*#__PURE__*/React.createElement("a", {
     href: `reservas.html?apt=${apt.id}&checkin=${checkin}&checkout=${checkout}&guests=${guests}`,
     className: "lsl-result-btn"
-  }, es ? 'Reservar →' : 'Book →')) : /*#__PURE__*/React.createElement("span", {
+  }, es ? 'Avanzar con la reserva →' : 'Book now →')) : /*#__PURE__*/React.createElement("span", {
     className: "lsl-result-unavail-msg"
   }, es ? 'No disponible' : 'Not available'))))));
 };

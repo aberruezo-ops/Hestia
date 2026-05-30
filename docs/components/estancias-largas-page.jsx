@@ -129,9 +129,10 @@ const LsHero = ({ lang }) => {
           <span className="lsl-pill">{lang === 'es' ? 'Sin intermediarios' : 'No middlemen'}</span>
         </div>
         <div className="lsl-hero-ctas">
-          <a href="https://wa.me/34620316370" className="lsl-btn-primary" target="_blank" rel="noopener">
-            {lang === 'es' ? 'Consultar disponibilidad →' : 'Check availability →'}
-          </a>
+          <button className="lsl-btn-primary"
+            onClick={() => document.getElementById('buscar')?.scrollIntoView({ behavior: 'smooth' })}>
+            {lang === 'es' ? 'Comprobar disponibilidad ↓' : 'Check availability ↓'}
+          </button>
         </div>
       </div>
     </section>
@@ -215,12 +216,10 @@ const LsPrices = ({ lang }) => {
 };
 
 const LsSearch = ({ lang }) => {
-  const today = new Date().toISOString().slice(0, 10);
-  const [checkin,  setCheckin ] = React.useState('');
-  const [checkout, setCheckout] = React.useState('');
-  const [guests,   setGuests  ] = React.useState(1);
-  const [avail,    setAvail   ] = React.useState(null);
-  const [loading,  setLoading ] = React.useState(false);
+  const [checkin,   setCheckin  ] = React.useState('');
+  const [checkout,  setCheckout ] = React.useState('');
+  const [guests,    setGuests   ] = React.useState(1);
+  const [avail,     setAvail    ] = React.useState(null);
   const [availData, setAvailData] = React.useState(null);
   const es = lang === 'es';
   const nights = checkin && checkout ? _drDiff(checkin, checkout) : 0;
@@ -232,7 +231,6 @@ const LsSearch = ({ lang }) => {
       .catch(() => {});
   }, []);
 
-  // Blocked = unión de fechas bloqueadas en los 3 apartamentos (para el calendario)
   const blockedUnion = React.useMemo(() => {
     if (!availData) return [];
     const all = [];
@@ -241,7 +239,7 @@ const LsSearch = ({ lang }) => {
   }, [availData]);
 
   const calcLsTotal = (start, end) => {
-    const lsCfg = (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || { specialNightFlat: 80, easterRanges: [] };
+    const lsCfg = (window.PRICES_V2?.longStayConfig) || { specialNightFlat: 80, easterRanges: [] };
     const flat  = lsCfg.specialNightFlat || 80;
     const easter = lsCfg.easterRanges || [];
     const isXmas = (ds) => { const m = +ds.slice(5,7), d = +ds.slice(8,10); return (m===12&&d>=23)||(m===1&&d<=6); };
@@ -257,95 +255,88 @@ const LsSearch = ({ lang }) => {
     return Math.round(total);
   };
 
-  const handleSearch = async () => {
-    if (!checkin || !checkout || nights < 29) return;
-    const mo = +checkin.slice(5, 7);
-    if (mo === 7 || mo === 8) return;
-    setLoading(true);
-    try {
-      const data = availData || null;
-      const total = calcLsTotal(checkin, checkout);
-      setAvail(LS_APTS.map(apt => ({
-        apt, nights, total,
-        available: _drAvail(checkin, checkout, data ? (data[apt.id]?.blocked || []) : []),
-      })));
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Auto-search when valid dates are selected
   React.useEffect(() => {
     if (checkin && checkout && nights >= 29) {
       const mo = +checkin.slice(5, 7);
-      if (mo !== 7 && mo !== 8) handleSearch();
-      else setAvail(null);
+      if (mo === 7 || mo === 8) { setAvail(null); return; }
+      const lsTotal = calcLsTotal(checkin, checkout);
+      setAvail(LS_APTS.map(apt => {
+        const isAvail = _drAvail(checkin, checkout, availData ? (availData[apt.id]?.blocked || []) : []);
+        const regCalc = isAvail ? _calcStay(checkin, checkout, apt.id, false, guests) : null;
+        return { apt, nights, lsTotal, regTotal: regCalc?.directTotal || 0, available: isAvail };
+      }));
     } else {
       setAvail(null);
     }
-  }, [checkin, checkout]);
+  }, [checkin, checkout, guests]);
 
   const julAugWarning = checkin && ([7,8].includes(+checkin.slice(5,7)));
 
   return (
-    <section className="lsl-section lsl-search-section" id="buscar">
+    <section className="lsl-search-dark" id="buscar">
       <div className="lsl-inner">
-        <h2 className="lsl-h2">{es ? 'Comprobar disponibilidad' : 'Check availability'}</h2>
+        <h2 className="lsl-h2 lsl-h2--ondk">{es ? 'Comprobar disponibilidad' : 'Check availability'}</h2>
 
-        <div className="lsl-picker-wrap">
-          <DateRangePicker
-            checkin={checkin}
-            checkout={checkout}
-            setCheckin={(d) => { setCheckin(d); setAvail(null); }}
-            setCheckout={(d) => { setCheckout(d); setAvail(null); }}
-            blocked={blockedUnion}
-            lang={lang}
-            accent="var(--ber, #3D1A35)"
-            minNightsOverride={29}
-          />
-        </div>
-
-        <div className="lsl-search-footer">
-          <div className="lsl-search-field lsl-search-field--sm">
-            <label className="lsl-search-lbl">{es ? 'Personas' : 'Guests'}</label>
-            <select className="lsl-search-input" value={guests}
-              onChange={e => { setGuests(Number(e.target.value)); }}>
-              {[1,2,3,4].map(n => <option key={n} value={n}>{n}</option>)}
-            </select>
+        <div className="lsl-sd-card">
+          <div className="lsl-picker-wrap">
+            <DateRangePicker
+              checkin={checkin}
+              checkout={checkout}
+              setCheckin={(d) => { setCheckin(d); setAvail(null); }}
+              setCheckout={(d) => { setCheckout(d); setAvail(null); }}
+              blocked={blockedUnion}
+              lang={lang}
+              accent="var(--ber, #3D1A35)"
+              minNightsOverride={29}
+            />
           </div>
-          {julAugWarning && (
-            <p className="lsl-search-error">
-              {es ? 'No disponible en julio ni agosto.' : 'Not available in July or August.'}
-            </p>
-          )}
-          {checkin && checkout && nights > 0 && nights < 29 && (
-            <p className="lsl-search-error">
-              {es ? `Mínimo 29 noches. Has seleccionado ${nights}.` : `Minimum 29 nights. You selected ${nights}.`}
-            </p>
-          )}
+
+          <div className="lsl-search-footer">
+            <div className="lsl-search-field lsl-search-field--sm">
+              <label className="lsl-search-lbl">{es ? 'Personas' : 'Guests'}</label>
+              <select className="lsl-search-input" value={guests}
+                onChange={e => setGuests(Number(e.target.value))}>
+                {[1,2,3,4].map(n => <option key={n} value={n}>{n}</option>)}
+              </select>
+            </div>
+            {julAugWarning && (
+              <p className="lsl-search-error">{es ? 'No disponible en julio ni agosto.' : 'Not available in July or August.'}</p>
+            )}
+            {checkin && checkout && nights > 0 && nights < 29 && (
+              <p className="lsl-search-error">
+                {es ? `Mínimo 29 noches. Has seleccionado ${nights}.` : `Minimum 29 nights. You selected ${nights}.`}
+              </p>
+            )}
+          </div>
         </div>
 
         {avail && (
           <div className="lsl-results">
-            {avail.map(({ apt, available, total, nights: n }) => (
+            {avail.map(({ apt, available, lsTotal, regTotal, nights: n }) => (
               <div key={apt.id} className={`lsl-result${available ? '' : ' lsl-result--unavail'}`}
                    style={{ '--lsl-accent': apt.accent }}>
                 <div className="lsl-result-apt">HESTÍA <strong>{apt.name.toUpperCase()}</strong></div>
                 {available ? (
                   <>
-                    <div className="lsl-result-price">
-                      <span className="lsl-result-total">{total.toLocaleString('es-ES')} €</span>
+                    <div className="lsl-result-prices">
+                      {regTotal > lsTotal && (
+                        <span className="lsl-result-reg">{regTotal.toLocaleString('es-ES')} €</span>
+                      )}
+                      <span className="lsl-result-ls">{lsTotal.toLocaleString('es-ES')} €</span>
                       <span className="lsl-result-nights">{n} {es ? 'noches' : 'nights'}</span>
                     </div>
+                    {regTotal > lsTotal && (
+                      <div className="lsl-result-saving">
+                        {es ? `Ahorras ${(regTotal - lsTotal).toLocaleString('es-ES')} €` : `Save ${(regTotal - lsTotal).toLocaleString('es-ES')} €`}
+                      </div>
+                    )}
                     <a href={`reservas.html?apt=${apt.id}&checkin=${checkin}&checkout=${checkout}&guests=${guests}`}
                        className="lsl-result-btn">
-                      {es ? 'Reservar →' : 'Book →'}
+                      {es ? 'Avanzar con la reserva →' : 'Book now →'}
                     </a>
                   </>
                 ) : (
-                  <span className="lsl-result-unavail-msg">
-                    {es ? 'No disponible' : 'Not available'}
-                  </span>
+                  <span className="lsl-result-unavail-msg">{es ? 'No disponible' : 'Not available'}</span>
                 )}
               </div>
             ))}
