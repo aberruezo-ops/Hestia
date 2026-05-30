@@ -147,11 +147,40 @@ const _resExtraUnitSuffix = (unit, lang) => {
   return '';
 };
 
+// Gap-offer override helpers — apply gapOverrides from prices.json to the
+// base price, then keep guest/pet supplements unchanged on top.
+const _gapOverrideCalc = (aptId, checkin) => {
+  const v2 = window.PRICES_V2;
+  if (!v2 || !aptId || !checkin) return null;
+  const ov = (v2.gapOverrides || {})[`${aptId}|${checkin}`];
+  if (!ov || !ov.type || ov.type === 'none') return null;
+  const base   = (v2.apts?.[aptId]?.base) || 0;
+  const season = _v2SeasonForDate(checkin, v2);
+  const mult   = (v2.seasons?.[season]?.multiplier) || 1;
+  const seasonBase = Math.round(base * mult);
+  let perNight;
+  if (ov.type === 'fixed')     perNight = ov.value;
+  else if (ov.type === 'discount')  perNight = Math.round(seasonBase * (1 - ov.value / 100));
+  else if (ov.type === 'increment') perNight = Math.round(seasonBase * (1 + ov.value / 100));
+  else perNight = seasonBase;
+  return { perNight, ov };
+};
+const _applyGapOv = (calc, perNight) => {
+  if (!calc) return null;
+  const baseTotal   = perNight * calc.nights;
+  const afterStay   = baseTotal;
+  const directTotal = afterStay + calc.guestSuppAmt + calc.petAmt;
+  const avgPerNight = Math.round((afterStay + calc.guestSuppAmt) / calc.nights);
+  return { ...calc, baseTotal, stayD: null, stayDiscAmt: 0, afterStay, directTotal, avgPerNight, isGapOffer: true, gapPerNight: perNight };
+};
+
 const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] }) => {
   if (!apt || !checkin || !checkout) return null;
   const gn = parseInt(guests, 10) || null;
-  const calc = _calcStay(checkin, checkout, apt, pets === 'yes', gn);
-  if (!calc || calc.nights <= 0) return null;
+  const calcRaw = _calcStay(checkin, checkout, apt, pets === 'yes', gn);
+  if (!calcRaw || calcRaw.nights <= 0) return null;
+  const gapOv = _gapOverrideCalc(apt, checkin);
+  const calc  = gapOv ? _applyGapOv(calcRaw, gapOv.perNight) : calcRaw;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
   const extrasTotal = extras.reduce((s, e) => s + e.amount, 0);
   const grandTotal = calc.directTotal + extrasTotal;
@@ -177,7 +206,12 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
       </div>
       <div className="price-breakdown">
         <div className="price-line">
-          <span>{lang === 'es' ? `${calc.nights} noches` : `${calc.nights} nights`}</span>
+          {calc.isGapOffer
+            ? <span>{lang === 'es'
+                ? `Oferta · ${calc.nights} noches × ${calc.gapPerNight} €/n`
+                : `Offer · ${calc.nights} nights × ${calc.gapPerNight} €/n`}</span>
+            : <span>{lang === 'es' ? `${calc.nights} noches` : `${calc.nights} nights`}</span>
+          }
           <span>{fmt(calc.baseTotal)}</span>
         </div>
         {calc.stayD && (
@@ -497,8 +531,10 @@ const ReservasForm = ({ lang }) => {
   const hasEmail = /\S+@\S+/.test(email);
   const channelValid = channel === 'whatsapp' ? (hasName && hasTel) : (hasName && hasEmail);
 
-  // Cálculo
-  const calc = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes', parseInt(guests, 10) || null) : null;
+  // Cálculo — aplica gapOverride si el hueco tiene oferta activa
+  const calcRaw = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes', parseInt(guests, 10) || null) : null;
+  const gapOv   = step1Complete ? _gapOverrideCalc(apt, checkin) : null;
+  const calc    = gapOv && calcRaw ? _applyGapOv(calcRaw, gapOv.perNight) : calcRaw;
   const nightsForExtras = calc?.nights || 0;
   const selectedExtras = computeSelectedExtras(nightsForExtras);
   const extrasCount = Object.values(extrasSel).filter(v => v > 0).length;
@@ -564,15 +600,17 @@ const ReservasForm = ({ lang }) => {
     const grandAvg   = calc ? Math.round(grandTotal / calc.nights) : 0;
     const priceBlock = calc
       ? (lang === 'es'
-          ? `\n💰 PRECIO ESTIMADO DIRECTO\n` +
+          ? `\n💰 ${calc.isGapOffer ? 'PRECIO DE OFERTA DIRECTA' : 'PRECIO ESTIMADO DIRECTO'}\n` +
             `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` +
+            (calc.isGapOffer ? `   🏷 Oferta: ${fmt(calc.gapPerNight)}/noche (precio cerrado)\n` : '') +
             (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') +
             (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') +
             (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') +
             (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
             `   ✓ Precio directo siempre mejor que cualquier plataforma\n`
-          : `\n💰 ESTIMATED DIRECT PRICE\n` +
+          : `\n💰 ${calc.isGapOffer ? 'DIRECT OFFER PRICE' : 'ESTIMATED DIRECT PRICE'}\n` +
             `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` +
+            (calc.isGapOffer ? `   🏷 Offer: ${fmt(calc.gapPerNight)}/night (locked price)\n` : '') +
             (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') +
             (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') +
             (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') +
