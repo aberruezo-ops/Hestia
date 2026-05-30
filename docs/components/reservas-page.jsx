@@ -203,6 +203,71 @@ const _calcLsTotal = (start, end, guests, withPets) => {
   return { total: Math.round(total), specialNights: specialN };
 };
 
+// Resumen de precio para larga estancia en el paso 2 (reemplaza a PricePreview)
+const LsPriceSummary = ({ ls, extras = [], guests, pets, lang }) => {
+  const es = lang === 'es';
+  const fmt = n => n.toLocaleString('es-ES') + ' €';
+  const extrasTotal = extras.reduce((s, e) => s + e.amount, 0);
+  const grandTotal = ls.total + extrasTotal;
+  const lsCfg = (window.PRICES_V2?.longStayConfig) || {};
+  const extraGuests = Math.max(0, (guests || 1) - 2);
+  const extraGuestPerMo = lsCfg.extraGuestPerMonth || 0;
+  const petPerMo = lsCfg.petPerMonth || 0;
+  return (
+    <div className="price-engine price-engine-form">
+      <div className="price-main-row">
+        <div className="price-direct-block">
+          <span className="price-label-sm">{es ? 'Precio estancia larga' : 'Long-stay price'}</span>
+          <span className="price-direct-total">{fmt(grandTotal)}</span>
+          <span className="price-avg-night">{es ? 'tarifa mensual' : 'monthly rate'}</span>
+        </div>
+        <div className="price-right-col">
+          <div className="price-guarantee-badge">
+            {es ? '✓ Precio directo siempre mejor' : '✓ Direct price always better'}
+          </div>
+          <div className="price-guarantee-sub">
+            {es ? 'Sin comisiones de plataformas.' : 'No platform commissions.'}
+          </div>
+        </div>
+      </div>
+      <div className="price-breakdown">
+        <div className="price-line">
+          <span>{es ? 'Tarifa mensual larga estancia' : 'Long-stay monthly rate'}</span>
+          <span>{fmt(ls.total)}</span>
+        </div>
+        {extraGuests > 0 && extraGuestPerMo > 0 && (
+          <div className="price-line">
+            <span>{es ? `${extraGuests} huésped${extraGuests>1?'es':''} extra · ${extraGuestPerMo}€/mes` : `${extraGuests} extra guest${extraGuests>1?'s':''} · ${extraGuestPerMo}€/mo`}</span>
+          </div>
+        )}
+        {pets === 'yes' && petPerMo > 0 && (
+          <div className="price-line">
+            <span>{es ? `Mascota · ${petPerMo}€/mes` : `Pet · ${petPerMo}€/mo`}</span>
+          </div>
+        )}
+        {ls.specialNights > 0 && (
+          <div className="price-line">
+            <span>{es ? `${ls.specialNights} noche${ls.specialNights>1?'s':''} especial (${lsCfg.specialNightFlat||80}€/n)` : `${ls.specialNights} special night${ls.specialNights>1?'s':''} (${lsCfg.specialNightFlat||80}€/n)`}</span>
+          </div>
+        )}
+        {extras.map(ex => (
+          <div className="price-line" key={ex.id}>
+            <span>{ex.label}</span>
+            <span>+{fmt(ex.amount)}</span>
+          </div>
+        ))}
+        <div className="price-line price-line-total">
+          <span>{es ? 'Total estimado' : 'Estimated total'}</span>
+          <span>{fmt(grandTotal)}</span>
+        </div>
+      </div>
+      <p className="price-note">{es
+        ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.'
+        : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.'}</p>
+    </div>
+  );
+};
+
 const LsInfoBlock = ({ checkin, checkout, calc, guests, pets, lang }) => {
   const nights = calc ? calc.nights : 0;
   // regularTotal = undiscounted nightly sum (no stay-discount) for meaningful comparison
@@ -617,6 +682,9 @@ const ReservasForm = ({ lang }) => {
   const extrasCount = Object.values(extrasSel).filter(v => v > 0).length;
   const blocked = avail && avail[apt] ? avail[apt].blocked : null;
   const isAvailable = step1Complete && availLoaded ? _resAvail(checkin, checkout, blocked) : null;
+  // Larga estancia: ≥29 noches, no julio ni agosto
+  const isLsStay = nightsSelected > 28 && (() => { const m = checkin ? parseInt(checkin.slice(5,7),10) : 0; return m !== 7 && m !== 8; })();
+  const lsCalc   = isLsStay ? _calcLsTotal(checkin, checkout, parseInt(guests,10)||1, pets==='yes') : null;
 
   // Avanzar pasos. step1Ready basta (sin apt) — en step 2 el huésped
   // verá la disponibilidad de los 3 Hestías y puede elegir uno.
@@ -673,27 +741,41 @@ const ReservasForm = ({ lang }) => {
     const petsText = pets === 'yes' ? (lang === 'es' ? 'Sí' : 'Yes') : 'No';
     const babyText = baby === 'yes' ? (lang === 'es' ? 'Sí' : 'Yes') : 'No';
 
-    const grandTotal = calc ? calc.directTotal + extrasTotal : 0;
-    const grandAvg   = calc ? Math.round(grandTotal / calc.nights) : 0;
-    const priceBlock = calc
+    const grandTotal = isLsStay && lsCalc
+      ? lsCalc.total + extrasTotal
+      : (calc ? calc.directTotal + extrasTotal : 0);
+    const grandAvg = calc ? Math.round(grandTotal / calc.nights) : 0;
+    const priceBlock = (isLsStay && lsCalc)
       ? (lang === 'es'
-          ? `\n💰 ${calc.isGapOffer ? 'PRECIO DE OFERTA DIRECTA' : 'PRECIO ESTIMADO DIRECTO'}\n` +
-            `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` +
-            (calc.isGapOffer ? `   🏷 Oferta: ${fmt(calc.gapPerNight)}/noche (precio cerrado)\n` : '') +
-            (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') +
-            (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') +
-            (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') +
+          ? `\n💰 PRECIO ESTANCIA LARGA (TARIFA MENSUAL)\n` +
+            `   ${fmt(grandTotal)} total\n` +
+            (lsCalc.specialNights > 0 ? `   🎄 ${lsCalc.specialNights} noches especiales incluidas\n` : '') +
             (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-            `   ✓ Precio directo siempre mejor que cualquier plataforma\n`
-          : `\n💰 ${calc.isGapOffer ? 'DIRECT OFFER PRICE' : 'ESTIMATED DIRECT PRICE'}\n` +
-            `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` +
-            (calc.isGapOffer ? `   🏷 Offer: ${fmt(calc.gapPerNight)}/night (locked price)\n` : '') +
-            (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') +
-            (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') +
-            (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') +
+            `   Señal 20% = ${fmt(Math.round(grandTotal * 0.2))} · resto a la llegada\n`
+          : `\n💰 LONG-STAY PRICE (MONTHLY RATE)\n` +
+            `   ${fmt(grandTotal)} total\n` +
+            (lsCalc.specialNights > 0 ? `   🎄 ${lsCalc.specialNights} special nights included\n` : '') +
             (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-            `   ✓ Direct price always better than any platform\n`)
-      : '';
+            `   Deposit 20% = ${fmt(Math.round(grandTotal * 0.2))} · balance on arrival\n`)
+      : (calc
+          ? (lang === 'es'
+              ? `\n💰 ${calc.isGapOffer ? 'PRECIO DE OFERTA DIRECTA' : 'PRECIO ESTIMADO DIRECTO'}\n` +
+                `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` +
+                (calc.isGapOffer ? `   🏷 Oferta: ${fmt(calc.gapPerNight)}/noche (precio cerrado)\n` : '') +
+                (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') +
+                (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') +
+                (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') +
+                (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
+                `   ✓ Precio directo siempre mejor que cualquier plataforma\n`
+              : `\n💰 ${calc.isGapOffer ? 'DIRECT OFFER PRICE' : 'ESTIMATED DIRECT PRICE'}\n` +
+                `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` +
+                (calc.isGapOffer ? `   🏷 Offer: ${fmt(calc.gapPerNight)}/night (locked price)\n` : '') +
+                (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') +
+                (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') +
+                (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') +
+                (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
+                `   ✓ Direct price always better than any platform\n`)
+          : '');
     const lines = lang === 'es'
       ? [
           `¡Hola! Quiero hacer una consulta de reserva.\n`,
@@ -971,7 +1053,7 @@ const ReservasForm = ({ lang }) => {
         {step >= 2 && (
           <div className="rf-step-body">
             {/* Long-stay info block — shown when nights > 28 and month is Sep–Jun */}
-            {nightsSelected > 28 && (() => { const m = checkin ? parseInt(checkin.slice(5,7),10) : 0; return m !== 7 && m !== 8; })() && (
+            {isLsStay && (
               <LsInfoBlock checkin={checkin} checkout={checkout} calc={calc} guests={guests} pets={pets} lang={lang} />
             )}
             <ReviewQuote apt={apt} lang={lang} />
@@ -1098,9 +1180,12 @@ const ReservasForm = ({ lang }) => {
               </div>
             )}
 
-            {/* Price — debajo de los extras para que el huésped vea cómo
-                cambia el total al añadir cada extra. */}
-            {calc && (
+            {/* Price — Para LS mostramos el total mensual (no el cálculo por noches).
+                Para corta estancia usamos PricePreview con su breakdown completo. */}
+            {isLsStay && lsCalc && (
+              <LsPriceSummary ls={lsCalc} extras={selectedExtras} guests={parseInt(guests,10)||1} pets={pets} lang={lang} />
+            )}
+            {!isLsStay && calc && (
               <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} guests={guests} lang={lang} extras={selectedExtras}/>
             )}
 
