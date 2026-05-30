@@ -13,6 +13,8 @@ const APT_DATA = {
     license: 'VFT/AL/01580',
     name_short: 'Mar',
     video_src: 'assets/hestia v13 mar clean.mp4',
+    video_duration: 'PT1M14S',
+    video_upload: '2026-05-30',
     accent: '#6B7A3A',
     accent2: '#8B9A52',
     accent_dk: '#4A5628',
@@ -49,6 +51,8 @@ const APT_DATA = {
     license: 'VFT/AL/05535',
     name_short: 'Thalassa',
     video_src: 'assets/hestia intro v9 thalassa outro.mp4',
+    video_duration: 'PT1M6S',
+    video_upload: '2026-05-30',
     accent: '#8A4A24',
     accent2: '#B86A3C',
     accent_dk: '#6E3A1C',
@@ -85,6 +89,8 @@ const APT_DATA = {
     license: 'VTF/AL/07056',
     name_short: 'Salinas',
     video_src: 'assets/hestia v14 salinas clean.mp4',
+    video_duration: 'PT1M21S',
+    video_upload: '2026-05-30',
     accent: '#9E7A2C',
     accent2: '#D4A84A',
     accent_dk: '#7A5E1A',
@@ -1370,11 +1376,11 @@ const ApartmentPageApp = () => {
       '@context': 'https://schema.org',
       '@type': 'VideoObject',
       'name': `Visita virtual · ${apt.es.name}`,
-      'description': apt.es.concept,
+      'description': `${apt.es.concept} ${apt.es.desc}`.slice(0, 300),
       'thumbnailUrl': `https://www.hestiayourhome.com/${apt.hero_img}`,
-      'uploadDate': '2025-01-01',
-      'duration': 'PT2M',
-      'contentUrl': `https://www.hestiayourhome.com/${apt.video_src}`
+      'uploadDate': apt.video_upload || '2026-05-30',
+      'duration': apt.video_duration || 'PT1M30S',
+      'contentUrl': `https://www.hestiayourhome.com/${encodeURI(apt.video_src)}`
     };
     const el = document.createElement('script');
     el.type = 'application/ld+json';
