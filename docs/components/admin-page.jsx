@@ -4883,6 +4883,28 @@ const BULK_PRESETS = [
   { label: 'Crítica urgente (<7d)', icon: '🚨', cfg: { season: 'critica', minN: '', maxN: '', maxDays: '7', type: 'discount', value: '25', lm: true, onlyNew: true } },
 ];
 
+// Long-stay monthly rates (€/month). Jul (7) and Aug (8) not offered.
+const LS_RATES = { 1:1390, 2:1390, 3:1390, 4:1390, 5:1690, 6:1790, 9:1790, 10:1690, 11:1390, 12:1390 };
+
+const _isLongStayGap = (gap) => {
+  if (gap.nights <= 28) return false;
+  const m = parseInt(gap.start.slice(5, 7), 10);
+  return m !== 7 && m !== 8;
+};
+
+const _lsIncludesChristmas = (start, end) => {
+  const yr = parseInt(start.slice(0, 4), 10);
+  return (start < `${yr + 1}-01-07` && end > `${yr}-12-20`) ||
+         (start < `${yr}-01-07`     && end > `${yr - 1}-12-20`);
+};
+
+const _lsMonthlyRate = (start, end, easterFlag) => {
+  const m = parseInt(start.slice(5, 7), 10);
+  if (!LS_RATES[m]) return null;
+  if (_lsIncludesChristmas(start, end) || easterFlag) return 1490;
+  return LS_RATES[m];
+};
+
 const _hcOvLabel = (ov) => {
   if (!ov) return null;
   if (ov.type === 'discount')  return `-${ov.value}%`;
@@ -4927,6 +4949,8 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
   const [bulkValue,   setBulkValue  ] = React.useState('');
   const [bulkLastMin, setBulkLastMin] = React.useState(false);
   const [bulkSaving,  setBulkSaving ] = React.useState(false);
+  const [hcView,      setHcView     ] = React.useState('cortos');
+  const [lsEaster,    setLsEaster   ] = React.useState({});
 
   const today     = new Date().toISOString().slice(0, 10);
   const horizonStr = pricesData && pricesData.bookingHorizon && pricesData.bookingHorizon.lastCheckinDate;
@@ -4994,6 +5018,13 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
     }
     return result;
   }, [avail, pricesData]);
+
+  const longStayGaps = React.useMemo(() => {
+    const r = {};
+    for (const id of ['vm','vt','vs']) r[id] = (allGaps[id]||[]).filter(_isLongStayGap);
+    return r;
+  }, [allGaps]);
+  const longStayCount = ['vm','vt','vs'].reduce((n,id) => n + (longStayGaps[id]||[]).length, 0);
 
   const openGap = (gap) => {
     setActiveGap(gap.id);
@@ -5166,9 +5197,9 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
   if (!avail)   return <div className="pe-card"><p className="pe-help">Sin datos de disponibilidad.</p></div>;
 
   const aptIds     = ['vm', 'vt', 'vs'].filter(id => filterApt === 'all' || filterApt === id);
-  const totalGaps  = aptIds.reduce((n, id) => n + (allGaps[id] || []).length, 0);
-  const totalProb  = aptIds.reduce((n, id) => n + (allGaps[id] || []).filter(g => g.overLim).length, 0);
-  const totalOvs   = aptIds.reduce((n, id) => n + (allGaps[id] || []).filter(g => g.override).length, 0);
+  const totalGaps  = aptIds.reduce((n, id) => n + (allGaps[id] || []).filter(g => !_isLongStayGap(g)).length, 0);
+  const totalProb  = aptIds.reduce((n, id) => n + (allGaps[id] || []).filter(g => !_isLongStayGap(g) && g.overLim).length, 0);
+  const totalOvs   = aptIds.reduce((n, id) => n + (allGaps[id] || []).filter(g => !_isLongStayGap(g) && g.override).length, 0);
 
   return (
     <div className="pe-card hc-tab">
@@ -5196,6 +5227,18 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
 
       {saveMsg && <div className={`hc-global-msg${saveMsg.startsWith('Error') ? ' err' : ' ok'}`}>{saveMsg}</div>}
 
+      {/* ── Sub-tabs ────────────────────────────────────── */}
+      <div className="hc-subtab-bar">
+        <button type="button" className={`hc-subtab-btn${hcView === 'cortos' ? ' active' : ''}`}
+          onClick={() => setHcView('cortos')}>Huecos cortos</button>
+        <button type="button" className={`hc-subtab-btn${hcView === 'largas' ? ' active' : ''}`}
+          onClick={() => setHcView('largas')}>
+          Estancias largas
+          {longStayCount > 0 && <span className="hc-subtab-badge">{longStayCount}</span>}
+        </button>
+      </div>
+
+      {hcView === 'cortos' && <>
       {/* ── Regla de negocio visible ────────────────────── */}
       <div className="hc-rules">
         <span><strong>Alta / Crítica:</strong> máx. 7 noches entre reservas</span>
@@ -5306,7 +5349,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
       {/* ── Por apartamento ─────────────────────────────── */}
       {aptIds.map(aptId => {
         const meta = HC_APT[aptId];
-        let   gaps = (allGaps[aptId] || []);
+        let   gaps = (allGaps[aptId] || []).filter(g => !_isLongStayGap(g));
         if (filterProb) gaps = gaps.filter(g => g.overLim);
         const allAptGaps = allGaps[aptId] || [];
 
@@ -5554,6 +5597,98 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
           </div>
         );
       })}
+      </>}
+
+      {hcView === 'largas' && (
+        <div className="ls-wrap">
+
+          <div className="ls-info">
+            <div>
+              <strong>Estancias largas · más de 28 noches · septiembre – junio</strong><br/>
+              <span className="ls-info-sub">Para teletrabajadores, negocios y personas que quieren vivir una temporada en Vera Playa. Sin julio ni agosto.</span>
+            </div>
+          </div>
+
+          <div className="ls-rates">
+            <div className="ls-rates-title">Tarifas de referencia (€ / mes completo)</div>
+            <div className="ls-rates-grid">
+              {[
+                { label: 'Nov – Abr', rate: 1390, note: 'T. baja' },
+                { label: 'Oct · May', rate: 1690, note: '' },
+                { label: 'Jun · Sep', rate: 1790, note: '' },
+                { label: 'Navidad / Semana Santa', rate: 1490, note: 'sobre T. baja' },
+              ].map(r => (
+                <div key={r.label} className="ls-rate-row">
+                  <span className="ls-rate-period">{r.label}</span>
+                  <span className="ls-rate-val">{r.rate}<span className="ls-rate-per">€/mes</span></span>
+                  {r.note && <span className="ls-rate-note">{r.note}</span>}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {['vm','vt','vs'].map(aptId => {
+            const meta = HC_APT[aptId];
+            const gaps = longStayGaps[aptId] || [];
+            if (gaps.length === 0) return null;
+            return (
+              <div key={aptId} className="hc-apt">
+                <div className="hc-apt-hd" style={{ '--hc-accent': meta.accent }}>
+                  <span className="hc-apt-name">{meta.name}</span>
+                  <span className="hc-apt-meta">{gaps.length} {gaps.length === 1 ? 'hueco disponible' : 'huecos disponibles'}</span>
+                </div>
+                <div className="hc-list">
+                  {gaps.map(gap => {
+                    const easter  = !!(lsEaster[gap.id]);
+                    const hasXmas = _lsIncludesChristmas(gap.start, gap.end);
+                    const rate    = _lsMonthlyRate(gap.start, gap.end, easter);
+                    const total   = rate ? Math.round((gap.nights / 30) * rate) : null;
+                    const months  = (gap.nights / 30).toFixed(1);
+                    const waMsg   = `Hola 👋\n\nTenemos disponible *${meta.name}* para una estancia larga:\n📅 ${_hcFmt(gap.start)} → ${_hcFmt(gap.end)} (${gap.nights} noches · ~${months} meses)\n💰 ${rate ? rate + '€/mes' : 'consultar'}\nTotal estimado: ~${total ? total + '€' : 'consultar'}\n\nPerfecto para teletrabajo, negocio o vivir una temporada en Vera Playa 🌊\nSin comisiones · trato directo.`;
+                    return (
+                      <div key={gap.id} className="ls-gap">
+                        <div className="ls-gap-head">
+                          <span className="hc-dates">{_hcFmt(gap.start)} → {_hcFmt(gap.end)}</span>
+                          <span className="hc-nights">{gap.nights}n</span>
+                          <span className="ls-gap-months">~{months} meses</span>
+                          {hasXmas && <span className="hc-badge hc-badge-warn">Navidad</span>}
+                        </div>
+                        <div className="ls-gap-pricing">
+                          <div className="ls-gap-rate">
+                            <span className="ls-gap-rate-val">{rate ? `${rate}€` : '—'}<span className="ls-rate-per">/mes</span></span>
+                            {total && <span className="ls-gap-total">≈ {total}€ total</span>}
+                          </div>
+                          <div className="ls-gap-flags">
+                            <label className="hc-check-lbl" style={{ fontSize: 12 }}>
+                              <input type="checkbox" checked={easter}
+                                onChange={e => setLsEaster(s => ({ ...s, [gap.id]: e.target.checked }))}/>
+                              Incluye Semana Santa (+100€/mes)
+                            </label>
+                          </div>
+                          <div className="ls-gap-actions">
+                            <button type="button" className="pe-btn pe-btn-ghost ls-wa-btn"
+                              onClick={() => navigator.clipboard.writeText(waMsg)
+                                .then(() => { setSaveMsg('Propuesta copiada ✓'); setTimeout(() => setSaveMsg(null), 3000); })
+                                .catch(() => setSaveMsg('Error al copiar'))}>
+                              Copiar propuesta WhatsApp
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+
+          {longStayCount === 0 && (
+            <p className="pe-help" style={{ margin: '16px 0' }}>
+              No hay huecos de más de 28 noches en septiembre–junio actualmente.
+            </p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
