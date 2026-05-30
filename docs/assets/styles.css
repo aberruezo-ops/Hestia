@@ -21307,7 +21307,27 @@ img[src*="apt-vt-gallery-"] {
 .lsl-cta .lsl-btn-ghost { color: rgba(255,255,255,.65); }
 
 /* ── LsSearch — disponibilidad larga estancia ───────────────── */
-.lsl-search-section { background: color-mix(in srgb, var(--ber, #3D1A35) 4%, var(--crema, #FAF6F0)); }
+.lsl-search-dark {
+  background: linear-gradient(180deg, var(--ber-dk, #2A0F2E) 0%, #1A0820 100%);
+  padding: 72px 24px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.lsl-search-dark::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f0e8d5' fill-opacity='0.022'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.lsl-search-dark .lsl-inner { position: relative; z-index: 1; }
+.lsl-h2--ondk { color: var(--crema, #FAF6F0) !important; }
+.lsl-sd-card {
+  background: #fff;
+  border-radius: 12px 0 12px 0;
+  padding: 28px 28px 20px;
+  margin-bottom: 32px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.25);
+}
 .lsl-picker-wrap {
   max-width: 640px;
   margin-bottom: 20px;
@@ -21412,10 +21432,16 @@ img[src*="apt-vt-gallery-"] {
   color: var(--lsl-accent, #3AAABB);
 }
 .lsl-result-apt strong { font-weight: 800; }
-.lsl-result-price { display: flex; align-items: baseline; gap: 8px; }
-.lsl-result-total {
+.lsl-result-prices { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.lsl-result-reg {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: rgba(42,15,46,.40);
+  text-decoration: line-through;
+}
+.lsl-result-ls {
   font-family: var(--serif, Georgia, serif);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   color: var(--ber, #3D1A35);
   line-height: 1;
@@ -21424,6 +21450,17 @@ img[src*="apt-vt-gallery-"] {
   font-family: var(--sans);
   font-size: 12px;
   color: var(--ink-soft, #7A5A72);
+}
+.lsl-result-saving {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--lsl-accent, #3AAABB);
+  background: color-mix(in srgb, var(--lsl-accent, #3AAABB) 12%, transparent);
+  padding: 3px 10px;
+  border-radius: 10px 0 10px 0;
+  display: inline-block;
 }
 .lsl-result-btn {
   display: inline-block;
