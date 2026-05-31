@@ -1071,6 +1071,12 @@ const LongStayStrip = ({
   lang
 }) => {
   const es = lang === 'es';
+  const v2 = window.PRICES_V2;
+  const bases = v2?.apts ? Object.values(v2.apts).map(a => a.base).filter(Boolean) : [];
+  const minBase = bases.length ? Math.min(...bases) : 83;
+  const nightlyMonthly = minBase * 30;
+  const lsRate = 1450;
+  const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
   return /*#__PURE__*/React.createElement("section", {
     className: "lss-strip",
     "aria-label": es ? 'Estancias largas' : 'Long stays'
@@ -1091,8 +1097,16 @@ const LongStayStrip = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "lss-pill"
   }, es ? '29+ noches' : '29+ nights'), /*#__PURE__*/React.createElement("span", {
-    className: "lss-pill"
-  }, es ? 'desde 1.450€/mes' : 'from €1,450/month'), /*#__PURE__*/React.createElement("span", {
+    className: "lss-pill lss-pill-compare"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "lss-pill-reg"
+  }, "~", nightlyMonthly.toLocaleString('es-ES'), "\u20AC/mes"), /*#__PURE__*/React.createElement("span", {
+    className: "lss-pill-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "lss-pill-ls"
+  }, es ? `desde 1.450€/mes` : `from €1,450/mo`), /*#__PURE__*/React.createElement("span", {
+    className: "lss-pill-save"
+  }, "\u2212", savings, "%")), /*#__PURE__*/React.createElement("span", {
     className: "lss-pill"
   }, "WiFi fibra"), /*#__PURE__*/React.createElement("span", {
     className: "lss-pill"

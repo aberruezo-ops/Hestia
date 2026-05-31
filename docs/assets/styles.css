@@ -17686,6 +17686,13 @@ img[src*="apt-vt-gallery-"] {
   border-bottom: 1px solid color-mix(in srgb, var(--apt-accent) 10%, transparent);
 }
 .apt-pt-row:last-child { border-bottom: none; }
+.apt-pt-ls { align-items: flex-start; border-top: 1px dashed color-mix(in srgb, var(--apt-accent) 20%, transparent); margin-top: 4px; padding-top: 12px; }
+.apt-pt-ls-tag { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: .04em; opacity: .55; vertical-align: middle; }
+.apt-pt-ls-price { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.apt-pt-ls-reg { font-size: 12px; color: var(--ink-soft); text-decoration: line-through; opacity: .6; white-space: nowrap; }
+.apt-pt-ls-rate { font-family: var(--sans); font-size: 13px; color: var(--ink); white-space: nowrap; display: flex; align-items: baseline; gap: 5px; }
+.apt-pt-ls-rate strong { font-size: 17px; font-weight: 700; color: var(--ok, #4A6A28); letter-spacing: -0.01em; }
+.apt-pt-ls-save { font-size: 11px; font-weight: 700; color: var(--ok, #4A6A28); background: color-mix(in srgb, var(--ok,#4A6A28) 12%, transparent); border-radius: 4px; padding: 1px 5px; }
 .apt-pt-season {
   font-family: var(--sans);
   font-size: 13px;
@@ -20980,6 +20987,11 @@ img[src*="apt-vt-gallery-"] {
   padding: 5px 13px;
   white-space: nowrap;
 }
+.lss-pill-compare { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; }
+.lss-pill-reg { text-decoration: line-through; opacity: .55; font-weight: 500; font-size: 11px; }
+.lss-pill-arrow { opacity: .5; font-size: 11px; }
+.lss-pill-ls { font-weight: 700; font-size: 13px; color: #fff; letter-spacing: -.01em; }
+.lss-pill-save { font-size: 10px; font-weight: 700; background: rgba(255,255,255,.2); border-radius: 4px; padding: 1px 5px; letter-spacing: .02em; }
 .lss-cta {
   display: inline-block;
   background: var(--accent, #C87A45);

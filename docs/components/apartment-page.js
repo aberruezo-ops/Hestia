@@ -1203,7 +1203,26 @@ const AptPriceTeaser = ({
     className: "apt-pt-price"
   }, lang === 'es' ? 'desde ' : 'from ', /*#__PURE__*/React.createElement("strong", null, s.price, " \u20AC"), /*#__PURE__*/React.createElement("span", {
     className: "apt-pt-per"
-  }, lang === 'es' ? '/noche' : '/night'))))), /*#__PURE__*/React.createElement("a", {
+  }, lang === 'es' ? '/noche' : '/night')))), (() => {
+    const nightlyMonthly = base * 30;
+    const lsRate = 1450;
+    const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
+    return /*#__PURE__*/React.createElement("div", {
+      className: "apt-pt-row apt-pt-ls"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "apt-pt-season"
+    }, lang === 'es' ? 'Estancia larga · +29 noches' : 'Long stay · 29+ nights', /*#__PURE__*/React.createElement("span", {
+      className: "apt-pt-ls-tag"
+    }, "Sep\u2013Jun")), /*#__PURE__*/React.createElement("span", {
+      className: "apt-pt-ls-price"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "apt-pt-ls-reg"
+    }, "~", nightlyMonthly.toLocaleString('es-ES'), " \u20AC/mes"), /*#__PURE__*/React.createElement("span", {
+      className: "apt-pt-ls-rate"
+    }, lang === 'es' ? 'desde ' : 'from ', /*#__PURE__*/React.createElement("strong", null, "1.450 \u20AC/mes"), /*#__PURE__*/React.createElement("span", {
+      className: "apt-pt-ls-save"
+    }, "\u2212", savings, "%"))));
+  })()), /*#__PURE__*/React.createElement("a", {
     href: waHref,
     target: "_blank",
     rel: "noopener",
