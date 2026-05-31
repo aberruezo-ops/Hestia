@@ -6358,6 +6358,14 @@ const LsCfgPanel = ({
   onSave,
   saving
 }) => {
+  const mr = lsCfg.monthlyRates || {
+    baja: 1450,
+    media: 1590,
+    alta: 1790
+  };
+  const [rateBaja, setRateBaja] = React.useState(String(mr.baja || 1450));
+  const [rateMedia, setRateMedia] = React.useState(String(mr.media || 1590));
+  const [rateAlta, setRateAlta] = React.useState(String(mr.alta || 1790));
   const [flat, setFlat] = React.useState(String(lsCfg.specialNightFlat || 80));
   const [extraGuest, setExtraGuest] = React.useState(String(lsCfg.extraGuestPerMonth || 60));
   const [petMonth, setPetMonth] = React.useState(String(lsCfg.petPerMonth || 50));
@@ -6367,6 +6375,14 @@ const LsCfgPanel = ({
   const [suppSal, setSuppSal] = React.useState(String(suppIn.vs || 0));
   const [ranges, setRanges] = React.useState((lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n'));
   React.useEffect(() => {
+    const r = lsCfg.monthlyRates || {
+      baja: 1450,
+      media: 1590,
+      alta: 1790
+    };
+    setRateBaja(String(r.baja || 1450));
+    setRateMedia(String(r.media || 1590));
+    setRateAlta(String(r.alta || 1790));
     setFlat(String(lsCfg.specialNightFlat || 80));
     setExtraGuest(String(lsCfg.extraGuestPerMonth || 60));
     setPetMonth(String(lsCfg.petPerMonth || 50));
@@ -6382,6 +6398,11 @@ const LsCfgPanel = ({
       return s && e ? [s, e] : null;
     }).filter(Boolean);
     onSave({
+      monthlyRates: {
+        baja: parseFloat(rateBaja) || 1450,
+        media: parseFloat(rateMedia) || 1590,
+        alta: parseFloat(rateAlta) || 1790
+      },
       specialNightFlat: parseFloat(flat) || 80,
       extraGuestPerMonth: parseFloat(extraGuest) || 60,
       petPerMonth: parseFloat(petMonth) || 0,
@@ -6393,17 +6414,174 @@ const LsCfgPanel = ({
       easterRanges: parsed
     });
   };
+
+  // Precios efectivos en vivo: base + suplemento
+  const effPrice = (base, supp) => {
+    const b = parseFloat(base) || 0;
+    const s = parseFloat(supp) || 0;
+    return (b + s).toLocaleString('es-ES') + ' €';
+  };
+  const APTS = [{
+    id: 'vm',
+    label: 'Hestía Mar',
+    val: suppMar,
+    set: setSuppMar
+  }, {
+    id: 'vt',
+    label: 'Hestía Thalassa',
+    val: suppTha,
+    set: setSuppTha
+  }, {
+    id: 'vs',
+    label: 'Hestía Salinas',
+    val: suppSal,
+    set: setSuppSal
+  }];
   return /*#__PURE__*/React.createElement("div", {
     className: "ls-cfg-wrap"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hc-bulk-toggle",
     onClick: () => setOpen(o => !o)
-  }, /*#__PURE__*/React.createElement("span", null, "Configuraci\xF3n \xB7 noches especiales"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, "Estancia larga \xB7 tarifas mensuales y condiciones"), /*#__PURE__*/React.createElement("span", {
     className: `hc-bulk-chev${open ? ' open' : ''}`
   }, "\u25BC")), open && /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-body"
   }, /*#__PURE__*/React.createElement("div", {
+    className: "ls-cfg-section-title"
+  }, "Tarifas base mensuales (\u20AC/mes)"), /*#__PURE__*/React.createElement("div", {
+    className: "ls-cfg-rates-table"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ls-cfg-rates-head"
+  }, /*#__PURE__*/React.createElement("span", null, "Temporada"), /*#__PURE__*/React.createElement("span", null, "Meses"), /*#__PURE__*/React.createElement("span", null, "\u20AC base / mes")), [{
+    key: 'baja',
+    label: 'T. baja',
+    months: 'Nov · Dic · Ene · Feb · Mar · Abr',
+    val: rateBaja,
+    set: setRateBaja
+  }, {
+    key: 'media',
+    label: 'T. media',
+    months: 'Oct · May',
+    val: rateMedia,
+    set: setRateMedia
+  }, {
+    key: 'alta',
+    label: 'T. alta',
+    months: 'Jun · Sep',
+    val: rateAlta,
+    set: setRateAlta
+  }].map(({
+    key,
+    label,
+    months,
+    val,
+    set
+  }) => /*#__PURE__*/React.createElement("div", {
+    key: key,
+    className: "ls-cfg-rates-row"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ls-cfg-season-lbl"
+  }, label), /*#__PURE__*/React.createElement("span", {
+    className: "ls-cfg-season-months"
+  }, months), /*#__PURE__*/React.createElement("div", {
+    className: "hc-input-row",
+    style: {
+      gap: 4
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    step: "10",
+    className: "pe-input pe-input-num",
+    style: {
+      width: 80
+    },
+    value: val,
+    onChange: e => set(e.target.value)
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "pe-suffix"
+  }, "\u20AC/mes")))), /*#__PURE__*/React.createElement("div", {
+    className: "ls-cfg-rates-row ls-cfg-special-row"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ls-cfg-season-lbl"
+  }, "Noches especiales"), /*#__PURE__*/React.createElement("span", {
+    className: "ls-cfg-season-months"
+  }, "Navidad (23 dic\u20136 ene) \xB7 Semana Santa"), /*#__PURE__*/React.createElement("div", {
+    className: "hc-input-row",
+    style: {
+      gap: 4
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    step: "1",
+    className: "pe-input pe-input-num",
+    style: {
+      width: 80
+    },
+    value: flat,
+    onChange: e => setFlat(e.target.value)
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "pe-suffix"
+  }, "\u20AC/noche")))), /*#__PURE__*/React.createElement("div", {
+    className: "ls-cfg-section-title",
+    style: {
+      marginTop: 20
+    }
+  }, "Precio efectivo por apartamento"), /*#__PURE__*/React.createElement("div", {
+    className: "ls-cfg-apt-table"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ls-cfg-apt-head"
+  }, /*#__PURE__*/React.createElement("span", null, "Apartamento"), /*#__PURE__*/React.createElement("span", null, "Suplemento"), /*#__PURE__*/React.createElement("span", null, "T. baja"), /*#__PURE__*/React.createElement("span", null, "T. media"), /*#__PURE__*/React.createElement("span", null, "T. alta")), APTS.map(({
+    id,
+    label,
+    val,
+    set
+  }) => /*#__PURE__*/React.createElement("div", {
+    key: id,
+    className: "ls-cfg-apt-row"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ls-cfg-apt-name"
+  }, label), /*#__PURE__*/React.createElement("div", {
+    className: "hc-input-row",
+    style: {
+      gap: 4
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "pe-suffix",
+    style: {
+      marginRight: 2
+    }
+  }, "+"), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    step: "10",
+    className: "pe-input pe-input-num",
+    style: {
+      width: 70
+    },
+    value: val,
+    onChange: e => set(e.target.value)
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "pe-suffix"
+  }, "\u20AC/mes")), /*#__PURE__*/React.createElement("span", {
+    className: "ls-cfg-eff"
+  }, effPrice(rateBaja, val)), /*#__PURE__*/React.createElement("span", {
+    className: "ls-cfg-eff"
+  }, effPrice(rateMedia, val)), /*#__PURE__*/React.createElement("span", {
+    className: "ls-cfg-eff ls-cfg-eff-alta"
+  }, effPrice(rateAlta, val))))), /*#__PURE__*/React.createElement("p", {
+    className: "hc-preview",
+    style: {
+      marginTop: 8
+    }
+  }, "Precio efectivo = tarifa base + suplemento \xB7 calculado pro-rata diario"), /*#__PURE__*/React.createElement("div", {
+    className: "ls-cfg-section-title",
+    style: {
+      marginTop: 20
+    }
+  }, "Suplementos y fechas especiales"), /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-row",
     style: {
       alignItems: 'flex-start',
@@ -6414,27 +6592,7 @@ const LsCfgPanel = ({
     className: "hc-bulk-field"
   }, /*#__PURE__*/React.createElement("label", {
     className: "hc-lbl"
-  }, "Precio noche especial (\u20AC fijo)"), /*#__PURE__*/React.createElement("div", {
-    className: "hc-input-row"
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
-    step: "1",
-    className: "pe-input pe-input-num",
-    style: {
-      width: 70
-    },
-    value: flat,
-    onChange: e => setFlat(e.target.value)
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "pe-suffix"
-  }, "\u20AC/n"), /*#__PURE__*/React.createElement("span", {
-    className: "hc-preview"
-  }, "Navidad (23 dic\u20136 ene) y Semana Santa se cobran a ", flat, "\u20AC fijo por noche"))), /*#__PURE__*/React.createElement("div", {
-    className: "hc-bulk-field"
-  }, /*#__PURE__*/React.createElement("label", {
-    className: "hc-lbl"
-  }, "Suplemento hu\xE9sped extra (\u20AC/mes)"), /*#__PURE__*/React.createElement("div", {
+  }, "Hu\xE9sped extra (\u20AC/mes)"), /*#__PURE__*/React.createElement("div", {
     className: "hc-input-row"
   }, /*#__PURE__*/React.createElement("input", {
     type: "number",
@@ -6450,11 +6608,11 @@ const LsCfgPanel = ({
     className: "pe-suffix"
   }, "\u20AC/mes"), /*#__PURE__*/React.createElement("span", {
     className: "hc-preview"
-  }, "Base 2 hu\xE9spedes \xB7 cada hu\xE9sped adicional ", extraGuest, "\u20AC/mes"))), /*#__PURE__*/React.createElement("div", {
+  }, "Base 2 hu\xE9spedes \xB7 cada hu\xE9sped extra ", extraGuest, "\u20AC/mes"))), /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-field"
   }, /*#__PURE__*/React.createElement("label", {
     className: "hc-lbl"
-  }, "Suplemento mascota (\u20AC/mes)"), /*#__PURE__*/React.createElement("div", {
+  }, "Mascota (\u20AC/mes)"), /*#__PURE__*/React.createElement("div", {
     className: "hc-input-row"
   }, /*#__PURE__*/React.createElement("input", {
     type: "number",
@@ -6470,66 +6628,7 @@ const LsCfgPanel = ({
     className: "pe-suffix"
   }, "\u20AC/mes"), /*#__PURE__*/React.createElement("span", {
     className: "hc-preview"
-  }, "Se a\xF1ade al total si el hu\xE9sped trae mascota"))), /*#__PURE__*/React.createElement("div", {
-    className: "hc-bulk-field",
-    style: {
-      flex: '0 0 100%'
-    }
-  }, /*#__PURE__*/React.createElement("label", {
-    className: "hc-lbl"
-  }, "Suplemento mensual por apartamento (\u20AC/mes)"), /*#__PURE__*/React.createElement("div", {
-    className: "hc-input-row",
-    style: {
-      gap: 12,
-      flexWrap: 'wrap'
-    }
-  }, [{
-    id: 'vm',
-    label: 'Mar',
-    val: suppMar,
-    set: setSuppMar
-  }, {
-    id: 'vt',
-    label: 'Thalassa',
-    val: suppTha,
-    set: setSuppTha
-  }, {
-    id: 'vs',
-    label: 'Salinas',
-    val: suppSal,
-    set: setSuppSal
-  }].map(({
-    id,
-    label,
-    val,
-    set
-  }) => /*#__PURE__*/React.createElement("div", {
-    key: id,
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: 4
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "hc-preview",
-    style: {
-      minWidth: 60
-    }
-  }, label), /*#__PURE__*/React.createElement("input", {
-    type: "number",
-    min: "0",
-    step: "1",
-    className: "pe-input pe-input-num",
-    style: {
-      width: 70
-    },
-    value: val,
-    onChange: e => set(e.target.value)
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "pe-suffix"
-  }, "\u20AC/mes"))), /*#__PURE__*/React.createElement("span", {
-    className: "hc-preview"
-  }, "Se suma a la tarifa base mensual de ese apartamento (pro-rata diario)"))), /*#__PURE__*/React.createElement("div", {
+  }, "Se a\xF1ade si el hu\xE9sped trae mascota"))), /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-field",
     style: {
       flex: 1,
@@ -6549,7 +6648,7 @@ const LsCfgPanel = ({
     className: "hc-bulk-foot"
   }, /*#__PURE__*/React.createElement("span", {
     className: "hc-bulk-preview"
-  }, "Los cambios afectan al c\xE1lculo de todos los huecos en pantalla."), /*#__PURE__*/React.createElement("button", {
+  }, "Los cambios se guardan en prices.json y afectan a todos los c\xE1lculos de estancia larga."), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-primary",
     disabled: saving,

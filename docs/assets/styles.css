@@ -20924,17 +20924,75 @@ img[src*="apt-vt-gallery-"] {
 .ls-bk-total-val { font-size: 15px; font-weight: 700; }
 .ls-bk-special   { color: #B85800; font-weight: 600; }
 .ls-cfg-wrap { border: 1px solid rgba(42,15,46,.10); border-radius: 8px; overflow: hidden; }
+
+/* ── Long-stay admin config panel ──────────────────────────── */
+.ls-cfg-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--ink-soft, #7A5A72);
+  margin-bottom: 8px;
+}
+.ls-cfg-rates-table,
+.ls-cfg-apt-table {
+  border: 1px solid rgba(42,15,46,.10);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.ls-cfg-rates-head,
+.ls-cfg-apt-head {
+  display: grid;
+  background: rgba(42,15,46,.05);
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-soft, #7A5A72);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  border-bottom: 1px solid rgba(42,15,46,.10);
+}
+.ls-cfg-rates-head { grid-template-columns: 90px 1fr 130px; gap: 8px; }
+.ls-cfg-apt-head   { grid-template-columns: 140px 160px 1fr 1fr 1fr; gap: 8px; }
+.ls-cfg-rates-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 130px;
+  gap: 8px;
   align-items: center;
   padding: 8px 12px;
-  background: rgba(42,15,46,.05);
-  font-size: 12.5px;
+  border-bottom: 1px solid rgba(42,15,46,.06);
+  font-size: 13px;
+}
+.ls-cfg-rates-row:last-child { border-bottom: none; }
+.ls-cfg-special-row { background: rgba(184,88,0,.04); }
+.ls-cfg-season-lbl   { font-weight: 600; color: var(--ink, #3D1A35); }
+.ls-cfg-season-months { font-size: 11.5px; color: var(--ink-soft, #7A5A72); }
+.ls-cfg-apt-row {
+  display: grid;
+  grid-template-columns: 140px 160px 1fr 1fr 1fr;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(42,15,46,.06);
+  font-size: 13px;
+}
+.ls-cfg-apt-row:last-child { border-bottom: none; }
+.ls-cfg-apt-name { font-weight: 600; color: var(--ink, #3D1A35); }
+.ls-cfg-eff {
+  font-size: 13px;
   font-weight: 600;
   color: var(--ink, #3D1A35);
-  border-top: 1px solid rgba(42,15,46,.10);
+  text-align: right;
+  padding-right: 4px;
 }
-.ls-bk-total-val { font-size: 15px; font-weight: 700; }
-.ls-bk-special   { color: #B85800; font-weight: 600; }
-.ls-cfg-wrap { border: 1px solid rgba(42,15,46,.10); border-radius: 8px; overflow: hidden; }
+.ls-cfg-eff-alta { color: #3A7A45; }
+@media (max-width: 680px) {
+  .ls-cfg-rates-head { grid-template-columns: 80px 1fr 110px; font-size: 10px; }
+  .ls-cfg-rates-row  { grid-template-columns: 80px 1fr 110px; font-size: 12px; }
+  .ls-cfg-apt-head   { grid-template-columns: 100px 130px 1fr 1fr 1fr; font-size: 10px; }
+  .ls-cfg-apt-row    { grid-template-columns: 100px 130px 1fr 1fr 1fr; font-size: 12px; }
+  .ls-cfg-apt-name   { font-size: 12px; }
+}
 
 /* ── Long-stay homepage strip ───────────────────────────────── */
 .lss-strip {
