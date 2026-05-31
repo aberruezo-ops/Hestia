@@ -3397,8 +3397,12 @@ const DIRECT_PERKS = {
     id: 'descuento',
     icon: '🎁',
     stat: '−30%',
-    t: 'Descuentos por estancia larga.',
-    d: '−3 % a partir de 7 noches · −15 % a partir de 15 · −30 % a partir de 29. Aplicables en temporadas elegibles.'
+    t: 'Estancias largas desde 1.450 €/mes.',
+    d: 'Mínimo 29 noches, disponible de septiembre a junio. Sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.',
+    link: {
+      href: 'estancias-largas.html',
+      label: 'Ver tarifas y disponibilidad →'
+    }
   }, {
     id: 'guia',
     icon: '🗝',
@@ -3452,8 +3456,12 @@ const DIRECT_PERKS = {
     id: 'descuento',
     icon: '🎁',
     stat: '−30%',
-    t: 'Long-stay discounts.',
-    d: '−3 % from 7 nights · −15 % from 15 · −30 % from 29. Apply in eligible seasons.'
+    t: 'Long stays from €1,450/month.',
+    d: 'Minimum 29 nights, available September to June. No commission, formal lease signed by both parties, 100% direct contact.',
+    link: {
+      href: 'estancias-largas.html',
+      label: 'See rates and availability →'
+    }
   }, {
     id: 'guia',
     icon: '🗝',
@@ -3662,7 +3670,11 @@ const DirectBookingModal = ({
     className: "dbm-card-t"
   }, cur.t), /*#__PURE__*/React.createElement("p", {
     className: "dbm-card-d"
-  }, cur.d)), /*#__PURE__*/React.createElement("button", {
+  }, cur.d), cur.link && /*#__PURE__*/React.createElement("a", {
+    href: cur.link.href,
+    className: "dbm-card-link",
+    onClick: onClose
+  }, cur.link.label)), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "dbm-nav",
     onClick: goNext,

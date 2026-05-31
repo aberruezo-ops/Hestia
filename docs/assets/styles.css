@@ -13354,6 +13354,21 @@ footer,
 @keyframes dbm-staggered {
   to { opacity: 1; transform: translateY(0); }
 }
+.dbm-card-link {
+  display: inline-block;
+  margin-top: 12px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--perk-c1, var(--ber));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: opacity .2s;
+  opacity: 0;
+  animation: dbm-staggered .55s cubic-bezier(.22, 1, .36, 1) .42s forwards;
+}
+.dbm-card-link:hover { opacity: 0.75; }
 .dbm-icon {
   font-size: 30px;
   line-height: 1;
