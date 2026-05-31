@@ -2361,7 +2361,39 @@ const useSectionGlow = () => {
   }, []);
 };
 
-Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, useSectionGlow, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt, DateRangePicker, _drAvail, _drAdj, _drDiff, _drFmtDate });
+// _calcLsTotal — tarifa larga estancia (≥29 noches, Sep–Jun).
+// Pro-rata diario: base mensual / días del mes, día a día.
+// Noches de Navidad y Semana Santa: tarifa especial plana.
+const _calcLsTotal = (start, end, guests, withPets, aptId) => {
+  if (!start || !end || start >= end) return null;
+  const lsCfg          = (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || { specialNightFlat: 80, easterRanges: [] };
+  const flat           = lsCfg.specialNightFlat  || 80;
+  const easter         = lsCfg.easterRanges       || [];
+  const extraGuestPerMo = lsCfg.extraGuestPerMonth || 0;
+  const petPerMo       = lsCfg.petPerMonth        || 0;
+  const aptSupp        = ((lsCfg.aptSupplement || {})[aptId] || 0);
+  const extraGuests    = Math.max(0, (guests || 1) - 2);
+  const isXmas = (ds) => { const m = +ds.slice(5,7), d = +ds.slice(8,10); return (m===12&&d>=23)||(m===1&&d<=6); };
+  const isEast = (ds) => easter.some(([s,e]) => ds>=s && ds<=e);
+  const adj = (ds, n) => { const dt = new Date(ds+'T12:00:00Z'); dt.setUTCDate(dt.getUTCDate()+n); return dt.toISOString().slice(0,10); };
+  let total = 0, specialN = 0, cur = start;
+  while (cur < end) {
+    const mo = +cur.slice(5,7);
+    if (mo === 7 || mo === 8) return null;
+    const yr = +cur.slice(0,4);
+    const dim = new Date(yr, mo, 0).getDate();
+    const rate = (mo===6||mo===9) ? 1790 : (mo===5||mo===10) ? 1590 : 1450;
+    const special = isXmas(cur) || isEast(cur);
+    total += special ? flat : (rate + aptSupp) / dim;
+    if (extraGuests > 0) total += extraGuests * extraGuestPerMo / dim;
+    if (withPets)        total += petPerMo / dim;
+    if (special) specialN++;
+    cur = adj(cur, 1);
+  }
+  return { total: Math.round(total), specialNights: specialN };
+};
+
+Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, useSectionGlow, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt, DateRangePicker, _drAvail, _drAdj, _drDiff, _drFmtDate, _calcLsTotal });
 
 // ================================================================
 // DirectBookingPerks — sección "Reserva directa, una mejor manera"
