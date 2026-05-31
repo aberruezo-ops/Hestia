@@ -12,12 +12,12 @@ const APT_GUIDE_PIN = { vm: 'HVM2016', vt: 'HVT2019', vs: 'HVS2021' };
 // en apt.gallery_imgs[]. Las captions se sacan de apt[lang].gallery_captions[].
 const ROOM_PHOTOS = {
   vm: {
-    salon:        [0, 1, 2, 20, 21],      // 'Salón · ...'
+    salon:        [0, 1, 2, 19, 20, 21],  // 'Salón · ...' (19=lámpara sofá, movida desde urbanización)
     cocina:       [5, 6, 7],              // 'Cocina · ...'
-    dormitorios:  [8, 9, 10, 24],         // 'Dormitorio · ...'
-    banos:        [14, 15, 16],           // 'Baño · ...'
-    terraza:      [11, 12, 13],           // 'Terraza · ...'
-    urbanizacion: [3, 17, 18, 19],        // 'Piscina', 'Zona duchas'
+    dormitorios:  [8, 9, 24],             // 'Dormitorio · ...' (eliminado índice 10 = simétrico)
+    banos:        [13, 14, 15, 16],       // 'Baño · ...' (13=Baño 1 LED verde, movido desde terraza)
+    terraza:      [11, 12],               // 'Terraza · ...' (13 movido a baños)
+    urbanizacion: [3, 17, 18],            // 'Piscina', 'Zona duchas' (19 movido a salón)
   },
   vt: {
     salon:        [4, 7, 9],
@@ -58,8 +58,9 @@ const GUIDE_SECTIONS = [
   { id: 'terraza',      es: 'Tu terraza',       en: 'Your terrace' },
   { id: 'urbanizacion', es: 'Tu urbanización',  en: 'Your complex' },
   { id: 'alrededores',  es: 'Alrededores',      en: 'Surroundings' },
-  { id: 'lugares',      es: 'Lugares de interés', en: 'Places of interest' },
-  { id: 'sabores',      es: 'Sabores',          en: 'Tastes' },
+  { id: 'lugares',         es: 'Lugares de interés',  en: 'Places of interest' },
+  { id: 'supermercados',   es: 'Supermercados',       en: 'Supermarkets' },
+  { id: 'sabores',         es: 'Sabores',             en: 'Tastes' },
   { id: 'pueblos',      es: 'Pueblos y cultura', en: 'Towns & culture' },
   { id: 'mar-playas',   es: 'Mar y playas',     en: 'Sea & beaches' },
   { id: 'planes',       es: 'Planes y excursiones', en: 'Things to do' },
@@ -73,7 +74,8 @@ const GUIDE_SECTIONS = [
 // Mapeo de qué categorías van en cada sección temática.
 // El bloque 'alrededores' queda solo con intro/mapa/fuentes oficiales.
 const SECTION_CATS = {
-  sabores:     ['restaurant', 'bar', 'fish', 'super', 'celiac'],
+  supermercados: ['super'],
+  sabores:     ['restaurant', 'bar', 'fish', 'celiac'],
   pueblos:     ['town', 'bookshop'],
   'mar-playas':['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
   planes:      ['gem', 'water', 'adventure', 'trek', 'leisure', 'bodega'],
@@ -1122,9 +1124,13 @@ const GUIDE_SHARED = {
       title: 'Alrededores y recomendaciones',
       intro: 'Sería imposible ofrecer un catálogo completo de recomendaciones sobre los alrededores de Hestía, pues sería infinito. Para empezar a explorar te recomendamos estas fuentes:',
       disclaimer_title: 'Sobre lo que leerás a continuación',
-      disclaimer: 'Todas las distancias y tiempos de coche son aproximados y se calculan desde la urbanización Vera Playa como punto común a las tres Hestías (que están a menos de 2 km entre sí). Conviene comprobar la ruta exacta en Google Maps antes de salir, sobre todo en verano cuando el tráfico se carga. Los horarios de bares, restaurantes y comercios cambian con la temporada y pueden alterarse sin previo aviso — siempre que puedas, llama o consulta su web antes de ir. Las valoraciones (⭐) y los "best" que destacamos son recomendaciones personales y dependen del momento: un sitio brillante en mayo puede estar saturado en agosto, un chiringuito impecable en temporada puede cerrar en invierno, y el aforo o el tiempo cambian la experiencia. Tómalo como guía de salida, no como verdad absoluta.',
+      disclaimer: [
+        'Distancias y tiempos en coche calculados desde Vera Playa, punto común a las tres Hestías (a menos de 2 km entre sí). Comprueba la ruta exacta en Google Maps antes de salir, especialmente en verano cuando el tráfico se carga.',
+        'Los horarios de bares, restaurantes y comercios cambian con la temporada y pueden alterarse sin previo aviso — llama o consulta su web antes de ir.',
+        'Las valoraciones (⭐) y los "best" que destacamos son recomendaciones personales que dependen del momento: un sitio brillante en mayo puede estar saturado en agosto, y el aforo o el tiempo cambian la experiencia. Tómalo como guía de salida, no como verdad absoluta.',
+      ],
       sources: [
-        '¡Pregúntanos! Te ayudaremos con mucho gusto según nuestra experiencia y la de nuestros huéspedes como tú. Más abajo tienes una pequeña muestra…',
+        '¡Pregúntanos! Te ayudaremos con mucho gusto según nuestra experiencia y la de huéspedes como tú. A continuación tienes una pequeña muestra…',
       ],
       sites: {
         title: 'Sitios web de recomendación turística',
@@ -1225,7 +1231,7 @@ const GUIDE_SHARED = {
       title: 'Ayúdanos a mejorar',
       paras: [
         'Tu experiencia importa más que ninguna palabra que podamos escribir aquí. Si algo no ha estado a la altura, dínoslo antes de irte y lo solucionamos.',
-        'Y si te gustó tu Hestía, una reseña honesta en Booking o Airbnb nos ayuda muchísimo a seguir mejorando.',
+        'Y si te gustó tu Hestía, una reseña honesta en Booking, Airbnb o Google Maps nos ayuda muchísimo a seguir mejorando.',
       ],
     },
   },
@@ -1445,7 +1451,7 @@ const GUIDE_SHARED = {
       title: 'Help us improve',
       paras: [
         'Your experience matters more than anything we can write here. If something isn\'t up to scratch, tell us before you leave and we\'ll fix it.',
-        'And if you loved your Hestía, an honest review on Booking or Airbnb really helps us keep improving.',
+        'And if you loved your Hestía, an honest review on Booking, Airbnb or Google Maps really helps us keep improving.',
       ],
     },
   },
@@ -1476,7 +1482,7 @@ const GUIDE_BY_APT = {
           'Cuidado con el aire acondicionado por la noche y las corrientes de aire.',
           'Ponte el despertador un día no muy nublado para ver el amanecer.',
         ]},
-        { id: 'banos', title: 'Tus baños', body: 'Tus dos baños: uno con columna de hidroterapia y espejo de cromoterapia, y otro con ducha y luz de colores. Productos básicos para tus primeros días, aromas, velas, secador, botiquín y más.', recs: [
+        { id: 'banos', title: 'Tus baños', body: 'Tus dos baños: uno con columna de hidroterapia y espejo de cromoterapia, y otro con ducha. Productos básicos para tus primeros días: aromas, velas, secador, botiquín y más.', recs: [
           'Haz un uso prudente y responsable del agua. El agua es vida.',
           'Las toallas del baño no son para la playa ni para la piscina.',
           'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.',
@@ -1488,7 +1494,7 @@ const GUIDE_BY_APT = {
           'Recoge el toldo y los cojines cuando sople aire, llueva o vayas a salir.',
           'Usa velas para crear el ambiente perfecto.',
         ]},
-        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Tu urbanización es textil — para olvidarse del mundo y cerca de todo. Tu plaza subterránea es la nº 160. Tienes entrada y salida controladas por código, plazas de garaje interiores en la planta -2, zona de parking exterior y portal de acceso peatonal (nº 14, 1.A) en planta 0, piscina y jacuzzi en planta -2, atajo peatonal a la playa y zonas verdes.', recs: [
+        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Tu urbanización es textil. Tu plaza subterránea es la nº 160, en la planta -2. También dispones de zona de parking exterior y portal de acceso peatonal (nº 14, 1.A) en planta 0. En tu urbanización también podrás disfrutar de piscina y jacuzzi en planta -2, por donde hay un atajo peatonal de salida hacia la playa y zonas verdes.', recs: [
           'Para ir a la piscina o playa baja en el ascensor a la planta -2, atravesa el parking y baja hasta la planta a nivel del suelo del bloque de enfrente. Allí encontrarás la zona de aguas.',
           'Junto a la piscina tienes un atajo para ir y volver de la playa.',
           'Respeta las zonas comunes y las normas de la urbanización.',
@@ -1516,7 +1522,7 @@ const GUIDE_BY_APT = {
           'Watch out for night-time A/C and drafts.',
           'Set the alarm one clear morning to catch the sunrise.',
         ]},
-        { id: 'banos', title: 'Your bathrooms', body: 'Your two bathrooms: one with a hydrotherapy column and chromotherapy mirror, the other with a shower and colour lighting. Basic products for your first days, plus scents, candles, hairdryer, first-aid kit and more.', recs: [
+        { id: 'banos', title: 'Your bathrooms', body: 'Your two bathrooms: one with a hydrotherapy column and chromotherapy mirror, the other with a shower. Basic products for your first days: scents, candles, hairdryer, first-aid kit and more.', recs: [
           'Use water responsibly. Water is life.',
           'Bathroom towels are not for the beach or the pool.',
           'Be careful with creams and make-up — they damage textiles.',
@@ -1528,7 +1534,7 @@ const GUIDE_BY_APT = {
           'Roll up the awning and put away cushions when it\'s windy, raining, or you go out.',
           'Use candles to create the perfect atmosphere.',
         ]},
-        { id: 'urbanizacion', title: 'Your complex', body: 'Your complex is textile-free — to forget the world while staying near everything. Your underground parking space is nº 160. Code-controlled entrance, indoor parking on floor -2, outdoor parking and pedestrian entrance (nº 14, 1.A) on ground floor, pool and jacuzzi on floor -2, pedestrian shortcut to the beach and green areas.', recs: [
+        { id: 'urbanizacion', title: 'Your complex', body: 'Your complex is textile-free. Your underground parking space is nº 160, on floor -2. You also have outdoor parking and a pedestrian entrance (nº 14, 1.A) on ground floor. In your complex you can also enjoy the pool and jacuzzi on floor -2, where there is a pedestrian shortcut to the beach and green areas.', recs: [
           'To reach the pool or beach: take the elevator down to floor -2, cross the car park, then go down to the ground level of the block opposite. Pool area is in the middle of the complex.',
           'Next to the pool you have a shortcut to and from the beach.',
           'Respect the common areas and the complex rules.',
@@ -1771,7 +1777,7 @@ const GuideMap = ({ lang, apt }) => {
 const CompactPlaceItem = ({ p, lang }) => {
   const [open, setOpen] = React.useState(false);
   const hasDetails = p.desc || p.specialty || p.best || p.tip ||
-                     p.services || p.access || p.level ||
+                     p.services || p.access || p.level || p.url ||
                      (Array.isArray(p.events) && p.events.length > 0);
   const mapHref = p.url
     || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ' Almería')}`;
@@ -4748,7 +4754,9 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             {s.surroundings.disclaimer && (
               <aside className="ag-disclaimer" role="note">
                 <span className="ag-disclaimer-tag">{s.surroundings.disclaimer_title}</span>
-                <p className="ag-disclaimer-body">{s.surroundings.disclaimer}</p>
+                {Array.isArray(s.surroundings.disclaimer)
+                  ? <ul className="ag-disclaimer-list">{s.surroundings.disclaimer.map((item, i) => <li key={i}>{item}</li>)}</ul>
+                  : <p className="ag-disclaimer-body">{s.surroundings.disclaimer}</p>}
               </aside>
             )}
 
@@ -4794,15 +4802,33 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <h2 className="ag-h2">{lang === 'es' ? 'Lugares de interés' : 'Places of interest'}</h2>
             <p className="ag-para">
               {lang === 'es'
-                ? 'Hay cientos. Esto es un atlas — los imprescindibles del Levante almeriense y la Región de Murcia, organizados por tipo. Cada línea tiene la distancia, cómo llegar y un enlace donde puedes leer más. Cuando un lugar forma parte de un itinerario o se describe mejor en otra sección, te llevamos allí.'
-                : 'There are hundreds. This is an atlas — the must-sees of the Almería Levante and Murcia Region, sorted by type. Each line includes the distance, how to get there, and a link to read more. When a place is part of an itinerary or described in detail in another section, we point you there.'}
+                ? 'Estos son los imprescindibles del Levante almeriense y la Región de Murcia, organizados por tipo y con la distancia desde Hestía.'
+                : 'The must-sees of the Almería Levante and Murcia Region, sorted by type and with the distance from Hestía.'}
             </p>
             <PlacesOfInterestAtlas lang={lang} />
           </section>
 
+          {/* Supermercados */}
+          <section id="ag-supermercados" className="ag-section">
+            <span className="ag-section-num">14</span>
+            <h2 className="ag-h2">{lang === 'es' ? 'Supermercados' : 'Supermarkets'}</h2>
+            <p className="ag-para">
+              {lang === 'es'
+                ? 'Los supermercados más cercanos a Hestía, de menor a mayor distancia.'
+                : 'The nearest supermarkets to Hestía, from closest to furthest.'}
+            </p>
+            {SECTION_CATS.supermercados.map(catId => {
+              const cat = CATEGORIES.find(c => c.id === catId);
+              if (!cat) return null;
+              const inCat = PLACES.filter(p => p.cat === catId);
+              if (!inCat.length) return null;
+              return <CatGroup key={catId} cat={cat} places={inCat} lang={lang} />;
+            })}
+          </section>
+
           {/* Sabores · comer y beber */}
           <section id="ag-sabores" className="ag-section">
-            <span className="ag-section-num">14</span>
+            <span className="ag-section-num">15</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Sabores' : 'Tastes'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -4824,7 +4850,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Pueblos y cultura */}
           <section id="ag-pueblos" className="ag-section">
-            <span className="ag-section-num">15</span>
+            <span className="ag-section-num">16</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -4845,11 +4871,11 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Mar y playas */}
           <section id="ag-mar-playas" className="ag-section">
-            <span className="ag-section-num">16</span>
+            <span className="ag-section-num">17</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mar y playas' : 'Sea & beaches'}</h2>
             <p className="ag-para">
               {lang === 'es'
-                ? 'Las mejores playas y calas — desde las más accesibles a las vírgenes que exigen caminar un rato. Servicios, acceso y la mejor hora para ir en cada época del año.'
+                ? 'Las mejores playas y calas — desde las más accesibles a las más vírgenes que exigen caminar un rato. Servicios, acceso y la mejor hora para ir en cada época del año.'
                 : 'The best beaches and coves — from the easily accessible to the wild ones that require a walk. Services, access and the best hour to visit in each season.'}
             </p>
             <Top5BeachesBand places={PLACES} lang={lang} />
@@ -4864,7 +4890,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Planes y excursiones */}
           <section id="ag-planes" className="ag-section">
-            <span className="ag-section-num">17</span>
+            <span className="ag-section-num">18</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Planes y excursiones' : 'Things to do'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -4883,7 +4909,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Mercados y compras */}
           <section id="ag-mercados" className="ag-section">
-            <span className="ag-section-num">18</span>
+            <span className="ag-section-num">19</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mercados y compras' : 'Markets & shops'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -4901,7 +4927,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Salud y servicios · centros de salud, vets, fisio, farmacias */}
           <section id="ag-salud" className="ag-section">
-            <span className="ag-section-num">19</span>
+            <span className="ag-section-num">20</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Salud y servicios' : 'Health & services'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -4919,7 +4945,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Movilidad · gasolineras y carga eléctrica */}
           <section id="ag-movilidad" className="ag-section">
-            <span className="ag-section-num">20</span>
+            <span className="ag-section-num">21</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -4941,7 +4967,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-telefonos" className="ag-section">
-            <span className="ag-section-num">21</span>
+            <span className="ag-section-num">22</span>
             <h2 className="ag-h2">{s.phones.title}</h2>
             <table className="ag-phones-table">
               <tbody>
@@ -4956,7 +4982,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-feedback" className="ag-section">
-            <span className="ag-section-num">22</span>
+            <span className="ag-section-num">23</span>
             <h2 className="ag-h2">{s.feedback.title}</h2>
             {s.feedback.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
           </section>
