@@ -633,6 +633,11 @@
             "vm": 0,
             "vt": 0,
             "vs": 0
+        },
+        "monthlyRates": {
+            "baja": 1450,
+            "media": 1590,
+            "alta": 1790
         }
     }
 }

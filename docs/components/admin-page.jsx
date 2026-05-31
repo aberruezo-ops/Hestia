@@ -4959,21 +4959,30 @@ const _hcEffPrice = (base, ov) => {
 
 // Config panel for long-stay special night flat rate + Easter date ranges
 const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
+  const mr = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+  const [rateBaja,   setRateBaja  ] = React.useState(String(mr.baja  || 1450));
+  const [rateMedia,  setRateMedia ] = React.useState(String(mr.media || 1590));
+  const [rateAlta,   setRateAlta  ] = React.useState(String(mr.alta  || 1790));
   const [flat,       setFlat      ] = React.useState(String(lsCfg.specialNightFlat   || 80));
   const [extraGuest, setExtraGuest] = React.useState(String(lsCfg.extraGuestPerMonth || 60));
   const [petMonth,   setPetMonth  ] = React.useState(String(lsCfg.petPerMonth        || 50));
-  const suppIn = (lsCfg.aptSupplement || {});
+  const suppIn = lsCfg.aptSupplement || {};
   const [suppMar, setSuppMar] = React.useState(String(suppIn.vm || 0));
   const [suppTha, setSuppTha] = React.useState(String(suppIn.vt || 0));
   const [suppSal, setSuppSal] = React.useState(String(suppIn.vs || 0));
   const [ranges,     setRanges    ] = React.useState(
     (lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n')
   );
+
   React.useEffect(() => {
+    const r = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+    setRateBaja(String(r.baja  || 1450));
+    setRateMedia(String(r.media || 1590));
+    setRateAlta(String(r.alta  || 1790));
     setFlat(String(lsCfg.specialNightFlat   || 80));
     setExtraGuest(String(lsCfg.extraGuestPerMonth || 60));
     setPetMonth(String(lsCfg.petPerMonth        || 50));
-    const s = (lsCfg.aptSupplement || {});
+    const s = lsCfg.aptSupplement || {};
     setSuppMar(String(s.vm || 0));
     setSuppTha(String(s.vt || 0));
     setSuppSal(String(s.vs || 0));
@@ -4986,6 +4995,11 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
       return s && e ? [s, e] : null;
     }).filter(Boolean);
     onSave({
+      monthlyRates: {
+        baja:  parseFloat(rateBaja)  || 1450,
+        media: parseFloat(rateMedia) || 1590,
+        alta:  parseFloat(rateAlta)  || 1790,
+      },
       specialNightFlat:   parseFloat(flat)       || 80,
       extraGuestPerMonth: parseFloat(extraGuest) || 60,
       petPerMonth:        parseFloat(petMonth)   || 0,
@@ -4994,62 +5008,114 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
         vt: parseFloat(suppTha) || 0,
         vs: parseFloat(suppSal) || 0,
       },
-      easterRanges:       parsed,
+      easterRanges: parsed,
     });
   };
+
+  // Precios efectivos en vivo: base + suplemento
+  const effPrice = (base, supp) => {
+    const b = parseFloat(base) || 0;
+    const s = parseFloat(supp) || 0;
+    return (b + s).toLocaleString('es-ES') + ' €';
+  };
+
+  const APTS = [
+    { id: 'vm', label: 'Hestía Mar',      val: suppMar, set: setSuppMar },
+    { id: 'vt', label: 'Hestía Thalassa', val: suppTha, set: setSuppTha },
+    { id: 'vs', label: 'Hestía Salinas',  val: suppSal, set: setSuppSal },
+  ];
 
   return (
     <div className="ls-cfg-wrap">
       <button type="button" className="hc-bulk-toggle" onClick={() => setOpen(o => !o)}>
-        <span>Configuración · noches especiales</span>
+        <span>Estancia larga · tarifas mensuales y condiciones</span>
         <span className={`hc-bulk-chev${open ? ' open' : ''}`}>▼</span>
       </button>
       {open && (
         <div className="hc-bulk-body">
-          <div className="hc-bulk-row" style={{ alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
-            <div className="hc-bulk-field">
-              <label className="hc-lbl">Precio noche especial (€ fijo)</label>
-              <div className="hc-input-row">
-                <input type="number" min="0" step="1" className="pe-input pe-input-num" style={{ width: 70 }}
+
+          {/* BLOQUE 1 — Tarifas base por temporada */}
+          <div className="ls-cfg-section-title">Tarifas base mensuales (€/mes)</div>
+          <div className="ls-cfg-rates-table">
+            <div className="ls-cfg-rates-head">
+              <span>Temporada</span>
+              <span>Meses</span>
+              <span>€ base / mes</span>
+            </div>
+            {[
+              { key: 'baja',  label: 'T. baja',  months: 'Nov · Dic · Ene · Feb · Mar · Abr', val: rateBaja,  set: setRateBaja  },
+              { key: 'media', label: 'T. media', months: 'Oct · May',                           val: rateMedia, set: setRateMedia },
+              { key: 'alta',  label: 'T. alta',  months: 'Jun · Sep',                           val: rateAlta,  set: setRateAlta  },
+            ].map(({ key, label, months, val, set }) => (
+              <div key={key} className="ls-cfg-rates-row">
+                <span className="ls-cfg-season-lbl">{label}</span>
+                <span className="ls-cfg-season-months">{months}</span>
+                <div className="hc-input-row" style={{ gap: 4 }}>
+                  <input type="number" min="0" step="10" className="pe-input pe-input-num" style={{ width: 80 }}
+                    value={val} onChange={e => set(e.target.value)}/>
+                  <span className="pe-suffix">€/mes</span>
+                </div>
+              </div>
+            ))}
+            <div className="ls-cfg-rates-row ls-cfg-special-row">
+              <span className="ls-cfg-season-lbl">Noches especiales</span>
+              <span className="ls-cfg-season-months">Navidad (23 dic–6 ene) · Semana Santa</span>
+              <div className="hc-input-row" style={{ gap: 4 }}>
+                <input type="number" min="0" step="1" className="pe-input pe-input-num" style={{ width: 80 }}
                   value={flat} onChange={e => setFlat(e.target.value)}/>
-                <span className="pe-suffix">€/n</span>
-                <span className="hc-preview">Navidad (23 dic–6 ene) y Semana Santa se cobran a {flat}€ fijo por noche</span>
+                <span className="pe-suffix">€/noche</span>
               </div>
             </div>
+          </div>
+
+          {/* BLOQUE 2 — Precio efectivo por apartamento */}
+          <div className="ls-cfg-section-title" style={{ marginTop: 20 }}>Precio efectivo por apartamento</div>
+          <div className="ls-cfg-apt-table">
+            <div className="ls-cfg-apt-head">
+              <span>Apartamento</span>
+              <span>Suplemento</span>
+              <span>T. baja</span>
+              <span>T. media</span>
+              <span>T. alta</span>
+            </div>
+            {APTS.map(({ id, label, val, set }) => (
+              <div key={id} className="ls-cfg-apt-row">
+                <span className="ls-cfg-apt-name">{label}</span>
+                <div className="hc-input-row" style={{ gap: 4 }}>
+                  <span className="pe-suffix" style={{ marginRight: 2 }}>+</span>
+                  <input type="number" min="0" step="10" className="pe-input pe-input-num" style={{ width: 70 }}
+                    value={val} onChange={e => set(e.target.value)}/>
+                  <span className="pe-suffix">€/mes</span>
+                </div>
+                <span className="ls-cfg-eff">{effPrice(rateBaja,  val)}</span>
+                <span className="ls-cfg-eff">{effPrice(rateMedia, val)}</span>
+                <span className="ls-cfg-eff ls-cfg-eff-alta">{effPrice(rateAlta,  val)}</span>
+              </div>
+            ))}
+          </div>
+          <p className="hc-preview" style={{ marginTop: 8 }}>
+            Precio efectivo = tarifa base + suplemento · calculado pro-rata diario
+          </p>
+
+          {/* BLOQUE 3 — Suplementos por huésped/mascota y Semana Santa */}
+          <div className="ls-cfg-section-title" style={{ marginTop: 20 }}>Suplementos y fechas especiales</div>
+          <div className="hc-bulk-row" style={{ alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
             <div className="hc-bulk-field">
-              <label className="hc-lbl">Suplemento huésped extra (€/mes)</label>
+              <label className="hc-lbl">Huésped extra (€/mes)</label>
               <div className="hc-input-row">
                 <input type="number" min="0" step="1" className="pe-input pe-input-num" style={{ width: 70 }}
                   value={extraGuest} onChange={e => setExtraGuest(e.target.value)}/>
                 <span className="pe-suffix">€/mes</span>
-                <span className="hc-preview">Base 2 huéspedes · cada huésped adicional {extraGuest}€/mes</span>
+                <span className="hc-preview">Base 2 huéspedes · cada huésped extra {extraGuest}€/mes</span>
               </div>
             </div>
             <div className="hc-bulk-field">
-              <label className="hc-lbl">Suplemento mascota (€/mes)</label>
+              <label className="hc-lbl">Mascota (€/mes)</label>
               <div className="hc-input-row">
                 <input type="number" min="0" step="1" className="pe-input pe-input-num" style={{ width: 70 }}
                   value={petMonth} onChange={e => setPetMonth(e.target.value)}/>
                 <span className="pe-suffix">€/mes</span>
-                <span className="hc-preview">Se añade al total si el huésped trae mascota</span>
-              </div>
-            </div>
-            <div className="hc-bulk-field" style={{ flex: '0 0 100%' }}>
-              <label className="hc-lbl">Suplemento mensual por apartamento (€/mes)</label>
-              <div className="hc-input-row" style={{ gap: 12, flexWrap: 'wrap' }}>
-                {[
-                  { id: 'vm', label: 'Mar',      val: suppMar, set: setSuppMar },
-                  { id: 'vt', label: 'Thalassa', val: suppTha, set: setSuppTha },
-                  { id: 'vs', label: 'Salinas',  val: suppSal, set: setSuppSal },
-                ].map(({ id, label, val, set }) => (
-                  <div key={id} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                    <span className="hc-preview" style={{ minWidth: 60 }}>{label}</span>
-                    <input type="number" min="0" step="1" className="pe-input pe-input-num" style={{ width: 70 }}
-                      value={val} onChange={e => set(e.target.value)}/>
-                    <span className="pe-suffix">€/mes</span>
-                  </div>
-                ))}
-                <span className="hc-preview">Se suma a la tarifa base mensual de ese apartamento (pro-rata diario)</span>
+                <span className="hc-preview">Se añade si el huésped trae mascota</span>
               </div>
             </div>
             <div className="hc-bulk-field" style={{ flex: 1, minWidth: 260 }}>
@@ -5062,8 +5128,9 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
                 placeholder={'2026-03-26 2026-04-06\n2027-04-08 2027-04-19'}/>
             </div>
           </div>
+
           <div className="hc-bulk-foot">
-            <span className="hc-bulk-preview">Los cambios afectan al cálculo de todos los huecos en pantalla.</span>
+            <span className="hc-bulk-preview">Los cambios se guardan en prices.json y afectan a todos los cálculos de estancia larga.</span>
             <button type="button" className="pe-btn pe-btn-primary" disabled={saving} onClick={handleSave}>
               {saving ? 'Guardando…' : 'Guardar configuración'}
             </button>
