@@ -23,6 +23,15 @@ const CF_SITE_TAG = '770c05669c6b45ea8f1026576fe7dcce';
 // URL del Worker de Cloudflare que escribe en Google Sheets.
 // Despliega workers/sheets-sync/ y pega la URL aquí.
 const SHEETS_WORKER_URL = 'https://hestia-sheets-sync.SUSTITUIR.workers.dev';
+
+// URL del Worker de pago (workers/pago/). Sustituir tras wrangler deploy.
+const PAGO_WORKER_URL = 'https://hestia-pago.SUSTITUIR.workers.dev';
+const PAGO_PAGE_URL = 'https://www.hestiayourhome.com/pago.html';
+const APT_FULL = {
+  vm: 'Hestía Mar',
+  vt: 'Hestía Thalassa',
+  vs: 'Hestía Salinas'
+};
 const apiHeaders = token => ({
   'Authorization': `Bearer ${token}`,
   'Accept': 'application/vnd.github+json',
@@ -4361,6 +4370,130 @@ const LeilaTab = ({
   })());
 };
 
+// ── PagoLinkInline ─────────────────────────────────────────────────────────────
+// Panel inline que aparece al pulsar "💳" en una prereserva.
+// Genera la URL de pago y permite copiarla o enviarla por WhatsApp.
+const PagoLinkInline = ({
+  pr,
+  noches,
+  onClose
+}) => {
+  const deposit = pr.reserva || Math.round((Number(pr.ingreso_total) || 0) * 0.20);
+  const resto = (Number(pr.ingreso_total) || 0) - deposit;
+  const aptShort = APT_NAMES[pr.apt] || pr.apt;
+  const aptFull = APT_FULL[pr.apt] || aptShort;
+  const params = new URLSearchParams({
+    apt: pr.apt,
+    checkin: pr.entrada,
+    checkout: pr.salida,
+    nights: String(noches),
+    total: String(pr.ingreso_total || 0),
+    deposit: String(deposit),
+    guests: String(pr.huespedes || 2),
+    name: pr.responsable || ''
+  });
+  const url = `${PAGO_PAGE_URL}?${params.toString()}`;
+  const [copied, setCopied] = React.useState(false);
+  const copyUrl = () => {
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2200);
+    });
+  };
+  const waMsg = lang => {
+    const greeting = lang === 'en' ? `Hi ${pr.responsable || 'there'},` : `Hola ${pr.responsable || ''},`;
+    const apt = lang === 'en' ? `Hestía ${aptShort}` : `Hestía ${aptShort}`;
+    const body = lang === 'en' ? `Here's the link to pay your ${deposit}€ deposit and confirm your stay at ${apt} (${pr.entrada} → ${pr.salida}):\n${url}\n\nThe remaining ${resto}€ is paid on arrival.` : `Aquí tienes el link para pagar la señal de ${deposit}€ y confirmar tu reserva en ${apt} (${pr.entrada} → ${pr.salida}):\n${url}\n\nEl resto (${resto}€) se abona a la llegada.`;
+    return encodeURIComponent(`${greeting}\n${body}`);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    style: {
+      background: 'rgba(42,15,46,.04)',
+      border: '1px solid rgba(42,15,46,.12)',
+      borderRadius: 8,
+      padding: '16px 18px',
+      marginTop: 10,
+      position: 'relative'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: onClose,
+    style: {
+      position: 'absolute',
+      top: 10,
+      right: 12,
+      background: 'none',
+      border: 'none',
+      fontSize: 16,
+      cursor: 'pointer',
+      color: '#7A5A72'
+    },
+    title: "Cerrar"
+  }, "\u2715"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      fontWeight: 700,
+      letterSpacing: '.06em',
+      textTransform: 'uppercase',
+      color: '#7A5A72',
+      marginBottom: 10
+    }
+  }, "Link de pago"), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 8,
+      marginBottom: 6,
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 11.5,
+      color: '#3D1A35',
+      background: 'rgba(42,15,46,.07)',
+      borderRadius: 5,
+      padding: '4px 10px',
+      wordBreak: 'break-all',
+      flex: 1,
+      minWidth: 0
+    }
+  }, url)), /*#__PURE__*/React.createElement("div", {
+    style: {
+      fontSize: 12,
+      color: '#7A5A72',
+      marginBottom: 12
+    }
+  }, "Se\xF1al: ", /*#__PURE__*/React.createElement("strong", {
+    style: {
+      color: '#C87A45'
+    }
+  }, deposit, "\u20AC"), " \xB7 Resto al llegar: ", /*#__PURE__*/React.createElement("strong", null, resto, "\u20AC")), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: 8,
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-primary",
+    onClick: copyUrl
+  }, copied ? '✓ Copiado' : 'Copiar link'), /*#__PURE__*/React.createElement("a", {
+    className: "pe-btn pe-btn-ghost",
+    style: {
+      textDecoration: 'none'
+    },
+    href: `https://wa.me/34620316370?text=${waMsg('es')}`,
+    target: "_blank",
+    rel: "noopener"
+  }, "WhatsApp Alex \uD83C\uDDEA\uD83C\uDDF8"), /*#__PURE__*/React.createElement("a", {
+    className: "pe-btn pe-btn-ghost",
+    style: {
+      textDecoration: 'none'
+    },
+    href: `https://wa.me/34654138251?text=${waMsg('en')}`,
+    target: "_blank",
+    rel: "noopener"
+  }, "WhatsApp Fran \uD83C\uDDEC\uD83C\uDDE7")));
+};
+
 // ── PrereservasTab ─────────────────────────────────────────────────────────────
 // Borradores de reserva almacenados en docs/data/prereservas.json (repo público).
 // El botón "→ Reservas" escribe en reservas.json del repo privado y elimina el
@@ -4376,6 +4509,7 @@ const PrereservasTab = ({
   const [isErr, setIsErr] = React.useState(false);
   const [syncing, setSyncing] = React.useState(null);
   const [showForm, setShowForm] = React.useState(false);
+  const [pagoFor, setPagoFor] = React.useState(null);
   const emptyForm = {
     apt: 'vm',
     responsable: '',
@@ -4748,8 +4882,19 @@ const PrereservasTab = ({
     onClick: () => syncItem(pr)
   }, syncing === pr.id ? '…' : '→ Reservas'), /*#__PURE__*/React.createElement("button", {
     className: "pe-btn pe-btn-ghost",
+    style: {
+      marginRight: 4
+    },
+    onClick: () => setPagoFor(pagoFor?.id === pr.id ? null : pr),
+    title: "Generar link de pago"
+  }, "\uD83D\uDCB3"), /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-ghost",
     onClick: () => deleteItem(pr.id)
-  }, "\u2715"))))))));
+  }, "\u2715")))))), pagoFor && /*#__PURE__*/React.createElement(PagoLinkInline, {
+    pr: pagoFor,
+    noches: noches(pagoFor),
+    onClose: () => setPagoFor(null)
+  })));
 };
 const ReservasTab = ({
   token,
