@@ -398,43 +398,39 @@ const Header = ({ mode, scrolled, lang }) => {
       {vitruvio}
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
         <nav className="mobile-nav">
-          <div className="mn-label eyebrow">{lang === 'es' ? 'Hestías' : 'Hestías'}</div>
-          <div className="mn-apts-grid">
-            <div className="mn-apt-row mn-vm">
+          <div className="mn-apts">
+            <div className="mn-apt-card mn-vm">
               <NavLink href={NAV_PAGES.mar} className="mn-apt-link">
-                <span className="mn-num">01</span>
-                <span className="mn-name">Hestía <em>Mar</em></span>
+                <span className="mn-apt-num">01</span>
+                <span className="mn-apt-name">Hestía <em>Mar</em></span>
+                <span className="mn-apt-arrow">→</span>
               </NavLink>
             </div>
-            <div className="mn-apt-row mn-vt">
+            <div className="mn-apt-card mn-vt">
               <NavLink href={NAV_PAGES.thalassa} className="mn-apt-link">
-                <span className="mn-num">02</span>
-                <span className="mn-name">Hestía <em>Thalassa</em></span>
+                <span className="mn-apt-num">02</span>
+                <span className="mn-apt-name">Hestía <em>Thalassa</em></span>
+                <span className="mn-apt-arrow">→</span>
               </NavLink>
             </div>
-            <div className="mn-apt-row mn-vs">
+            <div className="mn-apt-card mn-vs">
               <NavLink href={NAV_PAGES.salinas} className="mn-apt-link">
-                <span className="mn-num">03</span>
-                <span className="mn-name">Hestía <em>Salinas</em></span>
+                <span className="mn-apt-num">03</span>
+                <span className="mn-apt-name">Hestía <em>Salinas</em></span>
+                <span className="mn-apt-arrow">→</span>
               </NavLink>
             </div>
           </div>
-          <div className="mn-sep"/>
-          <NavLink href={NAV_PAGES.porqueHestia} className="mn-mid-why mn-mid-why-full">
-            → {lang === 'es' ? '¿Por qué Hestía?' : 'Why Hestía?'}
-          </NavLink>
-          <div className="mn-sep"/>
-          <div className="mn-pages-row">
-            <NavLink href={NAV_PAGES.nosotros} className="mn-page">{t.nav[4]}</NavLink>
-            <NavLink href={NAV_PAGES.opiniones} className="mn-page">{t.nav[5]}</NavLink>
-            <NavLink href={NAV_PAGES.noticias} className="mn-page">{t.nav[7]}</NavLink>
-            <NavLink href={NAV_PAGES.estanciasLargas} className="mn-page">{t.nav[9]}</NavLink>
+          <div className="mn-links">
+            <NavLink href={NAV_PAGES.porqueHestia} className="mn-link">{lang === 'es' ? '¿Por qué Hestía?' : 'Why Hestía?'}</NavLink>
+            <NavLink href={NAV_PAGES.nosotros} className="mn-link">{t.nav[4]}</NavLink>
+            <NavLink href={NAV_PAGES.opiniones} className="mn-link">{t.nav[5]}</NavLink>
+            <NavLink href={NAV_PAGES.noticias} className="mn-link">{t.nav[7]}</NavLink>
+            <NavLink href={NAV_PAGES.estanciasLargas} className="mn-link">{t.nav[9]}</NavLink>
+            <NavLink href={NAV_PAGES.ventajas} className="mn-link">✓ {lang === 'es' ? 'Ventajas' : 'Perks'}</NavLink>
           </div>
-          <div className="mn-cta-row">
-            <NavLink href={NAV_PAGES.reservas} className="mobile-cta">{t.cta_nav} →</NavLink>
-            <NavLink href={NAV_PAGES.ventajas} className="mn-mid-ventajas mn-ventajas-inline">
-              ✓ {lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks'}
-            </NavLink>
+          <div className="mn-actions">
+            <NavLink href={NAV_PAGES.reservas} className="mn-cta-primary">{t.cta_nav} →</NavLink>
           </div>
           <div className="mn-contacts">
             <a href="https://wa.me/34620316370" target="_blank" rel="noopener">
