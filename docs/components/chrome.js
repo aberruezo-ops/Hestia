@@ -520,66 +520,66 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("nav", {
     className: "mobile-nav"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "mn-label eyebrow"
-  }, lang === 'es' ? 'Hestías' : 'Hestías'), /*#__PURE__*/React.createElement("div", {
-    className: "mn-apts-grid"
+    className: "mn-apts"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "mn-apt-row mn-vm"
+    className: "mn-apt-card mn-vm"
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.mar,
     className: "mn-apt-link"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "mn-num"
+    className: "mn-apt-num"
   }, "01"), /*#__PURE__*/React.createElement("span", {
-    className: "mn-name"
-  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Mar")))), /*#__PURE__*/React.createElement("div", {
-    className: "mn-apt-row mn-vt"
+    className: "mn-apt-name"
+  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Mar")), /*#__PURE__*/React.createElement("span", {
+    className: "mn-apt-arrow"
+  }, "\u2192"))), /*#__PURE__*/React.createElement("div", {
+    className: "mn-apt-card mn-vt"
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.thalassa,
     className: "mn-apt-link"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "mn-num"
+    className: "mn-apt-num"
   }, "02"), /*#__PURE__*/React.createElement("span", {
-    className: "mn-name"
-  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Thalassa")))), /*#__PURE__*/React.createElement("div", {
-    className: "mn-apt-row mn-vs"
+    className: "mn-apt-name"
+  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Thalassa")), /*#__PURE__*/React.createElement("span", {
+    className: "mn-apt-arrow"
+  }, "\u2192"))), /*#__PURE__*/React.createElement("div", {
+    className: "mn-apt-card mn-vs"
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.salinas,
     className: "mn-apt-link"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "mn-num"
+    className: "mn-apt-num"
   }, "03"), /*#__PURE__*/React.createElement("span", {
-    className: "mn-name"
-  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Salinas"))))), /*#__PURE__*/React.createElement("div", {
-    className: "mn-sep"
-  }), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.porqueHestia,
-    className: "mn-mid-why mn-mid-why-full"
-  }, "\u2192 ", lang === 'es' ? '¿Por qué Hestía?' : 'Why Hestía?'), /*#__PURE__*/React.createElement("div", {
-    className: "mn-sep"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "mn-pages-row"
+    className: "mn-apt-name"
+  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Salinas")), /*#__PURE__*/React.createElement("span", {
+    className: "mn-apt-arrow"
+  }, "\u2192")))), /*#__PURE__*/React.createElement("div", {
+    className: "mn-links"
   }, /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.porqueHestia,
+    className: "mn-link"
+  }, lang === 'es' ? '¿Por qué Hestía?' : 'Why Hestía?'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.nosotros,
-    className: "mn-page"
+    className: "mn-link"
   }, t.nav[4]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.opiniones,
-    className: "mn-page"
+    className: "mn-link"
   }, t.nav[5]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.noticias,
-    className: "mn-page"
+    className: "mn-link"
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.estanciasLargas,
-    className: "mn-page"
-  }, t.nav[9])), /*#__PURE__*/React.createElement("div", {
-    className: "mn-cta-row"
+    className: "mn-link"
+  }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.ventajas,
+    className: "mn-link"
+  }, "\u2713 ", lang === 'es' ? 'Ventajas' : 'Perks')), /*#__PURE__*/React.createElement("div", {
+    className: "mn-actions"
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
-    className: "mobile-cta"
-  }, t.cta_nav, " \u2192"), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.ventajas,
-    className: "mn-mid-ventajas mn-ventajas-inline"
-  }, "\u2713 ", lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks')), /*#__PURE__*/React.createElement("div", {
+    className: "mn-cta-primary"
+  }, t.cta_nav, " \u2192")), /*#__PURE__*/React.createElement("div", {
     className: "mn-contacts"
   }, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370",
