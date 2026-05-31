@@ -1613,6 +1613,19 @@ const PLACES = [
   lat: 36.7605,
   lng: -2.1075
 }, {
+  id: 'los-barqueros',
+  name: 'Los Barqueros · Paseos en barco desde Las Negras',
+  desc: 'Salidas desde Las Negras, el rincón más salvaje del Parque Natural de Cabo de Gata. Paseos y rutas en barco por las calas vírgenes del parque, accesibles únicamente desde el mar. La zona de Las Negras–San Pedro guarda algunas de las aguas más transparentes de toda la costa mediterránea. Distancia: ~45 min desde Vera Playa por carretera.',
+  specialty: 'Calas totalmente vírgenes sin acceso terrestre · fondo marino intacto · paisaje volcánico único.',
+  level: 'Fácil · todas las edades · reserva previa recomendada',
+  phone: '642 026 020',
+  cat: 'water',
+  url: 'https://losbarqueros.com',
+  lat: 36.8720,
+  lng: -2.0150,
+  featured: true,
+  featuredOrder: 4
+}, {
   id: 'mojacar-fiesta',
   name: 'Mojácar Fiesta · actividades',
   desc: 'Catálogo amplio de planes en Mojácar (kayak, paddle surf, paseos, alquiler de barcos).',
@@ -4512,7 +4525,10 @@ const CompactPlaceItem = ({
     className: "ag-place-level"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-place-level-tag"
-  }, lang === 'es' ? 'Dificultad:' : 'Level:'), ' ', p.level), /*#__PURE__*/React.createElement("a", {
+  }, lang === 'es' ? 'Dificultad:' : 'Level:'), ' ', p.level), p.phone && /*#__PURE__*/React.createElement("a", {
+    className: "ag-place-phone",
+    href: `tel:${p.phone.replace(/\s/g, '')}`
+  }, "\uD83D\uDCDE ", p.phone), /*#__PURE__*/React.createElement("a", {
     className: "ag-place-link",
     href: mapHref,
     target: "_blank",
