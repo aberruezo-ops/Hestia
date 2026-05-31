@@ -1056,6 +1056,27 @@ const AptPriceTeaser = ({ apt, lang }) => {
               </span>
             </div>
           ))}
+          {(() => {
+            const nightlyMonthly = base * 30;
+            const lsRate = 1450;
+            const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
+            return (
+              <div className="apt-pt-row apt-pt-ls">
+                <span className="apt-pt-season">
+                  {lang === 'es' ? 'Estancia larga · +29 noches' : 'Long stay · 29+ nights'}
+                  <span className="apt-pt-ls-tag">Sep–Jun</span>
+                </span>
+                <span className="apt-pt-ls-price">
+                  <span className="apt-pt-ls-reg">~{nightlyMonthly.toLocaleString('es-ES')} €/mes</span>
+                  <span className="apt-pt-ls-rate">
+                    {lang === 'es' ? 'desde ' : 'from '}
+                    <strong>1.450 €/mes</strong>
+                    <span className="apt-pt-ls-save">−{savings}%</span>
+                  </span>
+                </span>
+              </div>
+            );
+          })()}
         </div>
         <a href={waHref} target="_blank" rel="noopener" className="apt-pt-wa-btn">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

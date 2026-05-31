@@ -772,6 +772,12 @@ const HomePriceStrip = ({ lang }) => {
 
 const LongStayStrip = ({ lang }) => {
   const es = lang === 'es';
+  const v2 = window.PRICES_V2;
+  const bases = v2?.apts ? Object.values(v2.apts).map(a => a.base).filter(Boolean) : [];
+  const minBase = bases.length ? Math.min(...bases) : 83;
+  const nightlyMonthly = minBase * 30;
+  const lsRate = 1450;
+  const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
   return (
     <section className="lss-strip" aria-label={es ? 'Estancias largas' : 'Long stays'}>
       <div className="lss-inner">
@@ -789,7 +795,12 @@ const LongStayStrip = ({ lang }) => {
         <div className="lss-right">
           <div className="lss-pills">
             <span className="lss-pill">{es ? '29+ noches' : '29+ nights'}</span>
-            <span className="lss-pill">{es ? 'desde 1.450€/mes' : 'from €1,450/month'}</span>
+            <span className="lss-pill lss-pill-compare">
+              <span className="lss-pill-reg">~{nightlyMonthly.toLocaleString('es-ES')}€/mes</span>
+              <span className="lss-pill-arrow">→</span>
+              <span className="lss-pill-ls">{es ? `desde 1.450€/mes` : `from €1,450/mo`}</span>
+              <span className="lss-pill-save">−{savings}%</span>
+            </span>
             <span className="lss-pill">WiFi fibra</span>
             <span className="lss-pill">{es ? 'Contrato formal' : 'Formal contract'}</span>
           </div>
