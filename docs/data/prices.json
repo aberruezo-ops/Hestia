@@ -1,643 +1,643 @@
 {
-    "_doc": "Hestía pricing source of truth. Edited via /admin.html (GitHub PAT). Read by web at runtime via fetch('data/prices.json'). All dates are local Europe/Madrid (no timezone offsets).",
-    "version": 1,
-    "updatedAt": "2026-05-28T20:59:46.480Z",
-    "currency": "EUR",
-    "apts": {
-        "vm": {
-            "name": "Hestía Vera Mar",
-            "vft": "VFT/AL/01580",
-            "base": 88
-        },
-        "vt": {
-            "name": "Hestía Vera Thalassa",
-            "vft": "VFT/AL/05535",
-            "base": 85
-        },
-        "vs": {
-            "name": "Hestía Vera Salinas",
-            "vft": "VTF/AL/07056",
-            "base": 83
-        }
+  "_doc": "Hestía pricing source of truth. Edited via /admin.html (GitHub PAT). Read by web at runtime via fetch('data/prices.json'). All dates are local Europe/Madrid (no timezone offsets).",
+  "version": 1,
+  "updatedAt": "2026-05-28T20:59:46.480Z",
+  "currency": "EUR",
+  "apts": {
+    "vm": {
+      "name": "Hestía Vera Mar",
+      "vft": "VFT/AL/01580",
+      "base": 88
     },
-    "seasons": {
-        "baja": {
-            "label": "Baja",
-            "multiplier": 1,
-            "color": "#9ca3af"
-        },
-        "media": {
-            "label": "Media",
-            "multiplier": 1.2,
-            "color": "#10b981"
-        },
-        "alta": {
-            "label": "Alta",
-            "multiplier": 1.8,
-            "color": "#f59e0b"
-        },
-        "critica": {
-            "label": "Crítica",
-            "multiplier": 2.4,
-            "color": "#ef4444"
-        }
+    "vt": {
+      "name": "Hestía Vera Thalassa",
+      "vft": "VFT/AL/05535",
+      "base": 85
     },
-    "rules": {
-        "extraGuestPerNight": 5,
-        "guestSupplements": [
-            {
-                "from": 1,
-                "to": 2,
-                "perNight": 1,
-                "label": "1 → 2 huéspedes"
-            },
-            {
-                "from": 2,
-                "to": 3,
-                "perNight": 4,
-                "label": "2 → 3 huéspedes"
-            },
-            {
-                "from": 3,
-                "to": 4,
-                "perNight": 4,
-                "label": "3 → 4 huéspedes"
-            },
-            {
-                "from": 4,
-                "to": 5,
-                "perNight": 5,
-                "label": "4 → 5 huéspedes"
-            },
-            {
-                "from": 5,
-                "to": 6,
-                "perNight": 3,
-                "label": "5 → 6 huéspedes"
-            }
-        ],
-        "minNights": 3,
-        "twoNightFloor": 2,
-        "criticalSeasonMinNights": 7,
-        "imminentDays": 7,
-        "shortStayPricing": [
-            {
-                "nights": 2,
-                "basedOnNights": 4,
-                "discount": 0,
-                "label": "2 noches: precio de 4 noches (sin descuento)"
-            },
-            {
-                "nights": 3,
-                "basedOnNights": 4,
-                "discount": 1,
-                "label": "3 noches: precio de 5 − 10 €"
-            },
-            {
-                "nights": 4,
-                "basedOnNights": 5,
-                "discount": 50,
-                "label": "4 noches: precio de 6 − 20 €"
-            }
-        ],
-        "directDiscount": 0,
-        "petPerNight": 10,
-        "petMax": 50,
-        "petFlatFee": 50,
-        "extras": [
-            {
-                "id": "huespedAdicional",
-                "label_es": "Huésped adicional (incluye sábanas y toallas)",
-                "label_en": "Extra guest (includes sheets and towels)",
-                "price": 18,
-                "unit": "noche"
-            },
-            {
-                "id": "toallas",
-                "label_es": "Juego de toallas adicional",
-                "label_en": "Extra towel set",
-                "price": 6,
-                "unit": "set"
-            },
-            {
-                "id": "sabanasIndividual",
-                "label_es": "Juego de sábanas adicional · individual",
-                "label_en": "Extra sheet set · single",
-                "price": 10,
-                "unit": "set"
-            },
-            {
-                "id": "sabanasDoble",
-                "label_es": "Juego de sábanas adicional · doble",
-                "label_en": "Extra sheet set · double",
-                "price": 12,
-                "unit": "set"
-            },
-            {
-                "id": "trona",
-                "label_es": "Trona",
-                "label_en": "Baby high chair",
-                "price": 5,
-                "unit": "estancia"
-            },
-            {
-                "id": "cuna",
-                "label_es": "Cuna (sábanas incluidas)",
-                "label_en": "Baby cot (sheets included)",
-                "price": 20,
-                "unit": "estancia"
-            },
-            {
-                "id": "earlyCheckin",
-                "label_es": "Early check-in · 10 €/h antes de 15:00 (o 40 € desde 10:00)",
-                "label_en": "Early check-in · 10 €/h before 15:00 (or 40 € from 10:00)",
-                "price": 10,
-                "unit": "hora"
-            },
-            {
-                "id": "lateCheckout",
-                "label_es": "Late check-out · 10 €/h después de 11:00 (o 40 € hasta 18:00)",
-                "label_en": "Late check-out · 10 €/h after 11:00 (or 40 € until 18:00)",
-                "price": 10,
-                "unit": "hora"
-            },
-            {
-                "id": "lateCheckin23",
-                "label_es": "Late check-in presencial · 21:00 → 23:00",
-                "label_en": "Late check-in (in person) · 21:00 → 23:00",
-                "price": 20,
-                "unit": "estancia"
-            },
-            {
-                "id": "lateCheckin00",
-                "label_es": "Late check-in presencial · 23:00 → 00:00",
-                "label_en": "Late check-in (in person) · 23:00 → 00:00",
-                "price": 40,
-                "unit": "estancia"
-            }
-        ],
-        "stayDiscounts": [
-            {
-                "minNights": 7,
-                "pct": 0.03,
-                "excludeSeasons": [
-                    "critica"
-                ],
-                "label": "−3 % a partir de 7 noches"
-            },
-            {
-                "minNights": 15,
-                "pct": 0.15,
-                "excludeSeasons": [
-                    "alta",
-                    "critica"
-                ],
-                "label": "−15 % a partir de 15 noches"
-            },
-            {
-                "minNights": 29,
-                "pct": 0.3,
-                "excludeSeasons": [
-                    "alta",
-                    "critica"
-                ],
-                "label": "−30 % a partir de 29 noches"
-            }
-        ],
-        "bridgeBumpsOneStep": true,
-        "seasonLadder": [
-            "baja",
-            "media",
-            "alta",
-            "critica"
-        ]
-    },
-    "calendar": {
-        "2026": {
-            "seasons": {
-                "baja": [
-                    [
-                        "2026-01-01",
-                        "2026-03-28"
-                    ],
-                    [
-                        "2026-04-07",
-                        "2026-04-30"
-                    ],
-                    [
-                        "2026-11-03",
-                        "2026-12-21"
-                    ]
-                ],
-                "media": [
-                    [
-                        "2026-05-01",
-                        "2026-06-11"
-                    ],
-                    [
-                        "2026-09-16",
-                        "2026-11-02"
-                    ]
-                ],
-                "alta": [
-                    [
-                        "2026-06-12",
-                        "2026-07-09"
-                    ],
-                    [
-                        "2026-09-01",
-                        "2026-09-15"
-                    ]
-                ],
-                "critica": [
-                    [
-                        "2026-07-10",
-                        "2026-08-31"
-                    ]
-                ]
-            },
-            "specials": {
-                "semSanta": {
-                    "season": "media",
-                    "ranges": [
-                        [
-                            "2026-03-29",
-                            "2026-04-06"
-                        ]
-                    ],
-                    "label": "Semana Santa"
-                },
-                "navidad": {
-                    "season": "media",
-                    "ranges": [
-                        [
-                            "2026-12-22",
-                            "2026-12-31"
-                        ]
-                    ],
-                    "label": "Navidad"
-                }
-            },
-            "bridges": [
-                {
-                    "name": "Reyes",
-                    "ranges": [
-                        [
-                            "2026-01-05",
-                            "2026-01-06"
-                        ]
-                    ]
-                },
-                {
-                    "name": "Día del Trabajador",
-                    "ranges": [
-                        [
-                            "2026-05-01",
-                            "2026-05-03"
-                        ]
-                    ]
-                },
-                {
-                    "name": "Hispanidad",
-                    "ranges": [
-                        [
-                            "2026-10-10",
-                            "2026-10-12"
-                        ]
-                    ]
-                },
-                {
-                    "name": "Todos los Santos",
-                    "ranges": [
-                        [
-                            "2026-10-31",
-                            "2026-11-02"
-                        ]
-                    ]
-                },
-                {
-                    "name": "Constitución + Inmaculada",
-                    "ranges": [
-                        [
-                            "2026-12-05",
-                            "2026-12-08"
-                        ]
-                    ]
-                }
-            ]
-        },
-        "2027": {
-            "seasons": {
-                "baja": [
-                    [
-                        "2027-01-01",
-                        "2027-03-28"
-                    ],
-                    [
-                        "2027-04-07",
-                        "2027-04-30"
-                    ],
-                    [
-                        "2027-11-03",
-                        "2027-12-21"
-                    ]
-                ],
-                "media": [
-                    [
-                        "2027-05-01",
-                        "2027-06-11"
-                    ],
-                    [
-                        "2027-09-16",
-                        "2027-11-02"
-                    ]
-                ],
-                "alta": [
-                    [
-                        "2027-06-12",
-                        "2027-07-08"
-                    ],
-                    [
-                        "2027-09-01",
-                        "2027-09-15"
-                    ]
-                ],
-                "critica": [
-                    [
-                        "2027-07-09",
-                        "2027-08-31"
-                    ]
-                ]
-            },
-            "specials": {
-                "semSanta": {
-                    "season": "media",
-                    "ranges": [
-                        [
-                            "2027-03-29",
-                            "2027-04-06"
-                        ]
-                    ],
-                    "label": "Semana Santa"
-                },
-                "navidad": {
-                    "season": "media",
-                    "ranges": [
-                        [
-                            "2027-12-22",
-                            "2027-12-31"
-                        ]
-                    ],
-                    "label": "Navidad"
-                }
-            },
-            "bridges": [
-                {
-                    "name": "Reyes",
-                    "ranges": [
-                        [
-                            "2027-01-05",
-                            "2027-01-06"
-                        ]
-                    ]
-                },
-                {
-                    "name": "Día del Trabajador",
-                    "ranges": [
-                        [
-                            "2027-05-01",
-                            "2027-05-03"
-                        ]
-                    ]
-                },
-                {
-                    "name": "Hispanidad",
-                    "ranges": [
-                        [
-                            "2027-10-10",
-                            "2027-10-12"
-                        ]
-                    ]
-                },
-                {
-                    "name": "Todos los Santos",
-                    "ranges": [
-                        [
-                            "2027-10-31",
-                            "2027-11-02"
-                        ]
-                    ]
-                },
-                {
-                    "name": "Constitución + Inmaculada",
-                    "ranges": [
-                        [
-                            "2027-12-05",
-                            "2027-12-08"
-                        ]
-                    ]
-                }
-            ]
-        }
-    },
-    "bookingHorizon": {
-        "lastCheckinDate": "2027-03-20",
-        "reason": "Cierre antes de Semana Santa 2027 (Domingo de Ramos: 2027-03-21)"
-    },
-    "manual_blocks": {
-        "vm": [],
-        "vt": [],
-        "vs": []
-    },
-    "gapOverrides": {
-        "vm|2026-06-27": {
-            "apt": "vm",
-            "start": "2026-06-27",
-            "end": "2026-07-01",
-            "nights": 4,
-            "type": "fixed",
-            "value": 140,
-            "lastMinute": true
-        },
-        "vm|2026-05-29": {
-            "apt": "vm",
-            "start": "2026-05-29",
-            "end": "2026-06-13",
-            "nights": 15,
-            "type": "discount",
-            "value": 20,
-            "lastMinute": true
-        },
-        "vm|2026-07-08": {
-            "apt": "vm",
-            "start": "2026-07-08",
-            "end": "2026-07-12",
-            "nights": 4,
-            "type": "fixed",
-            "value": 180,
-            "lastMinute": true
-        },
-        "vm|2026-08-30": {
-            "apt": "vm",
-            "start": "2026-08-30",
-            "end": "2026-09-08",
-            "nights": 9,
-            "type": "discount",
-            "value": 15
-        },
-        "vt|2026-06-03": {
-            "apt": "vt",
-            "start": "2026-06-03",
-            "end": "2026-06-06",
-            "nights": 3,
-            "type": "fixed",
-            "value": 95,
-            "lastMinute": true
-        },
-        "vt|2026-06-21": {
-            "apt": "vt",
-            "start": "2026-06-21",
-            "end": "2026-06-28",
-            "nights": 7,
-            "type": "fixed",
-            "value": 100,
-            "minNights": 6,
-            "lastMinute": true
-        },
-        "vt|2026-06-28": {
-            "apt": "vt",
-            "start": "2026-06-28",
-            "end": "2026-07-05",
-            "nights": 7,
-            "type": "fixed",
-            "value": 130,
-            "minNights": 6,
-            "lastMinute": true
-        },
-        "vt|2026-07-05": {
-            "apt": "vt",
-            "start": "2026-07-05",
-            "end": "2026-07-12",
-            "nights": 7,
-            "type": "fixed",
-            "value": 160,
-            "lastMinute": true
-        },
-        "vm|2026-05-31": {
-            "apt": "vm",
-            "start": "2026-05-31",
-            "end": "2026-06-13",
-            "nights": 13,
-            "type": "fixed",
-            "value": 90,
-            "minNights": 6,
-            "lastMinute": true
-        },
-        "vm|2026-07-18": {
-            "apt": "vm",
-            "start": "2026-07-18",
-            "end": "2026-07-28",
-            "nights": 10,
-            "type": "fixed",
-            "value": 199,
-            "minNights": 6
-        },
-        "vt|2026-07-12": {
-            "apt": "vt",
-            "start": "2026-07-12",
-            "end": "2026-08-01",
-            "nights": 20,
-            "type": "fixed",
-            "value": 199,
-            "minNights": 6
-        },
-        "vs|2026-08-23": {
-            "apt": "vs",
-            "start": "2026-08-23",
-            "end": "2026-08-30",
-            "nights": 7,
-            "type": "fixed",
-            "value": 190,
-            "minNights": 6
-        },
-        "vs|2026-09-14": {
-            "apt": "vs",
-            "start": "2026-09-14",
-            "end": "2026-10-25",
-            "nights": 41,
-            "type": "fixed",
-            "value": 100
-        },
-        "vs|2026-11-01": {
-            "apt": "vs",
-            "start": "2026-11-01",
-            "end": "2026-12-24",
-            "nights": 53,
-            "type": "fixed",
-            "value": 80
-        },
-        "vt|2026-08-17": {
-            "apt": "vt",
-            "start": "2026-08-17",
-            "end": "2026-08-30",
-            "nights": 13,
-            "type": "fixed",
-            "value": 199,
-            "minNights": 6
-        },
-        "vt|2026-08-30": {
-            "apt": "vt",
-            "start": "2026-08-30",
-            "end": "2026-09-05",
-            "nights": 6,
-            "type": "fixed",
-            "value": 160
-        },
-        "vs|2026-08-30": {
-            "apt": "vs",
-            "start": "2026-08-30",
-            "end": "2026-09-05",
-            "nights": 6,
-            "type": "fixed",
-            "value": 160
-        }
-    },
-    "gapSplits": {
-        "vt|2026-06-21": [
-            "2026-06-28",
-            "2026-07-05",
-            "2026-07-12"
-        ],
-        "vt|2026-08-17": [
-            "2026-08-30"
-        ],
-        "vs|2026-08-23": [
-            "2026-08-30"
-        ]
-    },
-    "longStayConfig": {
-        "specialNightFlat": 80,
-        "easterRanges": [
-            [
-                "2026-03-26",
-                "2026-04-06"
-            ],
-            [
-                "2027-04-08",
-                "2027-04-19"
-            ]
-        ],
-        "extraGuestPerMonth": 60,
-        "petPerMonth": 50,
-        "aptSupplement": {
-            "vm": 0,
-            "vt": 0,
-            "vs": 0
-        },
-        "monthlyRates": {
-            "baja": 1450,
-            "media": 1590,
-            "alta": 1790
-        }
+    "vs": {
+      "name": "Hestía Vera Salinas",
+      "vft": "VTF/AL/07056",
+      "base": 83
     }
+  },
+  "seasons": {
+    "baja": {
+      "label": "Baja",
+      "multiplier": 1,
+      "color": "#9ca3af"
+    },
+    "media": {
+      "label": "Media",
+      "multiplier": 1.2,
+      "color": "#10b981"
+    },
+    "alta": {
+      "label": "Alta",
+      "multiplier": 1.8,
+      "color": "#f59e0b"
+    },
+    "critica": {
+      "label": "Crítica",
+      "multiplier": 2.4,
+      "color": "#ef4444"
+    }
+  },
+  "rules": {
+    "extraGuestPerNight": 5,
+    "guestSupplements": [
+      {
+        "from": 1,
+        "to": 2,
+        "perNight": 1,
+        "label": "1 → 2 huéspedes"
+      },
+      {
+        "from": 2,
+        "to": 3,
+        "perNight": 4,
+        "label": "2 → 3 huéspedes"
+      },
+      {
+        "from": 3,
+        "to": 4,
+        "perNight": 4,
+        "label": "3 → 4 huéspedes"
+      },
+      {
+        "from": 4,
+        "to": 5,
+        "perNight": 5,
+        "label": "4 → 5 huéspedes"
+      },
+      {
+        "from": 5,
+        "to": 6,
+        "perNight": 3,
+        "label": "5 → 6 huéspedes"
+      }
+    ],
+    "minNights": 3,
+    "twoNightFloor": 2,
+    "criticalSeasonMinNights": 7,
+    "imminentDays": 7,
+    "shortStayPricing": [
+      {
+        "nights": 2,
+        "basedOnNights": 4,
+        "discount": 0,
+        "label": "2 noches: precio de 4 noches (sin descuento)"
+      },
+      {
+        "nights": 3,
+        "basedOnNights": 4,
+        "discount": 1,
+        "label": "3 noches: precio de 5 − 10 €"
+      },
+      {
+        "nights": 4,
+        "basedOnNights": 5,
+        "discount": 50,
+        "label": "4 noches: precio de 6 − 20 €"
+      }
+    ],
+    "directDiscount": 0,
+    "petPerNight": 10,
+    "petMax": 50,
+    "petFlatFee": 50,
+    "extras": [
+      {
+        "id": "huespedAdicional",
+        "label_es": "Huésped adicional (incluye sábanas y toallas)",
+        "label_en": "Extra guest (includes sheets and towels)",
+        "price": 18,
+        "unit": "noche"
+      },
+      {
+        "id": "toallas",
+        "label_es": "Juego de toallas adicional",
+        "label_en": "Extra towel set",
+        "price": 6,
+        "unit": "set"
+      },
+      {
+        "id": "sabanasIndividual",
+        "label_es": "Juego de sábanas adicional · individual",
+        "label_en": "Extra sheet set · single",
+        "price": 10,
+        "unit": "set"
+      },
+      {
+        "id": "sabanasDoble",
+        "label_es": "Juego de sábanas adicional · doble",
+        "label_en": "Extra sheet set · double",
+        "price": 12,
+        "unit": "set"
+      },
+      {
+        "id": "trona",
+        "label_es": "Trona",
+        "label_en": "Baby high chair",
+        "price": 5,
+        "unit": "estancia"
+      },
+      {
+        "id": "cuna",
+        "label_es": "Cuna (sábanas incluidas)",
+        "label_en": "Baby cot (sheets included)",
+        "price": 20,
+        "unit": "estancia"
+      },
+      {
+        "id": "earlyCheckin",
+        "label_es": "Early check-in · 10 €/h antes de 15:00 (o 40 € desde 10:00)",
+        "label_en": "Early check-in · 10 €/h before 15:00 (or 40 € from 10:00)",
+        "price": 10,
+        "unit": "hora"
+      },
+      {
+        "id": "lateCheckout",
+        "label_es": "Late check-out · 10 €/h después de 11:00 (o 40 € hasta 18:00)",
+        "label_en": "Late check-out · 10 €/h after 11:00 (or 40 € until 18:00)",
+        "price": 10,
+        "unit": "hora"
+      },
+      {
+        "id": "lateCheckin23",
+        "label_es": "Late check-in presencial · 21:00 → 23:00",
+        "label_en": "Late check-in (in person) · 21:00 → 23:00",
+        "price": 20,
+        "unit": "estancia"
+      },
+      {
+        "id": "lateCheckin00",
+        "label_es": "Late check-in presencial · 23:00 → 00:00",
+        "label_en": "Late check-in (in person) · 23:00 → 00:00",
+        "price": 40,
+        "unit": "estancia"
+      }
+    ],
+    "stayDiscounts": [
+      {
+        "minNights": 7,
+        "pct": 0.03,
+        "excludeSeasons": [
+          "critica"
+        ],
+        "label": "−3 % a partir de 7 noches"
+      },
+      {
+        "minNights": 15,
+        "pct": 0.15,
+        "excludeSeasons": [
+          "alta",
+          "critica"
+        ],
+        "label": "−15 % a partir de 15 noches"
+      },
+      {
+        "minNights": 29,
+        "pct": 0.3,
+        "excludeSeasons": [
+          "alta",
+          "critica"
+        ],
+        "label": "−30 % a partir de 29 noches"
+      }
+    ],
+    "bridgeBumpsOneStep": true,
+    "seasonLadder": [
+      "baja",
+      "media",
+      "alta",
+      "critica"
+    ]
+  },
+  "calendar": {
+    "2026": {
+      "seasons": {
+        "baja": [
+          [
+            "2026-01-01",
+            "2026-03-28"
+          ],
+          [
+            "2026-04-07",
+            "2026-04-30"
+          ],
+          [
+            "2026-11-03",
+            "2026-12-21"
+          ]
+        ],
+        "media": [
+          [
+            "2026-05-01",
+            "2026-06-11"
+          ],
+          [
+            "2026-09-16",
+            "2026-11-02"
+          ]
+        ],
+        "alta": [
+          [
+            "2026-06-12",
+            "2026-07-09"
+          ],
+          [
+            "2026-09-01",
+            "2026-09-15"
+          ]
+        ],
+        "critica": [
+          [
+            "2026-07-10",
+            "2026-08-31"
+          ]
+        ]
+      },
+      "specials": {
+        "semSanta": {
+          "season": "media",
+          "ranges": [
+            [
+              "2026-03-29",
+              "2026-04-06"
+            ]
+          ],
+          "label": "Semana Santa"
+        },
+        "navidad": {
+          "season": "media",
+          "ranges": [
+            [
+              "2026-12-22",
+              "2026-12-31"
+            ]
+          ],
+          "label": "Navidad"
+        }
+      },
+      "bridges": [
+        {
+          "name": "Reyes",
+          "ranges": [
+            [
+              "2026-01-05",
+              "2026-01-06"
+            ]
+          ]
+        },
+        {
+          "name": "Día del Trabajador",
+          "ranges": [
+            [
+              "2026-05-01",
+              "2026-05-03"
+            ]
+          ]
+        },
+        {
+          "name": "Hispanidad",
+          "ranges": [
+            [
+              "2026-10-10",
+              "2026-10-12"
+            ]
+          ]
+        },
+        {
+          "name": "Todos los Santos",
+          "ranges": [
+            [
+              "2026-10-31",
+              "2026-11-02"
+            ]
+          ]
+        },
+        {
+          "name": "Constitución + Inmaculada",
+          "ranges": [
+            [
+              "2026-12-05",
+              "2026-12-08"
+            ]
+          ]
+        }
+      ]
+    },
+    "2027": {
+      "seasons": {
+        "baja": [
+          [
+            "2027-01-01",
+            "2027-03-28"
+          ],
+          [
+            "2027-04-07",
+            "2027-04-30"
+          ],
+          [
+            "2027-11-03",
+            "2027-12-21"
+          ]
+        ],
+        "media": [
+          [
+            "2027-05-01",
+            "2027-06-11"
+          ],
+          [
+            "2027-09-16",
+            "2027-11-02"
+          ]
+        ],
+        "alta": [
+          [
+            "2027-06-12",
+            "2027-07-08"
+          ],
+          [
+            "2027-09-01",
+            "2027-09-15"
+          ]
+        ],
+        "critica": [
+          [
+            "2027-07-09",
+            "2027-08-31"
+          ]
+        ]
+      },
+      "specials": {
+        "semSanta": {
+          "season": "media",
+          "ranges": [
+            [
+              "2027-03-29",
+              "2027-04-06"
+            ]
+          ],
+          "label": "Semana Santa"
+        },
+        "navidad": {
+          "season": "media",
+          "ranges": [
+            [
+              "2027-12-22",
+              "2027-12-31"
+            ]
+          ],
+          "label": "Navidad"
+        }
+      },
+      "bridges": [
+        {
+          "name": "Reyes",
+          "ranges": [
+            [
+              "2027-01-05",
+              "2027-01-06"
+            ]
+          ]
+        },
+        {
+          "name": "Día del Trabajador",
+          "ranges": [
+            [
+              "2027-05-01",
+              "2027-05-03"
+            ]
+          ]
+        },
+        {
+          "name": "Hispanidad",
+          "ranges": [
+            [
+              "2027-10-10",
+              "2027-10-12"
+            ]
+          ]
+        },
+        {
+          "name": "Todos los Santos",
+          "ranges": [
+            [
+              "2027-10-31",
+              "2027-11-02"
+            ]
+          ]
+        },
+        {
+          "name": "Constitución + Inmaculada",
+          "ranges": [
+            [
+              "2027-12-05",
+              "2027-12-08"
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  "bookingHorizon": {
+    "lastCheckinDate": "2027-03-20",
+    "reason": "Cierre antes de Semana Santa 2027 (Domingo de Ramos: 2027-03-21)"
+  },
+  "manual_blocks": {
+    "vm": [],
+    "vt": [],
+    "vs": []
+  },
+  "gapOverrides": {
+    "vm|2026-06-27": {
+      "apt": "vm",
+      "start": "2026-06-27",
+      "end": "2026-07-01",
+      "nights": 4,
+      "type": "fixed",
+      "value": 140,
+      "lastMinute": true
+    },
+    "vm|2026-05-29": {
+      "apt": "vm",
+      "start": "2026-05-29",
+      "end": "2026-06-13",
+      "nights": 15,
+      "type": "discount",
+      "value": 20,
+      "lastMinute": true
+    },
+    "vm|2026-07-08": {
+      "apt": "vm",
+      "start": "2026-07-08",
+      "end": "2026-07-12",
+      "nights": 4,
+      "type": "fixed",
+      "value": 180,
+      "lastMinute": true
+    },
+    "vm|2026-08-30": {
+      "apt": "vm",
+      "start": "2026-08-30",
+      "end": "2026-09-08",
+      "nights": 9,
+      "type": "discount",
+      "value": 15
+    },
+    "vt|2026-06-03": {
+      "apt": "vt",
+      "start": "2026-06-03",
+      "end": "2026-06-06",
+      "nights": 3,
+      "type": "fixed",
+      "value": 95,
+      "lastMinute": true
+    },
+    "vt|2026-06-21": {
+      "apt": "vt",
+      "start": "2026-06-21",
+      "end": "2026-06-28",
+      "nights": 7,
+      "type": "fixed",
+      "value": 100,
+      "minNights": 6,
+      "lastMinute": true
+    },
+    "vt|2026-06-28": {
+      "apt": "vt",
+      "start": "2026-06-28",
+      "end": "2026-07-05",
+      "nights": 7,
+      "type": "fixed",
+      "value": 130,
+      "minNights": 6,
+      "lastMinute": true
+    },
+    "vt|2026-07-05": {
+      "apt": "vt",
+      "start": "2026-07-05",
+      "end": "2026-07-12",
+      "nights": 7,
+      "type": "fixed",
+      "value": 160,
+      "lastMinute": true
+    },
+    "vm|2026-05-31": {
+      "apt": "vm",
+      "start": "2026-05-31",
+      "end": "2026-06-13",
+      "nights": 13,
+      "type": "fixed",
+      "value": 90,
+      "minNights": 6,
+      "lastMinute": true
+    },
+    "vm|2026-07-18": {
+      "apt": "vm",
+      "start": "2026-07-18",
+      "end": "2026-07-28",
+      "nights": 10,
+      "type": "fixed",
+      "value": 199,
+      "minNights": 6
+    },
+    "vt|2026-07-12": {
+      "apt": "vt",
+      "start": "2026-07-12",
+      "end": "2026-08-01",
+      "nights": 20,
+      "type": "fixed",
+      "value": 199,
+      "minNights": 6
+    },
+    "vs|2026-08-23": {
+      "apt": "vs",
+      "start": "2026-08-23",
+      "end": "2026-08-30",
+      "nights": 7,
+      "type": "fixed",
+      "value": 190,
+      "minNights": 6
+    },
+    "vs|2026-09-14": {
+      "apt": "vs",
+      "start": "2026-09-14",
+      "end": "2026-10-25",
+      "nights": 41,
+      "type": "fixed",
+      "value": 100
+    },
+    "vs|2026-11-01": {
+      "apt": "vs",
+      "start": "2026-11-01",
+      "end": "2026-12-24",
+      "nights": 53,
+      "type": "fixed",
+      "value": 80
+    },
+    "vt|2026-08-17": {
+      "apt": "vt",
+      "start": "2026-08-17",
+      "end": "2026-08-30",
+      "nights": 13,
+      "type": "fixed",
+      "value": 199,
+      "minNights": 6
+    },
+    "vt|2026-08-30": {
+      "apt": "vt",
+      "start": "2026-08-30",
+      "end": "2026-09-05",
+      "nights": 6,
+      "type": "fixed",
+      "value": 160
+    },
+    "vs|2026-08-30": {
+      "apt": "vs",
+      "start": "2026-08-30",
+      "end": "2026-09-05",
+      "nights": 6,
+      "type": "fixed",
+      "value": 160
+    }
+  },
+  "gapSplits": {
+    "vt|2026-06-21": [
+      "2026-06-28",
+      "2026-07-05",
+      "2026-07-12"
+    ],
+    "vt|2026-08-17": [
+      "2026-08-30"
+    ],
+    "vs|2026-08-23": [
+      "2026-08-30"
+    ]
+  },
+  "longStayConfig": {
+    "monthlyRates": {
+      "baja": 1450,
+      "media": 1540,
+      "alta": 1770
+    },
+    "specialNightFlat": 80,
+    "extraGuestPerMonth": 60,
+    "petPerMonth": 50,
+    "aptSupplement": {
+      "vm": 40,
+      "vt": 40,
+      "vs": 0
+    },
+    "easterRanges": [
+      [
+        "2026-03-26",
+        "2026-04-06"
+      ],
+      [
+        "2027-04-08",
+        "2027-04-19"
+      ]
+    ]
+  }
 }
