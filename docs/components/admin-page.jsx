@@ -4962,6 +4962,10 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
   const [flat,       setFlat      ] = React.useState(String(lsCfg.specialNightFlat   || 80));
   const [extraGuest, setExtraGuest] = React.useState(String(lsCfg.extraGuestPerMonth || 60));
   const [petMonth,   setPetMonth  ] = React.useState(String(lsCfg.petPerMonth        || 50));
+  const suppIn = (lsCfg.aptSupplement || {});
+  const [suppMar, setSuppMar] = React.useState(String(suppIn.vm || 0));
+  const [suppTha, setSuppTha] = React.useState(String(suppIn.vt || 0));
+  const [suppSal, setSuppSal] = React.useState(String(suppIn.vs || 0));
   const [ranges,     setRanges    ] = React.useState(
     (lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n')
   );
@@ -4969,6 +4973,10 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
     setFlat(String(lsCfg.specialNightFlat   || 80));
     setExtraGuest(String(lsCfg.extraGuestPerMonth || 60));
     setPetMonth(String(lsCfg.petPerMonth        || 50));
+    const s = (lsCfg.aptSupplement || {});
+    setSuppMar(String(s.vm || 0));
+    setSuppTha(String(s.vt || 0));
+    setSuppSal(String(s.vs || 0));
     setRanges((lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n'));
   }, [lsCfg]);
 
@@ -4981,6 +4989,11 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
       specialNightFlat:   parseFloat(flat)       || 80,
       extraGuestPerMonth: parseFloat(extraGuest) || 60,
       petPerMonth:        parseFloat(petMonth)   || 0,
+      aptSupplement: {
+        vm: parseFloat(suppMar) || 0,
+        vt: parseFloat(suppTha) || 0,
+        vs: parseFloat(suppSal) || 0,
+      },
       easterRanges:       parsed,
     });
   };
@@ -5019,6 +5032,24 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
                   value={petMonth} onChange={e => setPetMonth(e.target.value)}/>
                 <span className="pe-suffix">€/mes</span>
                 <span className="hc-preview">Se añade al total si el huésped trae mascota</span>
+              </div>
+            </div>
+            <div className="hc-bulk-field" style={{ flex: '0 0 100%' }}>
+              <label className="hc-lbl">Suplemento mensual por apartamento (€/mes)</label>
+              <div className="hc-input-row" style={{ gap: 12, flexWrap: 'wrap' }}>
+                {[
+                  { id: 'vm', label: 'Mar',      val: suppMar, set: setSuppMar },
+                  { id: 'vt', label: 'Thalassa', val: suppTha, set: setSuppTha },
+                  { id: 'vs', label: 'Salinas',  val: suppSal, set: setSuppSal },
+                ].map(({ id, label, val, set }) => (
+                  <div key={id} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <span className="hc-preview" style={{ minWidth: 60 }}>{label}</span>
+                    <input type="number" min="0" step="1" className="pe-input pe-input-num" style={{ width: 70 }}
+                      value={val} onChange={e => set(e.target.value)}/>
+                    <span className="pe-suffix">€/mes</span>
+                  </div>
+                ))}
+                <span className="hc-preview">Se suma a la tarifa base mensual de ese apartamento (pro-rata diario)</span>
               </div>
             </div>
             <div className="hc-bulk-field" style={{ flex: 1, minWidth: 260 }}>

@@ -4623,6 +4623,37 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
   margin-top: 2px;
   font-size: 14px;
 }
+.price-line-total.is-striked { text-decoration: line-through; opacity: .45; font-weight: 400; }
+.price-line-ls-hl {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ok, #4A6A28);
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0 2px;
+}
+.price-line-ls-hl .prl-ls-val {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ber, #3D1A35);
+  line-height: 1;
+}
+.price-line-saving {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ok, #4A6A28);
+  background: color-mix(in srgb, var(--ok, #4A6A28) 10%, transparent);
+  border-radius: 6px 0 6px 0;
+  padding: 5px 10px;
+  margin-top: 4px;
+}
+.prl-saving-val { font-size: 14px; letter-spacing: -.01em; }
 .price-note {
   font-size: 11px;
   color: var(--ber);
@@ -21269,6 +21300,7 @@ img[src*="apt-vt-gallery-"] {
 .lsl-pt-tag { font-size: 11px; font-weight: 600; color: var(--ink-soft, #7A5A72); letter-spacing: .06em; text-transform: uppercase; }
 .lsl-pt-rate { font-size: 18px; font-weight: 700; color: var(--ber, #2A0F2E); white-space: nowrap; margin-left: auto; }
 .lsl-pt-unit { font-size: 12px; font-weight: 400; color: var(--ink-soft, #7A5A72); margin-left: 4px; }
+.lsl-pt-desde { font-size: 11px; font-weight: 400; color: var(--ink-soft, #7A5A72); margin-right: 2px; text-transform: lowercase; letter-spacing: .01em; }
 .lsl-prices-min { margin-top: 14px; font-size: 12.5px; color: var(--ink-soft, #7A5A72); }
 
 /* Apts */

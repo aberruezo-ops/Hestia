@@ -174,14 +174,15 @@ const _applyGapOv = (calc, perNight) => {
   return { ...calc, baseTotal, stayD: null, stayDiscAmt: 0, afterStay, directTotal, avgPerNight, isGapOffer: true, gapPerNight: perNight };
 };
 
-// Calcula el total de larga estancia usando tarifas mensuales + flat especial
-const _calcLsTotal = (start, end, guests, withPets) => {
+// Calcula el total de larga estancia usando tarifas mensuales + flat especial + suplemento por apt
+const _calcLsTotal = (start, end, guests, withPets, aptId) => {
   if (!start || !end || start >= end) return null;
   const lsCfg           = (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || { specialNightFlat: 80, easterRanges: [] };
   const flat            = lsCfg.specialNightFlat  || 80;
   const easter          = lsCfg.easterRanges       || [];
   const extraGuestPerMo = lsCfg.extraGuestPerMonth || 0;
   const petPerMo        = lsCfg.petPerMonth        || 0;
+  const aptSupp         = ((lsCfg.aptSupplement || {})[aptId] || 0);
   const extraGuests     = Math.max(0, (guests || 1) - 2);
   const isXmas = (ds) => { const m = +ds.slice(5,7), d = +ds.slice(8,10); return (m===12&&d>=23)||(m===1&&d<=6); };
   const isEast = (ds) => easter.some(([s,e]) => ds>=s && ds<=e);
@@ -194,7 +195,7 @@ const _calcLsTotal = (start, end, guests, withPets) => {
     const dim = new Date(yr, mo, 0).getDate();
     const rate = (mo===6||mo===9) ? 1790 : (mo===5||mo===10) ? 1590 : 1450;
     const special = isXmas(cur) || isEast(cur);
-    total += special ? flat : rate/dim;
+    total += special ? flat : (rate + aptSupp) / dim;
     if (extraGuests > 0) total += extraGuests * extraGuestPerMo / dim;
     if (withPets)        total += petPerMo / dim;
     if (special) specialN++;
@@ -268,45 +269,19 @@ const LsPriceSummary = ({ ls, extras = [], guests, pets, lang }) => {
   );
 };
 
-const LsInfoBlock = ({ checkin, checkout, calc, guests, pets, lang }) => {
+const LsInfoBlock = ({ calc, lang }) => {
   const nights = calc ? calc.nights : 0;
-  // regularTotal = undiscounted nightly sum (no stay-discount) for meaningful comparison
-  const regularTotal = calc ? (calc.baseTotal + (calc.guestSuppAmt || 0) + (calc.petAmt || 0)) : 0;
-  const guestsN = parseInt(guests, 10) || 1;
-  const withPets = pets === 'yes';
-  const ls = _calcLsTotal(checkin, checkout, guestsN, withPets);
-  if (!ls) return null;
   const es = lang === 'es';
-  const fmt = n => n.toLocaleString('es-ES') + ' €';
-  const saving = regularTotal - ls.total;
   return (
     <div className="rf-ls-info">
       <div className="rf-ls-info-head">
         <span className="rf-ls-info-badge">{es ? 'Estancia larga · +28 noches' : 'Long stay · 28+ nights'}</span>
-        <span className="rf-ls-info-title">{es ? 'Tarifas mensuales especiales' : 'Special monthly rates'}</span>
-      </div>
-      <div className="rf-ls-price-row">
-        <div className="rf-ls-price-ls">
-          <span className="rf-ls-price-label">{es ? 'Precio estancia larga' : 'Long-stay price'}</span>
-          <span className="rf-ls-price-val">{fmt(ls.total)}</span>
-          {ls.specialNights > 0 && (
-            <span className="rf-ls-price-note">
-              {es ? `Incluye ${ls.specialNights} ${ls.specialNights===1?'noche':'noches'} especial (80€/n)` : `Includes ${ls.specialNights} special night${ls.specialNights===1?'':'s'} (80€/n)`}
-            </span>
-          )}
-        </div>
-        {saving > 0 && (
-          <div className="rf-ls-price-reg">
-            <span className="rf-ls-price-label">{es ? 'Tarifa corta estancia' : 'Short-stay rate'}</span>
-            <s className="rf-ls-price-striked">{fmt(regularTotal)}</s>
-            <span className="rf-ls-saving">−{fmt(saving)} {es ? 'de ahorro' : 'saved'}</span>
-          </div>
-        )}
+        <span className="rf-ls-info-title">{es ? 'Se aplica tarifa mensual especial' : 'Special monthly rate applies'}</span>
       </div>
       <ul className="rf-ls-conditions">
         <li>{es ? 'Contrato de arrendamiento de temporada' : 'Seasonal rental agreement'}</li>
         <li>{es ? 'Señal del 20% para confirmar · resto a la llegada' : '20% deposit to confirm · balance on arrival'}</li>
-        <li>{es ? `Tarifa mensual (${nights} noches)` : `Monthly rate (${nights} nights)`}</li>
+        <li>{es ? `${nights} noches — tarifa mensual` : `${nights} nights — monthly rate`}</li>
         <li>{es ? 'Sin comisiones de plataformas' : 'No platform commissions'}</li>
       </ul>
       <a href="estancias-largas.html" className="rf-ls-info-link" target="_blank" rel="noopener">
@@ -316,7 +291,7 @@ const LsInfoBlock = ({ checkin, checkout, calc, guests, pets, lang }) => {
   );
 };
 
-const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] }) => {
+const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [], lsCalc }) => {
   if (!apt || !checkin || !checkout) return null;
   const gn = parseInt(guests, 10) || null;
   const calcRaw = _calcStay(checkin, checkout, apt, pets === 'yes', gn);
@@ -325,15 +300,25 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
   const calc  = gapOv ? _applyGapOv(calcRaw, gapOv.perNight) : calcRaw;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
   const extrasTotal = extras.reduce((s, e) => s + e.amount, 0);
-  const grandTotal = calc.directTotal + extrasTotal;
-  const grandAvg = Math.round(grandTotal / calc.nights);
+  const nightlyGrandTotal = calc.directTotal + extrasTotal;
+  const lsGrandTotal = lsCalc ? lsCalc.total + extrasTotal : 0;
+  const grandTotal = lsCalc ? lsGrandTotal : nightlyGrandTotal;
+  const grandAvg = lsCalc ? null : Math.round(grandTotal / calc.nights);
+  const savings = lsCalc ? nightlyGrandTotal - lsGrandTotal : 0;
   return (
     <div className="price-engine price-engine-form">
       <div className="price-main-row">
         <div className="price-direct-block">
-          <span className="price-label-sm">{lang === 'es' ? 'Precio directo' : 'Direct price'}</span>
+          <span className="price-label-sm">
+            {lsCalc
+              ? (lang === 'es' ? 'Precio estancia larga' : 'Long-stay price')
+              : (lang === 'es' ? 'Precio directo' : 'Direct price')}
+          </span>
           <span className="price-direct-total">{fmt(grandTotal)}</span>
-          <span className="price-avg-night">{fmt(grandAvg)}{lang === 'es' ? '/noche' : '/night'}</span>
+          {lsCalc
+            ? <span className="price-avg-night">{lang === 'es' ? 'tarifa mensual' : 'monthly rate'}</span>
+            : <span className="price-avg-night">{fmt(grandAvg)}{lang === 'es' ? '/noche' : '/night'}</span>
+          }
         </div>
         <div className="price-right-col">
           <div className="price-guarantee-badge">
@@ -395,14 +380,33 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [] 
             </div>
           );
         })}
-        <div className="price-line price-line-total">
-          <span>{lang === 'es' ? 'Total estimado' : 'Estimated total'}</span>
-          <span>{fmt(grandTotal)}</span>
+        <div className={`price-line price-line-total${lsCalc ? ' is-striked' : ''}`}>
+          <span>{lang === 'es' ? 'Total estimado noche a noche' : 'Estimated nightly total'}</span>
+          <span>{fmt(nightlyGrandTotal)}</span>
         </div>
+        {lsCalc && (
+          <>
+            <div className="price-line-ls-hl">
+              <span>{lang === 'es' ? 'Precio estancia larga' : 'Long-stay price'}</span>
+              <span className="prl-ls-val">{fmt(lsGrandTotal)}</span>
+            </div>
+            {savings > 0 && (
+              <div className="price-line-saving">
+                <span>{lang === 'es' ? 'Ahorras' : 'You save'}</span>
+                <span className="prl-saving-val">−{fmt(savings)}</span>
+              </div>
+            )}
+          </>
+        )}
       </div>
-      <p className="price-note">{lang === 'es'
-        ? '* Precio orientativo. El precio directo es siempre mejor que cualquier plataforma.'
-        : '* Indicative price. Our direct price is always better than any platform.'}</p>
+      <p className="price-note">{lsCalc
+        ? (lang === 'es'
+            ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.'
+            : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.')
+        : (lang === 'es'
+            ? '* Precio orientativo. El precio directo es siempre mejor que cualquier plataforma.'
+            : '* Indicative price. Our direct price is always better than any platform.')
+      }</p>
     </div>
   );
 };
@@ -684,7 +688,7 @@ const ReservasForm = ({ lang }) => {
   const isAvailable = step1Complete && availLoaded ? _resAvail(checkin, checkout, blocked) : null;
   // Larga estancia: ≥29 noches, no julio ni agosto
   const isLsStay = nightsSelected > 28 && (() => { const m = checkin ? parseInt(checkin.slice(5,7),10) : 0; return m !== 7 && m !== 8; })();
-  const lsCalc   = isLsStay ? _calcLsTotal(checkin, checkout, parseInt(guests,10)||1, pets==='yes') : null;
+  const lsCalc   = isLsStay ? _calcLsTotal(checkin, checkout, parseInt(guests,10)||1, pets==='yes', apt) : null;
 
   // Avanzar pasos. step1Ready basta (sin apt) — en step 2 el huésped
   // verá la disponibilidad de los 3 Hestías y puede elegir uno.
@@ -1054,7 +1058,7 @@ const ReservasForm = ({ lang }) => {
           <div className="rf-step-body">
             {/* Long-stay info block — shown when nights > 28 and month is Sep–Jun */}
             {isLsStay && (
-              <LsInfoBlock checkin={checkin} checkout={checkout} calc={calc} guests={guests} pets={pets} lang={lang} />
+              <LsInfoBlock calc={calc} lang={lang} />
             )}
             <ReviewQuote apt={apt} lang={lang} />
             {/* Si no hay apt elegido, mostramos los 3 Hestías con su
@@ -1180,13 +1184,11 @@ const ReservasForm = ({ lang }) => {
               </div>
             )}
 
-            {/* Price — Para LS mostramos el total mensual (no el cálculo por noches).
-                Para corta estancia usamos PricePreview con su breakdown completo. */}
-            {isLsStay && lsCalc && (
-              <LsPriceSummary ls={lsCalc} extras={selectedExtras} guests={parseInt(guests,10)||1} pets={pets} lang={lang} />
-            )}
-            {!isLsStay && calc && (
-              <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} guests={guests} lang={lang} extras={selectedExtras}/>
+            {/* Price — PricePreview handles both regular and LS stays.
+                For LS stays lsCalc is passed so it shows the full nightly
+                breakdown crossed out plus the LS monthly price and savings. */}
+            {calc && (
+              <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} guests={guests} lang={lang} extras={selectedExtras} lsCalc={isLsStay ? lsCalc : null}/>
             )}
 
             {step === 2 && (

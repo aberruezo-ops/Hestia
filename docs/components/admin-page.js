@@ -6361,11 +6361,19 @@ const LsCfgPanel = ({
   const [flat, setFlat] = React.useState(String(lsCfg.specialNightFlat || 80));
   const [extraGuest, setExtraGuest] = React.useState(String(lsCfg.extraGuestPerMonth || 60));
   const [petMonth, setPetMonth] = React.useState(String(lsCfg.petPerMonth || 50));
+  const suppIn = lsCfg.aptSupplement || {};
+  const [suppMar, setSuppMar] = React.useState(String(suppIn.vm || 0));
+  const [suppTha, setSuppTha] = React.useState(String(suppIn.vt || 0));
+  const [suppSal, setSuppSal] = React.useState(String(suppIn.vs || 0));
   const [ranges, setRanges] = React.useState((lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n'));
   React.useEffect(() => {
     setFlat(String(lsCfg.specialNightFlat || 80));
     setExtraGuest(String(lsCfg.extraGuestPerMonth || 60));
     setPetMonth(String(lsCfg.petPerMonth || 50));
+    const s = lsCfg.aptSupplement || {};
+    setSuppMar(String(s.vm || 0));
+    setSuppTha(String(s.vt || 0));
+    setSuppSal(String(s.vs || 0));
     setRanges((lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n'));
   }, [lsCfg]);
   const handleSave = () => {
@@ -6377,6 +6385,11 @@ const LsCfgPanel = ({
       specialNightFlat: parseFloat(flat) || 80,
       extraGuestPerMonth: parseFloat(extraGuest) || 60,
       petPerMonth: parseFloat(petMonth) || 0,
+      aptSupplement: {
+        vm: parseFloat(suppMar) || 0,
+        vt: parseFloat(suppTha) || 0,
+        vs: parseFloat(suppSal) || 0
+      },
       easterRanges: parsed
     });
   };
@@ -6458,6 +6471,65 @@ const LsCfgPanel = ({
   }, "\u20AC/mes"), /*#__PURE__*/React.createElement("span", {
     className: "hc-preview"
   }, "Se a\xF1ade al total si el hu\xE9sped trae mascota"))), /*#__PURE__*/React.createElement("div", {
+    className: "hc-bulk-field",
+    style: {
+      flex: '0 0 100%'
+    }
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "hc-lbl"
+  }, "Suplemento mensual por apartamento (\u20AC/mes)"), /*#__PURE__*/React.createElement("div", {
+    className: "hc-input-row",
+    style: {
+      gap: 12,
+      flexWrap: 'wrap'
+    }
+  }, [{
+    id: 'vm',
+    label: 'Mar',
+    val: suppMar,
+    set: setSuppMar
+  }, {
+    id: 'vt',
+    label: 'Thalassa',
+    val: suppTha,
+    set: setSuppTha
+  }, {
+    id: 'vs',
+    label: 'Salinas',
+    val: suppSal,
+    set: setSuppSal
+  }].map(({
+    id,
+    label,
+    val,
+    set
+  }) => /*#__PURE__*/React.createElement("div", {
+    key: id,
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 4
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "hc-preview",
+    style: {
+      minWidth: 60
+    }
+  }, label), /*#__PURE__*/React.createElement("input", {
+    type: "number",
+    min: "0",
+    step: "1",
+    className: "pe-input pe-input-num",
+    style: {
+      width: 70
+    },
+    value: val,
+    onChange: e => set(e.target.value)
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "pe-suffix"
+  }, "\u20AC/mes"))), /*#__PURE__*/React.createElement("span", {
+    className: "hc-preview"
+  }, "Se suma a la tarifa base mensual de ese apartamento (pro-rata diario)"))), /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-field",
     style: {
       flex: 1,

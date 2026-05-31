@@ -273,7 +273,9 @@ const LsPrices = ({
     className: "lsl-pt-tag"
   }, r.months), /*#__PURE__*/React.createElement("span", {
     className: "lsl-pt-rate"
-  }, r.rate, /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "lsl-pt-desde"
+  }, lang === 'es' ? 'desde ' : 'from '), r.rate, /*#__PURE__*/React.createElement("span", {
     className: "lsl-pt-unit"
   }, "\u20AC/mes")))), /*#__PURE__*/React.createElement("div", {
     className: "lsl-pt-row lsl-pt-special"
@@ -312,7 +314,7 @@ const LsSearch = ({
     });
     return all;
   }, [availData]);
-  const calcLsTotal = (start, end, guests, withPets) => {
+  const calcLsTotal = (start, end, guests, withPets, aptId) => {
     const lsCfg = window.PRICES_V2?.longStayConfig || {
       specialNightFlat: 80,
       easterRanges: []
@@ -321,6 +323,7 @@ const LsSearch = ({
     const easter = lsCfg.easterRanges || [];
     const extraGuestPerMo = lsCfg.extraGuestPerMonth || 0;
     const petPerMo = lsCfg.petPerMonth || 0;
+    const aptSupp = (lsCfg.aptSupplement || {})[aptId] || 0;
     const extraGuests = Math.max(0, (guests || 1) - 2);
     const isXmas = ds => {
       const m = +ds.slice(5, 7),
@@ -335,7 +338,7 @@ const LsSearch = ({
         mo = +cur.slice(5, 7);
       const dim = new Date(yr, mo, 0).getDate();
       const rate = mo === 6 || mo === 9 ? 1790 : mo === 5 || mo === 10 ? 1590 : 1450;
-      total += isXmas(cur) || isEast(cur) ? flat : rate / dim;
+      total += isXmas(cur) || isEast(cur) ? flat : (rate + aptSupp) / dim;
       if (extraGuests > 0) total += extraGuests * extraGuestPerMo / dim;
       if (withPets) total += petPerMo / dim;
       cur = _drAdj(cur, 1);
@@ -349,11 +352,11 @@ const LsSearch = ({
         setAvail(null);
         return;
       }
-      const lsTotal = calcLsTotal(checkin, checkout, guests);
       setAvail(LS_APTS.map(apt => {
         const isAvail = _drAvail(checkin, checkout, availData ? availData[apt.id]?.blocked || [] : []);
         const regCalc = isAvail ? _calcStay(checkin, checkout, apt.id, false, guests) : null;
         const regTotal = regCalc ? regCalc.baseTotal + (regCalc.guestSuppAmt || 0) + (regCalc.petAmt || 0) : 0;
+        const lsTotal = calcLsTotal(checkin, checkout, guests, false, apt.id);
         return {
           apt,
           nights,
