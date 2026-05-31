@@ -3398,7 +3398,7 @@ const DIRECT_PERKS = {
     icon: '🎁',
     stat: '−30%',
     t: 'Estancias largas desde 1.450 €/mes.',
-    d: 'Mínimo 29 noches, disponible de septiembre a junio. Sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.',
+    d: 'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.',
     link: {
       href: 'estancias-largas.html',
       label: 'Ver tarifas y disponibilidad →'
@@ -3457,7 +3457,7 @@ const DIRECT_PERKS = {
     icon: '🎁',
     stat: '−30%',
     t: 'Long stays from €1,450/month.',
-    d: 'Minimum 29 nights, available September to June. No commission, formal lease signed by both parties, 100% direct contact.',
+    d: 'Minimum 29 nights · September to June (not available July or August). No commission, formal lease signed by both parties, 100% direct contact.',
     link: {
       href: 'estancias-largas.html',
       label: 'See rates and availability →'
