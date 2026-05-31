@@ -574,7 +574,7 @@ const Header = ({
   }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.ventajas,
     className: "mn-link"
-  }, "\u2713 ", lang === 'es' ? 'Ventajas' : 'Perks')), /*#__PURE__*/React.createElement("div", {
+  }, "\u2713 ", lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks')), /*#__PURE__*/React.createElement("div", {
     className: "mn-actions"
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
