@@ -8296,6 +8296,16 @@ const AdminApp = () => {
     className: "pe-tab-label"
   }, " Prereservas")), /*#__PURE__*/React.createElement("button", {
     type: "button",
+    className: `pe-tab${mode === 'bloqueos' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('bloqueos');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDD12", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Bloqueos")), /*#__PURE__*/React.createElement("button", {
+    type: "button",
     className: `pe-tab${mode === 'leila' ? ' is-active' : ''}`,
     onClick: () => {
       setMode('leila');
@@ -8400,6 +8410,8 @@ const AdminApp = () => {
       setContractPrefill(r);
       setMode('contract');
     }
+  }) : mode === 'bloqueos' ? /*#__PURE__*/React.createElement(BloquesTab, {
+    token: token
   }) : mode === 'leila' ? /*#__PURE__*/React.createElement(LeilaTab, {
     token: token
   }) : mode === 'facturas' ? /*#__PURE__*/React.createElement(FacturasTab, {

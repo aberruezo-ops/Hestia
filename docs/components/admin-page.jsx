@@ -6487,6 +6487,11 @@ const AdminApp = () => {
           📋<span className="pe-tab-label"> Prereservas</span>
         </button>
         <button type="button"
+          className={`pe-tab${mode === 'bloqueos' ? ' is-active' : ''}`}
+          onClick={() => { setMode('bloqueos'); setError(null); setSuccess(null); }}>
+          🔒<span className="pe-tab-label"> Bloqueos</span>
+        </button>
+        <button type="button"
           className={`pe-tab${mode === 'leila' ? ' is-active' : ''}`}
           onClick={() => { setMode('leila'); setError(null); setSuccess(null); }}>
           💳<span className="pe-tab-label"> Leila</span>
@@ -6530,7 +6535,7 @@ const AdminApp = () => {
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'huecos' ? <HuecosTab token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'inteligencia' ? <IntelligenciaTab token={token} onNavigate={tab => { setMode(tab); setError(null); setSuccess(null); }} /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'huecos' ? <HuecosTab token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'inteligencia' ? <IntelligenciaTab token={token} onNavigate={tab => { setMode(tab); setError(null); setSuccess(null); }} /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'bloqueos' ? <BloquesTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>
