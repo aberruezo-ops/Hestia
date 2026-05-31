@@ -1101,7 +1101,16 @@ const ReservasForm = ({
     className: "rf-status-main"
   }, t.status_no_data), /*#__PURE__*/React.createElement("span", {
     className: "rf-status-sub"
-  }, t.status_no_data_sub)), step === 2 && /*#__PURE__*/React.createElement("div", {
+  }, t.status_no_data_sub)), calc && /*#__PURE__*/React.createElement(PricePreview, {
+    apt: apt,
+    checkin: checkin,
+    checkout: checkout,
+    pets: pets,
+    guests: guests,
+    lang: lang,
+    extras: selectedExtras,
+    lsCalc: isLsStay ? lsCalc : null
+  }), step === 2 && /*#__PURE__*/React.createElement("div", {
     className: "form-field full rf-extras-block"
   }, /*#__PURE__*/React.createElement("div", {
     className: "form-extras-label"
@@ -1148,16 +1157,7 @@ const ReservasForm = ({
       disabled: qty >= maxForExtra(ex),
       "aria-label": lang === 'es' ? 'Añadir uno' : 'Add one'
     }, "+")));
-  }))), calc && /*#__PURE__*/React.createElement(PricePreview, {
-    apt: apt,
-    checkin: checkin,
-    checkout: checkout,
-    pets: pets,
-    guests: guests,
-    lang: lang,
-    extras: selectedExtras,
-    lsCalc: isLsStay ? lsCalc : null
-  }), step === 2 && /*#__PURE__*/React.createElement("div", {
+  }))), step === 2 && /*#__PURE__*/React.createElement("div", {
     className: "rf-step-actions"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",

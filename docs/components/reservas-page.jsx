@@ -1127,9 +1127,14 @@ const ReservasForm = ({ lang }) => {
               </div>
             )}
 
-            {/* Extras editor (chips) — primero los extras para que el
-                precio que sale debajo se vea recalculándose en vivo a
-                medida que el huésped marca/desmarca. */}
+            {/* Price — PricePreview handles both regular and LS stays.
+                For LS stays lsCalc is passed so it shows the full nightly
+                breakdown crossed out plus the LS monthly price and savings. */}
+            {calc && (
+              <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} guests={guests} lang={lang} extras={selectedExtras} lsCalc={isLsStay ? lsCalc : null}/>
+            )}
+
+            {/* Extras editor (chips) */}
             {step === 2 && (
               <div className="form-field full rf-extras-block">
                 <div className="form-extras-label">{t.f_extras_label}</div>
@@ -1182,13 +1187,6 @@ const ReservasForm = ({ lang }) => {
                   })}
                 </div>
               </div>
-            )}
-
-            {/* Price — PricePreview handles both regular and LS stays.
-                For LS stays lsCalc is passed so it shows the full nightly
-                breakdown crossed out plus the LS monthly price and savings. */}
-            {calc && (
-              <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} guests={guests} lang={lang} extras={selectedExtras} lsCalc={isLsStay ? lsCalc : null}/>
             )}
 
             {step === 2 && (
