@@ -893,7 +893,7 @@ const LastMinuteStrip = ({
       if (!data) return;
       const todayStr = new Date().toISOString().slice(0, 10);
       const horizon = new Date();
-      horizon.setDate(horizon.getDate() + 45);
+      horizon.setDate(horizon.getDate() + 90);
       const horizonStr = horizon.toISOString().slice(0, 10);
       const manualBlocks = window.PRICES_V2 && window.PRICES_V2.manual_blocks || {};
       const mergeRanges = (a, b) => {
@@ -945,7 +945,18 @@ const LastMinuteStrip = ({
         }
       }
       found.sort((a, b) => a.checkin.localeCompare(b.checkin));
-      setSlots(found.slice(0, 5));
+      // Max 2 huecos por apartamento para asegurar variedad y mostrar huecos de agosto.
+      const seen = {};
+      const filtered = [];
+      for (const s of found) {
+        const id = s.apt.id;
+        if ((seen[id] || 0) < 2) {
+          filtered.push(s);
+          seen[id] = (seen[id] || 0) + 1;
+        }
+        if (filtered.length >= 6) break;
+      }
+      setSlots(filtered);
     }).catch(() => {});
   }, []);
   if (!slots.length) return null;
@@ -964,11 +975,19 @@ const LastMinuteStrip = ({
   };
   const getStayPrice = (aptId, checkin, checkout) => {
     try {
-      const r = _calcStay(checkin, checkout, aptId, false, 2);
+      // Para huecos largos, calculamos precio sobre los primeros 7 días para no mostrar
+      // el total de toda la temporada (ej. 41 noches de verano = precio disparatado).
+      const gapNights = Math.round((new Date(checkout + 'T12:00:00Z') - new Date(checkin + 'T12:00:00Z')) / 86400000);
+      const sampleNights = Math.min(gapNights, 7);
+      const sampleDate = new Date(checkin + 'T12:00:00Z');
+      sampleDate.setUTCDate(sampleDate.getUTCDate() + sampleNights);
+      const sampleCheckout = sampleDate.toISOString().slice(0, 10);
+      const r = _calcStay(checkin, sampleCheckout, aptId, false, 2);
       if (!r || !r.directTotal || !r.nights) return null;
       return {
         total: Math.round(r.directTotal),
-        perNight: Math.round(r.directTotal / r.nights)
+        perNight: Math.round(r.directTotal / r.nights),
+        gapNights
       };
     } catch (_) {
       return null;
@@ -998,9 +1017,9 @@ const LastMinuteStrip = ({
       className: "lm-card-d2"
     }, fmtDate(slot.checkout))), /*#__PURE__*/React.createElement("span", {
       className: "lm-card-meta"
-    }, slot.nights, " ", lang === 'es' ? 'noches' : 'nights', price && /*#__PURE__*/React.createElement("span", {
+    }, slot.nights <= 21 ? slot.nights : `${slot.nights}+`, " ", lang === 'es' ? 'noches' : 'nights', price && /*#__PURE__*/React.createElement("span", {
       className: "lm-card-ppn"
-    }, " \xB7 ~", price.perNight, "\u20AC/n")), price && /*#__PURE__*/React.createElement("span", {
+    }, " \xB7 desde ", price.perNight, "\u20AC/n")), price && slot.nights <= 14 && /*#__PURE__*/React.createElement("span", {
       className: "lm-card-total"
     }, "~", price.total.toLocaleString('es-ES'), "\u20AC"));
   };
