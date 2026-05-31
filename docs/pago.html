@@ -235,6 +235,11 @@
 
 <main>
 
+  <!-- Demo banner (shown only in demo mode) -->
+  <div id="demo-banner" hidden style="width:100%;max-width:520px;margin:0 24px 12px;padding:10px 16px;background:rgba(200,122,69,.15);border:1.5px solid #C87A45;border-radius:8px 0 8px 0;font-family:'DM Sans',sans-serif;font-size:12px;color:#7A5A72;text-align:center;position:relative;z-index:1;box-sizing:border-box;">
+    <strong style="color:#C87A45">MODO DEMO</strong> — Los pagos son simulados. Configura las credenciales en <code>pago.html</code> y <code>workers/pago/</code> antes del lanzamiento.
+  </div>
+
   <!-- Error: invalid link -->
   <div id="error-screen" hidden>
     <div class="error-card">
@@ -486,6 +491,9 @@
     web3formsKey:    '95a86784-6d6a-496f-9830-15759c0a3cff',
   };
 
+  // Demo mode: active when any credential placeholder has not been replaced
+  const DEMO = CFG.workerUrl.includes('REPLACE') || CFG.stripePublicKey.includes('REPLACE') || CFG.paypalClientId.includes('REPLACE');
+
   const APTS = {
     vm: { name: 'Hestía Mar',      short: 'Mar',      num: '01' },
     vt: { name: 'Hestía Thalassa', short: 'Thalassa', num: '02' },
@@ -530,6 +538,8 @@
       showSuccess('tarjeta');
       return;
     }
+
+    if (DEMO) document.getElementById('demo-banner').hidden = false;
 
     // Fill booking summary
     document.getElementById('bc-name').innerHTML = `Hestía <em>${apt.short}</em>`;
@@ -618,7 +628,7 @@
     );
 
     try {
-      await fetch('https://api.web3forms.com/submit', { method: 'POST', body });
+      if (!DEMO) await fetch('https://api.web3forms.com/submit', { method: 'POST', body });
       showPending(method);
     } catch(e) {
       txt.textContent = 'Error al enviar aviso. Escríbenos por WhatsApp.';
@@ -632,6 +642,30 @@
     const loading = document.getElementById('stripe-loading');
     const errDiv  = document.getElementById('stripe-error');
     const btn     = document.getElementById('stripe-btn');
+
+    if (DEMO) {
+      loading.hidden = true;
+      document.getElementById('stripe-payment-element').innerHTML = `
+        <div style="background:#FFFCF6;border:1.5px solid rgba(42,15,46,.14);border-radius:8px;padding:16px;margin-bottom:12px">
+          <div style="margin-bottom:14px">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:#7A5A72;margin-bottom:6px">Número de tarjeta</div>
+            <div style="background:white;border:1.5px solid rgba(42,15,46,.14);border-radius:8px;padding:12px 14px;font-family:monospace;font-size:15px;color:#3D1A35;letter-spacing:.08em">4242 4242 4242 4242</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <div style="font-size:11px;font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:#7A5A72;margin-bottom:6px">Caducidad</div>
+              <div style="background:white;border:1.5px solid rgba(42,15,46,.14);border-radius:8px;padding:12px 14px;font-size:15px;color:#3D1A35">12 / 30</div>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:#7A5A72;margin-bottom:6px">CVC</div>
+              <div style="background:white;border:1.5px solid rgba(42,15,46,.14);border-radius:8px;padding:12px 14px;font-size:15px;color:#3D1A35">123</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font-size:11px;color:#C87A45;text-align:center">Modo demo — datos de prueba, sin cargo real</div>
+        </div>`;
+      btn.hidden = false;
+      return;
+    }
 
     try {
       const res = await fetch(`${CFG.workerUrl}/pago-api/intent`, {
@@ -684,7 +718,6 @@
   }
 
   async function submitStripe() {
-    if (!stripe || !stripeElements) return;
     const btn = document.getElementById('stripe-btn');
     const txt = document.getElementById('stripe-btn-txt');
     const arr = document.getElementById('stripe-arrow');
@@ -693,6 +726,14 @@
     txt.innerHTML = '<span class="spinner"></span> Procesando…';
     arr.hidden = true;
     err.hidden = true;
+
+    if (DEMO) {
+      await new Promise(r => setTimeout(r, 1800));
+      showSuccess('tarjeta');
+      return;
+    }
+
+    if (!stripe || !stripeElements) { btn.disabled = false; return; }
 
     const returnUrl = new URL(window.location.href);
     returnUrl.searchParams.set('paid', 'stripe');
@@ -719,6 +760,19 @@
     paypalInited = true;
     const loading = document.getElementById('paypal-loading');
     const errDiv  = document.getElementById('paypal-error');
+
+    if (DEMO) {
+      loading.hidden = true;
+      const container = document.getElementById('paypal-button-container');
+      container.innerHTML = `
+        <div style="text-align:center;padding:8px 0 4px">
+          <div style="font-size:11px;color:#C87A45;margin-bottom:10px">Modo demo — sin cargo real</div>
+          <button onclick="simulatePaypal()" style="background:#0070BA;color:white;border:none;border-radius:6px;padding:14px 32px;font-size:15px;font-weight:600;cursor:pointer;width:100%;letter-spacing:.02em">
+            Pagar con PayPal (demo)
+          </button>
+        </div>`;
+      return;
+    }
 
     const script = document.createElement('script');
     script.src = `https://www.paypal.com/sdk/js?client-id=${CFG.paypalClientId}&currency=EUR&intent=capture`;
@@ -758,6 +812,14 @@
       errDiv.hidden = false;
     };
     document.head.appendChild(script);
+  }
+
+  // ── Demo PayPal simulation ───────────────────────────────────────────────
+  async function simulatePaypal() {
+    const btn = document.querySelector('#paypal-button-container button');
+    if (btn) { btn.disabled = true; btn.textContent = 'Procesando…'; }
+    await new Promise(r => setTimeout(r, 1800));
+    showSuccess('PayPal');
   }
 
   // ── Result screens ───────────────────────────────────────────────────────
