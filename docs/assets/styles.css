@@ -12130,6 +12130,16 @@ footer,
   line-height: 1.55;
   color: var(--ink-soft);
 }
+.ag-disclaimer-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
 
 /* Sección de Llegada y salida (check-in) */
 .ag-section-checkin .ag-h3 {
