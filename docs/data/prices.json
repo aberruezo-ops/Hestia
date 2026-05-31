@@ -628,6 +628,11 @@
             ]
         ],
         "extraGuestPerMonth": 60,
-        "petPerMonth": 50
+        "petPerMonth": 50,
+        "aptSupplement": {
+            "vm": 0,
+            "vt": 0,
+            "vs": 0
+        }
     }
 }

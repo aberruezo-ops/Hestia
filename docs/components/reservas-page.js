@@ -172,8 +172,8 @@ const _applyGapOv = (calc, perNight) => {
   };
 };
 
-// Calcula el total de larga estancia usando tarifas mensuales + flat especial
-const _calcLsTotal = (start, end, guests, withPets) => {
+// Calcula el total de larga estancia usando tarifas mensuales + flat especial + suplemento por apt
+const _calcLsTotal = (start, end, guests, withPets, aptId) => {
   if (!start || !end || start >= end) return null;
   const lsCfg = window.PRICES_V2 && window.PRICES_V2.longStayConfig || {
     specialNightFlat: 80,
@@ -183,6 +183,7 @@ const _calcLsTotal = (start, end, guests, withPets) => {
   const easter = lsCfg.easterRanges || [];
   const extraGuestPerMo = lsCfg.extraGuestPerMonth || 0;
   const petPerMo = lsCfg.petPerMonth || 0;
+  const aptSupp = (lsCfg.aptSupplement || {})[aptId] || 0;
   const extraGuests = Math.max(0, (guests || 1) - 2);
   const isXmas = ds => {
     const m = +ds.slice(5, 7),
@@ -205,7 +206,7 @@ const _calcLsTotal = (start, end, guests, withPets) => {
     const dim = new Date(yr, mo, 0).getDate();
     const rate = mo === 6 || mo === 9 ? 1790 : mo === 5 || mo === 10 ? 1590 : 1450;
     const special = isXmas(cur) || isEast(cur);
-    total += special ? flat : rate / dim;
+    total += special ? flat : (rate + aptSupp) / dim;
     if (extraGuests > 0) total += extraGuests * extraGuestPerMo / dim;
     if (withPets) total += petPerMo / dim;
     if (special) specialN++;
@@ -271,23 +272,11 @@ const LsPriceSummary = ({
   }, es ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.' : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.'));
 };
 const LsInfoBlock = ({
-  checkin,
-  checkout,
   calc,
-  guests,
-  pets,
   lang
 }) => {
   const nights = calc ? calc.nights : 0;
-  // regularTotal = undiscounted nightly sum (no stay-discount) for meaningful comparison
-  const regularTotal = calc ? calc.baseTotal + (calc.guestSuppAmt || 0) + (calc.petAmt || 0) : 0;
-  const guestsN = parseInt(guests, 10) || 1;
-  const withPets = pets === 'yes';
-  const ls = _calcLsTotal(checkin, checkout, guestsN, withPets);
-  if (!ls) return null;
   const es = lang === 'es';
-  const fmt = n => n.toLocaleString('es-ES') + ' €';
-  const saving = regularTotal - ls.total;
   return /*#__PURE__*/React.createElement("div", {
     className: "rf-ls-info"
   }, /*#__PURE__*/React.createElement("div", {
@@ -296,27 +285,9 @@ const LsInfoBlock = ({
     className: "rf-ls-info-badge"
   }, es ? 'Estancia larga · +28 noches' : 'Long stay · 28+ nights'), /*#__PURE__*/React.createElement("span", {
     className: "rf-ls-info-title"
-  }, es ? 'Tarifas mensuales especiales' : 'Special monthly rates')), /*#__PURE__*/React.createElement("div", {
-    className: "rf-ls-price-row"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "rf-ls-price-ls"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "rf-ls-price-label"
-  }, es ? 'Precio estancia larga' : 'Long-stay price'), /*#__PURE__*/React.createElement("span", {
-    className: "rf-ls-price-val"
-  }, fmt(ls.total)), ls.specialNights > 0 && /*#__PURE__*/React.createElement("span", {
-    className: "rf-ls-price-note"
-  }, es ? `Incluye ${ls.specialNights} ${ls.specialNights === 1 ? 'noche' : 'noches'} especial (80€/n)` : `Includes ${ls.specialNights} special night${ls.specialNights === 1 ? '' : 's'} (80€/n)`)), saving > 0 && /*#__PURE__*/React.createElement("div", {
-    className: "rf-ls-price-reg"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "rf-ls-price-label"
-  }, es ? 'Tarifa corta estancia' : 'Short-stay rate'), /*#__PURE__*/React.createElement("s", {
-    className: "rf-ls-price-striked"
-  }, fmt(regularTotal)), /*#__PURE__*/React.createElement("span", {
-    className: "rf-ls-saving"
-  }, "\u2212", fmt(saving), " ", es ? 'de ahorro' : 'saved'))), /*#__PURE__*/React.createElement("ul", {
+  }, es ? 'Se aplica tarifa mensual especial' : 'Special monthly rate applies')), /*#__PURE__*/React.createElement("ul", {
     className: "rf-ls-conditions"
-  }, /*#__PURE__*/React.createElement("li", null, es ? 'Contrato de arrendamiento de temporada' : 'Seasonal rental agreement'), /*#__PURE__*/React.createElement("li", null, es ? 'Señal del 20% para confirmar · resto a la llegada' : '20% deposit to confirm · balance on arrival'), /*#__PURE__*/React.createElement("li", null, es ? `Tarifa mensual (${nights} noches)` : `Monthly rate (${nights} nights)`), /*#__PURE__*/React.createElement("li", null, es ? 'Sin comisiones de plataformas' : 'No platform commissions')), /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement("li", null, es ? 'Contrato de arrendamiento de temporada' : 'Seasonal rental agreement'), /*#__PURE__*/React.createElement("li", null, es ? 'Señal del 20% para confirmar · resto a la llegada' : '20% deposit to confirm · balance on arrival'), /*#__PURE__*/React.createElement("li", null, es ? `${nights} noches — tarifa mensual` : `${nights} nights — monthly rate`), /*#__PURE__*/React.createElement("li", null, es ? 'Sin comisiones de plataformas' : 'No platform commissions')), /*#__PURE__*/React.createElement("a", {
     href: "estancias-largas.html",
     className: "rf-ls-info-link",
     target: "_blank",
@@ -330,7 +301,8 @@ const PricePreview = ({
   pets,
   guests,
   lang,
-  extras = []
+  extras = [],
+  lsCalc
 }) => {
   if (!apt || !checkin || !checkout) return null;
   const gn = parseInt(guests, 10) || null;
@@ -340,8 +312,11 @@ const PricePreview = ({
   const calc = gapOv ? _applyGapOv(calcRaw, gapOv.perNight) : calcRaw;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
   const extrasTotal = extras.reduce((s, e) => s + e.amount, 0);
-  const grandTotal = calc.directTotal + extrasTotal;
-  const grandAvg = Math.round(grandTotal / calc.nights);
+  const nightlyGrandTotal = calc.directTotal + extrasTotal;
+  const lsGrandTotal = lsCalc ? lsCalc.total + extrasTotal : 0;
+  const grandTotal = lsCalc ? lsGrandTotal : nightlyGrandTotal;
+  const grandAvg = lsCalc ? null : Math.round(grandTotal / calc.nights);
+  const savings = lsCalc ? nightlyGrandTotal - lsGrandTotal : 0;
   return /*#__PURE__*/React.createElement("div", {
     className: "price-engine price-engine-form"
   }, /*#__PURE__*/React.createElement("div", {
@@ -350,9 +325,11 @@ const PricePreview = ({
     className: "price-direct-block"
   }, /*#__PURE__*/React.createElement("span", {
     className: "price-label-sm"
-  }, lang === 'es' ? 'Precio directo' : 'Direct price'), /*#__PURE__*/React.createElement("span", {
+  }, lsCalc ? lang === 'es' ? 'Precio estancia larga' : 'Long-stay price' : lang === 'es' ? 'Precio directo' : 'Direct price'), /*#__PURE__*/React.createElement("span", {
     className: "price-direct-total"
-  }, fmt(grandTotal)), /*#__PURE__*/React.createElement("span", {
+  }, fmt(grandTotal)), lsCalc ? /*#__PURE__*/React.createElement("span", {
+    className: "price-avg-night"
+  }, lang === 'es' ? 'tarifa mensual' : 'monthly rate') : /*#__PURE__*/React.createElement("span", {
     className: "price-avg-night"
   }, fmt(grandAvg), lang === 'es' ? '/noche' : '/night')), /*#__PURE__*/React.createElement("div", {
     className: "price-right-col"
@@ -387,10 +364,18 @@ const PricePreview = ({
       key: ex.id
     }, /*#__PURE__*/React.createElement("span", null, ex.label, detail), /*#__PURE__*/React.createElement("span", null, "+", fmt(ex.amount)));
   }), /*#__PURE__*/React.createElement("div", {
-    className: "price-line price-line-total"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Total estimado' : 'Estimated total'), /*#__PURE__*/React.createElement("span", null, fmt(grandTotal)))), /*#__PURE__*/React.createElement("p", {
+    className: `price-line price-line-total${lsCalc ? ' is-striked' : ''}`
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Total estimado noche a noche' : 'Estimated nightly total'), /*#__PURE__*/React.createElement("span", null, fmt(nightlyGrandTotal))), lsCalc && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "price-line-ls-hl"
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Precio estancia larga' : 'Long-stay price'), /*#__PURE__*/React.createElement("span", {
+    className: "prl-ls-val"
+  }, fmt(lsGrandTotal))), savings > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "price-line-saving"
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ahorras' : 'You save'), /*#__PURE__*/React.createElement("span", {
+    className: "prl-saving-val"
+  }, "\u2212", fmt(savings))))), /*#__PURE__*/React.createElement("p", {
     className: "price-note"
-  }, lang === 'es' ? '* Precio orientativo. El precio directo es siempre mejor que cualquier plataforma.' : '* Indicative price. Our direct price is always better than any platform.'));
+  }, lsCalc ? lang === 'es' ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.' : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.' : lang === 'es' ? '* Precio orientativo. El precio directo es siempre mejor que cualquier plataforma.' : '* Indicative price. Our direct price is always better than any platform.'));
 };
 
 // ReviewQuote — cita rotando de una reseña real verificada en el
@@ -745,7 +730,7 @@ const ReservasForm = ({
     const m = checkin ? parseInt(checkin.slice(5, 7), 10) : 0;
     return m !== 7 && m !== 8;
   })();
-  const lsCalc = isLsStay ? _calcLsTotal(checkin, checkout, parseInt(guests, 10) || 1, pets === 'yes') : null;
+  const lsCalc = isLsStay ? _calcLsTotal(checkin, checkout, parseInt(guests, 10) || 1, pets === 'yes', apt) : null;
 
   // Avanzar pasos. step1Ready basta (sin apt) — en step 2 el huésped
   // verá la disponibilidad de los 3 Hestías y puede elegir uno.
@@ -1046,11 +1031,7 @@ const ReservasForm = ({
   }, "\uD83D\uDD12")), step >= 2 && /*#__PURE__*/React.createElement("div", {
     className: "rf-step-body"
   }, isLsStay && /*#__PURE__*/React.createElement(LsInfoBlock, {
-    checkin: checkin,
-    checkout: checkout,
     calc: calc,
-    guests: guests,
-    pets: pets,
     lang: lang
   }), /*#__PURE__*/React.createElement(ReviewQuote, {
     apt: apt,
@@ -1167,20 +1148,15 @@ const ReservasForm = ({
       disabled: qty >= maxForExtra(ex),
       "aria-label": lang === 'es' ? 'Añadir uno' : 'Add one'
     }, "+")));
-  }))), isLsStay && lsCalc && /*#__PURE__*/React.createElement(LsPriceSummary, {
-    ls: lsCalc,
-    extras: selectedExtras,
-    guests: parseInt(guests, 10) || 1,
-    pets: pets,
-    lang: lang
-  }), !isLsStay && calc && /*#__PURE__*/React.createElement(PricePreview, {
+  }))), calc && /*#__PURE__*/React.createElement(PricePreview, {
     apt: apt,
     checkin: checkin,
     checkout: checkout,
     pets: pets,
     guests: guests,
     lang: lang,
-    extras: selectedExtras
+    extras: selectedExtras,
+    lsCalc: isLsStay ? lsCalc : null
   }), step === 2 && /*#__PURE__*/React.createElement("div", {
     className: "rf-step-actions"
   }, /*#__PURE__*/React.createElement("button", {
