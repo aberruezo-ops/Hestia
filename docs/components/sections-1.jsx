@@ -670,13 +670,12 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
           }
         }
         found.sort((a, b) => a.checkin.localeCompare(b.checkin));
-        // Max 2 huecos por apartamento para asegurar variedad y mostrar huecos de agosto.
         const seen = {};
         const filtered = [];
         for (const s of found) {
           const id = s.apt.id;
-          if ((seen[id] || 0) < 2) { filtered.push(s); seen[id] = (seen[id] || 0) + 1; }
-          if (filtered.length >= 6) break;
+          if ((seen[id] || 0) < 4) { filtered.push(s); seen[id] = (seen[id] || 0) + 1; }
+          if (filtered.length >= 9) break;
         }
         setSlots(filtered);
       })
