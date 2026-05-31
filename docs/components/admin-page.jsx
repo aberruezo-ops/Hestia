@@ -3971,8 +3971,9 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
       return c === 'CANCELADA' || c === 'CANCELADO';
     };
 
-    // Solo canal Directo/Directa — Booking/Airbnb los gestiona el iCal automáticamente
-    const _isDirectCanal = r => ['directo', 'directa'].includes((r.canal || '').trim().toLowerCase());
+    // Solo canal directo — Booking/Airbnb los gestiona el iCal automáticamente.
+    // Usar getCanalKey para normalizar: trata null/vacío/WhatsApp/custom igual que 'directo'.
+    const _isDirectCanal = r => getCanalKey(r.canal) === 'directo';
     const newDirect = Object.fromEntries(APTS_LIST.map(a => [a, []]));
     for (const r of allReservas) {
       if (_isCxl2(r) || !_isDirectCanal(r)) continue;
