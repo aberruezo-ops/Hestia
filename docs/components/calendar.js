@@ -394,7 +394,12 @@ const AptCalendar = ({
       if (j && j[aptId]) setData(j[aptId]);
     }).catch(() => {}).finally(() => setLoading(false));
   }, [aptId]);
-  const blocked = data ? data.blocked : [];
+
+  // Merge availability.json blocks with manual_blocks from prices.json.
+  // manual_blocks are instant (no wait for iCal sync), so direct reservations
+  // entered via BloquesTab appear in the calendar immediately.
+  const _manualBlocks = window.PRICES_V2 && window.PRICES_V2.manual_blocks && window.PRICES_V2.manual_blocks[aptId] || [];
+  const blocked = data ? [...data.blocked, ..._manualBlocks] : _manualBlocks;
   const updated = data ? data.updated : null;
   const sources = data ? data.sources : [];
   const fetchErrors = data ? data.fetch_errors || {} : {};
