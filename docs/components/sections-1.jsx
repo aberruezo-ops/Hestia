@@ -630,9 +630,21 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
         horizon.setDate(horizon.getDate() + 45);
         const horizonStr = horizon.toISOString().slice(0, 10);
 
+        const manualBlocks = (window.PRICES_V2 && window.PRICES_V2.manual_blocks) || {};
+        const mergeRanges = (a, b) => {
+          const all = [...a, ...b].sort((x, y) => x.start.localeCompare(y.start));
+          const m = [];
+          for (const r of all) {
+            if (m.length && r.start <= m[m.length-1].end) {
+              if (r.end > m[m.length-1].end) m[m.length-1] = { ...m[m.length-1], end: r.end };
+            } else { m.push({ ...r }); }
+          }
+          return m;
+        };
         const found = [];
         for (const apt of APARTMENTS) {
-          const blocked = data[apt.id]?.blocked || [];
+          const avBlocked = data[apt.id]?.blocked || [];
+          const blocked = mergeRanges(avBlocked, manualBlocks[apt.id] || []);
           // Incluir todos los bloques futuros, no solo los que empiezan antes del horizonte,
           // para que el checkout de cada hueco use el inicio real del siguiente bloque.
           const sorted = blocked
