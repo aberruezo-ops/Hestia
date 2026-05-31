@@ -388,6 +388,9 @@ const HsResultCard = ({
   const aptName = apt.name;
   // Precio base sin extras (sin mascota) — el detalle se ve en /reservas.
   const calc = checkin && checkout && checkout > checkin ? _calcStay(checkin, checkout, apt.id, false, parseInt(guests, 10) || null) : null;
+  // Larga estancia: ≥29 noches, no julio ni agosto
+  const isLsStay = nights > 28 && checkin && +checkin.slice(5, 7) !== 7 && +checkin.slice(5, 7) !== 8;
+  const lsCalc = isLsStay ? _calcLsTotal(checkin, checkout, parseInt(guests, 10) || 1, false, apt.id) : null;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
 
   // URL del CTA "Avanzar con la reserva" — pasa apt+fechas+huéspedes.
@@ -429,11 +432,11 @@ const HsResultCard = ({
     className: "hs-pb-direct"
   }, /*#__PURE__*/React.createElement("span", {
     className: "hs-pb-lbl"
-  }, lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to'), /*#__PURE__*/React.createElement("span", {
+  }, isLsStay && lsCalc ? lang === 'es' ? 'Precio estancia larga' : 'Long-stay price' : lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to'), /*#__PURE__*/React.createElement("span", {
     className: "hs-pb-total"
-  }, fmt(calc.directTotal)), /*#__PURE__*/React.createElement("span", {
+  }, isLsStay && lsCalc ? fmt(lsCalc.total) : fmt(calc.directTotal)), /*#__PURE__*/React.createElement("span", {
     className: "hs-pb-avg"
-  }, fmt(calc.avgPerNight), lang === 'es' ? '/noche' : '/night')), /*#__PURE__*/React.createElement("div", {
+  }, isLsStay && lsCalc ? lang === 'es' ? 'tarifa mensual' : 'monthly rate' : `${fmt(calc.avgPerNight)}${lang === 'es' ? '/noche' : '/night'}`)), /*#__PURE__*/React.createElement("div", {
     className: "hs-pb-right"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-badge"
@@ -448,10 +451,18 @@ const HsResultCard = ({
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
     className: "hs-pb-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento mascota (${PET_SUPP_FLAT}€ tarifa plana)` : `Pet supplement (${PET_SUPP_FLAT}€ flat fee)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), /*#__PURE__*/React.createElement("div", {
-    className: "hs-pb-line hs-pb-total-line"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'), /*#__PURE__*/React.createElement("span", null, fmt(calc.directTotal)))), /*#__PURE__*/React.createElement("p", {
+    className: `hs-pb-line hs-pb-total-line${isLsStay && lsCalc ? ' is-striked' : ''}`
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Total estimado noche a noche' : 'Estimated nightly total'), /*#__PURE__*/React.createElement("span", null, fmt(calc.directTotal))), isLsStay && lsCalc && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: "price-line-ls-hl"
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Precio estancia larga' : 'Long-stay price'), /*#__PURE__*/React.createElement("span", {
+    className: "prl-ls-val"
+  }, fmt(lsCalc.total))), calc.directTotal > lsCalc.total && /*#__PURE__*/React.createElement("div", {
+    className: "price-line-saving"
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ahorras' : 'You save'), /*#__PURE__*/React.createElement("span", {
+    className: "prl-saving-val"
+  }, "\u2212", fmt(calc.directTotal - lsCalc.total))))), /*#__PURE__*/React.createElement("p", {
     className: "hs-pb-note"
-  }, lang === 'es' ? '* Precio máximo orientativo. Cuéntanos de ti — muchas veces podemos ajustar.' : '* Maximum indicative price. Tell us about yourselves — we can often adjust.')), /*#__PURE__*/React.createElement("div", {
+  }, isLsStay && lsCalc ? lang === 'es' ? '* Señal del 20% para confirmar. Resto a la llegada.' : '* 20% deposit to confirm. Balance paid on arrival.' : lang === 'es' ? '* Precio máximo orientativo. Cuéntanos de ti — muchas veces podemos ajustar.' : '* Maximum indicative price. Tell us about yourselves — we can often adjust.')), /*#__PURE__*/React.createElement("div", {
     className: "hs-rc-actions hs-rc-actions-forward"
   }, /*#__PURE__*/React.createElement("a", {
     href: reservasHref,

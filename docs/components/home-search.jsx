@@ -330,6 +330,9 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
   // Precio base sin extras (sin mascota) — el detalle se ve en /reservas.
   const calc    = (checkin && checkout && checkout > checkin)
     ? _calcStay(checkin, checkout, apt.id, false, parseInt(guests, 10) || null) : null;
+  // Larga estancia: ≥29 noches, no julio ni agosto
+  const isLsStay = nights > 28 && checkin && +checkin.slice(5,7) !== 7 && +checkin.slice(5,7) !== 8;
+  const lsCalc   = isLsStay ? _calcLsTotal(checkin, checkout, parseInt(guests,10)||1, false, apt.id) : null;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
 
   // URL del CTA "Avanzar con la reserva" — pasa apt+fechas+huéspedes.
@@ -371,9 +374,19 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
               <div className="hs-price-block">
                 <div className="hs-pb-main">
                   <div className="hs-pb-direct">
-                    <span className="hs-pb-lbl">{lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to'}</span>
-                    <span className="hs-pb-total">{fmt(calc.directTotal)}</span>
-                    <span className="hs-pb-avg">{fmt(calc.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</span>
+                    <span className="hs-pb-lbl">
+                      {isLsStay && lsCalc
+                        ? (lang === 'es' ? 'Precio estancia larga' : 'Long-stay price')
+                        : (lang === 'es' ? 'Precio directo · hasta' : 'Direct price · up to')}
+                    </span>
+                    <span className="hs-pb-total">
+                      {isLsStay && lsCalc ? fmt(lsCalc.total) : fmt(calc.directTotal)}
+                    </span>
+                    <span className="hs-pb-avg">
+                      {isLsStay && lsCalc
+                        ? (lang === 'es' ? 'tarifa mensual' : 'monthly rate')
+                        : `${fmt(calc.avgPerNight)}${lang === 'es' ? '/noche' : '/night'}`}
+                    </span>
                   </div>
                   <div className="hs-pb-right">
                     <div className="price-guarantee-badge">
@@ -403,14 +416,34 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
                       <span>+{fmt(calc.petAmt)}</span>
                     </div>
                   )}
-                  <div className="hs-pb-line hs-pb-total-line">
-                    <span>{lang === 'es' ? 'Precio máximo directo' : 'Maximum direct price'}</span>
+                  <div className={`hs-pb-line hs-pb-total-line${isLsStay && lsCalc ? ' is-striked' : ''}`}>
+                    <span>{lang === 'es' ? 'Total estimado noche a noche' : 'Estimated nightly total'}</span>
                     <span>{fmt(calc.directTotal)}</span>
                   </div>
+                  {isLsStay && lsCalc && (
+                    <>
+                      <div className="price-line-ls-hl">
+                        <span>{lang === 'es' ? 'Precio estancia larga' : 'Long-stay price'}</span>
+                        <span className="prl-ls-val">{fmt(lsCalc.total)}</span>
+                      </div>
+                      {calc.directTotal > lsCalc.total && (
+                        <div className="price-line-saving">
+                          <span>{lang === 'es' ? 'Ahorras' : 'You save'}</span>
+                          <span className="prl-saving-val">−{fmt(calc.directTotal - lsCalc.total)}</span>
+                        </div>
+                      )}
+                    </>
+                  )}
                 </div>
-                <p className="hs-pb-note">{lang === 'es'
-                  ? '* Precio máximo orientativo. Cuéntanos de ti — muchas veces podemos ajustar.'
-                  : '* Maximum indicative price. Tell us about yourselves — we can often adjust.'}</p>
+                <p className="hs-pb-note">
+                  {isLsStay && lsCalc
+                    ? (lang === 'es'
+                        ? '* Señal del 20% para confirmar. Resto a la llegada.'
+                        : '* 20% deposit to confirm. Balance paid on arrival.')
+                    : (lang === 'es'
+                        ? '* Precio máximo orientativo. Cuéntanos de ti — muchas veces podemos ajustar.'
+                        : '* Maximum indicative price. Tell us about yourselves — we can often adjust.')}
+                </p>
               </div>
             )}
             <div className="hs-rc-actions hs-rc-actions-forward">
