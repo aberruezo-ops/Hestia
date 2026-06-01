@@ -2997,6 +2997,67 @@ info@hestiayourhome.com · +34 620 316 370`;
 // ============================================================
 const RESERVAS_PATH = 'reservas.json';
 const PRERESERVAS_PATH = 'docs/data/prereservas.json';
+
+// Sincroniza TODAS las reservas no canceladas de P-Edit → availability.json (repo público).
+// Se llama tras cada save/delete y tras convertir prereserva → reserva.
+// P-Edit es la fuente de verdad: cualquier canal (directo, Airbnb, Booking, etc.)
+// se vuelca al array `direct`, que el iCal sync (4h) también lee para calcular `blocked`.
+const _syncReservasToAvailability = async (allReservas, token) => {
+  const APTS_LIST = ['vm', 'vt', 'vs'];
+  const _cxl = r => r.cancelada === true || (r.cancelacion || '').trim().toUpperCase() === 'CANCELADA' || (r.cancelacion || '').trim().toUpperCase() === 'CANCELADO';
+  const newDirect = Object.fromEntries(APTS_LIST.map(a => [a, []]));
+  for (const r of allReservas) {
+    if (_cxl(r)) continue;
+    const apt = (r.apt || '').toLowerCase();
+    if (!APTS_LIST.includes(apt) || !r.entrada || !r.salida) continue;
+    newDirect[apt].push({
+      start: r.entrada,
+      end: r.salida
+    });
+  }
+  const _merge = ranges => {
+    if (!ranges.length) return [];
+    const s = [...ranges].sort((a, b) => a.start.localeCompare(b.start));
+    const m = [{
+      ...s[0]
+    }];
+    for (const r of s.slice(1)) {
+      if (r.start <= m[m.length - 1].end) {
+        if (r.end > m[m.length - 1].end) m[m.length - 1].end = r.end;
+      } else m.push({
+        ...r
+      });
+    }
+    return m;
+  };
+  const AV_PATH = 'docs/assets/availability.json';
+  const avRes = await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}?ref=${BRANCH}`, {
+    headers: apiHeaders(token),
+    cache: 'no-store'
+  });
+  if (!avRes.ok) return;
+  const avFile = await avRes.json();
+  const avData = JSON.parse(b64ToUtf8(avFile.content));
+  for (const apt of APTS_LIST) {
+    const ical = avData[apt]?.ical || avData[apt]?.blocked || [];
+    avData[apt] = {
+      ...avData[apt],
+      blocked: _merge([...ical, ...newDirect[apt]]),
+      ical,
+      direct: newDirect[apt]
+    };
+  }
+  await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}`, {
+    method: 'PUT',
+    headers: apiHeaders(token),
+    body: JSON.stringify({
+      message: 'chore(availability): sync reservas [skip ci]',
+      content: utf8ToB64(JSON.stringify(avData, null, 2)),
+      sha: avFile.sha,
+      branch: BRANCH
+    })
+  });
+};
 const APT_NAMES = {
   vm: 'Mar',
   vt: 'Thalassa',
@@ -4675,7 +4736,9 @@ const PrereservasTab = ({
         })
       });
       if (!rPut.ok) throw new Error('Error escribiendo reservas.json (' + rPut.status + ')');
-      // 4. Borrar de prereservas
+      // 4a. Sincronizar calendario inmediatamente (no esperar al iCal sync de 4h)
+      _syncReservasToAvailability(updated.reservas, token).catch(() => {});
+      // 4b. Borrar de prereservas
       const newItems = items.filter(r => r.id !== pr.id);
       const newSha = await saveList(newItems, sha);
       setItems(newItems);
@@ -4917,6 +4980,8 @@ const ReservasTab = ({
   const [focusYearOverride, setFocusYearOverride] = React.useState(null);
   const [focusMonth, setFocusMonth] = React.useState('all');
   const [loadedAt, setLoadedAt] = React.useState(null);
+  const [icalDiscrepancies, setIcalDiscrepancies] = React.useState([]);
+  const [discrepanciesOpen, setDiscrepanciesOpen] = React.useState(true);
   const loadData = React.useCallback(() => {
     if (!token) return;
     setLoading(true);
@@ -4934,6 +4999,39 @@ const ReservasTab = ({
       }));
     }).catch(e => setError('Error cargando reservas: ' + e.message + ' — F12 para detalle.')).finally(() => setLoading(false));
   }, [token]);
+
+  // Detecta bloques iCal sin reserva correspondiente en P-Edit.
+  // Se ejecuta tras cargar las reservas, comparando availability.json (ical[]) contra reservas[].
+  React.useEffect(() => {
+    if (!data) return;
+    const reservas = data.reservas || [];
+    const today = new Date().toISOString().slice(0, 10);
+    const _cxl = r => r.cancelada === true || (r.cancelacion || '').trim().toUpperCase() === 'CANCELADA';
+    fetch('assets/availability.json?t=' + Date.now(), {
+      cache: 'no-store'
+    }).then(r => r.ok ? r.json() : null).then(avail => {
+      if (!avail) return;
+      const APT_LABEL = {
+        vm: 'Hestía Mar',
+        vt: 'Hestía Thalassa',
+        vs: 'Hestía Salinas'
+      };
+      const found = [];
+      for (const apt of ['vm', 'vt', 'vs']) {
+        for (const block of avail[apt]?.ical || []) {
+          if (block.end <= today) continue;
+          const match = reservas.find(r => !_cxl(r) && (r.apt || '').toLowerCase() === apt && r.entrada < block.end && r.salida > block.start);
+          if (!match) found.push({
+            apt,
+            label: APT_LABEL[apt],
+            start: block.start,
+            end: block.end
+          });
+        }
+      }
+      setIcalDiscrepancies(found);
+    }).catch(() => {});
+  }, [data]);
   React.useEffect(() => {
     loadData();
     const interval = setInterval(loadData, 4 * 60 * 60 * 1000);
@@ -5096,78 +5194,6 @@ const ReservasTab = ({
   }).sort((a, b) => (a.entrada || '').localeCompare(b.entrada || ''));
   const canalKeys = Array.from(new Set(focusList.map(r => getCanalKey(r.canal))));
 
-  // --- Sincroniza reservas directas → availability.json (public repo) ---
-  // Se llama después de cada saveReservas para que los bloques directos
-  // aparezcan en el calendario sin esperar al próximo sync de iCal.
-  const _syncDirectToAvailability = async allReservas => {
-    const APTS_LIST = ['vm', 'vt', 'vs'];
-    const _isCxl2 = r => {
-      const c = (r.cancelacion || '').trim().toUpperCase();
-      return c === 'CANCELADA' || c === 'CANCELADO';
-    };
-
-    // Solo canal directo — Booking/Airbnb los gestiona el iCal automáticamente.
-    // Usar getCanalKey para normalizar: trata null/vacío/WhatsApp/custom igual que 'directo'.
-    const _isDirectCanal = r => getCanalKey(r.canal) === 'directo';
-    const newDirect = Object.fromEntries(APTS_LIST.map(a => [a, []]));
-    for (const r of allReservas) {
-      if (_isCxl2(r) || !_isDirectCanal(r)) continue;
-      const apt = (r.apt || '').toLowerCase();
-      if (!APTS_LIST.includes(apt) || !r.entrada || !r.salida) continue;
-      newDirect[apt].push({
-        start: r.entrada,
-        end: r.salida
-      });
-    }
-    const _mergeSorted = ranges => {
-      if (!ranges.length) return [];
-      const s = [...ranges].sort((a, b) => a.start.localeCompare(b.start));
-      const m = [{
-        ...s[0]
-      }];
-      for (const r of s.slice(1)) {
-        if (r.start <= m[m.length - 1].end) {
-          if (r.end > m[m.length - 1].end) m[m.length - 1].end = r.end;
-        } else {
-          m.push({
-            ...r
-          });
-        }
-      }
-      return m;
-    };
-
-    // Fetch availability.json fresco (con su SHA)
-    const AV_PATH = 'docs/assets/availability.json';
-    const avRes = await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}?ref=${BRANCH}`, {
-      headers: apiHeaders(token),
-      cache: 'no-store'
-    });
-    if (!avRes.ok) return;
-    const avFile = await avRes.json();
-    const avData = JSON.parse(b64ToUtf8(avFile.content));
-    for (const apt of APTS_LIST) {
-      const ical = avData[apt]?.ical || avData[apt]?.blocked || [];
-      const newBlocked = _mergeSorted([...ical, ...newDirect[apt]]);
-      avData[apt] = {
-        ...avData[apt],
-        blocked: newBlocked,
-        ical,
-        direct: newDirect[apt]
-      };
-    }
-    await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}`, {
-      method: 'PUT',
-      headers: apiHeaders(token),
-      body: JSON.stringify({
-        message: 'chore(availability): sync direct reservations [skip ci]',
-        content: utf8ToB64(JSON.stringify(avData, null, 2)),
-        sha: avFile.sha,
-        branch: BRANCH
-      })
-    });
-  };
-
   // --- Acciones ---
   const saveReservas = async (newReservas, {
     keepPanelOpen = false
@@ -5198,7 +5224,7 @@ const ReservasTab = ({
       return j.content.sha;
     };
     const onSaved = newReservasList => {
-      _syncDirectToAvailability(newReservasList).catch(() => {});
+      _syncReservasToAvailability(newReservasList, token).catch(() => {});
     };
     try {
       const newSha = await attemptSave(sha);
@@ -5544,7 +5570,32 @@ const ReservasTab = ({
     type: "button",
     className: "pe-btn pe-btn-primary",
     onClick: newRow
-  }, "+ Nueva"))), allYears.length > 1 && /*#__PURE__*/React.createElement("div", {
+  }, "+ Nueva"))), icalDiscrepancies.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "pe-card rv-discrepancy-banner"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "rv-discrepancy-head",
+    onClick: () => setDiscrepanciesOpen(o => !o),
+    style: {
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 8
+    }
+  }, /*#__PURE__*/React.createElement("span", null, "\u26A0\uFE0F"), /*#__PURE__*/React.createElement("strong", null, icalDiscrepancies.length, " bloque", icalDiscrepancies.length !== 1 ? 's' : '', " del iCal sin reserva en P-Edit"), /*#__PURE__*/React.createElement("span", {
+    style: {
+      marginLeft: 'auto',
+      opacity: .6,
+      fontSize: 12
+    }
+  }, discrepanciesOpen ? '▲ Ocultar' : '▼ Ver')), discrepanciesOpen && /*#__PURE__*/React.createElement("ul", {
+    className: "rv-discrepancy-list"
+  }, icalDiscrepancies.map((d, i) => /*#__PURE__*/React.createElement("li", {
+    key: i
+  }, /*#__PURE__*/React.createElement("strong", null, d.label), ": ", d.start, " \u2192 ", d.end, /*#__PURE__*/React.createElement("span", {
+    className: "rv-discrepancy-note"
+  }, " \u2014 bloqueado en Airbnb/Booking pero sin reserva registrada en P-Edit")))), /*#__PURE__*/React.createElement("p", {
+    className: "rv-discrepancy-hint"
+  }, "Si la reserva ya est\xE1 registrada con fechas ligeramente distintas, puedes ignorar esto. Si no lo est\xE1, crea la reserva para evitar solapamientos.")), allYears.length > 1 && /*#__PURE__*/React.createElement("div", {
     className: "rv-yearly"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-yearly-h"
