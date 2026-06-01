@@ -474,7 +474,7 @@ const HsResultCard = ({
     className: "hs-rc-link"
   }, lang === 'es' ? 'Ver Hestía' : 'See Hestía', " \u2192")), /*#__PURE__*/React.createElement("p", {
     className: "hs-rc-note"
-  }, lang === 'es' ? 'En la siguiente pantalla podrás añadir extras (cuna, trona, sábanas, mascota…) y dejarnos tus datos. Alex confirma en menos de 24 h.' : 'On the next screen you can add extras (cot, high chair, linen, pet…) and leave your details. Alex confirms within 24 h.')) : /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? 'En la siguiente pantalla podrás añadir extras (cuna, trona, sábanas, mascota…) y dejarnos tus datos. Confirmamos en menos de 24 h.' : 'On the next screen you can add extras (cot, high chair, linen, pet…) and leave your details. We confirm within 24 h.')) : /*#__PURE__*/React.createElement("p", {
     className: "hs-rc-unavail-note"
   }, lang === 'es' ? 'Prueba con otras fechas o escríbenos — a veces hay cancelaciones de última hora.' : 'Try different dates or write to us — last-minute cancellations do happen.', ' ', /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370",

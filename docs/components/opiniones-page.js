@@ -13,7 +13,7 @@ const OPINIONES_COPY = {
     testimonials_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Lo que dicen ", /*#__PURE__*/React.createElement("em", null, "los hu\xE9spedes.")),
     cta_eyebrow: 'Ahora es tu turno',
     cta_title: /*#__PURE__*/React.createElement(React.Fragment, null, "\xBFListo para ", /*#__PURE__*/React.createElement("em", null, "tu estancia?")),
-    cta_sub: 'Reserva directamente con nosotros. Sin intermediarios, sin comisiones, con Alex o Fran al otro lado.'
+    cta_sub: 'Reserva directamente con nosotros. Sin intermediarios, sin comisiones, sin plataformas.'
   },
   en: {
     eyebrow: 'What they say about us',
@@ -23,7 +23,7 @@ const OPINIONES_COPY = {
     testimonials_title: /*#__PURE__*/React.createElement(React.Fragment, null, "What the ", /*#__PURE__*/React.createElement("em", null, "guests say.")),
     cta_eyebrow: 'Now it\'s your turn',
     cta_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Ready for ", /*#__PURE__*/React.createElement("em", null, "your stay?")),
-    cta_sub: 'Book directly with us. No middlemen, no commissions, with Alex or Fran on the other side.'
+    cta_sub: 'Book directly with us. No middlemen, no commissions, no platforms.'
   }
 };
 
