@@ -936,7 +936,9 @@ const LastMinuteStrip = ({
           if (cursor >= horizonStr) break;
           if (block.start > cursor) {
             const nights = Math.round((new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
-            if (nights > 6 && !overlapsCritica(cursor, block.start)) found.push({
+            const critica = overlapsCritica(cursor, block.start);
+            const ok = critica ? nights < 6 : nights >= 4 && nights <= 28;
+            if (ok) found.push({
               apt,
               checkin: cursor,
               checkout: block.start,
@@ -947,7 +949,9 @@ const LastMinuteStrip = ({
         }
         if (cursor < horizonStr) {
           const nights = Math.round((new Date(horizonStr + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
-          if (nights > 6 && !overlapsCritica(cursor, horizonStr)) found.push({
+          const critica = overlapsCritica(cursor, horizonStr);
+          const ok = critica ? nights < 6 : nights >= 4 && nights <= 28;
+          if (ok) found.push({
             apt,
             checkin: cursor,
             checkout: horizonStr,
