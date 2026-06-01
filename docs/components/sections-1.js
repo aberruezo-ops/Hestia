@@ -1033,10 +1033,6 @@ const LastMinuteStrip = ({
     }, /*#__PURE__*/React.createElement("span", {
       className: "lm-card-apt lm-card-apt--longstay"
     }, lang === 'es' ? 'ESTANCIA LARGA' : 'LONG STAY'), /*#__PURE__*/React.createElement("span", {
-      className: "lm-card-dates"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "lm-longstay-discount"
-    }, "\u221230%")), /*#__PURE__*/React.createElement("span", {
       className: "lm-card-meta"
     }, lang === 'es' ? '29+ noches · descuento especial' : '29+ nights · special discount', /*#__PURE__*/React.createElement("span", {
       className: "lm-card-ppn"
