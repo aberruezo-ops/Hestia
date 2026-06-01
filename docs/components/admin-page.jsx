@@ -942,6 +942,7 @@ const CANAL_COLORS = {
 
 function compute2026Stats(reservas) {
   const active = reservas.filter(r => {
+    if (r.cancelada === true) return false;
     const c = (r.cancelacion || '').trim().toUpperCase();
     return c !== 'CANCELADA';
   });
@@ -3945,6 +3946,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
   // Excluimos 'renta' (sólo presente 2023+, semántica cambia año a año).
   // Las canceladas nunca se computan en métricas financieras.
   const _rxlCxl = r => {
+    if (r.cancelada === true) return true;
     const c = (r.cancelacion || '').trim().toUpperCase();
     return c === 'CANCELADA' || c === 'CANCELADO';
   };
