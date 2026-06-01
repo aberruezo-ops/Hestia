@@ -1023,6 +1023,27 @@ const LastMinuteStrip = ({
     }, "~", price.total.toLocaleString('es-ES'), "\u20AC"));
   };
   const dur = `${Math.max(10, slots.length * 5)}s`;
+  const renderLongStayCard = key => {
+    const ls = window.PRICES_V2?.longStayConfig;
+    const minRate = ls?.monthlyRates ? Math.min(...Object.values(ls.monthlyRates)) : 1450;
+    return /*#__PURE__*/React.createElement("a", {
+      key: key,
+      href: "estancias-largas.html",
+      className: "lm-card lm-card--longstay"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-apt lm-card-apt--longstay"
+    }, lang === 'es' ? 'ESTANCIA LARGA' : 'LONG STAY'), /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-dates"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "lm-longstay-discount"
+    }, "\u221230%")), /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-meta"
+    }, lang === 'es' ? '29+ noches · descuento especial' : '29+ nights · special discount', /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-ppn"
+    }, " \xB7 desde ", minRate.toLocaleString('es-ES'), "\u20AC/mes")), /*#__PURE__*/React.createElement("span", {
+      className: "lm-card-total lm-longstay-cta"
+    }, lang === 'es' ? 'Ver condiciones →' : 'See conditions →'));
+  };
   return /*#__PURE__*/React.createElement("section", {
     className: `lm-strip${embedded ? ' lm-strip--embedded' : ''}`,
     "aria-label": lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'
@@ -1037,7 +1058,7 @@ const LastMinuteStrip = ({
     style: {
       animationDuration: dur
     }
-  }, slots.map((slot, i) => renderCard(slot, i)), slots.map((slot, i) => renderCard(slot, `d${i}`)))), !embedded && /*#__PURE__*/React.createElement("a", {
+  }, slots.map((slot, i) => renderCard(slot, i)), renderLongStayCard('ls1'), slots.map((slot, i) => renderCard(slot, `d${i}`)), renderLongStayCard('ls2'))), !embedded && /*#__PURE__*/React.createElement("a", {
     href: "reservas.html",
     className: "lm-cta"
   }, lang === 'es' ? 'Ver disponibilidad completa →' : 'See full availability →')));

@@ -734,6 +734,28 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
 
   const dur = `${Math.max(10, slots.length * 5)}s`;
 
+  const renderLongStayCard = (key) => {
+    const ls = window.PRICES_V2?.longStayConfig;
+    const minRate = ls?.monthlyRates ? Math.min(...Object.values(ls.monthlyRates)) : 1450;
+    return (
+      <a key={key} href="estancias-largas.html" className="lm-card lm-card--longstay">
+        <span className="lm-card-apt lm-card-apt--longstay">
+          {lang === 'es' ? 'ESTANCIA LARGA' : 'LONG STAY'}
+        </span>
+        <span className="lm-card-dates">
+          <span className="lm-longstay-discount">−30%</span>
+        </span>
+        <span className="lm-card-meta">
+          {lang === 'es' ? '29+ noches · descuento especial' : '29+ nights · special discount'}
+          <span className="lm-card-ppn"> · desde {minRate.toLocaleString('es-ES')}€/mes</span>
+        </span>
+        <span className="lm-card-total lm-longstay-cta">
+          {lang === 'es' ? 'Ver condiciones →' : 'See conditions →'}
+        </span>
+      </a>
+    );
+  };
+
   return (
     <section className={`lm-strip${embedded ? ' lm-strip--embedded' : ''}`} aria-label={lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'}>
       <div className="lm-inner">
@@ -745,7 +767,9 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
         <div className="lm-marquee-wrap">
           <div className="lm-marquee-track" style={{ animationDuration: dur }}>
             {slots.map((slot, i) => renderCard(slot, i))}
+            {renderLongStayCard('ls1')}
             {slots.map((slot, i) => renderCard(slot, `d${i}`))}
+            {renderLongStayCard('ls2')}
           </div>
         </div>
         {!embedded && (
