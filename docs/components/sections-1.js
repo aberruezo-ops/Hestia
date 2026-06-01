@@ -913,19 +913,30 @@ const LastMinuteStrip = ({
         }
         return m;
       };
+      // Devuelve true si el rango [checkin, checkout) se solapa con temporada crítica.
+      const overlapsCritica = (checkin, checkout) => {
+        const v2 = window.PRICES_V2;
+        if (!v2 || !v2.calendar) return false;
+        const years = [...new Set([checkin.slice(0, 4), checkout.slice(0, 4)])];
+        for (const yr of years) {
+          const ranges = v2.calendar[yr]?.seasons?.critica || [];
+          for (const [s, e] of ranges) {
+            if (checkin < e && checkout > s) return true;
+          }
+        }
+        return false;
+      };
       const found = [];
       for (const apt of APARTMENTS) {
         const avBlocked = data[apt.id]?.blocked || [];
         const blocked = mergeRanges(avBlocked, manualBlocks[apt.id] || []);
-        // Incluir todos los bloques futuros, no solo los que empiezan antes del horizonte,
-        // para que el checkout de cada hueco use el inicio real del siguiente bloque.
         const sorted = blocked.filter(b => b.end > todayStr).sort((a, b) => a.start.localeCompare(b.start));
         let cursor = todayStr;
         for (const block of sorted) {
           if (cursor >= horizonStr) break;
           if (block.start > cursor) {
             const nights = Math.round((new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
-            if (nights >= 2) found.push({
+            if (nights > 6 && !overlapsCritica(cursor, block.start)) found.push({
               apt,
               checkin: cursor,
               checkout: block.start,
@@ -936,7 +947,7 @@ const LastMinuteStrip = ({
         }
         if (cursor < horizonStr) {
           const nights = Math.round((new Date(horizonStr + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
-          if (nights >= 2) found.push({
+          if (nights > 6 && !overlapsCritica(cursor, horizonStr)) found.push({
             apt,
             checkin: cursor,
             checkout: horizonStr,
