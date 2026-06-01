@@ -5200,6 +5200,7 @@ const ReservasTab = ({
   } = {}) => {
     setError(null);
     setSuccess(null);
+    const prevData = data;
     const newData = {
       ...data,
       reservas: newReservas,
@@ -5208,6 +5209,10 @@ const ReservasTab = ({
     };
     const payload = utf8ToB64(JSON.stringify(newData, null, 2));
     const commitMsg = `chore(reservas): update via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`;
+
+    // Actualización optimista: los KPIs y el listado se recalculan al instante
+    // sin esperar a que la API de GitHub confirme. Si la operación falla, se revierte.
+    setData(newData);
     const attemptSave = async currentSha => {
       const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
         method: 'PUT',
@@ -5229,7 +5234,6 @@ const ReservasTab = ({
     try {
       const newSha = await attemptSave(sha);
       setSha(newSha);
-      setData(newData);
       setSuccess('Reservas guardadas ✓');
       if (!keepPanelOpen) {
         setSelectedIdx(-1);
@@ -5249,7 +5253,6 @@ const ReservasTab = ({
           setSha(freshSha);
           const newSha = await attemptSave(freshSha);
           setSha(newSha);
-          setData(newData);
           setSuccess('Reservas guardadas ✓');
           if (!keepPanelOpen) {
             setSelectedIdx(-1);
@@ -5257,9 +5260,11 @@ const ReservasTab = ({
           }
           onSaved(newReservas);
         } catch (e2) {
+          setData(prevData);
           setError('Error guardando: ' + e2.message);
         }
       } else {
+        setData(prevData);
         setError('Error guardando: ' + e.message);
       }
     }
@@ -6257,17 +6262,33 @@ const ReservasTab = ({
   }, "\uD83D\uDDD1 Borrar"), draft && (isCancelada(draft) ? /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost rv-foot-btn rv-btn-reactivar",
-    onClick: () => setDraft(p => ({
-      ...p,
-      cancelada: false
-    }))
+    onClick: () => {
+      const updated = calcDerived({
+        ...draft,
+        cancelada: false
+      });
+      setDraft(updated);
+      if (selectedIdx >= 0 && selectedIdx < reservas.length) {
+        const nr = [...reservas];
+        nr[selectedIdx] = updated;
+        saveReservas(nr);
+      }
+    }
   }, "\u21A9 Reactivar") : /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost rv-foot-btn rv-btn-cancelar",
-    onClick: () => setDraft(p => ({
-      ...p,
-      cancelada: true
-    }))
+    onClick: () => {
+      const updated = calcDerived({
+        ...draft,
+        cancelada: true
+      });
+      setDraft(updated);
+      if (selectedIdx >= 0 && selectedIdx < reservas.length) {
+        const nr = [...reservas];
+        nr[selectedIdx] = updated;
+        saveReservas(nr);
+      }
+    }
   }, "\u2717 Cancelar reserva")), onOpenContract && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost rv-foot-btn",
