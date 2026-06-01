@@ -11,7 +11,7 @@ const OPINIONES_COPY = {
     testimonials_title: (<>Lo que dicen <em>los huéspedes.</em></>),
     cta_eyebrow: 'Ahora es tu turno',
     cta_title: (<>¿Listo para <em>tu estancia?</em></>),
-    cta_sub: 'Reserva directamente con nosotros. Sin intermediarios, sin comisiones, con Alex o Fran al otro lado.',
+    cta_sub: 'Reserva directamente con nosotros. Sin intermediarios, sin comisiones, sin plataformas.',
   },
   en: {
     eyebrow: 'What they say about us',
@@ -21,7 +21,7 @@ const OPINIONES_COPY = {
     testimonials_title: (<>What the <em>guests say.</em></>),
     cta_eyebrow: 'Now it\'s your turn',
     cta_title: (<>Ready for <em>your stay?</em></>),
-    cta_sub: 'Book directly with us. No middlemen, no commissions, with Alex or Fran on the other side.',
+    cta_sub: 'Book directly with us. No middlemen, no commissions, no platforms.',
   },
 };
 
