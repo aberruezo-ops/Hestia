@@ -742,9 +742,6 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
         <span className="lm-card-apt lm-card-apt--longstay">
           {lang === 'es' ? 'ESTANCIA LARGA' : 'LONG STAY'}
         </span>
-        <span className="lm-card-dates">
-          <span className="lm-longstay-discount">−30%</span>
-        </span>
         <span className="lm-card-meta">
           {lang === 'es' ? '29+ noches · descuento especial' : '29+ nights · special discount'}
           <span className="lm-card-ppn"> · desde {minRate.toLocaleString('es-ES')}€/mes</span>
