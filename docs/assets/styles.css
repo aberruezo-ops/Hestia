@@ -3219,12 +3219,14 @@ body.apt-bar-shown .cookies {
    ============================================================ */
 .ratings-marquee {
   background-color: #2A0F2E;
-  color: #F0E8D5;                              /* ratio ~11:1 sobre eggplant */
+  color: #F0E8D5;
   border-top: 1px solid rgba(240, 232, 213, 0.10);
   border-bottom: 1px solid rgba(240, 232, 213, 0.10);
   overflow: hidden;
   padding: 16px 0 52px; /* +32px bottom compensa que home-search (z:48) cubre el overlap */
   position: relative;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 .ratings-marquee::before,
 .ratings-marquee::after {
@@ -3248,9 +3250,11 @@ body.apt-bar-shown .cookies {
   align-items: center;
   gap: clamp(28px, 4vw, 48px);
   width: max-content;
-  animation: rmScroll 42s linear infinite;
+  animation: rmScroll 28s linear infinite;
   white-space: nowrap;
   will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .rm-item {
   font-family: var(--sans);
@@ -20280,12 +20284,17 @@ img[src*="apt-vt-gallery-"] {
   width: 100%;
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
   mask-image: linear-gradient(to right, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 .lm-marquee-track {
   display: flex;
   gap: 10px;
   width: max-content;
-  animation: lm-scroll linear infinite;
+  animation: lm-scroll 30s linear infinite;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .lm-marquee-track:hover { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) {
