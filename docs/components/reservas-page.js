@@ -462,8 +462,8 @@ const ReservasForm = ({
   };
   const aptAccents = {
     vm: '#6B7A3A',
-    vt: '#8A4A24',
-    vs: '#9E7A2C'
+    vt: '#B86A3C',
+    vs: '#D4A84A'
   };
   // Formato ES: "16 may 2026" · EN: "May 16, 2026"
   const fmtResDate = iso => {

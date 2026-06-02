@@ -1085,17 +1085,17 @@ const HomePriceStrip = ({
     id: 'vm',
     name: 'Mar',
     slug: 'mar',
-    accent: '#3AAABB'
+    accent: '#6B7A3A'
   }, {
     id: 'vt',
     name: 'Thalassa',
     slug: 'thalassa',
-    accent: '#8A4A24'
+    accent: '#B86A3C'
   }, {
     id: 'vs',
     name: 'Salinas',
     slug: 'salinas',
-    accent: '#9E7A2C'
+    accent: '#D4A84A'
   }];
   const basePrice = id => {
     const v2 = window.PRICES_V2;

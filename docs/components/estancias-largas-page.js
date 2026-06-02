@@ -125,21 +125,21 @@ const LS_APTS = [{
   id: 'vm',
   name: 'Mar',
   slug: 'mar',
-  accent: '#3AAABB',
+  accent: '#6B7A3A',
   concept_es: 'El campo de olivos llega al mar',
   concept_en: 'Where the olive grove meets the sea'
 }, {
   id: 'vt',
   name: 'Thalassa',
   slug: 'thalassa',
-  accent: '#8A4A24',
+  accent: '#B86A3C',
   concept_es: 'El ático sobre el Mediterráneo',
   concept_en: 'The penthouse above the Mediterranean'
 }, {
   id: 'vs',
   name: 'Salinas',
   slug: 'salinas',
-  accent: '#9E7A2C',
+  accent: '#D4A84A',
   concept_es: 'El amarillo albero del amanecer',
   concept_en: 'The golden dawn above the salt flats'
 }];
