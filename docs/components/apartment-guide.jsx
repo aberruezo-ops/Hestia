@@ -21,10 +21,10 @@ const ROOM_PHOTOS = {
   },
   vt: {
     salon:        [4, 7, 9],
-    cocina:       [5],
-    dormitorios:  [1, 2, 3, 11, 12],      // + cama-2 naranja (12) + cama-2 horizontal (13)
-    banos:        [6, 13, 14, 15],         // + ducha (14) + lavabo redondo (15) + grifo (16)
-    terraza:      [0, 8, 10],
+    cocina:       [16],                    // 16 = Cocina · encimera gris y azulejos ocres
+    dormitorios:  [1, 2, 11],             // 1 = Dormitorio principal, 2 y 11 = Dormitorio 2
+    banos:        [13, 5, 18, 12],        // 13 = Baño 2 grifería negra, 5 = Baño 1 mosaico, 18 = Baño lavabo, 12 = Baño 2 ducha
+    terraza:      [0, 7, 9],              // 0 = atardecer, 7 = chill out, 9 = vistas panorámicas
     urbanizacion: [],                     // sin foto en galería; usa URB_FALLBACK
   },
   vs: {
@@ -135,7 +135,6 @@ const PLACES = [
 
   // Supermercados
   { id: 'coviran',        name: 'Covirán', desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa. Para básicos sin coger el coche.', cat: 'super', lat: 37.2235, lng: -1.7975 },
-  { id: 'superberruezo', name: 'Supermercados Berruezo (Vera Playa)', desc: 'Supermercado local bien surtido en Vera Playa. Producto fresco, carnicería propia y trato cercano. Buenos precios en fruta y verdura de la huerta almeriense.', cat: 'super', url: 'https://maps.app.goo.gl/bh8A2eUZEn1bWaM16', lat: 37.2270, lng: -1.7980, featured: true },
   { id: 'consum',         name: 'Consum (Vera Playa)', desc: 'Supermercado mediano a 5 min en coche. Sorpresa: tiene un buen surtido de productos británicos (cereales, salsas, té, alubias Heinz) por la afluencia inglesa de la zona.', specialty: 'estantería de productos UK — Marmite, Yorkshire Tea, baked beans, salsas Branston, mince pies en Navidad.', cat: 'super', url: 'https://goo.gl/maps/h6UvnBe3ATHpsPXbA', lat: 37.2200, lng: -1.8090, featured: true },
   { id: 'mercadona',      name: 'Mercadona Vera Playa', desc: 'Mercadona estándar a 5 min en coche. El más completo de la zona.', cat: 'super', url: 'https://goo.gl/maps/axi9Lb9xLp8yuVUR8', lat: 37.2360, lng: -1.7935, featured: true },
   { id: 'super-vera',     name: 'Vera pueblo (Dia · Lidl · Mercadona)', desc: 'Supermercados grandes en Vera pueblo, a 10 min en coche.', cat: 'super', lat: 37.2491, lng: -1.8639, featured: true },
@@ -1062,7 +1061,7 @@ const GUIDE_SHARED = {
       garageIntro: 'Todos los apartamentos llevan plaza de garaje incluida en la urbanización Pueblo Salinas. La plaza que te corresponde según tu Hestía es:',
       garageNote: 'A confirmar con Fran antes de tu llegada — alguna semana puede haber rotación por mantenimiento.',
       checkoutTitle: 'Check-out',
-      checkoutBody: 'La salida es siempre antes de las 11:00. Deja las llaves donde Fran te indique (caja-llaves o entrega presencial, según hayas entrado). Las toallas y sábanas, sobre la cama — del resto se encarga el equipo de limpieza.',
+      checkoutBody: 'La salida es siempre antes de las 11:00. Deja las llaves donde Fran te indique (caja-llaves o entrega presencial, según hayas entrado). Las toallas y sábanas las puedes dejar sobre la cama; del resto se encarga el equipo de limpieza.',
       garbageTitle: 'Basura y reciclaje',
       garbageBody: 'Por normativa municipal, los contenedores de basura y reciclaje están SIEMPRE fuera de la urbanización (no dentro). Te recomendamos aprovechar la salida del día siguiente, o cualquier viaje en coche, para tirarlas de paso. Te agradeceríamos enormemente que no la dejes en los descansillos del edificio ni dentro de Hestía — atrae bichos y el equipo de limpieza no las recoge.',
     },
@@ -1070,7 +1069,7 @@ const GUIDE_SHARED = {
     why: null,
     cleaning: {
       title: 'Protocolo de limpieza',
-      intro: 'Puedes estar tranquilo. Nuestros protocolos de limpieza garantizan la desinfección y la higiene tanto de las superficies, como de la ropa de hogar.',
+      intro: 'Puedes estar tranquilo. Nuestros protocolos de limpieza garantizan la desinfección y la higiene tanto de las superficies como de la ropa de hogar.',
       note: 'Es posible que algunos cojines de los que viste en nuestra web no estén pues los tendremos en cuarentena o en limpieza profunda.',
       recs: [
         'Por favor respeta los textiles y mobiliario de Hestía.',
@@ -1272,7 +1271,7 @@ const GUIDE_SHARED = {
       garageIntro: 'Every apartment comes with an included garage spot in the Pueblo Salinas complex. The spot assigned to your Hestía is:',
       garageNote: 'Confirm with Fran before arrival — occasional rotation for maintenance.',
       checkoutTitle: 'Check-out',
-      checkoutBody: 'Check-out is always before 11:00. Leave the keys wherever Fran tells you (lockbox or in-person, depending on how you arrived). Towels and sheets stay on the bed — the cleaning team handles the rest.',
+      checkoutBody: 'Check-out is always before 11:00. Leave the keys wherever Fran tells you (lockbox or in-person, depending on how you arrived). Towels and sheets can go on the bed; the cleaning team handles the rest.',
       garbageTitle: 'Rubbish & recycling',
       garbageBody: 'By local regulation, rubbish and recycling bins are ALWAYS outside the complex (never inside). We recommend dropping off bin bags on your way out the next day, or on any car trip. We would really appreciate it if you do not leave them on the building landings or inside Hestía — it attracts pests and the cleaning team will not collect them.',
     },
@@ -1552,7 +1551,7 @@ const GUIDE_BY_APT = {
     es: {
       cover_tagline: 'Ático sobre el mar y el Salar de los Canos. Donde el horizonte se ensancha.',
       rooms: [
-        { id: 'salon', title: 'Tu salón', body: 'Tu sofá-cama y tu televisión plana son el sitio perfecto para una sesión de Netflix o HBO. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
+        { id: 'salon', title: 'Tu salón', body: 'Tu sofá-cama y tu televisión plana son el sitio perfecto para una sesión de HBO o Prime Video. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en casa.',
           'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de pie con el mando junto al cuadro del A/C.',
@@ -1579,18 +1578,26 @@ const GUIDE_BY_APT = {
           'Recoge el toldo y los cojines cuando sople aire, llueva o vayas a salir.',
           'Usa velas para crear el ambiente perfecto al atardecer.',
         ]},
-        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Tu urbanización tiene SPA comunitario (sauna y gimnasio), piscina y pistas de pádel. El SPA está abierto en otoño, invierno y primavera; en verano solo el gimnasio. Tu plaza subterránea te espera junto al ascensor.', recs: [
+        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Tu urbanización tiene SPA comunitario (sauna y gimnasio), piscina y pistas de pádel. El SPA está abierto en otoño, invierno y primavera; en verano solo el gimnasio. Tu plaza subterránea te espera junto a las escaleras.', recs: [
           'El SPA es comunitario y de uso por turnos — pregúntanos por la disponibilidad.',
           'Las pistas de pádel se reservan a través de la conserjería de la urbanización. Si las necesitas, pídenos el teléfono y te lo pasamos al momento.',
           'Respeta las zonas comunes y las normas de la urbanización.',
           'No utilices en la piscina las toallas de casa.',
         ]},
       ],
+      checkin: {
+        carText: 'Si conduces, llegas directamente a la puerta de Hestía. Te enviamos la mejor ruta según tu origen y la plaza de garaje cubierta exacta. No improvisas nada.',
+        modalities: [
+          { tag: 'Autónoma', body: 'Llegas y entras directamente. Te pasamos por mensaje el acceso a la caja-llaves y las instrucciones paso a paso. Útil si vienes con vuelo nocturno o si prefieres tu ritmo.' },
+          { tag: 'Presencial', body: 'Te recibe Leila, nuestra anfitriona en Thalassa, o una de sus trabajadoras. Te enseñan la casa y resuelven cualquier duda en el momento. Horario de recepción presencial: 15:00 – 21:00. Si llegas después de las 21:00 activamos la llegada autónoma, salvo que prefieras la presencial, lo cual conlleva un coste adicional para Leila.' },
+        ],
+        garageIntro: 'Tu plaza de garaje en Hestía Thalassa es:',
+      },
     },
     en: {
       cover_tagline: 'Penthouse over the sea and the Salar de los Canos. Where the horizon widens.',
       rooms: [
-        { id: 'salon', title: 'Your living room', body: 'Your sofa-bed and flat-screen TV are the perfect spot for a Netflix or HBO session. You control the temperature with the centralised A/C panel.', recs: [
+        { id: 'salon', title: 'Your living room', body: 'Your sofa-bed and flat-screen TV are the perfect spot for an HBO or Prime Video session. You control the temperature with the centralised A/C panel.', recs: [
           'Do not leave the A/C on with doors open or while you are away from home.',
           'Take a look at Hestía\'s usage guidelines, next to the entrance door.',
           'Adjust colour and tonality of the floor lamp with the remote next to the A/C panel.',
@@ -1617,13 +1624,21 @@ const GUIDE_BY_APT = {
           'Roll up the awning and put away cushions when it\'s windy, raining, or you go out.',
           'Use candles to create the perfect sunset atmosphere.',
         ]},
-        { id: 'urbanizacion', title: 'Your complex', body: 'Your complex has a shared SPA (sauna and gym), pool and padel courts. The SPA opens in autumn, winter and spring; only the gym stays open in summer. Your underground parking space is right by the lift.', recs: [
+        { id: 'urbanizacion', title: 'Your complex', body: 'Your complex has a shared SPA (sauna and gym), pool and padel courts. The SPA opens in autumn, winter and spring; only the gym stays open in summer. Your underground parking space is next to the stairs.', recs: [
           'The SPA is shared by slots — ask us for availability.',
           'Padel courts are booked through the complex concierge desk. If you need one, ask us and we will pass you the phone number right away.',
           'Respect the common areas and the complex rules.',
           'Do not take house towels to the pool.',
         ]},
       ],
+      checkin: {
+        carText: 'If you drive, you arrive straight at Hestía\'s door. We send you the best route from your starting point and the exact covered garage spot. Nothing left to chance.',
+        modalities: [
+          { tag: 'Self check-in', body: 'You arrive and let yourself in. We send you the lockbox access and step-by-step instructions by message. Handy for late flights or if you prefer your own pace.' },
+          { tag: 'In-person check-in', body: 'Leila, our Thalassa host, or one of her team greets you, shows you around and answers anything on the spot. In-person reception hours: 15:00 – 21:00. If you arrive after 21:00 we switch to self check-in, unless you prefer in-person — which involves an additional fee for Leila.' },
+        ],
+        garageIntro: 'Your garage spot at Hestía Thalassa is:',
+      },
     },
   },
 
@@ -4346,8 +4361,12 @@ const DayPlans = ({ lang }) => {
 // (se renderiza dentro del Header / Footer del portal)
 // ================================================================
 const AptGuideView = ({ apt, lang, onClose }) => {
-  const s         = GUIDE_SHARED[lang];
+  const _gs       = GUIDE_SHARED[lang];
   const a         = GUIDE_BY_APT[apt.id][lang];
+  const s         = { ..._gs,
+    checkin:  { ..._gs.checkin,  ...(a.checkin  || {}) },
+    cleaning: { ..._gs.cleaning, ...(a.cleaning || {}) },
+  };
   const aptInfo   = GUIDE_BY_APT[apt.id];
   const aptName   = apt[lang].name;
   const photoMap  = ROOM_PHOTOS[apt.id] || {};
@@ -4952,7 +4971,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                 ? 'Estaciones de servicio y puntos de carga para coche eléctrico en Vera Playa y alrededores. Cada lugar incluye distancia desde tu Hestía, horario habitual y enlace directo a Google Maps para llegar.'
                 : 'Petrol stations and EV charging points in Vera Playa and surroundings. Each spot includes distance from your Hestía, typical opening hours and a direct Google Maps link.'}
             </p>
-            <p className="ag-para" style={{fontSize:'0.92em',color:'var(--ink-soft)'}}>
+            <p className="ag-para">
               {lang === 'es'
                 ? 'Los horarios son orientativos (verificados en mayo 2026 mediante Repsol, Cepsa, Plenoil y Electromaps). El enlace de Google Maps siempre lleva al lugar correcto aunque cambie la información.'
                 : 'Hours are approximate (verified in May 2026 via Repsol, Cepsa, Plenoil and Electromaps). The Google Maps link always reaches the correct location even if details change.'}
