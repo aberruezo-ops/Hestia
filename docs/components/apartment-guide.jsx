@@ -31,8 +31,8 @@ const ROOM_PHOTOS = {
     salon:        [0, 1, 2, 3, 4, 5, 6, 7],
     cocina:       [8, 9, 10, 11],
     dormitorios:  [12, 13, 14],
-    banos:        [15, 16, 17, 18],
-    terraza:      [19, 20, 21, 22, 23, 24, 25, 26, 27],
+    banos:        [16, 17, 18],                          // 15 = Dormitorio 2, eliminado de baños
+    terraza:      [19, 20, 21, 22, 23, 24, 25, 26],      // 27 = Piscina, eliminada de terraza
     urbanizacion: [],
   },
 };
@@ -42,7 +42,7 @@ const ROOM_PHOTOS = {
 const URB_FALLBACK = {
   vm: ['assets/guides/vm/urb-1.jpg', 'assets/guides/vm/urb-2.jpg'],
   vt: ['assets/guides/vt/urb-1.jpg', 'assets/guides/vt/urb-2.jpg'],
-  vs: ['assets/guides/vs/urb-1.jpg'],
+  vs: [{ src: 'assets/guides/vs/urb-1.jpg', rotate: 180 }],
 };
 
 // Secciones del nav lateral, en orden de aparición
@@ -1649,7 +1649,7 @@ const GUIDE_BY_APT = {
     es: {
       cover_tagline: 'Junto a las salinas. Donde la luz se queda más tiempo.',
       rooms: [
-        { id: 'salon', title: 'Tu salón', body: 'Tu sofá-cama y tu televisión con ambilight son el rincón perfecto para una sesión de Netflix. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
+        { id: 'salon', title: 'Tu salón', body: 'Tu sofá-cama y tu televisión con ambilight son el rincón perfecto para una tarde de cine con HBO o Prime Video. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.',
           'Echa un vistazo a las Normas de uso de Hestía, al final de esta misma guía.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando a la misma.',
@@ -1672,10 +1672,10 @@ const GUIDE_BY_APT = {
         { id: 'terraza', title: 'Tu terraza', body: 'Tu terraza tiene las mejores vistas y dos ambientes para cada momento de las vacaciones.', recs: [
           'Disfruta de la tranquilidad y permite que tus vecinos también la disfruten.',
           'Mientras estés en la terraza apaga o reduce el A/C.',
-          'Recoge el toldo y los cojines cuando sople aire o llueva.',
+          'Recoge los cojines cuando sople aire o llueva.',
           'Usa velas para crear el ambiente perfecto.',
         ]},
-        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Tu urbanización es textil — para olvidarse del mundo y cerca de todo. Tu plaza subterránea es la nº 290. Tienes entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), acceso peatonal desde la urbanización, piscina y pistas deportivas. Hestía Vera Salinas está en bloque 22, planta 1, puerta 7.',
+        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Tu urbanización es textil, por lo que está prohibido el nudismo. Tu plaza de garage es la nº 290. Tienes entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), acceso peatonal desde la urbanización, piscina y pistas deportivas. Hestía Vera Salinas está en el bloque 22, planta 1, puerta 7.',
           points: [
             'Entrada y salida a la urbanización controlada por código.',
             'Acceso/barrera a la zona 2, donde está Hestía.',
@@ -1686,7 +1686,7 @@ const GUIDE_BY_APT = {
             'Pistas deportivas.',
           ],
           recs: [
-          'La urbanización merece la pena recorrerla. Los jardines, los riachuelos, las aves, otros pequeños animales, el desierto alrededor. Es un lugar sin igual, para disfrutar con los más pequeños con toda la tranquilidad de un recinto cerrado.',
+          'La urbanización merece la pena recorrerla para disfrutar de los jardines, los riachuelos, las aves y otros pequeños animales, todo ello con el desierto alrededor. Es un lugar sin igual, para disfrutar con toda la tranquilidad de un recinto cerrado, sobre todo si vas con niños.',
           'Cuida las plantas y la limpieza de la urbanización.',
           'Respeta las zonas comunes y las normas de la urbanización.',
           'Respeta a los vecinos.',
@@ -1694,11 +1694,19 @@ const GUIDE_BY_APT = {
           'Llama a Conserjería para reservar cualquier espacio común.',
         ]},
       ],
+      checkin: {
+        carText: 'Si conduces, llegas directamente a la puerta de Hestía. Te enviamos la mejor ruta según tu origen y la plaza de garaje cubierta exacta. No improvisas nada.',
+        modalities: [
+          { tag: 'Autónoma', body: 'Llegas y entras directamente. Te pasamos por mensaje el acceso a la caja-llaves y las instrucciones paso a paso. Útil si vienes con vuelo nocturno o si prefieres tu ritmo.' },
+          { tag: 'Presencial', body: 'Te recibe Leila, nuestra anfitriona en Salinas, o una de sus trabajadoras. Te enseñan la casa y resuelven cualquier duda en el momento. Horario de recepción presencial: 15:00 – 21:00. Si llegas después de las 21:00 activamos la llegada autónoma, salvo que prefieras la presencial, lo cual conlleva un coste adicional para Leila.' },
+        ],
+        garageIntro: 'Tu plaza de garaje en Hestía Salinas es:',
+      },
     },
     en: {
       cover_tagline: 'Next to the salt flats. Where light lingers longer.',
       rooms: [
-        { id: 'salon', title: 'Your living room', body: 'Your sofa-bed and ambilight smart TV are the perfect spot for a Netflix session. You control the temperature with the centralised air-conditioning panel.', recs: [
+        { id: 'salon', title: 'Your living room', body: 'Your sofa-bed and ambilight smart TV are the perfect spot for an evening with HBO or Prime Video. You control the temperature with the centralised air-conditioning panel.', recs: [
           'Do not leave the air conditioner running with doors open or while you are away from Hestía.',
           'Take a look at Hestía\'s usage guidelines, at the end of this guide.',
           'Adjust colour and tonality of the table lamp with the remote next to it.',
@@ -1721,10 +1729,10 @@ const GUIDE_BY_APT = {
         { id: 'terraza', title: 'Your terrace', body: 'Your terrace has the best views and two atmospheres for every moment of your holiday.', recs: [
           'Enjoy the quiet — and let your neighbours enjoy it too.',
           'Turn off or reduce the A/C while you are on the terrace.',
-          'Roll up the awning and put away cushions when it\'s windy or raining.',
+          'Put away cushions when it\'s windy or raining.',
           'Use candles to create the perfect atmosphere.',
         ]},
-        { id: 'urbanizacion', title: 'Your complex', body: 'Your complex is textile-free — to forget the world while staying near everything. Your underground parking space is nº 290. Code-controlled entrance, barrier to zone 2 (where Hestía is), pedestrian access from the complex, swimming pool and sports courts. Hestía Vera Salinas is at block 22, floor 1, unit 7.',
+        { id: 'urbanizacion', title: 'Your complex', body: 'Your complex is textile-only, so nudism is not permitted. Your garage space is nº 290. Code-controlled entrance, barrier to zone 2 (where Hestía is), pedestrian access from the complex, swimming pool and sports courts. Hestía Vera Salinas is at block 22, floor 1, unit 7.',
           points: [
             'Entrance and exit to the complex controlled by code.',
             'Access/barrier to zone 2, where Hestía is.',
@@ -1735,7 +1743,7 @@ const GUIDE_BY_APT = {
             'Sports courts.',
           ],
           recs: [
-          'The complex is worth exploring. The gardens, streams, birds, small animals, the surrounding desert — a place without equal, perfect for kids with the calm of a closed area.',
+          'The complex is worth exploring to enjoy the gardens, streams, birds and small animals — all surrounded by desert. A unique place to relax in the calm of a gated community, especially great with children.',
           'Take care of the plants and the cleanliness of the complex.',
           'Respect the common areas and the complex rules.',
           'Respect the neighbours.',
@@ -1743,6 +1751,14 @@ const GUIDE_BY_APT = {
           'Call the concierge to reserve any common space.',
         ]},
       ],
+      checkin: {
+        carText: 'If you drive, you arrive straight at Hestía\'s door. We send you the best route from your starting point and the exact covered garage spot. Nothing left to chance.',
+        modalities: [
+          { tag: 'Self check-in', body: 'You arrive and let yourself in. We send you the lockbox access and step-by-step instructions by message. Handy for late flights or if you prefer your own pace.' },
+          { tag: 'In-person check-in', body: 'Leila, our Salinas host, or one of her team greets you, shows you around and answers anything on the spot. In-person reception hours: 15:00 – 21:00. If you arrive after 21:00 we switch to self check-in, unless you prefer in-person — which involves an additional fee for Leila.' },
+        ],
+        garageIntro: 'Your garage spot at Hestía Salinas is:',
+      },
     },
   },
 };
@@ -4420,7 +4436,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
       .filter(i => i < galleryImgs.length)
       .map(i => ({ src: galleryImgs[i], caption: galleryCaptions[i] || '' }));
     if (fromGallery.length) return fromGallery;
-    if (roomId === 'urbanizacion') return urbExtra.map(src => ({ src, caption: '' }));
+    if (roomId === 'urbanizacion') return urbExtra.map(item =>
+      typeof item === 'string' ? { src: item, caption: '' } : { src: item.src, caption: '', rotate: item.rotate || 0 });
     return [];
   };
 
@@ -4432,7 +4449,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
         {photos.map((p, i) => (
           <figure key={i} className="ag-photo" style={{ '--i': i }}>
             <span className="ag-photo-frame">
-              <img decoding="async" src={p.src} alt={p.caption || ''} loading="lazy" />
+              <img decoding="async" src={p.src} alt={p.caption || ''} loading="lazy" style={p.rotate ? { transform: `rotate(${p.rotate}deg)` } : undefined} />
               {HasMark && <WatermarkBadge size={28} pos={{ bottom: 10, right: 10 }} />}
             </span>
             {p.caption && <figcaption>{p.caption}</figcaption>}
