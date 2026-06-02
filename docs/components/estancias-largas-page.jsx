@@ -40,7 +40,7 @@ const LS_COPY = {
     apts_cta:    'Ver apartamento',
     faq_title:   'Preguntas frecuentes',
     faqs: [
-      { q: '¿Cuántas noches es el mínimo?', a: 'El mínimo son 29 noches. No hay máximo — si quieres quedarte más tiempo, lo acordamos.' },
+      { q: '¿Cuántas noches es el mínimo?', a: 'El mínimo considerado son 29 noches. No hay máximo — si quieres quedarte más tiempo, lo acordamos.' },
       { q: '¿Hay contrato?', a: 'Sí. Firmamos un contrato de arrendamiento de temporada con los datos de todos los huéspedes. Recibirás el contrato antes de pagar la señal.' },
       { q: '¿Cómo se reserva?', a: 'Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de 2 horas para confirmar disponibilidad y enviarte el contrato.' },
       { q: '¿Hay que pagar todo al reservar?', a: 'Solo el 20% como señal para confirmar la reserva. El resto se abona a la llegada en efectivo o Bizum.' },
@@ -90,7 +90,7 @@ const LS_COPY = {
     apts_cta:    'View apartment',
     faq_title:   'Frequently asked questions',
     faqs: [
-      { q: 'What is the minimum stay?', a: 'The minimum is 29 nights. There is no maximum — if you want to stay longer, we arrange it.' },
+      { q: 'What is the minimum stay?', a: 'The minimum considered is 29 nights. There is no maximum — if you want to stay longer, we arrange it.' },
       { q: 'Is there a contract?', a: "Yes. We sign a seasonal rental agreement with all guests' details. You receive the contract before paying the deposit." },
       { q: 'How do I book?', a: 'Message us on WhatsApp or email with your dates and chosen apartment. We respond within 2 hours to confirm availability and send the contract.' },
       { q: 'Do I pay everything upfront?', a: 'Only 20% as a deposit to confirm the booking. The rest is paid on arrival in cash or Bizum.' },

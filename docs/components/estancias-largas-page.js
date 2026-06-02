@@ -40,7 +40,7 @@ const LS_COPY = {
     faq_title: 'Preguntas frecuentes',
     faqs: [{
       q: '¿Cuántas noches es el mínimo?',
-      a: 'El mínimo son 29 noches. No hay máximo — si quieres quedarte más tiempo, lo acordamos.'
+      a: 'El mínimo considerado son 29 noches. No hay máximo — si quieres quedarte más tiempo, lo acordamos.'
     }, {
       q: '¿Hay contrato?',
       a: 'Sí. Firmamos un contrato de arrendamiento de temporada con los datos de todos los huéspedes. Recibirás el contrato antes de pagar la señal.'
@@ -98,7 +98,7 @@ const LS_COPY = {
     faq_title: 'Frequently asked questions',
     faqs: [{
       q: 'What is the minimum stay?',
-      a: 'The minimum is 29 nights. There is no maximum — if you want to stay longer, we arrange it.'
+      a: 'The minimum considered is 29 nights. There is no maximum — if you want to stay longer, we arrange it.'
     }, {
       q: 'Is there a contract?',
       a: "Yes. We sign a seasonal rental agreement with all guests' details. You receive the contract before paying the deposit."
