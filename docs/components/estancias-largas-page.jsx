@@ -114,6 +114,13 @@ const LsHero = ({ lang }) => {
   const t = LS_COPY[lang];
   return (
     <section className="lsl-hero">
+      <video
+        className="lsl-hero-video"
+        src="assets/186080-877288093_medium.mp4"
+        autoPlay muted loop playsInline
+        aria-hidden="true"
+      />
+      <div className="lsl-hero-wash"/>
       <div className="lsl-hero-inner">
         <p className="eyebrow lsl-eyebrow">
           {lang === 'es' ? 'Estancias largas · Hestía Your Home' : 'Long stays · Hestía Your Home'}

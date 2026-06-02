@@ -149,7 +149,17 @@ const LsHero = ({
   const t = LS_COPY[lang];
   return /*#__PURE__*/React.createElement("section", {
     className: "lsl-hero"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("video", {
+    className: "lsl-hero-video",
+    src: "assets/186080-877288093_medium.mp4",
+    autoPlay: true,
+    muted: true,
+    loop: true,
+    playsInline: true,
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "lsl-hero-wash"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "lsl-hero-inner"
   }, /*#__PURE__*/React.createElement("p", {
     className: "eyebrow lsl-eyebrow"
