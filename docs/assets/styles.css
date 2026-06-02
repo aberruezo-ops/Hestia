@@ -20368,15 +20368,15 @@ img[src*="apt-vt-gallery-"] {
 }
 /* Card fija de estancia larga (29+ noches) */
 .lm-card--longstay {
-  --lm-color: #D4A84A;
-  border-left-color: #D4A84A;
+  --lm-color: #3AAABB;
+  border-left-color: #3AAABB;
   border-left-width: 3px;
-  background: rgba(212, 168, 74, 0.07);
+  background: rgba(58, 170, 187, 0.07);
   min-width: 170px;
 }
-.lm-card--longstay:hover { background: rgba(212, 168, 74, 0.13); }
+.lm-card--longstay:hover { background: rgba(58, 170, 187, 0.13); }
 .lm-card-apt--longstay {
-  color: #D4A84A;
+  color: #3AAABB;
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -20384,13 +20384,13 @@ img[src*="apt-vt-gallery-"] {
 .lm-longstay-discount {
   font-size: 22px;
   font-weight: 700;
-  color: #D4A84A;
+  color: #3AAABB;
   letter-spacing: -0.01em;
   line-height: 1;
 }
 .lm-longstay-cta {
   font-size: 11px;
-  color: #D4A84A;
+  color: #3AAABB;
   opacity: 0.85;
   font-weight: 500;
 }
