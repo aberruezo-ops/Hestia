@@ -670,7 +670,7 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
                 (new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000
               );
               const critica = overlapsCritica(cursor, block.start);
-              const ok = critica ? nights < 6 : (nights >= 4 && nights <= 28);
+              const ok = critica ? (nights >= 2 && nights < 6) : (nights >= 2 && nights <= 28);
               if (ok) found.push({ apt, checkin: cursor, checkout: block.start, nights });
             }
             if (block.end > cursor) cursor = block.end;
@@ -680,7 +680,7 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
               (new Date(horizonStr + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000
             );
             const critica = overlapsCritica(cursor, horizonStr);
-            const ok = critica ? nights < 6 : (nights >= 4 && nights <= 28);
+            const ok = critica ? (nights >= 2 && nights < 6) : (nights >= 2 && nights <= 28);
             if (ok) found.push({ apt, checkin: cursor, checkout: horizonStr, nights });
           }
         }
@@ -706,7 +706,7 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
     }).format(new Date(ds + 'T12:00:00Z'));
   };
 
-  const APT_COLOR = { vm: '#3AAABB', vt: '#8A4A24', vs: '#9E7A2C' };
+  const APT_COLOR = { vm: '#6B7A3A', vt: '#B86A3C', vs: '#D4A84A' };
 
   const getStayPrice = (aptId, checkin, checkout) => {
     try {
