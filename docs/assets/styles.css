@@ -21305,10 +21305,28 @@ img[src*="apt-vt-gallery-"] {
 
 /* ── Estancias largas page ───────────────────────────────────── */
 .lsl-hero {
-  background: linear-gradient(150deg, var(--ber-dk, #1A0820) 0%, #3D1540 60%, #2A0F2E 100%);
+  background: var(--ber-dk, #1A0820);
   padding: calc(var(--chrome-h, 116px) + 48px) 24px 72px;
+  position: relative;
+  overflow: hidden;
+}
+.lsl-hero-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  z-index: 0;
+  opacity: 0.45;
+}
+.lsl-hero-wash {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top,  rgba(26,8,32,.95) 0%, rgba(26,8,32,.6) 45%, rgba(26,8,32,.25) 100%),
+    linear-gradient(to right, rgba(26,8,32,.65) 0%, transparent 65%);
+  z-index: 1;
+  pointer-events: none;
 }
 .lsl-hero-inner {
+  position: relative; z-index: 2;
   max-width: 740px;
   margin: 0 auto;
   display: flex;
