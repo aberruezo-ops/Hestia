@@ -6,10 +6,10 @@ const HS_APTS = [
   { id: 'vm', num: '01', name: 'Hestía Mar',      short: 'Mar',      slug: 'mar',      accent: '#6B7A3A',
     concept_es: 'El campo de olivos llega al mar.',
     concept_en: 'Where the olive grove meets the sea.' },
-  { id: 'vt', num: '02', name: 'Hestía Thalassa', short: 'Thalassa', slug: 'thalassa', accent: '#8A4A24',
+  { id: 'vt', num: '02', name: 'Hestía Thalassa', short: 'Thalassa', slug: 'thalassa', accent: '#B86A3C',
     concept_es: 'El ático sobre el Mediterráneo y el Salar de los Canos.',
     concept_en: 'The penthouse above the Mediterranean and the Salar de los Canos.' },
-  { id: 'vs', num: '03', name: 'Hestía Salinas',  short: 'Salinas',  slug: 'salinas',  accent: '#9E7A2C',
+  { id: 'vs', num: '03', name: 'Hestía Salinas',  short: 'Salinas',  slug: 'salinas',  accent: '#D4A84A',
     concept_es: 'El amarillo albero del amanecer sobre las salinas.',
     concept_en: 'Ochre yellow, sunrise over the salt flats.' },
 ];

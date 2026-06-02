@@ -28,8 +28,8 @@ const OPINIONES_COPY = {
 // Color de acento por Hestía (los mismos que en /opiniones tabs).
 const APT_ACCENT = {
   vm:  '#6B7A3A',
-  vt:  '#8A4A24',
-  vs:  '#9E7A2C',
+  vt:  '#B86A3C',
+  vs:  '#D4A84A',
   all: '#3D1A35',
 };
 // Mapeo apt → nombre completo para mostrar.

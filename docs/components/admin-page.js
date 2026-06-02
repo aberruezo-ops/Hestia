@@ -6403,15 +6403,15 @@ const HC_COL = {
 const HC_APT = {
   vm: {
     name: 'Hestía Mar',
-    accent: '#3AAABB'
+    accent: '#6B7A3A'
   },
   vt: {
     name: 'Hestía Thalassa',
-    accent: '#8A4A24'
+    accent: '#B86A3C'
   },
   vs: {
     name: 'Hestía Salinas',
-    accent: '#9E7A2C'
+    accent: '#D4A84A'
   }
 };
 const BULK_PRESETS = [{

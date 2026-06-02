@@ -3031,9 +3031,9 @@ const WidgetTopRecs = ({ lang }) => {
 // secretos: solo fricción de UX para diferenciar a huéspedes.
 const HESTIA_GUIDE_PINS = { vm: 'HVM2016', vt: 'HVT2019', vs: 'HVS2021' };
 const HESTIA_APT_META = {
-  vm: { name: 'Hestía Mar',      slug: 'mar',      accent: '#3AAABB', concept_es: 'Frente a la playa', concept_en: 'By the beach' },
-  vt: { name: 'Hestía Thalassa', slug: 'thalassa', accent: '#8A4A24', concept_es: 'Ático panorámico',  concept_en: 'Panoramic penthouse' },
-  vs: { name: 'Hestía Salinas',  slug: 'salinas',  accent: '#9E7A2C', concept_es: 'Junto a las salinas', concept_en: 'Next to the salt flats' },
+  vm: { name: 'Hestía Mar',      slug: 'mar',      accent: '#6B7A3A', concept_es: 'Frente a la playa', concept_en: 'By the beach' },
+  vt: { name: 'Hestía Thalassa', slug: 'thalassa', accent: '#B86A3C', concept_es: 'Ático panorámico',  concept_en: 'Panoramic penthouse' },
+  vs: { name: 'Hestía Salinas',  slug: 'salinas',  accent: '#D4A84A', concept_es: 'Junto a las salinas', concept_en: 'Next to the salt flats' },
 };
 
 // Modal global de acceso huéspedes. Dos pasos:

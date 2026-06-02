@@ -5017,9 +5017,9 @@ const HC_MAX    = { critica: 7, alta: 7, media: 28, baja: 28 };
 const HC_LBL    = { baja: 'T. baja', media: 'T. media', alta: 'T. alta', critica: 'T. crítica' };
 const HC_COL    = { baja: '#6FC4D1', media: '#B9813E', alta: '#D42B80', critica: '#8A1B1B' };
 const HC_APT    = {
-  vm: { name: 'Hestía Mar',      accent: '#3AAABB' },
-  vt: { name: 'Hestía Thalassa', accent: '#8A4A24' },
-  vs: { name: 'Hestía Salinas',  accent: '#9E7A2C' },
+  vm: { name: 'Hestía Mar',      accent: '#6B7A3A' },
+  vt: { name: 'Hestía Thalassa', accent: '#B86A3C' },
+  vs: { name: 'Hestía Salinas',  accent: '#D4A84A' },
 };
 
 const BULK_PRESETS = [

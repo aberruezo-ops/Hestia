@@ -799,9 +799,9 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
 // ================================================================
 const HomePriceStrip = ({ lang }) => {
   const APT_META = [
-    { id: 'vm', name: 'Mar',      slug: 'mar',      accent: '#3AAABB' },
-    { id: 'vt', name: 'Thalassa', slug: 'thalassa', accent: '#8A4A24' },
-    { id: 'vs', name: 'Salinas',  slug: 'salinas',  accent: '#9E7A2C' },
+    { id: 'vm', name: 'Mar',      slug: 'mar',      accent: '#6B7A3A' },
+    { id: 'vt', name: 'Thalassa', slug: 'thalassa', accent: '#B86A3C' },
+    { id: 'vs', name: 'Salinas',  slug: 'salinas',  accent: '#D4A84A' },
   ];
 
   const basePrice = (id) => {

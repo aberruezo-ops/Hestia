@@ -19,7 +19,7 @@ const HS_APTS = [{
   name: 'Hestía Thalassa',
   short: 'Thalassa',
   slug: 'thalassa',
-  accent: '#8A4A24',
+  accent: '#B86A3C',
   concept_es: 'El ático sobre el Mediterráneo y el Salar de los Canos.',
   concept_en: 'The penthouse above the Mediterranean and the Salar de los Canos.'
 }, {
@@ -28,7 +28,7 @@ const HS_APTS = [{
   name: 'Hestía Salinas',
   short: 'Salinas',
   slug: 'salinas',
-  accent: '#9E7A2C',
+  accent: '#D4A84A',
   concept_es: 'El amarillo albero del amanecer sobre las salinas.',
   concept_en: 'Ochre yellow, sunrise over the salt flats.'
 }];
