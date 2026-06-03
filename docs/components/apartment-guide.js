@@ -160,7 +160,7 @@ const GUIDE_SECTIONS = [{
 // El bloque 'alrededores' queda solo con intro/mapa/fuentes oficiales.
 const SECTION_CATS = {
   supermercados: ['super'],
-  sabores: ['restaurant', 'bar', 'fish', 'celiac'],
+  sabores: ['michelin', 'restaurant', 'bar', 'fish', 'celiac'],
   pueblos: ['town', 'bookshop'],
   'mar-playas': ['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
   planes: ['gem', 'water', 'adventure', 'trek', 'leisure', 'bodega'],
@@ -184,6 +184,12 @@ const CATEGORIES = [{
   en: 'Restaurants',
   color: 'var(--vt)',
   icon: '🍽️'
+}, {
+  id: 'michelin',
+  es: 'Guía Michelin 2025',
+  en: 'Michelin Guide 2025',
+  color: 'var(--vs)',
+  icon: '⭐'
 }, {
   id: 'celiac',
   es: 'Restaurantes celíacos',
@@ -814,19 +820,280 @@ const PLACES = [
   lng: -1.8810,
   featured: true
 },
-// Almería capital
+// ── Guía Michelin 2025 ── Almería ──────────────────────────────
 {
-  id: 'joseba-anorga',
-  name: 'Joseba Añorga (Almería capital)',
-  desc: 'Cocina vasca-mediterránea de autor. Recomendado por Guía Michelin.',
-  specialty: 'menú degustación con producto de mercado, pescados a la brasa.',
-  tier: '€€€€',
+  id: 'mich-vivo',
+  name: 'Vivo Gourmet',
+  cat: 'michelin',
+  tier: '€€€',
   rating: 4.7,
-  cat: 'restaurant',
   lat: 36.8395,
-  lng: -2.4635,
-  featured: true
+  lng: -2.4655,
+  featured: true,
+  desc: 'Almería capital. Cocina en movimiento: menú cambiante según el producto de temporada de proximidad.',
+  specialty: 'carnes a la brasa con materia prima de kilómetro cero. El nombre "Vivo" refleja su filosofía de cocina siempre en evolución.'
 }, {
+  id: 'mich-tinta-negra',
+  name: 'Asador Marino Tinta Negra',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.6,
+  lat: 36.8406,
+  lng: -2.4688,
+  featured: true,
+  desc: 'Almería capital, casco viejo. Segunda vida de un antiguo asador: salones de esencia castellana renovados, con un gran mural de pulpo monocromático.',
+  specialty: 'pescados y mariscos del día a la parrilla, no solo carnes. Propuesta tradicional actualizada.'
+}, {
+  id: 'mich-gines',
+  name: 'Ginés Peregrín',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.7,
+  lat: 36.8380,
+  lng: -2.4618,
+  featured: true,
+  desc: 'Almería capital. "Amor por la cocina" — vocación desde la infancia del chef. Base mediterránea con matices de Japón, México, Perú y Holanda.',
+  specialty: 'menú degustación sorpresa de 5 o 7 pases. Servicio a la carta también disponible.'
+}, {
+  id: 'mich-travieso',
+  name: 'Travieso',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.6,
+  lat: 36.8368,
+  lng: -2.4605,
+  featured: true,
+  desc: 'Almería capital, zona residencial. Chef Dani Muñoz: cocina contemporánea creativa con producto de temporada y proximidad.',
+  specialty: 'sashimi de presa ibérica "Joselito", salmonete de roca, costillar ibérico glaseado. Primer apartado de tapas informales en la carta.'
+}, {
+  id: 'mich-tony',
+  name: 'Tony García Espacio Gastronómico',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.6,
+  lat: 36.8388,
+  lng: -2.4631,
+  desc: 'Almería capital. Gastrobar informal + comedor. Fusión entre cocina tradicional y actual con producto de Almería como bandera.',
+  specialty: 'cocina de mercado almeriense con toques contemporáneos.'
+}, {
+  id: 'mich-lavilla',
+  name: 'La Villa',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.6,
+  lat: 36.9380,
+  lng: -1.9680,
+  featured: true,
+  desc: 'Agua Amarga, Níjar. Villa con varios comedores mediterráneos y terraza con piscina. Carta de gusto actual con protagonismo de la brasa.',
+  specialty: 'platos a la brasa con producto de la zona costera.'
+}, {
+  id: 'mich-barra-jose',
+  name: 'Barra de José Álvarez',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.7,
+  lat: 36.8393,
+  lng: -2.4643,
+  featured: true,
+  desc: 'Almería capital. Comparte cocina y bodega con La Costa (⭐ Estrella Michelin). Barra + mesas sin mantel, platos actuales en medias raciones.',
+  specialty: 'buenos pescados, mariscos y carnes. Postre icónico: el Nuestro Flan, super cremoso de vainilla.'
+},
+// ── Guía Michelin 2025 ── Murcia ───────────────────────────────
+{
+  id: 'mich-cabana-buenavista',
+  name: 'Cabaña Buenavista',
+  cat: 'michelin',
+  tier: '€€€€',
+  rating: 4.9,
+  lat: 37.9425,
+  lng: -1.0705,
+  featured: true,
+  desc: 'El Palmar (Murcia). ⭐⭐ Dos Estrellas Michelin — única en la región. Chef Pablo González-Conejero.',
+  specialty: 'variedades autóctonas de frutas y verduras murcianas en vías de extinción. Menús Olivo y Experience. Varios platos terminados en mesa.',
+  url: 'https://restaurantecabanabuenavista.com'
+}, {
+  id: 'mich-almo',
+  name: 'Almo',
+  cat: 'michelin',
+  tier: '€€€€',
+  rating: 4.8,
+  lat: 37.9838,
+  lng: -1.1305,
+  featured: true,
+  desc: 'Murcia capital. ⭐ Estrella Michelin. Chef Juan Guillamón. Cocina mediterránea de mercado en dos plantas con ventanales de suelo a techo.',
+  specialty: 'carpaccio de vaca madurada con alioli negro, parpatana de atún rojo. Menú degustación disponible.',
+  url: 'https://almorestaurante.com'
+}, {
+  id: 'mich-frases',
+  name: 'Frases',
+  cat: 'michelin',
+  tier: '€€€€',
+  rating: 4.8,
+  lat: 37.9843,
+  lng: -1.1285,
+  featured: true,
+  desc: 'Murcia capital. ⭐ Estrella Michelin (nueva en 2025). Chefs Marco Antonio Iniesta y María Egea. Cada plato es una "frase" que narra una historia local.',
+  specialty: 'menús Origen y Tierra. Plato icónico "El Jamón" (sabores de cocido) y "Chato murciano" (terrina de carrillera y papada).'
+}, {
+  id: 'mich-barahonda',
+  name: 'Barahonda',
+  cat: 'michelin',
+  tier: '€€€€',
+  rating: 4.8,
+  lat: 38.6199,
+  lng: -1.1168,
+  featured: true,
+  desc: 'Yecla. ⭐ Estrella Michelin (nueva en 2025 — primera para Yecla). Chef Alejandro Ibáñez. Cocina de terruño en viñedos de Señorío de Barahonda.',
+  specialty: 'menús Caliza y Arcilla con ingredientes del entorno: huerta propia, carne, aceite, quesos y vinos de la finca.',
+  url: 'https://barahonda.com/en/restaurant/'
+}, {
+  id: 'mich-tandem',
+  name: 'Tándem',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.6,
+  lat: 37.9832,
+  lng: -1.1313,
+  desc: 'Murcia capital. Bib Gourmand. Pequeño y acogedor. Cocina mediterránea con producto de primera, carta viva que cambia con la temporada.',
+  specialty: 'platos en medias raciones para compartir. Anchoa con mantequilla fermentada y compota de higos.'
+}, {
+  id: 'mich-perro-limon',
+  name: 'Perro Limón',
+  cat: 'michelin',
+  tier: '€€',
+  rating: 4.5,
+  lat: 37.9854,
+  lng: -1.1292,
+  desc: 'Murcia capital, Plaza de San Juan. Bib Gourmand. Bistró de fusión mundial: India, Marruecos, Francia, Japón. Puerta amarilla característica.',
+  specialty: 'Chili Crab con rollitos de primavera, "Bocados del Mundo" para compartir.'
+},
+// ── Guía Michelin 2025 ── Granada ──────────────────────────────
+{
+  id: 'mich-la-finca',
+  name: 'La Finca (Loja)',
+  cat: 'michelin',
+  tier: '€€€€',
+  rating: 4.8,
+  lat: 37.1668,
+  lng: -4.1493,
+  featured: true,
+  desc: 'Loja (Granada/Málaga). ⭐ Estrella Michelin. Chef Fernando Arjona. Resort Barceló La Bobadilla, en plena sierra.',
+  specialty: 'cocina andaluza con toques modernos: aceite de oliva local, caviar de Riofrío, productos ibéricos. Comedor de estilo masía rural.'
+}, {
+  id: 'mich-farala',
+  name: 'Faralá',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.8,
+  lat: 37.1752,
+  lng: -3.5900,
+  featured: true,
+  desc: 'Granada capital, Cuesta de Gomérez (a los pies de la Alhambra). Recomendado 2025 · ⭐ Estrella Michelin 2026. Chef Cristina Jiménez.',
+  specialty: 'tres menús degustación de cocina granadina actualizada. El edificio combina restaurante, wine bar y exhibiciones de flamenco.',
+  url: 'https://restaurantefarala.com'
+}, {
+  id: 'mich-maria-de-la-o',
+  name: 'María de la O',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.7,
+  lat: 37.1803,
+  lng: -3.5912,
+  featured: true,
+  desc: 'Granada capital, palacete del siglo XIX. Bib Gourmand. Chef Chechu González. Cocina moderna granadina centrada en salsas, acidez y temporada.',
+  specialty: 'menús degustación de 10 o 13 pases (78€/93€). Cocina abierta al comedor con protagonismo de caldos, fondos y escabeches.'
+}, {
+  id: 'mich-atelier',
+  name: 'Atelier Casa de Comidas',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.6,
+  lat: 37.1773,
+  lng: -3.6092,
+  desc: 'Granada capital. Recomendado. Chef Raúl Sierra. Filosofía de "casa de comidas" contemporánea, cocina a la vista detrás de la barra.',
+  specialty: 'croissant relleno de rabo de toro con salsa Bearnesa, menú degustación estacional. Cocina andaluza actualizada.',
+  url: 'https://ateliercasadecomidas.com'
+}, {
+  id: 'mich-arriaga',
+  name: 'Arriaga',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.7,
+  lat: 37.1801,
+  lng: -3.6155,
+  desc: 'Granada capital, Torre del Centro Cultural CajaGranada (55m de altura). Recomendado. Chef Álvaro Arriaga (origen vasco).',
+  specialty: 'cocina de autor con vistas panorámicas a la Vega y Sierra Nevada. Dos menús degustación.',
+  url: 'https://www.restaurantearriaga.com'
+}, {
+  id: 'mich-cala',
+  name: 'Cala',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.7,
+  lat: 37.1684,
+  lng: -3.6142,
+  desc: 'Granada capital, zona Parque de las Ciencias. Recomendado. Chef Samuel Hernández. Solo cuatro mesas — restaurante íntimo.',
+  specialty: 'cocina de temporada con influencias francesas, portuguesas y españolas. Carta renovada dos veces al año + menú degustación estacional.',
+  url: 'https://restaurantecalagranada.es'
+}, {
+  id: 'mich-albidaya',
+  name: 'Albidaya',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.6,
+  lat: 37.1783,
+  lng: -3.5983,
+  desc: 'Granada capital. Recomendado 2025 · Bib Gourmand 2026. Fusión de cocina andaluza con sabores árabes y marroquíes.',
+  specialty: 'menú degustación semanal cambiante con producto de temporada, sin carta fija. Fundado en 2023.',
+  url: 'https://www.albidayarestaurante.com'
+}, {
+  id: 'mich-fm',
+  name: 'FM (Bar FM)',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.7,
+  lat: 37.1790,
+  lng: -3.5993,
+  featured: true,
+  desc: 'Granada capital. Recomendado. Desde 1985. Francisco Martín: barra de mariscos con conexión directa a la lonja de Motril.',
+  specialty: 'gambas de Motril, ensaladilla rusa con gamba blanca, selección de vinos y champagnes. Producto excepción directamente del mar.',
+  url: 'https://barfm.es'
+}, {
+  id: 'mich-le-bistro',
+  name: 'Le Bistró by El Conjuro',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.5,
+  lat: 37.1762,
+  lng: -3.6054,
+  desc: 'Granada capital. Recomendado. Bistró informal con personalidad propia y jornadas especiales de despojos.',
+  specialty: 'platos de raíz ibérica sin interpretación clásica. Torta real con sorbete de mandarina. Guiños a la cocina de Motril.'
+}, {
+  id: 'mich-el-conjuro',
+  name: 'El Conjuro',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.6,
+  lat: 36.7178,
+  lng: -3.4620,
+  featured: true,
+  desc: 'Calahonda (Gualchos, Granada, costa). Recomendado. Antonio y Daniel Lorenzo. Comedor gastronómico + taberna para raciones.',
+  specialty: 'frituras de ortiguillas y puntillas, brasas (chipirón, presa ibérica), canelón de pularda, arroces. Recetario andaluz de raíz.',
+  url: 'https://elconjurorestaurante.com'
+}, {
+  id: 'mich-ruta-veleta',
+  name: 'Ruta del Veleta',
+  cat: 'michelin',
+  tier: '€€€',
+  rating: 4.6,
+  lat: 37.1252,
+  lng: -3.5648,
+  desc: 'Cenes de la Vega (a las puertas de Sierra Nevada). Recomendado. Institución granadina desde 1976 — familia Pedraza.',
+  specialty: 'cocina andaluza con toques creativos. Comedor con más de 3.000 jarras granadinas en el techo. Bodega excepcional.',
+  url: 'https://www.rutadelveleta.com'
+},
+// Almería capital desc: 'Cocina vasca-mediterránea de autor. Recomendado por Guía Michelin.', specialty: 'menú degustación con producto de mercado, pescados a la brasa.', tier: '€€€€', rating: 4.7, cat: 'restaurant', lat: 36.8395, lng: -2.4635, featured: true },
+{
   id: 'casa-puga',
   name: 'Casa Puga (Almería capital)',
   desc: 'Histórica taberna fundada en 1870. Templo de la tapa almeriense.',
