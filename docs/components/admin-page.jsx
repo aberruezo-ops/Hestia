@@ -1714,8 +1714,8 @@ const ContractTab = ({ pricesData, prefill }) => {
     return new Promise(resolve => {
       const img = new Image();
       img.onload = () => {
-        // W/H = 2100/550 = 210/55 exactly — same ratio as jsPDF target
-        const W = 2100, H = 550;
+        // W/H = 2100/650 = 210/65 exactly — same ratio as jsPDF target
+        const W = 2100, H = 650;
         const c = document.createElement('canvas');
         c.width = W; c.height = H;
         const ctx = c.getContext('2d');
@@ -1729,12 +1729,12 @@ const ContractTab = ({ pricesData, prefill }) => {
           sh = img.naturalHeight; sw = sh * tgtAR;
           sx = (img.naturalWidth - sw) / 2;
         } else {
-          // portrait: take central 90% of width to avoid edge design elements,
-          // crop height at 20% from top (upper portion of room)
-          sw = img.naturalWidth * 0.9;
+          // narrower than target ratio: use full width, crop vertically
+          // at 35% from top (avoids ceiling, shows the room interior)
+          sw = img.naturalWidth;
           sh = sw / tgtAR;
-          sx = (img.naturalWidth - sw) / 2;
-          sy = Math.max(0, (img.naturalHeight - sh) * 0.2);
+          sx = 0;
+          sy = Math.max(0, (img.naturalHeight - sh) * 0.35);
         }
         ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
         resolve(c.toDataURL('image/jpeg', 0.92));
@@ -1828,7 +1828,7 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
   .hero {
     position: relative;
     width: 100%;
-    height: 55mm;
+    height: 65mm;
     overflow: hidden;
     background: linear-gradient(135deg, var(--ber) 0%, var(--ber-lt) 100%);
   }
@@ -2019,8 +2019,8 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
 </div>
 
 <div id="pdf-content">
-<!-- Spacer for page-1 hero: bar(18mm) + hero(55mm) − MARG_TOP(30mm) = 43mm -->
-<div style="height:43mm;line-height:0;font-size:0"> </div>
+<!-- Spacer for page-1 hero: bar(18mm) + hero(65mm) − MARG_TOP(30mm) = 53mm -->
+<div style="height:53mm;line-height:0;font-size:0"> </div>
 <div id="contract-body">
 
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
@@ -2137,7 +2137,7 @@ ${clausulaFianza}
   var FILE = ${JSON.stringify(pdfFilename)};
   var APT   = ${JSON.stringify('Vera ' + a.shortName)};
   var META  = ${JSON.stringify(noches + ' noches · ' + huespedes + ' huéspedes')};
-  var DATES = ${JSON.stringify(fechaEntradaStr + ' → ' + fechaSalidaStr)};
+  var DATES = ${JSON.stringify(fechaEntradaStr + ' - ' + fechaSalidaStr)};
 
   async function generate() {
     try { await document.fonts.ready; } catch(e) {}
@@ -2178,28 +2178,28 @@ ${clausulaFianza}
       /* ── Portada: foto + overlay + texto (sólo página 1) ─── */
       if (i === 1) {
         if (HERO) {
-          try { pdf.addImage(HERO, 'JPEG', 0, hH, pW, 55); } catch(e) {}
+          try { pdf.addImage(HERO, 'JPEG', 0, hH, pW, 65); } catch(e) {}
           pdf.saveGraphicsState();
-          pdf.setGState(pdf.GState({ opacity: 0.48 }));
+          pdf.setGState(pdf.GState({ opacity: 0.38 }));
           pdf.setFillColor(42, 15, 46);
-          pdf.rect(0, hH, pW, 55, 'F');
+          pdf.rect(0, hH, pW, 65, 'F');
           pdf.restoreGraphicsState();
         } else {
           pdf.setFillColor(42, 15, 46);
-          pdf.rect(0, hH, pW, 55, 'F');
+          pdf.rect(0, hH, pW, 65, 'F');
         }
         pdf.setFont('helvetica', 'italic');
         pdf.setFontSize(7);
         pdf.setTextColor(228, 217, 190);
-        pdf.text('contrato de arrendamiento por temporada', 8, hH + 34);
+        pdf.text('contrato de arrendamiento por temporada', 8, hH + 42);
         pdf.setFont('helvetica', 'bold');
         pdf.setFontSize(16);
         pdf.setTextColor(240, 232, 213);
-        pdf.text('Hestía · ' + APT, 8, hH + 43);
+        pdf.text('Hestia · ' + APT, 8, hH + 52);
         pdf.setFont('helvetica', 'normal');
         pdf.setFontSize(8);
         pdf.setTextColor(228, 217, 190);
-        pdf.text(DATES + '  ·  ' + META, 8, hH + 51);
+        pdf.text(DATES + '  ·  ' + META, 8, hH + 61);
       }
 
       /* ── Barra compacta (todas las páginas, encima del hero) */
