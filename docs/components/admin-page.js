@@ -3048,7 +3048,7 @@ const _syncReservasToAvailability = async (allReservas, token) => {
       direct: newDirect[apt]
     };
   }
-  await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}`, {
+  const putRes = await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}`, {
     method: 'PUT',
     headers: apiHeaders(token),
     body: JSON.stringify({
@@ -3058,6 +3058,7 @@ const _syncReservasToAvailability = async (allReservas, token) => {
       branch: BRANCH
     })
   });
+  if (putRes.ok) window.dispatchEvent(new CustomEvent('hestia:availability-updated'));
 };
 const APT_NAMES = {
   vm: 'Mar',
@@ -6919,7 +6920,7 @@ const HuecosTab = ({
     specialNightFlat: 80,
     easterRanges: []
   };
-  React.useEffect(() => {
+  const _fetchAvail = React.useCallback(() => {
     setLoading(true);
     setLoadErr(null);
     fetch(`${API}/repos/${REPO}/contents/docs/assets/availability.json?ref=${BRANCH}`, {
@@ -6930,6 +6931,15 @@ const HuecosTab = ({
       setAvail(JSON.parse(b64ToUtf8(j.content)));
     }).catch(e => setLoadErr(e.message)).finally(() => setLoading(false));
   }, [token]);
+  React.useEffect(() => {
+    _fetchAvail();
+    const iv = setInterval(_fetchAvail, 4 * 60 * 60 * 1000);
+    window.addEventListener('hestia:availability-updated', _fetchAvail);
+    return () => {
+      clearInterval(iv);
+      window.removeEventListener('hestia:availability-updated', _fetchAvail);
+    };
+  }, [_fetchAvail]);
   const nightBase = (aptId, season) => {
     if (!pricesData || !pricesData.apts || !pricesData.seasons) return 0;
     const base = (pricesData.apts[aptId] || {}).base || 0;

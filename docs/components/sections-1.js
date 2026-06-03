@@ -886,7 +886,7 @@ const LastMinuteStrip = ({
   embedded = false
 }) => {
   const [slots, setSlots] = React.useState([]);
-  React.useEffect(() => {
+  const _loadSlots = React.useCallback(() => {
     fetch('assets/availability.json?t=' + Date.now(), {
       cache: 'no-store'
     }).then(r => r.ok ? r.json() : null).then(data => {
@@ -973,6 +973,11 @@ const LastMinuteStrip = ({
       setSlots(filtered);
     }).catch(() => {});
   }, []);
+  React.useEffect(() => {
+    _loadSlots();
+    const iv = setInterval(_loadSlots, 4 * 60 * 60 * 1000);
+    return () => clearInterval(iv);
+  }, [_loadSlots]);
   if (!slots.length) return null;
   const fmtDate = ds => {
     if (!ds) return '';
