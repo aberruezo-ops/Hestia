@@ -106,9 +106,9 @@ const App = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement(HomePriceStrip, {
     lang: lang
-  }), /*#__PURE__*/React.createElement(HomeSearch, {
-    lang: lang
   }), typeof LastMinuteStrip !== 'undefined' && /*#__PURE__*/React.createElement(LastMinuteStrip, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(HomeSearch, {
     lang: lang
   }), /*#__PURE__*/React.createElement(Apartments, {
     lang: lang
