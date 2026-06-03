@@ -1928,8 +1928,9 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
     vertical-align: baseline;
     margin: 0 1mm;
   }
-  .blank-line.short { min-width: 30mm; }
-  .blank-line.long  { min-width: 80mm; }
+  .blank-line.short  { min-width: 30mm; }
+  .blank-line.medium { min-width: 55mm; }
+  .blank-line.long   { min-width: 80mm; }
   ul, ol { margin: 1mm 0 2mm 6mm; padding: 0; color: var(--ber); }
   li { margin: 0.8mm 0; }
   li::marker { color: var(--sol); }
@@ -2028,7 +2029,7 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
 <h2>Reunidos</h2>
 <p>Por una parte, <strong>D. Alejandro Berruezo Márquez</strong> y <strong>D. Francisco Javier Moral Arévalo</strong>, mayores de edad, y con domicilio a efectos de notificaciones en Avenida de la Constitución 38, 1A, 28821 de Coslada, Madrid, con DNI. ***DNI-RETIRADO*** y ***DNI-RETIRADO***, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ***IBAN-RETIRADO***.</p>
 <p><em>(De ahora en adelante, "Los Propietarios".)</em></p>
-<p>De otra parte, <strong>D./Dña. ${escHtml(nombre.toUpperCase())}</strong>, mayor de edad, con domicilio a efectos de notificaciones en: ${domicilio ? `<strong>${escHtml(domicilio)}</strong>` : '<span class="blank-line long" aria-label="dirección a rellenar"></span>'}, con Documento Nacional de Identidad: ${dni ? `<strong>${escHtml(dni)}</strong>` : '<span class="blank-line short" aria-label="DNI a rellenar"></span>'}, y con teléfono: ${telefono ? `<strong>${escHtml(telefono)}</strong>` : '<span class="blank-line short" aria-label="teléfono a rellenar"></span>'}.</p>
+<p>De otra parte, <strong>D./Dña. ${escHtml(nombre.toUpperCase())}</strong>, mayor de edad, con domicilio a efectos de notificaciones en: ${domicilio ? `<strong>${escHtml(domicilio)}</strong>` : '<span class="blank-line long" aria-label="dirección a rellenar"></span>'}, con Documento Nacional de Identidad: ${dni ? `<strong>${escHtml(dni)}</strong>` : '<span class="blank-line short" aria-label="DNI a rellenar"></span>'}, con teléfono: ${telefono ? `<strong>${escHtml(telefono)}</strong>` : '<span class="blank-line short" aria-label="teléfono a rellenar"></span>'}, y correo electrónico a efectos de notificaciones telemáticas: ${email ? `<strong>${escHtml(email)}</strong>` : '<span class="blank-line medium" aria-label="email a rellenar"></span>'}.</p>
 <p><em>(en adelante, "la Parte Arrendataria".)</em></p>
 <p>Ambas partes se reconocen capacidad legal suficiente para este acto y libremente,</p>
 
