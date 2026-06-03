@@ -2167,8 +2167,8 @@ ${clausulaFianza}
       if (WM) {
         try {
           pdf.saveGraphicsState();
-          pdf.setGState(pdf.GState({ opacity: 0.055 }));
-          var wmW = 90, wmH = 63;
+          pdf.setGState(pdf.GState({ opacity: 0.065 }));
+          var wmW = 120, wmH = 120; // logo-teal-transparent.png es 600×600 (ratio 1:1)
           pdf.addImage(WM, 'PNG', pW / 2 - wmW / 2, pH / 2 - wmH / 2, wmW, wmH, '', 'NONE', 25);
           pdf.restoreGraphicsState();
         } catch(e) {}
