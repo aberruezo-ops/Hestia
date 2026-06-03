@@ -2443,10 +2443,11 @@ const _syncReservasToAvailability = async (allReservas, token) => {
     const ical = avData[apt]?.ical || avData[apt]?.blocked || [];
     avData[apt] = { ...avData[apt], blocked: _merge([...ical, ...newDirect[apt]]), ical, direct: newDirect[apt] };
   }
-  await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}`, {
+  const putRes = await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}`, {
     method: 'PUT', headers: apiHeaders(token),
     body: JSON.stringify({ message: 'chore(availability): sync reservas [skip ci]', content: utf8ToB64(JSON.stringify(avData, null, 2)), sha: avFile.sha, branch: BRANCH }),
   });
+  if (putRes.ok) window.dispatchEvent(new CustomEvent('hestia:availability-updated'));
 };
 
 const APT_NAMES   = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
@@ -5327,7 +5328,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
   const gapSplits  = (pricesData && pricesData.gapSplits)    || {};
   const lsCfg      = (pricesData && pricesData.longStayConfig) || { specialNightFlat: 80, easterRanges: [] };
 
-  React.useEffect(() => {
+  const _fetchAvail = React.useCallback(() => {
     setLoading(true); setLoadErr(null);
     fetch(`${API}/repos/${REPO}/contents/docs/assets/availability.json?ref=${BRANCH}`,
       { headers: apiHeaders(token), cache: 'no-store' })
@@ -5339,6 +5340,16 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
       .catch(e => setLoadErr(e.message))
       .finally(() => setLoading(false));
   }, [token]);
+
+  React.useEffect(() => {
+    _fetchAvail();
+    const iv = setInterval(_fetchAvail, 4 * 60 * 60 * 1000);
+    window.addEventListener('hestia:availability-updated', _fetchAvail);
+    return () => {
+      clearInterval(iv);
+      window.removeEventListener('hestia:availability-updated', _fetchAvail);
+    };
+  }, [_fetchAvail]);
 
   const nightBase = (aptId, season) => {
     if (!pricesData || !pricesData.apts || !pricesData.seasons) return 0;
