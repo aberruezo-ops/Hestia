@@ -2719,6 +2719,11 @@ body.apt-bar-shown .cookies {
 @media (hover: none) and (pointer: coarse) {
   .apartments-scroll::after { opacity: 1; }
   .apartments-scroll.scrolled::after { opacity: 0; }
+  /* Reducir contenido de la card en móvil para que no desborde sobre .apt-corner */
+  .apt-card .apt-content { gap: 8px; }
+  .apt-card .apt-num { font-size: 52px; }
+  .apt-card .apt-price-badge { margin: 6px 0 2px; }
+  .apt-avail-hint { margin: 0 0 2px; }
 
   .apt-scroll-progress {
     gap: 8px;
@@ -3390,7 +3395,7 @@ body.apt-bar-shown .cookies {
 .direct-perks-teaser {
   background-color: #2A0F2E;
   color: #F0E8D5;
-  padding: clamp(20px, 3vw, 36px) var(--page-pad);
+  padding: clamp(20px, 3vw, 36px) var(--page-pad) clamp(36px, 4vw, 52px);
   border-top: 1px solid rgba(240, 232, 213, 0.08);
   position: relative;
 }
@@ -17783,6 +17788,10 @@ img[src*="apt-vt-gallery-"] {
   }
   .apt-pt-table { grid-column: 1; grid-row: auto; }
   .apt-pt-wa-btn { grid-column: 1; width: 100%; justify-content: center; box-sizing: border-box; }
+  .apt-pt-season { white-space: normal; }
+  .apt-pt-price  { white-space: normal; text-align: right; }
+  .apt-pt-ls-reg { white-space: normal; }
+  .apt-pt-ls-rate { white-space: normal; flex-wrap: wrap; }
 }
 
 /* ============================================================
