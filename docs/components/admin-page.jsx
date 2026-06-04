@@ -2464,8 +2464,8 @@ const APT_TEXT    = { vm: '#FFFBF4', vt: '#FFFBF4', vs: '#3D1A35' };
 // por reserva: la UI los usa solo como sugerencia inicial cuando
 // se cambia el canal de una nueva reserva.
 const COMMISSION_RATES = {
-  airbnb:   0.149,
-  booking:  0.187,
+  airbnb:   0.160, // 14.9% comisión OTA + 1.1% bancaria
+  booking:  0.198, // 18.7% comisión OTA + 1.1% bancaria
   directo:  0,
   avaibook: 0,
 };
@@ -2533,8 +2533,18 @@ function calcDerived(r) {
   }
 
   const ingreso = Number(out.ingreso_total) || 0;
-  const com     = Number(out.comision)      || 0;
-  const gasto   = Number(out.gasto_limpieza) || 0;
+
+  // 2b. Comisión OTA auto-calculada salvo override manual.
+  if (!r._comision_manual) {
+    const cKey = getCanalKey(out.canal);
+    const rate = COMMISSION_RATES[cKey] ?? 0;
+    if (rate > 0) {
+      out.comision = Math.round(ingreso * rate * 100) / 100;
+    }
+  }
+
+  const com   = Number(out.comision)       || 0;
+  const gasto = Number(out.gasto_limpieza) || 0;
 
   // 3. BAI = ingreso_total − comision − gasto_limpieza.
   out.bai = Math.round((ingreso - com - gasto) * 100) / 100;
@@ -4037,6 +4047,19 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
   const canalKeys = Array.from(new Set(focusList.map(r => getCanalKey(r.canal))));
 
 
+  // Recalcula la comisión de TODAS las reservas Booking/Airbnb con las tasas actuales.
+  // Útil tras un cambio de tasas. Las reservas directas no se tocan.
+  const recalcularComisiones = async () => {
+    if (!data || !sha) return;
+    const updated = (data.reservas || []).map(r => {
+      const ck = getCanalKey(r.canal);
+      if (ck !== 'booking' && ck !== 'airbnb') return r;
+      return calcDerived({ ...r, _comision_manual: false });
+    });
+    await saveReservas(updated, { keepPanelOpen: true });
+    setSuccess('Comisiones recalculadas y guardadas ✓');
+  };
+
   // --- Acciones ---
   const saveReservas = async (newReservas, { keepPanelOpen = false } = {}) => {
     setError(null); setSuccess(null);
@@ -4117,12 +4140,13 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
   const updateDraft = (field, value) => {
     setDraft(prev => {
       let next = { ...prev, [field]: value };
-      // Sugerencia de comisión al cambiar canal en reserva nueva.
+      // Al cambiar canal, resetear override de comisión — calcDerived la recalcula.
       if (field === 'canal') {
-        const rate = COMMISSION_RATES[getCanalKey(value)] ?? 0;
-        if (next.ingreso_total) {
-          next.comision = Math.round(next.ingreso_total * rate * 100) / 100;
-        }
+        next._comision_manual = false;
+      }
+      // Si el usuario edita la comisión directamente, marcamos manual.
+      if (field === 'comision') {
+        next._comision_manual = true;
       }
       // Si el usuario edita la limpieza directamente, marcamos
       // _limpieza_manual=true para que el auto-cálculo no la
@@ -4135,11 +4159,8 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
     });
   };
 
-  // Restaura el auto-cálculo de limpieza desactivando el flag
-  // de override manual.
-  const resetLimpiezaAuto = () => {
-    setDraft(prev => calcDerived({ ...prev, _limpieza_manual: false }));
-  };
+  const resetLimpiezaAuto  = () => setDraft(prev => calcDerived({ ...prev, _limpieza_manual:  false }));
+  const resetComisionAuto  = () => setDraft(prev => calcDerived({ ...prev, _comision_manual: false }));
 
   // Devuelve la reserva que solapa con `r` (excluyendo el índice `skipIdx`).
   // Solapar = el check-in de una es estrictamente antes del check-out de la
@@ -4370,8 +4391,11 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
               {loading ? 'Recargando…' : 'Recargar'}
             </button>
             {loadedAt && <span className="leila-loaded-at">Actualizado {loadedAt}</span>}
-<button type="button" className="pe-btn pe-btn-ghost" onClick={() => data && exportReservasExcel(focusList, focusYear)} disabled={!data}>
+            <button type="button" className="pe-btn pe-btn-ghost" onClick={() => data && exportReservasExcel(focusList, focusYear)} disabled={!data}>
               Exportar Excel
+            </button>
+            <button type="button" className="pe-btn pe-btn-ghost" onClick={recalcularComisiones} disabled={!data || loading} title="Aplica Booking 19.8% (18.7%+1.1%) y Airbnb 16.0% (14.9%+1.1%) a todas las reservas OTA">
+              Recalcular comisiones
             </button>
             <button type="button" className="pe-btn pe-btn-primary" onClick={newRow}>+ Nueva</button>
           </div>
@@ -4798,7 +4822,18 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                 </div>
                 <div className="rv-row2">
                   <div className="rv-field">
-                    <label>Comisión <span className="rv-hint-inline">tasa {getCanalKey(draft.canal)}: {((COMMISSION_RATES[getCanalKey(draft.canal)] ?? 0)*100).toFixed(1)}%</span></label>
+                    <label>Comisión
+                      {draft._comision_manual
+                        ? <button type="button" className="rv-mini-link" onClick={resetComisionAuto}>↻ auto</button>
+                        : (() => {
+                            const ck = getCanalKey(draft.canal);
+                            return <span className="rv-hint-inline">
+                              {ck === 'booking' ? 'booking: 19.8% (18.7%+1.1%)' :
+                               ck === 'airbnb'  ? 'airbnb: 16.0% (14.9%+1.1%)' :
+                               `${ck}: ${((COMMISSION_RATES[ck] ?? 0)*100).toFixed(1)}%`}
+                            </span>;
+                          })()}
+                    </label>
                     <NumInput step="0.01" value={draft.comision || 0} onChange={v => updateDraft('comision', v)} />
                   </div>
                   <div className="rv-field">
