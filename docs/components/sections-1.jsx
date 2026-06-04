@@ -528,8 +528,8 @@ const Apartments = ({ lang }) => {
                       <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
                       <span className="apb-match">
                         {lang === 'es'
-                          ? '✓ Aprox. un 18% más barato que en Booking o Airbnb*'
-                          : '✓ Approx. 18% cheaper than Booking or Airbnb*'}
+                          ? '✓ Desde un 10% más barato que en Booking o Airbnb*'
+                          : '✓ From 10% cheaper than Booking or Airbnb*'}
                       </span>
                     </div>
                   )}
@@ -882,8 +882,7 @@ const HomePriceStrip = ({ lang }) => {
         <div className="hps-grid">
           {APT_META.map(apt => {
             const p = basePrice(apt.id);
-            const pBooking = p ? Math.round(p * 1.18) : null;
-            const pAirbnb  = p ? Math.round(p * 1.17) : null;
+            const pMin = p ? Math.round(p * 1.10) : null;
             return (
               <a key={apt.id} href={`${apt.slug}.html`} className="hps-card" style={{ '--hps-accent': apt.accent }}>
                 <span className="hps-name">HESTÍA <strong>{apt.name.toUpperCase()}</strong></span>
@@ -895,14 +894,9 @@ const HomePriceStrip = ({ lang }) => {
                 {p && (
                   <span className="hps-ota-compare">
                     <span className="hps-ota-row">
-                      <span className="hps-ota-name">Booking</span>
-                      <span className="hps-ota-price">desde ~{pBooking}€</span>
-                      <span className="hps-ota-pct">aprox. +18%</span>
-                    </span>
-                    <span className="hps-ota-row">
-                      <span className="hps-ota-name">Airbnb</span>
-                      <span className="hps-ota-price">desde ~{pAirbnb}€</span>
-                      <span className="hps-ota-pct">aprox. +17%</span>
+                      <span className="hps-ota-name">Booking / Airbnb</span>
+                      <span className="hps-ota-price">desde ~{pMin}€</span>
+                      <span className="hps-ota-pct">+10% mín.</span>
                     </span>
                   </span>
                 )}
