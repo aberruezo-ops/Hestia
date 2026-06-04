@@ -20131,6 +20131,31 @@ img[src*="apt-vt-gallery-"] {
   color: var(--hps-accent);
   margin-top: 3px;
 }
+.hps-ota-compare {
+  display: flex; flex-direction: column; gap: 3px;
+  margin: 6px 0 2px;
+}
+.hps-ota-row {
+  display: flex; align-items: baseline; gap: 5px;
+  font-family: var(--sans); font-size: 11px;
+}
+.hps-ota-name {
+  color: rgba(240,232,213,.45); min-width: 44px;
+}
+.hps-ota-price {
+  color: rgba(240,232,213,.55); text-decoration: line-through; text-decoration-color: rgba(240,232,213,.3);
+}
+.hps-ota-pct {
+  font-size: 10px; font-weight: 600;
+  color: var(--err, #B8246E); background: rgba(184,36,110,.15);
+  padding: 1px 4px; border-radius: 3px 0 3px 0;
+}
+.hps-disclaimer {
+  font-family: var(--sans); font-size: 10px;
+  color: rgba(240,232,213,.35);
+  text-align: center; margin: 14px auto 0;
+  max-width: 520px; line-height: 1.5;
+}
 @media (max-width: 600px) {
   .hps-strip { padding: 22px 16px 28px; }
   .hps-grid { grid-template-columns: 1fr; gap: 8px; }
@@ -20138,6 +20163,7 @@ img[src*="apt-vt-gallery-"] {
   .hps-name { flex: 1; }
   .hps-price { margin: 0 16px 0 auto; }
   .hps-cta { display: none; }
+  .hps-ota-compare { display: none; }
 }
 
 /* ============================================================

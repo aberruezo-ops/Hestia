@@ -528,8 +528,8 @@ const Apartments = ({ lang }) => {
                       <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
                       <span className="apb-match">
                         {lang === 'es'
-                          ? '✓ Precio directo siempre mejor que cualquier plataforma'
-                          : '✓ Direct price always better than any platform'}
+                          ? '✓ Hasta un 18% más barato que en Booking o Airbnb*'
+                          : '✓ Up to 18% cheaper than Booking or Airbnb*'}
                       </span>
                     </div>
                   )}
@@ -880,18 +880,42 @@ const HomePriceStrip = ({ lang }) => {
           {lang === 'es' ? 'Precio directo · sin intermediarios' : 'Direct price · no middlemen'}
         </p>
         <div className="hps-grid">
-          {APT_META.map(apt => (
-            <a key={apt.id} href={`${apt.slug}.html`} className="hps-card" style={{ '--hps-accent': apt.accent }}>
-              <span className="hps-name">HESTÍA <strong>{apt.name.toUpperCase()}</strong></span>
-              <span className="hps-price">
-                <span className="hps-desde">{lang === 'es' ? 'desde' : 'from'}</span>
-                <span className="hps-amount">{basePrice(apt.id)}€</span>
-                <span className="hps-per">/noche</span>
-              </span>
-              <span className="hps-cta">{lang === 'es' ? 'Ver apartamento →' : 'View apartment →'}</span>
-            </a>
-          ))}
+          {APT_META.map(apt => {
+            const p = basePrice(apt.id);
+            const pBooking = p ? Math.round(p * 1.18) : null;
+            const pAirbnb  = p ? Math.round(p * 1.17) : null;
+            return (
+              <a key={apt.id} href={`${apt.slug}.html`} className="hps-card" style={{ '--hps-accent': apt.accent }}>
+                <span className="hps-name">HESTÍA <strong>{apt.name.toUpperCase()}</strong></span>
+                <span className="hps-price">
+                  <span className="hps-desde">{lang === 'es' ? 'desde' : 'from'}</span>
+                  <span className="hps-amount">{p}€</span>
+                  <span className="hps-per">/noche</span>
+                </span>
+                {p && (
+                  <span className="hps-ota-compare">
+                    <span className="hps-ota-row">
+                      <span className="hps-ota-name">Booking</span>
+                      <span className="hps-ota-price">~{pBooking}€</span>
+                      <span className="hps-ota-pct">+18%</span>
+                    </span>
+                    <span className="hps-ota-row">
+                      <span className="hps-ota-name">Airbnb</span>
+                      <span className="hps-ota-price">~{pAirbnb}€</span>
+                      <span className="hps-ota-pct">+17%</span>
+                    </span>
+                  </span>
+                )}
+                <span className="hps-cta">{lang === 'es' ? 'Ver apartamento →' : 'View apartment →'}</span>
+              </a>
+            );
+          })}
         </div>
+        <p className="hps-disclaimer">
+          {lang === 'es'
+            ? '* Precios en plataformas aproximados. No incluyen ofertas generales ni personalizadas propias de cada plataforma, que desconocemos.'
+            : '* Platform prices are approximate. They do not include platform-specific general or personalised offers, which we cannot know.'}
+        </p>
       </div>
     </section>
   );
