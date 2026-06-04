@@ -1229,7 +1229,7 @@ const HomePriceStrip = ({
     }, lang === 'es' ? 'Ver apartamento →' : 'View apartment →'));
   })), /*#__PURE__*/React.createElement("p", {
     className: "hps-disclaimer"
-  }, lang === 'es' ? '* Precios en plataformas aproximados. No incluyen ofertas generales ni personalizadas propias de cada plataforma, que desconocemos.' : '* Platform prices are approximate. They do not include platform-specific general or personalised offers, which we cannot know.')));
+  }, lang === 'es' ? '* Precios en plataformas aproximados. No incluyen las ofertas personales o generales que las plataformas puedan hacer a sus clientes, ya que no podemos conocerlas.' : '* Platform prices are approximate. They do not include personal or general offers that platforms may make to their own customers, which we cannot know.')));
 };
 const LongStayStrip = ({
   lang
