@@ -182,6 +182,8 @@ html, body {
   line-height: 1.55;
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
+  orphans: 3;
+  widows: 3;
 }
 
 /* ============ Tipografía ============ */
@@ -196,6 +198,8 @@ h1 { font-size: 36pt; letter-spacing: -0.01em; }
 h2 { font-size: 26pt; letter-spacing: -0.005em; }
 h3 { font-size: 18pt; }
 h4 { font-size: 13pt; font-weight: 600; letter-spacing: 0.02em; }
+/* Evitar títulos huérfanos al final de página */
+h2, h3, h4 { break-after: avoid; page-break-after: avoid; }
 p { margin: 0 0 9pt; }
 em { font-style: italic; color: var(--ber); }
 a { color: var(--teal-dk); text-decoration: none; }
@@ -216,6 +220,7 @@ a { color: var(--teal-dk); text-decoration: none; }
 .cover {
   page: cover;
   position: relative;
+  z-index: 100;
   width: 210mm;
   height: 297mm;
   overflow: hidden;
@@ -354,6 +359,10 @@ section.no-break {
   margin-bottom: 16pt;
   padding-bottom: 10pt;
   border-bottom: 1px solid var(--hair);
+  break-after: avoid;
+  page-break-after: avoid;
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 .section-hd .eyebrow { color: var(--apt-c); }
 .section-hd h2 { margin-bottom: 0; color: var(--apt-c-dk); }
@@ -368,6 +377,10 @@ section.no-break {
   margin: 0 0 14pt;
   padding-bottom: 6pt;
   position: relative;
+  break-after: avoid;
+  page-break-after: avoid;
+  break-inside: avoid;
+  page-break-inside: avoid;
 }
 .sect-mark-logo {
   width: 14pt;
@@ -1483,6 +1496,7 @@ section.no-break {
 .back-cover {
   page: cover;
   position: relative;
+  z-index: 100;
   width: 210mm;
   height: 297mm;
   margin: 0;
@@ -2310,12 +2324,18 @@ async function generate(aptId, lang, data) {
       : new Promise(r => { img.onload = img.onerror = r; })));
   });
 
+    const aptDisplayName = esc(apt[lang].name);
+    const guideLabel = lang === 'es' ? 'Guía del huésped' : 'Guest guide';
+    const headerHtml = `<div style="box-sizing:border-box;width:100%;height:100%;display:flex;align-items:flex-end;padding:0 16mm 2mm;font-family:Inter,Arial,sans-serif;font-size:7.5pt;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#5B4A57;border-bottom:0.5pt solid rgba(61,26,53,0.14);background:white;">${aptDisplayName} &middot; ${guideLabel}</div>`;
     await page.pdf({
       path: outPath,
       format: 'A4',
       printBackground: true,
       preferCSSPageSize: true,
-      margin: { top: 0, right: 0, bottom: 0, left: 0 },
+      displayHeaderFooter: true,
+      headerTemplate: headerHtml,
+      footerTemplate: '<span></span>',
+      margin: { top: '14mm', right: 0, bottom: 0, left: 0 },
     });
   } finally {
     await browser.close();
