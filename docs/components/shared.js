@@ -4473,6 +4473,7 @@ const WidgetStack = ({
     return () => obs.disconnect();
   }, []);
   const hidden = !pastHero || searchActive || guideOpen;
+  const onReservas = typeof window !== 'undefined' && window.location.pathname.includes('reservas');
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: `widget-stack ${hidden ? 'is-hidden' : ''}`,
     "aria-hidden": hidden
@@ -4482,7 +4483,11 @@ const WidgetStack = ({
     lang: lang
   }), /*#__PURE__*/React.createElement(WidgetGuestAccess, {
     lang: lang
-  })), perksOpen && /*#__PURE__*/React.createElement(DirectBookingModal, {
+  })), !onReservas && /*#__PURE__*/React.createElement("a", {
+    href: "reservas.html",
+    className: `mob-book-btn${hidden ? ' mob-book-btn--hidden' : ''}`,
+    "aria-hidden": hidden
+  }, lang === 'es' ? 'Reservar →' : 'Book →'), perksOpen && /*#__PURE__*/React.createElement(DirectBookingModal, {
     lang: lang,
     onClose: () => setPerksOpen(false)
   }));

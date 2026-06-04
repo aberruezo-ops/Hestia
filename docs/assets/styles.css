@@ -2615,6 +2615,25 @@ body.apt-bar-shown .cookies {
   white-space: normal;
   line-height: 1.3;
 }
+/* ---- Availability hint on apt-card ---- */
+.apt-avail-hint {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--sans); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: rgba(240,232,213,.75);
+  margin: 2px 0 6px;
+}
+.apt-avail-hint .aah-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--sol-lt, #6FC4D1);
+  flex-shrink: 0; animation: aah-pulse 2.4s ease-in-out infinite;
+}
+@keyframes aah-pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: .5; transform: scale(.8); }
+}
+.apt-avail-hint .aah-nights { opacity: .6; }
+
 /* ---- Two CTAs on apt-card ---- */
 .apt-ctas {
   display: flex; align-items: center; gap: 16px; margin-top: 16px; flex-wrap: wrap;
@@ -21712,4 +21731,43 @@ img[src*="apt-vt-gallery-"] {
   .lsl-search-field { flex: 0 0 calc(50% - 6px); }
   .lsl-search-field--sm { flex: 0 0 calc(50% - 6px); }
   .lsl-search-btn { width: 100%; justify-content: center; }
+}
+
+/* ================================================================
+   Mobile floating "Reservar" button — visible only on mobile
+   after scrolling past the hero.
+   ================================================================ */
+.mob-book-btn {
+  display: none;
+}
+@media (max-width: 767px) {
+  .mob-book-btn {
+    display: block;
+    position: fixed;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 900;
+    background: var(--sol, #3AAABB);
+    color: var(--crema, #FAF6F0);
+    font-family: var(--sans); font-size: 13px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 13px 32px;
+    border-radius: 10px 0 10px 0;
+    box-shadow: 0 4px 20px rgba(58,170,187,.45);
+    transition: opacity .3s ease, transform .3s cubic-bezier(.23,1,.32,1), box-shadow .2s;
+    white-space: nowrap;
+    pointer-events: auto;
+    text-decoration: none;
+  }
+  .mob-book-btn--hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(12px);
+  }
+  body.apt-bar-shown .mob-book-btn { display: none; }
+  .mob-book-btn:hover,
+  .mob-book-btn:focus-visible {
+    box-shadow: 0 6px 28px rgba(58,170,187,.6);
+  }
 }
