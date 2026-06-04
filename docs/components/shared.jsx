@@ -3283,6 +3283,7 @@ const WidgetStack = ({ lang }) => {
   }, []);
 
   const hidden = !pastHero || searchActive || guideOpen;
+  const onReservas = typeof window !== 'undefined' && window.location.pathname.includes('reservas');
 
   return (
     <>
@@ -3291,6 +3292,15 @@ const WidgetStack = ({ lang }) => {
         <WidgetDirectBooking lang={lang} />
         <WidgetGuestAccess lang={lang} />
       </div>
+      {!onReservas && (
+        <a
+          href="reservas.html"
+          className={`mob-book-btn${hidden ? ' mob-book-btn--hidden' : ''}`}
+          aria-hidden={hidden}
+        >
+          {lang === 'es' ? 'Reservar →' : 'Book →'}
+        </a>
+      )}
       {perksOpen && <DirectBookingModal lang={lang} onClose={() => setPerksOpen(false)} />}
     </>
   );

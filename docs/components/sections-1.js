@@ -477,6 +477,41 @@ const APARTMENTS = [{
   imgH: 1146,
   meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas']
 }];
+const _aptNextFree = (data, aptId) => {
+  if (!data) return null;
+  const today = new Date().toISOString().slice(0, 10);
+  const manualBlocks = window.PRICES_V2?.manual_blocks || {};
+  const avBlocked = data[aptId]?.blocked || [];
+  const all = [...avBlocked, ...(manualBlocks[aptId] || [])].sort((a, b) => a.start.localeCompare(b.start));
+  const merged = [];
+  for (const r of all) {
+    if (merged.length && r.start <= merged[merged.length - 1].end) {
+      if (r.end > merged[merged.length - 1].end) merged[merged.length - 1] = {
+        ...merged[merged.length - 1],
+        end: r.end
+      };
+    } else merged.push({
+      ...r
+    });
+  }
+  let cursor = today;
+  for (const block of merged.filter(b => b.end > today)) {
+    if (block.start > cursor) {
+      const nights = Math.round((new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
+      if (nights >= 2) return {
+        checkin: cursor,
+        checkout: block.start,
+        nights
+      };
+    }
+    if (block.end > cursor) cursor = block.end;
+  }
+  return {
+    checkin: cursor,
+    checkout: null,
+    nights: null
+  };
+};
 const Apartments = ({
   lang
 }) => {
@@ -485,6 +520,17 @@ const Apartments = ({
   const [activeIdx, setActiveIdx] = React.useState(0);
   const [bookingApt, setBookingApt] = React.useState(null);
   const [hasScrolled, setHasScrolled] = React.useState(false);
+  const [aptAvail, setAptAvail] = React.useState({});
+  React.useEffect(() => {
+    fetch('assets/availability.json?t=' + Date.now(), {
+      cache: 'no-store'
+    }).then(r => r.ok ? r.json() : null).then(data => {
+      if (!data) return;
+      const result = {};
+      for (const apt of APARTMENTS) result[apt.id] = _aptNextFree(data, apt.id);
+      setAptAvail(result);
+    }).catch(() => {});
+  }, []);
 
   // Precios "desde / hasta" mostrados son el base de prices.json
   // (lo que el admin ve en /p-edit.html). Sin aplicar directDiscount —
@@ -642,7 +688,26 @@ const Apartments = ({
       className: "apb-per"
     }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
       className: "apb-match"
-    }, lang === 'es' ? '✓ Precio directo siempre mejor que cualquier plataforma' : '✓ Direct price always better than any platform')), /*#__PURE__*/React.createElement("div", {
+    }, lang === 'es' ? '✓ Precio directo siempre mejor que cualquier plataforma' : '✓ Direct price always better than any platform')), (() => {
+      const av = aptAvail[a.id];
+      if (!av) return null;
+      const today = new Date().toISOString().slice(0, 10);
+      const isNow = av.checkin <= today;
+      const months = lang === 'es' ? ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'] : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const fmt = d => {
+        const [, mm, dd] = d.split('-');
+        return `${parseInt(dd)} ${months[parseInt(mm) - 1]}`;
+      };
+      return /*#__PURE__*/React.createElement("div", {
+        className: "apt-avail-hint"
+      }, /*#__PURE__*/React.createElement("span", {
+        className: "aah-dot"
+      }), isNow ? lang === 'es' ? 'Disponible ahora' : 'Available now' : `${lang === 'es' ? 'Libre' : 'Free'} ${fmt(av.checkin)}`, av.checkout && av.nights ? /*#__PURE__*/React.createElement("span", {
+        className: "aah-nights"
+      }, " \xB7 ", av.nights, " ", lang === 'es' ? 'noches' : 'nights') : /*#__PURE__*/React.createElement("span", {
+        className: "aah-nights"
+      }, " ", lang === 'es' ? 'en adelante' : 'onwards'));
+    })(), /*#__PURE__*/React.createElement("div", {
       className: "apt-ctas"
     }, /*#__PURE__*/React.createElement("a", {
       href: `${a.slug}.html`,
