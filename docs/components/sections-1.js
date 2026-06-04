@@ -688,7 +688,7 @@ const Apartments = ({
       className: "apb-per"
     }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
       className: "apb-match"
-    }, lang === 'es' ? '✓ Precio directo siempre mejor que cualquier plataforma' : '✓ Direct price always better than any platform')), (() => {
+    }, lang === 'es' ? '✓ Hasta un 18% más barato que en Booking o Airbnb*' : '✓ Up to 18% cheaper than Booking or Airbnb*')), (() => {
       const av = aptAvail[a.id];
       if (!av) return null;
       const today = new Date().toISOString().slice(0, 10);
@@ -1185,26 +1185,51 @@ const HomePriceStrip = ({
     className: "hps-label eyebrow"
   }, lang === 'es' ? 'Precio directo · sin intermediarios' : 'Direct price · no middlemen'), /*#__PURE__*/React.createElement("div", {
     className: "hps-grid"
-  }, APT_META.map(apt => /*#__PURE__*/React.createElement("a", {
-    key: apt.id,
-    href: `${apt.slug}.html`,
-    className: "hps-card",
-    style: {
-      '--hps-accent': apt.accent
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "hps-name"
-  }, "HEST\xCDA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), /*#__PURE__*/React.createElement("span", {
-    className: "hps-price"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "hps-desde"
-  }, lang === 'es' ? 'desde' : 'from'), /*#__PURE__*/React.createElement("span", {
-    className: "hps-amount"
-  }, basePrice(apt.id), "\u20AC"), /*#__PURE__*/React.createElement("span", {
-    className: "hps-per"
-  }, "/noche")), /*#__PURE__*/React.createElement("span", {
-    className: "hps-cta"
-  }, lang === 'es' ? 'Ver apartamento →' : 'View apartment →'))))));
+  }, APT_META.map(apt => {
+    const p = basePrice(apt.id);
+    const pBooking = p ? Math.round(p * 1.18) : null;
+    const pAirbnb = p ? Math.round(p * 1.17) : null;
+    return /*#__PURE__*/React.createElement("a", {
+      key: apt.id,
+      href: `${apt.slug}.html`,
+      className: "hps-card",
+      style: {
+        '--hps-accent': apt.accent
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "hps-name"
+    }, "HEST\xCDA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), /*#__PURE__*/React.createElement("span", {
+      className: "hps-price"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "hps-desde"
+    }, lang === 'es' ? 'desde' : 'from'), /*#__PURE__*/React.createElement("span", {
+      className: "hps-amount"
+    }, p, "\u20AC"), /*#__PURE__*/React.createElement("span", {
+      className: "hps-per"
+    }, "/noche")), p && /*#__PURE__*/React.createElement("span", {
+      className: "hps-ota-compare"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "hps-ota-row"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "hps-ota-name"
+    }, "Booking"), /*#__PURE__*/React.createElement("span", {
+      className: "hps-ota-price"
+    }, "~", pBooking, "\u20AC"), /*#__PURE__*/React.createElement("span", {
+      className: "hps-ota-pct"
+    }, "+18%")), /*#__PURE__*/React.createElement("span", {
+      className: "hps-ota-row"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "hps-ota-name"
+    }, "Airbnb"), /*#__PURE__*/React.createElement("span", {
+      className: "hps-ota-price"
+    }, "~", pAirbnb, "\u20AC"), /*#__PURE__*/React.createElement("span", {
+      className: "hps-ota-pct"
+    }, "+17%"))), /*#__PURE__*/React.createElement("span", {
+      className: "hps-cta"
+    }, lang === 'es' ? 'Ver apartamento →' : 'View apartment →'));
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "hps-disclaimer"
+  }, lang === 'es' ? '* Precios en plataformas aproximados. No incluyen ofertas generales ni personalizadas propias de cada plataforma, que desconocemos.' : '* Platform prices are approximate. They do not include platform-specific general or personalised offers, which we cannot know.')));
 };
 const LongStayStrip = ({
   lang
