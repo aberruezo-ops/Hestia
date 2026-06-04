@@ -688,7 +688,7 @@ const Apartments = ({
       className: "apb-per"
     }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
       className: "apb-match"
-    }, lang === 'es' ? '✓ Hasta un 18% más barato que en Booking o Airbnb*' : '✓ Up to 18% cheaper than Booking or Airbnb*')), (() => {
+    }, lang === 'es' ? '✓ Aprox. un 18% más barato que en Booking o Airbnb*' : '✓ Approx. 18% cheaper than Booking or Airbnb*')), (() => {
       const av = aptAvail[a.id];
       if (!av) return null;
       const today = new Date().toISOString().slice(0, 10);
@@ -1214,22 +1214,22 @@ const HomePriceStrip = ({
       className: "hps-ota-name"
     }, "Booking"), /*#__PURE__*/React.createElement("span", {
       className: "hps-ota-price"
-    }, "~", pBooking, "\u20AC"), /*#__PURE__*/React.createElement("span", {
+    }, "desde ~", pBooking, "\u20AC"), /*#__PURE__*/React.createElement("span", {
       className: "hps-ota-pct"
-    }, "+18%")), /*#__PURE__*/React.createElement("span", {
+    }, "aprox. +18%")), /*#__PURE__*/React.createElement("span", {
       className: "hps-ota-row"
     }, /*#__PURE__*/React.createElement("span", {
       className: "hps-ota-name"
     }, "Airbnb"), /*#__PURE__*/React.createElement("span", {
       className: "hps-ota-price"
-    }, "~", pAirbnb, "\u20AC"), /*#__PURE__*/React.createElement("span", {
+    }, "desde ~", pAirbnb, "\u20AC"), /*#__PURE__*/React.createElement("span", {
       className: "hps-ota-pct"
-    }, "+17%"))), /*#__PURE__*/React.createElement("span", {
+    }, "aprox. +17%"))), /*#__PURE__*/React.createElement("span", {
       className: "hps-cta"
     }, lang === 'es' ? 'Ver apartamento →' : 'View apartment →'));
   })), /*#__PURE__*/React.createElement("p", {
     className: "hps-disclaimer"
-  }, lang === 'es' ? '* Precios en plataformas aproximados. No incluyen las ofertas personales o generales que las plataformas puedan hacer a sus clientes, ya que no podemos conocerlas.' : '* Platform prices are approximate. They do not include personal or general offers that platforms may make to their own customers, which we cannot know.')));
+  }, lang === 'es' ? '* Precios en plataformas aproximados. No incluyen las ofertas personales o generales que las plataformas puedan hacer a sus clientes, ni sus programas de fidelización o descuento — ya que no podemos conocerlos. En cualquier caso, siempre podemos mejorar el precio.' : '* Platform prices are approximate. They do not include personal or general offers, nor loyalty or discount programmes that platforms may offer their customers — as we cannot know them. In any case, we can always do better on price.')));
 };
 const LongStayStrip = ({
   lang
