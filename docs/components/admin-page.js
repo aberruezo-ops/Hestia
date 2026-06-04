@@ -4169,7 +4169,7 @@ const LeilaTab = ({
   };
   const MES_FULL = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   const fmtBal = n => n > 0 ? `Leila debe ${n} €` : n < 0 ? `Hestía debe ${Math.abs(n)} €` : 'Saldado';
-  const allYears = [...new Set(reservas.map(r => String(r.year || '')).filter(Boolean))].sort().filter(y => y >= '2025');
+  const allYears = [...new Set(reservas.map(r => String(r.year || '')).filter(Boolean))].sort();
   const yearRows = reservas.map((r, i) => ({
     ...r,
     _idx: i
