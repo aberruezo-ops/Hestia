@@ -53,7 +53,7 @@ const CONTACTO_COPY = {
         href: "salinas.html",
         className: "cl-vs"
       }, "Hest\xEDa Salinas"), ". Puedes comparar los tres en ", /*#__PURE__*/React.createElement("a", {
-        href: "index.html"
+        href: "/"
       }, "la home"), ".")
     }, {
       q: '¿Quiénes sois Alex y Fran?',
@@ -110,7 +110,7 @@ const CONTACTO_COPY = {
         href: "salinas.html",
         className: "cl-vs"
       }, "Hest\xEDa Salinas"), ". Compare all three on ", /*#__PURE__*/React.createElement("a", {
-        href: "index.html"
+        href: "/"
       }, "the home page"), ".")
     }, {
       q: 'Who are Alex and Fran?',

@@ -425,7 +425,7 @@ const QUICK_FAQ = {
     }, {
       q: '¿Qué Hestía me conviene más?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Compara los tres en ", /*#__PURE__*/React.createElement("a", {
-        href: "index.html"
+        href: "/"
       }, "nuestra home"), ". ", /*#__PURE__*/React.createElement("a", {
         href: "mar.html"
       }, "Mar"), " es planta primera con jard\xEDn, terraza de amanecer y mascotas. ", /*#__PURE__*/React.createElement("a", {
@@ -456,7 +456,7 @@ const QUICK_FAQ = {
     }, {
       q: 'Which Hestía suits me best?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Compare all three on ", /*#__PURE__*/React.createElement("a", {
-        href: "index.html"
+        href: "/"
       }, "our home page"), ". ", /*#__PURE__*/React.createElement("a", {
         href: "mar.html"
       }, "Mar"), " is first floor with garden, sunrise terrace and pets. ", /*#__PURE__*/React.createElement("a", {
