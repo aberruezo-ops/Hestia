@@ -2464,8 +2464,8 @@ const APT_TEXT    = { vm: '#FFFBF4', vt: '#FFFBF4', vs: '#3D1A35' };
 // por reserva: la UI los usa solo como sugerencia inicial cuando
 // se cambia el canal de una nueva reserva.
 const COMMISSION_RATES = {
-  airbnb:   0.160, // 14.9% comisión OTA + 1.1% bancaria
-  booking:  0.198, // 18.7% comisión OTA + 1.1% bancaria
+  airbnb:   0.18755, // 15.5% + IVA (21%) = 18.755% efectivo sobre bruto
+  booking:  0.198,   // 18.7% comisión OTA + 1.1% bancaria
   directo:  0,
   avaibook: 0,
 };
@@ -4394,7 +4394,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
             <button type="button" className="pe-btn pe-btn-ghost" onClick={() => data && exportReservasExcel(focusList, focusYear)} disabled={!data}>
               Exportar Excel
             </button>
-            <button type="button" className="pe-btn pe-btn-ghost" onClick={recalcularComisiones} disabled={!data || loading} title="Aplica Booking 19.8% (18.7%+1.1%) y Airbnb 16.0% (14.9%+1.1%) a todas las reservas OTA">
+            <button type="button" className="pe-btn pe-btn-ghost" onClick={recalcularComisiones} disabled={!data || loading} title="Aplica Booking 19.8% (18.7%+1.1%) y Airbnb 18.755% (15.5%+IVA) a todas las reservas OTA">
               Recalcular comisiones
             </button>
             <button type="button" className="pe-btn pe-btn-primary" onClick={newRow}>+ Nueva</button>
@@ -4829,7 +4829,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                             const ck = getCanalKey(draft.canal);
                             return <span className="rv-hint-inline">
                               {ck === 'booking' ? 'booking: 19.8% (18.7%+1.1%)' :
-                               ck === 'airbnb'  ? 'airbnb: 16.0% (14.9%+1.1%)' :
+                               ck === 'airbnb'  ? 'airbnb: 18.755% (15.5%+IVA)' :
                                `${ck}: ${((COMMISSION_RATES[ck] ?? 0)*100).toFixed(1)}%`}
                             </span>;
                           })()}
