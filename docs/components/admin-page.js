@@ -3088,8 +3088,8 @@ const APT_TEXT = {
 const COMMISSION_RATES = {
   airbnb: 0.18755,
   // 15.5% + IVA (21%) = 18.755% efectivo sobre bruto
-  booking: 0.198,
-  // 18.7% comisión OTA + 1.1% bancaria
+  booking: 0.183,
+  // 17% comisión OTA + 1.3% bancaria
   directo: 0,
   avaibook: 0
 };
@@ -5636,7 +5636,7 @@ const ReservasTab = ({
     className: "pe-btn pe-btn-ghost",
     onClick: recalcularComisiones,
     disabled: !data || loading,
-    title: "Aplica Booking 19.8% (18.7%+1.1%) y Airbnb 18.755% (15.5%+IVA) a todas las reservas OTA"
+    title: "Aplica Booking 18.3% (17%+1.3% bancaria) y Airbnb 18.755% (15.5%+IVA) a todas las reservas OTA"
   }, "Recalcular comisiones"), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-primary",
@@ -6220,7 +6220,7 @@ const ReservasTab = ({
     const ck = getCanalKey(draft.canal);
     return /*#__PURE__*/React.createElement("span", {
       className: "rv-hint-inline"
-    }, ck === 'booking' ? 'booking: 19.8% (18.7%+1.1%)' : ck === 'airbnb' ? 'airbnb: 18.755% (15.5%+IVA)' : `${ck}: ${((COMMISSION_RATES[ck] ?? 0) * 100).toFixed(1)}%`);
+    }, ck === 'booking' ? 'booking: 18.3% (17%+1.3% bancaria)' : ck === 'airbnb' ? 'airbnb: 18.755% (15.5%+IVA)' : `${ck}: ${((COMMISSION_RATES[ck] ?? 0) * 100).toFixed(1)}%`);
   })()), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.comision || 0,

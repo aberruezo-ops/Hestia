@@ -2465,7 +2465,7 @@ const APT_TEXT    = { vm: '#FFFBF4', vt: '#FFFBF4', vs: '#3D1A35' };
 // se cambia el canal de una nueva reserva.
 const COMMISSION_RATES = {
   airbnb:   0.18755, // 15.5% + IVA (21%) = 18.755% efectivo sobre bruto
-  booking:  0.198,   // 18.7% comisión OTA + 1.1% bancaria
+  booking:  0.183,   // 17% comisión OTA + 1.3% bancaria
   directo:  0,
   avaibook: 0,
 };
@@ -4413,7 +4413,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
             <button type="button" className="pe-btn pe-btn-ghost" onClick={() => data && exportReservasExcel(focusList, focusYear)} disabled={!data}>
               Exportar Excel
             </button>
-            <button type="button" className="pe-btn pe-btn-ghost" onClick={recalcularComisiones} disabled={!data || loading} title="Aplica Booking 19.8% (18.7%+1.1%) y Airbnb 18.755% (15.5%+IVA) a todas las reservas OTA">
+            <button type="button" className="pe-btn pe-btn-ghost" onClick={recalcularComisiones} disabled={!data || loading} title="Aplica Booking 18.3% (17%+1.3% bancaria) y Airbnb 18.755% (15.5%+IVA) a todas las reservas OTA">
               Recalcular comisiones
             </button>
             <button type="button" className="pe-btn pe-btn-primary" onClick={newRow}>+ Nueva</button>
@@ -4861,7 +4861,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                         : (() => {
                             const ck = getCanalKey(draft.canal);
                             return <span className="rv-hint-inline">
-                              {ck === 'booking' ? 'booking: 19.8% (18.7%+1.1%)' :
+                              {ck === 'booking' ? 'booking: 18.3% (17%+1.3% bancaria)' :
                                ck === 'airbnb'  ? 'airbnb: 18.755% (15.5%+IVA)' :
                                `${ck}: ${((COMMISSION_RATES[ck] ?? 0)*100).toFixed(1)}%`}
                             </span>;
