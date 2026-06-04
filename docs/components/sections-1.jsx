@@ -528,8 +528,8 @@ const Apartments = ({ lang }) => {
                       <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
                       <span className="apb-match">
                         {lang === 'es'
-                          ? '✓ Hasta un 18% más barato que en Booking o Airbnb*'
-                          : '✓ Up to 18% cheaper than Booking or Airbnb*'}
+                          ? '✓ Aprox. un 18% más barato que en Booking o Airbnb*'
+                          : '✓ Approx. 18% cheaper than Booking or Airbnb*'}
                       </span>
                     </div>
                   )}
@@ -896,13 +896,13 @@ const HomePriceStrip = ({ lang }) => {
                   <span className="hps-ota-compare">
                     <span className="hps-ota-row">
                       <span className="hps-ota-name">Booking</span>
-                      <span className="hps-ota-price">~{pBooking}€</span>
-                      <span className="hps-ota-pct">+18%</span>
+                      <span className="hps-ota-price">desde ~{pBooking}€</span>
+                      <span className="hps-ota-pct">aprox. +18%</span>
                     </span>
                     <span className="hps-ota-row">
                       <span className="hps-ota-name">Airbnb</span>
-                      <span className="hps-ota-price">~{pAirbnb}€</span>
-                      <span className="hps-ota-pct">+17%</span>
+                      <span className="hps-ota-price">desde ~{pAirbnb}€</span>
+                      <span className="hps-ota-pct">aprox. +17%</span>
                     </span>
                   </span>
                 )}
@@ -913,8 +913,8 @@ const HomePriceStrip = ({ lang }) => {
         </div>
         <p className="hps-disclaimer">
           {lang === 'es'
-            ? '* Precios en plataformas aproximados. No incluyen las ofertas personales o generales que las plataformas puedan hacer a sus clientes, ya que no podemos conocerlas.'
-            : '* Platform prices are approximate. They do not include personal or general offers that platforms may make to their own customers, which we cannot know.'}
+            ? '* Precios en plataformas aproximados. No incluyen las ofertas personales o generales que las plataformas puedan hacer a sus clientes, ni sus programas de fidelización o descuento — ya que no podemos conocerlos. En cualquier caso, siempre podemos mejorar el precio.'
+            : '* Platform prices are approximate. They do not include personal or general offers, nor loyalty or discount programmes that platforms may offer their customers — as we cannot know them. In any case, we can always do better on price.'}
         </p>
       </div>
     </section>
