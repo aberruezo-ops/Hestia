@@ -362,7 +362,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <NavLink href={NAV_PAGES.estanciasLargas}>{t.nav[9]}</NavLink>
         </nav>
         <div className="brand-center">
-          <a href="index.html" className="brand-lockup" aria-label="Hestía — Inicio">
+          <a href="/" className="brand-lockup" aria-label="Hestía — Inicio">
             <span className="hestia-logo-mark" aria-hidden="true">
               <img decoding="async" src="assets/logo-teal-transparent.png" alt="" className="hestia-logo" width="600" height="600"/>
             </span>
