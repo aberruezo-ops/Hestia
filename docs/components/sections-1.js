@@ -688,7 +688,7 @@ const Apartments = ({
       className: "apb-per"
     }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
       className: "apb-match"
-    }, lang === 'es' ? '✓ Aprox. un 18% más barato que en Booking o Airbnb*' : '✓ Approx. 18% cheaper than Booking or Airbnb*')), (() => {
+    }, lang === 'es' ? '✓ Desde un 10% más barato que en Booking o Airbnb*' : '✓ From 10% cheaper than Booking or Airbnb*')), (() => {
       const av = aptAvail[a.id];
       if (!av) return null;
       const today = new Date().toISOString().slice(0, 10);
@@ -1187,8 +1187,7 @@ const HomePriceStrip = ({
     className: "hps-grid"
   }, APT_META.map(apt => {
     const p = basePrice(apt.id);
-    const pBooking = p ? Math.round(p * 1.18) : null;
-    const pAirbnb = p ? Math.round(p * 1.17) : null;
+    const pMin = p ? Math.round(p * 1.10) : null;
     return /*#__PURE__*/React.createElement("a", {
       key: apt.id,
       href: `${apt.slug}.html`,
@@ -1212,19 +1211,11 @@ const HomePriceStrip = ({
       className: "hps-ota-row"
     }, /*#__PURE__*/React.createElement("span", {
       className: "hps-ota-name"
-    }, "Booking"), /*#__PURE__*/React.createElement("span", {
+    }, "Booking / Airbnb"), /*#__PURE__*/React.createElement("span", {
       className: "hps-ota-price"
-    }, "desde ~", pBooking, "\u20AC"), /*#__PURE__*/React.createElement("span", {
+    }, "desde ~", pMin, "\u20AC"), /*#__PURE__*/React.createElement("span", {
       className: "hps-ota-pct"
-    }, "aprox. +18%")), /*#__PURE__*/React.createElement("span", {
-      className: "hps-ota-row"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "hps-ota-name"
-    }, "Airbnb"), /*#__PURE__*/React.createElement("span", {
-      className: "hps-ota-price"
-    }, "desde ~", pAirbnb, "\u20AC"), /*#__PURE__*/React.createElement("span", {
-      className: "hps-ota-pct"
-    }, "aprox. +17%"))), /*#__PURE__*/React.createElement("span", {
+    }, "+10% m\xEDn."))), /*#__PURE__*/React.createElement("span", {
       className: "hps-cta"
     }, lang === 'es' ? 'Ver apartamento →' : 'View apartment →'));
   })), /*#__PURE__*/React.createElement("p", {
