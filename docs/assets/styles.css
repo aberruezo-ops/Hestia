@@ -19361,6 +19361,8 @@ img[src*="apt-vt-gallery-"] {
   box-shadow: inset 3px 0 0 0 var(--sol);
 }
 .rv-yearly-row.is-focus td { font-weight: 600; }
+.rv-yearly-row-agg { opacity: .75; }
+.rv-agg-badge { display: inline-block; margin-left: 6px; padding: 1px 6px; font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; background: rgba(58,170,187,.12); color: var(--sol-text, #176E80); border-radius: 4px 0 4px 0; }
 .rv-yearly-neg { color: #8a4a24; }
 .rv-kpi {
   background: rgba(255, 251, 244, 0.7);

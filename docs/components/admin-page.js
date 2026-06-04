@@ -4980,6 +4980,7 @@ const ReservasTab = ({
 }) => {
   const [data, setData] = React.useState(null);
   const [sha, setSha] = React.useState(null);
+  const [histData, setHistData] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
   const [success, setSuccess] = React.useState(null);
@@ -5000,7 +5001,7 @@ const ReservasTab = ({
     if (!token) return;
     setLoading(true);
     setError(null);
-    fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
+    Promise.all([fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
       headers: apiHeaders(token),
       cache: 'no-store'
     }).then(r => r.json()).then(j => {
@@ -5011,7 +5012,11 @@ const ReservasTab = ({
         hour: '2-digit',
         minute: '2-digit'
       }));
-    }).catch(e => setError('Error cargando reservas: ' + e.message + ' — F12 para detalle.')).finally(() => setLoading(false));
+    }), fetch('data/dashboard-historico.json', {
+      cache: 'no-store'
+    }).then(r => r.ok ? r.json() : null).then(hist => {
+      if (hist) setHistData(hist);
+    }).catch(() => {})]).catch(e => setError('Error cargando reservas: ' + e.message + ' — F12 para detalle.')).finally(() => setLoading(false));
   }, [token]);
 
   // Detecta bloques iCal sin reserva correspondiente en P-Edit.
@@ -5104,9 +5109,11 @@ const ReservasTab = ({
     if (!y) return;
     (byYear[y] = byYear[y] || []).push(r);
   });
-  const allYears = Object.keys(byYear).sort();
+  const historicYears = histData ? Object.keys(histData.years || {}).filter(y => !byYear[y]) : [];
+  const allYears = [...Object.keys(byYear), ...historicYears].sort();
   const defaultFocus = byYear[currentYear] ? currentYear : allYears[allYears.length - 1] || currentYear;
-  const focusYear = focusYearOverride && byYear[focusYearOverride] ? focusYearOverride : defaultFocus;
+  const isHistoricOnly = y => !byYear[y] && !!(histData && histData.years && histData.years[y]);
+  const focusYear = focusYearOverride && allYears.includes(focusYearOverride) ? focusYearOverride : defaultFocus;
   const focusList = byYear[focusYear] || [];
   const MES_FULL = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   const allMonths = [...new Set(focusList.map(r => (r.entrada || '').slice(5, 7)).filter(Boolean))].sort();
@@ -5155,7 +5162,27 @@ const ReservasTab = ({
       maxNoche: preciosNoche.length ? Math.max(...preciosNoche) : 0
     };
   };
-  const kFocus = yearMetrics(focusList);
+  const kFocusRaw = yearMetrics(focusList);
+  const kFocus = focusList.length === 0 && isHistoricOnly(focusYear) && histData.years[focusYear] ? (() => {
+    const h = histData.years[focusYear];
+    const bruto = h.ingresos || 0;
+    const neto = h.bai || 0;
+    const noches = h.noches || 0;
+    return {
+      reservas: h.reservas || 0,
+      noches,
+      bruto,
+      comision: 0,
+      limpieza: 0,
+      neto,
+      rentabilidad: bruto ? neto / bruto : 0,
+      comisionPct: 0,
+      brutoPorNoche: noches ? bruto / noches : 0,
+      netoPorNoche: noches ? neto / noches : 0,
+      minNoche: null,
+      maxNoche: null
+    };
+  })() : kFocusRaw;
 
   // KPIs por apartamento (sólo año focal)
   const byApt = ['vm', 'vt', 'vs'].map(apt => {
@@ -5639,7 +5666,7 @@ const ReservasTab = ({
     className: "rv-discrepancy-note"
   }, " \u2014 bloqueado en Airbnb/Booking pero sin reserva registrada en P-Edit")))), /*#__PURE__*/React.createElement("p", {
     className: "rv-discrepancy-hint"
-  }, "Si la reserva ya est\xE1 registrada con fechas ligeramente distintas, puedes ignorar esto. Si no lo est\xE1, crea la reserva para evitar solapamientos.")), allYears.length > 1 && /*#__PURE__*/React.createElement("div", {
+  }, "Si la reserva ya est\xE1 registrada con fechas ligeramente distintas, puedes ignorar esto. Si no lo est\xE1, crea la reserva para evitar solapamientos.")), allYears.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "rv-yearly"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-yearly-h"
@@ -5670,16 +5697,37 @@ const ReservasTab = ({
   }, "\u20AC/noche m\xEDn"), /*#__PURE__*/React.createElement("th", {
     className: "num"
   }, "\u20AC/noche m\xE1x"))), /*#__PURE__*/React.createElement("tbody", null, allYears.map(y => {
-    const m = yearMetrics(byYear[y]);
+    const isAgg = isHistoricOnly(y);
+    const m = isAgg ? (() => {
+      const h = histData.years[y];
+      const bruto = h.ingresos || 0;
+      const neto = h.bai || 0;
+      const noches = h.noches || 0;
+      return {
+        reservas: h.reservas || 0,
+        noches,
+        bruto,
+        comision: null,
+        limpieza: null,
+        neto,
+        rentabilidad: bruto ? neto / bruto : 0,
+        brutoPorNoche: noches ? bruto / noches : 0,
+        minNoche: null,
+        maxNoche: null
+      };
+    })() : yearMetrics(byYear[y]);
     const isFocus = y === focusYear;
     return /*#__PURE__*/React.createElement("tr", {
       key: y,
-      className: `rv-yearly-row${isFocus ? ' is-focus' : ''}`,
+      className: `rv-yearly-row${isFocus ? ' is-focus' : ''}${isAgg ? ' rv-yearly-row-agg' : ''}`,
       onClick: () => {
         setFocusYearOverride(y);
         setFocusMonth('all');
-      }
-    }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, y)), /*#__PURE__*/React.createElement("td", {
+      },
+      title: isAgg ? 'Datos agregados — sin fichas individuales para este año' : ''
+    }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, y), isAgg && /*#__PURE__*/React.createElement("span", {
+      className: "rv-agg-badge"
+    }, "resumen")), /*#__PURE__*/React.createElement("td", {
       className: "num"
     }, m.reservas), /*#__PURE__*/React.createElement("td", {
       className: "num"
@@ -5687,9 +5735,9 @@ const ReservasTab = ({
       className: "num"
     }, fmtEur(m.bruto)), /*#__PURE__*/React.createElement("td", {
       className: "num rv-yearly-neg"
-    }, "\u2212", fmtEur(m.comision)), /*#__PURE__*/React.createElement("td", {
+    }, m.comision !== null ? `−${fmtEur(m.comision)}` : '—'), /*#__PURE__*/React.createElement("td", {
       className: "num rv-yearly-neg"
-    }, "\u2212", fmtEur(m.limpieza)), /*#__PURE__*/React.createElement("td", {
+    }, m.limpieza !== null ? `−${fmtEur(m.limpieza)}` : '—'), /*#__PURE__*/React.createElement("td", {
       className: "num"
     }, /*#__PURE__*/React.createElement("strong", null, fmtEur(m.neto))), /*#__PURE__*/React.createElement("td", {
       className: "num"
@@ -5865,12 +5913,17 @@ const ReservasTab = ({
     value: "cancelada"
   }, "Canceladas"))), /*#__PURE__*/React.createElement("span", {
     className: "rv-hint"
-  }, "Click en una fila para editarla \u2192")), visibleMonths.length === 0 && /*#__PURE__*/React.createElement("p", {
+  }, "Click en una fila para editarla \u2192")), visibleMonths.length === 0 && (isHistoricOnly(focusYear) ? /*#__PURE__*/React.createElement("p", {
     className: "pe-help",
     style: {
       marginTop: 16
     }
-  }, "Sin reservas en ", focusYear, "."), visibleMonths.map(m => {
+  }, "A\xF1o ", focusYear, " \u2014 datos agregados del hist\xF3rico. No hay fichas individuales registradas en P-Edit para este a\xF1o. Los res\xFAmenes se muestran en la tabla de arriba.") : /*#__PURE__*/React.createElement("p", {
+    className: "pe-help",
+    style: {
+      marginTop: 16
+    }
+  }, "Sin reservas en ", focusYear, ".")), visibleMonths.map(m => {
     const mRows = filtered.filter(r => (r.entrada || '').slice(5, 7) === m);
     if (mRows.length === 0) return null;
     const mActive = mRows.filter(r => !isCancelada(r));
