@@ -470,7 +470,7 @@ const Header = ({
   }, t.nav[9])), /*#__PURE__*/React.createElement("div", {
     className: "brand-center"
   }, /*#__PURE__*/React.createElement("a", {
-    href: "index.html",
+    href: "/",
     className: "brand-lockup",
     "aria-label": "Hest\xEDa \u2014 Inicio"
   }, /*#__PURE__*/React.createElement("span", {
