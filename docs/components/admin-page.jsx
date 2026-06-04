@@ -3828,6 +3828,7 @@ const PrereservasTab = ({ token, refreshKey }) => {
 const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
   const [data,        setData]        = React.useState(null);
   const [sha,         setSha]         = React.useState(null);
+  const [histData,    setHistData]    = React.useState(null);
   const [loading,     setLoading]     = React.useState(false);
   const [error,       setError]       = React.useState(null);
   const [success,     setSuccess]     = React.useState(null);
@@ -3850,16 +3851,22 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
     if (!token) return;
     setLoading(true);
     setError(null);
-fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' })
-      .then(r => r.json())
-      .then(j => {
-        if (j.message) throw new Error(j.message);
-        setSha(j.sha);
-        setData(JSON.parse(b64ToUtf8(j.content)));
-        setLoadedAt(new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }));
-      })
-      .catch(e => setError('Error cargando reservas: ' + e.message + ' — F12 para detalle.'))
-      .finally(() => setLoading(false));
+    Promise.all([
+      fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' })
+        .then(r => r.json())
+        .then(j => {
+          if (j.message) throw new Error(j.message);
+          setSha(j.sha);
+          setData(JSON.parse(b64ToUtf8(j.content)));
+          setLoadedAt(new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }));
+        }),
+      fetch('data/dashboard-historico.json', { cache: 'no-store' })
+        .then(r => r.ok ? r.json() : null)
+        .then(hist => { if (hist) setHistData(hist); })
+        .catch(() => {}),
+    ])
+    .catch(e => setError('Error cargando reservas: ' + e.message + ' — F12 para detalle.'))
+    .finally(() => setLoading(false));
   }, [token]);
 
   // Detecta bloques iCal sin reserva correspondiente en P-Edit.
@@ -3936,9 +3943,11 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
     if (!y) return;
     (byYear[y] = byYear[y] || []).push(r);
   });
-  const allYears = Object.keys(byYear).sort();
+  const historicYears = histData ? Object.keys(histData.years || {}).filter(y => !byYear[y]) : [];
+  const allYears = [...Object.keys(byYear), ...historicYears].sort();
   const defaultFocus = byYear[currentYear] ? currentYear : (allYears[allYears.length - 1] || currentYear);
-  const focusYear = focusYearOverride && byYear[focusYearOverride] ? focusYearOverride : defaultFocus;
+  const isHistoricOnly = y => !byYear[y] && !!(histData && histData.years && histData.years[y]);
+  const focusYear = (focusYearOverride && allYears.includes(focusYearOverride)) ? focusYearOverride : defaultFocus;
   const focusList = byYear[focusYear] || [];
 
   const MES_FULL = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -3986,7 +3995,17 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
       maxNoche: preciosNoche.length ? Math.max(...preciosNoche) : 0,
     };
   };
-  const kFocus = yearMetrics(focusList);
+  const kFocusRaw = yearMetrics(focusList);
+  const kFocus = (focusList.length === 0 && isHistoricOnly(focusYear) && histData.years[focusYear])
+    ? (() => {
+        const h = histData.years[focusYear];
+        const bruto = h.ingresos || 0; const neto = h.bai || 0; const noches = h.noches || 0;
+        return { reservas: h.reservas || 0, noches, bruto, comision: 0, limpieza: 0, neto,
+          rentabilidad: bruto ? neto / bruto : 0, comisionPct: 0,
+          brutoPorNoche: noches ? bruto / noches : 0, netoPorNoche: noches ? neto / noches : 0,
+          minNoche: null, maxNoche: null };
+      })()
+    : kFocusRaw;
 
   // KPIs por apartamento (sólo año focal)
   const byApt = ['vm', 'vt', 'vs'].map(apt => {
@@ -4429,7 +4448,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
             Tabla comparativa con métricas consistentes año a año:
             Bruto · Comisiones · Limpieza · Neto (BAI) · Margen · €/noche.
             Click en una fila para cambiar el año focal del listado. */}
-        {allYears.length > 1 && (
+        {allYears.length > 0 && (
           <div className="rv-yearly">
             <div className="rv-yearly-h">
               <h3>Histórico por año</h3>
@@ -4452,18 +4471,28 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                 </tr></thead>
                 <tbody>
                   {allYears.map(y => {
-                    const m = yearMetrics(byYear[y]);
+                    const isAgg = isHistoricOnly(y);
+                    const m = isAgg
+                      ? (() => {
+                          const h = histData.years[y];
+                          const bruto = h.ingresos || 0; const neto = h.bai || 0; const noches = h.noches || 0;
+                          return { reservas: h.reservas||0, noches, bruto, comision: null, limpieza: null, neto,
+                            rentabilidad: bruto ? neto/bruto : 0, brutoPorNoche: noches ? bruto/noches : 0,
+                            minNoche: null, maxNoche: null };
+                        })()
+                      : yearMetrics(byYear[y]);
                     const isFocus = y === focusYear;
                     return (
                       <tr key={y}
-                          className={`rv-yearly-row${isFocus ? ' is-focus' : ''}`}
-                          onClick={() => { setFocusYearOverride(y); setFocusMonth('all'); }}>
-                        <td><strong>{y}</strong></td>
+                          className={`rv-yearly-row${isFocus ? ' is-focus' : ''}${isAgg ? ' rv-yearly-row-agg' : ''}`}
+                          onClick={() => { setFocusYearOverride(y); setFocusMonth('all'); }}
+                          title={isAgg ? 'Datos agregados — sin fichas individuales para este año' : ''}>
+                        <td><strong>{y}</strong>{isAgg && <span className="rv-agg-badge">resumen</span>}</td>
                         <td className="num">{m.reservas}</td>
                         <td className="num">{m.noches}</td>
                         <td className="num">{fmtEur(m.bruto)}</td>
-                        <td className="num rv-yearly-neg">−{fmtEur(m.comision)}</td>
-                        <td className="num rv-yearly-neg">−{fmtEur(m.limpieza)}</td>
+                        <td className="num rv-yearly-neg">{m.comision !== null ? `−${fmtEur(m.comision)}` : '—'}</td>
+                        <td className="num rv-yearly-neg">{m.limpieza !== null ? `−${fmtEur(m.limpieza)}` : '—'}</td>
                         <td className="num"><strong>{fmtEur(m.neto)}</strong></td>
                         <td className="num"><strong>{fmtPct(m.rentabilidad)}</strong></td>
                         <td className="num">{fmtEur(m.brutoPorNoche)}</td>
@@ -4595,7 +4624,11 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
         </div>
 
         {/* ───── Tablas por mes ───── */}
-        {visibleMonths.length === 0 && <p className="pe-help" style={{ marginTop: 16 }}>Sin reservas en {focusYear}.</p>}
+        {visibleMonths.length === 0 && (
+          isHistoricOnly(focusYear)
+            ? <p className="pe-help" style={{ marginTop: 16 }}>Año {focusYear} — datos agregados del histórico. No hay fichas individuales registradas en P-Edit para este año. Los resúmenes se muestran en la tabla de arriba.</p>
+            : <p className="pe-help" style={{ marginTop: 16 }}>Sin reservas en {focusYear}.</p>
+        )}
 
         {visibleMonths.map(m => {
           const mRows = filtered.filter(r => (r.entrada || '').slice(5, 7) === m);
