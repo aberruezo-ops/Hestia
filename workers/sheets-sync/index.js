@@ -60,8 +60,14 @@ export default {
       return new Response('Method Not Allowed', { status: 405, headers: corsHeaders });
     }
 
-    // Rate limiting por IP usando KV
-    if (env.RATE_KV) {
+    // Rate limiting por IP usando KV — OBLIGATORIO: rechaza si no está configurado
+    if (!env.RATE_KV) {
+      console.error('RATE_KV namespace not bound — request rejected');
+      return new Response(JSON.stringify({ error: 'Service misconfigured' }), {
+        status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    {
       const ip  = req.headers.get('CF-Connecting-IP') || 'unknown';
       const key = `rl:${ip}`;
       const count = parseInt(await env.RATE_KV.get(key) || '0');
@@ -83,11 +89,42 @@ export default {
       });
     }
 
+    // Validación básica del payload
+    const contentLength = req.headers.get('Content-Length');
+    if (contentLength && parseInt(contentLength) > 512 * 1024) {
+      return new Response(JSON.stringify({ error: 'Payload too large' }), {
+        status: 413, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
     const reservas = body.reservas;
     if (!Array.isArray(reservas) || reservas.length === 0) {
       return new Response(JSON.stringify({ error: 'Missing or empty reservas array' }), {
         status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
+    }
+    if (reservas.length > 2000) {
+      return new Response(JSON.stringify({ error: 'Too many reservas (max 2000)' }), {
+        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+    const VALID_APTS = new Set(['vm', 'vt', 'vs']);
+    for (const r of reservas) {
+      if (typeof r !== 'object' || r === null) {
+        return new Response(JSON.stringify({ error: 'Invalid reserva entry' }), {
+          status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+      if (r.apt && !VALID_APTS.has(String(r.apt).toLowerCase())) {
+        return new Response(JSON.stringify({ error: `Invalid apt value: ${r.apt}` }), {
+          status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
+      if (r.responsable && String(r.responsable).length > 200) {
+        return new Response(JSON.stringify({ error: 'responsable field too long' }), {
+          status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
     }
 
     if (!env.GCP_SA_KEY) {

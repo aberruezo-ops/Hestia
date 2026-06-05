@@ -39,14 +39,13 @@ jobs:
 
       - name: Sync availability data
         env:
-          ICAL_VM_AIRBNB:  "https://www.airbnb.com/calendar/ical/17253235.ics?t=884f5a6f50994d7ba0ff70ae0adb6a01&locale=es"
+          ICAL_VM_AIRBNB:  ${{ secrets.ICAL_VM_AIRBNB }}
           ICAL_VM_BOOKING: ${{ secrets.ICAL_VM_BOOKING }}
-          ICAL_VT_AIRBNB:  "https://www.airbnb.com/calendar/ical/40813709.ics?t=2e7a355e6706497a9c8e830dfbaa8f84&locale=es"
+          ICAL_VT_AIRBNB:  ${{ secrets.ICAL_VT_AIRBNB }}
           ICAL_VT_BOOKING: ${{ secrets.ICAL_VT_BOOKING }}
-          ICAL_VS_AIRBNB:  "https://www.airbnb.com/calendar/ical/51707917.ics?t=8fcaa412ddbc400085ee555440561c3a&locale=es"
+          ICAL_VS_AIRBNB:  ${{ secrets.ICAL_VS_AIRBNB }}
           ICAL_VS_BOOKING: ${{ secrets.ICAL_VS_BOOKING }}
-          # Print first 60 lines of each raw iCal in the logs for debugging
-          ICAL_DEBUG: "1"
+          ICAL_DEBUG: "0"
         run: python .github/scripts/sync_ical.py
 
       - name: Show result

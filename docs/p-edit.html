@@ -30,11 +30,13 @@
 
   async function loadComponents() {
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?t=' + Date.now(), { cache: 'no-store' });
-      if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
-      const code = await res.text();
-      // eslint-disable-next-line no-eval
-      eval(code);
+      await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = file + '?t=' + Date.now();
+        script.onload = resolve;
+        script.onerror = () => reject(new Error(`Failed to load ${file}`));
+        document.head.appendChild(script);
+      });
     }
   }
 
