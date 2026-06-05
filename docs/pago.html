@@ -126,11 +126,14 @@
       gap: 6px; padding: 14px 14px 12px;
       background: var(--crema); border: 1.5px solid rgba(42,15,46,.12);
       border-radius: var(--r-sm); cursor: pointer;
-      transition: border-color .15s, background .15s, box-shadow .15s;
+      transition: border-color 160ms cubic-bezier(0.23,1,0.32,1), background 160ms cubic-bezier(0.23,1,0.32,1), box-shadow 220ms cubic-bezier(0.23,1,0.32,1), transform 100ms cubic-bezier(0.23,1,0.32,1);
       text-align: left; font-family: var(--sans);
     }
-    .method-card:hover { border-color: rgba(42,15,46,.25); background: white; }
+    @media (hover: hover) and (pointer: fine) {
+      .method-card:hover { border-color: rgba(42,15,46,.25); background: white; }
+    }
     .method-card.active { border-color: var(--accent); background: white; box-shadow: 0 0 0 3px rgba(200,122,69,.14); }
+    .method-card:active:not([disabled]) { transform: scale(0.97); }
     .method-icon { font-size: 22px; line-height: 1; }
     .method-name { font-size: 13px; font-weight: 600; color: var(--ink); }
     .method-sub { font-size: 11px; color: var(--ink-soft); font-weight: 400; }
@@ -155,9 +158,12 @@
       font-family: var(--sans); font-size: 14.5px; font-weight: 600; letter-spacing: .04em;
       cursor: pointer; width: 100%;
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      transition: background .15s, transform .12s;
+      transition: background 160ms cubic-bezier(0.23,1,0.32,1), transform 100ms cubic-bezier(0.23,1,0.32,1), box-shadow 220ms cubic-bezier(0.23,1,0.32,1);
     }
-    .manual-confirm-btn:hover { background: var(--ber-dk); transform: translateY(-1px); }
+    @media (hover: hover) and (pointer: fine) {
+      .manual-confirm-btn:hover { background: var(--ber-dk); transform: translateY(-1px); }
+    }
+    .manual-confirm-btn:active:not(:disabled) { transform: scale(0.97); }
     .manual-confirm-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
     /* Stripe element wrapper */
     #stripe-payment-element { min-height: 64px; }
@@ -170,12 +176,14 @@
       cursor: pointer; width: 100%;
       display: flex; align-items: center; justify-content: center; gap: 8px;
       box-shadow: 0 4px 16px rgba(200,122,69,.35);
-      transition: background .15s, transform .12s, box-shadow .15s;
+      transition: background 160ms cubic-bezier(0.23,1,0.32,1), transform 100ms cubic-bezier(0.23,1,0.32,1), box-shadow 220ms cubic-bezier(0.23,1,0.32,1);
       position: relative; overflow: hidden;
     }
     .pay-btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,.12) 0%, transparent 60%); }
-    .pay-btn:hover { background: var(--accent-dk); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,122,69,.42); }
-    .pay-btn:active { transform: translateY(0); }
+    @media (hover: hover) and (pointer: fine) {
+      .pay-btn:hover { background: var(--accent-dk); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,122,69,.42); }
+    }
+    .pay-btn:active:not(:disabled) { transform: translateY(0) scale(0.97); }
     .pay-btn:disabled { opacity: .7; cursor: not-allowed; transform: none; box-shadow: none; }
     .pay-arrow { font-size: 18px; }
     /* Pay note */
