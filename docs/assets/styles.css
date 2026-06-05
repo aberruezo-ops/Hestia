@@ -1535,7 +1535,7 @@ section {
 .btn-ghost-light:hover { background: var(--arena); color: var(--ber-dk); }
 .btn-ghost-dark { color: var(--ber); border-color: var(--ber); }
 .btn-ghost-dark:hover { background: var(--ber); color: var(--crema); }
-.btn .arrow { transition: transform .3s; }
+.btn .arrow { transition: transform var(--dur-base) var(--ease-out); }
 @media (hover: hover) and (pointer: fine) {
   .btn:hover .arrow { transform: translateX(4px); }
 }
@@ -4190,6 +4190,9 @@ a.asb-cta,
   flex-shrink: 0;
   white-space: nowrap;
   text-decoration: none !important;
+  transition: background-color var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
 }
 a.asb-cta:hover,
 .asb-cta:hover {
@@ -4250,6 +4253,8 @@ body[data-apt="salinas"]  .ag-nav-btn-primary {
   border: 1px solid rgba(240, 232, 213, 0.22) !important;
   animation: aptCtaFlow 9s ease-in-out infinite;
   background-size: 220% 220% !important;
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
 }
 /* Mar — olivo metálico */
 [data-apt="mar"]      .asb-cta,
@@ -4390,6 +4395,24 @@ body[data-apt="salinas"]  .ag-nav-btn-primary:hover {
     inset 0 1px 0 rgba(255, 255, 255, 0.48),
     inset 0 -1px 0 rgba(0, 0, 0, 0.25),
     0 10px 32px var(--apt-glow, rgba(58, 170, 187, 0.65)) !important;
+}
+/* Active — press feedback */
+[data-apt="mar"]      .asb-cta:active,
+[data-apt="thalassa"] .asb-cta:active,
+[data-apt="salinas"]  .asb-cta:active,
+body[data-apt="mar"]      a.apt-page-reserve-btn:active,
+body[data-apt="thalassa"] a.apt-page-reserve-btn:active,
+body[data-apt="salinas"]  a.apt-page-reserve-btn:active,
+body[data-apt="mar"]      .widget-cta:active,
+body[data-apt="thalassa"] .widget-cta:active,
+body[data-apt="salinas"]  .widget-cta:active,
+body[data-apt="mar"]      .ads-btn:active,
+body[data-apt="thalassa"] .ads-btn:active,
+body[data-apt="salinas"]  .ads-btn:active,
+body[data-apt="mar"]      .ag-nav-btn-primary:active,
+body[data-apt="thalassa"] .ag-nav-btn-primary:active,
+body[data-apt="salinas"]  .ag-nav-btn-primary:active {
+  transform: translateY(0) scale(0.97);
 }
 
 @keyframes aptCtaFlow {
@@ -15343,12 +15366,19 @@ a.cta-wa-btn,
   border: 0 !important;
   font-weight: 700 !important;
   box-shadow: 0 4px 18px rgba(58,170,187,.35);
+  transition: background-color var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
 }
 a.cta-wa-btn:hover,
 .contact-cta a.cta-wa-btn:hover {
   background-color: #6FC4D1 !important;
   color: #2A0F2E !important;
   box-shadow: 0 6px 22px rgba(58,170,187,.5);
+}
+a.cta-wa-btn:active,
+.contact-cta a.cta-wa-btn:active {
+  transform: scale(0.97) !important;
 }
 a.cta-wa-btn::before,
 .contact-cta a.cta-wa-btn::before { display: none !important; }
@@ -21294,11 +21324,14 @@ img[src*="apt-vt-gallery-"] {
   padding: 13px 22px;
   border-radius: 8px 0 8px 0;
   text-decoration: none;
-  transition: background .14s, transform .12s;
+  transition: background var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
   box-shadow: 0 4px 16px rgba(200,122,69,.35);
   align-self: flex-start;
 }
-.lss-cta:hover { background: #A85E2E; transform: translateY(-1px); }
+.lss-cta:hover { background: #A85E2E; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,122,69,.5); }
+.lss-cta:active { transform: translateY(0) scale(0.97); }
 
 /* ── Long-stay nudge in home search ─────────────────────────── */
 .hs-longstay-nudge {
@@ -21653,9 +21686,11 @@ img[src*="apt-vt-gallery-"] {
   flex-direction: column;
   gap: 8px;
   text-decoration: none;
-  transition: box-shadow .14s, transform .12s;
+  transition: box-shadow var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
 }
 .lsl-apt-card:hover { box-shadow: 0 6px 20px rgba(42,15,46,.10); transform: translateY(-2px); }
+.lsl-apt-card:active { transform: scale(0.98); }
 .lsl-apt-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--lsl-accent, #3AAABB); }
 .lsl-apt-name { font-size: 12px; font-weight: 700; letter-spacing: .1em; color: var(--ber, #2A0F2E); }
 .lsl-apt-concept { font-size: 13px; color: var(--ink-soft, #7A5A72); line-height: 1.45; flex: 1; }
