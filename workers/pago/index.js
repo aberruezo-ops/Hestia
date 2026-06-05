@@ -34,6 +34,9 @@ export default {
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Vary': 'Origin',
+      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
     };
 
     if (req.method === 'OPTIONS') {
@@ -173,7 +176,11 @@ async function handleStripeWebhook(req, env) {
   }
 
   return new Response(JSON.stringify({ received: true }), {
-    status: 200, headers: { 'Content-Type': 'application/json' },
+    status: 200, headers: {
+      'Content-Type': 'application/json',
+      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+      'X-Content-Type-Options': 'nosniff',
+    },
   });
 }
 

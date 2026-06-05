@@ -45,6 +45,9 @@ export default {
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Vary': 'Origin',
+      'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
     };
 
     if (req.method === 'OPTIONS') {
