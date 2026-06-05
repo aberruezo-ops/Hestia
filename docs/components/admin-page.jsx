@@ -4669,7 +4669,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                       const statusIcon = cancelada ? '✗' : status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
                       const isSel = idx === selectedIdx;
                       return (
-                        <tr key={idx} className={`rv-row rv-row-${status}${isSel ? ' is-selected' : ''}${cancelada ? ' rv-row-cancelada' : ''}`}
+                        <tr key={idx} className={`rv-row rv-row-${status} rv-canal-${getCanalKey(r.canal)}${isSel ? ' is-selected' : ''}${cancelada ? ' rv-row-cancelada' : ''}`}
                           data-apt={r.apt} style={{'--apt-c': APT_COLOR[r.apt] || 'transparent'}}
                           onClick={() => openRow(idx)}>
                           <td className={`rv-status rv-status-${status}`} title={status}>{statusIcon}</td>

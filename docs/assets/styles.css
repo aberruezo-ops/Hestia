@@ -19560,6 +19560,20 @@ img[src*="apt-vt-gallery-"] {
 }
 .rv-row-past { opacity: 0.55; }
 .rv-row-cancelada { opacity: 0.38; color: #888 !important; }
+
+/* Canal: franja izquierda + tinte de fondo suave */
+.rv-canal-booking  { background: rgba(0,53,128,0.045); box-shadow: inset 4px 0 0 0 #003580; }
+.rv-canal-airbnb   { background: rgba(255,90,95,0.05);  box-shadow: inset 4px 0 0 0 #FF5A5F; }
+.rv-canal-directo  { background: rgba(58,170,187,0.05); box-shadow: inset 4px 0 0 0 var(--sol); }
+.rv-canal-avaibook { background: rgba(120,80,160,0.04); box-shadow: inset 4px 0 0 0 #7850A0; }
+.rv-canal-booking:hover  { background: rgba(0,53,128,0.09); }
+.rv-canal-airbnb:hover   { background: rgba(255,90,95,0.10); }
+.rv-canal-directo:hover  { background: rgba(58,170,187,0.10); }
+.rv-canal-avaibook:hover { background: rgba(120,80,160,0.08); }
+.rv-canal-booking.is-selected  { background: rgba(0,53,128,0.13); box-shadow: inset 6px 0 0 0 #003580; }
+.rv-canal-airbnb.is-selected   { background: rgba(255,90,95,0.14);  box-shadow: inset 6px 0 0 0 #FF5A5F; }
+.rv-canal-directo.is-selected  { background: rgba(58,170,187,0.14); box-shadow: inset 6px 0 0 0 var(--sol); }
+.rv-canal-avaibook.is-selected { background: rgba(120,80,160,0.12); box-shadow: inset 6px 0 0 0 #7850A0; }
 .rv-row-cancelada td { text-decoration: line-through; color: #888 !important; }
 .rv-row-cancelada .rv-apt-chip { filter: grayscale(1); opacity: 0.5; }
 .rv-month-foot td { border-top: 2px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); font-size: 12px; }

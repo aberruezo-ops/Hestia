@@ -5970,7 +5970,7 @@ const ReservasTab = ({
       const isSel = idx === selectedIdx;
       return /*#__PURE__*/React.createElement("tr", {
         key: idx,
-        className: `rv-row rv-row-${status}${isSel ? ' is-selected' : ''}${cancelada ? ' rv-row-cancelada' : ''}`,
+        className: `rv-row rv-row-${status} rv-canal-${getCanalKey(r.canal)}${isSel ? ' is-selected' : ''}${cancelada ? ' rv-row-cancelada' : ''}`,
         "data-apt": r.apt,
         style: {
           '--apt-c': APT_COLOR[r.apt] || 'transparent'
