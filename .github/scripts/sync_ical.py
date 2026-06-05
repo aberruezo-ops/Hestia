@@ -27,7 +27,7 @@ SOURCES      = ["airbnb", "booking"]
 LOOKAHEAD    = 548   # ~18 months
 OUTPUT       = Path(__file__).parents[2] / "docs" / "assets" / "availability.json"
 PRICES_JSON  = Path(__file__).parents[2] / "docs" / "data" / "prices.json"
-DEBUG_DIR    = Path(__file__).parents[2] / "docs" / "assets" / "ical-debug"
+DEBUG = os.environ.get("ICAL_DEBUG", "0") not in ("0", "false", "")
 
 HEADERS = {
     "User-Agent":      "CalendarStore/6.0 (1190; OS X 14.4) dataaccessd/1.0",
@@ -52,19 +52,19 @@ def fetch_ical(url: str, debug_path: Path | None = None) -> tuple[list[dict], st
 
         raw_text = resp.text
 
-        # Save raw iCal for debugging
-        if debug_path:
-            debug_path.parent.mkdir(parents=True, exist_ok=True)
-            debug_path.write_text(raw_text, encoding="utf-8")
-            print(f"    raw saved → {debug_path.name}")
-
-        # Print first chunk so it appears in CI logs
-        lines = raw_text.splitlines()
-        print(f"    -- raw iCal ({len(lines)} lines) --")
-        for line in lines[:60]:
-            print(f"    | {line}")
-        if len(lines) > 60:
-            print(f"    | ... ({len(lines) - 60} more lines)")
+        if DEBUG:
+            debug_dir = Path(__file__).parents[2] / "docs" / "assets" / "ical-debug"
+            dp = debug_dir / f"{debug_path.name}" if debug_path else None
+            if dp:
+                dp.parent.mkdir(parents=True, exist_ok=True)
+                dp.write_text(raw_text, encoding="utf-8")
+                print(f"    raw saved → {dp.name}")
+            lines = raw_text.splitlines()
+            print(f"    -- raw iCal ({len(lines)} lines) --")
+            for line in lines[:60]:
+                print(f"    | {line}")
+            if len(lines) > 60:
+                print(f"    | ... ({len(lines) - 60} more lines)")
 
         cal    = Calendar.from_ical(resp.content)
         ranges = []
@@ -221,7 +221,7 @@ def main() -> None:
                 print(f"  {apt}/{src}: not configured — skipping")
                 continue
 
-            debug_file = DEBUG_DIR / f"{apt}-{src}.ics" if os.environ.get("ICAL_DEBUG") else None
+            debug_file = Path(f"{apt}-{src}.ics") if DEBUG else None
             print(f"  {apt}/{src}: fetching…")
             raw, err = fetch_ical(url, debug_path=debug_file)
 
