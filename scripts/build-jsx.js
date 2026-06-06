@@ -17,9 +17,11 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const babel = require('@babel/core');
 
 const SRC_DIR = path.join(__dirname, '..', 'docs', 'components');
+const DOCS_DIR = path.join(__dirname, '..', 'docs');
 const PRESETS = [
   ['@babel/preset-react', { runtime: 'classic' }],
 ];
@@ -58,4 +60,25 @@ for (const file of files) {
 }
 
 console.log(`\nDone. ${ok} compiled, ${fail} failed.`);
+
+if (fail === 0) {
+  // Stamp a content hash of the compiled components into every HTML loader
+  // (?cv=…). Lets browsers cache component JS (the big payload) while still
+  // busting on deploy. Data JSON keeps its own no-store fetch untouched.
+  const hash = crypto.createHash('md5');
+  for (const file of fs.readdirSync(SRC_DIR).filter(f => f.endsWith('.js')).sort()) {
+    hash.update(fs.readFileSync(path.join(SRC_DIR, file)));
+  }
+  const cv = hash.digest('hex').slice(0, 10);
+
+  let stamped = 0;
+  for (const html of fs.readdirSync(DOCS_DIR).filter(f => f.endsWith('.html'))) {
+    const p = path.join(DOCS_DIR, html);
+    const before = fs.readFileSync(p, 'utf8');
+    const after = before.replace(/\?cv=[a-z0-9]*/g, '?cv=' + cv);
+    if (after !== before) { fs.writeFileSync(p, after); stamped++; }
+  }
+  console.log(`Component version cv=${cv} stamped in ${stamped} HTMLs.`);
+}
+
 process.exit(fail > 0 ? 1 : 0);
