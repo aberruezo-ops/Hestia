@@ -2247,11 +2247,11 @@ const ContractTab = ({
           sx = (img.naturalWidth - sw) / 2;
         } else {
           // narrower than target ratio: use full width, crop vertically
-          // at 35% from top (avoids ceiling, shows the room interior)
+          // at 15% from top — enough to skip plain ceiling while keeping room interior
           sw = img.naturalWidth;
           sh = sw / tgtAR;
           sx = 0;
-          sy = Math.max(0, (img.naturalHeight - sh) * 0.35);
+          sy = Math.max(0, (img.naturalHeight - sh) * 0.15);
         }
         ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
         resolve(c.toDataURL('image/jpeg', 0.92));
@@ -2330,7 +2330,7 @@ const ContractTab = ({
     margin: 0; padding: 0; background: #fff;
   }
   #pdf-content { background: #fff; }
-  #contract-body { padding: 5mm 16mm 8mm; }
+  #contract-body { padding: 8mm 16mm 14mm; }
 
   /* ── Hero (primera página) ───────────────────────────── */
   .hero {
@@ -2528,8 +2528,8 @@ const ContractTab = ({
 </div>
 
 <div id="pdf-content">
-<!-- Spacer for page-1 hero: bar(18mm) + hero(65mm) − MARG_TOP(30mm) = 53mm -->
-<div style="height:53mm;line-height:0;font-size:0"> </div>
+<!-- Spacer for page-1 hero: bar(18mm) + hero(65mm) − MARG_TOP(30mm) + 3mm buffer = 56mm -->
+<div style="height:56mm;line-height:0;font-size:0"> </div>
 <div id="contract-body">
 
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
