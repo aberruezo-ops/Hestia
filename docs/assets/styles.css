@@ -1535,7 +1535,7 @@ section {
 .btn-ghost-light:hover { background: var(--arena); color: var(--ber-dk); }
 .btn-ghost-dark { color: var(--ber); border-color: var(--ber); }
 .btn-ghost-dark:hover { background: var(--ber); color: var(--crema); }
-.btn .arrow { transition: transform .3s; }
+.btn .arrow { transition: transform var(--dur-base) var(--ease-out); }
 @media (hover: hover) and (pointer: fine) {
   .btn:hover .arrow { transform: translateX(4px); }
 }
@@ -3201,7 +3201,7 @@ body.apt-bar-shown .cookies {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--sol-lt);
-  opacity: 0.72;
+  opacity: 0.95;
   margin-bottom: 6px;
   padding-bottom: 14px;
 }
@@ -3218,7 +3218,7 @@ body.apt-bar-shown .cookies {
   font-family: var(--serif);
   font-size: 22px;
   font-style: italic;
-  opacity: 0.55;
+  opacity: 0.75;
   font-weight: 300;
 }
 .manifest .principle .p-text {
@@ -3234,7 +3234,7 @@ body.apt-bar-shown .cookies {
   font-style: italic;
   font-size: clamp(16px, 1.3vw, 20px);
   line-height: 1.5;
-  opacity: 0.7;
+  opacity: 0.88;
   max-width: 44ch;
 }
 
@@ -3333,14 +3333,17 @@ body.apt-bar-shown .cookies {
   border-radius: 10px 0 10px 0;
   text-align: left;
   border-top: 3px solid var(--ber);
-  transition: transform .4s, box-shadow .4s;
+  transition: transform var(--dur-slow, .4s) var(--ease-out), box-shadow var(--dur-slow, .4s) var(--ease-out);
   transform: translateZ(0);
   will-change: transform;
 }
-.rating-card:hover {
-  transform: translateY(-4px) translateZ(0);
-  box-shadow: 0 20px 50px rgba(42,15,46,0.1);
+@media (hover: hover) and (pointer: fine) {
+  .rating-card:hover {
+    transform: translateY(-4px) translateZ(0);
+    box-shadow: 0 20px 50px rgba(42,15,46,0.1);
+  }
 }
+.rating-card:active { transform: translateY(0) scale(0.98) translateZ(0); }
 .rating-card .platform {
   font-family: var(--sans); font-weight: 500; font-size: 12px;
   letter-spacing: 0.24em; text-transform: uppercase; opacity: 0.75;
@@ -3357,7 +3360,7 @@ body.apt-bar-shown .cookies {
 }
 .rating-card .score-max {
   font-family: var(--sans); font-size: 12px;
-  opacity: 0.5; margin-left: 4px;
+  opacity: 0.75; margin-left: 4px;
 }
 .rating-card .desc {
   margin-top: 16px;
@@ -3386,7 +3389,7 @@ body.apt-bar-shown .cookies {
   font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
-  opacity: 0.55;
+  opacity: 0.75;
 }
 
 /* ============================================================
@@ -3565,10 +3568,10 @@ footer::before {
 footer h5 {
   font-family: var(--sans); font-weight: 500; font-size: 12px;
   letter-spacing: 0.22em; text-transform: uppercase;
-  opacity: 0.75;
+  opacity: 0.90;
   margin: 0 0 18px;
 }
-footer .col ul { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 2.1; opacity: 0.8; }
+footer .col ul { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 2.1; opacity: 0.88; }
 footer .col a:hover { color: var(--sol-lt); }
 /* Botón estilizado como enlace para "Revisar consentimiento" */
 .footer-linklike {
@@ -3580,11 +3583,11 @@ footer .col a:hover { color: var(--sol-lt); }
 footer .footer-brand .hestia-logo { height: 32px; width: auto; margin-bottom: 14px; }
 footer .footer-brand .tagline {
   font-family: var(--serif); font-style: italic;
-  font-size: 15px; opacity: 0.75; max-width: 26ch;
+  font-size: 15px; opacity: 0.88; max-width: 26ch;
   line-height: 1.5;
 }
 footer .footer-brand .addr {
-  margin-top: 24px; font-size: 12px; opacity: 0.6; line-height: 1.7;
+  margin-top: 24px; font-size: 12px; opacity: 0.75; line-height: 1.7;
 }
 .footer-social {
   display: flex; gap: 14px; margin-top: 20px; align-items: center;
@@ -3599,7 +3602,7 @@ footer .footer-brand .addr {
 .footer-social a:hover { color: var(--sol-lt); border-color: var(--sol-lt); }
 .footer-social-cta {
   margin-top: 12px; font-size: 11px; letter-spacing: 0.1em;
-  text-transform: uppercase; opacity: 0.45;
+  text-transform: uppercase; opacity: 0.70;
 }
 .footer-bottom {
   position: relative;
@@ -3607,7 +3610,7 @@ footer .footer-brand .addr {
   max-width: 1400px; margin: 30px auto 0;
   display: flex; justify-content: space-between; align-items: center; gap: 24px;
   font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-  opacity: 0.5; flex-wrap: wrap;
+  opacity: 0.70; flex-wrap: wrap;
 }
 .footer-bottom .licences { font-family: var(--serif); font-style: italic; text-transform: none; letter-spacing: 0.04em; }
 
@@ -3632,7 +3635,7 @@ footer .footer-brand .addr {
   font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(240,232,213,0.45);
+  color: rgba(240,232,213,0.72);
   margin-bottom: 22px;
 }
 .avail-dot {
@@ -3733,7 +3736,7 @@ footer .footer-brand .addr {
   font-family: var(--serif);
   font-size: 17px;
   font-weight: 300;
-  color: rgba(240,232,213,.7);
+  color: rgba(240,232,213,.88);
   letter-spacing: 0.05em;
   min-width: 260px;
   text-align: center;
@@ -4190,6 +4193,9 @@ a.asb-cta,
   flex-shrink: 0;
   white-space: nowrap;
   text-decoration: none !important;
+  transition: background-color var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
 }
 a.asb-cta:hover,
 .asb-cta:hover {
@@ -4250,6 +4256,8 @@ body[data-apt="salinas"]  .ag-nav-btn-primary {
   border: 1px solid rgba(240, 232, 213, 0.22) !important;
   animation: aptCtaFlow 9s ease-in-out infinite;
   background-size: 220% 220% !important;
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
 }
 /* Mar — olivo metálico */
 [data-apt="mar"]      .asb-cta,
@@ -4390,6 +4398,24 @@ body[data-apt="salinas"]  .ag-nav-btn-primary:hover {
     inset 0 1px 0 rgba(255, 255, 255, 0.48),
     inset 0 -1px 0 rgba(0, 0, 0, 0.25),
     0 10px 32px var(--apt-glow, rgba(58, 170, 187, 0.65)) !important;
+}
+/* Active — press feedback */
+[data-apt="mar"]      .asb-cta:active,
+[data-apt="thalassa"] .asb-cta:active,
+[data-apt="salinas"]  .asb-cta:active,
+body[data-apt="mar"]      a.apt-page-reserve-btn:active,
+body[data-apt="thalassa"] a.apt-page-reserve-btn:active,
+body[data-apt="salinas"]  a.apt-page-reserve-btn:active,
+body[data-apt="mar"]      .widget-cta:active,
+body[data-apt="thalassa"] .widget-cta:active,
+body[data-apt="salinas"]  .widget-cta:active,
+body[data-apt="mar"]      .ads-btn:active,
+body[data-apt="thalassa"] .ads-btn:active,
+body[data-apt="salinas"]  .ads-btn:active,
+body[data-apt="mar"]      .ag-nav-btn-primary:active,
+body[data-apt="thalassa"] .ag-nav-btn-primary:active,
+body[data-apt="salinas"]  .ag-nav-btn-primary:active {
+  transform: translateY(0) scale(0.97);
 }
 
 @keyframes aptCtaFlow {
@@ -6568,10 +6594,11 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   text-decoration: none;
   transition: transform var(--dur-liquid) var(--ease-liquid);
 }
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .apt-other-card { -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
   .apt-other-card:hover { -webkit-transform: translateY(-6px) translateZ(0); transform: translateY(-6px) translateZ(0); }
 }
+.apt-other-card:active { transform: scale(0.97) translateZ(0); }
 .apt-other-img {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
@@ -10021,6 +10048,121 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   line-height: 1.7;
   margin: 0;
   opacity: 0.85;
+}
+
+/* ── Territory section header + view toggle ── */
+.noticias-terr-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.noticias-terr-header .noticias-terr-title {
+  margin-bottom: 0;
+}
+.noticias-view-toggle {
+  display: flex;
+  gap: 0;
+  border: 1.5px solid rgba(61,26,53,.18);
+  border-radius: 10px 0 10px 0;
+  overflow: hidden;
+  flex-shrink: 0;
+  align-self: flex-end;
+}
+.noticias-view-btn {
+  padding: 9px 20px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ber);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.noticias-view-btn + .noticias-view-btn {
+  border-left: 1.5px solid rgba(61,26,53,.18);
+}
+.noticias-view-btn:hover {
+  background: rgba(61,26,53,.06);
+}
+.noticias-view-btn.active {
+  background: var(--ber);
+  color: var(--crema);
+}
+
+/* ── By-month view ── */
+.noticias-mes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 48px;
+}
+.noticias-mes-col {
+  border-top: 2px solid var(--ber);
+  padding-top: 24px;
+}
+.noticias-mes-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.noticias-mes-name {
+  font-family: var(--serif);
+  font-size: clamp(20px, 2.2vw, 28px);
+  font-weight: 300;
+  color: var(--ber-dk);
+}
+.noticias-mes-count {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: rgba(61,26,53,.45);
+  text-transform: uppercase;
+}
+
+/* Zone badge shown in by-month view */
+.noticias-article-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+.noticias-article-meta .noticias-tag {
+  margin-bottom: 0;
+}
+.noticias-zone-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(61,26,53,.5);
+  white-space: nowrap;
+}
+.noticias-zone-icon {
+  font-size: 12px;
+  line-height: 1;
+}
+
+@media (max-width: 900px) {
+  .noticias-mes-grid { grid-template-columns: 1fr; gap: 40px 0; }
+  .noticias-mes-col { border-top-width: 2px; }
+}
+@media (max-width: 640px) {
+  .noticias-terr-header { align-items: flex-start; }
+  .noticias-view-toggle { align-self: flex-start; }
+  .noticias-view-btn { padding: 8px 16px; font-size: 12px; }
 }
 
 /* Próxima edición */
@@ -13888,9 +14030,12 @@ footer,
   z-index: 1;
   display: flex; align-items: center; justify-content: center;
   padding-bottom: 4px;
-  transition: background .25s ease, transform .15s var(--ease-out, ease);
+  transition: background var(--dur-base) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
-.ads-min:hover { background: var(--ber); transform: scale(1.06); }
+@media (hover: hover) and (pointer: fine) {
+  .ads-min:hover { background: var(--ber); transform: scale(1.06); }
+}
+.ads-min:active { transform: scale(0.94); }
 
 /* Estado minimizado: pill flotante a la derecha que restaura al pulsarse */
 .apt-desktop-sidebar-mini {
@@ -14112,9 +14257,12 @@ footer,
   z-index: 1;
   display: flex; align-items: center; justify-content: center;
   padding-bottom: 3px;
-  transition: background .25s ease, transform .15s var(--ease-out, ease);
+  transition: background var(--dur-base) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
-.widget-min-btn:hover { background: var(--ber); transform: scale(1.06); }
+@media (hover: hover) and (pointer: fine) {
+  .widget-min-btn:hover { background: var(--ber); transform: scale(1.06); }
+}
+.widget-min-btn:active { transform: scale(0.94); }
 
 /* Eyebrow + título dentro del card. */
 .widget-card .eyebrow {
@@ -14674,13 +14822,16 @@ body.apt-bar-shown .widget-stack {
   font-family: var(--sans);
   text-align: left;
   cursor: pointer;
-  transition: background .25s ease, border-color .25s ease, transform .15s ease;
+  transition: background var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
-.ga-apt-card:hover {
-  background: color-mix(in srgb, var(--ga-accent) 16%, var(--crema));
-  border-color: var(--ga-accent);
-  transform: translateX(2px);
+@media (hover: hover) and (pointer: fine) {
+  .ga-apt-card:hover {
+    background: color-mix(in srgb, var(--ga-accent) 16%, var(--crema));
+    border-color: var(--ga-accent);
+    transform: translateX(2px);
+  }
 }
+.ga-apt-card:active { transform: scale(0.98); }
 .ga-apt-star {
   display: inline-flex; align-items: center; justify-content: center;
   width: 28px; height: 28px;
@@ -15228,12 +15379,19 @@ a.cta-wa-btn,
   border: 0 !important;
   font-weight: 700 !important;
   box-shadow: 0 4px 18px rgba(58,170,187,.35);
+  transition: background-color var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
 }
 a.cta-wa-btn:hover,
 .contact-cta a.cta-wa-btn:hover {
   background-color: #6FC4D1 !important;
   color: #2A0F2E !important;
   box-shadow: 0 6px 22px rgba(58,170,187,.5);
+}
+a.cta-wa-btn:active,
+.contact-cta a.cta-wa-btn:active {
+  transform: scale(0.97) !important;
 }
 a.cta-wa-btn::before,
 .contact-cta a.cta-wa-btn::before { display: none !important; }
@@ -21195,11 +21353,14 @@ img[src*="apt-vt-gallery-"] {
   padding: 13px 22px;
   border-radius: 8px 0 8px 0;
   text-decoration: none;
-  transition: background .14s, transform .12s;
+  transition: background var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
   box-shadow: 0 4px 16px rgba(200,122,69,.35);
   align-self: flex-start;
 }
-.lss-cta:hover { background: #A85E2E; transform: translateY(-1px); }
+.lss-cta:hover { background: #A85E2E; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,122,69,.5); }
+.lss-cta:active { transform: translateY(0) scale(0.97); }
 
 /* ── Long-stay nudge in home search ─────────────────────────── */
 .hs-longstay-nudge {
@@ -21554,9 +21715,11 @@ img[src*="apt-vt-gallery-"] {
   flex-direction: column;
   gap: 8px;
   text-decoration: none;
-  transition: box-shadow .14s, transform .12s;
+  transition: box-shadow var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
 }
 .lsl-apt-card:hover { box-shadow: 0 6px 20px rgba(42,15,46,.10); transform: translateY(-2px); }
+.lsl-apt-card:active { transform: scale(0.98); }
 .lsl-apt-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--lsl-accent, #3AAABB); }
 .lsl-apt-name { font-size: 12px; font-weight: 700; letter-spacing: .1em; color: var(--ber, #2A0F2E); }
 .lsl-apt-concept { font-size: 13px; color: var(--ink-soft, #7A5A72); line-height: 1.45; flex: 1; }
@@ -21593,13 +21756,13 @@ img[src*="apt-vt-gallery-"] {
   background: white;
 }
 
-/* CTA */
-.lsl-cta { background: linear-gradient(135deg, var(--ber-dk, #1A0820), var(--ber, #2A0F2E)); }
+/* CTA — specificity must beat .lsl-section:nth-child(even) (0,2,0) */
+.lsl-section.lsl-cta { background: linear-gradient(135deg, var(--ber-dk, #1A0820), var(--ber, #2A0F2E)); }
 .lsl-cta-inner { text-align: center; }
-.lsl-cta .lsl-h2 { color: white; }
+.lsl-section.lsl-cta .lsl-h2 { color: white; }
 .lsl-cta-body { font-size: 15px; color: rgba(255,255,255,.65); margin-bottom: 28px; line-height: 1.6; }
 .lsl-cta-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
-.lsl-cta .lsl-btn-ghost { color: rgba(255,255,255,.65); }
+.lsl-section.lsl-cta .lsl-btn-ghost { color: rgba(255,255,255,.65); }
 
 /* ── LsSearch — disponibilidad larga estancia ───────────────── */
 .lsl-search-dark {

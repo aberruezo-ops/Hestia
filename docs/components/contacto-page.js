@@ -291,7 +291,7 @@ const ContactoAddress = ({
     href: "thalassa.html"
   }, "Hest\xEDa Thalassa")), /*#__PURE__*/React.createElement("span", {
     className: "cl-vs"
-  }, "VTF/AL/07056 \xB7 ", /*#__PURE__*/React.createElement("a", {
+  }, "VFT/AL/07056 \xB7 ", /*#__PURE__*/React.createElement("a", {
     href: "salinas.html"
   }, "Hest\xEDa Salinas")))), /*#__PURE__*/React.createElement("div", {
     className: "contacto-book-cta"
