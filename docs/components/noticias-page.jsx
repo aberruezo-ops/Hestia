@@ -45,6 +45,7 @@ const NOTICIAS = {
   ],
 
   // ── Noticias del territorio ───────────────────────────────────
+  // months: array of month numbers (6=Jun, 7=Jul, 8=Aug) when the event/content is relevant.
   territorio: [
     {
       cat:  { es: 'Vera Playa & alrededores', en: 'Vera Playa & surroundings' },
@@ -52,6 +53,7 @@ const NOTICIAS = {
       accent: 'var(--sol)',
       articles: [
         {
+          months: [6],
           tag:    { es: 'Tradición',     en: 'Tradition'    },
           titulo: { es: 'Noche de San Juan — hogueras en la playa el 23 de junio', en: 'Midsummer Night — bonfires on the beach, 23 June' },
           cuerpo: {
@@ -60,14 +62,16 @@ const NOTICIAS = {
           },
         },
         {
+          months: [6, 7],
           tag:    { es: 'Mar',           en: 'Sea'          },
           titulo: { es: 'El agua llega a 22°C — empieza la temporada de snorkel', en: 'Sea temperature hits 22°C — snorkel season begins' },
           cuerpo: {
-            es: 'Con el agua sobre los 22 grados, las calas de Cala del Cuervo y Los Cocedores (a 15 km por carretera costera) se vuelven practicables para el snorkel sin traje. Posidonia oceánica, peces piedra, sepias y pulpos pequeños. Lleva gafas y tubo — las aletas son optativas.',
-            en: 'With sea temperatures above 22°C, the coves at Cala del Cuervo and Los Cocedores (15km along the coast road) become practical for wetsuit-free snorkelling. Posidonia meadows, scorpionfish, cuttlefish and small octopus. Bring mask and snorkel — fins optional.',
+            es: 'Con el agua sobre los 22 grados, las calas de Cala del Cuervo y Los Cocederos (a 15 km por carretera costera) se vuelven practicables para el snorkel sin traje. Posidonia oceánica, peces piedra, sepias y pulpos pequeños. Lleva gafas y tubo — las aletas son optativas.',
+            en: 'With sea temperatures above 22°C, the coves at Cala del Cuervo and Los Cocederos (15km along the coast road) become practical for wetsuit-free snorkelling. Posidonia meadows, scorpionfish, cuttlefish and small octopus. Bring mask and snorkel — fins optional.',
           },
         },
         {
+          months: [6, 7, 8],
           tag:    { es: 'Mercado',       en: 'Market'       },
           titulo: { es: 'Mercado nocturno de Vera pueblo — viernes y sábados desde las 21h', en: 'Vera village night market — Fridays and Saturdays from 9pm' },
           cuerpo: {
@@ -83,6 +87,7 @@ const NOTICIAS = {
       accent: 'var(--vm)',
       articles: [
         {
+          months: [6],
           tag:    { es: 'Naturaleza',    en: 'Nature'       },
           titulo: { es: 'Cabo de Gata en junio — última ventana antes del calor extremo', en: 'Cabo de Gata in June — last window before the heat' },
           cuerpo: {
@@ -91,6 +96,7 @@ const NOTICIAS = {
           },
         },
         {
+          months: [6],
           tag:    { es: 'Cultura',       en: 'Culture'      },
           titulo: { es: 'Almería de Escena — teatro en los Reales Alcázares, todo junio', en: 'Almería on Stage — theatre in the Royal Alcazar, all June' },
           cuerpo: {
@@ -99,6 +105,7 @@ const NOTICIAS = {
           },
         },
         {
+          months: [7],
           tag:    { es: 'Conciertos',    en: 'Concerts'     },
           titulo: { es: 'Siente la Plaza 2026 — Chayanne, Mónica Naranjo y Carlos Rivera en la Plaza de Toros de Almería', en: 'Siente la Plaza 2026 — Chayanne, Mónica Naranjo and Carlos Rivera at Almería bullring' },
           cuerpo: {
@@ -107,6 +114,7 @@ const NOTICIAS = {
           },
         },
         {
+          months: [8],
           tag:    { es: 'Festival',      en: 'Festival'     },
           titulo: { es: 'Cooltural Fest — David Bisbal, Hombres G y Rigoberta Bandini del 20 al 23 de agosto', en: 'Cooltural Fest — David Bisbal, Hombres G and Rigoberta Bandini, 20–23 August' },
           cuerpo: {
@@ -115,6 +123,7 @@ const NOTICIAS = {
           },
         },
         {
+          months: [8],
           tag:    { es: 'Festival',      en: 'Festival'     },
           titulo: { es: 'The Juergas Rock Festival — Pendulum, Celtas Cortos y ska-punk en Adra del 5 al 8 de agosto', en: 'The Juergas Rock Festival — Pendulum, Celtas Cortos and ska-punk in Adra, 5–8 August' },
           cuerpo: {
@@ -130,6 +139,7 @@ const NOTICIAS = {
       accent: 'var(--vt)',
       articles: [
         {
+          months: [6, 7],
           tag:    { es: 'Festival',      en: 'Festival'     },
           titulo: { es: 'Festival Internacional de Música y Danza de Granada — junio y julio en el Generalife', en: 'Granada International Music and Dance Festival — June and July in the Generalife' },
           cuerpo: {
@@ -138,6 +148,7 @@ const NOTICIAS = {
           },
         },
         {
+          months: [6],
           tag:    { es: 'Gastronomía',   en: 'Food'         },
           titulo: { es: 'Tomate Huevo de Toro de Almería — la cosecha llega a los mercados', en: 'Almería\'s Huevo de Toro tomato — the harvest hits the markets' },
           cuerpo: {
@@ -146,6 +157,7 @@ const NOTICIAS = {
           },
         },
         {
+          months: [8],
           tag:    { es: 'Playa',         en: 'Beach'        },
           titulo: { es: 'Carreras de caballos en la playa de Sanlúcar de Barrameda — ya hay fechas para agosto', en: 'Horse racing on Sanlúcar de Barrameda beach — August dates announced' },
           cuerpo: {
@@ -161,6 +173,7 @@ const NOTICIAS = {
       accent: 'var(--vs-dk)',
       articles: [
         {
+          months: [6],
           tag:    { es: 'Tradición',     en: 'Tradition'    },
           titulo: { es: 'Noche de San Juan en Águilas — la mayor hoguera del Mediterráneo español', en: 'Midsummer Night in Águilas — the largest bonfire on the Spanish Mediterranean' },
           cuerpo: {
@@ -169,6 +182,7 @@ const NOTICIAS = {
           },
         },
         {
+          months: [6],
           tag:    { es: 'Música',        en: 'Music'        },
           titulo: { es: 'Festival de Jazz de Murcia — segunda quincena de junio', en: 'Murcia Jazz Festival — second half of June' },
           cuerpo: {
@@ -177,6 +191,7 @@ const NOTICIAS = {
           },
         },
         {
+          months: [7],
           tag:    { es: 'Conciertos',    en: 'Concerts'     },
           titulo: { es: 'Noches del Malecón — Suede, Romeo Santos, Prince Royce y Nicky Jam en Murcia en julio', en: 'Noches del Malecón — Suede, Romeo Santos, Prince Royce and Nicky Jam in Murcia, July' },
           cuerpo: {
@@ -185,6 +200,7 @@ const NOTICIAS = {
           },
         },
         {
+          months: [7],
           tag:    { es: 'Festival',      en: 'Festival'     },
           titulo: { es: 'La Mar de Músicas — Sílvia Pérez Cruz, Rubén Blades y Judeline en Cartagena del 17 al 25 de julio', en: 'La Mar de Músicas — Sílvia Pérez Cruz, Rubén Blades and Judeline in Cartagena, 17–25 July' },
           cuerpo: {
@@ -193,6 +209,7 @@ const NOTICIAS = {
           },
         },
         {
+          months: [8],
           tag:    { es: 'Concierto',     en: 'Concert'      },
           titulo: { es: 'Juanes en el Festival Sal de Música — 13 de agosto, San Pedro del Pinatar', en: 'Juanes at Festival Sal de Música — 13 August, San Pedro del Pinatar' },
           cuerpo: {
@@ -201,6 +218,7 @@ const NOTICIAS = {
           },
         },
         {
+          months: [7],
           tag:    { es: 'Festival',      en: 'Festival'     },
           titulo: { es: 'Fan Futura Fest — 24 y 25 de julio en Los Alcázares', en: 'Fan Futura Fest — 24–25 July in Los Alcázares' },
           cuerpo: {
@@ -209,6 +227,7 @@ const NOTICIAS = {
           },
         },
         {
+          months: [6, 7, 8],
           tag:    { es: 'Verano',        en: 'Summer'       },
           titulo: { es: 'Cala Cortina, Cartagena — la piscina natural del Mediterráneo', en: 'Cala Cortina, Cartagena — the Mediterranean\'s natural pool' },
           cuerpo: {
@@ -219,6 +238,12 @@ const NOTICIAS = {
       ],
     },
   ],
+};
+
+const MONTH_NAMES = {
+  6: { es: 'Junio',  en: 'June'   },
+  7: { es: 'Julio',  en: 'July'   },
+  8: { es: 'Agosto', en: 'August' },
 };
 
 // ── Histórico de ediciones ────────────────────────────────────────
@@ -372,8 +397,41 @@ const ArticleCard = ({ article, lang }) => (
   </div>
 );
 
+// Article card variant for by-month view: includes zone badge
+const ArticleCardWithZone = ({ article, cat, lang }) => (
+  <div className="noticias-article" style={{ '--cat-accent': cat.accent }}>
+    <div className="noticias-article-meta">
+      <span className="noticias-tag">{article.tag[lang]}</span>
+      <span className="noticias-zone-badge">
+        <span className="noticias-zone-icon">{cat.icon}</span>
+        {cat.cat[lang]}
+      </span>
+    </div>
+    <h3 className="noticias-titulo">{article.titulo[lang]}</h3>
+    <p className="noticias-cuerpo">{article.cuerpo[lang]}</p>
+  </div>
+);
+
 const NoticiasPage = ({ lang }) => {
   const N = NOTICIAS;
+  const [terrView, setTerrView] = React.useState('zona'); // 'zona' | 'mes'
+
+  // Build by-month index: month → [{article, cat}]
+  const byMonth = React.useMemo(() => {
+    const map = {};
+    N.territorio.forEach(cat => {
+      cat.articles.forEach(a => {
+        (a.months || []).forEach(m => {
+          if (!map[m]) map[m] = [];
+          map[m].push({ article: a, cat });
+        });
+      });
+    });
+    return Object.entries(map)
+      .sort((a, b) => Number(a[0]) - Number(b[0]))
+      .map(([m, items]) => ({ month: Number(m), items }));
+  }, []);
+
   return (
     <>
       {/* ── Hero ── */}
@@ -433,29 +491,72 @@ const NoticiasPage = ({ lang }) => {
       {/* ── Noticias del territorio ── */}
       <section className="noticias-territorio section-cream">
         <div className="container">
-          <div className="eyebrow noticias-terr-eyebrow">
-            {lang === 'es' ? 'Noticias del territorio' : 'Territory news'}
-          </div>
-          <h2 className="noticias-terr-title">
-            {lang === 'es'
-              ? <>Qué pasa este mes<br/><em>a tu alrededor</em></>
-              : <>{"What's happening this month"}<br/><em>around you</em></>}
-          </h2>
-          <div className="noticias-terr-grid">
-            {N.territorio.map((cat, ci) => (
-              <div key={ci} className="noticias-cat" style={{ '--cat-accent': cat.accent }}>
-                <div className="noticias-cat-head">
-                  <span className="noticias-cat-icon">{cat.icon}</span>
-                  <h3 className="noticias-cat-name">{cat.cat[lang]}</h3>
-                </div>
-                <div className="noticias-articles">
-                  {cat.articles.map((a, ai) => (
-                    <ArticleCard key={ai} article={a} lang={lang} />
-                  ))}
-                </div>
+          <div className="noticias-terr-header">
+            <div>
+              <div className="eyebrow noticias-terr-eyebrow">
+                {lang === 'es' ? 'Noticias del territorio' : 'Territory news'}
               </div>
-            ))}
+              <h2 className="noticias-terr-title">
+                {lang === 'es'
+                  ? <>Qué pasa este mes<br/><em>a tu alrededor</em></>
+                  : <>{"What's happening this month"}<br/><em>around you</em></>}
+              </h2>
+            </div>
+            <div className="noticias-view-toggle" role="group" aria-label={lang === 'es' ? 'Vista' : 'View'}>
+              <button
+                type="button"
+                className={`noticias-view-btn${terrView === 'zona' ? ' active' : ''}`}
+                onClick={() => setTerrView('zona')}
+              >
+                {lang === 'es' ? 'Por zona' : 'By area'}
+              </button>
+              <button
+                type="button"
+                className={`noticias-view-btn${terrView === 'mes' ? ' active' : ''}`}
+                onClick={() => setTerrView('mes')}
+              >
+                {lang === 'es' ? 'Por mes' : 'By month'}
+              </button>
+            </div>
           </div>
+
+          {terrView === 'zona' ? (
+            <div className="noticias-terr-grid">
+              {N.territorio.map((cat, ci) => (
+                <div key={ci} className="noticias-cat" style={{ '--cat-accent': cat.accent }}>
+                  <div className="noticias-cat-head">
+                    <span className="noticias-cat-icon">{cat.icon}</span>
+                    <h3 className="noticias-cat-name">{cat.cat[lang]}</h3>
+                  </div>
+                  <div className="noticias-articles">
+                    {cat.articles.map((a, ai) => (
+                      <ArticleCard key={ai} article={a} lang={lang} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="noticias-mes-grid">
+              {byMonth.map(({ month, items }) => (
+                <div key={month} className="noticias-mes-col">
+                  <div className="noticias-mes-head">
+                    <span className="noticias-mes-name">{MONTH_NAMES[month][lang]}</span>
+                    <span className="noticias-mes-count">
+                      {items.length} {lang === 'es'
+                        ? (items.length === 1 ? 'evento' : 'eventos')
+                        : (items.length === 1 ? 'event' : 'events')}
+                    </span>
+                  </div>
+                  <div className="noticias-articles">
+                    {items.map((entry, i) => (
+                      <ArticleCardWithZone key={i} article={entry.article} cat={entry.cat} lang={lang} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

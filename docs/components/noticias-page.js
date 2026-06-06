@@ -56,6 +56,7 @@ const NOTICIAS = {
     }
   }],
   // ── Noticias del territorio ───────────────────────────────────
+  // months: array of month numbers (6=Jun, 7=Jul, 8=Aug) when the event/content is relevant.
   territorio: [{
     cat: {
       es: 'Vera Playa & alrededores',
@@ -64,6 +65,7 @@ const NOTICIAS = {
     icon: '🔥',
     accent: 'var(--sol)',
     articles: [{
+      months: [6],
       tag: {
         es: 'Tradición',
         en: 'Tradition'
@@ -77,6 +79,7 @@ const NOTICIAS = {
         en: 'The shortest night of the year is the most celebrated on the Almería coast. Bonfires along the shore from 10pm, music and the tradition of jumping the flames to cleanse the year ahead. In Vera Playa there\'s no central organisation — it unfolds family by family, street by street, bar by bar. Bring something to burn.'
       }
     }, {
+      months: [6, 7],
       tag: {
         es: 'Mar',
         en: 'Sea'
@@ -86,10 +89,11 @@ const NOTICIAS = {
         en: 'Sea temperature hits 22°C — snorkel season begins'
       },
       cuerpo: {
-        es: 'Con el agua sobre los 22 grados, las calas de Cala del Cuervo y Los Cocedores (a 15 km por carretera costera) se vuelven practicables para el snorkel sin traje. Posidonia oceánica, peces piedra, sepias y pulpos pequeños. Lleva gafas y tubo — las aletas son optativas.',
-        en: 'With sea temperatures above 22°C, the coves at Cala del Cuervo and Los Cocedores (15km along the coast road) become practical for wetsuit-free snorkelling. Posidonia meadows, scorpionfish, cuttlefish and small octopus. Bring mask and snorkel — fins optional.'
+        es: 'Con el agua sobre los 22 grados, las calas de Cala del Cuervo y Los Cocederos (a 15 km por carretera costera) se vuelven practicables para el snorkel sin traje. Posidonia oceánica, peces piedra, sepias y pulpos pequeños. Lleva gafas y tubo — las aletas son optativas.',
+        en: 'With sea temperatures above 22°C, the coves at Cala del Cuervo and Los Cocederos (15km along the coast road) become practical for wetsuit-free snorkelling. Posidonia meadows, scorpionfish, cuttlefish and small octopus. Bring mask and snorkel — fins optional.'
       }
     }, {
+      months: [6, 7, 8],
       tag: {
         es: 'Mercado',
         en: 'Market'
@@ -111,6 +115,7 @@ const NOTICIAS = {
     icon: '🌿',
     accent: 'var(--vm)',
     articles: [{
+      months: [6],
       tag: {
         es: 'Naturaleza',
         en: 'Nature'
@@ -124,6 +129,7 @@ const NOTICIAS = {
         en: 'The natural park is walkable in June before 9am or after 7pm, before July\'s punishing heat sets in. The trail from Mesa Roldán lighthouse to Playazo de Rodalquilar is the least crowded in the whole park and has the best coastal views. Bring extra water.'
       }
     }, {
+      months: [6],
       tag: {
         es: 'Cultura',
         en: 'Culture'
@@ -137,6 +143,7 @@ const NOTICIAS = {
         en: 'Almería\'s performing arts festival fills the Royal Alcazar and its courtyard with theatre, contemporary dance and classical music. Tickets from €12, many outdoor performances free. 1h 15\' from Vera — a perfect evening out.'
       }
     }, {
+      months: [7],
       tag: {
         es: 'Conciertos',
         en: 'Concerts'
@@ -150,6 +157,7 @@ const NOTICIAS = {
         en: 'The summer concert series at Almería bullring brings top-tier acts: Chayanne (8 Jul · Bailemos Otra Vez Tour), Antonio Orozco (10 Jul), Carlos Rivera (18 Jul) and Mónica Naranjo (25 Jul). All at 10pm. 1h 15\' from Vera Playa. Tickets at sientelaplaza.com.'
       }
     }, {
+      months: [8],
       tag: {
         es: 'Festival',
         en: 'Festival'
@@ -163,6 +171,7 @@ const NOTICIAS = {
         en: 'Europe\'s most inclusive indie festival returns to Almería\'s fairground with a landmark lineup: Friday 21 (La M.O.D.A., Lori Meyers, León Benavente, Rusowsky), Saturday 22 (Hombres G, Ana Torroja, Rigoberta Bandini, La Pegatina), Sunday 23 (David Bisbal, Sidecars). Free welcome party on 20 August at Parque de las Almadrabillas. 82 artists across all stages. coolturalfest.com.'
       }
     }, {
+      months: [8],
       tag: {
         es: 'Festival',
         en: 'Festival'
@@ -184,6 +193,7 @@ const NOTICIAS = {
     icon: '🎶',
     accent: 'var(--vt)',
     articles: [{
+      months: [6, 7],
       tag: {
         es: 'Festival',
         en: 'Festival'
@@ -197,6 +207,7 @@ const NOTICIAS = {
         en: 'One of Europe\'s most important festivals, with the Alhambra and Generalife gardens as the stage. Orchestra, flamenco, ballet and contemporary dance under the stars. Granada is 2h 15\' from Vera Playa — worth a night away. Tickets sell months in advance.'
       }
     }, {
+      months: [6],
       tag: {
         es: 'Gastronomía',
         en: 'Food'
@@ -210,6 +221,7 @@ const NOTICIAS = {
         en: 'The Huevo de Toro tomato — an ancient Almería variety weighing up to 800 grams — arrives at local markets in June. This is the summer tomato, tasting exactly as a tomato should. At the Saturday market in Vera village, direct from the grower for under €2/kg.'
       }
     }, {
+      months: [8],
       tag: {
         es: 'Playa',
         en: 'Beach'
@@ -231,6 +243,7 @@ const NOTICIAS = {
     icon: '⛵',
     accent: 'var(--vs-dk)',
     articles: [{
+      months: [6],
       tag: {
         es: 'Tradición',
         en: 'Tradition'
@@ -244,6 +257,7 @@ const NOTICIAS = {
         en: 'The town of Águilas, 50km from Vera Playa, celebrates Midsummer Night with the largest bonfire on the coast: a multi-storey structure burned on El Hornillo beach. The spectacle runs from 11pm to dawn. Wear clothes you don\'t mind getting smoky.'
       }
     }, {
+      months: [6],
       tag: {
         es: 'Música',
         en: 'Music'
@@ -257,6 +271,7 @@ const NOTICIAS = {
         en: 'The Murcia jazz festival fills the Malecón gardens and Cathedral square with open-air concerts. Free entry for most performances. Murcia is 1h 30\' from Vera Playa. Combine with tapas in the Carmen quarter.'
       }
     }, {
+      months: [7],
       tag: {
         es: 'Conciertos',
         en: 'Concerts'
@@ -270,6 +285,7 @@ const NOTICIAS = {
         en: 'Murcia\'s most comprehensive summer concert series spans multiple venues with an eclectic bill: Nicky Jam (10 Jul), Suede (22 Jul), Wolfmother (23 Jul) and Romeo Santos & Prince Royce together (28 Jul). Up to 20,000 capacity. Murcia 1h 30\' from Vera Playa. lasnochesdelmalecon.com.'
       }
     }, {
+      months: [7],
       tag: {
         es: 'Festival',
         en: 'Festival'
@@ -283,6 +299,7 @@ const NOTICIAS = {
         en: '31st edition of the prestigious world music festival in Cartagena, with Ecuador as the featured country. Lineup: Sílvia Pérez Cruz, Judeline, Maria Arnal, Silvana Estrada, Carminho, Lila Downs, Rodrigo Cuevas and Rubén Blades. 45 concerts, 21 free. Cartagena 1h 15\' from Vera Playa. lamardemusicas.cartagena.es.'
       }
     }, {
+      months: [8],
       tag: {
         es: 'Concierto',
         en: 'Concert'
@@ -296,6 +313,7 @@ const NOTICIAS = {
         en: 'Juanes presents his new album JuanesTeban in his only 2026 Spanish date. The Sal de Música Festival runs 12–16 August beside the Mar Menor. San Pedro del Pinatar is 45 minutes from Vera Playa — one of the most accessible big concerts of the summer. sanpedrodelpinatar.servientradas.net.'
       }
     }, {
+      months: [7],
       tag: {
         es: 'Festival',
         en: 'Festival'
@@ -309,6 +327,7 @@ const NOTICIAS = {
         en: 'Urban and electronic music festival at Parque del Gonio in Los Alcázares, 45 minutes from Vera Playa. Sixth edition on the Mar Menor with two days of music. General tickets from €58. fanfutura.com.'
       }
     }, {
+      months: [6, 7, 8],
       tag: {
         es: 'Verano',
         en: 'Summer'
@@ -323,6 +342,20 @@ const NOTICIAS = {
       }
     }]
   }]
+};
+const MONTH_NAMES = {
+  6: {
+    es: 'Junio',
+    en: 'June'
+  },
+  7: {
+    es: 'Julio',
+    en: 'July'
+  },
+  8: {
+    es: 'Agosto',
+    en: 'August'
+  }
 };
 
 // ── Histórico de ediciones ────────────────────────────────────────
@@ -494,10 +527,55 @@ const ArticleCard = ({
 }, article.titulo[lang]), /*#__PURE__*/React.createElement("p", {
   className: "noticias-cuerpo"
 }, article.cuerpo[lang]));
+
+// Article card variant for by-month view: includes zone badge
+const ArticleCardWithZone = ({
+  article,
+  cat,
+  lang
+}) => /*#__PURE__*/React.createElement("div", {
+  className: "noticias-article",
+  style: {
+    '--cat-accent': cat.accent
+  }
+}, /*#__PURE__*/React.createElement("div", {
+  className: "noticias-article-meta"
+}, /*#__PURE__*/React.createElement("span", {
+  className: "noticias-tag"
+}, article.tag[lang]), /*#__PURE__*/React.createElement("span", {
+  className: "noticias-zone-badge"
+}, /*#__PURE__*/React.createElement("span", {
+  className: "noticias-zone-icon"
+}, cat.icon), cat.cat[lang])), /*#__PURE__*/React.createElement("h3", {
+  className: "noticias-titulo"
+}, article.titulo[lang]), /*#__PURE__*/React.createElement("p", {
+  className: "noticias-cuerpo"
+}, article.cuerpo[lang]));
 const NoticiasPage = ({
   lang
 }) => {
   const N = NOTICIAS;
+  const [terrView, setTerrView] = React.useState('zona'); // 'zona' | 'mes'
+
+  // Build by-month index: month → [{article, cat}]
+  const byMonth = React.useMemo(() => {
+    const map = {};
+    N.territorio.forEach(cat => {
+      cat.articles.forEach(a => {
+        (a.months || []).forEach(m => {
+          if (!map[m]) map[m] = [];
+          map[m].push({
+            article: a,
+            cat
+          });
+        });
+      });
+    });
+    return Object.entries(map).sort((a, b) => Number(a[0]) - Number(b[0])).map(([m, items]) => ({
+      month: Number(m),
+      items
+    }));
+  }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
     className: "page-hero noticias-hero"
   }, /*#__PURE__*/React.createElement("video", {
@@ -547,10 +625,24 @@ const NoticiasPage = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
   }, /*#__PURE__*/React.createElement("div", {
+    className: "noticias-terr-header"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow noticias-terr-eyebrow"
   }, lang === 'es' ? 'Noticias del territorio' : 'Territory news'), /*#__PURE__*/React.createElement("h2", {
     className: "noticias-terr-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Qu\xE9 pasa este mes", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "a tu alrededor")) : /*#__PURE__*/React.createElement(React.Fragment, null, "What's happening this month", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "around you"))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Qu\xE9 pasa este mes", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "a tu alrededor")) : /*#__PURE__*/React.createElement(React.Fragment, null, "What's happening this month", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "around you")))), /*#__PURE__*/React.createElement("div", {
+    className: "noticias-view-toggle",
+    role: "group",
+    "aria-label": lang === 'es' ? 'Vista' : 'View'
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `noticias-view-btn${terrView === 'zona' ? ' active' : ''}`,
+    onClick: () => setTerrView('zona')
+  }, lang === 'es' ? 'Por zona' : 'By area'), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `noticias-view-btn${terrView === 'mes' ? ' active' : ''}`,
+    onClick: () => setTerrView('mes')
+  }, lang === 'es' ? 'Por mes' : 'By month'))), terrView === 'zona' ? /*#__PURE__*/React.createElement("div", {
     className: "noticias-terr-grid"
   }, N.territorio.map((cat, ci) => /*#__PURE__*/React.createElement("div", {
     key: ci,
@@ -569,6 +661,27 @@ const NoticiasPage = ({
   }, cat.articles.map((a, ai) => /*#__PURE__*/React.createElement(ArticleCard, {
     key: ai,
     article: a,
+    lang: lang
+  })))))) : /*#__PURE__*/React.createElement("div", {
+    className: "noticias-mes-grid"
+  }, byMonth.map(({
+    month,
+    items
+  }) => /*#__PURE__*/React.createElement("div", {
+    key: month,
+    className: "noticias-mes-col"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "noticias-mes-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "noticias-mes-name"
+  }, MONTH_NAMES[month][lang]), /*#__PURE__*/React.createElement("span", {
+    className: "noticias-mes-count"
+  }, items.length, " ", lang === 'es' ? items.length === 1 ? 'evento' : 'eventos' : items.length === 1 ? 'event' : 'events')), /*#__PURE__*/React.createElement("div", {
+    className: "noticias-articles"
+  }, items.map((entry, i) => /*#__PURE__*/React.createElement(ArticleCardWithZone, {
+    key: i,
+    article: entry.article,
+    cat: entry.cat,
     lang: lang
   })))))))), /*#__PURE__*/React.createElement(NoticiasArchivo, {
     lang: lang

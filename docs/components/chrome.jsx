@@ -699,7 +699,7 @@ const Footer = ({ lang }) => {
       <FooterNewsletter lang={lang} />
       <div className="footer-bottom">
         <div>© {new Date().getFullYear()} HESTÍA YOUR HOME · Alex Berruezo & Fran Moral</div>
-        <div className="licences">VFT/AL/01580 · VFT/AL/05535 · VTF/AL/07056</div>
+        <div className="licences">VFT/AL/01580 · VFT/AL/05535 · VFT/AL/07056</div>
       </div>
     </footer>
   );
