@@ -147,7 +147,7 @@ const Hero = ({ lang, onScrollDown }) => {
           <span className="hero-proof-item">★ 10 <span className="hero-proof-name">Thalassa</span></span>
           <span className="hero-proof-dot"/>
           <span className="hero-proof-item">★ 9.9 <span className="hero-proof-name">Salinas</span></span>
-          <span className="hero-proof-platform">{lang === 'es' ? 'Media · Booking · Airbnb · web' : 'Average · Booking · Airbnb · site'}</span>
+          <span className="hero-proof-platform">{lang === 'es' ? 'Media en Booking · Airbnb · web — +600 familias desde 2016' : 'Average across Booking · Airbnb · site — 600+ families since 2016'}</span>
         </div>
         {(() => {
           const prices = typeof HESTIA_PRICES !== 'undefined' ? HESTIA_PRICES : null;

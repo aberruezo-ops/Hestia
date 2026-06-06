@@ -60,7 +60,7 @@ const RESERVAS_COPY = {
     note: 'Al pulsar se abrirá WhatsApp con tu solicitud. Alex o Fran te responden en menos de 24 horas.',
     aside_title: 'Tu solicitud llega a:',
     guarantee_title: 'Reserva directa',
-    guarantee_items: ['Precio directo siempre mejor que cualquier plataforma', 'Sin comisiones de intermediarios', 'Alex o Fran responden personalmente', 'Confirmación en menos de 24 horas', 'Flexibilidad real en cambios y cancelaciones']
+    guarantee_items: ['Precio directo siempre mejor que cualquier plataforma', 'Reservando directo te ahorras desde un 10 %', 'Alex o Fran responden personalmente', 'Confirmación en menos de 24 horas', 'Flexibilidad real en cambios y cancelaciones']
   },
   en: {
     eyebrow: 'Direct price always better than Booking or Airbnb · No middlemen',
@@ -117,7 +117,7 @@ const RESERVAS_COPY = {
     note: 'Clicking will open WhatsApp with your request. Alex or Fran will reply within 24 hours.',
     aside_title: 'Your request goes to:',
     guarantee_title: 'Direct booking',
-    guarantee_items: ['Direct price always better than any platform', 'No platform commissions', 'Alex or Fran reply personally', 'Confirmation within 24 hours', 'Real flexibility on changes and cancellations']
+    guarantee_items: ['Direct price always better than any platform', 'Book direct and save from 10%', 'Alex or Fran reply personally', 'Confirmation within 24 hours', 'Real flexibility on changes and cancellations']
   }
 };
 const _resExtrasList = () => {
@@ -1303,7 +1303,9 @@ const ReservasAside = ({
     className: "rg-title"
   }, t.guarantee_title), /*#__PURE__*/React.createElement("p", {
     className: "rg-lede"
-  }, lang === 'es' ? 'Precio directo siempre mejor que Booking o Airbnb · sin comisiones · respuesta humana en menos de 24 h.' : 'Direct price always better than Booking or Airbnb · no commissions · human reply within 24 h.'), /*#__PURE__*/React.createElement("button", {
+  }, lang === 'es' ? 'Reservando directo te ahorras desde un 10 %: mejor precio que Booking o Airbnb, sin comisiones y con respuesta humana en menos de 24 h.' : 'Book direct and save from 10%: better price than Booking or Airbnb, no commissions and a human reply within 24 h.'), /*#__PURE__*/React.createElement("p", {
+    className: "rg-disclaimer"
+  }, lang === 'es' ? '* El ahorro exacto depende del programa de cada plataforma y de ofertas puntuales; por eso indicamos «desde un 10 %».' : '* The exact saving depends on each platform’s program and occasional offers; that’s why we say "from 10%".'), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "rg-cta",
     onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks')),

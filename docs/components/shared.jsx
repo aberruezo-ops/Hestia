@@ -2405,7 +2405,7 @@ Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrol
 const DIRECT_PERKS = {
   es: [
     { id:'precio',    icon:'💰', stat:'✓',       t:'Mejoramos cualquier precio.',                     d:'Nuestro precio directo es siempre mejor que cualquier plataforma — sin excepciones, sin letra pequeña.' },
-    { id:'comision',  icon:'🚫', stat:'0%',      t:'Sin comisiones de plataforma.',                   d:'Las OTAs se quedan una comisión por cada reserva. Reservando directamente, ese coste no existe — pagas el precio real, no el inflado por intermediarios.' },
+    { id:'comision',  icon:'🚫', stat:'−10%',    t:'Reservando directo te ahorras desde un 10 %.',    d:'Las plataformas como Booking o Airbnb añaden comisiones y cargos de servicio que aquí no existen: pagas el precio real, no el inflado por intermediarios. El ahorro exacto depende del programa de cada plataforma y de ofertas puntuales — por eso decimos «desde un 10 %».' },
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Respuesta humana, no un bot.',                    d:'Hablas directamente con Alex o Fran. Casi siempre respondemos en minutos; máximo una hora en horario activo.' },
     { id:'cancel',    icon:'🔓', stat:'✓',       t:'Mejoramos las condiciones de cancelación.',       d:'¿Necesitas algo distinto a la política estándar? Pregúntanos, miramos cada caso. Sin formularios eternos, sin sanciones ocultas.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Pago seguro y flexible.',                         d:'Sin pre-autorizaciones que bloqueen tu tarjeta. Si necesitas plazos, los acordamos contigo. Pago directo, sin intermediarios.' },
@@ -2416,7 +2416,7 @@ const DIRECT_PERKS = {
   ],
   en: [
     { id:'precio',    icon:'💰', stat:'✓',       t:'We beat any price.',                              d:'Our direct price is always better than any platform — no exceptions, no small print.' },
-    { id:'comision',  icon:'🚫', stat:'0%',      t:'No platform commissions.',                        d:'OTAs keep a commission on every booking. Booking direct, that cost simply does not exist — you pay the real price, not the inflated one.' },
+    { id:'comision',  icon:'🚫', stat:'−10%',    t:'Book direct and save from 10%.',                  d:'Platforms like Booking or Airbnb add commissions and service fees that simply don\'t exist here: you pay the real price, not the inflated one. The exact saving depends on each platform\'s program and occasional offers — that\'s why we say "from 10%".' },
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Human reply, not a bot.',                         d:'You talk directly to Alex or Fran. Usually within minutes; up to an hour during active hours.' },
     { id:'cancel',    icon:'🔓', stat:'✓',       t:'We improve cancellation terms.',                  d:'Need something different from the standard policy? Just ask — we look at each case. No endless forms, no hidden penalties.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Safe, flexible payment.',                         d:'No pre-authorisations blocking your card. If you need installments, we agree them. Direct payment, no middleman.' },
