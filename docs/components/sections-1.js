@@ -475,7 +475,7 @@ const APARTMENTS = [{
   num: '03',
   name: 'Hestía Salinas',
   slug: 'salinas',
-  license: 'VTF/AL/07056',
+  license: 'VFT/AL/07056',
   concept: 'apt_03_concept',
   img: 'assets/apt-vm.jpg',
   imgW: 1255,
