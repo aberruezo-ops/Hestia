@@ -357,7 +357,7 @@ const APARTMENTS = [
   { id: 'vt', num: '02', name: 'Hestía Thalassa', slug: 'thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
     img: 'assets/apt-vt-4.jpg', imgW: 1440, imgH: 1103,
     meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA'] },
-  { id: 'vs', num: '03', name: 'Hestía Salinas',  slug: 'salinas',  license: 'VTF/AL/07056', concept: 'apt_03_concept',
+  { id: 'vs', num: '03', name: 'Hestía Salinas',  slug: 'salinas',  license: 'VFT/AL/07056', concept: 'apt_03_concept',
     img: 'assets/apt-vm.jpg', imgW: 1255, imgH: 1146,
     meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas'] },
 ];

@@ -204,7 +204,7 @@ const ContactoAddress = ({ lang }) => {
             <div className="contacto-lic-list">
               <span className="cl-vm">VFT/AL/01580 · <a href="mar.html">Hestía Mar</a></span>
               <span className="cl-vt">VFT/AL/05535 · <a href="thalassa.html">Hestía Thalassa</a></span>
-              <span className="cl-vs">VTF/AL/07056 · <a href="salinas.html">Hestía Salinas</a></span>
+              <span className="cl-vs">VFT/AL/07056 · <a href="salinas.html">Hestía Salinas</a></span>
             </div>
           </div>
           <div className="contacto-book-cta">

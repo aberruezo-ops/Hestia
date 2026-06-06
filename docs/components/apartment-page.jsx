@@ -114,7 +114,7 @@ const APT_DATA = {
     },
   },
   vs: {
-    id: 'vs', num: '03', slug: 'salinas', license: 'VTF/AL/07056',
+    id: 'vs', num: '03', slug: 'salinas', license: 'VFT/AL/07056',
     name_short: 'Salinas',
     video_src: 'assets/hestia v14 salinas clean.mp4',
     video_duration: 'PT1M21S', video_upload: '2026-05-30',
