@@ -3372,9 +3372,9 @@ const DIRECT_PERKS = {
   }, {
     id: 'comision',
     icon: '🚫',
-    stat: '0%',
-    t: 'Sin comisiones de plataforma.',
-    d: 'Las OTAs se quedan una comisión por cada reserva. Reservando directamente, ese coste no existe — pagas el precio real, no el inflado por intermediarios.'
+    stat: '−10%',
+    t: 'Reservando directo te ahorras desde un 10 %.',
+    d: 'Las plataformas como Booking o Airbnb añaden comisiones y cargos de servicio que aquí no existen: pagas el precio real, no el inflado por intermediarios. El ahorro exacto depende del programa de cada plataforma y de ofertas puntuales — por eso decimos «desde un 10 %».'
   }, {
     id: 'respuesta',
     icon: '⏱',
@@ -3431,9 +3431,9 @@ const DIRECT_PERKS = {
   }, {
     id: 'comision',
     icon: '🚫',
-    stat: '0%',
-    t: 'No platform commissions.',
-    d: 'OTAs keep a commission on every booking. Booking direct, that cost simply does not exist — you pay the real price, not the inflated one.'
+    stat: '−10%',
+    t: 'Book direct and save from 10%.',
+    d: 'Platforms like Booking or Airbnb add commissions and service fees that simply don\'t exist here: you pay the real price, not the inflated one. The exact saving depends on each platform\'s program and occasional offers — that\'s why we say "from 10%".'
   }, {
     id: 'respuesta',
     icon: '⏱',

@@ -184,7 +184,7 @@ const Hero = ({
     className: "hero-proof-name"
   }, "Salinas")), /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-platform"
-  }, lang === 'es' ? 'Media · Booking · Airbnb · web' : 'Average · Booking · Airbnb · site')), (() => {
+  }, lang === 'es' ? 'Media en Booking · Airbnb · web — +600 familias desde 2016' : 'Average across Booking · Airbnb · site — 600+ families since 2016')), (() => {
     const prices = typeof HESTIA_PRICES !== 'undefined' ? HESTIA_PRICES : null;
     if (!prices) return null;
     const mins = ['vm', 'vt', 'vs'].map(id => {

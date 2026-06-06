@@ -60,7 +60,7 @@ const RESERVAS_COPY = {
     guarantee_title: 'Reserva directa',
     guarantee_items: [
       'Precio directo siempre mejor que cualquier plataforma',
-      'Sin comisiones de intermediarios',
+      'Reservando directo te ahorras desde un 10 %',
       'Alex o Fran responden personalmente',
       'Confirmación en menos de 24 horas',
       'Flexibilidad real en cambios y cancelaciones',
@@ -123,7 +123,7 @@ const RESERVAS_COPY = {
     guarantee_title: 'Direct booking',
     guarantee_items: [
       'Direct price always better than any platform',
-      'No platform commissions',
+      'Book direct and save from 10%',
       'Alex or Fran reply personally',
       'Confirmation within 24 hours',
       'Real flexibility on changes and cancellations',
@@ -1296,8 +1296,13 @@ const ReservasAside = ({ lang }) => {
         <div className="rg-title">{t.guarantee_title}</div>
         <p className="rg-lede">
           {lang === 'es'
-            ? 'Precio directo siempre mejor que Booking o Airbnb · sin comisiones · respuesta humana en menos de 24 h.'
-            : 'Direct price always better than Booking or Airbnb · no commissions · human reply within 24 h.'}
+            ? 'Reservando directo te ahorras desde un 10 %: mejor precio que Booking o Airbnb, sin comisiones y con respuesta humana en menos de 24 h.'
+            : 'Book direct and save from 10%: better price than Booking or Airbnb, no commissions and a human reply within 24 h.'}
+        </p>
+        <p className="rg-disclaimer">
+          {lang === 'es'
+            ? '* El ahorro exacto depende del programa de cada plataforma y de ofertas puntuales; por eso indicamos «desde un 10 %».'
+            : '* The exact saving depends on each platform’s program and occasional offers; that’s why we say "from 10%".'}
         </p>
         <button
           type="button"
