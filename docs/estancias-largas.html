@@ -90,7 +90,7 @@
     } catch (e) { console.warn('prices.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?t=' + Date.now(), { cache: 'no-store' });
+      const res = await fetch(file + '?cv=fe58e7a376');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       eval(await res.text());
     }
