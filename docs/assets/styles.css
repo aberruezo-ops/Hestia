@@ -21740,13 +21740,13 @@ img[src*="apt-vt-gallery-"] {
   background: white;
 }
 
-/* CTA */
-.lsl-cta { background: linear-gradient(135deg, var(--ber-dk, #1A0820), var(--ber, #2A0F2E)); }
+/* CTA — specificity must beat .lsl-section:nth-child(even) (0,2,0) */
+.lsl-section.lsl-cta { background: linear-gradient(135deg, var(--ber-dk, #1A0820), var(--ber, #2A0F2E)); }
 .lsl-cta-inner { text-align: center; }
-.lsl-cta .lsl-h2 { color: white; }
+.lsl-section.lsl-cta .lsl-h2 { color: white; }
 .lsl-cta-body { font-size: 15px; color: rgba(255,255,255,.65); margin-bottom: 28px; line-height: 1.6; }
 .lsl-cta-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
-.lsl-cta .lsl-btn-ghost { color: rgba(255,255,255,.65); }
+.lsl-section.lsl-cta .lsl-btn-ghost { color: rgba(255,255,255,.65); }
 
 /* ── LsSearch — disponibilidad larga estancia ───────────────── */
 .lsl-search-dark {
