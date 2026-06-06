@@ -151,7 +151,7 @@ const LsHero = ({
     className: "lsl-hero"
   }, /*#__PURE__*/React.createElement("video", {
     className: "lsl-hero-video",
-    src: "assets/186080-877288093_medium.mp4",
+    src: "assets/Videoshome/hero-rompeolas.mp4",
     autoPlay: true,
     muted: true,
     loop: true,
