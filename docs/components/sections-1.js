@@ -67,6 +67,11 @@ const HERO_VIDEOS = [{
   poster: 'assets/hero-terrace-night.jpg',
   mood: 'teal',
   alt: 'Piscina en verano'
+}, {
+  src: 'assets/Videoshome/hero-rompeolas.mp4',
+  poster: 'assets/hero-terrace-night.jpg',
+  mood: 'night',
+  alt: 'Olas rompiendo en el rompeolas · espuma y mar abierto'
 }
 // Para añadir un vídeo: súbelo a docs/assets/Videoshome/ y añade
 // una entrada con la misma forma. Para hacerlo circular, procesa
