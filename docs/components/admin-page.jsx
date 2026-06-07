@@ -130,6 +130,13 @@ function diffNoches(entradaIso, salidaIso) {
   const b = new Date(salidaIso + 'T00:00:00');
   return Math.max(0, Math.round((b - a) / (24*60*60*1000)));
 }
+// Suma días a una fecha ISO (YYYY-MM-DD) usando aritmética local (sin saltos de zona horaria).
+function addDaysIso(iso, days) {
+  if (!iso) return iso;
+  const [y, m, d] = iso.split('-').map(Number);
+  const r = new Date(y, m - 1, d + days);
+  return `${r.getFullYear()}-${String(r.getMonth()+1).padStart(2,'0')}-${String(r.getDate()).padStart(2,'0')}`;
+}
 
 // base64 ↔ utf-8 (atob/btoa no manejan UTF-8 directamente)
 const utf8ToB64 = (s) => btoa(unescape(encodeURIComponent(s)));
@@ -824,7 +831,7 @@ const PasteFromEmail = ({ onAdd, onCancel }) => {
             <dt>Valoración</dt>  <dd>{parsed.rating}/5</dd>
             <dt>Nombre</dt>      <dd>{parsed.name || <em>— no detectado</em>}</dd>
             {parsed.email && (<><dt>Email</dt><dd className="pe-mono">{parsed.email}</dd></>)}
-            <dt>Fecha</dt>       <dd className="pe-mono">{parsed.date}</dd>
+            <dt>Fecha</dt>       <dd className="pe-mono">{fmtDate(parsed.date)}</dd>
             <dt>Idioma</dt>      <dd>{parsed.lang.toUpperCase()}</dd>
             <dt>Texto</dt>       <dd className="pe-paste-text">{parsed.text || <em>— no detectado</em>}</dd>
           </dl>
@@ -1427,7 +1434,8 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
 
   const fmtEvt = (ts) => {
     const d = new Date(ts);
-    return `${d.toLocaleDateString('es-ES')} ${d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+    const f = `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getFullYear()).slice(2)}`;
+    return `${f} ${d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
   };
 
   const SEV_COLOR = { alta: '#E74C3C', media: '#E67E22', baja: '#1BC8D8' };
@@ -2349,7 +2357,7 @@ info@hestiayourhome.com · +34 620 316 370`;
         <fieldset>
           <legend>Estancia</legend>
           <div className="pe-grid">
-            <div className="pe-field"><label>Fecha de entrada *</label><input type="date" value={fechaEntrada} onChange={e => setFechaEntrada(e.target.value)} /></div>
+            <div className="pe-field"><label>Fecha de entrada *</label><input type="date" value={fechaEntrada} onChange={e => { const v = e.target.value; setFechaEntrada(v); if (v && (!fechaSalida || fechaSalida <= v)) setFechaSalida(addDaysIso(v, 7)); }} /></div>
             <div className="pe-field"><label>Fecha de salida *</label><input type="date" value={fechaSalida} onChange={e => setFechaSalida(e.target.value)} /></div>
             <div className="pe-field"><label>Noches (calculado)</label><input type="text" readOnly value={noches} className="ct-readonly" /></div>
             <div className="pe-field"><label>Nº de huéspedes</label><NumInput min="1" max="8" value={huespedes} onChange={v => setHuespedes(v)} /></div>
@@ -2590,7 +2598,11 @@ const fmtEur = n => (n == null || isNaN(n))
 const fmtPct = n => (n == null || isNaN(n))
   ? '—'
   : `${(Number(n) * 100).toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %`;
-const fmtDate = d => d || '—';
+const fmtDate = (d) => {
+  if (!d) return '—';
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d));
+  return m ? `${m[3]}.${m[2]}.${m[1].slice(2)}` : d;
+};
 const fmtDelta = (cur, prev) => {
   if (prev == null || prev === 0) return '';
   const diff = ((cur - prev) / Math.abs(prev)) * 100;
@@ -3448,7 +3460,7 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
                       <tr key={r._idx}>
                         <td className="leila-apt">{APT_LABEL[r.apt] || r.apt}</td>
                         <td className="leila-guest">{r.responsable || '—'}</td>
-                        <td className="leila-dates">{r.entrada}{r.salida ? ` · ${r.salida}` : ''}</td>
+                        <td className="leila-dates">{fmtDate(r.entrada)}{r.salida ? ` · ${fmtDate(r.salida)}` : ''}</td>
                         <td className="num">{r.noches || '—'}</td>
                         <td className="num">{r.ingreso_total != null ? `${r.ingreso_total} €` : '—'}</td>
                         <td className="num">{r.bai != null ? `${r.bai} €` : '—'}</td>
@@ -3752,7 +3764,7 @@ const PrereservasTab = ({ token, refreshKey }) => {
               </div>
               <div className="pe-field">
                 <label>Entrada *</label>
-                <input type="date" className="pe-input" value={form.entrada} onChange={e => setForm(f=>({...f,entrada:e.target.value}))} />
+                <input type="date" className="pe-input" value={form.entrada} onChange={e => { const v = e.target.value; setForm(f => ({ ...f, entrada: v, salida: (f.salida && f.salida > v) ? f.salida : addDaysIso(v, 7) })); }} />
               </div>
               <div className="pe-field">
                 <label>Salida *</label>
@@ -4210,7 +4222,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
     const cleaned = calcDerived(draft);
     const overlap = findOverlap(cleaned, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
     if (overlap) {
-      setError(`Solape de fechas: la reserva de ${overlap.responsable || '—'} (${overlap.entrada} → ${overlap.salida}) en ${overlap.apt?.toUpperCase() || '—'} se superpone con estas fechas. Corrige antes de guardar.`);
+      setError(`Solape de fechas: la reserva de ${overlap.responsable || '—'} (${fmtDate(overlap.entrada)} → ${fmtDate(overlap.salida)}) en ${overlap.apt?.toUpperCase() || '—'} se superpone con estas fechas. Corrige antes de guardar.`);
       return;
     }
     const nr = [...reservas];
@@ -4771,7 +4783,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                 <div className="rv-row3">
                   <div className="rv-field">
                     <label>Entrada</label>
-                    <input type="date" value={draft.entrada || ''} onChange={e => updateDraft('entrada', e.target.value)} />
+                    <input type="date" value={draft.entrada || ''} onChange={e => { const v = e.target.value; updateDraft('entrada', v); if (v && (!draft.salida || draft.salida <= v)) updateDraft('salida', addDaysIso(v, 7)); }} />
                   </div>
                   <div className="rv-field">
                     <label>Salida</label>
@@ -4972,7 +4984,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
               const liveOverlap = draft && findOverlap(draft, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
               return liveOverlap ? (
                 <div className="rv-overlap-warn">
-                  ⚠ Solape con {liveOverlap.responsable || '—'} ({liveOverlap.entrada} → {liveOverlap.salida}) en {liveOverlap.apt?.toUpperCase() || '—'}
+                  ⚠ Solape con {liveOverlap.responsable || '—'} ({fmtDate(liveOverlap.entrada)} → {fmtDate(liveOverlap.salida)}) en {liveOverlap.apt?.toUpperCase() || '—'}
                 </div>
               ) : null;
             })()}
