@@ -556,6 +556,18 @@ const NoticiasPage = ({
 }) => {
   const N = NOTICIAS;
   const [terrView, setTerrView] = React.useState('zona'); // 'zona' | 'mes'
+  const heroRef = React.useRef(null);
+  const [floatBadge, setFloatBadge] = React.useState(false);
+  React.useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => setFloatBadge(!e.isIntersecting), {
+      rootMargin: '-40px 0px 0px 0px',
+      threshold: 0
+    });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   // Build by-month index: month → [{article, cat}]
   const byMonth = React.useMemo(() => {
@@ -577,7 +589,8 @@ const NoticiasPage = ({
     }));
   }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
-    className: "page-hero noticias-hero"
+    className: "page-hero noticias-hero",
+    ref: heroRef
   }, /*#__PURE__*/React.createElement("video", {
     className: "noticias-hero-video",
     src: "assets/BE123FA9-6E78-4AE0-AF49-8253801E58E8.MP4",
@@ -687,7 +700,10 @@ const NoticiasPage = ({
     lang: lang
   }), /*#__PURE__*/React.createElement(ShareSection, {
     lang: lang
-  }));
+  }), /*#__PURE__*/React.createElement("div", {
+    className: `noticias-edition-float${floatBadge ? ' visible' : ''}`,
+    "aria-hidden": !floatBadge
+  }, lang === 'es' ? 'Edición · Junio 2026' : 'Edition · June 2026'));
 };
 
 // ── App wrapper ────────────────────────────────────────────────────

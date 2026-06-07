@@ -9872,6 +9872,34 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   padding: 6px 16px;
   margin-bottom: 20px;
 }
+.noticias-edition-float {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 90;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sol-lt);
+  background: var(--ber-dk);
+  border: 1px solid rgba(58, 170, 187, 0.35);
+  border-radius: 10px 0 10px 0;
+  padding: 8px 16px;
+  box-shadow: 0 6px 22px rgba(20, 8, 24, 0.35);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease;
+}
+.noticias-edition-float.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (max-width: 560px) {
+  .noticias-edition-float { bottom: 16px; left: 16px; font-size: 10px; padding: 7px 13px; }
+}
 .noticias-hero-title {
   font-family: var(--serif);
   font-weight: 300;
