@@ -208,9 +208,9 @@ const ReviewCard = ({ rev, lang, fmtDate }) => {
   );
 };
 
-// Reviews paginadas: 3 por "página", flechas prev/next, sin scroll vertical infinito.
+// Reviews paginadas: 6 por "página", flechas prev/next, sin scroll vertical infinito.
 // ============================================================
-const CARDS_PER_PAGE = 3;
+const CARDS_PER_PAGE = 6;
 
 const OpinionesTestimonials = ({ lang }) => {
   const t = OPINIONES_COPY[lang];
