@@ -54,7 +54,7 @@
   <link rel="preconnect" href="https://unpkg.com" crossorigin/>
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,opsz,wght@0,5..1200,400..900;1,5..1200,400..900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="assets/styles.css?v=610"/>
+  <link rel="stylesheet" href="assets/styles.css?v=611"/>
   <!-- GA4: cuando tengas el Measurement ID, descomenta y reemplaza G-XXXXXXXXXX
        Google Analytics → Admin → Propiedad → Flujos de datos → tu dominio → Measurement ID
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -90,7 +90,7 @@
     } catch (e) { console.warn('prices.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=8ccd51abab');
+      const res = await fetch(file + '?cv=751ac373b9');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       eval(await res.text());
     }
