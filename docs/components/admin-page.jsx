@@ -3310,6 +3310,20 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
     const m = (r.entrada || '').slice(5, 7);
     if (m) (byMonth[m] = byMonth[m] || []).push(r);
   });
+
+  // Efectivo cobrado a Leila por reserva: edición manual > efectivo ya guardado >
+  // (reservas directas) el remanente que el huésped paga en efectivo a la llegada,
+  // es decir lo que queda del total tras la señal y el pago previo (al_checkin).
+  const efectivoDe = (r) => {
+    if (editsEfectivo[r._idx] !== undefined) return Number(editsEfectivo[r._idx]) || 0;
+    const stored = Number(r.efectivo_leila ?? r.pagos_leila) || 0;
+    if (stored) return stored;
+    if (getCanalKey(r.canal) === 'directo') {
+      const rem = Math.max(0, (Number(r.ingreso_total)||0) - (Number(r.reserva)||0) - (Number(r.pago_previo)||0));
+      return Number(r.al_checkin) || rem;
+    }
+    return 0;
+  };
   const visibleMonths = focusMonth === 'all' ? allMonths : allMonths.filter(m => m === focusMonth);
 
   // Saldo inicial del año (arrastrado del año anterior).
@@ -3327,7 +3341,7 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
       const mKey = `${focusYear}-${m}`;
       const mRows = byMonth[m] || [];
       const mEf = mRows.reduce((s, r) => {
-        const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila ?? r.pagos_leila) || 0);
+        const v = efectivoDe(r);
         return s + v;
       }, 0);
       const mTa = mRows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
@@ -3401,7 +3415,7 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
         const mKey = `${focusYear}-${m}`;
         const mTarifa   = rows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
         const mEfectivo = rows.reduce((s, r) => {
-          const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila ?? r.pagos_leila) || 0);
+          const v = efectivoDe(r);
           return s + v;
         }, 0);
         const liqEntry  = liquidaciones.find(l => l.mes === mKey);
@@ -3416,7 +3430,7 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
 
         let mAcum = monthCarry[m] ?? 0;
         const rowAcums = rows.map(r => {
-          const ef = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila ?? r.pagos_leila) || 0);
+          const ef = efectivoDe(r);
           mAcum += ef - (Number(r.gasto_limpieza) || 0);
           return mAcum;
         });
@@ -3454,7 +3468,7 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
                 <tbody>
                   {rows.map((r, ri) => {
                     const tarifa   = Number(r.gasto_limpieza) || 0;
-                    const efectivo = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila ?? r.pagos_leila) || 0);
+                    const efectivo = efectivoDe(r);
                     const acum     = rowAcums[ri];
                     return (
                       <tr key={r._idx}>
