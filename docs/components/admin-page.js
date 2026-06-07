@@ -130,6 +130,13 @@ function diffNoches(entradaIso, salidaIso) {
   const b = new Date(salidaIso + 'T00:00:00');
   return Math.max(0, Math.round((b - a) / (24 * 60 * 60 * 1000)));
 }
+// Suma días a una fecha ISO (YYYY-MM-DD) usando aritmética local (sin saltos de zona horaria).
+function addDaysIso(iso, days) {
+  if (!iso) return iso;
+  const [y, m, d] = iso.split('-').map(Number);
+  const r = new Date(y, m - 1, d + days);
+  return `${r.getFullYear()}-${String(r.getMonth() + 1).padStart(2, '0')}-${String(r.getDate()).padStart(2, '0')}`;
+}
 
 // base64 ↔ utf-8 (atob/btoa no manejan UTF-8 directamente)
 const utf8ToB64 = s => btoa(unescape(encodeURIComponent(s)));
@@ -980,7 +987,7 @@ const PasteFromEmail = ({
     className: "pe-mono"
   }, parsed.email)), /*#__PURE__*/React.createElement("dt", null, "Fecha"), "       ", /*#__PURE__*/React.createElement("dd", {
     className: "pe-mono"
-  }, parsed.date), /*#__PURE__*/React.createElement("dt", null, "Idioma"), "      ", /*#__PURE__*/React.createElement("dd", null, parsed.lang.toUpperCase()), /*#__PURE__*/React.createElement("dt", null, "Texto"), "       ", /*#__PURE__*/React.createElement("dd", {
+  }, fmtDate(parsed.date)), /*#__PURE__*/React.createElement("dt", null, "Idioma"), "      ", /*#__PURE__*/React.createElement("dd", null, parsed.lang.toUpperCase()), /*#__PURE__*/React.createElement("dt", null, "Texto"), "       ", /*#__PURE__*/React.createElement("dd", {
     className: "pe-paste-text"
   }, parsed.text || /*#__PURE__*/React.createElement("em", null, "\u2014 no detectado"))), /*#__PURE__*/React.createElement("div", {
     className: "pe-actions",
@@ -1847,7 +1854,8 @@ const IntelligenciaTab = ({
   }];
   const fmtEvt = ts => {
     const d = new Date(ts);
-    return `${d.toLocaleDateString('es-ES')} ${d.toLocaleTimeString('es-ES', {
+    const f = `${String(d.getDate()).padStart(2, '0')}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getFullYear()).slice(2)}`;
+    return `${f} ${d.toLocaleTimeString('es-ES', {
       hour: '2-digit',
       minute: '2-digit'
     })}`;
@@ -2883,7 +2891,11 @@ info@hestiayourhome.com · +34 620 316 370`;
   }, /*#__PURE__*/React.createElement("label", null, "Fecha de entrada *"), /*#__PURE__*/React.createElement("input", {
     type: "date",
     value: fechaEntrada,
-    onChange: e => setFechaEntrada(e.target.value)
+    onChange: e => {
+      const v = e.target.value;
+      setFechaEntrada(v);
+      if (v && (!fechaSalida || fechaSalida <= v)) setFechaSalida(addDaysIso(v, 7));
+    }
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
   }, /*#__PURE__*/React.createElement("label", null, "Fecha de salida *"), /*#__PURE__*/React.createElement("input", {
@@ -3209,7 +3221,11 @@ const fmtPct = n => n == null || isNaN(n) ? '—' : `${(Number(n) * 100).toLocal
   minimumFractionDigits: 1,
   maximumFractionDigits: 1
 })} %`;
-const fmtDate = d => d || '—';
+const fmtDate = d => {
+  if (!d) return '—';
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d));
+  return m ? `${m[3]}.${m[2]}.${m[1].slice(2)}` : d;
+};
 const fmtDelta = (cur, prev) => {
   if (prev == null || prev === 0) return '';
   const diff = (cur - prev) / Math.abs(prev) * 100;
@@ -4358,7 +4374,7 @@ const LeilaTab = ({
         className: "leila-guest"
       }, r.responsable || '—'), /*#__PURE__*/React.createElement("td", {
         className: "leila-dates"
-      }, r.entrada, r.salida ? ` · ${r.salida}` : ''), /*#__PURE__*/React.createElement("td", {
+      }, fmtDate(r.entrada), r.salida ? ` · ${fmtDate(r.salida)}` : ''), /*#__PURE__*/React.createElement("td", {
         className: "num"
       }, r.noches || '—'), /*#__PURE__*/React.createElement("td", {
         className: "num"
@@ -4866,10 +4882,14 @@ const PrereservasTab = ({
     type: "date",
     className: "pe-input",
     value: form.entrada,
-    onChange: e => setForm(f => ({
-      ...f,
-      entrada: e.target.value
-    }))
+    onChange: e => {
+      const v = e.target.value;
+      setForm(f => ({
+        ...f,
+        entrada: v,
+        salida: f.salida && f.salida > v ? f.salida : addDaysIso(v, 7)
+      }));
+    }
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
   }, /*#__PURE__*/React.createElement("label", null, "Salida *"), /*#__PURE__*/React.createElement("input", {
@@ -5433,7 +5453,7 @@ const ReservasTab = ({
     const cleaned = calcDerived(draft);
     const overlap = findOverlap(cleaned, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
     if (overlap) {
-      setError(`Solape de fechas: la reserva de ${overlap.responsable || '—'} (${overlap.entrada} → ${overlap.salida}) en ${overlap.apt?.toUpperCase() || '—'} se superpone con estas fechas. Corrige antes de guardar.`);
+      setError(`Solape de fechas: la reserva de ${overlap.responsable || '—'} (${fmtDate(overlap.entrada)} → ${fmtDate(overlap.salida)}) en ${overlap.apt?.toUpperCase() || '—'} se superpone con estas fechas. Corrige antes de guardar.`);
       return;
     }
     const nr = [...reservas];
@@ -6104,7 +6124,11 @@ const ReservasTab = ({
   }, /*#__PURE__*/React.createElement("label", null, "Entrada"), /*#__PURE__*/React.createElement("input", {
     type: "date",
     value: draft.entrada || '',
-    onChange: e => updateDraft('entrada', e.target.value)
+    onChange: e => {
+      const v = e.target.value;
+      updateDraft('entrada', v);
+      if (v && (!draft.salida || draft.salida <= v)) updateDraft('salida', addDaysIso(v, 7));
+    }
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("label", null, "Salida"), /*#__PURE__*/React.createElement("input", {
@@ -6352,7 +6376,7 @@ const ReservasTab = ({
     const liveOverlap = draft && findOverlap(draft, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
     return liveOverlap ? /*#__PURE__*/React.createElement("div", {
       className: "rv-overlap-warn"
-    }, "\u26A0 Solape con ", liveOverlap.responsable || '—', " (", liveOverlap.entrada, " \u2192 ", liveOverlap.salida, ") en ", liveOverlap.apt?.toUpperCase() || '—') : null;
+    }, "\u26A0 Solape con ", liveOverlap.responsable || '—', " (", fmtDate(liveOverlap.entrada), " \u2192 ", fmtDate(liveOverlap.salida), ") en ", liveOverlap.apt?.toUpperCase() || '—') : null;
   })(), /*#__PURE__*/React.createElement("footer", {
     className: "rv-edit-foot"
   }, /*#__PURE__*/React.createElement("div", {
