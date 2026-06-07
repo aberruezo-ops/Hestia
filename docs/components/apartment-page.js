@@ -579,6 +579,20 @@ const GalleryCarousel = ({
     return map[key] || '50% 50%';
   };
 
+  // <picture> elige la fuente .webp por type, pero si esa fuente falla (404,
+  // caché o deploy incompleto) NO cae al <img> jpg por sí sola: la imagen
+  // queda en blanco. Aquí forzamos el fallback al jpg al primer error.
+  const webpFallback = e => {
+    const img = e.currentTarget;
+    if (img.dataset.jpgFallback) return;
+    img.dataset.jpgFallback = '1';
+    const pic = img.parentNode;
+    const source = pic && pic.tagName === 'PICTURE' ? pic.querySelector('source[type="image/webp"]') : null;
+    if (source) source.remove();
+    const jpg = img.getAttribute('src');
+    img.src = jpg + (jpg.indexOf('?') >= 0 ? '&' : '?') + 'fb=1';
+  };
+
   // Cambia de foto. La animación visual la lleva el CSS sobre
   // .gc-slide (transform translateX). NO envolvemos en _vt() porque
   // colisiona con el slide CSS y produce flicker en mobile.
@@ -697,6 +711,7 @@ const GalleryCarousel = ({
     src: src,
     alt: captions[i],
     loading: i === 0 ? 'eager' : 'lazy',
+    onError: webpFallback,
     style: {
       objectPosition: posFor(src)
     }
@@ -747,6 +762,7 @@ const GalleryCarousel = ({
     src: src,
     alt: "",
     loading: "lazy",
+    onError: webpFallback,
     style: {
       objectPosition: posFor(src)
     }
@@ -778,6 +794,7 @@ const GalleryCarousel = ({
     className: "gc-lb-img",
     src: imgs[cur],
     alt: captions[cur],
+    onError: webpFallback,
     onClick: e => e.stopPropagation()
   })), /*#__PURE__*/React.createElement("button", {
     className: "gc-lb-next",
