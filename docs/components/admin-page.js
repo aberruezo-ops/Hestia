@@ -2329,7 +2329,7 @@ const ContractTab = ({
     margin: 0;
     margin: 0; padding: 0; background: #fff;
   }
-  #pdf-content { background: #fff; }
+  #pdf-content { background: #fff; width: 210mm; margin: 0 auto; }
   #contract-body { padding: 8mm 16mm 14mm; }
 
   /* ── Hero (primera página) ───────────────────────────── */
@@ -2528,8 +2528,11 @@ const ContractTab = ({
 </div>
 
 <div id="pdf-content">
-<!-- Spacer for page-1 hero: bar(18mm) + hero(65mm) − MARG_TOP(30mm) + 3mm buffer = 56mm -->
-<div style="height:56mm;line-height:0;font-size:0"> </div>
+<!-- Spacer para el hero de la página 1. #pdf-content está fijado a 210mm para que
+     1 mm CSS = 1 mm PDF en cualquier dispositivo (sin esto, en móvil el viewport por
+     defecto ~980px comprimía el spacer y el texto se solapaba bajo el hero).
+     barra(18) + hero(65) − MARG_TOP(30) + 7 de holgura = 60mm -->
+<div style="height:60mm;line-height:0;font-size:0"> </div>
 <div id="contract-body">
 
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
@@ -2657,7 +2660,7 @@ ${clausulaFianza}
       margin: [MARG_TOP, 0, MARG_BOT, 0],
       filename: FILE,
       image: { type: 'jpeg', quality: 0.96 },
-      html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false },
+      html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, windowWidth: 794 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       pagebreak: { mode: ['css', 'legacy'] }
     };
