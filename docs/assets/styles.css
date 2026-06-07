@@ -9874,7 +9874,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .noticias-edition-float {
   position: fixed;
-  bottom: 24px;
+  top: calc(var(--topbar-h, 36px) + 108px);
   left: 24px;
   z-index: 90;
   font-family: var(--sans);
@@ -9889,7 +9889,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   padding: 8px 16px;
   box-shadow: 0 6px 22px rgba(20, 8, 24, 0.35);
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(-10px);
   pointer-events: none;
   transition: opacity .3s ease, transform .3s ease;
 }
@@ -9898,7 +9898,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   transform: translateY(0);
 }
 @media (max-width: 560px) {
-  .noticias-edition-float { bottom: 16px; left: 16px; font-size: 10px; padding: 7px 13px; }
+  .noticias-edition-float { left: 12px; font-size: 10px; padding: 7px 13px; }
 }
 .noticias-hero-title {
   font-family: var(--serif);
