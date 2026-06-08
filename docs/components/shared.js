@@ -625,7 +625,7 @@ const QUICK_FAQ = {
       }, "Reserva aqu\xED."))
     }, {
       q: '¿Cuánto tardáis en confirmar la reserva?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Menos de 24 horas. En la mayor\xEDa de los casos respondemos el mismo d\xEDa \u2014 y en muchos casos, en menos de una hora.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Normalmente en minutos. Casi siempre respondemos el mismo d\xEDa y, la mayor\xEDa de las veces, en cuesti\xF3n de minutos.")
     }, {
       q: '¿Qué pasa si necesito cambiar las fechas?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Escr\xEDbenos. Somos flexibles con cambios y cancelaciones siempre que se puedan gestionar. No hay que batallar con ninguna plataforma \u2014 es una conversaci\xF3n entre personas.")
@@ -640,7 +640,7 @@ const QUICK_FAQ = {
       }, "Book here."))
     }, {
       q: 'How long does confirmation take?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Under 24 hours. In most cases we reply the same day \u2014 and often in under an hour.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Usually within minutes. Almost always the same day and, most of the time, within minutes.")
     }, {
       q: 'What if I need to change my dates?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Write to us. We are flexible with changes and cancellations as long as they can be managed. No need to fight with a platform \u2014 it is a conversation between people.")

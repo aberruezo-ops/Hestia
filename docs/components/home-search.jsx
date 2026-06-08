@@ -457,8 +457,8 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
             </div>
             <p className="hs-rc-note">
               {lang === 'es'
-                ? 'En la siguiente pantalla podrás añadir extras (cuna, trona, sábanas, mascota…) y dejarnos tus datos. Confirmamos en menos de 24 h.'
-                : 'On the next screen you can add extras (cot, high chair, linen, pet…) and leave your details. We confirm within 24 h.'}
+                ? 'En la siguiente pantalla podrás añadir extras (cuna, trona, sábanas, mascota…) y dejarnos tus datos. Normalmente te contestamos en minutos.'
+                : 'On the next screen you can add extras (cot, high chair, linen, pet…) and leave your details. We usually reply in minutes.'}
             </p>
           </>
         ) : (
@@ -709,7 +709,7 @@ const HomeSearch = ({ lang }) => {
           <div className="hs-trust">
             <span>{lang === 'es' ? '🔒 Sin comisiones' : '🔒 No fees'}</span>
             <span className="hs-trust-dot"/>
-            <span>{lang === 'es' ? '✓ Te confirmamos en 24h' : '✓ We confirm in 24h'}</span>
+            <span>{lang === 'es' ? '✓ Te contestamos en minutos' : '✓ We reply in minutes'}</span>
             <span className="hs-trust-dot"/>
             <span>{lang === 'es' ? 'Solo 3 Hestías' : 'Only 3 Hestías'}</span>
           </div>
@@ -768,8 +768,8 @@ const HomeSearch = ({ lang }) => {
             {results.every(r => r.available === null) && (
               <div className="hs-no-data">
                 {lang === 'es'
-                  ? 'No tenemos datos de disponibilidad en este momento. Escríbenos directamente y te respondemos en menos de 24 h.'
-                  : 'We don\'t have availability data right now. Write to us directly and we\'ll reply within 24 h.'}
+                  ? 'No tenemos datos de disponibilidad en este momento. Escríbenos directamente y te respondemos normalmente en minutos.'
+                  : 'We don\'t have availability data right now. Write to us directly and we\'ll usually reply in minutes.'}
                 {' '}
                 <a href="https://wa.me/34620316370" target="_blank" rel="noopener">
                   WhatsApp →

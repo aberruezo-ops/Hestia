@@ -6,7 +6,7 @@ const RESERVAS_COPY = {
   es: {
     eyebrow: 'Precio directo siempre mejor que Booking o Airbnb · Sin intermediarios',
     title: (<>Reserva tu<br/><em>hogar en Vera.</em></>),
-    sub: 'Escríbenos directamente. Alex o Fran confirman en menos de 24 horas.',
+    sub: 'Escríbenos directamente. Alex o Fran te responden normalmente en minutos.',
     form_title: 'Solicitar reserva',
     form_sub: 'Tres pasos: dinos qué buscas, te enseñamos disponibilidad y precio, y eliges cómo enviar la solicitud.',
     step1_title: 'Tu reserva',
@@ -41,7 +41,7 @@ const RESERVAS_COPY = {
     status_taken: 'Ocupado en esas fechas',
     status_taken_sub: 'Aún así puedes enviarnos la solicitud — te avisamos si se libera o te proponemos alternativas.',
     status_no_data: 'No tenemos datos en este momento',
-    status_no_data_sub: 'Sin problema — envíanos la solicitud y te confirmamos en menos de 24 h.',
+    status_no_data_sub: 'Sin problema — envíanos la solicitud y te respondemos normalmente en minutos.',
     channel_label: 'Elige cómo quieres enviarnos la solicitud',
     channel_wa: 'WhatsApp',
     channel_wa_desc: 'Necesitamos tu nombre y teléfono.',
@@ -55,21 +55,21 @@ const RESERVAS_COPY = {
     summary_pets: 'Mascota',
     summary_extras: 'Extras',
     summary_nights: (n) => `${n} ${n === 1 ? 'noche' : 'noches'}`,
-    note: 'Al pulsar se abrirá WhatsApp con tu solicitud. Alex o Fran te responden en menos de 24 horas.',
+    note: 'Al pulsar se abrirá WhatsApp con tu solicitud. Alex o Fran te responden normalmente en minutos.',
     aside_title: 'Tu solicitud llega a:',
     guarantee_title: 'Reserva directa',
     guarantee_items: [
       'Precio directo siempre mejor que cualquier plataforma',
       'Reservando directo te ahorras desde un 10 %',
       'Alex o Fran responden personalmente',
-      'Confirmación en menos de 24 horas',
+      'Te respondemos normalmente en minutos',
       'Flexibilidad real en cambios y cancelaciones',
     ],
   },
   en: {
     eyebrow: 'Direct price always better than Booking or Airbnb · No middlemen',
     title: (<>Book your<br/><em>home in Vera.</em></>),
-    sub: 'Write to us directly. Alex or Fran confirm within 24 hours.',
+    sub: 'Write to us directly. Alex or Fran usually reply in minutes.',
     form_title: 'Request a booking',
     form_sub: 'Three steps: tell us what you need, see availability and price, then choose how to send the request.',
     step1_title: 'Your booking',
@@ -104,7 +104,7 @@ const RESERVAS_COPY = {
     status_taken: 'Taken on those dates',
     status_taken_sub: 'You can still send the request — we will let you know if it frees up or suggest alternatives.',
     status_no_data: 'No data right now',
-    status_no_data_sub: 'No worries — send the request and we will confirm within 24 h.',
+    status_no_data_sub: 'No worries — send the request and we usually reply in minutes.',
     channel_label: 'Choose how to send your request',
     channel_wa: 'WhatsApp',
     channel_wa_desc: 'We need your name and phone.',
@@ -118,14 +118,14 @@ const RESERVAS_COPY = {
     summary_pets: 'Pet',
     summary_extras: 'Extras',
     summary_nights: (n) => `${n} ${n === 1 ? 'night' : 'nights'}`,
-    note: 'Clicking will open WhatsApp with your request. Alex or Fran will reply within 24 hours.',
+    note: 'Clicking will open WhatsApp with your request. Alex or Fran usually reply in minutes.',
     aside_title: 'Your request goes to:',
     guarantee_title: 'Direct booking',
     guarantee_items: [
       'Direct price always better than any platform',
       'Book direct and save from 10%',
       'Alex or Fran reply personally',
-      'Confirmation within 24 hours',
+      'We usually reply in minutes',
       'Real flexibility on changes and cancellations',
     ],
   },
@@ -1296,8 +1296,8 @@ const ReservasAside = ({ lang }) => {
         <div className="rg-title">{t.guarantee_title}</div>
         <p className="rg-lede">
           {lang === 'es'
-            ? 'Reservando directo te ahorras desde un 10 %: mejor precio que Booking o Airbnb, sin comisiones y con respuesta humana en menos de 24 h.'
-            : 'Book direct and save from 10%: better price than Booking or Airbnb, no commissions and a human reply within 24 h.'}
+            ? 'Reservando directo te ahorras desde un 10 %: mejor precio que Booking o Airbnb, sin comisiones y con respuesta humana normalmente en minutos.'
+            : 'Book direct and save from 10%: better price than Booking or Airbnb, no commissions and a human reply usually in minutes.'}
         </p>
         <p className="rg-disclaimer">
           {lang === 'es'

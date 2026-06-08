@@ -8,7 +8,7 @@ const CONTACTO_COPY = {
   es: {
     eyebrow: 'Estamos aquí para ti',
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Cont\xE1ctanos.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Te respondemos nosotros.")),
-    sub: 'Sin centralitas. Alex y Fran responden en menos de 24 horas.',
+    sub: 'Sin centralitas. Alex y Fran responden normalmente en minutos.',
     intro: 'No somos una empresa con centralita. Somos Alex y Fran, y respondemos nosotros personalmente. Alex atiende en español, Fran en inglés.',
     alex_title: 'Alex Berruezo',
     alex_role: 'Reserva · Antes de tu llegada',
@@ -29,7 +29,7 @@ const CONTACTO_COPY = {
     faq_title: 'Preguntas frecuentes',
     faqs: [{
       q: '¿Cuándo podéis responder?',
-      a: 'Casi siempre en menos de una hora, de 9h a 22h todos los días de la semana. Alex responde en español, Fran en inglés.'
+      a: 'Normalmente en minutos, de 9h a 22h todos los días de la semana. Alex responde en español, Fran en inglés.'
     }, {
       q: '¿Puedo llamar o solo WhatsApp?',
       a: 'Puedes llamar, pero el WhatsApp es más rápido. Alex: +34 620 316 370. Fran: +34 654 138 251.'
@@ -65,7 +65,7 @@ const CONTACTO_COPY = {
   en: {
     eyebrow: "We're here for you",
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Contact us.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "We reply ourselves.")),
-    sub: 'No call centres. Alex and Fran respond within 24 hours.',
+    sub: 'No call centres. Alex and Fran usually reply in minutes.',
     intro: "We are not a company with a call centre. We are Alex and Fran, and we respond personally. Alex handles Spanish, Fran handles English.",
     alex_title: 'Alex Berruezo',
     alex_role: 'Booking · Before you arrive',
@@ -86,7 +86,7 @@ const CONTACTO_COPY = {
     faq_title: 'Frequently asked questions',
     faqs: [{
       q: 'When can you reply?',
-      a: 'Almost always within an hour, 9am to 10pm every day of the week. Alex replies in Spanish, Fran in English.'
+      a: 'Usually within minutes, 9am to 10pm every day of the week. Alex replies in Spanish, Fran in English.'
     }, {
       q: 'Can I call or only WhatsApp?',
       a: 'You can call, but WhatsApp is faster. Alex: +34 620 316 370. Fran: +34 654 138 251.'

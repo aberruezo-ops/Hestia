@@ -282,7 +282,7 @@ const RatingsMarquee = ({ lang }) => {
     'Sin comisiones · reserva directa',
     '10 años en Vera Playa',
     'Precio directo siempre mejor',
-    'Te responde Alex o Fran en <24 h',
+    'Te responde Alex o Fran, normalmente en minutos',
   ] : [
     '★ 9.8 · Booking.com',
     '★ 5.0 · Airbnb Superhost',
@@ -291,7 +291,7 @@ const RatingsMarquee = ({ lang }) => {
     'No commissions · direct booking',
     '10 years in Vera Playa',
     'Direct price always better',
-    'Alex or Fran reply within 24 h',
+    'Alex or Fran reply, usually in minutes',
   ];
   // Duplicamos el array para que el loop sea continuo (translateX -50%).
   const doubled = [...items, ...items];

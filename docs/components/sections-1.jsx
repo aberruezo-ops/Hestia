@@ -341,8 +341,8 @@ const HomeBookingModal = ({ apt, lang, onClose }) => {
         </div>
         <p className="hbm-note">
           {lang === 'es'
-            ? '* Precios orientativos máximos. Alex o Fran responden en menos de 24 h.'
-            : '* Maximum guide prices. Alex or Fran reply within 24 h.'}
+            ? '* Precios orientativos máximos. Alex o Fran responden normalmente en minutos.'
+            : '* Maximum guide prices. Alex or Fran usually reply in minutes.'}
         </p>
       </div>
     </div>

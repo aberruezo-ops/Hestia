@@ -474,7 +474,7 @@ const HsResultCard = ({
     className: "hs-rc-link"
   }, lang === 'es' ? 'Ver Hestía' : 'See Hestía', " \u2192")), /*#__PURE__*/React.createElement("p", {
     className: "hs-rc-note"
-  }, lang === 'es' ? 'En la siguiente pantalla podrás añadir extras (cuna, trona, sábanas, mascota…) y dejarnos tus datos. Confirmamos en menos de 24 h.' : 'On the next screen you can add extras (cot, high chair, linen, pet…) and leave your details. We confirm within 24 h.')) : /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? 'En la siguiente pantalla podrás añadir extras (cuna, trona, sábanas, mascota…) y dejarnos tus datos. Normalmente te contestamos en minutos.' : 'On the next screen you can add extras (cot, high chair, linen, pet…) and leave your details. We usually reply in minutes.')) : /*#__PURE__*/React.createElement("p", {
     className: "hs-rc-unavail-note"
   }, lang === 'es' ? 'Prueba con otras fechas o escríbenos — a veces hay cancelaciones de última hora.' : 'Try different dates or write to us — last-minute cancellations do happen.', ' ', /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370",
@@ -708,7 +708,7 @@ const HomeSearch = ({
     className: "hs-trust"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? '🔒 Sin comisiones' : '🔒 No fees'), /*#__PURE__*/React.createElement("span", {
     className: "hs-trust-dot"
-  }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? '✓ Te confirmamos en 24h' : '✓ We confirm in 24h'), /*#__PURE__*/React.createElement("span", {
+  }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? '✓ Te contestamos en minutos' : '✓ We reply in minutes'), /*#__PURE__*/React.createElement("span", {
     className: "hs-trust-dot"
   }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Solo 3 Hestías' : 'Only 3 Hestías'))), results && /*#__PURE__*/React.createElement("div", {
     className: "hs-results",
@@ -740,7 +740,7 @@ const HomeSearch = ({
     className: "hs-ls-cta"
   }, lang === 'es' ? 'Ver condiciones →' : 'See conditions →')), results.every(r => r.available === null) && /*#__PURE__*/React.createElement("div", {
     className: "hs-no-data"
-  }, lang === 'es' ? 'No tenemos datos de disponibilidad en este momento. Escríbenos directamente y te respondemos en menos de 24 h.' : 'We don\'t have availability data right now. Write to us directly and we\'ll reply within 24 h.', ' ', /*#__PURE__*/React.createElement("a", {
+  }, lang === 'es' ? 'No tenemos datos de disponibilidad en este momento. Escríbenos directamente y te respondemos normalmente en minutos.' : 'We don\'t have availability data right now. Write to us directly and we\'ll usually reply in minutes.', ' ', /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370",
     target: "_blank",
     rel: "noopener"
