@@ -1829,7 +1829,7 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
     margin: 0;
     margin: 0; padding: 0; background: #fff;
   }
-  #pdf-content { background: #fff; width: 210mm; margin: 0 auto; }
+  #pdf-content { background: #fff; width: 210mm; }
   #contract-body { padding: 8mm 16mm 14mm; }
 
   /* ── Hero (primera página) ───────────────────────────── */
@@ -2160,7 +2160,7 @@ ${clausulaFianza}
       margin: [MARG_TOP, 0, MARG_BOT, 0],
       filename: FILE,
       image: { type: 'jpeg', quality: 0.96 },
-      html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false, windowWidth: 794 },
+      html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       pagebreak: { mode: ['css', 'legacy'] }
     };
