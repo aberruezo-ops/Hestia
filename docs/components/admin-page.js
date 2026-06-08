@@ -67,6 +67,7 @@ const APT_CONTRACT_DATA = {
     name: 'Hestía Vera Salinas',
     shortName: 'Salinas',
     heroPhoto: 'assets/apt-vm.jpg',
+    heroFocusY: 0.8,
     direccion: 'Apto. 7, planta 1ª, bloque 22, en la urbanización Pueblo Salinas, en C/ Alcazaba 115',
     plazaGaraje: '290',
     zonaObras: 'cercanas',
@@ -2228,7 +2229,7 @@ const ContractTab = ({
   // Pre-crop a data URL to the hero aspect ratio (210mm × 55mm ≈ 3.82:1).
   // html2canvas does not reliably apply object-fit or background-size,
   // so we crop in JS first and embed the already-cropped image.
-  const cropHero = rawUrl => {
+  const cropHero = (rawUrl, focusY = 0.5) => {
     if (!rawUrl) return Promise.resolve(null);
     return new Promise(resolve => {
       const img = new Image();
@@ -2259,7 +2260,7 @@ const ContractTab = ({
           sw = img.naturalWidth;
           sh = sw / tgtAR;
           sx = 0;
-          sy = Math.max(0, (img.naturalHeight - sh) * 0.5);
+          sy = Math.max(0, (img.naturalHeight - sh) * focusY);
         }
         ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
         resolve(c.toDataURL('image/jpeg', 0.92));
@@ -2814,7 +2815,7 @@ info@hestiayourhome.com · +34 620 316 370`;
 
     // ASYNC — pre-load images as data URIs so they embed correctly in the PDF.
     const [heroRaw, logoDataUrl, wmDataUrl] = await Promise.all([fetchDataUrl(aptInfo.heroPhoto), fetchDataUrl('assets/logo-hestia-brand.png'), fetchDataUrl('assets/logo-teal-transparent.png')]);
-    const heroDataUrl = await cropHero(heroRaw);
+    const heroDataUrl = await cropHero(heroRaw, aptInfo.heroFocusY ?? 0.5);
 
     // Write contract HTML to the already-opened window.
     const html = buildContractHTML(heroDataUrl, logoDataUrl, wmDataUrl);
