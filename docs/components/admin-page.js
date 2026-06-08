@@ -46,7 +46,7 @@ const APT_CONTRACT_DATA = {
   vm: {
     name: 'Hestía Vera Mar',
     shortName: 'Mar',
-    heroPhoto: 'assets/apt-vm-gallery-10.jpg',
+    heroPhoto: 'assets/apt-vs.jpg',
     direccion: 'Apto. 1A, del portal 14, edificio 3, en la urbanización Paraíso Playa, en C/ Islas Canarias, 7',
     plazaGaraje: '160',
     zonaObras: 'enfrente',
@@ -56,7 +56,7 @@ const APT_CONTRACT_DATA = {
   vt: {
     name: 'Hestía Vera Thalassa',
     shortName: 'Thalassa',
-    heroPhoto: 'assets/apt-vt-gallery-03.jpg',
+    heroPhoto: 'assets/apt-vt-4.jpg',
     direccion: 'Apto. 11, planta 5ª, escalera 13, en la urbanización Thalassa, en C/ Tomillo 2',
     plazaGaraje: '163',
     zonaObras: 'cercanas',
@@ -66,7 +66,7 @@ const APT_CONTRACT_DATA = {
   vs: {
     name: 'Hestía Vera Salinas',
     shortName: 'Salinas',
-    heroPhoto: 'assets/apt-vs-gallery-21.jpg',
+    heroPhoto: 'assets/apt-vm.jpg',
     direccion: 'Apto. 7, planta 1ª, bloque 22, en la urbanización Pueblo Salinas, en C/ Alcazaba 115',
     plazaGaraje: '290',
     zonaObras: 'cercanas',
@@ -2254,12 +2254,12 @@ const ContractTab = ({
           sw = sh * tgtAR;
           sx = (img.naturalWidth - sw) / 2;
         } else {
-          // narrower than target ratio: use full width, crop vertically
-          // at 15% from top — enough to skip plain ceiling while keeping room interior
+          // narrower than target ratio: use full width y recorte vertical
+          // CENTRADO — encuadra bien el cabecero + los cojines de la cama de frente.
           sw = img.naturalWidth;
           sh = sw / tgtAR;
           sx = 0;
-          sy = Math.max(0, (img.naturalHeight - sh) * 0.15);
+          sy = Math.max(0, (img.naturalHeight - sh) * 0.5);
         }
         ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
         resolve(c.toDataURL('image/jpeg', 0.92));
