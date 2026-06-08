@@ -142,8 +142,8 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
               </div>
               <div className="price-guarantee-sub">
                 {lang === 'es'
-                  ? '¿Lo encuentras más barato en Booking o Airbnb? No solo lo igualamos — lo mejoramos.'
-                  : 'Found it cheaper on Booking or Airbnb? We won\'t just match it — we\'ll beat it.'}
+                  ? '¿Lo encuentras más barato en Booking o Airbnb? Tráenoslo: te lo igualamos y, si podemos, lo mejoramos.'
+                  : 'Found it cheaper on Booking or Airbnb? Bring it to us — we\'ll match it and, if we can, beat it.'}
               </div>
             </div>
           </div>
@@ -203,8 +203,8 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
       <div className="req-disclaimer">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         <p>{lang === 'es'
-          ? <><strong>Precio máximo orientativo.</strong> Si encuentras este apartamento más barato en Booking, Airbnb o cualquier otra plataforma, escríbenos — no solo lo igualamos, lo mejoramos. En la siguiente pantalla puedes añadir extras (cuna, trona, sábanas, mascota…). Normalmente te contestamos en minutos.</>
-          : <><strong>Maximum indicative price.</strong> Found it cheaper on Booking, Airbnb or any other platform? Write to us — we won't just match it, we'll beat it. On the next screen you can add extras (cot, high chair, linen, pet…). We usually reply in minutes.</>}</p>
+          ? <><strong>Precio máximo orientativo.</strong> El precio de la web es el directo, sin comisiones de plataforma. Las plataformas a veces hacen promociones puntuales que no controlamos; si encuentras este apartamento más barato, tráenoslo y te lo igualamos —y, si podemos, lo mejoramos—. En la siguiente pantalla puedes añadir extras (cuna, trona, sábanas, mascota…). Normalmente te contestamos en minutos.</>
+          : <><strong>Maximum indicative price.</strong> The website price is the direct one, with no platform commission. Platforms sometimes run promos we don't control; if you find this apartment cheaper, bring it to us and we'll match it —and, if we can, beat it—. On the next screen you can add extras (cot, high chair, linen, pet…). We usually reply in minutes.</>}</p>
       </div>
 
       {/* CTA único: avanzar con la reserva → /reservas con prefill */}

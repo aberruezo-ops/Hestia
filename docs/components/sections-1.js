@@ -693,7 +693,7 @@ const Apartments = ({
       className: "apb-per"
     }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
       className: "apb-match"
-    }, lang === 'es' ? '✓ Desde un 10% más barato que en Booking o Airbnb*' : '✓ From 10% cheaper than Booking or Airbnb*')), (() => {
+    }, lang === 'es' ? '✓ Normalmente desde un 10% más barato que en Booking o Airbnb*' : '✓ Usually from 10% cheaper than Booking or Airbnb*')), (() => {
       const av = aptAvail[a.id];
       if (!av) return null;
       const today = new Date().toISOString().slice(0, 10);

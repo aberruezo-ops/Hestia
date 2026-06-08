@@ -390,12 +390,12 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
                   </div>
                   <div className="hs-pb-right">
                     <div className="price-guarantee-badge">
-                      {lang === 'es' ? '✓ Precio directo siempre mejor' : '✓ Direct price always better'}
+                      {lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'}
                     </div>
                     <div className="price-guarantee-sub">
                       {lang === 'es'
-                        ? 'Precio directo siempre mejor que cualquier plataforma.'
-                        : 'Our direct price is always better than any platform.'}
+                        ? '¿Lo encuentras más barato en Booking o Airbnb? Te lo igualamos y, si podemos, lo mejoramos.'
+                        : 'Found it cheaper on Booking or Airbnb? We\'ll match it and, if we can, beat it.'}
                     </div>
                   </div>
                 </div>

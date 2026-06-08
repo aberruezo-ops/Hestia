@@ -532,8 +532,8 @@ const Apartments = ({ lang }) => {
                       <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
                       <span className="apb-match">
                         {lang === 'es'
-                          ? '✓ Desde un 10% más barato que en Booking o Airbnb*'
-                          : '✓ From 10% cheaper than Booking or Airbnb*'}
+                          ? '✓ Normalmente desde un 10% más barato que en Booking o Airbnb*'
+                          : '✓ Usually from 10% cheaper than Booking or Airbnb*'}
                       </span>
                     </div>
                   )}

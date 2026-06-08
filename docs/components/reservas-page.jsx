@@ -4,7 +4,7 @@
 
 const RESERVAS_COPY = {
   es: {
-    eyebrow: 'Precio directo siempre mejor que Booking o Airbnb · Sin intermediarios',
+    eyebrow: 'Mejor precio garantizado: te lo igualamos y lo mejoramos · Sin comisiones',
     title: (<>Reserva tu<br/><em>hogar en Vera.</em></>),
     sub: 'Escríbenos directamente. Alex o Fran te responden normalmente en minutos.',
     form_title: 'Solicitar reserva',
@@ -59,7 +59,7 @@ const RESERVAS_COPY = {
     aside_title: 'Tu solicitud llega a:',
     guarantee_title: 'Reserva directa',
     guarantee_items: [
-      'Precio directo siempre mejor que cualquier plataforma',
+      'Mejor precio garantizado: te lo igualamos y lo mejoramos',
       'Reservando directo te ahorras desde un 10 %',
       'Alex o Fran responden personalmente',
       'Te respondemos normalmente en minutos',
@@ -67,7 +67,7 @@ const RESERVAS_COPY = {
     ],
   },
   en: {
-    eyebrow: 'Direct price always better than Booking or Airbnb · No middlemen',
+    eyebrow: 'Best price guaranteed: we match it and beat it · No commissions',
     title: (<>Book your<br/><em>home in Vera.</em></>),
     sub: 'Write to us directly. Alex or Fran usually reply in minutes.',
     form_title: 'Request a booking',
@@ -122,7 +122,7 @@ const RESERVAS_COPY = {
     aside_title: 'Your request goes to:',
     guarantee_title: 'Direct booking',
     guarantee_items: [
-      'Direct price always better than any platform',
+      'Best price guaranteed: we match it and beat it',
       'Book direct and save from 10%',
       'Alex or Fran reply personally',
       'We usually reply in minutes',
@@ -196,7 +196,7 @@ const LsPriceSummary = ({ ls, extras = [], guests, pets, lang }) => {
         </div>
         <div className="price-right-col">
           <div className="price-guarantee-badge">
-            {es ? '✓ Precio directo siempre mejor' : '✓ Direct price always better'}
+            {es ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'}
           </div>
           <div className="price-guarantee-sub">
             {es ? 'Sin comisiones de plataformas.' : 'No platform commissions.'}
@@ -294,7 +294,7 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [],
         </div>
         <div className="price-right-col">
           <div className="price-guarantee-badge">
-            {lang === 'es' ? '✓ Precio directo siempre mejor' : '✓ Direct price always better'}
+            {lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'}
           </div>
           <div className="price-guarantee-sub">
             {lang === 'es'
@@ -376,8 +376,8 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [],
             ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.'
             : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.')
         : (lang === 'es'
-            ? '* Precio orientativo. El precio directo es siempre mejor que cualquier plataforma.'
-            : '* Indicative price. Our direct price is always better than any platform.')
+            ? '* Precio orientativo. ¿Lo encuentras más barato en una plataforma? Te lo igualamos y, si podemos, lo mejoramos.'
+            : '* Indicative price. Found it cheaper on a platform? We\'ll match it and, if we can, beat it.')
       }</p>
     </div>
   );
@@ -742,7 +742,7 @@ const ReservasForm = ({ lang }) => {
                 (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') +
                 (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') +
                 (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-                `   ✓ Precio directo siempre mejor que cualquier plataforma\n`
+                `   ✓ Mejor precio garantizado: te lo igualamos y lo mejoramos\n`
               : `\n💰 ${calc.isGapOffer ? 'DIRECT OFFER PRICE' : 'ESTIMATED DIRECT PRICE'}\n` +
                 `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` +
                 (calc.isGapOffer ? `   🏷 Offer: ${fmt(calc.gapPerNight)}/night (locked price)\n` : '') +
@@ -750,7 +750,7 @@ const ReservasForm = ({ lang }) => {
                 (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') +
                 (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') +
                 (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-                `   ✓ Direct price always better than any platform\n`)
+                `   ✓ Best price guaranteed: we match it and beat it\n`)
           : '');
     const lines = lang === 'es'
       ? [

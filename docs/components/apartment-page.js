@@ -473,7 +473,7 @@ const AptPageHero = ({
     className: "app-per"
   }, lang === 'es' ? ' / noche · precio directo' : ' / night · direct price'), /*#__PURE__*/React.createElement("span", {
     className: "app-match"
-  }, lang === 'es' ? '· Precio directo siempre mejor que Booking o Airbnb.' : '· Direct price always better than Booking or Airbnb.')), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '· Mejor precio garantizado: te lo igualamos.' : '· Best price guaranteed: we match it.')), /*#__PURE__*/React.createElement("div", {
     className: "apt-page-ctas"
   }, /*#__PURE__*/React.createElement("a", {
     href: `reservas.html?apt=${apt.id}`,
@@ -1323,7 +1323,7 @@ const AptStickyBar = ({
   }, lang === 'es' ? `desde ${minP}€/noche` : `from ${minP}€/night`, /*#__PURE__*/React.createElement("span", {
     className: "asb-match",
     "aria-hidden": "true"
-  }, lang === 'es' ? '✓ precio directo siempre mejor' : '✓ direct price always better'))), /*#__PURE__*/React.createElement("a", {
+  }, lang === 'es' ? '✓ mejor precio garantizado' : '✓ best price guaranteed'))), /*#__PURE__*/React.createElement("a", {
     href: reservasHref,
     className: "btn btn-primary asb-cta"
   }, lang === 'es' ? 'Reservar' : 'Book', " ", /*#__PURE__*/React.createElement("span", {
