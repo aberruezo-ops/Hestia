@@ -408,7 +408,7 @@ const Ratings = ({
 const RatingsMarquee = ({
   lang
 }) => {
-  const items = lang === 'es' ? ['★ 9.8 · Booking.com', '★ 5.0 · Airbnb Superhost', '★ 4.9 · Google Maps', '600+ familias desde 2016', 'Sin comisiones · reserva directa', '10 años en Vera Playa', 'Precio directo siempre mejor', 'Te responde Alex o Fran en <24 h'] : ['★ 9.8 · Booking.com', '★ 5.0 · Airbnb Superhost', '★ 4.9 · Google Maps', '600+ families since 2016', 'No commissions · direct booking', '10 years in Vera Playa', 'Direct price always better', 'Alex or Fran reply within 24 h'];
+  const items = lang === 'es' ? ['★ 9.8 · Booking.com', '★ 5.0 · Airbnb Superhost', '★ 4.9 · Google Maps', '600+ familias desde 2016', 'Sin comisiones · reserva directa', '10 años en Vera Playa', 'Precio directo siempre mejor', 'Te responde Alex o Fran, normalmente en minutos'] : ['★ 9.8 · Booking.com', '★ 5.0 · Airbnb Superhost', '★ 4.9 · Google Maps', '600+ families since 2016', 'No commissions · direct booking', '10 years in Vera Playa', 'Direct price always better', 'Alex or Fran reply, usually in minutes'];
   // Duplicamos el array para que el loop sea continuo (translateX -50%).
   const doubled = [...items, ...items];
   return /*#__PURE__*/React.createElement("section", {

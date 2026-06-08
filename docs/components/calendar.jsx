@@ -203,8 +203,8 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
       <div className="req-disclaimer">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         <p>{lang === 'es'
-          ? <><strong>Precio máximo orientativo.</strong> Si encuentras este apartamento más barato en Booking, Airbnb o cualquier otra plataforma, escríbenos — no solo lo igualamos, lo mejoramos. En la siguiente pantalla puedes añadir extras (cuna, trona, sábanas, mascota…). Confirmamos en menos de 24 h.</>
-          : <><strong>Maximum indicative price.</strong> Found it cheaper on Booking, Airbnb or any other platform? Write to us — we won't just match it, we'll beat it. On the next screen you can add extras (cot, high chair, linen, pet…). We confirm within 24 h.</>}</p>
+          ? <><strong>Precio máximo orientativo.</strong> Si encuentras este apartamento más barato en Booking, Airbnb o cualquier otra plataforma, escríbenos — no solo lo igualamos, lo mejoramos. En la siguiente pantalla puedes añadir extras (cuna, trona, sábanas, mascota…). Normalmente te contestamos en minutos.</>
+          : <><strong>Maximum indicative price.</strong> Found it cheaper on Booking, Airbnb or any other platform? Write to us — we won't just match it, we'll beat it. On the next screen you can add extras (cot, high chair, linen, pet…). We usually reply in minutes.</>}</p>
       </div>
 
       {/* CTA único: avanzar con la reserva → /reservas con prefill */}

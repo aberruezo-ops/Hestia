@@ -444,7 +444,7 @@ const HomeBookingModal = ({
     onClick: !valid ? e => e.preventDefault() : undefined
   }, /*#__PURE__*/React.createElement(MailIcon, null), " ", lang === 'es' ? 'Enviar por email' : 'Send by email')), /*#__PURE__*/React.createElement("p", {
     className: "hbm-note"
-  }, lang === 'es' ? '* Precios orientativos máximos. Alex o Fran responden en menos de 24 h.' : '* Maximum guide prices. Alex or Fran reply within 24 h.')));
+  }, lang === 'es' ? '* Precios orientativos máximos. Alex o Fran responden normalmente en minutos.' : '* Maximum guide prices. Alex or Fran usually reply in minutes.')));
 };
 
 // --- APARTAMENTOS (scroll horizontal) ---
