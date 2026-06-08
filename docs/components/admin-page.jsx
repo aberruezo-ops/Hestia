@@ -46,7 +46,7 @@ const APT_CONTRACT_DATA = {
   vm: {
     name: 'Hestía Vera Mar',
     shortName: 'Mar',
-    heroPhoto: 'assets/apt-vm-gallery-1.jpg',
+    heroPhoto: 'assets/apt-vm-gallery-10.jpg',
     direccion: 'Apto. 1A, del portal 14, edificio 3, en la urbanización Paraíso Playa, en C/ Islas Canarias, 7',
     plazaGaraje: '160',
     zonaObras: 'enfrente',
@@ -56,7 +56,7 @@ const APT_CONTRACT_DATA = {
   vt: {
     name: 'Hestía Vera Thalassa',
     shortName: 'Thalassa',
-    heroPhoto: 'assets/apt-vt-gallery-01.jpg',
+    heroPhoto: 'assets/apt-vt-gallery-03.jpg',
     direccion: 'Apto. 11, planta 5ª, escalera 13, en la urbanización Thalassa, en C/ Tomillo 2',
     plazaGaraje: '163',
     zonaObras: 'cercanas',
@@ -66,7 +66,7 @@ const APT_CONTRACT_DATA = {
   vs: {
     name: 'Hestía Vera Salinas',
     shortName: 'Salinas',
-    heroPhoto: 'assets/apt-vs-collage-header.jpg',
+    heroPhoto: 'assets/apt-vs-gallery-21.jpg',
     direccion: 'Apto. 7, planta 1ª, bloque 22, en la urbanización Pueblo Salinas, en C/ Alcazaba 115',
     plazaGaraje: '290',
     zonaObras: 'cercanas',
