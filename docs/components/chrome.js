@@ -206,6 +206,7 @@ const Header = ({
 }) => {
   const t = COPY[lang];
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [accessOpen, setAccessOpen] = React.useState(false);
   const close = () => setMobileOpen(false);
   React.useEffect(() => {
     close();
@@ -579,7 +580,17 @@ const Header = ({
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
     className: "mn-cta-primary"
-  }, t.cta_nav, " \u2192")), /*#__PURE__*/React.createElement("div", {
+  }, t.cta_nav, " \u2192"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "mn-cta-secondary",
+    onClick: () => {
+      close();
+      setAccessOpen(true);
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "mn-cta-ico",
+    "aria-hidden": "true"
+  }, "\u2726"), lang === 'es' ? 'Acceso huéspedes' : 'Guest access')), /*#__PURE__*/React.createElement("div", {
     className: "mn-contacts"
   }, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370",
@@ -593,7 +604,10 @@ const Header = ({
     rel: "noopener"
   }, /*#__PURE__*/React.createElement("span", {
     className: "tl-dot"
-  }), "Fran \xB7 +34 654 138 251")))));
+  }), "Fran \xB7 +34 654 138 251")))), accessOpen && typeof GuestAccessModal !== 'undefined' && ReactDOM.createPortal(/*#__PURE__*/React.createElement(GuestAccessModal, {
+    lang: lang,
+    onClose: () => setAccessOpen(false)
+  }), document.body));
 };
 const FloatingChat = ({
   lang

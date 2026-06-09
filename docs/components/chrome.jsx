@@ -132,6 +132,7 @@ const MnGuestSection = ({ t, lang, NavLink, NAV_PAGES }) => {
 const Header = ({ mode, scrolled, lang }) => {
   const t = COPY[lang];
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [accessOpen, setAccessOpen] = React.useState(false);
   const close = () => setMobileOpen(false);
   React.useEffect(() => { close(); }, [lang]);
 
@@ -431,6 +432,14 @@ const Header = ({ mode, scrolled, lang }) => {
           </div>
           <div className="mn-actions">
             <NavLink href={NAV_PAGES.reservas} className="mn-cta-primary">{t.cta_nav} →</NavLink>
+            <button
+              type="button"
+              className="mn-cta-secondary"
+              onClick={() => { close(); setAccessOpen(true); }}
+            >
+              <span className="mn-cta-ico" aria-hidden="true">✦</span>
+              {lang === 'es' ? 'Acceso huéspedes' : 'Guest access'}
+            </button>
           </div>
           <div className="mn-contacts">
             <a href="https://wa.me/34620316370" target="_blank" rel="noopener">
@@ -442,6 +451,10 @@ const Header = ({ mode, scrolled, lang }) => {
           </div>
         </nav>
       </div>
+      {accessOpen && typeof GuestAccessModal !== 'undefined' && ReactDOM.createPortal(
+        <GuestAccessModal lang={lang} onClose={() => setAccessOpen(false)} />,
+        document.body
+      )}
     </>
   );
 };

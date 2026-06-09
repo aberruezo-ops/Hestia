@@ -3377,4 +3377,4 @@ const HomeGuideTeaser = ({ lang }) => {
   );
 };
 
-Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin, WidgetGuestAccess, WidgetTopRecs, TOP_RECS, HomeGuideTeaser });
+Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin, WidgetGuestAccess, WidgetTopRecs, TOP_RECS, HomeGuideTeaser, GuestAccessModal });
