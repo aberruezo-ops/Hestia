@@ -331,7 +331,7 @@ const PricePreview = ({
     className: "prl-saving-val"
   }, "\u2212", fmt(savings))))), /*#__PURE__*/React.createElement("p", {
     className: "price-note"
-  }, lsCalc ? lang === 'es' ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.' : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.' : lang === 'es' ? '* Precio orientativo. ¿Lo encuentras más barato en una plataforma? Te lo igualamos y, si podemos, lo mejoramos.' : '* Indicative price. Found it cheaper on a platform? We\'ll match it and, if we can, beat it.'));
+  }, lsCalc ? lang === 'es' ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.' : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.' : lang === 'es' ? '* Precio orientativo. ¿Lo encuentras más barato en una plataforma? No solo te lo igualamos: te lo mejoramos.' : '* Indicative price. Found it cheaper on a platform? We don\'t just match it — we beat it.'));
 };
 
 // ReviewQuote — cita rotando de una reseña real verificada en el

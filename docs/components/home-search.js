@@ -442,7 +442,7 @@ const HsResultCard = ({
     className: "price-guarantee-badge"
   }, lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
-  }, lang === 'es' ? '¿Lo encuentras más barato en Booking o Airbnb? Te lo igualamos y, si podemos, lo mejoramos.' : 'Found it cheaper on Booking or Airbnb? We\'ll match it and, if we can, beat it.'))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '¿Lo encuentras más barato en Booking o Airbnb? No solo te lo igualamos: te lo mejoramos.' : 'Found it cheaper on Booking or Airbnb? We don\'t just match it — we beat it.'))), /*#__PURE__*/React.createElement("div", {
     className: "hs-pb-breakdown"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hs-pb-line"

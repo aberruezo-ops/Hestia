@@ -433,7 +433,7 @@ const QUICK_FAQ = {
   reservas: {
     es: [
       { q: '¿Es mejor reservar directo que por Booking o Airbnb?',
-        a: <>Sí: reservando directo no pagas las comisiones que cobran las plataformas, así que casi siempre sale más barato. A veces lanzan promociones que no controlamos; si ves un precio más bajo, tráenoslo y te lo igualamos —y, siempre que podamos, lo mejoramos—. Sin intermediarios, hablando con los propietarios. <a href="reservas.html">Reserva aquí.</a></> },
+        a: <>Sí: reservando directo no pagas las comisiones que cobran las plataformas, así que casi siempre sale más barato. A veces lanzan promociones que no controlamos; si ves un precio más bajo, tráenoslo: no solo te lo igualamos, te lo mejoramos. Sin intermediarios, hablando con los propietarios. <a href="reservas.html">Reserva aquí.</a></> },
       { q: '¿Cuánto tardáis en confirmar la reserva?',
         a: <>Normalmente en minutos. Casi siempre respondemos el mismo día y, la mayoría de las veces, en cuestión de minutos.</> },
       { q: '¿Qué pasa si necesito cambiar las fechas?',
@@ -443,7 +443,7 @@ const QUICK_FAQ = {
     ],
     en: [
       { q: 'Is it better to book directly than through Booking or Airbnb?',
-        a: <>Yes: booking direct you skip the commissions platforms charge, so it's almost always cheaper. They sometimes run promos we don't control; if you find a lower price, bring it to us and we'll match it —and, whenever we can, beat it—. No middlemen, straight with the owners. <a href="reservas.html">Book here.</a></> },
+        a: <>Yes: booking direct you skip the commissions platforms charge, so it's almost always cheaper. They sometimes run promos we don't control; if you find a lower price, bring it to us: we don't just match it, we beat it. No middlemen, straight with the owners. <a href="reservas.html">Book here.</a></> },
       { q: 'How long does confirmation take?',
         a: <>Usually within minutes. Almost always the same day and, most of the time, within minutes.</> },
       { q: 'What if I need to change my dates?',
@@ -2404,7 +2404,7 @@ Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrol
 // ================================================================
 const DIRECT_PERKS = {
   es: [
-    { id:'precio',    icon:'💰', stat:'✓',       t:'Igualamos y mejoramos cualquier precio.',          d:'El precio de la web es el directo, sin comisiones de plataforma, así que casi siempre es más barato. Las plataformas a veces hacen promociones que no controlamos; si encuentras uno más bajo, tráenoslo: te lo igualamos y, siempre que podamos, lo mejoramos.' },
+    { id:'precio',    icon:'💰', stat:'✓',       t:'No solo igualamos: mejoramos cualquier precio.',   d:'El precio de la web es el directo, sin comisiones de plataforma, así que casi siempre es más barato. Las plataformas a veces hacen promociones que no controlamos; si encuentras uno más bajo, tráenoslo: no solo te lo igualamos, te lo mejoramos.' },
     { id:'comision',  icon:'🚫', stat:'−10%',    t:'Reservando directo te ahorras desde un 10 %.',    d:'Las plataformas como Booking o Airbnb añaden comisiones y cargos de servicio que aquí no existen: pagas el precio real, no el inflado por intermediarios. El ahorro exacto depende del programa de cada plataforma y de ofertas puntuales — por eso decimos «desde un 10 %».' },
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Respuesta humana, no un bot.',                    d:'Hablas directamente con Alex o Fran. Casi siempre respondemos en minutos; máximo una hora en horario activo.' },
     { id:'cancel',    icon:'🔓', stat:'✓',       t:'Mejoramos las condiciones de cancelación.',       d:'¿Necesitas algo distinto a la política estándar? Pregúntanos, miramos cada caso. Sin formularios eternos, sin sanciones ocultas.' },
@@ -2415,7 +2415,7 @@ const DIRECT_PERKS = {
     { id:'proceso',   icon:'📜', stat:'20%',     t:'Contrato, prereserva y resto al llegar.',         d:'Te enviamos un borrador de contrato con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelación y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Una pequeña prereserva a convenir — normalmente el 20 % del total — se paga al formalizar el contrato; el resto, al llegar a Hestía. Acusamos recibo de todo (contrato y pago) para darte confianza, garantía y seguridad en cada paso.' },
   ],
   en: [
-    { id:'precio',    icon:'💰', stat:'✓',       t:'We match and beat any price.',                    d:'The website price is the direct one, with no platform commission, so it\'s almost always cheaper. Platforms sometimes run promos we don\'t control; if you find a lower one, bring it to us: we\'ll match it and, whenever we can, beat it.' },
+    { id:'precio',    icon:'💰', stat:'✓',       t:'We don\'t just match — we beat any price.',        d:'The website price is the direct one, with no platform commission, so it\'s almost always cheaper. Platforms sometimes run promos we don\'t control; if you find a lower one, bring it to us: we don\'t just match it, we beat it.' },
     { id:'comision',  icon:'🚫', stat:'−10%',    t:'Book direct and save from 10%.',                  d:'Platforms like Booking or Airbnb add commissions and service fees that simply don\'t exist here: you pay the real price, not the inflated one. The exact saving depends on each platform\'s program and occasional offers — that\'s why we say "from 10%".' },
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Human reply, not a bot.',                         d:'You talk directly to Alex or Fran. Usually within minutes; up to an hour during active hours.' },
     { id:'cancel',    icon:'🔓', stat:'✓',       t:'We improve cancellation terms.',                  d:'Need something different from the standard policy? Just ask — we look at each case. No endless forms, no hidden penalties.' },
