@@ -60,7 +60,7 @@ const RESERVAS_COPY = {
     note: 'Al pulsar se abrirá WhatsApp con tu solicitud. Alex o Fran te responden normalmente en minutos.',
     aside_title: 'Tu solicitud llega a:',
     guarantee_title: 'Reserva directa',
-    guarantee_items: ['Mejor precio garantizado: te lo igualamos y lo mejoramos', 'Reservando directo te ahorras desde un 10 %', 'Alex o Fran responden personalmente', 'Te respondemos normalmente en minutos', 'Flexibilidad real en cambios y cancelaciones']
+    guarantee_items: ['Mejor precio garantizado: te lo igualamos y lo mejoramos', 'Reservando directo te ahorras hasta un 10 % aprox.', 'Alex o Fran responden personalmente', 'Te respondemos normalmente en minutos', 'Flexibilidad real en cambios y cancelaciones']
   },
   en: {
     eyebrow: 'Best price guaranteed: we match it and beat it · No commissions',
@@ -117,7 +117,7 @@ const RESERVAS_COPY = {
     note: 'Clicking will open WhatsApp with your request. Alex or Fran usually reply in minutes.',
     aside_title: 'Your request goes to:',
     guarantee_title: 'Direct booking',
-    guarantee_items: ['Best price guaranteed: we match it and beat it', 'Book direct and save from 10%', 'Alex or Fran reply personally', 'We usually reply in minutes', 'Real flexibility on changes and cancellations']
+    guarantee_items: ['Best price guaranteed: we match it and beat it', 'Book direct and save up to ~10%', 'Alex or Fran reply personally', 'We usually reply in minutes', 'Real flexibility on changes and cancellations']
   }
 };
 const _resExtrasList = () => {
@@ -1303,9 +1303,9 @@ const ReservasAside = ({
     className: "rg-title"
   }, t.guarantee_title), /*#__PURE__*/React.createElement("p", {
     className: "rg-lede"
-  }, lang === 'es' ? 'Reservando directo te ahorras desde un 10 %: mejor precio que Booking o Airbnb, sin comisiones y con respuesta humana normalmente en minutos.' : 'Book direct and save from 10%: better price than Booking or Airbnb, no commissions and a human reply usually in minutes.'), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? 'Reservando directo te ahorras hasta un 10 % aprox.: mejor precio que Booking o Airbnb, sin comisiones y con respuesta humana normalmente en minutos.' : 'Book direct and save up to ~10%: better price than Booking or Airbnb, no commissions and a human reply usually in minutes.'), /*#__PURE__*/React.createElement("p", {
     className: "rg-disclaimer"
-  }, lang === 'es' ? '* El ahorro exacto depende del programa de cada plataforma y de ofertas puntuales; por eso indicamos «desde un 10 %».' : '* The exact saving depends on each platform’s program and occasional offers; that’s why we say "from 10%".'), /*#__PURE__*/React.createElement("button", {
+  }, lang === 'es' ? '* El ahorro exacto depende de si la plataforma ya está aplicando descuentos o programas propios que no podemos conocer; por eso indicamos «hasta un 10 % aprox.».' : '* The exact saving depends on whether the platform is already applying its own discounts or programmes we can’t know; that’s why we say "up to ~10%".'), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "rg-cta",
     onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks')),

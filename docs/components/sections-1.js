@@ -693,7 +693,7 @@ const Apartments = ({
       className: "apb-per"
     }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
       className: "apb-match"
-    }, lang === 'es' ? '✓ Normalmente desde un 10% más barato que en Booking o Airbnb*' : '✓ Usually from 10% cheaper than Booking or Airbnb*')), (() => {
+    }, lang === 'es' ? '✓ Hasta un 10% aprox. más barato que en Booking o Airbnb*' : '✓ Up to ~10% cheaper than Booking or Airbnb*')), (() => {
       const av = aptAvail[a.id];
       if (!av) return null;
       const today = new Date().toISOString().slice(0, 10);
@@ -1220,7 +1220,7 @@ const HomePriceStrip = ({
       className: "hps-ota-price"
     }, "desde ~", pMin, "\u20AC"), /*#__PURE__*/React.createElement("span", {
       className: "hps-ota-pct"
-    }, "+10% m\xEDn."))), /*#__PURE__*/React.createElement("span", {
+    }, "+10% aprox."))), /*#__PURE__*/React.createElement("span", {
       className: "hps-cta"
     }, lang === 'es' ? 'Ver apartamento →' : 'View apartment →'));
   })), /*#__PURE__*/React.createElement("p", {

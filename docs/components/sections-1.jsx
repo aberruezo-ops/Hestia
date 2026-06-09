@@ -532,8 +532,8 @@ const Apartments = ({ lang }) => {
                       <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
                       <span className="apb-match">
                         {lang === 'es'
-                          ? '✓ Normalmente desde un 10% más barato que en Booking o Airbnb*'
-                          : '✓ Usually from 10% cheaper than Booking or Airbnb*'}
+                          ? '✓ Hasta un 10% aprox. más barato que en Booking o Airbnb*'
+                          : '✓ Up to ~10% cheaper than Booking or Airbnb*'}
                       </span>
                     </div>
                   )}
@@ -900,7 +900,7 @@ const HomePriceStrip = ({ lang }) => {
                     <span className="hps-ota-row">
                       <span className="hps-ota-name">Booking / Airbnb</span>
                       <span className="hps-ota-price">desde ~{pMin}€</span>
-                      <span className="hps-ota-pct">+10% mín.</span>
+                      <span className="hps-ota-pct">+10% aprox.</span>
                     </span>
                   </span>
                 )}

@@ -3378,9 +3378,9 @@ const DIRECT_PERKS = {
   }, {
     id: 'comision',
     icon: '🚫',
-    stat: '−10%',
-    t: 'Reservando directo te ahorras desde un 10 %.',
-    d: 'Las plataformas como Booking o Airbnb añaden comisiones y cargos de servicio que aquí no existen: pagas el precio real, no el inflado por intermediarios. El ahorro exacto depende del programa de cada plataforma y de ofertas puntuales — por eso decimos «desde un 10 %».'
+    stat: '~10%',
+    t: 'Reservando directo te ahorras hasta un 10 % aprox.',
+    d: 'Las plataformas como Booking o Airbnb añaden comisiones y cargos de servicio que aquí no existen: pagas el precio real, no el inflado por intermediarios. El ahorro exacto depende de si la plataforma ya está aplicando descuentos o programas propios que no podemos conocer — por eso decimos «hasta un 10 % aprox.».'
   }, {
     id: 'respuesta',
     icon: '⏱',
@@ -3437,9 +3437,9 @@ const DIRECT_PERKS = {
   }, {
     id: 'comision',
     icon: '🚫',
-    stat: '−10%',
-    t: 'Book direct and save from 10%.',
-    d: 'Platforms like Booking or Airbnb add commissions and service fees that simply don\'t exist here: you pay the real price, not the inflated one. The exact saving depends on each platform\'s program and occasional offers — that\'s why we say "from 10%".'
+    stat: '~10%',
+    t: 'Book direct and save up to ~10%.',
+    d: 'Platforms like Booking or Airbnb add commissions and service fees that simply don\'t exist here: you pay the real price, not the inflated one. The exact saving depends on whether the platform is already applying its own discounts or programmes we can\'t know — that\'s why we say "up to ~10%".'
   }, {
     id: 'respuesta',
     icon: '⏱',
