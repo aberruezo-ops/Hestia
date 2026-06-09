@@ -23,16 +23,13 @@ const LS_COPY = {
     rate_label: '€ / mes',
     price_rows: [{
       period: 'Nov · Dic · Ene · Feb · Mar · Abr',
-      months: 'T. baja',
-      rate: '1.450'
+      months: 'T. baja'
     }, {
       period: 'Oct · May',
-      months: '',
-      rate: '1.590'
+      months: ''
     }, {
       period: 'Jun · Sep',
-      months: '',
-      rate: '1.790'
+      months: ''
     }],
     min_note: 'Estancia mínima: 29 noches. Sin disponibilidad en julio y agosto.',
     apts_title: 'Los tres Hestías',
@@ -81,16 +78,13 @@ const LS_COPY = {
     rate_label: '€ / month',
     price_rows: [{
       period: 'Nov · Dec · Jan · Feb · Mar · Apr',
-      months: 'Low season',
-      rate: '1,450'
+      months: 'Low season'
     }, {
       period: 'Oct · May',
-      months: '',
-      rate: '1,590'
+      months: ''
     }, {
       period: 'Jun · Sep',
-      months: '',
-      rate: '1,790'
+      months: ''
     }],
     min_note: 'Minimum stay: 29 nights. July and August not available.',
     apts_title: 'The three Hestías',
@@ -143,6 +137,17 @@ const LS_APTS = [{
   concept_es: 'El amarillo albero del amanecer',
   concept_en: 'The golden dawn above the salt flats'
 }];
+
+// Tarifas de estancia larga: SIEMPRE desde prices.json (window.PRICES_V2),
+// para que coincidan con el panel admin. Sin números hardcodeados en la web.
+const _lsCfgPub = () => window.PRICES_V2 && window.PRICES_V2.longStayConfig || {};
+const _lsRates = () => _lsCfgPub().monthlyRates || {
+  baja: 1450,
+  media: 1590,
+  alta: 1790
+};
+const _lsFlat = () => _lsCfgPub().specialNightFlat || 80;
+const _fmtRate = (n, lang) => String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'es' ? '.' : ',');
 const LsHero = ({
   lang
 }) => {
@@ -176,7 +181,7 @@ const LsHero = ({
     className: "lsl-pill"
   }, lang === 'es' ? 'Sep – Jun' : 'Sep – Jun'), /*#__PURE__*/React.createElement("span", {
     className: "lsl-pill"
-  }, lang === 'es' ? 'desde 1.450€/mes' : 'from €1,450/month'), /*#__PURE__*/React.createElement("span", {
+  }, lang === 'es' ? `desde ${_fmtRate(_lsRates().baja, 'es')}€/mes` : `from €${_fmtRate(_lsRates().baja, 'en')}/month`), /*#__PURE__*/React.createElement("span", {
     className: "lsl-pill"
   }, lang === 'es' ? 'Sin intermediarios' : 'No middlemen')), /*#__PURE__*/React.createElement("div", {
     className: "lsl-hero-ctas"
@@ -264,6 +269,9 @@ const LsPrices = ({
   lang
 }) => {
   const t = LS_COPY[lang];
+  const rates = _lsRates();
+  const rateByIdx = [rates.baja, rates.media, rates.alta];
+  const note = t.prices_note.replace(/\b80\b/, String(_lsFlat()));
   return /*#__PURE__*/React.createElement("section", {
     className: "lsl-section lsl-prices"
   }, /*#__PURE__*/React.createElement("div", {
@@ -272,9 +280,9 @@ const LsPrices = ({
     className: "lsl-h2"
   }, t.prices_title), /*#__PURE__*/React.createElement("p", {
     className: "lsl-prices-note"
-  }, t.prices_note), /*#__PURE__*/React.createElement("div", {
+  }, note), /*#__PURE__*/React.createElement("div", {
     className: "lsl-prices-table"
-  }, t.price_rows.map(r => /*#__PURE__*/React.createElement("div", {
+  }, t.price_rows.map((r, i) => /*#__PURE__*/React.createElement("div", {
     key: r.period,
     className: "lsl-pt-row"
   }, /*#__PURE__*/React.createElement("span", {
@@ -285,7 +293,7 @@ const LsPrices = ({
     className: "lsl-pt-rate"
   }, /*#__PURE__*/React.createElement("span", {
     className: "lsl-pt-desde"
-  }, lang === 'es' ? 'desde ' : 'from '), r.rate, /*#__PURE__*/React.createElement("span", {
+  }, lang === 'es' ? 'desde ' : 'from '), _fmtRate(rateByIdx[i], lang), /*#__PURE__*/React.createElement("span", {
     className: "lsl-pt-unit"
   }, "\u20AC/mes")))), /*#__PURE__*/React.createElement("div", {
     className: "lsl-pt-row lsl-pt-special"
@@ -295,7 +303,7 @@ const LsPrices = ({
     className: "lsl-pt-tag"
   }, lang === 'es' ? 'tarifa especial' : 'special rate'), /*#__PURE__*/React.createElement("span", {
     className: "lsl-pt-rate"
-  }, "80", /*#__PURE__*/React.createElement("span", {
+  }, _lsFlat(), /*#__PURE__*/React.createElement("span", {
     className: "lsl-pt-unit"
   }, "\u20AC/noche")))), /*#__PURE__*/React.createElement("p", {
     className: "lsl-prices-min"
