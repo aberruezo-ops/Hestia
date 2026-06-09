@@ -434,6 +434,8 @@ const QUICK_FAQ = {
     es: [
       { q: '¿Es mejor reservar directo que por Booking o Airbnb?',
         a: <>Sí: reservando directo no pagas las comisiones que cobran las plataformas, así que casi siempre sale más barato. A veces lanzan promociones que no controlamos; si ves un precio más bajo, tráenoslo: no solo te lo igualamos, te lo mejoramos. Sin intermediarios, hablando con los propietarios. <a href="reservas.html">Reserva aquí.</a></> },
+      { q: '¿Y si veo un precio más barato en una plataforma?',
+        a: <>Puede pasar en momentos puntuales: Booking o Airbnb lanzan sus propios descuentos y programas (ofertas de última hora, niveles de fidelidad, cupones…) que nosotros no controlamos, así que a veces su precio baja del que damos por defecto. No es que te cobremos de más — es su promoción, no nuestro precio real. Si te ocurre, escríbenos con el precio que ves: nos adaptamos y hacemos todo lo posible por mejorarlo.</> },
       { q: '¿Cuánto tardáis en confirmar la reserva?',
         a: <>Normalmente en minutos. Casi siempre respondemos el mismo día y, la mayoría de las veces, en cuestión de minutos.</> },
       { q: '¿Qué pasa si necesito cambiar las fechas?',
@@ -444,6 +446,8 @@ const QUICK_FAQ = {
     en: [
       { q: 'Is it better to book directly than through Booking or Airbnb?',
         a: <>Yes: booking direct you skip the commissions platforms charge, so it's almost always cheaper. They sometimes run promos we don't control; if you find a lower price, bring it to us: we don't just match it, we beat it. No middlemen, straight with the owners. <a href="reservas.html">Book here.</a></> },
+      { q: 'What if I see a cheaper price on a platform?',
+        a: <>It can happen at certain moments: Booking or Airbnb run their own discounts and programs (last-minute deals, loyalty tiers, coupons…) that we don't control, so sometimes their price dips below our default one. It doesn't mean we're overcharging — it's their promotion, not our real price. If it happens, write to us with the price you see: we'll adapt and do everything we can to beat it.</> },
       { q: 'How long does confirmation take?',
         a: <>Usually within minutes. Almost always the same day and, most of the time, within minutes.</> },
       { q: 'What if I need to change my dates?',

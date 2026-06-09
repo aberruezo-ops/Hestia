@@ -624,6 +624,9 @@ const QUICK_FAQ = {
         href: "reservas.html"
       }, "Reserva aqu\xED."))
     }, {
+      q: '¿Y si veo un precio más barato en una plataforma?',
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Puede pasar en momentos puntuales: Booking o Airbnb lanzan sus propios descuentos y programas (ofertas de \xFAltima hora, niveles de fidelidad, cupones\u2026) que nosotros no controlamos, as\xED que a veces su precio baja del que damos por defecto. No es que te cobremos de m\xE1s \u2014 es su promoci\xF3n, no nuestro precio real. Si te ocurre, escr\xEDbenos con el precio que ves: nos adaptamos y hacemos todo lo posible por mejorarlo.")
+    }, {
       q: '¿Cuánto tardáis en confirmar la reserva?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Normalmente en minutos. Casi siempre respondemos el mismo d\xEDa y, la mayor\xEDa de las veces, en cuesti\xF3n de minutos.")
     }, {
@@ -638,6 +641,9 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes: booking direct you skip the commissions platforms charge, so it's almost always cheaper. They sometimes run promos we don't control; if you find a lower price, bring it to us: we don't just match it, we beat it. No middlemen, straight with the owners. ", /*#__PURE__*/React.createElement("a", {
         href: "reservas.html"
       }, "Book here."))
+    }, {
+      q: 'What if I see a cheaper price on a platform?',
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "It can happen at certain moments: Booking or Airbnb run their own discounts and programs (last-minute deals, loyalty tiers, coupons\u2026) that we don't control, so sometimes their price dips below our default one. It doesn't mean we're overcharging \u2014 it's their promotion, not our real price. If it happens, write to us with the price you see: we'll adapt and do everything we can to beat it.")
     }, {
       q: 'How long does confirmation take?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Usually within minutes. Almost always the same day and, most of the time, within minutes.")
