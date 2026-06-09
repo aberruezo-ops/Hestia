@@ -394,8 +394,8 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
                     </div>
                     <div className="price-guarantee-sub">
                       {lang === 'es'
-                        ? '¿Lo encuentras más barato en Booking o Airbnb? Te lo igualamos y, si podemos, lo mejoramos.'
-                        : 'Found it cheaper on Booking or Airbnb? We\'ll match it and, if we can, beat it.'}
+                        ? '¿Lo encuentras más barato en Booking o Airbnb? No solo te lo igualamos: te lo mejoramos.'
+                        : 'Found it cheaper on Booking or Airbnb? We don\'t just match it — we beat it.'}
                     </div>
                   </div>
                 </div>

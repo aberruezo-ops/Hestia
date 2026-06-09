@@ -154,7 +154,7 @@ const RequestPanel = ({
     className: "price-guarantee-badge"
   }, lang === 'es' ? '★ Mejor precio garantizado' : '★ Best price guaranteed'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
-  }, lang === 'es' ? '¿Lo encuentras más barato en Booking o Airbnb? Tráenoslo: te lo igualamos y, si podemos, lo mejoramos.' : 'Found it cheaper on Booking or Airbnb? Bring it to us — we\'ll match it and, if we can, beat it.'))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '¿Lo encuentras más barato en Booking o Airbnb? Tráenoslo: no solo te lo igualamos, te lo mejoramos.' : 'Found it cheaper on Booking or Airbnb? Bring it to us — we don\'t just match it, we beat it.'))), /*#__PURE__*/React.createElement("div", {
     className: "price-breakdown"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-line"
@@ -218,7 +218,7 @@ const RequestPanel = ({
     y1: "16",
     x2: "12.01",
     y2: "16"
-  })), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Precio m\xE1ximo orientativo."), " El precio de la web es el directo, sin comisiones de plataforma. Las plataformas a veces hacen promociones puntuales que no controlamos; si encuentras este apartamento m\xE1s barato, tr\xE1enoslo y te lo igualamos \u2014y, si podemos, lo mejoramos\u2014. En la siguiente pantalla puedes a\xF1adir extras (cuna, trona, s\xE1banas, mascota\u2026). Normalmente te contestamos en minutos.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Maximum indicative price."), " The website price is the direct one, with no platform commission. Platforms sometimes run promos we don't control; if you find this apartment cheaper, bring it to us and we'll match it \u2014and, if we can, beat it\u2014. On the next screen you can add extras (cot, high chair, linen, pet\u2026). We usually reply in minutes."))), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Precio m\xE1ximo orientativo."), " El precio de la web es el directo, sin comisiones de plataforma. Las plataformas a veces hacen promociones puntuales que no controlamos; si encuentras este apartamento m\xE1s barato, tr\xE1enoslo: no solo te lo igualamos, te lo mejoramos. En la siguiente pantalla puedes a\xF1adir extras (cuna, trona, s\xE1banas, mascota\u2026). Normalmente te contestamos en minutos.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Maximum indicative price."), " The website price is the direct one, with no platform commission. Platforms sometimes run promos we don't control; if you find this apartment cheaper, bring it to us: we don't just match it, we beat it. On the next screen you can add extras (cot, high chair, linen, pet\u2026). We usually reply in minutes."))), /*#__PURE__*/React.createElement("div", {
     className: "req-actions req-actions-forward"
   }, /*#__PURE__*/React.createElement("a", {
     href: reservasHref,

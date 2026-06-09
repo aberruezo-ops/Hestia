@@ -620,7 +620,7 @@ const QUICK_FAQ = {
   reservas: {
     es: [{
       q: '¿Es mejor reservar directo que por Booking o Airbnb?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED: reservando directo no pagas las comisiones que cobran las plataformas, as\xED que casi siempre sale m\xE1s barato. A veces lanzan promociones que no controlamos; si ves un precio m\xE1s bajo, tr\xE1enoslo y te lo igualamos \u2014y, siempre que podamos, lo mejoramos\u2014. Sin intermediarios, hablando con los propietarios. ", /*#__PURE__*/React.createElement("a", {
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED: reservando directo no pagas las comisiones que cobran las plataformas, as\xED que casi siempre sale m\xE1s barato. A veces lanzan promociones que no controlamos; si ves un precio m\xE1s bajo, tr\xE1enoslo: no solo te lo igualamos, te lo mejoramos. Sin intermediarios, hablando con los propietarios. ", /*#__PURE__*/React.createElement("a", {
         href: "reservas.html"
       }, "Reserva aqu\xED."))
     }, {
@@ -635,7 +635,7 @@ const QUICK_FAQ = {
     }],
     en: [{
       q: 'Is it better to book directly than through Booking or Airbnb?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes: booking direct you skip the commissions platforms charge, so it's almost always cheaper. They sometimes run promos we don't control; if you find a lower price, bring it to us and we'll match it \u2014and, whenever we can, beat it\u2014. No middlemen, straight with the owners. ", /*#__PURE__*/React.createElement("a", {
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes: booking direct you skip the commissions platforms charge, so it's almost always cheaper. They sometimes run promos we don't control; if you find a lower price, bring it to us: we don't just match it, we beat it. No middlemen, straight with the owners. ", /*#__PURE__*/React.createElement("a", {
         href: "reservas.html"
       }, "Book here."))
     }, {
@@ -3367,8 +3367,8 @@ const DIRECT_PERKS = {
     id: 'precio',
     icon: '💰',
     stat: '✓',
-    t: 'Igualamos y mejoramos cualquier precio.',
-    d: 'El precio de la web es el directo, sin comisiones de plataforma, así que casi siempre es más barato. Las plataformas a veces hacen promociones que no controlamos; si encuentras uno más bajo, tráenoslo: te lo igualamos y, siempre que podamos, lo mejoramos.'
+    t: 'No solo igualamos: mejoramos cualquier precio.',
+    d: 'El precio de la web es el directo, sin comisiones de plataforma, así que casi siempre es más barato. Las plataformas a veces hacen promociones que no controlamos; si encuentras uno más bajo, tráenoslo: no solo te lo igualamos, te lo mejoramos.'
   }, {
     id: 'comision',
     icon: '🚫',
@@ -3426,8 +3426,8 @@ const DIRECT_PERKS = {
     id: 'precio',
     icon: '💰',
     stat: '✓',
-    t: 'We match and beat any price.',
-    d: 'The website price is the direct one, with no platform commission, so it\'s almost always cheaper. Platforms sometimes run promos we don\'t control; if you find a lower one, bring it to us: we\'ll match it and, whenever we can, beat it.'
+    t: 'We don\'t just match — we beat any price.',
+    d: 'The website price is the direct one, with no platform commission, so it\'s almost always cheaper. Platforms sometimes run promos we don\'t control; if you find a lower one, bring it to us: we don\'t just match it, we beat it.'
   }, {
     id: 'comision',
     icon: '🚫',
