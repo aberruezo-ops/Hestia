@@ -31,9 +31,9 @@ const LS_COPY = {
     months_label: 'Meses',
     rate_label:   '€ / mes',
     price_rows: [
-      { period: 'Nov · Dic · Ene · Feb · Mar · Abr', months: 'T. baja', rate: '1.450' },
-      { period: 'Oct · May',                          months: '',        rate: '1.590' },
-      { period: 'Jun · Sep',                          months: '',        rate: '1.790' },
+      { period: 'Nov · Dic · Ene · Feb · Mar · Abr', months: 'T. baja' },
+      { period: 'Oct · May',                          months: '' },
+      { period: 'Jun · Sep',                          months: '' },
     ],
     min_note:    'Estancia mínima: 29 noches. Sin disponibilidad en julio y agosto.',
     apts_title:  'Los tres Hestías',
@@ -81,9 +81,9 @@ const LS_COPY = {
     months_label: 'Months',
     rate_label:   '€ / month',
     price_rows: [
-      { period: 'Nov · Dec · Jan · Feb · Mar · Apr', months: 'Low season', rate: '1,450' },
-      { period: 'Oct · May',                          months: '',           rate: '1,590' },
-      { period: 'Jun · Sep',                          months: '',           rate: '1,790' },
+      { period: 'Nov · Dec · Jan · Feb · Mar · Apr', months: 'Low season' },
+      { period: 'Oct · May',                          months: '' },
+      { period: 'Jun · Sep',                          months: '' },
     ],
     min_note:    'Minimum stay: 29 nights. July and August not available.',
     apts_title:  'The three Hestías',
@@ -110,6 +110,13 @@ const LS_APTS = [
   { id: 'vs', name: 'Salinas',  slug: 'salinas',  accent: '#D4A84A', concept_es: 'El amarillo albero del amanecer', concept_en: 'The golden dawn above the salt flats' },
 ];
 
+// Tarifas de estancia larga: SIEMPRE desde prices.json (window.PRICES_V2),
+// para que coincidan con el panel admin. Sin números hardcodeados en la web.
+const _lsCfgPub = () => (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || {};
+const _lsRates  = () => _lsCfgPub().monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+const _lsFlat   = () => _lsCfgPub().specialNightFlat || 80;
+const _fmtRate  = (n, lang) => String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'es' ? '.' : ',');
+
 const LsHero = ({ lang }) => {
   const t = LS_COPY[lang];
   return (
@@ -132,7 +139,7 @@ const LsHero = ({ lang }) => {
         <div className="lsl-hero-pills">
           <span className="lsl-pill">29+ {lang === 'es' ? 'noches' : 'nights'}</span>
           <span className="lsl-pill">{lang === 'es' ? 'Sep – Jun' : 'Sep – Jun'}</span>
-          <span className="lsl-pill">{lang === 'es' ? 'desde 1.450€/mes' : 'from €1,450/month'}</span>
+          <span className="lsl-pill">{lang === 'es' ? `desde ${_fmtRate(_lsRates().baja, 'es')}€/mes` : `from €${_fmtRate(_lsRates().baja, 'en')}/month`}</span>
           <span className="lsl-pill">{lang === 'es' ? 'Sin intermediarios' : 'No middlemen'}</span>
         </div>
         <div className="lsl-hero-ctas">
@@ -195,17 +202,20 @@ const LsIncludes = ({ lang }) => {
 
 const LsPrices = ({ lang }) => {
   const t = LS_COPY[lang];
+  const rates = _lsRates();
+  const rateByIdx = [rates.baja, rates.media, rates.alta];
+  const note = t.prices_note.replace(/\b80\b/, String(_lsFlat()));
   return (
     <section className="lsl-section lsl-prices">
       <div className="lsl-inner">
         <h2 className="lsl-h2">{t.prices_title}</h2>
-        <p className="lsl-prices-note">{t.prices_note}</p>
+        <p className="lsl-prices-note">{note}</p>
         <div className="lsl-prices-table">
-          {t.price_rows.map(r => (
+          {t.price_rows.map((r, i) => (
             <div key={r.period} className="lsl-pt-row">
               <span className="lsl-pt-period">{r.period}</span>
               {r.months && <span className="lsl-pt-tag">{r.months}</span>}
-              <span className="lsl-pt-rate"><span className="lsl-pt-desde">{lang === 'es' ? 'desde ' : 'from '}</span>{r.rate}<span className="lsl-pt-unit">€/mes</span></span>
+              <span className="lsl-pt-rate"><span className="lsl-pt-desde">{lang === 'es' ? 'desde ' : 'from '}</span>{_fmtRate(rateByIdx[i], lang)}<span className="lsl-pt-unit">€/mes</span></span>
             </div>
           ))}
           <div className="lsl-pt-row lsl-pt-special">
@@ -213,7 +223,7 @@ const LsPrices = ({ lang }) => {
               {lang === 'es' ? 'Navidad (23 dic–6 ene) · Semana Santa' : 'Christmas (Dec 23–Jan 6) · Easter'}
             </span>
             <span className="lsl-pt-tag">{lang === 'es' ? 'tarifa especial' : 'special rate'}</span>
-            <span className="lsl-pt-rate">80<span className="lsl-pt-unit">€/noche</span></span>
+            <span className="lsl-pt-rate">{_lsFlat()}<span className="lsl-pt-unit">€/noche</span></span>
           </div>
         </div>
         <p className="lsl-prices-min">{t.min_note}</p>
