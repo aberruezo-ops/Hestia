@@ -625,7 +625,7 @@
   },
   "longStayConfig": {
     "monthlyRates": {
-      "baja": 1480,
+      "baja": 1490,
       "media": 1590,
       "alta": 1850
     },
