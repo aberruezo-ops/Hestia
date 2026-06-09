@@ -5130,9 +5130,6 @@ const BULK_PRESETS = [
   { label: 'Crítica urgente (<7d)', icon: '🚨', cfg: { season: 'critica', minN: '', maxN: '', maxDays: '7', type: 'discount', value: '25', lm: true, onlyNew: true } },
 ];
 
-// Long-stay monthly rates (€/month). Jul (7) and Aug (8) not offered.
-const LS_RATES = { 1:1450, 2:1450, 3:1450, 4:1450, 5:1590, 6:1790, 9:1790, 10:1590, 11:1450, 12:1450 };
-
 const _isLongStayGap = (gap) => {
   if (gap.nights <= 28) return false;
   const m = parseInt(gap.start.slice(5, 7), 10);
@@ -5158,9 +5155,11 @@ const _lsIsEasterNight = (ds, easterRanges) => {
   return easterRanges.some(([s, e]) => ds >= s && ds <= e);
 };
 
-const _lsBreakdown = (start, end, lsCfg) => {
+const _lsBreakdown = (start, end, lsCfg, aptSupp = 0) => {
   const specialFlat  = (lsCfg && lsCfg.specialNightFlat) || 80;
   const easterRanges = (lsCfg && lsCfg.easterRanges) || [];
+  const rates        = (lsCfg && lsCfg.monthlyRates) || { baja: 1450, media: 1590, alta: 1790 };
+  const supp         = Number(aptSupp) || 0;
   const MO_NAMES = ['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 
   const byMonth = {};
@@ -5169,8 +5168,9 @@ const _lsBreakdown = (start, end, lsCfg) => {
     const yr = parseInt(cur.slice(0, 4), 10);
     const mo = parseInt(cur.slice(5, 7), 10);
     if (mo === 7 || mo === 8) return null;
-    const monthlyRate = (mo === 6 || mo === 9) ? 1790
-                      : (mo === 5 || mo === 10) ? 1590 : 1450;
+    const monthlyBase = (mo === 6 || mo === 9) ? rates.alta
+                      : (mo === 5 || mo === 10) ? rates.media : rates.baja;
+    const monthlyRate = (Number(monthlyBase) || 0) + supp;
     const dim         = new Date(yr, mo, 0).getDate();
     const baseNight   = monthlyRate / dim;
     const isSpecial   = _lsIsChristmasNight(cur) || _lsIsEasterNight(cur, easterRanges);
@@ -6098,9 +6098,9 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
             <div className="ls-rates-title">Tarifas base (€ / mes completo) · noches especiales {lsCfg.specialNightFlat}€/n fijo</div>
             <div className="ls-rates-grid">
               {[
-                { label: 'Nov – Abr', rate: 1450, note: 'T. baja' },
-                { label: 'Oct · May', rate: 1590, note: '' },
-                { label: 'Jun · Sep', rate: 1790, note: '' },
+                { label: 'Nov – Abr', rate: (lsCfg.monthlyRates || {}).baja  ?? 1450, note: 'T. baja' },
+                { label: 'Oct · May', rate: (lsCfg.monthlyRates || {}).media ?? 1590, note: '' },
+                { label: 'Jun · Sep', rate: (lsCfg.monthlyRates || {}).alta  ?? 1790, note: '' },
                 { label: `Navidad / S. Santa ${lsCfg.specialNightFlat}€`, note: 'precio fijo por noche' },
               ].map(r => (
                 <div key={r.label} className="ls-rate-row">
@@ -6124,7 +6124,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
                 </div>
                 <div className="hc-list">
                   {gaps.map(gap => {
-                    const bd      = _lsBreakdown(gap.start, gap.end, lsCfg);
+                    const bd      = _lsBreakdown(gap.start, gap.end, lsCfg, (lsCfg.aptSupplement || {})[aptId] || 0);
                     if (!bd) return null;
                     const hasSpec = bd.parts.some(p => p.specialNights > 0);
                     const months  = (gap.nights / 30).toFixed(1);
