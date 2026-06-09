@@ -4562,5 +4562,6 @@ Object.assign(window, {
   WidgetGuestAccess,
   WidgetTopRecs,
   TOP_RECS,
-  HomeGuideTeaser
+  HomeGuideTeaser,
+  GuestAccessModal
 });
