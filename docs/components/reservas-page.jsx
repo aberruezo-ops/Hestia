@@ -60,7 +60,7 @@ const RESERVAS_COPY = {
     guarantee_title: 'Reserva directa',
     guarantee_items: [
       'Mejor precio garantizado: te lo igualamos y lo mejoramos',
-      'Reservando directo te ahorras desde un 10 %',
+      'Reservando directo te ahorras hasta un 10 % aprox.',
       'Alex o Fran responden personalmente',
       'Te respondemos normalmente en minutos',
       'Flexibilidad real en cambios y cancelaciones',
@@ -123,7 +123,7 @@ const RESERVAS_COPY = {
     guarantee_title: 'Direct booking',
     guarantee_items: [
       'Best price guaranteed: we match it and beat it',
-      'Book direct and save from 10%',
+      'Book direct and save up to ~10%',
       'Alex or Fran reply personally',
       'We usually reply in minutes',
       'Real flexibility on changes and cancellations',
@@ -1296,13 +1296,13 @@ const ReservasAside = ({ lang }) => {
         <div className="rg-title">{t.guarantee_title}</div>
         <p className="rg-lede">
           {lang === 'es'
-            ? 'Reservando directo te ahorras desde un 10 %: mejor precio que Booking o Airbnb, sin comisiones y con respuesta humana normalmente en minutos.'
-            : 'Book direct and save from 10%: better price than Booking or Airbnb, no commissions and a human reply usually in minutes.'}
+            ? 'Reservando directo te ahorras hasta un 10 % aprox.: mejor precio que Booking o Airbnb, sin comisiones y con respuesta humana normalmente en minutos.'
+            : 'Book direct and save up to ~10%: better price than Booking or Airbnb, no commissions and a human reply usually in minutes.'}
         </p>
         <p className="rg-disclaimer">
           {lang === 'es'
-            ? '* El ahorro exacto depende del programa de cada plataforma y de ofertas puntuales; por eso indicamos «desde un 10 %».'
-            : '* The exact saving depends on each platform’s program and occasional offers; that’s why we say "from 10%".'}
+            ? '* El ahorro exacto depende de si la plataforma ya está aplicando descuentos o programas propios que no podemos conocer; por eso indicamos «hasta un 10 % aprox.».'
+            : '* The exact saving depends on whether the platform is already applying its own discounts or programmes we can’t know; that’s why we say "up to ~10%".'}
         </p>
         <button
           type="button"
