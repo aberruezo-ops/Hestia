@@ -6505,20 +6505,26 @@ const _hcCalcGaps = (blocked, today, horizon) => {
   if (!blocked || blocked.length === 0) return [];
   const sorted = [...blocked].sort((a, b) => a.start < b.start ? -1 : 1);
   const gaps = [];
-  for (let i = 0; i < sorted.length - 1; i++) {
-    const gs = sorted[i].end;
-    const ge = sorted[i + 1].start;
-    if (gs >= ge) continue; // overlap or zero gap
-    if (ge <= today) continue; // entirely in the past
-    if (horizon && gs >= horizon) continue;
+  const pushGap = (gs, ge) => {
+    if (gs >= ge) return; // overlap or zero gap
+    if (ge <= today) return; // entirely in the past
+    if (horizon && gs >= horizon) return;
     const nights = _hcDiff(gs, ge);
-    if (nights < 2) continue; // 1-night gaps can't be booked
+    if (nights < 2) return; // 1-night gaps can't be booked
     gaps.push({
       start: gs,
       end: ge,
       nights
     });
-  }
+  };
+  // Disponibilidad antes del primer bloqueo (hoy → primer bloqueo)
+  pushGap(today, sorted[0].start);
+  // Huecos entre bloqueos consecutivos
+  for (let i = 0; i < sorted.length - 1; i++) pushGap(sorted[i].end, sorted[i + 1].start);
+  // Disponibilidad abierta tras el último bloqueo, acotada al horizonte de reservas.
+  // Sin esto, un apartamento libre de forma indefinida (sin bloqueo posterior) no
+  // mostraba ningún hueco — y sus estancias largas quedaban invisibles.
+  if (horizon) pushGap(sorted[sorted.length - 1].end, horizon);
   return gaps;
 };
 const HC_MAX = {
@@ -7040,7 +7046,7 @@ const HuecosTab = ({
   const [bulkLastMin, setBulkLastMin] = React.useState(false);
   const [bulkSaving, setBulkSaving] = React.useState(false);
   const [hcView, setHcView] = React.useState('cortos');
-  const [lsCfgOpen, setLsCfgOpen] = React.useState(false);
+  const [lsCfgOpen, setLsCfgOpen] = React.useState(true);
   const today = new Date().toISOString().slice(0, 10);
   const horizonStr = pricesData && pricesData.bookingHorizon && pricesData.bookingHorizon.lastCheckinDate;
   const calendar = pricesData && pricesData.calendar || {};
@@ -7893,39 +7899,7 @@ const HuecosTab = ({
     setOpen: setLsCfgOpen,
     onSave: handleSaveLsCfg,
     saving: saving
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "ls-rates"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "ls-rates-title"
-  }, "Tarifas base (\u20AC / mes completo) \xB7 noches especiales ", lsCfg.specialNightFlat, "\u20AC/n fijo"), /*#__PURE__*/React.createElement("div", {
-    className: "ls-rates-grid"
-  }, [{
-    label: 'Nov – Abr',
-    rate: (lsCfg.monthlyRates || {}).baja ?? 1450,
-    note: 'T. baja'
-  }, {
-    label: 'Oct · May',
-    rate: (lsCfg.monthlyRates || {}).media ?? 1590,
-    note: ''
-  }, {
-    label: 'Jun · Sep',
-    rate: (lsCfg.monthlyRates || {}).alta ?? 1790,
-    note: ''
-  }, {
-    label: `Navidad / S. Santa ${lsCfg.specialNightFlat}€`,
-    note: 'precio fijo por noche'
-  }].map(r => /*#__PURE__*/React.createElement("div", {
-    key: r.label,
-    className: "ls-rate-row"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ls-rate-period"
-  }, r.label), r.rate && /*#__PURE__*/React.createElement("span", {
-    className: "ls-rate-val"
-  }, r.rate, /*#__PURE__*/React.createElement("span", {
-    className: "ls-rate-per"
-  }, "\u20AC/mes")), r.note && /*#__PURE__*/React.createElement("span", {
-    className: "ls-rate-note"
-  }, r.note))))), ['vm', 'vt', 'vs'].map(aptId => {
+  }), ['vm', 'vt', 'vs'].map(aptId => {
     const meta = HC_APT[aptId];
     const gaps = longStayGaps[aptId] || [];
     if (gaps.length === 0) return null;

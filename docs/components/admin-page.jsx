@@ -5100,16 +5100,22 @@ const _hcCalcGaps = (blocked, today, horizon) => {
   if (!blocked || blocked.length === 0) return [];
   const sorted = [...blocked].sort((a, b) => a.start < b.start ? -1 : 1);
   const gaps = [];
-  for (let i = 0; i < sorted.length - 1; i++) {
-    const gs = sorted[i].end;
-    const ge = sorted[i + 1].start;
-    if (gs >= ge) continue;            // overlap or zero gap
-    if (ge <= today) continue;         // entirely in the past
-    if (horizon && gs >= horizon) continue;
+  const pushGap = (gs, ge) => {
+    if (gs >= ge) return;              // overlap or zero gap
+    if (ge <= today) return;          // entirely in the past
+    if (horizon && gs >= horizon) return;
     const nights = _hcDiff(gs, ge);
-    if (nights < 2) continue;         // 1-night gaps can't be booked
+    if (nights < 2) return;           // 1-night gaps can't be booked
     gaps.push({ start: gs, end: ge, nights });
-  }
+  };
+  // Disponibilidad antes del primer bloqueo (hoy → primer bloqueo)
+  pushGap(today, sorted[0].start);
+  // Huecos entre bloqueos consecutivos
+  for (let i = 0; i < sorted.length - 1; i++) pushGap(sorted[i].end, sorted[i + 1].start);
+  // Disponibilidad abierta tras el último bloqueo, acotada al horizonte de reservas.
+  // Sin esto, un apartamento libre de forma indefinida (sin bloqueo posterior) no
+  // mostraba ningún hueco — y sus estancias largas quedaban invisibles.
+  if (horizon) pushGap(sorted[sorted.length - 1].end, horizon);
   return gaps;
 };
 
@@ -5417,7 +5423,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
   const [bulkLastMin, setBulkLastMin] = React.useState(false);
   const [bulkSaving,  setBulkSaving ] = React.useState(false);
   const [hcView,      setHcView     ] = React.useState('cortos');
-  const [lsCfgOpen,   setLsCfgOpen  ] = React.useState(false);
+  const [lsCfgOpen,   setLsCfgOpen  ] = React.useState(true);
 
   const today     = new Date().toISOString().slice(0, 10);
   const horizonStr = pricesData && pricesData.bookingHorizon && pricesData.bookingHorizon.lastCheckinDate;
@@ -6091,26 +6097,9 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
             </div>
           </div>
 
-          {/* ── Configuración de noches especiales ── */}
+          {/* Tarifas base, precio efectivo por apartamento y suplementos — única fuente
+              de verdad (editable, lee/escribe prices.json). Sin tabla duplicada aparte. */}
           <LsCfgPanel lsCfg={lsCfg} open={lsCfgOpen} setOpen={setLsCfgOpen} onSave={handleSaveLsCfg} saving={saving}/>
-
-          <div className="ls-rates">
-            <div className="ls-rates-title">Tarifas base (€ / mes completo) · noches especiales {lsCfg.specialNightFlat}€/n fijo</div>
-            <div className="ls-rates-grid">
-              {[
-                { label: 'Nov – Abr', rate: (lsCfg.monthlyRates || {}).baja  ?? 1450, note: 'T. baja' },
-                { label: 'Oct · May', rate: (lsCfg.monthlyRates || {}).media ?? 1590, note: '' },
-                { label: 'Jun · Sep', rate: (lsCfg.monthlyRates || {}).alta  ?? 1790, note: '' },
-                { label: `Navidad / S. Santa ${lsCfg.specialNightFlat}€`, note: 'precio fijo por noche' },
-              ].map(r => (
-                <div key={r.label} className="ls-rate-row">
-                  <span className="ls-rate-period">{r.label}</span>
-                  {r.rate && <span className="ls-rate-val">{r.rate}<span className="ls-rate-per">€/mes</span></span>}
-                  {r.note && <span className="ls-rate-note">{r.note}</span>}
-                </div>
-              ))}
-            </div>
-          </div>
 
           {['vm','vt','vs'].map(aptId => {
             const meta = HC_APT[aptId];
