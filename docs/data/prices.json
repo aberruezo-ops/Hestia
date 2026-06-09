@@ -625,9 +625,9 @@
   },
   "longStayConfig": {
     "monthlyRates": {
-      "baja": 1450,
-      "media": 1540,
-      "alta": 1770
+      "baja": 1480,
+      "media": 1590,
+      "alta": 1850
     },
     "specialNightFlat": 80,
     "extraGuestPerMonth": 60,
