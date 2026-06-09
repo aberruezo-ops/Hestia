@@ -14,18 +14,18 @@ const ROOM_PHOTOS = {
   vm: {
     salon:        [0, 1, 2, 19, 20, 21],  // 'Salón · ...' (19=lámpara sofá, movida desde urbanización)
     cocina:       [5, 6, 7],              // 'Cocina · ...'
-    dormitorios:  [8, 9, 24],             // 'Dormitorio · ...' (eliminado índice 10 = simétrico)
-    banos:        [13, 14, 15, 16],       // 'Baño · ...' (13=Baño 1 LED verde, movido desde terraza)
+    dormitorios:  [8, 9, 23],             // 8=Dorm 2 turquesa, 9=Dorm principal, 23=Dorm principal lámpara globo
+    banos:        [13, 14, 15],           // 13=Baño 1 LED verde, 14/15=Baño 2 (16=Piscina movido a urbanización)
     terraza:      [11, 12],               // 'Terraza · ...' (13 movido a baños)
-    urbanizacion: [3, 17, 18],            // 'Piscina', 'Zona duchas' (19 movido a salón)
+    urbanizacion: [3, 16, 17, 18],        // 3=Piscina noche, 16=Piscina día, 17=Piscina jardines, 18=Zona duchas
   },
   vt: {
-    salon:        [4, 7, 9],
+    salon:        [3, 4, 8, 17],          // 3=Salón vistas, 4=Comedor, 8=Salón sofá, 17=Salón comedor (antes incluía 7/9 que son terraza)
     cocina:       [16],                    // 16 = Cocina · encimera gris y azulejos ocres
     dormitorios:  [1, 2, 11],             // 1 = Dormitorio principal, 2 y 11 = Dormitorio 2
     banos:        [13, 5, 18, 12],        // 13 = Baño 2 grifería negra, 5 = Baño 1 mosaico, 18 = Baño lavabo, 12 = Baño 2 ducha
     terraza:      [0, 7, 9],              // 0 = atardecer, 7 = chill out, 9 = vistas panorámicas
-    urbanizacion: [],                     // sin foto en galería; usa URB_FALLBACK
+    urbanizacion: [15],                   // 15 = Piscina · vistas aéreas y Mediterráneo
   },
   vs: {
     salon:        [0, 1, 2, 3, 4, 5, 6, 7],
