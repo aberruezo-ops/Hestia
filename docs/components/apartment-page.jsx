@@ -1057,8 +1057,8 @@ const AptPriceTeaser = ({ apt, lang }) => {
           <span className="apt-pt-eyebrow">{lang === 'es' ? 'Precios orientativos' : 'Indicative prices'}</span>
           <p className="apt-pt-note">
             {lang === 'es'
-              ? 'Precio máximo de referencia · el precio real suele ser inferior según duración y temporada exacta.'
-              : 'Maximum reference price · actual price is often lower depending on exact dates and duration.'}
+              ? 'Precio de referencia para dos huéspedes · el precio real puede ser inferior según duración y temporada exacta.'
+              : 'Reference price for two guests · the actual price may be lower depending on exact dates and duration.'}
           </p>
         </div>
         <div className="apt-pt-table">
