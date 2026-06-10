@@ -3402,7 +3402,7 @@ const DIRECT_PERKS = {
   }, {
     id: 'descuento',
     icon: '🎁',
-    stat: '−30%',
+    stat: 'desde −30%',
     t: 'Estancias largas desde {LS} €/mes.',
     d: 'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.',
     link: {
@@ -3461,7 +3461,7 @@ const DIRECT_PERKS = {
   }, {
     id: 'descuento',
     icon: '🎁',
-    stat: '−30%',
+    stat: 'from −30%',
     t: 'Long stays from €{LS}/month.',
     d: 'Minimum 29 nights · September to June (not available July or August). No commission, formal lease signed by both parties, 100% direct contact.',
     link: {
