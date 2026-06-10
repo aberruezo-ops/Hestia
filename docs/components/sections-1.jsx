@@ -925,7 +925,10 @@ const LongStayStrip = ({ lang }) => {
   const bases = v2?.apts ? Object.values(v2.apts).map(a => a.base).filter(Boolean) : [];
   const minBase = bases.length ? Math.min(...bases) : 83;
   const nightlyMonthly = minBase * 30;
-  const lsRate = 1450;
+  const lsCfg = v2?.longStayConfig || {};
+  const lsRates = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+  const supps = Object.values(lsCfg.aptSupplement || {});
+  const lsRate = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + (supps.length ? Math.min(...supps) : 0);
   const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
   return (
     <section className="lss-strip" aria-label={es ? 'Estancias largas' : 'Long stays'}>
@@ -947,7 +950,7 @@ const LongStayStrip = ({ lang }) => {
             <span className="lss-pill lss-pill-compare">
               <span className="lss-pill-reg">~{nightlyMonthly.toLocaleString('es-ES')}€/mes</span>
               <span className="lss-pill-arrow">→</span>
-              <span className="lss-pill-ls">{es ? `desde 1.450€/mes` : `from €1,450/mo`}</span>
+              <span className="lss-pill-ls">{es ? `desde ${lsRate.toLocaleString('es-ES')}€/mes` : `from €${lsRate.toLocaleString('en-US')}/mo`}</span>
               <span className="lss-pill-save">−{savings}%</span>
             </span>
             <span className="lss-pill">WiFi fibra</span>

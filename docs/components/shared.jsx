@@ -2413,7 +2413,7 @@ const DIRECT_PERKS = {
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Respuesta humana, no un bot.',                    d:'Hablas directamente con Alex o Fran. Casi siempre respondemos en minutos; máximo una hora en horario activo.' },
     { id:'cancel',    icon:'🔓', stat:'✓',       t:'Mejoramos las condiciones de cancelación.',       d:'¿Necesitas algo distinto a la política estándar? Pregúntanos, miramos cada caso. Sin formularios eternos, sin sanciones ocultas.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Pago seguro y flexible.',                         d:'Sin pre-autorizaciones que bloqueen tu tarjeta. Si necesitas plazos, los acordamos contigo. Pago directo, sin intermediarios.' },
-    { id:'descuento', icon:'🎁', stat:'−30%',    t:'Estancias largas desde 1.450 €/mes.',             d:'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.', link: { href: 'estancias-largas.html', label: 'Ver tarifas y disponibilidad →' } },
+    { id:'descuento', icon:'🎁', stat:'−30%',    t:'Estancias largas desde {LS} €/mes.',             d:'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.', link: { href: 'estancias-largas.html', label: 'Ver tarifas y disponibilidad →' } },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Guía privada incluida.',                          d:'Recomendaciones de Alex y Fran, instrucciones de Hestía, restaurantes, calas y rutas. Activa toda la estancia.' },
     { id:'mascotas',  icon:'🐾', stat:'3/3',     t:'Mascotas bienvenidas.',                           d:'En los tres. Petición previa y un pequeño suplemento — sin tarifas abusivas ni vetos.' },
     { id:'proceso',   icon:'📜', stat:'20%',     t:'Contrato, prereserva y resto al llegar.',         d:'Te enviamos un borrador de contrato con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelación y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Una pequeña prereserva a convenir — normalmente el 20 % del total — se paga al formalizar el contrato; el resto, al llegar a Hestía. Acusamos recibo de todo (contrato y pago) para darte confianza, garantía y seguridad en cada paso.' },
@@ -2424,7 +2424,7 @@ const DIRECT_PERKS = {
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Human reply, not a bot.',                         d:'You talk directly to Alex or Fran. Usually within minutes; up to an hour during active hours.' },
     { id:'cancel',    icon:'🔓', stat:'✓',       t:'We improve cancellation terms.',                  d:'Need something different from the standard policy? Just ask — we look at each case. No endless forms, no hidden penalties.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Safe, flexible payment.',                         d:'No pre-authorisations blocking your card. If you need installments, we agree them. Direct payment, no middleman.' },
-    { id:'descuento', icon:'🎁', stat:'−30%',    t:'Long stays from €1,450/month.',                   d:'Minimum 29 nights · September to June (not available July or August). No commission, formal lease signed by both parties, 100% direct contact.', link: { href: 'estancias-largas.html', label: 'See rates and availability →' } },
+    { id:'descuento', icon:'🎁', stat:'−30%',    t:'Long stays from €{LS}/month.',                   d:'Minimum 29 nights · September to June (not available July or August). No commission, formal lease signed by both parties, 100% direct contact.', link: { href: 'estancias-largas.html', label: 'See rates and availability →' } },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Private guide included.',                         d:'Alex & Fran recommendations, Hestía instructions, restaurants, hidden coves and routes. Active throughout your stay.' },
     { id:'mascotas',  icon:'🐾', stat:'3/3',     t:'Pets welcome.',                                   d:'In all three Hestías. On request and with a small supplement — no abusive fees, no blanket bans.' },
     { id:'proceso',   icon:'📜', stat:'20%',     t:'Contract, deposit and balance on arrival.',       d:'We send you a draft contract with the rights and obligations of both parties (prices, payments, cancellation terms and house rules). You review it, fill it in, sign and return it. A small deposit to agree — usually 20 % of the total — is paid when the contract is signed; the rest, on arrival at Hestía. We acknowledge everything (contract and payment) so you have trust, guarantee and security at every step.' },
@@ -2461,8 +2461,21 @@ const _PERK_HUES = {
 
 // Modal con carrusel: una sola card visible, prev/next + dots.
 // Se monta condicionalmente; cierra con backdrop click, ESC o ✕.
+// Tarifa mensual de estancia larga mínima ("desde"), SIEMPRE desde prices.json:
+// base más barata + suplemento de apartamento más bajo. Nunca hardcodeada.
+const _lsMinMonthly = () => {
+  const c = (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || {};
+  const r = c.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+  const supps = Object.values(c.aptSupplement || {});
+  return Math.min(r.baja, r.media, r.alta) + (supps.length ? Math.min(...supps) : 0);
+};
+const getDirectPerks = (lang) => {
+  const fmt = _lsMinMonthly().toLocaleString(lang === 'es' ? 'es-ES' : 'en-US');
+  return DIRECT_PERKS[lang].map(p => p.id === 'descuento' ? { ...p, t: p.t.replace('{LS}', fmt) } : p);
+};
+
 const DirectBookingModal = ({ lang, onClose }) => {
-  const list   = DIRECT_PERKS[lang];
+  const list   = getDirectPerks(lang);
   const ribbon = DIRECT_RIBBON[lang];
   const len    = list.length;
   const [idx, setIdx] = React.useState(0);

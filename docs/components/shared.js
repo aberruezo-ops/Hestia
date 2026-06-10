@@ -3403,7 +3403,7 @@ const DIRECT_PERKS = {
     id: 'descuento',
     icon: '🎁',
     stat: '−30%',
-    t: 'Estancias largas desde 1.450 €/mes.',
+    t: 'Estancias largas desde {LS} €/mes.',
     d: 'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.',
     link: {
       href: 'estancias-largas.html',
@@ -3462,7 +3462,7 @@ const DIRECT_PERKS = {
     id: 'descuento',
     icon: '🎁',
     stat: '−30%',
-    t: 'Long stays from €1,450/month.',
+    t: 'Long stays from €{LS}/month.',
     d: 'Minimum 29 nights · September to June (not available July or August). No commission, formal lease signed by both parties, 100% direct contact.',
     link: {
       href: 'estancias-largas.html',
@@ -3567,11 +3567,30 @@ const _PERK_HUES = {
 
 // Modal con carrusel: una sola card visible, prev/next + dots.
 // Se monta condicionalmente; cierra con backdrop click, ESC o ✕.
+// Tarifa mensual de estancia larga mínima ("desde"), SIEMPRE desde prices.json:
+// base más barata + suplemento de apartamento más bajo. Nunca hardcodeada.
+const _lsMinMonthly = () => {
+  const c = window.PRICES_V2 && window.PRICES_V2.longStayConfig || {};
+  const r = c.monthlyRates || {
+    baja: 1450,
+    media: 1590,
+    alta: 1790
+  };
+  const supps = Object.values(c.aptSupplement || {});
+  return Math.min(r.baja, r.media, r.alta) + (supps.length ? Math.min(...supps) : 0);
+};
+const getDirectPerks = lang => {
+  const fmt = _lsMinMonthly().toLocaleString(lang === 'es' ? 'es-ES' : 'en-US');
+  return DIRECT_PERKS[lang].map(p => p.id === 'descuento' ? {
+    ...p,
+    t: p.t.replace('{LS}', fmt)
+  } : p);
+};
 const DirectBookingModal = ({
   lang,
   onClose
 }) => {
-  const list = DIRECT_PERKS[lang];
+  const list = getDirectPerks(lang);
   const ribbon = DIRECT_RIBBON[lang];
   const len = list.length;
   const [idx, setIdx] = React.useState(0);
