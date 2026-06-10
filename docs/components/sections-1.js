@@ -1235,7 +1235,14 @@ const LongStayStrip = ({
   const bases = v2?.apts ? Object.values(v2.apts).map(a => a.base).filter(Boolean) : [];
   const minBase = bases.length ? Math.min(...bases) : 83;
   const nightlyMonthly = minBase * 30;
-  const lsRate = 1450;
+  const lsCfg = v2?.longStayConfig || {};
+  const lsRates = lsCfg.monthlyRates || {
+    baja: 1450,
+    media: 1590,
+    alta: 1790
+  };
+  const supps = Object.values(lsCfg.aptSupplement || {});
+  const lsRate = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + (supps.length ? Math.min(...supps) : 0);
   const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
   return /*#__PURE__*/React.createElement("section", {
     className: "lss-strip",
@@ -1264,7 +1271,7 @@ const LongStayStrip = ({
     className: "lss-pill-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "lss-pill-ls"
-  }, es ? `desde 1.450€/mes` : `from €1,450/mo`), /*#__PURE__*/React.createElement("span", {
+  }, es ? `desde ${lsRate.toLocaleString('es-ES')}€/mes` : `from €${lsRate.toLocaleString('en-US')}/mo`), /*#__PURE__*/React.createElement("span", {
     className: "lss-pill-save"
   }, "\u2212", savings, "%")), /*#__PURE__*/React.createElement("span", {
     className: "lss-pill"

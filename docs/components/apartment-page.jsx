@@ -1074,7 +1074,10 @@ const AptPriceTeaser = ({ apt, lang }) => {
           ))}
           {(() => {
             const nightlyMonthly = base * 30;
-            const lsRate = 1450;
+            const lsCfg   = v2.longStayConfig || {};
+            const lsRates = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+            const supp    = (lsCfg.aptSupplement || {})[apt.id] || 0;
+            const lsRate  = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + supp;
             const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
             return (
               <div className="apt-pt-row apt-pt-ls">
@@ -1086,7 +1089,7 @@ const AptPriceTeaser = ({ apt, lang }) => {
                   <span className="apt-pt-ls-reg">~{nightlyMonthly.toLocaleString('es-ES')} €/mes</span>
                   <span className="apt-pt-ls-rate">
                     {lang === 'es' ? 'desde ' : 'from '}
-                    <strong>1.450 €/mes</strong>
+                    <strong>{lsRate.toLocaleString(lang === 'es' ? 'es-ES' : 'en-US')} €/mes</strong>
                     <span className="apt-pt-ls-save">−{savings}%</span>
                   </span>
                 </span>
