@@ -1209,7 +1209,7 @@ const AptPriceTeaser = ({
     className: "apt-pt-eyebrow"
   }, lang === 'es' ? 'Precios orientativos' : 'Indicative prices'), /*#__PURE__*/React.createElement("p", {
     className: "apt-pt-note"
-  }, lang === 'es' ? 'Precio máximo de referencia · el precio real suele ser inferior según duración y temporada exacta.' : 'Maximum reference price · actual price is often lower depending on exact dates and duration.')), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Precio de referencia para dos huéspedes · el precio real puede ser inferior según duración y temporada exacta.' : 'Reference price for two guests · the actual price may be lower depending on exact dates and duration.')), /*#__PURE__*/React.createElement("div", {
     className: "apt-pt-table"
   }, seasons.map(s => /*#__PURE__*/React.createElement("div", {
     key: s.key,
