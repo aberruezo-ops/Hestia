@@ -2269,7 +2269,7 @@ const ContractTab = ({
       img.src = rawUrl;
     });
   };
-  const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
+  const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl, signDataUrl) => {
     const escHtml = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     const a = aptInfo;
     const fechaFirmaStr = fmtFechaEs(fechaFirma);
@@ -2505,6 +2505,16 @@ const ContractTab = ({
     color: var(--ber-lt);
     font-weight: normal;
   }
+  .firma-img {
+    display: block;
+    height: 18mm;
+    margin: 2mm 0 1mm;
+    object-fit: contain;
+  }
+  .firma-space {
+    display: block;
+    height: 18mm;
+  }
 
   /* Bloque ornamental al final */
   .closing {
@@ -2540,8 +2550,9 @@ const ContractTab = ({
 <!-- Spacer para el hero de la página 1. #pdf-content está fijado a 210mm para que
      1 mm CSS = 1 mm PDF en cualquier dispositivo (sin esto, en móvil el viewport por
      defecto ~980px comprimía el spacer y el texto se solapaba bajo el hero).
-     barra(18) + hero(65) − MARG_TOP(30) + 7 de holgura = 60mm -->
-<div style="height:60mm;line-height:0;font-size:0"> </div>
+     barra(18) + hero(65) − MARG_TOP(30) + 15 de holgura = 68mm (evita que el
+     encabezado tape la primera cláusula en cualquier dispositivo). -->
+<div style="height:68mm;line-height:0;font-size:0"> </div>
 <div id="contract-body">
 
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
@@ -2638,12 +2649,14 @@ ${clausulaFianza}
 
 <div class="firmas">
   <div class="firma">
-    <strong>Los Propietarios</strong> <em style="font-weight:normal">(con una es suficiente)</em><br>
+    <strong>Los Propietarios</strong> <em style="font-weight:normal">(con una es suficiente)</em>
+    ${signDataUrl ? `<img src="${signDataUrl}" class="firma-img" alt="Firma de los propietarios">` : ''}
     Fdo.: Alejandro Berruezo Márquez<br>
     Fdo.: Francisco Javier Moral Arévalo
   </div>
   <div class="firma">
-    <strong>La Parte Arrendataria</strong><br>
+    <strong>La Parte Arrendataria</strong>
+    <span class="firma-space" aria-hidden="true"></span>
     Fdo.: <strong>${escHtml(nombre.toUpperCase())}</strong>
   </div>
 </div>
@@ -2655,6 +2668,7 @@ ${clausulaFianza}
   var HERO = ${JSON.stringify(heroDataUrl || '')};
   var LOGO = ${JSON.stringify(logoDataUrl || '')};
   var WM   = ${JSON.stringify(wmDataUrl || '')};
+  var SIGN = ${JSON.stringify(signDataUrl || '')};
   var FILE = ${JSON.stringify(pdfFilename)};
   var APT   = ${JSON.stringify('Vera ' + a.shortName)};
   var META  = ${JSON.stringify(noches + ' noches · ' + huespedes + ' huéspedes')};
@@ -2750,6 +2764,22 @@ ${clausulaFianza}
       pdf.setFontSize(7);
       pdf.text('Hestia Your Home · info@hestiayourhome.com · +34 620 316 370', 16, footY);
       pdf.text('Página ' + i + ' de ' + n, pW - 5, footY, { align: 'right' });
+
+      /* ── Firma por página: línea para el huésped (izq.) + firma de los
+            propietarios ya estampada (der.). En el margen inferior reservado. */
+      var pgSigY = pH - 13;
+      pdf.setDrawColor(150, 150, 150);
+      pdf.setLineWidth(0.2);
+      pdf.line(16, pgSigY, 64, pgSigY);
+      pdf.line(pW - 64, pgSigY, pW - 16, pgSigY);
+      pdf.setTextColor(120, 120, 120);
+      pdf.setFont('helvetica', 'normal');
+      pdf.setFontSize(6);
+      pdf.text('Firma huésped', 16, pgSigY + 2.6);
+      pdf.text('Los Propietarios', pW - 64, pgSigY + 2.6);
+      if (SIGN) {
+        try { pdf.addImage(SIGN, 'PNG', pW - 60, pgSigY - 10.5, 32, 11); } catch(e) {}
+      }
     }
 
     await worker.save();
@@ -2814,11 +2844,11 @@ info@hestiayourhome.com · +34 620 316 370`;
     document.body.removeChild(aEl);
 
     // ASYNC — pre-load images as data URIs so they embed correctly in the PDF.
-    const [heroRaw, logoDataUrl, wmDataUrl] = await Promise.all([fetchDataUrl(aptInfo.heroPhoto), fetchDataUrl('assets/logo-hestia-brand.png'), fetchDataUrl('assets/logo-teal-transparent.png')]);
+    const [heroRaw, logoDataUrl, wmDataUrl, signDataUrl] = await Promise.all([fetchDataUrl(aptInfo.heroPhoto), fetchDataUrl('assets/logo-hestia-brand.png'), fetchDataUrl('assets/logo-teal-transparent.png'), fetchDataUrl('assets/contract/firma-propietarios.png')]);
     const heroDataUrl = await cropHero(heroRaw, aptInfo.heroFocusY ?? 0.5);
 
     // Write contract HTML to the already-opened window.
-    const html = buildContractHTML(heroDataUrl, logoDataUrl, wmDataUrl);
+    const html = buildContractHTML(heroDataUrl, logoDataUrl, wmDataUrl, signDataUrl);
     w.document.open();
     w.document.write(html);
     w.document.close();
