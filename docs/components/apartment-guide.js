@@ -60,10 +60,7 @@ const ROOM_PHOTOS = {
 const URB_FALLBACK = {
   vm: ['assets/guides/vm/urb-1.jpg', 'assets/guides/vm/urb-2.jpg'],
   vt: ['assets/guides/vt/urb-1.jpg', 'assets/guides/vt/urb-2.jpg'],
-  vs: [{
-    src: 'assets/guides/vs/urb-1.jpg',
-    rotate: 180
-  }]
+  vs: ['assets/guides/vs/urb-1.jpg']
 };
 
 // Secciones del nav lateral, en orden de aparición
