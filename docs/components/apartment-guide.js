@@ -10265,7 +10265,7 @@ const AptGuideGate = ({
     spellCheck: false,
     maxLength: 12,
     className: "ag-modal-input",
-    placeholder: "HVX0000",
+    placeholder: `${(APT_GUIDE_PIN[apt.id] || 'HVX0000').slice(0, 3)}0000`,
     value: pin,
     onChange: e => {
       setPin(e.target.value);

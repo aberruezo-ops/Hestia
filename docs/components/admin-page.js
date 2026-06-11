@@ -6453,6 +6453,37 @@ const ReservasTab = ({
         opacity: .6
       }
     }, "Se genera solo, caduca en la salida y se publica al guardar; al cancelar la reserva queda revocado."));
+  })(), draft && draft.apt && draft.entrada && draft.salida && window.PRICES_V2 && getCanalKey(draft.canal) !== 'directo' && draft.entrada > today && (() => {
+    const calc = window._calcStay && window._calcStay(draft.entrada, draft.salida, draft.apt, !!draft.mascota, Number(draft.huespedes) || null);
+    if (!calc) return null;
+    return /*#__PURE__*/React.createElement("div", {
+      className: "rv-direct-price",
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 10,
+        flexWrap: 'wrap',
+        margin: '10px 0',
+        padding: '10px 14px',
+        background: '#eef4fb',
+        border: '1px solid #b9cde0',
+        borderRadius: 8
+      }
+    }, /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 12,
+        opacity: .75
+      }
+    }, "\uD83D\uDCA1 Precio si fuera reserva directa:"), /*#__PURE__*/React.createElement("strong", {
+      style: {
+        fontSize: 18
+      }
+    }, calc.directTotal.toLocaleString('es-ES'), " \u20AC"), /*#__PURE__*/React.createElement("span", {
+      style: {
+        fontSize: 11,
+        opacity: .6
+      }
+    }, calc.nights, " noches \xB7 con los precios actuales (se actualiza solo si cambian, mientras la reserva sea OTA y futura)"));
   })(), /*#__PURE__*/React.createElement("footer", {
     className: "rv-edit-foot"
   }, /*#__PURE__*/React.createElement("div", {
@@ -7083,9 +7114,9 @@ const LsCfgPanel = ({
 // reserva lo quita del set → el acceso a la guía queda revocado.
 // ================================================================
 const APT_SIGLAS = {
-  vm: 'HM',
-  vt: 'HT',
-  vs: 'HS'
+  vm: 'HVM',
+  vt: 'HVT',
+  vs: 'HVS'
 };
 async function _guidePinSha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
@@ -8131,6 +8162,12 @@ const AdminApp = () => {
   const [token, setToken] = React.useState('');
   const [data, setData] = React.useState(null);
   const [sha, setSha] = React.useState(null);
+  // Expone prices.json al motor de precios compartido (_calcStay de shared.js),
+  // para calcular en vivo el "precio si fuera directa" de las reservas OTA.
+  // Se reasigna cada vez que cambian los precios.
+  React.useEffect(() => {
+    if (data) window.PRICES_V2 = data;
+  }, [data]);
   const [reviewsData, setReviewsData] = React.useState(null);
   const [reviewsSha, setReviewsSha] = React.useState(null);
   const [calJson, setCalJson] = React.useState('');
