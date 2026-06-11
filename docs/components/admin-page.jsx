@@ -3727,6 +3727,8 @@ const PrereservasTab = ({ token, refreshKey }) => {
       if (!rPut.ok) throw new Error('Error escribiendo reservas.json (' + rPut.status + ')');
       // 4a. Sincronizar calendario inmediatamente (no esperar al iCal sync de 4h)
       _syncReservasToAvailability(updated.reservas, token).catch(() => {});
+      // 4a-bis. Publicar PINs de acceso a la guía de las reservas activas
+      _syncReservasToGuestPins(updated.reservas, token).catch(() => {});
       // 4b. Borrar de prereservas
       const newItems = items.filter(r => r.id !== pr.id);
       const newSha = await saveList(newItems, sha);
@@ -4109,6 +4111,18 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
     setSuccess('Comisiones recalculadas y guardadas ✓');
   };
 
+  // Publica los PINs de acceso a la guía de todas las reservas activas.
+  // Normalmente se hace solo al guardar; este botón fuerza la sincronización
+  // (útil para poblar reservas ya existentes la primera vez).
+  const syncGuidePins = async () => {
+    if (!data) return;
+    setError(null); setSuccess(null);
+    try {
+      const changed = await _syncReservasToGuestPins(data.reservas || [], token);
+      setSuccess(changed ? 'PINs de acceso a la guía sincronizados ✓' : 'Los PINs de la guía ya estaban al día ✓');
+    } catch (e) { setError('Error sincronizando PINs de la guía: ' + e.message); }
+  };
+
   // --- Acciones ---
   const saveReservas = async (newReservas, { keepPanelOpen = false } = {}) => {
     setError(null); setSuccess(null);
@@ -4133,6 +4147,8 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
 
     const onSaved = (newReservasList) => {
       _syncReservasToAvailability(newReservasList, token).catch(() => {});
+      // Publica/revoca automáticamente los PINs de la guía según las reservas activas.
+      _syncReservasToGuestPins(newReservasList, token).catch(() => {});
     };
 
     try {
@@ -4445,6 +4461,9 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
             </button>
             <button type="button" className="pe-btn pe-btn-ghost" onClick={recalcularComisiones} disabled={!data || loading} title="Aplica Booking 18.3% (17%+1.3% bancaria) y Airbnb 18.755% (15.5%+IVA) a todas las reservas OTA">
               Recalcular comisiones
+            </button>
+            <button type="button" className="pe-btn pe-btn-ghost" onClick={syncGuidePins} disabled={!data || loading} title="Publica en la guía los PINs de acceso de las reservas activas (se hace solo al guardar; esto fuerza la sincronización)">
+              🔑 Sincronizar accesos
             </button>
             <button type="button" className="pe-btn pe-btn-primary" onClick={newRow}>+ Nueva</button>
           </div>
@@ -5004,6 +5023,18 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
               ) : null;
             })()}
 
+            {draft && draft.apt && draft.entrada && draft.salida && !_reservaCxl(draft) && (() => {
+              const pin = reservaGuidePin(draft);
+              return (
+                <div className="rv-guide-pin" style={{ display:'flex', alignItems:'center', gap:10, flexWrap:'wrap', margin:'10px 0', padding:'10px 14px', background:'#f4faf0', border:'1px solid #cdb', borderRadius:8 }}>
+                  <span style={{ fontSize:12, opacity:.75 }}>🔑 PIN de guía del huésped:</span>
+                  <code style={{ fontSize:18, fontWeight:700, letterSpacing:2 }}>{pin}</code>
+                  <button type="button" className="pe-btn pe-btn-ghost" onClick={() => navigator.clipboard?.writeText(pin)}>Copiar</button>
+                  <span style={{ fontSize:11, opacity:.6 }}>Se genera solo, caduca en la salida y se publica al guardar; al cancelar la reserva queda revocado.</span>
+                </div>
+              );
+            })()}
+
             <footer className="rv-edit-foot">
               <div className="rv-edit-foot-row1">
                 {selectedIdx >= 0 && selectedIdx < reservas.length && (
@@ -5395,146 +5426,64 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
 };
 
 // ================================================================
-// GuestPinManager — PINs de guía por huésped (revocables)
-// Genera un PIN aleatorio por reserva; guarda SOLO el hash SHA-256 +
-// caducidad en prices.json → guestPins[apt]. Revocar = borrar la entrada.
-// El PIN real solo se muestra al generarlo (no se almacena).
+// PIN de guía por reserva (derivado de los datos de la reserva)
+// El PIN se genera solo: SIGLAS del apartamento + 4 cifras deterministas.
+// Las reservas ACTIVAS publican el hash SHA-256 de su PIN en
+// prices.json → guestPins[apt] (caducidad = salida). Cancelar o borrar la
+// reserva lo quita del set → el acceso a la guía queda revocado.
 // ================================================================
-const GP_APTS = [
-  { id: 'vm', name: 'Hestía Mar' },
-  { id: 'vt', name: 'Hestía Thalassa' },
-  { id: 'vs', name: 'Hestía Salinas' },
-];
-async function _gpSha256(str) {
+const APT_SIGLAS = { vm: 'HM', vt: 'HT', vs: 'HS' };
+
+async function _guidePinSha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
-function _gpRandomPin(len = 7) {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sin I/O/0/1 (evita confusión)
-  const a = new Uint8Array(len);
-  crypto.getRandomValues(a);
-  return Array.from(a).map(b => chars[b % chars.length]).join('');
+// Hash determinista (djb2) → 4 cifras estables desde los datos de la reserva.
+function _pinCode4(str) {
+  let h = 5381;
+  for (let i = 0; i < str.length; i++) h = ((h * 33) ^ str.charCodeAt(i)) >>> 0;
+  return String(h % 10000).padStart(4, '0');
 }
+// PIN visible = SIGLAS + 4 cifras. Mismo dato de reserva → mismo PIN siempre.
+const reservaGuidePin = (r) => {
+  const apt = (r.apt || '').toLowerCase();
+  const sig = APT_SIGLAS[apt] || 'HX';
+  const seed = `${apt}|${r.entrada || ''}|${r.salida || ''}|${r.localizador || r.id || r.responsable || ''}`;
+  return sig + _pinCode4(seed);
+};
+const _reservaCxl = (r) => r.cancelada === true || (r.cancelacion || '').trim().toUpperCase() === 'CANCELADA';
 
-const GuestPinManager = ({ token, pricesData, onPricesUpdated }) => {
-  const [apt, setApt]       = React.useState('vm');
-  const [until, setUntil]   = React.useState('');
-  const [ref, setRef]       = React.useState('');
-  const [generated, setGen] = React.useState(null);
-  const [saving, setSaving] = React.useState(false);
-  const [msg, setMsg]       = React.useState(null);
-
-  const guestPins = pricesData.guestPins || { vm: [], vt: [], vs: [] };
+// Publica en prices.json → guestPins el hash del PIN de cada reserva ACTIVA
+// (no cancelada y con salida futura). Reemplaza el set completo: las reservas
+// canceladas o pasadas desaparecen y su PIN deja de validar. Solo escribe si
+// hay cambios (no genera commits en balde). Devuelve true si publicó.
+const _syncReservasToGuestPins = async (reservas, token) => {
   const today = new Date().toISOString().slice(0, 10);
-
-  const persist = async (nextGuestPins) => {
-    setSaving(true); setMsg(null);
-    try {
-      const rf  = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' });
-      const rfj = await rf.json();
-      if (rfj.message) throw new Error(rfj.message);
-      const next = { ...pricesData, guestPins: nextGuestPins };
-      const res = await fetch(`${API}/repos/${REPO}/contents/${PATH}`, {
-        method: 'PUT',
-        headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          message: `chore(guia): pins huésped via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
-          content: utf8ToB64(JSON.stringify(next, null, 2)),
-          sha: rfj.sha, branch: BRANCH,
-        }),
-      });
-      const j = await res.json();
-      if (!res.ok) throw new Error(j.message || 'Error');
-      onPricesUpdated(next, j.content.sha);
-      setMsg('Guardado ✓');
-      return true;
-    } catch (e) { setMsg('Error: ' + e.message); return false; }
-    finally { setSaving(false); }
-  };
-
-  const generate = async () => {
-    setMsg(null); setGen(null);
-    if (!until) { setMsg('Pon la fecha de caducidad (normalmente la salida del huésped).'); return; }
-    const pin = _gpRandomPin();
-    const h = await _gpSha256(pin);
-    const base = { vm: [], vt: [], vs: [], ...(pricesData.guestPins || {}) };
-    base[apt] = [...(base[apt] || []), { h, until, ref: ref.trim() || '—', created: today }];
-    const ok = await persist(base);
-    if (ok) { setGen({ pin, aptName: GP_APTS.find(a => a.id === apt).name }); setRef(''); }
-  };
-
-  const revoke = async (aptId, idx) => {
-    const base = { ...(pricesData.guestPins || {}) };
-    base[aptId] = (base[aptId] || []).filter((_, i) => i !== idx);
-    await persist(base);
-  };
-
-  return (
-    <div className="pe-section">
-      <h2 className="pe-section-title">Guía · PINs por huésped</h2>
-      <p className="pe-note" style={{ marginBottom: 14 }}>
-        Genera un PIN único por reserva para acceder a la guía web y al PDF. Se guarda solo el hash + la caducidad
-        (el PIN nunca se almacena). Cópialo y mándalo en la confirmación. Al cancelar una reserva, revócalo aquí y deja de funcionar.
-      </p>
-
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'flex-end' }}>
-        <div className="pe-field"><label>Apartamento</label>
-          <select className="pe-input" value={apt} onChange={e => setApt(e.target.value)}>
-            {GP_APTS.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
-          </select>
-        </div>
-        <div className="pe-field"><label>Caduca el (salida)</label>
-          <input type="date" className="pe-input" value={until} min={today} onChange={e => setUntil(e.target.value)} />
-        </div>
-        <div className="pe-field" style={{ flex: 1, minWidth: 180 }}><label>Referencia (sin datos personales)</label>
-          <input type="text" className="pe-input" value={ref} maxLength={40} placeholder="p.ej. Reserva jul-A" onChange={e => setRef(e.target.value)} />
-        </div>
-        <button type="button" className="pe-btn pe-btn-primary" disabled={saving} onClick={generate}>
-          {saving ? 'Guardando…' : 'Generar PIN'}
-        </button>
-      </div>
-
-      {generated && (
-        <div style={{ marginTop: 14, padding: '12px 16px', border: '1px solid #cdb', borderRadius: 8, background: '#f4faf0' }}>
-          <div style={{ fontSize: 13, marginBottom: 6 }}>PIN para <strong>{generated.aptName}</strong> — cópialo ahora, no se vuelve a mostrar:</div>
-          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-            <code style={{ fontSize: 22, letterSpacing: 3, fontWeight: 700 }}>{generated.pin}</code>
-            <button type="button" className="pe-btn" onClick={() => navigator.clipboard?.writeText(generated.pin)}>Copiar</button>
-          </div>
-        </div>
-      )}
-      {msg && <p className="pe-note" style={{ marginTop: 10 }}>{msg}</p>}
-
-      {GP_APTS.map(a => {
-        const list = guestPins[a.id] || [];
-        return (
-          <div key={a.id} style={{ marginTop: 18 }}>
-            <h3 style={{ fontSize: 14, margin: '0 0 8px' }}>{a.name} · <span style={{ opacity: .6 }}>{list.length} activo{list.length === 1 ? '' : 's'}</span></h3>
-            {list.length === 0 ? <p className="pe-note">Sin PINs.</p> : (
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
-                <thead><tr style={{ textAlign: 'left', opacity: .6 }}><th style={{ padding: '4px 8px' }}>Referencia</th><th style={{ padding: '4px 8px' }}>Caduca</th><th style={{ padding: '4px 8px' }}>Creado</th><th></th></tr></thead>
-                <tbody>
-                  {list.map((e, i) => {
-                    const expired = e.until && e.until < today;
-                    return (
-                      <tr key={i} style={{ borderTop: '1px solid #0001', opacity: expired ? .5 : 1 }}>
-                        <td style={{ padding: '4px 8px' }}>{e.ref || '—'}</td>
-                        <td style={{ padding: '4px 8px' }}>{e.until || '∞'}{expired ? ' · caducado' : ''}</td>
-                        <td style={{ padding: '4px 8px' }}>{e.created || '—'}</td>
-                        <td style={{ padding: '4px 8px', textAlign: 'right' }}>
-                          <button type="button" className="pe-btn pe-btn-danger" disabled={saving} onClick={() => revoke(a.id, i)}>Revocar</button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
+  const next = { vm: [], vt: [], vs: [] };
+  for (const r of (reservas || [])) {
+    const apt = (r.apt || '').toLowerCase();
+    if (!next[apt] || _reservaCxl(r) || !r.salida || r.salida < today) continue;
+    const h = await _guidePinSha256(reservaGuidePin(r));
+    // until/ref sin datos personales: fechas de la reserva (ya públicas en availability.json).
+    next[apt].push({ h, until: r.salida, ref: r.entrada || '—' });
+  }
+  const rf = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' });
+  const rfj = await rf.json();
+  if (rfj.message) throw new Error(rfj.message);
+  const prices = JSON.parse(b64ToUtf8(rfj.content));
+  if (JSON.stringify(prices.guestPins || {}) === JSON.stringify(next)) return false;
+  prices.guestPins = next;
+  const res = await fetch(`${API}/repos/${REPO}/contents/${PATH}`, {
+    method: 'PUT',
+    headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message: `chore(guia): sync PINs de acceso desde reservas · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
+      content: utf8ToB64(JSON.stringify(prices, null, 2)),
+      sha: rfj.sha, branch: BRANCH,
+    }),
+  });
+  if (!res.ok) { const j = await res.json(); throw new Error(j.message || 'Error'); }
+  return true;
 };
 
 const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
@@ -6791,11 +6740,6 @@ const AdminApp = () => {
           🔒<span className="pe-tab-label"> Bloqueos</span>
         </button>
         <button type="button"
-          className={`pe-tab${mode === 'guiapins' ? ' is-active' : ''}`}
-          onClick={() => { setMode('guiapins'); setError(null); setSuccess(null); }}>
-          🔑<span className="pe-tab-label"> Guía PINs</span>
-        </button>
-        <button type="button"
           className={`pe-tab${mode === 'leila' ? ' is-active' : ''}`}
           onClick={() => { setMode('leila'); setError(null); setSuccess(null); }}>
           💳<span className="pe-tab-label"> Leila</span>
@@ -6839,7 +6783,7 @@ const AdminApp = () => {
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'huecos' ? <HuecosTab token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'inteligencia' ? <IntelligenciaTab token={token} onNavigate={tab => { setMode(tab); setError(null); setSuccess(null); }} /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'bloqueos' ? <BloquesTab token={token} /> : mode === 'guiapins' ? <GuestPinManager token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'huecos' ? <HuecosTab token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'inteligencia' ? <IntelligenciaTab token={token} onNavigate={tab => { setMode(tab); setError(null); setSuccess(null); }} /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'bloqueos' ? <BloquesTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>
