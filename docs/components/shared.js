@@ -4436,7 +4436,7 @@ const GuestAccessModal = ({
     "data-lpignore": "true",
     maxLength: 12,
     className: "ga-modal-input",
-    placeholder: "HVX0000",
+    placeholder: `${(HESTIA_GUIDE_PINS[selectedApt] || 'HVX0000').slice(0, 3)}0000`,
     value: pin,
     onChange: e => {
       setPin(e.target.value);

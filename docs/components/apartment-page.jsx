@@ -952,7 +952,7 @@ const AptGuideDownload = ({ apt, lang }) => {
               data-lpignore="true"
               maxLength={12}
               className="apt-guide-input"
-              placeholder="HVX0000"
+              placeholder={`${(APT_GUIDE_PIN[apt.id] || 'HVX0000').slice(0, 3)}0000`}
               value={pin}
               onChange={(e) => { setPin(e.target.value); if (status !== 'idle') setStatus('idle'); }}
               aria-invalid={status === 'error'}
