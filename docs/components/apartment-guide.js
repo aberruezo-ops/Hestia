@@ -9608,7 +9608,18 @@ const AptGuideView = ({
     }
   }, /*#__PURE__*/React.createElement("polyline", {
     points: navOpen ? '18 15 12 9 6 15' : '6 9 12 15 18 9'
-  }))), /*#__PURE__*/React.createElement("aside", {
+  }))), navOpen && /*#__PURE__*/React.createElement("div", {
+    className: "ag-nav-backdrop no-print",
+    onClick: () => setNavOpen(false),
+    "aria-hidden": "true"
+  }), navOpen && ReactDOM.createPortal(/*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "ag-nav-close no-print",
+    onClick: () => setNavOpen(false),
+    "aria-label": lang === 'es' ? 'Cerrar índice' : 'Close contents'
+  }, "\u2715 ", /*#__PURE__*/React.createElement("span", {
+    className: "ag-nav-close-txt"
+  }, lang === 'es' ? 'Cerrar' : 'Close')), document.body), /*#__PURE__*/React.createElement("aside", {
     className: `ag-nav no-print${navOpen ? ' is-open' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "ag-nav-inner"

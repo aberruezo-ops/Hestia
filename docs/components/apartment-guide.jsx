@@ -4652,6 +4652,16 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </svg>
         </button>
 
+        {navOpen && <div className="ag-nav-backdrop no-print" onClick={() => setNavOpen(false)} aria-hidden="true" />}
+        {navOpen && ReactDOM.createPortal(
+          <button
+            type="button"
+            className="ag-nav-close no-print"
+            onClick={() => setNavOpen(false)}
+            aria-label={lang === 'es' ? 'Cerrar índice' : 'Close contents'}
+          >✕ <span className="ag-nav-close-txt">{lang === 'es' ? 'Cerrar' : 'Close'}</span></button>,
+          document.body
+        )}
         <aside className={`ag-nav no-print${navOpen ? ' is-open' : ''}`}>
           <div className="ag-nav-inner">
             <span className="ag-nav-label">{lang === 'es' ? 'Índice' : 'Contents'}</span>
