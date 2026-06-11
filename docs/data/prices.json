@@ -1,7 +1,7 @@
 {
   "_doc": "Hestía pricing source of truth. Edited via /admin.html (GitHub PAT). Read by web at runtime via fetch('data/prices.json'). All dates are local Europe/Madrid (no timezone offsets).",
   "version": 1,
-  "updatedAt": "2026-05-28T20:59:46.480Z",
+  "updatedAt": "2026-06-11T17:33:14.329Z",
   "currency": "EUR",
   "apts": {
     "vm": {
@@ -83,7 +83,7 @@
     "shortStayPricing": [
       {
         "nights": 2,
-        "basedOnNights": 4,
+        "basedOnNights": 3,
         "discount": 0,
         "label": "2 noches: precio de 4 noches (sin descuento)"
       },
@@ -232,7 +232,7 @@
         "media": [
           [
             "2026-05-01",
-            "2026-06-11"
+            "2026-06-25"
           ],
           [
             "2026-09-16",
@@ -241,18 +241,18 @@
         ],
         "alta": [
           [
-            "2026-06-12",
-            "2026-07-09"
+            "2026-06-26",
+            "2026-07-16"
           ],
           [
-            "2026-09-01",
+            "2026-08-30",
             "2026-09-15"
           ]
         ],
         "critica": [
           [
-            "2026-07-10",
-            "2026-08-31"
+            "2026-07-17",
+            "2026-08-29"
           ]
         ]
       },
