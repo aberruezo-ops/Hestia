@@ -3047,6 +3047,29 @@ const WidgetTopRecs = ({ lang }) => {
 // apartment-guide.jsx — al ser un sitio estático, los PINs no son
 // secretos: solo fricción de UX para diferenciar a huéspedes.
 const HESTIA_GUIDE_PINS = { vm: 'HVM2016', vt: 'HVT2019', vs: 'HVS2021' };
+
+// Validación del PIN de la guía. Admite dos tipos de PIN:
+//  - PIN maestro por apartamento (HESTIA_GUIDE_PINS): acceso de los
+//    propietarios, siempre válido.
+//  - PIN por huésped (prices.json → guestPins[apt]): se almacena SOLO el
+//    hash SHA-256 + fecha de caducidad (until). El PIN real nunca se guarda.
+//    Revocar al cancelar = borrar la entrada; caduca solo tras `until`.
+async function hestiaSha256Hex(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+async function validateGuidePin(aptId, entered) {
+  const pin = (entered || '').trim().toUpperCase();
+  if (!pin) return false;
+  if (pin === HESTIA_GUIDE_PINS[aptId]) return true;
+  const list = (window.PRICES_V2 && window.PRICES_V2.guestPins && window.PRICES_V2.guestPins[aptId]) || [];
+  if (!list.length) return false;
+  const today = new Date().toISOString().slice(0, 10);
+  let h;
+  try { h = await hestiaSha256Hex(pin); } catch (_) { return false; }
+  return list.some(e => e && e.h === h && (!e.until || e.until >= today));
+}
+Object.assign(window, { validateGuidePin, hestiaSha256Hex });
 const HESTIA_APT_META = {
   vm: { name: 'Hestía Mar',      slug: 'mar',      accent: '#6B7A3A', concept_es: 'Frente a la playa', concept_en: 'By the beach' },
   vt: { name: 'Hestía Thalassa', slug: 'thalassa', accent: '#B86A3C', concept_es: 'Ático panorámico',  concept_en: 'Panoramic penthouse' },
@@ -3090,16 +3113,16 @@ const GuestAccessModal = ({ lang, onClose }) => {
     });
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    const expected = HESTIA_GUIDE_PINS[selectedApt];
     // Lee del DOM, no del state. Si el usuario tipea y pulsa submit
     // muy rápido, el setState del último onChange puede no haberse
     // committed todavía y `pin` devolvería el valor anterior (la
     // primera pulsación de Entrar SIEMPRE fallaba por esto).
     const liveValue = (inputRef.current && inputRef.current.value) || pin;
     const entered = liveValue.trim().toUpperCase();
-    if (entered === expected) {
+    const ok = await validateGuidePin(selectedApt, entered);
+    if (ok) {
       if (entered !== pin) setPin(entered);
       setStatus('success');
       try { sessionStorage.setItem('hestia-guide-unlock-' + selectedApt, '1'); } catch (err) {}
