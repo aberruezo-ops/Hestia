@@ -1,7 +1,7 @@
 {
   "_doc": "Hestía pricing source of truth. Edited via /admin.html (GitHub PAT). Read by web at runtime via fetch('data/prices.json'). All dates are local Europe/Madrid (no timezone offsets).",
   "version": 1,
-  "updatedAt": "2026-06-11T17:34:38.284Z",
+  "updatedAt": "2026-06-11T17:35:25.027Z",
   "currency": "EUR",
   "apts": {
     "vm": {
