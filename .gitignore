@@ -8,6 +8,7 @@
 !docs/assets/apple-touch-icon.png
 !docs/assets/logo-*.png
 !docs/assets/pwa-icon-*.png
+!docs/assets/contract/*.png
 !docs/assets/photo-*.jpg
 !docs/assets/*.jpg
 !docs/assets/*.mov
