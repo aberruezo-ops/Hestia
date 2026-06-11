@@ -10167,9 +10167,10 @@ const AptGuideGate = ({
     window.addEventListener('hestia:open-guide-pin', onOpen);
     return () => window.removeEventListener('hestia:open-guide-pin', onOpen);
   }, []);
-  const submit = e => {
+  const submit = async e => {
     e.preventDefault();
-    if (pin.trim().toUpperCase() === expected) {
+    const ok = window.validateGuidePin ? await window.validateGuidePin(apt.id, pin) : pin.trim().toUpperCase() === expected;
+    if (ok) {
       setStatus('success');
       // Delay matches the modal's .is-success exit animation (scale + blur out)
       // and lets the apartment-page crossfade kick in cleanly afterwards.

@@ -5394,6 +5394,149 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
   );
 };
 
+// ================================================================
+// GuestPinManager — PINs de guía por huésped (revocables)
+// Genera un PIN aleatorio por reserva; guarda SOLO el hash SHA-256 +
+// caducidad en prices.json → guestPins[apt]. Revocar = borrar la entrada.
+// El PIN real solo se muestra al generarlo (no se almacena).
+// ================================================================
+const GP_APTS = [
+  { id: 'vm', name: 'Hestía Mar' },
+  { id: 'vt', name: 'Hestía Thalassa' },
+  { id: 'vs', name: 'Hestía Salinas' },
+];
+async function _gpSha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+function _gpRandomPin(len = 7) {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sin I/O/0/1 (evita confusión)
+  const a = new Uint8Array(len);
+  crypto.getRandomValues(a);
+  return Array.from(a).map(b => chars[b % chars.length]).join('');
+}
+
+const GuestPinManager = ({ token, pricesData, onPricesUpdated }) => {
+  const [apt, setApt]       = React.useState('vm');
+  const [until, setUntil]   = React.useState('');
+  const [ref, setRef]       = React.useState('');
+  const [generated, setGen] = React.useState(null);
+  const [saving, setSaving] = React.useState(false);
+  const [msg, setMsg]       = React.useState(null);
+
+  const guestPins = pricesData.guestPins || { vm: [], vt: [], vs: [] };
+  const today = new Date().toISOString().slice(0, 10);
+
+  const persist = async (nextGuestPins) => {
+    setSaving(true); setMsg(null);
+    try {
+      const rf  = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' });
+      const rfj = await rf.json();
+      if (rfj.message) throw new Error(rfj.message);
+      const next = { ...pricesData, guestPins: nextGuestPins };
+      const res = await fetch(`${API}/repos/${REPO}/contents/${PATH}`, {
+        method: 'PUT',
+        headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: `chore(guia): pins huésped via /p-edit · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
+          content: utf8ToB64(JSON.stringify(next, null, 2)),
+          sha: rfj.sha, branch: BRANCH,
+        }),
+      });
+      const j = await res.json();
+      if (!res.ok) throw new Error(j.message || 'Error');
+      onPricesUpdated(next, j.content.sha);
+      setMsg('Guardado ✓');
+      return true;
+    } catch (e) { setMsg('Error: ' + e.message); return false; }
+    finally { setSaving(false); }
+  };
+
+  const generate = async () => {
+    setMsg(null); setGen(null);
+    if (!until) { setMsg('Pon la fecha de caducidad (normalmente la salida del huésped).'); return; }
+    const pin = _gpRandomPin();
+    const h = await _gpSha256(pin);
+    const base = { vm: [], vt: [], vs: [], ...(pricesData.guestPins || {}) };
+    base[apt] = [...(base[apt] || []), { h, until, ref: ref.trim() || '—', created: today }];
+    const ok = await persist(base);
+    if (ok) { setGen({ pin, aptName: GP_APTS.find(a => a.id === apt).name }); setRef(''); }
+  };
+
+  const revoke = async (aptId, idx) => {
+    const base = { ...(pricesData.guestPins || {}) };
+    base[aptId] = (base[aptId] || []).filter((_, i) => i !== idx);
+    await persist(base);
+  };
+
+  return (
+    <div className="pe-section">
+      <h2 className="pe-section-title">Guía · PINs por huésped</h2>
+      <p className="pe-note" style={{ marginBottom: 14 }}>
+        Genera un PIN único por reserva para acceder a la guía web y al PDF. Se guarda solo el hash + la caducidad
+        (el PIN nunca se almacena). Cópialo y mándalo en la confirmación. Al cancelar una reserva, revócalo aquí y deja de funcionar.
+      </p>
+
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'flex-end' }}>
+        <div className="pe-field"><label>Apartamento</label>
+          <select className="pe-input" value={apt} onChange={e => setApt(e.target.value)}>
+            {GP_APTS.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
+          </select>
+        </div>
+        <div className="pe-field"><label>Caduca el (salida)</label>
+          <input type="date" className="pe-input" value={until} min={today} onChange={e => setUntil(e.target.value)} />
+        </div>
+        <div className="pe-field" style={{ flex: 1, minWidth: 180 }}><label>Referencia (sin datos personales)</label>
+          <input type="text" className="pe-input" value={ref} maxLength={40} placeholder="p.ej. Reserva jul-A" onChange={e => setRef(e.target.value)} />
+        </div>
+        <button type="button" className="pe-btn pe-btn-primary" disabled={saving} onClick={generate}>
+          {saving ? 'Guardando…' : 'Generar PIN'}
+        </button>
+      </div>
+
+      {generated && (
+        <div style={{ marginTop: 14, padding: '12px 16px', border: '1px solid #cdb', borderRadius: 8, background: '#f4faf0' }}>
+          <div style={{ fontSize: 13, marginBottom: 6 }}>PIN para <strong>{generated.aptName}</strong> — cópialo ahora, no se vuelve a mostrar:</div>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+            <code style={{ fontSize: 22, letterSpacing: 3, fontWeight: 700 }}>{generated.pin}</code>
+            <button type="button" className="pe-btn" onClick={() => navigator.clipboard?.writeText(generated.pin)}>Copiar</button>
+          </div>
+        </div>
+      )}
+      {msg && <p className="pe-note" style={{ marginTop: 10 }}>{msg}</p>}
+
+      {GP_APTS.map(a => {
+        const list = guestPins[a.id] || [];
+        return (
+          <div key={a.id} style={{ marginTop: 18 }}>
+            <h3 style={{ fontSize: 14, margin: '0 0 8px' }}>{a.name} · <span style={{ opacity: .6 }}>{list.length} activo{list.length === 1 ? '' : 's'}</span></h3>
+            {list.length === 0 ? <p className="pe-note">Sin PINs.</p> : (
+              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+                <thead><tr style={{ textAlign: 'left', opacity: .6 }}><th style={{ padding: '4px 8px' }}>Referencia</th><th style={{ padding: '4px 8px' }}>Caduca</th><th style={{ padding: '4px 8px' }}>Creado</th><th></th></tr></thead>
+                <tbody>
+                  {list.map((e, i) => {
+                    const expired = e.until && e.until < today;
+                    return (
+                      <tr key={i} style={{ borderTop: '1px solid #0001', opacity: expired ? .5 : 1 }}>
+                        <td style={{ padding: '4px 8px' }}>{e.ref || '—'}</td>
+                        <td style={{ padding: '4px 8px' }}>{e.until || '∞'}{expired ? ' · caducado' : ''}</td>
+                        <td style={{ padding: '4px 8px' }}>{e.created || '—'}</td>
+                        <td style={{ padding: '4px 8px', textAlign: 'right' }}>
+                          <button type="button" className="pe-btn pe-btn-danger" disabled={saving} onClick={() => revoke(a.id, i)}>Revocar</button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
   const [avail,      setAvail     ] = React.useState(null);
   const [loadErr,    setLoadErr   ] = React.useState(null);
@@ -6648,6 +6791,11 @@ const AdminApp = () => {
           🔒<span className="pe-tab-label"> Bloqueos</span>
         </button>
         <button type="button"
+          className={`pe-tab${mode === 'guiapins' ? ' is-active' : ''}`}
+          onClick={() => { setMode('guiapins'); setError(null); setSuccess(null); }}>
+          🔑<span className="pe-tab-label"> Guía PINs</span>
+        </button>
+        <button type="button"
           className={`pe-tab${mode === 'leila' ? ' is-active' : ''}`}
           onClick={() => { setMode('leila'); setError(null); setSuccess(null); }}>
           💳<span className="pe-tab-label"> Leila</span>
@@ -6691,7 +6839,7 @@ const AdminApp = () => {
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'huecos' ? <HuecosTab token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'inteligencia' ? <IntelligenciaTab token={token} onNavigate={tab => { setMode(tab); setError(null); setSuccess(null); }} /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'bloqueos' ? <BloquesTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'huecos' ? <HuecosTab token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'inteligencia' ? <IntelligenciaTab token={token} onNavigate={tab => { setMode(tab); setError(null); setSuccess(null); }} /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'bloqueos' ? <BloquesTab token={token} /> : mode === 'guiapins' ? <GuestPinManager token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>

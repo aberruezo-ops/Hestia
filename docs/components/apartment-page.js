@@ -1013,7 +1013,7 @@ const AptGuideDownload = ({
     error: 'Wrong PIN. Check your booking confirmation.',
     success: 'Download started!'
   };
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
     // Lee del DOM, no del state. En móvil, tipear el último carácter
     // y pulsar submit casi a la vez puede hacer que el setState del
@@ -1021,8 +1021,11 @@ const AptGuideDownload = ({
     const liveValue = inputRef.current && inputRef.current.value || pin;
     const entered = liveValue.trim().toUpperCase();
     if (entered !== pin) setPin(entered);
-    if (entered === expected) {
+    const ok = window.validateGuidePin ? await window.validateGuidePin(apt.id, entered) : entered === expected;
+    if (ok) {
       setStatus('success');
+      // El PDF se sirve con el nombre del PIN maestro; los PINs de huésped
+      // validan el acceso pero el fichero es el mismo.
       const a = document.createElement('a');
       a.href = `assets/guides/${expected}.pdf`;
       a.download = `Guia-${apt.es.name.replace(/\s+/g, '-')}.pdf`;
