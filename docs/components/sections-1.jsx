@@ -764,6 +764,57 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
     return () => clearInterval(iv);
   }, [_loadSlots]);
 
+  // Marquee con auto-scroll por JS (rAF) que ADEMÁS se puede arrastrar con dedo
+  // (móvil/iPad) o ratón (PC) en ambos sentidos. El contenido va duplicado, así
+  // que basta con envolver el offset en [-setW, 0] para un bucle continuo.
+  const wrapRef = React.useRef(null);
+  const trackRef = React.useRef(null);
+  React.useEffect(() => {
+    const wrap = wrapRef.current, track = trackRef.current;
+    if (!wrap || !track) return;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let setW = track.scrollWidth / 2;
+    const durSec = Math.max(10, slots.length * 5);
+    const speed = setW > 0 ? setW / (durSec * 1000) : 0; // px por ms (igual que la animación CSS previa)
+    let offset = 0, raf = 0, last = performance.now();
+    let dragging = false, hovering = false, lastX = 0, moved = 0;
+    const wrapOffset = () => { if (setW <= 0) return; while (offset <= -setW) offset += setW; while (offset > 0) offset -= setW; };
+    const apply = () => { track.style.transform = `translateX(${offset}px)`; };
+    const frame = (now) => {
+      const dt = Math.min(now - last, 50); last = now;
+      if (!dragging && !hovering && !reduce) { offset -= speed * dt; wrapOffset(); apply(); }
+      raf = requestAnimationFrame(frame);
+    };
+    const onDown = (e) => { dragging = true; moved = 0; lastX = e.clientX; wrap.classList.add('lm-dragging'); try { wrap.setPointerCapture(e.pointerId); } catch (_) {} };
+    const onMove = (e) => { if (!dragging) return; const dx = e.clientX - lastX; lastX = e.clientX; moved += Math.abs(dx); offset += dx; wrapOffset(); apply(); };
+    const onUp = (e) => { if (!dragging) return; dragging = false; wrap.classList.remove('lm-dragging'); try { wrap.releasePointerCapture(e.pointerId); } catch (_) {} };
+    const onClick = (e) => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } };
+    const onEnter = (e) => { if (e.pointerType === 'mouse') hovering = true; };
+    const onLeave = (e) => { if (e.pointerType === 'mouse') hovering = false; };
+    const onResize = () => { setW = track.scrollWidth / 2; };
+    setW = track.scrollWidth / 2; apply();
+    raf = requestAnimationFrame(frame);
+    wrap.addEventListener('pointerdown', onDown);
+    wrap.addEventListener('pointermove', onMove);
+    wrap.addEventListener('pointerup', onUp);
+    wrap.addEventListener('pointercancel', onUp);
+    wrap.addEventListener('pointerenter', onEnter);
+    wrap.addEventListener('pointerleave', onLeave);
+    wrap.addEventListener('click', onClick, true);
+    window.addEventListener('resize', onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      wrap.removeEventListener('pointerdown', onDown);
+      wrap.removeEventListener('pointermove', onMove);
+      wrap.removeEventListener('pointerup', onUp);
+      wrap.removeEventListener('pointercancel', onUp);
+      wrap.removeEventListener('pointerenter', onEnter);
+      wrap.removeEventListener('pointerleave', onLeave);
+      wrap.removeEventListener('click', onClick, true);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [slots]);
+
   if (!slots.length) return null;
 
   const fmtDate = (ds) => {
@@ -814,8 +865,6 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
     );
   };
 
-  const dur = `${Math.max(10, slots.length * 5)}s`;
-
   const renderLongStayCard = (key) => {
     const ls = window.PRICES_V2?.longStayConfig;
     const minRate = ls?.monthlyRates ? Math.min(...Object.values(ls.monthlyRates)) : 1450;
@@ -843,8 +892,8 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
             {lang === 'es' ? 'Huecos disponibles ahora:' : 'Available now:'}
           </span>
         )}
-        <div className="lm-marquee-wrap">
-          <div className="lm-marquee-track" style={{ animationDuration: dur }}>
+        <div className="lm-marquee-wrap" ref={wrapRef}>
+          <div className="lm-marquee-track" ref={trackRef}>
             {slots.map((slot, i) => renderCard(slot, i))}
             {renderLongStayCard('ls1')}
             {slots.map((slot, i) => renderCard(slot, `d${i}`))}
