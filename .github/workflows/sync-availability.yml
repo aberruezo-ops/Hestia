@@ -56,10 +56,10 @@ jobs:
         if: always()
         run: cat docs/assets/availability.json
 
-      # Recalcula los huecos: poda las ofertas de hueco corto (<6 noches) que ya
-      # no corresponden a un hueco vigente tras el cambio de disponibilidad.
-      - name: Prune stale gap offers
-        run: node scripts/prune-gap-offers.mjs
+      # Recalcula las ofertas de hueco corto (2-5 noches) tras el cambio de
+      # disponibilidad: poda las caducadas y auto-crea el descuento de última hora.
+      - name: Recalcular ofertas de hueco
+        run: node scripts/recalc-gap-offers.mjs
 
       - name: Commit and push if changed
         run: |
