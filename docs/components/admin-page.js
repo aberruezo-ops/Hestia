@@ -2305,6 +2305,7 @@ const ContractTab = ({
     const pdfFilename = `${fechaEntrada}_Hestia_Vera_${a.shortName.replace(/\s+/g, '_')}_contrato_${safeName(nombre)}_${noches}_noches.pdf`;
     return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=794, initial-scale=1">
 <title>Contrato · Hestía Vera ${a.shortName} · ${escHtml(nombre)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2348,6 +2349,14 @@ const ContractTab = ({
     height: 65mm;
     overflow: hidden;
     background: linear-gradient(135deg, var(--ber) 0%, var(--ber-lt) 100%);
+  }
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 60%;
   }
   .hero-overlay {
     position: absolute;
@@ -2537,11 +2546,20 @@ const ContractTab = ({
 </div>
 
 <div id="pdf-content">
-<!-- Spacer para el hero de la página 1. #pdf-content está fijado a 210mm para que
-     1 mm CSS = 1 mm PDF en cualquier dispositivo (sin esto, en móvil el viewport por
-     defecto ~980px comprimía el spacer y el texto se solapaba bajo el hero).
-     barra(18) + hero(65) − MARG_TOP(30) + 7 de holgura = 60mm -->
-<div style="height:60mm;line-height:0;font-size:0"> </div>
+<!-- Hero en el flujo del documento (no superpuesto por jsPDF). Al formar parte de la
+     imagen que html2canvas rasteriza, escala SIEMPRE junto al contenido, así que la
+     cabecera nunca puede desalinearse y solaparse con el texto (problema previo en
+     móvil con el spacer fijo + hero dibujado por jsPDF). La barra fina y el pie se
+     dibujan en los márgenes reservados (MARG_TOP/MARG_BOT), fuera del contenido. -->
+<div class="hero">
+  ${heroUrl ? `<img class="hero-img" src="${heroUrl}" alt="">` : ''}
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <p class="hero-eyebrow">contrato de arrendamiento por temporada</p>
+    <div class="hero-title">Hestía · Vera ${a.shortName}</div>
+    <p class="hero-meta">${fechaEntradaStr} – ${fechaSalidaStr}  ·  ${noches} noches · ${huespedes} huéspedes</p>
+  </div>
+</div>
 <div id="contract-body">
 
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
@@ -2663,12 +2681,16 @@ ${clausulaFianza}
   async function generate() {
     try { await document.fonts.ready; } catch(e) {}
     var el = document.getElementById('pdf-content');
-    // margin: [top, right, bottom, left] — top/bottom leave room for jsPDF header/footer
-    var MARG_TOP = 30, MARG_BOT = 24;
+    // margin: [top, right, bottom, left] — la barra fina (18mm) y el pie viven en estos
+    // márgenes; el contenido (incl. el hero, ya dentro del flujo) nunca los invade.
+    var MARG_TOP = 18, MARG_BOT = 22;
     var opt = {
       margin: [MARG_TOP, 0, MARG_BOT, 0],
       filename: FILE,
       image: { type: 'jpeg', quality: 0.96 },
+      // El <meta viewport width=794> del HTML hace que el móvil maquete a 794px (=210mm)
+      // igual que escritorio, en vez del viewport por defecto ~980px que desajustaba la
+      // imagen escalada y desbordaba el contenido sobre cabecera/pie.
       html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
       pagebreak: { mode: ['css', 'legacy'] }
@@ -2696,34 +2718,7 @@ ${clausulaFianza}
 
       var hH = 18;
 
-      /* ── Portada: foto + overlay + texto (sólo página 1) ─── */
-      if (i === 1) {
-        if (HERO) {
-          try { pdf.addImage(HERO, 'JPEG', 0, hH, pW, 65); } catch(e) {}
-          pdf.saveGraphicsState();
-          pdf.setGState(pdf.GState({ opacity: 0.38 }));
-          pdf.setFillColor(42, 15, 46);
-          pdf.rect(0, hH, pW, 65, 'F');
-          pdf.restoreGraphicsState();
-        } else {
-          pdf.setFillColor(42, 15, 46);
-          pdf.rect(0, hH, pW, 65, 'F');
-        }
-        pdf.setFont('helvetica', 'italic');
-        pdf.setFontSize(7);
-        pdf.setTextColor(228, 217, 190);
-        pdf.text('contrato de arrendamiento por temporada', 8, hH + 42);
-        pdf.setFont('helvetica', 'bold');
-        pdf.setFontSize(16);
-        pdf.setTextColor(240, 232, 213);
-        pdf.text('Hestia · ' + APT, 8, hH + 52);
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(8);
-        pdf.setTextColor(228, 217, 190);
-        pdf.text(DATES + '  ·  ' + META, 8, hH + 61);
-      }
-
-      /* ── Barra compacta (todas las páginas, encima del hero) */
+      /* ── Barra compacta (todas las páginas, en el margen superior) */
       pdf.setFillColor(42, 15, 46);
       pdf.rect(0, 0, pW, hH, 'F');
       if (LOGO) {
