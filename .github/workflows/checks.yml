@@ -1,8 +1,10 @@
-name: Checks — precio y contraste
+name: Checks — precio, smoke y contraste
 
 # Guardarraíles que se ejecutan en cada push/PR:
 #  · price-consistency: BLOQUEA si el precio (fuente única _calcStay) cambia sin
 #    actualizar la baseline. Garantiza que ninguna página muestre un precio distinto.
+#  · smoke: BLOQUEA si alguna página da error JS/consola, no renderiza o tiene un
+#    enlace interno roto (habría cazado la "pantalla en blanco").
 #  · contrast: audita WCAG color-contrast de cada página y BLOQUEA cualquier
 #    regresión nueva (ratchet contra scripts/contrast-baseline.json). Los borderline
 #    heredados quedan tolerados en la baseline; para depurarla: --update-baseline.
@@ -42,6 +44,10 @@ jobs:
         run: |
           cd docs && python3 -m http.server 8123 &
           sleep 2
+      # Carga cada página y BLOQUEA si hay error JS/consola, no renderiza o tiene un
+      # enlace interno roto (smoke test — habría cazado la pantalla en blanco).
+      - name: Smoke test (carga + errores + enlaces)
+        run: node scripts/smoke-test.cjs
       # Bloquea cualquier REGRESIÓN de contraste (fallo nuevo no presente en la
       # baseline). Los borderline/heredados quedan tolerados en contrast-baseline.json.
       - name: Auditoría de contraste (WCAG, ratchet)
