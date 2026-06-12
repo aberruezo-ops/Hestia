@@ -18097,6 +18097,37 @@ img[src*="apt-vt-gallery-"] {
   color: var(--ber);
   margin: 0 0 10px;
 }
+.rf-quote-clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  position: relative;
+}
+.rf-quote-clamped::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1.5em;
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--sol) 5%, var(--crema)));
+  pointer-events: none;
+}
+.rf-quote-toggle {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ber);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.rf-quote-toggle:hover { opacity: 0.72; }
 .rf-quote-meta {
   display: flex;
   flex-wrap: wrap;
