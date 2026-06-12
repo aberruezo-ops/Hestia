@@ -17425,6 +17425,102 @@ img[src*="apt-vt-gallery-"] {
   color: var(--ber-dk);
 }
 
+/* Hint inline bajo un botón bloqueado (por qué no se puede continuar/enviar) */
+.rf-btn-hint {
+  margin: 8px 0 0;
+  text-align: center;
+  color: color-mix(in srgb, var(--ber) 70%, transparent);
+}
+
+/* Recap del paso 3: resumen + precio estimado visible al enviar */
+.rf-recap {
+  margin: 0 0 18px;
+  display: grid;
+  gap: 10px;
+}
+.rf-recap-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--sol) 7%, var(--crema));
+  border: 1px solid color-mix(in srgb, var(--sol) 22%, transparent);
+  border-radius: 10px;
+}
+.rf-recap-price span {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ber) 70%, transparent);
+}
+.rf-recap-price strong {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--ber);
+}
+
+/* Pantalla de confirmación tras enviar (envío fiable: enlace de respaldo + copiar) */
+.rf-sent {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  text-align: center;
+  padding: 26px 20px;
+  background: color-mix(in srgb, var(--sol) 6%, var(--crema));
+  border: 1px solid color-mix(in srgb, var(--sol) 24%, transparent);
+  border-radius: 14px;
+}
+.rf-sent-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--sol);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+}
+.rf-sent-title {
+  margin: 4px 0 0;
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--ber);
+}
+.rf-sent-text {
+  margin: 0;
+  max-width: 420px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ber-dk);
+}
+.rf-sent-fallback {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: color-mix(in srgb, var(--ber) 75%, transparent);
+}
+.rf-sent-fallback a {
+  color: var(--sol);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.rf-sent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 8px 0 0;
+}
+.rf-sent-direct {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: color-mix(in srgb, var(--ber) 70%, transparent);
+}
+.rf-sent-direct strong { color: var(--ber); }
+
 /* Calendario · días "too-soon" (rango < minNights desde el check-in)
    Visualmente desactivados — el huésped no puede pulsarlos. Tooltip
    nativo explica "Estancia mínima N noches". Aplica a ambos pickers
