@@ -2340,10 +2340,11 @@ const ContractTab = ({
     margin: 0; padding: 0; background: #fff;
   }
   #pdf-content { background: #fff; width: 210mm; }
-  #contract-body { padding: 8mm 16mm 14mm; }
+  #contract-body { padding: 14mm 16mm 14mm; }
 
   /* ── Hero (primera página) ───────────────────────────── */
   .hero {
+    margin-top: -8mm;
     position: relative;
     width: 100%;
     height: 65mm;
@@ -2696,7 +2697,7 @@ ${clausulaFianza}
     // La barra fina ocupa 0–18mm y el pie ~287–290mm. Dejamos MARG_TOP/BOT MAYORES
     // que esas franjas para que SIEMPRE quede una banda blanca entre cabecera y
     // contenido, y entre contenido y pie — imposible que se solapen en ninguna página.
-    var MARG_TOP = 28, MARG_BOT = 30;
+    var MARG_TOP = 26, MARG_BOT = 30;
     var opt = {
       margin: [MARG_TOP, 0, MARG_BOT, 0],
       filename: FILE,
