@@ -20651,10 +20651,6 @@ img[src*="apt-vt-gallery-"] {
   font-size: 10px;
   letter-spacing: 0.12em;
 }
-@keyframes lm-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
 .lm-marquee-wrap {
   overflow: hidden;
   width: 100%;
@@ -20662,20 +20658,23 @@ img[src*="apt-vt-gallery-"] {
   mask-image: linear-gradient(to right, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+  cursor: grab;
+  touch-action: pan-y;          /* permite scroll vertical de la página; el horizontal lo arrastramos */
+  user-select: none;
+  -webkit-user-select: none;
 }
+.lm-marquee-wrap.lm-dragging { cursor: grabbing; }
 .lm-marquee-track {
   display: flex;
   gap: 10px;
   width: max-content;
-  animation: lm-scroll 30s linear infinite;
-  will-change: transform;
+  will-change: transform;       /* el desplazamiento (auto + arrastre) lo controla JS via transform */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
-.lm-marquee-track:hover { animation-play-state: paused; }
+.lm-marquee-track a { -webkit-user-drag: none; }
 @media (prefers-reduced-motion: reduce) {
-  .lm-marquee-track { animation: none; }
-  .lm-marquee-wrap { -webkit-mask-image: none; mask-image: none; overflow-x: auto; }
+  .lm-marquee-wrap { -webkit-mask-image: none; mask-image: none; }
 }
 /* Tarjeta de hueco disponible */
 .lm-card {
