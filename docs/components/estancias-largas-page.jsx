@@ -248,10 +248,17 @@ const LsSearch = ({ lang }) => {
       .catch(() => {});
   }, []);
 
+  // Mezcla los bloqueos de availability.json (iCal, cada 4h) con manual_blocks de
+  // prices.json (reservas directas de p-edit, instantáneas) — igual que el
+  // calendario — para que cualquier reserva/cancelación afecte ya a la estancia larga.
+  const _mblk = (aptId) => (window.PRICES_V2?.manual_blocks?.[aptId]) || [];
   const blockedUnion = React.useMemo(() => {
     if (!availData) return [];
     const all = [];
-    LS_APTS.forEach(a => { (availData[a.id]?.blocked || []).forEach(b => all.push(b)); });
+    LS_APTS.forEach(a => {
+      (availData[a.id]?.blocked || []).forEach(b => all.push(b));
+      _mblk(a.id).forEach(b => all.push(b));
+    });
     return all;
   }, [availData]);
 
@@ -284,7 +291,7 @@ const LsSearch = ({ lang }) => {
       const mo = +checkin.slice(5, 7);
       if (mo === 7 || mo === 8) { setAvail(null); return; }
       setAvail(LS_APTS.map(apt => {
-        const isAvail = _drAvail(checkin, checkout, availData ? (availData[apt.id]?.blocked || []) : []);
+        const isAvail = _drAvail(checkin, checkout, [...((availData?.[apt.id]?.blocked) || []), ..._mblk(apt.id)]);
         const regCalc = isAvail ? _calcStay(checkin, checkout, apt.id, false, guests) : null;
         const regTotal = regCalc ? regCalc.baseTotal + (regCalc.guestSuppAmt || 0) + (regCalc.petAmt || 0) : 0;
         const lsTotal = calcLsTotal(checkin, checkout, guests, false, apt.id);
