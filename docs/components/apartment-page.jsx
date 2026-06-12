@@ -1080,7 +1080,7 @@ const AptPriceTeaser = ({ apt, lang }) => {
           {(() => {
             const nightlyMonthly = base * 30;
             const lsCfg   = v2.longStayConfig || {};
-            const lsRates = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+            const lsRates = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
             const supp    = (lsCfg.aptSupplement || {})[apt.id] || 0;
             const lsRate  = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + supp;
             const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);

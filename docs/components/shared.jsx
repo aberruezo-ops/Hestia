@@ -2419,7 +2419,7 @@ const _calcLsTotal = (start, end, guests, withPets, aptId) => {
   const petPerMo       = lsCfg.petPerMonth        || 0;
   const aptSupp        = ((lsCfg.aptSupplement || {})[aptId] || 0);
   const extraGuests    = Math.max(0, (guests || 1) - 2);
-  const rates          = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+  const rates          = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
   const isXmas = (ds) => { const m = +ds.slice(5,7), d = +ds.slice(8,10); return (m===12&&d>=23)||(m===1&&d<=6); };
   const isEast = (ds) => easter.some(([s,e]) => ds>=s && ds<=e);
   const adj = (ds, n) => { const dt = new Date(ds+'T12:00:00Z'); dt.setUTCDate(dt.getUTCDate()+n); return dt.toISOString().slice(0,10); };
@@ -2507,7 +2507,7 @@ const _PERK_HUES = {
 // base más barata + suplemento de apartamento más bajo. Nunca hardcodeada.
 const _lsMinMonthly = () => {
   const c = (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || {};
-  const r = c.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+  const r = c.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
   const supps = Object.values(c.aptSupplement || {});
   return Math.min(r.baja, r.media, r.alta) + (supps.length ? Math.min(...supps) : 0);
 };

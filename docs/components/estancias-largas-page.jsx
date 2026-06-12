@@ -113,7 +113,7 @@ const LS_APTS = [
 // Tarifas de estancia larga: SIEMPRE desde prices.json (window.PRICES_V2),
 // para que coincidan con el panel admin. Sin números hardcodeados en la web.
 const _lsCfgPub = () => (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || {};
-const _lsRates  = () => _lsCfgPub().monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+const _lsRates  = () => _lsCfgPub().monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
 const _lsFlat   = () => _lsCfgPub().specialNightFlat || 80;
 const _fmtRate  = (n, lang) => String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'es' ? '.' : ',');
 
@@ -270,7 +270,7 @@ const LsSearch = ({ lang }) => {
     const petPerMo          = lsCfg.petPerMonth         || 0;
     const aptSupp           = ((lsCfg.aptSupplement || {})[aptId] || 0);
     const extraGuests       = Math.max(0, (guests || 1) - 2);
-    const rates             = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+    const rates             = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
     const isXmas = (ds) => { const m = +ds.slice(5,7), d = +ds.slice(8,10); return (m===12&&d>=23)||(m===1&&d<=6); };
     const isEast = (ds) => easter.some(([s,e]) => ds>=s && ds<=e);
     let total = 0, cur = start;

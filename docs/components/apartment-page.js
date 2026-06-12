@@ -1227,9 +1227,9 @@ const AptPriceTeaser = ({
     const nightlyMonthly = base * 30;
     const lsCfg = v2.longStayConfig || {};
     const lsRates = lsCfg.monthlyRates || {
-      baja: 1450,
+      baja: 1490,
       media: 1590,
-      alta: 1790
+      alta: 1850
     };
     const supp = (lsCfg.aptSupplement || {})[apt.id] || 0;
     const lsRate = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + supp;

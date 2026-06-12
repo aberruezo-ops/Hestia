@@ -867,7 +867,7 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
 
   const renderLongStayCard = (key) => {
     const ls = window.PRICES_V2?.longStayConfig;
-    const minRate = ls?.monthlyRates ? Math.min(...Object.values(ls.monthlyRates)) : 1450;
+    const minRate = ls?.monthlyRates ? Math.min(...Object.values(ls.monthlyRates)) : 1490;
     return (
       <a key={key} href="estancias-largas.html" className="lm-card lm-card--longstay">
         <span className="lm-card-apt lm-card-apt--longstay">
@@ -975,7 +975,7 @@ const LongStayStrip = ({ lang }) => {
   const minBase = bases.length ? Math.min(...bases) : 83;
   const nightlyMonthly = minBase * 30;
   const lsCfg = v2?.longStayConfig || {};
-  const lsRates = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+  const lsRates = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
   const supps = Object.values(lsCfg.aptSupplement || {});
   const lsRate = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + (supps.length ? Math.min(...supps) : 0);
   const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
