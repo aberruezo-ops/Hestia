@@ -2491,14 +2491,15 @@ const ContractTab = ({
   .key-num { color: var(--vt-dk); font-weight: 700; }
 
   .firmas {
-    margin-top: 12mm;
+    margin-top: 9mm;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10mm;
     page-break-inside: avoid;
+    break-inside: avoid;
   }
   .firma {
-    padding-top: 18mm;
+    padding-top: 15mm;
     border-top: 1pt solid var(--sol);
     font-size: 9.5pt;
     color: var(--ber);
@@ -2693,7 +2694,10 @@ ${clausulaFianza}
       // imagen escalada y desbordaba el contenido sobre cabecera/pie.
       html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak: { mode: ['css', 'legacy'] }
+      // avoid explícito: más fiable que el page-break-inside del CSS para que
+      // html2pdf NUNCA parta el bloque de firmas ni una fila de tabla (evita que
+      // las firmas se corten y pisen el pie si caen en el borde de página).
+      pagebreak: { mode: ['css', 'legacy'], avoid: ['.firmas', 'tr'] }
     };
     var worker = html2pdf().set(opt).from(el);
     await worker.toPdf();
