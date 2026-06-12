@@ -62,15 +62,44 @@ for (const file of files) {
 console.log(`\nDone. ${ok} compiled, ${fail} failed.`);
 
 if (fail === 0) {
-  // Stamp a content hash of the compiled components into every HTML loader
-  // (?cv=…). Lets browsers cache component JS (the big payload) while still
-  // busting on deploy. Data JSON keeps its own no-store fetch untouched.
+  // Limpia copias hash anteriores ANTES de calcular el cv (si no, el hash se
+  // contaminaría con los .<hash>.js del build previo).
+  const HASHED_RE = /\.[a-f0-9]{10}\.js$/;
+  for (const f of fs.readdirSync(SRC_DIR)) {
+    if (HASHED_RE.test(f)) fs.unlinkSync(path.join(SRC_DIR, f));
+  }
+
+  // Content hash de los componentes compilados (solo ficheros planos).
   const hash = crypto.createHash('md5');
   for (const file of fs.readdirSync(SRC_DIR).filter(f => f.endsWith('.js')).sort()) {
     hash.update(fs.readFileSync(path.join(SRC_DIR, file)));
   }
   const cv = hash.digest('hex').slice(0, 10);
 
+  // Cache-busting por NOMBRE DE ARCHIVO para el cargador de p-edit.html.
+  // Las query strings (?cv=, ?t=) las ignoran algunas cachés de CDN/proxy, así
+  // que el generador de contratos seguía sirviéndose viejo. Un nombre de archivo
+  // con hash (shared.<cv>.js) es una URL nueva que NINGUNA caché ha visto.
+  const HASHED = ['shared', 'admin-page'];
+  for (const name of HASHED) {
+    const plain = path.join(SRC_DIR, name + '.js');
+    if (fs.existsSync(plain)) {
+      fs.copyFileSync(plain, path.join(SRC_DIR, `${name}.${cv}.js`));
+    }
+  }
+  const peditPath = path.join(DOCS_DIR, 'p-edit.html');
+  if (fs.existsSync(peditPath)) {
+    let pedit = fs.readFileSync(peditPath, 'utf8');
+    pedit = pedit.replace(
+      /const COMPONENT_FILES = \[[\s\S]*?\];/,
+      'const COMPONENT_FILES = [\n' +
+      HASHED.map(n => `    'components/${n}.${cv}.js',`).join('\n') +
+      '\n  ];'
+    );
+    fs.writeFileSync(peditPath, pedit);
+  }
+
+  // Resto de páginas: siguen con ?cv= en la query (sirve para el caché del navegador).
   let stamped = 0;
   for (const html of fs.readdirSync(DOCS_DIR).filter(f => f.endsWith('.html'))) {
     const p = path.join(DOCS_DIR, html);
@@ -78,7 +107,7 @@ if (fail === 0) {
     const after = before.replace(/\?cv=[a-z0-9]*/g, '?cv=' + cv);
     if (after !== before) { fs.writeFileSync(p, after); stamped++; }
   }
-  console.log(`Component version cv=${cv} stamped in ${stamped} HTMLs.`);
+  console.log(`Component version cv=${cv}; hashed loaders escritos; cv stamped in ${stamped} HTMLs.`);
 }
 
 process.exit(fail > 0 ? 1 : 0);
