@@ -6852,9 +6852,9 @@ const _lsBreakdown = (start, end, lsCfg, aptSupp = 0) => {
   const specialFlat = lsCfg && lsCfg.specialNightFlat || 80;
   const easterRanges = lsCfg && lsCfg.easterRanges || [];
   const rates = lsCfg && lsCfg.monthlyRates || {
-    baja: 1450,
+    baja: 1490,
     media: 1590,
-    alta: 1790
+    alta: 1850
   };
   const supp = Number(aptSupp) || 0;
   const MO_NAMES = ['', 'ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
@@ -6919,9 +6919,9 @@ const LsCfgPanel = ({
   saving
 }) => {
   const mr = lsCfg.monthlyRates || {
-    baja: 1450,
+    baja: 1490,
     media: 1590,
-    alta: 1790
+    alta: 1850
   };
   const [rateBaja, setRateBaja] = React.useState(String(mr.baja || 1450));
   const [rateMedia, setRateMedia] = React.useState(String(mr.media || 1590));
@@ -6936,9 +6936,9 @@ const LsCfgPanel = ({
   const [ranges, setRanges] = React.useState((lsCfg.easterRanges || []).map(([s, e]) => `${s} ${e}`).join('\n'));
   React.useEffect(() => {
     const r = lsCfg.monthlyRates || {
-      baja: 1450,
+      baja: 1490,
       media: 1590,
-      alta: 1790
+      alta: 1850
     };
     setRateBaja(String(r.baja || 1450));
     setRateMedia(String(r.media || 1590));

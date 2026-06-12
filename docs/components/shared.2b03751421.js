@@ -3341,9 +3341,9 @@ const _calcLsTotal = (start, end, guests, withPets, aptId) => {
   const aptSupp = (lsCfg.aptSupplement || {})[aptId] || 0;
   const extraGuests = Math.max(0, (guests || 1) - 2);
   const rates = lsCfg.monthlyRates || {
-    baja: 1450,
+    baja: 1490,
     media: 1590,
-    alta: 1790
+    alta: 1850
   };
   const isXmas = ds => {
     const m = +ds.slice(5, 7),
@@ -3618,9 +3618,9 @@ const _PERK_HUES = {
 const _lsMinMonthly = () => {
   const c = window.PRICES_V2 && window.PRICES_V2.longStayConfig || {};
   const r = c.monthlyRates || {
-    baja: 1450,
+    baja: 1490,
     media: 1590,
-    alta: 1790
+    alta: 1850
   };
   const supps = Object.values(c.aptSupplement || {});
   return Math.min(r.baja, r.media, r.alta) + (supps.length ? Math.min(...supps) : 0);

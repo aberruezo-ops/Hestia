@@ -142,9 +142,9 @@ const LS_APTS = [{
 // para que coincidan con el panel admin. Sin números hardcodeados en la web.
 const _lsCfgPub = () => window.PRICES_V2 && window.PRICES_V2.longStayConfig || {};
 const _lsRates = () => _lsCfgPub().monthlyRates || {
-  baja: 1450,
+  baja: 1490,
   media: 1590,
-  alta: 1790
+  alta: 1850
 };
 const _lsFlat = () => _lsCfgPub().specialNightFlat || 80;
 const _fmtRate = (n, lang) => String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'es' ? '.' : ',');
@@ -350,9 +350,9 @@ const LsSearch = ({
     const aptSupp = (lsCfg.aptSupplement || {})[aptId] || 0;
     const extraGuests = Math.max(0, (guests || 1) - 2);
     const rates = lsCfg.monthlyRates || {
-      baja: 1450,
+      baja: 1490,
       media: 1590,
-      alta: 1790
+      alta: 1850
     };
     const isXmas = ds => {
       const m = +ds.slice(5, 7),

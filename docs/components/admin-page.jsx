@@ -5279,7 +5279,7 @@ const _lsIsEasterNight = (ds, easterRanges) => {
 const _lsBreakdown = (start, end, lsCfg, aptSupp = 0) => {
   const specialFlat  = (lsCfg && lsCfg.specialNightFlat) || 80;
   const easterRanges = (lsCfg && lsCfg.easterRanges) || [];
-  const rates        = (lsCfg && lsCfg.monthlyRates) || { baja: 1450, media: 1590, alta: 1790 };
+  const rates        = (lsCfg && lsCfg.monthlyRates) || { baja: 1490, media: 1590, alta: 1850 };
   const supp         = Number(aptSupp) || 0;
   const MO_NAMES = ['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 
@@ -5327,7 +5327,7 @@ const _hcEffPrice = (base, ov) => {
 
 // Config panel for long-stay special night flat rate + Easter date ranges
 const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
-  const mr = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+  const mr = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
   const [rateBaja,   setRateBaja  ] = React.useState(String(mr.baja  || 1450));
   const [rateMedia,  setRateMedia ] = React.useState(String(mr.media || 1590));
   const [rateAlta,   setRateAlta  ] = React.useState(String(mr.alta  || 1790));
@@ -5343,7 +5343,7 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
   );
 
   React.useEffect(() => {
-    const r = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+    const r = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
     setRateBaja(String(r.baja  || 1450));
     setRateMedia(String(r.media || 1590));
     setRateAlta(String(r.alta  || 1790));
