@@ -3,11 +3,14 @@
 // ejecuta la regla WCAG color-contrast de axe-core y reporta cualquier fallo.
 // Uso:  (servir docs/ en :8123)  &&  node scripts/contrast-audit.cjs
 // Sale con código 1 si hay fallos (apto para CI / pre-push).
-const { chromium } = require('/opt/node22/lib/node_modules/playwright');
 const fs = require('fs');
 const path = require('path');
-
-const AXE = fs.readFileSync('/tmp/axe/node_modules/axe-core/axe.min.js', 'utf8');
+// playwright y axe-core: desde node_modules (CI) o, si no, desde la ruta del entorno local.
+let chromium;
+try { ({ chromium } = require('playwright')); }
+catch { ({ chromium } = require('/opt/node22/lib/node_modules/playwright')); }
+const _axePath = (() => { try { return require.resolve('axe-core/axe.min.js'); } catch { return '/tmp/axe/node_modules/axe-core/axe.min.js'; } })();
+const AXE = fs.readFileSync(_axePath, 'utf8');
 const BASE = process.env.BASE || 'http://localhost:8123';
 const DOCS = path.join(__dirname, '..', 'docs');
 const PAGES = (process.env.PAGES ? process.env.PAGES.split(',') :
