@@ -2185,7 +2185,10 @@ ${clausulaFianza}
     var el = document.getElementById('pdf-content');
     // margin: [top, right, bottom, left] — la barra fina (18mm) y el pie viven en estos
     // márgenes; el contenido (incl. el hero, ya dentro del flujo) nunca los invade.
-    var MARG_TOP = 18, MARG_BOT = 22;
+    // La barra fina ocupa 0–18mm y el pie ~287–290mm. Dejamos MARG_TOP/BOT MAYORES
+    // que esas franjas para que SIEMPRE quede una banda blanca entre cabecera y
+    // contenido, y entre contenido y pie — imposible que se solapen en ninguna página.
+    var MARG_TOP = 28, MARG_BOT = 30;
     var opt = {
       margin: [MARG_TOP, 0, MARG_BOT, 0],
       filename: FILE,

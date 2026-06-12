@@ -15282,6 +15282,21 @@ body.apt-bar-shown .widget-stack {
   border-color: rgba(240,232,213,.10);
 }
 
+/* ── FIX CONTRASTE: .req-panel es SIEMPRE una tarjeta clara (--crema), aunque
+   viva dentro de .apt-avail (oscuro). Los overrides .apt-avail de arriba ponen
+   texto CLARO, que sobre la tarjeta clara queda invisible. Estos selectores
+   (.apt-avail .req-panel .x, mayor especificidad) restauran texto oscuro. ── */
+.apt-avail .req-panel .price-label-sm     { color: var(--ber); opacity: .68; }
+.apt-avail .req-panel .price-direct-total { color: var(--ber-dk); }
+.apt-avail .req-panel .price-avg-night    { color: var(--ber); opacity: .75; }
+.apt-avail .req-panel .price-guarantee-sub{ color: rgba(42,15,46,.65); }
+.apt-avail .req-panel .price-breakdown    { border-top-color: rgba(42,15,46,.12); }
+.apt-avail .req-panel .price-line         { color: rgba(42,15,46,.78); }
+.apt-avail .req-panel .price-line-disc    { color: #B01E66; }
+.apt-avail .req-panel .price-line-total   { color: var(--ber-dk); border-top-color: rgba(42,15,46,.14); }
+.apt-avail .req-panel .price-note         { color: rgba(42,15,46,.6); }
+.apt-avail .req-panel .price-engine       { background: transparent; border-color: rgba(42,15,46,.1); }
+
 /* Acciones del formulario de reservas: 2 botones (WhatsApp + Email)
    en fila, cada uno se habilita según campos rellenos. */
 .reservas-actions {
