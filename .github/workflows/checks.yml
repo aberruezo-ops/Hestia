@@ -3,8 +3,9 @@ name: Checks — precio y contraste
 # Guardarraíles que se ejecutan en cada push/PR:
 #  · price-consistency: BLOQUEA si el precio (fuente única _calcStay) cambia sin
 #    actualizar la baseline. Garantiza que ninguna página muestre un precio distinto.
-#  · contrast: audita WCAG color-contrast de cada página (reporta; aún no bloquea
-#    porque quedan botones por revisar — quitar continue-on-error cuando esté a 0).
+#  · contrast: audita WCAG color-contrast de cada página y BLOQUEA cualquier
+#    regresión nueva (ratchet contra scripts/contrast-baseline.json). Los borderline
+#    heredados quedan tolerados en la baseline; para depurarla: --update-baseline.
 
 on:
   push:
@@ -41,6 +42,7 @@ jobs:
         run: |
           cd docs && python3 -m http.server 8123 &
           sleep 2
-      - name: Auditoría de contraste (WCAG)
-        continue-on-error: true
+      # Bloquea cualquier REGRESIÓN de contraste (fallo nuevo no presente en la
+      # baseline). Los borderline/heredados quedan tolerados en contrast-baseline.json.
+      - name: Auditoría de contraste (WCAG, ratchet)
         run: node scripts/contrast-audit.cjs

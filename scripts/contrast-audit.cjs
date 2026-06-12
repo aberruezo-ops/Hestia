@@ -60,14 +60,16 @@ const VIEWPORTS = [
         for (const v of res.violations) {
           for (const node of v.nodes) {
             const sel = node.target.join(' ');
-            // Días pasados del calendario: deshabilitados/no reservables (WCAG exime
-            // los elementos inactivos). Se omiten del guardarraíl a propósito.
-            if (/\.past\b/.test(sel)) continue;
+            // Elementos deshabilitados/inactivos (días pasados del calendario, pasos
+            // bloqueados del formulario): WCAG los exime. Se omiten del guardarraíl.
+            if (/\.past\b|\.is-locked\b/.test(sel)) continue;
             const d = (node.any && node.any[0] && node.any[0].data) || {};
             if (d.contrastRatio == null) continue; // indeterminado (bg imagen) — se ignora
             totalFails++;
+            // clave normalizada (sin nth-child ni atributos href/target) para el ratchet
+            const key = `${slug}|${sel.replace(/:nth-child\(\d+\)/g, '').replace(/\[[^\]]*\]/g, '')}`;
             report.push({
-              page: slug, vp: vp.name,
+              page: slug, vp: vp.name, key,
               ratio: d.contrastRatio, need: d.expectedContrastRatio,
               fg: d.fgColor, bg: d.bgColor,
               size: d.fontSize, weight: d.fontWeight,
@@ -84,19 +86,35 @@ const VIEWPORTS = [
   }
   await browser.close();
 
-  // salida
+  // salida — ratchet: la baseline (scripts/contrast-baseline.json) lista los fallos
+  // tolerados (borderline/heredados). El gate BLOQUEA solo fallos NUEVOS (regresiones).
   const fails = report.filter(r => r.ratio != null);
-  if (fails.length === 0) {
-    console.log('✓ CONTRASTE OK — sin fallos WCAG color-contrast en', PAGES.length, 'páginas (móvil + escritorio).');
-  } else {
-    console.log(`✗ ${fails.length} FALLOS de contraste:\n`);
-    for (const r of fails.sort((a,b)=>a.ratio-b.ratio)) {
-      console.log(`  [${r.page} · ${r.vp}] ratio ${r.ratio} (necesita ${r.need}) — ${r.fg} sobre ${r.bg} · ${r.size}px${r.weight>=700?' bold':''}`);
-      console.log(`      ${r.sel}`);
-      console.log(`      ${r.text}`);
-    }
-  }
   const errs = report.filter(r => r.error);
-  if (errs.length) { console.log(`\n✗ ${errs.length} ERROR(es) de carga/render (cuentan como fallo del guardarraíl):`); errs.forEach(e=>console.log(`  ${e.page}/${e.vp}: ${e.error}`)); }
-  process.exit((fails.length || errs.length) ? 1 : 0);
+  const BASE_FILE = path.join(__dirname, 'contrast-baseline.json');
+  const curKeys = [...new Set(fails.map(r => r.key))].sort();
+
+  if (process.argv.includes('--update-baseline')) {
+    fs.writeFileSync(BASE_FILE, JSON.stringify(curKeys, null, 2) + '\n');
+    console.log(`Baseline de contraste actualizada: ${curKeys.length} selectores tolerados → scripts/contrast-baseline.json`);
+    process.exit(errs.length ? 1 : 0);
+  }
+
+  const baseline = fs.existsSync(BASE_FILE) ? new Set(JSON.parse(fs.readFileSync(BASE_FILE, 'utf8'))) : new Set();
+  const isNew = r => !baseline.has(r.key);
+  const newFails = fails.filter(isNew);
+  const knownFails = fails.length - newFails.length;
+
+  if (newFails.length === 0 && errs.length === 0) {
+    console.log(`✓ CONTRASTE OK — sin regresiones. ${knownFails} fallos tolerados en baseline (borderline/heredados).`);
+  }
+  if (newFails.length) {
+    console.log(`✗ ${newFails.length} REGRESIÓN(es) de contraste NUEVA(s) (no estaban en baseline):\n`);
+    for (const r of newFails.sort((a, b) => a.ratio - b.ratio)) {
+      console.log(`  [${r.page} · ${r.vp}] ratio ${r.ratio} (necesita ${r.need}) — ${r.fg} sobre ${r.bg} · ${r.size}px${r.weight >= 700 ? ' bold' : ''}`);
+      console.log(`      ${r.sel}\n      ${r.text}`);
+    }
+    console.log('\nArréglalo, o si es intencionado: node scripts/contrast-audit.cjs --update-baseline');
+  }
+  if (errs.length) { console.log(`\n✗ ${errs.length} ERROR(es) de carga/render:`); errs.forEach(e => console.log(`  ${e.page}/${e.vp}: ${e.error}`)); }
+  process.exit((newFails.length || errs.length) ? 1 : 0);
 })().catch(e => { console.error('ERR', e); process.exit(2); });
