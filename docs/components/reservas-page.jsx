@@ -624,10 +624,8 @@ const ReservasForm = ({ lang }) => {
   const hasEmail = /\S+@\S+/.test(email);
   const channelValid = channel === 'whatsapp' ? (hasName && hasTel) : (hasName && hasEmail);
 
-  // Cálculo — aplica gapOverride si el hueco tiene oferta activa
-  const calcRaw = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes', parseInt(guests, 10) || null) : null;
-  const gapOv   = step1Complete ? _gapOverrideCalc(apt, checkin) : null;
-  const calc    = gapOv && calcRaw ? _applyGapOv(calcRaw, gapOv.perNight) : calcRaw;
+  // Cálculo — _calcStay ya aplica la oferta de hueco internamente (fuente única).
+  const calc = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes', parseInt(guests, 10) || null) : null;
   const nightsForExtras = calc?.nights || 0;
   const selectedExtras = computeSelectedExtras(nightsForExtras);
   const extrasCount = Object.values(extrasSel).filter(v => v > 0).length;
