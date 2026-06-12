@@ -1,0 +1,79 @@
+{
+  "vm|2026-08-08|2026-08-15|g2|p0": {
+    "nights": 7,
+    "baseTotal": 1414,
+    "stayDiscAmt": 0,
+    "guestSuppAmt": 0,
+    "petAmt": 0,
+    "directTotal": 1414,
+    "avgPerNight": 202,
+    "isGapOffer": false,
+    "gapPerNight": null
+  },
+  "vm|2026-08-08|2026-08-12|g4|p0": {
+    "nights": 4,
+    "baseTotal": 960,
+    "stayDiscAmt": 0,
+    "guestSuppAmt": 36,
+    "petAmt": 0,
+    "directTotal": 996,
+    "avgPerNight": 249,
+    "isGapOffer": false,
+    "gapPerNight": null
+  },
+  "vm|2026-02-10|2026-02-17|g2|p0": {
+    "nights": 7,
+    "baseTotal": 616,
+    "stayDiscAmt": 18,
+    "guestSuppAmt": 0,
+    "petAmt": 0,
+    "directTotal": 598,
+    "avgPerNight": 85,
+    "isGapOffer": false,
+    "gapPerNight": null
+  },
+  "vt|2026-08-08|2026-08-22|g2|p1": {
+    "nights": 14,
+    "baseTotal": 2730,
+    "stayDiscAmt": 0,
+    "guestSuppAmt": 0,
+    "petAmt": 50,
+    "directTotal": 2780,
+    "avgPerNight": 195,
+    "isGapOffer": false,
+    "gapPerNight": null
+  },
+  "vt|2026-09-10|2026-09-13|g3|p0": {
+    "nights": 3,
+    "baseTotal": 595,
+    "stayDiscAmt": 0,
+    "guestSuppAmt": 15,
+    "petAmt": 0,
+    "directTotal": 610,
+    "avgPerNight": 203,
+    "isGapOffer": false,
+    "gapPerNight": null
+  },
+  "vs|2026-08-31|2026-09-05|g2|p0": {
+    "nights": 5,
+    "baseTotal": 615,
+    "stayDiscAmt": 0,
+    "guestSuppAmt": 0,
+    "petAmt": 0,
+    "directTotal": 615,
+    "avgPerNight": 123,
+    "isGapOffer": true,
+    "gapPerNight": 123
+  },
+  "vs|2026-12-26|2027-01-02|g2|p0": {
+    "nights": 7,
+    "baseTotal": 731,
+    "stayDiscAmt": 22,
+    "guestSuppAmt": 0,
+    "petAmt": 0,
+    "directTotal": 709,
+    "avgPerNight": 101,
+    "isGapOffer": false,
+    "gapPerNight": null
+  }
+}

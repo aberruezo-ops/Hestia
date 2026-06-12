@@ -1,0 +1,46 @@
+name: Checks — precio y contraste
+
+# Guardarraíles que se ejecutan en cada push/PR:
+#  · price-consistency: BLOQUEA si el precio (fuente única _calcStay) cambia sin
+#    actualizar la baseline. Garantiza que ninguna página muestre un precio distinto.
+#  · contrast: audita WCAG color-contrast de cada página (reporta; aún no bloquea
+#    porque quedan botones por revisar — quitar continue-on-error cuando esté a 0).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  price-consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Precio — fuente única _calcStay (regresión)
+        run: node scripts/price-consistency.mjs
+
+  contrast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Instalar Playwright + axe-core
+        run: |
+          npm install --no-save axe-core playwright
+          npx playwright install --with-deps chromium
+      - name: Servir docs
+        run: |
+          cd docs && python3 -m http.server 8123 &
+          sleep 2
+      - name: Auditoría de contraste (WCAG)
+        continue-on-error: true
+        run: node scripts/contrast-audit.cjs

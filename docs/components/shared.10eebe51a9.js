@@ -2736,10 +2736,26 @@ const _dayPrice = (ds, aptId) => {
   return tbl.base[month] || 100;
 };
 
-// Calcula el desglose completo para una estancia. Modelo simplificado
-// (mayo 2026): un solo precio, el directo. No comparamos con plataformas
-// externas — la promesa pública es "te mejoramos cualquier precio que
-// veas en cualquier sitio".
+// ╔══════════════════════════════════════════════════════════════════════════╗
+// ║  _calcStay — FUENTE ÚNICA DE VERDAD DEL PRECIO NOCHE A NOCHE.               ║
+// ║                                                                            ║
+// ║  TODO sitio que muestre un precio de estancia (páginas de apartamento, la  ║
+// ║  Home, /reservas, estancia larga, admin) DEBE llamar a esta función y      ║
+// ║  mostrar su resultado tal cual (calc.directTotal / calc.avgPerNight). Así  ║
+// ║  es IMPOSIBLE que dos páginas muestren un precio distinto para las mismas  ║
+// ║  fechas.                                                                   ║
+// ║                                                                            ║
+// ║  ⛔ NUNCA calcules un precio de estancia fuera de aquí (nada de            ║
+// ║     `perNight * nights`, descuentos, ofertas de hueco ni temporadas en     ║
+// ║     otro componente). Si necesitas un caso nuevo, añádelo DENTRO de        ║
+// ║     _calcStay. (Excepción: el precio de estancia LARGA mensual vive en su  ║
+// ║     propio cálculo `calcLsTotal`, es otro producto.)                       ║
+// ║                                                                            ║
+// ║  Cubre: tarifa variable por noche, regla short-stay, descuento por         ║
+// ║  estancia, oferta de hueco (solo si la estancia rellena el hueco exacto y  ║
+// ║  no choca con manual_blocks), suplemento de huéspedes y mascota.           ║
+// ║  Protegido por scripts/price-consistency.mjs (regresión).                  ║
+// ╚══════════════════════════════════════════════════════════════════════════╝
 const _calcStay = (selStart, selEnd, aptId, withPets, guests) => {
   if (!selStart || !selEnd || !aptId) return null;
   const nights = _be_diff(selStart, selEnd);
