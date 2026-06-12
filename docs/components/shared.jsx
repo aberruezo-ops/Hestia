@@ -1941,8 +1941,13 @@ const _calcStay = (selStart, selEnd, aptId, withPets, guests) => {
   // el hueco — la entrada coincide con el inicio (clave aptId|selStart) Y la salida
   // con el fin del hueco. Si la estancia se sale del hueco, NO aplica (precio normal).
   // Vive aquí para que apartamento, home y reservas calculen siempre igual.
+  // Validación en runtime: una reserva directa instantánea (manual_blocks de
+  // prices.json) que solape las fechas invalida la oferta aun antes del recálculo
+  // del workflow (cada 4h). Las externas (iCal) ya entran sincronizadas con el pruning.
+  const _mb = (v2 && v2.manual_blocks && v2.manual_blocks[aptId]) || [];
+  const _gapBlocked = _mb.some(b => selStart < b.end && selEnd > b.start);
   const gov = v2 && v2.gapOverrides && v2.gapOverrides[`${aptId}|${selStart}`];
-  if (gov && gov.type && gov.type !== 'none' && gov.end === selEnd) {
+  if (gov && gov.type && gov.type !== 'none' && gov.end === selEnd && !_gapBlocked) {
     const seasonBase = Math.round(((v2.apts && v2.apts[aptId] && v2.apts[aptId].base) || 0)
       * ((v2.seasons && v2.seasons[_v2SeasonForDate(selStart, v2)] && v2.seasons[_v2SeasonForDate(selStart, v2)].multiplier) || 1));
     let pn;
