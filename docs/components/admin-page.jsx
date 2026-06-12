@@ -1982,8 +1982,13 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
   /* Cifras destacadas (renta, prereserva, fianza) */
   .key-num { color: var(--vt-dk); font-weight: 700; }
 
+  .sign-page {
+    page-break-before: always;
+    break-before: page;
+    page-break-inside: avoid;
+  }
   .firmas {
-    margin-top: 9mm;
+    margin-top: 10mm;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10mm;
@@ -2147,6 +2152,9 @@ ${clausulaFianza}
 <p>Respetad las horas de check-in (a partir de las 15:00) y check-out (hasta las 11:00). No están permitidas las mascotas, salvo aprobación explícita. No fuméis. Las toallas son para uso exclusivo dentro de Hestía. Solo está permitido colgar ropa en el tendedero. El uso de las zonas comunes será en el horario permitido, especialmente la piscina. No está permitido el naturismo ni el toples en toda la urbanización, ya que se trata de una urbanización textil. Cualquier incidente o problemática derivada de los menores de edad será responsabilidad de sus padres/tutores. Cualquier situación o incidente de los servicios comunes o del exterior de Hestía no es responsabilidad nuestra, aunque intentaremos ayudarte. Por favor, intenta dejar Hestía limpio y recogido. De las sábanas y toallas nos encargamos nosotros. En cualquier caso, no laves las toallas y sábanas con ropa de otro color, por favor.</p>
 <p><strong>Mancomunidad y zonas comunes.</strong> No se permite circular a velocidad superior a la indicada por la mancomunidad — en general, muy reducida. Hay niños, mascotas y peatones; conducid siempre despacio. Asimismo, no se permite ensuciar ni deteriorar las zonas comunes (jardines, piscina, ascensores, pasillos y descansillos). Cualquier desperfecto o suciedad reiterada será responsabilidad del huésped.</p>
 
+<div class="sign-page">
+<h2>Firma del contrato</h2>
+<p>En prueba de conformidad con todo lo anterior, ambas partes firman el presente contrato por duplicado y a un solo efecto, en el lugar y fecha indicados en el encabezamiento.</p>
 <div class="firmas">
   <div class="firma">
     <strong>Los Propietarios</strong> <em style="font-weight:normal">(con una es suficiente)</em><br>
@@ -2157,6 +2165,7 @@ ${clausulaFianza}
     <strong>La Parte Arrendataria</strong><br>
     Fdo.: <strong>${escHtml(nombre.toUpperCase())}</strong>
   </div>
+</div>
 </div>
 </div><!-- #contract-body -->
 </div><!-- #pdf-content -->
@@ -2189,7 +2198,10 @@ ${clausulaFianza}
       // avoid explícito: más fiable que el page-break-inside del CSS para que
       // html2pdf NUNCA parta el bloque de firmas ni una fila de tabla (evita que
       // las firmas se corten y pisen el pie si caen en el borde de página).
-      pagebreak: { mode: ['css', 'legacy'], avoid: ['.firmas', 'tr'] }
+      // Las firmas SIEMPRE en su propia página (before) — html2pdf/Safari a veces
+      // partía o se comía el bloque si caía en un borde. En página propia entra
+      // entero y nunca se pierde. 'tr' evita partir filas de tabla.
+      pagebreak: { mode: ['css', 'legacy'], before: ['.sign-page'], avoid: ['tr'] }
     };
     var worker = html2pdf().set(opt).from(el);
     await worker.toPdf();
