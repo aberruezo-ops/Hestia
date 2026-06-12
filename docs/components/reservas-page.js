@@ -318,8 +318,11 @@ const ReviewQuote = ({
     if (hi.length && Math.random() < 0.7) return hi;
     return list;
   }, [apt]);
-  if (!pool.length) return null;
-  const r = pool[Math.floor(Math.random() * pool.length)];
+
+  // Memoizado para que no cambie de reseña en cada render (p.ej. al plegar/desplegar).
+  const r = React.useMemo(() => pool.length ? pool[Math.floor(Math.random() * pool.length)] : null, [pool]);
+  const [expanded, setExpanded] = React.useState(false);
+  if (!pool.length || !r) return null;
   const date = new Date(r.date);
   const mo = String(date.getMonth() + 1).padStart(2, '0');
   const yr = date.getFullYear();
@@ -335,6 +338,7 @@ const ReviewQuote = ({
     vs: 'Salinas',
     all: ''
   }[r.apt] || '';
+  const isLong = (r.text || '').length > 240;
   return /*#__PURE__*/React.createElement("div", {
     className: "rf-quote",
     "aria-label": lang === 'es' ? 'Reseña verificada' : 'Verified review'
@@ -342,8 +346,13 @@ const ReviewQuote = ({
     className: "rf-quote-mark",
     "aria-hidden": "true"
   }, "\u201C"), /*#__PURE__*/React.createElement("p", {
-    className: "rf-quote-text"
-  }, r.text), /*#__PURE__*/React.createElement("div", {
+    className: `rf-quote-text${isLong && !expanded ? ' rf-quote-clamped' : ''}`
+  }, r.text), isLong && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "rf-quote-toggle",
+    "aria-expanded": expanded,
+    onClick: () => setExpanded(e => !e)
+  }, expanded ? lang === 'es' ? 'Ver menos' : 'Show less' : lang === 'es' ? 'Ver más' : 'Show more'), /*#__PURE__*/React.createElement("div", {
     className: "rf-quote-meta"
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-quote-name"

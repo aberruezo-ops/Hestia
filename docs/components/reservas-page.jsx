@@ -375,8 +375,11 @@ const ReviewQuote = ({ apt, lang }) => {
     return list;
   }, [apt]);
 
-  if (!pool.length) return null;
-  const r = pool[Math.floor(Math.random() * pool.length)];
+  // Memoizado para que no cambie de reseña en cada render (p.ej. al plegar/desplegar).
+  const r = React.useMemo(() => (pool.length ? pool[Math.floor(Math.random() * pool.length)] : null), [pool]);
+  const [expanded, setExpanded] = React.useState(false);
+
+  if (!pool.length || !r) return null;
   const date = new Date(r.date);
   const mo = String(date.getMonth() + 1).padStart(2, '0');
   const yr = date.getFullYear();
@@ -384,11 +387,17 @@ const ReviewQuote = ({ apt, lang }) => {
     booking: 'Booking', airbnb: 'Airbnb', google: 'Google', web: 'Hestía',
   }[r.source] || r.source;
   const aptLbl = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas', all: '' }[r.apt] || '';
+  const isLong = (r.text || '').length > 240;
 
   return (
     <div className="rf-quote" aria-label={lang === 'es' ? 'Reseña verificada' : 'Verified review'}>
       <div className="rf-quote-mark" aria-hidden="true">“</div>
-      <p className="rf-quote-text">{r.text}</p>
+      <p className={`rf-quote-text${isLong && !expanded ? ' rf-quote-clamped' : ''}`}>{r.text}</p>
+      {isLong && (
+        <button type="button" className="rf-quote-toggle" aria-expanded={expanded} onClick={() => setExpanded(e => !e)}>
+          {expanded ? (lang === 'es' ? 'Ver menos' : 'Show less') : (lang === 'es' ? 'Ver más' : 'Show more')}
+        </button>
+      )}
       <div className="rf-quote-meta">
         <span className="rf-quote-name">{r.name.split(' ')[0]}</span>
         <span className="rf-quote-sep">·</span>

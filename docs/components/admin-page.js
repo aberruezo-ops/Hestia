@@ -2180,7 +2180,8 @@ const IntelligenciaTab = ({
 // ============================================================
 const ContractTab = ({
   pricesData,
-  prefill
+  prefill,
+  token
 }) => {
   // Estado del formulario — usa prefill si llega desde Reservas
   const today = new Date().toISOString().slice(0, 10);
@@ -2201,6 +2202,71 @@ const ContractTab = ({
   const [diasCancelacion, setDiasCancelacion] = React.useState(p.cancelacion ? Number((String(p.cancelacion).match(/\d+/) || [])[0]) || 14 : 14);
   const [fianza, setFianza] = React.useState(p.fianza || false);
   const [fechaFirma, setFechaFirma] = React.useState(today);
+  const [reservaSaveMsg, setReservaSaveMsg] = React.useState(null);
+
+  // Persiste los datos del huésped editados aquí de vuelta en la reserva
+  // (reservas.json). Sin esto, lo que se rellena en el contrato no quedaba
+  // guardado en la reserva. Solo aplica si el contrato se abrió desde una reserva.
+  const canSaveToReserva = !!(prefill && token);
+  const saveToReserva = async () => {
+    if (!canSaveToReserva) return;
+    setReservaSaveMsg({
+      kind: 'info',
+      text: 'Guardando en la reserva…'
+    });
+    try {
+      const ref = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, {
+        headers: apiHeaders(token),
+        cache: 'no-store'
+      });
+      if (!ref.ok) throw new Error('No pude leer reservas.json');
+      const j = await ref.json();
+      const fileData = JSON.parse(b64ToUtf8(j.content));
+      const list = fileData.reservas || [];
+      const idx = prefill.id ? list.findIndex(x => x.id === prefill.id) : list.findIndex(x => x.entrada === prefill.entrada && x.apt === prefill.apt && (x.responsable || '') === (prefill.responsable || ''));
+      if (idx < 0) throw new Error('No encontré la reserva en el archivo');
+      list[idx] = {
+        ...list[idx],
+        responsable: nombre,
+        dni,
+        direccion: domicilio,
+        telefono,
+        email,
+        huespedes: Number(huespedes) || list[idx].huespedes,
+        mascota,
+        fianza
+      };
+      const newData = {
+        ...fileData,
+        reservas: list,
+        updatedAt: new Date().toISOString(),
+        count: list.length
+      };
+      const put = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
+        method: 'PUT',
+        headers: apiHeaders(token),
+        body: JSON.stringify({
+          message: `chore(reservas): datos de contrato · ${nombre}`,
+          content: utf8ToB64(JSON.stringify(newData, null, 2)),
+          sha: j.sha,
+          branch: BRANCH
+        })
+      });
+      if (!put.ok) {
+        const pj = await put.json();
+        throw new Error(pj.message || 'Error al guardar');
+      }
+      setReservaSaveMsg({
+        kind: 'ok',
+        text: 'Datos guardados en la reserva ✓'
+      });
+    } catch (e) {
+      setReservaSaveMsg({
+        kind: 'err',
+        text: 'No se pudo guardar en la reserva: ' + e.message
+      });
+    }
+  };
   const aptInfo = APT_CONTRACT_DATA[apt];
   const noches = diffNoches(fechaEntrada, fechaSalida);
   const remanente = Math.max(0, Number(precioTotal || 0) - Number(prereserva || 0) - Number(pagoPrevio || 0));
@@ -2838,6 +2904,9 @@ info@hestiayourhome.com · +34 620 316 370`;
     w.document.write(html);
     w.document.close();
     w.focus();
+
+    // Guarda los datos del huésped editados aquí de vuelta en la reserva.
+    if (canSaveToReserva) await saveToReserva();
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
@@ -3003,9 +3072,19 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "pe-btn pe-btn-primary",
     onClick: onGenerar,
     disabled: !formOk()
-  }, "\uD83D\uDCE8 Generar contrato y abrir correo"), !formOk() && /*#__PURE__*/React.createElement("span", {
+  }, "\uD83D\uDCE8 Generar contrato y abrir correo"), canSaveToReserva && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-ghost",
+    onClick: saveToReserva,
+    title: "Guarda los datos del hu\xE9sped en la reserva sin generar el contrato"
+  }, "\uD83D\uDCBE Guardar datos en la reserva"), !formOk() && /*#__PURE__*/React.createElement("span", {
     className: "ct-actions-hint"
-  }, "Faltan campos obligatorios (marcados con *)."))));
+  }, "Faltan campos obligatorios (marcados con *)."), reservaSaveMsg && /*#__PURE__*/React.createElement("span", {
+    className: "ct-actions-hint",
+    style: {
+      color: reservaSaveMsg.kind === 'err' ? '#c0392b' : reservaSaveMsg.kind === 'ok' ? '#1e8449' : 'inherit'
+    }
+  }, reservaSaveMsg.text))));
 };
 
 // ============================================================
@@ -5412,6 +5491,9 @@ const ReservasTab = ({
       apt: 'vm',
       responsable: '',
       telefono: null,
+      email: '',
+      dni: '',
+      direccion: '',
       huespedes: 2,
       menores_12: null,
       cuna_trona: null,
@@ -5497,9 +5579,10 @@ const ReservasTab = ({
       return r.entrada < other.salida && r.salida > other.entrada;
     }) || null;
   };
-  const saveDraft = () => {
-    if (!draft) return;
-    const cleaned = calcDerived(draft);
+  const saveDraft = override => {
+    const d = override || draft;
+    if (!d) return;
+    const cleaned = calcDerived(d);
     const overlap = findOverlap(cleaned, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
     if (overlap) {
       setError(`Solape de fechas: la reserva de ${overlap.responsable || '—'} (${fmtDate(overlap.entrada)} → ${fmtDate(overlap.salida)}) en ${overlap.apt?.toUpperCase() || '—'} se superpone con estas fechas. Corrige antes de guardar.`);
@@ -6140,6 +6223,13 @@ const ReservasTab = ({
     onChange: e => updateDraft('responsable', e.target.value),
     placeholder: "Nombre completo"
   })), /*#__PURE__*/React.createElement("div", {
+    className: "rv-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Email"), /*#__PURE__*/React.createElement("input", {
+    type: "email",
+    value: draft.email || '',
+    onChange: e => updateDraft('email', e.target.value),
+    placeholder: "huesped@ejemplo.com"
+  })), /*#__PURE__*/React.createElement("div", {
     className: "rv-row2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
@@ -6542,8 +6632,13 @@ const ReservasTab = ({
     className: "pe-btn pe-btn-ghost rv-foot-btn",
     title: "Abrir en el generador de contratos",
     onClick: () => {
-      saveDraft();
-      onOpenContract(draft);
+      const wid = draft.id ? draft : {
+        ...draft,
+        id: typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : 'r' + Date.now() + Math.random().toString(36).slice(2)
+      };
+      setDraft(wid);
+      saveDraft(wid);
+      onOpenContract(wid);
     }
   }, "\uD83D\uDCC4 Contrato"), selectedIdx >= 0 && selectedIdx < reservas.length && /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -8783,7 +8878,8 @@ const AdminApp = () => {
     }
   }) : mode === 'contract' ? /*#__PURE__*/React.createElement(ContractTab, {
     pricesData: data,
-    prefill: contractPrefill
+    prefill: contractPrefill,
+    token: token
   }) : mode === 'prereservas' ? /*#__PURE__*/React.createElement(PrereservasTab, {
     token: token,
     refreshKey: refreshKey
