@@ -34,6 +34,10 @@ jobs:
         with:
           python-version: '3.12'
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Install dependencies
         run: pip install icalendar requests
 
@@ -52,15 +56,23 @@ jobs:
         if: always()
         run: cat docs/assets/availability.json
 
+      # Recalcula los huecos: poda las ofertas de hueco corto (<6 noches) que ya
+      # no corresponden a un hueco vigente tras el cambio de disponibilidad.
+      - name: Prune stale gap offers
+        run: node scripts/prune-gap-offers.mjs
+
       - name: Commit and push if changed
         run: |
           git config user.name  "hestia-bot"
           git config user.email "bot@hestiayourhome.com"
           git add docs/assets/availability.json
+          git add docs/data/prices.json
           git add docs/assets/ical-debug/ 2>/dev/null || true
           if ! git diff --staged --quiet; then
-            git commit -m "chore: sync availability data [skip ci]"
+            git commit -m "chore: sync availability + recalcular ofertas de hueco [skip ci]"
+            # rebase por si el admin tocó el repo entre checkout y push
+            git pull --rebase --autostash origin "$(git rev-parse --abbrev-ref HEAD)" || true
             git push
           else
-            echo "No changes — availability.json is up to date."
+            echo "No changes — availability y ofertas al día."
           fi
