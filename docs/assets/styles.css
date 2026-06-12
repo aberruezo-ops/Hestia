@@ -3812,7 +3812,7 @@ footer .footer-brand .addr {
   margin-bottom: 20px;
   text-transform: capitalize;
 }
-.cal-yr { opacity: .45; font-size: 13px; margin-left: 5px; }
+.cal-yr { opacity: .7; font-size: 13px; margin-left: 5px; }
 .cal-grid {
   display: grid;
   grid-template-columns: repeat(7,1fr);
@@ -3853,7 +3853,7 @@ footer .footer-brand .addr {
    en la zona de transición. Sin line-through (el día sí está libre por
    la tarde). */
 .cal-cell.blk-after .c-n { color: var(--ber-dk); font-weight: 500; }
-.cal-cell.today:not(.blk) .c-n { color: var(--apt-accent,var(--sol)); font-weight: 500; }
+.cal-cell.today:not(.blk) .c-n { color: var(--apt-accent-dk,var(--sol-text)); font-weight: 500; }
 /* Strip — horizontal bar connecting blocked range. Color crema. */
 .c-strip {
   position: absolute;
@@ -3989,7 +3989,7 @@ footer .footer-brand .addr {
   margin: 0 auto 20px;
   display: flex; align-items: center; gap: 10px;
   font-family: var(--sans); font-size: 12px;
-  color: rgba(42,15,46,.65);
+  color: rgba(42,15,46,.72);
   background: rgba(255,255,255,.92);
   border: 1px solid rgba(42,15,46,.12);
   border-radius: 10px 0 10px 0; padding: 10px 18px;
@@ -4014,7 +4014,7 @@ footer .footer-brand .addr {
   border: 1px solid rgba(180,50,30,.25);
 }
 .avail-sel-msg.info {
-  color: rgba(42,15,46,.65);
+  color: rgba(42,15,46,.72);
   background: rgba(255,255,255,.85);
   border: 1px solid rgba(42,15,46,.12);
 }
@@ -4085,7 +4085,7 @@ footer .footer-brand .addr {
 }
 .req-guests-lbl {
   font-family: var(--sans); font-size: 13px;
-  color: rgba(42,15,46,.65);
+  color: rgba(42,15,46,.72);
 }
 .req-guests-ctrl {
   display: flex; align-items: center; gap: 0;
@@ -4150,7 +4150,7 @@ footer .footer-brand .addr {
   border: 1px solid rgba(240,190,60,.18);
   border-radius: 10px 0 10px 0; padding: 14px 16px;
   margin-bottom: 24px;
-  color: rgba(42,15,46,.65);
+  color: rgba(42,15,46,.72);
 }
 .req-disclaimer svg { flex-shrink: 0; margin-top: 2px; color: rgba(180,130,20,.85); }
 .req-disclaimer p {
@@ -4553,7 +4553,7 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .req-btn-mail {
-  color: rgba(42,15,46,.65) !important;
+  color: rgba(42,15,46,.72) !important;
   border-color: rgba(42,15,46,.25) !important;
   background: transparent !important;
 }
@@ -4570,7 +4570,7 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
   letter-spacing: .08em; color: rgba(42,15,46,.35);
   padding: 0; transition: color .2s;
 }
-.req-reset:hover { color: rgba(42,15,46,.65); }
+.req-reset:hover { color: rgba(42,15,46,.72); }
 
 /* ================================================================
    PRICE ENGINE — Motor de precios
@@ -6155,7 +6155,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .apt-day-eyebrow {
   margin-bottom: 24px;
-  color: var(--apt-accent);
+  color: var(--apt-accent-dk);
 }
 .apt-day-grid {
   display: grid;
@@ -6183,7 +6183,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-family: var(--serif);
   font-size: 26px;
   font-weight: 600;
-  color: var(--apt-accent);
+  color: var(--apt-accent-dk);
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
@@ -6211,7 +6211,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-size: 12px;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: rgba(42,15,46,.42);
+  color: rgba(42,15,46,.72);
   margin-bottom: 28px;
 }
 .apt-equip-stats {
@@ -6237,14 +6237,14 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .aes-unit {
   font-family: var(--serif);
   font-size: 14px;
-  color: rgba(42,15,46,.48);
+  color: rgba(42,15,46,.72);
 }
 .aes-lbl {
   font-family: var(--sans);
   font-size: 12px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: rgba(42,15,46,.4);
+  color: rgba(42,15,46,.72);
   margin-top: 2px;
 }
 .apt-equip-icons {
@@ -6262,7 +6262,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .aei-label {
   font-family: var(--sans);
   font-size: 13px;
-  color: rgba(42,15,46,.65);
+  color: rgba(42,15,46,.72);
   line-height: 1.35;
 }
 .apt-equip-categories {
@@ -8821,13 +8821,13 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .reservas-person-card .r-lang {
   font-size: 13px;
-  color: var(--card-accent, var(--sol));
+  color: var(--sol-text);
   letter-spacing: 0.06em;
 }
 .reservas-person-card .r-role {
   font-size: 12px;
   color: var(--ink);
-  opacity: 0.55;
+  opacity: 0.72;
   letter-spacing: 0.06em;
 }
 .reservas-person-card .r-actions {
@@ -9734,12 +9734,12 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
    .reservas-form-wrap es cream, así que sobreescribimos los colores
    de texto para que se lean correctamente.                          */
 .reservas-form-wrap .cal-mhd          { color: var(--ber-dk); }
-.reservas-form-wrap .cal-yr           { color: var(--ber); opacity: 0.55; }
-.reservas-form-wrap .cal-wd           { color: var(--ber); opacity: 0.5; }
+.reservas-form-wrap .cal-yr           { color: var(--ber); opacity: 0.72; }
+.reservas-form-wrap .cal-wd           { color: var(--ber); opacity: 0.72; }
 .reservas-form-wrap .c-n              { color: var(--ber-dk); opacity: 0.85; }
 .reservas-form-wrap .cal-cell.past .c-n { color: var(--ber); opacity: 0.25; }
 .reservas-form-wrap .cal-cell.blk  .c-n { color: var(--ber-dk); opacity: 0.7; }
-.reservas-form-wrap .cal-cell.today:not(.blk) .c-n { color: var(--apt-accent, var(--sol)); font-weight: 600; }
+.reservas-form-wrap .cal-cell.today:not(.blk) .c-n { color: var(--apt-accent-dk, var(--sol-text)); font-weight: 600; }
 .reservas-form-wrap .cal-cell.in-sel .c-n,
 .reservas-form-wrap .cal-cell.sel-s  .c-n,
 .reservas-form-wrap .cal-cell.sel-e  .c-n { color: var(--ber-dk); font-weight: 600; opacity: 1; }
@@ -9747,7 +9747,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .reservas-form-wrap .cal-cell.prev-s .c-n,
 .reservas-form-wrap .cal-cell.prev-e .c-n { color: var(--ber-dk); opacity: 0.85; }
 .reservas-form-wrap .cal-cell.prev-m .c-n { color: var(--ber-dk); opacity: 0.5; }
-.reservas-form-wrap .hscal-phase-hint { color: var(--sol-h); }
+.reservas-form-wrap .hscal-phase-hint { color: var(--sol-text); }
 .reservas-form-wrap .avail-nav-lbl    { color: var(--ber-dk); opacity: 0.85; }
 .reservas-form-wrap .avail-arr        { color: var(--ber); }
 .reservas-form-wrap .hscal-sel-lbl    { color: var(--ber); opacity: 0.7; }
@@ -9757,11 +9757,11 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .lsl-sd-card .cal-month         { background: transparent; border-color: rgba(42,15,46,.08); }
 .lsl-sd-card .cal-mhd           { color: var(--ber-dk); }
 .lsl-sd-card .cal-yr            { color: var(--ber); opacity: 0.55; }
-.lsl-sd-card .cal-wd            { color: var(--ber); opacity: 0.5; }
+.lsl-sd-card .cal-wd            { color: var(--ber); opacity: 0.72; }
 .lsl-sd-card .c-n               { color: var(--ber-dk); opacity: 0.85; }
 .lsl-sd-card .cal-cell.past .c-n { color: var(--ber); opacity: 0.25; }
 .lsl-sd-card .cal-cell.blk  .c-n { color: var(--ber-dk); opacity: 0.7; }
-.lsl-sd-card .cal-cell.today:not(.blk) .c-n { color: var(--sol, #3AAABB); font-weight: 600; }
+.lsl-sd-card .cal-cell.today:not(.blk) .c-n { color: var(--sol-text, #176E80); font-weight: 600; }
 .lsl-sd-card .cal-cell.in-sel .c-n,
 .lsl-sd-card .cal-cell.sel-s  .c-n,
 .lsl-sd-card .cal-cell.sel-e  .c-n { color: var(--ber-dk); font-weight: 600; opacity: 1; }
@@ -9771,7 +9771,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .lsl-sd-card .cal-cell.prev-m .c-n { color: var(--ber-dk); opacity: 0.5; }
 .lsl-sd-card .avail-nav-lbl         { color: var(--ber-dk); opacity: 0.85; }
 .lsl-sd-card .avail-arr             { color: var(--ber); }
-.lsl-sd-card .hscal-phase-hint      { color: var(--sol-h); }
+.lsl-sd-card .hscal-phase-hint      { color: var(--sol-text); }
 .lsl-sd-card .avail-legend          { color: rgba(42,15,46,.4); }
 .lsl-sd-card .leg-dot.lg-av         { border-color: rgba(42,15,46,.25); }
 .lsl-sd-card .avail-upd             { color: rgba(42,15,46,.3); }
@@ -9852,7 +9852,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   position: absolute; inset: 0;
   background:
     linear-gradient(to top,  rgba(42,15,46,.95) 0%, rgba(42,15,46,.6) 45%, rgba(42,15,46,.18) 100%),
-    linear-gradient(to right, rgba(42,15,46,.65) 0%, transparent 65%);
+    linear-gradient(to right, rgba(42,15,46,.72) 0%, transparent 65%);
   z-index: 1;
   pointer-events: none;
 }
@@ -15289,7 +15289,7 @@ body.apt-bar-shown .widget-stack {
 .apt-avail .req-panel .price-label-sm     { color: var(--ber); opacity: .68; }
 .apt-avail .req-panel .price-direct-total { color: var(--ber-dk); }
 .apt-avail .req-panel .price-avg-night    { color: var(--ber); opacity: .75; }
-.apt-avail .req-panel .price-guarantee-sub{ color: rgba(42,15,46,.65); }
+.apt-avail .req-panel .price-guarantee-sub{ color: rgba(42,15,46,.72); }
 .apt-avail .req-panel .price-breakdown    { border-top-color: rgba(42,15,46,.12); }
 .apt-avail .req-panel .price-line         { color: rgba(42,15,46,.78); }
 .apt-avail .req-panel .price-line-disc    { color: #B01E66; }
@@ -16078,7 +16078,7 @@ a:focus-visible,
   font-style: italic;
   font-size: 14px;
   letter-spacing: 0.18em;
-  color: var(--sol-h);
+  color: var(--sol-text);
   min-width: 28px;
 }
 .rf-step-title {
@@ -17881,7 +17881,7 @@ img[src*="apt-vt-gallery-"] {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--apt-accent, #3AAABB);
+  color: var(--apt-accent-dk, #176E80);
   margin: 0 0 24px;
 }
 .amr-grid {
@@ -17915,7 +17915,7 @@ img[src*="apt-vt-gallery-"] {
   font-weight: 600;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: rgba(42,15,46,.40);
+  color: rgba(42,15,46,.72);
 }
 .amr-text {
   font-family: var(--serif, Georgia, serif);
@@ -17983,7 +17983,7 @@ img[src*="apt-vt-gallery-"] {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--apt-accent);
+  color: var(--apt-accent-dk);
   margin-bottom: 12px;
 }
 .apt-pt-note {
@@ -18003,12 +18003,12 @@ img[src*="apt-vt-gallery-"] {
 }
 .apt-pt-row:last-child { border-bottom: none; }
 .apt-pt-ls { align-items: flex-start; border-top: 1px dashed color-mix(in srgb, var(--apt-accent) 20%, transparent); margin-top: 4px; padding-top: 12px; }
-.apt-pt-ls-tag { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: .04em; opacity: .55; vertical-align: middle; }
+.apt-pt-ls-tag { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: .04em; color: rgba(42,15,46,.72); opacity: 1; vertical-align: middle; }
 .apt-pt-ls-price { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-.apt-pt-ls-reg { font-size: 12px; color: var(--ink-soft); text-decoration: line-through; opacity: .6; white-space: nowrap; }
+.apt-pt-ls-reg { font-size: 12px; color: var(--ink-soft); text-decoration: line-through; opacity: .75; white-space: nowrap; }
 .apt-pt-ls-rate { font-family: var(--sans); font-size: 13px; color: var(--ink); white-space: nowrap; display: flex; align-items: baseline; gap: 5px; }
-.apt-pt-ls-rate strong { font-size: 17px; font-weight: 700; color: var(--ok, #4A6A28); letter-spacing: -0.01em; }
-.apt-pt-ls-save { font-size: 11px; font-weight: 700; color: var(--ok, #4A6A28); background: color-mix(in srgb, var(--ok,#4A6A28) 12%, transparent); border-radius: 4px; padding: 1px 5px; }
+.apt-pt-ls-rate strong { font-size: 17px; font-weight: 700; color: #3F5622; letter-spacing: -0.01em; }
+.apt-pt-ls-save { font-size: 11px; font-weight: 700; color: #3F5622; background: color-mix(in srgb, var(--ok,#4A6A28) 12%, transparent); border-radius: 4px; padding: 1px 5px; }
 .apt-pt-season {
   font-family: var(--sans);
   font-size: 13px;
@@ -18025,7 +18025,7 @@ img[src*="apt-vt-gallery-"] {
 .apt-pt-price strong {
   font-size: 17px;
   font-weight: 600;
-  color: var(--apt-accent);
+  color: var(--apt-accent-dk);
   letter-spacing: -0.01em;
 }
 .apt-pt-per {
@@ -18042,7 +18042,7 @@ img[src*="apt-vt-gallery-"] {
   gap: 9px;
   padding: 12px 20px;
   border-radius: 10px 0 10px 0;
-  background: var(--apt-accent, #3AAABB);
+  background: var(--apt-accent-dk, #176E80);
   color: #fff;
   font-family: var(--sans);
   font-size: 14px;
@@ -21122,7 +21122,7 @@ img[src*="apt-vt-gallery-"] {
   line-height: 1.5;
 }
 .hc-field { display: flex; flex-direction: column; gap: 6px; }
-.hc-lbl { font-size: 12px; font-weight: 600; color: rgba(42,15,46,.65); text-transform: uppercase; letter-spacing: .06em; }
+.hc-lbl { font-size: 12px; font-weight: 600; color: rgba(42,15,46,.72); text-transform: uppercase; letter-spacing: .06em; }
 .hc-opt { font-size: 11px; font-weight: 400; text-transform: none; letter-spacing: 0; color: rgba(42,15,46,.4); }
 
 .hc-type-row { display: flex; gap: 6px; flex-wrap: wrap; }
