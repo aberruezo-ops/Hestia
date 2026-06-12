@@ -2412,7 +2412,7 @@ body.apt-bar-shown .cookies {
   background: var(--arena);
   color: var(--ber-dk);
 }
-.apartments-intro .eyebrow { color: var(--vm); margin-bottom: 18px; }
+.apartments-intro .eyebrow { color: var(--vm-dk); opacity: 1; margin-bottom: 18px; }
 .apartments-intro h2 {
   max-width: 14ch; margin: 0 auto;
 }
@@ -6076,7 +6076,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   align-items: start;
 }
 .avd-eyebrow {
-  color: var(--apt-accent);
+  color: color-mix(in srgb, var(--apt-accent) 48%, var(--crema, #FAF6F0));
   display: block;
   margin-bottom: 20px;
 }
@@ -6156,6 +6156,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .apt-day-eyebrow {
   margin-bottom: 24px;
   color: var(--apt-accent-dk);
+  opacity: 1;
 }
 .apt-day-grid {
   display: grid;
@@ -11011,7 +11012,7 @@ footer,
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--crema);
-  background: var(--apt-accent, var(--sol));
+  background: var(--apt-accent-dk, var(--sol-text, #176E80));
   border: 1.5px solid var(--apt-accent, var(--sol));
   border-radius: 12px 0 12px 0;
   padding: 16px 32px;
@@ -20398,7 +20399,7 @@ img[src*="apt-vt-gallery-"] {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: .14em;
-  color: var(--hps-accent);
+  color: color-mix(in srgb, var(--hps-accent) 52%, var(--crema, #FAF6F0));
 }
 .hps-price {
   display: flex;
@@ -20427,7 +20428,7 @@ img[src*="apt-vt-gallery-"] {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: .06em;
-  color: var(--hps-accent);
+  color: color-mix(in srgb, var(--hps-accent) 52%, var(--crema, #FAF6F0));
   margin-top: 3px;
 }
 .hps-ota-compare {
@@ -20446,7 +20447,7 @@ img[src*="apt-vt-gallery-"] {
 }
 .hps-ota-pct {
   font-size: 10px; font-weight: 600;
-  color: var(--err, #B8246E); background: rgba(184,36,110,.15);
+  color: #F18FBD; background: rgba(184,36,110,.15);
   padding: 1px 4px; border-radius: 3px 0 3px 0;
 }
 .hps-disclaimer {
@@ -20665,7 +20666,7 @@ img[src*="apt-vt-gallery-"] {
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: var(--lm-color, #3AAABB);
+  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #FAF6F0));
 }
 .lm-card-dates {
   display: flex;
@@ -20682,7 +20683,7 @@ img[src*="apt-vt-gallery-"] {
   letter-spacing: 0.02em;
 }
 .lm-card-ppn {
-  color: var(--lm-color, #3AAABB);
+  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #FAF6F0));
   opacity: 1;
 }
 .lm-card-orig s {
@@ -20691,13 +20692,13 @@ img[src*="apt-vt-gallery-"] {
   font-style: normal;
 }
 .lm-card-discounted {
-  color: var(--lm-color, #3AAABB);
+  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #FAF6F0));
   font-weight: 600;
 }
 .lm-card-total {
   font-size: 15px;
   font-weight: 600;
-  color: var(--lm-color, #3AAABB);
+  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #FAF6F0));
   letter-spacing: 0.01em;
 }
 /* Badge "ÚLTIMA HORA" */
@@ -21462,7 +21463,7 @@ img[src*="apt-vt-gallery-"] {
 .lss-pill-save { font-size: 10px; font-weight: 700; background: rgba(255,255,255,.2); border-radius: 4px; padding: 1px 5px; letter-spacing: .02em; }
 .lss-cta {
   display: inline-block;
-  background: var(--accent, #C87A45);
+  background: color-mix(in srgb, var(--accent, #C87A45) 70%, #000);
   color: white;
   font-weight: 600;
   font-size: 14px;
@@ -21736,7 +21737,7 @@ img[src*="apt-vt-gallery-"] {
 .lsl-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
 .lsl-btn-primary {
   display: inline-block;
-  background: var(--accent, #C87A45);
+  background: color-mix(in srgb, var(--accent, #C87A45) 70%, #000);
   color: white;
   font-weight: 600;
   font-size: 15px;
@@ -21839,7 +21840,7 @@ img[src*="apt-vt-gallery-"] {
 .lsl-apt-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--lsl-accent, #3AAABB); }
 .lsl-apt-name { font-size: 12px; font-weight: 700; letter-spacing: .1em; color: var(--ber, #2A0F2E); }
 .lsl-apt-concept { font-size: 13px; color: var(--ink-soft, #7A5A72); line-height: 1.45; flex: 1; }
-.lsl-apt-cta { font-size: 12.5px; font-weight: 600; color: var(--lsl-accent, #3AAABB); margin-top: 4px; }
+.lsl-apt-cta { font-size: 12.5px; font-weight: 600; color: color-mix(in srgb, var(--lsl-accent, #176E80) 66%, #000); margin-top: 4px; }
 
 /* FAQ */
 .lsl-faq-inner { max-width: 680px; }
