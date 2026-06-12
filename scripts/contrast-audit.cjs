@@ -56,6 +56,10 @@ const VIEWPORTS = [
         }
         for (const v of res.violations) {
           for (const node of v.nodes) {
+            const sel = node.target.join(' ');
+            // Días pasados del calendario: deshabilitados/no reservables (WCAG exime
+            // los elementos inactivos). Se omiten del guardarraíl a propósito.
+            if (/\.past\b/.test(sel)) continue;
             const d = (node.any && node.any[0] && node.any[0].data) || {};
             if (d.contrastRatio == null) continue; // indeterminado (bg imagen) — se ignora
             totalFails++;
@@ -90,6 +94,6 @@ const VIEWPORTS = [
     }
   }
   const errs = report.filter(r => r.error);
-  if (errs.length) { console.log('\n(errores de carga:'); errs.forEach(e=>console.log(`  ${e.page}/${e.vp}: ${e.error}`)); console.log(')'); }
-  process.exit(fails.length ? 1 : 0);
+  if (errs.length) { console.log(`\n✗ ${errs.length} ERROR(es) de carga/render (cuentan como fallo del guardarraíl):`); errs.forEach(e=>console.log(`  ${e.page}/${e.vp}: ${e.error}`)); }
+  process.exit((fails.length || errs.length) ? 1 : 0);
 })().catch(e => { console.error('ERR', e); process.exit(2); });

@@ -118,7 +118,7 @@ const APT_DATA = {
     name_short: 'Salinas',
     video_src: 'assets/hestia v14 salinas clean.mp4',
     video_duration: 'PT1M21S', video_upload: '2026-05-30',
-    accent: '#D4A84A', accent2: '#E8C476', accent_dk: '#9E7A2C',
+    accent: '#D4A84A', accent2: '#E8C476', accent_dk: '#7A5E1A',
     hero_img: 'assets/apt-vm.jpg',
     bedroom_img: 'assets/apt-vs-gallery-21.jpg',
     floorplan_img: 'assets/apt-vs-floorplan.jpg',
@@ -393,7 +393,7 @@ const AptEquipamiento = ({ apt, lang }) => {
             { val: d.terrace,       unit: '',                               lbl: lang === 'es' ? 'terraza' : 'terrace' },
           ].map((s, i) => (
             <div key={i} className="apt-equip-stat">
-              <span className="aes-val" style={{ color: accent }}>{s.val}</span>
+              <span className="aes-val" style={{ color: 'var(--apt-accent-dk)' }}>{s.val}</span>
               {s.unit && <span className="aes-unit"> {s.unit}</span>}
               <span className="aes-lbl">{s.lbl}</span>
             </div>
@@ -402,7 +402,7 @@ const AptEquipamiento = ({ apt, lang }) => {
         <div className="apt-equip-categories">
           {grouped.map(cat => (
             <div key={cat.key} className="apt-equip-cat">
-              <div className="aec-label" style={{ color: accent }}>{lang === 'es' ? cat.es : cat.en}</div>
+              <div className="aec-label" style={{ color: 'var(--apt-accent-dk)' }}>{lang === 'es' ? cat.es : cat.en}</div>
               <div className="apt-equip-icons">
                 {cat.items.map(([icon, label], i) => (
                   <div key={i} className="apt-equip-item">

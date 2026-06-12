@@ -93,7 +93,7 @@ const APT_DATA = {
     video_upload: '2026-05-30',
     accent: '#D4A84A',
     accent2: '#E8C476',
-    accent_dk: '#9E7A2C',
+    accent_dk: '#7A5E1A',
     hero_img: 'assets/apt-vm.jpg',
     bedroom_img: 'assets/apt-vs-gallery-21.jpg',
     floorplan_img: 'assets/apt-vs-floorplan.jpg',
@@ -348,7 +348,7 @@ const AptEquipamiento = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "aes-val",
     style: {
-      color: accent
+      color: 'var(--apt-accent-dk)'
     }
   }, s.val), s.unit && /*#__PURE__*/React.createElement("span", {
     className: "aes-unit"
@@ -362,7 +362,7 @@ const AptEquipamiento = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "aec-label",
     style: {
-      color: accent
+      color: 'var(--apt-accent-dk)'
     }
   }, lang === 'es' ? cat.es : cat.en), /*#__PURE__*/React.createElement("div", {
     className: "apt-equip-icons"
