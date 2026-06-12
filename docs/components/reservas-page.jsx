@@ -486,6 +486,9 @@ const ReservasForm = ({ lang }) => {
   // Workflow
   const [step, setStep]         = React.useState(1);
   const [channel, setChannel]   = React.useState('whatsapp');
+  const [sent, setSent]         = React.useState(null); // { channel, url, msg } tras enviar
+  const [copied, setCopied]     = React.useState(false);
+  const [step2Hint, setStep2Hint] = React.useState(false); // intentó continuar sin elegir Hestía
 
   // Disponibilidad (carga lazy)
   const [avail, setAvail]       = React.useState(null);
@@ -628,9 +631,9 @@ const ReservasForm = ({ lang }) => {
   // disponibilidad → el huésped elige el que prefiera (o el que tenga libre).
   const step1Ready    = checkin && checkout && guests && checkin < checkout && meetsMinNights;
   const step1Complete = apt && step1Ready;
-  const hasName  = name.trim().length > 0;
-  const hasTel   = tel.replace(/\D/g, '').length >= 6;
-  const hasEmail = /\S+@\S+/.test(email);
+  const hasName  = name.trim().length >= 2;
+  const hasTel   = tel.replace(/\D/g, '').length >= 9;
+  const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   const channelValid = channel === 'whatsapp' ? (hasName && hasTel) : (hasName && hasEmail);
 
   // Cálculo — _calcStay ya aplica la oferta de hueco internamente (fuente única).
@@ -643,6 +646,8 @@ const ReservasForm = ({ lang }) => {
   // Larga estancia: ≥29 noches, no julio ni agosto
   const isLsStay = nightsSelected > 28 && (() => { const m = checkin ? parseInt(checkin.slice(5,7),10) : 0; return m !== 7 && m !== 8; })();
   const lsCalc   = isLsStay ? _calcLsTotal(checkin, checkout, parseInt(guests,10)||1, pets==='yes', apt) : null;
+  const recapExtrasTotal = selectedExtras.reduce((s, e) => s + e.amount, 0);
+  const recapTotal = isLsStay && lsCalc ? lsCalc.total + recapExtrasTotal : (calc ? calc.directTotal + recapExtrasTotal : 0);
 
   // Avanzar pasos. step1Ready basta (sin apt) — en step 2 el huésped
   // verá la disponibilidad de los 3 Hestías y puede elegir uno.
@@ -655,6 +660,12 @@ const ReservasForm = ({ lang }) => {
     }, 60);
   };
   const goToStep3 = () => {
+    if (!step1Complete) { // falta elegir Hestía → señala el grid en vez de avanzar en silencio
+      setStep2Hint(true);
+      document.querySelector('.rf-apt-availability, .rf-apt-pick')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    setStep2Hint(false);
     setStep(3);
     if (typeof _hestiaTrack === 'function') _hestiaTrack('booking_step3', { apt: apt || 'all', checkin, checkout });
     setTimeout(() => {
@@ -766,16 +777,39 @@ const ReservasForm = ({ lang }) => {
     e?.preventDefault();
     if (!step1Complete || !channelValid) return;
     if (typeof _hestiaTrack === 'function') _hestiaTrack('booking_sent', { apt: apt || 'all', channel, checkin, checkout });
+    const msg = buildMsg();
+    let url;
     if (channel === 'whatsapp') {
       const waNum = lang === 'es' ? '34620316370' : '34654138251';
-      window.open(`https://wa.me/${waNum}?text=` + encodeURIComponent(buildMsg()), '_blank');
+      url = `https://wa.me/${waNum}?text=` + encodeURIComponent(msg);
+      window.open(url, '_blank');
     } else {
       const subj = lang === 'es'
         ? `Consulta reserva — ${aptNames[apt] || 'Hestía'}`
         : `Booking enquiry — ${aptNames[apt] || 'Hestía'}`;
-      window.location.href = `mailto:info@hestiayourhome.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(buildMsg())}`;
+      url = `mailto:info@hestiayourhome.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(msg)}`;
+      window.location.href = url;
     }
+    setSent({ channel, url, msg });
   };
+
+  const copyMsg = () => {
+    if (!sent || !navigator.clipboard) return;
+    navigator.clipboard.writeText(sent.msg)
+      .then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); })
+      .catch(() => {});
+  };
+
+  // Razón por la que el botón de enviar/avanzar está bloqueado (hint inline).
+  const step1Hint = !step1Ready && (!checkin || !checkout)
+    ? (lang === 'es' ? 'Elige las fechas de entrada y salida para continuar.' : 'Pick check-in and check-out dates to continue.')
+    : null;
+  const sendHint = !apt
+    ? (lang === 'es' ? 'Vuelve al paso 2 y elige una Hestía.' : 'Go back to step 2 and pick a Hestía.')
+    : !hasName ? (lang === 'es' ? 'Escribe tu nombre.' : 'Enter your name.')
+    : (channel === 'whatsapp' && !hasTel) ? (lang === 'es' ? 'Escribe un teléfono válido (mín. 9 dígitos).' : 'Enter a valid phone (min. 9 digits).')
+    : (channel === 'email' && !hasEmail) ? (lang === 'es' ? 'Escribe un email válido.' : 'Enter a valid email.')
+    : null;
 
   // Resumen del paso 1 cuando está plegado — card con color del Hestía,
   // fechas en español, badge bonita.
@@ -992,6 +1026,7 @@ const ReservasForm = ({ lang }) => {
               >
                 {t.check_avail}
               </button>
+              {step1Hint && <p className="form-help-note rf-btn-hint">{step1Hint}</p>}
             </div>
           </div>
         )}
@@ -1145,9 +1180,14 @@ const ReservasForm = ({ lang }) => {
 
             {step === 2 && (
               <div className="rf-step-actions">
-                <button type="button" className="btn btn-primary rf-next" onClick={goToStep3}>
+                <button type="button" className={`btn btn-primary rf-next${!step1Complete ? ' req-btn-dis' : ''}`} onClick={goToStep3}>
                   {t.continue_to_send}
                 </button>
+                {step2Hint && !apt && (
+                  <p className="form-help-note rf-btn-hint" role="alert">
+                    {lang === 'es' ? '↑ Elige una Hestía arriba para continuar.' : '↑ Pick a Hestía above to continue.'}
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -1167,6 +1207,46 @@ const ReservasForm = ({ lang }) => {
         </header>
         {step >= 3 && (
           <div className="rf-step-body">
+            {step1Summary && (
+              <div className="rf-recap" aria-label={lang === 'es' ? 'Resumen de tu solicitud' : 'Your request summary'}>
+                {step1Summary}
+                {recapTotal > 0 && (
+                  <div className="rf-recap-price">
+                    <span>{lang === 'es' ? 'Precio estimado directo' : 'Estimated direct price'}</span>
+                    <strong>{fmt(recapTotal)}</strong>
+                  </div>
+                )}
+              </div>
+            )}
+            {sent ? (
+              <div className="rf-sent" role="status" aria-live="polite">
+                <div className="rf-sent-icon" aria-hidden="true">✓</div>
+                <h4 className="rf-sent-title">{lang === 'es' ? 'Solicitud preparada' : 'Request ready'}</h4>
+                <p className="rf-sent-text">
+                  {sent.channel === 'whatsapp'
+                    ? (lang === 'es' ? 'Te hemos abierto WhatsApp con tu solicitud. Pulsa enviar allí para que nos llegue.' : 'We opened WhatsApp with your request. Press send there so it reaches us.')
+                    : (lang === 'es' ? 'Te hemos abierto tu correo con la solicitud. Pulsa enviar para que nos llegue.' : 'We opened your email with the request. Press send so it reaches us.')}
+                </p>
+                <p className="rf-sent-fallback">
+                  {lang === 'es' ? '¿No se abrió? ' : 'Didn’t open? '}
+                  <a href={sent.url} target={sent.channel === 'whatsapp' ? '_blank' : undefined} rel="noopener">
+                    {sent.channel === 'whatsapp' ? (lang === 'es' ? 'Abrir WhatsApp' : 'Open WhatsApp') : (lang === 'es' ? 'Abrir tu correo' : 'Open your email')}
+                  </a>
+                </p>
+                <div className="rf-sent-actions">
+                  <button type="button" className="btn btn-ghost" onClick={copyMsg}>
+                    {copied ? (lang === 'es' ? 'Copiado ✓' : 'Copied ✓') : (lang === 'es' ? 'Copiar mensaje' : 'Copy message')}
+                  </button>
+                  <button type="button" className="btn btn-ghost" onClick={() => setSent(null)}>
+                    {lang === 'es' ? 'Volver' : 'Back'}
+                  </button>
+                </div>
+                <p className="rf-sent-direct">
+                  {lang === 'es' ? 'O contáctanos directamente: ' : 'Or contact us directly: '}
+                  <strong>{sent.channel === 'whatsapp' ? (lang === 'es' ? '+34 620 316 370' : '+34 654 138 251') : 'info@hestiayourhome.com'}</strong>
+                </p>
+              </div>
+            ) : (<>
             <div className="rf-channel-label">{t.channel_label}</div>
             <div className="rf-channels" role="tablist">
               <button
@@ -1228,8 +1308,10 @@ const ReservasForm = ({ lang }) => {
                 >
                   {channel === 'whatsapp' ? t.send_wa : t.send_email}
                 </button>
+                {sendHint && <p className="form-help-note rf-btn-hint">{sendHint}</p>}
               </div>
             </form>
+            </>)}
           </div>
         )}
       </section>
