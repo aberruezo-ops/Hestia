@@ -450,15 +450,6 @@
     "vs": []
   },
   "gapOverrides": {
-    "vm|2026-06-27": {
-      "apt": "vm",
-      "start": "2026-06-27",
-      "end": "2026-07-01",
-      "nights": 4,
-      "type": "fixed",
-      "value": 140,
-      "lastMinute": true
-    },
     "vm|2026-05-29": {
       "apt": "vm",
       "start": "2026-05-29",
@@ -468,15 +459,6 @@
       "value": 20,
       "lastMinute": true
     },
-    "vm|2026-07-08": {
-      "apt": "vm",
-      "start": "2026-07-08",
-      "end": "2026-07-12",
-      "nights": 4,
-      "type": "fixed",
-      "value": 180,
-      "lastMinute": true
-    },
     "vm|2026-08-30": {
       "apt": "vm",
       "start": "2026-08-30",
@@ -484,15 +466,6 @@
       "nights": 9,
       "type": "discount",
       "value": 15
-    },
-    "vt|2026-06-03": {
-      "apt": "vt",
-      "start": "2026-06-03",
-      "end": "2026-06-06",
-      "nights": 3,
-      "type": "fixed",
-      "value": 95,
-      "lastMinute": true
     },
     "vt|2026-06-21": {
       "apt": "vt",
