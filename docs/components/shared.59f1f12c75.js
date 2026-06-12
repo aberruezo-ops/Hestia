@@ -2784,20 +2784,45 @@ const _calcStay = (selStart, selEnd, aptId, withPets, guests) => {
   // Suplemento por huéspedes — base = 1 huésped, se suma escalón a escalón.
   const guestSuppPerNight = _guestSuppPerNight(guests);
   const guestSuppAmt = guestSuppPerNight * nights;
-  const directTotal = afterStay + petAmt + guestSuppAmt;
-  const avgPerNight = Math.round((afterStay + guestSuppAmt) / nights);
+  let fBaseTotal = baseTotal,
+    fStayD = stayD,
+    fStayDiscAmt = stayDiscAmt,
+    fAfterStay = afterStay;
+  let isGapOffer = false,
+    gapPerNight = null;
+
+  // Oferta de hueco (gapOverrides): SOLO se aplica si la estancia rellena EXACTAMENTE
+  // el hueco — la entrada coincide con el inicio (clave aptId|selStart) Y la salida
+  // con el fin del hueco. Si la estancia se sale del hueco, NO aplica (precio normal).
+  // Vive aquí para que apartamento, home y reservas calculen siempre igual.
+  const gov = v2 && v2.gapOverrides && v2.gapOverrides[`${aptId}|${selStart}`];
+  if (gov && gov.type && gov.type !== 'none' && gov.end === selEnd) {
+    const seasonBase = Math.round((v2.apts && v2.apts[aptId] && v2.apts[aptId].base || 0) * (v2.seasons && v2.seasons[_v2SeasonForDate(selStart, v2)] && v2.seasons[_v2SeasonForDate(selStart, v2)].multiplier || 1));
+    let pn;
+    if (gov.type === 'fixed') pn = gov.value;else if (gov.type === 'discount') pn = Math.round(seasonBase * (1 - gov.value / 100));else if (gov.type === 'increment') pn = Math.round(seasonBase * (1 + gov.value / 100));else pn = seasonBase;
+    fBaseTotal = pn * nights;
+    fStayD = null;
+    fStayDiscAmt = 0;
+    fAfterStay = fBaseTotal;
+    isGapOffer = true;
+    gapPerNight = pn;
+  }
+  const directTotal = fAfterStay + petAmt + guestSuppAmt;
+  const avgPerNight = Math.round((fAfterStay + guestSuppAmt) / nights);
   return {
     nights,
-    baseTotal,
-    stayD,
-    stayDiscAmt,
-    afterStay,
+    baseTotal: fBaseTotal,
+    stayD: fStayD,
+    stayDiscAmt: fStayDiscAmt,
+    afterStay: fAfterStay,
     petAmt,
     guestSuppPerNight,
     guestSuppAmt,
     guests: guests || null,
     directTotal,
-    avgPerNight
+    avgPerNight,
+    isGapOffer,
+    gapPerNight
   };
 };
 

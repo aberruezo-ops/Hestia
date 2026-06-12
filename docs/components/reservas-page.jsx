@@ -147,32 +147,9 @@ const _resExtraUnitSuffix = (unit, lang) => {
   return '';
 };
 
-// Gap-offer override helpers — apply gapOverrides from prices.json to the
-// base price, then keep guest/pet supplements unchanged on top.
-const _gapOverrideCalc = (aptId, checkin) => {
-  const v2 = window.PRICES_V2;
-  if (!v2 || !aptId || !checkin) return null;
-  const ov = (v2.gapOverrides || {})[`${aptId}|${checkin}`];
-  if (!ov || !ov.type || ov.type === 'none') return null;
-  const base   = (v2.apts?.[aptId]?.base) || 0;
-  const season = _v2SeasonForDate(checkin, v2);
-  const mult   = (v2.seasons?.[season]?.multiplier) || 1;
-  const seasonBase = Math.round(base * mult);
-  let perNight;
-  if (ov.type === 'fixed')     perNight = ov.value;
-  else if (ov.type === 'discount')  perNight = Math.round(seasonBase * (1 - ov.value / 100));
-  else if (ov.type === 'increment') perNight = Math.round(seasonBase * (1 + ov.value / 100));
-  else perNight = seasonBase;
-  return { perNight, ov };
-};
-const _applyGapOv = (calc, perNight) => {
-  if (!calc) return null;
-  const baseTotal   = perNight * calc.nights;
-  const afterStay   = baseTotal;
-  const directTotal = afterStay + calc.guestSuppAmt + calc.petAmt;
-  const avgPerNight = Math.round((afterStay + calc.guestSuppAmt) / calc.nights);
-  return { ...calc, baseTotal, stayD: null, stayDiscAmt: 0, afterStay, directTotal, avgPerNight, isGapOffer: true, gapPerNight: perNight };
-};
+// La oferta de hueco (gapOverrides) la aplica ahora _calcStay (shared.js), para que
+// apartamento, home y reservas calculen siempre el mismo precio. Solo aplica si la
+// estancia rellena exactamente el hueco (entrada+salida = el hueco).
 
 // Calcula el total de larga estancia usando tarifas mensuales + flat especial + suplemento por apt
 
@@ -266,10 +243,8 @@ const LsInfoBlock = ({ calc, lang }) => {
 const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [], lsCalc }) => {
   if (!apt || !checkin || !checkout) return null;
   const gn = parseInt(guests, 10) || null;
-  const calcRaw = _calcStay(checkin, checkout, apt, pets === 'yes', gn);
-  if (!calcRaw || calcRaw.nights <= 0) return null;
-  const gapOv = _gapOverrideCalc(apt, checkin);
-  const calc  = gapOv ? _applyGapOv(calcRaw, gapOv.perNight) : calcRaw;
+  const calc = _calcStay(checkin, checkout, apt, pets === 'yes', gn);
+  if (!calc || calc.nights <= 0) return null;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
   const extrasTotal = extras.reduce((s, e) => s + e.amount, 0);
   const nightlyGrandTotal = calc.directTotal + extrasTotal;
