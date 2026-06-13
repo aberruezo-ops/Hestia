@@ -5580,7 +5580,9 @@ const ReservasTab = ({
     }) || null;
   };
   const saveDraft = override => {
-    const d = override || draft;
+    // override solo es una reserva (la del botón de contrato). Si llega un evento
+    // de click (onClick={saveDraft}) lo ignoramos y usamos el draft actual.
+    const d = override && override.apt !== undefined ? override : draft;
     if (!d) return;
     const cleaned = calcDerived(d);
     const overlap = findOverlap(cleaned, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
@@ -6653,7 +6655,7 @@ const ReservasTab = ({
   }, "Cancelar"), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-primary rv-foot-btn rv-foot-save",
-    onClick: saveDraft
+    onClick: () => saveDraft()
   }, "Guardar"))))));
 };
 
