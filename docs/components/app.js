@@ -140,11 +140,11 @@ const App = () => {
         return true;
       }
     };
-    // Safari/iPadOS solo desbloquea el audio en un gesto DISCRETO (tap/clic/tecla),
-    // nunca en scroll. Y solo lo damos por reproducido cuando play() RESUELVE: si el
-    // primer gesto es un scroll u otro que Safari rechaza, seguimos esperando el
-    // siguiente gesto en vez de gastar el único disparo.
-    const evs = ['pointerdown', 'click', 'touchend', 'keydown'];
+    // Disparamos en el PRIMER gesto, y con los eventos más tempranos (touch/mouse
+    // -down) para que el mar empiece en cuanto tocas/pulsas al ENTRAR, no al cerrar
+    // la ventana del logo. Solo se da por reproducido cuando play() RESUELVE (Safari
+    // rechaza algunos gestos como el scroll); así seguimos esperando el siguiente.
+    const evs = ['pointerdown', 'touchstart', 'mousedown', 'touchend', 'click', 'keydown'];
     const cleanup = () => evs.forEach(ev => window.removeEventListener(ev, playOnce, true));
     const playOnce = () => {
       if (done || !wanted()) return;
