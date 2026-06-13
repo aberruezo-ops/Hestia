@@ -17,6 +17,41 @@ Hestía es un sitio estático (GitHub Pages, sirviendo desde `docs/`) con:
 
 ---
 
+## Reglas de negocio · INVARIANTES (cosas que NO pueden ocurrir)
+
+> Catálogo de verdades del negocio que SIEMPRE deben cumplirse. Antes de tocar precios,
+> calendario, disponibilidad, reservas o copy comercial, repasa esta lista. Si un cambio
+> contradice una regla, es un bug. Mantenla actualizada cuando cambien las premisas.
+> Cada regla lleva [dónde se aplica] para localizar el código.
+
+### Estancias largas
+- **NO existen estancias largas con check-in en julio ni en agosto.** Solo de septiembre a junio. [estancias-largas-page · reservas-page `isLsStay` · sections-1 `_isLongStayGap` · shared `_calcLsTotal`]
+- **Mínimo 29 noches** para considerarse estancia larga. Por debajo, es estancia normal.
+- Tarifa **mensual desde `prices.json` → longStayConfig.monthlyRates** (hoy baja 1.490 · media 1.590 · alta 1.850 €/mes). NUNCA hardcodear el "desde X€/mes" (ni en HTML/meta/JSON-LD).
+- Noches de **Navidad (23 dic–6 ene)** y **Semana Santa** → tarifa plana `specialNightFlat` (hoy 80 €/noche), no la mensual prorrateada.
+- En el calendario, una fecha se bloquea **solo si los TRES apartamentos están ocupados** esa noche (basta uno libre para poder seleccionar).
+
+### Disponibilidad y reservas
+- **No se aceptan reservas por debajo de la estancia mínima**: `minNights` (hoy 3) general; `criticalSeasonMinNights` (hoy 7) en temporada crítica; ventana inminente `imminentDays` (hoy 7). [prices.json `rules` · `_calcStay` · DateRangePicker `too-soon`]
+- **No se puede reservar una fecha ya ocupada** (availability.json iCal + `manual_blocks` de prices.json). Ambas fuentes cuentan.
+- El precio que ve el huésped SIEMPRE sale de **`_calcStay` / prices.json** (fuente única). NUNCA calcular o hardcodear precios en un componente. [shared `_calcStay`]
+- **Huecos cortos (2–5 noches)**: las ofertas se recalculan solas (last-minute por temporada); las **ofertas manuales no se pisan** ni se borran si el hueco no cambió. [scripts/recalc-gap-offers.mjs]
+
+### Mascotas y huéspedes
+- **Mascotas: permitidas en los 3 Hestías**, con petición previa y suplemento (hoy 10 €/noche, máx 50 €). Nunca vetos ni tarifas abusivas. [prices.json `petPerNight`/`petMax`]
+- No exceder la **capacidad de cada apartamento** (huésped extra: `extraGuestPerNight`, hoy 5 €/noche). Todos los huéspedes que pernoctan van en el contrato (parte SES).
+
+### Reserva directa (copy comercial — debe ser coherente en TODA la web)
+- Ahorro: **"hasta un 10% aprox."** (no un número fijo distinto). [shared `DIRECT_PERKS`/`DIRECT_RIBBON`]
+- Promesa de precio: **"no solo igualamos, mejoramos"** + **0% comisiones**. No prometer otra cosa.
+- Pago: **señal ~20%** al firmar el contrato, **resto a la llegada**. Respuesta humana **≤1 h** (normalmente minutos).
+
+### Datos y secretos (ver también sección Seguridad)
+- **JAMÁS** datos personales de huéspedes (nombre+contacto, DNI, teléfono, importes) dentro de `docs/` ni en commits públicos. Van en el repo privado `hestia-data` / `data-private/`.
+- **JAMÁS** PATs, API keys ni secretos en el código.
+
+---
+
 ## Seguridad — reglas de obligado cumplimiento
 
 Aplica estas medidas a TODO el código nuevo y revisa lo existente cuando lo toques.
