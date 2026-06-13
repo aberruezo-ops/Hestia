@@ -92,16 +92,35 @@ const Hero = ({ lang, onScrollDown }) => {
     if (el) { el.muted = true; el.play().catch(() => {}); }
   }, [vidIdx]);
 
-  // Reanuda si el usuario vuelve a la pestaña
+  // Reanuda el vídeo al volver a la pestaña/app. En iOS, volver de otra app no
+  // cuenta como gesto y play() puede rechazarse, dejando el vídeo congelado; en ese
+  // caso reanudamos al primer toque. También escuchamos pageshow (bfcache de Safari).
   React.useEffect(() => {
-    const onVisible = () => {
-      if (!document.hidden && bgVideoRef.current) {
-        bgVideoRef.current.muted = true;
-        bgVideoRef.current.play().catch(() => {});
-      }
+    let armed = false;
+    const evs = ['pointerdown', 'touchstart', 'click', 'keydown'];
+    const cleanup = () => evs.forEach(ev => window.removeEventListener(ev, onGesture, true));
+    const onGesture = () => { armed = false; cleanup(); resume(); };
+    const resume = () => {
+      const el = bgVideoRef.current;
+      if (!el) return;
+      el.muted = true;
+      const p = el.play();
+      if (p && p.catch) p.catch(() => {
+        if (armed) return;
+        armed = true;
+        evs.forEach(ev => window.addEventListener(ev, onGesture, { once: true, capture: true, passive: true }));
+      });
     };
+    const onVisible = () => { if (!document.hidden) resume(); };
     document.addEventListener('visibilitychange', onVisible);
-    return () => document.removeEventListener('visibilitychange', onVisible);
+    window.addEventListener('pageshow', resume);
+    window.addEventListener('focus', resume);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('pageshow', resume);
+      window.removeEventListener('focus', resume);
+      cleanup();
+    };
   }, []);
 
   return (
