@@ -22231,3 +22231,29 @@ img[src*="apt-vt-gallery-"] {
     box-shadow: 0 6px 28px rgba(58,170,187,.6);
   }
 }
+
+/* Botón de sonido — silenciar/activar el sonido sutil de mar de la home.
+   Abajo-izquierda para no chocar con el chat ni los widgets (derecha). */
+.sound-toggle {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 70;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(240,232,213,.22);
+  background: color-mix(in srgb, var(--ber-dk, #2A0F2E) 88%, transparent);
+  color: rgba(240,232,213,.82);
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 14px rgba(0,0,0,.28);
+  transition: color .15s, background .15s, transform .15s, opacity .15s;
+}
+.sound-toggle:hover { color: #fff; transform: translateY(-1px); }
+.sound-toggle:not(.is-on) { color: rgba(240,232,213,.5); }
+.sound-toggle:focus-visible { outline: 2px solid var(--sol, #3AAABB); outline-offset: 2px; }
+@media (max-width: 600px) { .sound-toggle { width: 36px; height: 36px; left: 12px; bottom: 12px; } }
