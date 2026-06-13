@@ -20,7 +20,7 @@ const APT_DATA = {
     accent_dk: '#4A5628',
     hero_img: 'assets/apt-vs.jpg',
     bedroom_img: 'assets/apt-vm-gallery-10.jpg',
-    floorplan_img: 'assets/apt-vm-plano.jpg',
+    floorplan_img: 'assets/apt-vm-plano.jpg?v=2',
     floorplan_subtitle_es: 'distribución en planta.',
     floorplan_subtitle_en: 'floor layout.',
     floorplan_desc_es: 'Mar se distribuye en primera planta con terraza de esquina: salón-comedor abierto, cocina equipada, dos dormitorios y dos baños. La terraza en esquina recibe luz desde el amanecer hasta el atardecer.',
