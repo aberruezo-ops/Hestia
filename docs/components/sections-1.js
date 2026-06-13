@@ -747,6 +747,11 @@ const Compare = ({
     vt: 'Ático · mar y Salar de los Canos',
     vs: 'Amanecer sobre las salinas'
   }, {
+    label: 'Carácter',
+    vm: 'El más cercano a la playa · un agradable paseo',
+    vt: 'El más alto · dominas toda la vista',
+    vs: 'El más grande · desconexión · base para explorar la zona'
+  }, {
     label: 'Plazas',
     vm: '6 + bebé · 2 hab.',
     vt: '6 + bebé · 2 hab.',
@@ -808,6 +813,11 @@ const Compare = ({
     vm: 'Sea through the olive grove',
     vt: 'Penthouse · sea & Salar de los Canos',
     vs: 'Sunrise over the salt flats'
+  }, {
+    label: 'Character',
+    vm: 'Closest to the beach · a short, pleasant walk',
+    vt: 'The highest · you command the whole view',
+    vs: 'The largest · disconnection · a base to explore the area'
   }, {
     label: 'Guests',
     vm: '6 + baby · 2 bed.',
