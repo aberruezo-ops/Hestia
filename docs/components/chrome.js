@@ -522,6 +522,9 @@ const Header = ({
     href: NAV_PAGES.reservas,
     className: "cta"
   }, /*#__PURE__*/React.createElement("span", {
+    className: "cta-border",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", {
     className: "cta-text"
   }, t.cta_nav))), /*#__PURE__*/React.createElement("button", {
     className: `hamburger-btn ${mobileOpen ? 'open' : ''}`,

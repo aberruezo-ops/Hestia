@@ -612,7 +612,8 @@ p  { line-height: 1.65; font-weight: 300; }
   .header nav .cta::after { animation: none; }
 }
 .header nav .cta {
-  transform: translate3d(var(--mag-x), var(--mag-y), 0);
+  --cta-lift: 0px;
+  transform: translate3d(var(--mag-x), calc(var(--mag-y) + var(--cta-lift)), 0);
   transition: transform .25s cubic-bezier(.2, 1.4, .35, 1), filter .25s ease, color .25s ease, background-color .3s ease, box-shadow .3s ease;
 }
 .header nav .cta:hover {
@@ -630,7 +631,70 @@ p  { line-height: 1.65; font-weight: 300; }
   --mag-ty: 0px;
   display: inline-block;
   transform: translate3d(var(--mag-tx), var(--mag-ty), 0);
-  transition: transform .25s cubic-bezier(.2, 1.4, .35, 1);
+  transition: transform .25s cubic-bezier(.2, 1.4, .35, 1), letter-spacing .25s ease;
+}
+
+/* ── Animaciones premium del botón RESERVA ───────────────────────────── */
+@property --cta-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+
+/* 1) Pulso de atención — el halo de color "respira" suavemente */
+.header nav .cta::before {
+  animation: cta-cycle 80s linear infinite, ctaBreathe 3.4s ease-in-out infinite;
+}
+@keyframes ctaBreathe {
+  0%, 100% { opacity: 0.6;  transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.12); }
+}
+
+/* 2) Borde de luz animado — un trazo teal recorre el borde en bucle */
+.header nav .cta .cta-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  z-index: 1;
+  background: conic-gradient(from var(--cta-angle),
+    transparent 0deg, transparent 35deg,
+    var(--cta-tint) 70deg, #8FD3DE 92deg, var(--cta-tint) 114deg,
+    transparent 150deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: ctaBorderSpin 4.5s linear infinite;
+  opacity: 0.9;
+}
+@keyframes ctaBorderSpin { to { --cta-angle: 360deg; } }
+
+/* 3) Hover/tap mejorado — elevación + apertura de la letra */
+.header nav .cta:hover { --cta-lift: -2px; }
+.header nav .cta:hover .cta-text { letter-spacing: 0.2em; }
+
+/* 4) Press/ripple — feedback al pulsar (sobre todo en móvil) */
+.header nav .cta:active { --cta-lift: 1px; filter: brightness(1.1); transition-duration: .08s; }
+.header nav .cta .cta-text::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 12px; height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240,232,213,.55), transparent 70%);
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+.header nav .cta:active .cta-text::after { animation: ctaRipple .55s ease-out; }
+@keyframes ctaRipple {
+  0%   { transform: scale(0);  opacity: 0.7; }
+  100% { transform: scale(16); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header nav .cta::before { animation: none; }
+  .header nav .cta .cta-border { animation: none; opacity: 0.5; }
+  .header nav .cta .cta-text::after { animation: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .header nav .cta,
