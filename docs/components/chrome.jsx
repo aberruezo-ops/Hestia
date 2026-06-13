@@ -161,6 +161,15 @@ const Header = ({ mode, scrolled, lang }) => {
   const [launchEnded, setLaunchEnded] = React.useState(false);
   const dismissBanner = React.useCallback(() => { setShowBanner(false); }, []);
 
+  // El banner de lanzamiento se ve desde el primer momento y desaparece tras un
+  // scroll mínimo hacia abajo. No se persiste: vuelve a aparecer al recargar/reentrar.
+  React.useEffect(() => {
+    if (!showBanner) return;
+    const onScroll = () => { if (window.scrollY > 40) setShowBanner(false); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [showBanner]);
+
   const toggleVit = () => {
     const next = !vitMin;
     setVitMin(next);
@@ -213,7 +222,7 @@ const Header = ({ mode, scrolled, lang }) => {
             )}
           </div>
         </div>
-        <div className={`hv-launch-text${launchEnded ? ' hv-launch-text--visible' : ''}`}>
+        <div className="hv-launch-text hv-launch-text--visible">
           <div className="hv-launch-text-inner">
             {lang === 'es'
               ? <><em>Nuestra marca evoluciona, nuestra ilusión continúa.</em>{' '}

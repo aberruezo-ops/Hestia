@@ -244,6 +244,19 @@ const Header = ({
   const dismissBanner = React.useCallback(() => {
     setShowBanner(false);
   }, []);
+
+  // El banner de lanzamiento se ve desde el primer momento y desaparece tras un
+  // scroll mínimo hacia abajo. No se persiste: vuelve a aparecer al recargar/reentrar.
+  React.useEffect(() => {
+    if (!showBanner) return;
+    const onScroll = () => {
+      if (window.scrollY > 40) setShowBanner(false);
+    };
+    window.addEventListener('scroll', onScroll, {
+      passive: true
+    });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [showBanner]);
   const toggleVit = () => {
     const next = !vitMin;
     setVitMin(next);
@@ -314,7 +327,7 @@ const Header = ({
     onClick: replayLaunch,
     "aria-label": lang === 'es' ? 'Volver a ver' : 'Replay'
   }, "\u21BA"))), /*#__PURE__*/React.createElement("div", {
-    className: `hv-launch-text${launchEnded ? ' hv-launch-text--visible' : ''}`
+    className: "hv-launch-text hv-launch-text--visible"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-launch-text-inner"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Nuestra marca evoluciona, nuestra ilusi\xF3n contin\xFAa."), ' ', /*#__PURE__*/React.createElement("a", {
