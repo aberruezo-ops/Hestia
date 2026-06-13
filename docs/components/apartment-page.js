@@ -1410,7 +1410,7 @@ const ApartmentPageApp = () => {
         'worstRating': 1
       },
       'itemReviewed': {
-        '@type': 'Accommodation',
+        '@type': ['Accommodation', 'LodgingBusiness'],
         '@id': `${pageUrl}#accommodation`
       }
     }));
