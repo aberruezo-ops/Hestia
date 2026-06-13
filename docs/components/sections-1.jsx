@@ -289,7 +289,7 @@ const HomeBookingModal = ({ apt, lang, onClose }) => {
   return (
     <div className="hbm-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="hbm-apt-title">
       <div className="hbm-card" ref={cardRef} onClick={e => e.stopPropagation()}>
-        <button className="hbm-close" onClick={onClose} aria-label="Cerrar">✕</button>
+        <button className="hbm-close" onClick={onClose} aria-label={lang === 'es' ? 'Cerrar' : 'Close'}>✕</button>
 
         <div className="hbm-head">
           <div className="hbm-apt-num">{apt.num}</div>
