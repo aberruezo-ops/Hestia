@@ -42,6 +42,24 @@ const OfertaBanner = ({
     "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
   }, "\xD7"));
 };
+const _SEA_VOL = 0.25;
+// Rampa de volumen (fade) con requestAnimationFrame — para que el mar no corte de
+// golpe ni al silenciar ni al terminar, sino que baje hasta desaparecer.
+const _fadeTo = (audio, to, ms, onEnd) => {
+  if (!audio) return;
+  if (audio._raf) cancelAnimationFrame(audio._raf);
+  const from = audio.volume;
+  const t0 = typeof performance !== 'undefined' ? performance.now() : Date.now();
+  const tick = now => {
+    const k = ms <= 0 ? 1 : Math.min(1, (now - t0) / ms);
+    audio.volume = Math.max(0, Math.min(1, from + (to - from) * k));
+    if (k < 1) audio._raf = requestAnimationFrame(tick);else {
+      audio._raf = null;
+      if (onEnd) onEnd();
+    }
+  };
+  audio._raf = requestAnimationFrame(tick);
+};
 const App = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
   const {
@@ -105,9 +123,14 @@ const App = () => {
   const seaRef = React.useRef(null);
   React.useEffect(() => {
     const audio = new Audio('assets/sea-ambient.mp3');
-    audio.volume = 0.25;
+    audio.volume = _SEA_VOL;
     audio.preload = 'auto';
     seaRef.current = audio;
+    // Fundido de salida en los ~2.5 s finales: el mar se apaga suave, no de golpe.
+    audio.addEventListener('timeupdate', () => {
+      const left = audio.duration - audio.currentTime;
+      if (isFinite(left) && left <= 2.5 && !audio._raf && audio.volume > 0.01) _fadeTo(audio, 0, left * 1000);
+    });
     let done = false;
     const wanted = () => {
       try {
@@ -145,11 +168,13 @@ const App = () => {
       const a = seaRef.current;
       if (a) {
         if (next) {
+          a.volume = 0;
           a.currentTime = 0;
           a.play().catch(() => {});
+          _fadeTo(a, _SEA_VOL, 600);
         } else {
-          a.pause();
-        }
+          _fadeTo(a, 0, 1000, () => a.pause());
+        } // fade-out suave al silenciar
       }
       return next;
     });
