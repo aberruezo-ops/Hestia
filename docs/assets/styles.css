@@ -542,6 +542,9 @@ p  { line-height: 1.65; font-weight: 300; }
    el halo coloreado que cicla. ::after es el sheen de luz. */
 .header nav .cta {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px 22px;
   border: 1px solid rgba(240, 232, 213, 0.28) !important;
   border-radius: 10px 0 10px 0;

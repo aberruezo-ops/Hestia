@@ -140,29 +140,29 @@ const App = () => {
         return true;
       }
     };
-    // Disparamos en el PRIMER gesto, y con los eventos más tempranos (touch/mouse
-    // -down) para que el mar empiece en cuanto tocas/pulsas al ENTRAR, no al cerrar
-    // la ventana del logo. Solo se da por reproducido cuando play() RESUELVE (Safari
-    // rechaza algunos gestos como el scroll); así seguimos esperando el siguiente.
-    const evs = ['pointerdown', 'touchstart', 'mousedown', 'touchend', 'click', 'keydown'];
-    const cleanup = () => evs.forEach(ev => window.removeEventListener(ev, playOnce, true));
-    const playOnce = () => {
+    // Reproducir una vez al primer gesto. Los listeners se ponen YA (sin esperar a que
+    // el play() inicial falle) para no perder el primer toque. Usamos gestos que
+    // Safari/iOS SÍ aceptan para desbloquear audio (touchend/click/pointerup/tecla);
+    // pointerdown/touchstart/scroll no lo desbloquean en Safari. Solo se marca hecho
+    // cuando play() RESUELVE, así que si un gesto se rechaza, seguimos esperando.
+    const evs = ['touchend', 'click', 'pointerup', 'keydown'];
+    const cleanup = () => evs.forEach(ev => document.removeEventListener(ev, onGesture, true));
+    const onGesture = () => {
       if (done || !wanted()) return;
       audio.play().then(() => {
         done = true;
         cleanup();
       }).catch(() => {});
     };
-    if (wanted()) {
-      audio.play().then(() => {
-        done = true;
-      }).catch(() => {
-        evs.forEach(ev => window.addEventListener(ev, playOnce, {
-          passive: true,
-          capture: true
-        }));
-      });
-    }
+    evs.forEach(ev => document.addEventListener(ev, onGesture, {
+      passive: true,
+      capture: true
+    }));
+    // Intento inmediato por si el navegador ya permite (sesión con interacción previa).
+    if (wanted()) audio.play().then(() => {
+      done = true;
+      cleanup();
+    }).catch(() => {});
     return cleanup;
   }, []);
   const toggleSound = () => {
