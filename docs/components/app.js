@@ -93,30 +93,67 @@ const App = () => {
   // Sonido sutil de mar — suena UNA sola vez al entrar en la home (sin bucle).
   // Los navegadores bloquean el audio con sonido hasta que el usuario interactúa,
   // así que intentamos reproducir al cargar y, si se bloquea, lo lanzamos en el
-  // primer gesto (clic/tecla/tap/scroll). Una sola reproducción por carga.
+  // primer gesto (clic/tecla/tap/scroll). Una reproducción por carga. El usuario
+  // puede silenciarlo con el botón; la preferencia se recuerda (localStorage).
+  const [soundOn, setSoundOn] = React.useState(() => {
+    try {
+      return localStorage.getItem('hestia-sound') !== 'off';
+    } catch (_) {
+      return true;
+    }
+  });
+  const seaRef = React.useRef(null);
   React.useEffect(() => {
     const audio = new Audio('assets/sea-ambient.mp3');
     audio.volume = 0.25;
     audio.preload = 'auto';
+    seaRef.current = audio;
     let done = false;
+    const wanted = () => {
+      try {
+        return localStorage.getItem('hestia-sound') !== 'off';
+      } catch (_) {
+        return true;
+      }
+    };
     const evs = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
     const cleanup = () => evs.forEach(ev => window.removeEventListener(ev, playOnce));
     const playOnce = () => {
       if (done) return;
       done = true;
-      audio.play().catch(() => {});
+      if (wanted()) audio.play().catch(() => {});
       cleanup();
     };
-    audio.play().then(() => {
-      done = true;
-    }).catch(() => {
-      if (!done) evs.forEach(ev => window.addEventListener(ev, playOnce, {
-        once: true,
-        passive: true
-      }));
-    });
+    if (wanted()) {
+      audio.play().then(() => {
+        done = true;
+      }).catch(() => {
+        if (!done) evs.forEach(ev => window.addEventListener(ev, playOnce, {
+          once: true,
+          passive: true
+        }));
+      });
+    }
     return cleanup;
   }, []);
+  const toggleSound = () => {
+    setSoundOn(prev => {
+      const next = !prev;
+      try {
+        localStorage.setItem('hestia-sound', next ? 'on' : 'off');
+      } catch (_) {}
+      const a = seaRef.current;
+      if (a) {
+        if (next) {
+          a.currentTime = 0;
+          a.play().catch(() => {});
+        } else {
+          a.pause();
+        }
+      }
+      return next;
+    });
+  };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Topbar, {
     lang: lang,
     setLang: setLang
@@ -164,7 +201,40 @@ const App = () => {
     availHref: "#buscar"
   })), /*#__PURE__*/React.createElement(Footer, {
     lang: lang
-  }), /*#__PURE__*/React.createElement(WidgetStack, {
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `sound-toggle${soundOn ? ' is-on' : ''}`,
+    onClick: toggleSound,
+    "aria-pressed": soundOn,
+    title: soundOn ? lang === 'es' ? 'Silenciar sonido' : 'Mute sound' : lang === 'es' ? 'Activar sonido' : 'Unmute sound',
+    "aria-label": soundOn ? lang === 'es' ? 'Silenciar sonido de mar' : 'Mute sea sound' : lang === 'es' ? 'Activar sonido de mar' : 'Unmute sea sound'
+  }, /*#__PURE__*/React.createElement("svg", {
+    viewBox: "0 0 24 24",
+    width: "18",
+    height: "18",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("path", {
+    d: "M11 5 6 9H2v6h4l5 4z"
+  }), soundOn ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("path", {
+    d: "M15.5 8.5a5 5 0 0 1 0 7"
+  }), /*#__PURE__*/React.createElement("path", {
+    d: "M18.5 5.5a9 9 0 0 1 0 13"
+  })) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("line", {
+    x1: "22",
+    y1: "9",
+    x2: "16",
+    y2: "15"
+  }), /*#__PURE__*/React.createElement("line", {
+    x1: "16",
+    y1: "9",
+    x2: "22",
+    y2: "15"
+  })))), /*#__PURE__*/React.createElement(WidgetStack, {
     lang: lang
   }), /*#__PURE__*/React.createElement(FloatingChat, {
     lang: lang
