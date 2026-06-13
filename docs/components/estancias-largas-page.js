@@ -328,15 +328,42 @@ const LsSearch = ({
   // Mezcla los bloqueos de availability.json (iCal, cada 4h) con manual_blocks de
   // prices.json (reservas directas de p-edit, instantáneas) — igual que el
   // calendario — para que cualquier reserva/cancelación afecte ya a la estancia larga.
+  // El calendario marca una noche como NO disponible solo si está ocupada en LOS
+  // TRES apartamentos (intersección). Una estancia larga necesita un único Hestía
+  // libre, así que una fecha con al menos uno libre debe poder seleccionarse — el
+  // panel de resultados dice luego qué apartamento(s) hay para esas fechas.
   const _mblk = aptId => window.PRICES_V2?.manual_blocks?.[aptId] || [];
-  const blockedUnion = React.useMemo(() => {
+  const blockedAll = React.useMemo(() => {
     if (!availData) return [];
-    const all = [];
-    LS_APTS.forEach(a => {
-      (availData[a.id]?.blocked || []).forEach(b => all.push(b));
-      _mblk(a.id).forEach(b => all.push(b));
-    });
-    return all;
+    const nightSet = aptId => {
+      const s = new Set();
+      [...(availData[aptId]?.blocked || []), ..._mblk(aptId)].forEach(({
+        start,
+        end
+      }) => {
+        if (!start || !end) return;
+        let d = start,
+          guard = 0;
+        while (d < end && guard++ < 1200) {
+          s.add(d);
+          d = _drAdj(d, 1);
+        }
+      });
+      return s;
+    };
+    const sets = LS_APTS.map(a => nightSet(a.id));
+    if (!sets.length) return [];
+    const [first, ...rest] = sets;
+    const inter = [...first].filter(d => rest.every(s => s.has(d))).sort();
+    const ranges = [];
+    for (const d of inter) {
+      const last = ranges[ranges.length - 1];
+      if (last && last.end === d) last.end = _drAdj(d, 1);else ranges.push({
+        start: d,
+        end: _drAdj(d, 1)
+      });
+    }
+    return ranges;
   }, [availData]);
   const calcLsTotal = (start, end, guests, withPets, aptId) => {
     const lsCfg = window.PRICES_V2?.longStayConfig || {
@@ -422,7 +449,7 @@ const LsSearch = ({
       setCheckout(d);
       setAvail(null);
     },
-    blocked: blockedUnion,
+    blocked: blockedAll,
     lang: lang,
     accent: "var(--ber, #3D1A35)",
     minNightsOverride: 29

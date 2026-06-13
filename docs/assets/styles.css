@@ -9757,7 +9757,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 /* Tema CLARO para el DateRangePicker dentro de la tarjeta blanca en estancias-largas */
 .lsl-sd-card .cal-month         { background: transparent; border-color: rgba(42,15,46,.08); }
 .lsl-sd-card .cal-mhd           { color: var(--ber-dk); }
-.lsl-sd-card .cal-yr            { color: var(--ber); opacity: 0.55; }
+.lsl-sd-card .cal-yr            { color: var(--ber); opacity: 0.72; }
 .lsl-sd-card .cal-wd            { color: var(--ber); opacity: 0.72; }
 .lsl-sd-card .c-n               { color: var(--ber-dk); opacity: 0.85; }
 .lsl-sd-card .cal-cell.past .c-n { color: var(--ber); opacity: 0.25; }
@@ -9773,9 +9773,9 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .lsl-sd-card .avail-nav-lbl         { color: var(--ber-dk); opacity: 0.85; }
 .lsl-sd-card .avail-arr             { color: var(--ber); }
 .lsl-sd-card .hscal-phase-hint      { color: var(--sol-text); }
-.lsl-sd-card .avail-legend          { color: rgba(42,15,46,.4); }
+.lsl-sd-card .avail-legend          { color: rgba(42,15,46,.72); }
 .lsl-sd-card .leg-dot.lg-av         { border-color: rgba(42,15,46,.25); }
-.lsl-sd-card .avail-upd             { color: rgba(42,15,46,.3); }
+.lsl-sd-card .avail-upd             { color: rgba(42,15,46,.64); }
 .lsl-sd-card .cal-cell.clickable:hover:not(.in-sel):not(.in-prev) .c-n { color: var(--sol, #3AAABB); }
 
 .hscal-phase-hint {
@@ -22055,7 +22055,7 @@ img[src*="apt-vt-gallery-"] {
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--ink-soft, #7A5A72);
+  color: rgba(240,232,213,.78);
 }
 .lsl-search-input {
   font-family: var(--sans);
@@ -22137,7 +22137,7 @@ img[src*="apt-vt-gallery-"] {
 .lsl-result-reg {
   font-family: var(--sans);
   font-size: 14px;
-  color: rgba(42,15,46,.40);
+  color: rgba(42,15,46,.7);
   text-decoration: line-through;
 }
 .lsl-result-ls {
