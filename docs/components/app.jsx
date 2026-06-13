@@ -21,7 +21,7 @@ const OfertaBanner = ({ lang }) => {
     <div className="oferta-banner" role="alert">
       <span className="oferta-text">{text}</span>
       {cta && <a href="reservas.html" className="oferta-cta">{cta}</a>}
-      <button type="button" className="oferta-close" onClick={dismiss} aria-label="Cerrar">×</button>
+      <button type="button" className="oferta-close" onClick={dismiss} aria-label={lang === 'es' ? 'Cerrar' : 'Close'}>×</button>
     </div>
   );
 };

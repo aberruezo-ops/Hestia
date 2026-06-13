@@ -378,7 +378,7 @@ const HomeBookingModal = ({
   }, /*#__PURE__*/React.createElement("button", {
     className: "hbm-close",
     onClick: onClose,
-    "aria-label": "Cerrar"
+    "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
   }, "\u2715"), /*#__PURE__*/React.createElement("div", {
     className: "hbm-head"
   }, /*#__PURE__*/React.createElement("div", {

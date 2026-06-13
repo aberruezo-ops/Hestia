@@ -39,7 +39,7 @@ const OfertaBanner = ({
     type: "button",
     className: "oferta-close",
     onClick: dismiss,
-    "aria-label": "Cerrar"
+    "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
   }, "\xD7"));
 };
 const App = () => {
