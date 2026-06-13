@@ -89,6 +89,34 @@ const App = () => {
     document.body.classList.toggle('no-stars', !tweaks.starfield);
     document.body.classList.toggle('no-parallax', !tweaks.parallax);
   }, [tweaks]);
+
+  // Sonido sutil de mar — suena UNA sola vez al entrar en la home (sin bucle).
+  // Los navegadores bloquean el audio con sonido hasta que el usuario interactúa,
+  // así que intentamos reproducir al cargar y, si se bloquea, lo lanzamos en el
+  // primer gesto (clic/tecla/tap/scroll). Una sola reproducción por carga.
+  React.useEffect(() => {
+    const audio = new Audio('assets/sea-ambient.mp3');
+    audio.volume = 0.25;
+    audio.preload = 'auto';
+    let done = false;
+    const evs = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+    const cleanup = () => evs.forEach(ev => window.removeEventListener(ev, playOnce));
+    const playOnce = () => {
+      if (done) return;
+      done = true;
+      audio.play().catch(() => {});
+      cleanup();
+    };
+    audio.play().then(() => {
+      done = true;
+    }).catch(() => {
+      if (!done) evs.forEach(ev => window.addEventListener(ev, playOnce, {
+        once: true,
+        passive: true
+      }));
+    });
+    return cleanup;
+  }, []);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Topbar, {
     lang: lang,
     setLang: setLang
