@@ -125,6 +125,7 @@ const App = () => {
     const audio = new Audio('assets/sea-ambient.mp3');
     audio.volume = _SEA_VOL;
     audio.preload = 'auto';
+    audio.playsInline = true;
     seaRef.current = audio;
     // Fundido de salida en los ~2.5 s finales: el mar se apaga suave, no de golpe.
     audio.addEventListener('timeupdate', () => {
@@ -139,21 +140,26 @@ const App = () => {
         return true;
       }
     };
-    const evs = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
-    const cleanup = () => evs.forEach(ev => window.removeEventListener(ev, playOnce));
+    // Safari/iPadOS solo desbloquea el audio en un gesto DISCRETO (tap/clic/tecla),
+    // nunca en scroll. Y solo lo damos por reproducido cuando play() RESUELVE: si el
+    // primer gesto es un scroll u otro que Safari rechaza, seguimos esperando el
+    // siguiente gesto en vez de gastar el único disparo.
+    const evs = ['pointerdown', 'click', 'touchend', 'keydown'];
+    const cleanup = () => evs.forEach(ev => window.removeEventListener(ev, playOnce, true));
     const playOnce = () => {
-      if (done) return;
-      done = true;
-      if (wanted()) audio.play().catch(() => {});
-      cleanup();
+      if (done || !wanted()) return;
+      audio.play().then(() => {
+        done = true;
+        cleanup();
+      }).catch(() => {});
     };
     if (wanted()) {
       audio.play().then(() => {
         done = true;
       }).catch(() => {
-        if (!done) evs.forEach(ev => window.addEventListener(ev, playOnce, {
-          once: true,
-          passive: true
+        evs.forEach(ev => window.addEventListener(ev, playOnce, {
+          passive: true,
+          capture: true
         }));
       });
     }
