@@ -305,7 +305,7 @@ const LsSearch = ({ lang }) => {
   const julAugWarning = checkin && ([7,8].includes(+checkin.slice(5,7)));
 
   return (
-    <section className="lsl-search-dark" id="buscar">
+    <section className="lsl-search-dark" id="buscar" data-avail-checker>
       <div className="lsl-inner">
         <h2 className="lsl-h2 lsl-h2--ondk">{es ? 'Comprobar disponibilidad' : 'Check availability'}</h2>
 
