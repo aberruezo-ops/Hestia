@@ -9776,6 +9776,9 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .lsl-sd-card .avail-legend          { color: rgba(42,15,46,.72); }
 .lsl-sd-card .leg-dot.lg-av         { border-color: rgba(42,15,46,.25); }
 .lsl-sd-card .avail-upd             { color: rgba(42,15,46,.64); }
+.lsl-sd-card .hscal-sel-lbl          { color: rgba(42,15,46,.7); }
+.lsl-sd-card .hscal-sel-item strong  { color: var(--ber-dk); }
+.lsl-sd-card .hscal-clear            { color: rgba(42,15,46,.62); }
 .lsl-sd-card .cal-cell.clickable:hover:not(.in-sel):not(.in-prev) .c-n { color: var(--sol, #3AAABB); }
 
 .hscal-phase-hint {
@@ -22055,7 +22058,7 @@ img[src*="apt-vt-gallery-"] {
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: rgba(240,232,213,.78);
+  color: rgba(42,15,46,.72);
 }
 .lsl-search-input {
   font-family: var(--sans);
