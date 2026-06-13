@@ -1,7 +1,7 @@
 {
   "_doc": "Hestía pricing source of truth. Edited via /admin.html (GitHub PAT). Read by web at runtime via fetch('data/prices.json'). All dates are local Europe/Madrid (no timezone offsets).",
   "version": 1,
-  "updatedAt": "2026-06-13T08:16:37.694Z",
+  "updatedAt": "2026-06-13T14:45:59.138Z",
   "currency": "EUR",
   "apts": {
     "vm": {
@@ -38,7 +38,7 @@
     },
     "critica": {
       "label": "Crítica",
-      "multiplier": 2.3,
+      "multiplier": 2.2,
       "color": "#ef4444"
     }
   },
