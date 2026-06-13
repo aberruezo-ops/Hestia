@@ -4546,6 +4546,10 @@ const WidgetStack = ({
   // si DirectBookingPerks estaba mounted en la página. Ahora cualquier
   // página con WidgetStack tiene el listener garantizado.
   const [perksOpen, setPerksOpen] = React.useState(false);
+  // Oculta el botón flotante "Reservar →" mientras un checker de disponibilidad
+  // ([data-avail-checker]) está a la vista, para que no compita con el "Comprobar
+  // disponibilidad" de esa página (si no, al pulsar Reservar se pierde la selección).
+  const [checkerInView, setCheckerInView] = React.useState(false);
   React.useEffect(() => {
     const onOpen = () => setPerksOpen(true);
     window.addEventListener('hestia:open-direct-perks', onOpen);
@@ -4573,7 +4577,25 @@ const WidgetStack = ({
     });
     return () => obs.disconnect();
   }, []);
+  React.useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return;
+    const els = document.querySelectorAll('[data-avail-checker]');
+    if (!els.length) return;
+    const seen = new Set();
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) seen.add(e.target);else seen.delete(e.target);
+      });
+      setCheckerInView(seen.size > 0);
+    }, {
+      threshold: 0,
+      rootMargin: '0px 0px -15% 0px'
+    });
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, []);
   const hidden = !pastHero || searchActive || guideOpen;
+  const bookHidden = hidden || checkerInView;
   const onReservas = typeof window !== 'undefined' && window.location.pathname.includes('reservas');
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: `widget-stack ${hidden ? 'is-hidden' : ''}`,
@@ -4586,8 +4608,8 @@ const WidgetStack = ({
     lang: lang
   })), !onReservas && /*#__PURE__*/React.createElement("a", {
     href: "reservas.html",
-    className: `mob-book-btn${hidden ? ' mob-book-btn--hidden' : ''}`,
-    "aria-hidden": hidden
+    className: `mob-book-btn${bookHidden ? ' mob-book-btn--hidden' : ''}`,
+    "aria-hidden": bookHidden
   }, lang === 'es' ? 'Reservar →' : 'Book →'), perksOpen && /*#__PURE__*/React.createElement(DirectBookingModal, {
     lang: lang,
     onClose: () => setPerksOpen(false)

@@ -588,6 +588,7 @@ const AptCalendar = ({
   return /*#__PURE__*/React.createElement("section", {
     id: "apt-avail",
     className: "apt-avail",
+    "data-avail-checker": true,
     style: sectionStyle
   }, /*#__PURE__*/React.createElement("div", {
     className: "avail-hd"

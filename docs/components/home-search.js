@@ -620,6 +620,7 @@ const HomeSearch = ({
   return /*#__PURE__*/React.createElement("section", {
     className: "home-search",
     id: "buscar",
+    "data-avail-checker": true,
     "data-screen-label": "03b Buscador"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hs-inner"

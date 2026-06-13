@@ -616,7 +616,7 @@ const HomeSearch = ({ lang }) => {
   };
 
   return (
-    <section className="home-search" id="buscar" data-screen-label="03b Buscador">
+    <section className="home-search" id="buscar" data-avail-checker data-screen-label="03b Buscador">
       <div className="hs-inner">
 
         {/* Header */}
