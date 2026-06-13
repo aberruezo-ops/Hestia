@@ -212,7 +212,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <div className="hv-box">
             <video ref={launchVidRef} autoPlay muted playsInline preload="auto"
                    onEnded={() => setLaunchEnded(true)}>
-              <source src="assets/gemini_generated_video_7C740615.mp4" type="video/mp4"/>
+              <source src="assets/gemini_generated_video_7C740615.mp4?v=na" type="video/mp4"/>
             </video>
             {launchEnded && (
               <button type="button" className="hv-replay" onClick={replayLaunch}

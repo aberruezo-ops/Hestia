@@ -319,7 +319,7 @@ const Header = ({
     preload: "auto",
     onEnded: () => setLaunchEnded(true)
   }, /*#__PURE__*/React.createElement("source", {
-    src: "assets/gemini_generated_video_7C740615.mp4",
+    src: "assets/gemini_generated_video_7C740615.mp4?v=na",
     type: "video/mp4"
   })), launchEnded && /*#__PURE__*/React.createElement("button", {
     type: "button",
