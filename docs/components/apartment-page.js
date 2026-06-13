@@ -1376,6 +1376,14 @@ const ApartmentPageApp = () => {
     scrolled
   } = useScrollMode();
   useReveal();
+
+  // La barra sticky de reservar se OCULTA mientras el checker de disponibilidad
+  // (#apt-avail) está a la vista: si no, sus dos CTAs ("Comprobar disponibilidad"
+  // y "Reservar") compiten en móvil y, al pulsar el sticky, se pierde la selección
+  // de fechas que se estaba haciendo. Cuando se hace scroll fuera del checker, la
+  // barra reaparece.
+  const [availInView, setAvailInView] = React.useState(false);
+  const barVisible = scrolled && !availInView;
   React.useEffect(() => {
     localStorage.setItem('hestia-lang', lang);
     document.documentElement.lang = lang;
@@ -1467,9 +1475,9 @@ const ApartmentPageApp = () => {
     };
   }, [apt.accent, apt.accent2, apt.accent_dk, apt.slug]);
   React.useEffect(() => {
-    document.body.classList.toggle('apt-bar-shown', !!scrolled);
+    document.body.classList.toggle('apt-bar-shown', !!barVisible);
     return () => document.body.classList.remove('apt-bar-shown');
-  }, [scrolled]);
+  }, [barVisible]);
 
   // Crossfade entre vista apt ↔ guía: fade-out 220ms → swap → RAF → fade-in.
   // Aplica un blur sutil para mascarar el cambio (truco de Emil para crossfades).
@@ -1493,6 +1501,22 @@ const ApartmentPageApp = () => {
   // La guía vive DENTRO de la página: header y footer del portal se mantienen,
   // y solo el contenido de <main> se sustituye por la guía con su nav lateral.
   const showGuide = renderGuide && typeof AptGuideView !== 'undefined';
+
+  // Observa si el checker de disponibilidad está en pantalla (para ocultar el sticky).
+  React.useEffect(() => {
+    if (showGuide || typeof IntersectionObserver === 'undefined') {
+      setAvailInView(false);
+      return;
+    }
+    const el = document.getElementById('apt-avail');
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setAvailInView(entry.isIntersecting), {
+      threshold: 0,
+      rootMargin: '0px 0px -15% 0px'
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [showGuide]);
 
   // Marca body.guide-open mientras la guía está activa — los widgets
   // flotantes la respetan y se ocultan vía MutationObserver.
@@ -1564,7 +1588,7 @@ const ApartmentPageApp = () => {
   }), !showGuide && /*#__PURE__*/React.createElement(AptStickyBar, {
     apt: apt,
     lang: lang,
-    scrolled: scrolled
+    scrolled: barVisible
   }), /*#__PURE__*/React.createElement(WidgetStack, {
     lang: lang
   }), /*#__PURE__*/React.createElement(FloatingChat, {
