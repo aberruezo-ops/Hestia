@@ -1,7 +1,7 @@
 {
   "_doc": "Hestía pricing source of truth. Edited via /admin.html (GitHub PAT). Read by web at runtime via fetch('data/prices.json'). All dates are local Europe/Madrid (no timezone offsets).",
   "version": 1,
-  "updatedAt": "2026-06-13T14:45:59.138Z",
+  "updatedAt": "2026-06-13T22:21:06.143Z",
   "currency": "EUR",
   "apts": {
     "vm": {
@@ -12,12 +12,12 @@
     "vt": {
       "name": "Hestía Vera Thalassa",
       "vft": "VFT/AL/05535",
-      "base": 85
+      "base": 86
     },
     "vs": {
       "name": "Hestía Vera Salinas",
       "vft": "VFT/AL/07056",
-      "base": 83
+      "base": 85
     }
   },
   "seasons": {
@@ -38,7 +38,7 @@
     },
     "critica": {
       "label": "Crítica",
-      "multiplier": 2.2,
+      "multiplier": 2.3,
       "color": "#ef4444"
     }
   },
