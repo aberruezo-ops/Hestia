@@ -1251,7 +1251,7 @@ const ApartmentPageApp = () => {
         'bestRating': 5,
         'worstRating': 1,
       },
-      'itemReviewed': { '@type': 'Accommodation', '@id': `${pageUrl}#accommodation` },
+      'itemReviewed': { '@type': ['Accommodation', 'LodgingBusiness'], '@id': `${pageUrl}#accommodation` },
     }));
     const el = document.createElement('script');
     el.type = 'application/ld+json';

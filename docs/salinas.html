@@ -39,7 +39,7 @@
 <link rel="stylesheet" href="assets/styles.css?v=646"/>          <link rel="preload" as="image" href="assets/apt-vs.jpg" fetchpriority="high"/>  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Accommodation",
+    "@type": ["Accommodation", "LodgingBusiness"],
     "name": "Hestía Salinas",
     "description": "Hestía Salinas — junto a las Salinas de Puerto Rey. 3 piscinas, dos terrazas, Parque Natural. 2 habitaciones, 6 plazas + bebé. Vera Playa, Almería.",
     "url": "https://www.hestiayourhome.com/salinas.html",
@@ -188,7 +188,7 @@
     } catch (e) { console.warn('photo-positions.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=b3233ea071');
+      const res = await fetch(file + '?cv=0e1735e97c');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
