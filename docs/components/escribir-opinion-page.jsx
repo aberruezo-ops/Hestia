@@ -12,6 +12,16 @@ const W3F_KEY = '95a86784-6d6a-496f-9830-15759c0a3cff';
 // asegura que sólo huéspedes que recibieron el PIN pueden opinar.
 const EO_GUIDE_PIN = { vm: 'HVM2016', vt: 'HVT2019', vs: 'HVS2021' };
 
+// Ficha de Google Maps de cada Hestía (mismas que el JSON-LD sameAs de
+// mar.html / thalassa.html / salinas.html). Abren la ficha donde el huésped
+// puede pulsar "Escribir una reseña". Las reseñas de Google son el canal que
+// más nos descubre, por eso lo enlazamos directo al terminar el formulario.
+const GMAPS_PLACE = {
+  vm: 'https://maps.app.goo.gl/r6tL6kJK6XHtYsCE7',
+  vt: 'https://maps.app.goo.gl/daGi8o2Uh32avqhP6',
+  vs: 'https://maps.app.goo.gl/Mi3z2kKjjaDqNLT98',
+};
+
 const ESCRIBIR_COPY = {
   es: {
     eyebrow: 'Comparte tu experiencia',
@@ -37,7 +47,8 @@ const ESCRIBIR_COPY = {
     sending: 'Enviando…',
     success_title: '¡Gracias!',
     success_text: 'Hemos recibido tu opinión. La revisaremos y, una vez aprobada, aparecerá en nuestra web. Te avisaremos cuando esté publicada.',
-    success_extra: 'Si te animas, también puedes dejarla en Booking.com, Airbnb o Google Maps, son las plataformas en las que la verán otros viajeros.',
+    success_extra: 'Si te animas, déjala también en Google: es donde más viajeros nos descubren. Te lleva directo a la ficha de tu Hestía (también puedes hacerlo en Booking.com o Airbnb).',
+    success_gmaps: 'Dejar reseña en Google',
     success_back: '← Volver a Opiniones',
     error_generic: 'No hemos podido enviar tu opinión. Inténtalo de nuevo en un minuto, o escríbenos por WhatsApp.',
     val_consent: 'Debes aceptar la política de privacidad para enviar tu opinión.',
@@ -72,7 +83,8 @@ const ESCRIBIR_COPY = {
     sending: 'Sending…',
     success_title: 'Thank you!',
     success_text: 'We have received your review. We will check it and once approved it will appear on our website. We\'ll let you know when it\'s published.',
-    success_extra: 'If you feel like it, you can also post it on Booking.com, Airbnb or Google Maps, those are where other travellers will see it.',
+    success_extra: 'If you feel like it, post it on Google too: that is where most travellers discover us. It takes you straight to your Hestía listing (you can also use Booking.com or Airbnb).',
+    success_gmaps: 'Leave a Google review',
     success_back: '← Back to Reviews',
     error_generic: 'We could not send your review. Try again in a minute, or message us on WhatsApp.',
     val_consent: 'You must accept the privacy policy to send your review.',
@@ -196,7 +208,18 @@ const EscribirOpinionForm = ({ lang }) => {
             <h2 className="eo-success-title">{t.success_title}</h2>
             <p className="eo-success-text">{t.success_text}</p>
             <p className="eo-success-extra">{t.success_extra}</p>
-            <a href="opiniones.html" className="btn btn-primary">{t.success_back}</a>
+            {GMAPS_PLACE[apt] && (
+              <a
+                href={GMAPS_PLACE[apt]}
+                target="_blank"
+                rel="noopener"
+                className="btn btn-primary eo-gmaps-btn">
+                <span className="eo-gmaps-g" aria-hidden="true">G</span>
+                {t.success_gmaps}
+                <span className="arrow"> →</span>
+              </a>
+            )}
+            <a href="opiniones.html" className="eo-success-back">{t.success_back}</a>
           </div>
         </div>
       </section>
