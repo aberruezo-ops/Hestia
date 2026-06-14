@@ -15798,8 +15798,36 @@ a.cta-wa-btn::before,
   font-size: 13px;
   color: var(--ink-soft);
   font-style: italic;
-  margin: 0 0 28px;
+  margin: 0 0 24px;
 }
+.eo-gmaps-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.eo-gmaps-g {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  color: #4285F4;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1;
+}
+.eo-success-back {
+  display: block;
+  margin-top: 20px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.eo-success-back:hover { color: var(--ber-dk); }
 
 /* CTA en /opiniones que enlaza a /escribir-opinion */
 .opiniones-share-cta {
