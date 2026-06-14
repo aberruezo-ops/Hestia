@@ -427,7 +427,7 @@ const LsSearch = ({
   }, [checkin, checkout, guests]);
   const julAugWarning = checkin && [7, 8].includes(+checkin.slice(5, 7));
   return /*#__PURE__*/React.createElement("section", {
-    className: "lsl-search-dark",
+    className: "lsl-search-dark on-dark",
     id: "buscar",
     "data-avail-checker": true
   }, /*#__PURE__*/React.createElement("div", {

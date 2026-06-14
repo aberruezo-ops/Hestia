@@ -133,6 +133,15 @@ Aplica estas medidas a TODO el código nuevo y revisa lo existente cuando lo toq
 - **Edita lo existente** antes de crear archivos nuevos. Pregunta antes de añadir un módulo si no es estrictamente necesario.
 - **Sin backwards-compat** por defecto: si renombras o eliminas algo, hazlo limpio.
 
+### Contraste · regla preventiva (fondos oscuros)
+
+> El contraste oscuro-sobre-oscuro ha sido un fallo recurrente. Para que no vuelva a pasar:
+
+- **Toda sección con fondo oscuro lleva la clase `on-dark`** (en `styles.css`: fija el color de texto por defecto en claro, `--crema`). Así, si un elemento olvida declarar su color, hereda claro (legible), no el oscuro de página.
+- **Contrapartida obligatoria**: toda superficie clara anidada (tarjeta blanca, input, píldora clara) sobre un fondo oscuro **declara su propio color de texto oscuro** (`color: var(--ink)`), para no heredar claro-sobre-blanco.
+- **Nunca** uses `--ink`, `--ink-soft` ni un acento oscuro (de marca) para texto que va directo sobre un fondo oscuro. Usa los tonos crema (`--crema`, `rgba(240,232,213,...)`).
+- **Cubre todos los estados**, no solo el inicial: `:hover`, `:focus`, `:disabled`, vacío, cargando y "no disponible". El audit de contraste solo recorre el estado inicial de cada página, así que los estados que aparecen tras interactuar (resultados, no disponible, desplegables) no los caza: revísalos a mano.
+
 ## Tests y verificación
 
 - No hay suite de tests automatizada aún. Cuando toques algo crítico:
