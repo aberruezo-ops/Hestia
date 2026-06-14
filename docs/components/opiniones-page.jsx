@@ -392,6 +392,20 @@ const OpinionesPageApp = () => {
               {lang === 'es' ? 'Comparte tu experiencia' : 'Share your experience'}
               <span className="arrow"> →</span>
             </a>
+            <div className="osc-gmaps">
+              <p className="osc-gmaps-lbl">
+                {lang === 'es'
+                  ? '¿Ya te alojaste? Déjala directamente en Google, en la ficha de tu Hestía:'
+                  : 'Already stayed with us? Post it straight on Google, on your Hestía listing:'}
+              </p>
+              <div className="osc-gmaps-links">
+                {[['vm','Hestía Mar'],['vt','Hestía Thalassa'],['vs','Hestía Salinas']].map(([id, name]) => (
+                  <a key={id} href={GMAPS_PLACE[id]} target="_blank" rel="noopener" className="osc-gmaps-link">
+                    <span className="osc-gmaps-g" aria-hidden="true">G</span>{name}
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
         <QuickFAQ lang={lang} pageId="opiniones" />

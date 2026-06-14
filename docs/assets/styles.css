@@ -15860,6 +15860,53 @@ a.cta-wa-btn::before,
   color: rgba(240,232,213,.82);
 }
 .osc-btn { display: inline-flex; }
+.osc-gmaps {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(240,232,213,.14);
+}
+.osc-gmaps-lbl {
+  font-size: 13px;
+  color: rgba(240,232,213,.7);
+  margin: 0 0 14px;
+}
+.osc-gmaps-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.osc-gmaps-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 10px 0 10px 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--arena);
+  text-decoration: none;
+  background: rgba(240,232,213,.08);
+  border: 1px solid rgba(240,232,213,.2);
+  transition: background .18s, border-color .18s;
+}
+.osc-gmaps-link:hover {
+  background: rgba(240,232,213,.14);
+  border-color: var(--sol);
+}
+.osc-gmaps-g {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  color: #4285F4;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+}
 
 /* ── Reviews admin (/r-edit) ──────────────────────────────────── */
 .pe-rev-filters {
