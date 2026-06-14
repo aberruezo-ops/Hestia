@@ -11,17 +11,27 @@ const EMP_COPY = {
   es: {
     eyebrow: 'Hestía para empresas y profesionales',
     title: (<>Alojamiento con factura, contrato <em>y trato directo.</em></>),
-    sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Tarifa mensual cerrada, sin comisiones y con respuesta humana en menos de una hora.',
+    sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración, con factura y contrato, y os echamos una mano con los servicios locales que necesitéis.',
     waCta: 'Hablar por WhatsApp',
     formCta: 'Pedir propuesta',
     perksTitle: 'Por qué trabajar con nosotros',
     perks: [
       { icon: '🧾', t: 'Factura y contrato', d: 'Emitimos factura y firmamos contrato. Pensado para empresas, clínicas y profesionales que necesitan justificar el gasto.' },
-      { icon: '📅', t: 'Tarifa mensual cerrada', d: 'Precio fijo al mes para estancias largas (29 noches o más), de septiembre a junio. Sin sorpresas.' },
+      { icon: '📅', t: 'Cualquier duración', d: 'Una noche, una semana o varios meses: nos adaptamos a lo que necesitéis, con la mejor tarifa según las fechas.' },
       { icon: '🤝', t: '0% comisiones', d: 'Reserva directa con nosotros, los propietarios. Sin intermediarios ni cargos de plataforma.' },
       { icon: '⏱️', t: 'Respuesta en menos de 1 h', d: 'Hablas siempre con Alex o Fran. Coordinamos llegadas, facturación y necesidades especiales al momento.' },
       { icon: '🏠', t: 'Tres apartamentos a 2 km', d: 'Hasta tres equipos o familias alojados cerca, en la misma zona de Vera Playa.' },
       { icon: '📶', t: 'Listos para entrar', d: 'WiFi de fibra, cocina equipada, lavadora, terraza y limpieza coordinada. Listos para vivir o para teletrabajar.' },
+    ],
+    servicesTitle: 'Servicios locales a medida',
+    servicesSub: 'No solo damos las llaves. Ayudamos a la empresa y a sus profesionales o clientes con lo que haga falta para que la estancia salga rodada:',
+    services: [
+      'Traslados desde el aeropuerto y movilidad por la zona',
+      'Limpieza y cambio de toallas adicionales',
+      'Reserva de restaurantes, golf y actividades',
+      'Lavandería, coworking y recados del día a día',
+      'Necesidades especiales (cuna, parking, llegada fuera de horario)',
+      'Guía local completa de Vera Playa para tus huéspedes',
     ],
     sectorsTitle: 'Con quién trabajamos',
     sectorsSub: 'Si tu negocio necesita alojar a clientes, equipos o pacientes cerca de Vera Playa, encajamos. Algunos ejemplos:',
@@ -65,17 +75,27 @@ const EMP_COPY = {
   en: {
     eyebrow: 'Hestía for businesses & professionals',
     title: (<>Accommodation with invoicing, a contract <em>and a direct relationship.</em></>),
-    sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. Fixed monthly rate, no commissions and a human reply in under an hour.',
+    sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay, with invoicing and a contract, and we help with the local services you need.',
     waCta: 'Chat on WhatsApp',
     formCta: 'Request a proposal',
     perksTitle: 'Why work with us',
     perks: [
       { icon: '🧾', t: 'Invoicing and contract', d: 'We issue an invoice and sign a contract. Built for companies, clinics and professionals who need to justify the expense.' },
-      { icon: '📅', t: 'Fixed monthly rate', d: 'A fixed monthly price for long stays (29 nights or more), from September to June. No surprises.' },
+      { icon: '📅', t: 'Any length of stay', d: 'One night, a week or several months: we adapt to what you need, with the best rate for your dates.' },
       { icon: '🤝', t: '0% commissions', d: 'Book directly with us, the owners. No middlemen, no platform fees.' },
       { icon: '⏱️', t: 'Reply in under 1 h', d: 'You always speak to Alex or Fran. We coordinate arrivals, invoicing and special needs on the spot.' },
       { icon: '🏠', t: 'Three apartments within 2 km', d: 'Up to three teams or families housed close together, in the same Vera Playa area.' },
       { icon: '📶', t: 'Ready to move in', d: 'Fibre WiFi, equipped kitchen, washing machine, terrace and coordinated cleaning. Ready to live or work remotely.' },
+    ],
+    servicesTitle: 'Tailored local services',
+    servicesSub: 'We do more than hand over the keys. We help the company and its professionals or clients with whatever they need for a smooth stay:',
+    services: [
+      'Airport transfers and getting around the area',
+      'Extra cleaning and towel changes',
+      'Restaurant, golf and activity bookings',
+      'Laundry, coworking and day-to-day errands',
+      'Special requests (cot, parking, late arrival)',
+      'A full local Vera Playa guide for your guests',
     ],
     sectorsTitle: 'Who we work with',
     sectorsSub: 'If your business needs to house clients, teams or patients near Vera Playa, we fit. Some examples:',
@@ -337,6 +357,20 @@ const EmpresasPageApp = () => {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="emp-services-sec">
+          <div className="container">
+            <h2 className="emp-h2">{t.servicesTitle}</h2>
+            <p className="emp-services-sub">{t.servicesSub}</p>
+            <ul className="emp-services-list">
+              {t.services.map((s, i) => (
+                <li key={i} className="emp-service-item">
+                  <span className="emp-service-check" aria-hidden="true">✓</span>{s}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 

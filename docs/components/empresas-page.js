@@ -12,7 +12,7 @@ const EMP_COPY = {
   es: {
     eyebrow: 'Hestía para empresas y profesionales',
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Alojamiento con factura, contrato ", /*#__PURE__*/React.createElement("em", null, "y trato directo.")),
-    sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Tarifa mensual cerrada, sin comisiones y con respuesta humana en menos de una hora.',
+    sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración, con factura y contrato, y os echamos una mano con los servicios locales que necesitéis.',
     waCta: 'Hablar por WhatsApp',
     formCta: 'Pedir propuesta',
     perksTitle: 'Por qué trabajar con nosotros',
@@ -22,8 +22,8 @@ const EMP_COPY = {
       d: 'Emitimos factura y firmamos contrato. Pensado para empresas, clínicas y profesionales que necesitan justificar el gasto.'
     }, {
       icon: '📅',
-      t: 'Tarifa mensual cerrada',
-      d: 'Precio fijo al mes para estancias largas (29 noches o más), de septiembre a junio. Sin sorpresas.'
+      t: 'Cualquier duración',
+      d: 'Una noche, una semana o varios meses: nos adaptamos a lo que necesitéis, con la mejor tarifa según las fechas.'
     }, {
       icon: '🤝',
       t: '0% comisiones',
@@ -41,6 +41,9 @@ const EMP_COPY = {
       t: 'Listos para entrar',
       d: 'WiFi de fibra, cocina equipada, lavadora, terraza y limpieza coordinada. Listos para vivir o para teletrabajar.'
     }],
+    servicesTitle: 'Servicios locales a medida',
+    servicesSub: 'No solo damos las llaves. Ayudamos a la empresa y a sus profesionales o clientes con lo que haga falta para que la estancia salga rodada:',
+    services: ['Traslados desde el aeropuerto y movilidad por la zona', 'Limpieza y cambio de toallas adicionales', 'Reserva de restaurantes, golf y actividades', 'Lavandería, coworking y recados del día a día', 'Necesidades especiales (cuna, parking, llegada fuera de horario)', 'Guía local completa de Vera Playa para tus huéspedes'],
     sectorsTitle: 'Con quién trabajamos',
     sectorsSub: 'Si tu negocio necesita alojar a clientes, equipos o pacientes cerca de Vera Playa, encajamos. Algunos ejemplos:',
     sectors: ['Empresas con técnicos o visitas (agroindustria, energía, construcción)', 'Clínicas y turismo de salud', 'Campos de entrenamiento deportivo', 'Golf (stay & play)', 'Bodas y eventos', 'Inmobiliarias y compradores de vivienda', 'Productoras de cine y publicidad', 'Turoperadores y clubes'],
@@ -78,7 +81,7 @@ const EMP_COPY = {
   en: {
     eyebrow: 'Hestía for businesses & professionals',
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Accommodation with invoicing, a contract ", /*#__PURE__*/React.createElement("em", null, "and a direct relationship.")),
-    sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. Fixed monthly rate, no commissions and a human reply in under an hour.',
+    sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay, with invoicing and a contract, and we help with the local services you need.',
     waCta: 'Chat on WhatsApp',
     formCta: 'Request a proposal',
     perksTitle: 'Why work with us',
@@ -88,8 +91,8 @@ const EMP_COPY = {
       d: 'We issue an invoice and sign a contract. Built for companies, clinics and professionals who need to justify the expense.'
     }, {
       icon: '📅',
-      t: 'Fixed monthly rate',
-      d: 'A fixed monthly price for long stays (29 nights or more), from September to June. No surprises.'
+      t: 'Any length of stay',
+      d: 'One night, a week or several months: we adapt to what you need, with the best rate for your dates.'
     }, {
       icon: '🤝',
       t: '0% commissions',
@@ -107,6 +110,9 @@ const EMP_COPY = {
       t: 'Ready to move in',
       d: 'Fibre WiFi, equipped kitchen, washing machine, terrace and coordinated cleaning. Ready to live or work remotely.'
     }],
+    servicesTitle: 'Tailored local services',
+    servicesSub: 'We do more than hand over the keys. We help the company and its professionals or clients with whatever they need for a smooth stay:',
+    services: ['Airport transfers and getting around the area', 'Extra cleaning and towel changes', 'Restaurant, golf and activity bookings', 'Laundry, coworking and day-to-day errands', 'Special requests (cot, parking, late arrival)', 'A full local Vera Playa guide for your guests'],
     sectorsTitle: 'Who we work with',
     sectorsSub: 'If your business needs to house clients, teams or patients near Vera Playa, we fit. Some examples:',
     sectors: ['Companies with technicians or visitors (agribusiness, energy, construction)', 'Clinics and health tourism', 'Sports training camps', 'Golf (stay & play)', 'Weddings and events', 'Estate agencies and home buyers', 'Film and advertising productions', 'Tour operators and clubs'],
@@ -476,6 +482,22 @@ const EmpresasPageApp = () => {
   }, p.t), /*#__PURE__*/React.createElement("p", {
     className: "emp-perk-d"
   }, p.d)))))), /*#__PURE__*/React.createElement("section", {
+    className: "emp-services-sec"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "emp-h2"
+  }, t.servicesTitle), /*#__PURE__*/React.createElement("p", {
+    className: "emp-services-sub"
+  }, t.servicesSub), /*#__PURE__*/React.createElement("ul", {
+    className: "emp-services-list"
+  }, t.services.map((s, i) => /*#__PURE__*/React.createElement("li", {
+    key: i,
+    className: "emp-service-item"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "emp-service-check",
+    "aria-hidden": "true"
+  }, "\u2713"), s))))), /*#__PURE__*/React.createElement("section", {
     className: "emp-sectors-sec on-dark"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
