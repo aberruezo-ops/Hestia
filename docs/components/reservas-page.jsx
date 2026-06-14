@@ -778,6 +778,17 @@ const ReservasForm = ({ lang }) => {
     if (!step1Complete || !channelValid) return;
     if (typeof _hestiaTrack === 'function') _hestiaTrack('booking_sent', { apt: apt || 'all', channel, checkin, checkout });
     const msg = buildMsg();
+    // Captura server-side (Web3Forms): la solicitud llega a vuestro email aunque el
+    // huésped no complete el WhatsApp/correo. En segundo plano, no bloquea su canal.
+    try {
+      const fd = new FormData();
+      fd.append('access_key', '95a86784-6d6a-496f-9830-15759c0a3cff');
+      fd.append('subject', `Solicitud de reserva · ${aptNames[apt] || 'Hestía'} · ${checkin} → ${checkout}`);
+      fd.append('from_name', name || 'Web Hestía');
+      if (hasEmail) fd.append('email', email.trim());
+      fd.append('message', `${msg}\n\nCanal elegido: ${channel === 'whatsapp' ? `WhatsApp (${tel})` : `Email (${email})`}`);
+      fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd }).catch(() => {});
+    } catch (_) {}
     let url;
     if (channel === 'whatsapp') {
       const waNum = lang === 'es' ? '34620316370' : '34654138251';

@@ -87,7 +87,7 @@ const LEGAL_COPY = {
         p: 'Alex Berruezo y Francisco Moral, propietarios de Hestía Your Home. Dirección: Calle Islas Canarias 7, 04621 Vera Playa, Almería. Email: info@hestiayourhome.com.'
       }, {
         h: 'Datos que recogemos',
-        p: 'Recogemos los datos que tú nos proporcionas voluntariamente a través de: (1) el formulario de reservas: nombre y teléfono o email, enviados directamente a nuestro WhatsApp o correo; (2) el formulario de opiniones: nombre de firma, email y texto de tu experiencia, enviados mediante Web3Forms (api.web3forms.com); (3) comunicación directa por WhatsApp, teléfono o email.'
+        p: 'Recogemos los datos que tú nos proporcionas voluntariamente a través de: (1) el formulario de reservas: nombre y teléfono o email, enviados a nuestro WhatsApp o correo y, como copia, mediante Web3Forms (api.web3forms.com) a nuestro email; (2) el formulario de opiniones: nombre de firma, email y texto de tu experiencia, enviados mediante Web3Forms (api.web3forms.com); (3) comunicación directa por WhatsApp, teléfono o email.'
       }, {
         h: 'Encargados del tratamiento',
         p: 'El formulario de opiniones utiliza Web3Forms (Singular Bits LLC, api.web3forms.com) que recibe y reenvía el mensaje a nuestro email sin almacenarlo de forma permanente. Las analíticas del sitio son procesadas por Cloudflare Web Analytics (Cloudflare, Inc., cloudflare.com), que no recoge IPs ni datos personales identificables. Ambos proveedores tienen sede en EE.UU.; el tratamiento se realiza con las garantías adecuadas conforme al art. 46 RGPD.'
@@ -116,7 +116,7 @@ const LEGAL_COPY = {
         p: 'Alex Berruezo and Francisco Moral, owners of Hestía Your Home. Address: Calle Islas Canarias 7, 04621 Vera Playa, Almería, Spain. Email: info@hestiayourhome.com.'
       }, {
         h: 'Data we collect',
-        p: 'We collect data you voluntarily provide through: (1) the booking form: name and phone or email, sent directly to our WhatsApp or inbox; (2) the review form: display name, email and your experience text, sent via Web3Forms (api.web3forms.com); (3) direct contact via WhatsApp, phone or email.'
+        p: 'We collect data you voluntarily provide through: (1) the booking form: name and phone or email, sent to our WhatsApp or inbox and, as a copy, via Web3Forms (api.web3forms.com) to our email; (2) the review form: display name, email and your experience text, sent via Web3Forms (api.web3forms.com); (3) direct contact via WhatsApp, phone or email.'
       }, {
         h: 'Data processors',
         p: 'The review form uses Web3Forms (Singular Bits LLC, api.web3forms.com), which receives and forwards the message to our email without permanent storage. Site analytics are handled by Cloudflare Web Analytics (Cloudflare, Inc., cloudflare.com), which does not collect IPs or personally identifiable data. Both providers are based in the US; processing is carried out with appropriate safeguards under Art. 46 GDPR.'
