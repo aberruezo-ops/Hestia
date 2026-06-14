@@ -22413,6 +22413,13 @@ img[src*="apt-vt-gallery-"] {
     transform: translateX(-50%) translateY(12px);
   }
   body.apt-bar-shown .mob-book-btn { display: none; }
+  /* El menú móvil ya incluye su propio botón "Reserva"; oculta el flotante
+     global mientras el menú está abierto para no duplicarlo. */
+  body:has(.mobile-menu.open) .mob-book-btn {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(12px);
+  }
   .mob-book-btn:hover,
   .mob-book-btn:focus-visible {
     box-shadow: 0 6px 28px rgba(58,170,187,.6);
