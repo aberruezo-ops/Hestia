@@ -163,7 +163,7 @@ const SECTION_CATS = {
   'mar-playas': ['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
   planes: ['gem', 'water', 'adventure', 'trek', 'leisure', 'bodega'],
   mercados: ['abasto', 'market'],
-  salud: ['health', 'vet', 'pet-board', 'physio', 'pharmacy'],
+  salud: ['health', 'vet', 'pet-board', 'physio', 'pharmacy', 'coworking', 'laundry', 'atm'],
   movilidad: ['fuel', 'ev-charge']
 };
 
@@ -344,6 +344,24 @@ const CATEGORIES = [{
   en: 'EV charging points',
   color: 'var(--teal-dk)',
   icon: '🔌'
+}, {
+  id: 'coworking',
+  es: 'Coworking y teletrabajo',
+  en: 'Coworking & remote work',
+  color: 'var(--vt-dk)',
+  icon: '💻'
+}, {
+  id: 'laundry',
+  es: 'Lavanderías y tintorerías',
+  en: 'Laundry & dry cleaning',
+  color: 'var(--vt2)',
+  icon: '👕'
+}, {
+  id: 'atm',
+  es: 'Cajeros y bancos',
+  en: 'ATMs & banks',
+  color: 'var(--vs-dk)',
+  icon: '🏧'
 }];
 
 // ----- Lugares: nombre, categoría, descripción opcional, coords aproximadas, URL -----
@@ -1776,6 +1794,87 @@ const PLACES = [
   url: 'https://goo.gl/maps/AXJ74Goy1ESTtBVy7',
   lat: 37.6850,
   lng: -1.7060
+},
+// Coworking y teletrabajo. El enlace abre una búsqueda en vivo en Maps,
+// así sigue siendo correcto aunque cambien los negocios concretos.
+{
+  id: 'cw-biblio-vera',
+  name: 'Biblioteca Pública de Vera',
+  cat: 'coworking',
+  desc: 'Sala silenciosa y climatizada con WiFi gratis: opción cómoda y sin coste para un par de horas de trabajo concentrado cerca de Hestía.',
+  desc_en: 'Quiet, air-conditioned room with free WiFi: a comfy, no-cost option for a couple of hours of focused work near Hestía.',
+  url: 'https://www.google.com/maps/search/?api=1&query=Biblioteca+P%C3%BAblica+Vera+Almer%C3%ADa',
+  lat: 37.2473,
+  lng: -1.8612
+}, {
+  id: 'cw-cafes-garrucha',
+  name: 'Cafeterías para teletrabajar (Garrucha y Mojácar)',
+  cat: 'coworking',
+  desc: 'Varias cafeterías del paseo de Garrucha y de Mojácar Playa tienen WiFi y enchufes, y no les importa que te quedes con el portátil fuera de las horas punta. Pide algo, elige mesa con sombra y a trabajar.',
+  desc_en: 'Several cafés along the Garrucha promenade and Mojácar Playa have WiFi and plug sockets, and do not mind you settling in with a laptop outside peak hours. Order something, pick a shaded table and get to work.',
+  url: 'https://www.google.com/maps/search/?api=1&query=cafeter%C3%ADa+wifi+Garrucha',
+  lat: 37.1815,
+  lng: -1.8235
+}, {
+  id: 'cw-almeria',
+  name: 'Coworking en Almería capital',
+  cat: 'coworking',
+  desc: 'Para quien necesite un puesto fijo con salas de reuniones, impresora y fibra simétrica, la oferta de coworking está en Almería capital, a unos 45 min. Busca y reserva el que mejor te encaje.',
+  desc_en: 'If you need a fixed desk with meeting rooms, a printer and symmetric fibre, the coworking options are in the city of Almería, about 45 min away. Search and book whichever suits you best.',
+  url: 'https://www.google.com/maps/search/?api=1&query=coworking+Almer%C3%ADa',
+  lat: 36.8381,
+  lng: -2.4597
+},
+// Lavanderías y tintorerías
+{
+  id: 'ln-veraplaya',
+  name: 'Lavandería autoservicio (Vera Playa)',
+  cat: 'laundry',
+  desc: 'Lavadoras y secadoras de autoservicio en la zona de Vera Playa, útiles en estancias largas o para una colada rápida sin esperar al día de limpieza.',
+  desc_en: 'Self-service washers and dryers in the Vera Playa area, handy for longer stays or a quick wash without waiting for cleaning day.',
+  url: 'https://www.google.com/maps/search/?api=1&query=lavander%C3%ADa+autoservicio+Vera+Playa',
+  lat: 37.2360,
+  lng: -1.7935,
+  featured: true
+}, {
+  id: 'ln-mojacar',
+  name: 'Lavandería y tintorería en Mojácar',
+  cat: 'laundry',
+  desc: 'Lavado, secado y también tintorería y planchado en Mojácar Playa, para cuando necesites algo más que la lavadora del apartamento.',
+  desc_en: 'Wash, dry and also dry cleaning and ironing in Mojácar Playa, for when you need more than the apartment washing machine.',
+  url: 'https://www.google.com/maps/search/?api=1&query=lavander%C3%ADa+tintorer%C3%ADa+Moj%C3%A1car',
+  lat: 37.1377,
+  lng: -1.8523
+},
+// Cajeros y bancos
+{
+  id: 'atm-vera',
+  name: 'Cajeros y bancos en Vera pueblo',
+  cat: 'atm',
+  desc: 'En el casco de Vera están las principales entidades (CaixaBank, Santander, BBVA, Unicaja y Cajamar) con sus cajeros, a unos 10 min en coche. Es donde más opciones juntas encontrarás.',
+  desc_en: 'Vera town centre has the main banks (CaixaBank, Santander, BBVA, Unicaja and Cajamar) and their ATMs, about 10 min by car. It is where you will find the most options together.',
+  url: 'https://www.google.com/maps/search/?api=1&query=cajeros+bancos+Vera+Almer%C3%ADa',
+  lat: 37.2473,
+  lng: -1.8612,
+  featured: true
+}, {
+  id: 'atm-veraplaya',
+  name: 'Cajero en Vera Playa',
+  cat: 'atm',
+  desc: 'En la zona comercial de Vera Playa hay cajeros para sacar efectivo sin bajar al pueblo. Comprueba la comisión en pantalla antes de aceptar, sobre todo en los cajeros independientes.',
+  desc_en: 'The Vera Playa commercial area has ATMs to withdraw cash without driving to town. Check the on-screen fee before accepting, especially at independent ATMs.',
+  url: 'https://www.google.com/maps/search/?api=1&query=cajero+Vera+Playa',
+  lat: 37.2360,
+  lng: -1.7935
+}, {
+  id: 'atm-garrucha',
+  name: 'Cajeros en Garrucha',
+  cat: 'atm',
+  desc: 'El paseo y el centro de Garrucha concentran varias entidades y cajeros, prácticos si estás de playa o de cena por la zona.',
+  desc_en: 'The Garrucha promenade and centre have several banks and ATMs, handy if you are at the beach or out for dinner nearby.',
+  url: 'https://www.google.com/maps/search/?api=1&query=cajeros+Garrucha+Almer%C3%ADa',
+  lat: 37.1815,
+  lng: -1.8235
 },
 // Mercadillos (los mejores de la zona, ordenados por día)
 {
@@ -9978,7 +10077,17 @@ const AptGuideView = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-sites-arrow",
     "aria-hidden": "true"
-  }, "\u2197"), l.label))))))))), /*#__PURE__*/React.createElement("section", {
+  }, "\u2197"), l.label)))))))), /*#__PURE__*/React.createElement("div", {
+    className: "ag-when"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, lang === 'es' ? 'Cuándo venir y qué llevar' : 'When to come and what to pack'), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, lang === 'es' ? 'El Levante almeriense presume del clima más seco y soleado de Europa: unas 3.000 horas de sol al año y muy poca lluvia. Los veranos son calurosos y secos, los inviernos suaves (rara vez baja de 10 °C de día). El mar está agradable para bañarse de junio a octubre.' : 'The Almería Levante boasts the driest, sunniest climate in Europe: around 3,000 hours of sun a year and very little rain. Summers are hot and dry, winters mild (it rarely drops below 10 °C during the day). The sea is pleasant for swimming from June to October.'), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, lang === 'es' ? 'Cada época tiene lo suyo. Julio y agosto son temporada alta, con playas llenas y mucho ambiente; mayo, junio, septiembre y octubre dan el mejor equilibrio de calor, mar templado y tranquilidad; de noviembre a abril es ideal para estancias largas, senderismo y pueblos sin colas.' : 'Each season has its charm. July and August are high season, with busy beaches and a lively buzz; May, June, September and October give the best balance of warmth, mild sea and calm; November to April is ideal for long stays, hiking and villages with no queues.'), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, lang === 'es' ? 'Lleva siempre protección solar, gorra y agua, aquí el sol aprieta incluso en primavera. Para las calas de difícil acceso, calzado cómodo y escarpines. En las noches de costa entra brisa, así que una capa ligera viene bien hasta en verano. Si vienes en invierno, ropa de entretiempo y algo de abrigo para la tarde.' : 'Always bring sun protection, a cap and water, the sun is strong here even in spring. For the hard-access coves, comfortable shoes and water shoes. Coastal evenings get a breeze, so a light layer is welcome even in summer. If you come in winter, bring mid-season clothing and something warmer for the evening.'))), /*#__PURE__*/React.createElement("section", {
     id: "ag-lugares",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
@@ -10100,7 +10209,15 @@ const AptGuideView = ({
     });
   }), /*#__PURE__*/React.createElement(DayPlans, {
     lang: lang
-  })), /*#__PURE__*/React.createElement("section", {
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "ag-rainy"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, lang === 'es' ? 'Plan B si llueve' : 'Plan B if it rains'), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, lang === 'es' ? 'Llueve pocos días al año, pero si te toca uno, hay planes a cubierto que merecen la pena:' : 'It rains few days a year, but if one catches you, there are indoor plans worth your while:'), /*#__PURE__*/React.createElement("ul", {
+    className: "ag-recs"
+  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Cuevas de Sorbas: galerías de yeso bajo tierra, temperatura constante y visita guiada (a 40 min).' : 'Sorbas Caves: underground gypsum galleries, constant temperature and a guided tour (40 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Museos de Almería capital: el Museo de Almería (culturas de Los Millares y El Argar) y el Museo de la Guitarra (a 45 min).' : 'Museums in Almería city: the Museum of Almería (Los Millares and El Argar cultures) and the Guitar Museum (45 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Alcazaba de Almería: aunque es al aire libre, sus salas y la visita dan para un buen rato resguardado.' : 'Alcazaba of Almería: although open-air, its halls and the visit give you a good while under cover.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Una comida larga: reserva uno de los restaurantes de la sección Sabores, incluido algún Guía Michelin, y alarga la sobremesa.' : 'A long lunch: book one of the restaurants in the Tastes section, a Michelin Guide pick included, and stretch out the afternoon.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Spa o balneario: Vera Playa tiene centros de spa para una tarde de relax bajo techo.' : 'Spa or wellness centre: Vera Playa has spas for a relaxing afternoon indoors.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Compras a cubierto: centros comerciales de Almería capital si toca reponer.' : 'Indoor shopping: the shopping centres in Almería city if you need to restock.')))), /*#__PURE__*/React.createElement("section", {
     id: "ag-mercados",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
@@ -10129,7 +10246,7 @@ const AptGuideView = ({
     className: "ag-h2"
   }, lang === 'es' ? 'Salud y servicios' : 'Health & services'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, lang === 'es' ? 'Servicios para tenerlo todo a mano: centros de salud, veterinarios (incluyendo 24 h), guarderías y residencias para mascotas, farmacias y fisioterapeutas.' : 'Everything within reach: health centres, vets (including 24 h), pet boarding and daycare, pharmacies and physiotherapy clinics.'), SECTION_CATS.salud.map(catId => {
+  }, lang === 'es' ? 'Servicios para tenerlo todo a mano: centros de salud, veterinarios (incluyendo 24 h), guarderías y residencias para mascotas, farmacias y fisioterapeutas. Y para el día a día de una estancia larga, dónde teletrabajar, lavanderías y dónde sacar efectivo. El mejor sitio para trabajar suele ser tu propio Hestía, con WiFi de fibra; aquí van alternativas para cuando quieras cambiar de aires.' : 'Everything within reach: health centres, vets (including 24 h), pet boarding and daycare, pharmacies and physiotherapy clinics. And for the day-to-day of a longer stay, where to work remotely, laundries and where to get cash. The best place to work is usually your own Hestía, with fibre WiFi; here are alternatives for when you fancy a change of scene.'), SECTION_CATS.salud.map(catId => {
     const cat = CATEGORIES.find(c => c.id === catId);
     if (!cat) return null;
     const inCat = PLACES.filter(p => p.cat === catId);
@@ -10283,7 +10400,7 @@ const AptGuideGate = ({
     className: "apt-guide-gate-desc"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "No es un folleto: es la ", /*#__PURE__*/React.createElement("strong", null, "supergu\xEDa que nos habr\xEDa gustado encontrar a nosotros"), " cuando llegamos por primera vez a Vera. Veintid\xF3s cap\xEDtulos con todo lo que necesitas para vivir tu estancia, desde c\xF3mo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense.") : /*#__PURE__*/React.createElement(React.Fragment, null, "This isn't a leaflet: it's the ", /*#__PURE__*/React.createElement("strong", null, "super-guide we wish we'd had ourselves"), " the first time we arrived in Vera. Twenty-two chapters with everything you need for your stay, from how to get here from any of the five nearest airports to the corners only locals from the Levante know.")), /*#__PURE__*/React.createElement("ul", {
     className: "apt-guide-gate-stats"
-  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 cap\xEDtulos"), " sobre tu Hest\xEDa y el entorno") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 chapters"), " on your Hest\xEDa and the area")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "M\xE1s de 230 recomendaciones"), ": restaurantes, playas, bares, bodegas, mercados, pescader\xEDas\u2026") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "More than 230 recommendations"), ": restaurants, beaches, bars, wineries, markets, fishmongers\u2026")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 planes de d\xEDa completo"), " con horarios, rutas y reservas") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 full-day itineraries"), " with timing, routes and bookings")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Annual calendar"), " of festivals and local events")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Servicios a mano"), ": centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarder\xEDas y residencias para mascotas\u2026") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Everything within reach"), ": health centres, 24 h vets, pharmacies, physio clinics, pet boarding & daycare\u2026")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Tel\xE9fonos \xFAtiles"), " y nuestro contacto directo antes, durante y despu\xE9s de tu estancia") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Useful phones"), " and our direct line before, during and after your stay"))), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 cap\xEDtulos"), " sobre tu Hest\xEDa y el entorno") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 chapters"), " on your Hest\xEDa and the area")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "M\xE1s de 230 recomendaciones"), ": restaurantes, playas, bares, bodegas, mercados, pescader\xEDas\u2026") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "More than 230 recommendations"), ": restaurants, beaches, bars, wineries, markets, fishmongers\u2026")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 planes de d\xEDa completo"), " con horarios, rutas y reservas") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 full-day itineraries"), " with timing, routes and bookings")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Annual calendar"), " of festivals and local events")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Servicios a mano"), ": centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarder\xEDas para mascotas, coworking, lavander\xEDas y cajeros\u2026") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Everything within reach"), ": health centres, 24 h vets, pharmacies, physio clinics, pet boarding, coworking, laundries & ATMs\u2026")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Tel\xE9fonos \xFAtiles"), " y nuestro contacto directo antes, durante y despu\xE9s de tu estancia") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Useful phones"), " and our direct line before, during and after your stay"))), /*#__PURE__*/React.createElement("p", {
     className: "apt-guide-gate-foot"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Web interactiva + PDF descargable de 40 p\xE1ginas. Reservada para hu\xE9spedes con PIN.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Interactive web + 40-page downloadable PDF. Reserved for guests with a PIN.")), /*#__PURE__*/React.createElement("button", {
     className: "apt-guide-gate-btn",
