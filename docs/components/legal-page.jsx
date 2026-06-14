@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA — Páginas legales: Cookies + Privacidad
+// HESTÍA, Páginas legales: Cookies + Privacidad
 // Selecciona cuál renderizar con window.__LEGAL__ ('cookies' | 'privacidad')
 // ================================================================
 
@@ -77,7 +77,7 @@ const LEGAL_COPY = {
         },
         {
           h: 'Datos que recogemos',
-          p: 'Recogemos los datos que tú nos proporcionas voluntariamente a través de: (1) el formulario de reservas — nombre y teléfono o email, enviados directamente a nuestro WhatsApp o correo; (2) el formulario de opiniones — nombre de firma, email y texto de tu experiencia, enviados mediante Web3Forms (api.web3forms.com); (3) comunicación directa por WhatsApp, teléfono o email.',
+          p: 'Recogemos los datos que tú nos proporcionas voluntariamente a través de: (1) el formulario de reservas: nombre y teléfono o email, enviados directamente a nuestro WhatsApp o correo; (2) el formulario de opiniones: nombre de firma, email y texto de tu experiencia, enviados mediante Web3Forms (api.web3forms.com); (3) comunicación directa por WhatsApp, teléfono o email.',
         },
         {
           h: 'Encargados del tratamiento',
@@ -115,7 +115,7 @@ const LEGAL_COPY = {
         },
         {
           h: 'Data we collect',
-          p: 'We collect data you voluntarily provide through: (1) the booking form — name and phone or email, sent directly to our WhatsApp or inbox; (2) the review form — display name, email and your experience text, sent via Web3Forms (api.web3forms.com); (3) direct contact via WhatsApp, phone or email.',
+          p: 'We collect data you voluntarily provide through: (1) the booking form: name and phone or email, sent directly to our WhatsApp or inbox; (2) the review form: display name, email and your experience text, sent via Web3Forms (api.web3forms.com); (3) direct contact via WhatsApp, phone or email.',
         },
         {
           h: 'Data processors',

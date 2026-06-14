@@ -45,7 +45,7 @@
       "name": "¿Estas valoraciones son reales y verificadas?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sí. Las puntuaciones de Booking.com, Airbnb y Google Maps son verificadas por las propias plataformas — solo pueden valorar quienes han completado una estancia real. No podemos modificarlas."
+        "text": "Sí. Las puntuaciones de Booking.com, Airbnb y Google Maps son verificadas por las propias plataformas, solo pueden valorar quienes han completado una estancia real. No podemos modificarlas."
       }
     },
     {
@@ -61,7 +61,7 @@
       "name": "¿Qué es lo que más valoran los huéspedes?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "La atención personal de Alex y Fran, la limpieza y el estado de cada Hestía, y la ubicación. Y que cuando algo falla, se resuelve de verdad — no se pone una excusa."
+        "text": "La atención personal de Alex y Fran, la limpieza y el estado de cada Hestía, y la ubicación. Y que cuando algo falla, se resuelve de verdad, no se pone una excusa."
       }
     },
     {
@@ -69,7 +69,7 @@
       "name": "¿Cómo dejo una reseña tras mi estancia?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "En Booking.com, Airbnb o Google Maps, según donde hayas reservado. También puedes escribirnos directamente — nos alegra saber cómo fue la experiencia."
+        "text": "En Booking.com, Airbnb o Google Maps, según donde hayas reservado. También puedes escribirnos directamente, nos alegra saber cómo fue la experiencia."
       }
     }
   ]
@@ -137,7 +137,7 @@
     } catch (e) { console.warn('reviews.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=aa9f7e980f');
+      const res = await fetch(file + '?cv=6635f90961');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

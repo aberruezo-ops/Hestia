@@ -245,7 +245,7 @@
 
   <!-- Demo banner (shown only in demo mode) -->
   <div id="demo-banner" hidden style="width:100%;max-width:520px;margin:0 24px 12px;padding:10px 16px;background:rgba(200,122,69,.15);border:1.5px solid #C87A45;border-radius:8px 0 8px 0;font-family:'DM Sans',sans-serif;font-size:12px;color:#7A5A72;text-align:center;position:relative;z-index:1;box-sizing:border-box;">
-    <strong style="color:#C87A45">MODO DEMO</strong> — Los pagos son simulados. Configura las credenciales en <code>pago.html</code> y <code>workers/pago/</code> antes del lanzamiento.
+    <strong style="color:#C87A45">MODO DEMO</strong>, Los pagos son simulados. Configura las credenciales en <code>pago.html</code> y <code>workers/pago/</code> antes del lanzamiento.
   </div>
 
   <!-- Error: invalid link -->
@@ -269,35 +269,35 @@
       <div class="bc-apt-bar">
         <span class="bc-apt-dot"></span>
         <span class="bc-apt-name" id="bc-name">Hestía</span>
-        <span class="bc-apt-num" id="bc-num">—</span>
+        <span class="bc-apt-num" id="bc-num">–</span>
       </div>
       <div class="bc-body">
         <div class="bc-dates">
-          <span class="bc-date-chip" id="bc-checkin">—</span>
+          <span class="bc-date-chip" id="bc-checkin">–</span>
           <span class="bc-arrow">→</span>
-          <span class="bc-date-chip" id="bc-checkout">—</span>
+          <span class="bc-date-chip" id="bc-checkout">–</span>
         </div>
         <div class="bc-meta">
-          <span class="bc-pill" id="bc-nights">—</span>
-          <span class="bc-pill" id="bc-guests">—</span>
+          <span class="bc-pill" id="bc-nights">–</span>
+          <span class="bc-pill" id="bc-guests">–</span>
           <span class="bc-pill">Vera Playa</span>
         </div>
         <div class="bc-divider"></div>
         <div class="bc-total-row">
           <span class="bc-total-lbl">Total reserva</span>
-          <span class="bc-total-val" id="bc-total">—</span>
+          <span class="bc-total-val" id="bc-total">–</span>
         </div>
         <div class="bc-signal-row">
           <div>
             <div class="bc-signal-tag">Señal ahora · 20%</div>
             <div class="bc-signal-lbl">Pago para confirmar</div>
           </div>
-          <div class="bc-signal-amount"><span id="bc-deposit">—</span><span class="bc-signal-cents"> €</span></div>
+          <div class="bc-signal-amount"><span id="bc-deposit">–</span><span class="bc-signal-cents"> €</span></div>
         </div>
         <div class="bc-resto-row">
           <span class="bc-resto-lbl">Resto al llegar</span>
           <div style="display:flex;align-items:center">
-            <span class="bc-resto-val" id="bc-resto">—</span>
+            <span class="bc-resto-val" id="bc-resto">–</span>
             <span class="bc-resto-badge">Al check-in</span>
           </div>
         </div>
@@ -308,7 +308,7 @@
             Política de cancelación
           </div>
           <div class="bc-cancel-rows">
-            <div class="bc-cancel-row"><span class="bc-cancel-period">+30 días antes</span><span id="bc-cancel-full">Cancelación gratuita — devolución completa</span></div>
+            <div class="bc-cancel-row"><span class="bc-cancel-period">+30 días antes</span><span id="bc-cancel-full">Cancelación gratuita, devolución completa</span></div>
             <div class="bc-cancel-row"><span class="bc-cancel-period">14 – 30 días</span><span id="bc-cancel-half">50% de la señal devuelta</span></div>
             <div class="bc-cancel-row"><span class="bc-cancel-period">Menos de 14d</span><span>Señal no reembolsable · intentaremos re-realquilar esas fechas: si lo conseguimos, te devolvemos el importe íntegro.</span></div>
           </div>
@@ -358,14 +358,14 @@
           <div class="mi-row">
             <span class="mi-lbl">Importe</span>
             <div style="display:flex;align-items:center;gap:8px">
-              <span class="mi-val big" id="biz-amount">—</span>
+              <span class="mi-val big" id="biz-amount">–</span>
               <button class="mi-copy" onclick="copy(this, document.getElementById('biz-amount').textContent.replace(' €',''))">Copiar</button>
             </div>
           </div>
           <div class="mi-row">
             <span class="mi-lbl">Concepto</span>
             <div style="display:flex;align-items:center;gap:8px">
-              <span class="mi-val" id="biz-concept" style="font-size:13px">—</span>
+              <span class="mi-val" id="biz-concept" style="font-size:13px">–</span>
               <button class="mi-copy" onclick="copy(this, document.getElementById('biz-concept').textContent)">Copiar</button>
             </div>
           </div>
@@ -384,25 +384,25 @@
           <div class="mi-row">
             <span class="mi-lbl">IBAN</span>
             <div style="display:flex;align-items:center;gap:8px">
-              <span class="mi-val" id="tr-iban" style="font-size:13px">—</span>
+              <span class="mi-val" id="tr-iban" style="font-size:13px">–</span>
               <button class="mi-copy" onclick="copy(this, document.getElementById('tr-iban').textContent.replace(/\s/g,''))">Copiar</button>
             </div>
           </div>
           <div class="mi-row">
             <span class="mi-lbl">Titular</span>
-            <span class="mi-val" id="tr-titular" style="font-size:13px">—</span>
+            <span class="mi-val" id="tr-titular" style="font-size:13px">–</span>
           </div>
           <div class="mi-row">
             <span class="mi-lbl">Importe</span>
             <div style="display:flex;align-items:center;gap:8px">
-              <span class="mi-val big" id="tr-amount">—</span>
+              <span class="mi-val big" id="tr-amount">–</span>
               <button class="mi-copy" onclick="copy(this, document.getElementById('tr-amount').textContent.replace(' €',''))">Copiar</button>
             </div>
           </div>
           <div class="mi-row">
             <span class="mi-lbl">Concepto</span>
             <div style="display:flex;align-items:center;gap:8px">
-              <span class="mi-val" id="tr-concept" style="font-size:13px">—</span>
+              <span class="mi-val" id="tr-concept" style="font-size:13px">–</span>
               <button class="mi-copy" onclick="copy(this, document.getElementById('tr-concept').textContent)">Copiar</button>
             </div>
           </div>
@@ -421,7 +421,7 @@
         <div id="stripe-payment-element"></div>
         <div id="stripe-error" class="pay-error" hidden></div>
         <button class="pay-btn" id="stripe-btn" onclick="submitStripe()" hidden>
-          <span id="stripe-btn-txt">Pagar <span id="stripe-btn-amount">—</span> ahora</span>
+          <span id="stripe-btn-txt">Pagar <span id="stripe-btn-amount">–</span> ahora</span>
           <span class="pay-arrow" id="stripe-arrow">→</span>
         </button>
       </div>
@@ -434,7 +434,7 @@
       </div>
 
       <p class="pay-note" id="pay-note" hidden>
-        La señal confirma tu reserva. El resto (<strong id="note-resto">—</strong>)
+        La señal confirma tu reserva. El resto (<strong id="note-resto">–</strong>)
         se abona en efectivo o Bizum a la llegada.
       </p>
 
@@ -461,8 +461,8 @@
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2E7D52" stroke-width="2.2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
       </div>
       <p class="result-title">Pago confirmado</p>
-      <p class="result-sub">Hemos recibido tu señal de <strong id="ok-deposit">—</strong>. En breve te enviamos la confirmación de reserva y el contrato firmado por nuestra parte con todas las condiciones.</p>
-      <div class="result-summary" id="ok-summary">—</div>
+      <p class="result-sub">Hemos recibido tu señal de <strong id="ok-deposit">–</strong>. En breve te enviamos la confirmación de reserva y el contrato firmado por nuestra parte con todas las condiciones.</p>
+      <div class="result-summary" id="ok-summary">–</div>
     </div>
   </div>
 
@@ -475,7 +475,7 @@
       <p class="result-title">¡Gracias!</p>
       <p class="result-sub" id="pending-sub">Verificaremos el pago y te confirmamos la reserva en breve.</p>
       <p style="font-size:12.5px;color:var(--ink-soft);margin-top:10px;line-height:1.6">En cuanto confirmemos la recepción del pago te enviamos la confirmación de reserva y el contrato firmado por nuestra parte con todas las condiciones.</p>
-      <div class="result-summary" id="pending-summary">—</div>
+      <div class="result-summary" id="pending-summary">–</div>
     </div>
   </div>
 
@@ -488,14 +488,14 @@
 </footer>
 
 <script>
-  // ── Config — actualizar antes del deploy ─────────────────────────────────
+  // ── Config, actualizar antes del deploy ─────────────────────────────────
   const CFG = {
     stripePublicKey: 'pk_test_REPLACE_WITH_YOUR_STRIPE_PUBLISHABLE_KEY',
     paypalClientId:  'REPLACE_WITH_PAYPAL_CLIENT_ID',
     workerUrl:       'https://hestia-pago.REPLACE.workers.dev',
     bizumPhone:      '+34 620 316 370',   // Alex
     bizumPhoneNum:   '34620316370',
-    ibanTitular:     'TITULAR — actualizar en pago.html',
+    ibanTitular:     'TITULAR, actualizar en pago.html',
     iban:            'ES00 0000 0000 0000 0000 0000',  // actualizar con IBAN real
     web3formsKey:    '95a86784-6d6a-496f-9830-15759c0a3cff',
   };
@@ -511,7 +511,7 @@
 
   const MONTHS = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
   const fmtDate = iso => {
-    if (!iso) return '—';
+    if (!iso) return '–';
     const [y, m, d] = iso.split('-');
     return `${parseInt(d)} ${MONTHS[parseInt(m)-1]} ${y}`;
   };
@@ -670,7 +670,7 @@
               <div style="background:white;border:1.5px solid rgba(42,15,46,.14);border-radius:8px;padding:12px 14px;font-size:15px;color:#3D1A35">123</div>
             </div>
           </div>
-          <div style="margin-top:10px;font-size:11px;color:#C87A45;text-align:center">Modo demo — datos de prueba, sin cargo real</div>
+          <div style="margin-top:10px;font-size:11px;color:#C87A45;text-align:center">Modo demo: datos de prueba, sin cargo real</div>
         </div>`;
       btn.hidden = false;
       return;
@@ -775,7 +775,7 @@
       const container = document.getElementById('paypal-button-container');
       container.innerHTML = `
         <div style="text-align:center;padding:8px 0 4px">
-          <div style="font-size:11px;color:#C87A45;margin-bottom:10px">Modo demo — sin cargo real</div>
+          <div style="font-size:11px;color:#C87A45;margin-bottom:10px">Modo demo, sin cargo real</div>
           <button onclick="simulatePaypal()" style="background:#0070BA;color:white;border:none;border-radius:6px;padding:14px 32px;font-size:15px;font-weight:600;cursor:pointer;width:100%;letter-spacing:.02em">
             Pagar con PayPal (demo)
           </button>

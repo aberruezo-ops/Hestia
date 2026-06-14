@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA — /escribir-opinion · formulario público de opinión.
+// HESTÍA, /escribir-opinion · formulario público de opinión.
 // Envía a Web3Forms (api.web3forms.com/submit) que reenvía email
 // a Alex/Fran. Sin backend propio. Reviews quedan en email hasta
 // que Alex/Fran las aprueban en /p-edit y las añaden a reviews.json.
@@ -16,7 +16,7 @@ const ESCRIBIR_COPY = {
   es: {
     eyebrow: 'Comparte tu experiencia',
     title: (<>Cuéntanos cómo <em>te fue.</em></>),
-    sub: 'Tu opinión es importante. Tras revisarla, la publicaremos en nuestra web. Sin filtros raros — si algo no salió bien, también queremos saberlo.',
+    sub: 'Tu opinión es importante. Tras revisarla, la publicaremos en nuestra web. Sin filtros raros: si algo no salió bien, también queremos saberlo.',
     apt_label: '¿En qué Hestía te alojaste?',
     apt_vm: 'Hestía Mar',
     apt_vt: 'Hestía Thalassa',
@@ -37,7 +37,7 @@ const ESCRIBIR_COPY = {
     sending: 'Enviando…',
     success_title: '¡Gracias!',
     success_text: 'Hemos recibido tu opinión. La revisaremos y, una vez aprobada, aparecerá en nuestra web. Te avisaremos cuando esté publicada.',
-    success_extra: 'Si te animas, también puedes dejarla en Booking.com, Airbnb o Google Maps — son las plataformas en las que la verán otros viajeros.',
+    success_extra: 'Si te animas, también puedes dejarla en Booking.com, Airbnb o Google Maps, son las plataformas en las que la verán otros viajeros.',
     success_back: '← Volver a Opiniones',
     error_generic: 'No hemos podido enviar tu opinión. Inténtalo de nuevo en un minuto, o escríbenos por WhatsApp.',
     val_consent: 'Debes aceptar la política de privacidad para enviar tu opinión.',
@@ -51,7 +51,7 @@ const ESCRIBIR_COPY = {
   en: {
     eyebrow: 'Share your experience',
     title: (<>Tell us how <em>it went.</em></>),
-    sub: 'Your opinion matters. After we review it, we will publish it on our website. No weird filters — if something went wrong, we also want to know.',
+    sub: 'Your opinion matters. After we review it, we will publish it on our website. No weird filters: if something went wrong, we also want to know.',
     apt_label: 'Which Hestía did you stay at?',
     apt_vm: 'Hestía Mar',
     apt_vt: 'Hestía Thalassa',
@@ -72,7 +72,7 @@ const ESCRIBIR_COPY = {
     sending: 'Sending…',
     success_title: 'Thank you!',
     success_text: 'We have received your review. We will check it and once approved it will appear on our website. We\'ll let you know when it\'s published.',
-    success_extra: 'If you feel like it, you can also post it on Booking.com, Airbnb or Google Maps — those are where other travellers will see it.',
+    success_extra: 'If you feel like it, you can also post it on Booking.com, Airbnb or Google Maps, those are where other travellers will see it.',
     success_back: '← Back to Reviews',
     error_generic: 'We could not send your review. Try again in a minute, or message us on WhatsApp.',
     val_consent: 'You must accept the privacy policy to send your review.',
@@ -163,7 +163,7 @@ const EscribirOpinionForm = ({ lang }) => {
     fd.append('Valoración', `${rating}/5`);
     fd.append('Nombre', name);
     fd.append('Email', email);
-    fd.append('Fechas', date || '—');
+    fd.append('Fechas', date || '–');
     fd.append('Idioma', lang === 'es' ? 'Español' : 'English');
     fd.append('Opinión', text);
     // Honeypot anti-spam (Web3Forms lo respeta).
@@ -225,7 +225,7 @@ const EscribirOpinionForm = ({ lang }) => {
             {errors.apt && <span className="eo-err">{errors.apt}</span>}
           </div>
 
-          {/* PIN de reserva — imprescindible */}
+          {/* PIN de reserva, imprescindible */}
           <div className="eo-field">
             <label className="eo-label" htmlFor="eo-pin">
               {t.pin_label} <span className="eo-required" aria-hidden="true">*</span>

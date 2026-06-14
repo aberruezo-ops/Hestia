@@ -1,8 +1,8 @@
 // ============================================================
-// HESTÍA · ADMIN — /p-edit.html
+// HESTÍA · ADMIN, /p-edit.html
 // Editor de docs/data/prices.json + docs/data/reviews.json.
 // Login con GitHub PAT (permiso contents:write sobre el repo).
-// El token vive solo en memoria — nunca en el repo ni localStorage.
+// El token vive solo en memoria, nunca en el repo ni localStorage.
 // Tabs: [ Pricing ] [ Reviews ]
 // ============================================================
 
@@ -13,7 +13,7 @@ const REVIEWS_PATH = 'docs/data/reviews.json';
 const BRANCH = 'main';
 const API    = 'https://api.github.com';
 
-// Cloudflare Web Analytics — Worker proxy + identificadores (no secretos)
+// Cloudflare Web Analytics, Worker proxy + identificadores (no secretos)
 const CF_WORKER_URL = 'https://little-night-9399.hestia-vera-almeria.workers.dev/';
 const CF_ACCOUNT    = 'ccb910d549f39e3bad5d89e33315d57e';
 const CF_SITE_TAG   = '770c05669c6b45ea8f1026576fe7dcce';
@@ -39,7 +39,7 @@ const apiHeaders = (token) => ({
 });
 
 // ============================================================
-// CONTRATO — datos por apartamento (variantes de la plantilla
+// CONTRATO, datos por apartamento (variantes de la plantilla
 // unificada en docs/contracts/template-base.md).
 // ============================================================
 const APT_CONTRACT_DATA = {
@@ -143,7 +143,7 @@ function addDaysIso(iso, days) {
 const utf8ToB64 = (s) => btoa(unescape(encodeURIComponent(s)));
 const b64ToUtf8 = (s) => decodeURIComponent(escape(atob(s.replace(/\n/g, ''))));
 
-// NumInput — resuelve el problema clásico de React con inputs numéricos
+// NumInput, resuelve el problema clásico de React con inputs numéricos
 // controlados: imposibilidad de borrar un "0", punto decimal eliminado al vuelo.
 // Mantiene estado string local mientras el campo está activo; solo confirma
 // al parent cuando hay un número válido completo. Selecciona todo al enfocar.
@@ -191,7 +191,7 @@ const NumInput = ({ value, onChange, min, max, step, className, placeholder, dis
 };
 
 // ============================================================
-// validateYearCoverage — para un año dado, comprueba que cada
+// validateYearCoverage: para un año dado, comprueba que cada
 // día está cubierto por exactamente una temporada/especial. Los
 // puentes no cuentan: solo bumpean +1 grado, no asignan
 // temporada base.
@@ -280,7 +280,7 @@ const sourceLabel = (src, cal, seasons) => {
 };
 
 // ============================================================
-// CalendarEditor — UI estructurada para editar el calendario.
+// CalendarEditor, UI estructurada para editar el calendario.
 // Lee/escribe el mismo JSON que el textarea (fuente única) pero
 // con tablas por año + secciones de especiales y puentes. El
 // textarea avanzado se mantiene plegado para edición libre.
@@ -351,7 +351,7 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
     return (
       <div className="pe-card">
         <h2>Calendario y horizonte de reservas</h2>
-        <div className="pe-error">JSON inválido — {calErr}. Edita el bloque avanzado abajo para arreglarlo.</div>
+        <div className="pe-error">JSON inválido, {calErr}. Edita el bloque avanzado abajo para arreglarlo.</div>
         <textarea
           value={calJson}
           onChange={e => updateCalJson(e.target.value)}
@@ -399,7 +399,7 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
               <div className="pe-validate">
                 {valid.gaps.length > 0 && (
                   <div className="pe-validate-block pe-validate-gaps">
-                    <strong>{valid.gaps.length} hueco(s) sin temporada — añade un rango que los cubra:</strong>
+                    <strong>{valid.gaps.length} hueco(s) sin temporada, añade un rango que los cubra:</strong>
                     <ul>
                       {valid.gaps.map((g, i) => (
                         <li key={i}>
@@ -411,13 +411,13 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
                 )}
                 {valid.overlaps.length > 0 && (
                   <div className="pe-validate-block pe-validate-overlaps">
-                    <strong>{valid.overlaps.length} solapamiento(s) — un día solo puede pertenecer a una temporada o especial:</strong>
+                    <strong>{valid.overlaps.length} solapamiento(s), un día solo puede pertenecer a una temporada o especial:</strong>
                     <ul>
                       {valid.overlaps.map((o, i) => (
                         <li key={i}>
                           {o.start === o.end ? o.start : `${o.start} → ${o.end}`}
                           <span className="pe-validate-sources">
-                            {' '}— {o.sources.map(s => sourceLabel(s, cal, seasons)).join(' + ')}
+                            {' '}– {o.sources.map(s => sourceLabel(s, cal, seasons)).join(' + ')}
                           </span>
                         </li>
                       ))}
@@ -544,7 +544,7 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
               className="pe-textarea pe-mono"
               spellCheck="false"
             />
-            {!calOk && <div className="pe-error">JSON inválido — {calErr}</div>}
+            {!calOk && <div className="pe-error">JSON inválido, {calErr}</div>}
           </>
         )}
       </div>
@@ -553,7 +553,7 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
 };
 
 // ============================================================
-// REVIEWS — modelo + componentes de la pestaña Reviews
+// REVIEWS, modelo + componentes de la pestaña Reviews
 // ============================================================
 const REVIEW_SOURCES = [
   { id: 'booking', label: 'Booking.com', short: 'Booking', color: '#003B95' },
@@ -578,7 +578,7 @@ const ReviewRow = ({ review, onChange, onRemove, onApprove }) => {
   const sourceMeta = REVIEW_SOURCES.find(s => s.id === review.source) || REVIEW_SOURCES[3];
   const aptMeta   = REVIEW_APTS.find(a => a.id === review.apt) || { label: review.apt };
   const isPending = review.status === 'pending';
-  const dateLbl = review.date ? review.date.slice(0, 7) : '—';
+  const dateLbl = review.date ? review.date.slice(0, 7) : '–';
   const snippet = (review.text || '').slice(0, 110);
   const ratingLbl = review.source === 'booking'
     ? `${review.rating}/10`
@@ -601,7 +601,7 @@ const ReviewRow = ({ review, onChange, onRemove, onApprove }) => {
         </span>
         <span className="pe-rev-apt-badge">{aptMeta.label}</span>
         <span className="pe-rev-date-cell">{dateLbl}</span>
-        <span className="pe-rev-name-cell">{review.name || '—'}</span>
+        <span className="pe-rev-name-cell">{review.name || '–'}</span>
         <span className="pe-rev-country-cell">{review.country || ''}</span>
         <span className="pe-rev-rating-cell">{ratingLbl}{review.highlight ? ' ✦' : ''}</span>
         {isPending && onApprove && (
@@ -785,7 +785,7 @@ const PasteFromEmail = ({ onAdd, onCancel }) => {
       id: newReviewId('web'),
       source: 'web',
       apt: parsed.apt,
-      name: parsed.name || '—',
+      name: parsed.name || '–',
       country: '',
       date: parsed.date,
       rating: Number(parsed.rating) || 5,
@@ -830,11 +830,11 @@ const PasteFromEmail = ({ onAdd, onCancel }) => {
           <dl className="pe-paste-grid">
             <dt>Hestía</dt>      <dd>{(REVIEW_APTS.find(a => a.id === parsed.apt) || {}).label || parsed.apt}</dd>
             <dt>Valoración</dt>  <dd>{parsed.rating}/5</dd>
-            <dt>Nombre</dt>      <dd>{parsed.name || <em>— no detectado</em>}</dd>
+            <dt>Nombre</dt>      <dd>{parsed.name || <em>– no detectado</em>}</dd>
             {parsed.email && (<><dt>Email</dt><dd className="pe-mono">{parsed.email}</dd></>)}
             <dt>Fecha</dt>       <dd className="pe-mono">{fmtDate(parsed.date)}</dd>
             <dt>Idioma</dt>      <dd>{parsed.lang.toUpperCase()}</dd>
-            <dt>Texto</dt>       <dd className="pe-paste-text">{parsed.text || <em>— no detectado</em>}</dd>
+            <dt>Texto</dt>       <dd className="pe-paste-text">{parsed.text || <em>– no detectado</em>}</dd>
           </dl>
           <div className="pe-actions" style={{marginTop:14}}>
             <button type="button" onClick={accept} className="pe-btn pe-btn-primary">
@@ -933,7 +933,7 @@ const NewReviewForm = ({ onAdd, onCancel }) => {
 };
 
 // ============================================================
-// DashboardTab — resumen histórico + live 2026
+// DashboardTab, resumen histórico + live 2026
 // ============================================================
 
 const dashFmtMoney = v => v >= 1000
@@ -1206,7 +1206,7 @@ function ReservasNochesChart({ years, yearData }) {
 }
 
 // ============================================================
-// IntelligenciaTab — panel unificado: tráfico + negocio + acciones
+// IntelligenciaTab, panel unificado: tráfico + negocio + acciones
 // ============================================================
 const IntelligenciaTab = ({ token, onNavigate }) => {
   const [days,     setDays]     = React.useState(30);
@@ -1322,7 +1322,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
       if (rate < 0.05) {
         out.push({ sev: 'alta', cat: 'Conversión', title: `Conversión búsqueda→reserva: ${Math.round(rate * 100)}%`, desc: `${sent} de ${searches} búsquedas acaban en reserva. Revisa precios, mínimos de estancia y la fricción del formulario.`, tab: 'pricing' });
       } else if (rate < 0.12) {
-        out.push({ sev: 'media', cat: 'Conversión', title: `Conversión al ${Math.round(rate * 100)}% — hay recorrido`, desc: `${sent} reservas de ${searches} búsquedas. Un CTA más directo o un price anchoring más claro podría mejorar el ratio.` });
+        out.push({ sev: 'media', cat: 'Conversión', title: `Conversión al ${Math.round(rate * 100)}%, hay recorrido`, desc: `${sent} reservas de ${searches} búsquedas. Un CTA más directo o un price anchoring más claro podría mejorar el ratio.` });
       }
     }
 
@@ -1374,7 +1374,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
       if (total >= 3 && ota / total > 0.65) {
         out.push({ sev: 'alta', cat: 'Canales', title: `${Math.round(ota / total * 100)}% reservas OTA en 2026`, desc: 'Alta dependencia de Booking/Airbnb. Activa newsletter, redes y WhatsApp directo para reducir comisiones.', tab: 'pricing' });
       } else if (total >= 3 && direct / total > 0.45) {
-        out.push({ sev: 'baja', cat: 'Canales', title: `${Math.round(direct / total * 100)}% reservas directas — buen ratio`, desc: 'Mantén los canales directos activos y sigue priorizando WhatsApp y la reserva sin intermediarios.' });
+        out.push({ sev: 'baja', cat: 'Canales', title: `${Math.round(direct / total * 100)}% reservas directas, buen ratio`, desc: 'Mantén los canales directos activos y sigue priorizando WhatsApp y la reserva sin intermediarios.' });
       }
     }
 
@@ -1405,7 +1405,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
   const totalPV  = cfData ? (cfData.pages     || []).reduce((s, r) => s + r.count, 0) : null;
   const totalCtr = cfData ? (cfData.countries || []).reduce((s, r) => s + r.count, 0) : 0;
   const totalDev = cfData ? (cfData.devices   || []).reduce((s, r) => s + r.count, 0) : 0;
-  const topCtry  = cfData ? ((cfData.countries || [])[0]?.dimensions?.countryName || '—') : null;
+  const topCtry  = cfData ? ((cfData.countries || [])[0]?.dimensions?.countryName || '–') : null;
   const funnConv = (() => { const s = fc['search_initiated'] || 0; const r = fc['booking_sent'] || 0; return s ? Math.round(r / s * 100) + '%' : null; })();
   const stats26  = yearData?.['2026'];
   const years    = yearData ? Object.keys(yearData).sort() : [];
@@ -1464,27 +1464,27 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
         <>
           <div className="intel-kpis">
             <div className="intel-kpi">
-              <div className="intel-kpi-val" style={{ color: '#1BC8D8' }}>{totalPV != null ? totalPV.toLocaleString('es-ES') : '—'}</div>
+              <div className="intel-kpi-val" style={{ color: '#1BC8D8' }}>{totalPV != null ? totalPV.toLocaleString('es-ES') : '–'}</div>
               <div className="intel-kpi-lbl">Páginas vistas · {days}d</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val">{topCtry ?? '—'}</div>
+              <div className="intel-kpi-val">{topCtry ?? '–'}</div>
               <div className="intel-kpi-lbl">País principal</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val" style={{ color: funnConv && parseInt(funnConv) < 5 ? '#E74C3C' : '#D4A84A' }}>{funnConv ?? '—'}</div>
+              <div className="intel-kpi-val" style={{ color: funnConv && parseInt(funnConv) < 5 ? '#E74C3C' : '#D4A84A' }}>{funnConv ?? '–'}</div>
               <div className="intel-kpi-lbl">Conversión búsqueda→reserva</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val" style={{ color: '#D4A84A' }}>{stats26 ? dashFmtMoney(stats26.ingresos) : '—'}</div>
+              <div className="intel-kpi-val" style={{ color: '#D4A84A' }}>{stats26 ? dashFmtMoney(stats26.ingresos) : '–'}</div>
               <div className="intel-kpi-lbl">Ingresos 2026</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val">{stats26 ? stats26.reservas : '—'}</div>
+              <div className="intel-kpi-val">{stats26 ? stats26.reservas : '–'}</div>
               <div className="intel-kpi-lbl">Reservas 2026</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val">{stats26 ? dashFmtMoney(stats26.precio_noche) : '—'}</div>
+              <div className="intel-kpi-val">{stats26 ? dashFmtMoney(stats26.precio_noche) : '–'}</div>
               <div className="intel-kpi-lbl">Precio/noche medio 2026</div>
             </div>
           </div>
@@ -1536,13 +1536,13 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
                         <div className="pe-cf-col">
                           <div className="pe-cf-col-title">Países</div>
                           {(cfData.countries || []).map((r, i) => (
-                            <BarRow key={i} label={r.dimensions.countryName || '—'} count={r.count} total={totalCtr} bold={i === 0} />
+                            <BarRow key={i} label={r.dimensions.countryName || '–'} count={r.count} total={totalCtr} bold={i === 0} />
                           ))}
                         </div>
                         <div className="pe-cf-col">
                           <div className="pe-cf-col-title">Dispositivos</div>
                           {(cfData.devices || []).map((r, i) => (
-                            <BarRow key={i} label={r.dimensions.deviceType || '—'} count={r.count} total={totalDev} bold={i === 0} />
+                            <BarRow key={i} label={r.dimensions.deviceType || '–'} count={r.count} total={totalDev} bold={i === 0} />
                           ))}
                         </div>
                       </div>
@@ -1639,7 +1639,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
                             <td className="pe-ev-ts">{fmtEvt(ev.ts)}</td>
                             <td className="pe-ev-name">{ev.name}</td>
                             <td className="pe-ev-data">
-                              {Object.entries(ev).filter(([k]) => k !== 'ts' && k !== 'name').map(([k, v]) => `${k}: ${v}`).join(' · ') || '—'}
+                              {Object.entries(ev).filter(([k]) => k !== 'ts' && k !== 'name').map(([k, v]) => `${k}: ${v}`).join(' · ') || '–'}
                             </td>
                           </tr>
                         ))}
@@ -1657,7 +1657,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
 };
 
 // ============================================================
-// ContractTab — generador de contratos de arrendamiento.
+// ContractTab, generador de contratos de arrendamiento.
 // Plantilla base: docs/contracts/template-base.md.
 // Flujo: rellenas el formulario → "Generar contrato y abrir correo"
 // abre dos cosas a la vez:
@@ -1666,7 +1666,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
 //      prerrellenados (el usuario adjunta el PDF descargado).
 // ============================================================
 const ContractTab = ({ pricesData, prefill, token }) => {
-  // Estado del formulario — usa prefill si llega desde Reservas
+  // Estado del formulario, usa prefill si llega desde Reservas
   const today = new Date().toISOString().slice(0,10);
   const p = prefill || {};
   const [apt, setApt]                 = React.useState(p.apt || 'vm');
@@ -1728,7 +1728,7 @@ const ContractTab = ({ pricesData, prefill, token }) => {
   const noches = diffNoches(fechaEntrada, fechaSalida);
   const remanente = Math.max(0, Number(precioTotal||0) - Number(prereserva||0) - Number(pagoPrevio||0));
 
-  // Lista de extras (tabla cláusula novena) — leídos de prices.json.
+  // Lista de extras (tabla cláusula novena), leídos de prices.json.
   const extras = (pricesData && pricesData.rules && pricesData.rules.extras) || [];
 
   const formOk = () => apt && nombre && fechaEntrada && fechaSalida
@@ -1759,7 +1759,7 @@ const ContractTab = ({ pricesData, prefill, token }) => {
     return new Promise(resolve => {
       const img = new Image();
       img.onload = () => {
-        // W/H = 2100/650 = 210/65 exactly — same ratio as jsPDF target
+        // W/H = 2100/650 = 210/65 exactly, same ratio as jsPDF target
         const W = 2100, H = 650;
         const c = document.createElement('canvas');
         c.width = W; c.height = H;
@@ -1768,14 +1768,14 @@ const ContractTab = ({ pricesData, prefill, token }) => {
         const tgtAR = W / H; // 3.818:1
         let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight;
         if (Math.abs(srcAR - tgtAR) / tgtAR < 0.02) {
-          // already at target ratio (e.g. pre-built collage) — just resize
+          // already at target ratio (e.g. pre-built collage), just resize
         } else if (srcAR > tgtAR) {
           // landscape wider: crop sides equally
           sh = img.naturalHeight; sw = sh * tgtAR;
           sx = (img.naturalWidth - sw) / 2;
         } else {
           // narrower than target ratio: use full width y recorte vertical
-          // CENTRADO — encuadra bien el cabecero + los cojines de la cama de frente.
+          // CENTRADO, encuadra bien el cabecero + los cojines de la cama de frente.
           sw = img.naturalWidth;
           sh = sw / tgtAR;
           sx = 0;
@@ -2127,7 +2127,7 @@ ${bloqueAccesibilidad}
     <tr><td><strong>Señal / prereserva</strong></td><td class="num">${prereserva} €</td><td>Transferencia a ES2114650100911726525059 o Bizum a +34 620 316 370</td></tr>
     ${pagoPrevioN > 0 ? `<tr><td><strong>Pago previo</strong></td><td class="num">${pagoPrevio} €</td><td>Transferencia o Bizum (según acuerdo)</td></tr>` : ''}
     <tr><td><strong>Remanente (check-in)</strong></td><td class="num">${remanente} €</td><td>Efectivo en el momento del check-in</td></tr>
-    ${fianza ? `<tr><td><strong>Fianza</strong></td><td class="num">300 €</td><td>Transferencia 2 días antes de la llegada — se devuelve al check-out</td></tr>` : ''}
+    ${fianza ? `<tr><td><strong>Fianza</strong></td><td class="num">300 €</td><td>Transferencia 2 días antes de la llegada, se devuelve al check-out</td></tr>` : ''}
     <tr style="border-top: 1pt solid var(--ber)"><td><strong>TOTAL</strong></td><td class="num"><strong>${precioTotal} €</strong></td><td></td></tr>
   </tbody>
 </table>
@@ -2187,7 +2187,7 @@ ${clausulaFianza}
 <p>Respetad y no extraigáis de Hestía el equipamiento, el contenido, el mobiliario y los detalles. Tras vuestra estancia se realizará un inventario e inspección de Hestía, con lo que cualquier deterioro o sustracción será vuestra responsabilidad.</p>
 <p>Nuestro máximo deseo es que descanséis y que respetéis igualmente el descanso de nuestros vecinos, evitando los ruidos, la música y el jaleo a deshoras. Hestía es exclusivamente para vuestro uso y disfrute, no para el de otros.</p>
 <p>Respetad las horas de check-in (a partir de las 15:00) y check-out (hasta las 11:00). No están permitidas las mascotas, salvo aprobación explícita. No fuméis. Las toallas son para uso exclusivo dentro de Hestía. Solo está permitido colgar ropa en el tendedero. El uso de las zonas comunes será en el horario permitido, especialmente la piscina. No está permitido el naturismo ni el toples en toda la urbanización, ya que se trata de una urbanización textil. Cualquier incidente o problemática derivada de los menores de edad será responsabilidad de sus padres/tutores. Cualquier situación o incidente de los servicios comunes o del exterior de Hestía no es responsabilidad nuestra, aunque intentaremos ayudarte. Por favor, intenta dejar Hestía limpio y recogido. De las sábanas y toallas nos encargamos nosotros. En cualquier caso, no laves las toallas y sábanas con ropa de otro color, por favor.</p>
-<p><strong>Mancomunidad y zonas comunes.</strong> No se permite circular a velocidad superior a la indicada por la mancomunidad — en general, muy reducida. Hay niños, mascotas y peatones; conducid siempre despacio. Asimismo, no se permite ensuciar ni deteriorar las zonas comunes (jardines, piscina, ascensores, pasillos y descansillos). Cualquier desperfecto o suciedad reiterada será responsabilidad del huésped.</p>
+<p><strong>Mancomunidad y zonas comunes.</strong> No se permite circular a velocidad superior a la indicada por la mancomunidad: en general, muy reducida. Hay niños, mascotas y peatones; conducid siempre despacio. Asimismo, no se permite ensuciar ni deteriorar las zonas comunes (jardines, piscina, ascensores, pasillos y descansillos). Cualquier desperfecto o suciedad reiterada será responsabilidad del huésped.</p>
 
 <div class="sign-page">
 <h2>Firma del contrato</h2>
@@ -2220,11 +2220,11 @@ ${clausulaFianza}
   async function generate() {
     try { await document.fonts.ready; } catch(e) {}
     var el = document.getElementById('pdf-content');
-    // margin: [top, right, bottom, left] — la barra fina (18mm) y el pie viven en estos
+    // margin: [top, right, bottom, left], la barra fina (18mm) y el pie viven en estos
     // márgenes; el contenido (incl. el hero, ya dentro del flujo) nunca los invade.
     // La barra fina ocupa 0–18mm y el pie ~287–290mm. Dejamos MARG_TOP/BOT MAYORES
     // que esas franjas para que SIEMPRE quede una banda blanca entre cabecera y
-    // contenido, y entre contenido y pie — imposible que se solapen en ninguna página.
+    // contenido, y entre contenido y pie, imposible que se solapen en ninguna página.
     var MARG_TOP = 26, MARG_BOT = 30;
     var opt = {
       margin: [MARG_TOP, 0, MARG_BOT, 0],
@@ -2238,7 +2238,7 @@ ${clausulaFianza}
       // avoid explícito: más fiable que el page-break-inside del CSS para que
       // html2pdf NUNCA parta el bloque de firmas ni una fila de tabla (evita que
       // las firmas se corten y pisen el pie si caen en el borde de página).
-      // Las firmas SIEMPRE en su propia página (before) — html2pdf/Safari a veces
+      // Las firmas SIEMPRE en su propia página (before), html2pdf/Safari a veces
       // partía o se comía el bloque si caía en un borde. En página propia entra
       // entero y nunca se pierde. 'tr' evita partir filas de tabla.
       pagebreak: { mode: ['css', 'legacy'], before: ['.sign-page'], avoid: ['tr'] }
@@ -2296,7 +2296,7 @@ ${clausulaFianza}
     }
 
     await worker.save();
-    document.getElementById('gen-status').textContent = 'PDF descargado — puedes cerrar esta pestaña o usar Ctrl+P si necesitas imprimirlo.';
+    document.getElementById('gen-status').textContent = 'PDF descargado, puedes cerrar esta pestaña o usar Ctrl+P si necesitas imprimirlo.';
   }
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -2341,7 +2341,7 @@ info@hestiayourhome.com · +34 620 316 370`;
       alert('Faltan campos por rellenar. Comprueba que el huésped tiene nombre, fechas y precio total > 0, y que la prereserva no supere el total.');
       return;
     }
-    // SYNC — must happen inside the user-gesture context, before any await.
+    // SYNC: must happen inside the user-gesture context, before any await.
     // Browsers block window.open and mailto navigation triggered asynchronously.
     const w = window.open('', '_blank');
     if (!w) {
@@ -2356,7 +2356,7 @@ info@hestiayourhome.com · +34 620 316 370`;
     aEl.click();
     document.body.removeChild(aEl);
 
-    // ASYNC — pre-load images as data URIs so they embed correctly in the PDF.
+    // ASYNC, pre-load images as data URIs so they embed correctly in the PDF.
     const [heroRaw, logoDataUrl, wmDataUrl] = await Promise.all([
       fetchDataUrl(aptInfo.heroPhoto),
       fetchDataUrl('assets/logo-hestia-brand.png'),
@@ -2465,7 +2465,7 @@ info@hestiayourhome.com · +34 620 316 370`;
 };
 
 // ============================================================
-// ReservasTab — pestaña de reservas (v2).
+// ReservasTab, pestaña de reservas (v2).
 //
 // Lee data-private/reservas.json vía la API de GitHub con el PAT
 // del usuario. La carpeta data-private/ vive FUERA de docs/, por
@@ -2658,13 +2658,13 @@ function reservaStatus(r, todayStr) {
 }
 
 const fmtEur = n => (n == null || isNaN(n))
-  ? '—'
+  ? '–'
   : `${Number(n).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
 const fmtPct = n => (n == null || isNaN(n))
-  ? '—'
+  ? '–'
   : `${(Number(n) * 100).toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %`;
 const fmtDate = (d) => {
-  if (!d) return '—';
+  if (!d) return '–';
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d));
   return m ? `${m[3]}.${m[2]}.${m[1].slice(2)}` : d;
 };
@@ -2787,7 +2787,7 @@ const BloquesTab = ({ token }) => {
   );
 };
 
-// FacturasTab — Gastos deducibles por año / apartamento
+// FacturasTab, Gastos deducibles por año / apartamento
 // Datos en PRIVATE_REPO/facturas.json
 // PDFs en PRIVATE_REPO/facturas-pdf/<filename>
 // ============================================================
@@ -3089,10 +3089,10 @@ const FacturasTab = ({ token }) => {
                   <tr key={i} className="fac-row" onClick={() => openEdit(i)}>
                     <td className="fac-date">{fmtDate(f.fecha)}</td>
                     <td className="fac-proveedor">
-                      <strong>{f.proveedor || '—'}</strong>
+                      <strong>{f.proveedor || '–'}</strong>
                       {f.nif && <span className="fac-nif">{f.nif}</span>}
                     </td>
-                    <td className="fac-concepto">{f.concepto || '—'}</td>
+                    <td className="fac-concepto">{f.concepto || '–'}</td>
                     <td><span className="fac-cat-chip">{catLabel}</span></td>
                     <td>
                       {f.apt && f.apt !== 'general'
@@ -3100,13 +3100,13 @@ const FacturasTab = ({ token }) => {
                         : <span className="fac-apt-gen">General</span>}
                     </td>
                     <td className="num">{fmtEur(f.base)}</td>
-                    <td className="num fac-iva">{f.iva_pct ? `${f.iva_pct}%` : '—'}</td>
+                    <td className="num fac-iva">{f.iva_pct ? `${f.iva_pct}%` : '–'}</td>
                     <td className="num"><strong>{fmtEur(f.total)}</strong></td>
                     <td className="num fac-deducible">{fmtEur(deducible)}{f.deducible_pct < 100 ? <span className="fac-pct"> ({f.deducible_pct}%)</span> : ''}</td>
                     <td className="fac-pdf-cell" onClick={e => e.stopPropagation()}>
                       {f.factura_pdf
                         ? <button type="button" className="fac-pdf-btn" title={f.factura_pdf} onClick={() => handlePdfDownload(f.factura_pdf)}>📎 PDF</button>
-                        : <span className="fac-no-pdf">—</span>}
+                        : <span className="fac-no-pdf">–</span>}
                     </td>
                     <td className="fac-actions-cell" onClick={e => e.stopPropagation()}>
                       <button type="button" className="fac-del-btn" title="Borrar" onClick={() => deleteFactura(i)}>🗑</button>
@@ -3119,7 +3119,7 @@ const FacturasTab = ({ token }) => {
               <tr className="fac-foot">
                 <td colSpan="5">Total {filtered.length} factura{filtered.length !== 1 ? 's' : ''}</td>
                 <td className="num"><strong>{fmtEur(totBase)}</strong></td>
-                <td className="num">—</td>
+                <td className="num">–</td>
                 <td className="num"><strong>{fmtEur(totTotal)}</strong></td>
                 <td className="num fac-deducible"><strong>{fmtEur(totDeducible)}</strong></td>
                 <td colSpan="2"/>
@@ -3285,7 +3285,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
 
   const copyToSheets = async (currentData) => {
     if (!SHEETS_WORKER_URL) {
-      setSyncMsg('Sync con Google Sheets no configurado — ver SETUP-SHEETS-SYNC.md');
+      setSyncMsg('Sync con Google Sheets no configurado, ver SETUP-SHEETS-SYNC.md');
       return;
     }
     setSyncing(true); setSyncMsg(null);
@@ -3538,13 +3538,13 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
                     return (
                       <tr key={r._idx}>
                         <td className="leila-apt">{APT_LABEL[r.apt] || r.apt}</td>
-                        <td className="leila-guest">{r.responsable || '—'}</td>
+                        <td className="leila-guest">{r.responsable || '–'}</td>
                         <td className="leila-dates">{fmtDate(r.entrada)}{r.salida ? ` · ${fmtDate(r.salida)}` : ''}</td>
-                        <td className="num">{r.noches || '—'}</td>
-                        <td className="num">{r.ingreso_total != null ? `${r.ingreso_total} €` : '—'}</td>
-                        <td className="num">{r.bai != null ? `${r.bai} €` : '—'}</td>
-                        <td className="num">{r.rentabilidad_pct != null ? `${Math.round(r.rentabilidad_pct * 1000) / 10} %` : '—'}</td>
-                        <td className="num">{r.precio_bruto_noche != null ? `${r.precio_bruto_noche} €` : '—'}</td>
+                        <td className="num">{r.noches || '–'}</td>
+                        <td className="num">{r.ingreso_total != null ? `${r.ingreso_total} €` : '–'}</td>
+                        <td className="num">{r.bai != null ? `${r.bai} €` : '–'}</td>
+                        <td className="num">{r.rentabilidad_pct != null ? `${Math.round(r.rentabilidad_pct * 1000) / 10} %` : '–'}</td>
+                        <td className="num">{r.precio_bruto_noche != null ? `${r.precio_bruto_noche} €` : '–'}</td>
                         <td className="num">{tarifa} €</td>
                         <td className="num">
                           <NumInput step="1" min="0" className="leila-cobro-input"
@@ -3554,7 +3554,7 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
                           />
                         </td>
                         <td className={`num ${acum > 0 ? 'leila-owe' : acum < 0 ? 'leila-over' : 'leila-ok'}`}>
-                          {acum === 0 ? '—' : `${acum > 0 ? '+' : ''}${acum} €`}
+                          {acum === 0 ? '–' : `${acum > 0 ? '+' : ''}${acum} €`}
                         </td>
                       </tr>
                     );
@@ -3567,9 +3567,9 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
                     <td className="num">{rows.reduce((s,r) => s + (Number(r.bai)||0), 0)} €</td>
                     <td colSpan="2"/>
                     <td className="num">{mTarifa} €</td>
-                    <td className="num">{mEfectivo > 0 ? `${mEfectivo} €` : '—'}</td>
+                    <td className="num">{mEfectivo > 0 ? `${mEfectivo} €` : '–'}</td>
                     <td className={`num ${(mEfectivo - mTarifa) > 0 ? 'leila-owe' : (mEfectivo - mTarifa) < 0 ? 'leila-over' : 'leila-ok'}`}>
-                      {(mEfectivo - mTarifa) === 0 ? '—' : `${(mEfectivo - mTarifa) > 0 ? '+' : ''}${mEfectivo - mTarifa} €`}
+                      {(mEfectivo - mTarifa) === 0 ? '–' : `${(mEfectivo - mTarifa) > 0 ? '+' : ''}${mEfectivo - mTarifa} €`}
                     </td>
                   </tr>
                 </tfoot>
@@ -3803,7 +3803,7 @@ const PrereservasTab = ({ token, refreshKey }) => {
   };
 
   const noches = (pr) => pr.entrada && pr.salida
-    ? Math.round((new Date(pr.salida) - new Date(pr.entrada)) / 86400000) : '—';
+    ? Math.round((new Date(pr.salida) - new Date(pr.entrada)) / 86400000) : '–';
 
   if (loading) return <div className="pe-loading">Cargando prereservas…</div>;
 
@@ -3890,8 +3890,8 @@ const PrereservasTab = ({ token, refreshKey }) => {
                   <td>{fmtDate(pr.salida)}</td>
                   <td>{noches(pr)}</td>
                   <td>{fmtEur(pr.ingreso_total)}</td>
-                  <td>{pr.reserva ? fmtEur(pr.reserva) : '—'}</td>
-                  <td className="pe-hint">{pr.canal||'—'}</td>
+                  <td>{pr.reserva ? fmtEur(pr.reserva) : '–'}</td>
+                  <td className="pe-hint">{pr.canal||'–'}</td>
                   <td style={{ whiteSpace:'nowrap' }}>
                     <button className="pe-btn pe-btn-primary" style={{ marginRight:6 }}
                       disabled={!!syncing} onClick={() => syncItem(pr)}>
@@ -3961,7 +3961,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
         .then(hist => { if (hist) setHistData(hist); })
         .catch(() => {}),
     ])
-    .catch(e => setError('Error cargando reservas: ' + e.message + ' — F12 para detalle.'))
+    .catch(e => setError('Error cargando reservas: ' + e.message + ', F12 para detalle.'))
     .finally(() => setLoading(false));
   }, [token]);
 
@@ -4004,7 +4004,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
 
   const copyToSheets = async (currentData) => {
     if (!SHEETS_WORKER_URL) {
-      setSyncMsg('Sync con Google Sheets no configurado — ver SETUP-SHEETS-SYNC.md');
+      setSyncMsg('Sync con Google Sheets no configurado, ver SETUP-SHEETS-SYNC.md');
       return;
     }
     setSyncing(true); setSyncMsg(null);
@@ -4029,7 +4029,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
   const today    = new Date().toISOString().slice(0, 10);
 
   // --- Agrupación por año. Usamos r.year (calculado por el parser
-  // a partir de la fecha de SALIDA — criterio contable de Hestía).
+  // a partir de la fecha de SALIDA, criterio contable de Hestía).
   // Fallback a la fecha de salida o entrada si falta. ---
   const yearOf = r => r.year ? String(r.year) : ((r.salida || r.entrada || '').slice(0, 4));
   const currentYear = String(new Date().getFullYear());
@@ -4134,11 +4134,11 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
     const dias = Math.round((new Date(r.entrada) - new Date(today)) / 86400000);
     const lines = [
       `🏠 *Reserva en ${dias} día${dias !== 1 ? 's' : ''} · ${apt}*`,
-      `👤 ${r.responsable || '—'}`,
+      `👤 ${r.responsable || '–'}`,
       r.telefono    ? `📞 ${r.telefono}` : '',
       `📅 Entrada: ${fmtDate(r.entrada)}`,
       `📅 Salida:  ${fmtDate(r.salida)}`,
-      `🌙 ${r.noches || '—'} noches · ${r.huespedes || '—'} pax`,
+      `🌙 ${r.noches || '('} noches · ${r.huespedes || ')'} pax`,
       r.canal ? `📲 Canal: ${r.canal}` : '',
       r.ingreso_total ? `💶 Total: ${fmtEur(r.ingreso_total)}` : '',
       r.bai         ? `📈 BAI: ${fmtEur(r.bai)}` : '',
@@ -4269,7 +4269,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
   const updateDraft = (field, value) => {
     setDraft(prev => {
       let next = { ...prev, [field]: value };
-      // Al cambiar canal, resetear override de comisión — calcDerived la recalcula.
+      // Al cambiar canal, resetear override de comisión, calcDerived la recalcula.
       if (field === 'canal') {
         next._comision_manual = false;
       }
@@ -4320,7 +4320,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
     const cleaned = calcDerived(d);
     const overlap = findOverlap(cleaned, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
     if (overlap) {
-      setError(`Solape de fechas: la reserva de ${overlap.responsable || '—'} (${fmtDate(overlap.entrada)} → ${fmtDate(overlap.salida)}) en ${overlap.apt?.toUpperCase() || '—'} se superpone con estas fechas. Corrige antes de guardar.`);
+      setError(`Solape de fechas: la reserva de ${overlap.responsable || '–'} (${fmtDate(overlap.entrada)} → ${fmtDate(overlap.salida)}) en ${overlap.apt?.toUpperCase() || '–'} se superpone con estas fechas. Corrige antes de guardar.`);
       return;
     }
     const nr = [...reservas];
@@ -4517,7 +4517,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
 
       <div className="pe-card rv-card">
         <div className="rv-head">
-          <h2>🗓️ Reservas <span className="rv-count">· año {focusYear} · {kFocus.reservas} reservas · actualizado {data.updatedAt ? data.updatedAt.slice(0,10) : '—'}</span></h2>
+          <h2>🗓️ Reservas <span className="rv-count">· año {focusYear} · {kFocus.reservas} reservas · actualizado {data.updatedAt ? data.updatedAt.slice(0,10) : '–'}</span></h2>
           <div className="rv-head-actions">
             <button type="button" className="pe-btn pe-btn-ghost" onClick={loadData} disabled={loading}>
               {loading ? 'Recargando…' : 'Recargar'}
@@ -4551,7 +4551,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                 {icalDiscrepancies.map((d, i) => (
                   <li key={i}>
                     <strong>{d.label}</strong>: {d.start} → {d.end}
-                    <span className="rv-discrepancy-note"> — bloqueado en Airbnb/Booking pero sin reserva registrada en P-Edit</span>
+                    <span className="rv-discrepancy-note">, bloqueado en Airbnb/Booking pero sin reserva registrada en P-Edit</span>
                   </li>
                 ))}
               </ul>
@@ -4602,18 +4602,18 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                       <tr key={y}
                           className={`rv-yearly-row${isFocus ? ' is-focus' : ''}${isAgg ? ' rv-yearly-row-agg' : ''}`}
                           onClick={() => { setFocusYearOverride(y); setFocusMonth('all'); }}
-                          title={isAgg ? 'Datos agregados — sin fichas individuales para este año' : ''}>
+                          title={isAgg ? 'Datos agregados, sin fichas individuales para este año' : ''}>
                         <td><strong>{y}</strong>{isAgg && <span className="rv-agg-badge">resumen</span>}</td>
                         <td className="num">{m.reservas}</td>
                         <td className="num">{m.noches}</td>
                         <td className="num">{fmtEur(m.bruto)}</td>
-                        <td className="num rv-yearly-neg">{m.comision !== null ? `−${fmtEur(m.comision)}` : '—'}</td>
-                        <td className="num rv-yearly-neg">{m.limpieza !== null ? `−${fmtEur(m.limpieza)}` : '—'}</td>
+                        <td className="num rv-yearly-neg">{m.comision !== null ? `−${fmtEur(m.comision)}` : '–'}</td>
+                        <td className="num rv-yearly-neg">{m.limpieza !== null ? `−${fmtEur(m.limpieza)}` : '–'}</td>
                         <td className="num"><strong>{fmtEur(m.neto)}</strong></td>
                         <td className="num"><strong>{fmtPct(m.rentabilidad)}</strong></td>
                         <td className="num">{fmtEur(m.brutoPorNoche)}</td>
-                        <td className="num rv-yearly-min">{m.minNoche ? fmtEur(m.minNoche) : '—'}</td>
-                        <td className="num rv-yearly-max">{m.maxNoche ? fmtEur(m.maxNoche) : '—'}</td>
+                        <td className="num rv-yearly-min">{m.minNoche ? fmtEur(m.minNoche) : '–'}</td>
+                        <td className="num rv-yearly-max">{m.maxNoche ? fmtEur(m.maxNoche) : '–'}</td>
                       </tr>
                     );
                   })}
@@ -4631,8 +4631,8 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
           <KpiCard label="Limpieza" value={fmtEur(kFocus.limpieza)} sub={kFocus.bruto ? `${fmtPct(kFocus.limpieza/kFocus.bruto)} del bruto` : null} />
           <KpiCard label="Neto (BAI)" accent="#6B7A3A" value={fmtEur(kFocus.neto)} sub={`${fmtEur(kFocus.netoPorNoche)}/noche neto`} />
           <KpiCard label="Rentabilidad" accent="#6B7A3A" value={fmtPct(kFocus.rentabilidad)} sub="neto / bruto" />
-          <KpiCard label="€/noche mín" value={kFocus.minNoche ? fmtEur(kFocus.minNoche) : '—'} sub="reserva más barata" />
-          <KpiCard label="€/noche máx" value={kFocus.maxNoche ? fmtEur(kFocus.maxNoche) : '—'} sub="reserva más cara" />
+          <KpiCard label="€/noche mín" value={kFocus.minNoche ? fmtEur(kFocus.minNoche) : '–'} sub="reserva más barata" />
+          <KpiCard label="€/noche máx" value={kFocus.maxNoche ? fmtEur(kFocus.maxNoche) : '–'} sub="reserva más cara" />
         </div>
 
         {/* Subrejilla: por apartamento + por canal */}
@@ -4742,7 +4742,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
         {/* ───── Tablas por mes ───── */}
         {visibleMonths.length === 0 && (
           isHistoricOnly(focusYear)
-            ? <p className="pe-help" style={{ marginTop: 16 }}>Año {focusYear} — datos agregados del histórico. No hay fichas individuales registradas en P-Edit para este año. Los resúmenes se muestran en la tabla de arriba.</p>
+            ? <p className="pe-help" style={{ marginTop: 16 }}>Año {focusYear}, datos agregados del histórico. No hay fichas individuales registradas en P-Edit para este año. Los resúmenes se muestran en la tabla de arriba.</p>
             : <p className="pe-help" style={{ marginTop: 16 }}>Sin reservas en {focusYear}.</p>
         )}
 
@@ -4763,7 +4763,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                   <span>{mNoches} noches</span>
                   <span>Bruto: <strong>{fmtEur(mBruto)}</strong></span>
                   <span>BAI: <strong>{fmtEur(mBai)}</strong></span>
-                  <span>{mBruto ? fmtPct(mBai / mBruto) : '—'}</span>
+                  <span>{mBruto ? fmtPct(mBai / mBruto) : '–'}</span>
                 </span>
               </div>
               <div className="rv-table-wrap">
@@ -4793,9 +4793,9 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                           <td>{r.responsable}{r.mascota ? ' 🐾' : ''}{r.cuna_trona ? ' 👶' : ''}</td>
                           <td>{fmtDate(r.entrada)}</td>
                           <td>{fmtDate(r.salida)}</td>
-                          <td className="num">{r.noches || '—'}</td>
-                          <td className="num">{r.huespedes || '—'}</td>
-                          <td>{r.canal || '—'}</td>
+                          <td className="num">{r.noches || '–'}</td>
+                          <td className="num">{r.huespedes || '–'}</td>
+                          <td>{r.canal || '–'}</td>
                           <td className="num">{fmtEur(r.ingreso_total)}</td>
                           <td className="num">{fmtEur(r.comision)}</td>
                           <td className="num">{fmtEur(r.bai)}</td>
@@ -4820,7 +4820,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                       <td className="num"><strong>{fmtEur(mBruto)}</strong></td>
                       <td className="num">{fmtEur(mComis)}</td>
                       <td className="num"><strong>{fmtEur(mBai)}</strong></td>
-                      <td className="num">{mBruto ? fmtPct(mBai / mBruto) : '—'}</td>
+                      <td className="num">{mBruto ? fmtPct(mBai / mBruto) : '–'}</td>
                       <td/><td/>
                     </tr>
                   </tfoot>
@@ -4869,7 +4869,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                     <label>DNI enviado</label>
                     <select value={draft.dni_enviado === true ? 'si' : draft.dni_enviado === false ? 'no' : ''}
                       onChange={e => updateDraft('dni_enviado', e.target.value === 'si' ? true : e.target.value === 'no' ? false : null)}>
-                      <option value="">—</option>
+                      <option value="">–</option>
                       <option value="si">Sí</option>
                       <option value="no">No</option>
                     </select>
@@ -4912,7 +4912,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                     <label>Cuna / trona</label>
                     <select value={draft.cuna_trona === true ? 'si' : draft.cuna_trona === false ? 'no' : ''}
                       onChange={e => updateDraft('cuna_trona', e.target.value === 'si' ? true : e.target.value === 'no' ? false : null)}>
-                      <option value="">—</option>
+                      <option value="">–</option>
                       <option value="si">Sí</option>
                       <option value="no">No</option>
                     </select>
@@ -4960,7 +4960,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                   <div className="rv-field">
                     <label>Contactado por</label>
                     <select value={draft.contactado || ''} onChange={e => updateDraft('contactado', e.target.value)}>
-                      <option value="">—</option>
+                      <option value="">–</option>
                       <option value="Alex">Alex</option>
                       <option value="Fran">Fran</option>
                     </select>
@@ -5028,7 +5028,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                 <div className="rv-calc-block">
                   <div className="rv-calc-block-title">Calculado automáticamente</div>
                   <div className="rv-calc-grid">
-                    <div><span>Noches</span><strong>{draft.noches || '—'}</strong></div>
+                    <div><span>Noches</span><strong>{draft.noches || '–'}</strong></div>
                     <div><span>BAI</span><strong>{fmtEur(draft.bai)}</strong></div>
                     <div><span>Rentabilidad</span><strong>{fmtPct(draft.rentabilidad_pct)}</strong></div>
                     <div><span>Bruto/noche</span><strong>{fmtEur(draft.precio_bruto_noche)}</strong></div>
@@ -5089,7 +5089,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
               const liveOverlap = draft && findOverlap(draft, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
               return liveOverlap ? (
                 <div className="rv-overlap-warn">
-                  ⚠ Solape con {liveOverlap.responsable || '—'} ({fmtDate(liveOverlap.entrada)} → {fmtDate(liveOverlap.salida)}) en {liveOverlap.apt?.toUpperCase() || '—'}
+                  ⚠ Solape con {liveOverlap.responsable || '–'} ({fmtDate(liveOverlap.entrada)} → {fmtDate(liveOverlap.salida)}) en {liveOverlap.apt?.toUpperCase() || '–'}
                 </div>
               ) : null;
             })()}
@@ -5167,7 +5167,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
 
 
 // ---------------------------------------------------------------
-// HuecosTab — gestión de huecos entre reservas con pricing
+// HuecosTab, gestión de huecos entre reservas con pricing
 // ---------------------------------------------------------------
 
 const _hcDiff = (a, b) =>
@@ -5231,7 +5231,7 @@ const _hcCalcGaps = (blocked, today, horizon) => {
   for (let i = 0; i < sorted.length - 1; i++) pushGap(sorted[i].end, sorted[i + 1].start);
   // Disponibilidad abierta tras el último bloqueo, acotada al horizonte de reservas.
   // Sin esto, un apartamento libre de forma indefinida (sin bloqueo posterior) no
-  // mostraba ningún hueco — y sus estancias largas quedaban invisibles.
+  // mostraba ningún hueco, y sus estancias largas quedaban invisibles.
   if (horizon) pushGap(sorted[sorted.length - 1].end, horizon);
   return gaps;
 };
@@ -5404,7 +5404,7 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
       {open && (
         <div className="hc-bulk-body">
 
-          {/* BLOQUE 1 — Tarifas base por temporada */}
+          {/* BLOQUE 1, Tarifas base por temporada */}
           <div className="ls-cfg-section-title">Tarifas base mensuales (€/mes)</div>
           <div className="ls-cfg-rates-table">
             <div className="ls-cfg-rates-head">
@@ -5438,7 +5438,7 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
             </div>
           </div>
 
-          {/* BLOQUE 2 — Precio efectivo por apartamento */}
+          {/* BLOQUE 2, Precio efectivo por apartamento */}
           <div className="ls-cfg-section-title" style={{ marginTop: 20 }}>Precio efectivo por apartamento</div>
           <div className="ls-cfg-apt-table">
             <div className="ls-cfg-apt-head">
@@ -5467,7 +5467,7 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
             Precio efectivo = tarifa base + suplemento · calculado pro-rata diario
           </p>
 
-          {/* BLOQUE 3 — Suplementos por huésped/mascota y Semana Santa */}
+          {/* BLOQUE 3, Suplementos por huésped/mascota y Semana Santa */}
           <div className="ls-cfg-section-title" style={{ marginTop: 20 }}>Suplementos y fechas especiales</div>
           <div className="hc-bulk-row" style={{ alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
             <div className="hc-bulk-field">
@@ -5551,7 +5551,7 @@ const _syncReservasToGuestPins = async (reservas, token) => {
     if (!next[apt] || _reservaCxl(r) || !r.salida || r.salida < today) continue;
     const h = await _guidePinSha256(reservaGuidePin(r));
     // until/ref sin datos personales: fechas de la reserva (ya públicas en availability.json).
-    next[apt].push({ h, until: r.salida, ref: r.entrada || '—' });
+    next[apt].push({ h, until: r.salida, ref: r.entrada || '–' });
   }
   const rf = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' });
   const rfj = await rf.json();
@@ -5953,15 +5953,15 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
                 </div>
                 <div className="hc-bulk-field">
                   <label className="hc-lbl">Noches mín.</label>
-                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMinN} onChange={e => setBulkMinN(e.target.value)} placeholder="—"/>
+                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMinN} onChange={e => setBulkMinN(e.target.value)} placeholder="–"/>
                 </div>
                 <div className="hc-bulk-field">
                   <label className="hc-lbl">Noches máx.</label>
-                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMaxN} onChange={e => setBulkMaxN(e.target.value)} placeholder="—"/>
+                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMaxN} onChange={e => setBulkMaxN(e.target.value)} placeholder="–"/>
                 </div>
                 <div className="hc-bulk-field">
                   <label className="hc-lbl">Checkin ≤ Xd</label>
-                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMaxDays} onChange={e => setBulkMaxDays(e.target.value)} placeholder="—"/>
+                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMaxDays} onChange={e => setBulkMaxDays(e.target.value)} placeholder="–"/>
                 </div>
               </div>
               <div className="hc-bulk-row">
@@ -6047,7 +6047,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
                     <div key={gap.id}
                       className={`hc-row${gap.overLim ? ' hc-over' : ''}${gap.override ? ' hc-has-ov' : ''}${isActive ? ' hc-open' : ''}`}>
 
-                      {/* Fila principal — siempre visible */}
+                      {/* Fila principal, siempre visible */}
                       <div className="hc-row-hd" onClick={() => isActive ? closeGap() : openGap(gap)}>
                         <span className="hc-dates">
                           {_hcFmt(gap.start)} → {_hcFmt(gap.end)}
@@ -6275,7 +6275,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
             </div>
           </div>
 
-          {/* Tarifas base, precio efectivo por apartamento y suplementos — única fuente
+          {/* Tarifas base, precio efectivo por apartamento y suplementos, única fuente
               de verdad (editable, lee/escribe prices.json). Sin tabla duplicada aparte. */}
           <LsCfgPanel lsCfg={lsCfg} open={lsCfgOpen} setOpen={setLsCfgOpen} onSave={handleSaveLsCfg} saving={saving}/>
 
@@ -6411,7 +6411,7 @@ const AdminApp = () => {
       );
       if (res.status === 204) {
         setSyncState('ok');
-        setSyncMsg('Sync lanzado — actualizando datos…');
+        setSyncMsg('Sync lanzado, actualizando datos…');
         // Reload all tab data immediately (fresh SHA) then again when workflow finishes (~65s)
         setRefreshKey(k => k + 1);
         reloadConfig();
@@ -6655,7 +6655,7 @@ const AdminApp = () => {
     );
   }
 
-  // ---- Reviews — listado y filtros ----
+  // ---- Reviews, listado y filtros ----
   const renderReviewsTab = () => {
     if (!reviewsData) {
       return (
@@ -6792,7 +6792,7 @@ const AdminApp = () => {
       <div className="pe-topbar">
         <span>Hestía · Admin</span>
         <span className="pe-meta">
-          {mode === 'pricing' ? `Precios actualizados: ${data.updatedAt || '—'}` :
+          {mode === 'pricing' ? `Precios actualizados: ${data.updatedAt || '–'}` :
            reviewsData ? `${(reviewsData.items || []).length} reviews` : ''}
         </span>
         <div className="pe-topbar-actions">
@@ -7281,7 +7281,7 @@ const AdminApp = () => {
                     }}
                     className="pe-input pe-input-num" />
                 </td>
-                <td className="pe-mono pe-hint">{(d.excludeSeasons || []).join(', ') || '—'}</td>
+                <td className="pe-mono pe-hint">{(d.excludeSeasons || []).join(', ') || '–'}</td>
               </tr>
             ))}
           </tbody>

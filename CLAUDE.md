@@ -126,6 +126,7 @@ Aplica estas medidas a TODO el código nuevo y revisa lo existente cuando lo toq
 
 ## Estilo de código
 
+- **PROHIBIDO el guion largo / raya (`—`, em dash U+2014) en TODO el texto visible de la web** (copy, meta, JSON-LD, datos). Suena "a IA". Usa la puntuación que pida la gramática de cada frase: **coma** (apósito), **dos puntos** (introducir explicación o lista), **paréntesis** (inciso), **punto y coma** o **punto** (unir oraciones). El guion corto `–` (en dash, U+2013) sí es válido para rangos (fechas, "23 dic–6 ene"). Nunca generes un `—`.
 - **Sin comentarios redundantes**: el código autoexplicativo no necesita comentarios. Solo comenta WHY no obvio (restricciones, workarounds, decisiones de negocio).
 - **Sin emojis** salvo que se pidan explícitamente (esta guía es la excepción porque listamos categorías visuales del sitio).
 - **Brevedad sobre brillantez**: 3 líneas claras > una elegante de 1.

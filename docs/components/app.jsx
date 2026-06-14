@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA — App raíz (landing)
+// HESTÍA, App raíz (landing)
 // useScrollMode y useReveal viven en shared.jsx
 // ================================================================
 
@@ -27,7 +27,7 @@ const OfertaBanner = ({ lang }) => {
 };
 
 const _SEA_VOL = 0.25;
-// Rampa de volumen (fade) con requestAnimationFrame — para que el mar no corte de
+// Rampa de volumen (fade) con requestAnimationFrame, para que el mar no corte de
 // golpe ni al silenciar ni al terminar, sino que baje hasta desaparecer.
 const _fadeTo = (audio, to, ms, onEnd) => {
   if (!audio) return;
@@ -82,7 +82,7 @@ const App = () => {
     document.body.classList.toggle('no-parallax', !tweaks.parallax);
   }, [tweaks]);
 
-  // Sonido sutil de mar — suena UNA sola vez al entrar en la home (sin bucle).
+  // Sonido sutil de mar, suena UNA sola vez al entrar en la home (sin bucle).
   // Los navegadores bloquean el audio con sonido hasta que el usuario interactúa,
   // así que intentamos reproducir al cargar y, si se bloquea, lo lanzamos en el
   // primer gesto (clic/tecla/tap/scroll). Una reproducción por carga. El usuario
