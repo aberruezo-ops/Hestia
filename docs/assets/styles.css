@@ -22169,6 +22169,16 @@ img[src*="apt-vt-gallery-"] {
 .lsl-section.lsl-cta .lsl-btn-ghost { color: rgba(255,255,255,.65); }
 
 /* ── LsSearch — disponibilidad larga estancia ───────────────── */
+/* ── Salvaguarda de contraste · secciones de fondo oscuro ──────────
+   Regla preventiva (ver CLAUDE.md): toda seccion con fondo oscuro lleva
+   .on-dark, que fija el color de texto por defecto en claro. Asi, si un
+   elemento olvida declarar su color, hereda claro (legible) en vez del
+   oscuro de pagina. Contrapartida obligatoria: toda superficie clara
+   anidada (tarjeta blanca) declara su PROPIO color oscuro, para no
+   heredar claro-sobre-blanco. Nunca uses --ink/--ink-soft ni un acento
+   oscuro para texto directo sobre .on-dark. */
+.on-dark { color: var(--crema, #FAF6F0); }
+
 .lsl-search-dark {
   background: linear-gradient(180deg, var(--ber-dk, #2A0F2E) 0%, #1A0820 100%);
   padding: 72px 24px 80px;
@@ -22185,6 +22195,7 @@ img[src*="apt-vt-gallery-"] {
 .lsl-h2--ondk { color: var(--crema, #FAF6F0) !important; }
 .lsl-sd-card {
   background: #fff;
+  color: var(--ink, #3D1A35);
   border-radius: 12px 0 12px 0;
   padding: 28px 28px 20px;
   margin-bottom: 32px;
@@ -22273,6 +22284,7 @@ img[src*="apt-vt-gallery-"] {
 }
 .lsl-result {
   background: #fff;
+  color: var(--ink, #3D1A35);
   border: 1.5px solid color-mix(in srgb, var(--lsl-accent, #3AAABB) 30%, transparent);
   border-radius: 10px 0 10px 0;
   padding: 18px 20px;
