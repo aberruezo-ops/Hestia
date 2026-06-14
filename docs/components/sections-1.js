@@ -1385,7 +1385,7 @@ const LongStayStrip = ({
   const lsRate = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + (supps.length ? Math.min(...supps) : 0);
   const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
   return /*#__PURE__*/React.createElement("section", {
-    className: "lss-strip",
+    className: "lss-strip on-dark",
     "aria-label": es ? 'Estancias largas' : 'Long stays'
   }, /*#__PURE__*/React.createElement("div", {
     className: "lss-inner"
