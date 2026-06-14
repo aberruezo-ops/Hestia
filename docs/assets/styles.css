@@ -22178,6 +22178,17 @@ img[src*="apt-vt-gallery-"] {
    heredar claro-sobre-blanco. Nunca uses --ink/--ink-soft ni un acento
    oscuro para texto directo sobre .on-dark. */
 .on-dark { color: var(--crema, #FAF6F0); }
+/* .btn-ghost-dark usa tinta oscura (pensado para fondos claros). Sobre una
+   seccion .on-dark se volveria invisible: aqui lo forzamos a claro. */
+.on-dark .btn-ghost-dark {
+  color: var(--crema, #FAF6F0);
+  border-color: rgba(240, 232, 213, .55);
+}
+.on-dark .btn-ghost-dark:hover {
+  background: rgba(240, 232, 213, .12);
+  color: var(--crema, #FAF6F0);
+  border-color: var(--crema, #FAF6F0);
+}
 
 .lsl-search-dark {
   background: linear-gradient(180deg, var(--ber-dk, #2A0F2E) 0%, #1A0820 100%);
