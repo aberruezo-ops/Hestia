@@ -1114,6 +1114,39 @@ const _amrSrc = {
   google: 'Google',
   web: 'Hestía'
 };
+const AmrCard = ({
+  r,
+  lang
+}) => {
+  const stars = _amrStars(r);
+  const full = r.text || '';
+  const needsTrunc = full.length > 145;
+  const [open, setOpen] = React.useState(false);
+  const text = needsTrunc && !open ? full.slice(0, 142) + '…' : full;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "amr-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "amr-top"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "amr-stars",
+    "aria-label": `${stars} estrellas`
+  }, '★'.repeat(stars)), /*#__PURE__*/React.createElement("span", {
+    className: "amr-src-lbl"
+  }, _amrSrc[r.source] || r.source)), /*#__PURE__*/React.createElement("p", {
+    className: "amr-text"
+  }, "\"", text, "\""), needsTrunc && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "amr-expand-btn",
+    onClick: () => setOpen(o => !o)
+  }, open ? lang === 'es' ? 'Leer menos' : 'Show less' : lang === 'es' ? 'Leer más' : 'Read more'), /*#__PURE__*/React.createElement("div", {
+    className: "amr-author"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "amr-flag",
+    "aria-hidden": "true"
+  }, _amrFlag(r.country)), /*#__PURE__*/React.createElement("span", {
+    className: "amr-name"
+  }, r.name)));
+};
 const AptMiniReviews = ({
   apt,
   lang
@@ -1134,30 +1167,11 @@ const AptMiniReviews = ({
     className: "amr-eyebrow"
   }, lang === 'es' ? 'Lo que dicen los huéspedes' : 'What guests say'), /*#__PURE__*/React.createElement("div", {
     className: "amr-grid"
-  }, picks.map(r => {
-    const stars = _amrStars(r);
-    const text = r.text.length > 145 ? r.text.slice(0, 142) + '…' : r.text;
-    return /*#__PURE__*/React.createElement("div", {
-      key: r.id,
-      className: "amr-card"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "amr-top"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "amr-stars",
-      "aria-label": `${stars} estrellas`
-    }, '★'.repeat(stars)), /*#__PURE__*/React.createElement("span", {
-      className: "amr-src-lbl"
-    }, _amrSrc[r.source] || r.source)), /*#__PURE__*/React.createElement("p", {
-      className: "amr-text"
-    }, "\"", text, "\""), /*#__PURE__*/React.createElement("div", {
-      className: "amr-author"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "amr-flag",
-      "aria-hidden": "true"
-    }, _amrFlag(r.country)), /*#__PURE__*/React.createElement("span", {
-      className: "amr-name"
-    }, r.name)));
-  }))));
+  }, picks.map(r => /*#__PURE__*/React.createElement(AmrCard, {
+    key: r.id,
+    r: r,
+    lang: lang
+  })))));
 };
 
 // --- Tabla de precios orientativos ---

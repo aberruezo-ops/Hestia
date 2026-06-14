@@ -18084,6 +18084,22 @@ img[src*="apt-vt-gallery-"] {
   text-transform: uppercase;
   color: rgba(42,15,46,.72);
 }
+.amr-expand-btn {
+  align-self: flex-start;
+  margin: 2px 0 0;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--apt-accent, var(--sol));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.amr-expand-btn:hover { opacity: 0.72; }
 .amr-text {
   font-family: var(--serif, Georgia, serif);
   font-size: 14px;
