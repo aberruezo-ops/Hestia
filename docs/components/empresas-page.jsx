@@ -1,0 +1,363 @@
+// ================================================================
+// HESTÍA, /empresas · página B2B. Argumentario para empresas,
+// clínicas, clubes deportivos, inmobiliarias, etc. + formulario
+// de captación que envía a Web3Forms (api.web3forms.com/submit).
+// Sin backend propio: el lead llega a nuestro email.
+// ================================================================
+
+const EMP_W3F_KEY = '95a86784-6d6a-496f-9830-15759c0a3cff';
+
+const EMP_COPY = {
+  es: {
+    eyebrow: 'Hestía para empresas y profesionales',
+    title: (<>Alojamiento con factura, contrato <em>y trato directo.</em></>),
+    sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Tarifa mensual cerrada, sin comisiones y con respuesta humana en menos de una hora.',
+    waCta: 'Hablar por WhatsApp',
+    formCta: 'Pedir propuesta',
+    perksTitle: 'Por qué trabajar con nosotros',
+    perks: [
+      { icon: '🧾', t: 'Factura y contrato', d: 'Emitimos factura y firmamos contrato. Pensado para empresas, clínicas y profesionales que necesitan justificar el gasto.' },
+      { icon: '📅', t: 'Tarifa mensual cerrada', d: 'Precio fijo al mes para estancias largas (29 noches o más), de septiembre a junio. Sin sorpresas.' },
+      { icon: '🤝', t: '0% comisiones', d: 'Reserva directa con nosotros, los propietarios. Sin intermediarios ni cargos de plataforma.' },
+      { icon: '⏱️', t: 'Respuesta en menos de 1 h', d: 'Hablas siempre con Alex o Fran. Coordinamos llegadas, facturación y necesidades especiales al momento.' },
+      { icon: '🏠', t: 'Tres apartamentos a 2 km', d: 'Hasta tres equipos o familias alojados cerca, en la misma zona de Vera Playa.' },
+      { icon: '📶', t: 'Listos para entrar', d: 'WiFi de fibra, cocina equipada, lavadora, terraza y limpieza coordinada. Listos para vivir o para teletrabajar.' },
+    ],
+    sectorsTitle: 'Con quién trabajamos',
+    sectorsSub: 'Si tu negocio necesita alojar a clientes, equipos o pacientes cerca de Vera Playa, encajamos. Algunos ejemplos:',
+    sectors: [
+      'Empresas con técnicos o visitas (agroindustria, energía, construcción)',
+      'Clínicas y turismo de salud',
+      'Campos de entrenamiento deportivo',
+      'Golf (stay & play)',
+      'Bodas y eventos',
+      'Inmobiliarias y compradores de vivienda',
+      'Productoras de cine y publicidad',
+      'Turoperadores y clubes',
+    ],
+    formTitle: 'Cuéntanos qué necesitas',
+    formSub: 'Te respondemos con una propuesta a medida, normalmente en minutos.',
+    f_company: 'Empresa u organización',
+    f_name: 'Nombre de contacto',
+    f_email: 'Email',
+    f_phone: 'Teléfono (opcional)',
+    f_sector: 'Sector',
+    f_sector_ph: 'Selecciona…',
+    f_people: 'Nº de personas o apartamentos',
+    f_dates: 'Fechas aproximadas',
+    f_dates_ph: 'Ej. octubre 2026, 3 semanas',
+    f_msg: 'Cuéntanos tu caso',
+    f_msg_ph: '¿A quién alojarías, cuántas noches, qué necesitas (factura, contrato, varias unidades)?',
+    submit: 'Enviar solicitud',
+    sending: 'Enviando…',
+    success_title: '¡Gracias! Hemos recibido tu solicitud.',
+    success_text: 'Te responderemos con una propuesta lo antes posible, normalmente en menos de una hora. Si prefieres ir más rápido, escríbenos directamente por WhatsApp.',
+    success_wa: 'Escribir por WhatsApp',
+    success_back: '← Volver al inicio',
+    error_generic: 'No hemos podido enviar tu solicitud. Inténtalo de nuevo en un minuto, o escríbenos por WhatsApp.',
+    val_company: 'Dinos el nombre de tu empresa u organización',
+    val_name: 'Cuéntanos tu nombre',
+    val_email: 'Email no válido',
+    val_msg: 'Cuéntanos un poco más (mínimo 20 caracteres)',
+    val_consent: 'Debes aceptar la política de privacidad para enviar tu solicitud.',
+    consent: (<>He leído y acepto la <a href="privacidad.html" target="_blank" rel="noopener">política de privacidad</a>. Entiendo que mis datos serán usados para responder a mi solicitud y procesados por Web3Forms para su envío.</>),
+  },
+  en: {
+    eyebrow: 'Hestía for businesses & professionals',
+    title: (<>Accommodation with invoicing, a contract <em>and a direct relationship.</em></>),
+    sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. Fixed monthly rate, no commissions and a human reply in under an hour.',
+    waCta: 'Chat on WhatsApp',
+    formCta: 'Request a proposal',
+    perksTitle: 'Why work with us',
+    perks: [
+      { icon: '🧾', t: 'Invoicing and contract', d: 'We issue an invoice and sign a contract. Built for companies, clinics and professionals who need to justify the expense.' },
+      { icon: '📅', t: 'Fixed monthly rate', d: 'A fixed monthly price for long stays (29 nights or more), from September to June. No surprises.' },
+      { icon: '🤝', t: '0% commissions', d: 'Book directly with us, the owners. No middlemen, no platform fees.' },
+      { icon: '⏱️', t: 'Reply in under 1 h', d: 'You always speak to Alex or Fran. We coordinate arrivals, invoicing and special needs on the spot.' },
+      { icon: '🏠', t: 'Three apartments within 2 km', d: 'Up to three teams or families housed close together, in the same Vera Playa area.' },
+      { icon: '📶', t: 'Ready to move in', d: 'Fibre WiFi, equipped kitchen, washing machine, terrace and coordinated cleaning. Ready to live or work remotely.' },
+    ],
+    sectorsTitle: 'Who we work with',
+    sectorsSub: 'If your business needs to house clients, teams or patients near Vera Playa, we fit. Some examples:',
+    sectors: [
+      'Companies with technicians or visitors (agribusiness, energy, construction)',
+      'Clinics and health tourism',
+      'Sports training camps',
+      'Golf (stay & play)',
+      'Weddings and events',
+      'Estate agencies and home buyers',
+      'Film and advertising productions',
+      'Tour operators and clubs',
+    ],
+    formTitle: 'Tell us what you need',
+    formSub: 'We reply with a tailored proposal, usually within minutes.',
+    f_company: 'Company or organisation',
+    f_name: 'Contact name',
+    f_email: 'Email',
+    f_phone: 'Phone (optional)',
+    f_sector: 'Sector',
+    f_sector_ph: 'Select…',
+    f_people: 'Number of people or apartments',
+    f_dates: 'Approximate dates',
+    f_dates_ph: 'e.g. October 2026, 3 weeks',
+    f_msg: 'Tell us about your case',
+    f_msg_ph: 'Who would you house, how many nights, what do you need (invoice, contract, several units)?',
+    submit: 'Send request',
+    sending: 'Sending…',
+    success_title: 'Thank you! We have received your request.',
+    success_text: 'We will reply with a proposal as soon as possible, usually within an hour. If you would rather go faster, message us directly on WhatsApp.',
+    success_wa: 'Message on WhatsApp',
+    success_back: '← Back to home',
+    error_generic: 'We could not send your request. Try again in a minute, or message us on WhatsApp.',
+    val_company: 'Tell us your company or organisation name',
+    val_name: 'Please tell us your name',
+    val_email: 'Invalid email',
+    val_msg: 'Tell us a bit more (at least 20 characters)',
+    val_consent: 'You must accept the privacy policy to send your request.',
+    consent: (<>I have read and accept the <a href="privacidad.html" target="_blank" rel="noopener">privacy policy</a>. I understand my data will be used to reply to my request and processed by Web3Forms for delivery.</>),
+  },
+};
+
+const EMP_WA = 'https://wa.me/34620316370';
+
+const EmpresasForm = ({ lang }) => {
+  const t = EMP_COPY[lang];
+  const [company, setCompany] = React.useState('');
+  const [name, setName]       = React.useState('');
+  const [email, setEmail]     = React.useState('');
+  const [phone, setPhone]     = React.useState('');
+  const [sector, setSector]   = React.useState('');
+  const [people, setPeople]   = React.useState('');
+  const [dates, setDates]     = React.useState('');
+  const [msg, setMsg]         = React.useState('');
+  const [honeypot, setHoneypot] = React.useState('');
+  const [consent, setConsent] = React.useState(false);
+  const [phase, setPhase]     = React.useState('idle');
+  const [errors, setErrors]   = React.useState({});
+
+  const MSG_MAX = 2000;
+
+  const validate = () => {
+    const e = {};
+    if (!company.trim()) e.company = t.val_company;
+    if (!name.trim()) e.name = t.val_name;
+    if (!/\S+@\S+\.\S+/.test(email)) e.email = t.val_email;
+    if (msg.trim().length < 20) e.msg = t.val_msg;
+    if (msg.trim().length > MSG_MAX) e.msg = t.val_msg;
+    if (!consent) e.consent = t.val_consent;
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const submit = async (ev) => {
+    ev.preventDefault();
+    if (honeypot) return;
+    if (!validate()) return;
+    setPhase('sending');
+
+    const fd = new FormData();
+    fd.append('access_key', EMP_W3F_KEY);
+    fd.append('subject', `Solicitud B2B · ${company.trim()}${sector ? ` · ${sector}` : ''}`);
+    fd.append('from_name', name.trim() || 'Web Hestía');
+    fd.append('replyto', email.trim());
+    fd.append('Empresa', company.trim());
+    fd.append('Contacto', name.trim());
+    fd.append('Email', email.trim());
+    fd.append('Teléfono', phone.trim() || '–');
+    fd.append('Sector', sector || '–');
+    fd.append('Personas/apartamentos', people.trim() || '–');
+    fd.append('Fechas', dates.trim() || '–');
+    fd.append('Idioma', lang === 'es' ? 'Español' : 'English');
+    fd.append('Mensaje', msg.trim());
+    fd.append('botcheck', '');
+
+    try {
+      const r = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd });
+      const j = await r.json().catch(() => ({}));
+      setPhase(j.success ? 'success' : 'error');
+    } catch (err) {
+      console.error('w3f network', err);
+      setPhase('error');
+    }
+  };
+
+  if (phase === 'success') {
+    return (
+      <section className="emp-success">
+        <div className="container">
+          <div className="emp-success-card">
+            <span className="emp-success-icon" aria-hidden="true">✓</span>
+            <h2 className="emp-success-title">{t.success_title}</h2>
+            <p className="emp-success-text">{t.success_text}</p>
+            <a href={EMP_WA} target="_blank" rel="noopener" className="btn btn-primary emp-wa-btn">{t.success_wa}</a>
+            <a href="index.html" className="emp-success-back">{t.success_back}</a>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="emp-form-sec" id="propuesta">
+      <div className="container">
+        <div className="emp-form-head">
+          <h2 className="emp-h2">{t.formTitle}</h2>
+          <p className="emp-form-sub">{t.formSub}</p>
+        </div>
+        <form className="emp-form" onSubmit={submit} noValidate>
+          <div className="emp-row">
+            <div className="emp-field">
+              <label className="emp-label" htmlFor="emp-company">{t.f_company}</label>
+              <input id="emp-company" type="text" className="emp-input" value={company}
+                onChange={e => { setCompany(e.target.value); setErrors(er => ({ ...er, company: undefined })); }}
+                autoComplete="organization"/>
+              {errors.company && <span className="emp-err">{errors.company}</span>}
+            </div>
+            <div className="emp-field">
+              <label className="emp-label" htmlFor="emp-name">{t.f_name}</label>
+              <input id="emp-name" type="text" className="emp-input" value={name}
+                onChange={e => { setName(e.target.value); setErrors(er => ({ ...er, name: undefined })); }}
+                autoComplete="name"/>
+              {errors.name && <span className="emp-err">{errors.name}</span>}
+            </div>
+          </div>
+
+          <div className="emp-row">
+            <div className="emp-field">
+              <label className="emp-label" htmlFor="emp-email">{t.f_email}</label>
+              <input id="emp-email" type="email" className="emp-input" value={email}
+                onChange={e => { setEmail(e.target.value); setErrors(er => ({ ...er, email: undefined })); }}
+                autoComplete="email"/>
+              {errors.email && <span className="emp-err">{errors.email}</span>}
+            </div>
+            <div className="emp-field">
+              <label className="emp-label" htmlFor="emp-phone">{t.f_phone}</label>
+              <input id="emp-phone" type="tel" className="emp-input" value={phone}
+                onChange={e => setPhone(e.target.value)} autoComplete="tel"/>
+            </div>
+          </div>
+
+          <div className="emp-row">
+            <div className="emp-field">
+              <label className="emp-label" htmlFor="emp-sector">{t.f_sector}</label>
+              <select id="emp-sector" className="emp-input" value={sector} onChange={e => setSector(e.target.value)}>
+                <option value="">{t.f_sector_ph}</option>
+                {t.sectors.map((s, i) => <option key={i} value={s}>{s}</option>)}
+              </select>
+            </div>
+            <div className="emp-field">
+              <label className="emp-label" htmlFor="emp-people">{t.f_people}</label>
+              <input id="emp-people" type="text" className="emp-input" value={people}
+                onChange={e => setPeople(e.target.value)}/>
+            </div>
+          </div>
+
+          <div className="emp-field">
+            <label className="emp-label" htmlFor="emp-dates">{t.f_dates}</label>
+            <input id="emp-dates" type="text" className="emp-input" value={dates}
+              onChange={e => setDates(e.target.value)} placeholder={t.f_dates_ph}/>
+          </div>
+
+          <div className="emp-field">
+            <label className="emp-label" htmlFor="emp-msg">{t.f_msg}</label>
+            <textarea id="emp-msg" className="emp-textarea" rows={5} value={msg}
+              onChange={e => { setMsg(e.target.value); setErrors(er => ({ ...er, msg: undefined })); }}
+              placeholder={t.f_msg_ph} maxLength={MSG_MAX}/>
+            <span className={`emp-help${msg.length > MSG_MAX - 150 ? ' emp-help-warn' : ''}`}>{msg.length} / {MSG_MAX}</span>
+            {errors.msg && <span className="emp-err">{errors.msg}</span>}
+          </div>
+
+          <input type="text" name="botcheck" className="emp-honeypot" value={honeypot}
+            onChange={e => setHoneypot(e.target.value)} tabIndex="-1" autoComplete="off" aria-hidden="true"/>
+
+          <div className="emp-field emp-consent-field">
+            <label className="emp-consent-label">
+              <input type="checkbox" className="emp-consent-check" checked={consent}
+                onChange={e => { setConsent(e.target.checked); setErrors(er => ({ ...er, consent: undefined })); }}/>
+              <span>{t.consent}</span>
+            </label>
+            {errors.consent && <span className="emp-err">{errors.consent}</span>}
+          </div>
+
+          <div className="emp-actions">
+            <button type="submit" className="btn btn-primary emp-submit" disabled={phase === 'sending'}>
+              {phase === 'sending' ? t.sending : t.submit}
+              <span className="arrow"> →</span>
+            </button>
+          </div>
+
+          {phase === 'error' && <p className="emp-error-msg">{t.error_generic}</p>}
+        </form>
+      </div>
+    </section>
+  );
+};
+
+const EmpresasPageApp = () => {
+  const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
+  const { mode, scrolled } = useScrollMode();
+  useReveal();
+
+  React.useEffect(() => {
+    localStorage.setItem('hestia-lang', lang);
+    document.documentElement.lang = lang;
+    document.title = lang === 'es'
+      ? 'Hestía para empresas · Alojamiento con factura y contrato · Vera Playa'
+      : 'Hestía for business · Accommodation with invoicing and contract · Vera Playa';
+  }, [lang]);
+
+  const t = EMP_COPY[lang];
+
+  return (
+    <>
+      <Topbar lang={lang} setLang={setLang} />
+      <Header mode={mode} scrolled={scrolled} lang={lang} />
+      <main>
+        <section className="page-hero emp-hero on-dark">
+          <div className="page-hero-content">
+            <div className="eyebrow">{t.eyebrow}</div>
+            <h1>{t.title}</h1>
+            <p className="page-hero-sub">{t.sub}</p>
+            <div className="emp-hero-cta">
+              <a href="#propuesta" className="btn btn-primary">{t.formCta}</a>
+              <a href={EMP_WA} target="_blank" rel="noopener" className="btn btn-ghost-dark">{t.waCta}</a>
+            </div>
+          </div>
+        </section>
+
+        <section className="emp-perks-sec">
+          <div className="container">
+            <h2 className="emp-h2">{t.perksTitle}</h2>
+            <div className="emp-perks-grid">
+              {t.perks.map((p, i) => (
+                <div key={i} className="emp-perk">
+                  <span className="emp-perk-icon" aria-hidden="true">{p.icon}</span>
+                  <h3 className="emp-perk-t">{p.t}</h3>
+                  <p className="emp-perk-d">{p.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="emp-sectors-sec on-dark">
+          <div className="container">
+            <h2 className="emp-h2">{t.sectorsTitle}</h2>
+            <p className="emp-sectors-sub">{t.sectorsSub}</p>
+            <ul className="emp-sectors-list">
+              {t.sectors.map((s, i) => <li key={i} className="emp-sector-chip">{s}</li>)}
+            </ul>
+          </div>
+        </section>
+
+        <EmpresasForm lang={lang} />
+      </main>
+      <Footer lang={lang} />
+      <WidgetStack lang={lang} />
+      <FloatingChat lang={lang} />
+      <Cookies lang={lang} />
+    </>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<EmpresasPageApp/>);
