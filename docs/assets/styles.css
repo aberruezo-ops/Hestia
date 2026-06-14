@@ -22282,9 +22282,15 @@ img[src*="apt-vt-gallery-"] {
   box-shadow: 0 2px 8px rgba(42,15,46,.07);
 }
 .lsl-result--unavail {
-  background: rgba(42,15,46,.03);
-  border-color: rgba(42,15,46,.10);
-  opacity: .65;
+  background: rgba(240,232,213,.05);
+  border-color: rgba(240,232,213,.16);
+  box-shadow: none;
+}
+.lsl-result--unavail .lsl-result-apt {
+  color: rgba(240,232,213,.72);
+}
+.lsl-result--unavail .lsl-result-unavail-msg {
+  color: rgba(240,232,213,.6);
 }
 .lsl-result-apt {
   font-family: var(--sans);
