@@ -18,15 +18,8 @@ const EO_GUIDE_PIN = {
   vs: 'HVS2021'
 };
 
-// Ficha de Google Maps de cada Hestía (mismas que el JSON-LD sameAs de
-// mar.html / thalassa.html / salinas.html). Abren la ficha donde el huésped
-// puede pulsar "Escribir una reseña". Las reseñas de Google son el canal que
-// más nos descubre, por eso lo enlazamos directo al terminar el formulario.
-const GMAPS_PLACE = {
-  vm: 'https://maps.app.goo.gl/r6tL6kJK6XHtYsCE7',
-  vt: 'https://maps.app.goo.gl/daGi8o2Uh32avqhP6',
-  vs: 'https://maps.app.goo.gl/Mi3z2kKjjaDqNLT98'
-};
+// GMAPS_PLACE (ficha de Google de cada Hestía) vive en shared.jsx, fuente única.
+
 const ESCRIBIR_COPY = {
   es: {
     eyebrow: 'Comparte tu experiencia',
