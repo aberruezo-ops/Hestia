@@ -986,6 +986,32 @@ const _amrFlag = (cc) => {
 const _amrStars = (r) => Math.round(r.source === 'booking' ? r.rating / 2 : r.rating);
 const _amrSrc   = { booking: 'Booking', airbnb: 'Airbnb', google: 'Google', web: 'Hestía' };
 
+const AmrCard = ({ r, lang }) => {
+  const stars = _amrStars(r);
+  const full = r.text || '';
+  const needsTrunc = full.length > 145;
+  const [open, setOpen] = React.useState(false);
+  const text = needsTrunc && !open ? full.slice(0, 142) + '…' : full;
+  return (
+    <div className="amr-card">
+      <div className="amr-top">
+        <span className="amr-stars" aria-label={`${stars} estrellas`}>{'★'.repeat(stars)}</span>
+        <span className="amr-src-lbl">{_amrSrc[r.source] || r.source}</span>
+      </div>
+      <p className="amr-text">"{text}"</p>
+      {needsTrunc && (
+        <button type="button" className="amr-expand-btn" onClick={() => setOpen(o => !o)}>
+          {open ? (lang === 'es' ? 'Leer menos' : 'Show less') : (lang === 'es' ? 'Leer más' : 'Read more')}
+        </button>
+      )}
+      <div className="amr-author">
+        <span className="amr-flag" aria-hidden="true">{_amrFlag(r.country)}</span>
+        <span className="amr-name">{r.name}</span>
+      </div>
+    </div>
+  );
+};
+
 const AptMiniReviews = ({ apt, lang }) => {
   const all  = (window.REVIEWS && window.REVIEWS.items) || [];
   const pool = all.filter(r => r.status === 'published' && r.apt === apt.id && r.highlight)
@@ -1002,25 +1028,7 @@ const AptMiniReviews = ({ apt, lang }) => {
           {lang === 'es' ? 'Lo que dicen los huéspedes' : 'What guests say'}
         </p>
         <div className="amr-grid">
-          {picks.map(r => {
-            const stars = _amrStars(r);
-            const text  = r.text.length > 145 ? r.text.slice(0, 142) + '…' : r.text;
-            return (
-              <div key={r.id} className="amr-card">
-                <div className="amr-top">
-                  <span className="amr-stars" aria-label={`${stars} estrellas`}>
-                    {'★'.repeat(stars)}
-                  </span>
-                  <span className="amr-src-lbl">{_amrSrc[r.source] || r.source}</span>
-                </div>
-                <p className="amr-text">"{text}"</p>
-                <div className="amr-author">
-                  <span className="amr-flag" aria-hidden="true">{_amrFlag(r.country)}</span>
-                  <span className="amr-name">{r.name}</span>
-                </div>
-              </div>
-            );
-          })}
+          {picks.map(r => <AmrCard key={r.id} r={r} lang={lang} />)}
         </div>
       </div>
     </section>
