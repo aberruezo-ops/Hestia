@@ -3408,6 +3408,17 @@ Object.assign(window, {
   _calcLsTotal
 });
 
+// Ficha de Google Maps de cada Hestía (mismas que el sameAs del JSON-LD de
+// mar.html / thalassa.html / salinas.html). Abren la ficha donde el huésped
+// pulsa "Escribir una reseña". Las reseñas de Google son el canal que más
+// reservas nuevas atrae, por eso enlazamos directo. Fuente única.
+const GMAPS_PLACE = {
+  vm: 'https://maps.app.goo.gl/r6tL6kJK6XHtYsCE7',
+  vt: 'https://maps.app.goo.gl/daGi8o2Uh32avqhP6',
+  vs: 'https://maps.app.goo.gl/Mi3z2kKjjaDqNLT98'
+};
+window.GMAPS_PLACE = GMAPS_PLACE;
+
 // ================================================================
 // DirectBookingPerks, sección "Reserva directa, una mejor manera"
 // Stat ribbon (4 cifras destacadas) + botón → rejilla de 8 cards

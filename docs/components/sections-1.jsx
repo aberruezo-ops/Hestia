@@ -1001,7 +1001,7 @@ const LongStayStrip = ({ lang }) => {
   const lsRate = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + (supps.length ? Math.min(...supps) : 0);
   const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
   return (
-    <section className="lss-strip" aria-label={es ? 'Estancias largas' : 'Long stays'}>
+    <section className="lss-strip on-dark" aria-label={es ? 'Estancias largas' : 'Long stays'}>
       <div className="lss-inner">
         <div className="lss-text">
           <p className="eyebrow lss-eyebrow">{es ? 'Más de un mes en Vera Playa' : 'More than a month in Vera Playa'}</p>

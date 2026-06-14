@@ -504,7 +504,22 @@ const OpinionesPageApp = () => {
     className: "btn btn-primary osc-btn"
   }, lang === 'es' ? 'Comparte tu experiencia' : 'Share your experience', /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, " \u2192")))), /*#__PURE__*/React.createElement(QuickFAQ, {
+  }, " \u2192")), /*#__PURE__*/React.createElement("div", {
+    className: "osc-gmaps"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "osc-gmaps-lbl"
+  }, lang === 'es' ? '¿Ya te alojaste? Déjala directamente en Google, en la ficha de tu Hestía:' : 'Already stayed with us? Post it straight on Google, on your Hestía listing:'), /*#__PURE__*/React.createElement("div", {
+    className: "osc-gmaps-links"
+  }, [['vm', 'Hestía Mar'], ['vt', 'Hestía Thalassa'], ['vs', 'Hestía Salinas']].map(([id, name]) => /*#__PURE__*/React.createElement("a", {
+    key: id,
+    href: GMAPS_PLACE[id],
+    target: "_blank",
+    rel: "noopener",
+    className: "osc-gmaps-link"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "osc-gmaps-g",
+    "aria-hidden": "true"
+  }, "G"), name)))))), /*#__PURE__*/React.createElement(QuickFAQ, {
     lang: lang,
     pageId: "opiniones"
   }), /*#__PURE__*/React.createElement(ContactCTA, {
