@@ -145,7 +145,8 @@ const NAV_PAGES = {
   contacto: 'contacto.html',
   reservas: 'reservas.html',
   ventajas: 'reservas.html#ventajas',
-  estanciasLargas: 'estancias-largas.html'
+  estanciasLargas: 'estancias-largas.html',
+  empresas: 'empresas.html'
 };
 const isActive = href => {
   const current = window.location.pathname.split('/').pop() || 'index.html';
@@ -481,7 +482,9 @@ const Header = ({
     href: NAV_PAGES.salinas
   }, t.nav[3]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.estanciasLargas
-  }, t.nav[9])), /*#__PURE__*/React.createElement("div", {
+  }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.empresas
+  }, lang === 'es' ? 'Empresas' : 'For business')), /*#__PURE__*/React.createElement("div", {
     className: "brand-center"
   }, /*#__PURE__*/React.createElement("a", {
     href: "/",
@@ -589,6 +592,9 @@ const Header = ({
     href: NAV_PAGES.estanciasLargas,
     className: "mn-link"
   }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.empresas,
+    className: "mn-link"
+  }, lang === 'es' ? 'Empresas' : 'For business'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.ventajas,
     className: "mn-link"
   }, "\u2713 ", lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks')), /*#__PURE__*/React.createElement("div", {
