@@ -83,6 +83,7 @@ const NAV_PAGES = {
   reservas:         'reservas.html',
   ventajas:         'reservas.html#ventajas',
   estanciasLargas:  'estancias-largas.html',
+  empresas:         'empresas.html',
 };
 
 const isActive = (href) => {
@@ -370,6 +371,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <NavLink href={NAV_PAGES.thalassa}>{t.nav[2]}</NavLink>
           <NavLink href={NAV_PAGES.salinas}>{t.nav[3]}</NavLink>
           <NavLink href={NAV_PAGES.estanciasLargas}>{t.nav[9]}</NavLink>
+          <NavLink href={NAV_PAGES.empresas}>{lang === 'es' ? 'Empresas' : 'For business'}</NavLink>
         </nav>
         <div className="brand-center">
           <a href="/" className="brand-lockup" aria-label="Hestía, Inicio">
@@ -437,6 +439,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.opiniones} className="mn-link">{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias} className="mn-link">{t.nav[7]}</NavLink>
             <NavLink href={NAV_PAGES.estanciasLargas} className="mn-link">{t.nav[9]}</NavLink>
+            <NavLink href={NAV_PAGES.empresas} className="mn-link">{lang === 'es' ? 'Empresas' : 'For business'}</NavLink>
             <NavLink href={NAV_PAGES.ventajas} className="mn-link">✓ {lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks'}</NavLink>
           </div>
           <div className="mn-actions">
