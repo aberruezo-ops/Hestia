@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA — Chrome (topbar, header, cookies, floating chat, footer)
+// HESTÍA: Chrome (topbar, header, cookies, floating chat, footer)
 // ================================================================
 
 const Topbar = ({ lang, setLang }) => (
@@ -151,7 +151,7 @@ const Header = ({ mode, scrolled, lang }) => {
     return () => window.removeEventListener('hestia-vit-change', sync);
   }, []);
 
-  // Launch banner — siempre en la home (Vitruvio desactivado en home de momento)
+  // Launch banner, siempre en la home (Vitruvio desactivado en home de momento)
   const [showBanner, setShowBanner] = React.useState(() => {
     try {
       const page = window.location.pathname.split('/').pop();
@@ -199,7 +199,7 @@ const Header = ({ mode, scrolled, lang }) => {
     try { const p = window.location.pathname.split('/').pop(); return p === '' || p === 'index.html'; } catch (_) { return false; }
   })();
 
-  // Banner de lanzamiento — siempre en la home, fondo blanco
+  // Banner de lanzamiento: siempre en la home, fondo blanco
   const launchVidRef = React.useRef(null);
   const replayLaunch = () => {
     setLaunchEnded(false);
@@ -244,7 +244,7 @@ const Header = ({ mode, scrolled, lang }) => {
     document.body
   ) : null;
 
-  // Vitruvio — no se muestra en la home
+  // Vitruvio, no se muestra en la home
   const vitruvio = (!isHomePage && !vitMin) ? ReactDOM.createPortal(
     <div className={`hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`}>
       <div className="hv-inner">
@@ -289,7 +289,7 @@ const Header = ({ mode, scrolled, lang }) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Magnetic CTA — el botón RESERVA del header atrae el cursor cuando está
+  // Magnetic CTA, el botón RESERVA del header atrae el cursor cuando está
   // cerca (radio 80 px). El texto interior desliza max 12 px hacia el
   // cursor, el botón entero 6 px. Spring suave vía transition CSS.
   // Solo en desktop con hover real, off en reduced-motion.
@@ -372,7 +372,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <NavLink href={NAV_PAGES.estanciasLargas}>{t.nav[9]}</NavLink>
         </nav>
         <div className="brand-center">
-          <a href="/" className="brand-lockup" aria-label="Hestía — Inicio">
+          <a href="/" className="brand-lockup" aria-label="Hestía, Inicio">
             <span className="hestia-logo-mark" aria-hidden="true">
               <img decoding="async" src="assets/logo-teal-transparent.png" alt="" className="hestia-logo" width="600" height="600"/>
             </span>
@@ -586,7 +586,7 @@ const Cookies = ({ lang }) => {
   }, []);
   // Permite re-abrir el banner desde cualquier sitio (footer, /cookies.html…)
   // disparando un evento global. Usuario puede revisar/cambiar el consentimiento
-  // sin tener que limpiar el localStorage a mano — RGPD-compliant.
+  // sin tener que limpiar el localStorage a mano, RGPD-compliant.
   React.useEffect(() => {
     const reopen = () => {
       localStorage.removeItem('hestia-cookies');
@@ -600,7 +600,7 @@ const Cookies = ({ lang }) => {
     const s = document.createElement('script');
     s.defer = true;
     // Proxy propio para evitar ad-blockers (cloudflareinsights.com está bloqueado).
-    // Worker: workers/analytics-proxy — desplegado en hestia-analytics.hestia-vera-almeria.workers.dev
+    // Worker: workers/analytics-proxy, desplegado en hestia-analytics.hestia-vera-almeria.workers.dev
     s.src = 'https://hestia-analytics.hestia-vera-almeria.workers.dev/s.js';
     s.setAttribute('data-cf-beacon',
       '{"token":"770c05669c6b45ea8f1026576fe7dcce",' +

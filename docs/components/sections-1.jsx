@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA — Secciones de la home
+// HESTÍA, Secciones de la home
 // ================================================================
 
 // --- HERO · galería rotatoria de vídeos de fondo ----------------
@@ -9,10 +9,10 @@
 //   1. Subir el .mp4 a docs/assets/
 //   2. Añadir aquí un objeto { src, poster, mood, alt }
 //      · mood ∈ 'violet' | 'teal' | 'warm' | 'night'
-//        — violet: velo morado (atmósfera nocturna, marina suave)
-//        — teal:   azul mediterráneo (día, agua clara)
-//        — warm:   bermellón cálido (atardecer, dorado)
-//        — night:  azul profundo (noche cerrada, estrellas)
+//       : violet: velo morado (atmósfera nocturna, marina suave)
+//       : teal:   azul mediterráneo (día, agua clara)
+//       : warm:   bermellón cálido (atardecer, dorado)
+//       : night:  azul profundo (noche cerrada, estrellas)
 // Para crear un mood nuevo: añade ::before override en styles.css.
 // Los .mp4 viven en docs/assets/Videoshome/ y todos vienen procesados
 // con grading + sharpening y loop circular (xfade end→start) para que
@@ -130,7 +130,7 @@ const Hero = ({ lang, onScrollDown }) => {
       data-screen-label="01 Hero"
       data-hero-video={pick.src}
     >
-      {/* Vídeo de fondo — playlist aleatoria, avanza al siguiente al terminar */}
+      {/* Vídeo de fondo: playlist aleatoria, avanza al siguiente al terminar */}
       <video
         ref={bgVideoRef}
         className="hero-bg-video"
@@ -166,7 +166,7 @@ const Hero = ({ lang, onScrollDown }) => {
           <span className="hero-proof-item">★ 10 <span className="hero-proof-name">Thalassa</span></span>
           <span className="hero-proof-dot"/>
           <span className="hero-proof-item">★ 9.9 <span className="hero-proof-name">Salinas</span></span>
-          <span className="hero-proof-platform">{lang === 'es' ? 'Media en Booking · Airbnb · web — +600 familias desde 2016' : 'Average across Booking · Airbnb · site — 600+ families since 2016'}</span>
+          <span className="hero-proof-platform">{lang === 'es' ? 'Media en Booking · Airbnb · web, +600 familias desde 2016' : 'Average across Booking · Airbnb · site, 600+ families since 2016'}</span>
         </div>
         {(() => {
           const prices = typeof HESTIA_PRICES !== 'undefined' ? HESTIA_PRICES : null;
@@ -222,7 +222,7 @@ const Bridge = ({ lang }) => {
     <section className="bridge" data-screen-label="02 Amanecer" ref={sectionRef}>
       <div className={`celestial${burst ? ' sun-burst' : ''}`}/>
       <div className="bridge-inner">
-        <div className="eyebrow bridge-time">— 07:14 —</div>
+        <div className="eyebrow bridge-time">( 07:14 )</div>
         <h2 className="reveal" style={{marginTop: 20}}>{t.bridge_title}</h2>
         <p className="reveal delay-1">{t.bridge_sub}</p>
         <div className={`bridge-palette${burst ? ' burst-active' : ''}`}>
@@ -266,10 +266,10 @@ const HomeBookingModal = ({ apt, lang, onClose }) => {
     return intro + em + ph + txt + end;
   };
 
-  const mailSubj = lang === 'es' ? `Consulta reserva — ${apt.name}` : `Booking enquiry — ${apt.name}`;
+  const mailSubj = lang === 'es' ? `Consulta reserva, ${apt.name}` : `Booking enquiry, ${apt.name}`;
   const mailBody = lang === 'es'
-    ? `Nombre: ${name}\nEmail: ${email}\nTeléfono: ${phone || '—'}\nHestía: ${apt.name}\n\n${msg || '(sin mensaje adicional)'}`
-    : `Name: ${name}\nEmail: ${email}\nPhone: ${phone || '—'}\nHestía: ${apt.name}\n\n${msg || '(no additional message)'}`;
+    ? `Nombre: ${name}\nEmail: ${email}\nTeléfono: ${phone || '–'}\nHestía: ${apt.name}\n\n${msg || '(sin mensaje adicional)'}`
+    : `Name: ${name}\nEmail: ${email}\nPhone: ${phone || '–'}\nHestía: ${apt.name}\n\n${msg || '(no additional message)'}`;
 
   React.useEffect(() => {
     const FOCUSABLE = 'button:not([disabled]), a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -425,7 +425,7 @@ const Apartments = ({ lang }) => {
   }, []);
 
   // Precios "desde / hasta" mostrados son el base de prices.json
-  // (lo que el admin ve en /p-edit.html). Sin aplicar directDiscount —
+  // (lo que el admin ve en /p-edit.html). Sin aplicar directDiscount –
   // ese descuento es para el ahorro vs plataformas dentro del desglose.
   const aptMaxPrice = (aptId) => {
     const tbl = HESTIA_PRICES[aptId];
@@ -697,7 +697,7 @@ const Compare = ({ lang }) => {
 };
 
 // ================================================================
-// LAST MINUTE STRIP — huecos disponibles en los próximos 45 días
+// LAST MINUTE STRIP, huecos disponibles en los próximos 45 días
 // ================================================================
 const LastMinuteStrip = ({ lang, embedded = false }) => {
   const [slots, setSlots] = React.useState([]);
@@ -932,7 +932,7 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
 };
 
 // ================================================================
-// HOME PRICE STRIP — 3 precios base visibles antes del buscador
+// HOME PRICE STRIP, 3 precios base visibles antes del buscador
 // ================================================================
 const HomePriceStrip = ({ lang }) => {
   const APT_META = [
@@ -981,8 +981,8 @@ const HomePriceStrip = ({ lang }) => {
         </div>
         <p className="hps-disclaimer">
           {lang === 'es'
-            ? '* Precios en plataformas aproximados. No incluyen las ofertas personales o generales que las plataformas puedan hacer a sus clientes, ni sus programas de fidelización o descuento — ya que no podemos conocerlos. En cualquier caso, siempre podemos mejorar el precio.'
-            : '* Platform prices are approximate. They do not include personal or general offers, nor loyalty or discount programmes that platforms may offer their customers — as we cannot know them. In any case, we can always do better on price.'}
+            ? '* Precios en plataformas aproximados. No incluyen las ofertas personales o generales que las plataformas puedan hacer a sus clientes, ni sus programas de fidelización o descuento, ya que no podemos conocerlos. En cualquier caso, siempre podemos mejorar el precio.'
+            : '* Platform prices are approximate. They do not include personal or general offers, nor loyalty or discount programmes that platforms may offer their customers, as we cannot know them. In any case, we can always do better on price.'}
         </p>
       </div>
     </section>

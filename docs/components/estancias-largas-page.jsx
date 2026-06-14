@@ -1,4 +1,4 @@
-// Estancias largas — página dedicada a reservas de +28 noches
+// Estancias largas, página dedicada a reservas de +28 noches
 // Sep–Jun, para teletrabajadores, empresas y estancias prolongadas.
 
 const LS_COPY = {
@@ -40,7 +40,7 @@ const LS_COPY = {
     apts_cta:    'Ver apartamento',
     faq_title:   'Preguntas frecuentes',
     faqs: [
-      { q: '¿Cuántas noches es el mínimo?', a: 'El mínimo considerado son 29 noches. No hay máximo — si quieres quedarte más tiempo, lo acordamos.' },
+      { q: '¿Cuántas noches es el mínimo?', a: 'El mínimo considerado son 29 noches. No hay máximo: si quieres quedarte más tiempo, lo acordamos.' },
       { q: '¿Hay contrato?', a: 'Sí. Firmamos un contrato de arrendamiento de temporada con los datos de todos los huéspedes. Recibirás el contrato antes de pagar la señal.' },
       { q: '¿Cómo se reserva?', a: 'Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de 2 horas para confirmar disponibilidad y enviarte el contrato.' },
       { q: '¿Hay que pagar todo al reservar?', a: 'Solo el 20% como señal para confirmar la reserva. El resto se abona a la llegada en efectivo o Bizum.' },
@@ -55,12 +55,12 @@ const LS_COPY = {
   en: {
     title:        'Your base in Vera Playa',
     subtitle:     'One month, one season, as long as you need.',
-    sub2:         'Three fully equipped apartments for extended stays — for remote workers, businesses, or simply because you want to spend time in a special place with exceptional weather. Available September to June.',
+    sub2:         'Three fully equipped apartments for extended stays: for remote workers, businesses, or simply because you want to spend time in a special place with exceptional weather. Available September to June.',
     who_title:    'Who is Hestía long stay for?',
     who_1_title:  'Remote worker · Digital nomad',
     who_1_body:   'Fibre WiFi, desk, silence and the Mediterranean 200 metres away. Vera Playa is an affordable destination with 320 sunny days a year.',
     who_2_title:  'Business · Project team',
-    who_2_body:   'Auditors, consultants, relocated teams. A full apartment — more economical and comfortable than a hotel for weeks.',
+    who_2_body:   'Auditors, consultants, relocated teams. A full apartment, more economical and comfortable than a hotel for weeks.',
     who_3_title:  'Long season · New chapter',
     who_3_body:   'Wintering in the south, a first time living abroad or simply spending time by the sea before deciding.',
     includes_title: "What's included",
@@ -90,7 +90,7 @@ const LS_COPY = {
     apts_cta:    'View apartment',
     faq_title:   'Frequently asked questions',
     faqs: [
-      { q: 'What is the minimum stay?', a: 'The minimum considered is 29 nights. There is no maximum — if you want to stay longer, we arrange it.' },
+      { q: 'What is the minimum stay?', a: 'The minimum considered is 29 nights. There is no maximum: if you want to stay longer, we arrange it.' },
       { q: 'Is there a contract?', a: "Yes. We sign a seasonal rental agreement with all guests' details. You receive the contract before paying the deposit." },
       { q: 'How do I book?', a: 'Message us on WhatsApp or email with your dates and chosen apartment. We respond within 2 hours to confirm availability and send the contract.' },
       { q: 'Do I pay everything upfront?', a: 'Only 20% as a deposit to confirm the booking. The rest is paid on arrival in cash or Bizum.' },
@@ -249,11 +249,11 @@ const LsSearch = ({ lang }) => {
   }, []);
 
   // Mezcla los bloqueos de availability.json (iCal, cada 4h) con manual_blocks de
-  // prices.json (reservas directas de p-edit, instantáneas) — igual que el
-  // calendario — para que cualquier reserva/cancelación afecte ya a la estancia larga.
+  // prices.json (reservas directas de p-edit, instantáneas), igual que el
+  // calendario, para que cualquier reserva/cancelación afecte ya a la estancia larga.
   // El calendario marca una noche como NO disponible solo si está ocupada en LOS
   // TRES apartamentos (intersección). Una estancia larga necesita un único Hestía
-  // libre, así que una fecha con al menos uno libre debe poder seleccionarse — el
+  // libre, así que una fecha con al menos uno libre debe poder seleccionarse, el
   // panel de resultados dice luego qué apartamento(s) hay para esas fechas.
   const _mblk = (aptId) => (window.PRICES_V2?.manual_blocks?.[aptId]) || [];
   const blockedAll = React.useMemo(() => {

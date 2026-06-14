@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA — Página de Opiniones / Reviews
+// HESTÍA, Página de Opiniones / Reviews
 // ================================================================
 
 const OPINIONES_COPY = {
@@ -122,9 +122,9 @@ const OpinionesRatings = ({ lang }) => {
 };
 
 // ============================================================
-// OpinionesTestimonials — sección de reviews curadas + web propia
+// OpinionesTestimonials, sección de reviews curadas + web propia
 // Lee window.REVIEWS (cargado en el HTML antes que el componente).
-// Cinta horizontal con frases cortas extraídas de las reviews —
+// Cinta horizontal con frases cortas extraídas de las reviews –
 // teaser emocional antes del grid estructurado. Bg eggplant + texto
 // arena (ratio ~11:1). Pausa en hover. Off en reduced-motion.
 const OpinionesQuotesMarquee = ({ lang }) => {
@@ -153,7 +153,7 @@ const OpinionesQuotesMarquee = ({ lang }) => {
               <span className="oqm-mark">«</span>
               <span className="oqm-text">{q.txt}</span>
               <span className="oqm-mark">»</span>
-              <span className="oqm-attr"> — {q.name}</span>
+              <span className="oqm-attr">, {q.name}</span>
             </span>
             <span className="oqm-dot" aria-hidden="true">✦</span>
           </React.Fragment>

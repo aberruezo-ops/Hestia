@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA — Página de Reservas
+// HESTÍA, Página de Reservas
 // ================================================================
 
 const RESERVAS_COPY = {
@@ -39,9 +39,9 @@ const RESERVAS_COPY = {
     continue_to_send: 'Continuar →',
     status_avail: 'Disponible para tus fechas',
     status_taken: 'Ocupado en esas fechas',
-    status_taken_sub: 'Aún así puedes enviarnos la solicitud — te avisamos si se libera o te proponemos alternativas.',
+    status_taken_sub: 'Aún así puedes enviarnos la solicitud, te avisamos si se libera o te proponemos alternativas.',
     status_no_data: 'No tenemos datos en este momento',
-    status_no_data_sub: 'Sin problema — envíanos la solicitud y te respondemos normalmente en minutos.',
+    status_no_data_sub: 'Sin problema, envíanos la solicitud y te respondemos normalmente en minutos.',
     channel_label: 'Elige cómo quieres enviarnos la solicitud',
     channel_wa: 'WhatsApp',
     channel_wa_desc: 'Necesitamos tu nombre y teléfono.',
@@ -102,9 +102,9 @@ const RESERVAS_COPY = {
     continue_to_send: 'Continue →',
     status_avail: 'Available for your dates',
     status_taken: 'Taken on those dates',
-    status_taken_sub: 'You can still send the request — we will let you know if it frees up or suggest alternatives.',
+    status_taken_sub: 'You can still send the request, we will let you know if it frees up or suggest alternatives.',
     status_no_data: 'No data right now',
-    status_no_data_sub: 'No worries — send the request and we usually reply in minutes.',
+    status_no_data_sub: 'No worries, send the request and we usually reply in minutes.',
     channel_label: 'Choose how to send your request',
     channel_wa: 'WhatsApp',
     channel_wa_desc: 'We need your name and phone.',
@@ -230,7 +230,7 @@ const LsInfoBlock = ({ calc, lang }) => {
       <ul className="rf-ls-conditions">
         <li>{es ? 'Contrato de arrendamiento de temporada' : 'Seasonal rental agreement'}</li>
         <li>{es ? 'Señal del 20% para confirmar · resto a la llegada' : '20% deposit to confirm · balance on arrival'}</li>
-        <li>{es ? `${nights} noches — tarifa mensual` : `${nights} nights — monthly rate`}</li>
+        <li>{es ? `${nights} noches, tarifa mensual` : `${nights} nights, monthly rate`}</li>
         <li>{es ? 'Sin comisiones de plataformas' : 'No platform commissions'}</li>
       </ul>
       <a href="estancias-largas.html" className="rf-ls-info-link" target="_blank" rel="noopener">
@@ -273,8 +273,8 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [],
           </div>
           <div className="price-guarantee-sub">
             {lang === 'es'
-              ? 'Reserva directa — sin comisiones de plataformas.'
-              : 'Book direct — no platform commissions.'}
+              ? 'Reserva directa, sin comisiones de plataformas.'
+              : 'Book direct, no platform commissions.'}
           </div>
         </div>
       </div>
@@ -352,13 +352,13 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [],
             : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.')
         : (lang === 'es'
             ? '* Precio orientativo. ¿Lo encuentras más barato en una plataforma? No solo te lo igualamos: te lo mejoramos.'
-            : '* Indicative price. Found it cheaper on a platform? We don\'t just match it — we beat it.')
+            : '* Indicative price. Found it cheaper on a platform? We don\'t just match it, we beat it.')
       }</p>
     </div>
   );
 };
 
-// ReviewQuote — cita rotando de una reseña real verificada en el
+// ReviewQuote, cita rotando de una reseña real verificada en el
 // paso 2 del formulario de reservas. Lee window.REVIEWS y elige
 // una al azar de las published (filtrada por apt si hay uno).
 const ReviewQuote = ({ apt, lang }) => {
@@ -465,7 +465,7 @@ const ReservasForm = ({ lang }) => {
     return `${mo} ${d}, ${y}`;
   };
 
-  // Step 1 — datos que afectan a precio y disponibilidad
+  // Step 1, datos que afectan a precio y disponibilidad
   const [apt, setApt]           = React.useState('');
   const [checkin, setCheckin]   = React.useState('');
   const [checkout, setCheckout] = React.useState('');
@@ -477,7 +477,7 @@ const ReservasForm = ({ lang }) => {
   const [extrasSel, setExtrasSel] = React.useState({});
   const extrasList = _resExtrasList();
 
-  // Step 3 — datos del canal + comentarios
+  // Step 3, datos del canal + comentarios
   const [name, setName]         = React.useState('');
   const [tel, setTel]           = React.useState('');
   const [email, setEmail]       = React.useState('');
@@ -530,7 +530,7 @@ const ReservasForm = ({ lang }) => {
     }
     if (qPets === 'yes') { setPets('yes'); hadAny = true; }
     // Bebé: setea el toggle Sí/No y deja la opción a marcar cuna/trona en
-    // los extras (no las marca automáticamente — el huésped decide).
+    // los extras (no las marca automáticamente, el huésped decide).
     const qBaby = qs.get('baby');
     if (qBaby === 'yes') { setBaby('yes'); hadAny = true; }
     // Si vino apt + ambas fechas, avanzamos al step 2 directamente.
@@ -560,7 +560,7 @@ const ReservasForm = ({ lang }) => {
   };
   // Máximo qty por extra. Items "estancia" (cuna, trona, late check-in)
   // son binarios → max 1. "hora" (early check-in, late check-out) hasta
-  // 8 horas. Resto (set/noche) escala con huéspedes — default 6.
+  // 8 horas. Resto (set/noche) escala con huéspedes, default 6.
   const guestCap = Math.max(1, parseInt(guests, 10) || 6);
   const maxForExtra = (ex) => {
     if (!ex) return guestCap;
@@ -623,7 +623,7 @@ const ReservasForm = ({ lang }) => {
   const nightsSelected = (checkin && checkout)
     ? Math.round((new Date(checkout + 'T12:00:00Z') - new Date(checkin + 'T12:00:00Z')) / 86400000)
     : 0;
-  // floor mínimo absoluto (2) — el bloqueo final se valida en el picker;
+  // floor mínimo absoluto (2), el bloqueo final se valida en el picker;
   // aquí solo aseguramos que no sea < twoNightFloor.
   const meetsMinNights = nightsSelected >= twoNightFloor;
   // step1Ready = puede pasar al step 2 incluso sin apt elegido. Si no hay
@@ -636,7 +636,7 @@ const ReservasForm = ({ lang }) => {
   const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   const channelValid = channel === 'whatsapp' ? (hasName && hasTel) : (hasName && hasEmail);
 
-  // Cálculo — _calcStay ya aplica la oferta de hueco internamente (fuente única).
+  // Cálculo, _calcStay ya aplica la oferta de hueco internamente (fuente única).
   const calc = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes', parseInt(guests, 10) || null) : null;
   const nightsForExtras = calc?.nights || 0;
   const selectedExtras = computeSelectedExtras(nightsForExtras);
@@ -649,7 +649,7 @@ const ReservasForm = ({ lang }) => {
   const recapExtrasTotal = selectedExtras.reduce((s, e) => s + e.amount, 0);
   const recapTotal = isLsStay && lsCalc ? lsCalc.total + recapExtrasTotal : (calc ? calc.directTotal + recapExtrasTotal : 0);
 
-  // Avanzar pasos. step1Ready basta (sin apt) — en step 2 el huésped
+  // Avanzar pasos. step1Ready basta (sin apt), en step 2 el huésped
   // verá la disponibilidad de los 3 Hestías y puede elegir uno.
   const goToStep2 = () => {
     if (!step1Ready) return;
@@ -691,13 +691,13 @@ const ReservasForm = ({ lang }) => {
       const headEn = '\nExtras:';
       const lines = selectedExtras.map(ex => {
         if (ex.unit === 'hora') {
-          return `  • ${ex.label} — ${ex.qty} h × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
+          return `  • ${ex.label}, ${ex.qty} h × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
         }
         if (ex.unit === 'noche') {
-          return `  • ${ex.label} — ${ex.qty} ${lang === 'es' ? 'noches' : 'nights'} × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
+          return `  • ${ex.label}, ${ex.qty} ${lang === 'es' ? 'noches' : 'nights'} × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
         }
         if (ex.amount > 0) {
-          return `  • ${ex.label} — ${fmt(ex.amount)}`;
+          return `  • ${ex.label}, ${fmt(ex.amount)}`;
         }
         return `  • ${ex.label}`;
       });
@@ -748,7 +748,7 @@ const ReservasForm = ({ lang }) => {
     const lines = lang === 'es'
       ? [
           `¡Hola! Quiero hacer una consulta de reserva.\n`,
-          `Hestía: ${aptNames[apt] || apt || '—'}`,
+          `Hestía: ${aptNames[apt] || apt || '–'}`,
           `Nombre: ${name}`,
           channel === 'whatsapp' ? `Teléfono: ${tel}` : `Email: ${email}`,
           `Entrada: ${checkin}`,
@@ -756,11 +756,11 @@ const ReservasForm = ({ lang }) => {
           `Huéspedes: ${guests}`,
           `Mascota: ${petsText}`,
           `Bebé: ${babyText}${extrasText}${priceBlock}`,
-          `Comentarios: ${comments || '—'}`,
+          `Comentarios: ${comments || '–'}`,
         ]
       : [
           `Hello! I'd like to enquire about a booking.\n`,
-          `Hestía: ${aptNames[apt] || apt || '—'}`,
+          `Hestía: ${aptNames[apt] || apt || '–'}`,
           `Name: ${name}`,
           channel === 'whatsapp' ? `Phone: ${tel}` : `Email: ${email}`,
           `Check-in: ${checkin}`,
@@ -768,7 +768,7 @@ const ReservasForm = ({ lang }) => {
           `Guests: ${guests}`,
           `Pet: ${petsText}`,
           `Baby: ${babyText}${extrasText}${priceBlock}`,
-          `Comments: ${comments || '—'}`,
+          `Comments: ${comments || '–'}`,
         ];
     return lines.join('\n');
   };
@@ -785,8 +785,8 @@ const ReservasForm = ({ lang }) => {
       window.open(url, '_blank');
     } else {
       const subj = lang === 'es'
-        ? `Consulta reserva — ${aptNames[apt] || 'Hestía'}`
-        : `Booking enquiry — ${aptNames[apt] || 'Hestía'}`;
+        ? `Consulta reserva, ${aptNames[apt] || 'Hestía'}`
+        : `Booking enquiry, ${aptNames[apt] || 'Hestía'}`;
       url = `mailto:info@hestiayourhome.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(msg)}`;
       window.location.href = url;
     }
@@ -811,7 +811,7 @@ const ReservasForm = ({ lang }) => {
     : (channel === 'email' && !hasEmail) ? (lang === 'es' ? 'Escribe un email válido.' : 'Enter a valid email.')
     : null;
 
-  // Resumen del paso 1 cuando está plegado — card con color del Hestía,
+  // Resumen del paso 1 cuando está plegado: card con color del Hestía,
   // fechas en español, badge bonita.
   const nightsBooked = step1Complete ? nightsSelected : null;
   const step1Summary = step1Complete ? (
@@ -859,7 +859,7 @@ const ReservasForm = ({ lang }) => {
       <h2 className="reservas-form-title">{t.form_title}</h2>
       <div className="reservas-form-sub">{t.form_sub}</div>
 
-      {/* Progress indicator — visible en móvil, sutil en desktop */}
+      {/* Progress indicator: visible en móvil, sutil en desktop */}
       <div className="rf-progress" aria-label={lang === 'es' ? `Paso ${step} de 3` : `Step ${step} of 3`}>
         {[
           { n: 1, label: lang === 'es' ? 'Datos'  : 'Details' },
@@ -876,7 +876,7 @@ const ReservasForm = ({ lang }) => {
         ))}
       </div>
 
-      {/* SECTION 1 — DATOS */}
+      {/* SECTION 1, DATOS */}
       <section
         id="rf-step-1"
         className={`rf-step rf-step-1 ${step === 1 ? 'is-open' : 'is-collapsed'}`}
@@ -1032,7 +1032,7 @@ const ReservasForm = ({ lang }) => {
         )}
       </section>
 
-      {/* SECTION 2 — DISPONIBILIDAD Y PRECIO */}
+      {/* SECTION 2, DISPONIBILIDAD Y PRECIO */}
       <section
         id="rf-step-2"
         className={`rf-step rf-step-2 ${step >= 2 ? 'is-open' : 'is-locked'} ${step > 2 ? 'is-collapsed' : ''}`}
@@ -1045,7 +1045,7 @@ const ReservasForm = ({ lang }) => {
         </header>
         {step >= 2 && (
           <div className="rf-step-body">
-            {/* Long-stay info block — shown when nights > 28 and month is Sep–Jun */}
+            {/* Long-stay info block, shown when nights > 28 and month is Sep–Jun */}
             {isLsStay && (
               <LsInfoBlock calc={calc} lang={lang} />
             )}
@@ -1094,7 +1094,7 @@ const ReservasForm = ({ lang }) => {
                 </div>
               </div>
             )}
-            {/* Status badge — sólo si hay apt elegido */}
+            {/* Status badge, sólo si hay apt elegido */}
             {apt && isAvailable === true && (
               <div className="rf-status rf-status-ok">
                 <span className="rf-status-icon" aria-hidden="true">✓</span>
@@ -1116,7 +1116,7 @@ const ReservasForm = ({ lang }) => {
               </div>
             )}
 
-            {/* Price — PricePreview handles both regular and LS stays.
+            {/* Price, PricePreview handles both regular and LS stays.
                 For LS stays lsCalc is passed so it shows the full nightly
                 breakdown crossed out plus the LS monthly price and savings. */}
             {calc && (
@@ -1194,7 +1194,7 @@ const ReservasForm = ({ lang }) => {
         )}
       </section>
 
-      {/* SECTION 3 — CANAL */}
+      {/* SECTION 3, CANAL */}
       <section
         id="rf-step-3"
         className={`rf-step rf-step-3 ${step >= 3 ? 'is-open' : 'is-locked'}`}

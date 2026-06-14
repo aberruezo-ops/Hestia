@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA — Buscador de disponibilidad (Home)
+// HESTÍA, Buscador de disponibilidad (Home)
 // ================================================================
 
 const HS_APTS = [
@@ -41,7 +41,7 @@ const _hsFmtDate = (ds, lang) => {
     : `${ME[d.getUTCMonth()].slice(0,3)} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
 };
 
-// ---- Custom calendar range picker — mismo estilo que AptCalendar ----
+// ---- Custom calendar range picker, mismo estilo que AptCalendar ----
 const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, lang, today }) => {
   const [hover, setHover] = React.useState(null);
   const [drMsg, setDrMsg] = React.useState(null);
@@ -54,17 +54,17 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
     return avail[apt].blocked || [];
   }, [apt, avail]);
 
-  // Cierre de reservas — última fecha de check-in aceptada (de prices.json).
+  // Cierre de reservas, última fecha de check-in aceptada (de prices.json).
   const horizonStr = (window.PRICES_V2 && window.PRICES_V2.bookingHorizon
     && window.PRICES_V2.bookingHorizon.lastCheckinDate) || null;
   const _isBeyondHorizon = (ds) => !!(horizonStr && ds > horizonStr);
 
   const _isBlkLocal = (ds) => blocked.some(r => ds >= r.start && ds < r.end);
-  // Día "partido" — primer día de bloque: mañana libre (check-out válido),
+  // Día "partido": primer día de bloque: mañana libre (check-out válido),
   // tarde ocupada (check-in NO válido).
   const _isBlkStartLocal = (ds) => _isBlkLocal(ds) && !_isBlkLocal(_hsAdj(ds, -1));
 
-  // Estancia mínima — capas de reglas (idéntico a DateRangePicker en shared):
+  // Estancia mínima, capas de reglas (idéntico a DateRangePicker en shared):
   //   1) 1 noche → siempre prohibida.
   //   2) Por defecto: 3 noches mínimo (minNights).
   //   3) Temporada crítica: 7 noches mínimo (criticalSeasonMinNights).
@@ -322,12 +322,12 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
 // Flujo nuevo: el huésped ve disponibilidad + precio base aquí, y un único
 // CTA "Avanzar con la reserva" lo lleva a /reservas con apt+fechas+huéspedes
 // pre-rellenados. Extras (cuna, trona, sábanas, mascota...) y datos de
-// contacto se gestionan allí — aquí reducimos la carga al mínimo.
+// contacto se gestionan allí, aquí reducimos la carga al mínimo.
 const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
 
   const nights  = checkin && checkout ? _hsDiff(checkin, checkout) : 0;
   const aptName = apt.name;
-  // Precio base sin extras (sin mascota) — el detalle se ve en /reservas.
+  // Precio base sin extras (sin mascota), el detalle se ve en /reservas.
   const calc    = (checkin && checkout && checkout > checkin)
     ? _calcStay(checkin, checkout, apt.id, false, parseInt(guests, 10) || null) : null;
   // Larga estancia: ≥29 noches, no julio ni agosto
@@ -335,7 +335,7 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
   const lsCalc   = isLsStay ? _calcLsTotal(checkin, checkout, parseInt(guests,10)||1, false, apt.id) : null;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
 
-  // URL del CTA "Avanzar con la reserva" — pasa apt+fechas+huéspedes.
+  // URL del CTA "Avanzar con la reserva", pasa apt+fechas+huéspedes.
   // Mascota y extras se eligen en /reservas (paso único de extras).
   const reservasHref = (() => {
     const params = new URLSearchParams();
@@ -395,7 +395,7 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
                     <div className="price-guarantee-sub">
                       {lang === 'es'
                         ? '¿Lo encuentras más barato en Booking o Airbnb? No solo te lo igualamos: te lo mejoramos.'
-                        : 'Found it cheaper on Booking or Airbnb? We don\'t just match it — we beat it.'}
+                        : 'Found it cheaper on Booking or Airbnb? We don\'t just match it, we beat it.'}
                     </div>
                   </div>
                 </div>
@@ -441,8 +441,8 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
                         ? '* Señal del 20% para confirmar. Resto a la llegada.'
                         : '* 20% deposit to confirm. Balance paid on arrival.')
                     : (lang === 'es'
-                        ? '* Precio máximo orientativo. Cuéntanos de ti — muchas veces podemos ajustar.'
-                        : '* Maximum indicative price. Tell us about yourselves — we can often adjust.')}
+                        ? '* Precio máximo orientativo. Cuéntanos de ti, muchas veces podemos ajustar.'
+                        : '* Maximum indicative price. Tell us about yourselves, we can often adjust.')}
                 </p>
               </div>
             )}
@@ -464,8 +464,8 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
         ) : (
           <p className="hs-rc-unavail-note">
             {lang === 'es'
-              ? 'Prueba con otras fechas o escríbenos — a veces hay cancelaciones de última hora.'
-              : 'Try different dates or write to us — last-minute cancellations do happen.'}
+              ? 'Prueba con otras fechas o escríbenos, a veces hay cancelaciones de última hora.'
+              : 'Try different dates or write to us, last-minute cancellations do happen.'}
             {' '}
             <a href="https://wa.me/34620316370" target="_blank" rel="noopener">
               WhatsApp →
@@ -669,7 +669,7 @@ const HomeSearch = ({ lang }) => {
             lang={lang} today={today}
           />
 
-          {/* Guests — sin extras: cuna/trona/sábanas/toallas/mascota se
+          {/* Guests, sin extras: cuna/trona/sábanas/toallas/mascota se
               gestionan en /reservas (paso único). Aquí solo lo esencial
               para comprobar disponibilidad y ver precio base. */}
           <div className="hs-row hs-row--wrap">
@@ -789,8 +789,8 @@ const HomeSearch = ({ lang }) => {
             <>
               <p className="hs-notify-text">
                 {lang === 'es'
-                  ? 'Déjanos tu email y te avisamos si esas fechas se liberan — cancelaciones, ventanas nuevas…'
-                  : 'Leave your email and we\'ll let you know if those dates open up — cancellations, new slots…'}
+                  ? 'Déjanos tu email y te avisamos si esas fechas se liberan: cancelaciones, ventanas nuevas…'
+                  : 'Leave your email and we\'ll let you know if those dates open up: cancellations, new slots…'}
               </p>
               {notifyState === 'sent' ? (
                 <p className="hs-notify-ok">
@@ -825,8 +825,8 @@ const HomeSearch = ({ lang }) => {
             <>
               <p className="hs-notify-text">
                 {lang === 'es'
-                  ? '¿Tus fechas están ocupadas? Avísanos y te escribimos si se libera algo — cancelaciones, aperturas de calendario…'
-                  : 'Are your dates taken? Let us know and we\'ll reach out if something opens up — cancellations, new slots…'}
+                  ? '¿Tus fechas están ocupadas? Avísanos y te escribimos si se libera algo: cancelaciones, aperturas de calendario…'
+                  : 'Are your dates taken? Let us know and we\'ll reach out if something opens up: cancellations, new slots…'}
               </p>
               <a
                 href={lang === 'es'

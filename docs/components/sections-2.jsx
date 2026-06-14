@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA — Secciones parte 2: Counters, Gallery, Team, Manifest, Ratings, Contact
+// HESTÍA: Secciones parte 2: Counters, Gallery, Team, Manifest, Ratings, Contact
 // ================================================================
 
 // --- COUNTERS con animación ---
@@ -99,7 +99,7 @@ const Gallery = ({ lang }) => {
         {tiles.map((tile, i) => (
           <div key={i} className={`g-tile ${tile.cls}`}>
             <div className="img"/>
-            <div className="caption">— {tile.caption}</div>
+            <div className="caption">– {tile.caption}</div>
           </div>
         ))}
       </div>
@@ -181,10 +181,10 @@ const Team = ({ lang }) => {
 
 // --- MANIFEST (Viajero hogareño + colaborador) ---
 // Dos arquetipos fusionados en una sola narrativa:
-//   1) Lead — Viajero hogareño: vives aquí, no haces turismo.
-//   2) Bridge — porque es tu casa ahora, lo cuidas como propio.
-//   3) Principles — cuatro maneras concretas de cuidar.
-//   4) Quote — para quien venga después.
+//   1) Lead: Viajero hogareño: vives aquí, no haces turismo.
+//   2) Bridge: porque es tu casa ahora, lo cuidas como propio.
+//   3) Principles, cuatro maneras concretas de cuidar.
+//   4) Quote, para quien venga después.
 const Manifest = ({ lang }) => {
   const t = COPY[lang];
   return (
@@ -239,7 +239,7 @@ const Ratings = ({ lang }) => {
               {lang === 'es'
                 ? '«Todo impecable. La ubicación, Hestía y sobre todo el trato de Alex. Volvemos seguro.»'
                 : '«Everything perfect. The location, the Hestía, and above all Alex\'s care. We\'ll definitely be back.»'}
-              <cite>— María G. · Hestía Mar · 2024</cite>
+              <cite>– María G. · Hestía Mar · 2024</cite>
             </blockquote>
           </div>
           <div className="rating-card" style={{borderTopColor: 'var(--vt)'}}>
@@ -250,7 +250,7 @@ const Ratings = ({ lang }) => {
               {lang === 'es'
                 ? '«Llevamos diez años viajando y nunca habíamos visto unas vistas así desde un alojamiento. El SPA es otro nivel.»'
                 : '«Ten years travelling and we\'ve never had views like these from a holiday rental. The SPA is something else entirely.»'}
-              <cite>— James & Sophie · Hestía Thalassa · 2024</cite>
+              <cite>– James & Sophie · Hestía Thalassa · 2024</cite>
             </blockquote>
           </div>
           <div className="rating-card" style={{borderTopColor: 'var(--vs)'}}>
@@ -261,7 +261,7 @@ const Ratings = ({ lang }) => {
               {lang === 'es'
                 ? '«Hestía tiene algo que no se puede comprar: la sensación de que alguien ha pensado en cada detalle para que te sientas en casa.»'
                 : '«Hestía has something money can\'t buy: the feeling that someone thought of every detail so you feel at home, not in a rental.»'}
-              <cite>— Carlos M. · Hestía Salinas · 2024</cite>
+              <cite>– Carlos M. · Hestía Salinas · 2024</cite>
             </blockquote>
           </div>
         </div>
@@ -270,7 +270,7 @@ const Ratings = ({ lang }) => {
   );
 };
 
-// --- RATINGS MARQUEE — cinta de plataformas/métricas bajo Ratings ---
+// --- RATINGS MARQUEE, cinta de plataformas/métricas bajo Ratings ---
 // Texto-only marquee: sin logos externos (cero deps). Arena #F0E8D5 sobre
 // eggplant #2A0F2E (ratio ~11:1). Track duplicado para loop continuo.
 const RatingsMarquee = ({ lang }) => {

@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA — Disponibilidad + Selección de fechas
+// HESTÍA, Disponibilidad + Selección de fechas
 // Lee docs/assets/availability.json (generado por GitHub Action)
 // ================================================================
 
@@ -70,7 +70,7 @@ const _summerScarcity = (blocked) => {
 };
 
 // ---------------------------------------------------------------
-// RequestPanel — aparece cuando hay fechas seleccionadas
+// RequestPanel, aparece cuando hay fechas seleccionadas
 // ---------------------------------------------------------------
 const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
   const [guests, setGuests] = React.useState(2);
@@ -96,7 +96,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
 
   // CTA "Avanzar con la reserva": navega a /reservas pre-rellenado.
   // Datos de contacto, extras detallados (cuna, trona, sábanas, toallas)
-  // y comentarios se gestionan allí — aquí solo lo esencial.
+  // y comentarios se gestionan allí, aquí solo lo esencial.
   const reservasHref = (() => {
     const params = new URLSearchParams();
     params.set('apt', aptId);
@@ -118,7 +118,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
           <span className="req-date-val">{fmtDate(selStart)}</span>
         </div>
         <div className="req-nights">
-          <span className="req-nights-n">{calc ? calc.nights : '—'}</span>
+          <span className="req-nights-n">{calc ? calc.nights : '–'}</span>
           <span className="req-nights-lbl">{lang === 'es' ? 'noches' : 'nights'}</span>
         </div>
         <div className="req-date-col req-date-col--r">
@@ -143,7 +143,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
               <div className="price-guarantee-sub">
                 {lang === 'es'
                   ? '¿Lo encuentras más barato en Booking o Airbnb? Tráenoslo: no solo te lo igualamos, te lo mejoramos.'
-                  : 'Found it cheaper on Booking or Airbnb? Bring it to us — we don\'t just match it, we beat it.'}
+                  : 'Found it cheaper on Booking or Airbnb? Bring it to us, we don\'t just match it, we beat it.'}
               </div>
             </div>
           </div>
@@ -199,7 +199,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
         </label>
       </div>
 
-      {/* Disclaimer — precio orientativo + garantía de mejora */}
+      {/* Disclaimer, precio orientativo + garantía de mejora */}
       <div className="req-disclaimer">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         <p>{lang === 'es'
@@ -223,7 +223,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
 };
 
 // ---------------------------------------------------------------
-// CalMonth — rejilla de un mes
+// CalMonth, rejilla de un mes
 // ---------------------------------------------------------------
 const CalMonth = ({
   year, month, blocked, lang, todayStr, horizonStr,
@@ -253,7 +253,7 @@ const CalMonth = ({
           const isPast  = ds < todayStr;
           // Beyond booking horizon = no aceptamos reservas con check-in
           // posterior a esa fecha (ej. cierre antes de Sem. Santa 2027).
-          // Se trata visualmente como "past" — gris, no clickable.
+          // Se trata visualmente como "past": gris, no clickable.
           const beyondHorizon = !!(horizonStr && ds > horizonStr);
           const isToday = ds === todayStr;
           const isBlk   = _isBlk(ds, blocked);
@@ -354,7 +354,7 @@ const CalMonth = ({
 };
 
 // ---------------------------------------------------------------
-// AptCalendar — sección principal
+// AptCalendar, sección principal
 // ---------------------------------------------------------------
 const AptCalendar = ({ aptId, lang, accent }) => {
   const [data,    setData   ] = React.useState(null);
@@ -391,12 +391,12 @@ const AptCalendar = ({ aptId, lang, accent }) => {
   const hasSyncError = Object.keys(fetchErrors).length > 0;
   const isDemo       = data ? data.demo          : false;
 
-  // Cierre de reservas — última fecha de check-in aceptada (ej. 20 mar 2027).
+  // Cierre de reservas, última fecha de check-in aceptada (ej. 20 mar 2027).
   // Lee de prices.json (window.PRICES_V2). null = sin restricción.
   const horizonStr = (window.PRICES_V2 && window.PRICES_V2.bookingHorizon
     && window.PRICES_V2.bookingHorizon.lastCheckinDate) || null;
 
-  // Estancia mínima — capas:
+  // Estancia mínima, capas:
   //   1) 1 noche → prohibida siempre.
   //   2) Base (minNights, default 3).
   //   3) Crítica (criticalSeasonMinNights, default 7).
@@ -468,7 +468,7 @@ const AptCalendar = ({ aptId, lang, accent }) => {
       return;
     }
 
-    // ds > selStart, no end yet — check path is clear
+    // ds > selStart, no end yet, check path is clear
     let cur = _adj(selStart, 1);
     while (cur < ds) {
       if (_isBlk(cur, blocked)) {
@@ -482,7 +482,7 @@ const AptCalendar = ({ aptId, lang, accent }) => {
       cur = _adj(cur, 1);
     }
 
-    // Enforce minimum nights — rechaza la selección con mensaje
+    // Enforce minimum nights, rechaza la selección con mensaje
     // explicativo según el caso: 1 noche prohibida en cualquier caso,
     // 2 noches en temporada crítica salvo excepciones.
     const nights = _diff(selStart, ds);
@@ -584,7 +584,7 @@ const AptCalendar = ({ aptId, lang, accent }) => {
         </p>
       </div>
 
-      {/* Scarcity badge — shows free weeks remaining in summer */}
+      {/* Scarcity badge, shows free weeks remaining in summer */}
       {!loading && data && (() => {
         const free = _summerScarcity(blocked);
         if (free === null) return null;
@@ -609,7 +609,7 @@ const AptCalendar = ({ aptId, lang, accent }) => {
         </div>
       )}
 
-      {/* Sync-error notice — shown only when fetch failed but we have no demo flag */}
+      {/* Sync-error notice, shown only when fetch failed but we have no demo flag */}
       {!isDemo && hasSyncError && (
         <div className="avail-sync-err">
           {lang === 'es'
@@ -660,7 +660,7 @@ const AptCalendar = ({ aptId, lang, accent }) => {
         </div>
       )}
 
-      {/* Request panel — appears once both dates are selected */}
+      {/* Request panel, appears once both dates are selected */}
       {selStart && selEnd ? (
         <RequestPanel
           aptId={aptId} lang={lang} accent={accent}
@@ -668,7 +668,7 @@ const AptCalendar = ({ aptId, lang, accent }) => {
           onReset={handleReset}
         />
       ) : (
-        /* Footer — only shown when no complete selection */
+        /* Footer, only shown when no complete selection */
         <div className="avail-foot">
           <div className="avail-legend">
             <span className="leg-item"><span className="leg-dot lg-av"/>{lang === 'es' ? 'Disponible' : 'Available'}</span>
