@@ -22420,6 +22420,11 @@ img[src*="apt-vt-gallery-"] {
     pointer-events: none;
     transform: translateX(-50%) translateY(12px);
   }
+  /* Igual con la burbuja de chat: no debe flotar sobre el menú abierto. */
+  body:has(.mobile-menu.open) .float-chat {
+    opacity: 0;
+    pointer-events: none;
+  }
   .mob-book-btn:hover,
   .mob-book-btn:focus-visible {
     box-shadow: 0 6px 28px rgba(58,170,187,.6);
