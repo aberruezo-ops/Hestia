@@ -344,6 +344,15 @@ const EmpresasPageApp = () => {
   const { mode, scrolled } = useScrollMode();
   useReveal();
 
+  const heroVid = React.useRef(null);
+  React.useEffect(() => {
+    const tryPlay = () => { const el = heroVid.current; if (el) { el.muted = true; el.play().catch(() => {}); } };
+    tryPlay();
+    const onVisible = () => { if (!document.hidden) tryPlay(); };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => document.removeEventListener('visibilitychange', onVisible);
+  }, []);
+
   React.useEffect(() => {
     localStorage.setItem('hestia-lang', lang);
     document.documentElement.lang = lang;
@@ -360,6 +369,10 @@ const EmpresasPageApp = () => {
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main>
         <section className="page-hero emp-hero on-dark">
+          <video ref={heroVid} className="emp-hero-video" autoPlay muted loop playsInline preload="auto" poster="assets/empresas-hero-poster.jpg">
+            <source src="assets/empresas-hero.mp4" type="video/mp4"/>
+          </video>
+          <div className="emp-hero-wash"/>
           <div className="page-hero-content">
             <div className="eyebrow">{t.eyebrow}</div>
             <h1>{t.title}</h1>
