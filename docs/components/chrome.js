@@ -484,7 +484,7 @@ const Header = ({
     href: NAV_PAGES.estanciasLargas
   }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.empresas
-  }, lang === 'es' ? 'Empresas' : 'For business')), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Para empresas' : 'For business')), /*#__PURE__*/React.createElement("div", {
     className: "brand-center"
   }, /*#__PURE__*/React.createElement("a", {
     href: "/",
@@ -594,7 +594,7 @@ const Header = ({
   }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.empresas,
     className: "mn-link"
-  }, lang === 'es' ? 'Empresas' : 'For business'), /*#__PURE__*/React.createElement(NavLink, {
+  }, lang === 'es' ? 'Para empresas' : 'For business'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.ventajas,
     className: "mn-link"
   }, "\u2713 ", lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks')), /*#__PURE__*/React.createElement("div", {
@@ -926,7 +926,7 @@ const Footer = ({
     href: "estancias-largas.html"
   }, t.nav[9])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "empresas.html"
-  }, lang === 'es' ? 'Empresas' : 'For business')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, lang === 'es' ? 'Para empresas' : 'For business')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "privacidad.html"
   }, lang === 'es' ? 'Privacidad' : 'Privacy')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "cookies.html"

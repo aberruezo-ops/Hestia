@@ -371,7 +371,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <NavLink href={NAV_PAGES.thalassa}>{t.nav[2]}</NavLink>
           <NavLink href={NAV_PAGES.salinas}>{t.nav[3]}</NavLink>
           <NavLink href={NAV_PAGES.estanciasLargas}>{t.nav[9]}</NavLink>
-          <NavLink href={NAV_PAGES.empresas}>{lang === 'es' ? 'Empresas' : 'For business'}</NavLink>
+          <NavLink href={NAV_PAGES.empresas}>{lang === 'es' ? 'Para empresas' : 'For business'}</NavLink>
         </nav>
         <div className="brand-center">
           <a href="/" className="brand-lockup" aria-label="Hestía, Inicio">
@@ -439,7 +439,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.opiniones} className="mn-link">{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias} className="mn-link">{t.nav[7]}</NavLink>
             <NavLink href={NAV_PAGES.estanciasLargas} className="mn-link">{t.nav[9]}</NavLink>
-            <NavLink href={NAV_PAGES.empresas} className="mn-link">{lang === 'es' ? 'Empresas' : 'For business'}</NavLink>
+            <NavLink href={NAV_PAGES.empresas} className="mn-link">{lang === 'es' ? 'Para empresas' : 'For business'}</NavLink>
             <NavLink href={NAV_PAGES.ventajas} className="mn-link">✓ {lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks'}</NavLink>
           </div>
           <div className="mn-actions">
@@ -693,7 +693,7 @@ const Footer = ({ lang }) => {
             <li><a href="opiniones.html">{t.nav[5]}</a></li>
             <li><a href="noticias.html">{t.nav[7]}</a></li>
             <li><a href="estancias-largas.html">{t.nav[9]}</a></li>
-            <li><a href="empresas.html">{lang === 'es' ? 'Empresas' : 'For business'}</a></li>
+            <li><a href="empresas.html">{lang === 'es' ? 'Para empresas' : 'For business'}</a></li>
             <li><a href="privacidad.html">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>
             <li><a href="cookies.html">Cookies</a></li>
             <li><a href="mapa.html">{lang === 'es' ? 'Mapa web' : 'Site map'}</a></li>
