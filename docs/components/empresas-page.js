@@ -551,11 +551,9 @@ const EmpresasPageApp = () => {
     href: "#propuesta",
     className: "btn btn-primary"
   }, t.formCta), /*#__PURE__*/React.createElement("a", {
-    href: EMP_WA,
-    target: "_blank",
-    rel: "noopener",
+    href: "reservas.html",
     className: "btn btn-ghost-dark"
-  }, t.waCta)))), /*#__PURE__*/React.createElement("div", {
+  }, t.availBtn)))), /*#__PURE__*/React.createElement("div", {
     className: "emp-trust",
     "aria-label": lang === 'es' ? 'Lo que nos diferencia' : 'What sets us apart'
   }, /*#__PURE__*/React.createElement("ul", {
