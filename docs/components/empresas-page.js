@@ -637,7 +637,7 @@ const EmpresasPageApp = () => {
     href: "#buscar",
     className: "btn btn-ghost-dark"
   }, t.availBtn)), /*#__PURE__*/React.createElement("a", {
-    href: "downloads/Hestia-Empresas-Dossier.pdf",
+    href: `downloads/Hestia-Empresas-Dossier${lang === 'es' ? '' : '-EN'}.pdf`,
     className: "emp-hero-dl",
     target: "_blank",
     rel: "noopener",
