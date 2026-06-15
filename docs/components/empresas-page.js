@@ -43,7 +43,8 @@ const EMP_COPY = {
     }],
     servicesTitle: 'Servicios locales a medida',
     servicesSub: 'No solo damos las llaves. Ayudamos a la empresa y a sus profesionales o clientes con lo que haga falta para que la estancia salga rodada:',
-    services: ['Traslados desde el aeropuerto y movilidad por la zona', 'Limpieza y cambio de toallas adicionales', 'Reserva de restaurantes, golf y actividades', 'Lavandería, coworking y recados del día a día', 'Necesidades especiales (cuna, parking, llegada fuera de horario)', 'Guía local completa de Vera Playa para tus huéspedes'],
+    services: ['Os ayudamos a encontrar traslados desde el aeropuerto y movilidad por la zona', 'Limpieza y cambio de toallas adicionales', 'En nuestra guía os damos restaurantes, golf y actividades, lavandería, coworking y recados del día a día', 'Necesidades especiales (cuna, parking, llegada autónoma fuera de horario)', 'Guía local completa de Vera Playa para vuestros huéspedes'],
+    servicesFoot: 'Dinos qué necesitas y nos ponemos manos a la obra.',
     sectorsTitle: 'Con quién trabajamos',
     sectorsSub: 'Si tu negocio necesita alojar a clientes, equipos o pacientes cerca de Vera Playa, encajamos. Algunos ejemplos:',
     sectors: ['Empresas con técnicos o visitas (agroindustria, energía, construcción)', 'Clínicas y turismo de salud', 'Campos de entrenamiento deportivo', 'Golf (stay & play)', 'Bodas y eventos', 'Inmobiliarias y compradores de vivienda', 'Productoras de cine y publicidad', 'Turoperadores y clubes'],
@@ -112,7 +113,8 @@ const EMP_COPY = {
     }],
     servicesTitle: 'Tailored local services',
     servicesSub: 'We do more than hand over the keys. We help the company and its professionals or clients with whatever they need for a smooth stay:',
-    services: ['Airport transfers and getting around the area', 'Extra cleaning and towel changes', 'Restaurant, golf and activity bookings', 'Laundry, coworking and day-to-day errands', 'Special requests (cot, parking, late arrival)', 'A full local Vera Playa guide for your guests'],
+    services: ['We help you find airport transfers and ways to get around the area', 'Extra cleaning and towel changes', 'In our guide we point you to restaurants, golf and activities, laundry, coworking and day-to-day errands', 'Special requests (cot, parking, self check-in outside hours)', 'A full local Vera Playa guide for your guests'],
+    servicesFoot: 'Tell us what you need and we get to work.',
     sectorsTitle: 'Who we work with',
     sectorsSub: 'If your business needs to house clients, teams or patients near Vera Playa, we fit. Some examples:',
     sectors: ['Companies with technicians or visitors (agribusiness, energy, construction)', 'Clinics and health tourism', 'Sports training camps', 'Golf (stay & play)', 'Weddings and events', 'Estate agencies and home buyers', 'Film and advertising productions', 'Tour operators and clubs'],
@@ -497,7 +499,9 @@ const EmpresasPageApp = () => {
   }, /*#__PURE__*/React.createElement("span", {
     className: "emp-service-check",
     "aria-hidden": "true"
-  }, "\u2713"), s))))), /*#__PURE__*/React.createElement("section", {
+  }, "\u2713"), s))), /*#__PURE__*/React.createElement("p", {
+    className: "emp-services-foot"
+  }, t.servicesFoot))), /*#__PURE__*/React.createElement("section", {
     className: "emp-sectors-sec on-dark"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
