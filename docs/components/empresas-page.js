@@ -13,7 +13,6 @@ const EMP_COPY = {
     eyebrow: 'Hestía para empresas y profesionales',
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Apartamentos en Vera Playa, ", /*#__PURE__*/React.createElement("em", null, "a vuestra medida.")),
     sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración y os echamos una mano con los servicios locales que necesitéis.',
-    waCta: 'Hablar por WhatsApp',
     formCta: 'Pedir propuesta',
     trust: ['Reserva directa, 0% comisiones', 'Trato directo con los dueños', 'Nos adaptamos a cualquier duración', 'Licencias turísticas VFT/AL'],
     perksTitle: 'Por qué trabajar con nosotros',
@@ -78,6 +77,8 @@ const EMP_COPY = {
     sectors: ['Empresas con técnicos o visitas (agroindustria, energía, construcción)', 'Clínicas y turismo de salud', 'Campos de entrenamiento deportivo', 'Golf (stay & play)', 'Bodas y eventos', 'Inmobiliarias y compradores de vivienda', 'Productoras de cine y publicidad', 'Turoperadores y clubes'],
     formTitle: 'Cuéntanos qué necesitas',
     formSub: 'Te respondemos con una propuesta a medida, normalmente en minutos.',
+    cmLabel: 'Por correo aquí abajo, o directamente por WhatsApp o teléfono con Alex:',
+    cmCall: 'Llamar',
     f_company: 'Empresa u organización',
     f_name: 'Nombre de contacto',
     f_email: 'Email',
@@ -111,7 +112,6 @@ const EMP_COPY = {
     eyebrow: 'Hestía for businesses & professionals',
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Apartments in Vera Playa, ", /*#__PURE__*/React.createElement("em", null, "tailored to you.")),
     sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay and help with the local services you need.',
-    waCta: 'Chat on WhatsApp',
     formCta: 'Request a proposal',
     trust: ['Direct booking, 0% commission', 'Deal directly with the owners', 'We adapt to any length of stay', 'VFT/AL tourist licences'],
     perksTitle: 'Why work with us',
@@ -176,6 +176,8 @@ const EMP_COPY = {
     sectors: ['Companies with technicians or visitors (agribusiness, energy, construction)', 'Clinics and health tourism', 'Sports training camps', 'Golf (stay & play)', 'Weddings and events', 'Estate agencies and home buyers', 'Film and advertising productions', 'Tour operators and clubs'],
     formTitle: 'Tell us what you need',
     formSub: 'We reply with a tailored proposal, usually within minutes.',
+    cmLabel: 'By email below, or directly by WhatsApp or phone with Fran:',
+    cmCall: 'Call',
     f_company: 'Company or organisation',
     f_name: 'Contact name',
     f_email: 'Email',
@@ -206,11 +208,24 @@ const EMP_COPY = {
     }, "privacy policy"), ". I understand my data will be used to reply to my request and processed by Web3Forms for delivery.")
   }
 };
-const EMP_WA = 'https://wa.me/34620316370';
 const EmpresasForm = ({
   lang
 }) => {
   const t = EMP_COPY[lang];
+  // Persona de contacto por idioma: español → Alex, inglés → Fran.
+  const cm = lang === 'es' ? {
+    name: 'Alex',
+    tel: '+34 620 316 370',
+    telHref: 'tel:+34620316370',
+    wa: '34620316370'
+  } : {
+    name: 'Fran',
+    tel: '+34 654 138 251',
+    telHref: 'tel:+34654138251',
+    wa: '34654138251'
+  };
+  const cmWaMsg = lang === 'es' ? `Hola ${cm.name}, os escribo desde la web de Hestía por un alojamiento para mi empresa.` : `Hi ${cm.name}, I'm contacting you from the Hestía website about accommodation for my company.`;
+  const cmWaHref = `https://wa.me/${cm.wa}?text=${encodeURIComponent(cmWaMsg)}`;
   const [company, setCompany] = React.useState('');
   const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
@@ -282,7 +297,7 @@ const EmpresasForm = ({
     }, t.success_title), /*#__PURE__*/React.createElement("p", {
       className: "emp-success-text"
     }, t.success_text), /*#__PURE__*/React.createElement("a", {
-      href: EMP_WA,
+      href: cmWaHref,
       target: "_blank",
       rel: "noopener",
       className: "btn btn-primary emp-wa-btn"
@@ -302,7 +317,25 @@ const EmpresasForm = ({
     className: "emp-h2"
   }, t.formTitle), /*#__PURE__*/React.createElement("p", {
     className: "emp-form-sub"
-  }, t.formSub)), /*#__PURE__*/React.createElement("form", {
+  }, t.formSub), /*#__PURE__*/React.createElement("div", {
+    className: "emp-contact-methods"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "emp-cm-label"
+  }, t.cmLabel), /*#__PURE__*/React.createElement("div", {
+    className: "emp-cm-btns"
+  }, /*#__PURE__*/React.createElement("a", {
+    className: "emp-cm-btn",
+    href: cmWaHref,
+    target: "_blank",
+    rel: "noopener"
+  }, /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "\uD83D\uDCAC"), " WhatsApp"), /*#__PURE__*/React.createElement("a", {
+    className: "emp-cm-btn",
+    href: cm.telHref
+  }, /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "\uD83D\uDCDE"), " ", t.cmCall, " \xB7 ", cm.tel)))), /*#__PURE__*/React.createElement("form", {
     className: "emp-form",
     onSubmit: submit,
     noValidate: true

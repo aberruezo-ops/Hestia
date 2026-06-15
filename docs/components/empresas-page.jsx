@@ -12,7 +12,6 @@ const EMP_COPY = {
     eyebrow: 'Hestía para empresas y profesionales',
     title: (<>Apartamentos en Vera Playa, <em>a vuestra medida.</em></>),
     sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración y os echamos una mano con los servicios locales que necesitéis.',
-    waCta: 'Hablar por WhatsApp',
     formCta: 'Pedir propuesta',
     trust: ['Reserva directa, 0% comisiones', 'Trato directo con los dueños', 'Nos adaptamos a cualquier duración', 'Licencias turísticas VFT/AL'],
     perksTitle: 'Por qué trabajar con nosotros',
@@ -61,6 +60,8 @@ const EMP_COPY = {
     ],
     formTitle: 'Cuéntanos qué necesitas',
     formSub: 'Te respondemos con una propuesta a medida, normalmente en minutos.',
+    cmLabel: 'Por correo aquí abajo, o directamente por WhatsApp o teléfono con Alex:',
+    cmCall: 'Llamar',
     f_company: 'Empresa u organización',
     f_name: 'Nombre de contacto',
     f_email: 'Email',
@@ -90,7 +91,6 @@ const EMP_COPY = {
     eyebrow: 'Hestía for businesses & professionals',
     title: (<>Apartments in Vera Playa, <em>tailored to you.</em></>),
     sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay and help with the local services you need.',
-    waCta: 'Chat on WhatsApp',
     formCta: 'Request a proposal',
     trust: ['Direct booking, 0% commission', 'Deal directly with the owners', 'We adapt to any length of stay', 'VFT/AL tourist licences'],
     perksTitle: 'Why work with us',
@@ -139,6 +139,8 @@ const EMP_COPY = {
     ],
     formTitle: 'Tell us what you need',
     formSub: 'We reply with a tailored proposal, usually within minutes.',
+    cmLabel: 'By email below, or directly by WhatsApp or phone with Fran:',
+    cmCall: 'Call',
     f_company: 'Company or organisation',
     f_name: 'Contact name',
     f_email: 'Email',
@@ -166,10 +168,16 @@ const EMP_COPY = {
   },
 };
 
-const EMP_WA = 'https://wa.me/34620316370';
-
 const EmpresasForm = ({ lang }) => {
   const t = EMP_COPY[lang];
+  // Persona de contacto por idioma: español → Alex, inglés → Fran.
+  const cm = lang === 'es'
+    ? { name: 'Alex', tel: '+34 620 316 370', telHref: 'tel:+34620316370', wa: '34620316370' }
+    : { name: 'Fran', tel: '+34 654 138 251', telHref: 'tel:+34654138251', wa: '34654138251' };
+  const cmWaMsg = lang === 'es'
+    ? `Hola ${cm.name}, os escribo desde la web de Hestía por un alojamiento para mi empresa.`
+    : `Hi ${cm.name}, I'm contacting you from the Hestía website about accommodation for my company.`;
+  const cmWaHref = `https://wa.me/${cm.wa}?text=${encodeURIComponent(cmWaMsg)}`;
   const [company, setCompany] = React.useState('');
   const [name, setName]       = React.useState('');
   const [email, setEmail]     = React.useState('');
@@ -237,7 +245,7 @@ const EmpresasForm = ({ lang }) => {
             <span className="emp-success-icon" aria-hidden="true">✓</span>
             <h2 className="emp-success-title">{t.success_title}</h2>
             <p className="emp-success-text">{t.success_text}</p>
-            <a href={EMP_WA} target="_blank" rel="noopener" className="btn btn-primary emp-wa-btn">{t.success_wa}</a>
+            <a href={cmWaHref} target="_blank" rel="noopener" className="btn btn-primary emp-wa-btn">{t.success_wa}</a>
             <a href="index.html" className="emp-success-back">{t.success_back}</a>
           </div>
         </div>
@@ -251,6 +259,17 @@ const EmpresasForm = ({ lang }) => {
         <div className="emp-form-head">
           <h2 className="emp-h2">{t.formTitle}</h2>
           <p className="emp-form-sub">{t.formSub}</p>
+          <div className="emp-contact-methods">
+            <span className="emp-cm-label">{t.cmLabel}</span>
+            <div className="emp-cm-btns">
+              <a className="emp-cm-btn" href={cmWaHref} target="_blank" rel="noopener">
+                <span aria-hidden="true">💬</span> WhatsApp
+              </a>
+              <a className="emp-cm-btn" href={cm.telHref}>
+                <span aria-hidden="true">📞</span> {t.cmCall} · {cm.tel}
+              </a>
+            </div>
+          </div>
         </div>
         <form className="emp-form" onSubmit={submit} noValidate>
           <div className="emp-row">
