@@ -1,14 +1,10 @@
 import { chromium } from 'playwright';
 const b = await chromium.launch();
-for (const [w,h,tag] of [[390,844,'mob'],[1280,800,'desk']]) {
-  const p = await b.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 2 });
-  await p.goto('http://localhost:8144/empresas-local.html', { waitUntil: 'load' });
-  await p.waitForSelector('.emp-trust-track', { timeout: 8000 });
-  await p.evaluate(() => document.querySelector('.emp-trust').scrollIntoView({ block: 'center' }));
-  await p.waitForTimeout(500);
-  const n = await p.evaluate(() => document.querySelectorAll('.emp-trust-item').length);
-  console.log(tag, 'items:', n);
-  await p.screenshot({ path: `/tmp/emp-${tag}.png` });
-  await p.close();
-}
+const p = await b.newPage({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1.5 });
+await p.goto('http://localhost:8145/empresas-local.html', { waitUntil: 'load' });
+await p.waitForSelector('.emp-hero-video', { timeout: 8000 });
+await p.waitForTimeout(1500);
+const v = await p.evaluate(() => { const el=document.querySelector('.emp-hero-video'); return { vw: el.videoWidth, vh: el.videoHeight, paused: el.paused, ct: +el.currentTime.toFixed(2) }; });
+console.log('video:', JSON.stringify(v));
+await p.screenshot({ path: '/tmp/emp-hero.png', clip:{x:0,y:0,width:1280,height:560} });
 await b.close();
