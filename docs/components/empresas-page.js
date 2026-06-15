@@ -42,8 +42,8 @@ const EMP_COPY = {
       d: 'WiFi de fibra, cocina equipada, lavadora, terraza y limpieza coordinada. Listos para vivir o para teletrabajar.'
     }],
     servicesTitle: 'Servicios locales a medida',
-    servicesSub: 'No solo damos las llaves. Ayudamos a la empresa y a sus profesionales o clientes con lo que haga falta para que la estancia salga rodada:',
-    services: ['Os ayudamos a encontrar traslados desde el aeropuerto y movilidad por la zona', 'Limpieza y cambio de toallas adicionales', 'En nuestra guía os damos restaurantes, golf y actividades, lavandería, coworking y recados del día a día', 'Necesidades especiales (cuna, parking, llegada autónoma fuera de horario)', 'Guía local completa de Vera Playa para vuestros huéspedes'],
+    servicesSub: 'No solo damos las llaves. Damos algunos servicios extra y os facilitamos el resto, para que la estancia salga rodada:',
+    services: ['Limpieza, plancha y lavandería extra', 'Cambio de toallas y sábanas adicional', 'Necesidades especiales: cuna, parking, llegada autónoma fuera de horario', 'Os facilitamos los traslados del aeropuerto y cómo moveros por la zona', 'Guía local con restaurantes, golf, actividades y coworking, para que lo organicéis a vuestro aire', 'Siempre intentamos echar una mano en lo que surja'],
     servicesFoot: 'Dinos qué necesitas y nos ponemos manos a la obra.',
     packagesTitle: 'Dos formas de trabajar con nosotros',
     packages: [{
@@ -148,8 +148,8 @@ const EMP_COPY = {
       d: 'Fibre WiFi, equipped kitchen, washing machine, terrace and coordinated cleaning. Ready to live or work remotely.'
     }],
     servicesTitle: 'Tailored local services',
-    servicesSub: 'We do more than hand over the keys. We help the company and its professionals or clients with whatever they need for a smooth stay:',
-    services: ['We help you find airport transfers and ways to get around the area', 'Extra cleaning and towel changes', 'In our guide we point you to restaurants, golf and activities, laundry, coworking and day-to-day errands', 'Special requests (cot, parking, self check-in outside hours)', 'A full local Vera Playa guide for your guests'],
+    servicesSub: 'We do more than hand over the keys. We provide a few extra services and make the rest easy, for a smooth stay:',
+    services: ['Extra cleaning, ironing and laundry', 'Additional towel and linen changes', 'Special requests: cot, parking, self check-in outside hours', 'We make airport transfers and getting around the area easy', 'A local guide with restaurants, golf, activities and coworking, so you organise it your way', 'We always try to help with whatever comes up'],
     servicesFoot: 'Tell us what you need and we get to work.',
     packagesTitle: 'Two ways to work with us',
     packages: [{
