@@ -15,6 +15,7 @@ const EMP_COPY = {
     sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración, con factura y contrato, y os echamos una mano con los servicios locales que necesitéis.',
     waCta: 'Hablar por WhatsApp',
     formCta: 'Pedir propuesta',
+    trust: ['Factura con IVA', 'Contrato formal', 'Licencias turísticas VFT/AL', 'Reserva directa, 0% comisiones'],
     perksTitle: 'Por qué trabajar con nosotros',
     perks: [{
       icon: '🧾',
@@ -30,8 +31,8 @@ const EMP_COPY = {
       d: 'Reserva directa con nosotros, los propietarios. Sin intermediarios ni cargos de plataforma.'
     }, {
       icon: '⏱️',
-      t: 'Respuesta en menos de 1 h',
-      d: 'Hablas siempre con Alex o Fran. Coordinamos llegadas, facturación y necesidades especiales al momento.'
+      t: 'Un único contacto que os lo resuelve todo',
+      d: 'Hablas siempre con Alex o Fran, de la reserva a la salida: coordinan llegadas, facturación y necesidades especiales, con respuesta en menos de una hora.'
     }, {
       icon: '🏠',
       t: 'Tres apartamentos a 2 km',
@@ -45,6 +46,14 @@ const EMP_COPY = {
     servicesSub: 'No solo damos las llaves. Ayudamos a la empresa y a sus profesionales o clientes con lo que haga falta para que la estancia salga rodada:',
     services: ['Os ayudamos a encontrar traslados desde el aeropuerto y movilidad por la zona', 'Limpieza y cambio de toallas adicionales', 'En nuestra guía os damos restaurantes, golf y actividades, lavandería, coworking y recados del día a día', 'Necesidades especiales (cuna, parking, llegada autónoma fuera de horario)', 'Guía local completa de Vera Playa para vuestros huéspedes'],
     servicesFoot: 'Dinos qué necesitas y nos ponemos manos a la obra.',
+    packagesTitle: 'Dos formas de trabajar con nosotros',
+    packages: [{
+      t: 'Equipos y proyectos',
+      d: 'Para empresas que desplazan técnicos, cuadrillas o consultores semanas o meses: varias unidades cerca entre sí, factura mensual, contrato y llegada autónoma.'
+    }, {
+      t: 'Profesionales y clientes',
+      d: 'Para quien llega a la zona de forma individual (nueva incorporación, paciente, comprador de vivienda, deportista): alojamiento listo para entrar y guía local para ubicarse desde el primer día.'
+    }],
     sectorsTitle: 'Con quién trabajamos',
     sectorsSub: 'Si tu negocio necesita alojar a clientes, equipos o pacientes cerca de Vera Playa, encajamos. Algunos ejemplos:',
     sectors: ['Empresas con técnicos o visitas (agroindustria, energía, construcción)', 'Clínicas y turismo de salud', 'Campos de entrenamiento deportivo', 'Golf (stay & play)', 'Bodas y eventos', 'Inmobiliarias y compradores de vivienda', 'Productoras de cine y publicidad', 'Turoperadores y clubes'],
@@ -85,6 +94,7 @@ const EMP_COPY = {
     sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay, with invoicing and a contract, and we help with the local services you need.',
     waCta: 'Chat on WhatsApp',
     formCta: 'Request a proposal',
+    trust: ['VAT invoice', 'Formal contract', 'VFT/AL tourist licences', 'Direct booking, 0% commission'],
     perksTitle: 'Why work with us',
     perks: [{
       icon: '🧾',
@@ -100,8 +110,8 @@ const EMP_COPY = {
       d: 'Book directly with us, the owners. No middlemen, no platform fees.'
     }, {
       icon: '⏱️',
-      t: 'Reply in under 1 h',
-      d: 'You always speak to Alex or Fran. We coordinate arrivals, invoicing and special needs on the spot.'
+      t: 'One contact who handles it all',
+      d: 'You always speak to Alex or Fran, from booking to checkout: they coordinate arrivals, invoicing and special requests, with a reply in under an hour.'
     }, {
       icon: '🏠',
       t: 'Three apartments within 2 km',
@@ -115,6 +125,14 @@ const EMP_COPY = {
     servicesSub: 'We do more than hand over the keys. We help the company and its professionals or clients with whatever they need for a smooth stay:',
     services: ['We help you find airport transfers and ways to get around the area', 'Extra cleaning and towel changes', 'In our guide we point you to restaurants, golf and activities, laundry, coworking and day-to-day errands', 'Special requests (cot, parking, self check-in outside hours)', 'A full local Vera Playa guide for your guests'],
     servicesFoot: 'Tell us what you need and we get to work.',
+    packagesTitle: 'Two ways to work with us',
+    packages: [{
+      t: 'Teams and projects',
+      d: 'For companies sending technicians, crews or consultants for weeks or months: several units close together, monthly invoicing, a contract and self check-in.'
+    }, {
+      t: 'Professionals and clients',
+      d: 'For individual arrivals (new hire, patient, home buyer, athlete): a ready-to-move-in apartment and a local guide to settle in from day one.'
+    }],
     sectorsTitle: 'Who we work with',
     sectorsSub: 'If your business needs to house clients, teams or patients near Vera Playa, we fit. Some examples:',
     sectors: ['Companies with technicians or visitors (agribusiness, energy, construction)', 'Clinics and health tourism', 'Sports training camps', 'Golf (stay & play)', 'Weddings and events', 'Estate agencies and home buyers', 'Film and advertising productions', 'Tour operators and clubs'],
@@ -465,7 +483,19 @@ const EmpresasPageApp = () => {
     target: "_blank",
     rel: "noopener",
     className: "btn btn-ghost-dark"
-  }, t.waCta)))), /*#__PURE__*/React.createElement("section", {
+  }, t.waCta)))), /*#__PURE__*/React.createElement("div", {
+    className: "emp-trust"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/React.createElement("ul", {
+    className: "emp-trust-list"
+  }, t.trust.map((item, i) => /*#__PURE__*/React.createElement("li", {
+    key: i,
+    className: "emp-trust-item"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "emp-trust-check",
+    "aria-hidden": "true"
+  }, "\u2713"), item))))), /*#__PURE__*/React.createElement("section", {
     className: "emp-perks-sec"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
@@ -502,6 +532,21 @@ const EmpresasPageApp = () => {
   }, "\u2713"), s))), /*#__PURE__*/React.createElement("p", {
     className: "emp-services-foot"
   }, t.servicesFoot))), /*#__PURE__*/React.createElement("section", {
+    className: "emp-packages-sec"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "emp-h2"
+  }, t.packagesTitle), /*#__PURE__*/React.createElement("div", {
+    className: "emp-packages-grid"
+  }, t.packages.map((p, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "emp-package"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "emp-package-t"
+  }, p.t), /*#__PURE__*/React.createElement("p", {
+    className: "emp-package-d"
+  }, p.d)))))), /*#__PURE__*/React.createElement("section", {
     className: "emp-sectors-sec on-dark"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
