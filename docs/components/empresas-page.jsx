@@ -20,7 +20,7 @@ const EMP_COPY = {
       { icon: '🧾', t: 'Factura y contrato', d: 'Emitimos factura y firmamos contrato. Pensado para empresas, clínicas y profesionales que necesitan justificar el gasto.' },
       { icon: '📅', t: 'Cualquier duración', d: 'Una noche, una semana o varios meses: nos adaptamos a lo que necesitéis, con la mejor tarifa según las fechas.' },
       { icon: '🤝', t: '0% comisiones', d: 'Reserva directa con nosotros, los propietarios. Sin intermediarios ni cargos de plataforma.' },
-      { icon: '⏱️', t: 'Un único contacto que os lo resuelve todo', d: 'Hablas siempre con Alex o Fran, de la reserva a la salida: coordinan llegadas, facturación y necesidades especiales, con respuesta en menos de una hora.' },
+      { icon: '⏱️', t: 'Trato directo con los dueños', d: 'Hablas directamente con Alex y Fran, de la reserva a la salida: coordinamos llegadas, facturación y necesidades especiales, con respuesta en menos de una hora.' },
       { icon: '🏠', t: 'Tres apartamentos a 2 km', d: 'Hasta tres equipos o familias alojados cerca, en la misma zona de Vera Playa.' },
       { icon: '📶', t: 'Listos para entrar', d: 'WiFi de fibra, cocina equipada, lavadora, terraza y limpieza coordinada. Listos para vivir o para teletrabajar.' },
     ],
@@ -38,6 +38,13 @@ const EMP_COPY = {
     packages: [
       { t: 'Equipos y proyectos', d: 'Para empresas que desplazan técnicos, cuadrillas o consultores semanas o meses: varias unidades cerca entre sí, factura mensual, contrato y llegada autónoma.' },
       { t: 'Profesionales y clientes', d: 'Para quien llega a la zona de forma individual (nueva incorporación, paciente, comprador de vivienda, deportista): alojamiento listo para entrar y guía local para ubicarse desde el primer día.' },
+    ],
+    stepsTitle: 'Cómo trabajamos',
+    steps: [
+      { n: '1', t: 'Nos cuentas qué necesitas', d: 'Fechas, número de personas y qué hace falta: factura, contrato, varias unidades o servicios.' },
+      { n: '2', t: 'Te enviamos una propuesta', d: 'A medida y rápida, normalmente en menos de una hora, con precio cerrado y condiciones claras.' },
+      { n: '3', t: 'Confirmamos con contrato y factura', d: 'Señal para reservar, contrato firmado y factura con IVA. Sin comisiones.' },
+      { n: '4', t: 'Os acompañamos durante la estancia', d: 'Llegada autónoma, servicios locales y lo que surja. Estamos a un mensaje.' },
     ],
     sectorsTitle: 'Con quién trabajamos',
     sectorsSub: 'Si tu negocio necesita alojar a clientes, equipos o pacientes cerca de Vera Playa, encajamos. Algunos ejemplos:',
@@ -90,7 +97,7 @@ const EMP_COPY = {
       { icon: '🧾', t: 'Invoicing and contract', d: 'We issue an invoice and sign a contract. Built for companies, clinics and professionals who need to justify the expense.' },
       { icon: '📅', t: 'Any length of stay', d: 'One night, a week or several months: we adapt to what you need, with the best rate for your dates.' },
       { icon: '🤝', t: '0% commissions', d: 'Book directly with us, the owners. No middlemen, no platform fees.' },
-      { icon: '⏱️', t: 'One contact who handles it all', d: 'You always speak to Alex or Fran, from booking to checkout: they coordinate arrivals, invoicing and special requests, with a reply in under an hour.' },
+      { icon: '⏱️', t: 'Direct with the owners', d: 'You deal directly with Alex and Fran, from booking to checkout: we coordinate arrivals, invoicing and special requests, with a reply in under an hour.' },
       { icon: '🏠', t: 'Three apartments within 2 km', d: 'Up to three teams or families housed close together, in the same Vera Playa area.' },
       { icon: '📶', t: 'Ready to move in', d: 'Fibre WiFi, equipped kitchen, washing machine, terrace and coordinated cleaning. Ready to live or work remotely.' },
     ],
@@ -108,6 +115,13 @@ const EMP_COPY = {
     packages: [
       { t: 'Teams and projects', d: 'For companies sending technicians, crews or consultants for weeks or months: several units close together, monthly invoicing, a contract and self check-in.' },
       { t: 'Professionals and clients', d: 'For individual arrivals (new hire, patient, home buyer, athlete): a ready-to-move-in apartment and a local guide to settle in from day one.' },
+    ],
+    stepsTitle: 'How we work',
+    steps: [
+      { n: '1', t: 'You tell us what you need', d: 'Dates, number of people and what is required: invoice, contract, several units or services.' },
+      { n: '2', t: 'We send you a proposal', d: 'Tailored and fast, usually within an hour, with a closed price and clear terms.' },
+      { n: '3', t: 'We confirm with contract and invoice', d: 'A deposit to book, a signed contract and a VAT invoice. No commissions.' },
+      { n: '4', t: 'We support you throughout the stay', d: 'Self check-in, local services and whatever comes up. We are one message away.' },
     ],
     sectorsTitle: 'Who we work with',
     sectorsSub: 'If your business needs to house clients, teams or patients near Vera Playa, we fit. Some examples:',
@@ -420,6 +434,21 @@ const EmpresasPageApp = () => {
             <ul className="emp-sectors-list">
               {t.sectors.map((s, i) => <li key={i} className="emp-sector-chip">{s}</li>)}
             </ul>
+          </div>
+        </section>
+
+        <section className="emp-steps-sec">
+          <div className="container">
+            <h2 className="emp-h2">{t.stepsTitle}</h2>
+            <ol className="emp-steps-grid">
+              {t.steps.map((s, i) => (
+                <li key={i} className="emp-step">
+                  <span className="emp-step-n" aria-hidden="true">{s.n}</span>
+                  <h3 className="emp-step-t">{s.t}</h3>
+                  <p className="emp-step-d">{s.d}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
 
