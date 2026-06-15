@@ -46,8 +46,6 @@ const EMP_COPY = {
       { n: '3', t: 'Confirmas la reserva', d: 'Una señal para reservar y el resto a la llegada. Te lo dejamos todo por escrito y sin comisiones.' },
       { n: '4', t: 'Os acompañamos durante la estancia', d: 'Llegada autónoma, servicios locales y lo que surja. Estamos a un mensaje.' },
     ],
-    availTitle: '¿Prefieres ver fechas primero?',
-    availText: 'Puedes comprobar la disponibilidad de los tres apartamentos cuando quieras. Eso sí: con las empresas preferimos hablarlo, así ajustamos apartamentos, duración y servicios a lo que de verdad necesitáis.',
     availBtn: 'Comprobar disponibilidad',
     sectorsTitle: 'Con quién trabajamos',
     sectorsSub: 'Si tu negocio necesita alojar a clientes, equipos o pacientes cerca de Vera Playa, encajamos. Algunos ejemplos:',
@@ -126,8 +124,6 @@ const EMP_COPY = {
       { n: '3', t: 'You confirm the booking', d: 'A deposit to book and the rest on arrival. We put everything in writing, with no commissions.' },
       { n: '4', t: 'We support you throughout the stay', d: 'Self check-in, local services and whatever comes up. We are one message away.' },
     ],
-    availTitle: 'Would you rather see dates first?',
-    availText: 'You can check availability for the three apartments whenever you like. That said, with companies we prefer to talk it through, so we can tailor apartments, length of stay and services to what you really need.',
     availBtn: 'Check availability',
     sectorsTitle: 'Who we work with',
     sectorsSub: 'If your business needs to house clients, teams or patients near Vera Playa, we fit. Some examples:',
@@ -385,7 +381,7 @@ const EmpresasPageApp = () => {
             <p className="page-hero-sub">{t.sub}</p>
             <div className="emp-hero-cta">
               <a href="#propuesta" className="btn btn-primary">{t.formCta}</a>
-              <a href="reservas.html" className="btn btn-ghost-dark">{t.availBtn}</a>
+              <a href="#buscar" className="btn btn-ghost-dark">{t.availBtn}</a>
             </div>
           </div>
         </section>
@@ -469,15 +465,7 @@ const EmpresasPageApp = () => {
           </div>
         </section>
 
-        <section className="emp-avail">
-          <div className="container">
-            <h2 className="emp-h2">{t.availTitle}</h2>
-            <p className="emp-avail-text">{t.availText}</p>
-            <a href="reservas.html" className="btn btn-ghost-dark emp-avail-btn">
-              {t.availBtn}<span className="arrow"> →</span>
-            </a>
-          </div>
-        </section>
+        {typeof HomeSearch !== 'undefined' && <HomeSearch lang={lang} b2b />}
 
         <EmpresasForm lang={lang} />
       </main>
