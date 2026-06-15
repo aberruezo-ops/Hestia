@@ -22543,6 +22543,14 @@ img[src*="apt-vt-gallery-"] {
   font-weight: 700;
   margin-top: 1px;
 }
+.emp-services-foot {
+  max-width: 880px;
+  margin: 28px auto 0;
+  text-align: center;
+  font-family: var(--serif);
+  font-size: clamp(17px, 2.4vw, 21px);
+  color: var(--ber-dk);
+}
 .emp-sectors-sec {
   background: linear-gradient(135deg, var(--ber-dk, #1A0820) 0%, var(--ber, #2A0F2E) 100%);
   padding: clamp(56px, 8vw, 88px) var(--page-pad);
