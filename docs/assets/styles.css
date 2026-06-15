@@ -501,6 +501,7 @@ p  { line-height: 1.65; font-weight: 300; }
   padding: 6px 2px;
   position: relative;
   opacity: 0.82;
+  text-align: center;
   transition: opacity .2s;
 }
 .header nav a:hover { opacity: 1; }
