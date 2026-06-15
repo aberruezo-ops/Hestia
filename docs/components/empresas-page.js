@@ -488,6 +488,22 @@ const EmpresasPageApp = () => {
     scrolled
   } = useScrollMode();
   useReveal();
+  const heroVid = React.useRef(null);
+  React.useEffect(() => {
+    const tryPlay = () => {
+      const el = heroVid.current;
+      if (el) {
+        el.muted = true;
+        el.play().catch(() => {});
+      }
+    };
+    tryPlay();
+    const onVisible = () => {
+      if (!document.hidden) tryPlay();
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => document.removeEventListener('visibilitychange', onVisible);
+  }, []);
   React.useEffect(() => {
     localStorage.setItem('hestia-lang', lang);
     document.documentElement.lang = lang;
@@ -503,7 +519,21 @@ const EmpresasPageApp = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement("main", null, /*#__PURE__*/React.createElement("section", {
     className: "page-hero emp-hero on-dark"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("video", {
+    ref: heroVid,
+    className: "emp-hero-video",
+    autoPlay: true,
+    muted: true,
+    loop: true,
+    playsInline: true,
+    preload: "auto",
+    poster: "assets/empresas-hero-poster.jpg"
+  }, /*#__PURE__*/React.createElement("source", {
+    src: "assets/empresas-hero.mp4",
+    type: "video/mp4"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "emp-hero-wash"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "page-hero-content"
   }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
