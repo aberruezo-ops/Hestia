@@ -22473,9 +22473,13 @@ img[src*="apt-vt-gallery-"] {
   margin-top: 28px;
 }
 .emp-trust {
+  position: relative;
+  z-index: 51;
   background: var(--ber-dk, #2A0F2E);
   border-top: 1px solid rgba(240, 232, 213, .12);
-  padding: 16px var(--page-pad);
+  /* El hero lleva margin-bottom:-32px (efecto de solape); compensamos con
+     padding superior para que los checks no queden tapados por el hero. */
+  padding: 50px var(--page-pad) 18px;
 }
 .emp-trust-list {
   max-width: 980px;
