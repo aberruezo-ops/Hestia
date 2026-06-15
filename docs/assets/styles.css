@@ -22536,6 +22536,48 @@ img[src*="apt-vt-gallery-"] {
 }
 .emp-package-d { font-size: 14.5px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
 
+.emp-steps-sec {
+  background: var(--arena);
+  padding: clamp(56px, 8vw, 88px) var(--page-pad);
+}
+.emp-steps-grid {
+  max-width: 1040px;
+  margin: 0 auto;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+.emp-step {
+  background: #fff;
+  color: var(--ink);
+  border-radius: 12px 0 12px 0;
+  padding: 24px 22px;
+  border: 1px solid rgba(42,15,46,.08);
+}
+.emp-step-n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--sol);
+  color: var(--ber-dk);
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.emp-step-t {
+  font-family: var(--sans);
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ber-dk);
+  margin: 0 0 8px;
+}
+.emp-step-d { font-size: 14px; line-height: 1.55; color: var(--ink-soft); margin: 0; }
+
 .emp-perks-sec {
   background: var(--crema);
   padding: clamp(56px, 8vw, 88px) var(--page-pad);

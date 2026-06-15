@@ -31,8 +31,8 @@ const EMP_COPY = {
       d: 'Reserva directa con nosotros, los propietarios. Sin intermediarios ni cargos de plataforma.'
     }, {
       icon: '⏱️',
-      t: 'Un único contacto que os lo resuelve todo',
-      d: 'Hablas siempre con Alex o Fran, de la reserva a la salida: coordinan llegadas, facturación y necesidades especiales, con respuesta en menos de una hora.'
+      t: 'Trato directo con los dueños',
+      d: 'Hablas directamente con Alex y Fran, de la reserva a la salida: coordinamos llegadas, facturación y necesidades especiales, con respuesta en menos de una hora.'
     }, {
       icon: '🏠',
       t: 'Tres apartamentos a 2 km',
@@ -53,6 +53,24 @@ const EMP_COPY = {
     }, {
       t: 'Profesionales y clientes',
       d: 'Para quien llega a la zona de forma individual (nueva incorporación, paciente, comprador de vivienda, deportista): alojamiento listo para entrar y guía local para ubicarse desde el primer día.'
+    }],
+    stepsTitle: 'Cómo trabajamos',
+    steps: [{
+      n: '1',
+      t: 'Nos cuentas qué necesitas',
+      d: 'Fechas, número de personas y qué hace falta: factura, contrato, varias unidades o servicios.'
+    }, {
+      n: '2',
+      t: 'Te enviamos una propuesta',
+      d: 'A medida y rápida, normalmente en menos de una hora, con precio cerrado y condiciones claras.'
+    }, {
+      n: '3',
+      t: 'Confirmamos con contrato y factura',
+      d: 'Señal para reservar, contrato firmado y factura con IVA. Sin comisiones.'
+    }, {
+      n: '4',
+      t: 'Os acompañamos durante la estancia',
+      d: 'Llegada autónoma, servicios locales y lo que surja. Estamos a un mensaje.'
     }],
     sectorsTitle: 'Con quién trabajamos',
     sectorsSub: 'Si tu negocio necesita alojar a clientes, equipos o pacientes cerca de Vera Playa, encajamos. Algunos ejemplos:',
@@ -110,8 +128,8 @@ const EMP_COPY = {
       d: 'Book directly with us, the owners. No middlemen, no platform fees.'
     }, {
       icon: '⏱️',
-      t: 'One contact who handles it all',
-      d: 'You always speak to Alex or Fran, from booking to checkout: they coordinate arrivals, invoicing and special requests, with a reply in under an hour.'
+      t: 'Direct with the owners',
+      d: 'You deal directly with Alex and Fran, from booking to checkout: we coordinate arrivals, invoicing and special requests, with a reply in under an hour.'
     }, {
       icon: '🏠',
       t: 'Three apartments within 2 km',
@@ -132,6 +150,24 @@ const EMP_COPY = {
     }, {
       t: 'Professionals and clients',
       d: 'For individual arrivals (new hire, patient, home buyer, athlete): a ready-to-move-in apartment and a local guide to settle in from day one.'
+    }],
+    stepsTitle: 'How we work',
+    steps: [{
+      n: '1',
+      t: 'You tell us what you need',
+      d: 'Dates, number of people and what is required: invoice, contract, several units or services.'
+    }, {
+      n: '2',
+      t: 'We send you a proposal',
+      d: 'Tailored and fast, usually within an hour, with a closed price and clear terms.'
+    }, {
+      n: '3',
+      t: 'We confirm with contract and invoice',
+      d: 'A deposit to book, a signed contract and a VAT invoice. No commissions.'
+    }, {
+      n: '4',
+      t: 'We support you throughout the stay',
+      d: 'Self check-in, local services and whatever comes up. We are one message away.'
     }],
     sectorsTitle: 'Who we work with',
     sectorsSub: 'If your business needs to house clients, teams or patients near Vera Playa, we fit. Some examples:',
@@ -559,7 +595,25 @@ const EmpresasPageApp = () => {
   }, t.sectors.map((s, i) => /*#__PURE__*/React.createElement("li", {
     key: i,
     className: "emp-sector-chip"
-  }, s))))), /*#__PURE__*/React.createElement(EmpresasForm, {
+  }, s))))), /*#__PURE__*/React.createElement("section", {
+    className: "emp-steps-sec"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "emp-h2"
+  }, t.stepsTitle), /*#__PURE__*/React.createElement("ol", {
+    className: "emp-steps-grid"
+  }, t.steps.map((s, i) => /*#__PURE__*/React.createElement("li", {
+    key: i,
+    className: "emp-step"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "emp-step-n",
+    "aria-hidden": "true"
+  }, s.n), /*#__PURE__*/React.createElement("h3", {
+    className: "emp-step-t"
+  }, s.t), /*#__PURE__*/React.createElement("p", {
+    className: "emp-step-d"
+  }, s.d)))))), /*#__PURE__*/React.createElement(EmpresasForm, {
     lang: lang
   })), /*#__PURE__*/React.createElement(Footer, {
     lang: lang
