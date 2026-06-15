@@ -447,7 +447,7 @@ const EmpresasPageApp = () => {
               <a href="#propuesta" className="btn btn-primary">{t.formCta}</a>
               <a href="#buscar" className="btn btn-ghost-dark">{t.availBtn}</a>
             </div>
-            <a href="downloads/Hestia-Empresas-Dossier.pdf" className="emp-hero-dl" target="_blank" rel="noopener" download>
+            <a href={`downloads/Hestia-Empresas-Dossier${lang === 'es' ? '' : '-EN'}.pdf`} className="emp-hero-dl" target="_blank" rel="noopener" download>
               <span aria-hidden="true">↓</span> {t.dlDossier}
             </a>
           </div>
