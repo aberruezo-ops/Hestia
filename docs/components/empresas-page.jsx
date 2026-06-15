@@ -14,12 +14,13 @@ const EMP_COPY = {
     sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración, con factura y contrato, y os echamos una mano con los servicios locales que necesitéis.',
     waCta: 'Hablar por WhatsApp',
     formCta: 'Pedir propuesta',
+    trust: ['Factura con IVA', 'Contrato formal', 'Licencias turísticas VFT/AL', 'Reserva directa, 0% comisiones'],
     perksTitle: 'Por qué trabajar con nosotros',
     perks: [
       { icon: '🧾', t: 'Factura y contrato', d: 'Emitimos factura y firmamos contrato. Pensado para empresas, clínicas y profesionales que necesitan justificar el gasto.' },
       { icon: '📅', t: 'Cualquier duración', d: 'Una noche, una semana o varios meses: nos adaptamos a lo que necesitéis, con la mejor tarifa según las fechas.' },
       { icon: '🤝', t: '0% comisiones', d: 'Reserva directa con nosotros, los propietarios. Sin intermediarios ni cargos de plataforma.' },
-      { icon: '⏱️', t: 'Respuesta en menos de 1 h', d: 'Hablas siempre con Alex o Fran. Coordinamos llegadas, facturación y necesidades especiales al momento.' },
+      { icon: '⏱️', t: 'Un único contacto que os lo resuelve todo', d: 'Hablas siempre con Alex o Fran, de la reserva a la salida: coordinan llegadas, facturación y necesidades especiales, con respuesta en menos de una hora.' },
       { icon: '🏠', t: 'Tres apartamentos a 2 km', d: 'Hasta tres equipos o familias alojados cerca, en la misma zona de Vera Playa.' },
       { icon: '📶', t: 'Listos para entrar', d: 'WiFi de fibra, cocina equipada, lavadora, terraza y limpieza coordinada. Listos para vivir o para teletrabajar.' },
     ],
@@ -33,6 +34,11 @@ const EMP_COPY = {
       'Guía local completa de Vera Playa para vuestros huéspedes',
     ],
     servicesFoot: 'Dinos qué necesitas y nos ponemos manos a la obra.',
+    packagesTitle: 'Dos formas de trabajar con nosotros',
+    packages: [
+      { t: 'Equipos y proyectos', d: 'Para empresas que desplazan técnicos, cuadrillas o consultores semanas o meses: varias unidades cerca entre sí, factura mensual, contrato y llegada autónoma.' },
+      { t: 'Profesionales y clientes', d: 'Para quien llega a la zona de forma individual (nueva incorporación, paciente, comprador de vivienda, deportista): alojamiento listo para entrar y guía local para ubicarse desde el primer día.' },
+    ],
     sectorsTitle: 'Con quién trabajamos',
     sectorsSub: 'Si tu negocio necesita alojar a clientes, equipos o pacientes cerca de Vera Playa, encajamos. Algunos ejemplos:',
     sectors: [
@@ -78,12 +84,13 @@ const EMP_COPY = {
     sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay, with invoicing and a contract, and we help with the local services you need.',
     waCta: 'Chat on WhatsApp',
     formCta: 'Request a proposal',
+    trust: ['VAT invoice', 'Formal contract', 'VFT/AL tourist licences', 'Direct booking, 0% commission'],
     perksTitle: 'Why work with us',
     perks: [
       { icon: '🧾', t: 'Invoicing and contract', d: 'We issue an invoice and sign a contract. Built for companies, clinics and professionals who need to justify the expense.' },
       { icon: '📅', t: 'Any length of stay', d: 'One night, a week or several months: we adapt to what you need, with the best rate for your dates.' },
       { icon: '🤝', t: '0% commissions', d: 'Book directly with us, the owners. No middlemen, no platform fees.' },
-      { icon: '⏱️', t: 'Reply in under 1 h', d: 'You always speak to Alex or Fran. We coordinate arrivals, invoicing and special needs on the spot.' },
+      { icon: '⏱️', t: 'One contact who handles it all', d: 'You always speak to Alex or Fran, from booking to checkout: they coordinate arrivals, invoicing and special requests, with a reply in under an hour.' },
       { icon: '🏠', t: 'Three apartments within 2 km', d: 'Up to three teams or families housed close together, in the same Vera Playa area.' },
       { icon: '📶', t: 'Ready to move in', d: 'Fibre WiFi, equipped kitchen, washing machine, terrace and coordinated cleaning. Ready to live or work remotely.' },
     ],
@@ -97,6 +104,11 @@ const EMP_COPY = {
       'A full local Vera Playa guide for your guests',
     ],
     servicesFoot: 'Tell us what you need and we get to work.',
+    packagesTitle: 'Two ways to work with us',
+    packages: [
+      { t: 'Teams and projects', d: 'For companies sending technicians, crews or consultants for weeks or months: several units close together, monthly invoicing, a contract and self check-in.' },
+      { t: 'Professionals and clients', d: 'For individual arrivals (new hire, patient, home buyer, athlete): a ready-to-move-in apartment and a local guide to settle in from day one.' },
+    ],
     sectorsTitle: 'Who we work with',
     sectorsSub: 'If your business needs to house clients, teams or patients near Vera Playa, we fit. Some examples:',
     sectors: [
@@ -345,6 +357,18 @@ const EmpresasPageApp = () => {
           </div>
         </section>
 
+        <div className="emp-trust">
+          <div className="container">
+            <ul className="emp-trust-list">
+              {t.trust.map((item, i) => (
+                <li key={i} className="emp-trust-item">
+                  <span className="emp-trust-check" aria-hidden="true">✓</span>{item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
         <section className="emp-perks-sec">
           <div className="container">
             <h2 className="emp-h2">{t.perksTitle}</h2>
@@ -372,6 +396,20 @@ const EmpresasPageApp = () => {
               ))}
             </ul>
             <p className="emp-services-foot">{t.servicesFoot}</p>
+          </div>
+        </section>
+
+        <section className="emp-packages-sec">
+          <div className="container">
+            <h2 className="emp-h2">{t.packagesTitle}</h2>
+            <div className="emp-packages-grid">
+              {t.packages.map((p, i) => (
+                <div key={i} className="emp-package">
+                  <h3 className="emp-package-t">{p.t}</h3>
+                  <p className="emp-package-d">{p.d}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
