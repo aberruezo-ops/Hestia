@@ -46,6 +46,7 @@ const EMP_COPY = {
       { n: '4', t: 'Os acompañamos durante la estancia', d: 'Llegada autónoma, servicios locales y lo que surja. Estamos a un mensaje.' },
     ],
     availBtn: 'Comprobar disponibilidad',
+    dlDossier: 'Descargar dossier (PDF)',
     sectorsTitle: 'Con quién trabajamos',
     sectorsSub: 'Si tu negocio necesita alojar a clientes, equipos o pacientes cerca de Vera Playa, encajamos. Algunos ejemplos:',
     sectors: [
@@ -131,6 +132,7 @@ const EMP_COPY = {
       { n: '4', t: 'We support you throughout the stay', d: 'Self check-in, local services and whatever comes up. We are one message away.' },
     ],
     availBtn: 'Check availability',
+    dlDossier: 'Download brochure (PDF)',
     sectorsTitle: 'Who we work with',
     sectorsSub: 'If your business needs to house clients, teams or patients near Vera Playa, we fit. Some examples:',
     sectors: [
@@ -443,6 +445,9 @@ const EmpresasPageApp = () => {
               <a href="#propuesta" className="btn btn-primary">{t.formCta}</a>
               <a href="#buscar" className="btn btn-ghost-dark">{t.availBtn}</a>
             </div>
+            <a href="downloads/Hestia-Empresas-Dossier.pdf" className="emp-hero-dl" target="_blank" rel="noopener" download>
+              <span aria-hidden="true">↓</span> {t.dlDossier}
+            </a>
           </div>
         </section>
 
