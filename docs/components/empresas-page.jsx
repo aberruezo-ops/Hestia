@@ -385,7 +385,7 @@ const EmpresasPageApp = () => {
             <p className="page-hero-sub">{t.sub}</p>
             <div className="emp-hero-cta">
               <a href="#propuesta" className="btn btn-primary">{t.formCta}</a>
-              <a href={EMP_WA} target="_blank" rel="noopener" className="btn btn-ghost-dark">{t.waCta}</a>
+              <a href="reservas.html" className="btn btn-ghost-dark">{t.availBtn}</a>
             </div>
           </div>
         </section>
