@@ -72,6 +72,9 @@ const EMP_COPY = {
       t: 'Os acompañamos durante la estancia',
       d: 'Llegada autónoma, servicios locales y lo que surja. Estamos a un mensaje.'
     }],
+    availTitle: '¿Prefieres ver fechas primero?',
+    availText: 'Puedes comprobar la disponibilidad de los tres apartamentos cuando quieras. Eso sí: con las empresas preferimos hablarlo, así ajustamos apartamentos, duración y servicios a lo que de verdad necesitáis.',
+    availBtn: 'Comprobar disponibilidad',
     sectorsTitle: 'Con quién trabajamos',
     sectorsSub: 'Si tu negocio necesita alojar a clientes, equipos o pacientes cerca de Vera Playa, encajamos. Algunos ejemplos:',
     sectors: ['Empresas con técnicos o visitas (agroindustria, energía, construcción)', 'Clínicas y turismo de salud', 'Campos de entrenamiento deportivo', 'Golf (stay & play)', 'Bodas y eventos', 'Inmobiliarias y compradores de vivienda', 'Productoras de cine y publicidad', 'Turoperadores y clubes'],
@@ -169,6 +172,9 @@ const EMP_COPY = {
       t: 'We support you throughout the stay',
       d: 'Self check-in, local services and whatever comes up. We are one message away.'
     }],
+    availTitle: 'Would you rather see dates first?',
+    availText: 'You can check availability for the three apartments whenever you like. That said, with companies we prefer to talk it through, so we can tailor apartments, length of stay and services to what you really need.',
+    availBtn: 'Check availability',
     sectorsTitle: 'Who we work with',
     sectorsSub: 'If your business needs to house clients, teams or patients near Vera Playa, we fit. Some examples:',
     sectors: ['Companies with technicians or visitors (agribusiness, energy, construction)', 'Clinics and health tourism', 'Sports training camps', 'Golf (stay & play)', 'Weddings and events', 'Estate agencies and home buyers', 'Film and advertising productions', 'Tour operators and clubs'],
@@ -643,7 +649,20 @@ const EmpresasPageApp = () => {
     className: "emp-step-t"
   }, s.t), /*#__PURE__*/React.createElement("p", {
     className: "emp-step-d"
-  }, s.d)))))), /*#__PURE__*/React.createElement(EmpresasForm, {
+  }, s.d)))))), /*#__PURE__*/React.createElement("section", {
+    className: "emp-avail"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "emp-h2"
+  }, t.availTitle), /*#__PURE__*/React.createElement("p", {
+    className: "emp-avail-text"
+  }, t.availText), /*#__PURE__*/React.createElement("a", {
+    href: "reservas.html",
+    className: "btn btn-ghost-dark emp-avail-btn"
+  }, t.availBtn, /*#__PURE__*/React.createElement("span", {
+    className: "arrow"
+  }, " \u2192")))), /*#__PURE__*/React.createElement(EmpresasForm, {
     lang: lang
   })), /*#__PURE__*/React.createElement(Footer, {
     lang: lang

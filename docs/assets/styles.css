@@ -22746,6 +22746,20 @@ img[src*="apt-vt-gallery-"] {
   padding: 9px 16px;
 }
 
+.emp-avail {
+  background: var(--crema);
+  padding: clamp(48px, 7vw, 72px) var(--page-pad) 0;
+  text-align: center;
+}
+.emp-avail-text {
+  max-width: 660px;
+  margin: 0 auto 24px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.emp-avail-btn { display: inline-flex; }
+
 .emp-form-sec {
   background: var(--crema);
   padding: clamp(48px, 7vw, 80px) var(--page-pad) clamp(64px, 9vw, 110px);
