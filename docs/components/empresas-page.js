@@ -77,12 +77,18 @@ const EMP_COPY = {
     sectors: ['Empresas con técnicos o visitas (agroindustria, energía, construcción)', 'Clínicas y turismo de salud', 'Campos de entrenamiento deportivo', 'Golf (stay & play)', 'Bodas y eventos', 'Inmobiliarias y compradores de vivienda', 'Productoras de cine y publicidad', 'Turoperadores y clubes'],
     formTitle: 'Cuéntanos qué necesitas',
     formSub: 'Te respondemos con una propuesta a medida, normalmente en minutos.',
-    cmLabel: 'Por correo aquí abajo, o directamente por WhatsApp o teléfono con Alex:',
-    cmCall: 'Llamar',
+    ch_label: '¿Cómo prefieres que te contactemos?',
+    ch_email: 'Correo',
+    ch_whatsapp: 'WhatsApp',
+    ch_call: 'Llamada',
     f_company: 'Empresa u organización',
     f_name: 'Nombre de contacto',
-    f_email: 'Email',
-    f_phone: 'Teléfono (opcional)',
+    f_email: 'Tu email',
+    f_wa: 'Tu WhatsApp',
+    f_tel: 'Tu teléfono',
+    f_calltime: 'Mejor hora para llamar',
+    f_calltime_ph: 'Ej. mañanas, después de las 18 h',
+    val_phone: 'Déjanos un teléfono válido',
     f_sector: 'Sector',
     f_sector_ph: 'Selecciona…',
     f_people: 'Nº de personas o apartamentos',
@@ -176,12 +182,18 @@ const EMP_COPY = {
     sectors: ['Companies with technicians or visitors (agribusiness, energy, construction)', 'Clinics and health tourism', 'Sports training camps', 'Golf (stay & play)', 'Weddings and events', 'Estate agencies and home buyers', 'Film and advertising productions', 'Tour operators and clubs'],
     formTitle: 'Tell us what you need',
     formSub: 'We reply with a tailored proposal, usually within minutes.',
-    cmLabel: 'By email below, or directly by WhatsApp or phone with Fran:',
-    cmCall: 'Call',
+    ch_label: 'How would you like us to reach you?',
+    ch_email: 'Email',
+    ch_whatsapp: 'WhatsApp',
+    ch_call: 'Call',
     f_company: 'Company or organisation',
     f_name: 'Contact name',
-    f_email: 'Email',
-    f_phone: 'Phone (optional)',
+    f_email: 'Your email',
+    f_wa: 'Your WhatsApp',
+    f_tel: 'Your phone',
+    f_calltime: 'Best time to call',
+    f_calltime_ph: 'e.g. mornings, after 6 pm',
+    val_phone: 'Please leave a valid phone number',
     f_sector: 'Sector',
     f_sector_ph: 'Select…',
     f_people: 'Number of people or apartments',
@@ -228,8 +240,10 @@ const EmpresasForm = ({
   const cmWaHref = `https://wa.me/${cm.wa}?text=${encodeURIComponent(cmWaMsg)}`;
   const [company, setCompany] = React.useState('');
   const [name, setName] = React.useState('');
+  const [channel, setChannel] = React.useState('email'); // email | whatsapp | call
   const [email, setEmail] = React.useState('');
   const [phone, setPhone] = React.useState('');
+  const [callTime, setCallTime] = React.useState('');
   const [sector, setSector] = React.useState('');
   const [people, setPeople] = React.useState('');
   const [dates, setDates] = React.useState('');
@@ -243,7 +257,11 @@ const EmpresasForm = ({
     const e = {};
     if (!company.trim()) e.company = t.val_company;
     if (!name.trim()) e.name = t.val_name;
-    if (!/\S+@\S+\.\S+/.test(email)) e.email = t.val_email;
+    if (channel === 'email') {
+      if (!/\S+@\S+\.\S+/.test(email)) e.email = t.val_email;
+    } else {
+      if (phone.replace(/\D/g, '').length < 9) e.phone = t.val_phone;
+    }
     if (msg.trim().length < 20) e.msg = t.val_msg;
     if (msg.trim().length > MSG_MAX) e.msg = t.val_msg;
     if (!consent) e.consent = t.val_consent;
@@ -255,19 +273,29 @@ const EmpresasForm = ({
     if (honeypot) return;
     if (!validate()) return;
     setPhase('sending');
+    const channelLabel = {
+      email: 'Email',
+      whatsapp: 'WhatsApp',
+      call: 'Llamada'
+    }[channel];
     const fd = new FormData();
     fd.append('access_key', EMP_W3F_KEY);
-    fd.append('subject', `Solicitud B2B · ${company.trim()}${sector ? ` · ${sector}` : ''}`);
+    fd.append('subject', `Solicitud B2B · ${channelLabel} · ${company.trim()}${sector ? ` · ${sector}` : ''}`);
     fd.append('from_name', name.trim() || 'Web Hestía');
-    fd.append('replyto', email.trim());
+    if (channel === 'email') fd.append('replyto', email.trim());
     fd.append('Empresa', company.trim());
     fd.append('Contacto', name.trim());
-    fd.append('Email', email.trim());
-    fd.append('Teléfono', phone.trim() || '–');
+    fd.append('Vía preferida', channelLabel);
+    if (channel === 'email') {
+      fd.append('Email', email.trim());
+    } else {
+      fd.append(channel === 'whatsapp' ? 'WhatsApp' : 'Teléfono', phone.trim());
+      if (channel === 'call') fd.append('Mejor hora para llamar', callTime.trim() || '–');
+    }
     fd.append('Sector', sector || '–');
     fd.append('Personas/apartamentos', people.trim() || '–');
     fd.append('Fechas', dates.trim() || '–');
-    fd.append('Idioma', lang === 'es' ? 'Español' : 'English');
+    fd.append('Idioma', lang === 'es' ? 'Español (Alex)' : 'English (Fran)');
     fd.append('Mensaje', msg.trim());
     fd.append('botcheck', '');
     try {
@@ -317,25 +345,7 @@ const EmpresasForm = ({
     className: "emp-h2"
   }, t.formTitle), /*#__PURE__*/React.createElement("p", {
     className: "emp-form-sub"
-  }, t.formSub), /*#__PURE__*/React.createElement("div", {
-    className: "emp-contact-methods"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "emp-cm-label"
-  }, t.cmLabel), /*#__PURE__*/React.createElement("div", {
-    className: "emp-cm-btns"
-  }, /*#__PURE__*/React.createElement("a", {
-    className: "emp-cm-btn",
-    href: cmWaHref,
-    target: "_blank",
-    rel: "noopener"
-  }, /*#__PURE__*/React.createElement("span", {
-    "aria-hidden": "true"
-  }, "\uD83D\uDCAC"), " WhatsApp"), /*#__PURE__*/React.createElement("a", {
-    className: "emp-cm-btn",
-    href: cm.telHref
-  }, /*#__PURE__*/React.createElement("span", {
-    "aria-hidden": "true"
-  }, "\uD83D\uDCDE"), " ", t.cmCall, " \xB7 ", cm.tel)))), /*#__PURE__*/React.createElement("form", {
+  }, t.formSub)), /*#__PURE__*/React.createElement("form", {
     className: "emp-form",
     onSubmit: submit,
     noValidate: true
@@ -382,8 +392,28 @@ const EmpresasForm = ({
   }), errors.name && /*#__PURE__*/React.createElement("span", {
     className: "emp-err"
   }, errors.name))), /*#__PURE__*/React.createElement("div", {
-    className: "emp-row"
-  }, /*#__PURE__*/React.createElement("div", {
+    className: "emp-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "emp-label"
+  }, t.ch_label), /*#__PURE__*/React.createElement("div", {
+    className: "emp-channel-sel"
+  }, [['email', t.ch_email, '✉️'], ['whatsapp', t.ch_whatsapp, '💬'], ['call', t.ch_call, '📞']].map(([id, label, icon]) => /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    key: id,
+    className: `emp-channel-btn${channel === id ? ' is-on' : ''}`,
+    onClick: () => {
+      setChannel(id);
+      setErrors(er => ({
+        ...er,
+        email: undefined,
+        phone: undefined
+      }));
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, icon), " ", label))), /*#__PURE__*/React.createElement("span", {
+    className: "emp-help"
+  }, lang === 'es' ? `Te contactará ${cm.name}.` : `${cm.name} will get back to you.`)), channel === 'email' ? /*#__PURE__*/React.createElement("div", {
     className: "emp-field"
   }, /*#__PURE__*/React.createElement("label", {
     className: "emp-label",
@@ -403,18 +433,40 @@ const EmpresasForm = ({
     autoComplete: "email"
   }), errors.email && /*#__PURE__*/React.createElement("span", {
     className: "emp-err"
-  }, errors.email)), /*#__PURE__*/React.createElement("div", {
+  }, errors.email)) : /*#__PURE__*/React.createElement("div", {
+    className: "emp-row"
+  }, /*#__PURE__*/React.createElement("div", {
     className: "emp-field"
   }, /*#__PURE__*/React.createElement("label", {
     className: "emp-label",
     htmlFor: "emp-phone"
-  }, t.f_phone), /*#__PURE__*/React.createElement("input", {
+  }, channel === 'whatsapp' ? t.f_wa : t.f_tel), /*#__PURE__*/React.createElement("input", {
     id: "emp-phone",
     type: "tel",
     className: "emp-input",
     value: phone,
-    onChange: e => setPhone(e.target.value),
+    onChange: e => {
+      setPhone(e.target.value);
+      setErrors(er => ({
+        ...er,
+        phone: undefined
+      }));
+    },
     autoComplete: "tel"
+  }), errors.phone && /*#__PURE__*/React.createElement("span", {
+    className: "emp-err"
+  }, errors.phone)), channel === 'call' && /*#__PURE__*/React.createElement("div", {
+    className: "emp-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "emp-label",
+    htmlFor: "emp-calltime"
+  }, t.f_calltime), /*#__PURE__*/React.createElement("input", {
+    id: "emp-calltime",
+    type: "text",
+    className: "emp-input",
+    value: callTime,
+    onChange: e => setCallTime(e.target.value),
+    placeholder: t.f_calltime_ph
   }))), /*#__PURE__*/React.createElement("div", {
     className: "emp-row"
   }, /*#__PURE__*/React.createElement("div", {
