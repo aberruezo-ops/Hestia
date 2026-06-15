@@ -11,16 +11,16 @@ const EMP_W3F_KEY = '95a86784-6d6a-496f-9830-15759c0a3cff';
 const EMP_COPY = {
   es: {
     eyebrow: 'Hestía para empresas y profesionales',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Alojamiento con factura, contrato ", /*#__PURE__*/React.createElement("em", null, "y trato directo.")),
-    sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración, con factura y contrato, y os echamos una mano con los servicios locales que necesitéis.',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Apartamentos en Vera Playa, ", /*#__PURE__*/React.createElement("em", null, "a vuestra medida.")),
+    sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración y os echamos una mano con los servicios locales que necesitéis.',
     waCta: 'Hablar por WhatsApp',
     formCta: 'Pedir propuesta',
-    trust: ['Siempre con factura', 'Contrato legal que protege a ambas partes', 'Licencias turísticas VFT/AL', 'Reserva directa, 0% comisiones'],
+    trust: ['Reserva directa, 0% comisiones', 'Trato directo con los dueños', 'Nos adaptamos a cualquier duración', 'Licencias turísticas VFT/AL'],
     perksTitle: 'Por qué trabajar con nosotros',
     perks: [{
-      icon: '🧾',
-      t: 'Factura y contrato',
-      d: 'Reservas con factura, como siempre, y firmamos un contrato legal que protege a las dos partes. Justificas el gasto sin complicaciones.'
+      icon: '📍',
+      t: 'Conocemos la zona',
+      d: 'Llevamos años en Vera Playa. Os ayudamos con traslados, servicios y recomendaciones para que la estancia salga rodada.'
     }, {
       icon: '📅',
       t: 'Cualquier duración',
@@ -32,7 +32,7 @@ const EMP_COPY = {
     }, {
       icon: '⏱️',
       t: 'Trato directo con los dueños',
-      d: 'Hablas directamente con Alex y Fran, de la reserva a la salida: coordinamos llegadas, facturación y necesidades especiales, con respuesta en menos de una hora.'
+      d: 'Hablas directamente con Alex y Fran, de la reserva a la salida: coordinamos llegadas, servicios y necesidades especiales, con respuesta en menos de una hora.'
     }, {
       icon: '🏠',
       t: 'Tres apartamentos a 2 km',
@@ -49,7 +49,7 @@ const EMP_COPY = {
     packagesTitle: 'Dos formas de trabajar con nosotros',
     packages: [{
       t: 'Equipos y proyectos',
-      d: 'Para empresas que desplazan técnicos, cuadrillas o consultores semanas o meses: varias unidades cerca entre sí, factura mensual, contrato y llegada autónoma.'
+      d: 'Para empresas que desplazan técnicos, cuadrillas o consultores semanas o meses: varias unidades cerca entre sí, tarifa mensual y llegada autónoma.'
     }, {
       t: 'Profesionales y clientes',
       d: 'Para quien llega a la zona de forma individual (nueva incorporación, paciente, comprador de vivienda, deportista): alojamiento listo para entrar y guía local para ubicarse desde el primer día.'
@@ -65,8 +65,8 @@ const EMP_COPY = {
       d: 'A medida y rápida, normalmente en menos de una hora, con precio cerrado y condiciones claras.'
     }, {
       n: '3',
-      t: 'Confirmamos con contrato y factura',
-      d: 'Señal para reservar, contrato legal firmado y tu factura. Sin comisiones.'
+      t: 'Confirmas la reserva',
+      d: 'Una señal para reservar y el resto a la llegada. Te lo dejamos todo por escrito y sin comisiones.'
     }, {
       n: '4',
       t: 'Os acompañamos durante la estancia',
@@ -108,16 +108,16 @@ const EMP_COPY = {
   },
   en: {
     eyebrow: 'Hestía for businesses & professionals',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Accommodation with invoicing, a contract ", /*#__PURE__*/React.createElement("em", null, "and a direct relationship.")),
-    sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay, with invoicing and a contract, and we help with the local services you need.',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Apartments in Vera Playa, ", /*#__PURE__*/React.createElement("em", null, "tailored to you.")),
+    sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay and help with the local services you need.',
     waCta: 'Chat on WhatsApp',
     formCta: 'Request a proposal',
-    trust: ['Always with an invoice', 'A legal contract protecting both parties', 'VFT/AL tourist licences', 'Direct booking, 0% commission'],
+    trust: ['Direct booking, 0% commission', 'Deal directly with the owners', 'We adapt to any length of stay', 'VFT/AL tourist licences'],
     perksTitle: 'Why work with us',
     perks: [{
-      icon: '🧾',
-      t: 'Invoicing and contract',
-      d: 'You book with an invoice, as always, plus a legal contract that protects both parties. Easy to justify the expense.'
+      icon: '📍',
+      t: 'We know the area',
+      d: 'We have spent years in Vera Playa. We help with transfers, services and recommendations so the stay runs smoothly.'
     }, {
       icon: '📅',
       t: 'Any length of stay',
@@ -129,7 +129,7 @@ const EMP_COPY = {
     }, {
       icon: '⏱️',
       t: 'Direct with the owners',
-      d: 'You deal directly with Alex and Fran, from booking to checkout: we coordinate arrivals, invoicing and special requests, with a reply in under an hour.'
+      d: 'You deal directly with Alex and Fran, from booking to checkout: we coordinate arrivals, services and special requests, with a reply in under an hour.'
     }, {
       icon: '🏠',
       t: 'Three apartments within 2 km',
@@ -146,7 +146,7 @@ const EMP_COPY = {
     packagesTitle: 'Two ways to work with us',
     packages: [{
       t: 'Teams and projects',
-      d: 'For companies sending technicians, crews or consultants for weeks or months: several units close together, monthly invoicing, a contract and self check-in.'
+      d: 'For companies sending technicians, crews or consultants for weeks or months: several units close together, a monthly rate and self check-in.'
     }, {
       t: 'Professionals and clients',
       d: 'For individual arrivals (new hire, patient, home buyer, athlete): a ready-to-move-in apartment and a local guide to settle in from day one.'
@@ -162,8 +162,8 @@ const EMP_COPY = {
       d: 'Tailored and fast, usually within an hour, with a closed price and clear terms.'
     }, {
       n: '3',
-      t: 'We confirm with contract and invoice',
-      d: 'A deposit to book, a signed legal contract and your invoice. No commissions.'
+      t: 'You confirm the booking',
+      d: 'A deposit to book and the rest on arrival. We put everything in writing, with no commissions.'
     }, {
       n: '4',
       t: 'We support you throughout the stay',
@@ -491,7 +491,7 @@ const EmpresasPageApp = () => {
   React.useEffect(() => {
     localStorage.setItem('hestia-lang', lang);
     document.documentElement.lang = lang;
-    document.title = lang === 'es' ? 'Hestía para empresas · Alojamiento con factura y contrato · Vera Playa' : 'Hestía for business · Accommodation with invoicing and contract · Vera Playa';
+    document.title = lang === 'es' ? 'Hestía para empresas · Apartamentos en Vera Playa para equipos y profesionales' : 'Hestía for business · Apartments in Vera Playa for teams and professionals';
   }, [lang]);
   const t = EMP_COPY[lang];
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Topbar, {
