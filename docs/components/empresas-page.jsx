@@ -18,7 +18,7 @@ const EMP_COPY = {
     perksTitle: 'Por qué trabajar con nosotros',
     perks: [
       { icon: '📍', t: 'Conocemos la zona', d: 'Llevamos años en Vera Playa. Os ayudamos con traslados, servicios y recomendaciones para que la estancia salga rodada.' },
-      { icon: '📅', t: 'Cualquier duración', d: 'Una noche, una semana o varios meses: nos adaptamos a lo que necesitéis, con la mejor tarifa según las fechas.' },
+      { icon: '📅', t: 'Cualquier duración', d: 'Desde un par de noches a varios meses: nos adaptamos a lo que necesitéis, con la mejor tarifa según las fechas.' },
       { icon: '🤝', t: '0% comisiones', d: 'Reserva directa con nosotros, los propietarios. Sin intermediarios ni cargos de plataforma.' },
       { icon: '⏱️', t: 'Trato directo con los dueños', d: 'Hablas directamente con Alex y Fran, de la reserva a la salida: coordinamos llegadas, servicios y necesidades especiales, con respuesta en menos de una hora.' },
       { icon: '🏠', t: 'Tres apartamentos a 2 km', d: 'Hasta tres equipos o familias alojados cerca, en la misma zona de Vera Playa.' },
@@ -95,7 +95,7 @@ const EMP_COPY = {
     perksTitle: 'Why work with us',
     perks: [
       { icon: '📍', t: 'We know the area', d: 'We have spent years in Vera Playa. We help with transfers, services and recommendations so the stay runs smoothly.' },
-      { icon: '📅', t: 'Any length of stay', d: 'One night, a week or several months: we adapt to what you need, with the best rate for your dates.' },
+      { icon: '📅', t: 'Any length of stay', d: 'From a couple of nights to several months: we adapt to what you need, with the best rate for your dates.' },
       { icon: '🤝', t: '0% commissions', d: 'Book directly with us, the owners. No middlemen, no platform fees.' },
       { icon: '⏱️', t: 'Direct with the owners', d: 'You deal directly with Alex and Fran, from booking to checkout: we coordinate arrivals, services and special requests, with a reply in under an hour.' },
       { icon: '🏠', t: 'Three apartments within 2 km', d: 'Up to three teams or families housed close together, in the same Vera Playa area.' },
@@ -371,16 +371,14 @@ const EmpresasPageApp = () => {
           </div>
         </section>
 
-        <div className="emp-trust">
-          <div className="container">
-            <ul className="emp-trust-list">
-              {t.trust.map((item, i) => (
-                <li key={i} className="emp-trust-item">
-                  <span className="emp-trust-check" aria-hidden="true">✓</span>{item}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="emp-trust" aria-label={lang === 'es' ? 'Lo que nos diferencia' : 'What sets us apart'}>
+          <ul className="emp-trust-track">
+            {[...t.trust, ...t.trust].map((item, i) => (
+              <li key={i} className="emp-trust-item" aria-hidden={i >= t.trust.length ? 'true' : undefined}>
+                <span className="emp-trust-check" aria-hidden="true">✓</span>{item}
+              </li>
+            ))}
+          </ul>
         </div>
 
         <section className="emp-perks-sec">
