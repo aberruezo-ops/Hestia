@@ -72,6 +72,7 @@ const EMP_COPY = {
       d: 'Llegada autónoma, servicios locales y lo que surja. Estamos a un mensaje.'
     }],
     availBtn: 'Comprobar disponibilidad',
+    dlDossier: 'Descargar dossier (PDF)',
     sectorsTitle: 'Con quién trabajamos',
     sectorsSub: 'Si tu negocio necesita alojar a clientes, equipos o pacientes cerca de Vera Playa, encajamos. Algunos ejemplos:',
     sectors: ['Empresas con técnicos o visitas (agroindustria, energía, construcción)', 'Clínicas y turismo de salud', 'Campos de entrenamiento deportivo', 'Golf (stay & play)', 'Bodas y eventos', 'Inmobiliarias y compradores de vivienda', 'Productoras de cine y publicidad', 'Turoperadores y clubes'],
@@ -177,6 +178,7 @@ const EMP_COPY = {
       d: 'Self check-in, local services and whatever comes up. We are one message away.'
     }],
     availBtn: 'Check availability',
+    dlDossier: 'Download brochure (PDF)',
     sectorsTitle: 'Who we work with',
     sectorsSub: 'If your business needs to house clients, teams or patients near Vera Playa, we fit. Some examples:',
     sectors: ['Companies with technicians or visitors (agribusiness, energy, construction)', 'Clinics and health tourism', 'Sports training camps', 'Golf (stay & play)', 'Weddings and events', 'Estate agencies and home buyers', 'Film and advertising productions', 'Tour operators and clubs'],
@@ -634,7 +636,15 @@ const EmpresasPageApp = () => {
   }, t.formCta), /*#__PURE__*/React.createElement("a", {
     href: "#buscar",
     className: "btn btn-ghost-dark"
-  }, t.availBtn)))), /*#__PURE__*/React.createElement("div", {
+  }, t.availBtn)), /*#__PURE__*/React.createElement("a", {
+    href: "downloads/Hestia-Empresas-Dossier.pdf",
+    className: "emp-hero-dl",
+    target: "_blank",
+    rel: "noopener",
+    download: true
+  }, /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "\u2193"), " ", t.dlDossier))), /*#__PURE__*/React.createElement("div", {
     className: "emp-trust",
     "aria-label": lang === 'es' ? 'Lo que nos diferencia' : 'What sets us apart'
   }, /*#__PURE__*/React.createElement("ul", {
