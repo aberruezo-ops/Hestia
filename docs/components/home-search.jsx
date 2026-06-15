@@ -478,7 +478,7 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
 };
 
 // ---- Main search widget ----
-const HomeSearch = ({ lang }) => {
+const HomeSearch = ({ lang, b2b = false }) => {
   const [avail,   setAvail  ] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
 
@@ -622,15 +622,23 @@ const HomeSearch = ({ lang }) => {
         {/* Header */}
         <div className="hs-hd">
           <div className="eyebrow hs-eyebrow">
-            {lang === 'es' ? 'Busca tu estancia · Vera Playa' : 'Find your stay · Vera Playa'}
+            {b2b
+              ? (lang === 'es' ? 'Disponibilidad · Vera Playa' : 'Availability · Vera Playa')
+              : (lang === 'es' ? 'Busca tu estancia · Vera Playa' : 'Find your stay · Vera Playa')}
           </div>
           <h2 className="hs-title">
-            {lang === 'es' ? <em>¿Cuándo venís?</em> : <em>When are you coming?</em>}
+            {b2b
+              ? (lang === 'es' ? <em>Comprueba tus fechas</em> : <em>Check your dates</em>)
+              : (lang === 'es' ? <em>¿Cuándo venís?</em> : <em>When are you coming?</em>)}
           </h2>
           <p className="hs-sub">
-            {lang === 'es'
-              ? 'Coge uno de nuestros huecos o elige tu Hestía y las fechas que prefieras.'
-              : 'Grab one of our available slots or choose your Hestía and the dates you prefer.'}
+            {b2b
+              ? (lang === 'es'
+                  ? 'Mira qué apartamentos tenemos libres y su precio. Para empresas tenemos condiciones especiales: lo mejor es que lo tratemos personalmente.'
+                  : 'See which apartments are free and at what price. For companies we have special terms, so it is best to handle it personally.')
+              : (lang === 'es'
+                  ? 'Coge uno de nuestros huecos o elige tu Hestía y las fechas que prefieras.'
+                  : 'Grab one of our available slots or choose your Hestía and the dates you prefer.')}
           </p>
         </div>
 
@@ -748,8 +756,24 @@ const HomeSearch = ({ lang }) => {
               />
             ))}
 
+            {/* Condiciones especiales para empresas (variante B2B) */}
+            {b2b && results.some(r => r.available === true) && (
+              <div className="hs-longstay-nudge hs-b2b-nudge">
+                <div className="hs-ls-icon">💼</div>
+                <div className="hs-ls-body">
+                  <strong>{lang === 'es' ? 'Condiciones especiales para empresas' : 'Special terms for companies'}</strong>
+                  <span>{lang === 'es'
+                    ? ' Sobre este precio ajustamos las condiciones según vuestras fechas y necesidades. Lo mejor es que lo tratemos personalmente.'
+                    : ' We tailor the terms on top of this price to your dates and needs. It is best to handle it personally.'}</span>
+                </div>
+                <a href="#propuesta" className="hs-ls-cta">
+                  {lang === 'es' ? 'Pedir propuesta →' : 'Request a proposal →'}
+                </a>
+              </div>
+            )}
+
             {/* Long-stay nudge */}
-            {results._isLongStay && (
+            {results._isLongStay && !b2b && (
               <div className="hs-longstay-nudge">
                 <div className="hs-ls-icon">🏠</div>
                 <div className="hs-ls-body">
