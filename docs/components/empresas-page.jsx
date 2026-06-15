@@ -14,10 +14,10 @@ const EMP_COPY = {
     sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración, con factura y contrato, y os echamos una mano con los servicios locales que necesitéis.',
     waCta: 'Hablar por WhatsApp',
     formCta: 'Pedir propuesta',
-    trust: ['Factura con IVA', 'Contrato formal', 'Licencias turísticas VFT/AL', 'Reserva directa, 0% comisiones'],
+    trust: ['Siempre con factura', 'Contrato legal que protege a ambas partes', 'Licencias turísticas VFT/AL', 'Reserva directa, 0% comisiones'],
     perksTitle: 'Por qué trabajar con nosotros',
     perks: [
-      { icon: '🧾', t: 'Factura y contrato', d: 'Emitimos factura y firmamos contrato. Pensado para empresas, clínicas y profesionales que necesitan justificar el gasto.' },
+      { icon: '🧾', t: 'Factura y contrato', d: 'Reservas con factura, como siempre, y firmamos un contrato legal que protege a las dos partes. Justificas el gasto sin complicaciones.' },
       { icon: '📅', t: 'Cualquier duración', d: 'Una noche, una semana o varios meses: nos adaptamos a lo que necesitéis, con la mejor tarifa según las fechas.' },
       { icon: '🤝', t: '0% comisiones', d: 'Reserva directa con nosotros, los propietarios. Sin intermediarios ni cargos de plataforma.' },
       { icon: '⏱️', t: 'Trato directo con los dueños', d: 'Hablas directamente con Alex y Fran, de la reserva a la salida: coordinamos llegadas, facturación y necesidades especiales, con respuesta en menos de una hora.' },
@@ -43,7 +43,7 @@ const EMP_COPY = {
     steps: [
       { n: '1', t: 'Nos cuentas qué necesitas', d: 'Fechas, número de personas y qué hace falta: factura, contrato, varias unidades o servicios.' },
       { n: '2', t: 'Te enviamos una propuesta', d: 'A medida y rápida, normalmente en menos de una hora, con precio cerrado y condiciones claras.' },
-      { n: '3', t: 'Confirmamos con contrato y factura', d: 'Señal para reservar, contrato firmado y factura con IVA. Sin comisiones.' },
+      { n: '3', t: 'Confirmamos con contrato y factura', d: 'Señal para reservar, contrato legal firmado y tu factura. Sin comisiones.' },
       { n: '4', t: 'Os acompañamos durante la estancia', d: 'Llegada autónoma, servicios locales y lo que surja. Estamos a un mensaje.' },
     ],
     sectorsTitle: 'Con quién trabajamos',
@@ -91,10 +91,10 @@ const EMP_COPY = {
     sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay, with invoicing and a contract, and we help with the local services you need.',
     waCta: 'Chat on WhatsApp',
     formCta: 'Request a proposal',
-    trust: ['VAT invoice', 'Formal contract', 'VFT/AL tourist licences', 'Direct booking, 0% commission'],
+    trust: ['Always with an invoice', 'A legal contract protecting both parties', 'VFT/AL tourist licences', 'Direct booking, 0% commission'],
     perksTitle: 'Why work with us',
     perks: [
-      { icon: '🧾', t: 'Invoicing and contract', d: 'We issue an invoice and sign a contract. Built for companies, clinics and professionals who need to justify the expense.' },
+      { icon: '🧾', t: 'Invoicing and contract', d: 'You book with an invoice, as always, plus a legal contract that protects both parties. Easy to justify the expense.' },
       { icon: '📅', t: 'Any length of stay', d: 'One night, a week or several months: we adapt to what you need, with the best rate for your dates.' },
       { icon: '🤝', t: '0% commissions', d: 'Book directly with us, the owners. No middlemen, no platform fees.' },
       { icon: '⏱️', t: 'Direct with the owners', d: 'You deal directly with Alex and Fran, from booking to checkout: we coordinate arrivals, invoicing and special requests, with a reply in under an hour.' },
@@ -120,7 +120,7 @@ const EMP_COPY = {
     steps: [
       { n: '1', t: 'You tell us what you need', d: 'Dates, number of people and what is required: invoice, contract, several units or services.' },
       { n: '2', t: 'We send you a proposal', d: 'Tailored and fast, usually within an hour, with a closed price and clear terms.' },
-      { n: '3', t: 'We confirm with contract and invoice', d: 'A deposit to book, a signed contract and a VAT invoice. No commissions.' },
+      { n: '3', t: 'We confirm with contract and invoice', d: 'A deposit to book, a signed legal contract and your invoice. No commissions.' },
       { n: '4', t: 'We support you throughout the stay', d: 'Self check-in, local services and whatever comes up. We are one message away.' },
     ],
     sectorsTitle: 'Who we work with',
