@@ -10,17 +10,17 @@ const EMP_W3F_KEY = '95a86784-6d6a-496f-9830-15759c0a3cff';
 const EMP_COPY = {
   es: {
     eyebrow: 'Hestía para empresas y profesionales',
-    title: (<>Alojamiento con factura, contrato <em>y trato directo.</em></>),
-    sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración, con factura y contrato, y os echamos una mano con los servicios locales que necesitéis.',
+    title: (<>Apartamentos en Vera Playa, <em>a vuestra medida.</em></>),
+    sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración y os echamos una mano con los servicios locales que necesitéis.',
     waCta: 'Hablar por WhatsApp',
     formCta: 'Pedir propuesta',
-    trust: ['Siempre con factura', 'Contrato legal que protege a ambas partes', 'Licencias turísticas VFT/AL', 'Reserva directa, 0% comisiones'],
+    trust: ['Reserva directa, 0% comisiones', 'Trato directo con los dueños', 'Nos adaptamos a cualquier duración', 'Licencias turísticas VFT/AL'],
     perksTitle: 'Por qué trabajar con nosotros',
     perks: [
-      { icon: '🧾', t: 'Factura y contrato', d: 'Reservas con factura, como siempre, y firmamos un contrato legal que protege a las dos partes. Justificas el gasto sin complicaciones.' },
+      { icon: '📍', t: 'Conocemos la zona', d: 'Llevamos años en Vera Playa. Os ayudamos con traslados, servicios y recomendaciones para que la estancia salga rodada.' },
       { icon: '📅', t: 'Cualquier duración', d: 'Una noche, una semana o varios meses: nos adaptamos a lo que necesitéis, con la mejor tarifa según las fechas.' },
       { icon: '🤝', t: '0% comisiones', d: 'Reserva directa con nosotros, los propietarios. Sin intermediarios ni cargos de plataforma.' },
-      { icon: '⏱️', t: 'Trato directo con los dueños', d: 'Hablas directamente con Alex y Fran, de la reserva a la salida: coordinamos llegadas, facturación y necesidades especiales, con respuesta en menos de una hora.' },
+      { icon: '⏱️', t: 'Trato directo con los dueños', d: 'Hablas directamente con Alex y Fran, de la reserva a la salida: coordinamos llegadas, servicios y necesidades especiales, con respuesta en menos de una hora.' },
       { icon: '🏠', t: 'Tres apartamentos a 2 km', d: 'Hasta tres equipos o familias alojados cerca, en la misma zona de Vera Playa.' },
       { icon: '📶', t: 'Listos para entrar', d: 'WiFi de fibra, cocina equipada, lavadora, terraza y limpieza coordinada. Listos para vivir o para teletrabajar.' },
     ],
@@ -36,14 +36,14 @@ const EMP_COPY = {
     servicesFoot: 'Dinos qué necesitas y nos ponemos manos a la obra.',
     packagesTitle: 'Dos formas de trabajar con nosotros',
     packages: [
-      { t: 'Equipos y proyectos', d: 'Para empresas que desplazan técnicos, cuadrillas o consultores semanas o meses: varias unidades cerca entre sí, factura mensual, contrato y llegada autónoma.' },
+      { t: 'Equipos y proyectos', d: 'Para empresas que desplazan técnicos, cuadrillas o consultores semanas o meses: varias unidades cerca entre sí, tarifa mensual y llegada autónoma.' },
       { t: 'Profesionales y clientes', d: 'Para quien llega a la zona de forma individual (nueva incorporación, paciente, comprador de vivienda, deportista): alojamiento listo para entrar y guía local para ubicarse desde el primer día.' },
     ],
     stepsTitle: 'Cómo trabajamos',
     steps: [
       { n: '1', t: 'Nos cuentas qué necesitas', d: 'Fechas, número de personas y qué hace falta: factura, contrato, varias unidades o servicios.' },
       { n: '2', t: 'Te enviamos una propuesta', d: 'A medida y rápida, normalmente en menos de una hora, con precio cerrado y condiciones claras.' },
-      { n: '3', t: 'Confirmamos con contrato y factura', d: 'Señal para reservar, contrato legal firmado y tu factura. Sin comisiones.' },
+      { n: '3', t: 'Confirmas la reserva', d: 'Una señal para reservar y el resto a la llegada. Te lo dejamos todo por escrito y sin comisiones.' },
       { n: '4', t: 'Os acompañamos durante la estancia', d: 'Llegada autónoma, servicios locales y lo que surja. Estamos a un mensaje.' },
     ],
     sectorsTitle: 'Con quién trabajamos',
@@ -87,17 +87,17 @@ const EMP_COPY = {
   },
   en: {
     eyebrow: 'Hestía for businesses & professionals',
-    title: (<>Accommodation with invoicing, a contract <em>and a direct relationship.</em></>),
-    sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay, with invoicing and a contract, and we help with the local services you need.',
+    title: (<>Apartments in Vera Playa, <em>tailored to you.</em></>),
+    sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay and help with the local services you need.',
     waCta: 'Chat on WhatsApp',
     formCta: 'Request a proposal',
-    trust: ['Always with an invoice', 'A legal contract protecting both parties', 'VFT/AL tourist licences', 'Direct booking, 0% commission'],
+    trust: ['Direct booking, 0% commission', 'Deal directly with the owners', 'We adapt to any length of stay', 'VFT/AL tourist licences'],
     perksTitle: 'Why work with us',
     perks: [
-      { icon: '🧾', t: 'Invoicing and contract', d: 'You book with an invoice, as always, plus a legal contract that protects both parties. Easy to justify the expense.' },
+      { icon: '📍', t: 'We know the area', d: 'We have spent years in Vera Playa. We help with transfers, services and recommendations so the stay runs smoothly.' },
       { icon: '📅', t: 'Any length of stay', d: 'One night, a week or several months: we adapt to what you need, with the best rate for your dates.' },
       { icon: '🤝', t: '0% commissions', d: 'Book directly with us, the owners. No middlemen, no platform fees.' },
-      { icon: '⏱️', t: 'Direct with the owners', d: 'You deal directly with Alex and Fran, from booking to checkout: we coordinate arrivals, invoicing and special requests, with a reply in under an hour.' },
+      { icon: '⏱️', t: 'Direct with the owners', d: 'You deal directly with Alex and Fran, from booking to checkout: we coordinate arrivals, services and special requests, with a reply in under an hour.' },
       { icon: '🏠', t: 'Three apartments within 2 km', d: 'Up to three teams or families housed close together, in the same Vera Playa area.' },
       { icon: '📶', t: 'Ready to move in', d: 'Fibre WiFi, equipped kitchen, washing machine, terrace and coordinated cleaning. Ready to live or work remotely.' },
     ],
@@ -113,14 +113,14 @@ const EMP_COPY = {
     servicesFoot: 'Tell us what you need and we get to work.',
     packagesTitle: 'Two ways to work with us',
     packages: [
-      { t: 'Teams and projects', d: 'For companies sending technicians, crews or consultants for weeks or months: several units close together, monthly invoicing, a contract and self check-in.' },
+      { t: 'Teams and projects', d: 'For companies sending technicians, crews or consultants for weeks or months: several units close together, a monthly rate and self check-in.' },
       { t: 'Professionals and clients', d: 'For individual arrivals (new hire, patient, home buyer, athlete): a ready-to-move-in apartment and a local guide to settle in from day one.' },
     ],
     stepsTitle: 'How we work',
     steps: [
       { n: '1', t: 'You tell us what you need', d: 'Dates, number of people and what is required: invoice, contract, several units or services.' },
       { n: '2', t: 'We send you a proposal', d: 'Tailored and fast, usually within an hour, with a closed price and clear terms.' },
-      { n: '3', t: 'We confirm with contract and invoice', d: 'A deposit to book, a signed legal contract and your invoice. No commissions.' },
+      { n: '3', t: 'You confirm the booking', d: 'A deposit to book and the rest on arrival. We put everything in writing, with no commissions.' },
       { n: '4', t: 'We support you throughout the stay', d: 'Self check-in, local services and whatever comes up. We are one message away.' },
     ],
     sectorsTitle: 'Who we work with',
@@ -348,8 +348,8 @@ const EmpresasPageApp = () => {
     localStorage.setItem('hestia-lang', lang);
     document.documentElement.lang = lang;
     document.title = lang === 'es'
-      ? 'Hestía para empresas · Alojamiento con factura y contrato · Vera Playa'
-      : 'Hestía for business · Accommodation with invoicing and contract · Vera Playa';
+      ? 'Hestía para empresas · Apartamentos en Vera Playa para equipos y profesionales'
+      : 'Hestía for business · Apartments in Vera Playa for teams and professionals';
   }, [lang]);
 
   const t = EMP_COPY[lang];
