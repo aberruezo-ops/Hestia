@@ -24,7 +24,7 @@ const EMP_COPY = {
     }, {
       icon: '📅',
       t: 'Cualquier duración',
-      d: 'Una noche, una semana o varios meses: nos adaptamos a lo que necesitéis, con la mejor tarifa según las fechas.'
+      d: 'Desde un par de noches a varios meses: nos adaptamos a lo que necesitéis, con la mejor tarifa según las fechas.'
     }, {
       icon: '🤝',
       t: '0% comisiones',
@@ -121,7 +121,7 @@ const EMP_COPY = {
     }, {
       icon: '📅',
       t: 'Any length of stay',
-      d: 'One night, a week or several months: we adapt to what you need, with the best rate for your dates.'
+      d: 'From a couple of nights to several months: we adapt to what you need, with the best rate for your dates.'
     }, {
       icon: '🤝',
       t: '0% commissions',
@@ -520,18 +520,18 @@ const EmpresasPageApp = () => {
     rel: "noopener",
     className: "btn btn-ghost-dark"
   }, t.waCta)))), /*#__PURE__*/React.createElement("div", {
-    className: "emp-trust"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "container"
+    className: "emp-trust",
+    "aria-label": lang === 'es' ? 'Lo que nos diferencia' : 'What sets us apart'
   }, /*#__PURE__*/React.createElement("ul", {
-    className: "emp-trust-list"
-  }, t.trust.map((item, i) => /*#__PURE__*/React.createElement("li", {
+    className: "emp-trust-track"
+  }, [...t.trust, ...t.trust].map((item, i) => /*#__PURE__*/React.createElement("li", {
     key: i,
-    className: "emp-trust-item"
+    className: "emp-trust-item",
+    "aria-hidden": i >= t.trust.length ? 'true' : undefined
   }, /*#__PURE__*/React.createElement("span", {
     className: "emp-trust-check",
     "aria-hidden": "true"
-  }, "\u2713"), item))))), /*#__PURE__*/React.createElement("section", {
+  }, "\u2713"), item)))), /*#__PURE__*/React.createElement("section", {
     className: "emp-perks-sec"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
