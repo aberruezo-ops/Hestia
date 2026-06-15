@@ -15,12 +15,12 @@ const EMP_COPY = {
     sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración, con factura y contrato, y os echamos una mano con los servicios locales que necesitéis.',
     waCta: 'Hablar por WhatsApp',
     formCta: 'Pedir propuesta',
-    trust: ['Factura con IVA', 'Contrato formal', 'Licencias turísticas VFT/AL', 'Reserva directa, 0% comisiones'],
+    trust: ['Siempre con factura', 'Contrato legal que protege a ambas partes', 'Licencias turísticas VFT/AL', 'Reserva directa, 0% comisiones'],
     perksTitle: 'Por qué trabajar con nosotros',
     perks: [{
       icon: '🧾',
       t: 'Factura y contrato',
-      d: 'Emitimos factura y firmamos contrato. Pensado para empresas, clínicas y profesionales que necesitan justificar el gasto.'
+      d: 'Reservas con factura, como siempre, y firmamos un contrato legal que protege a las dos partes. Justificas el gasto sin complicaciones.'
     }, {
       icon: '📅',
       t: 'Cualquier duración',
@@ -66,7 +66,7 @@ const EMP_COPY = {
     }, {
       n: '3',
       t: 'Confirmamos con contrato y factura',
-      d: 'Señal para reservar, contrato firmado y factura con IVA. Sin comisiones.'
+      d: 'Señal para reservar, contrato legal firmado y tu factura. Sin comisiones.'
     }, {
       n: '4',
       t: 'Os acompañamos durante la estancia',
@@ -112,12 +112,12 @@ const EMP_COPY = {
     sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay, with invoicing and a contract, and we help with the local services you need.',
     waCta: 'Chat on WhatsApp',
     formCta: 'Request a proposal',
-    trust: ['VAT invoice', 'Formal contract', 'VFT/AL tourist licences', 'Direct booking, 0% commission'],
+    trust: ['Always with an invoice', 'A legal contract protecting both parties', 'VFT/AL tourist licences', 'Direct booking, 0% commission'],
     perksTitle: 'Why work with us',
     perks: [{
       icon: '🧾',
       t: 'Invoicing and contract',
-      d: 'We issue an invoice and sign a contract. Built for companies, clinics and professionals who need to justify the expense.'
+      d: 'You book with an invoice, as always, plus a legal contract that protects both parties. Easy to justify the expense.'
     }, {
       icon: '📅',
       t: 'Any length of stay',
@@ -163,7 +163,7 @@ const EMP_COPY = {
     }, {
       n: '3',
       t: 'We confirm with contract and invoice',
-      d: 'A deposit to book, a signed contract and a VAT invoice. No commissions.'
+      d: 'A deposit to book, a signed legal contract and your invoice. No commissions.'
     }, {
       n: '4',
       t: 'We support you throughout the stay',
