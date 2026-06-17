@@ -477,16 +477,6 @@
       "minNights": 5,
       "lastMinute": true
     },
-    "vt|2026-06-28": {
-      "apt": "vt",
-      "start": "2026-06-28",
-      "end": "2026-07-05",
-      "nights": 7,
-      "type": "fixed",
-      "value": 130,
-      "minNights": 6,
-      "lastMinute": true
-    },
     "vt|2026-07-05": {
       "apt": "vt",
       "start": "2026-07-05",
