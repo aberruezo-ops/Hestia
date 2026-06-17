@@ -597,9 +597,9 @@
     "extraGuestPerMonth": 60,
     "petPerMonth": 50,
     "aptSupplement": {
-      "vm": 40,
-      "vt": 40,
-      "vs": 0
+      "vm": 50,
+      "vt": 35,
+      "vs": 30
     },
     "easterRanges": [
       [
