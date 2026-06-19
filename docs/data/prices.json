@@ -581,6 +581,15 @@
       "type": "discount",
       "value": 20,
       "lastMinute": true
+    },
+    "vt|2026-07-10": {
+      "apt": "vt",
+      "start": "2026-07-10",
+      "end": "2026-07-25",
+      "nights": 15,
+      "type": "discount",
+      "value": 20,
+      "lastMinute": true
     }
   },
   "gapSplits": {
@@ -704,11 +713,6 @@
         "h": "c24e56003d295295678d54e942aab32468f3a2fcfaf631f3d33e0c4dc091f757",
         "until": "2026-07-10",
         "ref": "2026-07-01"
-      },
-      {
-        "h": "6ec8ffb511e14c84c4404cf228a099e23b0306c6f64565fb3e5905a7dffc93c5",
-        "until": "2026-08-08",
-        "ref": "2026-07-25"
       }
     ],
     "vs": [
