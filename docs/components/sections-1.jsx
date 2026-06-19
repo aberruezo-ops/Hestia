@@ -798,7 +798,8 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
     const durSec = Math.max(10, slots.length * 5);
     const speed = setW > 0 ? setW / (durSec * 1000) : 0; // px por ms (igual que la animación CSS previa)
     let offset = 0, raf = 0, last = performance.now();
-    let dragging = false, hovering = false, lastX = 0, moved = 0;
+    let dragging = false, hovering = false, lastX = 0, moved = 0, captured = false, pid = null;
+    const DRAG_THRESHOLD = 8;
     const wrapOffset = () => { if (setW <= 0) return; while (offset <= -setW) offset += setW; while (offset > 0) offset -= setW; };
     const apply = () => { track.style.transform = `translateX(${offset}px)`; };
     const frame = (now) => {
@@ -806,10 +807,26 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
       if (!dragging && !hovering && !reduce) { offset -= speed * dt; wrapOffset(); apply(); }
       raf = requestAnimationFrame(frame);
     };
-    const onDown = (e) => { dragging = true; moved = 0; lastX = e.clientX; wrap.classList.add('lm-dragging'); try { wrap.setPointerCapture(e.pointerId); } catch (_) {} };
-    const onMove = (e) => { if (!dragging) return; const dx = e.clientX - lastX; lastX = e.clientX; moved += Math.abs(dx); offset += dx; wrapOffset(); apply(); };
-    const onUp = (e) => { if (!dragging) return; dragging = false; wrap.classList.remove('lm-dragging'); try { wrap.releasePointerCapture(e.pointerId); } catch (_) {} };
-    const onClick = (e) => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } };
+    // Solo capturamos el puntero cuando hay arrastre real (moved > umbral). Si se
+    // captura ya en pointerdown, el navegador no dispara el click en los <a> y las
+    // tarjetas dejan de abrir su enlace (reservas / estancias largas).
+    const onDown = (e) => { dragging = true; moved = 0; captured = false; pid = e.pointerId; lastX = e.clientX; };
+    const onMove = (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - lastX; lastX = e.clientX; moved += Math.abs(dx);
+      offset += dx; wrapOffset(); apply();
+      if (!captured && moved > DRAG_THRESHOLD) {
+        captured = true; wrap.classList.add('lm-dragging');
+        try { wrap.setPointerCapture(pid); } catch (_) {}
+      }
+    };
+    const onUp = () => {
+      if (!dragging) return;
+      dragging = false;
+      if (captured) { wrap.classList.remove('lm-dragging'); try { wrap.releasePointerCapture(pid); } catch (_) {} }
+      captured = false;
+    };
+    const onClick = (e) => { if (moved > DRAG_THRESHOLD) { e.preventDefault(); e.stopPropagation(); } };
     const onEnter = (e) => { if (e.pointerType === 'mouse') hovering = true; };
     const onLeave = (e) => { if (e.pointerType === 'mouse') hovering = false; };
     const onResize = () => { setW = track.scrollWidth / 2; };
