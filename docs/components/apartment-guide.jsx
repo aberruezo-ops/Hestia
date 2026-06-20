@@ -102,8 +102,9 @@ const GUIDE_GROUPS = [
 // carretera de acceso. Los enlaces abren una búsqueda en vivo de Google Maps.
 const ARRIVAL_EATS = {
   es: {
-    title: 'De camino: dónde parar cuando ya falta poco',
-    intro: 'Buenas paradas para comer o cenar, y pequeñas visitas para ver algo bonito o comprar producto típico, cuando os quedan entre tres y una hora para llegar a Vera Playa, según por dónde vengáis.',
+    title: 'De camino a casa: dónde parar cuando ya falta poco',
+    intro: 'El viaje también es parte de Hestía. En el último tramo, cuando os quedan entre tres y una hora, aquí tenéis dónde comer algo rico, ver un sitio que merezca la pena o comprar producto típico, según por dónde vengáis. Para que lleguéis a casa con el viaje ya disfrutado.',
+    closer: 'Y al terminar la última curva, Hestía os espera. El viaje acaba justo donde empieza vuestro descanso.',
     eatLabel: 'Para comer',
     breakLabel: 'Paradas cortas',
     kinds: { ver: 'Ver', comprar: 'Comprar', descansar: 'Descansar' },
@@ -142,8 +143,9 @@ const ARRIVAL_EATS = {
     ],
   },
   en: {
-    title: 'On the way: where to stop as you get close',
-    intro: 'Good lunch or dinner stops, plus short visits to see something lovely or buy a typical local product, when you are between three and one hour from Vera Playa, depending on which way you come.',
+    title: 'On the way home: where to stop as you get close',
+    intro: 'The journey is part of Hestía too. On the final stretch, when you are between three and one hour away, here is where to eat something good, see somewhere worthwhile or buy a typical local product, depending on your route. So you arrive home with the trip already enjoyed.',
+    closer: 'And as you round the last bend, Hestía is waiting. The journey ends exactly where your rest begins.',
     eatLabel: 'To eat',
     breakLabel: 'Short stops',
     kinds: { ver: 'See', comprar: 'Buy', descansar: 'Rest' },
@@ -1271,6 +1273,16 @@ const GUIDE_SHARED = {
     checkin: {
       title: 'Llegada y salida',
       intro: 'Lo tienes todo cubierto: Fran te escribirá unos días antes de tu llegada para acordar la modalidad que mejor te encaje y compartirte los detalles. Llegues como llegues: en avión, bus o coche propio, te mandamos las indicaciones exactas para llegar en coche hasta la puerta de Hestía y te acompañamos a distancia hasta que estés dentro. No tienes que preocuparte de nada, solo dile a Fran a qué hora aproximada llegas.',
+      beforeTitle: 'Antes de tu llegada',
+      beforeIntro: 'Cuanto antes hablemos, más fácil te lo ponemos. Con estos detalles resueltos, llegas sin pensar en nada.',
+      beforeItems: [
+        'Dinos tu hora aproximada de llegada: Fran te escribe unos días antes para cerrar los detalles.',
+        'Cuéntanos cómo vienes (avión, autobús, tren o coche) y te mandamos las indicaciones exactas hasta la puerta.',
+        '¿Vienes con mascota, bebé o necesitas algo concreto? Pídelo con antelación y lo dejamos listo.',
+        'Elige tu modalidad de check-in: autónoma (entras a tu ritmo) o presencial (te recibe Fran).',
+      ],
+      packLightTitle: 'Viaja ligero: pregúntanos antes de hacer la maleta',
+      packLightBody: 'Muchas cosas ya están en tu Hestía: secador, plancha y tabla, menaje de cocina, toallas, ropa de cama y wifi. Cuna, trona o toallas de playa, bajo petición. Dinos qué necesitas y te confirmamos qué hay, para que no cargues con lo que ya te espera en casa.',
       airportsTitle: 'Aeropuertos cercanos',
       airportsIntro: 'Vera Playa tiene cinco aeropuertos en su radio razonable. El más cómodo depende de tu vuelo y tu paciencia con la carretera. Tiempos aproximados en coche por la AP-7 / A-7:',
       airports: [
@@ -1481,6 +1493,16 @@ const GUIDE_SHARED = {
     checkin: {
       title: 'Arrival & departure',
       intro: 'You are covered: Fran will message you a few days before your arrival to agree on the option that suits you best and share the specifics. However you travel: by plane, bus or car, we send you exact directions to drive right to the front door and we are with you every step of the way until you are in. Nothing to worry about, just let Fran know your approximate arrival time.',
+      beforeTitle: 'Before you arrive',
+      beforeIntro: 'The sooner we talk, the easier we make it. With these details sorted, you arrive without a thing to think about.',
+      beforeItems: [
+        'Tell us your approximate arrival time: Fran writes to you a few days before to settle the details.',
+        'Let us know how you are coming (plane, bus, train or car) and we send you the exact directions to the door.',
+        'Travelling with a pet, a baby or need something specific? Ask in advance and we leave it ready.',
+        'Choose your check-in option: self check-in (at your own pace) or in-person (Fran greets you).',
+      ],
+      packLightTitle: 'Travel light: ask us before you pack',
+      packLightBody: 'Many things are already in your Hestía: hairdryer, iron and board, kitchenware, towels, bed linen and wifi. Cot, high chair or beach towels, on request. Tell us what you need and we confirm what is there, so you do not carry what is already waiting for you at home.',
       airportsTitle: 'Nearest airports',
       airportsIntro: 'Vera Playa has five airports within reasonable range. Which one is best depends on your flight options and how much road you want to drive. Approximate driving times via AP-7 / A-7:',
       airports: [
@@ -4911,6 +4933,25 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <h2 className="ag-h2">{s.checkin.title}</h2>
             <p className="ag-para ag-para-lead">{s.checkin.intro}</p>
 
+            {s.checkin.beforeItems && (
+              <div className="ag-before">
+                <h3 className="ag-h3">{s.checkin.beforeTitle}</h3>
+                <p className="ag-para">{s.checkin.beforeIntro}</p>
+                <ul className="ag-before-list">
+                  {s.checkin.beforeItems.map((it, i) => <li key={i}>{it}</li>)}
+                </ul>
+                {s.checkin.packLightBody && (
+                  <div className="ag-packlight">
+                    <span className="ag-packlight-icon" aria-hidden="true">🧳</span>
+                    <div className="ag-packlight-txt">
+                      <h4 className="ag-packlight-title">{s.checkin.packLightTitle}</h4>
+                      <p className="ag-packlight-body">{s.checkin.packLightBody}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             <h3 className="ag-h3">{lang === 'es' ? 'Cómo llegar a Hestía' : 'How to get to Hestía'}</h3>
             <p className="ag-para">{lang === 'es'
               ? 'Vengas como vengas, en avión, autobús, tren o coche, aquí tienes lo que necesitas saber según tu medio de transporte. Te enviamos siempre las indicaciones exactas para los últimos kilómetros hasta la puerta.'
@@ -5004,9 +5045,13 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               {s.checkin.carAccompany && (
                 <p className="ag-para ag-car-accompany"><span className="ag-car-icon" aria-hidden="true">✦</span>{s.checkin.carAccompany}</p>
               )}
+            </div>
 
-              <h5 className="ag-arrmode-sub">{ARRIVAL_EATS[lang].title}</h5>
-              <p className="ag-para">{ARRIVAL_EATS[lang].intro}</p>
+            </div>{/* /ag-arrival-modes */}
+
+            <div className="ag-arrival-eats-block">
+              <h3 className="ag-h3">{ARRIVAL_EATS[lang].title}</h3>
+              <p className="ag-para ag-para-lead">{ARRIVAL_EATS[lang].intro}</p>
               <div className="ag-arrival-eats">
                 {ARRIVAL_EATS[lang].routes.map((r, i) => (
                   <div key={i} className="ag-ae-route">
@@ -5049,9 +5094,10 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                   </div>
                 ))}
               </div>
+              {ARRIVAL_EATS[lang].closer && (
+                <p className="ag-para ag-arrival-closer">{ARRIVAL_EATS[lang].closer}</p>
+              )}
             </div>
-
-            </div>{/* /ag-arrival-modes */}
 
             <h3 className="ag-h3">{s.checkin.modalitiesTitle}</h3>
             <div className="ag-checkin-modes">

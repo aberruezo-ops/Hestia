@@ -1021,6 +1021,10 @@ section.no-break {
 .checkin-h4 { margin: 4mm 0 1.5mm; font-size: 10.5pt; font-weight: 700; color: var(--ink); }
 .checkin-h5 { margin: 3mm 0 1mm; font-size: 9.5pt; font-weight: 700; color: var(--apt-c-dk); }
 .arrmode-block { margin: 0 0 2mm; padding-bottom: 1mm; }
+.before-list { margin: 1.5mm 0 2.5mm; padding-left: 5mm; }
+.before-list li { font-size: 9.5pt; line-height: 1.5; margin-bottom: 1mm; }
+.packlight { padding: 2.5mm 3mm; background: rgba(214,158,46,.12); border: 0.4pt solid rgba(214,158,46,.4); border-radius: 1.5mm; font-size: 9pt; line-height: 1.5; }
+.arrival-closer { margin-top: 3mm; padding-top: 2mm; border-top: 0.4pt solid var(--apt-c); font-size: 10pt; color: var(--apt-c-dk); }
 .checkin-modes {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1613,6 +1617,15 @@ function renderCheckin(shared, aptData, aptGuide, lang) {
     </div>
     <p class="checkin-intro">${esc(c.intro)}</p>
 
+    ${c.beforeItems ? `
+    <h3 class="checkin-h3">${esc(c.beforeTitle)}</h3>
+    <p>${esc(c.beforeIntro)}</p>
+    <ul class="before-list">
+      ${c.beforeItems.map(it => `<li>${esc(it)}</li>`).join('')}
+    </ul>
+    ${c.packLightBody ? `<div class="packlight"><strong>${esc(c.packLightTitle)}</strong> ${esc(c.packLightBody)}</div>` : ''}
+    ` : ''}
+
     <h3 class="checkin-h3">${lang === 'es' ? 'Cómo llegar a Hestía' : 'How to get to Hestía'}</h3>
     <p>${lang === 'es'
       ? 'Vengas como vengas, en avión, autobús, tren o coche, esto es lo que necesitas saber según tu medio de transporte. Te enviamos siempre las indicaciones exactas para los últimos kilómetros.'
@@ -1677,7 +1690,7 @@ function renderCheckin(shared, aptData, aptGuide, lang) {
     ${c.carText ? `<p>${esc(c.carText)}</p>` : ''}
     ${c.carAccompany ? `<p class="checkin-note"><em>${esc(c.carAccompany)}</em></p>` : ''}
     ${shared.__arrivalEats ? `
-    <h5 class="checkin-h5">${esc(shared.__arrivalEats.title)}</h5>
+    <h3 class="checkin-h3">${esc(shared.__arrivalEats.title)}</h3>
     <p>${esc(shared.__arrivalEats.intro)}</p>
     ${shared.__arrivalEats.routes.map(r => `
       <div class="ae-route">
@@ -1697,6 +1710,7 @@ function renderCheckin(shared, aptData, aptGuide, lang) {
             <span class="ae-note">${esc(sp.note)}</span>
           </div>`).join('')}` : ''}
       </div>`).join('')}
+    ${shared.__arrivalEats.closer ? `<p class="arrival-closer"><em>${esc(shared.__arrivalEats.closer)}</em></p>` : ''}
     ` : ''}
 
     <h3 class="checkin-h3">${esc(c.modalitiesTitle)}</h3>
