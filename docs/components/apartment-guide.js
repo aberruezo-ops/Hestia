@@ -10144,9 +10144,20 @@ const AptGuideView = ({
     className: "ag-h2"
   }, s.checkin.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-lead"
-  }, s.checkin.intro), s.checkin.airports && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
+  }, s.checkin.intro), /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"
-  }, s.checkin.airportsTitle), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? 'Cómo llegar a Hestía' : 'How to get to Hestía'), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, lang === 'es' ? 'Vengas como vengas, en avión, autobús, tren o coche, aquí tienes lo que necesitas saber según tu medio de transporte. Te enviamos siempre las indicaciones exactas para los últimos kilómetros hasta la puerta.' : 'However you come, by plane, bus, train or car, here is what you need to know by transport mode. We always send you the exact directions for the last few kilometres to the door.'), /*#__PURE__*/React.createElement("div", {
+    className: "ag-arrival-modes"
+  }, s.checkin.airports && /*#__PURE__*/React.createElement("div", {
+    className: "ag-arrmode"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "ag-arrmode-h"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-arrmode-icon",
+    "aria-hidden": "true"
+  }, "\u2708\uFE0F"), lang === 'es' ? 'En avión' : 'By plane'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
   }, s.checkin.airportsIntro), /*#__PURE__*/React.createElement("div", {
     className: "ag-airports"
@@ -10171,15 +10182,50 @@ const AptGuideView = ({
     className: "ag-airport-notes"
   }, a.notes))))), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-note"
-  }, s.checkin.airportsTip)), s.checkin.stations && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
-    className: "ag-h3"
-  }, s.checkin.stationsTitle), /*#__PURE__*/React.createElement("p", {
+  }, s.checkin.airportsTip)), s.checkin.stations && s.checkin.stations.some(st => st.type === 'BUS') && /*#__PURE__*/React.createElement("div", {
+    className: "ag-arrmode"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "ag-arrmode-h"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-arrmode-icon",
+    "aria-hidden": "true"
+  }, "\uD83D\uDE8C"), lang === 'es' ? 'En autobús' : 'By bus'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, s.checkin.stationsIntro), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'La estación de autobuses de Vera está a 5-10 min en taxi desde Hestía. ALSA la conecta con Almería, Murcia, Mojácar, Cuevas del Almanzora y Águilas.' : 'Vera bus station is a 5-10 min taxi from Hestía. ALSA links it with Almería, Murcia, Mojácar, Cuevas del Almanzora and Águilas.'), /*#__PURE__*/React.createElement("div", {
     className: "ag-airports"
-  }, s.checkin.stations.map((st, i) => /*#__PURE__*/React.createElement("div", {
+  }, s.checkin.stations.filter(st => st.type === 'BUS').map((st, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
-    className: `ag-airport ag-station ag-station-${st.type.toLowerCase()}`
+    className: "ag-airport ag-station ag-station-bus"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-airport-code ag-station-badge"
+  }, st.type), /*#__PURE__*/React.createElement("div", {
+    className: "ag-airport-main"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-airport-name"
+  }, st.name), /*#__PURE__*/React.createElement("div", {
+    className: "ag-airport-meta"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-airport-km"
+  }, st.km, " km"), /*#__PURE__*/React.createElement("span", {
+    className: "ag-airport-sep"
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+    className: "ag-airport-time"
+  }, st.time)), /*#__PURE__*/React.createElement("div", {
+    className: "ag-airport-notes"
+  }, st.notes)))))), s.checkin.stations && s.checkin.stations.some(st => st.type === 'TRN') && /*#__PURE__*/React.createElement("div", {
+    className: "ag-arrmode"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "ag-arrmode-h"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-arrmode-icon",
+    "aria-hidden": "true"
+  }, "\uD83D\uDE86"), lang === 'es' ? 'En tren' : 'By train'), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, lang === 'es' ? 'Todavía no hay tren directo a Vera: lo más práctico es bajar en Almería capital o Murcia y seguir en bus, taxi o coche de alquiler.' : 'There is no direct train to Vera yet: the easiest is to get off in Almería city or Murcia and continue by bus, taxi or rental car.'), /*#__PURE__*/React.createElement("div", {
+    className: "ag-airports"
+  }, s.checkin.stations.filter(st => st.type === 'TRN').map((st, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "ag-airport ag-station ag-station-trn"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-airport-code ag-station-badge"
   }, st.type), /*#__PURE__*/React.createElement("div", {
@@ -10202,56 +10248,22 @@ const AptGuideView = ({
     className: "ag-ave-curiosity-eyebrow"
   }, s.checkin.stationsAveTitle), /*#__PURE__*/React.createElement("p", {
     className: "ag-ave-curiosity-text"
-  }, s.checkin.stationsAve))), s.checkin.carTitle && /*#__PURE__*/React.createElement("div", {
-    className: "ag-car-block"
-  }, /*#__PURE__*/React.createElement("h3", {
-    className: "ag-h3"
-  }, s.checkin.carTitle), /*#__PURE__*/React.createElement("p", {
+  }, s.checkin.stationsAve))), /*#__PURE__*/React.createElement("div", {
+    className: "ag-arrmode"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "ag-arrmode-h"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-arrmode-icon",
+    "aria-hidden": "true"
+  }, "\uD83D\uDE97"), lang === 'es' ? 'En coche' : 'By car'), s.checkin.carText && /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, s.checkin.carText), /*#__PURE__*/React.createElement("p", {
+  }, s.checkin.carText), s.checkin.carAccompany && /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-car-accompany"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-car-icon",
     "aria-hidden": "true"
-  }, "\u2726"), s.checkin.carAccompany)), /*#__PURE__*/React.createElement("h3", {
-    className: "ag-h3"
-  }, s.checkin.modalitiesTitle), /*#__PURE__*/React.createElement("div", {
-    className: "ag-checkin-modes"
-  }, s.checkin.modalities.map((m, i) => /*#__PURE__*/React.createElement("div", {
-    key: i,
-    className: "ag-checkin-mode"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-checkin-mode-tag"
-  }, m.tag), /*#__PURE__*/React.createElement("p", {
-    className: "ag-checkin-mode-body"
-  }, m.body)))), /*#__PURE__*/React.createElement("h3", {
-    className: "ag-h3"
-  }, s.checkin.garageTitle), /*#__PURE__*/React.createElement("p", {
-    className: "ag-para"
-  }, s.checkin.garageIntro), /*#__PURE__*/React.createElement("div", {
-    className: "ag-checkin-garage"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-checkin-garage-apt"
-  }, apt.name), /*#__PURE__*/React.createElement("span", {
-    className: "ag-checkin-garage-sep"
-  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
-    className: "ag-checkin-garage-label"
-  }, lang === 'es' ? 'Plaza' : 'Spot'), /*#__PURE__*/React.createElement("span", {
-    className: "ag-checkin-garage-num"
-  }, aptInfo.garageSpot || '–')), /*#__PURE__*/React.createElement("p", {
-    className: "ag-para ag-para-note"
-  }, s.checkin.garageNote), /*#__PURE__*/React.createElement("h3", {
-    className: "ag-h3"
-  }, s.checkin.checkoutTitle), /*#__PURE__*/React.createElement("p", {
-    className: "ag-para"
-  }, s.checkin.checkoutBody), s.checkin.garbageBody && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
-    className: "ag-h3"
-  }, s.checkin.garbageTitle), /*#__PURE__*/React.createElement("div", {
-    className: "ag-checkin-garbage"
-  }, /*#__PURE__*/React.createElement("p", {
-    className: "ag-para"
-  }, s.checkin.garbageBody))), /*#__PURE__*/React.createElement("h3", {
-    className: "ag-h3"
+  }, "\u2726"), s.checkin.carAccompany), /*#__PURE__*/React.createElement("h5", {
+    className: "ag-arrmode-sub"
   }, ARRIVAL_EATS[lang].title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
   }, ARRIVAL_EATS[lang].intro), /*#__PURE__*/React.createElement("div", {
@@ -10307,7 +10319,44 @@ const AptGuideView = ({
     rel: "noopener"
   }, lang === 'es' ? 'Cómo llegar' : 'Directions', " ", /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
-  }, "\u2197")))))))))), /*#__PURE__*/React.createElement("section", {
+  }, "\u2197"))))))))))), /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, s.checkin.modalitiesTitle), /*#__PURE__*/React.createElement("div", {
+    className: "ag-checkin-modes"
+  }, s.checkin.modalities.map((m, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "ag-checkin-mode"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-checkin-mode-tag"
+  }, m.tag), /*#__PURE__*/React.createElement("p", {
+    className: "ag-checkin-mode-body"
+  }, m.body)))), /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, s.checkin.garageTitle), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, s.checkin.garageIntro), /*#__PURE__*/React.createElement("div", {
+    className: "ag-checkin-garage"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-checkin-garage-apt"
+  }, apt.name), /*#__PURE__*/React.createElement("span", {
+    className: "ag-checkin-garage-sep"
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+    className: "ag-checkin-garage-label"
+  }, lang === 'es' ? 'Plaza' : 'Spot'), /*#__PURE__*/React.createElement("span", {
+    className: "ag-checkin-garage-num"
+  }, aptInfo.garageSpot || '–')), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para ag-para-note"
+  }, s.checkin.garageNote), /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, s.checkin.checkoutTitle), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, s.checkin.checkoutBody), s.checkin.garbageBody && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, s.checkin.garbageTitle), /*#__PURE__*/React.createElement("div", {
+    className: "ag-checkin-garbage"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, s.checkin.garbageBody)))), /*#__PURE__*/React.createElement("section", {
     id: "ag-wifi",
     className: "ag-section ag-section-wifi"
   }, /*#__PURE__*/React.createElement("span", {

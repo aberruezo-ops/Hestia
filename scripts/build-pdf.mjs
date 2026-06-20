@@ -1018,6 +1018,9 @@ section.no-break {
 
 .checkin-intro { margin: 0 0 4mm; font-size: 10pt; line-height: 1.6; color: var(--ink); }
 .checkin-h3 { margin: 6mm 0 2mm; font-size: 12pt; color: var(--apt-c-dk); }
+.checkin-h4 { margin: 4mm 0 1.5mm; font-size: 10.5pt; font-weight: 700; color: var(--ink); }
+.checkin-h5 { margin: 3mm 0 1mm; font-size: 9.5pt; font-weight: 700; color: var(--apt-c-dk); }
+.arrmode-block { margin: 0 0 2mm; padding-bottom: 1mm; }
 .checkin-modes {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1610,11 +1613,16 @@ function renderCheckin(shared, aptData, aptGuide, lang) {
     </div>
     <p class="checkin-intro">${esc(c.intro)}</p>
 
+    <h3 class="checkin-h3">${lang === 'es' ? 'Cómo llegar a Hestía' : 'How to get to Hestía'}</h3>
+    <p>${lang === 'es'
+      ? 'Vengas como vengas, en avión, autobús, tren o coche, esto es lo que necesitas saber según tu medio de transporte. Te enviamos siempre las indicaciones exactas para los últimos kilómetros.'
+      : 'However you come, by plane, bus, train or car, here is what you need to know by transport mode. We always send you the exact directions for the last few kilometres.'}</p>
+
     ${c.airports ? `
-    <h3 class="checkin-h3">${esc(c.airportsTitle)}</h3>
+    <h4 class="checkin-h4">${lang === 'es' ? 'En avión' : 'By plane'}</h4>
     <p>${esc(c.airportsIntro)}</p>
     <table class="airports-table">
-      <thead><tr><th>Código</th><th>Aeropuerto</th><th class="num">km</th><th class="num">Tiempo</th><th>Notas</th></tr></thead>
+      <thead><tr><th>${lang === 'es' ? 'Código' : 'Code'}</th><th>${lang === 'es' ? 'Aeropuerto' : 'Airport'}</th><th class="num">km</th><th class="num">${lang === 'es' ? 'Tiempo' : 'Time'}</th><th>${lang === 'es' ? 'Notas' : 'Notes'}</th></tr></thead>
       <tbody>
         ${c.airports.map(a => `<tr>
           <td class="ap-code">${esc(a.code)}</td>
@@ -1626,6 +1634,69 @@ function renderCheckin(shared, aptData, aptGuide, lang) {
       </tbody>
     </table>
     <p class="checkin-note"><em>${esc(c.airportsTip)}</em></p>
+    ` : ''}
+
+    ${(c.stations && c.stations.some(st => st.type === 'BUS')) ? `
+    <h4 class="checkin-h4">${lang === 'es' ? 'En autobús' : 'By bus'}</h4>
+    <p>${lang === 'es'
+      ? 'La estación de autobuses de Vera está a 5-10 min en taxi desde Hestía. ALSA la conecta con Almería, Murcia, Mojácar, Cuevas del Almanzora y Águilas.'
+      : 'Vera bus station is a 5-10 min taxi from Hestía. ALSA links it with Almería, Murcia, Mojácar, Cuevas del Almanzora and Águilas.'}</p>
+    <table class="airports-table">
+      <tbody>
+        ${c.stations.filter(st => st.type === 'BUS').map(st => `<tr>
+          <td class="ap-code">${esc(st.type)}</td>
+          <td><strong>${esc(st.name)}</strong></td>
+          <td class="num">${st.km}</td>
+          <td class="num">${esc(st.time)}</td>
+          <td class="ap-notes">${esc(st.notes)}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    ` : ''}
+
+    ${(c.stations && c.stations.some(st => st.type === 'TRN')) ? `
+    <h4 class="checkin-h4">${lang === 'es' ? 'En tren' : 'By train'}</h4>
+    <p>${lang === 'es'
+      ? 'Todavía no hay tren directo a Vera: lo más práctico es bajar en Almería capital o Murcia y seguir en bus, taxi o coche de alquiler.'
+      : 'There is no direct train to Vera yet: the easiest is to get off in Almería city or Murcia and continue by bus, taxi or rental car.'}</p>
+    <table class="airports-table">
+      <tbody>
+        ${c.stations.filter(st => st.type === 'TRN').map(st => `<tr>
+          <td class="ap-code">${esc(st.type)}</td>
+          <td><strong>${esc(st.name)}</strong></td>
+          <td class="num">${st.km}</td>
+          <td class="num">${esc(st.time)}</td>
+          <td class="ap-notes">${esc(st.notes)}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    ${c.stationsAve ? `<div class="checkin-garbage"><p><strong>${esc(c.stationsAveTitle)}</strong> ${esc(c.stationsAve)}</p></div>` : ''}
+    ` : ''}
+
+    <h4 class="checkin-h4">${lang === 'es' ? 'En coche' : 'By car'}</h4>
+    ${c.carText ? `<p>${esc(c.carText)}</p>` : ''}
+    ${c.carAccompany ? `<p class="checkin-note"><em>${esc(c.carAccompany)}</em></p>` : ''}
+    ${shared.__arrivalEats ? `
+    <h5 class="checkin-h5">${esc(shared.__arrivalEats.title)}</h5>
+    <p>${esc(shared.__arrivalEats.intro)}</p>
+    ${shared.__arrivalEats.routes.map(r => `
+      <div class="ae-route">
+        <div class="ae-road">${esc(r.road)}</div>
+        ${shared.__arrivalEats.eatLabel ? `<div class="ae-sublabel">${esc(shared.__arrivalEats.eatLabel)}</div>` : ''}
+        ${r.stops.map(sp => `
+          <div class="ae-item">
+            <strong>${esc(sp.name)}</strong> <span class="ae-town">· ${esc(sp.town)}</span><br/>
+            <span class="ae-note">${esc(sp.note)}</span>
+          </div>`).join('')}
+        ${(r.breaks && r.breaks.length) ? `
+        ${shared.__arrivalEats.breakLabel ? `<div class="ae-sublabel">${esc(shared.__arrivalEats.breakLabel)}</div>` : ''}
+        ${r.breaks.map(sp => `
+          <div class="ae-item ae-item-break">
+            <span class="ae-kind ae-kind-${sp.kind}">${esc((shared.__arrivalEats.kinds || {})[sp.kind] || '')}</span>
+            <strong>${esc(sp.name)}</strong> <span class="ae-town">· ${esc(sp.town)}</span><br/>
+            <span class="ae-note">${esc(sp.note)}</span>
+          </div>`).join('')}` : ''}
+      </div>`).join('')}
     ` : ''}
 
     <h3 class="checkin-h3">${esc(c.modalitiesTitle)}</h3>
@@ -1653,29 +1724,6 @@ function renderCheckin(shared, aptData, aptGuide, lang) {
     ${c.garbageBody ? `
     <h3 class="checkin-h3">${esc(c.garbageTitle)}</h3>
     <div class="checkin-garbage"><p>${esc(c.garbageBody)}</p></div>
-    ` : ''}
-
-    ${shared.__arrivalEats ? `
-    <h3 class="checkin-h3">${esc(shared.__arrivalEats.title)}</h3>
-    <p class="checkin-intro">${esc(shared.__arrivalEats.intro)}</p>
-    ${shared.__arrivalEats.routes.map(r => `
-      <div class="ae-route">
-        <div class="ae-road">${esc(r.road)}</div>
-        ${shared.__arrivalEats.eatLabel ? `<div class="ae-sublabel">${esc(shared.__arrivalEats.eatLabel)}</div>` : ''}
-        ${r.stops.map(sp => `
-          <div class="ae-item">
-            <strong>${esc(sp.name)}</strong> <span class="ae-town">· ${esc(sp.town)}</span><br/>
-            <span class="ae-note">${esc(sp.note)}</span>
-          </div>`).join('')}
-        ${(r.breaks && r.breaks.length) ? `
-        ${shared.__arrivalEats.breakLabel ? `<div class="ae-sublabel">${esc(shared.__arrivalEats.breakLabel)}</div>` : ''}
-        ${r.breaks.map(sp => `
-          <div class="ae-item ae-item-break">
-            <span class="ae-kind ae-kind-${sp.kind}">${esc((shared.__arrivalEats.kinds || {})[sp.kind] || '')}</span>
-            <strong>${esc(sp.name)}</strong> <span class="ae-town">· ${esc(sp.town)}</span><br/>
-            <span class="ae-note">${esc(sp.note)}</span>
-          </div>`).join('')}` : ''}
-      </div>`).join('')}
     ` : ''}
   </section>`;
 }

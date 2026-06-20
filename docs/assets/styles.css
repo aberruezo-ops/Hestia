@@ -19595,6 +19595,35 @@ img[src*="apt-vt-gallery-"] {
 .ag-ae-kind-comprar { background: var(--ber, #B05A3C); }
 .ag-ae-kind-descansar { background: var(--vt, #6E7F4E); }
 
+/* Cómo llegar: apartados por medio de transporte (avión, bus, tren, coche) */
+.ag-arrival-modes { display: flex; flex-direction: column; gap: 26px; margin-top: 8px; }
+.ag-arrmode {
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--apt-accent) 5%, #fff);
+  border: 1px solid color-mix(in srgb, var(--apt-accent) 16%, transparent);
+}
+.ag-arrmode-h {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--ber-dk);
+  margin: 0 0 10px;
+}
+.ag-arrmode-icon { font-size: 20px; line-height: 1; }
+.ag-arrmode-sub {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ber-dk);
+  margin: 18px 0 4px;
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--apt-accent) 16%, transparent);
+}
+
 /* ============================================================
    Calendario consolidado de eventos
    ============================================================ */

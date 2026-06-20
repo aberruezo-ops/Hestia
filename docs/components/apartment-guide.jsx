@@ -4911,9 +4911,16 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <h2 className="ag-h2">{s.checkin.title}</h2>
             <p className="ag-para ag-para-lead">{s.checkin.intro}</p>
 
+            <h3 className="ag-h3">{lang === 'es' ? 'Cómo llegar a Hestía' : 'How to get to Hestía'}</h3>
+            <p className="ag-para">{lang === 'es'
+              ? 'Vengas como vengas, en avión, autobús, tren o coche, aquí tienes lo que necesitas saber según tu medio de transporte. Te enviamos siempre las indicaciones exactas para los últimos kilómetros hasta la puerta.'
+              : 'However you come, by plane, bus, train or car, here is what you need to know by transport mode. We always send you the exact directions for the last few kilometres to the door.'}</p>
+
+            <div className="ag-arrival-modes">
+
             {s.checkin.airports && (
-              <>
-                <h3 className="ag-h3">{s.checkin.airportsTitle}</h3>
+              <div className="ag-arrmode">
+                <h4 className="ag-arrmode-h"><span className="ag-arrmode-icon" aria-hidden="true">✈️</span>{lang === 'es' ? 'En avión' : 'By plane'}</h4>
                 <p className="ag-para">{s.checkin.airportsIntro}</p>
                 <div className="ag-airports">
                   {s.checkin.airports.map((a, i) => (
@@ -4932,16 +4939,43 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                   ))}
                 </div>
                 <p className="ag-para ag-para-note">{s.checkin.airportsTip}</p>
-              </>
+              </div>
             )}
 
-            {s.checkin.stations && (
-              <>
-                <h3 className="ag-h3">{s.checkin.stationsTitle}</h3>
-                <p className="ag-para">{s.checkin.stationsIntro}</p>
+            {s.checkin.stations && s.checkin.stations.some(st => st.type === 'BUS') && (
+              <div className="ag-arrmode">
+                <h4 className="ag-arrmode-h"><span className="ag-arrmode-icon" aria-hidden="true">🚌</span>{lang === 'es' ? 'En autobús' : 'By bus'}</h4>
+                <p className="ag-para">{lang === 'es'
+                  ? 'La estación de autobuses de Vera está a 5-10 min en taxi desde Hestía. ALSA la conecta con Almería, Murcia, Mojácar, Cuevas del Almanzora y Águilas.'
+                  : 'Vera bus station is a 5-10 min taxi from Hestía. ALSA links it with Almería, Murcia, Mojácar, Cuevas del Almanzora and Águilas.'}</p>
                 <div className="ag-airports">
-                  {s.checkin.stations.map((st, i) => (
-                    <div key={i} className={`ag-airport ag-station ag-station-${st.type.toLowerCase()}`}>
+                  {s.checkin.stations.filter(st => st.type === 'BUS').map((st, i) => (
+                    <div key={i} className="ag-airport ag-station ag-station-bus">
+                      <span className="ag-airport-code ag-station-badge">{st.type}</span>
+                      <div className="ag-airport-main">
+                        <div className="ag-airport-name">{st.name}</div>
+                        <div className="ag-airport-meta">
+                          <span className="ag-airport-km">{st.km} km</span>
+                          <span className="ag-airport-sep">·</span>
+                          <span className="ag-airport-time">{st.time}</span>
+                        </div>
+                        <div className="ag-airport-notes">{st.notes}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {s.checkin.stations && s.checkin.stations.some(st => st.type === 'TRN') && (
+              <div className="ag-arrmode">
+                <h4 className="ag-arrmode-h"><span className="ag-arrmode-icon" aria-hidden="true">🚆</span>{lang === 'es' ? 'En tren' : 'By train'}</h4>
+                <p className="ag-para">{lang === 'es'
+                  ? 'Todavía no hay tren directo a Vera: lo más práctico es bajar en Almería capital o Murcia y seguir en bus, taxi o coche de alquiler.'
+                  : 'There is no direct train to Vera yet: the easiest is to get off in Almería city or Murcia and continue by bus, taxi or rental car.'}</p>
+                <div className="ag-airports">
+                  {s.checkin.stations.filter(st => st.type === 'TRN').map((st, i) => (
+                    <div key={i} className="ag-airport ag-station ag-station-trn">
                       <span className="ag-airport-code ag-station-badge">{st.type}</span>
                       <div className="ag-airport-main">
                         <div className="ag-airport-name">{st.name}</div>
@@ -4961,16 +4995,63 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                     <p className="ag-ave-curiosity-text">{s.checkin.stationsAve}</p>
                   </div>
                 )}
-              </>
-            )}
-
-            {s.checkin.carTitle && (
-              <div className="ag-car-block">
-                <h3 className="ag-h3">{s.checkin.carTitle}</h3>
-                <p className="ag-para">{s.checkin.carText}</p>
-                <p className="ag-para ag-car-accompany"><span className="ag-car-icon" aria-hidden="true">✦</span>{s.checkin.carAccompany}</p>
               </div>
             )}
+
+            <div className="ag-arrmode">
+              <h4 className="ag-arrmode-h"><span className="ag-arrmode-icon" aria-hidden="true">🚗</span>{lang === 'es' ? 'En coche' : 'By car'}</h4>
+              {s.checkin.carText && <p className="ag-para">{s.checkin.carText}</p>}
+              {s.checkin.carAccompany && (
+                <p className="ag-para ag-car-accompany"><span className="ag-car-icon" aria-hidden="true">✦</span>{s.checkin.carAccompany}</p>
+              )}
+
+              <h5 className="ag-arrmode-sub">{ARRIVAL_EATS[lang].title}</h5>
+              <p className="ag-para">{ARRIVAL_EATS[lang].intro}</p>
+              <div className="ag-arrival-eats">
+                {ARRIVAL_EATS[lang].routes.map((r, i) => (
+                  <div key={i} className="ag-ae-route">
+                    <h4 className="ag-ae-road">{r.road}</h4>
+                    <p className="ag-ae-sublabel">{ARRIVAL_EATS[lang].eatLabel}</p>
+                    <ul className="ag-ae-list">
+                      {r.stops.map((sp, j) => (
+                        <li key={j} className="ag-ae-item">
+                          <div className="ag-ae-head">
+                            <span className="ag-ae-name">{sp.name}</span>
+                            <span className="ag-ae-town"> · {sp.town}</span>
+                          </div>
+                          <span className="ag-ae-note">{sp.note}</span>
+                          <a className="ag-ae-map" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sp.q)}`} target="_blank" rel="noopener">
+                            {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                    {r.breaks && r.breaks.length > 0 && (
+                      <>
+                        <p className="ag-ae-sublabel">{ARRIVAL_EATS[lang].breakLabel}</p>
+                        <ul className="ag-ae-list ag-ae-list-breaks">
+                          {r.breaks.map((sp, j) => (
+                            <li key={j} className="ag-ae-item">
+                              <div className="ag-ae-head">
+                                <span className={`ag-ae-kind ag-ae-kind-${sp.kind}`}>{ARRIVAL_EATS[lang].kinds[sp.kind]}</span>
+                                <span className="ag-ae-name">{sp.name}</span>
+                                <span className="ag-ae-town"> · {sp.town}</span>
+                              </div>
+                              <span className="ag-ae-note">{sp.note}</span>
+                              <a className="ag-ae-map" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sp.q)}`} target="_blank" rel="noopener">
+                                {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            </div>{/* /ag-arrival-modes */}
 
             <h3 className="ag-h3">{s.checkin.modalitiesTitle}</h3>
             <div className="ag-checkin-modes">
@@ -5004,50 +5085,6 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               </>
             )}
 
-            <h3 className="ag-h3">{ARRIVAL_EATS[lang].title}</h3>
-            <p className="ag-para">{ARRIVAL_EATS[lang].intro}</p>
-            <div className="ag-arrival-eats">
-              {ARRIVAL_EATS[lang].routes.map((r, i) => (
-                <div key={i} className="ag-ae-route">
-                  <h4 className="ag-ae-road">{r.road}</h4>
-                  <p className="ag-ae-sublabel">{ARRIVAL_EATS[lang].eatLabel}</p>
-                  <ul className="ag-ae-list">
-                    {r.stops.map((sp, j) => (
-                      <li key={j} className="ag-ae-item">
-                        <div className="ag-ae-head">
-                          <span className="ag-ae-name">{sp.name}</span>
-                          <span className="ag-ae-town"> · {sp.town}</span>
-                        </div>
-                        <span className="ag-ae-note">{sp.note}</span>
-                        <a className="ag-ae-map" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sp.q)}`} target="_blank" rel="noopener">
-                          {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                  {r.breaks && r.breaks.length > 0 && (
-                    <>
-                      <p className="ag-ae-sublabel">{ARRIVAL_EATS[lang].breakLabel}</p>
-                      <ul className="ag-ae-list ag-ae-list-breaks">
-                        {r.breaks.map((sp, j) => (
-                          <li key={j} className="ag-ae-item">
-                            <div className="ag-ae-head">
-                              <span className={`ag-ae-kind ag-ae-kind-${sp.kind}`}>{ARRIVAL_EATS[lang].kinds[sp.kind]}</span>
-                              <span className="ag-ae-name">{sp.name}</span>
-                              <span className="ag-ae-town"> · {sp.town}</span>
-                            </div>
-                            <span className="ag-ae-note">{sp.note}</span>
-                            <a className="ag-ae-map" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sp.q)}`} target="_blank" rel="noopener">
-                              {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-                </div>
-              ))}
-            </div>
           </section>
           )}
 
