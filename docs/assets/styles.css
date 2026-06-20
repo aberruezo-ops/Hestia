@@ -19624,6 +19624,64 @@ img[src*="apt-vt-gallery-"] {
   border-top: 1px solid color-mix(in srgb, var(--apt-accent) 16%, transparent);
 }
 
+/* Antes de tu llegada: checklist de preparación + viaja ligero */
+.ag-before { margin: 4px 0 8px; }
+.ag-before-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.ag-before-list li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.ag-before-list li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 7px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--apt-accent);
+}
+.ag-packlight {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--sol, #D69E2E) 12%, #fff);
+  border: 1px solid color-mix(in srgb, var(--sol, #D69E2E) 32%, transparent);
+}
+.ag-packlight-icon { font-size: 26px; line-height: 1; flex-shrink: 0; }
+.ag-packlight-title {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ber-dk);
+  margin: 0 0 4px;
+}
+.ag-packlight-body { font-size: 14px; line-height: 1.5; color: var(--ink-soft); margin: 0; }
+
+/* De camino a casa: bloque experiencial del último tramo del viaje */
+.ag-arrival-eats-block { margin-top: 30px; }
+.ag-arrival-closer {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid color-mix(in srgb, var(--apt-accent) 18%, transparent);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ber-dk);
+}
+
 /* ============================================================
    Calendario consolidado de eventos
    ============================================================ */
