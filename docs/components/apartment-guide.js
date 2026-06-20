@@ -158,8 +158,15 @@ const GUIDE_SECTIONS = [{
 // carretera de acceso. Los enlaces abren una búsqueda en vivo de Google Maps.
 const ARRIVAL_EATS = {
   es: {
-    title: 'De camino: dónde comer cuando ya falta poco',
-    intro: 'Buenas paradas para comer o cenar cuando os quedan entre tres y una hora para llegar a Vera Playa, según por dónde vengáis.',
+    title: 'De camino: dónde parar cuando ya falta poco',
+    intro: 'Buenas paradas para comer o cenar, y pequeñas visitas para ver algo bonito o comprar producto típico, cuando os quedan entre tres y una hora para llegar a Vera Playa, según por dónde vengáis.',
+    eatLabel: 'Para comer',
+    breakLabel: 'Paradas cortas',
+    kinds: {
+      ver: 'Ver',
+      comprar: 'Comprar',
+      descansar: 'Descansar'
+    },
     routes: [{
       road: 'Por el norte y Levante (A-7, desde Alicante/Murcia)',
       stops: [{
@@ -177,6 +184,25 @@ const ARRIVAL_EATS = {
         town: 'Lorca · a ~50 min',
         note: 'Taberna típica murciana con producto local. Última parada grande antes de Vera.',
         q: 'La Cofradía taberna típica Lorca'
+      }],
+      breaks: [{
+        kind: 'ver',
+        name: 'Castillo de Lorca (Fortaleza del Sol)',
+        town: 'Lorca · a ~50 min',
+        note: 'Una vuelta corta por la fortaleza y el casco barroco, con buenas vistas del valle.',
+        q: 'Castillo de Lorca Fortaleza del Sol'
+      }, {
+        kind: 'comprar',
+        name: 'Dulces de convento y obradores',
+        town: 'Lorca · a ~50 min',
+        note: 'Repostería artesana del centro (yemas, mantecados, suspiros) para llevar.',
+        q: 'pastelería tradicional centro Lorca'
+      }, {
+        kind: 'ver',
+        name: 'Geoda gigante de Pulpí',
+        town: 'Pulpí · a ~35 min',
+        note: 'Una de las geodas visitables más grandes del mundo. Visita guiada corta, reserva antes de ir. Perfecta para estirar las piernas casi llegando.',
+        q: 'Geoda de Pulpí entradas'
       }]
     }, {
       road: 'Por el oeste e interior (A-92, desde Granada)',
@@ -190,6 +216,25 @@ const ARRIVAL_EATS = {
         town: 'Baza · a ~1 h 10',
         note: 'Tapeo granadino en el centro histórico: huevos rotos, presa ibérica.',
         q: 'restaurante Los Cántaros Baza Granada'
+      }],
+      breaks: [{
+        kind: 'ver',
+        name: 'Barrio de cuevas y catedral',
+        town: 'Guadix · a ~1 h 40',
+        note: 'Casas cueva habitadas y mirador del Cerro de la Bola; una parada corta con mucho encanto.',
+        q: 'barrio de cuevas Guadix mirador Cerro de la Bola'
+      }, {
+        kind: 'comprar',
+        name: 'Cerámica de Guadix',
+        town: 'Guadix · a ~1 h 40',
+        note: 'Alfarería accitana de barro vidriado, muy típica de la zona, para llevaros una pieza.',
+        q: 'cerámica alfarería Guadix'
+      }, {
+        kind: 'descansar',
+        name: 'Casco histórico de Baza',
+        town: 'Baza · a ~1 h 10',
+        note: 'Plaza Mayor, baños árabes y sitios de tapeo para un respiro a media tarde.',
+        q: 'casco histórico Baza plaza mayor'
       }]
     }, {
       road: 'Por la costa (A-7, desde Almería/Málaga o el aeropuerto)',
@@ -203,12 +248,38 @@ const ARRIVAL_EATS = {
         town: 'Almería capital · a ~1 h',
         note: 'De lo mejor para tapear en Almería, junto a la Alcazaba; cocina almeriense de solera.',
         q: 'La Encina Almería tapas Alcazaba'
+      }],
+      breaks: [{
+        kind: 'ver',
+        name: 'Alcazaba de Almería',
+        town: 'Almería capital · a ~1 h',
+        note: 'La segunda fortaleza musulmana más grande de España, con entrada gratuita y vistas al mar. Visita corta muy rentable.',
+        q: 'Alcazaba de Almería'
+      }, {
+        kind: 'comprar',
+        name: 'Cerámica y jarapas de Níjar',
+        town: 'Níjar · a ~45 min',
+        note: 'El producto más típico de la zona: alfombras de trapo (jarapas) y cerámica pintada a mano. Pueblo bonito para un paseo corto.',
+        q: 'cerámica jarapas Níjar'
+      }, {
+        kind: 'comprar',
+        name: 'Mercado Central de Almería',
+        town: 'Almería capital · a ~1 h',
+        note: 'Edificio de hierro de 1893: pescado, gamba roja y verduras de la huerta para llevar, con bares para picar algo.',
+        q: 'Mercado Central Almería'
       }]
     }]
   },
   en: {
-    title: 'On the way: where to eat as you get close',
-    intro: 'Good lunch or dinner stops when you are between three and one hour from Vera Playa, depending on which way you come.',
+    title: 'On the way: where to stop as you get close',
+    intro: 'Good lunch or dinner stops, plus short visits to see something lovely or buy a typical local product, when you are between three and one hour from Vera Playa, depending on which way you come.',
+    eatLabel: 'To eat',
+    breakLabel: 'Short stops',
+    kinds: {
+      ver: 'See',
+      comprar: 'Buy',
+      descansar: 'Rest'
+    },
     routes: [{
       road: 'From the north & Levante (A-7, from Alicante/Murcia)',
       stops: [{
@@ -226,6 +297,25 @@ const ARRIVAL_EATS = {
         town: 'Lorca · ~50 min away',
         note: 'Traditional Murcian tavern with local produce. Last big stop before Vera.',
         q: 'La Cofradía taberna típica Lorca'
+      }],
+      breaks: [{
+        kind: 'ver',
+        name: 'Lorca Castle (Fortaleza del Sol)',
+        town: 'Lorca · ~50 min away',
+        note: 'A short walk around the fortress and the baroque old town, with good views over the valley.',
+        q: 'Castillo de Lorca Fortaleza del Sol'
+      }, {
+        kind: 'comprar',
+        name: 'Convent sweets & bakeries',
+        town: 'Lorca · ~50 min away',
+        note: 'Handmade pastries in the centre (yemas, mantecados, suspiros) to take with you.',
+        q: 'pastelería tradicional centro Lorca'
+      }, {
+        kind: 'ver',
+        name: 'Giant Geode of Pulpí',
+        town: 'Pulpí · ~35 min away',
+        note: 'One of the largest visitable geodes in the world. Short guided visit, book ahead. Perfect to stretch your legs almost there.',
+        q: 'Geoda de Pulpí entradas'
       }]
     }, {
       road: 'From the west & inland (A-92, from Granada)',
@@ -239,6 +329,25 @@ const ARRIVAL_EATS = {
         town: 'Baza · ~1 h 10 away',
         note: 'Granada-style tapas in the old town: huevos rotos, Iberian pork.',
         q: 'restaurante Los Cántaros Baza Granada'
+      }],
+      breaks: [{
+        kind: 'ver',
+        name: 'Cave quarter & cathedral',
+        town: 'Guadix · ~1 h 40 away',
+        note: 'Inhabited cave houses and the Cerro de la Bola viewpoint; a short, charming stop.',
+        q: 'barrio de cuevas Guadix mirador Cerro de la Bola'
+      }, {
+        kind: 'comprar',
+        name: 'Guadix pottery',
+        town: 'Guadix · ~1 h 40 away',
+        note: 'Local glazed earthenware, very typical of the area, to take a piece home.',
+        q: 'cerámica alfarería Guadix'
+      }, {
+        kind: 'descansar',
+        name: 'Baza old town',
+        town: 'Baza · ~1 h 10 away',
+        note: 'Plaza Mayor, Arab baths and tapas spots for a mid-afternoon break.',
+        q: 'casco histórico Baza plaza mayor'
       }]
     }, {
       road: 'Along the coast (A-7, from Almería/Málaga or the airport)',
@@ -252,6 +361,25 @@ const ARRIVAL_EATS = {
         town: 'Almería city · ~1 h away',
         note: 'Some of the best tapas in Almería, by the Alcazaba; classic Almería cooking.',
         q: 'La Encina Almería tapas Alcazaba'
+      }],
+      breaks: [{
+        kind: 'ver',
+        name: 'Alcazaba of Almería',
+        town: 'Almería city · ~1 h away',
+        note: 'The second-largest Muslim fortress in Spain, free entry and sea views. A short, rewarding visit.',
+        q: 'Alcazaba de Almería'
+      }, {
+        kind: 'comprar',
+        name: 'Níjar pottery & jarapas',
+        town: 'Níjar · ~45 min away',
+        note: 'The most typical craft around here: rag rugs (jarapas) and hand-painted ceramics. A pretty village for a short walk.',
+        q: 'cerámica jarapas Níjar'
+      }, {
+        kind: 'comprar',
+        name: 'Almería Central Market',
+        town: 'Almería city · ~1 h away',
+        note: '1893 ironwork hall: fish, red prawns and garden vegetables to take away, with bars for a bite.',
+        q: 'Mercado Central Almería'
       }]
     }]
   }
@@ -10051,7 +10179,9 @@ const AptGuideView = ({
     className: "ag-ae-route"
   }, /*#__PURE__*/React.createElement("h4", {
     className: "ag-ae-road"
-  }, r.road), /*#__PURE__*/React.createElement("ul", {
+  }, r.road), /*#__PURE__*/React.createElement("p", {
+    className: "ag-ae-sublabel"
+  }, ARRIVAL_EATS[lang].eatLabel), /*#__PURE__*/React.createElement("ul", {
     className: "ag-ae-list"
   }, r.stops.map((sp, j) => /*#__PURE__*/React.createElement("li", {
     key: j,
@@ -10071,7 +10201,31 @@ const AptGuideView = ({
     rel: "noopener"
   }, lang === 'es' ? 'Cómo llegar' : 'Directions', " ", /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
-  }, "\u2197"))))))))), /*#__PURE__*/React.createElement("section", {
+  }, "\u2197"))))), r.breaks && r.breaks.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", {
+    className: "ag-ae-sublabel"
+  }, ARRIVAL_EATS[lang].breakLabel), /*#__PURE__*/React.createElement("ul", {
+    className: "ag-ae-list ag-ae-list-breaks"
+  }, r.breaks.map((sp, j) => /*#__PURE__*/React.createElement("li", {
+    key: j,
+    className: "ag-ae-item"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-ae-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: `ag-ae-kind ag-ae-kind-${sp.kind}`
+  }, ARRIVAL_EATS[lang].kinds[sp.kind]), /*#__PURE__*/React.createElement("span", {
+    className: "ag-ae-name"
+  }, sp.name), /*#__PURE__*/React.createElement("span", {
+    className: "ag-ae-town"
+  }, " \xB7 ", sp.town)), /*#__PURE__*/React.createElement("span", {
+    className: "ag-ae-note"
+  }, sp.note), /*#__PURE__*/React.createElement("a", {
+    className: "ag-ae-map",
+    href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sp.q)}`,
+    target: "_blank",
+    rel: "noopener"
+  }, lang === 'es' ? 'Cómo llegar' : 'Directions', " ", /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "\u2197")))))))))), /*#__PURE__*/React.createElement("section", {
     id: "ag-wifi",
     className: "ag-section ag-section-wifi"
   }, /*#__PURE__*/React.createElement("span", {

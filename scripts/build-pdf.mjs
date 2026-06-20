@@ -1096,6 +1096,11 @@ section.no-break {
 .ae-item strong { font-size: 10pt; color: var(--ink); }
 .ae-town { font-size: 8.5pt; color: var(--ink-soft); }
 .ae-note { font-size: 9pt; color: var(--ink-soft); line-height: 1.5; }
+.ae-sublabel { font-size: 7.5pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); margin: 2mm 0 1.2mm; }
+.ae-item-break { border-left-color: #D69E2E; }
+.ae-kind { display: inline-block; font-size: 7pt; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #fff; background: var(--apt-c-dk); border-radius: 2mm; padding: 0.2mm 1.6mm; margin-right: 1.2mm; }
+.ae-kind-comprar { background: #B05A3C; }
+.ae-kind-descansar { background: #6E7F4E; }
 
 .events-cal { margin: 5mm 0 6mm; page-break-inside: auto; }
 .events-cal h3 { margin: 0 0 1.5mm; font-size: 12pt; color: var(--apt-c-dk); }
@@ -1656,11 +1661,20 @@ function renderCheckin(shared, aptData, aptGuide, lang) {
     ${shared.__arrivalEats.routes.map(r => `
       <div class="ae-route">
         <div class="ae-road">${esc(r.road)}</div>
+        ${shared.__arrivalEats.eatLabel ? `<div class="ae-sublabel">${esc(shared.__arrivalEats.eatLabel)}</div>` : ''}
         ${r.stops.map(sp => `
           <div class="ae-item">
             <strong>${esc(sp.name)}</strong> <span class="ae-town">· ${esc(sp.town)}</span><br/>
             <span class="ae-note">${esc(sp.note)}</span>
           </div>`).join('')}
+        ${(r.breaks && r.breaks.length) ? `
+        ${shared.__arrivalEats.breakLabel ? `<div class="ae-sublabel">${esc(shared.__arrivalEats.breakLabel)}</div>` : ''}
+        ${r.breaks.map(sp => `
+          <div class="ae-item ae-item-break">
+            <span class="ae-kind ae-kind-${sp.kind}">${esc((shared.__arrivalEats.kinds || {})[sp.kind] || '')}</span>
+            <strong>${esc(sp.name)}</strong> <span class="ae-town">· ${esc(sp.town)}</span><br/>
+            <span class="ae-note">${esc(sp.note)}</span>
+          </div>`).join('')}` : ''}
       </div>`).join('')}
     ` : ''}
   </section>`;
