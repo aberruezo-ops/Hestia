@@ -154,6 +154,42 @@ const GUIDE_SECTIONS = [{
   en: 'Feedback'
 }];
 
+// Agrupación temática del índice: en vez de una lista plana de 22 capítulos
+// (que abruma), se presentan en 5 partes con un orden de lectura natural.
+// Los ids deben ir en el mismo orden que GUIDE_SECTIONS para que la numeración
+// del índice y del cuerpo coincidan.
+const GUIDE_GROUPS = [{
+  es: 'Tu llegada',
+  en: 'Your arrival',
+  descEs: 'Lo esencial para entrar y conectarte el primer día.',
+  descEn: 'The essentials to get in and online on day one.',
+  ids: ['bienvenida', 'llegada', 'wifi']
+}, {
+  es: 'Tu apartamento',
+  en: 'Your apartment',
+  descEs: 'Cómo funciona cada rincón de tu casa, estancia a estancia.',
+  descEn: 'How every corner of your home works, room by room.',
+  ids: ['limpieza', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion']
+}, {
+  es: 'Cerca de casa',
+  en: 'Close to home',
+  descEs: 'Lo que tienes a un paso: orientarte, comprar y comer bien.',
+  descEn: 'What is a step away: getting oriented, shopping and eating well.',
+  ids: ['alrededores', 'lugares', 'supermercados', 'sabores']
+}, {
+  es: 'Descubrir la zona',
+  en: 'Explore the area',
+  descEs: 'Pueblos, playas y planes que merecen una salida.',
+  descEn: 'Towns, beaches and plans worth a trip out.',
+  ids: ['pueblos', 'mar-playas', 'planes']
+}, {
+  es: 'Servicios y ayuda',
+  en: 'Services & help',
+  descEs: 'Mercados, salud, repostaje y teléfonos, por si acaso.',
+  descEn: 'Markets, health, fuel and phones, just in case.',
+  ids: ['mercados', 'salud', 'movilidad', 'telefonos', 'feedback']
+}];
+
 // Dónde comer/cenar cuando faltan entre 3 y 1 hora para Vera Playa, por
 // carretera de acceso. Los enlaces abren una búsqueda en vivo de Google Maps.
 const ARRIVAL_EATS = {
@@ -9849,6 +9885,33 @@ const AptGuideView = ({
       }
     })), p.caption && /*#__PURE__*/React.createElement("figcaption", null, p.caption))));
   };
+
+  // Banda divisoria que abre cada parte temática en el cuerpo de la guía.
+  // Se renderiza antes de la primera sección de cada grupo (ver GUIDE_GROUPS).
+  const partStarts = {};
+  GUIDE_GROUPS.forEach((g, gi) => {
+    partStarts[g.ids[0]] = {
+      ...g,
+      n: gi + 1
+    };
+  });
+  const renderPart = sectionId => {
+    const g = partStarts[sectionId];
+    if (!g) return null;
+    return /*#__PURE__*/React.createElement("div", {
+      className: "ag-part no-print",
+      id: `ag-part-${g.n}`
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-part-num",
+      "aria-hidden": "true"
+    }, String(g.n).padStart(2, '0')), /*#__PURE__*/React.createElement("div", {
+      className: "ag-part-txt"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-part-name"
+    }, g[lang]), /*#__PURE__*/React.createElement("span", {
+      className: "ag-part-desc"
+    }, lang === 'es' ? g.descEs : g.descEn)));
+  };
   return /*#__PURE__*/React.createElement("article", {
     className: "apt-guide-view",
     "data-apt": apt.id,
@@ -9931,17 +9994,26 @@ const AptGuideView = ({
     className: "ag-print-toc-label"
   }, lang === 'es' ? 'Índice' : 'Contents'), /*#__PURE__*/React.createElement("h2", {
     className: "ag-print-toc-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tu Hest\xEDa,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "en ", GUIDE_SECTIONS.length, " cap\xEDtulos.")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Your Hest\xEDa,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "in ", GUIDE_SECTIONS.length, " chapters."))), /*#__PURE__*/React.createElement("ol", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tu Hest\xEDa,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "en ", GUIDE_GROUPS.length, " partes y ", GUIDE_SECTIONS.length, " cap\xEDtulos.")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Your Hest\xEDa,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "in ", GUIDE_GROUPS.length, " parts and ", GUIDE_SECTIONS.length, " chapters."))), /*#__PURE__*/React.createElement("ol", {
     className: "ag-print-toc-list"
-  }, GUIDE_SECTIONS.map((sec, i) => /*#__PURE__*/React.createElement("li", {
-    key: sec.id
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-print-toc-num"
-  }, String(i + 1).padStart(2, '0')), /*#__PURE__*/React.createElement("span", {
-    className: "ag-print-toc-name"
-  }, sec[lang]), /*#__PURE__*/React.createElement("span", {
-    className: "ag-print-toc-leader",
-    "aria-hidden": "true"
+  }, GUIDE_GROUPS.map((g, gi) => /*#__PURE__*/React.createElement(React.Fragment, {
+    key: gi
+  }, /*#__PURE__*/React.createElement("li", {
+    className: "ag-print-toc-group"
+  }, g[lang]), g.ids.map(id => {
+    const i = GUIDE_SECTIONS.findIndex(sec => sec.id === id);
+    const sec = GUIDE_SECTIONS[i];
+    if (!sec) return null;
+    return /*#__PURE__*/React.createElement("li", {
+      key: id
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-print-toc-num"
+    }, String(i + 1).padStart(2, '0')), /*#__PURE__*/React.createElement("span", {
+      className: "ag-print-toc-name"
+    }, sec[lang]), /*#__PURE__*/React.createElement("span", {
+      className: "ag-print-toc-leader",
+      "aria-hidden": "true"
+    }));
   })))), /*#__PURE__*/React.createElement("p", {
     className: "ag-print-toc-foot"
   }, lang === 'es' ? 'Esta guía cubre todo lo que necesitas saber sobre tu Hestía y los alrededores. Léela con calma, está hecha para acompañarte.' : 'This guide covers everything you need to know about your Hestía and the surroundings. Read it slowly, it is made to accompany you.')), /*#__PURE__*/React.createElement("div", {
@@ -10010,17 +10082,27 @@ const AptGuideView = ({
     className: "ag-nav-label"
   }, lang === 'es' ? 'Índice' : 'Contents'), /*#__PURE__*/React.createElement("ol", {
     className: "ag-nav-list"
-  }, GUIDE_SECTIONS.map((sec, i) => /*#__PURE__*/React.createElement("li", {
-    key: sec.id
-  }, /*#__PURE__*/React.createElement("a", {
-    href: `#ag-${sec.id}`,
-    className: activeSection === sec.id ? 'is-active' : '',
-    onClick: e => handleNavClick(e, sec.id)
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-nav-num"
-  }, String(i + 1).padStart(2, '0')), /*#__PURE__*/React.createElement("span", {
-    className: "ag-nav-text"
-  }, sec[lang]))))), /*#__PURE__*/React.createElement("div", {
+  }, GUIDE_GROUPS.map((g, gi) => /*#__PURE__*/React.createElement(React.Fragment, {
+    key: gi
+  }, /*#__PURE__*/React.createElement("li", {
+    className: "ag-nav-group",
+    "aria-hidden": "true"
+  }, g[lang]), g.ids.map(id => {
+    const i = GUIDE_SECTIONS.findIndex(sec => sec.id === id);
+    const sec = GUIDE_SECTIONS[i];
+    if (!sec) return null;
+    return /*#__PURE__*/React.createElement("li", {
+      key: id
+    }, /*#__PURE__*/React.createElement("a", {
+      href: `#ag-${id}`,
+      className: activeSection === id ? 'is-active' : '',
+      onClick: e => handleNavClick(e, id)
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-nav-num"
+    }, String(i + 1).padStart(2, '0')), /*#__PURE__*/React.createElement("span", {
+      className: "ag-nav-text"
+    }, sec[lang])));
+  })))), /*#__PURE__*/React.createElement("div", {
     className: "ag-nav-actions"
   }, /*#__PURE__*/React.createElement("a", {
     className: "ag-nav-btn ag-nav-btn-primary",
@@ -10030,7 +10112,7 @@ const AptGuideView = ({
     rel: "noopener"
   }, lang === 'es' ? '⇩ Descargar guía (PDF)' : '⇩ Download guide (PDF)')))), /*#__PURE__*/React.createElement("div", {
     className: "ag-content"
-  }, /*#__PURE__*/React.createElement("section", {
+  }, renderPart('bienvenida'), /*#__PURE__*/React.createElement("section", {
     id: "ag-bienvenida",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
@@ -10250,7 +10332,7 @@ const AptGuideView = ({
     className: "ag-wifi-row-value ag-wifi-row-pass"
   }, s.wifi.passValue)), /*#__PURE__*/React.createElement("p", {
     className: "ag-wifi-note"
-  }, s.wifi.note))), /*#__PURE__*/React.createElement("section", {
+  }, s.wifi.note))), renderPart('limpieza'), /*#__PURE__*/React.createElement("section", {
     id: "ag-limpieza",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
@@ -10314,7 +10396,7 @@ const AptGuideView = ({
     className: "ag-recs"
   }, room.recs.map((r, i) => /*#__PURE__*/React.createElement("li", {
     key: i
-  }, r))))), /*#__PURE__*/React.createElement("section", {
+  }, r))))), renderPart('alrededores'), /*#__PURE__*/React.createElement("section", {
     id: "ag-alrededores",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
@@ -10430,7 +10512,7 @@ const AptGuideView = ({
       places: inCat,
       lang: lang
     });
-  })), /*#__PURE__*/React.createElement("section", {
+  })), renderPart('pueblos'), /*#__PURE__*/React.createElement("section", {
     id: "ag-pueblos",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
@@ -10505,7 +10587,7 @@ const AptGuideView = ({
     className: "ag-para"
   }, lang === 'es' ? 'Llueve pocos días al año, pero si te toca uno, hay planes a cubierto que merecen la pena:' : 'It rains few days a year, but if one catches you, there are indoor plans worth your while:'), /*#__PURE__*/React.createElement("ul", {
     className: "ag-recs"
-  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Cuevas de Sorbas: galerías de yeso bajo tierra, temperatura constante y visita guiada (a 40 min).' : 'Sorbas Caves: underground gypsum galleries, constant temperature and a guided tour (40 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Museos de Almería capital: el Museo de Almería (culturas de Los Millares y El Argar) y el Museo de la Guitarra (a 45 min).' : 'Museums in Almería city: the Museum of Almería (Los Millares and El Argar cultures) and the Guitar Museum (45 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Alcazaba de Almería: aunque es al aire libre, sus salas y la visita dan para un buen rato resguardado.' : 'Alcazaba of Almería: although open-air, its halls and the visit give you a good while under cover.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Una comida larga: reserva uno de los restaurantes de la sección Sabores, incluido algún Guía Michelin, y alarga la sobremesa.' : 'A long lunch: book one of the restaurants in the Tastes section, a Michelin Guide pick included, and stretch out the afternoon.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Spa o balneario: Vera Playa tiene centros de spa para una tarde de relax bajo techo.' : 'Spa or wellness centre: Vera Playa has spas for a relaxing afternoon indoors.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Compras a cubierto: centros comerciales de Almería capital si toca reponer.' : 'Indoor shopping: the shopping centres in Almería city if you need to restock.')))), /*#__PURE__*/React.createElement("section", {
+  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Cuevas de Sorbas: galerías de yeso bajo tierra, temperatura constante y visita guiada (a 40 min).' : 'Sorbas Caves: underground gypsum galleries, constant temperature and a guided tour (40 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Museos de Almería capital: el Museo de Almería (culturas de Los Millares y El Argar) y el Museo de la Guitarra (a 45 min).' : 'Museums in Almería city: the Museum of Almería (Los Millares and El Argar cultures) and the Guitar Museum (45 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Alcazaba de Almería: aunque es al aire libre, sus salas y la visita dan para un buen rato resguardado.' : 'Alcazaba of Almería: although open-air, its halls and the visit give you a good while under cover.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Una comida larga: reserva uno de los restaurantes de la sección Sabores, incluido algún Guía Michelin, y alarga la sobremesa.' : 'A long lunch: book one of the restaurants in the Tastes section, a Michelin Guide pick included, and stretch out the afternoon.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Spa o balneario: Vera Playa tiene centros de spa para una tarde de relax bajo techo.' : 'Spa or wellness centre: Vera Playa has spas for a relaxing afternoon indoors.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Compras a cubierto: centros comerciales de Almería capital si toca reponer.' : 'Indoor shopping: the shopping centres in Almería city if you need to restock.')))), renderPart('mercados'), /*#__PURE__*/React.createElement("section", {
     id: "ag-mercados",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
