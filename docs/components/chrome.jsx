@@ -654,6 +654,10 @@ const Footer = ({ lang }) => {
   const t = COPY[lang];
   return (
     <footer>
+      <video className="footer-bg-video" autoPlay muted loop playsInline preload="auto" poster="assets/footer-bg-poster.jpg" aria-hidden="true">
+        <source src="assets/footer-bg.mp4" type="video/mp4"/>
+      </video>
+      <div className="footer-bg-wash" aria-hidden="true"/>
       <div className="footer-grid">
         <div className="col footer-brand">
           <img decoding="async" src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo" loading="lazy" width="600" height="600"/>
