@@ -1,14 +1,12 @@
 import { chromium } from 'playwright';
-const b = await chromium.launch({ executablePath:'/opt/pw-browsers/chromium-1223/chrome-linux/chrome' });
-const p = await b.newPage({ viewport:{width:1200,height:900} });
-await p.goto('http://localhost:8173/_navtest.html', { waitUntil:'load' });
-await p.waitForTimeout(3500);
-const has = await p.evaluate(()=>({ strip:!!document.querySelector('.lm-strip'), cards:document.querySelectorAll('.lm-card').length, errDiv:(document.getElementById('root')?.textContent||'').includes('Error loading') }));
-console.log('state:', JSON.stringify(has));
-if (has.cards>0){
-  const first=await p.$('.lm-card'); const href=await first.getAttribute('href');
-  await first.scrollIntoViewIfNeeded(); await p.waitForTimeout(300);
-  await first.click(); await p.waitForTimeout(800);
-  console.log('TAP →', href, '| now:', p.url().split('/').pop());
-}
+const b = await chromium.launch({ executablePath:'/opt/pw-browsers/chromium-1223/chrome-linux/chrome', args:['--autoplay-policy=no-user-gesture-required'] });
+const p = await b.newPage({ viewport:{width:1100,height:760} });
+await p.goto('http://localhost:8177/_ft.html', { waitUntil:'load' });
+await p.waitForSelector('footer .footer-bg-video', { timeout:9000 });
+await p.evaluate(()=>{ const v=document.querySelector('.footer-bg-video'); v.muted=true; v.play().catch(()=>{}); document.querySelector('footer').scrollIntoView({block:'end'}); });
+await p.waitForTimeout(2500);
+const info = await p.evaluate(()=>{ const v=document.querySelector('.footer-bg-video'); return {vw:v.videoWidth, paused:v.paused, ct:+v.currentTime.toFixed(2)}; });
+console.log('video:', JSON.stringify(info));
+const fr = await p.evaluate(()=>{ const r=document.querySelector('footer').getBoundingClientRect(); return {top:Math.round(r.top)}; });
+await p.screenshot({ path:'/tmp/footer2.png', clip:{x:0,y:Math.max(0,fr.top),width:1100,height:Math.min(760,760-Math.max(0,fr.top))} });
 await b.close();
