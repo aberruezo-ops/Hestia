@@ -846,7 +846,38 @@ const Footer = ({
   lang
 }) => {
   const t = COPY[lang];
+  const ftVid = React.useRef(null);
+  React.useEffect(() => {
+    const v = ftVid.current;
+    if (!v) return;
+    const tryPlay = () => {
+      v.muted = true;
+      const p = v.play();
+      if (p && p.catch) p.catch(() => {});
+    };
+    tryPlay();
+    let io;
+    if (window.IntersectionObserver) {
+      io = new IntersectionObserver(es => {
+        es.forEach(e => {
+          if (e.isIntersecting) tryPlay();
+        });
+      }, {
+        threshold: 0.01
+      });
+      io.observe(v);
+    }
+    const onVis = () => {
+      if (!document.hidden) tryPlay();
+    };
+    document.addEventListener('visibilitychange', onVis);
+    return () => {
+      document.removeEventListener('visibilitychange', onVis);
+      if (io) io.disconnect();
+    };
+  }, []);
   return /*#__PURE__*/React.createElement("footer", null, /*#__PURE__*/React.createElement("video", {
+    ref: ftVid,
     className: "footer-bg-video",
     autoPlay: true,
     muted: true,
