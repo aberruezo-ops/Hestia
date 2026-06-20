@@ -154,12 +154,55 @@ const GUIDE_SECTIONS = [{
   en: 'Feedback'
 }];
 
+// Agrupación temática del índice: en vez de una lista plana de 22 capítulos
+// (que abruma), se presentan en 5 partes con un orden de lectura natural.
+// Los ids deben ir en el mismo orden que GUIDE_SECTIONS para que la numeración
+// del índice y del cuerpo coincidan.
+const GUIDE_GROUPS = [{
+  es: 'Tu llegada',
+  en: 'Your arrival',
+  descEs: 'Lo esencial para entrar y conectarte el primer día.',
+  descEn: 'The essentials to get in and online on day one.',
+  ids: ['bienvenida', 'llegada', 'wifi']
+}, {
+  es: 'Tu apartamento',
+  en: 'Your apartment',
+  descEs: 'Cómo funciona cada rincón de tu casa, estancia a estancia.',
+  descEn: 'How every corner of your home works, room by room.',
+  ids: ['limpieza', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion']
+}, {
+  es: 'Cerca de casa',
+  en: 'Close to home',
+  descEs: 'Lo que tienes a un paso: orientarte, comprar y comer bien.',
+  descEn: 'What is a step away: getting oriented, shopping and eating well.',
+  ids: ['alrededores', 'lugares', 'supermercados', 'sabores']
+}, {
+  es: 'Descubrir la zona',
+  en: 'Explore the area',
+  descEs: 'Pueblos, playas y planes que merecen una salida.',
+  descEn: 'Towns, beaches and plans worth a trip out.',
+  ids: ['pueblos', 'mar-playas', 'planes']
+}, {
+  es: 'Servicios y ayuda',
+  en: 'Services & help',
+  descEs: 'Mercados, salud, repostaje y teléfonos, por si acaso.',
+  descEn: 'Markets, health, fuel and phones, just in case.',
+  ids: ['mercados', 'salud', 'movilidad', 'telefonos', 'feedback']
+}];
+
 // Dónde comer/cenar cuando faltan entre 3 y 1 hora para Vera Playa, por
 // carretera de acceso. Los enlaces abren una búsqueda en vivo de Google Maps.
 const ARRIVAL_EATS = {
   es: {
-    title: 'De camino: dónde comer cuando ya falta poco',
-    intro: 'Buenas paradas para comer o cenar cuando os quedan entre tres y una hora para llegar a Vera Playa, según por dónde vengáis.',
+    title: 'De camino: dónde parar cuando ya falta poco',
+    intro: 'Buenas paradas para comer o cenar, y pequeñas visitas para ver algo bonito o comprar producto típico, cuando os quedan entre tres y una hora para llegar a Vera Playa, según por dónde vengáis.',
+    eatLabel: 'Para comer',
+    breakLabel: 'Paradas cortas',
+    kinds: {
+      ver: 'Ver',
+      comprar: 'Comprar',
+      descansar: 'Descansar'
+    },
     routes: [{
       road: 'Por el norte y Levante (A-7, desde Alicante/Murcia)',
       stops: [{
@@ -177,6 +220,25 @@ const ARRIVAL_EATS = {
         town: 'Lorca · a ~50 min',
         note: 'Taberna típica murciana con producto local. Última parada grande antes de Vera.',
         q: 'La Cofradía taberna típica Lorca'
+      }],
+      breaks: [{
+        kind: 'ver',
+        name: 'Castillo de Lorca (Fortaleza del Sol)',
+        town: 'Lorca · a ~50 min',
+        note: 'Una vuelta corta por la fortaleza y el casco barroco, con buenas vistas del valle.',
+        q: 'Castillo de Lorca Fortaleza del Sol'
+      }, {
+        kind: 'comprar',
+        name: 'Dulces de convento y obradores',
+        town: 'Lorca · a ~50 min',
+        note: 'Repostería artesana del centro (yemas, mantecados, suspiros) para llevar.',
+        q: 'pastelería tradicional centro Lorca'
+      }, {
+        kind: 'ver',
+        name: 'Geoda gigante de Pulpí',
+        town: 'Pulpí · a ~35 min',
+        note: 'Una de las geodas visitables más grandes del mundo. Visita guiada corta, reserva antes de ir. Perfecta para estirar las piernas casi llegando.',
+        q: 'Geoda de Pulpí entradas'
       }]
     }, {
       road: 'Por el oeste e interior (A-92, desde Granada)',
@@ -190,6 +252,25 @@ const ARRIVAL_EATS = {
         town: 'Baza · a ~1 h 10',
         note: 'Tapeo granadino en el centro histórico: huevos rotos, presa ibérica.',
         q: 'restaurante Los Cántaros Baza Granada'
+      }],
+      breaks: [{
+        kind: 'ver',
+        name: 'Barrio de cuevas y catedral',
+        town: 'Guadix · a ~1 h 40',
+        note: 'Casas cueva habitadas y mirador del Cerro de la Bola; una parada corta con mucho encanto.',
+        q: 'barrio de cuevas Guadix mirador Cerro de la Bola'
+      }, {
+        kind: 'comprar',
+        name: 'Cerámica de Guadix',
+        town: 'Guadix · a ~1 h 40',
+        note: 'Alfarería accitana de barro vidriado, muy típica de la zona, para llevaros una pieza.',
+        q: 'cerámica alfarería Guadix'
+      }, {
+        kind: 'descansar',
+        name: 'Casco histórico de Baza',
+        town: 'Baza · a ~1 h 10',
+        note: 'Plaza Mayor, baños árabes y sitios de tapeo para un respiro a media tarde.',
+        q: 'casco histórico Baza plaza mayor'
       }]
     }, {
       road: 'Por la costa (A-7, desde Almería/Málaga o el aeropuerto)',
@@ -203,12 +284,38 @@ const ARRIVAL_EATS = {
         town: 'Almería capital · a ~1 h',
         note: 'De lo mejor para tapear en Almería, junto a la Alcazaba; cocina almeriense de solera.',
         q: 'La Encina Almería tapas Alcazaba'
+      }],
+      breaks: [{
+        kind: 'ver',
+        name: 'Alcazaba de Almería',
+        town: 'Almería capital · a ~1 h',
+        note: 'La segunda fortaleza musulmana más grande de España, con entrada gratuita y vistas al mar. Visita corta muy rentable.',
+        q: 'Alcazaba de Almería'
+      }, {
+        kind: 'comprar',
+        name: 'Cerámica y jarapas de Níjar',
+        town: 'Níjar · a ~45 min',
+        note: 'El producto más típico de la zona: alfombras de trapo (jarapas) y cerámica pintada a mano. Pueblo bonito para un paseo corto.',
+        q: 'cerámica jarapas Níjar'
+      }, {
+        kind: 'comprar',
+        name: 'Mercado Central de Almería',
+        town: 'Almería capital · a ~1 h',
+        note: 'Edificio de hierro de 1893: pescado, gamba roja y verduras de la huerta para llevar, con bares para picar algo.',
+        q: 'Mercado Central Almería'
       }]
     }]
   },
   en: {
-    title: 'On the way: where to eat as you get close',
-    intro: 'Good lunch or dinner stops when you are between three and one hour from Vera Playa, depending on which way you come.',
+    title: 'On the way: where to stop as you get close',
+    intro: 'Good lunch or dinner stops, plus short visits to see something lovely or buy a typical local product, when you are between three and one hour from Vera Playa, depending on which way you come.',
+    eatLabel: 'To eat',
+    breakLabel: 'Short stops',
+    kinds: {
+      ver: 'See',
+      comprar: 'Buy',
+      descansar: 'Rest'
+    },
     routes: [{
       road: 'From the north & Levante (A-7, from Alicante/Murcia)',
       stops: [{
@@ -226,6 +333,25 @@ const ARRIVAL_EATS = {
         town: 'Lorca · ~50 min away',
         note: 'Traditional Murcian tavern with local produce. Last big stop before Vera.',
         q: 'La Cofradía taberna típica Lorca'
+      }],
+      breaks: [{
+        kind: 'ver',
+        name: 'Lorca Castle (Fortaleza del Sol)',
+        town: 'Lorca · ~50 min away',
+        note: 'A short walk around the fortress and the baroque old town, with good views over the valley.',
+        q: 'Castillo de Lorca Fortaleza del Sol'
+      }, {
+        kind: 'comprar',
+        name: 'Convent sweets & bakeries',
+        town: 'Lorca · ~50 min away',
+        note: 'Handmade pastries in the centre (yemas, mantecados, suspiros) to take with you.',
+        q: 'pastelería tradicional centro Lorca'
+      }, {
+        kind: 'ver',
+        name: 'Giant Geode of Pulpí',
+        town: 'Pulpí · ~35 min away',
+        note: 'One of the largest visitable geodes in the world. Short guided visit, book ahead. Perfect to stretch your legs almost there.',
+        q: 'Geoda de Pulpí entradas'
       }]
     }, {
       road: 'From the west & inland (A-92, from Granada)',
@@ -239,6 +365,25 @@ const ARRIVAL_EATS = {
         town: 'Baza · ~1 h 10 away',
         note: 'Granada-style tapas in the old town: huevos rotos, Iberian pork.',
         q: 'restaurante Los Cántaros Baza Granada'
+      }],
+      breaks: [{
+        kind: 'ver',
+        name: 'Cave quarter & cathedral',
+        town: 'Guadix · ~1 h 40 away',
+        note: 'Inhabited cave houses and the Cerro de la Bola viewpoint; a short, charming stop.',
+        q: 'barrio de cuevas Guadix mirador Cerro de la Bola'
+      }, {
+        kind: 'comprar',
+        name: 'Guadix pottery',
+        town: 'Guadix · ~1 h 40 away',
+        note: 'Local glazed earthenware, very typical of the area, to take a piece home.',
+        q: 'cerámica alfarería Guadix'
+      }, {
+        kind: 'descansar',
+        name: 'Baza old town',
+        town: 'Baza · ~1 h 10 away',
+        note: 'Plaza Mayor, Arab baths and tapas spots for a mid-afternoon break.',
+        q: 'casco histórico Baza plaza mayor'
       }]
     }, {
       road: 'Along the coast (A-7, from Almería/Málaga or the airport)',
@@ -252,6 +397,25 @@ const ARRIVAL_EATS = {
         town: 'Almería city · ~1 h away',
         note: 'Some of the best tapas in Almería, by the Alcazaba; classic Almería cooking.',
         q: 'La Encina Almería tapas Alcazaba'
+      }],
+      breaks: [{
+        kind: 'ver',
+        name: 'Alcazaba of Almería',
+        town: 'Almería city · ~1 h away',
+        note: 'The second-largest Muslim fortress in Spain, free entry and sea views. A short, rewarding visit.',
+        q: 'Alcazaba de Almería'
+      }, {
+        kind: 'comprar',
+        name: 'Níjar pottery & jarapas',
+        town: 'Níjar · ~45 min away',
+        note: 'The most typical craft around here: rag rugs (jarapas) and hand-painted ceramics. A pretty village for a short walk.',
+        q: 'cerámica jarapas Níjar'
+      }, {
+        kind: 'comprar',
+        name: 'Almería Central Market',
+        town: 'Almería city · ~1 h away',
+        note: '1893 ironwork hall: fish, red prawns and garden vegetables to take away, with bars for a bite.',
+        q: 'Mercado Central Almería'
       }]
     }]
   }
@@ -9721,6 +9885,33 @@ const AptGuideView = ({
       }
     })), p.caption && /*#__PURE__*/React.createElement("figcaption", null, p.caption))));
   };
+
+  // Banda divisoria que abre cada parte temática en el cuerpo de la guía.
+  // Se renderiza antes de la primera sección de cada grupo (ver GUIDE_GROUPS).
+  const partStarts = {};
+  GUIDE_GROUPS.forEach((g, gi) => {
+    partStarts[g.ids[0]] = {
+      ...g,
+      n: gi + 1
+    };
+  });
+  const renderPart = sectionId => {
+    const g = partStarts[sectionId];
+    if (!g) return null;
+    return /*#__PURE__*/React.createElement("div", {
+      className: "ag-part no-print",
+      id: `ag-part-${g.n}`
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-part-num",
+      "aria-hidden": "true"
+    }, String(g.n).padStart(2, '0')), /*#__PURE__*/React.createElement("div", {
+      className: "ag-part-txt"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-part-name"
+    }, g[lang]), /*#__PURE__*/React.createElement("span", {
+      className: "ag-part-desc"
+    }, lang === 'es' ? g.descEs : g.descEn)));
+  };
   return /*#__PURE__*/React.createElement("article", {
     className: "apt-guide-view",
     "data-apt": apt.id,
@@ -9803,17 +9994,26 @@ const AptGuideView = ({
     className: "ag-print-toc-label"
   }, lang === 'es' ? 'Índice' : 'Contents'), /*#__PURE__*/React.createElement("h2", {
     className: "ag-print-toc-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tu Hest\xEDa,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "en ", GUIDE_SECTIONS.length, " cap\xEDtulos.")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Your Hest\xEDa,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "in ", GUIDE_SECTIONS.length, " chapters."))), /*#__PURE__*/React.createElement("ol", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tu Hest\xEDa,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "en ", GUIDE_GROUPS.length, " partes y ", GUIDE_SECTIONS.length, " cap\xEDtulos.")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Your Hest\xEDa,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "in ", GUIDE_GROUPS.length, " parts and ", GUIDE_SECTIONS.length, " chapters."))), /*#__PURE__*/React.createElement("ol", {
     className: "ag-print-toc-list"
-  }, GUIDE_SECTIONS.map((sec, i) => /*#__PURE__*/React.createElement("li", {
-    key: sec.id
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-print-toc-num"
-  }, String(i + 1).padStart(2, '0')), /*#__PURE__*/React.createElement("span", {
-    className: "ag-print-toc-name"
-  }, sec[lang]), /*#__PURE__*/React.createElement("span", {
-    className: "ag-print-toc-leader",
-    "aria-hidden": "true"
+  }, GUIDE_GROUPS.map((g, gi) => /*#__PURE__*/React.createElement(React.Fragment, {
+    key: gi
+  }, /*#__PURE__*/React.createElement("li", {
+    className: "ag-print-toc-group"
+  }, g[lang]), g.ids.map(id => {
+    const i = GUIDE_SECTIONS.findIndex(sec => sec.id === id);
+    const sec = GUIDE_SECTIONS[i];
+    if (!sec) return null;
+    return /*#__PURE__*/React.createElement("li", {
+      key: id
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-print-toc-num"
+    }, String(i + 1).padStart(2, '0')), /*#__PURE__*/React.createElement("span", {
+      className: "ag-print-toc-name"
+    }, sec[lang]), /*#__PURE__*/React.createElement("span", {
+      className: "ag-print-toc-leader",
+      "aria-hidden": "true"
+    }));
   })))), /*#__PURE__*/React.createElement("p", {
     className: "ag-print-toc-foot"
   }, lang === 'es' ? 'Esta guía cubre todo lo que necesitas saber sobre tu Hestía y los alrededores. Léela con calma, está hecha para acompañarte.' : 'This guide covers everything you need to know about your Hestía and the surroundings. Read it slowly, it is made to accompany you.')), /*#__PURE__*/React.createElement("div", {
@@ -9882,17 +10082,27 @@ const AptGuideView = ({
     className: "ag-nav-label"
   }, lang === 'es' ? 'Índice' : 'Contents'), /*#__PURE__*/React.createElement("ol", {
     className: "ag-nav-list"
-  }, GUIDE_SECTIONS.map((sec, i) => /*#__PURE__*/React.createElement("li", {
-    key: sec.id
-  }, /*#__PURE__*/React.createElement("a", {
-    href: `#ag-${sec.id}`,
-    className: activeSection === sec.id ? 'is-active' : '',
-    onClick: e => handleNavClick(e, sec.id)
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-nav-num"
-  }, String(i + 1).padStart(2, '0')), /*#__PURE__*/React.createElement("span", {
-    className: "ag-nav-text"
-  }, sec[lang]))))), /*#__PURE__*/React.createElement("div", {
+  }, GUIDE_GROUPS.map((g, gi) => /*#__PURE__*/React.createElement(React.Fragment, {
+    key: gi
+  }, /*#__PURE__*/React.createElement("li", {
+    className: "ag-nav-group",
+    "aria-hidden": "true"
+  }, g[lang]), g.ids.map(id => {
+    const i = GUIDE_SECTIONS.findIndex(sec => sec.id === id);
+    const sec = GUIDE_SECTIONS[i];
+    if (!sec) return null;
+    return /*#__PURE__*/React.createElement("li", {
+      key: id
+    }, /*#__PURE__*/React.createElement("a", {
+      href: `#ag-${id}`,
+      className: activeSection === id ? 'is-active' : '',
+      onClick: e => handleNavClick(e, id)
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-nav-num"
+    }, String(i + 1).padStart(2, '0')), /*#__PURE__*/React.createElement("span", {
+      className: "ag-nav-text"
+    }, sec[lang])));
+  })))), /*#__PURE__*/React.createElement("div", {
     className: "ag-nav-actions"
   }, /*#__PURE__*/React.createElement("a", {
     className: "ag-nav-btn ag-nav-btn-primary",
@@ -9902,7 +10112,7 @@ const AptGuideView = ({
     rel: "noopener"
   }, lang === 'es' ? '⇩ Descargar guía (PDF)' : '⇩ Download guide (PDF)')))), /*#__PURE__*/React.createElement("div", {
     className: "ag-content"
-  }, /*#__PURE__*/React.createElement("section", {
+  }, renderPart('bienvenida'), /*#__PURE__*/React.createElement("section", {
     id: "ag-bienvenida",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
@@ -9934,9 +10144,20 @@ const AptGuideView = ({
     className: "ag-h2"
   }, s.checkin.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-lead"
-  }, s.checkin.intro), s.checkin.airports && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
+  }, s.checkin.intro), /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"
-  }, s.checkin.airportsTitle), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? 'Cómo llegar a Hestía' : 'How to get to Hestía'), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, lang === 'es' ? 'Vengas como vengas, en avión, autobús, tren o coche, aquí tienes lo que necesitas saber según tu medio de transporte. Te enviamos siempre las indicaciones exactas para los últimos kilómetros hasta la puerta.' : 'However you come, by plane, bus, train or car, here is what you need to know by transport mode. We always send you the exact directions for the last few kilometres to the door.'), /*#__PURE__*/React.createElement("div", {
+    className: "ag-arrival-modes"
+  }, s.checkin.airports && /*#__PURE__*/React.createElement("div", {
+    className: "ag-arrmode"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "ag-arrmode-h"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-arrmode-icon",
+    "aria-hidden": "true"
+  }, "\u2708\uFE0F"), lang === 'es' ? 'En avión' : 'By plane'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
   }, s.checkin.airportsIntro), /*#__PURE__*/React.createElement("div", {
     className: "ag-airports"
@@ -9961,15 +10182,50 @@ const AptGuideView = ({
     className: "ag-airport-notes"
   }, a.notes))))), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-note"
-  }, s.checkin.airportsTip)), s.checkin.stations && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h3", {
-    className: "ag-h3"
-  }, s.checkin.stationsTitle), /*#__PURE__*/React.createElement("p", {
+  }, s.checkin.airportsTip)), s.checkin.stations && s.checkin.stations.some(st => st.type === 'BUS') && /*#__PURE__*/React.createElement("div", {
+    className: "ag-arrmode"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "ag-arrmode-h"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-arrmode-icon",
+    "aria-hidden": "true"
+  }, "\uD83D\uDE8C"), lang === 'es' ? 'En autobús' : 'By bus'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, s.checkin.stationsIntro), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'La estación de autobuses de Vera está a 5-10 min en taxi desde Hestía. ALSA la conecta con Almería, Murcia, Mojácar, Cuevas del Almanzora y Águilas.' : 'Vera bus station is a 5-10 min taxi from Hestía. ALSA links it with Almería, Murcia, Mojácar, Cuevas del Almanzora and Águilas.'), /*#__PURE__*/React.createElement("div", {
     className: "ag-airports"
-  }, s.checkin.stations.map((st, i) => /*#__PURE__*/React.createElement("div", {
+  }, s.checkin.stations.filter(st => st.type === 'BUS').map((st, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
-    className: `ag-airport ag-station ag-station-${st.type.toLowerCase()}`
+    className: "ag-airport ag-station ag-station-bus"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-airport-code ag-station-badge"
+  }, st.type), /*#__PURE__*/React.createElement("div", {
+    className: "ag-airport-main"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-airport-name"
+  }, st.name), /*#__PURE__*/React.createElement("div", {
+    className: "ag-airport-meta"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-airport-km"
+  }, st.km, " km"), /*#__PURE__*/React.createElement("span", {
+    className: "ag-airport-sep"
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+    className: "ag-airport-time"
+  }, st.time)), /*#__PURE__*/React.createElement("div", {
+    className: "ag-airport-notes"
+  }, st.notes)))))), s.checkin.stations && s.checkin.stations.some(st => st.type === 'TRN') && /*#__PURE__*/React.createElement("div", {
+    className: "ag-arrmode"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "ag-arrmode-h"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-arrmode-icon",
+    "aria-hidden": "true"
+  }, "\uD83D\uDE86"), lang === 'es' ? 'En tren' : 'By train'), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, lang === 'es' ? 'Todavía no hay tren directo a Vera: lo más práctico es bajar en Almería capital o Murcia y seguir en bus, taxi o coche de alquiler.' : 'There is no direct train to Vera yet: the easiest is to get off in Almería city or Murcia and continue by bus, taxi or rental car.'), /*#__PURE__*/React.createElement("div", {
+    className: "ag-airports"
+  }, s.checkin.stations.filter(st => st.type === 'TRN').map((st, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "ag-airport ag-station ag-station-trn"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-airport-code ag-station-badge"
   }, st.type), /*#__PURE__*/React.createElement("div", {
@@ -9992,18 +10248,78 @@ const AptGuideView = ({
     className: "ag-ave-curiosity-eyebrow"
   }, s.checkin.stationsAveTitle), /*#__PURE__*/React.createElement("p", {
     className: "ag-ave-curiosity-text"
-  }, s.checkin.stationsAve))), s.checkin.carTitle && /*#__PURE__*/React.createElement("div", {
-    className: "ag-car-block"
-  }, /*#__PURE__*/React.createElement("h3", {
-    className: "ag-h3"
-  }, s.checkin.carTitle), /*#__PURE__*/React.createElement("p", {
+  }, s.checkin.stationsAve))), /*#__PURE__*/React.createElement("div", {
+    className: "ag-arrmode"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "ag-arrmode-h"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-arrmode-icon",
+    "aria-hidden": "true"
+  }, "\uD83D\uDE97"), lang === 'es' ? 'En coche' : 'By car'), s.checkin.carText && /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, s.checkin.carText), /*#__PURE__*/React.createElement("p", {
+  }, s.checkin.carText), s.checkin.carAccompany && /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-car-accompany"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-car-icon",
     "aria-hidden": "true"
-  }, "\u2726"), s.checkin.carAccompany)), /*#__PURE__*/React.createElement("h3", {
+  }, "\u2726"), s.checkin.carAccompany), /*#__PURE__*/React.createElement("h5", {
+    className: "ag-arrmode-sub"
+  }, ARRIVAL_EATS[lang].title), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, ARRIVAL_EATS[lang].intro), /*#__PURE__*/React.createElement("div", {
+    className: "ag-arrival-eats"
+  }, ARRIVAL_EATS[lang].routes.map((r, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "ag-ae-route"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "ag-ae-road"
+  }, r.road), /*#__PURE__*/React.createElement("p", {
+    className: "ag-ae-sublabel"
+  }, ARRIVAL_EATS[lang].eatLabel), /*#__PURE__*/React.createElement("ul", {
+    className: "ag-ae-list"
+  }, r.stops.map((sp, j) => /*#__PURE__*/React.createElement("li", {
+    key: j,
+    className: "ag-ae-item"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-ae-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-ae-name"
+  }, sp.name), /*#__PURE__*/React.createElement("span", {
+    className: "ag-ae-town"
+  }, " \xB7 ", sp.town)), /*#__PURE__*/React.createElement("span", {
+    className: "ag-ae-note"
+  }, sp.note), /*#__PURE__*/React.createElement("a", {
+    className: "ag-ae-map",
+    href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sp.q)}`,
+    target: "_blank",
+    rel: "noopener"
+  }, lang === 'es' ? 'Cómo llegar' : 'Directions', " ", /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "\u2197"))))), r.breaks && r.breaks.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", {
+    className: "ag-ae-sublabel"
+  }, ARRIVAL_EATS[lang].breakLabel), /*#__PURE__*/React.createElement("ul", {
+    className: "ag-ae-list ag-ae-list-breaks"
+  }, r.breaks.map((sp, j) => /*#__PURE__*/React.createElement("li", {
+    key: j,
+    className: "ag-ae-item"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-ae-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: `ag-ae-kind ag-ae-kind-${sp.kind}`
+  }, ARRIVAL_EATS[lang].kinds[sp.kind]), /*#__PURE__*/React.createElement("span", {
+    className: "ag-ae-name"
+  }, sp.name), /*#__PURE__*/React.createElement("span", {
+    className: "ag-ae-town"
+  }, " \xB7 ", sp.town)), /*#__PURE__*/React.createElement("span", {
+    className: "ag-ae-note"
+  }, sp.note), /*#__PURE__*/React.createElement("a", {
+    className: "ag-ae-map",
+    href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sp.q)}`,
+    target: "_blank",
+    rel: "noopener"
+  }, lang === 'es' ? 'Cómo llegar' : 'Directions', " ", /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "\u2197"))))))))))), /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"
   }, s.checkin.modalitiesTitle), /*#__PURE__*/React.createElement("div", {
     className: "ag-checkin-modes"
@@ -10040,38 +10356,7 @@ const AptGuideView = ({
     className: "ag-checkin-garbage"
   }, /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, s.checkin.garbageBody))), /*#__PURE__*/React.createElement("h3", {
-    className: "ag-h3"
-  }, ARRIVAL_EATS[lang].title), /*#__PURE__*/React.createElement("p", {
-    className: "ag-para"
-  }, ARRIVAL_EATS[lang].intro), /*#__PURE__*/React.createElement("div", {
-    className: "ag-arrival-eats"
-  }, ARRIVAL_EATS[lang].routes.map((r, i) => /*#__PURE__*/React.createElement("div", {
-    key: i,
-    className: "ag-ae-route"
-  }, /*#__PURE__*/React.createElement("h4", {
-    className: "ag-ae-road"
-  }, r.road), /*#__PURE__*/React.createElement("ul", {
-    className: "ag-ae-list"
-  }, r.stops.map((sp, j) => /*#__PURE__*/React.createElement("li", {
-    key: j,
-    className: "ag-ae-item"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "ag-ae-head"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-ae-name"
-  }, sp.name), /*#__PURE__*/React.createElement("span", {
-    className: "ag-ae-town"
-  }, " \xB7 ", sp.town)), /*#__PURE__*/React.createElement("span", {
-    className: "ag-ae-note"
-  }, sp.note), /*#__PURE__*/React.createElement("a", {
-    className: "ag-ae-map",
-    href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sp.q)}`,
-    target: "_blank",
-    rel: "noopener"
-  }, lang === 'es' ? 'Cómo llegar' : 'Directions', " ", /*#__PURE__*/React.createElement("span", {
-    "aria-hidden": "true"
-  }, "\u2197"))))))))), /*#__PURE__*/React.createElement("section", {
+  }, s.checkin.garbageBody)))), /*#__PURE__*/React.createElement("section", {
     id: "ag-wifi",
     className: "ag-section ag-section-wifi"
   }, /*#__PURE__*/React.createElement("span", {
@@ -10096,7 +10381,7 @@ const AptGuideView = ({
     className: "ag-wifi-row-value ag-wifi-row-pass"
   }, s.wifi.passValue)), /*#__PURE__*/React.createElement("p", {
     className: "ag-wifi-note"
-  }, s.wifi.note))), /*#__PURE__*/React.createElement("section", {
+  }, s.wifi.note))), renderPart('limpieza'), /*#__PURE__*/React.createElement("section", {
     id: "ag-limpieza",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
@@ -10160,7 +10445,7 @@ const AptGuideView = ({
     className: "ag-recs"
   }, room.recs.map((r, i) => /*#__PURE__*/React.createElement("li", {
     key: i
-  }, r))))), /*#__PURE__*/React.createElement("section", {
+  }, r))))), renderPart('alrededores'), /*#__PURE__*/React.createElement("section", {
     id: "ag-alrededores",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
@@ -10276,7 +10561,7 @@ const AptGuideView = ({
       places: inCat,
       lang: lang
     });
-  })), /*#__PURE__*/React.createElement("section", {
+  })), renderPart('pueblos'), /*#__PURE__*/React.createElement("section", {
     id: "ag-pueblos",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
@@ -10351,7 +10636,7 @@ const AptGuideView = ({
     className: "ag-para"
   }, lang === 'es' ? 'Llueve pocos días al año, pero si te toca uno, hay planes a cubierto que merecen la pena:' : 'It rains few days a year, but if one catches you, there are indoor plans worth your while:'), /*#__PURE__*/React.createElement("ul", {
     className: "ag-recs"
-  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Cuevas de Sorbas: galerías de yeso bajo tierra, temperatura constante y visita guiada (a 40 min).' : 'Sorbas Caves: underground gypsum galleries, constant temperature and a guided tour (40 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Museos de Almería capital: el Museo de Almería (culturas de Los Millares y El Argar) y el Museo de la Guitarra (a 45 min).' : 'Museums in Almería city: the Museum of Almería (Los Millares and El Argar cultures) and the Guitar Museum (45 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Alcazaba de Almería: aunque es al aire libre, sus salas y la visita dan para un buen rato resguardado.' : 'Alcazaba of Almería: although open-air, its halls and the visit give you a good while under cover.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Una comida larga: reserva uno de los restaurantes de la sección Sabores, incluido algún Guía Michelin, y alarga la sobremesa.' : 'A long lunch: book one of the restaurants in the Tastes section, a Michelin Guide pick included, and stretch out the afternoon.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Spa o balneario: Vera Playa tiene centros de spa para una tarde de relax bajo techo.' : 'Spa or wellness centre: Vera Playa has spas for a relaxing afternoon indoors.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Compras a cubierto: centros comerciales de Almería capital si toca reponer.' : 'Indoor shopping: the shopping centres in Almería city if you need to restock.')))), /*#__PURE__*/React.createElement("section", {
+  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Cuevas de Sorbas: galerías de yeso bajo tierra, temperatura constante y visita guiada (a 40 min).' : 'Sorbas Caves: underground gypsum galleries, constant temperature and a guided tour (40 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Museos de Almería capital: el Museo de Almería (culturas de Los Millares y El Argar) y el Museo de la Guitarra (a 45 min).' : 'Museums in Almería city: the Museum of Almería (Los Millares and El Argar cultures) and the Guitar Museum (45 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Alcazaba de Almería: aunque es al aire libre, sus salas y la visita dan para un buen rato resguardado.' : 'Alcazaba of Almería: although open-air, its halls and the visit give you a good while under cover.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Una comida larga: reserva uno de los restaurantes de la sección Sabores, incluido algún Guía Michelin, y alarga la sobremesa.' : 'A long lunch: book one of the restaurants in the Tastes section, a Michelin Guide pick included, and stretch out the afternoon.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Spa o balneario: Vera Playa tiene centros de spa para una tarde de relax bajo techo.' : 'Spa or wellness centre: Vera Playa has spas for a relaxing afternoon indoors.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Compras a cubierto: centros comerciales de Almería capital si toca reponer.' : 'Indoor shopping: the shopping centres in Almería city if you need to restock.')))), renderPart('mercados'), /*#__PURE__*/React.createElement("section", {
     id: "ag-mercados",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {

@@ -11475,6 +11475,17 @@ footer,
 }
 .ag-nav-list a.is-active .ag-nav-num { opacity: 1; }
 .ag-nav-text { flex: 1; }
+.ag-nav-group {
+  list-style: none;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--apt-accent);
+  margin: 14px 0 3px;
+  padding-bottom: 3px;
+}
+.ag-nav-group:first-child { margin-top: 6px; }
 
 .ag-nav-actions {
   display: flex;
@@ -11617,6 +11628,38 @@ footer,
 .ag-content {
   padding-top: clamp(32px, 4vw, 56px);
   min-width: 0;
+}
+
+.ag-part {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin: 0 0 clamp(28px, 4vw, 44px);
+  padding-bottom: 14px;
+  border-bottom: 2px solid color-mix(in srgb, var(--apt-accent) 30%, transparent);
+  scroll-margin-top: 24px;
+}
+.ag-part-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(28px, 5vw, 44px);
+  line-height: 1;
+  color: color-mix(in srgb, var(--apt-accent) 45%, transparent);
+  flex-shrink: 0;
+}
+.ag-part-txt { display: flex; flex-direction: column; gap: 4px; }
+.ag-part-name {
+  font-family: var(--serif);
+  font-size: clamp(20px, 3.4vw, 28px);
+  font-weight: 600;
+  color: var(--ber-dk);
+  line-height: 1.1;
+}
+.ag-part-desc {
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  max-width: 46ch;
 }
 
 .ag-section {
@@ -17047,6 +17090,19 @@ a:focus-visible,
     border-bottom: 1px dotted color-mix(in srgb, var(--apt-accent-dk, var(--vs-dk)) 22%, transparent);
     page-break-inside: avoid;
   }
+  .apt-guide-view .ag-print-toc-group {
+    display: block;
+    grid-template-columns: none;
+    border-bottom: none;
+    padding: 5mm 0 1mm;
+    font-family: 'Inter', sans-serif;
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--apt-accent-dk, var(--vs-dk));
+  }
+  .apt-guide-view .ag-print-toc-group:first-child { padding-top: 0; }
   .apt-guide-view .ag-print-toc-num {
     font-family: 'Playfair Display', serif;
     font-style: italic;
@@ -19513,6 +19569,60 @@ img[src*="apt-vt-gallery-"] {
   text-decoration: none;
 }
 .ag-ae-map:hover { text-decoration: underline; }
+.ag-ae-sublabel {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 11px 0 6px;
+}
+.ag-ae-list-breaks .ag-ae-item { border-left-color: rgba(214, 158, 46, .45); }
+.ag-ae-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; }
+.ag-ae-kind {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--sol-text, #176E80);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+.ag-ae-kind-comprar { background: var(--ber, #B05A3C); }
+.ag-ae-kind-descansar { background: var(--vt, #6E7F4E); }
+
+/* Cómo llegar: apartados por medio de transporte (avión, bus, tren, coche) */
+.ag-arrival-modes { display: flex; flex-direction: column; gap: 26px; margin-top: 8px; }
+.ag-arrmode {
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--apt-accent) 5%, #fff);
+  border: 1px solid color-mix(in srgb, var(--apt-accent) 16%, transparent);
+}
+.ag-arrmode-h {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--ber-dk);
+  margin: 0 0 10px;
+}
+.ag-arrmode-icon { font-size: 20px; line-height: 1; }
+.ag-arrmode-sub {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ber-dk);
+  margin: 18px 0 4px;
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--apt-accent) 16%, transparent);
+}
 
 /* ============================================================
    Calendario consolidado de eventos

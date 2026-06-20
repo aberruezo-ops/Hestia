@@ -855,7 +855,8 @@ const Footer = ({
       const p = v.play();
       if (p && p.catch) p.catch(() => {});
     };
-    tryPlay();
+    // No lo cargamos al montar (footer va bajo el fondo): solo cuando entra en
+    // viewport, para no competir con el vídeo del hero en la carga inicial.
     let io;
     if (window.IntersectionObserver) {
       io = new IntersectionObserver(es => {
@@ -866,6 +867,8 @@ const Footer = ({
         threshold: 0.01
       });
       io.observe(v);
+    } else {
+      tryPlay();
     }
     const onVis = () => {
       if (!document.hidden) tryPlay();
@@ -879,11 +882,10 @@ const Footer = ({
   return /*#__PURE__*/React.createElement("footer", null, /*#__PURE__*/React.createElement("video", {
     ref: ftVid,
     className: "footer-bg-video",
-    autoPlay: true,
     muted: true,
     loop: true,
     playsInline: true,
-    preload: "auto",
+    preload: "none",
     poster: "assets/footer-bg-poster.jpg",
     "aria-hidden": "true"
   }, /*#__PURE__*/React.createElement("source", {
