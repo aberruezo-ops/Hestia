@@ -297,6 +297,21 @@ const Header = ({
 
   // Banner de lanzamiento: siempre en la home, fondo blanco
   const launchVidRef = React.useRef(null);
+  // Vitruvio: al terminar de dibujarse la H, mantenemos el último fotograma
+  // 10 s antes de reiniciar (en vez de loop instantáneo).
+  const vitVidRef = React.useRef(null);
+  const vitTimer = React.useRef(null);
+  React.useEffect(() => () => clearTimeout(vitTimer.current), []);
+  const onVitEnded = () => {
+    clearTimeout(vitTimer.current);
+    vitTimer.current = setTimeout(() => {
+      const v = vitVidRef.current;
+      if (v) {
+        v.currentTime = 0;
+        v.play().catch(() => {});
+      }
+    }, 10000);
+  };
   const replayLaunch = () => {
     setLaunchEnded(false);
     if (launchVidRef.current) {
@@ -352,11 +367,12 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-box"
   }, /*#__PURE__*/React.createElement("video", {
+    ref: vitVidRef,
     autoPlay: true,
     muted: true,
-    loop: true,
     playsInline: true,
-    preload: "auto"
+    preload: "auto",
+    onEnded: onVitEnded
   }, /*#__PURE__*/React.createElement("source", {
     src: "assets/hestia-vitruvio.mp4",
     type: "video/mp4"
