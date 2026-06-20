@@ -846,7 +846,22 @@ const Footer = ({
   lang
 }) => {
   const t = COPY[lang];
-  return /*#__PURE__*/React.createElement("footer", null, /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement("footer", null, /*#__PURE__*/React.createElement("video", {
+    className: "footer-bg-video",
+    autoPlay: true,
+    muted: true,
+    loop: true,
+    playsInline: true,
+    preload: "auto",
+    poster: "assets/footer-bg-poster.jpg",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("source", {
+    src: "assets/footer-bg.mp4",
+    type: "video/mp4"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "footer-bg-wash",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "footer-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "col footer-brand"
