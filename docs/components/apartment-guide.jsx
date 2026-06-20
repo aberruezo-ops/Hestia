@@ -71,6 +71,49 @@ const GUIDE_SECTIONS = [
   { id: 'feedback',     es: 'Comentarios',      en: 'Feedback' },
 ];
 
+// Dónde comer/cenar cuando faltan entre 3 y 1 hora para Vera Playa, por
+// carretera de acceso. Los enlaces abren una búsqueda en vivo de Google Maps.
+const ARRIVAL_EATS = {
+  es: {
+    title: 'De camino: dónde comer cuando ya falta poco',
+    intro: 'Buenas paradas para comer o cenar cuando os quedan entre tres y una hora para llegar a Vera Playa, según por dónde vengáis.',
+    routes: [
+      { road: 'Por el norte y Levante (A-7, desde Alicante/Murcia)', stops: [
+        { name: 'Arrocería El Grano de Oro', town: 'Albatera (Alicante) · a ~2 h', note: 'Arroces al horno y paellas a la brasa de sarmiento. Pide el arroz con conejo.', q: 'Arrocería El Grano de Oro Albatera' },
+        { name: 'Tapeo en el centro', town: 'Murcia · a ~1 h', note: 'Plaza de las Flores y Santo Domingo: marinera, zarangollo y michirones.', q: 'Plaza de las Flores Murcia tapas' },
+        { name: 'La Cofradía', town: 'Lorca · a ~50 min', note: 'Taberna típica murciana con producto local. Última parada grande antes de Vera.', q: 'La Cofradía taberna típica Lorca' },
+      ] },
+      { road: 'Por el oeste e interior (A-92, desde Granada)', stops: [
+        { name: 'Mesón Granadul I', town: 'Guadix · a ~1 h 40', note: 'Jamón y quesos de la zona, cocina mediterránea; también venden producto para llevar.', q: 'Mesón Granadul Guadix A-92' },
+        { name: 'Los Cántaros / La Parra', town: 'Baza · a ~1 h 10', note: 'Tapeo granadino en el centro histórico: huevos rotos, presa ibérica.', q: 'restaurante Los Cántaros Baza Granada' },
+      ] },
+      { road: 'Por la costa (A-7, desde Almería/Málaga o el aeropuerto)', stops: [
+        { name: 'Akalá', town: 'Almería capital · a ~1 h', note: 'Arrocería en el paseo marítimo: arroz del señorito, meloso con bogavante.', q: 'Akalá arrocería Almería' },
+        { name: 'La Encina', town: 'Almería capital · a ~1 h', note: 'De lo mejor para tapear en Almería, junto a la Alcazaba; cocina almeriense de solera.', q: 'La Encina Almería tapas Alcazaba' },
+      ] },
+    ],
+  },
+  en: {
+    title: 'On the way: where to eat as you get close',
+    intro: 'Good lunch or dinner stops when you are between three and one hour from Vera Playa, depending on which way you come.',
+    routes: [
+      { road: 'From the north & Levante (A-7, from Alicante/Murcia)', stops: [
+        { name: 'Arrocería El Grano de Oro', town: 'Albatera (Alicante) · ~2 h away', note: 'Oven-baked rice and wood-fired paellas. Try the rice with rabbit.', q: 'Arrocería El Grano de Oro Albatera' },
+        { name: 'Tapas in the old town', town: 'Murcia · ~1 h away', note: 'Plaza de las Flores and Santo Domingo: marinera, zarangollo and michirones.', q: 'Plaza de las Flores Murcia tapas' },
+        { name: 'La Cofradía', town: 'Lorca · ~50 min away', note: 'Traditional Murcian tavern with local produce. Last big stop before Vera.', q: 'La Cofradía taberna típica Lorca' },
+      ] },
+      { road: 'From the west & inland (A-92, from Granada)', stops: [
+        { name: 'Mesón Granadul I', town: 'Guadix · ~1 h 40 away', note: 'Local ham and cheese, Mediterranean cooking; they also sell produce to take away.', q: 'Mesón Granadul Guadix A-92' },
+        { name: 'Los Cántaros / La Parra', town: 'Baza · ~1 h 10 away', note: 'Granada-style tapas in the old town: huevos rotos, Iberian pork.', q: 'restaurante Los Cántaros Baza Granada' },
+      ] },
+      { road: 'Along the coast (A-7, from Almería/Málaga or the airport)', stops: [
+        { name: 'Akalá', town: 'Almería city · ~1 h away', note: 'Seafront rice restaurant: arroz del señorito, soupy rice with lobster.', q: 'Akalá arrocería Almería' },
+        { name: 'La Encina', town: 'Almería city · ~1 h away', note: 'Some of the best tapas in Almería, by the Alcazaba; classic Almería cooking.', q: 'La Encina Almería tapas Alcazaba' },
+      ] },
+    ],
+  },
+};
+
 // Mapeo de qué categorías van en cada sección temática.
 // El bloque 'alrededores' queda solo con intro/mapa/fuentes oficiales.
 const SECTION_CATS = {
@@ -4852,6 +4895,30 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                 </div>
               </>
             )}
+
+            <h3 className="ag-h3">{ARRIVAL_EATS[lang].title}</h3>
+            <p className="ag-para">{ARRIVAL_EATS[lang].intro}</p>
+            <div className="ag-arrival-eats">
+              {ARRIVAL_EATS[lang].routes.map((r, i) => (
+                <div key={i} className="ag-ae-route">
+                  <h4 className="ag-ae-road">{r.road}</h4>
+                  <ul className="ag-ae-list">
+                    {r.stops.map((sp, j) => (
+                      <li key={j} className="ag-ae-item">
+                        <div className="ag-ae-head">
+                          <span className="ag-ae-name">{sp.name}</span>
+                          <span className="ag-ae-town"> · {sp.town}</span>
+                        </div>
+                        <span className="ag-ae-note">{sp.note}</span>
+                        <a className="ag-ae-map" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sp.q)}`} target="_blank" rel="noopener">
+                          {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </section>
           )}
 

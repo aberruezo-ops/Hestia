@@ -19483,6 +19483,37 @@ img[src*="apt-vt-gallery-"] {
 }
 .ag-checkin-garbage p { margin: 0; }
 
+/* De camino: dónde comer en la última hora(s) de viaje */
+.ag-arrival-eats { margin-top: 6px; }
+.ag-ae-route { margin-bottom: 16px; }
+.ag-ae-road {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  color: var(--sol-text, #176E80);
+  margin: 14px 0 9px;
+}
+.ag-ae-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 11px; }
+.ag-ae-item {
+  display: flex;
+  flex-direction: column;
+  padding-left: 13px;
+  border-left: 2px solid rgba(58, 170, 187, .35);
+}
+.ag-ae-name { font-weight: 700; color: var(--ber-dk); font-size: 14.5px; }
+.ag-ae-town { color: var(--ink-soft); font-size: 12.5px; }
+.ag-ae-note { font-size: 13.5px; line-height: 1.45; color: var(--ink-soft); margin: 3px 0 4px; }
+.ag-ae-map {
+  align-self: flex-start;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--sol-text, #176E80);
+  text-decoration: none;
+}
+.ag-ae-map:hover { text-decoration: underline; }
+
 /* ============================================================
    Calendario consolidado de eventos
    ============================================================ */
