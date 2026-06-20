@@ -652,9 +652,24 @@ const Cookies = ({ lang }) => {
 
 const Footer = ({ lang }) => {
   const t = COPY[lang];
+  const ftVid = React.useRef(null);
+  React.useEffect(() => {
+    const v = ftVid.current;
+    if (!v) return;
+    const tryPlay = () => { v.muted = true; const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+    tryPlay();
+    let io;
+    if (window.IntersectionObserver) {
+      io = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) tryPlay(); }); }, { threshold: 0.01 });
+      io.observe(v);
+    }
+    const onVis = () => { if (!document.hidden) tryPlay(); };
+    document.addEventListener('visibilitychange', onVis);
+    return () => { document.removeEventListener('visibilitychange', onVis); if (io) io.disconnect(); };
+  }, []);
   return (
     <footer>
-      <video className="footer-bg-video" autoPlay muted loop playsInline preload="auto" poster="assets/footer-bg-poster.jpg" aria-hidden="true">
+      <video ref={ftVid} className="footer-bg-video" autoPlay muted loop playsInline preload="auto" poster="assets/footer-bg-poster.jpg" aria-hidden="true">
         <source src="assets/footer-bg.mp4" type="video/mp4"/>
       </video>
       <div className="footer-bg-wash" aria-hidden="true"/>
