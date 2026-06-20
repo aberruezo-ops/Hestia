@@ -71,45 +71,114 @@ const GUIDE_SECTIONS = [
   { id: 'feedback',     es: 'Comentarios',      en: 'Feedback' },
 ];
 
+// Agrupación temática del índice: en vez de una lista plana de 22 capítulos
+// (que abruma), se presentan en 5 partes con un orden de lectura natural.
+// Los ids deben ir en el mismo orden que GUIDE_SECTIONS para que la numeración
+// del índice y del cuerpo coincidan.
+const GUIDE_GROUPS = [
+  { es: 'Tu llegada',        en: 'Your arrival',
+    descEs: 'Lo esencial para entrar y conectarte el primer día.',
+    descEn: 'The essentials to get in and online on day one.',
+    ids: ['bienvenida', 'llegada', 'wifi'] },
+  { es: 'Tu apartamento',    en: 'Your apartment',
+    descEs: 'Cómo funciona cada rincón de tu casa, estancia a estancia.',
+    descEn: 'How every corner of your home works, room by room.',
+    ids: ['limpieza', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion'] },
+  { es: 'Cerca de casa',     en: 'Close to home',
+    descEs: 'Lo que tienes a un paso: orientarte, comprar y comer bien.',
+    descEn: 'What is a step away: getting oriented, shopping and eating well.',
+    ids: ['alrededores', 'lugares', 'supermercados', 'sabores'] },
+  { es: 'Descubrir la zona', en: 'Explore the area',
+    descEs: 'Pueblos, playas y planes que merecen una salida.',
+    descEn: 'Towns, beaches and plans worth a trip out.',
+    ids: ['pueblos', 'mar-playas', 'planes'] },
+  { es: 'Servicios y ayuda', en: 'Services & help',
+    descEs: 'Mercados, salud, repostaje y teléfonos, por si acaso.',
+    descEn: 'Markets, health, fuel and phones, just in case.',
+    ids: ['mercados', 'salud', 'movilidad', 'telefonos', 'feedback'] },
+];
+
 // Dónde comer/cenar cuando faltan entre 3 y 1 hora para Vera Playa, por
 // carretera de acceso. Los enlaces abren una búsqueda en vivo de Google Maps.
 const ARRIVAL_EATS = {
   es: {
-    title: 'De camino: dónde comer cuando ya falta poco',
-    intro: 'Buenas paradas para comer o cenar cuando os quedan entre tres y una hora para llegar a Vera Playa, según por dónde vengáis.',
+    title: 'De camino: dónde parar cuando ya falta poco',
+    intro: 'Buenas paradas para comer o cenar, y pequeñas visitas para ver algo bonito o comprar producto típico, cuando os quedan entre tres y una hora para llegar a Vera Playa, según por dónde vengáis.',
+    eatLabel: 'Para comer',
+    breakLabel: 'Paradas cortas',
+    kinds: { ver: 'Ver', comprar: 'Comprar', descansar: 'Descansar' },
     routes: [
-      { road: 'Por el norte y Levante (A-7, desde Alicante/Murcia)', stops: [
-        { name: 'Arrocería El Grano de Oro', town: 'Albatera (Alicante) · a ~2 h', note: 'Arroces al horno y paellas a la brasa de sarmiento. Pide el arroz con conejo.', q: 'Arrocería El Grano de Oro Albatera' },
-        { name: 'Tapeo en el centro', town: 'Murcia · a ~1 h', note: 'Plaza de las Flores y Santo Domingo: marinera, zarangollo y michirones.', q: 'Plaza de las Flores Murcia tapas' },
-        { name: 'La Cofradía', town: 'Lorca · a ~50 min', note: 'Taberna típica murciana con producto local. Última parada grande antes de Vera.', q: 'La Cofradía taberna típica Lorca' },
-      ] },
-      { road: 'Por el oeste e interior (A-92, desde Granada)', stops: [
-        { name: 'Mesón Granadul I', town: 'Guadix · a ~1 h 40', note: 'Jamón y quesos de la zona, cocina mediterránea; también venden producto para llevar.', q: 'Mesón Granadul Guadix A-92' },
-        { name: 'Los Cántaros / La Parra', town: 'Baza · a ~1 h 10', note: 'Tapeo granadino en el centro histórico: huevos rotos, presa ibérica.', q: 'restaurante Los Cántaros Baza Granada' },
-      ] },
-      { road: 'Por la costa (A-7, desde Almería/Málaga o el aeropuerto)', stops: [
-        { name: 'Akalá', town: 'Almería capital · a ~1 h', note: 'Arrocería en el paseo marítimo: arroz del señorito, meloso con bogavante.', q: 'Akalá arrocería Almería' },
-        { name: 'La Encina', town: 'Almería capital · a ~1 h', note: 'De lo mejor para tapear en Almería, junto a la Alcazaba; cocina almeriense de solera.', q: 'La Encina Almería tapas Alcazaba' },
-      ] },
+      { road: 'Por el norte y Levante (A-7, desde Alicante/Murcia)',
+        stops: [
+          { name: 'Arrocería El Grano de Oro', town: 'Albatera (Alicante) · a ~2 h', note: 'Arroces al horno y paellas a la brasa de sarmiento. Pide el arroz con conejo.', q: 'Arrocería El Grano de Oro Albatera' },
+          { name: 'Tapeo en el centro', town: 'Murcia · a ~1 h', note: 'Plaza de las Flores y Santo Domingo: marinera, zarangollo y michirones.', q: 'Plaza de las Flores Murcia tapas' },
+          { name: 'La Cofradía', town: 'Lorca · a ~50 min', note: 'Taberna típica murciana con producto local. Última parada grande antes de Vera.', q: 'La Cofradía taberna típica Lorca' },
+        ],
+        breaks: [
+          { kind: 'ver', name: 'Castillo de Lorca (Fortaleza del Sol)', town: 'Lorca · a ~50 min', note: 'Una vuelta corta por la fortaleza y el casco barroco, con buenas vistas del valle.', q: 'Castillo de Lorca Fortaleza del Sol' },
+          { kind: 'comprar', name: 'Dulces de convento y obradores', town: 'Lorca · a ~50 min', note: 'Repostería artesana del centro (yemas, mantecados, suspiros) para llevar.', q: 'pastelería tradicional centro Lorca' },
+          { kind: 'ver', name: 'Geoda gigante de Pulpí', town: 'Pulpí · a ~35 min', note: 'Una de las geodas visitables más grandes del mundo. Visita guiada corta, reserva antes de ir. Perfecta para estirar las piernas casi llegando.', q: 'Geoda de Pulpí entradas' },
+        ] },
+      { road: 'Por el oeste e interior (A-92, desde Granada)',
+        stops: [
+          { name: 'Mesón Granadul I', town: 'Guadix · a ~1 h 40', note: 'Jamón y quesos de la zona, cocina mediterránea; también venden producto para llevar.', q: 'Mesón Granadul Guadix A-92' },
+          { name: 'Los Cántaros / La Parra', town: 'Baza · a ~1 h 10', note: 'Tapeo granadino en el centro histórico: huevos rotos, presa ibérica.', q: 'restaurante Los Cántaros Baza Granada' },
+        ],
+        breaks: [
+          { kind: 'ver', name: 'Barrio de cuevas y catedral', town: 'Guadix · a ~1 h 40', note: 'Casas cueva habitadas y mirador del Cerro de la Bola; una parada corta con mucho encanto.', q: 'barrio de cuevas Guadix mirador Cerro de la Bola' },
+          { kind: 'comprar', name: 'Cerámica de Guadix', town: 'Guadix · a ~1 h 40', note: 'Alfarería accitana de barro vidriado, muy típica de la zona, para llevaros una pieza.', q: 'cerámica alfarería Guadix' },
+          { kind: 'descansar', name: 'Casco histórico de Baza', town: 'Baza · a ~1 h 10', note: 'Plaza Mayor, baños árabes y sitios de tapeo para un respiro a media tarde.', q: 'casco histórico Baza plaza mayor' },
+        ] },
+      { road: 'Por la costa (A-7, desde Almería/Málaga o el aeropuerto)',
+        stops: [
+          { name: 'Akalá', town: 'Almería capital · a ~1 h', note: 'Arrocería en el paseo marítimo: arroz del señorito, meloso con bogavante.', q: 'Akalá arrocería Almería' },
+          { name: 'La Encina', town: 'Almería capital · a ~1 h', note: 'De lo mejor para tapear en Almería, junto a la Alcazaba; cocina almeriense de solera.', q: 'La Encina Almería tapas Alcazaba' },
+        ],
+        breaks: [
+          { kind: 'ver', name: 'Alcazaba de Almería', town: 'Almería capital · a ~1 h', note: 'La segunda fortaleza musulmana más grande de España, con entrada gratuita y vistas al mar. Visita corta muy rentable.', q: 'Alcazaba de Almería' },
+          { kind: 'comprar', name: 'Cerámica y jarapas de Níjar', town: 'Níjar · a ~45 min', note: 'El producto más típico de la zona: alfombras de trapo (jarapas) y cerámica pintada a mano. Pueblo bonito para un paseo corto.', q: 'cerámica jarapas Níjar' },
+          { kind: 'comprar', name: 'Mercado Central de Almería', town: 'Almería capital · a ~1 h', note: 'Edificio de hierro de 1893: pescado, gamba roja y verduras de la huerta para llevar, con bares para picar algo.', q: 'Mercado Central Almería' },
+        ] },
     ],
   },
   en: {
-    title: 'On the way: where to eat as you get close',
-    intro: 'Good lunch or dinner stops when you are between three and one hour from Vera Playa, depending on which way you come.',
+    title: 'On the way: where to stop as you get close',
+    intro: 'Good lunch or dinner stops, plus short visits to see something lovely or buy a typical local product, when you are between three and one hour from Vera Playa, depending on which way you come.',
+    eatLabel: 'To eat',
+    breakLabel: 'Short stops',
+    kinds: { ver: 'See', comprar: 'Buy', descansar: 'Rest' },
     routes: [
-      { road: 'From the north & Levante (A-7, from Alicante/Murcia)', stops: [
-        { name: 'Arrocería El Grano de Oro', town: 'Albatera (Alicante) · ~2 h away', note: 'Oven-baked rice and wood-fired paellas. Try the rice with rabbit.', q: 'Arrocería El Grano de Oro Albatera' },
-        { name: 'Tapas in the old town', town: 'Murcia · ~1 h away', note: 'Plaza de las Flores and Santo Domingo: marinera, zarangollo and michirones.', q: 'Plaza de las Flores Murcia tapas' },
-        { name: 'La Cofradía', town: 'Lorca · ~50 min away', note: 'Traditional Murcian tavern with local produce. Last big stop before Vera.', q: 'La Cofradía taberna típica Lorca' },
-      ] },
-      { road: 'From the west & inland (A-92, from Granada)', stops: [
-        { name: 'Mesón Granadul I', town: 'Guadix · ~1 h 40 away', note: 'Local ham and cheese, Mediterranean cooking; they also sell produce to take away.', q: 'Mesón Granadul Guadix A-92' },
-        { name: 'Los Cántaros / La Parra', town: 'Baza · ~1 h 10 away', note: 'Granada-style tapas in the old town: huevos rotos, Iberian pork.', q: 'restaurante Los Cántaros Baza Granada' },
-      ] },
-      { road: 'Along the coast (A-7, from Almería/Málaga or the airport)', stops: [
-        { name: 'Akalá', town: 'Almería city · ~1 h away', note: 'Seafront rice restaurant: arroz del señorito, soupy rice with lobster.', q: 'Akalá arrocería Almería' },
-        { name: 'La Encina', town: 'Almería city · ~1 h away', note: 'Some of the best tapas in Almería, by the Alcazaba; classic Almería cooking.', q: 'La Encina Almería tapas Alcazaba' },
-      ] },
+      { road: 'From the north & Levante (A-7, from Alicante/Murcia)',
+        stops: [
+          { name: 'Arrocería El Grano de Oro', town: 'Albatera (Alicante) · ~2 h away', note: 'Oven-baked rice and wood-fired paellas. Try the rice with rabbit.', q: 'Arrocería El Grano de Oro Albatera' },
+          { name: 'Tapas in the old town', town: 'Murcia · ~1 h away', note: 'Plaza de las Flores and Santo Domingo: marinera, zarangollo and michirones.', q: 'Plaza de las Flores Murcia tapas' },
+          { name: 'La Cofradía', town: 'Lorca · ~50 min away', note: 'Traditional Murcian tavern with local produce. Last big stop before Vera.', q: 'La Cofradía taberna típica Lorca' },
+        ],
+        breaks: [
+          { kind: 'ver', name: 'Lorca Castle (Fortaleza del Sol)', town: 'Lorca · ~50 min away', note: 'A short walk around the fortress and the baroque old town, with good views over the valley.', q: 'Castillo de Lorca Fortaleza del Sol' },
+          { kind: 'comprar', name: 'Convent sweets & bakeries', town: 'Lorca · ~50 min away', note: 'Handmade pastries in the centre (yemas, mantecados, suspiros) to take with you.', q: 'pastelería tradicional centro Lorca' },
+          { kind: 'ver', name: 'Giant Geode of Pulpí', town: 'Pulpí · ~35 min away', note: 'One of the largest visitable geodes in the world. Short guided visit, book ahead. Perfect to stretch your legs almost there.', q: 'Geoda de Pulpí entradas' },
+        ] },
+      { road: 'From the west & inland (A-92, from Granada)',
+        stops: [
+          { name: 'Mesón Granadul I', town: 'Guadix · ~1 h 40 away', note: 'Local ham and cheese, Mediterranean cooking; they also sell produce to take away.', q: 'Mesón Granadul Guadix A-92' },
+          { name: 'Los Cántaros / La Parra', town: 'Baza · ~1 h 10 away', note: 'Granada-style tapas in the old town: huevos rotos, Iberian pork.', q: 'restaurante Los Cántaros Baza Granada' },
+        ],
+        breaks: [
+          { kind: 'ver', name: 'Cave quarter & cathedral', town: 'Guadix · ~1 h 40 away', note: 'Inhabited cave houses and the Cerro de la Bola viewpoint; a short, charming stop.', q: 'barrio de cuevas Guadix mirador Cerro de la Bola' },
+          { kind: 'comprar', name: 'Guadix pottery', town: 'Guadix · ~1 h 40 away', note: 'Local glazed earthenware, very typical of the area, to take a piece home.', q: 'cerámica alfarería Guadix' },
+          { kind: 'descansar', name: 'Baza old town', town: 'Baza · ~1 h 10 away', note: 'Plaza Mayor, Arab baths and tapas spots for a mid-afternoon break.', q: 'casco histórico Baza plaza mayor' },
+        ] },
+      { road: 'Along the coast (A-7, from Almería/Málaga or the airport)',
+        stops: [
+          { name: 'Akalá', town: 'Almería city · ~1 h away', note: 'Seafront rice restaurant: arroz del señorito, soupy rice with lobster.', q: 'Akalá arrocería Almería' },
+          { name: 'La Encina', town: 'Almería city · ~1 h away', note: 'Some of the best tapas in Almería, by the Alcazaba; classic Almería cooking.', q: 'La Encina Almería tapas Alcazaba' },
+        ],
+        breaks: [
+          { kind: 'ver', name: 'Alcazaba of Almería', town: 'Almería city · ~1 h away', note: 'The second-largest Muslim fortress in Spain, free entry and sea views. A short, rewarding visit.', q: 'Alcazaba de Almería' },
+          { kind: 'comprar', name: 'Níjar pottery & jarapas', town: 'Níjar · ~45 min away', note: 'The most typical craft around here: rag rugs (jarapas) and hand-painted ceramics. A pretty village for a short walk.', q: 'cerámica jarapas Níjar' },
+          { kind: 'comprar', name: 'Almería Central Market', town: 'Almería city · ~1 h away', note: '1893 ironwork hall: fish, red prawns and garden vegetables to take away, with bars for a bite.', q: 'Mercado Central Almería' },
+        ] },
     ],
   },
 };
@@ -4633,6 +4702,24 @@ const AptGuideView = ({ apt, lang, onClose }) => {
     );
   };
 
+  // Banda divisoria que abre cada parte temática en el cuerpo de la guía.
+  // Se renderiza antes de la primera sección de cada grupo (ver GUIDE_GROUPS).
+  const partStarts = {};
+  GUIDE_GROUPS.forEach((g, gi) => { partStarts[g.ids[0]] = { ...g, n: gi + 1 }; });
+  const renderPart = (sectionId) => {
+    const g = partStarts[sectionId];
+    if (!g) return null;
+    return (
+      <div className="ag-part no-print" id={`ag-part-${g.n}`}>
+        <span className="ag-part-num" aria-hidden="true">{String(g.n).padStart(2, '0')}</span>
+        <div className="ag-part-txt">
+          <span className="ag-part-name">{g[lang]}</span>
+          <span className="ag-part-desc">{lang === 'es' ? g.descEs : g.descEn}</span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <article className="apt-guide-view" data-apt={apt.id}
              style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
@@ -4698,16 +4785,26 @@ const AptGuideView = ({ apt, lang, onClose }) => {
         <span className="ag-print-toc-label">{lang === 'es' ? 'Índice' : 'Contents'}</span>
         <h2 className="ag-print-toc-title">
           {lang === 'es'
-            ? <>Tu Hestía,<br/><em>en {GUIDE_SECTIONS.length} capítulos.</em></>
-            : <>Your Hestía,<br/><em>in {GUIDE_SECTIONS.length} chapters.</em></>}
+            ? <>Tu Hestía,<br/><em>en {GUIDE_GROUPS.length} partes y {GUIDE_SECTIONS.length} capítulos.</em></>
+            : <>Your Hestía,<br/><em>in {GUIDE_GROUPS.length} parts and {GUIDE_SECTIONS.length} chapters.</em></>}
         </h2>
         <ol className="ag-print-toc-list">
-          {GUIDE_SECTIONS.map((sec, i) => (
-            <li key={sec.id}>
-              <span className="ag-print-toc-num">{String(i + 1).padStart(2, '0')}</span>
-              <span className="ag-print-toc-name">{sec[lang]}</span>
-              <span className="ag-print-toc-leader" aria-hidden="true"/>
-            </li>
+          {GUIDE_GROUPS.map((g, gi) => (
+            <React.Fragment key={gi}>
+              <li className="ag-print-toc-group">{g[lang]}</li>
+              {g.ids.map(id => {
+                const i = GUIDE_SECTIONS.findIndex(sec => sec.id === id);
+                const sec = GUIDE_SECTIONS[i];
+                if (!sec) return null;
+                return (
+                  <li key={id}>
+                    <span className="ag-print-toc-num">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="ag-print-toc-name">{sec[lang]}</span>
+                    <span className="ag-print-toc-leader" aria-hidden="true"/>
+                  </li>
+                );
+              })}
+            </React.Fragment>
           ))}
         </ol>
         <p className="ag-print-toc-foot">
@@ -4751,17 +4848,27 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           <div className="ag-nav-inner">
             <span className="ag-nav-label">{lang === 'es' ? 'Índice' : 'Contents'}</span>
             <ol className="ag-nav-list">
-              {GUIDE_SECTIONS.map((sec, i) => (
-                <li key={sec.id}>
-                  <a
-                    href={`#ag-${sec.id}`}
-                    className={activeSection === sec.id ? 'is-active' : ''}
-                    onClick={(e) => handleNavClick(e, sec.id)}
-                  >
-                    <span className="ag-nav-num">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="ag-nav-text">{sec[lang]}</span>
-                  </a>
-                </li>
+              {GUIDE_GROUPS.map((g, gi) => (
+                <React.Fragment key={gi}>
+                  <li className="ag-nav-group" aria-hidden="true">{g[lang]}</li>
+                  {g.ids.map(id => {
+                    const i = GUIDE_SECTIONS.findIndex(sec => sec.id === id);
+                    const sec = GUIDE_SECTIONS[i];
+                    if (!sec) return null;
+                    return (
+                      <li key={id}>
+                        <a
+                          href={`#ag-${id}`}
+                          className={activeSection === id ? 'is-active' : ''}
+                          onClick={(e) => handleNavClick(e, id)}
+                        >
+                          <span className="ag-nav-num">{String(i + 1).padStart(2, '0')}</span>
+                          <span className="ag-nav-text">{sec[lang]}</span>
+                        </a>
+                      </li>
+                    );
+                  })}
+                </React.Fragment>
               ))}
             </ol>
             <div className="ag-nav-actions">
@@ -4780,6 +4887,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
         <div className="ag-content">
 
+          {renderPart('bienvenida')}
           <section id="ag-bienvenida" className="ag-section">
             <span className="ag-section-num">01</span>
             <h2 className="ag-h2">{s.welcome.title}</h2>
@@ -4803,9 +4911,16 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <h2 className="ag-h2">{s.checkin.title}</h2>
             <p className="ag-para ag-para-lead">{s.checkin.intro}</p>
 
+            <h3 className="ag-h3">{lang === 'es' ? 'Cómo llegar a Hestía' : 'How to get to Hestía'}</h3>
+            <p className="ag-para">{lang === 'es'
+              ? 'Vengas como vengas, en avión, autobús, tren o coche, aquí tienes lo que necesitas saber según tu medio de transporte. Te enviamos siempre las indicaciones exactas para los últimos kilómetros hasta la puerta.'
+              : 'However you come, by plane, bus, train or car, here is what you need to know by transport mode. We always send you the exact directions for the last few kilometres to the door.'}</p>
+
+            <div className="ag-arrival-modes">
+
             {s.checkin.airports && (
-              <>
-                <h3 className="ag-h3">{s.checkin.airportsTitle}</h3>
+              <div className="ag-arrmode">
+                <h4 className="ag-arrmode-h"><span className="ag-arrmode-icon" aria-hidden="true">✈️</span>{lang === 'es' ? 'En avión' : 'By plane'}</h4>
                 <p className="ag-para">{s.checkin.airportsIntro}</p>
                 <div className="ag-airports">
                   {s.checkin.airports.map((a, i) => (
@@ -4824,16 +4939,43 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                   ))}
                 </div>
                 <p className="ag-para ag-para-note">{s.checkin.airportsTip}</p>
-              </>
+              </div>
             )}
 
-            {s.checkin.stations && (
-              <>
-                <h3 className="ag-h3">{s.checkin.stationsTitle}</h3>
-                <p className="ag-para">{s.checkin.stationsIntro}</p>
+            {s.checkin.stations && s.checkin.stations.some(st => st.type === 'BUS') && (
+              <div className="ag-arrmode">
+                <h4 className="ag-arrmode-h"><span className="ag-arrmode-icon" aria-hidden="true">🚌</span>{lang === 'es' ? 'En autobús' : 'By bus'}</h4>
+                <p className="ag-para">{lang === 'es'
+                  ? 'La estación de autobuses de Vera está a 5-10 min en taxi desde Hestía. ALSA la conecta con Almería, Murcia, Mojácar, Cuevas del Almanzora y Águilas.'
+                  : 'Vera bus station is a 5-10 min taxi from Hestía. ALSA links it with Almería, Murcia, Mojácar, Cuevas del Almanzora and Águilas.'}</p>
                 <div className="ag-airports">
-                  {s.checkin.stations.map((st, i) => (
-                    <div key={i} className={`ag-airport ag-station ag-station-${st.type.toLowerCase()}`}>
+                  {s.checkin.stations.filter(st => st.type === 'BUS').map((st, i) => (
+                    <div key={i} className="ag-airport ag-station ag-station-bus">
+                      <span className="ag-airport-code ag-station-badge">{st.type}</span>
+                      <div className="ag-airport-main">
+                        <div className="ag-airport-name">{st.name}</div>
+                        <div className="ag-airport-meta">
+                          <span className="ag-airport-km">{st.km} km</span>
+                          <span className="ag-airport-sep">·</span>
+                          <span className="ag-airport-time">{st.time}</span>
+                        </div>
+                        <div className="ag-airport-notes">{st.notes}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {s.checkin.stations && s.checkin.stations.some(st => st.type === 'TRN') && (
+              <div className="ag-arrmode">
+                <h4 className="ag-arrmode-h"><span className="ag-arrmode-icon" aria-hidden="true">🚆</span>{lang === 'es' ? 'En tren' : 'By train'}</h4>
+                <p className="ag-para">{lang === 'es'
+                  ? 'Todavía no hay tren directo a Vera: lo más práctico es bajar en Almería capital o Murcia y seguir en bus, taxi o coche de alquiler.'
+                  : 'There is no direct train to Vera yet: the easiest is to get off in Almería city or Murcia and continue by bus, taxi or rental car.'}</p>
+                <div className="ag-airports">
+                  {s.checkin.stations.filter(st => st.type === 'TRN').map((st, i) => (
+                    <div key={i} className="ag-airport ag-station ag-station-trn">
                       <span className="ag-airport-code ag-station-badge">{st.type}</span>
                       <div className="ag-airport-main">
                         <div className="ag-airport-name">{st.name}</div>
@@ -4853,16 +4995,63 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                     <p className="ag-ave-curiosity-text">{s.checkin.stationsAve}</p>
                   </div>
                 )}
-              </>
-            )}
-
-            {s.checkin.carTitle && (
-              <div className="ag-car-block">
-                <h3 className="ag-h3">{s.checkin.carTitle}</h3>
-                <p className="ag-para">{s.checkin.carText}</p>
-                <p className="ag-para ag-car-accompany"><span className="ag-car-icon" aria-hidden="true">✦</span>{s.checkin.carAccompany}</p>
               </div>
             )}
+
+            <div className="ag-arrmode">
+              <h4 className="ag-arrmode-h"><span className="ag-arrmode-icon" aria-hidden="true">🚗</span>{lang === 'es' ? 'En coche' : 'By car'}</h4>
+              {s.checkin.carText && <p className="ag-para">{s.checkin.carText}</p>}
+              {s.checkin.carAccompany && (
+                <p className="ag-para ag-car-accompany"><span className="ag-car-icon" aria-hidden="true">✦</span>{s.checkin.carAccompany}</p>
+              )}
+
+              <h5 className="ag-arrmode-sub">{ARRIVAL_EATS[lang].title}</h5>
+              <p className="ag-para">{ARRIVAL_EATS[lang].intro}</p>
+              <div className="ag-arrival-eats">
+                {ARRIVAL_EATS[lang].routes.map((r, i) => (
+                  <div key={i} className="ag-ae-route">
+                    <h4 className="ag-ae-road">{r.road}</h4>
+                    <p className="ag-ae-sublabel">{ARRIVAL_EATS[lang].eatLabel}</p>
+                    <ul className="ag-ae-list">
+                      {r.stops.map((sp, j) => (
+                        <li key={j} className="ag-ae-item">
+                          <div className="ag-ae-head">
+                            <span className="ag-ae-name">{sp.name}</span>
+                            <span className="ag-ae-town"> · {sp.town}</span>
+                          </div>
+                          <span className="ag-ae-note">{sp.note}</span>
+                          <a className="ag-ae-map" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sp.q)}`} target="_blank" rel="noopener">
+                            {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                    {r.breaks && r.breaks.length > 0 && (
+                      <>
+                        <p className="ag-ae-sublabel">{ARRIVAL_EATS[lang].breakLabel}</p>
+                        <ul className="ag-ae-list ag-ae-list-breaks">
+                          {r.breaks.map((sp, j) => (
+                            <li key={j} className="ag-ae-item">
+                              <div className="ag-ae-head">
+                                <span className={`ag-ae-kind ag-ae-kind-${sp.kind}`}>{ARRIVAL_EATS[lang].kinds[sp.kind]}</span>
+                                <span className="ag-ae-name">{sp.name}</span>
+                                <span className="ag-ae-town"> · {sp.town}</span>
+                              </div>
+                              <span className="ag-ae-note">{sp.note}</span>
+                              <a className="ag-ae-map" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sp.q)}`} target="_blank" rel="noopener">
+                                {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            </div>{/* /ag-arrival-modes */}
 
             <h3 className="ag-h3">{s.checkin.modalitiesTitle}</h3>
             <div className="ag-checkin-modes">
@@ -4896,29 +5085,6 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               </>
             )}
 
-            <h3 className="ag-h3">{ARRIVAL_EATS[lang].title}</h3>
-            <p className="ag-para">{ARRIVAL_EATS[lang].intro}</p>
-            <div className="ag-arrival-eats">
-              {ARRIVAL_EATS[lang].routes.map((r, i) => (
-                <div key={i} className="ag-ae-route">
-                  <h4 className="ag-ae-road">{r.road}</h4>
-                  <ul className="ag-ae-list">
-                    {r.stops.map((sp, j) => (
-                      <li key={j} className="ag-ae-item">
-                        <div className="ag-ae-head">
-                          <span className="ag-ae-name">{sp.name}</span>
-                          <span className="ag-ae-town"> · {sp.town}</span>
-                        </div>
-                        <span className="ag-ae-note">{sp.note}</span>
-                        <a className="ag-ae-map" href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(sp.q)}`} target="_blank" rel="noopener">
-                          {lang === 'es' ? 'Cómo llegar' : 'Directions'} <span aria-hidden="true">↗</span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
           </section>
           )}
 
@@ -4939,6 +5105,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             </div>
           </section>
 
+          {renderPart('limpieza')}
           <section id="ag-limpieza" className="ag-section">
             <span className="ag-section-num">04</span>
             <h2 className="ag-h2">{s.cleaning.title}</h2>
@@ -4990,6 +5157,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             </section>
           ))}
 
+          {renderPart('alrededores')}
           <section id="ag-alrededores" className="ag-section">
             <span className="ag-section-num">12</span>
             <h2 className="ag-h2">{s.surroundings.title}</h2>
@@ -5112,6 +5280,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           {/* Pueblos y cultura */}
+          {renderPart('pueblos')}
           <section id="ag-pueblos" className="ag-section">
             <span className="ag-section-num">16</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'}</h2>
@@ -5200,6 +5369,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           {/* Mercados y compras */}
+          {renderPart('mercados')}
           <section id="ag-mercados" className="ag-section">
             <span className="ag-section-num">19</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mercados y compras' : 'Markets & shops'}</h2>

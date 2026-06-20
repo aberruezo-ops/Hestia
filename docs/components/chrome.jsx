@@ -657,11 +657,14 @@ const Footer = ({ lang }) => {
     const v = ftVid.current;
     if (!v) return;
     const tryPlay = () => { v.muted = true; const p = v.play(); if (p && p.catch) p.catch(() => {}); };
-    tryPlay();
+    // No lo cargamos al montar (footer va bajo el fondo): solo cuando entra en
+    // viewport, para no competir con el vídeo del hero en la carga inicial.
     let io;
     if (window.IntersectionObserver) {
       io = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) tryPlay(); }); }, { threshold: 0.01 });
       io.observe(v);
+    } else {
+      tryPlay();
     }
     const onVis = () => { if (!document.hidden) tryPlay(); };
     document.addEventListener('visibilitychange', onVis);
@@ -669,7 +672,7 @@ const Footer = ({ lang }) => {
   }, []);
   return (
     <footer>
-      <video ref={ftVid} className="footer-bg-video" autoPlay muted loop playsInline preload="auto" poster="assets/footer-bg-poster.jpg" aria-hidden="true">
+      <video ref={ftVid} className="footer-bg-video" muted loop playsInline preload="none" poster="assets/footer-bg-poster.jpg" aria-hidden="true">
         <source src="assets/footer-bg.mp4" type="video/mp4"/>
       </video>
       <div className="footer-bg-wash" aria-hidden="true"/>
