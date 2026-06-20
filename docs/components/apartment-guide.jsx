@@ -5542,9 +5542,15 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
 
   const submit = async (e) => {
     e.preventDefault();
+    // Lee del DOM, no del state: el autofill del navegador/gestor de
+    // contraseñas y el autocapitalize en móvil pueden fijar el value del input
+    // sin disparar onChange, dejando `pin` obsoleto y fallando el primer envío.
+    const liveValue = (inputRef.current && inputRef.current.value) || pin;
+    const entered = liveValue.trim().toUpperCase();
+    if (entered !== pin) setPin(entered);
     const ok = window.validateGuidePin
-      ? await window.validateGuidePin(apt.id, pin)
-      : (pin.trim().toUpperCase() === expected);
+      ? await window.validateGuidePin(apt.id, entered)
+      : (entered === expected);
     if (ok) {
       setStatus('success');
       // Delay matches the modal's .is-success exit animation (scale + blur out)
@@ -5639,7 +5645,11 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
                 inputMode="text"
                 autoComplete="off"
                 autoCapitalize="characters"
+                autoCorrect="off"
                 spellCheck={false}
+                enterKeyHint="go"
+                data-1p-ignore="true"
+                data-lpignore="true"
                 maxLength={12}
                 className="ag-modal-input"
                 placeholder={`${(APT_GUIDE_PIN[apt.id] || 'HVX0000').slice(0, 3)}0000`}
