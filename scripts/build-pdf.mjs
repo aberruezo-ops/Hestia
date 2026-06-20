@@ -88,6 +88,7 @@ function loadGuideData() {
     DAY_PLANS:       sandbox.DAY_PLANS,
     GUIDE_SECTIONS:  sandbox.GUIDE_SECTIONS,
     APT_DATA:        sandbox.APT_DATA,
+    ARRIVAL_EATS:    sandbox.ARRIVAL_EATS,
   };
 }
 
@@ -1089,6 +1090,12 @@ section.no-break {
 .ap-notes { font-size: 8.5pt; color: var(--ink); line-height: 1.4; }
 .checkin-garbage { padding: 2mm 3mm; background: rgba(106,122,58,.08); border-left: 1pt solid #6B7A3A; border-radius: 1mm; margin-top: 1.5mm; }
 .checkin-garbage p { margin: 0; font-size: 9pt; }
+.ae-route { margin: 3mm 0 0; }
+.ae-road { font-size: 9.5pt; font-weight: 700; color: var(--apt-c-dk); margin-bottom: 1.5mm; }
+.ae-item { margin: 0 0 2mm; padding-left: 3mm; border-left: 1pt solid var(--apt-c); }
+.ae-item strong { font-size: 10pt; color: var(--ink); }
+.ae-town { font-size: 8.5pt; color: var(--ink-soft); }
+.ae-note { font-size: 9pt; color: var(--ink-soft); line-height: 1.5; }
 
 .events-cal { margin: 5mm 0 6mm; page-break-inside: auto; }
 .events-cal h3 { margin: 0 0 1.5mm; font-size: 12pt; color: var(--apt-c-dk); }
@@ -1641,6 +1648,20 @@ function renderCheckin(shared, aptData, aptGuide, lang) {
     ${c.garbageBody ? `
     <h3 class="checkin-h3">${esc(c.garbageTitle)}</h3>
     <div class="checkin-garbage"><p>${esc(c.garbageBody)}</p></div>
+    ` : ''}
+
+    ${shared.__arrivalEats ? `
+    <h3 class="checkin-h3">${esc(shared.__arrivalEats.title)}</h3>
+    <p class="checkin-intro">${esc(shared.__arrivalEats.intro)}</p>
+    ${shared.__arrivalEats.routes.map(r => `
+      <div class="ae-route">
+        <div class="ae-road">${esc(r.road)}</div>
+        ${r.stops.map(sp => `
+          <div class="ae-item">
+            <strong>${esc(sp.name)}</strong> <span class="ae-town">· ${esc(sp.town)}</span><br/>
+            <span class="ae-note">${esc(sp.note)}</span>
+          </div>`).join('')}
+      </div>`).join('')}
     ` : ''}
   </section>`;
 }
@@ -2253,7 +2274,7 @@ function renderBackCover(aptData, lang) {
 function buildHTML(aptId, lang, data) {
   const apt = data.APT_DATA[aptId];
   const guide = data.GUIDE_BY_APT[aptId];
-  const shared = { ...data.GUIDE_SHARED[lang], __lang: lang };
+  const shared = { ...data.GUIDE_SHARED[lang], __lang: lang, __arrivalEats: (data.ARRIVAL_EATS || {})[lang] };
   const aptName = apt[lang].name;
   const aptAccent = apt.accent_dk || apt.accent || '#3D1A35';
   const aptAccentLight = apt.accent || '#4E2446';
