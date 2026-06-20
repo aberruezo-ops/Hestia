@@ -71,6 +71,33 @@ const GUIDE_SECTIONS = [
   { id: 'feedback',     es: 'Comentarios',      en: 'Feedback' },
 ];
 
+// Agrupación temática del índice: en vez de una lista plana de 22 capítulos
+// (que abruma), se presentan en 5 partes con un orden de lectura natural.
+// Los ids deben ir en el mismo orden que GUIDE_SECTIONS para que la numeración
+// del índice y del cuerpo coincidan.
+const GUIDE_GROUPS = [
+  { es: 'Tu llegada',        en: 'Your arrival',
+    descEs: 'Lo esencial para entrar y conectarte el primer día.',
+    descEn: 'The essentials to get in and online on day one.',
+    ids: ['bienvenida', 'llegada', 'wifi'] },
+  { es: 'Tu apartamento',    en: 'Your apartment',
+    descEs: 'Cómo funciona cada rincón de tu casa, estancia a estancia.',
+    descEn: 'How every corner of your home works, room by room.',
+    ids: ['limpieza', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion'] },
+  { es: 'Cerca de casa',     en: 'Close to home',
+    descEs: 'Lo que tienes a un paso: orientarte, comprar y comer bien.',
+    descEn: 'What is a step away: getting oriented, shopping and eating well.',
+    ids: ['alrededores', 'lugares', 'supermercados', 'sabores'] },
+  { es: 'Descubrir la zona', en: 'Explore the area',
+    descEs: 'Pueblos, playas y planes que merecen una salida.',
+    descEn: 'Towns, beaches and plans worth a trip out.',
+    ids: ['pueblos', 'mar-playas', 'planes'] },
+  { es: 'Servicios y ayuda', en: 'Services & help',
+    descEs: 'Mercados, salud, repostaje y teléfonos, por si acaso.',
+    descEn: 'Markets, health, fuel and phones, just in case.',
+    ids: ['mercados', 'salud', 'movilidad', 'telefonos', 'feedback'] },
+];
+
 // Dónde comer/cenar cuando faltan entre 3 y 1 hora para Vera Playa, por
 // carretera de acceso. Los enlaces abren una búsqueda en vivo de Google Maps.
 const ARRIVAL_EATS = {
@@ -4675,6 +4702,24 @@ const AptGuideView = ({ apt, lang, onClose }) => {
     );
   };
 
+  // Banda divisoria que abre cada parte temática en el cuerpo de la guía.
+  // Se renderiza antes de la primera sección de cada grupo (ver GUIDE_GROUPS).
+  const partStarts = {};
+  GUIDE_GROUPS.forEach((g, gi) => { partStarts[g.ids[0]] = { ...g, n: gi + 1 }; });
+  const renderPart = (sectionId) => {
+    const g = partStarts[sectionId];
+    if (!g) return null;
+    return (
+      <div className="ag-part no-print" id={`ag-part-${g.n}`}>
+        <span className="ag-part-num" aria-hidden="true">{String(g.n).padStart(2, '0')}</span>
+        <div className="ag-part-txt">
+          <span className="ag-part-name">{g[lang]}</span>
+          <span className="ag-part-desc">{lang === 'es' ? g.descEs : g.descEn}</span>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <article className="apt-guide-view" data-apt={apt.id}
              style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
@@ -4740,16 +4785,26 @@ const AptGuideView = ({ apt, lang, onClose }) => {
         <span className="ag-print-toc-label">{lang === 'es' ? 'Índice' : 'Contents'}</span>
         <h2 className="ag-print-toc-title">
           {lang === 'es'
-            ? <>Tu Hestía,<br/><em>en {GUIDE_SECTIONS.length} capítulos.</em></>
-            : <>Your Hestía,<br/><em>in {GUIDE_SECTIONS.length} chapters.</em></>}
+            ? <>Tu Hestía,<br/><em>en {GUIDE_GROUPS.length} partes y {GUIDE_SECTIONS.length} capítulos.</em></>
+            : <>Your Hestía,<br/><em>in {GUIDE_GROUPS.length} parts and {GUIDE_SECTIONS.length} chapters.</em></>}
         </h2>
         <ol className="ag-print-toc-list">
-          {GUIDE_SECTIONS.map((sec, i) => (
-            <li key={sec.id}>
-              <span className="ag-print-toc-num">{String(i + 1).padStart(2, '0')}</span>
-              <span className="ag-print-toc-name">{sec[lang]}</span>
-              <span className="ag-print-toc-leader" aria-hidden="true"/>
-            </li>
+          {GUIDE_GROUPS.map((g, gi) => (
+            <React.Fragment key={gi}>
+              <li className="ag-print-toc-group">{g[lang]}</li>
+              {g.ids.map(id => {
+                const i = GUIDE_SECTIONS.findIndex(sec => sec.id === id);
+                const sec = GUIDE_SECTIONS[i];
+                if (!sec) return null;
+                return (
+                  <li key={id}>
+                    <span className="ag-print-toc-num">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="ag-print-toc-name">{sec[lang]}</span>
+                    <span className="ag-print-toc-leader" aria-hidden="true"/>
+                  </li>
+                );
+              })}
+            </React.Fragment>
           ))}
         </ol>
         <p className="ag-print-toc-foot">
@@ -4793,17 +4848,27 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           <div className="ag-nav-inner">
             <span className="ag-nav-label">{lang === 'es' ? 'Índice' : 'Contents'}</span>
             <ol className="ag-nav-list">
-              {GUIDE_SECTIONS.map((sec, i) => (
-                <li key={sec.id}>
-                  <a
-                    href={`#ag-${sec.id}`}
-                    className={activeSection === sec.id ? 'is-active' : ''}
-                    onClick={(e) => handleNavClick(e, sec.id)}
-                  >
-                    <span className="ag-nav-num">{String(i + 1).padStart(2, '0')}</span>
-                    <span className="ag-nav-text">{sec[lang]}</span>
-                  </a>
-                </li>
+              {GUIDE_GROUPS.map((g, gi) => (
+                <React.Fragment key={gi}>
+                  <li className="ag-nav-group" aria-hidden="true">{g[lang]}</li>
+                  {g.ids.map(id => {
+                    const i = GUIDE_SECTIONS.findIndex(sec => sec.id === id);
+                    const sec = GUIDE_SECTIONS[i];
+                    if (!sec) return null;
+                    return (
+                      <li key={id}>
+                        <a
+                          href={`#ag-${id}`}
+                          className={activeSection === id ? 'is-active' : ''}
+                          onClick={(e) => handleNavClick(e, id)}
+                        >
+                          <span className="ag-nav-num">{String(i + 1).padStart(2, '0')}</span>
+                          <span className="ag-nav-text">{sec[lang]}</span>
+                        </a>
+                      </li>
+                    );
+                  })}
+                </React.Fragment>
               ))}
             </ol>
             <div className="ag-nav-actions">
@@ -4822,6 +4887,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
         <div className="ag-content">
 
+          {renderPart('bienvenida')}
           <section id="ag-bienvenida" className="ag-section">
             <span className="ag-section-num">01</span>
             <h2 className="ag-h2">{s.welcome.title}</h2>
@@ -5002,6 +5068,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             </div>
           </section>
 
+          {renderPart('limpieza')}
           <section id="ag-limpieza" className="ag-section">
             <span className="ag-section-num">04</span>
             <h2 className="ag-h2">{s.cleaning.title}</h2>
@@ -5053,6 +5120,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             </section>
           ))}
 
+          {renderPart('alrededores')}
           <section id="ag-alrededores" className="ag-section">
             <span className="ag-section-num">12</span>
             <h2 className="ag-h2">{s.surroundings.title}</h2>
@@ -5175,6 +5243,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           {/* Pueblos y cultura */}
+          {renderPart('pueblos')}
           <section id="ag-pueblos" className="ag-section">
             <span className="ag-section-num">16</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'}</h2>
@@ -5263,6 +5332,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           {/* Mercados y compras */}
+          {renderPart('mercados')}
           <section id="ag-mercados" className="ag-section">
             <span className="ag-section-num">19</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mercados y compras' : 'Markets & shops'}</h2>
