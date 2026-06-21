@@ -670,8 +670,8 @@ const PLACES = [
   name: 'Covirán',
   desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa. Para básicos sin coger el coche.',
   cat: 'super',
-  lat: 37.2235,
-  lng: -1.7975
+  lat: 37.2230,
+  lng: -1.8082
 }, {
   id: 'consum',
   name: 'Consum (Vera Playa)',
@@ -679,8 +679,8 @@ const PLACES = [
   specialty: 'estantería de productos UK: Marmite, Yorkshire Tea, baked beans, salsas Branston, mince pies en Navidad.',
   cat: 'super',
   url: 'https://goo.gl/maps/h6UvnBe3ATHpsPXbA',
-  lat: 37.2200,
-  lng: -1.8090,
+  lat: 37.2197,
+  lng: -1.8083,
   featured: true
 }, {
   id: 'mercadona',
@@ -688,8 +688,8 @@ const PLACES = [
   desc: 'Mercadona estándar a 5 min en coche. El más completo de la zona.',
   cat: 'super',
   url: 'https://goo.gl/maps/axi9Lb9xLp8yuVUR8',
-  lat: 37.2360,
-  lng: -1.7935,
+  lat: 37.2137,
+  lng: -1.8339,
   featured: true
 }, {
   id: 'super-vera',
@@ -708,8 +708,8 @@ const PLACES = [
   specialty: 'fish & chips congelados, Yorkshire puddings, scotch eggs, productos M&S y Tesco.',
   tip: 'Imprescindible para huéspedes ingleses con nostalgia. Hablan inglés en caja.',
   cat: 'super',
-  lat: 37.2380,
-  lng: -1.7895,
+  lat: 37.2396,
+  lng: -1.8564,
   featured: true
 }, {
   id: 'quicksave',
@@ -788,8 +788,8 @@ const PLACES = [
   tier: '€',
   cat: 'restaurant',
   rating: 4.2,
-  lat: 37.2230,
-  lng: -1.8090
+  lat: 37.2195,
+  lng: -1.8060
 }, {
   id: 'pomodoro',
   name: 'Pizzería Pomodoro',
@@ -798,8 +798,8 @@ const PLACES = [
   tier: '€€',
   cat: 'restaurant',
   rating: 4.3,
-  lat: 37.2270,
-  lng: -1.7920
+  lat: 37.2190,
+  lng: -1.8045
 }, {
   id: 'trattoria',
   name: 'La Trattoria da Marco',
@@ -809,7 +809,7 @@ const PLACES = [
   cat: 'restaurant',
   rating: 4.4,
   lat: 37.1810,
-  lng: -1.8230
+  lng: -1.8218
 }, {
   id: 'lua',
   name: 'Lúa',
@@ -841,7 +841,7 @@ const PLACES = [
   cat: 'restaurant',
   rating: 4.5,
   lat: 37.2245,
-  lng: -1.7965,
+  lng: -1.7985,
   featured: true
 }, {
   id: 'bbme-rest',
@@ -873,8 +873,8 @@ const PLACES = [
   tier: '€€',
   cat: 'restaurant',
   rating: 4.4,
-  lat: 37.2455,
-  lng: -1.7670,
+  lat: 37.2494,
+  lng: -1.7709,
   featured: true
 }, {
   id: 'rincon-puerto',
@@ -904,8 +904,8 @@ const PLACES = [
   tier: '€€',
   cat: 'restaurant',
   rating: 4.3,
-  lat: 37.2240,
-  lng: -1.8095
+  lat: 37.2210,
+  lng: -1.8070
 }, {
   id: 'av-alicante',
   name: 'Av. Ciudad de Alicante',
@@ -984,7 +984,7 @@ const PLACES = [
   cat: 'restaurant',
   rating: 4.3,
   lat: 37.2310,
-  lng: -1.7920
+  lng: -1.7930
 },
 // ── Top-rated por Google en la zona (≥4.5 estrellas) ─────────
 // Mojácar
@@ -1055,7 +1055,7 @@ const PLACES = [
   rating: 4.6,
   cat: 'restaurant',
   lat: 37.1820,
-  lng: -1.8240,
+  lng: -1.8222,
   featured: true
 },
 // Cabo de Gata · San José y alrededores
@@ -1504,8 +1504,8 @@ const PLACES = [
   desc: 'Mediterráneo a pie del puerto.',
   specialty: 'arroces y pescados de la lonja sin gluten.',
   cat: 'celiac',
-  lat: 37.1810,
-  lng: -1.8230
+  lat: 37.1731,
+  lng: -1.8228
 }, {
   id: 'kontiki',
   name: 'Mojácar: Cabo Norte, Neptuno, Kontiki',
@@ -1543,7 +1543,7 @@ const PLACES = [
   cat: 'bar',
   rating: 4.3,
   lat: 37.2260,
-  lng: -1.7935,
+  lng: -1.7950,
   featured: true
 }, {
   id: 'paraiso',
@@ -1553,7 +1553,7 @@ const PLACES = [
   cat: 'bar',
   rating: 4.3,
   lat: 37.2300,
-  lng: -1.7920
+  lng: -1.7940
 }, {
   id: 'chumbo',
   name: 'Chiringuito El Chumbo',
@@ -1561,8 +1561,8 @@ const PLACES = [
   specialty: 'sangría de cava, sardinas al espeto en verano y arroz del día.',
   cat: 'bar',
   rating: 4.2,
-  lat: 37.2360,
-  lng: -1.7895
+  lat: 37.2100,
+  lng: -1.7850
 }, {
   id: 'marau',
   name: 'Marau Beach Club',
@@ -1571,8 +1571,8 @@ const PLACES = [
   tip: 'Mejor reservar hamaca en julio-agosto; los atardeceres con DJ valen la pena.',
   cat: 'bar',
   rating: 4.4,
-  lat: 37.2410,
-  lng: -1.7895,
+  lat: 37.2100,
+  lng: -1.8098,
   featured: true
 }, {
   id: 'mar-arena',
@@ -1582,7 +1582,7 @@ const PLACES = [
   cat: 'bar',
   rating: 4.2,
   lat: 37.2335,
-  lng: -1.7910
+  lng: -1.7940
 }, {
   id: 'bbme-palomares',
   name: 'Bbme Palomares',
@@ -1723,7 +1723,7 @@ const PLACES = [
   tip: 'La subasta es a las 17:00 los días laborables. Llega con tiempo y compra después en las pescaderías de al lado.',
   cat: 'fish',
   lat: 37.1810,
-  lng: -1.8240,
+  lng: -1.8225,
   featured: true
 }, {
   id: 'mercado-vera',
@@ -1864,8 +1864,8 @@ const PLACES = [
   name: 'Farmacia (junto Consum)',
   cat: 'pharmacy',
   url: 'https://goo.gl/maps/bGMV1sjwUqrRTNzk6',
-  lat: 37.2210,
-  lng: -1.8085
+  lat: 37.2197,
+  lng: -1.8083
 }, {
   id: 'farmacia-2',
   name: 'Farmacia Vera Playa',
@@ -1906,8 +1906,8 @@ const PLACES = [
   desc: 'Consultorio en Mojácar Playa. Atención primaria en horario diurno.',
   cat: 'health',
   url: 'https://www.google.com/maps/search/?api=1&query=Centro+de+Salud+Mojacar+Playa',
-  lat: 37.1380,
-  lng: -1.8550
+  lat: 37.1340,
+  lng: -1.8510
 }, {
   id: 'hospital-huercal',
   name: 'Hospital La Inmaculada (Huércal-Overa)',
@@ -1941,8 +1941,8 @@ const PLACES = [
   desc: 'Clínica veterinaria en Vera Playa con horario regular de lunes a sábado.',
   cat: 'vet',
   url: 'https://www.vetcareveraplaza.com/',
-  lat: 37.2270,
-  lng: -1.7970
+  lat: 37.2197,
+  lng: -1.8083
 }, {
   id: 'vet-mojacar',
   name: 'Clínica Veterinaria Costa Índalo (Mojácar)',
