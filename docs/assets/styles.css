@@ -3738,6 +3738,17 @@ footer .footer-brand .addr {
   opacity: 0.70; flex-wrap: wrap;
 }
 .footer-bottom .licences { font-family: var(--serif); font-style: italic; text-transform: none; letter-spacing: 0.04em; }
+.footer-owner-link {
+  color: rgba(240, 232, 213, 0.75);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(240, 232, 213, 0.3);
+  padding-bottom: 1px;
+  transition: color var(--dur-fast, 160ms) var(--ease-out, ease), border-color var(--dur-fast, 160ms) var(--ease-out, ease);
+}
+.footer-owner-link:hover {
+  color: var(--sol-lt, #6FC4D1);
+  border-color: var(--sol-lt, #6FC4D1);
+}
 
 /* ============================================================
    CALENDAR — Disponibilidad en tiempo real
