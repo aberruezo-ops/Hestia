@@ -1987,6 +1987,70 @@ const _calcStay = (selStart, selEnd, aptId, withPets, guests) => {
 };
 
 // ================================================================
+// Alternativas cercanas con disponibilidad. Cuando el huésped comprueba
+// disponibilidad y su propuesta (apt + fechas) está ocupada, buscamos las
+// opciones libres más próximas: mismas fechas en otro Hestía, o las mismas
+// noches en fechas cercanas (±28 días) para el/los apartamentos que buscaba.
+// Devuelve cada alternativa con su precio (fuente única: _calcStay), ordenadas
+// de más cercana a más lejana. Sin estado, reutilizable en home y /reservas.
+// ================================================================
+const _ALT_APTS = [
+  { id: 'vm', name: 'Hestía Mar',      slug: 'mar',      accent: '#6B7A3A' },
+  { id: 'vt', name: 'Hestía Thalassa', slug: 'thalassa', accent: '#B86A3C' },
+  { id: 'vs', name: 'Hestía Salinas',  slug: 'salinas',  accent: '#D4A84A' },
+];
+function _hestiaFindAlternatives({ checkin, checkout, apt, avail, guests, max = 4, windowDays = 28 }) {
+  if (!checkin || !checkout || !avail || typeof _calcStay !== 'function') return [];
+  const _adj = (ds, n) => { const d = new Date(ds + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+  const _diff = (a, b) => Math.round((new Date(b + 'T12:00:00Z') - new Date(a + 'T12:00:00Z')) / 86400000);
+  const nights = _diff(checkin, checkout);
+  if (nights < 1) return [];
+
+  const wantIds  = apt ? [apt] : ['vm', 'vt', 'vs'];
+  const otherIds = _ALT_APTS.map(a => a.id).filter(id => !wantIds.includes(id));
+  const today    = new Date().toISOString().slice(0, 10);
+  const v2        = window.PRICES_V2 || {};
+  const rules     = v2.rules || {};
+  const baseMinN  = rules.minNights || 3;
+  const critMinN  = rules.criticalSeasonMinNights || baseMinN;
+  const horizon   = (v2.bookingHorizon && v2.bookingHorizon.lastCheckinDate) || null;
+  const isCrit    = (ds) => (typeof _v2BumpedSeasonForDate === 'function') ? _v2BumpedSeasonForDate(ds, v2) === 'critica' : false;
+  const isFree    = (id, cin, cout) => { const blk = avail[id] && avail[id].blocked; if (!blk) return false; return !blk.some(r => cin < r.end && cout > r.start); };
+
+  const out = [];
+  const seen = new Set();
+  const tryAdd = (id, cin) => {
+    if (out.length >= max * 3) return;
+    const cout = _adj(cin, nights);
+    if (cin < today) return;
+    if (horizon && cin > horizon) return;
+    if (nights < (isCrit(cin) ? critMinN : baseMinN)) return;
+    if (!isFree(id, cin, cout)) return;
+    const key = id + cin;
+    if (seen.has(key)) return;
+    seen.add(key);
+    const calc = _calcStay(cin, cout, id, false, parseInt(guests, 10) || null);
+    if (!calc) return;
+    const meta = _ALT_APTS.find(a => a.id === id);
+    out.push({
+      aptId: id, aptName: meta.name, slug: meta.slug, accent: meta.accent,
+      checkin: cin, checkout: cout, nights,
+      total: calc.directTotal, avgPerNight: calc.avgPerNight,
+      shiftDays: _diff(checkin, cin), sameDates: cin === checkin,
+    });
+  };
+
+  // 1) Mismas fechas, otro Hestía (la alternativa más cercana: mismo viaje, otra casa).
+  otherIds.forEach(id => tryAdd(id, checkin));
+  // 2) Mismas noches en fechas cercanas, de más próxima a más lejana.
+  for (let d = 1; d <= windowDays && out.length < max * 3; d++) {
+    wantIds.forEach(id => { tryAdd(id, _adj(checkin, -d)); tryAdd(id, _adj(checkin, d)); });
+  }
+  out.sort((a, b) => (Math.abs(a.shiftDays) - Math.abs(b.shiftDays)) || (a.total - b.total));
+  return out.slice(0, max);
+}
+
+// ================================================================
 // DateRangePicker: calendario doble con bloqueadas visibles, auto-jump
 // al checkout y preview en hover. Mismas mecánicas y estética que el
 // HsDateRange de la home, expuesto vía window para uso en /reservas.
@@ -2440,7 +2504,7 @@ const _calcLsTotal = (start, end, guests, withPets, aptId) => {
   return { total: Math.round(total), specialNights: specialN };
 };
 
-Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, useSectionGlow, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt, DateRangePicker, _drAvail, _drAdj, _drDiff, _drFmtDate, _calcLsTotal });
+Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, useSectionGlow, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt, DateRangePicker, _drAvail, _drAdj, _drDiff, _drFmtDate, _calcLsTotal, _hestiaFindAlternatives });
 
 // Ficha de Google Maps de cada Hestía (mismas que el sameAs del JSON-LD de
 // mar.html / thalassa.html / salinas.html). Abren la ficha donde el huésped

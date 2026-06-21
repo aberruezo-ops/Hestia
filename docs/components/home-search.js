@@ -51,6 +51,13 @@ const _hsFmtDate = (ds, lang) => {
   const ME = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   return lang === 'es' ? `${d.getUTCDate()} ${M[d.getUTCMonth()].slice(0, 3).toLowerCase()}. ${d.getUTCFullYear()}` : `${ME[d.getUTCMonth()].slice(0, 3)} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
 };
+const _hsShiftLabel = (shift, lang) => {
+  if (shift === 0) return lang === 'es' ? 'Mismas fechas' : 'Same dates';
+  const n = Math.abs(shift);
+  const unit = n === 1 ? lang === 'es' ? 'día' : 'day' : lang === 'es' ? 'días' : 'days';
+  if (lang === 'es') return shift < 0 ? `${n} ${unit} antes` : `${n} ${unit} después`;
+  return shift < 0 ? `${n} ${unit} earlier` : `${n} ${unit} later`;
+};
 
 // ---- Custom calendar range picker, mismo estilo que AptCalendar ----
 const HsDateRange = ({
@@ -749,7 +756,52 @@ const HomeSearch = ({
   }, /*#__PURE__*/React.createElement("strong", null, lang === 'es' ? '¿Más de un mes en Vera Playa?' : 'More than a month in Vera Playa?'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? ' Para estancias largas tenemos condiciones especiales: precio mensual fijo, contrato de arrendamiento y trato directo.' : ' For long stays we offer special terms: fixed monthly rate, rental contract and direct deal.')), /*#__PURE__*/React.createElement("a", {
     href: "estancias-largas.html",
     className: "hs-ls-cta"
-  }, lang === 'es' ? 'Ver condiciones →' : 'See conditions →')), results.every(r => r.available === null) && /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Ver condiciones →' : 'See conditions →')), results.some(r => r.available !== null) && results.every(r => r.available !== true) && (() => {
+    const alts = _hestiaFindAlternatives({
+      checkin,
+      checkout,
+      apt,
+      avail,
+      guests,
+      max: 4
+    });
+    if (!alts.length) return null;
+    const fmt = n => n.toLocaleString('es-ES') + ' €';
+    const altHref = alt => {
+      const p = new URLSearchParams();
+      p.set('apt', alt.aptId);
+      p.set('checkin', alt.checkin);
+      p.set('checkout', alt.checkout);
+      if (guests) p.set('guests', String(guests));
+      return 'reservas.html?' + p.toString();
+    };
+    return /*#__PURE__*/React.createElement("div", {
+      className: "hs-alts"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "hs-alts-hd"
+    }, lang === 'es' ? 'Cerca de lo que buscabas, con disponibilidad' : 'Close to what you wanted, with availability'), /*#__PURE__*/React.createElement("p", {
+      className: "hs-alts-sub"
+    }, lang === 'es' ? 'Estas opciones están libres. El precio es el directo, sin comisiones.' : 'These options are free. The price is direct, with no fees.'), /*#__PURE__*/React.createElement("div", {
+      className: "hs-alts-grid"
+    }, alts.map((alt, i) => /*#__PURE__*/React.createElement("a", {
+      key: i,
+      className: "hs-alt-card",
+      style: {
+        '--hs-accent': alt.accent
+      },
+      href: altHref(alt)
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "hs-alt-apt"
+    }, alt.aptName), /*#__PURE__*/React.createElement("span", {
+      className: "hs-alt-dates"
+    }, _hsFmtDate(alt.checkin, lang), " \u2013 ", _hsFmtDate(alt.checkout, lang)), /*#__PURE__*/React.createElement("span", {
+      className: "hs-alt-shift"
+    }, alt.sameDates ? lang === 'es' ? 'Mismas fechas, otro Hestía' : 'Same dates, another Hestía' : `${alt.nights} ${lang === 'es' ? 'noches' : 'nights'} · ${_hsShiftLabel(alt.shiftDays, lang)}`), /*#__PURE__*/React.createElement("span", {
+      className: "hs-alt-price"
+    }, /*#__PURE__*/React.createElement("strong", null, fmt(alt.total)), /*#__PURE__*/React.createElement("small", null, fmt(alt.avgPerNight), lang === 'es' ? '/noche' : '/night')), /*#__PURE__*/React.createElement("span", {
+      className: "hs-alt-cta"
+    }, lang === 'es' ? 'Reservar →' : 'Book →')))));
+  })(), results.every(r => r.available === null) && /*#__PURE__*/React.createElement("div", {
     className: "hs-no-data"
   }, lang === 'es' ? 'No tenemos datos de disponibilidad en este momento. Escríbenos directamente y te respondemos normalmente en minutos.' : 'We don\'t have availability data right now. Write to us directly and we\'ll usually reply in minutes.', ' ', /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370",
