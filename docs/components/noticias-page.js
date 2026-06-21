@@ -517,9 +517,11 @@ const VozCard = ({
 }, lang === 'es' ? `Ver ${item.apt} →` : `See ${item.apt} →`));
 const ArticleCard = ({
   article,
-  lang
+  lang,
+  id
 }) => /*#__PURE__*/React.createElement("div", {
-  className: "noticias-article"
+  className: "noticias-article",
+  id: id
 }, /*#__PURE__*/React.createElement("span", {
   className: "noticias-tag"
 }, article.tag[lang]), /*#__PURE__*/React.createElement("h3", {
@@ -558,6 +560,26 @@ const NoticiasPage = ({
   const [terrView, setTerrView] = React.useState('zona'); // 'zona' | 'mes'
   const heroRef = React.useRef(null);
   const [floatBadge, setFloatBadge] = React.useState(false);
+  React.useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash.startsWith('#art-')) return;
+    setTerrView('zona');
+    const id = hash.slice(1);
+    const attempt = n => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        });
+        el.classList.add('noticias-article--hl');
+        setTimeout(() => el.classList.remove('noticias-article--hl'), 2400);
+      } else if (n > 0) {
+        setTimeout(() => attempt(n - 1), 200);
+      }
+    };
+    setTimeout(() => attempt(6), 500);
+  }, []);
   React.useEffect(() => {
     const el = heroRef.current;
     if (!el) return;
@@ -607,7 +629,7 @@ const NoticiasPage = ({
     className: "noticias-edition-badge"
   }, lang === 'es' ? 'Edición · Junio 2026' : 'Edition · June 2026'), /*#__PURE__*/React.createElement("h1", {
     className: "noticias-hero-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Noticias & Blog", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "del territorio Hest\xEDa")) : /*#__PURE__*/React.createElement(React.Fragment, null, "News & Blog", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "from Hest\xEDa territory"))), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Noticias & Blog", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "del territorio Hestía")) : /*#__PURE__*/React.createElement(React.Fragment, null, "News & Blog", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "from Hestía territory"))), /*#__PURE__*/React.createElement("p", {
     className: "noticias-hero-sub"
   }, lang === 'es' ? 'Cada mes actualizamos esta página con lo mejor del territorio. Si quieres que cubramos algo: un evento, un rincón, un restaurante, escríbenos.' : "Every month we update this page with the best of the territory. If you'd like us to cover something: an event, a corner, a restaurant, write to us."), /*#__PURE__*/React.createElement("div", {
     className: "noticias-hero-ctas"
@@ -643,7 +665,9 @@ const NoticiasPage = ({
     className: "eyebrow noticias-terr-eyebrow"
   }, lang === 'es' ? 'Noticias del territorio' : 'Territory news'), /*#__PURE__*/React.createElement("h2", {
     className: "noticias-terr-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Qu\xE9 pasa este mes", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "a tu alrededor")) : /*#__PURE__*/React.createElement(React.Fragment, null, "What's happening this month", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "around you")))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Qué pasa este mes", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "a tu alrededor")) : /*#__PURE__*/React.createElement(React.Fragment, null, "What's happening this month", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "around you")))), /*#__PURE__*/React.createElement("div", {
+    className: "noticias-terr-controls"
+  }, /*#__PURE__*/React.createElement("div", {
     className: "noticias-view-toggle",
     role: "group",
     "aria-label": lang === 'es' ? 'Vista' : 'View'
@@ -655,7 +679,10 @@ const NoticiasPage = ({
     type: "button",
     className: `noticias-view-btn${terrView === 'mes' ? ' active' : ''}`,
     onClick: () => setTerrView('mes')
-  }, lang === 'es' ? 'Por mes' : 'By month'))), terrView === 'zona' ? /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Por mes' : 'By month')), /*#__PURE__*/React.createElement("a", {
+    href: "territorio.html",
+    className: "noticias-map-link"
+  }, lang === 'es' ? 'Ver mapa' : 'Map view'))), terrView === 'zona' ? /*#__PURE__*/React.createElement("div", {
     className: "noticias-terr-grid"
   }, N.territorio.map((cat, ci) => /*#__PURE__*/React.createElement("div", {
     key: ci,
@@ -674,7 +701,8 @@ const NoticiasPage = ({
   }, cat.articles.map((a, ai) => /*#__PURE__*/React.createElement(ArticleCard, {
     key: ai,
     article: a,
-    lang: lang
+    lang: lang,
+    id: `art-${ci}-${ai}`
   })))))) : /*#__PURE__*/React.createElement("div", {
     className: "noticias-mes-grid"
   }, byMonth.map(({

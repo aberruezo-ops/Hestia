@@ -332,14 +332,14 @@ const HsDateRange = ({
     className: `avail-arr${canGoPrev ? '' : ' off'}`,
     onClick: prevMonth,
     "aria-label": lang === 'es' ? 'Mes anterior' : 'Previous month'
-  }, "\u2039"), /*#__PURE__*/React.createElement("span", {
+  }, "‹"), /*#__PURE__*/React.createElement("span", {
     className: "avail-nav-lbl"
   }, navLbl), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "avail-arr",
     onClick: nextMonth,
     "aria-label": lang === 'es' ? 'Mes siguiente' : 'Next month'
-  }, "\u203A")), /*#__PURE__*/React.createElement("div", {
+  }, "›")), /*#__PURE__*/React.createElement("div", {
     className: "hscal-months",
     onMouseLeave: () => {
       if (!checkout) setHover(null);
@@ -422,7 +422,7 @@ const HsResultCard = ({
     className: "hs-rc-name"
   }, apt.name), /*#__PURE__*/React.createElement("div", {
     className: "hs-rc-concept"
-  }, "\xAB\u2009", lang === 'es' ? apt.concept_es : apt.concept_en, "\u2009\xBB"))), /*#__PURE__*/React.createElement("div", {
+  }, "«\u2009", lang === 'es' ? apt.concept_es : apt.concept_en, "\u2009»"))), /*#__PURE__*/React.createElement("div", {
     className: `hs-rc-status ${available ? 'ok' : 'no'}`
   }, available ? lang === 'es' ? '✓ Disponible' : '✓ Available' : lang === 'es' ? '✗ Reservado' : '✗ Booked')), available ? /*#__PURE__*/React.createElement(React.Fragment, null, calc && /*#__PURE__*/React.createElement("div", {
     className: "hs-price-block"
@@ -448,7 +448,7 @@ const HsResultCard = ({
     className: "hs-pb-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `${calc.nights} noches × precio variable` : `${calc.nights} nights × variable rate`), /*#__PURE__*/React.createElement("span", null, fmt(calc.baseTotal))), calc.stayD && /*#__PURE__*/React.createElement("div", {
     className: "hs-pb-line hs-pb-disc"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "−", fmt(calc.stayDiscAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
     className: "hs-pb-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento mascota (${PET_SUPP_FLAT}€ tarifa plana)` : `Pet supplement (${PET_SUPP_FLAT}€ flat fee)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), /*#__PURE__*/React.createElement("div", {
     className: `hs-pb-line hs-pb-total-line${isLsStay && lsCalc ? ' is-striked' : ''}`
@@ -460,7 +460,7 @@ const HsResultCard = ({
     className: "price-line-saving"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ahorras' : 'You save'), /*#__PURE__*/React.createElement("span", {
     className: "prl-saving-val"
-  }, "\u2212", fmt(calc.directTotal - lsCalc.total))))), /*#__PURE__*/React.createElement("p", {
+  }, "−", fmt(calc.directTotal - lsCalc.total))))), /*#__PURE__*/React.createElement("p", {
     className: "hs-pb-note"
   }, isLsStay && lsCalc ? lang === 'es' ? '* Señal del 20% para confirmar. Resto a la llegada.' : '* 20% deposit to confirm. Balance paid on arrival.' : lang === 'es' ? '* Precio máximo orientativo. Cuéntanos de ti, muchas veces podemos ajustar.' : '* Maximum indicative price. Tell us about yourselves, we can often adjust.')), /*#__PURE__*/React.createElement("div", {
     className: "hs-rc-actions hs-rc-actions-forward"
@@ -469,10 +469,10 @@ const HsResultCard = ({
     className: "btn btn-primary hs-forward-btn"
   }, lang === 'es' ? 'Avanzar con la reserva' : 'Continue with the booking', /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, " \u2192")), /*#__PURE__*/React.createElement("a", {
+  }, " →")), /*#__PURE__*/React.createElement("a", {
     href: `${apt.slug}.html`,
     className: "hs-rc-link"
-  }, lang === 'es' ? 'Ver Hestía' : 'See Hestía', " \u2192")), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? 'Ver Hestía' : 'See Hestía', " →")), /*#__PURE__*/React.createElement("p", {
     className: "hs-rc-note"
   }, lang === 'es' ? 'En la siguiente pantalla podrás añadir extras (cuna, trona, sábanas, mascota…) y dejarnos tus datos. Normalmente te contestamos en minutos.' : 'On the next screen you can add extras (cot, high chair, linen, pet…) and leave your details. We usually reply in minutes.')) : /*#__PURE__*/React.createElement("p", {
     className: "hs-rc-unavail-note"
@@ -480,7 +480,7 @@ const HsResultCard = ({
     href: "https://wa.me/34620316370",
     target: "_blank",
     rel: "noopener"
-  }, "WhatsApp \u2192"))));
+  }, "WhatsApp →"))));
 };
 
 // ---- Main search widget ----
@@ -631,7 +631,7 @@ const HomeSearch = ({
     className: "eyebrow hs-eyebrow"
   }, b2b ? lang === 'es' ? 'Disponibilidad · Vera Playa' : 'Availability · Vera Playa' : lang === 'es' ? 'Busca tu estancia · Vera Playa' : 'Find your stay · Vera Playa'), /*#__PURE__*/React.createElement("h2", {
     className: "hs-title"
-  }, b2b ? lang === 'es' ? /*#__PURE__*/React.createElement("em", null, "Comprueba tus fechas") : /*#__PURE__*/React.createElement("em", null, "Check your dates") : lang === 'es' ? /*#__PURE__*/React.createElement("em", null, "\xBFCu\xE1ndo ven\xEDs?") : /*#__PURE__*/React.createElement("em", null, "When are you coming?")), /*#__PURE__*/React.createElement("p", {
+  }, b2b ? lang === 'es' ? /*#__PURE__*/React.createElement("em", null, "Comprueba tus fechas") : /*#__PURE__*/React.createElement("em", null, "Check your dates") : lang === 'es' ? /*#__PURE__*/React.createElement("em", null, "¿Cuándo venís?") : /*#__PURE__*/React.createElement("em", null, "When are you coming?")), /*#__PURE__*/React.createElement("p", {
     className: "hs-sub"
   }, b2b ? lang === 'es' ? 'Mira qué apartamentos tenemos libres y su precio. Para empresas tenemos condiciones especiales: lo mejor es que lo tratemos personalmente.' : 'See which apartments are free and at what price. For companies we have special terms, so it is best to handle it personally.' : lang === 'es' ? 'Coge uno de nuestros huecos o elige tu Hestía y las fechas que prefieras.' : 'Grab one of our available slots or choose your Hestía and the dates you prefer.')), /*#__PURE__*/React.createElement("form", {
     className: "hs-form",
@@ -687,7 +687,7 @@ const HomeSearch = ({
     className: "hs-cnt-btn",
     "aria-label": lang === 'es' ? 'Reducir huéspedes' : 'Fewer guests',
     onClick: () => setGuests(g => Math.max(1, g - 1))
-  }, "\u2212"), /*#__PURE__*/React.createElement("span", {
+  }, "−"), /*#__PURE__*/React.createElement("span", {
     className: "hs-cnt-num"
   }, guests), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -704,7 +704,7 @@ const HomeSearch = ({
     className: "btn btn-primary hs-submit"
   }, lang === 'es' ? 'Comprobar disponibilidad' : 'Check availability', /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, " \u2192")), loading && /*#__PURE__*/React.createElement("span", {
+  }, " →")), loading && /*#__PURE__*/React.createElement("span", {
     className: "hs-loading-note"
   }, lang === 'es' ? 'Cargando disponibilidad…' : 'Loading availability…')), /*#__PURE__*/React.createElement("div", {
     className: "hs-trust"
@@ -735,7 +735,7 @@ const HomeSearch = ({
     className: "hs-longstay-nudge hs-b2b-nudge"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hs-ls-icon"
-  }, "\uD83D\uDCBC"), /*#__PURE__*/React.createElement("div", {
+  }, "💼"), /*#__PURE__*/React.createElement("div", {
     className: "hs-ls-body"
   }, /*#__PURE__*/React.createElement("strong", null, lang === 'es' ? 'Condiciones especiales para empresas' : 'Special terms for companies'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? ' Sobre este precio ajustamos las condiciones según vuestras fechas y necesidades. Lo mejor es que lo tratemos personalmente.' : ' We tailor the terms on top of this price to your dates and needs. It is best to handle it personally.')), /*#__PURE__*/React.createElement("a", {
     href: "#propuesta",
@@ -744,7 +744,7 @@ const HomeSearch = ({
     className: "hs-longstay-nudge"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hs-ls-icon"
-  }, "\uD83C\uDFE0"), /*#__PURE__*/React.createElement("div", {
+  }, "🏠"), /*#__PURE__*/React.createElement("div", {
     className: "hs-ls-body"
   }, /*#__PURE__*/React.createElement("strong", null, lang === 'es' ? '¿Más de un mes en Vera Playa?' : 'More than a month in Vera Playa?'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? ' Para estancias largas tenemos condiciones especiales: precio mensual fijo, contrato de arrendamiento y trato directo.' : ' For long stays we offer special terms: fixed monthly rate, rental contract and direct deal.')), /*#__PURE__*/React.createElement("a", {
     href: "estancias-largas.html",
@@ -755,10 +755,10 @@ const HomeSearch = ({
     href: "https://wa.me/34620316370",
     target: "_blank",
     rel: "noopener"
-  }, "WhatsApp \u2192")), /*#__PURE__*/React.createElement("button", {
+  }, "WhatsApp →")), /*#__PURE__*/React.createElement("button", {
     className: "hs-reset",
     onClick: handleReset
-  }, "\u2190 ", lang === 'es' ? 'Nueva búsqueda' : 'New search')), /*#__PURE__*/React.createElement("div", {
+  }, "← ", lang === 'es' ? 'Nueva búsqueda' : 'New search')), /*#__PURE__*/React.createElement("div", {
     className: "hs-notify"
   }, results && results.length > 0 && results.every(r => r.available === false) ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", {
     className: "hs-notify-text"

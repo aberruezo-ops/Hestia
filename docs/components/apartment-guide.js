@@ -4894,10 +4894,10 @@ const CompactPlaceItem = ({
     className: "ag-place-tier"
   }, p.tier), typeof p.rating === 'number' && /*#__PURE__*/React.createElement("span", {
     className: "ag-place-rating"
-  }, "\u2B50 ", p.rating.toFixed(1)), hasDetails && /*#__PURE__*/React.createElement("span", {
+  }, "⭐ ", p.rating.toFixed(1)), hasDetails && /*#__PURE__*/React.createElement("span", {
     className: `ag-place-compact-chev ${open ? 'open' : ''}`,
     "aria-hidden": "true"
-  }, "\u2193")), open && /*#__PURE__*/React.createElement("div", {
+  }, "↓")), open && /*#__PURE__*/React.createElement("div", {
     className: "ag-place-compact-body"
   }, p.desc && /*#__PURE__*/React.createElement("span", {
     className: "ag-place-desc"
@@ -4926,7 +4926,7 @@ const CompactPlaceItem = ({
     className: "ag-place-event-name"
   }, e.name), e.when && /*#__PURE__*/React.createElement("span", {
     className: "ag-place-event-when"
-  }, " \xB7 ", e.when), e.d && /*#__PURE__*/React.createElement("span", {
+  }, " · ", e.when), e.d && /*#__PURE__*/React.createElement("span", {
     className: "ag-place-event-desc"
   }, ", ", e.d))))), p.services && /*#__PURE__*/React.createElement("span", {
     className: "ag-place-services"
@@ -4939,14 +4939,14 @@ const CompactPlaceItem = ({
   }, lang === 'es' ? 'Dificultad:' : 'Level:'), ' ', p.level), p.phone && /*#__PURE__*/React.createElement("a", {
     className: "ag-place-phone",
     href: `tel:${p.phone.replace(/\s/g, '')}`
-  }, "\uD83D\uDCDE ", p.phone), /*#__PURE__*/React.createElement("a", {
+  }, "📞 ", p.phone), /*#__PURE__*/React.createElement("a", {
     className: "ag-place-link",
     href: mapHref,
     target: "_blank",
     rel: "noopener"
   }, lang === 'es' ? 'Cómo llegar' : 'Directions', " ", /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
-  }, "\u2197"))));
+  }, "↗"))));
 };
 
 // ================================================================
@@ -4983,14 +4983,14 @@ const DishesGuide = ({
     "aria-hidden": "true"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-cat-icon"
-  }, "\uD83C\uDF7D\uFE0F")), /*#__PURE__*/React.createElement("span", {
+  }, "🍽️")), /*#__PURE__*/React.createElement("span", {
     className: "ag-cat-label"
   }, lang === 'es' ? 'Platos típicos' : 'Iconic dishes'), /*#__PURE__*/React.createElement("span", {
     className: "ag-cat-count"
   }, ICONIC_DISHES.length), /*#__PURE__*/React.createElement("span", {
     className: `ag-cat-chev${open ? ' open' : ''}`,
     "aria-hidden": "true"
-  }, "\u2193")), /*#__PURE__*/React.createElement("div", {
+  }, "↓")), /*#__PURE__*/React.createElement("div", {
     className: "ag-cat-body",
     "aria-hidden": !open
   }, /*#__PURE__*/React.createElement("div", {
@@ -5036,7 +5036,7 @@ const DishesGuide = ({
       rel: "noopener"
     }, p.name, " ", /*#__PURE__*/React.createElement("span", {
       "aria-hidden": "true"
-    }, "\u2197"))))), refs.length === 0 && whereText && /*#__PURE__*/React.createElement("p", {
+    }, "↗"))))), refs.length === 0 && whereText && /*#__PURE__*/React.createElement("p", {
       className: "ag-dish-where ag-dish-where-text"
     }, /*#__PURE__*/React.createElement("span", {
       className: "ag-dish-where-tag"
@@ -5047,7 +5047,7 @@ const DishesGuide = ({
       rel: "noopener"
     }, lang === 'es' ? 'mapa' : 'map', " ", /*#__PURE__*/React.createElement("span", {
       "aria-hidden": "true"
-    }, "\u2197")))));
+    }, "↗")))));
   }))));
 };
 
@@ -5076,7 +5076,7 @@ const TapasRoutes = ({
     "aria-hidden": "true"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-cat-icon"
-  }, "\uD83D\uDDFA\uFE0F")), /*#__PURE__*/React.createElement("span", {
+  }, "🗺️")), /*#__PURE__*/React.createElement("span", {
     className: "ag-cat-label"
   }, lang === 'es' ? 'Rutas de tapas' : 'Tapas routes'), /*#__PURE__*/React.createElement("span", {
     className: "ag-cat-count"
@@ -5100,7 +5100,7 @@ const TapasRoutes = ({
     }, city), /*#__PURE__*/React.createElement("span", {
       className: `ag-cat-chev${isOpen ? ' open' : ''}`,
       "aria-hidden": "true"
-    }, "\u2193")), isOpen && /*#__PURE__*/React.createElement("div", {
+    }, "↓")), isOpen && /*#__PURE__*/React.createElement("div", {
       className: "ag-tapas-route-body"
     }, /*#__PURE__*/React.createElement("p", {
       className: "ag-tapas-intro"
@@ -5169,7 +5169,7 @@ const EventMonthGroup = ({
   }, events.length), /*#__PURE__*/React.createElement("span", {
     className: `ag-cal-month-chev${open ? ' open' : ''}`,
     "aria-hidden": "true"
-  }, "\u2193")), /*#__PURE__*/React.createElement("div", {
+  }, "↓")), /*#__PURE__*/React.createElement("div", {
     className: "ag-cal-month-body",
     "aria-hidden": !open
   }, /*#__PURE__*/React.createElement("div", {
@@ -5188,7 +5188,7 @@ const EventMonthGroup = ({
     }, e.when), isStar && /*#__PURE__*/React.createElement("span", {
       className: "ag-cal-card-star",
       title: lang === 'es' ? 'Interés turístico internacional' : 'International tourist interest'
-    }, "\u2605")), /*#__PURE__*/React.createElement("h4", {
+    }, "★")), /*#__PURE__*/React.createElement("h4", {
       className: "ag-cal-card-name"
     }, e.name), /*#__PURE__*/React.createElement("div", {
       className: "ag-cal-card-place"
@@ -5903,14 +5903,14 @@ const PlacesOfInterestAtlas = ({
         className: "ag-poi-km"
       }, p.km, " km"), /*#__PURE__*/React.createElement("span", {
         className: "ag-poi-sep"
-      }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+      }, "·"), /*#__PURE__*/React.createElement("span", {
         className: "ag-poi-how"
       }, lang === 'es' ? p.comoLlegar_es || p.comoLlegar_en : p.comoLlegar_en || p.comoLlegar_es), p.anchor && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
         className: "ag-poi-sep"
-      }, "\xB7"), /*#__PURE__*/React.createElement("a", {
+      }, "·"), /*#__PURE__*/React.createElement("a", {
         className: "ag-poi-anchor",
         href: `#${p.anchor}`
-      }, lang === 'es' ? 'ver en la guía' : 'see in the guide', " \u2193"))));
+      }, lang === 'es' ? 'ver en la guía' : 'see in the guide', " ↓"))));
     })));
   }));
 };
@@ -5933,18 +5933,18 @@ const CatGroup = ({
       className: "ag-place-star",
       title: lang === 'es' ? 'Imperdible' : 'Must-see',
       "aria-hidden": "true"
-    }, "\u2726"), /*#__PURE__*/React.createElement("span", {
+    }, "✦"), /*#__PURE__*/React.createElement("span", {
       className: "ag-place-name"
     }, p.name), p.tier && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-tier"
     }, p.tier), typeof p.rating === 'number' && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-rating",
       title: lang === 'es' ? 'Valoración Google' : 'Google rating'
-    }, "\u2B50 ", p.rating.toFixed(1))), (p.desc || p.desc_en) && /*#__PURE__*/React.createElement("span", {
+    }, "⭐ ", p.rating.toFixed(1))), (p.desc || p.desc_en) && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-desc"
     }, lang === 'en' && p.desc_en ? p.desc_en : p.desc, p.dist && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-dist"
-    }, " \xB7 ", p.dist)), p.specialty && /*#__PURE__*/React.createElement("span", {
+    }, " · ", p.dist)), p.specialty && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-specialty"
     }, /*#__PURE__*/React.createElement("span", {
       className: "ag-place-specialty-tag"
@@ -5969,7 +5969,7 @@ const CatGroup = ({
       className: "ag-place-event-name"
     }, e.name), e.when && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-event-when"
-    }, " \xB7 ", e.when), e.d && /*#__PURE__*/React.createElement("span", {
+    }, " · ", e.when), e.d && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-event-desc"
     }, ", ", e.d))))), p.services && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-services",
@@ -5988,7 +5988,7 @@ const CatGroup = ({
       rel: "noopener"
     }, lang === 'es' ? 'Cómo llegar' : 'Directions', " ", /*#__PURE__*/React.createElement("span", {
       "aria-hidden": "true"
-    }, "\u2197")));
+    }, "↗")));
   };
   return /*#__PURE__*/React.createElement("div", {
     className: `ag-cat-group ${open ? 'is-open' : ''}`
@@ -6012,7 +6012,7 @@ const CatGroup = ({
   }, places.length), /*#__PURE__*/React.createElement("span", {
     className: `ag-cat-chev ${open ? 'open' : ''}`,
     "aria-hidden": "true"
-  }, "\u2193")), /*#__PURE__*/React.createElement("div", {
+  }, "↓")), /*#__PURE__*/React.createElement("div", {
     className: "ag-cat-body",
     "aria-hidden": !open
   }, featured.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
@@ -6020,7 +6020,7 @@ const CatGroup = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-cat-sub-star",
     "aria-hidden": "true"
-  }, "\u2726"), lang === 'es' ? 'Imperdibles' : 'Must-see'), /*#__PURE__*/React.createElement("ul", {
+  }, "✦"), lang === 'es' ? 'Imperdibles' : 'Must-see'), /*#__PURE__*/React.createElement("ul", {
     className: "ag-places ag-places-featured"
   }, featured.map(renderPlace))), rest.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, featured.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "ag-cat-sub-h ag-cat-sub-h-rest"
@@ -6075,7 +6075,7 @@ const Top5BeachesBand = ({
     }, /*#__PURE__*/React.createElement("span", {
       className: "ag-top5-photo-icon",
       "aria-hidden": "true"
-    }, "\uD83D\uDCF7"), /*#__PURE__*/React.createElement("span", {
+    }, "📷"), /*#__PURE__*/React.createElement("span", {
       className: "ag-top5-photo-label"
     }, lang === 'es' ? 'Ver fotos' : 'Photos')), /*#__PURE__*/React.createElement("div", {
       className: "ag-top5-text"
@@ -6085,7 +6085,7 @@ const Top5BeachesBand = ({
       className: "ag-top5-name"
     }, p.name), typeof p.rating === 'number' && /*#__PURE__*/React.createElement("span", {
       className: "ag-top5-rating"
-    }, "\u2B50 ", p.rating.toFixed(1))), p.desc && /*#__PURE__*/React.createElement("span", {
+    }, "⭐ ", p.rating.toFixed(1))), p.desc && /*#__PURE__*/React.createElement("span", {
       className: "ag-top5-desc"
     }, p.desc), p.services && /*#__PURE__*/React.createElement("span", {
       className: "ag-top5-meta"
@@ -6099,13 +6099,13 @@ const Top5BeachesBand = ({
       rel: "noopener"
     }, lang === 'es' ? 'Cómo llegar' : 'Directions', " ", /*#__PURE__*/React.createElement("span", {
       "aria-hidden": "true"
-    }, "\u2197")), /*#__PURE__*/React.createElement("a", {
+    }, "↗")), /*#__PURE__*/React.createElement("a", {
       href: photosHref,
       target: "_blank",
       rel: "noopener"
     }, lang === 'es' ? 'Saber más' : 'Read more', " ", /*#__PURE__*/React.createElement("span", {
       "aria-hidden": "true"
-    }, "\u2197")))));
+    }, "↗")))));
   })));
 };
 
@@ -9310,21 +9310,21 @@ const DayPlanCard = ({
   }, plan.start, /*#__PURE__*/React.createElement("span", {
     className: "dp-card-arrow",
     "aria-hidden": "true"
-  }, "\u2192"), plan.end), /*#__PURE__*/React.createElement("span", {
+  }, "→"), plan.end), /*#__PURE__*/React.createElement("span", {
     className: "dp-card-title"
   }, title), /*#__PURE__*/React.createElement("span", {
     className: `dp-card-chev ${open ? 'open' : ''}`,
     "aria-hidden": "true"
-  }, "\u2193")), /*#__PURE__*/React.createElement("div", {
+  }, "↓")), /*#__PURE__*/React.createElement("div", {
     className: "dp-card-body",
     "aria-hidden": !open
   }, (durH || totalKm > 0 || themes.length > 0) && /*#__PURE__*/React.createElement("div", {
     className: "dp-meta-bar"
   }, durH && /*#__PURE__*/React.createElement("span", {
     className: "dp-meta-pill dp-meta-duration"
-  }, "\u23F1 ", durH, " h"), totalKm > 0 && /*#__PURE__*/React.createElement("span", {
+  }, "⏱ ", durH, " h"), totalKm > 0 && /*#__PURE__*/React.createElement("span", {
     className: "dp-meta-pill dp-meta-km"
-  }, "\uD83D\uDE97 ", Math.round(totalKm), " km"), themes.map(th => {
+  }, "🚗 ", Math.round(totalKm), " km"), themes.map(th => {
     const def = THEMES_DEFS[th] || {
       es: th,
       en: th,
@@ -9360,10 +9360,10 @@ const DayPlanCard = ({
     className: "dp-step-extra"
   }, s.km != null && s.km > 0 && /*#__PURE__*/React.createElement("span", {
     className: "dp-step-km"
-  }, "\uD83D\uDCCD ", s.km < 1 ? `${Math.round(s.km * 1000)} m` : `${s.km} km`), s.rating && /*#__PURE__*/React.createElement("span", {
+  }, "📍 ", s.km < 1 ? `${Math.round(s.km * 1000)} m` : `${s.km} km`), s.rating && /*#__PURE__*/React.createElement("span", {
     className: "dp-step-rating",
     title: `Fuente: ${s.rating.src}`
-  }, "\u2605 ", s.rating.v, " ", /*#__PURE__*/React.createElement("small", null, "\xB7 ", s.rating.src)), s.gmaps && /*#__PURE__*/React.createElement("a", {
+  }, "★ ", s.rating.v, " ", /*#__PURE__*/React.createElement("small", null, "· ", s.rating.src)), s.gmaps && /*#__PURE__*/React.createElement("a", {
     className: "dp-step-gmaps",
     href: s.gmaps,
     target: "_blank",
@@ -9481,7 +9481,7 @@ const DayPlans = ({
     type: "button",
     className: "dp-theme-clear",
     onClick: () => setThemes([])
-  }, "\u2715 ", lang === 'es' ? 'Limpiar' : 'Clear'))), Object.entries(DAY_PLAN_GROUPS).map(([type, group]) => {
+  }, "✕ ", lang === 'es' ? 'Limpiar' : 'Clear'))), Object.entries(DAY_PLAN_GROUPS).map(([type, group]) => {
     const plans = DAY_PLANS.map(enrichPlan).filter(p => p.type === type && matches(p));
     if (!plans.length) return null;
     return /*#__PURE__*/React.createElement("div", {
@@ -9649,7 +9649,7 @@ const AptGuideView = ({
     onClick: onClose
   }, /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
-  }, "\u2190"), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Volver a Hestía' : 'Back to Hestía')), /*#__PURE__*/React.createElement("span", {
+  }, "←"), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Volver a Hestía' : 'Back to Hestía')), /*#__PURE__*/React.createElement("span", {
     className: "ag-hero-eyebrow"
   }, lang === 'es' ? 'Guía del huésped' : 'Guest guide'), /*#__PURE__*/React.createElement("h1", {
     className: "ag-hero-title"
@@ -9667,7 +9667,7 @@ const AptGuideView = ({
     className: "ag-print-cover-top"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-print-cover-brand"
-  }, "Hest\xEDa Your Home"), /*#__PURE__*/React.createElement("span", {
+  }, "Hestía Your Home"), /*#__PURE__*/React.createElement("span", {
     className: "ag-print-cover-meta"
   }, lang === 'es' ? 'Guía del hogar · v1.0' : 'Home guide · v1.0')), /*#__PURE__*/React.createElement("div", {
     className: "ag-print-cover-num",
@@ -9678,7 +9678,7 @@ const AptGuideView = ({
     className: "ag-print-cover-eyebrow"
   }, lang === 'es' ? 'Vera Playa · Almería · Desde 2016' : 'Vera Playa · Almería · Since 2016'), /*#__PURE__*/React.createElement("h1", {
     className: "ag-print-cover-title"
-  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, apt.name_short)), /*#__PURE__*/React.createElement("p", {
+  }, "Hestía ", /*#__PURE__*/React.createElement("em", null, apt.name_short)), /*#__PURE__*/React.createElement("p", {
     className: "ag-print-cover-sub"
   }, s.cover_tagline)), /*#__PURE__*/React.createElement("div", {
     className: "ag-print-cover-rule",
@@ -9700,7 +9700,7 @@ const AptGuideView = ({
     className: "ag-print-toc-label"
   }, lang === 'es' ? 'Índice' : 'Contents'), /*#__PURE__*/React.createElement("h2", {
     className: "ag-print-toc-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tu Hest\xEDa,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "en ", GUIDE_SECTIONS.length, " cap\xEDtulos.")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Your Hest\xEDa,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "in ", GUIDE_SECTIONS.length, " chapters."))), /*#__PURE__*/React.createElement("ol", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tu Hestía,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "en ", GUIDE_SECTIONS.length, " capítulos.")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Your Hestía,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "in ", GUIDE_SECTIONS.length, " chapters."))), /*#__PURE__*/React.createElement("ol", {
     className: "ag-print-toc-list"
   }, GUIDE_SECTIONS.map((sec, i) => /*#__PURE__*/React.createElement("li", {
     key: sec.id
@@ -9769,7 +9769,7 @@ const AptGuideView = ({
     className: "ag-nav-close no-print",
     onClick: () => setNavOpen(false),
     "aria-label": lang === 'es' ? 'Cerrar índice' : 'Close contents'
-  }, "\u2715 ", /*#__PURE__*/React.createElement("span", {
+  }, "✕ ", /*#__PURE__*/React.createElement("span", {
     className: "ag-nav-close-txt"
   }, lang === 'es' ? 'Cerrar' : 'Close')), document.body), /*#__PURE__*/React.createElement("aside", {
     className: `ag-nav no-print${navOpen ? ' is-open' : ''}`
@@ -9822,7 +9822,7 @@ const AptGuideView = ({
     href: s.welcome.pdLinkHref,
     target: "_blank",
     rel: "noopener"
-  }, s.welcome.pdLinkLabel, " \u2192"))), s.checkin && /*#__PURE__*/React.createElement("section", {
+  }, s.welcome.pdLinkLabel, " →"))), s.checkin && /*#__PURE__*/React.createElement("section", {
     id: "ag-llegada",
     className: "ag-section ag-section-checkin"
   }, /*#__PURE__*/React.createElement("span", {
@@ -9852,7 +9852,7 @@ const AptGuideView = ({
     className: "ag-airport-km"
   }, a.km, " km"), /*#__PURE__*/React.createElement("span", {
     className: "ag-airport-sep"
-  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+  }, "·"), /*#__PURE__*/React.createElement("span", {
     className: "ag-airport-time"
   }, a.time)), /*#__PURE__*/React.createElement("div", {
     className: "ag-airport-notes"
@@ -9879,7 +9879,7 @@ const AptGuideView = ({
     className: "ag-airport-km"
   }, st.km, " km"), /*#__PURE__*/React.createElement("span", {
     className: "ag-airport-sep"
-  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+  }, "·"), /*#__PURE__*/React.createElement("span", {
     className: "ag-airport-time"
   }, st.time)), /*#__PURE__*/React.createElement("div", {
     className: "ag-airport-notes"
@@ -9900,7 +9900,7 @@ const AptGuideView = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-car-icon",
     "aria-hidden": "true"
-  }, "\u2726"), s.checkin.carAccompany)), /*#__PURE__*/React.createElement("h3", {
+  }, "✦"), s.checkin.carAccompany)), /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"
   }, s.checkin.modalitiesTitle), /*#__PURE__*/React.createElement("div", {
     className: "ag-checkin-modes"
@@ -9921,7 +9921,7 @@ const AptGuideView = ({
     className: "ag-checkin-garage-apt"
   }, apt.name), /*#__PURE__*/React.createElement("span", {
     className: "ag-checkin-garage-sep"
-  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+  }, "·"), /*#__PURE__*/React.createElement("span", {
     className: "ag-checkin-garage-label"
   }, lang === 'es' ? 'Plaza' : 'Spot'), /*#__PURE__*/React.createElement("span", {
     className: "ag-checkin-garage-num"
@@ -10077,7 +10077,7 @@ const AptGuideView = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-sites-arrow",
     "aria-hidden": "true"
-  }, "\u2197"), l.label)))))))), /*#__PURE__*/React.createElement("div", {
+  }, "↗"), l.label)))))))), /*#__PURE__*/React.createElement("div", {
     className: "ag-when"
   }, /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"
@@ -10309,7 +10309,7 @@ const AptGuideView = ({
     onClick: onClose
   }, /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
-  }, "\u2190"), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Volver a Hestía' : 'Back to Hestía'))))));
+  }, "←"), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Volver a Hestía' : 'Back to Hestía'))))));
 };
 
 // ================================================================
@@ -10396,19 +10396,19 @@ const AptGuideGate = ({
     className: "apt-guide-gate-eyebrow"
   }, lang === 'es' ? 'Guía del huésped' : 'Guest guide'), /*#__PURE__*/React.createElement("h2", {
     className: "apt-guide-gate-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "La gu\xEDa completa de ", /*#__PURE__*/React.createElement("em", null, apt.es.name)) : /*#__PURE__*/React.createElement(React.Fragment, null, "The complete ", /*#__PURE__*/React.createElement("em", null, apt.en.name), " guide")), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "La guía completa de ", /*#__PURE__*/React.createElement("em", null, apt.es.name)) : /*#__PURE__*/React.createElement(React.Fragment, null, "The complete ", /*#__PURE__*/React.createElement("em", null, apt.en.name), " guide")), /*#__PURE__*/React.createElement("p", {
     className: "apt-guide-gate-desc"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "No es un folleto: es la ", /*#__PURE__*/React.createElement("strong", null, "supergu\xEDa que nos habr\xEDa gustado encontrar a nosotros"), " cuando llegamos por primera vez a Vera. Veintid\xF3s cap\xEDtulos con todo lo que necesitas para vivir tu estancia, desde c\xF3mo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense.") : /*#__PURE__*/React.createElement(React.Fragment, null, "This isn't a leaflet: it's the ", /*#__PURE__*/React.createElement("strong", null, "super-guide we wish we'd had ourselves"), " the first time we arrived in Vera. Twenty-two chapters with everything you need for your stay, from how to get here from any of the five nearest airports to the corners only locals from the Levante know.")), /*#__PURE__*/React.createElement("ul", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "No es un folleto: es la ", /*#__PURE__*/React.createElement("strong", null, "superguía que nos habría gustado encontrar a nosotros"), " cuando llegamos por primera vez a Vera. Veintidós capítulos con todo lo que necesitas para vivir tu estancia, desde cómo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense.") : /*#__PURE__*/React.createElement(React.Fragment, null, "This isn't a leaflet: it's the ", /*#__PURE__*/React.createElement("strong", null, "super-guide we wish we'd had ourselves"), " the first time we arrived in Vera. Twenty-two chapters with everything you need for your stay, from how to get here from any of the five nearest airports to the corners only locals from the Levante know.")), /*#__PURE__*/React.createElement("ul", {
     className: "apt-guide-gate-stats"
-  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 cap\xEDtulos"), " sobre tu Hest\xEDa y el entorno") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 chapters"), " on your Hest\xEDa and the area")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "M\xE1s de 230 recomendaciones"), ": restaurantes, playas, bares, bodegas, mercados, pescader\xEDas\u2026") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "More than 230 recommendations"), ": restaurants, beaches, bars, wineries, markets, fishmongers\u2026")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 planes de d\xEDa completo"), " con horarios, rutas y reservas") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 full-day itineraries"), " with timing, routes and bookings")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Annual calendar"), " of festivals and local events")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Servicios a mano"), ": centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarder\xEDas para mascotas, coworking, lavander\xEDas y cajeros\u2026") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Everything within reach"), ": health centres, 24 h vets, pharmacies, physio clinics, pet boarding, coworking, laundries & ATMs\u2026")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Tel\xE9fonos \xFAtiles"), " y nuestro contacto directo antes, durante y despu\xE9s de tu estancia") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Useful phones"), " and our direct line before, during and after your stay"))), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 capítulos"), " sobre tu Hestía y el entorno") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 chapters"), " on your Hestía and the area")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Más de 230 recomendaciones"), ": restaurantes, playas, bares, bodegas, mercados, pescaderías…") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "More than 230 recommendations"), ": restaurants, beaches, bars, wineries, markets, fishmongers…")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 planes de día completo"), " con horarios, rutas y reservas") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 full-day itineraries"), " with timing, routes and bookings")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Annual calendar"), " of festivals and local events")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Servicios a mano"), ": centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías para mascotas, coworking, lavanderías y cajeros…") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Everything within reach"), ": health centres, 24 h vets, pharmacies, physio clinics, pet boarding, coworking, laundries & ATMs…")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Teléfonos útiles"), " y nuestro contacto directo antes, durante y después de tu estancia") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Useful phones"), " and our direct line before, during and after your stay"))), /*#__PURE__*/React.createElement("p", {
     className: "apt-guide-gate-foot"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Web interactiva + PDF descargable de 40 p\xE1ginas. Reservada para hu\xE9spedes con PIN.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Interactive web + 40-page downloadable PDF. Reserved for guests with a PIN.")), /*#__PURE__*/React.createElement("button", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Web interactiva + PDF descargable de 40 páginas. Reservada para huéspedes con PIN.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Interactive web + 40-page downloadable PDF. Reserved for guests with a PIN.")), /*#__PURE__*/React.createElement("button", {
     className: "apt-guide-gate-btn",
     onClick: () => setOpen(true)
   }, /*#__PURE__*/React.createElement("span", null, t.cta), /*#__PURE__*/React.createElement("span", {
     className: "apt-guide-gate-arrow",
     "aria-hidden": "true"
-  }, "\u2192")))), open && /*#__PURE__*/React.createElement("div", {
+  }, "→")))), open && /*#__PURE__*/React.createElement("div", {
     className: "ag-modal-backdrop",
     onClick: () => setOpen(false)
   }, /*#__PURE__*/React.createElement("div", {
@@ -10425,7 +10425,7 @@ const AptGuideGate = ({
     className: "ag-modal-close",
     onClick: () => setOpen(false),
     "aria-label": t.cancel
-  }, "\xD7"), /*#__PURE__*/React.createElement("h3", {
+  }, "×"), /*#__PURE__*/React.createElement("h3", {
     id: "ag-modal-title",
     className: "ag-modal-title"
   }, t.title), /*#__PURE__*/React.createElement("p", {

@@ -389,8 +389,8 @@ const VozCard = ({ item, lang }) => (
   </div>
 );
 
-const ArticleCard = ({ article, lang }) => (
-  <div className="noticias-article">
+const ArticleCard = ({ article, lang, id }) => (
+  <div className="noticias-article" id={id}>
     <span className="noticias-tag">{article.tag[lang]}</span>
     <h3 className="noticias-titulo">{article.titulo[lang]}</h3>
     <p className="noticias-cuerpo">{article.cuerpo[lang]}</p>
@@ -417,6 +417,24 @@ const NoticiasPage = ({ lang }) => {
   const [terrView, setTerrView] = React.useState('zona'); // 'zona' | 'mes'
   const heroRef = React.useRef(null);
   const [floatBadge, setFloatBadge] = React.useState(false);
+
+  React.useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash.startsWith('#art-')) return;
+    setTerrView('zona');
+    const id = hash.slice(1);
+    const attempt = (n) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.classList.add('noticias-article--hl');
+        setTimeout(() => el.classList.remove('noticias-article--hl'), 2400);
+      } else if (n > 0) {
+        setTimeout(() => attempt(n - 1), 200);
+      }
+    };
+    setTimeout(() => attempt(6), 500);
+  }, []);
 
   React.useEffect(() => {
     const el = heroRef.current;
@@ -515,21 +533,26 @@ const NoticiasPage = ({ lang }) => {
                   : <>{"What's happening this month"}<br/><em>around you</em></>}
               </h2>
             </div>
-            <div className="noticias-view-toggle" role="group" aria-label={lang === 'es' ? 'Vista' : 'View'}>
-              <button
-                type="button"
-                className={`noticias-view-btn${terrView === 'zona' ? ' active' : ''}`}
-                onClick={() => setTerrView('zona')}
-              >
-                {lang === 'es' ? 'Por zona' : 'By area'}
-              </button>
-              <button
-                type="button"
-                className={`noticias-view-btn${terrView === 'mes' ? ' active' : ''}`}
-                onClick={() => setTerrView('mes')}
-              >
-                {lang === 'es' ? 'Por mes' : 'By month'}
-              </button>
+            <div className="noticias-terr-controls">
+              <div className="noticias-view-toggle" role="group" aria-label={lang === 'es' ? 'Vista' : 'View'}>
+                <button
+                  type="button"
+                  className={`noticias-view-btn${terrView === 'zona' ? ' active' : ''}`}
+                  onClick={() => setTerrView('zona')}
+                >
+                  {lang === 'es' ? 'Por zona' : 'By area'}
+                </button>
+                <button
+                  type="button"
+                  className={`noticias-view-btn${terrView === 'mes' ? ' active' : ''}`}
+                  onClick={() => setTerrView('mes')}
+                >
+                  {lang === 'es' ? 'Por mes' : 'By month'}
+                </button>
+              </div>
+              <a href="territorio.html" className="noticias-map-link">
+                {lang === 'es' ? 'Ver mapa' : 'Map view'}
+              </a>
             </div>
           </div>
 
@@ -543,7 +566,7 @@ const NoticiasPage = ({ lang }) => {
                   </div>
                   <div className="noticias-articles">
                     {cat.articles.map((a, ai) => (
-                      <ArticleCard key={ai} article={a} lang={lang} />
+                      <ArticleCard key={ai} article={a} lang={lang} id={`art-${ci}-${ai}`} />
                     ))}
                   </div>
                 </div>
