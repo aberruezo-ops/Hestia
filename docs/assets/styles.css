@@ -3635,7 +3635,7 @@ footer {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(8px) saturate(1.2);
+  filter: blur(4px) saturate(1.2);
   transform: scale(1.12);
   opacity: 0.66;
   z-index: 0;
