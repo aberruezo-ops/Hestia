@@ -501,6 +501,7 @@ p  { line-height: 1.65; font-weight: 300; }
   padding: 6px 2px;
   position: relative;
   opacity: 0.82;
+  text-align: center;
   transition: opacity .2s;
 }
 .header nav a:hover { opacity: 1; }
@@ -542,6 +543,9 @@ p  { line-height: 1.65; font-weight: 300; }
    el halo coloreado que cicla. ::after es el sheen de luz. */
 .header nav .cta {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px 22px;
   border: 1px solid rgba(240, 232, 213, 0.28) !important;
   border-radius: 10px 0 10px 0;
@@ -609,7 +613,8 @@ p  { line-height: 1.65; font-weight: 300; }
   .header nav .cta::after { animation: none; }
 }
 .header nav .cta {
-  transform: translate3d(var(--mag-x), var(--mag-y), 0);
+  --cta-lift: 0px;
+  transform: translate3d(var(--mag-x), calc(var(--mag-y) + var(--cta-lift)), 0);
   transition: transform .25s cubic-bezier(.2, 1.4, .35, 1), filter .25s ease, color .25s ease, background-color .3s ease, box-shadow .3s ease;
 }
 .header nav .cta:hover {
@@ -627,7 +632,70 @@ p  { line-height: 1.65; font-weight: 300; }
   --mag-ty: 0px;
   display: inline-block;
   transform: translate3d(var(--mag-tx), var(--mag-ty), 0);
-  transition: transform .25s cubic-bezier(.2, 1.4, .35, 1);
+  transition: transform .25s cubic-bezier(.2, 1.4, .35, 1), letter-spacing .25s ease;
+}
+
+/* ── Animaciones premium del botón RESERVA ───────────────────────────── */
+@property --cta-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+
+/* 1) Pulso de atención — el halo de color "respira" suavemente */
+.header nav .cta::before {
+  animation: cta-cycle 80s linear infinite, ctaBreathe 3.4s ease-in-out infinite;
+}
+@keyframes ctaBreathe {
+  0%, 100% { opacity: 0.6;  transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.12); }
+}
+
+/* 2) Borde de luz animado — un trazo teal recorre el borde en bucle */
+.header nav .cta .cta-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  z-index: 1;
+  background: conic-gradient(from var(--cta-angle),
+    transparent 0deg, transparent 35deg,
+    var(--cta-tint) 70deg, #8FD3DE 92deg, var(--cta-tint) 114deg,
+    transparent 150deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: ctaBorderSpin 4.5s linear infinite;
+  opacity: 0.9;
+}
+@keyframes ctaBorderSpin { to { --cta-angle: 360deg; } }
+
+/* 3) Hover/tap mejorado — elevación + apertura de la letra */
+.header nav .cta:hover { --cta-lift: -2px; }
+.header nav .cta:hover .cta-text { letter-spacing: 0.2em; }
+
+/* 4) Press/ripple — feedback al pulsar (sobre todo en móvil) */
+.header nav .cta:active { --cta-lift: 1px; filter: brightness(1.1); transition-duration: .08s; }
+.header nav .cta .cta-text::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 12px; height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240,232,213,.55), transparent 70%);
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+.header nav .cta:active .cta-text::after { animation: ctaRipple .55s ease-out; }
+@keyframes ctaRipple {
+  0%   { transform: scale(0);  opacity: 0.7; }
+  100% { transform: scale(16); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header nav .cta::before { animation: none; }
+  .header nav .cta .cta-border { animation: none; opacity: 0.5; }
+  .header nav .cta .cta-text::after { animation: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .header nav .cta,
@@ -1079,6 +1147,35 @@ p  { line-height: 1.65; font-weight: 300; }
 .mn-cta-primary:hover {
   background: var(--sol-lt);
   box-shadow: 0 4px 22px -4px rgba(232,194,107,0.45);
+}
+.mn-cta-secondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px 20px;
+  font-family: var(--sans);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--arena);
+  background: transparent;
+  border: 1px solid rgba(240,232,213,.22);
+  border-radius: 0 12px 0 12px;
+  cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.mn-cta-secondary:hover {
+  background: rgba(240,232,213,.06);
+  border-color: rgba(240,232,213,.42);
+}
+.mn-cta-secondary .mn-cta-ico {
+  color: var(--sol);
+  font-size: 13px;
+  letter-spacing: 0;
 }
 
 /* Contactos */
@@ -2383,7 +2480,7 @@ body.apt-bar-shown .cookies {
   background: var(--arena);
   color: var(--ber-dk);
 }
-.apartments-intro .eyebrow { color: var(--vm); margin-bottom: 18px; }
+.apartments-intro .eyebrow { color: var(--vm-dk); opacity: 1; margin-bottom: 18px; }
 .apartments-intro h2 {
   max-width: 14ch; margin: 0 auto;
 }
@@ -3514,6 +3611,7 @@ body.apt-bar-shown .cookies {
 footer {
   position: relative;
   z-index: 39;
+  overflow: hidden;
   border-radius: 32px 0 32px 0;
   /* Color base sólido como fallback. */
   background-color: var(--ber-dk);
@@ -3529,6 +3627,33 @@ footer {
   color: var(--arena);
   padding: 72px var(--page-pad) 40px;
 }
+/* Vídeo de fondo del footer: difuminado, con tinte violeta de la paleta.
+   Va detrás de todo el contenido (z-index 2). Sin sonido. */
+.footer-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(4px) saturate(1.2);
+  transform: scale(1.12);
+  opacity: 0.66;
+  z-index: 0;
+  pointer-events: none;
+}
+.footer-bg-wash {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(130% 95% at 28% -10%, rgba(123, 59, 107, .52) 0%, transparent 55%),
+    radial-gradient(120% 90% at 100% 110%, rgba(123, 59, 107, .42) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(42, 15, 46, .74) 0%, rgba(42, 15, 46, .5) 45%, rgba(42, 15, 46, .8) 100%);
+}
+footer > .footer-grid,
+footer > .footer-newsletter,
+footer > .footer-bottom { position: relative; z-index: 2; }
 footer::before {
   content: '';
   position: absolute; inset: 0;
@@ -3613,6 +3738,17 @@ footer .footer-brand .addr {
   opacity: 0.70; flex-wrap: wrap;
 }
 .footer-bottom .licences { font-family: var(--serif); font-style: italic; text-transform: none; letter-spacing: 0.04em; }
+.footer-owner-link {
+  color: rgba(240, 232, 213, 0.75);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(240, 232, 213, 0.3);
+  padding-bottom: 1px;
+  transition: color var(--dur-fast, 160ms) var(--ease-out, ease), border-color var(--dur-fast, 160ms) var(--ease-out, ease);
+}
+.footer-owner-link:hover {
+  color: var(--sol-lt, #6FC4D1);
+  border-color: var(--sol-lt, #6FC4D1);
+}
 
 /* ============================================================
    CALENDAR — Disponibilidad en tiempo real
@@ -3783,7 +3919,7 @@ footer .footer-brand .addr {
   margin-bottom: 20px;
   text-transform: capitalize;
 }
-.cal-yr { opacity: .45; font-size: 13px; margin-left: 5px; }
+.cal-yr { opacity: .7; font-size: 13px; margin-left: 5px; }
 .cal-grid {
   display: grid;
   grid-template-columns: repeat(7,1fr);
@@ -3824,7 +3960,7 @@ footer .footer-brand .addr {
    en la zona de transición. Sin line-through (el día sí está libre por
    la tarde). */
 .cal-cell.blk-after .c-n { color: var(--ber-dk); font-weight: 500; }
-.cal-cell.today:not(.blk) .c-n { color: var(--apt-accent,var(--sol)); font-weight: 500; }
+.cal-cell.today:not(.blk) .c-n { color: var(--apt-accent-dk,var(--sol-text)); font-weight: 500; }
 /* Strip — horizontal bar connecting blocked range. Color crema. */
 .c-strip {
   position: absolute;
@@ -3960,7 +4096,7 @@ footer .footer-brand .addr {
   margin: 0 auto 20px;
   display: flex; align-items: center; gap: 10px;
   font-family: var(--sans); font-size: 12px;
-  color: rgba(42,15,46,.65);
+  color: rgba(42,15,46,.72);
   background: rgba(255,255,255,.92);
   border: 1px solid rgba(42,15,46,.12);
   border-radius: 10px 0 10px 0; padding: 10px 18px;
@@ -3985,7 +4121,7 @@ footer .footer-brand .addr {
   border: 1px solid rgba(180,50,30,.25);
 }
 .avail-sel-msg.info {
-  color: rgba(42,15,46,.65);
+  color: rgba(42,15,46,.72);
   background: rgba(255,255,255,.85);
   border: 1px solid rgba(42,15,46,.12);
 }
@@ -4056,7 +4192,7 @@ footer .footer-brand .addr {
 }
 .req-guests-lbl {
   font-family: var(--sans); font-size: 13px;
-  color: rgba(42,15,46,.65);
+  color: rgba(42,15,46,.72);
 }
 .req-guests-ctrl {
   display: flex; align-items: center; gap: 0;
@@ -4121,7 +4257,7 @@ footer .footer-brand .addr {
   border: 1px solid rgba(240,190,60,.18);
   border-radius: 10px 0 10px 0; padding: 14px 16px;
   margin-bottom: 24px;
-  color: rgba(42,15,46,.65);
+  color: rgba(42,15,46,.72);
 }
 .req-disclaimer svg { flex-shrink: 0; margin-top: 2px; color: rgba(180,130,20,.85); }
 .req-disclaimer p {
@@ -4524,7 +4660,7 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
 .req-btn-mail {
-  color: rgba(42,15,46,.65) !important;
+  color: rgba(42,15,46,.72) !important;
   border-color: rgba(42,15,46,.25) !important;
   background: transparent !important;
 }
@@ -4541,7 +4677,7 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
   letter-spacing: .08em; color: rgba(42,15,46,.35);
   padding: 0; transition: color .2s;
 }
-.req-reset:hover { color: rgba(42,15,46,.65); }
+.req-reset:hover { color: rgba(42,15,46,.72); }
 
 /* ================================================================
    PRICE ENGINE — Motor de precios
@@ -6047,7 +6183,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   align-items: start;
 }
 .avd-eyebrow {
-  color: var(--apt-accent);
+  color: color-mix(in srgb, var(--apt-accent) 48%, var(--crema, #FAF6F0));
   display: block;
   margin-bottom: 20px;
 }
@@ -6126,7 +6262,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .apt-day-eyebrow {
   margin-bottom: 24px;
-  color: var(--apt-accent);
+  color: var(--apt-accent-dk);
+  opacity: 1;
 }
 .apt-day-grid {
   display: grid;
@@ -6154,7 +6291,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-family: var(--serif);
   font-size: 26px;
   font-weight: 600;
-  color: var(--apt-accent);
+  color: var(--apt-accent-dk);
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
@@ -6182,7 +6319,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-size: 12px;
   letter-spacing: .18em;
   text-transform: uppercase;
-  color: rgba(42,15,46,.42);
+  color: rgba(42,15,46,.72);
   margin-bottom: 28px;
 }
 .apt-equip-stats {
@@ -6208,14 +6345,14 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .aes-unit {
   font-family: var(--serif);
   font-size: 14px;
-  color: rgba(42,15,46,.48);
+  color: rgba(42,15,46,.72);
 }
 .aes-lbl {
   font-family: var(--sans);
   font-size: 12px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: rgba(42,15,46,.4);
+  color: rgba(42,15,46,.72);
   margin-top: 2px;
 }
 .apt-equip-icons {
@@ -6233,7 +6370,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .aei-label {
   font-family: var(--sans);
   font-size: 13px;
-  color: rgba(42,15,46,.65);
+  color: rgba(42,15,46,.72);
   line-height: 1.35;
 }
 .apt-equip-categories {
@@ -7527,7 +7664,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-family: var(--sans);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  opacity: 0.55;
+  opacity: 0.72;
   margin-top: 8px;
 }
 .nos-blockquote-cream {
@@ -8792,13 +8929,13 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .reservas-person-card .r-lang {
   font-size: 13px;
-  color: var(--card-accent, var(--sol));
+  color: var(--sol-text);
   letter-spacing: 0.06em;
 }
 .reservas-person-card .r-role {
   font-size: 12px;
   color: var(--ink);
-  opacity: 0.55;
+  opacity: 0.72;
   letter-spacing: 0.06em;
 }
 .reservas-person-card .r-actions {
@@ -8827,6 +8964,13 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-weight: 300;
   line-height: 1.55;
   color: rgba(240, 232, 213, 0.82);
+  margin: 0 0 14px;
+}
+.reservas-guarantee .rg-disclaimer {
+  font-size: 11.5px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgba(240, 232, 213, 0.55);
   margin: 0 0 14px;
 }
 .reservas-guarantee .rg-cta {
@@ -9617,6 +9761,52 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   text-underline-offset: 3px;
 }
 
+/* Alternativas cercanas con disponibilidad (sobre fondo oscuro) */
+.hs-alts { margin-top: 16px; }
+.hs-alts-hd {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--crema, #FAF6F0);
+  margin-bottom: 2px;
+}
+.hs-alts-sub {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: rgba(240, 232, 213, .6);
+  margin: 0 0 12px;
+}
+.hs-alts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+.hs-alt-card {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 16px;
+  background: rgba(240, 232, 213, .06);
+  border: 1px solid rgba(240, 232, 213, .14);
+  border-left: 4px solid var(--hs-accent, var(--sol));
+  border-radius: 10px 0 10px 0;
+  text-decoration: none;
+  transition: background .2s var(--ease-out, ease), border-color .2s, transform .2s var(--ease-out, ease);
+}
+.hs-alt-card:hover { background: rgba(240, 232, 213, .1); transform: translateY(-2px); }
+.hs-alt-apt { font-family: var(--serif); font-size: 16px; color: var(--crema, #FAF6F0); }
+.hs-alt-dates { font-family: var(--sans); font-size: 13.5px; color: var(--arena, #F0E8D5); }
+.hs-alt-shift {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: rgba(240, 232, 213, .55);
+}
+.hs-alt-price { margin-top: 6px; display: flex; align-items: baseline; gap: 7px; }
+.hs-alt-price strong { font-size: 19px; font-weight: 600; color: var(--sol-lt, #6FC4D1); }
+.hs-alt-price small { font-size: 12px; color: rgba(240, 232, 213, .6); }
+.hs-alt-cta { margin-top: 6px; font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--sol-lt, #6FC4D1); }
+
 /* No data fallback */
 .hs-no-data {
   font-family: var(--sans);
@@ -9698,12 +9888,12 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
    .reservas-form-wrap es cream, así que sobreescribimos los colores
    de texto para que se lean correctamente.                          */
 .reservas-form-wrap .cal-mhd          { color: var(--ber-dk); }
-.reservas-form-wrap .cal-yr           { color: var(--ber); opacity: 0.55; }
-.reservas-form-wrap .cal-wd           { color: var(--ber); opacity: 0.5; }
+.reservas-form-wrap .cal-yr           { color: var(--ber); opacity: 0.72; }
+.reservas-form-wrap .cal-wd           { color: var(--ber); opacity: 0.72; }
 .reservas-form-wrap .c-n              { color: var(--ber-dk); opacity: 0.85; }
 .reservas-form-wrap .cal-cell.past .c-n { color: var(--ber); opacity: 0.25; }
 .reservas-form-wrap .cal-cell.blk  .c-n { color: var(--ber-dk); opacity: 0.7; }
-.reservas-form-wrap .cal-cell.today:not(.blk) .c-n { color: var(--apt-accent, var(--sol)); font-weight: 600; }
+.reservas-form-wrap .cal-cell.today:not(.blk) .c-n { color: var(--apt-accent-dk, var(--sol-text)); font-weight: 600; }
 .reservas-form-wrap .cal-cell.in-sel .c-n,
 .reservas-form-wrap .cal-cell.sel-s  .c-n,
 .reservas-form-wrap .cal-cell.sel-e  .c-n { color: var(--ber-dk); font-weight: 600; opacity: 1; }
@@ -9711,7 +9901,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .reservas-form-wrap .cal-cell.prev-s .c-n,
 .reservas-form-wrap .cal-cell.prev-e .c-n { color: var(--ber-dk); opacity: 0.85; }
 .reservas-form-wrap .cal-cell.prev-m .c-n { color: var(--ber-dk); opacity: 0.5; }
-.reservas-form-wrap .hscal-phase-hint { color: var(--sol-h); }
+.reservas-form-wrap .hscal-phase-hint { color: var(--sol-text); }
 .reservas-form-wrap .avail-nav-lbl    { color: var(--ber-dk); opacity: 0.85; }
 .reservas-form-wrap .avail-arr        { color: var(--ber); }
 .reservas-form-wrap .hscal-sel-lbl    { color: var(--ber); opacity: 0.7; }
@@ -9720,12 +9910,12 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 /* Tema CLARO para el DateRangePicker dentro de la tarjeta blanca en estancias-largas */
 .lsl-sd-card .cal-month         { background: transparent; border-color: rgba(42,15,46,.08); }
 .lsl-sd-card .cal-mhd           { color: var(--ber-dk); }
-.lsl-sd-card .cal-yr            { color: var(--ber); opacity: 0.55; }
-.lsl-sd-card .cal-wd            { color: var(--ber); opacity: 0.5; }
+.lsl-sd-card .cal-yr            { color: var(--ber); opacity: 0.72; }
+.lsl-sd-card .cal-wd            { color: var(--ber); opacity: 0.72; }
 .lsl-sd-card .c-n               { color: var(--ber-dk); opacity: 0.85; }
 .lsl-sd-card .cal-cell.past .c-n { color: var(--ber); opacity: 0.25; }
 .lsl-sd-card .cal-cell.blk  .c-n { color: var(--ber-dk); opacity: 0.7; }
-.lsl-sd-card .cal-cell.today:not(.blk) .c-n { color: var(--sol, #3AAABB); font-weight: 600; }
+.lsl-sd-card .cal-cell.today:not(.blk) .c-n { color: var(--sol-text, #176E80); font-weight: 600; }
 .lsl-sd-card .cal-cell.in-sel .c-n,
 .lsl-sd-card .cal-cell.sel-s  .c-n,
 .lsl-sd-card .cal-cell.sel-e  .c-n { color: var(--ber-dk); font-weight: 600; opacity: 1; }
@@ -9735,10 +9925,13 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .lsl-sd-card .cal-cell.prev-m .c-n { color: var(--ber-dk); opacity: 0.5; }
 .lsl-sd-card .avail-nav-lbl         { color: var(--ber-dk); opacity: 0.85; }
 .lsl-sd-card .avail-arr             { color: var(--ber); }
-.lsl-sd-card .hscal-phase-hint      { color: var(--sol-h); }
-.lsl-sd-card .avail-legend          { color: rgba(42,15,46,.4); }
+.lsl-sd-card .hscal-phase-hint      { color: var(--sol-text); }
+.lsl-sd-card .avail-legend          { color: rgba(42,15,46,.72); }
 .lsl-sd-card .leg-dot.lg-av         { border-color: rgba(42,15,46,.25); }
-.lsl-sd-card .avail-upd             { color: rgba(42,15,46,.3); }
+.lsl-sd-card .avail-upd             { color: rgba(42,15,46,.64); }
+.lsl-sd-card .hscal-sel-lbl          { color: rgba(42,15,46,.7); }
+.lsl-sd-card .hscal-sel-item strong  { color: var(--ber-dk); }
+.lsl-sd-card .hscal-clear            { color: rgba(42,15,46,.62); }
 .lsl-sd-card .cal-cell.clickable:hover:not(.in-sel):not(.in-prev) .c-n { color: var(--sol, #3AAABB); }
 
 .hscal-phase-hint {
@@ -9816,7 +10009,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   position: absolute; inset: 0;
   background:
     linear-gradient(to top,  rgba(42,15,46,.95) 0%, rgba(42,15,46,.6) 45%, rgba(42,15,46,.18) 100%),
-    linear-gradient(to right, rgba(42,15,46,.65) 0%, transparent 65%);
+    linear-gradient(to right, rgba(42,15,46,.72) 0%, transparent 65%);
   z-index: 1;
   pointer-events: none;
 }
@@ -9864,6 +10057,34 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   border-radius: 10px 0 10px 0;
   padding: 6px 16px;
   margin-bottom: 20px;
+}
+.noticias-edition-float {
+  position: fixed;
+  top: calc(var(--topbar-h, 36px) + 108px);
+  left: 24px;
+  z-index: 90;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sol-lt);
+  background: var(--ber-dk);
+  border: 1px solid rgba(58, 170, 187, 0.35);
+  border-radius: 10px 0 10px 0;
+  padding: 8px 16px;
+  box-shadow: 0 6px 22px rgba(20, 8, 24, 0.35);
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease;
+}
+.noticias-edition-float.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (max-width: 560px) {
+  .noticias-edition-float { left: 12px; font-size: 10px; padding: 7px 13px; }
 }
 .noticias-hero-title {
   font-family: var(--serif);
@@ -10947,7 +11168,7 @@ footer,
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--crema);
-  background: var(--apt-accent, var(--sol));
+  background: var(--apt-accent-dk, var(--sol-text, #176E80));
   border: 1.5px solid var(--apt-accent, var(--sol));
   border-radius: 12px 0 12px 0;
   padding: 16px 32px;
@@ -11311,6 +11532,17 @@ footer,
 }
 .ag-nav-list a.is-active .ag-nav-num { opacity: 1; }
 .ag-nav-text { flex: 1; }
+.ag-nav-group {
+  list-style: none;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--apt-accent);
+  margin: 14px 0 3px;
+  padding-bottom: 3px;
+}
+.ag-nav-group:first-child { margin-top: 6px; }
 
 .ag-nav-actions {
   display: flex;
@@ -11347,6 +11579,8 @@ footer,
   background: color-mix(in srgb, var(--apt-accent) 80%, var(--ber-dk));
 }
 .ag-nav-btn:active { transform: scale(0.97); }
+.ag-nav-close { display: none; }
+.ag-nav-backdrop { display: none; }
 
 /* Mobile: botón de índice siempre visible (sticky) --------------- */
 .ag-nav-toggle {
@@ -11391,7 +11625,7 @@ footer,
     width: min(320px, 84vw);
     height: 100dvh;
     background: var(--crema);
-    z-index: 100;
+    z-index: 2000;
     transform: translateX(100%);
     transition: transform 0.3s var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
     box-shadow: -8px 0 32px rgba(0,0,0,0.18);
@@ -11400,22 +11634,89 @@ footer,
   .ag-nav.is-open {
     transform: translateX(0);
   }
-  .ag-nav.is-open::before {
-    content: '';
+  /* Fondo oscuro REAL y clicable: tocar fuera cierra el índice. */
+  .ag-nav-backdrop {
+    display: block;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.4);
-    z-index: -1;
-    width: 100vw;
-    margin-left: calc(-100vw + 100%);
+    background: rgba(0,0,0,0.45);
+    z-index: 1999;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
   }
-  .ag-nav-inner { height: 100%; }
+  /* Botón cerrar: portalado a <body>, fijo arriba-derecha por encima de todo
+     el chrome (header, cookies…) con z-index altísimo → siempre alcanzable. */
+  .ag-nav-close {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    position: fixed;
+    top: calc(var(--topbar-h, 36px) + 92px);
+    right: 16px;
+    bottom: auto;
+    left: auto;
+    z-index: 100001;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 24px;
+    background: var(--apt-accent, #2A0F2E);
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.30);
+  }
+  .ag-nav-close:active { transform: scale(0.95); }
+  /* El índice scrollea por dentro; hueco arriba para el header y abajo para el ✕. */
+  .ag-nav-inner {
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding-top: calc(var(--topbar-h, 36px) + 110px);
+    padding-bottom: 72px;
+  }
 }
 
 /* CONTENT -------------------------------------------------------- */
 .ag-content {
   padding-top: clamp(32px, 4vw, 56px);
   min-width: 0;
+}
+
+.ag-part {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin: 0 0 clamp(28px, 4vw, 44px);
+  padding-bottom: 14px;
+  border-bottom: 2px solid color-mix(in srgb, var(--apt-accent) 30%, transparent);
+  scroll-margin-top: 24px;
+}
+.ag-part-num {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(28px, 5vw, 44px);
+  line-height: 1;
+  color: color-mix(in srgb, var(--apt-accent) 45%, transparent);
+  flex-shrink: 0;
+}
+.ag-part-txt { display: flex; flex-direction: column; gap: 4px; }
+.ag-part-name {
+  font-family: var(--serif);
+  font-size: clamp(20px, 3.4vw, 28px);
+  font-weight: 600;
+  color: var(--ber-dk);
+  line-height: 1.1;
+}
+.ag-part-desc {
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  max-width: 46ch;
 }
 
 .ag-section {
@@ -15181,6 +15482,21 @@ body.apt-bar-shown .widget-stack {
   border-color: rgba(240,232,213,.10);
 }
 
+/* ── FIX CONTRASTE: .req-panel es SIEMPRE una tarjeta clara (--crema), aunque
+   viva dentro de .apt-avail (oscuro). Los overrides .apt-avail de arriba ponen
+   texto CLARO, que sobre la tarjeta clara queda invisible. Estos selectores
+   (.apt-avail .req-panel .x, mayor especificidad) restauran texto oscuro. ── */
+.apt-avail .req-panel .price-label-sm     { color: var(--ber); opacity: .68; }
+.apt-avail .req-panel .price-direct-total { color: var(--ber-dk); }
+.apt-avail .req-panel .price-avg-night    { color: var(--ber); opacity: .75; }
+.apt-avail .req-panel .price-guarantee-sub{ color: rgba(42,15,46,.72); }
+.apt-avail .req-panel .price-breakdown    { border-top-color: rgba(42,15,46,.12); }
+.apt-avail .req-panel .price-line         { color: rgba(42,15,46,.78); }
+.apt-avail .req-panel .price-line-disc    { color: #B01E66; }
+.apt-avail .req-panel .price-line-total   { color: var(--ber-dk); border-top-color: rgba(42,15,46,.14); }
+.apt-avail .req-panel .price-note         { color: rgba(42,15,46,.6); }
+.apt-avail .req-panel .price-engine       { background: transparent; border-color: rgba(42,15,46,.1); }
+
 /* Acciones del formulario de reservas: 2 botones (WhatsApp + Email)
    en fila, cada uno se habilita según campos rellenos. */
 .reservas-actions {
@@ -15611,8 +15927,36 @@ a.cta-wa-btn::before,
   font-size: 13px;
   color: var(--ink-soft);
   font-style: italic;
-  margin: 0 0 28px;
+  margin: 0 0 24px;
 }
+.eo-gmaps-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.eo-gmaps-g {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  color: #4285F4;
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1;
+}
+.eo-success-back {
+  display: block;
+  margin-top: 20px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.eo-success-back:hover { color: var(--ber-dk); }
 
 /* CTA en /opiniones que enlaza a /escribir-opinion */
 .opiniones-share-cta {
@@ -15645,6 +15989,53 @@ a.cta-wa-btn::before,
   color: rgba(240,232,213,.82);
 }
 .osc-btn { display: inline-flex; }
+.osc-gmaps {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(240,232,213,.14);
+}
+.osc-gmaps-lbl {
+  font-size: 13px;
+  color: rgba(240,232,213,.7);
+  margin: 0 0 14px;
+}
+.osc-gmaps-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.osc-gmaps-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 10px 0 10px 0;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--arena);
+  text-decoration: none;
+  background: rgba(240,232,213,.08);
+  border: 1px solid rgba(240,232,213,.2);
+  transition: background .18s, border-color .18s;
+}
+.osc-gmaps-link:hover {
+  background: rgba(240,232,213,.14);
+  border-color: var(--sol);
+}
+.osc-gmaps-g {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  color: #4285F4;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1;
+}
 
 /* ── Reviews admin (/r-edit) ──────────────────────────────────── */
 .pe-rev-filters {
@@ -15962,7 +16353,7 @@ a:focus-visible,
   font-style: italic;
   font-size: 14px;
   letter-spacing: 0.18em;
-  color: var(--sol-h);
+  color: var(--sol-text);
   min-width: 28px;
 }
 .rf-step-title {
@@ -16323,6 +16714,52 @@ a:focus-visible,
   border: 1px solid color-mix(in srgb, var(--sol) 18%, transparent);
 }
 .rf-status-unknown .rf-status-icon { background: var(--sol-h); color: white; }
+
+/* Alternativas cercanas con disponibilidad (/reservas, superficie clara) */
+.rf-alts { margin: 14px 0 4px; }
+.rf-alts-hd {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--ber-dk, #2A0F2E);
+  margin-bottom: 2px;
+}
+.rf-alts-sub {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+}
+.rf-alts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 10px;
+}
+.rf-alt-card {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 13px 15px;
+  text-align: left;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--apt-accent, var(--sol)) 28%, transparent);
+  border-left: 4px solid var(--apt-accent, var(--sol));
+  border-radius: 10px 0 10px 0;
+  transition: box-shadow .2s var(--ease-out, ease), transform .2s var(--ease-out, ease);
+}
+.rf-alt-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(42, 15, 46, .1); }
+.rf-alt-apt { font-family: var(--serif); font-size: 16px; color: var(--ber-dk, #2A0F2E); }
+.rf-alt-dates { font-family: var(--sans); font-size: 13.5px; color: var(--ink); }
+.rf-alt-shift {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.rf-alt-price { margin-top: 6px; display: flex; align-items: baseline; gap: 7px; }
+.rf-alt-price strong { font-size: 19px; font-weight: 600; color: var(--sol-text, #176E80); }
+.rf-alt-price small { font-size: 12px; color: var(--ink-soft); }
 
 /* ── Progress indicator — /reservas ─────────────────────────────── */
 .rf-progress {
@@ -16756,6 +17193,19 @@ a:focus-visible,
     border-bottom: 1px dotted color-mix(in srgb, var(--apt-accent-dk, var(--vs-dk)) 22%, transparent);
     page-break-inside: avoid;
   }
+  .apt-guide-view .ag-print-toc-group {
+    display: block;
+    grid-template-columns: none;
+    border-bottom: none;
+    padding: 5mm 0 1mm;
+    font-family: 'Inter', sans-serif;
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--apt-accent-dk, var(--vs-dk));
+  }
+  .apt-guide-view .ag-print-toc-group:first-child { padding-top: 0; }
   .apt-guide-view .ag-print-toc-num {
     font-family: 'Playfair Display', serif;
     font-style: italic;
@@ -17308,6 +17758,102 @@ img[src*="apt-vt-gallery-"] {
   color: var(--ber-dk);
 }
 
+/* Hint inline bajo un botón bloqueado (por qué no se puede continuar/enviar) */
+.rf-btn-hint {
+  margin: 8px 0 0;
+  text-align: center;
+  color: color-mix(in srgb, var(--ber) 70%, transparent);
+}
+
+/* Recap del paso 3: resumen + precio estimado visible al enviar */
+.rf-recap {
+  margin: 0 0 18px;
+  display: grid;
+  gap: 10px;
+}
+.rf-recap-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--sol) 7%, var(--crema));
+  border: 1px solid color-mix(in srgb, var(--sol) 22%, transparent);
+  border-radius: 10px;
+}
+.rf-recap-price span {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ber) 70%, transparent);
+}
+.rf-recap-price strong {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--ber);
+}
+
+/* Pantalla de confirmación tras enviar (envío fiable: enlace de respaldo + copiar) */
+.rf-sent {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  text-align: center;
+  padding: 26px 20px;
+  background: color-mix(in srgb, var(--sol) 6%, var(--crema));
+  border: 1px solid color-mix(in srgb, var(--sol) 24%, transparent);
+  border-radius: 14px;
+}
+.rf-sent-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--sol);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+}
+.rf-sent-title {
+  margin: 4px 0 0;
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--ber);
+}
+.rf-sent-text {
+  margin: 0;
+  max-width: 420px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ber-dk);
+}
+.rf-sent-fallback {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: color-mix(in srgb, var(--ber) 75%, transparent);
+}
+.rf-sent-fallback a {
+  color: var(--sol);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.rf-sent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 8px 0 0;
+}
+.rf-sent-direct {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: color-mix(in srgb, var(--ber) 70%, transparent);
+}
+.rf-sent-direct strong { color: var(--ber); }
+
 /* Calendario · días "too-soon" (rango < minNights desde el check-in)
    Visualmente desactivados — el huésped no puede pulsarlos. Tooltip
    nativo explica "Estancia mínima N noches". Aplica a ambos pickers
@@ -17765,7 +18311,7 @@ img[src*="apt-vt-gallery-"] {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--apt-accent, #3AAABB);
+  color: var(--apt-accent-dk, #176E80);
   margin: 0 0 24px;
 }
 .amr-grid {
@@ -17799,8 +18345,24 @@ img[src*="apt-vt-gallery-"] {
   font-weight: 600;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: rgba(42,15,46,.40);
+  color: rgba(42,15,46,.72);
 }
+.amr-expand-btn {
+  align-self: flex-start;
+  margin: 2px 0 0;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--apt-accent, var(--sol));
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.amr-expand-btn:hover { opacity: 0.72; }
 .amr-text {
   font-family: var(--serif, Georgia, serif);
   font-size: 14px;
@@ -17867,7 +18429,7 @@ img[src*="apt-vt-gallery-"] {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--apt-accent);
+  color: var(--apt-accent-dk);
   margin-bottom: 12px;
 }
 .apt-pt-note {
@@ -17887,12 +18449,12 @@ img[src*="apt-vt-gallery-"] {
 }
 .apt-pt-row:last-child { border-bottom: none; }
 .apt-pt-ls { align-items: flex-start; border-top: 1px dashed color-mix(in srgb, var(--apt-accent) 20%, transparent); margin-top: 4px; padding-top: 12px; }
-.apt-pt-ls-tag { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: .04em; opacity: .55; vertical-align: middle; }
+.apt-pt-ls-tag { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: .04em; color: rgba(42,15,46,.72); opacity: 1; vertical-align: middle; }
 .apt-pt-ls-price { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-.apt-pt-ls-reg { font-size: 12px; color: var(--ink-soft); text-decoration: line-through; opacity: .6; white-space: nowrap; }
+.apt-pt-ls-reg { font-size: 12px; color: var(--ink-soft); text-decoration: line-through; opacity: .75; white-space: nowrap; }
 .apt-pt-ls-rate { font-family: var(--sans); font-size: 13px; color: var(--ink); white-space: nowrap; display: flex; align-items: baseline; gap: 5px; }
-.apt-pt-ls-rate strong { font-size: 17px; font-weight: 700; color: var(--ok, #4A6A28); letter-spacing: -0.01em; }
-.apt-pt-ls-save { font-size: 11px; font-weight: 700; color: var(--ok, #4A6A28); background: color-mix(in srgb, var(--ok,#4A6A28) 12%, transparent); border-radius: 4px; padding: 1px 5px; }
+.apt-pt-ls-rate strong { font-size: 17px; font-weight: 700; color: #3F5622; letter-spacing: -0.01em; }
+.apt-pt-ls-save { font-size: 11px; font-weight: 700; color: #3F5622; background: color-mix(in srgb, var(--ok,#4A6A28) 12%, transparent); border-radius: 4px; padding: 1px 5px; }
 .apt-pt-season {
   font-family: var(--sans);
   font-size: 13px;
@@ -17909,7 +18471,7 @@ img[src*="apt-vt-gallery-"] {
 .apt-pt-price strong {
   font-size: 17px;
   font-weight: 600;
-  color: var(--apt-accent);
+  color: var(--apt-accent-dk);
   letter-spacing: -0.01em;
 }
 .apt-pt-per {
@@ -17926,7 +18488,7 @@ img[src*="apt-vt-gallery-"] {
   gap: 9px;
   padding: 12px 20px;
   border-radius: 10px 0 10px 0;
-  background: var(--apt-accent, #3AAABB);
+  background: var(--apt-accent-dk, #176E80);
   color: #fff;
   font-family: var(--sans);
   font-size: 14px;
@@ -17980,6 +18542,37 @@ img[src*="apt-vt-gallery-"] {
   color: var(--ber);
   margin: 0 0 10px;
 }
+.rf-quote-clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  position: relative;
+}
+.rf-quote-clamped::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1.5em;
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--sol) 5%, var(--crema)));
+  pointer-events: none;
+}
+.rf-quote-toggle {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ber);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.rf-quote-toggle:hover { opacity: 0.72; }
 .rf-quote-meta {
   display: flex;
   flex-wrap: wrap;
@@ -19049,6 +19642,149 @@ img[src*="apt-vt-gallery-"] {
 }
 .ag-checkin-garbage p { margin: 0; }
 
+/* De camino: dónde comer en la última hora(s) de viaje */
+.ag-arrival-eats { margin-top: 6px; }
+.ag-ae-route { margin-bottom: 16px; }
+.ag-ae-road {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .01em;
+  color: var(--sol-text, #176E80);
+  margin: 14px 0 9px;
+}
+.ag-ae-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 11px; }
+.ag-ae-item {
+  display: flex;
+  flex-direction: column;
+  padding-left: 13px;
+  border-left: 2px solid rgba(58, 170, 187, .35);
+}
+.ag-ae-name { font-weight: 700; color: var(--ber-dk); font-size: 14.5px; }
+.ag-ae-town { color: var(--ink-soft); font-size: 12.5px; }
+.ag-ae-note { font-size: 13.5px; line-height: 1.45; color: var(--ink-soft); margin: 3px 0 4px; }
+.ag-ae-map {
+  align-self: flex-start;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--sol-text, #176E80);
+  text-decoration: none;
+}
+.ag-ae-map:hover { text-decoration: underline; }
+.ag-ae-sublabel {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin: 11px 0 6px;
+}
+.ag-ae-list-breaks .ag-ae-item { border-left-color: rgba(214, 158, 46, .45); }
+.ag-ae-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 6px; }
+.ag-ae-kind {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--sol-text, #176E80);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+.ag-ae-kind-comprar { background: var(--ber, #B05A3C); }
+.ag-ae-kind-descansar { background: var(--vt, #6E7F4E); }
+
+/* Cómo llegar: apartados por medio de transporte (avión, bus, tren, coche) */
+.ag-arrival-modes { display: flex; flex-direction: column; gap: 26px; margin-top: 8px; }
+.ag-arrmode {
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--apt-accent) 5%, #fff);
+  border: 1px solid color-mix(in srgb, var(--apt-accent) 16%, transparent);
+}
+.ag-arrmode-h {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--ber-dk);
+  margin: 0 0 10px;
+}
+.ag-arrmode-icon { font-size: 20px; line-height: 1; }
+.ag-arrmode-sub {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ber-dk);
+  margin: 18px 0 4px;
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--apt-accent) 16%, transparent);
+}
+
+/* Antes de tu llegada: checklist de preparación + viaja ligero */
+.ag-before { margin: 4px 0 8px; }
+.ag-before-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.ag-before-list li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.ag-before-list li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 7px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--apt-accent);
+}
+.ag-packlight {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--sol, #D69E2E) 12%, #fff);
+  border: 1px solid color-mix(in srgb, var(--sol, #D69E2E) 32%, transparent);
+}
+.ag-packlight-icon { font-size: 26px; line-height: 1; flex-shrink: 0; }
+.ag-packlight-title {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ber-dk);
+  margin: 0 0 4px;
+}
+.ag-packlight-body { font-size: 14px; line-height: 1.5; color: var(--ink-soft); margin: 0; }
+
+/* De camino a casa: bloque experiencial del último tramo del viaje */
+.ag-arrival-eats-block { margin-top: 30px; }
+.ag-arrival-closer {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid color-mix(in srgb, var(--apt-accent) 18%, transparent);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ber-dk);
+}
+
 /* ============================================================
    Calendario consolidado de eventos
    ============================================================ */
@@ -19519,6 +20255,8 @@ img[src*="apt-vt-gallery-"] {
   box-shadow: inset 3px 0 0 0 var(--sol);
 }
 .rv-yearly-row.is-focus td { font-weight: 600; }
+.rv-yearly-row-agg { opacity: .75; }
+.rv-agg-badge { display: inline-block; margin-left: 6px; padding: 1px 6px; font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; background: rgba(58,170,187,.12); color: var(--sol-text, #176E80); border-radius: 4px 0 4px 0; }
 .rv-yearly-neg { color: #8a4a24; }
 .rv-kpi {
   background: rgba(255, 251, 244, 0.7);
@@ -19716,6 +20454,20 @@ img[src*="apt-vt-gallery-"] {
 }
 .rv-row-past { opacity: 0.55; }
 .rv-row-cancelada { opacity: 0.38; color: #888 !important; }
+
+/* Canal: franja izquierda + tinte de fondo suave */
+.rv-canal-booking  { background: rgba(0,53,128,0.045); box-shadow: inset 4px 0 0 0 #003580; }
+.rv-canal-airbnb   { background: rgba(255,90,95,0.05);  box-shadow: inset 4px 0 0 0 #FF5A5F; }
+.rv-canal-directo  { background: rgba(58,170,187,0.05); box-shadow: inset 4px 0 0 0 var(--sol); }
+.rv-canal-avaibook { background: rgba(120,80,160,0.04); box-shadow: inset 4px 0 0 0 #7850A0; }
+.rv-canal-booking:hover  { background: rgba(0,53,128,0.09); }
+.rv-canal-airbnb:hover   { background: rgba(255,90,95,0.10); }
+.rv-canal-directo:hover  { background: rgba(58,170,187,0.10); }
+.rv-canal-avaibook:hover { background: rgba(120,80,160,0.08); }
+.rv-canal-booking.is-selected  { background: rgba(0,53,128,0.13); box-shadow: inset 6px 0 0 0 #003580; }
+.rv-canal-airbnb.is-selected   { background: rgba(255,90,95,0.14);  box-shadow: inset 6px 0 0 0 #FF5A5F; }
+.rv-canal-directo.is-selected  { background: rgba(58,170,187,0.14); box-shadow: inset 6px 0 0 0 var(--sol); }
+.rv-canal-avaibook.is-selected { background: rgba(120,80,160,0.12); box-shadow: inset 6px 0 0 0 #7850A0; }
 .rv-row-cancelada td { text-decoration: line-through; color: #888 !important; }
 .rv-row-cancelada .rv-apt-chip { filter: grayscale(1); opacity: 0.5; }
 .rv-month-foot td { border-top: 2px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); font-size: 12px; }
@@ -20266,7 +21018,7 @@ img[src*="apt-vt-gallery-"] {
   font-size: 10px;
   font-weight: 600;
   letter-spacing: .14em;
-  color: var(--hps-accent);
+  color: color-mix(in srgb, var(--hps-accent) 52%, var(--crema, #FAF6F0));
 }
 .hps-price {
   display: flex;
@@ -20295,7 +21047,7 @@ img[src*="apt-vt-gallery-"] {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: .06em;
-  color: var(--hps-accent);
+  color: color-mix(in srgb, var(--hps-accent) 52%, var(--crema, #FAF6F0));
   margin-top: 3px;
 }
 .hps-ota-compare {
@@ -20314,7 +21066,7 @@ img[src*="apt-vt-gallery-"] {
 }
 .hps-ota-pct {
   font-size: 10px; font-weight: 600;
-  color: var(--err, #B8246E); background: rgba(184,36,110,.15);
+  color: #F18FBD; background: rgba(184,36,110,.15);
   padding: 1px 4px; border-radius: 3px 0 3px 0;
 }
 .hps-disclaimer {
@@ -20487,10 +21239,6 @@ img[src*="apt-vt-gallery-"] {
   font-size: 10px;
   letter-spacing: 0.12em;
 }
-@keyframes lm-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
 .lm-marquee-wrap {
   overflow: hidden;
   width: 100%;
@@ -20498,20 +21246,23 @@ img[src*="apt-vt-gallery-"] {
   mask-image: linear-gradient(to right, transparent 0, #000 32px, #000 calc(100% - 32px), transparent 100%);
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+  cursor: grab;
+  touch-action: pan-y;          /* permite scroll vertical de la página; el horizontal lo arrastramos */
+  user-select: none;
+  -webkit-user-select: none;
 }
+.lm-marquee-wrap.lm-dragging { cursor: grabbing; }
 .lm-marquee-track {
   display: flex;
   gap: 10px;
   width: max-content;
-  animation: lm-scroll 30s linear infinite;
-  will-change: transform;
+  will-change: transform;       /* el desplazamiento (auto + arrastre) lo controla JS via transform */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
-.lm-marquee-track:hover { animation-play-state: paused; }
+.lm-marquee-track a { -webkit-user-drag: none; }
 @media (prefers-reduced-motion: reduce) {
-  .lm-marquee-track { animation: none; }
-  .lm-marquee-wrap { -webkit-mask-image: none; mask-image: none; overflow-x: auto; }
+  .lm-marquee-wrap { -webkit-mask-image: none; mask-image: none; }
 }
 /* Tarjeta de hueco disponible */
 .lm-card {
@@ -20533,7 +21284,7 @@ img[src*="apt-vt-gallery-"] {
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: var(--lm-color, #3AAABB);
+  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #FAF6F0));
 }
 .lm-card-dates {
   display: flex;
@@ -20550,7 +21301,7 @@ img[src*="apt-vt-gallery-"] {
   letter-spacing: 0.02em;
 }
 .lm-card-ppn {
-  color: var(--lm-color, #3AAABB);
+  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #FAF6F0));
   opacity: 1;
 }
 .lm-card-orig s {
@@ -20559,13 +21310,13 @@ img[src*="apt-vt-gallery-"] {
   font-style: normal;
 }
 .lm-card-discounted {
-  color: var(--lm-color, #3AAABB);
+  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #FAF6F0));
   font-weight: 600;
 }
 .lm-card-total {
   font-size: 15px;
   font-weight: 600;
-  color: var(--lm-color, #3AAABB);
+  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #FAF6F0));
   letter-spacing: 0.01em;
 }
 /* Badge "ÚLTIMA HORA" */
@@ -20990,7 +21741,7 @@ img[src*="apt-vt-gallery-"] {
   line-height: 1.5;
 }
 .hc-field { display: flex; flex-direction: column; gap: 6px; }
-.hc-lbl { font-size: 12px; font-weight: 600; color: rgba(42,15,46,.65); text-transform: uppercase; letter-spacing: .06em; }
+.hc-lbl { font-size: 12px; font-weight: 600; color: rgba(42,15,46,.72); text-transform: uppercase; letter-spacing: .06em; }
 .hc-opt { font-size: 11px; font-weight: 400; text-transform: none; letter-spacing: 0; color: rgba(42,15,46,.4); }
 
 .hc-type-row { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -21330,7 +22081,7 @@ img[src*="apt-vt-gallery-"] {
 .lss-pill-save { font-size: 10px; font-weight: 700; background: rgba(255,255,255,.2); border-radius: 4px; padding: 1px 5px; letter-spacing: .02em; }
 .lss-cta {
   display: inline-block;
-  background: var(--accent, #C87A45);
+  background: color-mix(in srgb, var(--accent, #C87A45) 70%, #000);
   color: white;
   font-weight: 600;
   font-size: 14px;
@@ -21604,7 +22355,7 @@ img[src*="apt-vt-gallery-"] {
 .lsl-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
 .lsl-btn-primary {
   display: inline-block;
-  background: var(--accent, #C87A45);
+  background: color-mix(in srgb, var(--accent, #C87A45) 70%, #000);
   color: white;
   font-weight: 600;
   font-size: 15px;
@@ -21707,7 +22458,7 @@ img[src*="apt-vt-gallery-"] {
 .lsl-apt-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--lsl-accent, #3AAABB); }
 .lsl-apt-name { font-size: 12px; font-weight: 700; letter-spacing: .1em; color: var(--ber, #2A0F2E); }
 .lsl-apt-concept { font-size: 13px; color: var(--ink-soft, #7A5A72); line-height: 1.45; flex: 1; }
-.lsl-apt-cta { font-size: 12.5px; font-weight: 600; color: var(--lsl-accent, #3AAABB); margin-top: 4px; }
+.lsl-apt-cta { font-size: 12.5px; font-weight: 600; color: color-mix(in srgb, var(--lsl-accent, #176E80) 66%, #000); margin-top: 4px; }
 
 /* FAQ */
 .lsl-faq-inner { max-width: 680px; }
@@ -21749,6 +22500,27 @@ img[src*="apt-vt-gallery-"] {
 .lsl-section.lsl-cta .lsl-btn-ghost { color: rgba(255,255,255,.65); }
 
 /* ── LsSearch — disponibilidad larga estancia ───────────────── */
+/* ── Salvaguarda de contraste · secciones de fondo oscuro ──────────
+   Regla preventiva (ver CLAUDE.md): toda seccion con fondo oscuro lleva
+   .on-dark, que fija el color de texto por defecto en claro. Asi, si un
+   elemento olvida declarar su color, hereda claro (legible) en vez del
+   oscuro de pagina. Contrapartida obligatoria: toda superficie clara
+   anidada (tarjeta blanca) declara su PROPIO color oscuro, para no
+   heredar claro-sobre-blanco. Nunca uses --ink/--ink-soft ni un acento
+   oscuro para texto directo sobre .on-dark. */
+.on-dark { color: var(--crema, #FAF6F0); }
+/* .btn-ghost-dark usa tinta oscura (pensado para fondos claros). Sobre una
+   seccion .on-dark se volveria invisible: aqui lo forzamos a claro. */
+.on-dark .btn-ghost-dark {
+  color: var(--crema, #FAF6F0);
+  border-color: rgba(240, 232, 213, .55);
+}
+.on-dark .btn-ghost-dark:hover {
+  background: rgba(240, 232, 213, .12);
+  color: var(--crema, #FAF6F0);
+  border-color: var(--crema, #FAF6F0);
+}
+
 .lsl-search-dark {
   background: linear-gradient(180deg, var(--ber-dk, #2A0F2E) 0%, #1A0820 100%);
   padding: 72px 24px 80px;
@@ -21765,6 +22537,7 @@ img[src*="apt-vt-gallery-"] {
 .lsl-h2--ondk { color: var(--crema, #FAF6F0) !important; }
 .lsl-sd-card {
   background: #fff;
+  color: var(--ink, #3D1A35);
   border-radius: 12px 0 12px 0;
   padding: 28px 28px 20px;
   margin-bottom: 32px;
@@ -21796,7 +22569,7 @@ img[src*="apt-vt-gallery-"] {
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--ink-soft, #7A5A72);
+  color: rgba(42,15,46,.72);
 }
 .lsl-search-input {
   font-family: var(--sans);
@@ -21853,6 +22626,7 @@ img[src*="apt-vt-gallery-"] {
 }
 .lsl-result {
   background: #fff;
+  color: var(--ink, #3D1A35);
   border: 1.5px solid color-mix(in srgb, var(--lsl-accent, #3AAABB) 30%, transparent);
   border-radius: 10px 0 10px 0;
   padding: 18px 20px;
@@ -21862,9 +22636,15 @@ img[src*="apt-vt-gallery-"] {
   box-shadow: 0 2px 8px rgba(42,15,46,.07);
 }
 .lsl-result--unavail {
-  background: rgba(42,15,46,.03);
-  border-color: rgba(42,15,46,.10);
-  opacity: .65;
+  background: rgba(240,232,213,.05);
+  border-color: rgba(240,232,213,.16);
+  box-shadow: none;
+}
+.lsl-result--unavail .lsl-result-apt {
+  color: rgba(240,232,213,.72);
+}
+.lsl-result--unavail .lsl-result-unavail-msg {
+  color: rgba(240,232,213,.6);
 }
 .lsl-result-apt {
   font-family: var(--sans);
@@ -21878,7 +22658,7 @@ img[src*="apt-vt-gallery-"] {
 .lsl-result-reg {
   font-family: var(--sans);
   font-size: 14px;
-  color: rgba(42,15,46,.40);
+  color: rgba(42,15,46,.7);
   text-decoration: line-through;
 }
 .lsl-result-ls {
@@ -21964,10 +22744,493 @@ img[src*="apt-vt-gallery-"] {
     transform: translateX(-50%) translateY(12px);
   }
   body.apt-bar-shown .mob-book-btn { display: none; }
+  /* El menú móvil ya incluye su propio botón "Reserva"; oculta el flotante
+     global mientras el menú está abierto para no duplicarlo. */
+  body:has(.mobile-menu.open) .mob-book-btn {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(12px);
+  }
+  /* Igual con la burbuja de chat: no debe flotar sobre el menú abierto. */
+  body:has(.mobile-menu.open) .float-chat {
+    opacity: 0;
+    pointer-events: none;
+  }
   .mob-book-btn:hover,
   .mob-book-btn:focus-visible {
     box-shadow: 0 6px 28px rgba(58,170,187,.6);
   }
+}
+
+/* Botón de sonido — silenciar/activar el sonido sutil de mar de la home.
+   Abajo-izquierda para no chocar con el chat ni los widgets (derecha). */
+.sound-toggle {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 70;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(240,232,213,.22);
+  background: color-mix(in srgb, var(--ber-dk, #2A0F2E) 88%, transparent);
+  color: rgba(240,232,213,.82);
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 14px rgba(0,0,0,.28);
+  transition: color .15s, background .15s, transform .15s, opacity .15s;
+}
+.sound-toggle:hover { color: #fff; transform: translateY(-1px); }
+.sound-toggle:not(.is-on) { color: rgba(240,232,213,.5); }
+.sound-toggle:focus-visible { outline: 2px solid var(--sol, #3AAABB); outline-offset: 2px; }
+@media (max-width: 600px) { .sound-toggle { width: 36px; height: 36px; left: 12px; bottom: 12px; } }
+
+/* ── /empresas · página B2B ───────────────────────────────────── */
+.emp-h2 {
+  font-family: var(--serif);
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 400;
+  color: var(--ber-dk);
+  margin: 0 0 24px;
+  text-align: center;
+}
+.emp-hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+.emp-hero { overflow: hidden; }
+.emp-hero-dl {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 30px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--crema, #FAF6F0);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(240, 232, 213, .4);
+  padding-bottom: 2px;
+  transition: color .18s, border-color .18s;
+}
+.emp-hero-dl:hover { color: #fff; border-color: var(--sol, #3AAABB); }
+.emp-hero-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 55%;
+  z-index: 0;
+  opacity: 0.92;
+}
+.emp-hero-wash {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, rgba(42,15,46,.82) 0%, rgba(42,15,46,.5) 38%, rgba(42,15,46,.2) 72%, rgba(42,15,46,.35) 100%),
+    linear-gradient(to right, rgba(42,15,46,.34) 0%, transparent 60%);
+  z-index: 1;
+}
+.emp-hero .page-hero-content { position: relative; z-index: 3; }
+.emp-trust {
+  position: relative;
+  z-index: 51;
+  background: var(--ber-dk, #2A0F2E);
+  border-top: 1px solid rgba(240, 232, 213, .12);
+  /* El hero lleva margin-bottom:-32px (efecto de solape); padding superior
+     para que la cinta no quede tapada por el hero. */
+  padding: 46px 0 16px;
+  overflow: hidden;
+}
+.emp-trust::before,
+.emp-trust::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 56px;
+  z-index: 1;
+  pointer-events: none;
+}
+.emp-trust::before { left: 0; background: linear-gradient(90deg, var(--ber-dk, #2A0F2E), transparent); }
+.emp-trust::after { right: 0; background: linear-gradient(270deg, var(--ber-dk, #2A0F2E), transparent); }
+.emp-trust-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  white-space: nowrap;
+  animation: empTrustScroll 34s linear infinite;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.emp-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 26px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--crema, #FAF6F0);
+}
+.emp-trust-check {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--sol);
+  color: var(--ber-dk);
+  font-size: 11px;
+  font-weight: 700;
+}
+@keyframes empTrustScroll {
+  from { transform: translate3d(-50%, 0, 0); }
+  to   { transform: translate3d(0, 0, 0); }
+}
+@media (hover: hover) and (pointer: fine) {
+  .emp-trust:hover .emp-trust-track { animation-play-state: paused; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .emp-trust-track {
+    animation: none;
+    transform: none;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 var(--page-pad);
+  }
+}
+
+.emp-packages-sec {
+  background: var(--crema);
+  padding: clamp(56px, 8vw, 88px) var(--page-pad);
+}
+.emp-packages-grid {
+  max-width: 920px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+.emp-package {
+  background: var(--arena);
+  color: var(--ink);
+  border-left: 3px solid var(--sol);
+  border-radius: 14px 0 14px 0;
+  padding: 28px 26px;
+}
+.emp-package-t {
+  font-family: var(--serif);
+  font-size: clamp(20px, 2.6vw, 26px);
+  font-weight: 400;
+  color: var(--ber-dk);
+  margin: 0 0 10px;
+}
+.emp-package-d { font-size: 14.5px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
+
+.emp-steps-sec {
+  background: var(--arena);
+  padding: clamp(56px, 8vw, 88px) var(--page-pad);
+}
+.emp-steps-grid {
+  max-width: 1040px;
+  margin: 0 auto;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+.emp-step {
+  background: #fff;
+  color: var(--ink);
+  border-radius: 12px 0 12px 0;
+  padding: 24px 22px;
+  border: 1px solid rgba(42,15,46,.08);
+}
+.emp-step-n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--sol);
+  color: var(--ber-dk);
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.emp-step-t {
+  font-family: var(--sans);
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ber-dk);
+  margin: 0 0 8px;
+}
+.emp-step-d { font-size: 14px; line-height: 1.55; color: var(--ink-soft); margin: 0; }
+
+.emp-perks-sec {
+  background: var(--crema);
+  padding: clamp(56px, 8vw, 88px) var(--page-pad);
+}
+.emp-perks-grid {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+.emp-perk {
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid rgba(42,15,46,.08);
+  border-top: 3px solid var(--sol);
+  border-radius: 12px 0 12px 0;
+  padding: 24px 22px;
+}
+.emp-perk-icon { font-size: 26px; display: block; margin-bottom: 12px; }
+.emp-perk-t {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ber-dk);
+  margin: 0 0 8px;
+}
+.emp-perk-d { font-size: 14px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
+
+.emp-services-sec {
+  background: var(--arena);
+  padding: clamp(56px, 8vw, 88px) var(--page-pad);
+}
+.emp-services-sub {
+  max-width: 640px;
+  margin: 0 auto 28px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.emp-services-list {
+  max-width: 880px;
+  margin: 0 auto;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px 28px;
+}
+.emp-service-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.emp-service-check {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--sol);
+  color: var(--ber-dk);
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 1px;
+}
+.emp-services-foot {
+  max-width: 880px;
+  margin: 28px auto 0;
+  text-align: center;
+  font-family: var(--serif);
+  font-size: clamp(17px, 2.4vw, 21px);
+  color: var(--ber-dk);
+}
+.emp-sectors-sec {
+  background: linear-gradient(135deg, var(--ber-dk, #1A0820) 0%, var(--ber, #2A0F2E) 100%);
+  padding: clamp(56px, 8vw, 88px) var(--page-pad);
+}
+.emp-sectors-sec .emp-h2 { color: var(--crema); }
+.emp-sectors-sub {
+  max-width: 620px;
+  margin: 0 auto 28px;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(240,232,213,.82);
+}
+.emp-sectors-list {
+  max-width: 880px;
+  margin: 0 auto;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.emp-sector-chip {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--crema);
+  background: rgba(240,232,213,.06);
+  border: 1px solid rgba(240,232,213,.42);
+  border-radius: 10px 0 10px 0;
+  padding: 12px 20px;
+  transition: background var(--dur-base, .2s) var(--ease-out, ease), border-color var(--dur-base, .2s) var(--ease-out, ease);
+}
+.emp-sector-chip:hover {
+  background: rgba(240,232,213,.12);
+  border-color: var(--sol);
+}
+
+.emp-avail {
+  background: var(--crema);
+  padding: clamp(48px, 7vw, 72px) var(--page-pad) 0;
+  text-align: center;
+}
+.emp-avail-text {
+  max-width: 660px;
+  margin: 0 auto 24px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.emp-avail-btn { display: inline-flex; }
+
+.emp-form-sec {
+  background: var(--crema);
+  padding: clamp(48px, 7vw, 80px) var(--page-pad) clamp(64px, 9vw, 110px);
+}
+.emp-form-head { text-align: center; margin-bottom: 32px; }
+.emp-form-sub { font-size: 15px; color: var(--ink-soft); margin: 8px 0 0; }
+.emp-channel-sel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.emp-channel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 10px 0 10px 0;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  background: #fff;
+  border: 1.5px solid rgba(42,15,46,.16);
+  transition: border-color .18s, background .18s, color .18s;
+}
+.emp-channel-btn:hover { border-color: var(--sol); }
+.emp-channel-btn.is-on {
+  background: var(--sol);
+  border-color: var(--sol);
+  color: var(--ber-dk);
+}
+.emp-form { max-width: 720px; margin: 0 auto; }
+.emp-row { display: flex; flex-wrap: wrap; gap: 18px; }
+.emp-row .emp-field { flex: 1; min-width: 220px; }
+.emp-field { display: flex; flex-direction: column; margin-bottom: 18px; }
+.emp-label {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ber-dk);
+  margin-bottom: 7px;
+}
+.emp-input, .emp-textarea {
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--ink);
+  background: #fff;
+  border: 1.5px solid rgba(42,15,46,.16);
+  border-radius: 10px 0 10px 0;
+  padding: 12px 14px;
+  width: 100%;
+}
+.emp-input:focus, .emp-textarea:focus { outline: none; border-color: var(--sol); }
+.emp-textarea { resize: vertical; min-height: 120px; }
+.emp-help { font-size: 12px; color: var(--ink-soft); margin-top: 5px; text-align: right; }
+.emp-help-warn { color: var(--err, #B3261E); }
+.emp-err { font-size: 12.5px; color: var(--err, #B3261E); margin-top: 5px; }
+.emp-honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.emp-consent-field { margin-top: 4px; }
+.emp-consent-label {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.emp-consent-label a { color: var(--sol-text, #176E80); }
+.emp-consent-check { margin-top: 3px; flex-shrink: 0; }
+.emp-actions { margin-top: 24px; text-align: center; }
+.emp-error-msg { margin-top: 16px; text-align: center; color: var(--err, #B3261E); font-size: 14px; }
+
+.emp-success { background: var(--crema); padding: clamp(56px, 8vw, 96px) var(--page-pad); }
+.emp-success-card {
+  max-width: 580px;
+  margin: 0 auto;
+  text-align: center;
+  background: var(--arena);
+  padding: clamp(36px, 5vw, 56px);
+  border-radius: 18px 0 18px 0;
+  border-left: 3px solid var(--sol);
+}
+.emp-success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--sol);
+  color: var(--ber-dk);
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+.emp-success-title {
+  font-family: var(--serif);
+  font-size: clamp(24px, 4vw, 34px);
+  color: var(--ber-dk);
+  margin: 0 0 14px;
+}
+.emp-success-text { font-size: 15px; line-height: 1.6; color: var(--ink); margin: 0 0 24px; }
+.emp-wa-btn { display: inline-flex; }
+.emp-success-back {
+  display: block;
+  margin-top: 20px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.emp-success-back:hover { color: var(--ber-dk); }
+@media (max-width: 560px) {
+  .emp-row { gap: 0; }
 }
 
 /* ── Noticias: map link + article highlight ── */
@@ -22011,4 +23274,130 @@ img[src*="apt-vt-gallery-"] {
 }
 @media (max-width: 640px) {
   .noticias-terr-controls { align-self: flex-start; }
+}
+
+/* ── Guía interactiva: mapa Leaflet ────────────────────────────── */
+.ag-map-leaflet {
+  height: 480px;
+  border-radius: 10px 0 10px 0;
+  overflow: hidden;
+  background: var(--crema, #FAF6F0);
+}
+@media (max-width: 640px) {
+  .ag-map-leaflet { height: 340px; }
+}
+.ag-map-leaflet .leaflet-popup-content-wrapper {
+  border-radius: 10px 0 10px 0 !important;
+  box-shadow: 0 4px 16px rgba(42,15,46,.18) !important;
+  border: 1px solid rgba(42,15,46,.08);
+  padding: 0;
+}
+.ag-map-leaflet .leaflet-popup-content { margin: 0; }
+.ag-map-leaflet .leaflet-popup-tip { background: #fff; }
+.hgp { padding: 10px 12px; font-family: var(--sans, system-ui); font-size: 12px; line-height: 1.5; min-width: 150px; }
+.hgp-tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 4px 0 4px 0; color: #fff; font-size: 10px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 6px; }
+.hgp-name { display: block; font-weight: 700; color: var(--ber-dk, #2A0F2E); margin-bottom: 3px; font-size: 13px; }
+.hgp-desc { display: block; color: rgba(42,15,46,.65); font-size: 11px; margin-bottom: 6px; line-height: 1.45; }
+.hgp-link { display: inline-block; font-size: 11px; font-weight: 600; text-decoration: none; }
+.hgp-link:hover { opacity: .75; }
+.hgp-home { font-weight: 700; font-size: 13px; color: var(--ber-dk, #2A0F2E); }
+
+/* ── PinsTab · editor de coordenadas en /p-edit ──────────────── */
+.pe-pins-wrap {
+  display: flex;
+  height: calc(100vh - 170px);
+  min-height: 480px;
+  gap: 0;
+  margin: 0 -20px;
+  border-top: 1px solid rgba(42,15,46,.1);
+}
+.pe-pins-map {
+  flex: 1;
+  min-width: 0;
+}
+.pe-pins-loading {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 13px;
+  color: rgba(42,15,46,.5);
+}
+.pe-pins-panel {
+  width: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--crema, #FAF6F0);
+  border-left: 1px solid rgba(42,15,46,.1);
+  font-size: 12px;
+}
+.pe-pins-ph {
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid rgba(42,15,46,.08);
+}
+.pe-pins-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ber-dk, #2A0F2E);
+  margin-bottom: 4px;
+}
+.pe-pins-search-wrap {
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(42,15,46,.08);
+}
+.pe-pins-changes-head {
+  padding: 8px 12px 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(42,15,46,.45);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(42,15,46,.06);
+}
+.pe-pins-changes {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 10px 8px;
+}
+.pe-pins-change-item {
+  background: rgba(42,15,46,.04);
+  border: 1px solid rgba(42,15,46,.1);
+  border-radius: 6px 0 6px 0;
+  padding: 8px 10px;
+  margin-bottom: 5px;
+  line-height: 1.5;
+}
+.pe-pins-change-name {
+  font-weight: 700;
+  color: var(--sol-text, #176E80);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pe-pins-change-old {
+  color: rgba(42,15,46,.4);
+  text-decoration: line-through;
+}
+.pe-pins-change-new { color: var(--ber-dk, #2A0F2E); }
+.pe-pins-footer {
+  padding: 10px 10px;
+  border-top: 1px solid rgba(42,15,46,.1);
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.pe-pins-toast {
+  margin: 0 10px 8px;
+  font-size: 11px;
+  color: var(--sol-text, #176E80);
+  background: rgba(58,170,187,.08);
+  border: 1px solid rgba(58,170,187,.3);
+  border-radius: 4px;
+  padding: 5px 8px;
+}
+@media (max-width: 700px) {
+  .pe-pins-wrap { flex-direction: column; height: auto; }
+  .pe-pins-map  { height: 55vh; }
+  .pe-pins-panel { width: 100%; border-left: none; border-top: 1px solid rgba(42,15,46,.1); }
 }

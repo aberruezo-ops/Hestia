@@ -1,8 +1,8 @@
 // ============================================================
-// HESTÍA · ADMIN — /p-edit.html
+// HESTÍA · ADMIN, /p-edit.html
 // Editor de docs/data/prices.json + docs/data/reviews.json.
 // Login con GitHub PAT (permiso contents:write sobre el repo).
-// El token vive solo en memoria — nunca en el repo ni localStorage.
+// El token vive solo en memoria, nunca en el repo ni localStorage.
 // Tabs: [ Pricing ] [ Reviews ]
 // ============================================================
 
@@ -13,7 +13,7 @@ const REVIEWS_PATH = 'docs/data/reviews.json';
 const BRANCH = 'main';
 const API    = 'https://api.github.com';
 
-// Cloudflare Web Analytics — Worker proxy + identificadores (no secretos)
+// Cloudflare Web Analytics, Worker proxy + identificadores (no secretos)
 const CF_WORKER_URL = 'https://little-night-9399.hestia-vera-almeria.workers.dev/';
 const CF_ACCOUNT    = 'ccb910d549f39e3bad5d89e33315d57e';
 const CF_SITE_TAG   = '770c05669c6b45ea8f1026576fe7dcce';
@@ -39,14 +39,14 @@ const apiHeaders = (token) => ({
 });
 
 // ============================================================
-// CONTRATO — datos por apartamento (variantes de la plantilla
+// CONTRATO, datos por apartamento (variantes de la plantilla
 // unificada en docs/contracts/template-base.md).
 // ============================================================
 const APT_CONTRACT_DATA = {
   vm: {
     name: 'Hestía Vera Mar',
     shortName: 'Mar',
-    heroPhoto: 'assets/apt-vm-gallery-1.jpg',
+    heroPhoto: 'assets/apt-vs.jpg',
     direccion: 'Apto. 1A, del portal 14, edificio 3, en la urbanización Paraíso Playa, en C/ Islas Canarias, 7',
     plazaGaraje: '160',
     zonaObras: 'enfrente',
@@ -56,7 +56,7 @@ const APT_CONTRACT_DATA = {
   vt: {
     name: 'Hestía Vera Thalassa',
     shortName: 'Thalassa',
-    heroPhoto: 'assets/apt-vt-gallery-01.jpg',
+    heroPhoto: 'assets/apt-vt-4.jpg',
     direccion: 'Apto. 11, planta 5ª, escalera 13, en la urbanización Thalassa, en C/ Tomillo 2',
     plazaGaraje: '163',
     zonaObras: 'cercanas',
@@ -66,7 +66,8 @@ const APT_CONTRACT_DATA = {
   vs: {
     name: 'Hestía Vera Salinas',
     shortName: 'Salinas',
-    heroPhoto: 'assets/apt-vs-collage-header.jpg',
+    heroPhoto: 'assets/apt-vm.jpg',
+    heroFocusY: 0.8,
     direccion: 'Apto. 7, planta 1ª, bloque 22, en la urbanización Pueblo Salinas, en C/ Alcazaba 115',
     plazaGaraje: '290',
     zonaObras: 'cercanas',
@@ -130,12 +131,19 @@ function diffNoches(entradaIso, salidaIso) {
   const b = new Date(salidaIso + 'T00:00:00');
   return Math.max(0, Math.round((b - a) / (24*60*60*1000)));
 }
+// Suma días a una fecha ISO (YYYY-MM-DD) usando aritmética local (sin saltos de zona horaria).
+function addDaysIso(iso, days) {
+  if (!iso) return iso;
+  const [y, m, d] = iso.split('-').map(Number);
+  const r = new Date(y, m - 1, d + days);
+  return `${r.getFullYear()}-${String(r.getMonth()+1).padStart(2,'0')}-${String(r.getDate()).padStart(2,'0')}`;
+}
 
 // base64 ↔ utf-8 (atob/btoa no manejan UTF-8 directamente)
 const utf8ToB64 = (s) => btoa(unescape(encodeURIComponent(s)));
 const b64ToUtf8 = (s) => decodeURIComponent(escape(atob(s.replace(/\n/g, ''))));
 
-// NumInput — resuelve el problema clásico de React con inputs numéricos
+// NumInput, resuelve el problema clásico de React con inputs numéricos
 // controlados: imposibilidad de borrar un "0", punto decimal eliminado al vuelo.
 // Mantiene estado string local mientras el campo está activo; solo confirma
 // al parent cuando hay un número válido completo. Selecciona todo al enfocar.
@@ -183,7 +191,7 @@ const NumInput = ({ value, onChange, min, max, step, className, placeholder, dis
 };
 
 // ============================================================
-// validateYearCoverage — para un año dado, comprueba que cada
+// validateYearCoverage: para un año dado, comprueba que cada
 // día está cubierto por exactamente una temporada/especial. Los
 // puentes no cuentan: solo bumpean +1 grado, no asignan
 // temporada base.
@@ -272,7 +280,7 @@ const sourceLabel = (src, cal, seasons) => {
 };
 
 // ============================================================
-// CalendarEditor — UI estructurada para editar el calendario.
+// CalendarEditor, UI estructurada para editar el calendario.
 // Lee/escribe el mismo JSON que el textarea (fuente única) pero
 // con tablas por año + secciones de especiales y puentes. El
 // textarea avanzado se mantiene plegado para edición libre.
@@ -343,7 +351,7 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
     return (
       <div className="pe-card">
         <h2>Calendario y horizonte de reservas</h2>
-        <div className="pe-error">JSON inválido — {calErr}. Edita el bloque avanzado abajo para arreglarlo.</div>
+        <div className="pe-error">JSON inválido, {calErr}. Edita el bloque avanzado abajo para arreglarlo.</div>
         <textarea
           value={calJson}
           onChange={e => updateCalJson(e.target.value)}
@@ -391,7 +399,7 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
               <div className="pe-validate">
                 {valid.gaps.length > 0 && (
                   <div className="pe-validate-block pe-validate-gaps">
-                    <strong>{valid.gaps.length} hueco(s) sin temporada — añade un rango que los cubra:</strong>
+                    <strong>{valid.gaps.length} hueco(s) sin temporada, añade un rango que los cubra:</strong>
                     <ul>
                       {valid.gaps.map((g, i) => (
                         <li key={i}>
@@ -403,13 +411,13 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
                 )}
                 {valid.overlaps.length > 0 && (
                   <div className="pe-validate-block pe-validate-overlaps">
-                    <strong>{valid.overlaps.length} solapamiento(s) — un día solo puede pertenecer a una temporada o especial:</strong>
+                    <strong>{valid.overlaps.length} solapamiento(s), un día solo puede pertenecer a una temporada o especial:</strong>
                     <ul>
                       {valid.overlaps.map((o, i) => (
                         <li key={i}>
                           {o.start === o.end ? o.start : `${o.start} → ${o.end}`}
                           <span className="pe-validate-sources">
-                            {' '}— {o.sources.map(s => sourceLabel(s, cal, seasons)).join(' + ')}
+                            {' '}– {o.sources.map(s => sourceLabel(s, cal, seasons)).join(' + ')}
                           </span>
                         </li>
                       ))}
@@ -536,7 +544,7 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
               className="pe-textarea pe-mono"
               spellCheck="false"
             />
-            {!calOk && <div className="pe-error">JSON inválido — {calErr}</div>}
+            {!calOk && <div className="pe-error">JSON inválido, {calErr}</div>}
           </>
         )}
       </div>
@@ -545,7 +553,7 @@ const CalendarEditor = ({ calJson, setCalJson, updateCalJson, calOk, calErr, sea
 };
 
 // ============================================================
-// REVIEWS — modelo + componentes de la pestaña Reviews
+// REVIEWS, modelo + componentes de la pestaña Reviews
 // ============================================================
 const REVIEW_SOURCES = [
   { id: 'booking', label: 'Booking.com', short: 'Booking', color: '#003B95' },
@@ -570,7 +578,7 @@ const ReviewRow = ({ review, onChange, onRemove, onApprove }) => {
   const sourceMeta = REVIEW_SOURCES.find(s => s.id === review.source) || REVIEW_SOURCES[3];
   const aptMeta   = REVIEW_APTS.find(a => a.id === review.apt) || { label: review.apt };
   const isPending = review.status === 'pending';
-  const dateLbl = review.date ? review.date.slice(0, 7) : '—';
+  const dateLbl = review.date ? review.date.slice(0, 7) : '–';
   const snippet = (review.text || '').slice(0, 110);
   const ratingLbl = review.source === 'booking'
     ? `${review.rating}/10`
@@ -593,7 +601,7 @@ const ReviewRow = ({ review, onChange, onRemove, onApprove }) => {
         </span>
         <span className="pe-rev-apt-badge">{aptMeta.label}</span>
         <span className="pe-rev-date-cell">{dateLbl}</span>
-        <span className="pe-rev-name-cell">{review.name || '—'}</span>
+        <span className="pe-rev-name-cell">{review.name || '–'}</span>
         <span className="pe-rev-country-cell">{review.country || ''}</span>
         <span className="pe-rev-rating-cell">{ratingLbl}{review.highlight ? ' ✦' : ''}</span>
         {isPending && onApprove && (
@@ -777,7 +785,7 @@ const PasteFromEmail = ({ onAdd, onCancel }) => {
       id: newReviewId('web'),
       source: 'web',
       apt: parsed.apt,
-      name: parsed.name || '—',
+      name: parsed.name || '–',
       country: '',
       date: parsed.date,
       rating: Number(parsed.rating) || 5,
@@ -822,11 +830,11 @@ const PasteFromEmail = ({ onAdd, onCancel }) => {
           <dl className="pe-paste-grid">
             <dt>Hestía</dt>      <dd>{(REVIEW_APTS.find(a => a.id === parsed.apt) || {}).label || parsed.apt}</dd>
             <dt>Valoración</dt>  <dd>{parsed.rating}/5</dd>
-            <dt>Nombre</dt>      <dd>{parsed.name || <em>— no detectado</em>}</dd>
+            <dt>Nombre</dt>      <dd>{parsed.name || <em>– no detectado</em>}</dd>
             {parsed.email && (<><dt>Email</dt><dd className="pe-mono">{parsed.email}</dd></>)}
-            <dt>Fecha</dt>       <dd className="pe-mono">{parsed.date}</dd>
+            <dt>Fecha</dt>       <dd className="pe-mono">{fmtDate(parsed.date)}</dd>
             <dt>Idioma</dt>      <dd>{parsed.lang.toUpperCase()}</dd>
-            <dt>Texto</dt>       <dd className="pe-paste-text">{parsed.text || <em>— no detectado</em>}</dd>
+            <dt>Texto</dt>       <dd className="pe-paste-text">{parsed.text || <em>– no detectado</em>}</dd>
           </dl>
           <div className="pe-actions" style={{marginTop:14}}>
             <button type="button" onClick={accept} className="pe-btn pe-btn-primary">
@@ -925,7 +933,7 @@ const NewReviewForm = ({ onAdd, onCancel }) => {
 };
 
 // ============================================================
-// DashboardTab — resumen histórico + live 2026
+// DashboardTab, resumen histórico + live 2026
 // ============================================================
 
 const dashFmtMoney = v => v >= 1000
@@ -1198,7 +1206,7 @@ function ReservasNochesChart({ years, yearData }) {
 }
 
 // ============================================================
-// IntelligenciaTab — panel unificado: tráfico + negocio + acciones
+// IntelligenciaTab, panel unificado: tráfico + negocio + acciones
 // ============================================================
 const IntelligenciaTab = ({ token, onNavigate }) => {
   const [days,     setDays]     = React.useState(30);
@@ -1314,7 +1322,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
       if (rate < 0.05) {
         out.push({ sev: 'alta', cat: 'Conversión', title: `Conversión búsqueda→reserva: ${Math.round(rate * 100)}%`, desc: `${sent} de ${searches} búsquedas acaban en reserva. Revisa precios, mínimos de estancia y la fricción del formulario.`, tab: 'pricing' });
       } else if (rate < 0.12) {
-        out.push({ sev: 'media', cat: 'Conversión', title: `Conversión al ${Math.round(rate * 100)}% — hay recorrido`, desc: `${sent} reservas de ${searches} búsquedas. Un CTA más directo o un price anchoring más claro podría mejorar el ratio.` });
+        out.push({ sev: 'media', cat: 'Conversión', title: `Conversión al ${Math.round(rate * 100)}%, hay recorrido`, desc: `${sent} reservas de ${searches} búsquedas. Un CTA más directo o un price anchoring más claro podría mejorar el ratio.` });
       }
     }
 
@@ -1366,7 +1374,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
       if (total >= 3 && ota / total > 0.65) {
         out.push({ sev: 'alta', cat: 'Canales', title: `${Math.round(ota / total * 100)}% reservas OTA en 2026`, desc: 'Alta dependencia de Booking/Airbnb. Activa newsletter, redes y WhatsApp directo para reducir comisiones.', tab: 'pricing' });
       } else if (total >= 3 && direct / total > 0.45) {
-        out.push({ sev: 'baja', cat: 'Canales', title: `${Math.round(direct / total * 100)}% reservas directas — buen ratio`, desc: 'Mantén los canales directos activos y sigue priorizando WhatsApp y la reserva sin intermediarios.' });
+        out.push({ sev: 'baja', cat: 'Canales', title: `${Math.round(direct / total * 100)}% reservas directas, buen ratio`, desc: 'Mantén los canales directos activos y sigue priorizando WhatsApp y la reserva sin intermediarios.' });
       }
     }
 
@@ -1397,7 +1405,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
   const totalPV  = cfData ? (cfData.pages     || []).reduce((s, r) => s + r.count, 0) : null;
   const totalCtr = cfData ? (cfData.countries || []).reduce((s, r) => s + r.count, 0) : 0;
   const totalDev = cfData ? (cfData.devices   || []).reduce((s, r) => s + r.count, 0) : 0;
-  const topCtry  = cfData ? ((cfData.countries || [])[0]?.dimensions?.countryName || '—') : null;
+  const topCtry  = cfData ? ((cfData.countries || [])[0]?.dimensions?.countryName || '–') : null;
   const funnConv = (() => { const s = fc['search_initiated'] || 0; const r = fc['booking_sent'] || 0; return s ? Math.round(r / s * 100) + '%' : null; })();
   const stats26  = yearData?.['2026'];
   const years    = yearData ? Object.keys(yearData).sort() : [];
@@ -1427,7 +1435,8 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
 
   const fmtEvt = (ts) => {
     const d = new Date(ts);
-    return `${d.toLocaleDateString('es-ES')} ${d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+    const f = `${String(d.getDate()).padStart(2,'0')}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getFullYear()).slice(2)}`;
+    return `${f} ${d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
   };
 
   const SEV_COLOR = { alta: '#E74C3C', media: '#E67E22', baja: '#1BC8D8' };
@@ -1455,27 +1464,27 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
         <>
           <div className="intel-kpis">
             <div className="intel-kpi">
-              <div className="intel-kpi-val" style={{ color: '#1BC8D8' }}>{totalPV != null ? totalPV.toLocaleString('es-ES') : '—'}</div>
+              <div className="intel-kpi-val" style={{ color: '#1BC8D8' }}>{totalPV != null ? totalPV.toLocaleString('es-ES') : '–'}</div>
               <div className="intel-kpi-lbl">Páginas vistas · {days}d</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val">{topCtry ?? '—'}</div>
+              <div className="intel-kpi-val">{topCtry ?? '–'}</div>
               <div className="intel-kpi-lbl">País principal</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val" style={{ color: funnConv && parseInt(funnConv) < 5 ? '#E74C3C' : '#D4A84A' }}>{funnConv ?? '—'}</div>
+              <div className="intel-kpi-val" style={{ color: funnConv && parseInt(funnConv) < 5 ? '#E74C3C' : '#D4A84A' }}>{funnConv ?? '–'}</div>
               <div className="intel-kpi-lbl">Conversión búsqueda→reserva</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val" style={{ color: '#D4A84A' }}>{stats26 ? dashFmtMoney(stats26.ingresos) : '—'}</div>
+              <div className="intel-kpi-val" style={{ color: '#D4A84A' }}>{stats26 ? dashFmtMoney(stats26.ingresos) : '–'}</div>
               <div className="intel-kpi-lbl">Ingresos 2026</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val">{stats26 ? stats26.reservas : '—'}</div>
+              <div className="intel-kpi-val">{stats26 ? stats26.reservas : '–'}</div>
               <div className="intel-kpi-lbl">Reservas 2026</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val">{stats26 ? dashFmtMoney(stats26.precio_noche) : '—'}</div>
+              <div className="intel-kpi-val">{stats26 ? dashFmtMoney(stats26.precio_noche) : '–'}</div>
               <div className="intel-kpi-lbl">Precio/noche medio 2026</div>
             </div>
           </div>
@@ -1527,13 +1536,13 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
                         <div className="pe-cf-col">
                           <div className="pe-cf-col-title">Países</div>
                           {(cfData.countries || []).map((r, i) => (
-                            <BarRow key={i} label={r.dimensions.countryName || '—'} count={r.count} total={totalCtr} bold={i === 0} />
+                            <BarRow key={i} label={r.dimensions.countryName || '–'} count={r.count} total={totalCtr} bold={i === 0} />
                           ))}
                         </div>
                         <div className="pe-cf-col">
                           <div className="pe-cf-col-title">Dispositivos</div>
                           {(cfData.devices || []).map((r, i) => (
-                            <BarRow key={i} label={r.dimensions.deviceType || '—'} count={r.count} total={totalDev} bold={i === 0} />
+                            <BarRow key={i} label={r.dimensions.deviceType || '–'} count={r.count} total={totalDev} bold={i === 0} />
                           ))}
                         </div>
                       </div>
@@ -1630,7 +1639,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
                             <td className="pe-ev-ts">{fmtEvt(ev.ts)}</td>
                             <td className="pe-ev-name">{ev.name}</td>
                             <td className="pe-ev-data">
-                              {Object.entries(ev).filter(([k]) => k !== 'ts' && k !== 'name').map(([k, v]) => `${k}: ${v}`).join(' · ') || '—'}
+                              {Object.entries(ev).filter(([k]) => k !== 'ts' && k !== 'name').map(([k, v]) => `${k}: ${v}`).join(' · ') || '–'}
                             </td>
                           </tr>
                         ))}
@@ -1648,7 +1657,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
 };
 
 // ============================================================
-// ContractTab — generador de contratos de arrendamiento.
+// ContractTab, generador de contratos de arrendamiento.
 // Plantilla base: docs/contracts/template-base.md.
 // Flujo: rellenas el formulario → "Generar contrato y abrir correo"
 // abre dos cosas a la vez:
@@ -1656,8 +1665,8 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
 //   2) mailto: con el correo del huésped, asunto y cuerpo
 //      prerrellenados (el usuario adjunta el PDF descargado).
 // ============================================================
-const ContractTab = ({ pricesData, prefill }) => {
-  // Estado del formulario — usa prefill si llega desde Reservas
+const ContractTab = ({ pricesData, prefill, token }) => {
+  // Estado del formulario, usa prefill si llega desde Reservas
   const today = new Date().toISOString().slice(0,10);
   const p = prefill || {};
   const [apt, setApt]                 = React.useState(p.apt || 'vm');
@@ -1678,12 +1687,48 @@ const ContractTab = ({ pricesData, prefill }) => {
   );
   const [fianza, setFianza]           = React.useState(p.fianza || false);
   const [fechaFirma, setFechaFirma]   = React.useState(today);
+  const [reservaSaveMsg, setReservaSaveMsg] = React.useState(null);
+
+  // Persiste los datos del huésped editados aquí de vuelta en la reserva
+  // (reservas.json). Sin esto, lo que se rellena en el contrato no quedaba
+  // guardado en la reserva. Solo aplica si el contrato se abrió desde una reserva.
+  const canSaveToReserva = !!(prefill && token);
+  const saveToReserva = async () => {
+    if (!canSaveToReserva) return;
+    setReservaSaveMsg({ kind: 'info', text: 'Guardando en la reserva…' });
+    try {
+      const ref = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' });
+      if (!ref.ok) throw new Error('No pude leer reservas.json');
+      const j = await ref.json();
+      const fileData = JSON.parse(b64ToUtf8(j.content));
+      const list = fileData.reservas || [];
+      const idx = prefill.id
+        ? list.findIndex(x => x.id === prefill.id)
+        : list.findIndex(x => x.entrada === prefill.entrada && x.apt === prefill.apt && (x.responsable || '') === (prefill.responsable || ''));
+      if (idx < 0) throw new Error('No encontré la reserva en el archivo');
+      list[idx] = {
+        ...list[idx],
+        responsable: nombre, dni, direccion: domicilio, telefono, email,
+        huespedes: Number(huespedes) || list[idx].huespedes,
+        mascota, fianza,
+      };
+      const newData = { ...fileData, reservas: list, updatedAt: new Date().toISOString(), count: list.length };
+      const put = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
+        method: 'PUT', headers: apiHeaders(token),
+        body: JSON.stringify({ message: `chore(reservas): datos de contrato · ${nombre}`, content: utf8ToB64(JSON.stringify(newData, null, 2)), sha: j.sha, branch: BRANCH }),
+      });
+      if (!put.ok) { const pj = await put.json(); throw new Error(pj.message || 'Error al guardar'); }
+      setReservaSaveMsg({ kind: 'ok', text: 'Datos guardados en la reserva ✓' });
+    } catch (e) {
+      setReservaSaveMsg({ kind: 'err', text: 'No se pudo guardar en la reserva: ' + e.message });
+    }
+  };
 
   const aptInfo = APT_CONTRACT_DATA[apt];
   const noches = diffNoches(fechaEntrada, fechaSalida);
   const remanente = Math.max(0, Number(precioTotal||0) - Number(prereserva||0) - Number(pagoPrevio||0));
 
-  // Lista de extras (tabla cláusula novena) — leídos de prices.json.
+  // Lista de extras (tabla cláusula novena), leídos de prices.json.
   const extras = (pricesData && pricesData.rules && pricesData.rules.extras) || [];
 
   const formOk = () => apt && nombre && fechaEntrada && fechaSalida
@@ -1709,12 +1754,12 @@ const ContractTab = ({ pricesData, prefill }) => {
   // Pre-crop a data URL to the hero aspect ratio (210mm × 55mm ≈ 3.82:1).
   // html2canvas does not reliably apply object-fit or background-size,
   // so we crop in JS first and embed the already-cropped image.
-  const cropHero = (rawUrl) => {
+  const cropHero = (rawUrl, focusY = 0.5) => {
     if (!rawUrl) return Promise.resolve(null);
     return new Promise(resolve => {
       const img = new Image();
       img.onload = () => {
-        // W/H = 2100/650 = 210/65 exactly — same ratio as jsPDF target
+        // W/H = 2100/650 = 210/65 exactly, same ratio as jsPDF target
         const W = 2100, H = 650;
         const c = document.createElement('canvas');
         c.width = W; c.height = H;
@@ -1723,18 +1768,18 @@ const ContractTab = ({ pricesData, prefill }) => {
         const tgtAR = W / H; // 3.818:1
         let sx = 0, sy = 0, sw = img.naturalWidth, sh = img.naturalHeight;
         if (Math.abs(srcAR - tgtAR) / tgtAR < 0.02) {
-          // already at target ratio (e.g. pre-built collage) — just resize
+          // already at target ratio (e.g. pre-built collage), just resize
         } else if (srcAR > tgtAR) {
           // landscape wider: crop sides equally
           sh = img.naturalHeight; sw = sh * tgtAR;
           sx = (img.naturalWidth - sw) / 2;
         } else {
-          // narrower than target ratio: use full width, crop vertically
-          // at 15% from top — enough to skip plain ceiling while keeping room interior
+          // narrower than target ratio: use full width y recorte vertical
+          // CENTRADO, encuadra bien el cabecero + los cojines de la cama de frente.
           sw = img.naturalWidth;
           sh = sw / tgtAR;
           sx = 0;
-          sy = Math.max(0, (img.naturalHeight - sh) * 0.15);
+          sy = Math.max(0, (img.naturalHeight - sh) * focusY);
         }
         ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
         resolve(c.toDataURL('image/jpeg', 0.92));
@@ -1788,6 +1833,7 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
     const pdfFilename = `${fechaEntrada}_Hestia_Vera_${a.shortName.replace(/\s+/g,'_')}_contrato_${safeName(nombre)}_${noches}_noches.pdf`;
     return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=794, initial-scale=1">
 <title>Contrato · Hestía Vera ${a.shortName} · ${escHtml(nombre)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1821,16 +1867,27 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
     margin: 0;
     margin: 0; padding: 0; background: #fff;
   }
-  #pdf-content { background: #fff; }
-  #contract-body { padding: 8mm 16mm 14mm; }
+  #pdf-content { background: #fff; width: 210mm; }
+  #contract-body { padding: 14mm 16mm 14mm; }
 
   /* ── Hero (primera página) ───────────────────────────── */
   .hero {
+    margin-top: -8mm;
     position: relative;
     width: 100%;
     height: 65mm;
     overflow: hidden;
     background: linear-gradient(135deg, var(--ber) 0%, var(--ber-lt) 100%);
+  }
+  .hero-img {
+    /* En el flujo (display:block), NO position:absolute + object-fit: html2canvas
+       (el rasterizador del PDF) descarta imágenes con object-fit posicionadas en
+       absoluto, y la cabecera salía en el navegador pero desaparecía en el PDF
+       guardado. cropHero ya recorta a la proporción exacta (2100×650), así que
+       object-fit es innecesario: width/height 100% encuadra sin deformar. */
+    display: block;
+    width: 100%;
+    height: 100%;
   }
   .hero-overlay {
     position: absolute;
@@ -1964,15 +2021,23 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
   /* Cifras destacadas (renta, prereserva, fianza) */
   .key-num { color: var(--vt-dk); font-weight: 700; }
 
+  /* El salto a página propia lo fuerza html2pdf via pagebreak.before (legacy),
+     más fiable en Safari. NO repetir aquí page-break-before (css mode), porque
+     el doble salto generaba una página en blanco antes de las firmas. */
+  .sign-page {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
   .firmas {
-    margin-top: 12mm;
+    margin-top: 10mm;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10mm;
     page-break-inside: avoid;
+    break-inside: avoid;
   }
   .firma {
-    padding-top: 18mm;
+    padding-top: 15mm;
     border-top: 1pt solid var(--sol);
     font-size: 9.5pt;
     color: var(--ber);
@@ -2020,14 +2085,26 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
 </div>
 
 <div id="pdf-content">
-<!-- Spacer for page-1 hero: bar(18mm) + hero(65mm) − MARG_TOP(30mm) + 3mm buffer = 56mm -->
-<div style="height:56mm;line-height:0;font-size:0"> </div>
+<!-- Hero en el flujo del documento (no superpuesto por jsPDF). Al formar parte de la
+     imagen que html2canvas rasteriza, escala SIEMPRE junto al contenido, así que la
+     cabecera nunca puede desalinearse y solaparse con el texto (problema previo en
+     móvil con el spacer fijo + hero dibujado por jsPDF). La barra fina y el pie se
+     dibujan en los márgenes reservados (MARG_TOP/MARG_BOT), fuera del contenido. -->
+<div class="hero">
+  ${heroUrl ? `<img class="hero-img" src="${heroUrl}" alt="">` : ''}
+  <div class="hero-overlay"></div>
+  <div class="hero-text">
+    <p class="hero-eyebrow">contrato de arrendamiento por temporada</p>
+    <div class="hero-title">Hestía · Vera ${a.shortName}</div>
+    <p class="hero-meta">${fechaEntradaStr} – ${fechaSalidaStr}  ·  ${noches} noches · ${huespedes} huéspedes</p>
+  </div>
+</div>
 <div id="contract-body">
 
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
 
 <h2>Reunidos</h2>
-<p>Por una parte, <strong>D. Alejandro Berruezo Márquez</strong> y <strong>D. Francisco Javier Moral Arévalo</strong>, mayores de edad, y con domicilio a efectos de notificaciones en Avenida de la Constitución 38, 1A, 28821 de Coslada, Madrid, con DNI. ***DNI-RETIRADO*** y ***DNI-RETIRADO***, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ***IBAN-RETIRADO***.</p>
+<p>Por una parte, <strong>D. Alejandro Berruezo Márquez</strong> y <strong>D. Francisco Javier Moral Arévalo</strong>, mayores de edad, y con domicilio a efectos de notificaciones en ***DOMICILIO-RETIRADO***, con DNI. ***DNI-RETIRADO*** y ***DNI-RETIRADO***, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ***IBAN-RETIRADO***.</p>
 <p><em>(De ahora en adelante, "Los Propietarios".)</em></p>
 <p>De otra parte, <strong>D./Dña. ${escHtml(nombre.toUpperCase())}</strong>, mayor de edad, con domicilio a efectos de notificaciones en: ${domicilio ? `<strong>${escHtml(domicilio)}</strong>` : '<span class="blank-line long" aria-label="dirección a rellenar"></span>'}, con Documento Nacional de Identidad: ${dni ? `<strong>${escHtml(dni)}</strong>` : '<span class="blank-line short" aria-label="DNI a rellenar"></span>'}, con teléfono: ${telefono ? `<strong>${escHtml(telefono)}</strong>` : '<span class="blank-line short" aria-label="teléfono a rellenar"></span>'}, y correo electrónico a efectos de notificaciones telemáticas: ${email ? `<strong>${escHtml(email)}</strong>` : '<span class="blank-line medium" aria-label="email a rellenar"></span>'}.</p>
 <p><em>(en adelante, "la Parte Arrendataria".)</em></p>
@@ -2054,7 +2131,7 @@ ${bloqueAccesibilidad}
     <tr><td><strong>Señal / prereserva</strong></td><td class="num">${prereserva} €</td><td>Transferencia a ***IBAN-RETIRADO*** o Bizum a +34 620 316 370</td></tr>
     ${pagoPrevioN > 0 ? `<tr><td><strong>Pago previo</strong></td><td class="num">${pagoPrevio} €</td><td>Transferencia o Bizum (según acuerdo)</td></tr>` : ''}
     <tr><td><strong>Remanente (check-in)</strong></td><td class="num">${remanente} €</td><td>Efectivo en el momento del check-in</td></tr>
-    ${fianza ? `<tr><td><strong>Fianza</strong></td><td class="num">300 €</td><td>Transferencia 2 días antes de la llegada — se devuelve al check-out</td></tr>` : ''}
+    ${fianza ? `<tr><td><strong>Fianza</strong></td><td class="num">300 €</td><td>Transferencia 2 días antes de la llegada, se devuelve al check-out</td></tr>` : ''}
     <tr style="border-top: 1pt solid var(--ber)"><td><strong>TOTAL</strong></td><td class="num"><strong>${precioTotal} €</strong></td><td></td></tr>
   </tbody>
 </table>
@@ -2114,8 +2191,11 @@ ${clausulaFianza}
 <p>Respetad y no extraigáis de Hestía el equipamiento, el contenido, el mobiliario y los detalles. Tras vuestra estancia se realizará un inventario e inspección de Hestía, con lo que cualquier deterioro o sustracción será vuestra responsabilidad.</p>
 <p>Nuestro máximo deseo es que descanséis y que respetéis igualmente el descanso de nuestros vecinos, evitando los ruidos, la música y el jaleo a deshoras. Hestía es exclusivamente para vuestro uso y disfrute, no para el de otros.</p>
 <p>Respetad las horas de check-in (a partir de las 15:00) y check-out (hasta las 11:00). No están permitidas las mascotas, salvo aprobación explícita. No fuméis. Las toallas son para uso exclusivo dentro de Hestía. Solo está permitido colgar ropa en el tendedero. El uso de las zonas comunes será en el horario permitido, especialmente la piscina. No está permitido el naturismo ni el toples en toda la urbanización, ya que se trata de una urbanización textil. Cualquier incidente o problemática derivada de los menores de edad será responsabilidad de sus padres/tutores. Cualquier situación o incidente de los servicios comunes o del exterior de Hestía no es responsabilidad nuestra, aunque intentaremos ayudarte. Por favor, intenta dejar Hestía limpio y recogido. De las sábanas y toallas nos encargamos nosotros. En cualquier caso, no laves las toallas y sábanas con ropa de otro color, por favor.</p>
-<p><strong>Mancomunidad y zonas comunes.</strong> No se permite circular a velocidad superior a la indicada por la mancomunidad — en general, muy reducida. Hay niños, mascotas y peatones; conducid siempre despacio. Asimismo, no se permite ensuciar ni deteriorar las zonas comunes (jardines, piscina, ascensores, pasillos y descansillos). Cualquier desperfecto o suciedad reiterada será responsabilidad del huésped.</p>
+<p><strong>Mancomunidad y zonas comunes.</strong> No se permite circular a velocidad superior a la indicada por la mancomunidad: en general, muy reducida. Hay niños, mascotas y peatones; conducid siempre despacio. Asimismo, no se permite ensuciar ni deteriorar las zonas comunes (jardines, piscina, ascensores, pasillos y descansillos). Cualquier desperfecto o suciedad reiterada será responsabilidad del huésped.</p>
 
+<div class="sign-page">
+<h2>Firma del contrato</h2>
+<p>En prueba de conformidad con todo lo anterior, ambas partes firman el presente contrato por duplicado y a un solo efecto, en el lugar y fecha indicados en el encabezamiento.</p>
 <div class="firmas">
   <div class="firma">
     <strong>Los Propietarios</strong> <em style="font-weight:normal">(con una es suficiente)</em><br>
@@ -2126,6 +2206,7 @@ ${clausulaFianza}
     <strong>La Parte Arrendataria</strong><br>
     Fdo.: <strong>${escHtml(nombre.toUpperCase())}</strong>
   </div>
+</div>
 </div>
 </div><!-- #contract-body -->
 </div><!-- #pdf-content -->
@@ -2143,15 +2224,38 @@ ${clausulaFianza}
   async function generate() {
     try { await document.fonts.ready; } catch(e) {}
     var el = document.getElementById('pdf-content');
-    // margin: [top, right, bottom, left] — top/bottom leave room for jsPDF header/footer
-    var MARG_TOP = 30, MARG_BOT = 24;
+    // Espera a que TODAS las imágenes (sobre todo el hero de la primera página)
+    // estén decodificadas antes de rasterizar. En Safari/iOS html2canvas a veces
+    // capturaba antes de que el data-URL del hero estuviera listo y la cabecera
+    // de la primera página salía en blanco al guardar.
+    try {
+      await Promise.all([].slice.call(el.querySelectorAll('img')).map(function(img) {
+        if (img.complete && img.naturalWidth) return img.decode ? img.decode().catch(function() {}) : Promise.resolve();
+        return new Promise(function(res) { img.onload = res; img.onerror = res; });
+      }));
+    } catch(e) {}
+    // margin: [top, right, bottom, left], la barra fina (18mm) y el pie viven en estos
+    // márgenes; el contenido (incl. el hero, ya dentro del flujo) nunca los invade.
+    // La barra fina ocupa 0–18mm y el pie ~287–290mm. Dejamos MARG_TOP/BOT MAYORES
+    // que esas franjas para que SIEMPRE quede una banda blanca entre cabecera y
+    // contenido, y entre contenido y pie, imposible que se solapen en ninguna página.
+    var MARG_TOP = 26, MARG_BOT = 30;
     var opt = {
       margin: [MARG_TOP, 0, MARG_BOT, 0],
       filename: FILE,
       image: { type: 'jpeg', quality: 0.96 },
+      // El <meta viewport width=794> del HTML hace que el móvil maquete a 794px (=210mm)
+      // igual que escritorio, en vez del viewport por defecto ~980px que desajustaba la
+      // imagen escalada y desbordaba el contenido sobre cabecera/pie.
       html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak: { mode: ['css', 'legacy'] }
+      // avoid explícito: más fiable que el page-break-inside del CSS para que
+      // html2pdf NUNCA parta el bloque de firmas ni una fila de tabla (evita que
+      // las firmas se corten y pisen el pie si caen en el borde de página).
+      // Las firmas SIEMPRE en su propia página (before), html2pdf/Safari a veces
+      // partía o se comía el bloque si caía en un borde. En página propia entra
+      // entero y nunca se pierde. 'tr' evita partir filas de tabla.
+      pagebreak: { mode: ['css', 'legacy'], before: ['.sign-page'], avoid: ['tr', '.firmas'] }
     };
     var worker = html2pdf().set(opt).from(el);
     await worker.toPdf();
@@ -2176,34 +2280,7 @@ ${clausulaFianza}
 
       var hH = 18;
 
-      /* ── Portada: foto + overlay + texto (sólo página 1) ─── */
-      if (i === 1) {
-        if (HERO) {
-          try { pdf.addImage(HERO, 'JPEG', 0, hH, pW, 65); } catch(e) {}
-          pdf.saveGraphicsState();
-          pdf.setGState(pdf.GState({ opacity: 0.38 }));
-          pdf.setFillColor(42, 15, 46);
-          pdf.rect(0, hH, pW, 65, 'F');
-          pdf.restoreGraphicsState();
-        } else {
-          pdf.setFillColor(42, 15, 46);
-          pdf.rect(0, hH, pW, 65, 'F');
-        }
-        pdf.setFont('helvetica', 'italic');
-        pdf.setFontSize(7);
-        pdf.setTextColor(228, 217, 190);
-        pdf.text('contrato de arrendamiento por temporada', 8, hH + 42);
-        pdf.setFont('helvetica', 'bold');
-        pdf.setFontSize(16);
-        pdf.setTextColor(240, 232, 213);
-        pdf.text('Hestia · ' + APT, 8, hH + 52);
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(8);
-        pdf.setTextColor(228, 217, 190);
-        pdf.text(DATES + '  ·  ' + META, 8, hH + 61);
-      }
-
-      /* ── Barra compacta (todas las páginas, encima del hero) */
+      /* ── Barra compacta (todas las páginas, en el margen superior) */
       pdf.setFillColor(42, 15, 46);
       pdf.rect(0, 0, pW, hH, 'F');
       if (LOGO) {
@@ -2233,7 +2310,7 @@ ${clausulaFianza}
     }
 
     await worker.save();
-    document.getElementById('gen-status').textContent = 'PDF descargado — puedes cerrar esta pestaña o usar Ctrl+P si necesitas imprimirlo.';
+    document.getElementById('gen-status').textContent = 'PDF descargado, puedes cerrar esta pestaña o usar Ctrl+P si necesitas imprimirlo.';
   }
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -2278,7 +2355,7 @@ info@hestiayourhome.com · +34 620 316 370`;
       alert('Faltan campos por rellenar. Comprueba que el huésped tiene nombre, fechas y precio total > 0, y que la prereserva no supere el total.');
       return;
     }
-    // SYNC — must happen inside the user-gesture context, before any await.
+    // SYNC: must happen inside the user-gesture context, before any await.
     // Browsers block window.open and mailto navigation triggered asynchronously.
     const w = window.open('', '_blank');
     if (!w) {
@@ -2293,13 +2370,13 @@ info@hestiayourhome.com · +34 620 316 370`;
     aEl.click();
     document.body.removeChild(aEl);
 
-    // ASYNC — pre-load images as data URIs so they embed correctly in the PDF.
+    // ASYNC, pre-load images as data URIs so they embed correctly in the PDF.
     const [heroRaw, logoDataUrl, wmDataUrl] = await Promise.all([
       fetchDataUrl(aptInfo.heroPhoto),
       fetchDataUrl('assets/logo-hestia-brand.png'),
       fetchDataUrl('assets/logo-teal-transparent.png'),
     ]);
-    const heroDataUrl = await cropHero(heroRaw);
+    const heroDataUrl = await cropHero(heroRaw, aptInfo.heroFocusY ?? 0.5);
 
     // Write contract HTML to the already-opened window.
     const html = buildContractHTML(heroDataUrl, logoDataUrl, wmDataUrl);
@@ -2307,6 +2384,9 @@ info@hestiayourhome.com · +34 620 316 370`;
     w.document.write(html);
     w.document.close();
     w.focus();
+
+    // Guarda los datos del huésped editados aquí de vuelta en la reserva.
+    if (canSaveToReserva) await saveToReserva();
   };
 
   return (
@@ -2346,7 +2426,7 @@ info@hestiayourhome.com · +34 620 316 370`;
         <fieldset>
           <legend>Estancia</legend>
           <div className="pe-grid">
-            <div className="pe-field"><label>Fecha de entrada *</label><input type="date" value={fechaEntrada} onChange={e => setFechaEntrada(e.target.value)} /></div>
+            <div className="pe-field"><label>Fecha de entrada *</label><input type="date" value={fechaEntrada} onChange={e => { const v = e.target.value; setFechaEntrada(v); if (v && (!fechaSalida || fechaSalida <= v)) setFechaSalida(addDaysIso(v, 7)); }} /></div>
             <div className="pe-field"><label>Fecha de salida *</label><input type="date" value={fechaSalida} onChange={e => setFechaSalida(e.target.value)} /></div>
             <div className="pe-field"><label>Noches (calculado)</label><input type="text" readOnly value={noches} className="ct-readonly" /></div>
             <div className="pe-field"><label>Nº de huéspedes</label><NumInput min="1" max="8" value={huespedes} onChange={v => setHuespedes(v)} /></div>
@@ -2381,7 +2461,17 @@ info@hestiayourhome.com · +34 620 316 370`;
           <button type="button" className="pe-btn pe-btn-primary" onClick={onGenerar} disabled={!formOk()}>
             📨 Generar contrato y abrir correo
           </button>
+          {canSaveToReserva && (
+            <button type="button" className="pe-btn pe-btn-ghost" onClick={saveToReserva} title="Guarda los datos del huésped en la reserva sin generar el contrato">
+              💾 Guardar datos en la reserva
+            </button>
+          )}
           {!formOk() && <span className="ct-actions-hint">Faltan campos obligatorios (marcados con *).</span>}
+          {reservaSaveMsg && (
+            <span className="ct-actions-hint" style={{ color: reservaSaveMsg.kind === 'err' ? '#c0392b' : reservaSaveMsg.kind === 'ok' ? '#1e8449' : 'inherit' }}>
+              {reservaSaveMsg.text}
+            </span>
+          )}
         </div>
       </div>
     </div>
@@ -2389,7 +2479,7 @@ info@hestiayourhome.com · +34 620 316 370`;
 };
 
 // ============================================================
-// ReservasTab — pestaña de reservas (v2).
+// ReservasTab, pestaña de reservas (v2).
 //
 // Lee data-private/reservas.json vía la API de GitHub con el PAT
 // del usuario. La carpeta data-private/ vive FUERA de docs/, por
@@ -2465,7 +2555,7 @@ const APT_TEXT    = { vm: '#FFFBF4', vt: '#FFFBF4', vs: '#3D1A35' };
 // se cambia el canal de una nueva reserva.
 const COMMISSION_RATES = {
   airbnb:   0.18755, // 15.5% + IVA (21%) = 18.755% efectivo sobre bruto
-  booking:  0.198,   // 18.7% comisión OTA + 1.1% bancaria
+  booking:  0.183,   // 17% comisión OTA + 1.3% bancaria
   directo:  0,
   avaibook: 0,
 };
@@ -2582,12 +2672,16 @@ function reservaStatus(r, todayStr) {
 }
 
 const fmtEur = n => (n == null || isNaN(n))
-  ? '—'
+  ? '–'
   : `${Number(n).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
 const fmtPct = n => (n == null || isNaN(n))
-  ? '—'
+  ? '–'
   : `${(Number(n) * 100).toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %`;
-const fmtDate = d => d || '—';
+const fmtDate = (d) => {
+  if (!d) return '–';
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(d));
+  return m ? `${m[3]}.${m[2]}.${m[1].slice(2)}` : d;
+};
 const fmtDelta = (cur, prev) => {
   if (prev == null || prev === 0) return '';
   const diff = ((cur - prev) / Math.abs(prev)) * 100;
@@ -2707,7 +2801,7 @@ const BloquesTab = ({ token }) => {
   );
 };
 
-// FacturasTab — Gastos deducibles por año / apartamento
+// FacturasTab, Gastos deducibles por año / apartamento
 // Datos en PRIVATE_REPO/facturas.json
 // PDFs en PRIVATE_REPO/facturas-pdf/<filename>
 // ============================================================
@@ -3009,10 +3103,10 @@ const FacturasTab = ({ token }) => {
                   <tr key={i} className="fac-row" onClick={() => openEdit(i)}>
                     <td className="fac-date">{fmtDate(f.fecha)}</td>
                     <td className="fac-proveedor">
-                      <strong>{f.proveedor || '—'}</strong>
+                      <strong>{f.proveedor || '–'}</strong>
                       {f.nif && <span className="fac-nif">{f.nif}</span>}
                     </td>
-                    <td className="fac-concepto">{f.concepto || '—'}</td>
+                    <td className="fac-concepto">{f.concepto || '–'}</td>
                     <td><span className="fac-cat-chip">{catLabel}</span></td>
                     <td>
                       {f.apt && f.apt !== 'general'
@@ -3020,13 +3114,13 @@ const FacturasTab = ({ token }) => {
                         : <span className="fac-apt-gen">General</span>}
                     </td>
                     <td className="num">{fmtEur(f.base)}</td>
-                    <td className="num fac-iva">{f.iva_pct ? `${f.iva_pct}%` : '—'}</td>
+                    <td className="num fac-iva">{f.iva_pct ? `${f.iva_pct}%` : '–'}</td>
                     <td className="num"><strong>{fmtEur(f.total)}</strong></td>
                     <td className="num fac-deducible">{fmtEur(deducible)}{f.deducible_pct < 100 ? <span className="fac-pct"> ({f.deducible_pct}%)</span> : ''}</td>
                     <td className="fac-pdf-cell" onClick={e => e.stopPropagation()}>
                       {f.factura_pdf
                         ? <button type="button" className="fac-pdf-btn" title={f.factura_pdf} onClick={() => handlePdfDownload(f.factura_pdf)}>📎 PDF</button>
-                        : <span className="fac-no-pdf">—</span>}
+                        : <span className="fac-no-pdf">–</span>}
                     </td>
                     <td className="fac-actions-cell" onClick={e => e.stopPropagation()}>
                       <button type="button" className="fac-del-btn" title="Borrar" onClick={() => deleteFactura(i)}>🗑</button>
@@ -3039,7 +3133,7 @@ const FacturasTab = ({ token }) => {
               <tr className="fac-foot">
                 <td colSpan="5">Total {filtered.length} factura{filtered.length !== 1 ? 's' : ''}</td>
                 <td className="num"><strong>{fmtEur(totBase)}</strong></td>
-                <td className="num">—</td>
+                <td className="num">–</td>
                 <td className="num"><strong>{fmtEur(totTotal)}</strong></td>
                 <td className="num fac-deducible"><strong>{fmtEur(totDeducible)}</strong></td>
                 <td colSpan="2"/>
@@ -3205,7 +3299,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
 
   const copyToSheets = async (currentData) => {
     if (!SHEETS_WORKER_URL) {
-      setSyncMsg('Sync con Google Sheets no configurado — ver SETUP-SHEETS-SYNC.md');
+      setSyncMsg('Sync con Google Sheets no configurado, ver SETUP-SHEETS-SYNC.md');
       return;
     }
     setSyncing(true); setSyncMsg(null);
@@ -3285,7 +3379,7 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
   const MES_FULL = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
   const fmtBal = n => n > 0 ? `Leila debe ${n} €` : n < 0 ? `Hestía debe ${Math.abs(n)} €` : 'Saldado';
 
-  const allYears = [...new Set(reservas.map(r => String(r.year || '')).filter(Boolean))].sort().filter(y => y >= '2025');
+  const allYears = [...new Set(reservas.map(r => String(r.year || '')).filter(Boolean))].sort();
   const yearRows = reservas.map((r, i) => ({ ...r, _idx: i }))
     .filter(r => String(r.year || '') === focusYear);
   const allMonths = [...new Set(yearRows.map(r => (r.entrada || '').slice(5, 7)).filter(Boolean))].sort();
@@ -3295,6 +3389,20 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
     const m = (r.entrada || '').slice(5, 7);
     if (m) (byMonth[m] = byMonth[m] || []).push(r);
   });
+
+  // Efectivo cobrado a Leila por reserva: edición manual > efectivo ya guardado >
+  // (reservas directas) el remanente que el huésped paga en efectivo a la llegada,
+  // es decir lo que queda del total tras la señal y el pago previo (al_checkin).
+  const efectivoDe = (r) => {
+    if (editsEfectivo[r._idx] !== undefined) return Number(editsEfectivo[r._idx]) || 0;
+    const stored = Number(r.efectivo_leila ?? r.pagos_leila) || 0;
+    if (stored) return stored;
+    if (getCanalKey(r.canal) === 'directo') {
+      const rem = Math.max(0, (Number(r.ingreso_total)||0) - (Number(r.reserva)||0) - (Number(r.pago_previo)||0));
+      return Number(r.al_checkin) || rem;
+    }
+    return 0;
+  };
   const visibleMonths = focusMonth === 'all' ? allMonths : allMonths.filter(m => m === focusMonth);
 
   // Saldo inicial del año (arrastrado del año anterior).
@@ -3312,7 +3420,7 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
       const mKey = `${focusYear}-${m}`;
       const mRows = byMonth[m] || [];
       const mEf = mRows.reduce((s, r) => {
-        const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila ?? r.pagos_leila) || 0);
+        const v = efectivoDe(r);
         return s + v;
       }, 0);
       const mTa = mRows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
@@ -3386,7 +3494,7 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
         const mKey = `${focusYear}-${m}`;
         const mTarifa   = rows.reduce((s, r) => s + (Number(r.gasto_limpieza) || 0), 0);
         const mEfectivo = rows.reduce((s, r) => {
-          const v = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila ?? r.pagos_leila) || 0);
+          const v = efectivoDe(r);
           return s + v;
         }, 0);
         const liqEntry  = liquidaciones.find(l => l.mes === mKey);
@@ -3401,7 +3509,7 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
 
         let mAcum = monthCarry[m] ?? 0;
         const rowAcums = rows.map(r => {
-          const ef = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila ?? r.pagos_leila) || 0);
+          const ef = efectivoDe(r);
           mAcum += ef - (Number(r.gasto_limpieza) || 0);
           return mAcum;
         });
@@ -3439,18 +3547,18 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
                 <tbody>
                   {rows.map((r, ri) => {
                     const tarifa   = Number(r.gasto_limpieza) || 0;
-                    const efectivo = editsEfectivo[r._idx] !== undefined ? Number(editsEfectivo[r._idx]) : (Number(r.efectivo_leila ?? r.pagos_leila) || 0);
+                    const efectivo = efectivoDe(r);
                     const acum     = rowAcums[ri];
                     return (
                       <tr key={r._idx}>
                         <td className="leila-apt">{APT_LABEL[r.apt] || r.apt}</td>
-                        <td className="leila-guest">{r.responsable || '—'}</td>
-                        <td className="leila-dates">{r.entrada}{r.salida ? ` · ${r.salida}` : ''}</td>
-                        <td className="num">{r.noches || '—'}</td>
-                        <td className="num">{r.ingreso_total != null ? `${r.ingreso_total} €` : '—'}</td>
-                        <td className="num">{r.bai != null ? `${r.bai} €` : '—'}</td>
-                        <td className="num">{r.rentabilidad_pct != null ? `${Math.round(r.rentabilidad_pct * 1000) / 10} %` : '—'}</td>
-                        <td className="num">{r.precio_bruto_noche != null ? `${r.precio_bruto_noche} €` : '—'}</td>
+                        <td className="leila-guest">{r.responsable || '–'}</td>
+                        <td className="leila-dates">{fmtDate(r.entrada)}{r.salida ? ` · ${fmtDate(r.salida)}` : ''}</td>
+                        <td className="num">{r.noches || '–'}</td>
+                        <td className="num">{r.ingreso_total != null ? `${r.ingreso_total} €` : '–'}</td>
+                        <td className="num">{r.bai != null ? `${r.bai} €` : '–'}</td>
+                        <td className="num">{r.rentabilidad_pct != null ? `${Math.round(r.rentabilidad_pct * 1000) / 10} %` : '–'}</td>
+                        <td className="num">{r.precio_bruto_noche != null ? `${r.precio_bruto_noche} €` : '–'}</td>
                         <td className="num">{tarifa} €</td>
                         <td className="num">
                           <NumInput step="1" min="0" className="leila-cobro-input"
@@ -3460,7 +3568,7 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
                           />
                         </td>
                         <td className={`num ${acum > 0 ? 'leila-owe' : acum < 0 ? 'leila-over' : 'leila-ok'}`}>
-                          {acum === 0 ? '—' : `${acum > 0 ? '+' : ''}${acum} €`}
+                          {acum === 0 ? '–' : `${acum > 0 ? '+' : ''}${acum} €`}
                         </td>
                       </tr>
                     );
@@ -3473,9 +3581,9 @@ const res = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`
                     <td className="num">{rows.reduce((s,r) => s + (Number(r.bai)||0), 0)} €</td>
                     <td colSpan="2"/>
                     <td className="num">{mTarifa} €</td>
-                    <td className="num">{mEfectivo > 0 ? `${mEfectivo} €` : '—'}</td>
+                    <td className="num">{mEfectivo > 0 ? `${mEfectivo} €` : '–'}</td>
                     <td className={`num ${(mEfectivo - mTarifa) > 0 ? 'leila-owe' : (mEfectivo - mTarifa) < 0 ? 'leila-over' : 'leila-ok'}`}>
-                      {(mEfectivo - mTarifa) === 0 ? '—' : `${(mEfectivo - mTarifa) > 0 ? '+' : ''}${mEfectivo - mTarifa} €`}
+                      {(mEfectivo - mTarifa) === 0 ? '–' : `${(mEfectivo - mTarifa) > 0 ? '+' : ''}${mEfectivo - mTarifa} €`}
                     </td>
                   </tr>
                 </tfoot>
@@ -3697,6 +3805,8 @@ const PrereservasTab = ({ token, refreshKey }) => {
       if (!rPut.ok) throw new Error('Error escribiendo reservas.json (' + rPut.status + ')');
       // 4a. Sincronizar calendario inmediatamente (no esperar al iCal sync de 4h)
       _syncReservasToAvailability(updated.reservas, token).catch(() => {});
+      // 4a-bis. Publicar PINs de acceso a la guía de las reservas activas
+      _syncReservasToGuestPins(updated.reservas, token).catch(() => {});
       // 4b. Borrar de prereservas
       const newItems = items.filter(r => r.id !== pr.id);
       const newSha = await saveList(newItems, sha);
@@ -3707,7 +3817,7 @@ const PrereservasTab = ({ token, refreshKey }) => {
   };
 
   const noches = (pr) => pr.entrada && pr.salida
-    ? Math.round((new Date(pr.salida) - new Date(pr.entrada)) / 86400000) : '—';
+    ? Math.round((new Date(pr.salida) - new Date(pr.entrada)) / 86400000) : '–';
 
   if (loading) return <div className="pe-loading">Cargando prereservas…</div>;
 
@@ -3749,7 +3859,7 @@ const PrereservasTab = ({ token, refreshKey }) => {
               </div>
               <div className="pe-field">
                 <label>Entrada *</label>
-                <input type="date" className="pe-input" value={form.entrada} onChange={e => setForm(f=>({...f,entrada:e.target.value}))} />
+                <input type="date" className="pe-input" value={form.entrada} onChange={e => { const v = e.target.value; setForm(f => ({ ...f, entrada: v, salida: (f.salida && f.salida > v) ? f.salida : addDaysIso(v, 7) })); }} />
               </div>
               <div className="pe-field">
                 <label>Salida *</label>
@@ -3794,8 +3904,8 @@ const PrereservasTab = ({ token, refreshKey }) => {
                   <td>{fmtDate(pr.salida)}</td>
                   <td>{noches(pr)}</td>
                   <td>{fmtEur(pr.ingreso_total)}</td>
-                  <td>{pr.reserva ? fmtEur(pr.reserva) : '—'}</td>
-                  <td className="pe-hint">{pr.canal||'—'}</td>
+                  <td>{pr.reserva ? fmtEur(pr.reserva) : '–'}</td>
+                  <td className="pe-hint">{pr.canal||'–'}</td>
                   <td style={{ whiteSpace:'nowrap' }}>
                     <button className="pe-btn pe-btn-primary" style={{ marginRight:6 }}
                       disabled={!!syncing} onClick={() => syncItem(pr)}>
@@ -3828,6 +3938,7 @@ const PrereservasTab = ({ token, refreshKey }) => {
 const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
   const [data,        setData]        = React.useState(null);
   const [sha,         setSha]         = React.useState(null);
+  const [histData,    setHistData]    = React.useState(null);
   const [loading,     setLoading]     = React.useState(false);
   const [error,       setError]       = React.useState(null);
   const [success,     setSuccess]     = React.useState(null);
@@ -3850,16 +3961,22 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
     if (!token) return;
     setLoading(true);
     setError(null);
-fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' })
-      .then(r => r.json())
-      .then(j => {
-        if (j.message) throw new Error(j.message);
-        setSha(j.sha);
-        setData(JSON.parse(b64ToUtf8(j.content)));
-        setLoadedAt(new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }));
-      })
-      .catch(e => setError('Error cargando reservas: ' + e.message + ' — F12 para detalle.'))
-      .finally(() => setLoading(false));
+    Promise.all([
+      fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' })
+        .then(r => r.json())
+        .then(j => {
+          if (j.message) throw new Error(j.message);
+          setSha(j.sha);
+          setData(JSON.parse(b64ToUtf8(j.content)));
+          setLoadedAt(new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }));
+        }),
+      fetch('data/dashboard-historico.json', { cache: 'no-store' })
+        .then(r => r.ok ? r.json() : null)
+        .then(hist => { if (hist) setHistData(hist); })
+        .catch(() => {}),
+    ])
+    .catch(e => setError('Error cargando reservas: ' + e.message + ', F12 para detalle.'))
+    .finally(() => setLoading(false));
   }, [token]);
 
   // Detecta bloques iCal sin reserva correspondiente en P-Edit.
@@ -3901,7 +4018,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
 
   const copyToSheets = async (currentData) => {
     if (!SHEETS_WORKER_URL) {
-      setSyncMsg('Sync con Google Sheets no configurado — ver SETUP-SHEETS-SYNC.md');
+      setSyncMsg('Sync con Google Sheets no configurado, ver SETUP-SHEETS-SYNC.md');
       return;
     }
     setSyncing(true); setSyncMsg(null);
@@ -3926,7 +4043,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
   const today    = new Date().toISOString().slice(0, 10);
 
   // --- Agrupación por año. Usamos r.year (calculado por el parser
-  // a partir de la fecha de SALIDA — criterio contable de Hestía).
+  // a partir de la fecha de SALIDA, criterio contable de Hestía).
   // Fallback a la fecha de salida o entrada si falta. ---
   const yearOf = r => r.year ? String(r.year) : ((r.salida || r.entrada || '').slice(0, 4));
   const currentYear = String(new Date().getFullYear());
@@ -3936,9 +4053,11 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
     if (!y) return;
     (byYear[y] = byYear[y] || []).push(r);
   });
-  const allYears = Object.keys(byYear).sort();
+  const historicYears = histData ? Object.keys(histData.years || {}).filter(y => !byYear[y]) : [];
+  const allYears = [...Object.keys(byYear), ...historicYears].sort();
   const defaultFocus = byYear[currentYear] ? currentYear : (allYears[allYears.length - 1] || currentYear);
-  const focusYear = focusYearOverride && byYear[focusYearOverride] ? focusYearOverride : defaultFocus;
+  const isHistoricOnly = y => !byYear[y] && !!(histData && histData.years && histData.years[y]);
+  const focusYear = (focusYearOverride && allYears.includes(focusYearOverride)) ? focusYearOverride : defaultFocus;
   const focusList = byYear[focusYear] || [];
 
   const MES_FULL = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -3986,7 +4105,17 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
       maxNoche: preciosNoche.length ? Math.max(...preciosNoche) : 0,
     };
   };
-  const kFocus = yearMetrics(focusList);
+  const kFocusRaw = yearMetrics(focusList);
+  const kFocus = (focusList.length === 0 && isHistoricOnly(focusYear) && histData.years[focusYear])
+    ? (() => {
+        const h = histData.years[focusYear];
+        const bruto = h.ingresos || 0; const neto = h.bai || 0; const noches = h.noches || 0;
+        return { reservas: h.reservas || 0, noches, bruto, comision: 0, limpieza: 0, neto,
+          rentabilidad: bruto ? neto / bruto : 0, comisionPct: 0,
+          brutoPorNoche: noches ? bruto / noches : 0, netoPorNoche: noches ? neto / noches : 0,
+          minNoche: null, maxNoche: null };
+      })()
+    : kFocusRaw;
 
   // KPIs por apartamento (sólo año focal)
   const byApt = ['vm', 'vt', 'vs'].map(apt => {
@@ -4019,11 +4148,11 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
     const dias = Math.round((new Date(r.entrada) - new Date(today)) / 86400000);
     const lines = [
       `🏠 *Reserva en ${dias} día${dias !== 1 ? 's' : ''} · ${apt}*`,
-      `👤 ${r.responsable || '—'}`,
+      `👤 ${r.responsable || '–'}`,
       r.telefono    ? `📞 ${r.telefono}` : '',
       `📅 Entrada: ${fmtDate(r.entrada)}`,
       `📅 Salida:  ${fmtDate(r.salida)}`,
-      `🌙 ${r.noches || '—'} noches · ${r.huespedes || '—'} pax`,
+      `🌙 ${r.noches || '('} noches · ${r.huespedes || ')'} pax`,
       r.canal ? `📲 Canal: ${r.canal}` : '',
       r.ingreso_total ? `💶 Total: ${fmtEur(r.ingreso_total)}` : '',
       r.bai         ? `📈 BAI: ${fmtEur(r.bai)}` : '',
@@ -4060,6 +4189,18 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
     setSuccess('Comisiones recalculadas y guardadas ✓');
   };
 
+  // Publica los PINs de acceso a la guía de todas las reservas activas.
+  // Normalmente se hace solo al guardar; este botón fuerza la sincronización
+  // (útil para poblar reservas ya existentes la primera vez).
+  const syncGuidePins = async () => {
+    if (!data) return;
+    setError(null); setSuccess(null);
+    try {
+      const changed = await _syncReservasToGuestPins(data.reservas || [], token);
+      setSuccess(changed ? 'PINs de acceso a la guía sincronizados ✓' : 'Los PINs de la guía ya estaban al día ✓');
+    } catch (e) { setError('Error sincronizando PINs de la guía: ' + e.message); }
+  };
+
   // --- Acciones ---
   const saveReservas = async (newReservas, { keepPanelOpen = false } = {}) => {
     setError(null); setSuccess(null);
@@ -4084,6 +4225,8 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
 
     const onSaved = (newReservasList) => {
       _syncReservasToAvailability(newReservasList, token).catch(() => {});
+      // Publica/revoca automáticamente los PINs de la guía según las reservas activas.
+      _syncReservasToGuestPins(newReservasList, token).catch(() => {});
     };
 
     try {
@@ -4122,7 +4265,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
   };
   const newRow = () => {
     const empty = {
-      apt: 'vm', responsable: '', telefono: null, huespedes: 2,
+      apt: 'vm', responsable: '', telefono: null, email: '', dni: '', direccion: '', huespedes: 2,
       menores_12: null, cuna_trona: null, mascota: false, dni_enviado: false,
       noches: null, entrada: today, salida: today,
       cancelacion: 'Cancelable 14', canal: 'Directo', contactado: 'Alex',
@@ -4140,7 +4283,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
   const updateDraft = (field, value) => {
     setDraft(prev => {
       let next = { ...prev, [field]: value };
-      // Al cambiar canal, resetear override de comisión — calcDerived la recalcula.
+      // Al cambiar canal, resetear override de comisión, calcDerived la recalcula.
       if (field === 'canal') {
         next._comision_manual = false;
       }
@@ -4183,12 +4326,15 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
     }) || null;
   };
 
-  const saveDraft = () => {
-    if (!draft) return;
-    const cleaned = calcDerived(draft);
+  const saveDraft = (override) => {
+    // override solo es una reserva (la del botón de contrato). Si llega un evento
+    // de click (onClick={saveDraft}) lo ignoramos y usamos el draft actual.
+    const d = (override && override.apt !== undefined) ? override : draft;
+    if (!d) return;
+    const cleaned = calcDerived(d);
     const overlap = findOverlap(cleaned, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
     if (overlap) {
-      setError(`Solape de fechas: la reserva de ${overlap.responsable || '—'} (${overlap.entrada} → ${overlap.salida}) en ${overlap.apt?.toUpperCase() || '—'} se superpone con estas fechas. Corrige antes de guardar.`);
+      setError(`Solape de fechas: la reserva de ${overlap.responsable || '–'} (${fmtDate(overlap.entrada)} → ${fmtDate(overlap.salida)}) en ${overlap.apt?.toUpperCase() || '–'} se superpone con estas fechas. Corrige antes de guardar.`);
       return;
     }
     const nr = [...reservas];
@@ -4385,7 +4531,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
 
       <div className="pe-card rv-card">
         <div className="rv-head">
-          <h2>🗓️ Reservas <span className="rv-count">· año {focusYear} · {kFocus.reservas} reservas · actualizado {data.updatedAt ? data.updatedAt.slice(0,10) : '—'}</span></h2>
+          <h2>🗓️ Reservas <span className="rv-count">· año {focusYear} · {kFocus.reservas} reservas · actualizado {data.updatedAt ? data.updatedAt.slice(0,10) : '–'}</span></h2>
           <div className="rv-head-actions">
             <button type="button" className="pe-btn pe-btn-ghost" onClick={loadData} disabled={loading}>
               {loading ? 'Recargando…' : 'Recargar'}
@@ -4394,8 +4540,11 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
             <button type="button" className="pe-btn pe-btn-ghost" onClick={() => data && exportReservasExcel(focusList, focusYear)} disabled={!data}>
               Exportar Excel
             </button>
-            <button type="button" className="pe-btn pe-btn-ghost" onClick={recalcularComisiones} disabled={!data || loading} title="Aplica Booking 19.8% (18.7%+1.1%) y Airbnb 18.755% (15.5%+IVA) a todas las reservas OTA">
+            <button type="button" className="pe-btn pe-btn-ghost" onClick={recalcularComisiones} disabled={!data || loading} title="Aplica Booking 18.3% (17%+1.3% bancaria) y Airbnb 18.755% (15.5%+IVA) a todas las reservas OTA">
               Recalcular comisiones
+            </button>
+            <button type="button" className="pe-btn pe-btn-ghost" onClick={syncGuidePins} disabled={!data || loading} title="Publica en la guía los PINs de acceso de las reservas activas (se hace solo al guardar; esto fuerza la sincronización)">
+              🔑 Sincronizar accesos
             </button>
             <button type="button" className="pe-btn pe-btn-primary" onClick={newRow}>+ Nueva</button>
           </div>
@@ -4416,7 +4565,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                 {icalDiscrepancies.map((d, i) => (
                   <li key={i}>
                     <strong>{d.label}</strong>: {d.start} → {d.end}
-                    <span className="rv-discrepancy-note"> — bloqueado en Airbnb/Booking pero sin reserva registrada en P-Edit</span>
+                    <span className="rv-discrepancy-note">, bloqueado en Airbnb/Booking pero sin reserva registrada en P-Edit</span>
                   </li>
                 ))}
               </ul>
@@ -4429,7 +4578,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
             Tabla comparativa con métricas consistentes año a año:
             Bruto · Comisiones · Limpieza · Neto (BAI) · Margen · €/noche.
             Click en una fila para cambiar el año focal del listado. */}
-        {allYears.length > 1 && (
+        {allYears.length > 0 && (
           <div className="rv-yearly">
             <div className="rv-yearly-h">
               <h3>Histórico por año</h3>
@@ -4452,23 +4601,33 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                 </tr></thead>
                 <tbody>
                   {allYears.map(y => {
-                    const m = yearMetrics(byYear[y]);
+                    const isAgg = isHistoricOnly(y);
+                    const m = isAgg
+                      ? (() => {
+                          const h = histData.years[y];
+                          const bruto = h.ingresos || 0; const neto = h.bai || 0; const noches = h.noches || 0;
+                          return { reservas: h.reservas||0, noches, bruto, comision: null, limpieza: null, neto,
+                            rentabilidad: bruto ? neto/bruto : 0, brutoPorNoche: noches ? bruto/noches : 0,
+                            minNoche: null, maxNoche: null };
+                        })()
+                      : yearMetrics(byYear[y]);
                     const isFocus = y === focusYear;
                     return (
                       <tr key={y}
-                          className={`rv-yearly-row${isFocus ? ' is-focus' : ''}`}
-                          onClick={() => { setFocusYearOverride(y); setFocusMonth('all'); }}>
-                        <td><strong>{y}</strong></td>
+                          className={`rv-yearly-row${isFocus ? ' is-focus' : ''}${isAgg ? ' rv-yearly-row-agg' : ''}`}
+                          onClick={() => { setFocusYearOverride(y); setFocusMonth('all'); }}
+                          title={isAgg ? 'Datos agregados, sin fichas individuales para este año' : ''}>
+                        <td><strong>{y}</strong>{isAgg && <span className="rv-agg-badge">resumen</span>}</td>
                         <td className="num">{m.reservas}</td>
                         <td className="num">{m.noches}</td>
                         <td className="num">{fmtEur(m.bruto)}</td>
-                        <td className="num rv-yearly-neg">−{fmtEur(m.comision)}</td>
-                        <td className="num rv-yearly-neg">−{fmtEur(m.limpieza)}</td>
+                        <td className="num rv-yearly-neg">{m.comision !== null ? `−${fmtEur(m.comision)}` : '–'}</td>
+                        <td className="num rv-yearly-neg">{m.limpieza !== null ? `−${fmtEur(m.limpieza)}` : '–'}</td>
                         <td className="num"><strong>{fmtEur(m.neto)}</strong></td>
                         <td className="num"><strong>{fmtPct(m.rentabilidad)}</strong></td>
                         <td className="num">{fmtEur(m.brutoPorNoche)}</td>
-                        <td className="num rv-yearly-min">{m.minNoche ? fmtEur(m.minNoche) : '—'}</td>
-                        <td className="num rv-yearly-max">{m.maxNoche ? fmtEur(m.maxNoche) : '—'}</td>
+                        <td className="num rv-yearly-min">{m.minNoche ? fmtEur(m.minNoche) : '–'}</td>
+                        <td className="num rv-yearly-max">{m.maxNoche ? fmtEur(m.maxNoche) : '–'}</td>
                       </tr>
                     );
                   })}
@@ -4486,8 +4645,8 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
           <KpiCard label="Limpieza" value={fmtEur(kFocus.limpieza)} sub={kFocus.bruto ? `${fmtPct(kFocus.limpieza/kFocus.bruto)} del bruto` : null} />
           <KpiCard label="Neto (BAI)" accent="#6B7A3A" value={fmtEur(kFocus.neto)} sub={`${fmtEur(kFocus.netoPorNoche)}/noche neto`} />
           <KpiCard label="Rentabilidad" accent="#6B7A3A" value={fmtPct(kFocus.rentabilidad)} sub="neto / bruto" />
-          <KpiCard label="€/noche mín" value={kFocus.minNoche ? fmtEur(kFocus.minNoche) : '—'} sub="reserva más barata" />
-          <KpiCard label="€/noche máx" value={kFocus.maxNoche ? fmtEur(kFocus.maxNoche) : '—'} sub="reserva más cara" />
+          <KpiCard label="€/noche mín" value={kFocus.minNoche ? fmtEur(kFocus.minNoche) : '–'} sub="reserva más barata" />
+          <KpiCard label="€/noche máx" value={kFocus.maxNoche ? fmtEur(kFocus.maxNoche) : '–'} sub="reserva más cara" />
         </div>
 
         {/* Subrejilla: por apartamento + por canal */}
@@ -4595,7 +4754,11 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
         </div>
 
         {/* ───── Tablas por mes ───── */}
-        {visibleMonths.length === 0 && <p className="pe-help" style={{ marginTop: 16 }}>Sin reservas en {focusYear}.</p>}
+        {visibleMonths.length === 0 && (
+          isHistoricOnly(focusYear)
+            ? <p className="pe-help" style={{ marginTop: 16 }}>Año {focusYear}, datos agregados del histórico. No hay fichas individuales registradas en P-Edit para este año. Los resúmenes se muestran en la tabla de arriba.</p>
+            : <p className="pe-help" style={{ marginTop: 16 }}>Sin reservas en {focusYear}.</p>
+        )}
 
         {visibleMonths.map(m => {
           const mRows = filtered.filter(r => (r.entrada || '').slice(5, 7) === m);
@@ -4614,7 +4777,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                   <span>{mNoches} noches</span>
                   <span>Bruto: <strong>{fmtEur(mBruto)}</strong></span>
                   <span>BAI: <strong>{fmtEur(mBai)}</strong></span>
-                  <span>{mBruto ? fmtPct(mBai / mBruto) : '—'}</span>
+                  <span>{mBruto ? fmtPct(mBai / mBruto) : '–'}</span>
                 </span>
               </div>
               <div className="rv-table-wrap">
@@ -4636,7 +4799,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                       const statusIcon = cancelada ? '✗' : status === 'staying' ? '🏠' : status === 'upcoming' ? '⏰' : status === 'past' ? '✓' : '·';
                       const isSel = idx === selectedIdx;
                       return (
-                        <tr key={idx} className={`rv-row rv-row-${status}${isSel ? ' is-selected' : ''}${cancelada ? ' rv-row-cancelada' : ''}`}
+                        <tr key={idx} className={`rv-row rv-row-${status} rv-canal-${getCanalKey(r.canal)}${isSel ? ' is-selected' : ''}${cancelada ? ' rv-row-cancelada' : ''}`}
                           data-apt={r.apt} style={{'--apt-c': APT_COLOR[r.apt] || 'transparent'}}
                           onClick={() => openRow(idx)}>
                           <td className={`rv-status rv-status-${status}`} title={status}>{statusIcon}</td>
@@ -4644,9 +4807,9 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                           <td>{r.responsable}{r.mascota ? ' 🐾' : ''}{r.cuna_trona ? ' 👶' : ''}</td>
                           <td>{fmtDate(r.entrada)}</td>
                           <td>{fmtDate(r.salida)}</td>
-                          <td className="num">{r.noches || '—'}</td>
-                          <td className="num">{r.huespedes || '—'}</td>
-                          <td>{r.canal || '—'}</td>
+                          <td className="num">{r.noches || '–'}</td>
+                          <td className="num">{r.huespedes || '–'}</td>
+                          <td>{r.canal || '–'}</td>
                           <td className="num">{fmtEur(r.ingreso_total)}</td>
                           <td className="num">{fmtEur(r.comision)}</td>
                           <td className="num">{fmtEur(r.bai)}</td>
@@ -4671,7 +4834,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                       <td className="num"><strong>{fmtEur(mBruto)}</strong></td>
                       <td className="num">{fmtEur(mComis)}</td>
                       <td className="num"><strong>{fmtEur(mBai)}</strong></td>
-                      <td className="num">{mBruto ? fmtPct(mBai / mBruto) : '—'}</td>
+                      <td className="num">{mBruto ? fmtPct(mBai / mBruto) : '–'}</td>
                       <td/><td/>
                     </tr>
                   </tfoot>
@@ -4707,6 +4870,10 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                   <label>Huésped (responsable)</label>
                   <input value={draft.responsable || ''} onChange={e => updateDraft('responsable', e.target.value)} placeholder="Nombre completo" />
                 </div>
+                <div className="rv-field">
+                  <label>Email</label>
+                  <input type="email" value={draft.email || ''} onChange={e => updateDraft('email', e.target.value)} placeholder="huesped@ejemplo.com" />
+                </div>
                 <div className="rv-row2">
                   <div className="rv-field">
                     <label>Teléfono</label>
@@ -4716,7 +4883,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                     <label>DNI enviado</label>
                     <select value={draft.dni_enviado === true ? 'si' : draft.dni_enviado === false ? 'no' : ''}
                       onChange={e => updateDraft('dni_enviado', e.target.value === 'si' ? true : e.target.value === 'no' ? false : null)}>
-                      <option value="">—</option>
+                      <option value="">–</option>
                       <option value="si">Sí</option>
                       <option value="no">No</option>
                     </select>
@@ -4735,7 +4902,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                 <div className="rv-row3">
                   <div className="rv-field">
                     <label>Entrada</label>
-                    <input type="date" value={draft.entrada || ''} onChange={e => updateDraft('entrada', e.target.value)} />
+                    <input type="date" value={draft.entrada || ''} onChange={e => { const v = e.target.value; updateDraft('entrada', v); if (v && (!draft.salida || draft.salida <= v)) updateDraft('salida', addDaysIso(v, 7)); }} />
                   </div>
                   <div className="rv-field">
                     <label>Salida</label>
@@ -4759,7 +4926,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                     <label>Cuna / trona</label>
                     <select value={draft.cuna_trona === true ? 'si' : draft.cuna_trona === false ? 'no' : ''}
                       onChange={e => updateDraft('cuna_trona', e.target.value === 'si' ? true : e.target.value === 'no' ? false : null)}>
-                      <option value="">—</option>
+                      <option value="">–</option>
                       <option value="si">Sí</option>
                       <option value="no">No</option>
                     </select>
@@ -4807,7 +4974,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                   <div className="rv-field">
                     <label>Contactado por</label>
                     <select value={draft.contactado || ''} onChange={e => updateDraft('contactado', e.target.value)}>
-                      <option value="">—</option>
+                      <option value="">–</option>
                       <option value="Alex">Alex</option>
                       <option value="Fran">Fran</option>
                     </select>
@@ -4828,7 +4995,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                         : (() => {
                             const ck = getCanalKey(draft.canal);
                             return <span className="rv-hint-inline">
-                              {ck === 'booking' ? 'booking: 19.8% (18.7%+1.1%)' :
+                              {ck === 'booking' ? 'booking: 18.3% (17%+1.3% bancaria)' :
                                ck === 'airbnb'  ? 'airbnb: 18.755% (15.5%+IVA)' :
                                `${ck}: ${((COMMISSION_RATES[ck] ?? 0)*100).toFixed(1)}%`}
                             </span>;
@@ -4875,7 +5042,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                 <div className="rv-calc-block">
                   <div className="rv-calc-block-title">Calculado automáticamente</div>
                   <div className="rv-calc-grid">
-                    <div><span>Noches</span><strong>{draft.noches || '—'}</strong></div>
+                    <div><span>Noches</span><strong>{draft.noches || '–'}</strong></div>
                     <div><span>BAI</span><strong>{fmtEur(draft.bai)}</strong></div>
                     <div><span>Rentabilidad</span><strong>{fmtPct(draft.rentabilidad_pct)}</strong></div>
                     <div><span>Bruto/noche</span><strong>{fmtEur(draft.precio_bruto_noche)}</strong></div>
@@ -4936,9 +5103,33 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
               const liveOverlap = draft && findOverlap(draft, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
               return liveOverlap ? (
                 <div className="rv-overlap-warn">
-                  ⚠ Solape con {liveOverlap.responsable || '—'} ({liveOverlap.entrada} → {liveOverlap.salida}) en {liveOverlap.apt?.toUpperCase() || '—'}
+                  ⚠ Solape con {liveOverlap.responsable || '–'} ({fmtDate(liveOverlap.entrada)} → {fmtDate(liveOverlap.salida)}) en {liveOverlap.apt?.toUpperCase() || '–'}
                 </div>
               ) : null;
+            })()}
+
+            {draft && draft.apt && draft.entrada && draft.salida && !_reservaCxl(draft) && (() => {
+              const pin = reservaGuidePin(draft);
+              return (
+                <div className="rv-guide-pin" style={{ display:'flex', alignItems:'center', gap:10, flexWrap:'wrap', margin:'10px 0', padding:'10px 14px', background:'#f4faf0', border:'1px solid #cdb', borderRadius:8 }}>
+                  <span style={{ fontSize:12, opacity:.75 }}>🔑 PIN de guía del huésped:</span>
+                  <code style={{ fontSize:18, fontWeight:700, letterSpacing:2 }}>{pin}</code>
+                  <button type="button" className="pe-btn pe-btn-ghost" onClick={() => navigator.clipboard?.writeText(pin)}>Copiar</button>
+                  <span style={{ fontSize:11, opacity:.6 }}>Se genera solo, caduca en la salida y se publica al guardar; al cancelar la reserva queda revocado.</span>
+                </div>
+              );
+            })()}
+
+            {draft && draft.apt && draft.entrada && draft.salida && window.PRICES_V2 && getCanalKey(draft.canal) !== 'directo' && draft.entrada > today && (() => {
+              const calc = window._calcStay && window._calcStay(draft.entrada, draft.salida, draft.apt, !!draft.mascota, Number(draft.huespedes) || null);
+              if (!calc) return null;
+              return (
+                <div className="rv-direct-price" style={{ display:'flex', alignItems:'center', gap:10, flexWrap:'wrap', margin:'10px 0', padding:'10px 14px', background:'#eef4fb', border:'1px solid #b9cde0', borderRadius:8 }}>
+                  <span style={{ fontSize:12, opacity:.75 }}>💡 Precio si fuera reserva directa:</span>
+                  <strong style={{ fontSize:18 }}>{calc.directTotal.toLocaleString('es-ES')} €</strong>
+                  <span style={{ fontSize:11, opacity:.6 }}>{calc.nights} noches · con los precios actuales (se actualiza solo si cambian, mientras la reserva sea OTA y futura)</span>
+                </div>
+              );
             })()}
 
             <footer className="rv-edit-foot">
@@ -4967,7 +5158,10 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
                 )}
                 {onOpenContract && (
                   <button type="button" className="pe-btn pe-btn-ghost rv-foot-btn" title="Abrir en el generador de contratos"
-                    onClick={() => { saveDraft(); onOpenContract(draft); }}>📄 Contrato</button>
+                    onClick={() => {
+                      const wid = draft.id ? draft : { ...draft, id: (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : 'r' + Date.now() + Math.random().toString(36).slice(2) };
+                      setDraft(wid); saveDraft(wid); onOpenContract(wid);
+                    }}>📄 Contrato</button>
                 )}
                 {selectedIdx >= 0 && selectedIdx < reservas.length && (
                   <button type="button" className="pe-btn pe-btn-ghost rv-foot-btn" onClick={duplicateRow}>Duplicar</button>
@@ -4975,7 +5169,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
               </div>
               <div className="rv-edit-foot-row2">
                 <button type="button" className="pe-btn pe-btn-ghost rv-foot-btn" onClick={cancelDraft}>Cancelar</button>
-                <button type="button" className="pe-btn pe-btn-primary rv-foot-btn rv-foot-save" onClick={saveDraft}>Guardar</button>
+                <button type="button" className="pe-btn pe-btn-primary rv-foot-btn rv-foot-save" onClick={() => saveDraft()}>Guardar</button>
               </div>
             </footer>
           </aside>
@@ -4987,7 +5181,7 @@ fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}?ref=${BRANCH}`, { 
 
 
 // ---------------------------------------------------------------
-// HuecosTab — gestión de huecos entre reservas con pricing
+// HuecosTab, gestión de huecos entre reservas con pricing
 // ---------------------------------------------------------------
 
 const _hcDiff = (a, b) =>
@@ -5037,16 +5231,22 @@ const _hcCalcGaps = (blocked, today, horizon) => {
   if (!blocked || blocked.length === 0) return [];
   const sorted = [...blocked].sort((a, b) => a.start < b.start ? -1 : 1);
   const gaps = [];
-  for (let i = 0; i < sorted.length - 1; i++) {
-    const gs = sorted[i].end;
-    const ge = sorted[i + 1].start;
-    if (gs >= ge) continue;            // overlap or zero gap
-    if (ge <= today) continue;         // entirely in the past
-    if (horizon && gs >= horizon) continue;
+  const pushGap = (gs, ge) => {
+    if (gs >= ge) return;              // overlap or zero gap
+    if (ge <= today) return;          // entirely in the past
+    if (horizon && gs >= horizon) return;
     const nights = _hcDiff(gs, ge);
-    if (nights < 2) continue;         // 1-night gaps can't be booked
+    if (nights < 2) return;           // 1-night gaps can't be booked
     gaps.push({ start: gs, end: ge, nights });
-  }
+  };
+  // Disponibilidad antes del primer bloqueo (hoy → primer bloqueo)
+  pushGap(today, sorted[0].start);
+  // Huecos entre bloqueos consecutivos
+  for (let i = 0; i < sorted.length - 1; i++) pushGap(sorted[i].end, sorted[i + 1].start);
+  // Disponibilidad abierta tras el último bloqueo, acotada al horizonte de reservas.
+  // Sin esto, un apartamento libre de forma indefinida (sin bloqueo posterior) no
+  // mostraba ningún hueco, y sus estancias largas quedaban invisibles.
+  if (horizon) pushGap(sorted[sorted.length - 1].end, horizon);
   return gaps;
 };
 
@@ -5066,9 +5266,6 @@ const BULK_PRESETS = [
   { label: 'Alta urgente (<14d)',  icon: '🔥', cfg: { season: 'alta',  minN: '', maxN: '', maxDays: '14', type: 'discount', value: '15', lm: true,  onlyNew: true  } },
   { label: 'Crítica urgente (<7d)', icon: '🚨', cfg: { season: 'critica', minN: '', maxN: '', maxDays: '7', type: 'discount', value: '25', lm: true, onlyNew: true } },
 ];
-
-// Long-stay monthly rates (€/month). Jul (7) and Aug (8) not offered.
-const LS_RATES = { 1:1450, 2:1450, 3:1450, 4:1450, 5:1590, 6:1790, 9:1790, 10:1590, 11:1450, 12:1450 };
 
 const _isLongStayGap = (gap) => {
   if (gap.nights <= 28) return false;
@@ -5095,9 +5292,11 @@ const _lsIsEasterNight = (ds, easterRanges) => {
   return easterRanges.some(([s, e]) => ds >= s && ds <= e);
 };
 
-const _lsBreakdown = (start, end, lsCfg) => {
+const _lsBreakdown = (start, end, lsCfg, aptSupp = 0) => {
   const specialFlat  = (lsCfg && lsCfg.specialNightFlat) || 80;
   const easterRanges = (lsCfg && lsCfg.easterRanges) || [];
+  const rates        = (lsCfg && lsCfg.monthlyRates) || { baja: 1490, media: 1590, alta: 1850 };
+  const supp         = Number(aptSupp) || 0;
   const MO_NAMES = ['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 
   const byMonth = {};
@@ -5106,8 +5305,9 @@ const _lsBreakdown = (start, end, lsCfg) => {
     const yr = parseInt(cur.slice(0, 4), 10);
     const mo = parseInt(cur.slice(5, 7), 10);
     if (mo === 7 || mo === 8) return null;
-    const monthlyRate = (mo === 6 || mo === 9) ? 1790
-                      : (mo === 5 || mo === 10) ? 1590 : 1450;
+    const monthlyBase = (mo === 6 || mo === 9) ? rates.alta
+                      : (mo === 5 || mo === 10) ? rates.media : rates.baja;
+    const monthlyRate = (Number(monthlyBase) || 0) + supp;
     const dim         = new Date(yr, mo, 0).getDate();
     const baseNight   = monthlyRate / dim;
     const isSpecial   = _lsIsChristmasNight(cur) || _lsIsEasterNight(cur, easterRanges);
@@ -5143,7 +5343,7 @@ const _hcEffPrice = (base, ov) => {
 
 // Config panel for long-stay special night flat rate + Easter date ranges
 const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
-  const mr = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+  const mr = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
   const [rateBaja,   setRateBaja  ] = React.useState(String(mr.baja  || 1450));
   const [rateMedia,  setRateMedia ] = React.useState(String(mr.media || 1590));
   const [rateAlta,   setRateAlta  ] = React.useState(String(mr.alta  || 1790));
@@ -5159,7 +5359,7 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
   );
 
   React.useEffect(() => {
-    const r = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
+    const r = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
     setRateBaja(String(r.baja  || 1450));
     setRateMedia(String(r.media || 1590));
     setRateAlta(String(r.alta  || 1790));
@@ -5218,7 +5418,7 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
       {open && (
         <div className="hc-bulk-body">
 
-          {/* BLOQUE 1 — Tarifas base por temporada */}
+          {/* BLOQUE 1, Tarifas base por temporada */}
           <div className="ls-cfg-section-title">Tarifas base mensuales (€/mes)</div>
           <div className="ls-cfg-rates-table">
             <div className="ls-cfg-rates-head">
@@ -5252,7 +5452,7 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
             </div>
           </div>
 
-          {/* BLOQUE 2 — Precio efectivo por apartamento */}
+          {/* BLOQUE 2, Precio efectivo por apartamento */}
           <div className="ls-cfg-section-title" style={{ marginTop: 20 }}>Precio efectivo por apartamento</div>
           <div className="ls-cfg-apt-table">
             <div className="ls-cfg-apt-head">
@@ -5281,7 +5481,7 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
             Precio efectivo = tarifa base + suplemento · calculado pro-rata diario
           </p>
 
-          {/* BLOQUE 3 — Suplementos por huésped/mascota y Semana Santa */}
+          {/* BLOQUE 3, Suplementos por huésped/mascota y Semana Santa */}
           <div className="ls-cfg-section-title" style={{ marginTop: 20 }}>Suplementos y fechas especiales</div>
           <div className="hc-bulk-row" style={{ alignItems: 'flex-start', flexWrap: 'wrap', gap: 16 }}>
             <div className="hc-bulk-field">
@@ -5325,6 +5525,67 @@ const LsCfgPanel = ({ lsCfg, open, setOpen, onSave, saving }) => {
   );
 };
 
+// ================================================================
+// PIN de guía por reserva (derivado de los datos de la reserva)
+// El PIN se genera solo: SIGLAS del apartamento + 4 cifras deterministas.
+// Las reservas ACTIVAS publican el hash SHA-256 de su PIN en
+// prices.json → guestPins[apt] (caducidad = salida). Cancelar o borrar la
+// reserva lo quita del set → el acceso a la guía queda revocado.
+// ================================================================
+const APT_SIGLAS = { vm: 'HVM', vt: 'HVT', vs: 'HVS' };
+
+async function _guidePinSha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+// Hash determinista (djb2) → 4 cifras estables desde los datos de la reserva.
+function _pinCode4(str) {
+  let h = 5381;
+  for (let i = 0; i < str.length; i++) h = ((h * 33) ^ str.charCodeAt(i)) >>> 0;
+  return String(h % 10000).padStart(4, '0');
+}
+// PIN visible = SIGLAS + 4 cifras. Mismo dato de reserva → mismo PIN siempre.
+const reservaGuidePin = (r) => {
+  const apt = (r.apt || '').toLowerCase();
+  const sig = APT_SIGLAS[apt] || 'HX';
+  const seed = `${apt}|${r.entrada || ''}|${r.salida || ''}|${r.localizador || r.id || r.responsable || ''}`;
+  return sig + _pinCode4(seed);
+};
+const _reservaCxl = (r) => r.cancelada === true || (r.cancelacion || '').trim().toUpperCase() === 'CANCELADA';
+
+// Publica en prices.json → guestPins el hash del PIN de cada reserva ACTIVA
+// (no cancelada y con salida futura). Reemplaza el set completo: las reservas
+// canceladas o pasadas desaparecen y su PIN deja de validar. Solo escribe si
+// hay cambios (no genera commits en balde). Devuelve true si publicó.
+const _syncReservasToGuestPins = async (reservas, token) => {
+  const today = new Date().toISOString().slice(0, 10);
+  const next = { vm: [], vt: [], vs: [] };
+  for (const r of (reservas || [])) {
+    const apt = (r.apt || '').toLowerCase();
+    if (!next[apt] || _reservaCxl(r) || !r.salida || r.salida < today) continue;
+    const h = await _guidePinSha256(reservaGuidePin(r));
+    // until/ref sin datos personales: fechas de la reserva (ya públicas en availability.json).
+    next[apt].push({ h, until: r.salida, ref: r.entrada || '–' });
+  }
+  const rf = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' });
+  const rfj = await rf.json();
+  if (rfj.message) throw new Error(rfj.message);
+  const prices = JSON.parse(b64ToUtf8(rfj.content));
+  if (JSON.stringify(prices.guestPins || {}) === JSON.stringify(next)) return false;
+  prices.guestPins = next;
+  const res = await fetch(`${API}/repos/${REPO}/contents/${PATH}`, {
+    method: 'PUT',
+    headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      message: `chore(guia): sync PINs de acceso desde reservas · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
+      content: utf8ToB64(JSON.stringify(prices, null, 2)),
+      sha: rfj.sha, branch: BRANCH,
+    }),
+  });
+  if (!res.ok) { const j = await res.json(); throw new Error(j.message || 'Error'); }
+  return true;
+};
+
 const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
   const [avail,      setAvail     ] = React.useState(null);
   const [loadErr,    setLoadErr   ] = React.useState(null);
@@ -5354,7 +5615,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
   const [bulkLastMin, setBulkLastMin] = React.useState(false);
   const [bulkSaving,  setBulkSaving ] = React.useState(false);
   const [hcView,      setHcView     ] = React.useState('cortos');
-  const [lsCfgOpen,   setLsCfgOpen  ] = React.useState(false);
+  const [lsCfgOpen,   setLsCfgOpen  ] = React.useState(true);
 
   const today     = new Date().toISOString().slice(0, 10);
   const horizonStr = pricesData && pricesData.bookingHorizon && pricesData.bookingHorizon.lastCheckinDate;
@@ -5706,15 +5967,15 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
                 </div>
                 <div className="hc-bulk-field">
                   <label className="hc-lbl">Noches mín.</label>
-                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMinN} onChange={e => setBulkMinN(e.target.value)} placeholder="—"/>
+                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMinN} onChange={e => setBulkMinN(e.target.value)} placeholder="–"/>
                 </div>
                 <div className="hc-bulk-field">
                   <label className="hc-lbl">Noches máx.</label>
-                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMaxN} onChange={e => setBulkMaxN(e.target.value)} placeholder="—"/>
+                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMaxN} onChange={e => setBulkMaxN(e.target.value)} placeholder="–"/>
                 </div>
                 <div className="hc-bulk-field">
                   <label className="hc-lbl">Checkin ≤ Xd</label>
-                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMaxDays} onChange={e => setBulkMaxDays(e.target.value)} placeholder="—"/>
+                  <input type="number" min="1" className="pe-input pe-input-num" style={{ width: 70 }} value={bulkMaxDays} onChange={e => setBulkMaxDays(e.target.value)} placeholder="–"/>
                 </div>
               </div>
               <div className="hc-bulk-row">
@@ -5800,7 +6061,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
                     <div key={gap.id}
                       className={`hc-row${gap.overLim ? ' hc-over' : ''}${gap.override ? ' hc-has-ov' : ''}${isActive ? ' hc-open' : ''}`}>
 
-                      {/* Fila principal — siempre visible */}
+                      {/* Fila principal, siempre visible */}
                       <div className="hc-row-hd" onClick={() => isActive ? closeGap() : openGap(gap)}>
                         <span className="hc-dates">
                           {_hcFmt(gap.start)} → {_hcFmt(gap.end)}
@@ -6028,26 +6289,9 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
             </div>
           </div>
 
-          {/* ── Configuración de noches especiales ── */}
+          {/* Tarifas base, precio efectivo por apartamento y suplementos, única fuente
+              de verdad (editable, lee/escribe prices.json). Sin tabla duplicada aparte. */}
           <LsCfgPanel lsCfg={lsCfg} open={lsCfgOpen} setOpen={setLsCfgOpen} onSave={handleSaveLsCfg} saving={saving}/>
-
-          <div className="ls-rates">
-            <div className="ls-rates-title">Tarifas base (€ / mes completo) · noches especiales {lsCfg.specialNightFlat}€/n fijo</div>
-            <div className="ls-rates-grid">
-              {[
-                { label: 'Nov – Abr', rate: 1450, note: 'T. baja' },
-                { label: 'Oct · May', rate: 1590, note: '' },
-                { label: 'Jun · Sep', rate: 1790, note: '' },
-                { label: `Navidad / S. Santa ${lsCfg.specialNightFlat}€`, note: 'precio fijo por noche' },
-              ].map(r => (
-                <div key={r.label} className="ls-rate-row">
-                  <span className="ls-rate-period">{r.label}</span>
-                  {r.rate && <span className="ls-rate-val">{r.rate}<span className="ls-rate-per">€/mes</span></span>}
-                  {r.note && <span className="ls-rate-note">{r.note}</span>}
-                </div>
-              ))}
-            </div>
-          </div>
 
           {['vm','vt','vs'].map(aptId => {
             const meta = HC_APT[aptId];
@@ -6061,7 +6305,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
                 </div>
                 <div className="hc-list">
                   {gaps.map(gap => {
-                    const bd      = _lsBreakdown(gap.start, gap.end, lsCfg);
+                    const bd      = _lsBreakdown(gap.start, gap.end, lsCfg, (lsCfg.aptSupplement || {})[aptId] || 0);
                     if (!bd) return null;
                     const hasSpec = bd.parts.some(p => p.specialNights > 0);
                     const months  = (gap.nights / 30).toFixed(1);
@@ -6124,6 +6368,186 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
 };
 
 // ---------------------------------------------------------------
+const CAT_COLORS_PINS = {
+  home:'#2A0F2E', super:'#6B7A3A', restaurant:'#B86A3C', michelin:'#D4A84A',
+  bar:'#3AAABB', fish:'#4E7A9A', abasto:'#8A6A2E', pharmacy:'#B82490',
+  health:'#B8246E', vet:'#4E8A5A', 'pet-board':'#7A5E8A', physio:'#5A7A8A',
+  bodega:'#8A4A2E', coworking:'#4A6A8A', laundry:'#6A8A6A', atm:'#8A7A4A',
+  market:'#7A4A2E', sport:'#3A6A8A', trek:'#4A7A3A', nature:'#3A8A5A',
+  beach:'#2A8A9E', geo:'#7A4A7A', culture:'#6A4A3A', celiac:'#8A6A4A',
+  bookshop:'#4A4A8A', gas:'#8A3A3A', ev:'#3A8A7A',
+};
+
+const PinsTab = ({ token }) => {
+  const mapRef        = React.useRef(null);
+  const mapInst       = React.useRef(null);
+  const markersRef    = React.useRef({});
+  const placesRef     = React.useRef([]);
+  const originalsRef  = React.useRef({});
+  const searchActive  = React.useRef(null);
+
+  const [changes,  setChanges]  = React.useState({});
+  const [search,   setSearch]   = React.useState('');
+  const [loading,  setLoading]  = React.useState(true);
+  const [loadErr,  setLoadErr]  = React.useState(null);
+  const [toast,    setToast]    = React.useState('');
+
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(''), 3000);
+  };
+
+  React.useEffect(() => {
+    if (!window.L) { setLoadErr('Leaflet no disponible. Recarga la página.'); setLoading(false); return; }
+    const L = window.L;
+
+    fetch('data/places.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(places => {
+        placesRef.current = places;
+        places.forEach(p => { originalsRef.current[p.id] = { lat: p.lat, lng: p.lng }; });
+        setLoading(false);
+
+        const map = L.map(mapRef.current, { scrollWheelZoom: true }).setView([37.22, -1.81], 11);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© <a href="https://openstreetmap.org/copyright">OSM</a>', maxZoom: 19,
+        }).addTo(map);
+        mapInst.current = map;
+
+        places.forEach(p => {
+          const col = CAT_COLORS_PINS[p.cat] || '#3AAABB';
+          const icon = L.divIcon({
+            className: '',
+            html: `<svg width="18" height="18"><circle cx="9" cy="9" r="7" fill="${col}" stroke="#fff" stroke-width="2"/></svg>`,
+            iconSize: [18, 18], iconAnchor: [9, 9],
+          });
+          const m = L.marker([p.lat, p.lng], { icon, draggable: true, title: p.name })
+            .bindTooltip(p.name, { direction: 'top', offset: [0, -9] })
+            .addTo(map);
+          m.on('dragend', () => {
+            const ll = m.getLatLng();
+            const o  = originalsRef.current[p.id];
+            const dist = map.distance([o.lat, o.lng], [ll.lat, ll.lng]);
+            if (dist < 20) {
+              m.setLatLng([o.lat, o.lng]);
+              setChanges(prev => { const n = { ...prev }; delete n[p.id]; return n; });
+            } else {
+              setChanges(prev => ({ ...prev, [p.id]: { lat: ll.lat, lng: ll.lng } }));
+            }
+          });
+          markersRef.current[p.id] = m;
+        });
+      })
+      .catch(e => { setLoadErr('Error cargando places.json: ' + e.message); setLoading(false); });
+
+    return () => {
+      if (mapInst.current) { mapInst.current.remove(); mapInst.current = null; }
+      markersRef.current = {};
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (!search.trim() || !mapInst.current) return;
+    const q = search.toLowerCase().trim();
+    if (searchActive.current) { markersRef.current[searchActive.current]?.closeTooltip(); }
+    const found = placesRef.current.find(p => p.name.toLowerCase().includes(q) || p.id.includes(q));
+    if (found) {
+      const m = markersRef.current[found.id];
+      if (m) { mapInst.current.setView(m.getLatLng(), 16); m.openTooltip(); searchActive.current = found.id; }
+    }
+  }, [search]);
+
+  const undoChange = (id) => {
+    const o = originalsRef.current[id];
+    markersRef.current[id]?.setLatLng([o.lat, o.lng]);
+    setChanges(prev => { const n = { ...prev }; delete n[id]; return n; });
+  };
+
+  const exportJson = () => {
+    const ids = Object.keys(changes);
+    if (!ids.length) { showToast('Sin cambios que exportar'); return; }
+    const out  = ids.map(id => ({ id, lat: parseFloat(changes[id].lat.toFixed(5)), lng: parseFloat(changes[id].lng.toFixed(5)) }));
+    const json = JSON.stringify(out, null, 2);
+    navigator.clipboard.writeText(json)
+      .then(()  => showToast(`JSON copiado (${out.length} cambios)`))
+      .catch(()  => showToast('No se pudo copiar al portapapeles'));
+  };
+
+  const resetAll = () => {
+    if (!Object.keys(changes).length) return;
+    if (!confirm('¿Reiniciar todos los cambios?')) return;
+    Object.keys(changes).forEach(id => {
+      const o = originalsRef.current[id];
+      markersRef.current[id]?.setLatLng([o.lat, o.lng]);
+    });
+    setChanges({});
+  };
+
+  if (loadErr) return <div className="pe-card"><p className="pe-error">{loadErr}</p></div>;
+
+  const changeIds = Object.keys(changes);
+
+  return (
+    <div className="pe-pins-wrap">
+      {loading && <div className="pe-pins-loading">Cargando mapa...</div>}
+      <div ref={mapRef} className="pe-pins-map" style={{ display: loading ? 'none' : undefined }} />
+      <div className="pe-pins-panel">
+        <div className="pe-pins-ph">
+          <h2 className="pe-pins-title">Editor de pins</h2>
+          <p className="pe-hint">Arrastra los pins a su posicion correcta. Exporta el JSON y pegalo en el chat con Claude para aplicar los cambios.</p>
+        </div>
+        <div className="pe-pins-search-wrap">
+          <input
+            type="text"
+            className="pe-input"
+            placeholder="Buscar lugar..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+        </div>
+        <div className="pe-pins-changes-head">Cambios ({changeIds.length})</div>
+        <div className="pe-pins-changes">
+          {changeIds.length === 0
+            ? <p className="pe-hint" style={{ padding: '12px 0' }}>Sin cambios aun.</p>
+            : changeIds.map(id => {
+                const p = placesRef.current.find(x => x.id === id);
+                const c = changes[id];
+                const o = originalsRef.current[id];
+                return (
+                  <div key={id} className="pe-pins-change-item">
+                    <div className="pe-pins-change-name">
+                      {p ? p.name : id}
+                      <button className="pe-btn pe-btn-ghost pe-btn-sm" style={{ float: 'right' }}
+                        onClick={() => {
+                          const oo = originalsRef.current[id];
+                          markersRef.current[id]?.setLatLng([oo.lat, oo.lng]);
+                          setChanges(prev => { const n = { ...prev }; delete n[id]; return n; });
+                        }}>
+                        deshacer
+                      </button>
+                    </div>
+                    <div className="pe-pins-change-old">{o.lat.toFixed(5)}, {o.lng.toFixed(5)}</div>
+                    <div className="pe-pins-change-new">→ {c.lat.toFixed(5)}, {c.lng.toFixed(5)}</div>
+                  </div>
+                );
+              })
+          }
+        </div>
+        <div className="pe-pins-footer">
+          <button className="pe-btn pe-btn-primary" onClick={exportJson} disabled={!changeIds.length}>
+            Exportar JSON
+          </button>
+          <button className="pe-btn pe-btn-ghost" onClick={resetAll} disabled={!changeIds.length}>
+            Reiniciar
+          </button>
+        </div>
+        {toast && <div className="pe-pins-toast">{toast}</div>}
+      </div>
+    </div>
+  );
+};
+
+// ---------------------------------------------------------------
 const AdminApp = () => {
   const [phase,    setPhase]    = React.useState('login');
   const [mode,     setMode]     = React.useState('reservas');
@@ -6131,6 +6555,10 @@ const AdminApp = () => {
   const [token,    setToken]    = React.useState('');
   const [data,     setData]     = React.useState(null);
   const [sha,      setSha]      = React.useState(null);
+  // Expone prices.json al motor de precios compartido (_calcStay de shared.js),
+  // para calcular en vivo el "precio si fuera directa" de las reservas OTA.
+  // Se reasigna cada vez que cambian los precios.
+  React.useEffect(() => { if (data) window.PRICES_V2 = data; }, [data]);
   const [reviewsData, setReviewsData] = React.useState(null);
   const [reviewsSha,  setReviewsSha]  = React.useState(null);
   const [calJson,  setCalJson]  = React.useState('');
@@ -6177,7 +6605,7 @@ const AdminApp = () => {
       );
       if (res.status === 204) {
         setSyncState('ok');
-        setSyncMsg('Sync lanzado — actualizando datos…');
+        setSyncMsg('Sync lanzado, actualizando datos…');
         // Reload all tab data immediately (fresh SHA) then again when workflow finishes (~65s)
         setRefreshKey(k => k + 1);
         reloadConfig();
@@ -6421,7 +6849,7 @@ const AdminApp = () => {
     );
   }
 
-  // ---- Reviews — listado y filtros ----
+  // ---- Reviews, listado y filtros ----
   const renderReviewsTab = () => {
     if (!reviewsData) {
       return (
@@ -6558,7 +6986,7 @@ const AdminApp = () => {
       <div className="pe-topbar">
         <span>Hestía · Admin</span>
         <span className="pe-meta">
-          {mode === 'pricing' ? `Precios actualizados: ${data.updatedAt || '—'}` :
+          {mode === 'pricing' ? `Precios actualizados: ${data.updatedAt || '–'}` :
            reviewsData ? `${(reviewsData.items || []).length} reviews` : ''}
         </span>
         <div className="pe-topbar-actions">
@@ -6634,12 +7062,17 @@ const AdminApp = () => {
             return pending > 0 ? <span className="pe-tab-badge">{pending}</span> : null;
           })()}
         </button>
+        <button type="button"
+          className={`pe-tab${mode === 'mapa' ? ' is-active' : ''}`}
+          onClick={() => { setMode('mapa'); setError(null); setSuccess(null); }}>
+          📍<span className="pe-tab-label"> Mapa</span>
+        </button>
       </div>
 
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'huecos' ? <HuecosTab token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'inteligencia' ? <IntelligenciaTab token={token} onNavigate={tab => { setMode(tab); setError(null); setSuccess(null); }} /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'bloqueos' ? <BloquesTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'mapa' ? <PinsTab token={token} /> : mode === 'huecos' ? <HuecosTab token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'inteligencia' ? <IntelligenciaTab token={token} onNavigate={tab => { setMode(tab); setError(null); setSuccess(null); }} /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} token={token} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'bloqueos' ? <BloquesTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>
@@ -7047,7 +7480,7 @@ const AdminApp = () => {
                     }}
                     className="pe-input pe-input-num" />
                 </td>
-                <td className="pe-mono pe-hint">{(d.excludeSeasons || []).join(', ') || '—'}</td>
+                <td className="pe-mono pe-hint">{(d.excludeSeasons || []).join(', ') || '–'}</td>
               </tr>
             ))}
           </tbody>
