@@ -1134,6 +1134,45 @@ const ReservasForm = ({ lang }) => {
               </div>
             )}
 
+            {apt && isAvailable === false && availLoaded && (() => {
+              const alts = _hestiaFindAlternatives({ checkin, checkout, apt, avail, guests: parseInt(guests, 10) || null, max: 4 });
+              if (!alts.length) return null;
+              const fmt = n => n.toLocaleString('es-ES') + ' €';
+              const shiftLabel = (alt) => {
+                if (alt.sameDates) return lang === 'es' ? 'Mismas fechas, otro Hestía' : 'Same dates, another Hestía';
+                const n = Math.abs(alt.shiftDays);
+                const u = n === 1 ? (lang === 'es' ? 'día' : 'day') : (lang === 'es' ? 'días' : 'days');
+                const dir = lang === 'es' ? (alt.shiftDays < 0 ? 'antes' : 'después') : (alt.shiftDays < 0 ? 'earlier' : 'later');
+                return `${alt.nights} ${lang === 'es' ? 'noches' : 'nights'} · ${n} ${u} ${dir}`;
+              };
+              const applyAlt = (alt) => {
+                setApt(alt.aptId); setCheckin(alt.checkin); setCheckout(alt.checkout);
+                setTimeout(() => document.getElementById('rf-step-2')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+              };
+              return (
+                <div className="rf-alts">
+                  <div className="rf-alts-hd">
+                    {lang === 'es' ? 'Cerca de lo que buscabas, con disponibilidad' : 'Close to what you wanted, with availability'}
+                  </div>
+                  <p className="rf-alts-sub">
+                    {lang === 'es'
+                      ? 'Toca una opción y la cargamos en tu solicitud. Precio directo, sin comisiones.'
+                      : 'Tap an option and we load it into your request. Direct price, no fees.'}
+                  </p>
+                  <div className="rf-alts-grid">
+                    {alts.map((alt, i) => (
+                      <button type="button" key={i} className="rf-alt-card" style={{ '--apt-accent': aptAccents[alt.aptId] }} onClick={() => applyAlt(alt)}>
+                        <span className="rf-alt-apt">{alt.aptName}</span>
+                        <span className="rf-alt-dates">{_drFmtDate(alt.checkin, lang)} – {_drFmtDate(alt.checkout, lang)}</span>
+                        <span className="rf-alt-shift">{shiftLabel(alt)}</span>
+                        <span className="rf-alt-price"><strong>{fmt(alt.total)}</strong> <small>{fmt(alt.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</small></span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+
             {/* Price, PricePreview handles both regular and LS stays.
                 For LS stays lsCalc is passed so it shows the full nightly
                 breakdown crossed out plus the LS monthly price and savings. */}

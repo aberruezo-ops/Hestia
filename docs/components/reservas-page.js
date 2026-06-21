@@ -1087,7 +1087,59 @@ const ReservasForm = ({
     className: "rf-status-main"
   }, t.status_no_data), /*#__PURE__*/React.createElement("span", {
     className: "rf-status-sub"
-  }, t.status_no_data_sub)), calc && /*#__PURE__*/React.createElement(PricePreview, {
+  }, t.status_no_data_sub)), apt && isAvailable === false && availLoaded && (() => {
+    const alts = _hestiaFindAlternatives({
+      checkin,
+      checkout,
+      apt,
+      avail,
+      guests: parseInt(guests, 10) || null,
+      max: 4
+    });
+    if (!alts.length) return null;
+    const fmt = n => n.toLocaleString('es-ES') + ' €';
+    const shiftLabel = alt => {
+      if (alt.sameDates) return lang === 'es' ? 'Mismas fechas, otro Hestía' : 'Same dates, another Hestía';
+      const n = Math.abs(alt.shiftDays);
+      const u = n === 1 ? lang === 'es' ? 'día' : 'day' : lang === 'es' ? 'días' : 'days';
+      const dir = lang === 'es' ? alt.shiftDays < 0 ? 'antes' : 'después' : alt.shiftDays < 0 ? 'earlier' : 'later';
+      return `${alt.nights} ${lang === 'es' ? 'noches' : 'nights'} · ${n} ${u} ${dir}`;
+    };
+    const applyAlt = alt => {
+      setApt(alt.aptId);
+      setCheckin(alt.checkin);
+      setCheckout(alt.checkout);
+      setTimeout(() => document.getElementById('rf-step-2')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      }), 60);
+    };
+    return /*#__PURE__*/React.createElement("div", {
+      className: "rf-alts"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "rf-alts-hd"
+    }, lang === 'es' ? 'Cerca de lo que buscabas, con disponibilidad' : 'Close to what you wanted, with availability'), /*#__PURE__*/React.createElement("p", {
+      className: "rf-alts-sub"
+    }, lang === 'es' ? 'Toca una opción y la cargamos en tu solicitud. Precio directo, sin comisiones.' : 'Tap an option and we load it into your request. Direct price, no fees.'), /*#__PURE__*/React.createElement("div", {
+      className: "rf-alts-grid"
+    }, alts.map((alt, i) => /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      key: i,
+      className: "rf-alt-card",
+      style: {
+        '--apt-accent': aptAccents[alt.aptId]
+      },
+      onClick: () => applyAlt(alt)
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "rf-alt-apt"
+    }, alt.aptName), /*#__PURE__*/React.createElement("span", {
+      className: "rf-alt-dates"
+    }, _drFmtDate(alt.checkin, lang), " \u2013 ", _drFmtDate(alt.checkout, lang)), /*#__PURE__*/React.createElement("span", {
+      className: "rf-alt-shift"
+    }, shiftLabel(alt)), /*#__PURE__*/React.createElement("span", {
+      className: "rf-alt-price"
+    }, /*#__PURE__*/React.createElement("strong", null, fmt(alt.total)), " ", /*#__PURE__*/React.createElement("small", null, fmt(alt.avgPerNight), lang === 'es' ? '/noche' : '/night'))))));
+  })(), calc && /*#__PURE__*/React.createElement(PricePreview, {
     apt: apt,
     checkin: checkin,
     checkout: checkout,
