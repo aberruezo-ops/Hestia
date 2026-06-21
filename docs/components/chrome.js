@@ -1014,7 +1014,10 @@ const Footer = ({
     className: "footer-bottom"
   }, /*#__PURE__*/React.createElement("div", null, "\xA9 ", new Date().getFullYear(), " HEST\xCDA YOUR HOME \xB7 Alex Berruezo & Fran Moral"), /*#__PURE__*/React.createElement("div", {
     className: "licences"
-  }, "VFT/AL/01580 \xB7 VFT/AL/05535 \xB7 VFT/AL/07056")));
+  }, "VFT/AL/01580 \xB7 VFT/AL/05535 \xB7 VFT/AL/07056"), /*#__PURE__*/React.createElement("a", {
+    className: "footer-owner-link",
+    href: "p-edit.html"
+  }, lang === 'es' ? 'Acceso propietarios' : 'Owner access')));
 };
 const FooterNewsletter = ({
   lang
