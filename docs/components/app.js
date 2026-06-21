@@ -40,7 +40,7 @@ const OfertaBanner = ({
     className: "oferta-close",
     onClick: dismiss,
     "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
-  }, "\xD7"));
+  }, "×"));
 };
 const _SEA_VOL = 0.25;
 // Rampa de volumen (fade) con requestAnimationFrame, para que el mar no corte de
