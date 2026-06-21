@@ -7,12 +7,12 @@
 const OPINIONES_COPY = {
   es: {
     eyebrow: 'Lo que dicen de nosotros',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Diez a\xF1os puntuando ", /*#__PURE__*/React.createElement("em", null, "casi perfecto.")),
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Diez años puntuando ", /*#__PURE__*/React.createElement("em", null, "casi perfecto.")),
     sub: 'No es un eslogan. Son cifras verificadas por las plataformas, escritas por las familias que han dormido aquí.',
     platform_title: 'Puntuaciones verificadas',
-    testimonials_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Lo que dicen ", /*#__PURE__*/React.createElement("em", null, "los hu\xE9spedes.")),
+    testimonials_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Lo que dicen ", /*#__PURE__*/React.createElement("em", null, "los huéspedes.")),
     cta_eyebrow: 'Ahora es tu turno',
-    cta_title: /*#__PURE__*/React.createElement(React.Fragment, null, "\xBFListo para ", /*#__PURE__*/React.createElement("em", null, "tu estancia?")),
+    cta_title: /*#__PURE__*/React.createElement(React.Fragment, null, "¿Listo para ", /*#__PURE__*/React.createElement("em", null, "tu estancia?")),
     cta_sub: 'Reserva directamente con nosotros. Sin intermediarios, sin comisiones, con Alex o Fran al otro lado.'
   },
   en: {
@@ -80,7 +80,7 @@ const Stars = ({
 }).map((_, i) => /*#__PURE__*/React.createElement("span", {
   key: i,
   className: "star"
-}, "\u2605")));
+}, "★")));
 const OpinionesHero = ({
   lang
 }) => {
@@ -157,14 +157,14 @@ const OpinionesRatings = ({
     target: "_blank",
     rel: "noopener",
     className: "platform-link"
-  }, lang === 'es' ? 'Ver en Booking.com' : 'View on Booking.com', " \u2192")), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Ver en Booking.com' : 'View on Booking.com', " →")), /*#__PURE__*/React.createElement("div", {
     className: "rating-card",
     style: {
       borderTopColor: 'var(--vt)'
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "platform"
-  }, "Airbnb \xB7 Superhost"), /*#__PURE__*/React.createElement("div", {
+  }, "Airbnb · Superhost"), /*#__PURE__*/React.createElement("div", {
     className: "score"
   }, "5", /*#__PURE__*/React.createElement("span", {
     className: "dec"
@@ -177,7 +177,7 @@ const OpinionesRatings = ({
     target: "_blank",
     rel: "noopener",
     className: "platform-link"
-  }, lang === 'es' ? 'Ver en Airbnb' : 'View on Airbnb', " \u2192")), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Ver en Airbnb' : 'View on Airbnb', " →")), /*#__PURE__*/React.createElement("div", {
     className: "rating-card",
     style: {
       borderTopColor: 'var(--vs)'
@@ -197,7 +197,7 @@ const OpinionesRatings = ({
     target: "_blank",
     rel: "noopener",
     className: "platform-link"
-  }, lang === 'es' ? 'Ver en Google Maps' : 'View on Google Maps', " \u2192")))));
+  }, lang === 'es' ? 'Ver en Google Maps' : 'View on Google Maps', " →")))));
 };
 
 // ============================================================
@@ -237,16 +237,16 @@ const OpinionesQuotesMarquee = ({
     className: "oqm-quote"
   }, /*#__PURE__*/React.createElement("span", {
     className: "oqm-mark"
-  }, "\xAB"), /*#__PURE__*/React.createElement("span", {
+  }, "«"), /*#__PURE__*/React.createElement("span", {
     className: "oqm-text"
   }, q.txt), /*#__PURE__*/React.createElement("span", {
     className: "oqm-mark"
-  }, "\xBB"), /*#__PURE__*/React.createElement("span", {
+  }, "»"), /*#__PURE__*/React.createElement("span", {
     className: "oqm-attr"
   }, ", ", q.name)), /*#__PURE__*/React.createElement("span", {
     className: "oqm-dot",
     "aria-hidden": "true"
-  }, "\u2726")))));
+  }, "✦")))));
 };
 const REVIEW_WORDS = 25; // palabras visibles antes del "leer más"
 
@@ -451,14 +451,14 @@ const OpinionesTestimonials = ({
     onClick: () => setPage(p => Math.max(0, p - 1)),
     disabled: safePage === 0,
     "aria-label": lang === 'es' ? 'Anteriores' : 'Previous'
-  }, "\u2190"), /*#__PURE__*/React.createElement("span", {
+  }, "←"), /*#__PURE__*/React.createElement("span", {
     className: "tc-counter"
-  }, safePage * CARDS_PER_PAGE + 1, "\u2013", Math.min((safePage + 1) * CARDS_PER_PAGE, visible.length), ' ', "/", ' ', visible.length), /*#__PURE__*/React.createElement("button", {
+  }, safePage * CARDS_PER_PAGE + 1, "–", Math.min((safePage + 1) * CARDS_PER_PAGE, visible.length), ' ', "/", ' ', visible.length), /*#__PURE__*/React.createElement("button", {
     className: "tc-arrow",
     onClick: () => setPage(p => Math.min(totalPages - 1, p + 1)),
     disabled: safePage === totalPages - 1,
     "aria-label": lang === 'es' ? 'Siguientes' : 'Next'
-  }, "\u2192")))));
+  }, "→")))));
 };
 const OpinionesPageApp = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
@@ -497,14 +497,14 @@ const OpinionesPageApp = () => {
     className: "osc-eyebrow"
   }, lang === 'es' ? '¿Has dormido en Hestía?' : 'Have you stayed at Hestía?'), /*#__PURE__*/React.createElement("h2", {
     className: "osc-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tu opini\xF3n ", /*#__PURE__*/React.createElement("em", null, "nos ayuda"), ".") : /*#__PURE__*/React.createElement(React.Fragment, null, "Your opinion ", /*#__PURE__*/React.createElement("em", null, "helps us"), ".")), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tu opinión ", /*#__PURE__*/React.createElement("em", null, "nos ayuda"), ".") : /*#__PURE__*/React.createElement(React.Fragment, null, "Your opinion ", /*#__PURE__*/React.createElement("em", null, "helps us"), ".")), /*#__PURE__*/React.createElement("p", {
     className: "osc-text"
   }, lang === 'es' ? 'Escríbenos en dos minutos cómo te fue. Una vez aprobada, aparecerá en esta misma página y nos ayudará a mejorar lo que toque.' : 'Tell us how it went in two minutes. After we review it, it appears right here and helps us improve where it matters.'), /*#__PURE__*/React.createElement("a", {
     href: "escribir-opinion.html",
     className: "btn btn-primary osc-btn"
   }, lang === 'es' ? 'Comparte tu experiencia' : 'Share your experience', /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, " \u2192")), /*#__PURE__*/React.createElement("div", {
+  }, " →")), /*#__PURE__*/React.createElement("div", {
     className: "osc-gmaps"
   }, /*#__PURE__*/React.createElement("p", {
     className: "osc-gmaps-lbl"

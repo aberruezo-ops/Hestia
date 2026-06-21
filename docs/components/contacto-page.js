@@ -7,7 +7,7 @@
 const CONTACTO_COPY = {
   es: {
     eyebrow: 'Estamos aquí para ti',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Cont\xE1ctanos.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Te respondemos nosotros.")),
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Contáctanos.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Te respondemos nosotros.")),
     sub: 'Sin centralitas. Alex y Fran responden normalmente en minutos.',
     intro: 'No somos una empresa con centralita. Somos Alex y Fran, y respondemos nosotros personalmente. Alex atiende en español, Fran en inglés.',
     alex_title: 'Alex Berruezo',
@@ -37,29 +37,29 @@ const CONTACTO_COPY = {
       q: '¿Cómo hago una reserva?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Rellena el formulario en nuestra ", /*#__PURE__*/React.createElement("a", {
         href: "reservas.html"
-      }, "p\xE1gina de reservas"), " o escr\xEDbenos directamente por WhatsApp con las fechas y qu\xE9 Hest\xEDa te interesa.")
+      }, "página de reservas"), " o escríbenos directamente por WhatsApp con las fechas y qué Hestía te interesa.")
     }, {
       q: '¿Cómo es el proceso de reserva directa?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Te enviamos un ", /*#__PURE__*/React.createElement("strong", null, "borrador de contrato"), " con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelaci\xF3n y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Una ", /*#__PURE__*/React.createElement("strong", null, "peque\xF1a prereserva a convenir"), ", normalmente el ", /*#__PURE__*/React.createElement("strong", null, "20 % de la reserva total"), ", se paga al formalizar el contrato; el resto se abona al llegar a Hest\xEDa. Acusamos recibo de todo (contrato y prereserva) para que tengas ", /*#__PURE__*/React.createElement("strong", null, "confianza, garant\xEDa y seguridad"), " en cada paso.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Te enviamos un ", /*#__PURE__*/React.createElement("strong", null, "borrador de contrato"), " con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelación y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Una ", /*#__PURE__*/React.createElement("strong", null, "pequeña prereserva a convenir"), ", normalmente el ", /*#__PURE__*/React.createElement("strong", null, "20 % de la reserva total"), ", se paga al formalizar el contrato; el resto se abona al llegar a Hestía. Acusamos recibo de todo (contrato y prereserva) para que tengas ", /*#__PURE__*/React.createElement("strong", null, "confianza, garantía y seguridad"), " en cada paso.")
     }, {
       q: '¿Qué Hestías tenéis?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Tenemos tres: ", /*#__PURE__*/React.createElement("a", {
         href: "mar.html",
         className: "cl-vm"
-      }, "Hest\xEDa Mar"), ", ", /*#__PURE__*/React.createElement("a", {
+      }, "Hestía Mar"), ", ", /*#__PURE__*/React.createElement("a", {
         href: "thalassa.html",
         className: "cl-vt"
-      }, "Hest\xEDa Thalassa"), " y ", /*#__PURE__*/React.createElement("a", {
+      }, "Hestía Thalassa"), " y ", /*#__PURE__*/React.createElement("a", {
         href: "salinas.html",
         className: "cl-vs"
-      }, "Hest\xEDa Salinas"), ". Puedes comparar los tres en ", /*#__PURE__*/React.createElement("a", {
+      }, "Hestía Salinas"), ". Puedes comparar los tres en ", /*#__PURE__*/React.createElement("a", {
         href: "/"
       }, "la home"), ".")
     }, {
       q: '¿Quiénes sois Alex y Fran?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("a", {
         href: "nosotros.html"
-      }, "Somos los propietarios de Hest\xEDa"), ", no una agencia. Gestionamos los tres en persona desde 2016.")
+      }, "Somos los propietarios de Hestía"), ", no una agencia. Gestionamos los tres en persona desde 2016.")
     }]
   },
   en: {
@@ -94,29 +94,29 @@ const CONTACTO_COPY = {
       q: 'How do I make a booking?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Fill in the form on our ", /*#__PURE__*/React.createElement("a", {
         href: "reservas.html"
-      }, "reservations page"), " or write to us directly on WhatsApp with your dates and the Hest\xEDa you are interested in.")
+      }, "reservations page"), " or write to us directly on WhatsApp with your dates and the Hestía you are interested in.")
     }, {
       q: 'How does the direct booking process work?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "We send you a ", /*#__PURE__*/React.createElement("strong", null, "draft contract"), " with the rights and obligations of both sides (prices, payments, cancellation terms and house rules). You review it, fill it in, sign and return it. A ", /*#__PURE__*/React.createElement("strong", null, "small deposit to agree"), ", usually ", /*#__PURE__*/React.createElement("strong", null, "20 % of the total booking"), ", is paid when the contract is signed; the rest is paid on arrival at Hest\xEDa. We acknowledge everything (contract and deposit) so you have ", /*#__PURE__*/React.createElement("strong", null, "trust, guarantee and security"), " at every step.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "We send you a ", /*#__PURE__*/React.createElement("strong", null, "draft contract"), " with the rights and obligations of both sides (prices, payments, cancellation terms and house rules). You review it, fill it in, sign and return it. A ", /*#__PURE__*/React.createElement("strong", null, "small deposit to agree"), ", usually ", /*#__PURE__*/React.createElement("strong", null, "20 % of the total booking"), ", is paid when the contract is signed; the rest is paid on arrival at Hestía. We acknowledge everything (contract and deposit) so you have ", /*#__PURE__*/React.createElement("strong", null, "trust, guarantee and security"), " at every step.")
     }, {
       q: 'Which Hestías do you have?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "We have three: ", /*#__PURE__*/React.createElement("a", {
         href: "mar.html",
         className: "cl-vm"
-      }, "Hest\xEDa Mar"), ", ", /*#__PURE__*/React.createElement("a", {
+      }, "Hestía Mar"), ", ", /*#__PURE__*/React.createElement("a", {
         href: "thalassa.html",
         className: "cl-vt"
-      }, "Hest\xEDa Thalassa"), " and ", /*#__PURE__*/React.createElement("a", {
+      }, "Hestía Thalassa"), " and ", /*#__PURE__*/React.createElement("a", {
         href: "salinas.html",
         className: "cl-vs"
-      }, "Hest\xEDa Salinas"), ". Compare all three on ", /*#__PURE__*/React.createElement("a", {
+      }, "Hestía Salinas"), ". Compare all three on ", /*#__PURE__*/React.createElement("a", {
         href: "/"
       }, "the home page"), ".")
     }, {
       q: 'Who are Alex and Fran?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("a", {
         href: "nosotros.html"
-      }, "We are the owners of Hest\xEDa"), ", not an agency. We have managed the three Hest\xEDas in person since 2016.")
+      }, "We are the owners of Hestía"), ", not an agency. We have managed the three Hestías in person since 2016.")
     }]
   }
 };
@@ -206,7 +206,7 @@ const PersonCard = ({
   rel: "noopener"
 }, "WhatsApp ", /*#__PURE__*/React.createElement("span", {
   className: "arrow"
-}, "\u2192")), /*#__PURE__*/React.createElement("a", {
+}, "→")), /*#__PURE__*/React.createElement("a", {
   href: `tel:${phone}`,
   className: "btn btn-ghost-dark"
 }, phone))));
@@ -251,11 +251,11 @@ const ContactoPersons = ({
   }, /*#__PURE__*/React.createElement("a", {
     href: "mailto:info@hestiayourhome.com",
     className: "btn btn-ghost-dark"
-  }, "\u2709 info@hestiayourhome.com")), /*#__PURE__*/React.createElement("p", {
+  }, "✉ info@hestiayourhome.com")), /*#__PURE__*/React.createElement("p", {
     className: "contacto-privacy-note"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement("small", null, "Al contactarnos, tus datos se tratar\xE1n conforme a nuestra ", /*#__PURE__*/React.createElement("a", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement("small", null, "Al contactarnos, tus datos se tratarán conforme a nuestra ", /*#__PURE__*/React.createElement("a", {
     href: "privacidad.html"
-  }, "pol\xEDtica de privacidad"), ".") : /*#__PURE__*/React.createElement("small", null, "When you contact us, your data will be handled in accordance with our ", /*#__PURE__*/React.createElement("a", {
+  }, "política de privacidad"), ".") : /*#__PURE__*/React.createElement("small", null, "When you contact us, your data will be handled in accordance with our ", /*#__PURE__*/React.createElement("a", {
     href: "privacidad.html"
   }, "privacy policy"), "."))));
 };
@@ -277,23 +277,23 @@ const ContactoAddress = ({
     className: "eyebrow"
   }, t.addr_eyebrow), /*#__PURE__*/React.createElement("div", {
     className: "contacto-addr-text"
-  }, "\uD83D\uDCCD ", t.addr)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
+  }, "📍 ", t.addr)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
   }, t.lic_eyebrow), /*#__PURE__*/React.createElement("div", {
     className: "contacto-lic-list"
   }, /*#__PURE__*/React.createElement("span", {
     className: "cl-vm"
-  }, "VFT/AL/01580 \xB7 ", /*#__PURE__*/React.createElement("a", {
+  }, "VFT/AL/01580 · ", /*#__PURE__*/React.createElement("a", {
     href: "mar.html"
-  }, "Hest\xEDa Mar")), /*#__PURE__*/React.createElement("span", {
+  }, "Hestía Mar")), /*#__PURE__*/React.createElement("span", {
     className: "cl-vt"
-  }, "VFT/AL/05535 \xB7 ", /*#__PURE__*/React.createElement("a", {
+  }, "VFT/AL/05535 · ", /*#__PURE__*/React.createElement("a", {
     href: "thalassa.html"
-  }, "Hest\xEDa Thalassa")), /*#__PURE__*/React.createElement("span", {
+  }, "Hestía Thalassa")), /*#__PURE__*/React.createElement("span", {
     className: "cl-vs"
-  }, "VFT/AL/07056 \xB7 ", /*#__PURE__*/React.createElement("a", {
+  }, "VFT/AL/07056 · ", /*#__PURE__*/React.createElement("a", {
     href: "salinas.html"
-  }, "Hest\xEDa Salinas")))), /*#__PURE__*/React.createElement("div", {
+  }, "Hestía Salinas")))), /*#__PURE__*/React.createElement("div", {
     className: "contacto-book-cta"
   }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"

@@ -7,10 +7,10 @@
 const PORQUE_COPY = {
   es: {
     eyebrow: 'La idea detrás de Hestía',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Por qu\xE9 creamos Hest\xEDa.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Y por qu\xE9 se llama as\xED.")),
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Por qué creamos Hestía.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Y por qué se llama así.")),
     sub: 'La historia de un nombre, una diosa y tres Hestías en Vera Playa.',
     origin_eyebrow: 'El origen',
-    origin_title: /*#__PURE__*/React.createElement(React.Fragment, null, "No empez\xF3 como un negocio,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "empez\xF3 como una convicci\xF3n.")),
+    origin_title: /*#__PURE__*/React.createElement(React.Fragment, null, "No empezó como un negocio,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "empezó como una convicción.")),
     origin_p1: '2016. Alex y Fran tienen tres viviendas en Vera Playa. Podrían haberlas puesto en una plataforma, cobrado la comisión y desconectado el teléfono. Lo contrario es más difícil y más lento, y es exactamente lo que decidieron hacer.',
     origin_p2: 'Hestía nació de una pregunta: ¿qué pasaría si el alquiler de vacaciones que usas te hiciera sentir en casa de verdad? No solo limpio y funcional. En casa: con historia, con carácter, con alguien al otro lado que sabe tu nombre.',
     origin_p3: 'Un ingeniero informático y un filólogo clásico con décadas en Vera Playa. El uno observa y construye; el otro nombra y cuida. Juntos transformaron las tres viviendas en tres hogares con alma propia. Sin oficina. Sin recepción. Con el teléfono siempre encendido.',
@@ -27,14 +27,14 @@ const PORQUE_COPY = {
     logo_sym_3_t: 'La cresta de ola',
     logo_sym_3_d: 'El Mediterráneo a 300 m. El destino. Lo que ves desde la terraza al despertar.',
     name_eyebrow: 'El nombre',
-    name_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hest\xEDa: la diosa del hogar.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "No de las guerras. Del fuego de casa.")),
+    name_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hestía: la diosa del hogar.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "No de las guerras. Del fuego de casa.")),
     name_p1: 'En la mitología griega, Hestía era la primogénita de los Titanes, la primera en ser devorada por Cronos y la última en ser liberada. Mientras los demás dioses del Olimpo peleaban por la guerra, el amor o el poder, Hestía guardaba la llama. Era la diosa del hogar, del fuego sagrado, del centro de la casa.',
     name_p2: 'En la antigua Grecia, el hogar no era solo un lugar físico: era el fuego que lo hacía vivir. Antes de salir de viaje y al volver, se honraba la llama. La llama que guarda Hestía. Ese fuego era lo que convertía una casa en hogar.',
     name_p3: 'Fran es filólogo clásico, conoce los nombres griegos desde dentro. Cuando llegó el momento de bautizar el proyecto, la respuesta ya existía: Hestía, la que transforma un lugar en hogar, la que guarda el fuego que da la bienvenida. Eso es precisamente lo que intentamos ser.',
     name_quote: '«El primer día que lo dijimos en voz alta supimos que era el único nombre posible.»',
     name_quote_attr: '– Fran Moral',
     values_eyebrow: 'Nuestros valores',
-    values_title: /*#__PURE__*/React.createElement(React.Fragment, null, "HEST\xCDA, una palabra", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "y seis maneras de habitarla.")),
+    values_title: /*#__PURE__*/React.createElement(React.Fragment, null, "HESTÍA, una palabra", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "y seis maneras de habitarla.")),
     values_lede: 'El nombre que recibimos de la diosa griega no es solo símbolo: es una guía. Cada letra de Hestía nombra un valor que practicamos a diario. Seis ideas que se suman en una sola: la confianza.',
     values: [{
       letter: 'H',
@@ -63,7 +63,7 @@ const PORQUE_COPY = {
     }],
     values_closing: /*#__PURE__*/React.createElement(React.Fragment, null, "Seis valores que se suman en uno: ", /*#__PURE__*/React.createElement("em", null, "la confianza.")),
     traveler_eyebrow: 'El huésped que nos elige',
-    traveler_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Sabemos para qui\xE9n", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "existe Hest\xEDa.")),
+    traveler_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Sabemos para quién", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "existe Hestía.")),
     traveler_intro: 'Hay un tipo de huésped que no viene solo a descansar. Trae consigo el cuidado, la curiosidad y las ganas de que el lugar que visita siga siendo lo que es. Cuida lo que usa, respeta lo que comparte y deja el destino un poco mejor de como lo encontró. Para ese huésped existe Hestía.',
     travelers: [{
       icon: '🏡',
@@ -79,7 +79,7 @@ const PORQUE_COPY = {
       d: 'Cuando encuentra un lugar donde se ha sentido en casa, vuelve. Y convierte a otros en huéspedes colaborativos.'
     }],
     evol_eyebrow: 'La transformación',
-    evol_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Diez a\xF1os despu\xE9s,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "una marca a la altura de lo que hemos construido.")),
+    evol_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Diez años después,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "una marca a la altura de lo que hemos construido.")),
     evol_p1: 'Hestía empezó con un logo sencillo, el tejado que nos acompañó durante casi una década y que llevamos con orgullo. Pero llegó un momento en que sentimos que la marca tenía que evolucionar. No para alejarnos de lo que somos, sino para expresarlo mejor.',
     evol_p2: 'Queríamos algo más sólido, más expresivo. Un símbolo que dijera desde el primer vistazo que detrás de Hestía hay intención, identidad y raíces. Que no somos un producto más en una plataforma: somos un proyecto con historia, con nombre propio y con un lugar en el mapa.',
     evol_p3: 'Y en esa nueva H, las curvas que forman la hoja de olivo y la cresta de ola: hay también, si miras bien, la silueta de un tejado. No es casualidad. Es el guiño al logo que durante años nos dio tantas satisfacciones: llevamos lo que fuimos dentro de lo que somos.',
@@ -88,7 +88,7 @@ const PORQUE_COPY = {
   },
   en: {
     eyebrow: 'The idea behind Hestía',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Why we created Hest\xEDa.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "And why it has this name.")),
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Why we created Hestía.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "And why it has this name.")),
     sub: 'The story of a name, a goddess and three Hestías in Vera Playa.',
     origin_eyebrow: 'The origin',
     origin_title: /*#__PURE__*/React.createElement(React.Fragment, null, "It didn't start as a business.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "It started as a conviction.")),
@@ -108,14 +108,14 @@ const PORQUE_COPY = {
     logo_sym_3_t: 'The wave crest',
     logo_sym_3_d: 'The Mediterranean 300 m away. The destination. What you see from the terrace when you wake.',
     name_eyebrow: 'The name',
-    name_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hest\xEDa: goddess of the hearth.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Not of wars. Of the home fire.")),
+    name_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hestía: goddess of the hearth.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Not of wars. Of the home fire.")),
     name_p1: 'In Greek mythology, Hestía was the firstborn of the Titans, the first to be swallowed by Cronus and the last to be freed. While the other Olympians fought over war, love or power, Hestía tended the flame. She was the goddess of the home, the sacred fire, the heart of the house.',
     name_p2: 'In ancient Greece, the hearth was not just a physical place: it was the fire that made it alive. Before leaving on a journey and upon returning, the flame was honoured. The flame that Hestía keeps. That fire is what turned a house into a home.',
     name_p3: 'Fran is a classical philologist, he knows Greek names from the inside. When the time came to name the project, the answer already existed. Hestía: the one who transforms a place into a home. The keeper of the welcoming fire. Exactly what we try to be.',
     name_quote: '"The first time we said it aloud, we knew it was the only possible name."',
     name_quote_attr: '– Fran Moral',
     values_eyebrow: 'Our values',
-    values_title: /*#__PURE__*/React.createElement(React.Fragment, null, "HEST\xCDA, one word", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "and six ways to inhabit it.")),
+    values_title: /*#__PURE__*/React.createElement(React.Fragment, null, "HESTÍA, one word", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "and six ways to inhabit it.")),
     values_lede: 'The name we received from the Greek goddess is not only a symbol: it is a guide. Every letter of Hestía names a value we practice every day. Six ideas that add up to one: trust.',
     values: [{
       letter: 'H',
@@ -144,7 +144,7 @@ const PORQUE_COPY = {
     }],
     values_closing: /*#__PURE__*/React.createElement(React.Fragment, null, "Six values that add up to one: ", /*#__PURE__*/React.createElement("em", null, "trust.")),
     traveler_eyebrow: 'The guest who chooses us',
-    traveler_title: /*#__PURE__*/React.createElement(React.Fragment, null, "We know who", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Hest\xEDa exists for.")),
+    traveler_title: /*#__PURE__*/React.createElement(React.Fragment, null, "We know who", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Hestía exists for.")),
     traveler_intro: "There is a type of guest who doesn't come just to rest. They bring care, curiosity and a genuine wish to leave the place a little better than they found it. They look after what they use, respect what they share, and make the destination better every day. Hestía exists for that guest.",
     travelers: [{
       icon: '🏡',
@@ -639,7 +639,7 @@ const PorqueColores = ({
   className: "eyebrow"
 }, lang === 'es' ? 'La paleta de Hestía' : 'The Hestía palette'), /*#__PURE__*/React.createElement("h2", {
   className: "reveal"
-}, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "No inventamos"), " nuestros colores.", /*#__PURE__*/React.createElement("br", null), "Los encontramos aqu\xED.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "We didn't invent"), " our colours.", /*#__PURE__*/React.createElement("br", null), "We found them here.")), /*#__PURE__*/React.createElement("p", {
+}, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "No inventamos"), " nuestros colores.", /*#__PURE__*/React.createElement("br", null), "Los encontramos aquí.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "We didn't invent"), " our colours.", /*#__PURE__*/React.createElement("br", null), "We found them here.")), /*#__PURE__*/React.createElement("p", {
   className: "nos-colores-intro reveal delay-1"
 }, lang === 'es' ? 'Vera Playa tiene una luz que cambia cada hora y una naturaleza que deja boquiabierto. Un ingeniero que observa y un filólogo que nombra. Así nació la paleta de Hestía: nueve colores del paisaje almeriense, capturados y convertidos en marca.' : 'Vera Playa has a light that changes every hour and a nature that leaves you breathless. An engineer who observes and a philologist who names. That is how the Hestía palette was born: nine colours of the Almería landscape, captured and turned into a brand.'), /*#__PURE__*/React.createElement("div", {
   className: "nos-colores-grid"
