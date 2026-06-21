@@ -785,7 +785,14 @@ const ReservasForm = ({ lang }) => {
       fd.append('access_key', '95a86784-6d6a-496f-9830-15759c0a3cff');
       fd.append('subject', `Solicitud de reserva · ${aptNames[apt] || 'Hestía'} · ${checkin} → ${checkout}`);
       fd.append('from_name', name || 'Web Hestía');
-      if (hasEmail) fd.append('email', email.trim());
+      // Reply-To del email que recibís: solo se puede responder por correo si el
+      // huésped eligió el canal email y dejó uno válido. Si eligió WhatsApp, no hay
+      // email (por diseño): se responde por WhatsApp al teléfono que aparece abajo.
+      if (channel === 'email' && hasEmail) {
+        fd.append('email', email.trim());
+        fd.append('replyto', email.trim());
+      }
+      if (channel === 'whatsapp' && hasTel) fd.append('Teléfono', tel.trim());
       fd.append('message', `${msg}\n\nCanal elegido: ${channel === 'whatsapp' ? `WhatsApp (${tel})` : `Email (${email})`}`);
       fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd }).catch(() => {});
     } catch (_) {}
@@ -1315,6 +1322,7 @@ const ReservasForm = ({ lang }) => {
                 <button
                   type="submit"
                   className={`btn btn-primary reservas-submit${!channelValid ? ' req-btn-dis' : ''}`}
+                  disabled={!channelValid}
                   aria-disabled={!channelValid}
                 >
                   {channel === 'whatsapp' ? t.send_wa : t.send_email}
