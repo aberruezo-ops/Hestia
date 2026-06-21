@@ -41,6 +41,14 @@ const _hsFmtDate = (ds, lang) => {
     : `${ME[d.getUTCMonth()].slice(0,3)} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
 };
 
+const _hsShiftLabel = (shift, lang) => {
+  if (shift === 0) return lang === 'es' ? 'Mismas fechas' : 'Same dates';
+  const n = Math.abs(shift);
+  const unit = n === 1 ? (lang === 'es' ? 'día' : 'day') : (lang === 'es' ? 'días' : 'days');
+  if (lang === 'es') return shift < 0 ? `${n} ${unit} antes` : `${n} ${unit} después`;
+  return shift < 0 ? `${n} ${unit} earlier` : `${n} ${unit} later`;
+};
+
 // ---- Custom calendar range picker, mismo estilo que AptCalendar ----
 const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, lang, today }) => {
   const [hover, setHover] = React.useState(null);
@@ -787,6 +795,51 @@ const HomeSearch = ({ lang, b2b = false }) => {
                 </a>
               </div>
             )}
+
+            {/* Alternativas cercanas con disponibilidad: cuando su propuesta
+                (apt + fechas) está ocupada, ofrecemos lo libre más próximo
+                con precio. */}
+            {results.some(r => r.available !== null) && results.every(r => r.available !== true) && (() => {
+              const alts = _hestiaFindAlternatives({ checkin, checkout, apt, avail, guests, max: 4 });
+              if (!alts.length) return null;
+              const fmt = n => n.toLocaleString('es-ES') + ' €';
+              const altHref = (alt) => {
+                const p = new URLSearchParams();
+                p.set('apt', alt.aptId);
+                p.set('checkin', alt.checkin);
+                p.set('checkout', alt.checkout);
+                if (guests) p.set('guests', String(guests));
+                return 'reservas.html?' + p.toString();
+              };
+              return (
+                <div className="hs-alts">
+                  <div className="hs-alts-hd">
+                    {lang === 'es'
+                      ? 'Cerca de lo que buscabas, con disponibilidad'
+                      : 'Close to what you wanted, with availability'}
+                  </div>
+                  <p className="hs-alts-sub">
+                    {lang === 'es'
+                      ? 'Estas opciones están libres. El precio es el directo, sin comisiones.'
+                      : 'These options are free. The price is direct, with no fees.'}
+                  </p>
+                  <div className="hs-alts-grid">
+                    {alts.map((alt, i) => (
+                      <a key={i} className="hs-alt-card" style={{ '--hs-accent': alt.accent }} href={altHref(alt)}>
+                        <span className="hs-alt-apt">{alt.aptName}</span>
+                        <span className="hs-alt-dates">{_hsFmtDate(alt.checkin, lang)} – {_hsFmtDate(alt.checkout, lang)}</span>
+                        <span className="hs-alt-shift">{alt.sameDates ? (lang === 'es' ? 'Mismas fechas, otro Hestía' : 'Same dates, another Hestía') : `${alt.nights} ${lang === 'es' ? 'noches' : 'nights'} · ${_hsShiftLabel(alt.shiftDays, lang)}`}</span>
+                        <span className="hs-alt-price">
+                          <strong>{fmt(alt.total)}</strong>
+                          <small>{fmt(alt.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</small>
+                        </span>
+                        <span className="hs-alt-cta">{lang === 'es' ? 'Reservar →' : 'Book →'}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* No availability data fallback */}
             {results.every(r => r.available === null) && (
