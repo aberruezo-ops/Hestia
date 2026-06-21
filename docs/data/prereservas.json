@@ -1,19 +1,3 @@
 {
-  "prereservas": [
-    {
-      "id": "pr-1782027702884",
-      "createdAt": "2026-06-21T07:41:42.884Z",
-      "apt": "vs",
-      "responsable": "Ruth Montero Gomez",
-      "telefono": "‪+34 620 38 67 48‬",
-      "huespedes": 2,
-      "menores_12": 0,
-      "entrada": "2026-08-08",
-      "salida": "2026-08-16",
-      "ingreso_total": 1560,
-      "reserva": 360,
-      "canal": "directo",
-      "observaciones": ""
-    }
-  ]
+  "prereservas": []
 }
