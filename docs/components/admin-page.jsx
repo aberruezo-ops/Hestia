@@ -2019,10 +2019,12 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
   /* Cifras destacadas (renta, prereserva, fianza) */
   .key-num { color: var(--vt-dk); font-weight: 700; }
 
+  /* El salto a página propia lo fuerza html2pdf via pagebreak.before (legacy),
+     más fiable en Safari. NO repetir aquí page-break-before (css mode), porque
+     el doble salto generaba una página en blanco antes de las firmas. */
   .sign-page {
-    page-break-before: always;
-    break-before: page;
     page-break-inside: avoid;
+    break-inside: avoid;
   }
   .firmas {
     margin-top: 10mm;
@@ -2100,7 +2102,7 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
 
 <h2>Reunidos</h2>
-<p>Por una parte, <strong>D. Alejandro Berruezo Márquez</strong> y <strong>D. Francisco Javier Moral Arévalo</strong>, mayores de edad, y con domicilio a efectos de notificaciones en Avenida de la Constitución 38, 1A, 28821 de Coslada, Madrid, con DNI. ***DNI-RETIRADO*** y ***DNI-RETIRADO***, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ***IBAN-RETIRADO***.</p>
+<p>Por una parte, <strong>D. Alejandro Berruezo Márquez</strong> y <strong>D. Francisco Javier Moral Arévalo</strong>, mayores de edad, y con domicilio a efectos de notificaciones en ***DOMICILIO-RETIRADO***, con DNI. ***DNI-RETIRADO*** y ***DNI-RETIRADO***, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ***IBAN-RETIRADO***.</p>
 <p><em>(De ahora en adelante, "Los Propietarios".)</em></p>
 <p>De otra parte, <strong>D./Dña. ${escHtml(nombre.toUpperCase())}</strong>, mayor de edad, con domicilio a efectos de notificaciones en: ${domicilio ? `<strong>${escHtml(domicilio)}</strong>` : '<span class="blank-line long" aria-label="dirección a rellenar"></span>'}, con Documento Nacional de Identidad: ${dni ? `<strong>${escHtml(dni)}</strong>` : '<span class="blank-line short" aria-label="DNI a rellenar"></span>'}, con teléfono: ${telefono ? `<strong>${escHtml(telefono)}</strong>` : '<span class="blank-line short" aria-label="teléfono a rellenar"></span>'}, y correo electrónico a efectos de notificaciones telemáticas: ${email ? `<strong>${escHtml(email)}</strong>` : '<span class="blank-line medium" aria-label="email a rellenar"></span>'}.</p>
 <p><em>(en adelante, "la Parte Arrendataria".)</em></p>
@@ -2220,6 +2222,16 @@ ${clausulaFianza}
   async function generate() {
     try { await document.fonts.ready; } catch(e) {}
     var el = document.getElementById('pdf-content');
+    // Espera a que TODAS las imágenes (sobre todo el hero de la primera página)
+    // estén decodificadas antes de rasterizar. En Safari/iOS html2canvas a veces
+    // capturaba antes de que el data-URL del hero estuviera listo y la cabecera
+    // de la primera página salía en blanco al guardar.
+    try {
+      await Promise.all([].slice.call(el.querySelectorAll('img')).map(function(img) {
+        if (img.complete && img.naturalWidth) return img.decode ? img.decode().catch(function() {}) : Promise.resolve();
+        return new Promise(function(res) { img.onload = res; img.onerror = res; });
+      }));
+    } catch(e) {}
     // margin: [top, right, bottom, left], la barra fina (18mm) y el pie viven en estos
     // márgenes; el contenido (incl. el hero, ya dentro del flujo) nunca los invade.
     // La barra fina ocupa 0–18mm y el pie ~287–290mm. Dejamos MARG_TOP/BOT MAYORES
@@ -2241,7 +2253,7 @@ ${clausulaFianza}
       // Las firmas SIEMPRE en su propia página (before), html2pdf/Safari a veces
       // partía o se comía el bloque si caía en un borde. En página propia entra
       // entero y nunca se pierde. 'tr' evita partir filas de tabla.
-      pagebreak: { mode: ['css', 'legacy'], before: ['.sign-page'], avoid: ['tr'] }
+      pagebreak: { mode: ['css', 'legacy'], before: ['.sign-page'], avoid: ['tr', '.firmas'] }
     };
     var worker = html2pdf().set(opt).from(el);
     await worker.toPdf();
