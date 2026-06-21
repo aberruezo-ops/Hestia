@@ -1880,12 +1880,14 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
     background: linear-gradient(135deg, var(--ber) 0%, var(--ber-lt) 100%);
   }
   .hero-img {
-    position: absolute;
-    inset: 0;
+    /* En el flujo (display:block), NO position:absolute + object-fit: html2canvas
+       (el rasterizador del PDF) descarta imágenes con object-fit posicionadas en
+       absoluto, y la cabecera salía en el navegador pero desaparecía en el PDF
+       guardado. cropHero ya recorta a la proporción exacta (2100×650), así que
+       object-fit es innecesario: width/height 100% encuadra sin deformar. */
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center 60%;
   }
   .hero-overlay {
     position: absolute;
