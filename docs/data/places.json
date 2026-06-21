@@ -1,0 +1,1920 @@
+[
+  {
+    "id": "hestia-mar",
+    "name": "Hestía Vera Mar",
+    "cat": "home",
+    "lat": 37.22883,
+    "lng": -1.80385
+  },
+  {
+    "id": "hestia-thalassa",
+    "name": "Hestía Vera Thalassa",
+    "cat": "home",
+    "lat": 37.23336,
+    "lng": -1.82415
+  },
+  {
+    "id": "hestia-salinas",
+    "name": "Hestía Vera Salinas",
+    "cat": "home",
+    "lat": 37.23094,
+    "lng": -1.8186
+  },
+  {
+    "id": "coviran",
+    "name": "Covirán",
+    "cat": "super",
+    "lat": 37.223,
+    "lng": -1.8082
+  },
+  {
+    "id": "consum",
+    "name": "Consum (Vera Playa)",
+    "cat": "super",
+    "lat": 37.2197,
+    "lng": -1.8083
+  },
+  {
+    "id": "mercadona",
+    "name": "Mercadona Vera Playa",
+    "cat": "super",
+    "lat": 37.2137,
+    "lng": -1.8339
+  },
+  {
+    "id": "super-vera",
+    "name": "Vera pueblo (Dia · Lidl · Mercadona)",
+    "cat": "super",
+    "lat": 37.2491,
+    "lng": -1.8639
+  },
+  {
+    "id": "iceland-vera",
+    "name": "Iceland Overseas (Vera Playa)",
+    "cat": "super",
+    "lat": 37.2396,
+    "lng": -1.8564
+  },
+  {
+    "id": "quicksave",
+    "name": "Quicksave Britannia (Mojácar)",
+    "cat": "super",
+    "lat": 37.145,
+    "lng": -1.854
+  },
+  {
+    "id": "aldi-vera",
+    "name": "Aldi (Vera pueblo)",
+    "cat": "super",
+    "lat": 37.2491,
+    "lng": -1.8639
+  },
+  {
+    "id": "nobel",
+    "name": "Nobel",
+    "cat": "bookshop",
+    "lat": 37.2491,
+    "lng": -1.8639
+  },
+  {
+    "id": "macondo",
+    "name": "Macondo",
+    "cat": "bookshop",
+    "lat": 37.1377,
+    "lng": -1.8523
+  },
+  {
+    "id": "riad-cabrera",
+    "name": "Riad Cabrera",
+    "cat": "restaurant",
+    "lat": 37.155,
+    "lng": -1.87
+  },
+  {
+    "id": "juan-moreno",
+    "name": "Juan Moreno",
+    "cat": "restaurant",
+    "lat": 37.2495,
+    "lng": -1.8623
+  },
+  {
+    "id": "terraza-carmona",
+    "name": "Terraza Carmona",
+    "cat": "restaurant",
+    "lat": 37.2486,
+    "lng": -1.8635
+  },
+  {
+    "id": "gateway-india",
+    "name": "Gateway to India",
+    "cat": "restaurant",
+    "lat": 37.2195,
+    "lng": -1.806
+  },
+  {
+    "id": "pomodoro",
+    "name": "Pizzería Pomodoro",
+    "cat": "restaurant",
+    "lat": 37.219,
+    "lng": -1.8045
+  },
+  {
+    "id": "trattoria",
+    "name": "La Trattoria da Marco",
+    "cat": "restaurant",
+    "lat": 37.181,
+    "lng": -1.8218
+  },
+  {
+    "id": "lua",
+    "name": "Lúa",
+    "cat": "restaurant",
+    "lat": 37.231,
+    "lng": -1.7935
+  },
+  {
+    "id": "bistro",
+    "name": "The Bistro",
+    "cat": "restaurant",
+    "lat": 37.231,
+    "lng": -1.7945
+  },
+  {
+    "id": "koa",
+    "name": "Resto Bar Koa",
+    "cat": "restaurant",
+    "lat": 37.2245,
+    "lng": -1.7985
+  },
+  {
+    "id": "bbme-rest",
+    "name": "Restaurante Bbme Palomares",
+    "cat": "restaurant",
+    "lat": 37.2155,
+    "lng": -1.78
+  },
+  {
+    "id": "playa-azul",
+    "name": "Hostal Playa Azul",
+    "cat": "restaurant",
+    "lat": 37.246,
+    "lng": -1.766
+  },
+  {
+    "id": "tadeo",
+    "name": "Tadeo",
+    "cat": "restaurant",
+    "lat": 37.2494,
+    "lng": -1.7709
+  },
+  {
+    "id": "rincon-puerto",
+    "name": "Rincón del Puerto (Garrucha)",
+    "cat": "restaurant",
+    "lat": 37.1818,
+    "lng": -1.8235
+  },
+  {
+    "id": "almadraba",
+    "name": "La Almadraba (Garrucha)",
+    "cat": "restaurant",
+    "lat": 37.1822,
+    "lng": -1.8232
+  },
+  {
+    "id": "rosado",
+    "name": "Freiduría Bar Rosado",
+    "cat": "restaurant",
+    "lat": 37.221,
+    "lng": -1.807
+  },
+  {
+    "id": "av-alicante",
+    "name": "Av. Ciudad de Alicante",
+    "cat": "restaurant",
+    "lat": 37.2196,
+    "lng": -1.8082
+  },
+  {
+    "id": "valentino",
+    "name": "Ristorante di Valentino",
+    "cat": "restaurant",
+    "lat": 37.1377,
+    "lng": -1.8523
+  },
+  {
+    "id": "cabo-norte",
+    "name": "Cabo Norte",
+    "cat": "restaurant",
+    "lat": 37.137,
+    "lng": -1.853
+  },
+  {
+    "id": "neptuno",
+    "name": "Restaurante Neptuno",
+    "cat": "restaurant",
+    "lat": 37.136,
+    "lng": -1.852
+  },
+  {
+    "id": "martin-fierro",
+    "name": "Asador Martín Fierro",
+    "cat": "restaurant",
+    "lat": 36.8475,
+    "lng": -2.0395
+  },
+  {
+    "id": "oro-luz",
+    "name": "Oro y Luz",
+    "cat": "restaurant",
+    "lat": 36.848,
+    "lng": -2.04
+  },
+  {
+    "id": "la-villa",
+    "name": "La Villa",
+    "cat": "restaurant",
+    "lat": 36.9395,
+    "lng": -2
+  },
+  {
+    "id": "maruja",
+    "name": "Chiringuito Maruja",
+    "cat": "restaurant",
+    "lat": 37.231,
+    "lng": -1.793
+  },
+  {
+    "id": "acebuche",
+    "name": "El Acebuche (Mojácar)",
+    "cat": "restaurant",
+    "lat": 37.1373,
+    "lng": -1.8519
+  },
+  {
+    "id": "almirez",
+    "name": "El Almirez (Mojácar)",
+    "cat": "restaurant",
+    "lat": 37.1378,
+    "lng": -1.8525
+  },
+  {
+    "id": "casa-egea",
+    "name": "Casa Egea (Vera)",
+    "cat": "restaurant",
+    "lat": 37.2494,
+    "lng": -1.8631
+  },
+  {
+    "id": "regio-restaurante",
+    "name": "Regio (Vera)",
+    "cat": "restaurant",
+    "lat": 37.2487,
+    "lng": -1.8637
+  },
+  {
+    "id": "almejero",
+    "name": "El Almejero (Garrucha)",
+    "cat": "restaurant",
+    "lat": 37.182,
+    "lng": -1.8222
+  },
+  {
+    "id": "gallineta",
+    "name": "La Gallineta (Pozo de los Frailes)",
+    "cat": "restaurant",
+    "lat": 36.786,
+    "lng": -2.09
+  },
+  {
+    "id": "4nudos",
+    "name": "4 Nudos (San José)",
+    "cat": "restaurant",
+    "lat": 36.767,
+    "lng": -2.108
+  },
+  {
+    "id": "casa-miguel-sj",
+    "name": "Casa Miguel (San José)",
+    "cat": "restaurant",
+    "lat": 36.7665,
+    "lng": -2.1075
+  },
+  {
+    "id": "chumbera",
+    "name": "Asador La Chumbera (Sopalmo)",
+    "cat": "restaurant",
+    "lat": 37.041,
+    "lng": -1.881
+  },
+  {
+    "id": "mich-vivo",
+    "name": "Vivo Gourmet",
+    "cat": "michelin",
+    "lat": 36.8395,
+    "lng": -2.4655
+  },
+  {
+    "id": "mich-tinta-negra",
+    "name": "Asador Marino Tinta Negra",
+    "cat": "michelin",
+    "lat": 36.8406,
+    "lng": -2.4688
+  },
+  {
+    "id": "mich-gines",
+    "name": "Ginés Peregrín",
+    "cat": "michelin",
+    "lat": 36.838,
+    "lng": -2.4618
+  },
+  {
+    "id": "mich-travieso",
+    "name": "Travieso",
+    "cat": "michelin",
+    "lat": 36.8368,
+    "lng": -2.4605
+  },
+  {
+    "id": "mich-tony",
+    "name": "Tony García Espacio Gastronómico",
+    "cat": "michelin",
+    "lat": 36.8388,
+    "lng": -2.4631
+  },
+  {
+    "id": "mich-lavilla",
+    "name": "La Villa",
+    "cat": "michelin",
+    "lat": 36.938,
+    "lng": -1.968
+  },
+  {
+    "id": "mich-barra-jose",
+    "name": "Barra de José Álvarez",
+    "cat": "michelin",
+    "lat": 36.8393,
+    "lng": -2.4643
+  },
+  {
+    "id": "mich-cabana-buenavista",
+    "name": "Cabaña Buenavista",
+    "cat": "michelin",
+    "lat": 37.9425,
+    "lng": -1.0705
+  },
+  {
+    "id": "mich-almo",
+    "name": "Almo",
+    "cat": "michelin",
+    "lat": 37.9838,
+    "lng": -1.1305
+  },
+  {
+    "id": "mich-frases",
+    "name": "Frases",
+    "cat": "michelin",
+    "lat": 37.9843,
+    "lng": -1.1285
+  },
+  {
+    "id": "mich-barahonda",
+    "name": "Barahonda",
+    "cat": "michelin",
+    "lat": 38.6199,
+    "lng": -1.1168
+  },
+  {
+    "id": "mich-tandem",
+    "name": "Tándem",
+    "cat": "michelin",
+    "lat": 37.9832,
+    "lng": -1.1313
+  },
+  {
+    "id": "mich-perro-limon",
+    "name": "Perro Limón",
+    "cat": "michelin",
+    "lat": 37.9854,
+    "lng": -1.1292
+  },
+  {
+    "id": "mich-la-finca",
+    "name": "La Finca (Loja)",
+    "cat": "michelin",
+    "lat": 37.1668,
+    "lng": -4.1493
+  },
+  {
+    "id": "mich-farala",
+    "name": "Faralá",
+    "cat": "michelin",
+    "lat": 37.1752,
+    "lng": -3.59
+  },
+  {
+    "id": "mich-maria-de-la-o",
+    "name": "María de la O",
+    "cat": "michelin",
+    "lat": 37.1803,
+    "lng": -3.5912
+  },
+  {
+    "id": "mich-atelier",
+    "name": "Atelier Casa de Comidas",
+    "cat": "michelin",
+    "lat": 37.1773,
+    "lng": -3.6092
+  },
+  {
+    "id": "mich-arriaga",
+    "name": "Arriaga",
+    "cat": "michelin",
+    "lat": 37.1801,
+    "lng": -3.6155
+  },
+  {
+    "id": "mich-cala",
+    "name": "Cala",
+    "cat": "michelin",
+    "lat": 37.1684,
+    "lng": -3.6142
+  },
+  {
+    "id": "mich-albidaya",
+    "name": "Albidaya",
+    "cat": "michelin",
+    "lat": 37.1783,
+    "lng": -3.5983
+  },
+  {
+    "id": "mich-fm",
+    "name": "FM (Bar FM)",
+    "cat": "michelin",
+    "lat": 37.179,
+    "lng": -3.5993
+  },
+  {
+    "id": "mich-le-bistro",
+    "name": "Le Bistró by El Conjuro",
+    "cat": "michelin",
+    "lat": 37.1762,
+    "lng": -3.6054
+  },
+  {
+    "id": "mich-el-conjuro",
+    "name": "El Conjuro",
+    "cat": "michelin",
+    "lat": 36.7178,
+    "lng": -3.462
+  },
+  {
+    "id": "mich-ruta-veleta",
+    "name": "Ruta del Veleta",
+    "cat": "michelin",
+    "lat": 37.1252,
+    "lng": -3.5648
+  },
+  {
+    "id": "casa-puga",
+    "name": "Casa Puga (Almería capital)",
+    "cat": "restaurant",
+    "lat": 36.8395,
+    "lng": -2.4633
+  },
+  {
+    "id": "tetería",
+    "name": "Tetería Almedina (Almería capital)",
+    "cat": "restaurant",
+    "lat": 36.84,
+    "lng": -2.469
+  },
+  {
+    "id": "torreluz-med",
+    "name": "Torreluz Mediterráneo (Almería capital)",
+    "cat": "restaurant",
+    "lat": 36.8392,
+    "lng": -2.4625
+  },
+  {
+    "id": "salmantice",
+    "name": "Salmantice (Almería capital)",
+    "cat": "restaurant",
+    "lat": 36.8378,
+    "lng": -2.4602
+  },
+  {
+    "id": "magoga",
+    "name": "Magoga (Cartagena)",
+    "cat": "restaurant",
+    "lat": 37.6017,
+    "lng": -0.9886
+  },
+  {
+    "id": "marquesita",
+    "name": "La Marquesita (Cartagena)",
+    "cat": "restaurant",
+    "lat": 37.603,
+    "lng": -0.987
+  },
+  {
+    "id": "san-roque",
+    "name": "El Barrio de San Roque (Cartagena)",
+    "cat": "restaurant",
+    "lat": 37.6042,
+    "lng": -0.9905
+  },
+  {
+    "id": "el-faro-aguilas",
+    "name": "El Faro (Águilas)",
+    "cat": "restaurant",
+    "lat": 37.407,
+    "lng": -1.579
+  },
+  {
+    "id": "juan-mari",
+    "name": "Juan Mari (Águilas)",
+    "cat": "restaurant",
+    "lat": 37.4065,
+    "lng": -1.581
+  },
+  {
+    "id": "casino-lorca",
+    "name": "Asador Casino de Lorca",
+    "cat": "restaurant",
+    "lat": 37.677,
+    "lng": -1.7
+  },
+  {
+    "id": "celiac-near",
+    "name": "Cerca de Hestía: Lúa, Chiringuito Maruja, Pizzería Memoli",
+    "cat": "celiac",
+    "lat": 37.224,
+    "lng": -1.798
+  },
+  {
+    "id": "boracay",
+    "name": "Boracay (Garrucha)",
+    "cat": "celiac",
+    "lat": 37.1731,
+    "lng": -1.8228
+  },
+  {
+    "id": "kontiki",
+    "name": "Mojácar: Cabo Norte, Neptuno, Kontiki",
+    "cat": "celiac",
+    "lat": 37.1377,
+    "lng": -1.8523
+  },
+  {
+    "id": "regio",
+    "name": "Vera pueblo: Juan Moreno, Terraza Carmona, Regio",
+    "cat": "celiac",
+    "lat": 37.2491,
+    "lng": -1.8639
+  },
+  {
+    "id": "celiac-asoc",
+    "name": "Asociación de Celíacos de Almería",
+    "cat": "celiac",
+    "lat": 36.835,
+    "lng": -2.463
+  },
+  {
+    "id": "turquesa",
+    "name": "Chiringuito Playa Turquesa",
+    "cat": "bar",
+    "lat": 37.226,
+    "lng": -1.795
+  },
+  {
+    "id": "paraiso",
+    "name": "Paraíso Vera Beach",
+    "cat": "bar",
+    "lat": 37.23,
+    "lng": -1.794
+  },
+  {
+    "id": "chumbo",
+    "name": "Chiringuito El Chumbo",
+    "cat": "bar",
+    "lat": 37.21,
+    "lng": -1.785
+  },
+  {
+    "id": "marau",
+    "name": "Marau Beach Club",
+    "cat": "bar",
+    "lat": 37.21,
+    "lng": -1.8098
+  },
+  {
+    "id": "mar-arena",
+    "name": "Chiringuito Mar y Arena",
+    "cat": "bar",
+    "lat": 37.2335,
+    "lng": -1.794
+  },
+  {
+    "id": "bbme-palomares",
+    "name": "Bbme Palomares",
+    "cat": "bar",
+    "lat": 37.2155,
+    "lng": -1.78
+  },
+  {
+    "id": "lebreros",
+    "name": "Los Lebreros (Garrucha puerto)",
+    "cat": "bar",
+    "lat": 37.182,
+    "lng": -1.8235
+  },
+  {
+    "id": "cantares",
+    "name": "Cantares (Mojácar Pueblo)",
+    "cat": "bar",
+    "lat": 37.138,
+    "lng": -1.8525
+  },
+  {
+    "id": "mandala",
+    "name": "Mandala (Mojácar Pueblo)",
+    "cat": "bar",
+    "lat": 37.1378,
+    "lng": -1.8522
+  },
+  {
+    "id": "cafe-bahia",
+    "name": "Café Bahía (Vera pueblo)",
+    "cat": "bar",
+    "lat": 37.2491,
+    "lng": -1.8639
+  },
+  {
+    "id": "sahara-sj",
+    "name": "Bar Sahara (San José)",
+    "cat": "bar",
+    "lat": 36.7665,
+    "lng": -2.108
+  },
+  {
+    "id": "la-mala",
+    "name": "La Mala (Almería capital)",
+    "cat": "bar",
+    "lat": 36.8395,
+    "lng": -2.4625
+  },
+  {
+    "id": "tetería-cap",
+    "name": "Tetería La Almedina Cafés (Almería)",
+    "cat": "bar",
+    "lat": 36.8398,
+    "lng": -2.4688
+  },
+  {
+    "id": "jovellanos",
+    "name": "Jovellanos 16 (Almería capital)",
+    "cat": "bar",
+    "lat": 36.838,
+    "lng": -2.4615
+  },
+  {
+    "id": "columbares",
+    "name": "Columbares (Cartagena)",
+    "cat": "bar",
+    "lat": 37.602,
+    "lng": -0.9885
+  },
+  {
+    "id": "el-zorro",
+    "name": "El Zorro Pub (Cartagena)",
+    "cat": "bar",
+    "lat": 37.5995,
+    "lng": -0.981
+  },
+  {
+    "id": "mar-menuda",
+    "name": "La Mar Menuda (Águilas)",
+    "cat": "bar",
+    "lat": 37.408,
+    "lng": -1.5785
+  },
+  {
+    "id": "lonja-garrucha",
+    "name": "Lonja de Garrucha (subasta)",
+    "cat": "fish",
+    "lat": 37.181,
+    "lng": -1.8225
+  },
+  {
+    "id": "mercado-vera",
+    "name": "Mercado de abastos (Vera pueblo)",
+    "cat": "abasto",
+    "lat": 37.2486,
+    "lng": -1.8625
+  },
+  {
+    "id": "el-mero",
+    "name": "Pescadería El Mero (Garrucha)",
+    "cat": "fish",
+    "lat": 37.1815,
+    "lng": -1.8235
+  },
+  {
+    "id": "isabel",
+    "name": "Pescados y Mariscos Isabel (Garrucha)",
+    "cat": "fish",
+    "lat": 37.182,
+    "lng": -1.824
+  },
+  {
+    "id": "pescados-online",
+    "name": "Pescados Garrucha (online)",
+    "cat": "fish",
+    "lat": 37.1815,
+    "lng": -1.823
+  },
+  {
+    "id": "pescaderia-vera",
+    "name": "Pescadería Hermanos Quintana (Vera pueblo)",
+    "cat": "fish",
+    "lat": 37.2493,
+    "lng": -1.8633
+  },
+  {
+    "id": "carniceria-rey",
+    "name": "Carnicería Rey (Vera pueblo)",
+    "cat": "fish",
+    "lat": 37.249,
+    "lng": -1.8635
+  },
+  {
+    "id": "carniceria-garrucha",
+    "name": "Carnicería Hermanos López (Garrucha)",
+    "cat": "fish",
+    "lat": 37.1818,
+    "lng": -1.8233
+  },
+  {
+    "id": "jamoneria-vera",
+    "name": "Jamonería Sierra Almería (Vera)",
+    "cat": "fish",
+    "lat": 37.2495,
+    "lng": -1.8636
+  },
+  {
+    "id": "panaderia-vera",
+    "name": "Panadería La Viña (Vera pueblo)",
+    "cat": "fish",
+    "lat": 37.2491,
+    "lng": -1.8637
+  },
+  {
+    "id": "fruteria-vera",
+    "name": "Frutería del Mercado (Vera)",
+    "cat": "abasto",
+    "lat": 37.2486,
+    "lng": -1.8625
+  },
+  {
+    "id": "mercado-garrucha",
+    "name": "Mercado municipal de Garrucha",
+    "cat": "abasto",
+    "lat": 37.1818,
+    "lng": -1.8238
+  },
+  {
+    "id": "mercado-cuevas",
+    "name": "Mercado de abastos (Cuevas del Almanzora)",
+    "cat": "abasto",
+    "lat": 37.298,
+    "lng": -1.8828
+  },
+  {
+    "id": "mercado-almeria",
+    "name": "Mercado Central (Almería capital)",
+    "cat": "abasto",
+    "lat": 36.8393,
+    "lng": -2.4637
+  },
+  {
+    "id": "queseria-velez",
+    "name": "Quesería Los Vélez",
+    "cat": "fish",
+    "lat": 37.652,
+    "lng": -2.076
+  },
+  {
+    "id": "farmacia-1",
+    "name": "Farmacia (junto Consum)",
+    "cat": "pharmacy",
+    "lat": 37.2197,
+    "lng": -1.8083
+  },
+  {
+    "id": "farmacia-2",
+    "name": "Farmacia Vera Playa",
+    "cat": "pharmacy",
+    "lat": 37.226,
+    "lng": -1.7985
+  },
+  {
+    "id": "cs-vera",
+    "name": "Centro de Salud de Vera (base 061)",
+    "cat": "health",
+    "lat": 37.248,
+    "lng": -1.862
+  },
+  {
+    "id": "cs-garrucha",
+    "name": "Centro de Salud de Garrucha",
+    "cat": "health",
+    "lat": 37.1815,
+    "lng": -1.824
+  },
+  {
+    "id": "cs-mojacar-playa",
+    "name": "Centro de Salud de Mojácar Playa",
+    "cat": "health",
+    "lat": 37.134,
+    "lng": -1.851
+  },
+  {
+    "id": "hospital-huercal",
+    "name": "Hospital La Inmaculada (Huércal-Overa)",
+    "cat": "health",
+    "lat": 37.387,
+    "lng": -1.945
+  },
+  {
+    "id": "vet-garrucha",
+    "name": "Clínica Veterinaria Garrucha (24h)",
+    "cat": "vet",
+    "lat": 37.1815,
+    "lng": -1.8225
+  },
+  {
+    "id": "vet-vera-plaza",
+    "name": "Vet Care Vera Plaza",
+    "cat": "vet",
+    "lat": 37.2197,
+    "lng": -1.8083
+  },
+  {
+    "id": "vet-mojacar",
+    "name": "Clínica Veterinaria Costa Índalo (Mojácar)",
+    "cat": "vet",
+    "lat": 37.138,
+    "lng": -1.85
+  },
+  {
+    "id": "pet-vera",
+    "name": "Hotel Residencia Canina-Felina Vera (Llanos de Rosa)",
+    "cat": "pet-board",
+    "lat": 37.248,
+    "lng": -1.84
+  },
+  {
+    "id": "pet-mojacar",
+    "name": "Residencia Canina Mojácar",
+    "cat": "pet-board",
+    "lat": 37.135,
+    "lng": -1.855
+  },
+  {
+    "id": "pet-garrucha",
+    "name": "Centro Canino Loma de Vera (Garrucha)",
+    "cat": "pet-board",
+    "lat": 37.181,
+    "lng": -1.829
+  },
+  {
+    "id": "fisio-vera-salud",
+    "name": "Centro de Fisioterapia Vera Salud (Garrucha)",
+    "cat": "physio",
+    "lat": 37.182,
+    "lng": -1.824
+  },
+  {
+    "id": "fisio-vitea",
+    "name": "Vitea Fisioterapia (Vera)",
+    "cat": "physio",
+    "lat": 37.2495,
+    "lng": -1.8625
+  },
+  {
+    "id": "fisio-vane",
+    "name": "Clínica de Fisioterapia Vane (Garrucha)",
+    "cat": "physio",
+    "lat": 37.181,
+    "lng": -1.8235
+  },
+  {
+    "id": "fisio-rehab-vera",
+    "name": "Centro de Rehabilitación Vera",
+    "cat": "physio",
+    "lat": 37.249,
+    "lng": -1.8635
+  },
+  {
+    "id": "bodega-sierra-almagrera",
+    "name": "Bodega Sierra Almagrera",
+    "cat": "bodega",
+    "lat": 37.368,
+    "lng": -1.812
+  },
+  {
+    "id": "cs-vera",
+    "name": "Centro de Salud de Vera",
+    "cat": "health",
+    "lat": 37.2473,
+    "lng": -1.8612
+  },
+  {
+    "id": "virgen-alcazar",
+    "name": "Virgen del Alcázar",
+    "cat": "health",
+    "lat": 37.685,
+    "lng": -1.706
+  },
+  {
+    "id": "cw-biblio-vera",
+    "name": "Biblioteca Pública de Vera",
+    "cat": "coworking",
+    "lat": 37.2473,
+    "lng": -1.8612
+  },
+  {
+    "id": "cw-cafes-garrucha",
+    "name": "Cafeterías para teletrabajar (Garrucha y Mojácar)",
+    "cat": "coworking",
+    "lat": 37.1815,
+    "lng": -1.8235
+  },
+  {
+    "id": "cw-almeria",
+    "name": "Coworking en Almería capital",
+    "cat": "coworking",
+    "lat": 36.8381,
+    "lng": -2.4597
+  },
+  {
+    "id": "ln-veraplaya",
+    "name": "Lavandería autoservicio (Vera Playa)",
+    "cat": "laundry",
+    "lat": 37.236,
+    "lng": -1.7935
+  },
+  {
+    "id": "ln-mojacar",
+    "name": "Lavandería y tintorería en Mojácar",
+    "cat": "laundry",
+    "lat": 37.1377,
+    "lng": -1.8523
+  },
+  {
+    "id": "atm-vera",
+    "name": "Cajeros y bancos en Vera pueblo",
+    "cat": "atm",
+    "lat": 37.2473,
+    "lng": -1.8612
+  },
+  {
+    "id": "atm-veraplaya",
+    "name": "Cajero en Vera Playa",
+    "cat": "atm",
+    "lat": 37.236,
+    "lng": -1.7935
+  },
+  {
+    "id": "atm-garrucha",
+    "name": "Cajeros en Garrucha",
+    "cat": "atm",
+    "lat": 37.1815,
+    "lng": -1.8235
+  },
+  {
+    "id": "m-vera-sab",
+    "name": "Mercadillo de Vera (sábado mañana)",
+    "cat": "market",
+    "lat": 37.2491,
+    "lng": -1.8639
+  },
+  {
+    "id": "m-mojacar-mie",
+    "name": "Mercadillo de Mojácar (miércoles mañana)",
+    "cat": "market",
+    "lat": 37.1377,
+    "lng": -1.8523
+  },
+  {
+    "id": "m-garrucha-vie",
+    "name": "Mercadillo de Garrucha (viernes mañana)",
+    "cat": "market",
+    "lat": 37.1815,
+    "lng": -1.8235
+  },
+  {
+    "id": "m-pulpi-mie",
+    "name": "Mercadillo de Pulpí (miércoles mañana)",
+    "cat": "market",
+    "lat": 37.4055,
+    "lng": -1.7635
+  },
+  {
+    "id": "m-cuevas-sab",
+    "name": "Mercadillo de Cuevas del Almanzora (sábado mañana)",
+    "cat": "market",
+    "lat": 37.298,
+    "lng": -1.883
+  },
+  {
+    "id": "m-mercadillos",
+    "name": "Calendario semanal completo",
+    "cat": "market",
+    "lat": 37.2491,
+    "lng": -1.8639
+  },
+  {
+    "id": "m-artesanal-mojacar",
+    "name": "Mercado artesanal de Mojácar Pueblo (verano)",
+    "cat": "market",
+    "lat": 37.138,
+    "lng": -1.8525
+  },
+  {
+    "id": "aquavera",
+    "name": "Parque acuático Aquavera",
+    "cat": "leisure",
+    "lat": 37.223,
+    "lng": -1.796
+  },
+  {
+    "id": "rumboalcabo",
+    "name": "Paseos en barco · Rumbo al Cabo",
+    "cat": "water",
+    "lat": 37.1815,
+    "lng": -1.8235
+  },
+  {
+    "id": "caboafondo",
+    "name": "Paseos en barco · El Cabo a Fondo",
+    "cat": "water",
+    "lat": 36.7605,
+    "lng": -2.1075
+  },
+  {
+    "id": "cabogata",
+    "name": "Paseos en barco · Cabo de Gata",
+    "cat": "water",
+    "lat": 36.7605,
+    "lng": -2.1075
+  },
+  {
+    "id": "los-barqueros",
+    "name": "Los Barqueros · Paseos en barco desde Las Negras",
+    "cat": "water",
+    "lat": 36.872,
+    "lng": -2.015
+  },
+  {
+    "id": "mojacar-fiesta",
+    "name": "Mojácar Fiesta · actividades",
+    "cat": "leisure",
+    "lat": 37.1377,
+    "lng": -1.8523
+  },
+  {
+    "id": "biplaza",
+    "name": "Vuelo en biplaza (Vera-Palomares)",
+    "cat": "leisure",
+    "lat": 37.215,
+    "lng": -1.772
+  },
+  {
+    "id": "turismo-ind",
+    "name": "Turismo industrial y científico",
+    "cat": "leisure",
+    "lat": 36.84,
+    "lng": -2.46
+  },
+  {
+    "id": "lunar-cable",
+    "name": "Lunar Cable Park (wakeboard · ski náutico)",
+    "cat": "adventure",
+    "lat": 37.397,
+    "lng": -1.732
+  },
+  {
+    "id": "sport-garrucha-adventure",
+    "name": "Garrucha Adventure Sports · pesca y alquiler de barcos",
+    "cat": "water",
+    "lat": 37.181,
+    "lng": -1.821
+  },
+  {
+    "id": "sport-mojacar-tour-snorkel",
+    "name": "Snorkel Cabo de Gata · Mojácar Tour",
+    "cat": "water",
+    "lat": 37.1377,
+    "lng": -1.8523
+  },
+  {
+    "id": "sport-deep-emotion",
+    "name": "Snorkel y buceo · Deep Emotion (Mojácar)",
+    "cat": "water",
+    "lat": 37.138,
+    "lng": -1.852
+  },
+  {
+    "id": "buceo-tortuga",
+    "name": "Buceo · Tortuga (Vera Playa)",
+    "cat": "water",
+    "lat": 37.247,
+    "lng": -1.766
+  },
+  {
+    "id": "buceo-villaricos",
+    "name": "Buceo · Villaricos Sub",
+    "cat": "water",
+    "lat": 37.247,
+    "lng": -1.766
+  },
+  {
+    "id": "buceo-mojacar",
+    "name": "Buceo · Mojácar",
+    "cat": "water",
+    "lat": 37.138,
+    "lng": -1.852
+  },
+  {
+    "id": "aquamundo",
+    "name": "Motos de agua · Aquamundo (sin titulación)",
+    "cat": "water",
+    "lat": 37.23,
+    "lng": -1.796
+  },
+  {
+    "id": "jetski-island",
+    "name": "Motos de agua · Desert Island (Carboneras)",
+    "cat": "water",
+    "lat": 36.999,
+    "lng": -1.901
+  },
+  {
+    "id": "karting",
+    "name": "Karting Garrucha",
+    "cat": "adventure",
+    "lat": 37.181,
+    "lng": -1.823
+  },
+  {
+    "id": "buggy",
+    "name": "Buggy en el desierto de Tabernas",
+    "cat": "adventure",
+    "lat": 37.054,
+    "lng": -2.388
+  },
+  {
+    "id": "vera-surfing",
+    "name": "Vera Surfing · clases de surf",
+    "cat": "water",
+    "lat": 37.224,
+    "lng": -1.795
+  },
+  {
+    "id": "vela-almeria",
+    "name": "Vela Almería · iniciación a la vela",
+    "cat": "water",
+    "lat": 36.835,
+    "lng": -2.463
+  },
+  {
+    "id": "trek-genoveses-monsul",
+    "name": "San José → Los Genoveses → Mónsul (PR-A 47)",
+    "cat": "trek",
+    "lat": 36.7617,
+    "lng": -2.105
+  },
+  {
+    "id": "trek-negras-san-pedro",
+    "name": "Las Negras → Cala de San Pedro",
+    "cat": "trek",
+    "lat": 36.88,
+    "lng": -2.0164
+  },
+  {
+    "id": "trek-isleta-escullos",
+    "name": "Isleta del Moro → Los Escullos (Cabo de Gata)",
+    "cat": "trek",
+    "lat": 36.8964,
+    "lng": -1.9837
+  },
+  {
+    "id": "trek-rodalquilar-albaricoques",
+    "name": "Rodalquilar → Los Albaricoques → Pozo de los Frailes",
+    "cat": "trek",
+    "lat": 36.8533,
+    "lng": -2.0497
+  },
+  {
+    "id": "trek-faro-cabo-gata",
+    "name": "Circuito Faro de Cabo de Gata – Las Amoladeras",
+    "cat": "trek",
+    "lat": 36.7269,
+    "lng": -2.1898
+  },
+  {
+    "id": "trek-sierra-cabrera-cumbre",
+    "name": "Cumbre de Sierra Cabrera (Punta Entinas)",
+    "cat": "trek",
+    "lat": 37.155,
+    "lng": -1.87
+  },
+  {
+    "id": "trek-cabrera-turre-bedar",
+    "name": "Turre → Bédar por la Sierra Cabrera",
+    "cat": "trek",
+    "lat": 37.16,
+    "lng": -1.89
+  },
+  {
+    "id": "trek-vera-garrucha",
+    "name": "Vera Playa → Garrucha (paseo litoral)",
+    "cat": "trek",
+    "lat": 37.227,
+    "lng": -1.7965
+  },
+  {
+    "id": "trek-vera-villaricos",
+    "name": "Vera Playa → Villaricos (ruinas romanas)",
+    "cat": "trek",
+    "lat": 37.247,
+    "lng": -1.766
+  },
+  {
+    "id": "trek-vera-pueblo",
+    "name": "Vera Playa → Vera pueblo (por el barranquillo)",
+    "cat": "trek",
+    "lat": 37.2491,
+    "lng": -1.8639
+  },
+  {
+    "id": "trek-mojacar-garrucha",
+    "name": "Paseo costero Mojácar Playa – Garrucha",
+    "cat": "trek",
+    "lat": 37.18,
+    "lng": -1.828
+  },
+  {
+    "id": "trek-la-mena",
+    "name": "Sendero La Mena – Macenas (PR-A 96)",
+    "cat": "trek",
+    "lat": 37.113,
+    "lng": -1.85
+  },
+  {
+    "id": "trek-marina-mojacar",
+    "name": "Marina de la Torre → Mojácar Pueblo",
+    "cat": "trek",
+    "lat": 37.11,
+    "lng": -1.8395
+  },
+  {
+    "id": "trek-rambla-sopalmo",
+    "name": "Rambla del Sopalmo",
+    "cat": "trek",
+    "lat": 37.14,
+    "lng": -1.88
+  },
+  {
+    "id": "trek-jali",
+    "name": "El Jalí – Sierra Cabrera (Turre)",
+    "cat": "trek",
+    "lat": 37.155,
+    "lng": -1.87
+  },
+  {
+    "id": "club-nautico",
+    "name": "Club Náutico Almanzora",
+    "cat": "water",
+    "lat": 37.253,
+    "lng": -1.772
+  },
+  {
+    "id": "bicis",
+    "name": "Alquiler de bicicletas (Vera Playa)",
+    "cat": "leisure",
+    "lat": 37.227,
+    "lng": -1.7965
+  },
+  {
+    "id": "bicis-villaricos",
+    "name": "Bicis Villaricos",
+    "cat": "leisure",
+    "lat": 37.247,
+    "lng": -1.766
+  },
+  {
+    "id": "t-castillo",
+    "name": "Castillo Marqués de los Vélez",
+    "cat": "town",
+    "lat": 37.6905,
+    "lng": -2.0998
+  },
+  {
+    "id": "t-olula",
+    "name": "Olula del Río",
+    "cat": "town",
+    "lat": 37.368,
+    "lng": -2.2785
+  },
+  {
+    "id": "t-cuevas-velez",
+    "name": "Cuevas de los Letreros (Vélez-Blanco)",
+    "cat": "town",
+    "lat": 37.692,
+    "lng": -2.096
+  },
+  {
+    "id": "g-salinas",
+    "name": "Salinas de Cabo de Gata",
+    "cat": "gem",
+    "lat": 36.778,
+    "lng": -2.21
+  },
+  {
+    "id": "g-arrecife",
+    "name": "Arrecife de las Sirenas",
+    "cat": "gem",
+    "lat": 36.728,
+    "lng": -2.189
+  },
+  {
+    "id": "g-cortijo-fraile",
+    "name": "Cortijo del Fraile",
+    "cat": "gem",
+    "lat": 36.883,
+    "lng": -2.08
+  },
+  {
+    "id": "g-isleta",
+    "name": "La Isleta del Moro",
+    "cat": "gem",
+    "lat": 36.906,
+    "lng": -2.025
+  },
+  {
+    "id": "g-rodalquilar",
+    "name": "Minas de Oro de Rodalquilar",
+    "cat": "gem",
+    "lat": 36.847,
+    "lng": -2.036
+  },
+  {
+    "id": "g-escullos",
+    "name": "Castillo de Los Escullos",
+    "cat": "gem",
+    "lat": 36.881,
+    "lng": -2.06
+  },
+  {
+    "id": "g-villaricos",
+    "name": "Baria · Villaricos",
+    "cat": "gem",
+    "lat": 37.244,
+    "lng": -1.892
+  },
+  {
+    "id": "g-pozo-frailes",
+    "name": "El Pozo de los Frailes",
+    "cat": "gem",
+    "lat": 36.829,
+    "lng": -2.143
+  },
+  {
+    "id": "g-molinos",
+    "name": "Molinos del Río Aguas",
+    "cat": "gem",
+    "lat": 37.069,
+    "lng": -2.078
+  },
+  {
+    "id": "g-vera-historica",
+    "name": "Vera histórica",
+    "cat": "gem",
+    "lat": 37.253,
+    "lng": -1.864
+  },
+  {
+    "id": "g-starlight",
+    "name": "Cielo oscuro · Reserva Starlight",
+    "cat": "gem",
+    "lat": 37.113,
+    "lng": -1.951
+  },
+  {
+    "id": "g-entinas",
+    "name": "Punta Entinas-Sabinal",
+    "cat": "gem",
+    "lat": 36.675,
+    "lng": -2.982
+  },
+  {
+    "id": "laguna",
+    "name": "Laguna de Puerto Rey",
+    "cat": "culture",
+    "lat": 37.211,
+    "lng": -1.777
+  },
+  {
+    "id": "el-argar",
+    "name": "Yacimiento El Argar",
+    "cat": "culture",
+    "lat": 37.244,
+    "lng": -1.892
+  },
+  {
+    "id": "geoda-pulpi",
+    "name": "Geoda de Pulpí",
+    "cat": "culture",
+    "lat": 37.4083,
+    "lng": -1.7635
+  },
+  {
+    "id": "cuevas-sorbas",
+    "name": "Cuevas de Sorbas",
+    "cat": "culture",
+    "lat": 37.107,
+    "lng": -2.082
+  },
+  {
+    "id": "tabernas",
+    "name": "Desierto de Tabernas",
+    "cat": "culture",
+    "lat": 37.041,
+    "lng": -2.389
+  },
+  {
+    "id": "minihollywood",
+    "name": "MiniHollywood · Oasys",
+    "cat": "culture",
+    "lat": 37.005,
+    "lng": -2.475
+  },
+  {
+    "id": "aquarium",
+    "name": "Aquarium Costa de Almería",
+    "cat": "culture",
+    "lat": 36.7674,
+    "lng": -2.6094
+  },
+  {
+    "id": "mariposario",
+    "name": "Mariposario de Almería",
+    "cat": "culture",
+    "lat": 36.7641,
+    "lng": -2.6109
+  },
+  {
+    "id": "p-cocedores",
+    "name": "Playa de los Cocedores",
+    "cat": "beach",
+    "lat": 37.379,
+    "lng": -1.626
+  },
+  {
+    "id": "p-carolina",
+    "name": "Playa de la Carolina",
+    "cat": "beach",
+    "lat": 37.355,
+    "lng": -1.651
+  },
+  {
+    "id": "p-calabardina",
+    "name": "Playa de Calabardina (Águilas)",
+    "cat": "beach",
+    "lat": 37.402,
+    "lng": -1.584
+  },
+  {
+    "id": "p-hornillo",
+    "name": "Playa del Hornillo (Águilas)",
+    "cat": "beach",
+    "lat": 37.408,
+    "lng": -1.578
+  },
+  {
+    "id": "p-calnegre",
+    "name": "Playas de Calnegre",
+    "cat": "beach-hard",
+    "lat": 37.473,
+    "lng": -1.425
+  },
+  {
+    "id": "p-vera",
+    "name": "Playa de Vera (sector textil)",
+    "cat": "beach",
+    "lat": 37.2275,
+    "lng": -1.7935
+  },
+  {
+    "id": "p-garrucha",
+    "name": "Playa de Garrucha",
+    "cat": "beach",
+    "lat": 37.181,
+    "lng": -1.823
+  },
+  {
+    "id": "p-macenas",
+    "name": "Playa de Macenas (Mojácar)",
+    "cat": "beach",
+    "lat": 37.083,
+    "lng": -1.835
+  },
+  {
+    "id": "p-piedras",
+    "name": "Piedras de Molino (Carboneras)",
+    "cat": "beach",
+    "lat": 37.02,
+    "lng": -1.873
+  },
+  {
+    "id": "p-mesa-roldan",
+    "name": "Mesa Roldán (Carboneras)",
+    "cat": "beach",
+    "lat": 36.962,
+    "lng": -1.908
+  },
+  {
+    "id": "p-muertos",
+    "name": "Playa de los Muertos",
+    "cat": "beach-hard",
+    "lat": 37.005,
+    "lng": -1.88
+  },
+  {
+    "id": "p-enmedio",
+    "name": "Cala de Enmedio",
+    "cat": "beach-hard",
+    "lat": 36.954,
+    "lng": -1.974
+  },
+  {
+    "id": "p-plomo",
+    "name": "Cala del Plomo",
+    "cat": "beach-hard",
+    "lat": 36.946,
+    "lng": -1.969
+  },
+  {
+    "id": "p-aguamarga",
+    "name": "Playa de Agua Amarga",
+    "cat": "beach",
+    "lat": 36.9395,
+    "lng": -2
+  },
+  {
+    "id": "p-raja",
+    "name": "Cala Rajá",
+    "cat": "beach-hard",
+    "lat": 36.905,
+    "lng": -1.986
+  },
+  {
+    "id": "p-negras",
+    "name": "Playa de Las Negras",
+    "cat": "beach",
+    "lat": 36.877,
+    "lng": -2.003
+  },
+  {
+    "id": "p-carbon",
+    "name": "Cala Carbón",
+    "cat": "beach-hard",
+    "lat": 36.868,
+    "lng": -2.005
+  },
+  {
+    "id": "p-cuervo",
+    "name": "Cala del Cuervo",
+    "cat": "beach-hard",
+    "lat": 36.861,
+    "lng": -2.01
+  },
+  {
+    "id": "p-san-pedro",
+    "name": "Cala de San Pedro",
+    "cat": "beach-hard",
+    "lat": 36.854,
+    "lng": -1.989
+  },
+  {
+    "id": "p-playazo",
+    "name": "El Playazo de Rodalquilar",
+    "cat": "beach",
+    "lat": 36.847,
+    "lng": -2.023
+  },
+  {
+    "id": "p-escullos",
+    "name": "Playa de los Escullos",
+    "cat": "beach",
+    "lat": 36.8742,
+    "lng": -2.0048
+  },
+  {
+    "id": "p-isleta",
+    "name": "La Isleta del Moro",
+    "cat": "beach",
+    "lat": 36.797,
+    "lng": -2.063
+  },
+  {
+    "id": "p-arena",
+    "name": "Cala Arena",
+    "cat": "beach-hard",
+    "lat": 36.802,
+    "lng": -2.069
+  },
+  {
+    "id": "p-bergantin",
+    "name": "Cala del Bergantín",
+    "cat": "beach-hard",
+    "lat": 36.787,
+    "lng": -2.094
+  },
+  {
+    "id": "p-higuera",
+    "name": "Cala Higuera",
+    "cat": "beach-hard",
+    "lat": 36.782,
+    "lng": -2.084
+  },
+  {
+    "id": "p-san-jose",
+    "name": "Playa de San José",
+    "cat": "beach",
+    "lat": 36.773,
+    "lng": -2.1115
+  },
+  {
+    "id": "p-genoveses",
+    "name": "Playa de los Genoveses",
+    "cat": "beach",
+    "lat": 36.761,
+    "lng": -2.089
+  },
+  {
+    "id": "p-monsul",
+    "name": "Playa de Mónsul",
+    "cat": "beach",
+    "lat": 36.746,
+    "lng": -2.113
+  },
+  {
+    "id": "p-barronal",
+    "name": "Playa del Barronal",
+    "cat": "beach",
+    "lat": 36.743,
+    "lng": -2.118
+  },
+  {
+    "id": "p-medialuna",
+    "name": "Cala de la Media Luna",
+    "cat": "beach-hard",
+    "lat": 36.7415,
+    "lng": -2.1195
+  },
+  {
+    "id": "p-cabogata",
+    "name": "Las Salinas (Cabo de Gata pueblo)",
+    "cat": "beach",
+    "lat": 36.753,
+    "lng": -2.225
+  },
+  {
+    "id": "p-fabriquilla",
+    "name": "La Fabriquilla / El Corralete",
+    "cat": "beach",
+    "lat": 36.727,
+    "lng": -2.195
+  },
+  {
+    "id": "p-zapillo",
+    "name": "Playa del Zapillo (Almería)",
+    "cat": "beach",
+    "lat": 36.829,
+    "lng": -2.438
+  },
+  {
+    "id": "p-nueva-almeria",
+    "name": "Playa Nueva Almería / Térmica",
+    "cat": "beach",
+    "lat": 36.827,
+    "lng": -2.454
+  },
+  {
+    "id": "p-costacabana",
+    "name": "Playa de Costacabana",
+    "cat": "beach",
+    "lat": 36.82,
+    "lng": -2.404
+  },
+  {
+    "id": "p-almeria",
+    "name": "Playa de El Palmer (Almería)",
+    "cat": "beach",
+    "lat": 36.823,
+    "lng": -2.414
+  },
+  {
+    "id": "p-aguadulce",
+    "name": "Playa de Aguadulce (Roquetas)",
+    "cat": "beach",
+    "lat": 36.807,
+    "lng": -2.568
+  },
+  {
+    "id": "p-toyo",
+    "name": "Playa del Toyo (Retamar)",
+    "cat": "beach",
+    "lat": 36.81,
+    "lng": -2.364
+  },
+  {
+    "id": "p-almerimar",
+    "name": "Playa de Almerimar (El Ejido)",
+    "cat": "beach",
+    "lat": 36.705,
+    "lng": -2.792
+  },
+  {
+    "id": "p-balerma",
+    "name": "Playa de Balerma (El Ejido)",
+    "cat": "beach",
+    "lat": 36.743,
+    "lng": -2.887
+  },
+  {
+    "id": "p-adra",
+    "name": "Playa de San Nicolás (Adra)",
+    "cat": "beach",
+    "lat": 36.743,
+    "lng": -3.022
+  },
+  {
+    "id": "p-mijo",
+    "name": "Cala de Mijo",
+    "cat": "beach-dog",
+    "lat": 37.044,
+    "lng": -1.891
+  },
+  {
+    "id": "p-canada",
+    "name": "Playa de la Cañada del Negro",
+    "cat": "beach-dog",
+    "lat": 37.022,
+    "lng": -1.877
+  },
+  {
+    "id": "playeros",
+    "name": "Playeros.es · directorio",
+    "cat": "beach-dog",
+    "lat": 37.11,
+    "lng": -1.8395
+  },
+  {
+    "id": "p-naturista-vera",
+    "name": "Vera Playa naturista",
+    "cat": "beach-nude",
+    "lat": 37.2425,
+    "lng": -1.788
+  },
+  {
+    "id": "p-naturista-almanzora",
+    "name": "Playa del Almanzora (zona naturista)",
+    "cat": "beach-nude",
+    "lat": 37.253,
+    "lng": -1.772
+  },
+  {
+    "id": "p-naturista-marina",
+    "name": "Playa de la Marina de la Torre (Mojácar)",
+    "cat": "beach-nude",
+    "lat": 37.1075,
+    "lng": -1.8395
+  },
+  {
+    "id": "p-srvc-vera",
+    "name": "Playa de Vera (sector textil)",
+    "cat": "beach-srvc",
+    "lat": 37.2275,
+    "lng": -1.7935
+  },
+  {
+    "id": "p-srvc-mojacar",
+    "name": "Mojácar Playa",
+    "cat": "beach-srvc",
+    "lat": 37.11,
+    "lng": -1.8395
+  },
+  {
+    "id": "p-srvc-garrucha",
+    "name": "Playa de Garrucha",
+    "cat": "beach-srvc",
+    "lat": 37.1815,
+    "lng": -1.821
+  },
+  {
+    "id": "p-srvc-quitapellejos",
+    "name": "Playa Quitapellejos (Palomares)",
+    "cat": "beach-srvc",
+    "lat": 37.205,
+    "lng": -1.779
+  },
+  {
+    "id": "gas-repsol-vera",
+    "name": "Repsol Vera (C/ Ancha)",
+    "cat": "fuel",
+    "lat": 37.2462,
+    "lng": -1.8645
+  },
+  {
+    "id": "gas-plenoil-vera",
+    "name": "Plenoil Vera (Crta. de Cuevas)",
+    "cat": "fuel",
+    "lat": 37.254,
+    "lng": -1.858
+  },
+  {
+    "id": "gas-baraza-vera",
+    "name": "BARAZA+ (N-340A km 533)",
+    "cat": "fuel",
+    "lat": 37.249,
+    "lng": -1.897
+  },
+  {
+    "id": "gas-vera-diesel",
+    "name": "Vera Diesel (Ctra. de Ronda)",
+    "cat": "fuel",
+    "lat": 37.2475,
+    "lng": -1.862
+  },
+  {
+    "id": "gas-repsol-garrucha",
+    "name": "Repsol Garrucha (Puerto)",
+    "cat": "fuel",
+    "lat": 37.1808,
+    "lng": -1.821
+  },
+  {
+    "id": "gas-cepsa-garrucha",
+    "name": "Cepsa La Garrucha (AL-152 Garrucha-Turre)",
+    "cat": "fuel",
+    "lat": 37.17,
+    "lng": -1.865
+  },
+  {
+    "id": "gas-repsol-mojacar",
+    "name": "Repsol Mojácar (AL-118 km 0,6)",
+    "cat": "fuel",
+    "lat": 37.138,
+    "lng": -1.8475
+  },
+  {
+    "id": "gas-repsol-palomares",
+    "name": "Repsol Palomares (ALP-118)",
+    "cat": "fuel",
+    "lat": 37.237,
+    "lng": -1.77
+  },
+  {
+    "id": "ev-mercadona-vera-mz",
+    "name": "Mercadona Vera (Av. Medina Azahara)",
+    "cat": "ev-charge",
+    "lat": 37.236,
+    "lng": -1.7935
+  },
+  {
+    "id": "ev-mercadona-vera-pueblo",
+    "name": "Mercadona Vera Pueblo (C/ Baza)",
+    "cat": "ev-charge",
+    "lat": 37.2491,
+    "lng": -1.8639
+  },
+  {
+    "id": "ev-lidl-albox",
+    "name": "Lidl Albox (ruta hacia interior)",
+    "cat": "ev-charge",
+    "lat": 37.3893,
+    "lng": -2.1424
+  },
+  {
+    "id": "ev-electromaps",
+    "name": "Mapa completo (Electromaps)",
+    "cat": "ev-charge",
+    "lat": 37.2491,
+    "lng": -1.8639
+  }
+]
