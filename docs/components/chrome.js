@@ -23,11 +23,11 @@ const Topbar = ({
   className: "tl-who hide-mobile"
 }, "Alex"), /*#__PURE__*/React.createElement("span", {
   className: "tl-mode hide-mobile"
-}, "\uD83C\uDDEA\uD83C\uDDF8 Espa\xF1ol"), /*#__PURE__*/React.createElement("span", {
+}, "🇪🇸 Español"), /*#__PURE__*/React.createElement("span", {
   className: "tl-num"
 }, "+34 620 316 370")), /*#__PURE__*/React.createElement("span", {
   className: "sep"
-}, "\xB7"), /*#__PURE__*/React.createElement("a", {
+}, "·"), /*#__PURE__*/React.createElement("a", {
   href: "https://wa.me/34654138251",
   className: `topbar-link${lang === 'en' ? ' tl-active' : ''}`,
   target: "_blank",
@@ -39,11 +39,11 @@ const Topbar = ({
   className: "tl-who hide-mobile"
 }, "Fran"), /*#__PURE__*/React.createElement("span", {
   className: "tl-mode hide-mobile"
-}, "\uD83C\uDDEC\uD83C\uDDE7 English"), /*#__PURE__*/React.createElement("span", {
+}, "🇬🇧 English"), /*#__PURE__*/React.createElement("span", {
   className: "tl-num"
 }, "+34 654 138 251")), /*#__PURE__*/React.createElement("span", {
   className: "sep hide-mobile"
-}, "\xB7"), /*#__PURE__*/React.createElement("a", {
+}, "·"), /*#__PURE__*/React.createElement("a", {
   href: "mailto:info@hestiayourhome.com",
   className: "topbar-link email hide-mobile",
   "aria-label": "Email"
@@ -55,11 +55,11 @@ const Topbar = ({
   className: lang === 'es' ? 'active' : '',
   onClick: () => setLang('es'),
   "aria-pressed": lang === 'es',
-  "aria-label": "Espa\xF1ol"
+  "aria-label": "Español"
 }, /*#__PURE__*/React.createElement("span", {
   className: "lang-full",
   "aria-hidden": "true"
-}, "\uD83C\uDDEA\uD83C\uDDF8 Espa\xF1ol"), /*#__PURE__*/React.createElement("span", {
+}, "🇪🇸 Español"), /*#__PURE__*/React.createElement("span", {
   className: "lang-abbr",
   "aria-hidden": "true"
 }, "ES")), /*#__PURE__*/React.createElement("span", {
@@ -73,7 +73,7 @@ const Topbar = ({
 }, /*#__PURE__*/React.createElement("span", {
   className: "lang-full",
   "aria-hidden": "true"
-}, "\uD83C\uDDEC\uD83C\uDDE7 English"), /*#__PURE__*/React.createElement("span", {
+}, "🇬🇧 English"), /*#__PURE__*/React.createElement("span", {
   className: "lang-abbr",
   "aria-hidden": "true"
 }, "EN")))), /*#__PURE__*/React.createElement("div", {
@@ -173,10 +173,10 @@ const MnGuestSection = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "mn-guests-icon",
     "aria-hidden": "true"
-  }, "\uD83D\uDD11"), /*#__PURE__*/React.createElement("span", null, t.mn_guests), /*#__PURE__*/React.createElement("span", {
+  }, "🔑"), /*#__PURE__*/React.createElement("span", null, t.mn_guests), /*#__PURE__*/React.createElement("span", {
     className: `mn-guests-chev${open ? ' open' : ''}`,
     "aria-hidden": "true"
-  }, "\u2193")), open && /*#__PURE__*/React.createElement("div", {
+  }, "↓")), open && /*#__PURE__*/React.createElement("div", {
     className: "mn-guests-body"
   }, /*#__PURE__*/React.createElement("div", {
     className: "mn-guests-label eyebrow"
@@ -186,19 +186,19 @@ const MnGuestSection = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "mn-guest-dot",
     "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("span", null, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Mar"))), /*#__PURE__*/React.createElement(NavLink, {
+  }), /*#__PURE__*/React.createElement("span", null, "Hestía ", /*#__PURE__*/React.createElement("em", null, "Mar"))), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.thalassa,
     className: "mn-guest-apt mn-vt"
   }, /*#__PURE__*/React.createElement("span", {
     className: "mn-guest-dot",
     "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("span", null, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Thalassa"))), /*#__PURE__*/React.createElement(NavLink, {
+  }), /*#__PURE__*/React.createElement("span", null, "Hestía ", /*#__PURE__*/React.createElement("em", null, "Thalassa"))), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.salinas,
     className: "mn-guest-apt mn-vs"
   }, /*#__PURE__*/React.createElement("span", {
     className: "mn-guest-dot",
     "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("span", null, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Salinas")))));
+  }), /*#__PURE__*/React.createElement("span", null, "Hestía ", /*#__PURE__*/React.createElement("em", null, "Salinas")))));
 };
 const Header = ({
   mode,
@@ -342,22 +342,22 @@ const Header = ({
     className: "hv-replay",
     onClick: replayLaunch,
     "aria-label": lang === 'es' ? 'Volver a ver' : 'Replay'
-  }, "\u21BA"))), /*#__PURE__*/React.createElement("div", {
+  }, "↺"))), /*#__PURE__*/React.createElement("div", {
     className: "hv-launch-text hv-launch-text--visible"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-launch-text-inner"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Nuestra marca evoluciona, nuestra ilusi\xF3n contin\xFAa."), ' ', /*#__PURE__*/React.createElement("a", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Nuestra marca evoluciona, nuestra ilusión continúa."), ' ', /*#__PURE__*/React.createElement("a", {
     href: "porque-hestia.html",
     className: "hv-launch-link"
-  }, "Saber m\xE1s \u2192")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Our brand evolves, our passion endures."), ' ', /*#__PURE__*/React.createElement("a", {
+  }, "Saber más →")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Our brand evolves, our passion endures."), ' ', /*#__PURE__*/React.createElement("a", {
     href: "porque-hestia.html",
     className: "hv-launch-link"
-  }, "Learn more \u2192"))))), /*#__PURE__*/React.createElement("button", {
+  }, "Learn more →"))))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hv-toggle",
     onClick: dismissBanner,
     "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
-  }, "\xD7")), document.body) : null;
+  }, "×")), document.body) : null;
 
   // Vitruvio, no se muestra en la home
   const vitruvio = !isHomePage && !vitMin ? ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
@@ -505,7 +505,7 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("a", {
     href: "/",
     className: "brand-lockup",
-    "aria-label": "Hest\xEDa, Inicio"
+    "aria-label": "Hestía, Inicio"
   }, /*#__PURE__*/React.createElement("span", {
     className: "hestia-logo-mark",
     "aria-hidden": "true"
@@ -518,7 +518,7 @@ const Header = ({
     height: "600"
   })), /*#__PURE__*/React.createElement("span", {
     className: "wordmark"
-  }, "HEST\xCDA"), /*#__PURE__*/React.createElement("span", {
+  }, "HESTÍA"), /*#__PURE__*/React.createElement("span", {
     className: "your-home"
   }, "your home!")), vitMin && /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -566,9 +566,9 @@ const Header = ({
     className: "mn-apt-num"
   }, "01"), /*#__PURE__*/React.createElement("span", {
     className: "mn-apt-name"
-  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Mar")), /*#__PURE__*/React.createElement("span", {
+  }, "Hestía ", /*#__PURE__*/React.createElement("em", null, "Mar")), /*#__PURE__*/React.createElement("span", {
     className: "mn-apt-arrow"
-  }, "\u2192"))), /*#__PURE__*/React.createElement("div", {
+  }, "→"))), /*#__PURE__*/React.createElement("div", {
     className: "mn-apt-card mn-vt"
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.thalassa,
@@ -577,9 +577,9 @@ const Header = ({
     className: "mn-apt-num"
   }, "02"), /*#__PURE__*/React.createElement("span", {
     className: "mn-apt-name"
-  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Thalassa")), /*#__PURE__*/React.createElement("span", {
+  }, "Hestía ", /*#__PURE__*/React.createElement("em", null, "Thalassa")), /*#__PURE__*/React.createElement("span", {
     className: "mn-apt-arrow"
-  }, "\u2192"))), /*#__PURE__*/React.createElement("div", {
+  }, "→"))), /*#__PURE__*/React.createElement("div", {
     className: "mn-apt-card mn-vs"
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.salinas,
@@ -588,9 +588,9 @@ const Header = ({
     className: "mn-apt-num"
   }, "03"), /*#__PURE__*/React.createElement("span", {
     className: "mn-apt-name"
-  }, "Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "Salinas")), /*#__PURE__*/React.createElement("span", {
+  }, "Hestía ", /*#__PURE__*/React.createElement("em", null, "Salinas")), /*#__PURE__*/React.createElement("span", {
     className: "mn-apt-arrow"
-  }, "\u2192")))), /*#__PURE__*/React.createElement("div", {
+  }, "→")))), /*#__PURE__*/React.createElement("div", {
     className: "mn-links"
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.porqueHestia,
@@ -613,12 +613,12 @@ const Header = ({
   }, lang === 'es' ? 'Para empresas' : 'For business'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.ventajas,
     className: "mn-link"
-  }, "\u2713 ", lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks')), /*#__PURE__*/React.createElement("div", {
+  }, "✓ ", lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks')), /*#__PURE__*/React.createElement("div", {
     className: "mn-actions"
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
     className: "mn-cta-primary"
-  }, t.cta_nav, " \u2192"), /*#__PURE__*/React.createElement("button", {
+  }, t.cta_nav, " →"), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "mn-cta-secondary",
     onClick: () => {
@@ -628,7 +628,7 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "mn-cta-ico",
     "aria-hidden": "true"
-  }, "\u2726"), lang === 'es' ? 'Acceso huéspedes' : 'Guest access')), /*#__PURE__*/React.createElement("div", {
+  }, "✦"), lang === 'es' ? 'Acceso huéspedes' : 'Guest access')), /*#__PURE__*/React.createElement("div", {
     className: "mn-contacts"
   }, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370",
@@ -636,13 +636,13 @@ const Header = ({
     rel: "noopener"
   }, /*#__PURE__*/React.createElement("span", {
     className: "tl-dot"
-  }), "Alex \xB7 +34 620 316 370"), /*#__PURE__*/React.createElement("a", {
+  }), "Alex · +34 620 316 370"), /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34654138251",
     target: "_blank",
     rel: "noopener"
   }, /*#__PURE__*/React.createElement("span", {
     className: "tl-dot"
-  }), "Fran \xB7 +34 654 138 251")))), accessOpen && typeof GuestAccessModal !== 'undefined' && ReactDOM.createPortal(/*#__PURE__*/React.createElement(GuestAccessModal, {
+  }), "Fran · +34 654 138 251")))), accessOpen && typeof GuestAccessModal !== 'undefined' && ReactDOM.createPortal(/*#__PURE__*/React.createElement(GuestAccessModal, {
     lang: lang,
     onClose: () => setAccessOpen(false)
   }), document.body));
@@ -828,9 +828,9 @@ const Cookies = ({
   };
   return /*#__PURE__*/React.createElement("div", {
     className: `cookies ${visible ? 'show' : ''}`
-  }, /*#__PURE__*/React.createElement("h5", null, lang === 'es' ? 'Cookies necesarias' : 'Cookie notice'), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Usamos una cookie de preferencia (idioma). Las visitas se miden de forma an\xF3nima y sin cookies. ", /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement("h5", null, lang === 'es' ? 'Cookies necesarias' : 'Cookie notice'), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Usamos una cookie de preferencia (idioma). Las visitas se miden de forma anónima y sin cookies. ", /*#__PURE__*/React.createElement("a", {
     href: "cookies.html"
-  }, "M\xE1s info"), ".") : /*#__PURE__*/React.createElement(React.Fragment, null, "We use a preference cookie (language). Visits are measured anonymously and without cookies. ", /*#__PURE__*/React.createElement("a", {
+  }, "Más info"), ".") : /*#__PURE__*/React.createElement(React.Fragment, null, "We use a preference cookie (language). Visits are measured anonymously and without cookies. ", /*#__PURE__*/React.createElement("a", {
     href: "cookies.html"
   }, "More info"), ".")), /*#__PURE__*/React.createElement("div", {
     className: "cookies-btns"
@@ -901,7 +901,7 @@ const Footer = ({
   }, /*#__PURE__*/React.createElement("img", {
     decoding: "async",
     src: "assets/logo-teal-transparent.png",
-    alt: "Hest\xEDa",
+    alt: "Hestía",
     className: "hestia-logo",
     loading: "lazy",
     width: "600",
@@ -912,7 +912,7 @@ const Footer = ({
       fontSize: 13,
       marginBottom: 4
     }
-  }, "HEST\xCDA"), /*#__PURE__*/React.createElement("div", {
+  }, "HESTÍA"), /*#__PURE__*/React.createElement("div", {
     className: "your-home",
     style: {
       fontSize: 9,
@@ -922,7 +922,7 @@ const Footer = ({
     className: "tagline"
   }, lang === 'es' ? '« Tu hogar lejos de tu casa. »' : '« Your home away from home. »'), /*#__PURE__*/React.createElement("div", {
     className: "addr"
-  }, "Calle Islas Canarias 7", /*#__PURE__*/React.createElement("br", null), "04621 Vera Playa, Almer\xEDa", /*#__PURE__*/React.createElement("br", null), "Espa\xF1a"), /*#__PURE__*/React.createElement("div", {
+  }, "Calle Islas Canarias 7", /*#__PURE__*/React.createElement("br", null), "04621 Vera Playa, Almería", /*#__PURE__*/React.createElement("br", null), "España"), /*#__PURE__*/React.createElement("div", {
     className: "footer-social"
   }, /*#__PURE__*/React.createElement("a", {
     href: "https://www.facebook.com/hestiayourhome",
@@ -972,11 +972,11 @@ const Footer = ({
     className: "col"
   }, /*#__PURE__*/React.createElement("h5", null, t.footer_apts), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "mar.html"
-  }, "Hest\xEDa Mar")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, "Hestía Mar")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "thalassa.html"
-  }, "Hest\xEDa Thalassa")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, "Hestía Thalassa")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "salinas.html"
-  }, "Hest\xEDa Salinas")))), /*#__PURE__*/React.createElement("div", {
+  }, "Hestía Salinas")))), /*#__PURE__*/React.createElement("div", {
     className: "col"
   }, /*#__PURE__*/React.createElement("h5", null, t.footer_hestia), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "nosotros.html"
@@ -1004,17 +1004,17 @@ const Footer = ({
     className: "col"
   }, /*#__PURE__*/React.createElement("h5", null, t.footer_contacto), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370"
-  }, "\uD83C\uDDEA\uD83C\uDDF8 Alex \xB7 WhatsApp")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, "🇪🇸 Alex · WhatsApp")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34654138251"
-  }, "\uD83C\uDDEC\uD83C\uDDE7 Fran \xB7 WhatsApp")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, "🇬🇧 Fran · WhatsApp")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "mailto:info@hestiayourhome.com"
   }, "info@hestiayourhome.com"))))), /*#__PURE__*/React.createElement(FooterNewsletter, {
     lang: lang
   }), /*#__PURE__*/React.createElement("div", {
     className: "footer-bottom"
-  }, /*#__PURE__*/React.createElement("div", null, "\xA9 ", new Date().getFullYear(), " HEST\xCDA YOUR HOME \xB7 Alex Berruezo & Fran Moral"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", null, "© ", new Date().getFullYear(), " HESTÍA YOUR HOME · Alex Berruezo & Fran Moral"), /*#__PURE__*/React.createElement("div", {
     className: "licences"
-  }, "VFT/AL/01580 \xB7 VFT/AL/05535 \xB7 VFT/AL/07056"), /*#__PURE__*/React.createElement("a", {
+  }, "VFT/AL/01580 · VFT/AL/05535 · VFT/AL/07056"), /*#__PURE__*/React.createElement("a", {
     className: "footer-owner-link",
     href: "p-edit.html"
   }, lang === 'es' ? 'Acceso propietarios' : 'Owner access')));

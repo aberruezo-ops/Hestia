@@ -7,7 +7,7 @@
 const NOSOTROS_COPY = {
   es: {
     eyebrow: 'Vera Playa · Almería · desde 2016',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Alex y Fran.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Vera Playa. Hest\xEDa.")),
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Alex y Fran.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Vera Playa. Hestía.")),
     sub: 'Las personas detrás de Hestía y su vínculo con Almería.',
     intro_title: /*#__PURE__*/React.createElement(React.Fragment, null, "No somos una empresa.", /*#__PURE__*/React.createElement("em", null, "Somos dos personas.")),
     intro_p1: 'Nos conocisteis cuando reservasteis, o quizás ahora mismo es la primera vez. Da igual. Lo importante es que detrás de Hestía no hay una plataforma, ni un gestor, ni una oficina. Estamos nosotros: Alex y Fran. Dos personas reales que cogen el teléfono, que conocen vuestro nombre y que se ocupan de que cuando llegáis, todo esté exactamente como tiene que estar.',
@@ -22,7 +22,7 @@ const NOSOTROS_COPY = {
     almeria_quote: '«Almería tiene la luz más honesta que conozco. No engaña. Lo que ves es lo que es.»',
     almeria_quote_attr: '– Alex Berruezo',
     team_eyebrow: 'El equipo',
-    team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Detr\xE1s de Hest\xEDa hay", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "dos personas reales.")),
+    team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Detrás de Hestía hay", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "dos personas reales.")),
     alex_eyebrow: '01 · Reserva · Antes de tu llegada',
     alex_lang: '🇪🇸 Español',
     alex_name: 'Alex Berruezo',
@@ -39,7 +39,7 @@ const NOSOTROS_COPY = {
   },
   en: {
     eyebrow: 'Vera Playa · Almería · since 2016',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Alex and Fran.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Vera Playa. Hest\xEDa.")),
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Alex and Fran.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Vera Playa. Hestía.")),
     sub: 'The people behind Hestía and their bond with Almería.',
     intro_title: /*#__PURE__*/React.createElement(React.Fragment, null, "We're not a company.", /*#__PURE__*/React.createElement("em", null, "We're two people.")),
     intro_p1: "You may have met us when you booked, or perhaps this is the very first time. It doesn't matter. What matters is that behind Hestía there is no platform, no property manager, no office. There's us: Alex and Fran. Two real people who pick up the phone, know your name, and make sure that when you arrive, everything is exactly as it should be.",
@@ -54,7 +54,7 @@ const NOSOTROS_COPY = {
     almeria_quote: '"Almería has the most honest light I know. It does not deceive. What you see is what it is."',
     almeria_quote_attr: '– Alex Berruezo',
     team_eyebrow: 'The team',
-    team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Behind Hest\xEDa there are", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "two real people.")),
+    team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Behind Hestía there are", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "two real people.")),
     alex_eyebrow: '01 · Booking · Before you arrive',
     alex_lang: '🇪🇸 Español',
     alex_name: 'Alex Berruezo',
@@ -82,7 +82,7 @@ const NosotrosHero = ({
   }, /*#__PURE__*/React.createElement("img", {
     decoding: "async",
     src: "assets/photo-nosotros-hero.jpg",
-    alt: "Alex y Fran, propietarios de Hest\xEDa Your Home, en Vera Playa",
+    alt: "Alex y Fran, propietarios de Hestía Your Home, en Vera Playa",
     className: "nosotros-hero-img",
     width: "1500",
     height: "1125"
