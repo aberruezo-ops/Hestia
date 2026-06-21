@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA, Página de Opiniones / Reviews
+// HESTÍA — Página de Opiniones / Reviews
 // ================================================================
 
 const OPINIONES_COPY = {
@@ -122,9 +122,9 @@ const OpinionesRatings = ({ lang }) => {
 };
 
 // ============================================================
-// OpinionesTestimonials, sección de reviews curadas + web propia
+// OpinionesTestimonials — sección de reviews curadas + web propia
 // Lee window.REVIEWS (cargado en el HTML antes que el componente).
-// Cinta horizontal con frases cortas extraídas de las reviews –
+// Cinta horizontal con frases cortas extraídas de las reviews —
 // teaser emocional antes del grid estructurado. Bg eggplant + texto
 // arena (ratio ~11:1). Pausa en hover. Off en reduced-motion.
 const OpinionesQuotesMarquee = ({ lang }) => {
@@ -153,7 +153,7 @@ const OpinionesQuotesMarquee = ({ lang }) => {
               <span className="oqm-mark">«</span>
               <span className="oqm-text">{q.txt}</span>
               <span className="oqm-mark">»</span>
-              <span className="oqm-attr">, {q.name}</span>
+              <span className="oqm-attr"> — {q.name}</span>
             </span>
             <span className="oqm-dot" aria-hidden="true">✦</span>
           </React.Fragment>
@@ -208,9 +208,9 @@ const ReviewCard = ({ rev, lang, fmtDate }) => {
   );
 };
 
-// Reviews paginadas: 6 por "página", flechas prev/next, sin scroll vertical infinito.
+// Reviews paginadas: 3 por "página", flechas prev/next, sin scroll vertical infinito.
 // ============================================================
-const CARDS_PER_PAGE = 6;
+const CARDS_PER_PAGE = 3;
 
 const OpinionesTestimonials = ({ lang }) => {
   const t = OPINIONES_COPY[lang];
@@ -392,20 +392,6 @@ const OpinionesPageApp = () => {
               {lang === 'es' ? 'Comparte tu experiencia' : 'Share your experience'}
               <span className="arrow"> →</span>
             </a>
-            <div className="osc-gmaps">
-              <p className="osc-gmaps-lbl">
-                {lang === 'es'
-                  ? '¿Ya te alojaste? Déjala directamente en Google, en la ficha de tu Hestía:'
-                  : 'Already stayed with us? Post it straight on Google, on your Hestía listing:'}
-              </p>
-              <div className="osc-gmaps-links">
-                {[['vm','Hestía Mar'],['vt','Hestía Thalassa'],['vs','Hestía Salinas']].map(([id, name]) => (
-                  <a key={id} href={GMAPS_PLACE[id]} target="_blank" rel="noopener" className="osc-gmaps-link">
-                    <span className="osc-gmaps-g" aria-hidden="true">G</span>{name}
-                  </a>
-                ))}
-              </div>
-            </div>
           </div>
         </section>
         <QuickFAQ lang={lang} pageId="opiniones" />

@@ -19,7 +19,7 @@
   <meta property="og:type"      content="website"/>
   <meta property="og:url"       content="https://www.hestiayourhome.com/reservas.html"/>
   <meta property="og:title"     content="Reservar en Hestía · Mejor precio directo · Sin intermediarios"/>
-  <meta property="og:description" content="Reserva directamente con Alex y Fran. Nuestro precio directo es siempre mejor que Booking o Airbnb, sin excepciones. Sin comisiones."/>
+  <meta property="og:description" content="Reserva directamente con Alex y Fran. Nuestro precio directo es siempre mejor que Booking o Airbnb — sin excepciones. Sin comisiones."/>
   <meta property="og:image"     content="https://www.hestiayourhome.com/assets/hero-terrace-night.jpg"/>
   <meta property="og:image:width"  content="1600"/>
   <meta property="og:image:height" content="1600"/>
@@ -28,7 +28,7 @@
   <meta property="og:locale:alternate" content="en_GB"/>
   <meta name="twitter:card"        content="summary_large_image"/>
   <meta name="twitter:title"       content="Reservar en Hestía · Mejor precio directo · Sin intermediarios"/>
-  <meta name="twitter:description" content="Reserva directamente con Alex y Fran. Nuestro precio directo es siempre mejor que Booking o Airbnb, sin excepciones. Sin comisiones."/>
+  <meta name="twitter:description" content="Reserva directamente con Alex y Fran. Nuestro precio directo es siempre mejor que Booking o Airbnb — sin excepciones. Sin comisiones."/>
   <meta name="twitter:image"       content="https://www.hestiayourhome.com/assets/hero-terrace-night.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -36,7 +36,7 @@
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,opsz,wght@0,5..1200,400..900;1,5..1200,400..900&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,opsz,wght@0,5..1200,400..900;1,5..1200,400..900&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=680"/>          <script type="application/ld+json">  {
+<link rel="stylesheet" href="assets/styles.css?v=611"/>          <script type="application/ld+json">  {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
@@ -45,7 +45,7 @@
       "name": "¿Es mejor reservar directo que por Booking o Airbnb?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sí. Nuestro precio directo es siempre mejor que cualquier plataforma, sin excepciones. Sin comisiones, sin intermediarios."
+        "text": "Sí. Nuestro precio directo es siempre mejor que cualquier plataforma — sin excepciones. Sin comisiones, sin intermediarios."
       }
     },
     {
@@ -53,7 +53,7 @@
       "name": "¿Cuánto tardáis en confirmar la reserva?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Menos de 24 horas. En la mayoría de los casos respondemos el mismo día: y en muchos casos, en menos de una hora."
+        "text": "Menos de 24 horas. En la mayoría de los casos respondemos el mismo día — y en muchos casos, en menos de una hora."
       }
     },
     {
@@ -61,7 +61,7 @@
       "name": "¿Qué pasa si necesito cambiar las fechas?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Escríbenos. Somos flexibles con cambios y cancelaciones siempre que se puedan gestionar. No hay que batallar con ninguna plataforma, es una conversación entre personas."
+        "text": "Escríbenos. Somos flexibles con cambios y cancelaciones siempre que se puedan gestionar. No hay que batallar con ninguna plataforma — es una conversación entre personas."
       }
     },
     {
@@ -136,7 +136,7 @@
     } catch (e) { console.warn('reviews.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=5b2f4cab84');
+      const res = await fetch(file + '?t=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

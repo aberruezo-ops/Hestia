@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA, Sección de guía de marca
+// HESTÍA — Sección de guía de marca
 // ================================================================
 
 const BRAND_COPY = {
@@ -11,7 +11,7 @@ const BRAND_COPY = {
     logo_eyebrow: 'El símbolo',
     logo_title: (<>Una H de hogar y de mar, <em>tejado y olas.</em></>),
     logo_p1: 'El monograma de Hestía es una serif clásica trabajada en teal vidriado. Las dos columnas verticales sostienen una doble curva: una hoja de olivo que se transforma en cresta de ola, y una segunda línea diagonal que evoca el tejado.',
-    logo_p2: 'Tres símbolos, una sola letra. Hogar, naturaleza, Mediterráneo.',
+    logo_p2: 'Tres símbolos, una sola letra. Hogar — naturaleza — Mediterráneo.',
     sym_1_t: 'Las columnas',
     sym_1_d: 'Estabilidad. La casa. Hestía, la diosa griega del hogar y del fuego que nunca se apaga.',
     sym_2_t: 'La hoja',
@@ -33,7 +33,7 @@ const BRAND_COPY = {
 
     type_eyebrow: 'Tipografía',
     type_title: (<>Lora para el alma, <em>Poppins para la voz.</em></>),
-    type_lede: 'Una pareja sobria que mezcla letra de libro y letra de pantalla. La cursiva de Lora es nuestra firma: aparece en titulares, citas y conceptos. Poppins delgada hace de soporte: navegación, datos, microcopy.',
+    type_lede: 'Una pareja sobria que mezcla letra de libro y letra de pantalla. La cursiva de Lora es nuestra firma — aparece en titulares, citas y conceptos. Poppins delgada hace de soporte: navegación, datos, microcopy.',
 
     voice_eyebrow: 'Tono de voz',
     voice_title: (<>Cercanos, no informales. <em>Cuidados, no fríos.</em></>),
@@ -59,27 +59,27 @@ const BRAND_COPY = {
     logo_eyebrow: 'The mark',
     logo_title: (<>An H that is also <em>roof and wave.</em></>),
     logo_p1: 'The Hestía monogram is a classical serif worked in glazed teal. The two vertical columns support a double curve: an olive leaf that becomes a wave crest, and a second diagonal that evokes the roof.',
-    logo_p2: 'Three symbols, a single letter. Home, nature, Mediterranean.',
+    logo_p2: 'Three symbols, a single letter. Home — nature — Mediterranean.',
     sym_1_t: 'The columns',
     sym_1_d: 'Stability. The house. Hestía, Greek goddess of home and the fire that never dies.',
     sym_2_t: 'The leaf',
     sym_2_d: 'The Almerian olive grove. What surrounds the house before reaching the sea.',
     sym_3_t: 'The wave',
-    sym_3_d: 'The Mediterranean 300 m away. The destination, what you see from the terrace.',
+    sym_3_d: 'The Mediterranean 300 m away. The destination — what you see from the terrace.',
     pal_eyebrow: 'Brand palette',
     pal_title: (<>Aubergine, teal and sand. <em>Day and night</em> in three colours.</>),
     pal_lede: 'The main palette comes from a single photograph: the Hestía Mar terrace at 1:00 AM. Turquoise cushions, lit candles, Vera Playa\'s violet sky. From there, the three governing tones of the whole brand.',
 
     landscape_eyebrow: 'The nine corporate colours',
     landscape_title: (<>The complete palette. <em>Nine colours from the landscape.</em></>),
-    landscape_lede: 'Every colour has an exact location in Almería. They were not chosen, they were found. Sky, sea, earth, flowers, stone. The entire brand fits within a single sunrise over Vera Playa.',
+    landscape_lede: 'Every colour has an exact location in Almería. They were not chosen — they were found. Sky, sea, earth, flowers, stone. The entire brand fits within a single sunrise over Vera Playa.',
 
     apt_eyebrow: 'Three Hestías · three landscapes',
     apt_title: (<>Each Hestía <em>borrows its colour from its landscape.</em></>),
     apt_lede: 'The three secondary identities work as sub-brands. They are not arbitrary colours: each one is extracted from a real Almerían landscape that defines the Hestía\'s atmosphere.',
     type_eyebrow: 'Typography',
     type_title: (<>Lora for the soul, <em>Poppins for the voice.</em></>),
-    type_lede: 'A sober pair mixing book type and screen type. Lora italics are our signature: they appear in headlines, quotes and concepts. Thin Poppins handles the rest: navigation, data, microcopy.',
+    type_lede: 'A sober pair mixing book type and screen type. Lora italics are our signature — they appear in headlines, quotes and concepts. Thin Poppins handles the rest: navigation, data, microcopy.',
     voice_eyebrow: 'Voice & tone',
     voice_title: (<>Close, not casual. <em>Crafted, not cold.</em></>),
     voice_lede: 'We write the way Alex and Fran chat on WhatsApp with a guest they already know. No "Dear customer". No "please be advised". No forced jokes or emojis tacked at the end of every line.',
@@ -98,14 +98,14 @@ const BRAND_COPY = {
 };
 
 const BG_LANDSCAPE = [
-  { hex: '#2A0F2E', cssVar: '--ber-dk', es: { name: 'Berenjena',      story: 'El cielo de Vera Playa a las tres de la madrugada. Morado oscuro, casi negro, la noche mediterránea antes de que el horizonte empiece a abrirse.' }, en: { name: 'Aubergine',     story: 'The Vera Playa sky at three in the morning. Dark purple, almost black, the Mediterranean night before the horizon begins to open.' }, light: false },
+  { hex: '#2A0F2E', cssVar: '--ber-dk', es: { name: 'Berenjena',      story: 'El cielo de Vera Playa a las tres de la madrugada. Morado oscuro, casi negro — la noche mediterránea antes de que el horizonte empiece a abrirse.' }, en: { name: 'Aubergine',     story: 'The Vera Playa sky at three in the morning. Dark purple, almost black — the Mediterranean night before the horizon begins to open.' }, light: false },
   { hex: '#7B3B6B', cssVar: '--vio',    es: { name: 'Violeta',         story: 'El instante entre la noche y el amanecer. El horizonte se tiñe de violeta justo antes de que llegue el azul del mar. Dura menos de veinte minutos.' },          en: { name: 'Violet',       story: 'The moment between night and dawn. The horizon turns violet just before the blue of the sea arrives. It lasts less than twenty minutes.' },          light: false },
-  { hex: '#1BC8D8', cssVar: '--tur',    es: { name: 'Turquesa',        story: 'El mar y el cielo al amanecer. No el azul eléctrico de postal: el turquesa real, limpio y luminoso, que el Mediterráneo y el cielo de Almería comparten.' },      en: { name: 'Turquoise',    story: 'The sea and sky at dawn. Not the electric blue of postcards: the real turquoise, clean and luminous, that the Mediterranean and Almería sky share.' },      light: false },
+  { hex: '#1BC8D8', cssVar: '--tur',    es: { name: 'Turquesa',        story: 'El mar y el cielo al amanecer. No el azul eléctrico de postal — el turquesa real, limpio y luminoso, que el Mediterráneo y el cielo de Almería comparten.' },      en: { name: 'Turquoise',    story: 'The sea and sky at dawn. Not the electric blue of postcards — the real turquoise, clean and luminous, that the Mediterranean and Almería sky share.' },      light: false },
   { hex: '#6B7A3A', cssVar: '--vm',     es: { name: 'Verde olivo',     story: 'El olivar de Vera Playa con la luz lateral de la mañana. Desde Hestía Mar se ve el mar entre las ramas. Este verde existe en Almería desde antes que Roma.' },       en: { name: 'Olive green',  story: 'The Vera Playa olive grove in side-light of morning. From Hestía Mar you see the sea between the branches. This green existed in Almería before Rome.' },  light: false },
   { hex: '#D42B80', cssVar: '--bug',    es: { name: 'Buganvilla',      story: 'El magenta que lo invade todo. Trepa por las paredes, cae sobre las terrazas, se escapa por las verjas. La firma de la costa almeriense: exuberante, insolente.' }, en: { name: 'Bougainvillea',story: 'The magenta that takes over everything. It climbs walls, spills over terraces, escapes through iron gates. The signature of the Almería coast.' },               light: false },
   { hex: '#C8975A', cssVar: '--alb',    es: { name: 'Albero',          story: 'La tierra almeriense. La pared encalada a las ocho de la mañana. El color que Almería lleva desde la antigüedad: tierra, cerámica, esparto seco.' },                en: { name: 'Ochre',        story: 'Almería earth. The whitewashed wall at eight in the morning. The colour Almería has carried since antiquity: clay, ceramics, dry esparto grass.' },          light: false },
   { hex: '#D4A84A', cssVar: '--vs',     es: { name: 'Sol almeriense',  story: 'La luz de la tarde en verano. Trescientos días al año, este es el color que baña las terrazas de Hestía a las seis. No amarillo. Oro viejo.' },                    en: { name: 'Almería sun',  story: 'Afternoon light in summer. Three hundred days a year, this is the colour washing Hestía\'s terraces at six. Not yellow. Old gold.' },                      light: false },
-  { hex: '#8B4A1E', cssVar: '--sie',    es: { name: 'Siena',           story: 'El crepúsculo sobre el Mediterráneo. Cuando el sol toca el agua el cielo se vuelve de este color exacto: naranja rojizo, cálido, irrepetible.' },                   en: { name: 'Sienna',       story: 'Dusk over the Mediterranean. When the sun touches the water the sky turns this exact colour: red-orange, warm, unrepeatable.' },                          light: false },
+  { hex: '#8B4A1E', cssVar: '--sie',    es: { name: 'Siena',           story: 'El crepúsculo sobre el Mediterráneo. Cuando el sol toca el agua el cielo se vuelve de este color exacto — naranja rojizo, cálido, irrepetible.' },                   en: { name: 'Sienna',       story: 'Dusk over the Mediterranean. When the sun touches the water the sky turns this exact colour — red-orange, warm, unrepeatable.' },                          light: false },
   { hex: '#F0E8D5', cssVar: '--arena',  es: { name: 'Arena',           story: 'La calima y la arena del Sahara. El polvo fino que llega en verano convierte la luz en algo sólido. Hestía huele a esto: sal, arena, lino.' },                       en: { name: 'Sand',         story: 'Calima and Saharan sand. The fine dust that arrives in summer turns the light solid. Hestía smells of this: salt, sand, linen.' },                          light: true  },
 ];
 
@@ -207,12 +207,12 @@ const BrandGuide = ({ lang }) => {
 
   const voicePairs = lang === 'es' ? [
     { we: '« Te respondo yo, en cuanto vea el mensaje. »', not: 'Estimado cliente, en breve atenderemos su consulta.' },
-    { we: '« La playa está a 300 metros, gira a la derecha al salir. »', not: 'Disponemos de una ubicación privilegiada en primera línea.' },
+    { we: '« La playa está a 300 metros — gira a la derecha al salir. »', not: 'Disponemos de una ubicación privilegiada en primera línea.' },
     { we: '« Si algo se rompe, lo dices. Y nosotros nos ocupamos. »', not: 'Política de daños conforme a las condiciones del contrato.' },
     { we: '« Alex en español, Fran en inglés. WhatsApp, sin formularios. »', not: 'Por favor, complete el formulario de contacto adjunto.' },
   ] : [
     { we: '« I\'ll reply, the moment I see your message. »', not: 'Dear customer, your enquiry will be attended shortly.' },
-    { we: '« The beach is 300 m away, turn right when you go out. »', not: 'We are pleased to offer a privileged front-line location.' },
+    { we: '« The beach is 300 m away — turn right when you go out. »', not: 'We are pleased to offer a privileged front-line location.' },
     { we: '« If anything breaks, just tell us. We take care of it. »', not: 'Damages policy as per terms and conditions of the contract.' },
     { we: '« Alex in Spanish, Fran in English. WhatsApp, no forms. »', not: 'Please fill out the attached contact form.' },
   ];
@@ -225,7 +225,7 @@ const BrandGuide = ({ lang }) => {
         {/* HEAD */}
         <div className="bg-head">
           <div>
-            <div className="eyebrow">– {t.eyebrow}</div>
+            <div className="eyebrow">— {t.eyebrow}</div>
             <h2>{t.title}</h2>
           </div>
           <div className="lede">{t.lede}</div>
@@ -295,7 +295,7 @@ const BrandGuide = ({ lang }) => {
           </div>
         </div>
 
-        {/* LANDSCAPE PALETTE, 9 corporate colours */}
+        {/* LANDSCAPE PALETTE — 9 corporate colours */}
         <div className="bg-landscape-section">
           <div className="bg-sub-eyebrow">{t.landscape_eyebrow}</div>
           <h3 className="bg-sub-title">{t.landscape_title}</h3>
@@ -337,7 +337,7 @@ const BrandGuide = ({ lang }) => {
               </div>
               <div className="info">
                 <div className="head-row">
-                  <span className="num">( {a.num} )</span>
+                  <span className="num">— {a.num} —</span>
                 </div>
                 <div className="name">{a.name.replace('Hestía ', 'Hestía ')}</div>
                 <div className="concept">{a.concept}</div>

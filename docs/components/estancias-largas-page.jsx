@@ -1,4 +1,4 @@
-// Estancias largas, página dedicada a reservas de +28 noches
+// Estancias largas — página dedicada a reservas de +28 noches
 // Sep–Jun, para teletrabajadores, empresas y estancias prolongadas.
 
 const LS_COPY = {
@@ -31,16 +31,16 @@ const LS_COPY = {
     months_label: 'Meses',
     rate_label:   '€ / mes',
     price_rows: [
-      { period: 'Nov · Dic · Ene · Feb · Mar · Abr', months: 'T. baja' },
-      { period: 'Oct · May',                          months: '' },
-      { period: 'Jun · Sep',                          months: '' },
+      { period: 'Nov · Dic · Ene · Feb · Mar · Abr', months: 'T. baja', rate: '1.450' },
+      { period: 'Oct · May',                          months: '',        rate: '1.590' },
+      { period: 'Jun · Sep',                          months: '',        rate: '1.790' },
     ],
     min_note:    'Estancia mínima: 29 noches. Sin disponibilidad en julio y agosto.',
     apts_title:  'Los tres Hestías',
     apts_cta:    'Ver apartamento',
     faq_title:   'Preguntas frecuentes',
     faqs: [
-      { q: '¿Cuántas noches es el mínimo?', a: 'El mínimo considerado son 29 noches. No hay máximo: si quieres quedarte más tiempo, lo acordamos.' },
+      { q: '¿Cuántas noches es el mínimo?', a: 'El mínimo considerado son 29 noches. No hay máximo — si quieres quedarte más tiempo, lo acordamos.' },
       { q: '¿Hay contrato?', a: 'Sí. Firmamos un contrato de arrendamiento de temporada con los datos de todos los huéspedes. Recibirás el contrato antes de pagar la señal.' },
       { q: '¿Cómo se reserva?', a: 'Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de 2 horas para confirmar disponibilidad y enviarte el contrato.' },
       { q: '¿Hay que pagar todo al reservar?', a: 'Solo el 20% como señal para confirmar la reserva. El resto se abona a la llegada en efectivo o Bizum.' },
@@ -55,12 +55,12 @@ const LS_COPY = {
   en: {
     title:        'Your base in Vera Playa',
     subtitle:     'One month, one season, as long as you need.',
-    sub2:         'Three fully equipped apartments for extended stays: for remote workers, businesses, or simply because you want to spend time in a special place with exceptional weather. Available September to June.',
+    sub2:         'Three fully equipped apartments for extended stays — for remote workers, businesses, or simply because you want to spend time in a special place with exceptional weather. Available September to June.',
     who_title:    'Who is Hestía long stay for?',
     who_1_title:  'Remote worker · Digital nomad',
     who_1_body:   'Fibre WiFi, desk, silence and the Mediterranean 200 metres away. Vera Playa is an affordable destination with 320 sunny days a year.',
     who_2_title:  'Business · Project team',
-    who_2_body:   'Auditors, consultants, relocated teams. A full apartment, more economical and comfortable than a hotel for weeks.',
+    who_2_body:   'Auditors, consultants, relocated teams. A full apartment — more economical and comfortable than a hotel for weeks.',
     who_3_title:  'Long season · New chapter',
     who_3_body:   'Wintering in the south, a first time living abroad or simply spending time by the sea before deciding.',
     includes_title: "What's included",
@@ -81,16 +81,16 @@ const LS_COPY = {
     months_label: 'Months',
     rate_label:   '€ / month',
     price_rows: [
-      { period: 'Nov · Dec · Jan · Feb · Mar · Apr', months: 'Low season' },
-      { period: 'Oct · May',                          months: '' },
-      { period: 'Jun · Sep',                          months: '' },
+      { period: 'Nov · Dec · Jan · Feb · Mar · Apr', months: 'Low season', rate: '1,450' },
+      { period: 'Oct · May',                          months: '',           rate: '1,590' },
+      { period: 'Jun · Sep',                          months: '',           rate: '1,790' },
     ],
     min_note:    'Minimum stay: 29 nights. July and August not available.',
     apts_title:  'The three Hestías',
     apts_cta:    'View apartment',
     faq_title:   'Frequently asked questions',
     faqs: [
-      { q: 'What is the minimum stay?', a: 'The minimum considered is 29 nights. There is no maximum: if you want to stay longer, we arrange it.' },
+      { q: 'What is the minimum stay?', a: 'The minimum considered is 29 nights. There is no maximum — if you want to stay longer, we arrange it.' },
       { q: 'Is there a contract?', a: "Yes. We sign a seasonal rental agreement with all guests' details. You receive the contract before paying the deposit." },
       { q: 'How do I book?', a: 'Message us on WhatsApp or email with your dates and chosen apartment. We respond within 2 hours to confirm availability and send the contract.' },
       { q: 'Do I pay everything upfront?', a: 'Only 20% as a deposit to confirm the booking. The rest is paid on arrival in cash or Bizum.' },
@@ -109,13 +109,6 @@ const LS_APTS = [
   { id: 'vt', name: 'Thalassa', slug: 'thalassa', accent: '#B86A3C', concept_es: 'El ático sobre el Mediterráneo', concept_en: 'The penthouse above the Mediterranean' },
   { id: 'vs', name: 'Salinas',  slug: 'salinas',  accent: '#D4A84A', concept_es: 'El amarillo albero del amanecer', concept_en: 'The golden dawn above the salt flats' },
 ];
-
-// Tarifas de estancia larga: SIEMPRE desde prices.json (window.PRICES_V2),
-// para que coincidan con el panel admin. Sin números hardcodeados en la web.
-const _lsCfgPub = () => (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || {};
-const _lsRates  = () => _lsCfgPub().monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
-const _lsFlat   = () => _lsCfgPub().specialNightFlat || 80;
-const _fmtRate  = (n, lang) => String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'es' ? '.' : ',');
 
 const LsHero = ({ lang }) => {
   const t = LS_COPY[lang];
@@ -139,7 +132,7 @@ const LsHero = ({ lang }) => {
         <div className="lsl-hero-pills">
           <span className="lsl-pill">29+ {lang === 'es' ? 'noches' : 'nights'}</span>
           <span className="lsl-pill">{lang === 'es' ? 'Sep – Jun' : 'Sep – Jun'}</span>
-          <span className="lsl-pill">{lang === 'es' ? `desde ${_fmtRate(_lsRates().baja, 'es')}€/mes` : `from €${_fmtRate(_lsRates().baja, 'en')}/month`}</span>
+          <span className="lsl-pill">{lang === 'es' ? 'desde 1.450€/mes' : 'from €1,450/month'}</span>
           <span className="lsl-pill">{lang === 'es' ? 'Sin intermediarios' : 'No middlemen'}</span>
         </div>
         <div className="lsl-hero-ctas">
@@ -202,20 +195,17 @@ const LsIncludes = ({ lang }) => {
 
 const LsPrices = ({ lang }) => {
   const t = LS_COPY[lang];
-  const rates = _lsRates();
-  const rateByIdx = [rates.baja, rates.media, rates.alta];
-  const note = t.prices_note.replace(/\b80\b/, String(_lsFlat()));
   return (
     <section className="lsl-section lsl-prices">
       <div className="lsl-inner">
         <h2 className="lsl-h2">{t.prices_title}</h2>
-        <p className="lsl-prices-note">{note}</p>
+        <p className="lsl-prices-note">{t.prices_note}</p>
         <div className="lsl-prices-table">
-          {t.price_rows.map((r, i) => (
+          {t.price_rows.map(r => (
             <div key={r.period} className="lsl-pt-row">
               <span className="lsl-pt-period">{r.period}</span>
               {r.months && <span className="lsl-pt-tag">{r.months}</span>}
-              <span className="lsl-pt-rate"><span className="lsl-pt-desde">{lang === 'es' ? 'desde ' : 'from '}</span>{_fmtRate(rateByIdx[i], lang)}<span className="lsl-pt-unit">€/mes</span></span>
+              <span className="lsl-pt-rate"><span className="lsl-pt-desde">{lang === 'es' ? 'desde ' : 'from '}</span>{r.rate}<span className="lsl-pt-unit">€/mes</span></span>
             </div>
           ))}
           <div className="lsl-pt-row lsl-pt-special">
@@ -223,7 +213,7 @@ const LsPrices = ({ lang }) => {
               {lang === 'es' ? 'Navidad (23 dic–6 ene) · Semana Santa' : 'Christmas (Dec 23–Jan 6) · Easter'}
             </span>
             <span className="lsl-pt-tag">{lang === 'es' ? 'tarifa especial' : 'special rate'}</span>
-            <span className="lsl-pt-rate">{_lsFlat()}<span className="lsl-pt-unit">€/noche</span></span>
+            <span className="lsl-pt-rate">80<span className="lsl-pt-unit">€/noche</span></span>
           </div>
         </div>
         <p className="lsl-prices-min">{t.min_note}</p>
@@ -248,36 +238,11 @@ const LsSearch = ({ lang }) => {
       .catch(() => {});
   }, []);
 
-  // Mezcla los bloqueos de availability.json (iCal, cada 4h) con manual_blocks de
-  // prices.json (reservas directas de p-edit, instantáneas), igual que el
-  // calendario, para que cualquier reserva/cancelación afecte ya a la estancia larga.
-  // El calendario marca una noche como NO disponible solo si está ocupada en LOS
-  // TRES apartamentos (intersección). Una estancia larga necesita un único Hestía
-  // libre, así que una fecha con al menos uno libre debe poder seleccionarse, el
-  // panel de resultados dice luego qué apartamento(s) hay para esas fechas.
-  const _mblk = (aptId) => (window.PRICES_V2?.manual_blocks?.[aptId]) || [];
-  const blockedAll = React.useMemo(() => {
+  const blockedUnion = React.useMemo(() => {
     if (!availData) return [];
-    const nightSet = (aptId) => {
-      const s = new Set();
-      [...((availData[aptId]?.blocked) || []), ..._mblk(aptId)].forEach(({ start, end }) => {
-        if (!start || !end) return;
-        let d = start, guard = 0;
-        while (d < end && guard++ < 1200) { s.add(d); d = _drAdj(d, 1); }
-      });
-      return s;
-    };
-    const sets = LS_APTS.map(a => nightSet(a.id));
-    if (!sets.length) return [];
-    const [first, ...rest] = sets;
-    const inter = [...first].filter(d => rest.every(s => s.has(d))).sort();
-    const ranges = [];
-    for (const d of inter) {
-      const last = ranges[ranges.length - 1];
-      if (last && last.end === d) last.end = _drAdj(d, 1);
-      else ranges.push({ start: d, end: _drAdj(d, 1) });
-    }
-    return ranges;
+    const all = [];
+    LS_APTS.forEach(a => { (availData[a.id]?.blocked || []).forEach(b => all.push(b)); });
+    return all;
   }, [availData]);
 
   const calcLsTotal = (start, end, guests, withPets, aptId) => {
@@ -288,7 +253,7 @@ const LsSearch = ({ lang }) => {
     const petPerMo          = lsCfg.petPerMonth         || 0;
     const aptSupp           = ((lsCfg.aptSupplement || {})[aptId] || 0);
     const extraGuests       = Math.max(0, (guests || 1) - 2);
-    const rates             = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
+    const rates             = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
     const isXmas = (ds) => { const m = +ds.slice(5,7), d = +ds.slice(8,10); return (m===12&&d>=23)||(m===1&&d<=6); };
     const isEast = (ds) => easter.some(([s,e]) => ds>=s && ds<=e);
     let total = 0, cur = start;
@@ -309,7 +274,7 @@ const LsSearch = ({ lang }) => {
       const mo = +checkin.slice(5, 7);
       if (mo === 7 || mo === 8) { setAvail(null); return; }
       setAvail(LS_APTS.map(apt => {
-        const isAvail = _drAvail(checkin, checkout, [...((availData?.[apt.id]?.blocked) || []), ..._mblk(apt.id)]);
+        const isAvail = _drAvail(checkin, checkout, availData ? (availData[apt.id]?.blocked || []) : []);
         const regCalc = isAvail ? _calcStay(checkin, checkout, apt.id, false, guests) : null;
         const regTotal = regCalc ? regCalc.baseTotal + (regCalc.guestSuppAmt || 0) + (regCalc.petAmt || 0) : 0;
         const lsTotal = calcLsTotal(checkin, checkout, guests, false, apt.id);
@@ -323,7 +288,7 @@ const LsSearch = ({ lang }) => {
   const julAugWarning = checkin && ([7,8].includes(+checkin.slice(5,7)));
 
   return (
-    <section className="lsl-search-dark on-dark" id="buscar" data-avail-checker>
+    <section className="lsl-search-dark" id="buscar">
       <div className="lsl-inner">
         <h2 className="lsl-h2 lsl-h2--ondk">{es ? 'Comprobar disponibilidad' : 'Check availability'}</h2>
 
@@ -334,7 +299,7 @@ const LsSearch = ({ lang }) => {
               checkout={checkout}
               setCheckin={(d) => { setCheckin(d); setAvail(null); }}
               setCheckout={(d) => { setCheckout(d); setAvail(null); }}
-              blocked={blockedAll}
+              blocked={blockedUnion}
               lang={lang}
               accent="var(--ber, #3D1A35)"
               minNightsOverride={29}

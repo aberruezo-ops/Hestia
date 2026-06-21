@@ -1,7 +1,7 @@
 {
   "_doc": "Hestía pricing source of truth. Edited via /admin.html (GitHub PAT). Read by web at runtime via fetch('data/prices.json'). All dates are local Europe/Madrid (no timezone offsets).",
   "version": 1,
-  "updatedAt": "2026-06-13T22:21:06.143Z",
+  "updatedAt": "2026-05-28T20:59:46.480Z",
   "currency": "EUR",
   "apts": {
     "vm": {
@@ -12,12 +12,12 @@
     "vt": {
       "name": "Hestía Vera Thalassa",
       "vft": "VFT/AL/05535",
-      "base": 86
+      "base": 85
     },
     "vs": {
       "name": "Hestía Vera Salinas",
       "vft": "VFT/AL/07056",
-      "base": 85
+      "base": 83
     }
   },
   "seasons": {
@@ -28,17 +28,17 @@
     },
     "media": {
       "label": "Media",
-      "multiplier": 1.3,
+      "multiplier": 1.2,
       "color": "#10b981"
     },
     "alta": {
       "label": "Alta",
-      "multiplier": 1.6,
+      "multiplier": 1.8,
       "color": "#f59e0b"
     },
     "critica": {
       "label": "Crítica",
-      "multiplier": 2.3,
+      "multiplier": 2.4,
       "color": "#ef4444"
     }
   },
@@ -83,7 +83,7 @@
     "shortStayPricing": [
       {
         "nights": 2,
-        "basedOnNights": 3,
+        "basedOnNights": 4,
         "discount": 0,
         "label": "2 noches: precio de 4 noches (sin descuento)"
       },
@@ -232,7 +232,7 @@
         "media": [
           [
             "2026-05-01",
-            "2026-06-25"
+            "2026-06-11"
           ],
           [
             "2026-09-16",
@@ -241,18 +241,18 @@
         ],
         "alta": [
           [
-            "2026-06-26",
-            "2026-07-16"
+            "2026-06-12",
+            "2026-07-09"
           ],
           [
-            "2026-08-30",
+            "2026-09-01",
             "2026-09-15"
           ]
         ],
         "critica": [
           [
-            "2026-07-17",
-            "2026-08-29"
+            "2026-07-10",
+            "2026-08-31"
           ]
         ]
       },
@@ -450,6 +450,15 @@
     "vs": []
   },
   "gapOverrides": {
+    "vm|2026-06-27": {
+      "apt": "vm",
+      "start": "2026-06-27",
+      "end": "2026-07-01",
+      "nights": 4,
+      "type": "fixed",
+      "value": 140,
+      "lastMinute": true
+    },
     "vm|2026-05-29": {
       "apt": "vm",
       "start": "2026-05-29",
@@ -459,6 +468,15 @@
       "value": 20,
       "lastMinute": true
     },
+    "vm|2026-07-08": {
+      "apt": "vm",
+      "start": "2026-07-08",
+      "end": "2026-07-12",
+      "nights": 4,
+      "type": "fixed",
+      "value": 180,
+      "lastMinute": true
+    },
     "vm|2026-08-30": {
       "apt": "vm",
       "start": "2026-08-30",
@@ -466,6 +484,15 @@
       "nights": 9,
       "type": "discount",
       "value": 15
+    },
+    "vt|2026-06-03": {
+      "apt": "vt",
+      "start": "2026-06-03",
+      "end": "2026-06-06",
+      "nights": 3,
+      "type": "fixed",
+      "value": 95,
+      "lastMinute": true
     },
     "vt|2026-06-21": {
       "apt": "vt",
@@ -573,24 +600,6 @@
       "nights": 6,
       "type": "fixed",
       "value": 160
-    },
-    "vs|2026-08-31": {
-      "apt": "vs",
-      "start": "2026-08-31",
-      "end": "2026-09-05",
-      "nights": 5,
-      "type": "discount",
-      "value": 15
-    },
-    "vm|2026-06-27": {
-      "apt": "vm",
-      "start": "2026-06-27",
-      "end": "2026-06-30",
-      "nights": 3,
-      "type": "discount",
-      "value": 20,
-      "lastMinute": true,
-      "auto": true
     }
   },
   "gapSplits": {
@@ -608,9 +617,9 @@
   },
   "longStayConfig": {
     "monthlyRates": {
-      "baja": 1490,
-      "media": 1590,
-      "alta": 1850
+      "baja": 1450,
+      "media": 1540,
+      "alta": 1770
     },
     "specialNightFlat": 80,
     "extraGuestPerMonth": 60,
@@ -629,119 +638,6 @@
         "2027-04-08",
         "2027-04-19"
       ]
-    ]
-  },
-  "guestPins": {
-    "vm": [
-      {
-        "h": "94f1f6f1c7c71ec9eac108f08306716fe56488849dcc3cf703b8b488bc9de651",
-        "until": "2026-06-20",
-        "ref": "2026-06-13"
-      },
-      {
-        "h": "7b801663bdd66e426dde0e0f8c60059f02bd9fefb85d3a79681e76192e037d22",
-        "until": "2026-06-27",
-        "ref": "2026-06-20"
-      },
-      {
-        "h": "27ef0bb3a42600730c859a2e347e7cab5e46f2c5c74da4c9bda0c85dc3b50fd6",
-        "until": "2026-07-08",
-        "ref": "2026-06-30"
-      },
-      {
-        "h": "4063303413891bfd227fa71829c61ca8a6603c0a4f8ce5eea0ab111ffdc084fd",
-        "until": "2026-08-04",
-        "ref": "2026-07-28"
-      },
-      {
-        "h": "c7d1bd5ae33ecb341d1e20172b2576fa454456897413d3421458bbdee7ee954f",
-        "until": "2026-08-12",
-        "ref": "2026-08-04"
-      },
-      {
-        "h": "0dc07cf32b36b5abf378fa80dc1d64e16a654d29619d9fd757757dc7cfab1018",
-        "until": "2026-08-30",
-        "ref": "2026-08-24"
-      },
-      {
-        "h": "1253aef5de582d77d87fcd4fbef3f2ec1b7d7332f7f9849a44d9989ad4103677",
-        "until": "2026-09-15",
-        "ref": "2026-09-08"
-      },
-      {
-        "h": "b19e6d335c050e59e02ee91e64fc15f2d5fa3c4eb9e13cddd8583baf0c21b859",
-        "until": "2026-10-02",
-        "ref": "2026-09-17"
-      },
-      {
-        "h": "7c6eaf4002b4aa181e8741a58ebc294aee37936f012826f22b09b630d592469d",
-        "until": "2026-10-20",
-        "ref": "2026-10-13"
-      },
-      {
-        "h": "850e4c6328d1257445d1022734e16cc92b2ce70e7fc7e0769215ba39ec3e97a7",
-        "until": "2026-07-28",
-        "ref": "2026-07-20"
-      },
-      {
-        "h": "2eb2fafe9b4eb48c8bf95b9bed97531a57de7f0630d58c1d3dfeb8fd012eb442",
-        "until": "2026-08-22",
-        "ref": "2026-08-15"
-      }
-    ],
-    "vt": [
-      {
-        "h": "03252a69824cc0190cc1b1e656f9e6c16fa256b88251dfffa54d1c29e20ce65a",
-        "until": "2026-06-13",
-        "ref": "2026-06-06"
-      },
-      {
-        "h": "cbdb990e56c2e1e17f2246432b09646b61fb943b1a8e60791afe41238b9c70d1",
-        "until": "2026-08-25",
-        "ref": "2026-08-18"
-      },
-      {
-        "h": "b2b0357a3213a3314c43b531db04e3d1db8e33e91c3cecd7c6761fa2d59bd38f",
-        "until": "2026-06-21",
-        "ref": "2026-06-13"
-      },
-      {
-        "h": "c8898ff53dbea2cc5533e5a4bdff65849557cc1cf22dab0d7bec55f6a60da9ba",
-        "until": "2026-08-17",
-        "ref": "2026-08-11"
-      },
-      {
-        "h": "ab91166e9eab4386ab797edb5ffdf93a3aafb8d5ee4df84581143df8f83a85d7",
-        "until": "2026-09-13",
-        "ref": "2026-09-05"
-      }
-    ],
-    "vs": [
-      {
-        "h": "bdab6e60cae88ce46c56522badc7266efdafc62a397b37453ededd3c39a7120c",
-        "until": "2026-07-31",
-        "ref": "2026-05-01"
-      },
-      {
-        "h": "64e725062524f376cde2a82252a7ccf14f6915e4f5ff4fc9870d7ec1ee9d6574",
-        "until": "2026-08-08",
-        "ref": "2026-08-01"
-      },
-      {
-        "h": "9130ac74d5563e5a24f1a2658a42f6652f90b68ab601219df3045bba7e70b939",
-        "until": "2026-08-23",
-        "ref": "2026-08-16"
-      },
-      {
-        "h": "6fc8ddc7da8b394f43986b79e0ecac780e28fb9e8c02ae512b1d713f74ddeb63",
-        "until": "2026-09-14",
-        "ref": "2026-09-05"
-      },
-      {
-        "h": "29fcb49f5f998cfc90c2beacdbc54d7589977e8def1660bddc0678d86dd418df",
-        "until": "2026-08-31",
-        "ref": "2026-08-24"
-      }
     ]
   }
 }

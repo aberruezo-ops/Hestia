@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA, Secciones de la home
+// HESTÍA — Secciones de la home
 // ================================================================
 
 // --- HERO · galería rotatoria de vídeos de fondo ----------------
@@ -9,10 +9,10 @@
 //   1. Subir el .mp4 a docs/assets/
 //   2. Añadir aquí un objeto { src, poster, mood, alt }
 //      · mood ∈ 'violet' | 'teal' | 'warm' | 'night'
-//       : violet: velo morado (atmósfera nocturna, marina suave)
-//       : teal:   azul mediterráneo (día, agua clara)
-//       : warm:   bermellón cálido (atardecer, dorado)
-//       : night:  azul profundo (noche cerrada, estrellas)
+//        — violet: velo morado (atmósfera nocturna, marina suave)
+//        — teal:   azul mediterráneo (día, agua clara)
+//        — warm:   bermellón cálido (atardecer, dorado)
+//        — night:  azul profundo (noche cerrada, estrellas)
 // Para crear un mood nuevo: añade ::before override en styles.css.
 // Los .mp4 viven en docs/assets/Videoshome/ y todos vienen procesados
 // con grading + sharpening y loop circular (xfade end→start) para que
@@ -92,35 +92,16 @@ const Hero = ({ lang, onScrollDown }) => {
     if (el) { el.muted = true; el.play().catch(() => {}); }
   }, [vidIdx]);
 
-  // Reanuda el vídeo al volver a la pestaña/app. En iOS, volver de otra app no
-  // cuenta como gesto y play() puede rechazarse, dejando el vídeo congelado; en ese
-  // caso reanudamos al primer toque. También escuchamos pageshow (bfcache de Safari).
+  // Reanuda si el usuario vuelve a la pestaña
   React.useEffect(() => {
-    let armed = false;
-    const evs = ['pointerdown', 'touchstart', 'click', 'keydown'];
-    const cleanup = () => evs.forEach(ev => window.removeEventListener(ev, onGesture, true));
-    const onGesture = () => { armed = false; cleanup(); resume(); };
-    const resume = () => {
-      const el = bgVideoRef.current;
-      if (!el) return;
-      el.muted = true;
-      const p = el.play();
-      if (p && p.catch) p.catch(() => {
-        if (armed) return;
-        armed = true;
-        evs.forEach(ev => window.addEventListener(ev, onGesture, { once: true, capture: true, passive: true }));
-      });
+    const onVisible = () => {
+      if (!document.hidden && bgVideoRef.current) {
+        bgVideoRef.current.muted = true;
+        bgVideoRef.current.play().catch(() => {});
+      }
     };
-    const onVisible = () => { if (!document.hidden) resume(); };
     document.addEventListener('visibilitychange', onVisible);
-    window.addEventListener('pageshow', resume);
-    window.addEventListener('focus', resume);
-    return () => {
-      document.removeEventListener('visibilitychange', onVisible);
-      window.removeEventListener('pageshow', resume);
-      window.removeEventListener('focus', resume);
-      cleanup();
-    };
+    return () => document.removeEventListener('visibilitychange', onVisible);
   }, []);
 
   return (
@@ -130,7 +111,7 @@ const Hero = ({ lang, onScrollDown }) => {
       data-screen-label="01 Hero"
       data-hero-video={pick.src}
     >
-      {/* Vídeo de fondo: playlist aleatoria, avanza al siguiente al terminar */}
+      {/* Vídeo de fondo — playlist aleatoria, avanza al siguiente al terminar */}
       <video
         ref={bgVideoRef}
         className="hero-bg-video"
@@ -166,7 +147,7 @@ const Hero = ({ lang, onScrollDown }) => {
           <span className="hero-proof-item">★ 10 <span className="hero-proof-name">Thalassa</span></span>
           <span className="hero-proof-dot"/>
           <span className="hero-proof-item">★ 9.9 <span className="hero-proof-name">Salinas</span></span>
-          <span className="hero-proof-platform">{lang === 'es' ? 'Media en Booking · Airbnb · web, +600 familias desde 2016' : 'Average across Booking · Airbnb · site, 600+ families since 2016'}</span>
+          <span className="hero-proof-platform">{lang === 'es' ? 'Media · Booking · Airbnb · web' : 'Average · Booking · Airbnb · site'}</span>
         </div>
         {(() => {
           const prices = typeof HESTIA_PRICES !== 'undefined' ? HESTIA_PRICES : null;
@@ -222,7 +203,7 @@ const Bridge = ({ lang }) => {
     <section className="bridge" data-screen-label="02 Amanecer" ref={sectionRef}>
       <div className={`celestial${burst ? ' sun-burst' : ''}`}/>
       <div className="bridge-inner">
-        <div className="eyebrow bridge-time">( 07:14 )</div>
+        <div className="eyebrow bridge-time">— 07:14 —</div>
         <h2 className="reveal" style={{marginTop: 20}}>{t.bridge_title}</h2>
         <p className="reveal delay-1">{t.bridge_sub}</p>
         <div className={`bridge-palette${burst ? ' burst-active' : ''}`}>
@@ -266,10 +247,10 @@ const HomeBookingModal = ({ apt, lang, onClose }) => {
     return intro + em + ph + txt + end;
   };
 
-  const mailSubj = lang === 'es' ? `Consulta reserva, ${apt.name}` : `Booking enquiry, ${apt.name}`;
+  const mailSubj = lang === 'es' ? `Consulta reserva — ${apt.name}` : `Booking enquiry — ${apt.name}`;
   const mailBody = lang === 'es'
-    ? `Nombre: ${name}\nEmail: ${email}\nTeléfono: ${phone || '–'}\nHestía: ${apt.name}\n\n${msg || '(sin mensaje adicional)'}`
-    : `Name: ${name}\nEmail: ${email}\nPhone: ${phone || '–'}\nHestía: ${apt.name}\n\n${msg || '(no additional message)'}`;
+    ? `Nombre: ${name}\nEmail: ${email}\nTeléfono: ${phone || '—'}\nHestía: ${apt.name}\n\n${msg || '(sin mensaje adicional)'}`
+    : `Name: ${name}\nEmail: ${email}\nPhone: ${phone || '—'}\nHestía: ${apt.name}\n\n${msg || '(no additional message)'}`;
 
   React.useEffect(() => {
     const FOCUSABLE = 'button:not([disabled]), a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -308,7 +289,7 @@ const HomeBookingModal = ({ apt, lang, onClose }) => {
   return (
     <div className="hbm-overlay" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="hbm-apt-title">
       <div className="hbm-card" ref={cardRef} onClick={e => e.stopPropagation()}>
-        <button className="hbm-close" onClick={onClose} aria-label={lang === 'es' ? 'Cerrar' : 'Close'}>✕</button>
+        <button className="hbm-close" onClick={onClose} aria-label="Cerrar">✕</button>
 
         <div className="hbm-head">
           <div className="hbm-apt-num">{apt.num}</div>
@@ -360,8 +341,8 @@ const HomeBookingModal = ({ apt, lang, onClose }) => {
         </div>
         <p className="hbm-note">
           {lang === 'es'
-            ? '* Precios orientativos máximos. Alex o Fran responden normalmente en minutos.'
-            : '* Maximum guide prices. Alex or Fran usually reply in minutes.'}
+            ? '* Precios orientativos máximos. Alex o Fran responden en menos de 24 h.'
+            : '* Maximum guide prices. Alex or Fran reply within 24 h.'}
         </p>
       </div>
     </div>
@@ -425,7 +406,7 @@ const Apartments = ({ lang }) => {
   }, []);
 
   // Precios "desde / hasta" mostrados son el base de prices.json
-  // (lo que el admin ve en /p-edit.html). Sin aplicar directDiscount –
+  // (lo que el admin ve en /p-edit.html). Sin aplicar directDiscount —
   // ese descuento es para el ahorro vs plataformas dentro del desglose.
   const aptMaxPrice = (aptId) => {
     const tbl = HESTIA_PRICES[aptId];
@@ -551,8 +532,8 @@ const Apartments = ({ lang }) => {
                       <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
                       <span className="apb-match">
                         {lang === 'es'
-                          ? '✓ Hasta un 10% aprox. más barato que en Booking o Airbnb*'
-                          : '✓ Up to ~10% cheaper than Booking or Airbnb*'}
+                          ? '✓ Desde un 10% más barato que en Booking o Airbnb*'
+                          : '✓ From 10% cheaper than Booking or Airbnb*'}
                       </span>
                     </div>
                   )}
@@ -610,7 +591,6 @@ const Apartments = ({ lang }) => {
 const Compare = ({ lang }) => {
   const rows = lang === 'es' ? [
     { label: 'Concepto',      vm: 'El mar desde los olivos', vt: 'Ático · mar y Salar de los Canos', vs: 'Amanecer sobre las salinas' },
-    { label: 'Carácter',      vm: 'El más cercano a la playa · un agradable paseo', vt: 'El más alto · dominas toda la vista', vs: 'El más grande · desconexión · base para explorar la zona' },
     { label: 'Plazas',        vm: '6 + bebé · 2 hab.', vt: '6 + bebé · 2 hab.', vs: '6 + bebé · 2 hab.' },
     { label: 'Terraza',       vm: 'Esquina 20m² · mar', vt: 'Panorámica · mar + salar', vs: 'Dos terrazas' },
     { label: 'Piscina',       vm: 'Comunitaria', vt: '2 ext. + jacuzzi', vs: 'Comunitaria + pistas de pádel' },
@@ -623,7 +603,6 @@ const Compare = ({ lang }) => {
     { label: 'Valoración',    vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
   ] : [
     { label: 'Concept',       vm: 'Sea through the olive grove', vt: 'Penthouse · sea & Salar de los Canos', vs: 'Sunrise over the salt flats' },
-    { label: 'Character',     vm: 'Closest to the beach · a short, pleasant walk', vt: 'The highest · you command the whole view', vs: 'The largest · disconnection · a base to explore the area' },
     { label: 'Guests',        vm: '6 + baby · 2 bed.', vt: '6 + baby · 2 bed.', vs: '6 + baby · 2 bed.' },
     { label: 'Terrace',       vm: 'Corner 20m² · sea', vt: 'Panoramic · sea + salt flats', vs: 'Two terraces' },
     { label: 'Pool',          vm: 'Shared', vt: '2 outdoor + jacuzzi', vs: 'Shared + padel courts' },
@@ -697,7 +676,7 @@ const Compare = ({ lang }) => {
 };
 
 // ================================================================
-// LAST MINUTE STRIP, huecos disponibles en los próximos 45 días
+// LAST MINUTE STRIP — huecos disponibles en los próximos 45 días
 // ================================================================
 const LastMinuteStrip = ({ lang, embedded = false }) => {
   const [slots, setSlots] = React.useState([]);
@@ -785,57 +764,6 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
     return () => clearInterval(iv);
   }, [_loadSlots]);
 
-  // Marquee con auto-scroll por JS (rAF) que ADEMÁS se puede arrastrar con dedo
-  // (móvil/iPad) o ratón (PC) en ambos sentidos. El contenido va duplicado, así
-  // que basta con envolver el offset en [-setW, 0] para un bucle continuo.
-  const wrapRef = React.useRef(null);
-  const trackRef = React.useRef(null);
-  React.useEffect(() => {
-    const wrap = wrapRef.current, track = trackRef.current;
-    if (!wrap || !track) return;
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let setW = track.scrollWidth / 2;
-    const durSec = Math.max(10, slots.length * 5);
-    const speed = setW > 0 ? setW / (durSec * 1000) : 0; // px por ms (igual que la animación CSS previa)
-    let offset = 0, raf = 0, last = performance.now();
-    let dragging = false, hovering = false, lastX = 0, moved = 0;
-    const wrapOffset = () => { if (setW <= 0) return; while (offset <= -setW) offset += setW; while (offset > 0) offset -= setW; };
-    const apply = () => { track.style.transform = `translateX(${offset}px)`; };
-    const frame = (now) => {
-      const dt = Math.min(now - last, 50); last = now;
-      if (!dragging && !hovering && !reduce) { offset -= speed * dt; wrapOffset(); apply(); }
-      raf = requestAnimationFrame(frame);
-    };
-    const onDown = (e) => { dragging = true; moved = 0; lastX = e.clientX; wrap.classList.add('lm-dragging'); try { wrap.setPointerCapture(e.pointerId); } catch (_) {} };
-    const onMove = (e) => { if (!dragging) return; const dx = e.clientX - lastX; lastX = e.clientX; moved += Math.abs(dx); offset += dx; wrapOffset(); apply(); };
-    const onUp = (e) => { if (!dragging) return; dragging = false; wrap.classList.remove('lm-dragging'); try { wrap.releasePointerCapture(e.pointerId); } catch (_) {} };
-    const onClick = (e) => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } };
-    const onEnter = (e) => { if (e.pointerType === 'mouse') hovering = true; };
-    const onLeave = (e) => { if (e.pointerType === 'mouse') hovering = false; };
-    const onResize = () => { setW = track.scrollWidth / 2; };
-    setW = track.scrollWidth / 2; apply();
-    raf = requestAnimationFrame(frame);
-    wrap.addEventListener('pointerdown', onDown);
-    wrap.addEventListener('pointermove', onMove);
-    wrap.addEventListener('pointerup', onUp);
-    wrap.addEventListener('pointercancel', onUp);
-    wrap.addEventListener('pointerenter', onEnter);
-    wrap.addEventListener('pointerleave', onLeave);
-    wrap.addEventListener('click', onClick, true);
-    window.addEventListener('resize', onResize);
-    return () => {
-      cancelAnimationFrame(raf);
-      wrap.removeEventListener('pointerdown', onDown);
-      wrap.removeEventListener('pointermove', onMove);
-      wrap.removeEventListener('pointerup', onUp);
-      wrap.removeEventListener('pointercancel', onUp);
-      wrap.removeEventListener('pointerenter', onEnter);
-      wrap.removeEventListener('pointerleave', onLeave);
-      wrap.removeEventListener('click', onClick, true);
-      window.removeEventListener('resize', onResize);
-    };
-  }, [slots]);
-
   if (!slots.length) return null;
 
   const fmtDate = (ds) => {
@@ -886,9 +814,11 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
     );
   };
 
+  const dur = `${Math.max(10, slots.length * 5)}s`;
+
   const renderLongStayCard = (key) => {
     const ls = window.PRICES_V2?.longStayConfig;
-    const minRate = ls?.monthlyRates ? Math.min(...Object.values(ls.monthlyRates)) : 1490;
+    const minRate = ls?.monthlyRates ? Math.min(...Object.values(ls.monthlyRates)) : 1450;
     return (
       <a key={key} href="estancias-largas.html" className="lm-card lm-card--longstay">
         <span className="lm-card-apt lm-card-apt--longstay">
@@ -913,8 +843,8 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
             {lang === 'es' ? 'Huecos disponibles ahora:' : 'Available now:'}
           </span>
         )}
-        <div className="lm-marquee-wrap" ref={wrapRef}>
-          <div className="lm-marquee-track" ref={trackRef}>
+        <div className="lm-marquee-wrap">
+          <div className="lm-marquee-track" style={{ animationDuration: dur }}>
             {slots.map((slot, i) => renderCard(slot, i))}
             {renderLongStayCard('ls1')}
             {slots.map((slot, i) => renderCard(slot, `d${i}`))}
@@ -932,7 +862,7 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
 };
 
 // ================================================================
-// HOME PRICE STRIP, 3 precios base visibles antes del buscador
+// HOME PRICE STRIP — 3 precios base visibles antes del buscador
 // ================================================================
 const HomePriceStrip = ({ lang }) => {
   const APT_META = [
@@ -970,7 +900,7 @@ const HomePriceStrip = ({ lang }) => {
                     <span className="hps-ota-row">
                       <span className="hps-ota-name">Booking / Airbnb</span>
                       <span className="hps-ota-price">desde ~{pMin}€</span>
-                      <span className="hps-ota-pct">+10% aprox.</span>
+                      <span className="hps-ota-pct">+10% mín.</span>
                     </span>
                   </span>
                 )}
@@ -981,8 +911,8 @@ const HomePriceStrip = ({ lang }) => {
         </div>
         <p className="hps-disclaimer">
           {lang === 'es'
-            ? '* Precios en plataformas aproximados. No incluyen las ofertas personales o generales que las plataformas puedan hacer a sus clientes, ni sus programas de fidelización o descuento, ya que no podemos conocerlos. En cualquier caso, siempre podemos mejorar el precio.'
-            : '* Platform prices are approximate. They do not include personal or general offers, nor loyalty or discount programmes that platforms may offer their customers, as we cannot know them. In any case, we can always do better on price.'}
+            ? '* Precios en plataformas aproximados. No incluyen las ofertas personales o generales que las plataformas puedan hacer a sus clientes, ni sus programas de fidelización o descuento — ya que no podemos conocerlos. En cualquier caso, siempre podemos mejorar el precio.'
+            : '* Platform prices are approximate. They do not include personal or general offers, nor loyalty or discount programmes that platforms may offer their customers — as we cannot know them. In any case, we can always do better on price.'}
         </p>
       </div>
     </section>
@@ -995,13 +925,10 @@ const LongStayStrip = ({ lang }) => {
   const bases = v2?.apts ? Object.values(v2.apts).map(a => a.base).filter(Boolean) : [];
   const minBase = bases.length ? Math.min(...bases) : 83;
   const nightlyMonthly = minBase * 30;
-  const lsCfg = v2?.longStayConfig || {};
-  const lsRates = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
-  const supps = Object.values(lsCfg.aptSupplement || {});
-  const lsRate = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + (supps.length ? Math.min(...supps) : 0);
+  const lsRate = 1450;
   const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
   return (
-    <section className="lss-strip on-dark" aria-label={es ? 'Estancias largas' : 'Long stays'}>
+    <section className="lss-strip" aria-label={es ? 'Estancias largas' : 'Long stays'}>
       <div className="lss-inner">
         <div className="lss-text">
           <p className="eyebrow lss-eyebrow">{es ? 'Más de un mes en Vera Playa' : 'More than a month in Vera Playa'}</p>
@@ -1020,7 +947,7 @@ const LongStayStrip = ({ lang }) => {
             <span className="lss-pill lss-pill-compare">
               <span className="lss-pill-reg">~{nightlyMonthly.toLocaleString('es-ES')}€/mes</span>
               <span className="lss-pill-arrow">→</span>
-              <span className="lss-pill-ls">{es ? `desde ${lsRate.toLocaleString('es-ES')}€/mes` : `from €${lsRate.toLocaleString('en-US')}/mo`}</span>
+              <span className="lss-pill-ls">{es ? `desde 1.450€/mes` : `from €1,450/mo`}</span>
               <span className="lss-pill-save">−{savings}%</span>
             </span>
             <span className="lss-pill">WiFi fibra</span>

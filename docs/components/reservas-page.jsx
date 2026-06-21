@@ -1,12 +1,12 @@
 // ================================================================
-// HESTÍA, Página de Reservas
+// HESTÍA — Página de Reservas
 // ================================================================
 
 const RESERVAS_COPY = {
   es: {
-    eyebrow: 'Mejor precio garantizado: te lo igualamos y lo mejoramos · Sin comisiones',
+    eyebrow: 'Precio directo siempre mejor que Booking o Airbnb · Sin intermediarios',
     title: (<>Reserva tu<br/><em>hogar en Vera.</em></>),
-    sub: 'Escríbenos directamente. Alex o Fran te responden normalmente en minutos.',
+    sub: 'Escríbenos directamente. Alex o Fran confirman en menos de 24 horas.',
     form_title: 'Solicitar reserva',
     form_sub: 'Tres pasos: dinos qué buscas, te enseñamos disponibilidad y precio, y eliges cómo enviar la solicitud.',
     step1_title: 'Tu reserva',
@@ -39,9 +39,9 @@ const RESERVAS_COPY = {
     continue_to_send: 'Continuar →',
     status_avail: 'Disponible para tus fechas',
     status_taken: 'Ocupado en esas fechas',
-    status_taken_sub: 'Aún así puedes enviarnos la solicitud, te avisamos si se libera o te proponemos alternativas.',
+    status_taken_sub: 'Aún así puedes enviarnos la solicitud — te avisamos si se libera o te proponemos alternativas.',
     status_no_data: 'No tenemos datos en este momento',
-    status_no_data_sub: 'Sin problema, envíanos la solicitud y te respondemos normalmente en minutos.',
+    status_no_data_sub: 'Sin problema — envíanos la solicitud y te confirmamos en menos de 24 h.',
     channel_label: 'Elige cómo quieres enviarnos la solicitud',
     channel_wa: 'WhatsApp',
     channel_wa_desc: 'Necesitamos tu nombre y teléfono.',
@@ -55,21 +55,21 @@ const RESERVAS_COPY = {
     summary_pets: 'Mascota',
     summary_extras: 'Extras',
     summary_nights: (n) => `${n} ${n === 1 ? 'noche' : 'noches'}`,
-    note: 'Al pulsar se abrirá WhatsApp con tu solicitud. Alex o Fran te responden normalmente en minutos.',
+    note: 'Al pulsar se abrirá WhatsApp con tu solicitud. Alex o Fran te responden en menos de 24 horas.',
     aside_title: 'Tu solicitud llega a:',
     guarantee_title: 'Reserva directa',
     guarantee_items: [
-      'Mejor precio garantizado: te lo igualamos y lo mejoramos',
-      'Reservando directo te ahorras hasta un 10 % aprox.',
+      'Precio directo siempre mejor que cualquier plataforma',
+      'Sin comisiones de intermediarios',
       'Alex o Fran responden personalmente',
-      'Te respondemos normalmente en minutos',
+      'Confirmación en menos de 24 horas',
       'Flexibilidad real en cambios y cancelaciones',
     ],
   },
   en: {
-    eyebrow: 'Best price guaranteed: we match it and beat it · No commissions',
+    eyebrow: 'Direct price always better than Booking or Airbnb · No middlemen',
     title: (<>Book your<br/><em>home in Vera.</em></>),
-    sub: 'Write to us directly. Alex or Fran usually reply in minutes.',
+    sub: 'Write to us directly. Alex or Fran confirm within 24 hours.',
     form_title: 'Request a booking',
     form_sub: 'Three steps: tell us what you need, see availability and price, then choose how to send the request.',
     step1_title: 'Your booking',
@@ -102,9 +102,9 @@ const RESERVAS_COPY = {
     continue_to_send: 'Continue →',
     status_avail: 'Available for your dates',
     status_taken: 'Taken on those dates',
-    status_taken_sub: 'You can still send the request, we will let you know if it frees up or suggest alternatives.',
+    status_taken_sub: 'You can still send the request — we will let you know if it frees up or suggest alternatives.',
     status_no_data: 'No data right now',
-    status_no_data_sub: 'No worries, send the request and we usually reply in minutes.',
+    status_no_data_sub: 'No worries — send the request and we will confirm within 24 h.',
     channel_label: 'Choose how to send your request',
     channel_wa: 'WhatsApp',
     channel_wa_desc: 'We need your name and phone.',
@@ -118,14 +118,14 @@ const RESERVAS_COPY = {
     summary_pets: 'Pet',
     summary_extras: 'Extras',
     summary_nights: (n) => `${n} ${n === 1 ? 'night' : 'nights'}`,
-    note: 'Clicking will open WhatsApp with your request. Alex or Fran usually reply in minutes.',
+    note: 'Clicking will open WhatsApp with your request. Alex or Fran will reply within 24 hours.',
     aside_title: 'Your request goes to:',
     guarantee_title: 'Direct booking',
     guarantee_items: [
-      'Best price guaranteed: we match it and beat it',
-      'Book direct and save up to ~10%',
+      'Direct price always better than any platform',
+      'No platform commissions',
       'Alex or Fran reply personally',
-      'We usually reply in minutes',
+      'Confirmation within 24 hours',
       'Real flexibility on changes and cancellations',
     ],
   },
@@ -147,9 +147,32 @@ const _resExtraUnitSuffix = (unit, lang) => {
   return '';
 };
 
-// La oferta de hueco (gapOverrides) la aplica ahora _calcStay (shared.js), para que
-// apartamento, home y reservas calculen siempre el mismo precio. Solo aplica si la
-// estancia rellena exactamente el hueco (entrada+salida = el hueco).
+// Gap-offer override helpers — apply gapOverrides from prices.json to the
+// base price, then keep guest/pet supplements unchanged on top.
+const _gapOverrideCalc = (aptId, checkin) => {
+  const v2 = window.PRICES_V2;
+  if (!v2 || !aptId || !checkin) return null;
+  const ov = (v2.gapOverrides || {})[`${aptId}|${checkin}`];
+  if (!ov || !ov.type || ov.type === 'none') return null;
+  const base   = (v2.apts?.[aptId]?.base) || 0;
+  const season = _v2SeasonForDate(checkin, v2);
+  const mult   = (v2.seasons?.[season]?.multiplier) || 1;
+  const seasonBase = Math.round(base * mult);
+  let perNight;
+  if (ov.type === 'fixed')     perNight = ov.value;
+  else if (ov.type === 'discount')  perNight = Math.round(seasonBase * (1 - ov.value / 100));
+  else if (ov.type === 'increment') perNight = Math.round(seasonBase * (1 + ov.value / 100));
+  else perNight = seasonBase;
+  return { perNight, ov };
+};
+const _applyGapOv = (calc, perNight) => {
+  if (!calc) return null;
+  const baseTotal   = perNight * calc.nights;
+  const afterStay   = baseTotal;
+  const directTotal = afterStay + calc.guestSuppAmt + calc.petAmt;
+  const avgPerNight = Math.round((afterStay + calc.guestSuppAmt) / calc.nights);
+  return { ...calc, baseTotal, stayD: null, stayDiscAmt: 0, afterStay, directTotal, avgPerNight, isGapOffer: true, gapPerNight: perNight };
+};
 
 // Calcula el total de larga estancia usando tarifas mensuales + flat especial + suplemento por apt
 
@@ -173,7 +196,7 @@ const LsPriceSummary = ({ ls, extras = [], guests, pets, lang }) => {
         </div>
         <div className="price-right-col">
           <div className="price-guarantee-badge">
-            {es ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'}
+            {es ? '✓ Precio directo siempre mejor' : '✓ Direct price always better'}
           </div>
           <div className="price-guarantee-sub">
             {es ? 'Sin comisiones de plataformas.' : 'No platform commissions.'}
@@ -230,7 +253,7 @@ const LsInfoBlock = ({ calc, lang }) => {
       <ul className="rf-ls-conditions">
         <li>{es ? 'Contrato de arrendamiento de temporada' : 'Seasonal rental agreement'}</li>
         <li>{es ? 'Señal del 20% para confirmar · resto a la llegada' : '20% deposit to confirm · balance on arrival'}</li>
-        <li>{es ? `${nights} noches, tarifa mensual` : `${nights} nights, monthly rate`}</li>
+        <li>{es ? `${nights} noches — tarifa mensual` : `${nights} nights — monthly rate`}</li>
         <li>{es ? 'Sin comisiones de plataformas' : 'No platform commissions'}</li>
       </ul>
       <a href="estancias-largas.html" className="rf-ls-info-link" target="_blank" rel="noopener">
@@ -243,8 +266,10 @@ const LsInfoBlock = ({ calc, lang }) => {
 const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [], lsCalc }) => {
   if (!apt || !checkin || !checkout) return null;
   const gn = parseInt(guests, 10) || null;
-  const calc = _calcStay(checkin, checkout, apt, pets === 'yes', gn);
-  if (!calc || calc.nights <= 0) return null;
+  const calcRaw = _calcStay(checkin, checkout, apt, pets === 'yes', gn);
+  if (!calcRaw || calcRaw.nights <= 0) return null;
+  const gapOv = _gapOverrideCalc(apt, checkin);
+  const calc  = gapOv ? _applyGapOv(calcRaw, gapOv.perNight) : calcRaw;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
   const extrasTotal = extras.reduce((s, e) => s + e.amount, 0);
   const nightlyGrandTotal = calc.directTotal + extrasTotal;
@@ -269,12 +294,12 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [],
         </div>
         <div className="price-right-col">
           <div className="price-guarantee-badge">
-            {lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'}
+            {lang === 'es' ? '✓ Precio directo siempre mejor' : '✓ Direct price always better'}
           </div>
           <div className="price-guarantee-sub">
             {lang === 'es'
-              ? 'Reserva directa, sin comisiones de plataformas.'
-              : 'Book direct, no platform commissions.'}
+              ? 'Reserva directa — sin comisiones de plataformas.'
+              : 'Book direct — no platform commissions.'}
           </div>
         </div>
       </div>
@@ -351,14 +376,14 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [],
             ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.'
             : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.')
         : (lang === 'es'
-            ? '* Precio orientativo. ¿Lo encuentras más barato en una plataforma? No solo te lo igualamos: te lo mejoramos.'
-            : '* Indicative price. Found it cheaper on a platform? We don\'t just match it, we beat it.')
+            ? '* Precio orientativo. El precio directo es siempre mejor que cualquier plataforma.'
+            : '* Indicative price. Our direct price is always better than any platform.')
       }</p>
     </div>
   );
 };
 
-// ReviewQuote, cita rotando de una reseña real verificada en el
+// ReviewQuote — cita rotando de una reseña real verificada en el
 // paso 2 del formulario de reservas. Lee window.REVIEWS y elige
 // una al azar de las published (filtrada por apt si hay uno).
 const ReviewQuote = ({ apt, lang }) => {
@@ -375,11 +400,8 @@ const ReviewQuote = ({ apt, lang }) => {
     return list;
   }, [apt]);
 
-  // Memoizado para que no cambie de reseña en cada render (p.ej. al plegar/desplegar).
-  const r = React.useMemo(() => (pool.length ? pool[Math.floor(Math.random() * pool.length)] : null), [pool]);
-  const [expanded, setExpanded] = React.useState(false);
-
-  if (!pool.length || !r) return null;
+  if (!pool.length) return null;
+  const r = pool[Math.floor(Math.random() * pool.length)];
   const date = new Date(r.date);
   const mo = String(date.getMonth() + 1).padStart(2, '0');
   const yr = date.getFullYear();
@@ -387,17 +409,11 @@ const ReviewQuote = ({ apt, lang }) => {
     booking: 'Booking', airbnb: 'Airbnb', google: 'Google', web: 'Hestía',
   }[r.source] || r.source;
   const aptLbl = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas', all: '' }[r.apt] || '';
-  const isLong = (r.text || '').length > 240;
 
   return (
     <div className="rf-quote" aria-label={lang === 'es' ? 'Reseña verificada' : 'Verified review'}>
       <div className="rf-quote-mark" aria-hidden="true">“</div>
-      <p className={`rf-quote-text${isLong && !expanded ? ' rf-quote-clamped' : ''}`}>{r.text}</p>
-      {isLong && (
-        <button type="button" className="rf-quote-toggle" aria-expanded={expanded} onClick={() => setExpanded(e => !e)}>
-          {expanded ? (lang === 'es' ? 'Ver menos' : 'Show less') : (lang === 'es' ? 'Ver más' : 'Show more')}
-        </button>
-      )}
+      <p className="rf-quote-text">{r.text}</p>
       <div className="rf-quote-meta">
         <span className="rf-quote-name">{r.name.split(' ')[0]}</span>
         <span className="rf-quote-sep">·</span>
@@ -465,7 +481,7 @@ const ReservasForm = ({ lang }) => {
     return `${mo} ${d}, ${y}`;
   };
 
-  // Step 1, datos que afectan a precio y disponibilidad
+  // Step 1 — datos que afectan a precio y disponibilidad
   const [apt, setApt]           = React.useState('');
   const [checkin, setCheckin]   = React.useState('');
   const [checkout, setCheckout] = React.useState('');
@@ -477,7 +493,7 @@ const ReservasForm = ({ lang }) => {
   const [extrasSel, setExtrasSel] = React.useState({});
   const extrasList = _resExtrasList();
 
-  // Step 3, datos del canal + comentarios
+  // Step 3 — datos del canal + comentarios
   const [name, setName]         = React.useState('');
   const [tel, setTel]           = React.useState('');
   const [email, setEmail]       = React.useState('');
@@ -486,9 +502,6 @@ const ReservasForm = ({ lang }) => {
   // Workflow
   const [step, setStep]         = React.useState(1);
   const [channel, setChannel]   = React.useState('whatsapp');
-  const [sent, setSent]         = React.useState(null); // { channel, url, msg } tras enviar
-  const [copied, setCopied]     = React.useState(false);
-  const [step2Hint, setStep2Hint] = React.useState(false); // intentó continuar sin elegir Hestía
 
   // Disponibilidad (carga lazy)
   const [avail, setAvail]       = React.useState(null);
@@ -530,7 +543,7 @@ const ReservasForm = ({ lang }) => {
     }
     if (qPets === 'yes') { setPets('yes'); hadAny = true; }
     // Bebé: setea el toggle Sí/No y deja la opción a marcar cuna/trona en
-    // los extras (no las marca automáticamente, el huésped decide).
+    // los extras (no las marca automáticamente — el huésped decide).
     const qBaby = qs.get('baby');
     if (qBaby === 'yes') { setBaby('yes'); hadAny = true; }
     // Si vino apt + ambas fechas, avanzamos al step 2 directamente.
@@ -560,7 +573,7 @@ const ReservasForm = ({ lang }) => {
   };
   // Máximo qty por extra. Items "estancia" (cuna, trona, late check-in)
   // son binarios → max 1. "hora" (early check-in, late check-out) hasta
-  // 8 horas. Resto (set/noche) escala con huéspedes, default 6.
+  // 8 horas. Resto (set/noche) escala con huéspedes — default 6.
   const guestCap = Math.max(1, parseInt(guests, 10) || 6);
   const maxForExtra = (ex) => {
     if (!ex) return guestCap;
@@ -623,7 +636,7 @@ const ReservasForm = ({ lang }) => {
   const nightsSelected = (checkin && checkout)
     ? Math.round((new Date(checkout + 'T12:00:00Z') - new Date(checkin + 'T12:00:00Z')) / 86400000)
     : 0;
-  // floor mínimo absoluto (2), el bloqueo final se valida en el picker;
+  // floor mínimo absoluto (2) — el bloqueo final se valida en el picker;
   // aquí solo aseguramos que no sea < twoNightFloor.
   const meetsMinNights = nightsSelected >= twoNightFloor;
   // step1Ready = puede pasar al step 2 incluso sin apt elegido. Si no hay
@@ -631,13 +644,15 @@ const ReservasForm = ({ lang }) => {
   // disponibilidad → el huésped elige el que prefiera (o el que tenga libre).
   const step1Ready    = checkin && checkout && guests && checkin < checkout && meetsMinNights;
   const step1Complete = apt && step1Ready;
-  const hasName  = name.trim().length >= 2;
-  const hasTel   = tel.replace(/\D/g, '').length >= 9;
-  const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const hasName  = name.trim().length > 0;
+  const hasTel   = tel.replace(/\D/g, '').length >= 6;
+  const hasEmail = /\S+@\S+/.test(email);
   const channelValid = channel === 'whatsapp' ? (hasName && hasTel) : (hasName && hasEmail);
 
-  // Cálculo, _calcStay ya aplica la oferta de hueco internamente (fuente única).
-  const calc = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes', parseInt(guests, 10) || null) : null;
+  // Cálculo — aplica gapOverride si el hueco tiene oferta activa
+  const calcRaw = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes', parseInt(guests, 10) || null) : null;
+  const gapOv   = step1Complete ? _gapOverrideCalc(apt, checkin) : null;
+  const calc    = gapOv && calcRaw ? _applyGapOv(calcRaw, gapOv.perNight) : calcRaw;
   const nightsForExtras = calc?.nights || 0;
   const selectedExtras = computeSelectedExtras(nightsForExtras);
   const extrasCount = Object.values(extrasSel).filter(v => v > 0).length;
@@ -646,10 +661,8 @@ const ReservasForm = ({ lang }) => {
   // Larga estancia: ≥29 noches, no julio ni agosto
   const isLsStay = nightsSelected > 28 && (() => { const m = checkin ? parseInt(checkin.slice(5,7),10) : 0; return m !== 7 && m !== 8; })();
   const lsCalc   = isLsStay ? _calcLsTotal(checkin, checkout, parseInt(guests,10)||1, pets==='yes', apt) : null;
-  const recapExtrasTotal = selectedExtras.reduce((s, e) => s + e.amount, 0);
-  const recapTotal = isLsStay && lsCalc ? lsCalc.total + recapExtrasTotal : (calc ? calc.directTotal + recapExtrasTotal : 0);
 
-  // Avanzar pasos. step1Ready basta (sin apt), en step 2 el huésped
+  // Avanzar pasos. step1Ready basta (sin apt) — en step 2 el huésped
   // verá la disponibilidad de los 3 Hestías y puede elegir uno.
   const goToStep2 = () => {
     if (!step1Ready) return;
@@ -660,12 +673,6 @@ const ReservasForm = ({ lang }) => {
     }, 60);
   };
   const goToStep3 = () => {
-    if (!step1Complete) { // falta elegir Hestía → señala el grid en vez de avanzar en silencio
-      setStep2Hint(true);
-      document.querySelector('.rf-apt-availability, .rf-apt-pick')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
-    setStep2Hint(false);
     setStep(3);
     if (typeof _hestiaTrack === 'function') _hestiaTrack('booking_step3', { apt: apt || 'all', checkin, checkout });
     setTimeout(() => {
@@ -691,13 +698,13 @@ const ReservasForm = ({ lang }) => {
       const headEn = '\nExtras:';
       const lines = selectedExtras.map(ex => {
         if (ex.unit === 'hora') {
-          return `  • ${ex.label}, ${ex.qty} h × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
+          return `  • ${ex.label} — ${ex.qty} h × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
         }
         if (ex.unit === 'noche') {
-          return `  • ${ex.label}, ${ex.qty} ${lang === 'es' ? 'noches' : 'nights'} × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
+          return `  • ${ex.label} — ${ex.qty} ${lang === 'es' ? 'noches' : 'nights'} × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
         }
         if (ex.amount > 0) {
-          return `  • ${ex.label}, ${fmt(ex.amount)}`;
+          return `  • ${ex.label} — ${fmt(ex.amount)}`;
         }
         return `  • ${ex.label}`;
       });
@@ -735,7 +742,7 @@ const ReservasForm = ({ lang }) => {
                 (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') +
                 (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') +
                 (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-                `   ✓ Mejor precio garantizado: te lo igualamos y lo mejoramos\n`
+                `   ✓ Precio directo siempre mejor que cualquier plataforma\n`
               : `\n💰 ${calc.isGapOffer ? 'DIRECT OFFER PRICE' : 'ESTIMATED DIRECT PRICE'}\n` +
                 `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` +
                 (calc.isGapOffer ? `   🏷 Offer: ${fmt(calc.gapPerNight)}/night (locked price)\n` : '') +
@@ -743,12 +750,12 @@ const ReservasForm = ({ lang }) => {
                 (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') +
                 (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') +
                 (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-                `   ✓ Best price guaranteed: we match it and beat it\n`)
+                `   ✓ Direct price always better than any platform\n`)
           : '');
     const lines = lang === 'es'
       ? [
           `¡Hola! Quiero hacer una consulta de reserva.\n`,
-          `Hestía: ${aptNames[apt] || apt || '–'}`,
+          `Hestía: ${aptNames[apt] || apt || '—'}`,
           `Nombre: ${name}`,
           channel === 'whatsapp' ? `Teléfono: ${tel}` : `Email: ${email}`,
           `Entrada: ${checkin}`,
@@ -756,11 +763,11 @@ const ReservasForm = ({ lang }) => {
           `Huéspedes: ${guests}`,
           `Mascota: ${petsText}`,
           `Bebé: ${babyText}${extrasText}${priceBlock}`,
-          `Comentarios: ${comments || '–'}`,
+          `Comentarios: ${comments || '—'}`,
         ]
       : [
           `Hello! I'd like to enquire about a booking.\n`,
-          `Hestía: ${aptNames[apt] || apt || '–'}`,
+          `Hestía: ${aptNames[apt] || apt || '—'}`,
           `Name: ${name}`,
           channel === 'whatsapp' ? `Phone: ${tel}` : `Email: ${email}`,
           `Check-in: ${checkin}`,
@@ -768,7 +775,7 @@ const ReservasForm = ({ lang }) => {
           `Guests: ${guests}`,
           `Pet: ${petsText}`,
           `Baby: ${babyText}${extrasText}${priceBlock}`,
-          `Comments: ${comments || '–'}`,
+          `Comments: ${comments || '—'}`,
         ];
     return lines.join('\n');
   };
@@ -777,52 +784,18 @@ const ReservasForm = ({ lang }) => {
     e?.preventDefault();
     if (!step1Complete || !channelValid) return;
     if (typeof _hestiaTrack === 'function') _hestiaTrack('booking_sent', { apt: apt || 'all', channel, checkin, checkout });
-    const msg = buildMsg();
-    // Captura server-side (Web3Forms): la solicitud llega a vuestro email aunque el
-    // huésped no complete el WhatsApp/correo. En segundo plano, no bloquea su canal.
-    try {
-      const fd = new FormData();
-      fd.append('access_key', '95a86784-6d6a-496f-9830-15759c0a3cff');
-      fd.append('subject', `Solicitud de reserva · ${aptNames[apt] || 'Hestía'} · ${checkin} → ${checkout}`);
-      fd.append('from_name', name || 'Web Hestía');
-      if (hasEmail) fd.append('email', email.trim());
-      fd.append('message', `${msg}\n\nCanal elegido: ${channel === 'whatsapp' ? `WhatsApp (${tel})` : `Email (${email})`}`);
-      fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd }).catch(() => {});
-    } catch (_) {}
-    let url;
     if (channel === 'whatsapp') {
       const waNum = lang === 'es' ? '34620316370' : '34654138251';
-      url = `https://wa.me/${waNum}?text=` + encodeURIComponent(msg);
-      window.open(url, '_blank');
+      window.open(`https://wa.me/${waNum}?text=` + encodeURIComponent(buildMsg()), '_blank');
     } else {
       const subj = lang === 'es'
-        ? `Consulta reserva, ${aptNames[apt] || 'Hestía'}`
-        : `Booking enquiry, ${aptNames[apt] || 'Hestía'}`;
-      url = `mailto:info@hestiayourhome.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(msg)}`;
-      window.location.href = url;
+        ? `Consulta reserva — ${aptNames[apt] || 'Hestía'}`
+        : `Booking enquiry — ${aptNames[apt] || 'Hestía'}`;
+      window.location.href = `mailto:info@hestiayourhome.com?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(buildMsg())}`;
     }
-    setSent({ channel, url, msg });
   };
 
-  const copyMsg = () => {
-    if (!sent || !navigator.clipboard) return;
-    navigator.clipboard.writeText(sent.msg)
-      .then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); })
-      .catch(() => {});
-  };
-
-  // Razón por la que el botón de enviar/avanzar está bloqueado (hint inline).
-  const step1Hint = !step1Ready && (!checkin || !checkout)
-    ? (lang === 'es' ? 'Elige las fechas de entrada y salida para continuar.' : 'Pick check-in and check-out dates to continue.')
-    : null;
-  const sendHint = !apt
-    ? (lang === 'es' ? 'Vuelve al paso 2 y elige una Hestía.' : 'Go back to step 2 and pick a Hestía.')
-    : !hasName ? (lang === 'es' ? 'Escribe tu nombre.' : 'Enter your name.')
-    : (channel === 'whatsapp' && !hasTel) ? (lang === 'es' ? 'Escribe un teléfono válido (mín. 9 dígitos).' : 'Enter a valid phone (min. 9 digits).')
-    : (channel === 'email' && !hasEmail) ? (lang === 'es' ? 'Escribe un email válido.' : 'Enter a valid email.')
-    : null;
-
-  // Resumen del paso 1 cuando está plegado: card con color del Hestía,
+  // Resumen del paso 1 cuando está plegado — card con color del Hestía,
   // fechas en español, badge bonita.
   const nightsBooked = step1Complete ? nightsSelected : null;
   const step1Summary = step1Complete ? (
@@ -870,7 +843,7 @@ const ReservasForm = ({ lang }) => {
       <h2 className="reservas-form-title">{t.form_title}</h2>
       <div className="reservas-form-sub">{t.form_sub}</div>
 
-      {/* Progress indicator: visible en móvil, sutil en desktop */}
+      {/* Progress indicator — visible en móvil, sutil en desktop */}
       <div className="rf-progress" aria-label={lang === 'es' ? `Paso ${step} de 3` : `Step ${step} of 3`}>
         {[
           { n: 1, label: lang === 'es' ? 'Datos'  : 'Details' },
@@ -887,7 +860,7 @@ const ReservasForm = ({ lang }) => {
         ))}
       </div>
 
-      {/* SECTION 1, DATOS */}
+      {/* SECTION 1 — DATOS */}
       <section
         id="rf-step-1"
         className={`rf-step rf-step-1 ${step === 1 ? 'is-open' : 'is-collapsed'}`}
@@ -1037,13 +1010,12 @@ const ReservasForm = ({ lang }) => {
               >
                 {t.check_avail}
               </button>
-              {step1Hint && <p className="form-help-note rf-btn-hint">{step1Hint}</p>}
             </div>
           </div>
         )}
       </section>
 
-      {/* SECTION 2, DISPONIBILIDAD Y PRECIO */}
+      {/* SECTION 2 — DISPONIBILIDAD Y PRECIO */}
       <section
         id="rf-step-2"
         className={`rf-step rf-step-2 ${step >= 2 ? 'is-open' : 'is-locked'} ${step > 2 ? 'is-collapsed' : ''}`}
@@ -1056,7 +1028,7 @@ const ReservasForm = ({ lang }) => {
         </header>
         {step >= 2 && (
           <div className="rf-step-body">
-            {/* Long-stay info block, shown when nights > 28 and month is Sep–Jun */}
+            {/* Long-stay info block — shown when nights > 28 and month is Sep–Jun */}
             {isLsStay && (
               <LsInfoBlock calc={calc} lang={lang} />
             )}
@@ -1105,7 +1077,7 @@ const ReservasForm = ({ lang }) => {
                 </div>
               </div>
             )}
-            {/* Status badge, sólo si hay apt elegido */}
+            {/* Status badge — sólo si hay apt elegido */}
             {apt && isAvailable === true && (
               <div className="rf-status rf-status-ok">
                 <span className="rf-status-icon" aria-hidden="true">✓</span>
@@ -1127,7 +1099,7 @@ const ReservasForm = ({ lang }) => {
               </div>
             )}
 
-            {/* Price, PricePreview handles both regular and LS stays.
+            {/* Price — PricePreview handles both regular and LS stays.
                 For LS stays lsCalc is passed so it shows the full nightly
                 breakdown crossed out plus the LS monthly price and savings. */}
             {calc && (
@@ -1191,21 +1163,16 @@ const ReservasForm = ({ lang }) => {
 
             {step === 2 && (
               <div className="rf-step-actions">
-                <button type="button" className={`btn btn-primary rf-next${!step1Complete ? ' req-btn-dis' : ''}`} onClick={goToStep3}>
+                <button type="button" className="btn btn-primary rf-next" onClick={goToStep3}>
                   {t.continue_to_send}
                 </button>
-                {step2Hint && !apt && (
-                  <p className="form-help-note rf-btn-hint" role="alert">
-                    {lang === 'es' ? '↑ Elige una Hestía arriba para continuar.' : '↑ Pick a Hestía above to continue.'}
-                  </p>
-                )}
               </div>
             )}
           </div>
         )}
       </section>
 
-      {/* SECTION 3, CANAL */}
+      {/* SECTION 3 — CANAL */}
       <section
         id="rf-step-3"
         className={`rf-step rf-step-3 ${step >= 3 ? 'is-open' : 'is-locked'}`}
@@ -1218,46 +1185,6 @@ const ReservasForm = ({ lang }) => {
         </header>
         {step >= 3 && (
           <div className="rf-step-body">
-            {step1Summary && (
-              <div className="rf-recap" aria-label={lang === 'es' ? 'Resumen de tu solicitud' : 'Your request summary'}>
-                {step1Summary}
-                {recapTotal > 0 && (
-                  <div className="rf-recap-price">
-                    <span>{lang === 'es' ? 'Precio estimado directo' : 'Estimated direct price'}</span>
-                    <strong>{fmt(recapTotal)}</strong>
-                  </div>
-                )}
-              </div>
-            )}
-            {sent ? (
-              <div className="rf-sent" role="status" aria-live="polite">
-                <div className="rf-sent-icon" aria-hidden="true">✓</div>
-                <h4 className="rf-sent-title">{lang === 'es' ? 'Solicitud preparada' : 'Request ready'}</h4>
-                <p className="rf-sent-text">
-                  {sent.channel === 'whatsapp'
-                    ? (lang === 'es' ? 'Te hemos abierto WhatsApp con tu solicitud. Pulsa enviar allí para que nos llegue.' : 'We opened WhatsApp with your request. Press send there so it reaches us.')
-                    : (lang === 'es' ? 'Te hemos abierto tu correo con la solicitud. Pulsa enviar para que nos llegue.' : 'We opened your email with the request. Press send so it reaches us.')}
-                </p>
-                <p className="rf-sent-fallback">
-                  {lang === 'es' ? '¿No se abrió? ' : 'Didn’t open? '}
-                  <a href={sent.url} target={sent.channel === 'whatsapp' ? '_blank' : undefined} rel="noopener">
-                    {sent.channel === 'whatsapp' ? (lang === 'es' ? 'Abrir WhatsApp' : 'Open WhatsApp') : (lang === 'es' ? 'Abrir tu correo' : 'Open your email')}
-                  </a>
-                </p>
-                <div className="rf-sent-actions">
-                  <button type="button" className="btn btn-ghost" onClick={copyMsg}>
-                    {copied ? (lang === 'es' ? 'Copiado ✓' : 'Copied ✓') : (lang === 'es' ? 'Copiar mensaje' : 'Copy message')}
-                  </button>
-                  <button type="button" className="btn btn-ghost" onClick={() => setSent(null)}>
-                    {lang === 'es' ? 'Volver' : 'Back'}
-                  </button>
-                </div>
-                <p className="rf-sent-direct">
-                  {lang === 'es' ? 'O contáctanos directamente: ' : 'Or contact us directly: '}
-                  <strong>{sent.channel === 'whatsapp' ? (lang === 'es' ? '+34 620 316 370' : '+34 654 138 251') : 'info@hestiayourhome.com'}</strong>
-                </p>
-              </div>
-            ) : (<>
             <div className="rf-channel-label">{t.channel_label}</div>
             <div className="rf-channels" role="tablist">
               <button
@@ -1319,10 +1246,8 @@ const ReservasForm = ({ lang }) => {
                 >
                   {channel === 'whatsapp' ? t.send_wa : t.send_email}
                 </button>
-                {sendHint && <p className="form-help-note rf-btn-hint">{sendHint}</p>}
               </div>
             </form>
-            </>)}
           </div>
         )}
       </section>
@@ -1371,13 +1296,8 @@ const ReservasAside = ({ lang }) => {
         <div className="rg-title">{t.guarantee_title}</div>
         <p className="rg-lede">
           {lang === 'es'
-            ? 'Reservando directo te ahorras hasta un 10 % aprox.: mejor precio que Booking o Airbnb, sin comisiones y con respuesta humana normalmente en minutos.'
-            : 'Book direct and save up to ~10%: better price than Booking or Airbnb, no commissions and a human reply usually in minutes.'}
-        </p>
-        <p className="rg-disclaimer">
-          {lang === 'es'
-            ? '* El ahorro exacto depende de si la plataforma ya está aplicando descuentos o programas propios que no podemos conocer; por eso indicamos «hasta un 10 % aprox.».'
-            : '* The exact saving depends on whether the platform is already applying its own discounts or programmes we can’t know; that’s why we say "up to ~10%".'}
+            ? 'Precio directo siempre mejor que Booking o Airbnb · sin comisiones · respuesta humana en menos de 24 h.'
+            : 'Direct price always better than Booking or Airbnb · no commissions · human reply within 24 h.'}
         </p>
         <button
           type="button"

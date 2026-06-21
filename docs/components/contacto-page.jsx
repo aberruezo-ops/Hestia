@@ -1,12 +1,12 @@
 // ================================================================
-// HESTÍA: Página de Contacto (puro contacto, sin formulario de reserva)
+// HESTÍA — Página de Contacto (puro contacto, sin formulario de reserva)
 // ================================================================
 
 const CONTACTO_COPY = {
   es: {
     eyebrow: 'Estamos aquí para ti',
     title: (<>Contáctanos.<br/><em>Te respondemos nosotros.</em></>),
-    sub: 'Sin centralitas. Alex y Fran responden normalmente en minutos.',
+    sub: 'Sin centralitas. Alex y Fran responden en menos de 24 horas.',
     intro: 'No somos una empresa con centralita. Somos Alex y Fran, y respondemos nosotros personalmente. Alex atiende en español, Fran en inglés.',
     alex_title: 'Alex Berruezo',
     alex_role: 'Reserva · Antes de tu llegada',
@@ -15,7 +15,7 @@ const CONTACTO_COPY = {
     fran_title: 'Fran Moral',
     fran_role: 'Estancia · Mientras estás aquí',
     fran_lang: '🇬🇧 English',
-    fran_quote: '«If anything breaks, calls, or changes, I am here. Your stay, my job.»',
+    fran_quote: '«If anything breaks, calls, or changes — I am here. Your stay, my job.»',
     wa_label: 'WhatsApp',
     tel_label: 'Teléfono',
     email_label: 'Email',
@@ -27,14 +27,14 @@ const CONTACTO_COPY = {
     faq_title: 'Preguntas frecuentes',
     faqs: [
       { q: '¿Cuándo podéis responder?',
-        a: 'Normalmente en minutos, de 9h a 22h todos los días de la semana. Alex responde en español, Fran en inglés.' },
+        a: 'Casi siempre en menos de una hora, de 9h a 22h todos los días de la semana. Alex responde en español, Fran en inglés.' },
       { q: '¿Puedo llamar o solo WhatsApp?',
         a: 'Puedes llamar, pero el WhatsApp es más rápido. Alex: +34 620 316 370. Fran: +34 654 138 251.' },
       { q: '¿Cómo hago una reserva?',
         a: (<>Rellena el formulario en nuestra <a href="reservas.html">página de reservas</a> o escríbenos directamente por WhatsApp con las fechas y qué Hestía te interesa.</>),
       },
       { q: '¿Cómo es el proceso de reserva directa?',
-        a: (<>Te enviamos un <strong>borrador de contrato</strong> con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelación y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Una <strong>pequeña prereserva a convenir</strong>, normalmente el <strong>20 % de la reserva total</strong>, se paga al formalizar el contrato; el resto se abona al llegar a Hestía. Acusamos recibo de todo (contrato y prereserva) para que tengas <strong>confianza, garantía y seguridad</strong> en cada paso.</>),
+        a: (<>Te enviamos un <strong>borrador de contrato</strong> con derechos y obligaciones de ambas partes —precios, pagos, condiciones de cancelación y normas—. Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Una <strong>pequeña prereserva a convenir</strong>, normalmente el <strong>20 % de la reserva total</strong>, se paga al formalizar el contrato; el resto se abona al llegar a Hestía. Acusamos recibo de todo —contrato y prereserva— para que tengas <strong>confianza, garantía y seguridad</strong> en cada paso.</>),
       },
       { q: '¿Qué Hestías tenéis?',
         a: (<>Tenemos tres: <a href="mar.html" className="cl-vm">Hestía Mar</a>, <a href="thalassa.html" className="cl-vt">Hestía Thalassa</a> y <a href="salinas.html" className="cl-vs">Hestía Salinas</a>. Puedes comparar los tres en <a href="/">la home</a>.</>),
@@ -47,7 +47,7 @@ const CONTACTO_COPY = {
   en: {
     eyebrow: "We're here for you",
     title: (<>Contact us.<br/><em>We reply ourselves.</em></>),
-    sub: 'No call centres. Alex and Fran usually reply in minutes.',
+    sub: 'No call centres. Alex and Fran respond within 24 hours.',
     intro: "We are not a company with a call centre. We are Alex and Fran, and we respond personally. Alex handles Spanish, Fran handles English.",
     alex_title: 'Alex Berruezo',
     alex_role: 'Booking · Before you arrive',
@@ -56,7 +56,7 @@ const CONTACTO_COPY = {
     fran_title: 'Fran Moral',
     fran_role: 'Stay · While you are here',
     fran_lang: '🇬🇧 English',
-    fran_quote: '«If anything breaks, calls, or changes, I am here. Your stay, my job.»',
+    fran_quote: '«If anything breaks, calls, or changes — I am here. Your stay, my job.»',
     wa_label: 'WhatsApp',
     tel_label: 'Phone',
     email_label: 'Email',
@@ -68,14 +68,14 @@ const CONTACTO_COPY = {
     faq_title: 'Frequently asked questions',
     faqs: [
       { q: 'When can you reply?',
-        a: 'Usually within minutes, 9am to 10pm every day of the week. Alex replies in Spanish, Fran in English.' },
+        a: 'Almost always within an hour, 9am to 10pm every day of the week. Alex replies in Spanish, Fran in English.' },
       { q: 'Can I call or only WhatsApp?',
         a: 'You can call, but WhatsApp is faster. Alex: +34 620 316 370. Fran: +34 654 138 251.' },
       { q: 'How do I make a booking?',
         a: (<>Fill in the form on our <a href="reservas.html">reservations page</a> or write to us directly on WhatsApp with your dates and the Hestía you are interested in.</>),
       },
       { q: 'How does the direct booking process work?',
-        a: (<>We send you a <strong>draft contract</strong> with the rights and obligations of both sides (prices, payments, cancellation terms and house rules). You review it, fill it in, sign and return it. A <strong>small deposit to agree</strong>, usually <strong>20 % of the total booking</strong>, is paid when the contract is signed; the rest is paid on arrival at Hestía. We acknowledge everything (contract and deposit) so you have <strong>trust, guarantee and security</strong> at every step.</>),
+        a: (<>We send you a <strong>draft contract</strong> with the rights and obligations of both sides —prices, payments, cancellation terms and house rules—. You review it, fill it in, sign and return it. A <strong>small deposit to agree</strong>, usually <strong>20 % of the total booking</strong>, is paid when the contract is signed; the rest is paid on arrival at Hestía. We acknowledge everything —contract and deposit— so you have <strong>trust, guarantee and security</strong> at every step.</>),
       },
       { q: 'Which Hestías do you have?',
         a: (<>We have three: <a href="mar.html" className="cl-vm">Hestía Mar</a>, <a href="thalassa.html" className="cl-vt">Hestía Thalassa</a> and <a href="salinas.html" className="cl-vs">Hestía Salinas</a>. Compare all three on <a href="/">the home page</a>.</>),

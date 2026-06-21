@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA: Chrome (topbar, header, cookies, floating chat, footer)
+// HESTÍA — Chrome (topbar, header, cookies, floating chat, footer)
 // ================================================================
 
 const Topbar = ({ lang, setLang }) => (
@@ -83,7 +83,6 @@ const NAV_PAGES = {
   reservas:         'reservas.html',
   ventajas:         'reservas.html#ventajas',
   estanciasLargas:  'estancias-largas.html',
-  empresas:         'empresas.html',
 };
 
 const isActive = (href) => {
@@ -133,7 +132,6 @@ const MnGuestSection = ({ t, lang, NavLink, NAV_PAGES }) => {
 const Header = ({ mode, scrolled, lang }) => {
   const t = COPY[lang];
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [accessOpen, setAccessOpen] = React.useState(false);
   const close = () => setMobileOpen(false);
   React.useEffect(() => { close(); }, [lang]);
 
@@ -152,7 +150,7 @@ const Header = ({ mode, scrolled, lang }) => {
     return () => window.removeEventListener('hestia-vit-change', sync);
   }, []);
 
-  // Launch banner, siempre en la home (Vitruvio desactivado en home de momento)
+  // Launch banner — siempre en la home (Vitruvio desactivado en home de momento)
   const [showBanner, setShowBanner] = React.useState(() => {
     try {
       const page = window.location.pathname.split('/').pop();
@@ -161,15 +159,6 @@ const Header = ({ mode, scrolled, lang }) => {
   });
   const [launchEnded, setLaunchEnded] = React.useState(false);
   const dismissBanner = React.useCallback(() => { setShowBanner(false); }, []);
-
-  // El banner de lanzamiento se ve desde el primer momento y desaparece tras un
-  // scroll mínimo hacia abajo. No se persiste: vuelve a aparecer al recargar/reentrar.
-  React.useEffect(() => {
-    if (!showBanner) return;
-    const onScroll = () => { if (window.scrollY > 40) setShowBanner(false); };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [showBanner]);
 
   const toggleVit = () => {
     const next = !vitMin;
@@ -200,7 +189,7 @@ const Header = ({ mode, scrolled, lang }) => {
     try { const p = window.location.pathname.split('/').pop(); return p === '' || p === 'index.html'; } catch (_) { return false; }
   })();
 
-  // Banner de lanzamiento: siempre en la home, fondo blanco
+  // Banner de lanzamiento — siempre en la home, fondo blanco
   const launchVidRef = React.useRef(null);
   const replayLaunch = () => {
     setLaunchEnded(false);
@@ -213,7 +202,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <div className="hv-box">
             <video ref={launchVidRef} autoPlay muted playsInline preload="auto"
                    onEnded={() => setLaunchEnded(true)}>
-              <source src="assets/gemini_generated_video_7C740615.mp4?v=na" type="video/mp4"/>
+              <source src="assets/gemini_generated_video_7C740615.mp4" type="video/mp4"/>
             </video>
             {launchEnded && (
               <button type="button" className="hv-replay" onClick={replayLaunch}
@@ -223,7 +212,7 @@ const Header = ({ mode, scrolled, lang }) => {
             )}
           </div>
         </div>
-        <div className="hv-launch-text hv-launch-text--visible">
+        <div className={`hv-launch-text${launchEnded ? ' hv-launch-text--visible' : ''}`}>
           <div className="hv-launch-text-inner">
             {lang === 'es'
               ? <><em>Nuestra marca evoluciona, nuestra ilusión continúa.</em>{' '}
@@ -245,7 +234,7 @@ const Header = ({ mode, scrolled, lang }) => {
     document.body
   ) : null;
 
-  // Vitruvio, no se muestra en la home
+  // Vitruvio — no se muestra en la home
   const vitruvio = (!isHomePage && !vitMin) ? ReactDOM.createPortal(
     <div className={`hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`}>
       <div className="hv-inner">
@@ -290,7 +279,7 @@ const Header = ({ mode, scrolled, lang }) => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Magnetic CTA, el botón RESERVA del header atrae el cursor cuando está
+  // Magnetic CTA — el botón RESERVA del header atrae el cursor cuando está
   // cerca (radio 80 px). El texto interior desliza max 12 px hacia el
   // cursor, el botón entero 6 px. Spring suave vía transition CSS.
   // Solo en desktop con hover real, off en reduced-motion.
@@ -371,10 +360,9 @@ const Header = ({ mode, scrolled, lang }) => {
           <NavLink href={NAV_PAGES.thalassa}>{t.nav[2]}</NavLink>
           <NavLink href={NAV_PAGES.salinas}>{t.nav[3]}</NavLink>
           <NavLink href={NAV_PAGES.estanciasLargas}>{t.nav[9]}</NavLink>
-          <NavLink href={NAV_PAGES.empresas}>{lang === 'es' ? 'Para empresas' : 'For business'}</NavLink>
         </nav>
         <div className="brand-center">
-          <a href="/" className="brand-lockup" aria-label="Hestía, Inicio">
+          <a href="/" className="brand-lockup" aria-label="Hestía — Inicio">
             <span className="hestia-logo-mark" aria-hidden="true">
               <img decoding="async" src="assets/logo-teal-transparent.png" alt="" className="hestia-logo" width="600" height="600"/>
             </span>
@@ -394,7 +382,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias}>{t.nav[7]}</NavLink>
             <NavLink href={NAV_PAGES.porqueHestia}>{t.nav[8]}</NavLink>
-            <NavLink href={NAV_PAGES.reservas} className="cta"><span className="cta-border" aria-hidden="true"/><span className="cta-text">{t.cta_nav}</span></NavLink>
+            <NavLink href={NAV_PAGES.reservas} className="cta"><span className="cta-text">{t.cta_nav}</span></NavLink>
           </nav>
           <button
             className={`hamburger-btn ${mobileOpen ? 'open' : ''}`}
@@ -439,19 +427,10 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.opiniones} className="mn-link">{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias} className="mn-link">{t.nav[7]}</NavLink>
             <NavLink href={NAV_PAGES.estanciasLargas} className="mn-link">{t.nav[9]}</NavLink>
-            <NavLink href={NAV_PAGES.empresas} className="mn-link">{lang === 'es' ? 'Para empresas' : 'For business'}</NavLink>
             <NavLink href={NAV_PAGES.ventajas} className="mn-link">✓ {lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks'}</NavLink>
           </div>
           <div className="mn-actions">
             <NavLink href={NAV_PAGES.reservas} className="mn-cta-primary">{t.cta_nav} →</NavLink>
-            <button
-              type="button"
-              className="mn-cta-secondary"
-              onClick={() => { close(); setAccessOpen(true); }}
-            >
-              <span className="mn-cta-ico" aria-hidden="true">✦</span>
-              {lang === 'es' ? 'Acceso huéspedes' : 'Guest access'}
-            </button>
           </div>
           <div className="mn-contacts">
             <a href="https://wa.me/34620316370" target="_blank" rel="noopener">
@@ -463,10 +442,6 @@ const Header = ({ mode, scrolled, lang }) => {
           </div>
         </nav>
       </div>
-      {accessOpen && typeof GuestAccessModal !== 'undefined' && ReactDOM.createPortal(
-        <GuestAccessModal lang={lang} onClose={() => setAccessOpen(false)} />,
-        document.body
-      )}
     </>
   );
 };
@@ -589,7 +564,7 @@ const Cookies = ({ lang }) => {
   }, []);
   // Permite re-abrir el banner desde cualquier sitio (footer, /cookies.html…)
   // disparando un evento global. Usuario puede revisar/cambiar el consentimiento
-  // sin tener que limpiar el localStorage a mano, RGPD-compliant.
+  // sin tener que limpiar el localStorage a mano — RGPD-compliant.
   React.useEffect(() => {
     const reopen = () => {
       localStorage.removeItem('hestia-cookies');
@@ -603,7 +578,7 @@ const Cookies = ({ lang }) => {
     const s = document.createElement('script');
     s.defer = true;
     // Proxy propio para evitar ad-blockers (cloudflareinsights.com está bloqueado).
-    // Worker: workers/analytics-proxy, desplegado en hestia-analytics.hestia-vera-almeria.workers.dev
+    // Worker: workers/analytics-proxy — desplegado en hestia-analytics.hestia-vera-almeria.workers.dev
     s.src = 'https://hestia-analytics.hestia-vera-almeria.workers.dev/s.js';
     s.setAttribute('data-cf-beacon',
       '{"token":"770c05669c6b45ea8f1026576fe7dcce",' +
@@ -670,6 +645,11 @@ const Footer = ({ lang }) => {
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
               </svg>
             </a>
+            <a href="https://twitter.com/hestiayourhome" target="_blank" rel="noopener" aria-label="Twitter / X">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
           </div>
           <div className="footer-social-cta">
             {lang === 'es'
@@ -693,7 +673,6 @@ const Footer = ({ lang }) => {
             <li><a href="opiniones.html">{t.nav[5]}</a></li>
             <li><a href="noticias.html">{t.nav[7]}</a></li>
             <li><a href="estancias-largas.html">{t.nav[9]}</a></li>
-            <li><a href="empresas.html">{lang === 'es' ? 'Para empresas' : 'For business'}</a></li>
             <li><a href="privacidad.html">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>
             <li><a href="cookies.html">Cookies</a></li>
             <li><a href="mapa.html">{lang === 'es' ? 'Mapa web' : 'Site map'}</a></li>

@@ -7,25 +7,7 @@
   <meta name="theme-color" content="#2A0F2E"/>
   <title>Página no encontrada · Hestía Your Home</title>
   <meta name="robots" content="noindex, follow"/>
-  <script>
-    /* Red de seguridad: URLs de la web antigua (/home/... y /rental/...) → página actual. */
-    (function () {
-      var p = location.pathname.toLowerCase();
-      if (p.indexOf('/home/') !== 0 && p.indexOf('/rental/') !== 0) return;
-      var t = '/';
-      if      (p.indexOf('thalassa') > -1) t = '/thalassa.html';
-      else if (p.indexOf('salinas')  > -1) t = '/salinas.html';
-      else if (p.indexOf('mar')      > -1) t = '/mar.html';
-      else if (p.indexOf('blog')     > -1 || p.indexOf('news') > -1 || p.indexOf('notici') > -1) t = '/noticias.html';
-      else if (p.indexOf('larga')    > -1 || p.indexOf('estancia') > -1 || p.indexOf('long') > -1) t = '/estancias-largas.html';
-      else if (p.indexOf('opinion')  > -1 || p.indexOf('review') > -1) t = '/opiniones.html';
-      else if (p.indexOf('nosotros') > -1 || p.indexOf('about') > -1) t = '/nosotros.html';
-      else if (p.indexOf('contact')  > -1) t = '/contacto.html';
-      else if (p.indexOf('reserva')  > -1 || p.indexOf('book') > -1 || p.indexOf('rental') > -1) t = '/reservas.html';
-      location.replace(t);
-    })();
-  </script>
-  <link rel="stylesheet" href="assets/styles.css?v=680"/>
+  <link rel="stylesheet" href="assets/styles.css?v=611"/>
   <style>
     .e404-wrap {
       min-height: 100dvh;

@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#2A0F2E"/>
   <title>Hestía Mar · Vera Playa, Almería</title>
   <meta name="robots" content="index, follow"/>
-  <meta name="description" content="Hestía Mar, terraza esquinera y vistas al mar. Mascotas bienvenidas. Vera Playa, Almería. Gestionado directamente por Alex y Fran."/>
+  <meta name="description" content="Hestía Mar — terraza esquinera y vistas al mar. Mascotas bienvenidas. Vera Playa, Almería. Gestionado directamente por Alex y Fran."/>
   <link rel="manifest" href="/site.webmanifest"/>
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml"/>
   <link rel="canonical" href="https://www.hestiayourhome.com/mar.html"/>
@@ -19,7 +19,7 @@
   <meta property="og:type"      content="website"/>
   <meta property="og:url"       content="https://www.hestiayourhome.com/mar.html"/>
   <meta property="og:title"     content="Hestía Mar · Terraza esquinera y vistas al mar · Vera Playa"/>
-  <meta property="og:description" content="Hestía Mar, terraza esquinera 20m² y vistas al mar. 2 habitaciones, hasta 6 personas. Mascotas bienvenidas. Vera Playa, Almería."/>
+  <meta property="og:description" content="Hestía Mar — terraza esquinera 20m² y vistas al mar. 2 habitaciones, hasta 6 personas. Mascotas bienvenidas. Vera Playa, Almería."/>
   <meta property="og:image"     content="https://www.hestiayourhome.com/assets/apt-vm.jpg"/>
   <meta property="og:image:width"  content="1255"/>
   <meta property="og:image:height" content="1146"/>
@@ -28,7 +28,7 @@
   <meta property="og:locale:alternate" content="en_GB"/>
   <meta name="twitter:card"        content="summary_large_image"/>
   <meta name="twitter:title"       content="Hestía Mar · Terraza esquinera y vistas al mar · Vera Playa"/>
-  <meta name="twitter:description" content="Hestía Mar, terraza esquinera 20m² y vistas al mar. 2 habitaciones, hasta 6 personas. Mascotas bienvenidas. Vera Playa, Almería."/>
+  <meta name="twitter:description" content="Hestía Mar — terraza esquinera 20m² y vistas al mar. 2 habitaciones, hasta 6 personas. Mascotas bienvenidas. Vera Playa, Almería."/>
   <meta name="twitter:image"       content="https://www.hestiayourhome.com/assets/apt-vm.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -36,14 +36,13 @@
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,opsz,wght@0,5..1200,400..900;1,5..1200,400..900&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,opsz,wght@0,5..1200,400..900;1,5..1200,400..900&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=680"/>          <link rel="preload" as="image" href="assets/apt-vm.jpg" fetchpriority="high"/>  <script type="application/ld+json">
+<link rel="stylesheet" href="assets/styles.css?v=611"/>          <link rel="preload" as="image" href="assets/apt-vm.jpg" fetchpriority="high"/>  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": ["Accommodation", "LodgingBusiness"],
+    "@type": "Accommodation",
     "name": "Hestía Mar",
-    "description": "Hestía Mar, terraza esquinera 20m² y vistas al mar. 2 habitaciones, 6 plazas + bebé. Mascotas bienvenidas. Vera Playa, Almería.",
+    "description": "Hestía Mar — terraza esquinera 20m² y vistas al mar. 2 habitaciones, 6 plazas + bebé. Mascotas bienvenidas. Vera Playa, Almería.",
     "url": "https://www.hestiayourhome.com/mar.html",
-    "sameAs": ["https://maps.app.goo.gl/r6tL6kJK6XHtYsCE7"],
     "numberOfRooms": 2,
     "occupancy": {"@type": "QuantitativeValue", "maxValue": 7},
     "amenityFeature": [
@@ -115,7 +114,7 @@
       "name": "¿A qué distancia está la playa?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Unos 300 metros a pie desde la salida de la urbanización, cinco minutos máximo hasta pisar la arena. La playa de Vera Playa es larga, tranquila y de arena fina."
+        "text": "Unos 300 metros a pie desde la salida de la urbanización — cinco minutos máximo hasta pisar la arena. La playa de Vera Playa es larga, tranquila y de arena fina."
       }
     }
   ]
@@ -189,7 +188,7 @@
     } catch (e) { console.warn('photo-positions.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=5b2f4cab84');
+      const res = await fetch(file + '?t=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

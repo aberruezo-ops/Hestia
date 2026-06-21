@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA, Mapa web (sitemap)
+// HESTÍA — Mapa web (sitemap)
 // Página accesible sólo desde el pie. Lista los apartados del sitio
 // organizados por bloque, en ES/EN según preferencia del huésped.
 // ================================================================
@@ -13,7 +13,7 @@ const MAPA_COPY = {
       {
         title: 'Los Hestías',
         items: [
-          { href: 'index.html', label: 'Home', desc: 'Empieza aquí, los tres Hestías de un vistazo.' },
+          { href: 'index.html', label: 'Home', desc: 'Empieza aquí — los tres Hestías de un vistazo.' },
           { href: 'mar.html', label: 'Hestía Mar', desc: 'Olivo · planta primera con jardín y terraza al amanecer.' },
           { href: 'thalassa.html', label: 'Hestía Thalassa', desc: 'Siena · ático con SPA comunitario y vistas panorámicas.' },
           { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Albero · tres piscinas y Parque Natural al lado.' },
@@ -23,23 +23,23 @@ const MAPA_COPY = {
         title: 'Reserva',
         items: [
           { href: 'reservas.html', label: 'Reservas', desc: 'Comprobar disponibilidad, ver precio y enviar la solicitud.' },
-          { href: 'contacto.html', label: 'Contacto', desc: 'WhatsApp, teléfono y email, te responde una persona.' },
+          { href: 'contacto.html', label: 'Contacto', desc: 'WhatsApp, teléfono y email — te responde una persona.' },
         ],
       },
       {
         title: 'Conócenos',
         items: [
-          { href: 'nosotros.html', label: 'Nosotros', desc: 'Alex y Fran, quiénes somos y por qué Vera Playa.' },
+          { href: 'nosotros.html', label: 'Nosotros', desc: 'Alex y Fran — quiénes somos y por qué Vera Playa.' },
           { href: 'porque-hestia.html', label: 'Por qué Hestía', desc: 'Nuestros seis valores y la paleta de Almería.' },
-          { href: 'opiniones.html', label: 'Opiniones', desc: 'Lo que dicen los huéspedes: Booking, Airbnb, Google y web.' },
-          { href: 'noticias.html', label: 'Noticias', desc: 'Lo mejor del territorio cada mes: Almería, Murcia, Granada.' },
+          { href: 'opiniones.html', label: 'Opiniones', desc: 'Lo que dicen los huéspedes — Booking, Airbnb, Google y web.' },
+          { href: 'noticias.html', label: 'Noticias', desc: 'Lo mejor del territorio cada mes — Almería, Murcia, Granada.' },
           { href: 'escribir-opinion.html', label: 'Dejar opinión', desc: 'Para huéspedes que ya han dormido en un Hestía.' },
         ],
       },
       {
         title: 'Legal',
         items: [
-          { href: 'privacidad.html', label: 'Privacidad', desc: 'Cómo tratamos tus datos, RGPD.' },
+          { href: 'privacidad.html', label: 'Privacidad', desc: 'Cómo tratamos tus datos — RGPD.' },
           { href: 'cookies.html', label: 'Cookies', desc: 'Qué cookies usamos y cómo gestionarlas.' },
         ],
       },
@@ -53,7 +53,7 @@ const MAPA_COPY = {
       {
         title: 'The Hestías',
         items: [
-          { href: 'index.html', label: 'Home', desc: 'Start here, the three Hestías at a glance.' },
+          { href: 'index.html', label: 'Home', desc: 'Start here — the three Hestías at a glance.' },
           { href: 'mar.html', label: 'Hestía Mar', desc: 'Olive · first floor with garden and sunrise terrace.' },
           { href: 'thalassa.html', label: 'Hestía Thalassa', desc: 'Sienna · penthouse with shared SPA and panoramic views.' },
           { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Ochre · three pools and the Nature Park next door.' },
@@ -63,23 +63,23 @@ const MAPA_COPY = {
         title: 'Book',
         items: [
           { href: 'reservas.html', label: 'Reservations', desc: 'Check availability, see the price and send the request.' },
-          { href: 'contacto.html', label: 'Contact', desc: 'WhatsApp, phone and email, a real person replies.' },
+          { href: 'contacto.html', label: 'Contact', desc: 'WhatsApp, phone and email — a real person replies.' },
         ],
       },
       {
         title: 'About us',
         items: [
-          { href: 'nosotros.html', label: 'About us', desc: 'Alex and Fran, who we are and why Vera Playa.' },
+          { href: 'nosotros.html', label: 'About us', desc: 'Alex and Fran — who we are and why Vera Playa.' },
           { href: 'porque-hestia.html', label: 'Why Hestía', desc: 'Our six values and the Almería palette.' },
-          { href: 'opiniones.html', label: 'Reviews', desc: 'What guests say: Booking, Airbnb, Google and our site.' },
-          { href: 'noticias.html', label: 'News', desc: 'The best of the territory each month: Almería, Murcia, Granada.' },
+          { href: 'opiniones.html', label: 'Reviews', desc: 'What guests say — Booking, Airbnb, Google and our site.' },
+          { href: 'noticias.html', label: 'News', desc: 'The best of the territory each month — Almería, Murcia, Granada.' },
           { href: 'escribir-opinion.html', label: 'Leave a review', desc: 'For guests who have stayed at a Hestía.' },
         ],
       },
       {
         title: 'Legal',
         items: [
-          { href: 'privacidad.html', label: 'Privacy', desc: 'How we handle your data, GDPR.' },
+          { href: 'privacidad.html', label: 'Privacy', desc: 'How we handle your data — GDPR.' },
           { href: 'cookies.html', label: 'Cookies', desc: 'What cookies we use and how to manage them.' },
         ],
       },

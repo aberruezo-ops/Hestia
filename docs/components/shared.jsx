@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA, componentes compartidos
+// HESTÍA — componentes compartidos
 // ================================================================
 
 // View Transition helper: usa la API nativa del navegador (Chrome 111+,
@@ -18,7 +18,7 @@ const _vt = (cb) => {
 };
 
 // ----------------------------------------------------------------
-// _hestiaTrack, registra eventos de funnel.
+// _hestiaTrack — registra eventos de funnel.
 // Guarda en localStorage (ring buffer 300 eventos) para la pestaña
 // Analítica de /p-edit. También intenta enviar al endpoint RUM de
 // Cloudflare si el beacon está cargado.
@@ -92,12 +92,12 @@ const COPY = {
     hero_cta_nosotros: 'Sobre nosotros y Hestía',
     hero_cta_2: 'Escríbenos',
     scroll_hint: 'Desliza para despertar',
-    hero_meta_right: 'Noche mediterránea, 36.96° N, 1.83° W',
+    hero_meta_right: 'Noche mediterránea — 36.96° N, 1.83° W',
     bridge_title: '…y amanece sobre Vera Playa.',
-    bridge_sub: 'La noche morada se retira despacio. El alba trae el albero: tierra, pared encalada, sal seca. A las siete, el Mediterráneo abre el ojo en teal y los olivos reciben la luz de costado. Al fondo, el Desierto de Tabernas ya es naranja.',
+    bridge_sub: 'La noche morada se retira despacio. El alba trae el albero — tierra, pared encalada, sal seca. A las siete, el Mediterráneo abre el ojo en teal y los olivos reciben la luz de costado. Al fondo, el Desierto de Tabernas ya es naranja.',
     apts_eyebrow: 'Nuestros tres Hestías',
     apts_title: (<>Tres atmósferas, <em>una misma casa.</em></>),
-    apts_sub: 'Cada uno toma su color del paisaje que lo rodea. Tres hogares: elige el tuyo, o ven tres veces.',
+    apts_sub: 'Cada uno toma su color del paisaje que lo rodea. Tres hogares — elige el tuyo, o ven tres veces.',
     apt_01_concept: 'El campo de olivos llega al mar',
     apt_02_concept: 'El ático sobre el Mediterráneo y el Salar de los Canos',
     apt_03_concept: 'El amarillo albero del amanecer sobre las salinas',
@@ -113,15 +113,15 @@ const COPY = {
     gallery_title: (<>La luz de Almería <em>cuenta la historia.</em></>),
     team_eyebrow: 'Quienes os reciben',
     team_title: (<>No somos una recepción. <em>Somos Alex y Fran.</em></>),
-    team_intro: 'En 2016 nacieron los tres, el nombre lo tomamos de la diosa griega del hogar. Diez años después seguimos limpiando, recibiendo, respondiendo WhatsApp y eligiendo las toallas. Todo lo hacemos nosotros, por eso todo importa.',
+    team_intro: 'En 2016 nacieron los tres — el nombre lo tomamos de la diosa griega del hogar. Diez años después seguimos limpiando, recibiendo, respondiendo WhatsApp y eligiendo las toallas. Todo lo hacemos nosotros, por eso todo importa.',
     alex_role: 'Reserva · Antes de tu llegada',
     alex_quote: '«A ti, antes de que llegues, te lo cuento todo. Después, cuando te vayas, te echaré de menos.»',
     fran_role: 'Estancia · Mientras estás aquí',
-    fran_quote: '«Si algo falla, cambia o necesita atención, estoy aquí. Tu estancia, mi trabajo.»',
+    fran_quote: '«Si algo falla, cambia o necesita atención — estoy aquí. Tu estancia, mi trabajo.»',
     manifest_eyebrow: 'El viajero que hace hogar',
-    manifest_title: (<>Hestía no se visita, <em>se vive, y se cuida para quien venga después.</em></>),
-    manifest_lead_1: 'No vienes a hacer turismo. Vienes a cocinar tu desayuno, a leer en la terraza, a seguir tu ritmo. Esto no es un hotel: durante tu estancia, es tu casa.',
-    manifest_lead_2: 'Y porque es tu casa, te pedimos lo que se le pide a quien quiere su hogar: que lo cuides. Que lo dejes listo. Para quien venga detrás, será su casa entonces, igual que es la tuya ahora.',
+    manifest_title: (<>Hestía no se visita, <em>se vive — y se cuida para quien venga después.</em></>),
+    manifest_lead_1: 'No vienes a hacer turismo. Vienes a cocinar tu desayuno, a leer en la terraza, a seguir tu ritmo. Esto no es un hotel — durante tu estancia, es tu casa.',
+    manifest_lead_2: 'Y porque es tu casa, te pedimos lo que se le pide a quien quiere su hogar: que lo cuides. Que lo dejes listo. Para quien venga detrás, será su casa entonces — igual que es la tuya ahora.',
     manifest_principles_eyebrow: 'Cuatro maneras de cuidar lo que es tuyo por unos días',
     manifest_p1: 'Agradecemos que repongas lo que uses.',
     manifest_p2: 'Si algo se estropea, nos gustaría saberlo.',
@@ -131,12 +131,12 @@ const COPY = {
     ratings_eyebrow: 'Lo que dicen de nosotros',
     ratings_title: (<>Diez años puntuando <em>casi perfecto.</em></>),
     ratings_sub: 'No es un eslogan. Son cifras verificadas por las plataformas, escritas por las familias que han dormido aquí.',
-    rating_booking_desc: 'Valoración Booking.com, promedio de los tres.',
+    rating_booking_desc: 'Valoración Booking.com — promedio de los tres.',
     rating_airbnb_desc: 'Superhost desde 2018. Puntuación máxima ininterrumpida.',
-    rating_google_desc: 'Google Maps, opiniones de huéspedes que volvieron a Vera.',
+    rating_google_desc: 'Google Maps — opiniones de huéspedes que volvieron a Vera.',
     contact_eyebrow: 'Reserva directa, sin intermediarios',
     contact_title: (<>Escríbenos. Te responde <em>una persona.</em></>),
-    contact_sub: 'Alex en español, Fran en inglés. WhatsApp, teléfono o email: sin formularios eternos, sin bots, sin comisiones.',
+    contact_sub: 'Alex en español, Fran en inglés. WhatsApp, teléfono o email — sin formularios eternos, sin bots, sin comisiones.',
     contact_cta_wa: 'WhatsApp Alex (ES)',
     contact_cta_wa_href: 'https://wa.me/34620316370',
     contact_cta_mail: 'info@hestiayourhome.com',
@@ -160,12 +160,12 @@ const COPY = {
     hero_cta_nosotros: 'About us & Hestía',
     hero_cta_2: 'Say hello',
     scroll_hint: 'Scroll to wake up',
-    hero_meta_right: 'Mediterranean night, 36.96° N, 1.83° W',
+    hero_meta_right: 'Mediterranean night — 36.96° N, 1.83° W',
     bridge_title: '…and morning breaks over Vera Playa.',
-    bridge_sub: 'The purple night slowly withdraws. Dawn brings the ochre: earth, whitewashed wall, dried salt. By seven, the Mediterranean opens its eye in teal, the olive trees catch the side-light. In the distance, the Tabernas Desert is already orange.',
+    bridge_sub: 'The purple night slowly withdraws. Dawn brings the ochre — earth, whitewashed wall, dried salt. By seven, the Mediterranean opens its eye in teal, the olive trees catch the side-light. In the distance, the Tabernas Desert is already orange.',
     apts_eyebrow: 'Our three Hestías',
     apts_title: (<>Three moods, <em>one same home.</em></>),
-    apts_sub: 'Each one borrows its colour from the landscape around it. Three homes: choose yours, or come three times.',
+    apts_sub: 'Each one borrows its colour from the landscape around it. Three homes — choose yours, or come three times.',
     apt_01_concept: 'Where the olive grove meets the sea',
     apt_02_concept: 'Penthouse above the Mediterranean and the Salar de los Canos',
     apt_03_concept: 'Ochre yellow, sunrise over the salt flats',
@@ -181,15 +181,15 @@ const COPY = {
     gallery_title: (<>Almería's light <em>tells the story.</em></>),
     team_eyebrow: 'The hosts',
     team_title: (<>Not a front desk. <em>Just Alex & Fran.</em></>),
-    team_intro: 'In 2016 the three Hestías opened, we took the name from the Greek goddess of home. Ten years later we still clean, welcome, reply WhatsApp and choose the towels. We do everything ourselves, that is why it all matters.',
+    team_intro: 'In 2016 the three Hestías opened — we took the name from the Greek goddess of home. Ten years later we still clean, welcome, reply WhatsApp and choose the towels. We do everything ourselves — that is why it all matters.',
     alex_role: 'Booking · Before you arrive',
     alex_quote: '«Before you arrive, I will tell you everything. After you leave, I will miss you a little.»',
     fran_role: 'Stay · While you are here',
-    fran_quote: '«If anything breaks, calls, or changes, I am here. Your stay, my job.»',
+    fran_quote: '«If anything breaks, calls, or changes — I am here. Your stay, my job.»',
     manifest_eyebrow: 'The traveler who makes a home',
-    manifest_title: (<>Hestía isn’t visited. <em>It’s lived in: and cared for, for whoever comes next.</em></>),
-    manifest_lead_1: 'You’re not here as a tourist. You’re here to cook your breakfast, read on the terrace, keep your own rhythm. This isn’t a hotel: while you stay, it’s your home.',
-    manifest_lead_2: 'And because it’s your home, we ask the same thing one asks of anyone who loves their home: care for it. Leave it ready. For whoever comes next, it will be their home then, just as it’s yours now.',
+    manifest_title: (<>Hestía isn’t visited. <em>It’s lived in — and cared for, for whoever comes next.</em></>),
+    manifest_lead_1: 'You’re not here as a tourist. You’re here to cook your breakfast, read on the terrace, keep your own rhythm. This isn’t a hotel — while you stay, it’s your home.',
+    manifest_lead_2: 'And because it’s your home, we ask the same thing one asks of anyone who loves their home: care for it. Leave it ready. For whoever comes next, it will be their home then — just as it’s yours now.',
     manifest_principles_eyebrow: 'Four ways to care for what is yours for a few days',
     manifest_p1: 'We appreciate you replacing what you use.',
     manifest_p2: 'If something breaks, we\'d love to know.',
@@ -199,12 +199,12 @@ const COPY = {
     ratings_eyebrow: 'What they say about us',
     ratings_title: (<>Ten years scoring <em>almost perfect.</em></>),
     ratings_sub: 'Not a slogan. Verified numbers from the platforms, written by the families who slept here.',
-    rating_booking_desc: 'Booking.com average, across our three Hestías.',
+    rating_booking_desc: 'Booking.com average — across our three Hestías.',
     rating_airbnb_desc: 'Superhost since 2018. Top score, uninterrupted.',
-    rating_google_desc: 'Google Maps, reviews from guests who came back to Vera.',
+    rating_google_desc: 'Google Maps — reviews from guests who came back to Vera.',
     contact_eyebrow: 'Direct booking, no middlemen',
     contact_title: (<>Write to us. A <em>real person</em> replies.</>),
-    contact_sub: 'Alex in Spanish, Fran in English. WhatsApp, phone or email: no endless forms, no bots, no commissions.',
+    contact_sub: 'Alex in Spanish, Fran in English. WhatsApp, phone or email — no endless forms, no bots, no commissions.',
     contact_cta_wa: 'WhatsApp Fran (EN)',
     contact_cta_wa_href: 'https://wa.me/34654138251',
     contact_cta_mail: 'info@hestiayourhome.com',
@@ -216,7 +216,7 @@ const COPY = {
   }
 };
 
-// Hooks compartidos, disponibles en todas las páginas
+// Hooks compartidos — disponibles en todas las páginas
 const useScrollMode = () => {
   const [mode, setMode] = React.useState('night');
   const [scrolled, setScrolled] = React.useState(false);
@@ -323,43 +323,43 @@ const QUICK_FAQ = {
   vm: {
     es: [
       { q: '¿Por qué elegiría Hestía Mar sobre los otros dos?',
-        a: <>Mar es planta primera, con acceso al jardín y a la piscina comunitaria. Al ser de esquina da a tres calles distintas: hacia el mar, hacia los lados y hacia la zona de entrada, lo que permite ventilación cruzada natural en todas las estancias. La terraza de 20m² está orientada al amanecer, pero desde ella ves el ciclo solar completo. El más cercano a la playa de los tres.</> },
+        a: <>Mar es planta primera, con acceso al jardín y a la piscina comunitaria. Al ser de esquina da a tres calles distintas: hacia el mar, hacia los lados y hacia la zona de entrada — lo que permite ventilación cruzada natural en todas las estancias. La terraza de 20m² está orientada al amanecer, pero desde ella ves el ciclo solar completo. El más cercano a la playa de los tres.</> },
       { q: '¿Puedo traer a mi perro (o gato)?',
         a: <>Sí, las mascotas son bienvenidas en los tres, siempre bajo petición previa y con suplemento. Solo pedimos que se respeten unas condiciones básicas y sensatas: dentro de Hestía, en las zonas comunes de la urbanización y en los espacios públicos. Avísanos al reservar.</> },
       { q: '¿El jacuzzi está disponible durante mi estancia?',
         a: <>El jacuzzi es comunitario y está abierto durante la temporada de verano, igual que la piscina. Si tienes dudas sobre tus fechas concretas, pregúntanos antes de reservar.</> },
       { q: '¿A qué distancia está la playa?',
-        a: <>Unos 300 metros a pie desde la salida de la urbanización, cinco minutos máximo hasta pisar la arena. La playa de Vera Playa es larga, tranquila y de arena fina.</> },
+        a: <>Unos 300 metros a pie desde la salida de la urbanización — cinco minutos máximo hasta pisar la arena. La playa de Vera Playa es larga, tranquila y de arena fina.</> },
     ],
     en: [
       { q: 'Why would I choose Hestía Mar over the other two?',
-        a: <>Mar is on the first floor, with access to the garden and shared pool. As a corner unit facing three different streets: sea side, lateral and entrance, it has natural cross-ventilation throughout. The 20m² terrace faces the sunrise, but from it you can follow the entire arc of the sun. The closest to the beach of the three.</> },
+        a: <>Mar is on the first floor, with access to the garden and shared pool. As a corner unit facing three different streets — sea side, lateral and entrance — it has natural cross-ventilation throughout. The 20m² terrace faces the sunrise, but from it you can follow the entire arc of the sun. The closest to the beach of the three.</> },
       { q: 'Can I bring my dog (or cat)?',
         a: <>Yes, pets are welcome in all three Hestías, always on request and with a supplement. We simply ask that basic conditions are respected: inside the Hestía, in the communal areas of the complex, and in public spaces. Let us know when booking.</> },
       { q: 'Is the jacuzzi available during my stay?',
-        a: <>The jacuzzi is a shared facility, open during the summer season, just like the pool. If you have doubts about your specific dates, ask us before booking.</> },
+        a: <>The jacuzzi is a shared facility, open during the summer season — just like the pool. If you have doubts about your specific dates, ask us before booking.</> },
       { q: 'How far is the beach?',
-        a: <>About 300 metres on foot from the complex exit, five minutes at most to reach the sand. Vera Playa beach is long, quiet and fine-sand.</> },
+        a: <>About 300 metres on foot from the complex exit — five minutes at most to reach the sand. Vera Playa beach is long, quiet and fine-sand.</> },
     ],
   },
   vt: {
     es: [
       { q: '¿Por qué elegiría Hestía Thalassa sobre los otros dos?',
-        a: <>Thalassa es el ático, el piso más alto de la urbanización. La terraza panorámica tiene vistas al Mediterráneo y al Salar de los Canos, el paisaje más abierto y luminoso de los tres. Además, la urbanización cuenta con SPA comunitario (con sauna), piscina y pistas de pádel.</> },
+        a: <>Thalassa es el ático, el piso más alto de la urbanización. La terraza panorámica tiene vistas al Mediterráneo y al Salar de los Canos — el paisaje más abierto y luminoso de los tres. Además, la urbanización cuenta con SPA comunitario (con sauna), piscina y pistas de pádel.</> },
       { q: '¿Cómo funciona el SPA de la urbanización?',
         a: <>El SPA es comunitario y está abierto en otoño, invierno y primavera. En verano permanece cerrado, aunque el gimnasio permanece abierto todo el año. El SPA también dispone de sauna.</> },
       { q: '¿Qué vistas tiene la terraza del ático?',
-        a: <>Desde la terraza panorámica ves el Mediterráneo y, hacia el interior, el Salar de los Canos, un paisaje árido y de gran belleza. La zona tiene una luz y una aridez espectaculares. El Desierto de Tabernas propiamente dicho está a unos 30 minutos en coche.</> },
+        a: <>Desde la terraza panorámica ves el Mediterráneo y, hacia el interior, el Salar de los Canos — un paisaje árido y de gran belleza. La zona tiene una luz y una aridez espectaculares. El Desierto de Tabernas propiamente dicho está a unos 30 minutos en coche.</> },
       { q: '¿Puedo traer mascotas?',
         a: <>Sí, en los tres. Siempre bajo petición previa y con un pequeño suplemento. Solo pedimos que se respeten unas normas básicas y sensatas: que no suban a sofás, sillones ni camas, y que no hagan sus necesidades en zonas comunes ni dentro de Hestía.</> },
     ],
     en: [
       { q: 'Why would I choose Hestía Thalassa over the other two?',
-        a: <>Thalassa is the penthouse, the highest floor in the complex. The panoramic terrace looks out over the Mediterranean and the Salar de los Canos: the most open and light-filled view of the three. The complex also has a shared SPA (with sauna), pool and padel courts.</> },
+        a: <>Thalassa is the penthouse — the highest floor in the complex. The panoramic terrace looks out over the Mediterranean and the Salar de los Canos: the most open and light-filled view of the three. The complex also has a shared SPA (with sauna), pool and padel courts.</> },
       { q: 'How does the shared SPA work?',
         a: <>The SPA is a communal facility, open in autumn, winter and spring. It closes during the summer, although the gym stays open all year round. There is also a sauna.</> },
       { q: 'What can you see from the penthouse terrace?',
-        a: <>From the panoramic terrace you look out over the Mediterranean and, inland, the Salar de los Canos: an arid, strikingly beautiful landscape. The area is dramatic and dry. The Tabernas Desert proper is about 30 minutes by car.</> },
+        a: <>From the panoramic terrace you look out over the Mediterranean and, inland, the Salar de los Canos — an arid, strikingly beautiful landscape. The area is dramatic and dry. The Tabernas Desert proper is about 30 minutes by car.</> },
       { q: 'Can I bring pets?',
         a: <>Yes, in all three Hestías. Always on request and with a small supplement. We just ask that basic rules are respected: pets should not get on sofas, armchairs or beds, and must not relieve themselves inside the Hestía or in communal areas.</> },
     ],
@@ -367,21 +367,21 @@ const QUICK_FAQ = {
   vs: {
     es: [
       { q: '¿Por qué elegiría Hestía Salinas sobre los otros dos?',
-        a: <>Salinas es el más espacioso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de pádel comunitarios, y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina con acceso peatonal directo. La luz dorada de Almería llena cada habitación, y la naturaleza empieza donde termina la acera.</> },
+        a: <>Salinas es el más espacioso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de pádel comunitarios, y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina con acceso peatonal directo. La luz dorada de Almería llena cada habitación — y la naturaleza empieza donde termina la acera.</> },
       { q: '¿Qué son las Salinas de Puerto Rey?',
         a: <>Un Parque Natural a pocos metros, con flamencos, aves migratorias y una luz dorada al amanecer única en Europa. Una de las razones por las que Salinas tiene algo que los demás no tienen.</> },
       { q: '¿Hay de verdad tres piscinas?',
-        a: <>Sí. La urbanización tiene tres piscinas comunitarias: no una sola dividida, sino tres zonas diferenciadas con orientaciones distintas. Además hay gimnasio y sauna comunitarios (el gimnasio abierto todo el año; la sauna, solo fuera de temporada de verano) y pistas de pádel. Una de las urbanizaciones mejor equipadas de Vera Playa.</> },
+        a: <>Sí. La urbanización tiene tres piscinas comunitarias — no una sola dividida, sino tres zonas diferenciadas con orientaciones distintas. Además hay gimnasio y sauna comunitarios (el gimnasio abierto todo el año; la sauna, solo fuera de temporada de verano) y pistas de pádel. Una de las urbanizaciones mejor equipadas de Vera Playa.</> },
       { q: '¿Puedo traer mascotas?',
         a: <>Sí, en los tres. Siempre bajo petición previa y con suplemento, respetando unas condiciones básicas dentro de Hestía, en las zonas comunes y en los espacios públicos.</> },
     ],
     en: [
       { q: 'Why would I choose Hestía Salinas over the other two?',
-        a: <>Salinas is the most spacious of the three. Two terraces, three pools, a communal gym, sauna and padel courts, and the Puerto Rey Salt-flat Nature Park around the corner with direct pedestrian access. Almería's golden afternoon light fills every room, and nature begins where the pavement ends.</> },
+        a: <>Salinas is the most spacious of the three. Two terraces, three pools, a communal gym, sauna and padel courts, and the Puerto Rey Salt-flat Nature Park around the corner with direct pedestrian access. Almería's golden afternoon light fills every room — and nature begins where the pavement ends.</> },
       { q: 'What is the Puerto Rey Nature Park?',
         a: <>A natural park a few metres away, with flamingos, migratory birds and a golden light at sunrise unique in Europe. One of the reasons Salinas has something the others don't.</> },
       { q: 'Are there really three pools?',
-        a: <>Yes. The complex has three community pools: not one divided, but three separate areas with different orientations. There is also a communal gym and sauna (gym open all year; sauna closed in summer) and padel courts. One of the best-equipped complexes in Vera Playa.</> },
+        a: <>Yes. The complex has three community pools — not one divided, but three separate areas with different orientations. There is also a communal gym and sauna (gym open all year; sauna closed in summer) and padel courts. One of the best-equipped complexes in Vera Playa.</> },
       { q: 'Can I bring pets?',
         a: <>Yes, in all three Hestías. Always on request and with a supplement, as long as basic conditions are respected inside the Hestía, in the communal areas and in public spaces.</> },
     ],
@@ -391,7 +391,7 @@ const QUICK_FAQ = {
       { q: '¿Desde cuándo lo hacéis vosotros mismos?',
         a: <>Desde 2016. En diez años hemos recibido a más de 600 familias. Nunca hemos externalizado la gestión: nosotros gestionamos, nosotros cuidamos.</> },
       { q: '¿Por qué se llaman así cada Hestía?',
-        a: <>Hestía era la diosa griega del hogar: la diosa pacífica, la que guardaba el fuego de casa. Eso es lo que intentamos hacer: que Hestía deje de ser un sitio donde dormir y se convierta en un lugar donde quedarse.</> },
+        a: <>Hestía era la diosa griega del hogar — la diosa pacífica, la que guardaba el fuego de casa. Eso es lo que intentamos hacer: que Hestía deje de ser un sitio donde dormir y se convierta en un lugar donde quedarse.</> },
       { q: '¿Hay alguna agencia o gestor detrás?',
         a: <>No. Somos Alex y Fran. No hay agencia, no hay gestor, no hay centralita. Cuando nos escribes, nos escribes a nosotros directamente.</> },
       { q: '¿Qué pasa si algo falla durante mi estancia?',
@@ -401,7 +401,7 @@ const QUICK_FAQ = {
       { q: 'How long have you been managing the Hestías yourselves?',
         a: <>Since 2016. In ten years we have hosted over 600 families. We have never outsourced management: we still clean, reply and choose the towels ourselves. <a href="nosotros.html">Read our story.</a></> },
       { q: "Why are they called Hestía?",
-        a: <>Hestía was the Greek goddess of the hearth: the peaceful goddess, guardian of the home fire. That is what we try to do: turn a Hestía from a place to sleep into a place you want to stay.</> },
+        a: <>Hestía was the Greek goddess of the hearth — the peaceful goddess, guardian of the home fire. That is what we try to do: turn a Hestía from a place to sleep into a place you want to stay.</> },
       { q: 'Is there an agency or property manager behind you?',
         a: <>No. We are Alex and Fran. No agency, no manager, no call centre. When you write to us, you are writing to us directly.</> },
       { q: 'What happens if something goes wrong during my stay?',
@@ -411,49 +411,45 @@ const QUICK_FAQ = {
   opiniones: {
     es: [
       { q: '¿Estas valoraciones son reales y verificadas?',
-        a: <>Sí. Las puntuaciones de Booking.com, Airbnb y Google Maps son verificadas por las propias plataformas, solo pueden valorar quienes han completado una estancia real. No podemos modificarlas.</> },
+        a: <>Sí. Las puntuaciones de Booking.com, Airbnb y Google Maps son verificadas por las propias plataformas — solo pueden valorar quienes han completado una estancia real. No podemos modificarlas.</> },
       { q: '¿Sois realmente Superhost en Airbnb?',
         a: <>Sí, desde 2018 de forma ininterrumpida. El estatus Superhost se revisa cada trimestre y requiere mantener puntuación máxima y tiempo de respuesta alto de forma continua. No es un título que se queda para siempre.</> },
       { q: '¿Qué es lo que más valoran los huéspedes?',
         a: <>La atención personal de Alex y Fran, la limpieza y el estado de cada Hestía. Y que cuando algo falla buscan soluciones en el momento.</> },
       { q: '¿Cómo dejo una reseña tras mi estancia?',
-        a: <>En Booking.com, Airbnb o Google Maps, según donde hayas reservado. También puedes escribirnos directamente, nos alegra saber cómo fue la experiencia.</> },
+        a: <>En Booking.com, Airbnb o Google Maps, según donde hayas reservado. También puedes escribirnos directamente — nos alegra saber cómo fue la experiencia.</> },
     ],
     en: [
       { q: 'Are these ratings real and verified?',
-        a: <>Yes. Scores on Booking.com, Airbnb and Google Maps are verified by the platforms themselves, only guests who have completed a real stay can leave a review. We cannot modify them.</> },
+        a: <>Yes. Scores on Booking.com, Airbnb and Google Maps are verified by the platforms themselves — only guests who have completed a real stay can leave a review. We cannot modify them.</> },
       { q: 'Are you really a Superhost on Airbnb?',
         a: <>Yes, continuously since 2018. Superhost status is reviewed every quarter and requires maintaining top scores and response times consistently. It is not a title that stays forever.</> },
       { q: 'What do guests value most?',
-        a: <>The personal attention from Alex and Fran, cleanliness and condition of the Hestías, and location. And that when something goes wrong, it genuinely gets fixed, no excuses.</> },
+        a: <>The personal attention from Alex and Fran, cleanliness and condition of the Hestías, and location. And that when something goes wrong, it genuinely gets fixed — no excuses.</> },
       { q: 'How do I leave a review after my stay?',
-        a: <>On Booking.com, Airbnb or Google Maps, depending on where you booked. You can also write to us directly, we love hearing how the experience went.</> },
+        a: <>On Booking.com, Airbnb or Google Maps, depending on where you booked. You can also write to us directly — we love hearing how the experience went.</> },
     ],
   },
   reservas: {
     es: [
       { q: '¿Es mejor reservar directo que por Booking o Airbnb?',
-        a: <>Sí: reservando directo no pagas las comisiones que cobran las plataformas, así que casi siempre sale más barato. A veces lanzan promociones que no controlamos; si ves un precio más bajo, tráenoslo: no solo te lo igualamos, te lo mejoramos. Sin intermediarios, hablando con los propietarios. <a href="reservas.html">Reserva aquí.</a></> },
-      { q: '¿Y si veo un precio más barato en una plataforma?',
-        a: <>Puede pasar en momentos puntuales: Booking o Airbnb lanzan sus propios descuentos y programas (ofertas de última hora, niveles de fidelidad, cupones…) que nosotros no controlamos, así que a veces su precio baja del que damos por defecto. No es que te cobremos de más: es su promoción, no nuestro precio real. Si te ocurre, escríbenos con el precio que ves: nos adaptamos y hacemos todo lo posible por mejorarlo.</> },
+        a: <>Sí. Y si encuentras un precio más bajo en cualquier plataforma, nuestro precio directo es siempre mejor que cualquier plataforma. Sin comisiones, sin intermediarios. <a href="reservas.html">Reserva aquí.</a></> },
       { q: '¿Cuánto tardáis en confirmar la reserva?',
-        a: <>Normalmente en minutos. Casi siempre respondemos el mismo día y, la mayoría de las veces, en cuestión de minutos.</> },
+        a: <>Menos de 24 horas. En la mayoría de los casos respondemos el mismo día — y en muchos casos, en menos de una hora.</> },
       { q: '¿Qué pasa si necesito cambiar las fechas?',
-        a: <>Escríbenos. Somos flexibles con cambios y cancelaciones siempre que se puedan gestionar. No hay que batallar con ninguna plataforma, es una conversación entre personas.</> },
+        a: <>Escríbenos. Somos flexibles con cambios y cancelaciones siempre que se puedan gestionar. No hay que batallar con ninguna plataforma — es una conversación entre personas.</> },
       { q: '¿Tenéis política de cancelación?',
         a: <>Sí. Te la explicamos al confirmar la reserva, según la temporada y las fechas. Si tienes dudas antes de reservar, pregúntanos sin compromiso.</> },
     ],
     en: [
       { q: 'Is it better to book directly than through Booking or Airbnb?',
-        a: <>Yes: booking direct you skip the commissions platforms charge, so it's almost always cheaper. They sometimes run promos we don't control; if you find a lower price, bring it to us: we don't just match it, we beat it. No middlemen, straight with the owners. <a href="reservas.html">Book here.</a></> },
-      { q: 'What if I see a cheaper price on a platform?',
-        a: <>It can happen at certain moments: Booking or Airbnb run their own discounts and programs (last-minute deals, loyalty tiers, coupons…) that we don't control, so sometimes their price dips below our default one. It doesn't mean we're overcharging, it's their promotion, not our real price. If it happens, write to us with the price you see: we'll adapt and do everything we can to beat it.</> },
+        a: <>Yes. Our direct price is always better than any platform — no exceptions, no middlemen. <a href="reservas.html">Book here.</a></> },
       { q: 'How long does confirmation take?',
-        a: <>Usually within minutes. Almost always the same day and, most of the time, within minutes.</> },
+        a: <>Under 24 hours. In most cases we reply the same day — and often in under an hour.</> },
       { q: 'What if I need to change my dates?',
-        a: <>Write to us. We are flexible with changes and cancellations as long as they can be managed. No need to fight with a platform, it is a conversation between people.</> },
+        a: <>Write to us. We are flexible with changes and cancellations as long as they can be managed. No need to fight with a platform — it is a conversation between people.</> },
       { q: 'Do you have a cancellation policy?',
-        a: <>Yes. We explain it when we confirm your booking, depending on the season and dates. If you have doubts before booking, just ask, no commitment.</> },
+        a: <>Yes. We explain it when we confirm your booking, depending on the season and dates. If you have doubts before booking, just ask — no commitment.</> },
     ],
   },
 };
@@ -493,18 +489,18 @@ const SABIAS_QUE_FACTS = [
   /* ── Almería y Vera Playa ── */
   {
     type: 'fact',
-    es: 'Almería recibe más de 3.000 horas de sol al año, casi el doble que la media europea.',
-    en: 'Almería receives over 3,000 hours of sunshine a year, almost twice the European average.',
+    es: 'Almería recibe más de 3.000 horas de sol al año — casi el doble que la media europea.',
+    en: 'Almería receives over 3,000 hours of sunshine a year — almost twice the European average.',
   },
   {
     type: 'fact',
     es: 'Almería tiene más días de sol al año que cualquier capital de Europa, incluidas Atenas y Lisboa.',
-    en: 'Almería has more sunny days per year than any European capital, including Athens and Lisbon.',
+    en: 'Almería has more sunny days per year than any European capital — including Athens and Lisbon.',
   },
   {
     type: 'fact',
-    es: '"Almería" viene del árabe Al-Mariyya, "el espejo del mar".',
-    en: '"Almería" comes from the Arabic Al-Mariyya, meaning "the mirror of the sea".',
+    es: '"Almería" viene del árabe Al-Mariyya — "el espejo del mar".',
+    en: '"Almería" comes from the Arabic Al-Mariyya — meaning "the mirror of the sea".',
   },
   {
     type: 'fact',
@@ -528,18 +524,18 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'El paseo marítimo de Vera Playa tiene casi 3 kilómetros sin coches, uno de los más largos del litoral mediterráneo español.',
-    en: 'The Vera Playa promenade stretches nearly 3 kilometres without a car, one of the longest on the Spanish Mediterranean coast.',
+    es: 'El paseo marítimo de Vera Playa tiene casi 3 kilómetros sin coches — uno de los más largos del litoral mediterráneo español.',
+    en: 'The Vera Playa promenade stretches nearly 3 kilometres without a car — one of the longest on the Spanish Mediterranean coast.',
   },
   {
     type: 'fact',
-    es: 'La temperatura media del Mediterráneo en Vera supera los 26 °C en verano, más cálida que en Mallorca o la Costa Brava.',
-    en: 'The Mediterranean at Vera averages over 26 °C in summer, warmer than Mallorca or the Costa Brava.',
+    es: 'La temperatura media del Mediterráneo en Vera supera los 26 °C en verano — más cálida que en Mallorca o la Costa Brava.',
+    en: 'The Mediterranean at Vera averages over 26 °C in summer — warmer than Mallorca or the Costa Brava.',
   },
   {
     type: 'fact',
-    es: 'El Mediterráneo en Vera Playa alcanza hasta 28 °C en agosto, más cálido que el Caribe en esas fechas.',
-    en: 'The Mediterranean at Vera Playa reaches up to 28 °C in August, warmer than the Caribbean at that time of year.',
+    es: 'El Mediterráneo en Vera Playa alcanza hasta 28 °C en agosto — más cálido que el Caribe en esas fechas.',
+    en: 'The Mediterranean at Vera Playa reaches up to 28 °C in August — warmer than the Caribbean at that time of year.',
   },
   {
     type: 'fact',
@@ -549,8 +545,8 @@ const SABIAS_QUE_FACTS = [
   /* ── Cabo de Gata y naturaleza ── */
   {
     type: 'fact',
-    es: 'El Parque Natural Cabo de Gata-Níjar recibe menos de 200 mm de lluvia al año, la aridez más extrema de Europa continental.',
-    en: 'The Cabo de Gata-Níjar Natural Park receives less than 200 mm of rain a year, the most extreme aridity on mainland Europe.',
+    es: 'El Parque Natural Cabo de Gata-Níjar recibe menos de 200 mm de lluvia al año — la aridez más extrema de Europa continental.',
+    en: 'The Cabo de Gata-Níjar Natural Park receives less than 200 mm of rain a year — the most extreme aridity on mainland Europe.',
   },
   {
     type: 'fact',
@@ -564,8 +560,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'Los fondos de Vera Playa son hábitat del caballito de mar mediterráneo, una de las especies más protegidas del litoral español.',
-    en: 'The waters off Vera Playa are habitat for the Mediterranean seahorse, one of the most protected species on the Spanish coast.',
+    es: 'Los fondos de Vera Playa son hábitat del caballito de mar mediterráneo — una de las especies más protegidas del litoral español.',
+    en: 'The waters off Vera Playa are habitat for the Mediterranean seahorse — one of the most protected species on the Spanish coast.',
   },
   /* ── Historia y gastronomía ── */
   {
@@ -576,7 +572,7 @@ const SABIAS_QUE_FACTS = [
   {
     type: 'fact',
     es: 'Las Salinas de Puerto Rey fueron explotadas por los romanos hace más de 2.000 años para elaborar el garum, la salsa más valiosa de la antigüedad.',
-    en: 'The Puerto Rey salt flats were worked by the Romans over 2,000 years ago to produce garum, the most prized condiment of antiquity.',
+    en: 'The Puerto Rey salt flats were worked by the Romans over 2,000 years ago to produce garum — the most prized condiment of antiquity.',
   },
   {
     type: 'fact',
@@ -585,8 +581,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'La mojama de atún de Garrucha, a pocos kilómetros de Vera: es una de las conservas más antiguas del Mediterráneo, con más de 2.000 años de tradición.',
-    en: 'The tuna mojama from Garrucha, a few kilometres from Vera, is one of the Mediterranean\'s oldest preserved foods, with over 2,000 years of tradition.',
+    es: 'La mojama de atún de Garrucha — a pocos kilómetros de Vera — es una de las conservas más antiguas del Mediterráneo, con más de 2.000 años de tradición.',
+    en: 'The tuna mojama from Garrucha — a few kilometres from Vera — is one of the Mediterranean\'s oldest preserved foods, with over 2,000 years of tradition.',
   },
   {
     type: 'fact',
@@ -596,13 +592,13 @@ const SABIAS_QUE_FACTS = [
   /* ── Hestía: lo que otros no tienen ── */
   {
     type: 'fact',
-    es: 'Hestía lleva más de diez años con puntuación máxima ininterrumpida en Booking.com, Airbnb y Google Maps, algo que menos del 1 % de los alojamientos turísticos de España mantiene durante tanto tiempo.',
-    en: 'Hestía has held top scores on Booking.com, Airbnb and Google Maps for over ten years, something fewer than 1% of guest accommodations in Spain sustain for that long.',
+    es: 'Hestía lleva más de diez años con puntuación máxima ininterrumpida en Booking.com, Airbnb y Google Maps — algo que menos del 1 % de los alojamientos turísticos de España mantiene durante tanto tiempo.',
+    en: 'Hestía has held top scores on Booking.com, Airbnb and Google Maps for over ten years — something fewer than 1% of guest accommodations in Spain sustain for that long.',
   },
   {
     type: 'fact',
-    es: 'Reserva directo con Hestía: sin comisiones de plataforma y, si encuentras un precio más bajo, te lo igualamos y lo mejoramos. Y hablas con los propietarios, no con una centralita ni un bot.',
-    en: 'Book direct with Hestía: no platform commissions and, if you find a lower price, we match it and beat it. And you speak with the owners, not a call centre or a bot.',
+    es: 'Reserva directo con Hestía: nuestro precio es siempre mejor que Booking o Airbnb — sin excepciones. Y hablas con los propietarios, no con una centralita ni un bot.',
+    en: 'Book direct with Hestía: our price is always better than Booking or Airbnb — no exceptions. And you speak with the owners, not a call centre or a bot.',
   },
   {
     type: 'fact',
@@ -616,8 +612,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'Más de 600 familias han dormido en Hestía desde 2016. Más del 40 % repite, sin necesidad de ninguna oferta ni descuento.',
-    en: 'Over 600 families have stayed at Hestía since 2016. More than 40% return, with no offer or discount needed.',
+    es: 'Más de 600 familias han dormido en Hestía desde 2016. Más del 40 % repite — sin necesidad de ninguna oferta ni descuento.',
+    en: 'Over 600 families have stayed at Hestía since 2016. More than 40% return — with no offer or discount needed.',
   },
   {
     type: 'fact',
@@ -631,210 +627,210 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'Los cambios de fecha y cancelaciones en Hestía se gestionan directamente con Alex o Fran: una conversación, no un formulario ni una política automática.',
-    en: 'Date changes and cancellations at Hestía are handled directly with Alex or Fran: a conversation, not a form or an automated policy.',
+    es: 'Los cambios de fecha y cancelaciones en Hestía se gestionan directamente con Alex o Fran — una conversación, no un formulario ni una política automática.',
+    en: 'Date changes and cancellations at Hestía are handled directly with Alex or Fran — a conversation, not a form or an automated policy.',
   },
 
-  /* ── Movidos desde FRASES_HOGAR (mayo 2026), eran curiosidades ── */
-  { type:'fact', es:'Almería es la provincia más soleada de Europa con más de 3.000 horas anuales: supera a Atenas, Lisboa y Marsella.', en:'Almería is Europe\'s sunniest province with over 3,000 hours a year: beating Athens, Lisbon and Marseille.' },
+  /* ── Movidos desde FRASES_HOGAR (mayo 2026) — eran curiosidades ── */
+  { type:'fact', es:'Almería es la provincia más soleada de Europa con más de 3.000 horas anuales — supera a Atenas, Lisboa y Marsella.', en:'Almería is Europe\'s sunniest province with over 3,000 hours a year — beating Athens, Lisbon and Marseille.' },
   { type:'fact', es:'En Almería se filmaron clásicos como El Bueno, el Feo y el Malo (1966), Lawrence de Arabia (1962) o Indiana Jones y la Última Cruzada (1989).', en:'Almería was the location for classics like The Good, the Bad and the Ugly (1966), Lawrence of Arabia (1962) and Indiana Jones and the Last Crusade (1989).' },
   { type:'fact', es:'La Alcazaba de Almería es la segunda fortaleza musulmana más grande de España, sólo superada por la Alhambra de Granada.', en:'Almería\'s Alcazaba is the second-largest Muslim fortress in Spain, beaten only by Granada\'s Alhambra.' },
-  { type:'fact', es:'El Mar de Plástico de Almería, más de 30.000 hectáreas de invernaderos, se ve desde el espacio y abastece de hortalizas a media Europa en invierno.', en:'Almería\'s Sea of Plastic: over 30,000 ha of greenhouses, is visible from space and supplies half of Europe with winter vegetables.' },
+  { type:'fact', es:'El Mar de Plástico de Almería — más de 30.000 hectáreas de invernaderos — se ve desde el espacio y abastece de hortalizas a media Europa en invierno.', en:'Almería\'s Sea of Plastic — over 30,000 ha of greenhouses — is visible from space and supplies half of Europe with winter vegetables.' },
   { type:'fact', es:'La Geoda de Pulpí es la mayor cueva con cristales de yeso transparentes accesible al público en Europa: 8 metros de cristales gigantes.', en:'The Pulpí Geode is Europe\'s largest publicly accessible cave of transparent gypsum crystals: 8 m of giant crystals.' },
-  { type:'fact', es:'En Roquetas de Mar nació el cantaor Manolo Caracol, uno de los grandes del flamenco del siglo XX.', en:'Cantaor Manolo Caracol, one of the great 20th-century flamenco voices, was born in Roquetas de Mar.' },
+  { type:'fact', es:'En Roquetas de Mar nació el cantaor Manolo Caracol — uno de los grandes del flamenco del siglo XX.', en:'Cantaor Manolo Caracol — one of the great 20th-century flamenco voices — was born in Roquetas de Mar.' },
   { type:'fact', es:'En Sorbas existen las únicas formaciones de karst en yeso a gran escala de toda Europa.', en:'Sorbas hosts the only large-scale gypsum karst formations in all of Europe.' },
-  { type:'fact', es:'La Cueva de los Letreros, en Vélez-Blanco, conserva pinturas rupestres declaradas Patrimonio de la Humanidad, la imagen del «Indalo» nació allí.', en:'The Letreros Cave in Vélez-Blanco preserves UNESCO-listed rock paintings, the image of the "Indalo" was born there.' },
+  { type:'fact', es:'La Cueva de los Letreros, en Vélez-Blanco, conserva pinturas rupestres declaradas Patrimonio de la Humanidad — la imagen del «Indalo» nació allí.', en:'The Letreros Cave in Vélez-Blanco preserves UNESCO-listed rock paintings — the image of the "Indalo" was born there.' },
   { type:'fact', es:'El Indalo, símbolo de Almería, es una figura prehistórica de hace ~4.500 años; durante siglos se pintó en las puertas de Mojácar como talismán.', en:'The Indalo, Almería\'s symbol, is a ~4,500-year-old prehistoric figure; for centuries it was painted on Mojácar doors as a talisman.' },
   { type:'fact', es:'El Castillo de Vélez-Blanco albergaba un patio renacentista que hoy se exhibe íntegro en el Museo Metropolitano de Nueva York.', en:'Vélez-Blanco Castle housed a Renaissance courtyard that today stands intact at the Metropolitan Museum in New York.' },
   { type:'fact', es:'La Sierra de los Filabres acoge el observatorio astronómico de Calar Alto, uno de los más importantes de Europa continental.', en:'The Filabres mountain range hosts Calar Alto, one of mainland Europe\'s leading astronomical observatories.' },
   { type:'fact', es:'En Garrucha la lonja de pescado abre cada tarde y subasta gambas rojas que viajan hasta los mejores restaurantes de Madrid.', en:'Garrucha\'s fish market opens every afternoon and auctions red prawns that travel to Madrid\'s top restaurants.' },
   { type:'fact', es:'La Alpujarra Almeriense, al pie de Sierra Nevada, conserva pueblos blancos colgados de la montaña como Laujar de Andarax y Ohanes.', en:'The Almerian Alpujarra, at the foot of Sierra Nevada, preserves white villages clinging to the mountain like Laujar de Andarax and Ohanes.' },
   { type:'fact', es:'En Lucainena de las Torres, declarado uno de los pueblos más bonitos de España, se conservan minas de hierro del siglo XIX y un trenecillo minero.', en:'Lucainena de las Torres, listed among Spain\'s prettiest villages, preserves 19th-century iron mines and a mining train.' },
-  { type:'fact', es:'El cabo de Gata-Níjar es la única región de Europa continental con clima oficialmente desértico, menos de 200 mm de lluvia al año.', en:'Cabo de Gata-Níjar is the only mainland-European region with an officially desert climate, under 200 mm of rain a year.' },
-  { type:'fact', es:'En el Cabo de Gata existen unas 1.000 especies vegetales, 200 de ellas endémicas, más diversidad que cualquier otro parque del Mediterráneo español.', en:'Cabo de Gata holds about 1,000 plant species, 200 of them endemic, more diversity than any other Spanish Mediterranean park.' },
+  { type:'fact', es:'El cabo de Gata-Níjar es la única región de Europa continental con clima oficialmente desértico — menos de 200 mm de lluvia al año.', en:'Cabo de Gata-Níjar is the only mainland-European region with an officially desert climate — under 200 mm of rain a year.' },
+  { type:'fact', es:'En el Cabo de Gata existen unas 1.000 especies vegetales, 200 de ellas endémicas — más diversidad que cualquier otro parque del Mediterráneo español.', en:'Cabo de Gata holds about 1,000 plant species, 200 of them endemic — more diversity than any other Spanish Mediterranean park.' },
   { type:'fact', es:'La Sierra de María-Los Vélez es uno de los mejores lugares de Andalucía para ver águila real, búho real y treparriscos.', en:'Sierra de María-Los Vélez is one of Andalusia\'s best spots to see golden eagle, eagle owl and wallcreeper.' },
-  { type:'fact', es:'El uvo Ohanes, uva blanca tardía de la Alpujarra almeriense, alcanzó tal fama en el siglo XIX que se exportaba en barriles a Londres y Nueva York.', en:'The Ohanes grape, a late white grape from the Almerian Alpujarra, was so famed in the 19th century it shipped in barrels to London and New York.' },
+  { type:'fact', es:'El uvo Ohanes — uva blanca tardía de la Alpujarra almeriense — alcanzó tal fama en el siglo XIX que se exportaba en barriles a Londres y Nueva York.', en:'The Ohanes grape — a late white grape from the Almerian Alpujarra — was so famed in the 19th century it shipped in barrels to London and New York.' },
   { type:'fact', es:'En Almería hay más de 70 municipios y solo 3 superan los 50.000 habitantes: la capital, Roquetas y El Ejido.', en:'Almería has over 70 municipalities and only 3 top 50,000 people: the capital, Roquetas and El Ejido.' },
-  { type:'fact', es:'El Refugio de la Guerra Civil de Almería son 4,5 km de túneles bajo la ciudad construidos para proteger a la población, los segundos más largos de España.', en:'Almería\'s Civil War Shelter is a 4.5 km network of underground tunnels built to shelter the population, Spain\'s second-longest.' },
+  { type:'fact', es:'El Refugio de la Guerra Civil de Almería son 4,5 km de túneles bajo la ciudad construidos para proteger a la población — los segundos más largos de España.', en:'Almería\'s Civil War Shelter is a 4.5 km network of underground tunnels built to shelter the population — Spain\'s second-longest.' },
   { type:'fact', es:'El Mar Menor, a 1 h de Vera Playa, es la mayor laguna salada de Europa: 170 km² con aguas siempre templadas.', en:'The Mar Menor, 1 h from Vera Playa, is Europe\'s largest saltwater lagoon: 170 km² of always-warm water.' },
   { type:'fact', es:'En Cartagena se conserva el único teatro romano en uso de toda Andalucía/Murcia: cabe 7.000 personas y se redescubrió en 1988.', en:'Cartagena holds the only working Roman theatre in Andalusia/Murcia: it seats 7,000 and was rediscovered in 1988.' },
-  { type:'fact', es:'La Manga del Mar Menor mide 22 km y es una franja de arena de apenas 100-1.000 m de ancho que separa dos mares.', en:'La Manga del Mar Menor is 22 km long: a sand strip just 100-1,000 m wide separating two seas.' },
+  { type:'fact', es:'La Manga del Mar Menor mide 22 km y es una franja de arena de apenas 100-1.000 m de ancho que separa dos mares.', en:'La Manga del Mar Menor is 22 km long — a sand strip just 100-1,000 m wide separating two seas.' },
   { type:'fact', es:'Águilas, la primera población murciana al norte de Almería, fundó en 1879 el primer carnaval declarado de Interés Turístico Internacional de la Región.', en:'Águilas, the first Murcian town north of Almería, founded in 1879 the first carnival declared of International Tourist Interest in the Region.' },
-  { type:'fact', es:'Los pasteles de carne de Murcia tienen más de 600 años, se servían en bodas árabes antes de la Reconquista.', en:'Murcia\'s meat pasties date back over 600 years, they were served at Arab weddings before the Reconquista.' },
+  { type:'fact', es:'Los pasteles de carne de Murcia tienen más de 600 años — se servían en bodas árabes antes de la Reconquista.', en:'Murcia\'s meat pasties date back over 600 years — they were served at Arab weddings before the Reconquista.' },
   { type:'fact', es:'La Catedral de Murcia tiene la segunda fachada barroca más grande de Europa y un campanario de 92 m, el segundo más alto de España.', en:'Murcia Cathedral has Europe\'s second-largest Baroque façade and a 92 m bell tower, Spain\'s second-tallest.' },
-  { type:'fact', es:'Caravaca de la Cruz es una de las cinco ciudades santas del cristianismo (junto a Roma, Jerusalén, Santiago y Santo Toribio).', en:'Caravaca de la Cruz is one of Christianity\'s five Holy Cities: alongside Rome, Jerusalem, Santiago and Santo Toribio.' },
+  { type:'fact', es:'Caravaca de la Cruz es una de las cinco ciudades santas del cristianismo (junto a Roma, Jerusalén, Santiago y Santo Toribio).', en:'Caravaca de la Cruz is one of Christianity\'s five Holy Cities — alongside Rome, Jerusalem, Santiago and Santo Toribio.' },
   { type:'fact', es:'El Valle de Ricote, último reducto morisco de la península, conserva pueblos colgados sobre cañones de huerta tropical.', en:'The Ricote Valley, the last Morisco stronghold in Iberia, preserves villages clinging over canyons of tropical orchards.' },
   { type:'fact', es:'Lorca, restaurada tras el terremoto de 2011, posee el casco histórico barroco más completo de la España mediterránea.', en:'Lorca, rebuilt after the 2011 earthquake, holds the most complete Baroque old town of Mediterranean Spain.' },
   { type:'fact', es:'La huerta de Murcia produce el 70 % del limón consumido en Europa y el 40 % de los pimientos en conserva.', en:'Murcia\'s vegetable plain produces 70 % of Europe\'s lemons and 40 % of canned peppers.' },
   { type:'fact', es:'El zarangollo murciano (calabacín, cebolla y huevo) y los michirones (habas con jamón y guindilla) son los reyes de cualquier tapeo en la Plaza de las Flores.', en:'Murcian zarangollo (zucchini, onion and egg) and michirones (broad beans with ham and chili) rule any tapas crawl at Plaza de las Flores.' },
-  { type:'fact', es:'En la pedanía cartagenera de Cabo de Palos hay un faro decimonónico encaramado a 81 m sobre el mar, un sitio top mundial para buceo.', en:'In Cabo de Palos (Cartagena) a 19th-century lighthouse perches 81 m above the sea, a world-class dive spot.' },
-  { type:'fact', es:'El Bando de la Huerta de Murcia (Martes de Pascua) reúne a más de 500.000 personas vestidas de traje regional, más que la Tomatina o las Fallas.', en:'Murcia\'s Bando de la Huerta (Easter Tuesday) draws over 500,000 people in regional dress, more than La Tomatina or Las Fallas.' },
+  { type:'fact', es:'En la pedanía cartagenera de Cabo de Palos hay un faro decimonónico encaramado a 81 m sobre el mar — un sitio top mundial para buceo.', en:'In Cabo de Palos (Cartagena) a 19th-century lighthouse perches 81 m above the sea — a world-class dive spot.' },
+  { type:'fact', es:'El Bando de la Huerta de Murcia (Martes de Pascua) reúne a más de 500.000 personas vestidas de traje regional — más que la Tomatina o las Fallas.', en:'Murcia\'s Bando de la Huerta (Easter Tuesday) draws over 500,000 people in regional dress — more than La Tomatina or Las Fallas.' },
   { type:'fact', es:'El paparajote, dulce típico de Murcia, se hace envolviendo una hoja de limonero en masa: la masa se come, la hoja no.', en:'The paparajote, a Murcian sweet, wraps a lemon-tree leaf in batter: you eat the batter, not the leaf.' },
   { type:'fact', es:'La Alhambra de Granada es el monumento más visitado de España: más de 2,7 millones de visitas al año.', en:'Granada\'s Alhambra is Spain\'s most-visited monument: over 2.7 million visits a year.' },
   { type:'fact', es:'Sierra Nevada tiene el pico más alto de la península (Mulhacén, 3.479 m) y la estación de esquí más al sur de Europa.', en:'Sierra Nevada has Iberia\'s highest peak (Mulhacén, 3,479 m) and Europe\'s southernmost ski resort.' },
-  { type:'fact', es:'La Costa Tropical de Granada produce mangos, papayas, chirimoyas y aguacates al aire libre, el clima subtropical más al norte del mundo.', en:'Granada\'s Tropical Coast grows mangoes, papayas, custard apples and avocados outdoors, the world\'s northernmost subtropical climate.' },
+  { type:'fact', es:'La Costa Tropical de Granada produce mangos, papayas, chirimoyas y aguacates al aire libre — el clima subtropical más al norte del mundo.', en:'Granada\'s Tropical Coast grows mangoes, papayas, custard apples and avocados outdoors — the world\'s northernmost subtropical climate.' },
   { type:'fact', es:'La Alpujarra granadina aún conserva pueblos donde se habla un castellano con vocablos árabes que se han perdido en el resto de España.', en:'Granada\'s Alpujarra preserves villages where Spanish still uses Arabic words lost in the rest of the country.' },
   { type:'fact', es:'Las Cuevas del Sacromonte (Granada) son un barrio entero excavado en la roca donde aún viven familias gitanas y se baila zambra.', en:'The Sacromonte Caves (Granada) form an entire neighbourhood carved into rock where Roma families still live and dance the zambra.' },
-  { type:'fact', es:'Federico García Lorca nació en Fuente Vaqueros, a 17 km de Granada, su casa-museo recibe miles de poetas cada año.', en:'Federico García Lorca was born in Fuente Vaqueros, 17 km from Granada, his house-museum draws thousands of poets each year.' },
-  { type:'fact', es:'En Granada, "ir de tapas" significa que cada caña va acompañada de una tapa gratis, costumbre más viva aquí que en cualquier otra capital.', en:'In Granada, "going for tapas" means every drink comes with a free tapa, alive here more than in any other Spanish capital.' },
+  { type:'fact', es:'Federico García Lorca nació en Fuente Vaqueros, a 17 km de Granada — su casa-museo recibe miles de poetas cada año.', en:'Federico García Lorca was born in Fuente Vaqueros, 17 km from Granada — his house-museum draws thousands of poets each year.' },
+  { type:'fact', es:'En Granada, "ir de tapas" significa que cada caña va acompañada de una tapa gratis — costumbre más viva aquí que en cualquier otra capital.', en:'In Granada, "going for tapas" means every drink comes with a free tapa — alive here more than in any other Spanish capital.' },
   { type:'fact', es:'Las cuevas de Guadix son el conjunto más grande de viviendas trogloditas habitadas de Europa: más de 4.500 personas viven en ellas hoy.', en:'The Guadix caves are Europe\'s largest set of inhabited troglodyte dwellings: over 4,500 people live in them today.' },
-  { type:'fact', es:'En Salobreña, frontera con Almería, se cultiva la mejor caña de azúcar de Europa, última destilería tradicional de ron en España.', en:'In Salobreña, on the Almería border, Europe\'s best sugar cane is grown, Spain\'s last traditional rum distillery operates here.' },
+  { type:'fact', es:'En Salobreña, frontera con Almería, se cultiva la mejor caña de azúcar de Europa — última destilería tradicional de ron en España.', en:'In Salobreña, on the Almería border, Europe\'s best sugar cane is grown — Spain\'s last traditional rum distillery operates here.' },
   { type:'fact', es:'El Albaicín de Granada es el conjunto urbano nazarí mejor conservado del mundo, declarado Patrimonio de la Humanidad en 1984.', en:'Granada\'s Albaicín is the world\'s best-preserved Nasrid urban quarter, UNESCO-listed since 1984.' },
-  { type:'fact', es:'La Acequia Real de la Alhambra lleva 800 años trayendo agua de Sierra Nevada, su sistema hidráulico inspiró acueductos en India y Marruecos.', en:'The Alhambra\'s Royal Acequia has carried Sierra Nevada water for 800 years, its hydraulic system inspired aqueducts in India and Morocco.' },
+  { type:'fact', es:'La Acequia Real de la Alhambra lleva 800 años trayendo agua de Sierra Nevada — su sistema hidráulico inspiró acueductos en India y Marruecos.', en:'The Alhambra\'s Royal Acequia has carried Sierra Nevada water for 800 years — its hydraulic system inspired aqueducts in India and Morocco.' },
   { type:'fact', es:'En Castril (norte de Granada) está el río más oligotrofo de Andalucía: agua tan limpia que sirve de patrón para estudios europeos.', en:'In Castril (northern Granada) flows Andalusia\'s most oligotrophic river: water so clean it serves as a benchmark for European studies.' },
   { type:'fact', es:'Jaén produce el 20 % del aceite de oliva del mundo: si fuera un país, sería el cuarto productor mundial.', en:'Jaén produces 20 % of the world\'s olive oil: if it were a country it would be the fourth-largest producer.' },
-  { type:'fact', es:'En el Parque Natural de Cazorla, Segura y las Villas nace el Guadalquivir: el río más largo de Andalucía, 657 km.', en:'In Cazorla, Segura and Las Villas Natural Park rises the Guadalquivir, Andalusia\'s longest river at 657 km.' },
-  { type:'fact', es:'Úbeda y Baeza son ciudades gemelas Patrimonio de la Humanidad por su Renacimiento andaluz, raro y casi único en Europa.', en:'Úbeda and Baeza are twin UNESCO World Heritage cities for their Andalusian Renaissance, rare and nearly unique in Europe.' },
+  { type:'fact', es:'En el Parque Natural de Cazorla, Segura y las Villas nace el Guadalquivir — el río más largo de Andalucía, 657 km.', en:'In Cazorla, Segura and Las Villas Natural Park rises the Guadalquivir — Andalusia\'s longest river at 657 km.' },
+  { type:'fact', es:'Úbeda y Baeza son ciudades gemelas Patrimonio de la Humanidad por su Renacimiento andaluz, raro y casi único en Europa.', en:'Úbeda and Baeza are twin UNESCO World Heritage cities for their Andalusian Renaissance — rare and nearly unique in Europe.' },
   { type:'fact', es:'En Jaén capital, los Baños Árabes del Palacio de Villardompardo son los mejor conservados de España.', en:'In Jaén city, the Arab Baths at Palacio de Villardompardo are the best-preserved in Spain.' },
-  { type:'fact', es:'La Sierra de Cazorla aún conserva linces ibéricos en libertad, se han pasado de 94 ejemplares en 2002 a más de 2.000 en 2024.', en:'Sierra de Cazorla still has wild Iberian lynxes: populations grew from 94 in 2002 to over 2,000 in 2024.' },
-  { type:'fact', es:'El Castillo de Santa Catalina (Jaén) se ve en pintura del Greco, y desde su mirador se domina el mar de olivos hasta Sierra Mágina.', en:'Santa Catalina Castle (Jaén) appears in an El Greco painting, its mirador sweeps the olive sea to Sierra Mágina.' },
+  { type:'fact', es:'La Sierra de Cazorla aún conserva linces ibéricos en libertad — se han pasado de 94 ejemplares en 2002 a más de 2.000 en 2024.', en:'Sierra de Cazorla still has wild Iberian lynxes — populations grew from 94 in 2002 to over 2,000 in 2024.' },
+  { type:'fact', es:'El Castillo de Santa Catalina (Jaén) se ve en pintura del Greco — y desde su mirador se domina el mar de olivos hasta Sierra Mágina.', en:'Santa Catalina Castle (Jaén) appears in an El Greco painting — its mirador sweeps the olive sea to Sierra Mágina.' },
   { type:'fact', es:'En Andújar (Jaén) se celebra el Cristo de los Jueves Santos, una procesión que reúne a más de 700.000 peregrinos cada abril.', en:'Andújar (Jaén) hosts the Cristo de los Jueves Santos, a procession drawing over 700,000 pilgrims each April.' },
   { type:'fact', es:'El cocido de pelotas, el ajilimoje, los ochíos y las gachamigas son cuatro pilares de la cocina serrana de Jaén.', en:'Cocido de pelotas, ajilimoje, ochíos and gachamigas are four pillars of Jaén\'s mountain cuisine.' },
   { type:'fact', es:'Iznatoraf es uno de los pueblos más altos de Jaén: 1.063 m, calles empedradas de piedra y vistas que llegan a Sierra Cazorla y Sierra Morena.', en:'Iznatoraf is one of Jaén\'s highest villages: 1,063 m, cobbled streets, views reaching Cazorla and Sierra Morena.' },
-  { type:'fact', es:'En Sabiote, Jaén, el castillo de los Vázquez de Molina conserva uno de los patios renacentistas más bellos de España, casi desconocido.', en:'In Sabiote, Jaén, the Vázquez de Molina castle holds one of Spain\'s loveliest, and least-known, Renaissance courtyards.' },
-  { type:'fact', es:'Almería, Murcia, Granada y Jaén comparten Sierra Nevada: la única cordillera del sur de Europa con nieve casi todo el año.', en:'Almería, Murcia, Granada and Jaén share Sierra Nevada, the only southern-European range with snow most of the year.' },
+  { type:'fact', es:'En Sabiote, Jaén, el castillo de los Vázquez de Molina conserva uno de los patios renacentistas más bellos de España, casi desconocido.', en:'In Sabiote, Jaén, the Vázquez de Molina castle holds one of Spain\'s loveliest — and least-known — Renaissance courtyards.' },
+  { type:'fact', es:'Almería, Murcia, Granada y Jaén comparten Sierra Nevada: la única cordillera del sur de Europa con nieve casi todo el año.', en:'Almería, Murcia, Granada and Jaén share Sierra Nevada — the only southern-European range with snow most of the year.' },
   { type:'fact', es:'La N-340, "carretera del Mediterráneo", recorre Almería, Murcia y Cataluña enlazando a más de 4 millones de habitantes costeros.', en:'The N-340 "Mediterranean road" crosses Almería, Murcia and Catalonia, linking over 4 million coastal residents.' },
-  { type:'fact', es:'En la frontera Almería-Granada, el Geoparque del Cabo de Gata se cruza con el de Sierra Nevada, único corredor desierto-alta montaña de Europa.', en:'On the Almería-Granada border, the Cabo de Gata Geopark meets Sierra Nevada\'s, Europe\'s only desert-to-high-mountain corridor.' },
+  { type:'fact', es:'En la frontera Almería-Granada, el Geoparque del Cabo de Gata se cruza con el de Sierra Nevada — único corredor desierto-alta montaña de Europa.', en:'On the Almería-Granada border, the Cabo de Gata Geopark meets Sierra Nevada\'s — Europe\'s only desert-to-high-mountain corridor.' },
   { type:'fact', es:'El Geoparque Mundial UNESCO de Granada (norte) y el del Cabo de Gata (Almería) son dos de los seis únicos de España.', en:'Granada\'s northern UNESCO Global Geopark and Cabo de Gata\'s (Almería) are two of just six in all of Spain.' },
   { type:'fact', es:'Los olivos del campo de Vera y los de Jaén forman parte del mayor bosque cultivado del mundo: 350 millones de olivos.', en:'Vera\'s olive groves and Jaén\'s belong to the world\'s largest cultivated forest: 350 million olive trees.' },
-  { type:'fact', es:'El AVE Madrid-Granada, abierto en 2019, redujo el viaje desde Madrid a 3 h, antes eran casi 5 con tren convencional.', en:'The Madrid-Granada AVE high-speed line, opened in 2019, cut Madrid travel to 3 h, formerly nearly 5 by conventional train.' },
+  { type:'fact', es:'El AVE Madrid-Granada, abierto en 2019, redujo el viaje desde Madrid a 3 h — antes eran casi 5 con tren convencional.', en:'The Madrid-Granada AVE high-speed line, opened in 2019, cut Madrid travel to 3 h — formerly nearly 5 by conventional train.' },
   { type:'fact', es:'La carretera A-92, que cruza Andalucía oriental, es la única que une a las cuatro provincias fronterizas con Almería en menos de 4 horas.', en:'The A-92 motorway across eastern Andalusia is the only road linking all four provinces bordering Almería in under 4 hours.' },
-  { type:'fact', es:'Granada y Almería tienen el cielo más oscuro de la Andalucía mediterránea, la noche en el Cabo y en Sierra Nevada compite con la del Atacama.', en:'Granada and Almería have Andalusia\'s darkest Mediterranean skies, nights at Cabo de Gata and Sierra Nevada rival those of Atacama.' },
-  { type:'fact', es:'Hestía está más cerca de Mojácar (10 min) que del centro de Vera pueblo (15 min), la mejor manera de conocer ambos sin moverte de Hestía.', en:'Hestía is closer to Mojácar (10 min) than to Vera town centre (15 min), the best way to know both without leaving Hestía.' },
+  { type:'fact', es:'Granada y Almería tienen el cielo más oscuro de la Andalucía mediterránea — la noche en el Cabo y en Sierra Nevada compite con la del Atacama.', en:'Granada and Almería have Andalusia\'s darkest Mediterranean skies — nights at Cabo de Gata and Sierra Nevada rival those of Atacama.' },
+  { type:'fact', es:'Hestía está más cerca de Mojácar (10 min) que del centro de Vera pueblo (15 min) — la mejor manera de conocer ambos sin moverte de Hestía.', en:'Hestía is closer to Mojácar (10 min) than to Vera town centre (15 min) — the best way to know both without leaving Hestía.' },
   { type:'fact', es:'Desde la terraza de Hestía Thalassa se ve el Mediterráneo, el Salar de los Canos y, en días limpios, las cumbres nevadas de Sierra Nevada.', en:'From Hestía Thalassa\'s terrace you can see the Mediterranean, the Salar de los Canos and, on clear days, snow-capped Sierra Nevada.' },
   { type:'fact', es:'A 30 min de Hestía empieza el Parque Natural de Cabo de Gata-Níjar y a 90 min el Parque Natural de Sierra María-Los Vélez. Dos parques en un día son posibles.', en:'30 min from Hestía starts the Cabo de Gata-Níjar Natural Park; 90 min to Sierra María-Los Vélez. Two parks in one day is possible.' },
   { type:'fact', es:'Hestía Vera Salinas linda con el Parque Natural de las Salinas de Puerto Rey: andas tres minutos y estás entre flamencos.', en:'Hestía Vera Salinas adjoins the Puerto Rey Salt Flats Natural Park: a three-minute walk puts you among flamingos.' },
   { type:'fact', es:'La Alcazaba de Almería es el segundo conjunto fortificado musulmán más grande de España, solo por detrás de la Alhambra.', en:'Almería\'s Alcazaba is the second-largest Muslim fortress in Spain, after the Alhambra.' },
-  { type:'fact', es:'La Catedral de Almería es la única catedral fortaleza de España: cuatro torres y muros gruesos para defenderse de los ataques berberiscos del siglo XVI.', en:'Almería\'s Cathedral is the only fortified cathedral in Spain, four towers and thick walls built to repel Barbary corsair raids in the 16th century.' },
+  { type:'fact', es:'La Catedral de Almería es la única catedral fortaleza de España: cuatro torres y muros gruesos para defenderse de los ataques berberiscos del siglo XVI.', en:'Almería\'s Cathedral is the only fortified cathedral in Spain — four towers and thick walls built to repel Barbary corsair raids in the 16th century.' },
   { type:'fact', es:'Los Refugios de la Guerra Civil de Almería son los más grandes de Europa abiertos al público: 4,5 km bajo el suelo, con quirófano y dispensario.', en:'Almería\'s Civil War Shelters are the largest in Europe open to the public: 4.5 km of tunnels with operating room and dispensary.' },
-  { type:'fact', es:'El barrio de la Chanca, en Almería capital, conserva casas-cueva habitadas, pintadas con colores vivos por encima del barro original.', en:'The Chanca quarter in Almería city still has inhabited cave-houses, painted in vivid colours over the original adobe.' },
+  { type:'fact', es:'El barrio de la Chanca, en Almería capital, conserva casas-cueva habitadas — pintadas con colores vivos por encima del barro original.', en:'The Chanca quarter in Almería city still has inhabited cave-houses, painted in vivid colours over the original adobe.' },
   { type:'fact', es:'En Los Millares (Santa Fe de Mondújar) están los restos de la primera civilización metalúrgica de la Península Ibérica: 4.000 a.C.', en:'Los Millares (Santa Fe de Mondújar) preserves the remains of the Iberian Peninsula\'s earliest metallurgical civilisation, around 4000 BC.' },
-  { type:'fact', es:'El Desierto de Tabernas es el único desierto de Europa continental: menos de 200 mm de lluvia al año.', en:'The Tabernas Desert is the only desert in continental Europe, under 200 mm of rain per year.' },
+  { type:'fact', es:'El Desierto de Tabernas es el único desierto de Europa continental: menos de 200 mm de lluvia al año.', en:'The Tabernas Desert is the only desert in continental Europe — under 200 mm of rain per year.' },
   { type:'fact', es:'En Tabernas se rodaron más de 500 películas: spaguetti western, Indiana Jones, Cleopatra, Lawrence de Arabia y Juego de Tronos pasaron por aquí.', en:'Over 500 films were shot in Tabernas: spaghetti westerns, Indiana Jones, Cleopatra, Lawrence of Arabia and Game of Thrones all visited.' },
-  { type:'fact', es:'Mini Hollywood (Oasys), Western Leone y Fort Bravo son los tres "pueblos del Oeste" originales construidos en Tabernas, siguen abiertos al público.', en:'Mini Hollywood (Oasys), Western Leone and Fort Bravo, the three original Wild-West sets in Tabernas, are still open to visitors.' },
+  { type:'fact', es:'Mini Hollywood (Oasys), Western Leone y Fort Bravo son los tres "pueblos del Oeste" originales construidos en Tabernas — siguen abiertos al público.', en:'Mini Hollywood (Oasys), Western Leone and Fort Bravo — the three original Wild-West sets in Tabernas — are still open to visitors.' },
   { type:'fact', es:'El observatorio de Calar Alto (Sierra de los Filabres, 2.168 m) tiene el telescopio óptico más grande de Europa continental: 3,5 m de diámetro.', en:'Calar Alto Observatory (Filabres range, 2,168 m) houses continental Europe\'s largest optical telescope, 3.5 m in diameter.' },
-  { type:'fact', es:'Macael lleva sacando mármol blanco desde la época romana: abasteció a la Mezquita de Córdoba, El Escorial y la Alhambra.', en:'Macael has quarried white marble since Roman times: supplying the Córdoba Mosque, El Escorial and the Alhambra.' },
+  { type:'fact', es:'Macael lleva sacando mármol blanco desde la época romana: abasteció a la Mezquita de Córdoba, El Escorial y la Alhambra.', en:'Macael has quarried white marble since Roman times — supplying the Córdoba Mosque, El Escorial and the Alhambra.' },
   { type:'fact', es:'En Pulpí está la geoda más grande de Europa abierta al público: una cavidad de 11 m con cristales de yeso transparentes de hasta 2 m.', en:'Pulpí holds Europe\'s largest geode open to the public: an 11-metre cavity with transparent gypsum crystals up to 2 m long.' },
   { type:'fact', es:'La Geoda de Pulpí se descubrió por casualidad en 1999, mientras dos mineros buscaban un nuevo filón en una mina ya abandonada.', en:'The Pulpí Geode was discovered by chance in 1999, when two miners exploring an abandoned mine broke through the wrong wall.' },
-  { type:'fact', es:'El Karst en Yesos de Sorbas es el segundo karst de yeso más importante de Europa: cuevas con cristales de selenita y ríos subterráneos.', en:'The Sorbas Gypsum Karst is Europe\'s second-largest gypsum karst, caves with selenite crystals and underground rivers.' },
-  { type:'fact', es:'Níjar mantiene desde el siglo XV el oficio de la jarapa: alfombras tejidas con tiras de tela reciclada en talleres familiares.', en:'Níjar has woven jarapas, rugs made from recycled fabric strips, in family workshops since the 15th century.' },
-  { type:'fact', es:'La playa de Mónsul aparece en "Indiana Jones y la Última Cruzada": la duna gigante es ceniza volcánica solidificada hace 8 millones de años.', en:'Mónsul beach appears in "Indiana Jones and the Last Crusade", the giant dune is volcanic ash solidified 8 million years ago.' },
+  { type:'fact', es:'El Karst en Yesos de Sorbas es el segundo karst de yeso más importante de Europa: cuevas con cristales de selenita y ríos subterráneos.', en:'The Sorbas Gypsum Karst is Europe\'s second-largest gypsum karst — caves with selenite crystals and underground rivers.' },
+  { type:'fact', es:'Níjar mantiene desde el siglo XV el oficio de la jarapa: alfombras tejidas con tiras de tela reciclada en talleres familiares.', en:'Níjar has woven jarapas — rugs made from recycled fabric strips — in family workshops since the 15th century.' },
+  { type:'fact', es:'La playa de Mónsul aparece en "Indiana Jones y la Última Cruzada": la duna gigante es ceniza volcánica solidificada hace 8 millones de años.', en:'Mónsul beach appears in "Indiana Jones and the Last Crusade" — the giant dune is volcanic ash solidified 8 million years ago.' },
   { type:'fact', es:'La playa de los Genoveses se llama así por la flota genovesa que ayudó a los Reyes Católicos a tomar Almería en 1489.', en:'Genoveses Beach owes its name to the Genoese fleet that helped the Catholic Monarchs take Almería in 1489.' },
-  { type:'fact', es:'En el Cabo de Gata vive el caballito de mar mediterráneo (Hippocampus guttulatus): uno de los pocos lugares de España donde se ve buceando.', en:'The Mediterranean seahorse (Hippocampus guttulatus) lives in Cabo de Gata, one of the few places in Spain to spot one while diving.' },
+  { type:'fact', es:'En el Cabo de Gata vive el caballito de mar mediterráneo (Hippocampus guttulatus): uno de los pocos lugares de España donde se ve buceando.', en:'The Mediterranean seahorse (Hippocampus guttulatus) lives in Cabo de Gata — one of the few places in Spain to spot one while diving.' },
   { type:'fact', es:'El Arrecife de las Sirenas, junto al faro del Cabo de Gata, es una formación volcánica única que dio origen a la leyenda local de las sirenas.', en:'The Mermaid Reef, next to the Cabo de Gata lighthouse, is a unique volcanic formation that inspired the local mermaid legend.' },
-  { type:'fact', es:'La pradera de posidonia oceánica del Cabo de Gata es de las mejor conservadas del Mediterráneo occidental: pulmón submarino que filtra el agua y oxigena el mar.', en:'Cabo de Gata\'s Posidonia oceanica meadow is one of the best-preserved in the western Mediterranean, an underwater lung that filters water and oxygenates the sea.' },
-  { type:'fact', es:'Las Salinas de Cabo de Gata producen 40.000 toneladas de sal marina al año: la única salina industrial activa de Andalucía oriental.', en:'The Cabo de Gata Salt Flats produce 40,000 tonnes of sea salt a year, eastern Andalusia\'s only active industrial salina.' },
-  { type:'fact', es:'La Cala de Enmedio (Agua Amarga) es para muchos la playa virgen más bonita de España: 30 minutos andando entre rocas blancas talladas por el viento.', en:'Cala de Enmedio (Agua Amarga) is widely considered Spain\'s most beautiful unspoiled beach, a 30-minute walk between wind-sculpted white rocks.' },
+  { type:'fact', es:'La pradera de posidonia oceánica del Cabo de Gata es de las mejor conservadas del Mediterráneo occidental: pulmón submarino que filtra el agua y oxigena el mar.', en:'Cabo de Gata\'s Posidonia oceanica meadow is one of the best-preserved in the western Mediterranean — an underwater lung that filters water and oxygenates the sea.' },
+  { type:'fact', es:'Las Salinas de Cabo de Gata producen 40.000 toneladas de sal marina al año: la única salina industrial activa de Andalucía oriental.', en:'The Cabo de Gata Salt Flats produce 40,000 tonnes of sea salt a year — eastern Andalusia\'s only active industrial salina.' },
+  { type:'fact', es:'La Cala de Enmedio (Agua Amarga) es para muchos la playa virgen más bonita de España: 30 minutos andando entre rocas blancas talladas por el viento.', en:'Cala de Enmedio (Agua Amarga) is widely considered Spain\'s most beautiful unspoiled beach — a 30-minute walk between wind-sculpted white rocks.' },
   { type:'fact', es:'La playa de los Muertos (Carboneras) recibe su nombre de la corriente de Almería, que devolvía a la orilla los cuerpos de naufragios del Estrecho.', en:'Playa de los Muertos (Carboneras) is named after the Almería current, which used to wash bodies from Strait of Gibraltar wrecks back ashore.' },
-  { type:'fact', es:'En el faro de Mesa Roldán (Carboneras) se rodaron escenas de Juego de Tronos: las almenadas paredes hacen de Rocadragón en la sexta temporada.', en:'Game of Thrones filmed at Mesa Roldán lighthouse (Carboneras), its battlemented walls play Dragonstone in season six.' },
-  { type:'fact', es:'Mojácar tiene un Indalo pintado en cada puerta: figura prehistórica de la Cueva de los Letreros (Vélez Blanco) adoptada como amuleto.', en:'Every door in Mojácar carries an Indalo: a prehistoric figure from the Letreros Cave (Vélez Blanco), adopted as a protective amulet.' },
+  { type:'fact', es:'En el faro de Mesa Roldán (Carboneras) se rodaron escenas de Juego de Tronos: las almenadas paredes hacen de Rocadragón en la sexta temporada.', en:'Game of Thrones filmed at Mesa Roldán lighthouse (Carboneras) — its battlemented walls play Dragonstone in season six.' },
+  { type:'fact', es:'Mojácar tiene un Indalo pintado en cada puerta: figura prehistórica de la Cueva de los Letreros (Vélez Blanco) adoptada como amuleto.', en:'Every door in Mojácar carries an Indalo — a prehistoric figure from the Letreros Cave (Vélez Blanco), adopted as a protective amulet.' },
   { type:'fact', es:'Mojácar Pueblo y Mojácar Playa están a solo 4 km en línea recta, pero el primer autobús urbano que los conectó (1962) tardaba 25 minutos por las curvas.', en:'Mojácar village and Mojácar beach are just 4 km apart in a straight line, but the first bus connecting them (1962) took 25 winding minutes.' },
   { type:'fact', es:'En la Plaza Nueva de Mojácar hay un mirador árabe del siglo XIII orientado al sureste: ve el amanecer del solsticio de verano sobre el peñón.', en:'Mojácar\'s Plaza Nueva mirador, dating from the 13th-century Moorish era, frames the summer-solstice sunrise over the headland.' },
-  { type:'fact', es:'El Castillo de Vélez Blanco es renacentista: el patio interior lo compró un magnate de Nueva York en 1904 y hoy se exhibe en el Museo Metropolitan de Manhattan.', en:'Vélez Blanco Castle is Renaissance, its inner courtyard was bought by a New York tycoon in 1904 and is now displayed at the Met in Manhattan.' },
+  { type:'fact', es:'El Castillo de Vélez Blanco es renacentista: el patio interior lo compró un magnate de Nueva York en 1904 y hoy se exhibe en el Museo Metropolitan de Manhattan.', en:'Vélez Blanco Castle is Renaissance — its inner courtyard was bought by a New York tycoon in 1904 and is now displayed at the Met in Manhattan.' },
   { type:'fact', es:'La Cueva de los Letreros (Vélez Blanco) es Patrimonio de la Humanidad: pinturas rupestres de hace 7.000 años, incluido el Indalo original.', en:'The Letreros Cave (Vélez Blanco) is a UNESCO World Heritage Site: 7,000-year-old rock paintings including the original Indalo.' },
   { type:'fact', es:'La Olla del Padre, en la Sierra de María, es la cima más alta del Parque Natural Sierra María-Los Vélez (2.045 m) y suele tener nieve hasta abril.', en:'La Olla del Padre, in the Sierra de María, is the highest peak in the Sierra María-Los Vélez Natural Park (2,045 m), often snow-covered through April.' },
   { type:'fact', es:'Las jarapas de Níjar y la cerámica esmaltada azul de Cuevas del Almanzora se consideran las dos artesanías más antiguas y vivas de la provincia.', en:'Níjar jarapas and Cuevas del Almanzora\'s blue glazed pottery are widely seen as the province\'s two oldest still-living crafts.' },
-  { type:'fact', es:'La gamba roja de Garrucha tiene Denominación de Origen propia: solo se considera auténtica la pescada en su caladero a 600 m de profundidad.', en:'Garrucha\'s red prawn carries its own protected designation, only those caught in its 600 m-deep fishing ground qualify as authentic.' },
+  { type:'fact', es:'La gamba roja de Garrucha tiene Denominación de Origen propia: solo se considera auténtica la pescada en su caladero a 600 m de profundidad.', en:'Garrucha\'s red prawn carries its own protected designation — only those caught in its 600 m-deep fishing ground qualify as authentic.' },
   { type:'fact', es:'Garrucha presume del "malecón más bonito del Mediterráneo": un kilómetro iluminado entre la flota pesquera y los restaurantes de marisco.', en:'Garrucha takes pride in the "prettiest harbour promenade in the Mediterranean": one lit kilometre between the fishing fleet and the seafood restaurants.' },
   { type:'fact', es:'El Cargadero de Mineral del Alquife (1904), en el puerto de Almería, es uno de los pocos puentes de carga ferroviaria sobre el mar conservados en España.', en:'The Alquife ore loader (1904) in Almería harbour is one of the few iron rail-loading piers built over the sea still preserved in Spain.' },
-  { type:'fact', es:'Roquetas de Mar tiene la mayor concentración de invernaderos del mundo: el "Mar de Plástico" cubre 31.000 hectáreas y se ve desde el espacio.', en:'Roquetas de Mar holds the world\'s largest concentration of greenhouses, the "Plastic Sea" covers 31,000 hectares and is visible from space.' },
+  { type:'fact', es:'Roquetas de Mar tiene la mayor concentración de invernaderos del mundo: el "Mar de Plástico" cubre 31.000 hectáreas y se ve desde el espacio.', en:'Roquetas de Mar holds the world\'s largest concentration of greenhouses — the "Plastic Sea" covers 31,000 hectares and is visible from space.' },
   { type:'fact', es:'La cooperativa de tomate de Almería y Murcia produce el grueso del tomate fresco que se consume en Alemania entre noviembre y marzo.', en:'The Almería-Murcia tomato cooperatives supply most of the fresh tomatoes consumed in Germany from November to March.' },
-  { type:'fact', es:'Adra fue fundada por los fenicios en el siglo VIII a.C. como "Abdera": una de las cinco colonias fenicias del litoral andaluz.', en:'Adra was founded by the Phoenicians in the 8th century BC as "Abdera", one of five Phoenician colonies on the Andalusian coast.' },
+  { type:'fact', es:'Adra fue fundada por los fenicios en el siglo VIII a.C. como "Abdera": una de las cinco colonias fenicias del litoral andaluz.', en:'Adra was founded by the Phoenicians in the 8th century BC as "Abdera" — one of five Phoenician colonies on the Andalusian coast.' },
   { type:'fact', es:'La Alpujarra almeriense (Laujar, Berja, Adra) fue el último refugio de los moriscos antes de su expulsión definitiva en 1571.', en:'The Almerian Alpujarra (Laujar, Berja, Adra) was the last Morisco refuge before their final expulsion in 1571.' },
-  { type:'fact', es:'En la cara este de Sierra Nevada nace el río Andarax, uno de los pocos ríos europeos cuyas aguas se evaporan antes de llegar al mar.', en:'The Andarax river rises on Sierra Nevada\'s eastern slope, one of the few European rivers whose waters evaporate before reaching the sea.' },
-  { type:'fact', es:'En Almería hay especialidades culinarias únicas: gurullos (pasta artesana), gachas, ajoblanco con almendras del Almanzora y olla de trigo serrana.', en:'Almería offers unique dishes: gurullos (handmade pasta), gachas, ajoblanco made with Almanzora almonds and the highland wheat olla.' },
-  { type:'fact', es:'Las migas almerienses son de sémola, no de pan: se acompañan con uvas, sardinas en aceite o granada, costumbre rural del invierno.', en:'Almerian migas are made with semolina, not bread, and are served with grapes, oil-cured sardines or pomegranate, a winter country tradition.' },
-  { type:'fact', es:'Almería y Murcia tienen los inviernos más cálidos de la Península Ibérica: media de 13 °C en enero, idéntica a la de Atenas.', en:'Almería and Murcia have the warmest winters on the Iberian Peninsula: averaging 13 °C in January, the same as Athens.' },
-  { type:'fact', es:'La Sierra Cabrera, entre Mojácar y Vera, es de origen metamórfico distinto al volcánico del Cabo de Gata: los geólogos la llaman "isla geológica".', en:'Sierra Cabrera, between Mojácar and Vera, is metamorphic in origin, unlike volcanic Cabo de Gata, geologists call it a "geological island".' },
+  { type:'fact', es:'En la cara este de Sierra Nevada nace el río Andarax — uno de los pocos ríos europeos cuyas aguas se evaporan antes de llegar al mar.', en:'The Andarax river rises on Sierra Nevada\'s eastern slope — one of the few European rivers whose waters evaporate before reaching the sea.' },
+  { type:'fact', es:'En Almería hay especialidades culinarias únicas: gurullos (pasta artesana), gachas, ajoblanco con almendras del Almanzora y olla de trigo serrana.', en:'Almería offers unique dishes — gurullos (handmade pasta), gachas, ajoblanco made with Almanzora almonds and the highland wheat olla.' },
+  { type:'fact', es:'Las migas almerienses son de sémola, no de pan: se acompañan con uvas, sardinas en aceite o granada — costumbre rural del invierno.', en:'Almerian migas are made with semolina, not bread, and are served with grapes, oil-cured sardines or pomegranate — a winter country tradition.' },
+  { type:'fact', es:'Almería y Murcia tienen los inviernos más cálidos de la Península Ibérica: media de 13 °C en enero, idéntica a la de Atenas.', en:'Almería and Murcia have the warmest winters on the Iberian Peninsula — averaging 13 °C in January, the same as Athens.' },
+  { type:'fact', es:'La Sierra Cabrera, entre Mojácar y Vera, es de origen metamórfico distinto al volcánico del Cabo de Gata: los geólogos la llaman "isla geológica".', en:'Sierra Cabrera, between Mojácar and Vera, is metamorphic in origin, unlike volcanic Cabo de Gata — geologists call it a "geological island".' },
   { type:'fact', es:'En el río Almanzora hay barbos endémicos de la cuenca, especie protegida que sobrevive solo en sus tramos altos.', en:'The Almanzora river hosts an endemic barbel species, protected and surviving only in its upper reaches.' },
-  { type:'fact', es:'La presa de Cuevas del Almanzora es la mayor de la cuenca del Segura: terminó con las riadas históricas que arrasaban el Levante en el siglo XIX.', en:'The Cuevas del Almanzora dam is the largest in the Segura basin, it ended the historic floods that devastated the Levante in the 19th century.' },
-  { type:'fact', es:'El Bajo Almanzora produce uva de mesa exportada desde el siglo XIX: en barco a Londres, Hamburgo y Nueva York en cinco semanas de travesía.', en:'The lower Almanzora has exported table grapes since the 19th century: five weeks by ship to London, Hamburg and New York.' },
-  { type:'fact', es:'El aceite de oliva de Tabernas tiene Denominación de Origen propia desde 2017: uno de los pocos D.O. cultivados en pleno desierto.', en:'Tabernas olive oil has had its own protected designation since 2017, one of the few PDOs grown in true desert.' },
-  { type:'fact', es:'El "Toyo" es el campo de golf más al sur de la Costa de Almería con vistas al Cabo de Gata desde todos los hoyos, diseño de Severiano Ballesteros.', en:'El Toyo is the southernmost golf course on the Almería Coast: Cabo de Gata views from every hole, designed by Seve Ballesteros.' },
-  { type:'fact', es:'En el Cabo de Gata vive el águila perdicera (Aquila fasciata): aquí nidifica una de las mayores poblaciones europeas de la especie.', en:'Bonelli\'s eagle (Aquila fasciata) breeds in Cabo de Gata, one of Europe\'s largest populations of the species.' },
-  { type:'fact', es:'En la Sierra de Filabres viven cabras montesas reintroducidas en los años 80, hoy se ven al amanecer subiendo a los telescopios de Calar Alto.', en:'Iberian ibex were reintroduced into the Filabres range in the 1980s, today you can spot them at dawn near the Calar Alto telescopes.' },
-  { type:'fact', es:'El Faro del Cabo de Gata fue uno de los últimos faros españoles en pasar del aceite de oliva a la electricidad, ocurrió en 1972.', en:'The Cabo de Gata lighthouse was among Spain\'s last to switch from olive oil to electric power, it happened in 1972.' },
-  { type:'fact', es:'Las cuatro cumbres volcánicas del Cabo de Gata (Bermeja, Mauricio, Negra, Higo Seco) se suben en una hora desde Las Negras y regalan vistas a 360°.', en:'Cabo de Gata\'s four volcanic peaks: Bermeja, Mauricio, Negra and Higo Seco, can be climbed in an hour from Las Negras for full 360° views.' },
-  { type:'fact', es:'Almería capital tiene el segundo casco histórico amurallado más grande de Andalucía oriental: solo Granada le supera.', en:'Almería city has eastern Andalusia\'s second-largest historic walled centre, only Granada is bigger.' },
-  { type:'fact', es:'La Catedral de Almería conserva una de las pocas custodias renacentistas de plata maciza en España: pesa cerca de 200 kg y solo sale en Corpus.', en:'Almería Cathedral keeps one of Spain\'s few solid-silver Renaissance monstrances: close to 200 kg, paraded only at Corpus Christi.' },
-  { type:'fact', es:'Vera celebra cada agosto sus Fiestas Mayores en honor a la Virgen de las Angustias: programa con encierros, dianas y feria centenaria.', en:'Vera holds its main August fiestas honouring the Virgin of the Angustias: running of the bulls, dawn parades and a fair dating back over a century.' },
+  { type:'fact', es:'La presa de Cuevas del Almanzora es la mayor de la cuenca del Segura: terminó con las riadas históricas que arrasaban el Levante en el siglo XIX.', en:'The Cuevas del Almanzora dam is the largest in the Segura basin — it ended the historic floods that devastated the Levante in the 19th century.' },
+  { type:'fact', es:'El Bajo Almanzora produce uva de mesa exportada desde el siglo XIX: en barco a Londres, Hamburgo y Nueva York en cinco semanas de travesía.', en:'The lower Almanzora has exported table grapes since the 19th century — five weeks by ship to London, Hamburg and New York.' },
+  { type:'fact', es:'El aceite de oliva de Tabernas tiene Denominación de Origen propia desde 2017: uno de los pocos D.O. cultivados en pleno desierto.', en:'Tabernas olive oil has had its own protected designation since 2017 — one of the few PDOs grown in true desert.' },
+  { type:'fact', es:'El "Toyo" es el campo de golf más al sur de la Costa de Almería con vistas al Cabo de Gata desde todos los hoyos — diseño de Severiano Ballesteros.', en:'El Toyo is the southernmost golf course on the Almería Coast — Cabo de Gata views from every hole, designed by Seve Ballesteros.' },
+  { type:'fact', es:'En el Cabo de Gata vive el águila perdicera (Aquila fasciata): aquí nidifica una de las mayores poblaciones europeas de la especie.', en:'Bonelli\'s eagle (Aquila fasciata) breeds in Cabo de Gata — one of Europe\'s largest populations of the species.' },
+  { type:'fact', es:'En la Sierra de Filabres viven cabras montesas reintroducidas en los años 80 — hoy se ven al amanecer subiendo a los telescopios de Calar Alto.', en:'Iberian ibex were reintroduced into the Filabres range in the 1980s — today you can spot them at dawn near the Calar Alto telescopes.' },
+  { type:'fact', es:'El Faro del Cabo de Gata fue uno de los últimos faros españoles en pasar del aceite de oliva a la electricidad — ocurrió en 1972.', en:'The Cabo de Gata lighthouse was among Spain\'s last to switch from olive oil to electric power — it happened in 1972.' },
+  { type:'fact', es:'Las cuatro cumbres volcánicas del Cabo de Gata (Bermeja, Mauricio, Negra, Higo Seco) se suben en una hora desde Las Negras y regalan vistas a 360°.', en:'Cabo de Gata\'s four volcanic peaks — Bermeja, Mauricio, Negra and Higo Seco — can be climbed in an hour from Las Negras for full 360° views.' },
+  { type:'fact', es:'Almería capital tiene el segundo casco histórico amurallado más grande de Andalucía oriental: solo Granada le supera.', en:'Almería city has eastern Andalusia\'s second-largest historic walled centre — only Granada is bigger.' },
+  { type:'fact', es:'La Catedral de Almería conserva una de las pocas custodias renacentistas de plata maciza en España: pesa cerca de 200 kg y solo sale en Corpus.', en:'Almería Cathedral keeps one of Spain\'s few solid-silver Renaissance monstrances — close to 200 kg, paraded only at Corpus Christi.' },
+  { type:'fact', es:'Vera celebra cada agosto sus Fiestas Mayores en honor a la Virgen de las Angustias: programa con encierros, dianas y feria centenaria.', en:'Vera holds its main August fiestas honouring the Virgin of the Angustias — running of the bulls, dawn parades and a fair dating back over a century.' },
   { type:'fact', es:'Cuevas del Almanzora tiene un castillo árabe del siglo XII restaurado: aparece en "El Cid" (1961) con Charlton Heston en escenas exteriores.', en:'Cuevas del Almanzora\'s 12th-century Moorish castle appears in "El Cid" (1961) with Charlton Heston in the exterior scenes.' },
-  { type:'fact', es:'Las playas naturistas de Vera Playa están reconocidas oficialmente desde 1979: una de las primeras de toda España y la única con bandera azul desde hace décadas.', en:'Vera Playa\'s naturist beaches were officially recognised in 1979, among Spain\'s first and Blue-Flag certified for decades.' },
-  { type:'fact', es:'La Cueva del Tesoro en Vélez Rubio guarda pinturas rupestres del Levantino: ciervas, cabras y cazadores en una de las cuevas más alejadas del mar de Andalucía.', en:'Vélez Rubio\'s Cueva del Tesoro keeps Levantine rock art: deer, goats and hunters in one of Andalusia\'s most inland caves.' },
-  { type:'fact', es:'El Castillo de Tabernas se ve desde 30 km a la redonda y domina todo el desierto: bajo restauración con financiación europea desde 2022.', en:'Tabernas Castle is visible from 30 km around, dominating the entire desert, under EU-funded restoration since 2022.' },
-  { type:'fact', es:'Lorca celebra la Semana Santa más teatral de España: pasos con cuádrigas romanas y representaciones bíblicas declaradas Bien de Interés Cultural.', en:'Lorca holds Spain\'s most theatrical Holy Week: Roman chariots and biblical pageants, declared a National Heritage Site.' },
-  { type:'fact', es:'El Castillo de Lorca, "Fortaleza del Sol", es el más grande de la Región de Murcia: 8 km de murallas y dos torres del homenaje.', en:'Lorca\'s "Fortaleza del Sol" is the largest castle in the Region of Murcia, 8 km of walls and two keep towers.' },
-  { type:'fact', es:'El terremoto de Lorca de 2011 fue uno de los más destructivos de la España moderna: la reconstrucción del centro histórico ganó el Premio Europa Nostra.', en:'Lorca\'s 2011 earthquake was among modern Spain\'s most destructive, the historic centre\'s restoration won the Europa Nostra Award.' },
-  { type:'fact', es:'Águilas tiene Carnaval de Interés Turístico Internacional: cuatro noches de música, comparsas y la "musa" elegida cada año atraen a 100.000 visitantes.', en:'Águilas Carnival is rated of International Tourist Interest: four nights of music, troupes and the annual "musa" draw 100,000 visitors.' },
-  { type:'fact', es:'En Águilas y Cabo Cope viven cabras montesas reintroducidas en los años 90: la pequeña reserva costera funciona como puente con la sierra.', en:'Águilas and Cabo Cope host ibex reintroduced in the 1990s, a small coastal reserve linking sea and inland sierra.' },
-  { type:'fact', es:'Cartagena guarda el único Teatro Romano de la Hispania Tarraconense excavado bajo el casco urbano, enterrado bajo la catedral medieval durante 2.000 años.', en:'Cartagena holds the only Roman Theatre of Hispania Tarraconensis excavated under a city centre: buried beneath the medieval cathedral for 2,000 years.' },
-  { type:'fact', es:'Cartagena es una de las pocas ciudades del mundo con dos puertos enfrentados: militar (Arsenal) y comercial, separados por solo 200 m.', en:'Cartagena is one of the few cities in the world with two facing harbours, military (Arsenal) and commercial, just 200 m apart.' },
-  { type:'fact', es:'Cartagena guarda el Submarino Peral, primer submarino eléctrico de combate del mundo, botado en 1888 y expuesto al aire libre en su puerto.', en:'Cartagena exhibits the Peral submarine, the world\'s first electric combat submarine, launched in 1888 and now displayed open-air at the harbour.' },
-  { type:'fact', es:'Asdrúbal el Bello fundó Cartagena en 227 a.C. con el nombre de Qart Hadasht, "Ciudad Nueva", capital cartaginesa de Iberia.', en:'Hasdrubal the Fair founded Cartagena in 227 BC as Qart Hadasht, "New City", the Carthaginian capital of Iberia.' },
-  { type:'fact', es:'La península ibérica le debe el nombre "España" al fenicio "I-Spn-Ya" (tierra de conejos): los conejos venían sobre todo de Almería y Murcia.', en:'The Iberian Peninsula owes its name "Spain" to the Phoenician "I-Spn-Ya" (land of rabbits), and most of those rabbits came from Almería and Murcia.' },
-  { type:'fact', es:'El Mar Menor es la mayor laguna salada de Europa: 135 km² conectados al Mediterráneo por cinco bocas estrechas llamadas "golas".', en:'The Mar Menor is Europe\'s largest saltwater lagoon, 135 km² linked to the Mediterranean by five narrow channels called "golas".' },
-  { type:'fact', es:'La Manga del Mar Menor mide 22 km y separa la laguna del Mediterráneo: en algunos puntos tiene solo 100 m de ancho.', en:'La Manga del Mar Menor is 22 km long, separating the lagoon from the open Mediterranean, narrowing to just 100 m in places.' },
-  { type:'fact', es:'En el Mar Menor se practica deportes náuticos sin viento ni olas: única laguna en Europa donde aprenden vela los niños menores de 10 años.', en:'The Mar Menor offers calm-water sailing, Europe\'s only lagoon where children under 10 routinely learn to sail.' },
-  { type:'fact', es:'La isla del Barón en el Mar Menor fue regalo de bodas de un barón a su esposa en 1900: hoy propiedad privada, solo se ve desde el aire.', en:'The Mar Menor\'s Isla del Barón was a wedding gift in 1900: private property today, visible only from the air.' },
-  { type:'fact', es:'Mazarrón fue el principal puerto de exportación de plata romana de Hispania: aún se conservan galerías mineras bajo la sierra.', en:'Mazarrón was Hispania\'s main Roman silver export port, mining galleries still survive under the surrounding hills.' },
-  { type:'fact', es:'En el yacimiento Phoenician de Mazarrón se conservan dos pecios fenicios del siglo VII a.C., únicos en el mundo: aún están bajo el mar.', en:'Mazarrón\'s Phoenician site preserves two 7th-century BC Phoenician shipwrecks unique in the world, still under water.' },
-  { type:'fact', es:'La Azohía (Mazarrón) tiene una de las cinco torres vigía costeras del Reino de Murcia: contra los ataques berberiscos del siglo XVI.', en:'La Azohía (Mazarrón) keeps one of the Kingdom of Murcia\'s five 16th-century coastal watchtowers, built against Barbary raids.' },
-  { type:'fact', es:'Caravaca de la Cruz es una de las cinco ciudades santas del cristianismo (junto a Roma, Jerusalén, Santiago y Santo Toribio): celebra Año Jubilar cada 7 años.', en:'Caravaca de la Cruz is one of Christianity\'s five Holy Cities: alongside Rome, Jerusalem, Santiago and Santo Toribio, with a Jubilee Year every 7 years.' },
-  { type:'fact', es:'La basílica de Caravaca alberga la Vera Cruz: reliquia de la cruz de Cristo donada en 1232, "lavada" cada 3 de mayo en una ceremonia única.', en:'Caravaca\'s basilica holds the True Cross, a relic donated in 1232 and ritually "washed" every 3 May in a unique ceremony.' },
-  { type:'fact', es:'Calasparra produce el único arroz español de Denominación de Origen Protegida cultivado en montaña: terrazas inundadas a 350 m de altitud.', en:'Calasparra grows Spain\'s only protected-designation rice cultivated at altitude, flooded mountain terraces at 350 m.' },
-  { type:'fact', es:'El Cañón de Almadenes (Calasparra) se navega solo en kayak: 4 km de paredes verticales de 100 m sobre el río Segura.', en:'The Almadenes Canyon (Calasparra) can be navigated only by kayak, 4 km of vertical 100-m walls along the Segura river.' },
-  { type:'fact', es:'Sierra Espuña fue el primer espacio reforestado de Europa: en 1891, Ricardo Codorníu plantó pinos para frenar la erosión, hoy 25.000 hectáreas de bosque.', en:'Sierra Espuña was Europe\'s first reforested area, in 1891 Ricardo Codorníu planted pines to halt erosion; today the forest covers 25,000 hectares.' },
-  { type:'fact', es:'Sierra Espuña conserva los "Pozos de la Nieve" del siglo XVI: 20 cisternas de piedra que recogían nieve para abastecer Cartagena en verano.', en:'Sierra Espuña preserves 16th-century "Pozos de la Nieve", 20 stone snow-pits that supplied Cartagena with ice through the summer.' },
-  { type:'fact', es:'Murcia tiene el segundo casco antiguo más extenso de España tras Sevilla: 215 hectáreas dentro de las antiguas murallas árabes.', en:'Murcia has Spain\'s second-largest old town after Seville, 215 hectares inside the former Moorish walls.' },
+  { type:'fact', es:'Las playas naturistas de Vera Playa están reconocidas oficialmente desde 1979: una de las primeras de toda España y la única con bandera azul desde hace décadas.', en:'Vera Playa\'s naturist beaches were officially recognised in 1979 — among Spain\'s first and Blue-Flag certified for decades.' },
+  { type:'fact', es:'La Cueva del Tesoro en Vélez Rubio guarda pinturas rupestres del Levantino: ciervas, cabras y cazadores en una de las cuevas más alejadas del mar de Andalucía.', en:'Vélez Rubio\'s Cueva del Tesoro keeps Levantine rock art — deer, goats and hunters in one of Andalusia\'s most inland caves.' },
+  { type:'fact', es:'El Castillo de Tabernas se ve desde 30 km a la redonda y domina todo el desierto: bajo restauración con financiación europea desde 2022.', en:'Tabernas Castle is visible from 30 km around, dominating the entire desert — under EU-funded restoration since 2022.' },
+  { type:'fact', es:'Lorca celebra la Semana Santa más teatral de España: pasos con cuádrigas romanas y representaciones bíblicas declaradas Bien de Interés Cultural.', en:'Lorca holds Spain\'s most theatrical Holy Week — Roman chariots and biblical pageants, declared a National Heritage Site.' },
+  { type:'fact', es:'El Castillo de Lorca, "Fortaleza del Sol", es el más grande de la Región de Murcia: 8 km de murallas y dos torres del homenaje.', en:'Lorca\'s "Fortaleza del Sol" is the largest castle in the Region of Murcia — 8 km of walls and two keep towers.' },
+  { type:'fact', es:'El terremoto de Lorca de 2011 fue uno de los más destructivos de la España moderna: la reconstrucción del centro histórico ganó el Premio Europa Nostra.', en:'Lorca\'s 2011 earthquake was among modern Spain\'s most destructive — the historic centre\'s restoration won the Europa Nostra Award.' },
+  { type:'fact', es:'Águilas tiene Carnaval de Interés Turístico Internacional: cuatro noches de música, comparsas y la "musa" elegida cada año atraen a 100.000 visitantes.', en:'Águilas Carnival is rated of International Tourist Interest — four nights of music, troupes and the annual "musa" draw 100,000 visitors.' },
+  { type:'fact', es:'En Águilas y Cabo Cope viven cabras montesas reintroducidas en los años 90: la pequeña reserva costera funciona como puente con la sierra.', en:'Águilas and Cabo Cope host ibex reintroduced in the 1990s — a small coastal reserve linking sea and inland sierra.' },
+  { type:'fact', es:'Cartagena guarda el único Teatro Romano de la Hispania Tarraconense excavado bajo el casco urbano — enterrado bajo la catedral medieval durante 2.000 años.', en:'Cartagena holds the only Roman Theatre of Hispania Tarraconensis excavated under a city centre — buried beneath the medieval cathedral for 2,000 years.' },
+  { type:'fact', es:'Cartagena es una de las pocas ciudades del mundo con dos puertos enfrentados: militar (Arsenal) y comercial, separados por solo 200 m.', en:'Cartagena is one of the few cities in the world with two facing harbours — military (Arsenal) and commercial — just 200 m apart.' },
+  { type:'fact', es:'Cartagena guarda el Submarino Peral, primer submarino eléctrico de combate del mundo, botado en 1888 y expuesto al aire libre en su puerto.', en:'Cartagena exhibits the Peral submarine — the world\'s first electric combat submarine, launched in 1888 and now displayed open-air at the harbour.' },
+  { type:'fact', es:'Asdrúbal el Bello fundó Cartagena en 227 a.C. con el nombre de Qart Hadasht — "Ciudad Nueva" — capital cartaginesa de Iberia.', en:'Hasdrubal the Fair founded Cartagena in 227 BC as Qart Hadasht — "New City" — the Carthaginian capital of Iberia.' },
+  { type:'fact', es:'La península ibérica le debe el nombre "España" al fenicio "I-Spn-Ya" (tierra de conejos): los conejos venían sobre todo de Almería y Murcia.', en:'The Iberian Peninsula owes its name "Spain" to the Phoenician "I-Spn-Ya" (land of rabbits) — and most of those rabbits came from Almería and Murcia.' },
+  { type:'fact', es:'El Mar Menor es la mayor laguna salada de Europa: 135 km² conectados al Mediterráneo por cinco bocas estrechas llamadas "golas".', en:'The Mar Menor is Europe\'s largest saltwater lagoon — 135 km² linked to the Mediterranean by five narrow channels called "golas".' },
+  { type:'fact', es:'La Manga del Mar Menor mide 22 km y separa la laguna del Mediterráneo: en algunos puntos tiene solo 100 m de ancho.', en:'La Manga del Mar Menor is 22 km long, separating the lagoon from the open Mediterranean — narrowing to just 100 m in places.' },
+  { type:'fact', es:'En el Mar Menor se practica deportes náuticos sin viento ni olas: única laguna en Europa donde aprenden vela los niños menores de 10 años.', en:'The Mar Menor offers calm-water sailing — Europe\'s only lagoon where children under 10 routinely learn to sail.' },
+  { type:'fact', es:'La isla del Barón en el Mar Menor fue regalo de bodas de un barón a su esposa en 1900: hoy propiedad privada, solo se ve desde el aire.', en:'The Mar Menor\'s Isla del Barón was a wedding gift in 1900 — private property today, visible only from the air.' },
+  { type:'fact', es:'Mazarrón fue el principal puerto de exportación de plata romana de Hispania: aún se conservan galerías mineras bajo la sierra.', en:'Mazarrón was Hispania\'s main Roman silver export port — mining galleries still survive under the surrounding hills.' },
+  { type:'fact', es:'En el yacimiento Phoenician de Mazarrón se conservan dos pecios fenicios del siglo VII a.C., únicos en el mundo: aún están bajo el mar.', en:'Mazarrón\'s Phoenician site preserves two 7th-century BC Phoenician shipwrecks unique in the world — still under water.' },
+  { type:'fact', es:'La Azohía (Mazarrón) tiene una de las cinco torres vigía costeras del Reino de Murcia: contra los ataques berberiscos del siglo XVI.', en:'La Azohía (Mazarrón) keeps one of the Kingdom of Murcia\'s five 16th-century coastal watchtowers — built against Barbary raids.' },
+  { type:'fact', es:'Caravaca de la Cruz es una de las cinco ciudades santas del cristianismo (junto a Roma, Jerusalén, Santiago y Santo Toribio): celebra Año Jubilar cada 7 años.', en:'Caravaca de la Cruz is one of Christianity\'s five Holy Cities — alongside Rome, Jerusalem, Santiago and Santo Toribio — with a Jubilee Year every 7 years.' },
+  { type:'fact', es:'La basílica de Caravaca alberga la Vera Cruz: reliquia de la cruz de Cristo donada en 1232, "lavada" cada 3 de mayo en una ceremonia única.', en:'Caravaca\'s basilica holds the True Cross — a relic donated in 1232 and ritually "washed" every 3 May in a unique ceremony.' },
+  { type:'fact', es:'Calasparra produce el único arroz español de Denominación de Origen Protegida cultivado en montaña: terrazas inundadas a 350 m de altitud.', en:'Calasparra grows Spain\'s only protected-designation rice cultivated at altitude — flooded mountain terraces at 350 m.' },
+  { type:'fact', es:'El Cañón de Almadenes (Calasparra) se navega solo en kayak: 4 km de paredes verticales de 100 m sobre el río Segura.', en:'The Almadenes Canyon (Calasparra) can be navigated only by kayak — 4 km of vertical 100-m walls along the Segura river.' },
+  { type:'fact', es:'Sierra Espuña fue el primer espacio reforestado de Europa: en 1891, Ricardo Codorníu plantó pinos para frenar la erosión, hoy 25.000 hectáreas de bosque.', en:'Sierra Espuña was Europe\'s first reforested area — in 1891 Ricardo Codorníu planted pines to halt erosion; today the forest covers 25,000 hectares.' },
+  { type:'fact', es:'Sierra Espuña conserva los "Pozos de la Nieve" del siglo XVI: 20 cisternas de piedra que recogían nieve para abastecer Cartagena en verano.', en:'Sierra Espuña preserves 16th-century "Pozos de la Nieve" — 20 stone snow-pits that supplied Cartagena with ice through the summer.' },
+  { type:'fact', es:'Murcia tiene el segundo casco antiguo más extenso de España tras Sevilla: 215 hectáreas dentro de las antiguas murallas árabes.', en:'Murcia has Spain\'s second-largest old town after Seville — 215 hectares inside the former Moorish walls.' },
   { type:'fact', es:'La Catedral de Murcia tiene la fachada barroca más alta de España (95 m) y conserva el corazón embalsamado del rey Alfonso X el Sabio.', en:'Murcia Cathedral has Spain\'s tallest Baroque façade (95 m) and preserves the embalmed heart of King Alfonso X the Wise.' },
-  { type:'fact', es:'La huerta de Murcia se riega con un sistema de acequias árabe del siglo X: el más antiguo de Europa todavía en uso, con su propio Tribunal del Agua.', en:'Murcia\'s huerta is irrigated by a 10th-century Moorish acequia system, Europe\'s oldest still in use, with its own Water Tribunal.' },
-  { type:'fact', es:'El altiplano murciano (Yecla, Jumilla) produce el monastrell más concentrado de España: vino de uva resistente a 40 °C en verano.', en:'Murcia\'s altiplano (Yecla, Jumilla) yields Spain\'s most concentrated Monastrell, wines from grapes that withstand 40 °C summers.' },
-  { type:'fact', es:'El "tomate raf" murciano-almeriense solo crece en suelo salino y combina dulzor y acidez extremos: las mejores variedades vienen de Pulpí y Águilas.', en:'The "raf" tomato, Murcian-Almerian, grows only in saline soil and combines extreme sweetness and acidity; the best come from Pulpí and Águilas.' },
-  { type:'fact', es:'El paparajote es el postre típico de la huerta murciana: hoja de limonero rebozada y frita con azúcar y canela. Se come la masa, no la hoja.', en:'Paparajote is Murcia\'s emblematic huerta dessert: a lemon leaf battered and fried, dusted with sugar and cinnamon. You eat the batter, not the leaf.' },
-  { type:'fact', es:'El "zarangollo" murciano es un revuelto de calabacín y cebolla, sencillo pero hecho con la huerta: solo se sabe a qué huele cuando es de Murcia.', en:'Murcia\'s "zarangollo" is a simple zucchini-onion scramble, but only Murcian huerta produce gives it that unmistakable scent.' },
-  { type:'fact', es:'Los michirones son habas secas guisadas con chorizo y hueso de jamón: el plato cuartelero murciano por excelencia, herencia mudéjar.', en:'Michirones are dried broad beans stewed with chorizo and ham bone, Murcia\'s emblematic barrack-style dish, of Mudéjar origin.' },
-  { type:'fact', es:'La Dama de Baza es una escultura íbera del siglo IV a.C. encontrada en el Cerro del Santuario en 1971: hoy en el Museo Arqueológico Nacional.', en:'The Lady of Baza is a 4th-century BC Iberian sculpture unearthed in 1971 at the Cerro del Santuario, now at the National Archaeological Museum.' },
-  { type:'fact', es:'Los Baños Árabes de Baza son los mejor conservados del sur de Granada: del siglo XIII, con decoraciones originales todavía visibles.', en:'Baza\'s Arab Baths are the best preserved in southern Granada: 13th-century, with original decoration still visible.' },
-  { type:'fact', es:'La fiesta del Cascamorras une Baza y Guadix cada 6 de septiembre: un hombre intenta robar una virgen mientras los vecinos lo cubren de aceite negro.', en:'The Cascamorras festival links Baza and Guadix on 6 September, one man tries to steal a Virgin statue while locals cover him in black oil.' },
-  { type:'fact', es:'Guadix tiene el segundo barrio troglodita más grande de Europa: más de 2.000 cuevas habitadas con chimeneas blancas asomando por los cerros.', en:'Guadix has Europe\'s second-largest troglodyte quarter: over 2,000 inhabited cave-houses, white chimneys poking out of the hills.' },
-  { type:'fact', es:'La Catedral de Guadix se construyó sobre la antigua mezquita aljama: única catedral barroca-mudéjar de Andalucía oriental.', en:'Guadix Cathedral was built over the former main mosque, the only Baroque-Mudéjar cathedral in eastern Andalusia.' },
-  { type:'fact', es:'El Geoparque de Granada, único geoparque UNESCO de la Cordillera Bética, es una sucesión de badlands rojizos en Gorafe y Marquesado.', en:'The Granada Geopark, the only UNESCO geopark in the Baetic Range, is a sequence of red badlands across Gorafe and Marquesado.' },
-  { type:'fact', es:'En Galera está el mayor yacimiento ibérico de Granada: la necrópolis de Tútugi, con más de 1.500 tumbas excavadas en la ladera.', en:'Galera holds Granada\'s largest Iberian site: the Tútugi necropolis, with over 1,500 tombs cut into the hillside.' },
-  { type:'fact', es:'En Orce se encontraron los restos humanos más antiguos de Europa: 1,4 millones de años. Los fósiles dieron al pueblo fama mundial en 1982.', en:'Orce yielded the oldest human remains found in Europe, 1.4 million years old. The fossils brought the village world fame in 1982.' },
-  { type:'fact', es:'La Sierra de Castril tiene el cañón fluvial más profundo de Andalucía oriental: paredes verticales de 200 m sobre el río Castril.', en:'The Sierra de Castril has eastern Andalusia\'s deepest river canyon, 200-m vertical walls along the Castril river.' },
-  { type:'fact', es:'Huéscar es la única ciudad de España "técnicamente en guerra" con Dinamarca durante 172 años: declarada en 1809 por Napoleón, paz firmada en 1981.', en:'Huéscar was the only Spanish town "technically at war" with Denmark for 172 years: declared in 1809 in the Napoleonic era, peace finally signed in 1981.' },
-  { type:'fact', es:'La Puebla de Don Fadrique (Huéscar) está a 1.143 m de altitud, uno de los municipios andaluces más altos con actividad agrícola tradicional.', en:'La Puebla de Don Fadrique (Huéscar) sits at 1,143 m, among Andalusia\'s highest towns with active traditional farming.' },
-  { type:'fact', es:'En la Cueva del Agua de Tíscar (Sierra de Castril) nace un río subterráneo: bóveda de 12 m que sirvió de capilla rupestre cristiana en el siglo XV.', en:'A subterranean river rises in Tíscar Cave (Sierra de Castril), its 12-m vault served as a Christian rock chapel in the 15th century.' },
-  { type:'fact', es:'Castril guarda uno de los pueblos blancos más altos de Andalucía oriental (1.000 m): visto desde el embalse, parece pegado al cielo.', en:'Castril is one of eastern Andalusia\'s highest whitewashed villages (1,000 m): viewed from the reservoir, it seems glued to the sky.' },
-  { type:'fact', es:'El embalse de Negratín (Granada oriental) es el segundo lago artificial más grande de Andalucía: aguas verde turquesa en pleno paisaje árido.', en:'The Negratín reservoir (eastern Granada) is Andalusia\'s second-largest artificial lake, turquoise water in the middle of arid landscape.' },
-  { type:'fact', es:'En las cumbres de Sierra Nevada, vertiente granadina, quedan los últimos glaciares fósiles del sur de Europa: el Veleta y el Mulhacén.', en:'Sierra Nevada\'s Granada slopes hold southern Europe\'s last fossil glaciers, Veleta and Mulhacén.' },
+  { type:'fact', es:'La huerta de Murcia se riega con un sistema de acequias árabe del siglo X — el más antiguo de Europa todavía en uso, con su propio Tribunal del Agua.', en:'Murcia\'s huerta is irrigated by a 10th-century Moorish acequia system — Europe\'s oldest still in use, with its own Water Tribunal.' },
+  { type:'fact', es:'El altiplano murciano (Yecla, Jumilla) produce el monastrell más concentrado de España: vino de uva resistente a 40 °C en verano.', en:'Murcia\'s altiplano (Yecla, Jumilla) yields Spain\'s most concentrated Monastrell — wines from grapes that withstand 40 °C summers.' },
+  { type:'fact', es:'El "tomate raf" murciano-almeriense solo crece en suelo salino y combina dulzor y acidez extremos: las mejores variedades vienen de Pulpí y Águilas.', en:'The "raf" tomato — Murcian-Almerian — grows only in saline soil and combines extreme sweetness and acidity; the best come from Pulpí and Águilas.' },
+  { type:'fact', es:'El paparajote es el postre típico de la huerta murciana: hoja de limonero rebozada y frita con azúcar y canela. Se come la masa, no la hoja.', en:'Paparajote is Murcia\'s emblematic huerta dessert — a lemon leaf battered and fried, dusted with sugar and cinnamon. You eat the batter, not the leaf.' },
+  { type:'fact', es:'El "zarangollo" murciano es un revuelto de calabacín y cebolla — sencillo pero hecho con la huerta: solo se sabe a qué huele cuando es de Murcia.', en:'Murcia\'s "zarangollo" is a simple zucchini-onion scramble — but only Murcian huerta produce gives it that unmistakable scent.' },
+  { type:'fact', es:'Los michirones son habas secas guisadas con chorizo y hueso de jamón: el plato cuartelero murciano por excelencia, herencia mudéjar.', en:'Michirones are dried broad beans stewed with chorizo and ham bone — Murcia\'s emblematic barrack-style dish, of Mudéjar origin.' },
+  { type:'fact', es:'La Dama de Baza es una escultura íbera del siglo IV a.C. encontrada en el Cerro del Santuario en 1971: hoy en el Museo Arqueológico Nacional.', en:'The Lady of Baza is a 4th-century BC Iberian sculpture unearthed in 1971 at the Cerro del Santuario — now at the National Archaeological Museum.' },
+  { type:'fact', es:'Los Baños Árabes de Baza son los mejor conservados del sur de Granada: del siglo XIII, con decoraciones originales todavía visibles.', en:'Baza\'s Arab Baths are the best preserved in southern Granada — 13th-century, with original decoration still visible.' },
+  { type:'fact', es:'La fiesta del Cascamorras une Baza y Guadix cada 6 de septiembre: un hombre intenta robar una virgen mientras los vecinos lo cubren de aceite negro.', en:'The Cascamorras festival links Baza and Guadix on 6 September — one man tries to steal a Virgin statue while locals cover him in black oil.' },
+  { type:'fact', es:'Guadix tiene el segundo barrio troglodita más grande de Europa: más de 2.000 cuevas habitadas con chimeneas blancas asomando por los cerros.', en:'Guadix has Europe\'s second-largest troglodyte quarter — over 2,000 inhabited cave-houses, white chimneys poking out of the hills.' },
+  { type:'fact', es:'La Catedral de Guadix se construyó sobre la antigua mezquita aljama: única catedral barroca-mudéjar de Andalucía oriental.', en:'Guadix Cathedral was built over the former main mosque — the only Baroque-Mudéjar cathedral in eastern Andalusia.' },
+  { type:'fact', es:'El Geoparque de Granada — único geoparque UNESCO de la Cordillera Bética — es una sucesión de badlands rojizos en Gorafe y Marquesado.', en:'The Granada Geopark — the only UNESCO geopark in the Baetic Range — is a sequence of red badlands across Gorafe and Marquesado.' },
+  { type:'fact', es:'En Galera está el mayor yacimiento ibérico de Granada: la necrópolis de Tútugi, con más de 1.500 tumbas excavadas en la ladera.', en:'Galera holds Granada\'s largest Iberian site — the Tútugi necropolis, with over 1,500 tombs cut into the hillside.' },
+  { type:'fact', es:'En Orce se encontraron los restos humanos más antiguos de Europa: 1,4 millones de años. Los fósiles dieron al pueblo fama mundial en 1982.', en:'Orce yielded the oldest human remains found in Europe — 1.4 million years old. The fossils brought the village world fame in 1982.' },
+  { type:'fact', es:'La Sierra de Castril tiene el cañón fluvial más profundo de Andalucía oriental: paredes verticales de 200 m sobre el río Castril.', en:'The Sierra de Castril has eastern Andalusia\'s deepest river canyon — 200-m vertical walls along the Castril river.' },
+  { type:'fact', es:'Huéscar es la única ciudad de España "técnicamente en guerra" con Dinamarca durante 172 años: declarada en 1809 por Napoleón, paz firmada en 1981.', en:'Huéscar was the only Spanish town "technically at war" with Denmark for 172 years — declared in 1809 in the Napoleonic era, peace finally signed in 1981.' },
+  { type:'fact', es:'La Puebla de Don Fadrique (Huéscar) está a 1.143 m de altitud — uno de los municipios andaluces más altos con actividad agrícola tradicional.', en:'La Puebla de Don Fadrique (Huéscar) sits at 1,143 m — among Andalusia\'s highest towns with active traditional farming.' },
+  { type:'fact', es:'En la Cueva del Agua de Tíscar (Sierra de Castril) nace un río subterráneo: bóveda de 12 m que sirvió de capilla rupestre cristiana en el siglo XV.', en:'A subterranean river rises in Tíscar Cave (Sierra de Castril) — its 12-m vault served as a Christian rock chapel in the 15th century.' },
+  { type:'fact', es:'Castril guarda uno de los pueblos blancos más altos de Andalucía oriental (1.000 m): visto desde el embalse, parece pegado al cielo.', en:'Castril is one of eastern Andalusia\'s highest whitewashed villages (1,000 m) — viewed from the reservoir, it seems glued to the sky.' },
+  { type:'fact', es:'El embalse de Negratín (Granada oriental) es el segundo lago artificial más grande de Andalucía: aguas verde turquesa en pleno paisaje árido.', en:'The Negratín reservoir (eastern Granada) is Andalusia\'s second-largest artificial lake — turquoise water in the middle of arid landscape.' },
+  { type:'fact', es:'En las cumbres de Sierra Nevada — vertiente granadina — quedan los últimos glaciares fósiles del sur de Europa: el Veleta y el Mulhacén.', en:'Sierra Nevada\'s Granada slopes hold southern Europe\'s last fossil glaciers — Veleta and Mulhacén.' },
   { type:'fact', es:'El Mulhacén (3.482 m) es el techo de la península ibérica y el tercer pico más alto de Europa occidental tras Mont Blanc y Monte Rosa.', en:'Mulhacén (3,482 m) is the highest peak on the Iberian Peninsula and Western Europe\'s third-highest after Mont Blanc and Monte Rosa.' },
   { type:'fact', es:'Sierra Nevada tiene la única estación de esquí del sur de Europa donde se puede esquiar viendo el mar Mediterráneo desde la pista.', en:'Sierra Nevada is the only ski resort in southern Europe where you can ski with a view of the Mediterranean Sea.' },
-  { type:'fact', es:'La cara este de Sierra Nevada (vertiente almeriense) es mucho más árida que la oeste: el Mulhacén divide dos climas radicalmente distintos.', en:'Sierra Nevada\'s eastern (Almerian) slope is far drier than the western, Mulhacén splits two radically different climates.' },
-  { type:'fact', es:'La Alpujarra granadina y la almeriense comparten arquitectura: tinaos (pasadizos cubiertos sobre las calles), terrazas y lavaderos comunales.', en:'Granadan and Almerian Alpujarras share architecture: tinaos (covered passageways over streets), terraced fields and communal washhouses.' },
-  { type:'fact', es:'En la Alpujarra granadina (Trevélez, Bubión, Pampaneira) curan el jamón a 1.500 m de altitud: secado al aire seco de la sierra.', en:'In the Granada Alpujarra (Trevélez, Bubión, Pampaneira), ham is cured at 1,500 m, dried by the mountain\'s dry air.' },
-  { type:'fact', es:'El Jamón de Trevélez es el único jamón curado a más altitud de Europa con D.O. propia: solo se cura entre noviembre y abril por el frío seco.', en:'Trevélez ham is Europe\'s highest-altitude PDO cured ham, produced only between November and April when the dry cold is right.' },
+  { type:'fact', es:'La cara este de Sierra Nevada (vertiente almeriense) es mucho más árida que la oeste: el Mulhacén divide dos climas radicalmente distintos.', en:'Sierra Nevada\'s eastern (Almerian) slope is far drier than the western — Mulhacén splits two radically different climates.' },
+  { type:'fact', es:'La Alpujarra granadina y la almeriense comparten arquitectura: tinaos (pasadizos cubiertos sobre las calles), terrazas y lavaderos comunales.', en:'Granadan and Almerian Alpujarras share architecture — tinaos (covered passageways over streets), terraced fields and communal washhouses.' },
+  { type:'fact', es:'En la Alpujarra granadina (Trevélez, Bubión, Pampaneira) curan el jamón a 1.500 m de altitud: secado al aire seco de la sierra.', en:'In the Granada Alpujarra (Trevélez, Bubión, Pampaneira), ham is cured at 1,500 m — dried by the mountain\'s dry air.' },
+  { type:'fact', es:'El Jamón de Trevélez es el único jamón curado a más altitud de Europa con D.O. propia: solo se cura entre noviembre y abril por el frío seco.', en:'Trevélez ham is Europe\'s highest-altitude PDO cured ham — produced only between November and April when the dry cold is right.' },
   { type:'fact', es:'En Cogollos de Guadix, sobre la sierra del Mencal, se conservan los únicos hipogeos romanos del sureste peninsular descubiertos hasta hoy.', en:'In Cogollos de Guadix, atop the Mencal range, lie the only Roman hypogea so far discovered in southeastern Iberia.' },
-  { type:'fact', es:'En la cueva de las Ventanas (Píñar, Granada oriental) están las "perlas de cueva" más grandes de Europa: esferas de calcita de hasta 2 cm.', en:'Píñar\'s Cueva de las Ventanas (eastern Granada) holds Europe\'s largest cave pearls, calcite spheres up to 2 cm across.' },
-  { type:'fact', es:'Almería, Murcia y Granada oriental conforman el "triángulo más seco de Europa": menos de 300 mm de lluvia anual en todo el territorio interior.', en:'Almería, Murcia and eastern Granada form Europe\'s "driest triangle", less than 300 mm of annual rain across all the inland area.' },
-  { type:'fact', es:'El cielo nocturno entre Sierra Nevada y Cabo de Gata es de los más oscuros de Europa: certificación Starlight para astrofotografía profesional.', en:'The night sky between Sierra Nevada and Cabo de Gata is among Europe\'s darkest, Starlight-certified for professional astrophotography.' },
+  { type:'fact', es:'En la cueva de las Ventanas (Píñar, Granada oriental) están las "perlas de cueva" más grandes de Europa: esferas de calcita de hasta 2 cm.', en:'Píñar\'s Cueva de las Ventanas (eastern Granada) holds Europe\'s largest cave pearls — calcite spheres up to 2 cm across.' },
+  { type:'fact', es:'Almería, Murcia y Granada oriental conforman el "triángulo más seco de Europa": menos de 300 mm de lluvia anual en todo el territorio interior.', en:'Almería, Murcia and eastern Granada form Europe\'s "driest triangle" — less than 300 mm of annual rain across all the inland area.' },
+  { type:'fact', es:'El cielo nocturno entre Sierra Nevada y Cabo de Gata es de los más oscuros de Europa: certificación Starlight para astrofotografía profesional.', en:'The night sky between Sierra Nevada and Cabo de Gata is among Europe\'s darkest — Starlight-certified for professional astrophotography.' },
   { type:'fact', es:'El monasterio de la Encarnación (Huelma, Jaén oriental, frontera con Granada) inspiró a García Lorca en algunos pasajes de "La Casa de Bernarda Alba".', en:'The Encarnación Monastery (Huelma, eastern Jaén near Granada) inspired García Lorca in passages of "The House of Bernarda Alba".' },
-  { type:'fact', es:'La trashumancia entre Almería y Granada está documentada desde el siglo XIII: los rebaños de la Alpujarra granadina pasaban el invierno en el Cabo.', en:'Transhumance between Almería and Granada is documented since the 13th century, Granadan Alpujarra flocks wintered in Cabo de Gata.' },
-  { type:'fact', es:'Almería y Murcia comparten el río Almanzora hasta que se evapora antes del mar: uno de los pocos ríos europeos sin desembocadura directa.', en:'Almería and Murcia share the Almanzora river until it evaporates before reaching the sea, one of Europe\'s few rivers without a direct mouth.' },
+  { type:'fact', es:'La trashumancia entre Almería y Granada está documentada desde el siglo XIII: los rebaños de la Alpujarra granadina pasaban el invierno en el Cabo.', en:'Transhumance between Almería and Granada is documented since the 13th century — Granadan Alpujarra flocks wintered in Cabo de Gata.' },
+  { type:'fact', es:'Almería y Murcia comparten el río Almanzora hasta que se evapora antes del mar: uno de los pocos ríos europeos sin desembocadura directa.', en:'Almería and Murcia share the Almanzora river until it evaporates before reaching the sea — one of Europe\'s few rivers without a direct mouth.' },
   { type:'fact', es:'Las "casas-cueva" de Guadix, Cuevas del Almanzora y Híjar conservan tradición común desde la repoblación cristiana del siglo XVI.', en:'The cave-houses of Guadix, Cuevas del Almanzora and Híjar share a common tradition dating back to the 16th-century Christian repopulation.' },
   { type:'fact', es:'El conjunto de paisajes áridos del sureste (Tabernas, Gorafe, Marquesado, badlands del Almanzora) es el segundo más extenso de Europa tras Bardenas Reales.', en:'The southeast\'s arid landscapes (Tabernas, Gorafe, Marquesado, Almanzora badlands) form Europe\'s second-largest arid complex after the Bardenas Reales.' },
-  { type:'fact', es:'La Sierra de Cazorla, Segura y Las Villas (Jaén, frontera con Granada) tiene el bosque mediterráneo más extenso de España: 209.000 ha.', en:'Cazorla, Segura and Las Villas range (Jaén, on the Granada border) holds Spain\'s largest Mediterranean forest: 209,000 hectares.' },
-  { type:'fact', es:'Tres de las cinco capitales más cálidas de España están en este triángulo: Almería, Murcia y Granada batieron 47 °C en agosto de 2021.', en:'Three of Spain\'s five hottest capitals lie in this triangle: Almería, Murcia and Granada all topped 47 °C in August 2021.' },
-  { type:'fact', es:'El Geoparque de Cabo de Gata-Níjar (Almería) y el de Granada son los únicos geoparques UNESCO consecutivos de Europa: una excursión los une en un día.', en:'The Cabo de Gata-Níjar Geopark (Almería) and the Granada Geopark are Europe\'s only consecutive UNESCO geoparks, connectable in a day trip.' },
-  { type:'fact', es:'La cocina del sureste comparte plato bandera: el cocido tradicional con garbanzos, tocino y morcilla, presente en Almería, Murcia y Granada.', en:'The southeast shares a flagship dish: the traditional cocido of chickpeas, bacon and morcilla: common to Almería, Murcia and Granada.' },
-  { type:'fact', es:'El "remojón" almeriense, granadino y murciano es ensalada de naranja, bacalao desmigado y aceitunas negras: fusión gastronómica de tres provincias.', en:'The "remojón" of Almería, Granada and Murcia is an orange, salt-cod and black-olive salad, a gastronomic fusion of three provinces.' },
-  { type:'fact', es:'Las almendras del Almanzora (Almería) y de Albanchez (Granada) abastecen a la mayor parte del turrón blando de Jijona: cosecha septiembre-octubre.', en:'Almonds from the Almanzora (Almería) and Albanchez (Granada) supply most of Jijona\'s soft turrón, harvested in September–October.' },
-  { type:'fact', es:'La cocina de los nazaríes seguía viva en Almería y Granada hasta 1571: hoy se reconstruye en restaurantes históricos como El Bosque del Lobo (Granada).', en:'Nasrid cuisine survived in Almería and Granada until 1571, today reconstructed in historic restaurants such as El Bosque del Lobo (Granada).' },
-  { type:'fact', es:'Hacia oriente, Almería, Murcia y Granada tienen el mayor número de horas de sol al año de toda Europa: más de 3.200 horas anuales.', en:'Almería, Murcia and Granada record Europe\'s highest annual sunshine totals: over 3,200 hours per year.' },
+  { type:'fact', es:'La Sierra de Cazorla, Segura y Las Villas (Jaén, frontera con Granada) tiene el bosque mediterráneo más extenso de España: 209.000 ha.', en:'Cazorla, Segura and Las Villas range (Jaén, on the Granada border) holds Spain\'s largest Mediterranean forest — 209,000 hectares.' },
+  { type:'fact', es:'Tres de las cinco capitales más cálidas de España están en este triángulo: Almería, Murcia y Granada batieron 47 °C en agosto de 2021.', en:'Three of Spain\'s five hottest capitals lie in this triangle — Almería, Murcia and Granada all topped 47 °C in August 2021.' },
+  { type:'fact', es:'El Geoparque de Cabo de Gata-Níjar (Almería) y el de Granada son los únicos geoparques UNESCO consecutivos de Europa: una excursión los une en un día.', en:'The Cabo de Gata-Níjar Geopark (Almería) and the Granada Geopark are Europe\'s only consecutive UNESCO geoparks — connectable in a day trip.' },
+  { type:'fact', es:'La cocina del sureste comparte plato bandera: el cocido tradicional con garbanzos, tocino y morcilla, presente en Almería, Murcia y Granada.', en:'The southeast shares a flagship dish — the traditional cocido of chickpeas, bacon and morcilla — common to Almería, Murcia and Granada.' },
+  { type:'fact', es:'El "remojón" almeriense, granadino y murciano es ensalada de naranja, bacalao desmigado y aceitunas negras: fusión gastronómica de tres provincias.', en:'The "remojón" of Almería, Granada and Murcia is an orange, salt-cod and black-olive salad — a gastronomic fusion of three provinces.' },
+  { type:'fact', es:'Las almendras del Almanzora (Almería) y de Albanchez (Granada) abastecen a la mayor parte del turrón blando de Jijona: cosecha septiembre-octubre.', en:'Almonds from the Almanzora (Almería) and Albanchez (Granada) supply most of Jijona\'s soft turrón — harvested in September–October.' },
+  { type:'fact', es:'La cocina de los nazaríes seguía viva en Almería y Granada hasta 1571: hoy se reconstruye en restaurantes históricos como El Bosque del Lobo (Granada).', en:'Nasrid cuisine survived in Almería and Granada until 1571 — today reconstructed in historic restaurants such as El Bosque del Lobo (Granada).' },
+  { type:'fact', es:'Hacia oriente, Almería, Murcia y Granada tienen el mayor número de horas de sol al año de toda Europa: más de 3.200 horas anuales.', en:'Almería, Murcia and Granada record Europe\'s highest annual sunshine totals — over 3,200 hours per year.' },
   { type:'fact', es:'La oliva picual del Almanzora se prensa en Tahal, Bayarque y Albanchez para producir aceite virgen extra de alta acidez baja, premiado en Europa.', en:'Picual olives from the Almanzora are pressed in Tahal, Bayarque and Albanchez into low-acidity extra-virgin oils, repeatedly awarded in Europe.' },
-  { type:'fact', es:'El Cante de las Minas (La Unión, Murcia) es el certamen flamenco más prestigioso del mundo: nació en 1961 cuando los mineros del cabo cantaban tras la jornada.', en:'La Unión\'s Cante de las Minas (Murcia) is the world\'s most prestigious flamenco contest, born in 1961 from the songs of cape miners after their shift.' },
-  { type:'fact', es:'El Día de Santa Cecilia se celebra en Murcia y Almería con bandas de música por la calle: tradición compartida desde el siglo XIX.', en:'St Cecilia\'s Day is celebrated in Murcia and Almería with marching bands in the streets, a shared tradition since the 19th century.' },
-  { type:'fact', es:'El cerro del Almirez (Sierra de los Filabres) tuvo el primer asentamiento humano del Calcolítico almeriense: 4.500 años a.C., junto a Los Millares.', en:'Cerro del Almirez (Filabres range) hosted Almería\'s earliest Chalcolithic settlement: 4,500 BC, alongside Los Millares.' },
+  { type:'fact', es:'El Cante de las Minas (La Unión, Murcia) es el certamen flamenco más prestigioso del mundo: nació en 1961 cuando los mineros del cabo cantaban tras la jornada.', en:'La Unión\'s Cante de las Minas (Murcia) is the world\'s most prestigious flamenco contest — born in 1961 from the songs of cape miners after their shift.' },
+  { type:'fact', es:'El Día de Santa Cecilia se celebra en Murcia y Almería con bandas de música por la calle: tradición compartida desde el siglo XIX.', en:'St Cecilia\'s Day is celebrated in Murcia and Almería with marching bands in the streets — a shared tradition since the 19th century.' },
+  { type:'fact', es:'El cerro del Almirez (Sierra de los Filabres) tuvo el primer asentamiento humano del Calcolítico almeriense: 4.500 años a.C. — junto a Los Millares.', en:'Cerro del Almirez (Filabres range) hosted Almería\'s earliest Chalcolithic settlement — 4,500 BC, alongside Los Millares.' },
 ];
 
 const FRASES_HOGAR = [
@@ -842,151 +838,151 @@ const FRASES_HOGAR = [
     type: 'quote',
     es: '«El hogar no es un lugar. Es un sentimiento.»',
     en: '«Home is not a place. It is a feeling.»',
-    attr: '– Cecelia Ahearn',
+    attr: '— Cecelia Ahearn',
   },
   {
     type: 'quote',
     es: '«El hogar es donde está el corazón.»',
     en: '«Home is where the heart is.»',
-    attr: '– Plinio el Viejo',
+    attr: '— Plinio el Viejo',
   },
   {
     type: 'quote',
     es: '«No hay lugar como el hogar.»',
     en: '«There is no place like home.»',
-    attr: '– L. Frank Baum, El Mago de Oz',
+    attr: '— L. Frank Baum, El Mago de Oz',
   },
   {
     type: 'quote',
     es: '«El hogar es el refugio del alma.»',
     en: '«The home is the refuge of the soul.»',
-    attr: '– Gaston Bachelard',
+    attr: '— Gaston Bachelard',
   },
   {
     type: 'quote',
     es: '«Donde haya amor, allí está el hogar.»',
     en: '«Where there is love, there is home.»',
-    attr: '– Leon Tolstoy',
+    attr: '— Leon Tolstoy',
   },
   {
     type: 'quote',
     es: '«Una casa se construye con ladrillos y vigas; un hogar se edifica con amor y sueños.»',
     en: '«A house is made of walls and beams; a home is built with love and dreams.»',
-    attr: '– William Arthur Ward',
+    attr: '— William Arthur Ward',
   },
   {
     type: 'quote',
     es: '«El buen huésped deja el lugar mejor de como lo encontró.»',
     en: '«A good guest leaves a place better than they found it.»',
-    attr: '– Proverbio / Proverb',
+    attr: '— Proverbio / Proverb',
   },
   {
     type: 'quote',
     es: '«Volver a casa es la forma más agradable de viajar.»',
     en: '«Returning home is the sweetest of all journeys.»',
-    attr: '– Fanny Burney',
+    attr: '— Fanny Burney',
   },
   {
     type: 'quote',
     es: '«Necesito el mar porque me enseña. No sé si aprendo música o conciencia: no sé si es ola sola o ser profundo, o sólo ronca voz o deslumbrante suposición de peces y navíos.»',
     en: '«I need the sea because it teaches me. I don\'t know if I learn music or awareness, if it is wave alone or deep being, or only hoarse voice or dazzling assumption of fish and ships.»',
-    attr: '– Pablo Neruda',
+    attr: '— Pablo Neruda',
   },
   {
     type: 'quote',
     es: '«El descanso no es holgazanería. Tumbarse en la hierba escuchando el murmullo del agua, contemplar las nubes flotando, no es perder el tiempo.»',
     en: '«Rest is not idleness. To lie sometimes on the grass listening to the murmur of water, or watching clouds float by, is by no means a waste of time.»',
-    attr: '– John Lubbock',
+    attr: '— John Lubbock',
   },
   {
     type: 'quote',
     es: '«La cura para todo es agua salada: sudor, lágrimas o el mar.»',
-    en: '«The cure for anything is salt water: sweat, tears, or the sea.»',
-    attr: '– Isak Dinesen',
+    en: '«The cure for anything is salt water — sweat, tears, or the sea.»',
+    attr: '— Isak Dinesen',
   },
   {
     type: 'quote',
     es: '«Vivir bien es la mejor venganza.»',
     en: '«Living well is the best revenge.»',
-    attr: '– George Herbert',
+    attr: '— George Herbert',
   },
   {
     type: 'quote',
     es: '«El mar es todo. Cubre siete décimas partes del globo. Su aliento es puro y vivificante. Es un inmenso desierto donde el hombre nunca está solo.»',
     en: '«The sea is everything. It covers seven-tenths of the globe. Its breath is pure and healthy. It is an immense desert where a man is never alone.»',
-    attr: '– Jules Verne',
+    attr: '— Jules Verne',
   },
   {
     type: 'quote',
     es: '«Quien cuida lo que comparte merece disfrutarlo del todo.»',
     en: '«Those who care for what they share deserve to enjoy it fully.»',
-    attr: '– Hestía',
+    attr: '— Hestía',
   },
   {
     type: 'quote',
     es: '«La vida es lo que pasa mientras estás ocupado haciendo otros planes.»',
     en: '«Life is what happens while you\'re busy making other plans.»',
-    attr: '– John Lennon',
+    attr: '— John Lennon',
   },
   {
     type: 'quote',
     es: '«El arte del descanso es parte del arte del trabajo.»',
     en: '«The art of rest is a part of the art of work.»',
-    attr: '– John Steinbeck',
+    attr: '— John Steinbeck',
   },
   {
     type: 'quote',
     es: '«Cada lugar que nos acoge bien merece ser cuidado igual de bien.»',
     en: '«Every place that welcomes us well deserves to be cared for just as well.»',
-    attr: '– Hestía',
+    attr: '— Hestía',
   },
   {
     type: 'quote',
     es: '«El verano tiene su propia eternidad.»',
     en: '«Summer has its own eternity.»',
-    attr: '– Charles Bowden',
+    attr: '— Charles Bowden',
   },
   {
     type: 'quote',
     es: '«No hay nada como quedarse en casa para sentirse de verdad cómodo.»',
     en: '«There is nothing like staying at home for real comfort.»',
-    attr: '– Jane Austen',
+    attr: '— Jane Austen',
   },
   {
     type: 'quote',
     es: '«No hace falta irse lejos para descubrir un lugar diferente. Hace falta llegar con los ojos abiertos.»',
     en: '«You need not go far to discover a different place. You just need to arrive with open eyes.»',
-    attr: '– Hestía',
+    attr: '— Hestía',
   },
   {
     type: 'quote',
     es: '«El verdadero descanso es sentir que el tiempo no corre.»',
     en: '«True rest is the feeling that time is not running.»',
-    attr: '– Marty Rubin',
+    attr: '— Marty Rubin',
   },
   {
     type: 'quote',
-    es: '«El sol, el mar y la brisa, la trinidad del bienestar mediterráneo.»',
-    en: '«Sun, sea and breeze, the Mediterranean trinity of wellbeing.»',
-    attr: '– Hestía',
+    es: '«El sol, el mar y la brisa — la trinidad del bienestar mediterráneo.»',
+    en: '«Sun, sea and breeze — the Mediterranean trinity of wellbeing.»',
+    attr: '— Hestía',
   },
   {
     type: 'quote',
     es: '«Lo que el sol es para las flores, el amor lo es para el alma humana.»',
     en: '«What the sun is to the flowers, love is to the human soul.»',
-    attr: '– Joseph Addison',
+    attr: '— Joseph Addison',
   },
   {
     type: 'quote',
     es: '«El espíritu no puede ser permanentemente negado. Se reafirma, aunque indirectamente, en cada acto de reposo.»',
     en: '«The spirit cannot be permanently denied. It reasserts itself, though indirectly, in every act of rest.»',
-    attr: '– Aldous Huxley',
+    attr: '— Aldous Huxley',
   },
   {
     type: 'quote',
     es: '«La felicidad es un lugar entre demasiado poco y demasiado mucho.»',
     en: '«Happiness is a place between too little and too much.»',
-    attr: '– Proverbio finlandés',
+    attr: '— Proverbio finlandés',
   },
 ];
 
@@ -999,7 +995,7 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   {
     es: 'La Reserva Marina de Cabo de Gata tiene la mayor visibilidad submarina del Mediterráneo occidental: hasta 40 metros de profundidad a simple vista.',
-    en: 'The Cabo de Gata Marine Reserve has the highest underwater visibility in the western Mediterranean, up to 40 metres of clear water.',
+    en: 'The Cabo de Gata Marine Reserve has the highest underwater visibility in the western Mediterranean — up to 40 metres of clear water.',
   },
   {
     es: 'La Playa de los Genoveses, en Cabo de Gata, figura entre las 10 playas más vírgenes de Europa según National Geographic.',
@@ -1023,8 +1019,8 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   /* Zona hacia Murcia */
   {
-    es: 'Águilas, a 40 minutos hacia Murcia, tiene 38 playas en menos de 30 kilómetros, la mayor densidad de calas vírgenes del litoral mediterráneo español.',
-    en: 'Águilas, 40 minutes towards Murcia, has 38 beaches in under 30 kilometres, the highest density of wild coves on the Spanish Mediterranean coast.',
+    es: 'Águilas, a 40 minutos hacia Murcia, tiene 38 playas en menos de 30 kilómetros — la mayor densidad de calas vírgenes del litoral mediterráneo español.',
+    en: 'Águilas, 40 minutes towards Murcia, has 38 beaches in under 30 kilometres — the highest density of wild coves on the Spanish Mediterranean coast.',
   },
   {
     es: 'Cabo Tiñoso, entre Cartagena y Mazarrón, es el único paraje del Mediterráneo europeo donde la tierra cae al mar desde 400 metros de altura sin ningún acceso rodado.',
@@ -1036,8 +1032,8 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   /* Pueblos */
   {
-    es: 'Mojácar, a 15 minutos de Vera, es uno de los pueblos más fotografiados del Mediterráneo, un cubo blanco sobre roca que Salvador Dalí describió como "el surrealismo natural".',
-    en: 'Mojácar, 15 minutes from Vera, is one of the most photographed villages in the Mediterranean, a white cube on rock that Salvador Dalí described as "natural surrealism".',
+    es: 'Mojácar, a 15 minutos de Vera, es uno de los pueblos más fotografiados del Mediterráneo — un cubo blanco sobre roca que Salvador Dalí describió como "el surrealismo natural".',
+    en: 'Mojácar, 15 minutes from Vera, is one of the most photographed villages in the Mediterranean — a white cube on rock that Salvador Dalí described as "natural surrealism".',
   },
   {
     es: 'Bédar, a 20 minutos hacia el interior, tiene 400 habitantes y más de 500 extranjeros empadronados que eligieron sus casas blancas para vivir. Uno de los pueblos más cosmopolitas por habitante de España.',
@@ -1054,7 +1050,7 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   {
     es: 'El litoral entre Vera Playa y Cabo de Gata no tiene ninguna plataforma petrolífera ni central eléctrica a la vista. Es uno de los pocos horizontes marítimos completamente vírgenes de España.',
-    en: 'The coastline between Vera Playa and Cabo de Gata has no oil platform or power plant visible on the horizon, one of the few completely unspoilt maritime views in Spain.',
+    en: 'The coastline between Vera Playa and Cabo de Gata has no oil platform or power plant visible on the horizon — one of the few completely unspoilt maritime views in Spain.',
   },
   /* Gastronomía */
   {
@@ -1062,12 +1058,12 @@ const SABIAS_QUE_HOME_FACTS = [
     en: 'Garrucha, 5 minutes from Vera, has the Mediterranean\'s most important red prawn market. The Garrucha red prawn is considered the world\'s finest by Spain\'s most acclaimed chefs.',
   },
   {
-    es: 'El tomate raf de Almería, el tomate más premiado de España, se cultiva en los invernaderos del entorno de Vera y se exporta a los mejores restaurantes de Europa.',
-    en: 'Almería\'s raf tomato, Spain\'s most award-winning tomato, is grown in greenhouses around Vera and exported to Europe\'s finest restaurants.',
+    es: 'El tomate raf de Almería — el tomate más premiado de España — se cultiva en los invernaderos del entorno de Vera y se exporta a los mejores restaurantes de Europa.',
+    en: 'Almería\'s raf tomato — Spain\'s most award-winning tomato — is grown in greenhouses around Vera and exported to Europe\'s finest restaurants.',
   },
   {
-    es: 'La pipirrana almeriense: tomate, pepino, pimiento y atún en aceite, lleva más de tres generaciones cocinándose igual en las casas de Vera. El plato de verano más refrescante del Mediterráneo.',
-    en: 'Almería\'s pipirrana: tomato, cucumber, pepper and tuna in oil, has been cooked the same way in Vera homes for over three generations. The Mediterranean\'s most refreshing summer dish.',
+    es: 'La pipirrana almeriense — tomate, pepino, pimiento y atún en aceite — lleva más de tres generaciones cocinándose igual en las casas de Vera. El plato de verano más refrescante del Mediterráneo.',
+    en: 'Almería\'s pipirrana — tomato, cucumber, pepper and tuna in oil — has been cooked the same way in Vera homes for over three generations. The Mediterranean\'s most refreshing summer dish.',
   },
   {
     es: 'La ñora, el pimentón seco que da sabor a la paella auténtica, se cultiva y seca al sol entre Almería y Murcia. Sin ñora, no hay paella.',
@@ -1075,12 +1071,12 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   /* Clima */
   {
-    es: 'En Vera Playa, la temperatura media de enero es de 13 °C: más cálida que Niza, Cannes o Montpellier en pleno invierno.',
-    en: 'In Vera Playa, the average January temperature is 13 °C: warmer than Nice, Cannes or Montpellier in the depths of winter.',
+    es: 'En Vera Playa, la temperatura media de enero es de 13 °C — más cálida que Niza, Cannes o Montpellier en pleno invierno.',
+    en: 'In Vera Playa, the average January temperature is 13 °C — warmer than Nice, Cannes or Montpellier in the depths of winter.',
   },
   {
-    es: 'Vera Playa recibe una media de 230 mm de lluvia al año: menos que Madrid, menos que Roma y una fracción de lo que llueve en el norte de España.',
-    en: 'Vera Playa receives an average of 230 mm of rain a year: less than Madrid, less than Rome, and a fraction of what falls in northern Spain.',
+    es: 'Vera Playa recibe una media de 230 mm de lluvia al año — menos que Madrid, menos que Roma y una fracción de lo que llueve en el norte de España.',
+    en: 'Vera Playa receives an average of 230 mm of rain a year — less than Madrid, less than Rome, and a fraction of what falls in northern Spain.',
   },
   /* Mar */
   {
@@ -1089,12 +1085,12 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   {
     es: 'La pradera de posidonia de Vera Playa produce entre 10 y 15 litros de oxígeno por m² al día. Es el pulmón subacuático del Mediterráneo occidental.',
-    en: 'The posidonia meadow off Vera Playa produces 10 to 15 litres of oxygen per square metre each day, the underwater lung of the western Mediterranean.',
+    en: 'The posidonia meadow off Vera Playa produces 10 to 15 litres of oxygen per square metre each day — the underwater lung of the western Mediterranean.',
   },
   /* Fauna */
   {
     es: 'El tramo de mar entre Vera Playa y la costa norte de África es una de las rutas habituales de los delfines mular del Mediterráneo. Se avistan frecuentemente desde los barcos de Garrucha.',
-    en: 'The stretch of sea between Vera Playa and the North African coast is a regular route for Mediterranean bottlenose dolphins, frequently spotted from Garrucha\'s boats.',
+    en: 'The stretch of sea between Vera Playa and the North African coast is a regular route for Mediterranean bottlenose dolphins — frequently spotted from Garrucha\'s boats.',
   },
   {
     es: 'La tortuga boba (Caretta caretta) nidifica en las playas del sur de Almería desde hace siglos. Las arenas finas de Vera Playa forman parte de su área de cría mediterránea.',
@@ -1107,7 +1103,7 @@ const SABIAS_QUE_HOME_FACTS = [
   /* Flora */
   {
     es: 'El esparto que crece salvaje en el campo de Vera fue la base de la economía rural almeriense durante siglos. Con él se fabricaban cestos, cuerdas y algunos de los primeros papeles de la historia.',
-    en: 'The esparto grass growing wild in the Vera countryside was the backbone of Almería\'s rural economy for centuries: used to make baskets, ropes, and some of history\'s earliest paper.',
+    en: 'The esparto grass growing wild in the Vera countryside was the backbone of Almería\'s rural economy for centuries — used to make baskets, ropes, and some of history\'s earliest paper.',
   },
   {
     es: 'El azufaifo, el árbol más resistente a la sequía de Europa, crece de forma natural en los campos de Vera. Sus frutos fueron alimento cotidiano de fenicios, griegos y romanos en el Mediterráneo.',
@@ -1120,32 +1116,32 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   {
     es: 'El desierto de Tabernas y el Mediterráneo se ven simultáneamente desde el Cabo de Gata: dos paisajes que no coexisten en ningún otro punto del planeta a tan poca distancia.',
-    en: 'The Tabernas Desert and the Mediterranean are visible simultaneously from Cabo de Gata, two landscapes that coexist nowhere else on the planet at such close range.',
+    en: 'The Tabernas Desert and the Mediterranean are visible simultaneously from Cabo de Gata — two landscapes that coexist nowhere else on the planet at such close range.',
   },
   {
-    es: 'La Alcazaba de Almería, construida en el siglo X, fue la mayor fortaleza árabe de España en su época, incluso más extensa que la Alhambra de Granada.',
-    en: 'The Almería Alcazaba, built in the 10th century, was the largest Arab fortress in Spain at the time, even more extensive than the Alhambra in Granada.',
+    es: 'La Alcazaba de Almería, construida en el siglo X, fue la mayor fortaleza árabe de España en su época — incluso más extensa que la Alhambra de Granada.',
+    en: 'The Almería Alcazaba, built in the 10th century, was the largest Arab fortress in Spain at the time — even more extensive than the Alhambra in Granada.',
   },
-  /* Datos espaciales: latitud, posición, coordenadas */
+  /* Datos espaciales — latitud, posición, coordenadas */
   {
-    es: 'Vera Playa se sitúa a 37° 14′ N, 1° 47′ O: exactamente la misma latitud que Atenas, Sevilla, Argel y San Francisco.',
-    en: 'Vera Playa sits at 37° 14′ N, 1° 47′ W: exactly the same latitude as Athens, Seville, Algiers and San Francisco.',
+    es: 'Vera Playa se sitúa a 37° 14′ N, 1° 47′ O — exactamente la misma latitud que Atenas, Sevilla, Argel y San Francisco.',
+    en: 'Vera Playa sits at 37° 14′ N, 1° 47′ W — exactly the same latitude as Athens, Seville, Algiers and San Francisco.',
   },
   {
     es: 'Vera Playa está a menos de 200 km de la costa africana. Está más cerca de Argelia que de Madrid.',
     en: 'Vera Playa is less than 200 km from the African coast. It is closer to Algeria than to Madrid.',
   },
   {
-    es: 'Vera Playa está a cero metros sobre el nivel del mar, literalmente al nivel del Mediterráneo. El pueblo de Vera, a 10 minutos tierra adentro, se eleva a 105 metros entre cítricos y olivares.',
-    en: 'Vera Playa sits at zero metres above sea level, literally at Mediterranean level. The town of Vera, 10 minutes inland, rises to 105 metres above citrus groves and olive fields.',
+    es: 'Vera Playa está a cero metros sobre el nivel del mar — literalmente al nivel del Mediterráneo. El pueblo de Vera, a 10 minutos tierra adentro, se eleva a 105 metros entre cítricos y olivares.',
+    en: 'Vera Playa sits at zero metres above sea level — literally at Mediterranean level. The town of Vera, 10 minutes inland, rises to 105 metres above citrus groves and olive fields.',
   },
   {
-    es: 'Por su longitud (1° 47′ O), en Vera Playa el sol de verano se pone a las 21:30 en hora oficial, pero el reloj solar marca las 20:00. Casi dos horas extra de luz vespertina que no existen en el centro de Europa.',
-    en: 'Due to its longitude (1° 47′ W), summer sunsets in Vera Playa happen at 21:30 by the clock, but the sun says 20:00. Nearly two extra hours of evening light that do not exist in central Europe.',
+    es: 'Por su longitud (1° 47′ O), en Vera Playa el sol de verano se pone a las 21:30 en hora oficial — pero el reloj solar marca las 20:00. Casi dos horas extra de luz vespertina que no existen en el centro de Europa.',
+    en: 'Due to its longitude (1° 47′ W), summer sunsets in Vera Playa happen at 21:30 by the clock — but the sun says 20:00. Nearly two extra hours of evening light that do not exist in central Europe.',
   },
   {
-    es: 'Vera Playa queda en la zona subtropical del hemisferio norte: la misma franja climática que el Sahara, el desierto de Atacama y el de Gobi. Es el único rincón de Europa con esa clasificación real.',
-    en: 'Vera Playa lies in the subtropical zone of the northern hemisphere: the same climatic band as the Sahara, Atacama and Gobi deserts. It is the only corner of Europe with that genuine classification.',
+    es: 'Vera Playa queda en la zona subtropical del hemisferio norte — la misma franja climática que el Sahara, el desierto de Atacama y el de Gobi. Es el único rincón de Europa con esa clasificación real.',
+    en: 'Vera Playa lies in the subtropical zone of the northern hemisphere — the same climatic band as the Sahara, Atacama and Gobi deserts. It is the only corner of Europe with that genuine classification.',
   },
   {
     es: 'Desde Vera Playa: 90 km a Almería capital, 550 km a Madrid, 700 km a Barcelona, 780 km a Casablanca. Más cerca de Marruecos que de la capital de España.',
@@ -1203,11 +1199,11 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   {
     es: 'La Cala del Plomo, en Cabo de Gata, solo es accesible a pie (1 hora de caminata) o en barco. Es la playa más aislada del parque natural y una de las más vírgenes del Mediterráneo.',
-    en: 'Cala del Plomo in Cabo de Gata is only reachable on foot (1 hour\'s walk) or by boat: the most isolated beach in the natural park, one of the most pristine in the Mediterranean.',
+    en: 'Cala del Plomo in Cabo de Gata is only reachable on foot (1 hour\'s walk) or by boat — the most isolated beach in the natural park, one of the most pristine in the Mediterranean.',
   },
   {
-    es: 'Las Cuatro Calas de Águilas: Cala Cerrada, Cala Carolina, Cala Palmera y Cala del Pino, son cuatro playas consecutivas de aguas cristalinas sin acceso rodado. A solo 40 km de Vera.',
-    en: 'The Cuatro Calas of Águilas: Cala Cerrada, Cala Carolina, Cala Palmera and Cala del Pino, are four consecutive crystal-clear coves with no road access. Just 40 km from Vera.',
+    es: 'Las Cuatro Calas de Águilas — Cala Cerrada, Cala Carolina, Cala Palmera y Cala del Pino — son cuatro playas consecutivas de aguas cristalinas sin acceso rodado. A solo 40 km de Vera.',
+    en: 'The Cuatro Calas of Águilas — Cala Cerrada, Cala Carolina, Cala Palmera and Cala del Pino — are four consecutive crystal-clear coves with no road access. Just 40 km from Vera.',
   },
   /* Más pueblos pintorescos */
   {
@@ -1219,8 +1215,8 @@ const SABIAS_QUE_HOME_FACTS = [
     en: 'San José in Cabo de Gata is the natural park\'s main village. From its harbour, boats depart to coves unreachable by road. Its seabed ranks among the most biodiverse in the western Mediterranean.',
   },
   {
-    es: 'Níjar, a 40 minutos de Vera, es la capital artesanal de Almería. Sus talleres de cerámica y esparto llevan produciendo con la misma técnica desde el siglo XV: sin moldes industriales, sin cambiar el método.',
-    en: 'Níjar, 40 minutes from Vera, is Almería\'s craft capital. Its ceramic and esparto workshops have used the same technique since the 15th century: no industrial moulds, method unchanged.',
+    es: 'Níjar, a 40 minutos de Vera, es la capital artesanal de Almería. Sus talleres de cerámica y esparto llevan produciendo con la misma técnica desde el siglo XV — sin moldes industriales, sin cambiar el método.',
+    en: 'Níjar, 40 minutes from Vera, is Almería\'s craft capital. Its ceramic and esparto workshops have used the same technique since the 15th century — no industrial moulds, method unchanged.',
   },
   /* Lugares singulares */
   {
@@ -1228,16 +1224,16 @@ const SABIAS_QUE_HOME_FACTS = [
     en: 'The Cabo de Gata lighthouse was built in 1863 and is the oldest active lighthouse in the province. Around it, the salt flats shelter pink flamingos, avocets and night herons year-round.',
   },
   {
-    es: 'La Cueva de Ambrosio, en Vélez Blanco (1 hora de Vera), tiene pinturas rupestres de más de 15.000 años de antigüedad, Patrimonio Mundial y uno de los yacimientos paleolíticos más importantes del sur de Europa.',
-    en: 'Cueva de Ambrosio in Vélez Blanco (1 hour from Vera) holds cave paintings over 15,000 years old, a World Heritage site and one of the most important Palaeolithic art sites in southern Europe.',
+    es: 'La Cueva de Ambrosio, en Vélez Blanco (1 hora de Vera), tiene pinturas rupestres de más de 15.000 años de antigüedad — Patrimonio Mundial y uno de los yacimientos paleolíticos más importantes del sur de Europa.',
+    en: 'Cueva de Ambrosio in Vélez Blanco (1 hour from Vera) holds cave paintings over 15,000 years old — a World Heritage site and one of the most important Palaeolithic art sites in southern Europe.',
   },
   {
     es: 'Fort Bravo y Mini Hollywood, en el Desierto de Tabernas (1 hora de Vera), fueron los platós donde se rodaron "El Bueno, el Feo y el Malo", "Lawrence de Arabia" y más de 600 westerns espagueti.',
     en: 'Fort Bravo and Mini Hollywood in the Tabernas Desert (1 hour from Vera) were the sets for "The Good, the Bad and the Ugly", "Lawrence of Arabia" and over 600 spaghetti westerns.',
   },
   {
-    es: 'El Arco del Agua, en el Valle de Aguas (Sorbas), es un arco natural de yeso de 15 metros de altura, uno de los paisajes geológicos más espectaculares y menos conocidos del sur de Europa.',
-    en: 'The Arco del Agua in the Valle de Aguas (Sorbas) is a natural gypsum arch 15 metres high, one of the most spectacular and least-known geological landscapes in southern Europe.',
+    es: 'El Arco del Agua, en el Valle de Aguas (Sorbas), es un arco natural de yeso de 15 metros de altura — uno de los paisajes geológicos más espectaculares y menos conocidos del sur de Europa.',
+    en: 'The Arco del Agua in the Valle de Aguas (Sorbas) is a natural gypsum arch 15 metres high — one of the most spectacular and least-known geological landscapes in southern Europe.',
   },
   /* Clima y naturaleza */
   {
@@ -1245,8 +1241,8 @@ const SABIAS_QUE_HOME_FACTS = [
     en: 'Sierra Nevada, with peaks above 3,400 metres, is visible from Vera beach on clear winter days. Just 80 km separate the Mediterranean from Europe\'s southernmost glacier.',
   },
   {
-    es: 'El Valle del Almanzora, a 30 minutos de Vera, florece en marzo con azahar de naranjo y limonero. El olor llega a la playa los días de poniente, uno de los fenómenos olfativos más sorprendentes de España.',
-    en: 'The Almanzora valley, 30 minutes from Vera, blooms in March with orange and lemon blossom. The scent reaches the beach on westerly days, one of Spain\'s most surprising natural perfume events.',
+    es: 'El Valle del Almanzora, a 30 minutos de Vera, florece en marzo con azahar de naranjo y limonero. El olor llega a la playa los días de poniente — uno de los fenómenos olfativos más sorprendentes de España.',
+    en: 'The Almanzora valley, 30 minutes from Vera, blooms in March with orange and lemon blossom. The scent reaches the beach on westerly days — one of Spain\'s most surprising natural perfume events.',
   },
   /* Gastronomía y tradición */
   {
@@ -1254,8 +1250,8 @@ const SABIAS_QUE_HOME_FACTS = [
     en: 'Garrucha, 5 minutes from Vera, has the only fishing port on the Almería coast that still holds a live fish auction first thing in the morning. Visitors are welcome.',
   },
   {
-    es: 'La almadraba de Cabo de Gata usa la misma trampa de redes laberínticas para atrapar atún rojo que los fenicios diseñaron hace 3.000 años: sin cambiar el método, sin añadir tecnología.',
-    en: 'The Cabo de Gata almadraba uses the same labyrinth-net trap for catching bluefin tuna that the Phoenicians devised 3,000 years ago: unchanged method, no technology added.',
+    es: 'La almadraba de Cabo de Gata usa la misma trampa de redes laberínticas para atrapar atún rojo que los fenicios diseñaron hace 3.000 años — sin cambiar el método, sin añadir tecnología.',
+    en: 'The Cabo de Gata almadraba uses the same labyrinth-net trap for catching bluefin tuna that the Phoenicians devised 3,000 years ago — unchanged method, no technology added.',
   },
   {
     es: 'El Parque Natural de Sierra María-Los Vélez, a 1 hora de Vera, supera los 2.000 metros. Desde sus cimas se ven simultáneamente el Mediterráneo, las sierras subbéticas y el norte de África.',
@@ -1267,8 +1263,8 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   /* Naturalismo / Vera Playa */
   {
-    es: 'Vera Playa es la playa naturista más grande de España, más de 5 km de arena sin ropa desde los años 70. Una de las comunidades naturistas más antiguas y numerosas de Europa.',
-    en: 'Vera Playa is Spain\'s largest naturist beach, over 5 km of clothes-free sand since the 1970s. One of the oldest and largest naturist communities in Europe.',
+    es: 'Vera Playa es la playa naturista más grande de España — más de 5 km de arena sin ropa desde los años 70. Una de las comunidades naturistas más antiguas y numerosas de Europa.',
+    en: 'Vera Playa is Spain\'s largest naturist beach — over 5 km of clothes-free sand since the 1970s. One of the oldest and largest naturist communities in Europe.',
   },
   {
     es: 'La playa naturista de Vera fue pionera en España cuando la inauguró en 1979. Hoy recibe más de 200.000 visitantes al año y figura en la guía naturista europea como referencia mediterránea.',
@@ -1279,7 +1275,7 @@ const SABIAS_QUE_HOME_FACTS = [
     es: 'El Indalo, símbolo de Almería, es una figura pintada en la Cueva de los Letreros hace más de 5.000 años. En Almería se cuelga en los balcones como amuleto de protección contra las tormentas.',
     en: 'The Indalo, Almería\'s symbol, is a figure painted in the Cueva de los Letreros over 5,000 years ago. In Almería it hangs from balconies as a charm against storms.',
   },
-  /* Invernaderos, agricultura */
+  /* Invernaderos — agricultura */
   {
     es: 'Los invernaderos de Almería producen el 20 % de la fruta y verdura que consume la Unión Europea. Vistos desde el espacio, forman el área de plástico más grande del planeta: más de 30.000 hectáreas.',
     en: 'Almería\'s greenhouses produce 20% of the fruit and vegetables consumed by the European Union. Seen from space, they form the largest plastic-covered area on Earth: over 30,000 hectares.',
@@ -1299,13 +1295,13 @@ const SABIAS_QUE_HOME_FACTS = [
     en: 'The Salinas del Cano, next to Hestía Salinas, are a bird reserve classified as a Special Protection Zone. Up to 600 pink flamingos arrive together in winter.',
   },
   {
-    es: 'Las salinas del litoral almeriense llevan produciendo sal para conservar el pescado desde la época fenicia, más de 2.700 años de historia salina ininterrumpida en el mismo litoral.',
-    en: 'The Almería coastal salt flats have produced salt for fish preservation since Phoenician times: over 2,700 years of uninterrupted salt-making history on the same shoreline.',
+    es: 'Las salinas del litoral almeriense llevan produciendo sal para conservar el pescado desde la época fenicia — más de 2.700 años de historia salina ininterrumpida en el mismo litoral.',
+    en: 'The Almería coastal salt flats have produced salt for fish preservation since Phoenician times — over 2,700 years of uninterrupted salt-making history on the same shoreline.',
   },
   /* Astronomía / cielos oscuros */
   {
     es: 'Almería tiene los cielos nocturnos más oscuros de España peninsular. Varias comarcas del interior están certificadas como "Starlight Reserve": son de los pocos lugares de Europa donde se ve la Vía Láctea a simple vista.',
-    en: 'Almería has the darkest night skies in mainland Spain. Several inland areas are certified Starlight Reserves, among the few places in Europe where the Milky Way is visible to the naked eye.',
+    en: 'Almería has the darkest night skies in mainland Spain. Several inland areas are certified Starlight Reserves — among the few places in Europe where the Milky Way is visible to the naked eye.',
   },
   /* Cetáceos */
   {
@@ -1318,8 +1314,8 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   /* Agave */
   {
-    es: 'El agave americano: la pita: florece una sola vez en su vida, entre 20 y 40 años después de brotar. Su tallo alcanza 6 metros en pocas semanas. Una de las vidas vegetales más dramáticas de la flora mediterránea.',
-    en: 'The American agave: the pita: flowers only once in its lifetime, between 20 and 40 years after sprouting. Its stalk reaches 6 metres in a matter of weeks. One of the most dramatic life cycles in Mediterranean flora.',
+    es: 'El agave americano — la pita — florece una sola vez en su vida, entre 20 y 40 años después de brotar. Su tallo alcanza 6 metros en pocas semanas. Una de las vidas vegetales más dramáticas de la flora mediterránea.',
+    en: 'The American agave — the pita — flowers only once in its lifetime, between 20 and 40 years after sprouting. Its stalk reaches 6 metres in a matter of weeks. One of the most dramatic life cycles in Mediterranean flora.',
   },
   /* Cine */
   {
@@ -1332,8 +1328,8 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   /* Viento */
   {
-    es: 'El Terral de Vera, viento cálido y seco que baja de la sierra, puede elevar la temperatura 10 °C en pocas horas. Los lugareños lo detectan por el olor a jara y romero que arrastra desde el interior.',
-    en: 'The Vera Terral: a warm, dry wind descending from the sierra, can raise temperatures 10 °C in a matter of hours. Locals detect it by the scent of cistus and rosemary it carries from the interior.',
+    es: 'El Terral de Vera — viento cálido y seco que baja de la sierra — puede elevar la temperatura 10 °C en pocas horas. Los lugareños lo detectan por el olor a jara y romero que arrastra desde el interior.',
+    en: 'The Vera Terral — a warm, dry wind descending from the sierra — can raise temperatures 10 °C in a matter of hours. Locals detect it by the scent of cistus and rosemary it carries from the interior.',
   },
   {
     es: 'El Levante de Almería es el viento más constante del Mediterráneo occidental: puede soplar sin parar durante 3 o 4 días. Los marineros árabes lo llamaban "el viento que empuja hacia Occidente".',
@@ -1350,8 +1346,8 @@ const SABIAS_QUE_HOME_FACTS = [
     en: 'Over 60% of Almería\'s place names are of Arabic origin: Vera (Bayra), Almería (Al-Mariyyat), Mojácar (Muxacra), Garrucha (from the Arabic for "sea pulley"). The Arabic language is written in the landscape.',
   },
   {
-    es: 'El periodo árabe de Almería (711-1489) duró más de 700 años, más que los 500 años que han pasado desde la conquista castellana. La impronta árabe en la cultura, la cocina y el paisaje es más profunda que cualquier otra.',
-    en: 'The Arab period of Almería (711–1489) lasted over 700 years, more than the 500 years since the Castilian conquest. The Arabic imprint on culture, cuisine and landscape runs deeper than any other.',
+    es: 'El periodo árabe de Almería (711-1489) duró más de 700 años — más que los 500 años que han pasado desde la conquista castellana. La impronta árabe en la cultura, la cocina y el paisaje es más profunda que cualquier otra.',
+    en: 'The Arab period of Almería (711–1489) lasted over 700 years — more than the 500 years since the Castilian conquest. The Arabic imprint on culture, cuisine and landscape runs deeper than any other.',
   },
   /* Terremoto de 1522 */
   {
@@ -1363,15 +1359,15 @@ const SABIAS_QUE_HOME_FACTS = [
     es: 'La jábega, embarcación de pesca tradicional del Mediterráneo andaluz, se bota al agua a mano desde la playa sin muelle. El arte de botar la jábega lleva más de 2.000 años sin cambiar de técnica.',
     en: 'The jábega, the traditional fishing boat of Andalusian Mediterranean, is launched by hand from the beach without a jetty. The art of launching the jábega has kept the same technique for over 2,000 years.',
   },
-  /* Gamba roja, más detalle */
+  /* Gamba roja — más detalle */
   {
     es: 'La gamba roja de Garrucha vive entre 600 y 1.200 metros de profundidad en el cañón submarino frente a Vera. La riqueza de ese cañón en plancton es lo que le da su sabor único e incomparable.',
     en: 'Garrucha\'s red prawn lives between 600 and 1,200 metres deep in the submarine canyon off Vera. The canyon\'s plankton richness is what gives it its unique, incomparable flavour.',
   },
   /* Mojama */
   {
-    es: 'La mojama, atún curado en sal al sol, es el embutido de mar más antiguo del Mediterráneo. Se elabora en Barbate y Isla Cristina, y llega a los mercados de Vera desde hace siglos. Un jamón de atún.',
-    en: 'Mojama, salt-cured tuna dried in the sun, is the oldest cured sea product in the Mediterranean. Made in Barbate and Isla Cristina, it has reached Vera\'s markets for centuries. A tuna ham.',
+    es: 'La mojama — atún curado en sal al sol — es el embutido de mar más antiguo del Mediterráneo. Se elabora en Barbate y Isla Cristina, y llega a los mercados de Vera desde hace siglos. Un jamón de atún.',
+    en: 'Mojama — salt-cured tuna dried in the sun — is the oldest cured sea product in the Mediterranean. Made in Barbate and Isla Cristina, it has reached Vera\'s markets for centuries. A tuna ham.',
   },
   /* Palometas y peces locales */
   {
@@ -1415,30 +1411,30 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   /* Pesca lunar */
   {
-    es: 'Los pescadores de Garrucha aún usan el calendario lunar para decidir cuándo pescar gamba roja. La luna nueva y la llena cambian la profundidad de migración del crustáceo, un conocimiento empírico de más de 800 años.',
-    en: 'Garrucha\'s fishermen still use the lunar calendar to decide when to fish for red prawns. New and full moons change the crustacean\'s migration depth, empirical knowledge over 800 years old.',
+    es: 'Los pescadores de Garrucha aún usan el calendario lunar para decidir cuándo pescar gamba roja. La luna nueva y la llena cambian la profundidad de migración del crustáceo — un conocimiento empírico de más de 800 años.',
+    en: 'Garrucha\'s fishermen still use the lunar calendar to decide when to fish for red prawns. New and full moons change the crustacean\'s migration depth — empirical knowledge over 800 years old.',
   },
   /* Higos */
   {
-    es: 'La higuera almeriense da dos cosechas al año: las brevas de junio y los higos de agosto. Los griegos llamaron "la tierra de las dos cosechas" a este litoral, uno de los primeros homenajes escritos a la fertilidad de Almería.',
-    en: 'The Almería fig tree gives two harvests a year: the figs of June and the figs of August. The Greeks called this coastline "the land of two harvests", one of the first written tributes to Almería\'s fertility.',
+    es: 'La higuera almeriense da dos cosechas al año: las brevas de junio y los higos de agosto. Los griegos llamaron "la tierra de las dos cosechas" a este litoral — uno de los primeros homenajes escritos a la fertilidad de Almería.',
+    en: 'The Almería fig tree gives two harvests a year: the figs of June and the figs of August. The Greeks called this coastline "the land of two harvests" — one of the first written tributes to Almería\'s fertility.',
   },
-  /* Almería occidental: Roquetas, Almerimar, El Ejido, Adra */
+  /* Almería occidental — Roquetas, Almerimar, El Ejido, Adra */
   {
-    es: 'Roquetas de Mar tiene 16 km de playa continua y un castillo de 1502, Santa Ana, construido para defender la costa de los piratas berberiscos. Hoy es uno de los pocos castillos costeros visitables del Mediterráneo español.',
-    en: 'Roquetas de Mar has 16 km of unbroken beach and a 1502 fortress, Santa Ana, built to defend the coast from Barbary pirates. Today it is one of the few visitable coastal castles on the Spanish Mediterranean.',
-  },
-  {
-    es: 'Almerimar nació en los 70 como puerto deportivo de un proyecto urbanístico pionero, uno de los primeros marinas-resort de España. Tiene 1.100 amarres y rutas en velero hasta Marruecos en 14 horas.',
-    en: 'Almerimar was born in the 1970s as the marina of a pioneering resort development, one of the first marina-resorts in Spain. It hosts 1,100 berths and sailing routes to Morocco in 14 hours.',
+    es: 'Roquetas de Mar tiene 16 km de playa continua y un castillo de 1502 — Santa Ana — construido para defender la costa de los piratas berberiscos. Hoy es uno de los pocos castillos costeros visitables del Mediterráneo español.',
+    en: 'Roquetas de Mar has 16 km of unbroken beach and a 1502 fortress — Santa Ana — built to defend the coast from Barbary pirates. Today it is one of the few visitable coastal castles on the Spanish Mediterranean.',
   },
   {
-    es: 'El Ejido produce el 30% del tomate y el pepino que se comen en Europa entre noviembre y marzo. Su "mar de plástico", 30.000 hectáreas de invernaderos, es el único cultivo humano visible desde el espacio.',
-    en: 'El Ejido grows 30% of all tomatoes and cucumbers eaten in Europe between November and March. Its "plastic sea": 30,000 hectares of greenhouses, is the only human crop visible from space.',
+    es: 'Almerimar nació en los 70 como puerto deportivo de un proyecto urbanístico pionero — uno de los primeros marinas-resort de España. Tiene 1.100 amarres y rutas en velero hasta Marruecos en 14 horas.',
+    en: 'Almerimar was born in the 1970s as the marina of a pioneering resort development — one of the first marina-resorts in Spain. It hosts 1,100 berths and sailing routes to Morocco in 14 hours.',
   },
   {
-    es: 'Adra es la ciudad más antigua de Andalucía: fundada por los fenicios hace 3.000 años como Abdera. En su museo hay una moneda púnica con un atún, el primer "logo" comercial de la cuenca mediterránea.',
-    en: 'Adra is Andalusia\'s oldest city: founded by the Phoenicians 3,000 years ago as Abdera. Its museum holds a Punic coin showing a tuna, the first commercial "logo" of the Mediterranean basin.',
+    es: 'El Ejido produce el 30% del tomate y el pepino que se comen en Europa entre noviembre y marzo. Su "mar de plástico" — 30.000 hectáreas de invernaderos — es el único cultivo humano visible desde el espacio.',
+    en: 'El Ejido grows 30% of all tomatoes and cucumbers eaten in Europe between November and March. Its "plastic sea" — 30,000 hectares of greenhouses — is the only human crop visible from space.',
+  },
+  {
+    es: 'Adra es la ciudad más antigua de Andalucía: fundada por los fenicios hace 3.000 años como Abdera. En su museo hay una moneda púnica con un atún — el primer "logo" comercial de la cuenca mediterránea.',
+    en: 'Adra is Andalusia\'s oldest city: founded by the Phoenicians 3,000 years ago as Abdera. Its museum holds a Punic coin showing a tuna — the first commercial "logo" of the Mediterranean basin.',
   },
   {
     es: 'Las Albuferas de Adra son el último humedal natural de Andalucía oriental: refugio de la malvasía cabeciblanca, ave en peligro crítico que estuvo a punto de extinguirse en los 80.',
@@ -1449,8 +1445,8 @@ const SABIAS_QUE_HOME_FACTS = [
     en: 'Berja, Dalías and the Almería Alpujarra were the last Moorish stronghold in the Peninsula after the 1492 fall of Granada. The white-washed mountain farmsteads still carry that Morisco architecture directly.',
   },
   {
-    es: 'La Sierra de Gádor, entre Berja y Almería capital, fue la mayor productora de plomo del mundo en el siglo XIX. Sus minas dieron tanto plomo que abastecieron media Europa.',
-    en: 'The Sierra de Gádor, between Berja and Almería city, was the world\'s largest lead producer in the 19th century. Its mines fed half of Europe.',
+    es: 'La Sierra de Gádor — entre Berja y Almería capital — fue la mayor productora de plomo del mundo en el siglo XIX. Sus minas dieron tanto plomo que abastecieron media Europa.',
+    en: 'The Sierra de Gádor — between Berja and Almería city — was the world\'s largest lead producer in the 19th century. Its mines fed half of Europe.',
   },
   {
     es: 'El Cabo Sacratif (Granada, frontera con Almería) es uno de los puntos más al sur de la España peninsular. Su faro lleva más de 160 años guiando barcos por el Estrecho del Mediterráneo.',
@@ -1459,101 +1455,101 @@ const SABIAS_QUE_HOME_FACTS = [
 
   /* ── Bloque ampliado · Almería ── */
   { es: 'El desierto de Tabernas es el único desierto propiamente dicho de Europa continental: llueve menos de 250 mm al año y hay paisajes idénticos a Arizona a media hora de Vera.', en: 'The Tabernas Desert is the only true desert in continental Europe: under 250 mm of rain per year and Arizona-like badlands half an hour from Vera.' },
-  { es: 'Más de 500 películas se han rodado en Tabernas. Sergio Leone filmó allí "El bueno, el feo y el malo" (1966) y los decorados se conservan como parques temáticos en Fort Bravo y Oasys.', en: 'Over 500 films have been shot in Tabernas. Sergio Leone filmed "The Good, the Bad and the Ugly" there in 1966, the sets still stand as theme parks at Fort Bravo and Oasys.' },
-  { es: 'El símbolo del Indalo, hoy en banderas y matrículas almerienses, es una pintura prehistórica del Abrigo de los Letreros en Vélez Blanco (hace ~4.500 años).', en: 'The Indalo symbol, on Almería\'s flag and number plates today: is a prehistoric painting from the Letreros shelter in Vélez Blanco, roughly 4,500 years old.' },
-  { es: 'La Geoda de Pulpí es la cavidad geológica visitable más grande del mundo: 11 m de largo, llena de cristales transparentes de yeso, descubierta por casualidad por unos espeleólogos en 1999.', en: 'The Pulpí Geode is the world\'s largest accessible geode: 11 m long, packed with transparent gypsum crystals, found by chance by cavers in 1999.' },
-  { es: 'Macael lleva sacando mármol blanco desde el Imperio Romano: con piedra de su sierra se hicieron las columnas de Medina Azahara y los patios de la Alhambra.', en: 'Macael has been quarrying white marble since Roman times, its stone built the columns of Medina Azahara and the courtyards of the Alhambra.' },
+  { es: 'Más de 500 películas se han rodado en Tabernas. Sergio Leone filmó allí "El bueno, el feo y el malo" (1966) y los decorados se conservan como parques temáticos en Fort Bravo y Oasys.', en: 'Over 500 films have been shot in Tabernas. Sergio Leone filmed "The Good, the Bad and the Ugly" there in 1966 — the sets still stand as theme parks at Fort Bravo and Oasys.' },
+  { es: 'El símbolo del Indalo, hoy en banderas y matrículas almerienses, es una pintura prehistórica del Abrigo de los Letreros en Vélez Blanco (hace ~4.500 años).', en: 'The Indalo symbol — on Almería\'s flag and number plates today — is a prehistoric painting from the Letreros shelter in Vélez Blanco, roughly 4,500 years old.' },
+  { es: 'La Geoda de Pulpí es la cavidad geológica visitable más grande del mundo: 11 m de largo, llena de cristales transparentes de yeso, descubierta por casualidad por unos espeleólogos en 1999.', en: 'The Pulpí Geode is the world\'s largest accessible geode — 11 m long, packed with transparent gypsum crystals, found by chance by cavers in 1999.' },
+  { es: 'Macael lleva sacando mármol blanco desde el Imperio Romano: con piedra de su sierra se hicieron las columnas de Medina Azahara y los patios de la Alhambra.', en: 'Macael has been quarrying white marble since Roman times — its stone built the columns of Medina Azahara and the courtyards of the Alhambra.' },
   { es: 'Los Yesos de Sorbas son un kárst único: bajo el pueblo serpentean más de 1.000 cuevas naturales talladas por el agua en el yeso, con cristales que parecen catedrales subterráneas.', en: 'The Sorbas gypsum karst is unique in Europe: over 1,000 natural caves wind beneath the village, water-carved through gypsum into crystal cathedrals.' },
-  { es: 'En Los Millares, junto a Santa Fe de Mondújar, hay una de las primeras ciudades amuralladas de Europa (siglo XXVI a.C.): una civilización del Calcolítico con murallas y torres mucho antes que Troya.', en: 'Los Millares, near Santa Fe de Mondújar, holds one of Europe\'s earliest walled cities (26th century BC), Copper Age towers and ramparts older than Troy.' },
-  { es: 'El Cable Inglés del puerto de Almería es la única estructura de hierro Eiffel-style en el sur peninsular. Servía para cargar mineral en barcos y hoy es Bien de Interés Cultural.', en: 'Almería port\'s "Cable Inglés" is the only Eiffel-style iron structure in southern Spain: built to load mineral onto ships, now a protected heritage site.' },
-  { es: 'La Alcazaba de Almería es la segunda fortaleza musulmana más grande de España tras la Alhambra. En su día albergó a 20.000 habitantes, más que muchas ciudades europeas medievales.', en: 'Almería\'s Alcazaba is Spain\'s second-largest Muslim fortress after the Alhambra. At its peak it housed 20,000 people, more than many medieval European cities.' },
-  { es: 'Almería fue, en el siglo XI, una de las ciudades más ricas del Mediterráneo: sus sederías exportaban a Bagdad, El Cairo y Bizancio.', en: 'In the 11th century Almería was one of the Mediterranean\'s wealthiest cities: its silks travelled to Baghdad, Cairo and Byzantium.' },
+  { es: 'En Los Millares, junto a Santa Fe de Mondújar, hay una de las primeras ciudades amuralladas de Europa (siglo XXVI a.C.): una civilización del Calcolítico con murallas y torres mucho antes que Troya.', en: 'Los Millares, near Santa Fe de Mondújar, holds one of Europe\'s earliest walled cities (26th century BC) — Copper Age towers and ramparts older than Troy.' },
+  { es: 'El Cable Inglés del puerto de Almería es la única estructura de hierro Eiffel-style en el sur peninsular. Servía para cargar mineral en barcos y hoy es Bien de Interés Cultural.', en: 'Almería port\'s "Cable Inglés" is the only Eiffel-style iron structure in southern Spain — built to load mineral onto ships, now a protected heritage site.' },
+  { es: 'La Alcazaba de Almería es la segunda fortaleza musulmana más grande de España tras la Alhambra. En su día albergó a 20.000 habitantes — más que muchas ciudades europeas medievales.', en: 'Almería\'s Alcazaba is Spain\'s second-largest Muslim fortress after the Alhambra. At its peak it housed 20,000 people — more than many medieval European cities.' },
+  { es: 'Almería fue, en el siglo XI, una de las ciudades más ricas del Mediterráneo: sus sederías exportaban a Bagdad, El Cairo y Bizancio.', en: 'In the 11th century Almería was one of the Mediterranean\'s wealthiest cities — its silks travelled to Baghdad, Cairo and Byzantium.' },
   { es: 'Mojácar la Vieja se asienta sobre un cerro con vistas a 360°. La leyenda dice que la última musulmana de la Reconquista negoció aquí la rendición sin perder casa ni huerta.', en: 'Old Mojácar perches on a 360°-view hill. Legend has it the last Muslim of the Reconquista negotiated her surrender here without losing house or garden.' },
   { es: 'Garrucha tiene una de las lonjas de pescado más vivas del Levante: la gamba roja de Garrucha está en las mejores cartas de Madrid y Barcelona y se subasta a la voz cada tarde.', en: 'Garrucha\'s fish market is one of the liveliest on the south coast. Its red prawn ends up on Madrid and Barcelona\'s top menus, auctioned out loud every afternoon.' },
   { es: 'La Sierra de los Filabres es la zona astronómica más limpia de Europa continental: en su cima está Calar Alto, el mayor observatorio del continente con un telescopio de 3,5 m.', en: 'The Filabres range has continental Europe\'s clearest skies: at its peak sits Calar Alto, the continent\'s largest observatory with a 3.5 m telescope.' },
-  { es: 'En el yacimiento argárico de El Argar (Antas) está el origen del nombre de toda una cultura prehistórica: la Cultura del Argar dominó el SE peninsular hace 4.000 años.', en: 'The Argaric culture: which dominated south-east Iberia 4,000 years ago, takes its name from the El Argar dig in Antas.' },
+  { es: 'En el yacimiento argárico de El Argar (Antas) está el origen del nombre de toda una cultura prehistórica: la Cultura del Argar dominó el SE peninsular hace 4.000 años.', en: 'The Argaric culture — which dominated south-east Iberia 4,000 years ago — takes its name from the El Argar dig in Antas.' },
   { es: 'Las Salinas de Cabo de Gata producen sal marina por evaporación natural desde la época fenicia. Hoy alimentan a la única colonia estable de flamencos del sureste peninsular.', en: 'The Cabo de Gata salt flats have produced sea salt by natural evaporation since Phoenician times. They feed the only stable flamingo colony of south-east Iberia.' },
-  { es: 'En Roquetas de Mar hay una "alcazaba" cristiana del XVI: el Castillo de Santa Ana, construido para vigilar piratas berberiscos que asaltaban la costa cada verano.', en: 'In Roquetas stands Santa Ana, a 16th-century Christian "alcazaba" built to spot Berber pirates who raided the coast each summer.' },
-  { es: 'Carboneras tiene la playa de los Muertos, repetidamente votada entre las mejores de España: 1 km de cantos rodados y agua transparente sin un solo edificio detrás.', en: 'Carboneras owns Playa de los Muertos, repeatedly voted among Spain\'s best: 1 km of pebbles, crystalline water, not a single building behind it.' },
-  { es: 'Vélez Blanco tiene un castillo renacentista cuyo patio fue desmontado y vendido entero a Nueva York en 1904, hoy está reconstruido pieza a pieza en el Metropolitan Museum.', en: 'Vélez Blanco\'s Renaissance castle had its courtyard dismantled and sold whole to New York in 1904, today it stands reassembled inside the Metropolitan Museum.' },
+  { es: 'En Roquetas de Mar hay una "alcazaba" cristiana del XVI: el Castillo de Santa Ana, construido para vigilar piratas berberiscos que asaltaban la costa cada verano.', en: 'In Roquetas stands Santa Ana — a 16th-century Christian "alcazaba" built to spot Berber pirates who raided the coast each summer.' },
+  { es: 'Carboneras tiene la playa de los Muertos, repetidamente votada entre las mejores de España: 1 km de cantos rodados y agua transparente sin un solo edificio detrás.', en: 'Carboneras owns Playa de los Muertos, repeatedly voted among Spain\'s best — 1 km of pebbles, crystalline water, not a single building behind it.' },
+  { es: 'Vélez Blanco tiene un castillo renacentista cuyo patio fue desmontado y vendido entero a Nueva York en 1904 — hoy está reconstruido pieza a pieza en el Metropolitan Museum.', en: 'Vélez Blanco\'s Renaissance castle had its courtyard dismantled and sold whole to New York in 1904 — today it stands reassembled inside the Metropolitan Museum.' },
   { es: 'Cuevas del Almanzora alberga uno de los yacimientos prehistóricos más densos de Europa: 26 enterramientos argáricos hallados solo en el cabezo de Fuente Álamo.', en: 'Cuevas del Almanzora holds one of Europe\'s densest prehistoric sites: 26 Argaric burials found in the single hill of Fuente Álamo.' },
-  { es: 'El acueducto de los Milagros en Albox sigue funcionando 250 años después: lleva agua de la Sierra de las Estancias a los huertos del pueblo con un caudal constante.', en: 'The Milagros aqueduct in Albox still works 250 years on, bringing water from the Estancias range to the village gardens at constant flow.' },
-  { es: 'Pulpí tiene la mina del Polvorín, la mayor explotación de hierro abandonada de Europa: un laberinto de galerías inundadas que se exploran en kayak con linterna frontal.', en: 'Pulpí\'s Polvorín mine, Europe\'s largest abandoned iron operation, is a flooded gallery maze you can kayak through with a head torch.' },
-  { es: 'Níjar es famoso por sus jarapas, alfombras tejidas con tiras de tela reciclada en telar de pedal, y por la cerámica vidriada que se hace desde el XVI.', en: 'Níjar is known for its "jarapas", rugs woven from recycled fabric strips on foot looms, and for the glazed pottery it has made since the 16th century.' },
+  { es: 'El acueducto de los Milagros en Albox sigue funcionando 250 años después: lleva agua de la Sierra de las Estancias a los huertos del pueblo con un caudal constante.', en: 'The Milagros aqueduct in Albox still works 250 years on — bringing water from the Estancias range to the village gardens at constant flow.' },
+  { es: 'Pulpí tiene la mina del Polvorín, la mayor explotación de hierro abandonada de Europa: un laberinto de galerías inundadas que se exploran en kayak con linterna frontal.', en: 'Pulpí\'s Polvorín mine — Europe\'s largest abandoned iron operation — is a flooded gallery maze you can kayak through with a head torch.' },
+  { es: 'Níjar es famoso por sus jarapas — alfombras tejidas con tiras de tela reciclada en telar de pedal — y por la cerámica vidriada que se hace desde el XVI.', en: 'Níjar is known for its "jarapas" — rugs woven from recycled fabric strips on foot looms — and for the glazed pottery it has made since the 16th century.' },
   { es: 'El Karst en Yesos de Sorbas es el segundo del mundo en extensión tras el de Sicilia. Bajo tus pies en Sorbas pasan cuevas que nadie ha cartografiado del todo.', en: 'The Sorbas gypsum karst is the world\'s second largest after Sicily\'s. Beneath the village wind caves still not fully mapped.' },
-  { es: 'El Almanzora era río navegable en época romana: por él subían barcos hasta el actual Cuevas para cargar plomo y plata de la sierra.', en: 'The Almanzora was a navigable river in Roman times, boats sailed up to modern Cuevas to load lead and silver from the mountains.' },
-  { es: 'La Cala de San Pedro, junto a Las Negras, solo se llega andando o en barca. Era refugio de hippies en los 70 y hoy sobreviven 8 personas viviendo sin coches ni red eléctrica.', en: 'San Pedro Cove, next to Las Negras, can only be reached on foot or by boat. Hippies took refuge there in the 70s, eight still live there today without cars or grid power.' },
+  { es: 'El Almanzora era río navegable en época romana: por él subían barcos hasta el actual Cuevas para cargar plomo y plata de la sierra.', en: 'The Almanzora was a navigable river in Roman times — boats sailed up to modern Cuevas to load lead and silver from the mountains.' },
+  { es: 'La Cala de San Pedro, junto a Las Negras, solo se llega andando o en barca. Era refugio de hippies en los 70 y hoy sobreviven 8 personas viviendo sin coches ni red eléctrica.', en: 'San Pedro Cove, next to Las Negras, can only be reached on foot or by boat. Hippies took refuge there in the 70s — eight still live there today without cars or grid power.' },
   { es: 'Almería capital tuvo la primera bombilla eléctrica encendida en España, en 1882, gracias al ingeniero Gaspar Molina y al inglés Samuel Wood que montaron una pequeña central en el barrio de la Almedina.', en: 'Almería had Spain\'s first electric bulb lit in 1882, thanks to engineer Gaspar Molina and English engineer Samuel Wood who set up a small plant in the Almedina district.' },
-  { es: 'El "tropicalismo" almeriense: subtropicales como chirimoyas, mangos, papayas y aguacates crecen al aire libre en el bajo Andarax, el único microclima de Europa que lo permite.', en: 'Almería\'s tropical microclimate: cherimoyas, mangoes, papayas and avocados grow outdoors in the lower Andarax, the only spot in Europe where they can.' },
+  { es: 'El "tropicalismo" almeriense: subtropicales como chirimoyas, mangos, papayas y aguacates crecen al aire libre en el bajo Andarax — el único microclima de Europa que lo permite.', en: 'Almería\'s tropical microclimate: cherimoyas, mangoes, papayas and avocados grow outdoors in the lower Andarax — the only spot in Europe where they can.' },
   { es: 'En Tabernas se rueda casi todos los meses: Indiana Jones, El Dorado, Lawrence de Arabia, Conan, Patton, Doctor Who, Juego de Tronos y Star Wars han pasado por sus ramblas.', en: 'Tabernas hosts shoots almost every month: Indiana Jones, El Dorado, Lawrence of Arabia, Conan, Patton, Doctor Who, Game of Thrones and Star Wars have all rolled cameras here.' },
-  { es: 'Las gambas rojas de Garrucha se diferencian de otras del Mediterráneo porque viven a 600-800 m de profundidad. Por eso su carne es más dulce, el frío concentra los azúcares.', en: 'Garrucha\'s red prawns live at 600-800 m depth: that cold concentrates sugars in the flesh, making them sweeter than other Mediterranean reds.' },
-  { es: 'La cueva del Tesoro, en el Cabezo María (Pulpí), guarda pinturas rupestres del Neolítico: cabras, ciervos y figuras humanas pintadas hace 7.000 años.', en: 'The Treasure Cave in Cabezo María (Pulpí) holds Neolithic rock paintings: goats, deer and human figures painted 7,000 years ago.' },
-  { es: 'El faro de Mesa Roldán (Carboneras) ha aparecido en "Juego de Tronos" como la Atalaya Marina de Meereen, el mar visto desde aquí sale en los créditos de la serie.', en: 'Mesa Roldán lighthouse (Carboneras) appeared in Game of Thrones as Meereen\'s sea watch, its sea view shows up in the credits.' },
-  { es: 'En Almería se inventó la "tapa" tal como la conocemos hoy: la costumbre de servir algo de comer GRATIS con la bebida sigue siendo norma, pruébala en el barrio de Las Cuatro Calles.', en: 'Almería is the birthplace of the modern "tapa", a free bite served with every drink. Still the norm. Try it in the Cuatro Calles district.' },
+  { es: 'Las gambas rojas de Garrucha se diferencian de otras del Mediterráneo porque viven a 600-800 m de profundidad. Por eso su carne es más dulce — el frío concentra los azúcares.', en: 'Garrucha\'s red prawns live at 600-800 m depth — that cold concentrates sugars in the flesh, making them sweeter than other Mediterranean reds.' },
+  { es: 'La cueva del Tesoro, en el Cabezo María (Pulpí), guarda pinturas rupestres del Neolítico: cabras, ciervos y figuras humanas pintadas hace 7.000 años.', en: 'The Treasure Cave in Cabezo María (Pulpí) holds Neolithic rock paintings — goats, deer and human figures painted 7,000 years ago.' },
+  { es: 'El faro de Mesa Roldán (Carboneras) ha aparecido en "Juego de Tronos" como la Atalaya Marina de Meereen — el mar visto desde aquí sale en los créditos de la serie.', en: 'Mesa Roldán lighthouse (Carboneras) appeared in Game of Thrones as Meereen\'s sea watch — its sea view shows up in the credits.' },
+  { es: 'En Almería se inventó la "tapa" tal como la conocemos hoy: la costumbre de servir algo de comer GRATIS con la bebida sigue siendo norma — pruébala en el barrio de Las Cuatro Calles.', en: 'Almería is the birthplace of the modern "tapa" — a free bite served with every drink. Still the norm. Try it in the Cuatro Calles district.' },
   { es: 'La ruta del cine en Tabernas es la única en Europa donde puedes hacer tu propia escena de duelo al sol con vestuario, caballo y diligencia de época.', en: 'Tabernas\' cinema route is the only one in Europe where you can stage your own western showdown with full period costume, horse and stagecoach.' },
-  { es: 'En el Parque Natural Sierra María-Los Vélez crecen sabinas centenarias y abetos pinsapos relictos del último período glaciar, un bosque que viene del Pleistoceno.', en: 'Sierra María-Los Vélez Natural Park grows centuries-old junipers and pinsapo firs left over from the last ice age, a forest straight out of the Pleistocene.' },
-  { es: 'En Cuevas del Almanzora se inventó el chocolate a la taza con canela y leche al estilo árabe, sigue siendo receta protegida de varias chocolaterías locales.', en: 'The Arab-style thick chocolate with cinnamon and milk was invented in Cuevas del Almanzora, still a protected recipe at a handful of local chocolatiers.' },
+  { es: 'En el Parque Natural Sierra María-Los Vélez crecen sabinas centenarias y abetos pinsapos relictos del último período glaciar — un bosque que viene del Pleistoceno.', en: 'Sierra María-Los Vélez Natural Park grows centuries-old junipers and pinsapo firs left over from the last ice age — a forest straight out of the Pleistocene.' },
+  { es: 'En Cuevas del Almanzora se inventó el chocolate a la taza con canela y leche al estilo árabe — sigue siendo receta protegida de varias chocolaterías locales.', en: 'The Arab-style thick chocolate with cinnamon and milk was invented in Cuevas del Almanzora — still a protected recipe at a handful of local chocolatiers.' },
 
   /* ── Bloque ampliado · Murcia limítrofe (sureste) ── */
-  { es: 'Cartagena fue fundada por los cartagineses en 227 a.C. como Qart Hadasht. Roma la conquistó en 209 a.C. y desde allí Aníbal mandaba mensajes a Cartago vía paloma, la primera "red" del Mediterráneo.', en: 'Cartagena was founded by the Carthaginians in 227 BC as Qart Hadasht. Rome took it in 209 BC and Hannibal sent pigeon-post to Carthage from there, the Mediterranean\'s first "network".' },
-  { es: 'El Teatro Romano de Cartagena estuvo enterrado bajo la ciudad hasta 1988. Fue descubierto al rehabilitar el barrio del Molinete, y hoy es uno de los mejor conservados de España.', en: 'Cartagena\'s Roman Theatre lay buried under the city until 1988. It was uncovered while restoring the Molinete quarter, now one of the best preserved in Spain.' },
-  { es: 'Isaac Peral inventó el primer submarino eléctrico del mundo en Cartagena (1888): funcional, navegaba sumergido. El original se expone en el puerto de la ciudad.', en: 'Isaac Peral built the world\'s first electric submarine in Cartagena (1888), fully functional and submersible. The original is on display at the city\'s port.' },
-  { es: 'Mazarrón conserva dos pecios fenicios del siglo VII a.C., los más antiguos del Mediterráneo occidental. Uno se ha extraído pieza a pieza, el otro sigue intacto bajo la arena.', en: 'Mazarrón holds two 7th-century BC Phoenician shipwrecks, the oldest in the western Mediterranean. One has been recovered piece by piece, the other still rests intact under sand.' },
-  { es: 'Las Gredas de Bolnuevo (Mazarrón) son esculturas naturales talladas por el viento en arcilla amarilla durante miles de años, un paisaje marciano a 50 m de la playa.', en: 'The Bolnuevo Gredas (Mazarrón) are wind-carved sculptures in yellow clay, a Martian landscape 50 m from the beach.' },
-  { es: 'Águilas celebra el carnaval declarado de Interés Turístico Internacional desde 2015. Su mascota, el "Cuerva", es un personaje único en España: media broma, media tradición ancestral.', en: 'Águilas\' carnival has been an international tourism event since 2015. Its mascot, "El Cuerva", is unique in Spain: half-joke, half-ancient-tradition.' },
+  { es: 'Cartagena fue fundada por los cartagineses en 227 a.C. como Qart Hadasht. Roma la conquistó en 209 a.C. y desde allí Aníbal mandaba mensajes a Cartago vía paloma — la primera "red" del Mediterráneo.', en: 'Cartagena was founded by the Carthaginians in 227 BC as Qart Hadasht. Rome took it in 209 BC and Hannibal sent pigeon-post to Carthage from there — the Mediterranean\'s first "network".' },
+  { es: 'El Teatro Romano de Cartagena estuvo enterrado bajo la ciudad hasta 1988. Fue descubierto al rehabilitar el barrio del Molinete — y hoy es uno de los mejor conservados de España.', en: 'Cartagena\'s Roman Theatre lay buried under the city until 1988. It was uncovered while restoring the Molinete quarter — now one of the best preserved in Spain.' },
+  { es: 'Isaac Peral inventó el primer submarino eléctrico del mundo en Cartagena (1888) — funcional, navegaba sumergido. El original se expone en el puerto de la ciudad.', en: 'Isaac Peral built the world\'s first electric submarine in Cartagena (1888) — fully functional and submersible. The original is on display at the city\'s port.' },
+  { es: 'Mazarrón conserva dos pecios fenicios del siglo VII a.C. — los más antiguos del Mediterráneo occidental. Uno se ha extraído pieza a pieza, el otro sigue intacto bajo la arena.', en: 'Mazarrón holds two 7th-century BC Phoenician shipwrecks — the oldest in the western Mediterranean. One has been recovered piece by piece, the other still rests intact under sand.' },
+  { es: 'Las Gredas de Bolnuevo (Mazarrón) son esculturas naturales talladas por el viento en arcilla amarilla durante miles de años — un paisaje marciano a 50 m de la playa.', en: 'The Bolnuevo Gredas (Mazarrón) are wind-carved sculptures in yellow clay — a Martian landscape 50 m from the beach.' },
+  { es: 'Águilas celebra el carnaval declarado de Interés Turístico Internacional desde 2015. Su mascota, el "Cuerva", es un personaje único en España: media broma, media tradición ancestral.', en: 'Águilas\' carnival has been an international tourism event since 2015. Its mascot, "El Cuerva", is unique in Spain — half-joke, half-ancient-tradition.' },
   { es: 'Lorca sufrió un terremoto de 5,1 en 2011 que arruinó su casco histórico. La reconstrucción ha recuperado uno de los conjuntos barrocos más completos del sur peninsular.', en: 'Lorca was hit by a magnitude 5.1 earthquake in 2011 that flattened its historic centre. The rebuild has recovered one of southern Spain\'s most complete baroque ensembles.' },
-  { es: 'La Semana Santa de Lorca, declarada de Interés Internacional, no es como las otras: hay carros romanos a galope, bordados en hilo de oro de 8 kg y carreras de caballos en plena procesión.', en: 'Lorca\'s Holy Week, internationally declared: is unlike any other: galloping Roman chariots, 8-kg gold-thread embroideries and horse races during the procession.' },
-  { es: 'Caravaca de la Cruz es una de las 5 ciudades santas del mundo católico. Su Vera Cruz es la única reliquia que se baña en agua y vino cada año: los demás lugares santos están en Roma, Jerusalén, Santiago y Loyola.', en: 'Caravaca de la Cruz is one of five holy cities of Catholicism. Its Vera Cruz is the only relic dipped in wine and water each year: the others are Rome, Jerusalem, Santiago and Loyola.' },
+  { es: 'La Semana Santa de Lorca, declarada de Interés Internacional, no es como las otras: hay carros romanos a galope, bordados en hilo de oro de 8 kg y carreras de caballos en plena procesión.', en: 'Lorca\'s Holy Week — internationally declared — is unlike any other: galloping Roman chariots, 8-kg gold-thread embroideries and horse races during the procession.' },
+  { es: 'Caravaca de la Cruz es una de las 5 ciudades santas del mundo católico. Su Vera Cruz es la única reliquia que se baña en agua y vino cada año — los demás lugares santos están en Roma, Jerusalén, Santiago y Loyola.', en: 'Caravaca de la Cruz is one of five holy cities of Catholicism. Its Vera Cruz is the only relic dipped in wine and water each year — the others are Rome, Jerusalem, Santiago and Loyola.' },
   { es: 'Sierra Espuña es el único bosque de pinos repoblado entero a mano: a finales del XIX el ingeniero Ricardo Codorníu plantó allí 20 millones de pinos para frenar la erosión.', en: 'Sierra Espuña is the only forest planted entirely by hand: in the late 19th century engineer Ricardo Codorníu planted 20 million pine trees there to stop erosion.' },
-  { es: 'Calblanque es un parque protegido sin un solo edificio en 13 km de costa, entrar requiere autobús lanzadera en verano. El mar es transparente y la arena, dorada de mineral.', en: 'Calblanque is a protected park with not one building along its 13 km of coast, shuttle access only in summer. The sea is clear, the sand mineral-gold.' },
-  { es: 'El Mar Menor es la laguna salada de agua de mar más grande de Europa: 135 km² y solo 7 m en su punto más profundo. Las aguas tienen el doble de sal que el mar y propiedades terapéuticas.', en: 'The Mar Menor is Europe\'s largest saltwater lagoon: 135 km², just 7 m deep at most. Its water is twice as salty as the sea and has therapeutic properties.' },
-  { es: 'Calasparra produce un arroz protegido por DOP que es el único en Europa que se cultiva con agua corriente de río, la cebada del agua mantiene el grano firme y absorbente.', en: 'Calasparra grows a PDO-protected rice: the only one in Europe cultivated with flowing river water, which keeps the grain firm and absorbent.' },
+  { es: 'Calblanque es un parque protegido sin un solo edificio en 13 km de costa — entrar requiere autobús lanzadera en verano. El mar es transparente y la arena, dorada de mineral.', en: 'Calblanque is a protected park with not one building along its 13 km of coast — shuttle access only in summer. The sea is clear, the sand mineral-gold.' },
+  { es: 'El Mar Menor es la laguna salada de agua de mar más grande de Europa: 135 km² y solo 7 m en su punto más profundo. Las aguas tienen el doble de sal que el mar y propiedades terapéuticas.', en: 'The Mar Menor is Europe\'s largest saltwater lagoon — 135 km², just 7 m deep at most. Its water is twice as salty as the sea and has therapeutic properties.' },
+  { es: 'Calasparra produce un arroz protegido por DOP que es el único en Europa que se cultiva con agua corriente de río — la cebada del agua mantiene el grano firme y absorbente.', en: 'Calasparra grows a PDO-protected rice — the only one in Europe cultivated with flowing river water, which keeps the grain firm and absorbent.' },
   { es: 'Mula es famosa por sus tambores: la Noche de los Tambores reúne a 20.000 tamborileros que tocan sin parar de la medianoche al amanecer en Semana Santa.', en: 'Mula is famous for its drums: the Night of the Drums brings together 20,000 drummers playing nonstop from midnight to dawn during Holy Week.' },
-  { es: 'En Bullas, Jumilla y Yecla se hace el mejor monastrell del mundo: una uva tinta robusta que solo madura bien en suelos secos y soleados como los del altiplano murciano.', en: 'Bullas, Jumilla and Yecla produce the world\'s best Monastrell: a robust red grape that only ripens properly in dry, sunny plateaus like Murcia\'s altiplano.' },
+  { es: 'En Bullas, Jumilla y Yecla se hace el mejor monastrell del mundo: una uva tinta robusta que solo madura bien en suelos secos y soleados como los del altiplano murciano.', en: 'Bullas, Jumilla and Yecla produce the world\'s best Monastrell — a robust red grape that only ripens properly in dry, sunny plateaus like Murcia\'s altiplano.' },
   { es: 'Murcia capital tiene la Casa-Museo Salzillo, dedicada al escultor del XVIII que talló todos los pasos de la Semana Santa local. Sus figuras en madera policromada se conservan intactas tras 250 años.', en: 'Murcia city houses the Salzillo museum, devoted to the 18th-century sculptor who carved every local Holy Week throne. His polychrome wood figures survive intact after 250 years.' },
   { es: 'El Valle de Ricote es el último reducto morisco de España: tras la expulsión de 1614 sobrevivieron varias familias por un permiso especial del rey. Hoy se mantienen los huertos de palmera y limonero.', en: 'The Ricote Valley is Spain\'s last Morisco stronghold: after the 1614 expulsion a handful of families survived by royal exemption. The palm and lemon orchards endure.' },
-  { es: 'Cieza tiene Medina Siyâsa, una ciudad andalusí del XII que mantiene 25 viviendas con yeserías originales, restos únicos de la vida cotidiana musulmana medieval.', en: 'Cieza holds Medina Siyâsa, a 12th-century Andalusi town with 25 dwellings still showing original plasterwork, unique remains of medieval Muslim daily life.' },
-  { es: 'La Sierra de la Pila, entre Fortuna y Abarán, esconde la Cueva Negra: yacimiento del Paleolítico con homínidos de hace 800.000 años, entre los más antiguos del sur europeo.', en: 'Sierra de la Pila, between Fortuna and Abarán, hides Cueva Negra: a Paleolithic site with 800,000-year-old hominins, among southern Europe\'s oldest.' },
-  { es: 'En Aledo (Murcia, frontera con Almería) hay una torre vigía del XII que se ve desde la Sierra de los Filabres, los moros la usaban para mandar señales de humo a Mojácar y Vera.', en: 'In Aledo (Murcia, on the Almería border) stands a 12th-century watchtower visible from the Filabres range, Moors used it to send smoke signals to Mojácar and Vera.' },
+  { es: 'Cieza tiene Medina Siyâsa, una ciudad andalusí del XII que mantiene 25 viviendas con yeserías originales — restos únicos de la vida cotidiana musulmana medieval.', en: 'Cieza holds Medina Siyâsa, a 12th-century Andalusi town with 25 dwellings still showing original plasterwork — unique remains of medieval Muslim daily life.' },
+  { es: 'La Sierra de la Pila, entre Fortuna y Abarán, esconde la Cueva Negra: yacimiento del Paleolítico con homínidos de hace 800.000 años — entre los más antiguos del sur europeo.', en: 'Sierra de la Pila, between Fortuna and Abarán, hides Cueva Negra — a Paleolithic site with 800,000-year-old hominins, among southern Europe\'s oldest.' },
+  { es: 'En Aledo (Murcia, frontera con Almería) hay una torre vigía del XII que se ve desde la Sierra de los Filabres — los moros la usaban para mandar señales de humo a Mojácar y Vera.', en: 'In Aledo (Murcia, on the Almería border) stands a 12th-century watchtower visible from the Filabres range — Moors used it to send smoke signals to Mojácar and Vera.' },
   { es: 'Los baños romanos de Fortuna (Murcia) llevan funcionando 2.000 años: las mismas aguas termales que usaron los legionarios se siguen embotellando hoy.', en: 'The Roman baths of Fortuna (Murcia) have been working for 2,000 years: the same thermal water once used by Roman legionaries is still bottled today.' },
-  { es: 'En las salinas de San Pedro del Pinatar conviven flamencos, avocetas y cigüeñuelas. Es el humedal con más especies de aves protegidas del sureste peninsular.', en: 'San Pedro del Pinatar\'s salt flats are home to flamingos, avocets and stilts, the south-east\'s wetland with most protected bird species.' },
+  { es: 'En las salinas de San Pedro del Pinatar conviven flamencos, avocetas y cigüeñuelas. Es el humedal con más especies de aves protegidas del sureste peninsular.', en: 'San Pedro del Pinatar\'s salt flats are home to flamingos, avocets and stilts — the south-east\'s wetland with most protected bird species.' },
   { es: 'Yecla tiene la mayor producción mundial de muebles tapizados de gama media: una de cada 10 sofás vendidos en Europa se fabrica en sus polígonos industriales.', en: 'Yecla is the world\'s largest producer of mid-range upholstered furniture: 1 in every 10 sofas sold in Europe is built in its industrial parks.' },
-  { es: 'Cope (entre Águilas y Calabardina) tiene una torre defensiva del XVI dentro del mar, la marea sube y la rodea por completo dos veces al día.', en: 'Cope (between Águilas and Calabardina) has a 16th-century defence tower in the sea, the tide surrounds it completely twice a day.' },
-  { es: 'El embalse de la Cierva (Mula) se llenó tan rápido al construirlo en 1929 que se quedó atrapado un pueblo entero, La Puebla de Mula, todavía emerge en años secos.', en: 'The Cierva reservoir (Mula) filled so fast after its 1929 construction that the entire village of La Puebla de Mula was trapped, it still emerges in drought years.' },
+  { es: 'Cope (entre Águilas y Calabardina) tiene una torre defensiva del XVI dentro del mar — la marea sube y la rodea por completo dos veces al día.', en: 'Cope (between Águilas and Calabardina) has a 16th-century defence tower in the sea — the tide surrounds it completely twice a day.' },
+  { es: 'El embalse de la Cierva (Mula) se llenó tan rápido al construirlo en 1929 que se quedó atrapado un pueblo entero, La Puebla de Mula — todavía emerge en años secos.', en: 'The Cierva reservoir (Mula) filled so fast after its 1929 construction that the entire village of La Puebla de Mula was trapped — it still emerges in drought years.' },
 
   /* ── Bloque ampliado · Granada limítrofe (Costa Tropical, Alpujarra y altiplano) ── */
-  { es: 'La Alpujarra granadina conserva las "tinaos": pórticos cubiertos entre casas: y los tejados planos de launa, arcilla impermeable que se compacta cada otoño antes de las lluvias.', en: 'The Granadan Alpujarra keeps its "tinaos", covered passages between houses: and flat launa roofs of waterproof clay, compacted every autumn before the rains.' },
-  { es: 'Trevélez es uno de los pueblos a más altitud habitados de España (1.476 m) y curan allí jamones DOP por la sequedad del aire, el frío seco mata bacterias sin necesidad de pimentón.', en: 'Trevélez is one of Spain\'s highest inhabited villages (1,476 m) and cures PDO hams thanks to its dry air, cold dryness kills bacteria without needing paprika.' },
-  { es: 'Sierra Nevada tiene el segundo techo de la España peninsular: el Mulhacén (3.479 m). Está a 1h45 en coche de Vera Playa, puedes esquiar y bañarte en el mar el mismo día.', en: 'Sierra Nevada has mainland Spain\'s second-highest peak: Mulhacén (3,479 m). It\'s 1h45 from Vera Playa by car, ski and swim in the sea the same day.' },
-  { es: 'En Orce (Granada, altiplano) está el yacimiento de Venta Micena: allí se halló el resto humano más antiguo de Europa (1,4 millones de años), conocido como el Hombre de Orce.', en: 'Orce (Granada altiplano) holds the Venta Micena site, Europe\'s oldest human remains were found there, 1.4 million years old: the so-called Orce Man.' },
-  { es: 'Galera (Granada, altiplano) conserva una necrópolis ibera del siglo IV a.C. con la Dama de Galera, una estatuilla de alabastro fenicia anterior a los íberos.', en: 'Galera (Granada altiplano) holds a 4th-century BC Iberian necropolis with the Lady of Galera, a Phoenician alabaster statuette older than the Iberians themselves.' },
-  { es: 'Guadix tiene 2.000 viviendas cueva habitadas, el mayor barrio troglodita de Europa. Las casas mantienen 18-20°C todo el año sin calefacción ni aire acondicionado.', en: 'Guadix has 2,000 inhabited cave dwellings, Europe\'s largest troglodyte district. They stay 18-20°C year-round without heating or AC.' },
+  { es: 'La Alpujarra granadina conserva las "tinaos" — pórticos cubiertos entre casas — y los tejados planos de launa, arcilla impermeable que se compacta cada otoño antes de las lluvias.', en: 'The Granadan Alpujarra keeps its "tinaos" — covered passages between houses — and flat launa roofs of waterproof clay, compacted every autumn before the rains.' },
+  { es: 'Trevélez es uno de los pueblos a más altitud habitados de España (1.476 m) y curan allí jamones DOP por la sequedad del aire — el frío seco mata bacterias sin necesidad de pimentón.', en: 'Trevélez is one of Spain\'s highest inhabited villages (1,476 m) and cures PDO hams thanks to its dry air — cold dryness kills bacteria without needing paprika.' },
+  { es: 'Sierra Nevada tiene el segundo techo de la España peninsular: el Mulhacén (3.479 m). Está a 1h45 en coche de Vera Playa — puedes esquiar y bañarte en el mar el mismo día.', en: 'Sierra Nevada has mainland Spain\'s second-highest peak: Mulhacén (3,479 m). It\'s 1h45 from Vera Playa by car — ski and swim in the sea the same day.' },
+  { es: 'En Orce (Granada, altiplano) está el yacimiento de Venta Micena: allí se halló el resto humano más antiguo de Europa (1,4 millones de años), conocido como el Hombre de Orce.', en: 'Orce (Granada altiplano) holds the Venta Micena site — Europe\'s oldest human remains were found there, 1.4 million years old: the so-called Orce Man.' },
+  { es: 'Galera (Granada, altiplano) conserva una necrópolis ibera del siglo IV a.C. con la Dama de Galera, una estatuilla de alabastro fenicia anterior a los íberos.', en: 'Galera (Granada altiplano) holds a 4th-century BC Iberian necropolis with the Lady of Galera — a Phoenician alabaster statuette older than the Iberians themselves.' },
+  { es: 'Guadix tiene 2.000 viviendas cueva habitadas — el mayor barrio troglodita de Europa. Las casas mantienen 18-20°C todo el año sin calefacción ni aire acondicionado.', en: 'Guadix has 2,000 inhabited cave dwellings — Europe\'s largest troglodyte district. They stay 18-20°C year-round without heating or AC.' },
   { es: 'Baza conserva los baños árabes del siglo X mejor preservados de Andalucía oriental. Funcionaron 600 años hasta que un terremoto en 1531 los cerró.', en: 'Baza holds eastern Andalusia\'s best preserved 10th-century Arab baths. They worked for 600 years until a 1531 earthquake closed them.' },
-  { es: 'El Geoparque de Granada (en torno a Guadix y Baza) tiene la mayor concentración de cárcavas y badlands de Europa, paisaje lunar de arcillas rojizas talladas por el agua.', en: 'The Granada Geopark (around Guadix and Baza) holds Europe\'s densest concentration of badlands, a lunar landscape of water-carved red clays.' },
-  { es: 'En Castril (Granada, frontera con Jaén) nace un río que perfora la montaña por dentro: la Cerrada del Río Castril es una pasarela colgada sobre el agua que se mete en cuevas.', en: 'In Castril (Granada, on the Jaén border) a river bores through the mountain, the Río Castril gorge is a hanging walkway over water that disappears into caves.' },
+  { es: 'El Geoparque de Granada (en torno a Guadix y Baza) tiene la mayor concentración de cárcavas y badlands de Europa — paisaje lunar de arcillas rojizas talladas por el agua.', en: 'The Granada Geopark (around Guadix and Baza) holds Europe\'s densest concentration of badlands — a lunar landscape of water-carved red clays.' },
+  { es: 'En Castril (Granada, frontera con Jaén) nace un río que perfora la montaña por dentro: la Cerrada del Río Castril es una pasarela colgada sobre el agua que se mete en cuevas.', en: 'In Castril (Granada, on the Jaén border) a river bores through the mountain — the Río Castril gorge is a hanging walkway over water that disappears into caves.' },
   { es: 'La Costa Tropical granadina (Salobreña, Almuñécar, Castell de Ferro) tiene las únicas plantaciones de caña de azúcar de Europa continental. El último ingenio cerró en 2006.', en: 'The Granadan Costa Tropical (Salobreña, Almuñécar, Castell de Ferro) hosts continental Europe\'s only sugarcane plantations. The last mill closed in 2006.' },
-  { es: 'Almuñécar fue Sexi, una ciudad fenicia del siglo VIII a.C., exportaba garum (salsa de pescado fermentado) a todo el Mediterráneo. Aún se conservan piscinas de fabricación romanas.', en: 'Almuñécar was Sexi, an 8th-century BC Phoenician city that exported garum (fermented fish sauce) across the Mediterranean. Roman production pools still survive.' },
-  { es: 'Salobreña tiene un castillo nazarí del XIII pegado a un peñón sobre el mar. En su época fue prisión real, varios sultanes de Granada acabaron allí.', en: 'Salobreña\'s 13th-century Nasrid castle clings to a sea-cliff. In its day it was a royal prison, several sultans of Granada ended their reigns there.' },
-  { es: 'Motril fue capital azucarera de Europa entre el XVI y el XIX. Aún se conservan sus chimeneas de ladrillo, patrimonio industrial único en el sur peninsular.', en: 'Motril was Europe\'s sugar capital between the 16th and 19th centuries. Its brick chimneys still stand, industrial heritage unique to southern Spain.' },
-  { es: 'La Calahorra (Granada, Marquesado del Zenete) tiene un castillo del siglo XVI con un patio renacentista italiano dentro: el primer ejemplo del Cinquecento en España.', en: 'La Calahorra (Granada, Zenete Marquisate) holds a 16th-century castle with a Renaissance Italian courtyard inside, the first Cinquecento example in Spain.' },
-  { es: 'En Jérez del Marquesado (Granada) nacen los ríos que abastecen toda la cuenca del Genil, un manantial subterráneo de la Sierra Nevada que no se seca nunca.', en: 'In Jérez del Marquesado (Granada) springs the water for the entire Genil basin, an underground source from Sierra Nevada that never dries up.' },
-  { es: 'En las cuevas de Pampaneira (Alpujarra) se hace el primer chocolate ecológico de España con cacao trazable y leche de cabra payoya, uno de los proyectos artesanos más premiados del país.', en: 'In Pampaneira (Alpujarra) sits Spain\'s first organic chocolate workshop with traceable cocoa and "payoya" goat milk, one of the country\'s most awarded craft projects.' },
-  { es: 'Capileira y Bubión son los pueblos de la Alpujarra que aparecen en "Sur" de Federico García Lorca, el paisaje de cumbres y arrayanes de los textos.', en: 'Capileira and Bubión are the Alpujarra villages in Federico García Lorca\'s "Sur", the same peaks and myrtle terraces of the texts.' },
-  { es: 'Pedro Antonio de Alarcón, autor de "El sombrero de tres picos", recorrió la Alpujarra en 1872 a lomos de mulo y escribió uno de los primeros libros de viajes modernos en español.', en: 'Pedro Antonio de Alarcón, author of "The Three-Cornered Hat", rode the Alpujarra by mule in 1872 and wrote one of Spain\'s first modern travel books.' },
+  { es: 'Almuñécar fue Sexi, una ciudad fenicia del siglo VIII a.C. — exportaba garum (salsa de pescado fermentado) a todo el Mediterráneo. Aún se conservan piscinas de fabricación romanas.', en: 'Almuñécar was Sexi — an 8th-century BC Phoenician city that exported garum (fermented fish sauce) across the Mediterranean. Roman production pools still survive.' },
+  { es: 'Salobreña tiene un castillo nazarí del XIII pegado a un peñón sobre el mar. En su época fue prisión real — varios sultanes de Granada acabaron allí.', en: 'Salobreña\'s 13th-century Nasrid castle clings to a sea-cliff. In its day it was a royal prison — several sultans of Granada ended their reigns there.' },
+  { es: 'Motril fue capital azucarera de Europa entre el XVI y el XIX. Aún se conservan sus chimeneas de ladrillo — patrimonio industrial único en el sur peninsular.', en: 'Motril was Europe\'s sugar capital between the 16th and 19th centuries. Its brick chimneys still stand — industrial heritage unique to southern Spain.' },
+  { es: 'La Calahorra (Granada, Marquesado del Zenete) tiene un castillo del siglo XVI con un patio renacentista italiano dentro: el primer ejemplo del Cinquecento en España.', en: 'La Calahorra (Granada, Zenete Marquisate) holds a 16th-century castle with a Renaissance Italian courtyard inside — the first Cinquecento example in Spain.' },
+  { es: 'En Jérez del Marquesado (Granada) nacen los ríos que abastecen toda la cuenca del Genil — un manantial subterráneo de la Sierra Nevada que no se seca nunca.', en: 'In Jérez del Marquesado (Granada) springs the water for the entire Genil basin — an underground source from Sierra Nevada that never dries up.' },
+  { es: 'En las cuevas de Pampaneira (Alpujarra) se hace el primer chocolate ecológico de España con cacao trazable y leche de cabra payoya — uno de los proyectos artesanos más premiados del país.', en: 'In Pampaneira (Alpujarra) sits Spain\'s first organic chocolate workshop with traceable cocoa and "payoya" goat milk — one of the country\'s most awarded craft projects.' },
+  { es: 'Capileira y Bubión son los pueblos de la Alpujarra que aparecen en "Sur" de Federico García Lorca — el paisaje de cumbres y arrayanes de los textos.', en: 'Capileira and Bubión are the Alpujarra villages in Federico García Lorca\'s "Sur" — the same peaks and myrtle terraces of the texts.' },
+  { es: 'Pedro Antonio de Alarcón, autor de "El sombrero de tres picos", recorrió la Alpujarra en 1872 a lomos de mulo y escribió uno de los primeros libros de viajes modernos en español.', en: 'Pedro Antonio de Alarcón — author of "The Three-Cornered Hat" — rode the Alpujarra by mule in 1872 and wrote one of Spain\'s first modern travel books.' },
   { es: 'La estación de esquí de Sierra Nevada es la más al sur de Europa: las pistas miran al Mediterráneo y desde el Veleta se ve el Rif marroquí en días claros.', en: 'Sierra Nevada is Europe\'s southernmost ski resort: pistes face the Mediterranean and from Veleta peak you can see the Moroccan Rif on clear days.' },
-  { es: 'En los telégrafos de la Calahorra (Granada) está la última fonda de muleros del antiguo camino real, un edificio del XIX donde paraban arrieros entre Granada y Almería.', en: 'In La Calahorra (Granada) stands the last muleteer inn of the old royal road, a 19th-century building where carriers stopped between Granada and Almería.' },
-  { es: 'En Lanjarón (Alpujarra) hay 6 manantiales con propiedades distintas, la marca de agua mineral más vendida en España nació allí en 1818.', en: 'Lanjarón (Alpujarra) has 6 mineral springs with distinct properties, Spain\'s top-selling bottled water started there in 1818.' },
+  { es: 'En los telégrafos de la Calahorra (Granada) está la última fonda de muleros del antiguo camino real — un edificio del XIX donde paraban arrieros entre Granada y Almería.', en: 'In La Calahorra (Granada) stands the last muleteer inn of the old royal road — a 19th-century building where carriers stopped between Granada and Almería.' },
+  { es: 'En Lanjarón (Alpujarra) hay 6 manantiales con propiedades distintas — la marca de agua mineral más vendida en España nació allí en 1818.', en: 'Lanjarón (Alpujarra) has 6 mineral springs with distinct properties — Spain\'s top-selling bottled water started there in 1818.' },
   { es: 'Sierra Nevada es refugio del único glaciar relicto de Europa al sur del paralelo 40°: bolsa de hielo permanente bajo el pico Veleta, restos del último período glacial.', en: 'Sierra Nevada shelters Europe\'s only relict glacier south of the 40th parallel: a permanent ice pocket under Veleta peak, surviving from the last ice age.' },
-  { es: 'En Pórtugos (Alpujarra) brota la Fuente Agria, agua ferruginosa que tiñe de naranja la piedra. Se cree que ayuda a la anemia y los lugareños la beben a diario.', en: 'In Pórtugos (Alpujarra) springs the Fuente Agria, iron-rich water that stains stones orange. Said to help with anaemia and drunk daily by locals.' },
-  { es: 'Huéscar (Granada, altiplano) le declaró la guerra a Dinamarca en 1809 por las Guerras Napoleónicas y se olvidaron de firmar la paz hasta 1981, 172 años de "guerra" sin un solo disparo.', en: 'Huéscar (Granada altiplano) declared war on Denmark in 1809 during the Napoleonic Wars and forgot to sign peace until 1981, 172 years of "war" without a single shot fired.' },
-  { es: 'La Falla de Baza es la mayor falla activa del sur peninsular: provoca pequeños terremotos cada año y dio forma a toda la hoya entre Granada y Almería.', en: 'The Baza Fault is southern Iberia\'s largest active fault, it triggers small quakes yearly and shaped the entire basin between Granada and Almería.' },
-  { es: 'La Cueva de las Ventanas en Píñar (Granada) tiene espeleotemas de aragonito raros: cristales en forma de flor que solo crecen en condiciones de humedad y temperatura muy estables.', en: 'The Ventanas Cave in Píñar (Granada) holds rare aragonite formations, flower-shaped crystals that only grow under very stable humidity and temperature.' },
-  { es: 'En las cuevas del Sacromonte (Granada) nació el "zambra", variante del flamenco más antigua y exclusiva de la comunidad gitana de Granada.', en: 'In the Sacromonte caves (Granada) was born the "zambra": the oldest flamenco style, exclusive to Granada\'s Roma community.' },
-  { es: 'El Marquesado del Zenete (Granada) cría la oveja segureña, raza autóctona que da el cordero más apreciado del altiplano. Pasta en sierras altas y solo se vende en mercados locales.', en: 'The Zenete Marquisate (Granada) breeds the Segureña sheep, a native breed yielding the most prized lamb in the altiplano. Grazed in high sierras, sold only in local markets.' },
-  { es: 'La almendra "marcona", la favorita de pastelerías de toda Europa: se cultiva entre Almería oriental, sur de Murcia y norte de Granada: el triángulo perfecto de altura y sequedad.', en: 'The Marcona almond: favourite of European patisseries: grows in eastern Almería, southern Murcia and northern Granada: the perfect dry, elevated triangle.' }
+  { es: 'En Pórtugos (Alpujarra) brota la Fuente Agria — agua ferruginosa que tiñe de naranja la piedra. Se cree que ayuda a la anemia y los lugareños la beben a diario.', en: 'In Pórtugos (Alpujarra) springs the Fuente Agria — iron-rich water that stains stones orange. Said to help with anaemia and drunk daily by locals.' },
+  { es: 'Huéscar (Granada, altiplano) le declaró la guerra a Dinamarca en 1809 por las Guerras Napoleónicas y se olvidaron de firmar la paz hasta 1981 — 172 años de "guerra" sin un solo disparo.', en: 'Huéscar (Granada altiplano) declared war on Denmark in 1809 during the Napoleonic Wars and forgot to sign peace until 1981 — 172 years of "war" without a single shot fired.' },
+  { es: 'La Falla de Baza es la mayor falla activa del sur peninsular: provoca pequeños terremotos cada año y dio forma a toda la hoya entre Granada y Almería.', en: 'The Baza Fault is southern Iberia\'s largest active fault — it triggers small quakes yearly and shaped the entire basin between Granada and Almería.' },
+  { es: 'La Cueva de las Ventanas en Píñar (Granada) tiene espeleotemas de aragonito raros: cristales en forma de flor que solo crecen en condiciones de humedad y temperatura muy estables.', en: 'The Ventanas Cave in Píñar (Granada) holds rare aragonite formations — flower-shaped crystals that only grow under very stable humidity and temperature.' },
+  { es: 'En las cuevas del Sacromonte (Granada) nació el "zambra" — variante del flamenco más antigua y exclusiva de la comunidad gitana de Granada.', en: 'In the Sacromonte caves (Granada) was born the "zambra" — the oldest flamenco style, exclusive to Granada\'s Roma community.' },
+  { es: 'El Marquesado del Zenete (Granada) cría la oveja segureña — raza autóctona que da el cordero más apreciado del altiplano. Pasta en sierras altas y solo se vende en mercados locales.', en: 'The Zenete Marquisate (Granada) breeds the Segureña sheep — a native breed yielding the most prized lamb in the altiplano. Grazed in high sierras, sold only in local markets.' },
+  { es: 'La almendra "marcona" — la favorita de pastelerías de toda Europa — se cultiva entre Almería oriental, sur de Murcia y norte de Granada: el triángulo perfecto de altura y sequedad.', en: 'The Marcona almond — favourite of European patisseries — grows in eastern Almería, southern Murcia and northern Granada: the perfect dry, elevated triangle.' }
 ];
 
-// Shuffled pools, stable per page load
+// Shuffled pools — stable per page load
 const _shuffle = (arr) => {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -1589,7 +1585,7 @@ const _saveSessionIdx = (i) => {
 // Keep _HOME_FACTS_POOL for backward-compat (FraseHogar etc.)
 const _HOME_FACTS_POOL = _getSessionPool();
 
-// Franja oscura antes del FAQ, solo datos de Almería / Hestía
+// Franja oscura antes del FAQ — solo datos de Almería / Hestía
 const SabiasQue = ({ lang, pool: propPool }) => {
   const pool = propPool || _FACTS_POOL;
   const [idx, setIdx] = React.useState(() => Math.floor(Math.random() * pool.length));
@@ -1617,7 +1613,7 @@ const SabiasQue = ({ lang, pool: propPool }) => {
   );
 };
 
-// Franja crema tras el hero, frases célebres sobre el hogar
+// Franja crema tras el hero — frases célebres sobre el hogar
 const FraseHogar = ({ lang }) => {
   const [idx, setIdx] = React.useState(() => Math.floor(Math.random() * _QUOTES_POOL.length));
   const [visible, setVisible] = React.useState(true);
@@ -1644,7 +1640,7 @@ const FraseHogar = ({ lang }) => {
   );
 };
 
-// Widget fijo media pantalla derecha, solo datos curiosos
+// Widget fijo media pantalla derecha — solo datos curiosos
 const StickyFacts = ({ lang }) => {
   const [pool]  = React.useState(_getSessionPool);
   const total   = pool.length;
@@ -1796,7 +1792,7 @@ const HESTIA_PRICES = (window.PRICES_V2 && window.PRICES_V2.apts)
   ? _v2DeriveV1(window.PRICES_V2)
   : HESTIA_PRICES_FALLBACK;
 
-// AIRBNB_PRICES eliminado en mayo 2026, ya no comparamos precio con
+// AIRBNB_PRICES eliminado en mayo 2026 — ya no comparamos precio con
 // plataformas externas. La promesa pública es "te mejoramos cualquier
 // precio que veas en cualquier sitio". Lo que se cobra es el precio
 // directo calculado a partir de prices.json + descuentos por estancia.
@@ -1807,7 +1803,7 @@ const _airbnbDayPrice = () => 0; // legacy stub para callers antiguos
 // cualquier precio que veas en cualquier sitio".
 
 // Stay discounts vienen del JSON cuando está disponible. El JSON puede
-// definir excludeSeasons (ej. "no se aplica en alta/crítica"), eso lo
+// definir excludeSeasons (ej. "no se aplica en alta/crítica") — eso lo
 // chequea _calcStay día a día. Ordenado de mayor a menor minNights para
 // que el primer match en .find() sea el mejor descuento aplicable.
 const STAY_DISCOUNTS = (window.PRICES_V2 && window.PRICES_V2.rules && Array.isArray(window.PRICES_V2.rules.stayDiscounts))
@@ -1884,26 +1880,10 @@ const _dayPrice = (ds, aptId) => {
   return tbl.base[month] || 100;
 };
 
-// ╔══════════════════════════════════════════════════════════════════════════╗
-// ║  _calcStay, FUENTE ÚNICA DE VERDAD DEL PRECIO NOCHE A NOCHE.               ║
-// ║                                                                            ║
-// ║  TODO sitio que muestre un precio de estancia (páginas de apartamento, la  ║
-// ║  Home, /reservas, estancia larga, admin) DEBE llamar a esta función y      ║
-// ║  mostrar su resultado tal cual (calc.directTotal / calc.avgPerNight). Así  ║
-// ║  es IMPOSIBLE que dos páginas muestren un precio distinto para las mismas  ║
-// ║  fechas.                                                                   ║
-// ║                                                                            ║
-// ║  ⛔ NUNCA calcules un precio de estancia fuera de aquí (nada de            ║
-// ║     `perNight * nights`, descuentos, ofertas de hueco ni temporadas en     ║
-// ║     otro componente). Si necesitas un caso nuevo, añádelo DENTRO de        ║
-// ║     _calcStay. (Excepción: el precio de estancia LARGA mensual vive en su  ║
-// ║     propio cálculo `calcLsTotal`, es otro producto.)                       ║
-// ║                                                                            ║
-// ║  Cubre: tarifa variable por noche, regla short-stay, descuento por         ║
-// ║  estancia, oferta de hueco (solo si la estancia rellena el hueco exacto y  ║
-// ║  no choca con manual_blocks), suplemento de huéspedes y mascota.           ║
-// ║  Protegido por scripts/price-consistency.mjs (regresión).                  ║
-// ╚══════════════════════════════════════════════════════════════════════════╝
+// Calcula el desglose completo para una estancia. Modelo simplificado
+// (mayo 2026): un solo precio, el directo. No comparamos con plataformas
+// externas — la promesa pública es "te mejoramos cualquier precio que
+// veas en cualquier sitio".
 const _calcStay = (selStart, selEnd, aptId, withPets, guests) => {
   if (!selStart || !selEnd || !aptId) return null;
   const nights = _be_diff(selStart, selEnd);
@@ -1946,48 +1926,22 @@ const _calcStay = (selStart, selEnd, aptId, withPets, guests) => {
 
   const petAmt = withPets ? _petCost(nights) : 0;
 
-  // Suplemento por huéspedes: base = 1 huésped, se suma escalón a escalón.
+  // Suplemento por huéspedes — base = 1 huésped, se suma escalón a escalón.
   const guestSuppPerNight = _guestSuppPerNight(guests);
   const guestSuppAmt = guestSuppPerNight * nights;
 
-  let fBaseTotal = baseTotal, fStayD = stayD, fStayDiscAmt = stayDiscAmt, fAfterStay = afterStay;
-  let isGapOffer = false, gapPerNight = null;
-
-  // Oferta de hueco (gapOverrides): SOLO se aplica si la estancia rellena EXACTAMENTE
-  // el hueco, la entrada coincide con el inicio (clave aptId|selStart) Y la salida
-  // con el fin del hueco. Si la estancia se sale del hueco, NO aplica (precio normal).
-  // Vive aquí para que apartamento, home y reservas calculen siempre igual.
-  // Validación en runtime: una reserva directa instantánea (manual_blocks de
-  // prices.json) que solape las fechas invalida la oferta aun antes del recálculo
-  // del workflow (cada 4h). Las externas (iCal) ya entran sincronizadas con el pruning.
-  const _mb = (v2 && v2.manual_blocks && v2.manual_blocks[aptId]) || [];
-  const _gapBlocked = _mb.some(b => selStart < b.end && selEnd > b.start);
-  const gov = v2 && v2.gapOverrides && v2.gapOverrides[`${aptId}|${selStart}`];
-  if (gov && gov.type && gov.type !== 'none' && gov.end === selEnd && !_gapBlocked) {
-    const seasonBase = Math.round(((v2.apts && v2.apts[aptId] && v2.apts[aptId].base) || 0)
-      * ((v2.seasons && v2.seasons[_v2SeasonForDate(selStart, v2)] && v2.seasons[_v2SeasonForDate(selStart, v2)].multiplier) || 1));
-    let pn;
-    if (gov.type === 'fixed')          pn = gov.value;
-    else if (gov.type === 'discount')  pn = Math.round(seasonBase * (1 - gov.value / 100));
-    else if (gov.type === 'increment') pn = Math.round(seasonBase * (1 + gov.value / 100));
-    else pn = seasonBase;
-    fBaseTotal = pn * nights;
-    fStayD = null; fStayDiscAmt = 0; fAfterStay = fBaseTotal;
-    isGapOffer = true; gapPerNight = pn;
-  }
-
-  const directTotal  = fAfterStay + petAmt + guestSuppAmt;
-  const avgPerNight  = Math.round((fAfterStay + guestSuppAmt) / nights);
+  const directTotal  = afterStay + petAmt + guestSuppAmt;
+  const avgPerNight  = Math.round((afterStay + guestSuppAmt) / nights);
 
   return {
-    nights, baseTotal: fBaseTotal, stayD: fStayD, stayDiscAmt: fStayDiscAmt, afterStay: fAfterStay,
+    nights, baseTotal, stayD, stayDiscAmt, afterStay,
     petAmt, guestSuppPerNight, guestSuppAmt, guests: guests || null,
-    directTotal, avgPerNight, isGapOffer, gapPerNight,
+    directTotal, avgPerNight,
   };
 };
 
 // ================================================================
-// DateRangePicker: calendario doble con bloqueadas visibles, auto-jump
+// DateRangePicker — calendario doble con bloqueadas visibles, auto-jump
 // al checkout y preview en hover. Mismas mecánicas y estética que el
 // HsDateRange de la home, expuesto vía window para uso en /reservas.
 // ================================================================
@@ -2027,7 +1981,7 @@ const DateRangePicker = ({
     && window.PRICES_V2.bookingHorizon.lastCheckinDate) || null;
   const _isBeyondHorizon = (ds) => !!(horizonStr && ds > horizonStr);
   const _isBlk = (ds) => blockedList.some(r => ds >= r.start && ds < r.end);
-  // Estancia mínima, capas de reglas:
+  // Estancia mínima — capas de reglas:
   //   1) 1 noche → siempre prohibida.
   //   2) Por defecto: 3 noches mínimo (minNights).
   //   3) Temporada crítica: 7 noches mínimo (criticalSeasonMinNights).
@@ -2078,7 +2032,7 @@ const DateRangePicker = ({
 
   let previewEnd = null;
   if (checkin && !checkout && hover && hover > checkin) {
-    // El hover puede ser un blocked-start (check-out válido), comprueba
+    // El hover puede ser un blocked-start (check-out válido) — comprueba
     // que el camino intermedio entre check-in y hover está libre.
     let ok = true;
     let cur = _drAdj(checkin, 1);
@@ -2307,7 +2261,7 @@ const DateRangePicker = ({
 };
 
 // ────────────────────────────────────────────────────────────────
-// Video loop fade, añade fade-out 0.65 s antes del final + fade-in
+// Video loop fade — añade fade-out 0.65 s antes del final + fade-in
 // al recomenzar para que el corte del loop no se note.
 // Funciona sobre cualquier <video loop> del sitio (excepto los que
 // llevan data-no-loop-fade). La CSS aplica transition opacity y la
@@ -2363,7 +2317,7 @@ if (typeof document !== 'undefined') {
   }
 }
 
-// useSectionGlow, barra fija en la parte superior del viewport que anima
+// useSectionGlow — barra fija en la parte superior del viewport que anima
 // con el color de la paleta cada vez que una nueva sección entra al scroll.
 // Oscuro → buganvilla (#D42B80), crema → turquesa (#1BC8D8).
 // Usa Web Animations API para reiniciar la animación de forma fiable.
@@ -2407,7 +2361,7 @@ const useSectionGlow = () => {
   }, []);
 };
 
-// _calcLsTotal: tarifa larga estancia (≥29 noches, Sep–Jun).
+// _calcLsTotal — tarifa larga estancia (≥29 noches, Sep–Jun).
 // Pro-rata diario: base mensual / días del mes, día a día.
 // Noches de Navidad y Semana Santa: tarifa especial plana.
 const _calcLsTotal = (start, end, guests, withPets, aptId) => {
@@ -2419,7 +2373,7 @@ const _calcLsTotal = (start, end, guests, withPets, aptId) => {
   const petPerMo       = lsCfg.petPerMonth        || 0;
   const aptSupp        = ((lsCfg.aptSupplement || {})[aptId] || 0);
   const extraGuests    = Math.max(0, (guests || 1) - 2);
-  const rates          = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
+  const rates          = lsCfg.monthlyRates || { baja: 1450, media: 1590, alta: 1790 };
   const isXmas = (ds) => { const m = +ds.slice(5,7), d = +ds.slice(8,10); return (m===12&&d>=23)||(m===1&&d<=6); };
   const isEast = (ds) => easter.some(([s,e]) => ds>=s && ds<=e);
   const adj = (ds, n) => { const dt = new Date(ds+'T12:00:00Z'); dt.setUTCDate(dt.getUTCDate()+n); return dt.toISOString().slice(0,10); };
@@ -2442,45 +2396,34 @@ const _calcLsTotal = (start, end, guests, withPets, aptId) => {
 
 Object.assign(window, { HestiaLogoMark, WatermarkBadge, Wordmark, COPY, useScrollMode, useReveal, useSectionGlow, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt, DateRangePicker, _drAvail, _drAdj, _drDiff, _drFmtDate, _calcLsTotal });
 
-// Ficha de Google Maps de cada Hestía (mismas que el sameAs del JSON-LD de
-// mar.html / thalassa.html / salinas.html). Abren la ficha donde el huésped
-// pulsa "Escribir una reseña". Las reseñas de Google son el canal que más
-// reservas nuevas atrae, por eso enlazamos directo. Fuente única.
-const GMAPS_PLACE = {
-  vm: 'https://maps.app.goo.gl/r6tL6kJK6XHtYsCE7',
-  vt: 'https://maps.app.goo.gl/daGi8o2Uh32avqhP6',
-  vs: 'https://maps.app.goo.gl/Mi3z2kKjjaDqNLT98',
-};
-window.GMAPS_PLACE = GMAPS_PLACE;
-
 // ================================================================
-// DirectBookingPerks, sección "Reserva directa, una mejor manera"
+// DirectBookingPerks — sección "Reserva directa, una mejor manera"
 // Stat ribbon (4 cifras destacadas) + botón → rejilla de 8 cards
 // ricos con icono, cifra, título y descripción. Reutilizable en
 // home y cada Hestía; mismo copy ES + EN, una sola fuente.
 // ================================================================
 const DIRECT_PERKS = {
   es: [
-    { id:'precio',    icon:'💰', stat:'✓',       t:'No solo igualamos: mejoramos cualquier precio.',   d:'El precio de la web es el directo, sin comisiones de plataforma, así que casi siempre es más barato. Las plataformas a veces hacen promociones que no controlamos; si encuentras uno más bajo, tráenoslo: no solo te lo igualamos, te lo mejoramos.' },
-    { id:'comision',  icon:'🚫', stat:'~10%',    t:'Reservando directo te ahorras hasta un 10 % aprox.',    d:'Las plataformas como Booking o Airbnb añaden comisiones y cargos de servicio que aquí no existen: pagas el precio real, no el inflado por intermediarios. El ahorro exacto depende de si la plataforma ya está aplicando descuentos o programas propios que no podemos conocer, por eso decimos «hasta un 10 % aprox.».' },
+    { id:'precio',    icon:'💰', stat:'✓',       t:'Mejoramos cualquier precio.',                     d:'Nuestro precio directo es siempre mejor que cualquier plataforma — sin excepciones, sin letra pequeña.' },
+    { id:'comision',  icon:'🚫', stat:'0%',      t:'Sin comisiones de plataforma.',                   d:'Las OTAs se quedan una comisión por cada reserva. Reservando directamente, ese coste no existe — pagas el precio real, no el inflado por intermediarios.' },
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Respuesta humana, no un bot.',                    d:'Hablas directamente con Alex o Fran. Casi siempre respondemos en minutos; máximo una hora en horario activo.' },
     { id:'cancel',    icon:'🔓', stat:'✓',       t:'Mejoramos las condiciones de cancelación.',       d:'¿Necesitas algo distinto a la política estándar? Pregúntanos, miramos cada caso. Sin formularios eternos, sin sanciones ocultas.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Pago seguro y flexible.',                         d:'Sin pre-autorizaciones que bloqueen tu tarjeta. Si necesitas plazos, los acordamos contigo. Pago directo, sin intermediarios.' },
-    { id:'descuento', icon:'🎁', stat:'desde −30%', t:'Estancias largas desde {LS} €/mes.',             d:'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.', link: { href: 'estancias-largas.html', label: 'Ver tarifas y disponibilidad →' } },
+    { id:'descuento', icon:'🎁', stat:'−30%',    t:'Estancias largas desde 1.450 €/mes.',             d:'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.', link: { href: 'estancias-largas.html', label: 'Ver tarifas y disponibilidad →' } },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Guía privada incluida.',                          d:'Recomendaciones de Alex y Fran, instrucciones de Hestía, restaurantes, calas y rutas. Activa toda la estancia.' },
-    { id:'mascotas',  icon:'🐾', stat:'3/3',     t:'Mascotas bienvenidas.',                           d:'En los tres. Petición previa y un pequeño suplemento, sin tarifas abusivas ni vetos.' },
-    { id:'proceso',   icon:'📜', stat:'20%',     t:'Contrato, prereserva y resto al llegar.',         d:'Te enviamos un borrador de contrato con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelación y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Una pequeña prereserva a convenir, normalmente el 20 % del total, se paga al formalizar el contrato; el resto, al llegar a Hestía. Acusamos recibo de todo (contrato y pago) para darte confianza, garantía y seguridad en cada paso.' },
+    { id:'mascotas',  icon:'🐾', stat:'3/3',     t:'Mascotas bienvenidas.',                           d:'En los tres. Petición previa y un pequeño suplemento — sin tarifas abusivas ni vetos.' },
+    { id:'proceso',   icon:'📜', stat:'20%',     t:'Contrato, prereserva y resto al llegar.',         d:'Te enviamos un borrador de contrato con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelación y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Una pequeña prereserva a convenir — normalmente el 20 % del total — se paga al formalizar el contrato; el resto, al llegar a Hestía. Acusamos recibo de todo (contrato y pago) para darte confianza, garantía y seguridad en cada paso.' },
   ],
   en: [
-    { id:'precio',    icon:'💰', stat:'✓',       t:'We don\'t just match, we beat any price.',        d:'The website price is the direct one, with no platform commission, so it\'s almost always cheaper. Platforms sometimes run promos we don\'t control; if you find a lower one, bring it to us: we don\'t just match it, we beat it.' },
-    { id:'comision',  icon:'🚫', stat:'~10%',    t:'Book direct and save up to ~10%.',                  d:'Platforms like Booking or Airbnb add commissions and service fees that simply don\'t exist here: you pay the real price, not the inflated one. The exact saving depends on whether the platform is already applying its own discounts or programmes we can\'t know, that\'s why we say "up to ~10%".' },
+    { id:'precio',    icon:'💰', stat:'✓',       t:'We beat any price.',                              d:'Our direct price is always better than any platform — no exceptions, no small print.' },
+    { id:'comision',  icon:'🚫', stat:'0%',      t:'No platform commissions.',                        d:'OTAs keep a commission on every booking. Booking direct, that cost simply does not exist — you pay the real price, not the inflated one.' },
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Human reply, not a bot.',                         d:'You talk directly to Alex or Fran. Usually within minutes; up to an hour during active hours.' },
-    { id:'cancel',    icon:'🔓', stat:'✓',       t:'We improve cancellation terms.',                  d:'Need something different from the standard policy? Just ask, we look at each case. No endless forms, no hidden penalties.' },
+    { id:'cancel',    icon:'🔓', stat:'✓',       t:'We improve cancellation terms.',                  d:'Need something different from the standard policy? Just ask — we look at each case. No endless forms, no hidden penalties.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Safe, flexible payment.',                         d:'No pre-authorisations blocking your card. If you need installments, we agree them. Direct payment, no middleman.' },
-    { id:'descuento', icon:'🎁', stat:'from −30%', t:'Long stays from €{LS}/month.',                   d:'Minimum 29 nights · September to June (not available July or August). No commission, formal lease signed by both parties, 100% direct contact.', link: { href: 'estancias-largas.html', label: 'See rates and availability →' } },
+    { id:'descuento', icon:'🎁', stat:'−30%',    t:'Long stays from €1,450/month.',                   d:'Minimum 29 nights · September to June (not available July or August). No commission, formal lease signed by both parties, 100% direct contact.', link: { href: 'estancias-largas.html', label: 'See rates and availability →' } },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Private guide included.',                         d:'Alex & Fran recommendations, Hestía instructions, restaurants, hidden coves and routes. Active throughout your stay.' },
-    { id:'mascotas',  icon:'🐾', stat:'3/3',     t:'Pets welcome.',                                   d:'In all three Hestías. On request and with a small supplement: no abusive fees, no blanket bans.' },
-    { id:'proceso',   icon:'📜', stat:'20%',     t:'Contract, deposit and balance on arrival.',       d:'We send you a draft contract with the rights and obligations of both parties (prices, payments, cancellation terms and house rules). You review it, fill it in, sign and return it. A small deposit to agree, usually 20 % of the total, is paid when the contract is signed; the rest, on arrival at Hestía. We acknowledge everything (contract and payment) so you have trust, guarantee and security at every step.' },
+    { id:'mascotas',  icon:'🐾', stat:'3/3',     t:'Pets welcome.',                                   d:'In all three Hestías. On request and with a small supplement — no abusive fees, no blanket bans.' },
+    { id:'proceso',   icon:'📜', stat:'20%',     t:'Contract, deposit and balance on arrival.',       d:'We send you a draft contract with the rights and obligations of both parties (prices, payments, cancellation terms and house rules). You review it, fill it in, sign and return it. A small deposit to agree — usually 20 % of the total — is paid when the contract is signed; the rest, on arrival at Hestía. We acknowledge everything (contract and payment) so you have trust, guarantee and security at every step.' },
   ],
 };
 
@@ -2499,7 +2442,7 @@ const DIRECT_RIBBON = {
   ],
 };
 
-// Cada perk recibe su propio acento de la paleta, 9 micro-identidades.
+// Cada perk recibe su propio acento de la paleta — 9 micro-identidades.
 const _PERK_HUES = {
   precio:    { c1: '#D4A84A', c2: '#E8C476' },   // dorado/sol
   comision:  { c1: '#8B4A1E', c2: '#B86A3C' },   // siena
@@ -2514,25 +2457,12 @@ const _PERK_HUES = {
 
 // Modal con carrusel: una sola card visible, prev/next + dots.
 // Se monta condicionalmente; cierra con backdrop click, ESC o ✕.
-// Tarifa mensual de estancia larga mínima ("desde"), SIEMPRE desde prices.json:
-// base más barata + suplemento de apartamento más bajo. Nunca hardcodeada.
-const _lsMinMonthly = () => {
-  const c = (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || {};
-  const r = c.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
-  const supps = Object.values(c.aptSupplement || {});
-  return Math.min(r.baja, r.media, r.alta) + (supps.length ? Math.min(...supps) : 0);
-};
-const getDirectPerks = (lang) => {
-  const fmt = _lsMinMonthly().toLocaleString(lang === 'es' ? 'es-ES' : 'en-US');
-  return DIRECT_PERKS[lang].map(p => p.id === 'descuento' ? { ...p, t: p.t.replace('{LS}', fmt) } : p);
-};
-
 const DirectBookingModal = ({ lang, onClose }) => {
-  const list   = getDirectPerks(lang);
+  const list   = DIRECT_PERKS[lang];
   const ribbon = DIRECT_RIBBON[lang];
   const len    = list.length;
   const [idx, setIdx] = React.useState(0);
-  // Dirección del último cambio, 'next' o 'prev' o '' (sin dirección).
+  // Dirección del último cambio — 'next' o 'prev' o '' (sin dirección).
   // Usado para que la transición de card sea direction-aware.
   const [dir, setDir] = React.useState('');
 
@@ -2560,7 +2490,7 @@ const DirectBookingModal = ({ lang, onClose }) => {
     <div className="dbm-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="dbm-title">
       <div className="dbm-modal" onClick={e => e.stopPropagation()}
         style={{ '--perk-c1': hue.c1, '--perk-c2': hue.c2 }}>
-        {/* Capa de motas ambientales, partículas turquesas flotando */}
+        {/* Capa de motas ambientales — partículas turquesas flotando */}
         <div className="dbm-motes" aria-hidden="true">
           {Array.from({ length: 14 }).map((_, i) => (
             <span key={i} className="dbm-mote" style={{ '--mote-i': i }} />
@@ -2681,7 +2611,7 @@ const DirectBookingPerks = ({ lang }) => {
 };
 
 // ================================================================
-// AptDesktopSidebar, widget lateral visible solo en escritorio/iPad
+// AptDesktopSidebar — widget lateral visible solo en escritorio/iPad
 // (≥900 px) en las páginas de Hestía. Sustituye a StickyFacts ahí.
 // Dos cajas apiladas: ventajas resumidas (con CTA al modal completo)
 // y acceso a la guía si ya estás reservado.
@@ -2764,13 +2694,13 @@ const AptDesktopSidebar = ({ lang, onGuideClick }) => {
 Object.assign(window, { DirectBookingPerks, DirectBookingModal, AptDesktopSidebar, DIRECT_PERKS, DIRECT_RIBBON });
 
 // ================================================================
-// WidgetStack, pila de widgets flotantes independientes a la derecha
+// WidgetStack — pila de widgets flotantes independientes a la derecha
 // (≥900 px). Tres widgets, cada uno con su propio botón de
 // minimizar/restaurar. Estado persistido en localStorage para que
 // el huésped no tenga que cerrarlos en cada página.
 //   1. Reserva directa (perks summary + CTA al modal completo)
 //   2. ¿Sabías que? (curiosidades rotando cada 9 s)
-//   3. Tu guía privada, solo si la página tiene window.__APT__ y NO
+//   3. Tu guía privada — solo si la página tiene window.__APT__ y NO
 //      se está visualizando la guía abierta.
 // Todos se ocultan cuando body.guide-open (la guía Hestía está abierta)
 // y cuando la búsqueda del home está activa (hs-results-change).
@@ -3097,32 +3027,9 @@ const WidgetTopRecs = ({ lang }) => {
 };
 
 // PINs por apartamento. Espejo del que vive en apartment-page.jsx /
-// apartment-guide.jsx: al ser un sitio estático, los PINs no son
+// apartment-guide.jsx — al ser un sitio estático, los PINs no son
 // secretos: solo fricción de UX para diferenciar a huéspedes.
 const HESTIA_GUIDE_PINS = { vm: 'HVM2016', vt: 'HVT2019', vs: 'HVS2021' };
-
-// Validación del PIN de la guía. Admite dos tipos de PIN:
-//  - PIN maestro por apartamento (HESTIA_GUIDE_PINS): acceso de los
-//    propietarios, siempre válido.
-//  - PIN por huésped (prices.json → guestPins[apt]): se almacena SOLO el
-//    hash SHA-256 + fecha de caducidad (until). El PIN real nunca se guarda.
-//    Revocar al cancelar = borrar la entrada; caduca solo tras `until`.
-async function hestiaSha256Hex(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-async function validateGuidePin(aptId, entered) {
-  const pin = (entered || '').trim().toUpperCase();
-  if (!pin) return false;
-  if (pin === HESTIA_GUIDE_PINS[aptId]) return true;
-  const list = (window.PRICES_V2 && window.PRICES_V2.guestPins && window.PRICES_V2.guestPins[aptId]) || [];
-  if (!list.length) return false;
-  const today = new Date().toISOString().slice(0, 10);
-  let h;
-  try { h = await hestiaSha256Hex(pin); } catch (_) { return false; }
-  return list.some(e => e && e.h === h && (!e.until || e.until >= today));
-}
-Object.assign(window, { validateGuidePin, hestiaSha256Hex });
 const HESTIA_APT_META = {
   vm: { name: 'Hestía Mar',      slug: 'mar',      accent: '#6B7A3A', concept_es: 'Frente a la playa', concept_en: 'By the beach' },
   vt: { name: 'Hestía Thalassa', slug: 'thalassa', accent: '#B86A3C', concept_es: 'Ático panorámico',  concept_en: 'Panoramic penthouse' },
@@ -3166,23 +3073,23 @@ const GuestAccessModal = ({ lang, onClose }) => {
     });
   };
 
-  const submit = async (e) => {
+  const submit = (e) => {
     e.preventDefault();
+    const expected = HESTIA_GUIDE_PINS[selectedApt];
     // Lee del DOM, no del state. Si el usuario tipea y pulsa submit
     // muy rápido, el setState del último onChange puede no haberse
     // committed todavía y `pin` devolvería el valor anterior (la
     // primera pulsación de Entrar SIEMPRE fallaba por esto).
     const liveValue = (inputRef.current && inputRef.current.value) || pin;
     const entered = liveValue.trim().toUpperCase();
-    const ok = await validateGuidePin(selectedApt, entered);
-    if (ok) {
+    if (entered === expected) {
       if (entered !== pin) setPin(entered);
       setStatus('success');
       try { sessionStorage.setItem('hestia-guide-unlock-' + selectedApt, '1'); } catch (err) {}
       const meta = HESTIA_APT_META[selectedApt];
       // Si ya estás en la página del apt seleccionado, dispara el
       // evento que abre la guía in-situ (sin navegación). Si no,
-      // navega al .html, el flag de sessionStorage hace que se
+      // navega al .html — el flag de sessionStorage hace que se
       // abra la guía automáticamente al cargar.
       setTimeout(() => {
         if (currentApt === selectedApt) {
@@ -3282,7 +3189,7 @@ const GuestAccessModal = ({ lang, onClose }) => {
                 data-lpignore="true"
                 maxLength={12}
                 className="ga-modal-input"
-                placeholder={`${(HESTIA_GUIDE_PINS[selectedApt] || 'HVX0000').slice(0, 3)}0000`}
+                placeholder="HVX0000"
                 value={pin}
                 onChange={e => { setPin(e.target.value); if (status !== 'idle') setStatus('idle'); }}
                 aria-invalid={status === 'error'}
@@ -3306,7 +3213,7 @@ const GuestAccessModal = ({ lang, onClose }) => {
   );
 };
 
-// Botón corporativo "Acceso huéspedes", abre el modal global.
+// Botón corporativo "Acceso huéspedes" — abre el modal global.
 // El modal se monta vía ReactDOM.createPortal directamente sobre <body>
 // porque el WidgetStack que lo contiene tiene `transform: translateY(-50%)`
 // y eso rompería `position: fixed` del backdrop (lo anclaría al widget
@@ -3343,16 +3250,12 @@ const WidgetStack = ({ lang }) => {
   const [pastHero, setPastHero] = React.useState(() => window.scrollY > window.innerHeight * 0.7);
   const [searchActive, setSearchActive] = React.useState(false);
   const [guideOpen, setGuideOpen] = React.useState(() => document.body.classList.contains('guide-open'));
-  // Modal global "Ver todas las ventajas", escucha el evento
+  // Modal global "Ver todas las ventajas" — escucha el evento
   // hestia:open-direct-perks que disparan los botones del widget
   // (.widget-cta) y del sidebar (.ads-btn). Antes solo funcionaba
   // si DirectBookingPerks estaba mounted en la página. Ahora cualquier
   // página con WidgetStack tiene el listener garantizado.
   const [perksOpen, setPerksOpen] = React.useState(false);
-  // Oculta el botón flotante "Reservar →" mientras un checker de disponibilidad
-  // ([data-avail-checker]) está a la vista, para que no compita con el "Comprobar
-  // disponibilidad" de esa página (si no, al pulsar Reservar se pierde la selección).
-  const [checkerInView, setCheckerInView] = React.useState(false);
   React.useEffect(() => {
     const onOpen = () => setPerksOpen(true);
     window.addEventListener('hestia:open-direct-perks', onOpen);
@@ -3379,21 +3282,7 @@ const WidgetStack = ({ lang }) => {
     return () => obs.disconnect();
   }, []);
 
-  React.useEffect(() => {
-    if (typeof IntersectionObserver === 'undefined') return;
-    const els = document.querySelectorAll('[data-avail-checker]');
-    if (!els.length) return;
-    const seen = new Set();
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) seen.add(e.target); else seen.delete(e.target); });
-      setCheckerInView(seen.size > 0);
-    }, { threshold: 0, rootMargin: '0px 0px -15% 0px' });
-    els.forEach(el => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-
   const hidden = !pastHero || searchActive || guideOpen;
-  const bookHidden = hidden || checkerInView;
   const onReservas = typeof window !== 'undefined' && window.location.pathname.includes('reservas');
 
   return (
@@ -3406,8 +3295,8 @@ const WidgetStack = ({ lang }) => {
       {!onReservas && (
         <a
           href="reservas.html"
-          className={`mob-book-btn${bookHidden ? ' mob-book-btn--hidden' : ''}`}
-          aria-hidden={bookHidden}
+          className={`mob-book-btn${hidden ? ' mob-book-btn--hidden' : ''}`}
+          aria-hidden={hidden}
         >
           {lang === 'es' ? 'Reservar →' : 'Book →'}
         </a>
@@ -3418,7 +3307,7 @@ const WidgetStack = ({ lang }) => {
 };
 
 // ================================================================
-// HomeGuideTeaser, bloque "La guía completa de Hestía" para la home.
+// HomeGuideTeaser — bloque "La guía completa de Hestía" para la home.
 // Mismo lenguaje visual que AptGuideGate (en la apt-page) pero sin
 // referencia a un apartamento concreto. El CTA abre GuestAccessModal
 // (mismo modal que el botón Acceso huéspedes) para pedir apto + PIN.
@@ -3429,13 +3318,13 @@ const HomeGuideTeaser = ({ lang }) => {
     eyebrow: 'Guía del huésped',
     title_a: 'La guía completa de ',
     title_em: 'Hestía',
-    desc: <>No es un folleto: es la <strong>superguía que nos habría gustado encontrar a nosotros</strong> cuando llegamos por primera vez a Vera. Veintidós capítulos con todo lo que necesitas para vivir tu estancia, desde cómo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense.</>,
+    desc: <>No es un folleto: es la <strong>superguía que nos habría gustado encontrar a nosotros</strong> cuando llegamos por primera vez a Vera. Veintidós capítulos con todo lo que necesitas para vivir tu estancia — desde cómo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense.</>,
     stats: [
       <><strong>22 capítulos</strong> sobre tu Hestía y el entorno</>,
-      <><strong>Más de 230 recomendaciones</strong>: restaurantes, playas, bares, bodegas, mercados, pescaderías…</>,
+      <><strong>Más de 230 recomendaciones</strong> — restaurantes, playas, bares, bodegas, mercados, pescaderías…</>,
       <><strong>48 planes de día completo</strong> con horarios, rutas y reservas</>,
       <><strong>Calendario anual</strong> de fiestas patronales y eventos</>,
-      <><strong>Servicios a mano</strong>: centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías y residencias para mascotas…</>,
+      <><strong>Servicios a mano</strong> — centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías y residencias para mascotas…</>,
       <><strong>Teléfonos útiles</strong> y nuestro contacto directo antes, durante y después de tu estancia</>,
     ],
     foot: 'Web interactiva + PDF descargable de 40 páginas. Reservada para huéspedes con PIN.',
@@ -3445,13 +3334,13 @@ const HomeGuideTeaser = ({ lang }) => {
     title_a: 'The complete ',
     title_em: 'Hestía',
     title_b: ' guide',
-    desc: <>This isn&apos;t a leaflet: it&apos;s the <strong>super-guide we wish we&apos;d had ourselves</strong> the first time we arrived in Vera. Twenty-two chapters with everything you need for your stay, from how to get here from any of the five nearest airports to the corners only locals from the Levante know.</>,
+    desc: <>This isn&apos;t a leaflet: it&apos;s the <strong>super-guide we wish we&apos;d had ourselves</strong> the first time we arrived in Vera. Twenty-two chapters with everything you need for your stay — from how to get here from any of the five nearest airports to the corners only locals from the Levante know.</>,
     stats: [
       <><strong>22 chapters</strong> on your Hestía and the area</>,
-      <><strong>230+ curated spots</strong>: restaurants, beaches, bars, wineries, markets, fishmongers…</>,
+      <><strong>230+ curated spots</strong> — restaurants, beaches, bars, wineries, markets, fishmongers…</>,
       <><strong>48 full-day itineraries</strong> with timing, routes and bookings</>,
       <><strong>Annual calendar</strong> of festivals and local events</>,
-      <><strong>Everything within reach</strong>: health centres, 24 h vets, pharmacies, physio clinics, pet boarding & daycare…</>,
+      <><strong>Everything within reach</strong> — health centres, 24 h vets, pharmacies, physio clinics, pet boarding & daycare…</>,
       <><strong>Useful phones</strong> and our direct line before, during and after your stay</>,
     ],
     foot: 'Interactive web + 40-page downloadable PDF. Reserved for guests with a PIN.',
@@ -3484,4 +3373,4 @@ const HomeGuideTeaser = ({ lang }) => {
   );
 };
 
-Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin, WidgetGuestAccess, WidgetTopRecs, TOP_RECS, HomeGuideTeaser, GuestAccessModal });
+Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin, WidgetGuestAccess, WidgetTopRecs, TOP_RECS, HomeGuideTeaser });

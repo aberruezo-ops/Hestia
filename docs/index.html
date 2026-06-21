@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#2A0F2E"/>
   <title>Hestía Your Home · Tu hogar en Vera Playa, Almería</title>
   <meta name="robots" content="index, follow"/>
-  <meta name="description" content="Tres Hestías, viviendas turísticas gestionadas directamente en Vera Playa por Alex y Fran. Desde 2016."/>
+  <meta name="description" content="Tres Hestías — viviendas turísticas gestionadas directamente en Vera Playa por Alex y Fran. Desde 2016."/>
   <link rel="manifest" href="/site.webmanifest"/>
   <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml"/>
   <link rel="canonical" href="https://www.hestiayourhome.com/"/>
@@ -36,7 +36,7 @@
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,opsz,wght@0,5..1200,400..900;1,5..1200,400..900&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,opsz,wght@0,5..1200,400..900;1,5..1200,400..900&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=680"/>          <script type="application/ld+json">  {
+<link rel="stylesheet" href="assets/styles.css?v=611"/>          <script type="application/ld+json">  {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
     "@id": "https://www.hestiayourhome.com/#org",
@@ -44,7 +44,7 @@
     "url": "https://www.hestiayourhome.com",
     "logo": "https://www.hestiayourhome.com/assets/logo-teal-transparent.png",
     "image": "https://www.hestiayourhome.com/assets/hero-terrace-night.jpg",
-    "description": "Tres Hestías, viviendas turísticas gestionadas directamente en Vera Playa por Alex y Fran. Desde 2016.",
+    "description": "Tres Hestías — viviendas turísticas gestionadas directamente en Vera Playa por Alex y Fran. Desde 2016.",
     "priceRange": "€€",
     "telephone": "+34620316370",
     "email": "info@hestiayourhome.com",
@@ -68,9 +68,7 @@
     "sameAs": [
       "https://www.booking.com/hotel/es/hestia-vera-mar.es.html",
       "https://www.airbnb.es/users/show/hestia",
-      "https://www.instagram.com/hestiayourhome",
-      "https://www.facebook.com/hestiayourhome",
-      "https://maps.app.goo.gl/MQg8XvUxAqPGLr6W9"
+      "https://maps.google.com/?cid=hestia-vera-playa"
     ],
     "aggregateRating": {
       "@type": "AggregateRating",
@@ -205,7 +203,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=5b2f4cab84');
+      const res = await fetch(file + '?t=' + Date.now(), { cache: 'no-store' });
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

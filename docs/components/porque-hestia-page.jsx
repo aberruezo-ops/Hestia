@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA, Página Por qué Hestía / Why Hestía
+// HESTÍA — Página Por qué Hestía / Why Hestía
 // ================================================================
 
 const PORQUE_COPY = {
@@ -10,16 +10,16 @@ const PORQUE_COPY = {
 
     origin_eyebrow: 'El origen',
     origin_title: (<>No empezó como un negocio,<br/><em>empezó como una convicción.</em></>),
-    origin_p1: '2016. Alex y Fran tienen tres viviendas en Vera Playa. Podrían haberlas puesto en una plataforma, cobrado la comisión y desconectado el teléfono. Lo contrario es más difícil y más lento, y es exactamente lo que decidieron hacer.',
-    origin_p2: 'Hestía nació de una pregunta: ¿qué pasaría si el alquiler de vacaciones que usas te hiciera sentir en casa de verdad? No solo limpio y funcional. En casa: con historia, con carácter, con alguien al otro lado que sabe tu nombre.',
+    origin_p1: '2016. Alex y Fran tienen tres viviendas en Vera Playa. Podrían haberlas puesto en una plataforma, cobrado la comisión y desconectado el teléfono. Lo contrario es más difícil y más lento — y es exactamente lo que decidieron hacer.',
+    origin_p2: 'Hestía nació de una pregunta: ¿qué pasaría si el alquiler de vacaciones que usas te hiciera sentir en casa de verdad? No solo limpio y funcional. En casa — con historia, con carácter, con alguien al otro lado que sabe tu nombre.',
     origin_p3: 'Un ingeniero informático y un filólogo clásico con décadas en Vera Playa. El uno observa y construye; el otro nombra y cuida. Juntos transformaron las tres viviendas en tres hogares con alma propia. Sin oficina. Sin recepción. Con el teléfono siempre encendido.',
     origin_quote: '«Lo más difícil no fue crear Hestía, fue convencernos de que merecía la pena intentarlo de otra manera.»',
-    origin_quote_attr: '– Alex Berruezo',
+    origin_quote_attr: '— Alex Berruezo',
 
     logo_eyebrow: 'El símbolo',
     logo_title: (<>Una H de hogar y de mar. <em>Tejado, hoja y ola.</em></>),
     logo_p1: 'El monograma de Hestía es una serif clásica trabajada en teal vidriado. No fue diseñado: fue descubierto. Las dos columnas verticales de la H sostienen una doble curva que lleva dos lecturas superpuestas.',
-    logo_p2: 'Tres símbolos, una sola letra. Hogar, naturaleza, Mediterráneo.',
+    logo_p2: 'Tres símbolos, una sola letra. Hogar — naturaleza — Mediterráneo.',
     logo_sym_1_t: 'Las columnas',
     logo_sym_1_d: 'Estabilidad. La casa. Hestía, la diosa griega del hogar y del fuego que nunca se apaga.',
     logo_sym_2_t: 'La hoja de olivo',
@@ -29,21 +29,21 @@ const PORQUE_COPY = {
 
     name_eyebrow: 'El nombre',
     name_title: (<>Hestía: la diosa del hogar.<br/><em>No de las guerras. Del fuego de casa.</em></>),
-    name_p1: 'En la mitología griega, Hestía era la primogénita de los Titanes, la primera en ser devorada por Cronos y la última en ser liberada. Mientras los demás dioses del Olimpo peleaban por la guerra, el amor o el poder, Hestía guardaba la llama. Era la diosa del hogar, del fuego sagrado, del centro de la casa.',
+    name_p1: 'En la mitología griega, Hestía era la primogénita de los Titanes — la primera en ser devorada por Cronos y la última en ser liberada. Mientras los demás dioses del Olimpo peleaban por la guerra, el amor o el poder, Hestía guardaba la llama. Era la diosa del hogar, del fuego sagrado, del centro de la casa.',
     name_p2: 'En la antigua Grecia, el hogar no era solo un lugar físico: era el fuego que lo hacía vivir. Antes de salir de viaje y al volver, se honraba la llama. La llama que guarda Hestía. Ese fuego era lo que convertía una casa en hogar.',
-    name_p3: 'Fran es filólogo clásico, conoce los nombres griegos desde dentro. Cuando llegó el momento de bautizar el proyecto, la respuesta ya existía: Hestía, la que transforma un lugar en hogar, la que guarda el fuego que da la bienvenida. Eso es precisamente lo que intentamos ser.',
+    name_p3: 'Fran es filólogo clásico — conoce los nombres griegos desde dentro. Cuando llegó el momento de bautizar el proyecto, la respuesta ya existía: Hestía, la que transforma un lugar en hogar, la que guarda el fuego que da la bienvenida. Eso es precisamente lo que intentamos ser.',
     name_quote: '«El primer día que lo dijimos en voz alta supimos que era el único nombre posible.»',
-    name_quote_attr: '– Fran Moral',
+    name_quote_attr: '— Fran Moral',
 
     values_eyebrow: 'Nuestros valores',
     values_title: (<>HESTÍA, una palabra<br/><em>y seis maneras de habitarla.</em></>),
     values_lede: 'El nombre que recibimos de la diosa griega no es solo símbolo: es una guía. Cada letra de Hestía nombra un valor que practicamos a diario. Seis ideas que se suman en una sola: la confianza.',
     values: [
-      { letter: 'H', name: 'Hospitalidad', desc: 'La llama que recibe. Hestía es la diosa del hogar y guarda el fuego de bienvenida, el que se honra al partir y al volver. Tu estancia empieza el día que reservas y no termina cuando te marchas: termina el día que quieres volver.' },
-      { letter: 'E', name: 'Escucha',      desc: 'Personas, no clientes. Alex en español, Fran en inglés. Conocemos tu nombre antes de que cruces la puerta y sabemos lo que necesitas, porque nos lo cuentas y porque escuchamos. Sin formularios. Sin intermediarios.' },
+      { letter: 'H', name: 'Hospitalidad', desc: 'La llama que recibe. Hestía es la diosa del hogar y guarda el fuego de bienvenida — el que se honra al partir y al volver. Tu estancia empieza el día que reservas y no termina cuando te marchas: termina el día que quieres volver.' },
+      { letter: 'E', name: 'Escucha',      desc: 'Personas, no clientes. Alex en español, Fran en inglés. Conocemos tu nombre antes de que cruces la puerta y sabemos lo que necesitas — porque nos lo cuentas y porque escuchamos. Sin formularios. Sin intermediarios.' },
       { letter: 'S', name: 'Sencillez',    desc: 'Sin recepción. Sin oficina. Lo esencial hecho con cuidado: tres llaves, tres casas, dos personas al teléfono. Lo demás sobra.' },
       { letter: 'T', name: 'Transparencia', desc: 'Sin letra pequeña. Precios claros, fotos reales, distancias medidas en metros. Si algo no está, lo decimos. Si algo se rompe, lo arreglamos. Lo que ves es lo que hay.' },
-      { letter: 'I', name: 'Integridad',   desc: 'Lo que prometemos al reservar es lo que entregamos al abrir la puerta. Diseñamos cada Hestía como si fuera nuestra propia casa: porque, en cierto modo, lo es. El cojín bien puesto, el café que espera, la toalla doblada: el detalle que lo cambia todo.' },
+      { letter: 'I', name: 'Integridad',   desc: 'Lo que prometemos al reservar es lo que entregamos al abrir la puerta. Diseñamos cada Hestía como si fuera nuestra propia casa — porque, en cierto modo, lo es. El cojín bien puesto, el café que espera, la toalla doblada: el detalle que lo cambia todo.' },
       { letter: 'A', name: 'Arraigo',      desc: 'No inventamos nada. Hestía huele a sal, a olivar, a calima del Sahara. Llevamos décadas en Vera Playa y eso es lo que entregamos: no un decorado, sino el sitio real.' },
     ],
     values_closing: (<>Seis valores que se suman en uno: <em>la confianza.</em></>),
@@ -59,9 +59,9 @@ const PORQUE_COPY = {
 
     evol_eyebrow: 'La transformación',
     evol_title: (<>Diez años después,<br/><em>una marca a la altura de lo que hemos construido.</em></>),
-    evol_p1: 'Hestía empezó con un logo sencillo, el tejado que nos acompañó durante casi una década y que llevamos con orgullo. Pero llegó un momento en que sentimos que la marca tenía que evolucionar. No para alejarnos de lo que somos, sino para expresarlo mejor.',
+    evol_p1: 'Hestía empezó con un logo sencillo — el tejado que nos acompañó durante casi una década y que llevamos con orgullo. Pero llegó un momento en que sentimos que la marca tenía que evolucionar. No para alejarnos de lo que somos, sino para expresarlo mejor.',
     evol_p2: 'Queríamos algo más sólido, más expresivo. Un símbolo que dijera desde el primer vistazo que detrás de Hestía hay intención, identidad y raíces. Que no somos un producto más en una plataforma: somos un proyecto con historia, con nombre propio y con un lugar en el mapa.',
-    evol_p3: 'Y en esa nueva H, las curvas que forman la hoja de olivo y la cresta de ola: hay también, si miras bien, la silueta de un tejado. No es casualidad. Es el guiño al logo que durante años nos dio tantas satisfacciones: llevamos lo que fuimos dentro de lo que somos.',
+    evol_p3: 'Y en esa nueva H — las curvas que forman la hoja de olivo y la cresta de ola — hay también, si miras bien, la silueta de un tejado. No es casualidad. Es el guiño al logo que durante años nos dio tantas satisfacciones: llevamos lo que fuimos dentro de lo que somos.',
 
     crosslink_label: 'Conoce a Alex y Fran',
     crosslink_text: 'Ver quiénes somos →',
@@ -73,16 +73,16 @@ const PORQUE_COPY = {
 
     origin_eyebrow: 'The origin',
     origin_title: (<>It didn't start as a business.<br/><em>It started as a conviction.</em></>),
-    origin_p1: '2016. Alex and Fran have three properties in Vera Playa. They could have listed them on a platform, collected the commission and switched the phone off. The opposite is harder and slower, and that is exactly what they decided to do.',
-    origin_p2: 'Hestía was born from a question: what if the holiday rental you book actually made you feel at home? Not just clean and functional. At home: with a history, with character, with someone on the other end who knows your name.',
-    origin_p3: 'A computer engineer and a classical philologist with decades in Vera Playa. One observes and builds; the other names and cares. Together they turned three properties into the three Hestías, three homes with their own soul. No office. No reception desk. With the phone always on.',
+    origin_p1: '2016. Alex and Fran have three properties in Vera Playa. They could have listed them on a platform, collected the commission and switched the phone off. The opposite is harder and slower — and that is exactly what they decided to do.',
+    origin_p2: 'Hestía was born from a question: what if the holiday rental you book actually made you feel at home? Not just clean and functional. At home — with a history, with character, with someone on the other end who knows your name.',
+    origin_p3: 'A computer engineer and a classical philologist with decades in Vera Playa. One observes and builds; the other names and cares. Together they turned three properties into the three Hestías — three homes with their own soul. No office. No reception desk. With the phone always on.',
     origin_quote: '"The hardest part was not creating Hestía. It was convincing ourselves it was worth trying a different way."',
-    origin_quote_attr: '– Alex Berruezo',
+    origin_quote_attr: '— Alex Berruezo',
 
     logo_eyebrow: 'The symbol',
     logo_title: (<>An H of home and sea. <em>Roof, leaf and wave.</em></>),
     logo_p1: 'The Hestía monogram is a classical serif worked in glazed teal. It was not designed: it was discovered. The two vertical columns of the H support a double curve that carries two overlapping readings.',
-    logo_p2: 'Three symbols, one single letter. Home, nature, Mediterranean.',
+    logo_p2: 'Three symbols, one single letter. Home — nature — Mediterranean.',
     logo_sym_1_t: 'The columns',
     logo_sym_1_d: 'Stability. The house. Hestía, Greek goddess of the home and the fire that never dies.',
     logo_sym_2_t: 'The olive leaf',
@@ -92,22 +92,22 @@ const PORQUE_COPY = {
 
     name_eyebrow: 'The name',
     name_title: (<>Hestía: goddess of the hearth.<br/><em>Not of wars. Of the home fire.</em></>),
-    name_p1: 'In Greek mythology, Hestía was the firstborn of the Titans, the first to be swallowed by Cronus and the last to be freed. While the other Olympians fought over war, love or power, Hestía tended the flame. She was the goddess of the home, the sacred fire, the heart of the house.',
+    name_p1: 'In Greek mythology, Hestía was the firstborn of the Titans — the first to be swallowed by Cronus and the last to be freed. While the other Olympians fought over war, love or power, Hestía tended the flame. She was the goddess of the home, the sacred fire, the heart of the house.',
     name_p2: 'In ancient Greece, the hearth was not just a physical place: it was the fire that made it alive. Before leaving on a journey and upon returning, the flame was honoured. The flame that Hestía keeps. That fire is what turned a house into a home.',
-    name_p3: 'Fran is a classical philologist, he knows Greek names from the inside. When the time came to name the project, the answer already existed. Hestía: the one who transforms a place into a home. The keeper of the welcoming fire. Exactly what we try to be.',
+    name_p3: 'Fran is a classical philologist — he knows Greek names from the inside. When the time came to name the project, the answer already existed. Hestía: the one who transforms a place into a home. The keeper of the welcoming fire. Exactly what we try to be.',
     name_quote: '"The first time we said it aloud, we knew it was the only possible name."',
-    name_quote_attr: '– Fran Moral',
+    name_quote_attr: '— Fran Moral',
 
     values_eyebrow: 'Our values',
     values_title: (<>HESTÍA, one word<br/><em>and six ways to inhabit it.</em></>),
     values_lede: 'The name we received from the Greek goddess is not only a symbol: it is a guide. Every letter of Hestía names a value we practice every day. Six ideas that add up to one: trust.',
     values: [
-      { letter: 'H', name: 'Hospitality',  desc: 'The flame that welcomes. Hestía is the goddess of the hearth, keeper of the fire honoured when leaving and returning. Your stay begins the day you book and does not end when you leave: it ends the day you want to come back.' },
-      { letter: 'E', name: 'Listening',    desc: 'People, not clients. Alex in Spanish, Fran in English. We know your name before you cross the door and what you need: because you tell us, and because we listen. No forms. No intermediaries.' },
+      { letter: 'H', name: 'Hospitality',  desc: 'The flame that welcomes. Hestía is the goddess of the hearth — keeper of the fire honoured when leaving and returning. Your stay begins the day you book and does not end when you leave: it ends the day you want to come back.' },
+      { letter: 'E', name: 'Listening',    desc: 'People, not clients. Alex in Spanish, Fran in English. We know your name before you cross the door and what you need — because you tell us, and because we listen. No forms. No intermediaries.' },
       { letter: 'S', name: 'Simplicity',   desc: 'No reception. No office. The essentials done with care: three keys, three homes, two people on the phone. Anything more is in the way.' },
       { letter: 'T', name: 'Transparency', desc: 'No small print. Clear prices, real photos, distances measured in metres. If something is missing, we say so. If something breaks, we fix it. What you see is what is there.' },
-      { letter: 'I', name: 'Integrity',    desc: 'What we promise at booking is what we hand over when the door opens. We design every Hestía as if it were our own home, because in a way it is. The neatly placed cushion, the waiting coffee, the folded towel: the detail that changes everything.' },
-      { letter: 'A', name: 'Authenticity', desc: 'We invented nothing. Hestía smells of salt, olive grove, Saharan calima. We have been in Vera Playa for decades: and that is what we hand over: not a stage set, but the real place.' },
+      { letter: 'I', name: 'Integrity',    desc: 'What we promise at booking is what we hand over when the door opens. We design every Hestía as if it were our own home — because in a way it is. The neatly placed cushion, the waiting coffee, the folded towel: the detail that changes everything.' },
+      { letter: 'A', name: 'Authenticity', desc: 'We invented nothing. Hestía smells of salt, olive grove, Saharan calima. We have been in Vera Playa for decades — and that is what we hand over: not a stage set, but the real place.' },
     ],
     values_closing: (<>Six values that add up to one: <em>trust.</em></>),
 
@@ -117,14 +117,14 @@ const PORQUE_COPY = {
     travelers: [
       { icon: '🏡', t: 'Cares for what they use as if it were theirs.', d: 'The Hestía they leave is as good as they found it. They know the next guest deserves the same.' },
       { icon: '🌿', t: "They don't just stay: they contribute.", d: 'They recommend the local bar, respect the quiet of the afternoon, leave their surroundings better than they found them.' },
-      { icon: '🔄', t: 'They come back. And bring someone.', d: "When they find a place where they felt at home, they return, and turn others into collaborative guests too." },
+      { icon: '🔄', t: 'They come back. And bring someone.', d: "When they find a place where they felt at home, they return — and turn others into collaborative guests too." },
     ],
 
     evol_eyebrow: 'The transformation',
     evol_title: (<>Ten years on,<br/><em>a brand to match what we've built.</em></>),
-    evol_p1: 'Hestía began with a simple logo: the red rooftop that accompanied us for nearly a decade, carried with pride. But a moment came when we felt the brand had to evolve. Not to move away from what we are, but to express it more clearly.',
+    evol_p1: 'Hestía began with a simple logo — the red rooftop that accompanied us for nearly a decade, carried with pride. But a moment came when we felt the brand had to evolve. Not to move away from what we are, but to express it more clearly.',
     evol_p2: 'We wanted something more solid, more expressive. A symbol that showed at a glance that behind Hestía there is intention, identity and roots. That we are not another listing on a platform: we are a project with a history, a proper name, and a place on the map.',
-    evol_p3: 'And in that new H, the curves that form the olive leaf and the wave crest: there is also, if you look carefully, the silhouette of a rooftop. That was no accident. It is a nod to the logo that served us so well for years: we carry what we were inside what we are.',
+    evol_p3: 'And in that new H — the curves that form the olive leaf and the wave crest — there is also, if you look carefully, the silhouette of a rooftop. That was no accident. It is a nod to the logo that served us so well for years: we carry what we were inside what we are.',
 
     crosslink_label: 'Meet Alex and Fran',
     crosslink_text: 'Who we are →',
@@ -133,16 +133,16 @@ const PORQUE_COPY = {
 
 const BRAND_PALETTE = [
   { hex: '#2A0F2E',
-    es: { name: 'Berenjena', story: 'El cielo de Vera Playa a las tres de la madrugada. Morado oscuro, casi negro, la noche mediterránea antes de que el horizonte empiece a abrirse. El color base de todo.' },
-    en: { name: 'Aubergine', story: 'The Vera Playa sky at three in the morning. Dark purple, almost black, the Mediterranean night before the horizon begins to open. The base colour of everything.' },
+    es: { name: 'Berenjena', story: 'El cielo de Vera Playa a las tres de la madrugada. Morado oscuro, casi negro — la noche mediterránea antes de que el horizonte empiece a abrirse. El color base de todo.' },
+    en: { name: 'Aubergine', story: 'The Vera Playa sky at three in the morning. Dark purple, almost black — the Mediterranean night before the horizon begins to open. The base colour of everything.' },
   },
   { hex: '#7B3B6B',
     es: { name: 'Violeta', story: 'El instante entre la noche y el amanecer. El horizonte se tiñe de violeta justo antes de que llegue el azul del mar. Dura menos de veinte minutos. Hay que estar despierto.' },
     en: { name: 'Violet', story: 'The moment between night and dawn. The horizon turns violet just before the blue of the sea arrives. It lasts less than twenty minutes. You have to be awake.' },
   },
   { hex: '#1BC8D8',
-    es: { name: 'Turquesa', story: 'El mar y el cielo al amanecer. No el azul eléctrico de postal: el turquesa real, limpio y luminoso, que el Mediterráneo y el cielo de Almería comparten solo en los primeros minutos del día.' },
-    en: { name: 'Turquoise', story: 'The sea and sky at dawn. Not the electric blue of postcards: the real turquoise, clean and luminous, that the Mediterranean and the Almería sky share only in the first minutes of the day.' },
+    es: { name: 'Turquesa', story: 'El mar y el cielo al amanecer. No el azul eléctrico de postal — el turquesa real, limpio y luminoso, que el Mediterráneo y el cielo de Almería comparten solo en los primeros minutos del día.' },
+    en: { name: 'Turquoise', story: 'The sea and sky at dawn. Not the electric blue of postcards — the real turquoise, clean and luminous, that the Mediterranean and the Almería sky share only in the first minutes of the day.' },
   },
   { hex: '#6B7A3A',
     es: { name: 'Verde olivo', story: 'El olivar de Vera Playa con la luz lateral de la mañana. Desde Hestía Mar se ve el mar entre las ramas. Este verde existe en Almería desde antes que Roma.' },
@@ -161,8 +161,8 @@ const BRAND_PALETTE = [
     en: { name: 'Almería sun', story: "Afternoon light in summer. More than 320 days a year, this is the colour washing Hestía's terraces at six. Not yellow. Old gold." },
   },
   { hex: '#8B4A1E',
-    es: { name: 'Siena', story: 'El crepúsculo sobre el Mediterráneo. Cuando el sol toca el agua el cielo se vuelve de este color exacto: naranja rojizo, cálido, irrepetible.' },
-    en: { name: 'Sienna', story: 'Dusk over the Mediterranean. When the sun touches the water the sky turns this exact colour: red-orange, warm, unrepeatable.' },
+    es: { name: 'Siena', story: 'El crepúsculo sobre el Mediterráneo. Cuando el sol toca el agua el cielo se vuelve de este color exacto — naranja rojizo, cálido, irrepetible.' },
+    en: { name: 'Sienna', story: 'Dusk over the Mediterranean. When the sun touches the water the sky turns this exact colour — red-orange, warm, unrepeatable.' },
   },
   { hex: '#F0E8D5',
     es: { name: 'Arena', story: 'La calima y la arena del Sahara. El polvo fino que llega en verano convierte la luz en algo sólido. Hestía huele a esto: sal, arena, lino.' },
@@ -309,10 +309,10 @@ const PorqueNombre = ({ lang }) => {
   );
 };
 
-// PorqueValores v4, sección "Nuestros valores", una pantalla interactiva.
+// PorqueValores v4 — sección "Nuestros valores", una pantalla interactiva.
 // Sin scroll choreography ni sticky. Stage compacto con letra gigante
 // a la izquierda (Playfair Display variable: opsz + wght animados en
-// keyframe de 10 s, por @property, la letra "transforma" su trazo
+// keyframe de 10 s, por @property — la letra "transforma" su trazo
 // continuamente mientras está activa) y nombre + descripción a la
 // derecha. Debajo las 6 letras HESTIA como tabs clickables.
 //
@@ -402,7 +402,7 @@ const PorqueValores = ({ lang }) => {
         onFocus={() => setPaused(true)}
         onBlur={() => setPaused(false)}
       >
-        {/* Stack de fotos detrás: un detalle de Hestía por letra,
+        {/* Stack de fotos detrás — un detalle de Hestía por letra,
             blur + opacidad bajos. Crossfade con activeIdx. */}
         <div className="pq-v4-photo-stack" aria-hidden="true">
           {t.values.map((vv, i) => (
@@ -480,7 +480,7 @@ const PorqueValores = ({ lang }) => {
               className={'pq-v4-strip-btn' + (i === activeIdx ? ' is-active' : '')}
               style={{ '--hue': PORQUE_V4_HUES[vv.letter] || '212, 168, 74' }}
               onClick={() => onSelect(i)}
-              aria-label={`${vv.letter}, ${vv.name}`}
+              aria-label={`${vv.letter} — ${vv.name}`}
             >
               <span className="pq-v4-strip-letter">{vv.letter}</span>
               {i === activeIdx && !paused && (
@@ -520,7 +520,7 @@ const PorqueColores = ({ lang }) => (
       <div className="nos-colores-grid">
         {BRAND_PALETTE.map((c, i) => {
           const d = c[lang];
-          // Relative luminance (sRGB): dark colours get light text, light ones get dark.
+          // Relative luminance (sRGB) — dark colours get light text, light ones get dark.
           const hex = c.hex.replace('#', '');
           const r = parseInt(hex.slice(0,2),16)/255, g = parseInt(hex.slice(2,4),16)/255, b = parseInt(hex.slice(4,6),16)/255;
           const lum = 0.2126*(r>0.04045?((r+0.055)/1.055)**2.4:r/12.92)
