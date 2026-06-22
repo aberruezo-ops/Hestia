@@ -20484,6 +20484,21 @@ img[src*="apt-vt-gallery-"] {
 .rv-row-cancelada td { text-decoration: line-through; color: #888 !important; }
 .rv-row-cancelada .rv-apt-chip { filter: grayscale(1); opacity: 0.5; }
 .rv-month-foot td { border-top: 2px solid rgba(0,0,0,0.08); background: rgba(0,0,0,0.02); font-size: 12px; }
+.rv-partial-tag {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #8A4A24;
+  background: rgba(200, 151, 90, 0.18);
+  border: 1px solid rgba(200, 151, 90, 0.4);
+  border-radius: 6px 0 6px 0;
+  vertical-align: middle;
+  cursor: help;
+}
 
 .rv-status-th { width: 24px; padding: 0 !important; }
 .rv-status {
