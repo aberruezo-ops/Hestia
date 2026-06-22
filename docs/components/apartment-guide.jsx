@@ -277,10 +277,10 @@ const PLACES = [
   { id: 'trattoria',      name: 'La Trattoria da Marco', desc: 'Garrucha. Las pizzas están geniales.', specialty: 'pizza calzone, pasta a la carbonara auténtica y tiramisú.', tier: '€',   cat: 'restaurant', rating: 4.4, lat: 37.1810, lng: -1.8218 },
   { id: 'lua',            name: 'Lúa',               desc: 'Sofisticado. Mejor para cena o copa.',     specialty: 'tartar de atún rojo, croquetas de gamba roja y carrillera al PX.', tip: 'Reserva mesa fuera al atardecer; la carta de cócteles está a la altura.', tier: '€€€', cat: 'restaurant', rating: 4.5, lat: 37.2310, lng: -1.7935 , featured: true },
   { id: 'bistro',         name: 'The Bistro',        desc: 'Bastante bien.',                            specialty: 'entrecot a la parrilla y ensalada de burrata.', tier: '€€',  cat: 'restaurant', rating: 4.3, lat: 37.2310, lng: -1.7945 },
-  { id: 'koa',            name: 'Resto Bar Koa',     desc: 'Frente a Hestía Vera Mar. Bocados pensados, ambiente cercano.', specialty: 'bao de panceta, ceviche del día y poke bowl.', tier: '€€',  cat: 'restaurant', rating: 4.5, lat: 37.2245, lng: -1.7985, featured: true },
-  { id: 'bbme-rest',      name: 'Restaurante Bbme Palomares', desc: 'En plena playa, a 10 min a pie.',  specialty: 'arroz negro con sepia y all i oli, sardinas a la espalda.', tier: '€€',  cat: 'restaurant', rating: 4.4, lat: 37.2155, lng: -1.7800 },
-  { id: 'playa-azul',     name: 'Hostal Playa Azul', desc: 'Villaricos. Excelente paella con bogavante.', specialty: 'paella con bogavante (encargar al reservar), gambas blancas de Garrucha.', tip: 'Pide la paella al hacer la reserva, la preparan al momento.', tier: '€€', cat: 'restaurant', rating: 4.5, lat: 37.2460, lng: -1.7660 , featured: true },
-  { id: 'tadeo',          name: 'Tadeo',             desc: 'Villaricos. Cocina de mar con producto del día.', specialty: 'arroz con bogavante, tostas de ahumados y pulpo a la brasa.', tier: '€€', cat: 'restaurant', rating: 4.4, lat: 37.2494, lng: -1.7709, featured: true },
+  { id: 'koa',            name: 'Resto Bar Koa',     desc: 'Frente a Hestía Vera Mar. Bocados pensados, ambiente cercano.', specialty: 'bao de panceta, ceviche del día y poke bowl.', tier: '€€',  cat: 'restaurant', rating: 4.5, lat: 37.2280, lng: -1.8010, featured: true },
+  { id: 'bbme-rest',      name: 'Restaurante Bbme Palomares', desc: 'En plena playa, a 10 min a pie.',  specialty: 'arroz negro con sepia y all i oli, sardinas a la espalda.', tier: '€€',  cat: 'restaurant', rating: 4.4, lat: 37.2340, lng: -1.8000 },
+  { id: 'playa-azul',     name: 'Hostal Playa Azul', desc: 'Villaricos. Excelente paella con bogavante.', specialty: 'paella con bogavante (encargar al reservar), gambas blancas de Garrucha.', tip: 'Pide la paella al hacer la reserva, la preparan al momento.', tier: '€€', cat: 'restaurant', rating: 4.5, lat: 37.2470, lng: -1.7730 , featured: true },
+  { id: 'tadeo',          name: 'Tadeo',             desc: 'Villaricos. Cocina de mar con producto del día.', specialty: 'arroz con bogavante, tostas de ahumados y pulpo a la brasa.', tier: '€€', cat: 'restaurant', rating: 4.4, lat: 37.2480, lng: -1.7730, featured: true },
   { id: 'rincon-puerto',  name: 'Rincón del Puerto (Garrucha)', desc: 'Junto a la lonja de Garrucha. Marisco fresquísimo y ambiente de pueblo pesquero.', specialty: 'camarones crudos de Garrucha (imprescindibles), gamba roja a la plancha y quisquilla viva.', tip: 'Pide los camarones crudos según vienen del barco, no hay nada igual en la zona.', tier: '€€€', cat: 'restaurant', lat: 37.1818, lng: -1.8235, featured: true },
   { id: 'almadraba',      name: 'La Almadraba (Garrucha)', desc: 'Garrucha. Vista al puerto, especializado en pescado de la lonja.', specialty: 'gamba roja de Garrucha, lubina a la sal y arroz caldoso de marisco.', tier: '€€€', cat: 'restaurant', lat: 37.1822, lng: -1.8232 },
   { id: 'rosado',         name: 'Freiduría Bar Rosado', desc: 'Buenas referencias.',                    specialty: 'fritura mixta de pescado y boquerones rebozados.', tier: '€€',  cat: 'restaurant', rating: 4.3, lat: 37.2210, lng: -1.8070 },
@@ -421,10 +421,10 @@ const PLACES = [
   // Copas y chiringuitos
   { id: 'turquesa',       name: 'Chiringuito Playa Turquesa', desc: 'Andando desde casa. Ambiente familiar de día, copas al atardecer.', specialty: 'mojito de menta del huerto y tabla de quesos al sol.', cat: 'bar', rating: 4.3, lat: 37.2260, lng: -1.7950, featured: true },
   { id: 'paraiso',        name: 'Paraíso Vera Beach', desc: 'Andando desde casa. Música chill desde media tarde.',         specialty: 'gin tonics premium y picoteo de tapeo mediterráneo.', cat: 'bar', rating: 4.3, lat: 37.2300, lng: -1.7940 },
-  { id: 'chumbo',         name: 'Chiringuito El Chumbo', desc: 'Andando desde casa. El más relajado del paseo.',      specialty: 'sangría de cava, sardinas al espeto en verano y arroz del día.', cat: 'bar', rating: 4.2, lat: 37.2100, lng: -1.7850 },
+  { id: 'chumbo',         name: 'Chiringuito El Chumbo', desc: 'Andando desde casa. El más relajado del paseo.',      specialty: 'sangría de cava, sardinas al espeto en verano y arroz del día.', cat: 'bar', rating: 4.2, lat: 37.2100, lng: -1.7970 },
   { id: 'marau',          name: 'Marau Beach Club',  desc: 'Beach club con DJ y zona de hamacas vista mar.',                                          specialty: 'cócteles de autor y carta asiática (poke, bao, tartar).', tip: 'Mejor reservar hamaca en julio-agosto; los atardeceres con DJ valen la pena.', cat: 'bar', rating: 4.4, lat: 37.2100, lng: -1.8098, featured: true },
   { id: 'mar-arena',      name: 'Chiringuito Mar y Arena', desc: 'Pequeño y muy local, a pie de arena.',                                    specialty: 'caña fría, paella los domingos y boquerones en vinagre.', cat: 'bar', rating: 4.2, lat: 37.2335, lng: -1.7940 },
-  { id: 'bbme-palomares', name: 'Bbme Palomares', desc: 'En plena playa, a 10 min a pie. Vistas amplias al Mediterráneo.',     specialty: 'spritz al atardecer, ostras y tapeo gourmet.', tip: 'Vete andando por la orilla al atardecer y vuelve en taxi: la luz vale la caminata.', cat: 'bar', rating: 4.4, lat: 37.2155, lng: -1.7800 , featured: true },
+  { id: 'bbme-palomares', name: 'Bbme Palomares', desc: 'En plena playa, a 10 min a pie. Vistas amplias al Mediterráneo.',     specialty: 'spritz al atardecer, ostras y tapeo gourmet.', tip: 'Vete andando por la orilla al atardecer y vuelve en taxi: la luz vale la caminata.', cat: 'bar', rating: 4.4, lat: 37.2340, lng: -1.8000 , featured: true },
   { id: 'lebreros',       name: 'Los Lebreros (Garrucha puerto)', desc: 'Caña, marisco y vista al puerto pesquero.', specialty: 'gambas blancas, quisquilla viva y conchas finas.', tip: 'Ir sobre las 19:00 cuando atracan los barcos.', cat: 'bar', rating: 4.4, lat: 37.1820, lng: -1.8235, featured: true },
   // ── Bares top-rated por Google ───────────────────────────────
   // Mojácar pueblo
@@ -464,7 +464,7 @@ const PLACES = [
 
   // Farmacias y salud
   { id: 'farmacia-1',     name: 'Farmacia (junto Consum)', cat: 'pharmacy', url: 'https://goo.gl/maps/bGMV1sjwUqrRTNzk6', lat: 37.2197, lng: -1.8083 },
-  { id: 'farmacia-2',     name: 'Farmacia Vera Playa',     cat: 'pharmacy', url: 'https://goo.gl/maps/GaRHGscDhErp9kBG7', lat: 37.2260, lng: -1.7985 },
+  { id: 'farmacia-2',     name: 'Farmacia Vera Playa',     cat: 'pharmacy', url: 'https://goo.gl/maps/GaRHGscDhErp9kBG7', lat: 37.2200, lng: -1.8080 },
 
   // ==========================================================
   // CENTROS DE SALUD Y URGENCIAS, verificados mayo 2026 vía
@@ -583,7 +583,7 @@ const PLACES = [
   { id: 'ln-veraplaya', name: 'Lavandería autoservicio (Vera Playa)', cat: 'laundry',
     desc: 'Lavadoras y secadoras de autoservicio en la zona de Vera Playa, útiles en estancias largas o para una colada rápida sin esperar al día de limpieza.',
     desc_en: 'Self-service washers and dryers in the Vera Playa area, handy for longer stays or a quick wash without waiting for cleaning day.',
-    url: 'https://www.google.com/maps/search/?api=1&query=lavander%C3%ADa+autoservicio+Vera+Playa', lat: 37.2360, lng: -1.7935, featured: true },
+    url: 'https://www.google.com/maps/search/?api=1&query=lavander%C3%ADa+autoservicio+Vera+Playa', lat: 37.2220, lng: -1.8090, featured: true },
   { id: 'ln-mojacar', name: 'Lavandería y tintorería en Mojácar', cat: 'laundry',
     desc: 'Lavado, secado y también tintorería y planchado en Mojácar Playa, para cuando necesites algo más que la lavadora del apartamento.',
     desc_en: 'Wash, dry and also dry cleaning and ironing in Mojácar Playa, for when you need more than the apartment washing machine.',
@@ -597,7 +597,7 @@ const PLACES = [
   { id: 'atm-veraplaya', name: 'Cajero en Vera Playa', cat: 'atm',
     desc: 'En la zona comercial de Vera Playa hay cajeros para sacar efectivo sin bajar al pueblo. Comprueba la comisión en pantalla antes de aceptar, sobre todo en los cajeros independientes.',
     desc_en: 'The Vera Playa commercial area has ATMs to withdraw cash without driving to town. Check the on-screen fee before accepting, especially at independent ATMs.',
-    url: 'https://www.google.com/maps/search/?api=1&query=cajero+Vera+Playa', lat: 37.2360, lng: -1.7935 },
+    url: 'https://www.google.com/maps/search/?api=1&query=cajero+Vera+Playa', lat: 37.2220, lng: -1.8090 },
   { id: 'atm-garrucha', name: 'Cajeros en Garrucha', cat: 'atm',
     desc: 'El paseo y el centro de Garrucha concentran varias entidades y cajeros, prácticos si estás de playa o de cena por la zona.',
     desc_en: 'The Garrucha promenade and centre have several banks and ATMs, handy if you are at the beach or out for dinner nearby.',
@@ -616,7 +616,7 @@ const PLACES = [
   { id: 'aquavera',       name: 'Parque acuático Aquavera',
     desc: 'Toboganes, piscinas y zona infantil. A 5 min en coche dentro de la propia Vera Playa.',
     level: 'Fácil · todas las edades · zona infantil supervisada',
-    cat: 'leisure', url: 'https://www.aquavera.com/', lat: 37.2230, lng: -1.7960, featured: true, featuredOrder: 1 },
+    cat: 'leisure', url: 'https://www.aquavera.com/', lat: 37.2280, lng: -1.8080, featured: true, featuredOrder: 1 },
   { id: 'rumboalcabo',    name: 'Paseos en barco · Rumbo al Cabo',
     desc: 'Salidas desde Garrucha con visita a calas accesibles solo por mar. Embarcación cómoda.',
     level: 'Fácil · todas las edades · chalecos a bordo',
@@ -642,7 +642,7 @@ const PLACES = [
   { id: 'biplaza',        name: 'Vuelo en biplaza (Vera-Palomares)',
     desc: 'Vuelos en ultraligero biplaza desde el aeródromo de Palomares. Vistas de costa, salinas y desierto.',
     level: 'Fácil · 8+ años · sin movilidad reducida (acceso al avión)',
-    cat: 'leisure', url: 'https://aeronomadas.com/es/vuelos-biplaza', lat: 37.2150, lng: -1.7720 },
+    cat: 'leisure', url: 'https://aeronomadas.com/es/vuelos-biplaza', lat: 37.2320, lng: -1.8070 },
   { id: 'turismo-ind',    name: 'Turismo industrial y científico',
     desc: 'Visitas guiadas a invernaderos, plantas solares y observatorios de Almería.',
     level: 'Fácil · todas las edades',
@@ -682,11 +682,11 @@ const PLACES = [
   { id: 'buceo-tortuga',  name: 'Buceo · Tortuga (Vera Playa)',
     desc: 'Centro de buceo cercano, con bautismos y cursos PADI completos.',
     level: 'Bautismo: Medio · 10+ años · Buena salud cardiopulmonar. · Cursos PADI: Alto · 12+ años con autorización',
-    cat: 'water', url: 'https://www.buceotortuga.com', lat: 37.2470, lng: -1.7660 },
+    cat: 'water', url: 'https://www.buceotortuga.com', lat: 37.2280, lng: -1.8030 },
   { id: 'buceo-villaricos', name: 'Buceo · Villaricos Sub',
     desc: 'Inmersiones en los pecios y arrecifes de Villaricos. Equipo completo en alquiler.',
     level: 'Medio-Alto · titulación PADI Open Water o equivalente · 14+ años',
-    cat: 'water', url: 'https://www.villaricosub.com', lat: 37.2470, lng: -1.7660 },
+    cat: 'water', url: 'https://www.villaricosub.com', lat: 37.2470, lng: -1.7730 },
   { id: 'buceo-mojacar',  name: 'Buceo · Mojácar',
     desc: 'Centro tradicional de buceo en Mojácar.',
     level: 'Bautismo: Medio · 10+ años. · Inmersiones: depende del nivel certificado',
@@ -776,7 +776,7 @@ const PLACES = [
     specialty: '~5 km · 1h15 · plano · arena y camino de tierra junto al acantilado.',
     level: 'Muy fácil · Todas las edades.',
     tip: 'Villaricos tiene un par de bares al lado del chiringuito de la playa. El Parque Arqueológico es visita libre y gratuita (señalizada junto al merendero).',
-    cat: 'trek', url: 'https://www.google.com/maps/search/?api=1&query=Villaricos+Parque+Arqueologico+Almeria', lat: 37.2470, lng: -1.7660 },
+    cat: 'trek', url: 'https://www.google.com/maps/search/?api=1&query=Villaricos+Parque+Arqueologico+Almeria', lat: 37.2340, lng: -1.7910 },
   { id: 'trek-vera-pueblo', name: 'Vera Playa → Vera pueblo (por el barranquillo)',
     desc: 'Paseo de unos 40 minutos hacia el interior subiendo suavemente por la carretera vieja y el camino rural hasta el casco histórico de Vera. Acaba en la Catedral-fortaleza (s.XVI) construida para resistir ataques berberiscos.',
     specialty: '~3,5 km · 40 min · 80 m desnivel · camino mixto asfalto/tierra.',
@@ -813,7 +813,7 @@ const PLACES = [
     cat: 'trek', url: 'https://www.wikiloc.com/hiking-trails/cortijo-cabrera-turre-mojacar-6347444', lat: 37.1550, lng: -1.8700 },
   { id: 'club-nautico',   name: 'Club Náutico Almanzora', cat: 'water', url: 'https://maps.app.goo.gl/kgT5rYortJ2s5oPN8', lat: 37.2530, lng: -1.7720 },
   { id: 'bicis',          name: 'Alquiler de bicicletas (Vera Playa)', cat: 'leisure', url: 'https://maps.app.goo.gl/yPqqBXpwgcZyu6568', lat: 37.2270, lng: -1.7965 },
-  { id: 'bicis-villaricos',name: 'Bicis Villaricos', desc: 'Tel. 627 139 092', cat: 'leisure', lat: 37.2470, lng: -1.7660 },
+  { id: 'bicis-villaricos',name: 'Bicis Villaricos', desc: 'Tel. 627 139 092', cat: 'leisure', lat: 37.2470, lng: -1.7730 },
 
   // Pueblos
   // Pueblos: cada uno con atractivos, recomendaciones y eventos clave.
@@ -1042,7 +1042,7 @@ const PLACES = [
     guideAnchor: '#ag-alrededores',
     gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.2110,-1.7770',
     web: 'https://www.juntadeandalucia.es/medioambiente/portal/landing-page-mapa-espacios-naturales/_blank/57800',
-    lat: 37.2110, lng: -1.7770 },
+    lat: 37.2260, lng: -1.8330 },
   { id: 'el-argar',       name: 'Yacimiento El Argar',
     cat: 'culture',
     dist: '~25 km', how: '🚗 · 25 min',
@@ -1167,7 +1167,7 @@ const PLACES = [
   { id: 'p-srvc-vera',    name: 'Playa de Vera (sector textil)', desc: 'Sombrillas, hamacas y chiringuitos.', cat: 'beach-srvc', lat: 37.2275, lng: -1.7935 },
   { id: 'p-srvc-mojacar', name: 'Mojácar Playa',           desc: 'Hamacas, sombrillas y chiringuitos a lo largo del paseo.', cat: 'beach-srvc', lat: 37.1100, lng: -1.8395 },
   { id: 'p-srvc-garrucha',name: 'Playa de Garrucha',       desc: 'Servicios de playa y paseo marítimo.', cat: 'beach-srvc', lat: 37.1815, lng: -1.8210 },
-  { id: 'p-srvc-quitapellejos', name: 'Playa Quitapellejos (Palomares)', desc: 'Hamacas, sombrillas y chiringuitos cerca de Hestía.', cat: 'beach-srvc', lat: 37.2050, lng: -1.7790 },
+  { id: 'p-srvc-quitapellejos', name: 'Playa Quitapellejos (Palomares)', desc: 'Hamacas, sombrillas y chiringuitos cerca de Hestía.', cat: 'beach-srvc', lat: 37.2050, lng: -1.7980 },
 
   // ==========================================================
   // GASOLINERAS, verificadas en mayo 2026 vía repsol.es, Cepsa,
@@ -1223,7 +1223,7 @@ const PLACES = [
     specialty: 'Marca: Repsol · Servicios: tienda básica, aseos.',
     tip: 'Horario habitual: 7:00 – 21:00.',
     cat: 'fuel', url: 'https://www.google.com/maps/search/?api=1&query=Repsol+Palomares+Almeria',
-    lat: 37.2370, lng: -1.7700 },
+    lat: 37.2340, lng: -1.8070 },
 
   // ==========================================================
   // PUNTOS DE CARGA ELÉCTRICA, verificados mayo 2026 vía
@@ -1235,7 +1235,7 @@ const PLACES = [
     specialty: 'Tipo: AC (carga lenta-rápida) · Conector: Type 2 · Hasta 22 kW.',
     tip: 'Horario igual que la tienda: lunes-sábado 9:00 – 21:30, domingos cerrado. Pensado para 1-2 h durante la compra; no es carga rápida.',
     cat: 'ev-charge', url: 'https://www.google.com/maps/search/?api=1&query=Mercadona+Vera+Medina+Azahara',
-    lat: 37.2360, lng: -1.7935, featured: true, featuredOrder: 1 },
+    lat: 37.2210, lng: -1.8110, featured: true, featuredOrder: 1 },
   { id: 'ev-mercadona-vera-pueblo', name: 'Mercadona Vera Pueblo (C/ Baza)',
     desc: 'Segunda ubicación de Mercadona en Vera pueblo, con 2 conectores AC tipo 2. Gratuito para clientes. Distancia aproximada: ~10 min en coche (~6 km) desde Vera Playa.',
     specialty: 'Tipo: AC · Conector: Type 2 · Hasta 22 kW (la potencia real entregada varía 4-22 kW según la hora).',

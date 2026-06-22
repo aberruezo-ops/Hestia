@@ -6549,6 +6549,7 @@ const PinsTab = () => {
       <div className="pe-pins-panel">
         <div className="pe-pins-ph">
           <div className="pe-pins-title">Editor de pins</div>
+          <div className="pe-pins-wip-banner">Mapa en construccion. Las coordenadas pueden no ser exactas.</div>
           <p className="pe-hint">Arrastra los pins a su posicion correcta. Exporta el JSON y pegalo en el chat con Claude para aplicar los cambios a la guia.</p>
         </div>
         <div className="pe-pins-search-wrap">
