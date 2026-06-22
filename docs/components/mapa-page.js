@@ -196,7 +196,7 @@ const MapaPage = ({
   }, it.label), /*#__PURE__*/React.createElement("span", {
     className: "mapa-link-arrow",
     "aria-hidden": "true"
-  }, "\u2192")), /*#__PURE__*/React.createElement("p", {
+  }, "→")), /*#__PURE__*/React.createElement("p", {
     className: "mapa-desc"
   }, it.desc)))))))));
 };
