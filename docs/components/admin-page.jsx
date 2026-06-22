@@ -5617,23 +5617,34 @@ const _syncReservasToGuestPins = async (reservas, token) => {
     // until/ref sin datos personales: fechas de la reserva (ya públicas en availability.json).
     next[apt].push({ h, until: r.salida, ref: r.entrada || '–' });
   }
-  const rf = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' });
-  const rfj = await rf.json();
-  if (rfj.message) throw new Error(rfj.message);
-  const prices = JSON.parse(b64ToUtf8(rfj.content));
-  if (JSON.stringify(prices.guestPins || {}) === JSON.stringify(next)) return false;
-  prices.guestPins = next;
-  const res = await fetch(`${API}/repos/${REPO}/contents/${PATH}`, {
-    method: 'PUT',
-    headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      message: `chore(guia): sync PINs de acceso desde reservas · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
-      content: utf8ToB64(JSON.stringify(prices, null, 2)),
-      sha: rfj.sha, branch: BRANCH,
-    }),
-  });
-  if (!res.ok) { const j = await res.json(); throw new Error(j.message || 'Error'); }
-  return true;
+  // Publica el set en prices.json. Reintenta si el fichero cambió entre la
+  // lectura y la escritura: las CI de disponibilidad/ofertas tocan el mismo
+  // prices.json, y un conflicto de SHA (409) hacía que el PIN NO se publicara
+  // (además el error se tragaba en el guardado), dejando al huésped sin acceso.
+  let lastErr;
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const rf = await fetch(`${API}/repos/${REPO}/contents/${PATH}?ref=${BRANCH}`, { headers: apiHeaders(token), cache: 'no-store' });
+    const rfj = await rf.json();
+    if (rfj.message) throw new Error(rfj.message);
+    const prices = JSON.parse(b64ToUtf8(rfj.content));
+    if (JSON.stringify(prices.guestPins || {}) === JSON.stringify(next)) return false;
+    prices.guestPins = next;
+    const res = await fetch(`${API}/repos/${REPO}/contents/${PATH}`, {
+      method: 'PUT',
+      headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: `chore(guia): sync PINs de acceso desde reservas · ${new Date().toISOString().slice(0, 16).replace('T', ' ')}`,
+        content: utf8ToB64(JSON.stringify(prices, null, 2)),
+        sha: rfj.sha, branch: BRANCH,
+      }),
+    });
+    if (res.ok) return true;
+    const j = await res.json().catch(() => ({}));
+    lastErr = new Error(j.message || 'Error');
+    // Solo reintenta ante conflicto de SHA; otros errores abortan.
+    if (res.status !== 409 && !((j.message || '').includes('does not match'))) break;
+  }
+  throw lastErr || new Error('No se pudo publicar el PIN de la guía');
 };
 
 const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
