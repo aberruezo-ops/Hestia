@@ -142,6 +142,27 @@ function addDaysIso(iso, days) {
   return `${r.getFullYear()}-${String(r.getMonth()+1).padStart(2,'0')}-${String(r.getDate()).padStart(2,'0')}`;
 }
 
+// Reparte las noches de una estancia [entrada, salida) por mes natural (clave
+// 'YYYY-MM'). Cada noche cuenta en el mes de la fecha en que se pernocta, es
+// decir desde la entrada hasta la salida-1. Sirve para prorratear el importe de
+// una reserva que abarca varios meses entre cada mes en lugar de imputarlo todo
+// al mes de entrada.
+function nightsByMonth(entrada, salida) {
+  const out = {};
+  if (!entrada || !salida) return out;
+  const [y1, m1, d1] = entrada.split('-').map(Number);
+  const [y2, m2, d2] = salida.split('-').map(Number);
+  let cur = new Date(y1, m1 - 1, d1);
+  const end = new Date(y2, m2 - 1, d2);
+  let guard = 0;
+  while (cur < end && guard++ < 4000) {
+    const key = `${cur.getFullYear()}-${String(cur.getMonth() + 1).padStart(2, '0')}`;
+    out[key] = (out[key] || 0) + 1;
+    cur.setDate(cur.getDate() + 1);
+  }
+  return out;
+}
+
 // base64 ↔ utf-8 (atob/btoa no manejan UTF-8 directamente)
 const utf8ToB64 = (s) => btoa(unescape(encodeURIComponent(s)));
 const b64ToUtf8 = (s) => decodeURIComponent(escape(atob(s.replace(/\n/g, ''))));
@@ -4065,7 +4086,19 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
   const focusList = byYear[focusYear] || [];
 
   const MES_FULL = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  const allMonths = [...new Set(focusList.map(r => (r.entrada || '').slice(5, 7)).filter(Boolean))].sort();
+  // Meses con actividad: no solo el de entrada, también aquellos en los que una
+  // reserva tiene noches (para que un mes "intermedio" de una estancia larga
+  // aparezca y reciba su parte prorrateada del importe).
+  const allMonths = (() => {
+    const set = new Set();
+    focusList.forEach(r => {
+      const em = (r.entrada || '').slice(5, 7);
+      if (em) set.add(em);
+      const nm = nightsByMonth(r.entrada, r.salida);
+      Object.keys(nm).forEach(k => { if (k.slice(0, 4) === focusYear) set.add(k.slice(5, 7)); });
+    });
+    return [...set].sort();
+  })();
   const byMonth = {};
   focusList.forEach(r => {
     const m = (r.entrada || '').slice(5, 7);
@@ -4765,19 +4798,31 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
         )}
 
         {visibleMonths.map(m => {
-          const mRows = filtered.filter(r => (r.entrada || '').slice(5, 7) === m);
-          if (mRows.length === 0) return null;
-          const mActive  = mRows.filter(r => !isCancelada(r));
-          const mBruto   = mActive.reduce((s, r) => s + (Number(r.ingreso_total) || 0), 0);
-          const mComis   = mActive.reduce((s, r) => s + (Number(r.comision) || 0), 0);
-          const mBai     = mActive.reduce((s, r) => s + (Number(r.bai) || 0), 0);
-          const mNoches  = mActive.reduce((s, r) => s + (Number(r.noches) || 0), 0);
+          const mKey = `${focusYear}-${m}`;
+          // Reservas con al menos una noche en este mes (no solo las que entran
+          // en él). El importe de cada reserva se prorratea según las noches que
+          // caen dentro del mes, en vez de imputarse todo al mes de entrada.
+          const mEntries = filtered.map(r => {
+            const nm = nightsByMonth(r.entrada, r.salida);
+            const totalN = Object.values(nm).reduce((a, b) => a + b, 0);
+            const nInMonth = nm[mKey] || 0;
+            if (nInMonth <= 0) return null;
+            const frac = totalN > 0 ? nInMonth / totalN : 0;
+            return { r, nInMonth, totalN, frac, partial: Object.keys(nm).length > 1 };
+          }).filter(Boolean);
+          if (mEntries.length === 0) return null;
+          const pro = (e, key) => (Number(e.r[key]) || 0) * e.frac;
+          const mActive  = mEntries.filter(e => !isCancelada(e.r));
+          const mBruto   = mActive.reduce((s, e) => s + pro(e, 'ingreso_total'), 0);
+          const mComis   = mActive.reduce((s, e) => s + pro(e, 'comision'), 0);
+          const mBai     = mActive.reduce((s, e) => s + pro(e, 'bai'), 0);
+          const mNoches  = mActive.reduce((s, e) => s + e.nInMonth, 0);
           return (
             <div key={m} className="leila-month-block">
               <div className="leila-month-hdr">
                 <span className="leila-month-name">{MES_FULL[parseInt(m, 10) - 1]} {focusYear}</span>
                 <span className="leila-month-kpis">
-                  <span>{mRows.length} reserva{mRows.length !== 1 ? 's' : ''}</span>
+                  <span>{mEntries.length} reserva{mEntries.length !== 1 ? 's' : ''}</span>
                   <span>{mNoches} noches</span>
                   <span>Bruto: <strong>{fmtEur(mBruto)}</strong></span>
                   <span>BAI: <strong>{fmtEur(mBai)}</strong></span>
@@ -4796,7 +4841,8 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                     <th className="rv-ical-th"></th>
                   </tr></thead>
                   <tbody>
-                    {mRows.map(r => {
+                    {mEntries.map(e => {
+                      const r = e.r;
                       const idx = reservas.indexOf(r);
                       const status = reservaStatus(r, today);
                       const cancelada = isCancelada(r);
@@ -4808,15 +4854,15 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                           onClick={() => openRow(idx)}>
                           <td className={`rv-status rv-status-${status}`} title={status}>{statusIcon}</td>
                           <td><span className="rv-apt-chip" style={{background: APT_COLOR[r.apt], color: APT_TEXT[r.apt]}}>{APT_NAMES[r.apt] || r.apt}</span></td>
-                          <td>{r.responsable}{r.mascota ? ' 🐾' : ''}{r.cuna_trona ? ' 👶' : ''}</td>
+                          <td>{r.responsable}{r.mascota ? ' 🐾' : ''}{r.cuna_trona ? ' 👶' : ''}{e.partial ? <span className="rv-partial-tag" title={`Estancia de ${e.totalN} noches repartida entre varios meses. Aquí se imputan las ${e.nInMonth} de este mes.`}>parcial</span> : ''}</td>
                           <td>{fmtDate(r.entrada)}</td>
                           <td>{fmtDate(r.salida)}</td>
-                          <td className="num">{r.noches || '–'}</td>
+                          <td className="num">{e.partial ? `${e.nInMonth}/${e.totalN}` : (e.nInMonth || r.noches || '–')}</td>
                           <td className="num">{r.huespedes || '–'}</td>
                           <td>{r.canal || '–'}</td>
-                          <td className="num">{fmtEur(r.ingreso_total)}</td>
-                          <td className="num">{fmtEur(r.comision)}</td>
-                          <td className="num">{fmtEur(r.bai)}</td>
+                          <td className="num">{fmtEur(pro(e, 'ingreso_total'))}</td>
+                          <td className="num">{fmtEur(pro(e, 'comision'))}</td>
+                          <td className="num">{fmtEur(pro(e, 'bai'))}</td>
                           <td className="num">{fmtPct(r.rentabilidad_pct)}</td>
                           <td className="rv-ical-td" onClick={e => e.stopPropagation()}>
                             <button type="button" className="rv-ical-btn" title="Generar alerta de calendario (.ics)"
