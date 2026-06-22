@@ -49,6 +49,7 @@ const APT_CONTRACT_DATA = {
     heroPhoto: 'assets/apt-vs.jpg',
     direccion: 'Apto. 1A, del portal 14, edificio 3, en la urbanización Paraíso Playa, en C/ Islas Canarias, 7',
     plazaGaraje: '160',
+    acceso: 'La vivienda se encuentra en una <strong>primera planta, con ascensor</strong>.',
     zonaObras: 'enfrente',
     bloqueAccesibilidad: true,
     bloqueSabanas: 'Un juego de sábanas para la cama de matrimonio y dos juegos de sábanas para las camas individuales.'
@@ -59,6 +60,7 @@ const APT_CONTRACT_DATA = {
     heroPhoto: 'assets/apt-vt-4.jpg',
     direccion: 'Apto. 11, planta 5ª, escalera 13, en la urbanización Thalassa, en C/ Tomillo 2',
     plazaGaraje: '163',
+    acceso: 'La vivienda se encuentra en una <strong>tercera planta, sin ascensor desde el garaje</strong>. Además, para acceder a la piscina y a otras zonas comunes de la urbanización existen <strong>tramos de escaleras adicionales</strong>.',
     zonaObras: 'cercanas',
     bloqueAccesibilidad: false,
     bloqueSabanas: 'Un juego de sábanas para la cama doble (D1) y un juego para cada cama individual del dormitorio dos (D2).'
@@ -70,6 +72,7 @@ const APT_CONTRACT_DATA = {
     heroFocusY: 0.8,
     direccion: 'Apto. 7, planta 1ª, bloque 22, en la urbanización Pueblo Salinas, en C/ Alcazaba 115',
     plazaGaraje: '290',
+    acceso: 'La vivienda se encuentra en una <strong>primera planta, sin ascensor</strong>.',
     zonaObras: 'cercanas',
     bloqueAccesibilidad: false,
     bloqueSabanas: 'Dos juegos de sábanas para la cama de matrimonio y sofá-cama y un juego de sábanas por cada cama individual del dormitorio dos.'
@@ -2651,6 +2654,7 @@ const ContractTab = ({
 <h2>EXPONEN</h2>
 <p><strong>I.</strong> Que el Propietario es titular de la siguiente finca en perfecto estado de uso:</p>
 <p><strong>VIVIENDA:</strong> Dirección: ${a.direccion}, en Vera (Almería), y plaza de garaje <strong>${a.plazaGaraje}</strong>, en las condiciones y con los muebles y servicios cuya descripción y fotografías se exponen en la página web www.hestiayourhome.com.</p>
+${a.acceso ? `<p>${a.acceso}</p>` : ''}
 <p>La vivienda se entrega limpia, en perfecto estado de uso, conservación y habitabilidad y los suministros y servicios que posee la misma se encuentran en funcionamiento. La vivienda se devolverá limpia y en perfecto estado.</p>
 ${bloqueAccesibilidad}
 <p>Hestía se encuentra en una zona de expansión y existen obras de construcción ${a.zonaObras}. La Parte Arrendataria da por conocida esta situación y los Propietarios no se hacen responsables de cualquier situación ocasionada por dichas obras.</p>
