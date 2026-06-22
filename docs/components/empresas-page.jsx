@@ -349,6 +349,17 @@ const EmpresasForm = ({ lang }) => {
             </div>
           )}
 
+          <p className="emp-contact-warn">
+            <span aria-hidden="true">⚠️</span>{' '}
+            {channel === 'email'
+              ? (lang === 'es'
+                  ? 'Revisa que el correo sea correcto: si está mal, no podremos contestarte.'
+                  : 'Double-check your email: if it is wrong, we will not be able to reply.')
+              : (lang === 'es'
+                  ? 'Revisa que el teléfono sea correcto: si está mal, no podremos contestarte.'
+                  : 'Double-check your phone number: if it is wrong, we will not be able to reply.')}
+          </p>
+
           <div className="emp-row">
             <div className="emp-field">
               <label className="emp-label" htmlFor="emp-sector">{t.f_sector}</label>

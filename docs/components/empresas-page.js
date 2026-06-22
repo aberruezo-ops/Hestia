@@ -469,7 +469,11 @@ const EmpresasForm = ({
     value: callTime,
     onChange: e => setCallTime(e.target.value),
     placeholder: t.f_calltime_ph
-  }))), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("p", {
+    className: "emp-contact-warn"
+  }, /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "\u26A0\uFE0F"), ' ', channel === 'email' ? lang === 'es' ? 'Revisa que el correo sea correcto: si está mal, no podremos contestarte.' : 'Double-check your email: if it is wrong, we will not be able to reply.' : lang === 'es' ? 'Revisa que el teléfono sea correcto: si está mal, no podremos contestarte.' : 'Double-check your phone number: if it is wrong, we will not be able to reply.'), /*#__PURE__*/React.createElement("div", {
     className: "emp-row"
   }, /*#__PURE__*/React.createElement("div", {
     className: "emp-field"
