@@ -435,6 +435,7 @@ const SECTION_CATS = {
   salud: ['health', 'vet', 'pet-board', 'physio', 'pharmacy', 'coworking', 'laundry', 'atm'],
   movilidad: ['fuel', 'ev-charge']
 };
+const CAT_TO_SECTION = Object.fromEntries(Object.entries(SECTION_CATS).flatMap(([sec, cats]) => cats.map(cat => [cat, sec])));
 
 // ----- Categorías de lugares (icono + color brand + etiqueta bilingüe) -----
 // Color: 1 token de la paleta corporativa por categoría. Icono: emoji
@@ -669,8 +670,8 @@ const PLACES = [
   name: 'Covirán',
   desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa. Para básicos sin coger el coche.',
   cat: 'super',
-  lat: 37.2235,
-  lng: -1.7975
+  lat: 37.2230,
+  lng: -1.8082
 }, {
   id: 'consum',
   name: 'Consum (Vera Playa)',
@@ -678,8 +679,8 @@ const PLACES = [
   specialty: 'estantería de productos UK: Marmite, Yorkshire Tea, baked beans, salsas Branston, mince pies en Navidad.',
   cat: 'super',
   url: 'https://goo.gl/maps/h6UvnBe3ATHpsPXbA',
-  lat: 37.2200,
-  lng: -1.8090,
+  lat: 37.2197,
+  lng: -1.8083,
   featured: true
 }, {
   id: 'mercadona',
@@ -687,8 +688,8 @@ const PLACES = [
   desc: 'Mercadona estándar a 5 min en coche. El más completo de la zona.',
   cat: 'super',
   url: 'https://goo.gl/maps/axi9Lb9xLp8yuVUR8',
-  lat: 37.2360,
-  lng: -1.7935,
+  lat: 37.2137,
+  lng: -1.8339,
   featured: true
 }, {
   id: 'super-vera',
@@ -707,8 +708,8 @@ const PLACES = [
   specialty: 'fish & chips congelados, Yorkshire puddings, scotch eggs, productos M&S y Tesco.',
   tip: 'Imprescindible para huéspedes ingleses con nostalgia. Hablan inglés en caja.',
   cat: 'super',
-  lat: 37.2380,
-  lng: -1.7895,
+  lat: 37.2396,
+  lng: -1.8564,
   featured: true
 }, {
   id: 'quicksave',
@@ -787,8 +788,8 @@ const PLACES = [
   tier: '€',
   cat: 'restaurant',
   rating: 4.2,
-  lat: 37.2230,
-  lng: -1.8090
+  lat: 37.2195,
+  lng: -1.8060
 }, {
   id: 'pomodoro',
   name: 'Pizzería Pomodoro',
@@ -797,8 +798,8 @@ const PLACES = [
   tier: '€€',
   cat: 'restaurant',
   rating: 4.3,
-  lat: 37.2270,
-  lng: -1.7920
+  lat: 37.2190,
+  lng: -1.8045
 }, {
   id: 'trattoria',
   name: 'La Trattoria da Marco',
@@ -808,7 +809,7 @@ const PLACES = [
   cat: 'restaurant',
   rating: 4.4,
   lat: 37.1810,
-  lng: -1.8230
+  lng: -1.8218
 }, {
   id: 'lua',
   name: 'Lúa',
@@ -840,7 +841,7 @@ const PLACES = [
   cat: 'restaurant',
   rating: 4.5,
   lat: 37.2245,
-  lng: -1.7965,
+  lng: -1.7985,
   featured: true
 }, {
   id: 'bbme-rest',
@@ -872,8 +873,8 @@ const PLACES = [
   tier: '€€',
   cat: 'restaurant',
   rating: 4.4,
-  lat: 37.2455,
-  lng: -1.7670,
+  lat: 37.2494,
+  lng: -1.7709,
   featured: true
 }, {
   id: 'rincon-puerto',
@@ -903,8 +904,8 @@ const PLACES = [
   tier: '€€',
   cat: 'restaurant',
   rating: 4.3,
-  lat: 37.2240,
-  lng: -1.8095
+  lat: 37.2210,
+  lng: -1.8070
 }, {
   id: 'av-alicante',
   name: 'Av. Ciudad de Alicante',
@@ -983,7 +984,7 @@ const PLACES = [
   cat: 'restaurant',
   rating: 4.3,
   lat: 37.2310,
-  lng: -1.7920
+  lng: -1.7930
 },
 // ── Top-rated por Google en la zona (≥4.5 estrellas) ─────────
 // Mojácar
@@ -1054,7 +1055,7 @@ const PLACES = [
   rating: 4.6,
   cat: 'restaurant',
   lat: 37.1820,
-  lng: -1.8240,
+  lng: -1.8222,
   featured: true
 },
 // Cabo de Gata · San José y alrededores
@@ -1503,8 +1504,8 @@ const PLACES = [
   desc: 'Mediterráneo a pie del puerto.',
   specialty: 'arroces y pescados de la lonja sin gluten.',
   cat: 'celiac',
-  lat: 37.1810,
-  lng: -1.8230
+  lat: 37.1731,
+  lng: -1.8228
 }, {
   id: 'kontiki',
   name: 'Mojácar: Cabo Norte, Neptuno, Kontiki',
@@ -1542,7 +1543,7 @@ const PLACES = [
   cat: 'bar',
   rating: 4.3,
   lat: 37.2260,
-  lng: -1.7935,
+  lng: -1.7950,
   featured: true
 }, {
   id: 'paraiso',
@@ -1552,7 +1553,7 @@ const PLACES = [
   cat: 'bar',
   rating: 4.3,
   lat: 37.2300,
-  lng: -1.7920
+  lng: -1.7940
 }, {
   id: 'chumbo',
   name: 'Chiringuito El Chumbo',
@@ -1560,8 +1561,8 @@ const PLACES = [
   specialty: 'sangría de cava, sardinas al espeto en verano y arroz del día.',
   cat: 'bar',
   rating: 4.2,
-  lat: 37.2360,
-  lng: -1.7895
+  lat: 37.2100,
+  lng: -1.7850
 }, {
   id: 'marau',
   name: 'Marau Beach Club',
@@ -1570,8 +1571,8 @@ const PLACES = [
   tip: 'Mejor reservar hamaca en julio-agosto; los atardeceres con DJ valen la pena.',
   cat: 'bar',
   rating: 4.4,
-  lat: 37.2410,
-  lng: -1.7895,
+  lat: 37.2100,
+  lng: -1.8098,
   featured: true
 }, {
   id: 'mar-arena',
@@ -1581,7 +1582,7 @@ const PLACES = [
   cat: 'bar',
   rating: 4.2,
   lat: 37.2335,
-  lng: -1.7910
+  lng: -1.7940
 }, {
   id: 'bbme-palomares',
   name: 'Bbme Palomares',
@@ -1722,7 +1723,7 @@ const PLACES = [
   tip: 'La subasta es a las 17:00 los días laborables. Llega con tiempo y compra después en las pescaderías de al lado.',
   cat: 'fish',
   lat: 37.1810,
-  lng: -1.8240,
+  lng: -1.8225,
   featured: true
 }, {
   id: 'mercado-vera',
@@ -1863,8 +1864,8 @@ const PLACES = [
   name: 'Farmacia (junto Consum)',
   cat: 'pharmacy',
   url: 'https://goo.gl/maps/bGMV1sjwUqrRTNzk6',
-  lat: 37.2210,
-  lng: -1.8085
+  lat: 37.2197,
+  lng: -1.8083
 }, {
   id: 'farmacia-2',
   name: 'Farmacia Vera Playa',
@@ -1905,8 +1906,8 @@ const PLACES = [
   desc: 'Consultorio en Mojácar Playa. Atención primaria en horario diurno.',
   cat: 'health',
   url: 'https://www.google.com/maps/search/?api=1&query=Centro+de+Salud+Mojacar+Playa',
-  lat: 37.1380,
-  lng: -1.8550
+  lat: 37.1340,
+  lng: -1.8510
 }, {
   id: 'hospital-huercal',
   name: 'Hospital La Inmaculada (Huércal-Overa)',
@@ -1940,8 +1941,8 @@ const PLACES = [
   desc: 'Clínica veterinaria en Vera Playa con horario regular de lunes a sábado.',
   cat: 'vet',
   url: 'https://www.vetcareveraplaza.com/',
-  lat: 37.2270,
-  lng: -1.7970
+  lat: 37.2197,
+  lng: -1.8083
 }, {
   id: 'vet-mojacar',
   name: 'Clínica Veterinaria Costa Índalo (Mojácar)',
@@ -5118,33 +5119,228 @@ const GUIDE_BY_APT = {
   }
 };
 
+// Hex colors for Leaflet markers (CSS vars don't resolve in SVG/canvas context)
+const GUIDE_MAP_COLORS = {
+  home: {
+    fill: '#2A0F2E',
+    border: '#3AAABB'
+  },
+  restaurant: {
+    fill: '#B86A3C',
+    border: '#8A4A24'
+  },
+  michelin: {
+    fill: '#D4A84A',
+    border: '#7A5E1A'
+  },
+  celiac: {
+    fill: '#D08B5A',
+    border: '#B86A3C'
+  },
+  bar: {
+    fill: '#D4A84A',
+    border: '#7A5E1A'
+  },
+  beach: {
+    fill: '#3AAABB',
+    border: '#2A8E9E'
+  },
+  'beach-dog': {
+    fill: '#6B7A3A',
+    border: '#4A5628'
+  },
+  'beach-nude': {
+    fill: '#9B7FDB',
+    border: '#7060A8'
+  },
+  'beach-srvc': {
+    fill: '#4ABBD4',
+    border: '#2A8E9E'
+  },
+  'beach-hard': {
+    fill: '#A070D0',
+    border: '#7B50B0'
+  },
+  super: {
+    fill: '#8B9A52',
+    border: '#4A5628'
+  },
+  fish: {
+    fill: '#176E80',
+    border: '#0A4A55'
+  },
+  pharmacy: {
+    fill: '#C49A3A',
+    border: '#8A6A1A'
+  },
+  health: {
+    fill: '#B8246E',
+    border: '#8A1A50'
+  },
+  vet: {
+    fill: '#6B7A3A',
+    border: '#4A5628'
+  },
+  physio: {
+    fill: '#A070D0',
+    border: '#7B50B0'
+  },
+  'pet-board': {
+    fill: '#D08B5A',
+    border: '#B86A3C'
+  },
+  gem: {
+    fill: '#3AAABB',
+    border: '#2A8E9E'
+  },
+  water: {
+    fill: '#4ABBD4',
+    border: '#2A8E9E'
+  },
+  adventure: {
+    fill: '#B8246E',
+    border: '#8A1A50'
+  },
+  trek: {
+    fill: '#8B9A52',
+    border: '#4A5628'
+  },
+  leisure: {
+    fill: '#E8C476',
+    border: '#C49A3A'
+  },
+  bodega: {
+    fill: '#3D1A35',
+    border: '#2A0F2E'
+  },
+  town: {
+    fill: '#8A4A24',
+    border: '#6A2A04'
+  },
+  bookshop: {
+    fill: '#8B7A6A',
+    border: '#6B5A4A'
+  },
+  abasto: {
+    fill: '#8A4A24',
+    border: '#6A2A04'
+  },
+  market: {
+    fill: '#7A5E1A',
+    border: '#5A3E0A'
+  },
+  fuel: {
+    fill: '#4E2446',
+    border: '#2A0F2E'
+  },
+  'ev-charge': {
+    fill: '#1A6060',
+    border: '#0A4040'
+  },
+  coworking: {
+    fill: '#8A4A24',
+    border: '#6A2A04'
+  },
+  laundry: {
+    fill: '#D08B5A',
+    border: '#B86A3C'
+  },
+  atm: {
+    fill: '#7A5E1A',
+    border: '#5A3E0A'
+  }
+};
+function buildGuidePopup(p, col, ci, section, lang) {
+  if (p.cat === 'home') {
+    return `<div class="hgp"><div class="hgp-home">${ci.icon || ''} ${p.name}</div></div>`;
+  }
+  const catLabel = ci[lang] || ci.es || '';
+  const sLink = section ? `#ag-${section}` : '#ag-lugares';
+  const sLabel = lang === 'es' ? 'Ver en la guía' : 'See in guide';
+  const sd = p.desc ? p.desc.length > 90 ? p.desc.slice(0, 90) + '…' : p.desc : '';
+  return `<div class="hgp">` + `<div class="hgp-tag" style="background:${col.fill}">${ci.icon || ''} ${catLabel}</div>` + `<strong class="hgp-name">${p.name}</strong>` + (sd ? `<span class="hgp-desc">${sd}</span>` : '') + `<a href="${sLink}" class="hgp-link" style="color:${col.fill}">${sLabel} →</a>` + `</div>`;
+}
+
 // ================================================================
-// GuideMap, mapa de Vera Playa (Google Maps embed)
-// Antes era un Leaflet con coordenadas hardcoded para cada lugar.
-// Reemplazado por iframe genérico de Google + cada lugar abre su
-// propio Google Maps al pulsar "Cómo llegar" en la lista de abajo.
-// Cero coordenadas que mantener.
+// GuideMap — mapa Leaflet interactivo con todos los lugares de la guía.
+// Leaflet 1.9.4 + OpenStreetMap. Sin API key, carga dinámica.
 // ================================================================
 const GuideMap = ({
   lang,
   apt
 }) => {
-  // Si tenemos el apt actual, centramos el embed en las coords concretas
-  // de ese Hestía. Si no, generic Vera Playa.
-  const home = apt && PLACES.find(p => p.id === `hestia-${apt.slug}`);
-  const src = home ? `https://maps.google.com/maps?q=${home.lat},${home.lng}&z=15&output=embed` : 'https://maps.google.com/maps?q=Vera+Playa+Almer%C3%ADa&z=14&output=embed';
+  const mapRef = React.useRef(null);
+  const mapInst = React.useRef(null);
+  const [leafletOk, setLeafletOk] = React.useState(!!window.L);
+  const aptSlug = apt ? apt.slug : null;
+  React.useEffect(() => {
+    if (window.L) {
+      setLeafletOk(true);
+      return;
+    }
+    const lnk = document.createElement('link');
+    lnk.rel = 'stylesheet';
+    lnk.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(lnk);
+    const sc = document.createElement('script');
+    sc.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    sc.onload = () => setLeafletOk(true);
+    document.head.appendChild(sc);
+  }, []);
+  React.useEffect(() => {
+    if (!leafletOk || !mapRef.current) return;
+    if (mapInst.current) {
+      mapInst.current.remove();
+      mapInst.current = null;
+    }
+    const catLookup = Object.fromEntries(CATEGORIES.map(c => [c.id, c]));
+    const home = PLACES.find(p => p.id === `hestia-${aptSlug}`);
+    const center = home ? [home.lat, home.lng] : [37.228, -1.806];
+    const zoom = home ? 12 : 11;
+    const map = window.L.map(mapRef.current, {
+      scrollWheelZoom: false
+    }).setView(center, zoom);
+    mapInst.current = map;
+    window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 19
+    }).addTo(map);
+    PLACES.forEach(p => {
+      if (!p.lat || !p.lng) return;
+      const isHome = p.cat === 'home';
+      const col = GUIDE_MAP_COLORS[p.cat] || {
+        fill: '#3AAABB',
+        border: '#2A8E9E'
+      };
+      const ci = catLookup[p.cat] || {};
+      const section = CAT_TO_SECTION[p.cat];
+      window.L.circleMarker([p.lat, p.lng], {
+        radius: isHome ? 10 : p.featured ? 8 : 6,
+        fillColor: col.fill,
+        color: col.border,
+        weight: isHome ? 2.5 : 1.5,
+        opacity: 1,
+        fillOpacity: isHome ? 1 : p.featured ? 0.9 : 0.75
+      }).bindPopup(buildGuidePopup(p, col, ci, section, lang), {
+        maxWidth: 220
+      }).addTo(map);
+    });
+    return () => {
+      if (mapInst.current) {
+        mapInst.current.remove();
+        mapInst.current = null;
+      }
+    };
+  }, [leafletOk, lang, aptSlug]);
+  const withCoords = PLACES.filter(p => p.lat && p.lng).length;
   return /*#__PURE__*/React.createElement("div", {
     className: "ag-map-block no-print"
-  }, /*#__PURE__*/React.createElement("iframe", {
-    className: "ag-map",
-    src: src,
-    loading: "lazy",
-    referrerPolicy: "no-referrer-when-downgrade",
-    title: home ? `${home.name}, mapa` : lang === 'es' ? 'Mapa de Vera Playa' : 'Vera Playa map',
-    allowFullScreen: true
+  }, /*#__PURE__*/React.createElement("div", {
+    ref: mapRef,
+    className: "ag-map ag-map-leaflet"
   }), /*#__PURE__*/React.createElement("div", {
     className: "ag-map-note"
-  }, lang === 'es' ? home ? `Mapa centrado en ${home.name}.` : 'Mapa general de Vera Playa. Cada recomendación de abajo abre Google Maps con la búsqueda directa.' : home ? `Map centred on ${home.name}.` : 'Overview of Vera Playa. Each recommendation below opens Google Maps with a direct search.'));
+  }, lang === 'es' ? `Mapa interactivo con ${withCoords} lugares de la guía. Toca cualquier pin para ver el detalle y navegar a esa sección.` : `Interactive map with ${withCoords} guide places. Tap any pin for details and a direct link to its section.`));
 };
 
 // ================================================================

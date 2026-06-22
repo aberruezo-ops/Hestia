@@ -473,27 +473,8 @@
       "end": "2026-06-28",
       "nights": 7,
       "type": "fixed",
-      "value": 100,
-      "minNights": 6,
-      "lastMinute": true
-    },
-    "vt|2026-06-28": {
-      "apt": "vt",
-      "start": "2026-06-28",
-      "end": "2026-07-05",
-      "nights": 7,
-      "type": "fixed",
-      "value": 130,
-      "minNights": 6,
-      "lastMinute": true
-    },
-    "vt|2026-07-05": {
-      "apt": "vt",
-      "start": "2026-07-05",
-      "end": "2026-07-12",
-      "nights": 7,
-      "type": "fixed",
-      "value": 160,
+      "value": 90,
+      "minNights": 5,
       "lastMinute": true
     },
     "vm|2026-05-31": {
@@ -591,6 +572,24 @@
       "value": 20,
       "lastMinute": true,
       "auto": true
+    },
+    "vt|2026-06-28": {
+      "apt": "vt",
+      "start": "2026-06-28",
+      "end": "2026-07-01",
+      "nights": 3,
+      "type": "discount",
+      "value": 20,
+      "lastMinute": true
+    },
+    "vt|2026-07-10": {
+      "apt": "vt",
+      "start": "2026-07-10",
+      "end": "2026-07-25",
+      "nights": 15,
+      "type": "discount",
+      "value": 20,
+      "lastMinute": true
     }
   },
   "gapSplits": {
@@ -616,9 +615,9 @@
     "extraGuestPerMonth": 60,
     "petPerMonth": 50,
     "aptSupplement": {
-      "vm": 40,
-      "vt": 40,
-      "vs": 0
+      "vm": 50,
+      "vt": 35,
+      "vs": 30
     },
     "easterRanges": [
       [
@@ -633,11 +632,6 @@
   },
   "guestPins": {
     "vm": [
-      {
-        "h": "94f1f6f1c7c71ec9eac108f08306716fe56488849dcc3cf703b8b488bc9de651",
-        "until": "2026-06-20",
-        "ref": "2026-06-13"
-      },
       {
         "h": "7b801663bdd66e426dde0e0f8c60059f02bd9fefb85d3a79681e76192e037d22",
         "until": "2026-06-27",
@@ -691,11 +685,6 @@
     ],
     "vt": [
       {
-        "h": "03252a69824cc0190cc1b1e656f9e6c16fa256b88251dfffa54d1c29e20ce65a",
-        "until": "2026-06-13",
-        "ref": "2026-06-06"
-      },
-      {
         "h": "cbdb990e56c2e1e17f2246432b09646b61fb943b1a8e60791afe41238b9c70d1",
         "until": "2026-08-25",
         "ref": "2026-08-18"
@@ -714,6 +703,16 @@
         "h": "ab91166e9eab4386ab797edb5ffdf93a3aafb8d5ee4df84581143df8f83a85d7",
         "until": "2026-09-13",
         "ref": "2026-09-05"
+      },
+      {
+        "h": "c24e56003d295295678d54e942aab32468f3a2fcfaf631f3d33e0c4dc091f757",
+        "until": "2026-07-10",
+        "ref": "2026-07-01"
+      },
+      {
+        "h": "6a25a5092287fe41b83a0c0543178deff10dae8eb68de8b0cd362b056d88a7c9",
+        "until": "2026-08-31",
+        "ref": "2026-08-25"
       }
     ],
     "vs": [
@@ -723,14 +722,9 @@
         "ref": "2026-05-01"
       },
       {
-        "h": "64e725062524f376cde2a82252a7ccf14f6915e4f5ff4fc9870d7ec1ee9d6574",
+        "h": "f7293f66da950001550e4a992af65a20ecf008d03bb48773f7233df7631d970a",
         "until": "2026-08-08",
         "ref": "2026-08-01"
-      },
-      {
-        "h": "9130ac74d5563e5a24f1a2658a42f6652f90b68ab601219df3045bba7e70b939",
-        "until": "2026-08-23",
-        "ref": "2026-08-16"
       },
       {
         "h": "6fc8ddc7da8b394f43986b79e0ecac780e28fb9e8c02ae512b1d713f74ddeb63",
@@ -741,6 +735,11 @@
         "h": "29fcb49f5f998cfc90c2beacdbc54d7589977e8def1660bddc0678d86dd418df",
         "until": "2026-08-31",
         "ref": "2026-08-24"
+      },
+      {
+        "h": "d9b8018be35925a61c1db540713e9a71f812f8c092d5f614b76e8c02b95d4f0d",
+        "until": "2026-08-16",
+        "ref": "2026-08-08"
       }
     ]
   }
