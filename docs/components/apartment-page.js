@@ -416,7 +416,7 @@ const PhotoPlaceholder = ({
   className: "ph-num"
 }, "0", index + 1)), caption && /*#__PURE__*/React.createElement("div", {
   className: "ph-caption"
-}, "– ", caption));
+}, "\u2013 ", caption));
 
 // --- Hero de la página de Hestía ---
 const AptPageHero = ({
@@ -461,13 +461,13 @@ const AptPageHero = ({
     className: "apt-page-eyebrow"
   }, /*#__PURE__*/React.createElement("span", null, apt.num), /*#__PURE__*/React.createElement("span", {
     className: "sep"
-  }, "·"), /*#__PURE__*/React.createElement("span", null, apt.license)), /*#__PURE__*/React.createElement("h1", {
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", null, apt.license)), /*#__PURE__*/React.createElement("h1", {
     className: "apt-page-name"
   }, /*#__PURE__*/React.createElement("span", {
     className: "small-label"
-  }, "HESTÍA"), apt.name_short), /*#__PURE__*/React.createElement("p", {
+  }, "HEST\xCDA"), apt.name_short), /*#__PURE__*/React.createElement("p", {
     className: "apt-page-concept"
-  }, "« ", d.concept, " »"), minPrice && /*#__PURE__*/React.createElement("p", {
+  }, "\xAB ", d.concept, " \xBB"), minPrice && /*#__PURE__*/React.createElement("p", {
     className: "apt-page-price"
   }, lang === 'es' ? `desde ${minPrice}€` : `from ${minPrice}€`, /*#__PURE__*/React.createElement("span", {
     className: "app-per"
@@ -480,7 +480,7 @@ const AptPageHero = ({
     className: "btn btn-primary apt-page-reserve-btn"
   }, lang === 'es' ? 'Reservar' : 'Book now', " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "→")), /*#__PURE__*/React.createElement("a", {
+  }, "\u2192")), /*#__PURE__*/React.createElement("a", {
     href: "#apt-avail",
     className: "btn btn-ghost-light"
   }, lang === 'es' ? 'Ver disponibilidad' : 'Check availability')), /*#__PURE__*/React.createElement("p", {
@@ -729,21 +729,21 @@ const GalleryCarousel = ({
     className: "gc-counter"
   }, cur + 1, " / ", n), /*#__PURE__*/React.createElement("div", {
     className: "gc-zoom-hint"
-  }, "⤢")), /*#__PURE__*/React.createElement("button", {
+  }, "\u2922")), /*#__PURE__*/React.createElement("button", {
     className: "gc-prev",
     onClick: e => {
       e.stopPropagation();
       go((cur - 1 + n) % n);
     },
     "aria-label": lang === 'es' ? 'Anterior' : 'Previous'
-  }, "‹"), /*#__PURE__*/React.createElement("button", {
+  }, "\u2039"), /*#__PURE__*/React.createElement("button", {
     className: "gc-next",
     onClick: e => {
       e.stopPropagation();
       go((cur + 1) % n);
     },
     "aria-label": lang === 'es' ? 'Siguiente' : 'Next'
-  }, "›")), /*#__PURE__*/React.createElement("div", {
+  }, "\u203A")), /*#__PURE__*/React.createElement("div", {
     className: "gc-thumbs",
     ref: thumbsRef
   }, imgs.map((src, i) => /*#__PURE__*/React.createElement("button", {
@@ -771,20 +771,20 @@ const GalleryCarousel = ({
     onClick: closeLightbox,
     role: "dialog",
     "aria-modal": "true",
-    "aria-label": "Galería de fotos"
+    "aria-label": "Galer\xEDa de fotos"
   }, /*#__PURE__*/React.createElement("button", {
     ref: lbCloseRef,
     className: "gc-lb-close",
     onClick: closeLightbox,
     "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
-  }, "✕"), /*#__PURE__*/React.createElement("button", {
+  }, "\u2715"), /*#__PURE__*/React.createElement("button", {
     className: "gc-lb-prev",
     onClick: e => {
       e.stopPropagation();
       setCur(i => (i - 1 + n) % n);
     },
     "aria-label": lang === 'es' ? 'Anterior' : 'Previous'
-  }, "‹"), /*#__PURE__*/React.createElement("picture", {
+  }, "\u2039"), /*#__PURE__*/React.createElement("picture", {
     className: "gc-lb-pic"
   }, /*#__PURE__*/React.createElement("source", {
     srcSet: imgs[cur].replace(/\.(jpg|jpeg|png)$/i, '.webp'),
@@ -803,7 +803,7 @@ const GalleryCarousel = ({
       setCur(i => (i + 1) % n);
     },
     "aria-label": lang === 'es' ? 'Siguiente' : 'Next'
-  }, "›"), /*#__PURE__*/React.createElement("div", {
+  }, "\u203A"), /*#__PURE__*/React.createElement("div", {
     className: "gc-lb-caption"
   }, captions[cur]), /*#__PURE__*/React.createElement("div", {
     className: "gc-lb-counter"
@@ -854,7 +854,7 @@ const AptVideoDesc = ({
     className: "btn btn-primary"
   }, lang === 'es' ? 'Reservar' : 'Book', " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "→")), /*#__PURE__*/React.createElement("a", {
+  }, "\u2192")), /*#__PURE__*/React.createElement("a", {
     href: guideHref,
     className: "btn btn-ghost"
   }, lang === 'es' ? 'Guia del apartamento' : 'Apartment guide')))));
@@ -929,11 +929,11 @@ const AptPageOthers = ({
       className: "apt-other-num"
     }, o.num), /*#__PURE__*/React.createElement("div", {
       className: "apt-other-name"
-    }, /*#__PURE__*/React.createElement("span", null, "HESTÍA"), /*#__PURE__*/React.createElement("strong", null, o.name_short)), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("span", null, "HEST\xCDA"), /*#__PURE__*/React.createElement("strong", null, o.name_short)), /*#__PURE__*/React.createElement("div", {
       className: "apt-other-concept"
-    }, "« ", d.concept, " »"), /*#__PURE__*/React.createElement("span", {
+    }, "\xAB ", d.concept, " \xBB"), /*#__PURE__*/React.createElement("span", {
       className: "apt-other-cta"
-    }, lang === 'es' ? 'Ver Hestía' : 'See Hestía', " →")));
+    }, lang === 'es' ? 'Ver Hestía' : 'See Hestía', " \u2192")));
   })));
 };
 
@@ -1092,7 +1092,7 @@ const AptGuideDownload = ({
   }, /*#__PURE__*/React.createElement("span", null, t.submit), /*#__PURE__*/React.createElement("span", {
     className: "apt-guide-arrow",
     "aria-hidden": "true"
-  }, "↓"))), /*#__PURE__*/React.createElement("p", {
+  }, "\u2193"))), /*#__PURE__*/React.createElement("p", {
     id: `guide-msg-${apt.id}`,
     className: "apt-guide-msg",
     role: "status"
@@ -1235,7 +1235,7 @@ const AptPriceTeaser = ({
     className: "apt-pt-season"
   }, lang === 'es' ? s.es : s.en), /*#__PURE__*/React.createElement("span", {
     className: "apt-pt-price"
-  }, lang === 'es' ? 'desde ' : 'from ', /*#__PURE__*/React.createElement("strong", null, s.price, " €"), /*#__PURE__*/React.createElement("span", {
+  }, lang === 'es' ? 'desde ' : 'from ', /*#__PURE__*/React.createElement("strong", null, s.price, " \u20AC"), /*#__PURE__*/React.createElement("span", {
     className: "apt-pt-per"
   }, lang === 'es' ? '/noche' : '/night')))), (() => {
     const nightlyMonthly = base * 30;
@@ -1254,15 +1254,15 @@ const AptPriceTeaser = ({
       className: "apt-pt-season"
     }, lang === 'es' ? 'Estancia larga · +29 noches' : 'Long stay · 29+ nights', /*#__PURE__*/React.createElement("span", {
       className: "apt-pt-ls-tag"
-    }, "Sep–Jun")), /*#__PURE__*/React.createElement("span", {
+    }, "Sep\u2013Jun")), /*#__PURE__*/React.createElement("span", {
       className: "apt-pt-ls-price"
     }, /*#__PURE__*/React.createElement("span", {
       className: "apt-pt-ls-reg"
-    }, "~", nightlyMonthly.toLocaleString('es-ES'), " €/mes"), /*#__PURE__*/React.createElement("span", {
+    }, "~", nightlyMonthly.toLocaleString('es-ES'), " \u20AC/mes"), /*#__PURE__*/React.createElement("span", {
       className: "apt-pt-ls-rate"
-    }, lang === 'es' ? 'desde ' : 'from ', /*#__PURE__*/React.createElement("strong", null, lsRate.toLocaleString(lang === 'es' ? 'es-ES' : 'en-US'), " €/mes"), /*#__PURE__*/React.createElement("span", {
+    }, lang === 'es' ? 'desde ' : 'from ', /*#__PURE__*/React.createElement("strong", null, lsRate.toLocaleString(lang === 'es' ? 'es-ES' : 'en-US'), " \u20AC/mes"), /*#__PURE__*/React.createElement("span", {
       className: "apt-pt-ls-save"
-    }, "−", savings, "%"))));
+    }, "\u2212", savings, "%"))));
   })()), /*#__PURE__*/React.createElement("a", {
     href: waHref,
     target: "_blank",
@@ -1278,7 +1278,7 @@ const AptPriceTeaser = ({
     d: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
   })), lang === 'es' ? 'Consúltanos precio para tus fechas' : 'Ask us for a price for your dates', /*#__PURE__*/React.createElement("span", {
     className: "apt-pt-wa-arrow"
-  }, " →"))));
+  }, " \u2192"))));
 };
 
 // --- Sticky booking bar ---
@@ -1338,11 +1338,11 @@ const AptStickyBar = ({
     "aria-label": lang === 'es' ? 'Cerrar barra de reserva' : 'Close booking bar',
     title: lang === 'es' ? 'Cerrar' : 'Close',
     onClick: close
-  }, "×"), /*#__PURE__*/React.createElement("div", {
+  }, "\xD7"), /*#__PURE__*/React.createElement("div", {
     className: "asb-info"
   }, /*#__PURE__*/React.createElement("span", {
     className: "asb-name"
-  }, "HESTÍA ", /*#__PURE__*/React.createElement("strong", null, apt.name_short)), minP && /*#__PURE__*/React.createElement("span", {
+  }, "HEST\xCDA ", /*#__PURE__*/React.createElement("strong", null, apt.name_short)), minP && /*#__PURE__*/React.createElement("span", {
     className: "asb-price"
   }, lang === 'es' ? `desde ${minP}€/noche` : `from ${minP}€/night`, /*#__PURE__*/React.createElement("span", {
     className: "asb-match",
@@ -1352,7 +1352,7 @@ const AptStickyBar = ({
     className: "btn btn-primary asb-cta"
   }, lang === 'es' ? 'Reservar' : 'Book', " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "→")), /*#__PURE__*/React.createElement("button", {
+  }, "\u2192")), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "asb-perks",
     onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks')),
@@ -1360,7 +1360,7 @@ const AptStickyBar = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "asb-perks-icon",
     "aria-hidden": "true"
-  }, "✦"), /*#__PURE__*/React.createElement("span", {
+  }, "\u2726"), /*#__PURE__*/React.createElement("span", {
     className: "asb-perks-text"
   }, lang === 'es' ? 'Ver ventajas' : 'See perks')));
 };

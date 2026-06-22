@@ -173,7 +173,7 @@ const Hero = ({
     className: "hero-content"
   }, /*#__PURE__*/React.createElement("div", {
     className: "wordmark hero-wordmark"
-  }, "HESTÍA"), /*#__PURE__*/React.createElement("div", {
+  }, "HEST\xCDA"), /*#__PURE__*/React.createElement("div", {
     className: "your-home hero-yourhome"
   }, "your home!"), /*#__PURE__*/React.createElement("h1", {
     className: "hero-title"
@@ -188,28 +188,28 @@ const Hero = ({
     className: "btn btn-primary"
   }, t.hero_cta_1, " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "→")), /*#__PURE__*/React.createElement("a", {
+  }, "\u2192")), /*#__PURE__*/React.createElement("a", {
     href: "#buscar",
     className: "btn btn-ghost-light"
   }, t.hero_cta_avail, " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "→"))), /*#__PURE__*/React.createElement("div", {
+  }, "\u2192"))), /*#__PURE__*/React.createElement("div", {
     className: "hero-proof"
   }, /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-item"
-  }, "★ 9.8 ", /*#__PURE__*/React.createElement("span", {
+  }, "\u2605 9.8 ", /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-name"
   }, "Mar")), /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-dot"
   }), /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-item"
-  }, "★ 10 ", /*#__PURE__*/React.createElement("span", {
+  }, "\u2605 10 ", /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-name"
   }, "Thalassa")), /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-dot"
   }), /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-item"
-  }, "★ 9.9 ", /*#__PURE__*/React.createElement("span", {
+  }, "\u2605 9.9 ", /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-name"
   }, "Salinas")), /*#__PURE__*/React.createElement("span", {
     className: "hero-proof-platform"
@@ -229,30 +229,30 @@ const Hero = ({
       className: "hpl-from"
     }, "desde "), /*#__PURE__*/React.createElement("strong", {
       className: "hpl-price"
-    }, from, "€"), /*#__PURE__*/React.createElement("span", {
+    }, from, "\u20AC"), /*#__PURE__*/React.createElement("span", {
       className: "hpl-per"
-    }, "/noche · precio directo garantizado")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+    }, "/noche \xB7 precio directo garantizado")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
       className: "hpl-from"
     }, "from "), /*#__PURE__*/React.createElement("strong", {
       className: "hpl-price"
-    }, from, "€"), /*#__PURE__*/React.createElement("span", {
+    }, from, "\u20AC"), /*#__PURE__*/React.createElement("span", {
       className: "hpl-per"
-    }, "/night · guaranteed direct price")));
+    }, "/night \xB7 guaranteed direct price")));
   })()), /*#__PURE__*/React.createElement("div", {
     className: "hero-meta"
   }, /*#__PURE__*/React.createElement("span", {
     className: "hero-meta-coords"
-  }, "37°11′N · 1°50′W"), /*#__PURE__*/React.createElement("div", {
+  }, "37\xB011\u2032N \xB7 1\xB050\u2032W"), /*#__PURE__*/React.createElement("div", {
     className: "hero-meta-facts"
   }, /*#__PURE__*/React.createElement("span", null, "Alt. 5 m"), /*#__PURE__*/React.createElement("span", {
     className: "hm-dot",
     "aria-hidden": "true"
-  }, "·"), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? '320+ días de sol' : '320+ sunny days'), /*#__PURE__*/React.createElement("span", {
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? '320+ días de sol' : '320+ sunny days'), /*#__PURE__*/React.createElement("span", {
     className: "hm-dot",
     "aria-hidden": "true"
-  }, "·"), /*#__PURE__*/React.createElement("span", null, "Mar Mediterráneo")), /*#__PURE__*/React.createElement("span", {
+  }, "\xB7"), /*#__PURE__*/React.createElement("span", null, "Mar Mediterr\xE1neo")), /*#__PURE__*/React.createElement("span", {
     className: "hide-mobile hero-meta-province"
-  }, "Almería · Andalucía")));
+  }, "Almer\xEDa \xB7 Andaluc\xEDa")));
 };
 
 // --- BRIDGE (transición día/noche) ---
@@ -408,14 +408,14 @@ const HomeBookingModal = ({
     className: "hbm-close",
     onClick: onClose,
     "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
-  }, "✕"), /*#__PURE__*/React.createElement("div", {
+  }, "\u2715"), /*#__PURE__*/React.createElement("div", {
     className: "hbm-head"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hbm-apt-num"
   }, apt.num), /*#__PURE__*/React.createElement("div", {
     id: "hbm-apt-title",
     className: "hbm-apt-name"
-  }, "HESTÍA ", /*#__PURE__*/React.createElement("strong", null, apt.name.replace('Hestía ', ''))), /*#__PURE__*/React.createElement("p", {
+  }, "HEST\xCDA ", /*#__PURE__*/React.createElement("strong", null, apt.name.replace('Hestía ', ''))), /*#__PURE__*/React.createElement("p", {
     className: "hbm-sub"
   }, lang === 'es' ? 'Solicitud de información · sin compromiso' : 'No-commitment enquiry')), /*#__PURE__*/React.createElement("div", {
     className: "hbm-form"
@@ -656,7 +656,7 @@ const Apartments = ({
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
     className: "apartments-intro",
     id: "apartamentos",
-    "data-screen-label": "03 Hestías"
+    "data-screen-label": "03 Hest\xEDas"
   }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
   }, t.apts_eyebrow), /*#__PURE__*/React.createElement("h2", null, t.apts_title), /*#__PURE__*/React.createElement("p", null, t.apts_sub)), /*#__PURE__*/React.createElement("div", {
@@ -704,9 +704,9 @@ const Apartments = ({
       className: "apt-name"
     }, /*#__PURE__*/React.createElement("span", {
       className: "small"
-    }, "HESTÍA"), /*#__PURE__*/React.createElement("br", null), a.name.replace('Hestía ', '')), /*#__PURE__*/React.createElement("div", {
+    }, "HEST\xCDA"), /*#__PURE__*/React.createElement("br", null), a.name.replace('Hestía ', '')), /*#__PURE__*/React.createElement("div", {
       className: "apt-tag"
-    }, "« ", t[a.concept], " »"), /*#__PURE__*/React.createElement("div", {
+    }, "\xAB ", t[a.concept], " \xBB"), /*#__PURE__*/React.createElement("div", {
       className: "apt-meta"
     }, a.meta.map((m, j) => /*#__PURE__*/React.createElement(React.Fragment, {
       key: j
@@ -718,7 +718,7 @@ const Apartments = ({
       className: "apb-label"
     }, lang === 'es' ? 'desde' : 'from'), /*#__PURE__*/React.createElement("span", {
       className: "apb-price"
-    }, minPrice.toLocaleString('es-ES'), "€"), /*#__PURE__*/React.createElement("span", {
+    }, minPrice.toLocaleString('es-ES'), "\u20AC"), /*#__PURE__*/React.createElement("span", {
       className: "apb-per"
     }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
       className: "apb-match"
@@ -738,7 +738,7 @@ const Apartments = ({
         className: "aah-dot"
       }), isNow ? lang === 'es' ? 'Disponible ahora' : 'Available now' : `${lang === 'es' ? 'Libre' : 'Free'} ${fmt(av.checkin)}`, av.checkout && av.nights ? /*#__PURE__*/React.createElement("span", {
         className: "aah-nights"
-      }, " · ", av.nights, " ", lang === 'es' ? 'noches' : 'nights') : /*#__PURE__*/React.createElement("span", {
+      }, " \xB7 ", av.nights, " ", lang === 'es' ? 'noches' : 'nights') : /*#__PURE__*/React.createElement("span", {
         className: "aah-nights"
       }, " ", lang === 'es' ? 'en adelante' : 'onwards'));
     })(), /*#__PURE__*/React.createElement("div", {
@@ -925,21 +925,21 @@ const Compare = ({
     className: "head vm"
   }, /*#__PURE__*/React.createElement("span", {
     className: "apt-tag"
-  }, "01 · Hestía"), /*#__PURE__*/React.createElement("span", null, "Mar"), /*#__PURE__*/React.createElement("span", {
+  }, "01 \xB7 Hest\xEDa"), /*#__PURE__*/React.createElement("span", null, "Mar"), /*#__PURE__*/React.createElement("span", {
     className: "apt-concept"
-  }, "« ", t.apt_01_concept, " »")), /*#__PURE__*/React.createElement("div", {
+  }, "\xAB ", t.apt_01_concept, " \xBB")), /*#__PURE__*/React.createElement("div", {
     className: "head vt"
   }, /*#__PURE__*/React.createElement("span", {
     className: "apt-tag"
-  }, "02 · Hestía"), /*#__PURE__*/React.createElement("span", null, "Thalassa"), /*#__PURE__*/React.createElement("span", {
+  }, "02 \xB7 Hest\xEDa"), /*#__PURE__*/React.createElement("span", null, "Thalassa"), /*#__PURE__*/React.createElement("span", {
     className: "apt-concept"
-  }, "« ", t.apt_02_concept, " »")), /*#__PURE__*/React.createElement("div", {
+  }, "\xAB ", t.apt_02_concept, " \xBB")), /*#__PURE__*/React.createElement("div", {
     className: "head vs"
   }, /*#__PURE__*/React.createElement("span", {
     className: "apt-tag"
-  }, "03 · Hestía"), /*#__PURE__*/React.createElement("span", null, "Salinas"), /*#__PURE__*/React.createElement("span", {
+  }, "03 \xB7 Hest\xEDa"), /*#__PURE__*/React.createElement("span", null, "Salinas"), /*#__PURE__*/React.createElement("span", {
     className: "apt-concept"
-  }, "« ", t.apt_03_concept, " »")), rows.map((r, i) => /*#__PURE__*/React.createElement(React.Fragment, {
+  }, "\xAB ", t.apt_03_concept, " \xBB")), rows.map((r, i) => /*#__PURE__*/React.createElement(React.Fragment, {
     key: i
   }, /*#__PURE__*/React.createElement("div", {
     className: "label"
@@ -973,11 +973,11 @@ const Compare = ({
     className: "cc-card-head"
   }, /*#__PURE__*/React.createElement("span", {
     className: "apt-tag"
-  }, a.num, " · Hestía"), /*#__PURE__*/React.createElement("span", {
+  }, a.num, " \xB7 Hest\xEDa"), /*#__PURE__*/React.createElement("span", {
     className: "cc-card-name"
   }, a.name), /*#__PURE__*/React.createElement("span", {
     className: "apt-concept"
-  }, "« ", t[a.aptKey], " »")), rows.map((row, i) => /*#__PURE__*/React.createElement("div", {
+  }, "\xAB ", t[a.aptKey], " \xBB")), rows.map((row, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
     className: "cc-row"
   }, /*#__PURE__*/React.createElement("span", {
@@ -1258,15 +1258,15 @@ const LastMinuteStrip = ({
       className: "lm-card-d1"
     }, fmtDate(slot.checkin)), /*#__PURE__*/React.createElement("span", {
       className: "lm-card-sep"
-    }, "→"), /*#__PURE__*/React.createElement("span", {
+    }, "\u2192"), /*#__PURE__*/React.createElement("span", {
       className: "lm-card-d2"
     }, fmtDate(slot.checkout))), /*#__PURE__*/React.createElement("span", {
       className: "lm-card-meta"
     }, slot.nights <= 21 ? slot.nights : `${slot.nights}+`, " ", lang === 'es' ? 'noches' : 'nights', price && /*#__PURE__*/React.createElement("span", {
       className: "lm-card-ppn"
-    }, " · desde ", price.perNight, "€/n")), price && slot.nights <= 14 && /*#__PURE__*/React.createElement("span", {
+    }, " \xB7 desde ", price.perNight, "\u20AC/n")), price && slot.nights <= 14 && /*#__PURE__*/React.createElement("span", {
       className: "lm-card-total"
-    }, "~", price.total.toLocaleString('es-ES'), "€"));
+    }, "~", price.total.toLocaleString('es-ES'), "\u20AC"));
   };
   const renderLongStayCard = key => {
     const ls = window.PRICES_V2?.longStayConfig;
@@ -1281,7 +1281,7 @@ const LastMinuteStrip = ({
       className: "lm-card-meta"
     }, lang === 'es' ? '29+ noches · descuento especial' : '29+ nights · special discount', /*#__PURE__*/React.createElement("span", {
       className: "lm-card-ppn"
-    }, " · desde ", minRate.toLocaleString('es-ES'), "€/mes")), /*#__PURE__*/React.createElement("span", {
+    }, " \xB7 desde ", minRate.toLocaleString('es-ES'), "\u20AC/mes")), /*#__PURE__*/React.createElement("span", {
       className: "lm-card-total lm-longstay-cta"
     }, lang === 'es' ? 'Ver condiciones →' : 'See conditions →'));
   };
@@ -1356,13 +1356,13 @@ const HomePriceStrip = ({
       }
     }, /*#__PURE__*/React.createElement("span", {
       className: "hps-name"
-    }, "HESTÍA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), /*#__PURE__*/React.createElement("span", {
+    }, "HEST\xCDA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), /*#__PURE__*/React.createElement("span", {
       className: "hps-price"
     }, /*#__PURE__*/React.createElement("span", {
       className: "hps-desde"
     }, lang === 'es' ? 'desde' : 'from'), /*#__PURE__*/React.createElement("span", {
       className: "hps-amount"
-    }, p, "€"), /*#__PURE__*/React.createElement("span", {
+    }, p, "\u20AC"), /*#__PURE__*/React.createElement("span", {
       className: "hps-per"
     }, "/noche")), p && /*#__PURE__*/React.createElement("span", {
       className: "hps-ota-compare"
@@ -1372,7 +1372,7 @@ const HomePriceStrip = ({
       className: "hps-ota-name"
     }, "Booking / Airbnb"), /*#__PURE__*/React.createElement("span", {
       className: "hps-ota-price"
-    }, "desde ~", pMin, "€"), /*#__PURE__*/React.createElement("span", {
+    }, "desde ~", pMin, "\u20AC"), /*#__PURE__*/React.createElement("span", {
       className: "hps-ota-pct"
     }, "+10% aprox."))), /*#__PURE__*/React.createElement("span", {
       className: "hps-cta"
@@ -1421,13 +1421,13 @@ const LongStayStrip = ({
     className: "lss-pill lss-pill-compare"
   }, /*#__PURE__*/React.createElement("span", {
     className: "lss-pill-reg"
-  }, "~", nightlyMonthly.toLocaleString('es-ES'), "€/mes"), /*#__PURE__*/React.createElement("span", {
+  }, "~", nightlyMonthly.toLocaleString('es-ES'), "\u20AC/mes"), /*#__PURE__*/React.createElement("span", {
     className: "lss-pill-arrow"
-  }, "→"), /*#__PURE__*/React.createElement("span", {
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "lss-pill-ls"
   }, es ? `desde ${lsRate.toLocaleString('es-ES')}€/mes` : `from €${lsRate.toLocaleString('en-US')}/mo`), /*#__PURE__*/React.createElement("span", {
     className: "lss-pill-save"
-  }, "−", savings, "%")), /*#__PURE__*/React.createElement("span", {
+  }, "\u2212", savings, "%")), /*#__PURE__*/React.createElement("span", {
     className: "lss-pill"
   }, "WiFi fibra"), /*#__PURE__*/React.createElement("span", {
     className: "lss-pill"

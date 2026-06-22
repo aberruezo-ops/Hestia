@@ -15873,6 +15873,19 @@ a.cta-wa-btn::before,
 .eo-consent-label a { color: inherit; text-decoration: underline; }
 .rf-privacy-note { font-size: 12px; color: var(--ber-dk); opacity: 0.65; margin-bottom: 12px; }
 .rf-privacy-note a { color: inherit; }
+.rf-contact-warn {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--vt-dk, #8A4A24);
+  background: color-mix(in srgb, var(--warn, #C8975A) 12%, #fff);
+  border: 1px solid color-mix(in srgb, var(--warn, #C8975A) 32%, transparent);
+  border-radius: 8px 0 8px 0;
+  padding: 8px 11px;
+  margin: 2px 0 4px;
+}
 .eo-actions { display: flex; justify-content: flex-end; }
 .eo-submit { min-width: 220px; justify-content: center; }
 .eo-error-msg {
@@ -23173,6 +23186,19 @@ img[src*="apt-vt-gallery-"] {
 .emp-help { font-size: 12px; color: var(--ink-soft); margin-top: 5px; text-align: right; }
 .emp-help-warn { color: var(--err, #B3261E); }
 .emp-err { font-size: 12.5px; color: var(--err, #B3261E); margin-top: 5px; }
+.emp-contact-warn {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--vt-dk, #8A4A24);
+  background: color-mix(in srgb, var(--warn, #C8975A) 12%, #fff);
+  border: 1px solid color-mix(in srgb, var(--warn, #C8975A) 32%, transparent);
+  border-radius: 8px 0 8px 0;
+  padding: 8px 11px;
+  margin: 4px 0 2px;
+}
 .emp-honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .emp-consent-field { margin-top: 4px; }
 .emp-consent-label {

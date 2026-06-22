@@ -616,7 +616,7 @@ const NoticiasPage = ({
     className: "noticias-edition-badge"
   }, lang === 'es' ? 'Edición · Junio 2026' : 'Edition · June 2026'), /*#__PURE__*/React.createElement("h1", {
     className: "noticias-hero-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Noticias & Blog", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "del territorio Hestía")) : /*#__PURE__*/React.createElement(React.Fragment, null, "News & Blog", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "from Hestía territory"))), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Noticias & Blog", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "del territorio Hest\xEDa")) : /*#__PURE__*/React.createElement(React.Fragment, null, "News & Blog", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "from Hest\xEDa territory"))), /*#__PURE__*/React.createElement("p", {
     className: "noticias-hero-sub"
   }, lang === 'es' ? 'Cada mes actualizamos esta página con lo mejor del territorio. Si quieres que cubramos algo — un evento, un rincón, un restaurante — escríbenos.' : "Every month we update this page with the best of the territory. If you'd like us to cover something — an event, a corner, a restaurant — write to us."), /*#__PURE__*/React.createElement("div", {
     className: "noticias-hero-ctas"
@@ -652,7 +652,7 @@ const NoticiasPage = ({
     className: "eyebrow noticias-terr-eyebrow"
   }, lang === 'es' ? 'Noticias del territorio' : 'Territory news'), /*#__PURE__*/React.createElement("h2", {
     className: "noticias-terr-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Qué pasa este mes", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "a tu alrededor")) : /*#__PURE__*/React.createElement(React.Fragment, null, "What's happening this month", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "around you")))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Qu\xE9 pasa este mes", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "a tu alrededor")) : /*#__PURE__*/React.createElement(React.Fragment, null, "What's happening this month", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "around you")))), /*#__PURE__*/React.createElement("div", {
     className: "noticias-terr-controls"
   }, /*#__PURE__*/React.createElement("div", {
     className: "noticias-view-toggle",
