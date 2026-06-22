@@ -60,7 +60,7 @@ const APT_CONTRACT_DATA = {
     heroPhoto: 'assets/apt-vt-4.jpg',
     direccion: 'Apto. 11, planta 5ª, escalera 13, en la urbanización Thalassa, en C/ Tomillo 2',
     plazaGaraje: '163',
-    acceso: 'La vivienda se encuentra en una <strong>tercera planta, sin ascensor desde el garaje</strong>. Además, para acceder a la piscina y a otras zonas comunes de la urbanización existen <strong>tramos de escaleras adicionales</strong>.',
+    acceso: 'La vivienda se encuentra en una <strong>tercera planta a contar desde el garaje, que está situado en una segunda planta, y no dispone de ascensor</strong>. Además, existen <strong>tramos de escaleras adicionales</strong> para acceder a diferentes lugares de la urbanización, como la piscina, el parque, las pistas de tenis, etc.',
     zonaObras: 'cercanas',
     bloqueAccesibilidad: false,
     bloqueSabanas: 'Un juego de sábanas para la cama doble (D1) y un juego para cada cama individual del dormitorio dos (D2).'
