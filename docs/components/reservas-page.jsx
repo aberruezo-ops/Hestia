@@ -1347,6 +1347,16 @@ const ReservasForm = ({ lang }) => {
                     onChange={e => setEmail(e.target.value)} required autoComplete="email"/>
                 </div>
               )}
+              <p className="rf-contact-warn">
+                <span aria-hidden="true">⚠️</span>{' '}
+                {channel === 'whatsapp'
+                  ? (lang === 'es'
+                      ? 'Revisa que el teléfono sea correcto: si está mal, no podremos contestarte.'
+                      : 'Double-check your phone number: if it is wrong, we will not be able to reply.')
+                  : (lang === 'es'
+                      ? 'Revisa que el correo sea correcto: si está mal, no podremos contestarte.'
+                      : 'Double-check your email: if it is wrong, we will not be able to reply.')}
+              </p>
               <div className="form-field full">
                 <label>{t.f_comments}</label>
                 <textarea placeholder={t.f_comments_ph} value={comments}

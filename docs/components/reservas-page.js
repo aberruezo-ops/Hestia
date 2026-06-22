@@ -1308,7 +1308,11 @@ const ReservasForm = ({
     onChange: e => setEmail(e.target.value),
     required: true,
     autoComplete: "email"
-  })), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "rf-contact-warn"
+  }, /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "\u26A0\uFE0F"), ' ', channel === 'whatsapp' ? lang === 'es' ? 'Revisa que el teléfono sea correcto: si está mal, no podremos contestarte.' : 'Double-check your phone number: if it is wrong, we will not be able to reply.' : lang === 'es' ? 'Revisa que el correo sea correcto: si está mal, no podremos contestarte.' : 'Double-check your email: if it is wrong, we will not be able to reply.'), /*#__PURE__*/React.createElement("div", {
     className: "form-field full"
   }, /*#__PURE__*/React.createElement("label", null, t.f_comments), /*#__PURE__*/React.createElement("textarea", {
     placeholder: t.f_comments_ph,
