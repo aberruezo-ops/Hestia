@@ -109,11 +109,11 @@ const EMP_COPY = {
     val_email: 'Email no válido',
     val_msg: 'Cuéntanos un poco más (mínimo 20 caracteres)',
     val_consent: 'Debes aceptar la política de privacidad para enviar tu solicitud.',
-    consent: /*#__PURE__*/React.createElement(React.Fragment, null, "He le\xEDdo y acepto la ", /*#__PURE__*/React.createElement("a", {
+    consent: /*#__PURE__*/React.createElement(React.Fragment, null, "He leído y acepto la ", /*#__PURE__*/React.createElement("a", {
       href: "privacidad.html",
       target: "_blank",
       rel: "noopener"
-    }, "pol\xEDtica de privacidad"), ". Entiendo que mis datos ser\xE1n usados para responder a mi solicitud y procesados por Web3Forms para su env\xEDo.")
+    }, "política de privacidad"), ". Entiendo que mis datos serán usados para responder a mi solicitud y procesados por Web3Forms para su envío.")
   },
   en: {
     eyebrow: 'Hestía for businesses & professionals',
@@ -322,7 +322,7 @@ const EmpresasForm = ({
     }, /*#__PURE__*/React.createElement("span", {
       className: "emp-success-icon",
       "aria-hidden": "true"
-    }, "\u2713"), /*#__PURE__*/React.createElement("h2", {
+    }, "✓"), /*#__PURE__*/React.createElement("h2", {
       className: "emp-success-title"
     }, t.success_title), /*#__PURE__*/React.createElement("p", {
       className: "emp-success-text"
@@ -473,7 +473,7 @@ const EmpresasForm = ({
     className: "emp-contact-warn"
   }, /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
-  }, "\u26A0\uFE0F"), ' ', channel === 'email' ? lang === 'es' ? 'Revisa que el correo sea correcto: si está mal, no podremos contestarte.' : 'Double-check your email: if it is wrong, we will not be able to reply.' : lang === 'es' ? 'Revisa que el teléfono sea correcto: si está mal, no podremos contestarte.' : 'Double-check your phone number: if it is wrong, we will not be able to reply.'), /*#__PURE__*/React.createElement("div", {
+  }, "⚠️"), ' ', channel === 'email' ? lang === 'es' ? 'Revisa que el correo sea correcto: si está mal, no podremos contestarte.' : 'Double-check your email: if it is wrong, we will not be able to reply.' : lang === 'es' ? 'Revisa que el teléfono sea correcto: si está mal, no podremos contestarte.' : 'Double-check your phone number: if it is wrong, we will not be able to reply.'), /*#__PURE__*/React.createElement("div", {
     className: "emp-row"
   }, /*#__PURE__*/React.createElement("div", {
     className: "emp-field"
@@ -570,7 +570,7 @@ const EmpresasForm = ({
     disabled: phase === 'sending'
   }, phase === 'sending' ? t.sending : t.submit, /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, " \u2192"))), phase === 'error' && /*#__PURE__*/React.createElement("p", {
+  }, " →"))), phase === 'error' && /*#__PURE__*/React.createElement("p", {
     className: "emp-error-msg"
   }, t.error_generic))));
 };
@@ -648,7 +648,7 @@ const EmpresasPageApp = () => {
     download: true
   }, /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
-  }, "\u2193"), " ", t.dlDossier))), /*#__PURE__*/React.createElement("div", {
+  }, "↓"), " ", t.dlDossier))), /*#__PURE__*/React.createElement("div", {
     className: "emp-trust",
     "aria-label": lang === 'es' ? 'Lo que nos diferencia' : 'What sets us apart'
   }, /*#__PURE__*/React.createElement("ul", {
@@ -660,7 +660,7 @@ const EmpresasPageApp = () => {
   }, /*#__PURE__*/React.createElement("span", {
     className: "emp-trust-check",
     "aria-hidden": "true"
-  }, "\u2713"), item)))), /*#__PURE__*/React.createElement("section", {
+  }, "✓"), item)))), /*#__PURE__*/React.createElement("section", {
     className: "emp-perks-sec"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
@@ -694,7 +694,7 @@ const EmpresasPageApp = () => {
   }, /*#__PURE__*/React.createElement("span", {
     className: "emp-service-check",
     "aria-hidden": "true"
-  }, "\u2713"), s))), /*#__PURE__*/React.createElement("p", {
+  }, "✓"), s))), /*#__PURE__*/React.createElement("p", {
     className: "emp-services-foot"
   }, t.servicesFoot))), /*#__PURE__*/React.createElement("section", {
     className: "emp-packages-sec"

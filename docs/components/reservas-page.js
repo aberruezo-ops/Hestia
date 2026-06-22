@@ -264,7 +264,7 @@ const PricePreview = ({
     className: "price-line"
   }, calc.isGapOffer ? /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Oferta · ${calc.nights} noches × ${calc.gapPerNight} €/n` : `Offer · ${calc.nights} nights × ${calc.gapPerNight} €/n`) : /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `${calc.nights} noches` : `${calc.nights} nights`), /*#__PURE__*/React.createElement("span", null, fmt(calc.baseTotal))), calc.stayD && /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-disc"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "\u2212", fmt(calc.stayDiscAmt))), calc.guestSuppAmt > 0 && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "−", fmt(calc.stayDiscAmt))), calc.guestSuppAmt > 0 && /*#__PURE__*/React.createElement("div", {
     className: "price-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `${calc.guests} huéspedes · +${calc.guestSuppPerNight} €/noche` : `${calc.guests} guests · +${calc.guestSuppPerNight} €/night`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.guestSuppAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
     className: "price-line"
@@ -294,7 +294,7 @@ const PricePreview = ({
     className: "price-line-saving"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ahorras' : 'You save'), /*#__PURE__*/React.createElement("span", {
     className: "prl-saving-val"
-  }, "\u2212", fmt(savings))))), /*#__PURE__*/React.createElement("p", {
+  }, "−", fmt(savings))))), /*#__PURE__*/React.createElement("p", {
     className: "price-note"
   }, lsCalc ? lang === 'es' ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.' : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.' : lang === 'es' ? '* Precio orientativo. ¿Lo encuentras más barato en una plataforma? No solo te lo igualamos: te lo mejoramos.' : '* Indicative price. Found it cheaper on a platform? We don\'t just match it, we beat it.'));
 };
@@ -345,7 +345,7 @@ const ReviewQuote = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "rf-quote-mark",
     "aria-hidden": "true"
-  }, "\u201C"), /*#__PURE__*/React.createElement("p", {
+  }, "“"), /*#__PURE__*/React.createElement("p", {
     className: `rf-quote-text${isLong && !expanded ? ' rf-quote-clamped' : ''}`
   }, r.text), isLong && /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -358,15 +358,15 @@ const ReviewQuote = ({
     className: "rf-quote-name"
   }, r.name.split(' ')[0]), /*#__PURE__*/React.createElement("span", {
     className: "rf-quote-sep"
-  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+  }, "·"), /*#__PURE__*/React.createElement("span", {
     className: "rf-quote-date"
   }, mo, "/", yr), aptLbl && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
     className: "rf-quote-sep"
-  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+  }, "·"), /*#__PURE__*/React.createElement("span", {
     className: "rf-quote-apt"
-  }, "Hest\xEDa ", aptLbl)), /*#__PURE__*/React.createElement("span", {
+  }, "Hestía ", aptLbl)), /*#__PURE__*/React.createElement("span", {
     className: "rf-quote-sep"
-  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+  }, "·"), /*#__PURE__*/React.createElement("span", {
     className: "rf-quote-source"
   }, lang === 'es' ? 'Reseña en' : 'Review on', " ", sourceLbl)));
 };
@@ -829,7 +829,7 @@ const ReservasForm = ({
   }, fmtResDate(checkin)), /*#__PURE__*/React.createElement("span", {
     className: "rf-summary-arrow",
     "aria-hidden": "true"
-  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+  }, "→"), /*#__PURE__*/React.createElement("span", {
     className: "rf-summary-date"
   }, fmtResDate(checkout))), /*#__PURE__*/React.createElement("div", {
     className: "rf-summary-pills"
@@ -839,7 +839,7 @@ const ReservasForm = ({
     className: "rf-summary-pill"
   }, guests, " ", guests === 1 ? lang === 'es' ? 'huésped' : 'guest' : lang === 'es' ? 'huéspedes' : 'guests'), pets === 'yes' && /*#__PURE__*/React.createElement("span", {
     className: "rf-summary-pill"
-  }, "\uD83D\uDC3E ", lang === 'es' ? 'mascota' : 'pet'), extrasCount > 0 && /*#__PURE__*/React.createElement("span", {
+  }, "🐾 ", lang === 'es' ? 'mascota' : 'pet'), extrasCount > 0 && /*#__PURE__*/React.createElement("span", {
     className: "rf-summary-pill"
   }, "+", extrasCount, " ", lang === 'es' ? 'extras' : 'extras'))) : null;
   const fmt = n => n.toLocaleString('es-ES') + ' €';
@@ -971,7 +971,7 @@ const ReservasForm = ({
     "aria-checked": pets === 'yes',
     className: `rf-chip rf-chip-wide${pets === 'yes' ? ' is-on' : ''}`,
     onClick: () => setPets('yes')
-  }, "\uD83D\uDC3E ", t.f_pets_yes))), /*#__PURE__*/React.createElement("div", {
+  }, "🐾 ", t.f_pets_yes))), /*#__PURE__*/React.createElement("div", {
     className: "form-field full"
   }, /*#__PURE__*/React.createElement("label", null, t.f_baby), /*#__PURE__*/React.createElement("div", {
     className: "rf-chip-row",
@@ -989,7 +989,7 @@ const ReservasForm = ({
     "aria-checked": baby === 'yes',
     className: `rf-chip rf-chip-wide${baby === 'yes' ? ' is-on' : ''}`,
     onClick: () => setBaby('yes')
-  }, "\uD83D\uDC76 ", t.f_baby_yes))), checkin && checkout && nightsSelected > 0 && nightsSelected < minNights && /*#__PURE__*/React.createElement("div", {
+  }, "👶 ", t.f_baby_yes))), checkin && checkout && nightsSelected > 0 && nightsSelected < minNights && /*#__PURE__*/React.createElement("div", {
     className: "rf-min-nights-warn",
     role: "alert"
   }, /*#__PURE__*/React.createElement("strong", null, lang === 'es' ? '⚠ Estancia mínima' : '⚠ Minimum stay'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `No aceptamos reservas de ${nightsSelected} ${nightsSelected === 1 ? 'noche' : 'noches'}. La estancia mínima en cualquier Hestía es de ${minNights} noches. Ajusta la fecha de salida para continuar.` : `We don't accept ${nightsSelected}-night stays. Minimum stay at any Hestía is ${minNights} nights. Adjust the check-out date to continue.`)), /*#__PURE__*/React.createElement("div", {
@@ -1014,7 +1014,7 @@ const ReservasForm = ({
   }, t.step2_title), step === 1 && /*#__PURE__*/React.createElement("span", {
     className: "rf-step-locked-note",
     "aria-hidden": "true"
-  }, "\uD83D\uDD12")), step >= 2 && /*#__PURE__*/React.createElement("div", {
+  }, "🔒")), step >= 2 && /*#__PURE__*/React.createElement("div", {
     className: "rf-step-body"
   }, isLsStay && /*#__PURE__*/React.createElement(LsInfoBlock, {
     calc: calc,
@@ -1069,12 +1069,12 @@ const ReservasForm = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-status-icon",
     "aria-hidden": "true"
-  }, "\u2713"), /*#__PURE__*/React.createElement("span", null, t.status_avail)), apt && isAvailable === false && /*#__PURE__*/React.createElement("div", {
+  }, "✓"), /*#__PURE__*/React.createElement("span", null, t.status_avail)), apt && isAvailable === false && /*#__PURE__*/React.createElement("div", {
     className: "rf-status rf-status-taken"
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-status-icon",
     "aria-hidden": "true"
-  }, "\xD7"), /*#__PURE__*/React.createElement("span", {
+  }, "×"), /*#__PURE__*/React.createElement("span", {
     className: "rf-status-main"
   }, t.status_taken), /*#__PURE__*/React.createElement("span", {
     className: "rf-status-sub"
@@ -1083,7 +1083,7 @@ const ReservasForm = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-status-icon",
     "aria-hidden": "true"
-  }, "\xB7"), /*#__PURE__*/React.createElement("span", {
+  }, "·"), /*#__PURE__*/React.createElement("span", {
     className: "rf-status-main"
   }, t.status_no_data), /*#__PURE__*/React.createElement("span", {
     className: "rf-status-sub"
@@ -1134,7 +1134,7 @@ const ReservasForm = ({
       className: "rf-alt-apt"
     }, alt.aptName), /*#__PURE__*/React.createElement("span", {
       className: "rf-alt-dates"
-    }, _drFmtDate(alt.checkin, lang), " \u2013 ", _drFmtDate(alt.checkout, lang)), /*#__PURE__*/React.createElement("span", {
+    }, _drFmtDate(alt.checkin, lang), " – ", _drFmtDate(alt.checkout, lang)), /*#__PURE__*/React.createElement("span", {
       className: "rf-alt-shift"
     }, shiftLabel(alt)), /*#__PURE__*/React.createElement("span", {
       className: "rf-alt-price"
@@ -1176,7 +1176,7 @@ const ReservasForm = ({
       className: "rf-extra-chip-label"
     }, label), ex.price > 0 && /*#__PURE__*/React.createElement("span", {
       className: "rf-extra-chip-price"
-    }, ex.price, " \u20AC", suffix))), checked && /*#__PURE__*/React.createElement("div", {
+    }, ex.price, " €", suffix))), checked && /*#__PURE__*/React.createElement("div", {
       className: "rf-extra-stepper",
       role: "group",
       "aria-label": lang === 'es' ? `Cantidad de ${label}` : `Quantity of ${label}`
@@ -1185,7 +1185,7 @@ const ReservasForm = ({
       className: "rf-extra-step-btn",
       onClick: () => decExtra(ex.id),
       "aria-label": lang === 'es' ? 'Quitar uno' : 'Remove one'
-    }, "\u2212"), /*#__PURE__*/React.createElement("span", {
+    }, "−"), /*#__PURE__*/React.createElement("span", {
       className: "rf-extra-step-num",
       "aria-live": "polite"
     }, qty), /*#__PURE__*/React.createElement("button", {
@@ -1217,7 +1217,7 @@ const ReservasForm = ({
   }, t.step3_title), step < 3 && /*#__PURE__*/React.createElement("span", {
     className: "rf-step-locked-note",
     "aria-hidden": "true"
-  }, "\uD83D\uDD12")), step >= 3 && /*#__PURE__*/React.createElement("div", {
+  }, "🔒")), step >= 3 && /*#__PURE__*/React.createElement("div", {
     className: "rf-step-body"
   }, step1Summary && /*#__PURE__*/React.createElement("div", {
     className: "rf-recap",
@@ -1231,7 +1231,7 @@ const ReservasForm = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "rf-sent-icon",
     "aria-hidden": "true"
-  }, "\u2713"), /*#__PURE__*/React.createElement("h4", {
+  }, "✓"), /*#__PURE__*/React.createElement("h4", {
     className: "rf-sent-title"
   }, lang === 'es' ? 'Solicitud preparada' : 'Request ready'), /*#__PURE__*/React.createElement("p", {
     className: "rf-sent-text"
@@ -1312,7 +1312,7 @@ const ReservasForm = ({
     className: "rf-contact-warn"
   }, /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
-  }, "\u26A0\uFE0F"), ' ', channel === 'whatsapp' ? lang === 'es' ? 'Revisa que el teléfono sea correcto: si está mal, no podremos contestarte.' : 'Double-check your phone number: if it is wrong, we will not be able to reply.' : lang === 'es' ? 'Revisa que el correo sea correcto: si está mal, no podremos contestarte.' : 'Double-check your email: if it is wrong, we will not be able to reply.'), /*#__PURE__*/React.createElement("div", {
+  }, "⚠️"), ' ', channel === 'whatsapp' ? lang === 'es' ? 'Revisa que el teléfono sea correcto: si está mal, no podremos contestarte.' : 'Double-check your phone number: if it is wrong, we will not be able to reply.' : lang === 'es' ? 'Revisa que el correo sea correcto: si está mal, no podremos contestarte.' : 'Double-check your email: if it is wrong, we will not be able to reply.'), /*#__PURE__*/React.createElement("div", {
     className: "form-field full"
   }, /*#__PURE__*/React.createElement("label", null, t.f_comments), /*#__PURE__*/React.createElement("textarea", {
     placeholder: t.f_comments_ph,
@@ -1326,7 +1326,7 @@ const ReservasForm = ({
     href: "privacidad.html",
     target: "_blank",
     rel: "noopener"
-  }, "pol\xEDtica de privacidad"), ". Tus datos se usar\xE1n \xFAnicamente para gestionar esta solicitud de reserva.")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("small", null, "By sending you accept our ", /*#__PURE__*/React.createElement("a", {
+  }, "política de privacidad"), ". Tus datos se usarán únicamente para gestionar esta solicitud de reserva.")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("small", null, "By sending you accept our ", /*#__PURE__*/React.createElement("a", {
     href: "privacidad.html",
     target: "_blank",
     rel: "noopener"
@@ -1368,7 +1368,7 @@ const ReservasAside = ({
     className: "r-name"
   }, "Alex Berruezo"), /*#__PURE__*/React.createElement("div", {
     className: "r-lang"
-  }, "\uD83C\uDDEA\uD83C\uDDF8 Espa\xF1ol"), /*#__PURE__*/React.createElement("div", {
+  }, "🇪🇸 Español"), /*#__PURE__*/React.createElement("div", {
     className: "r-role"
   }, lang === 'es' ? 'Reserva · Antes de tu llegada' : 'Booking · Before you arrive')), /*#__PURE__*/React.createElement("div", {
     className: "r-actions"
@@ -1379,7 +1379,7 @@ const ReservasAside = ({
     rel: "noopener"
   }, "WhatsApp ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "\u2192")), /*#__PURE__*/React.createElement("a", {
+  }, "→")), /*#__PURE__*/React.createElement("a", {
     href: "tel:+34620316370",
     className: "btn btn-ghost-dark"
   }, "+34 620 316 370"))), /*#__PURE__*/React.createElement("div", {
@@ -1409,7 +1409,7 @@ const ReservasAside = ({
     style: {
       color: 'var(--vt)'
     }
-  }, "\uD83C\uDDEC\uD83C\uDDE7 English"), /*#__PURE__*/React.createElement("div", {
+  }, "🇬🇧 English"), /*#__PURE__*/React.createElement("div", {
     className: "r-role"
   }, lang === 'es' ? 'Estancia · Mientras estás aquí' : 'Stay · While you are here')), /*#__PURE__*/React.createElement("div", {
     className: "r-actions"
@@ -1420,7 +1420,7 @@ const ReservasAside = ({
     rel: "noopener"
   }, "WhatsApp ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "\u2192")), /*#__PURE__*/React.createElement("a", {
+  }, "→")), /*#__PURE__*/React.createElement("a", {
     href: "tel:+34654138251",
     className: "btn btn-ghost-dark"
   }, "+34 654 138 251"))), /*#__PURE__*/React.createElement("div", {
@@ -1439,7 +1439,7 @@ const ReservasAside = ({
   }, lang === 'es' ? 'Ver todas las ventajas' : 'See all perks', /*#__PURE__*/React.createElement("span", {
     className: "rg-cta-arrow",
     "aria-hidden": "true"
-  }, "\u2192"))));
+  }, "→"))));
 };
 const ReservasPageApp = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
