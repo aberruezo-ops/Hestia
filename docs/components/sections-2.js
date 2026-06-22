@@ -124,7 +124,7 @@ const Gallery = ({
   return /*#__PURE__*/React.createElement("section", {
     className: "gallery",
     ref: ref,
-    "data-screen-label": "06 Galería"
+    "data-screen-label": "06 Galer\xEDa"
   }, /*#__PURE__*/React.createElement("div", {
     className: "gallery-head"
   }, /*#__PURE__*/React.createElement("div", {
@@ -138,7 +138,7 @@ const Gallery = ({
     className: "img"
   }), /*#__PURE__*/React.createElement("div", {
     className: "caption"
-  }, "– ", tile.caption)))));
+  }, "\u2013 ", tile.caption)))));
 };
 
 // --- TEAM ---
@@ -206,7 +206,7 @@ const Team = ({
     className: "member-info"
   }, /*#__PURE__*/React.createElement("span", {
     className: "role"
-  }, "01 · ", t.alex_role), /*#__PURE__*/React.createElement("span", {
+  }, "01 \xB7 ", t.alex_role), /*#__PURE__*/React.createElement("span", {
     className: "name"
   }, "Alex ", /*#__PURE__*/React.createElement("em", null, "Berruezo")), /*#__PURE__*/React.createElement("p", {
     className: "quote"
@@ -264,7 +264,7 @@ const Team = ({
     className: "member-info"
   }, /*#__PURE__*/React.createElement("span", {
     className: "role"
-  }, "02 · ", t.fran_role), /*#__PURE__*/React.createElement("span", {
+  }, "02 \xB7 ", t.fran_role), /*#__PURE__*/React.createElement("span", {
     className: "name"
   }, "Fran ", /*#__PURE__*/React.createElement("em", null, "Moral")), /*#__PURE__*/React.createElement("p", {
     className: "quote"
@@ -289,7 +289,7 @@ const Manifest = ({
   const t = COPY[lang];
   return /*#__PURE__*/React.createElement("section", {
     className: "manifest",
-    "data-screen-label": "08 Viajero hogareño"
+    "data-screen-label": "08 Viajero hogare\xF1o"
   }, /*#__PURE__*/React.createElement("div", {
     className: "manifest-inner"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
@@ -365,14 +365,14 @@ const Ratings = ({
     className: "desc"
   }, t.rating_booking_desc), /*#__PURE__*/React.createElement("blockquote", {
     className: "rating-quote"
-  }, lang === 'es' ? '«Todo impecable. La ubicación, Hestía y sobre todo el trato de Alex. Volvemos seguro.»' : '«Everything perfect. The location, the Hestía, and above all Alex\'s care. We\'ll definitely be back.»', /*#__PURE__*/React.createElement("cite", null, "– María G. · Hestía Mar · 2024"))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '«Todo impecable. La ubicación, Hestía y sobre todo el trato de Alex. Volvemos seguro.»' : '«Everything perfect. The location, the Hestía, and above all Alex\'s care. We\'ll definitely be back.»', /*#__PURE__*/React.createElement("cite", null, "\u2013 Mar\xEDa G. \xB7 Hest\xEDa Mar \xB7 2024"))), /*#__PURE__*/React.createElement("div", {
     className: "rating-card",
     style: {
       borderTopColor: 'var(--vt)'
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "platform"
-  }, "Airbnb · Superhost"), /*#__PURE__*/React.createElement("div", {
+  }, "Airbnb \xB7 Superhost"), /*#__PURE__*/React.createElement("div", {
     className: "score"
   }, "5", /*#__PURE__*/React.createElement("span", {
     className: "dec"
@@ -382,7 +382,7 @@ const Ratings = ({
     className: "desc"
   }, t.rating_airbnb_desc), /*#__PURE__*/React.createElement("blockquote", {
     className: "rating-quote"
-  }, lang === 'es' ? '«Llevamos diez años viajando y nunca habíamos visto unas vistas así desde un alojamiento. El SPA es otro nivel.»' : '«Ten years travelling and we\'ve never had views like these from a holiday rental. The SPA is something else entirely.»', /*#__PURE__*/React.createElement("cite", null, "– James & Sophie · Hestía Thalassa · 2024"))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '«Llevamos diez años viajando y nunca habíamos visto unas vistas así desde un alojamiento. El SPA es otro nivel.»' : '«Ten years travelling and we\'ve never had views like these from a holiday rental. The SPA is something else entirely.»', /*#__PURE__*/React.createElement("cite", null, "\u2013 James & Sophie \xB7 Hest\xEDa Thalassa \xB7 2024"))), /*#__PURE__*/React.createElement("div", {
     className: "rating-card",
     style: {
       borderTopColor: 'var(--vs)'
@@ -399,7 +399,7 @@ const Ratings = ({
     className: "desc"
   }, t.rating_google_desc), /*#__PURE__*/React.createElement("blockquote", {
     className: "rating-quote"
-  }, lang === 'es' ? '«Hestía tiene algo que no se puede comprar: la sensación de que alguien ha pensado en cada detalle para que te sientas en casa.»' : '«Hestía has something money can\'t buy: the feeling that someone thought of every detail so you feel at home, not in a rental.»', /*#__PURE__*/React.createElement("cite", null, "– Carlos M. · Hestía Salinas · 2024"))))));
+  }, lang === 'es' ? '«Hestía tiene algo que no se puede comprar: la sensación de que alguien ha pensado en cada detalle para que te sientas en casa.»' : '«Hestía has something money can\'t buy: the feeling that someone thought of every detail so you feel at home, not in a rental.»', /*#__PURE__*/React.createElement("cite", null, "\u2013 Carlos M. \xB7 Hest\xEDa Salinas \xB7 2024"))))));
 };
 
 // --- RATINGS MARQUEE, cinta de plataformas/métricas bajo Ratings ---
@@ -424,7 +424,7 @@ const RatingsMarquee = ({
   }, it), /*#__PURE__*/React.createElement("span", {
     className: "rm-dot",
     "aria-hidden": "true"
-  }, "✦")))));
+  }, "\u2726")))));
 };
 
 // --- DIRECT PERKS TEASER --- banda corta encima de ContactCTA con un
@@ -448,7 +448,7 @@ const DirectPerksTeaser = ({
 }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'), /*#__PURE__*/React.createElement("span", {
   className: "dpt-arrow",
   "aria-hidden": "true"
-}, "→"))));
+}, "\u2192"))));
 
 // --- CONTACT CTA ---
 const ContactCTA = ({
@@ -475,7 +475,7 @@ const ContactCTA = ({
     rel: "noopener"
   }, t.contact_cta_wa, " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "→")), /*#__PURE__*/React.createElement("a", {
+  }, "\u2192")), /*#__PURE__*/React.createElement("a", {
     href: "mailto:info@hestiayourhome.com",
     className: "btn btn-ghost-light"
   }, t.contact_cta_mail), availHref && /*#__PURE__*/React.createElement("a", {
@@ -483,9 +483,9 @@ const ContactCTA = ({
     className: "btn btn-ghost-light"
   }, t.contact_cta_avail, " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "→"))), /*#__PURE__*/React.createElement("div", {
+  }, "\u2192"))), /*#__PURE__*/React.createElement("div", {
     className: "address"
-  }, "Calle Islas Canarias 7 · 04621 Vera Playa · Almería"))));
+  }, "Calle Islas Canarias 7 \xB7 04621 Vera Playa \xB7 Almer\xEDa"))));
 };
 Object.assign(window, {
   Counters,

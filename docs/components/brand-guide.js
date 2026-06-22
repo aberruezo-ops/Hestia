@@ -7,8 +7,8 @@
 const BRAND_COPY = {
   es: {
     eyebrow: 'Manual de identidad',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "El idioma visual de ", /*#__PURE__*/React.createElement("em", null, "Hestía.")),
-    lede: /*#__PURE__*/React.createElement(React.Fragment, null, "Cada decisión cromática en este portal nace del paisaje de Vera Playa: la ", /*#__PURE__*/React.createElement("em", null, "noche mediterránea"), ", el ", /*#__PURE__*/React.createElement("em", null, "amanecer sobre las salinas"), ", el ", /*#__PURE__*/React.createElement("em", null, "olivar al mar"), ", la ", /*#__PURE__*/React.createElement("em", null, "tierra del Tabernas"), ". Esta es la lógica que mantiene unidas tres atmósferas distintas bajo un mismo techo."),
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "El idioma visual de ", /*#__PURE__*/React.createElement("em", null, "Hest\xEDa.")),
+    lede: /*#__PURE__*/React.createElement(React.Fragment, null, "Cada decisi\xF3n crom\xE1tica en este portal nace del paisaje de Vera Playa: la ", /*#__PURE__*/React.createElement("em", null, "noche mediterr\xE1nea"), ", el ", /*#__PURE__*/React.createElement("em", null, "amanecer sobre las salinas"), ", el ", /*#__PURE__*/React.createElement("em", null, "olivar al mar"), ", la ", /*#__PURE__*/React.createElement("em", null, "tierra del Tabernas"), ". Esta es la l\xF3gica que mantiene unidas tres atm\xF3sferas distintas bajo un mismo techo."),
     logo_eyebrow: 'El símbolo',
     logo_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Una H de hogar y de mar, ", /*#__PURE__*/React.createElement("em", null, "tejado y olas.")),
     logo_p1: 'El monograma de Hestía es una serif clásica trabajada en teal vidriado. Las dos columnas verticales sostienen una doble curva: una hoja de olivo que se transforma en cresta de ola, y una segunda línea diagonal que evoca el tejado.',
@@ -20,22 +20,22 @@ const BRAND_COPY = {
     sym_3_t: 'La ola',
     sym_3_d: 'El Mediterráneo a 300 m. El destino, lo que se ve desde la terraza.',
     pal_eyebrow: 'Paleta de marca',
-    pal_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Berenjena, teal y arena. ", /*#__PURE__*/React.createElement("em", null, "El día y la noche"), " en tres colores."),
+    pal_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Berenjena, teal y arena. ", /*#__PURE__*/React.createElement("em", null, "El d\xEDa y la noche"), " en tres colores."),
     pal_lede: 'La paleta principal nace de una sola foto: la terraza de Hestía Mar a la 1:00 AM. Cojines turquesa, velas encendidas, el cielo violeta de Vera Playa. De ahí salen los tres tonos rectores de toda la marca.',
     landscape_eyebrow: 'Los nueve colores corporativos',
     landscape_title: /*#__PURE__*/React.createElement(React.Fragment, null, "La paleta completa. ", /*#__PURE__*/React.createElement("em", null, "Nueve colores del paisaje.")),
     landscape_lede: 'Cada color tiene un lugar exacto en Almería. No se eligieron: se encontraron. El cielo, el mar, la tierra, las flores, la piedra. La marca entera cabe en un amanecer sobre Vera Playa.',
     apt_eyebrow: 'Tres Hestías · tres paisajes',
-    apt_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Cada Hestía ", /*#__PURE__*/React.createElement("em", null, "toma su color del paisaje.")),
+    apt_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Cada Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "toma su color del paisaje.")),
     apt_lede: 'Las tres identidades secundarias funcionan como sub-marcas. No son colores arbitrarios: cada uno está extraído de un paisaje real de Almería que define la atmósfera de Hestía.',
     type_eyebrow: 'Tipografía',
     type_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Lora para el alma, ", /*#__PURE__*/React.createElement("em", null, "Poppins para la voz.")),
     type_lede: 'Una pareja sobria que mezcla letra de libro y letra de pantalla. La cursiva de Lora es nuestra firma: aparece en titulares, citas y conceptos. Poppins delgada hace de soporte: navegación, datos, microcopy.',
     voice_eyebrow: 'Tono de voz',
-    voice_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Cercanos, no informales. ", /*#__PURE__*/React.createElement("em", null, "Cuidados, no fríos.")),
+    voice_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Cercanos, no informales. ", /*#__PURE__*/React.createElement("em", null, "Cuidados, no fr\xEDos.")),
     voice_lede: 'Hablamos como Alex y Fran hablan en WhatsApp con un huésped que ya conocen. Nada de "estimado cliente". Nada de "le informamos que". Tampoco de bromas forzadas o emojis al final de cada frase.',
     use_eyebrow: 'Usos del logotipo',
-    use_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Cómo se trata ", /*#__PURE__*/React.createElement("em", null, "el monograma.")),
+    use_title: /*#__PURE__*/React.createElement(React.Fragment, null, "C\xF3mo se trata ", /*#__PURE__*/React.createElement("em", null, "el monograma.")),
     use_lede: 'El logo respira: nunca menos de su propia altura de margen alrededor. Vive sobre fondo berenjena (versión nocturna) o sobre arena (versión diurna). Nunca se distorsiona, gira o coloca sobre fotos saturadas.',
     do_1: 'Sobre berenjena oscuro (modo noche).',
     do_2: 'Sobre arena clara (modo día).',
@@ -48,7 +48,7 @@ const BRAND_COPY = {
   },
   en: {
     eyebrow: 'Brand identity manual',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "The visual language of ", /*#__PURE__*/React.createElement("em", null, "Hestía.")),
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "The visual language of ", /*#__PURE__*/React.createElement("em", null, "Hest\xEDa.")),
     lede: /*#__PURE__*/React.createElement(React.Fragment, null, "Every chromatic decision in this site is born from the landscape of Vera Playa: the ", /*#__PURE__*/React.createElement("em", null, "Mediterranean night"), ", the ", /*#__PURE__*/React.createElement("em", null, "sunrise over the salt flats"), ", the ", /*#__PURE__*/React.createElement("em", null, "olive grove meeting the sea"), ", the ", /*#__PURE__*/React.createElement("em", null, "earth of Tabernas"), ". This is the logic that holds three different moods under one same roof."),
     logo_eyebrow: 'The mark',
     logo_title: /*#__PURE__*/React.createElement(React.Fragment, null, "An H that is also ", /*#__PURE__*/React.createElement("em", null, "roof and wave.")),
@@ -67,7 +67,7 @@ const BRAND_COPY = {
     landscape_title: /*#__PURE__*/React.createElement(React.Fragment, null, "The complete palette. ", /*#__PURE__*/React.createElement("em", null, "Nine colours from the landscape.")),
     landscape_lede: 'Every colour has an exact location in Almería. They were not chosen, they were found. Sky, sea, earth, flowers, stone. The entire brand fits within a single sunrise over Vera Playa.',
     apt_eyebrow: 'Three Hestías · three landscapes',
-    apt_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Each Hestía ", /*#__PURE__*/React.createElement("em", null, "borrows its colour from its landscape.")),
+    apt_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Each Hest\xEDa ", /*#__PURE__*/React.createElement("em", null, "borrows its colour from its landscape.")),
     apt_lede: 'The three secondary identities work as sub-brands. They are not arbitrary colours: each one is extracted from a real Almerían landscape that defines the Hestía\'s atmosphere.',
     type_eyebrow: 'Typography',
     type_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Lora for the soul, ", /*#__PURE__*/React.createElement("em", null, "Poppins for the voice.")),
@@ -334,7 +334,7 @@ const BrandGuide = ({
   return /*#__PURE__*/React.createElement("section", {
     className: "brand-guide",
     id: "marca",
-    "data-screen-label": "11 Guía de marca"
+    "data-screen-label": "11 Gu\xEDa de marca"
   }, /*#__PURE__*/React.createElement("div", {
     className: "bg-letter"
   }, "H"), /*#__PURE__*/React.createElement("div", {
@@ -343,7 +343,7 @@ const BrandGuide = ({
     className: "bg-head"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
-  }, "– ", t.eyebrow), /*#__PURE__*/React.createElement("h2", null, t.title)), /*#__PURE__*/React.createElement("div", {
+  }, "\u2013 ", t.eyebrow), /*#__PURE__*/React.createElement("h2", null, t.title)), /*#__PURE__*/React.createElement("div", {
     className: "lede"
   }, t.lede)), /*#__PURE__*/React.createElement("div", {
     className: "bg-sub-eyebrow"
@@ -357,15 +357,15 @@ const BrandGuide = ({
     className: "bg-logo-grid"
   }), /*#__PURE__*/React.createElement("span", {
     className: "x-mark tl"
-  }, "× margin"), /*#__PURE__*/React.createElement("span", {
+  }, "\xD7 margin"), /*#__PURE__*/React.createElement("span", {
     className: "x-mark tr"
-  }, "× margin"), /*#__PURE__*/React.createElement("span", {
+  }, "\xD7 margin"), /*#__PURE__*/React.createElement("span", {
     className: "x-mark bl"
-  }, "× margin"), /*#__PURE__*/React.createElement("span", {
+  }, "\xD7 margin"), /*#__PURE__*/React.createElement("span", {
     className: "x-mark br"
-  }, "× margin"), /*#__PURE__*/React.createElement("img", {
+  }, "\xD7 margin"), /*#__PURE__*/React.createElement("img", {
     src: "assets/logo-teal-transparent.png",
-    alt: "Hestía monogram"
+    alt: "Hest\xEDa monogram"
   })), /*#__PURE__*/React.createElement("div", {
     className: "bg-logo-text"
   }, /*#__PURE__*/React.createElement("p", null, t.logo_p1), /*#__PURE__*/React.createElement("p", null, t.logo_p2), /*#__PURE__*/React.createElement("div", {
@@ -409,7 +409,7 @@ const BrandGuide = ({
     className: "role"
   }, c.role), /*#__PURE__*/React.createElement("div", {
     className: "why"
-  }, "«\xA0", c.why, "\xA0»"), /*#__PURE__*/React.createElement("div", {
+  }, "\xAB\xA0", c.why, "\xA0\xBB"), /*#__PURE__*/React.createElement("div", {
     className: "vals"
   }, c.vals.map((v, j) => /*#__PURE__*/React.createElement("span", {
     key: j
@@ -437,7 +437,7 @@ const BrandGuide = ({
     className: "role"
   }, c.role), /*#__PURE__*/React.createElement("div", {
     className: "why"
-  }, "«\xA0", c.why, "\xA0»"), /*#__PURE__*/React.createElement("div", {
+  }, "\xAB\xA0", c.why, "\xA0\xBB"), /*#__PURE__*/React.createElement("div", {
     className: "vals"
   }, c.vals.map((v, j) => /*#__PURE__*/React.createElement("span", {
     key: j
@@ -521,13 +521,13 @@ const BrandGuide = ({
     className: "type-card serif"
   }, /*#__PURE__*/React.createElement("div", {
     className: "role-tag"
-  }, "Aa · Display"), /*#__PURE__*/React.createElement("div", {
+  }, "Aa \xB7 Display"), /*#__PURE__*/React.createElement("div", {
     className: "specimen"
   }, "Aa", /*#__PURE__*/React.createElement("span", {
     className: "specimen-lower"
-  }, "aábéíóúñ")), /*#__PURE__*/React.createElement("div", {
+  }, "a\xE1b\xE9\xED\xF3\xFA\xF1")), /*#__PURE__*/React.createElement("div", {
     className: "why"
-  }, "«\xA0", lang === 'es' ? 'La cursiva es nuestra firma. Usada con restricción para titulares y conceptos clave.' : 'The italic is our signature. Used with restraint, for headlines and key concepts.', "\xA0»"), /*#__PURE__*/React.createElement("div", {
+  }, "\xAB\xA0", lang === 'es' ? 'La cursiva es nuestra firma. Usada con restricción para titulares y conceptos clave.' : 'The italic is our signature. Used with restraint, for headlines and key concepts.', "\xA0\xBB"), /*#__PURE__*/React.createElement("div", {
     className: "meta"
   }, /*#__PURE__*/React.createElement("div", {
     className: "meta-row"
@@ -541,7 +541,7 @@ const BrandGuide = ({
     className: "key"
   }, "Weights"), /*#__PURE__*/React.createElement("span", {
     className: "val"
-  }, "300 · 400 · 500")), /*#__PURE__*/React.createElement("div", {
+  }, "300 \xB7 400 \xB7 500")), /*#__PURE__*/React.createElement("div", {
     className: "meta-row"
   }, /*#__PURE__*/React.createElement("span", {
     className: "key"
@@ -553,23 +553,23 @@ const BrandGuide = ({
     className: "key"
   }, "Italic"), /*#__PURE__*/React.createElement("span", {
     className: "val"
-  }, "marca el énfasis"))), /*#__PURE__*/React.createElement("div", {
+  }, "marca el \xE9nfasis"))), /*#__PURE__*/React.createElement("div", {
     className: "scale"
   }, /*#__PURE__*/React.createElement("div", {
     className: "scale-row"
   }, /*#__PURE__*/React.createElement("span", {
     className: "lbl"
-  }, "H1 · 104"), /*#__PURE__*/React.createElement("span", {
+  }, "H1 \xB7 104"), /*#__PURE__*/React.createElement("span", {
     className: "sample",
     style: {
       fontSize: 22,
       fontStyle: 'italic'
     }
-  }, "Tu hogar lejos…")), /*#__PURE__*/React.createElement("div", {
+  }, "Tu hogar lejos\u2026")), /*#__PURE__*/React.createElement("div", {
     className: "scale-row"
   }, /*#__PURE__*/React.createElement("span", {
     className: "lbl"
-  }, "H2 · 72"), /*#__PURE__*/React.createElement("span", {
+  }, "H2 \xB7 72"), /*#__PURE__*/React.createElement("span", {
     className: "sample",
     style: {
       fontSize: 18,
@@ -579,23 +579,23 @@ const BrandGuide = ({
     className: "scale-row"
   }, /*#__PURE__*/React.createElement("span", {
     className: "lbl"
-  }, "Quote · 22"), /*#__PURE__*/React.createElement("span", {
+  }, "Quote \xB7 22"), /*#__PURE__*/React.createElement("span", {
     className: "sample",
     style: {
       fontSize: 14,
       fontStyle: 'italic'
     }
-  }, "« Deja esto como… »")))), /*#__PURE__*/React.createElement("div", {
+  }, "\xAB Deja esto como\u2026 \xBB")))), /*#__PURE__*/React.createElement("div", {
     className: "type-card sans"
   }, /*#__PURE__*/React.createElement("div", {
     className: "role-tag"
-  }, "Aa · Text"), /*#__PURE__*/React.createElement("div", {
+  }, "Aa \xB7 Text"), /*#__PURE__*/React.createElement("div", {
     className: "specimen"
   }, "Aa", /*#__PURE__*/React.createElement("span", {
     className: "specimen-lower"
-  }, "123 · ñ")), /*#__PURE__*/React.createElement("div", {
+  }, "123 \xB7 \xF1")), /*#__PURE__*/React.createElement("div", {
     className: "why"
-  }, "«\xA0", lang === 'es' ? 'Soporte ligero. Pesos finos (200–400) para que respire al lado de Lora.' : 'Light support. Thin weights (200–400) so it breathes next to Lora.', "\xA0»"), /*#__PURE__*/React.createElement("div", {
+  }, "\xAB\xA0", lang === 'es' ? 'Soporte ligero. Pesos finos (200–400) para que respire al lado de Lora.' : 'Light support. Thin weights (200–400) so it breathes next to Lora.', "\xA0\xBB"), /*#__PURE__*/React.createElement("div", {
     className: "meta"
   }, /*#__PURE__*/React.createElement("div", {
     className: "meta-row"
@@ -609,7 +609,7 @@ const BrandGuide = ({
     className: "key"
   }, "Weights"), /*#__PURE__*/React.createElement("span", {
     className: "val"
-  }, "200 · 300 · 400 · 500")), /*#__PURE__*/React.createElement("div", {
+  }, "200 \xB7 300 \xB7 400 \xB7 500")), /*#__PURE__*/React.createElement("div", {
     className: "meta-row"
   }, /*#__PURE__*/React.createElement("span", {
     className: "key"
@@ -627,16 +627,16 @@ const BrandGuide = ({
     className: "scale-row"
   }, /*#__PURE__*/React.createElement("span", {
     className: "lbl"
-  }, "Body · 14"), /*#__PURE__*/React.createElement("span", {
+  }, "Body \xB7 14"), /*#__PURE__*/React.createElement("span", {
     className: "sample",
     style: {
       fontSize: 13
     }
-  }, "Tres Hestías en Vera Playa.")), /*#__PURE__*/React.createElement("div", {
+  }, "Tres Hest\xEDas en Vera Playa.")), /*#__PURE__*/React.createElement("div", {
     className: "scale-row"
   }, /*#__PURE__*/React.createElement("span", {
     className: "lbl"
-  }, "Eyebrow · 11"), /*#__PURE__*/React.createElement("span", {
+  }, "Eyebrow \xB7 11"), /*#__PURE__*/React.createElement("span", {
     className: "sample",
     style: {
       fontSize: 10,
@@ -648,13 +648,13 @@ const BrandGuide = ({
     className: "scale-row"
   }, /*#__PURE__*/React.createElement("span", {
     className: "lbl"
-  }, "Caps · 14"), /*#__PURE__*/React.createElement("span", {
+  }, "Caps \xB7 14"), /*#__PURE__*/React.createElement("span", {
     className: "sample wordmark",
     style: {
       fontSize: 12,
       letterSpacing: '0.44em'
     }
-  }, "HESTÍA"))))), /*#__PURE__*/React.createElement("div", {
+  }, "HEST\xCDA"))))), /*#__PURE__*/React.createElement("div", {
     className: "bg-voice"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "bg-sub-eyebrow"
@@ -692,7 +692,7 @@ const BrandGuide = ({
     className: "label"
   }, /*#__PURE__*/React.createElement("span", {
     className: "badge"
-  }, "✓ ", t.do_label), /*#__PURE__*/React.createElement("span", {
+  }, "\u2713 ", t.do_label), /*#__PURE__*/React.createElement("span", {
     className: "text"
   }, t.do_1))), /*#__PURE__*/React.createElement("div", {
     className: "usage-card do-card cream"
@@ -708,7 +708,7 @@ const BrandGuide = ({
     className: "label"
   }, /*#__PURE__*/React.createElement("span", {
     className: "badge"
-  }, "✓ ", t.do_label), /*#__PURE__*/React.createElement("span", {
+  }, "\u2713 ", t.do_label), /*#__PURE__*/React.createElement("span", {
     className: "text"
   }, t.do_2))), /*#__PURE__*/React.createElement("div", {
     className: "usage-card dont-card stretch"
@@ -721,7 +721,7 @@ const BrandGuide = ({
     className: "label"
   }, /*#__PURE__*/React.createElement("span", {
     className: "badge"
-  }, "✕ ", t.dont_label), /*#__PURE__*/React.createElement("span", {
+  }, "\u2715 ", t.dont_label), /*#__PURE__*/React.createElement("span", {
     className: "text"
   }, t.dont_2))), /*#__PURE__*/React.createElement("div", {
     className: "usage-card dont-card tilt"
@@ -734,7 +734,7 @@ const BrandGuide = ({
     className: "label"
   }, /*#__PURE__*/React.createElement("span", {
     className: "badge"
-  }, "✕ ", t.dont_label), /*#__PURE__*/React.createElement("span", {
+  }, "\u2715 ", t.dont_label), /*#__PURE__*/React.createElement("span", {
     className: "text"
   }, t.dont_3))))));
 };

@@ -25,11 +25,11 @@ const TweaksPanel = ({
       fontSize: 9,
       marginTop: 2
     }
-  }, "hestía your home!")), /*#__PURE__*/React.createElement("div", {
+  }, "hest\xEDa your home!")), /*#__PURE__*/React.createElement("div", {
     className: "tweaks-body"
   }, /*#__PURE__*/React.createElement("div", {
     className: "tweaks-row"
-  }, /*#__PURE__*/React.createElement("label", null, "Idioma · Language"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("label", null, "Idioma \xB7 Language"), /*#__PURE__*/React.createElement("div", {
     className: "seg-control"
   }, /*#__PURE__*/React.createElement("button", {
     className: lang === 'es' ? 'active' : '',
@@ -49,7 +49,7 @@ const TweaksPanel = ({
     onClick: () => update('starfield', false)
   }, "Off"))), /*#__PURE__*/React.createElement("div", {
     className: "tweaks-row"
-  }, /*#__PURE__*/React.createElement("label", null, "Parallax en galería"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("label", null, "Parallax en galer\xEDa"), /*#__PURE__*/React.createElement("div", {
     className: "seg-control"
   }, /*#__PURE__*/React.createElement("button", {
     className: tweaks.parallax ? 'active' : '',
@@ -59,7 +59,7 @@ const TweaksPanel = ({
     onClick: () => update('parallax', false)
   }, "Off"))), /*#__PURE__*/React.createElement("div", {
     className: "tweaks-row"
-  }, /*#__PURE__*/React.createElement("label", null, "Ir a sección"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("label", null, "Ir a secci\xF3n"), /*#__PURE__*/React.createElement("div", {
     className: "tweaks-jumps"
   }, /*#__PURE__*/React.createElement("button", {
     onClick: () => document.getElementById('apartamentos').scrollIntoView({

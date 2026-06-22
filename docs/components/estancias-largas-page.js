@@ -295,7 +295,7 @@ const LsPrices = ({
     className: "lsl-pt-desde"
   }, lang === 'es' ? 'desde ' : 'from '), _fmtRate(rateByIdx[i], lang), /*#__PURE__*/React.createElement("span", {
     className: "lsl-pt-unit"
-  }, "€/mes")))), /*#__PURE__*/React.createElement("div", {
+  }, "\u20AC/mes")))), /*#__PURE__*/React.createElement("div", {
     className: "lsl-pt-row lsl-pt-special"
   }, /*#__PURE__*/React.createElement("span", {
     className: "lsl-pt-period"
@@ -305,7 +305,7 @@ const LsPrices = ({
     className: "lsl-pt-rate"
   }, _lsFlat(), /*#__PURE__*/React.createElement("span", {
     className: "lsl-pt-unit"
-  }, "€/noche")))), /*#__PURE__*/React.createElement("p", {
+  }, "\u20AC/noche")))), /*#__PURE__*/React.createElement("p", {
     className: "lsl-prices-min"
   }, t.min_note)));
 };
@@ -486,13 +486,13 @@ const LsSearch = ({
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "lsl-result-apt"
-  }, "HESTÍA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), available ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, "HEST\xCDA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), available ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "lsl-result-prices"
   }, regTotal > lsTotal && /*#__PURE__*/React.createElement("span", {
     className: "lsl-result-reg"
-  }, regTotal.toLocaleString('es-ES'), " €"), /*#__PURE__*/React.createElement("span", {
+  }, regTotal.toLocaleString('es-ES'), " \u20AC"), /*#__PURE__*/React.createElement("span", {
     className: "lsl-result-ls"
-  }, lsTotal.toLocaleString('es-ES'), " €"), /*#__PURE__*/React.createElement("span", {
+  }, lsTotal.toLocaleString('es-ES'), " \u20AC"), /*#__PURE__*/React.createElement("span", {
     className: "lsl-result-nights"
   }, n, " ", es ? 'noches' : 'nights')), regTotal > lsTotal && /*#__PURE__*/React.createElement("div", {
     className: "lsl-result-saving"
@@ -526,11 +526,11 @@ const LsApts = ({
     className: "lsl-apt-dot"
   }), /*#__PURE__*/React.createElement("div", {
     className: "lsl-apt-name"
-  }, "HESTÍA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), /*#__PURE__*/React.createElement("div", {
+  }, "HEST\xCDA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), /*#__PURE__*/React.createElement("div", {
     className: "lsl-apt-concept"
   }, lang === 'es' ? apt.concept_es : apt.concept_en), /*#__PURE__*/React.createElement("span", {
     className: "lsl-apt-cta"
-  }, t.apts_cta, " →"))))));
+  }, t.apts_cta, " \u2192"))))));
 };
 const LsFaq = ({
   lang
@@ -577,7 +577,7 @@ const LsCta = ({
     className: "lsl-btn-primary",
     target: "_blank",
     rel: "noopener"
-  }, t.cta_wa, " →"), /*#__PURE__*/React.createElement("a", {
+  }, t.cta_wa, " \u2192"), /*#__PURE__*/React.createElement("a", {
     href: `mailto:${t.cta_mail}`,
     className: "lsl-btn-ghost"
   }, t.cta_mail))));
