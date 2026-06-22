@@ -23,7 +23,7 @@ const EO_GUIDE_PIN = {
 const ESCRIBIR_COPY = {
   es: {
     eyebrow: 'Comparte tu experiencia',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Cu\xE9ntanos c\xF3mo ", /*#__PURE__*/React.createElement("em", null, "te fue.")),
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Cuéntanos cómo ", /*#__PURE__*/React.createElement("em", null, "te fue.")),
     sub: 'Tu opinión es importante. Tras revisarla, la publicaremos en nuestra web. Sin filtros raros: si algo no salió bien, también queremos saberlo.',
     apt_label: '¿En qué Hestía te alojaste?',
     apt_vm: 'Hestía Mar',
@@ -114,7 +114,7 @@ const StarsInput = ({
     onMouseEnter: () => setHover(n),
     onMouseLeave: () => setHover(0),
     onClick: () => onChange(n)
-  }, "\u2605")), /*#__PURE__*/React.createElement("span", {
+  }, "★")), /*#__PURE__*/React.createElement("span", {
     className: "eo-stars-num"
   }, value > 0 ? `${value}/5` : ''));
 };
@@ -206,7 +206,7 @@ const EscribirOpinionForm = ({
     }, /*#__PURE__*/React.createElement("span", {
       className: "eo-success-icon",
       "aria-hidden": "true"
-    }, "\u2713"), /*#__PURE__*/React.createElement("h2", {
+    }, "✓"), /*#__PURE__*/React.createElement("h2", {
       className: "eo-success-title"
     }, t.success_title), /*#__PURE__*/React.createElement("p", {
       className: "eo-success-text"
@@ -222,7 +222,7 @@ const EscribirOpinionForm = ({
       "aria-hidden": "true"
     }, "G"), t.success_gmaps, /*#__PURE__*/React.createElement("span", {
       className: "arrow"
-    }, " \u2192")), /*#__PURE__*/React.createElement("a", {
+    }, " →")), /*#__PURE__*/React.createElement("a", {
       href: "opiniones.html",
       className: "eo-success-back"
     }, t.success_back))));
@@ -413,7 +413,7 @@ const EscribirOpinionForm = ({
     href: "privacidad.html",
     target: "_blank",
     rel: "noopener"
-  }, "He le\xEDdo y acepto la pol\xEDtica de privacidad."), " Entiendo que mis datos (nombre y email) ser\xE1n utilizados para publicar mi opini\xF3n y procesados por Web3Forms para su env\xEDo.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("a", {
+  }, "He leído y acepto la política de privacidad."), " Entiendo que mis datos (nombre y email) serán utilizados para publicar mi opinión y procesados por Web3Forms para su envío.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("a", {
     href: "privacidad.html",
     target: "_blank",
     rel: "noopener"
@@ -427,7 +427,7 @@ const EscribirOpinionForm = ({
     disabled: phase === 'sending'
   }, phase === 'sending' ? t.sending : t.submit, /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, " \u2192"))), phase === 'error' && /*#__PURE__*/React.createElement("p", {
+  }, " →"))), phase === 'error' && /*#__PURE__*/React.createElement("p", {
     className: "eo-error-msg"
   }, t.error_generic))));
 };
