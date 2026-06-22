@@ -23342,3 +23342,50 @@ img[src*="apt-vt-gallery-"] {
 .hgp-link { display: inline-block; font-size: 11px; font-weight: 600; text-decoration: none; }
 .hgp-link:hover { opacity: .75; }
 .hgp-home { font-weight: 700; font-size: 13px; color: var(--ber-dk, #2A0F2E); }
+
+/* ── PinsTab · editor de coordenadas en /p-edit ──────────────── */
+.pe-pins-wrap {
+  display: flex;
+  height: calc(100vh - 170px);
+  min-height: 480px;
+  margin: 0 -20px;
+  border-top: 1px solid rgba(42,15,46,.1);
+}
+.pe-pins-map { flex: 1; min-width: 0; }
+.pe-pins-loading {
+  display: flex; align-items: center; justify-content: center;
+  height: 100%; font-size: 13px; color: rgba(42,15,46,.5);
+}
+.pe-pins-panel {
+  width: 300px; flex-shrink: 0;
+  display: flex; flex-direction: column;
+  background: var(--crema, #FAF6F0);
+  border-left: 1px solid rgba(42,15,46,.1);
+  font-size: 12px;
+}
+.pe-pins-ph { padding: 14px 14px 10px; border-bottom: 1px solid rgba(42,15,46,.08); }
+.pe-pins-title { font-size: 13px; font-weight: 700; color: var(--ber-dk, #2A0F2E); margin-bottom: 4px; }
+.pe-pins-search-wrap { padding: 8px 10px; border-bottom: 1px solid rgba(42,15,46,.08); }
+.pe-pins-changes-head {
+  padding: 8px 12px 4px;
+  font-size: 10px; font-weight: 600; color: rgba(42,15,46,.45);
+  letter-spacing: .1em; text-transform: uppercase;
+  border-bottom: 1px solid rgba(42,15,46,.06);
+}
+.pe-pins-changes { flex: 1; overflow-y: auto; padding: 6px 10px 8px; }
+.pe-pins-change-item {
+  background: rgba(42,15,46,.04);
+  border: 1px solid rgba(42,15,46,.1);
+  border-radius: 6px 0 6px 0;
+  padding: 8px 10px; margin-bottom: 5px; line-height: 1.5;
+}
+.pe-pins-change-name { font-weight: 700; color: var(--sol-text, #176E80); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pe-pins-change-old { color: rgba(42,15,46,.4); text-decoration: line-through; }
+.pe-pins-change-new { color: var(--ber-dk, #2A0F2E); }
+.pe-pins-footer { padding: 10px; border-top: 1px solid rgba(42,15,46,.1); display: flex; gap: 6px; flex-wrap: wrap; }
+.pe-pins-toast { margin: 0 10px 8px; font-size: 11px; color: var(--sol-text, #176E80); background: rgba(58,170,187,.08); border: 1px solid rgba(58,170,187,.3); border-radius: 4px; padding: 5px 8px; }
+@media (max-width: 700px) {
+  .pe-pins-wrap { flex-direction: column; height: auto; }
+  .pe-pins-map  { height: 55vh; }
+  .pe-pins-panel { width: 100%; border-left: none; border-top: 1px solid rgba(42,15,46,.1); }
+}
