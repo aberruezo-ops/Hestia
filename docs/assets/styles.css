@@ -23365,6 +23365,7 @@ img[src*="apt-vt-gallery-"] {
 }
 .pe-pins-ph { padding: 14px 14px 10px; border-bottom: 1px solid rgba(42,15,46,.08); }
 .pe-pins-title { font-size: 13px; font-weight: 700; color: var(--ber-dk, #2A0F2E); margin-bottom: 4px; }
+.pe-pins-wip-banner { font-size: 11px; font-weight: 600; color: #8A4A24; background: #F5E8D4; border-radius: 4px; padding: 5px 8px; margin: 4px 0 8px; }
 .pe-pins-search-wrap { padding: 8px 10px; border-bottom: 1px solid rgba(42,15,46,.08); }
 .pe-pins-changes-head {
   padding: 8px 12px 4px;

@@ -8536,7 +8536,9 @@ const PinsTab = () => {
     className: "pe-pins-ph"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-pins-title"
-  }, "Editor de pins"), /*#__PURE__*/React.createElement("p", {
+  }, "Editor de pins"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-wip-banner"
+  }, "Mapa en construccion. Las coordenadas pueden no ser exactas."), /*#__PURE__*/React.createElement("p", {
     className: "pe-hint"
   }, "Arrastra los pins a su posicion correcta. Exporta el JSON y pegalo en el chat con Claude para aplicar los cambios a la guia.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-pins-search-wrap"
