@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#2A0F2E"/>
+  <title>Mapa del territorio · Hestía Your Home · Vera Playa, Almería</title>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/leaflet.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --ber:     #3D1A35;
+      --ber-dk:  #2A0F2E;
+      --ber-lt:  #4E2446;
+      --crema:   #FAF6F0;
+      --arena:   #F0E8D5;
+      --sol:     #3AAABB;
+      --sol-h:   #2A8E9E;
+      --sol-text:#176E80;
+      --vm:      #6B7A3A;
+      --vt:      #B86A3C;
+      --vs:      #D4A84A;
+      --serif:   'Playfair Display', Georgia, serif;
+      --sans:    'Inter', system-ui, sans-serif;
+    }
+    html, body { height: 100%; overflow: hidden; }
+    body { font-family: var(--sans); background: var(--crema); color: var(--ber-dk); }
+
+    /* ── Header ── */
+    .mapa-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 56px;
+      background: var(--ber-dk);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 1000;
+      gap: 12px;
+    }
+    .mapa-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(240,232,213,.65);
+      text-decoration: none;
+      transition: color .18s;
+      white-space: nowrap;
+    }
+    .mapa-back:hover { color: var(--crema); }
+    .mapa-logo {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--crema);
+      text-align: center;
+      line-height: 1.15;
+      flex-shrink: 0;
+    }
+    .mapa-logo span {
+      display: block;
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: none;
+      color: rgba(240,232,213,.45);
+    }
+    .mapa-lang {
+      display: flex;
+      border: 1.5px solid rgba(240,232,213,.2);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .mapa-lang-btn {
+      padding: 5px 11px;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: rgba(240,232,213,.5);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color .15s, background .15s;
+    }
+    .mapa-lang-btn.active { color: var(--crema); background: rgba(240,232,213,.12); }
+    .mapa-lang-btn:hover:not(.active) { color: rgba(240,232,213,.8); }
+
+    /* ── Map ── */
+    #map {
+      position: fixed;
+      top: 56px; left: 0; right: 0; bottom: 0;
+    }
+
+    /* ── Legend ── */
+    .mapa-legend {
+      position: fixed;
+      bottom: 28px;
+      left: 16px;
+      z-index: 900;
+      background: rgba(250,246,240,.97);
+      border: 1px solid rgba(61,26,53,.1);
+      border-radius: 10px 0 10px 0;
+      box-shadow: 0 4px 20px rgba(42,15,46,.14);
+      padding: 14px 18px 12px;
+      min-width: 178px;
+    }
+    .mapa-legend-title {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(42,15,46,.4);
+      margin-bottom: 10px;
+    }
+    .mapa-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 7px;
+    }
+    .mapa-legend-item:last-child { margin-bottom: 0; }
+    .mapa-legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.13);
+      flex-shrink: 0;
+    }
+    .mapa-legend-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--ber-dk);
+      line-height: 1.2;
+    }
+    .mapa-legend-sep {
+      height: 1px;
+      background: rgba(61,26,53,.1);
+      margin: 9px 0;
+    }
+    .mapa-legend-home-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--ber-dk);
+      border: 2.5px solid var(--sol);
+      flex-shrink: 0;
+    }
+
+    /* ── Leaflet popup override ── */
+    .leaflet-popup-content-wrapper {
+      border-radius: 10px 0 10px 0 !important;
+      box-shadow: 0 6px 28px rgba(42,15,46,.18) !important;
+      padding: 0 !important;
+      overflow: hidden;
+      border: none !important;
+    }
+    .leaflet-popup-content {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .leaflet-popup-tip {
+      box-shadow: none;
+    }
+
+    /* ── Hestía popup content ── */
+    .hp {
+      font-family: 'Inter', sans-serif;
+      padding: 15px 18px 14px;
+      min-width: 200px;
+      max-width: 260px;
+    }
+    .hp-zone {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.13em;
+      color: rgba(42,15,46,.4);
+      margin-bottom: 7px;
+      line-height: 1;
+    }
+    .hp-tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      padding: 3px 9px;
+      border-radius: 4px 0 4px 0;
+      color: #fff;
+      margin-bottom: 9px;
+    }
+    .hp-name {
+      display: block;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2A0F2E;
+      margin-bottom: 12px;
+      line-height: 1.35;
+    }
+    .hp-link {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      padding-bottom: 1.5px;
+      border-bottom: 1.5px solid currentColor;
+      transition: opacity .15s;
+    }
+    .hp-link:hover { opacity: .72; }
+
+    /* ── Mobile ── */
+    @media (max-width: 560px) {
+      .mapa-logo { display: none; }
+      .mapa-legend {
+        bottom: 12px; left: 8px;
+        padding: 10px 13px 9px;
+        min-width: 0;
+      }
+      .mapa-legend-label { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="mapa-header">
+  <a href="noticias.html" class="mapa-back" id="back-link">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2L4 7l5 5"/></svg>
+    <span id="back-label">Guía</span>
+  </a>
+  <div class="mapa-logo">HESTÍA <span>your home!</span></div>
+  <div class="mapa-lang">
+    <button class="mapa-lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
+    <button class="mapa-lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</header>
+
+<div id="map" role="application" aria-label="Mapa interactivo del territorio Hestía"></div>
+
+<div class="mapa-legend" id="legend" aria-hidden="true">
+  <div class="mapa-legend-title" id="leg-title">Zonas</div>
+  <div class="mapa-legend-item">
+    <div class="mapa-legend-dot" style="background:#3AAABB"></div>
+    <div class="mapa-legend-label" id="leg-z0">Vera Playa &amp; alrededores</div>
+  </div>
+  <div class="mapa-legend-item">
+    <div class="mapa-legend-dot" style="background:#6B7A3A"></div>
+    <div class="mapa-legend-label" id="leg-z1">Almería &amp; provincia</div>
+  </div>
+  <div class="mapa-legend-item">
+    <div class="mapa-legend-dot" style="background:#B86A3C"></div>
+    <div class="mapa-legend-label" id="leg-z2">Andalucía</div>
+  </div>
+  <div class="mapa-legend-item">
+    <div class="mapa-legend-dot" style="background:#C49A3A"></div>
+    <div class="mapa-legend-label" id="leg-z3">Murcia</div>
+  </div>
+  <div class="mapa-legend-sep"></div>
+  <div class="mapa-legend-item">
+    <div class="mapa-legend-home-dot"></div>
+    <div class="mapa-legend-label">Hestía Your Home</div>
+  </div>
+</div>
+
+<script src="assets/leaflet.js"></script>
+<script>
+// ── Language ──────────────────────────────────────────────────────────────────
+let LANG = localStorage.getItem('hestia-lang') || 'es';
+
+const TEXTS = {
+  es: {
+    back: 'Guía',
+    zones: 'Zonas',
+    z0: 'Vera Playa & alrededores',
+    z1: 'Almería & provincia',
+    z2: 'Andalucía',
+    z3: 'Murcia',
+    guide: 'Ver en la guía',
+    book: 'Reservar Hestía',
+  },
+  en: {
+    back: 'Guide',
+    zones: 'Areas',
+    z0: 'Vera Playa & surroundings',
+    z1: 'Almería city & province',
+    z2: 'Andalucía',
+    z3: 'Murcia',
+    guide: 'Read in the guide',
+    book: 'Book a Hestía',
+  },
+};
+
+function applyLang(l) {
+  const T = TEXTS[l];
+  document.documentElement.lang = l;
+  document.getElementById('btn-es').classList.toggle('active', l === 'es');
+  document.getElementById('btn-en').classList.toggle('active', l === 'en');
+  document.getElementById('back-label').textContent = T.back;
+  document.getElementById('leg-title').textContent = T.zones;
+  document.getElementById('leg-z0').textContent = T.z0;
+  document.getElementById('leg-z1').textContent = T.z1;
+  document.getElementById('leg-z2').textContent = T.z2;
+  document.getElementById('leg-z3').textContent = T.z3;
+}
+
+function setLang(l) {
+  LANG = l;
+  localStorage.setItem('hestia-lang', l);
+  applyLang(l);
+  ALL_MARKERS.forEach(({ marker, place }) => marker.setPopupContent(buildPopup(place)));
+  HOME_MARKER.setPopupContent(buildHomePopup());
+}
+
+applyLang(LANG);
+
+// ── Place data ────────────────────────────────────────────────────────────────
+const PLACES = [
+  // Zone 0: Vera Playa & alrededores
+  {
+    name:  { es: 'Playa de Vera · Noche de San Juan', en: 'Vera Beach · Midsummer Night' },
+    tag:   { es: 'Tradición', en: 'Tradition' },
+    zone:  { es: 'Vera Playa & alrededores', en: 'Vera Playa & surroundings' },
+    icon: '🔥', color: '#3AAABB',
+    lat: 37.239, lng: -1.762,
+    id: 'art-0-0',
+  },
+  {
+    name:  { es: 'Cala del Cuervo · Snorkel sin traje', en: 'Cala del Cuervo · Wetsuit-free snorkelling' },
+    tag:   { es: 'Mar', en: 'Sea' },
+    zone:  { es: 'Vera Playa & alrededores', en: 'Vera Playa & surroundings' },
+    icon: '🔥', color: '#3AAABB',
+    lat: 37.311, lng: -1.687,
+    id: 'art-0-1',
+  },
+  {
+    name:  { es: 'Los Cocederos · Snorkel sin traje', en: 'Los Cocederos · Wetsuit-free snorkelling' },
+    tag:   { es: 'Mar', en: 'Sea' },
+    zone:  { es: 'Vera Playa & alrededores', en: 'Vera Playa & surroundings' },
+    icon: '🔥', color: '#3AAABB',
+    lat: 37.293, lng: -1.700,
+    id: 'art-0-1',
+  },
+  {
+    name:  { es: 'Plaza Mayor · Mercado nocturno de verano', en: 'Plaza Mayor · Summer night market' },
+    tag:   { es: 'Mercado', en: 'Market' },
+    zone:  { es: 'Vera Playa & alrededores', en: 'Vera Playa & surroundings' },
+    icon: '🔥', color: '#3AAABB',
+    lat: 37.246, lng: -1.863,
+    id: 'art-0-2',
+  },
+  // Zone 1: Almería capital & provincia
+  {
+    name:  { es: 'Faro de Mesa Roldán · Ruta Cabo de Gata', en: 'Mesa Roldán Lighthouse · Cabo de Gata trail' },
+    tag:   { es: 'Naturaleza', en: 'Nature' },
+    zone:  { es: 'Almería capital & provincia', en: 'Almería city & province' },
+    icon: '🌿', color: '#6B7A3A',
+    lat: 36.933, lng: -1.837,
+    id: 'art-1-0',
+  },
+  {
+    name:  { es: 'Playazo de Rodalquilar · Cabo de Gata', en: 'Rodalquilar Beach · Cabo de Gata' },
+    tag:   { es: 'Naturaleza', en: 'Nature' },
+    zone:  { es: 'Almería capital & provincia', en: 'Almería city & province' },
+    icon: '🌿', color: '#6B7A3A',
+    lat: 36.869, lng: -2.004,
+    id: 'art-1-0',
+  },
+  {
+    name:  { es: 'Alcazaba de Almería · Almería de Escena', en: 'Almería Alcazaba · Almería on Stage' },
+    tag:   { es: 'Cultura', en: 'Culture' },
+    zone:  { es: 'Almería capital & provincia', en: 'Almería city & province' },
+    icon: '🌿', color: '#6B7A3A',
+    lat: 36.840, lng: -2.470,
+    id: 'art-1-1',
+  },
+  {
+    name:  { es: 'Plaza de Toros de Almería · Siente la Plaza 2026', en: 'Almería Bullring · Siente la Plaza 2026' },
+    tag:   { es: 'Conciertos', en: 'Concerts' },
+    zone:  { es: 'Almería capital & provincia', en: 'Almería city & province' },
+    icon: '🌿', color: '#6B7A3A',
+    lat: 36.834, lng: -2.460,
+    id: 'art-1-2',
+  },
+  {
+    name:  { es: 'Recinto Ferial de Almería · Cooltural Fest', en: 'Almería Fairground · Cooltural Fest' },
+    tag:   { es: 'Festival', en: 'Festival' },
+    zone:  { es: 'Almería capital & provincia', en: 'Almería city & province' },
+    icon: '🌿', color: '#6B7A3A',
+    lat: 36.820, lng: -2.484,
+    id: 'art-1-3',
+  },
+  {
+    name:  { es: 'Adra · The Juergas Rock Festival', en: 'Adra · The Juergas Rock Festival' },
+    tag:   { es: 'Festival', en: 'Festival' },
+    zone:  { es: 'Almería capital & provincia', en: 'Almería city & province' },
+    icon: '🌿', color: '#6B7A3A',
+    lat: 36.746, lng: -3.017,
+    id: 'art-1-4',
+  },
+  // Zone 2: Andalucía (local / within range)
+  {
+    name:  { es: 'Vera pueblo · Tomate Huevo de Toro', en: 'Vera village · Huevo de Toro tomato' },
+    tag:   { es: 'Gastronomía', en: 'Food' },
+    zone:  { es: 'Andalucía', en: 'Andalucía' },
+    icon: '🎶', color: '#B86A3C',
+    lat: 37.248, lng: -1.866,
+    id: 'art-2-1',
+  },
+  // Zone 3: Murcia
+  {
+    name:  { es: 'Playa El Hornillo · Noche de San Juan en Águilas', en: 'El Hornillo Beach · Midsummer Night in Águilas' },
+    tag:   { es: 'Tradición', en: 'Tradition' },
+    zone:  { es: 'Murcia', en: 'Murcia' },
+    icon: '⛵', color: '#C49A3A',
+    lat: 37.395, lng: -1.571,
+    id: 'art-3-0',
+  },
+  {
+    name:  { es: 'Jardines del Malecón · Festival de Jazz de Murcia', en: 'Malecón Gardens · Murcia Jazz Festival' },
+    tag:   { es: 'Música', en: 'Music' },
+    zone:  { es: 'Murcia', en: 'Murcia' },
+    icon: '⛵', color: '#C49A3A',
+    lat: 37.984, lng: -1.130,
+    id: 'art-3-1',
+  },
+  {
+    name:  { es: 'Murcia · Noches del Malecón 2026', en: 'Murcia · Noches del Malecón 2026' },
+    tag:   { es: 'Conciertos', en: 'Concerts' },
+    zone:  { es: 'Murcia', en: 'Murcia' },
+    icon: '⛵', color: '#C49A3A',
+    lat: 37.987, lng: -1.126,
+    id: 'art-3-2',
+  },
+  {
+    name:  { es: 'Cartagena · La Mar de Músicas', en: 'Cartagena · La Mar de Músicas' },
+    tag:   { es: 'Festival', en: 'Festival' },
+    zone:  { es: 'Murcia', en: 'Murcia' },
+    icon: '⛵', color: '#C49A3A',
+    lat: 37.600, lng: -0.987,
+    id: 'art-3-3',
+  },
+  {
+    name:  { es: 'San Pedro del Pinatar · Festival Sal de Música', en: 'San Pedro del Pinatar · Sal de Música Festival' },
+    tag:   { es: 'Concierto', en: 'Concert' },
+    zone:  { es: 'Murcia', en: 'Murcia' },
+    icon: '⛵', color: '#C49A3A',
+    lat: 37.834, lng: -0.784,
+    id: 'art-3-4',
+  },
+  {
+    name:  { es: 'Los Alcázares · Fan Futura Fest', en: 'Los Alcázares · Fan Futura Fest' },
+    tag:   { es: 'Festival', en: 'Festival' },
+    zone:  { es: 'Murcia', en: 'Murcia' },
+    icon: '⛵', color: '#C49A3A',
+    lat: 37.745, lng: -0.853,
+    id: 'art-3-5',
+  },
+  {
+    name:  { es: 'Cala Cortina · Cartagena', en: 'Cala Cortina · Cartagena' },
+    tag:   { es: 'Verano', en: 'Summer' },
+    zone:  { es: 'Murcia', en: 'Murcia' },
+    icon: '⛵', color: '#C49A3A',
+    lat: 37.587, lng: -1.011,
+    id: 'art-3-6',
+  },
+];
+
+// ── Popup builders ────────────────────────────────────────────────────────────
+function buildPopup(place) {
+  const T = TEXTS[LANG];
+  return `<div class="hp">
+    <div class="hp-zone">${place.icon}&nbsp;${place.zone[LANG]}</div>
+    <div class="hp-tag" style="background:${place.color}">${place.tag[LANG]}</div>
+    <strong class="hp-name">${place.name[LANG]}</strong>
+    <a href="noticias.html#${place.id}" class="hp-link" style="color:${place.color}">${T.guide} →</a>
+  </div>`;
+}
+
+function buildHomePopup() {
+  const T = TEXTS[LANG];
+  return `<div class="hp">
+    <div class="hp-zone">Vera Playa · Almería</div>
+    <div class="hp-tag" style="background:#2A0F2E">Hestía</div>
+    <strong class="hp-name">Hestía Your Home</strong>
+    <p style="font-size:11px;color:rgba(42,15,46,.5);margin:-8px 0 11px;font-family:Inter,sans-serif">Mar · Thalassa · Salinas</p>
+    <a href="reservas.html" class="hp-link" style="color:#3AAABB">${T.book} →</a>
+  </div>`;
+}
+
+// ── Map ───────────────────────────────────────────────────────────────────────
+const map = L.map('map', {
+  zoomControl: false,
+  attributionControl: true,
+}).setView([37.60, -1.62], 8);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  maxZoom: 18,
+}).addTo(map);
+
+L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+// Hestía home pin
+const HOME_MARKER = L.circleMarker([37.233, -1.760], {
+  radius: 10,
+  fillColor: '#2A0F2E',
+  color: '#3AAABB',
+  weight: 3,
+  opacity: 1,
+  fillOpacity: 1,
+  zIndexOffset: 1000,
+}).addTo(map);
+HOME_MARKER.bindPopup(buildHomePopup(), { maxWidth: 280 });
+
+// Place pins
+const ALL_MARKERS = PLACES.map(place => {
+  const marker = L.circleMarker([place.lat, place.lng], {
+    radius: 8,
+    fillColor: place.color,
+    color: '#fff',
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 0.9,
+  }).addTo(map);
+  marker.bindPopup(buildPopup(place), { maxWidth: 280 });
+  return { marker, place };
+});
+</script>
+</body>
+</html>

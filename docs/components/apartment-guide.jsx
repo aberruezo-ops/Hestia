@@ -197,6 +197,9 @@ const SECTION_CATS = {
   salud:       ['health', 'vet', 'pet-board', 'physio', 'pharmacy', 'coworking', 'laundry', 'atm'],
   movilidad:   ['fuel', 'ev-charge'],
 };
+const CAT_TO_SECTION = Object.fromEntries(
+  Object.entries(SECTION_CATS).flatMap(([sec, cats]) => cats.map(cat => [cat, sec]))
+);
 
 // ----- Categorías de lugares (icono + color brand + etiqueta bilingüe) -----
 // Color: 1 token de la paleta corporativa por categoría. Icono: emoji
@@ -252,12 +255,12 @@ const PLACES = [
   { id: 'hestia-salinas', name: 'Hestía Vera Salinas',  cat: 'home',  lat: 37.23094, lng: -1.81860 },
 
   // Supermercados
-  { id: 'coviran',        name: 'Covirán', desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa. Para básicos sin coger el coche.', cat: 'super', lat: 37.2235, lng: -1.7975 },
-  { id: 'consum',         name: 'Consum (Vera Playa)', desc: 'Supermercado mediano a 5 min en coche. Sorpresa: tiene un buen surtido de productos británicos (cereales, salsas, té, alubias Heinz) por la afluencia inglesa de la zona.', specialty: 'estantería de productos UK: Marmite, Yorkshire Tea, baked beans, salsas Branston, mince pies en Navidad.', cat: 'super', url: 'https://goo.gl/maps/h6UvnBe3ATHpsPXbA', lat: 37.2200, lng: -1.8090, featured: true },
-  { id: 'mercadona',      name: 'Mercadona Vera Playa', desc: 'Mercadona estándar a 5 min en coche. El más completo de la zona.', cat: 'super', url: 'https://goo.gl/maps/axi9Lb9xLp8yuVUR8', lat: 37.2360, lng: -1.7935, featured: true },
+  { id: 'coviran',        name: 'Covirán', desc: 'El más cercano (pequeño, andando), junto al hotel Vera Playa. Para básicos sin coger el coche.', cat: 'super', lat: 37.2230, lng: -1.8082 },
+  { id: 'consum',         name: 'Consum (Vera Playa)', desc: 'Supermercado mediano a 5 min en coche. Sorpresa: tiene un buen surtido de productos británicos (cereales, salsas, té, alubias Heinz) por la afluencia inglesa de la zona.', specialty: 'estantería de productos UK: Marmite, Yorkshire Tea, baked beans, salsas Branston, mince pies en Navidad.', cat: 'super', url: 'https://goo.gl/maps/h6UvnBe3ATHpsPXbA', lat: 37.2197, lng: -1.8083, featured: true },
+  { id: 'mercadona',      name: 'Mercadona Vera Playa', desc: 'Mercadona estándar a 5 min en coche. El más completo de la zona.', cat: 'super', url: 'https://goo.gl/maps/axi9Lb9xLp8yuVUR8', lat: 37.2137, lng: -1.8339, featured: true },
   { id: 'super-vera',     name: 'Vera pueblo (Dia · Lidl · Mercadona)', desc: 'Supermercados grandes en Vera pueblo, a 10 min en coche.', cat: 'super', lat: 37.2491, lng: -1.8639, featured: true },
   // Supermercados británicos / internacionales, para huéspedes UK que echen de menos lo de casa
-  { id: 'iceland-vera',   name: 'Iceland Overseas (Vera Playa)', desc: 'Supermercado británico junto al complejo Vera Natura. Productos congelados, ready meals, té, salsas y dulces típicos de UK.', specialty: 'fish & chips congelados, Yorkshire puddings, scotch eggs, productos M&S y Tesco.', tip: 'Imprescindible para huéspedes ingleses con nostalgia. Hablan inglés en caja.', cat: 'super', lat: 37.2380, lng: -1.7895, featured: true },
+  { id: 'iceland-vera',   name: 'Iceland Overseas (Vera Playa)', desc: 'Supermercado británico junto al complejo Vera Natura. Productos congelados, ready meals, té, salsas y dulces típicos de UK.', specialty: 'fish & chips congelados, Yorkshire puddings, scotch eggs, productos M&S y Tesco.', tip: 'Imprescindible para huéspedes ingleses con nostalgia. Hablan inglés en caja.', cat: 'super', lat: 37.2396, lng: -1.8564, featured: true },
   { id: 'quicksave',      name: 'Quicksave Britannia (Mojácar)', desc: 'Supermercado británico clásico de la Costa Almería. Surtido amplio de marcas UK que no encuentras en supermercado español.', specialty: 'embutidos ingleses (sausages, bacon Wiltshire), pasteles, panes especiales, repostería casera.', cat: 'super', lat: 37.1450, lng: -1.8540 },
   { id: 'aldi-vera',      name: 'Aldi (Vera pueblo)', desc: 'Cadena alemana low-cost. En Vera pueblo, a unos 10 min en coche desde Vera Playa.', specialty: 'productos alemanes (cerveza, embutidos, dulces) y precios bajos en básicos.', cat: 'super', lat: 37.2491, lng: -1.8639 },
 
@@ -269,18 +272,18 @@ const PLACES = [
   { id: 'riad-cabrera',   name: 'Riad Cabrera',     desc: 'Marroquí en Sierra Cabrera. Carretera de montaña, pero merece muchísimo la pena.', specialty: 'tagine de cordero con ciruelas, pastilla de pichón y té con menta en la terraza al atardecer.', tip: 'Reserva con tiempo y sube con luz: las curvas tienen su gracia, pero de noche cuestan.', tier: '€€€', cat: 'restaurant', rating: 4.6, lat: 37.1550, lng: -1.8700 , featured: true },
   { id: 'juan-moreno',    name: 'Juan Moreno',       desc: 'Sofisticado. Cocina de autor en Vera pueblo.', specialty: 'menú degustación con producto local, atún rojo de almadraba y arroces secos.', tier: '€€€', cat: 'restaurant', rating: 4.5, lat: 37.2495, lng: -1.8623 , featured: true },
   { id: 'terraza-carmona',name: 'Terraza Carmona',   desc: 'Cocina española moderna en Vera pueblo. Casa con historia.', specialty: 'gurullos con conejo y caldero de pescado; postres caseros.', tier: '€€',  cat: 'restaurant', rating: 4.5, lat: 37.2486, lng: -1.8635 },
-  { id: 'gateway-india',  name: 'Gateway to India',  desc: 'Hindú. Bueno y barato.',                   specialty: 'cordero rogan josh, pollo tikka masala y pan naan de ajo.', tier: '€',   cat: 'restaurant', rating: 4.2, lat: 37.2230, lng: -1.8090 },
-  { id: 'pomodoro',       name: 'Pizzería Pomodoro', desc: 'A pie de playa.',                          specialty: 'pizza al horno de leña, la diavola y la quattro formaggi salen siempre.', tier: '€€',  cat: 'restaurant', rating: 4.3, lat: 37.2270, lng: -1.7920 },
-  { id: 'trattoria',      name: 'La Trattoria da Marco', desc: 'Garrucha. Las pizzas están geniales.', specialty: 'pizza calzone, pasta a la carbonara auténtica y tiramisú.', tier: '€',   cat: 'restaurant', rating: 4.4, lat: 37.1810, lng: -1.8230 },
+  { id: 'gateway-india',  name: 'Gateway to India',  desc: 'Hindú. Bueno y barato.',                   specialty: 'cordero rogan josh, pollo tikka masala y pan naan de ajo.', tier: '€',   cat: 'restaurant', rating: 4.2, lat: 37.2195, lng: -1.8060 },
+  { id: 'pomodoro',       name: 'Pizzería Pomodoro', desc: 'A pie de playa.',                          specialty: 'pizza al horno de leña, la diavola y la quattro formaggi salen siempre.', tier: '€€',  cat: 'restaurant', rating: 4.3, lat: 37.2190, lng: -1.8045 },
+  { id: 'trattoria',      name: 'La Trattoria da Marco', desc: 'Garrucha. Las pizzas están geniales.', specialty: 'pizza calzone, pasta a la carbonara auténtica y tiramisú.', tier: '€',   cat: 'restaurant', rating: 4.4, lat: 37.1810, lng: -1.8218 },
   { id: 'lua',            name: 'Lúa',               desc: 'Sofisticado. Mejor para cena o copa.',     specialty: 'tartar de atún rojo, croquetas de gamba roja y carrillera al PX.', tip: 'Reserva mesa fuera al atardecer; la carta de cócteles está a la altura.', tier: '€€€', cat: 'restaurant', rating: 4.5, lat: 37.2310, lng: -1.7935 , featured: true },
   { id: 'bistro',         name: 'The Bistro',        desc: 'Bastante bien.',                            specialty: 'entrecot a la parrilla y ensalada de burrata.', tier: '€€',  cat: 'restaurant', rating: 4.3, lat: 37.2310, lng: -1.7945 },
-  { id: 'koa',            name: 'Resto Bar Koa',     desc: 'Frente a Hestía Vera Mar. Bocados pensados, ambiente cercano.', specialty: 'bao de panceta, ceviche del día y poke bowl.', tier: '€€',  cat: 'restaurant', rating: 4.5, lat: 37.2245, lng: -1.7965 , featured: true },
+  { id: 'koa',            name: 'Resto Bar Koa',     desc: 'Frente a Hestía Vera Mar. Bocados pensados, ambiente cercano.', specialty: 'bao de panceta, ceviche del día y poke bowl.', tier: '€€',  cat: 'restaurant', rating: 4.5, lat: 37.2245, lng: -1.7985, featured: true },
   { id: 'bbme-rest',      name: 'Restaurante Bbme Palomares', desc: 'En plena playa, a 10 min a pie.',  specialty: 'arroz negro con sepia y all i oli, sardinas a la espalda.', tier: '€€',  cat: 'restaurant', rating: 4.4, lat: 37.2155, lng: -1.7800 },
   { id: 'playa-azul',     name: 'Hostal Playa Azul', desc: 'Villaricos. Excelente paella con bogavante.', specialty: 'paella con bogavante (encargar al reservar), gambas blancas de Garrucha.', tip: 'Pide la paella al hacer la reserva, la preparan al momento.', tier: '€€', cat: 'restaurant', rating: 4.5, lat: 37.2460, lng: -1.7660 , featured: true },
-  { id: 'tadeo',          name: 'Tadeo',             desc: 'Villaricos. Cocina de mar con producto del día.', specialty: 'arroz con bogavante, tostas de ahumados y pulpo a la brasa.', tier: '€€', cat: 'restaurant', rating: 4.4, lat: 37.2455, lng: -1.7670 , featured: true },
+  { id: 'tadeo',          name: 'Tadeo',             desc: 'Villaricos. Cocina de mar con producto del día.', specialty: 'arroz con bogavante, tostas de ahumados y pulpo a la brasa.', tier: '€€', cat: 'restaurant', rating: 4.4, lat: 37.2494, lng: -1.7709, featured: true },
   { id: 'rincon-puerto',  name: 'Rincón del Puerto (Garrucha)', desc: 'Junto a la lonja de Garrucha. Marisco fresquísimo y ambiente de pueblo pesquero.', specialty: 'camarones crudos de Garrucha (imprescindibles), gamba roja a la plancha y quisquilla viva.', tip: 'Pide los camarones crudos según vienen del barco, no hay nada igual en la zona.', tier: '€€€', cat: 'restaurant', lat: 37.1818, lng: -1.8235, featured: true },
   { id: 'almadraba',      name: 'La Almadraba (Garrucha)', desc: 'Garrucha. Vista al puerto, especializado en pescado de la lonja.', specialty: 'gamba roja de Garrucha, lubina a la sal y arroz caldoso de marisco.', tier: '€€€', cat: 'restaurant', lat: 37.1822, lng: -1.8232 },
-  { id: 'rosado',         name: 'Freiduría Bar Rosado', desc: 'Buenas referencias.',                    specialty: 'fritura mixta de pescado y boquerones rebozados.', tier: '€€',  cat: 'restaurant', rating: 4.3, lat: 37.2240, lng: -1.8095 },
+  { id: 'rosado',         name: 'Freiduría Bar Rosado', desc: 'Buenas referencias.',                    specialty: 'fritura mixta de pescado y boquerones rebozados.', tier: '€€',  cat: 'restaurant', rating: 4.3, lat: 37.2210, lng: -1.8070 },
   { id: 'av-alicante',    name: 'Av. Ciudad de Alicante', desc: 'Detrás del Consum: pubs, comida rápida y más.',     cat: 'restaurant', lat: 37.2196, lng: -1.8082 },
   { id: 'valentino',      name: 'Ristorante di Valentino', desc: 'Mojácar.',                            specialty: 'pasta fresca casera, los ravioli de espinacas y la lasagna.', tier: '€€',  cat: 'restaurant', rating: 4.3, lat: 37.1377, lng: -1.8523 },
   { id: 'cabo-norte',     name: 'Cabo Norte',        desc: 'Mojácar. Buena materia prima a buen precio.', specialty: 'gambas al ajillo (imprescindibles), chuletón de vaca madurada, pulpo a la gallega y croquetas caseras.', tier: '€€',cat: 'restaurant', rating: 4.5, lat: 37.1370, lng: -1.8530 },
@@ -288,7 +291,7 @@ const PLACES = [
   { id: 'martin-fierro',  name: 'Asador Martín Fierro', desc: 'Rodalquilar. Asador argentino dentro del Parque Natural.', specialty: 'parrillada argentina, entraña, mollejas y empanadas criollas.', tip: 'Mesa fuera en primavera/otoño, el cielo de Cabo de Gata vale por sí solo.', tier: '€€€', cat: 'restaurant', rating: 4.6, lat: 36.8475, lng: -2.0395 , featured: true },
   { id: 'oro-luz',        name: 'Oro y Luz',         desc: 'Rodalquilar. Cocina creativa con producto del Parque.', specialty: 'menú degustación de temporada con verduras del huerto y pescado de Carboneras.', tier: '€€€', cat: 'restaurant', rating: 4.5, lat: 36.8480, lng: -2.0400 },
   { id: 'la-villa',       name: 'La Villa',          desc: 'Aguamarga. Mediterráneo elegante a pie de pueblo.', specialty: 'risotto de gambas, atún rojo a la parrilla y postre de chocolate templado.', tier: '€€€', cat: 'restaurant', rating: 4.5, lat: 36.9395, lng: -2.0000 },
-  { id: 'maruja',         name: 'Chiringuito Maruja', desc: 'Vera Playa. A pie de arena, ambiente sin pretensiones.', specialty: 'pescaíto frito, ensaladilla de la casa y sardinas al espeto en verano.', tier: '€€', cat: 'restaurant', rating: 4.3, lat: 37.2310, lng: -1.7920 },
+  { id: 'maruja',         name: 'Chiringuito Maruja', desc: 'Vera Playa. A pie de arena, ambiente sin pretensiones.', specialty: 'pescaíto frito, ensaladilla de la casa y sardinas al espeto en verano.', tier: '€€', cat: 'restaurant', rating: 4.3, lat: 37.2310, lng: -1.7930 },
 
   // ── Top-rated por Google en la zona (≥4.5 estrellas) ─────────
   // Mojácar
@@ -299,7 +302,7 @@ const PLACES = [
   { id: 'casa-egea',      name: 'Casa Egea (Vera)',  desc: 'Vera pueblo. Cocina tradicional con producto del Levante almeriense.', specialty: 'fritura de pescaíto, arroz a banda y postres caseros.', tier: '€€', rating: 4.6, cat: 'restaurant', lat: 37.2494, lng: -1.8631 },
   { id: 'regio-restaurante', name: 'Regio (Vera)',   desc: 'Vera pueblo. Casa de comidas con platos de cuchara y arroces.', specialty: 'olla de trigo, gurullos con conejo y arroz caldoso.', tier: '€€', rating: 4.5, cat: 'restaurant', lat: 37.2487, lng: -1.8637 },
   // Garrucha
-  { id: 'almejero',       name: 'El Almejero (Garrucha)', desc: 'Garrucha. Frente al puerto, especialista en marisco y arroces. Bib Gourmand.', specialty: 'arroz caldoso con bogavante, gamba roja a la plancha y almejas a la marinera.', tip: 'Mejor a mediodía con la luz del puerto.', tier: '€€€', rating: 4.6, cat: 'restaurant', lat: 37.1820, lng: -1.8240, featured: true },
+  { id: 'almejero',       name: 'El Almejero (Garrucha)', desc: 'Garrucha. Frente al puerto, especialista en marisco y arroces. Bib Gourmand.', specialty: 'arroz caldoso con bogavante, gamba roja a la plancha y almejas a la marinera.', tip: 'Mejor a mediodía con la luz del puerto.', tier: '€€€', rating: 4.6, cat: 'restaurant', lat: 37.1820, lng: -1.8222, featured: true },
   // Cabo de Gata · San José y alrededores
   { id: 'gallineta',      name: 'La Gallineta (Pozo de los Frailes)', desc: 'Pozo de los Frailes. Uno de los más reputados del Parque Natural. Reserva imprescindible.', specialty: 'menú degustación de pescado del día y atún rojo de almadraba.', tip: 'Reserva con 1-2 semanas de antelación en temporada.', tier: '€€€', rating: 4.7, cat: 'restaurant', lat: 36.7860, lng: -2.0900, featured: true },
   { id: '4nudos',         name: '4 Nudos (San José)', desc: 'San José. Cocina creativa con producto del mar de Cabo de Gata.', specialty: 'tartar de atún, ceviche de corvina y arroz negro.', tier: '€€€', rating: 4.6, cat: 'restaurant', lat: 36.7670, lng: -2.1080 },
@@ -410,17 +413,17 @@ const PLACES = [
 
   // Restaurantes celíacos (con menú o platos sin gluten certificados)
   { id: 'celiac-near',    name: 'Cerca de Hestía: Lúa, Chiringuito Maruja, Pizzería Memoli', desc: 'Andando o en 5 min en coche.', specialty: 'En Memoli pizza con base sin gluten; en Lúa el tartar y los pescados de la pizarra.', tip: 'Avisa al reservar, preparan utensilios separados.', cat: 'celiac', lat: 37.2240, lng: -1.7980, featured: true },
-  { id: 'boracay',        name: 'Boracay (Garrucha)', desc: 'Mediterráneo a pie del puerto.', specialty: 'arroces y pescados de la lonja sin gluten.', cat: 'celiac', lat: 37.1810, lng: -1.8230 },
+  { id: 'boracay',        name: 'Boracay (Garrucha)', desc: 'Mediterráneo a pie del puerto.', specialty: 'arroces y pescados de la lonja sin gluten.', cat: 'celiac', lat: 37.1731, lng: -1.8228 },
   { id: 'kontiki',        name: 'Mojácar: Cabo Norte, Neptuno, Kontiki', desc: 'Tres opciones seguras en el paseo de Mojácar.', specialty: 'Kontiki tiene carta sin gluten amplia; Neptuno controla muy bien el pescado.', cat: 'celiac', lat: 37.1377, lng: -1.8523, featured: true },
   { id: 'regio',          name: 'Vera pueblo: Juan Moreno, Terraza Carmona, Regio', desc: 'En el centro de Vera: tres clásicos con opciones sin gluten.', specialty: 'En Regio los gurullos y la olla de trigo; en Juan Moreno menú degustación adaptado bajo aviso.', tip: 'Reserva avisando, la cocina los prepara con cubiertos limpios.', cat: 'celiac', lat: 37.2491, lng: -1.8639, featured: true },
   { id: 'celiac-asoc',    name: 'Asociación de Celíacos de Almería', desc: 'Listado actualizado de restaurantes y obradores certificados.', cat: 'celiac', url: 'https://celiacosalmeria.es', lat: 36.8350, lng: -2.4630 },
 
   // Copas y chiringuitos
-  { id: 'turquesa',       name: 'Chiringuito Playa Turquesa', desc: 'Andando desde casa. Ambiente familiar de día, copas al atardecer.', specialty: 'mojito de menta del huerto y tabla de quesos al sol.', cat: 'bar', rating: 4.3, lat: 37.2260, lng: -1.7935 , featured: true },
-  { id: 'paraiso',        name: 'Paraíso Vera Beach', desc: 'Andando desde casa. Música chill desde media tarde.',         specialty: 'gin tonics premium y picoteo de tapeo mediterráneo.', cat: 'bar', rating: 4.3, lat: 37.2300, lng: -1.7920 },
-  { id: 'chumbo',         name: 'Chiringuito El Chumbo', desc: 'Andando desde casa. El más relajado del paseo.',      specialty: 'sangría de cava, sardinas al espeto en verano y arroz del día.', cat: 'bar', rating: 4.2, lat: 37.2360, lng: -1.7895 },
-  { id: 'marau',          name: 'Marau Beach Club',  desc: 'Beach club con DJ y zona de hamacas vista mar.',                                          specialty: 'cócteles de autor y carta asiática (poke, bao, tartar).', tip: 'Mejor reservar hamaca en julio-agosto; los atardeceres con DJ valen la pena.', cat: 'bar', rating: 4.4, lat: 37.2410, lng: -1.7895 , featured: true },
-  { id: 'mar-arena',      name: 'Chiringuito Mar y Arena', desc: 'Pequeño y muy local, a pie de arena.',                                    specialty: 'caña fría, paella los domingos y boquerones en vinagre.', cat: 'bar', rating: 4.2, lat: 37.2335, lng: -1.7910 },
+  { id: 'turquesa',       name: 'Chiringuito Playa Turquesa', desc: 'Andando desde casa. Ambiente familiar de día, copas al atardecer.', specialty: 'mojito de menta del huerto y tabla de quesos al sol.', cat: 'bar', rating: 4.3, lat: 37.2260, lng: -1.7950, featured: true },
+  { id: 'paraiso',        name: 'Paraíso Vera Beach', desc: 'Andando desde casa. Música chill desde media tarde.',         specialty: 'gin tonics premium y picoteo de tapeo mediterráneo.', cat: 'bar', rating: 4.3, lat: 37.2300, lng: -1.7940 },
+  { id: 'chumbo',         name: 'Chiringuito El Chumbo', desc: 'Andando desde casa. El más relajado del paseo.',      specialty: 'sangría de cava, sardinas al espeto en verano y arroz del día.', cat: 'bar', rating: 4.2, lat: 37.2100, lng: -1.7850 },
+  { id: 'marau',          name: 'Marau Beach Club',  desc: 'Beach club con DJ y zona de hamacas vista mar.',                                          specialty: 'cócteles de autor y carta asiática (poke, bao, tartar).', tip: 'Mejor reservar hamaca en julio-agosto; los atardeceres con DJ valen la pena.', cat: 'bar', rating: 4.4, lat: 37.2100, lng: -1.8098, featured: true },
+  { id: 'mar-arena',      name: 'Chiringuito Mar y Arena', desc: 'Pequeño y muy local, a pie de arena.',                                    specialty: 'caña fría, paella los domingos y boquerones en vinagre.', cat: 'bar', rating: 4.2, lat: 37.2335, lng: -1.7940 },
   { id: 'bbme-palomares', name: 'Bbme Palomares', desc: 'En plena playa, a 10 min a pie. Vistas amplias al Mediterráneo.',     specialty: 'spritz al atardecer, ostras y tapeo gourmet.', tip: 'Vete andando por la orilla al atardecer y vuelve en taxi: la luz vale la caminata.', cat: 'bar', rating: 4.4, lat: 37.2155, lng: -1.7800 , featured: true },
   { id: 'lebreros',       name: 'Los Lebreros (Garrucha puerto)', desc: 'Caña, marisco y vista al puerto pesquero.', specialty: 'gambas blancas, quisquilla viva y conchas finas.', tip: 'Ir sobre las 19:00 cuando atracan los barcos.', cat: 'bar', rating: 4.4, lat: 37.1820, lng: -1.8235, featured: true },
   // ── Bares top-rated por Google ───────────────────────────────
@@ -442,7 +445,7 @@ const PLACES = [
   { id: 'mar-menuda',     name: 'La Mar Menuda (Águilas)', desc: 'Águilas. Coctelería frente al mar.', specialty: 'mojitos, vermut casero y tapeo marinero.', rating: 4.5, cat: 'bar', lat: 37.4080, lng: -1.5785 },
 
   // Pescaderías y lonja
-  { id: 'lonja-garrucha', name: 'Lonja de Garrucha (subasta)', desc: 'Una de las lonjas más activas del Mediterráneo español. Subasta diaria de marisco y pescado de barco, se puede ver el espectáculo desde la cristalera.', specialty: 'gamba roja de Garrucha (la mejor del Mediterráneo), quisquilla, conchas finas, gallineta.', tip: 'La subasta es a las 17:00 los días laborables. Llega con tiempo y compra después en las pescaderías de al lado.', cat: 'fish', lat: 37.1810, lng: -1.8240, featured: true },
+  { id: 'lonja-garrucha', name: 'Lonja de Garrucha (subasta)', desc: 'Una de las lonjas más activas del Mediterráneo español. Subasta diaria de marisco y pescado de barco, se puede ver el espectáculo desde la cristalera.', specialty: 'gamba roja de Garrucha (la mejor del Mediterráneo), quisquilla, conchas finas, gallineta.', tip: 'La subasta es a las 17:00 los días laborables. Llega con tiempo y compra después en las pescaderías de al lado.', cat: 'fish', lat: 37.1810, lng: -1.8225, featured: true },
   { id: 'mercado-vera',   name: 'Mercado de abastos (Vera pueblo)', desc: 'Mercado tradicional cubierto con frutería, carnicería, pescadería y charcutería. Producto local del día.', specialty: 'producto fresco de la huerta de Almería, carne de la sierra, pescado de la lonja.', tip: 'Sábado por la mañana es cuando más vida tiene, combínalo con el mercadillo exterior.', cat: 'abasto', url: 'https://goo.gl/maps/PaEerwZNxAK1kNTS8', lat: 37.2486, lng: -1.8625, featured: true },
   { id: 'el-mero',        name: 'Pescadería El Mero (Garrucha)', desc: 'Junto a la lonja. Una de las pescaderías de referencia de Garrucha.', specialty: 'gamba roja recién subastada, lubinas y doradas salvajes, mariscos del día.', cat: 'fish', url: 'https://goo.gl/maps/AdJz6SEyGRvLeToDA', lat: 37.1815, lng: -1.8235, featured: true },
   { id: 'isabel',         name: 'Pescados y Mariscos Isabel (Garrucha)', desc: 'Pescadería pequeña pero con mucho oficio.', specialty: 'pescado para horno (besugo, dorada), pulpo cocido y conserva casera de mojama.', cat: 'fish', url: 'https://goo.gl/maps/RHCieMNkgo3FL8m5A', lat: 37.1820, lng: -1.8240 },
@@ -460,7 +463,7 @@ const PLACES = [
   { id: 'queseria-velez', name: 'Quesería Los Vélez', desc: 'Quesos artesanos de cabra y oveja de la Sierra de María-Los Vélez.', specialty: 'queso de cabra al romero, oveja semicurado y manchego de los Vélez.', tip: 'Pídelo en queserías de Vera o ve directamente al obrador en Vélez-Rubio.', cat: 'fish', lat: 37.6520, lng: -2.0760 },
 
   // Farmacias y salud
-  { id: 'farmacia-1',     name: 'Farmacia (junto Consum)', cat: 'pharmacy', url: 'https://goo.gl/maps/bGMV1sjwUqrRTNzk6', lat: 37.2210, lng: -1.8085 },
+  { id: 'farmacia-1',     name: 'Farmacia (junto Consum)', cat: 'pharmacy', url: 'https://goo.gl/maps/bGMV1sjwUqrRTNzk6', lat: 37.2197, lng: -1.8083 },
   { id: 'farmacia-2',     name: 'Farmacia Vera Playa',     cat: 'pharmacy', url: 'https://goo.gl/maps/GaRHGscDhErp9kBG7', lat: 37.2260, lng: -1.7985 },
 
   // ==========================================================
@@ -482,7 +485,7 @@ const PLACES = [
   { id: 'cs-mojacar-playa', name: 'Centro de Salud de Mojácar Playa',
     desc: 'Consultorio en Mojácar Playa. Atención primaria en horario diurno.',
     cat: 'health', url: 'https://www.google.com/maps/search/?api=1&query=Centro+de+Salud+Mojacar+Playa',
-    lat: 37.1380, lng: -1.8550 },
+    lat: 37.1340, lng: -1.8510 },
   { id: 'hospital-huercal', name: 'Hospital La Inmaculada (Huércal-Overa)',
     desc: 'Hospital comarcal de referencia. Urgencias 24h, ingreso y especialidades. Distancia: ~30 min en coche desde Vera Playa por la A-7.',
     tip: 'Urgencias: 950 17 53 06. Centralita: 950 02 91 00.',
@@ -500,7 +503,7 @@ const PLACES = [
   { id: 'vet-vera-plaza', name: 'Vet Care Vera Plaza',
     desc: 'Clínica veterinaria en Vera Playa con horario regular de lunes a sábado.',
     cat: 'vet', url: 'https://www.vetcareveraplaza.com/',
-    lat: 37.2270, lng: -1.7970 },
+    lat: 37.2197, lng: -1.8083 },
   { id: 'vet-mojacar',    name: 'Clínica Veterinaria Costa Índalo (Mojácar)',
     desc: 'Servicio de urgencias 24h (nocturno y festivos). Cirugía de urgencias y múltiples especialidades.',
     cat: 'vet', url: 'https://www.google.com/maps/search/?api=1&query=Clinica+Veterinaria+Costa+Indalo+Mojacar',
@@ -2028,38 +2031,125 @@ const GUIDE_BY_APT = {
   },
 };
 
+// Hex colors for Leaflet markers (CSS vars don't resolve in SVG/canvas context)
+const GUIDE_MAP_COLORS = {
+  home:         { fill: '#2A0F2E', border: '#3AAABB' },
+  restaurant:   { fill: '#B86A3C', border: '#8A4A24' },
+  michelin:     { fill: '#D4A84A', border: '#7A5E1A' },
+  celiac:       { fill: '#D08B5A', border: '#B86A3C' },
+  bar:          { fill: '#D4A84A', border: '#7A5E1A' },
+  beach:        { fill: '#3AAABB', border: '#2A8E9E' },
+  'beach-dog':  { fill: '#6B7A3A', border: '#4A5628' },
+  'beach-nude': { fill: '#9B7FDB', border: '#7060A8' },
+  'beach-srvc': { fill: '#4ABBD4', border: '#2A8E9E' },
+  'beach-hard': { fill: '#A070D0', border: '#7B50B0' },
+  super:        { fill: '#8B9A52', border: '#4A5628' },
+  fish:         { fill: '#176E80', border: '#0A4A55' },
+  pharmacy:     { fill: '#C49A3A', border: '#8A6A1A' },
+  health:       { fill: '#B8246E', border: '#8A1A50' },
+  vet:          { fill: '#6B7A3A', border: '#4A5628' },
+  physio:       { fill: '#A070D0', border: '#7B50B0' },
+  'pet-board':  { fill: '#D08B5A', border: '#B86A3C' },
+  gem:          { fill: '#3AAABB', border: '#2A8E9E' },
+  water:        { fill: '#4ABBD4', border: '#2A8E9E' },
+  adventure:    { fill: '#B8246E', border: '#8A1A50' },
+  trek:         { fill: '#8B9A52', border: '#4A5628' },
+  leisure:      { fill: '#E8C476', border: '#C49A3A' },
+  bodega:       { fill: '#3D1A35', border: '#2A0F2E' },
+  town:         { fill: '#8A4A24', border: '#6A2A04' },
+  bookshop:     { fill: '#8B7A6A', border: '#6B5A4A' },
+  abasto:       { fill: '#8A4A24', border: '#6A2A04' },
+  market:       { fill: '#7A5E1A', border: '#5A3E0A' },
+  fuel:         { fill: '#4E2446', border: '#2A0F2E' },
+  'ev-charge':  { fill: '#1A6060', border: '#0A4040' },
+  coworking:    { fill: '#8A4A24', border: '#6A2A04' },
+  laundry:      { fill: '#D08B5A', border: '#B86A3C' },
+  atm:          { fill: '#7A5E1A', border: '#5A3E0A' },
+};
+
+function buildGuidePopup(p, col, ci, section, lang) {
+  if (p.cat === 'home') {
+    return `<div class="hgp"><div class="hgp-home">${ci.icon || ''} ${p.name}</div></div>`;
+  }
+  const catLabel = ci[lang] || ci.es || '';
+  const sLink = section ? `#ag-${section}` : '#ag-lugares';
+  const sLabel = lang === 'es' ? 'Ver en la guía' : 'See in guide';
+  const sd = p.desc ? (p.desc.length > 90 ? p.desc.slice(0, 90) + '…' : p.desc) : '';
+  return `<div class="hgp">`
+    + `<div class="hgp-tag" style="background:${col.fill}">${ci.icon || ''} ${catLabel}</div>`
+    + `<strong class="hgp-name">${p.name}</strong>`
+    + (sd ? `<span class="hgp-desc">${sd}</span>` : '')
+    + `<a href="${sLink}" class="hgp-link" style="color:${col.fill}">${sLabel} →</a>`
+    + `</div>`;
+}
+
 // ================================================================
-// GuideMap, mapa de Vera Playa (Google Maps embed)
-// Antes era un Leaflet con coordenadas hardcoded para cada lugar.
-// Reemplazado por iframe genérico de Google + cada lugar abre su
-// propio Google Maps al pulsar "Cómo llegar" en la lista de abajo.
-// Cero coordenadas que mantener.
+// GuideMap — mapa Leaflet interactivo con todos los lugares de la guía.
+// Leaflet 1.9.4 + OpenStreetMap. Sin API key, carga dinámica.
 // ================================================================
 const GuideMap = ({ lang, apt }) => {
-  // Si tenemos el apt actual, centramos el embed en las coords concretas
-  // de ese Hestía. Si no, generic Vera Playa.
-  const home = apt && PLACES.find(p => p.id === `hestia-${apt.slug}`);
-  const src = home
-    ? `https://maps.google.com/maps?q=${home.lat},${home.lng}&z=15&output=embed`
-    : 'https://maps.google.com/maps?q=Vera+Playa+Almer%C3%ADa&z=14&output=embed';
+  const mapRef = React.useRef(null);
+  const mapInst = React.useRef(null);
+  const [leafletOk, setLeafletOk] = React.useState(!!(window.L));
+  const aptSlug = apt ? apt.slug : null;
+
+  React.useEffect(() => {
+    if (window.L) { setLeafletOk(true); return; }
+    const lnk = document.createElement('link');
+    lnk.rel = 'stylesheet';
+    lnk.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(lnk);
+    const sc = document.createElement('script');
+    sc.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    sc.onload = () => setLeafletOk(true);
+    document.head.appendChild(sc);
+  }, []);
+
+  React.useEffect(() => {
+    if (!leafletOk || !mapRef.current) return;
+    if (mapInst.current) { mapInst.current.remove(); mapInst.current = null; }
+
+    const catLookup = Object.fromEntries(CATEGORIES.map(c => [c.id, c]));
+    const home = PLACES.find(p => p.id === `hestia-${aptSlug}`);
+    const center = home ? [home.lat, home.lng] : [37.228, -1.806];
+    const zoom = home ? 12 : 11;
+
+    const map = window.L.map(mapRef.current, { scrollWheelZoom: false }).setView(center, zoom);
+    mapInst.current = map;
+
+    window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 19,
+    }).addTo(map);
+
+    PLACES.forEach(p => {
+      if (!p.lat || !p.lng) return;
+      const isHome = p.cat === 'home';
+      const col = GUIDE_MAP_COLORS[p.cat] || { fill: '#3AAABB', border: '#2A8E9E' };
+      const ci = catLookup[p.cat] || {};
+      const section = CAT_TO_SECTION[p.cat];
+      window.L.circleMarker([p.lat, p.lng], {
+        radius: isHome ? 10 : (p.featured ? 8 : 6),
+        fillColor: col.fill,
+        color: col.border,
+        weight: isHome ? 2.5 : 1.5,
+        opacity: 1,
+        fillOpacity: isHome ? 1 : (p.featured ? 0.9 : 0.75),
+      }).bindPopup(buildGuidePopup(p, col, ci, section, lang), { maxWidth: 220 })
+        .addTo(map);
+    });
+
+    return () => { if (mapInst.current) { mapInst.current.remove(); mapInst.current = null; } };
+  }, [leafletOk, lang, aptSlug]);
+
+  const withCoords = PLACES.filter(p => p.lat && p.lng).length;
   return (
     <div className="ag-map-block no-print">
-      <iframe
-        className="ag-map"
-        src={src}
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        title={home ? `${home.name}, mapa` : (lang === 'es' ? 'Mapa de Vera Playa' : 'Vera Playa map')}
-        allowFullScreen
-      />
+      <div ref={mapRef} className="ag-map ag-map-leaflet" />
       <div className="ag-map-note">
         {lang === 'es'
-          ? (home
-              ? `Mapa centrado en ${home.name}.`
-              : 'Mapa general de Vera Playa. Cada recomendación de abajo abre Google Maps con la búsqueda directa.')
-          : (home
-              ? `Map centred on ${home.name}.`
-              : 'Overview of Vera Playa. Each recommendation below opens Google Maps with a direct search.')}
+          ? `Mapa interactivo con ${withCoords} lugares de la guía. Toca cualquier pin para ver el detalle y navegar a esa sección.`
+          : `Interactive map with ${withCoords} guide places. Tap any pin for details and a direct link to its section.`}
       </div>
     </div>
   );
