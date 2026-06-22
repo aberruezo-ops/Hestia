@@ -6429,6 +6429,180 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
 };
 
 // ---------------------------------------------------------------
+const CAT_COLORS_PINS = {
+  home:'#2A0F2E', super:'#6B7A3A', restaurant:'#B86A3C', michelin:'#D4A84A',
+  bar:'#3AAABB', fish:'#4E7A9A', abasto:'#8A6A2E', pharmacy:'#B82490',
+  health:'#B8246E', vet:'#4E8A5A', 'pet-board':'#7A5E8A', physio:'#5A7A8A',
+  bodega:'#8A4A2E', coworking:'#4A6A8A', laundry:'#6A8A6A', atm:'#8A7A4A',
+  market:'#7A4A2E', sport:'#3A6A8A', trek:'#4A7A3A', nature:'#3A8A5A',
+  beach:'#2A8A9E', geo:'#7A4A7A', culture:'#6A4A3A', celiac:'#8A6A4A',
+  bookshop:'#4A4A8A', gas:'#8A3A3A', ev:'#3A8A7A',
+};
+
+const PinsTab = () => {
+  const mapRef       = React.useRef(null);
+  const mapInst      = React.useRef(null);
+  const markersRef   = React.useRef({});
+  const placesRef    = React.useRef([]);
+  const originalsRef = React.useRef({});
+  const searchActive = React.useRef(null);
+
+  const [changes, setChanges] = React.useState({});
+  const [search,  setSearch]  = React.useState('');
+  const [loading, setLoading] = React.useState(true);
+  const [loadErr, setLoadErr] = React.useState(null);
+  const [toast,   setToast]   = React.useState('');
+
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(''), 3000);
+  };
+
+  React.useEffect(() => {
+    if (!window.L) { setLoadErr('Leaflet no disponible. Recarga la pagina.'); setLoading(false); return; }
+    const L = window.L;
+
+    fetch('data/places.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(places => {
+        placesRef.current = places;
+        places.forEach(p => { originalsRef.current[p.id] = { lat: p.lat, lng: p.lng }; });
+        setLoading(false);
+
+        const map = L.map(mapRef.current, { scrollWheelZoom: true }).setView([37.22, -1.81], 11);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© <a href="https://openstreetmap.org/copyright">OSM</a>', maxZoom: 19,
+        }).addTo(map);
+        mapInst.current = map;
+
+        places.forEach(p => {
+          const col = CAT_COLORS_PINS[p.cat] || '#3AAABB';
+          const icon = L.divIcon({
+            className: '',
+            html: `<svg width="18" height="18"><circle cx="9" cy="9" r="7" fill="${col}" stroke="#fff" stroke-width="2"/></svg>`,
+            iconSize: [18, 18], iconAnchor: [9, 9],
+          });
+          const m = L.marker([p.lat, p.lng], { icon, draggable: true, title: p.name })
+            .bindTooltip(p.name, { direction: 'top', offset: [0, -9] })
+            .addTo(map);
+          m.on('dragend', () => {
+            const ll  = m.getLatLng();
+            const o   = originalsRef.current[p.id];
+            const dist = map.distance([o.lat, o.lng], [ll.lat, ll.lng]);
+            if (dist < 20) {
+              m.setLatLng([o.lat, o.lng]);
+              setChanges(prev => { const n = { ...prev }; delete n[p.id]; return n; });
+            } else {
+              setChanges(prev => ({ ...prev, [p.id]: { lat: ll.lat, lng: ll.lng } }));
+            }
+          });
+          markersRef.current[p.id] = m;
+        });
+      })
+      .catch(e => { setLoadErr('Error cargando places.json: ' + e.message); setLoading(false); });
+
+    return () => {
+      if (mapInst.current) { mapInst.current.remove(); mapInst.current = null; }
+      markersRef.current = {};
+    };
+  }, []);
+
+  React.useEffect(() => {
+    if (!search.trim() || !mapInst.current) return;
+    const q = search.toLowerCase().trim();
+    if (searchActive.current) markersRef.current[searchActive.current]?.closeTooltip();
+    const found = placesRef.current.find(p => p.name.toLowerCase().includes(q) || p.id.includes(q));
+    if (found) {
+      const m = markersRef.current[found.id];
+      if (m) { mapInst.current.setView(m.getLatLng(), 16); m.openTooltip(); searchActive.current = found.id; }
+    }
+  }, [search]);
+
+  const exportJson = () => {
+    const ids = Object.keys(changes);
+    if (!ids.length) { showToast('Sin cambios que exportar'); return; }
+    const out  = ids.map(id => ({ id, lat: parseFloat(changes[id].lat.toFixed(5)), lng: parseFloat(changes[id].lng.toFixed(5)) }));
+    const json = JSON.stringify(out, null, 2);
+    navigator.clipboard.writeText(json)
+      .then(()  => showToast(`JSON copiado (${out.length} cambios)`))
+      .catch(() => showToast('No se pudo copiar al portapapeles'));
+  };
+
+  const resetAll = () => {
+    if (!Object.keys(changes).length) return;
+    if (!confirm('Reiniciar todos los cambios?')) return;
+    Object.keys(changes).forEach(id => {
+      const o = originalsRef.current[id];
+      markersRef.current[id]?.setLatLng([o.lat, o.lng]);
+    });
+    setChanges({});
+  };
+
+  if (loadErr) return <div className="pe-card"><p className="pe-error">{loadErr}</p></div>;
+
+  const changeIds = Object.keys(changes);
+
+  return (
+    <div className="pe-pins-wrap">
+      {loading && <div className="pe-pins-loading">Cargando mapa...</div>}
+      <div ref={mapRef} className="pe-pins-map" style={loading ? { display: 'none' } : {}} />
+      <div className="pe-pins-panel">
+        <div className="pe-pins-ph">
+          <div className="pe-pins-title">Editor de pins</div>
+          <p className="pe-hint">Arrastra los pins a su posicion correcta. Exporta el JSON y pegalo en el chat con Claude para aplicar los cambios a la guia.</p>
+        </div>
+        <div className="pe-pins-search-wrap">
+          <input
+            type="text"
+            className="pe-input"
+            placeholder="Buscar lugar..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+        </div>
+        <div className="pe-pins-changes-head">Cambios ({changeIds.length})</div>
+        <div className="pe-pins-changes">
+          {changeIds.length === 0
+            ? <p className="pe-hint" style={{ padding: '12px 0' }}>Sin cambios aun.</p>
+            : changeIds.map(id => {
+                const p = placesRef.current.find(x => x.id === id);
+                const c = changes[id];
+                const o = originalsRef.current[id];
+                return (
+                  <div key={id} className="pe-pins-change-item">
+                    <div className="pe-pins-change-name">
+                      {p ? p.name : id}
+                      <button className="pe-btn pe-btn-ghost pe-btn-sm" style={{ float: 'right' }}
+                        onClick={() => {
+                          const oo = originalsRef.current[id];
+                          markersRef.current[id]?.setLatLng([oo.lat, oo.lng]);
+                          setChanges(prev => { const n = { ...prev }; delete n[id]; return n; });
+                        }}>
+                        deshacer
+                      </button>
+                    </div>
+                    <div className="pe-pins-change-old">{o.lat.toFixed(5)}, {o.lng.toFixed(5)}</div>
+                    <div className="pe-pins-change-new">→ {c.lat.toFixed(5)}, {c.lng.toFixed(5)}</div>
+                  </div>
+                );
+              })
+          }
+        </div>
+        <div className="pe-pins-footer">
+          <button className="pe-btn pe-btn-primary" onClick={exportJson} disabled={!changeIds.length}>
+            Exportar JSON
+          </button>
+          <button className="pe-btn pe-btn-ghost" onClick={resetAll} disabled={!changeIds.length}>
+            Reiniciar
+          </button>
+        </div>
+        {toast && <div className="pe-pins-toast">{toast}</div>}
+      </div>
+    </div>
+  );
+};
+
+// ---------------------------------------------------------------
 const AdminApp = () => {
   const [phase,    setPhase]    = React.useState('login');
   const [mode,     setMode]     = React.useState('reservas');
@@ -6943,12 +7117,17 @@ const AdminApp = () => {
             return pending > 0 ? <span className="pe-tab-badge">{pending}</span> : null;
           })()}
         </button>
+        <button type="button"
+          className={`pe-tab${mode === 'mapa' ? ' is-active' : ''}`}
+          onClick={() => { setMode('mapa'); setError(null); setSuccess(null); }}>
+          📍<span className="pe-tab-label"> Mapa</span>
+        </button>
       </div>
 
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'huecos' ? <HuecosTab token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'inteligencia' ? <IntelligenciaTab token={token} onNavigate={tab => { setMode(tab); setError(null); setSuccess(null); }} /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} token={token} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'bloqueos' ? <BloquesTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'mapa' ? <PinsTab /> : mode === 'huecos' ? <HuecosTab token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'inteligencia' ? <IntelligenciaTab token={token} onNavigate={tab => { setMode(tab); setError(null); setSuccess(null); }} /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} token={token} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'bloqueos' ? <BloquesTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>

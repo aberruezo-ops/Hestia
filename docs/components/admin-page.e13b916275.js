@@ -414,7 +414,7 @@ const CalendarEditor = ({
       className: "pe-card"
     }, /*#__PURE__*/React.createElement("h2", null, "Calendario y horizonte de reservas"), /*#__PURE__*/React.createElement("div", {
       className: "pe-error"
-    }, "JSON inv\xE1lido, ", calErr, ". Edita el bloque avanzado abajo para arreglarlo."), /*#__PURE__*/React.createElement("textarea", {
+    }, "JSON inválido, ", calErr, ". Edita el bloque avanzado abajo para arreglarlo."), /*#__PURE__*/React.createElement("textarea", {
       value: calJson,
       onChange: e => updateCalJson(e.target.value),
       rows: 20,
@@ -430,7 +430,7 @@ const CalendarEditor = ({
     className: "pe-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "\xDAltima fecha de check-in permitida"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "Última fecha de check-in permitida"), /*#__PURE__*/React.createElement("input", {
     type: "date",
     value: parsed.bookingHorizon.lastCheckinDate,
     onChange: e => updateHorizon(e.target.value),
@@ -444,21 +444,21 @@ const CalendarEditor = ({
     return /*#__PURE__*/React.createElement("div", {
       key: year,
       className: "pe-card"
-    }, /*#__PURE__*/React.createElement("h2", null, "Calendario ", year, " \xB7 temporadas"), okCoverage ? /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("h2", null, "Calendario ", year, " · temporadas"), okCoverage ? /*#__PURE__*/React.createElement("div", {
       className: "pe-success pe-validate-ok"
-    }, "\u2713 ", valid.totalDays, " d\xEDas cubiertos \xB7 sin huecos ni solapamientos") : /*#__PURE__*/React.createElement("div", {
+    }, "✓ ", valid.totalDays, " días cubiertos · sin huecos ni solapamientos") : /*#__PURE__*/React.createElement("div", {
       className: "pe-validate"
     }, valid.gaps.length > 0 && /*#__PURE__*/React.createElement("div", {
       className: "pe-validate-block pe-validate-gaps"
-    }, /*#__PURE__*/React.createElement("strong", null, valid.gaps.length, " hueco(s) sin temporada, a\xF1ade un rango que los cubra:"), /*#__PURE__*/React.createElement("ul", null, valid.gaps.map((g, i) => /*#__PURE__*/React.createElement("li", {
+    }, /*#__PURE__*/React.createElement("strong", null, valid.gaps.length, " hueco(s) sin temporada, añade un rango que los cubra:"), /*#__PURE__*/React.createElement("ul", null, valid.gaps.map((g, i) => /*#__PURE__*/React.createElement("li", {
       key: i
     }, g.start === g.end ? g.start : `${g.start} → ${g.end}`)))), valid.overlaps.length > 0 && /*#__PURE__*/React.createElement("div", {
       className: "pe-validate-block pe-validate-overlaps"
-    }, /*#__PURE__*/React.createElement("strong", null, valid.overlaps.length, " solapamiento(s), un d\xEDa solo puede pertenecer a una temporada o especial:"), /*#__PURE__*/React.createElement("ul", null, valid.overlaps.map((o, i) => /*#__PURE__*/React.createElement("li", {
+    }, /*#__PURE__*/React.createElement("strong", null, valid.overlaps.length, " solapamiento(s), un día solo puede pertenecer a una temporada o especial:"), /*#__PURE__*/React.createElement("ul", null, valid.overlaps.map((o, i) => /*#__PURE__*/React.createElement("li", {
       key: i
     }, o.start === o.end ? o.start : `${o.start} → ${o.end}`, /*#__PURE__*/React.createElement("span", {
       className: "pe-validate-sources"
-    }, ' ', "\u2013 ", o.sources.map(s => sourceLabel(s, cal, seasons)).join(' + '))))))), /*#__PURE__*/React.createElement("div", {
+    }, ' ', "– ", o.sources.map(s => sourceLabel(s, cal, seasons)).join(' + '))))))), /*#__PURE__*/React.createElement("div", {
       className: "pe-cal-seasons"
     }, seasonIds.map(sid => {
       const s = seasons[sid];
@@ -478,11 +478,11 @@ const CalendarEditor = ({
         }
       }), /*#__PURE__*/React.createElement("strong", null, s.label), /*#__PURE__*/React.createElement("span", {
         className: "pe-cal-mult"
-      }, "\xD7", s.multiplier), /*#__PURE__*/React.createElement("button", {
+      }, "×", s.multiplier), /*#__PURE__*/React.createElement("button", {
         type: "button",
         className: "pe-cal-add",
         onClick: () => addRange(year, 'seasons', sid),
-        "aria-label": "A\xF1adir rango"
+        "aria-label": "Añadir rango"
       }, "+")), ranges.length === 0 ? /*#__PURE__*/React.createElement("div", {
         className: "pe-cal-empty"
       }, "Sin rangos") : /*#__PURE__*/React.createElement("div", {
@@ -497,7 +497,7 @@ const CalendarEditor = ({
         className: "pe-input pe-input-date"
       }), /*#__PURE__*/React.createElement("span", {
         className: "pe-cal-arrow"
-      }, "\u2192"), /*#__PURE__*/React.createElement("input", {
+      }, "→"), /*#__PURE__*/React.createElement("input", {
         type: "date",
         value: r[1],
         onChange: e => updateRange(year, 'seasons', sid, i, 'end', e.target.value),
@@ -507,7 +507,7 @@ const CalendarEditor = ({
         className: "pe-cal-remove",
         onClick: () => removeRange(year, 'seasons', sid, i),
         "aria-label": "Eliminar"
-      }, "\xD7")))));
+      }, "×")))));
     })), /*#__PURE__*/React.createElement("h3", {
       className: "pe-h3"
     }, "Especiales"), /*#__PURE__*/React.createElement("div", {
@@ -523,7 +523,7 @@ const CalendarEditor = ({
       type: "button",
       className: "pe-cal-add",
       onClick: () => addRange(year, 'specials', sid),
-      "aria-label": "A\xF1adir rango"
+      "aria-label": "Añadir rango"
     }, "+")), /*#__PURE__*/React.createElement("div", {
       className: "pe-cal-ranges"
     }, sp.ranges.map((r, i) => /*#__PURE__*/React.createElement("div", {
@@ -536,7 +536,7 @@ const CalendarEditor = ({
       className: "pe-input pe-input-date"
     }), /*#__PURE__*/React.createElement("span", {
       className: "pe-cal-arrow"
-    }, "\u2192"), /*#__PURE__*/React.createElement("input", {
+    }, "→"), /*#__PURE__*/React.createElement("input", {
       type: "date",
       value: r[1],
       onChange: e => updateRange(year, 'specials', sid, i, 'end', e.target.value),
@@ -545,7 +545,7 @@ const CalendarEditor = ({
       type: "button",
       className: "pe-cal-remove",
       onClick: () => removeRange(year, 'specials', sid, i)
-    }, "\xD7"))))))), /*#__PURE__*/React.createElement("div", {
+    }, "×"))))))), /*#__PURE__*/React.createElement("div", {
       className: "pe-cal-bridges-h"
     }, /*#__PURE__*/React.createElement("h3", {
       className: "pe-h3"
@@ -573,7 +573,7 @@ const CalendarEditor = ({
       className: "pe-input pe-input-date"
     }), /*#__PURE__*/React.createElement("span", {
       className: "pe-cal-arrow"
-    }, "\u2192"), /*#__PURE__*/React.createElement("input", {
+    }, "→"), /*#__PURE__*/React.createElement("input", {
       type: "date",
       value: b.ranges[0][1],
       onChange: e => updateRange(year, 'bridges', null, i, 'end', e.target.value),
@@ -582,7 +582,7 @@ const CalendarEditor = ({
       type: "button",
       className: "pe-cal-remove",
       onClick: () => removeRange(year, 'bridges', null, i)
-    }, "\xD7")))));
+    }, "×")))));
   }), /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("button", {
@@ -591,7 +591,7 @@ const CalendarEditor = ({
     onClick: () => setAdvancedOpen(o => !o)
   }, advancedOpen ? '▼ Ocultar JSON avanzado' : '▶ Edición avanzada (JSON)'), advancedOpen && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", {
     className: "pe-lede"
-  }, "Para cambios masivos, paste/copy de un a\xF1o entero, o cuando quieras a\xF1adir un a\xF1o nuevo. Los cambios aqu\xED se reflejan en las tablas de arriba."), /*#__PURE__*/React.createElement("textarea", {
+  }, "Para cambios masivos, paste/copy de un año entero, o cuando quieras añadir un año nuevo. Los cambios aquí se reflejan en las tablas de arriba."), /*#__PURE__*/React.createElement("textarea", {
     value: calJson,
     onChange: e => updateCalJson(e.target.value),
     rows: 20,
@@ -599,7 +599,7 @@ const CalendarEditor = ({
     spellCheck: "false"
   }), !calOk && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
-  }, "JSON inv\xE1lido, ", calErr))));
+  }, "JSON inválido, ", calErr))));
 };
 
 // ============================================================
@@ -698,7 +698,7 @@ const ReviewRow = ({
       onApprove(review.id);
     },
     title: "Aprobar y publicar ahora"
-  }, "\u2713 Aprobar"), /*#__PURE__*/React.createElement("span", {
+  }, "✓ Aprobar"), /*#__PURE__*/React.createElement("span", {
     className: "pe-rev-snippet"
   }, snippet, review.text && review.text.length > 110 ? '…' : '')), expanded && /*#__PURE__*/React.createElement("div", {
     className: "pe-rev-row-body"
@@ -710,7 +710,7 @@ const ReviewRow = ({
     type: "button",
     className: "pe-btn pe-btn-ghost pe-btn-sm pe-rev-del",
     onClick: onRemove
-  }, "\xD7 Eliminar")), /*#__PURE__*/React.createElement("div", {
+  }, "× Eliminar")), /*#__PURE__*/React.createElement("div", {
     className: "pe-rev-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
@@ -733,7 +733,7 @@ const ReviewRow = ({
     value: s.id
   }, s.label)))), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Hest\xEDa"), /*#__PURE__*/React.createElement("select", {
+  }, /*#__PURE__*/React.createElement("label", null, "Hestía"), /*#__PURE__*/React.createElement("select", {
     value: review.apt,
     onChange: e => onChange('apt', e.target.value),
     className: "pe-input"
@@ -749,7 +749,7 @@ const ReviewRow = ({
     className: "pe-input"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Pa\xEDs (ISO 2)"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "País (ISO 2)"), /*#__PURE__*/React.createElement("input", {
     type: "text",
     maxLength: 2,
     value: review.country || '',
@@ -810,7 +810,7 @@ const ReviewRow = ({
     style: {
       cursor: 'pointer'
     }
-  }, "\u2726 Destacar como \"M\xE1s relevante\" en /opiniones"))));
+  }, "✦ Destacar como \"Más relevante\" en /opiniones"))));
 };
 
 // Parser para extraer una review del cuerpo del email que llega desde
@@ -957,12 +957,12 @@ const PasteFromEmail = ({
     }
   }, /*#__PURE__*/React.createElement("h3", {
     className: "pe-h3"
-  }, "\uD83D\uDCCB Pegar desde email"), /*#__PURE__*/React.createElement("p", {
+  }, "📋 Pegar desde email"), /*#__PURE__*/React.createElement("p", {
     className: "pe-hint",
     style: {
       marginBottom: 12
     }
-  }, "Pega el cuerpo del email que llega desde ", /*#__PURE__*/React.createElement("code", null, "/escribir-opinion"), ". Extraigo Hest\xEDa, valoraci\xF3n, nombre, email, fechas, idioma y texto. Se a\xF1ade como ", /*#__PURE__*/React.createElement("strong", null, "PENDIENTE"), " para revisar antes de publicar."), /*#__PURE__*/React.createElement("textarea", {
+  }, "Pega el cuerpo del email que llega desde ", /*#__PURE__*/React.createElement("code", null, "/escribir-opinion"), ". Extraigo Hestía, valoración, nombre, email, fechas, idioma y texto. Se añade como ", /*#__PURE__*/React.createElement("strong", null, "PENDIENTE"), " para revisar antes de publicar."), /*#__PURE__*/React.createElement("textarea", {
     rows: 10,
     value: raw,
     onChange: e => {
@@ -1006,15 +1006,15 @@ const PasteFromEmail = ({
     className: "pe-paste-preview-tag"
   }, "VISTA PREVIA"), /*#__PURE__*/React.createElement("span", {
     className: "pe-hint"
-  }, "Edita despu\xE9s si algo no est\xE1 bien.")), /*#__PURE__*/React.createElement("dl", {
+  }, "Edita después si algo no está bien.")), /*#__PURE__*/React.createElement("dl", {
     className: "pe-paste-grid"
-  }, /*#__PURE__*/React.createElement("dt", null, "Hest\xEDa"), "      ", /*#__PURE__*/React.createElement("dd", null, (REVIEW_APTS.find(a => a.id === parsed.apt) || {}).label || parsed.apt), /*#__PURE__*/React.createElement("dt", null, "Valoraci\xF3n"), "  ", /*#__PURE__*/React.createElement("dd", null, parsed.rating, "/5"), /*#__PURE__*/React.createElement("dt", null, "Nombre"), "      ", /*#__PURE__*/React.createElement("dd", null, parsed.name || /*#__PURE__*/React.createElement("em", null, "\u2013 no detectado")), parsed.email && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("dt", null, "Email"), /*#__PURE__*/React.createElement("dd", {
+  }, /*#__PURE__*/React.createElement("dt", null, "Hestía"), "      ", /*#__PURE__*/React.createElement("dd", null, (REVIEW_APTS.find(a => a.id === parsed.apt) || {}).label || parsed.apt), /*#__PURE__*/React.createElement("dt", null, "Valoración"), "  ", /*#__PURE__*/React.createElement("dd", null, parsed.rating, "/5"), /*#__PURE__*/React.createElement("dt", null, "Nombre"), "      ", /*#__PURE__*/React.createElement("dd", null, parsed.name || /*#__PURE__*/React.createElement("em", null, "– no detectado")), parsed.email && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("dt", null, "Email"), /*#__PURE__*/React.createElement("dd", {
     className: "pe-mono"
   }, parsed.email)), /*#__PURE__*/React.createElement("dt", null, "Fecha"), "       ", /*#__PURE__*/React.createElement("dd", {
     className: "pe-mono"
   }, fmtDate(parsed.date)), /*#__PURE__*/React.createElement("dt", null, "Idioma"), "      ", /*#__PURE__*/React.createElement("dd", null, parsed.lang.toUpperCase()), /*#__PURE__*/React.createElement("dt", null, "Texto"), "       ", /*#__PURE__*/React.createElement("dd", {
     className: "pe-paste-text"
-  }, parsed.text || /*#__PURE__*/React.createElement("em", null, "\u2013 no detectado"))), /*#__PURE__*/React.createElement("div", {
+  }, parsed.text || /*#__PURE__*/React.createElement("em", null, "– no detectado"))), /*#__PURE__*/React.createElement("div", {
     className: "pe-actions",
     style: {
       marginTop: 14
@@ -1023,7 +1023,7 @@ const PasteFromEmail = ({
     type: "button",
     onClick: accept,
     className: "pe-btn pe-btn-primary"
-  }, "\u2713 Crear como pendiente"), /*#__PURE__*/React.createElement("span", {
+  }, "✓ Crear como pendiente"), /*#__PURE__*/React.createElement("span", {
     className: "pe-hint"
   }, "Recuerda ", /*#__PURE__*/React.createElement("strong", null, "Guardar"), " al final para commitear."))));
 };
@@ -1061,12 +1061,12 @@ const NewReviewForm = ({
     onSubmit: submit
   }, /*#__PURE__*/React.createElement("h3", {
     className: "pe-h3"
-  }, "A\xF1adir review nueva"), /*#__PURE__*/React.createElement("p", {
+  }, "Añadir review nueva"), /*#__PURE__*/React.createElement("p", {
     className: "pe-hint",
     style: {
       marginBottom: 14
     }
-  }, "Si la review viene del formulario p\xFAblico (v\xEDa email Web3Forms), copia los campos aqu\xED. Por defecto se a\xF1ade como \"Publicada\"."), /*#__PURE__*/React.createElement("div", {
+  }, "Si la review viene del formulario público (vía email Web3Forms), copia los campos aquí. Por defecto se añade como \"Publicada\"."), /*#__PURE__*/React.createElement("div", {
     className: "pe-rev-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
@@ -1079,7 +1079,7 @@ const NewReviewForm = ({
     value: s.id
   }, s.label)))), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Hest\xEDa"), /*#__PURE__*/React.createElement("select", {
+  }, /*#__PURE__*/React.createElement("label", null, "Hestía"), /*#__PURE__*/React.createElement("select", {
     value: apt,
     onChange: e => setApt(e.target.value),
     className: "pe-input"
@@ -1096,7 +1096,7 @@ const NewReviewForm = ({
     required: true
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Pa\xEDs (ISO 2)"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "País (ISO 2)"), /*#__PURE__*/React.createElement("input", {
     type: "text",
     maxLength: 2,
     value: country,
@@ -1158,7 +1158,7 @@ const NewReviewForm = ({
     style: {
       cursor: 'pointer'
     }
-  }, "\u2726 Marcar como \"M\xE1s relevante\"")), /*#__PURE__*/React.createElement("div", {
+  }, "✦ Marcar como \"Más relevante\"")), /*#__PURE__*/React.createElement("div", {
     className: "pe-actions",
     style: {
       marginTop: 16
@@ -1166,7 +1166,7 @@ const NewReviewForm = ({
   }, /*#__PURE__*/React.createElement("button", {
     type: "submit",
     className: "pe-btn pe-btn-primary"
-  }, "A\xF1adir a la lista"), /*#__PURE__*/React.createElement("button", {
+  }, "Añadir a la lista"), /*#__PURE__*/React.createElement("button", {
     type: "button",
     onClick: onCancel,
     className: "pe-btn pe-btn-ghost"
@@ -1910,9 +1910,9 @@ const IntelligenciaTab = ({
     className: "pe-period-tab",
     onClick: reload,
     title: "Recargar"
-  }, "\u21BA"))), loading && /*#__PURE__*/React.createElement("div", {
+  }, "↺"))), loading && /*#__PURE__*/React.createElement("div", {
     className: "pe-analytics-loading"
-  }, "Cargando datos\u2026"), cfError && /*#__PURE__*/React.createElement("div", {
+  }, "Cargando datos…"), cfError && /*#__PURE__*/React.createElement("div", {
     className: "pe-error",
     style: {
       marginBottom: 12
@@ -1933,13 +1933,13 @@ const IntelligenciaTab = ({
     }
   }, totalPV != null ? totalPV.toLocaleString('es-ES') : '–'), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-lbl"
-  }, "P\xE1ginas vistas \xB7 ", days, "d")), /*#__PURE__*/React.createElement("div", {
+  }, "Páginas vistas · ", days, "d")), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi"
   }, /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-val"
   }, topCtry ?? '–'), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-lbl"
-  }, "Pa\xEDs principal")), /*#__PURE__*/React.createElement("div", {
+  }, "País principal")), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi"
   }, /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-val",
@@ -1948,7 +1948,7 @@ const IntelligenciaTab = ({
     }
   }, funnConv ?? '–'), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-lbl"
-  }, "Conversi\xF3n b\xFAsqueda\u2192reserva")), /*#__PURE__*/React.createElement("div", {
+  }, "Conversión búsqueda→reserva")), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi"
   }, /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-val",
@@ -1973,7 +1973,7 @@ const IntelligenciaTab = ({
     className: "intel-alertas"
   }, /*#__PURE__*/React.createElement("div", {
     className: "intel-alertas-title"
-  }, "Alertas e ideas de acci\xF3n"), alertas.map((a, i) => /*#__PURE__*/React.createElement("div", {
+  }, "Alertas e ideas de acción"), alertas.map((a, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
     className: `intel-alerta sev-${a.sev}`
   }, /*#__PURE__*/React.createElement("div", {
@@ -1999,7 +1999,7 @@ const IntelligenciaTab = ({
     type: "button",
     className: "intel-section-toggle",
     onClick: () => toggle('trafico')
-  }, /*#__PURE__*/React.createElement("span", null, "Tr\xE1fico web \xB7 ", days, " d\xEDas"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, "Tráfico web · ", days, " días"), /*#__PURE__*/React.createElement("span", {
     className: "intel-section-chevron"
   }, open.trafico ? '▲' : '▼')), open.trafico && /*#__PURE__*/React.createElement("div", {
     className: "intel-section-content"
@@ -2013,13 +2013,13 @@ const IntelligenciaTab = ({
     className: "pe-cf-stat-n"
   }, (totalPV || 0).toLocaleString('es-ES')), /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-stat-lbl"
-  }, "p\xE1ginas vistas \xB7 ", days, "d"))), /*#__PURE__*/React.createElement("div", {
+  }, "páginas vistas · ", days, "d"))), /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-cols"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-col-title"
-  }, "P\xE1ginas m\xE1s vistas"), (cfData.pages || []).length === 0 && /*#__PURE__*/React.createElement("p", {
+  }, "Páginas más vistas"), (cfData.pages || []).length === 0 && /*#__PURE__*/React.createElement("p", {
     className: "pe-hint"
   }, "Sin datos en este rango."), (cfData.pages || []).map((r, i) => /*#__PURE__*/React.createElement(BarRow, {
     key: i,
@@ -2031,7 +2031,7 @@ const IntelligenciaTab = ({
     className: "pe-cf-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-col-title"
-  }, "Pa\xEDses"), (cfData.countries || []).map((r, i) => /*#__PURE__*/React.createElement(BarRow, {
+  }, "Países"), (cfData.countries || []).map((r, i) => /*#__PURE__*/React.createElement(BarRow, {
     key: i,
     label: r.dimensions.countryName || '–',
     count: r.count,
@@ -2051,7 +2051,7 @@ const IntelligenciaTab = ({
     className: "pe-analytics-sep"
   }), /*#__PURE__*/React.createElement("div", {
     className: "pe-cf-col-title"
-  }, "Funnel de reservas \xB7 este navegador"), /*#__PURE__*/React.createElement("div", {
+  }, "Funnel de reservas · este navegador"), /*#__PURE__*/React.createElement("div", {
     className: "pe-funnel"
   }, FUNNEL_STEPS.map((step, i) => {
     const n = fc[step.name] || 0;
@@ -2075,7 +2075,7 @@ const IntelligenciaTab = ({
     type: "button",
     className: "intel-section-toggle",
     onClick: () => toggle('negocio')
-  }, /*#__PURE__*/React.createElement("span", null, "Negocio \xB7 hist\xF3rico"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, "Negocio · histórico"), /*#__PURE__*/React.createElement("span", {
     className: "intel-section-chevron"
   }, open.negocio ? '▲' : '▼')), open.negocio && /*#__PURE__*/React.createElement("div", {
     className: "intel-section-content"
@@ -2083,13 +2083,13 @@ const IntelligenciaTab = ({
     className: "pe-hint"
   }, "Error al cargar datos de negocio.") : !yearData ? !token ? /*#__PURE__*/React.createElement("p", {
     className: "pe-hint"
-  }, "Inicia sesi\xF3n con un PAT para ver datos de reservas en directo.") : /*#__PURE__*/React.createElement("p", {
+  }, "Inicia sesión con un PAT para ver datos de reservas en directo.") : /*#__PURE__*/React.createElement("p", {
     className: "pe-hint"
   }, "Sin datos.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "dash-section"
   }, /*#__PURE__*/React.createElement("h3", {
     className: "dash-section-title"
-  }, "Ingresos y BAI por a\xF1o"), /*#__PURE__*/React.createElement(BarChart, {
+  }, "Ingresos y BAI por año"), /*#__PURE__*/React.createElement(BarChart, {
     years: years,
     yearData: yearData
   })), /*#__PURE__*/React.createElement("div", {
@@ -2118,7 +2118,7 @@ const IntelligenciaTab = ({
     years: years,
     getData: y => yearData[y].rent_pct || 0,
     color: "#1BC8D8",
-    label: "Rentabilidad por a\xF1o",
+    label: "Rentabilidad por año",
     format: dashFmtPct
   }))), /*#__PURE__*/React.createElement("div", {
     className: "dash-charts-row"
@@ -2168,19 +2168,19 @@ const IntelligenciaTab = ({
     }
   }), "Noches")))), years.some(y => yearData[y].partial) && /*#__PURE__*/React.createElement("p", {
     className: "dash-footnote"
-  }, "* Datos parciales en algunos a\xF1os")))), /*#__PURE__*/React.createElement("div", {
+  }, "* Datos parciales en algunos años")))), /*#__PURE__*/React.createElement("div", {
     className: "intel-section"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "intel-section-toggle",
     onClick: () => toggle('eventos')
-  }, /*#__PURE__*/React.createElement("span", null, "Eventos recientes \xB7 este navegador"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, "Eventos recientes · este navegador"), /*#__PURE__*/React.createElement("span", {
     className: "intel-section-chevron"
   }, open.eventos ? '▲' : '▼')), open.eventos && /*#__PURE__*/React.createElement("div", {
     className: "intel-section-content"
   }, localEvents.length === 0 ? /*#__PURE__*/React.createElement("p", {
     className: "pe-hint"
-  }, "Sin eventos registrados todav\xEDa en este navegador.") : /*#__PURE__*/React.createElement("table", {
+  }, "Sin eventos registrados todavía en este navegador.") : /*#__PURE__*/React.createElement("table", {
     className: "pe-table pe-table-events"
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Hora"), /*#__PURE__*/React.createElement("th", null, "Evento"), /*#__PURE__*/React.createElement("th", null, "Datos"))), /*#__PURE__*/React.createElement("tbody", null, localEvents.slice(0, 60).map((ev, i) => /*#__PURE__*/React.createElement("tr", {
     key: i
@@ -2949,9 +2949,9 @@ info@hestiayourhome.com · +34 620 316 370`;
   };
   return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
-  }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDCC4 Generar contrato"), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("h2", null, "📄 Generar contrato"), /*#__PURE__*/React.createElement("p", {
     className: "pe-help"
-  }, "Rellena los datos del hu\xE9sped. El precio total lo dictas t\xFA \xB7 la fecha de firma se rellena con la de hoy (puedes cambiarla). Al pulsar ", /*#__PURE__*/React.createElement("strong", null, "Generar contrato y abrir correo"), " se abren dos ventanas: el contrato listo para guardar como PDF y tu cliente de correo con el mensaje prerrellenado al hu\xE9sped. Recuerda ", /*#__PURE__*/React.createElement("strong", null, "adjuntar manualmente"), " el PDF descargado al correo antes de enviarlo (los navegadores no permiten adjuntar autom\xE1ticamente desde un ", /*#__PURE__*/React.createElement("code", null, "mailto:"), ")."), /*#__PURE__*/React.createElement("div", {
+  }, "Rellena los datos del huésped. El precio total lo dictas tú · la fecha de firma se rellena con la de hoy (puedes cambiarla). Al pulsar ", /*#__PURE__*/React.createElement("strong", null, "Generar contrato y abrir correo"), " se abren dos ventanas: el contrato listo para guardar como PDF y tu cliente de correo con el mensaje prerrellenado al huésped. Recuerda ", /*#__PURE__*/React.createElement("strong", null, "adjuntar manualmente"), " el PDF descargado al correo antes de enviarlo (los navegadores no permiten adjuntar automáticamente desde un ", /*#__PURE__*/React.createElement("code", null, "mailto:"), ")."), /*#__PURE__*/React.createElement("div", {
     className: "ct-form"
   }, /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Apartamento"), /*#__PURE__*/React.createElement("div", {
     className: "pe-grid"
@@ -2968,7 +2968,7 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "ct-radio-name"
   }, info.name), /*#__PURE__*/React.createElement("span", {
     className: "ct-radio-meta"
-  }, "Plaza ", info.plazaGaraje))))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Datos del hu\xE9sped"), /*#__PURE__*/React.createElement("div", {
+  }, "Plaza ", info.plazaGaraje))))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Datos del huésped"), /*#__PURE__*/React.createElement("div", {
     className: "pe-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
@@ -2976,7 +2976,7 @@ info@hestiayourhome.com · +34 620 316 370`;
     type: "text",
     value: nombre,
     onChange: e => setNombre(e.target.value),
-    placeholder: "V\xCDCTOR CORT\xC9S"
+    placeholder: "VÍCTOR CORTÉS"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
   }, /*#__PURE__*/React.createElement("label", null, "DNI o pasaporte"), /*#__PURE__*/React.createElement("input", {
@@ -2993,10 +2993,10 @@ info@hestiayourhome.com · +34 620 316 370`;
     type: "text",
     value: domicilio,
     onChange: e => setDomicilio(e.target.value),
-    placeholder: "C/ Mayor 10, 1\xBAB, 28013 Madrid"
+    placeholder: "C/ Mayor 10, 1ºB, 28013 Madrid"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Tel\xE9fono"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "Teléfono"), /*#__PURE__*/React.createElement("input", {
     type: "tel",
     value: telefono,
     onChange: e => setTelefono(e.target.value),
@@ -3035,20 +3035,20 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "ct-readonly"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "N\xBA de hu\xE9spedes"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Nº de huéspedes"), /*#__PURE__*/React.createElement(NumInput, {
     min: "1",
     max: "8",
     value: huespedes,
     onChange: v => setHuespedes(v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "\xBFMascota?"), /*#__PURE__*/React.createElement("label", {
+  }, /*#__PURE__*/React.createElement("label", null, "¿Mascota?"), /*#__PURE__*/React.createElement("label", {
     className: "ct-toggle"
   }, /*#__PURE__*/React.createElement("input", {
     type: "checkbox",
     checked: mascota,
     onChange: e => setMascota(e.target.checked)
-  }), " ", /*#__PURE__*/React.createElement("span", null, "S\xED, viaja con mascota"))))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Importes (\u20AC)"), /*#__PURE__*/React.createElement("div", {
+  }), " ", /*#__PURE__*/React.createElement("span", null, "Sí, viaja con mascota"))))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Importes (€)"), /*#__PURE__*/React.createElement("div", {
     className: "pe-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
@@ -3060,7 +3060,7 @@ info@hestiayourhome.com · +34 620 316 370`;
     placeholder: "630"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al / prereserva (Bizum o transf.) *"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Señal / prereserva (Bizum o transf.) *"), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     min: "0",
     value: prereserva,
@@ -3081,24 +3081,24 @@ info@hestiayourhome.com · +34 620 316 370`;
     readOnly: true,
     value: `${remanente} €`,
     className: "ct-readonly"
-  })))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Pol\xEDtica"), /*#__PURE__*/React.createElement("div", {
+  })))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Política"), /*#__PURE__*/React.createElement("div", {
     className: "pe-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "D\xEDas de cancelaci\xF3n sin coste *"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Días de cancelación sin coste *"), /*#__PURE__*/React.createElement(NumInput, {
     min: "1",
     max: "60",
     value: diasCancelacion,
     onChange: v => setDiasCancelacion(v)
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "\xBFFianza?"), /*#__PURE__*/React.createElement("label", {
+  }, /*#__PURE__*/React.createElement("label", null, "¿Fianza?"), /*#__PURE__*/React.createElement("label", {
     className: "ct-toggle"
   }, /*#__PURE__*/React.createElement("input", {
     type: "checkbox",
     checked: fianza,
     onChange: e => setFianza(e.target.checked)
-  }), " ", /*#__PURE__*/React.createElement("span", null, "S\xED, 300 \u20AC (transferencia 2 d\xEDas antes)"))), /*#__PURE__*/React.createElement("div", {
+  }), " ", /*#__PURE__*/React.createElement("span", null, "Sí, 300 € (transferencia 2 días antes)"))), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
   }, /*#__PURE__*/React.createElement("label", null, "Fecha del contrato (firma)"), /*#__PURE__*/React.createElement("input", {
     type: "date",
@@ -3111,12 +3111,12 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "pe-btn pe-btn-primary",
     onClick: onGenerar,
     disabled: !formOk()
-  }, "\uD83D\uDCE8 Generar contrato y abrir correo"), canSaveToReserva && /*#__PURE__*/React.createElement("button", {
+  }, "📨 Generar contrato y abrir correo"), canSaveToReserva && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost",
     onClick: saveToReserva,
-    title: "Guarda los datos del hu\xE9sped en la reserva sin generar el contrato"
-  }, "\uD83D\uDCBE Guardar datos en la reserva"), !formOk() && /*#__PURE__*/React.createElement("span", {
+    title: "Guarda los datos del huésped en la reserva sin generar el contrato"
+  }, "💾 Guardar datos en la reserva"), !formOk() && /*#__PURE__*/React.createElement("span", {
     className: "ct-actions-hint"
   }, "Faltan campos obligatorios (marcados con *)."), reservaSaveMsg && /*#__PURE__*/React.createElement("span", {
     className: "ct-actions-hint",
@@ -3448,7 +3448,7 @@ const BloquesTab = ({
   }));
   if (loading) return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
-  }, /*#__PURE__*/React.createElement("p", null, "Cargando\u2026"));
+  }, /*#__PURE__*/React.createElement("p", null, "Cargando…"));
   if (loadErr) return /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
   }, loadErr);
@@ -3469,7 +3469,7 @@ const BloquesTab = ({
     className: "pe-section-title"
   }, "Bloqueos manuales de calendario"), /*#__PURE__*/React.createElement("p", {
     className: "blk-desc"
-  }, "Reservas directas y fechas cerradas que ", /*#__PURE__*/React.createElement("strong", null, "no aparecen en los feeds de Airbnb/Booking"), ". El sync iCal autom\xE1tico (cada 4 h) las integra en el calendario p\xFAblico junto con las reservas de plataformas."), APTS_BLK.map(({
+  }, "Reservas directas y fechas cerradas que ", /*#__PURE__*/React.createElement("strong", null, "no aparecen en los feeds de Airbnb/Booking"), ". El sync iCal automático (cada 4 h) las integra en el calendario público junto con las reservas de plataformas."), APTS_BLK.map(({
     id,
     label
   }) => /*#__PURE__*/React.createElement("div", {
@@ -3481,7 +3481,7 @@ const BloquesTab = ({
     className: "blk-empty"
   }, "Sin bloqueos manuales") : /*#__PURE__*/React.createElement("table", {
     className: "blk-table"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", null, "Nota / hu\xE9sped"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, (blocks[id] || []).map((r, i) => /*#__PURE__*/React.createElement("tr", {
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", null, "Nota / huésped"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, (blocks[id] || []).map((r, i) => /*#__PURE__*/React.createElement("tr", {
     key: i
   }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("input", {
     type: "date",
@@ -3498,15 +3498,15 @@ const BloquesTab = ({
     value: r.note || '',
     onChange: e => updateBlock(id, i, 'note', e.target.value),
     className: "blk-note-input",
-    placeholder: "Hu\xE9sped / motivo"
+    placeholder: "Huésped / motivo"
   })), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("button", {
     className: "blk-del",
     onClick: () => removeBlock(id, i),
     title: "Eliminar"
-  }, "\xD7")))))), /*#__PURE__*/React.createElement("button", {
+  }, "×")))))), /*#__PURE__*/React.createElement("button", {
     className: "blk-add",
     onClick: () => addBlock(id)
-  }, "+ A\xF1adir bloqueo"))), /*#__PURE__*/React.createElement("div", {
+  }, "+ Añadir bloqueo"))), /*#__PURE__*/React.createElement("div", {
     className: "pe-actions",
     style: {
       marginTop: '1.5rem'
@@ -3826,7 +3826,7 @@ const FacturasTab = ({
   }];
   if (loading) return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
-  }, /*#__PURE__*/React.createElement("p", null, "Cargando facturas\u2026"));
+  }, /*#__PURE__*/React.createElement("p", null, "Cargando facturas…"));
   return /*#__PURE__*/React.createElement("div", {
     className: "pe-card fac-card"
   }, error && /*#__PURE__*/React.createElement("div", {
@@ -3835,7 +3835,7 @@ const FacturasTab = ({
     className: "pe-success"
   }, success), /*#__PURE__*/React.createElement("div", {
     className: "fac-head"
-  }, /*#__PURE__*/React.createElement("h2", null, "\uD83E\uDDFE Facturas de gastos", /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("h2", null, "🧾 Facturas de gastos", /*#__PURE__*/React.createElement("span", {
     className: "fac-year-badge"
   }, focusYear)), /*#__PURE__*/React.createElement("div", {
     className: "fac-head-actions"
@@ -3858,7 +3858,7 @@ const FacturasTab = ({
     onClick: openNew
   }, "+ Nueva factura"))), /*#__PURE__*/React.createElement("div", {
     className: "fac-toolbar"
-  }, /*#__PURE__*/React.createElement("label", null, "Hest\xEDa", /*#__PURE__*/React.createElement("select", {
+  }, /*#__PURE__*/React.createElement("label", null, "Hestía", /*#__PURE__*/React.createElement("select", {
     value: filterApt,
     onChange: e => setFilterApt(e.target.value)
   }, /*#__PURE__*/React.createElement("option", {
@@ -3866,7 +3866,7 @@ const FacturasTab = ({
   }, "Todas"), aptOptions.map(a => /*#__PURE__*/React.createElement("option", {
     key: a.key,
     value: a.key
-  }, a.label)))), /*#__PURE__*/React.createElement("label", null, "Categor\xEDa", /*#__PURE__*/React.createElement("select", {
+  }, a.label)))), /*#__PURE__*/React.createElement("label", null, "Categoría", /*#__PURE__*/React.createElement("select", {
     value: filterCat,
     onChange: e => setFilterCat(e.target.value)
   }, /*#__PURE__*/React.createElement("option", {
@@ -3888,11 +3888,11 @@ const FacturasTab = ({
     className: "fac-kpi fac-kpi-accent"
   }, /*#__PURE__*/React.createElement("span", null, "Gasto deducible"), /*#__PURE__*/React.createElement("strong", null, fmtEur(totDeducible)))), filtered.length === 0 ? /*#__PURE__*/React.createElement("p", {
     className: "fac-empty"
-  }, "No hay facturas para ", focusYear, filterApt !== 'all' || filterCat !== 'all' ? ' con estos filtros' : '', ". Pulsa \"+ Nueva factura\" para a\xF1adir.") : /*#__PURE__*/React.createElement("div", {
+  }, "No hay facturas para ", focusYear, filterApt !== 'all' || filterCat !== 'all' ? ' con estos filtros' : '', ". Pulsa \"+ Nueva factura\" para añadir.") : /*#__PURE__*/React.createElement("div", {
     className: "fac-table-wrap"
   }, /*#__PURE__*/React.createElement("table", {
     className: "fac-table"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Fecha"), /*#__PURE__*/React.createElement("th", null, "Proveedor"), /*#__PURE__*/React.createElement("th", null, "Concepto"), /*#__PURE__*/React.createElement("th", null, "Categor\xEDa"), /*#__PURE__*/React.createElement("th", null, "Hest\xEDa"), /*#__PURE__*/React.createElement("th", {
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Fecha"), /*#__PURE__*/React.createElement("th", null, "Proveedor"), /*#__PURE__*/React.createElement("th", null, "Concepto"), /*#__PURE__*/React.createElement("th", null, "Categoría"), /*#__PURE__*/React.createElement("th", null, "Hestía"), /*#__PURE__*/React.createElement("th", {
     className: "num"
   }, "Base"), /*#__PURE__*/React.createElement("th", {
     className: "num"
@@ -3944,9 +3944,9 @@ const FacturasTab = ({
       className: "fac-pdf-btn",
       title: f.factura_pdf,
       onClick: () => handlePdfDownload(f.factura_pdf)
-    }, "\uD83D\uDCCE PDF") : /*#__PURE__*/React.createElement("span", {
+    }, "📎 PDF") : /*#__PURE__*/React.createElement("span", {
       className: "fac-no-pdf"
-    }, "\u2013")), /*#__PURE__*/React.createElement("td", {
+    }, "–")), /*#__PURE__*/React.createElement("td", {
       className: "fac-actions-cell",
       onClick: e => e.stopPropagation()
     }, /*#__PURE__*/React.createElement("button", {
@@ -3954,7 +3954,7 @@ const FacturasTab = ({
       className: "fac-del-btn",
       title: "Borrar",
       onClick: () => deleteFactura(i)
-    }, "\uD83D\uDDD1")));
+    }, "🗑")));
   })), /*#__PURE__*/React.createElement("tfoot", null, /*#__PURE__*/React.createElement("tr", {
     className: "fac-foot"
   }, /*#__PURE__*/React.createElement("td", {
@@ -3963,7 +3963,7 @@ const FacturasTab = ({
     className: "num"
   }, /*#__PURE__*/React.createElement("strong", null, fmtEur(totBase))), /*#__PURE__*/React.createElement("td", {
     className: "num"
-  }, "\u2013"), /*#__PURE__*/React.createElement("td", {
+  }, "–"), /*#__PURE__*/React.createElement("td", {
     className: "num"
   }, /*#__PURE__*/React.createElement("strong", null, fmtEur(totTotal))), /*#__PURE__*/React.createElement("td", {
     className: "num fac-deducible"
@@ -3971,7 +3971,7 @@ const FacturasTab = ({
     colSpan: "2"
   }))))), Object.keys(byCat).length > 1 && /*#__PURE__*/React.createElement("div", {
     className: "fac-bycat"
-  }, /*#__PURE__*/React.createElement("h3", null, "Por categor\xEDa"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h3", null, "Por categoría"), /*#__PURE__*/React.createElement("div", {
     className: "fac-bycat-grid"
   }, Object.entries(byCat).sort((a, b) => b[1].base - a[1].base).map(([k, v]) => {
     const catLabel = (GASTO_CATS.find(c => c.key === k) || {}).label || k;
@@ -3996,11 +3996,11 @@ const FacturasTab = ({
     className: "rv-edit-head"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-eyebrow"
-  }, editIdx >= 0 ? 'Editar factura' : 'Nueva factura', " \xB7 ", focusYear), /*#__PURE__*/React.createElement("h3", null, draft.proveedor || '(sin proveedor)')), /*#__PURE__*/React.createElement("button", {
+  }, editIdx >= 0 ? 'Editar factura' : 'Nueva factura', " · ", focusYear), /*#__PURE__*/React.createElement("h3", null, draft.proveedor || '(sin proveedor)')), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "rv-edit-close",
     onClick: cancelDraft
-  }, "\xD7")), /*#__PURE__*/React.createElement("div", {
+  }, "×")), /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-body"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-row2"
@@ -4013,7 +4013,7 @@ const FacturasTab = ({
     onChange: e => updateDraft('fecha', e.target.value)
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Hest\xEDa"), /*#__PURE__*/React.createElement("select", {
+  }, /*#__PURE__*/React.createElement("label", null, "Hestía"), /*#__PURE__*/React.createElement("select", {
     className: "pe-input",
     value: draft.apt || 'general',
     onChange: e => updateDraft('apt', e.target.value)
@@ -4042,10 +4042,10 @@ const FacturasTab = ({
     className: "pe-input",
     value: draft.concepto || '',
     onChange: e => updateDraft('concepto', e.target.value),
-    placeholder: "Descripci\xF3n del gasto"
+    placeholder: "Descripción del gasto"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Categor\xEDa"), /*#__PURE__*/React.createElement("select", {
+  }, /*#__PURE__*/React.createElement("label", null, "Categoría"), /*#__PURE__*/React.createElement("select", {
     className: "pe-input",
     value: draft.categoria || 'otros',
     onChange: e => updateDraft('categoria', e.target.value)
@@ -4084,7 +4084,7 @@ const FacturasTab = ({
     className: "pe-field"
   }, /*#__PURE__*/React.createElement("label", null, "% Deducible ", /*#__PURE__*/React.createElement("span", {
     className: "rv-hint-inline"
-  }, "100 = deducci\xF3n total")), /*#__PURE__*/React.createElement(NumInput, {
+  }, "100 = deducción total")), /*#__PURE__*/React.createElement(NumInput, {
     className: "pe-input",
     value: draft.deducible_pct ?? 100,
     onChange: v => updateDraft('deducible_pct', Math.min(100, Math.max(0, v))),
@@ -4102,16 +4102,16 @@ const FacturasTab = ({
   }, draft.factura_pdf ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
     className: "rv-contrato-fname",
     title: draft.factura_pdf
-  }, "\uD83D\uDCCE ", draft.factura_pdf), /*#__PURE__*/React.createElement("button", {
+  }, "📎 ", draft.factura_pdf), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost",
     onClick: () => handlePdfDownload(draft.factura_pdf)
-  }, "\u2B07 Ver"), /*#__PURE__*/React.createElement("label", {
+  }, "⬇ Ver"), /*#__PURE__*/React.createElement("label", {
     className: "pe-btn pe-btn-ghost",
     style: {
       cursor: 'pointer'
     }
-  }, "\uD83D\uDD04 Cambiar", /*#__PURE__*/React.createElement("input", {
+  }, "🔄 Cambiar", /*#__PURE__*/React.createElement("input", {
     type: "file",
     accept: ".pdf,.jpg,.jpeg,.png",
     style: {
@@ -4140,7 +4140,7 @@ const FacturasTab = ({
       cancelDraft();
       deleteFactura(facturas.indexOf(data.facturas[editIdx]));
     }
-  }, "\uD83D\uDDD1 Borrar"), /*#__PURE__*/React.createElement("div", {
+  }, "🗑 Borrar"), /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-foot-right"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -4298,7 +4298,7 @@ const LeilaTab = ({
   };
   if (loading) return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
-  }, /*#__PURE__*/React.createElement("p", null, "Cargando\u2026"));
+  }, /*#__PURE__*/React.createElement("p", null, "Cargando…"));
   if (loadErr) return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("div", {
@@ -4382,7 +4382,7 @@ const LeilaTab = ({
     style: {
       margin: 0
     }
-  }, "Pagos \xB7 Leila"), /*#__PURE__*/React.createElement("div", {
+  }, "Pagos · Leila"), /*#__PURE__*/React.createElement("div", {
     className: "leila-year-row"
   }, allYears.map(y => /*#__PURE__*/React.createElement("button", {
     key: y,
@@ -4421,7 +4421,7 @@ const LeilaTab = ({
     }))
   }), /*#__PURE__*/React.createElement("span", {
     className: "leila-saldo-unit"
-  }, "\u20AC"), saldoInicialYear !== 0 && /*#__PURE__*/React.createElement("span", {
+  }, "€"), saldoInicialYear !== 0 && /*#__PURE__*/React.createElement("span", {
     className: "leila-saldo-hint"
   }, saldoInicialYear > 0 ? `Leila debe ${saldoInicialYear}€ al entrar el año` : `Hestía debe ${Math.abs(saldoInicialYear)}€ al entrar el año`)), hasEdits && /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -4488,13 +4488,13 @@ const LeilaTab = ({
       className: "leila-month-name"
     }, MES_FULL[parseInt(m, 10) - 1], " ", focusYear), /*#__PURE__*/React.createElement("span", {
       className: "leila-month-kpis"
-    }, /*#__PURE__*/React.createElement("span", null, "Efectivo: ", /*#__PURE__*/React.createElement("strong", null, mEfectivo, " \u20AC")), /*#__PURE__*/React.createElement("span", null, "Limpieza: ", /*#__PURE__*/React.createElement("strong", null, mTarifa, " \u20AC")), /*#__PURE__*/React.createElement("span", null, "Neto mes: ", /*#__PURE__*/React.createElement("strong", null, mEfectivo - mTarifa, " \u20AC")), liqVal > 0 && /*#__PURE__*/React.createElement("span", null, "Leila pag\xF3: ", /*#__PURE__*/React.createElement("strong", null, liqVal, " \u20AC")), /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement("span", null, "Efectivo: ", /*#__PURE__*/React.createElement("strong", null, mEfectivo, " €")), /*#__PURE__*/React.createElement("span", null, "Limpieza: ", /*#__PURE__*/React.createElement("strong", null, mTarifa, " €")), /*#__PURE__*/React.createElement("span", null, "Neto mes: ", /*#__PURE__*/React.createElement("strong", null, mEfectivo - mTarifa, " €")), liqVal > 0 && /*#__PURE__*/React.createElement("span", null, "Leila pagó: ", /*#__PURE__*/React.createElement("strong", null, liqVal, " €")), /*#__PURE__*/React.createElement("span", {
       className: mBal > 0 ? 'leila-owe' : mBal < 0 ? 'leila-over' : ''
     }, /*#__PURE__*/React.createElement("strong", null, fmtBal(mBal))))), /*#__PURE__*/React.createElement("div", {
       className: "leila-table-wrap"
     }, /*#__PURE__*/React.createElement("table", {
       className: "leila-table"
-    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Hu\xE9sped"), /*#__PURE__*/React.createElement("th", null, "Entrada \xB7 Salida"), /*#__PURE__*/React.createElement("th", {
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Huésped"), /*#__PURE__*/React.createElement("th", null, "Entrada · Salida"), /*#__PURE__*/React.createElement("th", {
       className: "num"
     }, "Noches"), /*#__PURE__*/React.createElement("th", {
       className: "num"
@@ -4504,7 +4504,7 @@ const LeilaTab = ({
       className: "num"
     }, "Rent."), /*#__PURE__*/React.createElement("th", {
       className: "num"
-    }, "\u20AC/noche"), /*#__PURE__*/React.createElement("th", {
+    }, "€/noche"), /*#__PURE__*/React.createElement("th", {
       className: "num"
     }, "Limpieza"), /*#__PURE__*/React.createElement("th", {
       className: "num"
@@ -4534,7 +4534,7 @@ const LeilaTab = ({
         className: "num"
       }, r.precio_bruto_noche != null ? `${r.precio_bruto_noche} €` : '–'), /*#__PURE__*/React.createElement("td", {
         className: "num"
-      }, tarifa, " \u20AC"), /*#__PURE__*/React.createElement("td", {
+      }, tarifa, " €"), /*#__PURE__*/React.createElement("td", {
         className: "num"
       }, /*#__PURE__*/React.createElement(NumInput, {
         step: "1",
@@ -4555,13 +4555,13 @@ const LeilaTab = ({
       colSpan: "4"
     }), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, rows.reduce((s, r) => s + (Number(r.ingreso_total) || 0), 0), " \u20AC"), /*#__PURE__*/React.createElement("td", {
+    }, rows.reduce((s, r) => s + (Number(r.ingreso_total) || 0), 0), " €"), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, rows.reduce((s, r) => s + (Number(r.bai) || 0), 0), " \u20AC"), /*#__PURE__*/React.createElement("td", {
+    }, rows.reduce((s, r) => s + (Number(r.bai) || 0), 0), " €"), /*#__PURE__*/React.createElement("td", {
       colSpan: "2"
     }), /*#__PURE__*/React.createElement("td", {
       className: "num"
-    }, mTarifa, " \u20AC"), /*#__PURE__*/React.createElement("td", {
+    }, mTarifa, " €"), /*#__PURE__*/React.createElement("td", {
       className: "num"
     }, mEfectivo > 0 ? `${mEfectivo} €` : '–'), /*#__PURE__*/React.createElement("td", {
       className: `num ${mEfectivo - mTarifa > 0 ? 'leila-owe' : mEfectivo - mTarifa < 0 ? 'leila-over' : 'leila-ok'}`
@@ -4569,7 +4569,7 @@ const LeilaTab = ({
       className: "leila-liquid-row"
     }, /*#__PURE__*/React.createElement("label", {
       className: "leila-liquid-lbl"
-    }, "Leila pag\xF3 a Hest\xEDa en ", MES_FULL[parseInt(m, 10) - 1], ":"), /*#__PURE__*/React.createElement(NumInput, {
+    }, "Leila pagó a Hestía en ", MES_FULL[parseInt(m, 10) - 1], ":"), /*#__PURE__*/React.createElement(NumInput, {
       step: "1",
       min: "0",
       className: "leila-cobro-input",
@@ -4581,7 +4581,7 @@ const LeilaTab = ({
       }))
     }), /*#__PURE__*/React.createElement("span", {
       className: "leila-liquid-eur"
-    }, "\u20AC"), /*#__PURE__*/React.createElement("label", {
+    }, "€"), /*#__PURE__*/React.createElement("label", {
       className: "leila-liquid-lbl",
       style: {
         marginLeft: 16
@@ -4604,9 +4604,9 @@ const LeilaTab = ({
     const yrBal = yrNeto - yrLiquid;
     return /*#__PURE__*/React.createElement("div", {
       className: "leila-year-total"
-    }, /*#__PURE__*/React.createElement("span", null, "Total ", focusYear), /*#__PURE__*/React.createElement("span", null, "Efectivo: ", /*#__PURE__*/React.createElement("strong", null, yrEfectivo, " \u20AC")), /*#__PURE__*/React.createElement("span", null, "Limpieza: ", /*#__PURE__*/React.createElement("strong", null, yrTarifa, " \u20AC")), /*#__PURE__*/React.createElement("span", null, "Neto: ", /*#__PURE__*/React.createElement("strong", {
+    }, /*#__PURE__*/React.createElement("span", null, "Total ", focusYear), /*#__PURE__*/React.createElement("span", null, "Efectivo: ", /*#__PURE__*/React.createElement("strong", null, yrEfectivo, " €")), /*#__PURE__*/React.createElement("span", null, "Limpieza: ", /*#__PURE__*/React.createElement("strong", null, yrTarifa, " €")), /*#__PURE__*/React.createElement("span", null, "Neto: ", /*#__PURE__*/React.createElement("strong", {
       className: yrNeto > 0 ? 'leila-owe' : yrNeto < 0 ? 'leila-over' : ''
-    }, yrNeto > 0 ? '+' : '', yrNeto, " \u20AC")), yrLiquid > 0 && /*#__PURE__*/React.createElement("span", null, "Liquidado: ", /*#__PURE__*/React.createElement("strong", null, yrLiquid, " \u20AC")), /*#__PURE__*/React.createElement("span", {
+    }, yrNeto > 0 ? '+' : '', yrNeto, " €")), yrLiquid > 0 && /*#__PURE__*/React.createElement("span", null, "Liquidado: ", /*#__PURE__*/React.createElement("strong", null, yrLiquid, " €")), /*#__PURE__*/React.createElement("span", {
       className: yrBal > 0 ? 'leila-owe' : yrBal < 0 ? 'leila-over' : ''
     }, "Balance: ", /*#__PURE__*/React.createElement("strong", null, fmtBal(yrBal))));
   })());
@@ -4670,7 +4670,7 @@ const PagoLinkInline = ({
       color: '#7A5A72'
     },
     title: "Cerrar"
-  }, "\u2715"), /*#__PURE__*/React.createElement("div", {
+  }, "✕"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12,
       fontWeight: 700,
@@ -4704,11 +4704,11 @@ const PagoLinkInline = ({
       color: '#7A5A72',
       marginBottom: 12
     }
-  }, "Se\xF1al: ", /*#__PURE__*/React.createElement("strong", {
+  }, "Señal: ", /*#__PURE__*/React.createElement("strong", {
     style: {
       color: '#C87A45'
     }
-  }, deposit, "\u20AC"), " \xB7 Resto al llegar: ", /*#__PURE__*/React.createElement("strong", null, resto, "\u20AC")), /*#__PURE__*/React.createElement("div", {
+  }, deposit, "€"), " · Resto al llegar: ", /*#__PURE__*/React.createElement("strong", null, resto, "€")), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
       gap: 8,
@@ -4725,7 +4725,7 @@ const PagoLinkInline = ({
     href: `https://wa.me/34620316370?text=${waMsg('es')}`,
     target: "_blank",
     rel: "noopener"
-  }, "WhatsApp Alex \uD83C\uDDEA\uD83C\uDDF8"), /*#__PURE__*/React.createElement("a", {
+  }, "WhatsApp Alex 🇪🇸"), /*#__PURE__*/React.createElement("a", {
     className: "pe-btn pe-btn-ghost",
     style: {
       textDecoration: 'none'
@@ -4733,7 +4733,7 @@ const PagoLinkInline = ({
     href: `https://wa.me/34654138251?text=${waMsg('en')}`,
     target: "_blank",
     rel: "noopener"
-  }, "WhatsApp Fran \uD83C\uDDEC\uD83C\uDDE7")));
+  }, "WhatsApp Fran 🇬🇧")));
 };
 
 // ── PrereservasTab ─────────────────────────────────────────────────────────────
@@ -4938,7 +4938,7 @@ const PrereservasTab = ({
   const noches = pr => pr.entrada && pr.salida ? Math.round((new Date(pr.salida) - new Date(pr.entrada)) / 86400000) : '–';
   if (loading) return /*#__PURE__*/React.createElement("div", {
     className: "pe-loading"
-  }, "Cargando prereservas\u2026");
+  }, "Cargando prereservas…");
   return /*#__PURE__*/React.createElement("div", {
     className: "pe-tab-content"
   }, /*#__PURE__*/React.createElement("div", {
@@ -5018,7 +5018,7 @@ const PrereservasTab = ({
     placeholder: "Nombre y apellidos"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Tel\xE9fono"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "Teléfono"), /*#__PURE__*/React.createElement("input", {
     className: "pe-input",
     value: form.telefono,
     onChange: e => setForm(f => ({
@@ -5052,7 +5052,7 @@ const PrereservasTab = ({
     }))
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9spedes"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Huéspedes"), /*#__PURE__*/React.createElement(NumInput, {
     min: "1",
     max: "8",
     className: "pe-input pe-input-num",
@@ -5063,7 +5063,7 @@ const PrereservasTab = ({
     }))
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Importe total (\u20AC) *"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Importe total (€) *"), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     min: "0",
     className: "pe-input pe-input-num",
@@ -5075,7 +5075,7 @@ const PrereservasTab = ({
     placeholder: "1200"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al (\u20AC)"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Señal (€)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     min: "0",
     className: "pe-input pe-input-num",
@@ -5097,7 +5097,7 @@ const PrereservasTab = ({
       ...f,
       observaciones: e.target.value
     })),
-    placeholder: "Notas libres\u2026"
+    placeholder: "Notas libres…"
   }))), /*#__PURE__*/React.createElement("div", {
     className: "pe-actions"
   }, /*#__PURE__*/React.createElement("button", {
@@ -5107,7 +5107,7 @@ const PrereservasTab = ({
     className: "pe-hint"
   }, "No hay prereservas pendientes.") : items && /*#__PURE__*/React.createElement("table", {
     className: "pe-table"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Hu\xE9sped"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", null, "N"), /*#__PURE__*/React.createElement("th", null, "Total"), /*#__PURE__*/React.createElement("th", null, "Se\xF1al"), /*#__PURE__*/React.createElement("th", null, "Canal"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, items.map(pr => /*#__PURE__*/React.createElement("tr", {
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Huésped"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", null, "N"), /*#__PURE__*/React.createElement("th", null, "Total"), /*#__PURE__*/React.createElement("th", null, "Señal"), /*#__PURE__*/React.createElement("th", null, "Canal"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, items.map(pr => /*#__PURE__*/React.createElement("tr", {
     key: pr.id
   }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "res-apt-chip",
@@ -5137,10 +5137,10 @@ const PrereservasTab = ({
     },
     onClick: () => setPagoFor(pagoFor?.id === pr.id ? null : pr),
     title: "Generar link de pago"
-  }, "\uD83D\uDCB3"), /*#__PURE__*/React.createElement("button", {
+  }, "💳"), /*#__PURE__*/React.createElement("button", {
     className: "pe-btn pe-btn-ghost",
     onClick: () => deleteItem(pr.id)
-  }, "\u2715")))))), pagoFor && /*#__PURE__*/React.createElement(PagoLinkInline, {
+  }, "✕")))))), pagoFor && /*#__PURE__*/React.createElement(PagoLinkInline, {
     pr: pagoFor,
     noches: noches(pagoFor),
     onClose: () => setPagoFor(null)
@@ -5259,15 +5259,15 @@ const ReservasTab = ({
   };
   if (loading) return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
-  }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDDD3\uFE0F Reservas"), /*#__PURE__*/React.createElement("p", null, "Cargando\u2026"));
+  }, /*#__PURE__*/React.createElement("h2", null, "🗓️ Reservas"), /*#__PURE__*/React.createElement("p", null, "Cargando…"));
   if (!data && error) return /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
   }, error);
   if (!data) return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
-  }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDDD3\uFE0F Reservas"), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("h2", null, "🗓️ Reservas"), /*#__PURE__*/React.createElement("p", {
     className: "pe-help"
-  }, "Esperando autenticaci\xF3n\u2026"));
+  }, "Esperando autenticación…"));
   const reservas = data && data.reservas || [];
   const today = new Date().toISOString().slice(0, 10);
 
@@ -5825,9 +5825,9 @@ const ReservasTab = ({
     className: "pe-card rv-card"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-head"
-  }, /*#__PURE__*/React.createElement("h2", null, "\uD83D\uDDD3\uFE0F Reservas ", /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("h2", null, "🗓️ Reservas ", /*#__PURE__*/React.createElement("span", {
     className: "rv-count"
-  }, "\xB7 a\xF1o ", focusYear, " \xB7 ", kFocus.reservas, " reservas \xB7 actualizado ", data.updatedAt ? data.updatedAt.slice(0, 10) : '–')), /*#__PURE__*/React.createElement("div", {
+  }, "· año ", focusYear, " · ", kFocus.reservas, " reservas · actualizado ", data.updatedAt ? data.updatedAt.slice(0, 10) : '–')), /*#__PURE__*/React.createElement("div", {
     className: "rv-head-actions"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -5852,8 +5852,8 @@ const ReservasTab = ({
     className: "pe-btn pe-btn-ghost",
     onClick: syncGuidePins,
     disabled: !data || loading,
-    title: "Publica en la gu\xEDa los PINs de acceso de las reservas activas (se hace solo al guardar; esto fuerza la sincronizaci\xF3n)"
-  }, "\uD83D\uDD11 Sincronizar accesos"), /*#__PURE__*/React.createElement("button", {
+    title: "Publica en la guía los PINs de acceso de las reservas activas (se hace solo al guardar; esto fuerza la sincronización)"
+  }, "🔑 Sincronizar accesos"), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-primary",
     onClick: newRow
@@ -5868,7 +5868,7 @@ const ReservasTab = ({
       alignItems: 'center',
       gap: 8
     }
-  }, /*#__PURE__*/React.createElement("span", null, "\u26A0\uFE0F"), /*#__PURE__*/React.createElement("strong", null, icalDiscrepancies.length, " bloque", icalDiscrepancies.length !== 1 ? 's' : '', " del iCal sin reserva en P-Edit"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, "⚠️"), /*#__PURE__*/React.createElement("strong", null, icalDiscrepancies.length, " bloque", icalDiscrepancies.length !== 1 ? 's' : '', " del iCal sin reserva en P-Edit"), /*#__PURE__*/React.createElement("span", {
     style: {
       marginLeft: 'auto',
       opacity: .6,
@@ -5878,21 +5878,21 @@ const ReservasTab = ({
     className: "rv-discrepancy-list"
   }, icalDiscrepancies.map((d, i) => /*#__PURE__*/React.createElement("li", {
     key: i
-  }, /*#__PURE__*/React.createElement("strong", null, d.label), ": ", d.start, " \u2192 ", d.end, /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("strong", null, d.label), ": ", d.start, " → ", d.end, /*#__PURE__*/React.createElement("span", {
     className: "rv-discrepancy-note"
   }, ", bloqueado en Airbnb/Booking pero sin reserva registrada en P-Edit")))), /*#__PURE__*/React.createElement("p", {
     className: "rv-discrepancy-hint"
-  }, "Si la reserva ya est\xE1 registrada con fechas ligeramente distintas, puedes ignorar esto. Si no lo est\xE1, crea la reserva para evitar solapamientos.")), allYears.length > 0 && /*#__PURE__*/React.createElement("div", {
+  }, "Si la reserva ya está registrada con fechas ligeramente distintas, puedes ignorar esto. Si no lo está, crea la reserva para evitar solapamientos.")), allYears.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "rv-yearly"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-yearly-h"
-  }, /*#__PURE__*/React.createElement("h3", null, "Hist\xF3rico por a\xF1o"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("h3", null, "Histórico por año"), /*#__PURE__*/React.createElement("span", {
     className: "rv-yearly-sub"
-  }, "Click en un a\xF1o para verlo en el listado")), /*#__PURE__*/React.createElement("div", {
+  }, "Click en un año para verlo en el listado")), /*#__PURE__*/React.createElement("div", {
     className: "rv-yearly-wrap"
   }, /*#__PURE__*/React.createElement("table", {
     className: "rv-yearly-table"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "A\xF1o"), /*#__PURE__*/React.createElement("th", {
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Año"), /*#__PURE__*/React.createElement("th", {
     className: "num"
   }, "Reservas"), /*#__PURE__*/React.createElement("th", {
     className: "num"
@@ -5908,11 +5908,11 @@ const ReservasTab = ({
     className: "num"
   }, "Rentabilidad"), /*#__PURE__*/React.createElement("th", {
     className: "num"
-  }, "\u20AC/noche medio"), /*#__PURE__*/React.createElement("th", {
+  }, "€/noche medio"), /*#__PURE__*/React.createElement("th", {
     className: "num"
-  }, "\u20AC/noche m\xEDn"), /*#__PURE__*/React.createElement("th", {
+  }, "€/noche mín"), /*#__PURE__*/React.createElement("th", {
     className: "num"
-  }, "\u20AC/noche m\xE1x"))), /*#__PURE__*/React.createElement("tbody", null, allYears.map(y => {
+  }, "€/noche máx"))), /*#__PURE__*/React.createElement("tbody", null, allYears.map(y => {
     const isAgg = isHistoricOnly(y);
     const m = isAgg ? (() => {
       const h = histData.years[y];
@@ -5995,13 +5995,13 @@ const ReservasTab = ({
     value: fmtPct(kFocus.rentabilidad),
     sub: "neto / bruto"
   }), /*#__PURE__*/React.createElement(KpiCard, {
-    label: "\u20AC/noche m\xEDn",
+    label: "€/noche mín",
     value: kFocus.minNoche ? fmtEur(kFocus.minNoche) : '–',
-    sub: "reserva m\xE1s barata"
+    sub: "reserva más barata"
   }), /*#__PURE__*/React.createElement(KpiCard, {
-    label: "\u20AC/noche m\xE1x",
+    label: "€/noche máx",
     value: kFocus.maxNoche ? fmtEur(kFocus.maxNoche) : '–',
-    sub: "reserva m\xE1s cara"
+    sub: "reserva más cara"
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-dashboard-2"
   }, /*#__PURE__*/React.createElement("div", {
@@ -6025,7 +6025,7 @@ const ReservasTab = ({
     }
   }, APT_NAMES[b.apt]), /*#__PURE__*/React.createElement("span", {
     className: "rv-block-row-meta"
-  }, b.reservas, " reservas \xB7 ", b.noches, " noches"), /*#__PURE__*/React.createElement("span", {
+  }, b.reservas, " reservas · ", b.noches, " noches"), /*#__PURE__*/React.createElement("span", {
     className: "rv-block-row-val"
   }, fmtEur(b.ingreso)))))), /*#__PURE__*/React.createElement("div", {
     className: "rv-block"
@@ -6040,11 +6040,11 @@ const ReservasTab = ({
     className: "rv-canal-tag"
   }, c), /*#__PURE__*/React.createElement("span", {
     className: "rv-block-row-meta"
-  }, v.count, " reservas \xB7 BAI ", fmtEur(v.bai)), /*#__PURE__*/React.createElement("span", {
+  }, v.count, " reservas · BAI ", fmtEur(v.bai)), /*#__PURE__*/React.createElement("span", {
     className: "rv-block-row-val"
   }, fmtEur(v.sum))))))), enEstancia.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "rv-now rv-banner-staying"
-  }, /*#__PURE__*/React.createElement("h3", null, "\uD83C\uDFE0 En Hest\xEDa ahora mismo \xB7 ", enEstancia.length), /*#__PURE__*/React.createElement("ul", null, enEstancia.map((r, i) => /*#__PURE__*/React.createElement("li", {
+  }, /*#__PURE__*/React.createElement("h3", null, "🏠 En Hestía ahora mismo · ", enEstancia.length), /*#__PURE__*/React.createElement("ul", null, enEstancia.map((r, i) => /*#__PURE__*/React.createElement("li", {
     key: i
   }, /*#__PURE__*/React.createElement("span", {
     className: "rv-apt-chip",
@@ -6054,9 +6054,9 @@ const ReservasTab = ({
     }
   }, APT_NAMES[r.apt]), /*#__PURE__*/React.createElement("strong", null, r.responsable), /*#__PURE__*/React.createElement("span", {
     className: "rv-prox-meta"
-  }, "salida ", fmtDate(r.salida), " \xB7 ", r.huespedes, " pax \xB7 ", r.canal))))), proximas.length > 0 && /*#__PURE__*/React.createElement("div", {
+  }, "salida ", fmtDate(r.salida), " · ", r.huespedes, " pax · ", r.canal))))), proximas.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "rv-now rv-banner-upcoming rv-banner-alert"
-  }, /*#__PURE__*/React.createElement("h3", null, "\u26A0\uFE0F Reservas en menos de 30 d\xEDas \xB7 ", proximas.length), /*#__PURE__*/React.createElement("ul", null, proximas.map((r, i) => {
+  }, /*#__PURE__*/React.createElement("h3", null, "⚠️ Reservas en menos de 30 días · ", proximas.length), /*#__PURE__*/React.createElement("ul", null, proximas.map((r, i) => {
     const dias = Math.round((new Date(r.entrada) - new Date(today)) / 86400000);
     return /*#__PURE__*/React.createElement("li", {
       key: i
@@ -6072,16 +6072,16 @@ const ReservasTab = ({
       }
     }, APT_NAMES[r.apt]), /*#__PURE__*/React.createElement("strong", null, r.responsable), /*#__PURE__*/React.createElement("span", {
       className: "rv-prox-meta"
-    }, r.huespedes, " pax \xB7 ", r.noches, "n \xB7 ", r.canal), /*#__PURE__*/React.createElement("a", {
+    }, r.huespedes, " pax · ", r.noches, "n · ", r.canal), /*#__PURE__*/React.createElement("a", {
       href: buildWALink(r),
       target: "_blank",
       rel: "noopener noreferrer",
       className: "rv-wa-btn",
       title: "Avisar a Fran por WhatsApp"
-    }, "\uD83D\uDCF2 WhatsApp"));
+    }, "📲 WhatsApp"));
   }))), /*#__PURE__*/React.createElement("div", {
     className: "rv-toolbar"
-  }, /*#__PURE__*/React.createElement("label", null, "A\xF1o", /*#__PURE__*/React.createElement("select", {
+  }, /*#__PURE__*/React.createElement("label", null, "Año", /*#__PURE__*/React.createElement("select", {
     value: focusYear,
     onChange: e => {
       setFocusYearOverride(e.target.value);
@@ -6123,18 +6123,18 @@ const ReservasTab = ({
     value: "staying"
   }, "En estancia"), /*#__PURE__*/React.createElement("option", {
     value: "upcoming"
-  }, "Pr\xF3ximas"), /*#__PURE__*/React.createElement("option", {
+  }, "Próximas"), /*#__PURE__*/React.createElement("option", {
     value: "past"
   }, "Pasadas"), /*#__PURE__*/React.createElement("option", {
     value: "cancelada"
   }, "Canceladas"))), /*#__PURE__*/React.createElement("span", {
     className: "rv-hint"
-  }, "Click en una fila para editarla \u2192")), visibleMonths.length === 0 && (isHistoricOnly(focusYear) ? /*#__PURE__*/React.createElement("p", {
+  }, "Click en una fila para editarla →")), visibleMonths.length === 0 && (isHistoricOnly(focusYear) ? /*#__PURE__*/React.createElement("p", {
     className: "pe-help",
     style: {
       marginTop: 16
     }
-  }, "A\xF1o ", focusYear, ", datos agregados del hist\xF3rico. No hay fichas individuales registradas en P-Edit para este a\xF1o. Los res\xFAmenes se muestran en la tabla de arriba.") : /*#__PURE__*/React.createElement("p", {
+  }, "Año ", focusYear, ", datos agregados del histórico. No hay fichas individuales registradas en P-Edit para este año. Los resúmenes se muestran en la tabla de arriba.") : /*#__PURE__*/React.createElement("p", {
     className: "pe-help",
     style: {
       marginTop: 16
@@ -6180,7 +6180,7 @@ const ReservasTab = ({
       className: "rv-table"
     }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
       className: "rv-status-th"
-    }), /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Hu\xE9sped"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", {
+    }), /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Huésped"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", {
       className: "num"
     }, "Noches"), /*#__PURE__*/React.createElement("th", {
       className: "num"
@@ -6188,7 +6188,7 @@ const ReservasTab = ({
       className: "num"
     }, "Ingreso"), /*#__PURE__*/React.createElement("th", {
       className: "num"
-    }, "Comisi\xF3n"), /*#__PURE__*/React.createElement("th", {
+    }, "Comisión"), /*#__PURE__*/React.createElement("th", {
       className: "num"
     }, "BAI"), /*#__PURE__*/React.createElement("th", {
       className: "num"
@@ -6243,7 +6243,7 @@ const ReservasTab = ({
         className: "rv-ical-btn",
         title: "Generar alerta de calendario (.ics)",
         onClick: () => generateCalendarAlert(r)
-      }, "\uD83D\uDD14")), /*#__PURE__*/React.createElement("td", {
+      }, "🔔")), /*#__PURE__*/React.createElement("td", {
         className: "rv-ical-td",
         onClick: e => e.stopPropagation()
       }, r.contrato_pdf && /*#__PURE__*/React.createElement("button", {
@@ -6251,7 +6251,7 @@ const ReservasTab = ({
         className: "rv-ical-btn",
         title: r.contrato_pdf,
         onClick: () => downloadContrato(r.contrato_pdf)
-      }, "\uD83D\uDCC4")));
+      }, "📄")));
     })), /*#__PURE__*/React.createElement("tfoot", null, /*#__PURE__*/React.createElement("tr", {
       className: "rv-month-foot"
     }, /*#__PURE__*/React.createElement("td", {
@@ -6278,12 +6278,12 @@ const ReservasTab = ({
     className: "rv-edit-head"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-eyebrow"
-  }, selectedIdx < reservas.length ? 'Editar reserva' : 'Nueva reserva', " \xB7 ", APT_NAMES[draft.apt] || ''), /*#__PURE__*/React.createElement("h3", null, draft.responsable || '(sin nombre)')), /*#__PURE__*/React.createElement("button", {
+  }, selectedIdx < reservas.length ? 'Editar reserva' : 'Nueva reserva', " · ", APT_NAMES[draft.apt] || ''), /*#__PURE__*/React.createElement("h3", null, draft.responsable || '(sin nombre)')), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "rv-edit-close",
     onClick: cancelDraft,
     "aria-label": "Cerrar"
-  }, "\xD7")), /*#__PURE__*/React.createElement("div", {
+  }, "×")), /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-body"
   }, /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Estancia"), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
@@ -6295,7 +6295,7 @@ const ReservasTab = ({
     value: k
   }, v)))), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9sped (responsable)"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "Huésped (responsable)"), /*#__PURE__*/React.createElement("input", {
     value: draft.responsable || '',
     onChange: e => updateDraft('responsable', e.target.value),
     placeholder: "Nombre completo"
@@ -6310,7 +6310,7 @@ const ReservasTab = ({
     className: "rv-row2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Tel\xE9fono"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "Teléfono"), /*#__PURE__*/React.createElement("input", {
     value: draft.telefono || '',
     onChange: e => updateDraft('telefono', e.target.value),
     placeholder: "+34 600 000 000"
@@ -6321,9 +6321,9 @@ const ReservasTab = ({
     onChange: e => updateDraft('dni_enviado', e.target.value === 'si' ? true : e.target.value === 'no' ? false : null)
   }, /*#__PURE__*/React.createElement("option", {
     value: ""
-  }, "\u2013"), /*#__PURE__*/React.createElement("option", {
+  }, "–"), /*#__PURE__*/React.createElement("option", {
     value: "si"
-  }, "S\xED"), /*#__PURE__*/React.createElement("option", {
+  }, "Sí"), /*#__PURE__*/React.createElement("option", {
     value: "no"
   }, "No")))), /*#__PURE__*/React.createElement("div", {
     className: "rv-row2"
@@ -6335,10 +6335,10 @@ const ReservasTab = ({
     placeholder: "12345678A"
   })), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Direcci\xF3n postal"), /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", null, "Dirección postal"), /*#__PURE__*/React.createElement("input", {
     value: draft.direccion || '',
     onChange: e => updateDraft('direccion', e.target.value),
-    placeholder: "Calle, n\xBA, ciudad"
+    placeholder: "Calle, nº, ciudad"
   }))), /*#__PURE__*/React.createElement("div", {
     className: "rv-row3"
   }, /*#__PURE__*/React.createElement("div", {
@@ -6369,7 +6369,7 @@ const ReservasTab = ({
     className: "rv-row3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9spedes"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Huéspedes"), /*#__PURE__*/React.createElement(NumInput, {
     min: "1",
     value: draft.huespedes || 0,
     onChange: v => updateDraft('huespedes', v)
@@ -6386,9 +6386,9 @@ const ReservasTab = ({
     onChange: e => updateDraft('cuna_trona', e.target.value === 'si' ? true : e.target.value === 'no' ? false : null)
   }, /*#__PURE__*/React.createElement("option", {
     value: ""
-  }, "\u2013"), /*#__PURE__*/React.createElement("option", {
+  }, "–"), /*#__PURE__*/React.createElement("option", {
     value: "si"
-  }, "S\xED"), /*#__PURE__*/React.createElement("option", {
+  }, "Sí"), /*#__PURE__*/React.createElement("option", {
     value: "no"
   }, "No")))), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
@@ -6399,7 +6399,7 @@ const ReservasTab = ({
     value: "no"
   }, "No"), /*#__PURE__*/React.createElement("option", {
     value: "si"
-  }, "S\xED")))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Canal y cancelaci\xF3n"), /*#__PURE__*/React.createElement("div", {
+  }, "Sí")))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Canal y cancelación"), /*#__PURE__*/React.createElement("div", {
     className: "rv-row2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
@@ -6416,19 +6416,19 @@ const ReservasTab = ({
     value: "Avaibook"
   }, "Avaibook"))), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Estado / pol\xEDtica cancelaci\xF3n"), /*#__PURE__*/React.createElement("select", {
+  }, /*#__PURE__*/React.createElement("label", null, "Estado / política cancelación"), /*#__PURE__*/React.createElement("select", {
     value: isCancelada(draft || {}) ? '' : draft.cancelacion || 'Cancelable 14',
     onChange: e => updateDraft('cancelacion', e.target.value),
     disabled: isCancelada(draft || {})
   }, /*#__PURE__*/React.createElement("option", {
     value: "Cancelable 7"
-  }, "Cancelable 7 d\xEDas"), /*#__PURE__*/React.createElement("option", {
+  }, "Cancelable 7 días"), /*#__PURE__*/React.createElement("option", {
     value: "Cancelable 14"
-  }, "Cancelable 14 d\xEDas"), /*#__PURE__*/React.createElement("option", {
+  }, "Cancelable 14 días"), /*#__PURE__*/React.createElement("option", {
     value: "Cancelable 30"
-  }, "Cancelable 30 d\xEDas"), /*#__PURE__*/React.createElement("option", {
+  }, "Cancelable 30 días"), /*#__PURE__*/React.createElement("option", {
     value: "Cancelable 60"
-  }, "Cancelable 60 d\xEDas"), /*#__PURE__*/React.createElement("option", {
+  }, "Cancelable 60 días"), /*#__PURE__*/React.createElement("option", {
     value: "Semiestricta"
   }, "Semiestricta"), /*#__PURE__*/React.createElement("option", {
     value: "No reembolsable"
@@ -6447,7 +6447,7 @@ const ReservasTab = ({
     onChange: e => updateDraft('contactado', e.target.value)
   }, /*#__PURE__*/React.createElement("option", {
     value: ""
-  }, "\u2013"), /*#__PURE__*/React.createElement("option", {
+  }, "–"), /*#__PURE__*/React.createElement("option", {
     value: "Alex"
   }, "Alex"), /*#__PURE__*/React.createElement("option", {
     value: "Fran"
@@ -6461,11 +6461,11 @@ const ReservasTab = ({
     className: "rv-row2"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Comisi\xF3n", draft._comision_manual ? /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("label", null, "Comisión", draft._comision_manual ? /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "rv-mini-link",
     onClick: resetComisionAuto
-  }, "\u21BB auto") : (() => {
+  }, "↻ auto") : (() => {
     const ck = getCanalKey(draft.canal);
     return /*#__PURE__*/React.createElement("span", {
       className: "rv-hint-inline"
@@ -6480,9 +6480,9 @@ const ReservasTab = ({
     type: "button",
     className: "rv-mini-link",
     onClick: resetLimpiezaAuto
-  }, "\u21BB auto") : /*#__PURE__*/React.createElement("span", {
+  }, "↻ auto") : /*#__PURE__*/React.createElement("span", {
     className: "rv-hint-inline"
-  }, "auto (jul/ago o >10n: 90 \u20AC \xB7 resto: 80 \u20AC)")), /*#__PURE__*/React.createElement(NumInput, {
+  }, "auto (jul/ago o >10n: 90 € · resto: 80 €)")), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.gasto_limpieza || 0,
     onChange: v => updateDraft('gasto_limpieza', v)
@@ -6490,7 +6490,7 @@ const ReservasTab = ({
     className: "rv-row3"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Se\xF1al"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Señal"), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     value: draft.reserva || 0,
     onChange: v => updateDraft('reserva', v)
@@ -6509,7 +6509,7 @@ const ReservasTab = ({
       ...p,
       _checkin_manual: false
     }))
-  }, "\u21BB auto") : /*#__PURE__*/React.createElement("span", {
+  }, "↻ auto") : /*#__PURE__*/React.createElement("span", {
     className: "rv-calc"
   }, " auto")), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
@@ -6528,31 +6528,31 @@ const ReservasTab = ({
     value: "no"
   }, "No"), /*#__PURE__*/React.createElement("option", {
     value: "si"
-  }, "S\xED (300 \u20AC)"))), /*#__PURE__*/React.createElement("div", {
+  }, "Sí (300 €)"))), /*#__PURE__*/React.createElement("div", {
     className: "rv-calc-block"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-calc-block-title"
-  }, "Calculado autom\xE1ticamente"), /*#__PURE__*/React.createElement("div", {
+  }, "Calculado automáticamente"), /*#__PURE__*/React.createElement("div", {
     className: "rv-calc-grid"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Noches"), /*#__PURE__*/React.createElement("strong", null, draft.noches || '–')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "BAI"), /*#__PURE__*/React.createElement("strong", null, fmtEur(draft.bai))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Rentabilidad"), /*#__PURE__*/React.createElement("strong", null, fmtPct(draft.rentabilidad_pct))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Bruto/noche"), /*#__PURE__*/React.createElement("strong", null, fmtEur(draft.precio_bruto_noche))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Neto/noche"), /*#__PURE__*/React.createElement("strong", null, fmtEur(draft.precio_neto_noche))), (() => {
     const renta = Math.max(0, (Number(draft.ingreso_total) || 0) - (Number(draft.al_checkin) || 0));
     return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Renta declarable", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", {
       className: "rv-calc-em"
-    }, "ingreso \u2212 cash checkin")), /*#__PURE__*/React.createElement("strong", null, fmtEur(renta)));
+    }, "ingreso − cash checkin")), /*#__PURE__*/React.createElement("strong", null, fmtEur(renta)));
   })(), (() => {
     const eurHuespNoche = draft.noches > 0 && draft.huespedes > 0 && draft.ingreso_total > 0 ? draft.ingreso_total / draft.noches / draft.huespedes : null;
-    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "\u20AC/hu\xE9sped/noche"), /*#__PURE__*/React.createElement("strong", null, fmtEur(eurHuespNoche)));
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "€/huésped/noche"), /*#__PURE__*/React.createElement("strong", null, fmtEur(eurHuespNoche)));
   })(), (() => {
     if (!draft.entrada || !draft.f_reserva) return null;
     const dE = new Date(draft.entrada);
     const dF = new Date(draft.f_reserva);
     const dias = Math.round((dE.getTime() - dF.getTime()) / 86400000);
-    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Antelaci\xF3n"), /*#__PURE__*/React.createElement("strong", null, dias, " d\xEDas"));
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Antelación"), /*#__PURE__*/React.createElement("strong", null, dias, " días"));
   })(), (() => {
     const ingreso = Number(draft.ingreso_total) || 0;
     const com = Number(draft.comision) || 0;
     const pct = ingreso > 0 ? com / ingreso : 0;
-    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Comisi\xF3n efectiva"), /*#__PURE__*/React.createElement("strong", null, fmtPct(pct)));
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "Comisión efectiva"), /*#__PURE__*/React.createElement("strong", null, fmtPct(pct)));
   })()))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Observaciones"), /*#__PURE__*/React.createElement("div", {
     className: "rv-field"
   }, /*#__PURE__*/React.createElement("textarea", {
@@ -6565,16 +6565,16 @@ const ReservasTab = ({
   }, draft.contrato_pdf ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
     className: "rv-contrato-fname",
     title: draft.contrato_pdf
-  }, "\uD83D\uDCCE ", draft.contrato_pdf), /*#__PURE__*/React.createElement("button", {
+  }, "📎 ", draft.contrato_pdf), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost",
     onClick: handleContratoDownload
-  }, "\u2B07 Descargar"), /*#__PURE__*/React.createElement("label", {
+  }, "⬇ Descargar"), /*#__PURE__*/React.createElement("label", {
     className: "pe-btn pe-btn-ghost",
     style: {
       cursor: 'pointer'
     }
-  }, "\uD83D\uDD04 Reemplazar", /*#__PURE__*/React.createElement("input", {
+  }, "🔄 Reemplazar", /*#__PURE__*/React.createElement("input", {
     type: "file",
     accept: ".pdf",
     style: {
@@ -6598,7 +6598,7 @@ const ReservasTab = ({
     const liveOverlap = draft && findOverlap(draft, selectedIdx >= 0 && selectedIdx < reservas.length ? selectedIdx : -1);
     return liveOverlap ? /*#__PURE__*/React.createElement("div", {
       className: "rv-overlap-warn"
-    }, "\u26A0 Solape con ", liveOverlap.responsable || '–', " (", fmtDate(liveOverlap.entrada), " \u2192 ", fmtDate(liveOverlap.salida), ") en ", liveOverlap.apt?.toUpperCase() || '–') : null;
+    }, "⚠ Solape con ", liveOverlap.responsable || '–', " (", fmtDate(liveOverlap.entrada), " → ", fmtDate(liveOverlap.salida), ") en ", liveOverlap.apt?.toUpperCase() || '–') : null;
   })(), draft && draft.apt && draft.entrada && draft.salida && !_reservaCxl(draft) && (() => {
     const pin = reservaGuidePin(draft);
     return /*#__PURE__*/React.createElement("div", {
@@ -6619,7 +6619,7 @@ const ReservasTab = ({
         fontSize: 12,
         opacity: .75
       }
-    }, "\uD83D\uDD11 PIN de gu\xEDa del hu\xE9sped:"), /*#__PURE__*/React.createElement("code", {
+    }, "🔑 PIN de guía del huésped:"), /*#__PURE__*/React.createElement("code", {
       style: {
         fontSize: 18,
         fontWeight: 700,
@@ -6656,16 +6656,16 @@ const ReservasTab = ({
         fontSize: 12,
         opacity: .75
       }
-    }, "\uD83D\uDCA1 Precio si fuera reserva directa:"), /*#__PURE__*/React.createElement("strong", {
+    }, "💡 Precio si fuera reserva directa:"), /*#__PURE__*/React.createElement("strong", {
       style: {
         fontSize: 18
       }
-    }, calc.directTotal.toLocaleString('es-ES'), " \u20AC"), /*#__PURE__*/React.createElement("span", {
+    }, calc.directTotal.toLocaleString('es-ES'), " €"), /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: 11,
         opacity: .6
       }
-    }, calc.nights, " noches \xB7 con los precios actuales (se actualiza solo si cambian, mientras la reserva sea OTA y futura)"));
+    }, calc.nights, " noches · con los precios actuales (se actualiza solo si cambian, mientras la reserva sea OTA y futura)"));
   })(), /*#__PURE__*/React.createElement("footer", {
     className: "rv-edit-foot"
   }, /*#__PURE__*/React.createElement("div", {
@@ -6674,7 +6674,7 @@ const ReservasTab = ({
     type: "button",
     className: "pe-btn pe-btn-ghost rv-foot-btn rv-btn-danger",
     onClick: deleteRow
-  }, "\uD83D\uDDD1 Borrar"), draft && (isCancelada(draft) ? /*#__PURE__*/React.createElement("button", {
+  }, "🗑 Borrar"), draft && (isCancelada(draft) ? /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost rv-foot-btn rv-btn-reactivar",
     onClick: () => {
@@ -6689,7 +6689,7 @@ const ReservasTab = ({
         saveReservas(nr);
       }
     }
-  }, "\u21A9 Reactivar") : /*#__PURE__*/React.createElement("button", {
+  }, "↩ Reactivar") : /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost rv-foot-btn rv-btn-cancelar",
     onClick: () => {
@@ -6704,7 +6704,7 @@ const ReservasTab = ({
         saveReservas(nr);
       }
     }
-  }, "\u2717 Cancelar reserva")), onOpenContract && /*#__PURE__*/React.createElement("button", {
+  }, "✗ Cancelar reserva")), onOpenContract && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost rv-foot-btn",
     title: "Abrir en el generador de contratos",
@@ -6717,7 +6717,7 @@ const ReservasTab = ({
       saveDraft(wid);
       onOpenContract(wid);
     }
-  }, "\uD83D\uDCC4 Contrato"), selectedIdx >= 0 && selectedIdx < reservas.length && /*#__PURE__*/React.createElement("button", {
+  }, "📄 Contrato"), selectedIdx >= 0 && selectedIdx < reservas.length && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost rv-foot-btn",
     onClick: duplicateRow
@@ -7080,17 +7080,17 @@ const LsCfgPanel = ({
     type: "button",
     className: "hc-bulk-toggle",
     onClick: () => setOpen(o => !o)
-  }, /*#__PURE__*/React.createElement("span", null, "Estancia larga \xB7 tarifas mensuales y condiciones"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, "Estancia larga · tarifas mensuales y condiciones"), /*#__PURE__*/React.createElement("span", {
     className: `hc-bulk-chev${open ? ' open' : ''}`
-  }, "\u25BC")), open && /*#__PURE__*/React.createElement("div", {
+  }, "▼")), open && /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-body"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ls-cfg-section-title"
-  }, "Tarifas base mensuales (\u20AC/mes)"), /*#__PURE__*/React.createElement("div", {
+  }, "Tarifas base mensuales (€/mes)"), /*#__PURE__*/React.createElement("div", {
     className: "ls-cfg-rates-table"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ls-cfg-rates-head"
-  }, /*#__PURE__*/React.createElement("span", null, "Temporada"), /*#__PURE__*/React.createElement("span", null, "Meses"), /*#__PURE__*/React.createElement("span", null, "\u20AC base / mes")), [{
+  }, /*#__PURE__*/React.createElement("span", null, "Temporada"), /*#__PURE__*/React.createElement("span", null, "Meses"), /*#__PURE__*/React.createElement("span", null, "€ base / mes")), [{
     key: 'baja',
     label: 'T. baja',
     months: 'Nov · Dic · Ene · Feb · Mar · Abr',
@@ -7138,13 +7138,13 @@ const LsCfgPanel = ({
     onChange: e => set(e.target.value)
   }), /*#__PURE__*/React.createElement("span", {
     className: "pe-suffix"
-  }, "\u20AC/mes")))), /*#__PURE__*/React.createElement("div", {
+  }, "€/mes")))), /*#__PURE__*/React.createElement("div", {
     className: "ls-cfg-rates-row ls-cfg-special-row"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ls-cfg-season-lbl"
   }, "Noches especiales"), /*#__PURE__*/React.createElement("span", {
     className: "ls-cfg-season-months"
-  }, "Navidad (23 dic\u20136 ene) \xB7 Semana Santa"), /*#__PURE__*/React.createElement("div", {
+  }, "Navidad (23 dic–6 ene) · Semana Santa"), /*#__PURE__*/React.createElement("div", {
     className: "hc-input-row",
     style: {
       gap: 4
@@ -7161,7 +7161,7 @@ const LsCfgPanel = ({
     onChange: e => setFlat(e.target.value)
   }), /*#__PURE__*/React.createElement("span", {
     className: "pe-suffix"
-  }, "\u20AC/noche")))), /*#__PURE__*/React.createElement("div", {
+  }, "€/noche")))), /*#__PURE__*/React.createElement("div", {
     className: "ls-cfg-section-title",
     style: {
       marginTop: 20
@@ -7202,7 +7202,7 @@ const LsCfgPanel = ({
     onChange: e => set(e.target.value)
   }), /*#__PURE__*/React.createElement("span", {
     className: "pe-suffix"
-  }, "\u20AC/mes")), /*#__PURE__*/React.createElement("span", {
+  }, "€/mes")), /*#__PURE__*/React.createElement("span", {
     className: "ls-cfg-eff"
   }, effPrice(rateBaja, val)), /*#__PURE__*/React.createElement("span", {
     className: "ls-cfg-eff"
@@ -7213,7 +7213,7 @@ const LsCfgPanel = ({
     style: {
       marginTop: 8
     }
-  }, "Precio efectivo = tarifa base + suplemento \xB7 calculado pro-rata diario"), /*#__PURE__*/React.createElement("div", {
+  }, "Precio efectivo = tarifa base + suplemento · calculado pro-rata diario"), /*#__PURE__*/React.createElement("div", {
     className: "ls-cfg-section-title",
     style: {
       marginTop: 20
@@ -7229,7 +7229,7 @@ const LsCfgPanel = ({
     className: "hc-bulk-field"
   }, /*#__PURE__*/React.createElement("label", {
     className: "hc-lbl"
-  }, "Hu\xE9sped extra (\u20AC/mes)"), /*#__PURE__*/React.createElement("div", {
+  }, "Huésped extra (€/mes)"), /*#__PURE__*/React.createElement("div", {
     className: "hc-input-row"
   }, /*#__PURE__*/React.createElement("input", {
     type: "number",
@@ -7243,13 +7243,13 @@ const LsCfgPanel = ({
     onChange: e => setExtraGuest(e.target.value)
   }), /*#__PURE__*/React.createElement("span", {
     className: "pe-suffix"
-  }, "\u20AC/mes"), /*#__PURE__*/React.createElement("span", {
+  }, "€/mes"), /*#__PURE__*/React.createElement("span", {
     className: "hc-preview"
-  }, "Base 2 hu\xE9spedes \xB7 cada hu\xE9sped extra ", extraGuest, "\u20AC/mes"))), /*#__PURE__*/React.createElement("div", {
+  }, "Base 2 huéspedes · cada huésped extra ", extraGuest, "€/mes"))), /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-field"
   }, /*#__PURE__*/React.createElement("label", {
     className: "hc-lbl"
-  }, "Mascota (\u20AC/mes)"), /*#__PURE__*/React.createElement("div", {
+  }, "Mascota (€/mes)"), /*#__PURE__*/React.createElement("div", {
     className: "hc-input-row"
   }, /*#__PURE__*/React.createElement("input", {
     type: "number",
@@ -7263,9 +7263,9 @@ const LsCfgPanel = ({
     onChange: e => setPetMonth(e.target.value)
   }), /*#__PURE__*/React.createElement("span", {
     className: "pe-suffix"
-  }, "\u20AC/mes"), /*#__PURE__*/React.createElement("span", {
+  }, "€/mes"), /*#__PURE__*/React.createElement("span", {
     className: "hc-preview"
-  }, "Se a\xF1ade si el hu\xE9sped trae mascota"))), /*#__PURE__*/React.createElement("div", {
+  }, "Se añade si el huésped trae mascota"))), /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-field",
     style: {
       flex: 1,
@@ -7275,7 +7275,7 @@ const LsCfgPanel = ({
     className: "hc-lbl"
   }, "Fechas Semana Santa", /*#__PURE__*/React.createElement("span", {
     className: "hc-opt"
-  }, " (una por l\xEDnea: YYYY-MM-DD YYYY-MM-DD)")), /*#__PURE__*/React.createElement("textarea", {
+  }, " (una por línea: YYYY-MM-DD YYYY-MM-DD)")), /*#__PURE__*/React.createElement("textarea", {
     rows: 3,
     className: "pe-input hc-textarea",
     value: ranges,
@@ -7285,7 +7285,7 @@ const LsCfgPanel = ({
     className: "hc-bulk-foot"
   }, /*#__PURE__*/React.createElement("span", {
     className: "hc-bulk-preview"
-  }, "Los cambios se guardan en prices.json y afectan a todos los c\xE1lculos de estancia larga."), /*#__PURE__*/React.createElement("button", {
+  }, "Los cambios se guardan en prices.json y afectan a todos los cálculos de estancia larga."), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-primary",
     disabled: saving,
@@ -7781,7 +7781,7 @@ const HuecosTab = ({
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("p", {
     className: "pe-help"
-  }, "Cargando disponibilidad\u2026"));
+  }, "Cargando disponibilidad…"));
   if (loadErr) return /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("div", {
@@ -7806,7 +7806,7 @@ const HuecosTab = ({
     className: "hc-stat"
   }, totalGaps, " huecos"), totalProb > 0 && /*#__PURE__*/React.createElement("span", {
     className: "hc-stat hc-stat-warn"
-  }, totalProb, " \u26A0"), totalOvs > 0 && /*#__PURE__*/React.createElement("span", {
+  }, totalProb, " ⚠"), totalOvs > 0 && /*#__PURE__*/React.createElement("span", {
     className: "hc-stat hc-stat-ov"
   }, totalOvs, " con ajuste")), /*#__PURE__*/React.createElement("div", {
     className: "hc-filters"
@@ -7818,17 +7818,17 @@ const HuecosTab = ({
     value: "all"
   }, "Todos los apartamentos"), /*#__PURE__*/React.createElement("option", {
     value: "vm"
-  }, "Hest\xEDa Mar"), /*#__PURE__*/React.createElement("option", {
+  }, "Hestía Mar"), /*#__PURE__*/React.createElement("option", {
     value: "vt"
-  }, "Hest\xEDa Thalassa"), /*#__PURE__*/React.createElement("option", {
+  }, "Hestía Thalassa"), /*#__PURE__*/React.createElement("option", {
     value: "vs"
-  }, "Hest\xEDa Salinas")), /*#__PURE__*/React.createElement("label", {
+  }, "Hestía Salinas")), /*#__PURE__*/React.createElement("label", {
     className: "hc-check"
   }, /*#__PURE__*/React.createElement("input", {
     type: "checkbox",
     checked: filterProb,
     onChange: e => setFilterProb(e.target.checked)
-  }), "Solo problem\xE1ticos"))), saveMsg && /*#__PURE__*/React.createElement("div", {
+  }), "Solo problemáticos"))), saveMsg && /*#__PURE__*/React.createElement("div", {
     className: `hc-global-msg${saveMsg.startsWith('Error') ? ' err' : ' ok'}`
   }, saveMsg), /*#__PURE__*/React.createElement("div", {
     className: "hc-subtab-bar"
@@ -7844,7 +7844,7 @@ const HuecosTab = ({
     className: "hc-subtab-badge"
   }, longStayCount))), hcView === 'cortos' && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "hc-rules"
-  }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, "Alta / Cr\xEDtica:"), " m\xE1x. 7 noches entre reservas"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, "Media / Baja:"), " m\xE1x. 28 noches entre reservas")), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, "Alta / Crítica:"), " máx. 7 noches entre reservas"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, "Media / Baja:"), " máx. 28 noches entre reservas")), /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-wrap"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -7852,7 +7852,7 @@ const HuecosTab = ({
     onClick: () => setBulkOpen(o => !o)
   }, /*#__PURE__*/React.createElement("span", null, "Reglas globales"), /*#__PURE__*/React.createElement("span", {
     className: `hc-bulk-chev${bulkOpen ? ' open' : ''}`
-  }, "\u25BC")), bulkOpen && /*#__PURE__*/React.createElement("div", {
+  }, "▼")), bulkOpen && /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-body"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-presets"
@@ -7895,7 +7895,7 @@ const HuecosTab = ({
     value: "alta"
   }, "Alta"), /*#__PURE__*/React.createElement("option", {
     value: "critica"
-  }, "Cr\xEDtica"), /*#__PURE__*/React.createElement("option", {
+  }, "Crítica"), /*#__PURE__*/React.createElement("option", {
     value: "media"
   }, "Media"), /*#__PURE__*/React.createElement("option", {
     value: "baja"
@@ -7903,7 +7903,7 @@ const HuecosTab = ({
     className: "hc-bulk-field"
   }, /*#__PURE__*/React.createElement("label", {
     className: "hc-lbl"
-  }, "Noches m\xEDn."), /*#__PURE__*/React.createElement("input", {
+  }, "Noches mín."), /*#__PURE__*/React.createElement("input", {
     type: "number",
     min: "1",
     className: "pe-input pe-input-num",
@@ -7912,12 +7912,12 @@ const HuecosTab = ({
     },
     value: bulkMinN,
     onChange: e => setBulkMinN(e.target.value),
-    placeholder: "\u2013"
+    placeholder: "–"
   })), /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-field"
   }, /*#__PURE__*/React.createElement("label", {
     className: "hc-lbl"
-  }, "Noches m\xE1x."), /*#__PURE__*/React.createElement("input", {
+  }, "Noches máx."), /*#__PURE__*/React.createElement("input", {
     type: "number",
     min: "1",
     className: "pe-input pe-input-num",
@@ -7926,12 +7926,12 @@ const HuecosTab = ({
     },
     value: bulkMaxN,
     onChange: e => setBulkMaxN(e.target.value),
-    placeholder: "\u2013"
+    placeholder: "–"
   })), /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-field"
   }, /*#__PURE__*/React.createElement("label", {
     className: "hc-lbl"
-  }, "Checkin \u2264 Xd"), /*#__PURE__*/React.createElement("input", {
+  }, "Checkin ≤ Xd"), /*#__PURE__*/React.createElement("input", {
     type: "number",
     min: "1",
     className: "pe-input pe-input-num",
@@ -7940,7 +7940,7 @@ const HuecosTab = ({
     },
     value: bulkMaxDays,
     onChange: e => setBulkMaxDays(e.target.value),
-    placeholder: "\u2013"
+    placeholder: "–"
   }))), /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-row"
   }, /*#__PURE__*/React.createElement("div", {
@@ -7958,7 +7958,7 @@ const HuecosTab = ({
     value: "discount"
   }, "Descuento %"), /*#__PURE__*/React.createElement("option", {
     value: "fixed"
-  }, "Precio fijo \u20AC/n"), /*#__PURE__*/React.createElement("option", {
+  }, "Precio fijo €/n"), /*#__PURE__*/React.createElement("option", {
     value: "increment"
   }, "Incremento %"))), /*#__PURE__*/React.createElement("div", {
     className: "hc-bulk-field"
@@ -8022,9 +8022,9 @@ const HuecosTab = ({
       className: "hc-apt-meta"
     }, allAptGaps.length, " huecos", allAptGaps.filter(g => g.overLim).length > 0 && /*#__PURE__*/React.createElement("span", {
       className: "hc-apt-warn"
-    }, " \xB7 ", allAptGaps.filter(g => g.overLim).length, " \u26A0"), allAptGaps.filter(g => g.override).length > 0 && /*#__PURE__*/React.createElement("span", {
+    }, " · ", allAptGaps.filter(g => g.overLim).length, " ⚠"), allAptGaps.filter(g => g.override).length > 0 && /*#__PURE__*/React.createElement("span", {
       className: "hc-apt-ov"
-    }, " \xB7 ", allAptGaps.filter(g => g.override).length, " con ajuste"))), gaps.length === 0 ? /*#__PURE__*/React.createElement("p", {
+    }, " · ", allAptGaps.filter(g => g.override).length, " con ajuste"))), gaps.length === 0 ? /*#__PURE__*/React.createElement("p", {
       className: "pe-help",
       style: {
         margin: '12px 0 20px'
@@ -8045,7 +8045,7 @@ const HuecosTab = ({
         onClick: () => isActive ? closeGap() : openGap(gap)
       }, /*#__PURE__*/React.createElement("span", {
         className: "hc-dates"
-      }, _hcFmt(gap.start), " \u2192 ", _hcFmt(gap.end)), /*#__PURE__*/React.createElement("span", {
+      }, _hcFmt(gap.start), " → ", _hcFmt(gap.end)), /*#__PURE__*/React.createElement("span", {
         className: "hc-nights"
       }, gap.nights, "n"), /*#__PURE__*/React.createElement("span", {
         className: "hc-sea",
@@ -8054,7 +8054,7 @@ const HuecosTab = ({
         }
       }, HC_LBL[gap.season]), /*#__PURE__*/React.createElement("span", {
         className: "hc-price"
-      }, gap.effN !== gap.baseN ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, gap.effN, "\u20AC"), /*#__PURE__*/React.createElement("s", null, gap.baseN, "\u20AC")) : /*#__PURE__*/React.createElement(React.Fragment, null, gap.baseN, "\u20AC"), /*#__PURE__*/React.createElement("span", {
+      }, gap.effN !== gap.baseN ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, gap.effN, "€"), /*#__PURE__*/React.createElement("s", null, gap.baseN, "€")) : /*#__PURE__*/React.createElement(React.Fragment, null, gap.baseN, "€"), /*#__PURE__*/React.createElement("span", {
         className: "hc-per"
       }, "/n")), /*#__PURE__*/React.createElement("span", {
         className: "hc-badges"
@@ -8062,7 +8062,7 @@ const HuecosTab = ({
         className: "hc-badge hc-badge-seg"
       }, "seg ", gap.segIndex + 1, "/", gap.segTotal), gap.overLim && /*#__PURE__*/React.createElement("span", {
         className: "hc-badge hc-badge-warn"
-      }, "\u26A0 >", gap.maxN, "n"), gap.override && /*#__PURE__*/React.createElement("span", {
+      }, "⚠ >", gap.maxN, "n"), gap.override && /*#__PURE__*/React.createElement("span", {
         className: "hc-badge hc-badge-ov"
       }, _hcOvLabel(gap.override)), gap.override && gap.override.minNights && /*#__PURE__*/React.createElement("span", {
         className: "hc-badge hc-badge-ov"
@@ -8073,7 +8073,7 @@ const HuecosTab = ({
         title: gap.override.note
       }, "nota"), gap.daysUntil >= 0 && gap.daysUntil <= 30 && /*#__PURE__*/React.createElement("span", {
         className: "hc-badge hc-badge-urgent"
-      }, "\u23F1 ", gap.daysUntil, "d")), /*#__PURE__*/React.createElement("span", {
+      }, "⏱ ", gap.daysUntil, "d")), /*#__PURE__*/React.createElement("span", {
         className: "hc-toggle"
       }, isActive ? '▲' : '▼')), gap.daysUntil >= 0 && gap.daysUntil <= 30 && !(gap.override && gap.override.lastMinute) && !isActive && /*#__PURE__*/React.createElement("div", {
         className: "hc-quick-row"
@@ -8082,14 +8082,14 @@ const HuecosTab = ({
         className: "hc-quick-lm",
         disabled: saving,
         onClick: () => handleQuickUrgent(gap)
-      }, "\u26A1 \u221220% oferta urgente"), /*#__PURE__*/React.createElement("span", {
+      }, "⚡ −20% oferta urgente"), /*#__PURE__*/React.createElement("span", {
         className: "hc-quick-note"
-      }, "Aplica descuento del 20% y lo destaca en la home como \xFAltima hora")), isActive && /*#__PURE__*/React.createElement("div", {
+      }, "Aplica descuento del 20% y lo destaca en la home como última hora")), isActive && /*#__PURE__*/React.createElement("div", {
         className: "hc-edit",
         onClick: e => e.stopPropagation()
       }, gap.overLim && /*#__PURE__*/React.createElement("div", {
         className: "hc-overlimit-note"
-      }, "Hueco de ", /*#__PURE__*/React.createElement("strong", null, gap.nights, " noches"), " en ", HC_LBL[gap.season].toLowerCase(), " supera el m\xE1ximo de ", /*#__PURE__*/React.createElement("strong", null, gap.maxN, " noches"), ". Considera reducir las noches m\xEDnimas o aplicar un descuento agresivo."), /*#__PURE__*/React.createElement("div", {
+      }, "Hueco de ", /*#__PURE__*/React.createElement("strong", null, gap.nights, " noches"), " en ", HC_LBL[gap.season].toLowerCase(), " supera el máximo de ", /*#__PURE__*/React.createElement("strong", null, gap.maxN, " noches"), ". Considera reducir las noches mínimas o aplicar un descuento agresivo."), /*#__PURE__*/React.createElement("div", {
         className: "hc-field"
       }, /*#__PURE__*/React.createElement("label", {
         className: "hc-lbl"
@@ -8139,15 +8139,15 @@ const HuecosTab = ({
         className: "pe-suffix"
       }, dType === 'fixed' ? '€/n' : '%'), prevEff !== null && prevEff !== gap.baseN && /*#__PURE__*/React.createElement("span", {
         className: "hc-preview"
-      }, "\u2192 ", /*#__PURE__*/React.createElement("strong", null, prevEff, "\u20AC/n"), dType !== 'fixed' && /*#__PURE__*/React.createElement("span", {
+      }, "→ ", /*#__PURE__*/React.createElement("strong", null, prevEff, "€/n"), dType !== 'fixed' && /*#__PURE__*/React.createElement("span", {
         className: "hc-total-preview"
-      }, "\xB7 ", prevEff * gap.nights, "\u20AC total (", gap.nights, "n)")))), /*#__PURE__*/React.createElement("div", {
+      }, "· ", prevEff * gap.nights, "€ total (", gap.nights, "n)")))), /*#__PURE__*/React.createElement("div", {
         className: "hc-field"
       }, /*#__PURE__*/React.createElement("label", {
         className: "hc-lbl"
-      }, "Noches m\xEDnimas para este hueco", /*#__PURE__*/React.createElement("span", {
+      }, "Noches mínimas para este hueco", /*#__PURE__*/React.createElement("span", {
         className: "hc-opt"
-      }, " (vac\xEDo = regla global)")), /*#__PURE__*/React.createElement("div", {
+      }, " (vacío = regla global)")), /*#__PURE__*/React.createElement("div", {
         className: "hc-input-row"
       }, /*#__PURE__*/React.createElement("input", {
         type: "number",
@@ -8183,7 +8183,7 @@ const HuecosTab = ({
         className: "pe-input hc-textarea",
         value: dNote,
         onChange: e => setDNote(e.target.value),
-        placeholder: "Ej: oferta \xFAltimo momento, confirmar con Alex\u2026"
+        placeholder: "Ej: oferta último momento, confirmar con Alex…"
       })), /*#__PURE__*/React.createElement("div", {
         className: "hc-field"
       }, /*#__PURE__*/React.createElement("label", {
@@ -8200,7 +8200,7 @@ const HuecosTab = ({
         className: "hc-split-chip-rm",
         disabled: splitSaving,
         onClick: () => handleRemoveSplit(gap.parentId, sp)
-      }, "\xD7"))), /*#__PURE__*/React.createElement("button", {
+      }, "×"))), /*#__PURE__*/React.createElement("button", {
         type: "button",
         className: "pe-btn pe-btn-ghost hc-split-rm-all",
         disabled: splitSaving,
@@ -8236,7 +8236,7 @@ const HuecosTab = ({
           setSplitGapId(gap.parentId);
           setSplitDate('');
         }
-      }, "+ A\xF1adir punto de divisi\xF3n")), /*#__PURE__*/React.createElement("div", {
+      }, "+ Añadir punto de división")), /*#__PURE__*/React.createElement("div", {
         className: "hc-foot"
       }, saveMsg && /*#__PURE__*/React.createElement("span", {
         className: `hc-inline-msg${saveMsg.startsWith('Error') ? ' err' : ' ok'}`
@@ -8260,7 +8260,7 @@ const HuecosTab = ({
     className: "ls-wrap"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ls-info"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("strong", null, "Estancias largas \xB7 m\xE1s de 28 noches \xB7 septiembre \u2013 junio"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("strong", null, "Estancias largas · más de 28 noches · septiembre – junio"), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
     className: "ls-info-sub"
   }, "Para teletrabajadores, negocios y personas que quieren vivir una temporada en Vera Playa. Sin julio ni agosto."))), /*#__PURE__*/React.createElement(LsCfgPanel, {
     lsCfg: lsCfg,
@@ -8300,7 +8300,7 @@ const HuecosTab = ({
         className: "ls-gap-head"
       }, /*#__PURE__*/React.createElement("span", {
         className: "hc-dates"
-      }, _hcFmt(gap.start), " \u2192 ", _hcFmt(gap.end)), /*#__PURE__*/React.createElement("span", {
+      }, _hcFmt(gap.start), " → ", _hcFmt(gap.end)), /*#__PURE__*/React.createElement("span", {
         className: "hc-nights"
       }, gap.nights, "n"), /*#__PURE__*/React.createElement("span", {
         className: "ls-gap-months"
@@ -8317,15 +8317,15 @@ const HuecosTab = ({
         className: "ls-bk-nights"
       }, p.nights, "n"), /*#__PURE__*/React.createElement("span", {
         className: "ls-bk-rate"
-      }, p.monthlyRate, "\u20AC/", p.dim, "d", p.specialNights > 0 && /*#__PURE__*/React.createElement("span", {
+      }, p.monthlyRate, "€/", p.dim, "d", p.specialNights > 0 && /*#__PURE__*/React.createElement("span", {
         className: "ls-bk-special"
-      }, " \xB7 ", p.specialNights, "n\xD7", bd.multiplier)), /*#__PURE__*/React.createElement("span", {
+      }, " · ", p.specialNights, "n×", bd.multiplier)), /*#__PURE__*/React.createElement("span", {
         className: "ls-bk-sub"
-      }, "= ", p.amount, "\u20AC"))), /*#__PURE__*/React.createElement("div", {
+      }, "= ", p.amount, "€"))), /*#__PURE__*/React.createElement("div", {
         className: "ls-bk-total"
       }, /*#__PURE__*/React.createElement("span", null, "Total estimado"), /*#__PURE__*/React.createElement("span", {
         className: "ls-bk-total-val"
-      }, bd.total, "\u20AC"))), /*#__PURE__*/React.createElement("div", {
+      }, bd.total, "€"))), /*#__PURE__*/React.createElement("div", {
         className: "ls-gap-actions",
         style: {
           display: 'flex',
@@ -8346,7 +8346,258 @@ const HuecosTab = ({
     style: {
       margin: '16px 0'
     }
-  }, "No hay huecos de m\xE1s de 28 noches en septiembre\u2013junio actualmente.")));
+  }, "No hay huecos de más de 28 noches en septiembre–junio actualmente.")));
+};
+
+// ---------------------------------------------------------------
+const CAT_COLORS_PINS = {
+  home: '#2A0F2E',
+  super: '#6B7A3A',
+  restaurant: '#B86A3C',
+  michelin: '#D4A84A',
+  bar: '#3AAABB',
+  fish: '#4E7A9A',
+  abasto: '#8A6A2E',
+  pharmacy: '#B82490',
+  health: '#B8246E',
+  vet: '#4E8A5A',
+  'pet-board': '#7A5E8A',
+  physio: '#5A7A8A',
+  bodega: '#8A4A2E',
+  coworking: '#4A6A8A',
+  laundry: '#6A8A6A',
+  atm: '#8A7A4A',
+  market: '#7A4A2E',
+  sport: '#3A6A8A',
+  trek: '#4A7A3A',
+  nature: '#3A8A5A',
+  beach: '#2A8A9E',
+  geo: '#7A4A7A',
+  culture: '#6A4A3A',
+  celiac: '#8A6A4A',
+  bookshop: '#4A4A8A',
+  gas: '#8A3A3A',
+  ev: '#3A8A7A'
+};
+const PinsTab = () => {
+  const mapRef = React.useRef(null);
+  const mapInst = React.useRef(null);
+  const markersRef = React.useRef({});
+  const placesRef = React.useRef([]);
+  const originalsRef = React.useRef({});
+  const searchActive = React.useRef(null);
+  const [changes, setChanges] = React.useState({});
+  const [search, setSearch] = React.useState('');
+  const [loading, setLoading] = React.useState(true);
+  const [loadErr, setLoadErr] = React.useState(null);
+  const [toast, setToast] = React.useState('');
+  const showToast = msg => {
+    setToast(msg);
+    setTimeout(() => setToast(''), 3000);
+  };
+  React.useEffect(() => {
+    if (!window.L) {
+      setLoadErr('Leaflet no disponible. Recarga la pagina.');
+      setLoading(false);
+      return;
+    }
+    const L = window.L;
+    fetch('data/places.json?t=' + Date.now(), {
+      cache: 'no-store'
+    }).then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(places => {
+      placesRef.current = places;
+      places.forEach(p => {
+        originalsRef.current[p.id] = {
+          lat: p.lat,
+          lng: p.lng
+        };
+      });
+      setLoading(false);
+      const map = L.map(mapRef.current, {
+        scrollWheelZoom: true
+      }).setView([37.22, -1.81], 11);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© <a href="https://openstreetmap.org/copyright">OSM</a>',
+        maxZoom: 19
+      }).addTo(map);
+      mapInst.current = map;
+      places.forEach(p => {
+        const col = CAT_COLORS_PINS[p.cat] || '#3AAABB';
+        const icon = L.divIcon({
+          className: '',
+          html: `<svg width="18" height="18"><circle cx="9" cy="9" r="7" fill="${col}" stroke="#fff" stroke-width="2"/></svg>`,
+          iconSize: [18, 18],
+          iconAnchor: [9, 9]
+        });
+        const m = L.marker([p.lat, p.lng], {
+          icon,
+          draggable: true,
+          title: p.name
+        }).bindTooltip(p.name, {
+          direction: 'top',
+          offset: [0, -9]
+        }).addTo(map);
+        m.on('dragend', () => {
+          const ll = m.getLatLng();
+          const o = originalsRef.current[p.id];
+          const dist = map.distance([o.lat, o.lng], [ll.lat, ll.lng]);
+          if (dist < 20) {
+            m.setLatLng([o.lat, o.lng]);
+            setChanges(prev => {
+              const n = {
+                ...prev
+              };
+              delete n[p.id];
+              return n;
+            });
+          } else {
+            setChanges(prev => ({
+              ...prev,
+              [p.id]: {
+                lat: ll.lat,
+                lng: ll.lng
+              }
+            }));
+          }
+        });
+        markersRef.current[p.id] = m;
+      });
+    }).catch(e => {
+      setLoadErr('Error cargando places.json: ' + e.message);
+      setLoading(false);
+    });
+    return () => {
+      if (mapInst.current) {
+        mapInst.current.remove();
+        mapInst.current = null;
+      }
+      markersRef.current = {};
+    };
+  }, []);
+  React.useEffect(() => {
+    if (!search.trim() || !mapInst.current) return;
+    const q = search.toLowerCase().trim();
+    if (searchActive.current) markersRef.current[searchActive.current]?.closeTooltip();
+    const found = placesRef.current.find(p => p.name.toLowerCase().includes(q) || p.id.includes(q));
+    if (found) {
+      const m = markersRef.current[found.id];
+      if (m) {
+        mapInst.current.setView(m.getLatLng(), 16);
+        m.openTooltip();
+        searchActive.current = found.id;
+      }
+    }
+  }, [search]);
+  const exportJson = () => {
+    const ids = Object.keys(changes);
+    if (!ids.length) {
+      showToast('Sin cambios que exportar');
+      return;
+    }
+    const out = ids.map(id => ({
+      id,
+      lat: parseFloat(changes[id].lat.toFixed(5)),
+      lng: parseFloat(changes[id].lng.toFixed(5))
+    }));
+    const json = JSON.stringify(out, null, 2);
+    navigator.clipboard.writeText(json).then(() => showToast(`JSON copiado (${out.length} cambios)`)).catch(() => showToast('No se pudo copiar al portapapeles'));
+  };
+  const resetAll = () => {
+    if (!Object.keys(changes).length) return;
+    if (!confirm('Reiniciar todos los cambios?')) return;
+    Object.keys(changes).forEach(id => {
+      const o = originalsRef.current[id];
+      markersRef.current[id]?.setLatLng([o.lat, o.lng]);
+    });
+    setChanges({});
+  };
+  if (loadErr) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "pe-error"
+  }, loadErr));
+  const changeIds = Object.keys(changes);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-wrap"
+  }, loading && /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-loading"
+  }, "Cargando mapa..."), /*#__PURE__*/React.createElement("div", {
+    ref: mapRef,
+    className: "pe-pins-map",
+    style: loading ? {
+      display: 'none'
+    } : {}
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-panel"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-ph"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-title"
+  }, "Editor de pins"), /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint"
+  }, "Arrastra los pins a su posicion correcta. Exporta el JSON y pegalo en el chat con Claude para aplicar los cambios a la guia.")), /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-search-wrap"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    className: "pe-input",
+    placeholder: "Buscar lugar...",
+    value: search,
+    onChange: e => setSearch(e.target.value)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-changes-head"
+  }, "Cambios (", changeIds.length, ")"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-changes"
+  }, changeIds.length === 0 ? /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint",
+    style: {
+      padding: '12px 0'
+    }
+  }, "Sin cambios aun.") : changeIds.map(id => {
+    const p = placesRef.current.find(x => x.id === id);
+    const c = changes[id];
+    const o = originalsRef.current[id];
+    return /*#__PURE__*/React.createElement("div", {
+      key: id,
+      className: "pe-pins-change-item"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "pe-pins-change-name"
+    }, p ? p.name : id, /*#__PURE__*/React.createElement("button", {
+      className: "pe-btn pe-btn-ghost pe-btn-sm",
+      style: {
+        float: 'right'
+      },
+      onClick: () => {
+        const oo = originalsRef.current[id];
+        markersRef.current[id]?.setLatLng([oo.lat, oo.lng]);
+        setChanges(prev => {
+          const n = {
+            ...prev
+          };
+          delete n[id];
+          return n;
+        });
+      }
+    }, "deshacer")), /*#__PURE__*/React.createElement("div", {
+      className: "pe-pins-change-old"
+    }, o.lat.toFixed(5), ", ", o.lng.toFixed(5)), /*#__PURE__*/React.createElement("div", {
+      className: "pe-pins-change-new"
+    }, "→ ", c.lat.toFixed(5), ", ", c.lng.toFixed(5)));
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-footer"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-primary",
+    onClick: exportJson,
+    disabled: !changeIds.length
+  }, "Exportar JSON"), /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-ghost",
+    onClick: resetAll,
+    disabled: !changeIds.length
+  }, "Reiniciar")), toast && /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-toast"
+  }, toast)));
 };
 
 // ---------------------------------------------------------------
@@ -8652,7 +8903,7 @@ const AdminApp = () => {
       className: "pe-card pe-login-card"
     }, /*#__PURE__*/React.createElement("h1", {
       className: "pe-login-title"
-    }, "Hest\xEDa Admin"), /*#__PURE__*/React.createElement("form", {
+    }, "Hestía Admin"), /*#__PURE__*/React.createElement("form", {
       onSubmit: login,
       className: "pe-login-form"
     }, /*#__PURE__*/React.createElement("input", {
@@ -8662,7 +8913,7 @@ const AdminApp = () => {
       spellCheck: "false",
       value: token,
       onChange: e => setToken(e.target.value),
-      placeholder: "github_pat_\u2026",
+      placeholder: "github_pat_…",
       className: "pe-input pe-mono pe-login-input",
       required: true
     }), /*#__PURE__*/React.createElement("button", {
@@ -8672,7 +8923,7 @@ const AdminApp = () => {
       className: "pe-error"
     }, error)), /*#__PURE__*/React.createElement("details", {
       className: "pe-help"
-    }, /*#__PURE__*/React.createElement("summary", null, "\xBFC\xF3mo obtener el token?"), /*#__PURE__*/React.createElement("ol", null, /*#__PURE__*/React.createElement("li", null, "GitHub \u2192 Settings \u2192 Developer settings \u2192 Fine-grained tokens."), /*#__PURE__*/React.createElement("li", null, "Repository: ", /*#__PURE__*/React.createElement("code", null, REPO), " \xB7 Permisos: ", /*#__PURE__*/React.createElement("strong", null, "Contents: write"), "."), /*#__PURE__*/React.createElement("li", null, "Copia el token y p\xE9galo arriba.")))));
+    }, /*#__PURE__*/React.createElement("summary", null, "¿Cómo obtener el token?"), /*#__PURE__*/React.createElement("ol", null, /*#__PURE__*/React.createElement("li", null, "GitHub → Settings → Developer settings → Fine-grained tokens."), /*#__PURE__*/React.createElement("li", null, "Repository: ", /*#__PURE__*/React.createElement("code", null, REPO), " · Permisos: ", /*#__PURE__*/React.createElement("strong", null, "Contents: write"), "."), /*#__PURE__*/React.createElement("li", null, "Copia el token y pégalo arriba.")))));
   }
   if (phase === 'loading' || phase === 'saving') {
     return /*#__PURE__*/React.createElement("div", {
@@ -8723,7 +8974,7 @@ const AdminApp = () => {
     };
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
       className: "pe-card"
-    }, /*#__PURE__*/React.createElement("h2", null, "Reviews \xB7 ", filtered.length, " de ", counts.all, " \xB7 ", /*#__PURE__*/React.createElement("strong", null, counts.pending, " pendientes")), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("h2", null, "Reviews · ", filtered.length, " de ", counts.all, " · ", /*#__PURE__*/React.createElement("strong", null, counts.pending, " pendientes")), /*#__PURE__*/React.createElement("div", {
       className: "pe-rev-filters"
     }, /*#__PURE__*/React.createElement("div", {
       className: "pe-rev-filter-group"
@@ -8751,7 +9002,7 @@ const AdminApp = () => {
       className: "pe-rev-filter-group"
     }, /*#__PURE__*/React.createElement("span", {
       className: "pe-rev-flbl"
-    }, "Hest\xEDa"), /*#__PURE__*/React.createElement("button", {
+    }, "Hestía"), /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: `pe-btn pe-btn-sm${filterApt === 'all' ? ' pe-btn-primary' : ' pe-btn-ghost'}`,
       onClick: () => setFilterApt('all')
@@ -8817,7 +9068,7 @@ const AdminApp = () => {
     className: "pe-shell"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-topbar"
-  }, /*#__PURE__*/React.createElement("span", null, "Hest\xEDa \xB7 Admin"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, "Hestía · Admin"), /*#__PURE__*/React.createElement("span", {
     className: "pe-meta"
   }, mode === 'pricing' ? `Precios actualizados: ${data.updatedAt || '–'}` : reviewsData ? `${(reviewsData.items || []).length} reviews` : ''), /*#__PURE__*/React.createElement("div", {
     className: "pe-topbar-actions"
@@ -8836,7 +9087,7 @@ const AdminApp = () => {
   }, syncMsg), /*#__PURE__*/React.createElement("button", {
     onClick: logout,
     className: "pe-btn pe-btn-ghost"
-  }, "Cerrar sesi\xF3n"))), /*#__PURE__*/React.createElement("div", {
+  }, "Cerrar sesión"))), /*#__PURE__*/React.createElement("div", {
     className: "pe-tabs"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -8846,7 +9097,7 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDDD3\uFE0F", /*#__PURE__*/React.createElement("span", {
+  }, "🗓️", /*#__PURE__*/React.createElement("span", {
     className: "pe-tab-label"
   }, " Reservas")), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -8856,7 +9107,7 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCCB", /*#__PURE__*/React.createElement("span", {
+  }, "📋", /*#__PURE__*/React.createElement("span", {
     className: "pe-tab-label"
   }, " Prereservas")), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -8866,7 +9117,7 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDD12", /*#__PURE__*/React.createElement("span", {
+  }, "🔒", /*#__PURE__*/React.createElement("span", {
     className: "pe-tab-label"
   }, " Bloqueos")), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -8876,7 +9127,7 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCB3", /*#__PURE__*/React.createElement("span", {
+  }, "💳", /*#__PURE__*/React.createElement("span", {
     className: "pe-tab-label"
   }, " Leila")), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -8886,7 +9137,7 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCC4", /*#__PURE__*/React.createElement("span", {
+  }, "📄", /*#__PURE__*/React.createElement("span", {
     className: "pe-tab-label"
   }, " Contrato")), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -8896,7 +9147,7 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83E\uDDFE", /*#__PURE__*/React.createElement("span", {
+  }, "🧾", /*#__PURE__*/React.createElement("span", {
     className: "pe-tab-label"
   }, " Facturas")), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -8906,7 +9157,7 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83E\uDDE0", /*#__PURE__*/React.createElement("span", {
+  }, "🧠", /*#__PURE__*/React.createElement("span", {
     className: "pe-tab-label"
   }, " Inteligencia")), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -8916,7 +9167,7 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCB0", /*#__PURE__*/React.createElement("span", {
+  }, "💰", /*#__PURE__*/React.createElement("span", {
     className: "pe-tab-label"
   }, " Pricing")), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -8926,7 +9177,7 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\uD83D\uDCC5", /*#__PURE__*/React.createElement("span", {
+  }, "📅", /*#__PURE__*/React.createElement("span", {
     className: "pe-tab-label"
   }, " Huecos")), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -8936,18 +9187,28 @@ const AdminApp = () => {
       setError(null);
       setSuccess(null);
     }
-  }, "\u2B50", /*#__PURE__*/React.createElement("span", {
+  }, "⭐", /*#__PURE__*/React.createElement("span", {
     className: "pe-tab-label"
   }, " Reviews"), reviewsData && (() => {
     const pending = (reviewsData.items || []).filter(r => r.status === 'pending').length;
     return pending > 0 ? /*#__PURE__*/React.createElement("span", {
       className: "pe-tab-badge"
     }, pending) : null;
-  })())), success && /*#__PURE__*/React.createElement("div", {
+  })()), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'mapa' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('mapa');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "📍", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Mapa"))), success && /*#__PURE__*/React.createElement("div", {
     className: "pe-success"
   }, success), error && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
-  }, error), mode === 'huecos' ? /*#__PURE__*/React.createElement(HuecosTab, {
+  }, error), mode === 'mapa' ? /*#__PURE__*/React.createElement(PinsTab, null) : mode === 'huecos' ? /*#__PURE__*/React.createElement(HuecosTab, {
     token: token,
     pricesData: data,
     onPricesUpdated: (d, s) => {
@@ -8983,7 +9244,7 @@ const AdminApp = () => {
     token: token
   }) : mode === 'reviews' ? renderReviewsTab() : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
-  }, /*#__PURE__*/React.createElement("h2", null, "Precios base por noche \xB7 2 hu\xE9spedes \xB7 temporada baja"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h2", null, "Precios base por noche · 2 huéspedes · temporada baja"), /*#__PURE__*/React.createElement("div", {
     className: "pe-grid"
   }, Object.entries(data.apts).map(([id, apt]) => /*#__PURE__*/React.createElement("div", {
     key: id,
@@ -8998,7 +9259,7 @@ const AdminApp = () => {
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("span", {
     className: "pe-suffix"
-  }, "\u20AC")), /*#__PURE__*/React.createElement("small", {
+  }, "€")), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
   }, apt.vft))))), /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
@@ -9022,16 +9283,16 @@ const AdminApp = () => {
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("span", {
     className: "pe-suffix"
-  }, "\xD7 base")), Object.entries(data.apts).map(([aid, apt]) => /*#__PURE__*/React.createElement("small", {
+  }, "× base")), Object.entries(data.apts).map(([aid, apt]) => /*#__PURE__*/React.createElement("small", {
     key: aid,
     className: "pe-hint"
-  }, apt.name_short || apt.name.split(' ').pop(), ": ", (apt.base * s.multiplier).toFixed(2), " \u20AC")))))), /*#__PURE__*/React.createElement("div", {
+  }, apt.name_short || apt.name.split(' ').pop(), ": ", (apt.base * s.multiplier).toFixed(2), " €")))))), /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("h2", null, "Reglas globales"), /*#__PURE__*/React.createElement("div", {
     className: "pe-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Hu\xE9sped extra (\u20AC/noche, desde el 3.\xBA)"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Huésped extra (€/noche, desde el 3.º)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
     min: "0",
     value: data.rules.extraGuestPerNight,
@@ -9039,7 +9300,7 @@ const AdminApp = () => {
     className: "pe-input pe-input-num"
   })), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Estancia m\xEDnima (noches)"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Estancia mínima (noches)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
     min: "1",
     value: data.rules.minNights,
@@ -9047,9 +9308,9 @@ const AdminApp = () => {
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
-  }, "M\xEDnimo por defecto fuera de temporada cr\xEDtica.")), /*#__PURE__*/React.createElement("div", {
+  }, "Mínimo por defecto fuera de temporada crítica.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Ventana de estancia corta (d\xEDas)"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Ventana de estancia corta (días)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
     min: "0",
     value: data.rules.imminentDays,
@@ -9057,9 +9318,9 @@ const AdminApp = () => {
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
-  }, "Si el check-in es dentro de este n\xFAmero de d\xEDas, se permite el m\xEDnimo de estancia corta (t\xEDpicamente 2 noches). Pon 0 para desactivar.")), /*#__PURE__*/React.createElement("div", {
+  }, "Si el check-in es dentro de este número de días, se permite el mínimo de estancia corta (típicamente 2 noches). Pon 0 para desactivar.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "M\xEDnimo en estancia corta (noches)"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Mínimo en estancia corta (noches)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
     min: "1",
     max: "7",
@@ -9068,9 +9329,9 @@ const AdminApp = () => {
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
-  }, "Cu\xE1ntas noches admitir dentro de la ventana corta. Por defecto 2.")), /*#__PURE__*/React.createElement("div", {
+  }, "Cuántas noches admitir dentro de la ventana corta. Por defecto 2.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "M\xEDnimo en temporada cr\xEDtica (noches)"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Mínimo en temporada crítica (noches)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
     min: "1",
     value: data.rules.criticalSeasonMinNights,
@@ -9078,9 +9339,9 @@ const AdminApp = () => {
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
-  }, "Solo aplica en fechas marcadas como cr\xEDtica.")), /*#__PURE__*/React.createElement("div", {
+  }, "Solo aplica en fechas marcadas como crítica.")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Descuento reserva directa (0\u20131)"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Descuento reserva directa (0–1)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "0.01",
     min: "0",
     max: "1",
@@ -9089,9 +9350,9 @@ const AdminApp = () => {
     className: "pe-input pe-input-num"
   }), /*#__PURE__*/React.createElement("small", {
     className: "pe-hint"
-  }, "Ej. 0.09 = \u22129 % vs Booking/Airbnb")), /*#__PURE__*/React.createElement("div", {
+  }, "Ej. 0.09 = −9 % vs Booking/Airbnb")), /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
-  }, /*#__PURE__*/React.createElement("label", null, "Suplemento mascota (\u20AC/estancia)"), /*#__PURE__*/React.createElement(NumInput, {
+  }, /*#__PURE__*/React.createElement("label", null, "Suplemento mascota (€/estancia)"), /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
     min: "0",
     value: data.rules.petFlatFee,
@@ -9099,9 +9360,9 @@ const AdminApp = () => {
     className: "pe-input pe-input-num"
   })))), /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
-  }, /*#__PURE__*/React.createElement("h2", null, "Suplementos por hu\xE9sped"), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("h2", null, "Suplementos por huésped"), /*#__PURE__*/React.createElement("p", {
     className: "pe-lede"
-  }, "Precio escalonado por n\xFAmero de hu\xE9spedes. Cada fila es el coste adicional ", /*#__PURE__*/React.createElement("strong", null, "por noche"), " al subir un escal\xF3n. Base = 1 hu\xE9sped. Ej. 2 hu\xE9spedes = 1 hu\xE9sped + suplemento 1\u21922; 4 hu\xE9spedes = 1 hu\xE9sped + suplemento 1\u21922 + 2\u21923 + 3\u21924."), /*#__PURE__*/React.createElement("table", {
+  }, "Precio escalonado por número de huéspedes. Cada fila es el coste adicional ", /*#__PURE__*/React.createElement("strong", null, "por noche"), " al subir un escalón. Base = 1 huésped. Ej. 2 huéspedes = 1 huésped + suplemento 1→2; 4 huéspedes = 1 huésped + suplemento 1→2 + 2→3 + 3→4."), /*#__PURE__*/React.createElement("table", {
     className: "pe-table pe-table-extras"
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
     style: {
@@ -9115,7 +9376,7 @@ const AdminApp = () => {
     style: {
       width: 140
     }
-  }, "\u20AC/noche"), /*#__PURE__*/React.createElement("th", null, "Etiqueta"), /*#__PURE__*/React.createElement("th", {
+  }, "€/noche"), /*#__PURE__*/React.createElement("th", null, "Etiqueta"), /*#__PURE__*/React.createElement("th", {
     style: {
       width: 80
     }
@@ -9199,11 +9460,11 @@ const AdminApp = () => {
       });
       update('rules.guestSupplements', arr);
     }
-  }, "+ A\xF1adir escal\xF3n")), /*#__PURE__*/React.createElement("div", {
+  }, "+ Añadir escalón")), /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("h2", null, "Extras configurables"), /*#__PURE__*/React.createElement("p", {
     className: "pe-lede"
-  }, "Items opcionales que el hu\xE9sped puede pedir desde el formulario de reserva. Edita label, precio y unidad. Eliminar una fila la quita de la web."), /*#__PURE__*/React.createElement("table", {
+  }, "Items opcionales que el huésped puede pedir desde el formulario de reserva. Edita label, precio y unidad. Eliminar una fila la quita de la web."), /*#__PURE__*/React.createElement("table", {
     className: "pe-table pe-table-extras"
   }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
     style: {
@@ -9213,7 +9474,7 @@ const AdminApp = () => {
     style: {
       width: 100
     }
-  }, "Precio (\u20AC)"), /*#__PURE__*/React.createElement("th", {
+  }, "Precio (€)"), /*#__PURE__*/React.createElement("th", {
     style: {
       width: 130
     }
@@ -9302,7 +9563,7 @@ const AdminApp = () => {
       update('rules.extras', arr);
     },
     "aria-label": "Eliminar"
-  }, "\xD7")))))), /*#__PURE__*/React.createElement("button", {
+  }, "×")))))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost pe-btn-sm",
     style: {
@@ -9321,11 +9582,11 @@ const AdminApp = () => {
     }
   }, "+ Extra")), /*#__PURE__*/React.createElement("div", {
     className: "pe-card"
-  }, /*#__PURE__*/React.createElement("h2", null, "Estancia corta \xB7 precio penalizado"), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("h2", null, "Estancia corta · precio penalizado"), /*#__PURE__*/React.createElement("p", {
     className: "pe-lede"
-  }, "Para empujar a estancias de 5+ noches, las de 3 y 4 se cotizan como si duraran m\xE1s, menos un descuento fijo. Ej.: 3 noches = precio de 5 noches \u2212 10 \u20AC. Vac\xEDa la tabla para desactivar."), /*#__PURE__*/React.createElement("table", {
+  }, "Para empujar a estancias de 5+ noches, las de 3 y 4 se cotizan como si duraran más, menos un descuento fijo. Ej.: 3 noches = precio de 5 noches − 10 €. Vacía la tabla para desactivar."), /*#__PURE__*/React.createElement("table", {
     className: "pe-table"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Noches reales"), /*#__PURE__*/React.createElement("th", null, "Calcular como (noches)"), /*#__PURE__*/React.createElement("th", null, "Descuento fijo (\u20AC)"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, (data.rules.shortStayPricing || []).map((r, i) => /*#__PURE__*/React.createElement("tr", {
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Noches reales"), /*#__PURE__*/React.createElement("th", null, "Calcular como (noches)"), /*#__PURE__*/React.createElement("th", null, "Descuento fijo (€)"), /*#__PURE__*/React.createElement("th", null))), /*#__PURE__*/React.createElement("tbody", null, (data.rules.shortStayPricing || []).map((r, i) => /*#__PURE__*/React.createElement("tr", {
     key: i
   }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
@@ -9379,7 +9640,7 @@ const AdminApp = () => {
       update('rules.shortStayPricing', arr);
     },
     "aria-label": "Eliminar"
-  }, "\xD7")))))), /*#__PURE__*/React.createElement("button", {
+  }, "×")))))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost pe-btn-sm",
     style: {
@@ -9400,7 +9661,7 @@ const AdminApp = () => {
     className: "pe-card"
   }, /*#__PURE__*/React.createElement("h2", null, "Descuentos por estancia larga"), /*#__PURE__*/React.createElement("table", {
     className: "pe-table"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "M\xEDn. noches"), /*#__PURE__*/React.createElement("th", null, "Descuento (0\u20131)"), /*#__PURE__*/React.createElement("th", null, "No aplica en"))), /*#__PURE__*/React.createElement("tbody", null, data.rules.stayDiscounts.map((d, i) => /*#__PURE__*/React.createElement("tr", {
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Mín. noches"), /*#__PURE__*/React.createElement("th", null, "Descuento (0–1)"), /*#__PURE__*/React.createElement("th", null, "No aplica en"))), /*#__PURE__*/React.createElement("tbody", null, data.rules.stayDiscounts.map((d, i) => /*#__PURE__*/React.createElement("tr", {
     key: i
   }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement(NumInput, {
     step: "1",
