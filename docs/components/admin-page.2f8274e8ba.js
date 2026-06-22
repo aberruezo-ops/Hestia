@@ -58,7 +58,7 @@ const APT_CONTRACT_DATA = {
     name: 'Hestía Vera Thalassa',
     shortName: 'Thalassa',
     heroPhoto: 'assets/apt-vt-4.jpg',
-    direccion: 'Apto. 11, planta 5ª, escalera 13, en la urbanización Thalassa, en C/ Tomillo 2',
+    direccion: 'Apto. 11, escalera 13, en la urbanización Thalassa, en C/ Tomillo 2',
     plazaGaraje: '163',
     acceso: 'La vivienda se encuentra en un <strong>tercero sin ascensor desde el garaje</strong>. Además, existen <strong>tramos de escaleras adicionales</strong> para acceder a diferentes lugares de la urbanización, como la piscina, el parque, las pistas de tenis, etc.',
     zonaObras: 'cercanas',
