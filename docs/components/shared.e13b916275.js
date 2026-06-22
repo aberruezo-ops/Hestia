@@ -140,7 +140,7 @@ const Wordmark = ({
   style: {
     fontSize: size
   }
-}, "HEST\xCDA"), /*#__PURE__*/React.createElement("div", {
+}, "HESTÍA"), /*#__PURE__*/React.createElement("div", {
   className: "your-home",
   style: {
     fontSize: size * 0.62,
@@ -168,30 +168,30 @@ const COPY = {
     bridge_title: '…y amanece sobre Vera Playa.',
     bridge_sub: 'La noche morada se retira despacio. El alba trae el albero: tierra, pared encalada, sal seca. A las siete, el Mediterráneo abre el ojo en teal y los olivos reciben la luz de costado. Al fondo, el Desierto de Tabernas ya es naranja.',
     apts_eyebrow: 'Nuestros tres Hestías',
-    apts_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Tres atm\xF3sferas, ", /*#__PURE__*/React.createElement("em", null, "una misma casa.")),
+    apts_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Tres atmósferas, ", /*#__PURE__*/React.createElement("em", null, "una misma casa.")),
     apts_sub: 'Cada uno toma su color del paisaje que lo rodea. Tres hogares: elige el tuyo, o ven tres veces.',
     apt_01_concept: 'El campo de olivos llega al mar',
     apt_02_concept: 'El ático sobre el Mediterráneo y el Salar de los Canos',
     apt_03_concept: 'El amarillo albero del amanecer sobre las salinas',
     apt_cta: 'Ver Hestía',
     compare_eyebrow: 'Compara · Elige · Reserva',
-    compare_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Tres puertas distintas al ", /*#__PURE__*/React.createElement("em", null, "mismo Mediterr\xE1neo.")),
+    compare_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Tres puertas distintas al ", /*#__PURE__*/React.createElement("em", null, "mismo Mediterráneo.")),
     counters_eyebrow: 'Diez años · una playa · vuestra casa',
     days_unit: 'días',
     counter_1: 'familias han vivido aquí desde 2016',
     counter_2: 'días de sol al año en Vera Playa',
     counter_3: 'Hestías gestionados en persona por Alex y Fran',
     gallery_eyebrow: 'Postales desde Vera',
-    gallery_title: /*#__PURE__*/React.createElement(React.Fragment, null, "La luz de Almer\xEDa ", /*#__PURE__*/React.createElement("em", null, "cuenta la historia.")),
+    gallery_title: /*#__PURE__*/React.createElement(React.Fragment, null, "La luz de Almería ", /*#__PURE__*/React.createElement("em", null, "cuenta la historia.")),
     team_eyebrow: 'Quienes os reciben',
-    team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "No somos una recepci\xF3n. ", /*#__PURE__*/React.createElement("em", null, "Somos Alex y Fran.")),
+    team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "No somos una recepción. ", /*#__PURE__*/React.createElement("em", null, "Somos Alex y Fran.")),
     team_intro: 'En 2016 nacieron los tres, el nombre lo tomamos de la diosa griega del hogar. Diez años después seguimos limpiando, recibiendo, respondiendo WhatsApp y eligiendo las toallas. Todo lo hacemos nosotros, por eso todo importa.',
     alex_role: 'Reserva · Antes de tu llegada',
     alex_quote: '«A ti, antes de que llegues, te lo cuento todo. Después, cuando te vayas, te echaré de menos.»',
     fran_role: 'Estancia · Mientras estás aquí',
     fran_quote: '«Si algo falla, cambia o necesita atención, estoy aquí. Tu estancia, mi trabajo.»',
     manifest_eyebrow: 'El viajero que hace hogar',
-    manifest_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hest\xEDa no se visita, ", /*#__PURE__*/React.createElement("em", null, "se vive, y se cuida para quien venga despu\xE9s.")),
+    manifest_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hestía no se visita, ", /*#__PURE__*/React.createElement("em", null, "se vive, y se cuida para quien venga después.")),
     manifest_lead_1: 'No vienes a hacer turismo. Vienes a cocinar tu desayuno, a leer en la terraza, a seguir tu ritmo. Esto no es un hotel: durante tu estancia, es tu casa.',
     manifest_lead_2: 'Y porque es tu casa, te pedimos lo que se le pide a quien quiere su hogar: que lo cuides. Que lo dejes listo. Para quien venga detrás, será su casa entonces, igual que es la tuya ahora.',
     manifest_principles_eyebrow: 'Cuatro maneras de cuidar lo que es tuyo por unos días',
@@ -201,13 +201,13 @@ const COPY = {
     manifest_p4: 'Nosotros también ponemos todo de nuestra parte.',
     manifest_quote: '«Deja esto como te hubiera gustado encontrarlo. Alguien antes que tú también lo hizo.»',
     ratings_eyebrow: 'Lo que dicen de nosotros',
-    ratings_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Diez a\xF1os puntuando ", /*#__PURE__*/React.createElement("em", null, "casi perfecto.")),
+    ratings_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Diez años puntuando ", /*#__PURE__*/React.createElement("em", null, "casi perfecto.")),
     ratings_sub: 'No es un eslogan. Son cifras verificadas por las plataformas, escritas por las familias que han dormido aquí.',
     rating_booking_desc: 'Valoración Booking.com, promedio de los tres.',
     rating_airbnb_desc: 'Superhost desde 2018. Puntuación máxima ininterrumpida.',
     rating_google_desc: 'Google Maps, opiniones de huéspedes que volvieron a Vera.',
     contact_eyebrow: 'Reserva directa, sin intermediarios',
-    contact_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Escr\xEDbenos. Te responde ", /*#__PURE__*/React.createElement("em", null, "una persona.")),
+    contact_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Escríbenos. Te responde ", /*#__PURE__*/React.createElement("em", null, "una persona.")),
     contact_sub: 'Alex en español, Fran en inglés. WhatsApp, teléfono o email: sin formularios eternos, sin bots, sin comisiones.',
     contact_cta_wa: 'WhatsApp Alex (ES)',
     contact_cta_wa_href: 'https://wa.me/34620316370',
@@ -250,7 +250,7 @@ const COPY = {
     counter_2: 'days of sunshine a year in Vera Playa',
     counter_3: 'Hestías run in person by Alex & Fran',
     gallery_eyebrow: 'Postcards from Vera',
-    gallery_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Almer\xEDa's light ", /*#__PURE__*/React.createElement("em", null, "tells the story.")),
+    gallery_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Almería's light ", /*#__PURE__*/React.createElement("em", null, "tells the story.")),
     team_eyebrow: 'The hosts',
     team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Not a front desk. ", /*#__PURE__*/React.createElement("em", null, "Just Alex & Fran.")),
     team_intro: 'In 2016 the three Hestías opened, we took the name from the Greek goddess of home. Ten years later we still clean, welcome, reply WhatsApp and choose the towels. We do everything ourselves, that is why it all matters.',
@@ -259,7 +259,7 @@ const COPY = {
     fran_role: 'Stay · While you are here',
     fran_quote: '«If anything breaks, calls, or changes, I am here. Your stay, my job.»',
     manifest_eyebrow: 'The traveler who makes a home',
-    manifest_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hest\xEDa isn\u2019t visited. ", /*#__PURE__*/React.createElement("em", null, "It\u2019s lived in: and cared for, for whoever comes next.")),
+    manifest_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hestía isn’t visited. ", /*#__PURE__*/React.createElement("em", null, "It’s lived in: and cared for, for whoever comes next.")),
     manifest_lead_1: 'You’re not here as a tourist. You’re here to cook your breakfast, read on the terrace, keep your own rhythm. This isn’t a hotel: while you stay, it’s your home.',
     manifest_lead_2: 'And because it’s your home, we ask the same thing one asks of anyone who loves their home: care for it. Leave it ready. For whoever comes next, it will be their home then, just as it’s yours now.',
     manifest_principles_eyebrow: 'Four ways to care for what is yours for a few days',
@@ -410,7 +410,7 @@ const QUICK_FAQ = {
   home: {
     es: [{
       q: '¿Cómo reservo directamente?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Escr\xEDbenos por ", /*#__PURE__*/React.createElement("a", {
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Escríbenos por ", /*#__PURE__*/React.createElement("a", {
         href: "https://wa.me/34620316370",
         target: "_blank",
         rel: "noopener"
@@ -418,26 +418,26 @@ const QUICK_FAQ = {
         href: "mailto:info@hestiayourhome.com"
       }, "info@hestiayourhome.com"), ". Sin intermediarios, sin comisiones. O usa el formulario en ", /*#__PURE__*/React.createElement("a", {
         href: "reservas.html"
-      }, "nuestra p\xE1gina de reservas"), ".")
+      }, "nuestra página de reservas"), ".")
     }, {
       q: '¿Puedo llevar a mi perro?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED, en los tres. Las mascotas son bienvenidas siempre bajo petici\xF3n previa y con suplemento, respetando unas condiciones b\xE1sicas dentro de Hest\xEDa, en las zonas comunes y en los espacios p\xFAblicos. Av\xEDsanos al reservar.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Sí, en los tres. Las mascotas son bienvenidas siempre bajo petición previa y con suplemento, respetando unas condiciones básicas dentro de Hestía, en las zonas comunes y en los espacios públicos. Avísanos al reservar.")
     }, {
       q: '¿Qué Hestía me conviene más?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Compara los tres en ", /*#__PURE__*/React.createElement("a", {
         href: "/"
       }, "nuestra home"), ". ", /*#__PURE__*/React.createElement("a", {
         href: "mar.html"
-      }, "Mar"), " es planta primera con jard\xEDn, terraza de amanecer y mascotas. ", /*#__PURE__*/React.createElement("a", {
+      }, "Mar"), " es planta primera con jardín, terraza de amanecer y mascotas. ", /*#__PURE__*/React.createElement("a", {
         href: "thalassa.html"
-      }, "Thalassa"), " es el \xE1tico con SPA comunitario y vistas panor\xE1micas al mar. ", /*#__PURE__*/React.createElement("a", {
+      }, "Thalassa"), " es el ático con SPA comunitario y vistas panorámicas al mar. ", /*#__PURE__*/React.createElement("a", {
         href: "salinas.html"
       }, "Salinas"), " tiene tres piscinas y el Parque Natural al lado.")
     }, {
       q: '¿Quiénes sois Alex y Fran?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("a", {
         href: "nosotros.html"
-      }, "Somos los propietarios"), ", no una agencia. Gestionamos los tres en persona desde 2016. M\xE1s de 600 familias nos avalan.")
+      }, "Somos los propietarios"), ", no una agencia. Gestionamos los tres en persona desde 2016. Más de 600 familias nos avalan.")
     }],
     en: [{
       q: 'How do I book directly?',
@@ -452,7 +452,7 @@ const QUICK_FAQ = {
       }, "our reservations page"), ".")
     }, {
       q: 'Can I bring my dog?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes, in all three Hest\xEDas. Pets are welcome on request and with a supplement, as long as basic conditions are respected inside the Hest\xEDa, in the communal areas and in public spaces. Just let us know when booking.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes, in all three Hestías. Pets are welcome on request and with a supplement, as long as basic conditions are respected inside the Hestía, in the communal areas and in public spaces. Just let us know when booking.")
     }, {
       q: 'Which Hestía suits me best?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Compare all three on ", /*#__PURE__*/React.createElement("a", {
@@ -468,29 +468,29 @@ const QUICK_FAQ = {
       q: 'Who are Alex and Fran?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("a", {
         href: "nosotros.html"
-      }, "We are the owners"), ", not an agency. We have run the three Hest\xEDas in person since 2016. Over 600 families back us.")
+      }, "We are the owners"), ", not an agency. We have run the three Hestías in person since 2016. Over 600 families back us.")
     }]
   },
   vm: {
     es: [{
       q: '¿Por qué elegiría Hestía Mar sobre los otros dos?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Mar es planta primera, con acceso al jard\xEDn y a la piscina comunitaria. Al ser de esquina da a tres calles distintas: hacia el mar, hacia los lados y hacia la zona de entrada, lo que permite ventilaci\xF3n cruzada natural en todas las estancias. La terraza de 20m\xB2 est\xE1 orientada al amanecer, pero desde ella ves el ciclo solar completo. El m\xE1s cercano a la playa de los tres.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Mar es planta primera, con acceso al jardín y a la piscina comunitaria. Al ser de esquina da a tres calles distintas: hacia el mar, hacia los lados y hacia la zona de entrada, lo que permite ventilación cruzada natural en todas las estancias. La terraza de 20m² está orientada al amanecer, pero desde ella ves el ciclo solar completo. El más cercano a la playa de los tres.")
     }, {
       q: '¿Puedo traer a mi perro (o gato)?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED, las mascotas son bienvenidas en los tres, siempre bajo petici\xF3n previa y con suplemento. Solo pedimos que se respeten unas condiciones b\xE1sicas y sensatas: dentro de Hest\xEDa, en las zonas comunes de la urbanizaci\xF3n y en los espacios p\xFAblicos. Av\xEDsanos al reservar.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Sí, las mascotas son bienvenidas en los tres, siempre bajo petición previa y con suplemento. Solo pedimos que se respeten unas condiciones básicas y sensatas: dentro de Hestía, en las zonas comunes de la urbanización y en los espacios públicos. Avísanos al reservar.")
     }, {
       q: '¿El jacuzzi está disponible durante mi estancia?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "El jacuzzi es comunitario y est\xE1 abierto durante la temporada de verano, igual que la piscina. Si tienes dudas sobre tus fechas concretas, preg\xFAntanos antes de reservar.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "El jacuzzi es comunitario y está abierto durante la temporada de verano, igual que la piscina. Si tienes dudas sobre tus fechas concretas, pregúntanos antes de reservar.")
     }, {
       q: '¿A qué distancia está la playa?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Unos 300 metros a pie desde la salida de la urbanizaci\xF3n, cinco minutos m\xE1ximo hasta pisar la arena. La playa de Vera Playa es larga, tranquila y de arena fina.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Unos 300 metros a pie desde la salida de la urbanización, cinco minutos máximo hasta pisar la arena. La playa de Vera Playa es larga, tranquila y de arena fina.")
     }],
     en: [{
       q: 'Why would I choose Hestía Mar over the other two?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Mar is on the first floor, with access to the garden and shared pool. As a corner unit facing three different streets: sea side, lateral and entrance, it has natural cross-ventilation throughout. The 20m\xB2 terrace faces the sunrise, but from it you can follow the entire arc of the sun. The closest to the beach of the three.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Mar is on the first floor, with access to the garden and shared pool. As a corner unit facing three different streets: sea side, lateral and entrance, it has natural cross-ventilation throughout. The 20m² terrace faces the sunrise, but from it you can follow the entire arc of the sun. The closest to the beach of the three.")
     }, {
       q: 'Can I bring my dog (or cat)?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes, pets are welcome in all three Hest\xEDas, always on request and with a supplement. We simply ask that basic conditions are respected: inside the Hest\xEDa, in the communal areas of the complex, and in public spaces. Let us know when booking.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes, pets are welcome in all three Hestías, always on request and with a supplement. We simply ask that basic conditions are respected: inside the Hestía, in the communal areas of the complex, and in public spaces. Let us know when booking.")
     }, {
       q: 'Is the jacuzzi available during my stay?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "The jacuzzi is a shared facility, open during the summer season, just like the pool. If you have doubts about your specific dates, ask us before booking.")
@@ -502,16 +502,16 @@ const QUICK_FAQ = {
   vt: {
     es: [{
       q: '¿Por qué elegiría Hestía Thalassa sobre los otros dos?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Thalassa es el \xE1tico, el piso m\xE1s alto de la urbanizaci\xF3n. La terraza panor\xE1mica tiene vistas al Mediterr\xE1neo y al Salar de los Canos, el paisaje m\xE1s abierto y luminoso de los tres. Adem\xE1s, la urbanizaci\xF3n cuenta con SPA comunitario (con sauna), piscina y pistas de p\xE1del.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Thalassa es el ático, el piso más alto de la urbanización. La terraza panorámica tiene vistas al Mediterráneo y al Salar de los Canos, el paisaje más abierto y luminoso de los tres. Además, la urbanización cuenta con SPA comunitario (con sauna), piscina y pistas de pádel.")
     }, {
       q: '¿Cómo funciona el SPA de la urbanización?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "El SPA es comunitario y est\xE1 abierto en oto\xF1o, invierno y primavera. En verano permanece cerrado, aunque el gimnasio permanece abierto todo el a\xF1o. El SPA tambi\xE9n dispone de sauna.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "El SPA es comunitario y está abierto en otoño, invierno y primavera. En verano permanece cerrado, aunque el gimnasio permanece abierto todo el año. El SPA también dispone de sauna.")
     }, {
       q: '¿Qué vistas tiene la terraza del ático?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Desde la terraza panor\xE1mica ves el Mediterr\xE1neo y, hacia el interior, el Salar de los Canos, un paisaje \xE1rido y de gran belleza. La zona tiene una luz y una aridez espectaculares. El Desierto de Tabernas propiamente dicho est\xE1 a unos 30 minutos en coche.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Desde la terraza panorámica ves el Mediterráneo y, hacia el interior, el Salar de los Canos, un paisaje árido y de gran belleza. La zona tiene una luz y una aridez espectaculares. El Desierto de Tabernas propiamente dicho está a unos 30 minutos en coche.")
     }, {
       q: '¿Puedo traer mascotas?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED, en los tres. Siempre bajo petici\xF3n previa y con un peque\xF1o suplemento. Solo pedimos que se respeten unas normas b\xE1sicas y sensatas: que no suban a sof\xE1s, sillones ni camas, y que no hagan sus necesidades en zonas comunes ni dentro de Hest\xEDa.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Sí, en los tres. Siempre bajo petición previa y con un pequeño suplemento. Solo pedimos que se respeten unas normas básicas y sensatas: que no suban a sofás, sillones ni camas, y que no hagan sus necesidades en zonas comunes ni dentro de Hestía.")
     }],
     en: [{
       q: 'Why would I choose Hestía Thalassa over the other two?',
@@ -524,26 +524,26 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "From the panoramic terrace you look out over the Mediterranean and, inland, the Salar de los Canos: an arid, strikingly beautiful landscape. The area is dramatic and dry. The Tabernas Desert proper is about 30 minutes by car.")
     }, {
       q: 'Can I bring pets?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes, in all three Hest\xEDas. Always on request and with a small supplement. We just ask that basic rules are respected: pets should not get on sofas, armchairs or beds, and must not relieve themselves inside the Hest\xEDa or in communal areas.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes, in all three Hestías. Always on request and with a small supplement. We just ask that basic rules are respected: pets should not get on sofas, armchairs or beds, and must not relieve themselves inside the Hestía or in communal areas.")
     }]
   },
   vs: {
     es: [{
       q: '¿Por qué elegiría Hestía Salinas sobre los otros dos?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Salinas es el m\xE1s espacioso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de p\xE1del comunitarios, y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina con acceso peatonal directo. La luz dorada de Almer\xEDa llena cada habitaci\xF3n, y la naturaleza empieza donde termina la acera.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Salinas es el más espacioso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de pádel comunitarios, y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina con acceso peatonal directo. La luz dorada de Almería llena cada habitación, y la naturaleza empieza donde termina la acera.")
     }, {
       q: '¿Qué son las Salinas de Puerto Rey?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Un Parque Natural a pocos metros, con flamencos, aves migratorias y una luz dorada al amanecer \xFAnica en Europa. Una de las razones por las que Salinas tiene algo que los dem\xE1s no tienen.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Un Parque Natural a pocos metros, con flamencos, aves migratorias y una luz dorada al amanecer única en Europa. Una de las razones por las que Salinas tiene algo que los demás no tienen.")
     }, {
       q: '¿Hay de verdad tres piscinas?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED. La urbanizaci\xF3n tiene tres piscinas comunitarias: no una sola dividida, sino tres zonas diferenciadas con orientaciones distintas. Adem\xE1s hay gimnasio y sauna comunitarios (el gimnasio abierto todo el a\xF1o; la sauna, solo fuera de temporada de verano) y pistas de p\xE1del. Una de las urbanizaciones mejor equipadas de Vera Playa.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Sí. La urbanización tiene tres piscinas comunitarias: no una sola dividida, sino tres zonas diferenciadas con orientaciones distintas. Además hay gimnasio y sauna comunitarios (el gimnasio abierto todo el año; la sauna, solo fuera de temporada de verano) y pistas de pádel. Una de las urbanizaciones mejor equipadas de Vera Playa.")
     }, {
       q: '¿Puedo traer mascotas?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED, en los tres. Siempre bajo petici\xF3n previa y con suplemento, respetando unas condiciones b\xE1sicas dentro de Hest\xEDa, en las zonas comunes y en los espacios p\xFAblicos.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Sí, en los tres. Siempre bajo petición previa y con suplemento, respetando unas condiciones básicas dentro de Hestía, en las zonas comunes y en los espacios públicos.")
     }],
     en: [{
       q: 'Why would I choose Hestía Salinas over the other two?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Salinas is the most spacious of the three. Two terraces, three pools, a communal gym, sauna and padel courts, and the Puerto Rey Salt-flat Nature Park around the corner with direct pedestrian access. Almer\xEDa's golden afternoon light fills every room, and nature begins where the pavement ends.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Salinas is the most spacious of the three. Two terraces, three pools, a communal gym, sauna and padel courts, and the Puerto Rey Salt-flat Nature Park around the corner with direct pedestrian access. Almería's golden afternoon light fills every room, and nature begins where the pavement ends.")
     }, {
       q: 'What is the Puerto Rey Nature Park?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "A natural park a few metres away, with flamingos, migratory birds and a golden light at sunrise unique in Europe. One of the reasons Salinas has something the others don't.")
@@ -552,22 +552,22 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes. The complex has three community pools: not one divided, but three separate areas with different orientations. There is also a communal gym and sauna (gym open all year; sauna closed in summer) and padel courts. One of the best-equipped complexes in Vera Playa.")
     }, {
       q: 'Can I bring pets?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes, in all three Hest\xEDas. Always on request and with a supplement, as long as basic conditions are respected inside the Hest\xEDa, in the communal areas and in public spaces.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes, in all three Hestías. Always on request and with a supplement, as long as basic conditions are respected inside the Hestía, in the communal areas and in public spaces.")
     }]
   },
   nosotros: {
     es: [{
       q: '¿Desde cuándo lo hacéis vosotros mismos?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Desde 2016. En diez a\xF1os hemos recibido a m\xE1s de 600 familias. Nunca hemos externalizado la gesti\xF3n: nosotros gestionamos, nosotros cuidamos.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Desde 2016. En diez años hemos recibido a más de 600 familias. Nunca hemos externalizado la gestión: nosotros gestionamos, nosotros cuidamos.")
     }, {
       q: '¿Por qué se llaman así cada Hestía?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Hest\xEDa era la diosa griega del hogar: la diosa pac\xEDfica, la que guardaba el fuego de casa. Eso es lo que intentamos hacer: que Hest\xEDa deje de ser un sitio donde dormir y se convierta en un lugar donde quedarse.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Hestía era la diosa griega del hogar: la diosa pacífica, la que guardaba el fuego de casa. Eso es lo que intentamos hacer: que Hestía deje de ser un sitio donde dormir y se convierta en un lugar donde quedarse.")
     }, {
       q: '¿Hay alguna agencia o gestor detrás?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "No. Somos Alex y Fran. No hay agencia, no hay gestor, no hay centralita. Cuando nos escribes, nos escribes a nosotros directamente.")
     }, {
       q: '¿Qué pasa si algo falla durante mi estancia?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Fran se encarga de tu estancia, est\xE1 pendiente de ti, de vosotros. Responde r\xE1pido y resuelve con la mayor celeridad y eficacia posibles.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Fran se encarga de tu estancia, está pendiente de ti, de vosotros. Responde rápido y resuelve con la mayor celeridad y eficacia posibles.")
     }],
     en: [{
       q: 'How long have you been managing the Hestías yourselves?',
@@ -576,7 +576,7 @@ const QUICK_FAQ = {
       }, "Read our story."))
     }, {
       q: "Why are they called Hestía?",
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Hest\xEDa was the Greek goddess of the hearth: the peaceful goddess, guardian of the home fire. That is what we try to do: turn a Hest\xEDa from a place to sleep into a place you want to stay.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Hestía was the Greek goddess of the hearth: the peaceful goddess, guardian of the home fire. That is what we try to do: turn a Hestía from a place to sleep into a place you want to stay.")
     }, {
       q: 'Is there an agency or property manager behind you?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "No. We are Alex and Fran. No agency, no manager, no call centre. When you write to us, you are writing to us directly.")
@@ -592,16 +592,16 @@ const QUICK_FAQ = {
   opiniones: {
     es: [{
       q: '¿Estas valoraciones son reales y verificadas?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED. Las puntuaciones de Booking.com, Airbnb y Google Maps son verificadas por las propias plataformas, solo pueden valorar quienes han completado una estancia real. No podemos modificarlas.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Sí. Las puntuaciones de Booking.com, Airbnb y Google Maps son verificadas por las propias plataformas, solo pueden valorar quienes han completado una estancia real. No podemos modificarlas.")
     }, {
       q: '¿Sois realmente Superhost en Airbnb?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED, desde 2018 de forma ininterrumpida. El estatus Superhost se revisa cada trimestre y requiere mantener puntuaci\xF3n m\xE1xima y tiempo de respuesta alto de forma continua. No es un t\xEDtulo que se queda para siempre.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Sí, desde 2018 de forma ininterrumpida. El estatus Superhost se revisa cada trimestre y requiere mantener puntuación máxima y tiempo de respuesta alto de forma continua. No es un título que se queda para siempre.")
     }, {
       q: '¿Qué es lo que más valoran los huéspedes?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "La atenci\xF3n personal de Alex y Fran, la limpieza y el estado de cada Hest\xEDa. Y que cuando algo falla buscan soluciones en el momento.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "La atención personal de Alex y Fran, la limpieza y el estado de cada Hestía. Y que cuando algo falla buscan soluciones en el momento.")
     }, {
       q: '¿Cómo dejo una reseña tras mi estancia?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "En Booking.com, Airbnb o Google Maps, seg\xFAn donde hayas reservado. Tambi\xE9n puedes escribirnos directamente, nos alegra saber c\xF3mo fue la experiencia.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "En Booking.com, Airbnb o Google Maps, según donde hayas reservado. También puedes escribirnos directamente, nos alegra saber cómo fue la experiencia.")
     }],
     en: [{
       q: 'Are these ratings real and verified?',
@@ -611,7 +611,7 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Yes, continuously since 2018. Superhost status is reviewed every quarter and requires maintaining top scores and response times consistently. It is not a title that stays forever.")
     }, {
       q: 'What do guests value most?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "The personal attention from Alex and Fran, cleanliness and condition of the Hest\xEDas, and location. And that when something goes wrong, it genuinely gets fixed, no excuses.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "The personal attention from Alex and Fran, cleanliness and condition of the Hestías, and location. And that when something goes wrong, it genuinely gets fixed, no excuses.")
     }, {
       q: 'How do I leave a review after my stay?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "On Booking.com, Airbnb or Google Maps, depending on where you booked. You can also write to us directly, we love hearing how the experience went.")
@@ -620,21 +620,21 @@ const QUICK_FAQ = {
   reservas: {
     es: [{
       q: '¿Es mejor reservar directo que por Booking o Airbnb?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED: reservando directo no pagas las comisiones que cobran las plataformas, as\xED que casi siempre sale m\xE1s barato. A veces lanzan promociones que no controlamos; si ves un precio m\xE1s bajo, tr\xE1enoslo: no solo te lo igualamos, te lo mejoramos. Sin intermediarios, hablando con los propietarios. ", /*#__PURE__*/React.createElement("a", {
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Sí: reservando directo no pagas las comisiones que cobran las plataformas, así que casi siempre sale más barato. A veces lanzan promociones que no controlamos; si ves un precio más bajo, tráenoslo: no solo te lo igualamos, te lo mejoramos. Sin intermediarios, hablando con los propietarios. ", /*#__PURE__*/React.createElement("a", {
         href: "reservas.html"
-      }, "Reserva aqu\xED."))
+      }, "Reserva aquí."))
     }, {
       q: '¿Y si veo un precio más barato en una plataforma?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Puede pasar en momentos puntuales: Booking o Airbnb lanzan sus propios descuentos y programas (ofertas de \xFAltima hora, niveles de fidelidad, cupones\u2026) que nosotros no controlamos, as\xED que a veces su precio baja del que damos por defecto. No es que te cobremos de m\xE1s: es su promoci\xF3n, no nuestro precio real. Si te ocurre, escr\xEDbenos con el precio que ves: nos adaptamos y hacemos todo lo posible por mejorarlo.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Puede pasar en momentos puntuales: Booking o Airbnb lanzan sus propios descuentos y programas (ofertas de última hora, niveles de fidelidad, cupones…) que nosotros no controlamos, así que a veces su precio baja del que damos por defecto. No es que te cobremos de más: es su promoción, no nuestro precio real. Si te ocurre, escríbenos con el precio que ves: nos adaptamos y hacemos todo lo posible por mejorarlo.")
     }, {
       q: '¿Cuánto tardáis en confirmar la reserva?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Normalmente en minutos. Casi siempre respondemos el mismo d\xEDa y, la mayor\xEDa de las veces, en cuesti\xF3n de minutos.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Normalmente en minutos. Casi siempre respondemos el mismo día y, la mayoría de las veces, en cuestión de minutos.")
     }, {
       q: '¿Qué pasa si necesito cambiar las fechas?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Escr\xEDbenos. Somos flexibles con cambios y cancelaciones siempre que se puedan gestionar. No hay que batallar con ninguna plataforma, es una conversaci\xF3n entre personas.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Escríbenos. Somos flexibles con cambios y cancelaciones siempre que se puedan gestionar. No hay que batallar con ninguna plataforma, es una conversación entre personas.")
     }, {
       q: '¿Tenéis política de cancelación?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "S\xED. Te la explicamos al confirmar la reserva, seg\xFAn la temporada y las fechas. Si tienes dudas antes de reservar, preg\xFAntanos sin compromiso.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Sí. Te la explicamos al confirmar la reserva, según la temporada y las fechas. Si tienes dudas antes de reservar, pregúntanos sin compromiso.")
     }],
     en: [{
       q: 'Is it better to book directly than through Booking or Airbnb?',
@@ -643,7 +643,7 @@ const QUICK_FAQ = {
       }, "Book here."))
     }, {
       q: 'What if I see a cheaper price on a platform?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "It can happen at certain moments: Booking or Airbnb run their own discounts and programs (last-minute deals, loyalty tiers, coupons\u2026) that we don't control, so sometimes their price dips below our default one. It doesn't mean we're overcharging, it's their promotion, not our real price. If it happens, write to us with the price you see: we'll adapt and do everything we can to beat it.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "It can happen at certain moments: Booking or Airbnb run their own discounts and programs (last-minute deals, loyalty tiers, coupons…) that we don't control, so sometimes their price dips below our default one. It doesn't mean we're overcharging, it's their promotion, not our real price. If it happens, write to us with the price you see: we'll adapt and do everything we can to beat it.")
     }, {
       q: 'How long does confirmation take?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Usually within minutes. Almost always the same day and, most of the time, within minutes.")
@@ -2529,11 +2529,11 @@ const StickyFacts = ({
     className: "sf-toggle",
     onClick: () => setOpen(true),
     "aria-label": "Expandir"
-  }, "\uFF0B")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
+  }, "＋")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
     className: "sf-toggle",
     onClick: () => setOpen(false),
     "aria-label": "Minimizar"
-  }, "\u2212"), /*#__PURE__*/React.createElement("div", {
+  }, "−"), /*#__PURE__*/React.createElement("div", {
     className: `sf-body ${visible ? 'sf-in' : 'sf-out'}`
   }, /*#__PURE__*/React.createElement("span", {
     className: "sf-label"
@@ -2545,13 +2545,13 @@ const StickyFacts = ({
     className: "sf-nav-btn",
     onClick: () => advance(-1),
     "aria-label": lang === 'es' ? 'Anterior' : 'Previous'
-  }, "\u2190"), /*#__PURE__*/React.createElement("span", {
+  }, "←"), /*#__PURE__*/React.createElement("span", {
     className: "sf-counter"
   }, idx + 1, " / ", total), /*#__PURE__*/React.createElement("button", {
     className: "sf-nav-btn",
     onClick: () => advance(1),
     "aria-label": lang === 'es' ? 'Siguiente' : 'Next'
-  }, "\u2192"))));
+  }, "→"))));
 };
 
 // ================================================================
@@ -3269,14 +3269,14 @@ const DateRangePicker = ({
     className: `avail-arr${canGoPrev ? '' : ' off'}`,
     onClick: prevMonth,
     "aria-label": lang === 'es' ? 'Mes anterior' : 'Previous month'
-  }, "\u2039"), /*#__PURE__*/React.createElement("span", {
+  }, "‹"), /*#__PURE__*/React.createElement("span", {
     className: "avail-nav-lbl"
   }, navLbl), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "avail-arr",
     onClick: nextMonth,
     "aria-label": lang === 'es' ? 'Mes siguiente' : 'Next month'
-  }, "\u203A")), /*#__PURE__*/React.createElement("div", {
+  }, "›")), /*#__PURE__*/React.createElement("div", {
     className: "hscal-months",
     onMouseLeave: () => {
       if (!checkout) setHover(null);
@@ -3811,7 +3811,7 @@ const DirectBookingModal = ({
     className: "dbm-close",
     onClick: onClose,
     "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
-  }, "\xD7"), /*#__PURE__*/React.createElement("div", {
+  }, "×"), /*#__PURE__*/React.createElement("div", {
     className: "dbm-head"
   }, /*#__PURE__*/React.createElement("span", {
     className: "eyebrow"
@@ -3837,7 +3837,7 @@ const DirectBookingModal = ({
     className: "dbm-nav",
     onClick: goPrev,
     "aria-label": lang === 'es' ? 'Anterior' : 'Previous'
-  }, "\u2190"), /*#__PURE__*/React.createElement("article", {
+  }, "←"), /*#__PURE__*/React.createElement("article", {
     key: cur.id,
     className: `dbm-card ${dir === 'next' ? 'is-from-right' : dir === 'prev' ? 'is-from-left' : ''}`,
     "data-perk": cur.id
@@ -3861,7 +3861,7 @@ const DirectBookingModal = ({
     className: "dbm-nav",
     onClick: goNext,
     "aria-label": lang === 'es' ? 'Siguiente' : 'Next'
-  }, "\u2192")), /*#__PURE__*/React.createElement("div", {
+  }, "→")), /*#__PURE__*/React.createElement("div", {
     className: "dbm-dots"
   }, list.map((p, i) => /*#__PURE__*/React.createElement("button", {
     key: p.id,
@@ -3897,19 +3897,19 @@ const DirectBookingPerks = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "dbt-spark dbt-spark-1",
     "aria-hidden": "true"
-  }, "\u2726"), /*#__PURE__*/React.createElement("span", {
+  }, "✦"), /*#__PURE__*/React.createElement("span", {
     className: "dbt-spark dbt-spark-2",
     "aria-hidden": "true"
-  }, "\u2726"), /*#__PURE__*/React.createElement("span", {
+  }, "✦"), /*#__PURE__*/React.createElement("span", {
     className: "dbt-spark dbt-spark-3",
     "aria-hidden": "true"
-  }, "\u2726"), /*#__PURE__*/React.createElement("span", {
+  }, "✦"), /*#__PURE__*/React.createElement("span", {
     className: "dbt-spark dbt-spark-4",
     "aria-hidden": "true"
-  }, "\u2726"), /*#__PURE__*/React.createElement("span", {
+  }, "✦"), /*#__PURE__*/React.createElement("span", {
     className: "dbt-spark dbt-spark-5",
     "aria-hidden": "true"
-  }, "\u2726"), /*#__PURE__*/React.createElement("div", {
+  }, "✦"), /*#__PURE__*/React.createElement("div", {
     className: "container dbt-inner"
   }, /*#__PURE__*/React.createElement("span", {
     className: "eyebrow dbt-eyebrow"
@@ -3929,7 +3929,7 @@ const DirectBookingPerks = ({
   }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'), /*#__PURE__*/React.createElement("span", {
     className: "dbt-arrow",
     "aria-hidden": "true"
-  }, "\u2192")))), open && /*#__PURE__*/React.createElement(DirectBookingModal, {
+  }, "→")))), open && /*#__PURE__*/React.createElement(DirectBookingModal, {
     lang: lang,
     onClose: () => setOpen(false)
   }));
@@ -3957,7 +3957,7 @@ const AptDesktopSidebar = ({
     }, /*#__PURE__*/React.createElement("span", {
       className: "ads-mini-star",
       "aria-hidden": "true"
-    }, "\u2726"), /*#__PURE__*/React.createElement("span", {
+    }, "✦"), /*#__PURE__*/React.createElement("span", {
       className: "ads-mini-label"
     }, lang === 'es' ? 'Reserva directa' : 'Direct booking'));
   }
@@ -3970,7 +3970,7 @@ const AptDesktopSidebar = ({
     "aria-label": lang === 'es' ? 'Minimizar' : 'Minimize',
     title: lang === 'es' ? 'Minimizar' : 'Minimize',
     onClick: () => setMinimized(true)
-  }, "\u2212"), /*#__PURE__*/React.createElement("section", {
+  }, "−"), /*#__PURE__*/React.createElement("section", {
     className: "ads-card ads-perks"
   }, /*#__PURE__*/React.createElement("span", {
     className: "eyebrow"
@@ -3987,13 +3987,13 @@ const AptDesktopSidebar = ({
     onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks'))
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'), /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
-  }, "\u2192"))), /*#__PURE__*/React.createElement("section", {
+  }, "→"))), /*#__PURE__*/React.createElement("section", {
     className: "ads-card ads-guide"
   }, /*#__PURE__*/React.createElement("span", {
     className: "eyebrow"
   }, lang === 'es' ? '¿Ya estás reservado?' : 'Already booked?'), /*#__PURE__*/React.createElement("h4", {
     className: "ads-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tu ", /*#__PURE__*/React.createElement("em", null, "gu\xEDa privada")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Your ", /*#__PURE__*/React.createElement("em", null, "private guide"))), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tu ", /*#__PURE__*/React.createElement("em", null, "guía privada")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Your ", /*#__PURE__*/React.createElement("em", null, "private guide"))), /*#__PURE__*/React.createElement("p", {
     className: "ads-text"
   }, lang === 'es' ? 'Recomendaciones de Alex y Fran, instrucciones de tu Hestía, planes de día y todo lo que necesitas para tu estancia.' : 'Alex & Fran\'s recommendations, your Hestía instructions, day plans and everything you need for your stay.'), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -4001,7 +4001,7 @@ const AptDesktopSidebar = ({
     onClick: onGuideClick
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Acceder con PIN' : 'Open with PIN'), /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
-  }, "\u2192"))));
+  }, "→"))));
 };
 Object.assign(window, {
   DirectBookingPerks,
@@ -4070,7 +4070,7 @@ const WidgetDirectBooking = ({
   const ribbon = DIRECT_RIBBON[lang];
   if (min) {
     return /*#__PURE__*/React.createElement(WidgetMiniPill, {
-      icon: "\u2726",
+      icon: "✦",
       label: lang === 'es' ? 'Reserva directa' : 'Direct booking',
       ariaLabel: lang === 'es' ? 'Restaurar reserva directa' : 'Restore direct booking',
       onClick: () => setMin(false),
@@ -4086,7 +4086,7 @@ const WidgetDirectBooking = ({
     "aria-label": lang === 'es' ? 'Minimizar' : 'Minimize',
     title: lang === 'es' ? 'Minimizar' : 'Minimize',
     onClick: () => setMin(true)
-  }, "\u2212"), /*#__PURE__*/React.createElement("span", {
+  }, "−"), /*#__PURE__*/React.createElement("span", {
     className: "eyebrow"
   }, lang === 'es' ? 'Reserva directa' : 'Direct booking'), /*#__PURE__*/React.createElement("h4", {
     className: "widget-title"
@@ -4101,7 +4101,7 @@ const WidgetDirectBooking = ({
     onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks'))
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'), /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
-  }, "\u2192")));
+  }, "→")));
 };
 const WidgetSabiasQue = ({
   lang
@@ -4156,7 +4156,7 @@ const WidgetSabiasQue = ({
     "aria-label": lang === 'es' ? 'Minimizar' : 'Minimize',
     title: lang === 'es' ? 'Minimizar' : 'Minimize',
     onClick: () => setMin(true)
-  }, "\u2212"), /*#__PURE__*/React.createElement("div", {
+  }, "−"), /*#__PURE__*/React.createElement("div", {
     className: `sf-body ${visible ? 'sf-in' : 'sf-out'}`
   }, /*#__PURE__*/React.createElement("span", {
     className: "sf-label"
@@ -4168,13 +4168,13 @@ const WidgetSabiasQue = ({
     className: "sf-nav-btn",
     onClick: () => advance(-1),
     "aria-label": lang === 'es' ? 'Anterior' : 'Previous'
-  }, "\u2190"), /*#__PURE__*/React.createElement("span", {
+  }, "←"), /*#__PURE__*/React.createElement("span", {
     className: "sf-counter"
   }, idx + 1, " / ", total), /*#__PURE__*/React.createElement("button", {
     className: "sf-nav-btn",
     onClick: () => advance(1),
     "aria-label": lang === 'es' ? 'Siguiente' : 'Next'
-  }, "\u2192")));
+  }, "→")));
 };
 const WidgetGuidePin = ({
   lang,
@@ -4183,7 +4183,7 @@ const WidgetGuidePin = ({
   const [min, setMin] = _useLocalMin('guide');
   if (min) {
     return /*#__PURE__*/React.createElement(WidgetMiniPill, {
-      icon: "\u2726",
+      icon: "✦",
       label: lang === 'es' ? 'Guía para huéspedes' : 'Guests\' guidebook',
       ariaLabel: lang === 'es' ? 'Restaurar guía para huéspedes' : 'Restore guests\' guidebook',
       onClick: () => setMin(false),
@@ -4199,11 +4199,11 @@ const WidgetGuidePin = ({
     "aria-label": lang === 'es' ? 'Minimizar' : 'Minimize',
     title: lang === 'es' ? 'Minimizar' : 'Minimize',
     onClick: () => setMin(true)
-  }, "\u2212"), /*#__PURE__*/React.createElement("span", {
+  }, "−"), /*#__PURE__*/React.createElement("span", {
     className: "eyebrow"
   }, lang === 'es' ? '¿Ya estás reservado?' : 'Already booked?'), /*#__PURE__*/React.createElement("h4", {
     className: "widget-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Gu\xEDa para ", /*#__PURE__*/React.createElement("em", null, "hu\xE9spedes")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Guests' ", /*#__PURE__*/React.createElement("em", null, "guidebook"))), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Guía para ", /*#__PURE__*/React.createElement("em", null, "huéspedes")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Guests' ", /*#__PURE__*/React.createElement("em", null, "guidebook"))), /*#__PURE__*/React.createElement("p", {
     className: "widget-text"
   }, lang === 'es' ? 'Recomendaciones de Alex y Fran, instrucciones de Hestía, planes de día y todo lo que necesitas para tu estancia.' : 'Alex & Fran\'s recommendations, Hestía instructions, day plans and everything you need for your stay.'), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -4211,7 +4211,7 @@ const WidgetGuidePin = ({
     onClick: onGuideClick
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Acceder con PIN' : 'Open with PIN'), /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
-  }, "\u2192")));
+  }, "→")));
 };
 
 // Top 5 recomendaciones imprescindibles de Vera + Almería. Mezcla de
@@ -4313,7 +4313,7 @@ const WidgetTopRecs = ({
   }, [min, total]);
   if (min) {
     return /*#__PURE__*/React.createElement(WidgetMiniPill, {
-      icon: "\u2605",
+      icon: "★",
       label: lang === 'es' ? 'Imprescindibles' : 'Must-see',
       ariaLabel: lang === 'es' ? 'Restaurar recomendaciones' : 'Restore recommendations',
       onClick: () => setMin(false),
@@ -4330,7 +4330,7 @@ const WidgetTopRecs = ({
     "aria-label": lang === 'es' ? 'Minimizar' : 'Minimize',
     title: lang === 'es' ? 'Minimizar' : 'Minimize',
     onClick: () => setMin(true)
-  }, "\u2212"), /*#__PURE__*/React.createElement("span", {
+  }, "−"), /*#__PURE__*/React.createElement("span", {
     className: "eyebrow"
   }, lang === 'es' ? 'Imprescindibles · Vera y Almería' : 'Must-see · Vera & Almería'), /*#__PURE__*/React.createElement("div", {
     className: `tr-body ${visible ? 'tr-in' : 'tr-out'}`
@@ -4351,17 +4351,17 @@ const WidgetTopRecs = ({
     className: "sf-nav-btn",
     onClick: () => advance(-1),
     "aria-label": lang === 'es' ? 'Anterior' : 'Previous'
-  }, "\u2190"), /*#__PURE__*/React.createElement("a", {
+  }, "←"), /*#__PURE__*/React.createElement("a", {
     className: "tr-map",
     href: item.url,
     target: "_blank",
     rel: "noopener",
     "aria-label": lang === 'es' ? 'Ver en mapa' : 'View on map'
-  }, lang === 'es' ? 'Mapa' : 'Map', " \u2192"), /*#__PURE__*/React.createElement("button", {
+  }, lang === 'es' ? 'Mapa' : 'Map', " →"), /*#__PURE__*/React.createElement("button", {
     className: "sf-nav-btn",
     onClick: () => advance(1),
     "aria-label": lang === 'es' ? 'Siguiente' : 'Next'
-  }, "\u2192")));
+  }, "→")));
 };
 
 // PINs por apartamento. Espejo del que vive en apartment-page.jsx /
@@ -4540,7 +4540,7 @@ const GuestAccessModal = ({
     className: "ga-modal-close",
     onClick: onClose,
     "aria-label": t.cancel
-  }, "\xD7"), step === 'select' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+  }, "×"), step === 'select' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
     className: "ga-modal-eyebrow"
   }, t.title_select), /*#__PURE__*/React.createElement("p", {
     className: "ga-modal-desc"
@@ -4559,14 +4559,14 @@ const GuestAccessModal = ({
     }, /*#__PURE__*/React.createElement("span", {
       className: "ga-apt-star",
       "aria-hidden": "true"
-    }, "\u2726"), /*#__PURE__*/React.createElement("span", {
+    }, "✦"), /*#__PURE__*/React.createElement("span", {
       className: "ga-apt-name"
     }, m.name), /*#__PURE__*/React.createElement("span", {
       className: "ga-apt-concept"
     }, m[`concept_${lang}`]), /*#__PURE__*/React.createElement("span", {
       className: "ga-apt-arrow",
       "aria-hidden": "true"
-    }, "\u2192"));
+    }, "→"));
   }))) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
     className: "ga-modal-eyebrow"
   }, HESTIA_APT_META[selectedApt].name), /*#__PURE__*/React.createElement("h3", {
@@ -4633,7 +4633,7 @@ const WidgetGuestAccess = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "widget-mini-icon",
     "aria-hidden": "true"
-  }, "\u2726"), /*#__PURE__*/React.createElement("span", {
+  }, "✦"), /*#__PURE__*/React.createElement("span", {
     className: "widget-mini-label"
   }, lang === 'es' ? 'Acceso huéspedes' : 'Guest access')), open && ReactDOM.createPortal(/*#__PURE__*/React.createElement(GuestAccessModal, {
     lang: lang,
@@ -4741,8 +4741,8 @@ const HomeGuideTeaser = ({
     eyebrow: 'Guía del huésped',
     title_a: 'La guía completa de ',
     title_em: 'Hestía',
-    desc: /*#__PURE__*/React.createElement(React.Fragment, null, "No es un folleto: es la ", /*#__PURE__*/React.createElement("strong", null, "supergu\xEDa que nos habr\xEDa gustado encontrar a nosotros"), " cuando llegamos por primera vez a Vera. Veintid\xF3s cap\xEDtulos con todo lo que necesitas para vivir tu estancia, desde c\xF3mo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense."),
-    stats: [/*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 cap\xEDtulos"), " sobre tu Hest\xEDa y el entorno"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "M\xE1s de 230 recomendaciones"), ": restaurantes, playas, bares, bodegas, mercados, pescader\xEDas\u2026"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 planes de d\xEDa completo"), " con horarios, rutas y reservas"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Servicios a mano"), ": centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarder\xEDas y residencias para mascotas\u2026"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Tel\xE9fonos \xFAtiles"), " y nuestro contacto directo antes, durante y despu\xE9s de tu estancia")],
+    desc: /*#__PURE__*/React.createElement(React.Fragment, null, "No es un folleto: es la ", /*#__PURE__*/React.createElement("strong", null, "superguía que nos habría gustado encontrar a nosotros"), " cuando llegamos por primera vez a Vera. Veintidós capítulos con todo lo que necesitas para vivir tu estancia, desde cómo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense."),
+    stats: [/*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 capítulos"), " sobre tu Hestía y el entorno"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Más de 230 recomendaciones"), ": restaurantes, playas, bares, bodegas, mercados, pescaderías…"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 planes de día completo"), " con horarios, rutas y reservas"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Servicios a mano"), ": centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías y residencias para mascotas…"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Teléfonos útiles"), " y nuestro contacto directo antes, durante y después de tu estancia")],
     foot: 'Web interactiva + PDF descargable de 40 páginas. Reservada para huéspedes con PIN.',
     cta: 'Solo para huéspedes'
   } : {
@@ -4751,7 +4751,7 @@ const HomeGuideTeaser = ({
     title_em: 'Hestía',
     title_b: ' guide',
     desc: /*#__PURE__*/React.createElement(React.Fragment, null, "This isn't a leaflet: it's the ", /*#__PURE__*/React.createElement("strong", null, "super-guide we wish we'd had ourselves"), " the first time we arrived in Vera. Twenty-two chapters with everything you need for your stay, from how to get here from any of the five nearest airports to the corners only locals from the Levante know."),
-    stats: [/*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 chapters"), " on your Hest\xEDa and the area"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "230+ curated spots"), ": restaurants, beaches, bars, wineries, markets, fishmongers\u2026"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 full-day itineraries"), " with timing, routes and bookings"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Annual calendar"), " of festivals and local events"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Everything within reach"), ": health centres, 24 h vets, pharmacies, physio clinics, pet boarding & daycare\u2026"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Useful phones"), " and our direct line before, during and after your stay")],
+    stats: [/*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 chapters"), " on your Hestía and the area"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "230+ curated spots"), ": restaurants, beaches, bars, wineries, markets, fishmongers…"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 full-day itineraries"), " with timing, routes and bookings"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Annual calendar"), " of festivals and local events"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Everything within reach"), ": health centres, 24 h vets, pharmacies, physio clinics, pet boarding & daycare…"), /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Useful phones"), " and our direct line before, during and after your stay")],
     foot: 'Interactive web + 40-page downloadable PDF. Reserved for guests with a PIN.',
     cta: 'Guests only'
   };
@@ -4777,7 +4777,7 @@ const HomeGuideTeaser = ({
   }, /*#__PURE__*/React.createElement("span", null, t.cta), /*#__PURE__*/React.createElement("span", {
     className: "apt-guide-gate-arrow",
     "aria-hidden": "true"
-  }, "\u2192")))), modalOpen && ReactDOM.createPortal(/*#__PURE__*/React.createElement(GuestAccessModal, {
+  }, "→")))), modalOpen && ReactDOM.createPortal(/*#__PURE__*/React.createElement(GuestAccessModal, {
     lang: lang,
     onClose: () => setModalOpen(false)
   }), document.body));
