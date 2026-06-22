@@ -569,9 +569,7 @@
       "end": "2026-06-30",
       "nights": 3,
       "type": "discount",
-      "value": 20,
-      "lastMinute": true,
-      "auto": true
+      "lastMinute": true
     },
     "vt|2026-07-10": {
       "apt": "vt",
