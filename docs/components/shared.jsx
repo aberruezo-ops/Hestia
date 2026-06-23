@@ -3175,18 +3175,37 @@ async function hestiaSha256Hex(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
+// Worker que registra los accesos a la guía (KV). Vacío hasta desplegarlo:
+// pon aquí la URL de hestia-guide-access tras `wrangler deploy`.
+const GUIDE_ACCESS_WORKER_URL = 'https://hestia-guide-access.hestia-vera-almeria.workers.dev';
+// Registra un acceso a la guía (apartamento + fecha de entrada de la reserva).
+// Sin datos personales: el nombre se resuelve en /p-edit cruzando con reservas.
+// Fire-and-forget; text/plain para que el beacon no dispare preflight CORS.
+function logGuideAccess(apt, ref) {
+  try {
+    if (!GUIDE_ACCESS_WORKER_URL || !apt || !ref) return;
+    const payload = JSON.stringify({ apt, ref });
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(GUIDE_ACCESS_WORKER_URL + '/', new Blob([payload], { type: 'text/plain' }));
+    } else {
+      fetch(GUIDE_ACCESS_WORKER_URL + '/', { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: payload, keepalive: true }).catch(() => {});
+    }
+  } catch (_) {}
+}
 async function validateGuidePin(aptId, entered) {
   const pin = (entered || '').trim().toUpperCase();
   if (!pin) return false;
-  if (pin === HESTIA_GUIDE_PINS[aptId]) return true;
+  if (pin === HESTIA_GUIDE_PINS[aptId]) return true;  // PIN maestro (propietarios): no se registra
   const list = (window.PRICES_V2 && window.PRICES_V2.guestPins && window.PRICES_V2.guestPins[aptId]) || [];
   if (!list.length) return false;
   const today = new Date().toISOString().slice(0, 10);
   let h;
   try { h = await hestiaSha256Hex(pin); } catch (_) { return false; }
-  return list.some(e => e && e.h === h && (!e.until || e.until >= today));
+  const match = list.find(e => e && e.h === h && (!e.until || e.until >= today));
+  if (match) { logGuideAccess(aptId, match.ref); return true; }
+  return false;
 }
-Object.assign(window, { validateGuidePin, hestiaSha256Hex });
+Object.assign(window, { validateGuidePin, hestiaSha256Hex, logGuideAccess });
 const HESTIA_APT_META = {
   vm: { name: 'Hestía Mar',      slug: 'mar',      accent: '#6B7A3A', concept_es: 'Frente a la playa', concept_en: 'By the beach' },
   vt: { name: 'Hestía Thalassa', slug: 'thalassa', accent: '#B86A3C', concept_es: 'Ático panorámico',  concept_en: 'Panoramic penthouse' },

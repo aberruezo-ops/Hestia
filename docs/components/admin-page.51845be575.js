@@ -19,6 +19,8 @@ const API = 'https://api.github.com';
 const CF_WORKER_URL = 'https://little-night-9399.hestia-vera-almeria.workers.dev/';
 const CF_ACCOUNT = 'ccb910d549f39e3bad5d89e33315d57e';
 const CF_SITE_TAG = '770c05669c6b45ea8f1026576fe7dcce';
+// GUIDE_ACCESS_WORKER_URL se declara en shared.js (cargado antes); aquí se usa
+// esa misma global para leer el registro de accesos a la guía.
 
 // URL del Worker de Cloudflare que escribe en Google Sheets.
 // Despliega workers/sheets-sync/ y pega la URL aquí.
@@ -1581,8 +1583,20 @@ const IntelligenciaTab = ({
   const [open, setOpen] = React.useState({
     trafico: false,
     negocio: true,
+    accesos: true,
     eventos: false
   });
+  const [reservasRaw, setReservasRaw] = React.useState([]);
+  const [accesses, setAccesses] = React.useState(null);
+  const [accSecret, setAccSecret] = React.useState(() => {
+    try {
+      return sessionStorage.getItem('hestia-acc-secret') || '';
+    } catch (_) {
+      return '';
+    }
+  });
+  const [accLoading, setAccLoading] = React.useState(false);
+  const [accError, setAccError] = React.useState(null);
   const localEvents = (() => {
     try {
       return JSON.parse(localStorage.getItem('_htevt') || '[]');
@@ -1638,6 +1652,7 @@ const IntelligenciaTab = ({
         const raw = await liveRes.json();
         const json = JSON.parse(atob(raw.content.replace(/\n/g, '')));
         live2026 = compute2026Stats(json.reservas || []);
+        setReservasRaw(json.reservas || []);
       }
       const combined = {
         ...hist.years
@@ -1649,6 +1664,30 @@ const IntelligenciaTab = ({
       setBizError(e.message);
     }
   }, [token]);
+  const fetchAccesses = React.useCallback(async secret => {
+    const key = (secret != null ? secret : accSecret).trim();
+    if (!key) {
+      setAccError('Introduce la clave de lectura.');
+      return;
+    }
+    setAccLoading(true);
+    setAccError(null);
+    try {
+      const res = await fetch(`${GUIDE_ACCESS_WORKER_URL}/log?key=${encodeURIComponent(key)}`);
+      if (res.status === 401) throw new Error('Clave incorrecta.');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const j = await res.json();
+      setAccesses(Array.isArray(j.accesses) ? j.accesses : []);
+      try {
+        sessionStorage.setItem('hestia-acc-secret', key);
+      } catch (_) {}
+    } catch (e) {
+      setAccError(e.message);
+      setAccesses(null);
+    } finally {
+      setAccLoading(false);
+    }
+  }, [accSecret]);
   const reload = React.useCallback(() => {
     setLoading(true);
     Promise.all([fetchCF(days), fetchBiz()]).finally(() => setLoading(false));
@@ -2169,6 +2208,114 @@ const IntelligenciaTab = ({
   }), "Noches")))), years.some(y => yearData[y].partial) && /*#__PURE__*/React.createElement("p", {
     className: "dash-footnote"
   }, "* Datos parciales en algunos a\xF1os")))), /*#__PURE__*/React.createElement("div", {
+    className: "intel-section"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "intel-section-toggle",
+    onClick: () => toggle('accesos')
+  }, /*#__PURE__*/React.createElement("span", null, "Accesos a la gu\xEDa \xB7 por reserva"), /*#__PURE__*/React.createElement("span", {
+    className: "intel-section-chevron"
+  }, open.accesos ? '▲' : '▼')), open.accesos && /*#__PURE__*/React.createElement("div", {
+    className: "intel-section-content"
+  }, !accesses ? /*#__PURE__*/React.createElement("div", {
+    className: "acc-gate"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint",
+    style: {
+      marginTop: 0
+    }
+  }, "Registra cada vez que un hu\xE9sped abre la gu\xEDa con su PIN. Introduce la clave de lectura del worker (la que pusiste con ", /*#__PURE__*/React.createElement("code", null, "wrangler secret put READ_SECRET"), ")."), /*#__PURE__*/React.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: 8,
+      flexWrap: 'wrap',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "password",
+    className: "pe-input",
+    placeholder: "Clave de lectura",
+    value: accSecret,
+    onChange: e => setAccSecret(e.target.value),
+    style: {
+      maxWidth: 240
+    },
+    onKeyDown: e => {
+      if (e.key === 'Enter') fetchAccesses();
+    }
+  }), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "pe-btn pe-btn-primary",
+    disabled: accLoading,
+    onClick: () => fetchAccesses()
+  }, accLoading ? 'Cargando…' : 'Cargar accesos')), accError && /*#__PURE__*/React.createElement("p", {
+    className: "pe-error",
+    style: {
+      marginTop: 8
+    }
+  }, accError)) : (() => {
+    const fmtAcc = ts => {
+      const d = new Date(ts);
+      return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')} ${d.toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit'
+      })}`;
+    };
+    const rows = accesses.map(a => {
+      const r = reservasRaw.find(x => (x.apt || '').toLowerCase() === a.apt && x.entrada === a.ref);
+      const ts = (a.ts || []).slice().sort((x, y) => y - x);
+      return {
+        apt: a.apt,
+        ref: a.ref,
+        guest: r ? r.responsable || '(sin nombre)' : '(reserva no encontrada)',
+        salida: r ? r.salida : null,
+        canal: r ? r.canal : null,
+        n: ts.length,
+        last: ts[0] || 0,
+        ts
+      };
+    }).filter(r => r.n > 0).sort((a, b) => b.last - a.last);
+    const totalAcc = rows.reduce((s, r) => s + r.n, 0);
+    if (rows.length === 0) return /*#__PURE__*/React.createElement("p", {
+      className: "pe-hint"
+    }, "A\xFAn no hay accesos registrados.");
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+      className: "acc-kpis"
+    }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, rows.length), " reserva", rows.length !== 1 ? 's' : '', " han abierto la gu\xEDa"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, totalAcc), " acceso", totalAcc !== 1 ? 's' : '', " en total"), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "pe-btn pe-btn-ghost",
+      disabled: accLoading,
+      onClick: () => fetchAccesses(),
+      title: "Recargar"
+    }, "\u21BA")), /*#__PURE__*/React.createElement("div", {
+      className: "rv-table-wrap"
+    }, /*#__PURE__*/React.createElement("table", {
+      className: "rv-table acc-table"
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Apt"), /*#__PURE__*/React.createElement("th", null, "Hu\xE9sped"), /*#__PURE__*/React.createElement("th", null, "Entrada"), /*#__PURE__*/React.createElement("th", null, "Salida"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Accesos"), /*#__PURE__*/React.createElement("th", null, "\xDAltimo acceso"), /*#__PURE__*/React.createElement("th", null, "Historial"))), /*#__PURE__*/React.createElement("tbody", null, rows.map((r, i) => /*#__PURE__*/React.createElement("tr", {
+      key: i,
+      "data-apt": r.apt,
+      style: {
+        '--apt-c': APT_COLOR[r.apt] || 'transparent'
+      }
+    }, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+      className: "rv-apt-chip",
+      style: {
+        background: APT_COLOR[r.apt],
+        color: APT_TEXT[r.apt]
+      }
+    }, APT_NAMES[r.apt] || r.apt)), /*#__PURE__*/React.createElement("td", null, r.guest), /*#__PURE__*/React.createElement("td", null, fmtDate(r.ref)), /*#__PURE__*/React.createElement("td", null, r.salida ? fmtDate(r.salida) : '–'), /*#__PURE__*/React.createElement("td", {
+      className: "num"
+    }, /*#__PURE__*/React.createElement("strong", null, r.n)), /*#__PURE__*/React.createElement("td", null, fmtAcc(r.last)), /*#__PURE__*/React.createElement("td", {
+      className: "acc-history"
+    }, r.ts.slice(0, 8).map(t => fmtAcc(t)).join(' · '), r.ts.length > 8 ? ` +${r.ts.length - 8}` : '')))))), /*#__PURE__*/React.createElement("p", {
+      className: "pe-hint",
+      style: {
+        marginTop: 8
+      }
+    }, "El nombre se obtiene cruzando con tus reservas en local; el registro solo guarda apartamento, fecha de entrada y hora. El PIN maestro no se registra."));
+  })())), /*#__PURE__*/React.createElement("div", {
     className: "intel-section"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",

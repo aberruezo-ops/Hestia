@@ -20499,6 +20499,13 @@ img[src*="apt-vt-gallery-"] {
   vertical-align: middle;
   cursor: help;
 }
+.acc-gate { padding: 4px 0 2px; }
+.acc-kpis {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 16px;
+  margin: 4px 0 12px; font-size: 13px; color: var(--ink-soft, #5a5450);
+}
+.acc-kpis strong { color: var(--ink, #2A0F2E); font-size: 15px; }
+.acc-table .acc-history { font-size: 11px; color: var(--ink-soft, #6b6560); white-space: normal; line-height: 1.5; }
 
 .rv-status-th { width: 24px; padding: 0 !important; }
 .rv-status {

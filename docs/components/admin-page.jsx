@@ -17,6 +17,8 @@ const API    = 'https://api.github.com';
 const CF_WORKER_URL = 'https://little-night-9399.hestia-vera-almeria.workers.dev/';
 const CF_ACCOUNT    = 'ccb910d549f39e3bad5d89e33315d57e';
 const CF_SITE_TAG   = '770c05669c6b45ea8f1026576fe7dcce';
+// GUIDE_ACCESS_WORKER_URL se declara en shared.js (cargado antes); aquí se usa
+// esa misma global para leer el registro de accesos a la guía.
 
 // URL del Worker de Cloudflare que escribe en Google Sheets.
 // Despliega workers/sheets-sync/ y pega la URL aquí.
@@ -1240,7 +1242,12 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
   const [loading,  setLoading]  = React.useState(true);
   const [cfError,  setCfError]  = React.useState(null);
   const [bizError, setBizError] = React.useState(null);
-  const [open,     setOpen]     = React.useState({ trafico: false, negocio: true, eventos: false });
+  const [open,     setOpen]     = React.useState({ trafico: false, negocio: true, accesos: true, eventos: false });
+  const [reservasRaw, setReservasRaw] = React.useState([]);
+  const [accesses, setAccesses] = React.useState(null);
+  const [accSecret, setAccSecret] = React.useState(() => { try { return sessionStorage.getItem('hestia-acc-secret') || ''; } catch (_) { return ''; } });
+  const [accLoading, setAccLoading] = React.useState(false);
+  const [accError, setAccError] = React.useState(null);
 
   const localEvents = (() => {
     try { return JSON.parse(localStorage.getItem('_htevt') || '[]'); } catch (_) { return []; }
@@ -1296,6 +1303,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
         const raw  = await liveRes.json();
         const json = JSON.parse(atob(raw.content.replace(/\n/g, '')));
         live2026   = compute2026Stats(json.reservas || []);
+        setReservasRaw(json.reservas || []);
       }
       const combined = { ...hist.years };
       if (live2026) combined['2026'] = live2026;
@@ -1305,6 +1313,22 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
       setBizError(e.message);
     }
   }, [token]);
+
+  const fetchAccesses = React.useCallback(async (secret) => {
+    const key = (secret != null ? secret : accSecret).trim();
+    if (!key) { setAccError('Introduce la clave de lectura.'); return; }
+    setAccLoading(true); setAccError(null);
+    try {
+      const res = await fetch(`${GUIDE_ACCESS_WORKER_URL}/log?key=${encodeURIComponent(key)}`);
+      if (res.status === 401) throw new Error('Clave incorrecta.');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const j = await res.json();
+      setAccesses(Array.isArray(j.accesses) ? j.accesses : []);
+      try { sessionStorage.setItem('hestia-acc-secret', key); } catch (_) {}
+    } catch (e) {
+      setAccError(e.message); setAccesses(null);
+    } finally { setAccLoading(false); }
+  }, [accSecret]);
 
   const reload = React.useCallback(() => {
     setLoading(true);
@@ -1641,6 +1665,82 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
                     </>
                   )
                 }
+              </div>
+            )}
+          </div>
+
+          <div className="intel-section">
+            <button type="button" className="intel-section-toggle" onClick={() => toggle('accesos')}>
+              <span>Accesos a la guía · por reserva</span>
+              <span className="intel-section-chevron">{open.accesos ? '▲' : '▼'}</span>
+            </button>
+            {open.accesos && (
+              <div className="intel-section-content">
+                {!accesses ? (
+                  <div className="acc-gate">
+                    <p className="pe-hint" style={{ marginTop: 0 }}>
+                      Registra cada vez que un huésped abre la guía con su PIN. Introduce la clave de lectura del worker (la que pusiste con <code>wrangler secret put READ_SECRET</code>).
+                    </p>
+                    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+                      <input type="password" className="pe-input" placeholder="Clave de lectura" value={accSecret}
+                        onChange={e => setAccSecret(e.target.value)} style={{ maxWidth: 240 }}
+                        onKeyDown={e => { if (e.key === 'Enter') fetchAccesses(); }} />
+                      <button type="button" className="pe-btn pe-btn-primary" disabled={accLoading} onClick={() => fetchAccesses()}>
+                        {accLoading ? 'Cargando…' : 'Cargar accesos'}
+                      </button>
+                    </div>
+                    {accError && <p className="pe-error" style={{ marginTop: 8 }}>{accError}</p>}
+                  </div>
+                ) : (() => {
+                  const fmtAcc = (ts) => {
+                    const d = new Date(ts);
+                    return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')} ${d.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+                  };
+                  const rows = accesses.map(a => {
+                    const r = reservasRaw.find(x => (x.apt || '').toLowerCase() === a.apt && x.entrada === a.ref);
+                    const ts = (a.ts || []).slice().sort((x, y) => y - x);
+                    return {
+                      apt: a.apt, ref: a.ref,
+                      guest: r ? (r.responsable || '(sin nombre)') : '(reserva no encontrada)',
+                      salida: r ? r.salida : null,
+                      canal: r ? r.canal : null,
+                      n: ts.length, last: ts[0] || 0, ts,
+                    };
+                  }).filter(r => r.n > 0).sort((a, b) => b.last - a.last);
+                  const totalAcc = rows.reduce((s, r) => s + r.n, 0);
+                  if (rows.length === 0) return <p className="pe-hint">Aún no hay accesos registrados.</p>;
+                  return (
+                    <>
+                      <div className="acc-kpis">
+                        <span><strong>{rows.length}</strong> reserva{rows.length !== 1 ? 's' : ''} han abierto la guía</span>
+                        <span><strong>{totalAcc}</strong> acceso{totalAcc !== 1 ? 's' : ''} en total</span>
+                        <button type="button" className="pe-btn pe-btn-ghost" disabled={accLoading} onClick={() => fetchAccesses()} title="Recargar">↺</button>
+                      </div>
+                      <div className="rv-table-wrap">
+                        <table className="rv-table acc-table">
+                          <thead><tr>
+                            <th>Apt</th><th>Huésped</th><th>Entrada</th><th>Salida</th>
+                            <th className="num">Accesos</th><th>Último acceso</th><th>Historial</th>
+                          </tr></thead>
+                          <tbody>
+                            {rows.map((r, i) => (
+                              <tr key={i} data-apt={r.apt} style={{ '--apt-c': APT_COLOR[r.apt] || 'transparent' }}>
+                                <td><span className="rv-apt-chip" style={{ background: APT_COLOR[r.apt], color: APT_TEXT[r.apt] }}>{APT_NAMES[r.apt] || r.apt}</span></td>
+                                <td>{r.guest}</td>
+                                <td>{fmtDate(r.ref)}</td>
+                                <td>{r.salida ? fmtDate(r.salida) : '–'}</td>
+                                <td className="num"><strong>{r.n}</strong></td>
+                                <td>{fmtAcc(r.last)}</td>
+                                <td className="acc-history">{r.ts.slice(0, 8).map(t => fmtAcc(t)).join(' · ')}{r.ts.length > 8 ? ` +${r.ts.length - 8}` : ''}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <p className="pe-hint" style={{ marginTop: 8 }}>El nombre se obtiene cruzando con tus reservas en local; el registro solo guarda apartamento, fecha de entrada y hora. El PIN maestro no se registra.</p>
+                    </>
+                  );
+                })()}
               </div>
             )}
           </div>
