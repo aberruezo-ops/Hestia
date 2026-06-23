@@ -2178,6 +2178,54 @@ body.apt-bar-shown .cookies {
 }
 .hero-ctas .btn { font-size: 12px; padding: 12px 22px; }
 
+/* Mini-buscador del hero: dos campos de fecha + botón Comprobar → /reservas.
+   Campos claros (texto oscuro) legibles sobre el video del hero. */
+.hero-availform {
+  margin: 14px auto 0;
+  max-width: 520px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.hero-af-field { display: flex; flex-direction: column; gap: 5px; text-align: left; flex: 1 1 150px; min-width: 0; }
+.hero-af-field label {
+  font-family: var(--sans);
+  font-size: 10px; letter-spacing: .13em; text-transform: uppercase;
+  color: rgba(240,232,213,.9);
+}
+.hero-af-field input[type="date"] {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--ink, #2A0F2E);
+  background: rgba(250,246,240,.96);
+  border: 1px solid rgba(240,232,213,.3);
+  border-radius: 10px 0 10px 0;
+  padding: 10px 12px;
+  color-scheme: light;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.hero-af-field input[type="date"]:focus { outline: 2px solid var(--sol, #3AAABB); outline-offset: 1px; }
+.hero-af-btn { flex: 0 0 auto; font-size: 12px !important; padding: 11px 20px !important; }
+.hero-availform .btn-primary {
+  background-color: #3AAABB !important;
+  background-image: none !important;
+  color: #2A0F2E !important;
+  border: 0 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 6px 22px rgba(58,170,187,.55), 0 0 0 1px rgba(240,232,213,.18);
+}
+.hero-availform .btn-primary::before { display: none !important; }
+.hero-availform .btn-primary:hover { background-color: #6FC4D1 !important; }
+@media (max-width: 540px) {
+  .hero-af-field { flex: 1 1 42%; }
+  .hero-af-btn { flex: 1 1 100%; margin-top: 2px; }
+  .hero-af-field input[type="date"] { font-size: 16px; }  /* evita zoom iOS */
+}
+
 /* "Descubre cada Hestía" sobre el hero con video — bulletproof.
    El .btn-primary genérico no ganaba al ::before sheen sobre el wash.
    Hex literales + !important + sombra glow garantizan silueta. */
@@ -9346,27 +9394,6 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   margin-bottom: 8px;
 }
 .hs-field--inline .hs-lbl { margin-bottom: 0; }
-
-/* Campos de fecha nativos (entrada / salida) sobre el fondo oscuro: campo
-   claro con texto oscuro para que el selector del dispositivo se lea bien. */
-.hs-dates-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: nowrap; }
-.hs-field--date { flex: 1; min-width: 0; }
-.hs-dates-arrow { color: rgba(240,232,213,.5); font-size: 18px; padding-bottom: 12px; flex: 0 0 auto; }
-.hs-date-input {
-  width: 100%;
-  font-family: var(--sans);
-  font-size: 15px;
-  color: var(--ink, #2A0F2E);
-  background: var(--crema, #FAF6F0);
-  border: 1px solid rgba(240,232,213,.25);
-  border-radius: 10px 0 10px 0;
-  padding: 11px 12px;
-  color-scheme: light;
-  -webkit-appearance: none;
-  appearance: none;
-}
-.hs-date-input:focus { outline: 2px solid var(--sol, #3AAABB); outline-offset: 1px; border-color: transparent; }
-@media (max-width: 480px) { .hs-date-input { font-size: 16px; } }  /* evita zoom iOS */
 
 /* Date inputs */
 .hs-input {

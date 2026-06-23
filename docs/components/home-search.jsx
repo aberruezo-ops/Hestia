@@ -49,6 +49,282 @@ const _hsShiftLabel = (shift, lang) => {
   return shift < 0 ? `${n} ${unit} earlier` : `${n} ${unit} later`;
 };
 
+// ---- Custom calendar range picker, mismo estilo que AptCalendar ----
+const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, lang, today }) => {
+  const [hover, setHover] = React.useState(null);
+  const [drMsg, setDrMsg] = React.useState(null);
+  const todayDate = new Date(today + 'T12:00:00Z');
+  const [viewY, setViewY] = React.useState(todayDate.getUTCFullYear());
+  const [viewM, setViewM] = React.useState(todayDate.getUTCMonth());
+
+  const blocked = React.useMemo(() => {
+    if (!apt || !avail || !avail[apt]) return [];
+    return avail[apt].blocked || [];
+  }, [apt, avail]);
+
+  // Cierre de reservas, última fecha de check-in aceptada (de prices.json).
+  const horizonStr = (window.PRICES_V2 && window.PRICES_V2.bookingHorizon
+    && window.PRICES_V2.bookingHorizon.lastCheckinDate) || null;
+  const _isBeyondHorizon = (ds) => !!(horizonStr && ds > horizonStr);
+
+  const _isBlkLocal = (ds) => blocked.some(r => ds >= r.start && ds < r.end);
+  // Día "partido": primer día de bloque: mañana libre (check-out válido),
+  // tarde ocupada (check-in NO válido).
+  const _isBlkStartLocal = (ds) => _isBlkLocal(ds) && !_isBlkLocal(_hsAdj(ds, -1));
+
+  // Estancia mínima, capas de reglas (idéntico a DateRangePicker en shared):
+  //   1) 1 noche → siempre prohibida.
+  //   2) Por defecto: 3 noches mínimo (minNights).
+  //   3) Temporada crítica: 7 noches mínimo (criticalSeasonMinNights).
+  //   4) Excepción 2 noches (twoNightFloor): solo si el check-in cae en
+  //      la semana actual (≤ imminentDays) O si el rango rellena
+  //      exactamente un hueco entre dos reservas (gap-fill).
+  const rules = (window.PRICES_V2 && window.PRICES_V2.rules) || {};
+  const baseMinN      = rules.minNights || 3;
+  const twoNightFloor = rules.twoNightFloor || 2;
+  const criticalMinN  = rules.criticalSeasonMinNights || baseMinN;
+  const imminentD     = rules.imminentDays || 7;
+  const _isCriticalDate = (ds) => {
+    const v2 = window.PRICES_V2;
+    if (!v2 || typeof _v2BumpedSeasonForDate !== 'function') return false;
+    return _v2BumpedSeasonForDate(ds, v2) === 'critica';
+  };
+  const _isGapFiller = (cin, cout) => {
+    if (!cin || !cout) return false;
+    const dayBefore = _hsAdj(cin, -1);
+    const beforeBlk = blocked.some(r => dayBefore >= r.start && dayBefore < r.end);
+    const checkoutStartsBlk = blocked.some(r => r.start === cout);
+    return beforeBlk && checkoutStartsBlk;
+  };
+  const _effectiveMinN = (cin, coutCandidate) => {
+    if (!cin) return baseMinN;
+    const isImminent = _hsDiff(today, cin) <= imminentD;
+    const isGapFill  = coutCandidate && _isGapFiller(cin, coutCandidate);
+    if (isImminent || isGapFill) return twoNightFloor;
+    if (_isCriticalDate(cin)) return criticalMinN;
+    return baseMinN;
+  };
+  // Día "demasiado cerca del check-in para ser un check-out válido".
+  const _tooSoonForCheckout = (ds) => {
+    if (!checkin || checkout) return false;
+    if (ds <= checkin) return false;
+    return _hsDiff(checkin, ds) < _effectiveMinN(checkin, ds);
+  };
+
+  // Hover preview end: el camino intermedio debe estar libre. El hover
+  // puede ser un blocked-start (check-out válido).
+  let previewEnd = null;
+  if (checkin && !checkout && hover && hover > checkin) {
+    let ok = true;
+    let cur = _hsAdj(checkin, 1);
+    while (cur < hover) { if (_isBlkLocal(cur)) { ok = false; break; } cur = _hsAdj(cur, 1); }
+    if (ok) previewEnd = hover;
+  }
+
+  const handleDayClick = (ds) => {
+    if (ds <= today || _isBeyondHorizon(ds)) return;
+    const blk      = _isBlkLocal(ds);
+    const blkStart = blk && _isBlkStartLocal(ds);
+    if (blk && !blkStart) return;
+    // Fase check-in: blocked-start no vale (noche ocupada).
+    if (!checkin || checkout || ds <= checkin) {
+      if (blkStart) return;
+      setCheckin(ds); setCheckout(''); setDrMsg(null); return;
+    }
+    // Fase check-out: rechazar 1 noche y rangos < effectiveMin.
+    const nights = _hsDiff(checkin, ds);
+    const effMin = _effectiveMinN(checkin, ds);
+    if (nights === 1) {
+      setDrMsg({
+        type: 'error',
+        es: 'No se permiten reservas de 1 noche. La estancia mínima es 2 noches.',
+        en: 'One-night bookings are not allowed. Minimum stay is 2 nights.',
+      });
+      return;
+    }
+    if (nights < effMin) {
+      const isCrit = _isCriticalDate(checkin);
+      setDrMsg({
+        type: 'error',
+        es: isCrit
+          ? `Temporada crítica: estancia mínima ${effMin} noches. Excepción: 2 noches solo si el check-in es esta semana (≤${imminentD} días) o el rango rellena exactamente un hueco entre dos reservas existentes.`
+          : `Estancia mínima ${effMin} noches. Las reservas de 2 noches solo se permiten para la semana actual (≤${imminentD} días) o cuando rellenan exactamente un hueco entre dos reservas existentes.`,
+        en: isCrit
+          ? `Critical season: minimum stay ${effMin} nights. Exception: 2 nights only if check-in is this week (≤${imminentD} days) or the range exactly fills a gap between two existing bookings.`
+          : `Minimum stay ${effMin} nights. Two-night stays are only allowed for the current week (≤${imminentD} days) or when they exactly fill a gap between two existing bookings.`,
+      });
+      return;
+    }
+    // Verificar camino libre (sin bloqueadas en el medio).
+    let cur = _hsAdj(checkin, 1);
+    while (cur < ds) {
+      if (_isBlkLocal(cur)) { setCheckin(ds); setCheckout(''); setDrMsg(null); return; }
+      cur = _hsAdj(cur, 1);
+    }
+    setCheckout(ds); setDrMsg(null);
+  };
+
+  const MONTHS_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const MONTHS_EN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const WDS_ES = ['Lu','Ma','Mi','Ju','Vi','Sá','Do'];
+  const WDS_EN = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+
+  const renderMonth = (y, m) => {
+    const nDays  = new Date(y, m + 1, 0).getDate();
+    let firstDow = new Date(y, m, 1).getDay();
+    firstDow = firstDow === 0 ? 6 : firstDow - 1;
+    const wds    = lang === 'es' ? WDS_ES : WDS_EN;
+    const mName  = (lang === 'es' ? MONTHS_ES : MONTHS_EN)[m];
+    const cells  = [];
+    for (let i = 0; i < firstDow; i++) cells.push({ empty: true, k: `e${i}` });
+    for (let d = 1; d <= nDays; d++) cells.push({ d, k: d });
+
+    return (
+      <div className="cal-month" key={`${y}-${m}`}>
+        <div className="cal-mhd">{mName} <span className="cal-yr">{y}</span></div>
+        <div className="cal-grid">
+          {wds.map(w => <div key={w} className="cal-wd">{w}</div>)}
+          {cells.map(cell => {
+            if (cell.empty) return <div key={cell.k} className="cal-cell cal-empty"/>;
+            const { d } = cell;
+            const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+            const isPast  = ds <= today;
+            const isBeyond= _isBeyondHorizon(ds);
+            const isToday = ds === today;
+            const isBlk   = _isBlkLocal(ds);
+
+            const prevBlk     = isBlk && _isBlkLocal(_hsAdj(ds,-1));
+            const nextBlk     = isBlk && _isBlkLocal(_hsAdj(ds, 1));
+            const isBlkStart  = isBlk && !prevBlk;
+            const isBlkEnd    = isBlk && !nextBlk;
+            const isBlkSingle = isBlkStart && isBlkEnd;
+            const isBlkMid    = isBlk && !isBlkStart && !isBlkEnd;
+            // Día POST-bloqueo: no bloqueado pero el anterior sí. Mañana
+            // ocupada (huésped sale), tarde libre como check-in.
+            const isBlkAfter  = !isBlk && _isBlkLocal(_hsAdj(ds, -1));
+
+            const inSel = !!(checkin && checkout && ds >= checkin && ds <= checkout);
+            const isSS  = inSel && ds === checkin;
+            const isSE  = inSel && ds === checkout;
+            const isSM  = inSel && !isSS && !isSE;
+
+            const inPrev = !!(checkin && !checkout && previewEnd && ds >= checkin && ds <= previewEnd);
+            const isPS   = inPrev && ds === checkin;
+            const isPE   = inPrev && ds === previewEnd;
+            const isPM   = inPrev && !isPS && !isPE;
+
+            // Demasiado cerca del check-in para ser check-out válido
+            // (rango < effectiveMin). No clickable + visual atenuado.
+            const isTooSoon = _tooSoonForCheckout(ds);
+            // Un blocked-start es clickable (puede ser check-out: mañana libre)
+            const isClickable = !isPast && !isBeyond && !isTooSoon && (!isBlk || isBlkStart);
+            const showBlk = isBlk && !inSel && !inPrev;
+
+            return (
+              <div key={d}
+                className={['cal-cell',(isPast||isBeyond)&&'past',isToday&&'today',isBlk&&'blk',
+                  isBlkAfter && 'blk-after',
+                  isTooSoon && 'too-soon',
+                  isClickable&&'clickable',inSel&&'in-sel',isSS&&'sel-s',isSE&&'sel-e',isSM&&'sel-m',
+                  inPrev&&'in-prev',isPS&&'prev-s',isPE&&'prev-e',isPM&&'prev-m',
+                ].filter(Boolean).join(' ')}
+                onClick={isClickable ? () => handleDayClick(ds) : undefined}
+                onMouseEnter={isClickable && !checkout ? () => setHover(ds) : undefined}
+                onMouseLeave={isClickable ? () => setHover(null) : undefined}
+                title={isTooSoon ? (lang === 'es' ? `Estancia mínima ${_effectiveMinN(checkin, ds)} noches` : `Minimum stay ${_effectiveMinN(checkin, ds)} nights`) : undefined}
+              >
+                {showBlk && !isBlkSingle && isBlkStart && <div className="c-strip c-sr"/>}
+                {showBlk && (isBlkMid || (isBlkEnd && !isBlkSingle)) && <div className="c-strip"/>}
+                {isBlkAfter && !inSel && !inPrev && <div className="c-strip c-sl"/>}
+                {showBlk && isBlkSingle && <div className="c-strip"/>}
+                {showBlk && (isBlkStart || isBlkSingle) && <div className="c-circ"/>}
+                {isBlkAfter && !inSel && !inPrev && <div className="c-circ"/>}
+                {isSS && !isSE && <div className="c-strip c-sel-strip c-sr"/>}
+                {isSE && !isSS && <div className="c-strip c-sel-strip c-sl"/>}
+                {isSM          && <div className="c-strip c-sel-strip"/>}
+                {(isSS||isSE)  && <div className="c-circ c-sel-circ"/>}
+                {isPS && !isPE && <div className="c-strip c-prev-strip c-sr"/>}
+                {isPE && !isPS && <div className="c-strip c-prev-strip c-sl"/>}
+                {isPM          && <div className="c-strip c-prev-strip"/>}
+                {(isPS||isPE)  && <div className="c-circ c-prev-circ"/>}
+                {isToday && !inSel && !inPrev && <div className="c-today"/>}
+                <span className="c-n">{d}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const nextY    = viewM === 11 ? viewY + 1 : viewY;
+  const nextM    = viewM === 11 ? 0 : viewM + 1;
+  const canGoPrev = viewY > todayDate.getUTCFullYear() || viewM > todayDate.getUTCMonth();
+  const prevMonth = () => { if (!canGoPrev) return; if (viewM===0){setViewY(y=>y-1);setViewM(11);}else setViewM(m=>m-1); };
+  const nextMonth = () => { if (viewM===11){setViewY(y=>y+1);setViewM(0);}else setViewM(m=>m+1); };
+
+  const months = lang === 'es' ? MONTHS_ES : MONTHS_EN;
+  const navLbl = `${months[viewM]} · ${months[nextM]} ${nextY}`;
+  const nights = checkin && checkout ? _hsDiff(checkin, checkout) : null;
+
+  return (
+    <div className="hscal-wrap" style={{
+      '--apt-accent': '#1BC8D8',
+      '--sel-fill':   'rgba(27,200,216,.22)',
+      '--sel-circ':   'rgba(27,200,216,.90)',
+      '--prev-fill':  'rgba(27,200,216,.11)',
+      '--prev-circ':  'rgba(27,200,216,.48)',
+    }}>
+      <div className="hscal-phase-hint">
+        {!checkin    ? (lang==='es' ? '↓ Elige fecha de entrada'       : '↓ Choose check-in date')
+         : !checkout ? (lang==='es' ? '→ Ahora elige la fecha de salida' : '→ Now choose check-out date')
+         : null}
+      </div>
+      {drMsg && (
+        <div className={`hscal-msg hscal-msg-${drMsg.type || 'info'}`} role={drMsg.type === 'error' ? 'alert' : 'status'}>
+          {drMsg[lang] || drMsg.es}
+        </div>
+      )}
+      <div className="avail-nav hscal-nav">
+        <button type="button" className={`avail-arr${canGoPrev?'':' off'}`} onClick={prevMonth}
+          aria-label={lang==='es'?'Mes anterior':'Previous month'}>‹</button>
+        <span className="avail-nav-lbl">{navLbl}</span>
+        <button type="button" className="avail-arr" onClick={nextMonth}
+          aria-label={lang==='es'?'Mes siguiente':'Next month'}>›</button>
+      </div>
+      <div className="hscal-months" onMouseLeave={() => { if (!checkout) setHover(null); }}>
+        {renderMonth(viewY, viewM)}
+        {renderMonth(nextY, nextM)}
+      </div>
+      {(checkin || checkout) && (
+        <div className="hscal-sel-row">
+          {checkin && (
+            <span className="hscal-sel-item">
+              <span className="hscal-sel-lbl">{lang==='es' ? 'Entrada' : 'Check-in'}</span>
+              <strong>{_hsFmtDate(checkin, lang)}</strong>
+            </span>
+          )}
+          {checkout && (
+            <span className="hscal-sel-item">
+              <span className="hscal-sel-lbl">{lang==='es' ? 'Salida' : 'Check-out'}</span>
+              <strong>{_hsFmtDate(checkout, lang)}</strong>
+            </span>
+          )}
+          {nights && (
+            <div className="hs-nights-badge">
+              <span className="hs-nights-n">{nights}</span>
+              <span className="hs-nights-lbl">{lang==='es' ? 'noches' : 'nights'}</span>
+            </div>
+          )}
+          <button type="button" className="hscal-clear"
+            onClick={() => { setCheckin(''); setCheckout(''); setDrMsg(null); }}>
+            {lang==='es' ? '✕ Borrar' : '✕ Clear'}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
 
 // ---- Result card ----
 // Flujo nuevo: el huésped ve disponibilidad + precio base aquí, y un único
@@ -222,13 +498,10 @@ const HomeSearch = ({ lang, b2b = false }) => {
       .finally(() => setLoading(false));
   }, []);
 
-  // Form state. Por defecto: entrada = mañana, salida = una semana después,
-  // listo para pulsar "Comprobar" de un toque.
-  const today    = new Date().toISOString().slice(0, 10);
-  const tomorrow = _hsAdj(today, 1);
+  // Form state
   const [apt,         setApt        ] = React.useState('');   // '' = any
-  const [checkin,     setCheckin    ] = React.useState(tomorrow);
-  const [checkout,    setCheckout   ] = React.useState(_hsAdj(tomorrow, 7));
+  const [checkin,     setCheckin    ] = React.useState('');
+  const [checkout,    setCheckout   ] = React.useState('');
   const [guests,      setGuests     ] = React.useState(2);
   // Extras (cuna, trona, sábanas, toallas, mascota) se rellenan SOLO en
   // /reservas para no duplicar trabajo. Aquí solo huéspedes + fechas.
@@ -240,18 +513,7 @@ const HomeSearch = ({ lang, b2b = false }) => {
   const [notifyEmail, setNotifyEmail] = React.useState('');
   const [notifyState, setNotifyState] = React.useState('idle');
 
-  // Entrada cambia → salida salta automáticamente a +1 semana (default).
-  const onCheckinChange = (v) => {
-    setCheckin(v);
-    if (v) setCheckout(_hsAdj(v, 7));
-    setResults(null);
-    window.dispatchEvent(new CustomEvent('hs-results-change', { detail: false }));
-  };
-  const onCheckoutChange = (v) => {
-    setCheckout(v);
-    setResults(null);
-    window.dispatchEvent(new CustomEvent('hs-results-change', { detail: false }));
-  };
+  const today = new Date().toISOString().slice(0, 10);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -414,38 +676,14 @@ const HomeSearch = ({ lang, b2b = false }) => {
             </div>
           </div>
 
-          {/* Dos campos de fecha (selector nativo del dispositivo) con atajos:
-              entrada por defecto = mañana; al cambiar la entrada, la salida
-              salta a +1 semana. */}
-          <div className="hs-row hs-dates-row">
-            <div className="hs-field hs-field--date">
-              <label className="hs-lbl" htmlFor="hs-checkin">
-                {lang === 'es' ? 'Entrada' : 'Check-in'}
-              </label>
-              <input
-                id="hs-checkin"
-                type="date"
-                className="hs-date-input"
-                value={checkin}
-                min={tomorrow}
-                onChange={e => onCheckinChange(e.target.value)}
-              />
-            </div>
-            <span className="hs-dates-arrow" aria-hidden="true">→</span>
-            <div className="hs-field hs-field--date">
-              <label className="hs-lbl" htmlFor="hs-checkout">
-                {lang === 'es' ? 'Salida' : 'Check-out'}
-              </label>
-              <input
-                id="hs-checkout"
-                type="date"
-                className="hs-date-input"
-                value={checkout}
-                min={_hsAdj(checkin || tomorrow, 1)}
-                onChange={e => onCheckoutChange(e.target.value)}
-              />
-            </div>
-          </div>
+          {/* Calendar date range picker */}
+          <HsDateRange
+            checkin={checkin} checkout={checkout}
+            setCheckin={v => { setCheckin(v); setResults(null); }}
+            setCheckout={v => { setCheckout(v); setResults(null); }}
+            avail={avail} apt={apt}
+            lang={lang} today={today}
+          />
 
           {/* Guests, sin extras: cuna/trona/sábanas/toallas/mascota se
               gestionan en /reservas (paso único). Aquí solo lo esencial
@@ -558,13 +796,12 @@ const HomeSearch = ({ lang, b2b = false }) => {
               </div>
             )}
 
-            {/* Fechas parecidas/cercanas con disponibilidad: se muestran SIEMPRE
-                tras el resultado (cambia el titular según haya o no hueco en lo
-                pedido). Cada alternativa lleva su precio directo. */}
-            {results.some(r => r.available !== null) && (() => {
+            {/* Alternativas cercanas con disponibilidad: cuando su propuesta
+                (apt + fechas) está ocupada, ofrecemos lo libre más próximo
+                con precio. */}
+            {results.some(r => r.available !== null) && results.every(r => r.available !== true) && (() => {
               const alts = _hestiaFindAlternatives({ checkin, checkout, apt, avail, guests, max: 4 });
               if (!alts.length) return null;
-              const anyAvail = results.some(r => r.available === true);
               const fmt = n => n.toLocaleString('es-ES') + ' €';
               const altHref = (alt) => {
                 const p = new URLSearchParams();
@@ -577,14 +814,14 @@ const HomeSearch = ({ lang, b2b = false }) => {
               return (
                 <div className="hs-alts">
                   <div className="hs-alts-hd">
-                    {anyAvail
-                      ? (lang === 'es' ? '¿Flexibilidad en las fechas? Otras opciones cercanas' : 'Flexible on dates? Other nearby options')
-                      : (lang === 'es' ? 'Cerca de lo que buscabas, con disponibilidad' : 'Close to what you wanted, with availability')}
+                    {lang === 'es'
+                      ? 'Cerca de lo que buscabas, con disponibilidad'
+                      : 'Close to what you wanted, with availability'}
                   </div>
                   <p className="hs-alts-sub">
                     {lang === 'es'
-                      ? 'También están libres. El precio es el directo, sin comisiones.'
-                      : 'These are also free. The price is direct, with no fees.'}
+                      ? 'Estas opciones están libres. El precio es el directo, sin comisiones.'
+                      : 'These options are free. The price is direct, with no fees.'}
                   </p>
                   <div className="hs-alts-grid">
                     {alts.map((alt, i) => (

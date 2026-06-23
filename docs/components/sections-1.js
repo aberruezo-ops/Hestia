@@ -87,6 +87,28 @@ const Hero = ({
   const t = COPY[lang];
   const bgVideoRef = React.useRef(null);
 
+  // Mini-buscador del hero: dos campos de fecha que llevan a /reservas.
+  // Por defecto entrada = mañana, salida = +1 semana; al cambiar la entrada,
+  // la salida salta a +1 semana.
+  const _heroAdd = (ds, n) => {
+    const d = new Date(ds + 'T12:00:00Z');
+    d.setUTCDate(d.getUTCDate() + n);
+    return d.toISOString().slice(0, 10);
+  };
+  const heroToday = new Date().toISOString().slice(0, 10);
+  const heroTomorrow = _heroAdd(heroToday, 1);
+  const [hcIn, setHcIn] = React.useState(heroTomorrow);
+  const [hcOut, setHcOut] = React.useState(_heroAdd(heroTomorrow, 7));
+  const goReservas = e => {
+    e.preventDefault();
+    if (!hcIn || !hcOut || hcOut <= hcIn) return;
+    const p = new URLSearchParams({
+      checkin: hcIn,
+      checkout: hcOut
+    });
+    window.location.href = 'reservas.html?' + p.toString();
+  };
+
   // Playlist aleatoria: mezcla Fisher-Yates una vez por sesión (useMemo
   // se ejecuta solo en el montaje, es decir, una vez por carga de página).
   // El orden cambia en cada sesión sin necesidad de sessionStorage.
@@ -188,10 +210,36 @@ const Hero = ({
     className: "btn btn-primary"
   }, t.hero_cta_1, " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "\u2192")), /*#__PURE__*/React.createElement("a", {
-    href: "#buscar",
-    className: "btn btn-ghost-light"
-  }, t.hero_cta_avail, " ", /*#__PURE__*/React.createElement("span", {
+  }, "\u2192"))), /*#__PURE__*/React.createElement("form", {
+    className: "hero-availform",
+    onSubmit: goReservas
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "hero-af-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "hero-cin"
+  }, lang === 'es' ? 'Entrada' : 'Check-in'), /*#__PURE__*/React.createElement("input", {
+    id: "hero-cin",
+    type: "date",
+    value: hcIn,
+    min: heroTomorrow,
+    onChange: e => {
+      setHcIn(e.target.value);
+      if (e.target.value) setHcOut(_heroAdd(e.target.value, 7));
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "hero-af-field"
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "hero-cout"
+  }, lang === 'es' ? 'Salida' : 'Check-out'), /*#__PURE__*/React.createElement("input", {
+    id: "hero-cout",
+    type: "date",
+    value: hcOut,
+    min: _heroAdd(hcIn || heroTomorrow, 1),
+    onChange: e => setHcOut(e.target.value)
+  })), /*#__PURE__*/React.createElement("button", {
+    type: "submit",
+    className: "btn btn-primary hero-af-btn"
+  }, lang === 'es' ? 'Comprobar' : 'Check', " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
   }, "\u2192"))), /*#__PURE__*/React.createElement("div", {
     className: "hero-proof"
