@@ -533,8 +533,9 @@ const ReservasForm = ({ lang }) => {
     // los extras (no las marca automáticamente, el huésped decide).
     const qBaby = qs.get('baby');
     if (qBaby === 'yes') { setBaby('yes'); hadAny = true; }
-    // Si vino apt + ambas fechas, avanzamos al step 2 directamente.
-    if (qApt && qCheckin && qCheckout) {
+    // Con ambas fechas avanzamos al step 2 directamente (con o sin apt: sin apt
+    // se muestra la disponibilidad de los 3 Hestías para esas fechas + opciones).
+    if (qCheckin && qCheckout) {
       setStep(2);
       setTimeout(() => {
         document.getElementById('rf-step-2')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1112,6 +1113,54 @@ const ReservasForm = ({ lang }) => {
                 </div>
               </div>
             )}
+            {/* Sin apt: si algún Hestía está ocupado en esas fechas, ofrecemos
+                opciones cercanas con disponibilidad y precio. */}
+            {!apt && availLoaded && (() => {
+              const statuses = ['vm', 'vt', 'vs'].map(id => {
+                const blk = avail && avail[id] ? avail[id].blocked : null;
+                return blk ? _resAvail(checkin, checkout, blk) : null;
+              });
+              if (!statuses.some(s => s === false)) return null;
+              const noneFree = !statuses.some(s => s === true);
+              const alts = _hestiaFindAlternatives({ checkin, checkout, apt: '', avail, guests: parseInt(guests, 10) || null, max: 6 });
+              if (!alts.length) return null;
+              const fmt = n => n.toLocaleString('es-ES') + ' €';
+              const shiftLabel = (alt) => {
+                if (alt.sameDates) return lang === 'es' ? 'Mismas fechas, otro Hestía' : 'Same dates, another Hestía';
+                const n = Math.abs(alt.shiftDays);
+                const u = n === 1 ? (lang === 'es' ? 'día' : 'day') : (lang === 'es' ? 'días' : 'days');
+                const dir = lang === 'es' ? (alt.shiftDays < 0 ? 'antes' : 'después') : (alt.shiftDays < 0 ? 'earlier' : 'later');
+                return `${alt.nights} ${lang === 'es' ? 'noches' : 'nights'} · ${n} ${u} ${dir}`;
+              };
+              const applyAlt = (alt) => {
+                setApt(alt.aptId); setCheckin(alt.checkin); setCheckout(alt.checkout);
+                setTimeout(() => document.getElementById('rf-step-2')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+              };
+              return (
+                <div className="rf-alts">
+                  <div className="rf-alts-hd">
+                    {noneFree
+                      ? (lang === 'es' ? 'Ningún Hestía libre en esas fechas exactas. Opciones cercanas:' : 'No Hestía free on those exact dates. Nearby options:')
+                      : (lang === 'es' ? 'Otras opciones cercanas con disponibilidad' : 'Other nearby options with availability')}
+                  </div>
+                  <p className="rf-alts-sub">
+                    {lang === 'es'
+                      ? 'Toca una opción y la cargamos en tu solicitud. Precio directo, sin comisiones.'
+                      : 'Tap an option and we load it into your request. Direct price, no fees.'}
+                  </p>
+                  <div className="rf-alts-grid">
+                    {alts.map((alt, i) => (
+                      <button type="button" key={i} className="rf-alt-card" style={{ '--apt-accent': aptAccents[alt.aptId] }} onClick={() => applyAlt(alt)}>
+                        <span className="rf-alt-apt">{alt.aptName}</span>
+                        <span className="rf-alt-dates">{_drFmtDate(alt.checkin, lang)} – {_drFmtDate(alt.checkout, lang)}</span>
+                        <span className="rf-alt-shift">{shiftLabel(alt)}</span>
+                        <span className="rf-alt-price"><strong>{fmt(alt.total)}</strong> <small>{fmt(alt.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</small></span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
             {/* Status badge, sólo si hay apt elegido */}
             {apt && isAvailable === true && (
               <div className="rf-status rf-status-ok">

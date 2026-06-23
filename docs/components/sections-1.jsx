@@ -87,7 +87,9 @@ const Hero = ({ lang, onScrollDown }) => {
   const goReservas = (e) => {
     e.preventDefault();
     if (!hcIn || !hcOut || hcOut <= hcIn) return;
-    const p = new URLSearchParams({ checkin: hcIn, checkout: hcOut });
+    // Sin apartamento (cualquier Hestía) y 4 huéspedes por defecto: /reservas
+    // mostrará la disponibilidad de los 3 Hestías para esas fechas + opciones.
+    const p = new URLSearchParams({ checkin: hcIn, checkout: hcOut, guests: '4' });
     window.location.href = 'reservas.html?' + p.toString();
   };
 
