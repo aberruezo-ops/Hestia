@@ -21154,6 +21154,29 @@ img[src*="apt-vt-gallery-"] {
 .intel-wrap .pe-btn { color: rgba(255,255,255,0.9); }
 .intel-wrap .pe-btn { border-color: rgba(255,255,255,0.18); background: rgba(255,255,255,0.07); }
 .intel-wrap .pe-btn:hover { background: rgba(255,255,255,0.14); }
+
+/* Contraste: las secciones de Tráfico y Accesos reutilizan clases .pe-*/.rv-*
+   pensadas para fondo CLARO; dentro del panel oscuro de Inteligencia hay que
+   forzar texto claro para que no queden oscuro-sobre-oscuro. */
+.intel-wrap .pe-hint { color: rgba(240,232,213,0.55); }
+.intel-wrap .pe-cf-col-title { color: rgba(240,232,213,0.78); }
+.intel-wrap .pe-cf-row-label { color: rgba(240,232,213,0.85); }
+.intel-wrap .pe-cf-row-bold { color: var(--crema, #FAF6F0); }
+.intel-wrap .pe-cf-row-n { color: rgba(240,232,213,0.7); }
+.intel-wrap .pe-funnel-n { color: var(--crema, #FAF6F0); }
+.intel-wrap .pe-funnel-label { color: rgba(240,232,213,0.6); }
+.intel-wrap .pe-funnel-conv { color: var(--sol-lt, #6FC4D1); }
+.intel-wrap .pe-funnel-step { border-right-color: rgba(240,232,213,0.12); }
+.intel-wrap .pe-analytics-sep { background: rgba(240,232,213,0.12); }
+.intel-wrap .pe-error { color: #F2B8C6; }
+/* Tabla de accesos a la guía sobre fondo oscuro */
+.intel-wrap .acc-kpis { color: rgba(240,232,213,0.72); }
+.intel-wrap .acc-kpis strong { color: var(--crema, #FAF6F0); }
+.intel-wrap .rv-table { color: rgba(240,232,213,0.9); }
+.intel-wrap .rv-table thead th { color: rgba(240,232,213,0.7); background: rgba(240,232,213,0.05); border-bottom-color: rgba(240,232,213,0.18); }
+.intel-wrap .rv-table td { border-bottom-color: rgba(240,232,213,0.08); }
+.intel-wrap .acc-table .acc-history { color: rgba(240,232,213,0.5); }
+.intel-wrap .acc-table .rv-month-foot td { background: rgba(240,232,213,0.04); }
 .intel-hd {
   display: flex;
   align-items: center;
