@@ -9347,6 +9347,27 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .hs-field--inline .hs-lbl { margin-bottom: 0; }
 
+/* Campos de fecha nativos (entrada / salida) sobre el fondo oscuro: campo
+   claro con texto oscuro para que el selector del dispositivo se lea bien. */
+.hs-dates-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: nowrap; }
+.hs-field--date { flex: 1; min-width: 0; }
+.hs-dates-arrow { color: rgba(240,232,213,.5); font-size: 18px; padding-bottom: 12px; flex: 0 0 auto; }
+.hs-date-input {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--ink, #2A0F2E);
+  background: var(--crema, #FAF6F0);
+  border: 1px solid rgba(240,232,213,.25);
+  border-radius: 10px 0 10px 0;
+  padding: 11px 12px;
+  color-scheme: light;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.hs-date-input:focus { outline: 2px solid var(--sol, #3AAABB); outline-offset: 1px; border-color: transparent; }
+@media (max-width: 480px) { .hs-date-input { font-size: 16px; } }  /* evita zoom iOS */
+
 /* Date inputs */
 .hs-input {
   width: 100%;
