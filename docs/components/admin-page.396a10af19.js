@@ -8497,6 +8497,259 @@ const HuecosTab = ({
 };
 
 // ---------------------------------------------------------------
+const CAT_COLORS_PINS = {
+  home: '#2A0F2E',
+  super: '#6B7A3A',
+  restaurant: '#B86A3C',
+  michelin: '#D4A84A',
+  bar: '#3AAABB',
+  fish: '#4E7A9A',
+  abasto: '#8A6A2E',
+  pharmacy: '#B82490',
+  health: '#B8246E',
+  vet: '#4E8A5A',
+  'pet-board': '#7A5E8A',
+  physio: '#5A7A8A',
+  bodega: '#8A4A2E',
+  coworking: '#4A6A8A',
+  laundry: '#6A8A6A',
+  atm: '#8A7A4A',
+  market: '#7A4A2E',
+  sport: '#3A6A8A',
+  trek: '#4A7A3A',
+  nature: '#3A8A5A',
+  beach: '#2A8A9E',
+  geo: '#7A4A7A',
+  culture: '#6A4A3A',
+  celiac: '#8A6A4A',
+  bookshop: '#4A4A8A',
+  gas: '#8A3A3A',
+  ev: '#3A8A7A'
+};
+const PinsTab = () => {
+  const mapRef = React.useRef(null);
+  const mapInst = React.useRef(null);
+  const markersRef = React.useRef({});
+  const placesRef = React.useRef([]);
+  const originalsRef = React.useRef({});
+  const searchActive = React.useRef(null);
+  const [changes, setChanges] = React.useState({});
+  const [search, setSearch] = React.useState('');
+  const [loading, setLoading] = React.useState(true);
+  const [loadErr, setLoadErr] = React.useState(null);
+  const [toast, setToast] = React.useState('');
+  const showToast = msg => {
+    setToast(msg);
+    setTimeout(() => setToast(''), 3000);
+  };
+  React.useEffect(() => {
+    if (!window.L) {
+      setLoadErr('Leaflet no disponible. Recarga la pagina.');
+      setLoading(false);
+      return;
+    }
+    const L = window.L;
+    fetch('data/places.json?t=' + Date.now(), {
+      cache: 'no-store'
+    }).then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    }).then(places => {
+      placesRef.current = places;
+      places.forEach(p => {
+        originalsRef.current[p.id] = {
+          lat: p.lat,
+          lng: p.lng
+        };
+      });
+      setLoading(false);
+      const map = L.map(mapRef.current, {
+        scrollWheelZoom: true
+      }).setView([37.22, -1.81], 11);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© <a href="https://openstreetmap.org/copyright">OSM</a>',
+        maxZoom: 19
+      }).addTo(map);
+      mapInst.current = map;
+      places.forEach(p => {
+        const col = CAT_COLORS_PINS[p.cat] || '#3AAABB';
+        const icon = L.divIcon({
+          className: '',
+          html: `<svg width="18" height="18"><circle cx="9" cy="9" r="7" fill="${col}" stroke="#fff" stroke-width="2"/></svg>`,
+          iconSize: [18, 18],
+          iconAnchor: [9, 9]
+        });
+        const m = L.marker([p.lat, p.lng], {
+          icon,
+          draggable: true,
+          title: p.name
+        }).bindTooltip(p.name, {
+          direction: 'top',
+          offset: [0, -9]
+        }).addTo(map);
+        m.on('dragend', () => {
+          const ll = m.getLatLng();
+          const o = originalsRef.current[p.id];
+          const dist = map.distance([o.lat, o.lng], [ll.lat, ll.lng]);
+          if (dist < 20) {
+            m.setLatLng([o.lat, o.lng]);
+            setChanges(prev => {
+              const n = {
+                ...prev
+              };
+              delete n[p.id];
+              return n;
+            });
+          } else {
+            setChanges(prev => ({
+              ...prev,
+              [p.id]: {
+                lat: ll.lat,
+                lng: ll.lng
+              }
+            }));
+          }
+        });
+        markersRef.current[p.id] = m;
+      });
+    }).catch(e => {
+      setLoadErr('Error cargando places.json: ' + e.message);
+      setLoading(false);
+    });
+    return () => {
+      if (mapInst.current) {
+        mapInst.current.remove();
+        mapInst.current = null;
+      }
+      markersRef.current = {};
+    };
+  }, []);
+  React.useEffect(() => {
+    if (!search.trim() || !mapInst.current) return;
+    const q = search.toLowerCase().trim();
+    if (searchActive.current) markersRef.current[searchActive.current]?.closeTooltip();
+    const found = placesRef.current.find(p => p.name.toLowerCase().includes(q) || p.id.includes(q));
+    if (found) {
+      const m = markersRef.current[found.id];
+      if (m) {
+        mapInst.current.setView(m.getLatLng(), 16);
+        m.openTooltip();
+        searchActive.current = found.id;
+      }
+    }
+  }, [search]);
+  const exportJson = () => {
+    const ids = Object.keys(changes);
+    if (!ids.length) {
+      showToast('Sin cambios que exportar');
+      return;
+    }
+    const out = ids.map(id => ({
+      id,
+      lat: parseFloat(changes[id].lat.toFixed(5)),
+      lng: parseFloat(changes[id].lng.toFixed(5))
+    }));
+    const json = JSON.stringify(out, null, 2);
+    navigator.clipboard.writeText(json).then(() => showToast(`JSON copiado (${out.length} cambios)`)).catch(() => showToast('No se pudo copiar al portapapeles'));
+  };
+  const resetAll = () => {
+    if (!Object.keys(changes).length) return;
+    if (!confirm('Reiniciar todos los cambios?')) return;
+    Object.keys(changes).forEach(id => {
+      const o = originalsRef.current[id];
+      markersRef.current[id]?.setLatLng([o.lat, o.lng]);
+    });
+    setChanges({});
+  };
+  if (loadErr) return /*#__PURE__*/React.createElement("div", {
+    className: "pe-card"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "pe-error"
+  }, loadErr));
+  const changeIds = Object.keys(changes);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-wrap"
+  }, loading && /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-loading"
+  }, "Cargando mapa..."), /*#__PURE__*/React.createElement("div", {
+    ref: mapRef,
+    className: "pe-pins-map",
+    style: loading ? {
+      display: 'none'
+    } : {}
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-panel"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-ph"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-title"
+  }, "Editor de pins"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-wip-banner"
+  }, "Mapa en construccion. Las coordenadas pueden no ser exactas."), /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint"
+  }, "Arrastra los pins a su posicion correcta. Exporta el JSON y pegalo en el chat con Claude para aplicar los cambios a la guia.")), /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-search-wrap"
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "text",
+    className: "pe-input",
+    placeholder: "Buscar lugar...",
+    value: search,
+    onChange: e => setSearch(e.target.value)
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-changes-head"
+  }, "Cambios (", changeIds.length, ")"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-changes"
+  }, changeIds.length === 0 ? /*#__PURE__*/React.createElement("p", {
+    className: "pe-hint",
+    style: {
+      padding: '12px 0'
+    }
+  }, "Sin cambios aun.") : changeIds.map(id => {
+    const p = placesRef.current.find(x => x.id === id);
+    const c = changes[id];
+    const o = originalsRef.current[id];
+    return /*#__PURE__*/React.createElement("div", {
+      key: id,
+      className: "pe-pins-change-item"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "pe-pins-change-name"
+    }, p ? p.name : id, /*#__PURE__*/React.createElement("button", {
+      className: "pe-btn pe-btn-ghost pe-btn-sm",
+      style: {
+        float: 'right'
+      },
+      onClick: () => {
+        const oo = originalsRef.current[id];
+        markersRef.current[id]?.setLatLng([oo.lat, oo.lng]);
+        setChanges(prev => {
+          const n = {
+            ...prev
+          };
+          delete n[id];
+          return n;
+        });
+      }
+    }, "deshacer")), /*#__PURE__*/React.createElement("div", {
+      className: "pe-pins-change-old"
+    }, o.lat.toFixed(5), ", ", o.lng.toFixed(5)), /*#__PURE__*/React.createElement("div", {
+      className: "pe-pins-change-new"
+    }, "\u2192 ", c.lat.toFixed(5), ", ", c.lng.toFixed(5)));
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-footer"
+  }, /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-primary",
+    onClick: exportJson,
+    disabled: !changeIds.length
+  }, "Exportar JSON"), /*#__PURE__*/React.createElement("button", {
+    className: "pe-btn pe-btn-ghost",
+    onClick: resetAll,
+    disabled: !changeIds.length
+  }, "Reiniciar")), toast && /*#__PURE__*/React.createElement("div", {
+    className: "pe-pins-toast"
+  }, toast)));
+};
+
+// ---------------------------------------------------------------
 const AdminApp = () => {
   const [phase, setPhase] = React.useState('login');
   const [mode, setMode] = React.useState('reservas');
@@ -9090,11 +9343,21 @@ const AdminApp = () => {
     return pending > 0 ? /*#__PURE__*/React.createElement("span", {
       className: "pe-tab-badge"
     }, pending) : null;
-  })())), success && /*#__PURE__*/React.createElement("div", {
+  })()), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: `pe-tab${mode === 'mapa' ? ' is-active' : ''}`,
+    onClick: () => {
+      setMode('mapa');
+      setError(null);
+      setSuccess(null);
+    }
+  }, "\uD83D\uDCCD", /*#__PURE__*/React.createElement("span", {
+    className: "pe-tab-label"
+  }, " Mapa"))), success && /*#__PURE__*/React.createElement("div", {
     className: "pe-success"
   }, success), error && /*#__PURE__*/React.createElement("div", {
     className: "pe-error"
-  }, error), mode === 'huecos' ? /*#__PURE__*/React.createElement(HuecosTab, {
+  }, error), mode === 'mapa' ? /*#__PURE__*/React.createElement(PinsTab, null) : mode === 'huecos' ? /*#__PURE__*/React.createElement(HuecosTab, {
     token: token,
     pricesData: data,
     onPricesUpdated: (d, s) => {

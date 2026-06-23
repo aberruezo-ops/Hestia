@@ -1869,7 +1869,7 @@ const _dayPrice = (ds, aptId) => {
   // v2 (prices.json) tiene resolución por día, así que preferimos eso.
   // Si no está disponible, caemos a la tabla mensual + peaks (motor antiguo).
   const v2price = _dayPriceV2(ds, aptId);
-  if (v2price !== null) return v2price;
+  if (v2price !== null && Number.isFinite(v2price)) return v2price;
   const tbl = HESTIA_PRICES[aptId];
   if (!tbl) return 0;
   const month = parseInt(ds.slice(5, 7), 10);
@@ -1978,6 +1978,7 @@ const _calcStay = (selStart, selEnd, aptId, withPets, guests) => {
 
   const directTotal  = fAfterStay + petAmt + guestSuppAmt;
   const avgPerNight  = Math.round((fAfterStay + guestSuppAmt) / nights);
+  if (!Number.isFinite(directTotal)) return null;
 
   return {
     nights, baseTotal: fBaseTotal, stayD: fStayD, stayDiscAmt: fStayDiscAmt, afterStay: fAfterStay,

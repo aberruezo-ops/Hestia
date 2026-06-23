@@ -840,8 +840,8 @@ const PLACES = [
   tier: '€€',
   cat: 'restaurant',
   rating: 4.5,
-  lat: 37.2245,
-  lng: -1.7985,
+  lat: 37.2280,
+  lng: -1.8010,
   featured: true
 }, {
   id: 'bbme-rest',
@@ -851,8 +851,8 @@ const PLACES = [
   tier: '€€',
   cat: 'restaurant',
   rating: 4.4,
-  lat: 37.2155,
-  lng: -1.7800
+  lat: 37.2340,
+  lng: -1.8000
 }, {
   id: 'playa-azul',
   name: 'Hostal Playa Azul',
@@ -862,8 +862,8 @@ const PLACES = [
   tier: '€€',
   cat: 'restaurant',
   rating: 4.5,
-  lat: 37.2460,
-  lng: -1.7660,
+  lat: 37.2470,
+  lng: -1.7730,
   featured: true
 }, {
   id: 'tadeo',
@@ -873,8 +873,8 @@ const PLACES = [
   tier: '€€',
   cat: 'restaurant',
   rating: 4.4,
-  lat: 37.2494,
-  lng: -1.7709,
+  lat: 37.2480,
+  lng: -1.7730,
   featured: true
 }, {
   id: 'rincon-puerto',
@@ -1562,7 +1562,7 @@ const PLACES = [
   cat: 'bar',
   rating: 4.2,
   lat: 37.2100,
-  lng: -1.7850
+  lng: -1.7970
 }, {
   id: 'marau',
   name: 'Marau Beach Club',
@@ -1591,8 +1591,8 @@ const PLACES = [
   tip: 'Vete andando por la orilla al atardecer y vuelve en taxi: la luz vale la caminata.',
   cat: 'bar',
   rating: 4.4,
-  lat: 37.2155,
-  lng: -1.7800,
+  lat: 37.2340,
+  lng: -1.8000,
   featured: true
 }, {
   id: 'lebreros',
@@ -1871,8 +1871,8 @@ const PLACES = [
   name: 'Farmacia Vera Playa',
   cat: 'pharmacy',
   url: 'https://goo.gl/maps/GaRHGscDhErp9kBG7',
-  lat: 37.2260,
-  lng: -1.7985
+  lat: 37.2200,
+  lng: -1.8080
 },
 // ==========================================================
 // CENTROS DE SALUD Y URGENCIAS, verificados mayo 2026 vía
@@ -2103,8 +2103,8 @@ const PLACES = [
   desc: 'Lavadoras y secadoras de autoservicio en la zona de Vera Playa, útiles en estancias largas o para una colada rápida sin esperar al día de limpieza.',
   desc_en: 'Self-service washers and dryers in the Vera Playa area, handy for longer stays or a quick wash without waiting for cleaning day.',
   url: 'https://www.google.com/maps/search/?api=1&query=lavander%C3%ADa+autoservicio+Vera+Playa',
-  lat: 37.2360,
-  lng: -1.7935,
+  lat: 37.2220,
+  lng: -1.8090,
   featured: true
 }, {
   id: 'ln-mojacar',
@@ -2134,8 +2134,8 @@ const PLACES = [
   desc: 'En la zona comercial de Vera Playa hay cajeros para sacar efectivo sin bajar al pueblo. Comprueba la comisión en pantalla antes de aceptar, sobre todo en los cajeros independientes.',
   desc_en: 'The Vera Playa commercial area has ATMs to withdraw cash without driving to town. Check the on-screen fee before accepting, especially at independent ATMs.',
   url: 'https://www.google.com/maps/search/?api=1&query=cajero+Vera+Playa',
-  lat: 37.2360,
-  lng: -1.7935
+  lat: 37.2220,
+  lng: -1.8090
 }, {
   id: 'atm-garrucha',
   name: 'Cajeros en Garrucha',
@@ -2218,8 +2218,8 @@ const PLACES = [
   level: 'Fácil · todas las edades · zona infantil supervisada',
   cat: 'leisure',
   url: 'https://www.aquavera.com/',
-  lat: 37.2230,
-  lng: -1.7960,
+  lat: 37.2280,
+  lng: -1.8080,
   featured: true,
   featuredOrder: 1
 }, {
@@ -2278,8 +2278,8 @@ const PLACES = [
   level: 'Fácil · 8+ años · sin movilidad reducida (acceso al avión)',
   cat: 'leisure',
   url: 'https://aeronomadas.com/es/vuelos-biplaza',
-  lat: 37.2150,
-  lng: -1.7720
+  lat: 37.2320,
+  lng: -1.8070
 }, {
   id: 'turismo-ind',
   name: 'Turismo industrial y científico',
@@ -2356,8 +2356,8 @@ const PLACES = [
   level: 'Bautismo: Medio · 10+ años · Buena salud cardiopulmonar. · Cursos PADI: Alto · 12+ años con autorización',
   cat: 'water',
   url: 'https://www.buceotortuga.com',
-  lat: 37.2470,
-  lng: -1.7660
+  lat: 37.2280,
+  lng: -1.8030
 }, {
   id: 'buceo-villaricos',
   name: 'Buceo · Villaricos Sub',
@@ -2366,7 +2366,7 @@ const PLACES = [
   cat: 'water',
   url: 'https://www.villaricosub.com',
   lat: 37.2470,
-  lng: -1.7660
+  lng: -1.7730
 }, {
   id: 'buceo-mojacar',
   name: 'Buceo · Mojácar',
@@ -2543,8 +2543,8 @@ const PLACES = [
   tip: 'Villaricos tiene un par de bares al lado del chiringuito de la playa. El Parque Arqueológico es visita libre y gratuita (señalizada junto al merendero).',
   cat: 'trek',
   url: 'https://www.google.com/maps/search/?api=1&query=Villaricos+Parque+Arqueologico+Almeria',
-  lat: 37.2470,
-  lng: -1.7660
+  lat: 37.2340,
+  lng: -1.7910
 }, {
   id: 'trek-vera-pueblo',
   name: 'Vera Playa → Vera pueblo (por el barranquillo)',
@@ -2633,7 +2633,7 @@ const PLACES = [
   desc: 'Tel. 627 139 092',
   cat: 'leisure',
   lat: 37.2470,
-  lng: -1.7660
+  lng: -1.7730
 },
 // Pueblos
 // Pueblos: cada uno con atractivos, recomendaciones y eventos clave.
@@ -3365,8 +3365,8 @@ const PLACES = [
   guideAnchor: '#ag-alrededores',
   gmaps: 'https://www.google.com/maps/dir/Vera+Playa,Almería/37.2110,-1.7770',
   web: 'https://www.juntadeandalucia.es/medioambiente/portal/landing-page-mapa-espacios-naturales/_blank/57800',
-  lat: 37.2110,
-  lng: -1.7770
+  lat: 37.2260,
+  lng: -1.8330
 }, {
   id: 'el-argar',
   name: 'Yacimiento El Argar',
@@ -4033,7 +4033,7 @@ const PLACES = [
   desc: 'Hamacas, sombrillas y chiringuitos cerca de Hestía.',
   cat: 'beach-srvc',
   lat: 37.2050,
-  lng: -1.7790
+  lng: -1.7980
 },
 // ==========================================================
 // GASOLINERAS, verificadas en mayo 2026 vía repsol.es, Cepsa,
@@ -4124,8 +4124,8 @@ const PLACES = [
   tip: 'Horario habitual: 7:00 – 21:00.',
   cat: 'fuel',
   url: 'https://www.google.com/maps/search/?api=1&query=Repsol+Palomares+Almeria',
-  lat: 37.2370,
-  lng: -1.7700
+  lat: 37.2340,
+  lng: -1.8070
 },
 // ==========================================================
 // PUNTOS DE CARGA ELÉCTRICA, verificados mayo 2026 vía
@@ -4140,8 +4140,8 @@ const PLACES = [
   tip: 'Horario igual que la tienda: lunes-sábado 9:00 – 21:30, domingos cerrado. Pensado para 1-2 h durante la compra; no es carga rápida.',
   cat: 'ev-charge',
   url: 'https://www.google.com/maps/search/?api=1&query=Mercadona+Vera+Medina+Azahara',
-  lat: 37.2360,
-  lng: -1.7935,
+  lat: 37.2210,
+  lng: -1.8110,
   featured: true,
   featuredOrder: 1
 }, {
