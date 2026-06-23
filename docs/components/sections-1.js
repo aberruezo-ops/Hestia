@@ -210,7 +210,7 @@ const Hero = ({
     className: "hero-ctas"
   }, /*#__PURE__*/React.createElement("a", {
     href: "#apartamentos",
-    className: "btn btn-primary"
+    className: "btn btn-primary hero-cta-anim"
   }, t.hero_cta_1, " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
   }, "\u2192"))), /*#__PURE__*/React.createElement("form", {
@@ -242,7 +242,7 @@ const Hero = ({
   })), /*#__PURE__*/React.createElement("button", {
     type: "submit",
     className: "btn btn-primary hero-af-btn"
-  }, lang === 'es' ? 'Comprobar' : 'Check', " ", /*#__PURE__*/React.createElement("span", {
+  }, lang === 'es' ? 'Comprobar disponibilidad' : 'Check availability', " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
   }, "\u2192"))), /*#__PURE__*/React.createElement("div", {
     className: "hero-proof"

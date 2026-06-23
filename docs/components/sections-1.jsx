@@ -174,7 +174,7 @@ const Hero = ({ lang, onScrollDown }) => {
         </h1>
         <div className="hero-sub">{t.hero_sub}</div>
         <div className="hero-ctas">
-          <a href="#apartamentos" className="btn btn-primary">
+          <a href="#apartamentos" className="btn btn-primary hero-cta-anim">
             {t.hero_cta_1} <span className="arrow">→</span>
           </a>
         </div>
@@ -190,7 +190,7 @@ const Hero = ({ lang, onScrollDown }) => {
               onChange={e => setHcOut(e.target.value)} />
           </div>
           <button type="submit" className="btn btn-primary hero-af-btn">
-            {lang === 'es' ? 'Comprobar' : 'Check'} <span className="arrow">→</span>
+            {lang === 'es' ? 'Comprobar disponibilidad' : 'Check availability'} <span className="arrow">→</span>
           </button>
         </form>
         <div className="hero-proof">
