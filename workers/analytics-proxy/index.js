@@ -51,9 +51,17 @@ export default {
     // ── POST /r — datos RUM ─────────────────────────────────────
     if (pathname === '/r' && request.method === 'POST') {
       const body = await request.arrayBuffer();
+      // Reenviamos las cabeceras del visitante para que Cloudflare atribuya bien
+      // el dato: User-Agent (navegador/dispositivo), Referer, idioma e IP real
+      // (sin estas, las visitas salían incompletas o sin país/dispositivo).
+      const fwd = { 'Content-Type': request.headers.get('Content-Type') || 'application/json' };
+      const ua = request.headers.get('User-Agent');      if (ua) fwd['User-Agent'] = ua;
+      const ref = request.headers.get('Referer');         if (ref) fwd['Referer'] = ref;
+      const al = request.headers.get('Accept-Language');  if (al) fwd['Accept-Language'] = al;
+      const ip = request.headers.get('CF-Connecting-IP'); if (ip) fwd['X-Forwarded-For'] = ip;
       const upstream = await fetch(BEACON_DATA, {
         method:  'POST',
-        headers: { 'Content-Type': request.headers.get('Content-Type') || 'application/json' },
+        headers: fwd,
         body,
       });
       return new Response(upstream.body, {
