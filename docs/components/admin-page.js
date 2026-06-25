@@ -1276,14 +1276,14 @@ function BarChart({
       x2: inner.w,
       y1: y,
       y2: y,
-      stroke: 'rgba(255,255,255,0.07)',
+      stroke: 'rgba(61,26,53,0.08)',
       strokeWidth: 1
     }), React.createElement('text', {
       x: -6,
       y: y + 4,
       textAnchor: 'end',
       fontSize: 9,
-      fill: 'rgba(255,255,255,0.4)'
+      fill: 'rgba(61,26,53,0.55)'
     }, dashFmtMoney(maxVal * f)));
   }), years.map((yr, i) => {
     const d = yearData[yr];
@@ -1300,8 +1300,8 @@ function BarChart({
       y: scaleY(d.ingresos),
       width: bw,
       height: hI,
-      fill: 'rgba(212,168,74,0.55)',
-      stroke: isPartial ? 'rgba(212,168,74,0.4)' : 'none',
+      fill: 'rgba(212,168,74,0.85)',
+      stroke: isPartial ? 'rgba(168,128,44,0.6)' : 'none',
       strokeDasharray: isPartial ? '3 2' : 'none',
       rx: 2
     }, React.createElement('title', null, `${yr} Ingresos: ${dashFmtMoney(d.ingresos)}`)), React.createElement('rect', {
@@ -1317,25 +1317,25 @@ function BarChart({
       y: scaleY(d.ingresos) - 3,
       textAnchor: 'middle',
       fontSize: 8,
-      fill: '#D4A84A'
+      fill: '#9A7016'
     }, dashFmtMoney(d.ingresos)), React.createElement('text', {
       x: x2 + bw / 2,
       y: scaleY(d.bai) - 3,
       textAnchor: 'middle',
       fontSize: 8,
-      fill: '#1BC8D8'
+      fill: '#127E8C'
     }, dashFmtMoney(d.bai)), React.createElement('text', {
       x: cx,
       y: inner.h + 14,
       textAnchor: 'middle',
       fontSize: 10,
-      fill: 'rgba(255,255,255,0.6)'
+      fill: 'rgba(61,26,53,0.7)'
     }, yr), isPartial && React.createElement('text', {
       x: cx,
       y: inner.h + 24,
       textAnchor: 'middle',
       fontSize: 8,
-      fill: 'rgba(255,255,255,0.3)'
+      fill: 'rgba(61,26,53,0.4)'
     }, '*'));
   })));
 }
@@ -1381,14 +1381,14 @@ function LineChart({
       x2: inner.w,
       y1: y,
       y2: y,
-      stroke: 'rgba(255,255,255,0.06)',
+      stroke: 'rgba(61,26,53,0.08)',
       strokeWidth: 1
     }), React.createElement('text', {
       x: -6,
       y: y + 4,
       textAnchor: 'end',
       fontSize: 8,
-      fill: 'rgba(255,255,255,0.35)'
+      fill: 'rgba(61,26,53,0.55)'
     }, format(minV + range * f)));
   }), React.createElement('polyline', {
     points: pts,
@@ -1407,13 +1407,13 @@ function LineChart({
     y: toY(v) - 7,
     textAnchor: 'middle',
     fontSize: 8,
-    fill: color
+    fill: 'rgba(61,26,53,0.8)'
   }, format(v)), React.createElement('text', {
     x: toX(i),
     y: inner.h + 14,
     textAnchor: 'middle',
     fontSize: 9,
-    fill: 'rgba(255,255,255,0.5)'
+    fill: 'rgba(61,26,53,0.6)'
   }, years[i])))));
 }
 function StackedBarChart({
@@ -1488,7 +1488,7 @@ function StackedBarChart({
       y: inner.h + 14,
       textAnchor: 'middle',
       fontSize: 10,
-      fill: 'rgba(255,255,255,0.6)'
+      fill: 'rgba(61,26,53,0.7)'
     }, yr));
   }))), React.createElement('div', {
     className: 'dash-legend'
@@ -1554,14 +1554,14 @@ function ReservasNochesChart({
       y: inner.h - hN,
       width: bw,
       height: hN,
-      fill: 'rgba(27,200,216,0.45)',
+      fill: 'rgba(27,200,216,0.6)',
       rx: 2
     }, React.createElement('title', null, `${yr} Noches: ${d.noches}`)), React.createElement('text', {
       x: cx,
       y: inner.h + 14,
       textAnchor: 'middle',
       fontSize: 10,
-      fill: 'rgba(255,255,255,0.6)'
+      fill: 'rgba(61,26,53,0.7)'
     }, yr));
   })));
 }
@@ -1968,7 +1968,7 @@ const IntelligenciaTab = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-val",
     style: {
-      color: '#1BC8D8'
+      color: '#127E8C'
     }
   }, totalPV != null ? totalPV.toLocaleString('es-ES') : '–'), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-lbl"
@@ -1983,7 +1983,7 @@ const IntelligenciaTab = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-val",
     style: {
-      color: funnConv && parseInt(funnConv) < 5 ? '#E74C3C' : '#D4A84A'
+      color: funnConv && parseInt(funnConv) < 5 ? '#E74C3C' : '#9A7016'
     }
   }, funnConv ?? '–'), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-lbl"
@@ -1992,7 +1992,7 @@ const IntelligenciaTab = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-val",
     style: {
-      color: '#D4A84A'
+      color: '#9A7016'
     }
   }, stats26 ? dashFmtMoney(stats26.ingresos) : '–'), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-lbl"
@@ -2143,7 +2143,7 @@ const IntelligenciaTab = ({
   }, "Precio medio / noche"), /*#__PURE__*/React.createElement(LineChart, {
     years: years,
     getData: y => yearData[y].precio_noche || 0,
-    color: "#D4A84A",
+    color: "#B8862E",
     label: "Precio medio por noche",
     format: dashFmtMoney
   })), /*#__PURE__*/React.createElement("div", {
@@ -2156,7 +2156,7 @@ const IntelligenciaTab = ({
   }, "Rentabilidad %"), /*#__PURE__*/React.createElement(LineChart, {
     years: years,
     getData: y => yearData[y].rent_pct || 0,
-    color: "#1BC8D8",
+    color: "#127E8C",
     label: "Rentabilidad por a\xF1o",
     format: dashFmtPct
   }))), /*#__PURE__*/React.createElement("div", {

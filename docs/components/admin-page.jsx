@@ -1042,8 +1042,8 @@ function BarChart({ years, yearData }) {
         [0, 0.25, 0.5, 0.75, 1].map(f => {
           const y = inner.h * (1 - f);
           return React.createElement('g', { key: f },
-            React.createElement('line', { x1: 0, x2: inner.w, y1: y, y2: y, stroke: 'rgba(255,255,255,0.07)', strokeWidth: 1 }),
-            React.createElement('text', { x: -6, y: y + 4, textAnchor: 'end', fontSize: 9, fill: 'rgba(255,255,255,0.4)' },
+            React.createElement('line', { x1: 0, x2: inner.w, y1: y, y2: y, stroke: 'rgba(61,26,53,0.08)', strokeWidth: 1 }),
+            React.createElement('text', { x: -6, y: y + 4, textAnchor: 'end', fontSize: 9, fill: 'rgba(61,26,53,0.55)' },
               dashFmtMoney(maxVal * f))
           );
         }),
@@ -1058,8 +1058,8 @@ function BarChart({ years, yearData }) {
           return React.createElement('g', { key: yr },
             React.createElement('rect', {
               x: x1, y: scaleY(d.ingresos), width: bw, height: hI,
-              fill: 'rgba(212,168,74,0.55)',
-              stroke: isPartial ? 'rgba(212,168,74,0.4)' : 'none',
+              fill: 'rgba(212,168,74,0.85)',
+              stroke: isPartial ? 'rgba(168,128,44,0.6)' : 'none',
               strokeDasharray: isPartial ? '3 2' : 'none',
               rx: 2,
             },
@@ -1073,12 +1073,12 @@ function BarChart({ years, yearData }) {
             },
               React.createElement('title', null, `${yr} BAI: ${dashFmtMoney(d.bai)}`)
             ),
-            React.createElement('text', { x: x1 + bw / 2, y: scaleY(d.ingresos) - 3, textAnchor: 'middle', fontSize: 8, fill: '#D4A84A' },
+            React.createElement('text', { x: x1 + bw / 2, y: scaleY(d.ingresos) - 3, textAnchor: 'middle', fontSize: 8, fill: '#9A7016' },
               dashFmtMoney(d.ingresos)),
-            React.createElement('text', { x: x2 + bw / 2, y: scaleY(d.bai) - 3, textAnchor: 'middle', fontSize: 8, fill: '#1BC8D8' },
+            React.createElement('text', { x: x2 + bw / 2, y: scaleY(d.bai) - 3, textAnchor: 'middle', fontSize: 8, fill: '#127E8C' },
               dashFmtMoney(d.bai)),
-            React.createElement('text', { x: cx, y: inner.h + 14, textAnchor: 'middle', fontSize: 10, fill: 'rgba(255,255,255,0.6)' }, yr),
-            isPartial && React.createElement('text', { x: cx, y: inner.h + 24, textAnchor: 'middle', fontSize: 8, fill: 'rgba(255,255,255,0.3)' }, '*')
+            React.createElement('text', { x: cx, y: inner.h + 14, textAnchor: 'middle', fontSize: 10, fill: 'rgba(61,26,53,0.7)' }, yr),
+            isPartial && React.createElement('text', { x: cx, y: inner.h + 24, textAnchor: 'middle', fontSize: 8, fill: 'rgba(61,26,53,0.4)' }, '*')
           );
         })
       )
@@ -1104,8 +1104,8 @@ function LineChart({ years, getData, color, label, format }) {
         [0, 0.5, 1].map(f => {
           const y = inner.h * (1 - f);
           return React.createElement('g', { key: f },
-            React.createElement('line', { x1: 0, x2: inner.w, y1: y, y2: y, stroke: 'rgba(255,255,255,0.06)', strokeWidth: 1 }),
-            React.createElement('text', { x: -6, y: y + 4, textAnchor: 'end', fontSize: 8, fill: 'rgba(255,255,255,0.35)' },
+            React.createElement('line', { x1: 0, x2: inner.w, y1: y, y2: y, stroke: 'rgba(61,26,53,0.08)', strokeWidth: 1 }),
+            React.createElement('text', { x: -6, y: y + 4, textAnchor: 'end', fontSize: 8, fill: 'rgba(61,26,53,0.55)' },
               format(minV + range * f))
           );
         }),
@@ -1113,9 +1113,9 @@ function LineChart({ years, getData, color, label, format }) {
         vals.map((v, i) => React.createElement('g', { key: years[i] },
           React.createElement('circle', { cx: toX(i), cy: toY(v), r: 3, fill: color }),
           React.createElement('title', null, `${years[i]}: ${format(v)}`),
-          React.createElement('text', { x: toX(i), y: toY(v) - 7, textAnchor: 'middle', fontSize: 8, fill: color },
+          React.createElement('text', { x: toX(i), y: toY(v) - 7, textAnchor: 'middle', fontSize: 8, fill: 'rgba(61,26,53,0.8)' },
             format(v)),
-          React.createElement('text', { x: toX(i), y: inner.h + 14, textAnchor: 'middle', fontSize: 9, fill: 'rgba(255,255,255,0.5)' }, years[i])
+          React.createElement('text', { x: toX(i), y: inner.h + 14, textAnchor: 'middle', fontSize: 9, fill: 'rgba(61,26,53,0.6)' }, years[i])
         ))
       )
     )
@@ -1174,7 +1174,7 @@ function StackedBarChart({ years, yearData }) {
             });
             return React.createElement('g', { key: yr },
               ...bars,
-              React.createElement('text', { x: cx, y: inner.h + 14, textAnchor: 'middle', fontSize: 10, fill: 'rgba(255,255,255,0.6)' }, yr)
+              React.createElement('text', { x: cx, y: inner.h + 14, textAnchor: 'middle', fontSize: 10, fill: 'rgba(61,26,53,0.7)' }, yr)
             );
           })
         )
@@ -1219,11 +1219,11 @@ function ReservasNochesChart({ years, yearData }) {
             ),
             React.createElement('rect', {
               x: x2, y: inner.h - hN, width: bw, height: hN,
-              fill: 'rgba(27,200,216,0.45)', rx: 2,
+              fill: 'rgba(27,200,216,0.6)', rx: 2,
             },
               React.createElement('title', null, `${yr} Noches: ${d.noches}`)
             ),
-            React.createElement('text', { x: cx, y: inner.h + 14, textAnchor: 'middle', fontSize: 10, fill: 'rgba(255,255,255,0.6)' }, yr)
+            React.createElement('text', { x: cx, y: inner.h + 14, textAnchor: 'middle', fontSize: 10, fill: 'rgba(61,26,53,0.7)' }, yr)
           );
         })
       )
@@ -1512,7 +1512,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
         <>
           <div className="intel-kpis">
             <div className="intel-kpi">
-              <div className="intel-kpi-val" style={{ color: '#1BC8D8' }}>{totalPV != null ? totalPV.toLocaleString('es-ES') : '–'}</div>
+              <div className="intel-kpi-val" style={{ color: '#127E8C' }}>{totalPV != null ? totalPV.toLocaleString('es-ES') : '–'}</div>
               <div className="intel-kpi-lbl">Páginas vistas · {days}d</div>
             </div>
             <div className="intel-kpi">
@@ -1520,11 +1520,11 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
               <div className="intel-kpi-lbl">País principal</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val" style={{ color: funnConv && parseInt(funnConv) < 5 ? '#E74C3C' : '#D4A84A' }}>{funnConv ?? '–'}</div>
+              <div className="intel-kpi-val" style={{ color: funnConv && parseInt(funnConv) < 5 ? '#E74C3C' : '#9A7016' }}>{funnConv ?? '–'}</div>
               <div className="intel-kpi-lbl">Conversión búsqueda→reserva</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val" style={{ color: '#D4A84A' }}>{stats26 ? dashFmtMoney(stats26.ingresos) : '–'}</div>
+              <div className="intel-kpi-val" style={{ color: '#9A7016' }}>{stats26 ? dashFmtMoney(stats26.ingresos) : '–'}</div>
               <div className="intel-kpi-lbl">Ingresos 2026</div>
             </div>
             <div className="intel-kpi">
@@ -1636,11 +1636,11 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
                       <div className="dash-charts-row">
                         <div className="dash-chart-box" style={{ flex: 1 }}>
                           <h4 className="dash-chart-title">Precio medio / noche</h4>
-                          <LineChart years={years} getData={y => yearData[y].precio_noche || 0} color="#D4A84A" label="Precio medio por noche" format={dashFmtMoney} />
+                          <LineChart years={years} getData={y => yearData[y].precio_noche || 0} color="#B8862E" label="Precio medio por noche" format={dashFmtMoney} />
                         </div>
                         <div className="dash-chart-box" style={{ flex: 1 }}>
                           <h4 className="dash-chart-title">Rentabilidad %</h4>
-                          <LineChart years={years} getData={y => yearData[y].rent_pct || 0} color="#1BC8D8" label="Rentabilidad por año" format={dashFmtPct} />
+                          <LineChart years={years} getData={y => yearData[y].rent_pct || 0} color="#127E8C" label="Rentabilidad por año" format={dashFmtPct} />
                         </div>
                       </div>
                       <div className="dash-charts-row">
