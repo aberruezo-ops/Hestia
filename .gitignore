@@ -21,3 +21,8 @@ fresh_*.png
 node_modules/
 package-lock.json
 package.json
+
+# Vídeos grandes (> 25 MB) → subir a Cloudflare R2 con scripts/upload-r2.sh
+# Mantener en git solo los vídeos pequeños que ya están en el repo
+docs/assets/videos-r2/
+*.r2.mp4
