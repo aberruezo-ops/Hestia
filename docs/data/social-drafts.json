@@ -1,6 +1,18 @@
 {
   "drafts": [
     {
+      "id": "photo-vt-amanecer-2026-07-22",
+      "createdAt": "2026-07-22T00:00:00.000Z",
+      "status": "pending",
+      "source": "escaparate",
+      "format": "photo",
+      "apt": "vt",
+      "image": "assets/apt-vt-gallery-09.jpg",
+      "networks": ["ig", "fb"],
+      "caption": "Amanecer desde la terraza de Hestía Thalassa, bajo el toldo, con el café aún caliente.\n\nEl ático mira al Mediterráneo y al Salar de los Canos: cada mañana cambia de color.\n\nSi quieres despertarte así, mira las fechas libres o escríbenos.\n🔗 https://www.hestiayourhome.com/thalassa.html\n\n#VeraPlaya #Almeria #HestiaYourHome #HestiaThalassa",
+      "link": "https://www.hestiayourhome.com/thalassa.html"
+    },
+    {
       "id": "weekly-2026w30",
       "createdAt": "2026-07-20T09:50:43.862Z",
       "status": "pending",
