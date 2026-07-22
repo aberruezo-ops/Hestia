@@ -1,0 +1,29 @@
+.claude/skills/**/__pycache__/
+**/*.pyc
+
+# Debug screenshots from agent testing sessions
+*.png
+!docs/assets/favicon-32x32.png
+!docs/assets/favicon-16x16.png
+!docs/assets/apple-touch-icon.png
+!docs/assets/logo-*.png
+!docs/assets/pwa-icon-*.png
+!docs/assets/photo-*.jpg
+!docs/assets/*.jpg
+!docs/assets/*.mov
+debug_*.png
+mobile_*.png
+desktop_*.png
+screenshot_*.png
+fresh_*.png
+
+# Local copies of CDN assets are TRACKED (used as CDN fallback)
+# Do NOT add react.development.js, react-dom.development.js, babel.min.js here
+node_modules/
+package-lock.json
+package.json
+!remotion-video/package.json
+!remotion-video/package-lock.json
+
+# Datos privados de huéspedes — nunca commitear
+data-private/

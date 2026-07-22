@@ -1,0 +1,1014 @@
+// ================================================================
+// HESTÍA, Secciones de la home
+// ================================================================
+
+// --- HERO · galería rotatoria de vídeos de fondo ----------------
+// Cada visita a la home elige un vídeo al azar de esta lista. La
+// clase `mood-*` modula el "velo" (gradientes de .hero::before) para
+// que combine con la luz del clip. Para añadir uno nuevo basta con:
+//   1. Subir el .mp4 a docs/assets/
+//   2. Añadir aquí un objeto { src, poster, mood, alt }
+//      · mood ∈ 'violet' | 'teal' | 'warm' | 'night'
+//       : violet: velo morado (atmósfera nocturna, marina suave)
+//       : teal:   azul mediterráneo (día, agua clara)
+//       : warm:   bermellón cálido (atardecer, dorado)
+//       : night:  azul profundo (noche cerrada, estrellas)
+// Para crear un mood nuevo: añade ::before override en styles.css.
+// Los .mp4 viven en docs/assets/Videoshome/ y todos vienen procesados
+// con grading + sharpening y loop circular (xfade end→start) para que
+// el bucle sea imperceptible.
+// VIDEO_V se añade como query string al src para cache-bust cuando
+// re-grading o re-encode: bump cuando cambies los .mp4.
+const VIDEO_V = '2026-06-20';
+const HERO_VIDEOS = [
+  { src: 'assets/Videoshome/hero-playa-almeria.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'violet',
+    alt: 'Costa aérea · turquesa' },
+  { src: 'assets/Videoshome/hero-cabo-gata-mediodia.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'teal',
+    alt: 'Cabo de Gata · mediodía' },
+  { src: 'assets/Videoshome/hero-atardecer-aereo.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'warm',
+    alt: 'Atardecer aéreo sobre la playa' },
+  { src: 'assets/Videoshome/hero-cala-rocosa.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'night',
+    alt: 'Cala rocosa con agua cristalina · cenital' },
+  { src: 'assets/Videoshome/hero-playa-aerea-turquesa.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'teal',
+    alt: 'Playa aérea · arena dorada y agua turquesa' },
+  { src: 'assets/Videoshome/hero-atardecer-logo.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'warm',
+    alt: 'Atardecer cinematográfico con logo Hestía' },
+  { src: 'assets/Videoshome/hero-olas-acantilado.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'night',
+    alt: 'Olas rompiendo en acantilado rocoso' },
+  { src: 'assets/Videoshome/hero-cala-aerea.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'teal',
+    alt: 'Cala aérea · arena dorada y agua azul intenso' },
+  { src: 'assets/Videoshome/hero-piscina-verano.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'teal',
+    alt: 'Piscina en verano' },
+  { src: 'assets/Videoshome/hero-rompeolas.mp4',
+    poster: 'assets/hero-terrace-night.jpg',
+    mood: 'night',
+    alt: 'Olas rompiendo en el rompeolas · espuma y mar abierto' },
+  // Para añadir un vídeo: súbelo a docs/assets/Videoshome/ y añade
+  // una entrada con la misma forma. Para hacerlo circular, procesa
+  // con ffmpeg crossfade end→start (ver scripts/build-pdf.mjs para
+  // el comando exacto que usamos). Moods: violet | teal | warm | night.
+];
+
+// --- HERO cinematográfico ---
+const Hero = ({ lang, onScrollDown }) => {
+  const t = COPY[lang];
+  const bgVideoRef = React.useRef(null);
+
+  // Mini-buscador del hero: dos campos de fecha que llevan a /reservas.
+  // Por defecto entrada = mañana, salida = +1 semana; al cambiar la entrada,
+  // la salida salta a +1 semana.
+  const _heroAdd = (ds, n) => {
+    const d = new Date(ds + 'T12:00:00Z');
+    d.setUTCDate(d.getUTCDate() + n);
+    return d.toISOString().slice(0, 10);
+  };
+  const heroToday    = new Date().toISOString().slice(0, 10);
+  const heroTomorrow = _heroAdd(heroToday, 1);
+  const [hcIn,  setHcIn ] = React.useState(heroTomorrow);
+  const [hcOut, setHcOut] = React.useState(_heroAdd(heroTomorrow, 7));
+  const goReservas = (e) => {
+    e.preventDefault();
+    if (!hcIn || !hcOut || hcOut <= hcIn) return;
+    // Sin apartamento (cualquier Hestía) y 4 huéspedes por defecto: /reservas
+    // mostrará la disponibilidad de los 3 Hestías para esas fechas + opciones.
+    const p = new URLSearchParams({ checkin: hcIn, checkout: hcOut, guests: '4' });
+    window.location.href = 'reservas.html?' + p.toString();
+  };
+
+  // Playlist aleatoria: mezcla Fisher-Yates una vez por sesión (useMemo
+  // se ejecuta solo en el montaje, es decir, una vez por carga de página).
+  // El orden cambia en cada sesión sin necesidad de sessionStorage.
+  const playlist = React.useMemo(() => {
+    const a = [...HERO_VIDEOS];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }, []);
+  const [vidIdx, setVidIdx] = React.useState(0);
+  const pick = playlist[vidIdx];
+
+  // Arranca reproducción al montar y al cambiar de clip (key remonta el <video>)
+  React.useEffect(() => {
+    const el = bgVideoRef.current;
+    if (el) { el.muted = true; el.play().catch(() => {}); }
+  }, [vidIdx]);
+
+  // Reanuda el vídeo al volver a la pestaña/app. En iOS, volver de otra app no
+  // cuenta como gesto y play() puede rechazarse, dejando el vídeo congelado; en ese
+  // caso reanudamos al primer toque. También escuchamos pageshow (bfcache de Safari).
+  React.useEffect(() => {
+    let armed = false;
+    const evs = ['pointerdown', 'touchstart', 'click', 'keydown'];
+    const cleanup = () => evs.forEach(ev => window.removeEventListener(ev, onGesture, true));
+    const onGesture = () => { armed = false; cleanup(); resume(); };
+    const resume = () => {
+      const el = bgVideoRef.current;
+      if (!el) return;
+      el.muted = true;
+      const p = el.play();
+      if (p && p.catch) p.catch(() => {
+        if (armed) return;
+        armed = true;
+        evs.forEach(ev => window.addEventListener(ev, onGesture, { once: true, capture: true, passive: true }));
+      });
+    };
+    const onVisible = () => { if (!document.hidden) resume(); };
+    document.addEventListener('visibilitychange', onVisible);
+    window.addEventListener('pageshow', resume);
+    window.addEventListener('focus', resume);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('pageshow', resume);
+      window.removeEventListener('focus', resume);
+      cleanup();
+    };
+  }, []);
+
+  return (
+    <section
+      id="top"
+      className={`hero mood-${pick.mood}`}
+      data-screen-label="01 Hero"
+      data-hero-video={pick.src}
+    >
+      {/* Vídeo de fondo: playlist aleatoria, avanza al siguiente al terminar */}
+      <video
+        ref={bgVideoRef}
+        className="hero-bg-video"
+        autoPlay muted playsInline
+        preload="metadata"
+        poster={pick.poster}
+        aria-label={pick.alt}
+        key={pick.src}
+        onEnded={() => setVidIdx(i => (i + 1) % playlist.length)}
+      >
+        <source src={`${pick.src}?v=${VIDEO_V}`} type="video/mp4"/>
+      </video>
+      <div className="hero-content">
+        <div className="wordmark hero-wordmark">HESTÍA</div>
+        <div className="your-home hero-yourhome">your home!</div>
+
+        <h1 className="hero-title">
+          {t.hero_title_1}<br/>
+          <span className="it">{t.hero_title_2}</span>
+        </h1>
+        <div className="hero-sub">{t.hero_sub}</div>
+        <p className="hero-lastmin">
+          {lang === 'es'
+            ? <>Condiciones especiales del 8 al 20 de julio en Hestía Mar y del 21 de julio al 1 de agosto en Hestía Thalassa: {' '}
+                <a href="https://wa.me/34620316370?text=Hola%2C%20me%20interesan%20las%20condiciones%20especiales%20de%20%C3%BAltima%20hora" target="_blank" rel="noopener">escríbenos</a>
+                {' '}o <a href="tel:+34620316370">llama</a>.</>
+            : <>Special conditions from 8 to 20 July at Hestía Mar, and 21 July to 1 August at Hestía Thalassa: {' '}
+                <a href="https://wa.me/34620316370?text=Hi%2C%20I%27m%20interested%20in%20the%20last-minute%20special%20conditions" target="_blank" rel="noopener">message us</a>
+                {' '}or <a href="tel:+34620316370">call</a>.</>}
+        </p>
+        <form className="hero-availform" onSubmit={goReservas}>
+          <div className="hero-af-field">
+            <label htmlFor="hero-cin">{lang === 'es' ? 'Entrada' : 'Check-in'}</label>
+            <input id="hero-cin" type="date" value={hcIn} min={heroTomorrow}
+              onChange={e => { setHcIn(e.target.value); if (e.target.value) setHcOut(_heroAdd(e.target.value, 7)); }} />
+          </div>
+          <div className="hero-af-field">
+            <label htmlFor="hero-cout">{lang === 'es' ? 'Salida' : 'Check-out'}</label>
+            <input id="hero-cout" type="date" value={hcOut} min={_heroAdd(hcIn || heroTomorrow, 1)}
+              onChange={e => setHcOut(e.target.value)} />
+          </div>
+          <button type="submit" className="btn btn-primary hero-af-btn">
+            {lang === 'es' ? 'Comprobar disponibilidad' : 'Check availability'} <span className="arrow">→</span>
+          </button>
+        </form>
+        {/* "Descubre cada Hestía" + miniaturas de apartamento, juntos y justo
+            debajo del buscador de fechas: lo primero que se ve al entrar,
+            sin apenas hacer scroll. */}
+        <div className="hero-discover-group">
+          <div className="hero-ctas">
+            <a href="#apartamentos" className="btn btn-primary hero-cta-anim">
+              {t.hero_cta_1} <span className="arrow">→</span>
+            </a>
+          </div>
+          <nav className="hero-apts-quick" aria-label={lang === 'es' ? 'Ir directamente a un apartamento' : 'Jump to an apartment'}>
+            {APARTMENTS.map(a => (
+              <a key={a.id} href={`${a.slug}.html`} className={`haq-item ${a.id}`}>
+                <span className="haq-thumb">
+                  <picture>
+                    <source srcSet={a.img.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
+                    <img decoding="async" loading="lazy" src={a.img} alt="" width="72" height="72"/>
+                  </picture>
+                </span>
+                <span className="haq-label">{a.name.replace('Hestía ', '')}</span>
+                <span className="haq-rating"><HiIcon name="star-fill" size={10} className="haq-rating-star" /> {a.rating}</span>
+              </a>
+            ))}
+          </nav>
+        </div>
+        {/* La valoración de cada Hestía ya va en su miniatura de arriba
+            (nombre + ★): aquí solo la línea agregada, sin repetir nombres,
+            para no duplicar información y ahorrar espacio en móvil. */}
+        <p className="hero-proof-platform-solo">
+          {lang === 'es' ? 'Media en Booking · Airbnb · web, +600 familias desde 2016' : 'Average across Booking · Airbnb · site, 600+ families since 2016'}
+        </p>
+        {(() => {
+          const prices = typeof HESTIA_PRICES !== 'undefined' ? HESTIA_PRICES : null;
+          if (!prices) return null;
+          const mins = ['vm','vt','vs'].map(id => {
+            const tbl = prices[id]; if (!tbl) return null;
+            return Math.min(...tbl.base.slice(1));
+          }).filter(Boolean);
+          if (!mins.length) return null;
+          const from = Math.min(...mins);
+          return (
+            <div className="hero-price-line">
+              {lang === 'es'
+                ? <><span className="hpl-from">desde </span><strong className="hpl-price">{from}€</strong><span className="hpl-per">/noche · precio directo garantizado</span></>
+                : <><span className="hpl-from">from </span><strong className="hpl-price">{from}€</strong><span className="hpl-per">/night · guaranteed direct price</span></>}
+            </div>
+          );
+        })()}
+      </div>
+      <div className="hero-meta">
+        <span className="hero-meta-coords">37°11′N · 1°50′W</span>
+        <div className="hero-meta-facts">
+          <span>Alt. 5 m</span>
+          <span className="hm-dot" aria-hidden="true">·</span>
+          <span>{lang === 'es' ? '320+ días de sol' : '320+ sunny days'}</span>
+          <span className="hm-dot" aria-hidden="true">·</span>
+          <span>Mar Mediterráneo</span>
+        </div>
+        <span className="hide-mobile hero-meta-province">Almería · Andalucía</span>
+      </div>
+    </section>
+  );
+};
+
+// --- BRIDGE (transición día/noche) ---
+const Bridge = ({ lang }) => {
+  const t = COPY[lang];
+  const sectionRef = React.useRef(null);
+  const [burst, setBurst] = React.useState(false);
+
+  React.useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setTimeout(() => setBurst(true), 420); obs.disconnect(); } },
+      { threshold: 0.38 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <section className="bridge" data-screen-label="02 Amanecer" ref={sectionRef}>
+      <div className={`celestial${burst ? ' sun-burst' : ''}`}/>
+      <div className="bridge-inner">
+        <div className="eyebrow bridge-time">( 07:14 )</div>
+        <h2 className="reveal" style={{marginTop: 20}}>{t.bridge_title}</h2>
+        <p className="reveal delay-1">{t.bridge_sub}</p>
+        <div className={`bridge-palette${burst ? ' burst-active' : ''}`}>
+          {BRIDGE_PALETTE.map((c, i) => (
+            <div key={i} className="bridge-chip" style={{ '--chip-color': c.hex, '--chip-idx': i }}>
+              <div className="chip-swatch"/>
+              <div className="chip-label">
+                {(lang === 'es' ? c.es : c.en).split(' · ').map((part, j) => (
+                  <span key={j}>{part}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+
+// --- APARTAMENTOS (scroll horizontal) ---
+const APARTMENTS = [
+  { id: 'vm', num: '01', name: 'Hestía Mar',      slug: 'mar',      license: 'VFT/AL/01580', concept: 'apt_01_concept',
+    img: 'assets/apt-vs.jpg', imgW: 1024, imgH: 768, rating: '9.8',
+    meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición'] },
+  { id: 'vt', num: '02', name: 'Hestía Thalassa', slug: 'thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
+    img: 'assets/apt-vt-4.jpg', imgW: 1440, imgH: 1103, rating: '10',
+    meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA'] },
+  { id: 'vs', num: '03', name: 'Hestía Salinas',  slug: 'salinas',  license: 'VFT/AL/07056', concept: 'apt_03_concept',
+    img: 'assets/apt-vm.jpg', imgW: 1255, imgH: 1146, rating: '9.9',
+    meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas'] },
+];
+
+const _aptNextFree = (data, aptId) => {
+  if (!data) return null;
+  const today = new Date().toISOString().slice(0, 10);
+  const manualBlocks = (window.PRICES_V2?.manual_blocks) || {};
+  const avBlocked = data[aptId]?.blocked || [];
+  const all = [...avBlocked, ...(manualBlocks[aptId] || [])].sort((a, b) => a.start.localeCompare(b.start));
+  const merged = [];
+  for (const r of all) {
+    if (merged.length && r.start <= merged[merged.length - 1].end) {
+      if (r.end > merged[merged.length - 1].end) merged[merged.length - 1] = { ...merged[merged.length - 1], end: r.end };
+    } else merged.push({ ...r });
+  }
+  let cursor = today;
+  for (const block of merged.filter(b => b.end > today)) {
+    if (block.start > cursor) {
+      const nights = Math.round((new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
+      if (nights >= 2) return { checkin: cursor, checkout: block.start, nights };
+    }
+    if (block.end > cursor) cursor = block.end;
+  }
+  return { checkin: cursor, checkout: null, nights: null };
+};
+
+const Apartments = ({ lang }) => {
+  const t = COPY[lang];
+  const trackRef = React.useRef(null);
+  const [activeIdx,  setActiveIdx ] = React.useState(0);
+  const [hasScrolled, setHasScrolled] = React.useState(false);
+  const [aptAvail, setAptAvail] = React.useState({});
+
+  React.useEffect(() => {
+    fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data) return;
+        const result = {};
+        for (const apt of APARTMENTS) result[apt.id] = _aptNextFree(data, apt.id);
+        setAptAvail(result);
+      })
+      .catch(() => {});
+  }, []);
+
+  // Precios "desde / hasta" mostrados son el base de prices.json
+  // (lo que el admin ve en /p-edit.html). Sin aplicar directDiscount –
+  // ese descuento es para el ahorro vs plataformas dentro del desglose.
+  const aptMaxPrice = (aptId) => {
+    const tbl = HESTIA_PRICES[aptId];
+    if (!tbl) return null;
+    const maxBase = Math.max(...tbl.base.slice(1));
+    const maxPeak = tbl.peaks && tbl.peaks.length ? Math.max(...tbl.peaks.map(p => p.pn)) : 0;
+    return Math.max(maxBase, maxPeak);
+  };
+
+  const aptMinPrice = (aptId) => {
+    const tbl = HESTIA_PRICES[aptId];
+    if (!tbl) return null;
+    return Math.min(...tbl.base.slice(1));
+  };
+
+  const handleScroll = () => {
+    const track = trackRef.current;
+    if (!track) return;
+    setHasScrolled(true);
+    const children = track.querySelectorAll('.apt-card');
+    const trackRect = track.getBoundingClientRect();
+    const center = trackRect.left + trackRect.width / 2;
+    let closestIdx = 0;
+    let closestDist = Infinity;
+    children.forEach((child, i) => {
+      const r = child.getBoundingClientRect();
+      const c = r.left + r.width / 2;
+      const d = Math.abs(c - center);
+      if (d < closestDist) { closestDist = d; closestIdx = i; }
+    });
+    setActiveIdx(closestIdx);
+  };
+
+  const goTo = (i) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const child = track.querySelectorAll('.apt-card')[i];
+    if (child) {
+      track.scrollTo({ left: child.offsetLeft - (track.clientWidth - child.clientWidth) / 2, behavior: 'smooth' });
+    }
+  };
+
+  // Tilt 3D al pasar el cursor sobre cada apt-card. Solo en desktop con
+  // hover real (excluye táctil). Máx ±6° en X/Y. Se desactiva si el
+  // usuario prefiere reduced-motion. CSS lee --tilt-rx / --tilt-ry.
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const m = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const rm = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!m.matches || rm.matches) return;
+    const track = trackRef.current;
+    if (!track) return;
+    const cards = Array.from(track.querySelectorAll('.apt-card'));
+    const cleanup = [];
+    cards.forEach(card => {
+      let raf = 0;
+      const onMove = (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+        const rx = (0.5 - y) * 6;
+        const ry = (x - 0.5) * 6;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          card.style.setProperty('--tilt-rx', `${rx.toFixed(2)}deg`);
+          card.style.setProperty('--tilt-ry', `${ry.toFixed(2)}deg`);
+        });
+      };
+      const onLeave = () => {
+        cancelAnimationFrame(raf);
+        card.style.setProperty('--tilt-rx', '0deg');
+        card.style.setProperty('--tilt-ry', '0deg');
+      };
+      card.addEventListener('mousemove', onMove);
+      card.addEventListener('mouseleave', onLeave);
+      cleanup.push(() => {
+        card.removeEventListener('mousemove', onMove);
+        card.removeEventListener('mouseleave', onLeave);
+      });
+    });
+    return () => cleanup.forEach(fn => fn());
+  }, []);
+
+  return (
+    <>
+      <section className="apartments-intro" id="apartamentos" data-screen-label="03 Hestías">
+        <div className="eyebrow">{t.apts_eyebrow}</div>
+        <h2>{t.apts_title}</h2>
+        <p>{t.apts_sub}</p>
+        <div className="apts-pets">
+          <HiIcon name="paw" size={16} style={{ verticalAlign: '-3px', marginRight: 6 }} />
+          {t.apts_pets}
+        </div>
+      </section>
+      <div className={`apartments-scroll${hasScrolled ? ' scrolled' : ''}`}>
+        <div className="apartments-track" ref={trackRef} onScroll={handleScroll}>
+          {APARTMENTS.map((a, i) => {
+            const minPrice = aptMinPrice(a.id);
+            // "Reservar" lleva a /reservas con el apartamento, 2 huéspedes y el
+            // primer hueco libre preseleccionado (todo modificable allí). Para
+            // huecos abiertos o largos, una semana por defecto desde la entrada.
+            const av = aptAvail[a.id];
+            let bookUrl = `reservas.html?apt=${a.id}&guests=2`;
+            if (av && av.checkin) {
+              const addD = (ds, n) => { const d = new Date(ds + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+              const co = (av.checkout && av.nights && av.nights <= 14) ? av.checkout : addD(av.checkin, 7);
+              bookUrl = `reservas.html?apt=${a.id}&checkin=${av.checkin}&checkout=${co}&guests=2`;
+            }
+            return (
+              <div key={a.id} id={`apt-${a.id}`} className={`apt-card ${a.id}`}>
+                {/* Área de clic de toda la tarjeta: enlace invisible que cubre
+                    toda la superficie. Va oculto a lectores de pantalla y
+                    fuera del tabulador (aria-hidden + tabIndex -1): el enlace
+                    visible "Ver Hestía →" es el que se anuncia y se enfoca.
+                    El botón "Reservar" y ese enlace quedan por encima
+                    (apt-content, z-index superior) y siguen recibiendo el
+                    clic directo sin activar esta navegación. */}
+                <a
+                  className="apt-card-hit"
+                  href={`${a.slug}.html`}
+                  aria-hidden="true"
+                  tabIndex={-1}
+                />
+                <picture>
+                  <source srcSet={a.img.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
+                  <img decoding="async" src={a.img} alt={a.name} className="apt-photo" loading="eager" width={a.imgW} height={a.imgH}/>
+                </picture>
+                <WatermarkBadge size={32} pos={{ bottom: 72, right: 16 }}/>
+                <div className="apt-wash"/>
+                <div className="pattern"/>
+                <div className="apt-corner"><span className="bar"/>{a.license}</div>
+                <div className="apt-content">
+                  <div className="apt-num">{a.num}</div>
+                  <div className="apt-name">
+                    <span className="small">HESTÍA</span><br/>{a.name.replace('Hestía ', '')}
+                  </div>
+                  <div className="apt-tag">« {t[a.concept]} »</div>
+                  <div className="apt-meta">
+                    {a.meta.map((m, j) => (
+                      <React.Fragment key={j}>
+                        {j > 0 && <span className="dot"/>}
+                        <span>{m}</span>
+                      </React.Fragment>
+                    ))}
+                  </div>
+                  {minPrice && (
+                    <div className="apt-price-badge">
+                      <span className="apb-label">{lang === 'es' ? 'desde' : 'from'}</span>
+                      <span className="apb-price">{minPrice.toLocaleString('es-ES')}€</span>
+                      <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
+                      <span className="apb-match">
+                        {lang === 'es'
+                          ? '✓ Hasta un 10% aprox. más barato que en Booking o Airbnb*'
+                          : '✓ Up to ~10% cheaper than Booking or Airbnb*'}
+                      </span>
+                    </div>
+                  )}
+                  {(() => {
+                    const av = aptAvail[a.id];
+                    if (!av) return null;
+                    const today = new Date().toISOString().slice(0, 10);
+                    const isNow = av.checkin <= today;
+                    const months = lang === 'es'
+                      ? ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']
+                      : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                    const fmt = d => { const [,mm,dd] = d.split('-'); return `${parseInt(dd)} ${months[parseInt(mm)-1]}`; };
+                    return (
+                      <div className="apt-avail-hint">
+                        <span className="aah-dot"/>
+                        {isNow
+                          ? (lang === 'es' ? 'Disponible ahora' : 'Available now')
+                          : `${lang === 'es' ? 'Libre' : 'Free'} ${fmt(av.checkin)}`}
+                        {av.checkout && av.nights
+                          ? <span className="aah-nights"> · {av.nights} {lang === 'es' ? 'noches' : 'nights'}</span>
+                          : <span className="aah-nights"> {lang === 'es' ? 'en adelante' : 'onwards'}</span>}
+                      </div>
+                    );
+                  })()}
+                  <div className="apt-ctas">
+                    <a href={`${a.slug}.html`} className="apt-link-cta">{t.apt_cta}</a>
+                    <a href={bookUrl} className="apt-cta">
+                      {lang === 'es' ? 'Reservar →' : 'Book →'}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div className="apt-scroll-progress">
+          {APARTMENTS.map((a, i) => (
+            <button
+              key={i}
+              className={`seg ${i === activeIdx ? 'active' : ''}`}
+              onClick={() => goTo(i)}
+              aria-label={a.name}
+            >
+              <span className="seg-label">{a.name.replace('Hestía ', '')}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+};
+
+// --- COMPARADOR ---
+const Compare = ({ lang }) => {
+  const rows = lang === 'es' ? [
+    { label: 'Concepto',      vm: 'El mar desde los olivos', vt: 'Ático · mar y Salar de los Canos', vs: 'Amanecer sobre las salinas' },
+    { label: 'Carácter',      vm: 'El más cercano a la playa · un agradable paseo', vt: 'El más alto · dominas toda la vista', vs: 'El más grande · desconexión · base para explorar la zona' },
+    { label: 'Plazas',        vm: '6 + bebé · 2 hab.', vt: '6 + bebé · 2 hab.', vs: '6 + bebé · 2 hab.' },
+    { label: 'Terraza',       vm: 'Esquina 20m² · mar', vt: 'Panorámica · mar + salar', vs: 'Dos terrazas' },
+    { label: 'Piscina',       vm: 'Comunitaria', vt: '2 ext. + jacuzzi', vs: 'Comunitaria + pistas de pádel' },
+    { label: 'Extra ⭑',       vm: 'Jacuzzi comunitario', vt: 'Minigim · piscina climatizada + minispa (otoño-primavera)', vs: 'Gimnasio · sauna · Parque Natural Salinas' },
+    { label: 'Playa',         vm: '300 m', vt: '1,5 km', vs: '900 m' },
+    { label: 'Mascotas',      vm: 'Sí · petición + suplem.', vt: 'Sí · petición + suplem.', vs: 'Sí · petición + suplem.' },
+    { label: 'Ideal para',    vm: 'Practicidad · todo a mano', vt: 'Las mejores vistas', vs: 'Paz · jardines · naturaleza' },
+    { label: 'Superguía',     vm: '✓ Incluida', vt: '✓ Incluida', vs: '✓ Incluida' },
+    { label: 'Trato',         vm: '✓ Personalizado', vt: '✓ Personalizado', vs: '✓ Personalizado' },
+    { label: 'Valoración',    vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
+  ] : [
+    { label: 'Concept',       vm: 'Sea through the olive grove', vt: 'Penthouse · sea & Salar de los Canos', vs: 'Sunrise over the salt flats' },
+    { label: 'Character',     vm: 'Closest to the beach · a short, pleasant walk', vt: 'The highest · you command the whole view', vs: 'The largest · disconnection · a base to explore the area' },
+    { label: 'Guests',        vm: '6 + baby · 2 bed.', vt: '6 + baby · 2 bed.', vs: '6 + baby · 2 bed.' },
+    { label: 'Terrace',       vm: 'Corner 20m² · sea', vt: 'Panoramic · sea + salt flats', vs: 'Two terraces' },
+    { label: 'Pool',          vm: 'Shared', vt: '2 outdoor + jacuzzi', vs: 'Shared + padel courts' },
+    { label: 'Extra ⭑',       vm: 'Shared jacuzzi', vt: 'Mini-gym · heated pool + mini-spa (autumn–spring)', vs: 'Gym · sauna · salt-flat nature park' },
+    { label: 'Beach',         vm: '300 m', vt: '1.5 km', vs: '900 m' },
+    { label: 'Pets',          vm: 'Yes · request + suppl.', vt: 'Yes · request + suppl.', vs: 'Yes · request + suppl.' },
+    { label: 'Ideal for',     vm: 'Practicality · everything close', vt: 'Best views in the complex', vs: 'Peace · gardens · nature' },
+    { label: 'Guide',         vm: '✓ Included', vt: '✓ Included', vs: '✓ Included' },
+    { label: 'Care',          vm: '✓ Personal service', vt: '✓ Personal service', vs: '✓ Personal service' },
+    { label: 'Rating',        vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
+  ];
+  const t = COPY[lang];
+
+  return (
+    <section className="compare section-cream" data-screen-label="04 Comparador">
+      <div className="container">
+        <div className="eyebrow">{t.compare_eyebrow}</div>
+        <h2 style={{marginTop: 14}}>{t.compare_title}</h2>
+        <div className="compare-grid">
+          <div className="label"> </div>
+          <div className="head vm">
+            <span className="apt-tag">01 · Hestía</span>
+            <span>Mar</span>
+            <span className="apt-concept">« {t.apt_01_concept} »</span>
+          </div>
+          <div className="head vt">
+            <span className="apt-tag">02 · Hestía</span>
+            <span>Thalassa</span>
+            <span className="apt-concept">« {t.apt_02_concept} »</span>
+          </div>
+          <div className="head vs">
+            <span className="apt-tag">03 · Hestía</span>
+            <span>Salinas</span>
+            <span className="apt-concept">« {t.apt_03_concept} »</span>
+          </div>
+          {rows.map((r, i) => (
+            <React.Fragment key={i}>
+              <div className="label">{r.label}</div>
+              <div className={`cell ${r.rate ? 'rate' : ''}`}>{r.vm}</div>
+              <div className={`cell ${r.rate ? 'rate' : ''}`}>{r.vt}</div>
+              <div className={`cell ${r.rate ? 'rate' : ''}`}>{r.vs}</div>
+            </React.Fragment>
+          ))}
+        </div>
+
+        {/* Mobile: swipeable cards (one per apartment) */}
+        <div className="compare-cards-mobile">
+          {[
+            { key: 'vm', num: '01', name: 'Mar',      aptKey: 'apt_01_concept' },
+            { key: 'vt', num: '02', name: 'Thalassa', aptKey: 'apt_02_concept' },
+            { key: 'vs', num: '03', name: 'Salinas',  aptKey: 'apt_03_concept' },
+          ].map(a => (
+            <div key={a.key} className={`cc-card cc-${a.key}`}>
+              <div className="cc-card-head">
+                <span className="apt-tag">{a.num} · Hestía</span>
+                <span className="cc-card-name">{a.name}</span>
+                <span className="apt-concept">« {t[a.aptKey]} »</span>
+              </div>
+              {rows.map((row, i) => (
+                <div key={i} className="cc-row">
+                  <span className="cc-lbl">{row.label}</span>
+                  <span className={`cc-val${row.rate ? ' rate' : ''}`}>{row[a.key]}</span>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// ================================================================
+// LAST MINUTE STRIP, huecos disponibles en los próximos 45 días
+// ================================================================
+const LastMinuteStrip = ({ lang, embedded = false }) => {
+  const [slots, setSlots] = React.useState([]);
+
+  const _loadSlots = React.useCallback(() => {
+    fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data) return;
+        const todayStr = new Date().toISOString().slice(0, 10);
+        const horizon = new Date();
+        horizon.setDate(horizon.getDate() + 90);
+        const horizonStr = horizon.toISOString().slice(0, 10);
+
+        const manualBlocks = (window.PRICES_V2 && window.PRICES_V2.manual_blocks) || {};
+        const mergeRanges = (a, b) => {
+          const all = [...a, ...b].sort((x, y) => x.start.localeCompare(y.start));
+          const m = [];
+          for (const r of all) {
+            if (m.length && r.start <= m[m.length-1].end) {
+              if (r.end > m[m.length-1].end) m[m.length-1] = { ...m[m.length-1], end: r.end };
+            } else { m.push({ ...r }); }
+          }
+          return m;
+        };
+        // Devuelve true si el rango [checkin, checkout) se solapa con temporada crítica.
+        const overlapsCritica = (checkin, checkout) => {
+          const v2 = window.PRICES_V2;
+          if (!v2 || !v2.calendar) return false;
+          const years = [...new Set([checkin.slice(0, 4), checkout.slice(0, 4)])];
+          for (const yr of years) {
+            const ranges = v2.calendar[yr]?.seasons?.critica || [];
+            for (const [s, e] of ranges) {
+              if (checkin < e && checkout > s) return true;
+            }
+          }
+          return false;
+        };
+        const found = [];
+        for (const apt of APARTMENTS) {
+          const avBlocked = data[apt.id]?.blocked || [];
+          const blocked = mergeRanges(avBlocked, manualBlocks[apt.id] || []);
+          const sorted = blocked
+            .filter(b => b.end > todayStr)
+            .sort((a, b) => a.start.localeCompare(b.start));
+
+          let cursor = todayStr;
+          for (const block of sorted) {
+            if (cursor >= horizonStr) break;
+            if (block.start > cursor) {
+              const nights = Math.round(
+                (new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000
+              );
+              const critica = overlapsCritica(cursor, block.start);
+              const ok = critica ? (nights >= 2 && nights < 6) : (nights >= 2 && nights <= 28);
+              if (ok) found.push({ apt, checkin: cursor, checkout: block.start, nights });
+            }
+            if (block.end > cursor) cursor = block.end;
+          }
+          if (cursor < horizonStr) {
+            const nights = Math.round(
+              (new Date(horizonStr + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000
+            );
+            const critica = overlapsCritica(cursor, horizonStr);
+            const ok = critica ? (nights >= 2 && nights < 6) : (nights >= 2 && nights <= 28);
+            if (ok) found.push({ apt, checkin: cursor, checkout: horizonStr, nights });
+          }
+        }
+        found.sort((a, b) => a.checkin.localeCompare(b.checkin));
+        const seen = {};
+        const filtered = [];
+        for (const s of found) {
+          const id = s.apt.id;
+          if ((seen[id] || 0) < 4) { filtered.push(s); seen[id] = (seen[id] || 0) + 1; }
+          if (filtered.length >= 9) break;
+        }
+        setSlots(filtered);
+      })
+      .catch(() => {});
+  }, []);
+
+  React.useEffect(() => {
+    _loadSlots();
+    const iv = setInterval(_loadSlots, 4 * 60 * 60 * 1000);
+    return () => clearInterval(iv);
+  }, [_loadSlots]);
+
+  // Marquee con auto-scroll por JS (rAF) que ADEMÁS se puede arrastrar con dedo
+  // (móvil/iPad) o ratón (PC) en ambos sentidos. El contenido va duplicado, así
+  // que basta con envolver el offset en [-setW, 0] para un bucle continuo.
+  const wrapRef = React.useRef(null);
+  const trackRef = React.useRef(null);
+  React.useEffect(() => {
+    const wrap = wrapRef.current, track = trackRef.current;
+    if (!wrap || !track) return;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let setW = track.scrollWidth / 2;
+    const durSec = Math.max(10, slots.length * 5);
+    const speed = setW > 0 ? setW / (durSec * 1000) : 0; // px por ms (igual que la animación CSS previa)
+    let offset = 0, raf = 0, last = performance.now();
+    let dragging = false, hovering = false, lastX = 0, moved = 0, captured = false, pid = null;
+    const DRAG_THRESHOLD = 8;
+    const wrapOffset = () => { if (setW <= 0) return; while (offset <= -setW) offset += setW; while (offset > 0) offset -= setW; };
+    const apply = () => { track.style.transform = `translateX(${offset}px)`; };
+    const frame = (now) => {
+      const dt = Math.min(now - last, 50); last = now;
+      if (!dragging && !hovering && !reduce) { offset -= speed * dt; wrapOffset(); apply(); }
+      raf = requestAnimationFrame(frame);
+    };
+    // Solo capturamos el puntero cuando hay arrastre real (moved > umbral). Si se
+    // captura ya en pointerdown, el navegador no dispara el click en los <a> y las
+    // tarjetas dejan de abrir su enlace (reservas / estancias largas).
+    const onDown = (e) => { dragging = true; moved = 0; captured = false; pid = e.pointerId; lastX = e.clientX; };
+    const onMove = (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - lastX; lastX = e.clientX; moved += Math.abs(dx);
+      offset += dx; wrapOffset(); apply();
+      if (!captured && moved > DRAG_THRESHOLD) {
+        captured = true; wrap.classList.add('lm-dragging');
+        try { wrap.setPointerCapture(pid); } catch (_) {}
+      }
+    };
+    const onUp = () => {
+      if (!dragging) return;
+      dragging = false;
+      if (captured) { wrap.classList.remove('lm-dragging'); try { wrap.releasePointerCapture(pid); } catch (_) {} }
+      captured = false;
+    };
+    const onClick = (e) => { if (moved > DRAG_THRESHOLD) { e.preventDefault(); e.stopPropagation(); } };
+    const onEnter = (e) => { if (e.pointerType === 'mouse') hovering = true; };
+    const onLeave = (e) => { if (e.pointerType === 'mouse') hovering = false; };
+    const onResize = () => { setW = track.scrollWidth / 2; };
+    setW = track.scrollWidth / 2; apply();
+    raf = requestAnimationFrame(frame);
+    wrap.addEventListener('pointerdown', onDown);
+    wrap.addEventListener('pointermove', onMove);
+    wrap.addEventListener('pointerup', onUp);
+    wrap.addEventListener('pointercancel', onUp);
+    wrap.addEventListener('pointerenter', onEnter);
+    wrap.addEventListener('pointerleave', onLeave);
+    wrap.addEventListener('click', onClick, true);
+    window.addEventListener('resize', onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      wrap.removeEventListener('pointerdown', onDown);
+      wrap.removeEventListener('pointermove', onMove);
+      wrap.removeEventListener('pointerup', onUp);
+      wrap.removeEventListener('pointercancel', onUp);
+      wrap.removeEventListener('pointerenter', onEnter);
+      wrap.removeEventListener('pointerleave', onLeave);
+      wrap.removeEventListener('click', onClick, true);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [slots]);
+
+  if (!slots.length) return null;
+
+  const fmtDate = (ds) => {
+    if (!ds) return '';
+    return new Intl.DateTimeFormat(lang === 'en' ? 'en-US' : 'es-ES', {
+      day: '2-digit', month: '2-digit', year: '2-digit'
+    }).format(new Date(ds + 'T12:00:00Z'));
+  };
+
+  const APT_COLOR = { vm: '#6B7A3A', vt: '#B86A3C', vs: '#D4A84A' };
+
+  const getStayPrice = (aptId, checkin, checkout) => {
+    try {
+      // Para huecos largos, calculamos precio sobre los primeros 7 días para no mostrar
+      // el total de toda la temporada (ej. 41 noches de verano = precio disparatado).
+      const gapNights = Math.round(
+        (new Date(checkout + 'T12:00:00Z') - new Date(checkin + 'T12:00:00Z')) / 86400000
+      );
+      const sampleNights = Math.min(gapNights, 7);
+      const sampleDate = new Date(checkin + 'T12:00:00Z');
+      sampleDate.setUTCDate(sampleDate.getUTCDate() + sampleNights);
+      const sampleCheckout = sampleDate.toISOString().slice(0, 10);
+      const r = _calcStay(checkin, sampleCheckout, aptId, false, 2);
+      if (!r || !r.directTotal || !r.nights) return null;
+      return { total: Math.round(r.directTotal), perNight: Math.round(r.directTotal / r.nights), gapNights };
+    } catch (_) { return null; }
+  };
+
+  const renderCard = (slot, key) => {
+    const price = getStayPrice(slot.apt.id, slot.checkin, slot.checkout);
+    const color = APT_COLOR[slot.apt.id];
+    const url = `reservas.html?apt=${slot.apt.id}&checkin=${slot.checkin}&checkout=${slot.checkout}`;
+    const aptShort = slot.apt.name.replace('Hestía ', '').toUpperCase();
+    return (
+      <a key={key} href={url} className="lm-card" style={{ '--lm-color': color }}>
+        <span className="lm-card-apt">{aptShort}</span>
+        <span className="lm-card-dates">
+          <span className="lm-card-d1">{fmtDate(slot.checkin)}</span>
+          <span className="lm-card-sep">→</span>
+          <span className="lm-card-d2">{fmtDate(slot.checkout)}</span>
+        </span>
+        <span className="lm-card-meta">
+          {slot.nights <= 21 ? slot.nights : `${slot.nights}+`} {lang === 'es' ? 'noches' : 'nights'}
+          {price && <span className="lm-card-ppn"> · desde {price.perNight}€/n</span>}
+        </span>
+        {price && slot.nights <= 14 && <span className="lm-card-total">~{price.total.toLocaleString('es-ES')}€</span>}
+      </a>
+    );
+  };
+
+  const renderLongStayCard = (key) => {
+    const ls = window.PRICES_V2?.longStayConfig;
+    const minRate = ls?.monthlyRates ? Math.min(...Object.values(ls.monthlyRates)) : 1490;
+    return (
+      <a key={key} href="estancias-largas.html" className="lm-card lm-card--longstay">
+        <span className="lm-card-apt lm-card-apt--longstay">
+          {lang === 'es' ? 'ESTANCIA LARGA' : 'LONG STAY'}
+        </span>
+        <span className="lm-card-meta">
+          {lang === 'es' ? '29+ noches · descuento especial' : '29+ nights · special discount'}
+          <span className="lm-card-ppn"> · desde {minRate.toLocaleString('es-ES')}€/mes</span>
+        </span>
+        <span className="lm-card-total lm-longstay-cta">
+          {lang === 'es' ? 'Ver condiciones →' : 'See conditions →'}
+        </span>
+      </a>
+    );
+  };
+
+  return (
+    <section className={`lm-strip${embedded ? ' lm-strip--embedded' : ''}`} aria-label={lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'}>
+      <div className="lm-inner">
+        {!embedded && (
+          <span className="lm-eyebrow eyebrow">
+            {lang === 'es' ? 'Huecos disponibles ahora:' : 'Available now:'}
+          </span>
+        )}
+        <div className="lm-marquee-wrap" ref={wrapRef}>
+          <div className="lm-marquee-track" ref={trackRef}>
+            {slots.map((slot, i) => renderCard(slot, i))}
+            {renderLongStayCard('ls1')}
+            {slots.map((slot, i) => renderCard(slot, `d${i}`))}
+            {renderLongStayCard('ls2')}
+          </div>
+        </div>
+        {!embedded && (
+          <a href="reservas.html" className="lm-cta">
+            {lang === 'es' ? 'Ver disponibilidad completa →' : 'See full availability →'}
+          </a>
+        )}
+      </div>
+    </section>
+  );
+};
+
+// ================================================================
+// HOME PRICE STRIP, 3 precios base visibles antes del buscador
+// ================================================================
+const HomePriceStrip = ({ lang }) => {
+  const APT_META = [
+    { id: 'vm', name: 'Mar',      slug: 'mar',      accent: '#6B7A3A' },
+    { id: 'vt', name: 'Thalassa', slug: 'thalassa', accent: '#B86A3C' },
+    { id: 'vs', name: 'Salinas',  slug: 'salinas',  accent: '#D4A84A' },
+  ];
+
+  const basePrice = (id) => {
+    const v2 = window.PRICES_V2;
+    if (v2 && v2.apts && v2.apts[id] && v2.apts[id].base) return v2.apts[id].base;
+    return { vm: 88, vt: 85, vs: 83 }[id];
+  };
+
+  return (
+    <section className="hps-strip" aria-label={lang === 'es' ? 'Precios por apartamento' : 'Prices per apartment'}>
+      <div className="hps-inner">
+        <p className="hps-label eyebrow">
+          {lang === 'es' ? 'Precio directo · sin intermediarios' : 'Direct price · no middlemen'}
+        </p>
+        <div className="hps-grid">
+          {APT_META.map(apt => {
+            const p = basePrice(apt.id);
+            const pMin = p ? Math.round(p * 1.10) : null;
+            return (
+              <a key={apt.id} href={`${apt.slug}.html`} className="hps-card" style={{ '--hps-accent': apt.accent }}>
+                <span className="hps-name">HESTÍA <strong>{apt.name.toUpperCase()}</strong></span>
+                <span className="hps-price">
+                  <span className="hps-desde">{lang === 'es' ? 'desde' : 'from'}</span>
+                  <span className="hps-amount">{p}€</span>
+                  <span className="hps-per">/noche</span>
+                </span>
+                {p && (
+                  <span className="hps-ota-compare">
+                    <span className="hps-ota-row">
+                      <span className="hps-ota-name">Booking / Airbnb</span>
+                      <span className="hps-ota-price">desde ~{pMin}€</span>
+                      <span className="hps-ota-pct">+10% aprox.</span>
+                    </span>
+                  </span>
+                )}
+                <span className="hps-cta">{lang === 'es' ? 'Ver apartamento →' : 'View apartment →'}</span>
+              </a>
+            );
+          })}
+        </div>
+        <p className="hps-disclaimer">
+          {lang === 'es'
+            ? '* Precios en plataformas aproximados. No incluyen las ofertas personales o generales que las plataformas puedan hacer a sus clientes, ni sus programas de fidelización o descuento, ya que no podemos conocerlos. En cualquier caso, siempre podemos mejorar el precio.'
+            : '* Platform prices are approximate. They do not include personal or general offers, nor loyalty or discount programmes that platforms may offer their customers, as we cannot know them. In any case, we can always do better on price.'}
+        </p>
+      </div>
+    </section>
+  );
+};
+
+const LongStayStrip = ({ lang }) => {
+  const es = lang === 'es';
+  const v2 = window.PRICES_V2;
+  const bases = v2?.apts ? Object.values(v2.apts).map(a => a.base).filter(Boolean) : [];
+  const minBase = bases.length ? Math.min(...bases) : 83;
+  const nightlyMonthly = minBase * 30;
+  const lsCfg = v2?.longStayConfig || {};
+  const lsRates = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
+  const supps = Object.values(lsCfg.aptSupplement || {});
+  const lsRate = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + (supps.length ? Math.min(...supps) : 0);
+  const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
+  return (
+    <section className="lss-strip on-dark" aria-label={es ? 'Estancias largas' : 'Long stays'}>
+      <div className="lss-inner">
+        <div className="lss-text">
+          <p className="eyebrow lss-eyebrow">{es ? 'Más de un mes en Vera Playa' : 'More than a month in Vera Playa'}</p>
+          <h2 className="lss-title">
+            {es ? <>Teletrabajo, empresa<br/>o temporada larga.</> : <>Remote work, business<br/>or an extended stay.</>}
+          </h2>
+          <p className="lss-sub">
+            {es
+              ? 'Apartamentos totalmente equipados de septiembre a junio. Precio fijo mensual, sin intermediarios, con contrato.'
+              : 'Fully equipped apartments from September to June. Fixed monthly price, no middlemen, formal contract.'}
+          </p>
+        </div>
+        <div className="lss-right">
+          <div className="lss-pills">
+            <span className="lss-pill">{es ? '29+ noches' : '29+ nights'}</span>
+            <span className="lss-pill lss-pill-compare">
+              <span className="lss-pill-reg">~{nightlyMonthly.toLocaleString('es-ES')}€/mes</span>
+              <span className="lss-pill-arrow">→</span>
+              <span className="lss-pill-ls">{es ? `desde ${lsRate.toLocaleString('es-ES')}€/mes` : `from €${lsRate.toLocaleString('en-US')}/mo`}</span>
+              <span className="lss-pill-save">−{savings}%</span>
+            </span>
+            <span className="lss-pill">WiFi fibra</span>
+            <span className="lss-pill">{es ? 'Contrato formal' : 'Formal contract'}</span>
+          </div>
+          <a href="estancias-largas.html" className="lss-cta">
+            {es ? 'Ver condiciones y precios →' : 'See conditions and pricing →'}
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+Object.assign(window, { Hero, Bridge, Apartments, Compare, APARTMENTS, LastMinuteStrip, HomePriceStrip, LongStayStrip });

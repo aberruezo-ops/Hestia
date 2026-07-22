@@ -1,0 +1,23 @@
+{
+  "skill_name": "video-edit",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Tengo el vídeo docs/assets/logo-transform.mp4 y en el último segundo aparece el logo de Gemini en la esquina inferior derecha (watermark). Quítalo recortando esa zona. El vídeo es 1920x1080.",
+      "expected_output": "Runs ffprobe to inspect the video, identifies the crop dimensions to remove the watermark region, runs ffmpeg with crop filter, verifies the output with ffprobe.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "El vídeo hero-terrace-night.mp4 pesa 8 MB y quiero subirlo como fondo de la web. Necesito una versión MP4 y una WebM optimizadas para web, máximo 2 MB cada una, sin audio.",
+      "expected_output": "Inspects video with ffprobe, produces MP4 with libx264+faststart and WebM with vp9+opus, both without audio (-an), reports file sizes before/after.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Quiero un thumbnail del vídeo docs/assets/logo-transform.mp4 sacando el frame que hay en el segundo 2.5.",
+      "expected_output": "Runs ffprobe to confirm duration, then ffmpeg -ss 00:00:02.5 -frames:v 1 to extract the frame as JPG, reports the output file.",
+      "files": []
+    }
+  ]
+}

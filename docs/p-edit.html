@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#2A0F2E"/>
+  <meta name="robots" content="noindex,nofollow,noarchive"/>
+  <meta name="referrer" content="no-referrer"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Hestía Admin"/>
+  <link rel="manifest" href="p-edit.webmanifest"/>
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+  <title>Hestía · Admin</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin/>
+  <link rel="dns-prefetch" href="//unpkg.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/styles.css?v=885"/>
+  <link rel="stylesheet" href="assets/leaflet.css"/>
+</head><body class="pe-body">
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react.development.js'"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react-dom.development.js'"></script>
+<script src="assets/leaflet.js"></script>
+<script>
+  const COMPONENT_FILES = [
+    'components/shared.54c03c3bf2.js',
+    'components/admin-page.54c03c3bf2.js',
+  ];
+
+  async function loadComponents() {
+    for (const file of COMPONENT_FILES) {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = file + '?t=' + Date.now();
+        script.onload = resolve;
+        script.onerror = () => reject(new Error(`Failed to load ${file}`));
+        document.head.appendChild(script);
+      });
+    }
+  }
+
+  loadComponents().catch(err => {
+    const _errRoot = document.getElementById('root');
+    const _errDiv = document.createElement('div');
+    _errDiv.style.cssText = 'padding:40px;font-family:sans-serif;color:#c00';
+    _errDiv.innerHTML = '<b>Error loading components:</b><br>';
+    _errDiv.appendChild(document.createTextNode(err.message));
+    _errRoot.replaceChildren(_errDiv);
+    console.error(err);
+  });
+</script>
+
+</body>
+</html>

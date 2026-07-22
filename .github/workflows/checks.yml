@@ -1,0 +1,97 @@
+name: Checks — precio, smoke y contraste
+
+# Guardarraíles que se ejecutan en cada push/PR:
+#  · price-consistency: REPORTA si el precio (fuente única _calcStay) cambia respecto
+#    a la baseline. NO bloquea: los precios cambian a menudo de forma intencionada
+#    (/p-edit, recalculo de huecos). Para refrescar: price-consistency.mjs --update.
+#  · smoke: BLOQUEA si alguna página da error JS/consola, no renderiza o tiene un
+#    enlace interno roto (habría cazado la "pantalla en blanco"). Es el gate duro.
+#  · contrast: audita WCAG color-contrast y REPORTA regresiones (ratchet contra
+#    scripts/contrast-baseline.json). NO bloquea (continue-on-error): la baseline
+#    sólo se regenera de forma fiable en CI. Para depurarla: --update-baseline.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  price-consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      # BLOQUEA: invariantes de negocio de CLAUDE.md (descuento por estancia,
+      # tope de mascota, temporada alta > baja, estancia larga). Si una se
+      # rompe, es un bug de precio: para el merge.
+      - name: Invariantes de precio (test · gate)
+        run: node scripts/test-pricing.mjs
+      # Reporta si el precio cambia respecto a la baseline, pero NO bloquea: los
+      # precios cambian a menudo de forma intencionada (ediciones en /p-edit,
+      # recalculo de ofertas de hueco del bot). Para refrescar la foto tras un
+      # cambio intencionado: node scripts/price-consistency.mjs --update
+      - name: Precio — fuente única _calcStay (regresión · report)
+        continue-on-error: true
+        run: node scripts/price-consistency.mjs
+
+  # BLOQUEA si el .js compilado no cuadra con su .jsx fuente (el footgun del
+  # build: editar .jsx y olvidar `node scripts/build-jsx.js` sirve código viejo).
+  build-drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Node y Babel FIJADOS a los del build local, porque la salida de Babel
+      # no es byte-idéntica entre versiones de Node/Babel: sin fijar, este job
+      # daba un falso "drift" (el runner generaba un .js distinto al committeado
+      # aunque el .jsx estuviera en sync). Aun así se deja como REPORTE, no como
+      # gate: la reproducibilidad byte a byte entre entornos es frágil y no
+      # merece bloquear el merge. La prevención real del footgun es recompilar
+      # antes de commitear (hook local); el gate duro sigue siendo smoke + precio.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Instalar Babel (versión fijada = la del build local)
+        run: npm install --no-save @babel/core@8.0.1 @babel/preset-react@8.0.1
+      - name: Recompilar JSX
+        run: node scripts/build-jsx.js
+      - name: Avisar si el .js quedó desincronizado (reporte, no bloquea)
+        run: |
+          if ! git diff --quiet -- 'docs/components/*.js'; then
+            echo "::warning::El .js podría estar desincronizado con su .jsx (o difiere el entorno de build). Si editaste un .jsx, ejecuta 'node scripts/build-jsx.js' y commitea el .js."
+            git diff --stat -- 'docs/components/*.js'
+          else
+            echo "OK: .js sincronizado con .jsx"
+          fi
+
+  contrast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Instalar Playwright + axe-core
+        run: |
+          npm install --no-save axe-core playwright
+          npx playwright install --with-deps chromium
+      - name: Servir docs
+        run: |
+          cd docs && python3 -m http.server 8123 &
+          sleep 2
+      # Carga cada página y BLOQUEA si hay error JS/consola, no renderiza o tiene un
+      # enlace interno roto (smoke test — habría cazado la pantalla en blanco).
+      - name: Smoke test (carga + errores + enlaces)
+        run: node scripts/smoke-test.cjs
+      # Audita WCAG color-contrast y REPORTA regresiones (ratchet contra
+      # contrast-baseline.json). No bloquea: la baseline cubre borderline de marca
+      # (pills Airbnb/Google) y de páginas de pago que no se pueden regenerar de
+      # forma fiable fuera de CI. Los gates duros son smoke + precio.
+      - name: Auditoría de contraste (WCAG, ratchet · report)
+        continue-on-error: true
+        run: node scripts/contrast-audit.cjs

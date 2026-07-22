@@ -1,0 +1,12 @@
+[
+  "index|.hps-card > .hps-ota-compare > .hps-ota-row > .hps-ota-name",
+  "index|.hps-disclaimer",
+  "index|.rating-card > blockquote > cite",
+  "reservas|#rf-step-2 > .rf-step-head > .rf-step-num",
+  "reservas|#rf-step-2 > .rf-step-head > h3",
+  "reservas|#rf-step-3 > .rf-step-head > .rf-step-num",
+  "reservas|#rf-step-3 > .rf-step-head > h3",
+  "reservas|.reservas-person-card > div > .r-lang",
+  "reservas|.rps-pend.rf-ps > .rf-ps-lbl",
+  "reservas|.today > .c-n"
+]

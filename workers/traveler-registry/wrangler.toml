@@ -1,0 +1,25 @@
+name               = "hestia-traveler-registry"
+main               = "index.js"
+compatibility_date = "2024-09-23"
+workers_dev        = true
+
+# Una vez desplegado estará en:
+#   https://hestia-traveler-registry.<tu-subdominio>.workers.dev
+# Copia esa URL en docs/components/registro-page.jsx (TRAVELER_WORKER_URL)
+# y en la pestaña "Registro de viajeros" de /p-edit.
+#
+# Pasos de despliegue:
+#   cd workers/traveler-registry
+#   wrangler kv namespace create REG_KV      # pega el id devuelto abajo
+#   wrangler secret put READ_SECRET          # clave larga para leer desde /p-edit
+#   wrangler secret put ENCRYPT_KEY          # frase larga; cifra los datos en KV
+#   wrangler deploy
+
+# Binding al KV namespace donde se guardan las fichas (cifradas).
+[[kv_namespaces]]
+binding = "REG_KV"
+id      = "PLACEHOLDER_SUSTITUIR_CON_ID_REAL"
+
+# Secretos — NO se ponen aquí, se añaden con `wrangler secret put`:
+#   READ_SECRET   (lectura desde /p-edit)
+#   ENCRYPT_KEY   (cifrado AES-GCM de los datos personales)
