@@ -1,0 +1,21 @@
+name               = "hestia-guide-access"
+main               = "index.js"
+compatibility_date = "2024-09-23"
+workers_dev        = true
+
+# Una vez desplegado, el Worker estará en:
+#   https://hestia-guide-access.hestia-vera-almeria.workers.dev
+#
+# Pasos de despliegue:
+#   cd workers/guide-access
+#   wrangler kv namespace create ACCESS_KV     # pega el id devuelto abajo
+#   wrangler secret put READ_SECRET            # elige una clave larga (la usarás en /p-edit)
+#   wrangler deploy
+
+# Binding al KV namespace donde se guardan los accesos.
+[[kv_namespaces]]
+binding = "ACCESS_KV"
+id      = "PLACEHOLDER_SUSTITUIR_CON_ID_REAL"
+
+# Secreto READ_SECRET — NO se pone aquí, se añade con:
+#   wrangler secret put READ_SECRET

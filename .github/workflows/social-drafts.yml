@@ -1,0 +1,35 @@
+name: Generar borradores de redes
+
+# Propone borradores de posts (escaparate + huecos de última hora) cada lunes.
+# NO publica nada: solo escribe docs/data/social-drafts.json. La publicación es
+# manual desde la pestaña Redes de /p-edit.
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'   # lunes 07:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  gen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Generar borradores
+        run: node scripts/gen-social-drafts.mjs
+      - name: Commit si hay cambios
+        run: |
+          if [ -n "$(git status --porcelain docs/data/social-drafts.json)" ]; then
+            git config user.name "hestia-bot"
+            git config user.email "info@hestiayourhome.com"
+            git add docs/data/social-drafts.json
+            git commit -m "chore(redes): nuevos borradores de posts [skip ci]"
+            git push
+          else
+            echo "Sin cambios."
+          fi

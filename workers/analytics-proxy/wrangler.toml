@@ -1,0 +1,22 @@
+name               = "hestia-analytics"
+main               = "index.js"
+compatibility_date = "2024-09-23"
+workers_dev        = true
+
+# Una vez desplegado, el Worker estará en:
+#   https://hestia-analytics.hestia-vera-almeria.workers.dev
+#
+# Para desplegar:
+#   cd workers/analytics-proxy
+#   wrangler deploy
+#
+# El proxy no necesita KV ni secretos para funcionar.
+#
+# La ruta /err (monitorización de errores del sitio) SIEMPRE loguea (verlo con
+# `wrangler tail`). Para recibir ADEMÁS un email de aviso (throttled a 1 cada
+# 30 min por error), es opcional:
+#   wrangler kv namespace create ERR_KV   # pega el id abajo como binding ERR_KV
+#   wrangler secret put W3F_KEY           # opcional; si no, usa la clave pública del sitio
+# [[kv_namespaces]]
+# binding = "ERR_KV"
+# id = "<pega-el-id-aqui>"

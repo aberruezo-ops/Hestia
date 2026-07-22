@@ -1,0 +1,36 @@
+name: Salud del token de Meta
+
+# Un token de página de Meta puede caducar/invalidarse y entonces publicar en
+# Instagram/Facebook deja de funcionar sin avisar. Este cron consulta el
+# endpoint /health del worker social-publish una vez por semana; si el token
+# está caído, el job FALLA y GitHub envía un email al propietario del repo.
+#
+# Requiere que el worker social-publish esté desplegado (ruta /health) en:
+#   https://hestia-social-publish.hestia-vera-almeria.workers.dev/health
+# Si algún día cambia la URL, ajústala en HEALTH_URL (variable del repo) o aquí.
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'   # lunes 09:00 UTC
+  workflow_dispatch:       # y a mano cuando quieras comprobarlo
+
+permissions:
+  contents: read
+
+jobs:
+  meta-token:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comprobar /health del worker de publicación
+        run: |
+          URL="${HEALTH_URL:-https://hestia-social-publish.hestia-vera-almeria.workers.dev/health}"
+          echo "Consultando $URL"
+          code=$(curl -sS -o /tmp/health.json -w '%{http_code}' --max-time 20 "$URL" || echo "000")
+          echo "HTTP $code"; cat /tmp/health.json || true
+          if [ "$code" != "200" ]; then
+            echo "::error::El token de Meta parece caído o el worker no responde (HTTP $code). Renueva el token: wrangler secret put META_TOKEN en workers/social-publish."
+            exit 1
+          fi
+          echo "Token de Meta OK."
+        env:
+          HEALTH_URL: ${{ vars.META_HEALTH_URL }}

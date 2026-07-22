@@ -1,0 +1,26 @@
+name               = "hestia-pago"
+main               = "index.js"
+compatibility_date = "2024-09-23"
+workers_dev        = true
+
+# Modo PayPal: "sandbox" (por defecto) o "live"
+[vars]
+PAYPAL_ENV = "sandbox"
+
+# KV namespace para rate limiting.
+# Crear antes de desplegar:
+#   wrangler kv namespace create RATE_KV
+# Sustituir el id con el resultado del comando anterior.
+[[kv_namespaces]]
+binding = "RATE_KV"
+id      = "PLACEHOLDER_SUSTITUIR_CON_ID_REAL"
+
+# Secretos — añadir uno a uno con wrangler secret put:
+#   wrangler secret put STRIPE_SECRET_KEY
+#   wrangler secret put STRIPE_WEBHOOK_SECRET
+#   wrangler secret put PAYPAL_CLIENT_ID
+#   wrangler secret put PAYPAL_CLIENT_SECRET
+#   wrangler secret put GCP_SA_KEY        (mismo JSON que sheets-sync)
+#
+# Ruta pública (configurar en Cloudflare dashboard → Workers → Routes):
+#   hestiayourhome.com/pago-api/*

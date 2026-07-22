@@ -1,0 +1,1709 @@
+// ================================================================
+// HESTÍA, Página de Reservas
+// ================================================================
+
+const RESERVAS_COPY = {
+  es: {
+    eyebrow: 'Mejor precio garantizado: te lo igualamos y lo mejoramos · Sin comisiones',
+    title: (<>Reserva tu<br/><em>hogar en Vera.</em></>),
+    sub: 'Escríbenos directamente. Alex o Fran te responden normalmente en minutos.',
+    form_title: 'Solicitar reserva',
+    form_sub: 'Tres pasos: dinos qué buscas, te enseñamos disponibilidad y precio, y eliges cómo enviar la solicitud.',
+    step1_title: 'Tu reserva',
+    step2_title: 'Disponibilidad y precio',
+    step3_title: 'Cómo nos lo envías',
+    f_apt: 'Hestía',
+    f_apt_ph: 'Elige Hestía',
+    f_name: 'Nombre completo',
+    f_name_ph: 'Tu nombre',
+    f_email: 'Email',
+    f_email_ph: 'tu@email.com',
+    f_tel: 'Teléfono',
+    f_tel_ph: '+34 6XX XXX XXX',
+    f_checkin: 'Fecha de entrada',
+    f_checkout: 'Fecha de salida',
+    f_guests: 'Número de huéspedes',
+    f_guests_opts: ['1 huésped', '2 huéspedes', '3 huéspedes', '4 huéspedes', '5 huéspedes', '6 huéspedes'],
+    f_pets: '¿Viaja con mascota?',
+    f_pets_no: 'No',
+    f_pets_yes: 'Sí',
+    f_baby: '¿Viaja con bebé?',
+    f_baby_no: 'No',
+    f_baby_yes: 'Sí',
+    f_extras_label: 'Extras (opcional)',
+    f_extras: ['Ropa de cama extra', 'Toallas extra', 'Cuna de bebé', 'Silla de bebé'],
+    f_comments: 'Comentarios (opcional)',
+    f_comments_ph: 'Fechas alternativas, preguntas, necesidades especiales…',
+    check_avail: 'Comprobar disponibilidad y precio →',
+    edit_data: 'Cambiar datos',
+    continue_to_send: 'Continuar →',
+    status_avail: 'Disponible para tus fechas',
+    status_taken: 'Ocupado en esas fechas',
+    status_taken_sub: 'Aún así puedes enviarnos la solicitud, te avisamos si se libera o te proponemos alternativas.',
+    status_no_data: 'No tenemos datos en este momento',
+    status_no_data_sub: 'Sin problema, envíanos la solicitud y te respondemos normalmente en minutos.',
+    channel_label: 'Elige cómo quieres enviarnos la solicitud',
+    channel_wa: 'WhatsApp',
+    channel_wa_desc: 'Necesitamos tu nombre y teléfono.',
+    channel_email: 'Email',
+    channel_email_desc: 'Necesitamos tu nombre y email. Abrirá tu cliente de correo con todo pre-rellenado.',
+    send_wa: 'Enviar por WhatsApp →',
+    send_email: 'Enviar por email →',
+    summary_apt: 'Hestía',
+    summary_dates: 'Fechas',
+    summary_guests: 'Huéspedes',
+    summary_pets: 'Mascota',
+    summary_extras: 'Extras',
+    summary_nights: (n) => `${n} ${n === 1 ? 'noche' : 'noches'}`,
+    note: 'Al pulsar se abrirá WhatsApp con tu solicitud. Alex o Fran te responden normalmente en minutos.',
+    aside_title: 'Tu solicitud llega a:',
+    guarantee_title: 'Reserva directa',
+    guarantee_items: [
+      'Mejor precio garantizado: te lo igualamos y lo mejoramos',
+      'Reservando directo te ahorras hasta un 10 % aprox.',
+      'Alex o Fran responden personalmente',
+      'Te respondemos normalmente en minutos',
+      'Flexibilidad real en cambios y cancelaciones',
+    ],
+  },
+  en: {
+    eyebrow: 'Best price guaranteed: we match it and beat it · No commissions',
+    title: (<>Book your<br/><em>home in Vera.</em></>),
+    sub: 'Write to us directly. Alex or Fran usually reply in minutes.',
+    form_title: 'Request a booking',
+    form_sub: 'Three steps: tell us what you need, see availability and price, then choose how to send the request.',
+    step1_title: 'Your booking',
+    step2_title: 'Availability and price',
+    step3_title: 'How to send it',
+    f_apt: 'Hestía',
+    f_apt_ph: 'Choose a Hestía',
+    f_name: 'Full name',
+    f_name_ph: 'Your name',
+    f_email: 'Email',
+    f_email_ph: 'you@email.com',
+    f_tel: 'Phone',
+    f_tel_ph: '+34 6XX XXX XXX',
+    f_checkin: 'Check-in date',
+    f_checkout: 'Check-out date',
+    f_guests: 'Number of guests',
+    f_guests_opts: ['1 guest', '2 guests', '3 guests', '4 guests', '5 guests', '6 guests'],
+    f_pets: 'Bringing a pet?',
+    f_pets_no: 'No',
+    f_pets_yes: 'Yes',
+    f_baby: 'Bringing a baby?',
+    f_baby_no: 'No',
+    f_baby_yes: 'Yes',
+    f_extras_label: 'Extras (optional)',
+    f_extras: ['Extra bed linen', 'Extra towels', 'Baby cot', 'Baby chair'],
+    f_comments: 'Comments (optional)',
+    f_comments_ph: 'Alternative dates, questions, special needs…',
+    check_avail: 'Check availability and price →',
+    edit_data: 'Change details',
+    continue_to_send: 'Continue →',
+    status_avail: 'Available for your dates',
+    status_taken: 'Taken on those dates',
+    status_taken_sub: 'You can still send the request, we will let you know if it frees up or suggest alternatives.',
+    status_no_data: 'No data right now',
+    status_no_data_sub: 'No worries, send the request and we usually reply in minutes.',
+    channel_label: 'Choose how to send your request',
+    channel_wa: 'WhatsApp',
+    channel_wa_desc: 'We need your name and phone.',
+    channel_email: 'Email',
+    channel_email_desc: 'We need your name and email. Will open your mail client with everything pre-filled.',
+    send_wa: 'Send via WhatsApp →',
+    send_email: 'Send by email →',
+    summary_apt: 'Hestía',
+    summary_dates: 'Dates',
+    summary_guests: 'Guests',
+    summary_pets: 'Pet',
+    summary_extras: 'Extras',
+    summary_nights: (n) => `${n} ${n === 1 ? 'night' : 'nights'}`,
+    note: 'Clicking will open WhatsApp with your request. Alex or Fran usually reply in minutes.',
+    aside_title: 'Your request goes to:',
+    guarantee_title: 'Direct booking',
+    guarantee_items: [
+      'Best price guaranteed: we match it and beat it',
+      'Book direct and save up to ~10%',
+      'Alex or Fran reply personally',
+      'We usually reply in minutes',
+      'Real flexibility on changes and cancellations',
+    ],
+  },
+};
+
+const _resExtrasList = () => {
+  const v = window.PRICES_V2 && window.PRICES_V2.rules && window.PRICES_V2.rules.extras;
+  if (!Array.isArray(v)) return [];
+  // "huespedAdicional" se gestiona vía el contador de huéspedes y solo
+  // tiene sentido para modificar reservas existentes (no para crear una
+  // nueva). Se queda en /p-edit para el admin, fuera del flujo público.
+  return v.filter(ex => ex.id !== 'huespedAdicional');
+};
+
+const _resExtraUnitSuffix = (unit, lang) => {
+  if (unit === 'noche') return lang === 'es' ? '/noche' : '/night';
+  if (unit === 'hora')  return lang === 'es' ? '/hora'  : '/hour';
+  if (unit === 'set')   return lang === 'es' ? '/set'   : '/set';
+  return '';
+};
+
+// La oferta de hueco (gapOverrides) la aplica ahora _calcStay (shared.js), para que
+// apartamento, home y reservas calculen siempre el mismo precio. Solo aplica si la
+// estancia rellena exactamente el hueco (entrada+salida = el hueco).
+
+// Calcula el total de larga estancia usando tarifas mensuales + flat especial + suplemento por apt
+
+// Resumen de precio para larga estancia en el paso 2 (reemplaza a PricePreview)
+const LsPriceSummary = ({ ls, extras = [], guests, pets, lang }) => {
+  const es = lang === 'es';
+  const fmt = n => n.toLocaleString('es-ES') + ' €';
+  const extrasTotal = extras.reduce((s, e) => s + e.amount, 0);
+  const grandTotal = ls.total + extrasTotal;
+  const lsCfg = (window.PRICES_V2?.longStayConfig) || {};
+  const extraGuests = Math.max(0, (guests || 1) - 2);
+  const extraGuestPerMo = lsCfg.extraGuestPerMonth || 0;
+  const petPerMo = lsCfg.petPerMonth || 0;
+  return (
+    <div className="price-engine price-engine-form">
+      <div className="price-main-row">
+        <div className="price-direct-block">
+          <span className="price-label-sm">{es ? 'Precio estancia larga' : 'Long-stay price'}</span>
+          <AnimatedPrice className="price-direct-total" value={grandTotal} format={fmt} />
+          <span className="price-avg-night">{es ? 'tarifa mensual' : 'monthly rate'}</span>
+        </div>
+        <div className="price-right-col">
+          <div className="price-guarantee-badge">
+            {es ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'}
+          </div>
+          <div className="price-guarantee-sub">
+            {es ? 'Sin comisiones de plataformas.' : 'No platform commissions.'}
+          </div>
+        </div>
+      </div>
+      <div className="price-breakdown">
+        <div className="price-line">
+          <span>{es ? 'Tarifa mensual larga estancia' : 'Long-stay monthly rate'}</span>
+          <span>{fmt(ls.total)}</span>
+        </div>
+        {extraGuests > 0 && extraGuestPerMo > 0 && (
+          <div className="price-line">
+            <span>{es ? `${extraGuests} huésped${extraGuests>1?'es':''} extra · ${extraGuestPerMo}€/mes` : `${extraGuests} extra guest${extraGuests>1?'s':''} · ${extraGuestPerMo}€/mo`}</span>
+          </div>
+        )}
+        {pets === 'yes' && petPerMo > 0 && (
+          <div className="price-line">
+            <span>{es ? `Mascota · ${petPerMo}€/mes` : `Pet · ${petPerMo}€/mo`}</span>
+          </div>
+        )}
+        {ls.specialNights > 0 && (
+          <div className="price-line">
+            <span>{es ? `${ls.specialNights} noche${ls.specialNights>1?'s':''} especial (${lsCfg.specialNightFlat||80}€/n)` : `${ls.specialNights} special night${ls.specialNights>1?'s':''} (${lsCfg.specialNightFlat||80}€/n)`}</span>
+          </div>
+        )}
+        {extras.map(ex => (
+          <div className="price-line" key={ex.id}>
+            <span>{ex.label}</span>
+            <span>+{fmt(ex.amount)}</span>
+          </div>
+        ))}
+        <div className="price-line price-line-total">
+          <span>{es ? 'Total estimado' : 'Estimated total'}</span>
+          <span>{fmt(grandTotal)}</span>
+        </div>
+      </div>
+      <p className="price-note">{es
+        ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.'
+        : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.'}</p>
+    </div>
+  );
+};
+
+const LsInfoBlock = ({ calc, lang }) => {
+  const nights = calc ? calc.nights : 0;
+  const es = lang === 'es';
+  return (
+    <div className="rf-ls-info">
+      <div className="rf-ls-info-head">
+        <span className="rf-ls-info-badge">{es ? 'Estancia larga · +28 noches' : 'Long stay · 28+ nights'}</span>
+        <span className="rf-ls-info-title">{es ? 'Se aplica tarifa mensual especial' : 'Special monthly rate applies'}</span>
+      </div>
+      <ul className="rf-ls-conditions">
+        <li>{es ? 'Contrato de arrendamiento de temporada' : 'Seasonal rental agreement'}</li>
+        <li>{es ? 'Señal del 20% para confirmar · resto a la llegada' : '20% deposit to confirm · balance on arrival'}</li>
+        <li>{es ? `${nights} noches, tarifa mensual` : `${nights} nights, monthly rate`}</li>
+        <li>{es ? 'Sin comisiones de plataformas' : 'No platform commissions'}</li>
+      </ul>
+      <a href="estancias-largas.html" className="rf-ls-info-link" target="_blank" rel="noopener">
+        {es ? 'Ver todas las condiciones →' : 'See full conditions →'}
+      </a>
+    </div>
+  );
+};
+
+const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [], lsCalc }) => {
+  if (!apt || !checkin || !checkout) return null;
+  const gn = parseInt(guests, 10) || null;
+  const calc = _calcStay(checkin, checkout, apt, pets === 'yes', gn);
+  if (!calc || calc.nights <= 0) return null;
+  const fmt = n => n.toLocaleString('es-ES') + ' €';
+  const extrasTotal = extras.reduce((s, e) => s + e.amount, 0);
+  const nightlyGrandTotal = calc.directTotal + extrasTotal;
+  const lsGrandTotal = lsCalc ? lsCalc.total + extrasTotal : 0;
+  const grandTotal = lsCalc ? lsGrandTotal : nightlyGrandTotal;
+  const grandAvg = lsCalc ? null : Math.round(grandTotal / calc.nights);
+  const savings = lsCalc ? nightlyGrandTotal - lsGrandTotal : 0;
+  return (
+    <div className="price-engine price-engine-form">
+      <div className="price-main-row">
+        <div className="price-direct-block">
+          <span className="price-label-sm">
+            {lsCalc
+              ? (lang === 'es' ? 'Precio estancia larga' : 'Long-stay price')
+              : (lang === 'es' ? 'Precio directo' : 'Direct price')}
+          </span>
+          <AnimatedPrice className="price-direct-total" value={grandTotal} format={fmt} />
+          {lsCalc
+            ? <span className="price-avg-night">{lang === 'es' ? 'tarifa mensual' : 'monthly rate'}</span>
+            : <span className="price-avg-night">{fmt(grandAvg)}{lang === 'es' ? '/noche' : '/night'}</span>
+          }
+        </div>
+        <div className="price-right-col">
+          <div className="price-guarantee-badge">
+            {lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'}
+          </div>
+          <div className="price-guarantee-sub">
+            {lang === 'es'
+              ? 'Reserva directa, sin comisiones de plataformas.'
+              : 'Book direct, no platform commissions.'}
+          </div>
+        </div>
+      </div>
+      <div className="price-breakdown">
+        <div className="price-line">
+          {calc.isGapOffer
+            ? <span>{lang === 'es'
+                ? `Oferta · ${calc.nights} noches × ${calc.gapPerNight} €/n`
+                : `Offer · ${calc.nights} nights × ${calc.gapPerNight} €/n`}</span>
+            : <span>{lang === 'es' ? `${calc.nights} noches` : `${calc.nights} nights`}</span>
+          }
+          <span>{fmt(calc.baseTotal)}</span>
+        </div>
+        {calc.stayD && (
+          <div className="price-line price-line-disc">
+            <span>{lang === 'es' ? calc.stayD.es : calc.stayD.en}</span>
+            <span>−{fmt(calc.stayDiscAmt)}</span>
+          </div>
+        )}
+        {calc.guestSuppAmt > 0 && (
+          <div className="price-line">
+            <span>{lang === 'es'
+              ? `${calc.guests} huéspedes · +${calc.guestSuppPerNight} €/noche`
+              : `${calc.guests} guests · +${calc.guestSuppPerNight} €/night`}</span>
+            <span>+{fmt(calc.guestSuppAmt)}</span>
+          </div>
+        )}
+        {calc.petAmt > 0 && (
+          <div className="price-line">
+            <span>{lang === 'es' ? `Suplemento mascota (10 €/noche · máx. 50 €)` : `Pet supplement (10 €/night · max 50 €)`}</span>
+            <span>+{fmt(calc.petAmt)}</span>
+          </div>
+        )}
+        {extras.map(ex => {
+          const u = ex.units || 1;
+          let detail = '';
+          if (ex.unit === 'hora') {
+            detail = ` · ${u} h × ${ex.unitPrice} €`;
+          } else if (ex.unit === 'noche') {
+            const nLabel = lang === 'es' ? 'noches' : 'nights';
+            const uLabel = lang === 'es' ? (u === 1 ? 'unidad' : 'unidades') : (u === 1 ? 'unit' : 'units');
+            detail = ` · ${u} ${uLabel} × ${ex.qty} ${nLabel} × ${ex.unitPrice} €`;
+          } else if (u > 1) {
+            detail = ` · ${u} × ${ex.unitPrice} €`;
+          }
+          return (
+            <div className="price-line" key={ex.id}>
+              <span>{ex.label}{detail}</span>
+              <span>+{fmt(ex.amount)}</span>
+            </div>
+          );
+        })}
+        <div className={`price-line price-line-total${lsCalc ? ' is-striked' : ''}`}>
+          <span>{lang === 'es' ? 'Total estimado noche a noche' : 'Estimated nightly total'}</span>
+          <span>{fmt(nightlyGrandTotal)}</span>
+        </div>
+        {lsCalc && (
+          <>
+            <div className="price-line-ls-hl">
+              <span>{lang === 'es' ? 'Precio estancia larga' : 'Long-stay price'}</span>
+              <span className="prl-ls-val">{fmt(lsGrandTotal)}</span>
+            </div>
+            {savings > 0 && (
+              <div className="price-line-saving">
+                <span>{lang === 'es' ? 'Ahorras' : 'You save'}</span>
+                <span className="prl-saving-val">−{fmt(savings)}</span>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+      <p className="price-note">{lsCalc
+        ? (lang === 'es'
+            ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.'
+            : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.')
+        : (lang === 'es'
+            ? '* Precio orientativo. ¿Lo encuentras más barato en una plataforma? No solo te lo igualamos: te lo mejoramos.'
+            : '* Indicative price. Found it cheaper on a platform? We don\'t just match it, we beat it.')
+      }</p>
+    </div>
+  );
+};
+
+// ReviewQuote, cita rotando de una reseña real verificada en el
+// paso 2 del formulario de reservas. Lee window.REVIEWS y elige
+// una al azar de las published (filtrada por apt si hay uno).
+const ReviewQuote = ({ apt, lang }) => {
+  const pool = React.useMemo(() => {
+    const all = (window.REVIEWS && window.REVIEWS.items) || [];
+    let list = all.filter(r => r.status === 'published');
+    if (apt) {
+      const aptOnly = list.filter(r => r.apt === apt);
+      if (aptOnly.length >= 3) list = aptOnly;
+    }
+    // Prefer highlighted reviews 70% of the time
+    const hi = list.filter(r => r.highlight);
+    if (hi.length && Math.random() < 0.7) return hi;
+    return list;
+  }, [apt]);
+
+  // Memoizado para que no cambie de reseña en cada render (p.ej. al plegar/desplegar).
+  const r = React.useMemo(() => (pool.length ? pool[Math.floor(Math.random() * pool.length)] : null), [pool]);
+  const [expanded, setExpanded] = React.useState(false);
+
+  if (!pool.length || !r) return null;
+  const date = new Date(r.date);
+  const mo = String(date.getMonth() + 1).padStart(2, '0');
+  const yr = date.getFullYear();
+  const sourceLbl = {
+    booking: 'Booking', airbnb: 'Airbnb', google: 'Google', web: 'Hestía',
+  }[r.source] || r.source;
+  const aptLbl = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas', all: '' }[r.apt] || '';
+  const isLong = (r.text || '').length > 240;
+
+  return (
+    <div className="rf-quote" aria-label={lang === 'es' ? 'Reseña verificada' : 'Verified review'}>
+      <div className="rf-quote-mark" aria-hidden="true">“</div>
+      <p className={`rf-quote-text${isLong && !expanded ? ' rf-quote-clamped' : ''}`}>{r.text}</p>
+      {isLong && (
+        <button type="button" className="rf-quote-toggle" aria-expanded={expanded} onClick={() => setExpanded(e => !e)}>
+          {expanded ? (lang === 'es' ? 'Ver menos' : 'Show less') : (lang === 'es' ? 'Ver más' : 'Show more')}
+        </button>
+      )}
+      <div className="rf-quote-meta">
+        <span className="rf-quote-name">{r.name.split(' ')[0]}</span>
+        <span className="rf-quote-sep">·</span>
+        <span className="rf-quote-date">{mo}/{yr}</span>
+        {aptLbl && <><span className="rf-quote-sep">·</span><span className="rf-quote-apt">Hestía {aptLbl}</span></>}
+        <span className="rf-quote-sep">·</span>
+        <span className="rf-quote-source">{lang === 'es' ? 'Reseña en' : 'Review on'} {sourceLbl}</span>
+      </div>
+    </div>
+  );
+};
+
+const ReservasHero = ({ lang }) => {
+  const t = RESERVAS_COPY[lang];
+  const videoRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const tryPlay = (el) => { if (el) { el.muted = true; el.play().catch(() => {}); } };
+    tryPlay(videoRef.current);
+    const onVisible = () => { if (!document.hidden) { tryPlay(videoRef.current); } };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => { document.removeEventListener('visibilitychange', onVisible); };
+  }, []);
+
+  return (
+    <section className="page-hero reservas-hero">
+      <video
+        ref={videoRef}
+        className="reservas-hero-video"
+        autoPlay muted loop playsInline preload="auto"
+      >
+        <source src="assets/285834_medium.mp4" type="video/mp4"/>
+      </video>
+      <div className="reservas-hero-wash"/>
+      <div className="stars"/>
+      <div className="page-hero-content">
+        <div className="eyebrow">{t.eyebrow}</div>
+        <h1>{t.title}</h1>
+        <p className="page-hero-sub">{t.sub}</p>
+      </div>
+    </section>
+  );
+};
+
+// Helper: comprueba si un rango está libre dado un array blocked [{start,end}].
+// Igual semántica que home-search _hsAvail (end exclusivo).
+const _resAvail = (checkin, checkout, blocked) => {
+  if (!blocked) return null;
+  return !blocked.some(r => checkin < r.end && checkout > r.start);
+};
+
+// Erratas típicas de dominio de email. Si el huésped escribe uno de estos,
+// sugerimos la corrección (un clic) antes de que envíe una dirección que rebota.
+const _EMAIL_DOMAIN_FIX = {
+  'gmail.co': 'gmail.com', 'gmail.con': 'gmail.com', 'gmial.com': 'gmail.com',
+  'gmai.com': 'gmail.com', 'gmail.cm': 'gmail.com', 'gmal.com': 'gmail.com',
+  'gmaill.com': 'gmail.com', 'gnail.com': 'gmail.com', 'gamil.com': 'gmail.com',
+  'hotmial.com': 'hotmail.com', 'hotmai.com': 'hotmail.com', 'hotmail.co': 'hotmail.com',
+  'hotmal.com': 'hotmail.com', 'hotmali.com': 'hotmail.com', 'hotmailcom': 'hotmail.com',
+  'outlook.co': 'outlook.com', 'outlok.com': 'outlook.com', 'outloo.com': 'outlook.com',
+  'yahoo.co': 'yahoo.com', 'yaho.com': 'yahoo.com', 'yahooo.com': 'yahoo.com',
+  'icloud.co': 'icloud.com', 'iclould.com': 'icloud.com', 'icoud.com': 'icloud.com',
+  'live.co': 'live.com', 'live.con': 'live.com',
+};
+const _emailSuggest = (raw) => {
+  const v = String(raw || '').trim();
+  const at = v.lastIndexOf('@');
+  if (at < 1 || at === v.length - 1) return null;
+  const local = v.slice(0, at), domain = v.slice(at + 1).toLowerCase();
+  let fixed = _EMAIL_DOMAIN_FIX[domain];
+  if (!fixed) {
+    const m = domain.match(/^(gmail|hotmail|outlook|yahoo|icloud|live)\.(con|cmo|ocm|vom|xom|co|om)$/);
+    if (m) fixed = m[1] + '.com';
+  }
+  return fixed && fixed !== domain ? local + '@' + fixed : null;
+};
+
+const ReservasForm = ({ lang }) => {
+  const t = RESERVAS_COPY[lang];
+  const aptNames = { vm: 'Hestía Mar', vt: 'Hestía Thalassa', vs: 'Hestía Salinas' };
+  const aptAccents = { vm: '#6B7A3A', vt: '#B86A3C', vs: '#D4A84A' };
+  // Formato ES: "16 may 2026" · EN: "May 16, 2026"
+  const fmtResDate = (iso) => {
+    if (!iso) return '';
+    const [y, m, d] = iso.split('-').map(Number);
+    if (lang === 'es') {
+      const mo = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][m - 1];
+      return `${d} ${mo} ${y}`;
+    }
+    const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m - 1];
+    return `${mo} ${d}, ${y}`;
+  };
+
+  // Step 1, datos que afectan a precio y disponibilidad
+  const [apt, setApt]           = React.useState('');
+  const [checkin, setCheckin]   = React.useState('');
+  const [checkout, setCheckout] = React.useState('');
+  const [guests, setGuests]     = React.useState(lang === 'es' ? '4 huéspedes' : '4 guests');
+  const [pets, setPets]         = React.useState('no');
+  const [baby, setBaby]         = React.useState('no');
+  // extrasSel: { [id]: qty }. 0/missing = no seleccionado.
+  // Para unidades no-hora, qty siempre es 1; para 'hora', el usuario edita.
+  const [extrasSel, setExtrasSel] = React.useState({});
+  const extrasList = _resExtrasList();
+
+  // Step 3, datos del canal + comentarios
+  const [name, setName]         = React.useState('');
+  const [tel, setTel]           = React.useState('');
+  const [email, setEmail]       = React.useState('');
+  const [emailConfirm, setEmailConfirm] = React.useState('');
+  const [emailDns, setEmailDns] = React.useState(null); // null | 'checking' | 'ok' | 'baddomain' | 'nomx'
+  const [comments, setComments] = React.useState('');
+
+  // Workflow
+  const [step, setStep]         = React.useState(1);
+  const [channel, setChannel]   = React.useState('whatsapp');
+  const [sent, setSent]         = React.useState(null); // { channel, url, msg } tras enviar
+  const [copied, setCopied]     = React.useState(false);
+  const [step2Hint, setStep2Hint] = React.useState(false); // intentó continuar sin elegir Hestía
+
+  // Disponibilidad (carga lazy)
+  const [avail, setAvail]       = React.useState(null);
+  const [availLoaded, setAvailLoaded] = React.useState(false);
+
+  React.useEffect(() => {
+    fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(j => setAvail(j))
+      .catch(() => {})
+      .finally(() => setAvailLoaded(true));
+  }, []);
+
+  // Prefill desde URL: /reservas.html?apt=vm&checkin=YYYY-MM-DD&...
+  // Llamado desde home-search o desde el calendar de cada apt page.
+  // Si llega con apt+checkin+checkout+guests, salta directo al step 2
+  // (disponibilidad + precio) para que el huésped revise y avance.
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const qs = new URLSearchParams(window.location.search);
+    const qApt      = qs.get('apt');
+    const qCheckin  = qs.get('checkin');
+    const qCheckout = qs.get('checkout');
+    const qGuests   = qs.get('guests');
+    const qPets     = qs.get('pets');
+    let hadAny = false;
+    if (qApt && ['vm', 'vt', 'vs'].includes(qApt)) { setApt(qApt); hadAny = true; }
+    if (qCheckin && /^\d{4}-\d{2}-\d{2}$/.test(qCheckin))   { setCheckin(qCheckin);   hadAny = true; }
+    if (qCheckout && /^\d{4}-\d{2}-\d{2}$/.test(qCheckout)) { setCheckout(qCheckout); hadAny = true; }
+    if (qGuests) {
+      const n = parseInt(qGuests, 10);
+      if (!Number.isNaN(n) && n >= 1 && n <= 6) {
+        const guestStr = lang === 'es'
+          ? `${n} ${n === 1 ? 'huésped' : 'huéspedes'}`
+          : `${n} ${n === 1 ? 'guest' : 'guests'}`;
+        setGuests(guestStr);
+        hadAny = true;
+      }
+    }
+    if (qPets === 'yes') { setPets('yes'); hadAny = true; }
+    // Bebé: setea el toggle Sí/No y deja la opción a marcar cuna/trona en
+    // los extras (no las marca automáticamente, el huésped decide).
+    const qBaby = qs.get('baby');
+    if (qBaby === 'yes') { setBaby('yes'); hadAny = true; }
+    // Con ambas fechas avanzamos al step 2 directamente (con o sin apt: sin apt
+    // se muestra la disponibilidad de los 3 Hestías para esas fechas + opciones).
+    if (qCheckin && qCheckout) {
+      setStep(2);
+      setTimeout(() => {
+        document.getElementById('rf-step-2')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 120);
+    }
+    // Si el prefill se ha aplicado, limpiamos los params para que un
+    // refresh no re-prefille (UX confusa cuando el huésped ya está
+    // editando). El estado se mantiene en React.
+    if (hadAny && window.history && window.history.replaceState) {
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, [lang]);
+
+  const toggleExtra = (id) => {
+    setExtrasSel(prev => {
+      const cur = prev[id] || 0;
+      return { ...prev, [id]: cur > 0 ? 0 : 1 };
+    });
+  };
+  const setExtraQty = (id, qty) => {
+    const n = Math.max(0, Math.floor(Number(qty) || 0));
+    setExtrasSel(prev => ({ ...prev, [id]: n }));
+  };
+  // Máximo qty por extra. Items "estancia" (cuna, trona, late check-in)
+  // son binarios → max 1. "hora" (early check-in, late check-out) hasta
+  // 8 horas. Resto (set/noche) escala con huéspedes, default 6.
+  const guestCap = Math.max(1, parseInt(guests, 10) || 6);
+  const maxForExtra = (ex) => {
+    if (!ex) return guestCap;
+    if (ex.unit === 'estancia') return 1;
+    if (ex.unit === 'hora')     return 8;
+    return guestCap;
+  };
+  const extrasById = React.useMemo(() => {
+    const m = {};
+    for (const ex of extrasList) m[ex.id] = ex;
+    return m;
+  }, [extrasList]);
+  const incExtra = (id) => {
+    setExtrasSel(prev => {
+      const cur = prev[id] || 0;
+      const max = maxForExtra(extrasById[id]);
+      return { ...prev, [id]: Math.min(max, cur + 1) };
+    });
+  };
+  const decExtra = (id) => {
+    setExtrasSel(prev => {
+      const cur = prev[id] || 0;
+      return { ...prev, [id]: Math.max(0, cur - 1) };
+    });
+  };
+
+  // Computa los extras seleccionados con su importe ya calculado.
+  // Se evalúa SIEMPRE; si no hay noches válidas, los 'noche' dan amount 0
+  // pero igualmente quedan listados para mostrar al usuario.
+  const computeSelectedExtras = (nights) => {
+    return extrasList
+      .filter(ex => (extrasSel[ex.id] || 0) > 0)
+      .map(ex => {
+        const qty = extrasSel[ex.id];
+        let amount, lineQty;
+        if (ex.unit === 'hora')       { lineQty = qty;     amount = ex.price * qty; }
+        else if (ex.unit === 'noche') { lineQty = nights;  amount = ex.price * nights * qty; }
+        else                          { lineQty = qty;     amount = ex.price * qty; }
+        // qty es siempre el número de unidades elegidas por el huésped
+        // (1 por defecto, hasta el número de huéspedes). lineQty depende
+        // del tipo (horas, noches, o el propio qty).
+        return {
+          id: ex.id,
+          label: lang === 'es' ? ex.label_es : ex.label_en,
+          unit: ex.unit,
+          unitPrice: ex.price,
+          qty: lineQty,
+          units: qty,
+          amount,
+        };
+      });
+  };
+
+  // Validaciones
+  // minNights desde prices.json. Base 3 noches. Excepción 2 noches solo
+  // si check-in inminente o gap-fill exacto. 1 noche siempre prohibida.
+  const rrules = (window.PRICES_V2 && window.PRICES_V2.rules) || {};
+  const minNights = rrules.minNights || 3;
+  const twoNightFloor = rrules.twoNightFloor || 2;
+  const nightsSelected = (checkin && checkout)
+    ? Math.round((new Date(checkout + 'T12:00:00Z') - new Date(checkin + 'T12:00:00Z')) / 86400000)
+    : 0;
+  // floor mínimo absoluto (2), el bloqueo final se valida en el picker;
+  // aquí solo aseguramos que no sea < twoNightFloor.
+  const meetsMinNights = nightsSelected >= twoNightFloor;
+  // step1Ready = puede pasar al step 2 incluso sin apt elegido. Si no hay
+  // apt, en step 2 se muestra un grid con los 3 Hestías y su estado de
+  // disponibilidad → el huésped elige el que prefiera (o el que tenga libre).
+  const step1Ready    = checkin && checkout && guests && checkin < checkout && meetsMinNights;
+  const step1Complete = apt && step1Ready;
+  const hasName  = name.trim().length >= 2;
+  const hasTel   = tel.replace(/\D/g, '').length >= 9;
+  const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const emailMatch = email.trim().toLowerCase() === emailConfirm.trim().toLowerCase();
+  const emailTypo = channel === 'email' ? _emailSuggest(email) : null;
+  const emailDomain = email.includes('@') ? email.trim().split('@')[1].toLowerCase() : '';
+  const channelValid = channel === 'whatsapp' ? (hasName && hasTel) : (hasName && hasEmail && emailMatch);
+
+  // Comprobación en vivo del dominio del email (registros MX vía DNS-over-HTTPS).
+  // Avisa al instante si el dominio no existe o no puede recibir correos. No
+  // verifica el buzón exacto (eso no es posible desde el navegador).
+  React.useEffect(() => {
+    if (channel !== 'email' || !hasEmail || !emailDomain) { setEmailDns(null); return; }
+    const COMMON = new Set(['gmail.com', 'hotmail.com', 'hotmail.es', 'outlook.com', 'outlook.es', 'yahoo.com', 'yahoo.es', 'icloud.com', 'me.com', 'live.com', 'proton.me', 'protonmail.com']);
+    if (COMMON.has(emailDomain)) { setEmailDns('ok'); return; }
+    let cancelled = false;
+    setEmailDns('checking');
+    const timer = setTimeout(() => {
+      fetch(`https://dns.google/resolve?name=${encodeURIComponent(emailDomain)}&type=MX`)
+        .then(r => r.json())
+        .then(j => {
+          if (cancelled) return;
+          if (j.Status === 3) { setEmailDns('baddomain'); return; }   // NXDOMAIN: el dominio no existe
+          const hasMx = Array.isArray(j.Answer) && j.Answer.some(a => a.type === 15);
+          setEmailDns(hasMx ? 'ok' : 'nomx');
+        })
+        .catch(() => { if (!cancelled) setEmailDns(null); });   // sin red / bloqueado: no molestamos
+    }, 600);
+    return () => { cancelled = true; clearTimeout(timer); };
+  }, [channel, hasEmail, emailDomain]);
+
+  // Cálculo, _calcStay ya aplica la oferta de hueco internamente (fuente única).
+  const calc = step1Complete ? _calcStay(checkin, checkout, apt, pets === 'yes', parseInt(guests, 10) || null) : null;
+  const nightsForExtras = calc?.nights || 0;
+  const selectedExtras = computeSelectedExtras(nightsForExtras);
+  const extrasCount = Object.values(extrasSel).filter(v => v > 0).length;
+  const blocked = avail && avail[apt] ? avail[apt].blocked : null;
+  const isAvailable = step1Complete && availLoaded ? _resAvail(checkin, checkout, blocked) : null;
+  // Larga estancia: ≥29 noches, no julio ni agosto
+  const isLsStay = nightsSelected > 28 && (() => { const m = checkin ? parseInt(checkin.slice(5,7),10) : 0; return m !== 7 && m !== 8; })();
+  const lsCalc   = isLsStay ? _calcLsTotal(checkin, checkout, parseInt(guests,10)||1, pets==='yes', apt) : null;
+  const recapExtrasTotal = selectedExtras.reduce((s, e) => s + e.amount, 0);
+  const recapTotal = isLsStay && lsCalc ? lsCalc.total + recapExtrasTotal : (calc ? calc.directTotal + recapExtrasTotal : 0);
+
+  // ── Recuperación de leads ──────────────────────────────────────────────
+  // Si el visitante deja contacto y fechas pero se va SIN enviar la solicitud,
+  // capturamos ese lead y os llega por email (mismo buzón que las reservas) para
+  // que podáis escribirle vosotros. Se dispara al ocultar/cerrar la página, una
+  // sola vez por sesión, y solo si hay forma de contactarle (teléfono o email).
+  const abandonRef = React.useRef({});
+  abandonRef.current = { apt, checkin, checkout, guests, name, tel, email, pets, channel, sent: !!sent, recapTotal };
+  const abandonDoneRef = React.useRef(false);
+  React.useEffect(() => {
+    const capture = () => {
+      const s = abandonRef.current;
+      if (abandonDoneRef.current || s.sent) return;
+      const telDigits = (s.tel || '').replace(/\D/g, '');
+      const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((s.email || '').trim());
+      if ((telDigits.length < 9 && !validEmail) || !s.checkin || !s.checkout) return;
+      abandonDoneRef.current = true;
+      const aptName = aptNames[s.apt] || (s.apt || 'sin elegir');
+      const fd = new FormData();
+      fd.append('access_key', '95a86784-6d6a-496f-9830-15759c0a3cff');
+      fd.append('subject', `⚠️ Lead sin completar · ${aptName} · ${s.checkin} → ${s.checkout}`);
+      fd.append('from_name', s.name || 'Visitante web');
+      if (validEmail) fd.append('replyto', s.email.trim());
+      fd.append('message',
+        'Un visitante rellenó una solicitud de reserva pero NO llegó a enviarla. Escríbele tú:\n\n' +
+        `Nombre: ${s.name || '–'}\n` +
+        `Teléfono: ${s.tel || '–'}\n` +
+        `Email: ${s.email || '–'}\n` +
+        `Prefería: ${s.channel === 'whatsapp' ? 'WhatsApp' : 'Email'}\n` +
+        `Hestía: ${aptName}\n` +
+        `Entrada: ${s.checkin}\nSalida: ${s.checkout}\n` +
+        `Huéspedes: ${s.guests}\nMascota: ${s.pets === 'yes' ? 'Sí' : 'No'}\n` +
+        `Precio estimado: ${s.recapTotal ? s.recapTotal.toLocaleString('es-ES') + ' €' : '–'}\n`
+      );
+      try {
+        if (navigator.sendBeacon) navigator.sendBeacon('https://api.web3forms.com/submit', fd);
+        else fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd, keepalive: true }).catch(() => {});
+      } catch (_) {}
+    };
+    const onVis = () => { if (document.visibilityState === 'hidden') capture(); };
+    document.addEventListener('visibilitychange', onVis);
+    window.addEventListener('pagehide', capture);
+    return () => { document.removeEventListener('visibilitychange', onVis); window.removeEventListener('pagehide', capture); };
+  }, []);
+
+  // Avanzar pasos. step1Ready basta (sin apt), en step 2 el huésped
+  // verá la disponibilidad de los 3 Hestías y puede elegir uno.
+  const goToStep2 = () => {
+    if (!step1Ready) return;
+    setStep(2);
+    if (typeof _hestiaTrack === 'function') _hestiaTrack('booking_step2', { apt: apt || 'all', checkin, checkout });
+    setTimeout(() => {
+      document.getElementById('rf-step-2')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  };
+  const goToStep3 = () => {
+    if (!step1Complete) { // falta elegir Hestía → señala el grid en vez de avanzar en silencio
+      setStep2Hint(true);
+      document.querySelector('.rf-apt-availability, .rf-apt-pick')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    setStep2Hint(false);
+    setStep(3);
+    if (typeof _hestiaTrack === 'function') _hestiaTrack('booking_step3', { apt: apt || 'all', checkin, checkout });
+    setTimeout(() => {
+      document.getElementById('rf-step-3')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  };
+  const editStep1 = () => {
+    setStep(1);
+    setTimeout(() => {
+      document.getElementById('rf-step-1')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  };
+
+  // Mensaje a enviar
+  const buildMsg = () => {
+    const fmt = n => n.toLocaleString('es-ES') + ' €';
+    const extrasTotal = selectedExtras.reduce((s, e) => s + e.amount, 0);
+
+    // Bloque "Extras" en el cuerpo (entre Mascota y Precio)
+    let extrasText = '';
+    if (selectedExtras.length > 0) {
+      const headEs = '\nExtras:';
+      const headEn = '\nExtras:';
+      const lines = selectedExtras.map(ex => {
+        if (ex.unit === 'hora') {
+          return `  • ${ex.label}, ${ex.qty} h × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
+        }
+        if (ex.unit === 'noche') {
+          return `  • ${ex.label}, ${ex.qty} ${lang === 'es' ? 'noches' : 'nights'} × ${ex.unitPrice} € = ${fmt(ex.amount)}`;
+        }
+        if (ex.amount > 0) {
+          return `  • ${ex.label}, ${fmt(ex.amount)}`;
+        }
+        return `  • ${ex.label}`;
+      });
+      const subtotal = extrasTotal > 0
+        ? `\n  Subtotal extras: ${fmt(extrasTotal)}`
+        : '';
+      extrasText = (lang === 'es' ? headEs : headEn) + '\n' + lines.join('\n') + subtotal;
+    }
+
+    const petsText = pets === 'yes' ? (lang === 'es' ? 'Sí' : 'Yes') : 'No';
+    const babyText = baby === 'yes' ? (lang === 'es' ? 'Sí' : 'Yes') : 'No';
+
+    const grandTotal = isLsStay && lsCalc
+      ? lsCalc.total + extrasTotal
+      : (calc ? calc.directTotal + extrasTotal : 0);
+    const grandAvg = calc ? Math.round(grandTotal / calc.nights) : 0;
+    const priceBlock = (isLsStay && lsCalc)
+      ? (lang === 'es'
+          ? `\n💰 PRECIO ESTANCIA LARGA (TARIFA MENSUAL)\n` +
+            `   ${fmt(grandTotal)} total\n` +
+            (lsCalc.specialNights > 0 ? `   🎄 ${lsCalc.specialNights} noches especiales incluidas\n` : '') +
+            (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
+            `   Señal 20% = ${fmt(Math.round(grandTotal * 0.2))} · resto a la llegada\n`
+          : `\n💰 LONG-STAY PRICE (MONTHLY RATE)\n` +
+            `   ${fmt(grandTotal)} total\n` +
+            (lsCalc.specialNights > 0 ? `   🎄 ${lsCalc.specialNights} special nights included\n` : '') +
+            (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
+            `   Deposit 20% = ${fmt(Math.round(grandTotal * 0.2))} · balance on arrival\n`)
+      : (calc
+          ? (lang === 'es'
+              ? `\n💰 ${calc.isGapOffer ? 'PRECIO DE OFERTA DIRECTA' : 'PRECIO ESTIMADO DIRECTO'}\n` +
+                `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` +
+                (calc.isGapOffer ? `   🏷 Oferta: ${fmt(calc.gapPerNight)}/noche (precio cerrado)\n` : '') +
+                (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') +
+                (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') +
+                (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') +
+                (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
+                `   ✓ Mejor precio garantizado: te lo igualamos y lo mejoramos\n`
+              : `\n💰 ${calc.isGapOffer ? 'DIRECT OFFER PRICE' : 'ESTIMATED DIRECT PRICE'}\n` +
+                `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` +
+                (calc.isGapOffer ? `   🏷 Offer: ${fmt(calc.gapPerNight)}/night (locked price)\n` : '') +
+                (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') +
+                (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') +
+                (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') +
+                (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
+                `   ✓ Best price guaranteed: we match it and beat it\n`)
+          : '');
+    const lines = lang === 'es'
+      ? [
+          `¡Hola! Quiero hacer una consulta de reserva.\n`,
+          `Hestía: ${aptNames[apt] || apt || '–'}`,
+          `Nombre: ${name}`,
+          channel === 'whatsapp' ? `Teléfono: ${tel}` : `Email: ${email}`,
+          `Entrada: ${checkin}`,
+          `Salida: ${checkout}`,
+          `Huéspedes: ${guests}`,
+          `Mascota: ${petsText}`,
+          `Bebé: ${babyText}${extrasText}${priceBlock}`,
+          `Comentarios: ${comments || '–'}`,
+        ]
+      : [
+          `Hello! I'd like to enquire about a booking.\n`,
+          `Hestía: ${aptNames[apt] || apt || '–'}`,
+          `Name: ${name}`,
+          channel === 'whatsapp' ? `Phone: ${tel}` : `Email: ${email}`,
+          `Check-in: ${checkin}`,
+          `Check-out: ${checkout}`,
+          `Guests: ${guests}`,
+          `Pet: ${petsText}`,
+          `Baby: ${babyText}${extrasText}${priceBlock}`,
+          `Comments: ${comments || '–'}`,
+        ];
+    return lines.join('\n');
+  };
+
+  const send = (e) => {
+    e?.preventDefault();
+    if (!step1Complete || !channelValid) return;
+    if (typeof _hestiaTrack === 'function') _hestiaTrack('booking_sent', { apt: apt || 'all', channel, checkin, checkout });
+    const msg = buildMsg();
+    // Captura server-side (Web3Forms): la solicitud llega a vuestro email aunque el
+    // huésped no complete el WhatsApp/correo. En segundo plano, no bloquea su canal.
+    try {
+      const fd = new FormData();
+      fd.append('access_key', '95a86784-6d6a-496f-9830-15759c0a3cff');
+      fd.append('subject', `Solicitud de reserva · ${aptNames[apt] || 'Hestía'} · ${checkin} → ${checkout}`);
+      fd.append('from_name', name || 'Web Hestía');
+      // Reply-To del email que recibís: solo se puede responder por correo si el
+      // huésped eligió el canal email y dejó uno válido. Si eligió WhatsApp, no hay
+      // email (por diseño): se responde por WhatsApp al teléfono que aparece abajo.
+      if (channel === 'email' && hasEmail) {
+        fd.append('email', email.trim());
+        fd.append('replyto', email.trim());
+      }
+      if (tel.trim()) fd.append('Teléfono', tel.trim());   // respaldo también en canal email
+      const backupTel = channel === 'email' && tel.trim() ? `\nTeléfono de respaldo: ${tel.trim()}` : '';
+      fd.append('message', `${msg}\n\nCanal elegido: ${channel === 'whatsapp' ? `WhatsApp (${tel})` : `Email (${email})`}${backupTel}`);
+      // Envío fiable: si la red falla, el lead se encola en localStorage y se
+      // reintenta al cargar (antes era fire-and-forget y se perdía sin rastro).
+      if (window._hestiaSendLeadFd) window._hestiaSendLeadFd(fd);
+      else fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd }).catch(() => {});
+    } catch (_) {}
+    let url;
+    if (channel === 'whatsapp') {
+      const waNum = lang === 'es' ? '34620316370' : '34654138251';
+      url = `https://wa.me/${waNum}?text=` + encodeURIComponent(msg);
+      window.open(url, '_blank');
+    } else {
+      const subj = lang === 'es'
+        ? `Consulta reserva, ${aptNames[apt] || 'Hestía'}`
+        : `Booking enquiry, ${aptNames[apt] || 'Hestía'}`;
+      // CC al propio huésped: recibe una copia de su solicitud. Si su dirección
+      // está mal escrita, esa copia rebota → es la señal de que el email falla.
+      const ccPart = hasEmail ? `cc=${encodeURIComponent(email.trim())}&` : '';
+      url = `mailto:info@hestiayourhome.com?${ccPart}subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(msg)}`;
+      window.location.href = url;
+    }
+    setSent({ channel, url, msg });
+  };
+
+  const copyMsg = () => {
+    if (!sent || !navigator.clipboard) return;
+    navigator.clipboard.writeText(sent.msg)
+      .then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000); })
+      .catch(() => {});
+  };
+
+  // Razón por la que el botón de enviar/avanzar está bloqueado (hint inline).
+  const step1Hint = !step1Ready && (!checkin || !checkout)
+    ? (lang === 'es' ? 'Elige las fechas de entrada y salida para continuar.' : 'Pick check-in and check-out dates to continue.')
+    : null;
+  const sendHint = !apt
+    ? (lang === 'es' ? 'Vuelve al paso 2 y elige una Hestía.' : 'Go back to step 2 and pick a Hestía.')
+    : !hasName ? (lang === 'es' ? 'Escribe tu nombre.' : 'Enter your name.')
+    : (channel === 'whatsapp' && !hasTel) ? (lang === 'es' ? 'Escribe un teléfono válido (mín. 9 dígitos).' : 'Enter a valid phone (min. 9 digits).')
+    : (channel === 'email' && !hasEmail) ? (lang === 'es' ? 'Escribe un email válido.' : 'Enter a valid email.')
+    : (channel === 'email' && !emailMatch) ? (lang === 'es' ? 'Repite el mismo email en la confirmación.' : 'Re-type the same email in the confirmation.')
+    : null;
+
+  // Resumen del paso 1 cuando está plegado: card con color del Hestía,
+  // fechas en español, badge bonita.
+  const nightsBooked = step1Complete ? nightsSelected : null;
+  const step1Summary = step1Complete ? (
+    <div
+      className="rf-summary-card"
+      data-apt={apt}
+      style={{ '--apt-accent': aptAccents[apt] || 'var(--ber)' }}
+    >
+      <div className="rf-summary-apt">
+        <span className="rf-summary-dot" aria-hidden="true"/>
+        <strong>{aptNames[apt]}</strong>
+      </div>
+      <div className="rf-summary-dates">
+        <span className="rf-summary-date">{fmtResDate(checkin)}</span>
+        <span className="rf-summary-arrow" aria-hidden="true">→</span>
+        <span className="rf-summary-date">{fmtResDate(checkout)}</span>
+      </div>
+      <div className="rf-summary-pills">
+        {nightsBooked && (
+          <span className="rf-summary-pill">
+            {nightsBooked} {nightsBooked === 1
+              ? (lang === 'es' ? 'noche' : 'night')
+              : (lang === 'es' ? 'noches' : 'nights')}
+          </span>
+        )}
+        <span className="rf-summary-pill">
+          {guests} {guests === 1
+            ? (lang === 'es' ? 'huésped' : 'guest')
+            : (lang === 'es' ? 'huéspedes' : 'guests')}
+        </span>
+        {pets === 'yes' && (
+          <span className="rf-summary-pill"><HiIcon name="paw" size={13} style={{verticalAlign:'-2px',marginRight:3}} />{lang === 'es' ? 'mascota' : 'pet'}</span>
+        )}
+        {extrasCount > 0 && (
+          <span className="rf-summary-pill">+{extrasCount} {lang === 'es' ? 'extras' : 'extras'}</span>
+        )}
+      </div>
+    </div>
+  ) : null;
+
+  const fmt = n => n.toLocaleString('es-ES') + ' €';
+
+  return (
+    <div className="reservas-form-wrap">
+      <h2 className="reservas-form-title">{t.form_title}</h2>
+      <div className="reservas-form-sub">{t.form_sub}</div>
+
+      {/* Progress indicator: visible en móvil, sutil en desktop */}
+      <div className="rf-progress" aria-label={lang === 'es' ? `Paso ${step} de 3` : `Step ${step} of 3`}>
+        {[
+          { n: 1, label: lang === 'es' ? 'Datos'  : 'Details' },
+          { n: 2, label: lang === 'es' ? 'Precio'  : 'Price'   },
+          { n: 3, label: lang === 'es' ? 'Envío'   : 'Send'    },
+        ].map((s, i) => (
+          <React.Fragment key={s.n}>
+            <div className={`rf-ps${step === s.n ? ' rps-act' : step > s.n ? ' rps-done' : ' rps-pend'}`}>
+              <span className="rf-ps-n" aria-current={step === s.n ? 'step' : undefined}>{step > s.n ? '✓' : s.n}</span>
+              <span className="rf-ps-lbl">{s.label}</span>
+            </div>
+            {i < 2 && <span className={`rf-ps-line${step > s.n ? ' rps-done' : ''}`} aria-hidden="true"/>}
+          </React.Fragment>
+        ))}
+      </div>
+
+      {/* SECTION 1, DATOS */}
+      <section
+        id="rf-step-1"
+        className={`rf-step rf-step-1 ${step === 1 ? 'is-open' : 'is-collapsed'}`}
+        aria-current={step === 1 ? 'step' : undefined}
+      >
+        <header className="rf-step-head">
+          <span className="rf-step-num">01</span>
+          <h3 className="rf-step-title">{t.step1_title}</h3>
+          {step > 1 && (
+            <button type="button" className="rf-edit" onClick={editStep1}>
+              <span className="rf-edit-summary">{step1Summary}</span>
+              <span className="rf-edit-action">{t.edit_data}</span>
+            </button>
+          )}
+        </header>
+        {step === 1 && (
+          <div className="rf-step-body">
+            <div className="form-field full">
+              <label>{t.f_apt}</label>
+              <div className="rf-apt-pick" role="radiogroup" aria-label={t.f_apt}>
+                {[
+                  { id: 'vm', name: 'Hestía Mar',      accent: '#6B7A3A' },
+                  { id: 'vt', name: 'Hestía Thalassa', accent: '#B86A3C' },
+                  { id: 'vs', name: 'Hestía Salinas',  accent: '#D4A84A' },
+                ].map(o => (
+                  <button
+                    key={o.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={apt === o.id}
+                    className={`rf-apt-chip${apt === o.id ? ' is-on' : ''}`}
+                    style={{ '--apt-accent': o.accent }}
+                    onClick={() => setApt(o.id)}
+                  >
+                    <span className="rf-apt-chip-dot" aria-hidden="true"/>
+                    <span className="rf-apt-chip-name">{o.name}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div className="form-field full">
+              <label>{lang === 'es' ? 'Fechas de la estancia' : 'Stay dates'}</label>
+              <DateRangePicker
+                checkin={checkin}
+                checkout={checkout}
+                setCheckin={setCheckin}
+                setCheckout={setCheckout}
+                blocked={apt && avail && avail[apt] ? avail[apt].blocked : []}
+                gapOffers={apt && window.PRICES_V2 && window.PRICES_V2.gapOverrides
+                  ? Object.values(window.PRICES_V2.gapOverrides).filter(o => o && o.apt === apt)
+                  : []}
+                accent={
+                  apt === 'vm' ? '#6B7A3A'
+                  : apt === 'vt' ? '#B86A3C'
+                  : apt === 'vs' ? '#D4A84A'
+                  : '#3AAABB'
+                }
+                lang={lang}
+              />
+              {!apt && (
+                <p className="form-help-note">
+                  {lang === 'es'
+                    ? '↑ Selecciona primero un Hestía para ver las fechas bloqueadas.'
+                    : '↑ Pick a Hestía first to see blocked dates.'}
+                </p>
+              )}
+            </div>
+            <div className="form-field full">
+              <label>{t.f_guests}</label>
+              <div className="rf-chip-row" role="radiogroup" aria-label={t.f_guests}>
+                {t.f_guests_opts.map((o, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    role="radio"
+                    aria-checked={guests === o}
+                    className={`rf-chip${guests === o ? ' is-on' : ''}`}
+                    onClick={() => setGuests(o)}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
+              <span className="rf-chip-hint">
+                {guests || (lang === 'es' ? 'Selecciona número de huéspedes' : 'Pick the number of guests')}
+              </span>
+            </div>
+            <div className="form-field full">
+              <label>{t.f_pets}</label>
+              <div className="rf-chip-row" role="radiogroup" aria-label={t.f_pets}>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={pets === 'no'}
+                  className={`rf-chip rf-chip-wide${pets === 'no' ? ' is-on' : ''}`}
+                  onClick={() => setPets('no')}
+                >
+                  {t.f_pets_no}
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={pets === 'yes'}
+                  className={`rf-chip rf-chip-wide${pets === 'yes' ? ' is-on' : ''}`}
+                  onClick={() => setPets('yes')}
+                >
+                  <HiIcon name="paw" size={15} style={{verticalAlign:'-2px',marginRight:4}} />{t.f_pets_yes}
+                </button>
+              </div>
+            </div>
+            <div className="form-field full">
+              <label>{t.f_baby}</label>
+              <div className="rf-chip-row" role="radiogroup" aria-label={t.f_baby}>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={baby === 'no'}
+                  className={`rf-chip rf-chip-wide${baby === 'no' ? ' is-on' : ''}`}
+                  onClick={() => setBaby('no')}
+                >
+                  {t.f_baby_no}
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={baby === 'yes'}
+                  className={`rf-chip rf-chip-wide${baby === 'yes' ? ' is-on' : ''}`}
+                  onClick={() => setBaby('yes')}
+                >
+                  <HiIcon name="baby" size={15} style={{verticalAlign:'-2px',marginRight:4}} />{t.f_baby_yes}
+                </button>
+              </div>
+            </div>
+            {checkin && checkout && nightsSelected > 0 && nightsSelected < minNights && (
+              <div className="rf-min-nights-warn" role="alert">
+                <strong><HiIcon name="alert" size={14} style={{verticalAlign:'-2px',marginRight:4}} />{lang === 'es' ? 'Estancia mínima' : 'Minimum stay'}</strong>
+                <span>
+                  {lang === 'es'
+                    ? `No aceptamos reservas de ${nightsSelected} ${nightsSelected === 1 ? 'noche' : 'noches'}. La estancia mínima en cualquier Hestía es de ${minNights} noches. Ajusta la fecha de salida para continuar.`
+                    : `We don't accept ${nightsSelected}-night stays. Minimum stay at any Hestía is ${minNights} nights. Adjust the check-out date to continue.`}
+                </span>
+              </div>
+            )}
+            <div className="rf-step-actions">
+              <button
+                type="button"
+                onClick={goToStep2}
+                className={`btn btn-primary rf-next${!step1Ready ? ' req-btn-dis' : ''}`}
+                aria-disabled={!step1Ready}
+              >
+                {t.check_avail}
+              </button>
+              {step1Hint && <p className="form-help-note rf-btn-hint">{step1Hint}</p>}
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* SECTION 2, DISPONIBILIDAD Y PRECIO */}
+      <section
+        id="rf-step-2"
+        className={`rf-step rf-step-2 ${step >= 2 ? 'is-open' : 'is-locked'} ${step > 2 ? 'is-collapsed' : ''}`}
+        aria-current={step === 2 ? 'step' : undefined}
+      >
+        <header className="rf-step-head">
+          <span className="rf-step-num">02</span>
+          <h3 className="rf-step-title">{t.step2_title}</h3>
+          {step === 1 && <span className="rf-step-locked-note" aria-hidden="true"><HiIcon name="lock" size={13} /></span>}
+        </header>
+        {step >= 2 && (
+          <div className="rf-step-body">
+            {/* Long-stay info block, shown when nights > 28 and month is Sep–Jun */}
+            {isLsStay && (
+              <LsInfoBlock calc={calc} lang={lang} />
+            )}
+            <ReviewQuote apt={apt} lang={lang} />
+            {/* Mientras se carga la disponibilidad, esqueleto con la misma forma
+                que la rejilla de 3 Hestías para que no haya salto al aparecer. */}
+            {!apt && !availLoaded && (
+              <div className="rf-apt-availability" aria-hidden="true">
+                <div className="rf-sk rf-sk-lede" />
+                <div className="rf-apt-avail-grid">
+                  {[0, 1, 2].map(i => <div key={i} className="rf-apt-avail-card rf-sk-card" />)}
+                </div>
+              </div>
+            )}
+            {/* Si no hay apt elegido, mostramos los 3 Hestías con su
+                disponibilidad para las fechas → el huésped elige uno. */}
+            {!apt && availLoaded && (
+              <div className="rf-apt-availability" aria-label={lang === 'es' ? 'Disponibilidad por Hestía' : 'Availability per Hestía'}>
+                <p className="rf-apt-avail-lede">
+                  {lang === 'es'
+                    ? 'Estas son las Hestías disponibles para tus fechas. Elige una para continuar.'
+                    : 'These are the Hestías available for your dates. Pick one to continue.'}
+                </p>
+                <div className="rf-apt-avail-grid">
+                  {[
+                    { id: 'vm', name: 'Hestía Mar',      slug: 'mar',      color: '#6B7A3A' },
+                    { id: 'vt', name: 'Hestía Thalassa', slug: 'thalassa', color: '#B86A3C' },
+                    { id: 'vs', name: 'Hestía Salinas',  slug: 'salinas',  color: '#D4A84A' },
+                  ].map(a => {
+                    const blk = avail && avail[a.id] ? avail[a.id].blocked : null;
+                    const free = blk ? _resAvail(checkin, checkout, blk) : null;
+                    const statusClass = free === true ? 'is-free' : free === false ? 'is-taken' : 'is-unknown';
+                    const statusLabel = free === true
+                      ? (lang === 'es' ? 'Disponible' : 'Available')
+                      : free === false
+                        ? (lang === 'es' ? 'Ocupado'  : 'Taken')
+                        : (lang === 'es' ? 'Sin datos' : 'No data');
+                    return (
+                      <button
+                        key={a.id}
+                        type="button"
+                        className={`rf-apt-avail-card ${statusClass}`}
+                        style={{ '--apt-c': a.color }}
+                        onClick={() => setApt(a.id)}
+                      >
+                        <span className="rf-apt-avail-name">{a.name}</span>
+                        <span className="rf-apt-avail-badge">{statusLabel}</span>
+                        <span className="rf-apt-avail-cta">
+                          {free === false
+                            ? (lang === 'es' ? 'Envío de solicitud igualmente →' : 'Send request anyway →')
+                            : (lang === 'es' ? 'Elegir y continuar →' : 'Choose and continue →')}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            {/* Sin apt: si algún Hestía está ocupado en esas fechas, ofrecemos
+                opciones cercanas con disponibilidad y precio. */}
+            {!apt && availLoaded && (() => {
+              const statuses = ['vm', 'vt', 'vs'].map(id => {
+                const blk = avail && avail[id] ? avail[id].blocked : null;
+                return blk ? _resAvail(checkin, checkout, blk) : null;
+              });
+              if (!statuses.some(s => s === false)) return null;
+              const noneFree = !statuses.some(s => s === true);
+              const alts = _hestiaFindAlternatives({ checkin, checkout, apt: '', avail, guests: parseInt(guests, 10) || null, max: 6 });
+              if (!alts.length) return null;
+              const fmt = n => n.toLocaleString('es-ES') + ' €';
+              const shiftLabel = (alt) => {
+                if (alt.sameDates) return lang === 'es' ? 'Mismas fechas, otro Hestía' : 'Same dates, another Hestía';
+                const n = Math.abs(alt.shiftDays);
+                const u = n === 1 ? (lang === 'es' ? 'día' : 'day') : (lang === 'es' ? 'días' : 'days');
+                const dir = lang === 'es' ? (alt.shiftDays < 0 ? 'antes' : 'después') : (alt.shiftDays < 0 ? 'earlier' : 'later');
+                return `${alt.nights} ${lang === 'es' ? 'noches' : 'nights'} · ${n} ${u} ${dir}`;
+              };
+              const applyAlt = (alt) => {
+                setApt(alt.aptId); setCheckin(alt.checkin); setCheckout(alt.checkout);
+                setTimeout(() => document.getElementById('rf-step-2')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+              };
+              return (
+                <div className="rf-alts">
+                  <div className="rf-alts-hd">
+                    {noneFree
+                      ? (lang === 'es' ? 'Ningún Hestía libre en esas fechas exactas. Opciones cercanas:' : 'No Hestía free on those exact dates. Nearby options:')
+                      : (lang === 'es' ? 'Otras opciones cercanas con disponibilidad' : 'Other nearby options with availability')}
+                  </div>
+                  <p className="rf-alts-sub">
+                    {lang === 'es'
+                      ? 'Toca una opción y la cargamos en tu solicitud. Precio directo, sin comisiones.'
+                      : 'Tap an option and we load it into your request. Direct price, no fees.'}
+                  </p>
+                  <div className="rf-alts-grid">
+                    {alts.map((alt, i) => (
+                      <button type="button" key={i} className="rf-alt-card" style={{ '--apt-accent': aptAccents[alt.aptId] }} onClick={() => applyAlt(alt)}>
+                        <span className="rf-alt-apt">{alt.aptName}</span>
+                        <span className="rf-alt-dates">{_drFmtDate(alt.checkin, lang)} – {_drFmtDate(alt.checkout, lang)}</span>
+                        <span className="rf-alt-shift">{shiftLabel(alt)}</span>
+                        <span className="rf-alt-price"><strong>{fmt(alt.total)}</strong> <small>{fmt(alt.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</small></span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+            {/* Esqueleto del estado mientras carga la disponibilidad del apt elegido. */}
+            {apt && !availLoaded && (
+              <div className="rf-status rf-sk-status" aria-hidden="true"><span className="rf-sk rf-sk-status-line" /></div>
+            )}
+            {/* Status badge, sólo si hay apt elegido */}
+            {apt && isAvailable === true && (
+              <div className="rf-status rf-status-ok">
+                <span className="rf-status-icon" aria-hidden="true">✓</span>
+                <span>{t.status_avail}</span>
+              </div>
+            )}
+            {apt && isAvailable === false && (
+              <div className="rf-status rf-status-taken">
+                <span className="rf-status-icon" aria-hidden="true">×</span>
+                <span className="rf-status-main">{t.status_taken}</span>
+                <span className="rf-status-sub">{t.status_taken_sub}</span>
+              </div>
+            )}
+            {apt && isAvailable === null && availLoaded && (
+              <div className="rf-status rf-status-unknown">
+                <span className="rf-status-icon" aria-hidden="true">·</span>
+                <span className="rf-status-main">{t.status_no_data}</span>
+                <span className="rf-status-sub">{t.status_no_data_sub}</span>
+              </div>
+            )}
+
+            {apt && isAvailable === false && availLoaded && (() => {
+              const alts = _hestiaFindAlternatives({ checkin, checkout, apt, avail, guests: parseInt(guests, 10) || null, max: 4 });
+              if (!alts.length) return null;
+              const fmt = n => n.toLocaleString('es-ES') + ' €';
+              const shiftLabel = (alt) => {
+                if (alt.sameDates) return lang === 'es' ? 'Mismas fechas, otro Hestía' : 'Same dates, another Hestía';
+                const n = Math.abs(alt.shiftDays);
+                const u = n === 1 ? (lang === 'es' ? 'día' : 'day') : (lang === 'es' ? 'días' : 'days');
+                const dir = lang === 'es' ? (alt.shiftDays < 0 ? 'antes' : 'después') : (alt.shiftDays < 0 ? 'earlier' : 'later');
+                return `${alt.nights} ${lang === 'es' ? 'noches' : 'nights'} · ${n} ${u} ${dir}`;
+              };
+              const applyAlt = (alt) => {
+                setApt(alt.aptId); setCheckin(alt.checkin); setCheckout(alt.checkout);
+                setTimeout(() => document.getElementById('rf-step-2')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+              };
+              return (
+                <div className="rf-alts">
+                  <div className="rf-alts-hd">
+                    {lang === 'es' ? 'Cerca de lo que buscabas, con disponibilidad' : 'Close to what you wanted, with availability'}
+                  </div>
+                  <p className="rf-alts-sub">
+                    {lang === 'es'
+                      ? 'Toca una opción y la cargamos en tu solicitud. Precio directo, sin comisiones.'
+                      : 'Tap an option and we load it into your request. Direct price, no fees.'}
+                  </p>
+                  <div className="rf-alts-grid">
+                    {alts.map((alt, i) => (
+                      <button type="button" key={i} className="rf-alt-card" style={{ '--apt-accent': aptAccents[alt.aptId] }} onClick={() => applyAlt(alt)}>
+                        <span className="rf-alt-apt">{alt.aptName}</span>
+                        <span className="rf-alt-dates">{_drFmtDate(alt.checkin, lang)} – {_drFmtDate(alt.checkout, lang)}</span>
+                        <span className="rf-alt-shift">{shiftLabel(alt)}</span>
+                        <span className="rf-alt-price"><strong>{fmt(alt.total)}</strong> <small>{fmt(alt.avgPerNight)}{lang === 'es' ? '/noche' : '/night'}</small></span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Price, PricePreview handles both regular and LS stays.
+                For LS stays lsCalc is passed so it shows the full nightly
+                breakdown crossed out plus the LS monthly price and savings. */}
+            {calc && (
+              <PricePreview apt={apt} checkin={checkin} checkout={checkout} pets={pets} guests={guests} lang={lang} extras={selectedExtras} lsCalc={isLsStay ? lsCalc : null}/>
+            )}
+
+            {/* Extras editor (chips) */}
+            {step === 2 && (
+              <div className="form-field full rf-extras-block">
+                <div className="form-extras-label">{t.f_extras_label}</div>
+                <div className="rf-extras-chips">
+                  {extrasList.map(ex => {
+                    const qty = extrasSel[ex.id] || 0;
+                    const checked = qty > 0;
+                    const label = lang === 'es' ? ex.label_es : ex.label_en;
+                    const suffix = _resExtraUnitSuffix(ex.unit, lang);
+                    return (
+                      <div key={ex.id} className={`rf-extra-chip${checked ? ' is-on' : ''}`}>
+                        <button
+                          type="button"
+                          className="rf-extra-chip-btn"
+                          onClick={() => (checked ? null : incExtra(ex.id))}
+                          aria-label={checked ? label : (lang === 'es' ? `Añadir ${label}` : `Add ${label}`)}
+                        >
+                          <span className="rf-extra-chip-mark" aria-hidden="true">{checked ? '✓' : '＋'}</span>
+                          <span className="rf-extra-chip-text">
+                            <span className="rf-extra-chip-label">{label}</span>
+                            {ex.price > 0 && (
+                              <span className="rf-extra-chip-price">{ex.price} €{suffix}</span>
+                            )}
+                          </span>
+                        </button>
+                        {checked && (
+                          <div
+                            className="rf-extra-stepper"
+                            role="group"
+                            aria-label={lang === 'es' ? `Cantidad de ${label}` : `Quantity of ${label}`}
+                          >
+                            <button
+                              type="button"
+                              className="rf-extra-step-btn"
+                              onClick={() => decExtra(ex.id)}
+                              aria-label={lang === 'es' ? 'Quitar uno' : 'Remove one'}
+                            >−</button>
+                            <span className="rf-extra-step-num" aria-live="polite">{qty}</span>
+                            <button
+                              type="button"
+                              className="rf-extra-step-btn"
+                              onClick={() => incExtra(ex.id)}
+                              disabled={qty >= maxForExtra(ex)}
+                              aria-label={lang === 'es' ? 'Añadir uno' : 'Add one'}
+                            >+</button>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {step === 2 && (
+              <div className="rf-step-actions">
+                <button type="button" className={`btn btn-primary rf-next${!step1Complete ? ' req-btn-dis' : ''}`} onClick={goToStep3}>
+                  {t.continue_to_send}
+                </button>
+                {step2Hint && !apt && (
+                  <p className="form-help-note rf-btn-hint" role="alert">
+                    {lang === 'es' ? '↑ Elige una Hestía arriba para continuar.' : '↑ Pick a Hestía above to continue.'}
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+      </section>
+
+      {/* SECTION 3, CANAL */}
+      <section
+        id="rf-step-3"
+        className={`rf-step rf-step-3 ${step >= 3 ? 'is-open' : 'is-locked'}`}
+        aria-current={step === 3 ? 'step' : undefined}
+      >
+        <header className="rf-step-head">
+          <span className="rf-step-num">03</span>
+          <h3 className="rf-step-title">{t.step3_title}</h3>
+          {step < 3 && <span className="rf-step-locked-note" aria-hidden="true"><HiIcon name="lock" size={13} /></span>}
+        </header>
+        {step >= 3 && (
+          <div className="rf-step-body">
+            {step1Summary && (
+              <div className="rf-recap" aria-label={lang === 'es' ? 'Resumen de tu solicitud' : 'Your request summary'}>
+                {step1Summary}
+                {recapTotal > 0 && (
+                  <div className="rf-recap-price">
+                    <span>{lang === 'es' ? 'Precio estimado directo' : 'Estimated direct price'}</span>
+                    <strong>{fmt(recapTotal)}</strong>
+                  </div>
+                )}
+              </div>
+            )}
+            {sent ? (
+              <div className="rf-sent" role="status" aria-live="polite">
+                <div className="rf-sent-icon" aria-hidden="true">✓</div>
+                <h4 className="rf-sent-title">{lang === 'es' ? 'Solicitud preparada' : 'Request ready'}</h4>
+                <p className="rf-sent-text">
+                  {sent.channel === 'whatsapp'
+                    ? (lang === 'es' ? 'Te hemos abierto WhatsApp con tu solicitud. Pulsa enviar allí para que nos llegue.' : 'We opened WhatsApp with your request. Press send there so it reaches us.')
+                    : (lang === 'es' ? 'Te hemos abierto tu correo con la solicitud. Pulsa enviar para que nos llegue.' : 'We opened your email with the request. Press send so it reaches us.')}
+                </p>
+                {sent.channel === 'email' && (
+                  <p className="rf-sent-copy">
+                    {lang === 'es'
+                      ? <>Recibirás una copia de esta solicitud en tu correo{email ? <> (<strong>{email}</strong>)</> : ''}. Si no te llega en unos minutos (mira también spam), puede que el email esté mal escrito: escríbenos por WhatsApp o vuelve a enviarla.</>
+                      : <>You will get a copy of this request in your email{email ? <> (<strong>{email}</strong>)</> : ''}. If it does not arrive within a few minutes (check spam too), your email may be mistyped: message us on WhatsApp or send it again.</>}
+                  </p>
+                )}
+                <p className="rf-sent-fallback">
+                  {lang === 'es' ? '¿No se abrió? ' : 'Didn’t open? '}
+                  <a href={sent.url} target={sent.channel === 'whatsapp' ? '_blank' : undefined} rel="noopener">
+                    {sent.channel === 'whatsapp' ? (lang === 'es' ? 'Abrir WhatsApp' : 'Open WhatsApp') : (lang === 'es' ? 'Abrir tu correo' : 'Open your email')}
+                  </a>
+                </p>
+                <div className="rf-sent-actions">
+                  <button type="button" className="btn btn-ghost" onClick={copyMsg}>
+                    {copied ? (lang === 'es' ? 'Copiado ✓' : 'Copied ✓') : (lang === 'es' ? 'Copiar mensaje' : 'Copy message')}
+                  </button>
+                  <button type="button" className="btn btn-ghost" onClick={() => setSent(null)}>
+                    {lang === 'es' ? 'Volver' : 'Back'}
+                  </button>
+                </div>
+                <p className="rf-sent-direct">
+                  {lang === 'es' ? 'O contáctanos directamente: ' : 'Or contact us directly: '}
+                  <strong>{sent.channel === 'whatsapp' ? (lang === 'es' ? '+34 620 316 370' : '+34 654 138 251') : 'info@hestiayourhome.com'}</strong>
+                </p>
+              </div>
+            ) : (<>
+            <div className="rf-channel-label">{t.channel_label}</div>
+            <div className="rf-channels" role="tablist">
+              <button
+                type="button"
+                role="tab"
+                aria-selected={channel === 'whatsapp'}
+                className={`rf-channel ${channel === 'whatsapp' ? 'is-active' : ''}`}
+                onClick={() => setChannel('whatsapp')}
+              >
+                <span className="rf-channel-name">{t.channel_wa}</span>
+                <span className="rf-channel-desc">{t.channel_wa_desc}</span>
+              </button>
+              <button
+                type="button"
+                role="tab"
+                aria-selected={channel === 'email'}
+                className={`rf-channel ${channel === 'email' ? 'is-active' : ''}`}
+                onClick={() => setChannel('email')}
+              >
+                <span className="rf-channel-name">{t.channel_email}</span>
+                <span className="rf-channel-desc">{t.channel_email_desc}</span>
+              </button>
+            </div>
+
+            <form className="reservas-form rf-channel-form" onSubmit={send}>
+              <div className="form-field full">
+                <label>{t.f_name}</label>
+                <input type="text" placeholder={t.f_name_ph} value={name}
+                  onChange={e => setName(e.target.value)} required autoComplete="name"/>
+              </div>
+              {channel === 'whatsapp' ? (
+                <div className="form-field full">
+                  <label>{t.f_tel}</label>
+                  <input type="tel" placeholder={t.f_tel_ph} value={tel}
+                    onChange={e => setTel(e.target.value)} required autoComplete="tel"/>
+                </div>
+              ) : (
+                <>
+                <div className="form-field full">
+                  <label>{t.f_email}</label>
+                  <input type="email" placeholder={t.f_email_ph} value={email}
+                    onChange={e => setEmail(e.target.value)} required autoComplete="email"/>
+                  {emailTypo && (
+                    <button type="button" className="rf-email-suggest" onClick={() => setEmail(emailTypo)}>
+                      {lang === 'es' ? '¿Quisiste decir' : 'Did you mean'} <strong>{emailTypo}</strong>? · {lang === 'es' ? 'Usar' : 'Use it'}
+                    </button>
+                  )}
+                  {!emailTypo && hasEmail && emailDns === 'checking' && (
+                    <span className="rf-email-checking">{lang === 'es' ? 'Comprobando el correo…' : 'Checking your email…'}</span>
+                  )}
+                  {!emailTypo && emailDns === 'baddomain' && (
+                    <span className="rf-email-mismatch">{lang === 'es' ? `El dominio "${emailDomain}" no existe. Revisa tu correo.` : `The domain "${emailDomain}" does not exist. Check your email.`}</span>
+                  )}
+                  {!emailTypo && emailDns === 'nomx' && (
+                    <span className="rf-email-mismatch">{lang === 'es' ? `"${emailDomain}" no parece poder recibir correos. Revísalo.` : `"${emailDomain}" does not seem able to receive emails. Please check it.`}</span>
+                  )}
+                </div>
+                <div className="form-field full">
+                  <label>{lang === 'es' ? 'Confirma tu email' : 'Confirm your email'}</label>
+                  <input type="email" placeholder={lang === 'es' ? 'Repite tu email' : 'Re-type your email'}
+                    value={emailConfirm} onChange={e => setEmailConfirm(e.target.value)} required
+                    autoComplete="off"/>
+                  {emailConfirm.trim() && !emailMatch && (
+                    <span className="rf-email-mismatch">{lang === 'es' ? 'Los dos emails no coinciden.' : 'The two emails do not match.'}</span>
+                  )}
+                </div>
+                <div className="form-field full">
+                  <label>{lang === 'es' ? 'Teléfono (opcional, por si el email falla)' : 'Phone (optional, in case the email fails)'}</label>
+                  <input type="tel" placeholder={t.f_tel_ph} value={tel}
+                    onChange={e => setTel(e.target.value)} autoComplete="tel"/>
+                </div>
+                </>
+              )}
+              <p className="rf-contact-warn">
+                <HiIcon name="alert" size={15} style={{verticalAlign:'-2px'}} />{' '}
+                {channel === 'whatsapp'
+                  ? (lang === 'es'
+                      ? 'Revisa que el teléfono sea correcto: si está mal, no podremos contestarte.'
+                      : 'Double-check your phone number: if it is wrong, we will not be able to reply.')
+                  : (lang === 'es'
+                      ? 'Revisa que el correo sea correcto: si está mal, no podremos contestarte.'
+                      : 'Double-check your email: if it is wrong, we will not be able to reply.')}
+              </p>
+              <div className="form-field full">
+                <label>{t.f_comments}</label>
+                <textarea placeholder={t.f_comments_ph} value={comments}
+                  onChange={e => setComments(e.target.value)}/>
+              </div>
+              <div className="rf-step-actions">
+                <p className="rf-privacy-note">
+                  {lang === 'es'
+                    ? <><small>Al enviar aceptas nuestra <a href="privacidad.html" target="_blank" rel="noopener">política de privacidad</a>. Tus datos se usarán únicamente para gestionar esta solicitud de reserva.</small></>
+                    : <><small>By sending you accept our <a href="privacidad.html" target="_blank" rel="noopener">privacy policy</a>. Your data will only be used to manage this booking request.</small></>}
+                </p>
+                <button
+                  type="submit"
+                  className={`btn btn-primary reservas-submit${!channelValid ? ' req-btn-dis' : ''}`}
+                  disabled={!channelValid}
+                  aria-disabled={!channelValid}
+                >
+                  {channel === 'whatsapp' ? t.send_wa : t.send_email}
+                </button>
+                {sendHint && <p className="form-help-note rf-btn-hint">{sendHint}</p>}
+              </div>
+            </form>
+            </>)}
+          </div>
+        )}
+      </section>
+    </div>
+  );
+};
+
+const ReservasAside = ({ lang }) => {
+  const t = RESERVAS_COPY[lang];
+  return (
+    <aside className="reservas-aside">
+      <h2 className="reservas-aside-title">{t.aside_title}</h2>
+      <div className="reservas-person-card" style={{ '--card-accent': 'var(--sol)' }}>
+        <div className="r-avatar">
+          <img decoding="async" src="assets/photo-alex.jpg" alt="Alex Berruezo" width="731" height="1014" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
+        </div>
+        <div>
+          <div className="r-name">Alex Berruezo</div>
+          <div className="r-lang">🇪🇸 Español</div>
+          <div className="r-role">{lang === 'es' ? 'Reserva · Antes de tu llegada' : 'Booking · Before you arrive'}</div>
+        </div>
+        <div className="r-actions">
+          <a href="https://wa.me/34620316370" className="btn btn-primary" target="_blank" rel="noopener">
+            WhatsApp <span className="arrow">→</span>
+          </a>
+          <a href="tel:+34620316370" className="btn btn-ghost-dark">+34 620 316 370</a>
+        </div>
+      </div>
+      <div className="reservas-person-card" style={{ '--card-accent': 'var(--vt)' }}>
+        <div className="r-avatar" style={{ background: 'var(--vt)' }}>
+          <img decoding="async" src="assets/photo-fran.jpg" alt="Fran Moral" width="925" height="2000" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
+        </div>
+        <div>
+          <div className="r-name">Fran Moral</div>
+          <div className="r-lang" style={{ color: 'var(--vt)' }}>🇬🇧 English</div>
+          <div className="r-role">{lang === 'es' ? 'Estancia · Mientras estás aquí' : 'Stay · While you are here'}</div>
+        </div>
+        <div className="r-actions">
+          <a href="https://wa.me/34654138251" className="btn btn-primary" target="_blank" rel="noopener">
+            WhatsApp <span className="arrow">→</span>
+          </a>
+          <a href="tel:+34654138251" className="btn btn-ghost-dark">+34 654 138 251</a>
+        </div>
+      </div>
+      <div className="reservas-guarantee">
+        <div className="rg-title">{t.guarantee_title}</div>
+        <p className="rg-lede">
+          {lang === 'es'
+            ? 'Reservando directo te ahorras hasta un 10 % aprox.: mejor precio que Booking o Airbnb, sin comisiones y con respuesta humana normalmente en minutos.'
+            : 'Book direct and save up to ~10%: better price than Booking or Airbnb, no commissions and a human reply usually in minutes.'}
+        </p>
+        <p className="rg-disclaimer">
+          {lang === 'es'
+            ? '* El ahorro exacto depende de si la plataforma ya está aplicando descuentos o programas propios que no podemos conocer; por eso indicamos «hasta un 10 % aprox.».'
+            : '* The exact saving depends on whether the platform is already applying its own discounts or programmes we can’t know; that’s why we say "up to ~10%".'}
+        </p>
+        <button
+          type="button"
+          className="rg-cta"
+          onClick={() => window.dispatchEvent(new Event('hestia:open-direct-perks'))}
+          aria-haspopup="dialog"
+        >
+          {lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}
+          <span className="rg-cta-arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </aside>
+  );
+};
+
+const ReservasPageApp = () => {
+  const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
+  const { mode, scrolled } = useScrollMode();
+  useReveal();
+
+  React.useEffect(() => {
+    localStorage.setItem('hestia-lang', lang);
+    document.documentElement.lang = lang;
+    document.title = lang === 'es'
+      ? 'Reservas · Hestía Your Home · Vera Playa'
+      : 'Book · Hestía Your Home · Vera Playa';
+  }, [lang]);
+
+  // Abrir modal de ventajas directamente si se llega con #ventajas en la URL
+  React.useEffect(() => {
+    if (window.location.hash === '#ventajas') {
+      const t = setTimeout(() => {
+        window.dispatchEvent(new Event('hestia:open-direct-perks'));
+      }, 400);
+      return () => clearTimeout(t);
+    }
+  }, []);
+
+  return (
+    <>
+      <Topbar lang={lang} setLang={setLang} />
+      <Header mode={mode} scrolled={scrolled} lang={lang} />
+      <main>
+        <ReservasHero lang={lang} />
+        <FraseHogar lang={lang} />
+        <div className="reservas-body">
+          <div className="reservas-inner">
+            <ReservasForm lang={lang} />
+            <ReservasAside lang={lang} />
+          </div>
+        </div>
+        <QuickFAQ lang={lang} pageId="reservas" />
+        <ContactCTA lang={lang} />
+      </main>
+      <Footer lang={lang} />
+      <WidgetStack lang={lang} />
+      <FloatingChat lang={lang} />
+      <Cookies lang={lang} />
+    </>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<ReservasPageApp/>);

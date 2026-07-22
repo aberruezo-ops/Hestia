@@ -1,0 +1,15 @@
+name = "hestia-social-publish"
+main = "index.js"
+compatibility_date = "2024-11-01"
+
+# Rate limiting de publicaciones por IP. Crea el namespace y pega el id:
+#   wrangler kv namespace create SOCIAL_KV
+kv_namespaces = [
+  { binding = "SOCIAL_KV", id = "SUSTITUIR_POR_EL_ID_DEL_KV" }
+]
+
+# Los secretos NO van aquí. Se configuran con:
+#   wrangler secret put META_TOKEN
+#   wrangler secret put IG_USER_ID
+#   wrangler secret put FB_PAGE_ID
+#   wrangler secret put PUBLISH_SECRET

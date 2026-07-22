@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="referrer" content="no-referrer"/>
+  <meta name="theme-color" content="#2A0F2E"/>
+  <title>Registro de viajeros · Hestía Your Home</title>
+  <meta name="description" content="Registro de viajeros obligatorio (RD 933/2021). Rellena los datos de tu documento para tu estancia en Hestía."/>
+  <link rel="manifest" href="/site.webmanifest"/>
+  <link rel="canonical" href="https://www.hestiayourhome.com/registro.html"/>
+  <meta name="robots" content="noindex, follow"/>
+  <meta property="og:site_name" content="Hestía Your Home"/>
+  <meta property="og:type"      content="website"/>
+  <meta property="og:url"       content="https://www.hestiayourhome.com/registro.html"/>
+  <meta property="og:title"     content="Registro de viajeros · Hestía Your Home"/>
+  <meta property="og:description" content="Registro de viajeros obligatorio (RD 933/2021) para tu estancia en Hestía."/>
+  <meta property="og:image"     content="https://www.hestiayourhome.com/assets/hero-terrace-night.jpg"/>
+  <meta property="og:image:width"  content="1600"/>
+  <meta property="og:image:height" content="1600"/>
+  <meta property="og:image:alt"    content="Hestía Your Home · Vera Playa, Almería"/>
+  <meta property="og:locale"    content="es_ES"/>
+  <meta name="twitter:card"        content="summary_large_image"/>
+  <meta name="twitter:title"       content="Registro de viajeros · Hestía Your Home"/>
+  <meta name="twitter:description" content="Registro de viajeros obligatorio para tu estancia."/>
+  <meta name="twitter:image"       content="https://www.hestiayourhome.com/assets/hero-terrace-night.jpg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin/>
+  <link rel="dns-prefetch" href="//unpkg.com"/>
+  <link rel="preconnect" href="https://api.web3forms.com"/>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/styles.css?v=885"/>          <!-- GA4: cuando tengas el Measurement ID, descomenta y reemplaza G-XXXXXXXXXX
+       Google Analytics → Admin → Propiedad → Flujos de datos → tu dominio → Measurement ID
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-XXXXXXXXXX");
+  </script>
+  -->
+</head><body>
+<a href="#root" class="skip-link">Saltar al contenido principal</a>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react.development.js'"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react-dom.development.js'"></script>
+<script>
+  const __PRM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  window.__TWEAKS__ = { starfield: false && !__PRM, parallax: false && !__PRM };
+
+  const COMPONENT_FILES = [
+    'components/shared.js',
+    'components/registro-page.js',
+  ];
+
+  async function loadComponents() {
+    try {
+      const pr = await fetch('data/prices.json?t=' + Date.now(), { cache: 'no-store' });
+      if (pr.ok) window.PRICES_V2 = await pr.json();
+    } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
+
+    for (const file of COMPONENT_FILES) {
+      const res = await fetch(file + '?cv=54c03c3bf2');
+      if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
+      const code = await res.text();
+      // eslint-disable-next-line no-eval
+      eval(code);
+    }
+  }
+
+  loadComponents().catch(err => {
+    const _errRoot = document.getElementById('root');
+    const _errDiv = document.createElement('div');
+    _errDiv.style.cssText = 'padding:40px;font-family:sans-serif;color:#c00';
+    _errDiv.innerHTML = '<b>Error loading components:</b><br>';
+    _errDiv.appendChild(document.createTextNode(err.message));
+    _errRoot.replaceChildren(_errDiv);
+    console.error(err);
+  });
+</script>
+
+</body>
+</html>

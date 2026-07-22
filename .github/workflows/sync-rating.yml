@@ -1,0 +1,37 @@
+name: Sincronizar aggregateRating
+
+# Recalcula el aggregateRating del JSON-LD desde reviews.json (normalizando
+# escalas a /10) cada vez que cambian las reseñas, y commitea las páginas. Así
+# la valoración estructurada nunca se desfasa de las reseñas reales.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/data/reviews.json'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Recalcular aggregateRating
+        run: node scripts/sync-rating.mjs
+      - name: Commit si hay cambios
+        run: |
+          if [ -n "$(git status --porcelain docs/*.html)" ]; then
+            git config user.name "hestia-bot"
+            git config user.email "info@hestiayourhome.com"
+            git add docs/*.html
+            git commit -m "chore(seo): sincronizar aggregateRating con reviews.json [skip ci]"
+            git push
+          else
+            echo "Sin cambios."
+          fi
