@@ -12791,6 +12791,12 @@ footer,
 .ag-cat-body > * {
   overflow: hidden;
   min-height: 0;
+}
+/* El padding SOLO se aplica abierto: puesto en el hijo de forma incondicional,
+   su padding-top/bottom no lo suprime min-height:0 (el padding no es "altura
+   de contenido"), así que la fila de grid nunca llegaba a 0 real y quedaba un
+   resto de ~22px por el que se veía el título del contenido plegado. */
+.ag-cat-group.is-open .ag-cat-body > * {
   padding: 4px 0 18px;
 }
 @media (prefers-reduced-motion: reduce) {
