@@ -3030,31 +3030,33 @@ const CatGroup = ({ cat, places, lang }) => {
         <span className={`ag-cat-chev ${open ? 'open' : ''}`} aria-hidden="true">↓</span>
       </button>
       <div className="ag-cat-body" aria-hidden={!open}>
-        {featured.length > 0 && (
-          <>
-            <div className="ag-cat-sub-h">
-              <span className="ag-cat-sub-star" aria-hidden="true">✦</span>
-              {lang === 'es' ? 'Imperdibles' : 'Must-see'}
-            </div>
-            <ul className="ag-places ag-places-featured">
-              {featured.map(renderPlace)}
-            </ul>
-          </>
-        )}
-        {rest.length > 0 && (
-          <>
-            {featured.length > 0 && (
-              <div className="ag-cat-sub-h ag-cat-sub-h-rest">
-                {lang === 'es' ? 'Más recomendaciones' : 'More recommendations'}
+        <div className="ag-cat-body-inner">
+          {featured.length > 0 && (
+            <>
+              <div className="ag-cat-sub-h">
+                <span className="ag-cat-sub-star" aria-hidden="true">✦</span>
+                {lang === 'es' ? 'Imperdibles' : 'Must-see'}
               </div>
-            )}
-            <ul className="ag-places ag-places-compact">
-              {rest.map(p => (
-                <CompactPlaceItem key={p.id} p={p} lang={lang} />
-              ))}
-            </ul>
-          </>
-        )}
+              <ul className="ag-places ag-places-featured">
+                {featured.map(renderPlace)}
+              </ul>
+            </>
+          )}
+          {rest.length > 0 && (
+            <>
+              {featured.length > 0 && (
+                <div className="ag-cat-sub-h ag-cat-sub-h-rest">
+                  {lang === 'es' ? 'Más recomendaciones' : 'More recommendations'}
+                </div>
+              )}
+              <ul className="ag-places ag-places-compact">
+                {rest.map(p => (
+                  <CompactPlaceItem key={p.id} p={p} lang={lang} />
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
