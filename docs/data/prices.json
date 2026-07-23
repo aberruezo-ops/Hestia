@@ -446,7 +446,13 @@
   },
   "manual_blocks": {
     "vm": [],
-    "vt": [],
+    "vt": [
+      {
+        "start": "2026-08-08",
+        "end": "2026-08-11",
+        "note": "Fran y Alex"
+      }
+    ],
     "vs": []
   },
   "gapOverrides": {
