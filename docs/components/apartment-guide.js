@@ -6811,6 +6811,8 @@ const CatGroup = ({
   }, "↓")), /*#__PURE__*/React.createElement("div", {
     className: "ag-cat-body",
     "aria-hidden": !open
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-cat-body-inner"
   }, featured.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "ag-cat-sub-h"
   }, /*#__PURE__*/React.createElement("span", {
@@ -6826,7 +6828,7 @@ const CatGroup = ({
     key: p.id,
     p: p,
     lang: lang
-  }))))));
+  })))))));
 };
 
 // ================================================================
