@@ -5880,6 +5880,7 @@ const OCUP_APTS = ['vm', 'vt', 'vs'];
 const MES_LARGO_OCUP = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 const MES_CORTO_OCUP = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 const OCUP_DAYW = 30; // px por día en la tira continua
+const DOW_INITIAL_ES = ['D', 'L', 'M', 'X', 'J', 'V', 'S']; // índice = getUTCDay() (0=domingo)
 const _dOnly = s => String(s || '').slice(0, 10);
 const _dayMon = s => {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(_dOnly(s));
@@ -6045,10 +6046,13 @@ const OccupancyTimeline = ({
     className: "rv-ocup-corner"
   }), dayIdxs.map(i => {
     const iso = dayIso(i);
+    const dow = new Date(iso + 'T00:00:00Z').getUTCDay();
     return /*#__PURE__*/React.createElement("div", {
       key: i,
       className: `rv-ocup-d${isWe(iso) ? ' we' : ''}${i === todayIdx ? ' today' : ''}`
-    }, +iso.slice(8, 10));
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "rv-ocup-dow"
+    }, DOW_INITIAL_ES[dow]), +iso.slice(8, 10));
   })), OCUP_APTS.map(apt => /*#__PURE__*/React.createElement("div", {
     key: apt,
     className: "rv-ocup-row"
