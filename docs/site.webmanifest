@@ -1,0 +1,14 @@
+{
+  "name": "Hestía Your Home",
+  "short_name": "Hestía",
+  "description": "Tres viviendas turísticas en Vera Playa, Almería. Gestionadas directamente por Alex y Fran.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#2A0F2E",
+  "theme_color": "#2A0F2E",
+  "lang": "es-ES",
+  "icons": [
+    { "src": "/assets/favicon-32x32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "/assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

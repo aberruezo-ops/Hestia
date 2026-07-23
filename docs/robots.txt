@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /data/prereservas.json
+Disallow: /data/dashboard-historico.json
+Disallow: /data/social-drafts.json
+
+Sitemap: https://www.hestiayourhome.com/sitemap.xml
