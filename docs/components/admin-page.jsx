@@ -4551,6 +4551,7 @@ const OCUP_APTS = ['vm', 'vt', 'vs'];
 const MES_LARGO_OCUP = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 const MES_CORTO_OCUP = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
 const OCUP_DAYW = 30; // px por día en la tira continua
+const DOW_INITIAL_ES = ['D', 'L', 'M', 'X', 'J', 'V', 'S']; // índice = getUTCDay() (0=domingo)
 const _dOnly = (s) => String(s || '').slice(0, 10);
 const _dayMon = (s) => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(_dOnly(s)); return m ? `${+m[3]} ${MES_CORTO_OCUP[+m[2] - 1]}` : '–'; };
 // Utilidades de fecha en UTC sobre cadenas 'YYYY-MM-DD' (sin líos de zona).
@@ -4653,7 +4654,12 @@ const OccupancyTimeline = ({ reservas, today, onOpen }) => {
             <div className="rv-ocup-corner" />
             {dayIdxs.map(i => {
               const iso = dayIso(i);
-              return <div key={i} className={`rv-ocup-d${isWe(iso) ? ' we' : ''}${i === todayIdx ? ' today' : ''}`}>{+iso.slice(8, 10)}</div>;
+              const dow = new Date(iso + 'T00:00:00Z').getUTCDay();
+              return (
+                <div key={i} className={`rv-ocup-d${isWe(iso) ? ' we' : ''}${i === todayIdx ? ' today' : ''}`}>
+                  <span className="rv-ocup-dow">{DOW_INITIAL_ES[dow]}</span>{+iso.slice(8, 10)}
+                </div>
+              );
             })}
           </div>
           {OCUP_APTS.map(apt => (
