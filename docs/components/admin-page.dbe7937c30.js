@@ -6156,15 +6156,23 @@ const ReservasTab = ({
 
   // Detecta bloques iCal sin reserva correspondiente en P-Edit.
   // Se ejecuta tras cargar las reservas, comparando availability.json (ical[]) contra reservas[].
+  // El propio sync (sync_ical.py) mezcla dentro de "ical" tanto los bloqueos reales de
+  // Airbnb/Booking como VUESTROS bloqueos manuales (pestaña Bloqueos, prices.json
+  // manual_blocks): un bloqueo manual nunca va a tener una "reserva" de huésped detrás
+  // porque es intencional (uso propio, obras, etc.), así que hay que descartarlo aquí
+  // o el aviso avisa para siempre de algo que ya está atendido.
   React.useEffect(() => {
     if (!data) return;
     const reservas = data.reservas || [];
     const today = new Date().toISOString().slice(0, 10);
     const _cxl = r => r.cancelada === true || (r.cancelacion || '').trim().toUpperCase() === 'CANCELADA';
-    fetch('assets/availability.json?t=' + Date.now(), {
+    Promise.all([fetch('assets/availability.json?t=' + Date.now(), {
       cache: 'no-store'
-    }).then(r => r.ok ? r.json() : null).then(avail => {
+    }).then(r => r.ok ? r.json() : null), fetch('data/prices.json?t=' + Date.now(), {
+      cache: 'no-store'
+    }).then(r => r.ok ? r.json() : null)]).then(([avail, prices]) => {
       if (!avail) return;
+      const manualBlocks = prices && prices.manual_blocks || {};
       const APT_LABEL = {
         vm: 'Hestía Mar',
         vt: 'Hestía Thalassa',
@@ -6172,10 +6180,14 @@ const ReservasTab = ({
       };
       const found = [];
       for (const apt of ['vm', 'vt', 'vs']) {
+        const aptManual = manualBlocks[apt] || [];
         for (const block of avail[apt]?.ical || []) {
           if (block.end <= today) continue;
           const match = reservas.find(r => !_cxl(r) && (r.apt || '').toLowerCase() === apt && r.entrada < block.end && r.salida > block.start);
-          if (!match) found.push({
+          if (match) continue;
+          const manualMatch = aptManual.find(b => b.start && b.end && b.start < block.end && b.end > block.start);
+          if (manualMatch) continue;
+          found.push({
             apt,
             label: APT_LABEL[apt],
             start: block.start,
