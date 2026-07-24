@@ -1907,6 +1907,25 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   r: "3.4",
   fill: "none",
   stroke: "#3AAABB"
+})), /*#__PURE__*/React.createElement("symbol", {
+  id: "hi-cloud",
+  viewBox: "0 0 24 24"
+}, /*#__PURE__*/React.createElement("path", {
+  fill: "none",
+  stroke: "currentColor",
+  d: "M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"
+})), /*#__PURE__*/React.createElement("symbol", {
+  id: "hi-moon",
+  viewBox: "0 0 24 24"
+}, /*#__PURE__*/React.createElement("path", {
+  fill: "#D4A84A",
+  stroke: "none",
+  opacity: "0.16",
+  d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+}), /*#__PURE__*/React.createElement("path", {
+  fill: "none",
+  stroke: "currentColor",
+  d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
 })));
 // Mapa de ventajas de reserva directa (por id, independiente del idioma) a icono propio.
 const PERK_HI = {
@@ -6983,8 +7002,226 @@ const WidgetGiftHestia = ({
     "aria-hidden": "true"
   }, "→")));
 };
-const WidgetStack = ({
+
+// ── Widget "Hoy en Vera Playa" (solo Home) ──────────────────────────────────
+// Tiempo, oleaje y luna en directo, con un apunte con gracia (voz Alex/Fran,
+// nunca "¡genial!" ni superlativos). Datos de Open-Meteo (gratis, sin key,
+// CORS abierto): forecast (temperatura + código de cielo) y marine (oleaje,
+// puede no cubrir el punto exacto de costa; si no hay dato, se omite esa
+// línea sin más). Fase lunar se calcula localmente (sin API, matemáticas de
+// mes sinódico). Cacheado en sessionStorage 45 min para no golpear la API
+// en cada visita a la Home.
+const _VERA_LAT = 37.1833,
+  _VERA_LON = -1.8333;
+
+// Código de tiempo WMO (Open-Meteo) → { icon, es, en }. Agrupado por familias.
+const _WMO_SKY = code => {
+  if (code === 0) return {
+    icon: 'sun',
+    es: 'despejado',
+    en: 'clear sky'
+  };
+  if (code === 1) return {
+    icon: 'sun',
+    es: 'casi despejado',
+    en: 'mostly clear'
+  };
+  if (code === 2) return {
+    icon: 'cloud',
+    es: 'parcialmente nublado',
+    en: 'partly cloudy'
+  };
+  if (code === 3) return {
+    icon: 'cloud',
+    es: 'nublado',
+    en: 'overcast'
+  };
+  if (code === 45 || code === 48) return {
+    icon: 'cloud',
+    es: 'niebla',
+    en: 'foggy'
+  };
+  if (code >= 51 && code <= 57) return {
+    icon: 'cloud',
+    es: 'llovizna',
+    en: 'drizzle'
+  };
+  if (code >= 61 && code <= 67) return {
+    icon: 'cloud',
+    es: 'lluvia',
+    en: 'rain'
+  };
+  if (code >= 71 && code <= 77) return {
+    icon: 'cloud',
+    es: 'nieve',
+    en: 'snow'
+  };
+  if (code >= 80 && code <= 82) return {
+    icon: 'cloud',
+    es: 'chubascos',
+    en: 'showers'
+  };
+  if (code >= 95) return {
+    icon: 'cloud',
+    es: 'tormenta',
+    en: 'thunderstorm'
+  };
+  return {
+    icon: 'cloud',
+    es: 'variable',
+    en: 'mixed'
+  };
+};
+
+// Apunte con gracia por familia de cielo. Varios por categoría, elegido de
+// forma estable según el día del año (no al azar en cada recarga).
+const _WTHR_QUIPS = {
+  sun: {
+    es: ['Otro de esos 320 días de sol, aquí ya ni lo contamos.', 'Sol, cómo no. Toalla y a la playa.', 'Día de playa sin excusas.'],
+    en: ['Another of those 320 sunny days, we stopped counting.', 'Sun, of course. Towel and off to the beach.', 'No excuses today, beach day.']
+  },
+  cloud: {
+    es: ['Hoy con nubes, raro por aquí.', 'Un poco gris, el sol vuelve en cuanto se despiste.', 'Nubes de paso, nada serio.'],
+    en: ['A bit cloudy today, unusual around here.', 'A little grey, the sun will be back before long.', 'Passing clouds, nothing serious.']
+  }
+};
+const _pickQuip = (family, lang) => {
+  const pool = (_WTHR_QUIPS[family] || _WTHR_QUIPS.cloud)[lang] || _WTHR_QUIPS.cloud.es;
+  const doy = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  return pool[doy % pool.length];
+};
+
+// Fase lunar sin API: días desde una luna nueva de referencia / mes sinódico.
+const _MOON_PHASES = [{
+  es: 'luna nueva',
+  en: 'new moon'
+}, {
+  es: 'luna creciente',
+  en: 'waxing crescent'
+}, {
+  es: 'cuarto creciente',
+  en: 'first quarter'
+}, {
+  es: 'gibosa creciente',
+  en: 'waxing gibbous'
+}, {
+  es: 'luna llena',
+  en: 'full moon'
+}, {
+  es: 'gibosa menguante',
+  en: 'waning gibbous'
+}, {
+  es: 'cuarto menguante',
+  en: 'last quarter'
+}, {
+  es: 'luna menguante',
+  en: 'waning crescent'
+}];
+const _moonPhase = () => {
+  const synodic = 29.530588853;
+  const knownNewMoon = Date.UTC(2000, 0, 6, 18, 14, 0);
+  const days = (Date.now() - knownNewMoon) / 86400000;
+  const frac = (days % synodic + synodic) % synodic / synodic;
+  return _MOON_PHASES[Math.round(frac * 8) % 8];
+};
+const WidgetWeather = ({
   lang
+}) => {
+  const [min, setMin] = _useLocalMin('weather', true); // plegado por defecto
+  const [wx, setWx] = React.useState(null); // null = cargando/no disponible
+  React.useEffect(() => {
+    let alive = true;
+    const CACHE_KEY = 'hestia-weather-cache-v1';
+    const CACHE_MS = 45 * 60 * 1000;
+    try {
+      const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null');
+      if (cached && Date.now() - cached.t < CACHE_MS) {
+        setWx(cached.v);
+        return;
+      }
+    } catch (_) {}
+    const fUrl = `https://api.open-meteo.com/v1/forecast?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=temperature_2m,weather_code&timezone=Europe%2FMadrid`;
+    const mUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=wave_height&timezone=Europe%2FMadrid`;
+    Promise.all([fetch(fUrl).then(r => r.ok ? r.json() : null).catch(() => null), fetch(mUrl).then(r => r.ok ? r.json() : null).catch(() => null)]).then(([f, m]) => {
+      if (!alive) return;
+      if (!f || !f.current) {
+        setWx(false);
+        return;
+      }
+      const v = {
+        temp: Math.round(f.current.temperature_2m),
+        code: f.current.weather_code,
+        wave: m && m.current && typeof m.current.wave_height === 'number' ? m.current.wave_height : null
+      };
+      try {
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify({
+          t: Date.now(),
+          v
+        }));
+      } catch (_) {}
+      setWx(v);
+    }).catch(() => {
+      if (alive) setWx(false);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+  if (wx === false) return null; // fetch falló: no mostramos un widget roto
+
+  if (min) {
+    return /*#__PURE__*/React.createElement(WidgetMiniPill, {
+      icon: /*#__PURE__*/React.createElement(HiIcon, {
+        name: "sun",
+        size: 15
+      }),
+      label: lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa',
+      ariaLabel: lang === 'es' ? 'Restaurar el tiempo de hoy' : 'Restore today\'s weather',
+      onClick: () => setMin(false),
+      className: "widget-mini-weather"
+    });
+  }
+  const sky = wx ? _WMO_SKY(wx.code) : null;
+  const moon = _moonPhase();
+  return /*#__PURE__*/React.createElement("section", {
+    className: "widget-card widget-weather",
+    "aria-label": lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "widget-min-btn",
+    "aria-label": lang === 'es' ? 'Minimizar' : 'Minimize',
+    title: lang === 'es' ? 'Minimizar' : 'Minimize',
+    onClick: () => setMin(true)
+  }, "−"), /*#__PURE__*/React.createElement("span", {
+    className: "eyebrow"
+  }, lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'), !wx ? /*#__PURE__*/React.createElement("p", {
+    className: "widget-text"
+  }, lang === 'es' ? 'Consultando el tiempo…' : 'Checking the weather…') : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", {
+    className: "wthr-quip"
+  }, _pickQuip(sky.icon, lang)), /*#__PURE__*/React.createElement("ul", {
+    className: "wthr-facts"
+  }, /*#__PURE__*/React.createElement("li", {
+    className: "wthr-fact"
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: sky.icon,
+    size: 18
+  }), /*#__PURE__*/React.createElement("strong", null, wx.temp, "°"), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? sky.es : sky.en)), wx.wave !== null && /*#__PURE__*/React.createElement("li", {
+    className: "wthr-fact"
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "wave",
+    size: 18
+  }), /*#__PURE__*/React.createElement("strong", null, wx.wave.toFixed(1), " m"), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'oleaje' : 'swell')), /*#__PURE__*/React.createElement("li", {
+    className: "wthr-fact"
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "moon",
+    size: 18
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "wthr-moon-lbl"
+  }, lang === 'es' ? moon.es : moon.en)))));
+};
+const WidgetStack = ({
+  lang,
+  extra
 }) => {
   const [pastHero, setPastHero] = React.useState(() => window.scrollY > window.innerHeight * 0.7);
   const [searchActive, setSearchActive] = React.useState(false);
@@ -7057,7 +7294,7 @@ const WidgetStack = ({
     lang: lang
   }), /*#__PURE__*/React.createElement(WidgetGiftHestia, {
     lang: lang
-  })), !onReservas && /*#__PURE__*/React.createElement("a", {
+  }), extra), !onReservas && /*#__PURE__*/React.createElement("a", {
     href: "reservas.html",
     className: `mob-book-btn${bookHidden ? ' mob-book-btn--hidden' : ''}`,
     "aria-hidden": bookHidden
@@ -7129,6 +7366,7 @@ Object.assign(window, {
   WidgetGuidePin,
   WidgetGuestAccess,
   WidgetTopRecs,
+  WidgetWeather,
   TOP_RECS,
   HomeGuideTeaser,
   GuestAccessModal
