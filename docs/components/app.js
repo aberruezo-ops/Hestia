@@ -263,7 +263,10 @@ const App = () => {
     name: "mute",
     size: 22
   })), /*#__PURE__*/React.createElement(WidgetStack, {
-    lang: lang
+    lang: lang,
+    extra: /*#__PURE__*/React.createElement(WidgetWeather, {
+      lang: lang
+    })
   }), /*#__PURE__*/React.createElement(FloatingChat, {
     lang: lang
   }), /*#__PURE__*/React.createElement(Cookies, {

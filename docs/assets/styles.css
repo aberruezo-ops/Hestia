@@ -15125,6 +15125,43 @@ footer,
   font-weight: 700 !important;
   box-shadow: none;
 }
+
+/* ── Widget "Hoy en Vera Playa" (tiempo/oleaje/luna, solo Home) ── */
+.wthr-quip {
+  font-family: var(--serif);
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--arena);
+  margin: 0 0 14px;
+  font-style: italic;
+}
+.wthr-facts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.wthr-fact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--crema, #F0E8D5);
+}
+.wthr-fact strong {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--sol-lt, #6FC4D1);
+}
+.wthr-fact span {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--arena);
+  opacity: .85;
+}
+.wthr-moon-lbl { text-transform: capitalize; }
 .widget-cta-ghost:hover {
   background-color: rgba(240,232,213,.16) !important;
   color: #F0E8D5 !important;
