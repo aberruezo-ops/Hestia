@@ -1,0 +1,18 @@
+{
+  "location": "Vera Playa, Almería",
+  "note": "Media histórica orientativa del clima semiárido costero de Almería (no son datos de una estación meteorológica concreta). Sustituir por datos exactos de AEMET/Open-Meteo en cuanto se puedan consultar.",
+  "months": [
+    { "m": 1,  "avg": 12,   "min": 7,  "max": 17 },
+    { "m": 2,  "avg": 13,   "min": 8,  "max": 18 },
+    { "m": 3,  "avg": 14.5, "min": 10, "max": 19 },
+    { "m": 4,  "avg": 16.5, "min": 12, "max": 21 },
+    { "m": 5,  "avg": 19.5, "min": 15, "max": 24 },
+    { "m": 6,  "avg": 23.5, "min": 19, "max": 28 },
+    { "m": 7,  "avg": 26.5, "min": 22, "max": 31 },
+    { "m": 8,  "avg": 27,   "min": 23, "max": 31 },
+    { "m": 9,  "avg": 24.5, "min": 21, "max": 28 },
+    { "m": 10, "avg": 20.5, "min": 17, "max": 24 },
+    { "m": 11, "avg": 16,   "min": 12, "max": 20 },
+    { "m": 12, "avg": 13,   "min": 9,  "max": 17 }
+  ]
+}

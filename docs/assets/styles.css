@@ -2134,99 +2134,6 @@ body.apt-bar-shown .cookies {
      el Vitruvio está display:none, así que sin esto el "+" quedaba muerto
      (se pulsaba y no aparecía nada). */
   .hv-logo-btn { display: none; }
-  /* El banner de lanzamiento sí se muestra en móvil */
-  .hero-vitruvio--launch { display: block; }
-}
-
-/* --- Launch banner — fondo blanco, texto berenjena -------------------- */
-/* Sube el banner respecto al vitruvio normal para no tapar coordenadas */
-.hero-vitruvio--launch {
-  top: calc(100vh - 230px - clamp(200px, 22vw, 280px));
-}
-.hv-launch-card {
-  border-radius: 14px 0 14px 0;
-  overflow: hidden;
-  background: #fff;
-  box-shadow: 0 8px 36px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
-}
-.hero-vitruvio--launch .hv-inner {
-  border-radius: 0;
-  overflow: hidden;
-}
-.hero-vitruvio--launch .hv-box {
-  opacity: 1;
-  border-radius: 0;
-}
-.hv-launch-text {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.hv-launch-text--visible {
-  max-height: 80px;
-}
-.hv-launch-text-inner {
-  padding: 11px 14px 14px;
-  text-align: center;
-  font-family: var(--serif);
-  font-size: 13px;
-  font-style: italic;
-  color: var(--ber-dk);
-  opacity: 0;
-  transform: translateY(5px);
-  transition: opacity 0.8s ease 0.25s, transform 0.65s ease 0.25s;
-  pointer-events: auto;
-}
-.hv-launch-text--visible .hv-launch-text-inner {
-  opacity: 1;
-  transform: translateY(0);
-}
-.hv-replay {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: rgba(42,15,46,0.62);
-  border: 1px solid rgba(240,232,213,0.35);
-  color: var(--arena);
-  font-size: 16px;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s, transform 0.2s;
-  pointer-events: auto;
-}
-.hv-replay:hover { background: rgba(42,15,46,0.88); transform: rotate(-30deg); }
-.hv-launch-link {
-  display: inline-block;
-  margin-top: 4px;
-  font-family: var(--sans);
-  font-style: normal;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ber-dk);
-  text-decoration: none;
-  border-bottom: 1px solid currentColor;
-  pointer-events: auto;
-}
-.hv-launch-link:hover { opacity: 0.65; }
-@media (max-width: 900px) {
-  .hero-vitruvio--launch {
-    left: 12px;
-    right: 12px;
-    width: auto;
-    top: auto;
-    bottom: 16px;
-  }
-  .hero-vitruvio--launch .hv-box { aspect-ratio: 16 / 9; }
-  .hv-launch-card { border-radius: 12px 0 12px 0; }
-  .hv-launch-text-inner { font-size: 12px; }
 }
 
 .hero-wordmark {
@@ -20684,6 +20591,89 @@ img[src*="apt-vt-gallery-"] {
 .ag-welcome-pd-link:hover {
   color: var(--ber);
   border-color: var(--ber);
+}
+
+/* ── El tiempo en la guía: previsión 14 días + clima medio 12 meses ── */
+.ag-wthr14, .ag-climate { margin: 28px 0 0; }
+.ag-wthr14-scroll, .ag-climate-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 14px 2px 8px;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+.ag-wthr14-day {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+  width: 58px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  border-radius: 8px 0 8px 0;
+  background: rgba(61,26,53,.045);
+  border: 1px solid rgba(61,26,53,.12);
+  color: var(--ink);
+}
+.ag-wthr14-dow {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.ag-wthr14-num {
+  font-family: var(--serif);
+  font-size: 15px;
+  color: var(--apt-accent-dk, var(--ber));
+}
+.ag-wthr14-temps {
+  font-family: var(--sans);
+  font-size: 11px;
+  white-space: nowrap;
+  color: var(--ink);
+}
+.ag-wthr14-temps strong { font-weight: 700; margin-right: 3px; }
+.ag-climate-bar {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+  width: 46px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.ag-climate-avg {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.ag-climate-col {
+  display: block;
+  width: 14px;
+  border-radius: 5px 0 5px 0;
+  background: rgba(61,26,53,.16);
+  align-self: flex-end;
+}
+.ag-climate-bar.is-now .ag-climate-col { background: var(--apt-accent-dk, var(--ber)); }
+.ag-climate-bar.is-now .ag-climate-avg,
+.ag-climate-bar.is-now .ag-climate-lbl { color: var(--apt-accent-dk, var(--ber)); font-weight: 700; }
+.ag-climate-lbl {
+  font-family: var(--sans);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--ink-soft);
+}
+.ag-climate-note {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  margin: 6px 0 0;
+  line-height: 1.4;
 }
 
 /* ============================================================

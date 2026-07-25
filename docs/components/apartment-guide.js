@@ -194,6 +194,130 @@ const GUIDE_GROUPS = [{
   ids: ['mercados', 'salud', 'movilidad', 'telefonos', 'descuentos', 'feedback']
 }];
 
+// ── El tiempo en la guía: previsión a 14 días + clima medio de los próximos
+// 12 meses. _WMO_SKY, _VERA_LAT/_VERA_LON viven en shared.jsx (mismo origen
+// que el widget "Hoy en Vera Playa" de la Home): un único punto de verdad
+// para el mapeo de códigos de tiempo y las coordenadas.
+const GuideWeather14d = ({
+  lang
+}) => {
+  const [days, setDays] = React.useState(null); // null=cargando, false=falló
+  React.useEffect(() => {
+    let alive = true;
+    const CACHE_KEY = 'hestia-guide-forecast14-v1';
+    const CACHE_MS = 60 * 60 * 1000;
+    try {
+      const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null');
+      if (cached && Date.now() - cached.t < CACHE_MS) {
+        setDays(cached.v);
+        return;
+      }
+    } catch (_) {}
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=Europe%2FMadrid&forecast_days=14`;
+    fetch(url).then(r => r.ok ? r.json() : null).then(j => {
+      if (!alive) return;
+      if (!j || !j.daily || !Array.isArray(j.daily.time)) {
+        setDays(false);
+        return;
+      }
+      const v = j.daily.time.map((d, i) => ({
+        date: d,
+        max: Math.round(j.daily.temperature_2m_max[i]),
+        min: Math.round(j.daily.temperature_2m_min[i]),
+        code: j.daily.weather_code[i]
+      }));
+      try {
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify({
+          t: Date.now(),
+          v
+        }));
+      } catch (_) {}
+      setDays(v);
+    }).catch(() => {
+      if (alive) setDays(false);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+  if (days === false) return null;
+  const DOW = lang === 'es' ? ['D', 'L', 'M', 'X', 'J', 'V', 'S'] : ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+  return /*#__PURE__*/React.createElement("div", {
+    className: "ag-wthr14"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-cat-label"
+  }, lang === 'es' ? 'El tiempo estos días' : 'Weather these days'), days === null ? /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, lang === 'es' ? 'Consultando la previsión…' : 'Checking the forecast…') : /*#__PURE__*/React.createElement("div", {
+    className: "ag-wthr14-scroll"
+  }, days.map(d => {
+    const sky = _WMO_SKY(d.code);
+    const dow = DOW[new Date(d.date + 'T12:00:00Z').getUTCDay()];
+    const dnum = +d.date.slice(8, 10);
+    return /*#__PURE__*/React.createElement("div", {
+      key: d.date,
+      className: "ag-wthr14-day"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-wthr14-dow"
+    }, dow), /*#__PURE__*/React.createElement("span", {
+      className: "ag-wthr14-num"
+    }, dnum), /*#__PURE__*/React.createElement(HiIcon, {
+      name: sky.icon,
+      size: 20
+    }), /*#__PURE__*/React.createElement("span", {
+      className: "ag-wthr14-temps"
+    }, /*#__PURE__*/React.createElement("strong", null, d.max, "°"), " ", d.min, "°"));
+  })));
+};
+
+// Carrusel de clima: media histórica orientativa de cada uno de los próximos
+// 12 meses (empezando por el mes actual), leída de data/climate-monthly.json.
+// No es una previsión real a un año (nadie la tiene): es "qué suele hacer"
+// cada mes que viene, útil para hacerse una idea al planear la maleta.
+const GuideClimateChart = ({
+  lang
+}) => {
+  const [clim, setClim] = React.useState(null);
+  React.useEffect(() => {
+    fetch('data/climate-monthly.json').then(r => r.ok ? r.json() : null).then(j => setClim(j && Array.isArray(j.months) ? j : false)).catch(() => setClim(false));
+  }, []);
+  if (!clim) return null;
+  const MONTH_ES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+  const MONTH_EN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const MONTHS = lang === 'es' ? MONTH_ES : MONTH_EN;
+  const nowM = new Date().getUTCMonth(); // 0-11
+  const order = Array.from({
+    length: 12
+  }, (_, i) => (nowM + i) % 12);
+  const maxAvg = Math.max(...clim.months.map(m => m.avg));
+  return /*#__PURE__*/React.createElement("div", {
+    className: "ag-climate"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-cat-label"
+  }, lang === 'es' ? 'Cómo suele estar el tiempo, mes a mes' : 'What the weather is usually like, month by month'), /*#__PURE__*/React.createElement("div", {
+    className: "ag-climate-scroll"
+  }, order.map((mi, i) => {
+    const m = clim.months.find(x => x.m === mi + 1);
+    if (!m) return null;
+    const h = Math.max(18, Math.round(m.avg / maxAvg * 100));
+    return /*#__PURE__*/React.createElement("div", {
+      key: mi,
+      className: `ag-climate-bar${i === 0 ? ' is-now' : ''}`
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "ag-climate-avg"
+    }, Math.round(m.avg), "°"), /*#__PURE__*/React.createElement("span", {
+      className: "ag-climate-col",
+      style: {
+        height: `${h}px`
+      }
+    }), /*#__PURE__*/React.createElement("span", {
+      className: "ag-climate-lbl"
+    }, MONTHS[mi]));
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "ag-climate-note"
+  }, lang === 'es' ? 'Media orientativa por temporada, no una previsión exacta: sirve para hacerte una idea de qué ropa meter en la maleta.' : 'A seasonal average, not an exact forecast: useful to get a feel for what to pack.'));
+};
+
 // Dónde comer/cenar cuando faltan entre 3 y 1 hora para Vera Playa, por
 // carretera de acceso. Los enlaces abren una búsqueda en vivo de Google Maps.
 const ARRIVAL_EATS = {
@@ -10749,7 +10873,11 @@ const AptGuideView = ({
     href: s.welcome.pdLinkHref,
     target: "_blank",
     rel: "noopener"
-  }, s.welcome.pdLinkLabel, " →"))), s.checkin && /*#__PURE__*/React.createElement("section", {
+  }, s.welcome.pdLinkLabel, " →")), /*#__PURE__*/React.createElement(GuideWeather14d, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(GuideClimateChart, {
+    lang: lang
+  })), s.checkin && /*#__PURE__*/React.createElement("section", {
     id: "ag-llegada",
     className: "ag-section ag-section-checkin"
   }, /*#__PURE__*/React.createElement("span", {
