@@ -14839,7 +14839,7 @@ footer,
   top: 50%;
   transform: translateY(-50%);
   z-index: 88;
-  --widget-w: 208px;            /* ancho común y estrecho de los 4 widgets (card y pastillas) */
+  --widget-w: 180px;            /* ancho de la card abierta de cada widget */
   display: none; /* hidden by default; revealed at min-width: 900 */
   flex-direction: column;
   align-items: flex-end;
@@ -14878,9 +14878,7 @@ footer,
     0 0 0 1px rgba(58, 170, 187, 0.30);          /* halo sol más fuerte */
 }
 @media (min-width: 1100px) {
-  /* 260px: ancho para que quepa con margen la etiqueta más larga ("El rincón
-     del huésped") sin truncarse con elipsis. */
-  .widget-stack { --widget-w: 260px; }
+  .widget-stack { --widget-w: 224px; }
 }
 
 /* Botón minimizar de cada card (arriba-derecha del propio card). */
@@ -15196,13 +15194,15 @@ body[data-apt="salinas"] .widget-cta:hover {
 /* widget-mini bulletproof — hex literales para que iPad no pueda
    renderizar nada distinto a sol turquesa con texto eggplant.
    Background animado (gradient pan + sutil pulso de halo) para llamar
-   la atención sin agredir. */
+   la atención sin agredir.
+   Plegado, solo icono (footprint mínimo); la etiqueta se revela en
+   hover/focus expandiéndose hacia la izquierda, sin mover el icono. */
 .widget-mini {
   display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-  width: var(--widget-w, 208px);            /* mismo ancho que la card: los 4 igual de largos */
+  justify-content: flex-end;
+  gap: 0;
+  width: auto;
   box-sizing: border-box;
   background-color: #3AAABB !important;
   background-image: linear-gradient(
@@ -15219,7 +15219,7 @@ body[data-apt="salinas"] .widget-cta:hover {
   border: 0;
   border-left: 3px solid #3AAABB !important;
   border-radius: 12px 0 12px 0;
-  padding: 12px 14px;
+  padding: 11px;
   font-family: var(--sans);
   font-size: 11.5px;
   letter-spacing: .1em;
@@ -15230,9 +15230,13 @@ body[data-apt="salinas"] .widget-cta:hover {
     0 6px 18px rgba(42,15,46,.45),
     0 0 0 1px rgba(255,255,255,.10),
     0 0 18px rgba(58,170,187,.30);
-  transition: transform .15s ease, border-color .25s ease, box-shadow .35s ease;
+  transition: transform .15s ease, border-color .25s ease, box-shadow .35s ease, padding .3s ease;
   white-space: nowrap;
   animation: widgetMiniShimmer 7s ease-in-out infinite, widgetMiniPulse 3.4s ease-in-out infinite;
+}
+.widget-mini:hover,
+.widget-mini:focus-visible {
+  padding: 11px 14px;
 }
 @keyframes widgetMiniShimmer {
   0%   { background-position: 0%   50%; }
@@ -15253,7 +15257,8 @@ body[data-apt="salinas"] .widget-cta:hover {
       0 0 28px rgba(58,170,187,.55);
   }
 }
-.widget-mini:hover {
+.widget-mini:hover,
+.widget-mini:focus-visible {
   transform: translateX(-2px);
   animation-play-state: paused;
   background-image: linear-gradient(105deg, #6FC4D1 0%, #3AAABB 100%) !important;
@@ -15266,6 +15271,7 @@ body[data-apt="salinas"] .widget-cta:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: none;
   width: 22px; height: 22px;
   border-radius: 50%;
   background: rgba(42, 15, 46, 0.22);         /* eggplant tinte sobre sol */
@@ -15275,11 +15281,29 @@ body[data-apt="salinas"] .widget-cta:hover {
   line-height: 1;
   transition: background .25s ease, color .25s ease;
 }
-.widget-mini:hover .widget-mini-icon {
+.widget-mini:hover .widget-mini-icon,
+.widget-mini:focus-visible .widget-mini-icon {
   background: rgba(240,232,213,.18);
   color: #2A0F2E;
 }
-.widget-mini-label { line-height: 1; overflow: hidden; text-overflow: ellipsis; }
+.widget-mini-label {
+  display: inline-block;
+  line-height: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 0;
+  opacity: 0;
+  transition: max-width .3s var(--ease-out, ease), opacity .2s ease;
+}
+.widget-mini:hover .widget-mini-label,
+.widget-mini:focus-visible .widget-mini-label {
+  max-width: 200px;
+  opacity: 1;
+  margin-left: 8px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .widget-mini-label { transition: none; }
+}
 
 /* Compat: alias .widget-mini-access se mantiene como no-op (ya hereda
    todo el estilo unificado del .widget-mini). */
