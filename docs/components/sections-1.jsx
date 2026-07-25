@@ -173,15 +173,6 @@ const Hero = ({ lang, onScrollDown }) => {
           <span className="it">{t.hero_title_2}</span>
         </h1>
         <div className="hero-sub">{t.hero_sub}</div>
-        <p className="hero-lastmin">
-          {lang === 'es'
-            ? <>Condiciones especiales del 8 al 20 de julio en Hestía Mar y del 21 de julio al 1 de agosto en Hestía Thalassa: {' '}
-                <a href="https://wa.me/34620316370?text=Hola%2C%20me%20interesan%20las%20condiciones%20especiales%20de%20%C3%BAltima%20hora" target="_blank" rel="noopener">escríbenos</a>
-                {' '}o <a href="tel:+34620316370">llama</a>.</>
-            : <>Special conditions from 8 to 20 July at Hestía Mar, and 21 July to 1 August at Hestía Thalassa: {' '}
-                <a href="https://wa.me/34620316370?text=Hi%2C%20I%27m%20interested%20in%20the%20last-minute%20special%20conditions" target="_blank" rel="noopener">message us</a>
-                {' '}or <a href="tel:+34620316370">call</a>.</>}
-        </p>
         <form className="hero-availform" onSubmit={goReservas}>
           <div className="hero-af-field">
             <label htmlFor="hero-cin">{lang === 'es' ? 'Entrada' : 'Check-in'}</label>
