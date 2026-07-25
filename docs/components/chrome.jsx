@@ -399,7 +399,7 @@ const Header = ({ mode, scrolled, lang }) => {
               onClick={() => { close(); setAccessOpen(true); }}
             >
               <span className="mn-cta-ico" aria-hidden="true">✦</span>
-              {lang === 'es' ? 'Rincones del huésped' : 'Guest corners'}
+              {lang === 'es' ? 'Rincón del huésped' : 'Guest corner'}
             </button>
           </div>
           <div className="mn-contacts">

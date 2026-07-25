@@ -550,7 +550,7 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "mn-cta-ico",
     "aria-hidden": "true"
-  }, "✦"), lang === 'es' ? 'Rincones del huésped' : 'Guest corners')), /*#__PURE__*/React.createElement("div", {
+  }, "✦"), lang === 'es' ? 'Rincón del huésped' : 'Guest corner')), /*#__PURE__*/React.createElement("div", {
     className: "mn-contacts"
   }, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370",
