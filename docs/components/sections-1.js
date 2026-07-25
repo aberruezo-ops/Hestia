@@ -206,21 +206,7 @@ const Hero = ({
     className: "it"
   }, t.hero_title_2)), /*#__PURE__*/React.createElement("div", {
     className: "hero-sub"
-  }, t.hero_sub), /*#__PURE__*/React.createElement("p", {
-    className: "hero-lastmin"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Condiciones especiales del 8 al 20 de julio en Hestía Mar y del 21 de julio al 1 de agosto en Hestía Thalassa: ", ' ', /*#__PURE__*/React.createElement("a", {
-    href: "https://wa.me/34620316370?text=Hola%2C%20me%20interesan%20las%20condiciones%20especiales%20de%20%C3%BAltima%20hora",
-    target: "_blank",
-    rel: "noopener"
-  }, "escríbenos"), ' ', "o ", /*#__PURE__*/React.createElement("a", {
-    href: "tel:+34620316370"
-  }, "llama"), ".") : /*#__PURE__*/React.createElement(React.Fragment, null, "Special conditions from 8 to 20 July at Hestía Mar, and 21 July to 1 August at Hestía Thalassa: ", ' ', /*#__PURE__*/React.createElement("a", {
-    href: "https://wa.me/34620316370?text=Hi%2C%20I%27m%20interested%20in%20the%20last-minute%20special%20conditions",
-    target: "_blank",
-    rel: "noopener"
-  }, "message us"), ' ', "or ", /*#__PURE__*/React.createElement("a", {
-    href: "tel:+34620316370"
-  }, "call"), ".")), /*#__PURE__*/React.createElement("form", {
+  }, t.hero_sub), /*#__PURE__*/React.createElement("form", {
     className: "hero-availform",
     onSubmit: goReservas
   }, /*#__PURE__*/React.createElement("div", {

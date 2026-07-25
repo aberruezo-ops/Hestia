@@ -2283,25 +2283,6 @@ body.apt-bar-shown .cookies {
 /* Aviso de última hora (Mar/Thalassa): una línea entre el subtítulo y el
    buscador de fechas, para captar reservas de última hora por WhatsApp o
    llamada antes de que el huésped entre en el flujo de disponibilidad. */
-.hero-lastmin {
-  margin-top: 18px;
-  max-width: 560px;
-  margin-left: auto;
-  margin-right: auto;
-  font-family: var(--sans);
-  font-size: clamp(12.5px, 1.05vw, 14px);
-  line-height: 1.5;
-  color: var(--crema);
-  opacity: 0.82;
-}
-.hero-lastmin a {
-  color: var(--sol-lt, #6FC4D1);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  font-weight: 600;
-}
-.hero-lastmin a:hover { opacity: 0.8; }
-
 /* Mini-buscador del hero: dos campos de fecha + botón Comprobar → /reservas.
    Campos claros (texto oscuro) legibles sobre el video del hero. */
 .hero-availform {
