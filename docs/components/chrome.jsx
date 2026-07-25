@@ -158,25 +158,6 @@ const Header = ({ mode, scrolled, lang }) => {
     return () => window.removeEventListener('hestia-vit-change', sync);
   }, []);
 
-  // Launch banner, siempre en la home (Vitruvio desactivado en home de momento)
-  const [showBanner, setShowBanner] = React.useState(() => {
-    try {
-      const page = window.location.pathname.split('/').pop();
-      return page === '' || page === 'index.html';
-    } catch (_) { return false; }
-  });
-  const [launchEnded, setLaunchEnded] = React.useState(false);
-  const dismissBanner = React.useCallback(() => { setShowBanner(false); }, []);
-
-  // El banner de lanzamiento se ve desde el primer momento y desaparece tras un
-  // scroll mínimo hacia abajo. No se persiste: vuelve a aparecer al recargar/reentrar.
-  React.useEffect(() => {
-    if (!showBanner) return;
-    const onScroll = () => { if (window.scrollY > 40) setShowBanner(false); };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [showBanner]);
-
   const toggleVit = () => {
     const next = !vitMin;
     setVitMin(next);
@@ -201,13 +182,6 @@ const Header = ({ mode, scrolled, lang }) => {
   }, []);
   const vitHidden = !heroVisible;
 
-  // Vitruvio desactivado en la home de momento
-  const isHomePage = (() => {
-    try { const p = window.location.pathname.split('/').pop(); return p === '' || p === 'index.html'; } catch (_) { return false; }
-  })();
-
-  // Banner de lanzamiento: siempre en la home, fondo blanco
-  const launchVidRef = React.useRef(null);
   // Vitruvio: al terminar de dibujarse la H, mantenemos el último fotograma
   // 10 s antes de reiniciar (en vez de loop instantáneo).
   const vitVidRef = React.useRef(null);
@@ -220,51 +194,8 @@ const Header = ({ mode, scrolled, lang }) => {
       if (v) { v.currentTime = 0; v.play().catch(() => {}); }
     }, 10000);
   };
-  const replayLaunch = () => {
-    setLaunchEnded(false);
-    if (launchVidRef.current) { launchVidRef.current.currentTime = 0; launchVidRef.current.play().catch(() => {}); }
-  };
-  const launchBanner = showBanner ? ReactDOM.createPortal(
-    <div className="hero-vitruvio hero-vitruvio--launch">
-      <div className="hv-launch-card">
-        <div className="hv-inner">
-          <div className="hv-box">
-            <video ref={launchVidRef} autoPlay muted playsInline preload="auto"
-                   onEnded={() => setLaunchEnded(true)}>
-              <source src="assets/gemini_generated_video_7C740615.mp4?v=na" type="video/mp4"/>
-            </video>
-            {launchEnded && (
-              <button type="button" className="hv-replay" onClick={replayLaunch}
-                      aria-label={lang === 'es' ? 'Volver a ver' : 'Replay'}>
-                ↺
-              </button>
-            )}
-          </div>
-        </div>
-        <div className="hv-launch-text hv-launch-text--visible">
-          <div className="hv-launch-text-inner">
-            {lang === 'es'
-              ? <><em>Nuestra marca evoluciona, nuestra ilusión continúa.</em>{' '}
-                  <a href="porque-hestia.html" className="hv-launch-link">Saber más →</a></>
-              : <><em>Our brand evolves, our passion endures.</em>{' '}
-                  <a href="porque-hestia.html" className="hv-launch-link">Learn more →</a></>}
-          </div>
-        </div>
-      </div>
-      <button
-        type="button"
-        className="hv-toggle"
-        onClick={dismissBanner}
-        aria-label={lang === 'es' ? 'Cerrar' : 'Close'}
-      >
-        ×
-      </button>
-    </div>,
-    document.body
-  ) : null;
 
-  // Vitruvio, no se muestra en la home
-  const vitruvio = (!isHomePage && !vitMin) ? ReactDOM.createPortal(
+  const vitruvio = !vitMin ? ReactDOM.createPortal(
     <div className={`hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`}>
       <div className="hv-inner">
         <div className="hv-box">
@@ -400,7 +331,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <span className="wordmark">HESTÍA</span>
             <span className="your-home">your home!</span>
           </a>
-          {vitMin && !isHomePage && (
+          {vitMin && (
             <button type="button" className="hv-logo-btn" onClick={expandVit}
               aria-label={lang === 'es' ? 'Expandir animación Vitruvio' : 'Expand Vitruvio animation'}>
               +
@@ -425,7 +356,6 @@ const Header = ({ mode, scrolled, lang }) => {
           </button>
         </div>
       </header>
-      {launchBanner}
       {vitruvio}
       <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
         <nav className="mobile-nav">
@@ -469,7 +399,7 @@ const Header = ({ mode, scrolled, lang }) => {
               onClick={() => { close(); setAccessOpen(true); }}
             >
               <span className="mn-cta-ico" aria-hidden="true">✦</span>
-              {lang === 'es' ? 'El rincón del huésped' : 'The guest\x27s corner'}
+              {lang === 'es' ? 'Rincones del huésped' : 'Guest corners'}
             </button>
           </div>
           <div className="mn-contacts">

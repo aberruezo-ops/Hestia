@@ -333,7 +333,7 @@ const COPY = {
     nav: ['Inicio', 'Hestía Mar', 'Hestía Thalassa', 'Hestía Salinas', 'Hestía y nosotros', 'Vuestras opiniones', 'Contacto', 'Blog y noticias', '¿Por qué Hestía?', 'Estancias largas'],
     cta_nav: 'Reserva',
     mn_ventajas: 'Ventajas de reserva directa',
-    mn_guests: 'El rincón del huésped',
+    mn_guests: 'Rincones del huésped',
     mn_guide: 'Tu guía',
     hero_title_1: 'Bienvenido a tu hogar',
     hero_title_2: 'lejos de casa.',
@@ -402,7 +402,7 @@ const COPY = {
     nav: ['Home', 'Hestía Mar', 'Hestía Thalassa', 'Hestía Salinas', 'Hestía & us', 'Your reviews', 'Contact', 'Blog & news', 'Why Hestía', 'Long stays'],
     cta_nav: 'Book',
     mn_ventajas: 'Direct booking perks',
-    mn_guests: 'The guest\x27s corner',
+    mn_guests: 'Guest corners',
     mn_guide: 'Your guide',
     hero_title_1: 'Welcome to your home',
     hero_title_2: 'away from home.',
@@ -3642,7 +3642,7 @@ const GuestAccessModal = ({ lang, onClose }) => {
   };
 
   const t = lang === 'es' ? {
-    title_select: 'El rincón del huésped',
+    title_select: 'Rincones del huésped',
     desc_select:  'Elige tu Hestía e introduce el PIN que te enviamos con la reserva.',
     title_pin: (n) => `Acceso a ${n}`,
     desc_pin: 'Introduce el PIN que recibiste con tu reserva.',
@@ -3654,7 +3654,7 @@ const GuestAccessModal = ({ lang, onClose }) => {
     cancel: 'Cancelar',
     back: '← Cambiar',
   } : {
-    title_select: 'The guest\x27s corner',
+    title_select: 'Guest corners',
     desc_select:  'Pick your Hestía and enter the PIN we sent with your booking.',
     title_pin: (n) => `${n} guide access`,
     desc_pin: 'Enter the PIN from your booking.',
@@ -3762,12 +3762,12 @@ const WidgetGuestAccess = ({ lang }) => {
         type="button"
         className="widget-mini widget-mini-access"
         onClick={() => setOpen(true)}
-        aria-label={lang === 'es' ? 'El rincón del huésped' : 'The guest\x27s corner'}
-        title={lang === 'es' ? 'El rincón del huésped (guía y registro)' : 'The guest\x27s corner (guide & registration)'}
+        aria-label={lang === 'es' ? 'Rincones del huésped' : 'Guest corners'}
+        title={lang === 'es' ? 'Rincones del huésped (guía y registro)' : 'Guest corners (guide & registration)'}
       >
         <span className="widget-mini-icon" aria-hidden="true">✦</span>
         <span className="widget-mini-label">
-          {lang === 'es' ? 'El rincón del huésped' : 'The guest\x27s corner'}
+          {lang === 'es' ? 'Rincones del huésped' : 'Guest corners'}
         </span>
       </button>
       {open && ReactDOM.createPortal(
@@ -4108,4 +4108,4 @@ const HomeGuideTeaser = ({ lang }) => {
   );
 };
 
-Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin, WidgetGuestAccess, WidgetTopRecs, WidgetWeather, TOP_RECS, HomeGuideTeaser, GuestAccessModal });
+Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin, WidgetGuestAccess, WidgetTopRecs, WidgetWeather, TOP_RECS, HomeGuideTeaser, GuestAccessModal, _VERA_LAT, _VERA_LON, _WMO_SKY });

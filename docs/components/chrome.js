@@ -240,33 +240,6 @@ const Header = ({
     window.addEventListener('hestia-vit-change', sync);
     return () => window.removeEventListener('hestia-vit-change', sync);
   }, []);
-
-  // Launch banner, siempre en la home (Vitruvio desactivado en home de momento)
-  const [showBanner, setShowBanner] = React.useState(() => {
-    try {
-      const page = window.location.pathname.split('/').pop();
-      return page === '' || page === 'index.html';
-    } catch (_) {
-      return false;
-    }
-  });
-  const [launchEnded, setLaunchEnded] = React.useState(false);
-  const dismissBanner = React.useCallback(() => {
-    setShowBanner(false);
-  }, []);
-
-  // El banner de lanzamiento se ve desde el primer momento y desaparece tras un
-  // scroll mínimo hacia abajo. No se persiste: vuelve a aparecer al recargar/reentrar.
-  React.useEffect(() => {
-    if (!showBanner) return;
-    const onScroll = () => {
-      if (window.scrollY > 40) setShowBanner(false);
-    };
-    window.addEventListener('scroll', onScroll, {
-      passive: true
-    });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [showBanner]);
   const toggleVit = () => {
     const next = !vitMin;
     setVitMin(next);
@@ -294,18 +267,6 @@ const Header = ({
   }, []);
   const vitHidden = !heroVisible;
 
-  // Vitruvio desactivado en la home de momento
-  const isHomePage = (() => {
-    try {
-      const p = window.location.pathname.split('/').pop();
-      return p === '' || p === 'index.html';
-    } catch (_) {
-      return false;
-    }
-  })();
-
-  // Banner de lanzamiento: siempre en la home, fondo blanco
-  const launchVidRef = React.useRef(null);
   // Vitruvio: al terminar de dibujarse la H, mantenemos el último fotograma
   // 10 s antes de reiniciar (en vez de loop instantáneo).
   const vitVidRef = React.useRef(null);
@@ -321,55 +282,7 @@ const Header = ({
       }
     }, 10000);
   };
-  const replayLaunch = () => {
-    setLaunchEnded(false);
-    if (launchVidRef.current) {
-      launchVidRef.current.currentTime = 0;
-      launchVidRef.current.play().catch(() => {});
-    }
-  };
-  const launchBanner = showBanner ? ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
-    className: "hero-vitruvio hero-vitruvio--launch"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "hv-launch-card"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "hv-inner"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "hv-box"
-  }, /*#__PURE__*/React.createElement("video", {
-    ref: launchVidRef,
-    autoPlay: true,
-    muted: true,
-    playsInline: true,
-    preload: "auto",
-    onEnded: () => setLaunchEnded(true)
-  }, /*#__PURE__*/React.createElement("source", {
-    src: "assets/gemini_generated_video_7C740615.mp4?v=na",
-    type: "video/mp4"
-  })), launchEnded && /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: "hv-replay",
-    onClick: replayLaunch,
-    "aria-label": lang === 'es' ? 'Volver a ver' : 'Replay'
-  }, "↺"))), /*#__PURE__*/React.createElement("div", {
-    className: "hv-launch-text hv-launch-text--visible"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "hv-launch-text-inner"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Nuestra marca evoluciona, nuestra ilusión continúa."), ' ', /*#__PURE__*/React.createElement("a", {
-    href: "porque-hestia.html",
-    className: "hv-launch-link"
-  }, "Saber más →")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "Our brand evolves, our passion endures."), ' ', /*#__PURE__*/React.createElement("a", {
-    href: "porque-hestia.html",
-    className: "hv-launch-link"
-  }, "Learn more →"))))), /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: "hv-toggle",
-    onClick: dismissBanner,
-    "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
-  }, "×")), document.body) : null;
-
-  // Vitruvio, no se muestra en la home
-  const vitruvio = !isHomePage && !vitMin ? ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+  const vitruvio = !vitMin ? ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
     className: `hero-vitruvio${vitHidden ? ' hv-offhero' : ''}`
   }, /*#__PURE__*/React.createElement("div", {
     className: "hv-inner"
@@ -529,7 +442,7 @@ const Header = ({
     className: "wordmark"
   }, "HESTÍA"), /*#__PURE__*/React.createElement("span", {
     className: "your-home"
-  }, "your home!")), vitMin && !isHomePage && /*#__PURE__*/React.createElement("button", {
+  }, "your home!")), vitMin && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hv-logo-btn",
     onClick: expandVit,
@@ -559,7 +472,7 @@ const Header = ({
     onClick: () => setMobileOpen(o => !o),
     "aria-label": mobileOpen ? 'Cerrar menú' : 'Abrir menú',
     "aria-expanded": mobileOpen
-  }, mobileOpen ? /*#__PURE__*/React.createElement(IconClose, null) : /*#__PURE__*/React.createElement(IconHamburger, null)))), launchBanner, vitruvio, /*#__PURE__*/React.createElement("div", {
+  }, mobileOpen ? /*#__PURE__*/React.createElement(IconClose, null) : /*#__PURE__*/React.createElement(IconHamburger, null)))), vitruvio, /*#__PURE__*/React.createElement("div", {
     className: `mobile-menu ${mobileOpen ? 'open' : ''}`,
     "aria-hidden": !mobileOpen
   }, /*#__PURE__*/React.createElement("nav", {
@@ -637,7 +550,7 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "mn-cta-ico",
     "aria-hidden": "true"
-  }, "✦"), lang === 'es' ? 'El rincón del huésped' : 'The guest\x27s corner')), /*#__PURE__*/React.createElement("div", {
+  }, "✦"), lang === 'es' ? 'Rincones del huésped' : 'Guest corners')), /*#__PURE__*/React.createElement("div", {
     className: "mn-contacts"
   }, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370",
