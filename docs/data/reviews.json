@@ -1,7 +1,7 @@
 {
   "_doc": "Reviews curadas y de la web. source: 'booking'|'airbnb'|'google'|'web'. apt: 'vm'|'vt'|'vs'|'all'. highlight: true para destacarse en la sección de relevantes. status: 'published'|'pending' (solo published se muestra al público).",
   "version": 1,
-  "updatedAt": "2026-05-24T19:28:52.972Z",
+  "updatedAt": "2026-07-26T14:38:14.000Z",
   "items": [
     {
       "id": "bk-001",
@@ -5306,6 +5306,19 @@
       "text": "Tres piscinas, jardines enormes, riachuelos. Para venir con niños es de los mejores sitios de Vera.",
       "highlight": false,
       "status": "published"
+    },
+    {
+      "id": "wb-351",
+      "source": "web",
+      "apt": "vt",
+      "name": "Pablo & Andrea",
+      "country": "ES",
+      "date": "2026-07-01",
+      "rating": 5,
+      "lang": "es",
+      "text": "Super recomendable. Muy atentos desde el primer contacto, con mucha info y la casa con todo lo necesario para sentirte como en casa. Sin duda, repetiremos.",
+      "highlight": false,
+      "status": "pending"
     }
   ]
 }
