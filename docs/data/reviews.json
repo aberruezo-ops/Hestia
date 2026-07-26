@@ -1,7 +1,7 @@
 {
   "_doc": "Reviews curadas y de la web. source: 'booking'|'airbnb'|'google'|'web'. apt: 'vm'|'vt'|'vs'|'all'. highlight: true para destacarse en la sección de relevantes. status: 'published'|'pending' (solo published se muestra al público).",
   "version": 1,
-  "updatedAt": "2026-07-26T14:38:14.000Z",
+  "updatedAt": "2026-07-26T14:43:54.718Z",
   "items": [
     {
       "id": "bk-001",
@@ -5318,7 +5318,7 @@
       "lang": "es",
       "text": "Super recomendable. Muy atentos desde el primer contacto, con mucha info y la casa con todo lo necesario para sentirte como en casa. Sin duda, repetiremos.",
       "highlight": false,
-      "status": "pending"
+      "status": "published"
     }
   ]
 }
