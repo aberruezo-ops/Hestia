@@ -3200,15 +3200,29 @@ Object.assign(window, { DirectBookingPerks, DirectBookingModal, AptDesktopSideba
 // y cuando la búsqueda del home está activa (hs-results-change).
 // ================================================================
 
+// El stack va centrado verticalmente (top:50% + translateY(-50%)), así que
+// si crece demasiado (dos cards desplegadas a la vez) empuja al de más
+// arriba fuera de la pantalla por encima. Para que eso no pase, solo un
+// widget puede estar desplegado a la vez: al abrir uno, el resto se pliega
+// (evento global, sin depender de que compartan un padre común).
+const _WIDGET_OPEN_EVENT = 'hestia:widget-open';
 const _useLocalMin = (key, fallback = false) => {
-  const k = `hestia-widget-${key}-min2`;          // -min2: nuevo default (solo Sabías qué desplegado)
+  const k = `hestia-widget-${key}-min2`;          // -min2: nuevo default (todos plegados)
   const [min, setMin] = React.useState(() => {
     try { const v = localStorage.getItem(k); return v === null ? fallback : v === '1'; } catch (e) { return fallback; }
   });
   const update = (v) => {
     setMin(v);
     try { localStorage.setItem(k, v ? '1' : '0'); } catch (e) {}
+    if (!v) {
+      try { window.dispatchEvent(new CustomEvent(_WIDGET_OPEN_EVENT, { detail: key })); } catch (e) {}
+    }
   };
+  React.useEffect(() => {
+    const onOpen = (e) => { if (e.detail !== key) update(true); };
+    window.addEventListener(_WIDGET_OPEN_EVENT, onOpen);
+    return () => window.removeEventListener(_WIDGET_OPEN_EVENT, onOpen);
+  }, [key]);
   return [min, update];
 };
 
@@ -3278,7 +3292,7 @@ const WidgetDirectBooking = ({ lang }) => {
 };
 
 const WidgetSabiasQue = ({ lang }) => {
-  const [min, setMin] = _useLocalMin('sabias');
+  const [min, setMin] = _useLocalMin('sabias', true);   // plegado por defecto, como el resto
   const [pool] = React.useState(_getSessionPool);
   const total  = pool.length;
   const [idx, setIdx]         = React.useState(_getSessionIdx);
