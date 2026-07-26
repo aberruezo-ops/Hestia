@@ -6345,7 +6345,10 @@ const WidgetDirectBooking = ({
   const ribbon = DIRECT_RIBBON[lang];
   if (min) {
     return /*#__PURE__*/React.createElement(WidgetMiniPill, {
-      icon: "✦",
+      icon: /*#__PURE__*/React.createElement(HiIcon, {
+        name: "handshake",
+        size: 15
+      }),
       label: lang === 'es' ? 'Reserva directa' : 'Direct booking',
       ariaLabel: lang === 'es' ? 'Restaurar reserva directa' : 'Restore direct booking',
       onClick: () => setMin(false),
@@ -6414,7 +6417,10 @@ const WidgetSabiasQue = ({
   }, [min, total]);
   if (min) {
     return /*#__PURE__*/React.createElement(WidgetMiniPill, {
-      icon: "?",
+      icon: /*#__PURE__*/React.createElement(HiIcon, {
+        name: "bulb",
+        size: 15
+      }),
       label: lang === 'es' ? '¿Sabías que…?' : 'Did you know?',
       ariaLabel: lang === 'es' ? 'Restaurar curiosidades' : 'Restore did-you-know',
       onClick: () => setMin(false),
@@ -6946,7 +6952,10 @@ const WidgetGuestAccess = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "widget-mini-icon",
     "aria-hidden": "true"
-  }, "✦"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "key",
+    size: 15
+  })), /*#__PURE__*/React.createElement("span", {
     className: "widget-mini-label"
   }, lang === 'es' ? 'Rincón del huésped' : 'Guest corner')), open && ReactDOM.createPortal(/*#__PURE__*/React.createElement(GuestAccessModal, {
     lang: lang,
@@ -7129,9 +7138,10 @@ const WidgetWeather = ({
 }) => {
   const [min, setMin] = _useLocalMin('weather', true); // plegado por defecto
   const [wx, setWx] = React.useState(null); // null = cargando/no disponible
+  const [show7d, setShow7d] = React.useState(false);
   React.useEffect(() => {
     let alive = true;
-    const CACHE_KEY = 'hestia-weather-cache-v1';
+    const CACHE_KEY = 'hestia-weather-cache-v2';
     const CACHE_MS = 45 * 60 * 1000;
     try {
       const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null');
@@ -7140,7 +7150,10 @@ const WidgetWeather = ({
         return;
       }
     } catch (_) {}
-    const fUrl = `https://api.open-meteo.com/v1/forecast?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=temperature_2m,weather_code&timezone=Europe%2FMadrid`;
+    // Un único fetch de forecast trae el dato de hoy (current) y los próximos
+    // 7 días (daily) a la vez: evita una segunda llamada cuando se abre la
+    // ventana de previsión.
+    const fUrl = `https://api.open-meteo.com/v1/forecast?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=Europe%2FMadrid&forecast_days=7`;
     const mUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=wave_height&timezone=Europe%2FMadrid`;
     Promise.all([fetch(fUrl).then(r => r.ok ? r.json() : null).catch(() => null), fetch(mUrl).then(r => r.ok ? r.json() : null).catch(() => null)]).then(([f, m]) => {
       if (!alive) return;
@@ -7148,10 +7161,17 @@ const WidgetWeather = ({
         setWx(false);
         return;
       }
+      const days = f.daily && Array.isArray(f.daily.time) ? f.daily.time.map((d, i) => ({
+        date: d,
+        max: Math.round(f.daily.temperature_2m_max[i]),
+        min: Math.round(f.daily.temperature_2m_min[i]),
+        code: f.daily.weather_code[i]
+      })) : [];
       const v = {
         temp: Math.round(f.current.temperature_2m),
         code: f.current.weather_code,
-        wave: m && m.current && typeof m.current.wave_height === 'number' ? m.current.wave_height : null
+        wave: m && m.current && typeof m.current.wave_height === 'number' ? m.current.wave_height : null,
+        days
       };
       try {
         sessionStorage.setItem(CACHE_KEY, JSON.stringify({
@@ -7183,6 +7203,7 @@ const WidgetWeather = ({
   }
   const sky = wx ? _WMO_SKY(wx.code) : null;
   const moon = _moonPhase();
+  const DOW = lang === 'es' ? ['D', 'L', 'M', 'X', 'J', 'V', 'S'] : ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
   return /*#__PURE__*/React.createElement("section", {
     className: "widget-card widget-weather",
     "aria-label": lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'
@@ -7217,7 +7238,199 @@ const WidgetWeather = ({
     size: 18
   }), /*#__PURE__*/React.createElement("span", {
     className: "wthr-moon-lbl"
-  }, lang === 'es' ? moon.es : moon.en)))));
+  }, lang === 'es' ? moon.es : moon.en))), wx.days.length > 0 && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "widget-cta widget-cta-ghost wthr-7d-btn",
+    onClick: () => setShow7d(true)
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver 7 días' : 'See 7 days'), /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "→")), show7d && ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+    className: "wthr-7d-backdrop",
+    onClick: () => setShow7d(false)
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "wthr-7d-pop",
+    onClick: e => e.stopPropagation(),
+    role: "dialog",
+    "aria-label": lang === 'es' ? 'Previsión a 7 días' : '7-day forecast'
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "wthr-7d-close",
+    onClick: () => setShow7d(false),
+    "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
+  }, "×"), /*#__PURE__*/React.createElement("h4", {
+    className: "wthr-7d-title"
+  }, lang === 'es' ? 'Próximos 7 días · Vera Playa' : 'Next 7 days · Vera Playa'), /*#__PURE__*/React.createElement("ul", {
+    className: "wthr-7d-list"
+  }, wx.days.map((d, i) => {
+    const dSky = _WMO_SKY(d.code);
+    const dow = i === 0 ? lang === 'es' ? 'Hoy' : 'Today' : DOW[new Date(d.date + 'T12:00:00Z').getUTCDay()];
+    return /*#__PURE__*/React.createElement("li", {
+      key: d.date,
+      className: "wthr-7d-row"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "wthr-7d-dow"
+    }, dow), /*#__PURE__*/React.createElement(HiIcon, {
+      name: dSky.icon,
+      size: 18
+    }), /*#__PURE__*/React.createElement("span", {
+      className: "wthr-7d-desc"
+    }, lang === 'es' ? dSky.es : dSky.en), /*#__PURE__*/React.createElement("span", {
+      className: "wthr-7d-temps"
+    }, /*#__PURE__*/React.createElement("strong", null, d.max, "°"), " ", d.min, "°"));
+  })))), document.body)));
+};
+
+// ── Widget "Sonido de mar" (solo Home) ──────────────────────────────────────
+// Envoltorio del botón .sound-toggle de app.jsx como pieza de la barra de
+// widgets: el estado y el <audio> los sigue llevando App (aquí solo se
+// presenta). No tiene tarjeta ni estado de apertura propios: es un
+// interruptor directo, no hay nada que expandir.
+const WidgetSound = ({
+  lang,
+  soundOn,
+  onToggle
+}) => /*#__PURE__*/React.createElement("button", {
+  type: "button",
+  className: "widget-mini widget-mini-sound",
+  onClick: onToggle,
+  "aria-pressed": soundOn,
+  "aria-label": soundOn ? lang === 'es' ? 'Silenciar sonido de mar' : 'Mute sea sound' : lang === 'es' ? 'Activar sonido de mar' : 'Unmute sea sound',
+  title: soundOn ? lang === 'es' ? 'Silenciar sonido de mar' : 'Mute sea sound' : lang === 'es' ? 'Activar sonido de mar' : 'Unmute sea sound'
+}, /*#__PURE__*/React.createElement("span", {
+  className: "widget-mini-icon",
+  "aria-hidden": "true"
+}, /*#__PURE__*/React.createElement(HiIcon, {
+  name: soundOn ? 'sound' : 'mute',
+  size: 15
+})), /*#__PURE__*/React.createElement("span", {
+  className: "widget-mini-label"
+}, lang === 'es' ? 'Sonido de mar' : 'Sea sound'));
+
+// ── Widget "Contacto" (todas las páginas) ───────────────────────────────────
+// Mismo contacto directo con Alex y Fran que el burbuja flotante (chrome.jsx
+// FloatingChat), pero como pieza más de la barra en vez de un botón aparte.
+// FloatingChat se sigue mostrando tal cual en móvil (la barra es solo
+// ≥900px); en escritorio la barra sustituye a FloatingChat, así que no hay
+// dos accesos de contacto a la vez. Regalar Hestía ya tiene su propio
+// widget (WidgetGiftHestia): este solo cubre "hablar con Alex/Fran".
+const _CONTACT_WA_MSGS = {
+  es: {
+    'index.html': 'Hola, me interesa saber más sobre los apartamentos Hestía en Vera Playa.',
+    'mar.html': 'Hola, me interesa el apartamento Hestía Mar. ¿Podéis darme más información?',
+    'thalassa.html': 'Hola, me interesa el apartamento Hestía Thalassa. ¿Podéis darme más información?',
+    'salinas.html': 'Hola, me interesa el apartamento Hestía Salinas. ¿Podéis darme más información?',
+    'reservas.html': 'Hola, quiero hacer una reserva en Hestía. ¿Me podéis ayudar?',
+    'estancias-largas.html': 'Hola, me interesa una estancia larga en Hestía. ¿Podéis darme más información?',
+    'contacto.html': 'Hola, me pongo en contacto desde la web de Hestía.'
+  },
+  en: {
+    'index.html': 'Hi, I\'d like to know more about Hestía apartments in Vera Playa.',
+    'mar.html': 'Hi, I\'m interested in Hestía Mar. Can you tell me more?',
+    'thalassa.html': 'Hi, I\'m interested in Hestía Thalassa. Can you tell me more?',
+    'salinas.html': 'Hi, I\'m interested in Hestía Salinas. Can you tell me more?',
+    'reservas.html': 'Hi, I\'d like to book at Hestía. Can you help me?',
+    'estancias-largas.html': 'Hi, I\'m interested in a long stay at Hestía. Can you tell me more?',
+    'contacto.html': 'Hi, I\'m reaching out from the Hestía website.'
+  }
+};
+const _waMsgForPage = lang => {
+  const page = window.location.pathname.split('/').pop() || 'index.html';
+  return _CONTACT_WA_MSGS[lang][page] || (lang === 'es' ? 'Hola, me interesa Hestía Your Home.' : 'Hi, I\'d like to know more about Hestía Your Home.');
+};
+const _CONTACT_PERSONS = [{
+  id: 'alex',
+  name: 'Alex',
+  photo: 'assets/photo-alex.jpg',
+  photoW: 840,
+  photoH: 1120,
+  imgClass: 'wc-avatar-img-alex',
+  langLbl: 'Español',
+  tel: '+34 620 316 370',
+  telHref: 'tel:+34620316370',
+  waNumber: '34620316370'
+}, {
+  id: 'fran',
+  name: 'Fran',
+  photo: 'assets/photo-fran.jpg',
+  photoW: 925,
+  photoH: 2000,
+  imgClass: 'wc-avatar-img-fran',
+  langLbl: 'English',
+  tel: '+34 654 138 251',
+  telHref: 'tel:+34654138251',
+  waNumber: '34654138251'
+}];
+const WcWaIcon = () => /*#__PURE__*/React.createElement("svg", {
+  width: "13",
+  height: "13",
+  viewBox: "0 0 24 24",
+  fill: "currentColor",
+  "aria-hidden": "true"
+}, /*#__PURE__*/React.createElement("path", {
+  d: "M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+}));
+const WidgetContact = ({
+  lang
+}) => {
+  const [min, setMin] = _useLocalMin('contact', true); // plegado por defecto
+  if (min) {
+    return /*#__PURE__*/React.createElement(WidgetMiniPill, {
+      icon: /*#__PURE__*/React.createElement(HiIcon, {
+        name: "chat",
+        size: 15
+      }),
+      label: lang === 'es' ? 'Hablemos' : 'Let\'s talk',
+      ariaLabel: lang === 'es' ? 'Restaurar contacto' : 'Restore contact',
+      onClick: () => setMin(false),
+      className: "widget-mini-contact"
+    });
+  }
+  const waText = encodeURIComponent(_waMsgForPage(lang));
+  return /*#__PURE__*/React.createElement("section", {
+    className: "widget-card widget-contact",
+    "aria-label": lang === 'es' ? 'Hablemos' : 'Let\'s talk'
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "widget-min-btn",
+    "aria-label": lang === 'es' ? 'Minimizar' : 'Minimize',
+    title: lang === 'es' ? 'Minimizar' : 'Minimize',
+    onClick: () => setMin(true)
+  }, "−"), /*#__PURE__*/React.createElement("span", {
+    className: "eyebrow"
+  }, lang === 'es' ? 'Hablemos' : 'Let\'s talk'), /*#__PURE__*/React.createElement("p", {
+    className: "widget-text"
+  }, lang === 'es' ? 'Te responde una persona real. En minutos, no en días.' : 'A real person replies. In minutes, not days.'), _CONTACT_PERSONS.map(p => /*#__PURE__*/React.createElement("div", {
+    className: "wc-person",
+    key: p.id
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "wc-avatar"
+  }, /*#__PURE__*/React.createElement("img", {
+    src: p.photo,
+    alt: "",
+    loading: "lazy",
+    width: p.photoW,
+    height: p.photoH,
+    className: `wc-avatar-img ${p.imgClass}`
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "wc-body"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "wc-name"
+  }, p.name), /*#__PURE__*/React.createElement("div", {
+    className: "wc-actions"
+  }, /*#__PURE__*/React.createElement("a", {
+    className: "wc-btn",
+    href: `https://wa.me/${p.waNumber}?text=${waText}`,
+    target: "_blank",
+    rel: "noopener",
+    "aria-label": `WhatsApp ${p.name}`
+  }, /*#__PURE__*/React.createElement(WcWaIcon, null), " WhatsApp"), /*#__PURE__*/React.createElement("a", {
+    className: "wc-btn wc-btn-tel",
+    href: p.telHref,
+    "aria-label": `${lang === 'es' ? 'Llamar a' : 'Call'} ${p.name}`
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "phone",
+    size: 13
+  }), " ", lang === 'es' ? 'Llamar' : 'Call'))))));
 };
 const WidgetStack = ({
   lang,
@@ -7294,6 +7507,8 @@ const WidgetStack = ({
     lang: lang
   }), /*#__PURE__*/React.createElement(WidgetGiftHestia, {
     lang: lang
+  }), /*#__PURE__*/React.createElement(WidgetContact, {
+    lang: lang
   }), extra), !onReservas && /*#__PURE__*/React.createElement("a", {
     href: "reservas.html",
     className: `mob-book-btn${bookHidden ? ' mob-book-btn--hidden' : ''}`,
@@ -7367,6 +7582,8 @@ Object.assign(window, {
   WidgetGuestAccess,
   WidgetTopRecs,
   WidgetWeather,
+  WidgetSound,
+  WidgetContact,
   TOP_RECS,
   HomeGuideTeaser,
   GuestAccessModal,

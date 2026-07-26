@@ -264,9 +264,13 @@ const App = () => {
     size: 22
   })), /*#__PURE__*/React.createElement(WidgetStack, {
     lang: lang,
-    extra: /*#__PURE__*/React.createElement(WidgetWeather, {
+    extra: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(WidgetWeather, {
       lang: lang
-    })
+    }), /*#__PURE__*/React.createElement(WidgetSound, {
+      lang: lang,
+      soundOn: soundOn,
+      onToggle: toggleSound
+    }))
   }), /*#__PURE__*/React.createElement(FloatingChat, {
     lang: lang
   }), /*#__PURE__*/React.createElement(Cookies, {

@@ -176,7 +176,7 @@ const App = () => {
           <HiIcon name="mute" size={22} />
         )}
       </button>
-      <WidgetStack lang={lang} extra={<WidgetWeather lang={lang} />} />
+      <WidgetStack lang={lang} extra={<><WidgetWeather lang={lang} /><WidgetSound lang={lang} soundOn={soundOn} onToggle={toggleSound} /></>} />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />
       {tweaksOpen && <TweaksPanel tweaks={tweaks} update={updateTweak} lang={lang} setLang={setLang} />}
