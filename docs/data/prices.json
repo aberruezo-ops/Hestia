@@ -627,6 +627,16 @@
       "value": 5,
       "lastMinute": true,
       "auto": true
+    },
+    "vm|2026-07-28": {
+      "apt": "vm",
+      "start": "2026-07-28",
+      "end": "2026-07-31",
+      "nights": 3,
+      "type": "discount",
+      "value": 15,
+      "lastMinute": true,
+      "auto": true
     }
   },
   "gapSplits": {
