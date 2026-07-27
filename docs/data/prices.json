@@ -588,26 +588,6 @@
       "minNights": 4,
       "lastMinute": true
     },
-    "vt|2026-07-26": {
-      "apt": "vt",
-      "start": "2026-07-26",
-      "end": "2026-07-29",
-      "nights": 3,
-      "type": "discount",
-      "value": 15,
-      "lastMinute": true,
-      "auto": true
-    },
-    "vt|2026-07-29": {
-      "apt": "vt",
-      "start": "2026-07-29",
-      "end": "2026-08-01",
-      "nights": 3,
-      "type": "discount",
-      "value": 15,
-      "lastMinute": true,
-      "auto": true
-    },
     "vm|2026-08-22": {
       "apt": "vm",
       "start": "2026-08-22",
@@ -660,9 +640,6 @@
     ],
     "vs|2026-08-23": [
       "2026-08-30"
-    ],
-    "vt|2026-07-26": [
-      "2026-07-29"
     ],
     "vt|2026-08-11": [
       "2026-08-15"
@@ -806,7 +783,6 @@
     ]
   },
   "gapSplitsAuto": [
-    "vt|2026-07-26",
     "vt|2026-08-11",
     "vt|2026-08-25"
   ]
