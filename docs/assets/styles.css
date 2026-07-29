@@ -20836,6 +20836,69 @@ img[src*="apt-vt-gallery-"] {
   line-height: 1.4;
 }
 
+/* Primeros auxilios básicos (capítulo Salud) */
+.ag-emerg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 8px 0 28px;
+}
+.ag-emerg-card {
+  background: color-mix(in srgb, var(--apt-accent, var(--sol)) 6%, var(--crema));
+  border: 1px solid color-mix(in srgb, var(--apt-accent, var(--sol)) 22%, transparent);
+  border-radius: 4px 14px 4px 14px;
+  padding: 16px 18px;
+}
+.ag-emerg-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--apt-accent, var(--sol)) 16%, transparent);
+  color: var(--apt-accent-dk, var(--ber));
+  margin-bottom: 10px;
+}
+.ag-emerg-title {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.ag-emerg-steps {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ag-emerg-steps li {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink);
+  padding-left: 16px;
+  position: relative;
+}
+.ag-emerg-steps li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--apt-accent, var(--sol));
+}
+.ag-emerg-escalate {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ber-dk);
+  font-weight: 600;
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px dashed color-mix(in srgb, var(--apt-accent, var(--sol)) 30%, transparent);
+}
+
 /* ============================================================
    Reservas v2 · dashboard + tabla + panel de edición
    ============================================================ */
