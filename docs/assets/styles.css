@@ -21235,8 +21235,20 @@ img[src*="apt-vt-gallery-"] {
 .rv-rev li:first-child { border-top: none; }
 .rv-rev-meta { color: var(--ink-soft); font-size: 12px; }
 .rv-rev-btn { margin-left: auto; }
+.rv-rev-dismiss {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 1px solid rgba(61,26,53,.16);
+  background: transparent;
+  color: var(--ink-soft);
+  font-size: 15px; line-height: 1;
+  cursor: pointer;
+}
+.rv-rev-dismiss:hover { background: rgba(61,26,53,.08); color: var(--ink); }
 @media (max-width: 560px) {
   .rv-rev-btn { margin-left: 0; flex: 1 1 100%; }
+  .rv-rev-dismiss { margin-left: auto; }
 }
 
 /* --- Toolbar de filtros --- */
