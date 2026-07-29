@@ -288,6 +288,104 @@ const ARRIVAL_EATS = {
   },
 };
 
+// Primeros auxilios básicos ante los percances más típicos de una estancia
+// de playa/verano en Vera. No sustituye asistencia médica: siempre que haya
+// duda real, se llama al 112. Contenido orientativo, no un protocolo clínico.
+const EMERGENCY_CARDS = [
+  {
+    id: 'medusa',
+    icon: 'wave',
+    es: {
+      title: 'Picadura de medusa',
+      steps: [
+        'Sal del agua y no frotes la zona.',
+        'Retira los restos de tentáculo con el borde de una tarjeta o unas pinzas, nunca con la mano desnuda.',
+        'Enjuaga con agua de mar (nunca con agua dulce ni con orina, un mito que no funciona y puede empeorarlo).',
+        'Si tienes agua caliente a mano (no quemando, unos 40°), sumerge la zona 20-30 min: alivia bastante el dolor.',
+      ],
+      escalate: 'Llama al 112 si cuesta respirar, hay hinchazón que se extiende, mareo, o la picadura afecta a cara, ojos o una zona muy amplia.',
+    },
+    en: {
+      title: 'Jellyfish sting',
+      steps: [
+        'Get out of the water and avoid rubbing the area.',
+        'Remove any tentacle remains with the edge of a card or tweezers, never with your bare hand.',
+        'Rinse with seawater (never fresh water or urine, a myth that does not work and can make it worse).',
+        'If you have warm water at hand (warm, not scalding, around 40°), soak the area 20-30 min: it eases the pain a lot.',
+      ],
+      escalate: 'Call 112 if breathing feels difficult, the swelling is spreading, you feel dizzy, or the sting affects the face, eyes or a large area.',
+    },
+  },
+  {
+    id: 'picadura',
+    icon: 'cross',
+    es: {
+      title: 'Picadura de avispa, abeja o araña',
+      steps: [
+        'Si ha quedado el aguijón, retíralo raspando con una tarjeta (no lo aprietes con los dedos, inyecta más veneno).',
+        'Lava con agua y jabón y aplica frío local (hielo envuelto en un paño) para bajar la hinchazón y el picor.',
+        'Un antihistamínico oral, si tenéis, ayuda con la reacción local.',
+        'Las arañas realmente peligrosas son muy raras por aquí: lo habitual es escozor local que pasa en un día o dos.',
+      ],
+      escalate: 'Llama al 112 si la hinchazón avanza rápido más allá de la zona picada, cuesta respirar o tragar, hay mareo, o aparece urticaria por todo el cuerpo (puede ser una reacción alérgica grave).',
+    },
+    en: {
+      title: 'Wasp, bee or spider bite',
+      steps: [
+        'If the stinger is still in, scrape it out with a card (do not pinch it out, that injects more venom).',
+        'Wash with soap and water and apply local cold (ice wrapped in a cloth) to bring down swelling and itching.',
+        'An oral antihistamine, if you have one, helps with the local reaction.',
+        'Genuinely dangerous spiders are very rare around here: the usual outcome is local soreness that fades in a day or two.',
+      ],
+      escalate: 'Call 112 if the swelling spreads fast beyond the bite area, breathing or swallowing feels difficult, you feel dizzy, or hives break out all over the body (can be a serious allergic reaction).',
+    },
+  },
+  {
+    id: 'calor',
+    icon: 'thermometer',
+    es: {
+      title: 'Insolación y golpe de calor',
+      steps: [
+        'Con dolor de cabeza, mareo, sudoración intensa o náuseas: es agotamiento por calor. Lleva a la persona a la sombra o a un sitio fresco, afloja la ropa y ofrece agua a sorbos.',
+        'Paños húmedos y fríos en cuello, nuca, muñecas e ingles ayudan a bajar la temperatura más rápido.',
+        'El golpe de calor es distinto y más grave: piel muy caliente pero seca (deja de sudar), confusión o desorientación.',
+      ],
+      escalate: 'Si hay confusión, la piel está seca y muy caliente, o pierde el conocimiento: llama al 112 ya mismo y empieza a enfriar activamente (agua fría, ventilador, hielo en cuello y axilas) mientras llega ayuda. No des líquidos si la persona no está consciente.',
+    },
+    en: {
+      title: 'Sunstroke and heatstroke',
+      steps: [
+        'Headache, dizziness, heavy sweating or nausea: that is heat exhaustion. Move the person to shade or somewhere cool, loosen clothing and offer small sips of water.',
+        'Cool, damp cloths on the neck, wrists and groin help bring the temperature down faster.',
+        'Heatstroke is different and more serious: skin that is very hot but dry (sweating stops), confusion or disorientation.',
+      ],
+      escalate: 'If there is confusion, dry and very hot skin, or loss of consciousness: call 112 right away and start active cooling (cold water, a fan, ice on the neck and armpits) while help arrives. Do not give fluids if the person is not conscious.',
+    },
+  },
+  {
+    id: 'lipotimia',
+    icon: 'heart',
+    es: {
+      title: 'Mareo y lipotimia (desmayo)',
+      steps: [
+        'Si alguien nota que se marea y va a desmayarse, siéntalo con la cabeza entre las rodillas o túmbalo con las piernas elevadas.',
+        'Afloja ropa ajustada (cuello, cinturón) y dale aire.',
+        'Si se recupera sola en segundos, sin golpe en la caída y sin otros síntomas, no suele ser grave: que descanse y beba agua.',
+      ],
+      escalate: 'Llama al 112 si no recupera la consciencia en uno o dos minutos, se ha golpeado la cabeza al caer, hay dolor en el pecho o falta de aire, o se repiten los desmayos.',
+    },
+    en: {
+      title: 'Dizziness and fainting',
+      steps: [
+        'If someone feels faint and about to pass out, sit them down with their head between their knees, or lay them down with legs raised.',
+        'Loosen tight clothing (collar, belt) and let them get some air.',
+        'If they come round on their own within seconds, did not hit their head falling and have no other symptoms, it is usually not serious: let them rest and drink water.',
+      ],
+      escalate: 'Call 112 if consciousness does not return within one or two minutes, they hit their head falling, there is chest pain or shortness of breath, or fainting happens repeatedly.',
+    },
+  },
+];
+
 // Mapeo de qué categorías van en cada sección temática.
 // El bloque 'alrededores' queda solo con intro/mapa/fuentes oficiales.
 const SECTION_CATS = {
@@ -5809,6 +5907,32 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                 ? 'Servicios para tenerlo todo a mano: centros de salud, veterinarios (incluyendo 24 h), guarderías y residencias para mascotas, farmacias y fisioterapeutas. Y para el día a día de una estancia larga, dónde teletrabajar, lavanderías y dónde sacar efectivo. El mejor sitio para trabajar suele ser tu propio Hestía, con WiFi de fibra; aquí van alternativas para cuando quieras cambiar de aires.'
                 : 'Everything within reach: health centres, vets (including 24 h), pet boarding and daycare, pharmacies and physiotherapy clinics. And for the day-to-day of a longer stay, where to work remotely, laundries and where to get cash. The best place to work is usually your own Hestía, with fibre WiFi; here are alternatives for when you fancy a change of scene.'}
             </p>
+
+            <h3 className="ag-h3">{lang === 'es' ? 'Primeros auxilios básicos' : 'Basic first aid'}</h3>
+            <p className="ag-para">
+              {lang === 'es'
+                ? 'Nada de esto sustituye a un médico: es para reaccionar bien en los primeros minutos ante los percances más típicos de playa y verano. Si tienes dudas de verdad, mejor llamar al 112 y que lo valore alguien.'
+                : 'None of this replaces a doctor: it is here to help you react well in the first few minutes with the most typical beach and summer mishaps. If you have real doubts, better to call 112 and let someone assess it.'}
+            </p>
+            <div className="ag-emerg-grid">
+              {EMERGENCY_CARDS.map(card => {
+                const t = card[lang];
+                return (
+                  <div className="ag-emerg-card" key={card.id}>
+                    <span className="ag-emerg-icon" aria-hidden="true"><HiIcon name={card.icon} size={20} /></span>
+                    <h4 className="ag-emerg-title">{t.title}</h4>
+                    <ul className="ag-emerg-steps">
+                      {t.steps.map((step, i) => <li key={i}>{step}</li>)}
+                    </ul>
+                    <p className="ag-emerg-escalate">
+                      <HiIcon name="alert" size={13} style={{ verticalAlign: '-2px', marginRight: 4 }} />
+                      {t.escalate}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+
             {SECTION_CATS.salud.map(catId => {
               const cat = CATEGORIES.find(c => c.id === catId);
               if (!cat) return null;
