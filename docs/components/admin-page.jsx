@@ -4928,11 +4928,23 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
   }).sort((a, b) => a.entrada.localeCompare(b.entrada));
 
   // Checkouts recientes (salieron hace ≤14 días): candidatos a pedirles reseña.
+  // reviewReqDismissed: la petición se descarta (ya se pidió a mano, o no
+  // procede) sin tocar la reserva en sí; se guarda en la propia reserva para
+  // que no reaparezca en otro dispositivo/sesión.
   const recienCheckout = reservas.filter(r => {
+    if (r.reviewReqDismissed) return false;
     if (reservaStatus(r, today) !== 'past') return false;
     const days = (new Date(today) - new Date(r.salida)) / 86400000;
     return days >= 0 && days <= 14;
   }).sort((a, b) => (b.salida || '').localeCompare(a.salida || ''));
+
+  const dismissReviewReq = (r) => {
+    const idx = reservas.findIndex(x => x.id === r.id);
+    if (idx < 0) return;
+    const nr = [...reservas];
+    nr[idx] = { ...nr[idx], reviewReqDismissed: true };
+    saveReservas(nr);
+  };
 
   // WhatsApp AL HUÉSPED: mensaje de traspaso (Alex → Fran) para la llegada.
   // Se usa en las reservas a <30 días. Devuelve null si no hay teléfono.
@@ -5553,6 +5565,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                       : mail
                         ? <a href={mail} className="rv-wa-btn rv-rev-btn" title="Pedir reseña por email (no hay teléfono)">✉ Pedir reseña</a>
                         : <span className="rv-wa-btn rv-wa-disabled rv-rev-btn" title="No hay teléfono ni email del huésped">Sin contacto</span>}
+                    <button type="button" className="rv-rev-dismiss" title="Quitar de esta lista" aria-label={`Quitar petición de reseña de ${r.responsable}`} onClick={() => dismissReviewReq(r)}>×</button>
                   </li>
                 );
               })}
