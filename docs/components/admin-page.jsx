@@ -5540,6 +5540,9 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                           </div>
                         : <span className="rv-wa-btn rv-wa-disabled" title="No hay teléfono del huésped en esta reserva">Sin teléfono en la ficha</span>}
                     </div>
+                    <button type="button" className="rv-prox-detail-link" onClick={() => openRow(reservas.indexOf(r))}>
+                      Ver detalle de la reserva <span aria-hidden="true">→</span>
+                    </button>
                   </li>
                 );
               })}

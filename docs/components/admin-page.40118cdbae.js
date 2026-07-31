@@ -7110,7 +7110,13 @@ const ReservasTab = ({
     }), "M", m.n))) : /*#__PURE__*/React.createElement("span", {
       className: "rv-wa-btn rv-wa-disabled",
       title: "No hay teléfono del huésped en esta reserva"
-    }, "Sin teléfono en la ficha")));
+    }, "Sin teléfono en la ficha")), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "rv-prox-detail-link",
+      onClick: () => openRow(reservas.indexOf(r))
+    }, "Ver detalle de la reserva ", /*#__PURE__*/React.createElement("span", {
+      "aria-hidden": "true"
+    }, "→")));
   }))), recienCheckout.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "rv-rev"
   }, /*#__PURE__*/React.createElement("h3", null, /*#__PURE__*/React.createElement(HiIcon, {
