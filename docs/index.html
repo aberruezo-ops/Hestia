@@ -84,7 +84,7 @@
         "@type": "Accommodation",
         "name": "Hestía Vera Mar",
         "url": "https://www.hestiayourhome.com/mar.html",
-        "image": "https://www.hestiayourhome.com/assets/apt-vm.jpg",
+        "image": "https://www.hestiayourhome.com/assets/apt-vs.jpg",
         "address": {"@type": "PostalAddress", "streetAddress": "C. Islas Canarias 7", "addressLocality": "Vera", "postalCode": "04621", "addressCountry": "ES"},
         "geo": {"@type": "GeoCoordinates", "latitude": "37.22883", "longitude": "-1.80385"},
         "petsAllowed": true
@@ -102,7 +102,7 @@
         "@type": "Accommodation",
         "name": "Hestía Vera Salinas",
         "url": "https://www.hestiayourhome.com/salinas.html",
-        "image": "https://www.hestiayourhome.com/assets/apt-vs.jpg",
+        "image": "https://www.hestiayourhome.com/assets/apt-vm.jpg",
         "address": {"@type": "PostalAddress", "streetAddress": "Avda. Alcazaba 115, Pueblo Salinas Fase II", "addressLocality": "Vera", "postalCode": "04621", "addressCountry": "ES"},
         "geo": {"@type": "GeoCoordinates", "latitude": "37.23094", "longitude": "-1.81860"},
         "petsAllowed": true
@@ -213,7 +213,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=9d9209f727');
+      const res = await fetch(file + '?cv=60b7c4a3ec');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

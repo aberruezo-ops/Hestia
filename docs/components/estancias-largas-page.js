@@ -126,7 +126,7 @@ const LS_APTS = [{
   name: 'Mar',
   slug: 'mar',
   accent: '#6B7A3A',
-  img: 'assets/apt-vm.jpg',
+  img: 'assets/apt-vs.jpg',
   concept_es: 'El campo de olivos llega al mar',
   concept_en: 'Where the olive grove meets the sea'
 }, {
@@ -142,7 +142,7 @@ const LS_APTS = [{
   name: 'Salinas',
   slug: 'salinas',
   accent: '#D4A84A',
-  img: 'assets/apt-vs.jpg',
+  img: 'assets/apt-vm.jpg',
   concept_es: 'El amarillo albero del amanecer',
   concept_en: 'The golden dawn above the salt flats'
 }];
