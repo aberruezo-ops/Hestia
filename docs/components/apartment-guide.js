@@ -10739,6 +10739,53 @@ const AptGuideView = ({
       className: "ag-part-desc"
     }, lang === 'es' ? g.descEs : g.descEn)));
   };
+
+  // Miga de pan: "dónde estoy" siempre visible, en cualquier tamaño de
+  // pantalla. Deriva del mismo activeSection que ya alimenta el nav lateral,
+  // así que no hay una segunda fuente de verdad que se pueda desincronizar.
+  const activeSecIdx = Math.max(0, GUIDE_SECTIONS.findIndex(sec => sec.id === activeSection));
+  const activeSecObj = GUIDE_SECTIONS[activeSecIdx];
+  const activePartIdx = Math.max(0, GUIDE_GROUPS.findIndex(g => g.ids.includes(activeSection)));
+  const activePartObj = GUIDE_GROUPS[activePartIdx];
+  const guideCrumb = /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "ag-crumb no-print",
+    onClick: () => setNavOpen(o => !o),
+    "aria-expanded": navOpen,
+    "aria-label": lang === 'es' ? 'Ver índice completo de la guía' : 'View full guide contents'
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-crumb-eyebrow"
+  }, lang === 'es' ? `Parte ${activePartIdx + 1} de ${GUIDE_GROUPS.length}` : `Part ${activePartIdx + 1} of ${GUIDE_GROUPS.length}`, /*#__PURE__*/React.createElement("span", {
+    className: "ag-crumb-dot",
+    "aria-hidden": "true"
+  }, "·"), activePartObj[lang]), /*#__PURE__*/React.createElement("span", {
+    className: "ag-crumb-main"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-crumb-num"
+  }, String(activeSecIdx + 1).padStart(2, '0'), /*#__PURE__*/React.createElement("i", null, "/", String(GUIDE_SECTIONS.length).padStart(2, '0'))), /*#__PURE__*/React.createElement("span", {
+    className: "ag-crumb-name"
+  }, activeSecObj[lang]), /*#__PURE__*/React.createElement("svg", {
+    width: "13",
+    height: "13",
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: "2.4",
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    "aria-hidden": "true",
+    className: "ag-crumb-chev"
+  }, /*#__PURE__*/React.createElement("polyline", {
+    points: "9 6 15 12 9 18"
+  }))), /*#__PURE__*/React.createElement("span", {
+    className: "ag-crumb-track",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-crumb-fill",
+    style: {
+      width: `${(activeSecIdx + 1) / GUIDE_SECTIONS.length * 100}%`
+    }
+  })));
   return /*#__PURE__*/React.createElement("article", {
     className: "apt-guide-view",
     "data-apt": apt.id,
@@ -10939,7 +10986,7 @@ const AptGuideView = ({
     rel: "noopener"
   }, lang === 'es' ? '⇩ Descargar guía (PDF)' : '⇩ Download guide (PDF)')))), /*#__PURE__*/React.createElement("div", {
     className: "ag-content"
-  }, renderPart('bienvenida'), /*#__PURE__*/React.createElement("section", {
+  }, guideCrumb, renderPart('bienvenida'), /*#__PURE__*/React.createElement("section", {
     id: "ag-bienvenida",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {

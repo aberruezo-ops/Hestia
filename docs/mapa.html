@@ -32,7 +32,7 @@
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=927"/>          <!-- GA4: cuando tengas el Measurement ID, descomenta y reemplaza G-XXXXXXXXXX
+<link rel="stylesheet" href="assets/styles.css?v=928"/>          <!-- GA4: cuando tengas el Measurement ID, descomenta y reemplaza G-XXXXXXXXXX
        Google Analytics → Admin → Propiedad → Flujos de datos → tu dominio → Measurement ID
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
@@ -64,7 +64,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=aec03f37cf');
+      const res = await fetch(file + '?cv=9d9209f727');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
