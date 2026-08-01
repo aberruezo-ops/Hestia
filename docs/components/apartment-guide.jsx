@@ -5203,6 +5203,39 @@ const AptGuideView = ({ apt, lang, onClose }) => {
     );
   };
 
+  // Miga de pan: "dónde estoy" siempre visible, en cualquier tamaño de
+  // pantalla. Deriva del mismo activeSection que ya alimenta el nav lateral,
+  // así que no hay una segunda fuente de verdad que se pueda desincronizar.
+  const activeSecIdx  = Math.max(0, GUIDE_SECTIONS.findIndex(sec => sec.id === activeSection));
+  const activeSecObj  = GUIDE_SECTIONS[activeSecIdx];
+  const activePartIdx = Math.max(0, GUIDE_GROUPS.findIndex(g => g.ids.includes(activeSection)));
+  const activePartObj = GUIDE_GROUPS[activePartIdx];
+  const guideCrumb = (
+    <button
+      type="button"
+      className="ag-crumb no-print"
+      onClick={() => setNavOpen(o => !o)}
+      aria-expanded={navOpen}
+      aria-label={lang === 'es' ? 'Ver índice completo de la guía' : 'View full guide contents'}
+    >
+      <span className="ag-crumb-eyebrow">
+        {lang === 'es' ? `Parte ${activePartIdx + 1} de ${GUIDE_GROUPS.length}` : `Part ${activePartIdx + 1} of ${GUIDE_GROUPS.length}`}
+        <span className="ag-crumb-dot" aria-hidden="true">·</span>
+        {activePartObj[lang]}
+      </span>
+      <span className="ag-crumb-main">
+        <span className="ag-crumb-num">{String(activeSecIdx + 1).padStart(2, '0')}<i>/{String(GUIDE_SECTIONS.length).padStart(2, '0')}</i></span>
+        <span className="ag-crumb-name">{activeSecObj[lang]}</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="ag-crumb-chev">
+          <polyline points="9 6 15 12 9 18"/>
+        </svg>
+      </span>
+      <span className="ag-crumb-track" aria-hidden="true">
+        <span className="ag-crumb-fill" style={{ width: `${((activeSecIdx + 1) / GUIDE_SECTIONS.length) * 100}%` }}/>
+      </span>
+    </button>
+  );
+
   return (
     <article className="apt-guide-view" data-apt={apt.id}
              style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
@@ -5369,6 +5402,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
         </aside>
 
         <div className="ag-content">
+
+          {guideCrumb}
 
           {renderPart('bienvenida')}
           <section id="ag-bienvenida" className="ag-section">
