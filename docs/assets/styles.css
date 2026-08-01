@@ -24453,6 +24453,76 @@ img[src*="apt-vt-gallery-"] {
 .footer-amuleto .indalo-seal { color: var(--albero, #D4A84A); flex-shrink: 0; }
 .footer-amuleto span { font-size: 11.5px; line-height: 1.35; font-style: italic; }
 
+/* Galería del Indalo: mismo trazo, cuatro técnicas gráficas (footer) */
+.footer-indalo-gallery {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  margin: 8px auto 48px;
+  padding: 28px 24px;
+  text-align: center;
+  border-top: 1px solid rgba(240,232,213,.14);
+  border-bottom: 1px solid rgba(240,232,213,.14);
+}
+.footer-indalo-gallery .fig-eyebrow {
+  display: block;
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--sol-lt, #6FC4D1);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.footer-indalo-gallery .fig-intro {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: rgba(240,232,213,.72);
+  max-width: 440px;
+  margin: 0 auto 22px;
+}
+.fig-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.fig-card { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+.fig-mark {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: rgba(240,232,213,.06);
+  border: 1px solid rgba(240,232,213,.16);
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+  transition: background .25s ease, border-color .25s ease, transform .25s ease;
+}
+.fig-mark svg { width: 100%; height: 100%; }
+.fig-card:hover .fig-mark {
+  background: rgba(240,232,213,.11);
+  border-color: rgba(240,232,213,.32);
+  transform: translateY(-2px);
+}
+.fig-label {
+  font-size: 10.5px;
+  letter-spacing: .03em;
+  color: rgba(240,232,213,.68);
+  text-align: center;
+}
+.footer-indalo-gallery .fig-credit {
+  display: block;
+  margin-top: 20px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12px;
+  color: rgba(240,232,213,.5);
+}
+@media (max-width: 560px) {
+  .fig-grid { grid-template-columns: repeat(2, 1fr); max-width: 220px; row-gap: 22px; }
+  .footer-indalo-gallery { padding: 24px 16px; }
+}
+
 /* Loader: el Indalo se dibuja solo (trazo) y late suave */
 .indalo-loader { display: inline-flex; align-items: center; gap: 10px; }
 .indalo-loader-mark { color: var(--sol, #3AAABB); }

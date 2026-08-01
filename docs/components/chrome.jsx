@@ -634,6 +634,103 @@ const Cookies = ({ lang }) => {
   );
 };
 
+// ── Galería del Indalo: el mismo amuleto, cuatro técnicas gráficas ─────────
+// Todo el trazo es obra original nuestra (mismo esqueleto de puntos que
+// IndaloShape, la marca de Hestía), reinterpretado con técnicas distintas.
+// No son ilustraciones de terceros: por eso no lleva firma de "diseñador"
+// externo, solo el nombre de la técnica. Así no hay ninguna duda de
+// derechos de autor de nadie más.
+const IndaloClassicMark = () => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13" stroke="var(--vs)" strokeWidth="1.2" strokeLinecap="round"/>
+    <path d="M12 6.8V15" stroke="var(--vs)" strokeWidth="1.2" strokeLinecap="round"/>
+    <path d="M12 11 4.5 13M12 11 19.5 13" stroke="var(--vs)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 15l-3.2 5M12 15l3.2 5" stroke="var(--vs)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+const IndaloGrabadoMark = () => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <g opacity="0.28" transform="translate(0.5 0.35)" stroke="var(--ber-dk)" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13"/>
+      <path d="M12 6.8V15"/>
+      <path d="M12 11 4.5 13M12 11 19.5 13"/>
+      <path d="M12 15l-3.2 5M12 15l3.2 5"/>
+    </g>
+    <g stroke="var(--vt-dk)" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13"/>
+      <path d="M12 6.8V15"/>
+      <path d="M12 11 4.5 13M12 11 19.5 13"/>
+      <path d="M12 15l-3.2 5M12 15l3.2 5"/>
+    </g>
+  </svg>
+);
+const IndaloTrencadisMark = () => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <g stroke="var(--vm)" strokeWidth="1.7" strokeLinecap="round" strokeDasharray="0.05 3.15" strokeDashoffset="0">
+      <path d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13"/>
+      <path d="M12 6.8V15"/>
+      <path d="M12 11 4.5 13M12 11 19.5 13"/>
+      <path d="M12 15l-3.2 5M12 15l3.2 5"/>
+    </g>
+    <g stroke="var(--vt)" strokeWidth="1.7" strokeLinecap="round" strokeDasharray="0.05 3.15" strokeDashoffset="1.07">
+      <path d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13"/>
+      <path d="M12 6.8V15"/>
+      <path d="M12 11 4.5 13M12 11 19.5 13"/>
+      <path d="M12 15l-3.2 5M12 15l3.2 5"/>
+    </g>
+    <g stroke="var(--vs)" strokeWidth="1.7" strokeLinecap="round" strokeDasharray="0.05 3.15" strokeDashoffset="2.13">
+      <path d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13"/>
+      <path d="M12 6.8V15"/>
+      <path d="M12 11 4.5 13M12 11 19.5 13"/>
+      <path d="M12 15l-3.2 5M12 15l3.2 5"/>
+    </g>
+  </svg>
+);
+const IndaloAcuarelaMark = () => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="9.5" fill="var(--vm2)" opacity="0.16"/>
+    <g stroke="var(--vm-dk)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" opacity="0.42">
+      <path d="M4.7 13.3C4.9 6 19.7 5.2 19.4 12.8"/>
+      <path d="M11.85 6.6V15.1"/>
+      <path d="M12.1 11 4.4 13.4M11.9 10.9 19.7 12.7"/>
+      <path d="M12 15.1l-3.4 4.9M12.1 14.9l3 5.1"/>
+    </g>
+    <g stroke="var(--vm-dk)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" opacity="0.55">
+      <path d="M4.3 12.8C4.6 5.3 19.3 5.9 19.6 13.2"/>
+      <path d="M12.15 7V14.8"/>
+      <path d="M11.9 11.1 4.6 12.7M12.05 11 19.4 13.3"/>
+      <path d="M11.95 14.9l-3 5.1M12 15.2l3.4 4.9"/>
+    </g>
+  </svg>
+);
+const INDALO_STYLES = [
+  { id: 'clasico',   Mark: IndaloClassicMark,   es: 'Trazo clásico', en: 'Classic line' },
+  { id: 'grabado',   Mark: IndaloGrabadoMark,   es: 'Grabado',       en: 'Block print' },
+  { id: 'trencadis', Mark: IndaloTrencadisMark, en: 'Broken-tile mosaic', es: 'Trencadís' },
+  { id: 'acuarela',  Mark: IndaloAcuarelaMark,  es: 'Acuarela',      en: 'Watercolour' },
+];
+const IndaloGallery = ({ lang }) => (
+  <div className="footer-indalo-gallery">
+    <span className="fig-eyebrow">
+      {lang === 'es' ? 'El Indalo, nuestro amuleto' : 'The Indalo, our charm'}
+    </span>
+    <p className="fig-intro">
+      {lang === 'es'
+        ? 'El mismo trazo, dibujado de cuatro maneras. Obra original de Hestía: nada tomado de otro sitio.'
+        : 'The same figure, drawn four ways. Original Hestía artwork: nothing borrowed from anywhere else.'}
+    </p>
+    <div className="fig-grid">
+      {INDALO_STYLES.map(s => (
+        <div className="fig-card" key={s.id}>
+          <div className="fig-mark"><s.Mark/></div>
+          <span className="fig-label">{lang === 'es' ? s.es : s.en}</span>
+        </div>
+      ))}
+    </div>
+    <span className="fig-credit">Hestía Your Home</span>
+  </div>
+);
+
 const Footer = ({ lang }) => {
   const t = COPY[lang];
   const ftVid = React.useRef(null);
@@ -746,6 +843,7 @@ const Footer = ({ lang }) => {
           </ul>
         </div>
       </div>
+      <IndaloGallery lang={lang} />
       <FooterNewsletter lang={lang} />
       <div className="footer-bottom">
         <div>© {new Date().getFullYear()} HESTÍA YOUR HOME · Alex Berruezo & Fran Moral</div>
