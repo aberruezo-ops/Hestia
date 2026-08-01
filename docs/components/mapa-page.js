@@ -28,7 +28,7 @@ const MAPA_COPY = {
       }, {
         href: 'salinas.html',
         label: 'Hestía Salinas',
-        desc: 'Albero · tres piscinas y Parque Natural al lado.'
+        desc: 'Albero · tres piscinas y Parque Natural a un paseo corto.'
       }]
     }, {
       title: 'Reserva',
@@ -98,7 +98,7 @@ const MAPA_COPY = {
       }, {
         href: 'salinas.html',
         label: 'Hestía Salinas',
-        desc: 'Ochre · three pools and the Nature Park next door.'
+        desc: 'Ochre · three pools and the Nature Park a short walk away.'
       }]
     }, {
       title: 'Book',

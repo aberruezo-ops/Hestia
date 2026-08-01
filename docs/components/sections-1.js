@@ -697,7 +697,7 @@ const Compare = ({
     label: 'Concepto',
     vm: 'El mar desde los olivos',
     vt: 'Ático · mar y Salar de los Canos',
-    vs: 'Amanecer sobre las salinas'
+    vs: 'Amanecer cerca de las salinas'
   }, {
     label: 'Carácter',
     vm: 'El más cercano a la playa · un agradable paseo',
@@ -764,7 +764,7 @@ const Compare = ({
     label: 'Concept',
     vm: 'Sea through the olive grove',
     vt: 'Penthouse · sea & Salar de los Canos',
-    vs: 'Sunrise over the salt flats'
+    vs: 'Sunrise near the salt flats'
   }, {
     label: 'Character',
     vm: 'Closest to the beach · a short, pleasant walk',

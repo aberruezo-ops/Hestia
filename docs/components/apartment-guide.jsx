@@ -2200,7 +2200,7 @@ const GUIDE_BY_APT = {
     pdf: 'downloads/Hestia-Salinas-Guia.pdf',
     garageSpot: '290',
     es: {
-      cover_tagline: 'Junto a las salinas. Donde la luz se queda más tiempo.',
+      cover_tagline: 'Cerca de las salinas. Donde la luz se queda más tiempo.',
       rooms: [
         { id: 'salon', title: 'Tu salón', body: 'Tu sofá-cama y tu televisión con ambilight son el rincón perfecto para una tarde de cine con HBO o Prime Video. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.',
@@ -2257,7 +2257,7 @@ const GUIDE_BY_APT = {
       },
     },
     en: {
-      cover_tagline: 'Next to the salt flats. Where light lingers longer.',
+      cover_tagline: 'Near the salt flats. Where light lingers longer.',
       rooms: [
         { id: 'salon', title: 'Your living room', body: 'Your sofa-bed and ambilight smart TV are the perfect spot for an evening with HBO or Prime Video. You control the temperature with the centralised air-conditioning panel.', recs: [
           'Do not leave the air conditioner running with doors open or while you are away from Hestía.',

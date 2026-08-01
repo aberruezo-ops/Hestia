@@ -29,8 +29,8 @@ const HS_APTS = [{
   short: 'Salinas',
   slug: 'salinas',
   accent: '#D4A84A',
-  concept_es: 'El amarillo albero del amanecer sobre las salinas.',
-  concept_en: 'Ochre yellow, sunrise over the salt flats.'
+  concept_es: 'El amarillo albero del amanecer, cerca de las salinas.',
+  concept_en: 'Ochre yellow, sunrise near the salt flats.'
 }];
 
 // Checks if [checkin, checkout) overlaps with any blocked range

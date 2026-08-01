@@ -559,7 +559,7 @@ const Apartments = ({ lang }) => {
 // --- COMPARADOR ---
 const Compare = ({ lang }) => {
   const rows = lang === 'es' ? [
-    { label: 'Concepto',      vm: 'El mar desde los olivos', vt: 'Ático · mar y Salar de los Canos', vs: 'Amanecer sobre las salinas' },
+    { label: 'Concepto',      vm: 'El mar desde los olivos', vt: 'Ático · mar y Salar de los Canos', vs: 'Amanecer cerca de las salinas' },
     { label: 'Carácter',      vm: 'El más cercano a la playa · un agradable paseo', vt: 'El más alto · dominas toda la vista', vs: 'El más grande · desconexión · base para explorar la zona' },
     { label: 'Plazas',        vm: '6 + bebé · 2 hab.', vt: '6 + bebé · 2 hab.', vs: '6 + bebé · 2 hab.' },
     { label: 'Terraza',       vm: 'Esquina 20m² · mar', vt: 'Panorámica · mar + salar', vs: 'Dos terrazas' },
@@ -572,7 +572,7 @@ const Compare = ({ lang }) => {
     { label: 'Trato',         vm: '✓ Personalizado', vt: '✓ Personalizado', vs: '✓ Personalizado' },
     { label: 'Valoración',    vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
   ] : [
-    { label: 'Concept',       vm: 'Sea through the olive grove', vt: 'Penthouse · sea & Salar de los Canos', vs: 'Sunrise over the salt flats' },
+    { label: 'Concept',       vm: 'Sea through the olive grove', vt: 'Penthouse · sea & Salar de los Canos', vs: 'Sunrise near the salt flats' },
     { label: 'Character',     vm: 'Closest to the beach · a short, pleasant walk', vt: 'The highest · you command the whole view', vs: 'The largest · disconnection · a base to explore the area' },
     { label: 'Guests',        vm: '6 + baby · 2 bed.', vt: '6 + baby · 2 bed.', vs: '6 + baby · 2 bed.' },
     { label: 'Terrace',       vm: 'Corner 20m² · sea', vt: 'Panoramic · sea + salt flats', vs: 'Two terraces' },

@@ -5454,7 +5454,7 @@ const GUIDE_BY_APT = {
     pdf: 'downloads/Hestia-Salinas-Guia.pdf',
     garageSpot: '290',
     es: {
-      cover_tagline: 'Junto a las salinas. Donde la luz se queda más tiempo.',
+      cover_tagline: 'Cerca de las salinas. Donde la luz se queda más tiempo.',
       rooms: [{
         id: 'salon',
         title: 'Tu salón',
@@ -5500,7 +5500,7 @@ const GUIDE_BY_APT = {
       }
     },
     en: {
-      cover_tagline: 'Next to the salt flats. Where light lingers longer.',
+      cover_tagline: 'Near the salt flats. Where light lingers longer.',
       rooms: [{
         id: 'salon',
         title: 'Your living room',

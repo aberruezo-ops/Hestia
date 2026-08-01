@@ -153,7 +153,7 @@
       "name": "¿Qué Hestía me conviene más?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Mar es planta primera con jardín y terraza de amanecer. Thalassa es el ático con SPA comunitario y vistas panorámicas al mar. Salinas tiene tres piscinas y el Parque Natural al lado. Compara los tres en https://www.hestiayourhome.com/"
+        "text": "Mar es planta primera con jardín y terraza de amanecer. Thalassa es el ático con SPA comunitario y vistas panorámicas al mar. Salinas tiene tres piscinas y el Parque Natural a un paseo corto. Compara los tres en https://www.hestiayourhome.com/"
       }
     },
     {
@@ -213,7 +213,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=cfe3ea833c');
+      const res = await fetch(file + '?cv=9a3cd1c81d');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
