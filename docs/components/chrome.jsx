@@ -634,55 +634,62 @@ const Cookies = ({ lang }) => {
   );
 };
 
-// ── Galería del Indalo: el mismo amuleto, cuatro técnicas gráficas ─────────
-// Todo el trazo es obra original nuestra (mismo esqueleto de puntos que
-// IndaloShape, la marca de Hestía), reinterpretado con técnicas distintas.
-// No son ilustraciones de terceros: por eso no lleva firma de "diseñador"
-// externo, solo el nombre de la técnica. Así no hay ninguna duda de
-// derechos de autor de nadie más.
+// ── Franja del Indalo: el mismo amuleto, diez técnicas gráficas ────────────
+// El Indalo real se ha reinterpretado durante décadas en soportes muy
+// distintos: pintura rupestre (su origen, en la Cueva de los Letreros,
+// Vélez-Blanco, ~7500 años), azulejo, forja de balcones, joyería, bordado
+// de jarapa, mosaico y grafismo moderno. Nos hemos fijado en esa variedad
+// real para diseñar un abanico propio mucho más amplio, pero cada trazo de
+// aquí es dibujo nuestro (mismas coordenadas que IndaloShape, la marca de
+// Hestía), no la ilustración de ningún tercero. Por eso no lleva firma de
+// "diseñador" externo, solo el nombre de la técnica.
+const IND_ARCH = 'M4.5 13C4.5 5.5 19.5 5.5 19.5 13';
+const IND_BODY = 'M12 6.8V15';
+const IND_ARMS = 'M12 11 4.5 13M12 11 19.5 13';
+const IND_LEGS = 'M12 15l-3.2 5M12 15l3.2 5';
+
+const IndaloRupestreMark = () => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <rect x="1" y="1" width="22" height="22" rx="3" fill="#8B7355" opacity="0.22"/>
+    <circle cx="6" cy="5" r="0.4" fill="#6B5637" opacity="0.4"/>
+    <circle cx="18.5" cy="18" r="0.5" fill="#6B5637" opacity="0.35"/>
+    <circle cx="19" cy="4.5" r="0.3" fill="#6B5637" opacity="0.4"/>
+    <g stroke="#A0522D" strokeLinecap="round" strokeLinejoin="round" opacity="0.9">
+      <path d={IND_ARCH} strokeWidth="1.9"/>
+      <path d="M12 6.9V14.9" strokeWidth="1.7"/>
+      <path d="M12.1 11 4.6 13.1M11.9 10.9 19.4 12.9" strokeWidth="1.6"/>
+      <path d="M12 15l-3.1 4.9M12 15l3.3 4.8" strokeWidth="1.6"/>
+    </g>
+  </svg>
+);
 const IndaloClassicMark = () => (
   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13" stroke="var(--vs)" strokeWidth="1.2" strokeLinecap="round"/>
-    <path d="M12 6.8V15" stroke="var(--vs)" strokeWidth="1.2" strokeLinecap="round"/>
-    <path d="M12 11 4.5 13M12 11 19.5 13" stroke="var(--vs)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M12 15l-3.2 5M12 15l3.2 5" stroke="var(--vs)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d={IND_ARCH} stroke="var(--vs)" strokeWidth="1.2" strokeLinecap="round"/>
+    <path d={IND_BODY} stroke="var(--vs)" strokeWidth="1.2" strokeLinecap="round"/>
+    <path d={IND_ARMS} stroke="var(--vs)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d={IND_LEGS} stroke="var(--vs)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 const IndaloGrabadoMark = () => (
   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <g opacity="0.28" transform="translate(0.5 0.35)" stroke="var(--ber-dk)" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13"/>
-      <path d="M12 6.8V15"/>
-      <path d="M12 11 4.5 13M12 11 19.5 13"/>
-      <path d="M12 15l-3.2 5M12 15l3.2 5"/>
+      <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
     </g>
     <g stroke="var(--vt-dk)" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13"/>
-      <path d="M12 6.8V15"/>
-      <path d="M12 11 4.5 13M12 11 19.5 13"/>
-      <path d="M12 15l-3.2 5M12 15l3.2 5"/>
+      <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
     </g>
   </svg>
 );
 const IndaloTrencadisMark = () => (
   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <g stroke="var(--vm)" strokeWidth="1.7" strokeLinecap="round" strokeDasharray="0.05 3.15" strokeDashoffset="0">
-      <path d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13"/>
-      <path d="M12 6.8V15"/>
-      <path d="M12 11 4.5 13M12 11 19.5 13"/>
-      <path d="M12 15l-3.2 5M12 15l3.2 5"/>
+      <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
     </g>
     <g stroke="var(--vt)" strokeWidth="1.7" strokeLinecap="round" strokeDasharray="0.05 3.15" strokeDashoffset="1.07">
-      <path d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13"/>
-      <path d="M12 6.8V15"/>
-      <path d="M12 11 4.5 13M12 11 19.5 13"/>
-      <path d="M12 15l-3.2 5M12 15l3.2 5"/>
+      <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
     </g>
     <g stroke="var(--vs)" strokeWidth="1.7" strokeLinecap="round" strokeDasharray="0.05 3.15" strokeDashoffset="2.13">
-      <path d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13"/>
-      <path d="M12 6.8V15"/>
-      <path d="M12 11 4.5 13M12 11 19.5 13"/>
-      <path d="M12 15l-3.2 5M12 15l3.2 5"/>
+      <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
     </g>
   </svg>
 );
@@ -703,11 +710,84 @@ const IndaloAcuarelaMark = () => (
     </g>
   </svg>
 );
+const IndaloAzulejoMark = () => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <rect x="1" y="1" width="22" height="22" rx="3" fill="#EFF6F8" opacity="0.18"/>
+    <rect x="1.5" y="1.5" width="21" height="21" rx="1" fill="none" stroke="#5B9BC4" strokeWidth="0.4" opacity="0.4"/>
+    <g stroke="#5B9BC4" strokeWidth="2.3" strokeLinecap="butt" strokeDasharray="0.9 0.55">
+      <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
+    </g>
+    <g stroke="#F0CE7A" strokeWidth="0.8" strokeLinecap="butt" strokeDasharray="0.9 0.55" strokeDashoffset="0.7">
+      <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
+    </g>
+  </svg>
+);
+const IndaloForjaMark = () => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <rect x="1" y="1" width="22" height="22" rx="3" fill="#C9C2B4" opacity="0.24"/>
+    <g stroke="#3A3A3A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
+      <path d="M4.5 13a1 1 0 1 0 .6-1.7" strokeWidth="1"/>
+      <path d="M19.5 13a1 1 0 1 1-.6-1.7" strokeWidth="1"/>
+    </g>
+    <g fill="#3A3A3A">
+      <circle cx="12" cy="11" r="0.55"/>
+      <circle cx="4.5" cy="13" r="0.5"/>
+      <circle cx="19.5" cy="13" r="0.5"/>
+      <circle cx="12" cy="6.8" r="0.5"/>
+      <circle cx="8.8" cy="20" r="0.5"/>
+      <circle cx="15.2" cy="20" r="0.5"/>
+    </g>
+  </svg>
+);
+const IndaloNeonMark = () => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="10.5" fill="#1a0f1e"/>
+    <g stroke="#3AAABB" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" opacity="0.35">
+      <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
+    </g>
+    <g stroke="#7FE0EC" strokeWidth="0.9" strokeLinecap="round" strokeLinejoin="round">
+      <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
+    </g>
+  </svg>
+);
+const IndaloBordadoMark = () => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <rect x="1" y="1" width="22" height="22" rx="2" fill="#EFE3C8" opacity="0.14"/>
+    <g stroke="#B86A3C" strokeWidth="1.4" strokeLinecap="butt" strokeDasharray="0.7 0.5">
+      <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
+    </g>
+    <g stroke="#8A4A24" strokeWidth="0.5" strokeLinecap="butt" strokeDasharray="0.35 0.85" strokeDashoffset="0.2">
+      <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
+    </g>
+  </svg>
+);
+const IndaloJoyaMark = () => (
+  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <circle cx="12" cy="12" r="10.5" fill="#1a0f1e"/>
+    <g stroke="#F0CE7A" strokeWidth="0.55" strokeLinecap="round" strokeLinejoin="round">
+      <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
+    </g>
+    <g fill="#F0CE7A">
+      <circle cx="12" cy="6.8" r="0.55"/>
+      <circle cx="4.5" cy="13" r="0.55"/>
+      <circle cx="19.5" cy="13" r="0.55"/>
+      <circle cx="8.8" cy="20" r="0.5"/>
+      <circle cx="15.2" cy="20" r="0.5"/>
+    </g>
+  </svg>
+);
 const INDALO_STYLES = [
+  { id: 'rupestre',  Mark: IndaloRupestreMark,  es: 'Rupestre',   en: 'Cave art' },
   { id: 'clasico',   Mark: IndaloClassicMark,   es: 'Trazo clásico', en: 'Classic line' },
-  { id: 'grabado',   Mark: IndaloGrabadoMark,   es: 'Grabado',       en: 'Block print' },
-  { id: 'trencadis', Mark: IndaloTrencadisMark, en: 'Broken-tile mosaic', es: 'Trencadís' },
-  { id: 'acuarela',  Mark: IndaloAcuarelaMark,  es: 'Acuarela',      en: 'Watercolour' },
+  { id: 'grabado',   Mark: IndaloGrabadoMark,   es: 'Grabado',    en: 'Block print' },
+  { id: 'trencadis', Mark: IndaloTrencadisMark, es: 'Trencadís',  en: 'Broken-tile mosaic' },
+  { id: 'acuarela',  Mark: IndaloAcuarelaMark,  es: 'Acuarela',   en: 'Watercolour' },
+  { id: 'azulejo',   Mark: IndaloAzulejoMark,   es: 'Azulejo',    en: 'Ceramic tile' },
+  { id: 'forja',     Mark: IndaloForjaMark,     es: 'Forja',      en: 'Wrought iron' },
+  { id: 'neon',      Mark: IndaloNeonMark,      es: 'Neón',       en: 'Neon' },
+  { id: 'bordado',   Mark: IndaloBordadoMark,   es: 'Bordado',    en: 'Embroidery' },
+  { id: 'joya',      Mark: IndaloJoyaMark,      es: 'Joyería',    en: 'Jewellery' },
 ];
 const IndaloGallery = ({ lang }) => (
   <div className="footer-indalo-gallery">
@@ -716,16 +796,18 @@ const IndaloGallery = ({ lang }) => (
     </span>
     <p className="fig-intro">
       {lang === 'es'
-        ? 'El mismo trazo, dibujado de cuatro maneras. Obra original de Hestía: nada tomado de otro sitio.'
-        : 'The same figure, drawn four ways. Original Hestía artwork: nothing borrowed from anywhere else.'}
+        ? 'El mismo trazo, dibujado de diez maneras. Obra original de Hestía: nada tomado de otro sitio.'
+        : 'The same figure, drawn ten ways. Original Hestía artwork: nothing borrowed from anywhere else.'}
     </p>
-    <div className="fig-grid">
-      {INDALO_STYLES.map(s => (
-        <div className="fig-card" key={s.id}>
-          <div className="fig-mark"><s.Mark/></div>
-          <span className="fig-label">{lang === 'es' ? s.es : s.en}</span>
-        </div>
-      ))}
+    <div className="fig-marquee" role="list" aria-label={lang === 'es' ? 'Variaciones del Indalo' : 'Indalo variations'}>
+      <div className="fig-marquee-track">
+        {[...INDALO_STYLES, ...INDALO_STYLES].map((s, i) => (
+          <div className="fig-card" key={s.id + i} role="listitem" aria-hidden={i >= INDALO_STYLES.length}>
+            <div className="fig-mark"><s.Mark/></div>
+            <span className="fig-label">{lang === 'es' ? s.es : s.en}</span>
+          </div>
+        ))}
+      </div>
     </div>
     <span className="fig-credit">Hestía Your Home</span>
   </div>
