@@ -2,6 +2,368 @@
   "_doc": "Histórico de ediciones mensuales de Noticias & Blog. Añadir la edición vigente aquí cada vez que se publique una nueva. Ordenar de más reciente a más antigua.",
   "editions": [
     {
+      "key": "2026-07",
+      "edition": {
+        "es": "Julio 2026",
+        "en": "July 2026"
+      },
+      "voz": [
+        {
+          "num": "01",
+          "apt": "Hestía Mar",
+          "slug": "mar.html",
+          "accent": "var(--vm)",
+          "curiosidad": {
+            "es": "Julio es el corazón del verano en Vera Playa. El Mediterráneo ronda los 24-25°C y el agua ya no refresca, acompaña. La terraza esquinera de Hestía Mar pide dos momentos: el primer baño antes de las 9h, con la playa casi vacía, y la copa al atardecer, cuando el sol rasante enciende el olivar.",
+            "en": "July is the heart of summer in Vera Playa. The Mediterranean sits at 24-25°C and the water no longer cools, it keeps you company. Hestía Mar's corner terrace asks for two moments: an early swim before 9am with the beach almost empty, and a drink at sunset, when the low sun sets the olive grove alight."
+          },
+          "reco": {
+            "es": "Desayuna en el chiringuito de Puerto Rey antes de que apriete el calor: tostada de tomate Huevo de Toro y café con el mar de fondo. A media mañana ya hace demasiado para la arena, así que aprovecha la primera hora.",
+            "en": "Have breakfast at the Puerto Rey beach bar before the heat builds: Huevo de Toro tomato on toast and coffee with the sea behind. By mid-morning the sand is too hot, so make the most of the early hour."
+          }
+        },
+        {
+          "num": "02",
+          "apt": "Hestía Thalassa",
+          "slug": "thalassa.html",
+          "accent": "var(--vt)",
+          "curiosidad": {
+            "es": "Las noches de julio son tibias y secas, hechas para la terraza del ático. A partir de la tercera semana del mes empiezan a verse las primeras Perseidas, y mirando hacia el interior, sobre el Salar de los Canos, apenas hay contaminación lumínica. Una hamaca, el cielo y nada más.",
+            "en": "July nights are warm and dry, made for the penthouse terrace. From the third week of the month the first Perseids appear, and looking inland over the Salar de los Canos there is almost no light pollution. A lounger, the sky and nothing else."
+          },
+          "reco": {
+            "es": "Sube una manta fina y deja el móvil dentro. El mejor cielo es entre la una y las tres de la madrugada, cuando la urbanización ya duerme. No necesitas telescopio, solo paciencia y los ojos acostumbrados a la oscuridad.",
+            "en": "Bring a thin blanket and leave the phone indoors. The best sky is between 1 and 3am, when the complex is asleep. No telescope needed, just patience and eyes adjusted to the dark."
+          }
+        },
+        {
+          "num": "03",
+          "apt": "Hestía Salinas",
+          "slug": "salinas.html",
+          "accent": "var(--vs-dk)",
+          "curiosidad": {
+            "es": "Con el calor de julio, las Salinas de Puerto Rey alcanzan su rojo más intenso del año: el alga Dunaliella salina se protege produciendo betacaroteno y tiñe el agua de granate. A 50 metros de la puerta de Salinas tienes el espectáculo, pero ve temprano: a partir de las 11h el reflejo deslumbra y el calor no perdona.",
+            "en": "With July's heat, the Puerto Rey salt flats reach their deepest red of the year: the Dunaliella salina alga protects itself by producing beta-carotene, staining the water crimson. Fifty metres from Salinas's door the show is yours, but go early: from 11am the glare is blinding and the heat unforgiving."
+          },
+          "reco": {
+            "es": "La ruta de los flamencos, al amanecer. En julio el calor obliga a madrugar, y es justo cuando las aves están más activas y la luz es más suave para las fotos. Lleva agua y gorra aunque solo salgas una hora.",
+            "en": "The flamingo trail at dawn. July's heat forces an early start, which is exactly when the birds are most active and the light softest for photos. Take water and a hat even for a short walk."
+          }
+        }
+      ],
+      "territorio": [
+        {
+          "cat": {
+            "es": "Vera Playa & alrededores",
+            "en": "Vera Playa & surroundings"
+          },
+          "icon": "🌊",
+          "accent": "var(--sol)",
+          "articles": [
+            {
+              "months": [
+                7,
+                8
+              ],
+              "tag": {
+                "es": "Mar",
+                "en": "Sea"
+              },
+              "titulo": {
+                "es": "Temporada plena de snorkel: el agua a 24°C en las calas de Los Cocederos",
+                "en": "Peak snorkel season: 24°C water at the Los Cocederos coves"
+              },
+              "cuerpo": {
+                "es": "Con el mar sobre los 24 grados, las calas de Cala del Cuervo y Los Cocederos (a 15 km por la carretera costera) están en su mejor momento para el snorkel sin traje. Posidonia, sepias, pulpos pequeños y bancos de salpas. Ve antes de las 10h: después llega la gente y el aparcamiento se complica.",
+                "en": "With the sea above 24°C, the Cala del Cuervo and Los Cocederos coves (15km along the coast road) are at their best for wetsuit-free snorkelling. Posidonia, cuttlefish, small octopus and shoals of salema. Go before 10am: later the crowds arrive and parking gets tricky."
+              }
+            },
+            {
+              "months": [
+                7,
+                8
+              ],
+              "tag": {
+                "es": "Mercado",
+                "en": "Market"
+              },
+              "titulo": {
+                "es": "Mercado nocturno de Vera pueblo, viernes y sábados desde las 21h",
+                "en": "Vera village night market, Fridays and Saturdays from 9pm"
+              },
+              "cuerpo": {
+                "es": "En julio el mercado nocturno de la Plaza Mayor y el entorno de la fortaleza es el mejor plan cuando cae el sol: artesanía, productos del campo, limonada fría y música en directo, a 10 minutos de Hestía. Es cuando Vera pueblo se llena de vida sin el agobio de la costa.",
+                "en": "In July the night market around Vera's main square and fortress is the best plan once the sun drops: crafts, farm produce, cold lemonade and live music, 10 minutes from Hestía. It is when Vera village comes alive without the crush of the coast."
+              }
+            }
+          ]
+        },
+        {
+          "cat": {
+            "es": "Fiestas de pueblos cercanos",
+            "en": "Festivals in nearby towns"
+          },
+          "icon": "🎉",
+          "accent": "var(--vs)",
+          "articles": [
+            {
+              "months": [
+                7
+              ],
+              "tag": {
+                "es": "Tradición",
+                "en": "Tradition"
+              },
+              "titulo": {
+                "es": "Virgen del Carmen, 16 de julio: procesiones marítimas en Garrucha y la costa",
+                "en": "Virgen del Carmen, 16 July: maritime processions in Garrucha and along the coast"
+              },
+              "cuerpo": {
+                "es": "La patrona de los marineros se celebra el 16 de julio en todos los pueblos pesqueros de la zona. En Garrucha, a 10 minutos de Hestía, la imagen sale a hombros y se embarca para una procesión marítima seguida por una flota de barcas engalanadas: de las más emotivas de Almería. También en San José y Carboneras. Llega al puerto antes de las 18h.",
+                "en": "The patron of sailors is celebrated on 16 July in every fishing town in the area. In Garrucha, 10 minutes from Hestía, the image is carried shoulder-high and taken out to sea in a maritime procession followed by a fleet of decorated boats: one of the most moving in Almería. Also in San José and Carboneras. Get to the harbour before 6pm."
+              }
+            },
+            {
+              "months": [
+                7
+              ],
+              "tag": {
+                "es": "Artesanía",
+                "en": "Crafts"
+              },
+              "titulo": {
+                "es": "Feria de la Cerámica de Níjar, en julio",
+                "en": "Níjar Ceramics Fair, in July"
+              },
+              "cuerpo": {
+                "es": "Níjar, cuna de la cerámica andaluza y de la jarapa, abre en julio sus alfarerías centenarias en la Feria de la Cerámica: talleres en directo, demostraciones de torno y la mejor ocasión para llevarte una pieza única. A 50 minutos de Vera Playa, en la puerta del Cabo de Gata.",
+                "en": "Níjar, home of Andalusian ceramics and the jarapa rug, opens its century-old potteries in July for the Ceramics Fair: live workshops, wheel-throwing demonstrations and the best chance to take home a unique piece. 50 minutes from Vera Playa, at the gateway to Cabo de Gata."
+              }
+            },
+            {
+              "months": [
+                7
+              ],
+              "tag": {
+                "es": "Música",
+                "en": "Music"
+              },
+              "titulo": {
+                "es": "Música y Patrimonio en el castillo de Vélez-Blanco, segunda quincena de julio",
+                "en": "Music and Heritage at Vélez-Blanco castle, second half of July"
+              },
+              "cuerpo": {
+                "es": "El Festival Internacional de Música y Patrimonio lleva conciertos de clásica y jazz al patio de uno de los castillos renacentistas más bellos de España. El entorno, encalado y monumental, es tan protagonista como la música. A 1h 20' de Vera Playa, ideal combinado con la Cueva de los Letreros.",
+                "en": "The International Music and Heritage Festival brings classical and jazz concerts to the courtyard of one of Spain's finest Renaissance castles. The whitewashed, monumental setting is as much a star as the music. 1h 20' from Vera Playa, ideal combined with the Cueva de los Letreros."
+              }
+            }
+          ]
+        },
+        {
+          "cat": {
+            "es": "Almería capital & provincia",
+            "en": "Almería city & province"
+          },
+          "icon": "🎤",
+          "accent": "var(--vm)",
+          "articles": [
+            {
+              "months": [
+                7
+              ],
+              "tag": {
+                "es": "Conciertos",
+                "en": "Concerts"
+              },
+              "titulo": {
+                "es": "Siente la Plaza 2026: Chayanne, Carlos Rivera y Mónica Naranjo en la Plaza de Toros de Almería",
+                "en": "Siente la Plaza 2026: Chayanne, Carlos Rivera and Mónica Naranjo at Almería bullring"
+              },
+              "cuerpo": {
+                "es": "El ciclo de grandes conciertos de la Plaza de Toros de Almería tiene en julio su mejor cartel: Chayanne (8 jul), Antonio Orozco (10 jul), Carlos Rivera (18 jul) y Mónica Naranjo (25 jul). Todos a las 22h, a 1h 15' de Vera Playa. Entradas en sientelaplaza.com.",
+                "en": "The summer concert series at Almería bullring peaks in July: Chayanne (8 Jul), Antonio Orozco (10 Jul), Carlos Rivera (18 Jul) and Mónica Naranjo (25 Jul). All at 10pm, 1h 15' from Vera Playa. Tickets at sientelaplaza.com."
+              }
+            },
+            {
+              "months": [
+                7
+              ],
+              "tag": {
+                "es": "Jazz",
+                "en": "Jazz"
+              },
+              "titulo": {
+                "es": "Al Di Meola Acoustic Ensemble, 24 de julio en Almería",
+                "en": "Al Di Meola Acoustic Ensemble, 24 July in Almería"
+              },
+              "cuerpo": {
+                "es": "El guitarrista estadounidense, leyenda del jazz-fusión, trae su gira acústica a Almería capital el 24 de julio. Una noche de virtuosismo a la guitarra a 1h 15' de Vera Playa, ideal para combinar con una cena en el casco histórico antes del concierto.",
+                "en": "The American guitarist, a jazz-fusion legend, brings his acoustic tour to Almería city on 24 July. A night of guitar virtuosity 1h 15' from Vera Playa, perfect to pair with dinner in the old town before the show."
+              }
+            },
+            {
+              "months": [
+                8
+              ],
+              "tag": {
+                "es": "Festival",
+                "en": "Festival"
+              },
+              "titulo": {
+                "es": "Cooltural Fest: David Bisbal, Hombres G y Rigoberta Bandini del 20 al 23 de agosto",
+                "en": "Cooltural Fest: David Bisbal, Hombres G and Rigoberta Bandini, 20-23 August"
+              },
+              "cuerpo": {
+                "es": "El festival indie más inclusivo de Europa vuelve al Recinto Ferial de Almería con cartel histórico: Hombres G, Ana Torroja, Rigoberta Bandini, La Pegatina, David Bisbal y Sidecars, entre 82 artistas. Fiesta de bienvenida gratuita el 20 de agosto. Reserva ya si vienes en agosto: las entradas vuelan. coolturalfest.com.",
+                "en": "Europe's most inclusive indie festival returns to Almería's fairground with a landmark lineup: Hombres G, Ana Torroja, Rigoberta Bandini, La Pegatina, David Bisbal and Sidecars, among 82 artists. Free welcome party on 20 August. Book now if you visit in August: tickets fly. coolturalfest.com."
+              }
+            }
+          ]
+        },
+        {
+          "cat": {
+            "es": "Andalucía",
+            "en": "Andalucía"
+          },
+          "icon": "✨",
+          "accent": "var(--vt)",
+          "articles": [
+            {
+              "months": [
+                7
+              ],
+              "tag": {
+                "es": "Festival",
+                "en": "Festival"
+              },
+              "titulo": {
+                "es": "Festival Internacional de Música y Danza de Granada, julio en el Generalife",
+                "en": "Granada International Music and Dance Festival, July in the Generalife"
+              },
+              "cuerpo": {
+                "es": "Uno de los festivales más importantes de Europa cierra su edición en julio con la Alhambra y los jardines del Generalife como escenario. Orquesta, flamenco y danza bajo las estrellas. Granada está a 2h 15' de Vera Playa: merece una noche fuera, pero compra con antelación.",
+                "en": "One of Europe's most important festivals closes its run in July with the Alhambra and Generalife gardens as the stage. Orchestra, flamenco and dance under the stars. Granada is 2h 15' from Vera Playa: worth a night away, but book ahead."
+              }
+            },
+            {
+              "months": [
+                7
+              ],
+              "tag": {
+                "es": "Naturaleza",
+                "en": "Nature"
+              },
+              "titulo": {
+                "es": "Cabo de Gata en julio: madruga o espera a la tarde",
+                "en": "Cabo de Gata in July: go early or wait for the evening"
+              },
+              "cuerpo": {
+                "es": "El parque natural sigue siendo el plan de playa más bonito de la provincia, pero en julio hay que tomárselo con cabeza: antes de las 9h o después de las 19h, nunca al mediodía. Mónsul y el Playazo de Rodalquilar pierden el agobio de calor a primera y última hora. Lleva agua de sobra y calzado cerrado para los senderos.",
+                "en": "The natural park is still the prettiest beach plan in the province, but July demands sense: before 9am or after 7pm, never at midday. Mónsul and Playazo de Rodalquilar shed the worst heat early and late. Bring plenty of water and closed shoes for the trails."
+              }
+            },
+            {
+              "months": [
+                7,
+                8
+              ],
+              "tag": {
+                "es": "Cielo",
+                "en": "Sky"
+              },
+              "titulo": {
+                "es": "Perseidas y cielos oscuros: empieza la mejor temporada de estrellas",
+                "en": "Perseids and dark skies: the best stargazing season begins"
+              },
+              "cuerpo": {
+                "es": "Almería tiene de los cielos más limpios de Europa continental. Las Perseidas se empiezan a ver desde mediados de julio y alcanzan su pico a mediados de agosto, pero el interior del Cabo de Gata y la sierra de los Filabres ya regalan noches espectaculares. No hace falta ir lejos: la terraza de Thalassa, mirando al Salar, ya es un buen observatorio.",
+                "en": "Almería has some of the cleanest skies in mainland Europe. The Perseids start to show from mid-July and peak in mid-August, but the Cabo de Gata interior and the Filabres mountains already deliver spectacular nights. No need to go far: the Thalassa terrace, facing the Salar, is already a fine observatory."
+              }
+            }
+          ]
+        },
+        {
+          "cat": {
+            "es": "Murcia",
+            "en": "Murcia"
+          },
+          "icon": "⛵",
+          "accent": "var(--vs-dk)",
+          "articles": [
+            {
+              "months": [
+                7
+              ],
+              "tag": {
+                "es": "Conciertos",
+                "en": "Concerts"
+              },
+              "titulo": {
+                "es": "Noches del Malecón: Suede, Romeo Santos, Prince Royce y Nicky Jam en Murcia en julio",
+                "en": "Noches del Malecón: Suede, Romeo Santos, Prince Royce and Nicky Jam in Murcia, July"
+              },
+              "cuerpo": {
+                "es": "El ciclo de verano más completo de Murcia capital ocupa varios recintos con un cartel ecléctico: Nicky Jam (10 jul), Suede (22 jul), Wolfmother (23 jul) y Romeo Santos & Prince Royce juntos (28 jul). Murcia a 1h 30' de Vera Playa. lasnochesdelmalecon.com.",
+                "en": "Murcia's most comprehensive summer concert series spans multiple venues with an eclectic bill: Nicky Jam (10 Jul), Suede (22 Jul), Wolfmother (23 Jul) and Romeo Santos & Prince Royce together (28 Jul). Murcia 1h 30' from Vera Playa. lasnochesdelmalecon.com."
+              }
+            },
+            {
+              "months": [
+                7
+              ],
+              "tag": {
+                "es": "Festival",
+                "en": "Festival"
+              },
+              "titulo": {
+                "es": "La Mar de Músicas: Sílvia Pérez Cruz, Rubén Blades y Judeline en Cartagena del 17 al 25 de julio",
+                "en": "La Mar de Músicas: Sílvia Pérez Cruz, Rubén Blades and Judeline in Cartagena, 17-25 July"
+              },
+              "cuerpo": {
+                "es": "31ª edición del prestigioso festival de músicas del mundo en Cartagena, dedicada a Ecuador. Cartel: Sílvia Pérez Cruz, Judeline, Maria Arnal, Silvana Estrada, Carminho, Lila Downs, Rodrigo Cuevas y Rubén Blades. 45 conciertos, 21 gratuitos. Cartagena a 1h 15' de Vera Playa. lamardemusicas.cartagena.es.",
+                "en": "31st edition of the prestigious world music festival in Cartagena, with Ecuador as the featured country. Lineup: Sílvia Pérez Cruz, Judeline, Maria Arnal, Silvana Estrada, Carminho, Lila Downs, Rodrigo Cuevas and Rubén Blades. 45 concerts, 21 free. Cartagena 1h 15' from Vera Playa. lamardemusicas.cartagena.es."
+              }
+            },
+            {
+              "months": [
+                7
+              ],
+              "tag": {
+                "es": "Festival",
+                "en": "Festival"
+              },
+              "titulo": {
+                "es": "Fan Futura Fest, 24 y 25 de julio en Los Alcázares",
+                "en": "Fan Futura Fest, 24-25 July in Los Alcázares"
+              },
+              "cuerpo": {
+                "es": "Festival de géneros urbanos y electrónicos en el Parque del Gonio de Los Alcázares, a 45 minutos de Vera Playa. Sexta edición en el Mar Menor con dos días de música. Las entradas generales salen desde 58 €. fanfutura.com.",
+                "en": "Urban and electronic music festival at Parque del Gonio in Los Alcázares, 45 minutes from Vera Playa. Sixth edition on the Mar Menor with two days of music. General tickets from €58. fanfutura.com."
+              }
+            },
+            {
+              "months": [
+                7,
+                8
+              ],
+              "tag": {
+                "es": "Verano",
+                "en": "Summer"
+              },
+              "titulo": {
+                "es": "Cala Cortina, Cartagena: la piscina natural del Mediterráneo",
+                "en": "Cala Cortina, Cartagena: the Mediterranean's natural pool"
+              },
+              "cuerpo": {
+                "es": "A 1h 15' de Vera Playa, Cala Cortina es la cala urbana más bien conservada del litoral murciano. Aguas turquesas, arena fina y servicio de hamacas. En julio hay que llegar antes de las 9h para aparcar sin dar vueltas; a media mañana ya está completa.",
+                "en": "One hour fifteen from Vera Playa, Cala Cortina is the best-preserved urban cove on the Murcia coast. Turquoise water, fine sand and sun lounger hire. In July you need to arrive before 9am to park without circling; by mid-morning it is full."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "key": "2026-06",
       "edition": {
         "es": "Junio 2026",
