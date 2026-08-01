@@ -24481,46 +24481,69 @@ img[src*="apt-vt-gallery-"] {
   max-width: 440px;
   margin: 0 auto 22px;
 }
-.fig-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  max-width: 420px;
-  margin: 0 auto;
+/* Franja del Indalo: tira que se desplaza sola de derecha a izquierda
+   (dos copias del set seguidas + translateX(-50%) = bucle sin costura). */
+.fig-marquee {
+  overflow: hidden;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 48px, #000 calc(100% - 48px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 48px, #000 calc(100% - 48px), transparent 100%);
 }
-.fig-card { display: flex; flex-direction: column; align-items: center; gap: 9px; }
+.fig-marquee-track {
+  display: flex;
+  align-items: flex-start;
+  gap: 26px;
+  width: max-content;
+  animation: figMarquee 38s linear infinite;
+}
+.fig-marquee:hover .fig-marquee-track,
+.fig-marquee:focus-within .fig-marquee-track {
+  animation-play-state: paused;
+}
+@keyframes figMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fig-marquee-track { animation: none; }
+}
+.fig-card { display: flex; flex-direction: column; align-items: center; gap: 9px; flex: none; width: 76px; }
 .fig-mark {
-  width: 80px; height: 80px;
+  width: 70px; height: 70px;
   border-radius: 50%;
   background: rgba(240,232,213,.06);
   border: 1px solid rgba(240,232,213,.16);
   display: flex; align-items: center; justify-content: center;
-  padding: 16px;
+  padding: 14px;
+  overflow: hidden;
   transition: background .25s ease, border-color .25s ease, transform .25s ease;
 }
-.fig-mark svg { width: 100%; height: 100%; }
+.fig-mark svg { width: 100%; height: 100%; border-radius: 50%; }
 .fig-card:hover .fig-mark {
   background: rgba(240,232,213,.11);
   border-color: rgba(240,232,213,.32);
   transform: translateY(-2px);
 }
 .fig-label {
-  font-size: 10.5px;
+  font-size: 10px;
   letter-spacing: .03em;
   color: rgba(240,232,213,.68);
   text-align: center;
+  white-space: nowrap;
 }
 .footer-indalo-gallery .fig-credit {
   display: block;
-  margin-top: 20px;
+  margin-top: 22px;
   font-family: var(--serif);
   font-style: italic;
   font-size: 12px;
   color: rgba(240,232,213,.5);
 }
 @media (max-width: 560px) {
-  .fig-grid { grid-template-columns: repeat(2, 1fr); max-width: 220px; row-gap: 22px; }
-  .footer-indalo-gallery { padding: 24px 16px; }
+  .footer-indalo-gallery { padding: 24px 0; }
+  .fig-marquee-track { animation-duration: 26s; gap: 18px; }
+  .fig-mark { width: 60px; height: 60px; padding: 12px; }
+  .fig-card { width: 64px; }
 }
 
 /* Loader: el Indalo se dibuja solo (trazo) y late suave */
