@@ -352,7 +352,7 @@ const COPY = {
     apts_pets: 'Mascotas bienvenidas en los tres, con petición previa.',
     apt_01_concept: 'El campo de olivos llega al mar',
     apt_02_concept: 'El ático sobre el Mediterráneo y el Salar de los Canos',
-    apt_03_concept: 'El amarillo albero del amanecer sobre las salinas',
+    apt_03_concept: 'El amarillo albero del amanecer, cerca de las salinas',
     apt_cta: 'Ver Hestía',
     compare_eyebrow: 'Compara · Elige · Reserva',
     compare_title: (<>Tres puertas distintas al <em>mismo Mediterráneo.</em></>),
@@ -421,7 +421,7 @@ const COPY = {
     apts_pets: 'Pets welcome in all three, on request.',
     apt_01_concept: 'Where the olive grove meets the sea',
     apt_02_concept: 'Penthouse above the Mediterranean and the Salar de los Canos',
-    apt_03_concept: 'Ochre yellow, sunrise over the salt flats',
+    apt_03_concept: 'Ochre yellow, sunrise near the salt flats',
     apt_cta: 'See Hestía',
     compare_eyebrow: 'Compare · Choose · Book',
     compare_title: (<>Three doors onto the <em>same Mediterranean.</em></>),
@@ -558,7 +558,7 @@ const QUICK_FAQ = {
       { q: '¿Puedo llevar a mi perro?',
         a: <>Sí, en los tres. Las mascotas son bienvenidas siempre bajo petición previa y con suplemento, respetando unas condiciones básicas dentro de Hestía, en las zonas comunes y en los espacios públicos. Avísanos al reservar.</> },
       { q: '¿Qué Hestía me conviene más?',
-        a: <>Compara los tres en <a href="/">nuestra home</a>. <a href="mar.html">Mar</a> es planta primera con jardín, terraza de amanecer y mascotas. <a href="thalassa.html">Thalassa</a> es el ático con SPA comunitario y vistas panorámicas al mar. <a href="salinas.html">Salinas</a> tiene tres piscinas y el Parque Natural al lado.</> },
+        a: <>Compara los tres en <a href="/">nuestra home</a>. <a href="mar.html">Mar</a> es planta primera con jardín, terraza de amanecer y mascotas. <a href="thalassa.html">Thalassa</a> es el ático con SPA comunitario y vistas panorámicas al mar. <a href="salinas.html">Salinas</a> tiene tres piscinas y el Parque Natural a un paseo corto.</> },
       { q: '¿Quiénes sois Alex y Fran?',
         a: <><a href="nosotros.html">Somos los propietarios</a>, no una agencia. Gestionamos los tres en persona desde 2016. Más de 600 familias nos avalan.</> },
     ],
@@ -568,7 +568,7 @@ const QUICK_FAQ = {
       { q: 'Can I bring my dog?',
         a: <>Yes, in all three Hestías. Pets are welcome on request and with a supplement, as long as basic conditions are respected inside the Hestía, in the communal areas and in public spaces. Just let us know when booking.</> },
       { q: 'Which Hestía suits me best?',
-        a: <>Compare all three on <a href="/">our home page</a>. <a href="mar.html">Mar</a> is first floor with garden, sunrise terrace and pets. <a href="thalassa.html">Thalassa</a> is the penthouse with shared SPA and panoramic sea views. <a href="salinas.html">Salinas</a> has three pools and the Nature Park next door.</> },
+        a: <>Compare all three on <a href="/">our home page</a>. <a href="mar.html">Mar</a> is first floor with garden, sunrise terrace and pets. <a href="thalassa.html">Thalassa</a> is the penthouse with shared SPA and panoramic sea views. <a href="salinas.html">Salinas</a> has three pools and the Nature Park a short walk away.</> },
       { q: 'Who are Alex and Fran?',
         a: <><a href="nosotros.html">We are the owners</a>, not an agency. We have run the three Hestías in person since 2016. Over 600 families back us.</> },
     ],
@@ -620,9 +620,9 @@ const QUICK_FAQ = {
   vs: {
     es: [
       { q: '¿Por qué elegiría Hestía Salinas sobre los otros dos?',
-        a: <>Salinas es el más espacioso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de pádel comunitarios, y el Parque Natural de las Salinas de Puerto Rey a la vuelta de la esquina con acceso peatonal directo. La luz dorada de Almería llena cada habitación, y la naturaleza empieza donde termina la acera.</> },
+        a: <>Salinas es el más espacioso de los tres. Dos terrazas, tres piscinas, gimnasio, sauna y pistas de pádel comunitarios, y el Parque Natural de las Salinas de Puerto Rey a un paseo corto. La luz dorada de Almería llena cada habitación, con la naturaleza siempre cerca.</> },
       { q: '¿Qué son las Salinas de Puerto Rey?',
-        a: <>Un Parque Natural a pocos metros, con flamencos, aves migratorias y una luz dorada al amanecer única en Europa. Una de las razones por las que Salinas tiene algo que los demás no tienen.</> },
+        a: <>Un Parque Natural cercano, a un paseo corto, con flamencos, aves migratorias y una luz dorada al amanecer única en Europa. Una de las razones por las que Salinas tiene algo que los demás no tienen.</> },
       { q: '¿Hay de verdad tres piscinas?',
         a: <>Sí. La urbanización tiene tres piscinas comunitarias: no una sola dividida, sino tres zonas diferenciadas con orientaciones distintas. Además hay gimnasio y sauna comunitarios (el gimnasio abierto todo el año; la sauna, solo fuera de temporada de verano) y pistas de pádel. Una de las urbanizaciones mejor equipadas de Vera Playa.</> },
       { q: '¿Puedo traer mascotas?',
@@ -630,9 +630,9 @@ const QUICK_FAQ = {
     ],
     en: [
       { q: 'Why would I choose Hestía Salinas over the other two?',
-        a: <>Salinas is the most spacious of the three. Two terraces, three pools, a communal gym, sauna and padel courts, and the Puerto Rey Salt-flat Nature Park around the corner with direct pedestrian access. Almería's golden afternoon light fills every room, and nature begins where the pavement ends.</> },
+        a: <>Salinas is the most spacious of the three. Two terraces, three pools, a communal gym, sauna and padel courts, and the Puerto Rey Salt-flat Nature Park a short walk away. Almería's golden afternoon light fills every room, with nature always close by.</> },
       { q: 'What is the Puerto Rey Nature Park?',
-        a: <>A natural park a few metres away, with flamingos, migratory birds and a golden light at sunrise unique in Europe. One of the reasons Salinas has something the others don't.</> },
+        a: <>A nearby natural park, a short walk away, with flamingos, migratory birds and a golden light at sunrise unique in Europe. One of the reasons Salinas has something the others don't.</> },
       { q: 'Are there really three pools?',
         a: <>Yes. The complex has three community pools: not one divided, but three separate areas with different orientations. There is also a communal gym and sauna (gym open all year; sauna closed in summer) and padel courts. One of the best-equipped complexes in Vera Playa.</> },
       { q: 'Can I bring pets?',
@@ -961,7 +961,7 @@ const SABIAS_QUE_FACTS = [
   { type:'fact', es:'Hestía está más cerca de Mojácar (10 min) que del centro de Vera pueblo (15 min), la mejor manera de conocer ambos sin moverte de Hestía.', en:'Hestía is closer to Mojácar (10 min) than to Vera town centre (15 min), the best way to know both without leaving Hestía.' },
   { type:'fact', es:'Desde la terraza de Hestía Thalassa se ve el Mediterráneo, el Salar de los Canos y, en días limpios, las cumbres nevadas de Sierra Nevada.', en:'From Hestía Thalassa\'s terrace you can see the Mediterranean, the Salar de los Canos and, on clear days, snow-capped Sierra Nevada.' },
   { type:'fact', es:'A 30 min de Hestía empieza el Parque Natural de Cabo de Gata-Níjar y a 90 min el Parque Natural de Sierra María-Los Vélez. Dos parques en un día son posibles.', en:'30 min from Hestía starts the Cabo de Gata-Níjar Natural Park; 90 min to Sierra María-Los Vélez. Two parks in one day is possible.' },
-  { type:'fact', es:'Hestía Vera Salinas linda con el Parque Natural de las Salinas de Puerto Rey: andas tres minutos y estás entre flamencos.', en:'Hestía Vera Salinas adjoins the Puerto Rey Salt Flats Natural Park: a three-minute walk puts you among flamingos.' },
+  { type:'fact', es:'Hestía Vera Salinas está cerca del Parque Natural de las Salinas de Puerto Rey: un paseo corto y estás entre flamencos.', en:'Hestía Vera Salinas is close to the Puerto Rey Salt Flats Natural Park: a short walk puts you among flamingos.' },
   { type:'fact', es:'La Alcazaba de Almería es el segundo conjunto fortificado musulmán más grande de España, solo por detrás de la Alhambra.', en:'Almería\'s Alcazaba is the second-largest Muslim fortress in Spain, after the Alhambra.' },
   { type:'fact', es:'La Catedral de Almería es la única catedral fortaleza de España: cuatro torres y muros gruesos para defenderse de los ataques berberiscos del siglo XVI.', en:'Almería\'s Cathedral is the only fortified cathedral in Spain, four towers and thick walls built to repel Barbary corsair raids in the 16th century.' },
   { type:'fact', es:'Los Refugios de la Guerra Civil de Almería son los más grandes de Europa abiertos al público: 4,5 km bajo el suelo, con quirófano y dispensario.', en:'Almería\'s Civil War Shelters are the largest in Europe open to the public: 4.5 km of tunnels with operating room and dispensary.' },
@@ -1553,8 +1553,8 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   /* Salinas del Cano */
   {
-    es: 'Las Salinas del Cano, junto a Hestía Salinas, son una reserva de aves catalogada Zona de Especial Protección. En invierno llegan hasta 600 flamencos rosados de una sola vez.',
-    en: 'The Salinas del Cano, next to Hestía Salinas, are a bird reserve classified as a Special Protection Zone. Up to 600 pink flamingos arrive together in winter.',
+    es: 'Las Salinas del Cano, cerca de Hestía Salinas, son una reserva de aves catalogada Zona de Especial Protección. En invierno llegan hasta 600 flamencos rosados de una sola vez.',
+    en: 'The Salinas del Cano, near Hestía Salinas, are a bird reserve classified as a Special Protection Zone. Up to 600 pink flamingos arrive together in winter.',
   },
   {
     es: 'Las salinas del litoral almeriense llevan produciendo sal para conservar el pescado desde la época fenicia, más de 2.700 años de historia salina ininterrumpida en el mismo litoral.',
@@ -3448,10 +3448,10 @@ const TOP_RECS = [
     icon: '🦩',
     name_es: 'Salinas de Puerto Rey',
     name_en: 'Puerto Rey Salt Flats',
-    place_es: 'Vera Playa · al lado',
-    place_en: 'Vera Playa · next door',
-    desc_es: 'Parque Natural a pocos metros con flamencos, aves migratorias y luz dorada al amanecer. Acceso peatonal directo.',
-    desc_en: 'Nature park metres away with flamingos, migratory birds and golden dawn light. Direct walking access.',
+    place_es: 'Vera Playa · a un paseo corto',
+    place_en: 'Vera Playa · a short walk away',
+    desc_es: 'Parque Natural cercano, a un paseo corto, con flamencos, aves migratorias y luz dorada al amanecer.',
+    desc_en: 'Nearby nature park, a short walk away, with flamingos, migratory birds and golden dawn light.',
     url: 'https://www.google.com/maps/place/Salinas+de+Vera',
   },
 ];
@@ -3583,7 +3583,7 @@ Object.assign(window, { validateGuidePin, hestiaSha256Hex, logGuideAccess });
 const HESTIA_APT_META = {
   vm: { name: 'Hestía Mar',      slug: 'mar',      accent: '#6B7A3A', concept_es: 'Frente a la playa', concept_en: 'By the beach' },
   vt: { name: 'Hestía Thalassa', slug: 'thalassa', accent: '#B86A3C', concept_es: 'Ático panorámico',  concept_en: 'Panoramic penthouse' },
-  vs: { name: 'Hestía Salinas',  slug: 'salinas',  accent: '#D4A84A', concept_es: 'Junto a las salinas', concept_en: 'Next to the salt flats' },
+  vs: { name: 'Hestía Salinas',  slug: 'salinas',  accent: '#D4A84A', concept_es: 'Cerca de las salinas', concept_en: 'Near the salt flats' },
 };
 
 // Modal global de acceso huéspedes. Dos pasos:

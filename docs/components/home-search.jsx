@@ -10,8 +10,8 @@ const HS_APTS = [
     concept_es: 'El ático sobre el Mediterráneo y el Salar de los Canos.',
     concept_en: 'The penthouse above the Mediterranean and the Salar de los Canos.' },
   { id: 'vs', num: '03', name: 'Hestía Salinas',  short: 'Salinas',  slug: 'salinas',  accent: '#D4A84A',
-    concept_es: 'El amarillo albero del amanecer sobre las salinas.',
-    concept_en: 'Ochre yellow, sunrise over the salt flats.' },
+    concept_es: 'El amarillo albero del amanecer, cerca de las salinas.',
+    concept_en: 'Ochre yellow, sunrise near the salt flats.' },
 ];
 
 // Checks if [checkin, checkout) overlaps with any blocked range

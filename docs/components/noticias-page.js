@@ -46,8 +46,8 @@ const NOTICIAS = {
     "slug": "salinas.html",
     "accent": "var(--vs-dk)",
     "curiosidad": {
-      "es": "En agosto las Salinas de Puerto Rey mantienen su rojo más intenso del año, con las temperaturas más altas del verano acelerando la producción de betacaroteno del alga Dunaliella salina. A 50 metros de la puerta de Salinas, el paisaje parece de otro planeta a primera hora.",
-      "en": "In August the Puerto Rey salt flats hold their deepest red of the year, as the summer's highest temperatures speed up the beta-carotene production of the Dunaliella salina alga. Fifty metres from Salinas's door, the landscape looks otherworldly in the early morning."
+      "es": "En agosto las Salinas de Puerto Rey mantienen su rojo más intenso del año, con las temperaturas más altas del verano acelerando la producción de betacaroteno del alga Dunaliella salina. A un paseo corto de Salinas, el paisaje parece de otro planeta a primera hora.",
+      "en": "In August the Puerto Rey salt flats hold their deepest red of the year, as the summer's highest temperatures speed up the beta-carotene production of the Dunaliella salina alga. A short walk from Salinas, the landscape looks otherworldly in the early morning."
     },
     "reco": {
       "es": "Con el calor de agosto, sal a la ruta de los flamencos nada más amanecer, antes de las 8h. Es el único momento en que el paisaje y la temperatura invitan a caminar sin prisa; después, mejor dejarlo para el día siguiente.",

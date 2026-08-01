@@ -16,7 +16,7 @@ const MAPA_COPY = {
           { href: 'index.html', label: 'Home', desc: 'Empieza aquí, los tres Hestías de un vistazo.' },
           { href: 'mar.html', label: 'Hestía Mar', desc: 'Olivo · planta primera con jardín y terraza al amanecer.' },
           { href: 'thalassa.html', label: 'Hestía Thalassa', desc: 'Siena · ático con SPA comunitario y vistas panorámicas.' },
-          { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Albero · tres piscinas y Parque Natural al lado.' },
+          { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Albero · tres piscinas y Parque Natural a un paseo corto.' },
         ],
       },
       {
@@ -56,7 +56,7 @@ const MAPA_COPY = {
           { href: 'index.html', label: 'Home', desc: 'Start here, the three Hestías at a glance.' },
           { href: 'mar.html', label: 'Hestía Mar', desc: 'Olive · first floor with garden and sunrise terrace.' },
           { href: 'thalassa.html', label: 'Hestía Thalassa', desc: 'Sienna · penthouse with shared SPA and panoramic views.' },
-          { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Ochre · three pools and the Nature Park next door.' },
+          { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Ochre · three pools and the Nature Park a short walk away.' },
         ],
       },
       {
