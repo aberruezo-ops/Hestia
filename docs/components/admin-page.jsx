@@ -7860,9 +7860,17 @@ const TravelerRegistryTab = () => {
 
       {regs && regs.map((reg, i) => {
         const isOpen = open[reg.token] ?? (i === 0);
+        const aptId = (reg.token || '').split('-')[0];
+        const aptName = APT_NAMES[aptId];
+        const holder = reg.travelers && reg.travelers[0];
+        const holderName = holder ? [holder.nombre, holder.apellido1, holder.apellido2].filter(Boolean).join(' ') : '';
         return (
           <div key={reg.token} className="reg-admin-card">
             <button type="button" className="reg-admin-head" onClick={() => setOpen(p => ({ ...p, [reg.token]: !isOpen }))}>
+              <span className="reg-admin-who">
+                {aptName && <span className="reg-admin-apt-chip" style={{ background: APT_COLOR[aptId], color: APT_TEXT[aptId] }}>{aptName}</span>}
+                <strong className="reg-admin-holder">{holderName || 'Sin titular aún'}</strong>
+              </span>
               <span className="reg-admin-token">{reg.token}</span>
               <span className="reg-admin-meta">{(reg.travelers || []).length} viajero(s) · {fmtWhen(reg.submittedAt)}</span>
               <span aria-hidden="true">{isOpen ? '▾' : '▸'}</span>

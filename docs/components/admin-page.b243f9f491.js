@@ -10550,6 +10550,10 @@ const TravelerRegistryTab = () => {
     }
   }, "Aún no hay fichas enviadas."), regs && regs.map((reg, i) => {
     const isOpen = open[reg.token] ?? i === 0;
+    const aptId = (reg.token || '').split('-')[0];
+    const aptName = APT_NAMES[aptId];
+    const holder = reg.travelers && reg.travelers[0];
+    const holderName = holder ? [holder.nombre, holder.apellido1, holder.apellido2].filter(Boolean).join(' ') : '';
     return /*#__PURE__*/React.createElement("div", {
       key: reg.token,
       className: "reg-admin-card"
@@ -10561,6 +10565,16 @@ const TravelerRegistryTab = () => {
         [reg.token]: !isOpen
       }))
     }, /*#__PURE__*/React.createElement("span", {
+      className: "reg-admin-who"
+    }, aptName && /*#__PURE__*/React.createElement("span", {
+      className: "reg-admin-apt-chip",
+      style: {
+        background: APT_COLOR[aptId],
+        color: APT_TEXT[aptId]
+      }
+    }, aptName), /*#__PURE__*/React.createElement("strong", {
+      className: "reg-admin-holder"
+    }, holderName || 'Sin titular aún')), /*#__PURE__*/React.createElement("span", {
       className: "reg-admin-token"
     }, reg.token), /*#__PURE__*/React.createElement("span", {
       className: "reg-admin-meta"
