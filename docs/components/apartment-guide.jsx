@@ -1534,6 +1534,14 @@ const GUIDE_SHARED = {
       ],
       sign: 'Con cariño,',
       signer: 'Fran y Alex',
+      team: {
+        title: 'Quién está detrás de tu estancia',
+        members: [
+          { name: 'Alex', role: 'Tu reserva', body: 'Gestiona tu reserva y todo lo relacionado con ella: fechas, pagos, contrato y cualquier cambio antes de llegar.' },
+          { name: 'Fran', role: 'Tu estancia', body: 'Gestiona tu estancia una vez confirmada: cualquier imprevisto, recomendación o necesidad, desde antes de llegar para tenerlo todo preparado.' },
+          { name: 'Leila y Marina', role: 'Limpieza y recepción', body: 'Nuestro equipo de limpieza y recepción. Si eliges recepción presencial, cualquiera de las dos puede ser quien te reciba.' },
+        ],
+      },
       pdNote: 'Si te interesa la historia completa: de dónde viene el nombre, por qué empezamos este proyecto, qué buscamos cuando viajamos nosotros, la contamos con detalle en la web:',
       pdLinkLabel: 'Por qué creamos Hestía',
       pdLinkHref: 'https://aberruezo-ops.github.io/Hestia/porque-hestia.html',
@@ -1818,6 +1826,14 @@ const GUIDE_SHARED = {
       ],
       sign: 'With love,',
       signer: 'Fran & Alex',
+      team: {
+        title: 'Who is behind your stay',
+        members: [
+          { name: 'Alex', role: 'Your booking', body: 'Handles your booking and everything related to it: dates, payment, contract and any change before you arrive.' },
+          { name: 'Fran', role: 'Your stay', body: 'Handles your stay once confirmed: any hiccup, recommendation or need, from before you arrive so everything is ready.' },
+          { name: 'Leila and Marina', role: 'Cleaning & reception', body: 'Our cleaning and reception team. If you choose in-person check-in, either one of them may be the one to greet you.' },
+        ],
+      },
       pdNote: 'If you would like the full story: where the name comes from, why we started this project, what we look for when we travel ourselves, we tell it in detail on the website:',
       pdLinkLabel: 'Why we created Hestía',
       pdLinkHref: 'https://aberruezo-ops.github.io/Hestia/porque-hestia.html',
@@ -5361,6 +5377,21 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             {s.welcome.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
             <p className="ag-sign">{s.welcome.sign}</p>
             <p className="ag-signer">{s.welcome.signer}</p>
+
+            {s.welcome.team && (
+              <div className="ag-team">
+                <h3 className="ag-h3">{s.welcome.team.title}</h3>
+                <div className="ag-team-grid">
+                  {s.welcome.team.members.map((m, i) => (
+                    <div key={i} className="ag-team-member">
+                      <span className="ag-team-name">{m.name}</span>
+                      <span className="ag-team-role">{m.role}</span>
+                      <p className="ag-team-body">{m.body}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {s.welcome.pdNote && (
               <p className="ag-welcome-pd">

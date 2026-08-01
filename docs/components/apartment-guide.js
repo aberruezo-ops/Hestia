@@ -4583,6 +4583,22 @@ const GUIDE_SHARED = {
       paras: ['Si lees esto, tu reserva está más que confirmada, y no sabes la ilusión que nos hace tenerte aquí.', 'Hestía no es lujo. Tampoco es un alquiler vacacional al uso. Es nuestro hogar, y durante los próximos días queremos que también sea el tuyo. Por eso hemos puesto cariño en cada detalle de esta casa: porque es exactamente lo que a nosotros nos gusta encontrar cuando viajamos.', 'Ya estés preparando el viaje, viviendo tus días aquí, o de vuelta a casa con la maleta a medio deshacer: todo lo que esté en nuestra mano, antes, durante o después de tu estancia, lo haremos. Sin dudarlo. Para eso estamos.', 'Ahora descansa, relájate y siéntete en tu hogar lejos de casa.'],
       sign: 'Con cariño,',
       signer: 'Fran y Alex',
+      team: {
+        title: 'Quién está detrás de tu estancia',
+        members: [{
+          name: 'Alex',
+          role: 'Tu reserva',
+          body: 'Gestiona tu reserva y todo lo relacionado con ella: fechas, pagos, contrato y cualquier cambio antes de llegar.'
+        }, {
+          name: 'Fran',
+          role: 'Tu estancia',
+          body: 'Gestiona tu estancia una vez confirmada: cualquier imprevisto, recomendación o necesidad, desde antes de llegar para tenerlo todo preparado.'
+        }, {
+          name: 'Leila y Marina',
+          role: 'Limpieza y recepción',
+          body: 'Nuestro equipo de limpieza y recepción. Si eliges recepción presencial, cualquiera de las dos puede ser quien te reciba.'
+        }]
+      },
       pdNote: 'Si te interesa la historia completa: de dónde viene el nombre, por qué empezamos este proyecto, qué buscamos cuando viajamos nosotros, la contamos con detalle en la web:',
       pdLinkLabel: 'Por qué creamos Hestía',
       pdLinkHref: 'https://aberruezo-ops.github.io/Hestia/porque-hestia.html'
@@ -5013,6 +5029,22 @@ const GUIDE_SHARED = {
       paras: ['If you\'re reading this, your booking is more than confirmed, and we couldn\'t be more thrilled to have you with us.', 'Hestía is not luxury. It is not a standard holiday rental either. It is our home, and over the coming days we want it to be yours too. That is why we have put care into every detail of this place: because it is exactly what we like to find when we travel ourselves.', 'Whether you\'re still planning the trip, living your days here, or back home with a half-unpacked suitcase: anything in our hands, before, during or after your stay, we\'ll do it. No hesitation. That\'s what we\'re here for.', 'Now rest, relax, and settle into your home away from home.'],
       sign: 'With love,',
       signer: 'Fran & Alex',
+      team: {
+        title: 'Who is behind your stay',
+        members: [{
+          name: 'Alex',
+          role: 'Your booking',
+          body: 'Handles your booking and everything related to it: dates, payment, contract and any change before you arrive.'
+        }, {
+          name: 'Fran',
+          role: 'Your stay',
+          body: 'Handles your stay once confirmed: any hiccup, recommendation or need, from before you arrive so everything is ready.'
+        }, {
+          name: 'Leila and Marina',
+          role: 'Cleaning & reception',
+          body: 'Our cleaning and reception team. If you choose in-person check-in, either one of them may be the one to greet you.'
+        }]
+      },
       pdNote: 'If you would like the full story: where the name comes from, why we started this project, what we look for when we travel ourselves, we tell it in detail on the website:',
       pdLinkLabel: 'Why we created Hestía',
       pdLinkHref: 'https://aberruezo-ops.github.io/Hestia/porque-hestia.html'
@@ -10921,7 +10953,22 @@ const AptGuideView = ({
     className: "ag-sign"
   }, s.welcome.sign), /*#__PURE__*/React.createElement("p", {
     className: "ag-signer"
-  }, s.welcome.signer), s.welcome.pdNote && /*#__PURE__*/React.createElement("p", {
+  }, s.welcome.signer), s.welcome.team && /*#__PURE__*/React.createElement("div", {
+    className: "ag-team"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, s.welcome.team.title), /*#__PURE__*/React.createElement("div", {
+    className: "ag-team-grid"
+  }, s.welcome.team.members.map((m, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "ag-team-member"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-team-name"
+  }, m.name), /*#__PURE__*/React.createElement("span", {
+    className: "ag-team-role"
+  }, m.role), /*#__PURE__*/React.createElement("p", {
+    className: "ag-team-body"
+  }, m.body))))), s.welcome.pdNote && /*#__PURE__*/React.createElement("p", {
     className: "ag-welcome-pd"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-welcome-pd-tag"
