@@ -211,6 +211,20 @@ const NOTICIAS = {
         "es": "Agosto es el mes más caluroso del año: en el parque natural, ve antes de las 9h o después de las 19h, nunca al mediodía. Mónsul y el Playazo de Rodalquilar son mucho más agradables a primera y última hora. Agua de sobra y calzado cerrado para los senderos.",
         "en": "August is the hottest month of the year: in the natural park, go before 9am or after 7pm, never at midday. Mónsul and Playazo de Rodalquilar are far more pleasant early and late. Bring plenty of water and closed shoes for the trails."
       }
+    }, {
+      "months": [8],
+      "tag": {
+        "es": "Conciertos",
+        "en": "Concerts"
+      },
+      "titulo": {
+        "es": "Starlite Marbella cierra agosto con Niña Pastori, Gloria Trevi y Nile Rodgers & CHIC",
+        "en": "Starlite Marbella closes August with Niña Pastori, Gloria Trevi and Nile Rodgers & CHIC"
+      },
+      "cuerpo": {
+        "es": "El festival de referencia de la Costa del Sol programa conciertos casi a diario durante todo agosto en su auditorio al aire libre: Niña Pastori (21 ago), Gloria Trevi (24 ago) y Nile Rodgers & CHIC cerrando el 26. Marbella está a unas 3h de Vera Playa: un viaje largo, pero para quien quiera hacer noche fuera vale la pena. starlitefestival.com.",
+        "en": "The Costa del Sol's flagship festival programmes concerts almost daily throughout August at its open-air auditorium: Niña Pastori (21 Aug), Gloria Trevi (24 Aug) and Nile Rodgers & CHIC closing on the 26th. Marbella is about 3h from Vera Playa: a long trip, but worth it for those staying over. starlitefestival.com."
+      }
     }]
   }, {
     "cat": {
@@ -232,6 +246,20 @@ const NOTICIAS = {
       "cuerpo": {
         "es": "Sexta edición del festival en el Auditorio Paco Martín (Parque Torres), a 1h 15' de Vera Playa. Seis noches de conciertos: Alejandro Astola (14 ago), Café Quijano (20 ago), 500 Noches (21 ago), Carlos Ares (27 ago) y Taylormanía (28 ago), con Miguel Ríos cerrando el 29. Programa y entradas en crashmusic.es.",
         "en": "Sixth edition of the festival at the Auditorio Paco Martín (Parque Torres), 1h 15' from Vera Playa. Six nights of concerts: Alejandro Astola (14 Aug), Café Quijano (20 Aug), 500 Noches (21 Aug), Carlos Ares (27 Aug) and Taylormanía (28 Aug), with Miguel Ríos closing on the 29th. Programme and tickets at crashmusic.es."
+      }
+    }, {
+      "months": [8],
+      "tag": {
+        "es": "Jazz",
+        "en": "Jazz"
+      },
+      "titulo": {
+        "es": "VI Festival de Águilas Jazz, 7 de agosto en la Plaza Antonio Cortijos",
+        "en": "VI Águilas Jazz Festival, 7 August at Plaza Antonio Cortijos"
+      },
+      "cuerpo": {
+        "es": "Águilas, la localidad murciana más cercana a Vera Playa por la costa, celebra su festival de jazz al aire libre. El 7 de agosto actúa Sara Oschlag, a las 22h en la Plaza Antonio Cortijos. A unos 35 minutos de Hestía; consulta horarios y condiciones de acceso antes de ir.",
+        "en": "Águilas, the closest Murcian town to Vera Playa along the coast, holds its open-air jazz festival. On 7 August, Sara Oschlag performs at 10pm at Plaza Antonio Cortijos. About 35 minutes from Hestía; check timings and access details before going."
       }
     }, {
       "months": [8],
