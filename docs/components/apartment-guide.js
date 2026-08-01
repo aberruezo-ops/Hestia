@@ -2645,7 +2645,7 @@ const PLACES = [
   desc: 'Cable ski sobre el antiguo canal de remo de los Juegos Mediterráneos 2005, junto al embalse de Cuevas del Almanzora. Reinaugurado en 2019 como Lunar Cable Park. Sin barco, sin olas, el cable te arrastra. Distancia: ~20 km / 24 min desde Vera Playa por carretera local pasando por Vera y Cuevas del Almanzora.',
   specialty: 'Sistema de 5 torres para wakeboard, ski náutico y kneeboard. Además: circuito hinchable acuático (el mayor del sur de España), kayak, paddle surf, mini-rampa de skate y gimnasio outdoor. Sesiones de iniciación con instructor.',
   level: 'Medio · 8+ años en cable infantil · 12+ años en cable principal · Saber nadar bien · Forma física básica',
-  tip: 'Reserva online con 24 h en julio-agosto. Llévate crema solar, gorra y agua, el sol pega fuerte sobre el embalse. La primera caída es a los 5 minutos; al final del día acabas tirado en la hamaca con muy buena cara.',
+  tip: 'Reserva online con 24 h en julio-agosto. Llévate crema solar, gorra y agua, el sol pega fuerte sobre el embalse. La primera caída es a los 5 minutos; al final del día acabas tirado en la hamaca con muy buena cara. Avísanos antes de ir: hay mucho personal y es necesario avisar antes a la dueña para que el descuento funcione sin líos.',
   cat: 'adventure',
   url: 'https://lunarcablepark.com/',
   lat: 37.3970,
