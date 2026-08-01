@@ -5520,7 +5520,9 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                   <li key={i} className="rv-prox-card" data-apt={r.apt} style={{'--apt-c': APT_COLOR[r.apt] || 'var(--ber)'}}>
                     <div className="rv-prox-top">
                       <span className="rv-apt-chip" style={{background: APT_COLOR[r.apt], color: APT_TEXT[r.apt]}}>{APT_NAMES[r.apt]}</span>
-                      <strong className="rv-prox-guest">{r.responsable}{r.mascota ? ' 🐾' : ''}{r.cuna_trona ? ' 👶' : ''}</strong>
+                      <button type="button" className="rv-prox-guest rv-prox-guest-link" onClick={() => openRow(reservas.indexOf(r))} title="Ver detalle de la reserva">
+                        {r.responsable}{r.mascota ? ' 🐾' : ''}{r.cuna_trona ? ' 👶' : ''}
+                      </button>
                       <span className="rv-prox-days-badge">{llega}</span>
                     </div>
                     <div className="rv-prox-stay">
@@ -5540,9 +5542,6 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
                           </div>
                         : <span className="rv-wa-btn rv-wa-disabled" title="No hay teléfono del huésped en esta reserva">Sin teléfono en la ficha</span>}
                     </div>
-                    <button type="button" className="rv-prox-detail-link" onClick={() => openRow(reservas.indexOf(r))}>
-                      Ver detalle de la reserva <span aria-hidden="true">→</span>
-                    </button>
                   </li>
                 );
               })}
