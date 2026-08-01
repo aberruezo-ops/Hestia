@@ -843,10 +843,42 @@ const Cookies = ({
 // aquí es dibujo nuestro (mismas coordenadas que IndaloShape, la marca de
 // Hestía), no la ilustración de ningún tercero. Por eso no lleva firma de
 // "diseñador" externo, solo el nombre de la técnica.
+// El Indalo "real" no tiene una única postura: unas versiones cierran el
+// arco en bucle sobre la cabeza, otras lo abren en cúpula ancha, otras lo
+// quitan y dejan solo la figura con los brazos en cruz, otras corren con
+// las piernas asimétricas. Cada postura de aquí abajo es dibujo propio,
+// pero la variedad de posturas está inspirada en esa diversidad real
+// (búsqueda de imágenes: amuletos en madera, forja, cerámica, mural,
+// pictograma), no en calcar ninguna en concreto.
 const IND_ARCH = 'M4.5 13C4.5 5.5 19.5 5.5 19.5 13';
 const IND_BODY = 'M12 6.8V15';
 const IND_ARMS = 'M12 11 4.5 13M12 11 19.5 13';
 const IND_LEGS = 'M12 15l-3.2 5M12 15l3.2 5';
+
+// Postura "sin arco": persona en cruz simple, cabeza redonda rellena,
+// sin el elemento de arco/arcoíris. Como el pictograma más reducido.
+const IND2_HEAD = 'M12 5m-1.8 0a1.8 1.8 0 1 0 3.6 0a1.8 1.8 0 1 0 -3.6 0';
+const IND2_BODY = 'M12 6.8V14';
+const IND2_ARMS = 'M12 9.3 4.8 9.3M12 9.3 19.2 9.3';
+const IND2_LEGS = 'M12 14 6.8 20.3M12 14 17.2 20.3';
+
+// Postura "redonda": cabeza y cuerpo con más volumen, brazos horizontales
+// y una cúpula amplia por encima (como las tallas en madera de recuerdo).
+const IND3_HEAD = 'M12 5.3m-1.9 0a1.9 1.9 0 1 0 3.8 0a1.9 1.9 0 1 0 -3.8 0';
+const IND3_BODY = 'M12 7.2V14.3';
+const IND3_ARMS = 'M12 9.4 5.3 9.4M12 9.4 18.7 9.4';
+const IND3_ARCH = 'M5.3 9.4C5.3 3 18.7 3 18.7 9.4';
+const IND3_LEGS = 'M12 14.3 6.3 20.4M12 14.3 17.7 20.4';
+
+// Postura "en marcha": el arco se cierra en un aro sobre una mano, la otra
+// mitad del cuerpo va inclinada, las piernas quedan asimétricas a media
+// zancada. Como la silueta corriendo de las verjas de forja.
+const IND4_LOOP = 'M13 4.3m-2.5 0a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0';
+const IND4_TORSO = 'M13 6.8 11.3 15';
+const IND4_ARM_UP = 'M13 6.8 10.7 5.1';
+const IND4_ARM_DN = 'M12.1 9.6 18.9 7.7';
+const IND4_LEG_BACK = 'M11.3 15 6.2 21';
+const IND4_LEG_FWD = 'M11.3 15 16.4 17.7';
 const IndaloRupestreMark = () => /*#__PURE__*/React.createElement("svg", {
   viewBox: "0 0 24 24",
   fill: "none",
@@ -930,30 +962,34 @@ const IndaloGrabadoMark = () => /*#__PURE__*/React.createElement("svg", {
   opacity: "0.28",
   transform: "translate(0.5 0.35)",
   stroke: "var(--ber-dk)",
-  strokeWidth: "2.3",
+  strokeWidth: "2.1",
   strokeLinecap: "round",
   strokeLinejoin: "round"
 }, /*#__PURE__*/React.createElement("path", {
-  d: IND_ARCH
+  d: IND2_HEAD,
+  fill: "var(--ber-dk)",
+  stroke: "none"
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_BODY
+  d: IND2_BODY
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_ARMS
+  d: IND2_ARMS
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_LEGS
+  d: IND2_LEGS
 })), /*#__PURE__*/React.createElement("g", {
   stroke: "var(--vt-dk)",
-  strokeWidth: "2.3",
+  strokeWidth: "2.1",
   strokeLinecap: "round",
   strokeLinejoin: "round"
 }, /*#__PURE__*/React.createElement("path", {
-  d: IND_ARCH
+  d: IND2_HEAD,
+  fill: "var(--vt-dk)",
+  stroke: "none"
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_BODY
+  d: IND2_BODY
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_ARMS
+  d: IND2_ARMS
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_LEGS
+  d: IND2_LEGS
 })));
 const IndaloTrencadisMark = () => /*#__PURE__*/React.createElement("svg", {
   viewBox: "0 0 24 24",
@@ -1021,11 +1057,11 @@ const IndaloAcuarelaMark = () => /*#__PURE__*/React.createElement("svg", {
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4.7 13.3C4.9 6 19.7 5.2 19.4 12.8"
 }), /*#__PURE__*/React.createElement("path", {
-  d: "M11.85 6.6V15.1"
+  d: "M11.85 6.6V14.7"
 }), /*#__PURE__*/React.createElement("path", {
   d: "M12.1 11 4.4 13.4M11.9 10.9 19.7 12.7"
 }), /*#__PURE__*/React.createElement("path", {
-  d: "M12 15.1l-3.4 4.9M12.1 14.9l3 5.1"
+  d: "M11.85 14.7l-2.3 4.1M12 14.7l4.3 5.4"
 })), /*#__PURE__*/React.createElement("g", {
   stroke: "var(--vm-dk)",
   strokeWidth: "1.3",
@@ -1035,11 +1071,11 @@ const IndaloAcuarelaMark = () => /*#__PURE__*/React.createElement("svg", {
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4.3 12.8C4.6 5.3 19.3 5.9 19.6 13.2"
 }), /*#__PURE__*/React.createElement("path", {
-  d: "M12.15 7V14.8"
+  d: "M12.15 7V14.5"
 }), /*#__PURE__*/React.createElement("path", {
   d: "M11.9 11.1 4.6 12.7M12.05 11 19.4 13.3"
 }), /*#__PURE__*/React.createElement("path", {
-  d: "M11.95 14.9l-3 5.1M12 15.2l3.4 4.9"
+  d: "M11.9 14.5l-2 4M12.1 14.5l4.5 5.2"
 })));
 const IndaloAzulejoMark = () => /*#__PURE__*/React.createElement("svg", {
   viewBox: "0 0 24 24",
@@ -1065,31 +1101,35 @@ const IndaloAzulejoMark = () => /*#__PURE__*/React.createElement("svg", {
   opacity: "0.4"
 }), /*#__PURE__*/React.createElement("g", {
   stroke: "#5B9BC4",
-  strokeWidth: "2.3",
+  strokeWidth: "2.1",
   strokeLinecap: "butt",
   strokeDasharray: "0.9 0.55"
 }, /*#__PURE__*/React.createElement("path", {
-  d: IND_ARCH
+  d: IND3_HEAD
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_BODY
+  d: IND3_ARCH
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_ARMS
+  d: IND3_BODY
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_LEGS
+  d: IND3_ARMS
+}), /*#__PURE__*/React.createElement("path", {
+  d: IND3_LEGS
 })), /*#__PURE__*/React.createElement("g", {
   stroke: "#F0CE7A",
-  strokeWidth: "0.8",
+  strokeWidth: "0.75",
   strokeLinecap: "butt",
   strokeDasharray: "0.9 0.55",
   strokeDashoffset: "0.7"
 }, /*#__PURE__*/React.createElement("path", {
-  d: IND_ARCH
+  d: IND3_HEAD
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_BODY
+  d: IND3_ARCH
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_ARMS
+  d: IND3_BODY
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_LEGS
+  d: IND3_ARMS
+}), /*#__PURE__*/React.createElement("path", {
+  d: IND3_LEGS
 })));
 const IndaloForjaMark = () => /*#__PURE__*/React.createElement("svg", {
   viewBox: "0 0 24 24",
@@ -1109,44 +1149,38 @@ const IndaloForjaMark = () => /*#__PURE__*/React.createElement("svg", {
   strokeLinecap: "round",
   strokeLinejoin: "round"
 }, /*#__PURE__*/React.createElement("path", {
-  d: IND_ARCH
+  d: IND4_LOOP
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_BODY
+  d: IND4_TORSO
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_ARMS
+  d: IND4_ARM_UP
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_LEGS
+  d: IND4_ARM_DN
 }), /*#__PURE__*/React.createElement("path", {
-  d: "M4.5 13a1 1 0 1 0 .6-1.7",
-  strokeWidth: "1"
+  d: IND4_LEG_BACK
 }), /*#__PURE__*/React.createElement("path", {
-  d: "M19.5 13a1 1 0 1 1-.6-1.7",
-  strokeWidth: "1"
+  d: IND4_LEG_FWD
 })), /*#__PURE__*/React.createElement("g", {
   fill: "#3A3A3A"
 }, /*#__PURE__*/React.createElement("circle", {
-  cx: "12",
-  cy: "11",
+  cx: "11.3",
+  cy: "15",
   r: "0.55"
 }), /*#__PURE__*/React.createElement("circle", {
-  cx: "4.5",
-  cy: "13",
-  r: "0.5"
-}), /*#__PURE__*/React.createElement("circle", {
-  cx: "19.5",
-  cy: "13",
-  r: "0.5"
-}), /*#__PURE__*/React.createElement("circle", {
-  cx: "12",
+  cx: "13",
   cy: "6.8",
   r: "0.5"
 }), /*#__PURE__*/React.createElement("circle", {
-  cx: "8.8",
-  cy: "20",
+  cx: "18.9",
+  cy: "7.7",
   r: "0.5"
 }), /*#__PURE__*/React.createElement("circle", {
-  cx: "15.2",
-  cy: "20",
+  cx: "6.2",
+  cy: "21",
+  r: "0.5"
+}), /*#__PURE__*/React.createElement("circle", {
+  cx: "16.4",
+  cy: "17.7",
   r: "0.5"
 })));
 const IndaloNeonMark = () => /*#__PURE__*/React.createElement("svg", {
@@ -1235,41 +1269,49 @@ const IndaloJoyaMark = () => /*#__PURE__*/React.createElement("svg", {
   cy: "12",
   r: "10.5",
   fill: "#1a0f1e"
+}), /*#__PURE__*/React.createElement("circle", {
+  cx: "12",
+  cy: "12",
+  r: "9.2",
+  fill: "none",
+  stroke: "#F0CE7A",
+  strokeWidth: "0.25",
+  opacity: "0.5"
 }), /*#__PURE__*/React.createElement("g", {
   stroke: "#F0CE7A",
   strokeWidth: "0.55",
   strokeLinecap: "round",
   strokeLinejoin: "round"
 }, /*#__PURE__*/React.createElement("path", {
-  d: IND_ARCH
+  d: "M6.5 11.5C6.5 6.5 17.5 6.5 17.5 11.5"
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_BODY
+  d: "M12 8V14.5"
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_ARMS
+  d: "M12 10.8 6.5 11.5M12 10.8 17.5 11.5"
 }), /*#__PURE__*/React.createElement("path", {
-  d: IND_LEGS
+  d: "M12 14.5 9.8 19M12 14.5 14.2 19"
 })), /*#__PURE__*/React.createElement("g", {
   fill: "#F0CE7A"
 }, /*#__PURE__*/React.createElement("circle", {
   cx: "12",
-  cy: "6.8",
-  r: "0.55"
-}), /*#__PURE__*/React.createElement("circle", {
-  cx: "4.5",
-  cy: "13",
-  r: "0.55"
-}), /*#__PURE__*/React.createElement("circle", {
-  cx: "19.5",
-  cy: "13",
-  r: "0.55"
-}), /*#__PURE__*/React.createElement("circle", {
-  cx: "8.8",
-  cy: "20",
+  cy: "8",
   r: "0.5"
 }), /*#__PURE__*/React.createElement("circle", {
-  cx: "15.2",
-  cy: "20",
+  cx: "6.5",
+  cy: "11.5",
   r: "0.5"
+}), /*#__PURE__*/React.createElement("circle", {
+  cx: "17.5",
+  cy: "11.5",
+  r: "0.5"
+}), /*#__PURE__*/React.createElement("circle", {
+  cx: "9.8",
+  cy: "19",
+  r: "0.45"
+}), /*#__PURE__*/React.createElement("circle", {
+  cx: "14.2",
+  cy: "19",
+  r: "0.45"
 })));
 const INDALO_STYLES = [{
   id: 'rupestre',
