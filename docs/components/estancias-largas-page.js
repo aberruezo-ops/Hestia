@@ -126,6 +126,7 @@ const LS_APTS = [{
   name: 'Mar',
   slug: 'mar',
   accent: '#6B7A3A',
+  img: 'assets/apt-vm.jpg',
   concept_es: 'El campo de olivos llega al mar',
   concept_en: 'Where the olive grove meets the sea'
 }, {
@@ -133,6 +134,7 @@ const LS_APTS = [{
   name: 'Thalassa',
   slug: 'thalassa',
   accent: '#B86A3C',
+  img: 'assets/apt-vt-4.jpg',
   concept_es: 'El ático sobre el Mediterráneo',
   concept_en: 'The penthouse above the Mediterranean'
 }, {
@@ -140,6 +142,7 @@ const LS_APTS = [{
   name: 'Salinas',
   slug: 'salinas',
   accent: '#D4A84A',
+  img: 'assets/apt-vs.jpg',
   concept_es: 'El amarillo albero del amanecer',
   concept_en: 'The golden dawn above the salt flats'
 }];
@@ -495,7 +498,14 @@ const LsSearch = ({
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "lsl-result-apt"
-  }, "HESTÍA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), available ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("img", {
+    src: apt.img,
+    alt: "",
+    width: "34",
+    height: "34",
+    loading: "lazy",
+    className: "lsl-result-thumb"
+  }), "HESTÍA ", /*#__PURE__*/React.createElement("strong", null, apt.name.toUpperCase())), available ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "lsl-result-prices"
   }, regTotal > lsTotal && /*#__PURE__*/React.createElement("span", {
     className: "lsl-result-reg"
@@ -531,7 +541,14 @@ const LsApts = ({
     style: {
       '--lsl-accent': apt.accent
     }
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("img", {
+    src: apt.img,
+    alt: "",
+    width: "320",
+    height: "140",
+    loading: "lazy",
+    className: "lsl-apt-thumb"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "lsl-apt-dot"
   }), /*#__PURE__*/React.createElement("div", {
     className: "lsl-apt-name"

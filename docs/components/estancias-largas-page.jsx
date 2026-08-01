@@ -109,9 +109,9 @@ const LS_COPY = {
 };
 
 const LS_APTS = [
-  { id: 'vm', name: 'Mar',      slug: 'mar',      accent: '#6B7A3A', concept_es: 'El campo de olivos llega al mar', concept_en: 'Where the olive grove meets the sea' },
-  { id: 'vt', name: 'Thalassa', slug: 'thalassa', accent: '#B86A3C', concept_es: 'El ático sobre el Mediterráneo', concept_en: 'The penthouse above the Mediterranean' },
-  { id: 'vs', name: 'Salinas',  slug: 'salinas',  accent: '#D4A84A', concept_es: 'El amarillo albero del amanecer', concept_en: 'The golden dawn above the salt flats' },
+  { id: 'vm', name: 'Mar',      slug: 'mar',      accent: '#6B7A3A', img: 'assets/apt-vm.jpg',   concept_es: 'El campo de olivos llega al mar', concept_en: 'Where the olive grove meets the sea' },
+  { id: 'vt', name: 'Thalassa', slug: 'thalassa', accent: '#B86A3C', img: 'assets/apt-vt-4.jpg', concept_es: 'El ático sobre el Mediterráneo', concept_en: 'The penthouse above the Mediterranean' },
+  { id: 'vs', name: 'Salinas',  slug: 'salinas',  accent: '#D4A84A', img: 'assets/apt-vs.jpg',   concept_es: 'El amarillo albero del amanecer', concept_en: 'The golden dawn above the salt flats' },
 ];
 
 // Tarifas de estancia larga: SIEMPRE desde prices.json (window.PRICES_V2),
@@ -369,7 +369,10 @@ const LsSearch = ({ lang }) => {
             {avail.map(({ apt, available, lsTotal, regTotal, nights: n }) => (
               <div key={apt.id} className={`lsl-result${available ? '' : ' lsl-result--unavail'}`}
                    style={{ '--lsl-accent': apt.accent }}>
-                <div className="lsl-result-apt">HESTÍA <strong>{apt.name.toUpperCase()}</strong></div>
+                <div className="lsl-result-apt">
+                  <img src={apt.img} alt="" width="34" height="34" loading="lazy" className="lsl-result-thumb"/>
+                  HESTÍA <strong>{apt.name.toUpperCase()}</strong>
+                </div>
                 {available ? (
                   <>
                     <div className="lsl-result-prices">
@@ -410,6 +413,7 @@ const LsApts = ({ lang }) => {
         <div className="lsl-apts-grid">
           {LS_APTS.map(apt => (
             <a key={apt.id} href={`${apt.slug}.html`} className="lsl-apt-card" style={{ '--lsl-accent': apt.accent }}>
+              <img src={apt.img} alt="" width="320" height="140" loading="lazy" className="lsl-apt-thumb"/>
               <div className="lsl-apt-dot"/>
               <div className="lsl-apt-name">HESTÍA <strong>{apt.name.toUpperCase()}</strong></div>
               <div className="lsl-apt-concept">{lang === 'es' ? apt.concept_es : apt.concept_en}</div>
