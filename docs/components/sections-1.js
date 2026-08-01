@@ -381,9 +381,9 @@ const APARTMENTS = [{
   slug: 'mar',
   license: 'VFT/AL/01580',
   concept: 'apt_01_concept',
-  img: 'assets/apt-vs.jpg',
-  imgW: 1024,
-  imgH: 768,
+  img: 'assets/apt-vm.jpg',
+  imgW: 1255,
+  imgH: 1146,
   rating: '9.8',
   meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición']
 }, {
@@ -405,9 +405,9 @@ const APARTMENTS = [{
   slug: 'salinas',
   license: 'VFT/AL/07056',
   concept: 'apt_03_concept',
-  img: 'assets/apt-vm.jpg',
-  imgW: 1255,
-  imgH: 1146,
+  img: 'assets/apt-vs.jpg',
+  imgW: 1024,
+  imgH: 768,
   rating: '9.9',
   meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas']
 }];
