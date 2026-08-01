@@ -119,6 +119,21 @@ const NOTICIAS = {
             "es": "El propio pueblo de Vera, a 10 minutos de Hestía, celebra sus fiestas patronales en honor a la Santísima Virgen de las Angustias, con los tradicionales festejos de San Cleofás como parte del programa. Consulta el programa completo en vera.es antes de ir: horarios y actividades varían cada año.",
             "en": "Vera itself, 10 minutes from Hestía, celebrates its patron festivities honouring the Santísima Virgen de las Angustias, with the traditional San Cleofás celebrations as part of the programme. Check the full schedule at vera.es before going: times and activities vary each year."
           }
+        },
+        {
+          "months": [8],
+          "tag": {
+            "es": "Tradición",
+            "en": "Tradition"
+          },
+          "titulo": {
+            "es": "Fiestas de San Agustín en Mojácar, en torno al 28 de agosto",
+            "en": "San Agustín festivities in Mojácar, around 28 August"
+          },
+          "cuerpo": {
+            "es": "Mojácar celebra a su patrón, San Agustín, con la tradicional carrera de cintas (a caballo y en bicicleta para los más pequeños) entre otros actos populares. A 20 minutos de Hestía, es de las fiestas patronales más animadas de la comarca. Programa en mojacar.es.",
+            "en": "Mojácar celebrates its patron saint, San Agustín, with the traditional ribbon race (on horseback, and by bicycle for children) among other popular events. 20 minutes from Hestía, it's one of the liveliest patron festivities in the area. Programme at mojacar.es."
+          }
         }
       ]
     },
@@ -143,6 +158,36 @@ const NOTICIAS = {
           "cuerpo": {
             "es": "El ciclo Siente la Plaza sigue en agosto con Manuel Turizo el día 1, a 1h 15' de Vera Playa. El resto de la programación de agosto se va confirmando sobre la marcha: consulta sientelaplaza.com antes de reservar entradas.",
             "en": "The Siente la Plaza concert series continues into August with Manuel Turizo on the 1st, 1h 15' from Vera Playa. The rest of August's lineup is confirmed as the month goes on: check sientelaplaza.com before booking tickets."
+          }
+        },
+        {
+          "months": [8],
+          "tag": {
+            "es": "Festival",
+            "en": "Festival"
+          },
+          "titulo": {
+            "es": "Feria y Fiestas de Almería, del 21 al 29 de agosto, con Cooltural Fest",
+            "en": "Almería's Feria y Fiestas, 21-29 August, with Cooltural Fest"
+          },
+          "cuerpo": {
+            "es": "Nueve días de feria en la capital, con la música en directo como eje central. Dentro del programa, el Cooltural Fest (20-23 agosto en el Recinto Ferial) reúne a Hombres G, Ana Torroja, Rigoberta Bandini, La Pegatina, David Bisbal y Sidecars, entre 82 artistas. A 1h 15' de Vera Playa. coolturalfest.com.",
+            "en": "Nine days of fair in the capital, with live music at its core. Within the programme, Cooltural Fest (20-23 August at the Recinto Ferial) brings together Hombres G, Ana Torroja, Rigoberta Bandini, La Pegatina, David Bisbal and Sidecars, among 82 artists. 1h 15' from Vera Playa. coolturalfest.com."
+          }
+        },
+        {
+          "months": [8],
+          "tag": {
+            "es": "Gratis",
+            "en": "Free"
+          },
+          "titulo": {
+            "es": "A Pie de Calle: Omar Montes, Malú y Shinova en la playa de Roquetas de Mar, del 6 al 9 de agosto",
+            "en": "A Pie de Calle: Omar Montes, Malú and Shinova on Roquetas de Mar beach, 6-9 August"
+          },
+          "cuerpo": {
+            "es": "Conciertos gratuitos al aire libre en Playa Serena II: Omar Montes (6 ago, 22h), Shinova, Valira y Mono Cuchillo (7 ago, 20h) y Malú (9 ago, 22h). A menos de una hora de Vera Playa, entrada libre hasta completar aforo.",
+            "en": "Free open-air concerts at Playa Serena II: Omar Montes (6 Aug, 10pm), Shinova, Valira and Mono Cuchillo (7 Aug, 8pm) and Malú (9 Aug, 10pm). Under an hour from Vera Playa, free entry until the venue fills up."
           }
         }
       ]
