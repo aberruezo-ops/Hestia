@@ -7072,8 +7072,11 @@ const ReservasTab = ({
         background: APT_COLOR[r.apt],
         color: APT_TEXT[r.apt]
       }
-    }, APT_NAMES[r.apt]), /*#__PURE__*/React.createElement("strong", {
-      className: "rv-prox-guest"
+    }, APT_NAMES[r.apt]), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "rv-prox-guest rv-prox-guest-link",
+      onClick: () => openRow(reservas.indexOf(r)),
+      title: "Ver detalle de la reserva"
     }, r.responsable, r.mascota ? ' 🐾' : '', r.cuna_trona ? ' 👶' : ''), /*#__PURE__*/React.createElement("span", {
       className: "rv-prox-days-badge"
     }, llega)), /*#__PURE__*/React.createElement("div", {
@@ -7110,13 +7113,7 @@ const ReservasTab = ({
     }), "M", m.n))) : /*#__PURE__*/React.createElement("span", {
       className: "rv-wa-btn rv-wa-disabled",
       title: "No hay teléfono del huésped en esta reserva"
-    }, "Sin teléfono en la ficha")), /*#__PURE__*/React.createElement("button", {
-      type: "button",
-      className: "rv-prox-detail-link",
-      onClick: () => openRow(reservas.indexOf(r))
-    }, "Ver detalle de la reserva ", /*#__PURE__*/React.createElement("span", {
-      "aria-hidden": "true"
-    }, "→")));
+    }, "Sin teléfono en la ficha")));
   }))), recienCheckout.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "rv-rev"
   }, /*#__PURE__*/React.createElement("h3", null, /*#__PURE__*/React.createElement(HiIcon, {
