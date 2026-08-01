@@ -24787,8 +24787,15 @@ img[src*="apt-vt-gallery-"] {
 .reg-admin-card { border: 1.5px solid color-mix(in srgb, var(--ber) 16%, transparent); border-radius: 12px 0 12px 0; margin: 0 0 10px; overflow: hidden; }
 .reg-admin-head { width: 100%; display: flex; align-items: center; gap: 12px; padding: 11px 14px; background: var(--arena); border: 0; cursor: pointer; font: inherit; text-align: left; }
 .reg-admin-head:hover { background: color-mix(in srgb, var(--ber) 6%, var(--arena)); }
-.reg-admin-token { font-weight: 700; color: var(--ber-dk); }
-.reg-admin-meta { flex: 1; font-size: 12px; color: rgba(42,15,46,.6); }
+.reg-admin-who { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; }
+.reg-admin-apt-chip {
+  flex-shrink: 0;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em;
+  padding: 3px 8px; border-radius: 5px 0 5px 0;
+}
+.reg-admin-holder { color: var(--ber-dk); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.reg-admin-token { font-weight: 500; color: rgba(42,15,46,.55); font-size: 12px; flex-shrink: 0; }
+.reg-admin-meta { font-size: 12px; color: rgba(42,15,46,.6); flex-shrink: 0; }
 .reg-admin-traveler { padding: 10px 14px; border-top: 1px solid color-mix(in srgb, var(--ber) 10%, transparent); }
 .reg-admin-traveler > strong { display: block; margin-bottom: 6px; color: var(--ber); font-size: 14px; }
 .reg-admin-fields { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12.5px; color: var(--ink); }
