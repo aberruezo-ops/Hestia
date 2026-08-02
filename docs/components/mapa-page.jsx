@@ -34,6 +34,8 @@ const MAPA_COPY = {
           { href: 'opiniones.html', label: 'Opiniones', desc: 'Lo que dicen los huéspedes: Booking, Airbnb, Google y web.' },
           { href: 'noticias.html', label: 'Noticias', desc: 'Lo mejor del territorio cada mes: Almería, Murcia, Granada.' },
           { href: 'escribir-opinion.html', label: 'Dejar opinión', desc: 'Para huéspedes que ya han dormido en un Hestía.' },
+          { href: 'estancias-largas.html', label: 'Estancias largas', desc: 'Un mes o una temporada, tarifa mensual, de septiembre a junio.' },
+          { href: 'empresas.html', label: 'Para empresas', desc: 'Apartamentos para empresas, clínicas, clubes e inmobiliarias.' },
         ],
       },
       {
@@ -74,6 +76,8 @@ const MAPA_COPY = {
           { href: 'opiniones.html', label: 'Reviews', desc: 'What guests say: Booking, Airbnb, Google and our site.' },
           { href: 'noticias.html', label: 'News', desc: 'The best of the territory each month: Almería, Murcia, Granada.' },
           { href: 'escribir-opinion.html', label: 'Leave a review', desc: 'For guests who have stayed at a Hestía.' },
+          { href: 'estancias-largas.html', label: 'Long stays', desc: 'A month or a season, flat monthly rate, September to June.' },
+          { href: 'empresas.html', label: 'For business', desc: 'Apartments for companies, clinics, clubs and real estate agencies.' },
         ],
       },
       {
