@@ -3869,7 +3869,23 @@ footer::before {
   max-width: 1400px;
   margin: 0 auto;
   padding-bottom: 60px;
-  border-bottom: 1px solid rgba(240,232,213,0.12);
+}
+.footer-grid::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--vm), var(--vt), var(--vs), var(--vm));
+  background-size: 300% 100%;
+  opacity: 0.4;
+  animation: footerDividerShift 10s linear infinite;
+}
+@keyframes footerDividerShift {
+  from { background-position: 0% 0; }
+  to   { background-position: 300% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-grid::after { animation: none; background-position: 50% 0; }
 }
 footer h5 {
   font-family: var(--sans); font-weight: 500; font-size: 12px;
@@ -24595,7 +24611,6 @@ img[src*="apt-vt-gallery-"] {
   margin: 8px auto 48px;
   padding: 28px 24px;
   text-align: center;
-  border-top: 1px solid rgba(240,232,213,.14);
   border-bottom: 1px solid rgba(240,232,213,.14);
 }
 .footer-indalo-gallery .fig-eyebrow {
