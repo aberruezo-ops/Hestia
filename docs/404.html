@@ -8,10 +8,17 @@
   <title>Página no encontrada · Hestía Your Home</title>
   <meta name="robots" content="noindex, follow"/>
   <script>
-    /* Red de seguridad: URLs de la web antigua (/home/... y /rental/...) → página actual. */
+    /* Red de seguridad: URLs de la web antigua (Wix, previa a esta migración)
+       → página actual. Prefijos vistos en Google: /home/, /rental/, /english/;
+       y sueltas en la raíz: contact.html, contact-2.html (duplicados típicos
+       de Wix al renombrar una página). */
     (function () {
       var p = location.pathname.toLowerCase();
-      if (p.indexOf('/home/') !== 0 && p.indexOf('/rental/') !== 0) return;
+      var underLegacyPrefix = /^\/(home|rental|english)(\/|$)/.test(p);
+      var legacyRootFile = /^\/contacto?(-\d+)?\.html$/.test(p);
+      if (!underLegacyPrefix && !legacyRootFile) return;
+      // Prefijo a secas (era la home antigua): /rental/, /home/, /english/
+      if (/^\/(rental|home|english)\/?$/.test(p)) { location.replace('/'); return; }
       var t = '/';
       if      (p.indexOf('thalassa') > -1) t = '/thalassa.html';
       else if (p.indexOf('salinas')  > -1) t = '/salinas.html';
@@ -20,8 +27,9 @@
       else if (p.indexOf('larga')    > -1 || p.indexOf('estancia') > -1 || p.indexOf('long') > -1) t = '/estancias-largas.html';
       else if (p.indexOf('opinion')  > -1 || p.indexOf('review') > -1) t = '/opiniones.html';
       else if (p.indexOf('nosotros') > -1 || p.indexOf('about') > -1) t = '/nosotros.html';
+      else if (p.indexOf('empresa')  > -1 || p.indexOf('business') > -1) t = '/empresas.html';
       else if (p.indexOf('contact')  > -1) t = '/contacto.html';
-      else if (p.indexOf('reserva')  > -1 || p.indexOf('book') > -1 || p.indexOf('rental') > -1) t = '/reservas.html';
+      else if (p.indexOf('reserva')  > -1 || p.indexOf('book') > -1) t = '/reservas.html';
       location.replace(t);
     })();
   </script>
