@@ -37,6 +37,10 @@ const MAPA_COPY = {
         label: 'Reservas',
         desc: 'Comprobar disponibilidad, ver precio y enviar la solicitud.'
       }, {
+        href: 'estancias-largas.html',
+        label: 'Estancias largas',
+        desc: 'Un mes o una temporada, tarifa mensual, de septiembre a junio.'
+      }, {
         href: 'contacto.html',
         label: 'Contacto',
         desc: 'WhatsApp, teléfono y email, te responde una persona.'
@@ -63,10 +67,6 @@ const MAPA_COPY = {
         href: 'escribir-opinion.html',
         label: 'Dejar opinión',
         desc: 'Para huéspedes que ya han dormido en un Hestía.'
-      }, {
-        href: 'estancias-largas.html',
-        label: 'Estancias largas',
-        desc: 'Un mes o una temporada, tarifa mensual, de septiembre a junio.'
       }, {
         href: 'empresas.html',
         label: 'Para empresas',
@@ -115,6 +115,10 @@ const MAPA_COPY = {
         label: 'Reservations',
         desc: 'Check availability, see the price and send the request.'
       }, {
+        href: 'estancias-largas.html',
+        label: 'Long stays',
+        desc: 'A month or a season, flat monthly rate, September to June.'
+      }, {
         href: 'contacto.html',
         label: 'Contact',
         desc: 'WhatsApp, phone and email, a real person replies.'
@@ -141,10 +145,6 @@ const MAPA_COPY = {
         href: 'escribir-opinion.html',
         label: 'Leave a review',
         desc: 'For guests who have stayed at a Hestía.'
-      }, {
-        href: 'estancias-largas.html',
-        label: 'Long stays',
-        desc: 'A month or a season, flat monthly rate, September to June.'
       }, {
         href: 'empresas.html',
         label: 'For business',
