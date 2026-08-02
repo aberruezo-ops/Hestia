@@ -19,6 +19,29 @@ const _vt = cb => {
   }
 };
 
+// Nombre de huésped para mostrar en el portal: nunca el apellido completo.
+// Los datos internos (reviews.json, etc.) pueden guardar el nombre completo,
+// pero de cara al público siempre se recorta a "Nombre X." (o "Nombre1 & Nombre2 X."
+// en parejas). Defensivo: si el dato ya llega recortado, no lo toca.
+const _shortGuestName = name => {
+  const n = String(name || '').trim();
+  if (!n) return n;
+  const shortenOne = part => {
+    const words = part.trim().split(/\s+/);
+    if (words.length <= 1) return part.trim();
+    const last = words[words.length - 1];
+    if (last.length <= 2 || last.endsWith('.')) return part.trim();
+    const initial = [...last].find(ch => /\p{L}/u.test(ch));
+    return `${words[0]} ${(initial || last[0]).toUpperCase()}.`;
+  };
+  if (n.includes(' & ')) {
+    const [a, b] = n.split(' & ');
+    return `${shortenOne(a)} & ${shortenOne(b)}`;
+  }
+  return shortenOne(n);
+};
+window._shortGuestName = _shortGuestName;
+
 // ----------------------------------------------------------------
 // _hestiaTrack, registra eventos de funnel.
 // Guarda en localStorage (ring buffer 300 eventos) para la pestaña

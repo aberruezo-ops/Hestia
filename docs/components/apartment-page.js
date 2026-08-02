@@ -1195,7 +1195,7 @@ const AmrCard = ({
     "aria-hidden": "true"
   }, _amrFlag(r.country)), /*#__PURE__*/React.createElement("span", {
     className: "amr-name"
-  }, r.name)));
+  }, _shortGuestName(r.name))));
 };
 const AptMiniReviews = ({
   apt,
@@ -1481,7 +1481,7 @@ const ApartmentPageApp = () => {
       '@type': 'Review',
       'author': {
         '@type': 'Person',
-        'name': r.name && r.name !== '?' ? r.name : 'Verified Guest'
+        'name': r.name && r.name !== '?' ? _shortGuestName(r.name) : 'Verified Guest'
       },
       'datePublished': r.date,
       'reviewBody': r.text,

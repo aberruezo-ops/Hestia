@@ -1032,7 +1032,7 @@ const AmrCard = ({ r, lang }) => {
       )}
       <div className="amr-author">
         <span className="amr-flag" aria-hidden="true">{_amrFlag(r.country)}</span>
-        <span className="amr-name">{r.name}</span>
+        <span className="amr-name">{_shortGuestName(r.name)}</span>
       </div>
     </div>
   );
@@ -1290,7 +1290,7 @@ const ApartmentPageApp = () => {
     const schemaItems = aptReviews.map(r => ({
       '@context': 'https://schema.org',
       '@type': 'Review',
-      'author': { '@type': 'Person', 'name': (r.name && r.name !== '?') ? r.name : 'Verified Guest' },
+      'author': { '@type': 'Person', 'name': (r.name && r.name !== '?') ? _shortGuestName(r.name) : 'Verified Guest' },
       'datePublished': r.date,
       'reviewBody': r.text,
       'reviewRating': {

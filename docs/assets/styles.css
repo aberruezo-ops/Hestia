@@ -23376,7 +23376,7 @@ img[src*="apt-vt-gallery-"] {
 .lsl-hero {
   background: #1A0820;
   min-height: 88vh;
-  padding: calc(var(--chrome-h, 116px) + 56px) 24px 88px;
+  padding: calc(var(--chrome-h, 116px) + 56px) var(--page-pad) 88px;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -23472,7 +23472,7 @@ img[src*="apt-vt-gallery-"] {
 }
 .lsl-btn-ghost:hover { background: rgba(255,255,255,.07); }
 
-.lsl-section { padding: 64px 24px; }
+.lsl-section { padding: 64px var(--page-pad); }
 .lsl-section:nth-child(even) { background: rgba(42,15,46,.03); }
 .lsl-inner { max-width: 860px; margin: 0 auto; }
 .lsl-h2 {
@@ -23623,7 +23623,7 @@ img[src*="apt-vt-gallery-"] {
 
 .lsl-search-dark {
   background: linear-gradient(180deg, var(--ber-dk, #2A0F2E) 0%, #1A0820 100%);
-  padding: 72px 24px 80px;
+  padding: 72px var(--page-pad) 80px;
   position: relative;
   overflow: hidden;
 }
