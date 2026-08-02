@@ -41,6 +41,10 @@ const MAPA_COPY = {
         label: 'Estancias largas',
         desc: 'Un mes o una temporada, tarifa mensual, de septiembre a junio.'
       }, {
+        href: 'empresas.html',
+        label: 'Para empresas',
+        desc: 'Apartamentos para empresas, clínicas, clubes e inmobiliarias.'
+      }, {
         href: 'contacto.html',
         label: 'Contacto',
         desc: 'WhatsApp, teléfono y email, te responde una persona.'
@@ -67,10 +71,6 @@ const MAPA_COPY = {
         href: 'escribir-opinion.html',
         label: 'Dejar opinión',
         desc: 'Para huéspedes que ya han dormido en un Hestía.'
-      }, {
-        href: 'empresas.html',
-        label: 'Para empresas',
-        desc: 'Apartamentos para empresas, clínicas, clubes e inmobiliarias.'
       }]
     }, {
       title: 'Legal',
@@ -119,6 +119,10 @@ const MAPA_COPY = {
         label: 'Long stays',
         desc: 'A month or a season, flat monthly rate, September to June.'
       }, {
+        href: 'empresas.html',
+        label: 'For business',
+        desc: 'Apartments for companies, clinics, clubs and real estate agencies.'
+      }, {
         href: 'contacto.html',
         label: 'Contact',
         desc: 'WhatsApp, phone and email, a real person replies.'
@@ -145,10 +149,6 @@ const MAPA_COPY = {
         href: 'escribir-opinion.html',
         label: 'Leave a review',
         desc: 'For guests who have stayed at a Hestía.'
-      }, {
-        href: 'empresas.html',
-        label: 'For business',
-        desc: 'Apartments for companies, clinics, clubs and real estate agencies.'
       }]
     }, {
       title: 'Legal',
