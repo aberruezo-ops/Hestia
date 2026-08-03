@@ -4741,7 +4741,7 @@ const GUIDE_SHARED = {
       }, {
         icon: '🐾',
         t: 'Mascotas solo con aprobación previa',
-        d: 'No están permitidas salvo que nos lo hayáis pedido explícitamente y nosotros lo hayamos aprobado.'
+        d: 'No están permitidas salvo que nos lo hayáis pedido explícitamente y nosotros lo hayamos aprobado. Recoged siempre lo que ensucien en zonas comunes; ante cualquier incidente, la responsabilidad es del dueño.'
       }, {
         icon: '🚭',
         t: 'No se fuma dentro de Hestía',
@@ -4761,7 +4761,7 @@ const GUIDE_SHARED = {
       }, {
         icon: '🚼',
         t: 'Terminantemente prohibido hacer necesidades en la piscina o en cualquier zona común',
-        d: 'Aplica también a las mascotas: recoged siempre lo que ensucien en zonas comunes. Los bebés deben bañarse siempre con pañal de baño, nunca sin él. Si ocurre un incidente, la responsabilidad es de los familiares del bebé o del dueño de la mascota.'
+        d: 'Los bebés deben bañarse siempre con pañal de baño, nunca sin él. Si ocurre un incidente, la responsabilidad es de los familiares del bebé.'
       }, {
         icon: '🚗',
         t: 'No correr con el coche en la mancomunidad',
@@ -5095,7 +5095,7 @@ const GUIDE_SHARED = {
       }, {
         icon: '🐾',
         t: 'Pets only with prior approval',
-        d: 'Not allowed unless you have asked us and we have approved them explicitly.'
+        d: 'Not allowed unless you have asked us and we have approved them explicitly. Always pick up after them in shared areas; for any incident, responsibility lies with the owner.'
       }, {
         icon: '🚭',
         t: 'No smoking inside Hestía',
@@ -5115,7 +5115,7 @@ const GUIDE_SHARED = {
       }, {
         icon: '🚼',
         t: 'Strictly forbidden to relieve yourself in the pool or any shared area',
-        d: 'This applies to pets too: always pick up after them in shared areas. Babies must always wear a swim nappy, never without one. If an incident happens, responsibility lies with the baby\'s family or the pet\'s owner.'
+        d: 'Babies must always wear a swim nappy, never without one. If an incident happens, responsibility lies with the baby\'s family.'
       }, {
         icon: '🚗',
         t: 'No speeding inside the resort',
