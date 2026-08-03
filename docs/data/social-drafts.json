@@ -1,6 +1,27 @@
 {
   "drafts": [
     {
+      "id": "weekly-2026w32",
+      "createdAt": "2026-08-03T10:33:12.050Z",
+      "status": "pending",
+      "source": "weekly",
+      "format": "reel",
+      "apt": "vs",
+      "video": "assets/reel-blog.mp4",
+      "clip": {
+        "src": "assets/hestia v14 salinas clean.mp4",
+        "start": 58,
+        "dur": 9
+      },
+      "image": "assets/apt-vs-gallery-1.jpg",
+      "networks": [
+        "ig",
+        "fb"
+      ],
+      "caption": "Esta semana en el blog de Hestía 📰 · Edición de Agosto 2026\n\nHestía Vera Salinas: Agosto es el mes más caliente del año en Vera Playa: el Mediterráneo roza los 26-27°C y el aire apenas baja de los 24°C ni de madrugada.\n\nY en la zona: Agosto, el mes de más gente: cómo disfrutar la playa sin agobios.\n\nTe lo contamos todo en el blog, con la agenda del mes y las fiestas de los pueblos cercanos ↓\n🔗 https://www.hestiayourhome.com/noticias.html\n\n#VeraPlaya #Almeria #blog #quehacerenAlmeria #HestiaYourHome",
+      "link": "https://www.hestiayourhome.com/noticias.html"
+    },
+    {
       "id": "mes-2026-08-vm",
       "createdAt": "2026-07-27T10:32:59.415Z",
       "status": "pending",
@@ -402,5 +423,5 @@
       "link": "https://www.hestiayourhome.com/noticias.html"
     }
   ],
-  "updatedAt": "2026-07-27T10:32:59.415Z"
+  "updatedAt": "2026-08-03T10:33:12.050Z"
 }
