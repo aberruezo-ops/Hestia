@@ -4759,6 +4759,10 @@ const GUIDE_SHARED = {
         t: 'Respetad las normas de la urbanización',
         d: 'Especialmente el horario de piscina y zonas comunes. El incumplimiento es responsabilidad vuestra.'
       }, {
+        icon: '🚼',
+        t: 'Higiene en la piscina: terminantemente prohibido hacer necesidades',
+        d: 'Los bebés deben bañarse siempre con pañal de baño, nunca sin él. Si ocurre un incidente de este tipo, la responsabilidad es de los familiares o tutores del bebé.'
+      }, {
         icon: '🚗',
         t: 'No correr con el coche en la mancomunidad',
         d: 'La velocidad máxima dentro de la mancomunidad es muy baja. Hay niños, mascotas y peatones: circulad despacio, siempre. Es una norma de la comunidad y de sentido común.'
@@ -5108,6 +5112,10 @@ const GUIDE_SHARED = {
         icon: '🏊',
         t: 'Respect the community rules',
         d: 'Especially pool hours and shared areas. Breaking those rules is your responsibility.'
+      }, {
+        icon: '🚼',
+        t: 'Pool hygiene: strictly forbidden to relieve yourself in the pool',
+        d: 'Babies must always wear a swim nappy, never without one. If an incident of this kind happens, responsibility lies with the baby\'s family or guardians.'
       }, {
         icon: '🚗',
         t: 'No speeding inside the resort',

@@ -143,7 +143,7 @@
     } catch (e) { console.warn('reviews.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=e17931c5d5');
+      const res = await fetch(file + '?cv=49d2b973df');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
