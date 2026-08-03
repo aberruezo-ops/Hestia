@@ -637,6 +637,16 @@
       "value": 5,
       "lastMinute": true,
       "auto": true
+    },
+    "vt|2026-09-02": {
+      "apt": "vt",
+      "start": "2026-09-02",
+      "end": "2026-09-05",
+      "nights": 3,
+      "type": "discount",
+      "value": 5,
+      "lastMinute": true,
+      "auto": true
     }
   },
   "gapSplits": {
