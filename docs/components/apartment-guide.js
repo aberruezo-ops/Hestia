@@ -4760,8 +4760,8 @@ const GUIDE_SHARED = {
         d: 'Especialmente el horario de piscina y zonas comunes. El incumplimiento es responsabilidad vuestra.'
       }, {
         icon: '🚼',
-        t: 'Higiene en la piscina: terminantemente prohibido hacer necesidades',
-        d: 'Los bebés deben bañarse siempre con pañal de baño, nunca sin él. Si ocurre un incidente de este tipo, la responsabilidad es de los familiares o tutores del bebé.'
+        t: 'Terminantemente prohibido hacer necesidades en la piscina o en cualquier zona común',
+        d: 'Aplica también a las mascotas: recoged siempre lo que ensucien en zonas comunes. Los bebés deben bañarse siempre con pañal de baño, nunca sin él. Si ocurre un incidente, la responsabilidad es de los familiares del bebé o del dueño de la mascota.'
       }, {
         icon: '🚗',
         t: 'No correr con el coche en la mancomunidad',
@@ -5114,8 +5114,8 @@ const GUIDE_SHARED = {
         d: 'Especially pool hours and shared areas. Breaking those rules is your responsibility.'
       }, {
         icon: '🚼',
-        t: 'Pool hygiene: strictly forbidden to relieve yourself in the pool',
-        d: 'Babies must always wear a swim nappy, never without one. If an incident of this kind happens, responsibility lies with the baby\'s family or guardians.'
+        t: 'Strictly forbidden to relieve yourself in the pool or any shared area',
+        d: 'This applies to pets too: always pick up after them in shared areas. Babies must always wear a swim nappy, never without one. If an incident happens, responsibility lies with the baby\'s family or the pet\'s owner.'
       }, {
         icon: '🚗',
         t: 'No speeding inside the resort',
