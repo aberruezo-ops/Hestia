@@ -4927,21 +4927,6 @@ const LeilaTab = ({
     }
     return 0;
   };
-  // Importe que daría la fórmula EN VIVO (pasos 3-4 de efectivoDe), ignorando
-  // el valor ya guardado. Sirve solo para avisar de desajustes: si una reserva
-  // se amplía o se corrige el precio DESPUÉS de haber guardado efectivo_leila,
-  // ese guardado queda obsoleto para siempre (efectivoDe corta ahí y nunca
-  // vuelve a calcular). null = sin base fiable de comparación (reserva de OTA
-  // sin efectivo registrado al check-in: ahí un efectivo distinto de 0 es
-  // legítimo -tasa turística, limpieza-, no un desajuste).
-  const efectivoEsperadoDe = r => {
-    const alCheckin = Number(r.al_checkin) || 0;
-    if (alCheckin) return alCheckin;
-    if (getCanalKey(r.canal) === 'directo') {
-      return Math.max(0, (Number(r.ingreso_total) || 0) - (Number(r.reserva) || 0) - (Number(r.pago_previo) || 0));
-    }
-    return null;
-  };
   // Limpieza que Leila cobra por reserva: SIEMPRE la regla (80 €; 90 € en
   // jul-ago o estancias de 10 noches o más), así todas las reservas quedan
   // revisadas al instante aunque el valor guardado fuera antiguo.
@@ -5114,12 +5099,6 @@ const LeilaTab = ({
       const tarifa = limpiezaDe(r);
       const efectivo = efectivoDe(r);
       const acum = rowAcums[ri];
-      const esperado = efectivoEsperadoDe(r);
-      // Aviso de desajuste: el importe guardado ya no coincide con lo
-      // que da la fórmula en vivo (p. ej. la reserva se amplió después
-      // de guardar el efectivo de Leila). No se sobrescribe solo:
-      // Alex/Fran deciden si el número guardado es el correcto.
-      const desajuste = editsEfectivo[r._idx] === undefined && esperado !== null && efectivo > 0 && efectivo !== esperado;
       return /*#__PURE__*/React.createElement("tr", {
         key: r._idx
       }, /*#__PURE__*/React.createElement("td", {
@@ -5152,10 +5131,7 @@ const LeilaTab = ({
           ...prev,
           [r._idx]: v
         }))
-      }), desajuste && /*#__PURE__*/React.createElement("span", {
-        className: "leila-desajuste",
-        title: `El importe guardado (${efectivo} €) no coincide con lo que da la fórmula ahora mismo (${esperado} €). Puede que la reserva se haya ampliado o corregido después de guardar este importe. Revisa con Leila cuál es el correcto antes de cambiarlo.`
-      }, "⚠️ esperado ", esperado, " €")), /*#__PURE__*/React.createElement("td", {
+      })), /*#__PURE__*/React.createElement("td", {
         className: `num ${acum > 0 ? 'leila-owe' : acum < 0 ? 'leila-over' : 'leila-ok'}`
       }, acum === 0 ? '–' : `${acum > 0 ? '+' : ''}${acum} €`));
     })), /*#__PURE__*/React.createElement("tfoot", null, /*#__PURE__*/React.createElement("tr", {
