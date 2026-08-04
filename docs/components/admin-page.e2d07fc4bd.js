@@ -4912,20 +4912,21 @@ const LeilaTab = ({
   // también puede dejar efectivo a la llegada (tasa turística, limpieza, un
   // extra, un remanente pactado...). Antes solo se contaba en reservas directas
   // y ese efectivo de las OTA se perdía.
-  //   1) edición manual en esta pestaña
-  //   2) efectivo ya guardado (efectivo_leila / pagos_leila)
-  //   3) efectivo al check-in registrado en la reserva (al_checkin), sea el canal que sea
-  //   4) reserva directa sin al_checkin: remanente tras la señal y el pago previo
+  //   1) edición manual en esta pestaña (siempre gana: es la decisión activa de ahora mismo)
+  //   2) efectivo al check-in registrado en la reserva (al_checkin), sea el canal que sea
+  //   3) reserva directa sin al_checkin: remanente tras la señal y el pago previo,
+  //      SIEMPRE calculado en vivo a partir de la reserva actual (si se amplía la
+  //      estancia o se corrige el precio, este número se actualiza solo)
+  //   4) sin base para calcular en vivo (reserva de OTA sin al_checkin): se usa el
+  //      último efectivo guardado (efectivo_leila / pagos_leila), si lo hay
   const efectivoDe = r => {
     if (editsEfectivo[r._idx] !== undefined) return Number(editsEfectivo[r._idx]) || 0;
-    const stored = Number(r.efectivo_leila ?? r.pagos_leila) || 0;
-    if (stored) return stored;
     const alCheckin = Number(r.al_checkin) || 0;
     if (alCheckin) return alCheckin;
     if (getCanalKey(r.canal) === 'directo') {
       return Math.max(0, (Number(r.ingreso_total) || 0) - (Number(r.reserva) || 0) - (Number(r.pago_previo) || 0));
     }
-    return 0;
+    return Number(r.efectivo_leila ?? r.pagos_leila) || 0;
   };
   // Limpieza que Leila cobra por reserva: SIEMPRE la regla (80 €; 90 € en
   // jul-ago o estancias de 10 noches o más), así todas las reservas quedan
