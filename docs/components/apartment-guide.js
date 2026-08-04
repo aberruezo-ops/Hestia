@@ -4610,7 +4610,7 @@ const GUIDE_SHARED = {
       beforeIntro: 'Cuanto antes hablemos, más fácil te lo ponemos. Con estos detalles resueltos, llegas sin pensar en nada.',
       beforeItems: ['Dinos tu hora aproximada de llegada: Fran te escribe unos días antes para cerrar los detalles.', 'Cuéntanos cómo vienes (avión, autobús, tren o coche) y te mandamos las indicaciones exactas hasta la puerta.', '¿Vienes con mascota, bebé o necesitas algo concreto? Pídelo con antelación y lo dejamos listo.', 'Elige tu modalidad de check-in: autónoma (entras a tu ritmo) o presencial (te recibe Fran).'],
       packLightTitle: 'Viaja ligero: pregúntanos antes de hacer la maleta',
-      packLightBody: 'Muchas cosas ya están en tu Hestía: secador, plancha y tabla, menaje de cocina, toallas, ropa de cama y wifi. Cuna, trona o toallas de playa, bajo petición. Dinos qué necesitas y te confirmamos qué hay, para que no cargues con lo que ya te espera en casa.',
+      packLightBody: 'Muchas cosas ya están en tu Hestía: secador, plancha y tabla, menaje de cocina, toallas (solo para dentro del apartamento, no para piscina ni playa), ropa de cama y wifi. Cuna o trona, bajo petición. Dinos qué necesitas y te confirmamos qué hay, para que no cargues con lo que ya te espera en casa.',
       airportsTitle: 'Aeropuertos cercanos',
       airportsIntro: 'Vera Playa tiene cinco aeropuertos en su radio razonable. El más cómodo depende de tu vuelo y tu paciencia con la carretera. Tiempos aproximados en coche por la AP-7 / A-7:',
       airports: [{
@@ -4939,7 +4939,7 @@ const GUIDE_SHARED = {
       beforeIntro: 'The sooner we talk, the easier we make it. With these details sorted, you arrive without a thing to think about.',
       beforeItems: ['Tell us your approximate arrival time: Fran writes to you a few days before to settle the details.', 'Let us know how you are coming (plane, bus, train or car) and we send you the exact directions to the door.', 'Travelling with a pet, a baby or need something specific? Ask in advance and we leave it ready.', 'Choose your check-in option: self check-in (at your own pace) or in-person (Fran greets you).'],
       packLightTitle: 'Travel light: ask us before you pack',
-      packLightBody: 'Many things are already in your Hestía: hairdryer, iron and board, kitchenware, towels, bed linen and wifi. Cot, high chair or beach towels, on request. Tell us what you need and we confirm what is there, so you do not carry what is already waiting for you at home.',
+      packLightBody: 'Many things are already in your Hestía: hairdryer, iron and board, kitchenware, towels (for indoor use only, not for the pool or beach), bed linen and wifi. Cot or high chair, on request. Tell us what you need and we confirm what is there, so you do not carry what is already waiting for you at home.',
       airportsTitle: 'Nearest airports',
       airportsIntro: 'Vera Playa has five airports within reasonable range. Which one is best depends on your flight options and how much road you want to drive. Approximate driving times via AP-7 / A-7:',
       airports: [{
