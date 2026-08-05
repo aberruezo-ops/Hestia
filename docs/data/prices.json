@@ -445,7 +445,13 @@
     "reason": "Cierre antes de Semana Santa 2027 (Domingo de Ramos: 2027-03-21)"
   },
   "manual_blocks": {
-    "vm": [],
+    "vm": [
+      {
+        "start": "2027-04-30",
+        "end": "2027-05-04",
+        "note": ""
+      }
+    ],
     "vt": [
       {
         "start": "2026-08-08",
