@@ -808,6 +808,35 @@ p  { line-height: 1.65; font-weight: 300; }
 .brand-lockup .your-home { font-size: 11px; margin-top: 1px; }
 
 /* ────────────────────────────────────────────────────────────────
+   LOGO H · destellos de color ambientales (cristal se mantiene: el
+   PNG ya trae el degradado/brillo "cristal" horneado en los píxeles;
+   hue-rotate() solo gira el tono, no toca luminosidad, así que el
+   reflejo/sombreado de cristal sigue intacto en cualquier color).
+   Ciclo: teal (color base del PNG) → violeta → naranja → oro → verde
+   → vuelve a teal. En cada color hay un pico de brillo/saturación,
+   el "destello" pedido. Header y footer, siempre activo (no solo
+   hover). Se apaga solo con prefers-reduced-motion (regla global). */
+.hestia-logo { animation: hestiaLogoColorCycle 18s ease-in-out infinite; }
+@keyframes hestiaLogoColorCycle {
+  0%   { filter: hue-rotate(0deg)   saturate(1)    brightness(1); }     /* teal */
+  4%   { filter: hue-rotate(0deg)   saturate(1.35) brightness(1.45); }  /* destello */
+  8%   { filter: hue-rotate(0deg)   saturate(1)    brightness(1); }
+  20%  { filter: hue-rotate(107deg) saturate(1)    brightness(1); }     /* violeta */
+  24%  { filter: hue-rotate(107deg) saturate(1.35) brightness(1.45); }  /* destello */
+  28%  { filter: hue-rotate(107deg) saturate(1)    brightness(1); }
+  40%  { filter: hue-rotate(190deg) saturate(1)    brightness(1); }     /* naranja */
+  44%  { filter: hue-rotate(190deg) saturate(1.35) brightness(1.45); }  /* destello */
+  48%  { filter: hue-rotate(190deg) saturate(1)    brightness(1); }
+  60%  { filter: hue-rotate(210deg) saturate(1)    brightness(1); }     /* oro */
+  64%  { filter: hue-rotate(210deg) saturate(1.35) brightness(1.45); }  /* destello */
+  68%  { filter: hue-rotate(210deg) saturate(1)    brightness(1); }
+  80%  { filter: hue-rotate(254deg) saturate(1)    brightness(1); }     /* verde */
+  84%  { filter: hue-rotate(254deg) saturate(1.35) brightness(1.45); }  /* destello */
+  88%  { filter: hue-rotate(254deg) saturate(1)    brightness(1); }
+  100% { filter: hue-rotate(360deg) saturate(1)    brightness(1); }     /* vuelve a teal */
+}
+
+/* ────────────────────────────────────────────────────────────────
    ANIMACIÓN DEL LOGO H AL HOVER · Liquid breathing (opción 3)
    ────────────────────────────────────────────────────────────────
    La H "respira": scale 1 → 1.04 + drop-shadow turquesa que se
@@ -833,10 +862,13 @@ p  { line-height: 1.65; font-weight: 300; }
               filter    .5s cubic-bezier(.2, .8, .2, 1);
 }
 
-/* HOVER · breathing infinito en bucle */
+/* HOVER · breathing infinito en bucle. Solo transform (scale): el filter
+   del <img> ya está ocupado por hestiaLogoColorCycle (los destellos de
+   color), así que el "respiro" de hover no lo interrumpe ni lo destiñe
+   a teal fijo. El resplandor del hover vive aparte, en el halo ::after. */
 .header .brand-lockup:hover .hestia-logo,
 .header .brand-lockup:focus-visible .hestia-logo {
-  animation: hestiaLogoBreath 1.2s ease-in-out infinite;
+  animation: hestiaLogoColorCycle 18s ease-in-out infinite, hestiaLogoBreath 1.2s ease-in-out infinite;
 }
 .header .brand-lockup:hover .hestia-logo-mark::after,
 .header .brand-lockup:focus-visible .hestia-logo-mark::after {
@@ -845,14 +877,8 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 
 @keyframes hestiaLogoBreath {
-  0%, 100% {
-    transform: scale(1);
-    filter: drop-shadow(0 0 4px rgba(58, 170, 187, 0.35));
-  }
-  50% {
-    transform: scale(1.04);
-    filter: drop-shadow(0 0 14px rgba(58, 170, 187, 0.75));
-  }
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
 }
 @keyframes hestiaLogoHalo {
   0%, 100% {
