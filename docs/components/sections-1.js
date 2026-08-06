@@ -196,11 +196,7 @@ const Hero = ({
     type: "video/mp4"
   })), /*#__PURE__*/React.createElement("div", {
     className: "hero-content"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "wordmark hero-wordmark"
-  }, "HESTÍA"), /*#__PURE__*/React.createElement("div", {
-    className: "your-home hero-yourhome"
-  }, "your home!"), /*#__PURE__*/React.createElement("h1", {
+  }, /*#__PURE__*/React.createElement("h1", {
     className: "hero-title"
   }, t.hero_title_1, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
     className: "it"

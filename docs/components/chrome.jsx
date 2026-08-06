@@ -729,14 +729,14 @@ const IndaloTrencadisMark = () => (
 );
 const IndaloAcuarelaMark = () => (
   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <circle cx="12" cy="12" r="9.5" fill="var(--vm2)" opacity="0.16"/>
-    <g stroke="var(--vm-dk)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" opacity="0.42">
+    <circle cx="12" cy="12" r="9.5" fill="var(--vm2)" opacity="0.22"/>
+    <g stroke="var(--vm2)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" opacity="0.6">
       <path d="M4.7 13.3C4.9 6 19.7 5.2 19.4 12.8"/>
       <path d="M11.85 6.6V14.7"/>
       <path d="M12.1 11 4.4 13.4M11.9 10.9 19.7 12.7"/>
       <path d="M11.85 14.7l-2.3 4.1M12 14.7l4.3 5.4"/>
     </g>
-    <g stroke="var(--vm-dk)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" opacity="0.55">
+    <g stroke="var(--vm2)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" opacity="0.9">
       <path d="M4.3 12.8C4.6 5.3 19.3 5.9 19.6 13.2"/>
       <path d="M12.15 7V14.5"/>
       <path d="M11.9 11.1 4.6 12.7M12.05 11 19.4 13.3"/>

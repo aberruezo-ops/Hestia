@@ -451,29 +451,33 @@ p  { line-height: 1.65; font-weight: 300; }
   );
 }
 .header.night {
-  background: linear-gradient(108deg,
-    rgba(42,15,46,0.96)    0%,
-    rgba(62,22,58,0.84)   17%,
-    rgba(27,200,216,0.10) 36%,
-    rgba(123,59,107,0.82) 54%,
-    rgba(42,15,46,0.93)   71%,
-    rgba(55,18,52,0.87)   87%,
-    rgba(27,200,216,0.06) 100%
-  ) 0% 50% / 310% 100%;
+  background:
+    linear-gradient(108deg,
+      rgba(42,15,46,0.96)    0%,
+      rgba(62,22,58,0.84)   17%,
+      rgba(27,200,216,0.10) 36%,
+      rgba(123,59,107,0.82) 54%,
+      rgba(42,15,46,0.93)   71%,
+      rgba(55,18,52,0.87)   87%,
+      rgba(27,200,216,0.06) 100%
+    ) 0% 50% / 310% 100%,
+    var(--ber-dk, #2A0F2E);
   backdrop-filter: blur(22px) saturate(1.6);
   -webkit-backdrop-filter: blur(22px) saturate(1.6);
   border-bottom-color: rgba(240,232,213,0.08);
   animation: hdr-night-flow 22s ease-in-out infinite;
 }
 .header.day {
-  background: linear-gradient(108deg,
-    rgba(196,140,80,0.05)   0%,
-    rgba(252,242,218,0.96) 20%,
-    rgba(255,250,238,0.97) 46%,
-    rgba(212,168,74,0.13)  65%,
-    rgba(252,242,218,0.95) 82%,
-    rgba(196,140,80,0.05) 100%
-  ) 100% 50% / 290% 100%;
+  background:
+    linear-gradient(108deg,
+      rgba(196,140,80,0.05)   0%,
+      rgba(252,242,218,0.96) 20%,
+      rgba(255,250,238,0.97) 46%,
+      rgba(212,168,74,0.13)  65%,
+      rgba(252,242,218,0.95) 82%,
+      rgba(196,140,80,0.05) 100%
+    ) 100% 50% / 290% 100%,
+    var(--crema, #FAF6F0);
   backdrop-filter: blur(22px) saturate(1.6);
   -webkit-backdrop-filter: blur(22px) saturate(1.6);
   border-bottom-color: rgba(184,106,60,0.14);
@@ -14994,7 +14998,7 @@ footer,
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   max-height: calc(100vh - 120px);
   pointer-events: auto;
   transition: opacity .35s ease, transform .35s ease;
@@ -15527,13 +15531,13 @@ body[data-apt="salinas"] .widget-cta:hover {
     box-shadow:
       0 6px 18px rgba(42,15,46,.45),
       0 0 0 1px rgba(255,255,255,.10),
-      0 0 14px rgba(58,170,187,.25);
+      0 0 10px rgba(58,170,187,.16);
   }
   50% {
     box-shadow:
-      0 8px 22px rgba(42,15,46,.50),
-      0 0 0 1px rgba(255,255,255,.18),
-      0 0 28px rgba(58,170,187,.55);
+      0 7px 20px rgba(42,15,46,.48),
+      0 0 0 1px rgba(255,255,255,.13),
+      0 0 16px rgba(58,170,187,.30);
   }
 }
 .widget-mini:hover,
