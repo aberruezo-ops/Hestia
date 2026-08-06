@@ -1047,13 +1047,13 @@ const IndaloAcuarelaMark = () => /*#__PURE__*/React.createElement("svg", {
   cy: "12",
   r: "9.5",
   fill: "var(--vm2)",
-  opacity: "0.16"
+  opacity: "0.22"
 }), /*#__PURE__*/React.createElement("g", {
-  stroke: "var(--vm-dk)",
+  stroke: "var(--vm2)",
   strokeWidth: "1.3",
   strokeLinecap: "round",
   strokeLinejoin: "round",
-  opacity: "0.42"
+  opacity: "0.6"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4.7 13.3C4.9 6 19.7 5.2 19.4 12.8"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1063,11 +1063,11 @@ const IndaloAcuarelaMark = () => /*#__PURE__*/React.createElement("svg", {
 }), /*#__PURE__*/React.createElement("path", {
   d: "M11.85 14.7l-2.3 4.1M12 14.7l4.3 5.4"
 })), /*#__PURE__*/React.createElement("g", {
-  stroke: "var(--vm-dk)",
+  stroke: "var(--vm2)",
   strokeWidth: "1.3",
   strokeLinecap: "round",
   strokeLinejoin: "round",
-  opacity: "0.55"
+  opacity: "0.9"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4.3 12.8C4.6 5.3 19.3 5.9 19.6 13.2"
 }), /*#__PURE__*/React.createElement("path", {

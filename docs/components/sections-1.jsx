@@ -165,9 +165,6 @@ const Hero = ({ lang, onScrollDown }) => {
         <source src={`${pick.src}?v=${VIDEO_V}`} type="video/mp4"/>
       </video>
       <div className="hero-content">
-        <div className="wordmark hero-wordmark">HESTÍA</div>
-        <div className="your-home hero-yourhome">your home!</div>
-
         <h1 className="hero-title">
           {t.hero_title_1}<br/>
           <span className="it">{t.hero_title_2}</span>
