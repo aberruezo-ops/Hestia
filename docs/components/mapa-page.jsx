@@ -25,6 +25,7 @@ const MAPA_COPY = {
           { href: 'reservas.html', label: 'Reservas', desc: 'Comprobar disponibilidad, ver precio y enviar la solicitud.' },
           { href: 'estancias-largas.html', label: 'Estancias largas', desc: 'Un mes o una temporada, tarifa mensual, de septiembre a junio.' },
           { href: 'empresas.html', label: 'Para empresas', desc: 'Apartamentos para empresas, clínicas, clubes e inmobiliarias.' },
+          { href: 'reservas.html', label: 'Rincón del huésped', desc: 'Si ya tienes reserva, accede aquí a la guía de tu Hestía con el PIN que te enviamos.' },
           { href: 'contacto.html', label: 'Contacto', desc: 'WhatsApp, teléfono y email, te responde una persona.' },
         ],
       },
@@ -67,6 +68,7 @@ const MAPA_COPY = {
           { href: 'reservas.html', label: 'Reservations', desc: 'Check availability, see the price and send the request.' },
           { href: 'estancias-largas.html', label: 'Long stays', desc: 'A month or a season, flat monthly rate, September to June.' },
           { href: 'empresas.html', label: 'For business', desc: 'Apartments for companies, clinics, clubs and real estate agencies.' },
+          { href: 'reservas.html', label: 'Guest corner', desc: 'Already booked? Access your Hestía guide here with the PIN we sent you.' },
           { href: 'contacto.html', label: 'Contact', desc: 'WhatsApp, phone and email, a real person replies.' },
         ],
       },
@@ -108,7 +110,7 @@ const MapaPage = ({ lang }) => {
               </h2>
               <ul className="mapa-list">
                 {sec.items.map((it, j) => (
-                  <li key={it.href} className="mapa-item reveal" style={{ transitionDelay: `${280 + i * 80 + j * 45}ms` }}>
+                  <li key={it.label} className="mapa-item reveal" style={{ transitionDelay: `${280 + i * 80 + j * 45}ms` }}>
                     <a className="mapa-link" href={it.href}>
                       <span className="mapa-link-label">{it.label}</span>
                       <span className="mapa-link-arrow" aria-hidden="true">→</span>
