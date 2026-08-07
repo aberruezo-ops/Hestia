@@ -15279,14 +15279,34 @@ footer,
   padding-right: 24px;
 }
 .wthr-7d-list { list-style: none; margin: 0; padding: 0; }
+.wthr-7d-item {
+  padding: 9px 0;
+  border-top: 1px solid rgba(61,26,53,.08);
+}
+.wthr-7d-item:first-child { border-top: none; }
 .wthr-7d-row {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 9px 0;
-  border-top: 1px solid rgba(61,26,53,.08);
 }
-.wthr-7d-row:first-child { border-top: none; }
+.wthr-7d-extra {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 5px;
+  padding-left: 54px;   /* alinea bajo la descripción, tras dow + icono */
+}
+.wthr-7d-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  color: var(--ink-soft, var(--ink));
+  opacity: .68;
+  font-variant-numeric: tabular-nums;
+}
+.wthr-7d-chip .hi { flex-shrink: 0; opacity: .8; }
 .wthr-7d-dow {
   width: 44px;
   flex-shrink: 0;
