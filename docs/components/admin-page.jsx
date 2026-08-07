@@ -7859,7 +7859,9 @@ const TravelerRegistryTab = () => {
 
       {regs && regs.length === 0 && <p className="pe-help" style={{ marginTop: 12 }}>Aún no hay fichas enviadas.</p>}
 
-      {regs && regs.map((reg, i) => {
+      {/* El token lleva la fecha de entrada codificada (<apt>-<YYYYMMDD>-<random>,
+          ver AccessLinkButton más arriba): orden por fecha de estancia, más reciente primero. */}
+      {regs && [...regs].sort((a, b) => ((b.token || '').split('-')[1] || '').localeCompare((a.token || '').split('-')[1] || '')).map((reg, i) => {
         const isOpen = open[reg.token] ?? (i === 0);
         const aptId = (reg.token || '').split('-')[0];
         const aptName = APT_NAMES[aptId];
