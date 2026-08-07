@@ -4788,6 +4788,31 @@ const GUIDE_SHARED = {
         d: 'De las sábanas y toallas nos encargamos nosotros. Por favor, no las lavéis con ropa de otro color.'
       }]
     },
+    pets: {
+      title: 'Viajar con mascota',
+      intro: 'En los tres Hestía las mascotas son bienvenidas: nunca las vetamos ni cobramos tarifas abusivas por traerlas. Solo pedimos que nos lo digáis antes, para tenerlo todo listo.',
+      items: [{
+        icon: '📝',
+        t: 'Avisad antes de llegar, o al reservar',
+        d: 'Las mascotas solo están permitidas si nos lo pedís explícitamente y lo aprobamos. Escribidnos por WhatsApp con el tipo de mascota, tamaño y cuántas venís.'
+      }, {
+        icon: '💶',
+        t: 'Suplemento: 10 €/noche, máximo 50 €',
+        d: 'A partir de la quinta noche no sube más. En estancias largas, tarifa plana de 50 € al mes.'
+      }, {
+        icon: '🧹',
+        t: 'Limpiad lo que ensucien en zonas comunes',
+        d: 'Jardines, pasillos, ascensor… Ante cualquier incidente, la responsabilidad es del dueño (ver Normas de Hestía).'
+      }, {
+        icon: '🐕',
+        t: 'Playas para perros cerca',
+        d: 'Cala de Mijo y la Cañada del Negro, a poca distancia. Más detalle en el capítulo Mar y playas.'
+      }, {
+        icon: '🏥',
+        t: 'Veterinarios y residencias caninas',
+        d: 'Si necesitáis un veterinario o dejarla unas horas o días, el listado completo está en el capítulo Salud.'
+      }]
+    },
     surroundings: {
       title: 'Alrededores y recomendaciones',
       intro: 'Un catálogo completo de recomendaciones de los alrededores de Hestía sería infinito. Para empezar a explorar te recomendamos estas fuentes:',
@@ -5140,6 +5165,31 @@ const GUIDE_SHARED = {
         icon: '🧺',
         t: 'Leave Hestía clean and tidy',
         d: 'We take care of sheets and towels. Please do not wash them with coloured laundry.'
+      }]
+    },
+    pets: {
+      title: 'Travelling with a pet',
+      intro: 'Pets are welcome at all three Hestías: we never ban them or charge unfair fees for bringing one. We just ask you to tell us beforehand, so we can have everything ready.',
+      items: [{
+        icon: '📝',
+        t: 'Tell us before you arrive, or when booking',
+        d: 'Pets are only allowed if you ask us explicitly and we approve it. Message us on WhatsApp with the type of pet, size and how many are coming.'
+      }, {
+        icon: '💶',
+        t: 'Supplement: €10/night, €50 maximum',
+        d: 'From the fifth night on it does not go up further. For long stays, a flat €50/month.'
+      }, {
+        icon: '🧹',
+        t: 'Clean up after them in shared areas',
+        d: 'Gardens, corridors, the lift… For any incident, responsibility lies with the owner (see Hestía house rules).'
+      }, {
+        icon: '🐕',
+        t: 'Dog-friendly beaches nearby',
+        d: 'Cala de Mijo and Cañada del Negro, a short drive away. More detail in the Sea & beaches chapter.'
+      }, {
+        icon: '🏥',
+        t: 'Vets and pet boarding',
+        d: 'If you need a vet or somewhere to leave them for a few hours or days, the full list is in the Health chapter.'
       }]
     },
     surroundings: {
@@ -11391,7 +11441,28 @@ const AptGuideView = ({
     className: "ag-rule-title"
   }, rule.t), /*#__PURE__*/React.createElement("p", {
     className: "ag-rule-desc"
-  }, rule.d)))))), a.rooms.map((room, idx) => /*#__PURE__*/React.createElement("section", {
+  }, rule.d)))))), s.pets && /*#__PURE__*/React.createElement("section", {
+    id: "ag-mascotas",
+    className: "ag-section ag-section-rules ag-section-pets"
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "ag-h2"
+  }, s.pets.title), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, s.pets.intro), /*#__PURE__*/React.createElement("ul", {
+    className: "ag-rules-grid"
+  }, s.pets.items.map((item, i) => /*#__PURE__*/React.createElement("li", {
+    key: i,
+    className: "ag-rule"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-rule-icon",
+    "aria-hidden": "true"
+  }, iconifyText(item.icon, 18)), /*#__PURE__*/React.createElement("div", {
+    className: "ag-rule-body"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "ag-rule-title"
+  }, item.t), /*#__PURE__*/React.createElement("p", {
+    className: "ag-rule-desc"
+  }, item.d)))))), a.rooms.map((room, idx) => /*#__PURE__*/React.createElement("section", {
     key: room.id,
     id: `ag-${room.id}`,
     className: `ag-section ag-room ag-room-${room.id}`
