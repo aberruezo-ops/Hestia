@@ -1,26 +1,17 @@
-# Plantillas de contrato
+# Plantilla de contrato
 
-Sube aquí los archivos de las plantillas de contrato de los tres
-apartamentos. Cualquier formato sirve:
+`template-base.md` es la referencia de texto de la plantilla de contrato (las cláusulas), para consulta y edición del redactado. **No** es lo que usa el generador en tiempo real: `/p-edit.html → 📄 Contrato` tiene el texto de cada cláusula ya incorporado en su propio código.
 
-- `mar.docx` o `mar.pdf` o `mar.txt`
-- `thalassa.docx` / `thalassa.pdf` / `thalassa.txt`
-- `salinas.docx` / `salinas.pdf` / `salinas.txt`
+## Importante: esta carpeta es pública
 
-Si solo hay un cambio entre los tres (dirección, número VFT, capacidad),
-con una sola plantilla genérica vale.
+`docs/` se sirve entero por GitHub Pages y este repositorio (`aberruezo-ops/Hestia`) es público. Cualquier archivo aquí dentro es visible por cualquiera, tenga o no el enlace.
 
-Una vez subidos, el formulario de `/p-edit.html → 📄 Contrato`
-generará el contrato relleno descargable en PDF a partir de estas
-plantillas.
+**Nunca subas aquí:**
+- Contratos ya rellenados o firmados (nombre, DNI, teléfono, domicilio de huéspedes).
+- Cualquier dato real de los propietarios (DNI, IBAN, domicilio).
 
-## Cómo subir desde GitHub web
+## Dónde van los contratos firmados
 
-1. Entra en este repo en github.com
-2. Navega a `docs/contracts/`
-3. Botón **"Add file"** → **"Upload files"**
-4. Arrastra los archivos
-5. Botón verde **"Commit changes"** abajo
+Desde `/p-edit.html`, pestaña de una reserva → sección **"Contrato firmado"** → botón para adjuntar el PDF. Eso lo sube automáticamente al repositorio privado (`aberruezo-ops/hestia-data`), no a este repo. Es el único sitio donde deben vivir.
 
-Estos archivos NO se publican en la web — solo los lee el generador
-de contratos cuando tú lo abres en `/p-edit.html`.
+Si tienes un contrato firmado que subir, hazlo siempre desde ahí, nunca arrastrándolo a esta carpeta en GitHub.
