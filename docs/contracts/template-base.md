@@ -25,7 +25,9 @@ Madrid, **{{FECHA_FIRMA}}**
 
 ### REUNIDOS
 
-Por una parte, **D. Alejandro Berruezo Márquez** y **D. Francisco Javier Moral Arévalo**, mayores de edad, y con domicilio a efectos de notificaciones en Avenida de la Constitución 38, 1A, 28821 de Coslada, Madrid, con DNI. ***DNI-RETIRADO*** y ***DNI-RETIRADO***, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ***IBAN-RETIRADO***.
+Por una parte, **D. Alejandro Berruezo Márquez** y **D. Francisco Javier Moral Arévalo**, mayores de edad, y con domicilio a efectos de notificaciones en **{{DOMICILIO_PROPIETARIOS}}**, con DNI. **{{DNI_PROPIETARIO_1}}** y **{{DNI_PROPIETARIO_2}}**, telf. **{{TEL_PROPIETARIO_1}}** y **{{TEL_PROPIETARIO_2}}**, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: **{{IBAN_PROPIETARIOS}}**.
+
+*(Los valores reales de DNI, teléfono, domicilio e IBAN de los propietarios se rellenan solo en el generador de `/p-edit.html`, que los lee del repositorio privado. No se escriben en texto plano en este documento ni en ningún archivo dentro de `docs/`, porque este repo es público.)*
 
 *(De ahora en adelante, "Los Propietarios".)*
 
