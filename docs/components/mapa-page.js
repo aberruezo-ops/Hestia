@@ -45,6 +45,10 @@ const MAPA_COPY = {
         label: 'Para empresas',
         desc: 'Apartamentos para empresas, clínicas, clubes e inmobiliarias.'
       }, {
+        href: 'reservas.html',
+        label: 'Rincón del huésped',
+        desc: 'Si ya tienes reserva, accede aquí a la guía de tu Hestía con el PIN que te enviamos.'
+      }, {
         href: 'contacto.html',
         label: 'Contacto',
         desc: 'WhatsApp, teléfono y email, te responde una persona.'
@@ -123,6 +127,10 @@ const MAPA_COPY = {
         label: 'For business',
         desc: 'Apartments for companies, clinics, clubs and real estate agencies.'
       }, {
+        href: 'reservas.html',
+        label: 'Guest corner',
+        desc: 'Already booked? Access your Hestía guide here with the PIN we sent you.'
+      }, {
         href: 'contacto.html',
         label: 'Contact',
         desc: 'WhatsApp, phone and email, a real person replies.'
@@ -199,7 +207,7 @@ const MapaPage = ({
   }, String(i + 1).padStart(2, '0')), sec.title), /*#__PURE__*/React.createElement("ul", {
     className: "mapa-list"
   }, sec.items.map((it, j) => /*#__PURE__*/React.createElement("li", {
-    key: it.href,
+    key: it.label,
     className: "mapa-item reveal",
     style: {
       transitionDelay: `${280 + i * 80 + j * 45}ms`
