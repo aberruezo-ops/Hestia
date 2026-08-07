@@ -79,7 +79,6 @@ const T = {
     remove: 'Quitar',
     copy: 'Copiar dirección y contacto del titular',
     nombre: 'Nombre', apellido1: 'Primer apellido', apellido2: 'Segundo apellido',
-    apellido2Hint: '(si aparece en tu documento)',
     sexo: 'Sexo', hombre: 'Hombre', mujer: 'Mujer',
     tipoDoc: 'Tipo de documento', numDoc: 'Número de documento',
     numSoporte: 'Número de soporte', soporteHelp: '¿Dónde está?',
@@ -111,7 +110,6 @@ const T = {
     remove: 'Remove',
     copy: "Copy the holder's address and contact",
     nombre: 'First name', apellido1: 'Surname', apellido2: 'Second surname',
-    apellido2Hint: '(if it appears on your document)',
     sexo: 'Sex', hombre: 'Male', mujer: 'Female',
     tipoDoc: 'Document type', numDoc: 'Document number',
     numSoporte: 'Support number', soporteHelp: 'Where is it?',
@@ -168,7 +166,7 @@ const TravelerCard = ({ t, tr, idx, isTitular, onChange, onRemove, onCopy, error
       <div className="reg-grid">
         {field('nombre', t.nombre, { req: true, autoComplete: 'given-name', autoCapitalize: 'words' })}
         {field('apellido1', t.apellido1, { req: true, autoComplete: 'family-name', autoCapitalize: 'words' })}
-        {field('apellido2', <>{t.apellido2} <span className="reg-hint">{t.apellido2Hint}</span></>, { autoComplete: 'family-name', autoCapitalize: 'words' })}
+        {field('apellido2', t.apellido2, { req: true, autoComplete: 'family-name', autoCapitalize: 'words' })}
         <div className={`reg-field${err('sexo') ? ' has-err' : ''}`}>
           <label>{t.sexo}<span className="reg-req"> *</span></label>
           <select value={tr.sexo} onChange={(e) => set('sexo', e.target.value)}>
@@ -319,7 +317,7 @@ const RegistroPage = () => {
     const e = {};
     travelers.forEach((tr, i) => {
       const need = (k) => { if (!String(tr[k] || '').trim()) e[`${i}.${k}`] = t.req; };
-      ['nombre', 'apellido1', 'sexo', 'numDoc', 'fechaNacimiento', 'direccion', 'municipio', 'cp'].forEach(need);
+      ['nombre', 'apellido1', 'apellido2', 'sexo', 'numDoc', 'fechaNacimiento', 'direccion', 'municipio', 'cp'].forEach(need);
       if (i === 0) { need('telefono'); need('email'); }
       if (tr.tipoDoc === 'NIF' && tr.numDoc && !validDni(tr.numDoc)) e[`${i}.numDoc`] = t.errDni;
       if (tr.tipoDoc === 'NIE' && tr.numDoc && !validNie(tr.numDoc)) e[`${i}.numDoc`] = t.errNie;
