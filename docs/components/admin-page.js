@@ -10549,7 +10549,7 @@ const TravelerRegistryTab = () => {
     style: {
       marginTop: 12
     }
-  }, "Aún no hay fichas enviadas."), regs && regs.map((reg, i) => {
+  }, "Aún no hay fichas enviadas."), regs && [...regs].sort((a, b) => ((b.token || '').split('-')[1] || '').localeCompare((a.token || '').split('-')[1] || '')).map((reg, i) => {
     const isOpen = open[reg.token] ?? i === 0;
     const aptId = (reg.token || '').split('-')[0];
     const aptName = APT_NAMES[aptId];
