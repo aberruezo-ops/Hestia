@@ -144,7 +144,6 @@ const T = {
     nombre: 'Nombre',
     apellido1: 'Primer apellido',
     apellido2: 'Segundo apellido',
-    apellido2Hint: '(si aparece en tu documento)',
     sexo: 'Sexo',
     hombre: 'Hombre',
     mujer: 'Mujer',
@@ -188,7 +187,6 @@ const T = {
     nombre: 'First name',
     apellido1: 'Surname',
     apellido2: 'Second surname',
-    apellido2Hint: '(if it appears on your document)',
     sexo: 'Sex',
     hombre: 'Male',
     mujer: 'Female',
@@ -280,9 +278,8 @@ const TravelerCard = ({
     req: true,
     autoComplete: 'family-name',
     autoCapitalize: 'words'
-  }), field('apellido2', /*#__PURE__*/React.createElement(React.Fragment, null, t.apellido2, " ", /*#__PURE__*/React.createElement("span", {
-    className: "reg-hint"
-  }, t.apellido2Hint)), {
+  }), field('apellido2', t.apellido2, {
+    req: true,
     autoComplete: 'family-name',
     autoCapitalize: 'words'
   }), /*#__PURE__*/React.createElement("div", {
@@ -521,7 +518,7 @@ const RegistroPage = () => {
       const need = k => {
         if (!String(tr[k] || '').trim()) e[`${i}.${k}`] = t.req;
       };
-      ['nombre', 'apellido1', 'sexo', 'numDoc', 'fechaNacimiento', 'direccion', 'municipio', 'cp'].forEach(need);
+      ['nombre', 'apellido1', 'apellido2', 'sexo', 'numDoc', 'fechaNacimiento', 'direccion', 'municipio', 'cp'].forEach(need);
       if (i === 0) {
         need('telefono');
         need('email');
