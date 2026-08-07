@@ -122,6 +122,7 @@ Ambas partes se ratifican en el presente contrato y firman por duplicado, a un s
 El apartamento se entrega limpio y dotado.
 - Un juego de toallas por cada huésped.
 - {{BLOQUE_SABANAS_POR_APT}}
+- Un kit básico de higiene (jabón, gel, champú y artículos de aseo esenciales), como cortesía de bienvenida para facilitar la llegada. Cualquier cantidad adicional o producto más específico que la Parte Arrendataria pueda necesitar durante la estancia correrá por su cuenta.
 
 #### NOVENA · SERVICIOS ADICIONALES
 
