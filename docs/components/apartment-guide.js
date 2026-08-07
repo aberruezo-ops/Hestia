@@ -2186,7 +2186,7 @@ const PLACES = [
   specialty: 'atún rojo de almadraba, gambas blancas de Almería, especias del norte de África, aceitunas aliñadas.',
   tip: 'En el piso de arriba hay una galería de bares donde desayunar con los lugareños. Cierra a las 14:00, llega por la mañana.',
   cat: 'abasto',
-  url: 'https://maps.app.goo.gl/s7Q8R2vHoXWADzqC8',
+  url: 'https://www.google.com/maps/search/?api=1&query=36.8393,-2.4637',
   lat: 36.8393,
   lng: -2.4637,
   featured: true
@@ -4825,7 +4825,7 @@ const GUIDE_SHARED = {
           title: 'Vera y pueblos del Levante almeriense',
           links: [{
             label: 'Turismo de Vera',
-            url: 'https://www.veraturismo.com/'
+            url: 'https://www.vera.es/turismo/'
           }, {
             label: 'Ayuntamiento de Vera',
             url: 'https://www.vera.es/'
@@ -4837,13 +4837,13 @@ const GUIDE_SHARED = {
             url: 'https://www.garrucha.es/'
           }, {
             label: 'Turismo de Cuevas del Almanzora',
-            url: 'https://www.cuevasdelalmanzora.es/turismo'
+            url: 'https://turismo.cuevasdelalmanzora.es/'
           }, {
             label: 'Pulpí Turismo (Geoda)',
-            url: 'https://www.pulpi.es/turismo'
+            url: 'https://www.geodapulpi.es/'
           }, {
             label: 'Carboneras Turismo',
-            url: 'https://www.carboneras.es/turismo'
+            url: 'https://www.turismocarboneras.es/'
           }]
         }, {
           title: 'Almería capital y provincia',
@@ -4852,7 +4852,7 @@ const GUIDE_SHARED = {
             url: 'https://www.turismodealmeria.org/'
           }, {
             label: 'Almería Capital · turismo',
-            url: 'https://www.turismodealmeria.com/'
+            url: 'https://www.turismodealmeria.org/'
           }, {
             label: 'Cabo de Gata · Níjar',
             url: 'https://www.cabogataalmeria.com/'
@@ -4861,7 +4861,7 @@ const GUIDE_SHARED = {
             url: 'https://www.andalucia.org/'
           }, {
             label: 'Geoparque de Cabo de Gata',
-            url: 'https://geoparquecabodegata.es/'
+            url: 'https://www.cabogataalmeria.com/informacion-parque-natural/'
           }, {
             label: 'Gourmet Almería · gastronomía',
             url: 'https://gourmetalmeria.com/'
@@ -4882,13 +4882,13 @@ const GUIDE_SHARED = {
             url: 'https://www.aguilas.es/turismo'
           }, {
             label: 'Mazarrón Turismo',
-            url: 'https://www.mazarron.es/turismo'
+            url: 'https://www.visitamazarron.com/'
           }, {
             label: 'Cartagena · Puerto de Culturas',
-            url: 'https://www.cartagenaturismo.es/'
+            url: 'https://turismo.cartagena.es/'
           }, {
             label: 'Calasparra Turismo',
-            url: 'https://www.calasparra.org/turismo'
+            url: 'https://www.turismocalasparra.es/'
           }]
         }]
       },
@@ -5204,7 +5204,7 @@ const GUIDE_SHARED = {
           title: 'Vera and Levante Almeriense villages',
           links: [{
             label: 'Vera Tourism',
-            url: 'https://www.veraturismo.com/'
+            url: 'https://www.vera.es/turismo/'
           }, {
             label: 'Vera Town Hall',
             url: 'https://www.vera.es/'
@@ -5216,13 +5216,13 @@ const GUIDE_SHARED = {
             url: 'https://www.garrucha.es/'
           }, {
             label: 'Cuevas del Almanzora Tourism',
-            url: 'https://www.cuevasdelalmanzora.es/turismo'
+            url: 'https://turismo.cuevasdelalmanzora.es/'
           }, {
             label: 'Pulpí Tourism (Geode)',
-            url: 'https://www.pulpi.es/turismo'
+            url: 'https://www.geodapulpi.es/'
           }, {
             label: 'Carboneras Tourism',
-            url: 'https://www.carboneras.es/turismo'
+            url: 'https://www.turismocarboneras.es/'
           }]
         }, {
           title: 'Almería city and province',
@@ -5231,7 +5231,7 @@ const GUIDE_SHARED = {
             url: 'https://www.turismodealmeria.org/'
           }, {
             label: 'Almería City · tourism',
-            url: 'https://www.turismodealmeria.com/'
+            url: 'https://www.turismodealmeria.org/'
           }, {
             label: 'Cabo de Gata · Níjar',
             url: 'https://www.cabogataalmeria.com/'
@@ -5240,7 +5240,7 @@ const GUIDE_SHARED = {
             url: 'https://www.andalucia.org/'
           }, {
             label: 'Cabo de Gata Geopark',
-            url: 'https://geoparquecabodegata.es/'
+            url: 'https://www.cabogataalmeria.com/informacion-parque-natural/'
           }, {
             label: 'Gourmet Almería · food',
             url: 'https://gourmetalmeria.com/'
@@ -5261,13 +5261,13 @@ const GUIDE_SHARED = {
             url: 'https://www.aguilas.es/turismo'
           }, {
             label: 'Mazarrón Tourism',
-            url: 'https://www.mazarron.es/turismo'
+            url: 'https://www.visitamazarron.com/'
           }, {
             label: 'Cartagena · Port of Cultures',
-            url: 'https://www.cartagenaturismo.es/'
+            url: 'https://turismo.cartagena.es/'
           }, {
             label: 'Calasparra Tourism',
-            url: 'https://www.calasparra.org/turismo'
+            url: 'https://www.turismocalasparra.es/'
           }]
         }]
       },
@@ -6283,7 +6283,7 @@ const PLACES_OF_INTEREST = [
   km: 110,
   comoLlegar_es: 'AP-7 hasta Almería, salida 460 → A-92 dirección Guadix → salida Santa Fe de Mondújar.',
   comoLlegar_en: 'AP-7 to Almería, exit 460 → A-92 towards Guadix → Santa Fe de Mondújar exit.',
-  url: 'https://www.museosdeandalucia.es/web/conjuntoarqueologicolosmillares',
+  url: 'https://www.juntadeandalucia.es/aaiicc/enclaves/enclave-arqueologico-de-los-millares',
   desc_es: 'Poblado calcolítico (3200-2200 a.C.), uno de los más importantes de Europa.',
   desc_en: 'Chalcolithic settlement (3200-2200 BC), one of the most important in Europe.'
 }, {
@@ -6302,7 +6302,7 @@ const PLACES_OF_INTEREST = [
   km: 18,
   comoLlegar_es: 'A-332 hacia Cuevas del Almanzora y desvío a Villaricos en la costa.',
   comoLlegar_en: 'A-332 towards Cuevas del Almanzora and turn-off to Villaricos on the coast.',
-  url: 'https://www.museosdeandalucia.es/web/museodealmeria',
+  url: 'https://www.museosdeandalucia.es/web/museodealmeria/informacion-general',
   desc_es: 'Antigua colonia fenicia y ciudad romana de Baria, con necrópolis púnica visitable.',
   desc_en: 'Former Phoenician colony and Roman city of Baria, with a visitable Punic necropolis.'
 }, {
@@ -6406,7 +6406,7 @@ const PLACES_OF_INTEREST = [
   km: 115,
   comoLlegar_es: 'AP-7 dirección Murcia y Cartagena; en lo alto del casco histórico, con ascensor panorámico.',
   comoLlegar_en: 'AP-7 towards Murcia and Cartagena; atop the old town, with a panoramic lift.',
-  url: 'https://www.cartagenapuertodeculturas.com/',
+  url: 'https://puertodeculturas.cartagena.es/',
   desc_es: 'Castillo medieval sobre Cartagena, con centro de interpretación de la ciudad.',
   desc_en: 'Medieval castle above Cartagena, with the city interpretation centre.',
   anchor: 'ag-pueblos'
@@ -6446,7 +6446,7 @@ const PLACES_OF_INTEREST = [
   km: 90,
   comoLlegar_es: 'AP-7 hasta Almería capital, salida 460; en el casco histórico.',
   comoLlegar_en: 'AP-7 to Almería city, exit 460; in the old town.',
-  url: 'https://www.juntadeandalucia.es/cultura/enclaves/conjunto-monumental-de-la-alcazaba-de-almeria',
+  url: 'https://www.museosdeandalucia.es/web/conjuntomonumentallaalcazabaalmeria/informacion-general',
   desc_es: 'Segunda mayor fortaleza musulmana de España, fundada en el s. X por Abderramán III.',
   desc_en: 'Second largest Muslim fortress in Spain, founded in the 10th c. by Abd al-Rahman III.',
   anchor: 'ag-pueblos'
@@ -6486,7 +6486,7 @@ const PLACES_OF_INTEREST = [
   km: 115,
   comoLlegar_es: 'AP-7 dirección Murcia/Cartagena; museo junto al Ayuntamiento.',
   comoLlegar_en: 'AP-7 towards Murcia/Cartagena; museum next to the Town Hall.',
-  url: 'https://www.teatroromanocartagena.org/',
+  url: 'https://teatroromano.cartagena.es/',
   desc_es: 'Teatro romano del s. I a.C. con museo diseñado por Rafael Moneo.',
   desc_en: '1st-century BC Roman theatre with a museum designed by Rafael Moneo.',
   anchor: 'ag-pueblos'
@@ -6497,7 +6497,7 @@ const PLACES_OF_INTEREST = [
   km: 115,
   comoLlegar_es: 'Cartagena, cerro del Molinete en pleno casco histórico.',
   comoLlegar_en: 'Cartagena, Molinete hill in the heart of the old town.',
-  url: 'https://www.cartagenapuertodeculturas.com/',
+  url: 'https://puertodeculturas.cartagena.es/',
   desc_es: 'Conjunto arqueológico con foro, curia y termas romanas musealizadas.',
   desc_en: 'Archaeological site with forum, curia and Roman baths under cover.'
 }, {
@@ -6507,7 +6507,7 @@ const PLACES_OF_INTEREST = [
   km: 115,
   comoLlegar_es: 'Cartagena, calle Honda, en el casco histórico.',
   comoLlegar_en: 'Cartagena, Honda street, in the old town.',
-  url: 'https://www.cartagenapuertodeculturas.com/',
+  url: 'https://puertodeculturas.cartagena.es/',
   desc_es: 'Tramo de la calzada principal romana y termas asociadas.',
   desc_en: 'Section of the main Roman road and associated baths.'
 }, {
@@ -6526,7 +6526,7 @@ const PLACES_OF_INTEREST = [
   km: 115,
   comoLlegar_es: 'Cartagena, Plaza Risueño, en el casco histórico.',
   comoLlegar_en: 'Cartagena, Plaza Risueño, in the old town.',
-  url: 'https://www.cartagenapuertodeculturas.com/',
+  url: 'https://puertodeculturas.cartagena.es/',
   desc_es: 'Domus romana del s. I a.C. con pinturas murales y pavimentos originales.',
   desc_en: '1st-century BC Roman domus with original wall paintings and floors.'
 }, {
@@ -6685,7 +6685,7 @@ const PLACES_OF_INTEREST = [
   km: 95,
   comoLlegar_es: 'AP-7 salida 467 + AL-3115 dirección Cabo de Gata; observatorios señalizados.',
   comoLlegar_en: 'AP-7 exit 467 + AL-3115 towards Cabo de Gata; signposted observatories.',
-  url: 'https://www.juntadeandalucia.es/medioambiente/portal/areas-tematicas/espacios-protegidos/renpa/parque-natural-cabo-de-gata-nijar',
+  url: 'https://www.juntadeandalucia.es/medioambiente/portal/areas-tematicas/espacios-protegidos/legislacion-autonomica-nacional/parques-naturales/parque-natural-cabo-de-gata-nijar',
   desc_es: 'Humedal con flamencos rosas y más de 100 especies de aves.',
   desc_en: 'Wetland with pink flamingos and over 100 bird species.',
   anchor: 'ag-mar-playas'
@@ -6736,7 +6736,7 @@ const PLACES_OF_INTEREST = [
   km: 110,
   comoLlegar_es: 'AP-7 + A-7 + A-317 hasta Vélez-Blanco/María.',
   comoLlegar_en: 'AP-7 + A-7 + A-317 to Vélez-Blanco/María.',
-  url: 'https://www.juntadeandalucia.es/medioambiente/portal/areas-tematicas/espacios-protegidos/renpa/parque-natural-sierra-maria-los-velez',
+  url: 'https://www.juntadeandalucia.es/medioambiente/portal/areas-tematicas/espacios-protegidos/legislacion-autonomica-nacional/parques-naturales/parque-natural-sierra-maria-los-velez',
   desc_es: 'Sierra de montaña media con bosques de pino laricio y rapaces.',
   desc_en: 'Mid-mountain range with black pine forests and raptors.'
 }, {
@@ -6768,7 +6768,7 @@ const PLACES_OF_INTEREST = [
   km: 90,
   comoLlegar_es: 'AP-7 + A-92 salida Tabernas; señalizado desde la N-340A.',
   comoLlegar_en: 'AP-7 + A-92 Tabernas exit; signposted from the N-340A.',
-  url: 'https://fortbravo.es/',
+  url: 'https://fortbravo.org/',
   desc_es: 'Set de cine con poblado mexicano, fuerte y campamento indio.',
   desc_en: 'Film set with Mexican village, fort and Native American camp.',
   anchor: 'ag-actividades'
@@ -6826,7 +6826,7 @@ const PLACES_OF_INTEREST = [
   km: 115,
   comoLlegar_es: 'AP-7 dirección Cartagena; junto al puerto, frente al edificio del Ayuntamiento.',
   comoLlegar_en: 'AP-7 towards Cartagena; next to the port, opposite the Town Hall building.',
-  url: 'https://www.cultura.gob.es/mnarqua/',
+  url: 'https://www.cultura.gob.es/mnarqua/home.html',
   desc_es: 'Museo Nacional de Arqueología Subacuática con el tesoro de la fragata Mercedes.',
   desc_en: 'National Museum of Underwater Archaeology with the Mercedes frigate treasure.'
 }, {
@@ -6836,7 +6836,7 @@ const PLACES_OF_INTEREST = [
   km: 140,
   comoLlegar_es: 'AP-7 dirección Murcia capital; zona oeste de la ciudad.',
   comoLlegar_en: 'AP-7 towards Murcia city; western part of the city.',
-  url: 'https://www.terranatura.com/murcia/',
+  url: 'https://murcia.terranatura.com/',
   desc_es: 'Parque zoológico con más de 300 animales en hábitats naturalizados.',
   desc_en: 'Zoological park with over 300 animals in naturalised habitats.'
 }];
