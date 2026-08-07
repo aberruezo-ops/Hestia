@@ -205,6 +205,9 @@ const IconSprite = () => (
     <symbol id="hi-camera" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2" fill="none" stroke="currentColor"/><path fill="none" stroke="currentColor" d="M8.5 7 10 4.5h4L15.5 7"/><circle cx="12" cy="13.5" r="3.4" fill="none" stroke="#3AAABB"/></symbol>
     <symbol id="hi-cloud" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></symbol>
     <symbol id="hi-moon" viewBox="0 0 24 24"><path fill="#D4A84A" stroke="none" opacity="0.16" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/><path fill="none" stroke="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></symbol>
+    <symbol id="hi-thermo" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" d="M12 4a2 2 0 0 1 2 2v8.5a4 4 0 1 1-4 0V6a2 2 0 0 1 2-2z"/><path fill="none" stroke="#B86A3C" d="M12 8v6"/><circle fill="#B86A3C" stroke="none" cx="12" cy="17" r="2.2"/></symbol>
+    <symbol id="hi-drop" viewBox="0 0 24 24"><path fill="#3AAABB" stroke="none" opacity="0.18" d="M12 3.5c3 3.8 6 7.4 6 10.8a6 6 0 1 1-12 0c0-3.4 3-7 6-10.8z"/><path fill="none" stroke="currentColor" d="M12 3.5c3 3.8 6 7.4 6 10.8a6 6 0 1 1-12 0c0-3.4 3-7 6-10.8z"/></symbol>
+    <symbol id="hi-wind" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" d="M3 8h10.2a2.4 2.4 0 1 0-2-3.7"/><path fill="none" stroke="currentColor" d="M3 13h13.8a2.4 2.4 0 1 1-2 3.7"/><path fill="none" stroke="#3AAABB" d="M3 18h7.8a2 2 0 1 0-1.7-2.9"/></symbol>
   </svg>
 )
 // Mapa de ventajas de reserva directa (por id, independiente del idioma) a icono propio.
@@ -3926,7 +3929,7 @@ const WidgetWeather = ({ lang }) => {
   const [show7d, setShow7d] = React.useState(false);
   React.useEffect(() => {
     let alive = true;
-    const CACHE_KEY = 'hestia-weather-cache-v2';
+    const CACHE_KEY = 'hestia-weather-cache-v3';
     const CACHE_MS = 45 * 60 * 1000;
     try {
       const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null');
@@ -3935,7 +3938,7 @@ const WidgetWeather = ({ lang }) => {
     // Un único fetch de forecast trae el dato de hoy (current) y los próximos
     // 7 días (daily) a la vez: evita una segunda llamada cuando se abre la
     // ventana de previsión.
-    const fUrl = `https://api.open-meteo.com/v1/forecast?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=Europe%2FMadrid&forecast_days=7`;
+    const fUrl = `https://api.open-meteo.com/v1/forecast?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code,apparent_temperature_max,relative_humidity_2m_mean,wind_speed_10m_max&timezone=Europe%2FMadrid&forecast_days=7`;
     const mUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=wave_height&timezone=Europe%2FMadrid`;
     Promise.all([
       fetch(fUrl).then(r => r.ok ? r.json() : null).catch(() => null),
@@ -3943,15 +3946,25 @@ const WidgetWeather = ({ lang }) => {
     ]).then(([f, m]) => {
       if (!alive) return;
       if (!f || !f.current) { setWx(false); return; }
+      // Math.round de un valor que puede faltar (la API a veces omite un
+      // campo puntual): si no es número, null y ese dato simplemente no se
+      // pinta, en vez de romper el widget.
+      const numOrNull = (v) => (typeof v === 'number' && !Number.isNaN(v)) ? Math.round(v) : null;
       const days = (f.daily && Array.isArray(f.daily.time)) ? f.daily.time.map((d, i) => ({
         date: d,
         max: Math.round(f.daily.temperature_2m_max[i]),
         min: Math.round(f.daily.temperature_2m_min[i]),
         code: f.daily.weather_code[i],
+        feels: numOrNull(f.daily.apparent_temperature_max?.[i]),
+        humidity: numOrNull(f.daily.relative_humidity_2m_mean?.[i]),
+        wind: numOrNull(f.daily.wind_speed_10m_max?.[i]),
       })) : [];
       const v = {
         temp: Math.round(f.current.temperature_2m),
         code: f.current.weather_code,
+        feels: numOrNull(f.current.apparent_temperature),
+        humidity: numOrNull(f.current.relative_humidity_2m),
+        wind: numOrNull(f.current.wind_speed_10m),
         wave: (m && m.current && typeof m.current.wave_height === 'number') ? m.current.wave_height : null,
         days,
       };
@@ -3999,6 +4012,27 @@ const WidgetWeather = ({ lang }) => {
                 <span>{lang === 'es' ? 'oleaje' : 'swell'}</span>
               </li>
             )}
+            {wx.feels !== null && (
+              <li className="wthr-fact">
+                <HiIcon name="thermo" size={18} />
+                <strong>{wx.feels}°</strong>
+                <span>{lang === 'es' ? 'sensación térmica' : 'feels like'}</span>
+              </li>
+            )}
+            {wx.humidity !== null && (
+              <li className="wthr-fact">
+                <HiIcon name="drop" size={18} />
+                <strong>{wx.humidity}%</strong>
+                <span>{lang === 'es' ? 'humedad' : 'humidity'}</span>
+              </li>
+            )}
+            {wx.wind !== null && (
+              <li className="wthr-fact">
+                <HiIcon name="wind" size={18} />
+                <strong>{wx.wind} km/h</strong>
+                <span>{lang === 'es' ? 'viento' : 'wind'}</span>
+              </li>
+            )}
             <li className="wthr-fact">
               <HiIcon name="moon" size={18} />
               <span className="wthr-moon-lbl">{lang === 'es' ? moon.es : moon.en}</span>
@@ -4019,12 +4053,28 @@ const WidgetWeather = ({ lang }) => {
                   {wx.days.map((d, i) => {
                     const dSky = _WMO_SKY(d.code);
                     const dow = i === 0 ? (lang === 'es' ? 'Hoy' : 'Today') : DOW[new Date(d.date + 'T12:00:00Z').getUTCDay()];
+                    const hasExtra = d.feels !== null || d.humidity !== null || d.wind !== null;
                     return (
-                      <li key={d.date} className="wthr-7d-row">
-                        <span className="wthr-7d-dow">{dow}</span>
-                        <HiIcon name={dSky.icon} size={18} />
-                        <span className="wthr-7d-desc">{lang === 'es' ? dSky.es : dSky.en}</span>
-                        <span className="wthr-7d-temps"><strong>{d.max}°</strong> {d.min}°</span>
+                      <li key={d.date} className="wthr-7d-item">
+                        <div className="wthr-7d-row">
+                          <span className="wthr-7d-dow">{dow}</span>
+                          <HiIcon name={dSky.icon} size={18} />
+                          <span className="wthr-7d-desc">{lang === 'es' ? dSky.es : dSky.en}</span>
+                          <span className="wthr-7d-temps"><strong>{d.max}°</strong> {d.min}°</span>
+                        </div>
+                        {hasExtra && (
+                          <div className="wthr-7d-extra">
+                            {d.feels !== null && (
+                              <span className="wthr-7d-chip"><HiIcon name="thermo" size={12} /> {d.feels}°</span>
+                            )}
+                            {d.humidity !== null && (
+                              <span className="wthr-7d-chip"><HiIcon name="drop" size={12} /> {d.humidity}%</span>
+                            )}
+                            {d.wind !== null && (
+                              <span className="wthr-7d-chip"><HiIcon name="wind" size={12} /> {d.wind} km/h</span>
+                            )}
+                          </div>
+                        )}
                       </li>
                     );
                   })}
