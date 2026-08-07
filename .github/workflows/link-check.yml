@@ -1,0 +1,37 @@
+name: Enlaces externos
+
+# smoke-test.cjs (en checks.yml) ya vigila los enlaces INTERNOS en cada push,
+# como gate duro. Los enlaces EXTERNOS (Google Maps, webs de restaurantes y
+# servicios, redes sociales...) no se pueden comprobar ahí de forma fiable en
+# cada push: son de terceros, caen o van lentos por su cuenta y no deberían
+# bloquear un deploy. Por eso viven en un cron aparte, semanal, informativo.
+#
+# Si el job falla, GitHub avisa por email al propietario del repo: revisa el
+# log para ver qué URLs cayeron y en qué página(s) aparecen.
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'   # lunes 08:00 UTC
+  workflow_dispatch:       # y a mano cuando quieras comprobarlo
+
+permissions:
+  contents: read
+
+jobs:
+  external-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Instalar Playwright
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Servir docs
+        run: |
+          cd docs && python3 -m http.server 8123 &
+          sleep 2
+      - name: Comprobar enlaces externos (report)
+        run: node scripts/check-external-links.cjs
