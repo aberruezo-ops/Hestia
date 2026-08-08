@@ -919,15 +919,11 @@ const AptGuideDownload = ({ apt, lang }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Lee del DOM, no del state. En móvil, tipear el último carácter
-    // y pulsar submit casi a la vez puede hacer que el setState del
-    // onChange no haya committed todavía y `pin` sea el valor anterior.
-    const liveValue = (inputRef.current && inputRef.current.value) || pin;
-    const entered = liveValue.trim().toUpperCase();
+    const entered0 = ((inputRef.current && inputRef.current.value) || pin).trim().toUpperCase();
+    const { entered, ok } = window.submitGuidePin
+      ? await window.submitGuidePin(inputRef, pin, apt.id)
+      : { entered: entered0, ok: window.validateGuidePin ? await window.validateGuidePin(apt.id, entered0) : (entered0 === expected) };
     if (entered !== pin) setPin(entered);
-    const ok = window.validateGuidePin
-      ? await window.validateGuidePin(apt.id, entered)
-      : (entered === expected);
     if (ok) {
       setStatus('success');
       // El PDF se sirve con el nombre del PIN maestro; los PINs de huésped

@@ -3604,7 +3604,24 @@ async function validateGuidePin(aptId, entered) {
   if (match) { logGuideAccess(aptId, match.ref); return true; }
   return false;
 }
-Object.assign(window, { validateGuidePin, hestiaSha256Hex, logGuideAccess });
+// Lee el valor real del input (no el state, que puede no haber terminado de
+// comprometerse tras autofill, sugerencia de teclado móvil o el cambio de
+// paso del selector de Hestía) y valida. Si falla, reintenta una vez tras
+// un par de frames por si el valor todavía se estaba asentando, antes de
+// dar el PIN por incorrecto: así un "primer intento" que en realidad leía
+// un valor a medio escribir no se le cuenta como error al huésped.
+async function submitGuidePin(inputRef, pinState, aptId) {
+  const read = () => ((inputRef.current && inputRef.current.value) || pinState).trim().toUpperCase();
+  let entered = read();
+  let ok = await validateGuidePin(aptId, entered);
+  if (!ok) {
+    await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+    entered = read();
+    ok = await validateGuidePin(aptId, entered);
+  }
+  return { entered, ok };
+}
+Object.assign(window, { validateGuidePin, hestiaSha256Hex, logGuideAccess, submitGuidePin });
 const HESTIA_APT_META = {
   vm: { name: 'Hestía Mar',      slug: 'mar',      accent: '#6B7A3A', concept_es: 'Frente a la playa', concept_en: 'By the beach' },
   vt: { name: 'Hestía Thalassa', slug: 'thalassa', accent: '#B86A3C', concept_es: 'Ático panorámico',  concept_en: 'Panoramic penthouse' },
@@ -3650,13 +3667,7 @@ const GuestAccessModal = ({ lang, onClose }) => {
 
   const submit = async (e) => {
     e.preventDefault();
-    // Lee del DOM, no del state. Si el usuario tipea y pulsa submit
-    // muy rápido, el setState del último onChange puede no haberse
-    // committed todavía y `pin` devolvería el valor anterior (la
-    // primera pulsación de Entrar SIEMPRE fallaba por esto).
-    const liveValue = (inputRef.current && inputRef.current.value) || pin;
-    const entered = liveValue.trim().toUpperCase();
-    const ok = await validateGuidePin(selectedApt, entered);
+    const { entered, ok } = await submitGuidePin(inputRef, pin, selectedApt);
     if (ok) {
       if (entered !== pin) setPin(entered);
       setStatus('success');

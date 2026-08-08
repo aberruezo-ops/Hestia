@@ -6168,15 +6168,11 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
 
   const submit = async (e) => {
     e.preventDefault();
-    // Lee del DOM, no del state: el autofill del navegador/gestor de
-    // contraseñas y el autocapitalize en móvil pueden fijar el value del input
-    // sin disparar onChange, dejando `pin` obsoleto y fallando el primer envío.
-    const liveValue = (inputRef.current && inputRef.current.value) || pin;
-    const entered = liveValue.trim().toUpperCase();
+    const entered0 = ((inputRef.current && inputRef.current.value) || pin).trim().toUpperCase();
+    const { entered, ok } = window.submitGuidePin
+      ? await window.submitGuidePin(inputRef, pin, apt.id)
+      : { entered: entered0, ok: window.validateGuidePin ? await window.validateGuidePin(apt.id, entered0) : (entered0 === expected) };
     if (entered !== pin) setPin(entered);
-    const ok = window.validateGuidePin
-      ? await window.validateGuidePin(apt.id, entered)
-      : (entered === expected);
     if (ok) {
       setStatus('success');
       // Delay matches the modal's .is-success exit animation (scale + blur out)
