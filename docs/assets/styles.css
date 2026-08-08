@@ -15233,7 +15233,35 @@ footer,
   color: #F0E8D5 !important;
   border-color: #F0E8D5 !important;
 }
-.wthr-7d-btn { margin-top: 12px; }
+.wthr-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 12px;
+}
+.wthr-7d-btn { margin-top: 0; }
+.wthr-windy-link {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--sol-lt, #6FC4D1);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(111,196,209,.35);
+}
+.wthr-windy-link:hover { border-bottom-color: rgba(111,196,209,.8); }
+
+/* variant="inline": tarjeta del tiempo en flujo normal de página, solo
+   visible en móvil (en escritorio el widget flotante ya la cubre). */
+.widget-weather-inline {
+  display: none;
+  position: static;
+  width: auto;
+  max-width: none;
+  margin: 20px var(--page-pad);
+}
+@media (max-width: 899px) {
+  .widget-weather-inline { display: block; }
+}
 
 /* Ventana flotante "Ver 7 días" del widget del tiempo. Centrada en
    viewport (no anclada a la card: la card es estrecha, la lista de 7
@@ -15327,6 +15355,16 @@ footer,
   font-variant-numeric: tabular-nums;
 }
 .wthr-7d-temps strong { font-weight: 700; margin-right: 4px; }
+.wthr-windy-link-7d {
+  display: block;
+  margin-top: 16px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--sol-text, #176E80);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(23,110,128,.35);
+}
+.wthr-windy-link-7d:hover { border-bottom-color: rgba(23,110,128,.8); }
 
 /* ── Widget "Contacto" (barra, todas las páginas) ──────────────────────── */
 .wc-person {
