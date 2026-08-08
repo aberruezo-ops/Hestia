@@ -210,13 +210,13 @@ const APT_EQUIP = {
     daily_es: {
       eyebrow: 'Tu día en Hestía Mar',
       morning: 'Te despiertas con el mar a 300 metros y la luz que entra por la terraza de esquina, donde comienzas el día con un buen desayuno. Luego sales a la piscina y al jacuzzi del jardín sin coger el coche.',
-      core: 'La casa funciona con A/C por conductos, fibra y Smart TV con Prime, HBO, Sky y Pluto. La cocina está completa (lavavajillas y lavadora). Dos baños: uno con columna de hidroterapia y espejo de cromoterapia, otro con ducha.',
+      core: 'La casa funciona con A/C por conductos, fibra y Smart TV con streaming: solemos tener activas al menos dos plataformas de pago (Netflix, Movistar Plus, HBO, Prime, SkyShowtime) además de apps gratuitas. La cocina está completa (lavavajillas y lavadora). Dos baños: uno con columna de hidroterapia y espejo de cromoterapia, otro con ducha.',
       behind: 'Antes de que llegues: sábanas de 200 hilos planchadas, toallas de 600 g/m², kit de bienvenida, sombrilla preparada, cuna y trona montadas si las pediste. El A/C ajustado a la estación y el botiquín revisado.',
     },
     daily_en: {
       eyebrow: 'A day at Hestía Mar',
       morning: 'You wake up to the sea 300 m away and the light pouring in from the corner terrace, where you start the day with a good breakfast. Then the pool and jacuzzi in the garden, no need to take the car.',
-      core: 'The flat runs on ducted A/C, fibre Wi-Fi and a Smart TV with Prime, HBO, Sky and Pluto. Full kitchen (dishwasher and washer). Two bathrooms: one with a hydrotherapy column and chromotherapy mirror, the other with a shower.',
+      core: 'The flat runs on ducted A/C, fibre Wi-Fi and a Smart TV with streaming: we usually keep at least two paid platforms active (Netflix, Movistar Plus, HBO, Prime, SkyShowtime) plus free apps. Full kitchen (dishwasher and washer). Two bathrooms: one with a hydrotherapy column and chromotherapy mirror, the other with a shower.',
       behind: 'Before you arrive: 200-thread sheets ironed, 600 g/m² towels, a welcome kit, beach umbrella ready, cot and high chair set up if you booked them. A/C tuned to the season, first-aid kit checked.',
     },
     es: {
@@ -224,7 +224,7 @@ const APT_EQUIP = {
       icons: [
         ['🌊', 'Playa a 300m'], ['☀️', 'Terraza 20m² · esquina'], ['🏊', 'Piscina + Jacuzzi'],
         ['🌿', 'Jardines'], ['🛋', 'Chill out'], ['🛗', 'Ascensor'],
-        ['📺', 'Smart TV 55"'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'WIFI fibra'],
+        ['📺', 'Smart TV 55"'], ['🎬', 'Streaming: 2+ plataformas activas'], ['📶', 'WIFI fibra'],
         ['❄️', 'A/C por conductos'], ['🍳', 'Cocina completa · alto standing'], ['🍽', 'Lavavajillas'],
         ['🧺', 'Lavadora'], ['🛁', 'Bañera + hidromasaje'], ['🚿', 'Ducha'],
         ['🚗', 'Garaje cubierto'], ['🩹', 'Botiquín'],
@@ -238,7 +238,7 @@ const APT_EQUIP = {
       icons: [
         ['🌊', 'Beach 300m away'], ['☀️', '20m² corner terrace'], ['🏊', 'Pool + Jacuzzi'],
         ['🌿', 'Gardens'], ['🛋', 'Chill-out'], ['🛗', 'Lift'],
-        ['📺', '55" Smart TV'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'Fibre WIFI'],
+        ['📺', '55" Smart TV'], ['🎬', 'Streaming: 2+ active platforms'], ['📶', 'Fibre WIFI'],
         ['❄️', 'Ducted A/C'], ['🍳', 'Full premium kitchen'], ['🍽', 'Dishwasher'],
         ['🧺', 'Washer'], ['🛁', 'Bath + hydro-massage'], ['🚿', 'Shower'],
         ['🚗', 'Covered garage'], ['🩹', 'First-aid kit'],
@@ -253,13 +253,13 @@ const APT_EQUIP = {
     daily_es: {
       eyebrow: 'Tu día en Hestía Thalassa',
       morning: 'El Mediterráneo enmarcado en la terraza de 18 m² del ático. Cafetera Nespresso y desayuno con vistas. Disfruta de tus piscinas exteriores o de interior, dependiendo de la época del año.',
-      core: 'Zonas comunes: SPA con sauna y gimnasio (SPA en otoño-invierno-primavera; gimnasio todo el año), piscinas y pista de tenis. En el ático: Smart TV con Prime, HBO, Sky y Pluto, dos baños en suite con columnas de hidromasaje y cocina alto standing.',
+      core: 'Zonas comunes: SPA con sauna y gimnasio (SPA en otoño-invierno-primavera; gimnasio todo el año), piscinas y pista de tenis. En el ático: Smart TV con streaming (solemos tener al menos dos plataformas de pago activas entre Netflix, Movistar Plus, HBO, Prime y SkyShowtime, más apps gratuitas), dos baños en suite con columnas de hidromasaje y cocina alto standing.',
       behind: 'Cada llegada: sábanas de 200 hilos planchadas, toallas de 600 g/m², nórdicos de plumas, kit de bienvenida. Las zonas comunes (SPA, piscinas, gimnasio) las mantiene la urbanización; el ático lo dejamos listo nosotros: A/C calibrado, cafetera cargada y aromas preparados.',
     },
     daily_en: {
       eyebrow: 'A day at Hestía Thalassa',
       morning: 'The Mediterranean framed by the 18 m² penthouse terrace. Nespresso machine, breakfast with a view. Enjoy the outdoor or indoor pools depending on the time of year.',
-      core: 'Shared areas: spa with sauna and gym (spa open autumn–winter–spring; gym year-round), pools and tennis court. In the penthouse: Smart TV with Prime, HBO, Sky and Pluto, two en-suite bathrooms with hydro-massage columns and a high-end kitchen.',
+      core: 'Shared areas: spa with sauna and gym (spa open autumn–winter–spring; gym year-round), pools and tennis court. In the penthouse: Smart TV with streaming (we usually keep at least two paid platforms active among Netflix, Movistar Plus, HBO, Prime and SkyShowtime, plus free apps), two en-suite bathrooms with hydro-massage columns and a high-end kitchen.',
       behind: 'Every arrival: 200-thread sheets ironed, 600 g/m² towels, down duvets, a welcome kit. The complex maintains the shared areas (spa, pools, gym); we leave the penthouse fully prepped: A/C tuned, coffee machine loaded, aromas in place.',
     },
     es: {
@@ -268,7 +268,7 @@ const APT_EQUIP = {
         ['🌊', 'Mar · Laguna · Pueblo'], ['☀️', 'Terraza delantera 18m² · vistas al mar'], ['🌅', 'Terraza trasera'], ['🏊', '3 Piscinas'],
         ['🌡', 'Piscina climatizada'], ['♨️', 'Jacuzzi'], ['💪', 'Gimnasio'],
         ['🧖', 'Sauna'], ['🎾', 'Pista de tenis'], ['🌿', 'Jardines · Columpios'],
-        ['📺', 'Smart TV 55"'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'WIFI fibra'],
+        ['📺', 'Smart TV 55"'], ['🎬', 'Streaming: 2+ plataformas activas'], ['📶', 'WIFI fibra'],
         ['❄️', 'A/C salón y dormitorios'], ['🍳', 'Cocina completa · alto standing'], ['🍽', 'Lavavajillas'],
         ['🧺', 'Lavadora · alta gama'], ['☕', 'Nespresso + cafetera goteo'],
         ['🛁', 'Dos baños · en suite'], ['🚿', 'Columnas de hidromasaje'],
@@ -284,7 +284,7 @@ const APT_EQUIP = {
         ['🌊', 'Sea · Lagoon · Village'], ['☀️', 'Front terrace 18m² · sea views'], ['🌅', 'Rear terrace'], ['🏊', '3 Swimming pools'],
         ['🌡', 'Heated pool (autumn–spring)'], ['♨️', 'Jacuzzi'], ['💪', 'Gym'],
         ['🧖', 'Sauna'], ['🎾', 'Tennis court'], ['🌿', 'Gardens · Swings'],
-        ['📺', '55" Smart TV'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'Fibre WIFI'],
+        ['📺', '55" Smart TV'], ['🎬', 'Streaming: 2+ active platforms'], ['📶', 'Fibre WIFI'],
         ['❄️', 'A/C lounge & bedrooms'], ['🍳', 'Full premium kitchen'], ['🍽', 'Dishwasher'],
         ['🧺', 'Washing machine · premium'], ['☕', 'Nespresso + drip coffee maker'],
         ['🛁', 'Two en-suite bathrooms'], ['🚿', 'Hydro-massage columns'],
@@ -300,13 +300,13 @@ const APT_EQUIP = {
     daily_es: {
       eyebrow: 'Tu día en Hestía Salinas',
       morning: 'La luz dorada del amanecer entra por la terraza grande de 18 m², con las Salinas de Puerto Rey, único humedal protegido de la zona, a un paseo corto. Café y desayuno al sol; luego paseas hasta la playa o por el jardín de la urbanización.',
-      core: 'Dos terrazas: la de 18 m² para sol y luna, la de 14 m² para el atardecer. Piscina, gimnasio y pista de tenis en la urbanización. Smart TV 55" con Ambilight, Prime/HBO/Sky/Pluto, cocina completa y A/C frío-calor.',
+      core: 'Dos terrazas: la de 18 m² para sol y luna, la de 14 m² para el atardecer. Piscina, gimnasio y pista de tenis en la urbanización. Smart TV 55" con Ambilight y streaming (normalmente dos o más plataformas de pago activas entre Netflix, Movistar Plus, HBO, Prime y SkyShowtime, más apps gratuitas), cocina completa y A/C frío-calor.',
       behind: 'Antes de tu llegada: sábanas de 200 hilos planchadas, toallas de 600 g/m², nórdicos de plumas más alternativa antialérgica en el dormitorio principal, cuna y trona si las pediste. La cafetera Nespresso cargada y los aromas elegidos según la estación.',
     },
     daily_en: {
       eyebrow: 'A day at Hestía Salinas',
       morning: 'Golden morning light pours in through the 18 m² main terrace, with the Puerto Rey salt flats, the area\'s only protected wetland, a short walk away. Coffee and breakfast in the sun; then a walk to the beach or through the complex gardens.',
-      core: 'Two terraces: the 18 m² for sun and moon, the 14 m² for sunset. Pool, gym and tennis court in the complex. 55" Ambilight Smart TV, Prime/HBO/Sky/Pluto, full kitchen and heat-cool A/C.',
+      core: 'Two terraces: the 18 m² for sun and moon, the 14 m² for sunset. Pool, gym and tennis court in the complex. 55" Ambilight Smart TV with streaming (usually two or more paid platforms active among Netflix, Movistar Plus, HBO, Prime and SkyShowtime, plus free apps), full kitchen and heat-cool A/C.',
       behind: 'Before you arrive: 200-thread sheets ironed, 600 g/m² towels, down duvets plus a hypoallergenic alternative in the master bedroom, cot and high chair if you booked them. Nespresso machine loaded and aromas chosen by season.',
     },
     es: {
@@ -315,7 +315,7 @@ const APT_EQUIP = {
         ['🌊', 'Playa a 5 min en coche'], ['☀️', 'Terraza 18m² · sol y luna'], ['🌅', 'Terraza 14m² · atardecer'],
         ['🏊', 'Piscina'], ['🌿', 'Jardines · Riachuelos'], ['💪', 'Gimnasio'],
         ['🎾', 'Pista de tenis'], ['🛋', 'Chill out'], ['🏞', 'Salinas de Puerto Rey'],
-        ['📺', 'Smart TV 55" · Ambilight'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'WIFI fibra'],
+        ['📺', 'Smart TV 55" · Ambilight'], ['🎬', 'Streaming: 2+ plataformas activas'], ['📶', 'WIFI fibra'],
         ['❄️', 'A/C frío y calor'], ['🍳', 'Cocina completa · alto standing'], ['🍽', 'Lavavajillas'],
         ['🧺', 'Lavadora · alta gama'], ['☕', 'Nespresso + cafetera goteo'],
         ['🛁', 'Bañera + hidromasaje'], ['🚿', 'Cabina ducha + hidromasaje'],
@@ -331,7 +331,7 @@ const APT_EQUIP = {
         ['🌊', 'Beach 5 min by car'], ['☀️', '18m² terrace · sun & moon'], ['🌅', '14m² terrace · sunsets'],
         ['🏊', 'Pool'], ['🌿', 'Gardens · Streams'], ['💪', 'Gym'],
         ['🎾', 'Tennis court'], ['🛋', 'Chill-out'], ['🏞', 'Puerto Rey Salt Flats'],
-        ['📺', '55" Smart TV · Ambilight'], ['🎬', 'Prime · HBO · Sky · Pluto'], ['📶', 'Fibre WIFI'],
+        ['📺', '55" Smart TV · Ambilight'], ['🎬', 'Streaming: 2+ active platforms'], ['📶', 'Fibre WIFI'],
         ['❄️', 'A/C heat & cool'], ['🍳', 'Full premium kitchen'], ['🍽', 'Dishwasher'],
         ['🧺', 'Washing machine · premium'], ['☕', 'Nespresso + drip coffee maker'],
         ['🛁', 'Bath + hydro-massage'], ['🚿', 'Shower cabin + hydro-massage'],
@@ -350,7 +350,7 @@ const AptEquipamiento = ({ apt, lang }) => {
   const d = equip[lang];
   const accent = apt.accent;
 
-  const TECH_KW    = ['TV', 'WiFi', 'WIFI', 'fibra', 'Prime', 'HBO', 'Sky', 'Pluto', 'Alexa', 'Smart', 'fibre', 'Fibre'];
+  const TECH_KW    = ['TV', 'WiFi', 'WIFI', 'fibra', 'Streaming', 'streaming', 'Alexa', 'Smart', 'fibre', 'Fibre'];
   const KITCHEN_KW = ['cocin', 'kitchen', 'Kitchen', 'Lavadora', 'lavadora', 'Dishwasher', 'dishwasher', 'Washer', 'washer', 'lavavajillas', 'caf', 'Caf', 'espresso', 'nevera', 'microondas', 'tendedero', 'Tendedero', 'iron', 'Nespresso', 'blender', 'batidora', 'plancha', 'drip'];
   const OUTDOOR_KW = ['playa', 'Beach', 'beach', 'Piscina', 'piscin', 'pool', 'Pool', 'Terraza', 'terraza', 'terrace', 'Terrace', 'jardín', 'Garden', 'garden', 'jacuzzi', 'Jacuzzi', 'sauna', 'Sauna', 'SPA', 'pádel', 'padel', 'tenis', 'tennis', 'Tennis', 'gym', 'Gym', 'Gimnasio', 'gimnasio', 'Salinas', 'salinas', 'salt', 'Salt', 'lagoon', 'Lagoon', 'chill', 'Chill', 'Lift', 'Ascensor', 'garaje', 'Garaje', 'Garage', 'garage', 'Streams', 'streams', 'Swings', 'columpios', 'Park', 'Parque', 'Mar ', 'Sea ', 'Pueblo', 'Village', 'Laguna', 'climatiz'];
   const categorize = (label) => {
