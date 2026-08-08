@@ -140,7 +140,6 @@ const App = () => {
       <main>
         <Hero lang={lang} />
         <OfertaBanner lang={lang} />
-        <WidgetWeather lang={lang} variant="inline" />
         <FraseHogar lang={lang} />
         <RatingsMarquee lang={lang} />
         <HomePriceStrip lang={lang} />
@@ -177,6 +176,7 @@ const App = () => {
           <HiIcon name="mute" size={22} />
         )}
       </button>
+      <WidgetWeather lang={lang} variant="fab" />
       <WidgetStack lang={lang} extra={<><WidgetWeather lang={lang} /><WidgetSound lang={lang} soundOn={soundOn} onToggle={toggleSound} /></>} />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />

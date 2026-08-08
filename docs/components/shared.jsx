@@ -3942,6 +3942,7 @@ const WidgetWeather = ({ lang, variant = 'floating' }) => {
   const [min, setMin] = _useLocalMin('weather', true);   // plegado por defecto (solo variant floating)
   const [wx, setWx] = React.useState(null);   // null = cargando/no disponible
   const [show7d, setShow7d] = React.useState(false);
+  const [fabOpen, setFabOpen] = React.useState(false);   // solo variant="fab"
   React.useEffect(() => {
     let alive = true;
     const CACHE_KEY = 'hestia-weather-cache-v4';
@@ -4109,17 +4110,32 @@ const WidgetWeather = ({ lang, variant = 'floating' }) => {
     document.body
   ) : null;
 
-  // variant="inline": tarjeta siempre visible, en flujo normal de página
-  // (sin posición fija ni minimizar). Es la versión para móvil: el
-  // widget-stack flotante está oculto por debajo de 900px, así que sin
-  // esto el tiempo no existía en absoluto en móvil.
-  if (variant === 'inline') {
+  // variant="fab": botón flotante redondo, mismo estilo que .sound-toggle,
+  // apilado justo encima de él. Es la versión para móvil: el widget-stack
+  // flotante está oculto por debajo de 900px, así que sin esto el tiempo
+  // no existía en absoluto en móvil. Al tocarlo despliega el mismo
+  // contenido que la card de escritorio, en un panel ancla arriba.
+  if (variant === 'fab') {
+    const label = lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa';
     return (
-      <section className="widget-card widget-weather widget-weather-inline" aria-label={lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'}>
-        <span className="eyebrow">{lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'}</span>
-        <Content />
+      <div className={`wthr-fab-wrap${fabOpen ? ' is-open' : ''}`}>
+        <div className="wthr-fab-panel widget-card widget-weather" role="dialog" aria-label={label} aria-hidden={!fabOpen}>
+          <button type="button" className="widget-min-btn" onClick={() => setFabOpen(false)} aria-label={lang === 'es' ? 'Cerrar' : 'Close'}>×</button>
+          <span className="eyebrow">{label}</span>
+          <Content />
+        </div>
+        <button
+          type="button"
+          className="wthr-fab"
+          onClick={() => setFabOpen(o => !o)}
+          aria-expanded={fabOpen}
+          aria-label={label}
+          title={label}
+        >
+          <HiIcon name={wx ? sky.icon : 'sun'} size={24} />
+        </button>
         <SevenDayPortal />
-      </section>
+      </div>
     );
   }
 

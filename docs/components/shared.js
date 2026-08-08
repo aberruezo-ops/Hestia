@@ -7239,6 +7239,7 @@ const WidgetWeather = ({
   const [min, setMin] = _useLocalMin('weather', true); // plegado por defecto (solo variant floating)
   const [wx, setWx] = React.useState(null); // null = cargando/no disponible
   const [show7d, setShow7d] = React.useState(false);
+  const [fabOpen, setFabOpen] = React.useState(false); // solo variant="fab"
   React.useEffect(() => {
     let alive = true;
     const CACHE_KEY = 'hestia-weather-cache-v4';
@@ -7425,17 +7426,38 @@ const WidgetWeather = ({
     rel: "noopener"
   }, lang === 'es' ? 'Previsión detallada de viento y oleaje →' : 'Detailed wind & swell forecast →'))), document.body) : null;
 
-  // variant="inline": tarjeta siempre visible, en flujo normal de página
-  // (sin posición fija ni minimizar). Es la versión para móvil: el
-  // widget-stack flotante está oculto por debajo de 900px, así que sin
-  // esto el tiempo no existía en absoluto en móvil.
-  if (variant === 'inline') {
-    return /*#__PURE__*/React.createElement("section", {
-      className: "widget-card widget-weather widget-weather-inline",
-      "aria-label": lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'
-    }, /*#__PURE__*/React.createElement("span", {
+  // variant="fab": botón flotante redondo, mismo estilo que .sound-toggle,
+  // apilado justo encima de él. Es la versión para móvil: el widget-stack
+  // flotante está oculto por debajo de 900px, así que sin esto el tiempo
+  // no existía en absoluto en móvil. Al tocarlo despliega el mismo
+  // contenido que la card de escritorio, en un panel ancla arriba.
+  if (variant === 'fab') {
+    const label = lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa';
+    return /*#__PURE__*/React.createElement("div", {
+      className: `wthr-fab-wrap${fabOpen ? ' is-open' : ''}`
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "wthr-fab-panel widget-card widget-weather",
+      role: "dialog",
+      "aria-label": label,
+      "aria-hidden": !fabOpen
+    }, /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "widget-min-btn",
+      onClick: () => setFabOpen(false),
+      "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
+    }, "×"), /*#__PURE__*/React.createElement("span", {
       className: "eyebrow"
-    }, lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'), /*#__PURE__*/React.createElement(Content, null), /*#__PURE__*/React.createElement(SevenDayPortal, null));
+    }, label), /*#__PURE__*/React.createElement(Content, null)), /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "wthr-fab",
+      onClick: () => setFabOpen(o => !o),
+      "aria-expanded": fabOpen,
+      "aria-label": label,
+      title: label
+    }, /*#__PURE__*/React.createElement(HiIcon, {
+      name: wx ? sky.icon : 'sun',
+      size: 24
+    })), /*#__PURE__*/React.createElement(SevenDayPortal, null));
   }
   if (min) {
     return /*#__PURE__*/React.createElement(WidgetMiniPill, {

@@ -15250,17 +15250,58 @@ footer,
 }
 .wthr-windy-link:hover { border-bottom-color: rgba(111,196,209,.8); }
 
-/* variant="inline": tarjeta del tiempo en flujo normal de página, solo
-   visible en móvil (en escritorio el widget flotante ya la cubre). */
-.widget-weather-inline {
+/* variant="fab": botón flotante redondo del tiempo, apilado justo encima
+   de .sound-toggle (mismo left, mismo tamaño de anillo). Solo móvil: en
+   escritorio el widget flotante del stack ya cubre el tiempo. */
+.wthr-fab-wrap {
   display: none;
-  position: static;
-  width: auto;
-  max-width: none;
-  margin: 20px var(--page-pad);
+  position: fixed;
+  left: 28px;
+  bottom: calc(98px + env(safe-area-inset-bottom, 0px));   /* 28 + 56 (sound-toggle) + 14 (gap) */
+  z-index: 210;
 }
 @media (max-width: 899px) {
-  .widget-weather-inline { display: block; }
+  .wthr-fab-wrap { display: block; }
+}
+.wthr-fab {
+  width: 56px; height: 56px; border-radius: 50%; padding: 0;
+  display: grid; place-items: center;
+  background-color: #3AAABB; color: #2A0F2E; border: 0; cursor: pointer;
+  box-shadow:
+    0 0 0 3px rgba(240, 232, 213, 0.92),
+    0 0 0 5px rgba(42, 15, 46, 0.55),
+    0 10px 30px rgba(58, 170, 187, 0.55),
+    0 4px 14px rgba(42, 15, 46, 0.45);
+  transition: transform .3s ease, background-color .3s ease, box-shadow .3s ease;
+}
+.wthr-fab .hi { color: #2A0F2E; }
+.wthr-fab:active { transform: scale(1.04); }
+@media (hover: hover) and (pointer: fine) {
+  .wthr-fab:hover {
+    background-color: #6FC4D1; transform: scale(1.08);
+    box-shadow:
+      0 0 0 3px rgba(240, 232, 213, 1),
+      0 0 0 5px rgba(42, 15, 46, 0.65),
+      0 14px 36px rgba(58, 170, 187, 0.70),
+      0 6px 18px rgba(42, 15, 46, 0.55);
+  }
+}
+.wthr-fab-wrap .wthr-fab-panel {
+  position: absolute;
+  left: 0;
+  bottom: 70px;
+  width: 280px;
+  max-width: calc(100vw - 56px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px) scale(.97);
+  transform-origin: bottom left;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.wthr-fab-wrap.is-open .wthr-fab-panel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
 }
 
 /* Ventana flotante "Ver 7 días" del widget del tiempo. Centrada en
@@ -24012,11 +24053,11 @@ img[src*="apt-vt-gallery-"] {
 @media (prefers-reduced-motion: reduce) {
   .sound-waves .sw1, .sound-waves .sw2 { animation: none; opacity: 1; transform: none; }
 }
-/* Móvil: los tres botones más pequeños y todos en el mismo lado (derecha),
-   el de sonido apilado encima del de regalo y el de WhatsApp. */
+/* Móvil: los cuatro botones más pequeños y todos en el mismo lado (derecha),
+   apilados WhatsApp → regalo → sonido → tiempo. */
 @media (max-width: 600px) {
-  .sound-toggle, .float-chat .bubble-btn, .gift-fab { width: 40px; height: 40px; }
-  .sound-toggle .hi, .gift-fab .hi, .float-chat .bubble-btn svg { width: 17px; height: 17px; }
+  .sound-toggle, .float-chat .bubble-btn, .gift-fab, .wthr-fab { width: 40px; height: 40px; }
+  .sound-toggle .hi, .gift-fab .hi, .float-chat .bubble-btn svg, .wthr-fab .hi { width: 17px; height: 17px; }
   .float-chat { gap: 12px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); }
   /* sonido apilado encima del regalo y el WhatsApp (mismo lado y eje):
      16 (base) + 40 (WhatsApp) + 12 + 40 (regalo) + 12 = +104 */
@@ -24025,6 +24066,13 @@ img[src*="apt-vt-gallery-"] {
     right: 16px;
     bottom: calc(16px + env(safe-area-inset-bottom, 0px) + 104px);
   }
+  /* tiempo apilado encima del sonido: +104 (sonido) + 40 (su alto) + 12 = +156 */
+  .wthr-fab-wrap {
+    left: auto;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px) + 156px);
+  }
+  .wthr-fab-wrap .wthr-fab-panel { left: auto; right: 0; transform-origin: bottom right; }
 }
 
 /* ── /empresas · página B2B ───────────────────────────────────── */
