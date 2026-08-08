@@ -631,7 +631,7 @@
       "end": "2026-08-18",
       "nights": 3,
       "type": "discount",
-      "value": 5,
+      "value": 15,
       "lastMinute": true,
       "auto": true
     },
