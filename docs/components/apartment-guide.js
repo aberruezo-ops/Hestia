@@ -30,18 +30,22 @@ const ROOM_PHOTOS = {
     // 'Terraza · ...' (13 movido a baños)
     urbanizacion: [3, 16, 17, 18] // 3=Piscina noche, 16=Piscina día, 17=Piscina jardines, 18=Zona duchas
   },
+  // Reconstruido desde cero (las leyendas reales de gallery_captions no
+  // coincidían con los índices anteriores: aparecían sauna en dormitorios,
+  // piscina en baños, dormitorio en salón...). Cada índice comprobado
+  // contra su leyenda real en gallery_captions antes de asignarlo.
   vt: {
-    salon: [3, 4, 8, 17],
-    // 3=Salón vistas, 4=Comedor, 8=Salón sofá, 17=Salón comedor (antes incluía 7/9 que son terraza)
-    cocina: [16],
-    // 16 = Cocina · encimera gris y azulejos ocres
-    dormitorios: [1, 2, 11],
-    // 1 = Dormitorio principal, 2 y 11 = Dormitorio 2
-    banos: [13, 5, 18, 12],
-    // 13 = Baño 2 grifería negra, 5 = Baño 1 mosaico, 18 = Baño lavabo, 12 = Baño 2 ducha
-    terraza: [0, 7, 9],
-    // 0 = atardecer, 7 = chill out, 9 = vistas panorámicas
-    urbanizacion: [15] // 15 = Piscina · vistas aéreas y Mediterráneo
+    salon: [0, 3, 13, 18, 26],
+    // 0/3/18=Salón, 13=Comedor, 26=Entrada
+    cocina: [2],
+    // 2 = Cocina · encimera gris y azulejos ocres
+    dormitorios: [4, 6, 17, 20, 21, 22],
+    // 4/6/17=Dormitorio principal, 20/21/22=Dormitorio 2
+    banos: [5, 23, 24, 25],
+    // 5=Baño principal, 23=Baño 1, 24/25=Baño 2
+    terraza: [1, 15, 16, 19],
+    // Terraza (atardecer, horizonte, toldo)
+    urbanizacion: [7, 8, 9, 10, 11, 12, 14] // Piscina climatizada/minispa, jacuzzi, gimnasio, sauna, piscina exterior
   },
   vs: {
     salon: [0, 1, 2, 3, 4, 5, 6, 7],
@@ -51,7 +55,7 @@ const ROOM_PHOTOS = {
     // 15 = Dormitorio 2, eliminado de baños
     terraza: [19, 20, 21, 22, 23, 24, 25, 26],
     // 27 = Piscina, eliminada de terraza
-    urbanizacion: []
+    urbanizacion: [27, 28] // Piscina comunitaria (día y atardecer)
   }
 };
 
