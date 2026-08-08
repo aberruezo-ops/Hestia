@@ -196,9 +196,6 @@ const App = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement(OfertaBanner, {
     lang: lang
-  }), /*#__PURE__*/React.createElement(WidgetWeather, {
-    lang: lang,
-    variant: "inline"
   }), /*#__PURE__*/React.createElement(FraseHogar, {
     lang: lang
   }), /*#__PURE__*/React.createElement(RatingsMarquee, {
@@ -265,7 +262,10 @@ const App = () => {
   })) : /*#__PURE__*/React.createElement(HiIcon, {
     name: "mute",
     size: 22
-  })), /*#__PURE__*/React.createElement(WidgetStack, {
+  })), /*#__PURE__*/React.createElement(WidgetWeather, {
+    lang: lang,
+    variant: "fab"
+  }), /*#__PURE__*/React.createElement(WidgetStack, {
     lang: lang,
     extra: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(WidgetWeather, {
       lang: lang
