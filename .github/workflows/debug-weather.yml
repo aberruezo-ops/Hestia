@@ -28,7 +28,7 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Comprobar la web EN PRODUCCIÓN de verdad (no local)
         run: |
-          cat > /tmp/check.mjs << 'EOF'
+          cat > ./check.mjs << 'EOF'
           import { chromium } from 'playwright';
           const browser = await chromium.launch();
           const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
@@ -55,4 +55,4 @@ jobs:
           console.log('Texto completo de la tarjeta:', cardText);
           await browser.close();
           EOF
-          node /tmp/check.mjs
+          node ./check.mjs
