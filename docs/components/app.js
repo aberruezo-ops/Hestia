@@ -196,6 +196,9 @@ const App = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement(OfertaBanner, {
     lang: lang
+  }), /*#__PURE__*/React.createElement(WidgetWeather, {
+    lang: lang,
+    variant: "inline"
   }), /*#__PURE__*/React.createElement(FraseHogar, {
     lang: lang
   }), /*#__PURE__*/React.createElement(RatingsMarquee, {

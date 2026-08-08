@@ -140,6 +140,7 @@ const App = () => {
       <main>
         <Hero lang={lang} />
         <OfertaBanner lang={lang} />
+        <WidgetWeather lang={lang} variant="inline" />
         <FraseHogar lang={lang} />
         <RatingsMarquee lang={lang} />
         <HomePriceStrip lang={lang} />

@@ -1725,17 +1725,6 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   stroke: "#B8246E",
   d: "m5.6 5.6 12.8 12.8"
 })), /*#__PURE__*/React.createElement("symbol", {
-  id: "hi-wind",
-  viewBox: "0 0 24 24"
-}, /*#__PURE__*/React.createElement("path", {
-  fill: "none",
-  stroke: "currentColor",
-  d: "M3 8h11a2.5 2.5 0 1 0-2.5-2.6M3 16h9a2 2 0 1 1-2 2.1"
-}), /*#__PURE__*/React.createElement("path", {
-  fill: "none",
-  stroke: "#3AAABB",
-  d: "M3 12h14a2.5 2.5 0 1 1-2.5 2.6"
-})), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-broom",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
@@ -7220,15 +7209,21 @@ const _moonPhase = () => {
   const frac = (days % synodic + synodic) % synodic / synodic;
   return _MOON_PHASES[Math.round(frac * 8) % 8];
 };
+
+// Enlace a previsión detallada de la zona (viento + oleaje juntos, la vista
+// que de verdad quiere alguien decidiendo si hay playa/mar hoy). Windy es
+// bilingüe y no depende de nuestra propia lectura de la API.
+const _WINDY_URL = `https://www.windy.com/?wind,${_VERA_LAT},${_VERA_LON},11`;
 const WidgetWeather = ({
-  lang
+  lang,
+  variant = 'floating'
 }) => {
-  const [min, setMin] = _useLocalMin('weather', true); // plegado por defecto
+  const [min, setMin] = _useLocalMin('weather', true); // plegado por defecto (solo variant floating)
   const [wx, setWx] = React.useState(null); // null = cargando/no disponible
   const [show7d, setShow7d] = React.useState(false);
   React.useEffect(() => {
     let alive = true;
-    const CACHE_KEY = 'hestia-weather-cache-v3';
+    const CACHE_KEY = 'hestia-weather-cache-v4';
     const CACHE_MS = 45 * 60 * 1000;
     try {
       const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null');
@@ -7239,9 +7234,10 @@ const WidgetWeather = ({
     } catch (_) {}
     // Un único fetch de forecast trae el dato de hoy (current) y los próximos
     // 7 días (daily) a la vez: evita una segunda llamada cuando se abre la
-    // ventana de previsión.
+    // ventana de previsión. Igual con el oleaje: current + daily en la misma
+    // llamada al marine-api, para que "Ver 7 días" también lleve oleaje.
     const fUrl = `https://api.open-meteo.com/v1/forecast?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code,apparent_temperature_max,relative_humidity_2m_mean,wind_speed_10m_max&timezone=Europe%2FMadrid&forecast_days=7`;
-    const mUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=wave_height&timezone=Europe%2FMadrid`;
+    const mUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=wave_height&daily=wave_height_max&timezone=Europe%2FMadrid&forecast_days=7`;
     Promise.all([fetch(fUrl).then(r => r.ok ? r.json() : null).catch(() => null), fetch(mUrl).then(r => r.ok ? r.json() : null).catch(() => null)]).then(([f, m]) => {
       if (!alive) return;
       if (!f || !f.current) {
@@ -7252,6 +7248,8 @@ const WidgetWeather = ({
       // campo puntual): si no es número, null y ese dato simplemente no se
       // pinta, en vez de romper el widget.
       const numOrNull = v => typeof v === 'number' && !Number.isNaN(v) ? Math.round(v) : null;
+      const waveOrNull = v => typeof v === 'number' && !Number.isNaN(v) ? v : null;
+      const mDaily = m && m.daily && Array.isArray(m.daily.time) ? m.daily : null;
       const days = f.daily && Array.isArray(f.daily.time) ? f.daily.time.map((d, i) => ({
         date: d,
         max: Math.round(f.daily.temperature_2m_max[i]),
@@ -7259,7 +7257,8 @@ const WidgetWeather = ({
         code: f.daily.weather_code[i],
         feels: numOrNull(f.daily.apparent_temperature_max?.[i]),
         humidity: numOrNull(f.daily.relative_humidity_2m_mean?.[i]),
-        wind: numOrNull(f.daily.wind_speed_10m_max?.[i])
+        wind: numOrNull(f.daily.wind_speed_10m_max?.[i]),
+        wave: mDaily ? waveOrNull(mDaily.wave_height_max?.[i]) : null
       })) : [];
       const v = {
         temp: Math.round(f.current.temperature_2m),
@@ -7286,33 +7285,23 @@ const WidgetWeather = ({
   }, []);
   if (wx === false) return null; // fetch falló: no mostramos un widget roto
 
-  if (min) {
-    return /*#__PURE__*/React.createElement(WidgetMiniPill, {
-      icon: /*#__PURE__*/React.createElement(HiIcon, {
-        name: "sun",
-        size: 15
-      }),
-      label: lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa',
-      ariaLabel: lang === 'es' ? 'Restaurar el tiempo de hoy' : 'Restore today\'s weather',
-      onClick: () => setMin(false),
-      className: "widget-mini-weather"
-    });
-  }
   const sky = wx ? _WMO_SKY(wx.code) : null;
   const moon = _moonPhase();
   const DOW = lang === 'es' ? ['D', 'L', 'M', 'X', 'J', 'V', 'S'] : ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-  return /*#__PURE__*/React.createElement("section", {
-    className: "widget-card widget-weather",
-    "aria-label": lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'
-  }, /*#__PURE__*/React.createElement("button", {
+  const SevenDayLink = () => wx && wx.days.length > 0 ? /*#__PURE__*/React.createElement("button", {
     type: "button",
-    className: "widget-min-btn",
-    "aria-label": lang === 'es' ? 'Minimizar' : 'Minimize',
-    title: lang === 'es' ? 'Minimizar' : 'Minimize',
-    onClick: () => setMin(true)
-  }, "−"), /*#__PURE__*/React.createElement("span", {
-    className: "eyebrow"
-  }, lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'), !wx ? /*#__PURE__*/React.createElement("p", {
+    className: "widget-cta widget-cta-ghost wthr-7d-btn",
+    onClick: () => setShow7d(true)
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver 7 días' : 'See 7 days'), /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "→")) : null;
+  const WindyLink = () => /*#__PURE__*/React.createElement("a", {
+    className: "wthr-windy-link",
+    href: _WINDY_URL,
+    target: "_blank",
+    rel: "noopener"
+  }, lang === 'es' ? 'Previsión detallada de viento y oleaje →' : 'Detailed wind & swell forecast →');
+  const Content = () => !wx ? /*#__PURE__*/React.createElement("p", {
     className: "widget-text"
   }, lang === 'es' ? 'Consultando el tiempo…' : 'Checking the weather…') : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", {
     className: "wthr-quip"
@@ -7350,13 +7339,10 @@ const WidgetWeather = ({
     size: 18
   }), /*#__PURE__*/React.createElement("span", {
     className: "wthr-moon-lbl"
-  }, lang === 'es' ? moon.es : moon.en))), wx.days.length > 0 && /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: "widget-cta widget-cta-ghost wthr-7d-btn",
-    onClick: () => setShow7d(true)
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver 7 días' : 'See 7 days'), /*#__PURE__*/React.createElement("span", {
-    "aria-hidden": "true"
-  }, "→")), show7d && ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? moon.es : moon.en))), /*#__PURE__*/React.createElement("div", {
+    className: "wthr-links"
+  }, /*#__PURE__*/React.createElement(SevenDayLink, null), /*#__PURE__*/React.createElement(WindyLink, null)));
+  const SevenDayPortal = () => show7d ? ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
     className: "wthr-7d-backdrop",
     onClick: () => setShow7d(false)
   }, /*#__PURE__*/React.createElement("div", {
@@ -7376,7 +7362,7 @@ const WidgetWeather = ({
   }, wx.days.map((d, i) => {
     const dSky = _WMO_SKY(d.code);
     const dow = i === 0 ? lang === 'es' ? 'Hoy' : 'Today' : DOW[new Date(d.date + 'T12:00:00Z').getUTCDay()];
-    const hasExtra = d.feels !== null || d.humidity !== null || d.wind !== null;
+    const hasExtra = d.feels !== null || d.humidity !== null || d.wind !== null || d.wave !== null;
     return /*#__PURE__*/React.createElement("li", {
       key: d.date,
       className: "wthr-7d-item"
@@ -7408,8 +7394,55 @@ const WidgetWeather = ({
     }, /*#__PURE__*/React.createElement(HiIcon, {
       name: "wind",
       size: 12
-    }), " ", d.wind, " km/h")));
-  })))), document.body)));
+    }), " ", d.wind, " km/h"), d.wave !== null && /*#__PURE__*/React.createElement("span", {
+      className: "wthr-7d-chip"
+    }, /*#__PURE__*/React.createElement(HiIcon, {
+      name: "wave",
+      size: 12
+    }), " ", d.wave.toFixed(1), " m")));
+  })), /*#__PURE__*/React.createElement("a", {
+    className: "wthr-windy-link wthr-windy-link-7d",
+    href: _WINDY_URL,
+    target: "_blank",
+    rel: "noopener"
+  }, lang === 'es' ? 'Previsión detallada de viento y oleaje →' : 'Detailed wind & swell forecast →'))), document.body) : null;
+
+  // variant="inline": tarjeta siempre visible, en flujo normal de página
+  // (sin posición fija ni minimizar). Es la versión para móvil: el
+  // widget-stack flotante está oculto por debajo de 900px, así que sin
+  // esto el tiempo no existía en absoluto en móvil.
+  if (variant === 'inline') {
+    return /*#__PURE__*/React.createElement("section", {
+      className: "widget-card widget-weather widget-weather-inline",
+      "aria-label": lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "eyebrow"
+    }, lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'), /*#__PURE__*/React.createElement(Content, null), /*#__PURE__*/React.createElement(SevenDayPortal, null));
+  }
+  if (min) {
+    return /*#__PURE__*/React.createElement(WidgetMiniPill, {
+      icon: /*#__PURE__*/React.createElement(HiIcon, {
+        name: "sun",
+        size: 15
+      }),
+      label: lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa',
+      ariaLabel: lang === 'es' ? 'Restaurar el tiempo de hoy' : 'Restore today\'s weather',
+      onClick: () => setMin(false),
+      className: "widget-mini-weather"
+    });
+  }
+  return /*#__PURE__*/React.createElement("section", {
+    className: "widget-card widget-weather",
+    "aria-label": lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "widget-min-btn",
+    "aria-label": lang === 'es' ? 'Minimizar' : 'Minimize',
+    title: lang === 'es' ? 'Minimizar' : 'Minimize',
+    onClick: () => setMin(true)
+  }, "−"), /*#__PURE__*/React.createElement("span", {
+    className: "eyebrow"
+  }, lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'), /*#__PURE__*/React.createElement(Content, null), /*#__PURE__*/React.createElement(SevenDayPortal, null));
 };
 
 // ── Widget "Sonido de mar" (solo Home) ──────────────────────────────────────

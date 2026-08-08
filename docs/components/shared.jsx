@@ -187,7 +187,6 @@ const IconSprite = () => (
     <symbol id="hi-door" viewBox="0 0 24 24"><path fill="#3AAABB" stroke="none" opacity="0.12" d="M7 4h10v16H7z"/><path fill="none" stroke="currentColor" d="M6 21h12M7 21V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v17"/><circle cx="14.3" cy="12" r="1" fill="currentColor" stroke="none"/></symbol>
     <symbol id="hi-bell" viewBox="0 0 24 24"><path fill="#3AAABB" stroke="none" opacity="0.14" d="M7 16v-5a5 5 0 0 1 10 0v5z"/><path fill="none" stroke="currentColor" d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2.5h-15zM10 18.5a2 2 0 0 0 4 0"/></symbol>
     <symbol id="hi-nosmoking" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor"/><path fill="none" stroke="currentColor" d="M5.5 13h9v2h-9zM15.5 13v2M17.5 13v2M15 11c0-1.5 1.5-1.5 1.5-3"/><path fill="none" stroke="#B8246E" d="m5.6 5.6 12.8 12.8"/></symbol>
-    <symbol id="hi-wind" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" d="M3 8h11a2.5 2.5 0 1 0-2.5-2.6M3 16h9a2 2 0 1 1-2 2.1"/><path fill="none" stroke="#3AAABB" d="M3 12h14a2.5 2.5 0 1 1-2.5 2.6"/></symbol>
     <symbol id="hi-broom" viewBox="0 0 24 24"><path fill="#D4A84A" stroke="none" opacity="0.2" d="m8 11 5 5-3 4.5L4.5 16z"/><path fill="none" stroke="currentColor" d="M16 3 9 10M8 11l5 5-3 4.5L4.5 16zM7 13.5l4 3M9.5 11.5l4 3"/></symbol>
     <symbol id="hi-chair" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" d="M7 3v9h9V5a2 2 0 0 0-2-2zM7 12l-1.5 8M16 12l1.5 8M5.5 16h13"/><path fill="#3AAABB" stroke="none" opacity="0.14" d="M8 4h6v7H8z"/></symbol>
     <symbol id="hi-luggage" viewBox="0 0 24 24"><path fill="#3AAABB" stroke="none" opacity="0.14" d="M7 8h10v11H7z"/><rect x="6" y="7" width="12" height="13" rx="2" fill="none" stroke="currentColor"/><path fill="none" stroke="currentColor" d="M9.5 7V5a1.5 1.5 0 0 1 1.5-1.5h2A1.5 1.5 0 0 1 14.5 5v2M10 11v5M14 11v5"/></symbol>
@@ -3923,13 +3922,18 @@ const _moonPhase = () => {
   return _MOON_PHASES[Math.round(frac * 8) % 8];
 };
 
-const WidgetWeather = ({ lang }) => {
-  const [min, setMin] = _useLocalMin('weather', true);   // plegado por defecto
+// Enlace a previsión detallada de la zona (viento + oleaje juntos, la vista
+// que de verdad quiere alguien decidiendo si hay playa/mar hoy). Windy es
+// bilingüe y no depende de nuestra propia lectura de la API.
+const _WINDY_URL = `https://www.windy.com/?wind,${_VERA_LAT},${_VERA_LON},11`;
+
+const WidgetWeather = ({ lang, variant = 'floating' }) => {
+  const [min, setMin] = _useLocalMin('weather', true);   // plegado por defecto (solo variant floating)
   const [wx, setWx] = React.useState(null);   // null = cargando/no disponible
   const [show7d, setShow7d] = React.useState(false);
   React.useEffect(() => {
     let alive = true;
-    const CACHE_KEY = 'hestia-weather-cache-v3';
+    const CACHE_KEY = 'hestia-weather-cache-v4';
     const CACHE_MS = 45 * 60 * 1000;
     try {
       const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null');
@@ -3937,9 +3941,10 @@ const WidgetWeather = ({ lang }) => {
     } catch (_) {}
     // Un único fetch de forecast trae el dato de hoy (current) y los próximos
     // 7 días (daily) a la vez: evita una segunda llamada cuando se abre la
-    // ventana de previsión.
+    // ventana de previsión. Igual con el oleaje: current + daily en la misma
+    // llamada al marine-api, para que "Ver 7 días" también lleve oleaje.
     const fUrl = `https://api.open-meteo.com/v1/forecast?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=temperature_2m,weather_code,relative_humidity_2m,apparent_temperature,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min,weather_code,apparent_temperature_max,relative_humidity_2m_mean,wind_speed_10m_max&timezone=Europe%2FMadrid&forecast_days=7`;
-    const mUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=wave_height&timezone=Europe%2FMadrid`;
+    const mUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&current=wave_height&daily=wave_height_max&timezone=Europe%2FMadrid&forecast_days=7`;
     Promise.all([
       fetch(fUrl).then(r => r.ok ? r.json() : null).catch(() => null),
       fetch(mUrl).then(r => r.ok ? r.json() : null).catch(() => null),
@@ -3950,6 +3955,8 @@ const WidgetWeather = ({ lang }) => {
       // campo puntual): si no es número, null y ese dato simplemente no se
       // pinta, en vez de romper el widget.
       const numOrNull = (v) => (typeof v === 'number' && !Number.isNaN(v)) ? Math.round(v) : null;
+      const waveOrNull = (v) => (typeof v === 'number' && !Number.isNaN(v)) ? v : null;
+      const mDaily = m && m.daily && Array.isArray(m.daily.time) ? m.daily : null;
       const days = (f.daily && Array.isArray(f.daily.time)) ? f.daily.time.map((d, i) => ({
         date: d,
         max: Math.round(f.daily.temperature_2m_max[i]),
@@ -3958,6 +3965,7 @@ const WidgetWeather = ({ lang }) => {
         feels: numOrNull(f.daily.apparent_temperature_max?.[i]),
         humidity: numOrNull(f.daily.relative_humidity_2m_mean?.[i]),
         wind: numOrNull(f.daily.wind_speed_10m_max?.[i]),
+        wave: mDaily ? waveOrNull(mDaily.wave_height_max?.[i]) : null,
       })) : [];
       const v = {
         temp: Math.round(f.current.temperature_2m),
@@ -3976,6 +3984,134 @@ const WidgetWeather = ({ lang }) => {
 
   if (wx === false) return null;   // fetch falló: no mostramos un widget roto
 
+  const sky = wx ? _WMO_SKY(wx.code) : null;
+  const moon = _moonPhase();
+  const DOW = lang === 'es' ? ['D','L','M','X','J','V','S'] : ['S','M','T','W','T','F','S'];
+
+  const SevenDayLink = () => (wx && wx.days.length > 0) ? (
+    <button type="button" className="widget-cta widget-cta-ghost wthr-7d-btn" onClick={() => setShow7d(true)}>
+      <span>{lang === 'es' ? 'Ver 7 días' : 'See 7 days'}</span>
+      <span aria-hidden="true">→</span>
+    </button>
+  ) : null;
+
+  const WindyLink = () => (
+    <a className="wthr-windy-link" href={_WINDY_URL} target="_blank" rel="noopener">
+      {lang === 'es' ? 'Previsión detallada de viento y oleaje →' : 'Detailed wind & swell forecast →'}
+    </a>
+  );
+
+  const Content = () => !wx ? (
+    <p className="widget-text">{lang === 'es' ? 'Consultando el tiempo…' : 'Checking the weather…'}</p>
+  ) : (
+    <>
+      <p className="wthr-quip">{_pickQuip(sky.icon, lang)}</p>
+      <ul className="wthr-facts">
+        <li className="wthr-fact">
+          <HiIcon name={sky.icon} size={18} />
+          <strong>{wx.temp}°</strong>
+          <span>{lang === 'es' ? sky.es : sky.en}</span>
+        </li>
+        {wx.wave !== null && (
+          <li className="wthr-fact">
+            <HiIcon name="wave" size={18} />
+            <strong>{wx.wave.toFixed(1)} m</strong>
+            <span>{lang === 'es' ? 'oleaje' : 'swell'}</span>
+          </li>
+        )}
+        {wx.feels !== null && (
+          <li className="wthr-fact">
+            <HiIcon name="thermo" size={18} />
+            <strong>{wx.feels}°</strong>
+            <span>{lang === 'es' ? 'sensación térmica' : 'feels like'}</span>
+          </li>
+        )}
+        {wx.humidity !== null && (
+          <li className="wthr-fact">
+            <HiIcon name="drop" size={18} />
+            <strong>{wx.humidity}%</strong>
+            <span>{lang === 'es' ? 'humedad' : 'humidity'}</span>
+          </li>
+        )}
+        {wx.wind !== null && (
+          <li className="wthr-fact">
+            <HiIcon name="wind" size={18} />
+            <strong>{wx.wind} km/h</strong>
+            <span>{lang === 'es' ? 'viento' : 'wind'}</span>
+          </li>
+        )}
+        <li className="wthr-fact">
+          <HiIcon name="moon" size={18} />
+          <span className="wthr-moon-lbl">{lang === 'es' ? moon.es : moon.en}</span>
+        </li>
+      </ul>
+      <div className="wthr-links">
+        <SevenDayLink />
+        <WindyLink />
+      </div>
+    </>
+  );
+
+  const SevenDayPortal = () => show7d ? ReactDOM.createPortal(
+    <div className="wthr-7d-backdrop" onClick={() => setShow7d(false)}>
+      <div className="wthr-7d-pop" onClick={e => e.stopPropagation()} role="dialog" aria-label={lang === 'es' ? 'Previsión a 7 días' : '7-day forecast'}>
+        <button type="button" className="wthr-7d-close" onClick={() => setShow7d(false)} aria-label={lang === 'es' ? 'Cerrar' : 'Close'}>×</button>
+        <h4 className="wthr-7d-title">{lang === 'es' ? 'Próximos 7 días · Vera Playa' : 'Next 7 days · Vera Playa'}</h4>
+        <ul className="wthr-7d-list">
+          {wx.days.map((d, i) => {
+            const dSky = _WMO_SKY(d.code);
+            const dow = i === 0 ? (lang === 'es' ? 'Hoy' : 'Today') : DOW[new Date(d.date + 'T12:00:00Z').getUTCDay()];
+            const hasExtra = d.feels !== null || d.humidity !== null || d.wind !== null || d.wave !== null;
+            return (
+              <li key={d.date} className="wthr-7d-item">
+                <div className="wthr-7d-row">
+                  <span className="wthr-7d-dow">{dow}</span>
+                  <HiIcon name={dSky.icon} size={18} />
+                  <span className="wthr-7d-desc">{lang === 'es' ? dSky.es : dSky.en}</span>
+                  <span className="wthr-7d-temps"><strong>{d.max}°</strong> {d.min}°</span>
+                </div>
+                {hasExtra && (
+                  <div className="wthr-7d-extra">
+                    {d.feels !== null && (
+                      <span className="wthr-7d-chip"><HiIcon name="thermo" size={12} /> {d.feels}°</span>
+                    )}
+                    {d.humidity !== null && (
+                      <span className="wthr-7d-chip"><HiIcon name="drop" size={12} /> {d.humidity}%</span>
+                    )}
+                    {d.wind !== null && (
+                      <span className="wthr-7d-chip"><HiIcon name="wind" size={12} /> {d.wind} km/h</span>
+                    )}
+                    {d.wave !== null && (
+                      <span className="wthr-7d-chip"><HiIcon name="wave" size={12} /> {d.wave.toFixed(1)} m</span>
+                    )}
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+        <a className="wthr-windy-link wthr-windy-link-7d" href={_WINDY_URL} target="_blank" rel="noopener">
+          {lang === 'es' ? 'Previsión detallada de viento y oleaje →' : 'Detailed wind & swell forecast →'}
+        </a>
+      </div>
+    </div>,
+    document.body
+  ) : null;
+
+  // variant="inline": tarjeta siempre visible, en flujo normal de página
+  // (sin posición fija ni minimizar). Es la versión para móvil: el
+  // widget-stack flotante está oculto por debajo de 900px, así que sin
+  // esto el tiempo no existía en absoluto en móvil.
+  if (variant === 'inline') {
+    return (
+      <section className="widget-card widget-weather widget-weather-inline" aria-label={lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'}>
+        <span className="eyebrow">{lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'}</span>
+        <Content />
+        <SevenDayPortal />
+      </section>
+    );
+  }
+
   if (min) {
     return (
       <WidgetMiniPill
@@ -3987,104 +4123,12 @@ const WidgetWeather = ({ lang }) => {
       />
     );
   }
-  const sky = wx ? _WMO_SKY(wx.code) : null;
-  const moon = _moonPhase();
-  const DOW = lang === 'es' ? ['D','L','M','X','J','V','S'] : ['S','M','T','W','T','F','S'];
   return (
     <section className="widget-card widget-weather" aria-label={lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'}>
       <button type="button" className="widget-min-btn" aria-label={lang === 'es' ? 'Minimizar' : 'Minimize'} title={lang === 'es' ? 'Minimizar' : 'Minimize'} onClick={() => setMin(true)}>−</button>
       <span className="eyebrow">{lang === 'es' ? 'Hoy en Vera Playa' : 'Today in Vera Playa'}</span>
-      {!wx ? (
-        <p className="widget-text">{lang === 'es' ? 'Consultando el tiempo…' : 'Checking the weather…'}</p>
-      ) : (
-        <>
-          <p className="wthr-quip">{_pickQuip(sky.icon, lang)}</p>
-          <ul className="wthr-facts">
-            <li className="wthr-fact">
-              <HiIcon name={sky.icon} size={18} />
-              <strong>{wx.temp}°</strong>
-              <span>{lang === 'es' ? sky.es : sky.en}</span>
-            </li>
-            {wx.wave !== null && (
-              <li className="wthr-fact">
-                <HiIcon name="wave" size={18} />
-                <strong>{wx.wave.toFixed(1)} m</strong>
-                <span>{lang === 'es' ? 'oleaje' : 'swell'}</span>
-              </li>
-            )}
-            {wx.feels !== null && (
-              <li className="wthr-fact">
-                <HiIcon name="thermo" size={18} />
-                <strong>{wx.feels}°</strong>
-                <span>{lang === 'es' ? 'sensación térmica' : 'feels like'}</span>
-              </li>
-            )}
-            {wx.humidity !== null && (
-              <li className="wthr-fact">
-                <HiIcon name="drop" size={18} />
-                <strong>{wx.humidity}%</strong>
-                <span>{lang === 'es' ? 'humedad' : 'humidity'}</span>
-              </li>
-            )}
-            {wx.wind !== null && (
-              <li className="wthr-fact">
-                <HiIcon name="wind" size={18} />
-                <strong>{wx.wind} km/h</strong>
-                <span>{lang === 'es' ? 'viento' : 'wind'}</span>
-              </li>
-            )}
-            <li className="wthr-fact">
-              <HiIcon name="moon" size={18} />
-              <span className="wthr-moon-lbl">{lang === 'es' ? moon.es : moon.en}</span>
-            </li>
-          </ul>
-          {wx.days.length > 0 && (
-            <button type="button" className="widget-cta widget-cta-ghost wthr-7d-btn" onClick={() => setShow7d(true)}>
-              <span>{lang === 'es' ? 'Ver 7 días' : 'See 7 days'}</span>
-              <span aria-hidden="true">→</span>
-            </button>
-          )}
-          {show7d && ReactDOM.createPortal(
-            <div className="wthr-7d-backdrop" onClick={() => setShow7d(false)}>
-              <div className="wthr-7d-pop" onClick={e => e.stopPropagation()} role="dialog" aria-label={lang === 'es' ? 'Previsión a 7 días' : '7-day forecast'}>
-                <button type="button" className="wthr-7d-close" onClick={() => setShow7d(false)} aria-label={lang === 'es' ? 'Cerrar' : 'Close'}>×</button>
-                <h4 className="wthr-7d-title">{lang === 'es' ? 'Próximos 7 días · Vera Playa' : 'Next 7 days · Vera Playa'}</h4>
-                <ul className="wthr-7d-list">
-                  {wx.days.map((d, i) => {
-                    const dSky = _WMO_SKY(d.code);
-                    const dow = i === 0 ? (lang === 'es' ? 'Hoy' : 'Today') : DOW[new Date(d.date + 'T12:00:00Z').getUTCDay()];
-                    const hasExtra = d.feels !== null || d.humidity !== null || d.wind !== null;
-                    return (
-                      <li key={d.date} className="wthr-7d-item">
-                        <div className="wthr-7d-row">
-                          <span className="wthr-7d-dow">{dow}</span>
-                          <HiIcon name={dSky.icon} size={18} />
-                          <span className="wthr-7d-desc">{lang === 'es' ? dSky.es : dSky.en}</span>
-                          <span className="wthr-7d-temps"><strong>{d.max}°</strong> {d.min}°</span>
-                        </div>
-                        {hasExtra && (
-                          <div className="wthr-7d-extra">
-                            {d.feels !== null && (
-                              <span className="wthr-7d-chip"><HiIcon name="thermo" size={12} /> {d.feels}°</span>
-                            )}
-                            {d.humidity !== null && (
-                              <span className="wthr-7d-chip"><HiIcon name="drop" size={12} /> {d.humidity}%</span>
-                            )}
-                            {d.wind !== null && (
-                              <span className="wthr-7d-chip"><HiIcon name="wind" size={12} /> {d.wind} km/h</span>
-                            )}
-                          </div>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </div>,
-            document.body
-          )}
-        </>
-      )}
+      <Content />
+      <SevenDayPortal />
     </section>
   );
 };
