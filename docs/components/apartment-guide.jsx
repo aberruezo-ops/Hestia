@@ -399,7 +399,7 @@ const SECTION_CATS = {
   'mar-playas':['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
   planes:      ['gem', 'water', 'adventure', 'trek', 'leisure', 'bodega'],
   mercados:    ['abasto', 'market'],
-  salud:       ['health', 'vet', 'pet-board', 'physio', 'pharmacy', 'coworking', 'laundry', 'atm'],
+  salud:       ['health', 'vet', 'pet-board', 'pet-shop', 'physio', 'pharmacy', 'coworking', 'laundry', 'atm'],
   movilidad:   ['fuel', 'ev-charge'],
 };
 const CAT_TO_SECTION = Object.fromEntries(
@@ -427,6 +427,7 @@ const CATEGORIES = [
   { id: 'vet',         es: 'Veterinarios',           en: 'Vets',                  color: 'var(--vm)',      icon: '🩺' },
   { id: 'physio',      es: 'Fisioterapia',           en: 'Physiotherapy',         color: 'var(--vio)',     icon: '💆' },
   { id: 'pet-board',   es: 'Guarderías y residencias de animales', en: 'Pet boarding & daycare', color: 'var(--vt2)', icon: '🐾' },
+  { id: 'pet-shop',    es: 'Tiendas de animales',    en: 'Pet shops',             color: 'var(--vs2)',     icon: '🛍️' },
   { id: 'gem',       es: 'Visitas únicas',      en: 'Unique visits',     color: 'var(--sol)',    icon: '🗺️' },
   { id: 'water',     es: 'Agua y costa',        en: 'Water & coast',     color: 'var(--tur)',    icon: '🌊' },
   { id: 'adventure', es: 'Aventura',            en: 'Adventure',         color: 'var(--err)',    icon: '⚡' },
@@ -450,7 +451,7 @@ const GUIDE_CAT_HI = {
   bar: 'cocktail', beach: 'umbrella', 'beach-dog': 'paw', 'beach-nude': 'sun',
   'beach-srvc': 'lifebuoy', 'beach-hard': 'mountain', super: 'cart', fish: 'fish',
   pharmacy: 'pill', health: 'cross', vet: 'stethoscope', physio: 'heart',
-  'pet-board': 'paw', gem: 'gem', water: 'wave', adventure: 'spark', trek: 'boot',
+  'pet-board': 'paw', 'pet-shop': 'cart', gem: 'gem', water: 'wave', adventure: 'spark', trek: 'boot',
   leisure: 'ticket', bodega: 'wine', town: 'buildings', bookshop: 'book',
   abasto: 'shop', market: 'basket', fuel: 'fuel', 'ev-charge': 'plug',
   coworking: 'laptop', laundry: 'shirt', atm: 'card',
@@ -784,6 +785,21 @@ const PLACES = [
     desc: 'Residencia, hotel y guardería de día. Acoge incluso perros con problemas de salud. Trato cercano, recomendado en los foros locales.',
     cat: 'pet-board', url: 'https://www.bydeperros.com/residencias/residencia-centro-canino-loma-de-vera-1048.html',
     lat: 37.1810, lng: -1.8290, rating: 4.5 },
+
+  // ==========================================================
+  // TIENDAS DE ANIMALES, verificadas agosto 2026.
+  // Pienso, accesorios e higiene. Happy Pets está en la propia
+  // carretera de Playas de Vera; Tucano Mascotas, en Vera pueblo,
+  // suma peluquería canina y veterinario en el mismo sitio.
+  // ==========================================================
+  { id: 'pet-shop-happy', name: 'Happy Pets Garrucha',
+    desc: 'Pienso, accesorios, juguetes e higiene para todo tipo de mascotas, más peluquería canina. En la carretera que une Playas de Vera con Garrucha.',
+    cat: 'pet-shop', url: 'https://www.google.com/maps/search/?api=1&query=Happy+Pets+Garrucha+Carretera+de+Garrucha+Playas+de+Vera',
+    lat: 37.1950, lng: -1.8200, featured: true, featuredOrder: 1 },
+  { id: 'pet-shop-tucano', name: 'Tucano Mascotas (Vera)',
+    desc: 'Tienda de animales, peluquería canina y clínica veterinaria en el mismo local, en el centro de Vera.',
+    cat: 'pet-shop', url: 'https://www.google.com/maps/search/?api=1&query=Tucano+Mascotas+Vera+Almeria',
+    lat: 37.2467, lng: -1.8631 },
 
   // ==========================================================
   // FISIOTERAPIA, verificados mayo 2026.
@@ -1666,8 +1682,8 @@ const GUIDE_SHARED = {
           d: 'Jardines, pasillos, ascensor… Ante cualquier incidente, la responsabilidad es del dueño (ver Normas de Hestía).' },
         { icon: '🐕', t: 'Playas para perros cerca',
           d: 'Cala de Mijo y la Cañada del Negro, a poca distancia. Más detalle en el capítulo Mar y playas.' },
-        { icon: '🏥', t: 'Veterinarios y residencias caninas',
-          d: 'Si necesitáis un veterinario o dejarla unas horas o días, el listado completo está en el capítulo Salud.' },
+        { icon: '🏥', t: 'Veterinarios, guarderías y tiendas de animales',
+          d: 'Incluidos veterinarios de urgencias 24h, residencias caninas y tiendas de pienso y accesorios. El listado completo, con dirección y valoración, está en el capítulo Salud.' },
         { icon: '📜', t: 'Requisitos oficiales para viajar con mascota',
           d: 'Si venís de fuera de España: microchip, pasaporte europeo de animal de compañía y vacuna de la rabia en vigor son obligatorios. Guía oficial del Ministerio de Agricultura, Pesca y Alimentación.',
           href: 'https://www.mapa.gob.es/es/ganaderia/temas/comercio-exterior-ganadero/desplazamiento-animales-compania/viajar-perros-gatos-hurones' },
@@ -1927,8 +1943,8 @@ const GUIDE_SHARED = {
           d: 'Gardens, corridors, the lift… For any incident, responsibility lies with the owner (see Hestía house rules).' },
         { icon: '🐕', t: 'Dog-friendly beaches nearby',
           d: 'Cala de Mijo and Cañada del Negro, a short drive away. More detail in the Sea & beaches chapter.' },
-        { icon: '🏥', t: 'Vets and pet boarding',
-          d: 'If you need a vet or somewhere to leave them for a few hours or days, the full list is in the Health chapter.' },
+        { icon: '🏥', t: 'Vets, boarding and pet shops',
+          d: 'Including 24h emergency vets, dog boarding and pet food & supply shops. The full list, with address and rating, is in the Health chapter.' },
         { icon: '📜', t: 'Official pet-travel requirements',
           d: 'If you are coming from outside Spain: a microchip, an EU pet passport and an up-to-date rabies vaccination are mandatory. Official guide from Spain\'s Ministry of Agriculture, Fisheries and Food.',
           href: 'https://www.mapa.gob.es/en/ganaderia/temas/comercio-exterior-ganadero/desplazamiento-animales-compania/viajar-perros-gatos-hurones' },
@@ -2377,6 +2393,7 @@ const GUIDE_MAP_COLORS = {
   vet:          { fill: '#6B7A3A', border: '#4A5628' },
   physio:       { fill: '#A070D0', border: '#7B50B0' },
   'pet-board':  { fill: '#D08B5A', border: '#B86A3C' },
+  'pet-shop':   { fill: '#E8C476', border: '#7A5E1A' },
   gem:          { fill: '#3AAABB', border: '#2A8E9E' },
   water:        { fill: '#4ABBD4', border: '#2A8E9E' },
   adventure:    { fill: '#B8246E', border: '#8A1A50' },
@@ -6035,8 +6052,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <h2 className="ag-h2">{lang === 'es' ? 'Salud y servicios' : 'Health & services'}</h2>
             <p className="ag-para">
               {lang === 'es'
-                ? 'Servicios para tenerlo todo a mano: centros de salud, veterinarios (incluyendo 24 h), guarderías y residencias para mascotas, farmacias y fisioterapeutas. Y para el día a día de una estancia larga, dónde teletrabajar, lavanderías y dónde sacar efectivo. El mejor sitio para trabajar suele ser tu propio Hestía, con WiFi de fibra; aquí van alternativas para cuando quieras cambiar de aires.'
-                : 'Everything within reach: health centres, vets (including 24 h), pet boarding and daycare, pharmacies and physiotherapy clinics. And for the day-to-day of a longer stay, where to work remotely, laundries and where to get cash. The best place to work is usually your own Hestía, with fibre WiFi; here are alternatives for when you fancy a change of scene.'}
+                ? 'Servicios para tenerlo todo a mano: centros de salud, veterinarios (incluyendo 24 h), guarderías y residencias para mascotas, tiendas de animales, farmacias y fisioterapeutas. Y para el día a día de una estancia larga, dónde teletrabajar, lavanderías y dónde sacar efectivo. El mejor sitio para trabajar suele ser tu propio Hestía, con WiFi de fibra; aquí van alternativas para cuando quieras cambiar de aires.'
+                : 'Everything within reach: health centres, vets (including 24 h), pet boarding and daycare, pet shops, pharmacies and physiotherapy clinics. And for the day-to-day of a longer stay, where to work remotely, laundries and where to get cash. The best place to work is usually your own Hestía, with fibre WiFi; here are alternatives for when you fancy a change of scene.'}
             </p>
 
             <h3 className="ag-h3">{lang === 'es' ? 'Primeros auxilios básicos' : 'Basic first aid'}</h3>
@@ -6234,7 +6251,7 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
             <li>{lang === 'es' ? <><strong>Más de 230 recomendaciones</strong>: restaurantes, playas, bares, bodegas, mercados, pescaderías…</> : <><strong>More than 230 recommendations</strong>: restaurants, beaches, bars, wineries, markets, fishmongers…</>}</li>
             <li>{lang === 'es' ? <><strong>48 planes de día completo</strong> con horarios, rutas y reservas</> : <><strong>48 full-day itineraries</strong> with timing, routes and bookings</>}</li>
             <li>{lang === 'es' ? <><strong>Calendario anual</strong> de fiestas patronales y eventos</> : <><strong>Annual calendar</strong> of festivals and local events</>}</li>
-            <li>{lang === 'es' ? <><strong>Servicios a mano</strong>: centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías para mascotas, coworking, lavanderías y cajeros…</> : <><strong>Everything within reach</strong>: health centres, 24 h vets, pharmacies, physio clinics, pet boarding, coworking, laundries & ATMs…</>}</li>
+            <li>{lang === 'es' ? <><strong>Servicios a mano</strong>: centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías y tiendas para mascotas, coworking, lavanderías y cajeros…</> : <><strong>Everything within reach</strong>: health centres, 24 h vets, pharmacies, physio clinics, pet boarding & shops, coworking, laundries & ATMs…</>}</li>
             <li>{lang === 'es' ? <><strong>Teléfonos útiles</strong> y nuestro contacto directo antes, durante y después de tu estancia</> : <><strong>Useful phones</strong> and our direct line before, during and after your stay</>}</li>
           </ul>
 

@@ -621,7 +621,7 @@ const SECTION_CATS = {
   'mar-playas': ['beach', 'beach-hard', 'beach-srvc', 'beach-nude', 'beach-dog'],
   planes: ['gem', 'water', 'adventure', 'trek', 'leisure', 'bodega'],
   mercados: ['abasto', 'market'],
-  salud: ['health', 'vet', 'pet-board', 'physio', 'pharmacy', 'coworking', 'laundry', 'atm'],
+  salud: ['health', 'vet', 'pet-board', 'pet-shop', 'physio', 'pharmacy', 'coworking', 'laundry', 'atm'],
   movilidad: ['fuel', 'ev-charge']
 };
 const CAT_TO_SECTION = Object.fromEntries(Object.entries(SECTION_CATS).flatMap(([sec, cats]) => cats.map(cat => [cat, sec])));
@@ -731,6 +731,12 @@ const CATEGORIES = [{
   en: 'Pet boarding & daycare',
   color: 'var(--vt2)',
   icon: '🐾'
+}, {
+  id: 'pet-shop',
+  es: 'Tiendas de animales',
+  en: 'Pet shops',
+  color: 'var(--vs2)',
+  icon: '🛍️'
 }, {
   id: 'gem',
   es: 'Visitas únicas',
@@ -842,6 +848,7 @@ const GUIDE_CAT_HI = {
   vet: 'stethoscope',
   physio: 'heart',
   'pet-board': 'paw',
+  'pet-shop': 'cart',
   gem: 'gem',
   water: 'wave',
   adventure: 'spark',
@@ -2334,6 +2341,31 @@ const PLACES = [
   lat: 37.1810,
   lng: -1.8290,
   rating: 4.5
+},
+// ==========================================================
+// TIENDAS DE ANIMALES, verificadas agosto 2026.
+// Pienso, accesorios e higiene. Happy Pets está en la propia
+// carretera de Playas de Vera; Tucano Mascotas, en Vera pueblo,
+// suma peluquería canina y veterinario en el mismo sitio.
+// ==========================================================
+{
+  id: 'pet-shop-happy',
+  name: 'Happy Pets Garrucha',
+  desc: 'Pienso, accesorios, juguetes e higiene para todo tipo de mascotas, más peluquería canina. En la carretera que une Playas de Vera con Garrucha.',
+  cat: 'pet-shop',
+  url: 'https://www.google.com/maps/search/?api=1&query=Happy+Pets+Garrucha+Carretera+de+Garrucha+Playas+de+Vera',
+  lat: 37.1950,
+  lng: -1.8200,
+  featured: true,
+  featuredOrder: 1
+}, {
+  id: 'pet-shop-tucano',
+  name: 'Tucano Mascotas (Vera)',
+  desc: 'Tienda de animales, peluquería canina y clínica veterinaria en el mismo local, en el centro de Vera.',
+  cat: 'pet-shop',
+  url: 'https://www.google.com/maps/search/?api=1&query=Tucano+Mascotas+Vera+Almeria',
+  lat: 37.2467,
+  lng: -1.8631
 },
 // ==========================================================
 // FISIOTERAPIA, verificados mayo 2026.
@@ -4809,8 +4841,8 @@ const GUIDE_SHARED = {
         d: 'Cala de Mijo y la Cañada del Negro, a poca distancia. Más detalle en el capítulo Mar y playas.'
       }, {
         icon: '🏥',
-        t: 'Veterinarios y residencias caninas',
-        d: 'Si necesitáis un veterinario o dejarla unas horas o días, el listado completo está en el capítulo Salud.'
+        t: 'Veterinarios, guarderías y tiendas de animales',
+        d: 'Incluidos veterinarios de urgencias 24h, residencias caninas y tiendas de pienso y accesorios. El listado completo, con dirección y valoración, está en el capítulo Salud.'
       }, {
         icon: '📜',
         t: 'Requisitos oficiales para viajar con mascota',
@@ -5189,8 +5221,8 @@ const GUIDE_SHARED = {
         d: 'Cala de Mijo and Cañada del Negro, a short drive away. More detail in the Sea & beaches chapter.'
       }, {
         icon: '🏥',
-        t: 'Vets and pet boarding',
-        d: 'If you need a vet or somewhere to leave them for a few hours or days, the full list is in the Health chapter.'
+        t: 'Vets, boarding and pet shops',
+        d: 'Including 24h emergency vets, dog boarding and pet food & supply shops. The full list, with address and rating, is in the Health chapter.'
       }, {
         icon: '📜',
         t: 'Official pet-travel requirements',
@@ -5681,6 +5713,10 @@ const GUIDE_MAP_COLORS = {
   'pet-board': {
     fill: '#D08B5A',
     border: '#B86A3C'
+  },
+  'pet-shop': {
+    fill: '#E8C476',
+    border: '#7A5E1A'
   },
   gem: {
     fill: '#3AAABB',
@@ -11717,7 +11753,7 @@ const AptGuideView = ({
     className: "ag-h2"
   }, lang === 'es' ? 'Salud y servicios' : 'Health & services'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, lang === 'es' ? 'Servicios para tenerlo todo a mano: centros de salud, veterinarios (incluyendo 24 h), guarderías y residencias para mascotas, farmacias y fisioterapeutas. Y para el día a día de una estancia larga, dónde teletrabajar, lavanderías y dónde sacar efectivo. El mejor sitio para trabajar suele ser tu propio Hestía, con WiFi de fibra; aquí van alternativas para cuando quieras cambiar de aires.' : 'Everything within reach: health centres, vets (including 24 h), pet boarding and daycare, pharmacies and physiotherapy clinics. And for the day-to-day of a longer stay, where to work remotely, laundries and where to get cash. The best place to work is usually your own Hestía, with fibre WiFi; here are alternatives for when you fancy a change of scene.'), /*#__PURE__*/React.createElement("h3", {
+  }, lang === 'es' ? 'Servicios para tenerlo todo a mano: centros de salud, veterinarios (incluyendo 24 h), guarderías y residencias para mascotas, tiendas de animales, farmacias y fisioterapeutas. Y para el día a día de una estancia larga, dónde teletrabajar, lavanderías y dónde sacar efectivo. El mejor sitio para trabajar suele ser tu propio Hestía, con WiFi de fibra; aquí van alternativas para cuando quieras cambiar de aires.' : 'Everything within reach: health centres, vets (including 24 h), pet boarding and daycare, pet shops, pharmacies and physiotherapy clinics. And for the day-to-day of a longer stay, where to work remotely, laundries and where to get cash. The best place to work is usually your own Hestía, with fibre WiFi; here are alternatives for when you fancy a change of scene.'), /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"
   }, lang === 'es' ? 'Primeros auxilios básicos' : 'Basic first aid'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11923,7 +11959,7 @@ const AptGuideGate = ({
     className: "apt-guide-gate-desc"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "No es un folleto: es la ", /*#__PURE__*/React.createElement("strong", null, "superguía que nos habría gustado encontrar a nosotros"), " cuando llegamos por primera vez a Vera. Veintidós capítulos con todo lo que necesitas para vivir tu estancia, desde cómo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense.") : /*#__PURE__*/React.createElement(React.Fragment, null, "This isn't a leaflet: it's the ", /*#__PURE__*/React.createElement("strong", null, "super-guide we wish we'd had ourselves"), " the first time we arrived in Vera. Twenty-two chapters with everything you need for your stay, from how to get here from any of the five nearest airports to the corners only locals from the Levante know.")), /*#__PURE__*/React.createElement("ul", {
     className: "apt-guide-gate-stats"
-  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 capítulos"), " sobre tu Hestía y el entorno") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 chapters"), " on your Hestía and the area")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Más de 230 recomendaciones"), ": restaurantes, playas, bares, bodegas, mercados, pescaderías…") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "More than 230 recommendations"), ": restaurants, beaches, bars, wineries, markets, fishmongers…")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 planes de día completo"), " con horarios, rutas y reservas") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 full-day itineraries"), " with timing, routes and bookings")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Annual calendar"), " of festivals and local events")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Servicios a mano"), ": centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías para mascotas, coworking, lavanderías y cajeros…") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Everything within reach"), ": health centres, 24 h vets, pharmacies, physio clinics, pet boarding, coworking, laundries & ATMs…")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Teléfonos útiles"), " y nuestro contacto directo antes, durante y después de tu estancia") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Useful phones"), " and our direct line before, during and after your stay"))), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 capítulos"), " sobre tu Hestía y el entorno") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 chapters"), " on your Hestía and the area")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Más de 230 recomendaciones"), ": restaurantes, playas, bares, bodegas, mercados, pescaderías…") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "More than 230 recommendations"), ": restaurants, beaches, bars, wineries, markets, fishmongers…")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 planes de día completo"), " con horarios, rutas y reservas") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 full-day itineraries"), " with timing, routes and bookings")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Annual calendar"), " of festivals and local events")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Servicios a mano"), ": centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías y tiendas para mascotas, coworking, lavanderías y cajeros…") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Everything within reach"), ": health centres, 24 h vets, pharmacies, physio clinics, pet boarding & shops, coworking, laundries & ATMs…")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Teléfonos útiles"), " y nuestro contacto directo antes, durante y después de tu estancia") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Useful phones"), " and our direct line before, during and after your stay"))), /*#__PURE__*/React.createElement("p", {
     className: "apt-guide-gate-foot"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Web interactiva + PDF descargable de 40 páginas. Reservada para huéspedes con PIN.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Interactive web + 40-page downloadable PDF. Reserved for guests with a PIN.")), /*#__PURE__*/React.createElement("button", {
     className: "apt-guide-gate-btn",
