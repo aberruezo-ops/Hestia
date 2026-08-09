@@ -544,7 +544,7 @@ const NoticiasPage = ({ lang }) => {
       </div>
 
       {/* ── Hero ── */}
-      <section className="page-hero noticias-hero">
+      <section className="page-hero noticias-hero on-dark">
         <video
           className="noticias-hero-video"
           src="assets/BE123FA9-6E78-4AE0-AF49-8253801E58E8.MP4"

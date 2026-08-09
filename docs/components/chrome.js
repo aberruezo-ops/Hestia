@@ -8,7 +8,7 @@ const Topbar = ({
   lang,
   setLang
 }) => /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-  className: "topbar"
+  className: "topbar on-dark"
 }, /*#__PURE__*/React.createElement("div", {
   className: "contacts"
 }, /*#__PURE__*/React.createElement("a", {
@@ -154,55 +154,6 @@ const isActive = href => {
 };
 const CTA_CYCLE_DURATION = 80; // 8 colors × 10s
 
-// Sección plegable "Acceso para huéspedes" en el menú móvil.
-// Al pulsar muestra los enlaces a las guías de cada apartamento.
-const MnGuestSection = ({
-  t,
-  lang,
-  NavLink,
-  NAV_PAGES
-}) => {
-  const [open, setOpen] = React.useState(false);
-  return /*#__PURE__*/React.createElement("div", {
-    className: "mn-guests-section"
-  }, /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: `mn-guests-btn${open ? ' open' : ''}`,
-    onClick: () => setOpen(o => !o),
-    "aria-expanded": open
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "mn-guests-icon",
-    "aria-hidden": "true"
-  }, /*#__PURE__*/React.createElement(HiIcon, {
-    name: "key",
-    size: 20
-  })), /*#__PURE__*/React.createElement("span", null, t.mn_guests), /*#__PURE__*/React.createElement("span", {
-    className: `mn-guests-chev${open ? ' open' : ''}`,
-    "aria-hidden": "true"
-  }, "↓")), open && /*#__PURE__*/React.createElement("div", {
-    className: "mn-guests-body"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "mn-guests-label eyebrow"
-  }, t.mn_guide), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.mar,
-    className: "mn-guest-apt mn-vm"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "mn-guest-dot",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("span", null, "Hestía ", /*#__PURE__*/React.createElement("em", null, "Mar"))), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.thalassa,
-    className: "mn-guest-apt mn-vt"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "mn-guest-dot",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("span", null, "Hestía ", /*#__PURE__*/React.createElement("em", null, "Thalassa"))), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.salinas,
-    className: "mn-guest-apt mn-vs"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "mn-guest-dot",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("span", null, "Hestía ", /*#__PURE__*/React.createElement("em", null, "Salinas")))));
-};
 const Header = ({
   mode,
   scrolled,
@@ -473,7 +424,7 @@ const Header = ({
     "aria-label": mobileOpen ? 'Cerrar menú' : 'Abrir menú',
     "aria-expanded": mobileOpen
   }, mobileOpen ? /*#__PURE__*/React.createElement(IconClose, null) : /*#__PURE__*/React.createElement(IconHamburger, null)))), vitruvio, /*#__PURE__*/React.createElement("div", {
-    className: `mobile-menu ${mobileOpen ? 'open' : ''}`,
+    className: `mobile-menu on-dark ${mobileOpen ? 'open' : ''}`,
     "aria-hidden": !mobileOpen
   }, /*#__PURE__*/React.createElement("nav", {
     className: "mobile-nav"
@@ -1424,7 +1375,9 @@ const Footer = ({
       if (io) io.disconnect();
     };
   }, []);
-  return /*#__PURE__*/React.createElement("footer", null, /*#__PURE__*/React.createElement("video", {
+  return /*#__PURE__*/React.createElement("footer", {
+    className: "on-dark"
+  }, /*#__PURE__*/React.createElement("video", {
     ref: ftVid,
     className: "footer-bg-video",
     muted: true,

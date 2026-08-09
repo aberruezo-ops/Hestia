@@ -147,7 +147,7 @@ const Hero = ({ lang, onScrollDown }) => {
   return (
     <section
       id="top"
-      className={`hero mood-${pick.mood}`}
+      className={`hero on-dark mood-${pick.mood}`}
       data-screen-label="01 Hero"
       data-hero-video={pick.src}
     >
@@ -870,7 +870,7 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
   };
 
   return (
-    <section className={`lm-strip${embedded ? ' lm-strip--embedded' : ''}`} aria-label={lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'}>
+    <section className={`lm-strip on-dark${embedded ? ' lm-strip--embedded' : ''}`} aria-label={lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'}>
       <div className="lm-inner">
         {!embedded && (
           <span className="lm-eyebrow eyebrow">
@@ -912,7 +912,7 @@ const HomePriceStrip = ({ lang }) => {
   };
 
   return (
-    <section className="hps-strip" aria-label={lang === 'es' ? 'Precios por apartamento' : 'Prices per apartment'}>
+    <section className="hps-strip on-dark" aria-label={lang === 'es' ? 'Precios por apartamento' : 'Prices per apartment'}>
       <div className="hps-inner">
         <p className="hps-label eyebrow">
           {lang === 'es' ? 'Precio directo · sin intermediarios' : 'Direct price · no middlemen'}

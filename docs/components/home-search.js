@@ -633,7 +633,7 @@ const HomeSearch = ({
     }
   };
   return /*#__PURE__*/React.createElement("section", {
-    className: "home-search",
+    className: "home-search on-dark",
     id: "buscar",
     "data-avail-checker": true,
     "data-screen-label": "03b Buscador"

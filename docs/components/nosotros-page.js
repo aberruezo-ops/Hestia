@@ -186,7 +186,7 @@ const NosotrosTeam = ({
     fill: `url(#${gradId})`
   }));
   return /*#__PURE__*/React.createElement("section", {
-    className: "nosotros-team"
+    className: "nosotros-team on-dark"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
   }, /*#__PURE__*/React.createElement("div", {
@@ -284,7 +284,7 @@ const NosotrosManifest = ({
 }) => {
   const t = COPY[lang];
   return /*#__PURE__*/React.createElement("section", {
-    className: "manifest"
+    className: "manifest on-dark"
   }, /*#__PURE__*/React.createElement("div", {
     className: "manifest-inner"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("div", {

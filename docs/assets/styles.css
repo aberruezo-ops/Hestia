@@ -765,7 +765,7 @@ p  { line-height: 1.65; font-weight: 300; }
   right: -18px;
   width: 30px;
   height: 30px;
-  border-radius: 50%;
+  border-radius: 8px 0 8px 0;
   background: var(--ber-dk);
   color: var(--arena);
   border: 2px solid rgba(240,232,213,0.6);
@@ -1270,7 +1270,7 @@ p  { line-height: 1.65; font-weight: 300; }
    WhatsApp y el de sonido (círculo teal con doble anillo + glow). */
 .gift-fab {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 56px; height: 56px; border-radius: 50%; padding: 0;
+  width: 56px; height: 56px; border-radius: 12px 0 12px 0; padding: 0;
   background-color: #3AAABB; color: #2A0F2E; border: 0; cursor: pointer;
   box-shadow:
     0 0 0 3px rgba(240, 232, 213, 0.92),
@@ -1342,7 +1342,7 @@ body.apt-bar-shown .float-chat {
    (cream, oscuro, video, foto). Hex literales !important + doble anillo
    (sombra glow + ring blanco) para garantizar silueta siempre. */
 .float-chat .bubble-btn {
-  width: 56px; height: 56px; border-radius: 50%;
+  width: 56px; height: 56px; border-radius: 12px 0 12px 0;
   background-color: #3AAABB !important;            /* sol literal */
   background-image: none !important;
   color: #2A0F2E !important;                       /* ber-dk literal */
@@ -2097,7 +2097,7 @@ body.apt-bar-shown .cookies {
   right: -11px;
   width: 26px;
   height: 26px;
-  border-radius: 50%;
+  border-radius: 6px 0 6px 0;
   background: var(--ber-dk);
   color: var(--arena);
   border: 1px solid rgba(240,232,213,0.35);
@@ -3149,8 +3149,8 @@ body.apt-bar-shown .cookies {
     color: var(--crema);
     border-top: 3px solid transparent;
   }
-  .cc-card.cc-vm { border-top-color: #6B7A3A; }
-  .cc-card.cc-vt { border-top-color: #8A4A24; }
+  .cc-card.cc-vm { border-top-color: var(--vm); }
+  .cc-card.cc-vt { border-top-color: var(--vt-dk); }
   .cc-card.cc-vs { border-top-color: var(--vs-dk); }
   .cc-card-head {
     display: flex; flex-direction: column; gap: 6px;
@@ -3161,6 +3161,9 @@ body.apt-bar-shown .cookies {
     font-family: var(--serif); font-size: 26px; font-weight: 300;
     color: var(--crema);
   }
+  .cc-card.cc-vm .cc-card-name { color: var(--vm2); }
+  .cc-card.cc-vt .cc-card-name { color: var(--vt2); }
+  .cc-card.cc-vs .cc-card-name { color: var(--vs2); }
   .cc-row {
     display: flex; justify-content: space-between; align-items: flex-start;
     gap: 12px; padding: 9px 0;
@@ -3946,7 +3949,7 @@ footer .footer-brand .addr {
 }
 .footer-social a {
   display: flex; align-items: center; justify-content: center;
-  width: 34px; height: 34px; border-radius: 50%;
+  width: 34px; height: 34px; border-radius: 8px 0 8px 0;
   border: 1px solid rgba(240,232,213,0.2);
   color: rgba(240,232,213,0.65);
   transition: color 0.2s, border-color 0.2s;
@@ -4110,7 +4113,7 @@ footer .footer-brand .addr {
   border: 1px solid rgba(240,232,213,.18);
   color: rgba(240,232,213,.65);
   width: 38px; height: 38px;
-  border-radius: 50%;
+  border-radius: 8px 0 8px 0;
   cursor: pointer;
   font-size: 20px;
   line-height: 1;
@@ -4188,6 +4191,22 @@ footer .footer-brand .addr {
    la tarde). */
 .cal-cell.blk-after .c-n { color: var(--ber-dk); font-weight: 500; }
 .cal-cell.today:not(.blk) .c-n { color: var(--apt-accent-dk,var(--sol-text)); font-weight: 500; }
+/* .apt-avail y .home-search tienen fondo oscuro (ver CLAUDE.md): el número
+   de día bloqueado/hoy en tinta oscura de las reglas de arriba (pensadas
+   para el calendario claro de /reservas) quedaba invisible ahí. */
+.apt-avail .cal-cell.blk .c-n,
+.home-search .cal-cell.blk .c-n {
+  color: rgba(240,232,213,.55);
+  text-decoration-color: rgba(240,232,213,.35);
+}
+.apt-avail .cal-cell.blk-after .c-n,
+.home-search .cal-cell.blk-after .c-n {
+  color: rgba(240,232,213,.55);
+}
+.apt-avail .cal-cell.today:not(.blk) .c-n,
+.home-search .cal-cell.today:not(.blk) .c-n {
+  color: var(--apt-accent2, var(--sol-lt));
+}
 /* Strip — horizontal bar connecting blocked range. Color crema. */
 .c-strip {
   position: absolute;
@@ -6351,7 +6370,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   right: 8px;
   width: 24px;
   height: 24px;
-  border-radius: 50%;
+  border-radius: 6px 0 6px 0;
   background: transparent;
   color: var(--arena);
   border: 1px solid rgba(240, 232, 213, 0.3);
@@ -7086,7 +7105,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   color: var(--arena);
 }
 .apt-other-name span { font-size: 12px; letter-spacing: 0.3em; opacity: 0.6; }
-.apt-other-name strong { font-size: clamp(20px, 3vw, 28px); font-weight: 300; }
+.apt-other-name strong { font-size: clamp(20px, 3vw, 28px); font-weight: 300; color: var(--other-accent, var(--arena)); }
 .apt-other-concept {
   font-family: var(--serif);
   font-style: italic;
@@ -8454,7 +8473,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   background: transparent;
   cursor: pointer;
   padding: 0;
-  border-radius: 50%;
+  border-radius: 12px 0 12px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8468,7 +8487,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 50%;
+  border-radius: 12px 0 12px 0;
   background: radial-gradient(circle, rgba(var(--hue), 0.35) 0%, transparent 70%);
   opacity: 0;
   transition: opacity 320ms var(--pq-ease);
@@ -10097,12 +10116,14 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   padding: 14px 16px;
   background: rgba(240, 232, 213, .06);
   border: 1px solid rgba(240, 232, 213, .26);
+  border-left-width: 3px;
+  border-left-color: color-mix(in srgb, var(--hs-accent, var(--sol)) 70%, white);
   border-radius: 10px 0 10px 0;
   text-decoration: none;
   transition: background .2s var(--ease-out, ease), border-color .2s, transform .2s var(--ease-out, ease);
 }
 .hs-alt-card:hover { background: rgba(240, 232, 213, .1); transform: translateY(-2px); }
-.hs-alt-apt { font-family: var(--serif); font-size: 16px; color: var(--crema, #FAF6F0); }
+.hs-alt-apt { font-family: var(--serif); font-size: 16px; color: color-mix(in srgb, var(--hs-accent, var(--sol)) 70%, white); }
 .hs-alt-dates { font-family: var(--sans); font-size: 13.5px; color: var(--arena, #F0E8D5); }
 .hs-alt-shift {
   font-family: var(--sans);
@@ -14200,7 +14221,7 @@ footer,
   background: transparent; border: 0; cursor: pointer;
   font-size: 26px; line-height: 1;
   color: var(--ber-dk);
-  border-radius: 50%;
+  border-radius: 8px 0 8px 0;
   transition: background .25s ease;
 }
 .dbm-close:hover { background: rgba(61,26,53,.08); }
@@ -14269,7 +14290,7 @@ footer,
   width: 36px; height: 36px;
   background: var(--crema);
   border: 1px solid rgba(61,26,53,.18);
-  border-radius: 50%;
+  border-radius: 8px 0 8px 0;
   cursor: pointer;
   font-size: 18px;
   color: var(--ber);
@@ -14838,7 +14859,7 @@ footer,
   position: absolute;
   top: -10px; right: -10px;
   width: 30px; height: 30px;
-  border-radius: 50%;
+  border-radius: 8px 0 8px 0;
   background: var(--ber-dk);
   color: var(--sol);
   border: 0;
@@ -15066,7 +15087,7 @@ footer,
   position: absolute;
   top: -8px; right: -8px;
   width: 24px; height: 24px;
-  border-radius: 50%;
+  border-radius: 6px 0 6px 0;
   background: var(--ber-dk);
   color: var(--apt-accent, var(--sol));
   border: 0;
@@ -15264,7 +15285,7 @@ footer,
   .wthr-fab-wrap { display: block; }
 }
 .wthr-fab {
-  width: 56px; height: 56px; border-radius: 50%; padding: 0;
+  width: 56px; height: 56px; border-radius: 12px 0 12px 0; padding: 0;
   display: grid; place-items: center;
   background-color: #3AAABB; color: #2A0F2E; border: 0; cursor: pointer;
   box-shadow:
@@ -15331,7 +15352,7 @@ footer,
 .wthr-7d-close {
   position: absolute; top: 10px; right: 10px;
   width: 30px; height: 30px;
-  border-radius: 50%;
+  border-radius: 8px 0 8px 0;
   border: 0;
   background: rgba(61,26,53,.08);
   color: var(--ink);
@@ -16860,6 +16881,7 @@ a.cta-wa-btn::before,
   border: 1px solid rgba(240,232,213,.2);
   transition: background .18s, border-color .18s;
 }
+.osc-gmaps-link .apt-dot { margin-right: 0; }
 .osc-gmaps-link:hover {
   background: rgba(240,232,213,.14);
   border-color: var(--sol);
@@ -17411,7 +17433,7 @@ a:focus-visible,
   width: 30px;
   height: 30px;
   border: 0;
-  border-radius: 50%;
+  border-radius: 8px 0 8px 0;
   background: #3AAABB;
   color: #2A0F2E;
   font-size: 18px;
@@ -17643,7 +17665,7 @@ a:focus-visible,
 .rf-ps-n {
   width: 32px;
   height: 32px;
-  border-radius: 50%;
+  border-radius: 8px 0 8px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18491,6 +18513,7 @@ a:focus-visible,
   transition: color .2s ease, background-size .35s ease;
   margin-bottom: 4px;
 }
+.mapa-link .apt-dot { align-self: center; margin-right: 0; }
 .mapa-link:hover {
   color: #176E80;
   background-size: 100% 1.5px;
@@ -21132,9 +21155,9 @@ img[src*="apt-vt-gallery-"] {
   margin-bottom: 10px;
 }
 .ag-emerg-title {
-  font-family: var(--sans);
+  font-family: var(--serif);
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--ink);
   margin: 0 0 8px;
 }
@@ -21578,7 +21601,7 @@ img[src*="apt-vt-gallery-"] {
 .rv-rev-dismiss {
   flex-shrink: 0;
   width: 22px; height: 22px;
-  border-radius: 50%;
+  border-radius: 6px 0 6px 0;
   border: 1px solid rgba(61,26,53,.16);
   background: transparent;
   color: var(--ink-soft);
@@ -21775,7 +21798,7 @@ img[src*="apt-vt-gallery-"] {
   font-size: 18px;
   width: 28px;
   height: 28px;
-  border-radius: 50%;
+  border-radius: 8px 0 8px 0;
   cursor: pointer;
   line-height: 1;
 }
@@ -23321,34 +23344,35 @@ img[src*="apt-vt-gallery-"] {
 .lss-cta:hover { background: #A85E2E; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,122,69,.5); }
 .lss-cta:active { transform: translateY(0) scale(0.97); }
 
-/* ── Long-stay nudge in home search ─────────────────────────── */
+/* ── Long-stay nudge in home search (fondo oscuro: texto y CTA claros,
+   igual que .hs-alt-card / .hs-alt-cta en el mismo bloque) ──────────── */
 .hs-longstay-nudge {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  background: linear-gradient(135deg, rgba(42,15,46,.06), rgba(42,15,46,.03));
-  border: 1.5px solid rgba(42,15,46,.22);
+  background: rgba(240,232,213,.06);
+  border: 1.5px solid rgba(240,232,213,.22);
   border-radius: 8px 0 8px 0;
   padding: 14px 16px;
   margin: 4px 0;
   flex-wrap: wrap;
 }
 .hs-ls-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-.hs-ls-body { flex: 1; font-size: 13px; color: var(--ink, #3D1A35); line-height: 1.55; min-width: 180px; }
+.hs-ls-body { flex: 1; font-size: 13px; color: rgba(240,232,213,.85); line-height: 1.55; min-width: 180px; }
 .hs-ls-cta  {
   display: inline-flex;
   align-items: center;
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--accent-dk, #A85E2E);
+  color: var(--sol-lt, #6FC4D1);
   text-decoration: none;
   white-space: nowrap;
   padding: 8px 14px;
-  border: 1px solid rgba(200,122,69,.35);
+  border: 1px solid rgba(111,196,209,.35);
   border-radius: 6px 0 6px 0;
   transition: background .12s;
 }
-.hs-ls-cta:hover { background: rgba(200,122,69,.07); }
+.hs-ls-cta:hover { background: rgba(111,196,209,.10); }
 
 /* ── Long-stay nudge in reservas step 2 ─────────────────────── */
 .rf-ls-nudge {
@@ -24010,7 +24034,7 @@ img[src*="apt-vt-gallery-"] {
   height: 56px;
   display: grid;
   place-items: center;
-  border-radius: 50%;
+  border-radius: 12px 0 12px 0;
   border: 0;
   background-color: #3AAABB;
   color: #2A0F2E;
@@ -24249,7 +24273,7 @@ img[src*="apt-vt-gallery-"] {
   align-items: center;
   justify-content: center;
   width: 34px; height: 34px;
-  border-radius: 50%;
+  border-radius: 8px 0 8px 0;
   background: var(--sol);
   color: var(--ber-dk);
   font-family: var(--serif);

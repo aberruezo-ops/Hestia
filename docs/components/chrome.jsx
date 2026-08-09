@@ -4,7 +4,7 @@
 
 const Topbar = ({ lang, setLang }) => (
   <>
-    <div className="topbar">
+    <div className="topbar on-dark">
       <div className="contacts">
         <a href="https://wa.me/34620316370" className={`topbar-link${lang === 'es' ? ' tl-active' : ''}`} target="_blank" rel="noopener" aria-label="WhatsApp Alex">
           <span className={`tl-dot${lang === 'es' ? ' tl-dot--on' : ''}`}/>
@@ -92,43 +92,6 @@ const isActive = (href) => {
 };
 
 const CTA_CYCLE_DURATION = 80; // 8 colors × 10s
-
-// Sección plegable "Acceso para huéspedes" en el menú móvil.
-// Al pulsar muestra los enlaces a las guías de cada apartamento.
-const MnGuestSection = ({ t, lang, NavLink, NAV_PAGES }) => {
-  const [open, setOpen] = React.useState(false);
-  return (
-    <div className="mn-guests-section">
-      <button
-        type="button"
-        className={`mn-guests-btn${open ? ' open' : ''}`}
-        onClick={() => setOpen(o => !o)}
-        aria-expanded={open}
-      >
-        <span className="mn-guests-icon" aria-hidden="true"><HiIcon name="key" size={20} /></span>
-        <span>{t.mn_guests}</span>
-        <span className={`mn-guests-chev${open ? ' open' : ''}`} aria-hidden="true">↓</span>
-      </button>
-      {open && (
-        <div className="mn-guests-body">
-          <div className="mn-guests-label eyebrow">{t.mn_guide}</div>
-          <NavLink href={NAV_PAGES.mar} className="mn-guest-apt mn-vm">
-            <span className="mn-guest-dot" aria-hidden="true"/>
-            <span>Hestía <em>Mar</em></span>
-          </NavLink>
-          <NavLink href={NAV_PAGES.thalassa} className="mn-guest-apt mn-vt">
-            <span className="mn-guest-dot" aria-hidden="true"/>
-            <span>Hestía <em>Thalassa</em></span>
-          </NavLink>
-          <NavLink href={NAV_PAGES.salinas} className="mn-guest-apt mn-vs">
-            <span className="mn-guest-dot" aria-hidden="true"/>
-            <span>Hestía <em>Salinas</em></span>
-          </NavLink>
-        </div>
-      )}
-    </div>
-  );
-};
 
 const Header = ({ mode, scrolled, lang }) => {
   const t = COPY[lang];
@@ -357,7 +320,7 @@ const Header = ({ mode, scrolled, lang }) => {
         </div>
       </header>
       {vitruvio}
-      <div className={`mobile-menu ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
+      <div className={`mobile-menu on-dark ${mobileOpen ? 'open' : ''}`} aria-hidden={!mobileOpen}>
         <nav className="mobile-nav">
           <div className="mn-apts">
             <div className="mn-apt-card mn-vm">
@@ -874,7 +837,7 @@ const Footer = ({ lang }) => {
     return () => { document.removeEventListener('visibilitychange', onVis); if (io) io.disconnect(); };
   }, []);
   return (
-    <footer>
+    <footer className="on-dark">
       <video ref={ftVid} className="footer-bg-video" muted loop playsInline preload="none" poster="assets/footer-bg-poster.jpg" aria-hidden="true">
         <source src="assets/footer-bg.mp4" type="video/mp4"/>
       </video>

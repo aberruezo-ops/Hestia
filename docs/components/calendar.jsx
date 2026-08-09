@@ -564,7 +564,7 @@ const AptCalendar = ({ aptId, lang, accent }) => {
   };
 
   return (
-    <section id="apt-avail" className="apt-avail" data-avail-checker style={sectionStyle}>
+    <section id="apt-avail" className="apt-avail on-dark" data-avail-checker style={sectionStyle}>
 
       {/* Header */}
       <div className="avail-hd">

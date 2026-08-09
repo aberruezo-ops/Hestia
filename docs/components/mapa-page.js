@@ -20,15 +20,18 @@ const MAPA_COPY = {
       }, {
         href: 'mar.html',
         label: 'Hestía Mar',
-        desc: 'Olivo · planta primera con jardín y terraza al amanecer.'
+        desc: 'Olivo · planta primera con jardín y terraza al amanecer.',
+        apt: 'vm'
       }, {
         href: 'thalassa.html',
         label: 'Hestía Thalassa',
-        desc: 'Siena · ático con SPA comunitario y vistas panorámicas.'
+        desc: 'Siena · ático con SPA comunitario y vistas panorámicas.',
+        apt: 'vt'
       }, {
         href: 'salinas.html',
         label: 'Hestía Salinas',
-        desc: 'Albero · tres piscinas y Parque Natural a un paseo corto.'
+        desc: 'Albero · tres piscinas y Parque Natural a un paseo corto.',
+        apt: 'vs'
       }]
     }, {
       title: 'Reserva',
@@ -102,15 +105,18 @@ const MAPA_COPY = {
       }, {
         href: 'mar.html',
         label: 'Hestía Mar',
-        desc: 'Olive · first floor with garden and sunrise terrace.'
+        desc: 'Olive · first floor with garden and sunrise terrace.',
+        apt: 'vm'
       }, {
         href: 'thalassa.html',
         label: 'Hestía Thalassa',
-        desc: 'Sienna · penthouse with shared SPA and panoramic views.'
+        desc: 'Sienna · penthouse with shared SPA and panoramic views.',
+        apt: 'vt'
       }, {
         href: 'salinas.html',
         label: 'Hestía Salinas',
-        desc: 'Ochre · three pools and the Nature Park a short walk away.'
+        desc: 'Ochre · three pools and the Nature Park a short walk away.',
+        apt: 'vs'
       }]
     }, {
       title: 'Book',
@@ -215,7 +221,11 @@ const MapaPage = ({
   }, /*#__PURE__*/React.createElement("a", {
     className: "mapa-link",
     href: it.href
-  }, /*#__PURE__*/React.createElement("span", {
+  }, it.apt && /*#__PURE__*/React.createElement("span", {
+    className: "apt-dot",
+    "data-apt": it.apt,
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", {
     className: "mapa-link-label"
   }, it.label), /*#__PURE__*/React.createElement("span", {
     className: "mapa-link-arrow",
