@@ -4743,10 +4743,6 @@ const GUIDE_SHARED = {
         t: 'Check-in 15:00 · Check-out 11:00',
         d: 'Necesitamos un margen considerable para dejar Hestía a punto para la siguiente llegada. Late check-out y early check-in sujetos a disponibilidad.'
       }, {
-        icon: '🐾',
-        t: 'Mascotas solo con aprobación previa',
-        d: 'No están permitidas salvo que nos lo hayáis pedido explícitamente y nosotros lo hayamos aprobado. Recoged siempre lo que ensucien en zonas comunes; ante cualquier incidente, la responsabilidad es del dueño.'
-      }, {
         icon: '🚭',
         t: 'No se fuma dentro de Hestía',
         d: 'En toda la casa está prohibido.'
@@ -4815,6 +4811,11 @@ const GUIDE_SHARED = {
         icon: '🏥',
         t: 'Veterinarios y residencias caninas',
         d: 'Si necesitáis un veterinario o dejarla unas horas o días, el listado completo está en el capítulo Salud.'
+      }, {
+        icon: '📜',
+        t: 'Requisitos oficiales para viajar con mascota',
+        d: 'Si venís de fuera de España: microchip, pasaporte europeo de animal de compañía y vacuna de la rabia en vigor son obligatorios. Guía oficial del Ministerio de Agricultura, Pesca y Alimentación.',
+        href: 'https://www.mapa.gob.es/es/ganaderia/temas/comercio-exterior-ganadero/desplazamiento-animales-compania/viajar-perros-gatos-hurones'
       }]
     },
     surroundings: {
@@ -5122,10 +5123,6 @@ const GUIDE_SHARED = {
         t: 'Check-in 15:00 · Check-out 11:00',
         d: 'We need a considerable window to prepare Hestía for the next arrival. Late check-out and early check-in are subject to availability.'
       }, {
-        icon: '🐾',
-        t: 'Pets only with prior approval',
-        d: 'Not allowed unless you have asked us and we have approved them explicitly. Always pick up after them in shared areas; for any incident, responsibility lies with the owner.'
-      }, {
         icon: '🚭',
         t: 'No smoking inside Hestía',
         d: 'Strictly forbidden in the whole apartment.'
@@ -5194,6 +5191,11 @@ const GUIDE_SHARED = {
         icon: '🏥',
         t: 'Vets and pet boarding',
         d: 'If you need a vet or somewhere to leave them for a few hours or days, the full list is in the Health chapter.'
+      }, {
+        icon: '📜',
+        t: 'Official pet-travel requirements',
+        d: 'If you are coming from outside Spain: a microchip, an EU pet passport and an up-to-date rabies vaccination are mandatory. Official guide from Spain\'s Ministry of Agriculture, Fisheries and Food.',
+        href: 'https://www.mapa.gob.es/en/ganaderia/temas/comercio-exterior-ganadero/desplazamiento-animales-compania/viajar-perros-gatos-hurones'
       }]
     },
     surroundings: {
@@ -11466,7 +11468,12 @@ const AptGuideView = ({
     className: "ag-rule-title"
   }, item.t), /*#__PURE__*/React.createElement("p", {
     className: "ag-rule-desc"
-  }, item.d)))))), a.rooms.map((room, idx) => /*#__PURE__*/React.createElement("section", {
+  }, item.d), item.href && /*#__PURE__*/React.createElement("a", {
+    className: "ag-rule-link",
+    href: item.href,
+    target: "_blank",
+    rel: "noopener"
+  }, lang === 'es' ? 'Ver web oficial →' : 'See official site →')))))), a.rooms.map((room, idx) => /*#__PURE__*/React.createElement("section", {
     key: room.id,
     id: `ag-${room.id}`,
     className: `ag-section ag-room ag-room-${room.id}`

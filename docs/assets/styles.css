@@ -12374,6 +12374,16 @@ footer,
   line-height: 1.55;
   margin: 0;
 }
+.ag-rule-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--sol-text, #176E80);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(23,110,128,.35);
+}
+.ag-rule-link:hover { border-bottom-color: rgba(23,110,128,.8); }
 
 /* Leyenda del mapa de la urbanización: misma estructura que .ag-recs
    pero numeración no padded (1, 2, 3...) para coincidir con los
