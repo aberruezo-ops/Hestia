@@ -6393,6 +6393,35 @@ const _useLocalMin = (key, fallback = false) => {
   return [min, update];
 };
 
+// Mismo mecanismo que _useLocalMin pero para paneles flotantes sueltos que
+// no se persisten entre sesiones (chat, regalo, tiempo en móvil...): abrir
+// uno cierra cualquier otro que esté abierto, en vez de acumular pops uno
+// encima de otro. No usa localStorage, siempre arranca cerrado.
+const _useExclusiveOpen = key => {
+  const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    const onOpen = e => {
+      if (e.detail !== key) setOpen(false);
+    };
+    window.addEventListener(_WIDGET_OPEN_EVENT, onOpen);
+    return () => window.removeEventListener(_WIDGET_OPEN_EVENT, onOpen);
+  }, [key]);
+  const setOpenExclusive = v => {
+    setOpen(v);
+    if (v) {
+      try {
+        window.dispatchEvent(new CustomEvent(_WIDGET_OPEN_EVENT, {
+          detail: key
+        }));
+      } catch (e) {}
+    }
+  };
+  return [open, setOpenExclusive];
+};
+Object.assign(window, {
+  _useExclusiveOpen
+});
+
 // Pastilla corporativa de minimizado, reutilizada por los 3 widgets.
 // Borde redondeado a la izquierda + recta a la derecha (pegada al borde
 // del viewport). Estrella sol + label en caps + tinte ber-dk corporativo.
@@ -7239,7 +7268,7 @@ const WidgetWeather = ({
   const [min, setMin] = _useLocalMin('weather', true); // plegado por defecto (solo variant floating)
   const [wx, setWx] = React.useState(null); // null = cargando/no disponible
   const [show7d, setShow7d] = React.useState(false);
-  const [fabOpen, setFabOpen] = React.useState(false); // solo variant="fab"
+  const [fabOpen, setFabOpen] = _useExclusiveOpen('weather-fab'); // solo variant="fab"
   React.useEffect(() => {
     let alive = true;
     const CACHE_KEY = 'hestia-weather-cache-v4';
@@ -7307,10 +7336,17 @@ const WidgetWeather = ({
   const sky = wx ? _WMO_SKY(wx.code) : null;
   const moon = _moonPhase();
   const DOW = lang === 'es' ? ['D', 'L', 'M', 'X', 'J', 'V', 'S'] : ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+  // En variant="fab", abrir los 7 días con el panel ya desplegado apilaba
+  // un pop encima de otro: se cierra el panel ancla antes de abrir el
+  // modal de 7 días, nunca los dos overlays a la vez.
   const SevenDayLink = () => wx && wx.days.length > 0 ? /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "widget-cta widget-cta-ghost wthr-7d-btn",
-    onClick: () => setShow7d(true)
+    onClick: () => {
+      if (variant === 'fab') setFabOpen(false);
+      setShow7d(true);
+    }
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver 7 días' : 'See 7 days'), /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
   }, "→")) : null;
@@ -7450,7 +7486,7 @@ const WidgetWeather = ({
     }, label), /*#__PURE__*/React.createElement(Content, null)), /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: "wthr-fab",
-      onClick: () => setFabOpen(o => !o),
+      onClick: () => setFabOpen(!fabOpen),
       "aria-expanded": fabOpen,
       "aria-label": label,
       title: label
