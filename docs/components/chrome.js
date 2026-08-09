@@ -572,8 +572,11 @@ const Header = ({
 const FloatingChat = ({
   lang
 }) => {
-  const [open, setOpen] = React.useState(false);
-  const [giftOpen, setGiftOpen] = React.useState(false);
+  // _useExclusiveOpen (shared.jsx): abrir chat o regalo cierra cualquier
+  // otro panel flotante abierto (incluido el del tiempo en móvil), en vez
+  // de acumular pops uno encima de otro.
+  const [open, setOpen] = window._useExclusiveOpen('chat');
+  const [giftOpen, setGiftOpen] = window._useExclusiveOpen('gift');
   const WaIcon = () => /*#__PURE__*/React.createElement("svg", {
     width: "14",
     height: "14",
@@ -700,10 +703,7 @@ const FloatingChat = ({
     href: `mailto:info@hestiayourhome.com?subject=${giftSubject}&body=${giftBody}`
   }, lang === 'es' ? 'Por email' : 'By email'))), /*#__PURE__*/React.createElement("button", {
     className: "gift-fab",
-    onClick: () => {
-      setGiftOpen(!giftOpen);
-      setOpen(false);
-    },
+    onClick: () => setGiftOpen(!giftOpen),
     "aria-expanded": giftOpen,
     "aria-label": lang === 'es' ? 'Regala Hestía' : 'Gift Hestía'
   }, /*#__PURE__*/React.createElement(HiIcon, {
@@ -769,10 +769,7 @@ const FloatingChat = ({
     className: "sub"
   }, "info@hestiayourhome.com")))), /*#__PURE__*/React.createElement("button", {
     className: "bubble-btn",
-    onClick: () => {
-      setOpen(!open);
-      setGiftOpen(false);
-    },
+    onClick: () => setOpen(!open),
     "aria-label": open ? lang === 'es' ? 'Cerrar chat' : 'Close chat' : lang === 'es' ? 'Abrir chat' : 'Open chat'
   }, open ? /*#__PURE__*/React.createElement(IconClose, null) : /*#__PURE__*/React.createElement(IconChat, null)));
 };
