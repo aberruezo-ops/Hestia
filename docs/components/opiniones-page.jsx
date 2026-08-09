@@ -277,7 +277,7 @@ const OpinionesTestimonials = ({ lang }) => {
     { id: 'all', es: 'Todas las Hestías', en: 'All Hestías', accent: 'var(--ber)' },
     { id: 'vm',  es: 'Mar',              en: 'Mar',          accent: '#6B7A3A' },
     { id: 'vt',  es: 'Thalassa',         en: 'Thalassa',     accent: '#8A4A24' },
-    { id: 'vs',  es: 'Salinas',          en: 'Salinas',      accent: '#9E7A2C' },
+    { id: 'vs',  es: 'Salinas',          en: 'Salinas',      accent: '#7A5E1A' },
   ];
 
   return (
@@ -401,6 +401,7 @@ const OpinionesPageApp = () => {
               <div className="osc-gmaps-links">
                 {[['vm','Hestía Mar'],['vt','Hestía Thalassa'],['vs','Hestía Salinas']].map(([id, name]) => (
                   <a key={id} href={GMAPS_PLACE[id]} target="_blank" rel="noopener" className="osc-gmaps-link">
+                    <span className="apt-dot" data-apt={id} aria-hidden="true"/>
                     <span className="osc-gmaps-g" aria-hidden="true">G</span>{name}
                   </a>
                 ))}

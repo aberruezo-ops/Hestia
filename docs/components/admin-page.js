@@ -6085,9 +6085,9 @@ const OccupancyTimeline = ({
       background: APT_COLOR[apt],
       color: APT_TEXT[apt]
     },
-    title: `${b.r.responsable || '—'} · ${_dayMon(b.r.entrada)} → ${_dayMon(b.r.salida)} · ${b.r.canal || ''}`,
+    title: `${b.r.responsable || 'Sin nombre'} · ${_dayMon(b.r.entrada)} → ${_dayMon(b.r.salida)} · ${b.r.canal || ''}`,
     onClick: () => onOpen && onOpen(b.r)
-  }, /*#__PURE__*/React.createElement("span", null, b.r.responsable || '—'))))))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, b.r.responsable || 'Sin nombre'))))))), /*#__PURE__*/React.createElement("div", {
     className: "rv-ocup-legend"
   }, OCUP_APTS.map(apt => /*#__PURE__*/React.createElement("span", {
     key: apt,

@@ -602,7 +602,7 @@ const AptCalendar = ({
   };
   return /*#__PURE__*/React.createElement("section", {
     id: "apt-avail",
-    className: "apt-avail",
+    className: "apt-avail on-dark",
     "data-avail-checker": true,
     style: sectionStyle
   }, /*#__PURE__*/React.createElement("div", {

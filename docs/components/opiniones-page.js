@@ -398,7 +398,7 @@ const OpinionesTestimonials = ({
     id: 'vs',
     es: 'Salinas',
     en: 'Salinas',
-    accent: '#9E7A2C'
+    accent: '#7A5E1A'
   }];
   return /*#__PURE__*/React.createElement("section", {
     className: "opiniones-testimonials"
@@ -519,6 +519,10 @@ const OpinionesPageApp = () => {
     rel: "noopener",
     className: "osc-gmaps-link"
   }, /*#__PURE__*/React.createElement("span", {
+    className: "apt-dot",
+    "data-apt": id,
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", {
     className: "osc-gmaps-g",
     "aria-hidden": "true"
   }, "G"), name)))))), /*#__PURE__*/React.createElement(QuickFAQ, {

@@ -155,7 +155,7 @@ const NosotrosTeam = ({ lang }) => {
     </svg>
   );
   return (
-    <section className="nosotros-team">
+    <section className="nosotros-team on-dark">
       <div className="container">
         <div className="eyebrow nos-team-eyebrow">{t.team_eyebrow}</div>
         <h2 className="reveal">{t.team_title}</h2>
@@ -211,7 +211,7 @@ const NosotrosTeam = ({ lang }) => {
 const NosotrosManifest = ({ lang }) => {
   const t = COPY[lang];
   return (
-    <section className="manifest">
+    <section className="manifest on-dark">
       <div className="manifest-inner">
         <div>
           <div className="eyebrow">{t.manifest_eyebrow}</div>

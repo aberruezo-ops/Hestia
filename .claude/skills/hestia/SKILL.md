@@ -195,8 +195,19 @@ border-radius: 14px 0 14px 0;   /* variante video intro */
 border-radius: 8px 0 8px 0;     /* variante mobile */
 ```
 
-Aplica este patrón a cards, botones, pills, badges, overlays, tags.
-**Nunca** uses `border-radius: 50%` (círculos) salvo avatares.
+Aplica este patrón a cards, botones, modales, overlays y tags.
+**Nunca** uses `border-radius: 50%` (círculos) salvo avatares, puntos/marcadores
+de estado (`.apt-dot`, leyendas, indicador "hoy" del calendario) y los 4
+botones de acción flotante de móvil (chat, regalo, sonido, tiempo): esos
+cuatro son un set a juego, mismo tamaño y anillo, y siguen el patrón
+universal de FAB circular (como un lanzador de WhatsApp) a propósito.
+
+**Excepción documentada: pills, badges y tags van en cápsula, no asimétricos.**
+`border-radius: 999px` (o `100px`) es la convención real y consistente en
+todo el sitio para chips, badges y etiquetas (`.rv-ocup-pill`, `.lss-pill-save`,
+`.ag-place-discount`, etc., ~36 instancias). Si añades un pill/badge/tag nuevo,
+usa `999px`, no el asimétrico de arriba — esa parte del texto original de esta
+guía no reflejaba la práctica real del código y quedó corregida aquí.
 
 ---
 

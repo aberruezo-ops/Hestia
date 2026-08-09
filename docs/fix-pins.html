@@ -206,7 +206,7 @@ fetch('data/places.json')
   .then(r=>r.json())
   .then(loadPlaces)
   .catch(()=>{
-    document.getElementById('empty-msg').textContent='Error cargando places.json — sirve desde docs/ con un servidor local';
+    document.getElementById('empty-msg').textContent='Error cargando places.json: sirve desde docs/ con un servidor local';
   });
 </script>
 </body>

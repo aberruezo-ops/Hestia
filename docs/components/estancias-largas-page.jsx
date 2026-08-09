@@ -124,7 +124,7 @@ const _fmtRate  = (n, lang) => String(Math.round(Number(n) || 0)).replace(/\B(?=
 const LsHero = ({ lang }) => {
   const t = LS_COPY[lang];
   return (
-    <section className="lsl-hero">
+    <section className="lsl-hero on-dark">
       <video
         className="lsl-hero-video"
         src="assets/Videoshome/hero-rompeolas.mp4"

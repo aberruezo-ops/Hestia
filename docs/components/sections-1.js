@@ -177,7 +177,7 @@ const Hero = ({
   }, []);
   return /*#__PURE__*/React.createElement("section", {
     id: "top",
-    className: `hero mood-${pick.mood}`,
+    className: `hero on-dark mood-${pick.mood}`,
     "data-screen-label": "01 Hero",
     "data-hero-video": pick.src
   }, /*#__PURE__*/React.createElement("video", {
@@ -1205,7 +1205,7 @@ const LastMinuteStrip = ({
     }, lang === 'es' ? 'Ver condiciones →' : 'See conditions →'));
   };
   return /*#__PURE__*/React.createElement("section", {
-    className: `lm-strip${embedded ? ' lm-strip--embedded' : ''}`,
+    className: `lm-strip on-dark${embedded ? ' lm-strip--embedded' : ''}`,
     "aria-label": lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'
   }, /*#__PURE__*/React.createElement("div", {
     className: "lm-inner"
@@ -1255,7 +1255,7 @@ const HomePriceStrip = ({
     }[id];
   };
   return /*#__PURE__*/React.createElement("section", {
-    className: "hps-strip",
+    className: "hps-strip on-dark",
     "aria-label": lang === 'es' ? 'Precios por apartamento' : 'Prices per apartment'
   }, /*#__PURE__*/React.createElement("div", {
     className: "hps-inner"

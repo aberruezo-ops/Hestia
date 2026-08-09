@@ -581,7 +581,7 @@ const NoticiasPage = ({
     className: `noticias-edition-float${floatEd ? ' visible' : ''}`,
     "aria-hidden": !floatEd
   }, lang === 'es' ? 'Edición · ' + N.edition.es : 'Edition · ' + N.edition.en), /*#__PURE__*/React.createElement("section", {
-    className: "page-hero noticias-hero"
+    className: "page-hero noticias-hero on-dark"
   }, /*#__PURE__*/React.createElement("video", {
     className: "noticias-hero-video",
     src: "assets/BE123FA9-6E78-4AE0-AF49-8253801E58E8.MP4",

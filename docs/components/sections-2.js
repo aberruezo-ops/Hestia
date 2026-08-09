@@ -43,7 +43,7 @@ const Counters = ({
   const sun = useCountUp(320, 2000, seen);
   const apts = useCountUp(3, 1200, seen);
   return /*#__PURE__*/React.createElement("section", {
-    className: "counters",
+    className: "counters on-dark",
     ref: ref,
     "data-screen-label": "05 Cifras"
   }, /*#__PURE__*/React.createElement("div", {
@@ -288,7 +288,7 @@ const Manifest = ({
 }) => {
   const t = COPY[lang];
   return /*#__PURE__*/React.createElement("section", {
-    className: "manifest",
+    className: "manifest on-dark",
     "data-screen-label": "08 Viajero hogareño"
   }, /*#__PURE__*/React.createElement("div", {
     className: "manifest-inner"
@@ -351,7 +351,7 @@ const Ratings = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "rating-card",
     style: {
-      borderTopColor: 'var(--sol-h)'
+      borderTopColor: 'var(--vm)'
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "platform"
@@ -463,7 +463,7 @@ const ContactCTA = ({
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(DirectPerksTeaser, {
     lang: lang
   }), /*#__PURE__*/React.createElement("section", {
-    className: "contact-cta",
+    className: "contact-cta on-dark",
     id: "contacto",
     "data-screen-label": "10 Contacto"
   }, /*#__PURE__*/React.createElement(IndaloWatermark, {

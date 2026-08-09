@@ -14,9 +14,9 @@ const MAPA_COPY = {
         title: 'Los Hestías',
         items: [
           { href: 'index.html', label: 'Home', desc: 'Empieza aquí, los tres Hestías de un vistazo.' },
-          { href: 'mar.html', label: 'Hestía Mar', desc: 'Olivo · planta primera con jardín y terraza al amanecer.' },
-          { href: 'thalassa.html', label: 'Hestía Thalassa', desc: 'Siena · ático con SPA comunitario y vistas panorámicas.' },
-          { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Albero · tres piscinas y Parque Natural a un paseo corto.' },
+          { href: 'mar.html', label: 'Hestía Mar', desc: 'Olivo · planta primera con jardín y terraza al amanecer.', apt: 'vm' },
+          { href: 'thalassa.html', label: 'Hestía Thalassa', desc: 'Siena · ático con SPA comunitario y vistas panorámicas.', apt: 'vt' },
+          { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Albero · tres piscinas y Parque Natural a un paseo corto.', apt: 'vs' },
         ],
       },
       {
@@ -57,9 +57,9 @@ const MAPA_COPY = {
         title: 'The Hestías',
         items: [
           { href: 'index.html', label: 'Home', desc: 'Start here, the three Hestías at a glance.' },
-          { href: 'mar.html', label: 'Hestía Mar', desc: 'Olive · first floor with garden and sunrise terrace.' },
-          { href: 'thalassa.html', label: 'Hestía Thalassa', desc: 'Sienna · penthouse with shared SPA and panoramic views.' },
-          { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Ochre · three pools and the Nature Park a short walk away.' },
+          { href: 'mar.html', label: 'Hestía Mar', desc: 'Olive · first floor with garden and sunrise terrace.', apt: 'vm' },
+          { href: 'thalassa.html', label: 'Hestía Thalassa', desc: 'Sienna · penthouse with shared SPA and panoramic views.', apt: 'vt' },
+          { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Ochre · three pools and the Nature Park a short walk away.', apt: 'vs' },
         ],
       },
       {
@@ -112,6 +112,7 @@ const MapaPage = ({ lang }) => {
                 {sec.items.map((it, j) => (
                   <li key={it.label} className="mapa-item reveal" style={{ transitionDelay: `${280 + i * 80 + j * 45}ms` }}>
                     <a className="mapa-link" href={it.href}>
+                      {it.apt && <span className="apt-dot" data-apt={it.apt} aria-hidden="true"/>}
                       <span className="mapa-link-label">{it.label}</span>
                       <span className="mapa-link-arrow" aria-hidden="true">→</span>
                     </a>

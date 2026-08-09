@@ -36,7 +36,7 @@ const Counters = ({ lang }) => {
   const apts = useCountUp(3, 1200, seen);
 
   return (
-    <section className="counters" ref={ref} data-screen-label="05 Cifras">
+    <section className="counters on-dark" ref={ref} data-screen-label="05 Cifras">
       <div className="inner">
         <div className="eyebrow">{t.counters_eyebrow}</div>
         <div className="counters-grid">
@@ -188,7 +188,7 @@ const Team = ({ lang }) => {
 const Manifest = ({ lang }) => {
   const t = COPY[lang];
   return (
-    <section className="manifest" data-screen-label="08 Viajero hogareño">
+    <section className="manifest on-dark" data-screen-label="08 Viajero hogareño">
       <div className="manifest-inner">
         <div>
           <div className="eyebrow">{t.manifest_eyebrow}</div>
@@ -231,7 +231,7 @@ const Ratings = ({ lang }) => {
         <h2>{t.ratings_title}</h2>
         <p className="ratings-sub">{t.ratings_sub}</p>
         <div className="ratings-grid">
-          <div className="rating-card" style={{borderTopColor: 'var(--sol-h)'}}>
+          <div className="rating-card" style={{borderTopColor: 'var(--vm)'}}>
             <div className="platform">Booking.com</div>
             <div className="score">9<span className="dec">.8</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_booking_desc}</div>
@@ -339,7 +339,7 @@ const ContactCTA = ({ lang, availHref }) => {
   return (
     <>
       <DirectPerksTeaser lang={lang} />
-      <section className="contact-cta" id="contacto" data-screen-label="10 Contacto">
+      <section className="contact-cta on-dark" id="contacto" data-screen-label="10 Contacto">
         <IndaloWatermark className="cta-indalo-wm" />
         <div className="inner">
           <div className="eyebrow">{t.contact_eyebrow}</div>

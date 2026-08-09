@@ -4674,9 +4674,9 @@ const OccupancyTimeline = ({ reservas, today, onOpen }) => {
                 <button type="button" key={i}
                   className={`rv-ocup-bar${_dOnly(b.r.salida) <= today ? ' past' : ''}${b.contL ? ' cont-l' : ''}${b.contR ? ' cont-r' : ''}`}
                   style={{ gridColumn: `${b.s + 2} / ${b.e + 2}`, gridRow: 1, background: APT_COLOR[apt], color: APT_TEXT[apt] }}
-                  title={`${b.r.responsable || '—'} · ${_dayMon(b.r.entrada)} → ${_dayMon(b.r.salida)} · ${b.r.canal || ''}`}
+                  title={`${b.r.responsable || 'Sin nombre'} · ${_dayMon(b.r.entrada)} → ${_dayMon(b.r.salida)} · ${b.r.canal || ''}`}
                   onClick={() => onOpen && onOpen(b.r)}>
-                  <span>{b.r.responsable || '—'}</span>
+                  <span>{b.r.responsable || 'Sin nombre'}</span>
                 </button>
               ))}
             </div>

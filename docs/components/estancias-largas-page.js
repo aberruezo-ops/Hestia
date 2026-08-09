@@ -162,7 +162,7 @@ const LsHero = ({
 }) => {
   const t = LS_COPY[lang];
   return /*#__PURE__*/React.createElement("section", {
-    className: "lsl-hero"
+    className: "lsl-hero on-dark"
   }, /*#__PURE__*/React.createElement("video", {
     className: "lsl-hero-video",
     src: "assets/Videoshome/hero-rompeolas.mp4",
