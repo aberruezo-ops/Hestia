@@ -11256,7 +11256,7 @@ const AdminApp = () => {
       setSuccess(null);
     }
   }, /*#__PURE__*/React.createElement(HiIcon, {
-    name: "star-fill",
+    name: "star-rate",
     size: 18,
     className: "pe-tab-ic"
   }), /*#__PURE__*/React.createElement("span", {

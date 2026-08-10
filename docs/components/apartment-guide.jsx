@@ -466,8 +466,8 @@ const GUIDE_EMOJI_HI = {
   '🚿': 'shower', '🛟': 'lifebuoy', '🍹': 'cocktail', '🛏': 'bed', '🚻': 'toilet', '♿': 'accessible',
   '🏊': 'pool', '🪑': 'chair', '🚪': 'door', '🛎': 'bell', '🕒': 'clock', '🤫': 'mute', '🚭': 'nosmoking',
   '🌬': 'wind', '🧹': 'broom', '👙': 'umbrella', '🧳': 'luggage', '📞': 'phone', '📍': 'pin',
-  '🧗': 'mountain', '🥾': 'boot', '⭐': 'star-fill', '🌿': 'olive', '🍴': 'fork', '🏛': 'buildings',
-  '📜': 'doc', '✦': 'spark', '⛰': 'mountain', '☕': 'coffee', '🏖': 'umbrella', '🛒': 'cart',
+  '🧗': 'mountain', '🥾': 'boot', '⭐': 'star-fill', '🌿': 'olive', '🍴': 'fork', '🍽': 'fork', '🏛': 'buildings',
+  '📜': 'doc', '📝': 'doc', '✦': 'spark', '⛰': 'mountain', '☕': 'coffee', '🏖': 'umbrella', '🛒': 'cart',
   '🐾': 'paw', '🐕': 'paw', '🧺': 'basket', '🐟': 'fish', '🎭': 'ticket', '🏰': 'shield', '🏯': 'shield',
   '🌊': 'wave', '🌾': 'wheat', '💊': 'pill', '🏥': 'cross', '🩺': 'stethoscope', '💆': 'heart',
   '🗺': 'pin', '⚡': 'spark', '🍷': 'wine', '🏘': 'buildings', '📚': 'book', '🏪': 'shop', '⛽': 'fuel',
@@ -475,8 +475,11 @@ const GUIDE_EMOJI_HI = {
   '🍝': 'fork', '🍲': 'fork', '🥘': 'fork', '🦐': 'fish', '🍤': 'fish', '🍋': 'fork', '🥖': 'fork',
   '🥧': 'fork', '🍞': 'fork', '🌶': 'fork', '🥬': 'fork', '🥣': 'fork', '🍵': 'coffee', '🐐': 'fork',
   '🐙': 'fish', '🍳': 'fork', '🥗': 'fork', '🐌': 'fork', '🥞': 'fork',
+  '💶': 'euro', '🚼': 'baby', '👨‍👩‍👧': 'baby',
 };
-const GUIDE_EMOJI_RE = /[\p{Extended_Pictographic}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}]️?/gu;
+// Incluye ‍ (ZWJ) para que las familias emoji compuestas (👨‍👩‍👧, varios
+// codepoints unidos) casen como UNA sola clave, no persona a persona.
+const GUIDE_EMOJI_RE = /[\p{Extended_Pictographic}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}]️?(?:‍[\p{Extended_Pictographic}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}]️?)*/gu;
 // Convierte una cadena con emojis a nodos React, sustituyendo cada emoji conocido
 // por su icono de marca y dejando intacto el texto (y los emojis sin mapear).
 const iconifyText = (text, size = 14) => {

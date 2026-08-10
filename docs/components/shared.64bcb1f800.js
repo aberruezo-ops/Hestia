@@ -1993,7 +1993,8 @@ const PERK_HI = {
   descuento: 'gift',
   guia: 'key',
   mascotas: 'paw',
-  aliados: 'handshake'
+  aliados: 'handshake',
+  proceso: 'doc'
 };
 const HiIcon = ({
   name,
@@ -2074,7 +2075,9 @@ const BRAND_EMOJI_HI = {
   '🏘': 'buildings',
   '🍷': 'wine',
   '🐟': 'fish',
-  '🦩': 'salt'
+  '🦩': 'salt',
+  '✓': 'check',
+  '✗': 'ban'
 };
 const emojiHi = emoji => BRAND_EMOJI_HI[(emoji || '').replace(/️/g, '')];
 // Render: icono de marca si el emoji está mapeado; si no, el emoji tal cual.
