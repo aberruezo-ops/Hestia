@@ -5458,6 +5458,43 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
           </div>
         </div>
 
+        {/* ───── Filtros ───── */}
+        <div className="rv-toolbar">
+          <label>Año
+            <select value={focusYear} onChange={e => { setFocusYearOverride(e.target.value); setFocusMonth('all'); }}>
+              {allYears.slice().reverse().map(y => <option key={y} value={y}>{y}</option>)}
+            </select>
+          </label>
+          <label>Mes
+            <select value={focusMonth} onChange={e => setFocusMonth(e.target.value)}>
+              <option value="all">Todos los meses</option>
+              {allMonths.map(m => <option key={m} value={m}>{MES_FULL[parseInt(m, 10) - 1]}</option>)}
+            </select>
+          </label>
+          <label>Apartamento
+            <select value={filterApt} onChange={e => setFilterApt(e.target.value)}>
+              <option value="all">Todos</option>
+              {Object.entries(APT_NAMES).map(([k,v]) => <option key={k} value={k}>{v}</option>)}
+            </select>
+          </label>
+          <label>Canal
+            <select value={filterCanal} onChange={e => setFilterCanal(e.target.value)}>
+              <option value="all">Todos</option>
+              {canalKeys.map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
+            </select>
+          </label>
+          <label>Estado
+            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
+              <option value="all">Todas</option>
+              <option value="staying">En estancia</option>
+              <option value="upcoming">Próximas</option>
+              <option value="past">Pasadas</option>
+              <option value="cancelada">Canceladas</option>
+            </select>
+          </label>
+          <span className="rv-hint">Click en una fila para editarla →</span>
+        </div>
+
         {/* ───── Alerta discrepancias iCal ──────────────────────────────────
             Bloques bloqueados en Airbnb/Booking sin reserva en P-Edit.
             Puede indicar una reserva OTA no registrada manualmente. */}
@@ -5604,43 +5641,6 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
             </ul>
           </div>
         )}
-
-        {/* ───── Filtros ───── */}
-        <div className="rv-toolbar">
-          <label>Año
-            <select value={focusYear} onChange={e => { setFocusYearOverride(e.target.value); setFocusMonth('all'); }}>
-              {allYears.slice().reverse().map(y => <option key={y} value={y}>{y}</option>)}
-            </select>
-          </label>
-          <label>Mes
-            <select value={focusMonth} onChange={e => setFocusMonth(e.target.value)}>
-              <option value="all">Todos los meses</option>
-              {allMonths.map(m => <option key={m} value={m}>{MES_FULL[parseInt(m, 10) - 1]}</option>)}
-            </select>
-          </label>
-          <label>Apartamento
-            <select value={filterApt} onChange={e => setFilterApt(e.target.value)}>
-              <option value="all">Todos</option>
-              {Object.entries(APT_NAMES).map(([k,v]) => <option key={k} value={k}>{v}</option>)}
-            </select>
-          </label>
-          <label>Canal
-            <select value={filterCanal} onChange={e => setFilterCanal(e.target.value)}>
-              <option value="all">Todos</option>
-              {canalKeys.map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
-            </select>
-          </label>
-          <label>Estado
-            <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)}>
-              <option value="all">Todas</option>
-              <option value="staying">En estancia</option>
-              <option value="upcoming">Próximas</option>
-              <option value="past">Pasadas</option>
-              <option value="cancelada">Canceladas</option>
-            </select>
-          </label>
-          <span className="rv-hint">Click en una fila para editarla →</span>
-        </div>
 
         {/* ───── Tablas por mes ───── */}
         {visibleMonths.length === 0 && (
