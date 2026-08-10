@@ -904,8 +904,10 @@ const GUIDE_EMOJI_HI = {
   '⭐': 'star-fill',
   '🌿': 'olive',
   '🍴': 'fork',
+  '🍽': 'fork',
   '🏛': 'buildings',
   '📜': 'doc',
+  '📝': 'doc',
   '✦': 'spark',
   '⛰': 'mountain',
   '☕': 'coffee',
@@ -956,9 +958,14 @@ const GUIDE_EMOJI_HI = {
   '🍳': 'fork',
   '🥗': 'fork',
   '🐌': 'fork',
-  '🥞': 'fork'
+  '🥞': 'fork',
+  '💶': 'euro',
+  '🚼': 'baby',
+  '👨‍👩‍👧': 'baby'
 };
-const GUIDE_EMOJI_RE = /[\p{Extended_Pictographic}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}]️?/gu;
+// Incluye ‍ (ZWJ) para que las familias emoji compuestas (👨‍👩‍👧, varios
+// codepoints unidos) casen como UNA sola clave, no persona a persona.
+const GUIDE_EMOJI_RE = /[\p{Extended_Pictographic}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}]️?(?:‍[\p{Extended_Pictographic}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}]️?)*/gu;
 // Convierte una cadena con emojis a nodos React, sustituyendo cada emoji conocido
 // por su icono de marca y dejando intacto el texto (y los emojis sin mapear).
 const iconifyText = (text, size = 14) => {

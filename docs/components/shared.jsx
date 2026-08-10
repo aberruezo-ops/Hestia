@@ -210,7 +210,7 @@ const IconSprite = () => (
   </svg>
 )
 // Mapa de ventajas de reserva directa (por id, independiente del idioma) a icono propio.
-const PERK_HI = { precio: 'tag', comision: 'ban', respuesta: 'clock', cancel: 'unlock', pago: 'card', descuento: 'gift', guia: 'key', mascotas: 'paw', aliados: 'handshake' };
+const PERK_HI = { precio: 'tag', comision: 'ban', respuesta: 'clock', cancel: 'unlock', pago: 'card', descuento: 'gift', guia: 'key', mascotas: 'paw', aliados: 'handshake', proceso: 'doc' };
 const HiIcon = ({ name, size = 24, className = '', style, title }) => (
   <svg className={`hi${className ? ' ' + className : ''}`} width={size} height={size}
        role={title ? 'img' : undefined} aria-hidden={title ? undefined : 'true'} style={style}>
@@ -233,6 +233,7 @@ const BRAND_EMOJI_HI = {
   '🗑': 'trash', '✅': 'check', '📄': 'doc', '🧾': 'receipt', '📊': 'chart', '📈': 'chart',
   '📷': 'camera', '⏱': 'clock', '🧳': 'luggage', '✈': 'plane', '🚌': 'bus', '🚆': 'train',
   '🚗': 'car', '🚶': 'walk', '🏘': 'buildings', '🍷': 'wine', '🐟': 'fish', '🦩': 'salt',
+  '✓': 'check', '✗': 'ban',
 };
 const emojiHi = (emoji) => BRAND_EMOJI_HI[(emoji || '').replace(/️/g, '')];
 // Render: icono de marca si el emoji está mapeado; si no, el emoji tal cual.

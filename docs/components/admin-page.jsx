@@ -8411,7 +8411,7 @@ const AdminApp = () => {
         <button type="button"
           className={`pe-tab${mode === 'reviews' ? ' is-active' : ''}`}
           onClick={() => { setMode('reviews'); setError(null); setSuccess(null); }}>
-          <HiIcon name="star-fill" size={18} className="pe-tab-ic" /><span className="pe-tab-label"> Reviews</span>
+          <HiIcon name="star-rate" size={18} className="pe-tab-ic" /><span className="pe-tab-label"> Reviews</span>
           {reviewsData && (() => {
             const pending = (reviewsData.items || []).filter(r => r.status === 'pending').length;
             return pending > 0 ? <span className="pe-tab-badge">{pending}</span> : null;
