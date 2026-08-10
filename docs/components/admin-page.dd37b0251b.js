@@ -6962,7 +6962,57 @@ const ReservasTab = ({
     type: "button",
     className: "pe-btn pe-btn-primary",
     onClick: newRow
-  }, "+ Nueva"))), icalDiscrepancies.length > 0 && /*#__PURE__*/React.createElement("div", {
+  }, "+ Nueva"))), /*#__PURE__*/React.createElement("div", {
+    className: "rv-toolbar"
+  }, /*#__PURE__*/React.createElement("label", null, "Año", /*#__PURE__*/React.createElement("select", {
+    value: focusYear,
+    onChange: e => {
+      setFocusYearOverride(e.target.value);
+      setFocusMonth('all');
+    }
+  }, allYears.slice().reverse().map(y => /*#__PURE__*/React.createElement("option", {
+    key: y,
+    value: y
+  }, y)))), /*#__PURE__*/React.createElement("label", null, "Mes", /*#__PURE__*/React.createElement("select", {
+    value: focusMonth,
+    onChange: e => setFocusMonth(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "Todos los meses"), allMonths.map(m => /*#__PURE__*/React.createElement("option", {
+    key: m,
+    value: m
+  }, MES_FULL[parseInt(m, 10) - 1])))), /*#__PURE__*/React.createElement("label", null, "Apartamento", /*#__PURE__*/React.createElement("select", {
+    value: filterApt,
+    onChange: e => setFilterApt(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "Todos"), Object.entries(APT_NAMES).map(([k, v]) => /*#__PURE__*/React.createElement("option", {
+    key: k,
+    value: k
+  }, v)))), /*#__PURE__*/React.createElement("label", null, "Canal", /*#__PURE__*/React.createElement("select", {
+    value: filterCanal,
+    onChange: e => setFilterCanal(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "Todos"), canalKeys.map(c => /*#__PURE__*/React.createElement("option", {
+    key: c,
+    value: c
+  }, c.charAt(0).toUpperCase() + c.slice(1))))), /*#__PURE__*/React.createElement("label", null, "Estado", /*#__PURE__*/React.createElement("select", {
+    value: filterStatus,
+    onChange: e => setFilterStatus(e.target.value)
+  }, /*#__PURE__*/React.createElement("option", {
+    value: "all"
+  }, "Todas"), /*#__PURE__*/React.createElement("option", {
+    value: "staying"
+  }, "En estancia"), /*#__PURE__*/React.createElement("option", {
+    value: "upcoming"
+  }, "Próximas"), /*#__PURE__*/React.createElement("option", {
+    value: "past"
+  }, "Pasadas"), /*#__PURE__*/React.createElement("option", {
+    value: "cancelada"
+  }, "Canceladas"))), /*#__PURE__*/React.createElement("span", {
+    className: "rv-hint"
+  }, "Click en una fila para editarla →")), icalDiscrepancies.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "pe-card rv-discrepancy-banner"
   }, /*#__PURE__*/React.createElement("div", {
     className: "rv-discrepancy-head",
@@ -7198,57 +7248,7 @@ const ReservasTab = ({
       "aria-label": `Quitar petición de reseña de ${r.responsable}`,
       onClick: () => dismissReviewReq(r)
     }, "×"));
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "rv-toolbar"
-  }, /*#__PURE__*/React.createElement("label", null, "Año", /*#__PURE__*/React.createElement("select", {
-    value: focusYear,
-    onChange: e => {
-      setFocusYearOverride(e.target.value);
-      setFocusMonth('all');
-    }
-  }, allYears.slice().reverse().map(y => /*#__PURE__*/React.createElement("option", {
-    key: y,
-    value: y
-  }, y)))), /*#__PURE__*/React.createElement("label", null, "Mes", /*#__PURE__*/React.createElement("select", {
-    value: focusMonth,
-    onChange: e => setFocusMonth(e.target.value)
-  }, /*#__PURE__*/React.createElement("option", {
-    value: "all"
-  }, "Todos los meses"), allMonths.map(m => /*#__PURE__*/React.createElement("option", {
-    key: m,
-    value: m
-  }, MES_FULL[parseInt(m, 10) - 1])))), /*#__PURE__*/React.createElement("label", null, "Apartamento", /*#__PURE__*/React.createElement("select", {
-    value: filterApt,
-    onChange: e => setFilterApt(e.target.value)
-  }, /*#__PURE__*/React.createElement("option", {
-    value: "all"
-  }, "Todos"), Object.entries(APT_NAMES).map(([k, v]) => /*#__PURE__*/React.createElement("option", {
-    key: k,
-    value: k
-  }, v)))), /*#__PURE__*/React.createElement("label", null, "Canal", /*#__PURE__*/React.createElement("select", {
-    value: filterCanal,
-    onChange: e => setFilterCanal(e.target.value)
-  }, /*#__PURE__*/React.createElement("option", {
-    value: "all"
-  }, "Todos"), canalKeys.map(c => /*#__PURE__*/React.createElement("option", {
-    key: c,
-    value: c
-  }, c.charAt(0).toUpperCase() + c.slice(1))))), /*#__PURE__*/React.createElement("label", null, "Estado", /*#__PURE__*/React.createElement("select", {
-    value: filterStatus,
-    onChange: e => setFilterStatus(e.target.value)
-  }, /*#__PURE__*/React.createElement("option", {
-    value: "all"
-  }, "Todas"), /*#__PURE__*/React.createElement("option", {
-    value: "staying"
-  }, "En estancia"), /*#__PURE__*/React.createElement("option", {
-    value: "upcoming"
-  }, "Próximas"), /*#__PURE__*/React.createElement("option", {
-    value: "past"
-  }, "Pasadas"), /*#__PURE__*/React.createElement("option", {
-    value: "cancelada"
-  }, "Canceladas"))), /*#__PURE__*/React.createElement("span", {
-    className: "rv-hint"
-  }, "Click en una fila para editarla →")), visibleMonths.length === 0 && (isHistoricOnly(focusYear) ? /*#__PURE__*/React.createElement("p", {
+  }))), visibleMonths.length === 0 && (isHistoricOnly(focusYear) ? /*#__PURE__*/React.createElement("p", {
     className: "pe-help",
     style: {
       marginTop: 16
