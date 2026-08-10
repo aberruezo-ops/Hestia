@@ -1246,7 +1246,11 @@ const CANAL_COLORS = {
   Airbnb: '#E74C3C',
   Otro: '#888888'
 };
-function compute2026Stats(reservas) {
+
+// Agrega estadísticas (ingresos, noches, canales…) de un array de reservas.
+// No es específico de ningún año: el llamante le pasa solo las reservas de
+// UN año y guarda el resultado bajo esa clave (ver fetchBiz).
+function computeYearStats(reservas) {
   const active = reservas.filter(r => {
     if (r.cancelada === true) return false;
     const c = (r.cancelacion || '').trim().toUpperCase();
@@ -1630,9 +1634,11 @@ const IntelligenciaTab = ({
   token,
   onNavigate
 }) => {
+  const currentYear = String(new Date().getFullYear());
   const [days, setDays] = React.useState(30);
   const [cfData, setCfData] = React.useState(null);
   const [yearData, setYearData] = React.useState(null);
+  const [focusYear, setFocusYear] = React.useState(currentYear);
   const [avail, setAvail] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [cfError, setCfError] = React.useState(null);
@@ -1704,17 +1710,29 @@ const IntelligenciaTab = ({
       }) : Promise.resolve(null), fetch('assets/availability.json')]);
       if (!histRes.ok) throw new Error('No se pudo cargar el histórico');
       const hist = await histRes.json();
-      let live2026 = null;
-      if (liveRes && liveRes.ok) {
-        const raw = await liveRes.json();
-        const json = JSON.parse(atob(raw.content.replace(/\n/g, '')));
-        live2026 = compute2026Stats(json.reservas || []);
-        setReservasRaw(json.reservas || []);
-      }
       const combined = {
         ...hist.years
       };
-      if (live2026) combined['2026'] = live2026;
+      if (liveRes && liveRes.ok) {
+        const raw = await liveRes.json();
+        const json = JSON.parse(atob(raw.content.replace(/\n/g, '')));
+        const reservasLive = json.reservas || [];
+        setReservasRaw(reservasLive);
+        // Agrupa las reservas EN VIVO por año real (entrada, con salida de
+        // respaldo) antes de agregarlas: antes todo el array se metía sin
+        // filtrar bajo la clave fija '2026', así que una reserva de 2027 (o
+        // de cualquier otro año) inflaba las cifras de 2026 en vez de tener
+        // las suyas propias.
+        const byYear = {};
+        reservasLive.forEach(r => {
+          const y = (r.entrada || r.salida || '').slice(0, 4);
+          if (!y) return;
+          (byYear[y] = byYear[y] || []).push(r);
+        });
+        Object.entries(byYear).forEach(([y, rs]) => {
+          combined[y] = computeYearStats(rs);
+        });
+      }
       setYearData(combined);
       if (availRes.ok) setAvail(await availRes.json());
     } catch (e) {
@@ -1929,8 +1947,8 @@ const IntelligenciaTab = ({
         });
       }
     }
-    if (yearData?.['2026']) {
-      const d = yearData['2026'];
+    if (yearData?.[focusYear]) {
+      const d = yearData[focusYear];
       const cans = d.canales || {};
       const total = Object.values(cans).reduce((a, b) => a + b, 0) || 1;
       const ota = (cans['Booking'] || 0) + (cans['Airbnb'] || 0);
@@ -1939,7 +1957,7 @@ const IntelligenciaTab = ({
         out.push({
           sev: 'alta',
           cat: 'Canales',
-          title: `${Math.round(ota / total * 100)}% reservas OTA en 2026`,
+          title: `${Math.round(ota / total * 100)}% reservas OTA en ${focusYear}`,
           desc: 'Alta dependencia de Booking/Airbnb. Activa newsletter, redes y WhatsApp directo para reducir comisiones.',
           tab: 'pricing'
         });
@@ -1987,7 +2005,7 @@ const IntelligenciaTab = ({
       });
     }
     return out.sort((a, b) => sev[a.sev] - sev[b.sev]);
-  }, [cfData, yearData, altaFreeInfo, fc, avail]);
+  }, [cfData, yearData, altaFreeInfo, fc, avail, focusYear]);
   const toggle = key => setOpen(o => ({
     ...o,
     [key]: !o[key]
@@ -2001,8 +2019,11 @@ const IntelligenciaTab = ({
     const r = fc['booking_sent'] || 0;
     return s ? Math.round(r / s * 100) + '%' : null;
   })();
-  const stats26 = yearData?.['2026'];
   const years = yearData ? Object.keys(yearData).sort() : [];
+  // Si el año en curso no tiene datos todavía (arranque, o antes de que
+  // cargue fetchBiz), cae al último año disponible en vez de mostrar vacío.
+  const statsYear = yearData?.[focusYear] ? focusYear : years[years.length - 1] || focusYear;
+  const statsSel = yearData?.[statsYear];
   const BarRow = ({
     label,
     count,
@@ -2087,7 +2108,24 @@ const IntelligenciaTab = ({
     style: {
       marginBottom: 12
     }
-  }, "Negocio: ", bizError), !loading && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+  }, "Negocio: ", bizError), !loading && /*#__PURE__*/React.createElement(React.Fragment, null, years.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "pe-period-tabs",
+    style: {
+      marginBottom: 10
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 12,
+      color: 'rgba(61,26,53,0.6)',
+      alignSelf: 'center',
+      marginRight: 4
+    }
+  }, "Cifras del negocio · año"), years.map(y => /*#__PURE__*/React.createElement("button", {
+    key: y,
+    type: "button",
+    className: `pe-period-tab${y === statsYear ? ' is-active' : ''}`,
+    onClick: () => setFocusYear(y)
+  }, y))), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpis"
   }, /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi"
@@ -2120,21 +2158,21 @@ const IntelligenciaTab = ({
     style: {
       color: '#9A7016'
     }
-  }, stats26 ? dashFmtMoney(stats26.ingresos) : '–'), /*#__PURE__*/React.createElement("div", {
+  }, statsSel ? dashFmtMoney(statsSel.ingresos) : '–'), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-lbl"
-  }, "Ingresos 2026")), /*#__PURE__*/React.createElement("div", {
+  }, "Ingresos ", statsYear)), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi"
   }, /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-val"
-  }, stats26 ? stats26.reservas : '–'), /*#__PURE__*/React.createElement("div", {
+  }, statsSel ? statsSel.reservas : '–'), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-lbl"
-  }, "Reservas 2026")), /*#__PURE__*/React.createElement("div", {
+  }, "Reservas ", statsYear)), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi"
   }, /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-val"
-  }, stats26 ? dashFmtMoney(stats26.precio_noche) : '–'), /*#__PURE__*/React.createElement("div", {
+  }, statsSel ? dashFmtMoney(statsSel.precio_noche) : '–'), /*#__PURE__*/React.createElement("div", {
     className: "intel-kpi-lbl"
-  }, "Precio/noche medio 2026"))), /*#__PURE__*/React.createElement("div", {
+  }, "Precio/noche medio ", statsYear))), /*#__PURE__*/React.createElement("div", {
     className: "intel-alertas"
   }, /*#__PURE__*/React.createElement("div", {
     className: "intel-alertas-title"

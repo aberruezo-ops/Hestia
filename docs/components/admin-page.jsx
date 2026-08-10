@@ -1025,7 +1025,10 @@ const CANAL_COLORS = {
   Otro:    '#888888',
 };
 
-function compute2026Stats(reservas) {
+// Agrega estadísticas (ingresos, noches, canales…) de un array de reservas.
+// No es específico de ningún año: el llamante le pasa solo las reservas de
+// UN año y guarda el resultado bajo esa clave (ver fetchBiz).
+function computeYearStats(reservas) {
   const active = reservas.filter(r => {
     if (r.cancelada === true) return false;
     const c = (r.cancelacion || '').trim().toUpperCase();
@@ -1286,13 +1289,15 @@ function ReservasNochesChart({ years, yearData }) {
 // IntelligenciaTab, panel unificado: tráfico + negocio + acciones
 // ============================================================
 const IntelligenciaTab = ({ token, onNavigate }) => {
-  const [days,     setDays]     = React.useState(30);
-  const [cfData,   setCfData]   = React.useState(null);
-  const [yearData, setYearData] = React.useState(null);
-  const [avail,    setAvail]    = React.useState(null);
-  const [loading,  setLoading]  = React.useState(true);
-  const [cfError,  setCfError]  = React.useState(null);
-  const [bizError, setBizError] = React.useState(null);
+  const currentYear = String(new Date().getFullYear());
+  const [days,      setDays]      = React.useState(30);
+  const [cfData,    setCfData]    = React.useState(null);
+  const [yearData,  setYearData]  = React.useState(null);
+  const [focusYear, setFocusYear] = React.useState(currentYear);
+  const [avail,     setAvail]     = React.useState(null);
+  const [loading,   setLoading]   = React.useState(true);
+  const [cfError,   setCfError]   = React.useState(null);
+  const [bizError,  setBizError]  = React.useState(null);
   const [open,     setOpen]     = React.useState({ trafico: false, negocio: true, accesos: true, eventos: false });
   const [reservasRaw, setReservasRaw] = React.useState([]);
   const [accesses, setAccesses] = React.useState(null);
@@ -1349,15 +1354,25 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
       ]);
       if (!histRes.ok) throw new Error('No se pudo cargar el histórico');
       const hist = await histRes.json();
-      let live2026 = null;
+      const combined = { ...hist.years };
       if (liveRes && liveRes.ok) {
         const raw  = await liveRes.json();
         const json = JSON.parse(atob(raw.content.replace(/\n/g, '')));
-        live2026   = compute2026Stats(json.reservas || []);
-        setReservasRaw(json.reservas || []);
+        const reservasLive = json.reservas || [];
+        setReservasRaw(reservasLive);
+        // Agrupa las reservas EN VIVO por año real (entrada, con salida de
+        // respaldo) antes de agregarlas: antes todo el array se metía sin
+        // filtrar bajo la clave fija '2026', así que una reserva de 2027 (o
+        // de cualquier otro año) inflaba las cifras de 2026 en vez de tener
+        // las suyas propias.
+        const byYear = {};
+        reservasLive.forEach(r => {
+          const y = (r.entrada || r.salida || '').slice(0, 4);
+          if (!y) return;
+          (byYear[y] = byYear[y] || []).push(r);
+        });
+        Object.entries(byYear).forEach(([y, rs]) => { combined[y] = computeYearStats(rs); });
       }
-      const combined = { ...hist.years };
-      if (live2026) combined['2026'] = live2026;
       setYearData(combined);
       if (availRes.ok) setAvail(await availRes.json());
     } catch (e) {
@@ -1517,14 +1532,14 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
       }
     }
 
-    if (yearData?.['2026']) {
-      const d      = yearData['2026'];
+    if (yearData?.[focusYear]) {
+      const d      = yearData[focusYear];
       const cans   = d.canales || {};
       const total  = Object.values(cans).reduce((a, b) => a + b, 0) || 1;
       const ota    = (cans['Booking'] || 0) + (cans['Airbnb'] || 0);
       const direct = cans['Directo'] || 0;
       if (total >= 3 && ota / total > 0.65) {
-        out.push({ sev: 'alta', cat: 'Canales', title: `${Math.round(ota / total * 100)}% reservas OTA en 2026`, desc: 'Alta dependencia de Booking/Airbnb. Activa newsletter, redes y WhatsApp directo para reducir comisiones.', tab: 'pricing' });
+        out.push({ sev: 'alta', cat: 'Canales', title: `${Math.round(ota / total * 100)}% reservas OTA en ${focusYear}`, desc: 'Alta dependencia de Booking/Airbnb. Activa newsletter, redes y WhatsApp directo para reducir comisiones.', tab: 'pricing' });
       } else if (total >= 3 && direct / total > 0.45) {
         out.push({ sev: 'baja', cat: 'Canales', title: `${Math.round(direct / total * 100)}% reservas directas, buen ratio`, desc: 'Mantén los canales directos activos y sigue priorizando WhatsApp y la reserva sin intermediarios.' });
       }
@@ -1551,7 +1566,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
     }
 
     return out.sort((a, b) => sev[a.sev] - sev[b.sev]);
-  }, [cfData, yearData, altaFreeInfo, fc, avail]);
+  }, [cfData, yearData, altaFreeInfo, fc, avail, focusYear]);
 
   const toggle   = (key) => setOpen(o => ({ ...o, [key]: !o[key] }));
   const totalPV  = cfData ? (cfData.pages     || []).reduce((s, r) => s + r.count, 0) : null;
@@ -1559,8 +1574,11 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
   const totalDev = cfData ? (cfData.devices   || []).reduce((s, r) => s + r.count, 0) : 0;
   const topCtry  = cfData ? ((cfData.countries || [])[0]?.dimensions?.countryName || '–') : null;
   const funnConv = (() => { const s = fc['search_initiated'] || 0; const r = fc['booking_sent'] || 0; return s ? Math.round(r / s * 100) + '%' : null; })();
-  const stats26  = yearData?.['2026'];
   const years    = yearData ? Object.keys(yearData).sort() : [];
+  // Si el año en curso no tiene datos todavía (arranque, o antes de que
+  // cargue fetchBiz), cae al último año disponible en vez de mostrar vacío.
+  const statsYear = yearData?.[focusYear] ? focusYear : (years[years.length - 1] || focusYear);
+  const statsSel  = yearData?.[statsYear];
 
   const BarRow = ({ label, count, total, bold }) => {
     const pct = total ? Math.round(count / total * 100) : 0;
@@ -1614,6 +1632,17 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
 
       {!loading && (
         <>
+          {years.length > 0 && (
+            <div className="pe-period-tabs" style={{ marginBottom: 10 }}>
+              <span style={{ fontSize: 12, color: 'rgba(61,26,53,0.6)', alignSelf: 'center', marginRight: 4 }}>Cifras del negocio · año</span>
+              {years.map(y => (
+                <button key={y} type="button"
+                  className={`pe-period-tab${y === statsYear ? ' is-active' : ''}`}
+                  onClick={() => setFocusYear(y)}>{y}
+                </button>
+              ))}
+            </div>
+          )}
           <div className="intel-kpis">
             <div className="intel-kpi">
               <div className="intel-kpi-val" style={{ color: '#127E8C' }}>{totalPV != null ? totalPV.toLocaleString('es-ES') : '–'}</div>
@@ -1628,16 +1657,16 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
               <div className="intel-kpi-lbl">Conversión búsqueda→reserva</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val" style={{ color: '#9A7016' }}>{stats26 ? dashFmtMoney(stats26.ingresos) : '–'}</div>
-              <div className="intel-kpi-lbl">Ingresos 2026</div>
+              <div className="intel-kpi-val" style={{ color: '#9A7016' }}>{statsSel ? dashFmtMoney(statsSel.ingresos) : '–'}</div>
+              <div className="intel-kpi-lbl">Ingresos {statsYear}</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val">{stats26 ? stats26.reservas : '–'}</div>
-              <div className="intel-kpi-lbl">Reservas 2026</div>
+              <div className="intel-kpi-val">{statsSel ? statsSel.reservas : '–'}</div>
+              <div className="intel-kpi-lbl">Reservas {statsYear}</div>
             </div>
             <div className="intel-kpi">
-              <div className="intel-kpi-val">{stats26 ? dashFmtMoney(stats26.precio_noche) : '–'}</div>
-              <div className="intel-kpi-lbl">Precio/noche medio 2026</div>
+              <div className="intel-kpi-val">{statsSel ? dashFmtMoney(statsSel.precio_noche) : '–'}</div>
+              <div className="intel-kpi-lbl">Precio/noche medio {statsYear}</div>
             </div>
           </div>
 
