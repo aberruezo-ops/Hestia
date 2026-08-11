@@ -51,6 +51,7 @@ const URB_FALLBACK = {
 
 // Secciones del nav lateral, en orden de aparición
 const GUIDE_SECTIONS = [
+  { id: 'previaje',     es: 'Antes de hacer la maleta', en: 'Before you pack' },
   { id: 'bienvenida',   es: 'Bienvenida',       en: 'Welcome' },
   { id: 'llegada',      es: 'Llegada y salida', en: 'Arrival & departure' },
   { id: 'wifi',         es: 'Tu WiFi',          en: 'Your WiFi' },
@@ -76,7 +77,7 @@ const GUIDE_SECTIONS = [
   { id: 'feedback',     es: 'Comentarios',      en: 'Feedback' },
 ];
 
-// Agrupación temática del índice: en vez de una lista plana de 22 capítulos
+// Agrupación temática del índice: en vez de una lista plana de capítulos
 // (que abruma), se presentan en 5 partes con un orden de lectura natural.
 // Los ids deben ir en el mismo orden que GUIDE_SECTIONS para que la numeración
 // del índice y del cuerpo coincidan.
@@ -84,7 +85,7 @@ const GUIDE_GROUPS = [
   { es: 'Tu llegada',        en: 'Your arrival',
     descEs: 'Lo esencial para entrar y conectarte el primer día.',
     descEn: 'The essentials to get in and online on day one.',
-    ids: ['bienvenida', 'llegada', 'wifi'] },
+    ids: ['previaje', 'bienvenida', 'llegada', 'wifi'] },
   { es: 'Tu apartamento',    en: 'Your apartment',
     descEs: 'Cómo funciona cada rincón de tu casa, estancia a estancia.',
     descEn: 'How every corner of your home works, room by room.',
@@ -1547,6 +1548,23 @@ const PLACES = [
 // Contenido COMPARTIDO entre las 3 guías (carta de bienvenida, marca, etc.)
 const GUIDE_SHARED = {
   es: {
+    pretrip: {
+      title: 'Antes de hacer la maleta',
+      intro: 'Vera Playa no es una ciudad ni una zona de discotecas: es un pueblo costero tranquilo del Levante almeriense. Antes de venir, estas líneas te ayudan a saber exactamente qué te vas a encontrar, para que tu estancia empiece bien desde el primer día.',
+      items: [
+        { icon: '🏘', t: 'Un pueblo, no una ciudad',
+          d: 'Vera Playa es una urbanización costera de chalets y apartamentos, con supermercados, restaurantes y playas a un paseo, pero sin el ambiente de una ciudad. La vida nocturna es tranquila: más chiringuito que discoteca.' },
+        { icon: '🚗', t: 'Necesitarás coche',
+          d: 'El transporte público es escaso. Para explorar la zona (pueblos, calas, senderos) y llegar a muchos supermercados o restaurantes, el coche es casi imprescindible. Detalles de alquiler y aeropuertos en el capítulo Llegada y salida.' },
+        { icon: '☀', t: 'Sol seco, no tropical',
+          d: 'El clima es de los más secos de Europa: mucho sol, calor fuerte en verano, inviernos suaves. No esperes vegetación exuberante, el paisaje es semidesértico, el mismo que hizo famosos los spaghetti western de Tabernas. Más detalle, mes a mes, en el capítulo Alrededores.' },
+        { icon: '🌊', t: 'Playa y desconexión, no vida nocturna',
+          d: 'Hestía y Vera Playa encajan mejor con quien busca playa, descanso y desconexión que con quien busca fiesta y ambiente nocturno intenso. Si buscas eso último, probablemente encajes mejor en otro punto de la costa.' },
+        { icon: '📍', t: 'Dónde está exactamente',
+          d: 'Los tres Hestía están en Vera Playa (Almería), a menos de 2 km entre sí. El aeropuerto más cercano es Almería, a una hora en coche; hay otros cuatro en un radio razonable. Todos los detalles en el capítulo Llegada y salida.' },
+      ],
+      closing: 'Nosotros nos hacemos responsables de que Hestía esté impecable, funcione todo y estés bien atendido durante tu estancia. Lo que ocurre fuera del apartamento (el tiempo, el ambiente de la zona, la oferta de ocio, cómo de concurridas están las playas) no depende de nosotros. Si esta descripción encaja con lo que buscas, te va a encantar. Si tenías en mente otra cosa, mejor saberlo ahora que a mitad de la maleta.',
+    },
     welcome: {
       title: 'Bienvenido a tu Hestía',
       paras: [
@@ -1808,6 +1826,23 @@ const GUIDE_SHARED = {
     },
   },
   en: {
+    pretrip: {
+      title: 'Before you pack',
+      intro: 'Vera Playa is not a city and not a nightlife destination: it is a quiet coastal village in the Levante of Almería. Before you come, these lines help you know exactly what you will find, so your stay starts well from day one.',
+      items: [
+        { icon: '🏘', t: 'A village, not a city',
+          d: 'Vera Playa is a coastal development of villas and apartments, with supermarkets, restaurants and beaches within walking distance, but without a city atmosphere. Nightlife is low-key: more beach bar than nightclub.' },
+        { icon: '🚗', t: 'You will need a car',
+          d: 'Public transport is limited. To explore the area (towns, coves, trails) and reach many supermarkets or restaurants, a car is almost essential. Car hire and airport details are in the Arrival & departure chapter.' },
+        { icon: '☀', t: 'Dry sun, not tropical',
+          d: 'The climate is among the driest in Europe: plenty of sun, strong heat in summer, mild winters. Do not expect lush greenery, the landscape is semi-desert, the same one that made the Tabernas spaghetti westerns famous. More detail, month by month, in the Surroundings chapter.' },
+        { icon: '🌊', t: 'Beach and unwinding, not nightlife',
+          d: 'Hestía and Vera Playa suit someone looking for beach, rest and disconnecting more than someone looking for parties and an intense nightlife scene. If that is what you are after, you will probably find a better fit elsewhere on the coast.' },
+        { icon: '📍', t: 'Exactly where it is',
+          d: 'All three Hestías are in Vera Playa (Almería), less than 2 km apart. The nearest airport is Almería, about an hour by car; four more are within a reasonable range. Full details in the Arrival & departure chapter.' },
+      ],
+      closing: 'We take responsibility for Hestía being spotless, everything working and you being well looked after during your stay. What happens outside the apartment (the weather, the mood of the area, what there is to do, how busy the beaches are) is not up to us. If this description matches what you are after, you will love it here. If you had something else in mind, better to know now than halfway through packing.',
+    },
     checkin: {
       title: 'Arrival & departure',
       intro: 'You are covered: Fran will message you a few days before your arrival to agree on the option that suits you best and share the specifics. However you travel: by plane, bus or car, we send you exact directions to drive right to the front door and we are with you every step of the way until you are in. Nothing to worry about, just let Fran know your approximate arrival time.',
@@ -5467,9 +5502,27 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {guideCrumb}
 
-          {renderPart('bienvenida')}
-          <section id="ag-bienvenida" className="ag-section">
+          {renderPart('previaje')}
+          <section id="ag-previaje" className="ag-section ag-section-rules ag-section-pretrip">
             <span className="ag-section-num">01</span>
+            <h2 className="ag-h2">{s.pretrip.title}</h2>
+            <p className="ag-para">{s.pretrip.intro}</p>
+            <ul className="ag-rules-grid">
+              {s.pretrip.items.map((item, i) => (
+                <li key={i} className="ag-rule">
+                  <span className="ag-rule-icon" aria-hidden="true">{iconifyText(item.icon, 18)}</span>
+                  <div className="ag-rule-body">
+                    <h4 className="ag-rule-title">{item.t}</h4>
+                    <p className="ag-rule-desc">{item.d}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <p className="ag-para ag-pretrip-closing">{s.pretrip.closing}</p>
+          </section>
+
+          <section id="ag-bienvenida" className="ag-section">
+            <span className="ag-section-num">02</span>
             <h2 className="ag-h2">{s.welcome.title}</h2>
             {s.welcome.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
             <p className="ag-sign">{s.welcome.sign}</p>
@@ -5505,7 +5558,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {s.checkin && (
           <section id="ag-llegada" className="ag-section ag-section-checkin">
-            <span className="ag-section-num">02</span>
+            <span className="ag-section-num">03</span>
             <h2 className="ag-h2">{s.checkin.title}</h2>
             <p className="ag-para ag-para-lead">{s.checkin.intro}</p>
 
@@ -5728,7 +5781,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           )}
 
           <section id="ag-wifi" className="ag-section ag-section-wifi">
-            <span className="ag-section-num">03</span>
+            <span className="ag-section-num">04</span>
             <h2 className="ag-h2">{s.wifi.title}</h2>
             <p className="ag-para ag-para-lead">{s.wifi.intro}</p>
             <div className="ag-wifi-card">
@@ -5746,7 +5799,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {renderPart('limpieza')}
           <section id="ag-limpieza" className="ag-section">
-            <span className="ag-section-num">04</span>
+            <span className="ag-section-num">05</span>
             <h2 className="ag-h2">{s.cleaning.title}</h2>
             <p className="ag-para">{s.cleaning.intro}</p>
             <p className="ag-note">{s.cleaning.note}</p>
@@ -5758,7 +5811,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {s.rules && (
             <section id="ag-normas" className="ag-section ag-section-rules">
-              <span className="ag-section-num">05</span>
+              <span className="ag-section-num">06</span>
               <h2 className="ag-h2">{s.rules.title}</h2>
               <p className="ag-para">{s.rules.intro}</p>
               <ul className="ag-rules-grid">
@@ -5800,7 +5853,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {a.rooms.map((room, idx) => (
             <section key={room.id} id={`ag-${room.id}`} className={`ag-section ag-room ag-room-${room.id}`}>
-              <span className="ag-section-num">{String(idx + 6).padStart(2, '0')}</span>
+              <span className="ag-section-num">{String(idx + 7).padStart(2, '0')}</span>
               <h2 className="ag-h2">{room.title}</h2>
               <p className="ag-para ag-para-lead">{room.body}</p>
               <PhotoGrid photos={getRoomPhotos(room.id)} />
@@ -5821,7 +5874,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {renderPart('alrededores')}
           <section id="ag-alrededores" className="ag-section">
-            <span className="ag-section-num">12</span>
+            <span className="ag-section-num">13</span>
             <h2 className="ag-h2">{s.surroundings.title}</h2>
             <p className="ag-para">{s.surroundings.intro}</p>
 
@@ -5891,7 +5944,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               donde el lugar se describe en detalle o forma parte de un
               itinerario. La idea: ÍNDICE rápido, no contenido duplicado. */}
           <section id="ag-lugares" className="ag-section">
-            <span className="ag-section-num">13</span>
+            <span className="ag-section-num">14</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Lugares de interés' : 'Places of interest'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -5903,7 +5956,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Supermercados */}
           <section id="ag-supermercados" className="ag-section">
-            <span className="ag-section-num">14</span>
+            <span className="ag-section-num">15</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Supermercados' : 'Supermarkets'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -5921,7 +5974,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Sabores · comer y beber */}
           <section id="ag-sabores" className="ag-section">
-            <span className="ag-section-num">15</span>
+            <span className="ag-section-num">16</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Sabores' : 'Tastes'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -5944,7 +5997,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           {/* Pueblos y cultura */}
           {renderPart('pueblos')}
           <section id="ag-pueblos" className="ag-section">
-            <span className="ag-section-num">16</span>
+            <span className="ag-section-num">17</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -5965,7 +6018,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Mar y playas */}
           <section id="ag-mar-playas" className="ag-section">
-            <span className="ag-section-num">17</span>
+            <span className="ag-section-num">18</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mar y playas' : 'Sea & beaches'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -5984,7 +6037,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Planes y excursiones */}
           <section id="ag-planes" className="ag-section">
-            <span className="ag-section-num">18</span>
+            <span className="ag-section-num">19</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Planes y excursiones' : 'Things to do'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6033,7 +6086,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           {/* Mercados y compras */}
           {renderPart('mercados')}
           <section id="ag-mercados" className="ag-section">
-            <span className="ag-section-num">19</span>
+            <span className="ag-section-num">20</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Mercados y compras' : 'Markets & shops'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6051,7 +6104,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Salud y servicios · centros de salud, vets, fisio, farmacias */}
           <section id="ag-salud" className="ag-section">
-            <span className="ag-section-num">20</span>
+            <span className="ag-section-num">21</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Salud y servicios' : 'Health & services'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6095,7 +6148,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Movilidad · gasolineras y carga eléctrica */}
           <section id="ag-movilidad" className="ag-section">
-            <span className="ag-section-num">21</span>
+            <span className="ag-section-num">22</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6117,7 +6170,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-telefonos" className="ag-section">
-            <span className="ag-section-num">22</span>
+            <span className="ag-section-num">23</span>
             <h2 className="ag-h2">{s.phones.title}</h2>
             <table className="ag-phones-table">
               <tbody>
@@ -6132,7 +6185,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-descuentos" className="ag-section">
-            <span className="ag-section-num">23</span>
+            <span className="ag-section-num">24</span>
             <h2 className="ag-h2">{lang === 'es' ? 'Recomendados con descuento' : 'Recommended, with a discount'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6143,7 +6196,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-feedback" className="ag-section">
-            <span className="ag-section-num">24</span>
+            <span className="ag-section-num">25</span>
             <h2 className="ag-h2">{s.feedback.title}</h2>
             {s.feedback.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
           </section>
@@ -6245,12 +6298,12 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
           </h2>
           <p className="apt-guide-gate-desc">
             {lang === 'es'
-              ? <>No es un folleto: es la <strong>superguía que nos habría gustado encontrar a nosotros</strong> cuando llegamos por primera vez a Vera. Veintidós capítulos con todo lo que necesitas para vivir tu estancia, desde cómo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense.</>
-              : <>This isn&apos;t a leaflet: it&apos;s the <strong>super-guide we wish we&apos;d had ourselves</strong> the first time we arrived in Vera. Twenty-two chapters with everything you need for your stay, from how to get here from any of the five nearest airports to the corners only locals from the Levante know.</>}
+              ? <>No es un folleto: es la <strong>superguía que nos habría gustado encontrar a nosotros</strong> cuando llegamos por primera vez a Vera. Veinticuatro capítulos con todo lo que necesitas para vivir tu estancia, desde si Vera Playa encaja con lo que buscas hasta los rincones que solo conocen los vecinos del Levante almeriense.</>
+              : <>This isn&apos;t a leaflet: it&apos;s the <strong>super-guide we wish we&apos;d had ourselves</strong> the first time we arrived in Vera. Twenty-four chapters with everything you need for your stay, from whether Vera Playa fits what you are after to the corners only locals from the Levante know.</>}
           </p>
 
           <ul className="apt-guide-gate-stats">
-            <li>{lang === 'es' ? <><strong>22 capítulos</strong> sobre tu Hestía y el entorno</> : <><strong>22 chapters</strong> on your Hestía and the area</>}</li>
+            <li>{lang === 'es' ? <><strong>24 capítulos</strong> sobre tu Hestía y el entorno</> : <><strong>24 chapters</strong> on your Hestía and the area</>}</li>
             <li>{lang === 'es' ? <><strong>Más de 230 recomendaciones</strong>: restaurantes, playas, bares, bodegas, mercados, pescaderías…</> : <><strong>More than 230 recommendations</strong>: restaurants, beaches, bars, wineries, markets, fishmongers…</>}</li>
             <li>{lang === 'es' ? <><strong>48 planes de día completo</strong> con horarios, rutas y reservas</> : <><strong>48 full-day itineraries</strong> with timing, routes and bookings</>}</li>
             <li>{lang === 'es' ? <><strong>Calendario anual</strong> de fiestas patronales y eventos</> : <><strong>Annual calendar</strong> of festivals and local events</>}</li>

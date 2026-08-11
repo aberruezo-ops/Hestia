@@ -69,6 +69,10 @@ const URB_FALLBACK = {
 
 // Secciones del nav lateral, en orden de aparición
 const GUIDE_SECTIONS = [{
+  id: 'previaje',
+  es: 'Antes de hacer la maleta',
+  en: 'Before you pack'
+}, {
   id: 'bienvenida',
   es: 'Bienvenida',
   en: 'Welcome'
@@ -162,7 +166,7 @@ const GUIDE_SECTIONS = [{
   en: 'Feedback'
 }];
 
-// Agrupación temática del índice: en vez de una lista plana de 22 capítulos
+// Agrupación temática del índice: en vez de una lista plana de capítulos
 // (que abruma), se presentan en 5 partes con un orden de lectura natural.
 // Los ids deben ir en el mismo orden que GUIDE_SECTIONS para que la numeración
 // del índice y del cuerpo coincidan.
@@ -171,7 +175,7 @@ const GUIDE_GROUPS = [{
   en: 'Your arrival',
   descEs: 'Lo esencial para entrar y conectarte el primer día.',
   descEn: 'The essentials to get in and online on day one.',
-  ids: ['bienvenida', 'llegada', 'wifi']
+  ids: ['previaje', 'bienvenida', 'llegada', 'wifi']
 }, {
   es: 'Tu apartamento',
   en: 'Your apartment',
@@ -4621,6 +4625,32 @@ const PLACES = [
 // Contenido COMPARTIDO entre las 3 guías (carta de bienvenida, marca, etc.)
 const GUIDE_SHARED = {
   es: {
+    pretrip: {
+      title: 'Antes de hacer la maleta',
+      intro: 'Vera Playa no es una ciudad ni una zona de discotecas: es un pueblo costero tranquilo del Levante almeriense. Antes de venir, estas líneas te ayudan a saber exactamente qué te vas a encontrar, para que tu estancia empiece bien desde el primer día.',
+      items: [{
+        icon: '🏘',
+        t: 'Un pueblo, no una ciudad',
+        d: 'Vera Playa es una urbanización costera de chalets y apartamentos, con supermercados, restaurantes y playas a un paseo, pero sin el ambiente de una ciudad. La vida nocturna es tranquila: más chiringuito que discoteca.'
+      }, {
+        icon: '🚗',
+        t: 'Necesitarás coche',
+        d: 'El transporte público es escaso. Para explorar la zona (pueblos, calas, senderos) y llegar a muchos supermercados o restaurantes, el coche es casi imprescindible. Detalles de alquiler y aeropuertos en el capítulo Llegada y salida.'
+      }, {
+        icon: '☀',
+        t: 'Sol seco, no tropical',
+        d: 'El clima es de los más secos de Europa: mucho sol, calor fuerte en verano, inviernos suaves. No esperes vegetación exuberante, el paisaje es semidesértico, el mismo que hizo famosos los spaghetti western de Tabernas. Más detalle, mes a mes, en el capítulo Alrededores.'
+      }, {
+        icon: '🌊',
+        t: 'Playa y desconexión, no vida nocturna',
+        d: 'Hestía y Vera Playa encajan mejor con quien busca playa, descanso y desconexión que con quien busca fiesta y ambiente nocturno intenso. Si buscas eso último, probablemente encajes mejor en otro punto de la costa.'
+      }, {
+        icon: '📍',
+        t: 'Dónde está exactamente',
+        d: 'Los tres Hestía están en Vera Playa (Almería), a menos de 2 km entre sí. El aeropuerto más cercano es Almería, a una hora en coche; hay otros cuatro en un radio razonable. Todos los detalles en el capítulo Llegada y salida.'
+      }],
+      closing: 'Nosotros nos hacemos responsables de que Hestía esté impecable, funcione todo y estés bien atendido durante tu estancia. Lo que ocurre fuera del apartamento (el tiempo, el ambiente de la zona, la oferta de ocio, cómo de concurridas están las playas) no depende de nosotros. Si esta descripción encaja con lo que buscas, te va a encantar. Si tenías en mente otra cosa, mejor saberlo ahora que a mitad de la maleta.'
+    },
     welcome: {
       title: 'Bienvenido a tu Hestía',
       paras: ['Si lees esto, tu reserva está más que confirmada, y no sabes la ilusión que nos hace tenerte aquí.', 'Hestía no es lujo. Tampoco es un alquiler vacacional al uso. Es nuestro hogar, y durante los próximos días queremos que también sea el tuyo. Por eso hemos puesto cariño en cada detalle de esta casa: porque es exactamente lo que a nosotros nos gusta encontrar cuando viajamos.', 'Ya estés preparando el viaje, viviendo tus días aquí, o de vuelta a casa con la maleta a medio deshacer: todo lo que esté en nuestra mano, antes, durante o después de tu estancia, lo haremos. Sin dudarlo. Para eso estamos.', 'Ahora descansa, relájate y siéntete en tu hogar lejos de casa.'],
@@ -5001,6 +5031,32 @@ const GUIDE_SHARED = {
     }
   },
   en: {
+    pretrip: {
+      title: 'Before you pack',
+      intro: 'Vera Playa is not a city and not a nightlife destination: it is a quiet coastal village in the Levante of Almería. Before you come, these lines help you know exactly what you will find, so your stay starts well from day one.',
+      items: [{
+        icon: '🏘',
+        t: 'A village, not a city',
+        d: 'Vera Playa is a coastal development of villas and apartments, with supermarkets, restaurants and beaches within walking distance, but without a city atmosphere. Nightlife is low-key: more beach bar than nightclub.'
+      }, {
+        icon: '🚗',
+        t: 'You will need a car',
+        d: 'Public transport is limited. To explore the area (towns, coves, trails) and reach many supermarkets or restaurants, a car is almost essential. Car hire and airport details are in the Arrival & departure chapter.'
+      }, {
+        icon: '☀',
+        t: 'Dry sun, not tropical',
+        d: 'The climate is among the driest in Europe: plenty of sun, strong heat in summer, mild winters. Do not expect lush greenery, the landscape is semi-desert, the same one that made the Tabernas spaghetti westerns famous. More detail, month by month, in the Surroundings chapter.'
+      }, {
+        icon: '🌊',
+        t: 'Beach and unwinding, not nightlife',
+        d: 'Hestía and Vera Playa suit someone looking for beach, rest and disconnecting more than someone looking for parties and an intense nightlife scene. If that is what you are after, you will probably find a better fit elsewhere on the coast.'
+      }, {
+        icon: '📍',
+        t: 'Exactly where it is',
+        d: 'All three Hestías are in Vera Playa (Almería), less than 2 km apart. The nearest airport is Almería, about an hour by car; four more are within a reasonable range. Full details in the Arrival & departure chapter.'
+      }],
+      closing: 'We take responsibility for Hestía being spotless, everything working and you being well looked after during your stay. What happens outside the apartment (the weather, the mood of the area, what there is to do, how busy the beaches are) is not up to us. If this description matches what you are after, you will love it here. If you had something else in mind, better to know now than halfway through packing.'
+    },
     checkin: {
       title: 'Arrival & departure',
       intro: 'You are covered: Fran will message you a few days before your arrival to agree on the option that suits you best and share the specifics. However you travel: by plane, bus or car, we send you exact directions to drive right to the front door and we are with you every step of the way until you are in. Nothing to worry about, just let Fran know your approximate arrival time.',
@@ -11093,12 +11149,37 @@ const AptGuideView = ({
     rel: "noopener"
   }, lang === 'es' ? '⇩ Descargar guía (PDF)' : '⇩ Download guide (PDF)')))), /*#__PURE__*/React.createElement("div", {
     className: "ag-content"
-  }, guideCrumb, renderPart('bienvenida'), /*#__PURE__*/React.createElement("section", {
+  }, guideCrumb, renderPart('previaje'), /*#__PURE__*/React.createElement("section", {
+    id: "ag-previaje",
+    className: "ag-section ag-section-rules ag-section-pretrip"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-section-num"
+  }, "01"), /*#__PURE__*/React.createElement("h2", {
+    className: "ag-h2"
+  }, s.pretrip.title), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, s.pretrip.intro), /*#__PURE__*/React.createElement("ul", {
+    className: "ag-rules-grid"
+  }, s.pretrip.items.map((item, i) => /*#__PURE__*/React.createElement("li", {
+    key: i,
+    className: "ag-rule"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-rule-icon",
+    "aria-hidden": "true"
+  }, iconifyText(item.icon, 18)), /*#__PURE__*/React.createElement("div", {
+    className: "ag-rule-body"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "ag-rule-title"
+  }, item.t), /*#__PURE__*/React.createElement("p", {
+    className: "ag-rule-desc"
+  }, item.d))))), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para ag-pretrip-closing"
+  }, s.pretrip.closing)), /*#__PURE__*/React.createElement("section", {
     id: "ag-bienvenida",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "01"), /*#__PURE__*/React.createElement("h2", {
+  }, "02"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.welcome.title), s.welcome.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
@@ -11140,7 +11221,7 @@ const AptGuideView = ({
     className: "ag-section ag-section-checkin"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "02"), /*#__PURE__*/React.createElement("h2", {
+  }, "03"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.checkin.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-lead"
@@ -11430,7 +11511,7 @@ const AptGuideView = ({
     className: "ag-section ag-section-wifi"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "03"), /*#__PURE__*/React.createElement("h2", {
+  }, "04"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.wifi.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-lead"
@@ -11455,7 +11536,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "04"), /*#__PURE__*/React.createElement("h2", {
+  }, "05"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.cleaning.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11472,7 +11553,7 @@ const AptGuideView = ({
     className: "ag-section ag-section-rules"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "05"), /*#__PURE__*/React.createElement("h2", {
+  }, "06"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.rules.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11522,7 +11603,7 @@ const AptGuideView = ({
     className: `ag-section ag-room ag-room-${room.id}`
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, String(idx + 6).padStart(2, '0')), /*#__PURE__*/React.createElement("h2", {
+  }, String(idx + 7).padStart(2, '0')), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, room.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-lead"
@@ -11545,7 +11626,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "12"), /*#__PURE__*/React.createElement("h2", {
+  }, "13"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.surroundings.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11606,7 +11687,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "13"), /*#__PURE__*/React.createElement("h2", {
+  }, "14"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Lugares de interés' : 'Places of interest'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11617,7 +11698,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "14"), /*#__PURE__*/React.createElement("h2", {
+  }, "15"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Supermercados' : 'Supermarkets'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11637,7 +11718,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "15"), /*#__PURE__*/React.createElement("h2", {
+  }, "16"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Sabores' : 'Tastes'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11661,7 +11742,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "16"), /*#__PURE__*/React.createElement("h2", {
+  }, "17"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11683,7 +11764,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "17"), /*#__PURE__*/React.createElement("h2", {
+  }, "18"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Mar y playas' : 'Sea & beaches'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11706,7 +11787,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "18"), /*#__PURE__*/React.createElement("h2", {
+  }, "19"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Planes y excursiones' : 'Things to do'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11736,7 +11817,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "19"), /*#__PURE__*/React.createElement("h2", {
+  }, "20"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Mercados y compras' : 'Markets & shops'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11756,7 +11837,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "20"), /*#__PURE__*/React.createElement("h2", {
+  }, "21"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Salud y servicios' : 'Health & services'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11809,7 +11890,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "21"), /*#__PURE__*/React.createElement("h2", {
+  }, "22"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11831,7 +11912,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "22"), /*#__PURE__*/React.createElement("h2", {
+  }, "23"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.phones.title), /*#__PURE__*/React.createElement("table", {
     className: "ag-phones-table"
@@ -11844,7 +11925,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "23"), /*#__PURE__*/React.createElement("h2", {
+  }, "24"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Recomendados con descuento' : 'Recommended, with a discount'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11855,7 +11936,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "24"), /*#__PURE__*/React.createElement("h2", {
+  }, "25"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.feedback.title), s.feedback.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
@@ -11964,9 +12045,9 @@ const AptGuideGate = ({
     className: "apt-guide-gate-title"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "La guía completa de ", /*#__PURE__*/React.createElement("em", null, apt.es.name)) : /*#__PURE__*/React.createElement(React.Fragment, null, "The complete ", /*#__PURE__*/React.createElement("em", null, apt.en.name), " guide")), /*#__PURE__*/React.createElement("p", {
     className: "apt-guide-gate-desc"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "No es un folleto: es la ", /*#__PURE__*/React.createElement("strong", null, "superguía que nos habría gustado encontrar a nosotros"), " cuando llegamos por primera vez a Vera. Veintidós capítulos con todo lo que necesitas para vivir tu estancia, desde cómo llegar desde cualquiera de los cinco aeropuertos cercanos hasta los rincones que solo conocen los vecinos del Levante almeriense.") : /*#__PURE__*/React.createElement(React.Fragment, null, "This isn't a leaflet: it's the ", /*#__PURE__*/React.createElement("strong", null, "super-guide we wish we'd had ourselves"), " the first time we arrived in Vera. Twenty-two chapters with everything you need for your stay, from how to get here from any of the five nearest airports to the corners only locals from the Levante know.")), /*#__PURE__*/React.createElement("ul", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "No es un folleto: es la ", /*#__PURE__*/React.createElement("strong", null, "superguía que nos habría gustado encontrar a nosotros"), " cuando llegamos por primera vez a Vera. Veinticuatro capítulos con todo lo que necesitas para vivir tu estancia, desde si Vera Playa encaja con lo que buscas hasta los rincones que solo conocen los vecinos del Levante almeriense.") : /*#__PURE__*/React.createElement(React.Fragment, null, "This isn't a leaflet: it's the ", /*#__PURE__*/React.createElement("strong", null, "super-guide we wish we'd had ourselves"), " the first time we arrived in Vera. Twenty-four chapters with everything you need for your stay, from whether Vera Playa fits what you are after to the corners only locals from the Levante know.")), /*#__PURE__*/React.createElement("ul", {
     className: "apt-guide-gate-stats"
-  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 capítulos"), " sobre tu Hestía y el entorno") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "22 chapters"), " on your Hestía and the area")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Más de 230 recomendaciones"), ": restaurantes, playas, bares, bodegas, mercados, pescaderías…") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "More than 230 recommendations"), ": restaurants, beaches, bars, wineries, markets, fishmongers…")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 planes de día completo"), " con horarios, rutas y reservas") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 full-day itineraries"), " with timing, routes and bookings")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Annual calendar"), " of festivals and local events")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Servicios a mano"), ": centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías y tiendas para mascotas, coworking, lavanderías y cajeros…") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Everything within reach"), ": health centres, 24 h vets, pharmacies, physio clinics, pet boarding & shops, coworking, laundries & ATMs…")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Teléfonos útiles"), " y nuestro contacto directo antes, durante y después de tu estancia") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Useful phones"), " and our direct line before, during and after your stay"))), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "24 capítulos"), " sobre tu Hestía y el entorno") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "24 chapters"), " on your Hestía and the area")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Más de 230 recomendaciones"), ": restaurantes, playas, bares, bodegas, mercados, pescaderías…") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "More than 230 recommendations"), ": restaurants, beaches, bars, wineries, markets, fishmongers…")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 planes de día completo"), " con horarios, rutas y reservas") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "48 full-day itineraries"), " with timing, routes and bookings")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Calendario anual"), " de fiestas patronales y eventos") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Annual calendar"), " of festivals and local events")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Servicios a mano"), ": centros de salud, veterinarios 24 h, farmacias, fisioterapeutas, guarderías y tiendas para mascotas, coworking, lavanderías y cajeros…") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Everything within reach"), ": health centres, 24 h vets, pharmacies, physio clinics, pet boarding & shops, coworking, laundries & ATMs…")), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Teléfonos útiles"), " y nuestro contacto directo antes, durante y después de tu estancia") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Useful phones"), " and our direct line before, during and after your stay"))), /*#__PURE__*/React.createElement("p", {
     className: "apt-guide-gate-foot"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Web interactiva + PDF descargable de 40 páginas. Reservada para huéspedes con PIN.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Interactive web + 40-page downloadable PDF. Reserved for guests with a PIN.")), /*#__PURE__*/React.createElement("button", {
     className: "apt-guide-gate-btn",
