@@ -4638,8 +4638,8 @@ const GUIDE_SHARED = {
         d: 'El transporte público es escaso. Para explorar la zona (pueblos, calas, senderos) y llegar a muchos supermercados o restaurantes, el coche es casi imprescindible. Detalles de alquiler y aeropuertos en el capítulo Llegada y salida.'
       }, {
         icon: '☀',
-        t: 'Sol seco, no tropical',
-        d: 'El clima es de los más secos de Europa: mucho sol, calor fuerte en verano, inviernos suaves. No esperes vegetación exuberante, el paisaje es semidesértico, el mismo que hizo famosos los spaghetti western de Tabernas. Más detalle, mes a mes, en el capítulo Alrededores.'
+        t: 'Sol seco, paisaje de desierto',
+        d: 'El clima es de los más secos de Europa: mucho sol, calor fuerte en verano, inviernos suaves. El paisaje que lo acompaña es igual de singular: ramblas, cárcavas y tonos ocres muy distintos al verde que se suele asociar a unas vacaciones de costa, la misma estampa que hizo célebres los spaghetti western rodados en el cercano desierto de Tabernas, el único desierto de Europa continental. Es un paisaje precioso y pintoresco, pero poco convencional: mejor saberlo antes de venir que llevarte una sorpresa al llegar. Más detalle, mes a mes, en el capítulo Alrededores.'
       }, {
         icon: '🍹',
         t: 'Hay ambiente, sobre todo en verano',
@@ -5044,8 +5044,8 @@ const GUIDE_SHARED = {
         d: 'Public transport is limited. To explore the area (towns, coves, trails) and reach many supermarkets or restaurants, a car is almost essential. Car hire and airport details are in the Arrival & departure chapter.'
       }, {
         icon: '☀',
-        t: 'Dry sun, not tropical',
-        d: 'The climate is among the driest in Europe: plenty of sun, strong heat in summer, mild winters. Do not expect lush greenery, the landscape is semi-desert, the same one that made the Tabernas spaghetti westerns famous. More detail, month by month, in the Surroundings chapter.'
+        t: 'Dry sun, desert landscape',
+        d: 'The climate is among the driest in Europe: plenty of sun, strong heat in summer, mild winters. The landscape that comes with it is just as distinctive: ravines, badlands and ochre tones far from the green most people picture for a coastal holiday, the same backdrop that made the spaghetti westerns filmed in the nearby Tabernas desert famous, continental Europe\'s only desert. It is a beautiful, picturesque landscape, but an unconventional one: better to know that before you arrive than be surprised once you do. More detail, month by month, in the Surroundings chapter.'
       }, {
         icon: '🍹',
         t: 'There is a scene, especially in summer',
