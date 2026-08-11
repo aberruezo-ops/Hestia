@@ -4641,9 +4641,9 @@ const GUIDE_SHARED = {
         t: 'Sol seco, no tropical',
         d: 'El clima es de los más secos de Europa: mucho sol, calor fuerte en verano, inviernos suaves. No esperes vegetación exuberante, el paisaje es semidesértico, el mismo que hizo famosos los spaghetti western de Tabernas. Más detalle, mes a mes, en el capítulo Alrededores.'
       }, {
-        icon: '🌊',
-        t: 'Playa y desconexión, no vida nocturna',
-        d: 'Hestía y Vera Playa encajan mejor con quien busca playa, descanso y desconexión que con quien busca fiesta y ambiente nocturno intenso. Si buscas eso último, probablemente encajes mejor en otro punto de la costa.'
+        icon: '🍹',
+        t: 'Hay ambiente, sobre todo en verano',
+        d: 'Vera Playa tiene ocio y ambiente, especialmente en temporada estival. Si buscas más marcha, Garrucha, Mójacar y Vera pueblo están a un paseo, y Almería o Murcia a poco más. Lo que de verdad destaca la zona es la buena gastronomía y las playas de los alrededores: más detalle en los capítulos Sabores y Mar y playas.'
       }, {
         icon: '📍',
         t: 'Dónde está exactamente',
@@ -5047,9 +5047,9 @@ const GUIDE_SHARED = {
         t: 'Dry sun, not tropical',
         d: 'The climate is among the driest in Europe: plenty of sun, strong heat in summer, mild winters. Do not expect lush greenery, the landscape is semi-desert, the same one that made the Tabernas spaghetti westerns famous. More detail, month by month, in the Surroundings chapter.'
       }, {
-        icon: '🌊',
-        t: 'Beach and unwinding, not nightlife',
-        d: 'Hestía and Vera Playa suit someone looking for beach, rest and disconnecting more than someone looking for parties and an intense nightlife scene. If that is what you are after, you will probably find a better fit elsewhere on the coast.'
+        icon: '🍹',
+        t: 'There is a scene, especially in summer',
+        d: 'Vera Playa does have leisure and nightlife, especially in high season. If you want more of a scene, Garrucha, Mójacar and Vera village are a short drive away, and Almería or Murcia a little further. What the area really stands out for is great food and the beaches nearby: more detail in the Tastes and Sea & beaches chapters.'
       }, {
         icon: '📍',
         t: 'Exactly where it is',
