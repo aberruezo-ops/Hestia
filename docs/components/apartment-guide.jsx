@@ -2227,7 +2227,7 @@ const GUIDE_BY_APT = {
           'Recoge el toldo y los cojines cuando sople aire, llueva o vayas a salir.',
           'Usa velas para crear el ambiente perfecto al atardecer.',
         ]},
-        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Tu urbanización tiene SPA comunitario (sauna y gimnasio), piscina y pistas de pádel. El SPA está abierto en otoño, invierno y primavera; en verano solo el gimnasio. Tu plaza subterránea te espera junto a las escaleras.', recs: [
+        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Tu urbanización, Al Andalus Thalassa, tiene SPA comunitario (sauna y gimnasio), piscina y pistas de pádel. El SPA está abierto en otoño, invierno y primavera; en verano solo el gimnasio. Tu plaza subterránea te espera junto a las escaleras.', recs: [
           'El SPA es comunitario y de uso por turnos, pregúntanos por la disponibilidad.',
           'Las pistas de pádel se reservan a través de la conserjería de la urbanización. Si las necesitas, pídenos el teléfono y te lo pasamos al momento.',
           'Respeta las zonas comunes y las normas de la urbanización.',
@@ -2273,7 +2273,7 @@ const GUIDE_BY_APT = {
           'Roll up the awning and put away cushions when it\'s windy, raining, or you go out.',
           'Use candles to create the perfect sunset atmosphere.',
         ]},
-        { id: 'urbanizacion', title: 'Your complex', body: 'Your complex has a shared SPA (sauna and gym), pool and padel courts. The SPA opens in autumn, winter and spring; only the gym stays open in summer. Your underground parking space is next to the stairs.', recs: [
+        { id: 'urbanizacion', title: 'Your complex', body: 'Your complex, Al Andalus Thalassa, has a shared SPA (sauna and gym), pool and padel courts. The SPA opens in autumn, winter and spring; only the gym stays open in summer. Your underground parking space is next to the stairs.', recs: [
           'The SPA is shared and works in time slots, ask us for availability.',
           'Padel courts are booked through the complex concierge desk. If you need one, ask us and we will pass you the phone number right away.',
           'Respect the common areas and the complex rules.',
