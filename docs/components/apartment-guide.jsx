@@ -1556,8 +1556,8 @@ const GUIDE_SHARED = {
           d: 'Vera Playa es una urbanización costera de chalets y apartamentos, con supermercados, restaurantes y playas a un paseo, pero sin el ambiente de una ciudad. La vida nocturna es tranquila: más chiringuito que discoteca.' },
         { icon: '🚗', t: 'Necesitarás coche',
           d: 'El transporte público es escaso. Para explorar la zona (pueblos, calas, senderos) y llegar a muchos supermercados o restaurantes, el coche es casi imprescindible. Detalles de alquiler y aeropuertos en el capítulo Llegada y salida.' },
-        { icon: '☀', t: 'Sol seco, paisaje de desierto',
-          d: 'El clima es de los más secos de Europa: mucho sol, calor fuerte en verano, inviernos suaves. El paisaje que lo acompaña es igual de singular: ramblas, cárcavas y tonos ocres muy distintos al verde que se suele asociar a unas vacaciones de costa, la misma estampa que hizo célebres los spaghetti western rodados en el cercano desierto de Tabernas, el único desierto de Europa continental. Es un paisaje precioso y pintoresco, pero poco convencional: mejor saberlo antes de venir que llevarte una sorpresa al llegar. Más detalle, mes a mes, en el capítulo Alrededores.' },
+        { icon: '☀', t: 'Calor húmedo de costa, paisaje de desierto',
+          d: 'En la costa, junto al mar, el clima es húmedo: mucho sol, calor húmedo en verano, inviernos suaves. La provincia sí es de las más secas de Europa, y el paisaje del interior lo demuestra: ramblas, cárcavas y tonos ocres muy distintos al verde que se suele asociar a unas vacaciones de costa, la misma estampa que hizo célebres los spaghetti western rodados en el cercano desierto de Tabernas, el único desierto de Europa continental. Es un paisaje precioso y pintoresco, pero poco convencional: mejor saberlo antes de venir que llevarte una sorpresa al llegar. Más detalle, mes a mes, en el capítulo Alrededores.' },
         { icon: '🍹', t: 'Hay ambiente, sobre todo en verano',
           d: 'Vera Playa tiene ocio y ambiente, especialmente en temporada estival. Si buscas más marcha, Garrucha, Mójacar y Vera pueblo están a un paseo, y Almería o Murcia a poco más. Lo que de verdad destaca la zona es la buena gastronomía y las playas de los alrededores: más detalle en los capítulos Sabores y Mar y playas.' },
         { icon: '📍', t: 'Dónde está exactamente',
@@ -1834,8 +1834,8 @@ const GUIDE_SHARED = {
           d: 'Vera Playa is a coastal development of villas and apartments, with supermarkets, restaurants and beaches within walking distance, but without a city atmosphere. Nightlife is low-key: more beach bar than nightclub.' },
         { icon: '🚗', t: 'You will need a car',
           d: 'Public transport is limited. To explore the area (towns, coves, trails) and reach many supermarkets or restaurants, a car is almost essential. Car hire and airport details are in the Arrival & departure chapter.' },
-        { icon: '☀', t: 'Dry sun, desert landscape',
-          d: 'The climate is among the driest in Europe: plenty of sun, strong heat in summer, mild winters. The landscape that comes with it is just as distinctive: ravines, badlands and ochre tones far from the green most people picture for a coastal holiday, the same backdrop that made the spaghetti westerns filmed in the nearby Tabernas desert famous, continental Europe\'s only desert. It is a beautiful, picturesque landscape, but an unconventional one: better to know that before you arrive than be surprised once you do. More detail, month by month, in the Surroundings chapter.' },
+        { icon: '☀', t: 'Humid coastal heat, desert landscape',
+          d: 'Right on the coast, by the sea, the climate is humid: plenty of sun, humid heat in summer, mild winters. The province itself is among the driest in Europe, and the inland landscape shows it: ravines, badlands and ochre tones far from the green most people picture for a coastal holiday, the same backdrop that made the spaghetti westerns filmed in the nearby Tabernas desert famous, continental Europe\'s only desert. It is a beautiful, picturesque landscape, but an unconventional one: better to know that before you arrive than be surprised once you do. More detail, month by month, in the Surroundings chapter.' },
         { icon: '🍹', t: 'There is a scene, especially in summer',
           d: 'Vera Playa does have leisure and nightlife, especially in high season. If you want more of a scene, Garrucha, Mójacar and Vera village are a short drive away, and Almería or Murcia a little further. What the area really stands out for is great food and the beaches nearby: more detail in the Tastes and Sea & beaches chapters.' },
         { icon: '📍', t: 'Exactly where it is',
@@ -5922,8 +5922,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               <h3 className="ag-h3">{lang === 'es' ? 'Cuándo venir y qué llevar' : 'When to come and what to pack'}</h3>
               <p className="ag-para">
                 {lang === 'es'
-                  ? 'El Levante almeriense presume del clima más seco y soleado de Europa: unas 3.000 horas de sol al año y muy poca lluvia. Los veranos son calurosos y secos, los inviernos suaves (rara vez baja de 10 °C de día). El mar está agradable para bañarse de junio a octubre.'
-                  : 'The Almería Levante boasts the driest, sunniest climate in Europe: around 3,000 hours of sun a year and very little rain. Summers are hot and dry, winters mild (it rarely drops below 10 °C during the day). The sea is pleasant for swimming from June to October.'}
+                  ? 'El Levante almeriense presume del clima más seco y soleado de Europa: unas 3.000 horas de sol al año y muy poca lluvia. Eso sí, en la costa (Vera Playa) el calor del verano es húmedo por la cercanía del mar, no el calor seco del interior. Los inviernos son suaves (rara vez baja de 10 °C de día). El mar está agradable para bañarse de junio a octubre.'
+                  : 'The Almería Levante boasts the driest, sunniest climate in Europe: around 3,000 hours of sun a year and very little rain. That said, right on the coast (Vera Playa) summer heat is humid, being so close to the sea, not the dry heat you get inland. Winters are mild (it rarely drops below 10 °C during the day). The sea is pleasant for swimming from June to October.'}
               </p>
               <p className="ag-para">
                 {lang === 'es'
