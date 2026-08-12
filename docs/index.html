@@ -94,7 +94,7 @@
         "name": "Hestía Vera Thalassa",
         "url": "https://www.hestiayourhome.com/thalassa.html",
         "image": "https://www.hestiayourhome.com/assets/apt-vt-4.jpg",
-        "address": {"@type": "PostalAddress", "streetAddress": "C. Tomillo 2", "addressLocality": "Vera", "postalCode": "04621", "addressCountry": "ES"},
+        "address": {"@type": "PostalAddress", "streetAddress": "C. Tomillo 2, Urb. Al Andalus Thalassa", "addressLocality": "Vera", "postalCode": "04621", "addressCountry": "ES"},
         "geo": {"@type": "GeoCoordinates", "latitude": "37.23336", "longitude": "-1.82415"},
         "petsAllowed": true
       },
@@ -213,7 +213,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=8e3206c563');
+      const res = await fetch(file + '?cv=f23c8f5869');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
