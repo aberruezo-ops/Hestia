@@ -5642,7 +5642,7 @@ const GUIDE_BY_APT = {
       }, {
         id: 'urbanizacion',
         title: 'Tu urbanización',
-        body: 'Tu urbanización es textil, por lo que está prohibido el nudismo. Tu plaza de garaje es la nº 290. Tienes entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), acceso peatonal desde la urbanización, piscina y pistas deportivas. Hestía Vera Salinas está en el bloque 22, planta 1, puerta 7.',
+        body: 'Tu urbanización, Pueblo Salinas, es textil, por lo que está prohibido el nudismo. Tu plaza de garaje es la nº 290. Tienes entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), acceso peatonal desde la urbanización, piscina y pistas deportivas. Hestía Vera Salinas está en el bloque 22, planta 1, puerta 7.',
         points: ['Entrada y salida a la urbanización controlada por código.', 'Acceso/barrera a la zona 2, donde está Hestía.', 'Plaza de garaje de Hestía. Número 290.', 'Acceso peatonal a Hestía desde la urbanización.', 'Hestía Vera Salinas. Bloque 22, planta 1, apartamento 7.', 'Piscina.', 'Pistas deportivas.'],
         recs: ['Merece la pena recorrer la urbanización: jardines, riachuelos, aves y otros pequeños animales, con el desierto alrededor. Y toda la tranquilidad de un recinto cerrado, sobre todo si vas con niños.', 'Cuida las plantas y la limpieza de la urbanización.', 'Respeta las zonas comunes y las normas de la urbanización.', 'Respeta a los vecinos.', 'Las pistas deportivas (pádel y demás) se reservan a través de la conserjería de la urbanización. Si las necesitas, pídenos el teléfono y te lo pasamos al momento.', 'Llama a Conserjería para reservar cualquier espacio común.']
       }],
@@ -5688,7 +5688,7 @@ const GUIDE_BY_APT = {
       }, {
         id: 'urbanizacion',
         title: 'Your complex',
-        body: 'Your complex is textile-only, so nudism is not permitted. Your garage space is nº 290. Code-controlled entrance, barrier to zone 2 (where Hestía is), pedestrian access from the complex, swimming pool and sports courts. Hestía Vera Salinas is at block 22, floor 1, unit 7.',
+        body: 'Your complex, Pueblo Salinas, is textile-only, so nudism is not permitted. Your garage space is nº 290. Code-controlled entrance, barrier to zone 2 (where Hestía is), pedestrian access from the complex, swimming pool and sports courts. Hestía Vera Salinas is at block 22, floor 1, unit 7.',
         points: ['Entrance and exit to the complex controlled by code.', 'Access/barrier to zone 2, where Hestía is.', 'Hestía parking space. Number 290.', 'Pedestrian access to Hestía from the complex.', 'Hestía Vera Salinas. Block 22, floor 1, apartment 7.', 'Swimming pool.', 'Sports courts.'],
         recs: ['The complex is worth exploring: gardens, streams, birds and small animals, with the desert all around. And all the calm of a gated community, especially if you come with children.', 'Take care of the plants and the cleanliness of the complex.', 'Respect the common areas and the complex rules.', 'Respect the neighbours.', 'Sports courts (padel and others) are booked through the complex concierge desk. If you need one, ask us and we will pass you the phone number right away.', 'Call the concierge to reserve any common space.']
       }],
