@@ -2324,7 +2324,7 @@ const GUIDE_BY_APT = {
           'Recoge los cojines cuando sople aire o llueva.',
           'Usa velas para crear el ambiente perfecto.',
         ]},
-        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Tu urbanización es textil, por lo que está prohibido el nudismo. Tu plaza de garaje es la nº 290. Tienes entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), acceso peatonal desde la urbanización, piscina y pistas deportivas. Hestía Vera Salinas está en el bloque 22, planta 1, puerta 7.',
+        { id: 'urbanizacion', title: 'Tu urbanización', body: 'Tu urbanización, Pueblo Salinas, es textil, por lo que está prohibido el nudismo. Tu plaza de garaje es la nº 290. Tienes entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), acceso peatonal desde la urbanización, piscina y pistas deportivas. Hestía Vera Salinas está en el bloque 22, planta 1, puerta 7.',
           points: [
             'Entrada y salida a la urbanización controlada por código.',
             'Acceso/barrera a la zona 2, donde está Hestía.',
@@ -2381,7 +2381,7 @@ const GUIDE_BY_APT = {
           'Put away cushions when it\'s windy or raining.',
           'Use candles to create the perfect atmosphere.',
         ]},
-        { id: 'urbanizacion', title: 'Your complex', body: 'Your complex is textile-only, so nudism is not permitted. Your garage space is nº 290. Code-controlled entrance, barrier to zone 2 (where Hestía is), pedestrian access from the complex, swimming pool and sports courts. Hestía Vera Salinas is at block 22, floor 1, unit 7.',
+        { id: 'urbanizacion', title: 'Your complex', body: 'Your complex, Pueblo Salinas, is textile-only, so nudism is not permitted. Your garage space is nº 290. Code-controlled entrance, barrier to zone 2 (where Hestía is), pedestrian access from the complex, swimming pool and sports courts. Hestía Vera Salinas is at block 22, floor 1, unit 7.',
           points: [
             'Entrance and exit to the complex controlled by code.',
             'Access/barrier to zone 2, where Hestía is.',
