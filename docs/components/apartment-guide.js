@@ -4870,8 +4870,8 @@ const GUIDE_SHARED = {
         d: 'A partir de la quinta noche no sube más. En estancias largas, tarifa plana de 50 € al mes.'
       }, {
         icon: '🧹',
-        t: 'Limpiad lo que ensucien en zonas comunes',
-        d: 'Jardines, pasillos, ascensor… Ante cualquier incidente, la responsabilidad es del dueño (ver Normas de Hestía).'
+        t: 'No sueltos en zonas comunes',
+        d: 'En jardines, pasillos, ascensor y demás zonas comunes, la mascota no puede ir suelta. Limpiad lo que ensucie y, ante cualquier deterioro, la responsabilidad es del huésped (ver Normas de Hestía).'
       }, {
         icon: '🐕',
         t: 'Playas para perros cerca',
@@ -5276,8 +5276,8 @@ const GUIDE_SHARED = {
         d: 'From the fifth night on it does not go up further. For long stays, a flat €50/month.'
       }, {
         icon: '🧹',
-        t: 'Clean up after them in shared areas',
-        d: 'Gardens, corridors, the lift… For any incident, responsibility lies with the owner (see Hestía house rules).'
+        t: 'Keep them leashed in shared areas',
+        d: 'In gardens, corridors, the lift and other shared areas, pets must not be left off the leash. Clean up after them, and for any damage, responsibility lies with the guest (see Hestía house rules).'
       }, {
         icon: '🐕',
         t: 'Dog-friendly beaches nearby',
