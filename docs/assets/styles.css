@@ -10570,6 +10570,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 48px 56px;
+  align-items: start;
 }
 .noticias-cat-head {
   display: flex;
@@ -10677,6 +10678,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0 48px;
+  align-items: start;
 }
 .noticias-mes-col {
   border-top: 2px solid var(--ber);
