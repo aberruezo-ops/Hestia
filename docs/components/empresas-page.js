@@ -65,7 +65,7 @@ const EMP_COPY = {
     }, {
       n: '3',
       t: 'Confirmas la reserva',
-      d: 'Una señal para reservar y el resto a la llegada. Te lo dejamos todo por escrito y sin comisiones.'
+      d: 'Una señal para reservar y el resto a la llegada, o mes a mes, o lo hablamos. Te lo dejamos todo por escrito y sin comisiones.'
     }, {
       n: '4',
       t: 'Os acompañamos durante la estancia',
@@ -171,7 +171,7 @@ const EMP_COPY = {
     }, {
       n: '3',
       t: 'You confirm the booking',
-      d: 'A deposit to book and the rest on arrival. We put everything in writing, with no commissions.'
+      d: 'A deposit to book and the rest on arrival, month by month, or we work it out together. We put everything in writing, with no commissions.'
     }, {
       n: '4',
       t: 'We support you throughout the stay',

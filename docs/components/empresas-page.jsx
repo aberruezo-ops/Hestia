@@ -43,7 +43,7 @@ const EMP_COPY = {
     steps: [
       { n: '1', t: 'Nos cuentas qué necesitas', d: 'Fechas, número de personas y qué hace falta: factura, contrato, varias unidades o servicios.' },
       { n: '2', t: 'Te enviamos una propuesta', d: 'A medida y rápida, normalmente en menos de una hora, con precio cerrado y condiciones claras.' },
-      { n: '3', t: 'Confirmas la reserva', d: 'Una señal para reservar y el resto a la llegada. Te lo dejamos todo por escrito y sin comisiones.' },
+      { n: '3', t: 'Confirmas la reserva', d: 'Una señal para reservar y el resto a la llegada, o mes a mes, o lo hablamos. Te lo dejamos todo por escrito y sin comisiones.' },
       { n: '4', t: 'Os acompañamos durante la estancia', d: 'Llegada autónoma, servicios locales y lo que surja. Estamos a un mensaje.' },
     ],
     availBtn: 'Comprobar disponibilidad',
@@ -130,7 +130,7 @@ const EMP_COPY = {
     steps: [
       { n: '1', t: 'You tell us what you need', d: 'Dates, number of people and what is required: invoice, contract, several units or services.' },
       { n: '2', t: 'We send you a proposal', d: 'Tailored and fast, usually within an hour, with a closed price and clear terms.' },
-      { n: '3', t: 'You confirm the booking', d: 'A deposit to book and the rest on arrival. We put everything in writing, with no commissions.' },
+      { n: '3', t: 'You confirm the booking', d: 'A deposit to book and the rest on arrival, month by month, or we work it out together. We put everything in writing, with no commissions.' },
       { n: '4', t: 'We support you throughout the stay', d: 'Self check-in, local services and whatever comes up. We are one message away.' },
     ],
     availBtn: 'Check availability',
