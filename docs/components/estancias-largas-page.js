@@ -46,7 +46,7 @@ const LS_COPY = {
       a: 'Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de 2 horas para confirmar disponibilidad y enviarte el contrato.'
     }, {
       q: '¿Hay que pagar todo al reservar?',
-      a: 'Solo el 20% como señal para confirmar la reserva. El resto se abona a la llegada en efectivo o Bizum.'
+      a: 'Solo el 20% como señal para confirmar la reserva. El resto se abona a la llegada, a convenir.'
     }, {
       q: '¿Está disponible en verano?',
       a: 'No. Los apartamentos están en máxima demanda en julio y agosto. La larga estancia está disponible de septiembre a junio.'
@@ -104,7 +104,7 @@ const LS_COPY = {
       a: 'Message us on WhatsApp or email with your dates and chosen apartment. We respond within 2 hours to confirm availability and send the contract.'
     }, {
       q: 'Do I pay everything upfront?',
-      a: 'Only 20% as a deposit to confirm the booking. The rest is paid on arrival in cash or Bizum.'
+      a: 'Only 20% as a deposit to confirm the booking. The rest is paid on arrival, to be agreed.'
     }, {
       q: 'Available in summer?',
       a: 'No. The apartments are in peak demand in July and August. Long stays are available September to June.'
