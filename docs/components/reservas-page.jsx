@@ -212,8 +212,8 @@ const LsPriceSummary = ({ ls, extras = [], guests, pets, lang }) => {
         </div>
       </div>
       <p className="price-note">{es
-        ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.'
-        : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.'}</p>
+        ? '* Señal del 20% para confirmar. Resto a la llegada, a convenir.'
+        : '* 20% deposit to confirm. Balance on arrival, to be agreed.'}</p>
     </div>
   );
 };
@@ -348,8 +348,8 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [],
       </div>
       <p className="price-note">{lsCalc
         ? (lang === 'es'
-            ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.'
-            : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.')
+            ? '* Señal del 20% para confirmar. Resto a la llegada, a convenir.'
+            : '* 20% deposit to confirm. Balance on arrival, to be agreed.')
         : (lang === 'es'
             ? '* Precio orientativo. ¿Lo encuentras más barato en una plataforma? No solo te lo igualamos: te lo mejoramos.'
             : '* Indicative price. Found it cheaper on a platform? We don\'t just match it, we beat it.')

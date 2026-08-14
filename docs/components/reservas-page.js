@@ -194,7 +194,7 @@ const LsPriceSummary = ({
     className: "price-line price-line-total"
   }, /*#__PURE__*/React.createElement("span", null, es ? 'Total estimado' : 'Estimated total'), /*#__PURE__*/React.createElement("span", null, fmt(grandTotal)))), /*#__PURE__*/React.createElement("p", {
     className: "price-note"
-  }, es ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.' : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.'));
+  }, es ? '* Señal del 20% para confirmar. Resto a la llegada, a convenir.' : '* 20% deposit to confirm. Balance on arrival, to be agreed.'));
 };
 const LsInfoBlock = ({
   calc,
@@ -300,7 +300,7 @@ const PricePreview = ({
     className: "prl-saving-val"
   }, "−", fmt(savings))))), /*#__PURE__*/React.createElement("p", {
     className: "price-note"
-  }, lsCalc ? lang === 'es' ? '* Señal del 20% para confirmar. Resto a la llegada en efectivo o Bizum.' : '* 20% deposit to confirm. Balance paid on arrival in cash or Bizum.' : lang === 'es' ? '* Precio orientativo. ¿Lo encuentras más barato en una plataforma? No solo te lo igualamos: te lo mejoramos.' : '* Indicative price. Found it cheaper on a platform? We don\'t just match it, we beat it.'));
+  }, lsCalc ? lang === 'es' ? '* Señal del 20% para confirmar. Resto a la llegada, a convenir.' : '* 20% deposit to confirm. Balance on arrival, to be agreed.' : lang === 'es' ? '* Precio orientativo. ¿Lo encuentras más barato en una plataforma? No solo te lo igualamos: te lo mejoramos.' : '* Indicative price. Found it cheaper on a platform? We don\'t just match it, we beat it.'));
 };
 
 // ReviewQuote, cita rotando de una reseña real verificada en el
