@@ -7825,6 +7825,31 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .legal-footer-note { margin-top: 60px; }
 
+/* /normas.html — normas de la casa, con logotipo de fondo tenue */
+.normas-content { position: relative; overflow: hidden; }
+.normas-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 900px;
+  max-width: 140vw;
+  transform: translate(-50%, -50%);
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.normas-body { position: relative; z-index: 1; max-width: 980px; }
+.normas-intro {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0 0 8px;
+  max-width: 680px;
+}
+.normas-rules-grid { margin-top: 32px; }
+
 /* Cookie table */
 .legal-cookie-table {
   margin-top: 12px;

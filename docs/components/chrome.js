@@ -1511,6 +1511,8 @@ const Footer = ({
   }, t.nav[9])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "empresas.html"
   }, lang === 'es' ? 'Para empresas' : 'For business')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "normas.html"
+  }, lang === 'es' ? 'Normas de la casa' : 'House rules')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "privacidad.html"
   }, lang === 'es' ? 'Privacidad' : 'Privacy')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "cookies.html"

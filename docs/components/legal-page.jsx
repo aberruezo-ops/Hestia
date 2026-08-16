@@ -1,9 +1,13 @@
 // ================================================================
-// HESTÍA, Páginas legales: Cookies + Privacidad
-// Selecciona cuál renderizar con window.__LEGAL__ ('cookies' | 'privacidad')
+// HESTÍA, Páginas legales: Cookies + Privacidad + Normas
+// Selecciona cuál renderizar con window.__LEGAL__ ('cookies' | 'privacidad' | 'normas')
 // ================================================================
 
 const LEGAL_COPY = {
+  normas: {
+    es: { title: 'Normas de Hestía', eyebrow: 'Hestía · Normas de la casa' },
+    en: { title: 'Hestía House Rules', eyebrow: 'Hestía · House rules' },
+  },
   cookies: {
     es: {
       title: 'Política de Cookies',
@@ -215,6 +219,36 @@ const LegalContent = ({ copy, lang }) => (
   </section>
 );
 
+const NormasContent = ({ lang }) => {
+  const rules = window.HESTIA_RULES[lang];
+  return (
+    <section className="legal-content section-cream normas-content">
+      <img className="normas-watermark" src="assets/logo-teal-transparent.png" alt="" aria-hidden="true"/>
+      <div className="container">
+        <div className="legal-body normas-body">
+          <p className="normas-intro">{rules.intro}</p>
+          <ul className="ag-rules-grid normas-rules-grid">
+            {rules.items.map((rule, i) => (
+              <li key={i} className="ag-rule">
+                <span className="ag-rule-icon" aria-hidden="true"><HiIcon name={rule.hi} size={18}/></span>
+                <div className="ag-rule-body">
+                  <h4 className="ag-rule-title">{rule.t}</h4>
+                  <p className="ag-rule-desc">{rule.d}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+          <div className="legal-footer-note">
+            <p style={{ opacity: 0.5, fontSize: 13 }}>
+              {lang === 'es' ? 'Última actualización: mayo de 2026' : 'Last updated: May 2026'}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const LegalPageApp = () => {
   const type = window.__LEGAL__ || 'privacidad';
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
@@ -235,7 +269,7 @@ const LegalPageApp = () => {
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main>
         <LegalHero copy={copy}/>
-        <LegalContent copy={copy} lang={lang}/>
+        {type === 'normas' ? <NormasContent lang={lang}/> : <LegalContent copy={copy} lang={lang}/>}
       </main>
       <Footer lang={lang} />
       <FloatingChat lang={lang} />
