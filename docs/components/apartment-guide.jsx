@@ -51,8 +51,8 @@ const URB_FALLBACK = {
 
 // Secciones del nav lateral, en orden de aparición
 const GUIDE_SECTIONS = [
-  { id: 'previaje',     es: 'Antes de hacer la maleta', en: 'Before you pack' },
   { id: 'bienvenida',   es: 'Bienvenida',       en: 'Welcome' },
+  { id: 'previaje',     es: 'Antes de hacer la maleta', en: 'Before you pack' },
   { id: 'llegada',      es: 'Llegada y salida', en: 'Arrival & departure' },
   { id: 'wifi',         es: 'Tu WiFi',          en: 'Your WiFi' },
   { id: 'limpieza',     es: 'Limpieza',         en: 'Cleaning' },
@@ -78,18 +78,22 @@ const GUIDE_SECTIONS = [
 ];
 
 // Agrupación temática del índice: en vez de una lista plana de capítulos
-// (que abruma), se presentan en 5 partes con un orden de lectura natural.
+// (que abruma), se presentan en partes con un orden de lectura natural.
 // Los ids deben ir en el mismo orden que GUIDE_SECTIONS para que la numeración
 // del índice y del cuerpo coincidan.
 const GUIDE_GROUPS = [
-  { es: 'Tu llegada',        en: 'Your arrival',
-    descEs: 'Lo esencial para entrar y conectarte el primer día.',
-    descEn: 'The essentials to get in and online on day one.',
-    ids: ['previaje', 'bienvenida', 'llegada', 'wifi'] },
-  { es: 'Tu apartamento',    en: 'Your apartment',
-    descEs: 'Cómo funciona cada rincón de tu casa, estancia a estancia.',
-    descEn: 'How every corner of your home works, room by room.',
-    ids: ['limpieza', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion'] },
+  { es: 'Bienvenida',        en: 'Welcome',
+    descEs: 'Quiénes somos y qué tiempo hace estos días.',
+    descEn: 'Who we are and what the weather is like these days.',
+    ids: ['bienvenida'] },
+  { es: 'Antes de llegar',   en: 'Before you arrive',
+    descEs: 'Qué esperar del viaje, el registro obligatorio y cómo llegar hasta la puerta.',
+    descEn: 'What to expect from the trip, mandatory registration and how to get to the door.',
+    ids: ['previaje', 'llegada'] },
+  { es: 'Tu Hestía',         en: 'Your Hestía',
+    descEs: 'El WiFi y cómo funciona cada rincón de tu casa, estancia a estancia.',
+    descEn: 'The WiFi and how every corner of your home works, room by room.',
+    ids: ['wifi', 'limpieza', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion'] },
   { es: 'Cerca de casa',     en: 'Close to home',
     descEs: 'Lo que tienes a un paso: orientarte, comprar y comer bien.',
     descEn: 'What is a step away: getting oriented, shopping and eating well.',
@@ -5604,27 +5608,9 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {guideCrumb}
 
-          {renderPart('previaje')}
-          <section id="ag-previaje" className="ag-section ag-section-rules ag-section-pretrip">
-            <span className="ag-section-num">01</span>
-            <h2 className="ag-h2">{s.pretrip.title}</h2>
-            <p className="ag-para">{s.pretrip.intro}</p>
-            <ul className="ag-rules-grid">
-              {s.pretrip.items.map((item, i) => (
-                <li key={i} className="ag-rule">
-                  <span className="ag-rule-icon" aria-hidden="true">{iconifyText(item.icon, 18)}</span>
-                  <div className="ag-rule-body">
-                    <h4 className="ag-rule-title">{item.t}</h4>
-                    <p className="ag-rule-desc">{item.d}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <p className="ag-para ag-pretrip-closing">{s.pretrip.closing}</p>
-          </section>
-
+          {renderPart('bienvenida')}
           <section id="ag-bienvenida" className="ag-section">
-            <span className="ag-section-num">02</span>
+            <span className="ag-section-num">01</span>
             <h2 className="ag-h2">{s.welcome.title}</h2>
             {s.welcome.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
             <p className="ag-sign">{s.welcome.sign}</p>
@@ -5656,6 +5642,25 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
             <GuideWeather14d lang={lang} />
             <GuideClimateChart lang={lang} />
+          </section>
+
+          {renderPart('previaje')}
+          <section id="ag-previaje" className="ag-section ag-section-rules ag-section-pretrip">
+            <span className="ag-section-num">02</span>
+            <h2 className="ag-h2">{s.pretrip.title}</h2>
+            <p className="ag-para">{s.pretrip.intro}</p>
+            <ul className="ag-rules-grid">
+              {s.pretrip.items.map((item, i) => (
+                <li key={i} className="ag-rule">
+                  <span className="ag-rule-icon" aria-hidden="true">{iconifyText(item.icon, 18)}</span>
+                  <div className="ag-rule-body">
+                    <h4 className="ag-rule-title">{item.t}</h4>
+                    <p className="ag-rule-desc">{item.d}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <p className="ag-para ag-pretrip-closing">{s.pretrip.closing}</p>
           </section>
 
           {s.checkin && (
@@ -5882,6 +5887,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
           )}
 
+          {renderPart('wifi')}
           <section id="ag-wifi" className="ag-section ag-section-wifi">
             <span className="ag-section-num">04</span>
             <h2 className="ag-h2">{s.wifi.title}</h2>
@@ -5899,7 +5905,6 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             </div>
           </section>
 
-          {renderPart('limpieza')}
           <section id="ag-limpieza" className="ag-section">
             <span className="ag-section-num">05</span>
             <h2 className="ag-h2">{s.cleaning.title}</h2>
