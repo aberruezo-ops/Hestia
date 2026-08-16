@@ -5829,6 +5829,208 @@ const GMAPS_PLACE = {
 window.GMAPS_PLACE = GMAPS_PLACE;
 
 // ================================================================
+// HESTIA_RULES · Normas de la casa, fuente única (ES + EN).
+// La consume la guía del huésped (apartment-guide.jsx, capítulo
+// "Normas") y la página pública /normas.html (legal-page.jsx). `hi`
+// es el nombre ya resuelto del icono de marca (ver GUIDE_EMOJI_HI en
+// apartment-guide.jsx); `icon` se mantiene para que la guía lo pase
+// por iconifyText sin cambios.
+// ================================================================
+const HESTIA_RULES = {
+  es: {
+    title: 'Normas de Hestía',
+    intro: 'Estas normas vienen del contrato que firmaste con nosotros. Son sencillas y están pensadas para que tú, los próximos huéspedes y nuestros vecinos disfrutemos de Hestía.',
+    items: [{
+      icon: '🛒',
+      hi: 'cart',
+      t: 'Reponed lo que consumáis',
+      d: 'Hestía dispone de productos consumibles. Si gastáis o consumís algo, intentad reponerlo: salvo el kit de bienvenida, que es un pequeño regalo nuestro. Reponed también lo que consumáis fuera de ese kit.'
+    }, {
+      icon: '🌿',
+      hi: 'olive',
+      t: 'Cuidad el medio ambiente',
+      d: 'No malgastéis la luz ni el agua. No dejéis el aire acondicionado con las ventanas abiertas o cuando salgáis. Sentíos como en vuestro hogar.'
+    }, {
+      icon: '🪑',
+      hi: 'chair',
+      t: 'Recoged la terraza si salís',
+      d: 'Cojines, toldo y plantas: especialmente si hay viento, lluvia o predicción de mal tiempo.'
+    }, {
+      icon: '🛏️',
+      hi: 'bed',
+      t: 'Cuidad equipamiento y mobiliario',
+      d: 'No extraigáis nada de Hestía. Tras vuestra estancia haremos inventario; cualquier deterioro o sustracción será responsabilidad vuestra.'
+    }, {
+      icon: '🤫',
+      hi: 'mute',
+      t: 'Respetad el descanso',
+      d: 'El vuestro y el de los vecinos. Evitad ruidos, música o jaleo a deshoras.'
+    }, {
+      icon: '🚪',
+      hi: 'door',
+      t: 'Hestía es solo para vosotros',
+      d: 'No para terceros que no figuren en la reserva.'
+    }, {
+      icon: '🕒',
+      hi: 'clock',
+      t: 'Check-in 15:00 · Check-out 11:00',
+      d: 'Necesitamos un margen considerable para dejar Hestía a punto para la siguiente llegada. Late check-out y early check-in sujetos a disponibilidad.'
+    }, {
+      icon: '🚭',
+      hi: 'nosmoking',
+      t: 'No se fuma dentro de Hestía',
+      d: 'En toda la casa está prohibido.'
+    }, {
+      icon: '🏖️',
+      hi: 'umbrella',
+      t: 'Toallas solo dentro de Hestía',
+      d: 'No las uséis en la piscina ni en la playa. Para esos sitios, llevad las vuestras.'
+    }, {
+      icon: '🌬️',
+      hi: 'wind',
+      t: 'Tender solo en el tendedero',
+      d: 'No colguéis ropa en las barandillas ni en la terraza.'
+    }, {
+      icon: '🏊',
+      hi: 'pool',
+      t: 'Respetad las normas de la urbanización',
+      d: 'Especialmente el horario de piscina y zonas comunes. El incumplimiento es responsabilidad vuestra.'
+    }, {
+      icon: '🚼',
+      hi: 'baby',
+      t: 'Terminantemente prohibido hacer necesidades en la piscina o en cualquier zona común',
+      d: 'Los bebés deben bañarse siempre con pañal de baño, nunca sin él. Si ocurre un incidente, la responsabilidad es de los familiares del bebé.'
+    }, {
+      icon: '🚗',
+      hi: 'car',
+      t: 'No correr con el coche en la mancomunidad',
+      d: 'La velocidad máxima dentro de la mancomunidad es muy baja. Hay niños, mascotas y peatones: circulad despacio, siempre. Es una norma de la comunidad y de sentido común.'
+    }, {
+      icon: '🧹',
+      hi: 'broom',
+      t: 'No ensuciar ni deteriorar las zonas comunes',
+      d: 'Jardines, piscina, ascensores, pasillos y descansillos: dejadlos como os los encontrasteis. Cualquier desperfecto o suciedad reiterada es responsabilidad del huésped.'
+    }, {
+      icon: '👙',
+      hi: 'umbrella',
+      t: 'Urbanización textil',
+      d: 'No están permitidos el naturismo ni el topless en ninguna zona de la urbanización.'
+    }, {
+      icon: '👨‍👩‍👧',
+      hi: 'baby',
+      t: 'Menores bajo responsabilidad de sus padres',
+      d: 'Cualquier incidente con menores en Hestía o en zonas comunes es responsabilidad de sus padres o tutores.'
+    }, {
+      icon: '🛎️',
+      hi: 'bell',
+      t: 'Servicios comunes y exterior',
+      d: 'Lo que pase fuera de Hestía no es responsabilidad nuestra, pero siempre intentaremos ayudaros.'
+    }, {
+      icon: '🧺',
+      hi: 'basket',
+      t: 'Dejad Hestía limpia y recogida',
+      d: 'De las sábanas y toallas nos encargamos nosotros. Por favor, no las lavéis con ropa de otro color.'
+    }]
+  },
+  en: {
+    title: 'Hestía house rules',
+    intro: 'These rules come from the contract you signed. They are simple: they exist so you, future guests and our neighbours all enjoy Hestía.',
+    items: [{
+      icon: '🛒',
+      hi: 'cart',
+      t: 'Replace what you use up',
+      d: 'Hestía has consumable supplies. If you use or finish something, please try to replace it: except the welcome kit, which is a small gift from us. Replace also what you consume beyond that kit.'
+    }, {
+      icon: '🌿',
+      hi: 'olive',
+      t: 'Look after the environment',
+      d: 'Do not waste water or electricity. Never run the AC with windows open or when you leave. Treat it as your own home.'
+    }, {
+      icon: '🪑',
+      hi: 'chair',
+      t: 'Tidy the terrace before going out',
+      d: 'Cushions, awning and plants: especially when there is wind, rain or bad weather forecast.'
+    }, {
+      icon: '🛏️',
+      hi: 'bed',
+      t: 'Care for furniture and equipment',
+      d: 'Do not remove anything from Hestía. After your stay we run an inventory; any damage or loss will be your responsibility.'
+    }, {
+      icon: '🤫',
+      hi: 'mute',
+      t: 'Respect rest hours',
+      d: 'Yours and your neighbours\'. Avoid noise, music or loud gatherings late at night or early morning.'
+    }, {
+      icon: '🚪',
+      hi: 'door',
+      t: 'Hestía is only for you',
+      d: 'Not for third parties who are not on the booking.'
+    }, {
+      icon: '🕒',
+      hi: 'clock',
+      t: 'Check-in 15:00 · Check-out 11:00',
+      d: 'We need a considerable window to prepare Hestía for the next arrival. Late check-out and early check-in are subject to availability.'
+    }, {
+      icon: '🚭',
+      hi: 'nosmoking',
+      t: 'No smoking inside Hestía',
+      d: 'Strictly forbidden in the whole apartment.'
+    }, {
+      icon: '🏖️',
+      hi: 'umbrella',
+      t: 'Towels stay inside Hestía',
+      d: 'Do not take them to the pool or the beach. Use your own for those.'
+    }, {
+      icon: '🌬️',
+      hi: 'wind',
+      t: 'Hang laundry on the drying rack only',
+      d: 'Not on railings or terrace edges.'
+    }, {
+      icon: '🏊',
+      hi: 'pool',
+      t: 'Respect the community rules',
+      d: 'Especially pool hours and shared areas. Breaking those rules is your responsibility.'
+    }, {
+      icon: '🚼',
+      hi: 'baby',
+      t: 'Strictly forbidden to relieve yourself in the pool or any shared area',
+      d: 'Babies must always wear a swim nappy, never without one. If an incident happens, responsibility lies with the baby\'s family.'
+    }, {
+      icon: '🚗',
+      hi: 'car',
+      t: 'No speeding inside the resort',
+      d: 'Speed limits inside the resort are very low. Children, pets and pedestrians around: drive slowly, always. It is both a community rule and common sense.'
+    }, {
+      icon: '🧹',
+      hi: 'broom',
+      t: 'Do not dirty or damage common areas',
+      d: 'Gardens, pool, lifts, corridors and landings: leave them as you found them. Any repeated mess or damage is the guest\'s responsibility.'
+    }, {
+      icon: '👙',
+      hi: 'umbrella',
+      t: 'Textile community',
+      d: 'Naturism and topless are not allowed anywhere in the urbanisation.'
+    }, {
+      icon: '👨‍👩‍👧',
+      hi: 'baby',
+      t: 'Minors under their parents\' responsibility',
+      d: 'Any incident with minors inside Hestía or in shared areas is the responsibility of their parents/guardians.'
+    }, {
+      icon: '🛎️',
+      hi: 'bell',
+      t: 'Common services and outside areas',
+      d: 'What happens outside Hestía is not our responsibility, but we will always try to help.'
+    }, {
+      icon: '🧺',
+      hi: 'basket',
+      t: 'Leave Hestía clean and tidy',
+      d: 'We take care of sheets and towels. Please do not wash them with coloured laundry.'
+    }]
+  }
+};
+window.HESTIA_RULES = HESTIA_RULES;
+
+// ================================================================
 // DirectBookingPerks, sección "Reserva directa, una mejor manera"
 // Stat ribbon (4 cifras destacadas) + botón → rejilla de 8 cards
 // ricos con icono, cifra, título y descripción. Reutilizable en

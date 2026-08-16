@@ -122,4 +122,14 @@
     <priority>0.6</priority>
   </url>
 
+  <url>
+    <loc>https://www.hestiayourhome.com/normas.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/normas.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/normas.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/normas.html"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
 </urlset>
