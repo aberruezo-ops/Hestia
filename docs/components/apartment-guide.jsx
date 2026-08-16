@@ -2899,6 +2899,190 @@ const EventsCalendar = ({ lang }) => {
 };
 
 // ================================================================
+// PlaceFinder · buscador de lenguaje libre sobre PLACES.
+// Sin IA ni backend: interpreta la consulta con reglas (categoría,
+// zona conocida, cercanía a Hestía) y filtra los sitios que YA están
+// curados en esta guía. No consulta internet en directo.
+// ================================================================
+const _finderNorm = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+const FINDER_STOPWORDS = new Set([
+  'de', 'del', 'la', 'el', 'los', 'las', 'un', 'una', 'unos', 'unas', 'en', 'y', 'o', 'que', 'para', 'con',
+  'algo', 'alguna', 'alguno', 'cosa', 'dame', 'dime', 'quiero', 'busco', 'necesito', 'recomienda', 'recomiendame',
+  'sin', 'por', 'muy', 'mas', 'ya', 'no', 'si', 'su', 'sus', 'como', 'tambien', 'solo', 'este', 'esta', 'esa',
+  'ese', 'eso', 'esto', 'hay', 'estan', 'pero', 'sea', 'sera', 'este',
+  'the', 'a', 'an', 'of', 'in', 'and', 'or', 'for', 'me', 'want', 'looking', 'give', 'something', 'anything', 'find', 'need',
+  'is', 'are', 'be', 'it', 'on', 'at', 'to', 'with', 'without', 'very', 'also', 'that', 'this', 'these', 'those',
+]);
+
+const FINDER_PROXIMITY_TERMS = [
+  'cerca de una hestia', 'cerca de la hestia', 'cerca de hestia', 'cerca de mi hestia',
+  'near hestia', 'close to hestia', 'walking distance', 'a pie desde hestia', 'andando desde hestia',
+];
+
+const FINDER_REGION_TERMS = [
+  'almeria capital', 'san juan de los terreros', 'cuevas del almanzora', 'sierra cabrera',
+  'vera playa', 'villaricos', 'mojacar', 'garrucha', 'palomares', 'cartagena', 'aguilas',
+  'mazarron', 'roquetas', 'nijar', 'tabernas', 'lorca', 'murcia', 'almeria', 'vera',
+];
+
+// Orden importa: los términos más específicos van antes que los genéricos,
+// para que p.ej. "sombrillas" seleccione beach-srvc y no el "beach" genérico.
+const FINDER_CAT_MAP = [
+  { ids: ['beach-dog'], terms: ['playa para perros', 'playa perros', 'playas para perros', 'dog beach', 'dog friendly beach'] },
+  { ids: ['beach-nude'], terms: ['playa nudista', 'playa naturista', 'playas naturistas', 'nude beach', 'naturist beach'] },
+  { ids: ['beach-srvc'], terms: ['sombrilla', 'sombrillas', 'hamaca', 'hamacas', 'tumbona', 'tumbonas', 'socorrista', 'lifeguard', 'sunbed', 'sunbeds', 'umbrella', 'umbrellas'] },
+  { ids: ['beach-hard'], terms: ['dificil acceso', 'cala escondida', 'cala dificil', 'hard to reach', 'hard access beach'] },
+  { ids: ['beach', 'beach-dog', 'beach-nude', 'beach-srvc', 'beach-hard'], terms: ['playa', 'playas', 'beach', 'beaches', 'cala', 'calas', 'cove', 'coves'] },
+  { ids: ['michelin'], terms: ['michelin', 'estrella michelin'] },
+  { ids: ['celiac'], terms: ['celiaco', 'celiaca', 'sin gluten', 'gluten free', 'celiac'] },
+  { ids: ['restaurant'], terms: ['restaurante', 'restaurantes', 'restaurant', 'restaurants', 'comer', 'cena', 'cenar', 'comida', 'food', 'dinner', 'lunch'] },
+  { ids: ['bar'], terms: ['bar', 'bares', 'copas', 'chiringuito', 'tapas', 'tapear', 'pub', 'drinks', 'cerveza'] },
+  { ids: ['pet-board'], terms: ['guarderia mascota', 'residencia canina', 'residencia mascota', 'pet boarding', 'kennel', 'dog daycare'] },
+  { ids: ['pet-shop'], terms: ['tienda de animales', 'tienda mascotas', 'pienso', 'pet shop'] },
+  { ids: ['vet'], terms: ['veterinario', 'veterinaria', 'vet', 'veterinary'] },
+  { ids: ['super'], terms: ['supermercado', 'super', 'comprar comida', 'grocery', 'supermarket', 'groceries'] },
+  { ids: ['fish'], terms: ['pescaderia', 'carniceria', 'panaderia', 'fishmonger', 'butcher', 'bakery'] },
+  { ids: ['pharmacy'], terms: ['farmacia', 'pharmacy'] },
+  { ids: ['health'], terms: ['urgencias', 'hospital', 'centro de salud', 'emergency', 'clinic'] },
+  { ids: ['physio'], terms: ['fisioterapia', 'fisio', 'physiotherapy', 'physio'] },
+  { ids: ['gem'], terms: ['imprescindible', 'must see', 'visita unica'] },
+  { ids: ['water'], terms: ['buceo', 'kayak', 'paddel', 'paddle surf', 'vela', 'snorkel'] },
+  { ids: ['adventure'], terms: ['aventura', 'adrenalina', 'adventure'] },
+  { ids: ['trek'], terms: ['ruta', 'rutas', 'senderismo', 'sendero', 'hiking', 'trail', 'trekking'] },
+  { ids: ['leisure'], terms: ['parque', 'ocio', 'niños', 'ninos', 'kids', 'family fun'] },
+  { ids: ['bodega'], terms: ['bodega', 'bodegas', 'vino', 'vinos', 'enoturismo', 'winery', 'wine'] },
+  { ids: ['town'], terms: ['pueblo', 'pueblos', 'town', 'village'] },
+  { ids: ['bookshop'], terms: ['libreria', 'libros', 'bookshop', 'books'] },
+  { ids: ['abasto'], terms: ['mercado de abastos', 'mercado cubierto', 'covered market'] },
+  { ids: ['market'], terms: ['mercadillo', 'mercadillos', 'street market'] },
+  { ids: ['fuel'], terms: ['gasolinera', 'gasolina', 'petrol', 'gas station'] },
+  { ids: ['ev-charge'], terms: ['carga electrica', 'punto de carga', 'ev charging', 'electric car charge'] },
+  { ids: ['coworking'], terms: ['coworking', 'teletrabajo', 'remote work'] },
+  { ids: ['laundry'], terms: ['lavanderia', 'tintoreria', 'laundry', 'dry cleaning'] },
+  { ids: ['atm'], terms: ['cajero', 'banco', 'atm', 'bank'] },
+];
+
+const _finderDist = (lat1, lng1, lat2, lng2) => {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+};
+
+function findGuidePlaces(rawQuery) {
+  const q = _finderNorm(rawQuery);
+  if (!q) return { results: [], matchedCatIds: null, matchedRegion: null, usedProximity: false };
+
+  let matchedCatIds = null;
+  for (const entry of FINDER_CAT_MAP) {
+    if (entry.terms.some(t => q.includes(t))) { matchedCatIds = entry.ids; break; }
+  }
+
+  let matchedRegion = null;
+  for (const term of FINDER_REGION_TERMS) {
+    if (q.includes(term)) { matchedRegion = term; break; }
+  }
+
+  const usedProximity = FINDER_PROXIMITY_TERMS.some(t => q.includes(t)) || (q.includes('cerca') && !matchedRegion);
+
+  let pool = PLACES.filter(p => p.cat !== 'home');
+  if (matchedCatIds) pool = pool.filter(p => matchedCatIds.includes(p.cat));
+  if (matchedRegion) {
+    const inRegion = pool.filter(p => _finderNorm(`${p.name} ${p.desc || ''} ${p.desc_en || ''}`).includes(matchedRegion));
+    if (inRegion.length) pool = inRegion;
+  }
+
+  const tokens = q.split(/\s+/).filter(t => t.length > 2 && !FINDER_STOPWORDS.has(t));
+  let scored = pool.map(p => {
+    const words = new Set(_finderNorm(`${p.name} ${p.desc || ''} ${p.desc_en || ''} ${p.specialty || ''} ${p.tip || ''}`).split(/[^a-z0-9]+/).filter(Boolean));
+    const tokenScore = tokens.reduce((n, t) => n + (words.has(t) ? 1 : 0), 0);
+    const bonus = (p.featured ? 0.5 : 0) + (typeof p.rating === 'number' ? p.rating / 20 : 0);
+    return { p, tokenScore, score: tokenScore + bonus };
+  });
+
+  // Sin categoría ni zona detectada, exigimos coincidencia de palabra real.
+  // Con una sola palabra de consulta basta un acierto; con más, exigimos al
+  // menos dos, para que una única palabra común no rescate una consulta sin
+  // sentido y enseñe un sitio al azar.
+  if (!matchedCatIds && !matchedRegion) {
+    const minHits = tokens.length <= 1 ? 1 : 2;
+    scored = scored.filter(s => s.tokenScore >= minHits);
+  }
+
+  if (usedProximity) {
+    const hestias = PLACES.filter(p => p.cat === 'home');
+    scored.forEach(s => { s.dist = Math.min(...hestias.map(h => _finderDist(h.lat, h.lng, s.p.lat, s.p.lng))); });
+    scored.sort((a, b) => a.dist - b.dist);
+  } else {
+    scored.sort((a, b) => b.score - a.score);
+  }
+
+  return { results: scored.slice(0, 6).map(s => s.p), matchedCatIds, matchedRegion, usedProximity };
+}
+
+const PlaceFinder = ({ lang }) => {
+  const [query, setQuery] = React.useState('');
+  const [result, setResult] = React.useState(null);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const q = query.trim();
+    setResult(q ? findGuidePlaces(q) : null);
+  };
+
+  const placeholder = lang === 'es'
+    ? 'Ej. un restaurante cerca de una Hestía, algo en Murcia, una playa con sombrillas…'
+    : 'E.g. a restaurant near a Hestía, something in Murcia, a beach with sunbeds…';
+
+  return (
+    <div className="ag-finder">
+      <h3 className="ag-h3">{lang === 'es' ? 'Busca algo concreto' : 'Search for something specific'}</h3>
+      <p className="ag-finder-note">
+        {lang === 'es'
+          ? 'Escribe lo que buscas con tus palabras. Buscamos entre los sitios que ya conocemos y recomendamos en esta guía, no en internet en tiempo real: si no encuentras justo lo que necesitas, o quieres confirmar un dato, escríbenos.'
+          : 'Type what you are looking for in your own words. We search among the places we already know and recommend in this guide, not live on the internet: if you cannot find exactly what you need, or want to confirm a detail, message us.'}
+      </p>
+      <form className="ag-finder-form" onSubmit={onSubmit}>
+        <input
+          type="text"
+          className="ag-finder-input"
+          value={query}
+          onChange={e => setQuery(e.target.value)}
+          placeholder={placeholder}
+          aria-label={lang === 'es' ? 'Buscar en la guía' : 'Search the guide'}
+        />
+        <button type="submit" className="ag-finder-submit">
+          {lang === 'es' ? 'Buscar' : 'Search'}
+        </button>
+      </form>
+
+      {result && (
+        result.results.length > 0 ? (
+          <>
+            <p className="ag-finder-summary">
+              {lang === 'es'
+                ? `${result.results.length} resultado${result.results.length === 1 ? '' : 's'}${result.usedProximity ? ', ordenados por cercanía a Hestía' : ''}:`
+                : `${result.results.length} result${result.results.length === 1 ? '' : 's'}${result.usedProximity ? ', sorted by distance from Hestía' : ''}:`}
+            </p>
+            <ul className="ag-places ag-places-compact ag-finder-results">
+              {result.results.map(p => <CompactPlaceItem key={p.id} p={p} lang={lang} />)}
+            </ul>
+          </>
+        ) : (
+          <p className="ag-finder-empty">
+            {lang === 'es'
+              ? 'No hemos encontrado nada claro con esas palabras en esta guía. Prueba con otros términos, o pregúntanos directamente por el chat.'
+              : 'We could not find a clear match for that in this guide. Try different words, or ask us directly through the chat.'}
+          </p>
+        )
+      )}
+    </div>
+  );
+};
+
+// ================================================================
 // PLACES_OF_INTEREST · atlas estructurado por sub-categoría
 // ================================================================
 // Cada entrada es UNA LÍNEA: nombre, distancia, cómo llegar muy breve,
@@ -5886,6 +6070,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                   : <p className="ag-disclaimer-body">{s.surroundings.disclaimer}</p>}
               </aside>
             )}
+
+            <PlaceFinder lang={lang} />
 
             <GuideMap lang={lang} apt={apt} />
 

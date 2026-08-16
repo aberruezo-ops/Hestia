@@ -13135,6 +13135,67 @@ footer,
   gap: 7px;
 }
 
+/* Buscador de lenguaje libre sobre PLACES (capítulo Alrededores) */
+.ag-finder {
+  margin: 24px 0 32px;
+  padding: 20px 22px;
+  background: rgba(58, 170, 187, 0.06);
+  border: 1px solid rgba(58, 170, 187, 0.18);
+  border-radius: 10px 0 10px 0;
+}
+.ag-finder .ag-h3 { margin-top: 0; }
+.ag-finder-note {
+  margin: 0 0 16px;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.ag-finder-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ag-finder-input {
+  flex: 1 1 280px;
+  min-width: 0;
+  padding: 12px 16px;
+  border: 1px solid rgba(61, 26, 53, 0.15);
+  border-radius: 8px 0 8px 0;
+  background: var(--crema, #FAF6F0);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  transition: border-color var(--dur-base, 220ms) var(--ease-out, ease-out);
+}
+.ag-finder-input::placeholder { color: rgba(61, 26, 53, 0.4); }
+.ag-finder-input:focus { outline: none; border-color: var(--sol); }
+.ag-finder-submit {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 8px 0 8px 0;
+  background: var(--sol);
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background var(--dur-base, 220ms) var(--ease-out, ease-out);
+}
+.ag-finder-submit:hover { background: var(--sol-h); }
+.ag-finder-summary {
+  margin: 20px 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ber-dk);
+}
+.ag-finder-empty {
+  margin: 18px 0 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
 /* Sección de Llegada y salida (check-in) */
 .ag-section-checkin .ag-h3 {
   margin-top: 24px;
