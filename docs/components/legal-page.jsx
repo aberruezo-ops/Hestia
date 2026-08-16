@@ -221,13 +221,18 @@ const LegalContent = ({ copy, lang }) => (
 
 const NormasContent = ({ lang }) => {
   const rules = window.HESTIA_RULES[lang];
+  const es = window.HESTIA_RULES.es;
+  const en = window.HESTIA_RULES.en;
   return (
     <section className="legal-content section-cream normas-content">
       <img className="normas-watermark" src="assets/logo-teal-transparent.png" alt="" aria-hidden="true"/>
       <div className="container">
         <div className="legal-body normas-body">
-          <p className="normas-intro">{rules.intro}</p>
-          <ul className="ag-rules-grid normas-rules-grid">
+          <p className="normas-intro no-print">{rules.intro}</p>
+          <button type="button" className="btn btn-ghost-dark normas-print-btn no-print" onClick={() => window.print()}>
+            {lang === 'es' ? 'Imprimir (ES + EN, 1 hoja) →' : 'Print (ES + EN, 1 sheet) →'}
+          </button>
+          <ul className="ag-rules-grid normas-rules-grid no-print">
             {rules.items.map((rule, i) => (
               <li key={i} className="ag-rule">
                 <span className="ag-rule-icon" aria-hidden="true"><HiIcon name={rule.hi} size={18}/></span>
@@ -238,10 +243,29 @@ const NormasContent = ({ lang }) => {
               </li>
             ))}
           </ul>
-          <div className="legal-footer-note">
+          <div className="legal-footer-note no-print">
             <p style={{ opacity: 0.5, fontSize: 13 }}>
               {lang === 'es' ? 'Última actualización: mayo de 2026' : 'Last updated: May 2026'}
             </p>
+          </div>
+
+          {/* Hoja imprimible ES + EN en una sola página, oculta en pantalla */}
+          <div className="normas-print-sheet">
+            <div className="nps-head">
+              <img className="nps-logo" src="assets/logo-teal-transparent.png" alt=""/>
+              <h1>Normas de Hestía <span>· House Rules</span></h1>
+            </div>
+            <ul className="nps-grid">
+              {es.items.map((rule, i) => (
+                <li key={i} className="nps-item">
+                  <span className="nps-icon" aria-hidden="true"><HiIcon name={rule.hi} size={13}/></span>
+                  <div className="nps-body">
+                    <p className="nps-es"><strong>{rule.t}.</strong> {rule.d}</p>
+                    <p className="nps-en"><strong>{en.items[i].t}.</strong> {en.items[i].d}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
