@@ -219,6 +219,8 @@ const NormasContent = ({
   lang
 }) => {
   const rules = window.HESTIA_RULES[lang];
+  const es = window.HESTIA_RULES.es;
+  const en = window.HESTIA_RULES.en;
   return /*#__PURE__*/React.createElement("section", {
     className: "legal-content section-cream normas-content"
   }, /*#__PURE__*/React.createElement("img", {
@@ -231,9 +233,13 @@ const NormasContent = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "legal-body normas-body"
   }, /*#__PURE__*/React.createElement("p", {
-    className: "normas-intro"
-  }, rules.intro), /*#__PURE__*/React.createElement("ul", {
-    className: "ag-rules-grid normas-rules-grid"
+    className: "normas-intro no-print"
+  }, rules.intro), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "btn btn-ghost-dark normas-print-btn no-print",
+    onClick: () => window.print()
+  }, lang === 'es' ? 'Imprimir (ES + EN, 1 hoja) →' : 'Print (ES + EN, 1 sheet) →'), /*#__PURE__*/React.createElement("ul", {
+    className: "ag-rules-grid normas-rules-grid no-print"
   }, rules.items.map((rule, i) => /*#__PURE__*/React.createElement("li", {
     key: i,
     className: "ag-rule"
@@ -250,13 +256,38 @@ const NormasContent = ({
   }, rule.t), /*#__PURE__*/React.createElement("p", {
     className: "ag-rule-desc"
   }, rule.d))))), /*#__PURE__*/React.createElement("div", {
-    className: "legal-footer-note"
+    className: "legal-footer-note no-print"
   }, /*#__PURE__*/React.createElement("p", {
     style: {
       opacity: 0.5,
       fontSize: 13
     }
-  }, lang === 'es' ? 'Última actualización: mayo de 2026' : 'Last updated: May 2026')))));
+  }, lang === 'es' ? 'Última actualización: mayo de 2026' : 'Last updated: May 2026')), /*#__PURE__*/React.createElement("div", {
+    className: "normas-print-sheet"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "nps-head"
+  }, /*#__PURE__*/React.createElement("img", {
+    className: "nps-logo",
+    src: "assets/logo-teal-transparent.png",
+    alt: ""
+  }), /*#__PURE__*/React.createElement("h1", null, "Normas de Hestía ", /*#__PURE__*/React.createElement("span", null, "· House Rules"))), /*#__PURE__*/React.createElement("ul", {
+    className: "nps-grid"
+  }, es.items.map((rule, i) => /*#__PURE__*/React.createElement("li", {
+    key: i,
+    className: "nps-item"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "nps-icon",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: rule.hi,
+    size: 13
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "nps-body"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "nps-es"
+  }, /*#__PURE__*/React.createElement("strong", null, rule.t, "."), " ", rule.d), /*#__PURE__*/React.createElement("p", {
+    className: "nps-en"
+  }, /*#__PURE__*/React.createElement("strong", null, en.items[i].t, "."), " ", en.items[i].d)))))))));
 };
 const LegalPageApp = () => {
   const type = window.__LEGAL__ || 'privacidad';
