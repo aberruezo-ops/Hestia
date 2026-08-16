@@ -69,13 +69,13 @@ const URB_FALLBACK = {
 
 // Secciones del nav lateral, en orden de aparición
 const GUIDE_SECTIONS = [{
-  id: 'previaje',
-  es: 'Antes de hacer la maleta',
-  en: 'Before you pack'
-}, {
   id: 'bienvenida',
   es: 'Bienvenida',
   en: 'Welcome'
+}, {
+  id: 'previaje',
+  es: 'Antes de hacer la maleta',
+  en: 'Before you pack'
 }, {
   id: 'llegada',
   es: 'Llegada y salida',
@@ -167,21 +167,27 @@ const GUIDE_SECTIONS = [{
 }];
 
 // Agrupación temática del índice: en vez de una lista plana de capítulos
-// (que abruma), se presentan en 5 partes con un orden de lectura natural.
+// (que abruma), se presentan en partes con un orden de lectura natural.
 // Los ids deben ir en el mismo orden que GUIDE_SECTIONS para que la numeración
 // del índice y del cuerpo coincidan.
 const GUIDE_GROUPS = [{
-  es: 'Tu llegada',
-  en: 'Your arrival',
-  descEs: 'Lo esencial para entrar y conectarte el primer día.',
-  descEn: 'The essentials to get in and online on day one.',
-  ids: ['previaje', 'bienvenida', 'llegada', 'wifi']
+  es: 'Bienvenida',
+  en: 'Welcome',
+  descEs: 'Quiénes somos y qué tiempo hace estos días.',
+  descEn: 'Who we are and what the weather is like these days.',
+  ids: ['bienvenida']
 }, {
-  es: 'Tu apartamento',
-  en: 'Your apartment',
-  descEs: 'Cómo funciona cada rincón de tu casa, estancia a estancia.',
-  descEn: 'How every corner of your home works, room by room.',
-  ids: ['limpieza', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion']
+  es: 'Antes de llegar',
+  en: 'Before you arrive',
+  descEs: 'Qué esperar del viaje, el registro obligatorio y cómo llegar hasta la puerta.',
+  descEn: 'What to expect from the trip, mandatory registration and how to get to the door.',
+  ids: ['previaje', 'llegada']
+}, {
+  es: 'Tu Hestía',
+  en: 'Your Hestía',
+  descEs: 'El WiFi y cómo funciona cada rincón de tu casa, estancia a estancia.',
+  descEn: 'The WiFi and how every corner of your home works, room by room.',
+  ids: ['wifi', 'limpieza', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion']
 }, {
   es: 'Cerca de casa',
   en: 'Close to home',
@@ -11222,37 +11228,12 @@ const AptGuideView = ({
     rel: "noopener"
   }, lang === 'es' ? '⇩ Descargar guía (PDF)' : '⇩ Download guide (PDF)')))), /*#__PURE__*/React.createElement("div", {
     className: "ag-content"
-  }, guideCrumb, renderPart('previaje'), /*#__PURE__*/React.createElement("section", {
-    id: "ag-previaje",
-    className: "ag-section ag-section-rules ag-section-pretrip"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-section-num"
-  }, "01"), /*#__PURE__*/React.createElement("h2", {
-    className: "ag-h2"
-  }, s.pretrip.title), /*#__PURE__*/React.createElement("p", {
-    className: "ag-para"
-  }, s.pretrip.intro), /*#__PURE__*/React.createElement("ul", {
-    className: "ag-rules-grid"
-  }, s.pretrip.items.map((item, i) => /*#__PURE__*/React.createElement("li", {
-    key: i,
-    className: "ag-rule"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-rule-icon",
-    "aria-hidden": "true"
-  }, iconifyText(item.icon, 18)), /*#__PURE__*/React.createElement("div", {
-    className: "ag-rule-body"
-  }, /*#__PURE__*/React.createElement("h4", {
-    className: "ag-rule-title"
-  }, item.t), /*#__PURE__*/React.createElement("p", {
-    className: "ag-rule-desc"
-  }, item.d))))), /*#__PURE__*/React.createElement("p", {
-    className: "ag-para ag-pretrip-closing"
-  }, s.pretrip.closing)), /*#__PURE__*/React.createElement("section", {
+  }, guideCrumb, renderPart('bienvenida'), /*#__PURE__*/React.createElement("section", {
     id: "ag-bienvenida",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "02"), /*#__PURE__*/React.createElement("h2", {
+  }, "01"), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.welcome.title), s.welcome.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
@@ -11289,7 +11270,32 @@ const AptGuideView = ({
     lang: lang
   }), /*#__PURE__*/React.createElement(GuideClimateChart, {
     lang: lang
-  })), s.checkin && /*#__PURE__*/React.createElement("section", {
+  })), renderPart('previaje'), /*#__PURE__*/React.createElement("section", {
+    id: "ag-previaje",
+    className: "ag-section ag-section-rules ag-section-pretrip"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-section-num"
+  }, "02"), /*#__PURE__*/React.createElement("h2", {
+    className: "ag-h2"
+  }, s.pretrip.title), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para"
+  }, s.pretrip.intro), /*#__PURE__*/React.createElement("ul", {
+    className: "ag-rules-grid"
+  }, s.pretrip.items.map((item, i) => /*#__PURE__*/React.createElement("li", {
+    key: i,
+    className: "ag-rule"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-rule-icon",
+    "aria-hidden": "true"
+  }, iconifyText(item.icon, 18)), /*#__PURE__*/React.createElement("div", {
+    className: "ag-rule-body"
+  }, /*#__PURE__*/React.createElement("h4", {
+    className: "ag-rule-title"
+  }, item.t), /*#__PURE__*/React.createElement("p", {
+    className: "ag-rule-desc"
+  }, item.d))))), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para ag-pretrip-closing"
+  }, s.pretrip.closing)), s.checkin && /*#__PURE__*/React.createElement("section", {
     id: "ag-llegada",
     className: "ag-section ag-section-checkin"
   }, /*#__PURE__*/React.createElement("span", {
@@ -11579,7 +11585,7 @@ const AptGuideView = ({
     className: "ag-checkin-garbage"
   }, /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, s.checkin.garbageBody)))), /*#__PURE__*/React.createElement("section", {
+  }, s.checkin.garbageBody)))), renderPart('wifi'), /*#__PURE__*/React.createElement("section", {
     id: "ag-wifi",
     className: "ag-section ag-section-wifi"
   }, /*#__PURE__*/React.createElement("span", {
@@ -11604,7 +11610,7 @@ const AptGuideView = ({
     className: "ag-wifi-row-value ag-wifi-row-pass"
   }, s.wifi.passValue)), /*#__PURE__*/React.createElement("p", {
     className: "ag-wifi-note"
-  }, s.wifi.note))), renderPart('limpieza'), /*#__PURE__*/React.createElement("section", {
+  }, s.wifi.note))), /*#__PURE__*/React.createElement("section", {
     id: "ag-limpieza",
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
