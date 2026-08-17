@@ -16,6 +16,16 @@ const LEGAL_COPY = {
       eyebrow: 'Hestía · House rules'
     }
   },
+  letrero: {
+    es: {
+      title: 'Letrero de bienvenida',
+      eyebrow: 'Hestía · Letrero de bienvenida'
+    },
+    en: {
+      title: 'Welcome sign',
+      eyebrow: 'Hestía · Welcome sign'
+    }
+  },
   cookies: {
     es: {
       title: 'Política de Cookies',
@@ -295,6 +305,55 @@ const NormasContent = ({
     className: "nps-foot-sep"
   }, "·"), /*#__PURE__*/React.createElement("span", null, "Fran: +34 654 138 251"))))));
 };
+const LetreroContent = ({
+  lang
+}) => /*#__PURE__*/React.createElement("section", {
+  className: "legal-content section-cream letrero-content"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "container"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "legal-body"
+}, /*#__PURE__*/React.createElement("p", {
+  className: "normas-intro no-print"
+}, lang === 'es' ? 'Letrero de bienvenida en tamaño A6 (1/4 de A4), para imprimir y dejar en cada Hestía. Incluye el aviso de donación a Save the Children y el de hojas de reclamaciones, en español e inglés.' : 'A6-sized welcome sign (1/4 of A4), to print and leave in each Hestía. Includes the Save the Children donation notice and the complaint-forms notice, in Spanish and English.'), /*#__PURE__*/React.createElement("button", {
+  type: "button",
+  className: "btn btn-ghost-dark normas-print-btn no-print",
+  onClick: () => window.print()
+}, lang === 'es' ? 'Imprimir letrero →' : 'Print sign →'), /*#__PURE__*/React.createElement("div", {
+  className: "letrero-print-sheet"
+}, /*#__PURE__*/React.createElement("img", {
+  className: "wcard-logo",
+  src: "assets/logo-teal-transparent.png",
+  alt: ""
+}), /*#__PURE__*/React.createElement("h1", {
+  className: "wcard-title"
+}, "Bienvenido a tu Hestía ", /*#__PURE__*/React.createElement("span", null, "· Welcome")), /*#__PURE__*/React.createElement("div", {
+  className: "wcard-item"
+}, /*#__PURE__*/React.createElement("span", {
+  className: "wcard-icon",
+  "aria-hidden": "true"
+}, /*#__PURE__*/React.createElement(HiIcon, {
+  name: "heart",
+  size: 11
+})), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+  className: "wcard-es"
+}, "Con cada reserva directa, donamos una parte a Save the Children."), /*#__PURE__*/React.createElement("p", {
+  className: "wcard-en"
+}, "With every direct booking, we donate a share to Save the Children."))), /*#__PURE__*/React.createElement("div", {
+  className: "wcard-item"
+}, /*#__PURE__*/React.createElement("span", {
+  className: "wcard-icon",
+  "aria-hidden": "true"
+}, /*#__PURE__*/React.createElement(HiIcon, {
+  name: "doc",
+  size: 11
+})), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+  className: "wcard-es"
+}, "Disponemos de hojas de reclamaciones a disposición del consumidor. Esperamos que nunca las necesites."), /*#__PURE__*/React.createElement("p", {
+  className: "wcard-en"
+}, "Official complaint forms are available on request. We hope you never need them."))), /*#__PURE__*/React.createElement("p", {
+  className: "wcard-foot"
+}, "hestiayourhome.com")))));
 const LegalPageApp = () => {
   const type = window.__LEGAL__ || 'privacidad';
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
@@ -319,6 +378,8 @@ const LegalPageApp = () => {
   }), /*#__PURE__*/React.createElement("main", null, /*#__PURE__*/React.createElement(LegalHero, {
     copy: copy
   }), type === 'normas' ? /*#__PURE__*/React.createElement(NormasContent, {
+    lang: lang
+  }) : type === 'letrero' ? /*#__PURE__*/React.createElement(LetreroContent, {
     lang: lang
   }) : /*#__PURE__*/React.createElement(LegalContent, {
     copy: copy,

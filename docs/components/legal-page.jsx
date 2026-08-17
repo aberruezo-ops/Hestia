@@ -8,6 +8,10 @@ const LEGAL_COPY = {
     es: { title: 'Normas de Hestía', eyebrow: 'Hestía · Normas de la casa' },
     en: { title: 'Hestía House Rules', eyebrow: 'Hestía · House rules' },
   },
+  letrero: {
+    es: { title: 'Letrero de bienvenida', eyebrow: 'Hestía · Letrero de bienvenida' },
+    en: { title: 'Welcome sign', eyebrow: 'Hestía · Welcome sign' },
+  },
   cookies: {
     es: {
       title: 'Política de Cookies',
@@ -280,6 +284,43 @@ const NormasContent = ({ lang }) => {
   );
 };
 
+const LetreroContent = ({ lang }) => (
+  <section className="legal-content section-cream letrero-content">
+    <div className="container">
+      <div className="legal-body">
+        <p className="normas-intro no-print">
+          {lang === 'es'
+            ? 'Letrero de bienvenida en tamaño A6 (1/4 de A4), para imprimir y dejar en cada Hestía. Incluye el aviso de donación a Save the Children y el de hojas de reclamaciones, en español e inglés.'
+            : 'A6-sized welcome sign (1/4 of A4), to print and leave in each Hestía. Includes the Save the Children donation notice and the complaint-forms notice, in Spanish and English.'}
+        </p>
+        <button type="button" className="btn btn-ghost-dark normas-print-btn no-print" onClick={() => window.print()}>
+          {lang === 'es' ? 'Imprimir letrero →' : 'Print sign →'}
+        </button>
+
+        <div className="letrero-print-sheet">
+          <img className="wcard-logo" src="assets/logo-teal-transparent.png" alt=""/>
+          <h1 className="wcard-title">Bienvenido a tu Hestía <span>· Welcome</span></h1>
+          <div className="wcard-item">
+            <span className="wcard-icon" aria-hidden="true"><HiIcon name="heart" size={11}/></span>
+            <div>
+              <p className="wcard-es">Con cada reserva directa, donamos una parte a Save the Children.</p>
+              <p className="wcard-en">With every direct booking, we donate a share to Save the Children.</p>
+            </div>
+          </div>
+          <div className="wcard-item">
+            <span className="wcard-icon" aria-hidden="true"><HiIcon name="doc" size={11}/></span>
+            <div>
+              <p className="wcard-es">Disponemos de hojas de reclamaciones a disposición del consumidor. Esperamos que nunca las necesites.</p>
+              <p className="wcard-en">Official complaint forms are available on request. We hope you never need them.</p>
+            </div>
+          </div>
+          <p className="wcard-foot">hestiayourhome.com</p>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 const LegalPageApp = () => {
   const type = window.__LEGAL__ || 'privacidad';
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
@@ -300,7 +341,9 @@ const LegalPageApp = () => {
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main>
         <LegalHero copy={copy}/>
-        {type === 'normas' ? <NormasContent lang={lang}/> : <LegalContent copy={copy} lang={lang}/>}
+        {type === 'normas' ? <NormasContent lang={lang}/>
+          : type === 'letrero' ? <LetreroContent lang={lang}/>
+          : <LegalContent copy={copy} lang={lang}/>}
       </main>
       <Footer lang={lang} />
       <FloatingChat lang={lang} />

@@ -7967,6 +7967,62 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   }
   .nps-foot-sep { margin: 0 6px; color: #999; }
 }
+.letrero-print-sheet { display: none; }
+
+/* /letrero-bienvenida.html — letrero A6 (1/4 de A4) con el aviso de
+   donación a Save the Children y de hojas de reclamaciones. Página con
+   nombre CSS propia (letrero-a6) para no chocar con el @page A4 de
+   /normas.html, que comparte esta misma hoja de estilos: mismo patrón
+   que ya usa la guía del huésped para sus PDFs (vs-body, vm-body...). */
+@media print {
+  @page letrero-a6 { size: 105mm 148mm; margin: 8mm; }
+  body:has(.letrero-print-sheet) .topbar,
+  body:has(.letrero-print-sheet) .topbar-corner-fill,
+  body:has(.letrero-print-sheet) .header,
+  body:has(.letrero-print-sheet) footer,
+  body:has(.letrero-print-sheet) .float-chat,
+  body:has(.letrero-print-sheet) .gift-fab,
+  body:has(.letrero-print-sheet) .cookies-banner,
+  body:has(.letrero-print-sheet) .legal-hero {
+    display: none !important;
+  }
+  .letrero-content { padding: 0 !important; background: #fff !important; }
+  .letrero-content::after { display: none !important; }
+  .letrero-content .container { padding: 0 !important; max-width: 100% !important; }
+  .letrero-print-sheet {
+    display: flex;
+    page: letrero-a6;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 22px;
+  }
+  .wcard-logo { width: 52px; height: 52px; object-fit: contain; }
+  .wcard-title {
+    font-family: var(--serif);
+    font-size: 18pt;
+    font-weight: 500;
+    color: #000;
+    margin: 0;
+  }
+  .wcard-title span { display: block; font-weight: 300; opacity: 0.6; font-size: 12pt; margin-top: 4px; }
+  .wcard-item { display: flex; gap: 12px; text-align: left; align-items: flex-start; width: 100%; }
+  .wcard-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--sol) 14%, white);
+    border: 1px solid color-mix(in srgb, var(--sol) 35%, transparent);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sol-h);
+  }
+  .wcard-es { margin: 0; font-family: var(--sans); font-size: 11pt; line-height: 1.4; color: #111; }
+  .wcard-en { margin: 5px 0 0; font-family: var(--sans); font-size: 9.5pt; line-height: 1.35; color: #555; font-style: italic; }
+  .wcard-foot { margin-top: 8px; font-size: 9pt; color: #666; }
+}
 
 /* Cookie table */
 .legal-cookie-table {
