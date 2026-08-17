@@ -7869,23 +7869,23 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   body:has(.normas-print-sheet) .legal-hero {
     display: none !important;
   }
-  .normas-print-sheet { display: block; position: relative; }
+  .normas-print-sheet {
+    display: block;
+    /* Marca de agua: PNG con la opacidad ya "horneada" en el propio archivo
+       (logo-watermark-faint.png), pintada como background-image normal.
+       Nada de position:absolute/transform/opacity en el elemento: eso es lo
+       que fallaba en el motor de impresión de Safari móvil (salía un
+       fragmento minúsculo en vez de centrada). background-position:center
+       es la técnica de centrado más simple y compatible que hay. */
+    background-image: url('assets/logo-watermark-faint.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100mm 100mm;
+  }
   .normas-content { padding: 0 !important; background: #fff !important; }
   .normas-content::after { display: none !important; }
   .normas-content .container { padding: 0 !important; max-width: 100% !important; }
   .normas-body { max-width: 100% !important; }
-
-  .nps-watermark {
-    position: absolute;
-    inset: 0;
-    margin: auto;
-    width: 100mm;
-    height: 100mm;
-    opacity: 0.08;
-    pointer-events: none;
-    z-index: 0;
-  }
-  .nps-head, .nps-grid { position: relative; z-index: 1; }
 
   .nps-head {
     display: flex;
