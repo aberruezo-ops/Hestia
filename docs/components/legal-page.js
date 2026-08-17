@@ -264,12 +264,7 @@ const NormasContent = ({
     }
   }, lang === 'es' ? 'Última actualización: mayo de 2026' : 'Last updated: May 2026')), /*#__PURE__*/React.createElement("div", {
     className: "normas-print-sheet"
-  }, /*#__PURE__*/React.createElement("img", {
-    className: "nps-watermark",
-    src: "assets/logo-teal-transparent.png",
-    alt: "",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "nps-head"
   }, /*#__PURE__*/React.createElement("img", {
     className: "nps-logo",

@@ -251,7 +251,6 @@ const NormasContent = ({ lang }) => {
 
           {/* Hoja imprimible ES + EN en una sola página, oculta en pantalla */}
           <div className="normas-print-sheet">
-            <img className="nps-watermark" src="assets/logo-teal-transparent.png" alt="" aria-hidden="true"/>
             <div className="nps-head">
               <img className="nps-logo" src="assets/logo-teal-transparent.png" alt=""/>
               <h1>Normas de Hestía <span>· House Rules</span></h1>
