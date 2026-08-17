@@ -7900,12 +7900,13 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   .nps-head {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 8px;
     margin-bottom: 8px;
     border-bottom: 1px solid #000;
     padding-bottom: 6px;
   }
-  .nps-logo { width: 26px; height: 26px; object-fit: contain; flex-shrink: 0; }
+  .nps-logo { width: 30px; height: 30px; object-fit: contain; flex-shrink: 0; }
   .nps-head h1 {
     font-family: var(--serif);
     font-size: 15px;
