@@ -266,6 +266,13 @@ const NormasContent = ({ lang }) => {
                 </li>
               ))}
             </ul>
+            <div className="nps-foot">
+              <span>hestiayourhome.com</span>
+              <span className="nps-foot-sep">·</span>
+              <span>Alex: +34 620 316 370</span>
+              <span className="nps-foot-sep">·</span>
+              <span>Fran: +34 654 138 251</span>
+            </div>
           </div>
         </div>
       </div>
