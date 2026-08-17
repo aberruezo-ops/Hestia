@@ -7869,6 +7869,16 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   body:has(.normas-print-sheet) .legal-hero {
     display: none !important;
   }
+  /* Los navegadores omiten fondos/imágenes de fondo al imprimir por defecto
+     (ahorro de tinta), salvo que se pida explícitamente lo contrario. Sin
+     esto, la marca de agua (y los fondos de las tarjetas e iconos) nunca
+     llegan a imprimirse de verdad en un dispositivo real, aunque en las
+     pruebas con Playwright sí aparecían porque forzábamos printBackground
+     por API, algo que un usuario imprimiendo desde el móvil no tiene. */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
   .normas-print-sheet {
     display: block;
     /* Marca de agua: PNG con la opacidad ya "horneada" en el propio archivo
@@ -7895,7 +7905,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
     border-bottom: 1px solid #000;
     padding-bottom: 6px;
   }
-  .nps-logo { width: 20px; height: 20px; }
+  .nps-logo { width: 26px; height: 26px; object-fit: contain; flex-shrink: 0; }
   .nps-head h1 {
     font-family: var(--serif);
     font-size: 15px;
