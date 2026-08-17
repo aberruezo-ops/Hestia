@@ -287,7 +287,13 @@ const NormasContent = ({
     className: "nps-es"
   }, /*#__PURE__*/React.createElement("strong", null, rule.t, "."), " ", rule.d), /*#__PURE__*/React.createElement("p", {
     className: "nps-en"
-  }, /*#__PURE__*/React.createElement("strong", null, en.items[i].t, "."), " ", en.items[i].d)))))))));
+  }, /*#__PURE__*/React.createElement("strong", null, en.items[i].t, "."), " ", en.items[i].d))))), /*#__PURE__*/React.createElement("div", {
+    className: "nps-foot"
+  }, /*#__PURE__*/React.createElement("span", null, "hestiayourhome.com"), /*#__PURE__*/React.createElement("span", {
+    className: "nps-foot-sep"
+  }, "·"), /*#__PURE__*/React.createElement("span", null, "Alex: +34 620 316 370"), /*#__PURE__*/React.createElement("span", {
+    className: "nps-foot-sep"
+  }, "·"), /*#__PURE__*/React.createElement("span", null, "Fran: +34 654 138 251"))))));
 };
 const LegalPageApp = () => {
   const type = window.__LEGAL__ || 'privacidad';

@@ -7955,6 +7955,17 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   }
   .nps-es strong { font-family: var(--serif); font-style: italic; color: var(--ber-dk); }
   .nps-en { color: #555; font-style: italic; margin-top: 2px !important; }
+
+  .nps-foot {
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px solid #000;
+    text-align: center;
+    font-family: var(--sans);
+    font-size: 8pt;
+    color: #333;
+  }
+  .nps-foot-sep { margin: 0 6px; color: #999; }
 }
 
 /* Cookie table */
