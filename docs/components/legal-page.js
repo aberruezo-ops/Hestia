@@ -266,11 +266,11 @@ const NormasContent = ({
     className: "normas-print-sheet"
   }, /*#__PURE__*/React.createElement("div", {
     className: "nps-head"
-  }, /*#__PURE__*/React.createElement("img", {
+  }, /*#__PURE__*/React.createElement("h1", null, "Normas de Hestía ", /*#__PURE__*/React.createElement("span", null, "· House Rules")), /*#__PURE__*/React.createElement("img", {
     className: "nps-logo",
     src: "assets/logo-teal-transparent.png",
     alt: ""
-  }), /*#__PURE__*/React.createElement("h1", null, "Normas de Hestía ", /*#__PURE__*/React.createElement("span", null, "· House Rules"))), /*#__PURE__*/React.createElement("ul", {
+  })), /*#__PURE__*/React.createElement("ul", {
     className: "nps-grid"
   }, es.items.map((rule, i) => /*#__PURE__*/React.createElement("li", {
     key: i,

@@ -252,8 +252,8 @@ const NormasContent = ({ lang }) => {
           {/* Hoja imprimible ES + EN en una sola página, oculta en pantalla */}
           <div className="normas-print-sheet">
             <div className="nps-head">
-              <img className="nps-logo" src="assets/logo-teal-transparent.png" alt=""/>
               <h1>Normas de Hestía <span>· House Rules</span></h1>
+              <img className="nps-logo" src="assets/logo-teal-transparent.png" alt=""/>
             </div>
             <ul className="nps-grid">
               {es.items.map((rule, i) => (
