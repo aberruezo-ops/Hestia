@@ -11259,9 +11259,11 @@ const AptGuideView = ({
     rel: "noopener"
   }, lang === 'es' ? '⇩ Descargar guía (PDF)' : '⇩ Download guide (PDF)')))), /*#__PURE__*/React.createElement("div", {
     className: "ag-content"
-  }, guideCrumb, renderPart('bienvenida'), /*#__PURE__*/React.createElement("section", {
+  }, guideCrumb, /*#__PURE__*/React.createElement("div", {
+    className: "ag-part-group"
+  }, renderPart('bienvenida'), /*#__PURE__*/React.createElement("section", {
     id: "ag-bienvenida",
-    className: "ag-section ag-part-start"
+    className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
   }), /*#__PURE__*/React.createElement("h2", {
@@ -11297,13 +11299,11 @@ const AptGuideView = ({
     href: s.welcome.pdLinkHref,
     target: "_blank",
     rel: "noopener"
-  }, s.welcome.pdLinkLabel, " →")), /*#__PURE__*/React.createElement(GuideWeather14d, {
-    lang: lang
-  }), /*#__PURE__*/React.createElement(GuideClimateChart, {
-    lang: lang
-  })), renderPart('previaje'), /*#__PURE__*/React.createElement("section", {
+  }, s.welcome.pdLinkLabel, " →")))), /*#__PURE__*/React.createElement("div", {
+    className: "ag-part-group"
+  }, renderPart('previaje'), /*#__PURE__*/React.createElement("section", {
     id: "ag-previaje",
-    className: "ag-section ag-part-start ag-section-rules ag-section-pretrip"
+    className: "ag-section ag-section-rules ag-section-pretrip"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
   }), /*#__PURE__*/React.createElement("h2", {
@@ -11326,16 +11326,7 @@ const AptGuideView = ({
     className: "ag-rule-desc"
   }, item.d))))), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-pretrip-closing"
-  }, s.pretrip.closing)), s.checkin && /*#__PURE__*/React.createElement("section", {
-    id: "ag-llegada",
-    className: "ag-section ag-section-checkin"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ag-section-num"
-  }), /*#__PURE__*/React.createElement("h2", {
-    className: "ag-h2"
-  }, s.checkin.title), /*#__PURE__*/React.createElement("p", {
-    className: "ag-para ag-para-lead"
-  }, s.checkin.intro), /*#__PURE__*/React.createElement("div", {
+  }, s.pretrip.closing), /*#__PURE__*/React.createElement("div", {
     id: "ag-registro",
     className: "ag-registro-callout"
   }, /*#__PURE__*/React.createElement("span", {
@@ -11347,7 +11338,7 @@ const AptGuideView = ({
   })), /*#__PURE__*/React.createElement("div", {
     className: "ag-registro-body"
   }, /*#__PURE__*/React.createElement("h3", {
-    className: "ag-registro-h"
+    className: "ag-h3 ag-registro-h"
   }, lang === 'es' ? 'Registro de viajeros (obligatorio)' : 'Traveller registration (mandatory)'), /*#__PURE__*/React.createElement("p", {
     className: "ag-registro-p"
   }, lang === 'es' ? 'La Guardia Civil exige registrar a todas las personas que pernoctan (RD 933/2021). Tarda un par de minutos y puedes hacerlo antes de llegar; así el check-in es más rápido.' : 'The Guardia Civil requires registering everyone who stays overnight (RD 933/2021). It takes a couple of minutes and you can do it before arrival, so check-in is quicker.'), /*#__PURE__*/React.createElement("a", {
@@ -11364,7 +11355,22 @@ const AptGuideView = ({
     rel: "noopener"
   }, lang === 'es' ? 'Rellenar mis datos' : 'Fill in my details', " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "→")))), s.checkin.beforeItems && /*#__PURE__*/React.createElement("div", {
+  }, "→")))), /*#__PURE__*/React.createElement("h3", {
+    className: "ag-h3"
+  }, lang === 'es' ? 'El tiempo que te espera' : 'The weather that awaits you'), /*#__PURE__*/React.createElement(GuideWeather14d, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(GuideClimateChart, {
+    lang: lang
+  })), s.checkin && /*#__PURE__*/React.createElement("section", {
+    id: "ag-llegada",
+    className: "ag-section ag-section-checkin"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-section-num"
+  }), /*#__PURE__*/React.createElement("h2", {
+    className: "ag-h2"
+  }, s.checkin.title), /*#__PURE__*/React.createElement("p", {
+    className: "ag-para ag-para-lead"
+  }, s.checkin.intro), s.checkin.beforeItems && /*#__PURE__*/React.createElement("div", {
     className: "ag-before"
   }, /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"
@@ -11606,9 +11612,11 @@ const AptGuideView = ({
     className: "ag-checkin-garage-num"
   }, aptInfo.garageSpot || '–')), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-note"
-  }, s.checkin.garageNote)), renderPart('wifi'), /*#__PURE__*/React.createElement("section", {
+  }, s.checkin.garageNote))), /*#__PURE__*/React.createElement("div", {
+    className: "ag-part-group"
+  }, renderPart('wifi'), /*#__PURE__*/React.createElement("section", {
     id: "ag-wifi",
-    className: "ag-section ag-part-start ag-section-wifi"
+    className: "ag-section ag-section-wifi"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
   }), /*#__PURE__*/React.createElement("h2", {
@@ -11723,9 +11731,11 @@ const AptGuideView = ({
     className: "ag-recs"
   }, room.recs.map((r, i) => /*#__PURE__*/React.createElement("li", {
     key: i
-  }, r))))), renderPart('alrededores'), /*#__PURE__*/React.createElement("section", {
+  }, r)))))), /*#__PURE__*/React.createElement("div", {
+    className: "ag-part-group"
+  }, renderPart('alrededores'), /*#__PURE__*/React.createElement("section", {
     id: "ag-alrededores",
-    className: "ag-section ag-part-start"
+    className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
   }), /*#__PURE__*/React.createElement("h2", {
@@ -11841,9 +11851,11 @@ const AptGuideView = ({
       places: inCat,
       lang: lang
     });
-  })), renderPart('pueblos'), /*#__PURE__*/React.createElement("section", {
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "ag-part-group"
+  }, renderPart('pueblos'), /*#__PURE__*/React.createElement("section", {
     id: "ag-pueblos",
-    className: "ag-section ag-part-start"
+    className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
   }), /*#__PURE__*/React.createElement("h2", {
@@ -11916,9 +11928,11 @@ const AptGuideView = ({
     className: "ag-para"
   }, lang === 'es' ? 'Llueve pocos días al año, pero si te toca uno, hay planes a cubierto que merecen la pena:' : 'It rains few days a year, but if one catches you, there are indoor plans worth your while:'), /*#__PURE__*/React.createElement("ul", {
     className: "ag-recs"
-  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Cuevas de Sorbas: galerías de yeso bajo tierra, temperatura constante y visita guiada (a 40 min).' : 'Sorbas Caves: underground gypsum galleries, constant temperature and a guided tour (40 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Museos de Almería capital: el Museo de Almería (culturas de Los Millares y El Argar) y el Museo de la Guitarra (a 45 min).' : 'Museums in Almería city: the Museum of Almería (Los Millares and El Argar cultures) and the Guitar Museum (45 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Alcazaba de Almería: aunque es al aire libre, sus salas y la visita dan para un buen rato resguardado.' : 'Alcazaba of Almería: although open-air, its halls and the visit give you a good while under cover.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Una comida larga: reserva uno de los restaurantes de la sección Sabores, incluido algún Guía Michelin, y alarga la sobremesa.' : 'A long lunch: book one of the restaurants in the Tastes section, a Michelin Guide pick included, and stretch out the afternoon.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Spa o balneario: Vera Playa tiene centros de spa para una tarde de relax bajo techo.' : 'Spa or wellness centre: Vera Playa has spas for a relaxing afternoon indoors.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Compras a cubierto: centros comerciales de Almería capital si toca reponer.' : 'Indoor shopping: the shopping centres in Almería city if you need to restock.')))), renderPart('mercados'), /*#__PURE__*/React.createElement("section", {
+  }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Cuevas de Sorbas: galerías de yeso bajo tierra, temperatura constante y visita guiada (a 40 min).' : 'Sorbas Caves: underground gypsum galleries, constant temperature and a guided tour (40 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Museos de Almería capital: el Museo de Almería (culturas de Los Millares y El Argar) y el Museo de la Guitarra (a 45 min).' : 'Museums in Almería city: the Museum of Almería (Los Millares and El Argar cultures) and the Guitar Museum (45 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Alcazaba de Almería: aunque es al aire libre, sus salas y la visita dan para un buen rato resguardado.' : 'Alcazaba of Almería: although open-air, its halls and the visit give you a good while under cover.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Una comida larga: reserva uno de los restaurantes de la sección Sabores, incluido algún Guía Michelin, y alarga la sobremesa.' : 'A long lunch: book one of the restaurants in the Tastes section, a Michelin Guide pick included, and stretch out the afternoon.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Spa o balneario: Vera Playa tiene centros de spa para una tarde de relax bajo techo.' : 'Spa or wellness centre: Vera Playa has spas for a relaxing afternoon indoors.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Compras a cubierto: centros comerciales de Almería capital si toca reponer.' : 'Indoor shopping: the shopping centres in Almería city if you need to restock.'))))), /*#__PURE__*/React.createElement("div", {
+    className: "ag-part-group"
+  }, renderPart('mercados'), /*#__PURE__*/React.createElement("section", {
     id: "ag-mercados",
-    className: "ag-section ag-part-start"
+    className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
   }), /*#__PURE__*/React.createElement("h2", {
@@ -12035,9 +12049,11 @@ const AptGuideView = ({
     className: "ag-para"
   }, lang === 'es' ? 'Proveedores locales que aplican un descuento a quien se aloja en Hestía. Basta con avisar de que vienes de nuestra parte o enseñar tu reserva al llegar. Es una iniciativa que acabamos de empezar, así que de momento hay pocos, pero iremos sumando más con el tiempo.' : 'Local providers who give a discount to Hestía guests. Just mention you are staying with us, or show your booking on arrival. This is a new initiative we just started, so there are only a few for now, but we will keep adding more over time.'), /*#__PURE__*/React.createElement(GuestDiscounts, {
     lang: lang
-  })), renderPart('feedback'), /*#__PURE__*/React.createElement("section", {
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "ag-part-group"
+  }, renderPart('feedback'), /*#__PURE__*/React.createElement("section", {
     id: "ag-feedback",
-    className: "ag-section ag-part-start"
+    className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
   }), /*#__PURE__*/React.createElement("h2", {
@@ -12061,7 +12077,7 @@ const AptGuideView = ({
   }, s.feedback.subtitle), s.feedback.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
     className: "ag-para"
-  }, p))), /*#__PURE__*/React.createElement("div", {
+  }, p)))), /*#__PURE__*/React.createElement("div", {
     className: "ag-content-end no-print"
   }, /*#__PURE__*/React.createElement("button", {
     className: "ag-back",

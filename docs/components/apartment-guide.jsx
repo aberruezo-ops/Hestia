@@ -5635,8 +5635,9 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {guideCrumb}
 
+          <div className="ag-part-group">
           {renderPart('bienvenida')}
-          <section id="ag-bienvenida" className="ag-section ag-part-start">
+          <section id="ag-bienvenida" className="ag-section">
             <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.welcome.title}</h2>
             {s.welcome.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
@@ -5667,12 +5668,12 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               </p>
             )}
 
-            <GuideWeather14d lang={lang} />
-            <GuideClimateChart lang={lang} />
           </section>
+          </div>
 
+          <div className="ag-part-group">
           {renderPart('previaje')}
-          <section id="ag-previaje" className="ag-section ag-part-start ag-section-rules ag-section-pretrip">
+          <section id="ag-previaje" className="ag-section ag-section-rules ag-section-pretrip">
             <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.pretrip.title}</h2>
             <p className="ag-para">{s.pretrip.intro}</p>
@@ -5688,18 +5689,11 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               ))}
             </ul>
             <p className="ag-para ag-pretrip-closing">{s.pretrip.closing}</p>
-          </section>
-
-          {s.checkin && (
-          <section id="ag-llegada" className="ag-section ag-section-checkin">
-            <span className="ag-section-num"/>
-            <h2 className="ag-h2">{s.checkin.title}</h2>
-            <p className="ag-para ag-para-lead">{s.checkin.intro}</p>
 
             <div id="ag-registro" className="ag-registro-callout">
               <span className="ag-registro-ic" aria-hidden="true"><HiIcon name="shield" size={24} /></span>
               <div className="ag-registro-body">
-                <h3 className="ag-registro-h">{lang === 'es' ? 'Registro de viajeros (obligatorio)' : 'Traveller registration (mandatory)'}</h3>
+                <h3 className="ag-h3 ag-registro-h">{lang === 'es' ? 'Registro de viajeros (obligatorio)' : 'Traveller registration (mandatory)'}</h3>
                 <p className="ag-registro-p">
                   {lang === 'es'
                     ? 'La Guardia Civil exige registrar a todas las personas que pernoctan (RD 933/2021). Tarda un par de minutos y puedes hacerlo antes de llegar; así el check-in es más rápido.'
@@ -5712,6 +5706,17 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                 </a>
               </div>
             </div>
+
+            <h3 className="ag-h3">{lang === 'es' ? 'El tiempo que te espera' : 'The weather that awaits you'}</h3>
+            <GuideWeather14d lang={lang} />
+            <GuideClimateChart lang={lang} />
+          </section>
+
+          {s.checkin && (
+          <section id="ag-llegada" className="ag-section ag-section-checkin">
+            <span className="ag-section-num"/>
+            <h2 className="ag-h2">{s.checkin.title}</h2>
+            <p className="ag-para ag-para-lead">{s.checkin.intro}</p>
 
             {s.checkin.beforeItems && (
               <div className="ag-before">
@@ -5901,9 +5906,11 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           </section>
           )}
+          </div>
 
+          <div className="ag-part-group">
           {renderPart('wifi')}
-          <section id="ag-wifi" className="ag-section ag-part-start ag-section-wifi">
+          <section id="ag-wifi" className="ag-section ag-section-wifi">
             <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.wifi.title}</h2>
             <p className="ag-para ag-para-lead">{s.wifi.intro}</p>
@@ -5994,9 +6001,11 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               </ol>
             </section>
           ))}
+          </div>
 
+          <div className="ag-part-group">
           {renderPart('alrededores')}
-          <section id="ag-alrededores" className="ag-section ag-part-start">
+          <section id="ag-alrededores" className="ag-section">
             <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.surroundings.title}</h2>
             <p className="ag-para">{s.surroundings.intro}</p>
@@ -6118,10 +6127,12 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               return <CatGroup key={catId} cat={cat} places={inCat} lang={lang} />;
             })}
           </section>
+          </div>
 
           {/* Pueblos y cultura */}
+          <div className="ag-part-group">
           {renderPart('pueblos')}
-          <section id="ag-pueblos" className="ag-section ag-part-start">
+          <section id="ag-pueblos" className="ag-section">
             <span className="ag-section-num"/>
             <h2 className="ag-h2">{lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'}</h2>
             <p className="ag-para">
@@ -6207,10 +6218,12 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               </ul>
             </div>
           </section>
+          </div>
 
           {/* Mercados y compras */}
+          <div className="ag-part-group">
           {renderPart('mercados')}
-          <section id="ag-mercados" className="ag-section ag-part-start">
+          <section id="ag-mercados" className="ag-section">
             <span className="ag-section-num"/>
             <h2 className="ag-h2">{lang === 'es' ? 'Mercados y compras' : 'Markets & shops'}</h2>
             <p className="ag-para">
@@ -6319,9 +6332,11 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             </p>
             <GuestDiscounts lang={lang} />
           </section>
+          </div>
 
+          <div className="ag-part-group">
           {renderPart('feedback')}
-          <section id="ag-feedback" className="ag-section ag-part-start">
+          <section id="ag-feedback" className="ag-section">
             <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.feedback.title}</h2>
 
@@ -6343,6 +6358,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <h3 className="ag-h3">{s.feedback.subtitle}</h3>
             {s.feedback.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
           </section>
+          </div>
 
           <div className="ag-content-end no-print">
             <button className="ag-back" onClick={onClose}>

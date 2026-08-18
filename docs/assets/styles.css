@@ -12241,13 +12241,22 @@ footer,
   min-width: 0;
   /* Numeración jerárquica parte.capítulo.subapartado vía contadores CSS:
      siempre coincide con el orden real del DOM, sin números escritos a
-     mano que se puedan desincronizar al reordenar o añadir secciones.
-     El contador de parte (ag-part) se incrementa en .ag-part-start (el
-     primer capítulo de cada parte, ver GUIDE_GROUPS) en vez de en el
-     divisor .ag-part: ese divisor lleva no-print y en impresión los
-     elementos display:none no aplican sus counter-*, así que la
-     numeración de parte se rompería en el PDF si viviera solo ahí. */
-  counter-reset: ag-chapter ag-part;
+     mano que se puedan desincronizar al reordenar o añadir secciones. */
+  counter-reset: ag-part;
+}
+/* Cada parte (ver GUIDE_GROUPS) envuelve su divisor .ag-part y sus
+   capítulos en un .ag-part-group: reinicia ag-chapter y avanza ag-part
+   AQUÍ, en el contenedor, no en el primer capítulo. Poner reset e
+   increment del MISMO contador en un mismo elemento (probado en un
+   caso mínimo aislado) hace que el valor incrementado no se propague
+   al hermano siguiente en Chromium; con el reset en el padre y el
+   increment solo en cada .ag-section hijo, la numeración es fiable.
+   El contador de parte no vive en el propio .ag-part (que lleva
+   no-print) porque en impresión los elementos display:none no aplican
+   sus counter-*, y se rompería en el PDF. */
+.ag-part-group {
+  counter-reset: ag-chapter;
+  counter-increment: ag-part;
 }
 
 /* MIGA DE PAN --------------------------------------------------- *
@@ -12374,7 +12383,12 @@ footer,
   counter-increment: ag-chapter;
   counter-reset: ag-sub;
 }
-.ag-section:last-of-type {
+/* Antes .ag-section:last-of-type bastaba (un único nivel bajo .ag-content).
+   Ahora cada capítulo vive dentro de su .ag-part-group (ver nota arriba),
+   así que ":last-of-type" por sí solo marcaría el último capítulo de CADA
+   parte, no solo el del final de la guía: hay que anclarlo también al
+   último grupo. */
+.ag-part-group:last-of-type .ag-section:last-of-type {
   border-bottom: none;
   margin-bottom: 0;
 }
@@ -12389,13 +12403,6 @@ footer,
 }
 .ag-section-num::before {
   content: counter(ag-part, decimal-leading-zero) '.' counter(ag-chapter, decimal-leading-zero);
-}
-/* Primer capítulo de cada parte: reinicia el contador de capítulo y
-   avanza el de parte (ver nota en .ag-content sobre por qué aquí y no
-   en .ag-part). */
-.ag-section.ag-part-start {
-  counter-reset: ag-chapter ag-sub;
-  counter-increment: ag-chapter ag-part;
 }
 
 .ag-h2 {
@@ -18427,12 +18434,22 @@ a:focus-visible,
     page-break-inside: auto;
     position: relative;
   }
-  .apt-guide-view .ag-section:not(:first-child) {
+  /* Cada capítulo vive dentro de su .ag-part-group (ver numeración en
+     .ag-content): ":not(:first-child)" por sí solo solo mira a los
+     hermanos dentro de ESE grupo, así que el primer capítulo de cada
+     parte (previaje, wifi, alrededores...) perdería el salto de página.
+     Salto en todos por defecto, y se cancela solo para el primero de
+     todos (primer capítulo de la primera parte). */
+  .apt-guide-view .ag-section {
     page-break-before: always;
     break-before: page;
     padding-top: 0 !important;
   }
-  .apt-guide-view .ag-section:last-of-type {
+  .apt-guide-view .ag-part-group:first-of-type .ag-section:first-child {
+    page-break-before: auto;
+    break-before: auto;
+  }
+  .apt-guide-view .ag-part-group:last-of-type .ag-section:last-of-type {
     border-bottom: none !important;
     margin-bottom: 0 !important;
   }
