@@ -171,14 +171,14 @@ const GUIDE_SECTIONS = [{
 // Los ids deben ir en el mismo orden que GUIDE_SECTIONS para que la numeración
 // del índice y del cuerpo coincidan.
 const GUIDE_GROUPS = [{
-  es: 'Bienvenida',
-  en: 'Welcome',
+  es: 'Gracias por tu reserva',
+  en: 'Thank you for your booking',
   descEs: 'Quiénes somos y qué tiempo hace estos días.',
   descEn: 'Who we are and what the weather is like these days.',
   ids: ['bienvenida']
 }, {
-  es: 'Llegada a tu Hestía',
-  en: 'Arrival at your Hestía',
+  es: 'Antes de llegar a tu Hestía',
+  en: 'Before you arrive at your Hestía',
   descEs: 'Qué esperar del viaje, el registro obligatorio y cómo llegar hasta la puerta.',
   descEn: 'What to expect from the trip, mandatory registration and how to get to the door.',
   ids: ['previaje', 'llegada']
