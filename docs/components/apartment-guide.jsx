@@ -56,6 +56,8 @@ const GUIDE_SECTIONS = [
   { id: 'llegada',      es: 'Llegada', en: 'Arrival' },
   { id: 'wifi',         es: 'Tu WiFi',          en: 'Your WiFi' },
   { id: 'limpieza',     es: 'Limpieza',         en: 'Cleaning' },
+  { id: 'normas',       es: 'Normas de Hestía', en: 'Hestía house rules' },
+  { id: 'mascotas',     es: 'Viajar con mascota', en: 'Travelling with a pet' },
   { id: 'salon',        es: 'Tu salón',         en: 'Your living room' },
   { id: 'cocina',       es: 'Tu cocina',        en: 'Your kitchen' },
   { id: 'dormitorios',  es: 'Tus dormitorios',  en: 'Your bedrooms' },
@@ -93,7 +95,7 @@ const GUIDE_GROUPS = [
   { es: 'Tu Hestía',         en: 'Your Hestía',
     descEs: 'El WiFi y cómo funciona cada rincón de tu casa, estancia a estancia.',
     descEn: 'The WiFi and how every corner of your home works, room by room.',
-    ids: ['wifi', 'limpieza', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion'] },
+    ids: ['wifi', 'limpieza', 'normas', 'mascotas', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion'] },
   { es: 'Muy cerca de tu Hestía',     en: 'Very close to your Hestía',
     descEs: 'Lo que tienes a un paso: orientarte, comprar y comer bien.',
     descEn: 'What is a step away: getting oriented, shopping and eating well.',
@@ -111,6 +113,18 @@ const GUIDE_GROUPS = [
     descEn: 'How to leave everything, how we help you right to the end, and why your rating matters to us.',
     ids: ['feedback'] },
 ];
+
+// Fuente única de la numeración parte.capítulo (ej. "03.01"): se calcula
+// una sola vez a partir de GUIDE_GROUPS, para que el índice lateral y la
+// miga de pan (guideCrumb) muestren siempre el mismo número que el
+// contador CSS del cuerpo (.ag-section-num), sin dos fuentes de verdad
+// que se puedan desincronizar.
+const GUIDE_SECTION_NUM = {};
+GUIDE_GROUPS.forEach((g, gi) => {
+  g.ids.forEach((id, idx) => {
+    GUIDE_SECTION_NUM[id] = `${String(gi + 1).padStart(2, '0')}.${String(idx + 1).padStart(2, '0')}`;
+  });
+});
 
 // ── El tiempo en la guía: previsión a 14 días + clima medio de los próximos
 // 12 meses. _WMO_SKY, _VERA_LAT/_VERA_LON viven en shared.jsx (mismo origen
@@ -5441,7 +5455,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
         {activePartObj[lang]}
       </span>
       <span className="ag-crumb-main">
-        <span className="ag-crumb-num">{String(activeSecIdx + 1).padStart(2, '0')}<i>/{String(GUIDE_SECTIONS.length).padStart(2, '0')}</i></span>
+        <span className="ag-crumb-num">{GUIDE_SECTION_NUM[activeSecObj.id]}<i>/{String(GUIDE_SECTIONS.length).padStart(2, '0')}</i></span>
         <span className="ag-crumb-name">{activeSecObj[lang]}</span>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="ag-crumb-chev">
           <polyline points="9 6 15 12 9 18"/>
@@ -5585,8 +5599,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                 <React.Fragment key={gi}>
                   <li className="ag-nav-group" aria-hidden="true">{g[lang]}</li>
                   {g.ids.map(id => {
-                    const i = GUIDE_SECTIONS.findIndex(sec => sec.id === id);
-                    const sec = GUIDE_SECTIONS[i];
+                    const sec = GUIDE_SECTIONS.find(s2 => s2.id === id);
                     if (!sec) return null;
                     return (
                       <li key={id}>
@@ -5595,7 +5608,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
                           className={activeSection === id ? 'is-active' : ''}
                           onClick={(e) => handleNavClick(e, id)}
                         >
-                          <span className="ag-nav-num">{String(i + 1).padStart(2, '0')}</span>
+                          <span className="ag-nav-num">{GUIDE_SECTION_NUM[id]}</span>
                           <span className="ag-nav-text">{sec[lang]}</span>
                         </a>
                       </li>
@@ -5939,6 +5952,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {s.pets && (
             <section id="ag-mascotas" className="ag-section ag-section-rules ag-section-pets">
+              <span className="ag-section-num"/>
               <h2 className="ag-h2">{s.pets.title}</h2>
               <p className="ag-para">{s.pets.intro}</p>
               <ul className="ag-rules-grid">

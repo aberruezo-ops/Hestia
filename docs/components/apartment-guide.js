@@ -89,6 +89,14 @@ const GUIDE_SECTIONS = [{
   es: 'Limpieza',
   en: 'Cleaning'
 }, {
+  id: 'normas',
+  es: 'Normas de Hestía',
+  en: 'Hestía house rules'
+}, {
+  id: 'mascotas',
+  es: 'Viajar con mascota',
+  en: 'Travelling with a pet'
+}, {
   id: 'salon',
   es: 'Tu salón',
   en: 'Your living room'
@@ -187,7 +195,7 @@ const GUIDE_GROUPS = [{
   en: 'Your Hestía',
   descEs: 'El WiFi y cómo funciona cada rincón de tu casa, estancia a estancia.',
   descEn: 'The WiFi and how every corner of your home works, room by room.',
-  ids: ['wifi', 'limpieza', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion']
+  ids: ['wifi', 'limpieza', 'normas', 'mascotas', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion']
 }, {
   es: 'Muy cerca de tu Hestía',
   en: 'Very close to your Hestía',
@@ -213,6 +221,18 @@ const GUIDE_GROUPS = [{
   descEn: 'How to leave everything, how we help you right to the end, and why your rating matters to us.',
   ids: ['feedback']
 }];
+
+// Fuente única de la numeración parte.capítulo (ej. "03.01"): se calcula
+// una sola vez a partir de GUIDE_GROUPS, para que el índice lateral y la
+// miga de pan (guideCrumb) muestren siempre el mismo número que el
+// contador CSS del cuerpo (.ag-section-num), sin dos fuentes de verdad
+// que se puedan desincronizar.
+const GUIDE_SECTION_NUM = {};
+GUIDE_GROUPS.forEach((g, gi) => {
+  g.ids.forEach((id, idx) => {
+    GUIDE_SECTION_NUM[id] = `${String(gi + 1).padStart(2, '0')}.${String(idx + 1).padStart(2, '0')}`;
+  });
+});
 
 // ── El tiempo en la guía: previsión a 14 días + clima medio de los próximos
 // 12 meses. _WMO_SKY, _VERA_LAT/_VERA_LON viven en shared.jsx (mismo origen
@@ -11016,7 +11036,7 @@ const AptGuideView = ({
     className: "ag-crumb-main"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-crumb-num"
-  }, String(activeSecIdx + 1).padStart(2, '0'), /*#__PURE__*/React.createElement("i", null, "/", String(GUIDE_SECTIONS.length).padStart(2, '0'))), /*#__PURE__*/React.createElement("span", {
+  }, GUIDE_SECTION_NUM[activeSecObj.id], /*#__PURE__*/React.createElement("i", null, "/", String(GUIDE_SECTIONS.length).padStart(2, '0'))), /*#__PURE__*/React.createElement("span", {
     className: "ag-crumb-name"
   }, activeSecObj[lang]), /*#__PURE__*/React.createElement("svg", {
     width: "13",
@@ -11216,8 +11236,7 @@ const AptGuideView = ({
     className: "ag-nav-group",
     "aria-hidden": "true"
   }, g[lang]), g.ids.map(id => {
-    const i = GUIDE_SECTIONS.findIndex(sec => sec.id === id);
-    const sec = GUIDE_SECTIONS[i];
+    const sec = GUIDE_SECTIONS.find(s2 => s2.id === id);
     if (!sec) return null;
     return /*#__PURE__*/React.createElement("li", {
       key: id
@@ -11227,7 +11246,7 @@ const AptGuideView = ({
       onClick: e => handleNavClick(e, id)
     }, /*#__PURE__*/React.createElement("span", {
       className: "ag-nav-num"
-    }, String(i + 1).padStart(2, '0')), /*#__PURE__*/React.createElement("span", {
+    }, GUIDE_SECTION_NUM[id]), /*#__PURE__*/React.createElement("span", {
       className: "ag-nav-text"
     }, sec[lang])));
   })))), /*#__PURE__*/React.createElement("div", {
@@ -11655,7 +11674,9 @@ const AptGuideView = ({
   }, rule.d)))))), s.pets && /*#__PURE__*/React.createElement("section", {
     id: "ag-mascotas",
     className: "ag-section ag-section-rules ag-section-pets"
-  }, /*#__PURE__*/React.createElement("h2", {
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-section-num"
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.pets.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
