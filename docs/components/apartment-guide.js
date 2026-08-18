@@ -4957,7 +4957,7 @@ const GUIDE_SHARED = {
     },
     feedback: {
       title: 'Ayúdanos a mejorar',
-      paras: ['Tu experiencia importa más que ninguna palabra que podamos escribir aquí. Si algo no ha estado a la altura, dínoslo antes de irte y lo solucionamos.', 'Y si te gustó tu Hestía, una reseña honesta en Booking, Airbnb o Google Maps nos ayuda muchísimo a seguir mejorando.']
+      paras: ['Al valorarnos, ten en cuenta lo que depende de nosotros: que Hestía esté impecable, que todo funcione y que te sientas bien atendido. Que algo se rompa o falle alguna vez no está al 100% en nuestra mano, pero intentar solucionarlo y ayudarte sí lo está siempre.', 'Tu experiencia importa más que ninguna palabra que podamos escribir aquí. Si algo no ha estado a la altura, dínoslo antes de irte y lo solucionamos.', 'Y si te gustó tu Hestía, una reseña honesta en Booking, Airbnb o Google Maps nos ayuda muchísimo a seguir mejorando.']
     }
   },
   en: {
@@ -5287,7 +5287,7 @@ const GUIDE_SHARED = {
     },
     feedback: {
       title: 'Help us improve',
-      paras: ['Your experience matters more than anything we can write here. If something isn\'t up to scratch, tell us before you leave and we\'ll fix it.', 'And if you loved your Hestía, an honest review on Booking, Airbnb or Google Maps really helps us keep improving.']
+      paras: ['When you rate us, judge us on what is actually in our hands: Hestía being spotless, everything working, and you feeling well looked after. Something breaking or going wrong now and then is not 100% avoidable, but trying to fix it and help you always is.', 'Your experience matters more than anything we can write here. If something isn\'t up to scratch, tell us before you leave and we\'ll fix it.', 'And if you loved your Hestía, an honest review on Booking, Airbnb or Google Maps really helps us keep improving.']
     }
   }
 };
