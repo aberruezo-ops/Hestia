@@ -12397,9 +12397,6 @@ footer,
   counter-reset: ag-chapter ag-sub;
   counter-increment: ag-chapter ag-part;
 }
-/* ag-mascotas no lleva número propio (viaja pegado a Normas de la casa,
-   sin entrada en el índice lateral): no debe consumir un número. */
-.ag-section.ag-section-pets { counter-increment: none; }
 
 .ag-h2 {
   font-family: var(--serif);
