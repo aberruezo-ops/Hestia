@@ -7968,13 +7968,14 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .letrero-print-sheet { display: none; }
 
-/* letrero-bienvenida.html — letrero A6 (1/4 de A4) con el aviso de
-   donación a Save the Children y de hojas de reclamaciones. Página con
-   nombre CSS propia (letrero-a6) para no chocar con el @page A4 de
-   normas.html, que comparte esta misma hoja de estilos: mismo patrón
-   que ya usa la guía del huésped para sus PDFs (vs-body, vm-body...). */
+/* letrero-bienvenida.html — letrero 1/4 de A4 en horizontal (148 x 105mm,
+   apaisado). Página con nombre CSS propia (letrero-a6) para no chocar con
+   el @page A4 de normas.html, que comparte esta misma hoja de estilos:
+   mismo patrón que ya usa la guía del huésped para sus PDFs (vs-body,
+   vm-body...). Cabecera en fila y los dos avisos en columnas para que
+   quepan en la altura reducida del formato apaisado. */
 @media print {
-  @page letrero-a6 { size: 105mm 148mm; margin: 8mm; }
+  @page letrero-a6 { size: 148mm 105mm; margin: 8mm; }
   body:has(.letrero-print-sheet) .topbar,
   body:has(.letrero-print-sheet) .topbar-corner-fill,
   body:has(.letrero-print-sheet) .header,
@@ -7993,20 +7994,30 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
     page: letrero-a6;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 10px;
     background-image: url('assets/logo-watermark-faint.png');
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 55mm 55mm;
+    background-size: 50mm 50mm;
   }
-  .letrero-print-sheet .hprint-logo { width: 40px; height: 40px; }
-  .letrero-print-sheet .hprint-title { font-size: 14pt; }
-  .letrero-print-sheet .hprint-icon { width: 26px; height: 26px; }
-  .letrero-print-sheet .hprint-item { padding: 8px 10px; gap: 10px; text-align: left; }
-  .letrero-print-sheet .hprint-body p { font-size: 9.5pt; line-height: 1.35; }
-  .letrero-print-sheet .hprint-foot { font-size: 6.3pt; letter-spacing: -0.01em; }
+  .letrero-print-sheet .hprint-head-center {
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+  }
+  .letrero-print-sheet .hprint-logo { width: 30px; height: 30px; }
+  .letrero-print-sheet .hprint-title { font-size: 11pt; text-align: left; }
+  .letrero-print-sheet .hprint-icon { width: 22px; height: 22px; }
+  .letrero-print-sheet .hprint-item { padding: 6px 8px; gap: 8px; text-align: left; }
+  .letrero-print-sheet .hprint-body p { font-size: 8pt; line-height: 1.3; }
+  .letrero-print-sheet .hprint-foot { font-size: 6.3pt; letter-spacing: -0.01em; margin-top: 4px; padding-top: 5px; }
   .letrero-print-sheet .hprint-foot-sep { margin: 0 4px; }
-  .hprint-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; width: 100%; }
+  .letrero-print-sheet .hprint-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .hprint-list { list-style: none; margin: 0; padding: 0; width: 100%; }
 }
 
 /* Cookie table */
