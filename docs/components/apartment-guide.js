@@ -78,8 +78,8 @@ const GUIDE_SECTIONS = [{
   en: 'Before you pack'
 }, {
   id: 'llegada',
-  es: 'Llegada y salida',
-  en: 'Arrival & departure'
+  es: 'Llegada',
+  en: 'Arrival'
 }, {
   id: 'wifi',
   es: 'Tu WiFi',
@@ -4647,7 +4647,7 @@ const GUIDE_SHARED = {
       }, {
         icon: '🚗',
         t: 'Necesitarás coche',
-        d: 'El transporte público es escaso. Para explorar la zona (pueblos, calas, senderos) y llegar a muchos supermercados o restaurantes, el coche es casi imprescindible. Detalles de alquiler y aeropuertos en el capítulo Llegada y salida.'
+        d: 'El transporte público es escaso. Para explorar la zona (pueblos, calas, senderos) y llegar a muchos supermercados o restaurantes, el coche es casi imprescindible. Detalles de alquiler y aeropuertos en el capítulo Llegada.'
       }, {
         icon: '☀',
         t: 'Calor húmedo de costa, paisaje de desierto',
@@ -4659,7 +4659,7 @@ const GUIDE_SHARED = {
       }, {
         icon: '📍',
         t: 'Dónde está exactamente',
-        d: 'Los tres Hestía están en Vera Playa (Almería), a menos de 2 km entre sí. El aeropuerto más cercano es Almería, a una hora en coche; hay otros cuatro en un radio razonable. Todos los detalles en el capítulo Llegada y salida.'
+        d: 'Los tres Hestía están en Vera Playa (Almería), a menos de 2 km entre sí. El aeropuerto más cercano es Almería, a una hora en coche; hay otros cuatro en un radio razonable. Todos los detalles en el capítulo Llegada.'
       }],
       closing: 'Nosotros nos hacemos responsables de que Hestía esté impecable, funcione todo y estés bien atendido durante tu estancia. Lo que ocurre fuera del apartamento (el tiempo, el ambiente de la zona, la oferta de ocio, cómo de concurridas están las playas) no depende de nosotros. Si esta descripción encaja con lo que buscas, te va a encantar. Si tenías en mente otra cosa, mejor saberlo ahora que a mitad de la maleta.'
     },
@@ -4689,7 +4689,7 @@ const GUIDE_SHARED = {
       pdLinkHref: 'https://aberruezo-ops.github.io/Hestia/porque-hestia.html'
     },
     checkin: {
-      title: 'Llegada y salida',
+      title: 'Llegada',
       intro: 'Lo tienes todo cubierto: Fran te escribirá unos días antes de tu llegada para acordar la modalidad que mejor te encaje y compartirte los detalles. Llegues como llegues: en avión, bus o coche propio, te mandamos las indicaciones exactas para llegar en coche hasta la puerta de Hestía y te acompañamos a distancia hasta que estés dentro. No tienes que preocuparte de nada, solo dile a Fran a qué hora aproximada llegas.',
       beforeTitle: 'Antes de tu llegada',
       beforeIntro: 'Cuanto antes hablemos, más fácil te lo ponemos. Con estos detalles resueltos, llegas sin pensar en nada.',
@@ -4980,7 +4980,7 @@ const GUIDE_SHARED = {
       }, {
         icon: '🚗',
         t: 'You will need a car',
-        d: 'Public transport is limited. To explore the area (towns, coves, trails) and reach many supermarkets or restaurants, a car is almost essential. Car hire and airport details are in the Arrival & departure chapter.'
+        d: 'Public transport is limited. To explore the area (towns, coves, trails) and reach many supermarkets or restaurants, a car is almost essential. Car hire and airport details are in the Arrival chapter.'
       }, {
         icon: '☀',
         t: 'Humid coastal heat, desert landscape',
@@ -4992,12 +4992,12 @@ const GUIDE_SHARED = {
       }, {
         icon: '📍',
         t: 'Exactly where it is',
-        d: 'All three Hestías are in Vera Playa (Almería), less than 2 km apart. The nearest airport is Almería, about an hour by car; four more are within a reasonable range. Full details in the Arrival & departure chapter.'
+        d: 'All three Hestías are in Vera Playa (Almería), less than 2 km apart. The nearest airport is Almería, about an hour by car; four more are within a reasonable range. Full details in the Arrival chapter.'
       }],
       closing: 'We take responsibility for Hestía being spotless, everything working and you being well looked after during your stay. What happens outside the apartment (the weather, the mood of the area, what there is to do, how busy the beaches are) is not up to us. If this description matches what you are after, you will love it here. If you had something else in mind, better to know now than halfway through packing.'
     },
     checkin: {
-      title: 'Arrival & departure',
+      title: 'Arrival',
       intro: 'You are covered: Fran will message you a few days before your arrival to agree on the option that suits you best and share the specifics. However you travel: by plane, bus or car, we send you exact directions to drive right to the front door and we are with you every step of the way until you are in. Nothing to worry about, just let Fran know your approximate arrival time.',
       beforeTitle: 'Before you arrive',
       beforeIntro: 'The sooner we talk, the easier we make it. With these details sorted, you arrive without a thing to think about.',
