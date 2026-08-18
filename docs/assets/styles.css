@@ -12239,6 +12239,15 @@ footer,
 .ag-content {
   padding-top: clamp(32px, 4vw, 56px);
   min-width: 0;
+  /* Numeración jerárquica parte.capítulo.subapartado vía contadores CSS:
+     siempre coincide con el orden real del DOM, sin números escritos a
+     mano que se puedan desincronizar al reordenar o añadir secciones.
+     El contador de parte (ag-part) se incrementa en .ag-part-start (el
+     primer capítulo de cada parte, ver GUIDE_GROUPS) en vez de en el
+     divisor .ag-part: ese divisor lleva no-print y en impresión los
+     elementos display:none no aplican sus counter-*, así que la
+     numeración de parte se rompería en el PDF si viviera solo ahí. */
+  counter-reset: ag-chapter ag-part;
 }
 
 /* MIGA DE PAN --------------------------------------------------- *
@@ -12362,6 +12371,8 @@ footer,
   margin-bottom: clamp(48px, 7vw, 80px);
   border-bottom: 1px solid color-mix(in srgb, var(--apt-accent) 14%, transparent);
   scroll-margin-top: 24px;
+  counter-increment: ag-chapter;
+  counter-reset: ag-sub;
 }
 .ag-section:last-of-type {
   border-bottom: none;
@@ -12376,6 +12387,19 @@ footer,
   color: var(--apt-accent);
   margin-bottom: 12px;
 }
+.ag-section-num::before {
+  content: counter(ag-part, decimal-leading-zero) '.' counter(ag-chapter, decimal-leading-zero);
+}
+/* Primer capítulo de cada parte: reinicia el contador de capítulo y
+   avanza el de parte (ver nota en .ag-content sobre por qué aquí y no
+   en .ag-part). */
+.ag-section.ag-part-start {
+  counter-reset: ag-chapter ag-sub;
+  counter-increment: ag-chapter ag-part;
+}
+/* ag-mascotas no lleva número propio (viaja pegado a Normas de la casa,
+   sin entrada en el índice lateral): no debe consumir un número. */
+.ag-section.ag-section-pets { counter-increment: none; }
 
 .ag-h2 {
   font-family: var(--serif);
@@ -12403,6 +12427,12 @@ footer,
   font-weight: 500;
   color: var(--ber-dk);
   margin: 32px 0 14px;
+  counter-increment: ag-sub;
+}
+.ag-h3::before {
+  content: counter(ag-part, decimal-leading-zero) '.' counter(ag-chapter, decimal-leading-zero) '.' counter(ag-sub) '  ';
+  color: var(--apt-accent);
+  font-weight: 400;
 }
 .ag-para {
   font-size: 16px;

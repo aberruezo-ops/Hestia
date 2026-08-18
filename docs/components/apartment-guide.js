@@ -11242,10 +11242,10 @@ const AptGuideView = ({
     className: "ag-content"
   }, guideCrumb, renderPart('bienvenida'), /*#__PURE__*/React.createElement("section", {
     id: "ag-bienvenida",
-    className: "ag-section"
+    className: "ag-section ag-part-start"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "01"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.welcome.title), s.welcome.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
@@ -11284,10 +11284,10 @@ const AptGuideView = ({
     lang: lang
   })), renderPart('previaje'), /*#__PURE__*/React.createElement("section", {
     id: "ag-previaje",
-    className: "ag-section ag-section-rules ag-section-pretrip"
+    className: "ag-section ag-part-start ag-section-rules ag-section-pretrip"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "02"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.pretrip.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11312,7 +11312,7 @@ const AptGuideView = ({
     className: "ag-section ag-section-checkin"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "03"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.checkin.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-lead"
@@ -11589,10 +11589,10 @@ const AptGuideView = ({
     className: "ag-para ag-para-note"
   }, s.checkin.garageNote)), renderPart('wifi'), /*#__PURE__*/React.createElement("section", {
     id: "ag-wifi",
-    className: "ag-section ag-section-wifi"
+    className: "ag-section ag-part-start ag-section-wifi"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "04"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.wifi.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-lead"
@@ -11617,7 +11617,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "05"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.cleaning.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11634,7 +11634,7 @@ const AptGuideView = ({
     className: "ag-section ag-section-rules"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "06"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.rules.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11684,7 +11684,7 @@ const AptGuideView = ({
     className: `ag-section ag-room ag-room-${room.id}`
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, String(idx + 7).padStart(2, '0')), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, room.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para ag-para-lead"
@@ -11704,10 +11704,10 @@ const AptGuideView = ({
     key: i
   }, r))))), renderPart('alrededores'), /*#__PURE__*/React.createElement("section", {
     id: "ag-alrededores",
-    className: "ag-section"
+    className: "ag-section ag-part-start"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "13"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.surroundings.title), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11770,7 +11770,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "14"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Lugares de interés' : 'Places of interest'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11781,7 +11781,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "15"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Supermercados' : 'Supermarkets'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11801,7 +11801,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "16"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Sabores' : 'Tastes'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11822,10 +11822,10 @@ const AptGuideView = ({
     });
   })), renderPart('pueblos'), /*#__PURE__*/React.createElement("section", {
     id: "ag-pueblos",
-    className: "ag-section"
+    className: "ag-section ag-part-start"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "17"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11847,7 +11847,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "18"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Mar y playas' : 'Sea & beaches'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11870,7 +11870,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "19"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Planes y excursiones' : 'Things to do'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11897,10 +11897,10 @@ const AptGuideView = ({
     className: "ag-recs"
   }, /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Cuevas de Sorbas: galerías de yeso bajo tierra, temperatura constante y visita guiada (a 40 min).' : 'Sorbas Caves: underground gypsum galleries, constant temperature and a guided tour (40 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Museos de Almería capital: el Museo de Almería (culturas de Los Millares y El Argar) y el Museo de la Guitarra (a 45 min).' : 'Museums in Almería city: the Museum of Almería (Los Millares and El Argar cultures) and the Guitar Museum (45 min away).'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Alcazaba de Almería: aunque es al aire libre, sus salas y la visita dan para un buen rato resguardado.' : 'Alcazaba of Almería: although open-air, its halls and the visit give you a good while under cover.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Una comida larga: reserva uno de los restaurantes de la sección Sabores, incluido algún Guía Michelin, y alarga la sobremesa.' : 'A long lunch: book one of the restaurants in the Tastes section, a Michelin Guide pick included, and stretch out the afternoon.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Spa o balneario: Vera Playa tiene centros de spa para una tarde de relax bajo techo.' : 'Spa or wellness centre: Vera Playa has spas for a relaxing afternoon indoors.'), /*#__PURE__*/React.createElement("li", null, lang === 'es' ? 'Compras a cubierto: centros comerciales de Almería capital si toca reponer.' : 'Indoor shopping: the shopping centres in Almería city if you need to restock.')))), renderPart('mercados'), /*#__PURE__*/React.createElement("section", {
     id: "ag-mercados",
-    className: "ag-section"
+    className: "ag-section ag-part-start"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "20"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Mercados y compras' : 'Markets & shops'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11920,7 +11920,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "21"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Salud y servicios' : 'Health & services'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11973,7 +11973,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "22"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -11995,7 +11995,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "23"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.phones.title), /*#__PURE__*/React.createElement("table", {
     className: "ag-phones-table"
@@ -12008,7 +12008,7 @@ const AptGuideView = ({
     className: "ag-section"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "24"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, lang === 'es' ? 'Recomendados con descuento' : 'Recommended, with a discount'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
@@ -12016,10 +12016,10 @@ const AptGuideView = ({
     lang: lang
   })), renderPart('feedback'), /*#__PURE__*/React.createElement("section", {
     id: "ag-feedback",
-    className: "ag-section"
+    className: "ag-section ag-part-start"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-section-num"
-  }, "25"), /*#__PURE__*/React.createElement("h2", {
+  }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
   }, s.feedback.title), /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"

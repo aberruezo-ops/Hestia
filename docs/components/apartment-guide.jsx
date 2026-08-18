@@ -5623,8 +5623,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           {guideCrumb}
 
           {renderPart('bienvenida')}
-          <section id="ag-bienvenida" className="ag-section">
-            <span className="ag-section-num">01</span>
+          <section id="ag-bienvenida" className="ag-section ag-part-start">
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.welcome.title}</h2>
             {s.welcome.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
             <p className="ag-sign">{s.welcome.sign}</p>
@@ -5659,8 +5659,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           {renderPart('previaje')}
-          <section id="ag-previaje" className="ag-section ag-section-rules ag-section-pretrip">
-            <span className="ag-section-num">02</span>
+          <section id="ag-previaje" className="ag-section ag-part-start ag-section-rules ag-section-pretrip">
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.pretrip.title}</h2>
             <p className="ag-para">{s.pretrip.intro}</p>
             <ul className="ag-rules-grid">
@@ -5679,7 +5679,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {s.checkin && (
           <section id="ag-llegada" className="ag-section ag-section-checkin">
-            <span className="ag-section-num">03</span>
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.checkin.title}</h2>
             <p className="ag-para ag-para-lead">{s.checkin.intro}</p>
 
@@ -5890,8 +5890,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           )}
 
           {renderPart('wifi')}
-          <section id="ag-wifi" className="ag-section ag-section-wifi">
-            <span className="ag-section-num">04</span>
+          <section id="ag-wifi" className="ag-section ag-part-start ag-section-wifi">
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.wifi.title}</h2>
             <p className="ag-para ag-para-lead">{s.wifi.intro}</p>
             <div className="ag-wifi-card">
@@ -5908,7 +5908,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-limpieza" className="ag-section">
-            <span className="ag-section-num">05</span>
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.cleaning.title}</h2>
             <p className="ag-para">{s.cleaning.intro}</p>
             <p className="ag-note">{s.cleaning.note}</p>
@@ -5920,7 +5920,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {s.rules && (
             <section id="ag-normas" className="ag-section ag-section-rules">
-              <span className="ag-section-num">06</span>
+              <span className="ag-section-num"/>
               <h2 className="ag-h2">{s.rules.title}</h2>
               <p className="ag-para">{s.rules.intro}</p>
               <ul className="ag-rules-grid">
@@ -5962,7 +5962,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {a.rooms.map((room, idx) => (
             <section key={room.id} id={`ag-${room.id}`} className={`ag-section ag-room ag-room-${room.id}`}>
-              <span className="ag-section-num">{String(idx + 7).padStart(2, '0')}</span>
+              <span className="ag-section-num"/>
               <h2 className="ag-h2">{room.title}</h2>
               <p className="ag-para ag-para-lead">{room.body}</p>
               <PhotoGrid photos={getRoomPhotos(room.id)} />
@@ -5982,8 +5982,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           ))}
 
           {renderPart('alrededores')}
-          <section id="ag-alrededores" className="ag-section">
-            <span className="ag-section-num">13</span>
+          <section id="ag-alrededores" className="ag-section ag-part-start">
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.surroundings.title}</h2>
             <p className="ag-para">{s.surroundings.intro}</p>
 
@@ -6055,7 +6055,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               donde el lugar se describe en detalle o forma parte de un
               itinerario. La idea: ÍNDICE rápido, no contenido duplicado. */}
           <section id="ag-lugares" className="ag-section">
-            <span className="ag-section-num">14</span>
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{lang === 'es' ? 'Lugares de interés' : 'Places of interest'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6067,7 +6067,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Supermercados */}
           <section id="ag-supermercados" className="ag-section">
-            <span className="ag-section-num">15</span>
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{lang === 'es' ? 'Supermercados' : 'Supermarkets'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6085,7 +6085,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Sabores · comer y beber */}
           <section id="ag-sabores" className="ag-section">
-            <span className="ag-section-num">16</span>
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{lang === 'es' ? 'Sabores' : 'Tastes'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6107,8 +6107,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Pueblos y cultura */}
           {renderPart('pueblos')}
-          <section id="ag-pueblos" className="ag-section">
-            <span className="ag-section-num">17</span>
+          <section id="ag-pueblos" className="ag-section ag-part-start">
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6129,7 +6129,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Mar y playas */}
           <section id="ag-mar-playas" className="ag-section">
-            <span className="ag-section-num">18</span>
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{lang === 'es' ? 'Mar y playas' : 'Sea & beaches'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6148,7 +6148,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Planes y excursiones */}
           <section id="ag-planes" className="ag-section">
-            <span className="ag-section-num">19</span>
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{lang === 'es' ? 'Planes y excursiones' : 'Things to do'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6196,8 +6196,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Mercados y compras */}
           {renderPart('mercados')}
-          <section id="ag-mercados" className="ag-section">
-            <span className="ag-section-num">20</span>
+          <section id="ag-mercados" className="ag-section ag-part-start">
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{lang === 'es' ? 'Mercados y compras' : 'Markets & shops'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6215,7 +6215,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Salud y servicios · centros de salud, vets, fisio, farmacias */}
           <section id="ag-salud" className="ag-section">
-            <span className="ag-section-num">21</span>
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{lang === 'es' ? 'Salud y servicios' : 'Health & services'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6259,7 +6259,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
 
           {/* Movilidad · gasolineras y carga eléctrica */}
           <section id="ag-movilidad" className="ag-section">
-            <span className="ag-section-num">22</span>
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{lang === 'es' ? 'Gasolineras y carga eléctrica' : 'Fuel & EV charging'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6281,7 +6281,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-telefonos" className="ag-section">
-            <span className="ag-section-num">23</span>
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.phones.title}</h2>
             <table className="ag-phones-table">
               <tbody>
@@ -6296,7 +6296,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           <section id="ag-descuentos" className="ag-section">
-            <span className="ag-section-num">24</span>
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{lang === 'es' ? 'Recomendados con descuento' : 'Recommended, with a discount'}</h2>
             <p className="ag-para">
               {lang === 'es'
@@ -6307,8 +6307,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
           </section>
 
           {renderPart('feedback')}
-          <section id="ag-feedback" className="ag-section">
-            <span className="ag-section-num">25</span>
+          <section id="ag-feedback" className="ag-section ag-part-start">
+            <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.feedback.title}</h2>
 
             <h3 className="ag-h3">{s.feedback.checkoutTitle}</h3>
