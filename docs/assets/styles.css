@@ -7880,7 +7880,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   }
   .hprint-head-center { flex-direction: column; justify-content: center; text-align: center; }
   .hprint-logo { object-fit: contain; flex-shrink: 0; }
-  .hprint-title { font-family: var(--serif); font-weight: 500; color: #000; margin: 0; }
+  .hprint-title { font-family: var(--serif); font-weight: 600; color: #000; margin: 0; }
   .hprint-title span { font-weight: 300; opacity: 0.6; }
   .hprint-item {
     display: flex;
@@ -7917,6 +7917,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
     font-size: 8pt;
     color: #333;
   }
+  .hprint-foot span { white-space: nowrap; }
   .hprint-foot-sep { margin: 0 6px; color: #999; }
 }
 
@@ -8003,6 +8004,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   .letrero-print-sheet .hprint-icon { width: 26px; height: 26px; }
   .letrero-print-sheet .hprint-item { padding: 8px 10px; gap: 10px; text-align: left; }
   .letrero-print-sheet .hprint-body p { font-size: 9.5pt; line-height: 1.35; }
+  .letrero-print-sheet .hprint-foot { font-size: 6.3pt; letter-spacing: -0.01em; }
+  .letrero-print-sheet .hprint-foot-sep { margin: 0 4px; }
   .hprint-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; width: 100%; }
 }
 
