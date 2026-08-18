@@ -273,36 +273,38 @@ const NormasContent = ({
       fontSize: 13
     }
   }, lang === 'es' ? 'Última actualización: mayo de 2026' : 'Last updated: May 2026')), /*#__PURE__*/React.createElement("div", {
-    className: "normas-print-sheet"
+    className: "normas-print-sheet hprint-sheet"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "nps-head"
-  }, /*#__PURE__*/React.createElement("h1", null, "Normas de Hestía ", /*#__PURE__*/React.createElement("span", null, "· House Rules")), /*#__PURE__*/React.createElement("img", {
-    className: "nps-logo",
+    className: "hprint-head"
+  }, /*#__PURE__*/React.createElement("h1", {
+    className: "hprint-title"
+  }, "Normas de Hestía ", /*#__PURE__*/React.createElement("span", null, "· House Rules")), /*#__PURE__*/React.createElement("img", {
+    className: "hprint-logo",
     src: "assets/logo-teal-transparent.png",
     alt: ""
   })), /*#__PURE__*/React.createElement("ul", {
-    className: "nps-grid"
+    className: "hprint-grid"
   }, es.items.map((rule, i) => /*#__PURE__*/React.createElement("li", {
     key: i,
-    className: "nps-item"
+    className: "hprint-item"
   }, /*#__PURE__*/React.createElement("span", {
-    className: "nps-icon",
+    className: "hprint-icon",
     "aria-hidden": "true"
   }, /*#__PURE__*/React.createElement(HiIcon, {
     name: rule.hi,
     size: 13
   })), /*#__PURE__*/React.createElement("div", {
-    className: "nps-body"
+    className: "hprint-body"
   }, /*#__PURE__*/React.createElement("p", {
-    className: "nps-es"
+    className: "hprint-es"
   }, /*#__PURE__*/React.createElement("strong", null, rule.t, "."), " ", rule.d), /*#__PURE__*/React.createElement("p", {
-    className: "nps-en"
+    className: "hprint-en"
   }, /*#__PURE__*/React.createElement("strong", null, en.items[i].t, "."), " ", en.items[i].d))))), /*#__PURE__*/React.createElement("div", {
-    className: "nps-foot"
+    className: "hprint-foot"
   }, /*#__PURE__*/React.createElement("span", null, "hestiayourhome.com"), /*#__PURE__*/React.createElement("span", {
-    className: "nps-foot-sep"
+    className: "hprint-foot-sep"
   }, "·"), /*#__PURE__*/React.createElement("span", null, "Alex: +34 620 316 370"), /*#__PURE__*/React.createElement("span", {
-    className: "nps-foot-sep"
+    className: "hprint-foot-sep"
   }, "·"), /*#__PURE__*/React.createElement("span", null, "Fran: +34 654 138 251"))))));
 };
 const LetreroContent = ({
@@ -320,40 +322,52 @@ const LetreroContent = ({
   className: "btn btn-ghost-dark normas-print-btn no-print",
   onClick: () => window.print()
 }, lang === 'es' ? 'Imprimir letrero →' : 'Print sign →'), /*#__PURE__*/React.createElement("div", {
-  className: "letrero-print-sheet"
+  className: "letrero-print-sheet hprint-sheet"
+}, /*#__PURE__*/React.createElement("div", {
+  className: "hprint-head hprint-head-center"
 }, /*#__PURE__*/React.createElement("img", {
-  className: "wcard-logo",
+  className: "hprint-logo",
   src: "assets/logo-teal-transparent.png",
   alt: ""
 }), /*#__PURE__*/React.createElement("h1", {
-  className: "wcard-title"
-}, "Bienvenido a tu Hestía ", /*#__PURE__*/React.createElement("span", null, "· Welcome")), /*#__PURE__*/React.createElement("div", {
-  className: "wcard-item"
+  className: "hprint-title"
+}, "Bienvenido a tu hogar lejos de casa ", /*#__PURE__*/React.createElement("span", null, "· Welcome to your home away from home"))), /*#__PURE__*/React.createElement("ul", {
+  className: "hprint-list"
+}, /*#__PURE__*/React.createElement("li", {
+  className: "hprint-item"
 }, /*#__PURE__*/React.createElement("span", {
-  className: "wcard-icon",
+  className: "hprint-icon",
   "aria-hidden": "true"
 }, /*#__PURE__*/React.createElement(HiIcon, {
   name: "heart",
-  size: 11
-})), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
-  className: "wcard-es"
-}, "Con cada reserva directa, donamos una parte a Save the Children."), /*#__PURE__*/React.createElement("p", {
-  className: "wcard-en"
-}, "With every direct booking, we donate a share to Save the Children."))), /*#__PURE__*/React.createElement("div", {
-  className: "wcard-item"
+  size: 13
+})), /*#__PURE__*/React.createElement("div", {
+  className: "hprint-body"
+}, /*#__PURE__*/React.createElement("p", {
+  className: "hprint-es"
+}, /*#__PURE__*/React.createElement("strong", null, "Save the Children."), " Con cada reserva directa, donamos una parte."), /*#__PURE__*/React.createElement("p", {
+  className: "hprint-en"
+}, /*#__PURE__*/React.createElement("strong", null, "Save the Children."), " With every direct booking, we donate a share."))), /*#__PURE__*/React.createElement("li", {
+  className: "hprint-item"
 }, /*#__PURE__*/React.createElement("span", {
-  className: "wcard-icon",
+  className: "hprint-icon",
   "aria-hidden": "true"
 }, /*#__PURE__*/React.createElement(HiIcon, {
   name: "doc",
-  size: 11
-})), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
-  className: "wcard-es"
-}, "Disponemos de hojas de reclamaciones a disposición del consumidor. Esperamos que nunca las necesites."), /*#__PURE__*/React.createElement("p", {
-  className: "wcard-en"
-}, "Official complaint forms are available on request. We hope you never need them."))), /*#__PURE__*/React.createElement("p", {
-  className: "wcard-foot"
-}, "hestiayourhome.com")))));
+  size: 13
+})), /*#__PURE__*/React.createElement("div", {
+  className: "hprint-body"
+}, /*#__PURE__*/React.createElement("p", {
+  className: "hprint-es"
+}, /*#__PURE__*/React.createElement("strong", null, "Hojas de reclamaciones."), " A tu disposición como consumidor. Esperamos que nunca las necesites."), /*#__PURE__*/React.createElement("p", {
+  className: "hprint-en"
+}, /*#__PURE__*/React.createElement("strong", null, "Complaint forms."), " Available on request. We hope you never need them.")))), /*#__PURE__*/React.createElement("div", {
+  className: "hprint-foot"
+}, /*#__PURE__*/React.createElement("span", null, "hestiayourhome.com"), /*#__PURE__*/React.createElement("span", {
+  className: "hprint-foot-sep"
+}, "·"), /*#__PURE__*/React.createElement("span", null, "Alex: +34 620 316 370"), /*#__PURE__*/React.createElement("span", {
+  className: "hprint-foot-sep"
+}, "·"), /*#__PURE__*/React.createElement("span", null, "Fran: +34 654 138 251"))))));
 const LegalPageApp = () => {
   const type = window.__LEGAL__ || 'privacidad';
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
