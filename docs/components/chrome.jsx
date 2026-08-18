@@ -904,7 +904,6 @@ const Footer = ({ lang }) => {
             <li><a href="noticias.html">{t.nav[7]}</a></li>
             <li><a href="estancias-largas.html">{t.nav[9]}</a></li>
             <li><a href="empresas.html">{lang === 'es' ? 'Para empresas' : 'For business'}</a></li>
-            <li><a href="normas.html">{lang === 'es' ? 'Normas de la casa' : 'House rules'}</a></li>
             <li><a href="privacidad.html">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>
             <li><a href="cookies.html">Cookies</a></li>
             <li><a href="mapa.html">{lang === 'es' ? 'Mapa web' : 'Site map'}</a></li>
