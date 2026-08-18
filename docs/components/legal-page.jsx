@@ -253,28 +253,31 @@ const NormasContent = ({ lang }) => {
             </p>
           </div>
 
-          {/* Hoja imprimible ES + EN en una sola página, oculta en pantalla */}
-          <div className="normas-print-sheet">
-            <div className="nps-head">
-              <h1>Normas de Hestía <span>· House Rules</span></h1>
-              <img className="nps-logo" src="assets/logo-teal-transparent.png" alt=""/>
+          {/* Hoja imprimible ES + EN en una sola página, oculta en pantalla.
+              Plantilla compartida con letrero-bienvenida (clases hprint-*):
+              mismo tratamiento de cabecera, marca de agua, tarjeta e icono,
+              y pie, para que ambos impresos se vean de la misma familia. */}
+          <div className="normas-print-sheet hprint-sheet">
+            <div className="hprint-head">
+              <h1 className="hprint-title">Normas de Hestía <span>· House Rules</span></h1>
+              <img className="hprint-logo" src="assets/logo-teal-transparent.png" alt=""/>
             </div>
-            <ul className="nps-grid">
+            <ul className="hprint-grid">
               {es.items.map((rule, i) => (
-                <li key={i} className="nps-item">
-                  <span className="nps-icon" aria-hidden="true"><HiIcon name={rule.hi} size={13}/></span>
-                  <div className="nps-body">
-                    <p className="nps-es"><strong>{rule.t}.</strong> {rule.d}</p>
-                    <p className="nps-en"><strong>{en.items[i].t}.</strong> {en.items[i].d}</p>
+                <li key={i} className="hprint-item">
+                  <span className="hprint-icon" aria-hidden="true"><HiIcon name={rule.hi} size={13}/></span>
+                  <div className="hprint-body">
+                    <p className="hprint-es"><strong>{rule.t}.</strong> {rule.d}</p>
+                    <p className="hprint-en"><strong>{en.items[i].t}.</strong> {en.items[i].d}</p>
                   </div>
                 </li>
               ))}
             </ul>
-            <div className="nps-foot">
+            <div className="hprint-foot">
               <span>hestiayourhome.com</span>
-              <span className="nps-foot-sep">·</span>
+              <span className="hprint-foot-sep">·</span>
               <span>Alex: +34 620 316 370</span>
-              <span className="nps-foot-sep">·</span>
+              <span className="hprint-foot-sep">·</span>
               <span>Fran: +34 654 138 251</span>
             </div>
           </div>
@@ -297,24 +300,34 @@ const LetreroContent = ({ lang }) => (
           {lang === 'es' ? 'Imprimir letrero →' : 'Print sign →'}
         </button>
 
-        <div className="letrero-print-sheet">
-          <img className="wcard-logo" src="assets/logo-teal-transparent.png" alt=""/>
-          <h1 className="wcard-title">Bienvenido a tu Hestía <span>· Welcome</span></h1>
-          <div className="wcard-item">
-            <span className="wcard-icon" aria-hidden="true"><HiIcon name="heart" size={11}/></span>
-            <div>
-              <p className="wcard-es">Con cada reserva directa, donamos una parte a Save the Children.</p>
-              <p className="wcard-en">With every direct booking, we donate a share to Save the Children.</p>
-            </div>
+        <div className="letrero-print-sheet hprint-sheet">
+          <div className="hprint-head hprint-head-center">
+            <img className="hprint-logo" src="assets/logo-teal-transparent.png" alt=""/>
+            <h1 className="hprint-title">Bienvenido a tu hogar lejos de casa <span>· Welcome to your home away from home</span></h1>
           </div>
-          <div className="wcard-item">
-            <span className="wcard-icon" aria-hidden="true"><HiIcon name="doc" size={11}/></span>
-            <div>
-              <p className="wcard-es">Disponemos de hojas de reclamaciones a disposición del consumidor. Esperamos que nunca las necesites.</p>
-              <p className="wcard-en">Official complaint forms are available on request. We hope you never need them.</p>
-            </div>
+          <ul className="hprint-list">
+            <li className="hprint-item">
+              <span className="hprint-icon" aria-hidden="true"><HiIcon name="heart" size={13}/></span>
+              <div className="hprint-body">
+                <p className="hprint-es"><strong>Save the Children.</strong> Con cada reserva directa, donamos una parte.</p>
+                <p className="hprint-en"><strong>Save the Children.</strong> With every direct booking, we donate a share.</p>
+              </div>
+            </li>
+            <li className="hprint-item">
+              <span className="hprint-icon" aria-hidden="true"><HiIcon name="doc" size={13}/></span>
+              <div className="hprint-body">
+                <p className="hprint-es"><strong>Hojas de reclamaciones.</strong> A tu disposición como consumidor. Esperamos que nunca las necesites.</p>
+                <p className="hprint-en"><strong>Complaint forms.</strong> Available on request. We hope you never need them.</p>
+              </div>
+            </li>
+          </ul>
+          <div className="hprint-foot">
+            <span>hestiayourhome.com</span>
+            <span className="hprint-foot-sep">·</span>
+            <span>Alex: +34 620 316 370</span>
+            <span className="hprint-foot-sep">·</span>
+            <span>Fran: +34 654 138 251</span>
           </div>
-          <p className="wcard-foot">hestiayourhome.com</p>
         </div>
       </div>
     </div>
