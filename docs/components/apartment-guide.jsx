@@ -74,7 +74,7 @@ const GUIDE_SECTIONS = [
   { id: 'movilidad',    es: 'Gasolineras y carga eléctrica', en: 'Fuel & EV charging' },
   { id: 'telefonos',    es: 'Teléfonos',        en: 'Useful phones' },
   { id: 'descuentos',   es: 'Recomendados con descuento', en: 'Recommended, with a discount' },
-  { id: 'feedback',     es: 'Comentarios',      en: 'Feedback' },
+  { id: 'feedback',     es: 'Tu salida de Hestía', en: 'Your departure from Hestía' },
 ];
 
 // Agrupación temática del índice: en vez de una lista plana de capítulos
@@ -86,7 +86,7 @@ const GUIDE_GROUPS = [
     descEs: 'Quiénes somos y qué tiempo hace estos días.',
     descEn: 'Who we are and what the weather is like these days.',
     ids: ['bienvenida'] },
-  { es: 'Antes de llegar',   en: 'Before you arrive',
+  { es: 'Llegada a tu Hestía',   en: 'Arrival at your Hestía',
     descEs: 'Qué esperar del viaje, el registro obligatorio y cómo llegar hasta la puerta.',
     descEn: 'What to expect from the trip, mandatory registration and how to get to the door.',
     ids: ['previaje', 'llegada'] },
@@ -94,18 +94,22 @@ const GUIDE_GROUPS = [
     descEs: 'El WiFi y cómo funciona cada rincón de tu casa, estancia a estancia.',
     descEn: 'The WiFi and how every corner of your home works, room by room.',
     ids: ['wifi', 'limpieza', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion'] },
-  { es: 'Cerca de casa',     en: 'Close to home',
+  { es: 'Muy cerca de tu Hestía',     en: 'Very close to your Hestía',
     descEs: 'Lo que tienes a un paso: orientarte, comprar y comer bien.',
     descEn: 'What is a step away: getting oriented, shopping and eating well.',
     ids: ['alrededores', 'lugares', 'supermercados', 'sabores'] },
-  { es: 'Descubrir la zona', en: 'Explore the area',
+  { es: 'Un poco más allá de tu Hestía', en: 'A little further from your Hestía',
     descEs: 'Pueblos, playas y planes que merecen una salida.',
     descEn: 'Towns, beaches and plans worth a trip out.',
     ids: ['pueblos', 'mar-playas', 'planes'] },
-  { es: 'Servicios y ayuda', en: 'Services & help',
+  { es: 'Otros servicios y ayuda', en: 'Other services & help',
     descEs: 'Mercados, salud, repostaje y teléfonos, por si acaso.',
     descEn: 'Markets, health, fuel and phones, just in case.',
-    ids: ['mercados', 'salud', 'movilidad', 'telefonos', 'descuentos', 'feedback'] },
+    ids: ['mercados', 'salud', 'movilidad', 'telefonos', 'descuentos'] },
+  { es: 'Tu salida de Hestía', en: 'Your departure from Hestía',
+    descEs: 'Cómo dejarlo todo, cómo te ayudamos hasta el final y por qué tu valoración nos importa.',
+    descEn: 'How to leave everything, how we help you right to the end, and why your rating matters to us.',
+    ids: ['feedback'] },
 ];
 
 // ── El tiempo en la guía: previsión a 14 días + clima medio de los próximos
@@ -1636,10 +1640,6 @@ const GUIDE_SHARED = {
       garageTitle: 'Plaza de garaje',
       garageIntro: 'Todos los apartamentos llevan plaza de garaje incluida en la urbanización Pueblo Salinas. La plaza que te corresponde según tu Hestía es:',
       garageNote: 'A confirmar con Fran antes de tu llegada: alguna semana puede haber rotación por mantenimiento.',
-      checkoutTitle: 'Check-out',
-      checkoutBody: 'La salida es siempre antes de las 11:00. Deja las llaves donde Fran te indique (caja-llaves o entrega presencial, según hayas entrado). Las toallas y sábanas las puedes dejar sobre la cama; del resto se encarga el equipo de limpieza.',
-      garbageTitle: 'Basura y reciclaje',
-      garbageBody: 'Por normativa municipal, los contenedores de basura y reciclaje están SIEMPRE fuera de la urbanización (no dentro). Te recomendamos bajar las bolsas al salir al día siguiente, o en cualquier viaje en coche, y tirarlas de paso. Te agradeceríamos enormemente que no las dejes en los descansillos del edificio ni dentro de Hestía: atraen bichos y el equipo de limpieza no las recoge.',
     },
     name: null,
     why: null,
@@ -1781,11 +1781,19 @@ const GUIDE_SHARED = {
       ],
     },
     feedback: {
-      title: 'Ayúdanos a mejorar',
+      title: 'Tu salida de Hestía',
+      checkoutTitle: 'Check-out',
+      checkoutBody: 'La salida es siempre antes de las 11:00. Deja las llaves donde Fran te indique (caja-llaves o entrega presencial, según hayas entrado). Las toallas y sábanas las puedes dejar sobre la cama; del resto se encarga el equipo de limpieza.',
+      garbageTitle: 'Basura y reciclaje',
+      garbageBody: 'Por normativa municipal, los contenedores de basura y reciclaje están SIEMPRE fuera de la urbanización (no dentro). Te recomendamos bajar las bolsas al salir al día siguiente, o en cualquier viaje en coche, y tirarlas de paso. Te agradeceríamos enormemente que no las dejes en los descansillos del edificio ni dentro de Hestía: atraen bichos y el equipo de limpieza no las recoge.',
+      careTitle: 'Hasta el último minuto',
+      careBody: 'El día de la salida seguimos pendientes de ti: si surge cualquier duda o necesitas ayuda o instrucciones para el check-out, escríbenos y te respondemos.',
+      subtitle: 'Ayúdanos a mejorar',
       paras: [
         'Al valorarnos, ten en cuenta lo que depende de nosotros: que Hestía esté impecable, que todo funcione y que te sientas bien atendido. Que algo se rompa o falle alguna vez no está al 100% en nuestra mano, pero intentar solucionarlo y ayudarte sí lo está siempre.',
         'Tu experiencia importa más que ninguna palabra que podamos escribir aquí. Si algo no ha estado a la altura, dínoslo antes de irte y lo solucionamos.',
-        'Y si te gustó tu Hestía, una reseña honesta en Booking, Airbnb o Google Maps nos ayuda muchísimo a seguir mejorando.',
+        'Al terminar tu estancia te pediremos que nos evalúes: si te gustó tu Hestía, una reseña honesta en Booking, Airbnb o Google Maps nos ayuda muchísimo a seguir mejorando.',
+        'Nos encantaría que volvieras, y que nos recomendaras a quien quieras: creemos en el boca a boca más que en cualquier otra forma de publicidad.',
       ],
     },
   },
@@ -1852,10 +1860,6 @@ const GUIDE_SHARED = {
       garageTitle: 'Garage spot',
       garageIntro: 'Every apartment comes with an included garage spot in the Pueblo Salinas complex. The spot assigned to your Hestía is:',
       garageNote: 'Confirm with Fran before arrival: some weeks the spot rotates for maintenance.',
-      checkoutTitle: 'Check-out',
-      checkoutBody: 'Check-out is always before 11:00. Leave the keys wherever Fran tells you (lockbox or in-person, depending on how you arrived). Towels and sheets can go on the bed; the cleaning team handles the rest.',
-      garbageTitle: 'Rubbish & recycling',
-      garbageBody: 'By local regulation, rubbish and recycling bins are ALWAYS outside the complex (never inside). We recommend dropping off bin bags on your way out the next day, or on any car trip. We would really appreciate it if you do not leave them on the building landings or inside Hestía: they attract pests and the cleaning team will not collect them.',
     },
     welcome: {
       title: 'Welcome to your Hestía',
@@ -2019,11 +2023,19 @@ const GUIDE_SHARED = {
       ],
     },
     feedback: {
-      title: 'Help us improve',
+      title: 'Your departure from Hestía',
+      checkoutTitle: 'Check-out',
+      checkoutBody: 'Check-out is always before 11:00. Leave the keys wherever Fran tells you (lockbox or in-person, depending on how you arrived). Towels and sheets can go on the bed; the cleaning team handles the rest.',
+      garbageTitle: 'Rubbish & recycling',
+      garbageBody: 'By local regulation, rubbish and recycling bins are ALWAYS outside the complex (never inside). We recommend dropping off bin bags on your way out the next day, or on any car trip. We would really appreciate it if you do not leave them on the building landings or inside Hestía: they attract pests and the cleaning team will not collect them.',
+      careTitle: 'Right up to the last minute',
+      careBody: 'On the day you leave we are still here for you: if anything comes up or you need help or instructions for check-out, message us and we will get back to you.',
+      subtitle: 'Help us improve',
       paras: [
         'When you rate us, judge us on what is actually in our hands: Hestía being spotless, everything working, and you feeling well looked after. Something breaking or going wrong now and then is not 100% avoidable, but trying to fix it and help you always is.',
         'Your experience matters more than anything we can write here. If something isn\'t up to scratch, tell us before you leave and we\'ll fix it.',
-        'And if you loved your Hestía, an honest review on Booking, Airbnb or Google Maps really helps us keep improving.',
+        'At the end of your stay we will ask you to rate us: and if you loved your Hestía, an honest review on Booking, Airbnb or Google Maps really helps us keep improving.',
+        'We would love for you to come back, and to recommend us to the people you care about: we believe in word of mouth more than any other kind of advertising.',
       ],
     },
   },
@@ -5874,18 +5886,6 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             </div>
             <p className="ag-para ag-para-note">{s.checkin.garageNote}</p>
 
-            <h3 className="ag-h3">{s.checkin.checkoutTitle}</h3>
-            <p className="ag-para">{s.checkin.checkoutBody}</p>
-
-            {s.checkin.garbageBody && (
-              <>
-                <h3 className="ag-h3">{s.checkin.garbageTitle}</h3>
-                <div className="ag-checkin-garbage">
-                  <p className="ag-para">{s.checkin.garbageBody}</p>
-                </div>
-              </>
-            )}
-
           </section>
           )}
 
@@ -6306,9 +6306,27 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <GuestDiscounts lang={lang} />
           </section>
 
+          {renderPart('feedback')}
           <section id="ag-feedback" className="ag-section">
             <span className="ag-section-num">25</span>
             <h2 className="ag-h2">{s.feedback.title}</h2>
+
+            <h3 className="ag-h3">{s.feedback.checkoutTitle}</h3>
+            <p className="ag-para">{s.feedback.checkoutBody}</p>
+
+            {s.feedback.garbageBody && (
+              <>
+                <h3 className="ag-h3">{s.feedback.garbageTitle}</h3>
+                <div className="ag-checkin-garbage">
+                  <p className="ag-para">{s.feedback.garbageBody}</p>
+                </div>
+              </>
+            )}
+
+            <h3 className="ag-h3">{s.feedback.careTitle}</h3>
+            <p className="ag-para">{s.feedback.careBody}</p>
+
+            <h3 className="ag-h3">{s.feedback.subtitle}</h3>
             {s.feedback.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
           </section>
 
