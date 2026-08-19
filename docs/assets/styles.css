@@ -12088,15 +12088,25 @@ footer,
 .ag-nav-text { flex: 1; }
 .ag-nav-group {
   list-style: none;
+  margin: 14px 0 3px;
+}
+.ag-nav-group:first-child { margin-top: 6px; }
+/* Enlace al capítulo (parte): mismo patrón num+texto que los enlaces a
+   apartado, para que ambos tipos compartan formato; el peso/mayúsculas
+   marca la jerarquía sin cambiar la estructura visual. */
+.ag-nav-group a {
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--apt-accent);
-  margin: 14px 0 3px;
   padding-bottom: 3px;
 }
-.ag-nav-group:first-child { margin-top: 6px; }
+.ag-nav-group a:hover { color: var(--ber-dk); }
+.ag-nav-group a.is-active {
+  color: var(--ber-dk);
+  border-left-color: var(--apt-accent);
+}
 
 .ag-nav-actions {
   display: flex;

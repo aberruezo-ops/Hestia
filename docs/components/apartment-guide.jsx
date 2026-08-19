@@ -5386,6 +5386,13 @@ const AptGuideView = ({ apt, lang, onClose }) => {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const handlePartNavClick = (e, partNum) => {
+    e.preventDefault();
+    setNavOpen(false);
+    const el = document.getElementById(`ag-part-${partNum}`);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   // Devuelve [{src, caption}] para una habitación dada
   const getRoomPhotos = (roomId) => {
     const idxs = photoMap[roomId] || [];
@@ -5597,7 +5604,16 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <ol className="ag-nav-list">
               {GUIDE_GROUPS.map((g, gi) => (
                 <React.Fragment key={gi}>
-                  <li className="ag-nav-group" aria-hidden="true">{g[lang]}</li>
+                  <li className="ag-nav-group">
+                    <a
+                      href={`#ag-part-${gi + 1}`}
+                      className={activePartIdx === gi ? 'is-active' : ''}
+                      onClick={(e) => handlePartNavClick(e, gi + 1)}
+                    >
+                      <span className="ag-nav-num">{String(gi + 1).padStart(2, '0')}</span>
+                      <span className="ag-nav-text">{g[lang]}</span>
+                    </a>
+                  </li>
                   {g.ids.map(id => {
                     const sec = GUIDE_SECTIONS.find(s2 => s2.id === id);
                     if (!sec) return null;
