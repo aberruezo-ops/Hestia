@@ -51,7 +51,9 @@ const URB_FALLBACK = {
 
 // Secciones del nav lateral, en orden de aparición
 const GUIDE_SECTIONS = [
-  { id: 'bienvenida',   es: 'Bienvenida',       en: 'Welcome' },
+  { id: 'bienvenida',   es: 'Gracias por tu reserva', en: 'Thank you for your booking' },
+  { id: 'equipo',       es: 'El equipo Hestía', en: 'The Hestía team' },
+  { id: 'registro',     es: 'Registro de viajeros', en: 'Traveller registration' },
   { id: 'previaje',     es: 'Antes de hacer la maleta', en: 'Before you pack' },
   { id: 'llegada',      es: 'Llegada', en: 'Arrival' },
   { id: 'wifi',         es: 'Tu WiFi',          en: 'Your WiFi' },
@@ -84,26 +86,22 @@ const GUIDE_SECTIONS = [
 // Los ids deben ir en el mismo orden que GUIDE_SECTIONS para que la numeración
 // del índice y del cuerpo coincidan.
 const GUIDE_GROUPS = [
-  { es: 'Gracias por tu reserva', en: 'Thank you for your booking',
-    descEs: 'Quiénes somos y qué tiempo hace estos días.',
-    descEn: 'Who we are and what the weather is like these days.',
-    ids: ['bienvenida'] },
-  { es: 'Antes de llegar a tu Hestía', en: 'Before you arrive at your Hestía',
-    descEs: 'Qué esperar del viaje, el registro obligatorio y cómo llegar hasta la puerta.',
-    descEn: 'What to expect from the trip, mandatory registration and how to get to the door.',
-    ids: ['previaje', 'llegada'] },
+  { es: 'Primeros pasos en tu reserva', en: 'First steps in your booking',
+    descEs: 'Quiénes somos y quién hay detrás de tu estancia.',
+    descEn: 'Who we are and who is behind your stay.',
+    ids: ['bienvenida', 'equipo'] },
+  { es: 'Antes de tu estancia', en: 'Before your stay',
+    descEs: 'El registro obligatorio, qué esperar del viaje y cómo llegar hasta la puerta.',
+    descEn: 'Mandatory registration, what to expect from the trip and how to get to the door.',
+    ids: ['registro', 'previaje', 'llegada'] },
   { es: 'Tu Hestía',         en: 'Your Hestía',
     descEs: 'El WiFi y cómo funciona cada rincón de tu casa, estancia a estancia.',
     descEn: 'The WiFi and how every corner of your home works, room by room.',
     ids: ['wifi', 'limpieza', 'normas', 'mascotas', 'salon', 'cocina', 'dormitorios', 'banos', 'terraza', 'urbanizacion'] },
-  { es: 'Muy cerca de tu Hestía',     en: 'Very close to your Hestía',
-    descEs: 'Lo que tienes a un paso: orientarte, comprar y comer bien.',
-    descEn: 'What is a step away: getting oriented, shopping and eating well.',
-    ids: ['alrededores', 'lugares', 'supermercados', 'sabores'] },
-  { es: 'Un poco más allá de tu Hestía', en: 'A little further from your Hestía',
-    descEs: 'Pueblos, playas y planes que merecen una salida.',
-    descEn: 'Towns, beaches and plans worth a trip out.',
-    ids: ['pueblos', 'mar-playas', 'planes'] },
+  { es: 'Cosas para disfrutar la zona', en: 'Things to enjoy around the area',
+    descEs: 'Lo que tienes a un paso, y lo que merece una salida: orientarte, comprar, comer bien, pueblos, playas y planes.',
+    descEn: 'What is a step away, and what is worth a trip out: getting oriented, shopping, eating well, towns, beaches and plans.',
+    ids: ['alrededores', 'lugares', 'supermercados', 'sabores', 'pueblos', 'mar-playas', 'planes'] },
   { es: 'Otros servicios y ayuda', en: 'Other services & help',
     descEs: 'Mercados, salud, repostaje y teléfonos, por si acaso.',
     descEn: 'Markets, health, fuel and phones, just in case.',
@@ -1588,7 +1586,7 @@ const GUIDE_SHARED = {
       closing: 'Nosotros nos hacemos responsables de que Hestía esté impecable, funcione todo y estés bien atendido durante tu estancia. Lo que ocurre fuera del apartamento (el tiempo, el ambiente de la zona, la oferta de ocio, cómo de concurridas están las playas) no depende de nosotros. Si esta descripción encaja con lo que buscas, te va a encantar. Si tenías en mente otra cosa, mejor saberlo ahora que a mitad de la maleta.',
     },
     welcome: {
-      title: 'Bienvenido a tu Hestía',
+      title: 'Gracias por tu reserva',
       paras: [
         'Si lees esto, tu reserva está más que confirmada, y no sabes la ilusión que nos hace tenerte aquí.',
         'Hestía no es lujo. Tampoco es un alquiler vacacional al uso. Es nuestro hogar, y durante los próximos días queremos que también sea el tuyo. Por eso hemos puesto cariño en cada detalle de esta casa: porque es exactamente lo que a nosotros nos gusta encontrar cuando viajamos.',
@@ -1597,17 +1595,23 @@ const GUIDE_SHARED = {
       ],
       sign: 'Con cariño,',
       signer: 'Fran y Alex',
-      team: {
-        title: 'Quién está detrás de tu estancia',
-        members: [
-          { name: 'Alex', role: 'Tu reserva', body: 'Gestiona tu reserva y todo lo relacionado con ella: fechas, pagos, contrato y cualquier cambio antes de llegar.' },
-          { name: 'Fran', role: 'Tu estancia', body: 'Gestiona tu estancia una vez confirmada: cualquier imprevisto, recomendación o necesidad, desde antes de llegar para tenerlo todo preparado.' },
-          { name: 'Leila y Marina', role: 'Limpieza y recepción', body: 'Nuestro equipo de limpieza y recepción. Si eliges recepción presencial, cualquiera de las dos puede ser quien te reciba.' },
-        ],
-      },
+    },
+    equipo: {
+      title: 'El equipo Hestía',
+      intro: 'Quién está detrás de tu estancia, y qué hace cada uno.',
+      members: [
+        { name: 'Alex', role: 'Tu reserva', body: 'Gestiona tu reserva y todo lo relacionado con ella: fechas, pagos, contrato y cualquier cambio antes de llegar.' },
+        { name: 'Fran', role: 'Tu estancia', body: 'Gestiona tu estancia una vez confirmada: cualquier imprevisto, recomendación o necesidad, desde antes de llegar para tenerlo todo preparado.' },
+        { name: 'Leila y Marina', role: 'Limpieza y recepción', body: 'Nuestro equipo de limpieza y recepción. Si eliges recepción presencial, cualquiera de las dos puede ser quien te reciba.' },
+      ],
       pdNote: 'Si te interesa la historia completa: de dónde viene el nombre, por qué empezamos este proyecto, qué buscamos cuando viajamos nosotros, la contamos con detalle en la web:',
       pdLinkLabel: 'Por qué creamos Hestía',
       pdLinkHref: 'https://aberruezo-ops.github.io/Hestia/porque-hestia.html',
+    },
+    registro: {
+      title: 'Registro de viajeros',
+      intro: 'La Guardia Civil exige registrar a todas las personas que pernoctan (RD 933/2021), sin excepción: es obligatorio para cada huésped, no solo para quien hace la reserva. Tarda un par de minutos y puedes hacerlo antes de llegar; así el check-in es más rápido.',
+      cta: 'Rellenar mis datos',
     },
     checkin: {
       title: 'Llegada',
@@ -1876,7 +1880,7 @@ const GUIDE_SHARED = {
       garageNote: 'Confirm with Fran before arrival: some weeks the spot rotates for maintenance.',
     },
     welcome: {
-      title: 'Welcome to your Hestía',
+      title: 'Thank you for your booking',
       paras: [
         'If you\'re reading this, your booking is more than confirmed, and we couldn\'t be more thrilled to have you with us.',
         'Hestía is not luxury. It is not a standard holiday rental either. It is our home, and over the coming days we want it to be yours too. That is why we have put care into every detail of this place: because it is exactly what we like to find when we travel ourselves.',
@@ -1885,17 +1889,23 @@ const GUIDE_SHARED = {
       ],
       sign: 'With love,',
       signer: 'Fran & Alex',
-      team: {
-        title: 'Who is behind your stay',
-        members: [
-          { name: 'Alex', role: 'Your booking', body: 'Handles your booking and everything related to it: dates, payment, contract and any change before you arrive.' },
-          { name: 'Fran', role: 'Your stay', body: 'Handles your stay once confirmed: any hiccup, recommendation or need, from before you arrive so everything is ready.' },
-          { name: 'Leila and Marina', role: 'Cleaning & reception', body: 'Our cleaning and reception team. If you choose in-person check-in, either one of them may be the one to greet you.' },
-        ],
-      },
+    },
+    equipo: {
+      title: 'The Hestía team',
+      intro: 'Who is behind your stay, and what each of us does.',
+      members: [
+        { name: 'Alex', role: 'Your booking', body: 'Handles your booking and everything related to it: dates, payment, contract and any change before you arrive.' },
+        { name: 'Fran', role: 'Your stay', body: 'Handles your stay once confirmed: any hiccup, recommendation or need, from before you arrive so everything is ready.' },
+        { name: 'Leila and Marina', role: 'Cleaning & reception', body: 'Our cleaning and reception team. If you choose in-person check-in, either one of them may be the one to greet you.' },
+      ],
       pdNote: 'If you would like the full story: where the name comes from, why we started this project, what we look for when we travel ourselves, we tell it in detail on the website:',
       pdLinkLabel: 'Why we created Hestía',
       pdLinkHref: 'https://aberruezo-ops.github.io/Hestia/porque-hestia.html',
+    },
+    registro: {
+      title: 'Traveller registration',
+      intro: 'The Guardia Civil requires registering everyone who stays overnight (RD 933/2021), with no exceptions: it is mandatory for every guest, not only the person who booked. It takes a couple of minutes and you can do it before arrival, so check-in is quicker.',
+      cta: 'Fill in my details',
     },
     name: null,
     why: null,
@@ -5659,36 +5669,49 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             {s.welcome.paras.map((p, i) => <p key={i} className="ag-para">{p}</p>)}
             <p className="ag-sign">{s.welcome.sign}</p>
             <p className="ag-signer">{s.welcome.signer}</p>
+          </section>
 
-            {s.welcome.team && (
-              <div className="ag-team">
-                <h3 className="ag-h3">{s.welcome.team.title}</h3>
-                <div className="ag-team-grid">
-                  {s.welcome.team.members.map((m, i) => (
-                    <div key={i} className="ag-team-member">
-                      <span className="ag-team-name">{m.name}</span>
-                      <span className="ag-team-role">{m.role}</span>
-                      <p className="ag-team-body">{m.body}</p>
-                    </div>
-                  ))}
-                </div>
+          <section id="ag-equipo" className="ag-section">
+            <span className="ag-section-num"/>
+            <h2 className="ag-h2">{s.equipo.title}</h2>
+            <p className="ag-para">{s.equipo.intro}</p>
+
+            <div className="ag-team">
+              <div className="ag-team-grid">
+                {s.equipo.members.map((m, i) => (
+                  <div key={i} className="ag-team-member">
+                    <span className="ag-team-name">{m.name}</span>
+                    <span className="ag-team-role">{m.role}</span>
+                    <p className="ag-team-body">{m.body}</p>
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
 
-            {s.welcome.pdNote && (
+            {s.equipo.pdNote && (
               <p className="ag-welcome-pd">
-                <span className="ag-welcome-pd-tag">P.D.</span> {s.welcome.pdNote}{' '}
-                <a className="ag-welcome-pd-link" href={s.welcome.pdLinkHref} target="_blank" rel="noopener">
-                  {s.welcome.pdLinkLabel} →
+                <span className="ag-welcome-pd-tag">P.D.</span> {s.equipo.pdNote}{' '}
+                <a className="ag-welcome-pd-link" href={s.equipo.pdLinkHref} target="_blank" rel="noopener">
+                  {s.equipo.pdLinkLabel} →
                 </a>
               </p>
             )}
-
           </section>
           </div>
 
           <div className="ag-part-group">
-          {renderPart('previaje')}
+          {renderPart('registro')}
+          <section id="ag-registro" className="ag-section">
+            <span className="ag-section-num"/>
+            <h2 className="ag-h2">{s.registro.title}</h2>
+            <p className="ag-para ag-para-lead">{s.registro.intro}</p>
+            <a className="btn btn-primary"
+              href={`registro.html?apt=${apt.id}${(() => { try { const tk = sessionStorage.getItem('hestia-reg-token'); return tk ? `&r=${encodeURIComponent(tk)}` : ''; } catch (_) { return ''; } })()}`}
+              target="_blank" rel="noopener">
+              {s.registro.cta} <span className="arrow">→</span>
+            </a>
+          </section>
+
           <section id="ag-previaje" className="ag-section ag-section-rules ag-section-pretrip">
             <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.pretrip.title}</h2>
@@ -5705,23 +5728,6 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               ))}
             </ul>
             <p className="ag-para ag-pretrip-closing">{s.pretrip.closing}</p>
-
-            <div id="ag-registro" className="ag-registro-callout">
-              <span className="ag-registro-ic" aria-hidden="true"><HiIcon name="shield" size={24} /></span>
-              <div className="ag-registro-body">
-                <h3 className="ag-h3 ag-registro-h">{lang === 'es' ? 'Registro de viajeros (obligatorio)' : 'Traveller registration (mandatory)'}</h3>
-                <p className="ag-registro-p">
-                  {lang === 'es'
-                    ? 'La Guardia Civil exige registrar a todas las personas que pernoctan (RD 933/2021). Tarda un par de minutos y puedes hacerlo antes de llegar; así el check-in es más rápido.'
-                    : 'The Guardia Civil requires registering everyone who stays overnight (RD 933/2021). It takes a couple of minutes and you can do it before arrival, so check-in is quicker.'}
-                </p>
-                <a className="btn btn-primary ag-registro-cta"
-                  href={`registro.html?apt=${apt.id}${(() => { try { const tk = sessionStorage.getItem('hestia-reg-token'); return tk ? `&r=${encodeURIComponent(tk)}` : ''; } catch (_) { return ''; } })()}`}
-                  target="_blank" rel="noopener">
-                  {lang === 'es' ? 'Rellenar mis datos' : 'Fill in my details'} <span className="arrow">→</span>
-                </a>
-              </div>
-            </div>
 
             <h3 className="ag-h3">{lang === 'es' ? 'El tiempo que te espera' : 'The weather that awaits you'}</h3>
             <GuideWeather14d lang={lang} />
@@ -6143,11 +6149,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               return <CatGroup key={catId} cat={cat} places={inCat} lang={lang} />;
             })}
           </section>
-          </div>
 
           {/* Pueblos y cultura */}
-          <div className="ag-part-group">
-          {renderPart('pueblos')}
           <section id="ag-pueblos" className="ag-section">
             <span className="ag-section-num"/>
             <h2 className="ag-h2">{lang === 'es' ? 'Pueblos y cultura' : 'Towns & culture'}</h2>

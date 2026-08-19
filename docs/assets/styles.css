@@ -12485,7 +12485,6 @@ footer,
 
 /* Equipo detrás de la estancia (bienvenida) ----------------------- */
 .ag-team { margin: 28px 0 8px; }
-.ag-team .ag-h3 { margin-bottom: 12px; }
 .ag-team-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -25331,19 +25330,6 @@ img[src*="apt-vt-gallery-"] {
 }
 .reg-del-btn:hover, .reg-del-all:hover { background: #f9d9d6; border-color: #e79a94; }
 .reg-del-btn:disabled, .reg-del-all:disabled { opacity: 0.55; cursor: default; }
-
-/* Registro de viajeros · call-out dentro de la guía del huésped */
-.ag-registro-callout {
-  display: flex; gap: 14px; align-items: flex-start;
-  background: rgba(58,170,187,.10);
-  border: 1.5px solid rgba(58,170,187,.35);
-  border-radius: 4px 14px 4px 14px;
-  padding: 16px 18px; margin: 18px 0 26px;
-}
-.ag-registro-ic { color: var(--sol-text, #176E80); flex-shrink: 0; margin-top: 2px; }
-.ag-registro-h { margin: 0 0 6px; font-family: var(--sans); font-size: 16px; font-weight: 700; color: var(--ink, #2A0F2E); }
-.ag-registro-p { margin: 0 0 12px; font-size: 14px; line-height: 1.5; color: rgba(42,15,46,.8); }
-.ag-registro-cta { display: inline-flex; align-items: center; gap: 6px; }
 
 /* PIN de guía compacto (editor de reserva): solo el código + copiar */
 .rv-pin-mini {
