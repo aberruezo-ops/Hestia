@@ -10935,6 +10935,15 @@ const AptGuideView = ({
       block: 'start'
     });
   };
+  const handlePartNavClick = (e, partNum) => {
+    e.preventDefault();
+    setNavOpen(false);
+    const el = document.getElementById(`ag-part-${partNum}`);
+    if (el) el.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
 
   // Devuelve [{src, caption}] para una habitación dada
   const getRoomPhotos = roomId => {
@@ -11233,9 +11242,16 @@ const AptGuideView = ({
   }, GUIDE_GROUPS.map((g, gi) => /*#__PURE__*/React.createElement(React.Fragment, {
     key: gi
   }, /*#__PURE__*/React.createElement("li", {
-    className: "ag-nav-group",
-    "aria-hidden": "true"
-  }, g[lang]), g.ids.map(id => {
+    className: "ag-nav-group"
+  }, /*#__PURE__*/React.createElement("a", {
+    href: `#ag-part-${gi + 1}`,
+    className: activePartIdx === gi ? 'is-active' : '',
+    onClick: e => handlePartNavClick(e, gi + 1)
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-nav-num"
+  }, String(gi + 1).padStart(2, '0')), /*#__PURE__*/React.createElement("span", {
+    className: "ag-nav-text"
+  }, g[lang]))), g.ids.map(id => {
     const sec = GUIDE_SECTIONS.find(s2 => s2.id === id);
     if (!sec) return null;
     return /*#__PURE__*/React.createElement("li", {
