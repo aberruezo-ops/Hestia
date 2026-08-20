@@ -18,7 +18,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createContext, runInContext } from 'node:vm';
-import babel from '@babel/core';
+import * as babel from '@babel/core';
 import preset from '@babel/preset-react';
 import { chromium } from 'playwright';
 
@@ -32,13 +32,22 @@ if (!existsSync(OUT)) mkdirSync(OUT, { recursive: true });
 // 1) Carga de datos: extrae las constantes de los JSX vía Babel + vm
 // ---------------------------------------------------------------
 function loadGuideData() {
+  // shared.jsx tiene miles de líneas de UI dependientes del DOM real
+  // (IntersectionObserver, HTMLVideoElement...) que no sobreviven en este
+  // sandbox mínimo. apartment-guide.jsx solo necesita de ahí HESTIA_RULES
+  // (normas de la casa, fuente única desde el refactor), así que se extrae
+  // ese bloque en vez de evaluar el archivo entero.
+  const sharedFull = readFileSync(join(DOCS, 'components/shared.jsx'), 'utf8');
+  const rulesMatch = sharedFull.match(/const HESTIA_RULES = \{[\s\S]*?\nwindow\.HESTIA_RULES = HESTIA_RULES;\n/);
+  if (!rulesMatch) throw new Error('No se encontró HESTIA_RULES en shared.jsx');
+  const sharedSrc = rulesMatch[0];
   const guideSrc = readFileSync(join(DOCS, 'components/apartment-guide.jsx'), 'utf8');
   const aptSrc   = readFileSync(join(DOCS, 'components/apartment-page.jsx'),  'utf8');
   // Expone los consts/lets top-level como globalThis para que sobrevivan
   // entre llamadas a runInContext (const en vm aísla por script).
   const exposeTopLevel = (src) => src.replace(/^(const|let) (\w+) = /gm, 'globalThis.$2 = ');
   const transpile = (src) => babel.transformSync(exposeTopLevel(src), {
-    presets: [preset],
+    presets: [[preset, { runtime: 'classic' }]],
     babelrc: false,
     configFile: false,
     sourceMaps: false,
@@ -66,11 +75,18 @@ function loadGuideData() {
       addEventListener: () => {},
       createElement: () => ({}),
       getElementById: () => ({}),
+      dispatchEvent: () => {},
     },
+    fetch: () => Promise.reject(new Error('no fetch in build sandbox')),
+    sessionStorage: { getItem: () => null, setItem: () => {}, removeItem: () => {} },
+    localStorage: { getItem: () => null, setItem: () => {}, removeItem: () => {} },
+    matchMedia: () => ({ matches: false, addEventListener: () => {}, removeEventListener: () => {} }),
     console,
   };
   createContext(sandbox);
 
+  try { runInContext(transpile(sharedSrc), sandbox, { filename: 'shared.jsx' }); }
+  catch (e) { console.error('Error evaluando shared.jsx:', e.message); throw e; }
   try { runInContext(transpile(guideSrc), sandbox, { filename: 'apartment-guide.jsx' }); }
   catch (e) { console.error('Error evaluando apartment-guide.jsx:', e.message); throw e; }
   try { runInContext(transpile(aptSrc), sandbox, { filename: 'apartment-page.jsx' }); }
@@ -1603,6 +1619,89 @@ function renderWelcome(shared, aptData, lang) {
   </section>`;
 }
 
+function renderEquipo(shared, aptData, lang) {
+  const e = shared.equipo;
+  if (!e) return '';
+  return `
+  <section class="welcome compact">
+    ${sectionMark(aptData, lang)}
+    <div class="section-hd">
+      <div class="eyebrow">${esc(e.title.split(' ')[0]).toUpperCase()}</div>
+      <h2>${esc(e.title)}</h2>
+    </div>
+    ${e.intro ? `<p>${esc(e.intro)}</p>` : ''}
+    <div class="rules">
+      ${e.members.map(m => `
+        <div class="rule">
+          <div class="rule-hd">
+            <span class="rule-title">${esc(m.name)} · ${esc(m.role)}</span>
+          </div>
+          <div class="rule-d">${esc(m.body)}</div>
+        </div>`).join('\n')}
+    </div>
+    ${e.pdNote ? `
+      <p class="welcome-pd">
+        <span class="welcome-pd-tag">${lang === 'es' ? 'P.D.' : 'P.S.'}</span> ${esc(e.pdNote)}
+        <a class="welcome-pd-link" href="${esc(e.pdLinkHref)}">${esc(e.pdLinkLabel)} →</a>
+      </p>
+    ` : ''}
+  </section>`;
+}
+
+function renderRegistro(shared, aptData, aptId, lang) {
+  const r = shared.registro;
+  if (!r) return '';
+  const href = `https://www.hestiayourhome.com/registro.html?apt=${aptId}`;
+  return `
+  <section class="welcome compact">
+    ${sectionMark(aptData, lang)}
+    <div class="section-hd">
+      <div class="eyebrow">${esc(r.title.split(' ')[0]).toUpperCase()}</div>
+      <h2>${esc(r.title)}</h2>
+    </div>
+    <p>${esc(r.intro)}</p>
+    <p class="welcome-pd"><a class="welcome-pd-link" href="${esc(href)}">${esc(r.cta)} →</a></p>
+  </section>`;
+}
+
+function renderPretrip(shared, aptData, lang) {
+  const p = shared.pretrip;
+  if (!p) return '';
+  return `
+  <section class="compact">
+    ${sectionMark(aptData, lang)}
+    <div class="section-hd">
+      <div class="eyebrow">${esc(p.title.toUpperCase())}</div>
+      <h2>${esc(p.title)}</h2>
+    </div>
+    <p class="rules-intro">${esc(p.intro)}</p>
+    <div class="rules">
+      ${p.items.map(item => `
+        <div class="rule">
+          <div class="rule-hd">
+            <span class="rule-icon">${item.icon}</span>
+            <span class="rule-title">${esc(item.t)}</span>
+          </div>
+          <div class="rule-d">${esc(item.d)}</div>
+        </div>`).join('\n')}
+    </div>
+  </section>`;
+}
+
+function renderExpectativas(shared, aptData, lang) {
+  const x = shared.expectativas;
+  if (!x) return '';
+  return `
+  <section class="welcome compact">
+    ${sectionMark(aptData, lang)}
+    <div class="section-hd">
+      <div class="eyebrow">${esc(x.title.split(' ')[0]).toUpperCase()}</div>
+      <h2>${esc(x.title)}</h2>
+    </div>
+    ${x.paras.map(p => `<p>${esc(p)}</p>`).join('\n')}
+  </section>`;
+}
+
 function renderCheckin(shared, aptData, aptGuide, lang) {
   const c = shared.checkin;
   if (!c) return '';
@@ -2370,6 +2469,10 @@ function buildHTML(aptId, lang, data) {
 <body>
 ${renderCover(aptId, lang, apt, data.GUIDE_BY_APT)}
 ${renderWelcome(shared, apt, lang)}
+${renderEquipo(shared, apt, lang)}
+${renderRegistro(shared, apt, aptId, lang)}
+${renderPretrip(shared, apt, lang)}
+${renderExpectativas(shared, apt, lang)}
 ${renderCheckin(shared, apt, guide, lang)}
 ${renderWifi(shared, apt, lang)}
 ${renderNameAndWhy(shared, apt, lang)}
