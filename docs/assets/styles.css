@@ -12417,22 +12417,22 @@ footer,
 
 .ag-h2 {
   font-family: var(--serif);
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  font-size: clamp(34px, 5.2vw, 56px);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
   color: var(--ber-dk);
   margin: 0 0 24px;
   position: relative;
-  padding-bottom: 16px;
+  padding-bottom: 18px;
 }
 .ag-h2::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 48px;
-  height: 2px;
+  width: 64px;
+  height: 3px;
   background: var(--apt-accent);
 }
 .ag-h3 {
@@ -21369,17 +21369,6 @@ img[src*="apt-vt-gallery-"] {
   border-color: var(--ber);
 }
 
-/* ── Nota de cierre del capítulo "Antes de hacer la maleta" ── */
-.ag-pretrip-closing {
-  margin-top: 20px;
-  padding: 14px 18px;
-  background: rgba(58,170,187,0.07);
-  border-left: 3px solid var(--sol);
-  border-radius: 4px 0 4px 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--ink-soft);
-}
 
 /* ── El tiempo en la guía: previsión 14 días + clima medio 12 meses ── */
 .ag-wthr14, .ag-climate { margin: 28px 0 0; }

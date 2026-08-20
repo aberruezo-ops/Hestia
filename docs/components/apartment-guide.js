@@ -82,8 +82,16 @@ const GUIDE_SECTIONS = [{
   en: 'Traveller registration'
 }, {
   id: 'previaje',
-  es: 'Antes de hacer la maleta',
-  en: 'Before you pack'
+  es: 'Información sobre dónde está Hestía',
+  en: 'Information about where Hestía is located'
+}, {
+  id: 'tiempo',
+  es: 'El tiempo que te espera',
+  en: 'The weather that awaits you'
+}, {
+  id: 'expectativas',
+  es: 'Qué puedes esperar de Hestía',
+  en: 'What you can expect from Hestía'
 }, {
   id: 'llegada',
   es: 'Comienza tu viaje hasta Hestía',
@@ -197,7 +205,7 @@ const GUIDE_GROUPS = [{
   en: 'Before your stay',
   descEs: 'El registro obligatorio, qué esperar del viaje y cómo llegar hasta la puerta.',
   descEn: 'Mandatory registration, what to expect from the trip and how to get to the door.',
-  ids: ['registro', 'previaje', 'llegada']
+  ids: ['registro', 'previaje', 'tiempo', 'expectativas', 'llegada']
 }, {
   es: 'Tu Hestía',
   en: 'Your Hestía',
@@ -4660,7 +4668,7 @@ const PLACES = [
 const GUIDE_SHARED = {
   es: {
     pretrip: {
-      title: 'Antes de hacer la maleta',
+      title: 'Información sobre dónde está Hestía',
       intro: 'Vera Playa no es una ciudad ni una zona de discotecas: es un pueblo costero tranquilo del Levante almeriense. Antes de venir, estas líneas te ayudan a saber exactamente qué te vas a encontrar, para que tu estancia empiece bien desde el primer día.',
       items: [{
         icon: '🏘',
@@ -4682,8 +4690,14 @@ const GUIDE_SHARED = {
         icon: '📍',
         t: 'Dónde está exactamente',
         d: 'Los tres Hestía están en Vera Playa (Almería), a menos de 2 km entre sí. El aeropuerto más cercano es Almería, a una hora en coche; hay otros cuatro en un radio razonable. Todos los detalles en el capítulo Comienza tu viaje hasta Hestía.'
-      }],
-      closing: 'Nosotros nos hacemos responsables de que Hestía esté impecable, funcione todo y estés bien atendido durante tu estancia. Lo que ocurre fuera del apartamento (el tiempo, el ambiente de la zona, la oferta de ocio, cómo de concurridas están las playas) no depende de nosotros. Si esta descripción encaja con lo que buscas, te va a encantar. Si tenías en mente otra cosa, mejor saberlo ahora que a mitad de la maleta.'
+      }]
+    },
+    tiempo: {
+      title: 'El tiempo que te espera'
+    },
+    expectativas: {
+      title: 'Qué puedes esperar de Hestía',
+      paras: ['Nosotros nos hacemos responsables de que Hestía esté impecable, funcione todo y estés bien atendido durante tu estancia. Lo que ocurre fuera del apartamento (el tiempo, el ambiente de la zona, la oferta de ocio, cómo de concurridas están las playas) no depende de nosotros. Si esta descripción encaja con lo que buscas, te va a encantar. Si tenías en mente otra cosa, mejor saberlo ahora que al llegar.', 'Por favor, ten en cuenta que cualquier cosa puede romperse, estropearse, fallar… Lo que te garantizamos es que estaremos pendientes y que haremos todo lo que esté en nuestra mano para solucionarlo lo antes posible.']
     },
     welcome: {
       title: 'Gracias por tu reserva',
@@ -4721,7 +4735,7 @@ const GUIDE_SHARED = {
       intro: 'Lo tienes todo cubierto: Fran te escribirá unos días antes de tu llegada para acordar la modalidad que mejor te encaje y compartirte los detalles. Llegues como llegues: en avión, bus o coche propio, te mandamos las indicaciones exactas para llegar en coche hasta la puerta de Hestía y te acompañamos a distancia hasta que estés dentro. No tienes que preocuparte de nada, solo dile a Fran a qué hora aproximada llegas.',
       beforeTitle: 'Antes de tu llegada',
       beforeIntro: 'Cuanto antes hablemos, más fácil te lo ponemos. Con estos detalles resueltos, llegas sin pensar en nada.',
-      beforeItems: ['Dinos tu hora aproximada de llegada: Fran te escribe unos días antes para cerrar los detalles.', 'Cuéntanos cómo vienes (avión, autobús, tren o coche) y te mandamos las indicaciones exactas hasta la puerta.', '¿Vienes con mascota, bebé o necesitas algo concreto? Pídelo con antelación y lo dejamos listo.', 'Elige tu modalidad de check-in: autónoma (entras a tu ritmo) o presencial (te recibe Fran).'],
+      beforeItems: ['Dinos tu hora aproximada de llegada: Fran te escribe unos días antes para cerrar los detalles.', 'Cuéntanos cómo vienes (avión, autobús, tren o coche) y te mandamos las indicaciones exactas hasta la puerta.', '¿Vienes con mascota, bebé o necesitas algo concreto? Pídelo con antelación y lo dejamos listo.', 'Elige tu modalidad de check-in: autónoma (entras a tu ritmo) o presencial (te recibe Leila o alguien de su equipo).'],
       packLightTitle: 'Viaja ligero: pregúntanos antes de hacer la maleta',
       packLightBody: 'Muchas cosas ya están en tu Hestía: secador, plancha y tabla, menaje de cocina, toallas (solo para dentro del apartamento, no para piscina ni playa), ropa de cama y wifi. Cuna o trona, bajo petición. Dinos qué necesitas y te confirmamos qué hay, para que no cargues con lo que ya te espera en casa.',
       airportsTitle: 'Aeropuertos cercanos',
@@ -4799,10 +4813,10 @@ const GUIDE_SHARED = {
       modalitiesTitle: 'Dos modalidades de check-in',
       modalities: [{
         tag: 'Autónoma',
-        body: 'Llegas y entras directamente. Fran te pasa por mensaje el código de la urbanización, el acceso a la caja-llaves y las instrucciones paso a paso. Útil si vienes con vuelo nocturno o si prefieres tu ritmo.'
+        body: 'Llegas y entras directamente. Te pasamos por mensaje el código de la urbanización, el acceso a la caja-llaves y las instrucciones paso a paso. Útil si vienes con vuelo nocturno o si prefieres tu ritmo.'
       }, {
         tag: 'Presencial',
-        body: 'Te recibe Fran en persona, te enseña la casa y te resuelve cualquier duda en el momento. Horario de recepción presencial: 15:00 – 21:00. Si tu llegada cae fuera, pasamos a la modalidad autónoma sin más.'
+        body: 'Te recibe Leila o alguien de su equipo, te enseñan la casa y te resuelven cualquier duda en el momento. Horario de recepción presencial: 15:00 – 21:00. Si tu llegada cae fuera, pasamos a la modalidad autónoma sin más.'
       }],
       garageTitle: 'Plaza de garaje',
       garageIntro: 'Todos los apartamentos llevan plaza de garaje incluida en la urbanización Pueblo Salinas. La plaza que te corresponde según tu Hestía es:',
@@ -5021,15 +5035,21 @@ const GUIDE_SHARED = {
         icon: '📍',
         t: 'Exactly where it is',
         d: 'All three Hestías are in Vera Playa (Almería), less than 2 km apart. The nearest airport is Almería, about an hour by car; four more are within a reasonable range. Full details in the Your journey to Hestía begins chapter.'
-      }],
-      closing: 'We take responsibility for Hestía being spotless, everything working and you being well looked after during your stay. What happens outside the apartment (the weather, the mood of the area, what there is to do, how busy the beaches are) is not up to us. If this description matches what you are after, you will love it here. If you had something else in mind, better to know now than halfway through packing.'
+      }]
+    },
+    tiempo: {
+      title: 'The weather that awaits you'
+    },
+    expectativas: {
+      title: 'What you can expect from Hestía',
+      paras: ['We take responsibility for Hestía being spotless, everything working and you being well looked after during your stay. What happens outside the apartment (the weather, the mood of the area, what there is to do, how busy the beaches are) is not up to us. If this description matches what you are after, you will love it here. If you had something else in mind, better to know now than on arrival.', 'Please bear in mind that anything can break, wear out or fail... What we guarantee is that we will stay on top of it and do everything in our hands to fix it as soon as possible.']
     },
     checkin: {
       title: 'Your journey to Hestía begins',
       intro: 'You are covered: Fran will message you a few days before your arrival to agree on the option that suits you best and share the specifics. However you travel: by plane, bus or car, we send you exact directions to drive right to the front door and we are with you every step of the way until you are in. Nothing to worry about, just let Fran know your approximate arrival time.',
       beforeTitle: 'Before you arrive',
       beforeIntro: 'The sooner we talk, the easier we make it. With these details sorted, you arrive without a thing to think about.',
-      beforeItems: ['Tell us your approximate arrival time: Fran writes to you a few days before to settle the details.', 'Let us know how you are coming (plane, bus, train or car) and we send you the exact directions to the door.', 'Travelling with a pet, a baby or need something specific? Ask in advance and we leave it ready.', 'Choose your check-in option: self check-in (at your own pace) or in-person (Fran greets you).'],
+      beforeItems: ['Tell us your approximate arrival time: Fran writes to you a few days before to settle the details.', 'Let us know how you are coming (plane, bus, train or car) and we send you the exact directions to the door.', 'Travelling with a pet, a baby or need something specific? Ask in advance and we leave it ready.', 'Choose your check-in option: self check-in (at your own pace) or in-person (Leila or someone from her team greets you).'],
       packLightTitle: 'Travel light: ask us before you pack',
       packLightBody: 'Many things are already in your Hestía: hairdryer, iron and board, kitchenware, towels (for indoor use only, not for the pool or beach), bed linen and wifi. Cot or high chair, on request. Tell us what you need and we confirm what is there, so you do not carry what is already waiting for you at home.',
       airportsTitle: 'Nearest airports',
@@ -5107,10 +5127,10 @@ const GUIDE_SHARED = {
       modalitiesTitle: 'Two check-in options',
       modalities: [{
         tag: 'Self check-in',
-        body: 'You arrive and let yourself in. Fran sends you the gate code, lockbox access and step-by-step instructions by message. Handy for late flights or if you prefer your own pace.'
+        body: 'You arrive and let yourself in. We send you the gate code, lockbox access and step-by-step instructions by message. Handy for late flights or if you prefer your own pace.'
       }, {
         tag: 'In-person check-in',
-        body: 'Fran greets you, shows you around and answers anything on the spot. In-person reception hours: 15:00 – 21:00. If your arrival falls outside that window, we switch to self check-in, no problem.'
+        body: 'Leila or someone from her team greets you, shows you around and answers anything on the spot. In-person reception hours: 15:00 – 21:00. If your arrival falls outside that window, we switch to self check-in, no problem.'
       }],
       garageTitle: 'Garage spot',
       garageIntro: 'Every apartment comes with an included garage spot in the Pueblo Salinas complex. The spot assigned to your Hestía is:',
@@ -11384,15 +11404,28 @@ const AptGuideView = ({
     className: "ag-rule-title"
   }, item.t), /*#__PURE__*/React.createElement("p", {
     className: "ag-rule-desc"
-  }, item.d))))), /*#__PURE__*/React.createElement("p", {
-    className: "ag-para ag-pretrip-closing"
-  }, s.pretrip.closing), /*#__PURE__*/React.createElement("h3", {
-    className: "ag-h3"
-  }, lang === 'es' ? 'El tiempo que te espera' : 'The weather that awaits you'), /*#__PURE__*/React.createElement(GuideWeather14d, {
+  }, item.d)))))), /*#__PURE__*/React.createElement("section", {
+    id: "ag-tiempo",
+    className: "ag-section"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-section-num"
+  }), /*#__PURE__*/React.createElement("h2", {
+    className: "ag-h2"
+  }, s.tiempo.title), /*#__PURE__*/React.createElement(GuideWeather14d, {
     lang: lang
   }), /*#__PURE__*/React.createElement(GuideClimateChart, {
     lang: lang
-  })), s.checkin && /*#__PURE__*/React.createElement("section", {
+  })), /*#__PURE__*/React.createElement("section", {
+    id: "ag-expectativas",
+    className: "ag-section"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-section-num"
+  }), /*#__PURE__*/React.createElement("h2", {
+    className: "ag-h2"
+  }, s.expectativas.title), s.expectativas.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
+    key: i,
+    className: "ag-para"
+  }, p))), s.checkin && /*#__PURE__*/React.createElement("section", {
     id: "ag-llegada",
     className: "ag-section ag-section-checkin"
   }, /*#__PURE__*/React.createElement("span", {
