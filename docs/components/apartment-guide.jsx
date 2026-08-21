@@ -1594,6 +1594,7 @@ const GUIDE_SHARED = {
       paras: [
         'Nosotros nos hacemos responsables de que Hestía esté impecable, funcione todo y estés bien atendido durante tu estancia. Lo que ocurre fuera del apartamento (el tiempo, el ambiente de la zona, la oferta de ocio, cómo de concurridas están las playas) no depende de nosotros. Si esta descripción encaja con lo que buscas, te va a encantar. Si tenías en mente otra cosa, mejor saberlo ahora que al llegar.',
         'Por favor, ten en cuenta que cualquier cosa puede romperse, estropearse, fallar… Lo que te garantizamos es que estaremos pendientes y que haremos todo lo que esté en nuestra mano para solucionarlo lo antes posible.',
+        'Nos gustaría que nos valoraras por todo esto y no por aquello que sabes de antemano que no tiene el alojamiento o que no depende de lo que está en nuestra mano o en los servicios que podemos prestar. Pero siempre siempre vamos a intentar ayudarte.',
       ],
     },
     welcome: {
@@ -1851,6 +1852,7 @@ const GUIDE_SHARED = {
       paras: [
         'We take responsibility for Hestía being spotless, everything working and you being well looked after during your stay. What happens outside the apartment (the weather, the mood of the area, what there is to do, how busy the beaches are) is not up to us. If this description matches what you are after, you will love it here. If you had something else in mind, better to know now than on arrival.',
         'Please bear in mind that anything can break, wear out or fail... What we guarantee is that we will stay on top of it and do everything in our hands to fix it as soon as possible.',
+        'We would like you to rate us on all of this, not on anything you already know in advance is not part of the property, or is not up to us or the services we can offer. But we will always, always try to help.',
       ],
     },
     checkin: {
