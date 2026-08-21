@@ -717,8 +717,8 @@ const Compare = ({
   }, {
     label: 'Streaming',
     vm: 'SkyShowtime · HBO Max · Prime',
-    vt: '+ Movistar Plus · pronto Netflix y Disney+',
-    vs: 'Pronto + Disney+'
+    vt: '+ Movistar Plus · Netflix · Disney+',
+    vs: '+ Disney+'
   }, {
     label: 'Extra ⭑',
     vm: 'Jacuzzi comunitario',
@@ -789,8 +789,8 @@ const Compare = ({
   }, {
     label: 'Streaming',
     vm: 'SkyShowtime · HBO Max · Prime',
-    vt: '+ Movistar Plus · Netflix & Disney+ soon',
-    vs: 'Disney+ soon'
+    vt: '+ Movistar Plus · Netflix · Disney+',
+    vs: '+ Disney+'
   }, {
     label: 'Extra ⭑',
     vm: 'Shared jacuzzi',
