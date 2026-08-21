@@ -21989,6 +21989,24 @@ img[src*="apt-vt-gallery-"] {
 .rv-row-past { opacity: 0.55; }
 .rv-row-cancelada { opacity: 0.38; color: #888 !important; }
 
+/* Accesos a la guía: al contrario que en el listado de reservas, una fila
+   cancelada aquí NO se atenúa, se resalta: significa que alguien abrió (o
+   podría seguir abriendo) la guía de una reserva que ya no está activa. */
+.acc-row-alert { background: var(--err-bg, #F8E0EB) !important; }
+.acc-cancelada-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 7px;
+  border-radius: 3px 0 3px 0;
+  background: var(--err, #B8246E);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
 /* Canal: franja izquierda + tinte de fondo suave */
 .rv-canal-booking  { background: rgba(0,53,128,0.045); box-shadow: inset 4px 0 0 0 #003580; }
 .rv-canal-airbnb   { background: rgba(255,90,95,0.05);  box-shadow: inset 4px 0 0 0 #FF5A5F; }
@@ -22026,6 +22044,11 @@ img[src*="apt-vt-gallery-"] {
   margin: 4px 0 12px; font-size: 13px; color: var(--ink-soft, #5a5450);
 }
 .acc-kpis strong { color: var(--ink, #2A0F2E); font-size: 15px; }
+.acc-cancelada-kpi {
+  color: var(--err, #B8246E);
+  font-weight: 600;
+}
+.acc-cancelada-kpi strong { color: var(--err, #B8246E); font-size: 15px; }
 .acc-table .acc-history { font-size: 11px; color: var(--ink-soft, #6b6560); white-space: normal; line-height: 1.5; }
 
 .rv-status-th { width: 24px; padding: 0 !important; }
