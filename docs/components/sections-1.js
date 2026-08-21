@@ -715,6 +715,11 @@ const Compare = ({
     vt: '2 ext. + jacuzzi',
     vs: 'Comunitaria + pistas de pádel'
   }, {
+    label: 'Streaming',
+    vm: 'SkyShowtime · HBO Max · Prime',
+    vt: '+ Movistar Plus · pronto Netflix y Disney+',
+    vs: 'Pronto + Disney+'
+  }, {
     label: 'Extra ⭑',
     vm: 'Jacuzzi comunitario',
     vt: 'Minigim · piscina climatizada + minispa (otoño-primavera)',
@@ -781,6 +786,11 @@ const Compare = ({
     vm: 'Shared',
     vt: '2 outdoor + jacuzzi',
     vs: 'Shared + padel courts'
+  }, {
+    label: 'Streaming',
+    vm: 'SkyShowtime · HBO Max · Prime',
+    vt: '+ Movistar Plus · Netflix & Disney+ soon',
+    vs: 'Disney+ soon'
   }, {
     label: 'Extra ⭑',
     vm: 'Shared jacuzzi',
