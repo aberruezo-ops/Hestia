@@ -5442,7 +5442,7 @@ const GUIDE_BY_APT = {
       rooms: [{
         id: 'salon',
         title: 'Tu salón',
-        body: 'Tu sofá-cama y tu televisión plana son el sitio perfecto para una sesión de cine en casa. No es lo principal de la estancia, pero SkyShowtime, HBO Max y Prime Video están siempre activas, además de Movistar Plus. Estamos trabajando para sumar pronto Netflix y Disney+ también aquí, además de apps gratuitas. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.',
+        body: 'Tu sofá-cama y tu televisión plana son el sitio perfecto para una sesión de cine en casa. No es lo principal de la estancia, pero SkyShowtime, HBO Max, Prime Video, Movistar Plus, Netflix y Disney+ están siempre activas, además de apps gratuitas. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.',
         recs: ['No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en casa.', 'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.', 'Amolda a tu gusto el color y tonalidad de la lámpara de pie con el mando junto al cuadro del A/C.', 'Si necesitas usar la chimenea eléctrica, que sea mientras estés en Hestía.']
       }, {
         id: 'cocina',
@@ -5487,7 +5487,7 @@ const GUIDE_BY_APT = {
       rooms: [{
         id: 'salon',
         title: 'Your living room',
-        body: 'Your sofa-bed and flat-screen TV are the perfect spot for a movie night in. It is not the point of the stay, but SkyShowtime, HBO Max and Prime Video are always active, plus Movistar Plus. We are working on adding Netflix and Disney+ here too soon, plus free apps. You control the temperature with the centralised A/C panel.',
+        body: 'Your sofa-bed and flat-screen TV are the perfect spot for a movie night in. It is not the point of the stay, but SkyShowtime, HBO Max, Prime Video, Movistar Plus, Netflix and Disney+ are always active, plus free apps. You control the temperature with the centralised A/C panel.',
         recs: ['Do not leave the A/C on with doors open or while you are away from home.', 'Take a look at Hestía\'s usage guidelines, next to the entrance door.', 'Adjust colour and tonality of the floor lamp with the remote next to the A/C panel.', 'Use the electric fireplace only while you are at home.']
       }, {
         id: 'cocina',
@@ -5537,7 +5537,7 @@ const GUIDE_BY_APT = {
       rooms: [{
         id: 'salon',
         title: 'Tu salón',
-        body: 'Tu sofá-cama y tu televisión con ambilight son el rincón perfecto para una tarde de cine. No es lo principal de la estancia, pero SkyShowtime, HBO Max y Prime Video están siempre activas. Estamos trabajando para sumar pronto Disney+ también aquí, además de apps gratuitas. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.',
+        body: 'Tu sofá-cama y tu televisión con ambilight son el rincón perfecto para una tarde de cine. No es lo principal de la estancia, pero SkyShowtime, HBO Max, Prime Video y Disney+ están siempre activas, además de apps gratuitas. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.',
         recs: ['No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.', 'Echa un vistazo a las Normas de uso de Hestía, al final de esta misma guía.', 'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con su mando.']
       }, {
         id: 'cocina',
@@ -5583,7 +5583,7 @@ const GUIDE_BY_APT = {
       rooms: [{
         id: 'salon',
         title: 'Your living room',
-        body: 'Your sofa-bed and ambilight smart TV are the perfect spot for a movie evening. It is not the point of the stay, but SkyShowtime, HBO Max and Prime Video are always active. We are working on adding Disney+ here too soon, plus free apps. You control the temperature with the centralised air-conditioning panel.',
+        body: 'Your sofa-bed and ambilight smart TV are the perfect spot for a movie evening. It is not the point of the stay, but SkyShowtime, HBO Max, Prime Video and Disney+ are always active, plus free apps. You control the temperature with the centralised air-conditioning panel.',
         recs: ['Do not leave the air conditioner running with doors open or while you are away from Hestía.', 'Take a look at Hestía\'s usage guidelines, at the end of this guide.', 'Adjust colour and tonality of the table lamp with its remote.']
       }, {
         id: 'cocina',
