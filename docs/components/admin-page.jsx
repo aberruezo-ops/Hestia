@@ -1869,16 +1869,27 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
                       guest: r ? (r.responsable || '(sin nombre)') : '(reserva no encontrada)',
                       salida: r ? r.salida : null,
                       canal: r ? r.canal : null,
+                      // Este panel muestra el histórico de accesos, cruzado con el
+                      // estado ACTUAL de la reserva: si aparece cancelada aquí, el
+                      // acceso puede ser anterior a la cancelación (normal) o el PIN
+                      // puede seguir activo por un fallo de sincronización (revisar).
+                      cancelada: r ? _reservaCxl(r) : false,
                       n: ts.length, last: ts[0] || 0, ts,
                     };
                   }).filter(r => r.n > 0).sort((a, b) => b.last - a.last);
                   const totalAcc = rows.reduce((s, r) => s + r.n, 0);
+                  const canceladasConAcceso = rows.filter(r => r.cancelada).length;
                   if (rows.length === 0) return <p className="pe-hint">Aún no hay accesos registrados.</p>;
                   return (
                     <>
                       <div className="acc-kpis">
                         <span><strong>{rows.length}</strong> reserva{rows.length !== 1 ? 's' : ''} han abierto la guía</span>
                         <span><strong>{totalAcc}</strong> acceso{totalAcc !== 1 ? 's' : ''} en total</span>
+                        {canceladasConAcceso > 0 && (
+                          <span className="acc-cancelada-kpi" title="Reservas canceladas cuyo PIN registró algún acceso. Si el acceso es posterior a la cancelación, revisa si el PIN sigue activo (Sincronizar PINs).">
+                            ⚠ <strong>{canceladasConAcceso}</strong> cancelada{canceladasConAcceso !== 1 ? 's' : ''} con acceso
+                          </span>
+                        )}
                         <button type="button" className="pe-btn pe-btn-ghost" disabled={accLoading} onClick={() => fetchAccesses()} title="Recargar">↺</button>
                       </div>
                       <div className="rv-table-wrap">
@@ -1889,9 +1900,9 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
                           </tr></thead>
                           <tbody>
                             {rows.map((r, i) => (
-                              <tr key={i} data-apt={r.apt} style={{ '--apt-c': APT_COLOR[r.apt] || 'transparent' }}>
+                              <tr key={i} data-apt={r.apt} className={r.cancelada ? 'acc-row-alert' : ''} style={{ '--apt-c': APT_COLOR[r.apt] || 'transparent' }}>
                                 <td><span className="rv-apt-chip" style={{ background: APT_COLOR[r.apt], color: APT_TEXT[r.apt] }}>{APT_NAMES[r.apt] || r.apt}</span></td>
-                                <td>{r.guest}</td>
+                                <td>{r.guest}{r.cancelada && <span className="acc-cancelada-badge" title="Esta reserva está cancelada ahora mismo. Si el PIN sigue activo, revísalo.">✗ cancelada</span>}</td>
                                 <td>{fmtDate(r.ref)}</td>
                                 <td>{r.salida ? fmtDate(r.salida) : '–'}</td>
                                 <td className="num"><strong>{r.n}</strong></td>
@@ -5133,8 +5144,14 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
 
     const onSaved = (newReservasList) => {
       _syncReservasToAvailability(newReservasList, token).catch(() => {});
-      // Publica/revoca automáticamente los PINs de la guía según las reservas activas.
-      _syncReservasToGuestPins(newReservasList, token).catch(() => {});
+      // Publica/revoca los PINs de la guía. A diferencia del sync de
+      // disponibilidad, un fallo aquí es un problema de seguridad real (un
+      // huésped con la reserva cancelada podría conservar el acceso a la
+      // guía): si falla, se avisa en vez de tragárselo en silencio como
+      // antes.
+      _syncReservasToGuestPins(newReservasList, token).catch(e => {
+        setError('⚠ Reserva guardada, pero el PIN de la guía no se pudo sincronizar: ' + e.message + '. Pulsa "Sincronizar PINs" para reintentarlo.');
+      });
     };
 
     try {

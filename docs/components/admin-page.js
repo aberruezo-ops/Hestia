@@ -2474,18 +2474,27 @@ const IntelligenciaTab = ({
         guest: r ? r.responsable || '(sin nombre)' : '(reserva no encontrada)',
         salida: r ? r.salida : null,
         canal: r ? r.canal : null,
+        // Este panel muestra el histórico de accesos, cruzado con el
+        // estado ACTUAL de la reserva: si aparece cancelada aquí, el
+        // acceso puede ser anterior a la cancelación (normal) o el PIN
+        // puede seguir activo por un fallo de sincronización (revisar).
+        cancelada: r ? _reservaCxl(r) : false,
         n: ts.length,
         last: ts[0] || 0,
         ts
       };
     }).filter(r => r.n > 0).sort((a, b) => b.last - a.last);
     const totalAcc = rows.reduce((s, r) => s + r.n, 0);
+    const canceladasConAcceso = rows.filter(r => r.cancelada).length;
     if (rows.length === 0) return /*#__PURE__*/React.createElement("p", {
       className: "pe-hint"
     }, "Aún no hay accesos registrados.");
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
       className: "acc-kpis"
-    }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, rows.length), " reserva", rows.length !== 1 ? 's' : '', " han abierto la guía"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, totalAcc), " acceso", totalAcc !== 1 ? 's' : '', " en total"), /*#__PURE__*/React.createElement("button", {
+    }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, rows.length), " reserva", rows.length !== 1 ? 's' : '', " han abierto la guía"), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", null, totalAcc), " acceso", totalAcc !== 1 ? 's' : '', " en total"), canceladasConAcceso > 0 && /*#__PURE__*/React.createElement("span", {
+      className: "acc-cancelada-kpi",
+      title: "Reservas canceladas cuyo PIN registró algún acceso. Si el acceso es posterior a la cancelación, revisa si el PIN sigue activo (Sincronizar PINs)."
+    }, "⚠ ", /*#__PURE__*/React.createElement("strong", null, canceladasConAcceso), " cancelada", canceladasConAcceso !== 1 ? 's' : '', " con acceso"), /*#__PURE__*/React.createElement("button", {
       type: "button",
       className: "pe-btn pe-btn-ghost",
       disabled: accLoading,
@@ -2500,6 +2509,7 @@ const IntelligenciaTab = ({
     }, "Accesos"), /*#__PURE__*/React.createElement("th", null, "Último acceso"), /*#__PURE__*/React.createElement("th", null, "Historial"))), /*#__PURE__*/React.createElement("tbody", null, rows.map((r, i) => /*#__PURE__*/React.createElement("tr", {
       key: i,
       "data-apt": r.apt,
+      className: r.cancelada ? 'acc-row-alert' : '',
       style: {
         '--apt-c': APT_COLOR[r.apt] || 'transparent'
       }
@@ -2509,7 +2519,10 @@ const IntelligenciaTab = ({
         background: APT_COLOR[r.apt],
         color: APT_TEXT[r.apt]
       }
-    }, APT_NAMES[r.apt] || r.apt)), /*#__PURE__*/React.createElement("td", null, r.guest), /*#__PURE__*/React.createElement("td", null, fmtDate(r.ref)), /*#__PURE__*/React.createElement("td", null, r.salida ? fmtDate(r.salida) : '–'), /*#__PURE__*/React.createElement("td", {
+    }, APT_NAMES[r.apt] || r.apt)), /*#__PURE__*/React.createElement("td", null, r.guest, r.cancelada && /*#__PURE__*/React.createElement("span", {
+      className: "acc-cancelada-badge",
+      title: "Esta reserva está cancelada ahora mismo. Si el PIN sigue activo, revísalo."
+    }, "✗ cancelada")), /*#__PURE__*/React.createElement("td", null, fmtDate(r.ref)), /*#__PURE__*/React.createElement("td", null, r.salida ? fmtDate(r.salida) : '–'), /*#__PURE__*/React.createElement("td", {
       className: "num"
     }, /*#__PURE__*/React.createElement("strong", null, r.n)), /*#__PURE__*/React.createElement("td", null, fmtAcc(r.last)), /*#__PURE__*/React.createElement("td", {
       className: "acc-history"
@@ -6593,8 +6606,14 @@ const ReservasTab = ({
     };
     const onSaved = newReservasList => {
       _syncReservasToAvailability(newReservasList, token).catch(() => {});
-      // Publica/revoca automáticamente los PINs de la guía según las reservas activas.
-      _syncReservasToGuestPins(newReservasList, token).catch(() => {});
+      // Publica/revoca los PINs de la guía. A diferencia del sync de
+      // disponibilidad, un fallo aquí es un problema de seguridad real (un
+      // huésped con la reserva cancelada podría conservar el acceso a la
+      // guía): si falla, se avisa en vez de tragárselo en silencio como
+      // antes.
+      _syncReservasToGuestPins(newReservasList, token).catch(e => {
+        setError('⚠ Reserva guardada, pero el PIN de la guía no se pudo sincronizar: ' + e.message + '. Pulsa "Sincronizar PINs" para reintentarlo.');
+      });
     };
     try {
       const newSha = await attemptSave(sha);
