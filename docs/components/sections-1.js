@@ -716,7 +716,7 @@ const Compare = ({
     vs: 'Comunitaria + pistas de pádel'
   }, {
     label: 'Streaming',
-    vm: 'SkyShowtime · HBO Max · Prime',
+    vm: 'SkyShowtime · HBO Max · Prime · Disney+',
     vt: 'SkyShowtime · HBO Max · Prime · Movistar Plus · Netflix · Disney+',
     vs: 'SkyShowtime · HBO Max · Prime · Disney+'
   }, {
@@ -788,7 +788,7 @@ const Compare = ({
     vs: 'Shared + padel courts'
   }, {
     label: 'Streaming',
-    vm: 'SkyShowtime · HBO Max · Prime',
+    vm: 'SkyShowtime · HBO Max · Prime · Disney+',
     vt: 'SkyShowtime · HBO Max · Prime · Movistar Plus · Netflix · Disney+',
     vs: 'SkyShowtime · HBO Max · Prime · Disney+'
   }, {

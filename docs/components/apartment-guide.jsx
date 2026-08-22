@@ -2096,7 +2096,7 @@ const GUIDE_BY_APT = {
     es: {
       cover_tagline: 'El campo de olivos llega al mar. Donde el descanso encuentra su raíz.',
       rooms: [
-        { id: 'salon', title: 'Tu salón', body: 'Tu sofá-cama y tu televisión plana son el rincón perfecto para una tarde de sofá. No es lo principal de la estancia, pero SkyShowtime, HBO Max y Prime Video están siempre activas, además de apps gratuitas. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
+        { id: 'salon', title: 'Tu salón', body: 'Tu sofá-cama y tu televisión plana son el rincón perfecto para una tarde de sofá. No es lo principal de la estancia, pero SkyShowtime, HBO Max, Prime Video y Disney+ están siempre activas, además de apps gratuitas. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en Hestía.',
           'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de mesa con el mando junto al cuadro del A/C.',
@@ -2136,7 +2136,7 @@ const GUIDE_BY_APT = {
     en: {
       cover_tagline: 'Where the olive grove meets the sea. Rest, with its roots in place.',
       rooms: [
-        { id: 'salon', title: 'Your living room', body: 'Your sofa-bed and flat-screen TV are the perfect spot for a lazy afternoon. It is not the point of the stay, but SkyShowtime, HBO Max and Prime Video are always active, plus free apps. You control the temperature with the centralised A/C panel.', recs: [
+        { id: 'salon', title: 'Your living room', body: 'Your sofa-bed and flat-screen TV are the perfect spot for a lazy afternoon. It is not the point of the stay, but SkyShowtime, HBO Max, Prime Video and Disney+ are always active, plus free apps. You control the temperature with the centralised A/C panel.', recs: [
           'Do not leave the air conditioner running with doors open or while you are away from Hestía.',
           'Take a look at Hestía\'s usage guidelines, next to the entrance door.',
           'Adjust colour and tonality of the table lamp with the remote next to the A/C panel.',
