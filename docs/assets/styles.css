@@ -12365,7 +12365,7 @@ footer,
 .ag-part-num {
   font-family: var(--serif);
   font-style: italic;
-  font-size: clamp(28px, 5vw, 44px);
+  font-size: clamp(40px, 6.2vw, 60px);
   line-height: 1;
   color: color-mix(in srgb, var(--apt-accent) 45%, transparent);
   flex-shrink: 0;
@@ -12373,7 +12373,7 @@ footer,
 .ag-part-txt { display: flex; flex-direction: column; gap: 4px; }
 .ag-part-name {
   font-family: var(--serif);
-  font-size: clamp(20px, 3.4vw, 28px);
+  font-size: clamp(44px, 6.6vw, 68px);
   font-weight: 600;
   color: var(--ber-dk);
   line-height: 1.1;
