@@ -210,13 +210,13 @@ const APT_EQUIP = {
     daily_es: {
       eyebrow: 'Tu día en Hestía Mar',
       morning: 'Te despiertas con el mar a 300 metros y la luz que entra por la terraza de esquina, donde comienzas el día con un buen desayuno. Luego sales a la piscina y al jacuzzi del jardín sin coger el coche.',
-      core: 'La casa funciona con A/C por conductos, fibra y Smart TV con streaming: SkyShowtime, HBO Max y Prime Video siempre activas, además de apps gratuitas. La cocina está completa (lavavajillas y lavadora). Dos baños: uno con columna de hidroterapia y espejo de cromoterapia, otro con ducha.',
+      core: 'La casa funciona con A/C por conductos, fibra y Smart TV con streaming: SkyShowtime, HBO Max, Prime Video y Disney+ siempre activas, además de apps gratuitas. La cocina está completa (lavavajillas y lavadora). Dos baños: uno con columna de hidroterapia y espejo de cromoterapia, otro con ducha.',
       behind: 'Antes de que llegues: sábanas de 200 hilos planchadas, toallas de 600 g/m², kit de bienvenida, sombrilla preparada, cuna y trona montadas si las pediste. El A/C ajustado a la estación y el botiquín revisado.',
     },
     daily_en: {
       eyebrow: 'A day at Hestía Mar',
       morning: 'You wake up to the sea 300 m away and the light pouring in from the corner terrace, where you start the day with a good breakfast. Then the pool and jacuzzi in the garden, no need to take the car.',
-      core: 'The flat runs on ducted A/C, fibre Wi-Fi and a Smart TV with streaming: SkyShowtime, HBO Max and Prime Video are always active, plus free apps. Full kitchen (dishwasher and washer). Two bathrooms: one with a hydrotherapy column and chromotherapy mirror, the other with a shower.',
+      core: 'The flat runs on ducted A/C, fibre Wi-Fi and a Smart TV with streaming: SkyShowtime, HBO Max, Prime Video and Disney+ are always active, plus free apps. Full kitchen (dishwasher and washer). Two bathrooms: one with a hydrotherapy column and chromotherapy mirror, the other with a shower.',
       behind: 'Before you arrive: 200-thread sheets ironed, 600 g/m² towels, a welcome kit, beach umbrella ready, cot and high chair set up if you booked them. A/C tuned to the season, first-aid kit checked.',
     },
     es: {
@@ -224,7 +224,7 @@ const APT_EQUIP = {
       icons: [
         ['🌊', 'Playa a 300m'], ['☀️', 'Terraza 20m² · esquina'], ['🏊', 'Piscina + Jacuzzi'],
         ['🌿', 'Jardines'], ['🛋', 'Chill out'], ['🛗', 'Ascensor'],
-        ['📺', 'Smart TV 55"'], ['🎬', 'Streaming: SkyShowtime · HBO Max · Prime Video'], ['📶', 'WIFI fibra'],
+        ['📺', 'Smart TV 55"'], ['🎬', 'Streaming: SkyShowtime · HBO Max · Prime Video · Disney+'], ['📶', 'WIFI fibra'],
         ['❄️', 'A/C por conductos'], ['🍳', 'Cocina completa · alto standing'], ['🍽', 'Lavavajillas'],
         ['🧺', 'Lavadora'], ['🛁', 'Bañera + hidromasaje'], ['🚿', 'Ducha'],
         ['🚗', 'Garaje cubierto'], ['🩹', 'Botiquín'],
@@ -238,7 +238,7 @@ const APT_EQUIP = {
       icons: [
         ['🌊', 'Beach 300m away'], ['☀️', '20m² corner terrace'], ['🏊', 'Pool + Jacuzzi'],
         ['🌿', 'Gardens'], ['🛋', 'Chill-out'], ['🛗', 'Lift'],
-        ['📺', '55" Smart TV'], ['🎬', 'Streaming: SkyShowtime · HBO Max · Prime Video'], ['📶', 'Fibre WIFI'],
+        ['📺', '55" Smart TV'], ['🎬', 'Streaming: SkyShowtime · HBO Max · Prime Video · Disney+'], ['📶', 'Fibre WIFI'],
         ['❄️', 'Ducted A/C'], ['🍳', 'Full premium kitchen'], ['🍽', 'Dishwasher'],
         ['🧺', 'Washer'], ['🛁', 'Bath + hydro-massage'], ['🚿', 'Shower'],
         ['🚗', 'Covered garage'], ['🩹', 'First-aid kit'],
