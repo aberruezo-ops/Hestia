@@ -76,7 +76,7 @@ const MAPA_COPY = {
         title: 'About us',
         items: [
           { href: 'nosotros.html', label: 'Hestía and us', desc: 'Alex and Fran, where the name comes from, the six values and the Almería palette.' },
-          { href: '/guia-vera/', label: 'Guide extract', desc: 'Beaches, towns, where to eat and walks in the Almería Levante.' },
+          { href: '/guia-vera/en/', label: 'Guide extract', desc: 'Beaches, towns, where to eat and walks in the Almería Levante.' },
           { href: 'opiniones.html', label: 'Reviews', desc: 'What guests say: Booking, Airbnb, Google and our site.' },
           { href: 'noticias.html', label: 'News', desc: 'The best of the territory each month: Almería, Murcia, Granada.' },
           { href: 'escribir-opinion.html', label: 'Leave a review', desc: 'For guests who have stayed at a Hestía.' },

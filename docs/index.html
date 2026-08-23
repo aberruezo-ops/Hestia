@@ -45,7 +45,6 @@
     "logo": "https://www.hestiayourhome.com/assets/logo-teal-transparent.png",
     "image": "https://www.hestiayourhome.com/assets/hero-terrace-night.jpg",
     "description": "Tres Hestías, viviendas turísticas gestionadas directamente en Vera Playa por Alex y Fran. Desde 2016.",
-    "address": {"@type": "PostalAddress", "streetAddress": "C. Islas Canarias 7", "addressLocality": "Vera", "postalCode": "04621", "addressCountry": "ES"},
     "priceRange": "€€",
     "identifier": [
       {"@type": "PropertyValue", "name": "Registro de Turismo de Andalucía", "value": "VFT/AL/01580"},
@@ -71,6 +70,7 @@
     "email": "info@hestiayourhome.com",
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "C. Islas Canarias 7",
       "addressLocality": "Vera",
       "addressRegion": "Almería",
       "postalCode": "04621",
@@ -242,7 +242,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=c8e27157cb');
+      const res = await fetch(file + '?cv=48f1c80fc1');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

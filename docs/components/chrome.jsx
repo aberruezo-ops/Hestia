@@ -307,7 +307,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
             <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias}>{t.nav[7]}</NavLink>
-            <NavLink href={NAV_PAGES.guiaZona}>{lang === 'es' ? 'Extracto Guía' : 'Guide extract'}</NavLink>
+            <NavLink href={lang === 'es' ? NAV_PAGES.guiaZona : '/guia-vera/en/'}>{lang === 'es' ? 'Extracto Guía' : 'Guide extract'}</NavLink>
             <NavLink href={NAV_PAGES.reservas} className="cta"><span className="cta-border" aria-hidden="true"/><span className="cta-text">{t.cta_nav}</span></NavLink>
           </nav>
           <button
@@ -350,7 +350,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.nosotros} className="mn-link">{t.nav[4]}</NavLink>
             <NavLink href={NAV_PAGES.opiniones} className="mn-link">{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias} className="mn-link">{t.nav[7]}</NavLink>
-            <NavLink href={NAV_PAGES.guiaZona} className="mn-link">{lang === 'es' ? 'Extracto Guía' : 'Guide extract'}</NavLink>
+            <NavLink href={lang === 'es' ? NAV_PAGES.guiaZona : '/guia-vera/en/'} className="mn-link">{lang === 'es' ? 'Extracto Guía' : 'Guide extract'}</NavLink>
             <NavLink href={NAV_PAGES.estanciasLargas} className="mn-link">{t.nav[9]}</NavLink>
             <NavLink href={NAV_PAGES.empresas} className="mn-link">{lang === 'es' ? 'Para empresas' : 'For business'}</NavLink>
             <NavLink href={NAV_PAGES.ventajas} className="mn-link">✓ {lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks'}</NavLink>
@@ -902,7 +902,7 @@ const Footer = ({ lang }) => {
             <li><a href="nosotros.html">{t.nav[4]}</a></li>
             <li><a href="opiniones.html">{t.nav[5]}</a></li>
             <li><a href="noticias.html">{t.nav[7]}</a></li>
-            <li><a href="/guia-vera/">{lang === 'es' ? 'Extracto Guía' : 'Guide extract'}</a></li>
+            <li><a href={lang === 'es' ? '/guia-vera/' : '/guia-vera/en/'}>{lang === 'es' ? 'Extracto Guía' : 'Guide extract'}</a></li>
             <li><a href="estancias-largas.html">{t.nav[9]}</a></li>
             <li><a href="empresas.html">{lang === 'es' ? 'Para empresas' : 'For business'}</a></li>
             <li><a href="privacidad.html">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>

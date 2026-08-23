@@ -2,7 +2,7 @@
  * build-guia-zona.mjs
  *
  * Genera el hub público de la zona a partir de los mismos datos que la guía
- * del huésped (docs/components/apartment-guide.jsx).
+ * del huésped (docs/components/apartment-guide.jsx), en español y en inglés.
  *
  * Por qué páginas estáticas y no React: el resto del sitio pinta el body con
  * React desde un CDN, así que Google ve el HTML casi vacío en la primera
@@ -13,6 +13,12 @@
  * qué tiene de bueno, servicios, acceso y distancia). El campo `tip`, que es
  * el consejo de quien conoce el sitio, NO se publica: ese es el valor que se lleva
  * quien reserva directo y entra en la guía completa.
+ *
+ * Español: /guia-vera/... · Inglés: /guia-vera/en/...
+ * No todas las fichas están traducidas al inglés todavía (`desc_en`/`access_en`
+ * en apartment-guide.jsx): las que faltan no se anuncian, se generan igual
+ * salvo el texto libre de descripción (queda sin `<p>`), nunca se cuela
+ * español sin marcar en una página en inglés.
  *
  * Uso:  node scripts/build-guia-zona.mjs
  */
@@ -50,14 +56,22 @@ const esc = t => String(t ?? '')
 // El texto lleva emojis de servicio (🚿 🛟 ...) que en una página de contenido
 // aportan poco y ensucian el snippet de Google. Se traducen a palabras.
 const SERVICIOS = {
-  '🚿': 'duchas', '🛟': 'socorrista', '🍹': 'chiringuito', '🛏️': 'hamacas',
-  '🛏': 'hamacas', '🚻': 'aseos', '♿': 'accesible', '🅿️': 'parking',
-  '🐕': 'perros', '⛱️': 'sombrillas', '🚤': 'náutica', '🏐': 'voley',
+  es: {
+    '🚿': 'duchas', '🛟': 'socorrista', '🍹': 'chiringuito', '🛏️': 'hamacas',
+    '🛏': 'hamacas', '🚻': 'aseos', '♿': 'accesible', '🅿️': 'parking',
+    '🐕': 'perros', '⛱️': 'sombrillas', '🚤': 'náutica', '🏐': 'voley',
+  },
+  en: {
+    '🚿': 'showers', '🛟': 'lifeguard', '🍹': 'beach bar', '🛏️': 'sunbeds',
+    '🛏': 'sunbeds', '🚻': 'toilets', '♿': 'accessible', '🅿️': 'parking',
+    '🐕': 'dogs allowed', '⛱️': 'umbrellas', '🚤': 'watersports', '🏐': 'volleyball',
+  },
 };
-const legibles = s => {
+const legibles = (s, lang) => {
   if (!s) return '';
+  const dict = SERVICIOS[lang];
   const out = [];
-  for (const [emo, txt] of Object.entries(SERVICIOS)) if (s.includes(emo)) out.push(txt);
+  for (const [emo, txt] of Object.entries(dict)) if (s.includes(emo)) out.push(txt);
   return [...new Set(out)].join(' · ');
 };
 const limpiaEmoji = s => String(s ?? '')
@@ -112,8 +126,10 @@ for (const bruto of objetosQueEmpiezanPor(src, 'id')) {
   if (!lat || !lng) continue;
   const rat = b.match(/rating:\s*([\d.]+)/);
   PLACES.push({
-    id: campo(b, 'id'), name: campo(b, 'name'), desc: campo(b, 'desc'), best: campo(b, 'best'),
-    cat: campo(b, 'cat'), services: campo(b, 'services'), access: campo(b, 'access'),
+    id: campo(b, 'id'), name: campo(b, 'name'),
+    desc: campo(b, 'desc'), desc_en: campo(b, 'desc_en'), best: campo(b, 'best'),
+    cat: campo(b, 'cat'), services: campo(b, 'services'),
+    access: campo(b, 'access'), access_en: campo(b, 'access_en'),
     url: campo(b, 'url'), rating: rat ? parseFloat(rat[1]) : null,
     featured: b.includes('featured: true'),
     km: km(parseFloat(lat[1]), parseFloat(lng[1])),
@@ -123,8 +139,11 @@ for (const bruto of objetosQueEmpiezanPor(src, 'id')) {
 const ATLAS = [];
 for (const b of objetosQueEmpiezanPor(src, 'subcat')) {
   ATLAS.push({
-    subcat: campo(b, 'subcat'), name: campo(b, 'name_es'), desc: campo(b, 'desc_es'),
-    como: campo(b, 'comoLlegar_es'), url: campo(b, 'url'),
+    subcat: campo(b, 'subcat'),
+    name: { es: campo(b, 'name_es'), en: campo(b, 'name_en') },
+    desc: { es: campo(b, 'desc_es'), en: campo(b, 'desc_en') },
+    como: { es: campo(b, 'comoLlegar_es'), en: campo(b, 'comoLlegar_en') },
+    url: campo(b, 'url'),
     km: (b.match(/km:\s*(\d+)/) || [])[1],
   });
 }
@@ -133,52 +152,182 @@ for (const b of objetosQueEmpiezanPor(src, 'subcat')) {
 const HUBS = [
   {
     video: 'hero-cala-aerea.mp4', slug: 'playas', cats: ['beach', 'beach-hard', 'beach-dog', 'beach-nude', 'beach-srvc'],
-    h1: 'Las playas por las que volvemos',
-    title: 'Las mejores playas de Vera y el Levante almeriense · Hestía',
-    desc: 'Guía de las playas y calas del Levante almeriense, de Vera a Cabo de Gata: cómo son, qué servicios tienen y cómo se llega. Escrita por quienes llevan toda la vida viniendo.',
-    intro: 'De todas las playas del Levante almeriense, estas son a las que volvemos. No es un listado de la costa: es la criba de muchos veranos, de las urbanas con todos los servicios a las calas donde no hay nada más que agua y roca. Ordenadas por distancia desde los apartamentos.',
+    es: {
+      h1: 'Las playas por las que volvemos',
+      title: 'Las mejores playas de Vera y el Levante almeriense · Hestía',
+      desc: 'Guía de las playas y calas del Levante almeriense, de Vera a Cabo de Gata: cómo son, qué servicios tienen y cómo se llega. Escrita por quienes llevan toda la vida viniendo.',
+      intro: 'De todas las playas del Levante almeriense, estas son a las que volvemos. No es un listado de la costa: es la criba de muchos veranos, de las urbanas con todos los servicios a las calas donde no hay nada más que agua y roca. Ordenadas por distancia desde los apartamentos.',
+    },
+    en: {
+      h1: 'The beaches we keep coming back to',
+      title: 'The best beaches in Vera and the Almería Levante · Hestía',
+      desc: 'Guide to the beaches and coves of the Almería Levante, from Vera to Cabo de Gata: what they are like, what services they have and how to get there. Written by people who have been coming here their whole lives.',
+      intro: 'Of all the beaches on the Almería Levante, these are the ones we keep coming back to. This is not a list of the whole coast: it is the result of many summers, from town beaches with every service to coves with nothing but water and rock. Sorted by distance from the apartments.',
+    },
   },
   {
     video: 'hero-piscina-verano.mp4', slug: 'donde-comer', cats: ['restaurant', 'michelin', 'celiac', 'bar'],
-    h1: 'Las mesas que recomendamos',
-    title: 'Dónde comer en Vera, Garrucha y Mojácar · Guía Hestía',
-    desc: 'Restaurantes, chiringuitos y estrellas Michelin del Levante almeriense y alrededores, con lo que pedir en cada uno. Escrita por quienes llevan toda la vida viniendo.',
-    intro: 'De la gamba roja de Garrucha a las estrellas Michelin de Almería, Murcia y Cartagena. Aquí no está todo lo que hay: está donde nosotros comemos y a dónde mandamos a los huéspedes. Ordenado por distancia desde los apartamentos.',
+    es: {
+      h1: 'Las mesas que recomendamos',
+      title: 'Dónde comer en Vera, Garrucha y Mojácar · Guía Hestía',
+      desc: 'Restaurantes, chiringuitos y estrellas Michelin del Levante almeriense y alrededores, con lo que pedir en cada uno. Escrita por quienes llevan toda la vida viniendo.',
+      intro: 'De la gamba roja de Garrucha a las estrellas Michelin de Almería, Murcia y Cartagena. Aquí no está todo lo que hay: está donde nosotros comemos y a dónde mandamos a los huéspedes. Ordenado por distancia desde los apartamentos.',
+    },
+    en: {
+      h1: 'The tables we recommend',
+      title: 'Where to eat in Vera, Garrucha and Mojácar · Hestía Guide',
+      desc: 'Restaurants, beach bars and Michelin stars from the Almería Levante and beyond, with what to order at each one. Written by people who have been coming here their whole lives.',
+      intro: "From Garrucha's red prawns to the Michelin stars of Almería, Murcia and Cartagena. This is not everything there is: it is where we eat and where we send our guests. Sorted by distance from the apartments.",
+    },
   },
   {
     video: 'hero-playa-aerea-turquesa.mp4', slug: 'pueblos', cats: ['town', 'gem'],
-    h1: 'Los pueblos que merecen el viaje',
-    title: 'Pueblos que ver cerca de Vera, Almería · Guía Hestía',
-    desc: 'Los pueblos del Levante almeriense y del interior de Almería que merecen una visita, con qué ver en cada uno y a qué distancia están de Vera Playa.',
-    intro: 'Almería cambia mucho en pocos kilómetros: pueblos blancos colgados, pueblos mineros y casas cueva. De todos los que hay, estos son los que compensan coger el coche. Ordenados por distancia desde los apartamentos.',
+    es: {
+      h1: 'Los pueblos que merecen el viaje',
+      title: 'Pueblos que ver cerca de Vera, Almería · Guía Hestía',
+      desc: 'Los pueblos del Levante almeriense y del interior de Almería que merecen una visita, con qué ver en cada uno y a qué distancia están de Vera Playa.',
+      intro: 'Almería cambia mucho en pocos kilómetros: pueblos blancos colgados, pueblos mineros y casas cueva. De todos los que hay, estos son los que compensan coger el coche. Ordenados por distancia desde los apartamentos.',
+    },
+    en: {
+      h1: 'The villages worth the drive',
+      title: 'Villages to see near Vera, Almería · Hestía Guide',
+      desc: 'The villages of the Almería Levante and inland Almería that are worth a visit, with what to see in each one and how far they are from Vera Playa.',
+      intro: 'Almería changes a lot over a short distance: hillside white villages, mining towns and cave dwellings. Of everything there is, these are the ones worth getting in the car for. Sorted by distance from the apartments.',
+    },
   },
   {
     video: 'hero-cala-rocosa.mp4', slug: 'naturaleza-y-rutas', cats: ['trek', 'water', 'adventure'],
-    h1: 'Salir a andar, y a mojarse',
-    title: 'Rutas y naturaleza en el Levante almeriense · Guía Hestía',
-    desc: 'Senderos, rutas costeras, deportes de agua y planes al aire libre en el Levante almeriense y Cabo de Gata, con distancias desde Vera Playa.',
-    intro: 'Desde paseos litorales que empiezan en la puerta hasta el Karst en Yesos de Sorbas. Una selección corta a propósito: lo que de verdad recomendamos hacer al aire libre por aquí.',
+    es: {
+      h1: 'Salir a andar, y a mojarse',
+      title: 'Rutas y naturaleza en el Levante almeriense · Guía Hestía',
+      desc: 'Senderos, rutas costeras, deportes de agua y planes al aire libre en el Levante almeriense y Cabo de Gata, con distancias desde Vera Playa.',
+      intro: 'Desde paseos litorales que empiezan en la puerta hasta el Karst en Yesos de Sorbas. Una selección corta a propósito: lo que de verdad recomendamos hacer al aire libre por aquí.',
+    },
+    en: {
+      h1: 'Getting out to walk, and to get wet',
+      title: 'Trails and nature in the Almería Levante · Hestía Guide',
+      desc: 'Trails, coastal routes, water sports and outdoor plans in the Almería Levante and Cabo de Gata, with distances from Vera Playa.',
+      intro: 'From coastal walks that start at the door to the Karst en Yesos gypsum reserve in Sorbas. A deliberately short selection: what we genuinely recommend doing outdoors around here.',
+    },
   },
 ];
 
 const HUB_HISTORIA = {
   video: 'hero-atardecer-aereo.mp4', slug: 'historia', subcats: ['castillos', 'yacimientos', 'romano', 'islamico', 'cuevas'],
-  h1: 'Cuatro mil años de piedra',
-  title: 'Castillos y yacimientos de Almería · Guía Hestía',
-  desc: 'Castillos, yacimientos argáricos y romanos, patrimonio andalusí y cuevas del Levante almeriense y alrededores, con distancias desde Vera Playa.',
-  intro: 'Almería lleva habitada desde El Argar, hace 4.000 años. Fenicios, romanos y andalusíes dejaron aquí más de lo que cabe en una lista: estos son los que están cerca y merecen la parada.',
+  es: {
+    h1: 'Cuatro mil años de piedra',
+    title: 'Castillos y yacimientos de Almería · Guía Hestía',
+    desc: 'Castillos, yacimientos argáricos y romanos, patrimonio andalusí y cuevas del Levante almeriense y alrededores, con distancias desde Vera Playa.',
+    intro: 'Almería lleva habitada desde El Argar, hace 4.000 años. Fenicios, romanos y andalusíes dejaron aquí más de lo que cabe en una lista: estos son los que están cerca y merecen la parada.',
+  },
+  en: {
+    h1: 'Four thousand years of stone',
+    title: 'Castles and archaeological sites of Almería · Hestía Guide',
+    desc: 'Castles, Argaric and Roman sites, Andalusi heritage and caves of the Almería Levante and beyond, with distances from Vera Playa.',
+    intro: 'Almería has been inhabited since El Argar, 4,000 years ago. Phoenicians, Romans and Andalusis left behind more than fits in a list: these are the ones nearby that are worth the stop.',
+  },
 };
 
 const NOMBRE_CAT = {
-  beach: 'Playa', 'beach-hard': 'Cala de acceso difícil', 'beach-dog': 'Playa para perros',
-  'beach-nude': 'Playa naturista', 'beach-srvc': 'Servicios de playa',
-  restaurant: 'Restaurante', michelin: 'Michelin', celiac: 'Sin gluten', bar: 'Chiringuito o bar',
-  town: 'Pueblo', gem: 'Rincón', trek: 'Ruta', water: 'Agua', adventure: 'Aventura',
-  castillos: 'Castillo', yacimientos: 'Yacimiento', romano: 'Romano',
-  islamico: 'Andalusí', cuevas: 'Cueva y geología',
+  es: {
+    beach: 'Playa', 'beach-hard': 'Cala de acceso difícil', 'beach-dog': 'Playa para perros',
+    'beach-nude': 'Playa naturista', 'beach-srvc': 'Servicios de playa',
+    restaurant: 'Restaurante', michelin: 'Michelin', celiac: 'Sin gluten', bar: 'Chiringuito o bar',
+    town: 'Pueblo', gem: 'Rincón', trek: 'Ruta', water: 'Agua', adventure: 'Aventura',
+    castillos: 'Castillo', yacimientos: 'Yacimiento', romano: 'Romano',
+    islamico: 'Andalusí', cuevas: 'Cueva y geología',
+  },
+  en: {
+    beach: 'Beach', 'beach-hard': 'Hard-to-reach cove', 'beach-dog': 'Dog-friendly beach',
+    'beach-nude': 'Naturist beach', 'beach-srvc': 'Beach with services',
+    restaurant: 'Restaurant', michelin: 'Michelin', celiac: 'Gluten-free', bar: 'Beach bar or bar',
+    town: 'Village', gem: 'Hidden gem', trek: 'Trail', water: 'Water', adventure: 'Adventure',
+    castillos: 'Castle', yacimientos: 'Archaeological site', romano: 'Roman',
+    islamico: 'Andalusi', cuevas: 'Cave & geology',
+  },
 };
 
-// ---- plantilla ------------------------------------------------------------
+// ---- textos de plantilla, por idioma --------------------------------------
+const T = {
+  es: {
+    htmlLang: 'es', ogLocale: 'es_ES',
+    navGuia: 'Extracto Guía', navApts: 'Los apartamentos', navReserva: 'Reservar',
+    eyebrowGuia: 'Nuestra guía',
+    inicio: 'Inicio', nuestraGuia: 'Nuestra guía',
+    aviso: `Esto es <b>un extracto</b> de nuestra guía. La guía completa, con
+36 capítulos, 131 consejos y el mapa de la zona, es <b>exclusiva para quien se aloja
+con nosotros</b>: se entrega unos días antes de vuestra llegada.`,
+    ctaH2: 'Esto es la mitad de la guía',
+    ctaP1: 'Lo que ves aquí lo puede leer cualquiera: qué es cada sitio, qué tiene de bueno y a qué distancia queda. Es la parte que se puede contar por escrito.',
+    ctaP2: (n) => `La otra mitad no se aprende leyendo: se aprende viniendo año tras año. A qué hora llegar a cada cala para
+  encontrar sitio. Qué pedir en cada mesa. Dónde se aparca de verdad en agosto. Y en qué
+  <span class="num">${n}</span> tienen descuento nuestros huéspedes.`,
+    ctaDatos: [['36', 'capítulos'], ['131', 'consejos'], ['430', 'puntos en el mapa'], ['PDF', 'para ir sin cobertura']],
+    ctaP3: 'Se entrega unos días antes de la llegada, junto con todo lo del apartamento: del wifi a la farmacia de guardia. Tres casas en Vera Playa, llevadas por nosotros, sin comisiones de plataforma.',
+    apts: [
+      ['Hestía Mar', 'A 300 m de la playa'],
+      ['Hestía Thalassa', 'Ático con SPA y sauna'],
+      ['Hestía Salinas', 'Dos terrazas y las salinas'],
+    ],
+    pieP1: 'Guía escrita por Alex y Fran, que llevan en persona los tres apartamentos de <a href="/">Hestía Your Home</a> en Vera Playa (Almería) desde 2016. Licencias VFT/AL/01580, VFT/AL/05535 y VFT/AL/07056.',
+    pieNav: '<a href="/">Inicio</a> · <a href="/guia-vera/">Extracto Guía</a> · <a href="/reservas.html">Reservas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a>',
+    pieLegal: '<a href="/privacidad.html">Privacidad</a> · <a href="/cookies.html">Cookies</a>',
+    aUnPaseo: 'a un paseo', desdeCasa: 'desde casa',
+    sobre5: 'sobre 5', verMapa: 'Ver en el mapa', webOficial: 'Web oficial',
+    notaConTotal: (cuenta, total) => `Aquí van ${cuenta}. En la guía del huésped hay <b>${total}</b>, con el consejo de cada uno.`,
+    notaSinTotal: (cuenta) => `${cuenta} ${cuenta === 1 ? 'sitio' : 'sitios'}, del más cercano al más lejano.`,
+    sitios: 'sitios', categorias: 'categorías', elMasCercano: 'el más cercano', anosHistoria: 'años de historia',
+    indexTitle: 'Guía de Vera Playa y el Levante almeriense · Hestía',
+    indexDesc: (total) => `Guía del Levante almeriense por quienes llevan toda la vida viniendo: ${total} playas, restaurantes, pueblos, rutas y monumentos del Levante almeriense, con distancias y lo que merece la pena de cada uno.`,
+    indexH1: 'La Almería que no sale en otras guías',
+    indexIntro: (total) => `${total} sitios del Levante almeriense recorridos por Alex y Fran, ligados a Almería de toda la vida y con tres apartamentos en Vera Playa desde 2016. No es una lista copiada de otras webs: es lo que recomendamos a quien se aloja con nosotros, ordenado por distancia desde los apartamentos.`,
+    indexCifras: (total, n) => [[String(total), 'sitios'], [String(n), 'secciones'], ['2016', 'con casa aquí']],
+    porDondeEmpezar: 'Por dónde empezar',
+    verLos: (n) => `Ver los ${n} sitios`,
+    ondasSitios: (n) => `${n} sitios`,
+    onceNegocios: 'once negocios de la zona',
+  },
+  en: {
+    htmlLang: 'en', ogLocale: 'en_GB',
+    navGuia: 'Guide extract', navApts: 'The apartments', navReserva: 'Book',
+    eyebrowGuia: 'Our guide',
+    inicio: 'Home', nuestraGuia: 'Our guide',
+    aviso: `This is <b>an extract</b> of our guide. The full guide, with
+36 chapters, 131 tips and the area map, is <b>exclusive to guests staying
+with us</b>: it is handed over a few days before you arrive.`,
+    ctaH2: 'This is half the guide',
+    ctaP1: 'What you see here anyone can read: what each place is, what is good about it and how far it is. It is the part that can be put in writing.',
+    ctaP2: (n) => `The other half is not learned by reading: it is learned by coming back, year after
+  year. What time to arrive at each cove to find a spot. What to order at each table. Where to actually
+  park in August. And which <span class="num">${n}</span> give our guests a discount.`,
+    ctaDatos: [['36', 'chapters'], ['131', 'tips'], ['430', 'points on the map'], ['PDF', 'for when there is no signal']],
+    ctaP3: "Handed over a few days before arrival, along with everything about the apartment: from the wifi to the on-call pharmacy. Three homes in Vera Playa, run by us, with no platform commissions.",
+    apts: [
+      ['Hestía Mar', '300 m from the beach'],
+      ['Hestía Thalassa', 'Penthouse with spa and sauna'],
+      ['Hestía Salinas', 'Two terraces and the salt flats'],
+    ],
+    pieP1: 'Guide written by Alex and Fran, who personally run the three <a href="/">Hestía Your Home</a> apartments in Vera Playa (Almería) since 2016. Licences VFT/AL/01580, VFT/AL/05535 and VFT/AL/07056.',
+    pieNav: '<a href="/">Home</a> · <a href="/guia-vera/en/">Guide extract</a> · <a href="/reservas.html">Booking</a> · <a href="/opiniones.html">Reviews</a> · <a href="/nosotros.html">About us</a> · <a href="/contacto.html">Contact</a>',
+    pieLegal: '<a href="/privacidad.html">Privacy</a> · <a href="/cookies.html">Cookies</a>',
+    aUnPaseo: 'a short walk', desdeCasa: 'from home',
+    sobre5: 'out of 5', verMapa: 'View on map', webOficial: 'Official website',
+    notaConTotal: (cuenta, total) => `Here are ${cuenta}. The guest guide has <b>${total}</b>, with a tip for each.`,
+    notaSinTotal: (cuenta) => `${cuenta} ${cuenta === 1 ? 'place' : 'places'}, from nearest to farthest.`,
+    sitios: 'places', categorias: 'categories', elMasCercano: 'the nearest', anosHistoria: 'years of history',
+    indexTitle: 'Guide to Vera Playa and the Almería Levante · Hestía',
+    indexDesc: (total) => `Almería Levante guide by people who have been coming here their whole lives: ${total} beaches, restaurants, villages, trails and monuments of the Almería Levante, with distances and what is worth it in each one.`,
+    indexH1: 'The Almería that does not make it into other guides',
+    indexIntro: (total) => `${total} places across the Almería Levante visited by Alex and Fran, lifelong Almería people with three apartments in Vera Playa since 2016. This is not a list copied from other websites: it is what we recommend to our own guests, sorted by distance from the apartments.`,
+    indexCifras: (total, n) => [[String(total), 'places'], [String(n), 'sections'], ['2016', 'with a home here']],
+    porDondeEmpezar: 'Where to start',
+    verLos: (n) => `See all ${n} places`,
+    ondasSitios: (n) => `${n} places`,
+    onceNegocios: 'eleven local businesses',
+  },
+};
+
+// ---- plantilla (comparte CSS entre idiomas) -------------------------------
 const ESTILO = `
 :root{
   --ber:#3D1A35; --ber-dk:#2A0F2E; --ber-deep:#1E0722;
@@ -332,8 +481,8 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
 }
 `;
 
-const cabecera = ({ title, desc, canonical, jsonld }) => `<!DOCTYPE html>
-<html lang="es">
+const cabecera = ({ lang, title, desc, canonical, altHref, jsonld }) => `<!DOCTYPE html>
+<html lang="${T[lang].htmlLang}">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -342,8 +491,9 @@ const cabecera = ({ title, desc, canonical, jsonld }) => `<!DOCTYPE html>
 <meta name="robots" content="index, follow"/>
 <meta name="description" content="${esc(desc)}"/>
 <link rel="canonical" href="${canonical}"/>
-<link rel="alternate" hreflang="es" href="${canonical}"/>
-<link rel="alternate" hreflang="x-default" href="${canonical}"/>
+<link rel="alternate" hreflang="es" href="${lang === 'es' ? canonical : altHref}"/>
+<link rel="alternate" hreflang="en" href="${lang === 'en' ? canonical : altHref}"/>
+<link rel="alternate" hreflang="x-default" href="${lang === 'es' ? canonical : altHref}"/>
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png"/>
 <meta property="og:site_name" content="Hestía Your Home"/>
 <meta property="og:type" content="article"/>
@@ -351,7 +501,7 @@ const cabecera = ({ title, desc, canonical, jsonld }) => `<!DOCTYPE html>
 <meta property="og:title" content="${esc(title)}"/>
 <meta property="og:description" content="${esc(desc)}"/>
 <meta property="og:image" content="${BASE}/assets/hero-terrace-night.jpg"/>
-<meta property="og:locale" content="es_ES"/>
+<meta property="og:locale" content="${T[lang].ogLocale}"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
@@ -375,22 +525,22 @@ ${JSON.stringify(jsonld, null, 2)}
   <div class="wrap">
     <a class="brand" href="/">Hestía Your Home</a>
     <nav>
-      <a href="/guia-vera/">Extracto Guía</a>
-      <a href="/mar.html">Los apartamentos</a>
-      <a class="cta-top" href="/reservas.html">Reservar</a>
+      <a href="${lang === 'es' ? '/guia-vera/' : '/guia-vera/en/'}">${T[lang].navGuia}</a>
+      <a href="/mar.html">${T[lang].navApts}</a>
+      <a class="cta-top" href="/reservas.html">${T[lang].navReserva}</a>
     </nav>
   </div>
 </div>`;
 
 // El hero lleva vídeo real de la zona: es lo que vende antes de leer nada.
 // preload="metadata" y poster para no castigar la carga, igual que la home.
-const hero = ({ h1, intro, cifras, video }) => `
+const hero = ({ lang, h1, intro, cifras, video }) => `
 <header class="hero">
   ${video ? `<video autoplay muted loop playsinline preload="metadata" poster="/assets/posters/${video.replace('.mp4', '.jpg')}" aria-hidden="true">
     <source src="/assets/Videoshome/${video}" type="video/mp4"/>
   </video>` : ''}
   <div class="wrap">
-    <p class="eyebrow">Nuestra guía</p>
+    <p class="eyebrow">${T[lang].eyebrowGuia}</p>
     <h1>${esc(h1)}</h1>
     <p class="intro">${esc(intro)}</p>
     ${cifras && cifras.length ? `<div class="cifras">${cifras.map(c =>
@@ -405,96 +555,89 @@ const indice = grupos => grupos.length < 2 ? '' : `
 
 // Que quede dicho arriba y sin rodeos: esto es un extracto, la guía entera es
 // de los huéspedes. Antes solo se decía al final de la página.
-const avisoExtracto = `
-<p class="aviso">Esto es <b>un extracto</b> de nuestra guía. La guía completa, con
-36 capítulos, 131 consejos y el mapa de la zona, es <b>exclusiva para quien se aloja
-con nosotros</b>: se entrega unos días antes de vuestra llegada.</p>`;
+const avisoExtracto = lang => `
+<p class="aviso">${T[lang].aviso}</p>`;
 
-const bloqueCta = `
+const bloqueCta = lang => {
+  const t = T[lang];
+  return `
 <div class="cta">
-  <h2>Esto es la mitad de la guía</h2>
-  <p>Lo que ves aquí lo puede leer cualquiera: qué es cada sitio, qué tiene de bueno y a qué
-  distancia queda. Es la parte que se puede contar por escrito.</p>
-  <p>La otra mitad no se aprende leyendo: se aprende viniendo año tras año. A qué hora llegar a cada cala para
-  encontrar sitio. Qué pedir en cada mesa. Dónde se aparca de verdad en agosto. Y en qué
-  <span class="num">once negocios</span> de la zona tienen descuento nuestros huéspedes.</p>
+  <h2>${esc(t.ctaH2)}</h2>
+  <p>${esc(t.ctaP1)}</p>
+  <p>${t.ctaP2(t.onceNegocios)}</p>
   <div class="cta-datos">
-    <div><b>36</b><span>capítulos</span></div>
-    <div><b>131</b><span>consejos</span></div>
-    <div><b>430</b><span>puntos en el mapa</span></div>
-    <div><b>PDF</b><span>para ir sin cobertura</span></div>
+    ${t.ctaDatos.map(([n, s]) => `<div><b>${esc(n)}</b><span>${esc(s)}</span></div>`).join('')}
   </div>
-  <p>Se entrega unos días antes de la llegada, junto con todo lo del apartamento: del wifi a la farmacia de guardia.
-  Tres casas en Vera Playa, llevadas por nosotros, sin comisiones de plataforma.</p>
+  <p>${esc(t.ctaP3)}</p>
   <div class="apts">
-    <a class="vm" href="/mar.html"><b>Hestía Mar</b><span>A 300 m de la playa</span></a>
-    <a class="vt" href="/thalassa.html"><b>Hestía Thalassa</b><span>Ático con SPA y sauna</span></a>
-    <a class="vs" href="/salinas.html"><b>Hestía Salinas</b><span>Dos terrazas y las salinas</span></a>
+    <a class="vm" href="/mar.html"><b>${esc(t.apts[0][0])}</b><span>${esc(t.apts[0][1])}</span></a>
+    <a class="vt" href="/thalassa.html"><b>${esc(t.apts[1][0])}</b><span>${esc(t.apts[1][1])}</span></a>
+    <a class="vs" href="/salinas.html"><b>${esc(t.apts[2][0])}</b><span>${esc(t.apts[2][1])}</span></a>
   </div>
 </div>`;
+};
 
-const pie = `
+const pie = lang => `
 <footer class="pie">
-  <p>Guía escrita por Alex y Fran, que llevan en persona los tres apartamentos de
-  <a href="/">Hestía Your Home</a> en Vera Playa (Almería) desde 2016.
-  Licencias VFT/AL/01580, VFT/AL/05535 y VFT/AL/07056.</p>
-  <p><a href="/">Inicio</a> · <a href="/guia-vera/">Extracto Guía</a> ·
-  <a href="/reservas.html">Reservas</a> · <a href="/opiniones.html">Opiniones</a> ·
-  <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a></p>
-  <p><a href="/privacidad.html">Privacidad</a> · <a href="/cookies.html">Cookies</a></p>
+  <p>${T[lang].pieP1}</p>
+  <p>${T[lang].pieNav}</p>
+  <p>${T[lang].pieLegal}</p>
 </footer>
 </div>
 </body>
 </html>
 `;
 
-const distTxt = k => k < 0.8 ? 'a un paseo'
-  : (k < 10 ? `a ${k.toFixed(1).replace('.0', '')} km` : `a ${Math.round(k)} km`);
+const distTxt = (k, lang) => k < 0.8 ? T[lang].aUnPaseo
+  : (k < 10 ? `${k.toFixed(1).replace('.0', '')} km` : `${Math.round(k)} km`);
 
-function ficha(p) {
-  const serv = legibles(p.services);
-  const acc = limpiaEmoji(p.access);
+function ficha(p, lang) {
+  const desc = lang === 'es' ? p.desc : p.desc_en;
+  const acceso = lang === 'es' ? p.access : (p.access_en || null);
+  const serv = legibles(p.services, lang);
+  const acc = limpiaEmoji(acceso);
   const chips = [];
-  if (p.rating) chips.push(`<span class="chip nota">${p.rating} sobre 5</span>`);
+  if (p.rating) chips.push(`<span class="chip nota">${p.rating} ${T[lang].sobre5}</span>`);
   if (serv) chips.push(`<span class="chip">${esc(serv)}</span>`);
   if (acc) chips.push(`<span class="chip">${esc(acc)}</span>`);
-  if (p.url) chips.push(`<a href="${esc(p.url)}" rel="nofollow noopener" target="_blank">Ver en el mapa</a>`);
-  const d = distTxt(p.km);
+  if (p.url) chips.push(`<a href="${esc(p.url)}" rel="nofollow noopener" target="_blank">${T[lang].verMapa}</a>`);
+  const d = distTxt(p.km, lang);
   return `
 <article class="ficha">
   <div class="f-cuerpo">
     <h3>${esc(limpiaEmoji(p.name))}</h3>
-    ${p.desc ? `<p>${esc(p.desc)}</p>` : ''}
+    ${desc ? `<p>${esc(desc)}</p>` : ''}
     ${chips.length ? `<div class="chips">${chips.join('')}</div>` : ''}
   </div>
-  <span class="dist">${esc(d.replace('a ', ''))}<small>${d === 'a un paseo' ? 'desde casa' : 'desde casa'}</small></span>
+  <span class="dist">${esc(d)}<small>${T[lang].desdeCasa}</small></span>
 </article>`;
 }
 
-function fichaAtlas(a) {
+function fichaAtlas(a, lang) {
+  const name = a.name[lang] || a.name.es;
+  const desc = a.desc[lang];
+  const como = a.como[lang] || a.como.es;
   const chips = [];
-  if (a.como) chips.push(`<span class="chip">${esc(limpiaEmoji(a.como))}</span>`);
-  if (a.url) chips.push(`<a href="${esc(a.url)}" rel="nofollow noopener" target="_blank">Web oficial</a>`);
+  if (como) chips.push(`<span class="chip">${esc(limpiaEmoji(como))}</span>`);
+  if (a.url) chips.push(`<a href="${esc(a.url)}" rel="nofollow noopener" target="_blank">${T[lang].webOficial}</a>`);
   return `
 <article class="ficha">
   <div class="f-cuerpo">
-    <h3>${esc(a.name)}</h3>
-    ${a.desc ? `<p>${esc(a.desc)}</p>` : ''}
+    <h3>${esc(name)}</h3>
+    ${desc ? `<p>${esc(desc)}</p>` : ''}
     ${chips.length ? `<div class="chips">${chips.join('')}</div>` : ''}
   </div>
-  <span class="dist">${a.km} km<small>desde casa</small></span>
+  <span class="dist">${a.km} km<small>${T[lang].desdeCasa}</small></span>
 </article>`;
 }
 
-const seccion = (n, id, nombre, cuenta, fichas, total) => `
+const seccion = (n, id, nombre, cuenta, fichas, total, lang) => `
 <section class="grupo" id="${id}">
   <div class="grupo-head">
     <span class="grupo-n">${String(n).padStart(2, '0')}</span>
     <h2>${esc(nombre)}</h2>
   </div>
-  <p class="grupo-nota">${total && total > cuenta
-    ? `Aquí van ${cuenta}. En la guía del huésped hay <b>${total}</b>, con el consejo de cada uno.`
-    : `${cuenta} ${cuenta === 1 ? 'sitio' : 'sitios'}, del más cercano al más lejano.`}</p>
+  <p class="grupo-nota">${total && total > cuenta ? T[lang].notaConTotal(cuenta, total) : T[lang].notaSinTotal(cuenta)}</p>
   <div class="rejilla">${fichas}</div>
 </section>`;
 
@@ -504,136 +647,146 @@ function escribe(rel, html) {
   writeFileSync(join(dir, 'index.html'), html, 'utf8');
 }
 
-const migas = (nombre, url) => ({
+const migas = (lang, nombre, url) => ({
   '@context': 'https://schema.org', '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Inicio', item: `${BASE}/` },
-    { '@type': 'ListItem', position: 2, name: 'Nuestra guía', item: `${BASE}/guia-vera/` },
+    { '@type': 'ListItem', position: 1, name: T[lang].inicio, item: `${BASE}/` },
+    { '@type': 'ListItem', position: 2, name: T[lang].nuestraGuia, item: `${BASE}/guia-vera/${lang === 'en' ? 'en/' : ''}` },
     { '@type': 'ListItem', position: 3, name: nombre, item: url },
   ],
 });
 
+// URL de un hub según idioma: ES en /guia-vera/x/, EN en /guia-vera/en/x/
+const hubUrl = (lang, slug) => `${BASE}/guia-vera/${lang === 'en' ? 'en/' : ''}${slug ? slug + '/' : ''}`;
+const hubRel = (lang, slug) => `${lang === 'en' ? 'en/' : ''}${slug || ''}`;
+
 // ---- generación -----------------------------------------------------------
-const generadas = [];
+// Todo el hub se genera dos veces, una por idioma, con la misma criba de
+// contenido (qué se publica no cambia con el idioma, solo el texto).
+const resumen = { es: [], en: [] };
 
-for (const hub of HUBS) {
-  // Se publica la criba, no el archivo: lo marcado como imperdible más todo
-  // lo que está a menos de 6 km. Sin esa segunda condición la guía de playas
-  // empezaba a 26 km, sin las de Vera ni Garrucha, que es lo que de verdad
-  // busca quien va a dormir aquí. El resto se queda para quien reserva.
-  const items = PLACES.filter(p => hub.cats.includes(p.cat) && (p.featured || p.km < 6)).sort((a, b) => a.km - b.km);
-  if (!items.length) continue;
-  const url = `${BASE}/guia-vera/${hub.slug}/`;
-  const jsonld = [
-    migas(hub.h1, url),
-    {
-      '@context': 'https://schema.org', '@type': 'ItemList', name: hub.h1,
-      description: hub.desc, numberOfItems: items.length,
-      itemListElement: items.slice(0, 60).map((p, i) => ({
-        '@type': 'ListItem', position: i + 1,
-        item: { '@type': 'Place', name: limpiaEmoji(p.name), description: p.desc || undefined },
-      })),
-    },
-  ];
-  const porCat = {};
-  for (const p of items) (porCat[p.cat] ||= []).push(p);
-  const grupos = Object.keys(porCat).map(cat => ({ id: 'g-' + cat, nombre: NOMBRE_CAT[cat] || cat }));
-  const totalCat = {};
-  for (const p of PLACES) if (hub.cats.includes(p.cat)) totalCat[p.cat] = (totalCat[p.cat] || 0) + 1;
-  const cuerpo = Object.entries(porCat).map(([cat, lista], i) =>
-    seccion(i + 1, 'g-' + cat, NOMBRE_CAT[cat] || cat, lista.length,
-            lista.map(ficha).join(''), totalCat[cat])).join('');
-  const masCerca = items[0] ? distTxt(items[0].km) : null;
-  const cifras = [[String(items.length), 'sitios'], [String(grupos.length), 'categorías']];
-  if (masCerca) cifras.push([masCerca.replace('a ', ''), 'el más cercano']);
-  escribe(hub.slug,
-    cabecera({ title: hub.title, desc: hub.desc, canonical: url, jsonld })
-    + hero({ h1: hub.h1, intro: hub.intro, cifras, video: hub.video })
-    + indice(grupos)
-    + '<div class="wrap">' + avisoExtracto + cuerpo + bloqueCta + pie);
-  generadas.push({ slug: hub.slug, n: items.length, h1: hub.h1, desc: hub.desc });
-}
+for (const lang of ['es', 'en']) {
+  const generadas = resumen[lang];
 
-// historia, desde el Atlas
-{
-  const h = HUB_HISTORIA;
-  const items = ATLAS.filter(a => h.subcats.includes(a.subcat))
-    .sort((a, b) => Number(a.km) - Number(b.km)).slice(0, 12);
-  const url = `${BASE}/guia-vera/${h.slug}/`;
-  const jsonld = [
-    migas(h.h1, url),
-    {
-      '@context': 'https://schema.org', '@type': 'ItemList', name: h.h1,
-      description: h.desc, numberOfItems: items.length,
-      itemListElement: items.map((a, i) => ({
-        '@type': 'ListItem', position: i + 1,
-        item: { '@type': 'TouristAttraction', name: a.name, description: a.desc || undefined },
-      })),
-    },
-  ];
-  const porSub = {};
-  for (const a of items) (porSub[a.subcat] ||= []).push(a);
-  const grupos = Object.keys(porSub).map(sc => ({ id: 'g-' + sc, nombre: NOMBRE_CAT[sc] || sc }));
-  const cuerpo = Object.entries(porSub).map(([sc, lista], i) =>
-    seccion(i + 1, 'g-' + sc, NOMBRE_CAT[sc] || sc, lista.length, lista.map(fichaAtlas).join(''))).join('');
-  escribe(h.slug,
-    cabecera({ title: h.title, desc: h.desc, canonical: url, jsonld })
-    + hero({ h1: h.h1, intro: h.intro, video: h.video,
-             cifras: [[String(items.length), 'sitios'], [String(grupos.length), 'categorías'],
-                      ['4.000', 'años de historia']] })
-    + indice(grupos)
-    + '<div class="wrap">' + avisoExtracto + cuerpo + bloqueCta + pie);
-  generadas.push({ slug: h.slug, n: items.length, h1: h.h1, desc: h.desc });
-}
+  for (const hub of HUBS) {
+    const copy = hub[lang];
+    // Se publica la criba, no el archivo: lo marcado como imperdible más todo
+    // lo que está a menos de 6 km. Sin esa segunda condición la guía de playas
+    // empezaba a 26 km, sin las de Vera ni Garrucha, que es lo que de verdad
+    // busca quien va a dormir aquí. El resto se queda para quien reserva.
+    const items = PLACES.filter(p => hub.cats.includes(p.cat) && (p.featured || p.km < 6)).sort((a, b) => a.km - b.km);
+    if (!items.length) continue;
+    const url = hubUrl(lang, hub.slug);
+    const alt = hubUrl(lang === 'es' ? 'en' : 'es', hub.slug);
+    const jsonld = [
+      migas(lang, copy.h1, url),
+      {
+        '@context': 'https://schema.org', '@type': 'ItemList', name: copy.h1,
+        description: copy.desc, numberOfItems: items.length,
+        itemListElement: items.slice(0, 60).map((p, i) => ({
+          '@type': 'ListItem', position: i + 1,
+          item: { '@type': 'Place', name: limpiaEmoji(p.name), description: (lang === 'es' ? p.desc : p.desc_en) || undefined },
+        })),
+      },
+    ];
+    const porCat = {};
+    for (const p of items) (porCat[p.cat] ||= []).push(p);
+    const grupos = Object.keys(porCat).map(cat => ({ id: 'g-' + cat, nombre: NOMBRE_CAT[lang][cat] || cat }));
+    const totalCat = {};
+    for (const p of PLACES) if (hub.cats.includes(p.cat)) totalCat[p.cat] = (totalCat[p.cat] || 0) + 1;
+    const cuerpo = Object.entries(porCat).map(([cat, lista], i) =>
+      seccion(i + 1, 'g-' + cat, NOMBRE_CAT[lang][cat] || cat, lista.length,
+              lista.map(p => ficha(p, lang)).join(''), totalCat[cat], lang)).join('');
+    const masCerca = items[0] ? distTxt(items[0].km, lang) : null;
+    const cifras = [[String(items.length), T[lang].sitios], [String(grupos.length), T[lang].categorias]];
+    if (masCerca) cifras.push([masCerca, T[lang].elMasCercano]);
+    escribe(hubRel(lang, hub.slug),
+      cabecera({ lang, title: copy.title, desc: copy.desc, canonical: url, altHref: alt, jsonld })
+      + hero({ lang, h1: copy.h1, intro: copy.intro, cifras, video: hub.video })
+      + indice(grupos)
+      + '<div class="wrap">' + avisoExtracto(lang) + cuerpo + bloqueCta(lang) + pie(lang));
+    generadas.push({ slug: hub.slug, n: items.length, h1: copy.h1, desc: copy.desc });
+  }
 
-// índice del hub
-{
-  const url = `${BASE}/guia-vera/`;
-  const total = generadas.reduce((a, g) => a + g.n, 0);
-  const jsonld = [
-    {
-      '@context': 'https://schema.org', '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Inicio', item: `${BASE}/` },
-        { '@type': 'ListItem', position: 2, name: 'Nuestra guía', item: url },
-      ],
-    },
-    {
-      '@context': 'https://schema.org', '@type': 'ItemList',
-      name: 'Guía de Vera Playa y el Levante almeriense',
-      numberOfItems: generadas.length,
-      itemListElement: generadas.map((g, i) => ({
-        '@type': 'ListItem', position: i + 1, name: g.h1,
-        url: `${BASE}/guia-vera/${g.slug}/`,
-      })),
-    },
-  ];
-  const fichas = generadas.map(g => `
+  // historia, desde el Atlas
+  {
+    const h = HUB_HISTORIA;
+    const copy = h[lang];
+    const items = ATLAS.filter(a => h.subcats.includes(a.subcat))
+      .sort((a, b) => Number(a.km) - Number(b.km)).slice(0, 12);
+    const url = hubUrl(lang, h.slug);
+    const alt = hubUrl(lang === 'es' ? 'en' : 'es', h.slug);
+    const jsonld = [
+      migas(lang, copy.h1, url),
+      {
+        '@context': 'https://schema.org', '@type': 'ItemList', name: copy.h1,
+        description: copy.desc, numberOfItems: items.length,
+        itemListElement: items.map((a, i) => ({
+          '@type': 'ListItem', position: i + 1,
+          item: { '@type': 'TouristAttraction', name: a.name[lang] || a.name.es, description: a.desc[lang] || undefined },
+        })),
+      },
+    ];
+    const porSub = {};
+    for (const a of items) (porSub[a.subcat] ||= []).push(a);
+    const grupos = Object.keys(porSub).map(sc => ({ id: 'g-' + sc, nombre: NOMBRE_CAT[lang][sc] || sc }));
+    const cuerpo = Object.entries(porSub).map(([sc, lista], i) =>
+      seccion(i + 1, 'g-' + sc, NOMBRE_CAT[lang][sc] || sc, lista.length, lista.map(a => fichaAtlas(a, lang)).join(''), null, lang)).join('');
+    escribe(hubRel(lang, h.slug),
+      cabecera({ lang, title: copy.title, desc: copy.desc, canonical: url, altHref: alt, jsonld })
+      + hero({ lang, h1: copy.h1, intro: copy.intro, video: h.video,
+               cifras: [[String(items.length), T[lang].sitios], [String(grupos.length), T[lang].categorias],
+                        ['4.000', T[lang].anosHistoria]] })
+      + indice(grupos)
+      + '<div class="wrap">' + avisoExtracto(lang) + cuerpo + bloqueCta(lang) + pie(lang));
+    generadas.push({ slug: h.slug, n: items.length, h1: copy.h1, desc: copy.desc });
+  }
+
+  // índice del hub
+  {
+    const t = T[lang];
+    const url = hubUrl(lang, '');
+    const alt = hubUrl(lang === 'es' ? 'en' : 'es', '');
+    const total = generadas.reduce((a, g) => a + g.n, 0);
+    const jsonld = [
+      {
+        '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: t.inicio, item: `${BASE}/` },
+          { '@type': 'ListItem', position: 2, name: t.nuestraGuia, item: url },
+        ],
+      },
+      {
+        '@context': 'https://schema.org', '@type': 'ItemList',
+        name: lang === 'es' ? 'Guía de Vera Playa y el Levante almeriense' : 'Guide to Vera Playa and the Almería Levante',
+        numberOfItems: generadas.length,
+        itemListElement: generadas.map((g, i) => ({
+          '@type': 'ListItem', position: i + 1, name: g.h1,
+          url: hubUrl(lang, g.slug),
+        })),
+      },
+    ];
+    const fichas = generadas.map(g => `
 <article class="ficha">
   <div class="f-top">
-    <h3><a href="/guia-vera/${g.slug}/" style="color:inherit;text-decoration:none">${esc(g.h1)}</a></h3>
-    <span class="dist">${g.n} sitios</span>
+    <h3><a href="${hubUrl(lang, g.slug)}" style="color:inherit;text-decoration:none">${esc(g.h1)}</a></h3>
+    <span class="dist">${t.ondasSitios(g.n)}</span>
   </div>
   <p>${esc(g.desc)}</p>
-  <div class="chips"><a href="/guia-vera/${g.slug}/">Ver los ${g.n} sitios</a></div>
+  <div class="chips"><a href="${hubUrl(lang, g.slug)}">${esc(t.verLos(g.n))}</a></div>
 </article>`).join('');
-  escribe('',
-    cabecera({
-      title: 'Guía de Vera Playa y el Levante almeriense · Hestía',
-      desc: `Guía del Levante almeriense por quienes llevan toda la vida viniendo: ${total} playas, restaurantes, pueblos, rutas y monumentos del Levante almeriense, con distancias y lo que merece la pena de cada uno.`,
-      canonical: url, jsonld,
-    })
-    + hero({
-      h1: 'La Almería que no sale en otras guías',
-      intro: `${total} sitios del Levante almeriense recorridos por Alex y Fran, ligados a Almería de toda la vida y con tres apartamentos en Vera Playa desde 2016. No es una lista copiada de otras webs: es lo que recomendamos a quien se aloja con nosotros, ordenado por distancia desde los apartamentos.`,
-      cifras: [[String(total), 'sitios'], [String(generadas.length), 'secciones'], ['2016', 'con casa aquí']],
-      video: 'hero-atardecer-aereo.mp4',
-    })
-    + '<div class="wrap">' + avisoExtracto
-    + seccion(1, 'g-todo', 'Por dónde empezar', generadas.length, fichas)
-    + bloqueCta + pie);
+    escribe(hubRel(lang, ''),
+      cabecera({ lang, title: t.indexTitle, desc: t.indexDesc(total), canonical: url, altHref: alt, jsonld })
+      + hero({ lang, h1: t.indexH1, intro: t.indexIntro(total),
+               cifras: t.indexCifras(total, generadas.length), video: 'hero-atardecer-aereo.mp4' })
+      + '<div class="wrap">' + avisoExtracto(lang)
+      + seccion(1, 'g-todo', t.porDondeEmpezar, generadas.length, fichas, null, lang)
+      + bloqueCta(lang) + pie(lang));
+  }
 }
 
-console.log(`✓ hub generado en docs/guia-vera/`);
-for (const g of generadas) console.log(`   /guia-vera/${g.slug}/  ${String(g.n).padStart(3)} sitios`);
+console.log(`✓ hub generado en docs/guia-vera/ (es + en)`);
+for (const g of resumen.es) console.log(`   /guia-vera/${g.slug}/  ${String(g.n).padStart(3)} sitios`);
 console.log(`   /guia-vera/          índice`);
+for (const g of resumen.en) console.log(`   /guia-vera/en/${g.slug}/  ${String(g.n).padStart(3)} places`);
+console.log(`   /guia-vera/en/          index`);
