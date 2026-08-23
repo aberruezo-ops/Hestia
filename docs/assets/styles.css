@@ -11100,42 +11100,55 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 
 /* ================================================================
-   POR QUÉ HESTÍA — crosslink & mobile nav
+   NOSOTROS + POR QUÉ HESTÍA — costura de la página unificada
    ================================================================ */
-.pq-crosslink {
-  padding: 76px 24px;
+#por-que-hestia { scroll-margin-top: calc(var(--chrome-h, 116px) + 12px); }
+
+.acto {
+  position: relative; z-index: 38;
+  background: var(--crema, #FAF6F0);
+  padding: calc(clamp(64px, 8vw, 104px) + 32px) var(--page-pad) clamp(28px, 4vw, 48px);
 }
-.pq-cl-inner {
-  max-width: 720px; margin: 0 auto; text-align: center;
-  padding: clamp(38px, 5vw, 58px) clamp(26px, 4vw, 48px);
-  background: linear-gradient(152deg, #FFFFFF 0%, #FBF6EC 100%);
-  border: 1px solid var(--arena-dk, #E4D9BE);
-  border-radius: 16px 0 16px 0;
-  box-shadow: 0 12px 40px rgba(42, 15, 46, .06);
+.acto-inner {
+  max-width: 900px; margin: 0 auto;
+  display: flex; align-items: center; gap: clamp(18px, 3vw, 32px);
+  color: var(--ber, #3D1A35);
 }
-.pq-cl-inner .eyebrow { color: var(--sol-text, #176E80); margin-bottom: 18px; }
-.pq-cl-lead {
+.acto-num {
+  font-family: var(--serif); font-weight: 300; font-style: italic;
+  font-size: clamp(46px, 7vw, 82px); line-height: .84;
+  color: var(--sol-text, #176E80); opacity: .38;
+  letter-spacing: -.03em; flex: none;
+}
+.acto-rule {
+  flex: none; width: clamp(28px, 6vw, 76px); height: 1px;
+  background: linear-gradient(90deg, rgba(23,110,128,.45), rgba(61,26,53,.12));
+}
+.acto-txt { display: block; min-width: 0; }
+.acto-eyebrow {
+  display: block; color: var(--sol-text, #176E80); margin-bottom: 10px;
+}
+.acto-title {
+  display: block;
   font-family: var(--serif); font-weight: 300;
-  font-size: clamp(21px, 2.9vw, 30px); line-height: 1.25;
-  letter-spacing: -.015em; color: var(--ber, #3D1A35);
-  margin: 0 auto 26px; max-width: 22ch; text-wrap: balance;
+  font-size: clamp(24px, 3.4vw, 40px); line-height: 1.16;
+  letter-spacing: -.02em; color: var(--ber, #3D1A35);
+  text-wrap: balance;
 }
-.pq-cl-link {
-  display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--sans); font-size: 13px; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--crema, #FAF6F0); background: var(--ber-dk, #2A0F2E);
-  padding: 13px 26px; border-radius: 10px 0 10px 0; text-decoration: none;
-  transition: background .25s var(--ease-out, cubic-bezier(.23,1,.32,1)),
-              transform .25s var(--ease-out, cubic-bezier(.23,1,.32,1));
+.acto-title em { font-style: italic; color: rgba(61, 26, 53, .58); }
+
+@media (max-width: 620px) {
+  .acto-inner { gap: 14px; align-items: flex-start; }
+  .acto-rule { display: none; }
+  .acto-num { line-height: 1; margin-top: -6px; }
 }
-.pq-cl-link span { transition: transform .25s var(--ease-out, cubic-bezier(.23,1,.32,1)); }
-.pq-cl-link:hover { background: var(--ber, #3D1A35); }
-.pq-cl-link:active { transform: scale(.98); }
-@media (hover: hover) and (pointer: fine) {
-  .pq-cl-link:hover span { transform: translateX(4px); }
+
+/* El origen comparte maquetación con la intro de Nosotros y va justo debajo:
+   sin este cambio de fondo se leen como un único muro de texto. */
+.nos-intro.pq-origen {
+  background: linear-gradient(180deg, var(--crema, #FAF6F0) 0%, #F5EFE3 100%);
 }
-.pq-cl-link:hover { opacity: .7; }
+.nos-intro.pq-origen .nos-intro-head .eyebrow { color: var(--sol-text, #176E80); }
 
 /* ─── Forma corporativa + armonía perfecta de esquinas ──────────────────────
    Principio: la sección A tiene z-index mayor que B y se extiende 32 px
@@ -11320,46 +11333,49 @@ html:has(.apt-page-hero) {
 .nos-viajero,
 .pq-evolucion,
 .pq-valores,
-.pq-crosslink,
 .contacto-address,
 .opiniones-platforms,
 .noticias-territorio,
 .apt-floorplan { margin-bottom: -32px; }
 
-/* Z-index decreciente por posición en página (reutilizable entre páginas
-   distintas — valores en el rango 40-49, same as home, no conflict) */
-.nos-intro,
+/* Z-index decreciente por posición en página. Los valores solo se comparan
+   entre secciones de la MISMA página, así que se repiten entre páginas. */
+
+/* nosotros.html — la página unificada, en orden de scroll */
+.nos-intro           { z-index: 49; }
+.nos-intro.pq-origen { z-index: 48; }
+.nos-why.pq-nombre   { z-index: 47; }
+.porque-logo         { z-index: 46; }
+.pq-evolucion        { z-index: 45; }
+.nos-why             { z-index: 44; }
+.nos-colores         { z-index: 43; }
+.nosotros-team       { z-index: 42; }
+.pq-valores          { z-index: 41; }
+.nos-viajero         { z-index: 40; }
+
+/* resto de páginas */
 .contacto-persons,
 .opiniones-platforms,
 .noticias-voz,
 .apt-trust-strip { z-index: 49; }
 
-.porque-logo,
 .contacto-address,
 .opiniones-quotes-marquee,
 .noticias-territorio,
 .apt-video-desc { z-index: 48; }
 
-.nos-why,
-.pq-evolucion,
-.nosotros-team,
 .contacto-faq,
 .opiniones-testimonials { z-index: 47; }
 
-.nos-colores,
 .apt-equip { z-index: 46; }
 
-.nos-viajero,
 .apt-floorplan { z-index: 45; }
 
-.pq-valores,
 .dbt-band { z-index: 44; }
 
 .apt-avail { z-index: 43; }
 
 .apt-page-others { z-index: 42; }
-
-.pq-crosslink { z-index: 40; }
 
 /* Compensación padding-top (+32px para recuperar el espacio solapado) */
 .nos-intro      { padding-top: calc(96px  + 32px); }
@@ -11369,7 +11385,6 @@ html:has(.apt-page-hero) {
 .nos-colores    { padding-top: calc(96px  + 32px); }
 .nos-viajero    { padding-top: calc(96px  + 32px); }
 .pq-valores     { padding-top: 32px; }
-.pq-crosslink   { padding-top: calc(72px  + 32px); }
 .nosotros-team  { padding-top: calc(96px  + 32px); }
 .contacto-persons { padding-top: calc(96px + 32px); }
 .contacto-address { padding-top: calc(80px + 32px); }

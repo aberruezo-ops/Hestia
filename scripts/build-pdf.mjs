@@ -2288,7 +2288,7 @@ function renderFeedback(shared, aptData, lang) {
 }
 
 // ---------------------------------------------------------------
-// Por qué Hestía — contenido extraído de porque-hestia-page.jsx
+// Por qué Hestía — contenido extraído de porque-sections.jsx
 // ---------------------------------------------------------------
 const PORQUE_PDF = {
   es: {

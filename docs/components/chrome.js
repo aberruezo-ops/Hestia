@@ -139,7 +139,7 @@ const NAV_PAGES = {
   thalassa: 'thalassa.html',
   salinas: 'salinas.html',
   nosotros: 'nosotros.html',
-  porqueHestia: 'porque-hestia.html',
+  porqueHestia: 'nosotros.html#por-que-hestia',
   opiniones: 'opiniones.html',
   noticias: 'noticias.html',
   contacto: 'contacto.html',
@@ -251,7 +251,7 @@ const Header = ({
     src: "assets/hestia-vitruvio.mp4",
     type: "video/mp4"
   })), /*#__PURE__*/React.createElement("a", {
-    href: "porque-hestia.html",
+    href: NAV_PAGES.porqueHestia,
     className: "hv-box-link"
   }, lang === 'es' ? 'Nuestra marca' : 'Our brand'))), /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -411,7 +411,7 @@ const Header = ({
     href: NAV_PAGES.noticias
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.guiaZona
-  }, lang === 'es' ? 'Nuestra guía' : 'Our guide'), /*#__PURE__*/React.createElement(NavLink, {
+  }, lang === 'es' ? 'Extracto Guía' : 'Guide extract'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
     className: "cta"
   }, /*#__PURE__*/React.createElement("span", {
@@ -467,9 +467,6 @@ const Header = ({
   }, "→")))), /*#__PURE__*/React.createElement("div", {
     className: "mn-links"
   }, /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.porqueHestia,
-    className: "mn-link"
-  }, lang === 'es' ? '¿Por qué Hestía?' : 'Why Hestía?'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.nosotros,
     className: "mn-link"
   }, t.nav[4]), /*#__PURE__*/React.createElement(NavLink, {
@@ -481,7 +478,7 @@ const Header = ({
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.guiaZona,
     className: "mn-link"
-  }, lang === 'es' ? 'Nuestra guía' : 'Our guide'), /*#__PURE__*/React.createElement(NavLink, {
+  }, lang === 'es' ? 'Extracto Guía' : 'Guide extract'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.estanciasLargas,
     className: "mn-link"
   }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
@@ -1505,14 +1502,12 @@ const Footer = ({
   }, /*#__PURE__*/React.createElement("h5", null, t.footer_hestia), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "nosotros.html"
   }, t.nav[4])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-    href: "porque-hestia.html"
-  }, t.nav[8])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "opiniones.html"
   }, t.nav[5])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "noticias.html"
   }, t.nav[7])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "/guia-vera/"
-  }, lang === 'es' ? 'Nuestra guía' : 'Our guide')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, lang === 'es' ? 'Extracto Guía' : 'Guide extract')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "estancias-largas.html"
   }, t.nav[9])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "empresas.html"

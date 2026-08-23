@@ -23,7 +23,7 @@ const NOSOTROS_COPY = {
     almeria_quote_attr: '– Alex Berruezo',
 
     team_eyebrow: 'El equipo',
-    team_title: (<>Detrás de Hestía hay<br/><em>dos personas reales.</em></>),
+    team_title: (<>Uno antes de llegar.<br/><em>El otro mientras estás aquí.</em></>),
     alex_eyebrow: '01 · Reserva · Antes de tu llegada',
     alex_lang: '🇪🇸 Español',
     alex_name: 'Alex Berruezo',
@@ -36,10 +36,6 @@ const NOSOTROS_COPY = {
     fran_quote: '«If anything breaks, calls, or changes, I am here. Your stay, my job.»',
 
     manifest_cta: 'Reservar ahora →',
-
-    crosslink_label: 'La otra mitad de la historia',
-    crosslink_lead: 'Hestía era la diosa griega del hogar y del fuego que no se apaga.',
-    crosslink_text: 'Por qué elegimos su nombre',
   },
   en: {
     eyebrow: 'Vera Playa · Almería · since 2016',
@@ -61,7 +57,7 @@ const NOSOTROS_COPY = {
     almeria_quote_attr: '– Alex Berruezo',
 
     team_eyebrow: 'The team',
-    team_title: (<>Behind Hestía there are<br/><em>two real people.</em></>),
+    team_title: (<>One before you arrive.<br/><em>The other while you are here.</em></>),
     alex_eyebrow: '01 · Booking · Before you arrive',
     alex_lang: '🇪🇸 Español',
     alex_name: 'Alex Berruezo',
@@ -74,10 +70,6 @@ const NOSOTROS_COPY = {
     fran_quote: '«If anything breaks, calls, or changes, I am here. Your stay, my job.»',
 
     manifest_cta: 'Book now →',
-
-    crosslink_label: 'The other half of the story',
-    crosslink_lead: 'Hestía was the Greek goddess of the hearth and the fire that never goes out.',
-    crosslink_text: 'Why we chose her name',
   },
 };
 
@@ -233,18 +225,39 @@ const NosotrosManifest = ({ lang }) => {
   );
 };
 
-const NosotrosCrosslink = ({ lang }) => {
-  const t = NOSOTROS_COPY[lang];
+// Esta página fusiona lo que antes eran dos: "Nosotros" y "Por qué Hestía".
+// Los actos son la costura: sin ellos las secciones de origen quedan pegadas
+// unas a otras y se lee como dos páginas apiladas, no como una historia.
+const ACTOS = {
+  es: [
+    { num: 'I',   eyebrow: 'El fuego',      title: (<>Dos personas<br/><em>y una convicción.</em></>) },
+    { num: 'II',  eyebrow: 'El nombre',     title: (<>Por qué Hestía<br/><em>se llama Hestía.</em></>) },
+    { num: 'III', eyebrow: 'El lugar',      title: (<>Almería,<br/><em>en nueve colores.</em></>) },
+    { num: 'IV',  eyebrow: 'Las personas',  title: (<>Quién te responde,<br/><em>y con qué valores.</em></>) },
+    { num: 'V',   eyebrow: 'Y tú',          title: (<>El huésped para quien<br/><em>existe Hestía.</em></>) },
+  ],
+  en: [
+    { num: 'I',   eyebrow: 'The fire',   title: (<>Two people<br/><em>and one conviction.</em></>) },
+    { num: 'II',  eyebrow: 'The name',   title: (<>Why Hestía<br/><em>is called Hestía.</em></>) },
+    { num: 'III', eyebrow: 'The place',  title: (<>Almería,<br/><em>in nine colours.</em></>) },
+    { num: 'IV',  eyebrow: 'The people', title: (<>Who answers you,<br/><em>and with what values.</em></>) },
+    { num: 'V',   eyebrow: 'And you',    title: (<>The guest<br/><em>Hestía exists for.</em></>) },
+  ],
+};
+
+const Acto = ({ lang, i, id }) => {
+  const a = ACTOS[lang][i];
   return (
-    <section className="pq-crosslink section-cream">
-      <div className="pq-cl-inner reveal">
-        <div className="eyebrow">{t.crosslink_label}</div>
-        <p className="pq-cl-lead">{t.crosslink_lead}</p>
-        <a href="porque-hestia.html" className="pq-cl-link">
-          {t.crosslink_text}<span aria-hidden="true">→</span>
-        </a>
+    <div className="acto" id={id}>
+      <div className="acto-inner reveal">
+        <span className="acto-num" aria-hidden="true">{a.num}</span>
+        <span className="acto-rule" aria-hidden="true"/>
+        <span className="acto-txt">
+          <span className="eyebrow acto-eyebrow">{a.eyebrow}</span>
+          <span className="acto-title">{a.title}</span>
+        </span>
       </div>
-    </section>
+    </div>
   );
 };
 
@@ -257,8 +270,8 @@ const NosotrosPageApp = () => {
     localStorage.setItem('hestia-lang', lang);
     document.documentElement.lang = lang;
     document.title = lang === 'es'
-      ? 'Nosotros · Hestía Your Home · Vera Playa'
-      : 'About us · Hestía Your Home · Vera Playa';
+      ? 'Hestía y nosotros · Quiénes somos y por qué Hestía · Vera Playa'
+      : 'Hestía and us · Who we are and why Hestía · Vera Playa';
   }, [lang]);
 
   return (
@@ -268,11 +281,27 @@ const NosotrosPageApp = () => {
       <main>
         <NosotrosHero lang={lang} />
         <FraseHogar lang={lang} />
+
+        <Acto lang={lang} i={0} />
         <NosotrosIntro lang={lang} />
+        <PorqueOrigen lang={lang} />
+
+        <Acto lang={lang} i={1} id="por-que-hestia" />
+        <PorqueNombre lang={lang} />
+        <PorqueLogo lang={lang} />
+        <PorqueEvolucion lang={lang} />
+
+        <Acto lang={lang} i={2} />
         <NosotrosAlmeria lang={lang} />
+        <PorqueColores lang={lang} />
+
+        <Acto lang={lang} i={3} />
         <NosotrosTeam lang={lang} />
+        <PorqueValores lang={lang} />
+
+        <Acto lang={lang} i={4} />
+        <PorqueViajero lang={lang} />
         <NosotrosManifest lang={lang} />
-        <NosotrosCrosslink lang={lang} />
         <QuickFAQ lang={lang} pageId="nosotros" />
         <ContactCTA lang={lang} />
       </main>

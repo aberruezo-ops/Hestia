@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="assets/leaflet.css"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=1038"/>          <link rel="preload" as="image" href="assets/apt-vt-4.jpg" fetchpriority="high"/>  <script type="application/ld+json">
+<link rel="stylesheet" href="assets/styles.css?v=1039"/>          <link rel="preload" as="image" href="assets/apt-vt-4.jpg" fetchpriority="high"/>  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": ["Accommodation", "LodgingBusiness"],
@@ -177,7 +177,7 @@
   <p>Es el apartamento con más plataformas de streaming: SkyShowtime, HBO Max, Prime Video, Movistar Plus, Netflix y Disney+, todas activas.</p>
   <p>La playa está a 1,5 kilómetros. Mascotas bienvenidas con petición previa y un suplemento moderado por noche. Hay una estancia mínima, algo más alta en temporada crítica.</p>
   <p>Licencia turística VFT/AL/05535.</p>
-  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Nuestra guía</a></nav>
+  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Extracto Guía</a></nav>
 </noscript>
 
 
@@ -215,7 +215,7 @@
     } catch (e) { console.warn('photo-positions.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=d8a83b2de6');
+      const res = await fetch(file + '?cv=00e577d84d');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

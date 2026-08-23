@@ -74,11 +74,13 @@ done
 lado correcto. Estado actual de Hestía (correcto):
 
 - **DEBEN indexar** (`index, follow`): `index`, `mar`, `thalassa`, `salinas`,
-  `reservas`, `opiniones`, `nosotros`, `porque-hestia`, `estancias-largas`,
-  `empresas`, `noticias`, `contacto`.
+  `reservas`, `opiniones`, `nosotros`, `estancias-largas`,
+  `empresas`, `noticias`, `contacto`, `guia-vera/` y sus 5 subpáginas.
 - **NO deben indexar** (`noindex`) y está bien así: `p-edit` (admin),
   `escribir-opinion`, `mapa`, `registro`, `cookies`, `privacidad`, `404`,
   `pago`, `pago-prototipo`, `fix-pins`, `territorio`.
+- **Redirigidas** (canonical a otra + meta refresh): `porque-hestia` → `nosotros`
+  (las dos páginas se fusionaron).
 
 Regla: si una página no aparece en Google, **lo primero** es mirar su meta
 robots. Un `noindex` olvidado es la explicación más común y más tonta.
