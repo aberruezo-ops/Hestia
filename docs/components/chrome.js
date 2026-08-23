@@ -146,7 +146,8 @@ const NAV_PAGES = {
   reservas: 'reservas.html',
   ventajas: 'reservas.html#ventajas',
   estanciasLargas: 'estancias-largas.html',
-  empresas: 'empresas.html'
+  empresas: 'empresas.html',
+  guiaZona: '/guia-vera/'
 };
 const isActive = href => {
   const current = window.location.pathname.split('/').pop() || 'index.html';
@@ -409,6 +410,8 @@ const Header = ({
   }, t.nav[5]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.noticias
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.guiaZona
+  }, lang === 'es' ? 'La zona' : 'The area'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.porqueHestia
   }, t.nav[8]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
@@ -478,6 +481,9 @@ const Header = ({
     href: NAV_PAGES.noticias,
     className: "mn-link"
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.guiaZona,
+    className: "mn-link"
+  }, lang === 'es' ? 'Guía de la zona' : 'Area guide'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.estanciasLargas,
     className: "mn-link"
   }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {

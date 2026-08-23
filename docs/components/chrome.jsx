@@ -84,6 +84,7 @@ const NAV_PAGES = {
   ventajas:         'reservas.html#ventajas',
   estanciasLargas:  'estancias-largas.html',
   empresas:         'empresas.html',
+  guiaZona:         '/guia-vera/',
 };
 
 const isActive = (href) => {
@@ -306,6 +307,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
             <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias}>{t.nav[7]}</NavLink>
+            <NavLink href={NAV_PAGES.guiaZona}>{lang === 'es' ? 'La zona' : 'The area'}</NavLink>
             <NavLink href={NAV_PAGES.porqueHestia}>{t.nav[8]}</NavLink>
             <NavLink href={NAV_PAGES.reservas} className="cta"><span className="cta-border" aria-hidden="true"/><span className="cta-text">{t.cta_nav}</span></NavLink>
           </nav>
@@ -350,6 +352,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.nosotros} className="mn-link">{t.nav[4]}</NavLink>
             <NavLink href={NAV_PAGES.opiniones} className="mn-link">{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias} className="mn-link">{t.nav[7]}</NavLink>
+            <NavLink href={NAV_PAGES.guiaZona} className="mn-link">{lang === 'es' ? 'Guía de la zona' : 'Area guide'}</NavLink>
             <NavLink href={NAV_PAGES.estanciasLargas} className="mn-link">{t.nav[9]}</NavLink>
             <NavLink href={NAV_PAGES.empresas} className="mn-link">{lang === 'es' ? 'Para empresas' : 'For business'}</NavLink>
             <NavLink href={NAV_PAGES.ventajas} className="mn-link">✓ {lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks'}</NavLink>
