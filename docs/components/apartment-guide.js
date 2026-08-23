@@ -3061,6 +3061,44 @@ const PLACES = [
   url: 'https://www.wikiloc.com/hiking-trails/cortijo-cabrera-turre-mojacar-6347444',
   lat: 37.1550,
   lng: -1.8700
+},
+// ── Excursión de día completo, fuera de Almería ────────────────
+{
+  id: 'trek-castril',
+  name: 'Cerrada de Utrero (Sierra de Castril, Granada)',
+  desc: 'Cañón kárstico en el extremo norte de Granada, con el río Castril naciendo entre paredes de piedra caliza, cascadas y pasarelas de madera sobre el agua. Parque Natural.',
+  specialty: '~2,5 km ida y vuelta · 1h30 · desnivel suave · pasarelas y sendero de tierra.',
+  level: 'Fácil · todas las edades con calzado cerrado · tramos con roca húmeda.',
+  tip: 'Aparca en el área habilitada antes del cañón, la pista final no es apta para todos los coches. Combínalo con el pueblo de Castril, colgado sobre su propio barranco.',
+  cat: 'trek',
+  url: 'https://www.google.com/maps/search/?api=1&query=Cerrada+de+Utrero+Castril+Granada',
+  lat: 37.8047,
+  lng: -2.7729,
+  featured: true
+}, {
+  id: 'trek-espuna',
+  name: 'Sendero de Las Cámaras (Sierra Espuña, Murcia)',
+  desc: 'El mayor espacio natural de Murcia: pinares de repoblación centenarios y la vía ferrata y sendero de Las Cámaras hasta el Morrón de Totana, con cabras montesas casi seguras.',
+  specialty: '~7 km circular · 3 h · desnivel 400 m · tramo final con pasamanos.',
+  level: 'Medio · 12+ años con calzado de trekking · el tramo de Las Cámaras exige algo de cabeza para las alturas.',
+  tip: 'El Centro de Visitantes de El Berro tiene mapas de todas las rutas y el estado de las pistas. En primavera hay más agua en las fuentes.',
+  cat: 'trek',
+  url: 'https://www.google.com/maps/search/?api=1&query=Sierra+Espuna+Centro+de+Visitantes+El+Berro',
+  lat: 37.8580,
+  lng: -1.5550,
+  featured: true
+}, {
+  id: 'trek-gebas',
+  name: 'Barrancos de Gebas (Alhama de Murcia)',
+  desc: 'Paisaje de cárcavas y badlands formado por la erosión de margas y arcillas, con cañones estrechos y formaciones que parecen de otro planeta. Muy distinto a todo lo que hay en la costa.',
+  specialty: '~4 km circular · 1h30 · desnivel mínimo · sendero de tierra sin sombra.',
+  level: 'Fácil · todas las edades · evitar en pleno verano por la falta de sombra.',
+  tip: 'Mejor con luz rasante, al atardecer o a primera hora de la mañana: el color de la tierra cambia por completo.',
+  cat: 'trek',
+  url: 'https://www.google.com/maps/search/?api=1&query=Barrancos+de+Gebas+Alhama+de+Murcia',
+  lat: 37.8280,
+  lng: -1.4230,
+  featured: true
 }, {
   id: 'club-nautico',
   name: 'Club Náutico Almanzora',
@@ -3340,6 +3378,16 @@ const PLACES = [
   lng: -1.7000,
   featured: true
 }, {
+  id: 't-aledo',
+  name: 'Aledo (Murcia)',
+  desc: 'Pueblo amurallado sobre un cerro junto a Sierra Espuña, con el recinto defensivo del s. XIII casi intacto. Uno de los conjuntos históricos mejor conservados de la Región de Murcia.',
+  best: 'Muralla y castillo (recinto amurallado completo), Iglesia de El Salvador, mirador sobre Sierra Espuña y el valle del Guadalentín.',
+  tip: 'Combínalo con Sierra Espuña, están a 10 min en coche: sube al pueblo a media mañana y baja a hacer ruta por el parque.',
+  cat: 'town',
+  lat: 37.8163,
+  lng: -1.5001,
+  featured: true
+}, {
   id: 't-aguilas',
   name: 'Águilas (Murcia)',
   desc: 'Pueblo costero murciano a 30 min al norte. Famoso por su Carnaval, declarado de Interés Turístico Internacional.',
@@ -3515,7 +3563,8 @@ const PLACES = [
   }],
   cat: 'town',
   lat: 37.3850,
-  lng: -2.2780
+  lng: -2.2780,
+  featured: true
 }, {
   id: 't-olula',
   name: 'Olula del Río',
@@ -6593,6 +6642,24 @@ const PLACES_OF_INTEREST = [
   comoLlegar_en: 'AP-7 towards Málaga, Adra exit; site in the town centre.',
   desc_es: 'Restos de la antigua Abdera fenicia y romana, junto al mar de Adra.',
   desc_en: 'Remains of the ancient Phoenician and Roman Abdera, by the sea at Adra.'
+}, {
+  subcat: 'yacimientos',
+  name_es: 'Castellón Alto (Galera)',
+  name_en: 'Castellón Alto (Galera)',
+  km: 145,
+  comoLlegar_es: 'A-7 hasta Huércal-Overa + A-334/A-92N dirección Baza y Puebla de Don Fadrique, desvío a Galera.',
+  comoLlegar_en: 'A-7 to Huércal-Overa + A-334/A-92N towards Baza and Puebla de Don Fadrique, turn-off to Galera.',
+  desc_es: 'Poblado argárico de la Edad del Bronce reconstruido junto a Galera, con dieciséis viviendas y el ajuar funerario original en el museo comarcal.',
+  desc_en: 'Reconstructed Bronze Age Argaric settlement next to Galera, with sixteen dwellings and the original grave goods in the local museum.'
+}, {
+  subcat: 'yacimientos',
+  name_es: 'Orce, cuna del primer europeo',
+  name_en: 'Orce, cradle of the first European',
+  km: 155,
+  comoLlegar_es: 'A-7 hasta Huércal-Overa + A-334/A-92N dirección Baza; Orce está a 15 min de Galera.',
+  comoLlegar_en: 'A-7 to Huércal-Overa + A-334/A-92N towards Baza; Orce is 15 min from Galera.',
+  desc_es: 'El castillo de Orce alberga el fragmento craneal de 1,4 millones de años, el resto humano más antiguo hallado en Europa. Los yacimientos de Fuente Nueva-3 y Barranco León abren al público en jornadas señaladas.',
+  desc_en: 'Orce castle houses a 1.4-million-year-old skull fragment, the oldest human remains found in Europe. The Fuente Nueva-3 and Barranco León dig sites open to visitors on set dates.'
 },
 // --- Castillos y fortalezas ---
 {
