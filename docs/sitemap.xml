@@ -132,4 +132,59 @@
     <priority>0.4</priority>
   </url>
 
+
+  <url>
+    <loc>https://www.hestiayourhome.com/guia-vera/</loc>
+    <lastmod>2026-08-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/guia-vera/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/guia-vera/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/guia-vera/playas/</loc>
+    <lastmod>2026-08-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/guia-vera/playas/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/guia-vera/playas/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/guia-vera/donde-comer/</loc>
+    <lastmod>2026-08-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/guia-vera/donde-comer/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/guia-vera/donde-comer/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/guia-vera/pueblos/</loc>
+    <lastmod>2026-08-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/guia-vera/pueblos/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/guia-vera/pueblos/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/guia-vera/naturaleza-y-rutas/</loc>
+    <lastmod>2026-08-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/guia-vera/naturaleza-y-rutas/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/guia-vera/naturaleza-y-rutas/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/guia-vera/historia/</loc>
+    <lastmod>2026-08-23</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/guia-vera/historia/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/guia-vera/historia/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>

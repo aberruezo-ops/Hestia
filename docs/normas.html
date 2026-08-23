@@ -56,7 +56,7 @@
   <p>Mascotas bienvenidas en los tres apartamentos, siempre con petición previa y con un suplemento moderado por noche, con tope por estancia.</p>
   <p>Cuidad el equipamiento y el mobiliario: tras la estancia hacemos inventario. Y cuidad el entorno, sin malgastar luz ni agua y sin dejar el aire acondicionado encendido con las ventanas abiertas o cuando salgáis.</p>
   <p>Cualquier cosa puede romperse o fallar. Lo que garantizamos es que estaremos pendientes y haremos todo lo que esté en nuestra mano para resolverlo cuanto antes.</p>
-  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a></nav>
+  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Guía de la zona</a></nav>
 </noscript>
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react.development.js'"></script>
@@ -81,7 +81,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=a7ce6430de');
+      const res = await fetch(file + '?cv=91c9ef1b37');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

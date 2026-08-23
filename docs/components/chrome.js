@@ -1507,6 +1507,8 @@ const Footer = ({
   }, t.nav[5])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "noticias.html"
   }, t.nav[7])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "/guia-vera/"
+  }, lang === 'es' ? 'Guía de la zona' : 'Area guide')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "estancias-largas.html"
   }, t.nav[9])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "empresas.html"
