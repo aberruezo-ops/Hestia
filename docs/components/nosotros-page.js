@@ -34,8 +34,9 @@ const NOSOTROS_COPY = {
     fran_bio: 'Yo entro en escena cuando ya tienes tu reserva. Te atiendo durante tu estancia: para que nada falle, para que lo que necesites llegue, para resolver cualquier cosa en persona y a tiempo. Mi trabajo es que te vayas ya pensando en volver.',
     fran_quote: '«If anything breaks, calls, or changes, I am here. Your stay, my job.»',
     manifest_cta: 'Reservar ahora →',
-    crosslink_label: 'La historia del nombre',
-    crosslink_text: 'Descubre por qué se llama Hestía →'
+    crosslink_label: 'La otra mitad de la historia',
+    crosslink_lead: 'Hestía era la diosa griega del hogar y del fuego que no se apaga.',
+    crosslink_text: 'Por qué elegimos su nombre'
   },
   en: {
     eyebrow: 'Vera Playa · Almería · since 2016',
@@ -66,8 +67,9 @@ const NOSOTROS_COPY = {
     fran_bio: "I look after your stay. I am here while you are here: so nothing fails, so anything you need arrives, so issues get solved in person and on time. My job is that you leave already thinking about coming back.",
     fran_quote: '«If anything breaks, calls, or changes, I am here. Your stay, my job.»',
     manifest_cta: 'Book now →',
-    crosslink_label: 'The story of the name',
-    crosslink_text: "Find out why it's called Hestía →"
+    crosslink_label: 'The other half of the story',
+    crosslink_lead: 'Hestía was the Greek goddess of the hearth and the fire that never goes out.',
+    crosslink_text: 'Why we chose her name'
   }
 };
 const NosotrosHero = ({
@@ -309,11 +311,17 @@ const NosotrosCrosslink = ({
   return /*#__PURE__*/React.createElement("section", {
     className: "pq-crosslink section-cream"
   }, /*#__PURE__*/React.createElement("div", {
+    className: "pq-cl-inner reveal"
+  }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
-  }, t.crosslink_label), /*#__PURE__*/React.createElement("a", {
+  }, t.crosslink_label), /*#__PURE__*/React.createElement("p", {
+    className: "pq-cl-lead"
+  }, t.crosslink_lead), /*#__PURE__*/React.createElement("a", {
     href: "porque-hestia.html",
     className: "pq-cl-link"
-  }, t.crosslink_text));
+  }, t.crosslink_text, /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "→"))));
 };
 const NosotrosPageApp = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');

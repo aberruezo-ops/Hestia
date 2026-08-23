@@ -11103,21 +11103,37 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
    POR QUÉ HESTÍA — crosslink & mobile nav
    ================================================================ */
 .pq-crosslink {
-  text-align: center;
-  padding: 72px 24px;
+  padding: 76px 24px;
+}
+.pq-cl-inner {
+  max-width: 720px; margin: 0 auto; text-align: center;
+  padding: clamp(38px, 5vw, 58px) clamp(26px, 4vw, 48px);
+  background: linear-gradient(152deg, #FFFFFF 0%, #FBF6EC 100%);
+  border: 1px solid var(--arena-dk, #E4D9BE);
+  border-radius: 16px 0 16px 0;
+  box-shadow: 0 12px 40px rgba(42, 15, 46, .06);
+}
+.pq-cl-inner .eyebrow { color: var(--sol-text, #176E80); margin-bottom: 18px; }
+.pq-cl-lead {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(21px, 2.9vw, 30px); line-height: 1.25;
+  letter-spacing: -.015em; color: var(--ber, #3D1A35);
+  margin: 0 auto 26px; max-width: 22ch; text-wrap: balance;
 }
 .pq-cl-link {
-  display: inline-block;
-  margin-top: 18px;
-  font-family: var(--sans);
-  font-size: 12px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: #D42B80;
-  text-decoration: none;
-  border-bottom: 1px solid #D42B80;
-  padding-bottom: 3px;
-  transition: opacity .2s;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--sans); font-size: 13px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--crema, #FAF6F0); background: var(--ber-dk, #2A0F2E);
+  padding: 13px 26px; border-radius: 10px 0 10px 0; text-decoration: none;
+  transition: background .25s var(--ease-out, cubic-bezier(.23,1,.32,1)),
+              transform .25s var(--ease-out, cubic-bezier(.23,1,.32,1));
+}
+.pq-cl-link span { transition: transform .25s var(--ease-out, cubic-bezier(.23,1,.32,1)); }
+.pq-cl-link:hover { background: var(--ber, #3D1A35); }
+.pq-cl-link:active { transform: scale(.98); }
+@media (hover: hover) and (pointer: fine) {
+  .pq-cl-link:hover span { transform: translateX(4px); }
 }
 .pq-cl-link:hover { opacity: .7; }
 

@@ -412,8 +412,6 @@ const Header = ({
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.guiaZona
   }, lang === 'es' ? 'Nuestra guía' : 'Our guide'), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.porqueHestia
-  }, t.nav[8]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
     className: "cta"
   }, /*#__PURE__*/React.createElement("span", {

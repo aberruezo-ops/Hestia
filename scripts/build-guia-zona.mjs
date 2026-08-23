@@ -408,7 +408,7 @@ const indice = grupos => grupos.length < 2 ? '' : `
 const avisoExtracto = `
 <p class="aviso">Esto es <b>un extracto</b> de nuestra guía. La guía completa, con
 36 capítulos, 131 consejos y el mapa de la zona, es <b>exclusiva para quien se aloja
-con nosotros</b>: se entrega al reservar.</p>`;
+con nosotros</b>: se entrega unos días antes de vuestra llegada.</p>`;
 
 const bloqueCta = `
 <div class="cta">
@@ -424,7 +424,7 @@ const bloqueCta = `
     <div><b>430</b><span>puntos en el mapa</span></div>
     <div><b>PDF</b><span>para ir sin cobertura</span></div>
   </div>
-  <p>Se entrega al reservar, junto con todo lo del apartamento: del wifi a la farmacia de guardia.
+  <p>Se entrega unos días antes de la llegada, junto con todo lo del apartamento: del wifi a la farmacia de guardia.
   Tres casas en Vera Playa, llevadas por nosotros, sin comisiones de plataforma.</p>
   <div class="apts">
     <a class="vm" href="/mar.html"><b>Hestía Mar</b><span>A 300 m de la playa</span></a>
