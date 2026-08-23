@@ -251,7 +251,7 @@ const NOMBRE_CAT = {
 const T = {
   es: {
     htmlLang: 'es', ogLocale: 'es_ES',
-    navGuia: 'Extracto Guía', navApts: 'Los apartamentos', navReserva: 'Reservar',
+    navGuia: 'Extracto Guía', navApts: 'Los apartamentos', navAcceso: 'Acceso huésped', navReserva: 'Reservar',
     eyebrowGuia: 'Nuestra guía',
     inicio: 'Inicio', nuestraGuia: 'Nuestra guía',
     aviso: `Esto es <b>un extracto</b> de nuestra guía. La guía completa, con
@@ -259,9 +259,9 @@ const T = {
 con nosotros</b>: se entrega unos días antes de vuestra llegada.`,
     ctaH2: 'Esto es la mitad de la guía',
     ctaP1: 'Lo que ves aquí lo puede leer cualquiera: qué es cada sitio, qué tiene de bueno y a qué distancia queda. Es la parte que se puede contar por escrito.',
-    ctaP2: (n) => `La otra mitad no se aprende leyendo: se aprende viniendo año tras año. A qué hora llegar a cada cala para
-  encontrar sitio. Qué pedir en cada mesa. Dónde se aparca de verdad en agosto. Y en qué
-  <span class="num">${n}</span> tienen descuento nuestros huéspedes.`,
+    ctaP2: () => `La otra mitad no se aprende leyendo: se aprende viniendo año tras año. A qué hora llegar a cada cala para
+  encontrar sitio. Qué pedir en cada mesa. Dónde se aparca de verdad en agosto. Y los descuentos
+  que hemos negociado con negocios de la zona para quien reserva directo.`,
     ctaDatos: [['36', 'capítulos'], ['131', 'consejos'], ['430', 'puntos en el mapa'], ['PDF', 'para ir sin cobertura']],
     ctaP3: 'Se entrega unos días antes de la llegada, junto con todo lo del apartamento: del wifi a la farmacia de guardia. Tres casas en Vera Playa, llevadas por nosotros, sin comisiones de plataforma.',
     apts: [
@@ -285,11 +285,10 @@ con nosotros</b>: se entrega unos días antes de vuestra llegada.`,
     porDondeEmpezar: 'Por dónde empezar',
     verLos: (n) => `Ver los ${n} sitios`,
     ondasSitios: (n) => `${n} sitios`,
-    onceNegocios: 'once negocios de la zona',
   },
   en: {
     htmlLang: 'en', ogLocale: 'en_GB',
-    navGuia: 'Guide extract', navApts: 'The apartments', navReserva: 'Book',
+    navGuia: 'Guide extract', navApts: 'The apartments', navAcceso: 'Guest access', navReserva: 'Book',
     eyebrowGuia: 'Our guide',
     inicio: 'Home', nuestraGuia: 'Our guide',
     aviso: `This is <b>an extract</b> of our guide. The full guide, with
@@ -297,9 +296,9 @@ con nosotros</b>: se entrega unos días antes de vuestra llegada.`,
 with us</b>: it is handed over a few days before you arrive.`,
     ctaH2: 'This is half the guide',
     ctaP1: 'What you see here anyone can read: what each place is, what is good about it and how far it is. It is the part that can be put in writing.',
-    ctaP2: (n) => `The other half is not learned by reading: it is learned by coming back, year after
+    ctaP2: () => `The other half is not learned by reading: it is learned by coming back, year after
   year. What time to arrive at each cove to find a spot. What to order at each table. Where to actually
-  park in August. And which <span class="num">${n}</span> give our guests a discount.`,
+  park in August. And the discounts we have negotiated with local businesses for guests who book direct.`,
     ctaDatos: [['36', 'chapters'], ['131', 'tips'], ['430', 'points on the map'], ['PDF', 'for when there is no signal']],
     ctaP3: "Handed over a few days before arrival, along with everything about the apartment: from the wifi to the on-call pharmacy. Three homes in Vera Playa, run by us, with no platform commissions.",
     apts: [
@@ -323,7 +322,6 @@ with us</b>: it is handed over a few days before you arrive.`,
     porDondeEmpezar: 'Where to start',
     verLos: (n) => `See all ${n} places`,
     ondasSitios: (n) => `${n} places`,
-    onceNegocios: 'eleven local businesses',
   },
 };
 
@@ -527,6 +525,7 @@ ${JSON.stringify(jsonld, null, 2)}
     <nav>
       <a href="${lang === 'es' ? '/guia-vera/' : '/guia-vera/en/'}">${T[lang].navGuia}</a>
       <a href="/mar.html">${T[lang].navApts}</a>
+      <a href="/?acceso=huesped">${T[lang].navAcceso}</a>
       <a class="cta-top" href="/reservas.html">${T[lang].navReserva}</a>
     </nav>
   </div>
@@ -564,7 +563,7 @@ const bloqueCta = lang => {
 <div class="cta">
   <h2>${esc(t.ctaH2)}</h2>
   <p>${esc(t.ctaP1)}</p>
-  <p>${t.ctaP2(t.onceNegocios)}</p>
+  <p>${t.ctaP2()}</p>
   <div class="cta-datos">
     ${t.ctaDatos.map(([n, s]) => `<div><b>${esc(n)}</b><span>${esc(s)}</span></div>`).join('')}
   </div>

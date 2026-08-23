@@ -82,29 +82,39 @@ const App = () => {
     document.body.classList.toggle('no-parallax', !tweaks.parallax);
   }, [tweaks]);
 
-  // Sonido sutil de mar, suena UNA sola vez al entrar en la home (sin bucle).
-  // Los navegadores bloquean el audio con sonido hasta que el usuario interactúa,
-  // así que intentamos reproducir al cargar y, si se bloquea, lo lanzamos en el
-  // primer gesto (clic/tecla/tap/scroll). Una reproducción por carga. El usuario
-  // puede silenciarlo con el botón; la preferencia se recuerda (localStorage).
+  // Sonido sutil de mar: entra con fundido desde 0, suena en bucle con
+  // fundido de salida en los últimos segundos de cada vuelta y vuelve a
+  // subir al reiniciarse, hasta que el visitante sale de la home (se
+  // destruye con el componente, como cualquier página sin SPA) o lo
+  // silencia con el botón. Los navegadores bloquean el audio hasta que el
+  // usuario interactúa, así que intentamos reproducir al cargar y, si se
+  // bloquea, lo lanzamos en el primer gesto (clic/tecla/tap).
   const [soundOn, setSoundOn] = React.useState(() => {
     try { return localStorage.getItem('hestia-sound') !== 'off'; } catch (_) { return true; }
   });
   const seaRef = React.useRef(null);
   React.useEffect(() => {
     const audio = new Audio('assets/sea-ambient.mp3');
-    audio.volume = _SEA_VOL;
+    audio.volume = 0;
     audio.preload = 'auto';
     audio.playsInline = true;
     seaRef.current = audio;
-    // Fundido de salida en los ~2.5 s finales: el mar se apaga suave, no de golpe.
+    const wanted = () => { try { return localStorage.getItem('hestia-sound') !== 'off'; } catch (_) { return true; } };
+    // Fundido de salida en los ~2.5 s finales de cada vuelta: el mar se apaga suave, no de golpe.
     audio.addEventListener('timeupdate', () => {
       const left = audio.duration - audio.currentTime;
       if (isFinite(left) && left <= 2.5 && !audio._raf && audio.volume > 0.01) _fadeTo(audio, 0, left * 1000);
     });
+    // Al terminar la vuelta, si sigue sonando, empieza otra desde 0 y vuelve
+    // a subir: bucle de fundidos continuo, no un loop seco.
+    audio.addEventListener('ended', () => {
+      if (!wanted()) return;
+      audio.currentTime = 0;
+      audio.volume = 0;
+      audio.play().then(() => _fadeTo(audio, _SEA_VOL, 2000)).catch(() => {});
+    });
     let done = false;
-    const wanted = () => { try { return localStorage.getItem('hestia-sound') !== 'off'; } catch (_) { return true; } };
-    // Reproducir una vez al primer gesto. Los listeners se ponen YA (sin esperar a que
+    // Reproducir al primer gesto. Los listeners se ponen YA (sin esperar a que
     // el play() inicial falle) para no perder el primer toque. Usamos gestos que
     // Safari/iOS SÍ aceptan para desbloquear audio (touchend/click/pointerup/tecla);
     // pointerdown/touchstart/scroll no lo desbloquean en Safari. Solo se marca hecho
@@ -113,12 +123,12 @@ const App = () => {
     const cleanup = () => evs.forEach(ev => document.removeEventListener(ev, onGesture, true));
     const onGesture = () => {
       if (done || !wanted()) return;
-      audio.play().then(() => { done = true; cleanup(); }).catch(() => {});
+      audio.play().then(() => { done = true; cleanup(); _fadeTo(audio, _SEA_VOL, 2000); }).catch(() => {});
     };
     evs.forEach(ev => document.addEventListener(ev, onGesture, { passive: true, capture: true }));
     // Intento inmediato por si el navegador ya permite (sesión con interacción previa).
-    if (wanted()) audio.play().then(() => { done = true; cleanup(); }).catch(() => {});
-    return cleanup;
+    if (wanted()) audio.play().then(() => { done = true; cleanup(); _fadeTo(audio, _SEA_VOL, 2000); }).catch(() => {});
+    return () => { cleanup(); if (audio._raf) cancelAnimationFrame(audio._raf); audio.pause(); };
   }, []);
   const toggleSound = () => {
     setSoundOn(prev => {
@@ -176,8 +186,7 @@ const App = () => {
           <HiIcon name="mute" size={22} />
         )}
       </button>
-      <WidgetWeather lang={lang} variant="fab" />
-      <WidgetStack lang={lang} extra={<><WidgetWeather lang={lang} /><WidgetSound lang={lang} soundOn={soundOn} onToggle={toggleSound} /></>} />
+      <WidgetStack lang={lang} extra={<WidgetSound lang={lang} soundOn={soundOn} onToggle={toggleSound} />} />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />
       {tweaksOpen && <TweaksPanel tweaks={tweaks} update={updateTweak} lang={lang} setLang={setLang} />}
