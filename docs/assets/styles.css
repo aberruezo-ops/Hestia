@@ -16771,6 +16771,38 @@ body.apt-bar-shown .widget-stack {
   margin: 24px 0 14px;
 }
 .osl-star { color: var(--sol); font-size: 14px; }
+/* Resumen de opiniones: da escala antes de leer, para que 411 reseñas no
+   parezcan un montón indiferenciado. Vive sobre superficie clara. */
+.opi-resumen {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 18px 32px; margin: 26px 0 30px; padding: 20px 24px;
+  background: var(--arena, #F0E8D5); border-radius: 10px 0 10px 0;
+}
+.opi-res-datos { display: flex; flex-wrap: wrap; gap: 14px 34px; }
+.opi-res-datos div b {
+  display: block; font-family: var(--serif); font-size: 27px; line-height: 1;
+  color: var(--ber-dk, #2A0F2E); font-variant-numeric: tabular-nums;
+}
+.opi-res-datos div span {
+  display: block; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-soft); margin-top: 6px;
+}
+.opi-orden { display: flex; align-items: center; gap: 10px; }
+.opi-orden label {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--ink-soft); font-weight: 600;
+}
+.opi-orden select {
+  font-family: var(--sans); font-size: 13.5px; color: var(--ber-dk, #2A0F2E);
+  background: #fff; border: 1px solid rgba(42,15,46,.16);
+  border-radius: 8px 0 8px 0; padding: 8px 12px; cursor: pointer;
+}
+.opi-orden select:focus-visible { outline: 2px solid var(--sol); outline-offset: 2px; }
+@media (max-width: 560px) {
+  .opi-resumen { flex-direction: column; align-items: flex-start; }
+  .opi-res-datos div b { font-size: 23px; }
+}
+
 .opiniones-empty {
   text-align: center;
   font-size: 14px;
