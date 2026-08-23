@@ -66,7 +66,7 @@ El Propietario cede en arrendamiento de temporada con la duración que se indica
 
 **2.1** La renta neta es de **{{PRECIO_TOTAL_LETRAS}} ({{PRECIO_TOTAL_NUM}}) EUROS** para **{{N_HUESPEDES_LETRAS}} ({{N_HUESPEDES}}) personas**{{BLOQUE_MASCOTA_RENTA}}. Este contrato no tendrá validez en los siguientes casos:
 
-- Sin el correspondiente justificante de abono en la cuenta ***IBAN-RETIRADO*** o BIZUM al teléfono +34 620 316 370 de la prereserva, es decir, **{{PRERESERVA_LETRAS}} ({{PRERESERVA_NUM}}) EUROS**. Deberá ingresarse en el momento de la formalización de este contrato.
+- Sin el correspondiente justificante de abono en la cuenta `[IBAN · lo rellena el generador desde titulares.json, en el repo privado]` o BIZUM al teléfono +34 620 316 370 de la prereserva, es decir, **{{PRERESERVA_LETRAS}} ({{PRERESERVA_NUM}}) EUROS**. Deberá ingresarse en el momento de la formalización de este contrato.
 - Sin el correspondiente abono en efectivo del remanente de la estancia, es decir, **{{REMANENTE_LETRAS}} ({{REMANENTE_NUM}}) EUROS**. Deberá pagarse en efectivo en el momento del check-in.
 - Si no se envía el DNI o pasaporte de cada uno de los huéspedes mayores de 16 años, como adjunto al contrato firmado.
 {{LINEA_FIANZA_REQUISITO}}  *(solo si fianza activada: "- Si no se ha realizado la transferencia por la fianza que se explica en el punto 2.4.")*
@@ -256,7 +256,7 @@ Contrato de reserva · Hestía Vera {{APARTAMENTO_CORTO}} · {{FECHA_ENTRADA}} �
 >
 > 1. **El contrato firmado** por todas las partes (puedes contestar a este correo con el PDF firmado adjunto).
 > 2. **El DNI o pasaporte** de cada huésped mayor de 16 años.
-> 3. **El justificante de la prereserva** de **{{PRERESERVA_NUM}} €**, ingresada por transferencia a la cuenta `***IBAN-RETIRADO***` o BIZUM al teléfono `+34 620 316 370`.
+> 3. **El justificante de la prereserva** de **{{PRERESERVA_NUM}} €**, ingresada por transferencia a la cuenta ``[IBAN · lo rellena el generador desde titulares.json, en el repo privado]`` o BIZUM al teléfono `+34 620 316 370`.
 >
 > El remanente de **{{REMANENTE_NUM}} €** se abona en efectivo el día de la llegada, en el momento del check-in.
 >
