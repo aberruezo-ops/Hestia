@@ -607,16 +607,6 @@
       "minNights": 4,
       "lastMinute": true
     },
-    "vm|2026-08-22": {
-      "apt": "vm",
-      "start": "2026-08-22",
-      "end": "2026-08-24",
-      "nights": 2,
-      "type": "discount",
-      "value": 15,
-      "lastMinute": true,
-      "auto": true
-    },
     "vt|2026-09-02": {
       "apt": "vt",
       "start": "2026-09-02",
