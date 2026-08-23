@@ -250,6 +250,10 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
   transition:all .2s var(--ease);}
 .indice a:hover{color:var(--crema);background:var(--ber-dk);border-color:var(--ber-dk);}
 
+.aviso{margin:30px 0 -18px;padding:16px 20px;background:var(--arena);
+  border-left:3px solid var(--vs);border-radius:var(--r);
+  font-size:14.5px;color:var(--ink-soft);max-width:74ch;}
+.aviso b{color:var(--ink);font-weight:600;}
 .grupo{padding:74px 0 8px;scroll-margin-top:70px;}
 .grupo-head{display:flex;align-items:baseline;gap:20px;margin-bottom:6px;}
 .grupo-n{font-family:var(--serif);font-size:clamp(38px,5.4vw,60px);line-height:1;
@@ -371,7 +375,7 @@ ${JSON.stringify(jsonld, null, 2)}
   <div class="wrap">
     <a class="brand" href="/">Hestía Your Home</a>
     <nav>
-      <a href="/guia-vera/">Guía de la zona</a>
+      <a href="/guia-vera/">Nuestra guía</a>
       <a href="/mar.html">Los apartamentos</a>
       <a class="cta-top" href="/reservas.html">Reservar</a>
     </nav>
@@ -386,7 +390,7 @@ const hero = ({ h1, intro, cifras, video }) => `
     <source src="/assets/Videoshome/${video}" type="video/mp4"/>
   </video>` : ''}
   <div class="wrap">
-    <p class="eyebrow">Guía de la zona</p>
+    <p class="eyebrow">Nuestra guía</p>
     <h1>${esc(h1)}</h1>
     <p class="intro">${esc(intro)}</p>
     ${cifras && cifras.length ? `<div class="cifras">${cifras.map(c =>
@@ -398,6 +402,13 @@ const indice = grupos => grupos.length < 2 ? '' : `
 <div class="indice"><div class="wrap">
   ${grupos.map(g => `<a href="#${g.id}">${esc(g.nombre)}</a>`).join('')}
 </div></div>`;
+
+// Que quede dicho arriba y sin rodeos: esto es un extracto, la guía entera es
+// de los huéspedes. Antes solo se decía al final de la página.
+const avisoExtracto = `
+<p class="aviso">Esto es <b>un extracto</b> de nuestra guía. La guía completa, con
+36 capítulos, 131 consejos y el mapa de la zona, es <b>exclusiva para quien se aloja
+con nosotros</b>: se entrega al reservar.</p>`;
 
 const bloqueCta = `
 <div class="cta">
@@ -427,7 +438,7 @@ const pie = `
   <p>Guía escrita por Alex y Fran, que llevan en persona los tres apartamentos de
   <a href="/">Hestía Your Home</a> en Vera Playa (Almería) desde 2016.
   Licencias VFT/AL/01580, VFT/AL/05535 y VFT/AL/07056.</p>
-  <p><a href="/">Inicio</a> · <a href="/guia-vera/">Guía de la zona</a> ·
+  <p><a href="/">Inicio</a> · <a href="/guia-vera/">Nuestra guía</a> ·
   <a href="/reservas.html">Reservas</a> · <a href="/opiniones.html">Opiniones</a> ·
   <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a></p>
   <p><a href="/privacidad.html">Privacidad</a> · <a href="/cookies.html">Cookies</a></p>
@@ -497,7 +508,7 @@ const migas = (nombre, url) => ({
   '@context': 'https://schema.org', '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Inicio', item: `${BASE}/` },
-    { '@type': 'ListItem', position: 2, name: 'Guía de la zona', item: `${BASE}/guia-vera/` },
+    { '@type': 'ListItem', position: 2, name: 'Nuestra guía', item: `${BASE}/guia-vera/` },
     { '@type': 'ListItem', position: 3, name: nombre, item: url },
   ],
 });
@@ -539,7 +550,7 @@ for (const hub of HUBS) {
     cabecera({ title: hub.title, desc: hub.desc, canonical: url, jsonld })
     + hero({ h1: hub.h1, intro: hub.intro, cifras, video: hub.video })
     + indice(grupos)
-    + '<div class="wrap">' + cuerpo + bloqueCta + pie);
+    + '<div class="wrap">' + avisoExtracto + cuerpo + bloqueCta + pie);
   generadas.push({ slug: hub.slug, n: items.length, h1: hub.h1, desc: hub.desc });
 }
 
@@ -571,7 +582,7 @@ for (const hub of HUBS) {
              cifras: [[String(items.length), 'sitios'], [String(grupos.length), 'categorías'],
                       ['4.000', 'años de historia']] })
     + indice(grupos)
-    + '<div class="wrap">' + cuerpo + bloqueCta + pie);
+    + '<div class="wrap">' + avisoExtracto + cuerpo + bloqueCta + pie);
   generadas.push({ slug: h.slug, n: items.length, h1: h.h1, desc: h.desc });
 }
 
@@ -584,7 +595,7 @@ for (const hub of HUBS) {
       '@context': 'https://schema.org', '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Inicio', item: `${BASE}/` },
-        { '@type': 'ListItem', position: 2, name: 'Guía de la zona', item: url },
+        { '@type': 'ListItem', position: 2, name: 'Nuestra guía', item: url },
       ],
     },
     {
@@ -618,7 +629,7 @@ for (const hub of HUBS) {
       cifras: [[String(total), 'sitios'], [String(generadas.length), 'secciones'], ['2016', 'con casa aquí']],
       video: 'hero-atardecer-aereo.mp4',
     })
-    + '<div class="wrap">'
+    + '<div class="wrap">' + avisoExtracto
     + seccion(1, 'g-todo', 'Por dónde empezar', generadas.length, fichas)
     + bloqueCta + pie);
 }
