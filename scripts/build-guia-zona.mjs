@@ -257,9 +257,9 @@ const T = {
     aviso: `Esto es <b>un extracto</b> de nuestra guía. La guía completa, con
 36 capítulos, 131 consejos y el mapa de la zona, es <b>exclusiva para quien se aloja
 con nosotros</b>: se entrega unos días antes de vuestra llegada.`,
-    ctaH2: 'Esto es la mitad de la guía',
+    ctaH2: 'Esto es solo una muestra de la guía',
     ctaP1: 'Lo que ves aquí lo puede leer cualquiera: qué es cada sitio, qué tiene de bueno y a qué distancia queda. Es la parte que se puede contar por escrito.',
-    ctaP2: () => `La otra mitad no se aprende leyendo: se aprende viniendo año tras año. A qué hora llegar a cada cala para
+    ctaP2: () => `El resto no se aprende leyendo: se aprende viniendo año tras año. A qué hora llegar a cada cala para
   encontrar sitio. Qué pedir en cada mesa. Dónde se aparca de verdad en agosto. Y los descuentos
   que hemos negociado con negocios de la zona para quien reserva directo.`,
     ctaDatos: [['36', 'capítulos'], ['131', 'consejos'], ['430', 'puntos en el mapa'], ['PDF', 'para ir sin cobertura']],
@@ -294,9 +294,9 @@ con nosotros</b>: se entrega unos días antes de vuestra llegada.`,
     aviso: `This is <b>an extract</b> of our guide. The full guide, with
 36 chapters, 131 tips and the area map, is <b>exclusive to guests staying
 with us</b>: it is handed over a few days before you arrive.`,
-    ctaH2: 'This is half the guide',
+    ctaH2: 'This is just a sample of the guide',
     ctaP1: 'What you see here anyone can read: what each place is, what is good about it and how far it is. It is the part that can be put in writing.',
-    ctaP2: () => `The other half is not learned by reading: it is learned by coming back, year after
+    ctaP2: () => `The rest is not learned by reading: it is learned by coming back, year after
   year. What time to arrive at each cove to find a spot. What to order at each table. Where to actually
   park in August. And the discounts we have negotiated with local businesses for guests who book direct.`,
     ctaDatos: [['36', 'chapters'], ['131', 'tips'], ['430', 'points on the map'], ['PDF', 'for when there is no signal']],
