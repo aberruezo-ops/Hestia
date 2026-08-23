@@ -24,6 +24,9 @@ const Topbar = ({ lang, setLang }) => (
           info@hestiayourhome.com
         </a>
       </div>
+      <a href="reservas.html" className="tb-cta">
+        {lang === 'es' ? 'Reservar' : 'Book'}
+      </a>
       <div className="lang" role="group" aria-label="Language">
         <button
           className={lang === 'es' ? 'active' : ''}
@@ -309,7 +312,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.noticias}>{t.nav[7]}</NavLink>
             <NavLink href={NAV_PAGES.guiaZona}>{lang === 'es' ? 'Nuestra guía' : 'Our guide'}</NavLink>
             <NavLink href={NAV_PAGES.porqueHestia}>{t.nav[8]}</NavLink>
-            <NavLink href={NAV_PAGES.reservas} className="cta"><span className="cta-border" aria-hidden="true"/><span className="cta-text">{t.cta_nav}</span></NavLink>
+
           </nav>
           <button
             className={`hamburger-btn ${mobileOpen ? 'open' : ''}`}
