@@ -4045,7 +4045,10 @@ footer .footer-brand .addr {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--apt-accent, var(--sol));
+  /* El acento del apartamento es oscuro (olivo, cobre, dorado) y esto vive
+     sobre berenjena: teñir el texto con él lo dejaba ilegible. El color de
+     apartamento se queda en el punto y el borde, el texto va en crema. */
+  color: var(--crema, #FAF6F0);
   border: 1px solid var(--apt-accent-30, rgba(185,129,62,.3));
   background: var(--apt-accent-8, rgba(185,129,62,.08));
   border-radius: 10px 0 10px 0;
@@ -4055,7 +4058,7 @@ footer .footer-brand .addr {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--apt-accent, var(--sol));
+  background: var(--apt-accent2, var(--sol-lt));
   flex-shrink: 0;
   animation: avail-pulse 2s ease-in-out infinite;
 }

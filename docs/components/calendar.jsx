@@ -51,16 +51,28 @@ const _shortDate = (ds, lang) => {
   return `${d.getUTCDate()} ${M.slice(0,3).toLowerCase()}.`;
 };
 
-// Returns free days Jun–Aug of current year, or null if no badge should show.
-// Shows only Mar–Sep (approaching summer or mid-summer). Hides if ≥42 days free.
+// Noches libres que QUEDAN del verano (hasta el 31 de agosto), no las del
+// verano entero: contar desde el 1 de junio hacía que a finales de agosto
+// el cartel siguiera anunciando semanas ya pasadas. Arranca en hoy + la
+// ventana inminente, porque por debajo de ella no se puede reservar.
+// Devuelve null si no toca enseñar el cartel (fuera de temporada, verano
+// ya terminado, o queda holgura de sobra: 42+ noches).
 const _summerScarcity = (blocked) => {
   const today = new Date();
   const m = today.getMonth(); // 0-indexed
   if (m < 2 || m > 8) return null;
   const y = today.getFullYear();
-  let free = 0;
-  let cur = new Date(`${y}-06-01T12:00:00Z`);
+  const imm = (window.PRICES_V2 && window.PRICES_V2.rules && window.PRICES_V2.rules.imminentDays) || 0;
+
+  const cur = new Date(Date.UTC(y, m, today.getDate(), 12));
+  cur.setUTCDate(cur.getUTCDate() + imm);
+  const inicio = new Date(`${y}-06-01T12:00:00Z`);
+  if (cur < inicio) cur.setTime(inicio.getTime());
+
   const end = new Date(`${y}-08-31T12:00:00Z`);
+  if (cur > end) return null;
+
+  let free = 0;
   while (cur <= end) {
     const ds = cur.toISOString().slice(0, 10);
     if (!_isBlk(ds, blocked)) free++;
@@ -588,10 +600,14 @@ const AptCalendar = ({ aptId, lang, accent }) => {
       {!loading && data && (() => {
         const free = _summerScarcity(blocked);
         if (free === null) return null;
+        // Con pocas noches sueltas, redondear a semanas exagera lo que queda:
+        // por debajo de dos semanas se dicen las noches exactas.
         const wks = Math.round(free / 7);
-        const msg = free <= 7
-          ? { es: 'Prácticamente completo para este verano', en: 'Almost fully booked this summer' }
-          : { es: `Solo ${wks} semana${wks !== 1 ? 's' : ''} disponible${wks !== 1 ? 's' : ''} este verano`, en: `Only ${wks} week${wks !== 1 ? 's' : ''} left this summer` };
+        const msg = free === 0
+          ? { es: 'Sin noches libres este verano', en: 'No nights left this summer' }
+          : free < 14
+            ? { es: `Solo ${free} noche${free !== 1 ? 's' : ''} libre${free !== 1 ? 's' : ''} este verano`, en: `Only ${free} night${free !== 1 ? 's' : ''} left this summer` }
+            : { es: `Solo ${wks} semana${wks !== 1 ? 's' : ''} disponible${wks !== 1 ? 's' : ''} este verano`, en: `Only ${wks} week${wks !== 1 ? 's' : ''} left this summer` };
         return (
           <div className="avail-scarcity">
             <span className="avail-scar-dot"/>
