@@ -66,7 +66,7 @@
     {
       "id": "mes-2026-08-vm",
       "createdAt": "2026-07-27T10:32:59.415Z",
-      "status": "pending",
+      "status": "skipped",
       "source": "mes",
       "format": "reel",
       "apt": "vm",
@@ -465,5 +465,5 @@
       "link": "https://www.hestiayourhome.com/noticias.html"
     }
   ],
-  "updatedAt": "2026-08-23T18:45:39.939Z"
+  "updatedAt": "2026-08-23T18:45:41.805Z"
 }
