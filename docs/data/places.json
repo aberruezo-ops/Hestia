@@ -143,29 +143,29 @@
     "id": "koa",
     "name": "Resto Bar Koa",
     "cat": "restaurant",
-    "lat": 37.2245,
-    "lng": -1.7985
+    "lat": 37.228,
+    "lng": -1.801
   },
   {
     "id": "bbme-rest",
     "name": "Restaurante Bbme Palomares",
     "cat": "restaurant",
-    "lat": 37.2155,
-    "lng": -1.78
+    "lat": 37.234,
+    "lng": -1.8
   },
   {
     "id": "playa-azul",
     "name": "Hostal Playa Azul",
     "cat": "restaurant",
-    "lat": 37.246,
-    "lng": -1.766
+    "lat": 37.247,
+    "lng": -1.773
   },
   {
     "id": "tadeo",
     "name": "Tadeo",
     "cat": "restaurant",
-    "lat": 37.2494,
-    "lng": -1.7709
+    "lat": 37.248,
+    "lng": -1.773
   },
   {
     "id": "rincon-puerto",
@@ -599,7 +599,7 @@
     "name": "Chiringuito El Chumbo",
     "cat": "bar",
     "lat": 37.21,
-    "lng": -1.785
+    "lng": -1.797
   },
   {
     "id": "marau",
@@ -619,8 +619,8 @@
     "id": "bbme-palomares",
     "name": "Bbme Palomares",
     "cat": "bar",
-    "lat": 37.2155,
-    "lng": -1.78
+    "lat": 37.234,
+    "lng": -1.8
   },
   {
     "id": "lebreros",
@@ -815,8 +815,8 @@
     "id": "farmacia-2",
     "name": "Farmacia Vera Playa",
     "cat": "pharmacy",
-    "lat": 37.226,
-    "lng": -1.7985
+    "lat": 37.22,
+    "lng": -1.808
   },
   {
     "id": "cs-vera",
@@ -889,6 +889,20 @@
     "lng": -1.829
   },
   {
+    "id": "pet-shop-happy",
+    "name": "Happy Pets Garrucha",
+    "cat": "pet-shop",
+    "lat": 37.195,
+    "lng": -1.82
+  },
+  {
+    "id": "pet-shop-tucano",
+    "name": "Tucano Mascotas (Vera)",
+    "cat": "pet-shop",
+    "lat": 37.2467,
+    "lng": -1.8631
+  },
+  {
     "id": "fisio-vera-salud",
     "name": "Centro de Fisioterapia Vera Salud (Garrucha)",
     "cat": "physio",
@@ -922,6 +936,13 @@
     "cat": "bodega",
     "lat": 37.368,
     "lng": -1.812
+  },
+  {
+    "id": "bodega-cortijo-el-cura",
+    "name": "Cortijo El Cura Eco-Bodega (Laujar de Andarax)",
+    "cat": "bodega",
+    "lat": 36.985,
+    "lng": -2.935
   },
   {
     "id": "cs-vera",
@@ -962,8 +983,8 @@
     "id": "ln-veraplaya",
     "name": "Lavandería autoservicio (Vera Playa)",
     "cat": "laundry",
-    "lat": 37.236,
-    "lng": -1.7935
+    "lat": 37.222,
+    "lng": -1.809
   },
   {
     "id": "ln-mojacar",
@@ -983,8 +1004,8 @@
     "id": "atm-veraplaya",
     "name": "Cajero en Vera Playa",
     "cat": "atm",
-    "lat": 37.236,
-    "lng": -1.7935
+    "lat": 37.222,
+    "lng": -1.809
   },
   {
     "id": "atm-garrucha",
@@ -1046,8 +1067,8 @@
     "id": "aquavera",
     "name": "Parque acuático Aquavera",
     "cat": "leisure",
-    "lat": 37.223,
-    "lng": -1.796
+    "lat": 37.228,
+    "lng": -1.808
   },
   {
     "id": "rumboalcabo",
@@ -1088,8 +1109,8 @@
     "id": "biplaza",
     "name": "Vuelo en biplaza (Vera-Palomares)",
     "cat": "leisure",
-    "lat": 37.215,
-    "lng": -1.772
+    "lat": 37.232,
+    "lng": -1.807
   },
   {
     "id": "turismo-ind",
@@ -1130,15 +1151,15 @@
     "id": "buceo-tortuga",
     "name": "Buceo · Tortuga (Vera Playa)",
     "cat": "water",
-    "lat": 37.247,
-    "lng": -1.766
+    "lat": 37.228,
+    "lng": -1.803
   },
   {
     "id": "buceo-villaricos",
     "name": "Buceo · Villaricos Sub",
     "cat": "water",
     "lat": 37.247,
-    "lng": -1.766
+    "lng": -1.773
   },
   {
     "id": "buceo-mojacar",
@@ -1249,8 +1270,8 @@
     "id": "trek-vera-villaricos",
     "name": "Vera Playa → Villaricos (ruinas romanas)",
     "cat": "trek",
-    "lat": 37.247,
-    "lng": -1.766
+    "lat": 37.234,
+    "lng": -1.791
   },
   {
     "id": "trek-vera-pueblo",
@@ -1313,7 +1334,7 @@
     "name": "Bicis Villaricos",
     "cat": "leisure",
     "lat": 37.247,
-    "lng": -1.766
+    "lng": -1.773
   },
   {
     "id": "t-castillo",
@@ -1328,6 +1349,13 @@
     "cat": "town",
     "lat": 37.368,
     "lng": -2.2785
+  },
+  {
+    "id": "t-zurgena",
+    "name": "Zurgena",
+    "cat": "town",
+    "lat": 37.3517,
+    "lng": -2.047
   },
   {
     "id": "t-cuevas-velez",
@@ -1424,8 +1452,8 @@
     "id": "laguna",
     "name": "Laguna de Puerto Rey",
     "cat": "culture",
-    "lat": 37.211,
-    "lng": -1.777
+    "lat": 37.226,
+    "lng": -1.833
   },
   {
     "id": "el-argar",
@@ -1831,7 +1859,7 @@
     "name": "Playa Quitapellejos (Palomares)",
     "cat": "beach-srvc",
     "lat": 37.205,
-    "lng": -1.779
+    "lng": -1.798
   },
   {
     "id": "gas-repsol-vera",
@@ -1886,15 +1914,15 @@
     "id": "gas-repsol-palomares",
     "name": "Repsol Palomares (ALP-118)",
     "cat": "fuel",
-    "lat": 37.237,
-    "lng": -1.77
+    "lat": 37.234,
+    "lng": -1.807
   },
   {
     "id": "ev-mercadona-vera-mz",
     "name": "Mercadona Vera (Av. Medina Azahara)",
     "cat": "ev-charge",
-    "lat": 37.236,
-    "lng": -1.7935
+    "lat": 37.221,
+    "lng": -1.811
   },
   {
     "id": "ev-mercadona-vera-pueblo",
