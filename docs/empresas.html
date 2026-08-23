@@ -32,7 +32,7 @@
   <link rel="preconnect" href="https://api.web3forms.com"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=1038"/>
+<link rel="stylesheet" href="assets/styles.css?v=1039"/>
   <script type="application/ld+json">{
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -51,7 +51,7 @@
   <p>Trabajamos con factura, contrato y condiciones cerradas por escrito. Para estancias largas, de un mes en adelante, aplicamos tarifa mensual cerrada.</p>
   <p>La zona concentra actividad de agricultura intensiva, energía y construcción, además de rodajes en el Desierto de Tabernas, a unos 30 minutos en coche.</p>
   <p>Gestión directa con Alex y Fran, sin intermediarios, con respuesta en menos de una hora. Cuéntanos fechas, número de personas y necesidades y te preparamos una propuesta.</p>
-  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Nuestra guía</a></nav>
+  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Extracto Guía</a></nav>
 </noscript>
 
 
@@ -77,7 +77,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=d8a83b2de6');
+      const res = await fetch(file + '?cv=00e577d84d');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

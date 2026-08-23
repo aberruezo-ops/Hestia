@@ -22,7 +22,7 @@ const NOSOTROS_COPY = {
     almeria_quote: '«Almería tiene la luz más honesta que conozco. No engaña. Lo que ves es lo que es.»',
     almeria_quote_attr: '– Alex Berruezo',
     team_eyebrow: 'El equipo',
-    team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Detrás de Hestía hay", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "dos personas reales.")),
+    team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Uno antes de llegar.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "El otro mientras estás aquí.")),
     alex_eyebrow: '01 · Reserva · Antes de tu llegada',
     alex_lang: '🇪🇸 Español',
     alex_name: 'Alex Berruezo',
@@ -33,10 +33,7 @@ const NOSOTROS_COPY = {
     fran_name: 'Fran Moral',
     fran_bio: 'Yo entro en escena cuando ya tienes tu reserva. Te atiendo durante tu estancia: para que nada falle, para que lo que necesites llegue, para resolver cualquier cosa en persona y a tiempo. Mi trabajo es que te vayas ya pensando en volver.',
     fran_quote: '«If anything breaks, calls, or changes, I am here. Your stay, my job.»',
-    manifest_cta: 'Reservar ahora →',
-    crosslink_label: 'La otra mitad de la historia',
-    crosslink_lead: 'Hestía era la diosa griega del hogar y del fuego que no se apaga.',
-    crosslink_text: 'Por qué elegimos su nombre'
+    manifest_cta: 'Reservar ahora →'
   },
   en: {
     eyebrow: 'Vera Playa · Almería · since 2016',
@@ -55,7 +52,7 @@ const NOSOTROS_COPY = {
     almeria_quote: '"Almería has the most honest light I know. It does not deceive. What you see is what it is."',
     almeria_quote_attr: '– Alex Berruezo',
     team_eyebrow: 'The team',
-    team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Behind Hestía there are", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "two real people.")),
+    team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "One before you arrive.", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "The other while you are here.")),
     alex_eyebrow: '01 · Booking · Before you arrive',
     alex_lang: '🇪🇸 Español',
     alex_name: 'Alex Berruezo',
@@ -66,10 +63,7 @@ const NOSOTROS_COPY = {
     fran_name: 'Fran Moral',
     fran_bio: "I look after your stay. I am here while you are here: so nothing fails, so anything you need arrives, so issues get solved in person and on time. My job is that you leave already thinking about coming back.",
     fran_quote: '«If anything breaks, calls, or changes, I am here. Your stay, my job.»',
-    manifest_cta: 'Book now →',
-    crosslink_label: 'The other half of the story',
-    crosslink_lead: 'Hestía was the Greek goddess of the hearth and the fire that never goes out.',
-    crosslink_text: 'Why we chose her name'
+    manifest_cta: 'Book now →'
   }
 };
 const NosotrosHero = ({
@@ -304,24 +298,78 @@ const NosotrosManifest = ({
     className: "p-text"
   }, t[key]))))));
 };
-const NosotrosCrosslink = ({
-  lang
+
+// Esta página fusiona lo que antes eran dos: "Nosotros" y "Por qué Hestía".
+// Los actos son la costura: sin ellos las secciones de origen quedan pegadas
+// unas a otras y se lee como dos páginas apiladas, no como una historia.
+const ACTOS = {
+  es: [{
+    num: 'I',
+    eyebrow: 'El fuego',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Dos personas", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "y una convicción."))
+  }, {
+    num: 'II',
+    eyebrow: 'El nombre',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Por qué Hestía", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "se llama Hestía."))
+  }, {
+    num: 'III',
+    eyebrow: 'El lugar',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Almería,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "en nueve colores."))
+  }, {
+    num: 'IV',
+    eyebrow: 'Las personas',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Quién te responde,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "y con qué valores."))
+  }, {
+    num: 'V',
+    eyebrow: 'Y tú',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "El huésped para quien", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "existe Hestía."))
+  }],
+  en: [{
+    num: 'I',
+    eyebrow: 'The fire',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Two people", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "and one conviction."))
+  }, {
+    num: 'II',
+    eyebrow: 'The name',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Why Hestía", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "is called Hestía."))
+  }, {
+    num: 'III',
+    eyebrow: 'The place',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Almería,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "in nine colours."))
+  }, {
+    num: 'IV',
+    eyebrow: 'The people',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Who answers you,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "and with what values."))
+  }, {
+    num: 'V',
+    eyebrow: 'And you',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "The guest", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "Hestía exists for."))
+  }]
+};
+const Acto = ({
+  lang,
+  i,
+  id
 }) => {
-  const t = NOSOTROS_COPY[lang];
-  return /*#__PURE__*/React.createElement("section", {
-    className: "pq-crosslink section-cream"
+  const a = ACTOS[lang][i];
+  return /*#__PURE__*/React.createElement("div", {
+    className: "acto",
+    id: id
   }, /*#__PURE__*/React.createElement("div", {
-    className: "pq-cl-inner reveal"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "eyebrow"
-  }, t.crosslink_label), /*#__PURE__*/React.createElement("p", {
-    className: "pq-cl-lead"
-  }, t.crosslink_lead), /*#__PURE__*/React.createElement("a", {
-    href: "porque-hestia.html",
-    className: "pq-cl-link"
-  }, t.crosslink_text, /*#__PURE__*/React.createElement("span", {
+    className: "acto-inner reveal"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "acto-num",
     "aria-hidden": "true"
-  }, "→"))));
+  }, a.num), /*#__PURE__*/React.createElement("span", {
+    className: "acto-rule",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "acto-txt"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "eyebrow acto-eyebrow"
+  }, a.eyebrow), /*#__PURE__*/React.createElement("span", {
+    className: "acto-title"
+  }, a.title))));
 };
 const NosotrosPageApp = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
@@ -333,7 +381,7 @@ const NosotrosPageApp = () => {
   React.useEffect(() => {
     localStorage.setItem('hestia-lang', lang);
     document.documentElement.lang = lang;
-    document.title = lang === 'es' ? 'Nosotros · Hestía Your Home · Vera Playa' : 'About us · Hestía Your Home · Vera Playa';
+    document.title = lang === 'es' ? 'Hestía y nosotros · Quiénes somos y por qué Hestía · Vera Playa' : 'Hestía and us · Who we are and why Hestía · Vera Playa';
   }, [lang]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Topbar, {
     lang: lang,
@@ -346,15 +394,43 @@ const NosotrosPageApp = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement(FraseHogar, {
     lang: lang
+  }), /*#__PURE__*/React.createElement(Acto, {
+    lang: lang,
+    i: 0
   }), /*#__PURE__*/React.createElement(NosotrosIntro, {
     lang: lang
+  }), /*#__PURE__*/React.createElement(PorqueOrigen, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(Acto, {
+    lang: lang,
+    i: 1,
+    id: "por-que-hestia"
+  }), /*#__PURE__*/React.createElement(PorqueNombre, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(PorqueLogo, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(PorqueEvolucion, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(Acto, {
+    lang: lang,
+    i: 2
   }), /*#__PURE__*/React.createElement(NosotrosAlmeria, {
     lang: lang
+  }), /*#__PURE__*/React.createElement(PorqueColores, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(Acto, {
+    lang: lang,
+    i: 3
   }), /*#__PURE__*/React.createElement(NosotrosTeam, {
     lang: lang
-  }), /*#__PURE__*/React.createElement(NosotrosManifest, {
+  }), /*#__PURE__*/React.createElement(PorqueValores, {
     lang: lang
-  }), /*#__PURE__*/React.createElement(NosotrosCrosslink, {
+  }), /*#__PURE__*/React.createElement(Acto, {
+    lang: lang,
+    i: 4
+  }), /*#__PURE__*/React.createElement(PorqueViajero, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(NosotrosManifest, {
     lang: lang
   }), /*#__PURE__*/React.createElement(QuickFAQ, {
     lang: lang,

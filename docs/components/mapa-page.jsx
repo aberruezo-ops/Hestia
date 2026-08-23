@@ -32,8 +32,8 @@ const MAPA_COPY = {
       {
         title: 'Conócenos',
         items: [
-          { href: 'nosotros.html', label: 'Nosotros', desc: 'Alex y Fran, quiénes somos y por qué Vera Playa.' },
-          { href: 'porque-hestia.html', label: 'Por qué Hestía', desc: 'Nuestros seis valores y la paleta de Almería.' },
+          { href: 'nosotros.html', label: 'Hestía y nosotros', desc: 'Alex y Fran, el origen del nombre, los seis valores y la paleta de Almería.' },
+          { href: '/guia-vera/', label: 'Extracto Guía', desc: 'Playas, pueblos, dónde comer y rutas del Levante almeriense.' },
           { href: 'opiniones.html', label: 'Opiniones', desc: 'Lo que dicen los huéspedes: Booking, Airbnb, Google y web.' },
           { href: 'noticias.html', label: 'Noticias', desc: 'Lo mejor del territorio cada mes: Almería, Murcia, Granada.' },
           { href: 'escribir-opinion.html', label: 'Dejar opinión', desc: 'Para huéspedes que ya han dormido en un Hestía.' },
@@ -75,8 +75,8 @@ const MAPA_COPY = {
       {
         title: 'About us',
         items: [
-          { href: 'nosotros.html', label: 'About us', desc: 'Alex and Fran, who we are and why Vera Playa.' },
-          { href: 'porque-hestia.html', label: 'Why Hestía', desc: 'Our six values and the Almería palette.' },
+          { href: 'nosotros.html', label: 'Hestía and us', desc: 'Alex and Fran, where the name comes from, the six values and the Almería palette.' },
+          { href: '/guia-vera/', label: 'Guide extract', desc: 'Beaches, towns, where to eat and walks in the Almería Levante.' },
           { href: 'opiniones.html', label: 'Reviews', desc: 'What guests say: Booking, Airbnb, Google and our site.' },
           { href: 'noticias.html', label: 'News', desc: 'The best of the territory each month: Almería, Murcia, Granada.' },
           { href: 'escribir-opinion.html', label: 'Leave a review', desc: 'For guests who have stayed at a Hestía.' },

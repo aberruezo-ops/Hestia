@@ -1,12 +1,10 @@
 // ================================================================
-// HESTÍA, Página Por qué Hestía / Why Hestía
+// HESTÍA, Secciones "Por qué Hestía" / "Why Hestía"
+// Ya no son una página propia: viven dentro de nosotros.html (#por-que-hestia).
 // ================================================================
 
 const PORQUE_COPY = {
   es: {
-    eyebrow: 'La idea detrás de Hestía',
-    title: (<>Por qué creamos Hestía.<br/><em>Y por qué se llama así.</em></>),
-    sub: 'La historia de un nombre, una diosa y tres Hestías en Vera Playa.',
 
     origin_eyebrow: 'El origen',
     origin_title: (<>No empezó como un negocio,<br/><em>empezó como una convicción.</em></>),
@@ -63,14 +61,8 @@ const PORQUE_COPY = {
     evol_p2: 'Queríamos algo más sólido, más expresivo. Un símbolo que dijera desde el primer vistazo que detrás de Hestía hay intención y raíces. Que no somos un producto más en una plataforma: somos un proyecto con historia, con nombre propio y con un lugar en el mapa.',
     evol_p3: 'Y en esa nueva H, las curvas que forman la hoja de olivo y la cresta de ola: hay también, si miras bien, la silueta de un tejado. No es casualidad. Es el guiño al logo que durante años nos dio tantas satisfacciones: llevamos lo que fuimos dentro de lo que somos.',
 
-    crosslink_label: 'La otra mitad de la historia',
-    crosslink_lead: 'Detrás de todo esto hay dos personas que responden el teléfono.',
-    crosslink_text: 'Conoce a Alex y Fran',
   },
   en: {
-    eyebrow: 'The idea behind Hestía',
-    title: (<>Why we created Hestía.<br/><em>And why it has this name.</em></>),
-    sub: 'The story of a name, a goddess and three Hestías in Vera Playa.',
 
     origin_eyebrow: 'The origin',
     origin_title: (<>It didn't start as a business.<br/><em>It started as a conviction.</em></>),
@@ -127,9 +119,6 @@ const PORQUE_COPY = {
     evol_p2: 'We wanted something more solid, more expressive. A symbol that showed at a glance that behind Hestía there is intention and roots. That we are not another listing on a platform: we are a project with a history, a proper name, and a place on the map.',
     evol_p3: 'And in that new H, the curves that form the olive leaf and the wave crest: there is also, if you look carefully, the silhouette of a rooftop. That was no accident. It is a nod to the logo that served us so well for years: we carry what we were inside what we are.',
 
-    crosslink_label: 'The other half of the story',
-    crosslink_lead: 'Behind all this there are two people who answer the phone.',
-    crosslink_text: 'Meet Alex and Fran',
   },
 };
 
@@ -172,34 +161,10 @@ const BRAND_PALETTE = [
   },
 ];
 
-const PorqueHero = ({ lang }) => {
-  const t = PORQUE_COPY[lang];
-  const vidRef = React.useRef(null);
-  React.useEffect(() => {
-    if (vidRef.current) {
-      vidRef.current.playbackRate = 0.75;
-      vidRef.current.play().catch(() => {});
-    }
-  }, []);
-  return (
-    <section className="page-hero porque-hero">
-      <video ref={vidRef} className="porque-hero-video"
-        src="assets/CF5B0673-5F2B-4434-BF04-65182B57986B.mov"
-        muted loop playsInline preload="auto" aria-hidden="true"/>
-      <div className="porque-hero-wash"/>
-      <div className="page-hero-content">
-        <div className="eyebrow">{t.eyebrow}</div>
-        <h1>{t.title}</h1>
-        <p className="page-hero-sub">{t.sub}</p>
-      </div>
-    </section>
-  );
-};
-
 const PorqueOrigen = ({ lang }) => {
   const t = PORQUE_COPY[lang];
   return (
-    <section className="nos-intro">
+    <section className="nos-intro pq-origen">
       <div className="container">
         <div className="nos-intro-inner">
           <div className="nos-intro-head">
@@ -295,7 +260,7 @@ const PorqueEvolucion = ({ lang }) => {
 const PorqueNombre = ({ lang }) => {
   const t = PORQUE_COPY[lang];
   return (
-    <section className="nos-why section-cream">
+    <section className="nos-why pq-nombre section-cream">
       <div className="container">
         <div className="eyebrow">{t.name_eyebrow}</div>
         <h2 className="reveal">{t.name_title}</h2>
@@ -574,57 +539,7 @@ const PorqueViajero = ({ lang }) => {
   );
 };
 
-const PorqueCrosslink = ({ lang }) => {
-  const t = PORQUE_COPY[lang];
-  return (
-    <section className="pq-crosslink section-cream">
-      <div className="pq-cl-inner reveal">
-        <div className="eyebrow">{t.crosslink_label}</div>
-        <p className="pq-cl-lead">{t.crosslink_lead}</p>
-        <a href="nosotros.html" className="pq-cl-link">
-          {t.crosslink_text}<span aria-hidden="true">→</span>
-        </a>
-      </div>
-    </section>
-  );
-};
-
-const PorquePageApp = () => {
-  const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
-  const { mode, scrolled } = useScrollMode();
-  useReveal();
-  useSectionGlow();
-
-  React.useEffect(() => {
-    localStorage.setItem('hestia-lang', lang);
-    document.documentElement.lang = lang;
-    document.title = lang === 'es'
-      ? 'Por qué Hestía · Hestía Your Home · Vera Playa'
-      : 'Why Hestía · Hestía Your Home · Vera Playa';
-  }, [lang]);
-
-  return (
-    <>
-      <Topbar lang={lang} setLang={setLang} />
-      <Header mode={mode} scrolled={scrolled} lang={lang} />
-      <main>
-        <PorqueHero lang={lang} />
-        <PorqueOrigen lang={lang} />
-        <PorqueLogo lang={lang} />
-        <PorqueEvolucion lang={lang} />
-        <PorqueNombre lang={lang} />
-        <PorqueValores lang={lang} />
-        <PorqueColores lang={lang} />
-        <PorqueViajero lang={lang} />
-        <PorqueCrosslink lang={lang} />
-        <ContactCTA lang={lang} />
-      </main>
-      <Footer lang={lang} />
-      <WidgetStack lang={lang} />
-      <FloatingChat lang={lang} />
-      <Cookies lang={lang} />
-    </>
-  );
-};
-
-ReactDOM.createRoot(document.getElementById('root')).render(<PorquePageApp/>);
+Object.assign(window, {
+  PorqueOrigen, PorqueLogo, PorqueEvolucion, PorqueNombre,
+  PorqueValores, PorqueColores, PorqueViajero,
+});

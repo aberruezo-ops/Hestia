@@ -76,7 +76,7 @@ const NAV_PAGES = {
   thalassa:         'thalassa.html',
   salinas:          'salinas.html',
   nosotros:         'nosotros.html',
-  porqueHestia:     'porque-hestia.html',
+  porqueHestia:     'nosotros.html#por-que-hestia',
   opiniones:        'opiniones.html',
   noticias:         'noticias.html',
   contacto:         'contacto.html',
@@ -166,7 +166,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <video ref={vitVidRef} autoPlay muted playsInline preload="auto" onEnded={onVitEnded}>
             <source src="assets/hestia-vitruvio.mp4" type="video/mp4"/>
           </video>
-          <a href="porque-hestia.html" className="hv-box-link">
+          <a href={NAV_PAGES.porqueHestia} className="hv-box-link">
             {lang === 'es' ? 'Nuestra marca' : 'Our brand'}
           </a>
         </div>
@@ -307,7 +307,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
             <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias}>{t.nav[7]}</NavLink>
-            <NavLink href={NAV_PAGES.guiaZona}>{lang === 'es' ? 'Nuestra guía' : 'Our guide'}</NavLink>
+            <NavLink href={NAV_PAGES.guiaZona}>{lang === 'es' ? 'Extracto Guía' : 'Guide extract'}</NavLink>
             <NavLink href={NAV_PAGES.reservas} className="cta"><span className="cta-border" aria-hidden="true"/><span className="cta-text">{t.cta_nav}</span></NavLink>
           </nav>
           <button
@@ -347,11 +347,10 @@ const Header = ({ mode, scrolled, lang }) => {
             </div>
           </div>
           <div className="mn-links">
-            <NavLink href={NAV_PAGES.porqueHestia} className="mn-link">{lang === 'es' ? '¿Por qué Hestía?' : 'Why Hestía?'}</NavLink>
             <NavLink href={NAV_PAGES.nosotros} className="mn-link">{t.nav[4]}</NavLink>
             <NavLink href={NAV_PAGES.opiniones} className="mn-link">{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias} className="mn-link">{t.nav[7]}</NavLink>
-            <NavLink href={NAV_PAGES.guiaZona} className="mn-link">{lang === 'es' ? 'Nuestra guía' : 'Our guide'}</NavLink>
+            <NavLink href={NAV_PAGES.guiaZona} className="mn-link">{lang === 'es' ? 'Extracto Guía' : 'Guide extract'}</NavLink>
             <NavLink href={NAV_PAGES.estanciasLargas} className="mn-link">{t.nav[9]}</NavLink>
             <NavLink href={NAV_PAGES.empresas} className="mn-link">{lang === 'es' ? 'Para empresas' : 'For business'}</NavLink>
             <NavLink href={NAV_PAGES.ventajas} className="mn-link">✓ {lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks'}</NavLink>
@@ -901,10 +900,9 @@ const Footer = ({ lang }) => {
           <h5>{t.footer_hestia}</h5>
           <ul>
             <li><a href="nosotros.html">{t.nav[4]}</a></li>
-            <li><a href="porque-hestia.html">{t.nav[8]}</a></li>
             <li><a href="opiniones.html">{t.nav[5]}</a></li>
             <li><a href="noticias.html">{t.nav[7]}</a></li>
-            <li><a href="/guia-vera/">{lang === 'es' ? 'Nuestra guía' : 'Our guide'}</a></li>
+            <li><a href="/guia-vera/">{lang === 'es' ? 'Extracto Guía' : 'Guide extract'}</a></li>
             <li><a href="estancias-largas.html">{t.nav[9]}</a></li>
             <li><a href="empresas.html">{lang === 'es' ? 'Para empresas' : 'For business'}</a></li>
             <li><a href="privacidad.html">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>

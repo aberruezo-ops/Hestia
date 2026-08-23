@@ -60,12 +60,12 @@ const MAPA_COPY = {
       title: 'Conócenos',
       items: [{
         href: 'nosotros.html',
-        label: 'Nosotros',
-        desc: 'Alex y Fran, quiénes somos y por qué Vera Playa.'
+        label: 'Hestía y nosotros',
+        desc: 'Alex y Fran, el origen del nombre, los seis valores y la paleta de Almería.'
       }, {
-        href: 'porque-hestia.html',
-        label: 'Por qué Hestía',
-        desc: 'Nuestros seis valores y la paleta de Almería.'
+        href: '/guia-vera/',
+        label: 'Extracto Guía',
+        desc: 'Playas, pueblos, dónde comer y rutas del Levante almeriense.'
       }, {
         href: 'opiniones.html',
         label: 'Opiniones',
@@ -145,12 +145,12 @@ const MAPA_COPY = {
       title: 'About us',
       items: [{
         href: 'nosotros.html',
-        label: 'About us',
-        desc: 'Alex and Fran, who we are and why Vera Playa.'
+        label: 'Hestía and us',
+        desc: 'Alex and Fran, where the name comes from, the six values and the Almería palette.'
       }, {
-        href: 'porque-hestia.html',
-        label: 'Why Hestía',
-        desc: 'Our six values and the Almería palette.'
+        href: '/guia-vera/',
+        label: 'Guide extract',
+        desc: 'Beaches, towns, where to eat and walks in the Almería Levante.'
       }, {
         href: 'opiniones.html',
         label: 'Reviews',

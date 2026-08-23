@@ -375,7 +375,7 @@ ${JSON.stringify(jsonld, null, 2)}
   <div class="wrap">
     <a class="brand" href="/">Hestía Your Home</a>
     <nav>
-      <a href="/guia-vera/">Nuestra guía</a>
+      <a href="/guia-vera/">Extracto Guía</a>
       <a href="/mar.html">Los apartamentos</a>
       <a class="cta-top" href="/reservas.html">Reservar</a>
     </nav>
@@ -438,7 +438,7 @@ const pie = `
   <p>Guía escrita por Alex y Fran, que llevan en persona los tres apartamentos de
   <a href="/">Hestía Your Home</a> en Vera Playa (Almería) desde 2016.
   Licencias VFT/AL/01580, VFT/AL/05535 y VFT/AL/07056.</p>
-  <p><a href="/">Inicio</a> · <a href="/guia-vera/">Nuestra guía</a> ·
+  <p><a href="/">Inicio</a> · <a href="/guia-vera/">Extracto Guía</a> ·
   <a href="/reservas.html">Reservas</a> · <a href="/opiniones.html">Opiniones</a> ·
   <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a></p>
   <p><a href="/privacidad.html">Privacidad</a> · <a href="/cookies.html">Cookies</a></p>
@@ -624,7 +624,7 @@ for (const hub of HUBS) {
       canonical: url, jsonld,
     })
     + hero({
-      h1: 'La Almería que no sale en las guías',
+      h1: 'La Almería que no sale en otras guías',
       intro: `${total} sitios del Levante almeriense recorridos por Alex y Fran, ligados a Almería de toda la vida y con tres apartamentos en Vera Playa desde 2016. No es una lista copiada de otras webs: es lo que recomendamos a quien se aloja con nosotros, ordenado por distancia desde los apartamentos.`,
       cifras: [[String(total), 'sitios'], [String(generadas.length), 'secciones'], ['2016', 'con casa aquí']],
       video: 'hero-atardecer-aereo.mp4',

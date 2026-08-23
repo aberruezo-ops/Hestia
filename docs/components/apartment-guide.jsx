@@ -1640,7 +1640,7 @@ const GUIDE_SHARED = {
       ],
       pdNote: 'Si te interesa la historia completa: de dónde viene el nombre, por qué empezamos este proyecto, qué buscamos cuando viajamos nosotros, la contamos con detalle en la web:',
       pdLinkLabel: 'Por qué creamos Hestía',
-      pdLinkHref: 'https://aberruezo-ops.github.io/Hestia/porque-hestia.html',
+      pdLinkHref: 'https://www.hestiayourhome.com/nosotros.html#por-que-hestia',
     },
     registro: {
       title: 'Registro de viajeros',
@@ -1944,7 +1944,7 @@ const GUIDE_SHARED = {
       ],
       pdNote: 'If you would like the full story: where the name comes from, why we started this project, what we look for when we travel ourselves, we tell it in detail on the website:',
       pdLinkLabel: 'Why we created Hestía',
-      pdLinkHref: 'https://aberruezo-ops.github.io/Hestia/porque-hestia.html',
+      pdLinkHref: 'https://www.hestiayourhome.com/nosotros.html#por-que-hestia',
     },
     registro: {
       title: 'Traveller registration',
