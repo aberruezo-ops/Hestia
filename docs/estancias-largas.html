@@ -77,7 +77,7 @@
   <p>Incluye WiFi de fibra, cocina completa, lavadora, aire acondicionado frío y calor, y acceso a las zonas comunes de cada urbanización: piscinas, gimnasio y, en Thalassa, SPA con sauna.</p>
   <p>Vera Playa tiene servicios todo el año, clima suave en invierno y buena conexión con Almería, Murcia y los aeropuertos de la zona, lo que la hace cómoda para pasar la temporada fría.</p>
   <p>Mascotas bienvenidas con petición previa. Consúltanos fechas y te confirmamos disponibilidad y precio cerrado.</p>
-  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Guía de la zona</a></nav>
+  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Nuestra guía</a></nav>
 </noscript>
 
 
@@ -101,7 +101,7 @@
     } catch (e) { console.warn('prices.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=766b2553e7');
+      const res = await fetch(file + '?cv=c7520d7d53');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       eval(await res.text());
     }

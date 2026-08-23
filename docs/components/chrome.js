@@ -411,7 +411,7 @@ const Header = ({
     href: NAV_PAGES.noticias
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.guiaZona
-  }, lang === 'es' ? 'La zona' : 'The area'), /*#__PURE__*/React.createElement(NavLink, {
+  }, lang === 'es' ? 'Nuestra guía' : 'Our guide'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.porqueHestia
   }, t.nav[8]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
@@ -483,7 +483,7 @@ const Header = ({
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.guiaZona,
     className: "mn-link"
-  }, lang === 'es' ? 'Guía de la zona' : 'Area guide'), /*#__PURE__*/React.createElement(NavLink, {
+  }, lang === 'es' ? 'Nuestra guía' : 'Our guide'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.estanciasLargas,
     className: "mn-link"
   }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
@@ -1514,7 +1514,7 @@ const Footer = ({
     href: "noticias.html"
   }, t.nav[7])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "/guia-vera/"
-  }, lang === 'es' ? 'Guía de la zona' : 'Area guide')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, lang === 'es' ? 'Nuestra guía' : 'Our guide')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "estancias-largas.html"
   }, t.nav[9])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "empresas.html"

@@ -177,7 +177,7 @@
   <p>La urbanización tiene piscina, gimnasio, sauna, pista de tenis, pistas de pádel y jardines con riachuelos. En el dormitorio principal hay nórdico de plumas y alternativa antialérgica.</p>
   <p>Mascotas bienvenidas con petición previa y un suplemento moderado por noche. Hay una estancia mínima, algo más alta en temporada crítica.</p>
   <p>Licencia turística VFT/AL/07056.</p>
-  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Guía de la zona</a></nav>
+  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Nuestra guía</a></nav>
 </noscript>
 
 
@@ -215,7 +215,7 @@
     } catch (e) { console.warn('photo-positions.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=766b2553e7');
+      const res = await fetch(file + '?cv=c7520d7d53');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

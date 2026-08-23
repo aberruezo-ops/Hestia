@@ -117,7 +117,7 @@
   <p>Hay una estancia mínima, algo más alta en temporada crítica. El huésped adicional y las mascotas tienen un pequeño suplemento por noche. Las condiciones y el importe exacto se ven al elegir fechas.</p>
   <p>Para estancias de un mes o más, consulta las estancias largas: tarifa mensual cerrada, disponible de septiembre a junio.</p>
   <p>Todos los huéspedes que pernoctan se registran en el parte de viajeros, como exige la normativa española.</p>
-  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Guía de la zona</a></nav>
+  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Nuestra guía</a></nav>
 </noscript>
 
 
@@ -147,7 +147,7 @@
     } catch (e) { console.warn('reviews.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=766b2553e7');
+      const res = await fetch(file + '?cv=c7520d7d53');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
