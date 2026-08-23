@@ -859,6 +859,12 @@ const PLACES = [
     tip: 'Reserva imprescindible. Cierran agosto algunos días, confirma. Combínalo con visita a Cuevas del Almanzora pueblo y al castillo del Marqués de los Vélez.',
     cat: 'bodega', url: 'https://bodegasierraalmagrera.com/',
     lat: 37.3680, lng: -1.8120, featured: true, featuredOrder: 1, rating: 4.7 },
+  { id: 'bodega-cortijo-el-cura', name: 'Cortijo El Cura Eco-Bodega (Laujar de Andarax)',
+    desc: 'La bodega más antigua de Almería y la primera de la provincia en hacer vino ecológico certificado, desde 1998. Está a unos 1.000 m de altitud, en plena Alpujarra almeriense, entre Sierra Nevada y la Sierra de Gádor. Viñedo propio de 25 hectáreas, con cepas viejas de más de 40 años. Distancia: ~1 h 50 en coche desde Vera Playa, así que es plan de día entero.',
+    specialty: 'Visita guiada a la finca y la bodega, museo de aperos antiguos, parral del que se prueban hasta 52 variedades de uva fresca según temporada, y cata de 5 vinos ecológicos con aperitivos de la zona.',
+    tip: 'Reserva previa obligatoria, las visitas salen a las 11:00 todos los días (950 51 35 62). Está en la carretera de Laujar a Órgiva, km 4, paraje de Ojancos: el punto del mapa es orientativo, guíate por la carretera. Súbete el día entero y come en Laujar.',
+    cat: 'bodega', url: 'https://cortijoelcura.com/',
+    lat: 36.9850, lng: -2.9350 },
   { id: 'cs-vera',        name: 'Centro de Salud de Vera', cat: 'health',   url: 'https://goo.gl/maps/ei7cMoTYLmWLnWZj7', lat: 37.2473, lng: -1.8612 },
   { id: 'virgen-alcazar', name: 'Virgen del Alcázar', desc: 'Privado.',     cat: 'health', url: 'https://goo.gl/maps/AXJ74Goy1ESTtBVy7', lat: 37.6850, lng: -1.7060 },
 
