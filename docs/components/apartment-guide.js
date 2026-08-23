@@ -1043,6 +1043,22 @@ const iconifyText = (text, size = 14) => {
 // ----- Lugares: nombre, categoría, descripción opcional, coords aproximadas, URL -----
 // Las coordenadas son aproximadas (centroides de pueblos cuando no hay punto exacto).
 // Cuando un goo.gl link está disponible, va en .url para el detalle.
+//
+// featured: true (✦ "Imperdible") NO se decide solo por la nota. Un sitio a
+// cinco minutos con 4,3 le sirve más al huésped que uno a cien kilómetros con
+// 4,7, y los chiringuitos de playa rara vez pasan de 4,4 en Google aunque se
+// coma bien. El listón sube con la distancia a Hestía:
+//   · hasta ~6 km (el día a día, se va andando o en cinco minutos): desde 4,3
+//   · de 6 a 30 km: desde 4,5
+//   · más de 30 km (excursión, cuesta medio día): desde 4,6
+// Lo que sabemos por los huéspedes manda sobre la nota de Google: si nos
+// dicen que se come bien, va marcado aunque la nota pública no acompañe.
+// Los clásicos con historia también entran por derecho propio, aunque la
+// nota se quede corta: Casa Puga (Almería, 1870) es imperdible por lo que
+// es, no por su 4,5.
+// Excepción sin matices: los servicios de utilidad (super, gasolinera, cajero,
+// lavandería, farmacia, veterinario, centro de salud) nunca son imperdibles.
+// Se usan por necesidad y ya tienen su propia categoría en la guía.
 const PLACES = [
 // Hestía (centro del mapa), los 3 en Vera Playa
 // Coordenadas exactas extraídas de los Plus Codes que el usuario
@@ -1276,7 +1292,8 @@ const PLACES = [
   cat: 'restaurant',
   rating: 4.4,
   lat: 37.2480,
-  lng: -1.7730
+  lng: -1.7730,
+  featured: true
 }, {
   id: 'rincon-puerto',
   name: 'Rincón del Puerto (Garrucha)',
@@ -1944,7 +1961,8 @@ const PLACES = [
   cat: 'bar',
   rating: 4.3,
   lat: 37.2260,
-  lng: -1.7950
+  lng: -1.7950,
+  featured: true
 }, {
   id: 'paraiso',
   name: 'Paraíso Vera Beach',
@@ -1972,7 +1990,8 @@ const PLACES = [
   cat: 'bar',
   rating: 4.4,
   lat: 37.2100,
-  lng: -1.8098
+  lng: -1.8098,
+  featured: true
 }, {
   id: 'mar-arena',
   name: 'Chiringuito Mar y Arena',
@@ -1991,7 +2010,8 @@ const PLACES = [
   cat: 'bar',
   rating: 4.4,
   lat: 37.2340,
-  lng: -1.8000
+  lng: -1.8000,
+  featured: true
 }, {
   id: 'lebreros',
   name: 'Los Lebreros (Garrucha puerto)',
@@ -2001,7 +2021,8 @@ const PLACES = [
   cat: 'bar',
   rating: 4.4,
   lat: 37.1820,
-  lng: -1.8235
+  lng: -1.8235,
+  featured: true
 },
 // ── Bares top-rated por Google ───────────────────────────────
 // Mojácar pueblo
