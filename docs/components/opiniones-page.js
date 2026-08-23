@@ -307,7 +307,40 @@ const ReviewCard = ({
 
 // Reviews paginadas: 6 por "página", flechas prev/next, sin scroll vertical infinito.
 // ============================================================
-const CARDS_PER_PAGE = 6;
+const CARDS_PER_PAGE = 24;
+
+// Criterios de orden. "Relevantes" antepone las destacadas y, dentro, las que
+// traen texto largo: una reseña de tres palabras convence menos que una que
+// cuenta algo, aunque las dos sean de cinco estrellas.
+const ORDENES = [{
+  id: 'relevantes',
+  es: 'Más relevantes',
+  en: 'Most relevant'
+}, {
+  id: 'recientes',
+  es: 'Más recientes',
+  en: 'Most recent'
+}, {
+  id: 'mejores',
+  es: 'Mejor valoradas',
+  en: 'Highest rated'
+}, {
+  id: 'largas',
+  es: 'Más detalladas',
+  en: 'Most detailed'
+}];
+
+// Booking puntúa sobre 10 y el resto sobre 5: sin normalizar, ordenar por nota
+// pondría siempre Booking arriba.
+const _nota5 = r => (r.source === 'booking' ? r.rating / 2 : r.rating) || 0;
+const _fecha = r => r.date || '';
+const ordenar = (lista, modo) => {
+  const l = [...lista];
+  if (modo === 'recientes') return l.sort((a, b) => _fecha(b).localeCompare(_fecha(a)));
+  if (modo === 'mejores') return l.sort((a, b) => _nota5(b) - _nota5(a) || _fecha(b).localeCompare(_fecha(a)));
+  if (modo === 'largas') return l.sort((a, b) => (b.text || '').length - (a.text || '').length);
+  return [...l.filter(r => r.highlight).sort((a, b) => _fecha(b).localeCompare(_fecha(a))), ...l.filter(r => !r.highlight).sort((a, b) => (b.text || '').length - (a.text || '').length || _fecha(b).localeCompare(_fecha(a)))];
+};
 const OpinionesTestimonials = ({
   lang
 }) => {
@@ -316,6 +349,7 @@ const OpinionesTestimonials = ({
   const [filter, setFilter] = React.useState('all');
   const [aptFilter, setAptFilter] = React.useState('all');
   const [page, setPage] = React.useState(0);
+  const [orden, setOrden] = React.useState('relevantes');
   const changeFilter = src => _vt(() => {
     setFilter(src);
     setPage(0);
@@ -324,10 +358,28 @@ const OpinionesTestimonials = ({
     setAptFilter(apt);
     setPage(0);
   });
+  const changeOrden = o => _vt(() => {
+    setOrden(o);
+    setPage(0);
+  });
 
   // Filtrado: fuente + apartamento. Highlights primero, luego por fecha desc.
   const filtered = all.filter(r => filter === 'all' || r.source === filter).filter(r => aptFilter === 'all' || r.apt === aptFilter || r.apt === 'all');
-  const visible = [...filtered.filter(r => r.highlight).sort((a, b) => (b.date || '').localeCompare(a.date || '')), ...filtered.filter(r => !r.highlight).sort((a, b) => (b.date || '').localeCompare(a.date || ''))];
+  const visible = ordenar(filtered, orden);
+
+  // Resumen de lo que hay bajo el filtro activo: da escala antes de leer.
+  const resumen = (() => {
+    if (!filtered.length) return null;
+    const media = filtered.reduce((a, r) => a + _nota5(r), 0) / filtered.length;
+    const cinco = filtered.filter(r => _nota5(r) >= 4.9).length;
+    const anios = filtered.map(_fecha).filter(Boolean).sort();
+    return {
+      media: media.toFixed(2),
+      cinco: Math.round(cinco / filtered.length * 100),
+      desde: anios.length ? anios[0].slice(0, 4) : null,
+      total: filtered.length
+    };
+  })();
   const totalPages = Math.max(1, Math.ceil(visible.length / CARDS_PER_PAGE));
   const safePage = Math.min(page, totalPages - 1);
   const paginated = visible.slice(safePage * CARDS_PER_PAGE, (safePage + 1) * CARDS_PER_PAGE);
@@ -437,7 +489,22 @@ const OpinionesTestimonials = ({
     onClick: () => changeApt(tab.id)
   }, lang === 'es' ? tab.es : tab.en, /*#__PURE__*/React.createElement("span", {
     className: "opiniones-tab-count"
-  }, "(", aptCounts[tab.id], ")")))), visible.length === 0 ? /*#__PURE__*/React.createElement("p", {
+  }, "(", aptCounts[tab.id], ")")))), resumen && /*#__PURE__*/React.createElement("div", {
+    className: "opi-resumen reveal"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "opi-res-datos"
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, resumen.media), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'sobre 5' : 'out of 5')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, resumen.total), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'opiniones' : 'reviews')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, resumen.cinco, "%"), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'de sobresaliente' : 'top marks')), resumen.desde && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, resumen.desde), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'desde' : 'since'))), /*#__PURE__*/React.createElement("div", {
+    className: "opi-orden"
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: "opi-orden-sel"
+  }, lang === 'es' ? 'Ordenar por' : 'Sort by'), /*#__PURE__*/React.createElement("select", {
+    id: "opi-orden-sel",
+    value: orden,
+    onChange: e => changeOrden(e.target.value)
+  }, ORDENES.map(o => /*#__PURE__*/React.createElement("option", {
+    key: o.id,
+    value: o.id
+  }, lang === 'es' ? o.es : o.en))))), visible.length === 0 ? /*#__PURE__*/React.createElement("p", {
     className: "opiniones-empty"
   }, lang === 'es' ? 'Aún no hay opiniones para este filtro.' : 'No reviews yet for this filter.') : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "testimonials-grid"

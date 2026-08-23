@@ -210,7 +210,34 @@ const ReviewCard = ({ rev, lang, fmtDate }) => {
 
 // Reviews paginadas: 6 por "página", flechas prev/next, sin scroll vertical infinito.
 // ============================================================
-const CARDS_PER_PAGE = 6;
+const CARDS_PER_PAGE = 24;
+
+// Criterios de orden. "Relevantes" antepone las destacadas y, dentro, las que
+// traen texto largo: una reseña de tres palabras convence menos que una que
+// cuenta algo, aunque las dos sean de cinco estrellas.
+const ORDENES = [
+  { id: 'relevantes', es: 'Más relevantes', en: 'Most relevant' },
+  { id: 'recientes',  es: 'Más recientes',  en: 'Most recent' },
+  { id: 'mejores',    es: 'Mejor valoradas', en: 'Highest rated' },
+  { id: 'largas',     es: 'Más detalladas',  en: 'Most detailed' },
+];
+
+// Booking puntúa sobre 10 y el resto sobre 5: sin normalizar, ordenar por nota
+// pondría siempre Booking arriba.
+const _nota5 = r => (r.source === 'booking' ? r.rating / 2 : r.rating) || 0;
+const _fecha = r => r.date || '';
+
+const ordenar = (lista, modo) => {
+  const l = [...lista];
+  if (modo === 'recientes') return l.sort((a, b) => _fecha(b).localeCompare(_fecha(a)));
+  if (modo === 'mejores')   return l.sort((a, b) => _nota5(b) - _nota5(a) || _fecha(b).localeCompare(_fecha(a)));
+  if (modo === 'largas')    return l.sort((a, b) => (b.text || '').length - (a.text || '').length);
+  return [
+    ...l.filter(r => r.highlight).sort((a, b) => _fecha(b).localeCompare(_fecha(a))),
+    ...l.filter(r => !r.highlight).sort((a, b) =>
+      (b.text || '').length - (a.text || '').length || _fecha(b).localeCompare(_fecha(a))),
+  ];
+};
 
 const OpinionesTestimonials = ({ lang }) => {
   const t = OPINIONES_COPY[lang];
@@ -221,18 +248,31 @@ const OpinionesTestimonials = ({ lang }) => {
   const [filter, setFilter] = React.useState('all');
   const [aptFilter, setAptFilter] = React.useState('all');
   const [page, setPage] = React.useState(0);
+  const [orden, setOrden] = React.useState('relevantes');
 
   const changeFilter = (src) => _vt(() => { setFilter(src); setPage(0); });
   const changeApt   = (apt) => _vt(() => { setAptFilter(apt); setPage(0); });
+  const changeOrden = (o)   => _vt(() => { setOrden(o); setPage(0); });
 
   // Filtrado: fuente + apartamento. Highlights primero, luego por fecha desc.
   const filtered = all
     .filter(r => filter === 'all' || r.source === filter)
     .filter(r => aptFilter === 'all' || r.apt === aptFilter || r.apt === 'all');
-  const visible = [
-    ...filtered.filter(r => r.highlight).sort((a, b) => (b.date || '').localeCompare(a.date || '')),
-    ...filtered.filter(r => !r.highlight).sort((a, b) => (b.date || '').localeCompare(a.date || '')),
-  ];
+  const visible = ordenar(filtered, orden);
+
+  // Resumen de lo que hay bajo el filtro activo: da escala antes de leer.
+  const resumen = (() => {
+    if (!filtered.length) return null;
+    const media = filtered.reduce((a, r) => a + _nota5(r), 0) / filtered.length;
+    const cinco = filtered.filter(r => _nota5(r) >= 4.9).length;
+    const anios = filtered.map(_fecha).filter(Boolean).sort();
+    return {
+      media: media.toFixed(2),
+      cinco: Math.round(cinco / filtered.length * 100),
+      desde: anios.length ? anios[0].slice(0, 4) : null,
+      total: filtered.length,
+    };
+  })();
 
   const totalPages = Math.max(1, Math.ceil(visible.length / CARDS_PER_PAGE));
   const safePage   = Math.min(page, totalPages - 1);
@@ -313,6 +353,25 @@ const OpinionesTestimonials = ({ lang }) => {
             </button>
           ))}
         </div>
+
+        {resumen && (
+          <div className="opi-resumen reveal">
+            <div className="opi-res-datos">
+              <div><b>{resumen.media}</b><span>{lang === 'es' ? 'sobre 5' : 'out of 5'}</span></div>
+              <div><b>{resumen.total}</b><span>{lang === 'es' ? 'opiniones' : 'reviews'}</span></div>
+              <div><b>{resumen.cinco}%</b><span>{lang === 'es' ? 'de sobresaliente' : 'top marks'}</span></div>
+              {resumen.desde && <div><b>{resumen.desde}</b><span>{lang === 'es' ? 'desde' : 'since'}</span></div>}
+            </div>
+            <div className="opi-orden">
+              <label htmlFor="opi-orden-sel">{lang === 'es' ? 'Ordenar por' : 'Sort by'}</label>
+              <select id="opi-orden-sel" value={orden} onChange={e => changeOrden(e.target.value)}>
+                {ORDENES.map(o => (
+                  <option key={o.id} value={o.id}>{lang === 'es' ? o.es : o.en}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        )}
 
         {visible.length === 0 ? (
           <p className="opiniones-empty">
