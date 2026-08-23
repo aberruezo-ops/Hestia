@@ -22,49 +22,134 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
-:root{--ber:#3D1A35;--ber-dk:#2A0F2E;--sol:#176E80;--crema:#FAF6F0;--arena:#F0E8D5;
---ink:#2A0F2E;--ink-soft:#5A4459;--rule:#E2D8DC;--vm:#6B7A3A;--vt:#B86A3C;--vs:#B08A24;}
+:root{
+  --ber:#3D1A35; --ber-dk:#2A0F2E; --ber-deep:#1E0722;
+  --sol:#3AAABB; --sol-lt:#6FC4D1; --sol-txt:#176E80;
+  --crema:#FAF6F0; --arena:#F0E8D5; --arena-dk:#E4D9BE;
+  --ink:#2A0F2E; --ink-soft:#5A4459; --ink-faint:#8B7A8A;
+  --rule:#E6DCDF; --vm:#6B7A3A; --vt:#B86A3C; --vs:#B08A24;
+  --r:10px 0 10px 0; --r-lg:16px 0 16px 0;
+  --serif:'Fraunces',Georgia,serif; --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --ease:cubic-bezier(.23,1,.32,1);
+}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--crema);color:var(--ink);font-family:'Hanken Grotesk',system-ui,sans-serif;
-line-height:1.6;padding:0 20px 80px;}
-.wrap{max-width:840px;margin:0 auto;}
-header.top{padding:26px 0;border-bottom:1px solid var(--rule);display:flex;
-justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
-header.top a.brand{font-family:'Fraunces',Georgia,serif;font-size:20px;color:var(--ink);
-text-decoration:none;letter-spacing:.02em;}
-header.top nav a{color:var(--sol);text-decoration:none;font-size:14px;margin-left:16px;}
-header.top nav a:hover{text-decoration:underline;}
-.hero{padding:46px 0 8px;}
-.eyebrow{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sol);
-font-weight:600;margin-bottom:14px;}
-h1{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:clamp(32px,5.4vw,50px);
-line-height:1.1;letter-spacing:-.015em;margin-bottom:16px;}
-.intro{font-size:17.5px;color:var(--ink-soft);max-width:62ch;margin-bottom:8px;}
-h2.grupo{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:26px;
-margin:44px 0 4px;padding-top:22px;border-top:2px solid var(--ink);}
-.cuenta{font-size:13px;color:var(--ink-soft);margin-bottom:10px;}
-article{padding:20px 0;border-bottom:1px solid var(--rule);}
-article h3{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:21px;margin-bottom:5px;}
-article h3 .dist{font-family:'Hanken Grotesk',sans-serif;font-size:13px;color:var(--ink-soft);
-font-weight:400;margin-left:9px;white-space:nowrap;}
-article p{font-size:15.5px;color:var(--ink-soft);margin-bottom:6px;max-width:68ch;}
-article p.best{color:var(--ink);}
-article p.best b{font-weight:600;}
-.meta{font-size:13px;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;}
-.meta .tag{background:var(--arena);padding:2px 9px;border-radius:8px 0 8px 0;}
-.meta a{color:var(--sol);}
-.cta{background:var(--ber-dk);color:var(--crema);border-radius:14px 0 14px 0;
-padding:30px 32px;margin:48px 0 0;}
-.cta h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:25px;
-margin-bottom:12px;color:var(--crema);}
-.cta p{color:rgba(240,232,213,.82);font-size:15.5px;margin-bottom:14px;max-width:60ch;}
-.cta a{color:#6FC4D1;font-weight:600;}
-.apts{display:flex;gap:10px 22px;flex-wrap:wrap;margin-top:14px;font-size:15px;}
-.apts a{text-decoration:none;font-weight:600;}
-.apts a.vm{color:#9DAF62;} .apts a.vt{color:#D89467;} .apts a.vs{color:#E0BC5E;}
-footer.pie{margin-top:52px;padding-top:22px;border-top:1px solid var(--rule);
-font-size:13.5px;color:var(--ink-soft);}
-footer.pie a{color:var(--sol);}
+html{scroll-behavior:smooth;}
+body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+.topnav{position:absolute;top:0;left:0;right:0;z-index:5;padding:22px 0;}
+.topnav .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;}
+.topnav a{color:var(--crema);text-decoration:none;font-size:14px;opacity:.85;transition:opacity .2s;}
+.topnav a:hover{opacity:1;}
+.topnav .brand{font-family:var(--serif);font-size:19px;letter-spacing:.04em;opacity:1;}
+.topnav nav{display:flex;gap:22px;}
+@media(max-width:640px){.topnav nav a:not(.cta-top){display:none;}}
+
+.hero{position:relative;min-height:clamp(460px,64vh,640px);display:flex;align-items:flex-end;
+  background:var(--ber-deep);overflow:hidden;}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:.42;filter:saturate(1.1);}
+.hero::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(30,7,34,.74) 0%,rgba(30,7,34,.30) 42%,rgba(30,7,34,.95) 100%);}
+.hero .wrap{position:relative;z-index:2;padding-top:130px;padding-bottom:54px;width:100%;}
+.eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--sol-lt);
+  font-weight:600;margin-bottom:18px;animation:up .7s var(--ease) both;}
+.hero h1{font-family:var(--serif);font-weight:400;color:var(--crema);
+  font-size:clamp(36px,6.4vw,72px);line-height:1.03;letter-spacing:-.025em;
+  max-width:17ch;margin-bottom:22px;animation:up .8s var(--ease) .08s both;}
+.hero .intro{color:rgba(240,232,213,.86);font-size:clamp(16px,1.9vw,19px);max-width:56ch;
+  animation:up .8s var(--ease) .18s both;}
+.cifras{display:flex;flex-wrap:wrap;gap:16px 44px;margin-top:36px;
+  animation:up .8s var(--ease) .28s both;}
+.cifra b{display:block;font-family:var(--serif);font-size:clamp(28px,3.6vw,40px);
+  color:var(--crema);line-height:1;font-variant-numeric:tabular-nums;}
+.cifra span{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(240,232,213,.6);margin-top:8px;}
+@keyframes up{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
+
+.indice{position:sticky;top:0;z-index:4;background:rgba(250,246,240,.94);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);}
+.indice .wrap{display:flex;gap:8px;overflow-x:auto;padding-top:14px;padding-bottom:14px;
+  scrollbar-width:none;}
+.indice .wrap::-webkit-scrollbar{display:none;}
+.indice a{flex:0 0 auto;font-size:13px;color:var(--ink-soft);text-decoration:none;
+  padding:7px 15px;border:1px solid var(--rule);border-radius:var(--r);white-space:nowrap;
+  transition:all .2s var(--ease);}
+.indice a:hover{color:var(--crema);background:var(--ber-dk);border-color:var(--ber-dk);}
+
+.grupo{padding:74px 0 8px;scroll-margin-top:70px;}
+.grupo-head{display:flex;align-items:baseline;gap:20px;margin-bottom:6px;}
+.grupo-n{font-family:var(--serif);font-size:clamp(38px,5.4vw,60px);line-height:1;
+  color:var(--arena-dk);font-variant-numeric:tabular-nums;}
+.grupo h2{font-family:var(--serif);font-weight:400;font-size:clamp(24px,3.3vw,35px);
+  line-height:1.1;letter-spacing:-.02em;}
+.grupo-nota{color:var(--ink-faint);font-size:13.5px;margin-bottom:30px;padding-left:2px;}
+
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;}
+.ficha{position:relative;background:#fff;border:1px solid var(--rule);border-radius:var(--r);
+  padding:24px 24px 20px;display:flex;flex-direction:column;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);}
+.ficha:hover{transform:translateY(-3px);border-color:var(--arena-dk);
+  box-shadow:0 14px 34px rgba(42,15,46,.09);}
+.ficha.top{background:linear-gradient(168deg,#fff 0%,#FDF9F2 100%);border-color:var(--arena-dk);}
+.ficha.top::before{content:'\2726';position:absolute;top:18px;right:20px;color:var(--vs);
+  font-size:15px;line-height:1;}
+.f-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:9px;}
+.ficha h3{font-family:var(--serif);font-weight:400;font-size:20.5px;line-height:1.2;
+  letter-spacing:-.01em;padding-right:12px;}
+.dist{flex:0 0 auto;font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--sol-txt);
+  background:#EAF4F5;padding:4px 10px;border-radius:6px 0 6px 0;white-space:nowrap;
+  font-variant-numeric:tabular-nums;}
+.ficha p{font-size:14.5px;color:var(--ink-soft);margin-bottom:10px;}
+.ficha .best{color:var(--ink);border-left:2px solid var(--vs);padding-left:12px;
+  font-size:14px;margin-bottom:12px;}
+.ficha .best b{font-weight:600;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  display:block;color:var(--ink-faint);margin-bottom:3px;}
+.chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:auto;
+  padding-top:12px;border-top:1px solid var(--rule);}
+.chip{font-size:11.5px;color:var(--ink-soft);background:var(--arena);padding:3px 9px;
+  border-radius:6px 0 6px 0;}
+.chip.nota{background:#EDF1E2;color:#4A5628;font-weight:600;}
+.chips a{font-size:11.5px;color:var(--sol-txt);text-decoration:none;
+  border-bottom:1px solid rgba(23,110,128,.3);}
+.chips a:hover{border-bottom-color:var(--sol-txt);}
+
+.cta{position:relative;margin:88px 0 0;background:var(--ber-dk);color:var(--crema);
+  border-radius:var(--r-lg);padding:clamp(38px,5.4vw,60px);overflow:hidden;}
+.cta::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(680px 420px at 88% 8%,rgba(58,170,187,.20),transparent 62%),
+             radial-gradient(560px 380px at 4% 96%,rgba(212,168,74,.16),transparent 58%);}
+.cta>*{position:relative;z-index:1;}
+.cta h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.7vw,40px);
+  line-height:1.1;letter-spacing:-.02em;margin-bottom:22px;max-width:17ch;}
+.cta p{color:rgba(240,232,213,.84);font-size:16px;max-width:62ch;margin-bottom:15px;}
+.cta .num{color:var(--sol-lt);font-weight:600;}
+.cta-datos{display:flex;flex-wrap:wrap;gap:16px 36px;margin:28px 0 30px;
+  padding-top:26px;border-top:1px solid rgba(240,232,213,.18);}
+.cta-datos div b{display:block;font-family:var(--serif);font-size:30px;line-height:1;
+  color:var(--crema);font-variant-numeric:tabular-nums;}
+.cta-datos div span{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(240,232,213,.55);margin-top:7px;}
+.apts{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px;}
+.apts a{flex:1 1 200px;text-decoration:none;padding:17px 22px;border-radius:var(--r);
+  border:1px solid rgba(240,232,213,.2);background:rgba(240,232,213,.05);
+  transition:background .25s var(--ease),transform .25s var(--ease);}
+.apts a:hover{background:rgba(240,232,213,.11);transform:translateY(-2px);}
+.apts a b{display:block;font-family:var(--serif);font-size:19px;font-weight:400;margin-bottom:3px;}
+.apts a span{font-size:12.5px;color:rgba(240,232,213,.62);}
+.apts .vm b{color:#9DAF62;} .apts .vt b{color:#D89467;} .apts .vs b{color:#E0BC5E;}
+
+.pie{margin-top:66px;padding:34px 0 70px;border-top:1px solid var(--rule);
+  font-size:13.5px;color:var(--ink-faint);}
+.pie a{color:var(--sol-txt);}
+.pie p+p{margin-top:9px;}
+
+a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;}
+  html{scroll-behavior:auto;}
+}
 </style>
 <script type="application/ld+json">
 [
@@ -401,248 +486,377 @@ footer.pie a{color:var(--sol);}
 </script>
 </head>
 <body>
-<div class="wrap">
-<header class="top">
-  <a class="brand" href="/">Hestía Your Home</a>
-  <nav>
-    <a href="/guia-vera/">Guía de la zona</a>
-    <a href="/reservas.html">Reservas</a>
-    <a href="/contacto.html">Contacto</a>
-  </nav>
-</header>
-<div class="hero">
-  <p class="eyebrow">Guía de la zona</p>
-  <h1>Rutas, senderismo y naturaleza en Almería</h1>
-  <p class="intro">Desde paseos litorales que salen de la puerta de casa hasta el Karst en Yesos de Sorbas y las ramblas del interior. Ordenado por distancia desde Vera Playa.</p>
-</div>
-
-<h2 class="grupo">Agua</h2>
-<p class="cuenta">15 sitios, del más cercano al más lejano.</p>
-<article>
-  <h3>Buceo · Tortuga (Vera Playa)<span class="dist">a un paseo</span></h3>
-  <p>Centro de buceo cercano, con bautismos y cursos PADI completos.</p>
-  
-  <div class="meta"><a href="https://www.buceotortuga.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Motos de agua · Aquamundo (sin titulación)<span class="dist">a un paseo</span></h3>
-  <p>Alquiler de motos de agua en Vera Playa, sin necesidad de licencia. Sesiones de 15-30 min en zona acotada.</p>
-  
-  <div class="meta"><a href="https://www.aquamundo.es" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Vera Surfing · clases de surf<span class="dist">a un paseo</span></h3>
-  <p>Clases de surf y SUP en la propia Playa de Vera. Material en alquiler.</p>
-  
-  <div class="meta"><a href="https://cambiatugesto.vera.es/turismo/index.php?page=directorio_view&amp;id=1498" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Buceo · Villaricos Sub<span class="dist">a 3 km</span></h3>
-  <p>Inmersiones en los pecios y arrecifes de Villaricos. Equipo completo en alquiler.</p>
-  
-  <div class="meta"><a href="https://www.villaricosub.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Club Náutico Almanzora<span class="dist">a 4 km</span></h3>
-  
-  
-  <div class="meta"><a href="https://maps.app.goo.gl/kgT5rYortJ2s5oPN8" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Garrucha Adventure Sports · pesca y alquiler de barcos<span class="dist">a 6 km</span></h3>
-  <p>Empresa especializada en pesca recreativa con embarcación Menorquina 500 (4 personas). Salidas desde el puerto de Garrucha. También alquilan barcos sin patrón y con patrón. Distancia: ~10 min en coche desde Vera Playa (~7 km).</p>
-  
-  <div class="meta"><span class="tag">4.8 sobre 5</span><a href="https://garruchaadventuresports.com/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Paseos en barco · Rumbo al Cabo<span class="dist">a 6 km</span></h3>
-  <p>Salidas desde Garrucha con visita a calas accesibles solo por mar. Embarcación cómoda.</p>
-  
-  <div class="meta"><a href="http://www.rumboalcabo.com/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Snorkel y buceo · Deep Emotion (Mojácar)<span class="dist">a 11 km</span></h3>
-  <p>Centro de buceo en Mojácar con salidas diarias a Cabo de Gata. Snorkel guiado 60 €/persona (incluye traslado, equipo, guía, fotos y picnic). Buceo PADI desde bautismo a Open Water.</p>
-  
-  <div class="meta"><a href="https://deepemotiondiving.com/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Buceo · Mojácar<span class="dist">a 11 km</span></h3>
-  <p>Centro tradicional de buceo en Mojácar.</p>
-  
-  <div class="meta"><a href="https://www.buceomojacar.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Snorkel Cabo de Gata · Mojácar Tour<span class="dist">a 11 km</span></h3>
-  <p>Excursión guiada en barco a las calas vírgenes de Cabo de Gata (Cala de Enmedio, San Pedro, Plomo). Recogida en Vera Playa o Garrucha. Día completo 9:00-18:00. Equipo y picnic incluidos.</p>
-  
-  <div class="meta"><a href="https://mojacartour.com/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Motos de agua · Desert Island (Carboneras)<span class="dist">a 27 km</span></h3>
-  <p>Salidas guiadas en moto de agua por la costa de Cabo de Gata desde Carboneras. Recorridos hasta calas a las que no llegan los barcos.</p>
-  
-  <div class="meta"><a href="https://instagram.com/desertislandjetskiclub" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Los Barqueros · Paseos en barco desde Las Negras<span class="dist">a 44 km</span></h3>
-  <p>Salidas desde Las Negras, el rincón más salvaje del Parque Natural de Cabo de Gata. Paseos y rutas en barco por las calas vírgenes del parque, accesibles únicamente desde el mar. La zona de Las Negras–San Pedro guarda algunas de las aguas más transparentes de toda la costa mediterránea. Distancia: ~45 min desde Vera Playa por carretera.</p>
-  
-  <div class="meta"><a href="https://losbarqueros.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Paseos en barco · El Cabo a Fondo<span class="dist">a 58 km</span></h3>
-  <p>Excursiones marítimas por Cabo de Gata desde San José. Avistamiento de delfines algunos días.</p>
-  
-  <div class="meta"><a href="https://elcaboafondo.es" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Paseos en barco · Cabo de Gata<span class="dist">a 58 km</span></h3>
-  <p>Travesía por las calas vírgenes del parque natural.</p>
-  
-  <div class="meta"><a href="https://www.cabogataalmeria.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Vela Almería · iniciación a la vela<span class="dist">a 72 km</span></h3>
-  <p>Cursos de iniciación a la vela en el puerto de Almería. Salidas en velero ligero y crucero.</p>
-  
-  <div class="meta"><a href="https://www.velaalmeria.es" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<h2 class="grupo">Ruta</h2>
-<p class="cuenta">15 sitios, del más cercano al más lejano.</p>
-<article>
-  <h3>Vera Playa → Garrucha (paseo litoral)<span class="dist">a un paseo</span></h3>
-  <p>Paseo llano por la orilla del mar desde Vera Playa hasta el puerto pesquero de Garrucha. Sin desnivel, apta para carrito o personas mayores. Al llegar, el puerto tiene freidurías con el mejor pescado de la zona.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/search/?api=1&amp;query=Paseo+maritimo+Vera+Playa+Garrucha" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Vera Playa → Villaricos (ruinas romanas)<span class="dist">a 1 km</span></h3>
-  <p>Paseo hacia el norte por la playa y los acantilados bajos hasta llegar a Villaricos, donde hay restos de una colonia fenicia y romana del s.III a.C. Termina en el Parque Arqueológico con vistas al delta del Almanzora.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/search/?api=1&amp;query=Villaricos+Parque+Arqueologico+Almeria" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Vera Playa → Vera pueblo (por el barranquillo)<span class="dist">a 3 km</span></h3>
-  <p>Paseo de unos 40 minutos hacia el interior subiendo suavemente por la carretera vieja y el camino rural hasta el casco histórico de Vera. Acaba en la Catedral-fortaleza (s.XVI) construida para resistir ataques berberiscos.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/search/?api=1&amp;query=Vera+Almeria+casco+historico+Catedral" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Paseo costero Mojácar Playa – Garrucha<span class="dist">a 6 km</span></h3>
-  <p>Ruta de paseo (no técnica) por el Paseo del Mediterráneo de Mojácar Playa hasta el puerto pesquero de Garrucha. Sin desnivel, perfecta con niños. La llegada al puerto con las barcas de pesca y las freidurías lo convierte en plan completo.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/search/?api=1&amp;query=Paseo+Maritimo+Mojacar+Garrucha" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Cumbre de Sierra Cabrera (Punta Entinas)<span class="dist">a 10 km</span></h3>
-  <p>Ascenso a la cima de la Sierra Cabrera (~470 m) por la cara norte. Vistas de 360°: mar Mediterráneo, el delta del Almanzora, Mojácar y en días claros las cumbres nevadas de Sierra Nevada.</p>
-  
-  <div class="meta"><a href="https://www.wikiloc.com/wikiloc/find.do?act=trail&amp;sport=9&amp;lat=37.1550&amp;lon=-1.8700&amp;page=1" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>El Jalí – Sierra Cabrera (Turre)<span class="dist">a 10 km</span></h3>
-  <p>Ruta circular exigente con ascenso pronunciado y vistas del valle del Aguas y la Sierra Cabrera. ~12 km · 4 h · desnivel ~700 m.</p>
-  
-  <div class="meta"><a href="https://www.wikiloc.com/hiking-trails/cortijo-cabrera-turre-mojacar-6347444" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Turre → Bédar por la Sierra Cabrera<span class="dist">a 10 km</span></h3>
-  <p>Travesía de pueblo a pueblo cruzando la sierra. Sale de Turre y sube al collado con vistas a la costa y el valle del Aguas; baja a Bédar, pueblo fortaleza sobre un cerro con iglesia del s.XVI.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/search/?api=1&amp;query=Sendero+Turre+Bedar+Sierra+Cabrera" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Rambla del Sopalmo<span class="dist">a 11 km</span></h3>
-  <p>Sendero por la rambla del Sopalmo (Sierra Cabrera). Descenso suave de ~90 min.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/search/?api=1&amp;query=Rambla+Sopalmo+Sierra+Cabrera" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Sendero La Mena – Macenas (PR-A 96)<span class="dist">a 14 km</span></h3>
-  <p>Ruta lineal junto al mar entre los acantilados de Mojácar y la playa de Macenas. Pasa por la Torre del Pirulico (s.XVI) y miradores.</p>
-  
-  <div class="meta"><a href="https://senderosdealmeria.es/otras-zonas/la-mena-macenas-pr-a-96/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Marina de la Torre → Mojácar Pueblo<span class="dist">a 14 km</span></h3>
-  <p>Subida desde la costa hasta el casco antiguo de Mojácar. ~7 km ida y vuelta, baja dificultad.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/search/?api=1&amp;query=Marina+de+la+Torre+Mojacar+sendero" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Isleta del Moro → Los Escullos (Cabo de Gata)<span class="dist">a 40 km</span></h3>
-  <p>Senda litoral entre dos de los pueblos más pintorescos del parque. Acantilados volcánicos, calas pequeñas sin nombre, vistas a La Polacra (roca vertical en el mar) y al Castillo de Los Escullos.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/search/?api=1&amp;query=Isleta+del+Moro+sendero+Los+Escullos" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Las Negras → Cala de San Pedro<span class="dist">a 43 km</span></h3>
-  <p>Senda costera por acantilados hasta una cala remota con un castillo nazarí del s.XV y agua cristalina. Al llegar encuentras una pequeña comunidad autosuficiente que vende café y fruta. Sin carretera de acceso.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/search/?api=1&amp;query=Cala+San+Pedro+Las+Negras+Almeria" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Rodalquilar → Los Albaricoques → Pozo de los Frailes<span class="dist">a 47 km</span></h3>
-  <p>Ruta interior por el corazón volcánico del Cabo de Gata. Pasa por el antiguo pueblo minero de Los Albaricoques (escenario de spaghetti-westerns en los 60), campos de chumberas y taray, y el pozo de piedra volcánica del s.XVI.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/search/?api=1&amp;query=Rodalquilar+Almeria+senderismo" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>San José → Los Genoveses → Mónsul (PR-A 47)<span class="dist">a 58 km</span></h3>
-  <p>La ruta costera más espectacular del Parque Natural. Pasa por la bahía abierta de Los Genoveses y acaba en Mónsul, con sus rocas volcánicas negras y olas que moldean la arena como dunas. Patrimonio UNESCO.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/search/?api=1&amp;query=Playa+Los+Genoveses+San+Jose+Almeria" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Circuito Faro de Cabo de Gata – Las Amoladeras<span class="dist">a 65 km</span></h3>
-  <p>Ruta fácil que rodea el extremo sur del parque natural. Pasa junto a la laguna de El Charco (flamencos rosados de octubre a marzo), la playa de Las Amoladeras y el faro. Paisaje desértico y marino al mismo tiempo.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/search/?api=1&amp;query=Faro+Cabo+de+Gata+senderismo" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<h2 class="grupo">Aventura</h2>
-<p class="cuenta">3 sitios, del más cercano al más lejano.</p>
-<article>
-  <h3>Karting Garrucha<span class="dist">a 6 km</span></h3>
-  <p>Pista de karting outdoor en Garrucha. Karts adultos y karts infantiles separados. Distancia: ~10 min en coche desde Vera Playa.</p>
-  
-  <div class="meta"><a href="https://kartinggarrucha.es/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Lunar Cable Park (wakeboard · ski náutico)<span class="dist">a 19 km</span></h3>
-  <p>Cable ski sobre el antiguo canal de remo de los Juegos Mediterráneos 2005, junto al embalse de Cuevas del Almanzora. Reinaugurado en 2019 como Lunar Cable Park. Sin barco, sin olas, el cable te arrastra. Distancia: ~20 km / 24 min desde Vera Playa por carretera local pasando por Vera y Cuevas del Almanzora.</p>
-  
-  <div class="meta"><span class="tag">4.7 sobre 5</span><a href="https://lunarcablepark.com/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Buggy en el desierto de Tabernas<span class="dist">a 54 km</span></h3>
-  <p>Rutas en buggy 4×4 por el desierto de Tabernas (escenario de los spaghetti westerns). Ruta corta 1 h o larga 3 h con paradas. Distancia: ~1 h en coche desde Vera Playa (~70 km).</p>
-  
-  <div class="meta"><a href="https://buggy-almeria.com/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-
-<div class="cta">
-  <h2>Esto es la mitad de la guía</h2>
-  <p>Lo que ves aquí lo puede leer cualquiera: qué es cada sitio, qué tiene de bueno y
-  a qué distancia queda. Es la parte que se puede contar por escrito.</p>
-  <p>La otra mitad es la que hace falta haber vivido aquí: a qué hora llegar a cada cala
-  para encontrar sitio, qué pedir en cada mesa, dónde se aparca de verdad en agosto y con
-  qué once negocios de la zona tenemos descuento para nuestros huéspedes.</p>
-  <p>Quien reserva con nosotros recibe la guía completa: 36 capítulos, 131 consejos, mapa
-  con 430 puntos y un PDF para llevarla sin cobertura, además de todo lo del apartamento,
-  del wifi a la farmacia de guardia.</p>
-  <div class="apts">
-    <a class="vm" href="/mar.html">Hestía Mar</a>
-    <a class="vt" href="/thalassa.html">Hestía Thalassa</a>
-    <a class="vs" href="/salinas.html">Hestía Salinas</a>
+<div class="topnav">
+  <div class="wrap">
+    <a class="brand" href="/">Hestía Your Home</a>
+    <nav>
+      <a href="/guia-vera/">Guía de la zona</a>
+      <a href="/mar.html">Los apartamentos</a>
+      <a class="cta-top" href="/reservas.html">Reservar</a>
+    </nav>
   </div>
 </div>
-
+<header class="hero">
+  <video autoplay muted loop playsinline preload="metadata" poster="/assets/posters/hero-cala-rocosa.jpg" aria-hidden="true">
+    <source src="/assets/Videoshome/hero-cala-rocosa.mp4" type="video/mp4"/>
+  </video>
+  <div class="wrap">
+    <p class="eyebrow">Guía de la zona</p>
+    <h1>Rutas, senderismo y naturaleza en Almería</h1>
+    <p class="intro">Desde paseos litorales que salen de la puerta de casa hasta el Karst en Yesos de Sorbas y las ramblas del interior. Ordenado por distancia desde Vera Playa.</p>
+    <div class="cifras"><div class="cifra"><b>33</b><span>sitios</span></div><div class="cifra"><b>3</b><span>categorías</span></div><div class="cifra"><b>un paseo</b><span>el más cercano</span></div></div>
+  </div>
+</header>
+<div class="indice"><div class="wrap">
+  <a href="#g-water">Agua</a><a href="#g-trek">Ruta</a><a href="#g-adventure">Aventura</a>
+</div></div><div class="wrap">
+<section class="grupo" id="g-water">
+  <div class="grupo-head">
+    <span class="grupo-n">01</span>
+    <h2>Agua</h2>
+  </div>
+  <p class="grupo-nota">15 sitios, del más cercano al más lejano.</p>
+  <div class="rejilla">
+<article class="ficha">
+  <div class="f-top">
+    <h3>Buceo · Tortuga (Vera Playa)</h3>
+    <span class="dist">a un paseo</span>
+  </div>
+  <p>Centro de buceo cercano, con bautismos y cursos PADI completos.</p>
+  
+  <div class="chips"><a href="https://www.buceotortuga.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Motos de agua · Aquamundo (sin titulación)</h3>
+    <span class="dist">a un paseo</span>
+  </div>
+  <p>Alquiler de motos de agua en Vera Playa, sin necesidad de licencia. Sesiones de 15-30 min en zona acotada.</p>
+  
+  <div class="chips"><a href="https://www.aquamundo.es" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Vera Surfing · clases de surf</h3>
+    <span class="dist">a 0.9 km</span>
+  </div>
+  <p>Clases de surf y SUP en la propia Playa de Vera. Material en alquiler.</p>
+  
+  <div class="chips"><a href="https://cambiatugesto.vera.es/turismo/index.php?page=directorio_view&amp;id=1498" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Buceo · Villaricos Sub</h3>
+    <span class="dist">a 3.4 km</span>
+  </div>
+  <p>Inmersiones en los pecios y arrecifes de Villaricos. Equipo completo en alquiler.</p>
+  
+  <div class="chips"><a href="https://www.villaricosub.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Club Náutico Almanzora</h3>
+    <span class="dist">a 3.9 km</span>
+  </div>
+  
+  
+  <div class="chips"><a href="https://maps.app.goo.gl/kgT5rYortJ2s5oPN8" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Garrucha Adventure Sports · pesca y alquiler de barcos</h3>
+    <span class="dist">a 5.5 km</span>
+  </div>
+  <p>Empresa especializada en pesca recreativa con embarcación Menorquina 500 (4 personas). Salidas desde el puerto de Garrucha. También alquilan barcos sin patrón y con patrón. Distancia: ~10 min en coche desde Vera Playa (~7 km).</p>
+  
+  <div class="chips"><span class="chip nota">4.8 sobre 5</span><a href="https://garruchaadventuresports.com/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Paseos en barco · Rumbo al Cabo</h3>
+    <span class="dist">a 5.5 km</span>
+  </div>
+  <p>Salidas desde Garrucha con visita a calas accesibles solo por mar. Embarcación cómoda.</p>
+  
+  <div class="chips"><a href="http://www.rumboalcabo.com/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Snorkel y buceo · Deep Emotion (Mojácar)</h3>
+    <span class="dist">a 11 km</span>
+  </div>
+  <p>Centro de buceo en Mojácar con salidas diarias a Cabo de Gata. Snorkel guiado 60 €/persona (incluye traslado, equipo, guía, fotos y picnic). Buceo PADI desde bautismo a Open Water.</p>
+  
+  <div class="chips"><a href="https://deepemotiondiving.com/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Buceo · Mojácar</h3>
+    <span class="dist">a 11 km</span>
+  </div>
+  <p>Centro tradicional de buceo en Mojácar.</p>
+  
+  <div class="chips"><a href="https://www.buceomojacar.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Snorkel Cabo de Gata · Mojácar Tour</h3>
+    <span class="dist">a 11 km</span>
+  </div>
+  <p>Excursión guiada en barco a las calas vírgenes de Cabo de Gata (Cala de Enmedio, San Pedro, Plomo). Recogida en Vera Playa o Garrucha. Día completo 9:00-18:00. Equipo y picnic incluidos.</p>
+  
+  <div class="chips"><a href="https://mojacartour.com/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Motos de agua · Desert Island (Carboneras)</h3>
+    <span class="dist">a 27 km</span>
+  </div>
+  <p>Salidas guiadas en moto de agua por la costa de Cabo de Gata desde Carboneras. Recorridos hasta calas a las que no llegan los barcos.</p>
+  
+  <div class="chips"><a href="https://instagram.com/desertislandjetskiclub" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Los Barqueros · Paseos en barco desde Las Negras</h3>
+    <span class="dist">a 44 km</span>
+  </div>
+  <p>Salidas desde Las Negras, el rincón más salvaje del Parque Natural de Cabo de Gata. Paseos y rutas en barco por las calas vírgenes del parque, accesibles únicamente desde el mar. La zona de Las Negras–San Pedro guarda algunas de las aguas más transparentes de toda la costa mediterránea. Distancia: ~45 min desde Vera Playa por carretera.</p>
+  
+  <div class="chips"><a href="https://losbarqueros.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Paseos en barco · El Cabo a Fondo</h3>
+    <span class="dist">a 58 km</span>
+  </div>
+  <p>Excursiones marítimas por Cabo de Gata desde San José. Avistamiento de delfines algunos días.</p>
+  
+  <div class="chips"><a href="https://elcaboafondo.es" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Paseos en barco · Cabo de Gata</h3>
+    <span class="dist">a 58 km</span>
+  </div>
+  <p>Travesía por las calas vírgenes del parque natural.</p>
+  
+  <div class="chips"><a href="https://www.cabogataalmeria.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Vela Almería · iniciación a la vela</h3>
+    <span class="dist">a 72 km</span>
+  </div>
+  <p>Cursos de iniciación a la vela en el puerto de Almería. Salidas en velero ligero y crucero.</p>
+  
+  <div class="chips"><a href="https://www.velaalmeria.es" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article></div>
+</section>
+<section class="grupo" id="g-trek">
+  <div class="grupo-head">
+    <span class="grupo-n">02</span>
+    <h2>Ruta</h2>
+  </div>
+  <p class="grupo-nota">15 sitios, del más cercano al más lejano.</p>
+  <div class="rejilla">
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Vera Playa → Garrucha (paseo litoral)</h3>
+    <span class="dist">a un paseo</span>
+  </div>
+  <p>Paseo llano por la orilla del mar desde Vera Playa hasta el puerto pesquero de Garrucha. Sin desnivel, apta para carrito o personas mayores. Al llegar, el puerto tiene freidurías con el mejor pescado de la zona.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Paseo+maritimo+Vera+Playa+Garrucha" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Vera Playa → Villaricos (ruinas romanas)</h3>
+    <span class="dist">a 1.3 km</span>
+  </div>
+  <p>Paseo hacia el norte por la playa y los acantilados bajos hasta llegar a Villaricos, donde hay restos de una colonia fenicia y romana del s.III a.C. Termina en el Parque Arqueológico con vistas al delta del Almanzora.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Villaricos+Parque+Arqueologico+Almeria" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Vera Playa → Vera pueblo (por el barranquillo)</h3>
+    <span class="dist">a 3.2 km</span>
+  </div>
+  <p>Paseo de unos 40 minutos hacia el interior subiendo suavemente por la carretera vieja y el camino rural hasta el casco histórico de Vera. Acaba en la Catedral-fortaleza (s.XVI) construida para resistir ataques berberiscos.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Vera+Almeria+casco+historico+Catedral" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Paseo costero Mojácar Playa – Garrucha</h3>
+    <span class="dist">a 5.8 km</span>
+  </div>
+  <p>Ruta de paseo (no técnica) por el Paseo del Mediterráneo de Mojácar Playa hasta el puerto pesquero de Garrucha. Sin desnivel, perfecta con niños. La llegada al puerto con las barcas de pesca y las freidurías lo convierte en plan completo.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Paseo+Maritimo+Mojacar+Garrucha" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Cumbre de Sierra Cabrera (Punta Entinas)</h3>
+    <span class="dist">a 9.6 km</span>
+  </div>
+  <p>Ascenso a la cima de la Sierra Cabrera (~470 m) por la cara norte. Vistas de 360°: mar Mediterráneo, el delta del Almanzora, Mojácar y en días claros las cumbres nevadas de Sierra Nevada.</p>
+  
+  <div class="chips"><a href="https://www.wikiloc.com/wikiloc/find.do?act=trail&amp;sport=9&amp;lat=37.1550&amp;lon=-1.8700&amp;page=1" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>El Jalí – Sierra Cabrera (Turre)</h3>
+    <span class="dist">a 9.6 km</span>
+  </div>
+  <p>Ruta circular exigente con ascenso pronunciado y vistas del valle del Aguas y la Sierra Cabrera. ~12 km · 4 h · desnivel ~700 m.</p>
+  
+  <div class="chips"><a href="https://www.wikiloc.com/hiking-trails/cortijo-cabrera-turre-mojacar-6347444" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Turre → Bédar por la Sierra Cabrera</h3>
+    <span class="dist">a 10 km</span>
+  </div>
+  <p>Travesía de pueblo a pueblo cruzando la sierra. Sale de Turre y sube al collado con vistas a la costa y el valle del Aguas; baja a Bédar, pueblo fortaleza sobre un cerro con iglesia del s.XVI.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Sendero+Turre+Bedar+Sierra+Cabrera" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Rambla del Sopalmo</h3>
+    <span class="dist">a 11 km</span>
+  </div>
+  <p>Sendero por la rambla del Sopalmo (Sierra Cabrera). Descenso suave de ~90 min.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Rambla+Sopalmo+Sierra+Cabrera" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Sendero La Mena – Macenas (PR-A 96)</h3>
+    <span class="dist">a 14 km</span>
+  </div>
+  <p>Ruta lineal junto al mar entre los acantilados de Mojácar y la playa de Macenas. Pasa por la Torre del Pirulico (s.XVI) y miradores.</p>
+  
+  <div class="chips"><a href="https://senderosdealmeria.es/otras-zonas/la-mena-macenas-pr-a-96/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Marina de la Torre → Mojácar Pueblo</h3>
+    <span class="dist">a 14 km</span>
+  </div>
+  <p>Subida desde la costa hasta el casco antiguo de Mojácar. ~7 km ida y vuelta, baja dificultad.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Marina+de+la+Torre+Mojacar+sendero" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Isleta del Moro → Los Escullos (Cabo de Gata)</h3>
+    <span class="dist">a 40 km</span>
+  </div>
+  <p>Senda litoral entre dos de los pueblos más pintorescos del parque. Acantilados volcánicos, calas pequeñas sin nombre, vistas a La Polacra (roca vertical en el mar) y al Castillo de Los Escullos.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Isleta+del+Moro+sendero+Los+Escullos" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Las Negras → Cala de San Pedro</h3>
+    <span class="dist">a 43 km</span>
+  </div>
+  <p>Senda costera por acantilados hasta una cala remota con un castillo nazarí del s.XV y agua cristalina. Al llegar encuentras una pequeña comunidad autosuficiente que vende café y fruta. Sin carretera de acceso.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Cala+San+Pedro+Las+Negras+Almeria" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Rodalquilar → Los Albaricoques → Pozo de los Frailes</h3>
+    <span class="dist">a 47 km</span>
+  </div>
+  <p>Ruta interior por el corazón volcánico del Cabo de Gata. Pasa por el antiguo pueblo minero de Los Albaricoques (escenario de spaghetti-westerns en los 60), campos de chumberas y taray, y el pozo de piedra volcánica del s.XVI.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Rodalquilar+Almeria+senderismo" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>San José → Los Genoveses → Mónsul (PR-A 47)</h3>
+    <span class="dist">a 58 km</span>
+  </div>
+  <p>La ruta costera más espectacular del Parque Natural. Pasa por la bahía abierta de Los Genoveses y acaba en Mónsul, con sus rocas volcánicas negras y olas que moldean la arena como dunas. Patrimonio UNESCO.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Playa+Los+Genoveses+San+Jose+Almeria" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Circuito Faro de Cabo de Gata – Las Amoladeras</h3>
+    <span class="dist">a 65 km</span>
+  </div>
+  <p>Ruta fácil que rodea el extremo sur del parque natural. Pasa junto a la laguna de El Charco (flamencos rosados de octubre a marzo), la playa de Las Amoladeras y el faro. Paisaje desértico y marino al mismo tiempo.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Faro+Cabo+de+Gata+senderismo" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article></div>
+</section>
+<section class="grupo" id="g-adventure">
+  <div class="grupo-head">
+    <span class="grupo-n">03</span>
+    <h2>Aventura</h2>
+  </div>
+  <p class="grupo-nota">3 sitios, del más cercano al más lejano.</p>
+  <div class="rejilla">
+<article class="ficha">
+  <div class="f-top">
+    <h3>Karting Garrucha</h3>
+    <span class="dist">a 5.6 km</span>
+  </div>
+  <p>Pista de karting outdoor en Garrucha. Karts adultos y karts infantiles separados. Distancia: ~10 min en coche desde Vera Playa.</p>
+  
+  <div class="chips"><a href="https://kartinggarrucha.es/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Lunar Cable Park (wakeboard · ski náutico)</h3>
+    <span class="dist">a 19 km</span>
+  </div>
+  <p>Cable ski sobre el antiguo canal de remo de los Juegos Mediterráneos 2005, junto al embalse de Cuevas del Almanzora. Reinaugurado en 2019 como Lunar Cable Park. Sin barco, sin olas, el cable te arrastra. Distancia: ~20 km / 24 min desde Vera Playa por carretera local pasando por Vera y Cuevas del Almanzora.</p>
+  
+  <div class="chips"><span class="chip nota">4.7 sobre 5</span><a href="https://lunarcablepark.com/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Buggy en el desierto de Tabernas</h3>
+    <span class="dist">a 54 km</span>
+  </div>
+  <p>Rutas en buggy 4×4 por el desierto de Tabernas (escenario de los spaghetti westerns). Ruta corta 1 h o larga 3 h con paradas. Distancia: ~1 h en coche desde Vera Playa (~70 km).</p>
+  
+  <div class="chips"><a href="https://buggy-almeria.com/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article></div>
+</section>
+<div class="cta">
+  <h2>Esto es la mitad de la guía</h2>
+  <p>Lo que ves aquí lo puede leer cualquiera: qué es cada sitio, qué tiene de bueno y a qué
+  distancia queda. Es la parte que se puede contar por escrito.</p>
+  <p>La otra mitad no se aprende leyendo: se aprende viniendo año tras año. A qué hora llegar a cada cala para
+  encontrar sitio. Qué pedir en cada mesa. Dónde se aparca de verdad en agosto. Y en qué
+  <span class="num">once negocios</span> de la zona tienen descuento nuestros huéspedes.</p>
+  <div class="cta-datos">
+    <div><b>36</b><span>capítulos</span></div>
+    <div><b>131</b><span>consejos</span></div>
+    <div><b>430</b><span>puntos en el mapa</span></div>
+    <div><b>PDF</b><span>para ir sin cobertura</span></div>
+  </div>
+  <p>Se entrega al reservar, junto con todo lo del apartamento: del wifi a la farmacia de guardia.
+  Tres casas en Vera Playa, llevadas por nosotros, sin comisiones de plataforma.</p>
+  <div class="apts">
+    <a class="vm" href="/mar.html"><b>Hestía Mar</b><span>A 300 m de la playa</span></a>
+    <a class="vt" href="/thalassa.html"><b>Hestía Thalassa</b><span>Ático con SPA y sauna</span></a>
+    <a class="vs" href="/salinas.html"><b>Hestía Salinas</b><span>Dos terrazas y las salinas</span></a>
+  </div>
+</div>
 <footer class="pie">
-  <p>Guía escrita por Alex y Fran, que gestionan en persona los tres apartamentos de
+  <p>Guía escrita por Alex y Fran, que llevan en persona los tres apartamentos de
   <a href="/">Hestía Your Home</a> en Vera Playa (Almería) desde 2016.
   Licencias VFT/AL/01580, VFT/AL/05535 y VFT/AL/07056.</p>
-  <p style="margin-top:8px"><a href="/guia-vera/">Volver a la guía de la zona</a> ·
+  <p><a href="/guia-vera/">Guía de la zona</a> ·
   <a href="/">Inicio</a> · <a href="/reservas.html">Reservas</a> ·
   <a href="/contacto.html">Contacto</a></p>
 </footer>
