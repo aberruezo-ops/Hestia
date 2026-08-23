@@ -22,49 +22,134 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
-:root{--ber:#3D1A35;--ber-dk:#2A0F2E;--sol:#176E80;--crema:#FAF6F0;--arena:#F0E8D5;
---ink:#2A0F2E;--ink-soft:#5A4459;--rule:#E2D8DC;--vm:#6B7A3A;--vt:#B86A3C;--vs:#B08A24;}
+:root{
+  --ber:#3D1A35; --ber-dk:#2A0F2E; --ber-deep:#1E0722;
+  --sol:#3AAABB; --sol-lt:#6FC4D1; --sol-txt:#176E80;
+  --crema:#FAF6F0; --arena:#F0E8D5; --arena-dk:#E4D9BE;
+  --ink:#2A0F2E; --ink-soft:#5A4459; --ink-faint:#8B7A8A;
+  --rule:#E6DCDF; --vm:#6B7A3A; --vt:#B86A3C; --vs:#B08A24;
+  --r:10px 0 10px 0; --r-lg:16px 0 16px 0;
+  --serif:'Fraunces',Georgia,serif; --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --ease:cubic-bezier(.23,1,.32,1);
+}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--crema);color:var(--ink);font-family:'Hanken Grotesk',system-ui,sans-serif;
-line-height:1.6;padding:0 20px 80px;}
-.wrap{max-width:840px;margin:0 auto;}
-header.top{padding:26px 0;border-bottom:1px solid var(--rule);display:flex;
-justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;}
-header.top a.brand{font-family:'Fraunces',Georgia,serif;font-size:20px;color:var(--ink);
-text-decoration:none;letter-spacing:.02em;}
-header.top nav a{color:var(--sol);text-decoration:none;font-size:14px;margin-left:16px;}
-header.top nav a:hover{text-decoration:underline;}
-.hero{padding:46px 0 8px;}
-.eyebrow{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--sol);
-font-weight:600;margin-bottom:14px;}
-h1{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:clamp(32px,5.4vw,50px);
-line-height:1.1;letter-spacing:-.015em;margin-bottom:16px;}
-.intro{font-size:17.5px;color:var(--ink-soft);max-width:62ch;margin-bottom:8px;}
-h2.grupo{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:26px;
-margin:44px 0 4px;padding-top:22px;border-top:2px solid var(--ink);}
-.cuenta{font-size:13px;color:var(--ink-soft);margin-bottom:10px;}
-article{padding:20px 0;border-bottom:1px solid var(--rule);}
-article h3{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:21px;margin-bottom:5px;}
-article h3 .dist{font-family:'Hanken Grotesk',sans-serif;font-size:13px;color:var(--ink-soft);
-font-weight:400;margin-left:9px;white-space:nowrap;}
-article p{font-size:15.5px;color:var(--ink-soft);margin-bottom:6px;max-width:68ch;}
-article p.best{color:var(--ink);}
-article p.best b{font-weight:600;}
-.meta{font-size:13px;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;}
-.meta .tag{background:var(--arena);padding:2px 9px;border-radius:8px 0 8px 0;}
-.meta a{color:var(--sol);}
-.cta{background:var(--ber-dk);color:var(--crema);border-radius:14px 0 14px 0;
-padding:30px 32px;margin:48px 0 0;}
-.cta h2{font-family:'Fraunces',Georgia,serif;font-weight:400;font-size:25px;
-margin-bottom:12px;color:var(--crema);}
-.cta p{color:rgba(240,232,213,.82);font-size:15.5px;margin-bottom:14px;max-width:60ch;}
-.cta a{color:#6FC4D1;font-weight:600;}
-.apts{display:flex;gap:10px 22px;flex-wrap:wrap;margin-top:14px;font-size:15px;}
-.apts a{text-decoration:none;font-weight:600;}
-.apts a.vm{color:#9DAF62;} .apts a.vt{color:#D89467;} .apts a.vs{color:#E0BC5E;}
-footer.pie{margin-top:52px;padding-top:22px;border-top:1px solid var(--rule);
-font-size:13.5px;color:var(--ink-soft);}
-footer.pie a{color:var(--sol);}
+html{scroll-behavior:smooth;}
+body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-height:1.6;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+.topnav{position:absolute;top:0;left:0;right:0;z-index:5;padding:22px 0;}
+.topnav .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;}
+.topnav a{color:var(--crema);text-decoration:none;font-size:14px;opacity:.85;transition:opacity .2s;}
+.topnav a:hover{opacity:1;}
+.topnav .brand{font-family:var(--serif);font-size:19px;letter-spacing:.04em;opacity:1;}
+.topnav nav{display:flex;gap:22px;}
+@media(max-width:640px){.topnav nav a:not(.cta-top){display:none;}}
+
+.hero{position:relative;min-height:clamp(460px,64vh,640px);display:flex;align-items:flex-end;
+  background:var(--ber-deep);overflow:hidden;}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:.42;filter:saturate(1.1);}
+.hero::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(30,7,34,.74) 0%,rgba(30,7,34,.30) 42%,rgba(30,7,34,.95) 100%);}
+.hero .wrap{position:relative;z-index:2;padding-top:130px;padding-bottom:54px;width:100%;}
+.eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--sol-lt);
+  font-weight:600;margin-bottom:18px;animation:up .7s var(--ease) both;}
+.hero h1{font-family:var(--serif);font-weight:400;color:var(--crema);
+  font-size:clamp(36px,6.4vw,72px);line-height:1.03;letter-spacing:-.025em;
+  max-width:17ch;margin-bottom:22px;animation:up .8s var(--ease) .08s both;}
+.hero .intro{color:rgba(240,232,213,.86);font-size:clamp(16px,1.9vw,19px);max-width:56ch;
+  animation:up .8s var(--ease) .18s both;}
+.cifras{display:flex;flex-wrap:wrap;gap:16px 44px;margin-top:36px;
+  animation:up .8s var(--ease) .28s both;}
+.cifra b{display:block;font-family:var(--serif);font-size:clamp(28px,3.6vw,40px);
+  color:var(--crema);line-height:1;font-variant-numeric:tabular-nums;}
+.cifra span{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(240,232,213,.6);margin-top:8px;}
+@keyframes up{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
+
+.indice{position:sticky;top:0;z-index:4;background:rgba(250,246,240,.94);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);}
+.indice .wrap{display:flex;gap:8px;overflow-x:auto;padding-top:14px;padding-bottom:14px;
+  scrollbar-width:none;}
+.indice .wrap::-webkit-scrollbar{display:none;}
+.indice a{flex:0 0 auto;font-size:13px;color:var(--ink-soft);text-decoration:none;
+  padding:7px 15px;border:1px solid var(--rule);border-radius:var(--r);white-space:nowrap;
+  transition:all .2s var(--ease);}
+.indice a:hover{color:var(--crema);background:var(--ber-dk);border-color:var(--ber-dk);}
+
+.grupo{padding:74px 0 8px;scroll-margin-top:70px;}
+.grupo-head{display:flex;align-items:baseline;gap:20px;margin-bottom:6px;}
+.grupo-n{font-family:var(--serif);font-size:clamp(38px,5.4vw,60px);line-height:1;
+  color:var(--arena-dk);font-variant-numeric:tabular-nums;}
+.grupo h2{font-family:var(--serif);font-weight:400;font-size:clamp(24px,3.3vw,35px);
+  line-height:1.1;letter-spacing:-.02em;}
+.grupo-nota{color:var(--ink-faint);font-size:13.5px;margin-bottom:30px;padding-left:2px;}
+
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;}
+.ficha{position:relative;background:#fff;border:1px solid var(--rule);border-radius:var(--r);
+  padding:24px 24px 20px;display:flex;flex-direction:column;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);}
+.ficha:hover{transform:translateY(-3px);border-color:var(--arena-dk);
+  box-shadow:0 14px 34px rgba(42,15,46,.09);}
+.ficha.top{background:linear-gradient(168deg,#fff 0%,#FDF9F2 100%);border-color:var(--arena-dk);}
+.ficha.top::before{content:'\2726';position:absolute;top:18px;right:20px;color:var(--vs);
+  font-size:15px;line-height:1;}
+.f-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:9px;}
+.ficha h3{font-family:var(--serif);font-weight:400;font-size:20.5px;line-height:1.2;
+  letter-spacing:-.01em;padding-right:12px;}
+.dist{flex:0 0 auto;font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--sol-txt);
+  background:#EAF4F5;padding:4px 10px;border-radius:6px 0 6px 0;white-space:nowrap;
+  font-variant-numeric:tabular-nums;}
+.ficha p{font-size:14.5px;color:var(--ink-soft);margin-bottom:10px;}
+.ficha .best{color:var(--ink);border-left:2px solid var(--vs);padding-left:12px;
+  font-size:14px;margin-bottom:12px;}
+.ficha .best b{font-weight:600;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  display:block;color:var(--ink-faint);margin-bottom:3px;}
+.chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:auto;
+  padding-top:12px;border-top:1px solid var(--rule);}
+.chip{font-size:11.5px;color:var(--ink-soft);background:var(--arena);padding:3px 9px;
+  border-radius:6px 0 6px 0;}
+.chip.nota{background:#EDF1E2;color:#4A5628;font-weight:600;}
+.chips a{font-size:11.5px;color:var(--sol-txt);text-decoration:none;
+  border-bottom:1px solid rgba(23,110,128,.3);}
+.chips a:hover{border-bottom-color:var(--sol-txt);}
+
+.cta{position:relative;margin:88px 0 0;background:var(--ber-dk);color:var(--crema);
+  border-radius:var(--r-lg);padding:clamp(38px,5.4vw,60px);overflow:hidden;}
+.cta::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(680px 420px at 88% 8%,rgba(58,170,187,.20),transparent 62%),
+             radial-gradient(560px 380px at 4% 96%,rgba(212,168,74,.16),transparent 58%);}
+.cta>*{position:relative;z-index:1;}
+.cta h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.7vw,40px);
+  line-height:1.1;letter-spacing:-.02em;margin-bottom:22px;max-width:17ch;}
+.cta p{color:rgba(240,232,213,.84);font-size:16px;max-width:62ch;margin-bottom:15px;}
+.cta .num{color:var(--sol-lt);font-weight:600;}
+.cta-datos{display:flex;flex-wrap:wrap;gap:16px 36px;margin:28px 0 30px;
+  padding-top:26px;border-top:1px solid rgba(240,232,213,.18);}
+.cta-datos div b{display:block;font-family:var(--serif);font-size:30px;line-height:1;
+  color:var(--crema);font-variant-numeric:tabular-nums;}
+.cta-datos div span{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(240,232,213,.55);margin-top:7px;}
+.apts{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px;}
+.apts a{flex:1 1 200px;text-decoration:none;padding:17px 22px;border-radius:var(--r);
+  border:1px solid rgba(240,232,213,.2);background:rgba(240,232,213,.05);
+  transition:background .25s var(--ease),transform .25s var(--ease);}
+.apts a:hover{background:rgba(240,232,213,.11);transform:translateY(-2px);}
+.apts a b{display:block;font-family:var(--serif);font-size:19px;font-weight:400;margin-bottom:3px;}
+.apts a span{font-size:12.5px;color:rgba(240,232,213,.62);}
+.apts .vm b{color:#9DAF62;} .apts .vt b{color:#D89467;} .apts .vs b{color:#E0BC5E;}
+
+.pie{margin-top:66px;padding:34px 0 70px;border-top:1px solid var(--rule);
+  font-size:13.5px;color:var(--ink-faint);}
+.pie a{color:var(--sol-txt);}
+.pie p+p{margin-top:9px;}
+
+a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;}
+  html{scroll-behavior:auto;}
+}
 </style>
 <script type="application/ld+json">
 [
@@ -519,324 +604,486 @@ footer.pie a{color:var(--sol);}
 </script>
 </head>
 <body>
-<div class="wrap">
-<header class="top">
-  <a class="brand" href="/">Hestía Your Home</a>
-  <nav>
-    <a href="/guia-vera/">Guía de la zona</a>
-    <a href="/reservas.html">Reservas</a>
-    <a href="/contacto.html">Contacto</a>
-  </nav>
-</header>
-<div class="hero">
-  <p class="eyebrow">Guía de la zona</p>
-  <h1>Pueblos que ver cerca de Vera, en Almería</h1>
-  <p class="intro">Almería cambia mucho en pocos kilómetros: pueblos blancos colgados, pueblos mineros, casas cueva y rincones que no salen en las guías. Ordenados por distancia desde Vera Playa.</p>
-</div>
-
-<h2 class="grupo">Pueblo</h2>
-<p class="cuenta">34 sitios, del más cercano al más lejano.</p>
-<article>
-  <h3>Vera pueblo<span class="dist">a 3 km</span></h3>
-  <p>Cabecera comarcal. Plaza Mayor con palmeras, iglesia-fortaleza del s. XVI, ayuntamiento del s. XVIII y restos de la muralla.</p>
-  <p class="best"><b>No te pierdas:</b> Iglesia de la Encarnación (sólo fortaleza de iglesia conservada en Andalucía con cuatro torres), Plaza Mayor, Mercado de Abastos y Museo Histórico Municipal.</p>
-  
-</article>
-<article>
-  <h3>Antas<span class="dist">a 6 km</span></h3>
-  <p>Pueblo cercano a Hestía con yacimiento argárico (Edad del Bronce) de El Argar, el más importante de la Península.</p>
-  <p class="best"><b>No te pierdas:</b> Yacimiento de El Argar, Centro de Interpretación, Cabezo de Yerba, Iglesia de Santa María.</p>
-  
-</article>
-<article>
-  <h3>Garrucha<span class="dist">a 6 km</span></h3>
-  <p>Pueblo pesquero a 10 min de Hestía. Su lonja es de las más importantes del Mediterráneo (famosa la gamba roja).</p>
-  <p class="best"><b>No te pierdas:</b> Subasta de pescado (17:00 días laborables), Paseo Marítimo, Castillo de Jesús Nazareno (s. XVIII), Plaza del Pueblo.</p>
-  
-</article>
-<article>
-  <h3>Cuevas del Almanzora<span class="dist">a 8 km</span></h3>
-  <p>Capital del valle del Almanzora, dominada por un castillo del s. XV restaurado.</p>
-  <p class="best"><b>No te pierdas:</b> Castillo del Marqués (museo arqueológico y de arte), Cueva del Tesoro, ruta del Almanzora (paseos al río).</p>
-  
-</article>
-<article>
-  <h3>Los Gallardos<span class="dist">a 9 km</span></h3>
-  <p>Pueblo tranquilo a 15 min de Hestía, a los pies de Sierra Cabrera, con una comunidad internacional muy viva. Buena base para senderismo y rutas del aceite.</p>
-  <p class="best"><b>No te pierdas:</b> Plaza del pueblo y sus bares, senderos de Sierra Cabrera con vistas a la costa, almazaras de la zona.</p>
-  
-</article>
-<article>
-  <h3>Turre<span class="dist">a 11 km</span></h3>
-  <p>Pueblo blanco al pie de la Sierra Cabrera, a 15 min de Hestía. Auténtico y poco turistificado, con buenos olivares y almazaras.</p>
-  <p class="best"><b>No te pierdas:</b> Almazara de aceite (visitas con cata), senderismo en Sierra Cabrera, mirador hacia Mojácar y la costa, Iglesia de la Encarnación.</p>
-  
-</article>
-<article>
-  <h3>Mojácar<span class="dist">a 11 km</span></h3>
-  <p>El pueblo blanco más fotografiado de Almería, colgado sobre un cerro a 175 m. Herencia árabe en cada calle estrecha encalada.</p>
-  <p class="best"><b>No te pierdas:</b> Plaza del Frontón al atardecer (mirador), Fuente Mora, Iglesia de Santa María (fortaleza-iglesia), Puerta de la Ciudad y el símbolo del Indalo.</p>
-  
-</article>
-<article>
-  <h3>Bédar<span class="dist">a 13 km</span></h3>
-  <p>Pueblo blanco serrano con pasado minero, encaramado a 600 m. Vistas espectaculares al Levante almeriense.</p>
-  <p class="best"><b>No te pierdas:</b> Ruta minera (antiguos cargaderos y túneles), Iglesia de Santa María (s. XVI), mirador del pueblo, fuentes naturales.</p>
-  
-</article>
-<article>
-  <h3>Pulpí<span class="dist">a 19 km</span></h3>
-  <p>Pueblo del Levante almeriense, último al norte. Famoso mundialmente por la Geoda gigante (8 m de altura).</p>
-  <p class="best"><b>No te pierdas:</b> Geoda de Pulpí (visita guiada en mina, segunda más grande del mundo), Playa de los Cocedores, Castillo de San Juan de los Terreros.</p>
-  
-</article>
-<article>
-  <h3>Huércal-Overa<span class="dist">a 19 km</span></h3>
-  <p>Cabecera del Almanzora a 30 min, con una de las Semanas Santas más reconocidas de Almería (la rivalidad de los &quot;Coloraos&quot; y los &quot;Verdes&quot;). Buen comercio y gastronomía de comarca.</p>
-  <p class="best"><b>No te pierdas:</b> Iglesia de la Asunción, Convento de las Mercedarias, Teatro Rapallo, casco histórico y plaza del pueblo.</p>
-  
-</article>
-<article>
-  <h3>Zurgena<span class="dist">a 23 km</span></h3>
-  <p>Pueblo del valle del Almanzora a orillas del río, rodeado de cítricos y con una nutrida comunidad internacional. Ambiente tranquilo y auténtico.</p>
-  <p class="best"><b>No te pierdas:</b> Paseo del río Almanzora, ermita de San Ramón, naranjos y limoneros del valle, miradores hacia la sierra.</p>
-  
-</article>
-<article>
-  <h3>Carboneras<span class="dist">a 27 km</span></h3>
-  <p>Pueblo pesquero al norte del Cabo de Gata. Punto de partida hacia Playa de los Muertos y Mesa Roldán.</p>
-  <p class="best"><b>No te pierdas:</b> Castillo de San Andrés (s. XVI, escenario de Juego de Tronos), Mesa Roldán y su faro, playa del Algarrobico (polémica icónica), puerto pesquero al atardecer.</p>
-  
-</article>
-<article>
-  <h3>Sorbas<span class="dist">a 27 km</span></h3>
-  <p>Pueblo de casas colgadas sobre el barranco. Su entorno es el Paraje Natural Karst en Yesos, único en Europa.</p>
-  <p class="best"><b>No te pierdas:</b> Mirador de las casas colgadas, Cuevas de Sorbas (visita guiada en yeso natural), alfarería tradicional (talleres abiertos), Iglesia de Santa María.</p>
-  
-</article>
-<article>
-  <h3>Águilas (Murcia)<span class="dist">a 28 km</span></h3>
-  <p>Pueblo costero murciano a 30 min al norte. Famoso por su Carnaval, declarado de Interés Turístico Internacional.</p>
-  <p class="best"><b>No te pierdas:</b> Castillo de San Juan (mirador), Plaza de España, Embarcadero del Hornillo (antigua estación ferroviaria inglesa), Cuatro Calas (sur), Cala Cerrada.</p>
-  
-</article>
-<article>
-  <h3>Albox<span class="dist">a 33 km</span></h3>
-  <p>Capital del valle del Almanzora. Mercados al aire libre con producto local y artesanía marroquí.</p>
-  <p class="best"><b>No te pierdas:</b> Mercadillo de los sábados (uno de los más grandes de Almería), Iglesia de Santa María, paseo del Llano.</p>
-  
-</article>
-<article>
-  <h3>Olula del Río<span class="dist">a 42 km</span></h3>
-  <p>Pueblo del valle del Almanzora, sede del Museo Pérez Siquier (uno de los mejores museos de fotografía contemporánea de España).</p>
-  <p class="best"><b>No te pierdas:</b> Museo Carmen Pérez Siquier (gratuito), Plaza Mayor, mercado los miércoles.</p>
-  
-</article>
-<article>
-  <h3>Macael<span class="dist">a 43 km</span></h3>
-  <p>Capital mundial del mármol blanco: el mismo de la Alhambra, el Patio de los Leones y el Vaticano. A 50 min.</p>
-  <p class="best"><b>No te pierdas:</b> Centro de Interpretación del Mármol, ruta de los talleres artesanales, canteras (con visita guiada), Iglesia de Santa María (toda de mármol).</p>
-  
-</article>
-<article>
-  <h3>Níjar<span class="dist">a 45 km</span></h3>
-  <p>Pueblo blanco al pie de Sierra Alhamilla, puerta natural al Parque de Cabo de Gata. Cuna de la cerámica andaluza más reputada y de la jarapa (alfombra tradicional).</p>
-  <p class="best"><b>No te pierdas:</b> Calle de las Tiendas (alfarerías centenarias: La Tienda de los Milagros, El Oficio), Iglesia de Santa María (s. XVI), Plaza La Glorieta.</p>
-  
-</article>
-<article>
-  <h3>Lorca (Murcia)<span class="dist">a 50 km</span></h3>
-  <p>Ciudad barroca declarada Conjunto Histórico-Artístico. Conocida como &quot;la Ciudad del Sol&quot; y por una de las Semanas Santas más espectaculares de España.</p>
-  <p class="best"><b>No te pierdas:</b> Castillo de Lorca (Fortaleza del Sol: visita guiada con teatralización), Colegiata de San Patricio, Palacio de Guevara, Museo MASS (bordados de la Semana Santa Blancos y Azules), Plaza de España.</p>
-  
-</article>
-<article>
-  <h3>Vélez-Rubio<span class="dist">a 51 km</span></h3>
-  <p>Puerta de la Comarca de los Vélez, al norte de la provincia. Imponente arquitectura barroca y casas señoriales.</p>
-  <p class="best"><b>No te pierdas:</b> Iglesia de la Encarnación (catedral barroca del s. XVIII), Museo Comarcal Velezano y Casa de los Arrieros.</p>
-  
-</article>
-<article>
-  <h3>Tabernas<span class="dist">a 54 km</span></h3>
-  <p>Pueblo blanco en medio del único desierto de Europa. Escenario de más de 500 películas (El bueno, el feo y el malo).</p>
-  <p class="best"><b>No te pierdas:</b> Desierto de Tabernas, Mini Hollywood (Oasys), Fort Bravo (poblado del Oeste), Castillo de Tabernas, ruta de localizaciones de cine.</p>
-  
-</article>
-<article>
-  <h3>Vélez-Blanco<span class="dist">a 55 km</span></h3>
-  <p>Pueblo encalado coronado por uno de los castillos renacentistas más bellos de España. Su patio original está hoy en el Metropolitan de Nueva York.</p>
-  <p class="best"><b>No te pierdas:</b> Castillo del Marqués de los Vélez (s. XVI), Cueva de los Letreros (arte rupestre, Indalo original), Iglesia de Santiago.</p>
-  
-</article>
-<article>
-  <h3>Castillo Marqués de los Vélez<span class="dist">a 55 km</span></h3>
-  <p>Dentro de Vélez-Blanco. Fortaleza renacentista del s. XVI, una de las cumbres del Renacimiento andaluz.</p>
-  <p class="best"><b>No te pierdas:</b> Vista desde la Torre del Homenaje, la galería con vistas al valle y la reproducción del patio renacentista (el original está en el MET).</p>
-  
-</article>
-<article>
-  <h3>Cuevas de los Letreros (Vélez-Blanco)<span class="dist">a 55 km</span></h3>
-  <p>Abrigo rupestre con pinturas neolíticas. Aquí se descubrió el Indalo, símbolo de Almería.</p>
-  <p class="best"><b>No te pierdas:</b> Las pinturas rupestres (4.000-7.000 a.C.) Patrimonio de la Humanidad UNESCO: antílopes, brujos y el Indalo original.</p>
-  
-</article>
-<article>
-  <h3>San José<span class="dist">a 58 km</span></h3>
-  <p>Capital del Parque Natural de Cabo de Gata. Pueblo blanco junto al mar, base perfecta para explorar playas vírgenes.</p>
-  <p class="best"><b>No te pierdas:</b> Paseo del puerto deportivo, Centro de Visitantes Las Amoladeras, playas de Genoveses y Mónsul a 5-10 min.</p>
-  
-</article>
-<article>
-  <h3>Mazarrón (Murcia)<span class="dist">a 59 km</span></h3>
-  <p>Pueblo costero murciano con pasado minero romano. Playas vírgenes y aguas turquesas a 1 h 15 min.</p>
-  <p class="best"><b>No te pierdas:</b> Playa de Bolnuevo y sus erosiones geológicas (Las Gredas), Playa de la Carolina, Castillo de los Vélez, Museo Arqueológico.</p>
-  
-</article>
-<article>
-  <h3>Gérgal<span class="dist">a 65 km</span></h3>
-  <p>Pueblo blanco a los pies de la Sierra de los Filabres. Punto de partida natural para el Observatorio Astronómico de Calar Alto (uno de los más importantes de Europa).</p>
-  <p class="best"><b>No te pierdas:</b> Castillo de Gérgal (s. XV, vistas), Observatorio de Calar Alto (visitas guiadas a 2.168 m), senderismo en los Filabres.</p>
-  
-</article>
-<article>
-  <h3>Almería capital<span class="dist">a 72 km</span></h3>
-  <p>Capital de la provincia, a 1 h 15 min. Mezcla única de Alcazaba musulmana, Catedral-fortaleza y barrios marineros.</p>
-  <p class="best"><b>No te pierdas:</b> Alcazaba (segunda más grande de España tras la Alhambra), Catedral de la Encarnación (con planta de fortaleza), Refugios de la Guerra Civil, barrio de La Chanca, Cable Inglés (mirador al puerto), Aljibes Árabes.</p>
-  
-</article>
-<article>
-  <h3>Cartagena (Murcia)<span class="dist">a 83 km</span></h3>
-  <p>Ciudad portuaria con 3.000 años de historia. Romana, modernista y militar, única en el Mediterráneo. A 1 h 30 min.</p>
-  <p class="best"><b>No te pierdas:</b> Teatro Romano (descubierto en 1988, en perfecta conservación), Calle Mayor modernista, Museo del Foro Romano, Submarino Peral, Castillo de la Concepción (mirador), barrio del Molinete, Casa Cervantes.</p>
-  
-</article>
-<article>
-  <h3>Roquetas de Mar<span class="dist">a 87 km</span></h3>
-  <p>Capital turística del sur de la provincia, a 1 h 30 min. Playas largas, marismas con flamencos y el Aquarium más grande de la costa.</p>
-  <p class="best"><b>No te pierdas:</b> Castillo de Santa Ana, Aquarium Costa de Almería, Marismas de las Salinas Viejas (flamencos), playas de Bajadilla y Aguadulce.</p>
-  
-</article>
-<article>
-  <h3>Caravaca de la Cruz (Murcia)<span class="dist">a 97 km</span></h3>
-  <p>Ciudad Santa, una de las cinco del mundo cristiano con jubileo perpetuo cada 7 años. A 2 h 15 min, sierras del noroeste murciano.</p>
-  <p class="best"><b>No te pierdas:</b> Real Basílica de la Vera Cruz (s. XVII, con la reliquia de la Vera Cruz), Castillo de Caravaca, Museo de la Fiesta, casco antiguo medieval.</p>
-  
-</article>
-<article>
-  <h3>Murcia capital<span class="dist">a 103 km</span></h3>
-  <p>Capital de la Región a 1 h 50 min. Catedral barroca, casino del s. XIX, jardines y la huerta más fértil de Europa. Cuna del Bando de la Huerta.</p>
-  <p class="best"><b>No te pierdas:</b> Catedral de Santa María (fachada barroca + torre con vistas), Casino de Murcia (s. XIX, joya ecléctica), Real Casino, Museo Salzillo (imaginería barroca), Plaza de las Flores, Plaza Cardenal Belluga.</p>
-  
-</article>
-<article>
-  <h3>San Pedro del Pinatar (Murcia)<span class="dist">a 112 km</span></h3>
-  <p>Pueblo costero del Mar Menor a 1 h 20 min. Salinas, baños de lodo terapéuticos y el sabor del caldero murciano.</p>
-  <p class="best"><b>No te pierdas:</b> Salinas y arenales de San Pedro (parque regional, flamencos), playas de Lo Pagán, baños de lodo (terapéuticos, gratuitos), puerto pesquero.</p>
-  
-</article>
-<article>
-  <h3>Yecla (Murcia)<span class="dist">a 165 km</span></h3>
-  <p>Pueblo del interior vinícola murciano a 2 h 40 min. Capital del vino DOP Yecla (monastrell). Conjunto histórico de iglesias barrocas.</p>
-  <p class="best"><b>No te pierdas:</b> Basílica de la Purísima Concepción, Iglesia Vieja, Museo del Vino, bodegas DOP Yecla (Castaño, Barahonda).</p>
-  
-</article>
-<h2 class="grupo">Rincón</h2>
-<p class="cuenta">12 sitios, del más cercano al más lejano.</p>
-<article>
-  <h3>Vera histórica<span class="dist">a 3 km</span></h3>
-  <p>Pueblo rehecho en el s. XV tras el terremoto de 1518. La Colegiata, las plazas adoquinadas y la vida andaluza tranquila a 10 minutos de la playa.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/37.2530,-1.8640" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Baria · Villaricos<span class="dist">a 6 km</span></h3>
-  <p>Ciudad fenicio-romana (s. VI a.C.) a pie de playa, a 10 minutos de Hestía. Hay murallas, factorías de garum y una necrópolis. Casi sin señalizar, busca los carteles verdes.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/37.2440,-1.8920" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Cielo oscuro · Reserva Starlight<span class="dist">a 17 km</span></h3>
-  <p>La comarca es Reserva Starlight. El interior de Mojácar (Turre, Bédar, Cabrera) ofrece noches sin contaminación lumínica, la Vía Láctea a simple vista.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/37.1130,-1.9510" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Molinos del Río Aguas<span class="dist">a 29 km</span></h3>
-  <p>Molinos medievales en un cañón kárstico donde el río Aguas brota en pleno desierto. Palmitos, cañas, silencio y la sensación de estar en otro tiempo.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/37.0690,-2.0780" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>La Isleta del Moro<span class="dist">a 41 km</span></h3>
-  <p>El pueblo pesquero más auténtico y fotogénico del Parque. Casas encaladas, barcas de colores y silencio. Una postal que todavía existe de verdad.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.9060,-2.0250" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Castillo de Los Escullos<span class="dist">a 44 km</span></h3>
-  <p>Fortaleza costera del s. XVIII en una cala volcánica casi virgen. El castillo emerge del agua como sacado de una novela de piratas.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.8810,-2.0600" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Cortijo del Fraile<span class="dist">a 45 km</span></h3>
-  <p>Ruinas del cortijo donde ocurrió el crimen real que inspiró &quot;Bodas de Sangre&quot; de Lorca. Silencio absoluto, muros de adobe y una historia que eriza la piel.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.8830,-2.0800" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Minas de Oro de Rodalquilar<span class="dist">a 47 km</span></h3>
-  <p>Minas de oro decimonónicas abandonadas en pleno Parque Natural. Edificios industriales art-decó oxidados por el salitre. Perturbadoras y espectaculares.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.8470,-2.0360" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>El Pozo de los Frailes<span class="dist">a 53 km</span></h3>
-  <p>Noria morisca, aljibe y el único molino de viento en funcionamiento del Cabo de Gata. Bucólico, fuera del circuito turístico y sin ningún cartel de bienvenida.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.8290,-2.1430" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Salinas de Cabo de Gata<span class="dist">a 61 km</span></h3>
-  <p>Laguna rosa con cientos de flamencos al atardecer. El reflejo del cielo sobre la sal es irreal, la foto más sorprendente de Almería.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.7780,-2.2100" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Arrecife de las Sirenas<span class="dist">a 65 km</span></h3>
-  <p>Escollos volcánicos negros emergiendo del Mediterráneo turquesa, junto al faro de Cabo de Gata. La imagen más icónica de la costa almeriense.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.7280,-2.1890" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article>
-  <h3>Punta Entinas-Sabinal<span class="dist">a 120 km</span></h3>
-  <p>Dunas fósiles, pinar y laguna con flamencos en el punto más al sur de la provincia de Granada. El fin del mundo en el buen sentido.</p>
-  
-  <div class="meta"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.6750,-2.9820" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-
-<div class="cta">
-  <h2>Esto es la mitad de la guía</h2>
-  <p>Lo que ves aquí lo puede leer cualquiera: qué es cada sitio, qué tiene de bueno y
-  a qué distancia queda. Es la parte que se puede contar por escrito.</p>
-  <p>La otra mitad es la que hace falta haber vivido aquí: a qué hora llegar a cada cala
-  para encontrar sitio, qué pedir en cada mesa, dónde se aparca de verdad en agosto y con
-  qué once negocios de la zona tenemos descuento para nuestros huéspedes.</p>
-  <p>Quien reserva con nosotros recibe la guía completa: 36 capítulos, 131 consejos, mapa
-  con 430 puntos y un PDF para llevarla sin cobertura, además de todo lo del apartamento,
-  del wifi a la farmacia de guardia.</p>
-  <div class="apts">
-    <a class="vm" href="/mar.html">Hestía Mar</a>
-    <a class="vt" href="/thalassa.html">Hestía Thalassa</a>
-    <a class="vs" href="/salinas.html">Hestía Salinas</a>
+<div class="topnav">
+  <div class="wrap">
+    <a class="brand" href="/">Hestía Your Home</a>
+    <nav>
+      <a href="/guia-vera/">Guía de la zona</a>
+      <a href="/mar.html">Los apartamentos</a>
+      <a class="cta-top" href="/reservas.html">Reservar</a>
+    </nav>
   </div>
 </div>
-
+<header class="hero">
+  <video autoplay muted loop playsinline preload="metadata" poster="/assets/posters/hero-playa-aerea-turquesa.jpg" aria-hidden="true">
+    <source src="/assets/Videoshome/hero-playa-aerea-turquesa.mp4" type="video/mp4"/>
+  </video>
+  <div class="wrap">
+    <p class="eyebrow">Guía de la zona</p>
+    <h1>Pueblos que ver cerca de Vera, en Almería</h1>
+    <p class="intro">Almería cambia mucho en pocos kilómetros: pueblos blancos colgados, pueblos mineros, casas cueva y rincones que no salen en las guías. Ordenados por distancia desde Vera Playa.</p>
+    <div class="cifras"><div class="cifra"><b>46</b><span>sitios</span></div><div class="cifra"><b>2</b><span>categorías</span></div><div class="cifra"><b>3.2 km</b><span>el más cercano</span></div></div>
+  </div>
+</header>
+<div class="indice"><div class="wrap">
+  <a href="#g-town">Pueblo</a><a href="#g-gem">Rincón</a>
+</div></div><div class="wrap">
+<section class="grupo" id="g-town">
+  <div class="grupo-head">
+    <span class="grupo-n">01</span>
+    <h2>Pueblo</h2>
+  </div>
+  <p class="grupo-nota">34 sitios, del más cercano al más lejano.</p>
+  <div class="rejilla">
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Vera pueblo</h3>
+    <span class="dist">a 3.2 km</span>
+  </div>
+  <p>Cabecera comarcal. Plaza Mayor con palmeras, iglesia-fortaleza del s. XVI, ayuntamiento del s. XVIII y restos de la muralla.</p>
+  <p class="best"><b>No te pierdas</b>Iglesia de la Encarnación (sólo fortaleza de iglesia conservada en Andalucía con cuatro torres), Plaza Mayor, Mercado de Abastos y Museo Histórico Municipal.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Antas</h3>
+    <span class="dist">a 5.5 km</span>
+  </div>
+  <p>Pueblo cercano a Hestía con yacimiento argárico (Edad del Bronce) de El Argar, el más importante de la Península.</p>
+  <p class="best"><b>No te pierdas</b>Yacimiento de El Argar, Centro de Interpretación, Cabezo de Yerba, Iglesia de Santa María.</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Garrucha</h3>
+    <span class="dist">a 5.5 km</span>
+  </div>
+  <p>Pueblo pesquero a 10 min de Hestía. Su lonja es de las más importantes del Mediterráneo (famosa la gamba roja).</p>
+  <p class="best"><b>No te pierdas</b>Subasta de pescado (17:00 días laborables), Paseo Marítimo, Castillo de Jesús Nazareno (s. XVIII), Plaza del Pueblo.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Cuevas del Almanzora</h3>
+    <span class="dist">a 7.9 km</span>
+  </div>
+  <p>Capital del valle del Almanzora, dominada por un castillo del s. XV restaurado.</p>
+  <p class="best"><b>No te pierdas</b>Castillo del Marqués (museo arqueológico y de arte), Cueva del Tesoro, ruta del Almanzora (paseos al río).</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Los Gallardos</h3>
+    <span class="dist">a 9.4 km</span>
+  </div>
+  <p>Pueblo tranquilo a 15 min de Hestía, a los pies de Sierra Cabrera, con una comunidad internacional muy viva. Buena base para senderismo y rutas del aceite.</p>
+  <p class="best"><b>No te pierdas</b>Plaza del pueblo y sus bares, senderos de Sierra Cabrera con vistas a la costa, almazaras de la zona.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Turre</h3>
+    <span class="dist">a 11 km</span>
+  </div>
+  <p>Pueblo blanco al pie de la Sierra Cabrera, a 15 min de Hestía. Auténtico y poco turistificado, con buenos olivares y almazaras.</p>
+  <p class="best"><b>No te pierdas</b>Almazara de aceite (visitas con cata), senderismo en Sierra Cabrera, mirador hacia Mojácar y la costa, Iglesia de la Encarnación.</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Mojácar</h3>
+    <span class="dist">a 11 km</span>
+  </div>
+  <p>El pueblo blanco más fotografiado de Almería, colgado sobre un cerro a 175 m. Herencia árabe en cada calle estrecha encalada.</p>
+  <p class="best"><b>No te pierdas</b>Plaza del Frontón al atardecer (mirador), Fuente Mora, Iglesia de Santa María (fortaleza-iglesia), Puerta de la Ciudad y el símbolo del Indalo.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Bédar</h3>
+    <span class="dist">a 13 km</span>
+  </div>
+  <p>Pueblo blanco serrano con pasado minero, encaramado a 600 m. Vistas espectaculares al Levante almeriense.</p>
+  <p class="best"><b>No te pierdas</b>Ruta minera (antiguos cargaderos y túneles), Iglesia de Santa María (s. XVI), mirador del pueblo, fuentes naturales.</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Pulpí</h3>
+    <span class="dist">a 19 km</span>
+  </div>
+  <p>Pueblo del Levante almeriense, último al norte. Famoso mundialmente por la Geoda gigante (8 m de altura).</p>
+  <p class="best"><b>No te pierdas</b>Geoda de Pulpí (visita guiada en mina, segunda más grande del mundo), Playa de los Cocedores, Castillo de San Juan de los Terreros.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Huércal-Overa</h3>
+    <span class="dist">a 19 km</span>
+  </div>
+  <p>Cabecera del Almanzora a 30 min, con una de las Semanas Santas más reconocidas de Almería (la rivalidad de los &quot;Coloraos&quot; y los &quot;Verdes&quot;). Buen comercio y gastronomía de comarca.</p>
+  <p class="best"><b>No te pierdas</b>Iglesia de la Asunción, Convento de las Mercedarias, Teatro Rapallo, casco histórico y plaza del pueblo.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Zurgena</h3>
+    <span class="dist">a 23 km</span>
+  </div>
+  <p>Pueblo del valle del Almanzora a orillas del río, rodeado de cítricos y con una nutrida comunidad internacional. Ambiente tranquilo y auténtico.</p>
+  <p class="best"><b>No te pierdas</b>Paseo del río Almanzora, ermita de San Ramón, naranjos y limoneros del valle, miradores hacia la sierra.</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Carboneras</h3>
+    <span class="dist">a 27 km</span>
+  </div>
+  <p>Pueblo pesquero al norte del Cabo de Gata. Punto de partida hacia Playa de los Muertos y Mesa Roldán.</p>
+  <p class="best"><b>No te pierdas</b>Castillo de San Andrés (s. XVI, escenario de Juego de Tronos), Mesa Roldán y su faro, playa del Algarrobico (polémica icónica), puerto pesquero al atardecer.</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Sorbas</h3>
+    <span class="dist">a 27 km</span>
+  </div>
+  <p>Pueblo de casas colgadas sobre el barranco. Su entorno es el Paraje Natural Karst en Yesos, único en Europa.</p>
+  <p class="best"><b>No te pierdas</b>Mirador de las casas colgadas, Cuevas de Sorbas (visita guiada en yeso natural), alfarería tradicional (talleres abiertos), Iglesia de Santa María.</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Águilas (Murcia)</h3>
+    <span class="dist">a 28 km</span>
+  </div>
+  <p>Pueblo costero murciano a 30 min al norte. Famoso por su Carnaval, declarado de Interés Turístico Internacional.</p>
+  <p class="best"><b>No te pierdas</b>Castillo de San Juan (mirador), Plaza de España, Embarcadero del Hornillo (antigua estación ferroviaria inglesa), Cuatro Calas (sur), Cala Cerrada.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Albox</h3>
+    <span class="dist">a 33 km</span>
+  </div>
+  <p>Capital del valle del Almanzora. Mercados al aire libre con producto local y artesanía marroquí.</p>
+  <p class="best"><b>No te pierdas</b>Mercadillo de los sábados (uno de los más grandes de Almería), Iglesia de Santa María, paseo del Llano.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Olula del Río</h3>
+    <span class="dist">a 42 km</span>
+  </div>
+  <p>Pueblo del valle del Almanzora, sede del Museo Pérez Siquier (uno de los mejores museos de fotografía contemporánea de España).</p>
+  <p class="best"><b>No te pierdas</b>Museo Carmen Pérez Siquier (gratuito), Plaza Mayor, mercado los miércoles.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Macael</h3>
+    <span class="dist">a 43 km</span>
+  </div>
+  <p>Capital mundial del mármol blanco: el mismo de la Alhambra, el Patio de los Leones y el Vaticano. A 50 min.</p>
+  <p class="best"><b>No te pierdas</b>Centro de Interpretación del Mármol, ruta de los talleres artesanales, canteras (con visita guiada), Iglesia de Santa María (toda de mármol).</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Níjar</h3>
+    <span class="dist">a 45 km</span>
+  </div>
+  <p>Pueblo blanco al pie de Sierra Alhamilla, puerta natural al Parque de Cabo de Gata. Cuna de la cerámica andaluza más reputada y de la jarapa (alfombra tradicional).</p>
+  <p class="best"><b>No te pierdas</b>Calle de las Tiendas (alfarerías centenarias: La Tienda de los Milagros, El Oficio), Iglesia de Santa María (s. XVI), Plaza La Glorieta.</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Lorca (Murcia)</h3>
+    <span class="dist">a 50 km</span>
+  </div>
+  <p>Ciudad barroca declarada Conjunto Histórico-Artístico. Conocida como &quot;la Ciudad del Sol&quot; y por una de las Semanas Santas más espectaculares de España.</p>
+  <p class="best"><b>No te pierdas</b>Castillo de Lorca (Fortaleza del Sol: visita guiada con teatralización), Colegiata de San Patricio, Palacio de Guevara, Museo MASS (bordados de la Semana Santa Blancos y Azules), Plaza de España.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Vélez-Rubio</h3>
+    <span class="dist">a 51 km</span>
+  </div>
+  <p>Puerta de la Comarca de los Vélez, al norte de la provincia. Imponente arquitectura barroca y casas señoriales.</p>
+  <p class="best"><b>No te pierdas</b>Iglesia de la Encarnación (catedral barroca del s. XVIII), Museo Comarcal Velezano y Casa de los Arrieros.</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Tabernas</h3>
+    <span class="dist">a 54 km</span>
+  </div>
+  <p>Pueblo blanco en medio del único desierto de Europa. Escenario de más de 500 películas (El bueno, el feo y el malo).</p>
+  <p class="best"><b>No te pierdas</b>Desierto de Tabernas, Mini Hollywood (Oasys), Fort Bravo (poblado del Oeste), Castillo de Tabernas, ruta de localizaciones de cine.</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Vélez-Blanco</h3>
+    <span class="dist">a 55 km</span>
+  </div>
+  <p>Pueblo encalado coronado por uno de los castillos renacentistas más bellos de España. Su patio original está hoy en el Metropolitan de Nueva York.</p>
+  <p class="best"><b>No te pierdas</b>Castillo del Marqués de los Vélez (s. XVI), Cueva de los Letreros (arte rupestre, Indalo original), Iglesia de Santiago.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Castillo Marqués de los Vélez</h3>
+    <span class="dist">a 55 km</span>
+  </div>
+  <p>Dentro de Vélez-Blanco. Fortaleza renacentista del s. XVI, una de las cumbres del Renacimiento andaluz.</p>
+  <p class="best"><b>No te pierdas</b>Vista desde la Torre del Homenaje, la galería con vistas al valle y la reproducción del patio renacentista (el original está en el MET).</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Cuevas de los Letreros (Vélez-Blanco)</h3>
+    <span class="dist">a 55 km</span>
+  </div>
+  <p>Abrigo rupestre con pinturas neolíticas. Aquí se descubrió el Indalo, símbolo de Almería.</p>
+  <p class="best"><b>No te pierdas</b>Las pinturas rupestres (4.000-7.000 a.C.) Patrimonio de la Humanidad UNESCO: antílopes, brujos y el Indalo original.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>San José</h3>
+    <span class="dist">a 58 km</span>
+  </div>
+  <p>Capital del Parque Natural de Cabo de Gata. Pueblo blanco junto al mar, base perfecta para explorar playas vírgenes.</p>
+  <p class="best"><b>No te pierdas</b>Paseo del puerto deportivo, Centro de Visitantes Las Amoladeras, playas de Genoveses y Mónsul a 5-10 min.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Mazarrón (Murcia)</h3>
+    <span class="dist">a 59 km</span>
+  </div>
+  <p>Pueblo costero murciano con pasado minero romano. Playas vírgenes y aguas turquesas a 1 h 15 min.</p>
+  <p class="best"><b>No te pierdas</b>Playa de Bolnuevo y sus erosiones geológicas (Las Gredas), Playa de la Carolina, Castillo de los Vélez, Museo Arqueológico.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Gérgal</h3>
+    <span class="dist">a 65 km</span>
+  </div>
+  <p>Pueblo blanco a los pies de la Sierra de los Filabres. Punto de partida natural para el Observatorio Astronómico de Calar Alto (uno de los más importantes de Europa).</p>
+  <p class="best"><b>No te pierdas</b>Castillo de Gérgal (s. XV, vistas), Observatorio de Calar Alto (visitas guiadas a 2.168 m), senderismo en los Filabres.</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Almería capital</h3>
+    <span class="dist">a 72 km</span>
+  </div>
+  <p>Capital de la provincia, a 1 h 15 min. Mezcla única de Alcazaba musulmana, Catedral-fortaleza y barrios marineros.</p>
+  <p class="best"><b>No te pierdas</b>Alcazaba (segunda más grande de España tras la Alhambra), Catedral de la Encarnación (con planta de fortaleza), Refugios de la Guerra Civil, barrio de La Chanca, Cable Inglés (mirador al puerto), Aljibes Árabes.</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Cartagena (Murcia)</h3>
+    <span class="dist">a 83 km</span>
+  </div>
+  <p>Ciudad portuaria con 3.000 años de historia. Romana, modernista y militar, única en el Mediterráneo. A 1 h 30 min.</p>
+  <p class="best"><b>No te pierdas</b>Teatro Romano (descubierto en 1988, en perfecta conservación), Calle Mayor modernista, Museo del Foro Romano, Submarino Peral, Castillo de la Concepción (mirador), barrio del Molinete, Casa Cervantes.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Roquetas de Mar</h3>
+    <span class="dist">a 87 km</span>
+  </div>
+  <p>Capital turística del sur de la provincia, a 1 h 30 min. Playas largas, marismas con flamencos y el Aquarium más grande de la costa.</p>
+  <p class="best"><b>No te pierdas</b>Castillo de Santa Ana, Aquarium Costa de Almería, Marismas de las Salinas Viejas (flamencos), playas de Bajadilla y Aguadulce.</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Caravaca de la Cruz (Murcia)</h3>
+    <span class="dist">a 97 km</span>
+  </div>
+  <p>Ciudad Santa, una de las cinco del mundo cristiano con jubileo perpetuo cada 7 años. A 2 h 15 min, sierras del noroeste murciano.</p>
+  <p class="best"><b>No te pierdas</b>Real Basílica de la Vera Cruz (s. XVII, con la reliquia de la Vera Cruz), Castillo de Caravaca, Museo de la Fiesta, casco antiguo medieval.</p>
+  
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Murcia capital</h3>
+    <span class="dist">a 103 km</span>
+  </div>
+  <p>Capital de la Región a 1 h 50 min. Catedral barroca, casino del s. XIX, jardines y la huerta más fértil de Europa. Cuna del Bando de la Huerta.</p>
+  <p class="best"><b>No te pierdas</b>Catedral de Santa María (fachada barroca + torre con vistas), Casino de Murcia (s. XIX, joya ecléctica), Real Casino, Museo Salzillo (imaginería barroca), Plaza de las Flores, Plaza Cardenal Belluga.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>San Pedro del Pinatar (Murcia)</h3>
+    <span class="dist">a 112 km</span>
+  </div>
+  <p>Pueblo costero del Mar Menor a 1 h 20 min. Salinas, baños de lodo terapéuticos y el sabor del caldero murciano.</p>
+  <p class="best"><b>No te pierdas</b>Salinas y arenales de San Pedro (parque regional, flamencos), playas de Lo Pagán, baños de lodo (terapéuticos, gratuitos), puerto pesquero.</p>
+  
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Yecla (Murcia)</h3>
+    <span class="dist">a 165 km</span>
+  </div>
+  <p>Pueblo del interior vinícola murciano a 2 h 40 min. Capital del vino DOP Yecla (monastrell). Conjunto histórico de iglesias barrocas.</p>
+  <p class="best"><b>No te pierdas</b>Basílica de la Purísima Concepción, Iglesia Vieja, Museo del Vino, bodegas DOP Yecla (Castaño, Barahonda).</p>
+  
+</article></div>
+</section>
+<section class="grupo" id="g-gem">
+  <div class="grupo-head">
+    <span class="grupo-n">02</span>
+    <h2>Rincón</h2>
+  </div>
+  <p class="grupo-nota">12 sitios, del más cercano al más lejano.</p>
+  <div class="rejilla">
+<article class="ficha">
+  <div class="f-top">
+    <h3>Vera histórica</h3>
+    <span class="dist">a 3.3 km</span>
+  </div>
+  <p>Pueblo rehecho en el s. XV tras el terremoto de 1518. La Colegiata, las plazas adoquinadas y la vida andaluza tranquila a 10 minutos de la playa.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/37.2530,-1.8640" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Baria · Villaricos</h3>
+    <span class="dist">a 5.5 km</span>
+  </div>
+  <p>Ciudad fenicio-romana (s. VI a.C.) a pie de playa, a 10 minutos de Hestía. Hay murallas, factorías de garum y una necrópolis. Casi sin señalizar, busca los carteles verdes.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/37.2440,-1.8920" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Cielo oscuro · Reserva Starlight</h3>
+    <span class="dist">a 17 km</span>
+  </div>
+  <p>La comarca es Reserva Starlight. El interior de Mojácar (Turre, Bédar, Cabrera) ofrece noches sin contaminación lumínica, la Vía Láctea a simple vista.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/37.1130,-1.9510" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Molinos del Río Aguas</h3>
+    <span class="dist">a 29 km</span>
+  </div>
+  <p>Molinos medievales en un cañón kárstico donde el río Aguas brota en pleno desierto. Palmitos, cañas, silencio y la sensación de estar en otro tiempo.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/37.0690,-2.0780" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>La Isleta del Moro</h3>
+    <span class="dist">a 41 km</span>
+  </div>
+  <p>El pueblo pesquero más auténtico y fotogénico del Parque. Casas encaladas, barcas de colores y silencio. Una postal que todavía existe de verdad.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.9060,-2.0250" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Castillo de Los Escullos</h3>
+    <span class="dist">a 44 km</span>
+  </div>
+  <p>Fortaleza costera del s. XVIII en una cala volcánica casi virgen. El castillo emerge del agua como sacado de una novela de piratas.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.8810,-2.0600" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Cortijo del Fraile</h3>
+    <span class="dist">a 45 km</span>
+  </div>
+  <p>Ruinas del cortijo donde ocurrió el crimen real que inspiró &quot;Bodas de Sangre&quot; de Lorca. Silencio absoluto, muros de adobe y una historia que eriza la piel.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.8830,-2.0800" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Minas de Oro de Rodalquilar</h3>
+    <span class="dist">a 47 km</span>
+  </div>
+  <p>Minas de oro decimonónicas abandonadas en pleno Parque Natural. Edificios industriales art-decó oxidados por el salitre. Perturbadoras y espectaculares.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.8470,-2.0360" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>El Pozo de los Frailes</h3>
+    <span class="dist">a 53 km</span>
+  </div>
+  <p>Noria morisca, aljibe y el único molino de viento en funcionamiento del Cabo de Gata. Bucólico, fuera del circuito turístico y sin ningún cartel de bienvenida.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.8290,-2.1430" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Salinas de Cabo de Gata</h3>
+    <span class="dist">a 61 km</span>
+  </div>
+  <p>Laguna rosa con cientos de flamencos al atardecer. El reflejo del cielo sobre la sal es irreal, la foto más sorprendente de Almería.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.7780,-2.2100" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha top">
+  <div class="f-top">
+    <h3>Arrecife de las Sirenas</h3>
+    <span class="dist">a 65 km</span>
+  </div>
+  <p>Escollos volcánicos negros emergiendo del Mediterráneo turquesa, junto al faro de Cabo de Gata. La imagen más icónica de la costa almeriense.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.7280,-2.1890" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article>
+<article class="ficha">
+  <div class="f-top">
+    <h3>Punta Entinas-Sabinal</h3>
+    <span class="dist">a 120 km</span>
+  </div>
+  <p>Dunas fósiles, pinar y laguna con flamencos en el punto más al sur de la provincia de Granada. El fin del mundo en el buen sentido.</p>
+  
+  <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.6750,-2.9820" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+</article></div>
+</section>
+<div class="cta">
+  <h2>Esto es la mitad de la guía</h2>
+  <p>Lo que ves aquí lo puede leer cualquiera: qué es cada sitio, qué tiene de bueno y a qué
+  distancia queda. Es la parte que se puede contar por escrito.</p>
+  <p>La otra mitad no se aprende leyendo: se aprende viniendo año tras año. A qué hora llegar a cada cala para
+  encontrar sitio. Qué pedir en cada mesa. Dónde se aparca de verdad en agosto. Y en qué
+  <span class="num">once negocios</span> de la zona tienen descuento nuestros huéspedes.</p>
+  <div class="cta-datos">
+    <div><b>36</b><span>capítulos</span></div>
+    <div><b>131</b><span>consejos</span></div>
+    <div><b>430</b><span>puntos en el mapa</span></div>
+    <div><b>PDF</b><span>para ir sin cobertura</span></div>
+  </div>
+  <p>Se entrega al reservar, junto con todo lo del apartamento: del wifi a la farmacia de guardia.
+  Tres casas en Vera Playa, llevadas por nosotros, sin comisiones de plataforma.</p>
+  <div class="apts">
+    <a class="vm" href="/mar.html"><b>Hestía Mar</b><span>A 300 m de la playa</span></a>
+    <a class="vt" href="/thalassa.html"><b>Hestía Thalassa</b><span>Ático con SPA y sauna</span></a>
+    <a class="vs" href="/salinas.html"><b>Hestía Salinas</b><span>Dos terrazas y las salinas</span></a>
+  </div>
+</div>
 <footer class="pie">
-  <p>Guía escrita por Alex y Fran, que gestionan en persona los tres apartamentos de
+  <p>Guía escrita por Alex y Fran, que llevan en persona los tres apartamentos de
   <a href="/">Hestía Your Home</a> en Vera Playa (Almería) desde 2016.
   Licencias VFT/AL/01580, VFT/AL/05535 y VFT/AL/07056.</p>
-  <p style="margin-top:8px"><a href="/guia-vera/">Volver a la guía de la zona</a> ·
+  <p><a href="/guia-vera/">Guía de la zona</a> ·
   <a href="/">Inicio</a> · <a href="/reservas.html">Reservas</a> ·
   <a href="/contacto.html">Contacto</a></p>
 </footer>
