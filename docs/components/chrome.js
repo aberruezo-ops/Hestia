@@ -47,10 +47,7 @@ const Topbar = ({
   href: "mailto:info@hestiayourhome.com",
   className: "topbar-link email hide-mobile",
   "aria-label": "Email"
-}, "info@hestiayourhome.com")), /*#__PURE__*/React.createElement("a", {
-  href: "reservas.html",
-  className: "tb-cta"
-}, lang === 'es' ? 'Reservar' : 'Book'), /*#__PURE__*/React.createElement("div", {
+}, "info@hestiayourhome.com")), /*#__PURE__*/React.createElement("div", {
   className: "lang",
   role: "group",
   "aria-label": "Language"
@@ -414,7 +411,15 @@ const Header = ({
     href: NAV_PAGES.noticias
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.guiaZona
-  }, lang === 'es' ? 'Nuestra guía' : 'Our guide')), /*#__PURE__*/React.createElement("button", {
+  }, lang === 'es' ? 'Nuestra guía' : 'Our guide'), /*#__PURE__*/React.createElement(NavLink, {
+    href: NAV_PAGES.reservas,
+    className: "cta"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "cta-border",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "cta-text"
+  }, t.cta_nav))), /*#__PURE__*/React.createElement("button", {
     className: `hamburger-btn ${mobileOpen ? 'open' : ''}`,
     onClick: () => setMobileOpen(o => !o),
     "aria-label": mobileOpen ? 'Cerrar menú' : 'Abrir menú',
