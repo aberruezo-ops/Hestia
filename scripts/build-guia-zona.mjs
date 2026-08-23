@@ -133,40 +133,40 @@ for (const b of objetosQueEmpiezanPor(src, 'subcat')) {
 const HUBS = [
   {
     video: 'hero-cala-aerea.mp4', slug: 'playas', cats: ['beach', 'beach-hard', 'beach-dog', 'beach-nude', 'beach-srvc'],
-    h1: 'Playas de Vera, Mojácar y el Levante almeriense',
-    title: 'Playas de Vera y el Levante almeriense · Guía Hestía',
+    h1: 'Las playas por las que volvemos',
+    title: 'Las mejores playas de Vera y el Levante almeriense · Hestía',
     desc: 'Guía de las playas y calas del Levante almeriense, de Vera a Cabo de Gata: cómo son, qué servicios tienen y cómo se llega. Escrita por quienes llevan toda la vida viniendo.',
-    intro: 'Llevamos toda la vida ligados a esta costa, y estas son las playas y calas que recorremos, de las urbanas con todos los servicios a las calas de Cabo de Gata donde no hay nada más que agua y roca. Están ordenadas por distancia desde Vera Playa.',
+    intro: 'De todas las playas del Levante almeriense, estas son a las que volvemos. No es un listado de la costa: es la criba de muchos veranos, de las urbanas con todos los servicios a las calas donde no hay nada más que agua y roca. Ordenadas por distancia desde los apartamentos.',
   },
   {
     video: 'hero-piscina-verano.mp4', slug: 'donde-comer', cats: ['restaurant', 'michelin', 'celiac', 'bar'],
-    h1: 'Dónde comer en Vera, Garrucha y Mojácar',
+    h1: 'Las mesas que recomendamos',
     title: 'Dónde comer en Vera, Garrucha y Mojácar · Guía Hestía',
     desc: 'Restaurantes, chiringuitos y estrellas Michelin del Levante almeriense y alrededores, con lo que pedir en cada uno. Escrita por quienes llevan toda la vida viniendo.',
-    intro: 'De la gamba roja de Garrucha a las estrellas Michelin de Almería, Murcia y Cartagena. Están ordenados por distancia desde Vera Playa, empezando por lo que tenemos a un paseo.',
+    intro: 'De la gamba roja de Garrucha a las estrellas Michelin de Almería, Murcia y Cartagena. Aquí no está todo lo que hay: está donde nosotros comemos y a dónde mandamos a los huéspedes. Ordenado por distancia desde los apartamentos.',
   },
   {
     video: 'hero-playa-aerea-turquesa.mp4', slug: 'pueblos', cats: ['town', 'gem'],
-    h1: 'Pueblos que ver cerca de Vera, en Almería',
+    h1: 'Los pueblos que merecen el viaje',
     title: 'Pueblos que ver cerca de Vera, Almería · Guía Hestía',
     desc: 'Los pueblos del Levante almeriense y del interior de Almería que merecen una visita, con qué ver en cada uno y a qué distancia están de Vera Playa.',
-    intro: 'Almería cambia mucho en pocos kilómetros: pueblos blancos colgados, pueblos mineros, casas cueva y rincones que no salen en las guías. Ordenados por distancia desde Vera Playa.',
+    intro: 'Almería cambia mucho en pocos kilómetros: pueblos blancos colgados, pueblos mineros y casas cueva. De todos los que hay, estos son los que compensan coger el coche. Ordenados por distancia desde los apartamentos.',
   },
   {
     video: 'hero-cala-rocosa.mp4', slug: 'naturaleza-y-rutas', cats: ['trek', 'water', 'adventure'],
-    h1: 'Rutas, senderismo y naturaleza en Almería',
+    h1: 'Salir a andar, y a mojarse',
     title: 'Rutas y naturaleza en el Levante almeriense · Guía Hestía',
     desc: 'Senderos, rutas costeras, deportes de agua y planes al aire libre en el Levante almeriense y Cabo de Gata, con distancias desde Vera Playa.',
-    intro: 'Desde paseos litorales que salen de la puerta de casa hasta el Karst en Yesos de Sorbas y las ramblas del interior. Ordenado por distancia desde Vera Playa.',
+    intro: 'Desde paseos litorales que empiezan en la puerta hasta el Karst en Yesos de Sorbas. Una selección corta a propósito: lo que de verdad recomendamos hacer al aire libre por aquí.',
   },
 ];
 
 const HUB_HISTORIA = {
   video: 'hero-atardecer-aereo.mp4', slug: 'historia', subcats: ['castillos', 'yacimientos', 'romano', 'islamico', 'cuevas'],
-  h1: 'Castillos, yacimientos y patrimonio de Almería',
+  h1: 'Cuatro mil años de piedra',
   title: 'Castillos y yacimientos de Almería · Guía Hestía',
   desc: 'Castillos, yacimientos argáricos y romanos, patrimonio andalusí y cuevas del Levante almeriense y alrededores, con distancias desde Vera Playa.',
-  intro: 'Almería lleva habitada desde El Argar, hace 4.000 años. Fenicios, romanos, andalusíes y la piedra que dejaron detrás. Ordenado por distancia desde Vera Playa.',
+  intro: 'Almería lleva habitada desde El Argar, hace 4.000 años. Fenicios, romanos y andalusíes dejaron aquí más de lo que cabe en una lista: estos son los que están cerca y merecen la parada.',
 };
 
 const NOMBRE_CAT = {
@@ -203,6 +203,12 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 .topnav .brand{font-family:var(--serif);font-size:19px;letter-spacing:.04em;opacity:1;}
 .topnav nav{display:flex;gap:22px;}
 @media(max-width:640px){.topnav nav a:not(.cta-top){display:none;}}
+@media(max-width:680px){
+  .ficha{grid-template-columns:44px 1fr;padding:26px 0;}
+  .ficha::before{font-size:24px;}
+  .dist{grid-column:2;text-align:left;padding-top:0;margin-bottom:10px;font-size:17px;}
+  .dist small{display:inline;margin-left:7px;}
+}
 
 .hero{position:relative;min-height:clamp(460px,64vh,640px);display:flex;align-items:flex-end;
   background:var(--ber-deep);overflow:hidden;}
@@ -244,28 +250,31 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
   line-height:1.1;letter-spacing:-.02em;}
 .grupo-nota{color:var(--ink-faint);font-size:13.5px;margin-bottom:30px;padding-left:2px;}
 
-.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;}
-.ficha{position:relative;background:#fff;border:1px solid var(--rule);border-radius:var(--r);
-  padding:24px 24px 20px;display:flex;flex-direction:column;
-  transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);}
-.ficha:hover{transform:translateY(-3px);border-color:var(--arena-dk);
-  box-shadow:0 14px 34px rgba(42,15,46,.09);}
-.ficha.top{background:linear-gradient(168deg,#fff 0%,#FDF9F2 100%);border-color:var(--arena-dk);}
-.ficha.top::before{content:'\\2726';position:absolute;top:18px;right:20px;color:var(--vs);
-  font-size:15px;line-height:1;}
-.f-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:9px;}
-.ficha h3{font-family:var(--serif);font-weight:400;font-size:20.5px;line-height:1.2;
-  letter-spacing:-.01em;padding-right:12px;}
-.dist{flex:0 0 auto;font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--sol-txt);
-  background:#EAF4F5;padding:4px 10px;border-radius:6px 0 6px 0;white-space:nowrap;
-  font-variant-numeric:tabular-nums;}
-.ficha p{font-size:14.5px;color:var(--ink-soft);margin-bottom:10px;}
+.rejilla{display:flex;flex-direction:column;gap:0;}
+.ficha{position:relative;display:grid;grid-template-columns:70px 1fr auto;gap:0 26px;
+  align-items:start;padding:34px 30px 34px 4px;border-bottom:1px solid var(--rule);
+  transition:background .35s var(--ease),padding-left .35s var(--ease);}
+.ficha:first-child{border-top:1px solid var(--rule);}
+.ficha:hover{background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,0) 92%);padding-left:20px;}
+.ficha::before{counter-increment:sitio;content:counter(sitio,decimal-leading-zero);
+  font-family:var(--serif);font-size:34px;line-height:.95;color:var(--arena-dk);
+  font-variant-numeric:tabular-nums;transition:color .35s var(--ease);}
+.ficha:hover::before{color:var(--vs);}
+.rejilla{counter-reset:sitio;}
+.f-cuerpo{min-width:0;}
+.ficha h3{font-family:var(--serif);font-weight:400;font-size:clamp(21px,2.5vw,27px);
+  line-height:1.15;letter-spacing:-.015em;margin-bottom:8px;}
+.dist{grid-column:3;align-self:start;font-family:var(--serif);font-size:19px;
+  color:var(--sol-txt);white-space:nowrap;font-variant-numeric:tabular-nums;
+  padding-top:5px;text-align:right;}
+.dist small{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-faint);margin-top:4px;}
+.ficha p{font-size:15.5px;color:var(--ink-soft);margin-bottom:12px;max-width:62ch;}
 .ficha .best{color:var(--ink);border-left:2px solid var(--vs);padding-left:12px;
   font-size:14px;margin-bottom:12px;}
 .ficha .best b{font-weight:600;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
   display:block;color:var(--ink-faint);margin-bottom:3px;}
-.chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:auto;
-  padding-top:12px;border-top:1px solid var(--rule);}
+.chips{display:flex;flex-wrap:wrap;align-items:center;gap:7px 11px;}
 .chip{font-size:11.5px;color:var(--ink-soft);background:var(--arena);padding:3px 9px;
   border-radius:6px 0 6px 0;}
 .chip.nota{background:#EDF1E2;color:#4A5628;font-weight:600;}
@@ -419,15 +428,15 @@ function ficha(p) {
   if (serv) chips.push(`<span class="chip">${esc(serv)}</span>`);
   if (acc) chips.push(`<span class="chip">${esc(acc)}</span>`);
   if (p.url) chips.push(`<a href="${esc(p.url)}" rel="nofollow noopener" target="_blank">Ver en el mapa</a>`);
+  const d = distTxt(p.km);
   return `
-<article class="ficha${p.featured ? ' top' : ''}">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>${esc(limpiaEmoji(p.name))}</h3>
-    <span class="dist">${distTxt(p.km)}</span>
+    ${p.desc ? `<p>${esc(p.desc)}</p>` : ''}
+    ${chips.length ? `<div class="chips">${chips.join('')}</div>` : ''}
   </div>
-  ${p.desc ? `<p>${esc(p.desc)}</p>` : ''}
-  ${p.best ? `<p class="best"><b>No te pierdas</b>${esc(p.best)}</p>` : ''}
-  ${chips.length ? `<div class="chips">${chips.join('')}</div>` : ''}
+  <span class="dist">${esc(d.replace('a ', ''))}<small>${d === 'a un paseo' ? 'desde casa' : 'desde casa'}</small></span>
 </article>`;
 }
 
@@ -437,12 +446,12 @@ function fichaAtlas(a) {
   if (a.url) chips.push(`<a href="${esc(a.url)}" rel="nofollow noopener" target="_blank">Web oficial</a>`);
   return `
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>${esc(a.name)}</h3>
-    <span class="dist">a ${a.km} km</span>
+    ${a.desc ? `<p>${esc(a.desc)}</p>` : ''}
+    ${chips.length ? `<div class="chips">${chips.join('')}</div>` : ''}
   </div>
-  ${a.desc ? `<p>${esc(a.desc)}</p>` : ''}
-  ${chips.length ? `<div class="chips">${chips.join('')}</div>` : ''}
+  <span class="dist">${a.km} km<small>desde casa</small></span>
 </article>`;
 }
 
@@ -475,7 +484,11 @@ const migas = (nombre, url) => ({
 const generadas = [];
 
 for (const hub of HUBS) {
-  const items = PLACES.filter(p => hub.cats.includes(p.cat)).sort((a, b) => a.km - b.km);
+  // Se publica la criba, no el archivo: lo marcado como imperdible más todo
+  // lo que está a menos de 6 km. Sin esa segunda condición la guía de playas
+  // empezaba a 26 km, sin las de Vera ni Garrucha, que es lo que de verdad
+  // busca quien va a dormir aquí. El resto se queda para quien reserva.
+  const items = PLACES.filter(p => hub.cats.includes(p.cat) && (p.featured || p.km < 6)).sort((a, b) => a.km - b.km);
   if (!items.length) continue;
   const url = `${BASE}/guia-vera/${hub.slug}/`;
   const jsonld = [
@@ -509,7 +522,7 @@ for (const hub of HUBS) {
 {
   const h = HUB_HISTORIA;
   const items = ATLAS.filter(a => h.subcats.includes(a.subcat))
-    .sort((a, b) => Number(a.km) - Number(b.km));
+    .sort((a, b) => Number(a.km) - Number(b.km)).slice(0, 12);
   const url = `${BASE}/guia-vera/${h.slug}/`;
   const jsonld = [
     migas(h.h1, url),
@@ -575,7 +588,7 @@ for (const hub of HUBS) {
       canonical: url, jsonld,
     })
     + hero({
-      h1: 'La Almería que conocemos de siempre',
+      h1: 'La Almería que no sale en las guías',
       intro: `${total} sitios del Levante almeriense recorridos por Alex y Fran, ligados a Almería de toda la vida y con tres apartamentos en Vera Playa desde 2016. No es una lista copiada de otras webs: es lo que recomendamos a quien se aloja con nosotros, ordenado por distancia desde los apartamentos.`,
       cifras: [[String(total), 'sitios'], [String(generadas.length), 'secciones'], ['2016', 'con casa aquí']],
       video: 'hero-atardecer-aereo.mp4',

@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#2A0F2E"/>
 <title>Guía de Vera Playa y el Levante almeriense · Hestía</title>
 <meta name="robots" content="index, follow"/>
-<meta name="description" content="Guía del Levante almeriense por quienes llevan toda la vida viniendo: 252 playas, restaurantes, pueblos, rutas y monumentos del Levante almeriense, con distancias y lo que merece la pena de cada uno."/>
+<meta name="description" content="Guía del Levante almeriense por quienes llevan toda la vida viniendo: 121 playas, restaurantes, pueblos, rutas y monumentos del Levante almeriense, con distancias y lo que merece la pena de cada uno."/>
 <link rel="canonical" href="https://www.hestiayourhome.com/guia-vera/"/>
 <link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/guia-vera/"/>
 <link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/guia-vera/"/>
@@ -15,7 +15,7 @@
 <meta property="og:type" content="article"/>
 <meta property="og:url" content="https://www.hestiayourhome.com/guia-vera/"/>
 <meta property="og:title" content="Guía de Vera Playa y el Levante almeriense · Hestía"/>
-<meta property="og:description" content="Guía del Levante almeriense por quienes llevan toda la vida viniendo: 252 playas, restaurantes, pueblos, rutas y monumentos del Levante almeriense, con distancias y lo que merece la pena de cada uno."/>
+<meta property="og:description" content="Guía del Levante almeriense por quienes llevan toda la vida viniendo: 121 playas, restaurantes, pueblos, rutas y monumentos del Levante almeriense, con distancias y lo que merece la pena de cada uno."/>
 <meta property="og:image" content="https://www.hestiayourhome.com/assets/hero-terrace-night.jpg"/>
 <meta property="og:locale" content="es_ES"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -45,6 +45,12 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 .topnav .brand{font-family:var(--serif);font-size:19px;letter-spacing:.04em;opacity:1;}
 .topnav nav{display:flex;gap:22px;}
 @media(max-width:640px){.topnav nav a:not(.cta-top){display:none;}}
+@media(max-width:680px){
+  .ficha{grid-template-columns:44px 1fr;padding:26px 0;}
+  .ficha::before{font-size:24px;}
+  .dist{grid-column:2;text-align:left;padding-top:0;margin-bottom:10px;font-size:17px;}
+  .dist small{display:inline;margin-left:7px;}
+}
 
 .hero{position:relative;min-height:clamp(460px,64vh,640px);display:flex;align-items:flex-end;
   background:var(--ber-deep);overflow:hidden;}
@@ -86,28 +92,31 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
   line-height:1.1;letter-spacing:-.02em;}
 .grupo-nota{color:var(--ink-faint);font-size:13.5px;margin-bottom:30px;padding-left:2px;}
 
-.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;}
-.ficha{position:relative;background:#fff;border:1px solid var(--rule);border-radius:var(--r);
-  padding:24px 24px 20px;display:flex;flex-direction:column;
-  transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);}
-.ficha:hover{transform:translateY(-3px);border-color:var(--arena-dk);
-  box-shadow:0 14px 34px rgba(42,15,46,.09);}
-.ficha.top{background:linear-gradient(168deg,#fff 0%,#FDF9F2 100%);border-color:var(--arena-dk);}
-.ficha.top::before{content:'\2726';position:absolute;top:18px;right:20px;color:var(--vs);
-  font-size:15px;line-height:1;}
-.f-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:9px;}
-.ficha h3{font-family:var(--serif);font-weight:400;font-size:20.5px;line-height:1.2;
-  letter-spacing:-.01em;padding-right:12px;}
-.dist{flex:0 0 auto;font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--sol-txt);
-  background:#EAF4F5;padding:4px 10px;border-radius:6px 0 6px 0;white-space:nowrap;
-  font-variant-numeric:tabular-nums;}
-.ficha p{font-size:14.5px;color:var(--ink-soft);margin-bottom:10px;}
+.rejilla{display:flex;flex-direction:column;gap:0;}
+.ficha{position:relative;display:grid;grid-template-columns:70px 1fr auto;gap:0 26px;
+  align-items:start;padding:34px 30px 34px 4px;border-bottom:1px solid var(--rule);
+  transition:background .35s var(--ease),padding-left .35s var(--ease);}
+.ficha:first-child{border-top:1px solid var(--rule);}
+.ficha:hover{background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,0) 92%);padding-left:20px;}
+.ficha::before{counter-increment:sitio;content:counter(sitio,decimal-leading-zero);
+  font-family:var(--serif);font-size:34px;line-height:.95;color:var(--arena-dk);
+  font-variant-numeric:tabular-nums;transition:color .35s var(--ease);}
+.ficha:hover::before{color:var(--vs);}
+.rejilla{counter-reset:sitio;}
+.f-cuerpo{min-width:0;}
+.ficha h3{font-family:var(--serif);font-weight:400;font-size:clamp(21px,2.5vw,27px);
+  line-height:1.15;letter-spacing:-.015em;margin-bottom:8px;}
+.dist{grid-column:3;align-self:start;font-family:var(--serif);font-size:19px;
+  color:var(--sol-txt);white-space:nowrap;font-variant-numeric:tabular-nums;
+  padding-top:5px;text-align:right;}
+.dist small{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-faint);margin-top:4px;}
+.ficha p{font-size:15.5px;color:var(--ink-soft);margin-bottom:12px;max-width:62ch;}
 .ficha .best{color:var(--ink);border-left:2px solid var(--vs);padding-left:12px;
   font-size:14px;margin-bottom:12px;}
 .ficha .best b{font-weight:600;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
   display:block;color:var(--ink-faint);margin-bottom:3px;}
-.chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:auto;
-  padding-top:12px;border-top:1px solid var(--rule);}
+.chips{display:flex;flex-wrap:wrap;align-items:center;gap:7px 11px;}
 .chip{font-size:11.5px;color:var(--ink-soft);background:var(--arena);padding:3px 9px;
   border-radius:6px 0 6px 0;}
 .chip.nota{background:#EDF1E2;color:#4A5628;font-weight:600;}
@@ -180,31 +189,31 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       {
         "@type": "ListItem",
         "position": 1,
-        "name": "Playas de Vera, Mojácar y el Levante almeriense",
+        "name": "Las playas por las que volvemos",
         "url": "https://www.hestiayourhome.com/guia-vera/playas/"
       },
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "Dónde comer en Vera, Garrucha y Mojácar",
+        "name": "Las mesas que recomendamos",
         "url": "https://www.hestiayourhome.com/guia-vera/donde-comer/"
       },
       {
         "@type": "ListItem",
         "position": 3,
-        "name": "Pueblos que ver cerca de Vera, en Almería",
+        "name": "Los pueblos que merecen el viaje",
         "url": "https://www.hestiayourhome.com/guia-vera/pueblos/"
       },
       {
         "@type": "ListItem",
         "position": 4,
-        "name": "Rutas, senderismo y naturaleza en Almería",
+        "name": "Salir a andar, y a mojarse",
         "url": "https://www.hestiayourhome.com/guia-vera/naturaleza-y-rutas/"
       },
       {
         "@type": "ListItem",
         "position": 5,
-        "name": "Castillos, yacimientos y patrimonio de Almería",
+        "name": "Cuatro mil años de piedra",
         "url": "https://www.hestiayourhome.com/guia-vera/historia/"
       }
     ]
@@ -229,9 +238,9 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
   </video>
   <div class="wrap">
     <p class="eyebrow">Guía de la zona</p>
-    <h1>La Almería que conocemos de siempre</h1>
-    <p class="intro">252 sitios del Levante almeriense recorridos por Alex y Fran, ligados a Almería de toda la vida y con tres apartamentos en Vera Playa desde 2016. No es una lista copiada de otras webs: es lo que recomendamos a quien se aloja con nosotros, ordenado por distancia desde los apartamentos.</p>
-    <div class="cifras"><div class="cifra"><b>252</b><span>sitios</span></div><div class="cifra"><b>5</b><span>secciones</span></div><div class="cifra"><b>2016</b><span>con casa aquí</span></div></div>
+    <h1>La Almería que no sale en las guías</h1>
+    <p class="intro">121 sitios del Levante almeriense recorridos por Alex y Fran, ligados a Almería de toda la vida y con tres apartamentos en Vera Playa desde 2016. No es una lista copiada de otras webs: es lo que recomendamos a quien se aloja con nosotros, ordenado por distancia desde los apartamentos.</p>
+    <div class="cifras"><div class="cifra"><b>121</b><span>sitios</span></div><div class="cifra"><b>5</b><span>secciones</span></div><div class="cifra"><b>2016</b><span>con casa aquí</span></div></div>
   </div>
 </header><div class="wrap">
 <section class="grupo" id="g-todo">
@@ -243,43 +252,43 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
   <div class="rejilla">
 <article class="ficha">
   <div class="f-top">
-    <h3><a href="/guia-vera/playas/" style="color:inherit;text-decoration:none">Playas de Vera, Mojácar y el Levante almeriense</a></h3>
-    <span class="dist">51 sitios</span>
+    <h3><a href="/guia-vera/playas/" style="color:inherit;text-decoration:none">Las playas por las que volvemos</a></h3>
+    <span class="dist">12 sitios</span>
   </div>
   <p>Guía de las playas y calas del Levante almeriense, de Vera a Cabo de Gata: cómo son, qué servicios tienen y cómo se llega. Escrita por quienes llevan toda la vida viniendo.</p>
-  <div class="chips"><a href="/guia-vera/playas/">Ver los 51 sitios</a></div>
+  <div class="chips"><a href="/guia-vera/playas/">Ver los 12 sitios</a></div>
 </article>
 <article class="ficha">
   <div class="f-top">
-    <h3><a href="/guia-vera/donde-comer/" style="color:inherit;text-decoration:none">Dónde comer en Vera, Garrucha y Mojácar</a></h3>
-    <span class="dist">89 sitios</span>
+    <h3><a href="/guia-vera/donde-comer/" style="color:inherit;text-decoration:none">Las mesas que recomendamos</a></h3>
+    <span class="dist">57 sitios</span>
   </div>
   <p>Restaurantes, chiringuitos y estrellas Michelin del Levante almeriense y alrededores, con lo que pedir en cada uno. Escrita por quienes llevan toda la vida viniendo.</p>
-  <div class="chips"><a href="/guia-vera/donde-comer/">Ver los 89 sitios</a></div>
+  <div class="chips"><a href="/guia-vera/donde-comer/">Ver los 57 sitios</a></div>
 </article>
 <article class="ficha">
   <div class="f-top">
-    <h3><a href="/guia-vera/pueblos/" style="color:inherit;text-decoration:none">Pueblos que ver cerca de Vera, en Almería</a></h3>
-    <span class="dist">46 sitios</span>
+    <h3><a href="/guia-vera/pueblos/" style="color:inherit;text-decoration:none">Los pueblos que merecen el viaje</a></h3>
+    <span class="dist">22 sitios</span>
   </div>
   <p>Los pueblos del Levante almeriense y del interior de Almería que merecen una visita, con qué ver en cada uno y a qué distancia están de Vera Playa.</p>
-  <div class="chips"><a href="/guia-vera/pueblos/">Ver los 46 sitios</a></div>
+  <div class="chips"><a href="/guia-vera/pueblos/">Ver los 22 sitios</a></div>
 </article>
 <article class="ficha">
   <div class="f-top">
-    <h3><a href="/guia-vera/naturaleza-y-rutas/" style="color:inherit;text-decoration:none">Rutas, senderismo y naturaleza en Almería</a></h3>
-    <span class="dist">33 sitios</span>
+    <h3><a href="/guia-vera/naturaleza-y-rutas/" style="color:inherit;text-decoration:none">Salir a andar, y a mojarse</a></h3>
+    <span class="dist">18 sitios</span>
   </div>
   <p>Senderos, rutas costeras, deportes de agua y planes al aire libre en el Levante almeriense y Cabo de Gata, con distancias desde Vera Playa.</p>
-  <div class="chips"><a href="/guia-vera/naturaleza-y-rutas/">Ver los 33 sitios</a></div>
+  <div class="chips"><a href="/guia-vera/naturaleza-y-rutas/">Ver los 18 sitios</a></div>
 </article>
 <article class="ficha">
   <div class="f-top">
-    <h3><a href="/guia-vera/historia/" style="color:inherit;text-decoration:none">Castillos, yacimientos y patrimonio de Almería</a></h3>
-    <span class="dist">33 sitios</span>
+    <h3><a href="/guia-vera/historia/" style="color:inherit;text-decoration:none">Cuatro mil años de piedra</a></h3>
+    <span class="dist">12 sitios</span>
   </div>
   <p>Castillos, yacimientos argáricos y romanos, patrimonio andalusí y cuevas del Levante almeriense y alrededores, con distancias desde Vera Playa.</p>
-  <div class="chips"><a href="/guia-vera/historia/">Ver los 33 sitios</a></div>
+  <div class="chips"><a href="/guia-vera/historia/">Ver los 12 sitios</a></div>
 </article></div>
 </section>
 <div class="cta">

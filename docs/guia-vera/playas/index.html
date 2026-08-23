@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta name="theme-color" content="#2A0F2E"/>
-<title>Playas de Vera y el Levante almeriense · Guía Hestía</title>
+<title>Las mejores playas de Vera y el Levante almeriense · Hestía</title>
 <meta name="robots" content="index, follow"/>
 <meta name="description" content="Guía de las playas y calas del Levante almeriense, de Vera a Cabo de Gata: cómo son, qué servicios tienen y cómo se llega. Escrita por quienes llevan toda la vida viniendo."/>
 <link rel="canonical" href="https://www.hestiayourhome.com/guia-vera/playas/"/>
@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Hestía Your Home"/>
 <meta property="og:type" content="article"/>
 <meta property="og:url" content="https://www.hestiayourhome.com/guia-vera/playas/"/>
-<meta property="og:title" content="Playas de Vera y el Levante almeriense · Guía Hestía"/>
+<meta property="og:title" content="Las mejores playas de Vera y el Levante almeriense · Hestía"/>
 <meta property="og:description" content="Guía de las playas y calas del Levante almeriense, de Vera a Cabo de Gata: cómo son, qué servicios tienen y cómo se llega. Escrita por quienes llevan toda la vida viniendo."/>
 <meta property="og:image" content="https://www.hestiayourhome.com/assets/hero-terrace-night.jpg"/>
 <meta property="og:locale" content="es_ES"/>
@@ -45,6 +45,12 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 .topnav .brand{font-family:var(--serif);font-size:19px;letter-spacing:.04em;opacity:1;}
 .topnav nav{display:flex;gap:22px;}
 @media(max-width:640px){.topnav nav a:not(.cta-top){display:none;}}
+@media(max-width:680px){
+  .ficha{grid-template-columns:44px 1fr;padding:26px 0;}
+  .ficha::before{font-size:24px;}
+  .dist{grid-column:2;text-align:left;padding-top:0;margin-bottom:10px;font-size:17px;}
+  .dist small{display:inline;margin-left:7px;}
+}
 
 .hero{position:relative;min-height:clamp(460px,64vh,640px);display:flex;align-items:flex-end;
   background:var(--ber-deep);overflow:hidden;}
@@ -86,28 +92,31 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
   line-height:1.1;letter-spacing:-.02em;}
 .grupo-nota{color:var(--ink-faint);font-size:13.5px;margin-bottom:30px;padding-left:2px;}
 
-.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;}
-.ficha{position:relative;background:#fff;border:1px solid var(--rule);border-radius:var(--r);
-  padding:24px 24px 20px;display:flex;flex-direction:column;
-  transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);}
-.ficha:hover{transform:translateY(-3px);border-color:var(--arena-dk);
-  box-shadow:0 14px 34px rgba(42,15,46,.09);}
-.ficha.top{background:linear-gradient(168deg,#fff 0%,#FDF9F2 100%);border-color:var(--arena-dk);}
-.ficha.top::before{content:'\2726';position:absolute;top:18px;right:20px;color:var(--vs);
-  font-size:15px;line-height:1;}
-.f-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:9px;}
-.ficha h3{font-family:var(--serif);font-weight:400;font-size:20.5px;line-height:1.2;
-  letter-spacing:-.01em;padding-right:12px;}
-.dist{flex:0 0 auto;font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--sol-txt);
-  background:#EAF4F5;padding:4px 10px;border-radius:6px 0 6px 0;white-space:nowrap;
-  font-variant-numeric:tabular-nums;}
-.ficha p{font-size:14.5px;color:var(--ink-soft);margin-bottom:10px;}
+.rejilla{display:flex;flex-direction:column;gap:0;}
+.ficha{position:relative;display:grid;grid-template-columns:70px 1fr auto;gap:0 26px;
+  align-items:start;padding:34px 30px 34px 4px;border-bottom:1px solid var(--rule);
+  transition:background .35s var(--ease),padding-left .35s var(--ease);}
+.ficha:first-child{border-top:1px solid var(--rule);}
+.ficha:hover{background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,0) 92%);padding-left:20px;}
+.ficha::before{counter-increment:sitio;content:counter(sitio,decimal-leading-zero);
+  font-family:var(--serif);font-size:34px;line-height:.95;color:var(--arena-dk);
+  font-variant-numeric:tabular-nums;transition:color .35s var(--ease);}
+.ficha:hover::before{color:var(--vs);}
+.rejilla{counter-reset:sitio;}
+.f-cuerpo{min-width:0;}
+.ficha h3{font-family:var(--serif);font-weight:400;font-size:clamp(21px,2.5vw,27px);
+  line-height:1.15;letter-spacing:-.015em;margin-bottom:8px;}
+.dist{grid-column:3;align-self:start;font-family:var(--serif);font-size:19px;
+  color:var(--sol-txt);white-space:nowrap;font-variant-numeric:tabular-nums;
+  padding-top:5px;text-align:right;}
+.dist small{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-faint);margin-top:4px;}
+.ficha p{font-size:15.5px;color:var(--ink-soft);margin-bottom:12px;max-width:62ch;}
 .ficha .best{color:var(--ink);border-left:2px solid var(--vs);padding-left:12px;
   font-size:14px;margin-bottom:12px;}
 .ficha .best b{font-weight:600;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
   display:block;color:var(--ink-faint);margin-bottom:3px;}
-.chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:auto;
-  padding-top:12px;border-top:1px solid var(--rule);}
+.chips{display:flex;flex-wrap:wrap;align-items:center;gap:7px 11px;}
 .chip{font-size:11.5px;color:var(--ink-soft);background:var(--arena);padding:3px 9px;
   border-radius:6px 0 6px 0;}
 .chip.nota{background:#EDF1E2;color:#4A5628;font-weight:600;}
@@ -172,7 +181,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       {
         "@type": "ListItem",
         "position": 3,
-        "name": "Playas de Vera, Mojácar y el Levante almeriense",
+        "name": "Las playas por las que volvemos",
         "item": "https://www.hestiayourhome.com/guia-vera/playas/"
       }
     ]
@@ -180,9 +189,9 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "name": "Playas de Vera, Mojácar y el Levante almeriense",
+    "name": "Las playas por las que volvemos",
     "description": "Guía de las playas y calas del Levante almeriense, de Vera a Cabo de Gata: cómo son, qué servicios tienen y cómo se llega. Escrita por quienes llevan toda la vida viniendo.",
-    "numberOfItems": 51,
+    "numberOfItems": 12,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -252,118 +261,13 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
         "position": 8,
         "item": {
           "@type": "Place",
-          "name": "Playeros.es · directorio"
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 9,
-        "item": {
-          "@type": "Place",
-          "name": "Mojácar Playa",
-          "description": "Hamacas, sombrillas y chiringuitos a lo largo del paseo."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 10,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de la Marina de la Torre (Mojácar)",
-          "description": "Zona naturista en su tramo sur."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 11,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de Macenas (Mojácar)",
-          "description": "Sur de Mojácar. Mezcla de calas vírgenes y arena dorada. Castillo del s. XVIII al fondo."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 12,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de la Carolina",
-          "description": "San Juan de los Terreros. Larga, dorada, tranquila. Familiar."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 13,
-        "item": {
-          "@type": "Place",
-          "name": "Cala de Mijo"
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 14,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de los Cocedores",
-          "description": "San Juan de los Terreros (Pulpí). Última cala almeriense antes de Murcia. Aguas turquesas y rocas de arenisca con cuevas naturales."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 15,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de la Cañada del Negro"
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 16,
-        "item": {
-          "@type": "Place",
-          "name": "Piedras de Molino (Carboneras)",
-          "description": "Cala icónica al lado del Algarrobico. Aguas cristalinas, fondo rocoso para snorkel."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 17,
-        "item": {
-          "@type": "Place",
           "name": "Playa de los Muertos",
           "description": "Carboneras. Una de las mejores playas de España. Aguas cristalinas, cantos rodados grandes. Sin un solo servicio."
         }
       },
       {
         "@type": "ListItem",
-        "position": 18,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de Calabardina (Águilas)",
-          "description": "Murcia. Pueblo costero íntimo. Cala protegida, agua transparente. 35 min."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 19,
-        "item": {
-          "@type": "Place",
-          "name": "Playa del Hornillo (Águilas)",
-          "description": "Murcia. Cala urbana de aguas tranquilas, junto a la antigua estación inglesa."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 20,
-        "item": {
-          "@type": "Place",
-          "name": "Mesa Roldán (Carboneras)",
-          "description": "Domo volcánico con faro y fortaleza. Mirador con vistas a la Playa de los Muertos. Sale en Juego de Tronos."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 21,
+        "position": 9,
         "item": {
           "@type": "Place",
           "name": "Cala de Enmedio",
@@ -372,142 +276,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 22,
-        "item": {
-          "@type": "Place",
-          "name": "Cala del Plomo",
-          "description": "Agua Amarga. Cala virgen de arena oscura. Aguas cristalinas, snorkel."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 23,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de Agua Amarga",
-          "description": "Pueblo blanco con encanto, calas pequeñas y restaurantes a pie de arena."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 24,
-        "item": {
-          "@type": "Place",
-          "name": "Cala Rajá",
-          "description": "Entre Agua Amarga y Las Negras. Cala brava de piedra volcánica y agua esmeralda. Una de las más solitarias del parque."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 25,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de Las Negras",
-          "description": "Pueblo bohemio con cantos rodados negros y agua cristalina. Punto de salida hacia la Cala de San Pedro."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 26,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de los Escullos",
-          "description": "Los Escullos, Cabo de Gata. Amplia ensenada de arena gris oscura con el Castillo de San Felipe (s. XVIII) al fondo. La más accesible de esta zona del parque."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 27,
-        "item": {
-          "@type": "Place",
-          "name": "Playas de Calnegre",
-          "description": "Lorca-Mazarrón (Murcia). Parque regional protegido, calas vírgenes y áridas. 50 min."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 28,
-        "item": {
-          "@type": "Place",
-          "name": "Cala Carbón",
-          "description": "Las Negras. Cala de roca volcánica negra y agua cristalina. Solo accesible a pie desde Las Negras por el sendero costero sur."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 29,
-        "item": {
-          "@type": "Place",
-          "name": "Cala del Cuervo",
-          "description": "Las Negras. Ensenada de roca volcánica entre Las Negras y La Isleta. Aguas salvajes, muy poca gente."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 30,
-        "item": {
-          "@type": "Place",
-          "name": "Cala de San Pedro",
-          "description": "Comunidad hippie estable, fuente de agua dulce, sin servicios. Solo accesible a pie o por barca."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 31,
-        "item": {
-          "@type": "Place",
-          "name": "El Playazo de Rodalquilar",
-          "description": "Cabo de Gata. De fácil acceso, larga, rocas en los extremos. Castillo de San Ramón al sur."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 32,
-        "item": {
-          "@type": "Place",
-          "name": "Cala Arena",
-          "description": "San José. Pequeña cala de arena volcánica oscura entre Los Escullos y San José. Virgen, agua transparente, pocas personas."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 33,
-        "item": {
-          "@type": "Place",
-          "name": "La Isleta del Moro",
-          "description": "Pueblo pesquero diminuto con calas. Snorkel y comer en La Ola junto al mar."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 34,
-        "item": {
-          "@type": "Place",
-          "name": "Cala del Bergantín",
-          "description": "San José. Cala virgen de roca volcánica a 25 min al norte del pueblo. Agua cristalina, buena para snorkel, muy poca gente."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 35,
-        "item": {
-          "@type": "Place",
-          "name": "Cala Higuera",
-          "description": "San José. Cala de piedra y arena virgen a 15 min del pueblo. Agua muy limpia, snorkel entre roca volcánica. De las más fáciles de llegar sin servicios."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 36,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de San José",
-          "description": "La playa del pueblo de San José: arena fina, aguas tranquilas y protegidas por el dique. La mejor opción para el primer día o para familias con niños."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 37,
+        "position": 10,
         "item": {
           "@type": "Place",
           "name": "Playa de los Genoveses",
@@ -516,7 +285,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 38,
+        "position": 11,
         "item": {
           "@type": "Place",
           "name": "Playa de Mónsul",
@@ -525,119 +294,11 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 39,
+        "position": 12,
         "item": {
           "@type": "Place",
           "name": "Playa del Barronal",
           "description": "San José. Más virgen que Mónsul. Detrás de las dunas de la pista. Una de nuestras favoritas."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 40,
-        "item": {
-          "@type": "Place",
-          "name": "Cala de la Media Luna",
-          "description": "San José. Pequeña, simétrica, mar transparente. Se llega andando desde el Barronal."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 41,
-        "item": {
-          "@type": "Place",
-          "name": "Las Salinas (Cabo de Gata pueblo)",
-          "description": "Frente a las salinas con flamencos. Faro al fondo. Atardecer espectacular."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 42,
-        "item": {
-          "@type": "Place",
-          "name": "La Fabriquilla / El Corralete",
-          "description": "Última cala antes del Faro de Cabo de Gata. Roca volcánica, agua transparente. Punto más al sur."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 43,
-        "item": {
-          "@type": "Place",
-          "name": "Playa del Toyo (Retamar)",
-          "description": "Retamar / El Ejido. Limita con el Parque Natural. Arena fina y tranquila."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 44,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de Costacabana",
-          "description": "Almería. Larga, urbana, con un paseo amplio. Buena para familias."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 45,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de El Palmer (Almería)",
-          "description": "Capital. Paseo, hamacas, chiringuitos. 1 h 15 min en coche."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 46,
-        "item": {
-          "@type": "Place",
-          "name": "Playa del Zapillo (Almería)",
-          "description": "Capital. Bandera Azul. Paseo, hamacas, chiringuitos, paddle."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 47,
-        "item": {
-          "@type": "Place",
-          "name": "Playa Nueva Almería / Térmica",
-          "description": "Capital. Paralela al Zapillo, 1,5 km de arena con todos los servicios."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 48,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de Aguadulce (Roquetas)",
-          "description": "Roquetas de Mar. Larga, urbana, amplia. Buena para familia."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 49,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de Almerimar (El Ejido)",
-          "description": "Junto al puerto deportivo. 1 h 30 min de Vera. Aguas tranquilas."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 50,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de Balerma (El Ejido)",
-          "description": "La playa más larga de la zona. Arena gruesa, casi virgen en algunos tramos."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 51,
-        "item": {
-          "@type": "Place",
-          "name": "Playa de San Nicolás (Adra)",
-          "description": "Adra. Última playa antes de Granada. 1 h 50 min en coche."
         }
       }
     ]
@@ -662,281 +323,60 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
   </video>
   <div class="wrap">
     <p class="eyebrow">Guía de la zona</p>
-    <h1>Playas de Vera, Mojácar y el Levante almeriense</h1>
-    <p class="intro">Llevamos toda la vida ligados a esta costa, y estas son las playas y calas que recorremos, de las urbanas con todos los servicios a las calas de Cabo de Gata donde no hay nada más que agua y roca. Están ordenadas por distancia desde Vera Playa.</p>
-    <div class="cifras"><div class="cifra"><b>51</b><span>sitios</span></div><div class="cifra"><b>5</b><span>categorías</span></div><div class="cifra"><b>0.9 km</b><span>el más cercano</span></div></div>
+    <h1>Las playas por las que volvemos</h1>
+    <p class="intro">De todas las playas del Levante almeriense, estas son a las que volvemos. No es un listado de la costa: es la criba de muchos veranos, de las urbanas con todos los servicios a las calas donde no hay nada más que agua y roca. Ordenadas por distancia desde los apartamentos.</p>
+    <div class="cifras"><div class="cifra"><b>12</b><span>sitios</span></div><div class="cifra"><b>4</b><span>categorías</span></div><div class="cifra"><b>0.9 km</b><span>el más cercano</span></div></div>
   </div>
 </header>
 <div class="indice"><div class="wrap">
-  <a href="#g-beach">Playa</a><a href="#g-beach-srvc">Servicios de playa</a><a href="#g-beach-nude">Playa naturista</a><a href="#g-beach-dog">Playa para perros</a><a href="#g-beach-hard">Cala de acceso difícil</a>
+  <a href="#g-beach">Playa</a><a href="#g-beach-srvc">Servicios de playa</a><a href="#g-beach-nude">Playa naturista</a><a href="#g-beach-hard">Cala de acceso difícil</a>
 </div></div><div class="wrap">
 <section class="grupo" id="g-beach">
   <div class="grupo-head">
     <span class="grupo-n">01</span>
     <h2>Playa</h2>
   </div>
-  <p class="grupo-nota">29 sitios, del más cercano al más lejano.</p>
+  <p class="grupo-nota">5 sitios, del más cercano al más lejano.</p>
   <div class="rejilla">
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Playa de Vera (sector textil)</h3>
-    <span class="dist">a 0.9 km</span>
+    <p>Justo al lado de Hestía. Larga, fina, agua templada. La playa de cabecera.</p>
+    <div class="chips"><span class="chip nota">4.4 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos · accesible</span><span class="chip">desde Hestía · parking en calle</span></div>
   </div>
-  <p>Justo al lado de Hestía. Larga, fina, agua templada. La playa de cabecera.</p>
-  <p class="best"><b>No te pierdas</b>el atardecer caminando por la orilla hacia Garrucha.</p>
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos · accesible</span><span class="chip">desde Hestía · parking en calle</span></div>
+  <span class="dist">0.9 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Playa de Garrucha</h3>
-    <span class="dist">a 5.6 km</span>
+    <p>Pueblo pesquero a 10 min. Buena lonja de pescado. Paseo agradable.</p>
+    <div class="chips"><span class="chip nota">4.4 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos · accesible</span><span class="chip">parking en pueblo</span></div>
   </div>
-  <p>Pueblo pesquero a 10 min. Buena lonja de pescado. Paseo agradable.</p>
-  <p class="best"><b>No te pierdas</b>tomar algo en el puerto al atardecer cuando llegan los barcos.</p>
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos · accesible</span><span class="chip">parking en pueblo</span></div>
+  <span class="dist">5.6 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>Playa de Macenas (Mojácar)</h3>
-    <span class="dist">a 16 km</span>
-  </div>
-  <p>Sur de Mojácar. Mezcla de calas vírgenes y arena dorada. Castillo del s. XVIII al fondo.</p>
-  <p class="best"><b>No te pierdas</b>la torre vigía y las calas pequeñas al sur, casi vírgenes.</p>
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span><span class="chip">chiringuito · hamacas</span><span class="chip">acceso por carretera</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de la Carolina</h3>
-    <span class="dist">a 19 km</span>
-  </div>
-  <p>San Juan de los Terreros. Larga, dorada, tranquila. Familiar.</p>
-  <p class="best"><b>No te pierdas</b>arena fina para niños y aguas poco profundas.</p>
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos · accesible</span><span class="chip">parking abundante</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de los Cocedores</h3>
-    <span class="dist">a 23 km</span>
-  </div>
-  <p>San Juan de los Terreros (Pulpí). Última cala almeriense antes de Murcia. Aguas turquesas y rocas de arenisca con cuevas naturales.</p>
-  <p class="best"><b>No te pierdas</b>las cuevas labradas por el viento al sur de la cala, fotos icónicas.</p>
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span><span class="chip">hamacas · aseos · accesible</span><span class="chip">parking pequeño · pista corta</span><a href="https://goo.gl/maps/pCTJ8y5mt4y4VYkE8" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Piedras de Molino (Carboneras)</h3>
-    <span class="dist">a 24 km</span>
-  </div>
-  <p>Cala icónica al lado del Algarrobico. Aguas cristalinas, fondo rocoso para snorkel.</p>
-  <p class="best"><b>No te pierdas</b>snorkel entre las rocas, pulpos y meros si tienes suerte.</p>
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span><span class="chip">parking pequeño · 5 min</span><a href="https://goo.gl/maps/eySnjWJp1YcjkSiu9" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de Calabardina (Águilas)</h3>
-    <span class="dist">a 27 km</span>
-  </div>
-  <p>Murcia. Pueblo costero íntimo. Cala protegida, agua transparente. 35 min.</p>
-  <p class="best"><b>No te pierdas</b>snorkel en el extremo rocoso, buena visibilidad.</p>
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span><span class="chip">duchas · chiringuito · hamacas · aseos</span><span class="chip">parking en pueblo</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa del Hornillo (Águilas)</h3>
-    <span class="dist">a 28 km</span>
-  </div>
-  <p>Murcia. Cala urbana de aguas tranquilas, junto a la antigua estación inglesa.</p>
-  <p class="best"><b>No te pierdas</b>la silueta de la estación inglesa al fondo, foto de postal.</p>
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos</span><span class="chip">· línea Águilas</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Mesa Roldán (Carboneras)</h3>
-    <span class="dist">a 31 km</span>
-  </div>
-  <p>Domo volcánico con faro y fortaleza. Mirador con vistas a la Playa de los Muertos. Sale en Juego de Tronos.</p>
-  <p class="best"><b>No te pierdas</b>subir al atardecer, mirador 360° sobre el Mediterráneo.</p>
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span><span class="chip">hasta el faro · corto</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de Agua Amarga</h3>
-    <span class="dist">a 36 km</span>
-  </div>
-  <p>Pueblo blanco con encanto, calas pequeñas y restaurantes a pie de arena.</p>
-  <p class="best"><b>No te pierdas</b>cenar en La Villa o en Asador La Chumbera con los pies en la arena.</p>
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span><span class="chip">duchas · chiringuito · hamacas · aseos</span><span class="chip">parking en pueblo</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de Las Negras</h3>
-    <span class="dist">a 43 km</span>
-  </div>
-  <p>Pueblo bohemio con cantos rodados negros y agua cristalina. Punto de salida hacia la Cala de San Pedro.</p>
-  <p class="best"><b>No te pierdas</b>tomar una caña en La Caleta viendo las barcas pesqueras.</p>
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span><span class="chip">duchas · chiringuito · aseos</span><span class="chip">parking a la entrada del pueblo · taxi-barca a San Pedro</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de los Escullos</h3>
-    <span class="dist">a 43 km</span>
-  </div>
-  <p>Los Escullos, Cabo de Gata. Amplia ensenada de arena gris oscura con el Castillo de San Felipe (s. XVIII) al fondo. La más accesible de esta zona del parque.</p>
-  <p class="best"><b>No te pierdas</b>el castillo volcánico sobre el acantilado visto desde el agua, pura postal.</p>
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span><span class="chip">chiringuito · aseos</span><span class="chip">parking al pie de la playa</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Playa+Los+Escullos+Cabo+de+Gata+Almeria" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>El Playazo de Rodalquilar</h3>
-    <span class="dist">a 46 km</span>
-  </div>
-  <p>Cabo de Gata. De fácil acceso, larga, rocas en los extremos. Castillo de San Ramón al sur.</p>
-  <p class="best"><b>No te pierdas</b>subir al Castillo de San Ramón al final del día, vistas perfectas.</p>
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span><span class="chip">aseos</span><span class="chip">hasta el aparcamiento al pie de la playa</span><a href="https://goo.gl/maps/bu6fEsoT1mHC9j2w6" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>La Isleta del Moro</h3>
-    <span class="dist">a 53 km</span>
-  </div>
-  <p>Pueblo pesquero diminuto con calas. Snorkel y comer en La Ola junto al mar.</p>
-  <p class="best"><b>No te pierdas</b>comer pescado fresco en La Ola con las barcas detrás.</p>
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span><span class="chip">chiringuito · aseos</span><span class="chip">parking en pueblo · corto</span><a href="https://maps.google.com?q=Playa+del+Penon+Blanco" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de San José</h3>
-    <span class="dist">a 57 km</span>
-  </div>
-  <p>La playa del pueblo de San José: arena fina, aguas tranquilas y protegidas por el dique. La mejor opción para el primer día o para familias con niños.</p>
-  <p class="best"><b>No te pierdas</b>bañarse por la mañana y luego desayunar en el paseo del puerto antes de que llegue el calor del mediodía.</p>
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos · accesible</span><span class="chip">parking de pago en el pueblo en verano · desde el centro del pueblo</span></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Playa de los Genoveses</h3>
-    <span class="dist">a 58 km</span>
+    <p>San José. Bahía perfecta de medio km, dunas con sabinas. Sin servicios para preservar el paraje.</p>
+    <div class="chips"><span class="chip nota">4.7 sobre 5</span><span class="chip">socorrista</span><span class="chip">bus desde San José en verano (acceso restringido al coche) · carril bici · 25 min desde San José</span></div>
   </div>
-  <p>San José. Bahía perfecta de medio km, dunas con sabinas. Sin servicios para preservar el paraje.</p>
-  <p class="best"><b>No te pierdas</b>la bahía vista desde la duna sur, postal de Cabo de Gata.</p>
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span><span class="chip">socorrista</span><span class="chip">bus desde San José en verano (acceso restringido al coche) · carril bici · 25 min desde San José</span></div>
+  <span class="dist">58 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Playa de Mónsul</h3>
-    <span class="dist">a 60 km</span>
+    <p>San José. Famosa por la duna y la roca volcánica. Sale en El bueno, el feo y el malo y en Indiana Jones.</p>
+    <div class="chips"><span class="chip nota">4.7 sobre 5</span><span class="chip">socorrista · aseos</span><span class="chip">bus desde San José en verano (acceso restringido al coche) · carril bici</span></div>
   </div>
-  <p>San José. Famosa por la duna y la roca volcánica. Sale en El bueno, el feo y el malo y en Indiana Jones.</p>
-  <p class="best"><b>No te pierdas</b>la roca volcánica del centro y la duna gigante al oeste.</p>
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span><span class="chip">socorrista · aseos</span><span class="chip">bus desde San José en verano (acceso restringido al coche) · carril bici</span></div>
+  <span class="dist">60 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Playa del Barronal</h3>
-    <span class="dist">a 60 km</span>
+    <p>San José. Más virgen que Mónsul. Detrás de las dunas de la pista. Una de nuestras favoritas.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span><span class="chip">bus + 10 min andando entre dunas</span><a href="https://goo.gl/maps/sF2xaKDPrHEgjpxv6" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
   </div>
-  <p>San José. Más virgen que Mónsul. Detrás de las dunas de la pista. Una de nuestras favoritas.</p>
-  <p class="best"><b>No te pierdas</b>caminar entre dunas hasta llegar y encontrar la cala vacía.</p>
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span><span class="chip">bus + 10 min andando entre dunas</span><a href="https://goo.gl/maps/sF2xaKDPrHEgjpxv6" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Las Salinas (Cabo de Gata pueblo)</h3>
-    <span class="dist">a 64 km</span>
-  </div>
-  <p>Frente a las salinas con flamencos. Faro al fondo. Atardecer espectacular.</p>
-  <p class="best"><b>No te pierdas</b>los flamencos en las salinas al amanecer o atardecer.</p>
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span><span class="chip">duchas · chiringuito · hamacas · aseos · accesible</span><span class="chip">parking gratuito · línea M-100</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>La Fabriquilla / El Corralete</h3>
-    <span class="dist">a 65 km</span>
-  </div>
-  <p>Última cala antes del Faro de Cabo de Gata. Roca volcánica, agua transparente. Punto más al sur.</p>
-  <p class="best"><b>No te pierdas</b>el faro y el Arrecife de las Sirenas justo después.</p>
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span><span class="chip">hasta el faro</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa del Toyo (Retamar)</h3>
-    <span class="dist">a 67 km</span>
-  </div>
-  <p>Retamar / El Ejido. Limita con el Parque Natural. Arena fina y tranquila.</p>
-  
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos · accesible</span><span class="chip">parking</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de Costacabana</h3>
-    <span class="dist">a 69 km</span>
-  </div>
-  <p>Almería. Larga, urbana, con un paseo amplio. Buena para familias.</p>
-  
-  <div class="chips"><span class="chip nota">4.2 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos</span><span class="chip">· bus M-2</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de El Palmer (Almería)</h3>
-    <span class="dist">a 69 km</span>
-  </div>
-  <p>Capital. Paseo, hamacas, chiringuitos. 1 h 15 min en coche.</p>
-  
-  <div class="chips"><span class="chip nota">4.2 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos</span><span class="chip">· bus urbano</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa del Zapillo (Almería)</h3>
-    <span class="dist">a 71 km</span>
-  </div>
-  <p>Capital. Bandera Azul. Paseo, hamacas, chiringuitos, paddle.</p>
-  
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos · accesible</span><span class="chip">· bus urbano</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa Nueva Almería / Térmica</h3>
-    <span class="dist">a 72 km</span>
-  </div>
-  <p>Capital. Paralela al Zapillo, 1,5 km de arena con todos los servicios.</p>
-  
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos · accesible</span><span class="chip">· bus urbano</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de Aguadulce (Roquetas)</h3>
-    <span class="dist">a 81 km</span>
-  </div>
-  <p>Roquetas de Mar. Larga, urbana, amplia. Buena para familia.</p>
-  
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos · accesible</span><span class="chip">parking · línea M-302</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de Almerimar (El Ejido)</h3>
-    <span class="dist">a 104 km</span>
-  </div>
-  <p>Junto al puerto deportivo. 1 h 30 min de Vera. Aguas tranquilas.</p>
-  
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos · accesible</span><span class="chip">parking</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de Balerma (El Ejido)</h3>
-    <span class="dist">a 109 km</span>
-  </div>
-  <p>La playa más larga de la zona. Arena gruesa, casi virgen en algunos tramos.</p>
-  
-  <div class="chips"><span class="chip nota">4.2 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos</span><span class="chip">parking abundante</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de San Nicolás (Adra)</h3>
-    <span class="dist">a 119 km</span>
-  </div>
-  <p>Adra. Última playa antes de Granada. 1 h 50 min en coche.</p>
-  
-  <div class="chips"><span class="chip nota">4.2 sobre 5</span><span class="chip">duchas · socorrista · chiringuito · hamacas · aseos</span><span class="chip">parking</span></div>
+  <span class="dist">60 km<small>desde casa</small></span>
 </article></div>
 </section>
 <section class="grupo" id="g-beach-srvc">
@@ -944,43 +384,31 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
     <span class="grupo-n">02</span>
     <h2>Servicios de playa</h2>
   </div>
-  <p class="grupo-nota">4 sitios, del más cercano al más lejano.</p>
+  <p class="grupo-nota">3 sitios, del más cercano al más lejano.</p>
   <div class="rejilla">
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Playa de Vera (sector textil)</h3>
-    <span class="dist">a 0.9 km</span>
+    <p>Sombrillas, hamacas y chiringuitos.</p>
+    
   </div>
-  <p>Sombrillas, hamacas y chiringuitos.</p>
-  
-  
+  <span class="dist">0.9 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Playa Quitapellejos (Palomares)</h3>
-    <span class="dist">a 2.7 km</span>
+    <p>Hamacas, sombrillas y chiringuitos cerca de Hestía.</p>
+    
   </div>
-  <p>Hamacas, sombrillas y chiringuitos cerca de Hestía.</p>
-  
-  
+  <span class="dist">2.7 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Playa de Garrucha</h3>
-    <span class="dist">a 5.5 km</span>
+    <p>Servicios de playa y paseo marítimo.</p>
+    
   </div>
-  <p>Servicios de playa y paseo marítimo.</p>
-  
-  
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Mojácar Playa</h3>
-    <span class="dist">a 14 km</span>
-  </div>
-  <p>Hamacas, sombrillas y chiringuitos a lo largo del paseo.</p>
-  
-  
+  <span class="dist">5.5 km<small>desde casa</small></span>
 </article></div>
 </section>
 <section class="grupo" id="g-beach-nude">
@@ -988,185 +416,47 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
     <span class="grupo-n">03</span>
     <h2>Playa naturista</h2>
   </div>
-  <p class="grupo-nota">3 sitios, del más cercano al más lejano.</p>
+  <p class="grupo-nota">2 sitios, del más cercano al más lejano.</p>
   <div class="rejilla">
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Vera Playa naturista</h3>
-    <span class="dist">a 2.1 km</span>
+    <p>Frente al complejo naturista. La mayor zona naturista de España.</p>
+    
   </div>
-  <p>Frente al complejo naturista. La mayor zona naturista de España.</p>
-  
-  
+  <span class="dist">2.1 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Playa del Almanzora (zona naturista)</h3>
-    <span class="dist">a 3.9 km</span>
+    <p>Tramo norte de la playa, junto a la desembocadura del Almanzora.</p>
+    
   </div>
-  <p>Tramo norte de la playa, junto a la desembocadura del Almanzora.</p>
-  
-  
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de la Marina de la Torre (Mojácar)</h3>
-    <span class="dist">a 14 km</span>
-  </div>
-  <p>Zona naturista en su tramo sur.</p>
-  
-  
-</article></div>
-</section>
-<section class="grupo" id="g-beach-dog">
-  <div class="grupo-head">
-    <span class="grupo-n">04</span>
-    <h2>Playa para perros</h2>
-  </div>
-  <p class="grupo-nota">3 sitios, del más cercano al más lejano.</p>
-  <div class="rejilla">
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playeros.es · directorio</h3>
-    <span class="dist">a 14 km</span>
-  </div>
-  
-  
-  <div class="chips"><a href="http://www.playeros.es" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Cala de Mijo</h3>
-    <span class="dist">a 22 km</span>
-  </div>
-  
-  
-  <div class="chips"><a href="https://goo.gl/maps/bH2xyYdjNCdHvGy19" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playa de la Cañada del Negro</h3>
-    <span class="dist">a 24 km</span>
-  </div>
-  
-  
-  <div class="chips"><a href="https://goo.gl/maps/9iQMPzR1YWpPGjNc6" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+  <span class="dist">3.9 km<small>desde casa</small></span>
 </article></div>
 </section>
 <section class="grupo" id="g-beach-hard">
   <div class="grupo-head">
-    <span class="grupo-n">05</span>
+    <span class="grupo-n">04</span>
     <h2>Cala de acceso difícil</h2>
   </div>
-  <p class="grupo-nota">12 sitios, del más cercano al más lejano.</p>
+  <p class="grupo-nota">2 sitios, del más cercano al más lejano.</p>
   <div class="rejilla">
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Playa de los Muertos</h3>
-    <span class="dist">a 26 km</span>
+    <p>Carboneras. Una de las mejores playas de España. Aguas cristalinas, cantos rodados grandes. Sin un solo servicio.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span><span class="chip">parking de pago en verano · 15 min sendero pedregoso, fuerte pendiente</span><a href="https://goo.gl/maps/uh1baJWHPp1uan81A" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
   </div>
-  <p>Carboneras. Una de las mejores playas de España. Aguas cristalinas, cantos rodados grandes. Sin un solo servicio.</p>
-  <p class="best"><b>No te pierdas</b>el azul del agua, el contraste con las paredes blancas es irreal.</p>
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span><span class="chip">parking de pago en verano · 15 min sendero pedregoso, fuerte pendiente</span><a href="https://goo.gl/maps/uh1baJWHPp1uan81A" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+  <span class="dist">26 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Cala de Enmedio</h3>
-    <span class="dist">a 34 km</span>
+    <p>Agua Amarga. Nuestra favorita. Arena fina blanca enmarcada por roca esculpida. Casi virgen porque exige caminar.</p>
+    <div class="chips"><span class="chip nota">4.7 sobre 5</span><span class="chip">hasta Agua Amarga · 30 min campo a través</span><a href="https://goo.gl/maps/i72YXUhFgBzi7vhf6" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
   </div>
-  <p>Agua Amarga. Nuestra favorita. Arena fina blanca enmarcada por roca esculpida. Casi virgen porque exige caminar.</p>
-  <p class="best"><b>No te pierdas</b>las roca esculpidas por el viento al fondo, escenario de cuento.</p>
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span><span class="chip">hasta Agua Amarga · 30 min campo a través</span><a href="https://goo.gl/maps/i72YXUhFgBzi7vhf6" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Cala del Plomo</h3>
-    <span class="dist">a 34 km</span>
-  </div>
-  <p>Agua Amarga. Cala virgen de arena oscura. Aguas cristalinas, snorkel.</p>
-  <p class="best"><b>No te pierdas</b>snorkel en el extremo norte, la roca volcánica esconde mucha vida.</p>
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span><span class="chip">pista corta · 30 min a pie</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Cala Rajá</h3>
-    <span class="dist">a 39 km</span>
-  </div>
-  <p>Entre Agua Amarga y Las Negras. Cala brava de piedra volcánica y agua esmeralda. Una de las más solitarias del parque.</p>
-  <p class="best"><b>No te pierdas</b>la pared volcánica negra a pico sobre el agua esmeralda, sin rastro de civilización.</p>
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span><span class="chip">hasta Agua Amarga o Las Negras · 60–90 min por pista / campo a través</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Playas de Calnegre</h3>
-    <span class="dist">a 43 km</span>
-  </div>
-  <p>Lorca-Mazarrón (Murcia). Parque regional protegido, calas vírgenes y áridas. 50 min.</p>
-  <p class="best"><b>No te pierdas</b>soledad absoluta y fondos rocosos para snorkel.</p>
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span><span class="chip">pista de tierra · corto</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Cala Carbón</h3>
-    <span class="dist">a 44 km</span>
-  </div>
-  <p>Las Negras. Cala de roca volcánica negra y agua cristalina. Solo accesible a pie desde Las Negras por el sendero costero sur.</p>
-  <p class="best"><b>No te pierdas</b>el agua turquesa sobre la piedra negra volcánica, uno de los contrastes más fotogénicos del parque.</p>
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span><span class="chip">45 min desde Las Negras por sendero costero hacia el sur</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Cala del Cuervo</h3>
-    <span class="dist">a 45 km</span>
-  </div>
-  <p>Las Negras. Ensenada de roca volcánica entre Las Negras y La Isleta. Aguas salvajes, muy poca gente.</p>
-  <p class="best"><b>No te pierdas</b>la soledad absoluta a pocos kilómetros del pueblo, parece el fin del mundo.</p>
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span><span class="chip">60 min desde Las Negras por sendero costero hacia el sur</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Cala de San Pedro</h3>
-    <span class="dist">a 45 km</span>
-  </div>
-  <p>Comunidad hippie estable, fuente de agua dulce, sin servicios. Solo accesible a pie o por barca.</p>
-  <p class="best"><b>No te pierdas</b>la mezcla irrepetible: ruinas, fuente natural y comunidad alternativa.</p>
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span><span class="chip">90 min desde Las Negras (sendero costero) · taxi-barca en verano</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Cala Arena</h3>
-    <span class="dist">a 53 km</span>
-  </div>
-  <p>San José. Pequeña cala de arena volcánica oscura entre Los Escullos y San José. Virgen, agua transparente, pocas personas.</p>
-  <p class="best"><b>No te pierdas</b>la arena oscura volcánica en contraste con el agua turquesa, un rincón muy fotogénico.</p>
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span><span class="chip">40 min desde San José por sendero norte · sin acceso a coche</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Cala del Bergantín</h3>
-    <span class="dist">a 55 km</span>
-  </div>
-  <p>San José. Cala virgen de roca volcánica a 25 min al norte del pueblo. Agua cristalina, buena para snorkel, muy poca gente.</p>
-  <p class="best"><b>No te pierdas</b>el snorkel entre las rocas volcánicas, la posidonia está bien conservada y la fauna marina es abundante.</p>
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span><span class="chip">25–30 min desde San José por sendero norte · sin parking al pie</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Cala Higuera</h3>
-    <span class="dist">a 55 km</span>
-  </div>
-  <p>San José. Cala de piedra y arena virgen a 15 min del pueblo. Agua muy limpia, snorkel entre roca volcánica. De las más fáciles de llegar sin servicios.</p>
-  <p class="best"><b>No te pierdas</b>el agua en calma y transparente, perfecta para nadar y hacer snorkel cerca del pueblo.</p>
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span><span class="chip">15 min desde San José por sendero costero</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Cala de la Media Luna</h3>
-    <span class="dist">a 61 km</span>
-  </div>
-  <p>San José. Pequeña, simétrica, mar transparente. Se llega andando desde el Barronal.</p>
-  <p class="best"><b>No te pierdas</b>su forma perfecta de media luna, solo se ve desde el sendero costero.</p>
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span><span class="chip">desde el Barronal por sendero costero</span><a href="https://goo.gl/maps/ngDbWgoBfAdH5x4S8" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+  <span class="dist">34 km<small>desde casa</small></span>
 </article></div>
 </section>
 <div class="cta">
