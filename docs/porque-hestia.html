@@ -76,7 +76,7 @@
   <p>Hay una persona al otro lado. Alex y Fran gestionan los tres apartamentos desde 2016 y responden en menos de una hora, normalmente en minutos, antes y durante la estancia.</p>
   <p>Cada huésped recibe una guía propia de la zona con restaurantes, playas, pueblos, rutas y lugares que no salen en las guías genéricas, escrita por quien vive aquí.</p>
   <p>Mascotas bienvenidas en los tres apartamentos, con petición previa y suplemento razonable. Nunca vetos ni tarifas abusivas.</p>
-  <p>410 opiniones con una media de 9,93 sobre 10 y tres licencias turísticas en regla.</p>
+  <p>Cientos de opiniones de huéspedes con una media sobresaliente y tres licencias turísticas en regla.</p>
   <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a></nav>
 </noscript>
 
@@ -103,7 +103,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=f62216ed14');
+      const res = await fetch(file + '?cv=45bfad9ae4');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

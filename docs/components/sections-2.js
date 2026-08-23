@@ -39,7 +39,7 @@ const Counters = ({
     if (ref.current) io.observe(ref.current);
     return () => io.disconnect();
   }, []);
-  const families = useCountUp(600, 2200, seen);
+  const families = useCountUp(630, 2200, seen);
   const sun = useCountUp(320, 2000, seen);
   const apts = useCountUp(3, 1200, seen);
   return /*#__PURE__*/React.createElement("section", {
@@ -408,7 +408,7 @@ const Ratings = ({
 const RatingsMarquee = ({
   lang
 }) => {
-  const items = lang === 'es' ? ['★ 9.8 · Booking.com', '★ 5.0 · Airbnb Superhost', '★ 4.9 · Google Maps', '600+ familias desde 2016', 'Sin comisiones · reserva directa', '10 años en Vera Playa', 'Mejor precio garantizado', 'Te responde Alex o Fran, normalmente en minutos'] : ['★ 9.8 · Booking.com', '★ 5.0 · Airbnb Superhost', '★ 4.9 · Google Maps', '600+ families since 2016', 'No commissions · direct booking', '10 years in Vera Playa', 'Best price guaranteed', 'Alex or Fran reply, usually in minutes'];
+  const items = lang === 'es' ? ['★ 9.8 · Booking.com', '★ 5.0 · Airbnb Superhost', '★ 4.9 · Google Maps', '630+ familias desde 2016', 'Sin comisiones · reserva directa', '10 años en Vera Playa', 'Mejor precio garantizado', 'Te responde Alex o Fran, normalmente en minutos'] : ['★ 9.8 · Booking.com', '★ 5.0 · Airbnb Superhost', '★ 4.9 · Google Maps', '630+ families since 2016', 'No commissions · direct booking', '10 years in Vera Playa', 'Best price guaranteed', 'Alex or Fran reply, usually in minutes'];
   // Duplicamos el array para que el loop sea continuo (translateX -50%).
   const doubled = [...items, ...items];
   return /*#__PURE__*/React.createElement("section", {

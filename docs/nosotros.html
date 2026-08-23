@@ -86,7 +86,7 @@
       "name": "¿Desde cuándo lo hacéis vosotros mismos?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Desde 2016. En diez años hemos recibido a más de 600 familias. Nunca hemos externalizado la gestión: seguimos limpiando, respondiendo y eligiendo las toallas nosotros."
+        "text": "Desde 2016. En diez años hemos recibido a más de 630 familias. Nunca hemos externalizado la gestión: seguimos limpiando, respondiendo y eligiendo las toallas nosotros."
       }
     },
     {
@@ -183,7 +183,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=f62216ed14');
+      const res = await fetch(file + '?cv=45bfad9ae4');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

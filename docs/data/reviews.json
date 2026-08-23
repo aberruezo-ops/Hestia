@@ -1,7 +1,7 @@
 {
   "_doc": "Reviews curadas y de la web. source: 'booking'|'airbnb'|'google'|'web'. apt: 'vm'|'vt'|'vs'|'all'. highlight: true para destacarse en la sección de relevantes. status: 'published'|'pending' (solo published se muestra al público).",
   "version": 1,
-  "updatedAt": "2026-07-26T14:43:54.718Z",
+  "updatedAt": "2026-08-23T12:17:00Z",
   "items": [
     {
       "id": "bk-001",
@@ -5331,6 +5331,19 @@
       "lang": "es",
       "text": "¡Desde el momento en que conocimos a Fran supimos que Hestia era diferente! El apartamento estaba muy bien presentado y era cómodo. Está en una ubicación encantadora y muy bien equipado. Las camas son estupendas y las almohadas y la ropa de cama eran estupendas. Pero lo que destacó fue la calidez de la bienvenida de Fran y todos los pequeños y cuidados detalles. Fran se aseguró de que nos instaláramos bien y nada era un problema. ¡Recomendaríamos de todo corazón este encantador apartamento y la filosofía de Hestia de proporcionar un «hogar lejos del hogar»!",
       "highlight": false,
+      "status": "published"
+    },
+    {
+      "id": "ab-054",
+      "source": "airbnb",
+      "apt": "vm",
+      "name": "Helen",
+      "country": "ES",
+      "date": "2026-08-15",
+      "rating": 5,
+      "lang": "es",
+      "text": "Nuestra estancia fue maravillosa gracias a Fran y su socio por ser tan atentos, amables y preocuparse porque estuviésemos muy a gusto. Realmente una experiencia maravillosa, sin duda volveré ☺️",
+      "highlight": true,
       "status": "published"
     }
   ]
