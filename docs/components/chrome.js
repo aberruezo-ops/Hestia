@@ -168,6 +168,15 @@ const Header = ({
     close();
   }, [lang]);
 
+  // Enlace directo desde fuera de la app React (el extracto estático de la
+  // guía en /guia-vera/) con ?acceso=huesped: abre el modal solo, sin tener
+  // que explicar dónde está el botón.
+  React.useEffect(() => {
+    try {
+      if (new URLSearchParams(window.location.search).get('acceso') === 'huesped') setAccessOpen(true);
+    } catch (_) {}
+  }, []);
+
   // vitMin: se lee de sessionStorage para funcionar en cualquier página.
   // Por defecto minimizado: su posición fija está calculada para el hero a
   // pantalla completa de la home (top: 100vh - ...), y en el resto de páginas

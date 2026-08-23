@@ -3983,7 +3983,7 @@ const WidgetGiftHestia = ({ lang }) => {
   );
 };
 
-// ── Widget "Hoy en Vera Playa" (solo Home) ──────────────────────────────────
+// ── Widget "Hoy en Vera Playa" (en WidgetStack, todas las páginas) ──────────
 // Tiempo, oleaje y luna en directo, con un apunte con gracia (voz Alex/Fran,
 // nunca "¡genial!" ni superlativos). Datos de Open-Meteo (gratis, sin key,
 // CORS abierto): forecast (temperatura + código de cielo) y marine (oleaje,
@@ -4437,6 +4437,7 @@ const WidgetStack = ({ lang, extra }) => {
   return (
     <>
       <div className={`widget-stack ${hidden ? 'is-hidden' : ''}`} aria-hidden={hidden}>
+        <WidgetWeather lang={lang} />
         <WidgetSabiasQue lang={lang} />
         <WidgetDirectBooking lang={lang} />
         <WidgetGuestAccess lang={lang} />
@@ -4444,6 +4445,10 @@ const WidgetStack = ({ lang, extra }) => {
         <WidgetContact lang={lang} />
         {extra}
       </div>
+      {/* variant="fab": el widget-stack de arriba está oculto por debajo de
+          900px (ver comentario en WidgetWeather), así que en móvil el tiempo
+          solo existe gracias a este botón flotante, en todas las páginas. */}
+      <WidgetWeather lang={lang} variant="fab" />
       {!onReservas && (
         <a
           href="reservas.html"

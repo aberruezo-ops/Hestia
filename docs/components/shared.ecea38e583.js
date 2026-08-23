@@ -7336,7 +7336,7 @@ const WidgetGiftHestia = ({
   }, "→")));
 };
 
-// ── Widget "Hoy en Vera Playa" (solo Home) ──────────────────────────────────
+// ── Widget "Hoy en Vera Playa" (en WidgetStack, todas las páginas) ──────────
 // Tiempo, oleaje y luna en directo, con un apunte con gracia (voz Alex/Fran,
 // nunca "¡genial!" ni superlativos). Datos de Open-Meteo (gratis, sin key,
 // CORS abierto): forecast (temperatura + código de cielo) y marine (oleaje,
@@ -7941,7 +7941,9 @@ const WidgetStack = ({
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: `widget-stack ${hidden ? 'is-hidden' : ''}`,
     "aria-hidden": hidden
-  }, /*#__PURE__*/React.createElement(WidgetSabiasQue, {
+  }, /*#__PURE__*/React.createElement(WidgetWeather, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(WidgetSabiasQue, {
     lang: lang
   }), /*#__PURE__*/React.createElement(WidgetDirectBooking, {
     lang: lang
@@ -7951,7 +7953,10 @@ const WidgetStack = ({
     lang: lang
   }), /*#__PURE__*/React.createElement(WidgetContact, {
     lang: lang
-  }), extra), !onReservas && /*#__PURE__*/React.createElement("a", {
+  }), extra), /*#__PURE__*/React.createElement(WidgetWeather, {
+    lang: lang,
+    variant: "fab"
+  }), !onReservas && /*#__PURE__*/React.createElement("a", {
     href: "reservas.html",
     className: `mob-book-btn${bookHidden ? ' mob-book-btn--hidden' : ''}`,
     "aria-hidden": bookHidden
