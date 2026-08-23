@@ -15,6 +15,37 @@ const REVIEWS_PATH = 'docs/data/reviews.json';
 const BRANCH = 'main';
 const API = 'https://api.github.com';
 
+// Datos de los titulares para el contrato (nombre completo, DNI, domicilio
+// particular, IBAN). Van en el repo PRIVADO: este fichero se compila a
+// docs/components/admin-page.js, que GitHub Pages sirve a cualquiera, así que
+// nada de esto puede estar escrito aquí. Se cargan con el PAT al abrir la
+// pestaña de contratos, igual que las reservas.
+const TITULARES_PATH = 'titulares.json';
+
+// Se rellena en cargaTitulares(). Mientras esté vacío, el contrato imprime un
+// marcador visible en lugar del dato: es preferible un hueco evidente a un
+// contrato con datos inventados.
+let TITULARES = null;
+const _titFalta = (es, en) => `<span class="blank" style="color:#B8246E">[${es} / ${en}]</span>`;
+const tit = (campo, es, en) => TITULARES && TITULARES[campo] || _titFalta(es, en);
+async function cargaTitulares(token) {
+  if (TITULARES || !token) return TITULARES;
+  try {
+    const r = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${TITULARES_PATH}?ref=${BRANCH}`, {
+      headers: {
+        Authorization: `token ${token}`
+      },
+      cache: 'no-store'
+    });
+    if (!r.ok) return null;
+    const raw = await r.json();
+    TITULARES = JSON.parse(decodeURIComponent(escape(atob(raw.content.replace(/\n/g, '')))));
+    return TITULARES;
+  } catch {
+    return null;
+  }
+}
+
 // Cloudflare Web Analytics, Worker proxy + identificadores (no secretos)
 const CF_WORKER_URL = 'https://little-night-9399.hestia-vera-almeria.workers.dev/';
 const CF_ACCOUNT = 'ccb910d549f39e3bad5d89e33315d57e';
@@ -2571,6 +2602,19 @@ const ContractTab = ({
   prefill,
   token
 }) => {
+  // Los datos de los titulares viven en el repo privado, no en este bundle.
+  // Se piden en cuanto hay token para que estén listos al generar el contrato.
+  const [titListos, setTitListos] = React.useState(!!TITULARES);
+  React.useEffect(() => {
+    let vivo = true;
+    cargaTitulares(token).then(t => {
+      if (vivo && t) setTitListos(true);
+    });
+    return () => {
+      vivo = false;
+    };
+  }, [token]);
+
   // Estado del formulario, usa prefill si llega desde Reservas
   const today = new Date().toISOString().slice(0, 10);
   const p = prefill || {};
@@ -2842,7 +2886,7 @@ ${clausulaFianza}
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
 
 <h2>Parties</h2>
-<p>On the one part, <strong>Mr. Alejandro Berruezo Márquez</strong> and <strong>Mr. Francisco Javier Moral Arévalo</strong>, of legal age, with address for notifications at ***DOMICILIO-RETIRADO***, holding ID numbers ***DNI-RETIRADO*** and ***DNI-RETIRADO***, telephones 620316370 and 654138251 respectively, email info@hestiayourhome.com and bank account ***IBAN-RETIRADO***.</p>
+<p>On the one part, <strong>Mr. ${tit('nombre1', 'titular 1', 'owner 1')}</strong> and <strong>Mr. ${tit('nombre2', 'titular 2', 'owner 2')}</strong>, of legal age, with address for notifications at ${tit('domicilio', 'domicilio', 'address')}, holding ID numbers ${tit('dni1', 'DNI 1', 'ID 1')} and ${tit('dni2', 'DNI 2', 'ID 2')}, telephones ${tit('tel1', 'teléfono 1', 'phone 1')} and ${tit('tel2', 'teléfono 2', 'phone 2')} respectively, email info@hestiayourhome.com and bank account ${tit('iban', 'IBAN', 'IBAN')}.</p>
 <p><em>(Hereinafter, "the Owners".)</em></p>
 <p>On the other part, <strong>Mr./Ms. ${escHtml(nombre.toUpperCase())}</strong>, of legal age, with address for notifications at: ${_blank(domicilio, 'long', 'dirección a rellenar', 'address to be completed')}, holding identity document: ${_blank(dni, 'short', 'DNI a rellenar', 'ID to be completed')}, telephone: ${_blank(telefono, 'short', 'teléfono a rellenar', 'phone to be completed')}, and email for electronic notifications: ${_blank(email, 'medium', 'email a rellenar', 'email to be completed')}.</p>
 <p><em>(hereinafter, "the Tenant".)</em></p>
@@ -2914,8 +2958,8 @@ ${clausulaSegunda}
 <div class="firmas">
   <div class="firma">
     <strong>The Owners</strong> <em style="font-weight:normal">(one signature is sufficient)</em><br>
-    Signed: Alejandro Berruezo Márquez<br>
-    Signed: Francisco Javier Moral Arévalo
+    Signed: ${tit('nombre1', 'titular 1', 'owner 1')}<br>
+    Signed: ${tit('nombre2', 'titular 2', 'owner 2')}
   </div>
   <div class="firma">
     <strong>The Tenant</strong><br>
@@ -2927,7 +2971,7 @@ ${clausulaSegunda}
 <p class="lugar">Madrid, ${fechaFirmaStr}</p>
 
 <h2>Reunidos</h2>
-<p>Por una parte, <strong>D. Alejandro Berruezo Márquez</strong> y <strong>D. Francisco Javier Moral Arévalo</strong>, mayores de edad, y con domicilio a efectos de notificaciones en ***DOMICILIO-RETIRADO***, con DNI. ***DNI-RETIRADO*** y ***DNI-RETIRADO***, telf. 620316370 y 654138251, respectivamente, y correo electrónico: info@hestiayourhome.com y cuenta corriente: ***IBAN-RETIRADO***.</p>
+<p>Por una parte, <strong>D. ${tit('nombre1', 'titular 1', 'owner 1')}</strong> y <strong>D. ${tit('nombre2', 'titular 2', 'owner 2')}</strong>, mayores de edad, y con domicilio a efectos de notificaciones en ${tit('domicilio', 'domicilio', 'address')}, con DNI ${tit('dni1', 'DNI 1', 'ID 1')} y ${tit('dni2', 'DNI 2', 'ID 2')}, teléfonos ${tit('tel1', 'teléfono 1', 'phone 1')} y ${tit('tel2', 'teléfono 2', 'phone 2')} respectivamente, correo electrónico info@hestiayourhome.com y cuenta corriente: ${tit('iban', 'IBAN', 'IBAN')}.</p>
 <p><em>(De ahora en adelante, "Los Propietarios".)</em></p>
 <p>De otra parte, <strong>D./Dña. ${escHtml(nombre.toUpperCase())}</strong>, mayor de edad, con domicilio a efectos de notificaciones en: ${_blank(domicilio, 'long', 'dirección a rellenar', 'address to be completed')}, con Documento Nacional de Identidad: ${_blank(dni, 'short', 'DNI a rellenar', 'ID to be completed')}, con teléfono: ${_blank(telefono, 'short', 'teléfono a rellenar', 'phone to be completed')}, y correo electrónico a efectos de notificaciones telemáticas: ${_blank(email, 'medium', 'email a rellenar', 'email to be completed')}.</p>
 <p><em>(en adelante, "la Parte Arrendataria".)</em></p>
@@ -2999,8 +3043,8 @@ ${clausulaSegunda}
 <div class="firmas">
   <div class="firma">
     <strong>Los Propietarios</strong> <em style="font-weight:normal">(con una es suficiente)</em><br>
-    Fdo.: Alejandro Berruezo Márquez<br>
-    Fdo.: Francisco Javier Moral Arévalo
+    Fdo.: ${tit('nombre1', 'titular 1', 'owner 1')}<br>
+    Fdo.: ${tit('nombre2', 'titular 2', 'owner 2')}
   </div>
   <div class="firma">
     <strong>La Parte Arrendataria</strong><br>
@@ -3420,7 +3464,7 @@ To confirm your booking we need you to send us:
 
 1. The contract signed by all parties (you can reply to this email with the signed PDF attached).
 2. The ID card or passport of each guest over 16 years of age.
-3. Proof of the deposit of ${prereserva} €, paid by bank transfer to account ***IBAN-RETIRADO*** or Bizum to +34 620 316 370.${prevN > 0 ? `\n4. Proof of the advance payment of ${pagoPrevio} €.` : ''}
+3. Proof of the deposit of ${prereserva} €, paid by bank transfer to account ${tit('iban', 'IBAN', 'IBAN')} or Bizum to +34 620 316 370.${prevN > 0 ? `\n4. Proof of the advance payment of ${pagoPrevio} €.` : ''}
 
 The remaining ${remanente} € is paid in cash on the arrival day, at check-in. Any fees arising from these payments are borne by the guest.
 
@@ -3440,7 +3484,7 @@ Para confirmar tu reserva necesitamos que nos hagas llegar:
 
 1. El contrato firmado por todas las partes (puedes contestar a este correo con el PDF firmado adjunto).
 2. El DNI o pasaporte de cada huésped mayor de 16 años.
-3. El justificante de la señal de ${prereserva} €, ingresada por transferencia a la cuenta ***IBAN-RETIRADO*** o Bizum al teléfono +34 620 316 370.${prevN > 0 ? `\n4. El justificante del pago previo de ${pagoPrevio} €.` : ''}
+3. El justificante de la señal de ${prereserva} €, ingresada por transferencia a la cuenta ${tit('iban', 'IBAN', 'IBAN')} o Bizum al teléfono +34 620 316 370.${prevN > 0 ? `\n4. El justificante del pago previo de ${pagoPrevio} €.` : ''}
 
 El remanente de ${remanente} € se abona en efectivo el día de la llegada, en el momento del check-in. Cualquier gasto derivado de estos pagos corre a cargo del huésped.
 
@@ -3496,7 +3540,16 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "pe-h-ic"
   }), " Generar contrato"), /*#__PURE__*/React.createElement("p", {
     className: "pe-help"
-  }, "Rellena los datos del huésped. El precio total lo dictas tú · la fecha de firma se rellena con la de hoy (puedes cambiarla). Al pulsar ", /*#__PURE__*/React.createElement("strong", null, "Generar contrato y abrir correo"), " se abren dos ventanas: el contrato listo para guardar como PDF y tu cliente de correo con el mensaje prerrellenado al huésped. Recuerda ", /*#__PURE__*/React.createElement("strong", null, "adjuntar manualmente"), " el PDF descargado al correo antes de enviarlo (los navegadores no permiten adjuntar automáticamente desde un ", /*#__PURE__*/React.createElement("code", null, "mailto:"), ")."), /*#__PURE__*/React.createElement("div", {
+  }, "Rellena los datos del huésped. El precio total lo dictas tú · la fecha de firma se rellena con la de hoy (puedes cambiarla). Al pulsar ", /*#__PURE__*/React.createElement("strong", null, "Generar contrato y abrir correo"), " se abren dos ventanas: el contrato listo para guardar como PDF y tu cliente de correo con el mensaje prerrellenado al huésped. Recuerda ", /*#__PURE__*/React.createElement("strong", null, "adjuntar manualmente"), " el PDF descargado al correo antes de enviarlo (los navegadores no permiten adjuntar automáticamente desde un ", /*#__PURE__*/React.createElement("code", null, "mailto:"), ")."), !titListos && /*#__PURE__*/React.createElement("p", {
+    className: "pe-warn",
+    style: {
+      background: 'var(--err-bg, #F8E0EB)',
+      color: 'var(--err, #B8246E)',
+      padding: '10px 14px',
+      borderRadius: '10px 0 10px 0',
+      margin: '0 0 14px'
+    }
+  }, "No se han cargado los datos de los titulares desde ", /*#__PURE__*/React.createElement("code", null, "hestia-data/titulares.json"), ". El contrato saldría con huecos marcados en rojo donde van el nombre, el DNI, el domicilio y el IBAN. Comprueba que el token tiene acceso al repositorio privado y que el fichero existe."), /*#__PURE__*/React.createElement("div", {
     className: "ct-form"
   }, /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Apartamento"), /*#__PURE__*/React.createElement("div", {
     className: "pe-grid"
