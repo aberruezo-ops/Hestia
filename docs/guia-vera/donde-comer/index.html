@@ -45,6 +45,12 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 .topnav .brand{font-family:var(--serif);font-size:19px;letter-spacing:.04em;opacity:1;}
 .topnav nav{display:flex;gap:22px;}
 @media(max-width:640px){.topnav nav a:not(.cta-top){display:none;}}
+@media(max-width:680px){
+  .ficha{grid-template-columns:44px 1fr;padding:26px 0;}
+  .ficha::before{font-size:24px;}
+  .dist{grid-column:2;text-align:left;padding-top:0;margin-bottom:10px;font-size:17px;}
+  .dist small{display:inline;margin-left:7px;}
+}
 
 .hero{position:relative;min-height:clamp(460px,64vh,640px);display:flex;align-items:flex-end;
   background:var(--ber-deep);overflow:hidden;}
@@ -86,28 +92,31 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
   line-height:1.1;letter-spacing:-.02em;}
 .grupo-nota{color:var(--ink-faint);font-size:13.5px;margin-bottom:30px;padding-left:2px;}
 
-.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px;}
-.ficha{position:relative;background:#fff;border:1px solid var(--rule);border-radius:var(--r);
-  padding:24px 24px 20px;display:flex;flex-direction:column;
-  transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);}
-.ficha:hover{transform:translateY(-3px);border-color:var(--arena-dk);
-  box-shadow:0 14px 34px rgba(42,15,46,.09);}
-.ficha.top{background:linear-gradient(168deg,#fff 0%,#FDF9F2 100%);border-color:var(--arena-dk);}
-.ficha.top::before{content:'\2726';position:absolute;top:18px;right:20px;color:var(--vs);
-  font-size:15px;line-height:1;}
-.f-top{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin-bottom:9px;}
-.ficha h3{font-family:var(--serif);font-weight:400;font-size:20.5px;line-height:1.2;
-  letter-spacing:-.01em;padding-right:12px;}
-.dist{flex:0 0 auto;font-size:11.5px;font-weight:600;letter-spacing:.04em;color:var(--sol-txt);
-  background:#EAF4F5;padding:4px 10px;border-radius:6px 0 6px 0;white-space:nowrap;
-  font-variant-numeric:tabular-nums;}
-.ficha p{font-size:14.5px;color:var(--ink-soft);margin-bottom:10px;}
+.rejilla{display:flex;flex-direction:column;gap:0;}
+.ficha{position:relative;display:grid;grid-template-columns:70px 1fr auto;gap:0 26px;
+  align-items:start;padding:34px 30px 34px 4px;border-bottom:1px solid var(--rule);
+  transition:background .35s var(--ease),padding-left .35s var(--ease);}
+.ficha:first-child{border-top:1px solid var(--rule);}
+.ficha:hover{background:linear-gradient(90deg,#fff 0%,rgba(255,255,255,0) 92%);padding-left:20px;}
+.ficha::before{counter-increment:sitio;content:counter(sitio,decimal-leading-zero);
+  font-family:var(--serif);font-size:34px;line-height:.95;color:var(--arena-dk);
+  font-variant-numeric:tabular-nums;transition:color .35s var(--ease);}
+.ficha:hover::before{color:var(--vs);}
+.rejilla{counter-reset:sitio;}
+.f-cuerpo{min-width:0;}
+.ficha h3{font-family:var(--serif);font-weight:400;font-size:clamp(21px,2.5vw,27px);
+  line-height:1.15;letter-spacing:-.015em;margin-bottom:8px;}
+.dist{grid-column:3;align-self:start;font-family:var(--serif);font-size:19px;
+  color:var(--sol-txt);white-space:nowrap;font-variant-numeric:tabular-nums;
+  padding-top:5px;text-align:right;}
+.dist small{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-faint);margin-top:4px;}
+.ficha p{font-size:15.5px;color:var(--ink-soft);margin-bottom:12px;max-width:62ch;}
 .ficha .best{color:var(--ink);border-left:2px solid var(--vs);padding-left:12px;
   font-size:14px;margin-bottom:12px;}
 .ficha .best b{font-weight:600;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
   display:block;color:var(--ink-faint);margin-bottom:3px;}
-.chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:auto;
-  padding-top:12px;border-top:1px solid var(--rule);}
+.chips{display:flex;flex-wrap:wrap;align-items:center;gap:7px 11px;}
 .chip{font-size:11.5px;color:var(--ink-soft);background:var(--arena);padding:3px 9px;
   border-radius:6px 0 6px 0;}
 .chip.nota{background:#EDF1E2;color:#4A5628;font-weight:600;}
@@ -172,7 +181,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       {
         "@type": "ListItem",
         "position": 3,
-        "name": "Dónde comer en Vera, Garrucha y Mojácar",
+        "name": "Las mesas que recomendamos",
         "item": "https://www.hestiayourhome.com/guia-vera/donde-comer/"
       }
     ]
@@ -180,9 +189,9 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "name": "Dónde comer en Vera, Garrucha y Mojácar",
+    "name": "Las mesas que recomendamos",
     "description": "Restaurantes, chiringuitos y estrellas Michelin del Levante almeriense y alrededores, con lo que pedir en cada uno. Escrita por quienes llevan toda la vida viniendo.",
-    "numberOfItems": 89,
+    "numberOfItems": 57,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -450,22 +459,13 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
         "position": 30,
         "item": {
           "@type": "Place",
-          "name": "Boracay (Garrucha)",
-          "description": "Mediterráneo a pie del puerto."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 31,
-        "item": {
-          "@type": "Place",
           "name": "Riad Cabrera",
           "description": "Marroquí en Sierra Cabrera. Carretera de montaña, pero merece muchísimo la pena."
         }
       },
       {
         "@type": "ListItem",
-        "position": 32,
+        "position": 31,
         "item": {
           "@type": "Place",
           "name": "",
@@ -474,7 +474,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 33,
+        "position": 32,
         "item": {
           "@type": "Place",
           "name": "Cantares (Mojácar Pueblo)",
@@ -483,34 +483,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 34,
-        "item": {
-          "@type": "Place",
-          "name": "Mandala (Mojácar Pueblo)",
-          "description": "Coctelería de autor en el casco antiguo."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 35,
-        "item": {
-          "@type": "Place",
-          "name": "El Almirez (Mojácar)",
-          "description": "Mojácar Pueblo. Cocina mediterránea elegante con terraza con vistas."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 36,
-        "item": {
-          "@type": "Place",
-          "name": "Ristorante di Valentino",
-          "description": "Mojácar."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 37,
+        "position": 33,
         "item": {
           "@type": "Place",
           "name": "Mojácar: Cabo Norte, Neptuno, Kontiki",
@@ -519,7 +492,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 38,
+        "position": 34,
         "item": {
           "@type": "Place",
           "name": "El Acebuche (Mojácar)",
@@ -528,25 +501,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 39,
-        "item": {
-          "@type": "Place",
-          "name": "Cabo Norte",
-          "description": "Mojácar. Buena materia prima a buen precio."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 40,
-        "item": {
-          "@type": "Place",
-          "name": "Restaurante Neptuno",
-          "description": "Mojácar. Buen pescado."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 41,
+        "position": 35,
         "item": {
           "@type": "Place",
           "name": "Asador La Chumbera (Sopalmo)",
@@ -555,16 +510,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 42,
-        "item": {
-          "@type": "Place",
-          "name": "Juan Mari (Águilas)",
-          "description": "Águilas. Cocina marinera con producto del día."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 43,
+        "position": 36,
         "item": {
           "@type": "Place",
           "name": "El Faro (Águilas)",
@@ -573,16 +519,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 44,
-        "item": {
-          "@type": "Place",
-          "name": "La Mar Menuda (Águilas)",
-          "description": "Águilas. Coctelería frente al mar."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 45,
+        "position": 37,
         "item": {
           "@type": "Place",
           "name": "La Villa",
@@ -591,25 +528,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 46,
-        "item": {
-          "@type": "Place",
-          "name": "La Villa",
-          "description": "Aguamarga. Mediterráneo elegante a pie de pueblo."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 47,
-        "item": {
-          "@type": "Place",
-          "name": "Oro y Luz",
-          "description": "Rodalquilar. Cocina creativa con producto del Parque."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 48,
+        "position": 38,
         "item": {
           "@type": "Place",
           "name": "Asador Martín Fierro",
@@ -618,16 +537,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 49,
-        "item": {
-          "@type": "Place",
-          "name": "Asador Casino de Lorca",
-          "description": "Lorca. Comedor histórico dentro del Casino. Cocina murciana actualizada."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 50,
+        "position": 39,
         "item": {
           "@type": "Place",
           "name": "La Gallineta (Pozo de los Frailes)",
@@ -636,43 +546,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 51,
-        "item": {
-          "@type": "Place",
-          "name": "4 Nudos (San José)",
-          "description": "San José. Cocina creativa con producto del mar de Cabo de Gata."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 52,
-        "item": {
-          "@type": "Place",
-          "name": "Casa Miguel (San José)",
-          "description": "San José. Clásico de pescado y marisco a buen precio."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 53,
-        "item": {
-          "@type": "Place",
-          "name": "Bar Sahara (San José)",
-          "description": "San José. Música en vivo y ambiente de Cabo de Gata."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 54,
-        "item": {
-          "@type": "Place",
-          "name": "Salmantice (Almería capital)",
-          "description": "Asador castellano-leonés. Carnes a la brasa de primera."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 55,
+        "position": 40,
         "item": {
           "@type": "Place",
           "name": "La Mala (Almería capital)",
@@ -681,25 +555,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 56,
-        "item": {
-          "@type": "Place",
-          "name": "Torreluz Mediterráneo (Almería capital)",
-          "description": "En Plaza Flores. Cocina mediterránea con producto de mercado."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 57,
-        "item": {
-          "@type": "Place",
-          "name": "Jovellanos 16 (Almería capital)",
-          "description": "Tapeo de calidad en el centro. Producto y elaboración."
-        }
-      },
-      {
-        "@type": "ListItem",
-        "position": 58,
+        "position": 41,
         "item": {
           "@type": "Place",
           "name": "Travieso",
@@ -708,7 +564,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 59,
+        "position": 42,
         "item": {
           "@type": "Place",
           "name": "Ginés Peregrín",
@@ -717,11 +573,137 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
       },
       {
         "@type": "ListItem",
-        "position": 60,
+        "position": 43,
         "item": {
           "@type": "Place",
           "name": "Casa Puga (Almería capital)",
           "description": "Histórica taberna fundada en 1870. Templo de la tapa almeriense."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 44,
+        "item": {
+          "@type": "Place",
+          "name": "Barra de José Álvarez",
+          "description": "Almería capital. Comparte cocina y bodega con La Costa (⭐ Estrella Michelin). Barra + mesas sin mantel, platos actuales en medias raciones."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 45,
+        "item": {
+          "@type": "Place",
+          "name": "Vivo Gourmet",
+          "description": "Almería capital. Cocina en movimiento: menú cambiante según el producto de temporada de proximidad."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 46,
+        "item": {
+          "@type": "Place",
+          "name": "Asador Marino Tinta Negra",
+          "description": "Almería capital, casco viejo. Segunda vida de un antiguo asador: salones de esencia castellana renovados, con un gran mural de pulpo monocromático."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 47,
+        "item": {
+          "@type": "Place",
+          "name": "Magoga (Cartagena)",
+          "description": "Cartagena. ⭐ Estrella Michelin. Cocina murciana de alta gama."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 48,
+        "item": {
+          "@type": "Place",
+          "name": "Columbares (Cartagena)",
+          "description": "Plaza San Sebastián. Tapas creativas y vermuts."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 49,
+        "item": {
+          "@type": "Place",
+          "name": "Cabaña Buenavista",
+          "description": "El Palmar (Murcia). ⭐⭐ Dos Estrellas Michelin, única en la región. Chef Pablo González-Conejero."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 50,
+        "item": {
+          "@type": "Place",
+          "name": "Almo",
+          "description": "Murcia capital. ⭐ Estrella Michelin. Chef Juan Guillamón. Cocina mediterránea de mercado en dos plantas con ventanales de suelo a techo."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 51,
+        "item": {
+          "@type": "Place",
+          "name": "Frases",
+          "description": "Murcia capital. ⭐ Estrella Michelin (nueva en 2025). Chefs Marco Antonio Iniesta y María Egea. Cada plato es una \"frase\" que narra una historia local."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 52,
+        "item": {
+          "@type": "Place",
+          "name": "Faralá",
+          "description": "Granada capital, Cuesta de Gomérez (a los pies de la Alhambra). Recomendado 2025 · ⭐ Estrella Michelin 2026. Chef Cristina Jiménez."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 53,
+        "item": {
+          "@type": "Place",
+          "name": "María de la O",
+          "description": "Granada capital, palacete del siglo XIX. Bib Gourmand. Chef Chechu González. Cocina moderna granadina centrada en salsas, acidez y temporada."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 54,
+        "item": {
+          "@type": "Place",
+          "name": "El Conjuro",
+          "description": "Calahonda (Gualchos, Granada, costa). Recomendado. Antonio y Daniel Lorenzo. Comedor gastronómico + taberna para raciones."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 55,
+        "item": {
+          "@type": "Place",
+          "name": "FM (Bar FM)",
+          "description": "Granada capital. Recomendado. Desde 1985. Francisco Martín: barra de mariscos con conexión directa a la lonja de Motril."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 56,
+        "item": {
+          "@type": "Place",
+          "name": "Barahonda",
+          "description": "Yecla. ⭐ Estrella Michelin (nueva en 2025, primera para Yecla). Chef Alejandro Ibáñez. Cocina de terruño en viñedos de Señorío de Barahonda."
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 57,
+        "item": {
+          "@type": "Place",
+          "name": "La Finca (Loja)",
+          "description": "Loja (Granada/Málaga). ⭐ Estrella Michelin. Chef Fernando Arjona. Resort Barceló La Bobadilla, en plena sierra."
         }
       }
     ]
@@ -746,9 +728,9 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
   </video>
   <div class="wrap">
     <p class="eyebrow">Guía de la zona</p>
-    <h1>Dónde comer en Vera, Garrucha y Mojácar</h1>
-    <p class="intro">De la gamba roja de Garrucha a las estrellas Michelin de Almería, Murcia y Cartagena. Están ordenados por distancia desde Vera Playa, empezando por lo que tenemos a un paseo.</p>
-    <div class="cifras"><div class="cifra"><b>89</b><span>sitios</span></div><div class="cifra"><b>4</b><span>categorías</span></div><div class="cifra"><b>un paseo</b><span>el más cercano</span></div></div>
+    <h1>Las mesas que recomendamos</h1>
+    <p class="intro">De la gamba roja de Garrucha a las estrellas Michelin de Almería, Murcia y Cartagena. Aquí no está todo lo que hay: está donde nosotros comemos y a dónde mandamos a los huéspedes. Ordenado por distancia desde los apartamentos.</p>
+    <div class="cifras"><div class="cifra"><b>57</b><span>sitios</span></div><div class="cifra"><b>4</b><span>categorías</span></div><div class="cifra"><b>un paseo</b><span>el más cercano</span></div></div>
   </div>
 </header>
 <div class="indice"><div class="wrap">
@@ -759,394 +741,231 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
     <span class="grupo-n">01</span>
     <h2>Restaurante</h2>
   </div>
-  <p class="grupo-nota">43 sitios, del más cercano al más lejano.</p>
+  <p class="grupo-nota">28 sitios, del más cercano al más lejano.</p>
   <div class="rejilla">
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Resto Bar Koa</h3>
-    <span class="dist">a un paseo</span>
+    <p>Frente a Hestía Vera Mar. Bocados pensados, ambiente cercano.</p>
+    <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
   </div>
-  <p>Frente a Hestía Vera Mar. Bocados pensados, ambiente cercano.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
+  <span class="dist">un paseo<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Restaurante Bbme Palomares</h3>
-    <span class="dist">a un paseo</span>
+    <p>En plena playa, a 10 min a pie.</p>
+    <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
   </div>
-  <p>En plena playa, a 10 min a pie.</p>
-  
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
+  <span class="dist">un paseo<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>The Bistro</h3>
-    <span class="dist">a 0.9 km</span>
+    <p>Bastante bien.</p>
+    <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
   </div>
-  <p>Bastante bien.</p>
-  
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
+  <span class="dist">0.9 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Freiduría Bar Rosado</h3>
-    <span class="dist">a 0.9 km</span>
+    <p>Buenas referencias.</p>
+    <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
   </div>
-  <p>Buenas referencias.</p>
-  
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
+  <span class="dist">0.9 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Lúa</h3>
-    <span class="dist">a 0.9 km</span>
+    <p>Sofisticado. Mejor para cena o copa.</p>
+    <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
   </div>
-  <p>Sofisticado. Mejor para cena o copa.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
+  <span class="dist">0.9 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Chiringuito Maruja</h3>
-    <span class="dist">a 1 km</span>
+    <p>Vera Playa. A pie de arena, ambiente sin pretensiones.</p>
+    <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
   </div>
-  <p>Vera Playa. A pie de arena, ambiente sin pretensiones.</p>
-  
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
+  <span class="dist">1 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Gateway to India</h3>
-    <span class="dist">a 1.1 km</span>
+    <p>Hindú. Bueno y barato.</p>
+    <div class="chips"><span class="chip nota">4.2 sobre 5</span></div>
   </div>
-  <p>Hindú. Bueno y barato.</p>
-  
-  <div class="chips"><span class="chip nota">4.2 sobre 5</span></div>
+  <span class="dist">1.1 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Pizzería Pomodoro</h3>
-    <span class="dist">a 1.1 km</span>
+    <p>A pie de playa.</p>
+    <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
   </div>
-  <p>A pie de playa.</p>
-  
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
+  <span class="dist">1.1 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Av. Ciudad de Alicante</h3>
-    <span class="dist">a 1.1 km</span>
+    <p>Detrás del Consum: pubs, comida rápida y más.</p>
+    
   </div>
-  <p>Detrás del Consum: pubs, comida rápida y más.</p>
-  
-  
+  <span class="dist">1.1 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Juan Moreno</h3>
-    <span class="dist">a 3 km</span>
+    <p>Sofisticado. Cocina de autor en Vera pueblo.</p>
+    <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
   </div>
-  <p>Sofisticado. Cocina de autor en Vera pueblo.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
+  <span class="dist">3 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Casa Egea (Vera)</h3>
-    <span class="dist">a 3.1 km</span>
+    <p>Vera pueblo. Cocina tradicional con producto del Levante almeriense.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
   </div>
-  <p>Vera pueblo. Cocina tradicional con producto del Levante almeriense.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
+  <span class="dist">3.1 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Terraza Carmona</h3>
-    <span class="dist">a 3.1 km</span>
+    <p>Cocina española moderna en Vera pueblo. Casa con historia.</p>
+    <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
   </div>
-  <p>Cocina española moderna en Vera pueblo. Casa con historia.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
+  <span class="dist">3.1 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Regio (Vera)</h3>
-    <span class="dist">a 3.1 km</span>
+    <p>Vera pueblo. Casa de comidas con platos de cuchara y arroces.</p>
+    <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
   </div>
-  <p>Vera pueblo. Casa de comidas con platos de cuchara y arroces.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
+  <span class="dist">3.1 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Hostal Playa Azul</h3>
-    <span class="dist">a 3.4 km</span>
+    <p>Villaricos. Excelente paella con bogavante.</p>
+    <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
   </div>
-  <p>Villaricos. Excelente paella con bogavante.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
+  <span class="dist">3.4 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Tadeo</h3>
-    <span class="dist">a 3.5 km</span>
+    <p>Villaricos. Cocina de mar con producto del día.</p>
+    <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
   </div>
-  <p>Villaricos. Cocina de mar con producto del día.</p>
-  
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
+  <span class="dist">3.5 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>El Almejero (Garrucha)</h3>
-    <span class="dist">a 5.5 km</span>
+    <p>Garrucha. Frente al puerto, especialista en marisco y arroces. Bib Gourmand.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
   </div>
-  <p>Garrucha. Frente al puerto, especialista en marisco y arroces. Bib Gourmand.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
+  <span class="dist">5.5 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>La Almadraba (Garrucha)</h3>
-    <span class="dist">a 5.5 km</span>
+    <p>Garrucha. Vista al puerto, especializado en pescado de la lonja.</p>
+    
   </div>
-  <p>Garrucha. Vista al puerto, especializado en pescado de la lonja.</p>
-  
-  
+  <span class="dist">5.5 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Rincón del Puerto (Garrucha)</h3>
-    <span class="dist">a 5.5 km</span>
+    <p>Junto a la lonja de Garrucha. Marisco fresquísimo y ambiente de pueblo pesquero.</p>
+    
   </div>
-  <p>Junto a la lonja de Garrucha. Marisco fresquísimo y ambiente de pueblo pesquero.</p>
-  
-  
+  <span class="dist">5.5 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>La Trattoria da Marco</h3>
-    <span class="dist">a 5.6 km</span>
+    <p>Garrucha. Las pizzas están geniales.</p>
+    <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
   </div>
-  <p>Garrucha. Las pizzas están geniales.</p>
-  
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
+  <span class="dist">5.6 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Riad Cabrera</h3>
-    <span class="dist">a 9.6 km</span>
+    <p>Marroquí en Sierra Cabrera. Carretera de montaña, pero merece muchísimo la pena.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
   </div>
-  <p>Marroquí en Sierra Cabrera. Carretera de montaña, pero merece muchísimo la pena.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
+  <span class="dist">9.6 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3></h3>
-    <span class="dist">a 11 km</span>
+    <p>Mojácar Pueblo. Tapas y carta tradicional con producto local. Imprescindible.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
   </div>
-  <p>Mojácar Pueblo. Tapas y carta tradicional con producto local. Imprescindible.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
+  <span class="dist">11 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>El Almirez (Mojácar)</h3>
-    <span class="dist">a 11 km</span>
-  </div>
-  <p>Mojácar Pueblo. Cocina mediterránea elegante con terraza con vistas.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Ristorante di Valentino</h3>
-    <span class="dist">a 11 km</span>
-  </div>
-  <p>Mojácar.</p>
-  
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>El Acebuche (Mojácar)</h3>
-    <span class="dist">a 11 km</span>
+    <p>Recomendado por Guía Repsol y Bib Gourmand. Cocina almeriense actualizada.</p>
+    <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
   </div>
-  <p>Recomendado por Guía Repsol y Bib Gourmand. Cocina almeriense actualizada.</p>
-  
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
+  <span class="dist">11 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>Cabo Norte</h3>
-    <span class="dist">a 11 km</span>
-  </div>
-  <p>Mojácar. Buena materia prima a buen precio.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Restaurante Neptuno</h3>
-    <span class="dist">a 11 km</span>
-  </div>
-  <p>Mojácar. Buen pescado.</p>
-  
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Asador La Chumbera (Sopalmo)</h3>
-    <span class="dist">a 22 km</span>
+    <p>Entre Mojácar y Agua Amarga. Cocina al fuego con vistas espectaculares al mar.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
   </div>
-  <p>Entre Mojácar y Agua Amarga. Cocina al fuego con vistas espectaculares al mar.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
+  <span class="dist">22 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>Juan Mari (Águilas)</h3>
-    <span class="dist">a 28 km</span>
-  </div>
-  <p>Águilas. Cocina marinera con producto del día.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>El Faro (Águilas)</h3>
-    <span class="dist">a 28 km</span>
+    <p>Águilas. A pie de puerto. Famoso por el arroz caldero murciano.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
   </div>
-  <p>Águilas. A pie de puerto. Famoso por el arroz caldero murciano.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
+  <span class="dist">28 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>La Villa</h3>
-    <span class="dist">a 36 km</span>
-  </div>
-  <p>Aguamarga. Mediterráneo elegante a pie de pueblo.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Oro y Luz</h3>
-    <span class="dist">a 47 km</span>
-  </div>
-  <p>Rodalquilar. Cocina creativa con producto del Parque.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Asador Martín Fierro</h3>
-    <span class="dist">a 47 km</span>
+    <p>Rodalquilar. Asador argentino dentro del Parque Natural.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
   </div>
-  <p>Rodalquilar. Asador argentino dentro del Parque Natural.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
+  <span class="dist">47 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>Asador Casino de Lorca</h3>
-    <span class="dist">a 50 km</span>
-  </div>
-  <p>Lorca. Comedor histórico dentro del Casino. Cocina murciana actualizada.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>La Gallineta (Pozo de los Frailes)</h3>
-    <span class="dist">a 55 km</span>
+    <p>Pozo de los Frailes. Uno de los más reputados del Parque Natural. Reserva imprescindible.</p>
+    <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
   </div>
-  <p>Pozo de los Frailes. Uno de los más reputados del Parque Natural. Reserva imprescindible.</p>
-  
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
+  <span class="dist">55 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>4 Nudos (San José)</h3>
-    <span class="dist">a 58 km</span>
-  </div>
-  <p>San José. Cocina creativa con producto del mar de Cabo de Gata.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Casa Miguel (San José)</h3>
-    <span class="dist">a 58 km</span>
-  </div>
-  <p>San José. Clásico de pescado y marisco a buen precio.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Salmantice (Almería capital)</h3>
-    <span class="dist">a 72 km</span>
-  </div>
-  <p>Asador castellano-leonés. Carnes a la brasa de primera.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Torreluz Mediterráneo (Almería capital)</h3>
-    <span class="dist">a 72 km</span>
-  </div>
-  <p>En Plaza Flores. Cocina mediterránea con producto de mercado.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Casa Puga (Almería capital)</h3>
-    <span class="dist">a 72 km</span>
+    <p>Histórica taberna fundada en 1870. Templo de la tapa almeriense.</p>
+    <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
   </div>
-  <p>Histórica taberna fundada en 1870. Templo de la tapa almeriense.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
+  <span class="dist">72 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>Tetería Almedina (Almería capital)</h3>
-    <span class="dist">a 72 km</span>
-  </div>
-  <p>Barrio Almedina. Cocina marroquí auténtica en el casco antiguo.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>El Barrio de San Roque (Cartagena)</h3>
-    <span class="dist">a 83 km</span>
-  </div>
-  <p>Cartagena. Cocina tradicional con producto de la lonja.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Magoga (Cartagena)</h3>
-    <span class="dist">a 83 km</span>
+    <p>Cartagena. ⭐ Estrella Michelin. Cocina murciana de alta gama.</p>
+    <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
   </div>
-  <p>Cartagena. ⭐ Estrella Michelin. Cocina murciana de alta gama.</p>
-  
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>La Marquesita (Cartagena)</h3>
-    <span class="dist">a 83 km</span>
-  </div>
-  <p>Cartagena. Clásico imprescindible junto al teatro romano.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
+  <span class="dist">83 km<small>desde casa</small></span>
 </article></div>
 </section>
 <section class="grupo" id="g-bar">
@@ -1154,160 +973,95 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
     <span class="grupo-n">02</span>
     <h2>Chiringuito o bar</h2>
   </div>
-  <p class="grupo-nota">17 sitios, del más cercano al más lejano.</p>
+  <p class="grupo-nota">11 sitios, del más cercano al más lejano.</p>
   <div class="rejilla">
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Bbme Palomares</h3>
-    <span class="dist">a un paseo</span>
+    <p>En plena playa, a 10 min a pie. Vistas amplias al Mediterráneo.</p>
+    <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
   </div>
-  <p>En plena playa, a 10 min a pie. Vistas amplias al Mediterráneo.</p>
-  
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
+  <span class="dist">un paseo<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Chiringuito Playa Turquesa</h3>
-    <span class="dist">a 0.8 km</span>
+    <p>Andando desde casa. Ambiente familiar de día, copas al atardecer.</p>
+    <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
   </div>
-  <p>Andando desde casa. Ambiente familiar de día, copas al atardecer.</p>
-  
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
+  <span class="dist">0.8 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Paraíso Vera Beach</h3>
-    <span class="dist">a 0.9 km</span>
+    <p>Andando desde casa. Música chill desde media tarde.</p>
+    <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
   </div>
-  <p>Andando desde casa. Música chill desde media tarde.</p>
-  
-  <div class="chips"><span class="chip nota">4.3 sobre 5</span></div>
+  <span class="dist">0.9 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Chiringuito Mar y Arena</h3>
-    <span class="dist">a 1 km</span>
+    <p>Pequeño y muy local, a pie de arena.</p>
+    <div class="chips"><span class="chip nota">4.2 sobre 5</span></div>
   </div>
-  <p>Pequeño y muy local, a pie de arena.</p>
-  
-  <div class="chips"><span class="chip nota">4.2 sobre 5</span></div>
+  <span class="dist">1 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Marau Beach Club</h3>
-    <span class="dist">a 2.2 km</span>
+    <p>Beach club con DJ y zona de hamacas vista mar.</p>
+    <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
   </div>
-  <p>Beach club con DJ y zona de hamacas vista mar.</p>
-  
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
+  <span class="dist">2.2 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Chiringuito El Chumbo</h3>
-    <span class="dist">a 2.2 km</span>
+    <p>Andando desde casa. El más relajado del paseo.</p>
+    <div class="chips"><span class="chip nota">4.2 sobre 5</span></div>
   </div>
-  <p>Andando desde casa. El más relajado del paseo.</p>
-  
-  <div class="chips"><span class="chip nota">4.2 sobre 5</span></div>
+  <span class="dist">2.2 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Café Bahía (Vera pueblo)</h3>
-    <span class="dist">a 3.2 km</span>
+    <p>Plaza Mayor. Aperitivo clásico con tapa.</p>
+    <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
   </div>
-  <p>Plaza Mayor. Aperitivo clásico con tapa.</p>
-  
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
+  <span class="dist">3.2 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Los Lebreros (Garrucha puerto)</h3>
-    <span class="dist">a 5.5 km</span>
+    <p>Caña, marisco y vista al puerto pesquero.</p>
+    <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
   </div>
-  <p>Caña, marisco y vista al puerto pesquero.</p>
-  
-  <div class="chips"><span class="chip nota">4.4 sobre 5</span></div>
+  <span class="dist">5.5 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Cantares (Mojácar Pueblo)</h3>
-    <span class="dist">a 11 km</span>
+    <p>Plaza Nueva. Terraza con vistas al valle, ambiente bohemio.</p>
+    <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
   </div>
-  <p>Plaza Nueva. Terraza con vistas al valle, ambiente bohemio.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
+  <span class="dist">11 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>Mandala (Mojácar Pueblo)</h3>
-    <span class="dist">a 11 km</span>
-  </div>
-  <p>Coctelería de autor en el casco antiguo.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>La Mar Menuda (Águilas)</h3>
-    <span class="dist">a 28 km</span>
-  </div>
-  <p>Águilas. Coctelería frente al mar.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Bar Sahara (San José)</h3>
-    <span class="dist">a 58 km</span>
-  </div>
-  <p>San José. Música en vivo y ambiente de Cabo de Gata.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>La Mala (Almería capital)</h3>
-    <span class="dist">a 72 km</span>
+    <p>Centro histórico. Coctelería referente de la capital.</p>
+    <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
   </div>
-  <p>Centro histórico. Coctelería referente de la capital.</p>
-  
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
+  <span class="dist">72 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>Jovellanos 16 (Almería capital)</h3>
-    <span class="dist">a 72 km</span>
-  </div>
-  <p>Tapeo de calidad en el centro. Producto y elaboración.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Tetería La Almedina Cafés (Almería)</h3>
-    <span class="dist">a 72 km</span>
-  </div>
-  <p>Casco antiguo. Té marroquí y dulces árabes.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Columbares (Cartagena)</h3>
-    <span class="dist">a 83 km</span>
+    <p>Plaza San Sebastián. Tapas creativas y vermuts.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
   </div>
-  <p>Plaza San Sebastián. Tapas creativas y vermuts.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>El Zorro Pub (Cartagena)</h3>
-    <span class="dist">a 84 km</span>
-  </div>
-  <p>Coctelería junto al puerto. Carta extensa.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
+  <span class="dist">83 km<small>desde casa</small></span>
 </article></div>
 </section>
 <section class="grupo" id="g-celiac">
@@ -1315,52 +1069,31 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
     <span class="grupo-n">03</span>
     <h2>Sin gluten</h2>
   </div>
-  <p class="grupo-nota">5 sitios, del más cercano al más lejano.</p>
+  <p class="grupo-nota">3 sitios, del más cercano al más lejano.</p>
   <div class="rejilla">
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Cerca de Hestía: Lúa, Chiringuito Maruja, Pizzería Memoli</h3>
-    <span class="dist">a un paseo</span>
+    <p>Andando o en 5 min en coche.</p>
+    
   </div>
-  <p>Andando o en 5 min en coche.</p>
-  
-  
+  <span class="dist">un paseo<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Vera pueblo: Juan Moreno, Terraza Carmona, Regio</h3>
-    <span class="dist">a 3.2 km</span>
+    <p>En el centro de Vera: tres clásicos con opciones sin gluten.</p>
+    
   </div>
-  <p>En el centro de Vera: tres clásicos con opciones sin gluten.</p>
-  
-  
+  <span class="dist">3.2 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>Boracay (Garrucha)</h3>
-    <span class="dist">a 6.4 km</span>
-  </div>
-  <p>Mediterráneo a pie del puerto.</p>
-  
-  
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Mojácar: Cabo Norte, Neptuno, Kontiki</h3>
-    <span class="dist">a 11 km</span>
+    <p>Tres opciones seguras en el paseo de Mojácar.</p>
+    
   </div>
-  <p>Tres opciones seguras en el paseo de Mojácar.</p>
-  
-  
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Asociación de Celíacos de Almería</h3>
-    <span class="dist">a 72 km</span>
-  </div>
-  <p>Listado actualizado de restaurantes y obradores certificados.</p>
-  
-  <div class="chips"><a href="https://celiacosalmeria.es" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+  <span class="dist">11 km<small>desde casa</small></span>
 </article></div>
 </section>
 <section class="grupo" id="g-michelin">
@@ -1368,223 +1101,127 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
     <span class="grupo-n">04</span>
     <h2>Michelin</h2>
   </div>
-  <p class="grupo-nota">24 sitios, del más cercano al más lejano.</p>
+  <p class="grupo-nota">15 sitios, del más cercano al más lejano.</p>
   <div class="rejilla">
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>La Villa</h3>
-    <span class="dist">a 35 km</span>
+    <p>Agua Amarga, Níjar. Villa con varios comedores mediterráneos y terraza con piscina. Carta de gusto actual con protagonismo de la brasa.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
   </div>
-  <p>Agua Amarga, Níjar. Villa con varios comedores mediterráneos y terraza con piscina. Carta de gusto actual con protagonismo de la brasa.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
+  <span class="dist">35 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Travieso</h3>
-    <span class="dist">a 72 km</span>
+    <p>Almería capital, zona residencial. Chef Dani Muñoz: cocina contemporánea creativa con producto de temporada y proximidad.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
   </div>
-  <p>Almería capital, zona residencial. Chef Dani Muñoz: cocina contemporánea creativa con producto de temporada y proximidad.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
+  <span class="dist">72 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Ginés Peregrín</h3>
-    <span class="dist">a 72 km</span>
+    <p>Almería capital. &quot;Amor por la cocina&quot;, vocación desde la infancia del chef. Base mediterránea con matices de Japón, México, Perú y Holanda.</p>
+    <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
   </div>
-  <p>Almería capital. &quot;Amor por la cocina&quot;, vocación desde la infancia del chef. Base mediterránea con matices de Japón, México, Perú y Holanda.</p>
-  
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
+  <span class="dist">72 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>Tony García Espacio Gastronómico</h3>
-    <span class="dist">a 72 km</span>
-  </div>
-  <p>Almería capital. Gastrobar informal + comedor. Fusión entre cocina tradicional y actual con producto de Almería como bandera.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Barra de José Álvarez</h3>
-    <span class="dist">a 72 km</span>
+    <p>Almería capital. Comparte cocina y bodega con La Costa (⭐ Estrella Michelin). Barra + mesas sin mantel, platos actuales en medias raciones.</p>
+    <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
   </div>
-  <p>Almería capital. Comparte cocina y bodega con La Costa (⭐ Estrella Michelin). Barra + mesas sin mantel, platos actuales en medias raciones.</p>
-  
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
+  <span class="dist">72 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Vivo Gourmet</h3>
-    <span class="dist">a 72 km</span>
+    <p>Almería capital. Cocina en movimiento: menú cambiante según el producto de temporada de proximidad.</p>
+    <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
   </div>
-  <p>Almería capital. Cocina en movimiento: menú cambiante según el producto de temporada de proximidad.</p>
-  
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
+  <span class="dist">72 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Asador Marino Tinta Negra</h3>
-    <span class="dist">a 72 km</span>
+    <p>Almería capital, casco viejo. Segunda vida de un antiguo asador: salones de esencia castellana renovados, con un gran mural de pulpo monocromático.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
   </div>
-  <p>Almería capital, casco viejo. Segunda vida de un antiguo asador: salones de esencia castellana renovados, con un gran mural de pulpo monocromático.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
+  <span class="dist">72 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Cabaña Buenavista</h3>
-    <span class="dist">a 102 km</span>
+    <p>El Palmar (Murcia). ⭐⭐ Dos Estrellas Michelin, única en la región. Chef Pablo González-Conejero.</p>
+    <div class="chips"><span class="chip nota">4.9 sobre 5</span><a href="https://restaurantecabanabuenavista.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
   </div>
-  <p>El Palmar (Murcia). ⭐⭐ Dos Estrellas Michelin, única en la región. Chef Pablo González-Conejero.</p>
-  
-  <div class="chips"><span class="chip nota">4.9 sobre 5</span><a href="https://restaurantecabanabuenavista.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+  <span class="dist">102 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>Tándem</h3>
-    <span class="dist">a 103 km</span>
-  </div>
-  <p>Murcia capital. Bib Gourmand. Pequeño y acogedor. Cocina mediterránea con producto de primera, carta viva que cambia con la temporada.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Almo</h3>
-    <span class="dist">a 103 km</span>
+    <p>Murcia capital. ⭐ Estrella Michelin. Chef Juan Guillamón. Cocina mediterránea de mercado en dos plantas con ventanales de suelo a techo.</p>
+    <div class="chips"><span class="chip nota">4.8 sobre 5</span><a href="https://almorestaurante.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
   </div>
-  <p>Murcia capital. ⭐ Estrella Michelin. Chef Juan Guillamón. Cocina mediterránea de mercado en dos plantas con ventanales de suelo a techo.</p>
-  
-  <div class="chips"><span class="chip nota">4.8 sobre 5</span><a href="https://almorestaurante.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+  <span class="dist">103 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>Frases</h3>
-    <span class="dist">a 103 km</span>
+    <p>Murcia capital. ⭐ Estrella Michelin (nueva en 2025). Chefs Marco Antonio Iniesta y María Egea. Cada plato es una &quot;frase&quot; que narra una historia local.</p>
+    <div class="chips"><span class="chip nota">4.8 sobre 5</span></div>
   </div>
-  <p>Murcia capital. ⭐ Estrella Michelin (nueva en 2025). Chefs Marco Antonio Iniesta y María Egea. Cada plato es una &quot;frase&quot; que narra una historia local.</p>
-  
-  <div class="chips"><span class="chip nota">4.8 sobre 5</span></div>
+  <span class="dist">103 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>Perro Limón</h3>
-    <span class="dist">a 103 km</span>
-  </div>
-  <p>Murcia capital, Plaza de San Juan. Bib Gourmand. Bistró de fusión mundial: India, Marruecos, Francia, Japón. Puerta amarilla característica.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Ruta del Veleta</h3>
-    <span class="dist">a 154 km</span>
-  </div>
-  <p>Cenes de la Vega (a las puertas de Sierra Nevada). Recomendado. Institución granadina desde 1976, familia Pedraza.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span><a href="https://www.rutadelveleta.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Faralá</h3>
-    <span class="dist">a 156 km</span>
+    <p>Granada capital, Cuesta de Gomérez (a los pies de la Alhambra). Recomendado 2025 · ⭐ Estrella Michelin 2026. Chef Cristina Jiménez.</p>
+    <div class="chips"><span class="chip nota">4.8 sobre 5</span><a href="https://restaurantefarala.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
   </div>
-  <p>Granada capital, Cuesta de Gomérez (a los pies de la Alhambra). Recomendado 2025 · ⭐ Estrella Michelin 2026. Chef Cristina Jiménez.</p>
-  
-  <div class="chips"><span class="chip nota">4.8 sobre 5</span><a href="https://restaurantefarala.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+  <span class="dist">156 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>María de la O</h3>
-    <span class="dist">a 156 km</span>
+    <p>Granada capital, palacete del siglo XIX. Bib Gourmand. Chef Chechu González. Cocina moderna granadina centrada en salsas, acidez y temporada.</p>
+    <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
   </div>
-  <p>Granada capital, palacete del siglo XIX. Bib Gourmand. Chef Chechu González. Cocina moderna granadina centrada en salsas, acidez y temporada.</p>
-  
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span></div>
+  <span class="dist">156 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>El Conjuro</h3>
-    <span class="dist">a 156 km</span>
+    <p>Calahonda (Gualchos, Granada, costa). Recomendado. Antonio y Daniel Lorenzo. Comedor gastronómico + taberna para raciones.</p>
+    <div class="chips"><span class="chip nota">4.6 sobre 5</span><a href="https://elconjurorestaurante.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
   </div>
-  <p>Calahonda (Gualchos, Granada, costa). Recomendado. Antonio y Daniel Lorenzo. Comedor gastronómico + taberna para raciones.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span><a href="https://elconjurorestaurante.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+  <span class="dist">156 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>Albidaya</h3>
-    <span class="dist">a 157 km</span>
-  </div>
-  <p>Granada capital. Recomendado 2025 · Bib Gourmand 2026. Fusión de cocina andaluza con sabores árabes y marroquíes.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span><a href="https://www.albidayarestaurante.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>FM (Bar FM)</h3>
-    <span class="dist">a 157 km</span>
+    <p>Granada capital. Recomendado. Desde 1985. Francisco Martín: barra de mariscos con conexión directa a la lonja de Motril.</p>
+    <div class="chips"><span class="chip nota">4.7 sobre 5</span><a href="https://barfm.es" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
   </div>
-  <p>Granada capital. Recomendado. Desde 1985. Francisco Martín: barra de mariscos con conexión directa a la lonja de Motril.</p>
-  
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span><a href="https://barfm.es" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+  <span class="dist">157 km<small>desde casa</small></span>
 </article>
 <article class="ficha">
-  <div class="f-top">
-    <h3>Le Bistró by El Conjuro</h3>
-    <span class="dist">a 157 km</span>
-  </div>
-  <p>Granada capital. Recomendado. Bistró informal con personalidad propia y jornadas especiales de despojos.</p>
-  
-  <div class="chips"><span class="chip nota">4.5 sobre 5</span></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Atelier Casa de Comidas</h3>
-    <span class="dist">a 158 km</span>
-  </div>
-  <p>Granada capital. Recomendado. Chef Raúl Sierra. Filosofía de &quot;casa de comidas&quot; contemporánea, cocina a la vista detrás de la barra.</p>
-  
-  <div class="chips"><span class="chip nota">4.6 sobre 5</span><a href="https://ateliercasadecomidas.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Cala</h3>
-    <span class="dist">a 158 km</span>
-  </div>
-  <p>Granada capital, zona Parque de las Ciencias. Recomendado. Chef Samuel Hernández. Solo cuatro mesas, restaurante íntimo.</p>
-  
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span><a href="https://restaurantecalagranada.es" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha">
-  <div class="f-top">
-    <h3>Arriaga</h3>
-    <span class="dist">a 158 km</span>
-  </div>
-  <p>Granada capital, Torre del Centro Cultural CajaGranada (55m de altura). Recomendado. Chef Álvaro Arriaga (origen vasco).</p>
-  
-  <div class="chips"><span class="chip nota">4.7 sobre 5</span><a href="https://www.restaurantearriaga.com" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
-</article>
-<article class="ficha top">
-  <div class="f-top">
+  <div class="f-cuerpo">
     <h3>Barahonda</h3>
-    <span class="dist">a 166 km</span>
+    <p>Yecla. ⭐ Estrella Michelin (nueva en 2025, primera para Yecla). Chef Alejandro Ibáñez. Cocina de terruño en viñedos de Señorío de Barahonda.</p>
+    <div class="chips"><span class="chip nota">4.8 sobre 5</span><a href="https://barahonda.com/en/restaurant/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
   </div>
-  <p>Yecla. ⭐ Estrella Michelin (nueva en 2025, primera para Yecla). Chef Alejandro Ibáñez. Cocina de terruño en viñedos de Señorío de Barahonda.</p>
-  
-  <div class="chips"><span class="chip nota">4.8 sobre 5</span><a href="https://barahonda.com/en/restaurant/" rel="nofollow noopener" target="_blank">Ver en el mapa</a></div>
+  <span class="dist">166 km<small>desde casa</small></span>
 </article>
-<article class="ficha top">
-  <div class="f-top">
+<article class="ficha">
+  <div class="f-cuerpo">
     <h3>La Finca (Loja)</h3>
-    <span class="dist">a 206 km</span>
+    <p>Loja (Granada/Málaga). ⭐ Estrella Michelin. Chef Fernando Arjona. Resort Barceló La Bobadilla, en plena sierra.</p>
+    <div class="chips"><span class="chip nota">4.8 sobre 5</span></div>
   </div>
-  <p>Loja (Granada/Málaga). ⭐ Estrella Michelin. Chef Fernando Arjona. Resort Barceló La Bobadilla, en plena sierra.</p>
-  
-  <div class="chips"><span class="chip nota">4.8 sobre 5</span></div>
+  <span class="dist">206 km<small>desde casa</small></span>
 </article></div>
 </section>
 <div class="cta">
