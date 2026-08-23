@@ -10,8 +10,15 @@ workers_dev        = true
 #   cd workers/analytics-proxy
 #   wrangler deploy
 #
-# El proxy no necesita KV ni secretos para funcionar.
+# El proxy del beacon (/s.js, /r, /err) no necesita KV ni secretos.
 #
+# Para el embudo de reserva (/e y /stats) hace falta:
+#   wrangler kv namespace create EVENTS_KV     # pega el id abajo como binding EVENTS_KV
+#   wrangler secret put READ_SECRET            # clave larga; la pedirá /p-edit para leer /stats
+[[kv_namespaces]]
+binding = "EVENTS_KV"
+id      = "PLACEHOLDER_SUSTITUIR_CON_ID_REAL"
+
 # La ruta /err (monitorización de errores del sitio) SIEMPRE loguea (verlo con
 # `wrangler tail`). Para recibir ADEMÁS un email de aviso (throttled a 1 cada
 # 30 min por error), es opcional:

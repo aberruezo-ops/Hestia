@@ -1,31 +1,86 @@
 // Hestía — Analytics Proxy Worker
 //
-// Sirve el beacon de Cloudflare Web Analytics desde un dominio propio
-// para que los ad-blockers no lo detecten por hostname.
+// Dos cosas viven aquí:
+//
+// 1) Proxy del beacon de Cloudflare Web Analytics, servido desde un dominio
+//    propio para que los ad-blockers no lo detecten por hostname.
+// 2) Agregador del embudo de reserva (_hestiaTrack en shared.jsx): cuenta
+//    cuántas veces ocurre cada paso del embudo por día. SOLO contadores
+//    agregados por evento+día, nunca un registro por visitante: no hay IP,
+//    cookie ni identificador de sesión en lo que se guarda aquí.
 //
 // Rutas:
 //   GET  /s.js  → beacon.min.js (cacheado 2h en edge de CF)
 //   POST /r     → reenvía los datos RUM al endpoint de CF
+//   POST /e     → registra 1 ocurrencia de un evento del embudo (rate limited)
+//   GET  /stats?key=…&days=N → cuentas agregadas de los últimos N días.
+//                              Requiere READ_SECRET.
+//
+// KV namespace requerido (wrangler kv namespace create EVENTS_KV):
+//   EVENTS_KV
+// Secreto requerido para leer /stats (wrangler secret put READ_SECRET):
+//   READ_SECRET
 //
 // Deploy:
 //   cd workers/analytics-proxy
+//   wrangler kv namespace create EVENTS_KV     # pega el id en wrangler.toml
+//   wrangler secret put READ_SECRET            # elige una clave larga
 //   wrangler deploy
 //
-// No necesita secretos.
+// El proxy del beacon (/s.js, /r, /err) sigue sin necesitar KV ni secretos;
+// solo /e y /stats los usan.
 
 const BEACON_SCRIPT = 'https://static.cloudflareinsights.com/beacon.min.js';
 const BEACON_DATA   = 'https://cloudflareinsights.com/cdn-cgi/rum';
 
-const CORS = {
-  'Access-Control-Allow-Origin':  'https://hestiayourhome.com',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
-  'Vary': 'Origin',
-};
+// Único catálogo de eventos de embudo que se aceptan y se pueden leer.
+// Cerrado a propósito: así /e no se puede usar para acumular contadores
+// arbitrarios, y /stats siempre devuelve las mismas claves.
+const FUNNEL_EVENTS = ['search_initiated', 'dates_selected', 'booking_step2', 'booking_step3', 'booking_sent'];
+const MAX_STATS_DAYS = 90;
+
+// Rate limiting por IP del POST /e (anti-abuso).
+const RATE_LIMIT  = 120;         // eventos máx por IP
+const RATE_WINDOW = 15 * 60;     // ventana en segundos
+
+const ALLOWED_ORIGINS = [
+  'https://www.hestiayourhome.com',
+  'https://hestiayourhome.com',
+  'https://aberruezo-ops.github.io',
+];
+
+function corsHeaders(origin) {
+  const allow = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    'Access-Control-Allow-Origin':  allow,
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Vary': 'Origin',
+  };
+}
+
+const json = (obj, status, cors) =>
+  new Response(JSON.stringify(obj), {
+    status,
+    headers: { 'Content-Type': 'application/json; charset=utf-8', ...cors },
+  });
+
+// Comparación en tiempo (casi) constante para el secreto de lectura.
+function safeEqual(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
+const todayKey = () => new Date().toISOString().slice(0, 10);
 
 export default {
   async fetch(request, env) {
-    const { pathname } = new URL(request.url);
+    const url = new URL(request.url);
+    const { pathname } = url;
+    const origin = request.headers.get('Origin') || '';
+    const CORS = corsHeaders(origin);
 
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: CORS });
@@ -74,6 +129,7 @@ export default {
         headers: {
           'Content-Type': 'application/javascript; charset=utf-8',
           'Cache-Control': 'public, max-age=7200',
+          'X-Content-Type-Options': 'nosniff',
           ...CORS,
         },
       });
@@ -99,6 +155,60 @@ export default {
         status:  upstream.status,
         headers: { ...CORS },
       });
+    }
+
+    // ── POST /e — 1 ocurrencia de un evento del embudo ──────────
+    // Body: { name }. Solo suma +1 al contador del día para ese nombre;
+    // no guarda IP, ni ts, ni nada ligado al visitante. Si el nombre no
+    // está en FUNNEL_EVENTS, se ignora en silencio (204 igualmente, para
+    // no dar pistas a quien esté sondeando el endpoint).
+    if (pathname === '/e' && request.method === 'POST') {
+      if (!env.EVENTS_KV) return new Response(null, { status: 204, headers: CORS });
+
+      const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+      const rlKey = 'rl:' + ip;
+      const count = parseInt(await env.EVENTS_KV.get(rlKey) || '0', 10);
+      if (count >= RATE_LIMIT) {
+        return json({ error: 'rate_limited' }, 429, { ...CORS, 'Retry-After': String(RATE_WINDOW) });
+      }
+      await env.EVENTS_KV.put(rlKey, String(count + 1), { expirationTtl: RATE_WINDOW });
+
+      let d = {};
+      try { d = await request.json(); } catch (_) {}
+      const name = String(d.name || '');
+      if (FUNNEL_EVENTS.includes(name)) {
+        const evKey = `ev:${todayKey()}:${name}`;
+        const cur = parseInt(await env.EVENTS_KV.get(evKey) || '0', 10);
+        // TTL largo (13 meses): deja comparar un verano con el anterior.
+        await env.EVENTS_KV.put(evKey, String(cur + 1), { expirationTtl: 400 * 86400 });
+      }
+      return new Response(null, { status: 204, headers: CORS });
+    }
+
+    // ── GET /stats?key=SECRET&days=N — cuentas agregadas (admin) ─
+    if (pathname === '/stats' && request.method === 'GET') {
+      if (!env.READ_SECRET || !safeEqual(url.searchParams.get('key') || '', env.READ_SECRET)) {
+        return json({ error: 'unauthorized' }, 401, CORS);
+      }
+      if (!env.EVENTS_KV) return json({ error: 'storage_unavailable' }, 503, CORS);
+
+      const days = Math.min(MAX_STATS_DAYS, Math.max(1, parseInt(url.searchParams.get('days') || '30', 10)));
+      const dates = Array.from({ length: days }, (_, i) =>
+        new Date(Date.now() - i * 86400000).toISOString().slice(0, 10));
+
+      const totals = {};
+      const byDay = {};
+      await Promise.all(FUNNEL_EVENTS.map(async name => {
+        totals[name] = 0;
+        const perDay = await Promise.all(dates.map(d => env.EVENTS_KV.get(`ev:${d}:${name}`)));
+        perDay.forEach((v, i) => {
+          const n = parseInt(v || '0', 10) || 0;
+          totals[name] += n;
+          (byDay[dates[i]] ||= {})[name] = n;
+        });
+      }));
+
+      return json({ days, totals, byDay }, 200, CORS);
     }
 
     return new Response('Not found', { status: 404 });

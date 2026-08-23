@@ -1328,12 +1328,16 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
   const [loading,   setLoading]   = React.useState(true);
   const [cfError,   setCfError]   = React.useState(null);
   const [bizError,  setBizError]  = React.useState(null);
-  const [open,     setOpen]     = React.useState({ trafico: false, negocio: true, accesos: true, eventos: false });
+  const [open,     setOpen]     = React.useState({ trafico: false, negocio: true, embudo: true, accesos: true, eventos: false });
   const [reservasRaw, setReservasRaw] = React.useState([]);
   const [accesses, setAccesses] = React.useState(null);
   const [accSecret, setAccSecret] = React.useState(() => { try { return sessionStorage.getItem('hestia-acc-secret') || ''; } catch (_) { return ''; } });
   const [accLoading, setAccLoading] = React.useState(false);
   const [accError, setAccError] = React.useState(null);
+  const [stats, setStats] = React.useState(null);
+  const [statsSecret, setStatsSecret] = React.useState(() => { try { return sessionStorage.getItem('hestia-stats-secret') || ''; } catch (_) { return ''; } });
+  const [statsLoading, setStatsLoading] = React.useState(false);
+  const [statsError, setStatsError] = React.useState(null);
 
   const localEvents = (() => {
     try { return JSON.parse(localStorage.getItem('_htevt') || '[]'); } catch (_) { return []; }
@@ -1425,6 +1429,25 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
       setAccError(e.message); setAccesses(null);
     } finally { setAccLoading(false); }
   }, [accSecret]);
+
+  // Embudo de reserva agregado (todos los visitantes, no solo este navegador):
+  // POST /e en shared.jsx suma +1 por día a cada paso; esto lee los últimos
+  // `days`. Mismo patrón de clave de lectura que fetchAccesses.
+  const fetchStats = React.useCallback(async (secret) => {
+    const key = (secret != null ? secret : statsSecret).trim();
+    if (!key) { setStatsError('Introduce la clave de lectura.'); return; }
+    setStatsLoading(true); setStatsError(null);
+    try {
+      const res = await fetch(`${ANALYTICS_WORKER_URL}/stats?key=${encodeURIComponent(key)}&days=30`);
+      if (res.status === 401) throw new Error('Clave incorrecta.');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const j = await res.json();
+      setStats(j);
+      try { sessionStorage.setItem('hestia-stats-secret', key); } catch (_) {}
+    } catch (e) {
+      setStatsError(e.message); setStats(null);
+    } finally { setStatsLoading(false); }
+  }, [statsSecret]);
 
   const reload = React.useCallback(() => {
     setLoading(true);
@@ -1860,6 +1883,72 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
                     </>
                   )
                 }
+              </div>
+            )}
+          </div>
+
+          <div className="intel-section">
+            <button type="button" className="intel-section-toggle" onClick={() => toggle('embudo')}>
+              <span>Embudo de reserva · 30 días, todos los visitantes</span>
+              <span className="intel-section-chevron">{open.embudo ? '▲' : '▼'}</span>
+            </button>
+            {open.embudo && (
+              <div className="intel-section-content">
+                {!stats ? (
+                  <div className="acc-gate">
+                    <p className="pe-hint" style={{ marginTop: 0 }}>
+                      Cuántos visitantes llegan a cada paso de la reserva (buscar → elegir fechas → rellenar datos → confirmar → enviar), sumado de todos, no solo de este navegador. Introduce la clave de lectura del worker de analítica (<code>wrangler secret put READ_SECRET</code> en <code>workers/analytics-proxy</code>).
+                    </p>
+                    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+                      <input type="password" className="pe-input" placeholder="Clave de lectura" value={statsSecret}
+                        onChange={e => setStatsSecret(e.target.value)} style={{ maxWidth: 240 }}
+                        onKeyDown={e => { if (e.key === 'Enter') fetchStats(); }} />
+                      <button type="button" className="pe-btn pe-btn-primary" disabled={statsLoading} onClick={() => fetchStats()}>
+                        {statsLoading ? 'Cargando…' : 'Cargar embudo'}
+                      </button>
+                    </div>
+                    {statsError && <p className="pe-error" style={{ marginTop: 8 }}>{statsError}</p>}
+                  </div>
+                ) : (() => {
+                  const STAGES = [
+                    ['search_initiated', 'Buscó disponibilidad'],
+                    ['dates_selected',   'Eligió fechas'],
+                    ['booking_step2',    'Rellenó sus datos'],
+                    ['booking_step3',    'Llegó a confirmar'],
+                    ['booking_sent',     'Envió la reserva'],
+                  ];
+                  const first = stats.totals[STAGES[0][0]] || 0;
+                  if (first === 0 && STAGES.every(([id]) => !stats.totals[id])) {
+                    return <p className="pe-hint">Aún no hay eventos registrados en los últimos {stats.days} días.</p>;
+                  }
+                  return (
+                    <>
+                      <div className="funnel-bars">
+                        {STAGES.map(([id, label], i) => {
+                          const n = stats.totals[id] || 0;
+                          const pctFirst = first > 0 ? Math.round((n / first) * 100) : 0;
+                          const prev = i > 0 ? (stats.totals[STAGES[i - 1][0]] || 0) : null;
+                          const pctPrev = prev ? Math.round((n / prev) * 100) : null;
+                          return (
+                            <div className="funnel-row" key={id}>
+                              <span className="funnel-label">{label}</span>
+                              <div className="funnel-bar-track">
+                                <div className="funnel-bar-fill" style={{ width: `${pctFirst}%` }} />
+                              </div>
+                              <span className="funnel-n"><strong>{n}</strong></span>
+                              <span className="funnel-pct">
+                                {pctFirst}%{pctPrev !== null ? <span className="funnel-pct-prev"> · {pctPrev}% del paso anterior</span> : null}
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <p className="pe-hint" style={{ marginTop: 8 }}>
+                        Solo cuenta pasos, sin datos personales ni por visitante: cada evento suma +1 al contador del día. <button type="button" className="pe-btn pe-btn-ghost" disabled={statsLoading} onClick={() => fetchStats()} title="Recargar">↺ Recargar</button>
+                      </p>
+                    </>
+                  );
+                })()}
               </div>
             )}
           </div>
