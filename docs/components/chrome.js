@@ -410,7 +410,7 @@ const Header = ({
   }, t.nav[5]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.noticias
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.guiaZona
+    href: lang === 'es' ? NAV_PAGES.guiaZona : '/guia-vera/en/'
   }, lang === 'es' ? 'Extracto Guía' : 'Guide extract'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
     className: "cta"
@@ -476,7 +476,7 @@ const Header = ({
     href: NAV_PAGES.noticias,
     className: "mn-link"
   }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.guiaZona,
+    href: lang === 'es' ? NAV_PAGES.guiaZona : '/guia-vera/en/',
     className: "mn-link"
   }, lang === 'es' ? 'Extracto Guía' : 'Guide extract'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.estanciasLargas,
@@ -1506,7 +1506,7 @@ const Footer = ({
   }, t.nav[5])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "noticias.html"
   }, t.nav[7])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-    href: "/guia-vera/"
+    href: lang === 'es' ? '/guia-vera/' : '/guia-vera/en/'
   }, lang === 'es' ? 'Extracto Guía' : 'Guide extract')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "estancias-largas.html"
   }, t.nav[9])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {

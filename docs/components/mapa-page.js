@@ -148,7 +148,7 @@ const MAPA_COPY = {
         label: 'Hestía and us',
         desc: 'Alex and Fran, where the name comes from, the six values and the Almería palette.'
       }, {
-        href: '/guia-vera/',
+        href: '/guia-vera/en/',
         label: 'Guide extract',
         desc: 'Beaches, towns, where to eat and walks in the Almería Levante.'
       }, {
