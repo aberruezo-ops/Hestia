@@ -196,7 +196,15 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
   -webkit-font-smoothing:antialiased;overflow-x:hidden;}
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
 
-.topnav{position:absolute;top:0;left:0;right:0;z-index:5;padding:22px 0;}
+.topbar{position:relative;z-index:6;background:var(--ber-deep);color:rgba(240,232,213,.72);
+  font-size:12px;padding:8px 0;}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.topbar a{color:rgba(240,232,213,.72);text-decoration:none;transition:color .2s;}
+.topbar a:hover{color:var(--crema);}
+.tb-sep{margin:0 10px;opacity:.4;}
+@media(max-width:720px){.tb-mail{display:none;} .topbar .wrap{justify-content:center;}}
+@media(max-width:460px){.tb-sep,.tb-contacto a:last-child{display:none;}}
+.topnav{position:absolute;top:38px;left:0;right:0;z-index:5;padding:20px 0;}
 .topnav .wrap{display:flex;justify-content:space-between;align-items:center;gap:20px;}
 .topnav a{color:var(--crema);text-decoration:none;font-size:14px;opacity:.85;transition:opacity .2s;}
 .topnav a:hover{opacity:1;}
@@ -210,13 +218,13 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
   .dist small{display:inline;margin-left:7px;}
 }
 
-.hero{position:relative;min-height:clamp(460px,64vh,640px);display:flex;align-items:flex-end;
+.hero{position:relative;margin-top:-38px;min-height:clamp(480px,66vh,660px);display:flex;align-items:flex-end;
   background:var(--ber-deep);overflow:hidden;}
 .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   opacity:.42;filter:saturate(1.1);}
 .hero::after{content:'';position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(30,7,34,.74) 0%,rgba(30,7,34,.30) 42%,rgba(30,7,34,.95) 100%);}
-.hero .wrap{position:relative;z-index:2;padding-top:130px;padding-bottom:54px;width:100%;}
+.hero .wrap{position:relative;z-index:2;padding-top:132px;padding-bottom:54px;width:100%;}
 .eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--sol-lt);
   font-weight:600;margin-bottom:18px;animation:up .7s var(--ease) both;}
 .hero h1{font-family:var(--serif);font-weight:400;color:var(--crema);
@@ -249,6 +257,7 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 .grupo h2{font-family:var(--serif);font-weight:400;font-size:clamp(24px,3.3vw,35px);
   line-height:1.1;letter-spacing:-.02em;}
 .grupo-nota{color:var(--ink-faint);font-size:13.5px;margin-bottom:30px;padding-left:2px;}
+.grupo-nota b{color:var(--vs);font-weight:600;}
 
 .rejilla{display:flex;flex-direction:column;gap:0;}
 .ficha{position:relative;display:grid;grid-template-columns:70px 1fr auto;gap:0 26px;
@@ -348,6 +357,16 @@ ${JSON.stringify(jsonld, null, 2)}
 </script>
 </head>
 <body>
+<div class="topbar">
+  <div class="wrap">
+    <span class="tb-contacto">
+      <a href="https://wa.me/34620316370" rel="noopener">Alex &middot; +34 620 316 370</a>
+      <span class="tb-sep">&middot;</span>
+      <a href="https://wa.me/34654138251" rel="noopener">Fran &middot; +34 654 138 251</a>
+    </span>
+    <a class="tb-mail" href="mailto:info@hestiayourhome.com">info@hestiayourhome.com</a>
+  </div>
+</div>
 <div class="topnav">
   <div class="wrap">
     <a class="brand" href="/">Hestía Your Home</a>
@@ -408,9 +427,10 @@ const pie = `
   <p>Guía escrita por Alex y Fran, que llevan en persona los tres apartamentos de
   <a href="/">Hestía Your Home</a> en Vera Playa (Almería) desde 2016.
   Licencias VFT/AL/01580, VFT/AL/05535 y VFT/AL/07056.</p>
-  <p><a href="/guia-vera/">Guía de la zona</a> ·
-  <a href="/">Inicio</a> · <a href="/reservas.html">Reservas</a> ·
-  <a href="/contacto.html">Contacto</a></p>
+  <p><a href="/">Inicio</a> · <a href="/guia-vera/">Guía de la zona</a> ·
+  <a href="/reservas.html">Reservas</a> · <a href="/opiniones.html">Opiniones</a> ·
+  <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a></p>
+  <p><a href="/privacidad.html">Privacidad</a> · <a href="/cookies.html">Cookies</a></p>
 </footer>
 </div>
 </body>
@@ -455,13 +475,15 @@ function fichaAtlas(a) {
 </article>`;
 }
 
-const seccion = (n, id, nombre, cuenta, fichas) => `
+const seccion = (n, id, nombre, cuenta, fichas, total) => `
 <section class="grupo" id="${id}">
   <div class="grupo-head">
     <span class="grupo-n">${String(n).padStart(2, '0')}</span>
     <h2>${esc(nombre)}</h2>
   </div>
-  <p class="grupo-nota">${cuenta} ${cuenta === 1 ? 'sitio' : 'sitios'}, del más cercano al más lejano.</p>
+  <p class="grupo-nota">${total && total > cuenta
+    ? `Aquí van ${cuenta}. En la guía del huésped hay <b>${total}</b>, con el consejo de cada uno.`
+    : `${cuenta} ${cuenta === 1 ? 'sitio' : 'sitios'}, del más cercano al más lejano.`}</p>
   <div class="rejilla">${fichas}</div>
 </section>`;
 
@@ -505,8 +527,11 @@ for (const hub of HUBS) {
   const porCat = {};
   for (const p of items) (porCat[p.cat] ||= []).push(p);
   const grupos = Object.keys(porCat).map(cat => ({ id: 'g-' + cat, nombre: NOMBRE_CAT[cat] || cat }));
+  const totalCat = {};
+  for (const p of PLACES) if (hub.cats.includes(p.cat)) totalCat[p.cat] = (totalCat[p.cat] || 0) + 1;
   const cuerpo = Object.entries(porCat).map(([cat, lista], i) =>
-    seccion(i + 1, 'g-' + cat, NOMBRE_CAT[cat] || cat, lista.length, lista.map(ficha).join(''))).join('');
+    seccion(i + 1, 'g-' + cat, NOMBRE_CAT[cat] || cat, lista.length,
+            lista.map(ficha).join(''), totalCat[cat])).join('');
   const masCerca = items[0] ? distTxt(items[0].km) : null;
   const cifras = [[String(items.length), 'sitios'], [String(grupos.length), 'categorías']];
   if (masCerca) cifras.push([masCerca.replace('a ', ''), 'el más cercano']);
