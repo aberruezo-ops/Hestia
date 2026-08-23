@@ -83,8 +83,9 @@ const PORQUE_COPY = {
     evol_p1: 'Hestía empezó con un logo sencillo, el tejado que nos acompañó durante casi una década y que llevamos con orgullo. Pero llegó un momento en que sentimos que la marca tenía que evolucionar. No para alejarnos de lo que somos, sino para expresarlo mejor.',
     evol_p2: 'Queríamos algo más sólido, más expresivo. Un símbolo que dijera desde el primer vistazo que detrás de Hestía hay intención y raíces. Que no somos un producto más en una plataforma: somos un proyecto con historia, con nombre propio y con un lugar en el mapa.',
     evol_p3: 'Y en esa nueva H, las curvas que forman la hoja de olivo y la cresta de ola: hay también, si miras bien, la silueta de un tejado. No es casualidad. Es el guiño al logo que durante años nos dio tantas satisfacciones: llevamos lo que fuimos dentro de lo que somos.',
-    crosslink_label: 'Conoce a Alex y Fran',
-    crosslink_text: 'Ver quiénes somos →'
+    crosslink_label: 'La otra mitad de la historia',
+    crosslink_lead: 'Detrás de todo esto hay dos personas que responden el teléfono.',
+    crosslink_text: 'Conoce a Alex y Fran'
   },
   en: {
     eyebrow: 'The idea behind Hestía',
@@ -164,8 +165,9 @@ const PORQUE_COPY = {
     evol_p1: 'Hestía began with a simple logo: the red rooftop that accompanied us for nearly a decade, carried with pride. But a moment came when we felt the brand had to evolve. Not to move away from what we are, but to express it more clearly.',
     evol_p2: 'We wanted something more solid, more expressive. A symbol that showed at a glance that behind Hestía there is intention and roots. That we are not another listing on a platform: we are a project with a history, a proper name, and a place on the map.',
     evol_p3: 'And in that new H, the curves that form the olive leaf and the wave crest: there is also, if you look carefully, the silhouette of a rooftop. That was no accident. It is a nod to the logo that served us so well for years: we carry what we were inside what we are.',
-    crosslink_label: 'Meet Alex and Fran',
-    crosslink_text: 'Who we are →'
+    crosslink_label: 'The other half of the story',
+    crosslink_lead: 'Behind all this there are two people who answer the phone.',
+    crosslink_text: 'Meet Alex and Fran'
   }
 };
 const BRAND_PALETTE = [{
@@ -716,11 +718,17 @@ const PorqueCrosslink = ({
   return /*#__PURE__*/React.createElement("section", {
     className: "pq-crosslink section-cream"
   }, /*#__PURE__*/React.createElement("div", {
+    className: "pq-cl-inner reveal"
+  }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
-  }, t.crosslink_label), /*#__PURE__*/React.createElement("a", {
+  }, t.crosslink_label), /*#__PURE__*/React.createElement("p", {
+    className: "pq-cl-lead"
+  }, t.crosslink_lead), /*#__PURE__*/React.createElement("a", {
     href: "nosotros.html",
     className: "pq-cl-link"
-  }, t.crosslink_text));
+  }, t.crosslink_text, /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "→"))));
 };
 const PorquePageApp = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');

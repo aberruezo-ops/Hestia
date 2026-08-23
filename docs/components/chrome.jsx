@@ -311,7 +311,6 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
             <NavLink href={NAV_PAGES.noticias}>{t.nav[7]}</NavLink>
             <NavLink href={NAV_PAGES.guiaZona}>{lang === 'es' ? 'Nuestra guía' : 'Our guide'}</NavLink>
-            <NavLink href={NAV_PAGES.porqueHestia}>{t.nav[8]}</NavLink>
 
           </nav>
           <button

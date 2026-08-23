@@ -37,8 +37,9 @@ const NOSOTROS_COPY = {
 
     manifest_cta: 'Reservar ahora →',
 
-    crosslink_label: 'La historia del nombre',
-    crosslink_text: 'Descubre por qué se llama Hestía →',
+    crosslink_label: 'La otra mitad de la historia',
+    crosslink_lead: 'Hestía era la diosa griega del hogar y del fuego que no se apaga.',
+    crosslink_text: 'Por qué elegimos su nombre',
   },
   en: {
     eyebrow: 'Vera Playa · Almería · since 2016',
@@ -74,8 +75,9 @@ const NOSOTROS_COPY = {
 
     manifest_cta: 'Book now →',
 
-    crosslink_label: 'The story of the name',
-    crosslink_text: "Find out why it's called Hestía →",
+    crosslink_label: 'The other half of the story',
+    crosslink_lead: 'Hestía was the Greek goddess of the hearth and the fire that never goes out.',
+    crosslink_text: 'Why we chose her name',
   },
 };
 
@@ -235,8 +237,13 @@ const NosotrosCrosslink = ({ lang }) => {
   const t = NOSOTROS_COPY[lang];
   return (
     <section className="pq-crosslink section-cream">
-      <div className="eyebrow">{t.crosslink_label}</div>
-      <a href="porque-hestia.html" className="pq-cl-link">{t.crosslink_text}</a>
+      <div className="pq-cl-inner reveal">
+        <div className="eyebrow">{t.crosslink_label}</div>
+        <p className="pq-cl-lead">{t.crosslink_lead}</p>
+        <a href="porque-hestia.html" className="pq-cl-link">
+          {t.crosslink_text}<span aria-hidden="true">→</span>
+        </a>
+      </div>
     </section>
   );
 };
