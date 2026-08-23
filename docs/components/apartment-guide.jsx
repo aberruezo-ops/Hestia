@@ -525,6 +525,22 @@ const iconifyText = (text, size = 14) => {
 // ----- Lugares: nombre, categoría, descripción opcional, coords aproximadas, URL -----
 // Las coordenadas son aproximadas (centroides de pueblos cuando no hay punto exacto).
 // Cuando un goo.gl link está disponible, va en .url para el detalle.
+//
+// featured: true (✦ "Imperdible") NO se decide solo por la nota. Un sitio a
+// cinco minutos con 4,3 le sirve más al huésped que uno a cien kilómetros con
+// 4,7, y los chiringuitos de playa rara vez pasan de 4,4 en Google aunque se
+// coma bien. El listón sube con la distancia a Hestía:
+//   · hasta ~6 km (el día a día, se va andando o en cinco minutos): desde 4,3
+//   · de 6 a 30 km: desde 4,5
+//   · más de 30 km (excursión, cuesta medio día): desde 4,6
+// Lo que sabemos por los huéspedes manda sobre la nota de Google: si nos
+// dicen que se come bien, va marcado aunque la nota pública no acompañe.
+// Los clásicos con historia también entran por derecho propio, aunque la
+// nota se quede corta: Casa Puga (Almería, 1870) es imperdible por lo que
+// es, no por su 4,5.
+// Excepción sin matices: los servicios de utilidad (super, gasolinera, cajero,
+// lavandería, farmacia, veterinario, centro de salud) nunca son imperdibles.
+// Se usan por necesidad y ya tienen su propia categoría en la guía.
 const PLACES = [
   // Hestía (centro del mapa), los 3 en Vera Playa
   // Coordenadas exactas extraídas de los Plus Codes que el usuario
@@ -563,7 +579,7 @@ const PLACES = [
   { id: 'koa',            name: 'Resto Bar Koa',     desc: 'Frente a Hestía Vera Mar. Bocados pensados, ambiente cercano.', specialty: 'bao de panceta, ceviche del día y poke bowl.', tier: '€€',  cat: 'restaurant', rating: 4.5, lat: 37.2280, lng: -1.8010, featured: true },
   { id: 'bbme-rest',      name: 'Restaurante Bbme Palomares', desc: 'En plena playa, a 10 min a pie.',  specialty: 'arroz negro con sepia y all i oli, sardinas a la espalda.', tier: '€€',  cat: 'restaurant', rating: 4.4, lat: 37.2340, lng: -1.8000 },
   { id: 'playa-azul',     name: 'Hostal Playa Azul', desc: 'Villaricos. Excelente paella con bogavante.', specialty: 'paella con bogavante (encargar al reservar), gambas blancas de Garrucha.', tip: 'Pide la paella al hacer la reserva, la preparan al momento.', tier: '€€', cat: 'restaurant', rating: 4.5, lat: 37.2470, lng: -1.7730 , featured: true },
-  { id: 'tadeo',          name: 'Tadeo',             desc: 'Villaricos. Cocina de mar con producto del día.', specialty: 'arroz con bogavante, tostas de ahumados y pulpo a la brasa.', tier: '€€', cat: 'restaurant', rating: 4.4, lat: 37.2480, lng: -1.7730 },
+  { id: 'tadeo',          name: 'Tadeo',             desc: 'Villaricos. Cocina de mar con producto del día.', specialty: 'arroz con bogavante, tostas de ahumados y pulpo a la brasa.', tier: '€€', cat: 'restaurant', rating: 4.4, lat: 37.2480, lng: -1.7730, featured: true },
   { id: 'rincon-puerto',  name: 'Rincón del Puerto (Garrucha)', desc: 'Junto a la lonja de Garrucha. Marisco fresquísimo y ambiente de pueblo pesquero.', specialty: 'camarones crudos de Garrucha (imprescindibles), gamba roja a la plancha y quisquilla viva.', tip: 'Pide los camarones crudos según vienen del barco, no hay nada igual en la zona.', tier: '€€€', cat: 'restaurant', lat: 37.1818, lng: -1.8235, featured: true },
   { id: 'almadraba',      name: 'La Almadraba (Garrucha)', desc: 'Garrucha. Vista al puerto, especializado en pescado de la lonja.', specialty: 'gamba roja de Garrucha, lubina a la sal y arroz caldoso de marisco.', tier: '€€€', cat: 'restaurant', lat: 37.1822, lng: -1.8232 },
   { id: 'rosado',         name: 'Freiduría Bar Rosado', desc: 'Buenas referencias.',                    specialty: 'fritura mixta de pescado y boquerones rebozados.', tier: '€€',  cat: 'restaurant', rating: 4.3, lat: 37.2210, lng: -1.8070 },
@@ -702,13 +718,13 @@ const PLACES = [
   { id: 'celiac-asoc',    name: 'Asociación de Celíacos de Almería', desc: 'Listado actualizado de restaurantes y obradores certificados.', cat: 'celiac', url: 'https://celiacosalmeria.es', lat: 36.8350, lng: -2.4630 },
 
   // Copas y chiringuitos
-  { id: 'turquesa',       name: 'Chiringuito Playa Turquesa', desc: 'Andando desde casa. Ambiente familiar de día, copas al atardecer.', specialty: 'mojito de menta del huerto y tabla de quesos al sol.', cat: 'bar', rating: 4.3, lat: 37.2260, lng: -1.7950 },
+  { id: 'turquesa',       name: 'Chiringuito Playa Turquesa', desc: 'Andando desde casa. Ambiente familiar de día, copas al atardecer.', specialty: 'mojito de menta del huerto y tabla de quesos al sol.', cat: 'bar', rating: 4.3, lat: 37.2260, lng: -1.7950, featured: true },
   { id: 'paraiso',        name: 'Paraíso Vera Beach', desc: 'Andando desde casa. Música chill desde media tarde.',         specialty: 'gin tonics premium y picoteo de tapeo mediterráneo.', cat: 'bar', rating: 4.3, lat: 37.2300, lng: -1.7940 },
   { id: 'chumbo',         name: 'Chiringuito El Chumbo', desc: 'Andando desde casa. El más relajado del paseo.',      specialty: 'sangría de cava, sardinas al espeto en verano y arroz del día.', cat: 'bar', rating: 4.2, lat: 37.2100, lng: -1.7970 },
-  { id: 'marau',          name: 'Marau Beach Club',  desc: 'Beach club con DJ y zona de hamacas vista mar.',                                          specialty: 'cócteles de autor y carta asiática (poke, bao, tartar).', tip: 'Mejor reservar hamaca en julio-agosto; los atardeceres con DJ valen la pena.', cat: 'bar', rating: 4.4, lat: 37.2100, lng: -1.8098 },
+  { id: 'marau',          name: 'Marau Beach Club',  desc: 'Beach club con DJ y zona de hamacas vista mar.',                                          specialty: 'cócteles de autor y carta asiática (poke, bao, tartar).', tip: 'Mejor reservar hamaca en julio-agosto; los atardeceres con DJ valen la pena.', cat: 'bar', rating: 4.4, lat: 37.2100, lng: -1.8098, featured: true },
   { id: 'mar-arena',      name: 'Chiringuito Mar y Arena', desc: 'Pequeño y muy local, a pie de arena.',                                    specialty: 'caña fría, paella los domingos y boquerones en vinagre.', cat: 'bar', rating: 4.2, lat: 37.2335, lng: -1.7940 },
-  { id: 'bbme-palomares', name: 'Bbme Palomares', desc: 'En plena playa, a 10 min a pie. Vistas amplias al Mediterráneo.',     specialty: 'spritz al atardecer, ostras y tapeo gourmet.', tip: 'Vete andando por la orilla al atardecer y vuelve en taxi: la luz vale la caminata.', cat: 'bar', rating: 4.4, lat: 37.2340, lng: -1.8000  },
-  { id: 'lebreros',       name: 'Los Lebreros (Garrucha puerto)', desc: 'Caña, marisco y vista al puerto pesquero.', specialty: 'gambas blancas, quisquilla viva y conchas finas.', tip: 'Ir sobre las 19:00 cuando atracan los barcos.', cat: 'bar', rating: 4.4, lat: 37.1820, lng: -1.8235 },
+  { id: 'bbme-palomares', name: 'Bbme Palomares', desc: 'En plena playa, a 10 min a pie. Vistas amplias al Mediterráneo.',     specialty: 'spritz al atardecer, ostras y tapeo gourmet.', tip: 'Vete andando por la orilla al atardecer y vuelve en taxi: la luz vale la caminata.', cat: 'bar', rating: 4.4, lat: 37.2340, lng: -1.8000, featured: true  },
+  { id: 'lebreros',       name: 'Los Lebreros (Garrucha puerto)', desc: 'Caña, marisco y vista al puerto pesquero.', specialty: 'gambas blancas, quisquilla viva y conchas finas.', tip: 'Ir sobre las 19:00 cuando atracan los barcos.', cat: 'bar', rating: 4.4, lat: 37.1820, lng: -1.8235, featured: true },
   // ── Bares top-rated por Google ───────────────────────────────
   // Mojácar pueblo
   { id: 'cantares',       name: 'Cantares (Mojácar Pueblo)', desc: 'Plaza Nueva. Terraza con vistas al valle, ambiente bohemio.', specialty: 'vermut con tapa, tabla ibérica y cócteles al atardecer.', tip: 'Reserva mesa con vistas al valle, el atardecer es brutal.', rating: 4.5, cat: 'bar', lat: 37.1380, lng: -1.8525, featured: true },
