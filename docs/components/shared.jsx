@@ -42,9 +42,16 @@ window._shortGuestName = _shortGuestName;
 
 // ----------------------------------------------------------------
 // _hestiaTrack, registra eventos de funnel.
-// Guarda en localStorage (ring buffer 300 eventos) para la pestaña
-// Analítica de /p-edit. También intenta enviar al endpoint RUM de
-// Cloudflare si el beacon está cargado.
+// Tres destinos, cada uno con un fin distinto:
+//  1. localStorage (ring buffer 300 eventos): detalle crudo de ESTE
+//     navegador, para depurar en caliente durante una sesión.
+//  2. RUM custom de Cloudflare (si el beacon cargó): queda dentro de los
+//     datos de Cloudflare, no expuesto en ningún panel propio.
+//  3. POST /e al worker de analítica: +1 al contador agregado del día
+//     para ese evento, sin props ni identificador de visitante. Es lo
+//     que lee la sección "Eventos" de la pestaña Inteligencia en
+//     /p-edit para ver el embudo real (de todos los visitantes, no solo
+//     de quien esté mirando la consola).
 // ----------------------------------------------------------------
 const _hestiaTrack = (name, props = {}) => {
   try {
@@ -61,6 +68,10 @@ const _hestiaTrack = (name, props = {}) => {
         new Blob([JSON.stringify({ ...window.__cfBeacon, type: 'custom', name, ...props })],
           { type: 'application/json' }));
     }
+  } catch (_) {}
+  try {
+    navigator.sendBeacon(ANALYTICS_WORKER_URL + '/e',
+      new Blob([JSON.stringify({ name })], { type: 'application/json' }));
   } catch (_) {}
 };
 window._hestiaTrack = _hestiaTrack;
@@ -3689,6 +3700,10 @@ async function hestiaSha256Hex(str) {
 // Worker que registra los accesos a la guía (KV). Vacío hasta desplegarlo:
 // pon aquí la URL de hestia-guide-access tras `wrangler deploy`.
 const GUIDE_ACCESS_WORKER_URL = 'https://hestia-guide-access.hestia-vera-almeria.workers.dev';
+// Mismo worker que sirve el beacon de Cloudflare Web Analytics (chrome.jsx);
+// además agrega el embudo de reserva (POST /e, GET /stats). Usado por
+// _hestiaTrack más abajo y por la pestaña Inteligencia de /p-edit.
+const ANALYTICS_WORKER_URL = 'https://hestia-analytics.hestia-vera-almeria.workers.dev';
 // Registra un acceso a la guía (apartamento + fecha de entrada de la reserva).
 // Sin datos personales: el nombre se resuelve en /p-edit cruzando con reservas.
 // Fire-and-forget; text/plain para que el beacon no dispare preflight CORS.

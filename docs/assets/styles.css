@@ -22109,6 +22109,28 @@ img[src*="apt-vt-gallery-"] {
   cursor: help;
 }
 .acc-gate { padding: 4px 0 2px; }
+.funnel-bars { display: flex; flex-direction: column; gap: 10px; margin: 4px 0 2px; }
+.funnel-row {
+  display: grid; grid-template-columns: 150px 1fr 40px auto;
+  align-items: center; gap: 12px; font-size: 13px;
+}
+.funnel-label { color: var(--ink, #2A0F2E); font-weight: 500; }
+.funnel-bar-track {
+  height: 10px; border-radius: 6px 0 6px 0; background: var(--arena, #F0E8D5);
+  overflow: hidden;
+}
+.funnel-bar-fill {
+  height: 100%; border-radius: 6px 0 6px 0;
+  background: var(--sol, #3AAABB);
+  transition: width .3s var(--ease-out, ease);
+}
+.funnel-n { text-align: right; color: var(--ink, #2A0F2E); font-variant-numeric: tabular-nums; }
+.funnel-pct { color: var(--ink-soft, #5a5450); white-space: nowrap; }
+.funnel-pct-prev { color: var(--ink-faint, #8B7A8A); }
+@media (max-width: 640px) {
+  .funnel-row { grid-template-columns: 110px 1fr 32px; }
+  .funnel-pct { grid-column: 1 / -1; }
+}
 .acc-kpis {
   display: flex; flex-wrap: wrap; align-items: center; gap: 16px;
   margin: 4px 0 12px; font-size: 13px; color: var(--ink-soft, #5a5450);
