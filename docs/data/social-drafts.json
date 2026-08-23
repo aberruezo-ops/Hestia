@@ -3,7 +3,7 @@
     {
       "id": "weekly-2026w34",
       "createdAt": "2026-08-17T07:44:09.884Z",
-      "status": "pending",
+      "status": "skipped",
       "source": "weekly",
       "format": "reel",
       "apt": "vt",
@@ -465,5 +465,5 @@
       "link": "https://www.hestiayourhome.com/noticias.html"
     }
   ],
-  "updatedAt": "2026-08-17T07:44:09.884Z"
+  "updatedAt": "2026-08-23T18:45:16.765Z"
 }
