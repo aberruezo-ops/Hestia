@@ -896,8 +896,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'Los huéspedes de Hestía reciben, al reservar, una guía personalizada de Alex o Fran con restaurantes, playas secretas y rutas que no aparecen en ninguna guía turística.',
-    en: 'Hestía guests receive, on booking, a personalised guide from Alex or Fran with restaurants, hidden beaches and routes that appear in no travel guide.',
+    es: 'Nuestra guía de la zona es pública: 252 sitios del Levante almeriense, con lo que es cada uno y a qué distancia queda. Al reservar te damos la versión completa: a qué hora ir a cada sitio, qué pedir, dónde aparcar de verdad y los descuentos que hemos negociado.',
+    en: 'Our area guide is public: 252 places across the Almería Levante, with what each one is and how far it sits. Book and you get the full version: when to go, what to order, where to actually park, and the discounts we have arranged.',
   },
   {
     type: 'fact',
