@@ -2581,7 +2581,7 @@ const QUICK_FAQ = {
       q: '¿Quiénes sois Alex y Fran?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("a", {
         href: "nosotros.html"
-      }, "Somos los propietarios"), ", no una agencia. Gestionamos los tres en persona desde 2016. Más de 600 familias nos avalan.")
+      }, "Somos los propietarios"), ", no una agencia. Gestionamos los tres en persona desde 2016. Más de 630 familias nos avalan.")
     }],
     en: [{
       q: 'How do I book directly?',
@@ -2612,7 +2612,7 @@ const QUICK_FAQ = {
       q: 'Who are Alex and Fran?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("a", {
         href: "nosotros.html"
-      }, "We are the owners"), ", not an agency. We have run the three Hestías in person since 2016. Over 600 families back us.")
+      }, "We are the owners"), ", not an agency. We have run the three Hestías in person since 2016. Over 630 families back us.")
     }]
   },
   vm: {
@@ -2702,7 +2702,7 @@ const QUICK_FAQ = {
   nosotros: {
     es: [{
       q: '¿Desde cuándo lo hacéis vosotros mismos?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Desde 2016. En diez años hemos recibido a más de 600 familias. Nunca hemos externalizado la gestión: nosotros gestionamos, nosotros cuidamos.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Desde 2016. En diez años hemos recibido a más de 630 familias. Nunca hemos externalizado la gestión: nosotros gestionamos, nosotros cuidamos.")
     }, {
       q: '¿Por qué se llaman así cada Hestía?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Hestía era la diosa griega del hogar: la diosa pacífica, la que guardaba el fuego de casa. Eso es lo que intentamos hacer: que Hestía deje de ser un sitio donde dormir y se convierta en un lugar donde quedarse.")
@@ -2715,7 +2715,7 @@ const QUICK_FAQ = {
     }],
     en: [{
       q: 'How long have you been managing the Hestías yourselves?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Since 2016. In ten years we have hosted over 600 families. We have never outsourced management: we still clean, reply and choose the towels ourselves. ", /*#__PURE__*/React.createElement("a", {
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Since 2016. In ten years we have hosted over 630 families. We have never outsourced management: we still clean, reply and choose the towels ourselves. ", /*#__PURE__*/React.createElement("a", {
         href: "nosotros.html"
       }, "Read our story."))
     }, {
@@ -2934,8 +2934,8 @@ const SABIAS_QUE_FACTS = [/* ── Almería y Vera Playa ── */
   en: 'Pets are welcome in all three Hestías, on request and with a supplement, as long as basic conditions are respected.'
 }, {
   type: 'fact',
-  es: 'Más de 600 familias han dormido en Hestía desde 2016. Más del 40 % repite, sin necesidad de ninguna oferta ni descuento.',
-  en: 'Over 600 families have stayed at Hestía since 2016. More than 40% return, with no offer or discount needed.'
+  es: 'Más de 630 familias han dormido en Hestía desde 2016. Más del 40 % repite, sin necesidad de ninguna oferta ni descuento.',
+  en: 'Over 630 families have stayed at Hestía since 2016. More than 40% return, with no offer or discount needed.'
 }, {
   type: 'fact',
   es: 'Los huéspedes de Hestía reciben, al reservar, una guía personalizada de Alex o Fran con restaurantes, playas secretas y rutas que no aparecen en ninguna guía turística.',

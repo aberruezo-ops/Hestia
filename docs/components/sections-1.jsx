@@ -213,7 +213,7 @@ const Hero = ({ lang, onScrollDown }) => {
             (nombre + ★): aquí solo la línea agregada, sin repetir nombres,
             para no duplicar información y ahorrar espacio en móvil. */}
         <p className="hero-proof-platform-solo">
-          {lang === 'es' ? 'Media en Booking · Airbnb · web, +600 familias desde 2016' : 'Average across Booking · Airbnb · site, 600+ families since 2016'}
+          {lang === 'es' ? 'Media en Booking · Airbnb · web, +630 familias desde 2016' : 'Average across Booking · Airbnb · site, 630+ families since 2016'}
         </p>
         {(() => {
           const prices = typeof HESTIA_PRICES !== 'undefined' ? HESTIA_PRICES : null;

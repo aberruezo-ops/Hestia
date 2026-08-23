@@ -1086,8 +1086,7 @@ const PLACES = [
   cat: 'super',
   url: 'https://goo.gl/maps/h6UvnBe3ATHpsPXbA',
   lat: 37.2197,
-  lng: -1.8083,
-  featured: true
+  lng: -1.8083
 }, {
   id: 'mercadona',
   name: 'Mercadona Vera Playa',
@@ -1095,16 +1094,14 @@ const PLACES = [
   cat: 'super',
   url: 'https://goo.gl/maps/axi9Lb9xLp8yuVUR8',
   lat: 37.2137,
-  lng: -1.8339,
-  featured: true
+  lng: -1.8339
 }, {
   id: 'super-vera',
   name: 'Vera pueblo (Dia · Lidl · Mercadona)',
   desc: 'Supermercados grandes en Vera pueblo, a 10 min en coche.',
   cat: 'super',
   lat: 37.2491,
-  lng: -1.8639,
-  featured: true
+  lng: -1.8639
 },
 // Supermercados británicos / internacionales, para huéspedes UK que echen de menos lo de casa
 {
@@ -1115,8 +1112,7 @@ const PLACES = [
   tip: 'Imprescindible para huéspedes ingleses con nostalgia. Hablan inglés en caja.',
   cat: 'super',
   lat: 37.2396,
-  lng: -1.8564,
-  featured: true
+  lng: -1.8564
 }, {
   id: 'quicksave',
   name: 'Quicksave Britannia (Mojácar)',
@@ -1280,8 +1276,7 @@ const PLACES = [
   cat: 'restaurant',
   rating: 4.4,
   lat: 37.2480,
-  lng: -1.7730,
-  featured: true
+  lng: -1.7730
 }, {
   id: 'rincon-puerto',
   name: 'Rincón del Puerto (Garrucha)',
@@ -1949,8 +1944,7 @@ const PLACES = [
   cat: 'bar',
   rating: 4.3,
   lat: 37.2260,
-  lng: -1.7950,
-  featured: true
+  lng: -1.7950
 }, {
   id: 'paraiso',
   name: 'Paraíso Vera Beach',
@@ -1978,8 +1972,7 @@ const PLACES = [
   cat: 'bar',
   rating: 4.4,
   lat: 37.2100,
-  lng: -1.8098,
-  featured: true
+  lng: -1.8098
 }, {
   id: 'mar-arena',
   name: 'Chiringuito Mar y Arena',
@@ -1998,8 +1991,7 @@ const PLACES = [
   cat: 'bar',
   rating: 4.4,
   lat: 37.2340,
-  lng: -1.8000,
-  featured: true
+  lng: -1.8000
 }, {
   id: 'lebreros',
   name: 'Los Lebreros (Garrucha puerto)',
@@ -2009,8 +2001,7 @@ const PLACES = [
   cat: 'bar',
   rating: 4.4,
   lat: 37.1820,
-  lng: -1.8235,
-  featured: true
+  lng: -1.8235
 },
 // ── Bares top-rated por Google ───────────────────────────────
 // Mojácar pueblo
@@ -2296,7 +2287,6 @@ const PLACES = [
   url: 'https://www.google.com/maps/search/?api=1&query=Centro+de+Salud+Vera+Almeria',
   lat: 37.2480,
   lng: -1.8620,
-  featured: true,
   featuredOrder: 1
 }, {
   id: 'cs-garrucha',
@@ -2323,7 +2313,6 @@ const PLACES = [
   url: 'https://www.google.com/maps/search/?api=1&query=Hospital+La+Inmaculada+Huercal+Overa',
   lat: 37.3870,
   lng: -1.9450,
-  featured: true,
   featuredOrder: 2
 },
 // ==========================================================
@@ -2338,7 +2327,6 @@ const PLACES = [
   url: 'https://www.google.com/maps/search/?api=1&query=Clinica+Veterinaria+Garrucha+Malecon',
   lat: 37.1815,
   lng: -1.8225,
-  featured: true,
   featuredOrder: 1,
   rating: 4.6
 }, {
@@ -2409,7 +2397,6 @@ const PLACES = [
   url: 'https://www.google.com/maps/search/?api=1&query=Happy+Pets+Garrucha+Carretera+de+Garrucha+Playas+de+Vera',
   lat: 37.1950,
   lng: -1.8200,
-  featured: true,
   featuredOrder: 1
 }, {
   id: 'pet-shop-tucano',
@@ -2432,7 +2419,6 @@ const PLACES = [
   url: 'https://www.verasaludosteopatia.com/',
   lat: 37.1820,
   lng: -1.8240,
-  featured: true,
   featuredOrder: 1,
   rating: 4.7
 }, {
@@ -2535,8 +2521,7 @@ const PLACES = [
   desc_en: 'Self-service washers and dryers in the Vera Playa area, handy for longer stays or a quick wash without waiting for cleaning day.',
   url: 'https://www.google.com/maps/search/?api=1&query=lavander%C3%ADa+autoservicio+Vera+Playa',
   lat: 37.2220,
-  lng: -1.8090,
-  featured: true
+  lng: -1.8090
 }, {
   id: 'ln-mojacar',
   name: 'Lavandería y tintorería en Mojácar',
@@ -2556,8 +2541,7 @@ const PLACES = [
   desc_en: 'Vera town centre has the main banks (CaixaBank, Santander, BBVA, Unicaja and Cajamar) and their ATMs, about 10 min by car. It is where you will find the most options together.',
   url: 'https://www.google.com/maps/search/?api=1&query=cajeros+bancos+Vera+Almer%C3%ADa',
   lat: 37.2473,
-  lng: -1.8612,
-  featured: true
+  lng: -1.8612
 }, {
   id: 'atm-veraplaya',
   name: 'Cajero en Vera Playa',
@@ -4538,7 +4522,6 @@ const PLACES = [
   url: 'https://www.google.com/maps/search/?api=1&query=Repsol+Vera+Calle+Ancha+Almeria',
   lat: 37.2462,
   lng: -1.8645,
-  featured: true,
   featuredOrder: 1
 }, {
   id: 'gas-plenoil-vera',
@@ -4550,7 +4533,6 @@ const PLACES = [
   url: 'https://www.google.com/maps/search/?api=1&query=Plenoil+Vera+Carretera+Cuevas',
   lat: 37.2540,
   lng: -1.8580,
-  featured: true,
   featuredOrder: 2
 }, {
   id: 'gas-baraza-vera',
@@ -4628,7 +4610,6 @@ const PLACES = [
   url: 'https://www.google.com/maps/search/?api=1&query=Mercadona+Vera+Medina+Azahara',
   lat: 37.2210,
   lng: -1.8110,
-  featured: true,
   featuredOrder: 1
 }, {
   id: 'ev-mercadona-vera-pueblo',
@@ -4650,7 +4631,6 @@ const PLACES = [
   url: 'https://www.google.com/maps/search/?api=1&query=Lidl+Albox+puntos+recarga+coche+electrico',
   lat: 37.3893,
   lng: -2.1424,
-  featured: true,
   featuredOrder: 2
 }, {
   id: 'ev-electromaps',
