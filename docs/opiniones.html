@@ -116,7 +116,7 @@
   <p>Puedes filtrarlas por apartamento y ver la valoración de Hestía Mar, Hestía Thalassa y Hestía Salinas por separado.</p>
   <p>Lo que más repiten los huéspedes: la limpieza al llegar, la rapidez de respuesta durante la estancia y las terrazas. Nos hacemos responsables de que el apartamento esté impecable, de que todo funcione y de estar disponibles mientras estás aquí.</p>
   <p>Si te has alojado con nosotros, puedes dejar tu opinión desde la web.</p>
-  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a></nav>
+  <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Guía de la zona</a></nav>
 </noscript>
 
 
@@ -147,7 +147,7 @@
     } catch (e) { console.warn('reviews.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=a7ce6430de');
+      const res = await fetch(file + '?cv=91c9ef1b37');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
