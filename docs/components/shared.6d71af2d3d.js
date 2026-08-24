@@ -4936,10 +4936,16 @@ const _dayPrice = (ds, aptId) => {
 // ║  no choca con manual_blocks), suplemento de huéspedes y mascota.           ║
 // ║  Protegido por scripts/price-consistency.mjs (regresión).                  ║
 // ╚══════════════════════════════════════════════════════════════════════════╝
-const _calcStay = (selStart, selEnd, aptId, withPets, guests) => {
-  if (!selStart || !selEnd || !aptId) return null;
+// Precio de temporada "normal" de una estancia, sin ofertas de hueco: precio
+// variable noche a noche (con la regla short-stay de 2-4 noches) más el
+// descuento automático por estancia larga si corresponde. Es la base que usa
+// _calcStay cuando ninguna oferta de hueco cubre la estancia, y también la
+// referencia "sin ajuste" que usa p-edit en Gestión de huecos para saber
+// cuánto pagaría un huésped por ese hueco si no le tocara ningún ajuste
+// manual. Un solo cálculo, dos sitios que lo consumen.
+const _regularStayTotal = (selStart, selEnd, aptId) => {
   const nights = _be_diff(selStart, selEnd);
-  if (nights <= 0) return null;
+  const v2 = window.PRICES_V2;
   const sumNights = (start, n) => {
     let t = 0;
     let d = start;
@@ -4951,14 +4957,13 @@ const _calcStay = (selStart, selEnd, aptId, withPets, guests) => {
   };
 
   // Regla short-stay (3-4 noches cotizadas como 5-6 menos descuento fijo).
-  const v2rules = window.PRICES_V2 && window.PRICES_V2.rules;
+  const v2rules = v2 && v2.rules;
   const shortRule = v2rules && Array.isArray(v2rules.shortStayPricing) ? v2rules.shortStayPricing.find(r => r.nights === nights) : null;
   const horizonNights = shortRule ? shortRule.basedOnNights : nights;
   const flatDiscount = shortRule ? shortRule.discount : 0;
   const baseTotal = Math.round(sumNights(selStart, horizonNights) - flatDiscount);
 
   // Descuento por estancia larga. Excluye temporadas marcadas en JSON.
-  const v2 = window.PRICES_V2;
   const seasonsInStay = new Set();
   if (v2) {
     let s = selStart;
@@ -4974,40 +4979,90 @@ const _calcStay = (selStart, selEnd, aptId, withPets, guests) => {
     return true;
   }) || null;
   const stayDiscAmt = stayD ? Math.round(baseTotal * stayD.pct) : 0;
-  const afterStay = baseTotal - stayDiscAmt;
+  return {
+    baseTotal,
+    stayD,
+    stayDiscAmt,
+    afterStay: baseTotal - stayDiscAmt
+  };
+};
+const _calcStay = (selStart, selEnd, aptId, withPets, guests) => {
+  if (!selStart || !selEnd || !aptId) return null;
+  const nights = _be_diff(selStart, selEnd);
+  if (nights <= 0) return null;
+  const v2 = window.PRICES_V2;
+
+  // Ofertas de hueco (gapOverrides, gestión de huecos en p-edit): un ajuste
+  // "gana" para una noche solo si la estancia pedida CUBRE el hueco/segmento
+  // entero al que pertenece esa noche (igual o más noches que ese hueco
+  // concreto, entre o partido). Si la estancia pedida es más pequeña que el
+  // hueco concreto, esa noche NO lleva el ajuste (nos interesa alquilar el
+  // hueco completo, no un trozo) y se cobra a precio de temporada normal.
+  // Así el precio de una reserva que abarca varios huecos/segmentos con
+  // ajuste (o uno con ajuste y noches sueltas sin él) sale siempre de sumar,
+  // noche a noche, el precio que le corresponde a cada una: nunca puede
+  // quedar peor pagada una estancia larga que una corta dentro del mismo
+  // hueco. Vive aquí para que apartamento, home, reservas y admin calculen
+  // siempre igual, sin excepciones por página.
+  // Validación en runtime: una reserva directa instantánea (manual_blocks de
+  // prices.json) que solape las fechas invalida cualquier oferta aun antes
+  // del recálculo del workflow (cada 4h). Las externas (iCal) ya entran
+  // sincronizadas con el pruning.
+  const _mb = v2 && v2.manual_blocks && v2.manual_blocks[aptId] || [];
+  const _gapBlocked = _mb.some(b => selStart < b.end && selEnd > b.start);
+  const allGov = v2 && v2.gapOverrides ? Object.values(v2.gapOverrides) : [];
+  const applicable = _gapBlocked ? [] : allGov.filter(g => g.apt === aptId && g.type && g.type !== 'none' && g.start >= selStart && g.end <= selEnd);
+  const _seasonBaseAt = ds => Math.round((v2 && v2.apts && v2.apts[aptId] && v2.apts[aptId].base || 0) * (v2 && v2.seasons && v2.seasons[_v2SeasonForDate(ds, v2)] && v2.seasons[_v2SeasonForDate(ds, v2)].multiplier || 1));
+  const _govRate = g => {
+    const sb = _seasonBaseAt(g.start);
+    if (g.type === 'fixed') return g.value;
+    if (g.type === 'discount') return Math.round(sb * (1 - g.value / 100));
+    if (g.type === 'increment') return Math.round(sb * (1 + g.value / 100));
+    return sb;
+  };
+  const _govForNight = d => applicable.find(g => d >= g.start && d < g.end) || null;
+  let fBaseTotal, fStayD, fStayDiscAmt, fAfterStay;
+  let isGapOffer = false,
+    gapPerNight = null;
+  if (applicable.length > 0) {
+    // Alguna noche pedida cae en un hueco/segmento cubierto entero por la
+    // estancia: precio noche a noche, con el ajuste donde aplica y precio de
+    // temporada normal donde no. Sin regla short-stay ni descuento
+    // automático por estancia larga, incompatibles con un ajuste manual
+    // explícito para esas fechas.
+    let total = 0,
+      allOverride = true,
+      uniformRate = null,
+      uniform = true,
+      d = selStart;
+    for (let i = 0; i < nights; i++) {
+      const g = _govForNight(d);
+      const rate = g ? _govRate(g) : _dayPrice(d, aptId);
+      total += rate;
+      if (!g) allOverride = false;
+      if (uniformRate === null) uniformRate = rate;else if (uniformRate !== rate) uniform = false;
+      d = _be_adj(d, 1);
+    }
+    fBaseTotal = Math.round(total);
+    fStayD = null;
+    fStayDiscAmt = 0;
+    fAfterStay = fBaseTotal;
+    if (allOverride && uniform) {
+      isGapOffer = true;
+      gapPerNight = uniformRate;
+    }
+  } else {
+    const reg = _regularStayTotal(selStart, selEnd, aptId);
+    fBaseTotal = reg.baseTotal;
+    fStayD = reg.stayD;
+    fStayDiscAmt = reg.stayDiscAmt;
+    fAfterStay = reg.afterStay;
+  }
   const petAmt = withPets ? _petCost(nights) : 0;
 
   // Suplemento por huéspedes: base = 1 huésped, se suma escalón a escalón.
   const guestSuppPerNight = _guestSuppPerNight(guests);
   const guestSuppAmt = guestSuppPerNight * nights;
-  let fBaseTotal = baseTotal,
-    fStayD = stayD,
-    fStayDiscAmt = stayDiscAmt,
-    fAfterStay = afterStay;
-  let isGapOffer = false,
-    gapPerNight = null;
-
-  // Oferta de hueco (gapOverrides): SOLO se aplica si la estancia rellena EXACTAMENTE
-  // el hueco, la entrada coincide con el inicio (clave aptId|selStart) Y la salida
-  // con el fin del hueco. Si la estancia se sale del hueco, NO aplica (precio normal).
-  // Vive aquí para que apartamento, home y reservas calculen siempre igual.
-  // Validación en runtime: una reserva directa instantánea (manual_blocks de
-  // prices.json) que solape las fechas invalida la oferta aun antes del recálculo
-  // del workflow (cada 4h). Las externas (iCal) ya entran sincronizadas con el pruning.
-  const _mb = v2 && v2.manual_blocks && v2.manual_blocks[aptId] || [];
-  const _gapBlocked = _mb.some(b => selStart < b.end && selEnd > b.start);
-  const gov = v2 && v2.gapOverrides && v2.gapOverrides[`${aptId}|${selStart}`];
-  if (gov && gov.type && gov.type !== 'none' && gov.end === selEnd && !_gapBlocked) {
-    const seasonBase = Math.round((v2.apts && v2.apts[aptId] && v2.apts[aptId].base || 0) * (v2.seasons && v2.seasons[_v2SeasonForDate(selStart, v2)] && v2.seasons[_v2SeasonForDate(selStart, v2)].multiplier || 1));
-    let pn;
-    if (gov.type === 'fixed') pn = gov.value;else if (gov.type === 'discount') pn = Math.round(seasonBase * (1 - gov.value / 100));else if (gov.type === 'increment') pn = Math.round(seasonBase * (1 + gov.value / 100));else pn = seasonBase;
-    fBaseTotal = pn * nights;
-    fStayD = null;
-    fStayDiscAmt = 0;
-    fAfterStay = fBaseTotal;
-    isGapOffer = true;
-    gapPerNight = pn;
-  }
   const directTotal = fAfterStay + petAmt + guestSuppAmt;
   const avgPerNight = Math.round((fAfterStay + guestSuppAmt) / nights);
   if (!Number.isFinite(directTotal)) return null;
@@ -5856,6 +5911,7 @@ Object.assign(window, {
   PET_SUPP_FLAT,
   _dayPrice,
   _calcStay,
+  _regularStayTotal,
   _dayPriceV2,
   _v2SeasonForDate,
   _v2BumpedSeasonForDate,

@@ -6765,11 +6765,14 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
     };
   }, [_fetchAvail]);
 
-  const nightBase = (aptId, season) => {
-    if (!pricesData || !pricesData.apts || !pricesData.seasons) return 0;
-    const base = (pricesData.apts[aptId] || {}).base || 0;
-    const mult = (seasons[season] || {}).multiplier || 1;
-    return Math.round(base * mult);
+  // Precio de referencia de un hueco/segmento: el mismo que vería un huésped
+  // que reservara justo esas fechas (window._regularStayTotal / _calcStay,
+  // fuente única de precio), no un cálculo aparte con la "peor" temporada del
+  // rango. Así el número que ve Alex en Gestión de huecos siempre coincide
+  // con lo que muestra /reservas para las mismas fechas.
+  const nightBase = (aptId, segStart, segEnd, nights) => {
+    if (!pricesData || typeof window._regularStayTotal !== 'function') return 0;
+    return Math.round(window._regularStayTotal(segStart, segEnd, aptId).afterStay / nights) || 0;
   };
 
   const allGaps = React.useMemo(() => {
@@ -6792,8 +6795,10 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
           const season   = _hcDominantSeason(segStart, segEnd, calendar);
           const maxN     = HC_MAX[season] || 28;
           const override = overrides[segId] || null;
-          const baseN    = nightBase(aptId, season);
-          const effN     = _hcEffPrice(baseN, override);
+          const baseN    = nightBase(aptId, segStart, segEnd, nights);
+          const effN     = override && typeof window._calcStay === 'function'
+            ? Math.round(window._calcStay(segStart, segEnd, aptId, false, null).avgPerNight)
+            : baseN;
           return {
             start: segStart, end: segEnd, nights,
             aptId, id: segId,
