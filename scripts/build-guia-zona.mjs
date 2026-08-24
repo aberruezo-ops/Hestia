@@ -960,14 +960,19 @@ for (const lang of ['es', 'en']) {
         })),
       },
     ];
+    // Misma forma de DOM que ficha() (.f-cuerpo + .dist como hijos directos
+    // de .ficha): la rejilla CSS de .ficha da por hecho esos dos hijos. Con
+    // .f-top envolviendo título y cifra, como estaba antes, el grid no
+    // encontraba sus columnas y el texto quedaba montado unas líneas encima
+    // de otras.
     const fichas = generadas.map(g => `
-<article class="ficha">
-  <div class="f-top">
+<article class="ficha reveal">
+  <div class="f-cuerpo">
     <h3><a href="${hubUrl(lang, g.slug)}" style="color:inherit;text-decoration:none">${esc(g.h1)}</a></h3>
-    <span class="dist">${t.ondasSitios(g.n)}</span>
+    <p>${esc(g.desc)}</p>
+    <div class="chips"><a href="${hubUrl(lang, g.slug)}">${esc(t.verLos(g.n))}</a></div>
   </div>
-  <p>${esc(g.desc)}</p>
-  <div class="chips"><a href="${hubUrl(lang, g.slug)}">${esc(t.verLos(g.n))}</a></div>
+  <span class="dist">${esc(t.ondasSitios(g.n))}</span>
 </article>`).join('');
     escribe(hubRel(lang, ''),
       cabecera({ lang, title: t.indexTitle, desc: t.indexDesc(total), canonical: url, altHref: alt, jsonld })
