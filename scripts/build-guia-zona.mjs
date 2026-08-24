@@ -387,12 +387,6 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 .topnav .brand{font-family:var(--serif);font-size:19px;letter-spacing:.04em;opacity:1;}
 .topnav nav{display:flex;gap:22px;}
 @media(max-width:640px){.topnav nav a:not(.cta-top){display:none;}}
-@media(max-width:680px){
-  .ficha{grid-template-columns:44px 1fr;padding:26px 0;}
-  .ficha::before{font-size:24px;}
-  .dist{grid-column:2;text-align:left;padding-top:0;margin-bottom:10px;font-size:17px;}
-  .dist small{display:inline;margin-left:7px;}
-}
 
 .hero{position:relative;margin-top:-38px;min-height:clamp(480px,66vh,660px);display:flex;align-items:flex-end;
   background:var(--ber-deep);overflow:hidden;}
@@ -471,6 +465,17 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
   border-bottom:1px solid rgba(23,110,128,.3);}
 .chips a:hover{border-bottom-color:var(--sol-txt);}
 
+/* Va DESPUÉS de la .ficha base: en cascada, a igual especificidad gana la
+   regla que aparece última en el CSS. Puesta antes (como estaba) la base
+   la pisaba también en móvil, y el texto se apretaba en ~98px de ancho:
+   ese era el hueco enorme y el desalineado que se veía en el móvil. */
+@media(max-width:680px){
+  .ficha{grid-template-columns:44px 1fr;padding:26px 0;}
+  .ficha::before{font-size:24px;}
+  .dist{grid-column:2;text-align:left;padding-top:0;margin-bottom:10px;font-size:17px;}
+  .dist small{display:inline;margin-left:7px;}
+}
+
 .cta{position:relative;margin:88px 0 0;background:var(--ber-dk);color:var(--crema);
   border-radius:var(--r-lg);padding:clamp(38px,5.4vw,60px);overflow:hidden;}
 .cta::before{content:'';position:absolute;inset:0;
@@ -517,7 +522,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
    tiene un fallback por si algo falla: nunca se queda nada oculto. */
 html.js .reveal{opacity:0;transform:translateY(26px);
   transition:opacity .7s var(--ease),transform .7s var(--ease);}
-.reveal.is-in{opacity:1;transform:none;}
+html.js .reveal.is-in{opacity:1;transform:none;}
 
 /* ---- hero: zoom lento (Ken Burns) + insignia de valoración ---- */
 .hero video{animation:kenburns 22s ease-in-out infinite alternate;}
