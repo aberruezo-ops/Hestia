@@ -25,8 +25,6 @@ const MAPA_COPY = {
           { href: 'reservas.html', label: 'Reservas', desc: 'Comprobar disponibilidad, ver precio y enviar la solicitud.' },
           { href: 'estancias-largas.html', label: 'Estancias largas', desc: 'Un mes o una temporada, tarifa mensual, de septiembre a junio.' },
           { href: 'empresas.html', label: 'Para empresas', desc: 'Apartamentos para empresas, clínicas, clubes e inmobiliarias.' },
-          { href: 'reservas.html', label: 'Rincón del huésped', desc: 'Si ya tienes reserva, accede aquí a la guía de tu Hestía con el PIN que te enviamos.' },
-          { href: 'contacto.html', label: 'Contacto', desc: 'WhatsApp, teléfono y email, te responde una persona.' },
         ],
       },
       {
@@ -40,8 +38,10 @@ const MAPA_COPY = {
         ],
       },
       {
-        title: 'Legal',
+        title: 'Ayuda y legal',
         items: [
+          { href: 'contacto.html', label: 'Contacto', desc: 'WhatsApp, teléfono y email, te responde una persona.' },
+          { href: 'reservas.html', label: 'Rincón del huésped', desc: 'Si ya tienes reserva, accede aquí a la guía de tu Hestía con el PIN que te enviamos.' },
           { href: 'privacidad.html', label: 'Privacidad', desc: 'Cómo tratamos tus datos, RGPD.' },
           { href: 'cookies.html', label: 'Cookies', desc: 'Qué cookies usamos y cómo gestionarlas.' },
         ],
@@ -68,8 +68,6 @@ const MAPA_COPY = {
           { href: 'reservas.html', label: 'Reservations', desc: 'Check availability, see the price and send the request.' },
           { href: 'estancias-largas.html', label: 'Long stays', desc: 'A month or a season, flat monthly rate, September to June.' },
           { href: 'empresas.html', label: 'For business', desc: 'Apartments for companies, clinics, clubs and real estate agencies.' },
-          { href: 'reservas.html', label: 'Guest corner', desc: 'Already booked? Access your Hestía guide here with the PIN we sent you.' },
-          { href: 'contacto.html', label: 'Contact', desc: 'WhatsApp, phone and email, a real person replies.' },
         ],
       },
       {
@@ -83,8 +81,10 @@ const MAPA_COPY = {
         ],
       },
       {
-        title: 'Legal',
+        title: 'Help & legal',
         items: [
+          { href: 'contacto.html', label: 'Contact', desc: 'WhatsApp, phone and email, a real person replies.' },
+          { href: 'reservas.html', label: 'Guest corner', desc: 'Already booked? Access your Hestía guide here with the PIN we sent you.' },
           { href: 'privacidad.html', label: 'Privacy', desc: 'How we handle your data, GDPR.' },
           { href: 'cookies.html', label: 'Cookies', desc: 'What cookies we use and how to manage them.' },
         ],

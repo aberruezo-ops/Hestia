@@ -914,6 +914,11 @@ const Footer = ({ lang }) => {
             <li><a href={lang === 'es' ? '/guia-vera/' : '/guia-vera/en/'}>{lang === 'es' ? 'Extracto Guía' : 'Guide extract'}</a></li>
             <li><a href="estancias-largas.html">{t.nav[9]}</a></li>
             <li><a href="empresas.html">{lang === 'es' ? 'Para empresas' : 'For business'}</a></li>
+          </ul>
+        </div>
+        <div className="col">
+          <h5>{t.footer_legal}</h5>
+          <ul>
             <li><a href="privacidad.html">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>
             <li><a href="cookies.html">Cookies</a></li>
             <li><a href="mapa.html">{lang === 'es' ? 'Mapa web' : 'Site map'}</a></li>
