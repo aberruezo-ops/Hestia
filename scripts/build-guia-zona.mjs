@@ -273,7 +273,9 @@ const T = {
     inicio: 'Inicio', nuestraGuia: 'Nuestra guía',
     aviso: `Esto es <b>un extracto</b> de nuestra guía. La guía completa, con
 36 capítulos, 131 consejos y el mapa de la zona, es <b>exclusiva para quien se aloja
-con nosotros</b>: se entrega unos días antes de vuestra llegada.`,
+con nosotros</b>: se entrega unos días antes de vuestra llegada. También incluye
+planes de día completo para adultos y con niños, planes de mediodía, una
+descripción de cada Hestía y del uso que os recomendamos hacer, y muchas cosas más.`,
     ctaH2: 'Esto es solo una muestra de la guía',
     ctaP1: 'Lo que ves aquí lo puede leer cualquiera: qué es cada sitio, qué tiene de bueno y a qué distancia queda. Es la parte que se puede contar por escrito.',
     ctaP2: () => `El resto no se aprende leyendo: se aprende viniendo año tras año. A qué hora llegar a cada cala para
@@ -316,7 +318,9 @@ con nosotros</b>: se entrega unos días antes de vuestra llegada.`,
     inicio: 'Home', nuestraGuia: 'Our guide',
     aviso: `This is <b>an extract</b> of our guide. The full guide, with
 36 chapters, 131 tips and the area map, is <b>exclusive to guests staying
-with us</b>: it is handed over a few days before you arrive.`,
+with us</b>: it is handed over a few days before you arrive. It also includes
+full-day plans for adults and with kids, half-day plans, a description of
+each Hestía and how we recommend using it, and much more.`,
     ctaH2: 'This is just a sample of the guide',
     ctaP1: 'What you see here anyone can read: what each place is, what is good about it and how far it is. It is the part that can be put in writing.',
     ctaP2: () => `The rest is not learned by reading: it is learned by coming back, year after
