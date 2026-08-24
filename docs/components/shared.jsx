@@ -40,6 +40,35 @@ const _shortGuestName = (name) => {
 };
 window._shortGuestName = _shortGuestName;
 
+// Canal de origen de la visita (primer toque de la sesión): de dónde vino,
+// para poder comparar el peso real de directo/SEO frente a redes o email,
+// sin cookies ni IP. Cubo cerrado, se fija la primera vez en sessionStorage
+// (se pierde al cerrar la pestaña) y no se reescribe aunque el visitante
+// navegue entre páginas dentro de la misma sesión.
+const HESTIA_SRC_KEY = 'hestia-src';
+const _hestiaDetectSrc = () => {
+  try {
+    const cached = sessionStorage.getItem(HESTIA_SRC_KEY);
+    if (cached) return cached;
+  } catch (_) {}
+  let src = 'direct';
+  try {
+    const params = new URLSearchParams(location.search);
+    const utmSource = (params.get('utm_source') || '').toLowerCase();
+    const utmMedium = (params.get('utm_medium') || '').toLowerCase();
+    const ref = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, '') : '';
+    if (utmMedium === 'email' || utmSource === 'email') src = 'email';
+    else if (/instagram|facebook|fb|pinterest|tiktok/.test(utmSource)) src = 'social';
+    else if (utmSource) src = 'referral';
+    else if (/google\.|bing\.|duckduckgo\.|yahoo\./.test(ref)) src = 'organic_search';
+    else if (/instagram\.com|facebook\.com|l\.facebook|pinterest\.|tiktok\.com/.test(ref)) src = 'social';
+    else if (ref && !/hestiayourhome\.com|aberruezo-ops\.github\.io/.test(ref)) src = 'referral';
+    else src = 'direct';
+  } catch (_) {}
+  try { sessionStorage.setItem(HESTIA_SRC_KEY, src); } catch (_) {}
+  return src;
+};
+
 // ----------------------------------------------------------------
 // _hestiaTrack, registra eventos de funnel.
 // Tres destinos, cada uno con un fin distinto:
@@ -48,14 +77,16 @@ window._shortGuestName = _shortGuestName;
 //  2. RUM custom de Cloudflare (si el beacon cargó): queda dentro de los
 //     datos de Cloudflare, no expuesto en ningún panel propio.
 //  3. POST /e al worker de analítica: +1 al contador agregado del día
-//     para ese evento, sin props ni identificador de visitante. Es lo
-//     que lee la sección "Eventos" de la pestaña Inteligencia en
-//     /p-edit para ver el embudo real (de todos los visitantes, no solo
-//     de quien esté mirando la consola).
+//     para ese evento (y, para los eventos clave, +1 también al contador
+//     acumulado por canal de origen), sin identificador de visitante. Es
+//     lo que lee la pestaña Inteligencia en /p-edit para ver el embudo
+//     real (de todos los visitantes, no solo de quien esté mirando la
+//     consola).
 // ----------------------------------------------------------------
 const _hestiaTrack = (name, props = {}) => {
+  const src = _hestiaDetectSrc();
   try {
-    const ev = { ts: Date.now(), name, ...props };
+    const ev = { ts: Date.now(), name, src, ...props };
     const key = '_htevt';
     const arr = JSON.parse(localStorage.getItem(key) || '[]');
     arr.unshift(ev);
@@ -71,10 +102,24 @@ const _hestiaTrack = (name, props = {}) => {
   } catch (_) {}
   try {
     navigator.sendBeacon(ANALYTICS_WORKER_URL + '/e',
-      new Blob([JSON.stringify({ name })], { type: 'application/json' }));
+      new Blob([JSON.stringify({ name, src })], { type: 'application/json' }));
   } catch (_) {}
 };
 window._hestiaTrack = _hestiaTrack;
+
+// Clic en cualquier enlace de WhatsApp del sitio (hay ~30 repartidos por
+// todas las páginas: topbar, widgets flotantes, fichas de apartamento,
+// footer...). Un único listener delegado en vez de instrumentar cada uno,
+// para no tocar copy ni arriesgar una regresión en 30 sitios distintos.
+// No cuenta el envío final del formulario de reservas por WhatsApp (eso ya
+// lo cubre booking_sent con su propio canal elegido): ese caso abre wa.me
+// por window.open, no por un <a> real, así que no lo captura este listener.
+if (typeof document !== 'undefined' && typeof document.addEventListener === 'function') {
+  document.addEventListener('click', (e) => {
+    const a = e.target && e.target.closest && e.target.closest('a[href*="wa.me/"]');
+    if (a) _hestiaTrack('whatsapp_click');
+  }, true);
+}
 
 const HestiaLogoMark = ({ size = 40, color = '#3AAABB' }) => (
   <svg viewBox="0 0 120 120" width={size} height={size} aria-hidden="true">

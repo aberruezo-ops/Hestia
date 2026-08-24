@@ -2572,7 +2572,60 @@ const IntelligenciaTab = ({
       disabled: statsLoading,
       onClick: () => fetchStats(),
       title: "Recargar"
-    }, "↺ Recargar")));
+    }, "↺ Recargar")), stats.totals.whatsapp_click > 0 && /*#__PURE__*/React.createElement("p", {
+      className: "pe-hint",
+      style: {
+        marginTop: 4
+      }
+    }, /*#__PURE__*/React.createElement(HiIcon, {
+      name: "chat",
+      size: 13,
+      style: {
+        verticalAlign: '-2px',
+        marginRight: 4
+      }
+    }), /*#__PURE__*/React.createElement("strong", null, stats.totals.whatsapp_click), " clic(s) en un enlace de WhatsApp del sitio (fuera del envío de reserva, que ya cuenta como \"Envió la reserva\" arriba)."), stats.bySource && /*#__PURE__*/React.createElement("div", {
+      style: {
+        marginTop: 14,
+        overflowX: 'auto'
+      }
+    }, /*#__PURE__*/React.createElement("p", {
+      className: "pe-hint",
+      style: {
+        marginBottom: 6
+      }
+    }, "Por canal de origen (acumulado histórico, no solo estos ", stats.days, " días: de dónde vino la visita la primera vez, por sesión)."), /*#__PURE__*/React.createElement("table", {
+      className: "pe-table",
+      style: {
+        minWidth: 480
+      }
+    }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Canal"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Buscó disponibilidad"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Envió reserva"), /*#__PURE__*/React.createElement("th", {
+      className: "num"
+    }, "Clic WhatsApp"))), /*#__PURE__*/React.createElement("tbody", null, ['direct', 'organic_search', 'social', 'referral', 'email', 'other'].map(src => {
+      const SRC_LBL = {
+        direct: 'Directo',
+        organic_search: 'Buscador (SEO)',
+        social: 'Redes sociales',
+        referral: 'Otra web',
+        email: 'Email',
+        other: 'Otro'
+      };
+      const row = [stats.bySource.search_initiated, stats.bySource.booking_sent, stats.bySource.whatsapp_click];
+      if (!row.some(r => (r?.[src] || 0) > 0)) return null;
+      return /*#__PURE__*/React.createElement("tr", {
+        key: src
+      }, /*#__PURE__*/React.createElement("td", null, SRC_LBL[src]), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, stats.bySource.search_initiated?.[src] || 0), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, stats.bySource.booking_sent?.[src] || 0), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, stats.bySource.whatsapp_click?.[src] || 0));
+    })))));
   })())), /*#__PURE__*/React.createElement("div", {
     className: "intel-section"
   }, /*#__PURE__*/React.createElement("button", {

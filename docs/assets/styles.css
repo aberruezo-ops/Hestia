@@ -14203,6 +14203,7 @@ footer,
 .pe-table th, .pe-table td { padding: 8px 10px; text-align: left; border-bottom: 1px solid rgba(61,26,53,.08); }
 .pe-table th { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
 .pe-table input { max-width: 110px; }
+.pe-table td.num, .pe-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .pe-btn {
   padding: 11px 22px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
   border-radius: 8px 0 8px 0; border: 1px solid var(--ber);

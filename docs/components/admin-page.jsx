@@ -1946,6 +1946,46 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
                       <p className="pe-hint" style={{ marginTop: 8 }}>
                         Solo cuenta pasos, sin datos personales ni por visitante: cada evento suma +1 al contador del día. <button type="button" className="pe-btn pe-btn-ghost" disabled={statsLoading} onClick={() => fetchStats()} title="Recargar">↺ Recargar</button>
                       </p>
+
+                      {stats.totals.whatsapp_click > 0 && (
+                        <p className="pe-hint" style={{ marginTop: 4 }}>
+                          <HiIcon name="chat" size={13} style={{ verticalAlign: '-2px', marginRight: 4 }} />
+                          <strong>{stats.totals.whatsapp_click}</strong> clic(s) en un enlace de WhatsApp del sitio (fuera del envío de reserva, que ya cuenta como "Envió la reserva" arriba).
+                        </p>
+                      )}
+
+                      {stats.bySource && (
+                        <div style={{ marginTop: 14, overflowX: 'auto' }}>
+                          <p className="pe-hint" style={{ marginBottom: 6 }}>
+                            Por canal de origen (acumulado histórico, no solo estos {stats.days} días: de dónde vino la visita la primera vez, por sesión).
+                          </p>
+                          <table className="pe-table" style={{ minWidth: 480 }}>
+                            <thead>
+                              <tr>
+                                <th>Canal</th>
+                                <th className="num">Buscó disponibilidad</th>
+                                <th className="num">Envió reserva</th>
+                                <th className="num">Clic WhatsApp</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {['direct', 'organic_search', 'social', 'referral', 'email', 'other'].map(src => {
+                                const SRC_LBL = { direct: 'Directo', organic_search: 'Buscador (SEO)', social: 'Redes sociales', referral: 'Otra web', email: 'Email', other: 'Otro' };
+                                const row = [stats.bySource.search_initiated, stats.bySource.booking_sent, stats.bySource.whatsapp_click];
+                                if (!row.some(r => (r?.[src] || 0) > 0)) return null;
+                                return (
+                                  <tr key={src}>
+                                    <td>{SRC_LBL[src]}</td>
+                                    <td className="num">{stats.bySource.search_initiated?.[src] || 0}</td>
+                                    <td className="num">{stats.bySource.booking_sent?.[src] || 0}</td>
+                                    <td className="num">{stats.bySource.whatsapp_click?.[src] || 0}</td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
                     </>
                   );
                 })()}

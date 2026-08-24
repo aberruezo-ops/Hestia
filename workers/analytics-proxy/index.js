@@ -36,8 +36,16 @@ const BEACON_DATA   = 'https://cloudflareinsights.com/cdn-cgi/rum';
 // Único catálogo de eventos de embudo que se aceptan y se pueden leer.
 // Cerrado a propósito: así /e no se puede usar para acumular contadores
 // arbitrarios, y /stats siempre devuelve las mismas claves.
-const FUNNEL_EVENTS = ['search_initiated', 'dates_selected', 'booking_step2', 'booking_step3', 'booking_sent'];
+const FUNNEL_EVENTS = ['search_initiated', 'dates_selected', 'booking_step2', 'booking_step3', 'booking_sent', 'whatsapp_click'];
 const MAX_STATS_DAYS = 90;
+
+// Canal de origen de la visita (ver _hestiaDetectSrc en shared.jsx). Cubo
+// cerrado también aquí, por la misma razón. Solo se acumula por canal para
+// estos eventos (no todos): son los que responden a "de dónde viene el
+// tráfico que de verdad convierte", sin multiplicar escrituras en KV por
+// eventos intermedios del embudo que no aportan esa lectura.
+const SOURCES = ['direct', 'organic_search', 'social', 'referral', 'email', 'other'];
+const SRC_TRACKED_EVENTS = ['search_initiated', 'booking_sent', 'whatsapp_click'];
 
 // Rate limiting por IP del POST /e (anti-abuso).
 const RATE_LIMIT  = 120;         // eventos máx por IP
@@ -158,10 +166,12 @@ export default {
     }
 
     // ── POST /e — 1 ocurrencia de un evento del embudo ──────────
-    // Body: { name }. Solo suma +1 al contador del día para ese nombre;
-    // no guarda IP, ni ts, ni nada ligado al visitante. Si el nombre no
-    // está en FUNNEL_EVENTS, se ignora en silencio (204 igualmente, para
-    // no dar pistas a quien esté sondeando el endpoint).
+    // Body: { name, src? }. Solo suma +1 al contador del día para ese
+    // nombre (y, si aplica, +1 al acumulado por canal de origen); no
+    // guarda IP, ni ts, ni nada ligado al visitante. Si el nombre no está
+    // en FUNNEL_EVENTS, se ignora en silencio (204 igualmente, para no dar
+    // pistas a quien esté sondeando el endpoint). `src` fuera de SOURCES
+    // cae en 'other'.
     if (pathname === '/e' && request.method === 'POST') {
       if (!env.EVENTS_KV) return new Response(null, { status: 204, headers: CORS });
 
@@ -178,9 +188,21 @@ export default {
       const name = String(d.name || '');
       if (FUNNEL_EVENTS.includes(name)) {
         const evKey = `ev:${todayKey()}:${name}`;
-        const cur = parseInt(await env.EVENTS_KV.get(evKey) || '0', 10);
-        // TTL largo (13 meses): deja comparar un verano con el anterior.
-        await env.EVENTS_KV.put(evKey, String(cur + 1), { expirationTtl: 400 * 86400 });
+        const writes = [
+          env.EVENTS_KV.get(evKey).then(cur =>
+            env.EVENTS_KV.put(evKey, String((parseInt(cur || '0', 10)) + 1), { expirationTtl: 400 * 86400 })),
+        ];
+        // Contador acumulado por canal de origen (sin fecha, todo el histórico):
+        // solo para los eventos que responden a "qué canal trae tráfico que
+        // convierte", y sin desglose diario para no disparar el número de
+        // lecturas/escrituras a KV que hace falta luego en /stats.
+        if (SRC_TRACKED_EVENTS.includes(name)) {
+          const src = SOURCES.includes(d.src) ? d.src : 'other';
+          const srcKey = `evsrc:${name}:${src}`;
+          writes.push(env.EVENTS_KV.get(srcKey).then(cur =>
+            env.EVENTS_KV.put(srcKey, String((parseInt(cur || '0', 10)) + 1), { expirationTtl: 400 * 86400 })));
+        }
+        await Promise.all(writes);
       }
       return new Response(null, { status: 204, headers: CORS });
     }
@@ -208,7 +230,19 @@ export default {
         });
       }));
 
-      return json({ days, totals, byDay }, 200, CORS);
+      // Desglose por canal de origen: acumulado histórico, no filtrable por
+      // rango de días (ver comentario en SRC_TRACKED_EVENTS). Pocas claves
+      // fijas (3 eventos × 6 canales), no crece con `days`.
+      const bySource = {};
+      await Promise.all(SRC_TRACKED_EVENTS.map(async name => {
+        bySource[name] = {};
+        await Promise.all(SOURCES.map(async src => {
+          const v = await env.EVENTS_KV.get(`evsrc:${name}:${src}`);
+          bySource[name][src] = parseInt(v || '0', 10) || 0;
+        }));
+      }));
+
+      return json({ days, totals, byDay, bySource }, 200, CORS);
     }
 
     return new Response('Not found', { status: 404 });
