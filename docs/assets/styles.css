@@ -22666,115 +22666,6 @@ img[src*="apt-vt-gallery-"] {
 }
 
 /* ============================================================
-   HOME PRICE STRIP — 3 precios base antes del buscador
-   ============================================================ */
-.hps-strip {
-  background: var(--ber-dk, #2A0F2E);
-  padding: 28px 24px 36px;
-  border-top: 1px solid rgba(240,232,213,.07);
-}
-.hps-inner {
-  max-width: 820px;
-  margin: 0 auto;
-}
-.hps-label {
-  text-align: center;
-  color: rgba(240,232,213,.72);
-  margin: 0 0 18px;
-}
-.hps-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-.hps-card {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  padding: 18px 20px;
-  background: rgba(255,255,255,.035);
-  border: 1px solid color-mix(in srgb, var(--hps-accent) 28%, transparent);
-  border-radius: 10px 0 10px 0;
-  text-decoration: none;
-  transition: background .18s, border-color .18s;
-}
-.hps-card:hover {
-  background: rgba(255,255,255,.065);
-  border-color: color-mix(in srgb, var(--hps-accent) 55%, transparent);
-}
-.hps-name {
-  font-family: var(--sans);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .14em;
-  color: color-mix(in srgb, var(--hps-accent) 52%, var(--crema, #FAF6F0));
-}
-.hps-price {
-  display: flex;
-  align-items: baseline;
-  gap: 4px;
-}
-.hps-desde {
-  font-family: var(--sans);
-  font-size: 11px;
-  color: rgba(240,232,213,.72);
-}
-.hps-amount {
-  font-family: var(--serif, Georgia, serif);
-  font-size: 26px;
-  font-weight: 700;
-  color: var(--crema, #FAF6F0);
-  line-height: 1;
-}
-.hps-per {
-  font-family: var(--sans);
-  font-size: 11px;
-  color: rgba(240,232,213,.72);
-}
-.hps-cta {
-  font-family: var(--sans);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: .06em;
-  color: color-mix(in srgb, var(--hps-accent) 52%, var(--crema, #FAF6F0));
-  margin-top: 3px;
-}
-.hps-ota-compare {
-  display: flex; flex-direction: column; gap: 3px;
-  margin: 6px 0 2px;
-}
-.hps-ota-row {
-  display: flex; align-items: baseline; gap: 5px;
-  font-family: var(--sans); font-size: 11px;
-}
-.hps-ota-name {
-  color: rgba(240,232,213,.45); min-width: 44px;
-}
-.hps-ota-price {
-  color: rgba(240,232,213,.55); text-decoration: line-through; text-decoration-color: rgba(240,232,213,.3);
-}
-.hps-ota-pct {
-  font-size: 10px; font-weight: 600;
-  color: #F18FBD; background: rgba(184,36,110,.15);
-  padding: 1px 4px; border-radius: 3px 0 3px 0;
-}
-.hps-disclaimer {
-  font-family: var(--sans); font-size: 10px;
-  color: rgba(240,232,213,.35);
-  text-align: center; margin: 14px auto 0;
-  max-width: 520px; line-height: 1.5;
-}
-@media (max-width: 600px) {
-  .hps-strip { padding: 22px 16px 28px; }
-  .hps-grid { grid-template-columns: 1fr; gap: 8px; }
-  .hps-card { flex-direction: row; align-items: center; padding: 14px 16px; gap: 0; }
-  .hps-name { flex: 1; }
-  .hps-price { margin: 0 16px 0 auto; }
-  .hps-cta { display: none; }
-  .hps-ota-compare { display: none; }
-}
-
-/* ============================================================
    INTELLIGENCE TAB
    ============================================================ */
 /* Panel claro: Inteligencia usa el fondo crema de pe-card, igual que el resto
@@ -24527,10 +24418,20 @@ img[src*="apt-vt-gallery-"] {
     right: 16px;
     bottom: calc(16px + env(safe-area-inset-bottom, 0px) + 104px);
   }
-  /* tiempo apilado encima del sonido: +104 (sonido) + 40 (su alto) + 12 = +156 */
+  /* El cálculo de "+156" daba por hecho que .sound-toggle siempre está
+     ahí para apilarse encima. Pero sound-toggle solo existe en la home
+     (es el sonido de mar, app.jsx): en cualquier otra página no se
+     renderiza, así que el tiempo se quedaba flotando a 156px con el
+     regalo y el WhatsApp muy por debajo, amontonados entre ellos. Por
+     defecto se apila justo encima del regalo (mismo sitio que ocuparía
+     el sonido, +104); solo en la home, que sí tiene sound-toggle, sube
+     un piso más para no pisarlo. */
   .wthr-fab-wrap {
     left: auto;
     right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px) + 104px);
+  }
+  body:has(.sound-toggle) .wthr-fab-wrap {
     bottom: calc(16px + env(safe-area-inset-bottom, 0px) + 156px);
   }
   .wthr-fab-wrap .wthr-fab-panel { left: auto; right: 0; transform-origin: bottom right; }
