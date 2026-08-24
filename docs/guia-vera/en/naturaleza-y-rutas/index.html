@@ -169,11 +169,94 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 .pie p+p{margin-top:9px;}
 
 a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
+
+/* ---- barra de progreso de lectura ---- */
+.progreso{position:fixed;top:0;left:0;height:3px;width:0%;z-index:10;
+  background:linear-gradient(90deg,var(--vm),var(--sol),var(--vs));
+  transition:width .1s linear;}
+
+/* ---- revelado al hacer scroll ----
+   Esta página vive de que Google lea el contenido sin ejecutar JS: el
+   texto está siempre en el HTML, la animación solo afecta a la opacidad
+   visual. Por eso .reveal parte oculto SOLO si hay JS (bajo html.js,
+   añadida de forma síncrona en <head> antes de pintar) y el <noscript>
+   fuerza visibilidad completa si no lo hay. Además, el propio script
+   tiene un fallback por si algo falla: nunca se queda nada oculto. */
+html.js .reveal{opacity:0;transform:translateY(26px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal.is-in{opacity:1;transform:none;}
+
+/* ---- hero: zoom lento (Ken Burns) + insignia de valoración ---- */
+.hero video{animation:kenburns 22s ease-in-out infinite alternate;}
+@keyframes kenburns{from{transform:scale(1);}to{transform:scale(1.09);}}
+.hero-rating{display:inline-flex;align-items:center;gap:10px;margin-top:26px;
+  padding:10px 18px 10px 14px;background:rgba(240,232,213,.1);
+  border:1px solid rgba(240,232,213,.22);border-radius:var(--r);
+  backdrop-filter:blur(6px);animation:up .8s var(--ease) .36s both;}
+.hero-rating .stars{color:var(--vs2,#E8C476);font-size:15px;letter-spacing:1px;}
+.hero-rating b{font-family:var(--serif);font-size:19px;color:var(--crema);font-weight:500;}
+.hero-rating span{font-size:12px;color:rgba(240,232,213,.72);}
+
+/* ---- ficha imprescindible ---- */
+.ficha.imprescindible{background:linear-gradient(90deg,rgba(212,168,74,.07),transparent 60%);}
+.ficha.imprescindible::before{color:var(--vs);}
+.chip.destacado{background:var(--vs);color:#fff;font-weight:700;
+  display:inline-flex;align-items:center;gap:4px;}
+.chip.destacado::before{content:'★';font-size:10px;}
+
+/* ---- CTA principal: más contundente ---- */
+.cta{animation:cta-glow 9s ease-in-out infinite;}
+@keyframes cta-glow{
+  0%,100%{box-shadow:0 0 0 0 rgba(58,170,187,0);}
+  50%{box-shadow:0 0 70px 4px rgba(58,170,187,.12);}
+}
+.cta-ribbon{display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ber-dk);background:var(--sol-lt);padding:7px 16px;
+  border-radius:var(--r);margin-bottom:22px;}
+.cta-rating{display:flex;align-items:center;gap:10px;margin:6px 0 24px;}
+.cta-rating .stars{color:var(--vs2,#E8C476);font-size:16px;letter-spacing:1px;}
+.cta-rating b{font-family:var(--serif);font-size:22px;color:var(--crema);}
+.cta-rating span{font-size:13px;color:rgba(240,232,213,.7);}
+
+/* ---- CTA intermedia, entre bloques de la lista ---- */
+.cta-mid{margin:56px 0;padding:26px 28px;background:var(--arena);
+  border-radius:var(--r-lg);display:flex;align-items:center;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;}
+.cta-mid p{font-size:15px;color:var(--ink-soft);max-width:52ch;margin:0;}
+.cta-mid a{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--crema);background:var(--ber-dk);
+  padding:13px 24px;border-radius:var(--r);text-decoration:none;
+  transition:transform .25s var(--ease),background .25s var(--ease);}
+.cta-mid a:hover{background:var(--sol);transform:translateY(-2px);}
+
+/* ---- botón flotante "Reservar" ---- */
+.cta-float{position:fixed;right:24px;bottom:24px;z-index:9;
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.06em;
+  color:var(--crema);background:var(--ber-dk);padding:14px 24px;
+  border-radius:var(--r-lg);text-decoration:none;
+  box-shadow:0 10px 30px rgba(42,15,46,.35);
+  opacity:0;transform:translateY(16px) scale(.94);pointer-events:none;
+  transition:opacity .3s var(--ease),transform .3s var(--ease),background .25s var(--ease);}
+.cta-float.is-visible{opacity:1;transform:none;pointer-events:auto;}
+.cta-float:hover{background:var(--sol);}
+.cta-float span{animation:float-pulse 2.4s ease-in-out infinite;}
+@keyframes float-pulse{0%,100%{transform:translateX(0);}50%{transform:translateX(3px);}}
+@media(max-width:560px){.cta-float{right:16px;bottom:16px;padding:12px 18px;font-size:12px;}}
+
+/* ---- índice activo al hacer scroll ---- */
+.indice a.is-active{color:var(--crema);background:var(--ber-dk);border-color:var(--ber-dk);}
+
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;}
   html{scroll-behavior:auto;}
+  .reveal{opacity:1;transform:none;}
 }
 </style>
+<script>document.documentElement.classList.add('js');</script>
+<noscript><style>.reveal{opacity:1!important;transform:none!important;}</style></noscript>
 <script type="application/ld+json">
 [
   {
@@ -401,6 +484,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
 </script>
 </head>
 <body>
+<div class="progreso" id="progreso"></div>
 <div class="topbar">
   <div class="wrap">
     <span class="tb-contacto">
@@ -431,6 +515,11 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
     <h1>Getting out to walk, and to get wet</h1>
     <p class="intro">From coastal walks that start at the door to the Karst en Yesos gypsum reserve in Sorbas. A deliberately short selection: what we genuinely recommend doing outdoors around here.</p>
     <div class="cifras"><div class="cifra"><b>21</b><span>places</span></div><div class="cifra"><b>3</b><span>categories</span></div><div class="cifra"><b>a short walk</b><span>the nearest</span></div></div>
+    <div class="hero-rating">
+      <span class="stars" aria-hidden="true">★★★★★</span>
+      <b>9.93/10</b>
+      <span>412 from real guest reviews</span>
+    </div>
   </div>
 </header>
 <div class="indice"><div class="wrap">
@@ -440,13 +529,13 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
 36 chapters, 131 tips and the area map, is <b>exclusive to guests staying
 with us</b>: it is handed over a few days before you arrive.</p>
 <section class="grupo" id="g-water">
-  <div class="grupo-head">
+  <div class="grupo-head reveal">
     <span class="grupo-n">01</span>
     <h2>Water</h2>
   </div>
   <p class="grupo-nota">Here are 9. The guest guide has <b>15</b>, with a tip for each.</p>
   <div class="rejilla">
-<article class="ficha">
+<article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>Buceo · Tortuga (Vera Playa)</h3>
     <p>Nearby dive centre, with try-dives and full PADI courses.</p>
@@ -454,7 +543,7 @@ with us</b>: it is handed over a few days before you arrive.</p>
   </div>
   <span class="dist">a short walk<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>Motos de agua · Aquamundo (sin titulación)</h3>
     <p>Jet ski rental in Vera Playa, no licence required. 15-30 min sessions in a marked-off area.</p>
@@ -462,7 +551,7 @@ with us</b>: it is handed over a few days before you arrive.</p>
   </div>
   <span class="dist">a short walk<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>Vera Surfing · clases de surf</h3>
     <p>Surf and SUP lessons right on Vera beach. Equipment rental.</p>
@@ -470,7 +559,7 @@ with us</b>: it is handed over a few days before you arrive.</p>
   </div>
   <span class="dist">0.9 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>Buceo · Villaricos Sub</h3>
     <p>Dives on the wrecks and reefs of Villaricos. Full equipment rental.</p>
@@ -478,7 +567,7 @@ with us</b>: it is handed over a few days before you arrive.</p>
   </div>
   <span class="dist">3.4 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>Club Náutico Almanzora</h3>
     
@@ -486,15 +575,15 @@ with us</b>: it is handed over a few days before you arrive.</p>
   </div>
   <span class="dist">3.9 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Garrucha Adventure Sports · pesca y alquiler de barcos</h3>
     <p>A company specialising in recreational fishing aboard a 4-person Menorquina 500 boat. Departures from Garrucha harbour. Also rents boats with or without a skipper. Distance: ~10 min by car from Vera Playa (~7 km).</p>
-    <div class="chips"><span class="chip nota">4.8 out of 5</span><a href="https://garruchaadventuresports.com/" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><span class="chip nota">4.8 out of 5</span><a href="https://garruchaadventuresports.com/" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">5.5 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>Paseos en barco · Rumbo al Cabo</h3>
     <p>Departures from Garrucha with visits to coves reachable only by sea. A comfortable boat.</p>
@@ -502,39 +591,39 @@ with us</b>: it is handed over a few days before you arrive.</p>
   </div>
   <span class="dist">5.5 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Snorkel Cabo de Gata · Mojácar Tour</h3>
     <p>Guided boat trip to the unspoilt coves of Cabo de Gata (Cala de Enmedio, San Pedro, Plomo). Pick-up in Vera Playa or Garrucha. Full day, 9am-6pm. Equipment and picnic included.</p>
-    <div class="chips"><a href="https://mojacartour.com/" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://mojacartour.com/" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">11 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Los Barqueros · Paseos en barco desde Las Negras</h3>
     <p>Departures from Las Negras, the wildest corner of Cabo de Gata Natural Park. Boat trips along the Park's unspoilt coves, reachable only from the sea. The Las Negras-San Pedro area holds some of the clearest water on the whole Mediterranean coast. Distance: ~45 min from Vera Playa by road.</p>
-    <div class="chips"><a href="https://losbarqueros.com" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://losbarqueros.com" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">44 km<small>from home</small></span>
 </article></div>
 </section>
 <section class="grupo" id="g-trek">
-  <div class="grupo-head">
+  <div class="grupo-head reveal">
     <span class="grupo-n">02</span>
     <h2>Trail</h2>
   </div>
   <p class="grupo-nota">Here are 10. The guest guide has <b>18</b>, with a tip for each.</p>
   <div class="rejilla">
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Vera Playa → Garrucha (paseo litoral)</h3>
     <p>Flat walk along the shore from Vera Playa to Garrucha's fishing harbour. No incline, buggy or elderly-friendly. At the harbour, fried-fish restaurants serve the area's best catch.</p>
-    <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Paseo+maritimo+Vera+Playa+Garrucha" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Paseo+maritimo+Vera+Playa+Garrucha" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">a short walk<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>Vera Playa → Villaricos (ruinas romanas)</h3>
     <p>Walk north along the beach and low cliffs to Villaricos, where remains of a 3rd-century BC Phoenician and Roman colony stand. Ends at the Archaeological Park with views over the Almanzora delta.</p>
@@ -542,7 +631,7 @@ with us</b>: it is handed over a few days before you arrive.</p>
   </div>
   <span class="dist">1.3 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>Vera Playa → Vera pueblo (por el barranquillo)</h3>
     <p>A roughly 40-minute walk inland, climbing gently along the old road and rural track to Vera's historic centre. Ends at the 16th-century fortress-cathedral, built to withstand Berber raids.</p>
@@ -550,7 +639,7 @@ with us</b>: it is handed over a few days before you arrive.</p>
   </div>
   <span class="dist">3.2 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>Paseo costero Mojácar Playa – Garrucha</h3>
     <p>An easy walk (no technical difficulty) along Mojácar Playa's Paseo del Mediterráneo to Garrucha's fishing harbour. No incline, great with kids. Arriving at the harbour with the fishing boats and fried-fish spots makes it a complete plan.</p>
@@ -558,63 +647,67 @@ with us</b>: it is handed over a few days before you arrive.</p>
   </div>
   <span class="dist">5.8 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Sendero La Mena – Macenas (PR-A 96)</h3>
     <p>Linear coastal route between the cliffs of Mojácar and Macenas beach. Passes the 16th-century Torre del Pirulico watchtower and several viewpoints.</p>
-    <div class="chips"><a href="https://senderosdealmeria.es/otras-zonas/la-mena-macenas-pr-a-96/" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://senderosdealmeria.es/otras-zonas/la-mena-macenas-pr-a-96/" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">14 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Las Negras → Cala de San Pedro</h3>
     <p>Coastal trail along cliffs to a remote cove with a 15th-century Nasrid castle and crystal-clear water. On arrival you'll find a small self-sufficient community selling coffee and fruit. No road access.</p>
-    <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Cala+San+Pedro+Las+Negras+Almeria" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Cala+San+Pedro+Las+Negras+Almeria" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">43 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>San José → Los Genoveses → Mónsul (PR-A 47)</h3>
     <p>The Natural Park's most spectacular coastal route. Passes through the open bay of Los Genoveses and ends at Mónsul, with its black volcanic rocks and dune-sculpting waves. UNESCO World Heritage.</p>
-    <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Playa+Los+Genoveses+San+Jose+Almeria" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Playa+Los+Genoveses+San+Jose+Almeria" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">58 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Sendero de Las Cámaras (Sierra Espuña, Murcia)</h3>
     <p>Murcia's largest natural area: century-old reforested pine woods and the Las Cámaras via ferrata and trail up to the Morrón de Totana, with Spanish ibex sightings almost guaranteed.</p>
-    <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Sierra+Espuna+Centro+de+Visitantes+El+Berro" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Sierra+Espuna+Centro+de+Visitantes+El+Berro" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">73 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Barrancos de Gebas (Alhama de Murcia)</h3>
     <p>A landscape of gullies and badlands shaped by the erosion of marl and clay, with narrow canyons and formations that look like another planet. Quite unlike anything on the coast.</p>
-    <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Barrancos+de+Gebas+Alhama+de+Murcia" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Barrancos+de+Gebas+Alhama+de+Murcia" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">75 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Cerrada de Utrero (Sierra de Castril, Granada)</h3>
     <p>Karst canyon at the northern tip of Granada province, with the Castril river rising between limestone walls, waterfalls and wooden walkways over the water. Natural Park.</p>
-    <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Cerrada+de+Utrero+Castril+Granada" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Cerrada+de+Utrero+Castril+Granada" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">104 km<small>from home</small></span>
 </article></div>
 </section>
+<div class="cta-mid reveal">
+  <p>Liking what you see? The full guide, with a tip for every place, is for guests who book direct.</p>
+  <a href="/mar.html">See the three Hestías →</a>
+</div>
 <section class="grupo" id="g-adventure">
-  <div class="grupo-head">
+  <div class="grupo-head reveal">
     <span class="grupo-n">03</span>
     <h2>Adventure</h2>
   </div>
   <p class="grupo-nota">Here are 2. The guest guide has <b>3</b>, with a tip for each.</p>
   <div class="rejilla">
-<article class="ficha">
+<article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>Karting Garrucha</h3>
     <p>Outdoor karting track in Garrucha. Separate adult and children's karts. Distance: ~10 min by car from Vera Playa.</p>
@@ -622,17 +715,23 @@ with us</b>: it is handed over a few days before you arrive.</p>
   </div>
   <span class="dist">5.6 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Lunar Cable Park (wakeboard · ski náutico)</h3>
     <p>Cable ski on the former rowing canal of the 2005 Mediterranean Games, next to the Cuevas del Almanzora reservoir. Reopened in 2019 as Lunar Cable Park. No boat, no wake, the cable pulls you along. Distance: ~20 km / 24 min from Vera Playa by local road via Vera and Cuevas del Almanzora.</p>
-    <div class="chips"><span class="chip nota">4.7 out of 5</span><a href="https://lunarcablepark.com/" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><span class="chip nota">4.7 out of 5</span><a href="https://lunarcablepark.com/" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">19 km<small>from home</small></span>
 </article></div>
 </section>
-<div class="cta">
+<div class="cta reveal">
+  <span class="cta-ribbon">Direct booking</span>
   <h2>This is just a sample of the guide</h2>
+  <div class="cta-rating">
+    <span class="stars" aria-hidden="true">★★★★★</span>
+    <b>9.93/10</b>
+    <span>412 from real guest reviews</span>
+  </div>
   <p>What you see here anyone can read: what each place is, what is good about it and how far it is. It is the part that can be put in writing.</p>
   <p>The rest is not learned by reading: it is learned by coming back, year after
   year. What time to arrive at each cove to find a spot. What to order at each table. Where to actually
@@ -653,5 +752,49 @@ with us</b>: it is handed over a few days before you arrive.</p>
   <p><a href="/privacidad.html">Privacy</a> · <a href="/cookies.html">Cookies</a></p>
 </footer>
 </div>
+<a class="cta-float" id="cta-float" href="/reservas.html"><span>Book →</span></a>
+<script>
+(function(){
+  // Barra de progreso de lectura.
+  var barra = document.getElementById('progreso');
+  var flot = document.getElementById('cta-float');
+  var onScroll = function(){
+    var h = document.documentElement;
+    var alto = h.scrollHeight - h.clientHeight;
+    if (barra) barra.style.width = (alto > 0 ? (h.scrollTop / alto * 100) : 0) + '%';
+    if (flot) flot.classList.toggle('is-visible', h.scrollTop > window.innerHeight * 0.6);
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Revelado al entrar en viewport. Failsafe: si algo falla o el navegador
+  // no tiene IntersectionObserver, se revela todo a los 2,5 s igualmente,
+  // nunca se queda contenido oculto de forma permanente.
+  var reveals = document.querySelectorAll('.reveal');
+  var showAll = function(){ reveals.forEach(function(el){ el.classList.add('is-in'); }); };
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    showAll();
+  }
+  setTimeout(showAll, 2500);
+
+  // Resalta en el índice sticky la sección que se está leyendo.
+  var enlaces = document.querySelectorAll('.indice a');
+  var grupos = document.querySelectorAll('.grupo[id]');
+  if (enlaces.length && grupos.length && 'IntersectionObserver' in window) {
+    var activar = function(id){
+      enlaces.forEach(function(a){ a.classList.toggle('is-active', a.getAttribute('href') === '#' + id); });
+    };
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) activar(e.target.id); });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    grupos.forEach(function(g){ spy.observe(g); });
+  }
+})();
+</script>
 </body>
 </html>

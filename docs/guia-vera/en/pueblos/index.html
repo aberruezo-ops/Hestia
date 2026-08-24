@@ -169,11 +169,94 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 .pie p+p{margin-top:9px;}
 
 a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
+
+/* ---- barra de progreso de lectura ---- */
+.progreso{position:fixed;top:0;left:0;height:3px;width:0%;z-index:10;
+  background:linear-gradient(90deg,var(--vm),var(--sol),var(--vs));
+  transition:width .1s linear;}
+
+/* ---- revelado al hacer scroll ----
+   Esta página vive de que Google lea el contenido sin ejecutar JS: el
+   texto está siempre en el HTML, la animación solo afecta a la opacidad
+   visual. Por eso .reveal parte oculto SOLO si hay JS (bajo html.js,
+   añadida de forma síncrona en <head> antes de pintar) y el <noscript>
+   fuerza visibilidad completa si no lo hay. Además, el propio script
+   tiene un fallback por si algo falla: nunca se queda nada oculto. */
+html.js .reveal{opacity:0;transform:translateY(26px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal.is-in{opacity:1;transform:none;}
+
+/* ---- hero: zoom lento (Ken Burns) + insignia de valoración ---- */
+.hero video{animation:kenburns 22s ease-in-out infinite alternate;}
+@keyframes kenburns{from{transform:scale(1);}to{transform:scale(1.09);}}
+.hero-rating{display:inline-flex;align-items:center;gap:10px;margin-top:26px;
+  padding:10px 18px 10px 14px;background:rgba(240,232,213,.1);
+  border:1px solid rgba(240,232,213,.22);border-radius:var(--r);
+  backdrop-filter:blur(6px);animation:up .8s var(--ease) .36s both;}
+.hero-rating .stars{color:var(--vs2,#E8C476);font-size:15px;letter-spacing:1px;}
+.hero-rating b{font-family:var(--serif);font-size:19px;color:var(--crema);font-weight:500;}
+.hero-rating span{font-size:12px;color:rgba(240,232,213,.72);}
+
+/* ---- ficha imprescindible ---- */
+.ficha.imprescindible{background:linear-gradient(90deg,rgba(212,168,74,.07),transparent 60%);}
+.ficha.imprescindible::before{color:var(--vs);}
+.chip.destacado{background:var(--vs);color:#fff;font-weight:700;
+  display:inline-flex;align-items:center;gap:4px;}
+.chip.destacado::before{content:'★';font-size:10px;}
+
+/* ---- CTA principal: más contundente ---- */
+.cta{animation:cta-glow 9s ease-in-out infinite;}
+@keyframes cta-glow{
+  0%,100%{box-shadow:0 0 0 0 rgba(58,170,187,0);}
+  50%{box-shadow:0 0 70px 4px rgba(58,170,187,.12);}
+}
+.cta-ribbon{display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ber-dk);background:var(--sol-lt);padding:7px 16px;
+  border-radius:var(--r);margin-bottom:22px;}
+.cta-rating{display:flex;align-items:center;gap:10px;margin:6px 0 24px;}
+.cta-rating .stars{color:var(--vs2,#E8C476);font-size:16px;letter-spacing:1px;}
+.cta-rating b{font-family:var(--serif);font-size:22px;color:var(--crema);}
+.cta-rating span{font-size:13px;color:rgba(240,232,213,.7);}
+
+/* ---- CTA intermedia, entre bloques de la lista ---- */
+.cta-mid{margin:56px 0;padding:26px 28px;background:var(--arena);
+  border-radius:var(--r-lg);display:flex;align-items:center;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;}
+.cta-mid p{font-size:15px;color:var(--ink-soft);max-width:52ch;margin:0;}
+.cta-mid a{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--crema);background:var(--ber-dk);
+  padding:13px 24px;border-radius:var(--r);text-decoration:none;
+  transition:transform .25s var(--ease),background .25s var(--ease);}
+.cta-mid a:hover{background:var(--sol);transform:translateY(-2px);}
+
+/* ---- botón flotante "Reservar" ---- */
+.cta-float{position:fixed;right:24px;bottom:24px;z-index:9;
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.06em;
+  color:var(--crema);background:var(--ber-dk);padding:14px 24px;
+  border-radius:var(--r-lg);text-decoration:none;
+  box-shadow:0 10px 30px rgba(42,15,46,.35);
+  opacity:0;transform:translateY(16px) scale(.94);pointer-events:none;
+  transition:opacity .3s var(--ease),transform .3s var(--ease),background .25s var(--ease);}
+.cta-float.is-visible{opacity:1;transform:none;pointer-events:auto;}
+.cta-float:hover{background:var(--sol);}
+.cta-float span{animation:float-pulse 2.4s ease-in-out infinite;}
+@keyframes float-pulse{0%,100%{transform:translateX(0);}50%{transform:translateX(3px);}}
+@media(max-width:560px){.cta-float{right:16px;bottom:16px;padding:12px 18px;font-size:12px;}}
+
+/* ---- índice activo al hacer scroll ---- */
+.indice a.is-active{color:var(--crema);background:var(--ber-dk);border-color:var(--ber-dk);}
+
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;}
   html{scroll-behavior:auto;}
+  .reveal{opacity:1;transform:none;}
 }
 </style>
+<script>document.documentElement.classList.add('js');</script>
+<noscript><style>.reveal{opacity:1!important;transform:none!important;}</style></noscript>
 <script type="application/ld+json">
 [
   {
@@ -429,6 +512,7 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
 </script>
 </head>
 <body>
+<div class="progreso" id="progreso"></div>
 <div class="topbar">
   <div class="wrap">
     <span class="tb-contacto">
@@ -459,6 +543,11 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
     <h1>The villages worth the drive</h1>
     <p class="intro">Almería changes a lot over a short distance: hillside white villages, mining towns and cave dwellings. Of everything there is, these are the ones worth getting in the car for. Sorted by distance from the apartments.</p>
     <div class="cifras"><div class="cifra"><b>24</b><span>places</span></div><div class="cifra"><b>2</b><span>categories</span></div><div class="cifra"><b>3.2 km</b><span>the nearest</span></div></div>
+    <div class="hero-rating">
+      <span class="stars" aria-hidden="true">★★★★★</span>
+      <b>9.93/10</b>
+      <span>412 from real guest reviews</span>
+    </div>
   </div>
 </header>
 <div class="indice"><div class="wrap">
@@ -468,21 +557,21 @@ a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
 36 chapters, 131 tips and the area map, is <b>exclusive to guests staying
 with us</b>: it is handed over a few days before you arrive.</p>
 <section class="grupo" id="g-town">
-  <div class="grupo-head">
+  <div class="grupo-head reveal">
     <span class="grupo-n">01</span>
     <h2>Village</h2>
   </div>
   <p class="grupo-nota">Here are 18. The guest guide has <b>35</b>, with a tip for each.</p>
   <div class="rejilla">
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Vera pueblo</h3>
     <p>The comarca's main town. Palm-lined Plaza Mayor, a 16th-century fortress-church, an 18th-century town hall and remains of the old wall.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">3.2 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>Antas</h3>
     <p>Village near Hestía with the El Argar Bronze Age site, the most important on the Iberian Peninsula.</p>
@@ -490,143 +579,143 @@ with us</b>: it is handed over a few days before you arrive.</p>
   </div>
   <span class="dist">5.5 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Garrucha</h3>
     <p>Fishing village 10 min from Hestía. Its fish market is one of the most important on the Mediterranean (famous for red prawns).</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">5.5 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Mojácar</h3>
     <p>Almería's most photographed white village, perched on a hill at 175 m. Moorish heritage in every whitewashed narrow street.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">11 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Pulpí</h3>
     <p>Village in the Almería Levante, the northernmost. World-famous for its giant Geode (8 m tall).</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">19 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Carboneras</h3>
     <p>Fishing village north of Cabo de Gata. Starting point for Playa de los Muertos and Mesa Roldán.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">27 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Sorbas</h3>
     <p>Village of houses hanging over the ravine. Surrounded by the Karst en Yesos nature reserve, unique in Europe.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">27 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Águilas (Murcia)</h3>
     <p>Murcian coastal town, 30 min north. Famous for its Carnival, declared of International Tourist Interest.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">28 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Macael</h3>
     <p>The world capital of white marble: the same marble as the Alhambra, the Court of the Lions and the Vatican. 50 min away.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">43 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Níjar</h3>
     <p>White village at the foot of Sierra Alhamilla, the natural gateway to Cabo de Gata Natural Park. Home to Andalusia's most respected pottery and traditional jarapa rugs.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">45 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Lorca (Murcia)</h3>
     <p>Baroque city declared a Historic-Artistic Site. Known as &quot;the City of the Sun&quot; and for one of the most spectacular Holy Weeks in Spain.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">50 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Tabernas</h3>
     <p>White village in the middle of Europe's only desert. The setting for over 500 films (The Good, the Bad and the Ugly).</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">54 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Vélez-Blanco</h3>
     <p>Whitewashed village crowned by one of the finest Renaissance castles in Spain. Its original courtyard is now in New York's Metropolitan Museum.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">55 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Aledo (Murcia)</h3>
     <p>Walled village on a hill next to Sierra Espuña, with its 13th-century defensive perimeter almost intact. One of the best-preserved historic sites in the Region of Murcia.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">70 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Almería capital</h3>
     <p>The provincial capital, 1h15 away. A unique mix of a Moorish Alcazaba, a fortress-cathedral and old fishing quarters.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">72 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Cartagena (Murcia)</h3>
     <p>Port city with 3,000 years of history. Roman, modernist and military, unlike anywhere else on the Mediterranean. 1h30 away.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">83 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Caravaca de la Cruz (Murcia)</h3>
     <p>A Holy City, one of only five in the Christian world with a perpetual jubilee every 7 years. 2h15 away, in the mountains of northwest Murcia.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">97 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Murcia capital</h3>
     <p>The region's capital, 1h50 away. Baroque cathedral, a 19th-century casino, gardens and Europe's most fertile market-garden land. Birthplace of the Bando de la Huerta festival.</p>
-    
+    <div class="chips"><span class="chip destacado">Must-see</span></div>
   </div>
   <span class="dist">103 km<small>from home</small></span>
 </article></div>
 </section>
 <section class="grupo" id="g-gem">
-  <div class="grupo-head">
+  <div class="grupo-head reveal">
     <span class="grupo-n">02</span>
     <h2>Hidden gem</h2>
   </div>
   <p class="grupo-nota">Here are 6. The guest guide has <b>12</b>, with a tip for each.</p>
   <div class="rejilla">
-<article class="ficha">
+<article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>Vera histórica</h3>
     <p>Village rebuilt in the 15th century after the 1518 earthquake. The Collegiate Church, cobbled squares and quiet Andalusian life 10 minutes from the beach.</p>
@@ -634,49 +723,55 @@ with us</b>: it is handed over a few days before you arrive.</p>
   </div>
   <span class="dist">3.3 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Baria · Villaricos</h3>
     <p>Phoenician-Roman city (6th c. BC) right by the beach, 10 minutes from Hestía. Walls, garum factories and a necropolis remain. Barely signposted, look for the green signs.</p>
-    <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/37.2440,-1.8920" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/37.2440,-1.8920" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">5.5 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>La Isleta del Moro</h3>
     <p>The Park's most authentic and photogenic fishing village. Whitewashed houses, coloured boats and silence. A real postcard that still exists.</p>
-    <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.9060,-2.0250" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.9060,-2.0250" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">41 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Cortijo del Fraile</h3>
     <p>Ruins of the farmhouse where the real crime that inspired Lorca's &quot;Blood Wedding&quot; took place. Total silence, adobe walls and a story that raises goosebumps.</p>
-    <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.8830,-2.0800" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.8830,-2.0800" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">45 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Salinas de Cabo de Gata</h3>
     <p>Pink lagoon with hundreds of flamingos at sunset. The sky reflected in the salt is surreal, Almería's most surprising shot.</p>
-    <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.7780,-2.2100" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.7780,-2.2100" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">61 km<small>from home</small></span>
 </article>
-<article class="ficha">
+<article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Arrecife de las Sirenas</h3>
     <p>Black volcanic rocks rising from the turquoise Mediterranean, beside the Cabo de Gata lighthouse. The most iconic image of the Almería coast.</p>
-    <div class="chips"><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.7280,-2.1890" rel="nofollow noopener" target="_blank">View on map</a></div>
+    <div class="chips"><span class="chip destacado">Must-see</span><a href="https://www.google.com/maps/dir/Vera+Playa,Almería/36.7280,-2.1890" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">65 km<small>from home</small></span>
 </article></div>
 </section>
-<div class="cta">
+<div class="cta reveal">
+  <span class="cta-ribbon">Direct booking</span>
   <h2>This is just a sample of the guide</h2>
+  <div class="cta-rating">
+    <span class="stars" aria-hidden="true">★★★★★</span>
+    <b>9.93/10</b>
+    <span>412 from real guest reviews</span>
+  </div>
   <p>What you see here anyone can read: what each place is, what is good about it and how far it is. It is the part that can be put in writing.</p>
   <p>The rest is not learned by reading: it is learned by coming back, year after
   year. What time to arrive at each cove to find a spot. What to order at each table. Where to actually
@@ -697,5 +792,49 @@ with us</b>: it is handed over a few days before you arrive.</p>
   <p><a href="/privacidad.html">Privacy</a> · <a href="/cookies.html">Cookies</a></p>
 </footer>
 </div>
+<a class="cta-float" id="cta-float" href="/reservas.html"><span>Book →</span></a>
+<script>
+(function(){
+  // Barra de progreso de lectura.
+  var barra = document.getElementById('progreso');
+  var flot = document.getElementById('cta-float');
+  var onScroll = function(){
+    var h = document.documentElement;
+    var alto = h.scrollHeight - h.clientHeight;
+    if (barra) barra.style.width = (alto > 0 ? (h.scrollTop / alto * 100) : 0) + '%';
+    if (flot) flot.classList.toggle('is-visible', h.scrollTop > window.innerHeight * 0.6);
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Revelado al entrar en viewport. Failsafe: si algo falla o el navegador
+  // no tiene IntersectionObserver, se revela todo a los 2,5 s igualmente,
+  // nunca se queda contenido oculto de forma permanente.
+  var reveals = document.querySelectorAll('.reveal');
+  var showAll = function(){ reveals.forEach(function(el){ el.classList.add('is-in'); }); };
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    showAll();
+  }
+  setTimeout(showAll, 2500);
+
+  // Resalta en el índice sticky la sección que se está leyendo.
+  var enlaces = document.querySelectorAll('.indice a');
+  var grupos = document.querySelectorAll('.grupo[id]');
+  if (enlaces.length && grupos.length && 'IntersectionObserver' in window) {
+    var activar = function(id){
+      enlaces.forEach(function(a){ a.classList.toggle('is-active', a.getAttribute('href') === '#' + id); });
+    };
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) activar(e.target.id); });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    grupos.forEach(function(g){ spy.observe(g); });
+  }
+})();
+</script>
 </body>
 </html>
