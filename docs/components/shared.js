@@ -2373,7 +2373,7 @@ const COPY = {
     contact_cta_mail: 'info@hestiayourhome.com',
     contact_cta_avail: 'Comprobar disponibilidad',
     footer_apts: 'Hestías',
-    footer_hestia: 'Hestía',
+    footer_hestia: 'Sobre Hestía',
     footer_legal: 'Legal',
     footer_contacto: 'Contacto',
     footer_tag: 'Tu hogar en Vera Playa, desde 2016.'
@@ -2441,7 +2441,7 @@ const COPY = {
     contact_cta_mail: 'info@hestiayourhome.com',
     contact_cta_avail: 'Check availability',
     footer_apts: 'Hestías',
-    footer_hestia: 'Hestía',
+    footer_hestia: 'About Hestía',
     footer_legal: 'Legal',
     footer_contacto: 'Contact',
     footer_tag: 'Your home in Vera Playa, since 2016.'
