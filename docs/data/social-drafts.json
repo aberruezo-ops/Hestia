@@ -1,6 +1,111 @@
 {
   "drafts": [
     {
+      "id": "gap-vt-2026-08-30",
+      "createdAt": "2026-08-24T07:50:30.008Z",
+      "status": "pending",
+      "source": "gap",
+      "format": "reel",
+      "apt": "vt",
+      "video": "assets/reel-vt.mp4",
+      "clip": {
+        "src": "assets/hestia intro v9 thalassa outro.mp4",
+        "start": 24,
+        "dur": 9
+      },
+      "image": "assets/apt-vt-4.jpg",
+      "networks": [
+        "ig",
+        "fb"
+      ],
+      "caption": "Hueco de última hora en Hestía Vera Thalassa: del 30/08/2026 al 05/09/2026, 6 noches completas.\n\nSon las fechas exactas que quedan libres entre dos reservas. Reserva directa: 0% comisiones, respondemos en minutos y se admiten mascotas.\n\nLast-minute gap, book directly with us.\n\n📍 Vera Playa, Almería\n🔗 https://www.hestiayourhome.com/reservas.html\n\n#ultimahora #VeraPlaya #Almeria #HestiaYourHome #alquilervacacional",
+      "link": "https://www.hestiayourhome.com/reservas.html?apt=vt&checkin=2026-08-30&checkout=2026-09-05"
+    },
+    {
+      "id": "mes-2026-09-vm",
+      "createdAt": "2026-08-24T07:50:30.008Z",
+      "status": "pending",
+      "source": "mes",
+      "format": "reel",
+      "apt": "vm",
+      "video": "assets/reel-vm.mp4",
+      "clip": {
+        "src": "assets/hestia v13 mar clean.mp4",
+        "start": 17,
+        "dur": 9
+      },
+      "image": "assets/apt-vm-gallery-1.jpg",
+      "networks": [
+        "ig",
+        "fb"
+      ],
+      "caption": "Septiembre en Hestía Vera Mar ☀️\n\nTu hogar lejos de casa en Vera Playa. Reserva directa con nosotros: 0% comisiones, mejoramos cualquier precio, respondemos en minutos y se admiten mascotas.\n\nBook directly with us.\n\n📍 Vera Playa, Almería\n🔗 https://www.hestiayourhome.com/reservas.html\n\n#VeraPlaya #Almeria #Mojacar #verano #HestiaYourHome",
+      "link": "https://www.hestiayourhome.com/reservas.html?apt=vm"
+    },
+    {
+      "id": "mes-2026-09-vt",
+      "createdAt": "2026-08-24T07:50:30.008Z",
+      "status": "pending",
+      "source": "mes",
+      "format": "reel",
+      "apt": "vt",
+      "video": "assets/reel-vt.mp4",
+      "clip": {
+        "src": "assets/hestia intro v9 thalassa outro.mp4",
+        "start": 36,
+        "dur": 9
+      },
+      "image": "assets/apt-vt-4.jpg",
+      "networks": [
+        "ig",
+        "fb"
+      ],
+      "caption": "Septiembre en Hestía Vera Thalassa ☀️\n\nTu hogar lejos de casa en Vera Playa. Reserva directa con nosotros: 0% comisiones, mejoramos cualquier precio, respondemos en minutos y se admiten mascotas.\n\nBook directly with us.\n\n📍 Vera Playa, Almería\n🔗 https://www.hestiayourhome.com/reservas.html\n\n#VeraPlaya #Almeria #Mojacar #verano #HestiaYourHome",
+      "link": "https://www.hestiayourhome.com/reservas.html?apt=vt"
+    },
+    {
+      "id": "mes-2026-09-vs",
+      "createdAt": "2026-08-24T07:50:30.008Z",
+      "status": "pending",
+      "source": "mes",
+      "format": "reel",
+      "apt": "vs",
+      "video": "assets/reel-vs.mp4",
+      "clip": {
+        "src": "assets/hestia v14 salinas clean.mp4",
+        "start": 4,
+        "dur": 9
+      },
+      "image": "assets/apt-vs-gallery-1.jpg",
+      "networks": [
+        "ig",
+        "fb"
+      ],
+      "caption": "Septiembre en Hestía Vera Salinas ☀️\n\nTu hogar lejos de casa en Vera Playa. Reserva directa con nosotros: 0% comisiones, mejoramos cualquier precio, respondemos en minutos y se admiten mascotas.\n\nBook directly with us.\n\n📍 Vera Playa, Almería\n🔗 https://www.hestiayourhome.com/reservas.html\n\n#VeraPlaya #Almeria #Mojacar #verano #HestiaYourHome",
+      "link": "https://www.hestiayourhome.com/reservas.html?apt=vs"
+    },
+    {
+      "id": "weekly-2026w35",
+      "createdAt": "2026-08-24T07:50:30.008Z",
+      "status": "pending",
+      "source": "weekly",
+      "format": "reel",
+      "apt": "vs",
+      "video": "assets/reel-blog.mp4",
+      "clip": {
+        "src": "assets/hestia v14 salinas clean.mp4",
+        "start": 14,
+        "dur": 9
+      },
+      "image": "assets/apt-vs-gallery-1.jpg",
+      "networks": [
+        "ig",
+        "fb"
+      ],
+      "caption": "Esta semana en el blog de Hestía 📰 · Edición de Agosto 2026\n\nHestía Vera Salinas: Agosto es el mes más caliente del año en Vera Playa: el Mediterráneo roza los 26-27°C y el aire apenas baja de los 24°C ni de madrugada.\n\nY en la zona: Agosto, el mes de más gente: cómo disfrutar la playa sin agobios.\n\nTe lo contamos todo en el blog, con la agenda del mes y las fiestas de los pueblos cercanos ↓\n🔗 https://www.hestiayourhome.com/noticias.html\n\n#VeraPlaya #Almeria #blog #quehacerenAlmeria #HestiaYourHome",
+      "link": "https://www.hestiayourhome.com/noticias.html"
+    },
+    {
       "id": "weekly-2026w34",
       "createdAt": "2026-08-17T07:44:09.884Z",
       "status": "skipped",
@@ -465,5 +570,5 @@
       "link": "https://www.hestiayourhome.com/noticias.html"
     }
   ],
-  "updatedAt": "2026-08-23T18:50:11.205Z"
+  "updatedAt": "2026-08-24T07:50:30.008Z"
 }
