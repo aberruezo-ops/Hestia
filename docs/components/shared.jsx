@@ -2302,6 +2302,7 @@ function _hestiaFindAlternatives({ checkin, checkout, apt, avail, guests, max = 
 
   const wantIds  = apt ? [apt] : ['vm', 'vt', 'vs'];
   const otherIds = _ALT_APTS.map(a => a.id).filter(id => !wantIds.includes(id));
+  const allIds   = [...wantIds, ...otherIds];
   const today    = new Date().toISOString().slice(0, 10);
   const v2        = window.PRICES_V2 || {};
   const rules     = v2.rules || {};
@@ -2309,19 +2310,41 @@ function _hestiaFindAlternatives({ checkin, checkout, apt, avail, guests, max = 
   const critMinN  = rules.criticalSeasonMinNights || baseMinN;
   const horizon   = (v2.bookingHorizon && v2.bookingHorizon.lastCheckinDate) || null;
   const isCrit    = (ds) => (typeof _v2BumpedSeasonForDate === 'function') ? _v2BumpedSeasonForDate(ds, v2) === 'critica' : false;
-  const isFree    = (id, cin, cout) => { const blk = avail[id] && avail[id].blocked; if (!blk) return false; return !blk.some(r => cin < r.end && cout > r.start); };
+  const minNightsFor = (ds) => isCrit(ds) ? critMinN : baseMinN;
+
+  // Huecos libres reales por apartamento (fusiona los bloqueos y calcula lo
+  // que queda entre medias), en vez de solo probar la misma duración pedida
+  // desplazada día a día. Así, si el hueco que hay es más corto de lo que
+  // pide el huésped, se le ofrece igualmente (con menos noches) en vez de
+  // descartarlo sin más: mejor una estancia más corta que ninguna.
+  const searchStart = (() => { const s = _adj(checkin, -windowDays); return s < today ? today : s; })();
+  const searchEnd = (() => { const e = _adj(checkin, windowDays); return (horizon && horizon < e) ? horizon : e; })();
+  const freeGaps = (id) => {
+    if (searchStart >= searchEnd) return [];
+    const blk = ((avail[id] && avail[id].blocked) || [])
+      .filter(r => r.end > searchStart && r.start < searchEnd)
+      .sort((a, b) => a.start.localeCompare(b.start));
+    const gaps = [];
+    let cursor = searchStart;
+    for (const r of blk) {
+      if (r.start > cursor) gaps.push({ start: cursor, end: r.start < searchEnd ? r.start : searchEnd });
+      if (r.end > cursor) cursor = r.end;
+      if (cursor >= searchEnd) break;
+    }
+    if (cursor < searchEnd) gaps.push({ start: cursor, end: searchEnd });
+    return gaps.filter(g => _diff(g.start, g.end) >= 1);
+  };
 
   const out = [];
   const seen = new Set();
   const perAptN = {};
-  const tryAdd = (id, cin) => {
+  const tryAdd = (id, cin, cout) => {
     if ((perAptN[id] || 0) >= max) return;  // basta con guardar las `max` más cercanas de cada Hestía
-    const cout = _adj(cin, nights);
     if (cin < today) return;
-    if (horizon && cin > horizon) return;
-    if (nights < (isCrit(cin) ? critMinN : baseMinN)) return;
-    if (!isFree(id, cin, cout)) return;
-    const key = id + cin;
+    if (horizon && cout > horizon) return;
+    const n = _diff(cin, cout);
+    if (n < minNightsFor(cin)) return;
+    const key = id + cin + cout;
     if (seen.has(key)) return;
     seen.add(key);
     const calc = _calcStay(cin, cout, id, false, parseInt(guests, 10) || null);
@@ -2330,31 +2353,47 @@ function _hestiaFindAlternatives({ checkin, checkout, apt, avail, guests, max = 
     perAptN[id] = (perAptN[id] || 0) + 1;
     out.push({
       aptId: id, aptName: meta.name, slug: meta.slug, accent: meta.accent,
-      checkin: cin, checkout: cout, nights,
+      checkin: cin, checkout: cout, nights: n,
       total: calc.directTotal, avgPerNight: calc.avgPerNight,
-      shiftDays: _diff(checkin, cin), sameDates: cin === checkin,
+      shiftDays: _diff(checkin, cin), sameDates: cin === checkin && n === nights,
+      shorterThanRequested: n < nights,
     });
   };
 
-  // 1) Mismas fechas, otro Hestía (la alternativa más cercana: mismo viaje, otra casa).
-  otherIds.forEach(id => tryAdd(id, checkin));
-  // 2) Mismas noches en fechas cercanas, de más próxima a más lejana, para los 3.
-  for (let d = 1; d <= windowDays; d++) {
-    wantIds.forEach(id => { tryAdd(id, _adj(checkin, -d)); tryAdd(id, _adj(checkin, d)); });
-  }
+  // Para cada Hestía (la pedida y las otras), recorre sus huecos libres
+  // cercanos a la fecha pedida y decide qué ofrecer en cada uno:
+  //  · si el hueco es igual o más largo que lo pedido, la MISMA duración,
+  //    encajada lo más cerca posible del checkin original dentro del hueco;
+  //  · si es más corto (pero cumple la estancia mínima), el hueco entero.
+  allIds.forEach(id => {
+    freeGaps(id).forEach(g => {
+      const gapNights = _diff(g.start, g.end);
+      if (gapNights >= nights) {
+        let cin = checkin < g.start ? g.start : checkin;
+        if (_adj(cin, nights) > g.end) cin = _adj(g.end, -nights);
+        tryAdd(id, cin, _adj(cin, nights));
+      } else {
+        tryAdd(id, g.start, g.end);
+      }
+    });
+  });
 
   // Diversificar por apartamento: primero la opción más cercana de CADA Hestía
-  // (ordenadas entre sí por proximidad de fechas), luego la 2ª de cada uno, etc.
-  // Así la lista no se llena con un solo apartamento y aparecen los 3 Hestías,
+  // (ordenadas entre sí por proximidad de fechas y, a igualdad, prefiriendo la
+  // duración pedida sobre una más corta), luego la 2ª de cada uno, etc. Así la
+  // lista no se llena con un solo apartamento y aparecen los 3 Hestías,
   // siempre dando prioridad a las fechas más próximas a lo que pidió el huésped.
   const byApt = {};
   out.forEach(o => { (byApt[o.aptId] = byApt[o.aptId] || []).push(o); });
   Object.values(byApt).forEach(list => list.sort((a, b) =>
-    (Math.abs(a.shiftDays) - Math.abs(b.shiftDays)) || (a.total - b.total)));
+    (Math.abs(a.shiftDays) - Math.abs(b.shiftDays)) ||
+    (Number(a.shorterThanRequested) - Number(b.shorterThanRequested)) ||
+    (a.total - b.total)));
   Object.values(byApt).forEach(list => list.forEach((o, i) => { o._rank = i; }));
   out.sort((a, b) =>
     (a._rank - b._rank) ||
     (Math.abs(a.shiftDays) - Math.abs(b.shiftDays)) ||
+    (Number(a.shorterThanRequested) - Number(b.shorterThanRequested)) ||
     (a.total - b.total));
   out.forEach(o => { delete o._rank; });
   return out.slice(0, max);
