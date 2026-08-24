@@ -77,6 +77,23 @@ const legibles = (s, lang) => {
 const limpiaEmoji = s => String(s ?? '')
   .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, '').replace(/\s+/g, ' ').trim();
 
+// ---- prueba social real (misma normalización que scripts/sync-rating.mjs) -
+// La guía es la puerta de entrada de gente que no nos conoce: la nota y el
+// número de opiniones son el dato que más convence, y sale calculado de
+// reviews.json en cada build, nunca a mano, para no quedarse desfasado.
+const REVIEWS_PATH = join(ROOT, 'docs/data/reviews.json');
+const TEN_SCALE = new Set(['booking']);
+const RATING = (() => {
+  try {
+    const raw = JSON.parse(readFileSync(REVIEWS_PATH, 'utf8'));
+    const items = (raw.items || []).filter(r => r.status === 'published' && typeof r.rating === 'number');
+    if (!items.length) return null;
+    const norm = r => (TEN_SCALE.has(r.source) ? r.rating : r.rating * 2);
+    const sum = items.reduce((a, r) => a + norm(r), 0);
+    return { value: (sum / items.length).toFixed(2), count: items.length };
+  } catch (_) { return null; }
+})();
+
 // ---- extracción de datos --------------------------------------------------
 const src = readFileSync(SRC, 'utf8');
 
@@ -285,6 +302,12 @@ con nosotros</b>: se entrega unos días antes de vuestra llegada.`,
     porDondeEmpezar: 'Por dónde empezar',
     verLos: (n) => `Ver los ${n} sitios`,
     ondasSitios: (n) => `${n} sitios`,
+    imprescindible: 'Imprescindible',
+    ratingSub: 'en opiniones reales de huéspedes',
+    ctaRibbon: 'Reserva directa',
+    ctaFloatBtn: 'Reservar →',
+    ctaMid: '¿Te está gustando lo que ves? La guía completa, con el consejo de cada sitio, es para quien reserva directo.',
+    ctaMidBtn: 'Ver los tres Hestía',
   },
   en: {
     htmlLang: 'en', ogLocale: 'en_GB',
@@ -322,6 +345,12 @@ with us</b>: it is handed over a few days before you arrive.`,
     porDondeEmpezar: 'Where to start',
     verLos: (n) => `See all ${n} places`,
     ondasSitios: (n) => `${n} places`,
+    imprescindible: 'Must-see',
+    ratingSub: 'from real guest reviews',
+    ctaRibbon: 'Direct booking',
+    ctaFloatBtn: 'Book →',
+    ctaMid: 'Liking what you see? The full guide, with a tip for every place, is for guests who book direct.',
+    ctaMidBtn: 'See the three Hestías',
   },
 };
 
@@ -473,9 +502,90 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 .pie p+p{margin-top:9px;}
 
 a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
+
+/* ---- barra de progreso de lectura ---- */
+.progreso{position:fixed;top:0;left:0;height:3px;width:0%;z-index:10;
+  background:linear-gradient(90deg,var(--vm),var(--sol),var(--vs));
+  transition:width .1s linear;}
+
+/* ---- revelado al hacer scroll ----
+   Esta página vive de que Google lea el contenido sin ejecutar JS: el
+   texto está siempre en el HTML, la animación solo afecta a la opacidad
+   visual. Por eso .reveal parte oculto SOLO si hay JS (bajo html.js,
+   añadida de forma síncrona en <head> antes de pintar) y el <noscript>
+   fuerza visibilidad completa si no lo hay. Además, el propio script
+   tiene un fallback por si algo falla: nunca se queda nada oculto. */
+html.js .reveal{opacity:0;transform:translateY(26px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease);}
+.reveal.is-in{opacity:1;transform:none;}
+
+/* ---- hero: zoom lento (Ken Burns) + insignia de valoración ---- */
+.hero video{animation:kenburns 22s ease-in-out infinite alternate;}
+@keyframes kenburns{from{transform:scale(1);}to{transform:scale(1.09);}}
+.hero-rating{display:inline-flex;align-items:center;gap:10px;margin-top:26px;
+  padding:10px 18px 10px 14px;background:rgba(240,232,213,.1);
+  border:1px solid rgba(240,232,213,.22);border-radius:var(--r);
+  backdrop-filter:blur(6px);animation:up .8s var(--ease) .36s both;}
+.hero-rating .stars{color:var(--vs2,#E8C476);font-size:15px;letter-spacing:1px;}
+.hero-rating b{font-family:var(--serif);font-size:19px;color:var(--crema);font-weight:500;}
+.hero-rating span{font-size:12px;color:rgba(240,232,213,.72);}
+
+/* ---- ficha imprescindible ---- */
+.ficha.imprescindible{background:linear-gradient(90deg,rgba(212,168,74,.07),transparent 60%);}
+.ficha.imprescindible::before{color:var(--vs);}
+.chip.destacado{background:var(--vs);color:#fff;font-weight:700;
+  display:inline-flex;align-items:center;gap:4px;}
+.chip.destacado::before{content:'★';font-size:10px;}
+
+/* ---- CTA principal: más contundente ---- */
+.cta{animation:cta-glow 9s ease-in-out infinite;}
+@keyframes cta-glow{
+  0%,100%{box-shadow:0 0 0 0 rgba(58,170,187,0);}
+  50%{box-shadow:0 0 70px 4px rgba(58,170,187,.12);}
+}
+.cta-ribbon{display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ber-dk);background:var(--sol-lt);padding:7px 16px;
+  border-radius:var(--r);margin-bottom:22px;}
+.cta-rating{display:flex;align-items:center;gap:10px;margin:6px 0 24px;}
+.cta-rating .stars{color:var(--vs2,#E8C476);font-size:16px;letter-spacing:1px;}
+.cta-rating b{font-family:var(--serif);font-size:22px;color:var(--crema);}
+.cta-rating span{font-size:13px;color:rgba(240,232,213,.7);}
+
+/* ---- CTA intermedia, entre bloques de la lista ---- */
+.cta-mid{margin:56px 0;padding:26px 28px;background:var(--arena);
+  border-radius:var(--r-lg);display:flex;align-items:center;justify-content:space-between;
+  gap:20px;flex-wrap:wrap;}
+.cta-mid p{font-size:15px;color:var(--ink-soft);max-width:52ch;margin:0;}
+.cta-mid a{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--crema);background:var(--ber-dk);
+  padding:13px 24px;border-radius:var(--r);text-decoration:none;
+  transition:transform .25s var(--ease),background .25s var(--ease);}
+.cta-mid a:hover{background:var(--sol);transform:translateY(-2px);}
+
+/* ---- botón flotante "Reservar" ---- */
+.cta-float{position:fixed;right:24px;bottom:24px;z-index:9;
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--sans);font-size:13px;font-weight:700;letter-spacing:.06em;
+  color:var(--crema);background:var(--ber-dk);padding:14px 24px;
+  border-radius:var(--r-lg);text-decoration:none;
+  box-shadow:0 10px 30px rgba(42,15,46,.35);
+  opacity:0;transform:translateY(16px) scale(.94);pointer-events:none;
+  transition:opacity .3s var(--ease),transform .3s var(--ease),background .25s var(--ease);}
+.cta-float.is-visible{opacity:1;transform:none;pointer-events:auto;}
+.cta-float:hover{background:var(--sol);}
+.cta-float span{animation:float-pulse 2.4s ease-in-out infinite;}
+@keyframes float-pulse{0%,100%{transform:translateX(0);}50%{transform:translateX(3px);}}
+@media(max-width:560px){.cta-float{right:16px;bottom:16px;padding:12px 18px;font-size:12px;}}
+
+/* ---- índice activo al hacer scroll ---- */
+.indice a.is-active{color:var(--crema);background:var(--ber-dk);border-color:var(--ber-dk);}
+
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;}
   html{scroll-behavior:auto;}
+  .reveal{opacity:1;transform:none;}
 }
 `;
 
@@ -504,11 +614,14 @@ const cabecera = ({ lang, title, desc, canonical, altHref, jsonld }) => `<!DOCTY
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>${ESTILO}</style>
+<script>document.documentElement.classList.add('js');</script>
+<noscript><style>.reveal{opacity:1!important;transform:none!important;}</style></noscript>
 <script type="application/ld+json">
 ${JSON.stringify(jsonld, null, 2)}
 </script>
 </head>
 <body>
+<div class="progreso" id="progreso"></div>
 <div class="topbar">
   <div class="wrap">
     <span class="tb-contacto">
@@ -544,6 +657,11 @@ const hero = ({ lang, h1, intro, cifras, video }) => `
     <p class="intro">${esc(intro)}</p>
     ${cifras && cifras.length ? `<div class="cifras">${cifras.map(c =>
       `<div class="cifra"><b>${esc(c[0])}</b><span>${esc(c[1])}</span></div>`).join('')}</div>` : ''}
+    ${RATING ? `<div class="hero-rating">
+      <span class="stars" aria-hidden="true">★★★★★</span>
+      <b>${esc(RATING.value)}/10</b>
+      <span>${esc(String(RATING.count))} ${esc(T[lang].ratingSub)}</span>
+    </div>` : ''}
   </div>
 </header>`;
 
@@ -560,8 +678,14 @@ const avisoExtracto = lang => `
 const bloqueCta = lang => {
   const t = T[lang];
   return `
-<div class="cta">
+<div class="cta reveal">
+  <span class="cta-ribbon">${esc(t.ctaRibbon)}</span>
   <h2>${esc(t.ctaH2)}</h2>
+  ${RATING ? `<div class="cta-rating">
+    <span class="stars" aria-hidden="true">★★★★★</span>
+    <b>${esc(RATING.value)}/10</b>
+    <span>${esc(String(RATING.count))} ${esc(t.ratingSub)}</span>
+  </div>` : ''}
   <p>${esc(t.ctaP1)}</p>
   <p>${t.ctaP2()}</p>
   <div class="cta-datos">
@@ -576,6 +700,18 @@ const bloqueCta = lang => {
 </div>`;
 };
 
+// CTA compacta que se intercala entre bloques de categoría en hubs largos
+// (donde-comer, con 4 categorías y 57 sitios): sin ella, quien no llega
+// hasta el final nunca ve la llamada a reservar.
+const ctaMid = lang => {
+  const t = T[lang];
+  return `
+<div class="cta-mid reveal">
+  <p>${esc(t.ctaMid)}</p>
+  <a href="/mar.html">${esc(t.ctaMidBtn)} →</a>
+</div>`;
+};
+
 const pie = lang => `
 <footer class="pie">
   <p>${T[lang].pieP1}</p>
@@ -583,6 +719,50 @@ const pie = lang => `
   <p>${T[lang].pieLegal}</p>
 </footer>
 </div>
+<a class="cta-float" id="cta-float" href="/reservas.html"><span>${esc(T[lang].ctaFloatBtn)}</span></a>
+<script>
+(function(){
+  // Barra de progreso de lectura.
+  var barra = document.getElementById('progreso');
+  var flot = document.getElementById('cta-float');
+  var onScroll = function(){
+    var h = document.documentElement;
+    var alto = h.scrollHeight - h.clientHeight;
+    if (barra) barra.style.width = (alto > 0 ? (h.scrollTop / alto * 100) : 0) + '%';
+    if (flot) flot.classList.toggle('is-visible', h.scrollTop > window.innerHeight * 0.6);
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Revelado al entrar en viewport. Failsafe: si algo falla o el navegador
+  // no tiene IntersectionObserver, se revela todo a los 2,5 s igualmente,
+  // nunca se queda contenido oculto de forma permanente.
+  var reveals = document.querySelectorAll('.reveal');
+  var showAll = function(){ reveals.forEach(function(el){ el.classList.add('is-in'); }); };
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    reveals.forEach(function(el){ io.observe(el); });
+  } else {
+    showAll();
+  }
+  setTimeout(showAll, 2500);
+
+  // Resalta en el índice sticky la sección que se está leyendo.
+  var enlaces = document.querySelectorAll('.indice a');
+  var grupos = document.querySelectorAll('.grupo[id]');
+  if (enlaces.length && grupos.length && 'IntersectionObserver' in window) {
+    var activar = function(id){
+      enlaces.forEach(function(a){ a.classList.toggle('is-active', a.getAttribute('href') === '#' + id); });
+    };
+    var spy = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting) activar(e.target.id); });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    grupos.forEach(function(g){ spy.observe(g); });
+  }
+})();
+</script>
 </body>
 </html>
 `;
@@ -596,13 +776,14 @@ function ficha(p, lang) {
   const serv = legibles(p.services, lang);
   const acc = limpiaEmoji(acceso);
   const chips = [];
+  if (p.featured) chips.push(`<span class="chip destacado">${esc(T[lang].imprescindible)}</span>`);
   if (p.rating) chips.push(`<span class="chip nota">${p.rating} ${T[lang].sobre5}</span>`);
   if (serv) chips.push(`<span class="chip">${esc(serv)}</span>`);
   if (acc) chips.push(`<span class="chip">${esc(acc)}</span>`);
   if (p.url) chips.push(`<a href="${esc(p.url)}" rel="nofollow noopener" target="_blank">${T[lang].verMapa}</a>`);
   const d = distTxt(p.km, lang);
   return `
-<article class="ficha">
+<article class="ficha reveal${p.featured ? ' imprescindible' : ''}">
   <div class="f-cuerpo">
     <h3>${esc(limpiaEmoji(p.name))}</h3>
     ${desc ? `<p>${esc(desc)}</p>` : ''}
@@ -620,7 +801,7 @@ function fichaAtlas(a, lang) {
   if (como) chips.push(`<span class="chip">${esc(limpiaEmoji(como))}</span>`);
   if (a.url) chips.push(`<a href="${esc(a.url)}" rel="nofollow noopener" target="_blank">${T[lang].webOficial}</a>`);
   return `
-<article class="ficha">
+<article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>${esc(name)}</h3>
     ${desc ? `<p>${esc(desc)}</p>` : ''}
@@ -632,7 +813,7 @@ function fichaAtlas(a, lang) {
 
 const seccion = (n, id, nombre, cuenta, fichas, total, lang) => `
 <section class="grupo" id="${id}">
-  <div class="grupo-head">
+  <div class="grupo-head reveal">
     <span class="grupo-n">${String(n).padStart(2, '0')}</span>
     <h2>${esc(nombre)}</h2>
   </div>
@@ -693,9 +874,15 @@ for (const lang of ['es', 'en']) {
     const grupos = Object.keys(porCat).map(cat => ({ id: 'g-' + cat, nombre: NOMBRE_CAT[lang][cat] || cat }));
     const totalCat = {};
     for (const p of PLACES) if (hub.cats.includes(p.cat)) totalCat[p.cat] = (totalCat[p.cat] || 0) + 1;
-    const cuerpo = Object.entries(porCat).map(([cat, lista], i) =>
+    // En hubs con 3+ categorías se cuela una CTA compacta a mitad de lista:
+    // quien no llega hasta el bloque final (donde-comer tiene 57 sitios en
+    // 4 categorías) también ve la llamada a reservar.
+    const catEntries = Object.entries(porCat);
+    const medio = Math.floor(catEntries.length / 2);
+    const cuerpo = catEntries.map(([cat, lista], i) =>
       seccion(i + 1, 'g-' + cat, NOMBRE_CAT[lang][cat] || cat, lista.length,
-              lista.map(p => ficha(p, lang)).join(''), totalCat[cat], lang)).join('');
+              lista.map(p => ficha(p, lang)).join(''), totalCat[cat], lang)
+      + (catEntries.length >= 3 && i === medio ? ctaMid(lang) : '')).join('');
     const masCerca = items[0] ? distTxt(items[0].km, lang) : null;
     const cifras = [[String(items.length), T[lang].sitios], [String(grupos.length), T[lang].categorias]];
     if (masCerca) cifras.push([masCerca, T[lang].elMasCercano]);
@@ -729,8 +916,11 @@ for (const lang of ['es', 'en']) {
     const porSub = {};
     for (const a of items) (porSub[a.subcat] ||= []).push(a);
     const grupos = Object.keys(porSub).map(sc => ({ id: 'g-' + sc, nombre: NOMBRE_CAT[lang][sc] || sc }));
-    const cuerpo = Object.entries(porSub).map(([sc, lista], i) =>
-      seccion(i + 1, 'g-' + sc, NOMBRE_CAT[lang][sc] || sc, lista.length, lista.map(a => fichaAtlas(a, lang)).join(''), null, lang)).join('');
+    const subEntries = Object.entries(porSub);
+    const medioSub = Math.floor(subEntries.length / 2);
+    const cuerpo = subEntries.map(([sc, lista], i) =>
+      seccion(i + 1, 'g-' + sc, NOMBRE_CAT[lang][sc] || sc, lista.length, lista.map(a => fichaAtlas(a, lang)).join(''), null, lang)
+      + (subEntries.length >= 3 && i === medioSub ? ctaMid(lang) : '')).join('');
     escribe(hubRel(lang, h.slug),
       cabecera({ lang, title: copy.title, desc: copy.desc, canonical: url, altHref: alt, jsonld })
       + hero({ lang, h1: copy.h1, intro: copy.intro, video: h.video,
