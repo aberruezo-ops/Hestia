@@ -897,64 +897,6 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
   );
 };
 
-// ================================================================
-// HOME PRICE STRIP, 3 precios base visibles antes del buscador
-// ================================================================
-const HomePriceStrip = ({ lang }) => {
-  const APT_META = [
-    { id: 'vm', name: 'Mar',      slug: 'mar',      accent: '#6B7A3A' },
-    { id: 'vt', name: 'Thalassa', slug: 'thalassa', accent: '#B86A3C' },
-    { id: 'vs', name: 'Salinas',  slug: 'salinas',  accent: '#D4A84A' },
-  ];
-
-  const basePrice = (id) => {
-    const v2 = window.PRICES_V2;
-    if (v2 && v2.apts && v2.apts[id] && v2.apts[id].base) return v2.apts[id].base;
-    return { vm: 88, vt: 85, vs: 83 }[id];
-  };
-
-  return (
-    <section className="hps-strip on-dark" aria-label={lang === 'es' ? 'Precios por apartamento' : 'Prices per apartment'}>
-      <div className="hps-inner">
-        <p className="hps-label eyebrow">
-          {lang === 'es' ? 'Precio directo · sin intermediarios' : 'Direct price · no middlemen'}
-        </p>
-        <div className="hps-grid">
-          {APT_META.map(apt => {
-            const p = basePrice(apt.id);
-            const pMin = p ? Math.round(p * 1.10) : null;
-            return (
-              <a key={apt.id} href={`${apt.slug}.html`} className="hps-card" style={{ '--hps-accent': apt.accent }}>
-                <span className="hps-name">HESTÍA <strong>{apt.name.toUpperCase()}</strong></span>
-                <span className="hps-price">
-                  <span className="hps-desde">{lang === 'es' ? 'desde' : 'from'}</span>
-                  <span className="hps-amount">{p}€</span>
-                  <span className="hps-per">/noche</span>
-                </span>
-                {p && (
-                  <span className="hps-ota-compare">
-                    <span className="hps-ota-row">
-                      <span className="hps-ota-name">Booking / Airbnb</span>
-                      <span className="hps-ota-price">desde ~{pMin}€</span>
-                      <span className="hps-ota-pct">+10% aprox.</span>
-                    </span>
-                  </span>
-                )}
-                <span className="hps-cta">{lang === 'es' ? 'Ver apartamento →' : 'View apartment →'}</span>
-              </a>
-            );
-          })}
-        </div>
-        <p className="hps-disclaimer">
-          {lang === 'es'
-            ? '* Precios en plataformas aproximados. No incluyen las ofertas personales o generales que las plataformas puedan hacer a sus clientes, ni sus programas de fidelización o descuento, ya que no podemos conocerlos. En cualquier caso, siempre podemos mejorar el precio.'
-            : '* Platform prices are approximate. They do not include personal or general offers, nor loyalty or discount programmes that platforms may offer their customers, as we cannot know them. In any case, we can always do better on price.'}
-        </p>
-      </div>
-    </section>
-  );
-};
-
 const LongStayStrip = ({ lang }) => {
   const es = lang === 'es';
   const v2 = window.PRICES_V2;
@@ -1001,4 +943,4 @@ const LongStayStrip = ({ lang }) => {
   );
 };
 
-Object.assign(window, { Hero, Bridge, Apartments, Compare, APARTMENTS, LastMinuteStrip, HomePriceStrip, LongStayStrip });
+Object.assign(window, { Hero, Bridge, Apartments, Compare, APARTMENTS, LastMinuteStrip, LongStayStrip });

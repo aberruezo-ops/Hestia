@@ -152,7 +152,6 @@ const App = () => {
         <OfertaBanner lang={lang} />
         <FraseHogar lang={lang} />
         <RatingsMarquee lang={lang} />
-        <HomePriceStrip lang={lang} />
         {typeof LastMinuteStrip !== 'undefined' && <LastMinuteStrip lang={lang} />}
         <HomeSearch lang={lang} />
         <Apartments lang={lang} />
