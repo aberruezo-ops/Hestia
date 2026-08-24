@@ -1,7 +1,7 @@
 {
   "_doc": "Reviews curadas y de la web. source: 'booking'|'airbnb'|'google'|'web'. apt: 'vm'|'vt'|'vs'|'all'. highlight: true para destacarse en la sección de relevantes. status: 'published'|'pending' (solo published se muestra al público).",
   "version": 1,
-  "updatedAt": "2026-08-23T12:17:00Z",
+  "updatedAt": "2026-08-24T21:30:00Z",
   "items": [
     {
       "id": "bk-001",
@@ -5344,6 +5344,19 @@
       "lang": "es",
       "text": "Nuestra estancia fue maravillosa gracias a Fran y su socio por ser tan atentos, amables y preocuparse porque estuviésemos muy a gusto. Realmente una experiencia maravillosa, sin duda volveré ☺️",
       "highlight": true,
+      "status": "published"
+    },
+    {
+      "id": "go-138",
+      "source": "google",
+      "apt": "vs",
+      "name": "José Javier C.",
+      "country": "ES",
+      "date": "2026-08-24",
+      "rating": 5,
+      "lang": "es",
+      "text": "Hemos pasado una semana en familia, disfrutando muchísimo de la vivienda dotada de todas las comodidades y enseres para poder disfrutarla y de las zonas comunes (paseos, piscina, pádel). A 10 minutos en coche de las playas, aparcando casi al borde de la arena, y disfrutando de sus chiringuitos. Unas muy buenas vacaciones. Seguro que volveremos. Gracias a Fran y a Alejandro, han sido unos grandes anfitriones, muy atentos desde la llegada hasta el viaje de vuelta.",
+      "highlight": false,
       "status": "published"
     }
   ]
