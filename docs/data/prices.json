@@ -610,7 +610,7 @@
       "end": "2026-09-05",
       "nights": 3,
       "type": "discount",
-      "value": 10,
+      "value": 5,
       "lastMinute": true,
       "auto": true
     },
@@ -630,7 +630,7 @@
       "end": "2026-09-02",
       "nights": 3,
       "type": "discount",
-      "value": 10,
+      "value": 5,
       "lastMinute": true,
       "auto": true
     }
@@ -646,6 +646,9 @@
     ],
     "vs|2026-08-23": [
       "2026-08-30"
+    ],
+    "vt|2026-08-30": [
+      "2026-09-02"
     ]
   },
   "longStayConfig": {
