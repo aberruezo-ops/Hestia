@@ -903,6 +903,8 @@ const Footer = ({ lang }) => {
             <li><a href="thalassa.html"><span className="apt-dot" data-apt="vt" aria-hidden="true"/>Hestía Thalassa</a></li>
             <li><a href="salinas.html"><span className="apt-dot" data-apt="vs" aria-hidden="true"/>Hestía Salinas</a></li>
             <li><a href="reservas.html">{t.cta_nav}</a></li>
+            <li><a href="estancias-largas.html">{t.nav[9]}</a></li>
+            <li><a href="empresas.html">{lang === 'es' ? 'Para empresas' : 'For business'}</a></li>
           </ul>
         </div>
         <div className="col">
@@ -912,8 +914,6 @@ const Footer = ({ lang }) => {
             <li><a href="opiniones.html">{t.nav[5]}</a></li>
             <li><a href="noticias.html">{t.nav[7]}</a></li>
             <li><a href={lang === 'es' ? '/guia-vera/' : '/guia-vera/en/'}>{lang === 'es' ? 'Extracto Guía' : 'Guide extract'}</a></li>
-            <li><a href="estancias-largas.html">{t.nav[9]}</a></li>
-            <li><a href="empresas.html">{lang === 'es' ? 'Para empresas' : 'For business'}</a></li>
           </ul>
         </div>
         <div className="col">

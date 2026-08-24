@@ -1506,7 +1506,11 @@ const Footer = ({
     "aria-hidden": "true"
   }), "Hestía Salinas")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "reservas.html"
-  }, t.cta_nav)))), /*#__PURE__*/React.createElement("div", {
+  }, t.cta_nav)), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "estancias-largas.html"
+  }, t.nav[9])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: "empresas.html"
+  }, lang === 'es' ? 'Para empresas' : 'For business')))), /*#__PURE__*/React.createElement("div", {
     className: "col"
   }, /*#__PURE__*/React.createElement("h5", null, t.footer_hestia), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "nosotros.html"
@@ -1516,11 +1520,7 @@ const Footer = ({
     href: "noticias.html"
   }, t.nav[7])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: lang === 'es' ? '/guia-vera/' : '/guia-vera/en/'
-  }, lang === 'es' ? 'Extracto Guía' : 'Guide extract')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-    href: "estancias-largas.html"
-  }, t.nav[9])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
-    href: "empresas.html"
-  }, lang === 'es' ? 'Para empresas' : 'For business')))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Extracto Guía' : 'Guide extract')))), /*#__PURE__*/React.createElement("div", {
     className: "col"
   }, /*#__PURE__*/React.createElement("h5", null, t.footer_legal), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "privacidad.html"
