@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="assets/leaflet.css"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=1045"/>          <link rel="preload" as="image" href="assets/apt-vt-4.jpg" fetchpriority="high"/>  <script type="application/ld+json">
+<link rel="stylesheet" href="assets/styles.css?v=1046"/>          <link rel="preload" as="image" href="assets/apt-vt-4.jpg" fetchpriority="high"/>  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": ["Accommodation", "LodgingBusiness"],
@@ -215,7 +215,7 @@
     } catch (e) { console.warn('photo-positions.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=76c916161c');
+      const res = await fetch(file + '?cv=84c22cee78');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

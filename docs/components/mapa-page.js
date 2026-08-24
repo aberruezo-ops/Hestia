@@ -47,14 +47,6 @@ const MAPA_COPY = {
         href: 'empresas.html',
         label: 'Para empresas',
         desc: 'Apartamentos para empresas, clínicas, clubes e inmobiliarias.'
-      }, {
-        href: 'reservas.html',
-        label: 'Rincón del huésped',
-        desc: 'Si ya tienes reserva, accede aquí a la guía de tu Hestía con el PIN que te enviamos.'
-      }, {
-        href: 'contacto.html',
-        label: 'Contacto',
-        desc: 'WhatsApp, teléfono y email, te responde una persona.'
       }]
     }, {
       title: 'Conócenos',
@@ -80,8 +72,16 @@ const MAPA_COPY = {
         desc: 'Para huéspedes que ya han dormido en un Hestía.'
       }]
     }, {
-      title: 'Legal',
+      title: 'Ayuda y legal',
       items: [{
+        href: 'contacto.html',
+        label: 'Contacto',
+        desc: 'WhatsApp, teléfono y email, te responde una persona.'
+      }, {
+        href: 'reservas.html',
+        label: 'Rincón del huésped',
+        desc: 'Si ya tienes reserva, accede aquí a la guía de tu Hestía con el PIN que te enviamos.'
+      }, {
         href: 'privacidad.html',
         label: 'Privacidad',
         desc: 'Cómo tratamos tus datos, RGPD.'
@@ -132,14 +132,6 @@ const MAPA_COPY = {
         href: 'empresas.html',
         label: 'For business',
         desc: 'Apartments for companies, clinics, clubs and real estate agencies.'
-      }, {
-        href: 'reservas.html',
-        label: 'Guest corner',
-        desc: 'Already booked? Access your Hestía guide here with the PIN we sent you.'
-      }, {
-        href: 'contacto.html',
-        label: 'Contact',
-        desc: 'WhatsApp, phone and email, a real person replies.'
       }]
     }, {
       title: 'About us',
@@ -165,8 +157,16 @@ const MAPA_COPY = {
         desc: 'For guests who have stayed at a Hestía.'
       }]
     }, {
-      title: 'Legal',
+      title: 'Help & legal',
       items: [{
+        href: 'contacto.html',
+        label: 'Contact',
+        desc: 'WhatsApp, phone and email, a real person replies.'
+      }, {
+        href: 'reservas.html',
+        label: 'Guest corner',
+        desc: 'Already booked? Access your Hestía guide here with the PIN we sent you.'
+      }, {
         href: 'privacidad.html',
         label: 'Privacy',
         desc: 'How we handle your data, GDPR.'
