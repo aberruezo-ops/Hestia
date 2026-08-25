@@ -1138,6 +1138,14 @@ const PLACES = [
   lat: 37.1450,
   lng: -1.8540
 }, {
+  id: 'thefoodco-vera',
+  name: 'The Food Co. (British Supermarket) - Vera',
+  desc: 'Supermercado británico en Vera pueblo, muy bien valorado (4,0★, 864 reseñas). Los compradores destacan la excelente carnicería española que hay dentro del propio establecimiento.',
+  specialty: 'productos británicos importados junto a una carnicería española de calidad, poco habitual en un supermercado de este tipo.',
+  cat: 'super',
+  rating: 4.0,
+  url: 'https://www.google.com/maps/search/?api=1&query=The+Food+Co.+British+Supermarket+Vera'
+}, {
   id: 'aldi-vera',
   name: 'Aldi (Vera pueblo)',
   desc: 'Cadena alemana low-cost. En Vera pueblo, a unos 10 min en coche desde Vera Playa.',
