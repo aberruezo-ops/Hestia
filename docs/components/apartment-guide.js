@@ -1140,11 +1140,13 @@ const PLACES = [
 }, {
   id: 'thefoodco-vera',
   name: 'The Food Co. (British Supermarket) - Vera',
-  desc: 'Supermercado británico en Vera pueblo, muy bien valorado (4,0★, 864 reseñas). Los compradores destacan la excelente carnicería española que hay dentro del propio establecimiento.',
+  desc: 'Supermercado británico junto a Iceland Overseas, cerca del complejo Vera Natura. Muy bien valorado (4,0★, 864 reseñas). Los compradores destacan la excelente carnicería española que hay dentro del propio establecimiento.',
   specialty: 'productos británicos importados junto a una carnicería española de calidad, poco habitual en un supermercado de este tipo.',
   cat: 'super',
   rating: 4.0,
-  url: 'https://www.google.com/maps/search/?api=1&query=The+Food+Co.+British+Supermarket+Vera'
+  url: 'https://www.google.com/maps/search/?api=1&query=The+Food+Co.+British+Supermarket+Vera',
+  lat: 37.2393,
+  lng: -1.8564
 }, {
   id: 'aldi-vera',
   name: 'Aldi (Vera pueblo)',
