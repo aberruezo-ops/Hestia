@@ -2225,7 +2225,7 @@ const GUIDE_BY_APT = {
     es: {
       cover_tagline: 'Ático sobre el mar y el Salar de los Canos. Donde el horizonte se ensancha.',
       rooms: [
-        { id: 'salon', title: 'Tu salón', body: 'Tu sofá-cama y tu televisión plana son el sitio perfecto para una sesión de cine en casa. No es lo principal de la estancia, pero SkyShowtime, HBO Max, Prime Video, Movistar Plus, Netflix y Disney+ están siempre activas, además de apps gratuitas. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
+        { id: 'salon', title: 'Tu salón', body: 'Tu sofá-cama y tu televisión plana son el sitio perfecto para una sesión de cine en casa. No es lo principal de la estancia, pero SkyShowtime, HBO Max, Prime Video, Movistar Plus y Disney+ están siempre activas, además de apps gratuitas. La temperatura la controlas tú con el cuadro del aire acondicionado centralizado.', recs: [
           'No dejes el aire acondicionado encendido con las puertas abiertas o cuando no estés en casa.',
           'Echa un vistazo a las Normas de uso de Hestía, junto a la puerta de entrada.',
           'Amolda a tu gusto el color y tonalidad de la lámpara de pie con el mando junto al cuadro del A/C.',
@@ -2271,7 +2271,7 @@ const GUIDE_BY_APT = {
     en: {
       cover_tagline: 'Penthouse over the sea and the Salar de los Canos. Where the horizon widens.',
       rooms: [
-        { id: 'salon', title: 'Your living room', body: 'Your sofa-bed and flat-screen TV are the perfect spot for a movie night in. It is not the point of the stay, but SkyShowtime, HBO Max, Prime Video, Movistar Plus, Netflix and Disney+ are always active, plus free apps. You control the temperature with the centralised A/C panel.', recs: [
+        { id: 'salon', title: 'Your living room', body: 'Your sofa-bed and flat-screen TV are the perfect spot for a movie night in. It is not the point of the stay, but SkyShowtime, HBO Max, Prime Video, Movistar Plus and Disney+ are always active, plus free apps. You control the temperature with the centralised A/C panel.', recs: [
           'Do not leave the A/C on with doors open or while you are away from home.',
           'Take a look at Hestía\'s usage guidelines, next to the entrance door.',
           'Adjust colour and tonality of the floor lamp with the remote next to the A/C panel.',
