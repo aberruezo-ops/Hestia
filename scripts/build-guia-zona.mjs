@@ -272,16 +272,23 @@ const T = {
     eyebrowGuia: 'Nuestra guía',
     inicio: 'Inicio', nuestraGuia: 'Nuestra guía',
     aviso: `Esto es <b>un extracto</b> de nuestra guía. La guía completa, con
-36 capítulos, 131 consejos y el mapa de la zona, es <b>exclusiva para quien se aloja
-con nosotros</b>: se entrega unos días antes de vuestra llegada. También incluye
-planes de día completo para adultos y con niños, planes de mediodía, una
-descripción de cada Hestía y del uso que os recomendamos hacer, y muchas cosas más.`,
+30 capítulos y el mapa de la zona, es <b>exclusiva para quien se aloja
+con nosotros</b>: se entrega unos días antes de vuestra llegada, en PDF para
+llevar sin cobertura. Incluye:
+<ul>
+<li>La descripción de cada Hestía y cómo os recomendamos usarla, estancia a estancia.</li>
+<li>Planes de día completo, para adultos y con niños, y planes de mediodía.</li>
+<li>Platos típicos de la zona y dónde comerlos.</li>
+<li>Pueblos, playas, mercados y rutas, con la distancia real desde casa.</li>
+<li>Los descuentos que hemos negociado con negocios de la zona para quien reserva directo.</li>
+<li>Todo lo práctico: wifi, limpieza, normas, salud, gasolineras y teléfonos útiles.</li>
+</ul>`,
     ctaH2: 'Esto es solo una muestra de la guía',
     ctaP1: 'Lo que ves aquí lo puede leer cualquiera: qué es cada sitio, qué tiene de bueno y a qué distancia queda. Es la parte que se puede contar por escrito.',
     ctaP2: () => `El resto no se aprende leyendo: se aprende viniendo año tras año. A qué hora llegar a cada cala para
   encontrar sitio. Qué pedir en cada mesa. Dónde se aparca de verdad en agosto. Y los descuentos
   que hemos negociado con negocios de la zona para quien reserva directo.`,
-    ctaDatos: [['36', 'capítulos'], ['131', 'consejos'], ['430', 'puntos en el mapa'], ['PDF', 'para ir sin cobertura']],
+    ctaDatos: [['30', 'capítulos'], ['314', 'puntos en el mapa'], ['2016', 'con casa aquí'], ['PDF', 'para ir sin cobertura']],
     ctaP3: 'Se entrega unos días antes de la llegada, junto con todo lo del apartamento: del wifi a la farmacia de guardia. Tres casas en Vera Playa, llevadas por nosotros, sin comisiones de plataforma.',
     apts: [
       ['Hestía Mar', 'A 300 m de la playa'],
@@ -317,16 +324,23 @@ descripción de cada Hestía y del uso que os recomendamos hacer, y muchas cosas
     eyebrowGuia: 'Our guide',
     inicio: 'Home', nuestraGuia: 'Our guide',
     aviso: `This is <b>an extract</b> of our guide. The full guide, with
-36 chapters, 131 tips and the area map, is <b>exclusive to guests staying
-with us</b>: it is handed over a few days before you arrive. It also includes
-full-day plans for adults and with kids, half-day plans, a description of
-each Hestía and how we recommend using it, and much more.`,
+30 chapters and the area map, is <b>exclusive to guests staying
+with us</b>: it is handed over a few days before you arrive, as a PDF you
+can use without signal. It includes:
+<ul>
+<li>A description of each Hestía and how we recommend using it, room by room.</li>
+<li>Full-day plans, for adults and with kids, and half-day plans.</li>
+<li>Local dishes and where to eat them.</li>
+<li>Towns, beaches, markets and routes, with the real distance from home.</li>
+<li>The discounts we have negotiated with local businesses for direct guests.</li>
+<li>All the practical stuff: wifi, cleaning, house rules, health, fuel and useful phone numbers.</li>
+</ul>`,
     ctaH2: 'This is just a sample of the guide',
     ctaP1: 'What you see here anyone can read: what each place is, what is good about it and how far it is. It is the part that can be put in writing.',
     ctaP2: () => `The rest is not learned by reading: it is learned by coming back, year after
   year. What time to arrive at each cove to find a spot. What to order at each table. Where to actually
   park in August. And the discounts we have negotiated with local businesses for guests who book direct.`,
-    ctaDatos: [['36', 'chapters'], ['131', 'tips'], ['430', 'points on the map'], ['PDF', 'for when there is no signal']],
+    ctaDatos: [['30', 'chapters'], ['314', 'points on the map'], ['2016', 'with a home here'], ['PDF', 'for when there is no signal']],
     ctaP3: "Handed over a few days before arrival, along with everything about the apartment: from the wifi to the on-call pharmacy. Three homes in Vera Playa, run by us, with no platform commissions.",
     apts: [
       ['Hestía Mar', '300 m from the beach'],
@@ -453,6 +467,8 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
   border-left:3px solid var(--vs);border-radius:var(--r);
   font-size:14.5px;color:var(--ink-soft);max-width:74ch;}
 .aviso b{color:var(--ink);font-weight:600;}
+.aviso ul{margin:10px 0 2px;padding-left:20px;}
+.aviso li{margin:4px 0;}
 .grupo{padding:74px 0 8px;scroll-margin-top:70px;}
 .grupo-head{display:flex;align-items:baseline;gap:20px;margin-bottom:6px;}
 .grupo-n{font-family:var(--serif);font-size:clamp(38px,5.4vw,60px);line-height:1;
@@ -715,7 +731,7 @@ const indice = grupos => grupos.length < 2 ? '' : `
 // Que quede dicho arriba y sin rodeos: esto es un extracto, la guía entera es
 // de los huéspedes. Antes solo se decía al final de la página.
 const avisoExtracto = lang => `
-<p class="aviso">${T[lang].aviso}</p>`;
+<div class="aviso">${T[lang].aviso}</div>`;
 
 const bloqueCta = lang => {
   const t = T[lang];
