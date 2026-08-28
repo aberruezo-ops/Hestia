@@ -352,7 +352,7 @@ const RegistroPage = () => {
   };
 
   return (
-    <div className="reg-page on-dark">
+    <main className="reg-page on-dark" id="main-content" tabIndex={-1}>
       <IconSprite />
       <div className="reg-lang">
         <button type="button" className={lang === 'es' ? 'active' : ''} onClick={() => setLang('es')}>ES</button>
@@ -404,7 +404,7 @@ const RegistroPage = () => {
           </form>
         )}
       </div>
-    </div>
+    </main>
   );
 };
 

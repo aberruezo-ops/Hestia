@@ -137,7 +137,7 @@ const MapaPageApp = () => {
     <>
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
-      <main><MapaPage lang={lang} /></main>
+      <main id="main-content" tabIndex={-1}><MapaPage lang={lang} /></main>
       <Footer lang={lang} />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />

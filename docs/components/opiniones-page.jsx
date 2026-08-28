@@ -428,7 +428,7 @@ const OpinionesPageApp = () => {
     <>
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <OpinionesHero lang={lang} />
         <FraseHogar lang={lang} />
         <OpinionesRatings lang={lang} />

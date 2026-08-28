@@ -389,7 +389,7 @@ const EscribirOpinionPageApp = () => {
     <>
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <section className="page-hero eo-hero">
           <div className="page-hero-content">
             <div className="eyebrow">{t.eyebrow}</div>

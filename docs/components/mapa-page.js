@@ -252,7 +252,10 @@ const MapaPageApp = () => {
     mode: mode,
     scrolled: scrolled,
     lang: lang
-  }), /*#__PURE__*/React.createElement("main", null, /*#__PURE__*/React.createElement(MapaPage, {
+  }), /*#__PURE__*/React.createElement("main", {
+    id: "main-content",
+    tabIndex: -1
+  }, /*#__PURE__*/React.createElement(MapaPage, {
     lang: lang
   })), /*#__PURE__*/React.createElement(Footer, {
     lang: lang

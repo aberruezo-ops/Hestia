@@ -444,7 +444,7 @@ const EmpresasPageApp = () => {
     <>
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <section className="page-hero emp-hero on-dark">
           <video ref={heroVid} className="emp-hero-video" autoPlay muted loop playsInline preload="auto" poster="assets/empresas-hero-poster.jpg">
             <source src="assets/empresas-hero.mp4" type="video/mp4"/>
