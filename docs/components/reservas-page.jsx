@@ -413,21 +413,25 @@ const ReviewQuote = ({ apt, lang }) => {
 const ReservasHero = ({ lang }) => {
   const t = RESERVAS_COPY[lang];
   const videoRef = React.useRef(null);
+  const prefersReducedMotion = React.useMemo(
+    () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
 
   React.useEffect(() => {
+    if (prefersReducedMotion) return;
     const tryPlay = (el) => { if (el) { el.muted = true; el.play().catch(() => {}); } };
     tryPlay(videoRef.current);
     const onVisible = () => { if (!document.hidden) { tryPlay(videoRef.current); } };
     document.addEventListener('visibilitychange', onVisible);
     return () => { document.removeEventListener('visibilitychange', onVisible); };
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <section className="page-hero reservas-hero">
       <video
         ref={videoRef}
         className="reservas-hero-video"
-        autoPlay muted loop playsInline preload="auto"
+        autoPlay={!prefersReducedMotion} muted loop={!prefersReducedMotion} playsInline preload="auto"
+        poster="assets/hero-terrace-night.jpg"
       >
         <source src="assets/285834_medium.mp4" type="video/mp4"/>
       </video>

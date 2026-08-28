@@ -109,6 +109,21 @@ const StarsInput = ({
   lang
 }) => {
   const [hover, setHover] = React.useState(0);
+  // Patrón ARIA radiogroup: flechas mueven la selección entre las 5 estrellas,
+  // no solo el foco (el valor cambia con la flecha, como cualquier grupo de radios).
+  const onKeyDown = (e, n) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const next = Math.min(5, n + 1);
+      onChange(next);
+      e.currentTarget.parentElement.children[next - 1]?.focus();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const prev = Math.max(1, n - 1);
+      onChange(prev);
+      e.currentTarget.parentElement.children[prev - 1]?.focus();
+    }
+  };
   return /*#__PURE__*/React.createElement("div", {
     className: "eo-stars",
     role: "radiogroup",
@@ -119,9 +134,11 @@ const StarsInput = ({
     role: "radio",
     "aria-checked": value === n,
     "aria-label": `${n} ${lang === 'es' ? 'estrellas' : 'stars'}`,
+    tabIndex: value === n || value === 0 && n === 1 ? 0 : -1,
     className: `eo-star${(hover ? hover >= n : value >= n) ? ' is-on' : ''}`,
     onMouseEnter: () => setHover(n),
     onMouseLeave: () => setHover(0),
+    onKeyDown: e => onKeyDown(e, n),
     onClick: () => onChange(n)
   }, /*#__PURE__*/React.createElement(HiIcon, {
     name: "star-rate",
@@ -162,13 +179,18 @@ const EscribirOpinionForm = ({
     if (text.trim().length > TEXT_MAX) e.text = t.val_text;
     if (!consent) e.consent = t.val_consent;
     setErrors(e);
-    return Object.keys(e).length === 0;
+    return e;
   };
   const submit = async ev => {
     ev.preventDefault();
     // Honeypot: si el campo invisible tiene valor, es un bot
     if (honeypot) return;
-    if (!validate()) return;
+    const e = validate();
+    if (Object.keys(e).length > 0) {
+      const firstKey = Object.keys(e)[0];
+      setTimeout(() => document.getElementById(`eo-${firstKey}`)?.focus(), 50);
+      return;
+    }
     setPhase('sending');
     const aptName = {
       vm: 'Hestía Mar',
@@ -210,7 +232,9 @@ const EscribirOpinionForm = ({
   };
   if (phase === 'success') {
     return /*#__PURE__*/React.createElement("section", {
-      className: "eo-success"
+      className: "eo-success",
+      role: "status",
+      "aria-live": "polite"
     }, /*#__PURE__*/React.createElement("div", {
       className: "container"
     }, /*#__PURE__*/React.createElement("div", {
@@ -440,7 +464,8 @@ const EscribirOpinionForm = ({
   }, phase === 'sending' ? t.sending : t.submit, /*#__PURE__*/React.createElement("span", {
     className: "arrow"
   }, " →"))), phase === 'error' && /*#__PURE__*/React.createElement("p", {
-    className: "eo-error-msg"
+    className: "eo-error-msg",
+    role: "alert"
   }, t.error_generic))));
 };
 const EscribirOpinionPageApp = () => {

@@ -379,7 +379,9 @@ const ReservasHero = ({
 }) => {
   const t = RESERVAS_COPY[lang];
   const videoRef = React.useRef(null);
+  const prefersReducedMotion = React.useMemo(() => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
   React.useEffect(() => {
+    if (prefersReducedMotion) return;
     const tryPlay = el => {
       if (el) {
         el.muted = true;
@@ -396,17 +398,18 @@ const ReservasHero = ({
     return () => {
       document.removeEventListener('visibilitychange', onVisible);
     };
-  }, []);
+  }, [prefersReducedMotion]);
   return /*#__PURE__*/React.createElement("section", {
     className: "page-hero reservas-hero"
   }, /*#__PURE__*/React.createElement("video", {
     ref: videoRef,
     className: "reservas-hero-video",
-    autoPlay: true,
+    autoPlay: !prefersReducedMotion,
     muted: true,
-    loop: true,
+    loop: !prefersReducedMotion,
     playsInline: true,
-    preload: "auto"
+    preload: "auto",
+    poster: "assets/hero-terrace-night.jpg"
   }, /*#__PURE__*/React.createElement("source", {
     src: "assets/285834_medium.mp4",
     type: "video/mp4"

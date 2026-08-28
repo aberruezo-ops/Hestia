@@ -224,13 +224,18 @@ const EmpresasForm = ({ lang }) => {
     if (msg.trim().length > MSG_MAX) e.msg = t.val_msg;
     if (!consent) e.consent = t.val_consent;
     setErrors(e);
-    return Object.keys(e).length === 0;
+    return e;
   };
 
   const submit = async (ev) => {
     ev.preventDefault();
     if (honeypot) return;
-    if (!validate()) return;
+    const e = validate();
+    if (Object.keys(e).length > 0) {
+      const firstKey = Object.keys(e)[0];
+      setTimeout(() => document.getElementById(`emp-${firstKey}`)?.focus(), 50);
+      return;
+    }
     setPhase('sending');
 
     const channelLabel = { email: 'Email', whatsapp: 'WhatsApp', call: 'Llamada' }[channel];
@@ -267,7 +272,7 @@ const EmpresasForm = ({ lang }) => {
 
   if (phase === 'success') {
     return (
-      <section className="emp-success">
+      <section className="emp-success" role="status" aria-live="polite">
         <div className="container">
           <div className="emp-success-card">
             <span className="emp-success-icon" aria-hidden="true">✓</span>
@@ -395,7 +400,7 @@ const EmpresasForm = ({ lang }) => {
 
           <div className="emp-field emp-consent-field">
             <label className="emp-consent-label">
-              <input type="checkbox" className="emp-consent-check" checked={consent}
+              <input id="emp-consent" type="checkbox" className="emp-consent-check" checked={consent}
                 onChange={e => { setConsent(e.target.checked); setErrors(er => ({ ...er, consent: undefined })); }}/>
               <span>{t.consent}</span>
             </label>
@@ -409,7 +414,7 @@ const EmpresasForm = ({ lang }) => {
             </button>
           </div>
 
-          {phase === 'error' && <p className="emp-error-msg">{t.error_generic}</p>}
+          {phase === 'error' && <p className="emp-error-msg" role="alert">{t.error_generic}</p>}
         </form>
       </div>
     </section>
@@ -422,13 +427,16 @@ const EmpresasPageApp = () => {
   useReveal();
 
   const heroVid = React.useRef(null);
+  const prefersReducedMotion = React.useMemo(
+    () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
   React.useEffect(() => {
+    if (prefersReducedMotion) return;
     const tryPlay = () => { const el = heroVid.current; if (el) { el.muted = true; el.play().catch(() => {}); } };
     tryPlay();
     const onVisible = () => { if (!document.hidden) tryPlay(); };
     document.addEventListener('visibilitychange', onVisible);
     return () => document.removeEventListener('visibilitychange', onVisible);
-  }, []);
+  }, [prefersReducedMotion]);
 
   React.useEffect(() => {
     localStorage.setItem('hestia-lang', lang);
@@ -446,7 +454,7 @@ const EmpresasPageApp = () => {
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main id="main-content" tabIndex={-1}>
         <section className="page-hero emp-hero on-dark">
-          <video ref={heroVid} className="emp-hero-video" autoPlay muted loop playsInline preload="auto" poster="assets/empresas-hero-poster.jpg">
+          <video ref={heroVid} className="emp-hero-video" autoPlay={!prefersReducedMotion} muted loop={!prefersReducedMotion} playsInline preload="auto" poster="assets/empresas-hero-poster.jpg">
             <source src="assets/empresas-hero.mp4" type="video/mp4"/>
           </video>
           <div className="emp-hero-wash"/>

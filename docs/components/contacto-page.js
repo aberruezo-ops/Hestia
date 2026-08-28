@@ -125,7 +125,9 @@ const ContactoHero = ({
 }) => {
   const t = CONTACTO_COPY[lang];
   const videoRef = React.useRef(null);
+  const prefersReducedMotion = React.useMemo(() => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
   React.useEffect(() => {
+    if (prefersReducedMotion) return;
     const tryPlay = el => {
       if (el) {
         el.muted = true;
@@ -138,15 +140,15 @@ const ContactoHero = ({
     };
     document.addEventListener('visibilitychange', onVisible);
     return () => document.removeEventListener('visibilitychange', onVisible);
-  }, []);
+  }, [prefersReducedMotion]);
   return /*#__PURE__*/React.createElement("section", {
     className: "page-hero contacto-hero"
   }, /*#__PURE__*/React.createElement("video", {
     ref: videoRef,
     className: "contacto-hero-video",
-    autoPlay: true,
+    autoPlay: !prefersReducedMotion,
     muted: true,
-    loop: true,
+    loop: !prefersReducedMotion,
     playsInline: true,
     preload: "auto"
   }, /*#__PURE__*/React.createElement("source", {
@@ -183,6 +185,8 @@ const PersonCard = ({
   decoding: "async",
   src: imgSrc,
   alt: name,
+  width: "64",
+  height: "64",
   loading: "lazy",
   onError: e => {
     e.currentTarget.style.display = 'none';
@@ -334,11 +338,15 @@ const ContactoFAQ = ({
     className: `faq-item ${open === i ? 'open' : ''}`
   }, /*#__PURE__*/React.createElement("button", {
     className: "faq-q",
-    onClick: () => setOpen(open === i ? null : i)
+    onClick: () => setOpen(open === i ? null : i),
+    "aria-expanded": open === i,
+    "aria-controls": `contacto-faq-a-${i}`
   }, /*#__PURE__*/React.createElement("span", null, faq.q), /*#__PURE__*/React.createElement("span", {
-    className: "faq-chevron"
+    className: "faq-chevron",
+    "aria-hidden": "true"
   }, open === i ? '−' : '+')), /*#__PURE__*/React.createElement("div", {
-    className: "faq-a"
+    className: "faq-a",
+    id: `contacto-faq-a-${i}`
   }, faq.a))))));
 };
 const ContactoPageApp = () => {
