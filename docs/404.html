@@ -102,14 +102,24 @@
       border: 1px solid rgba(240, 232, 213, 0.20);
     }
     .e404-link:hover { opacity: 0.82; }
-    .e404-agent-note {
+    .e404-recover {
       font-size: 13px;
       color: rgba(240, 232, 213, 0.5);
       margin: 28px 0 0;
-      max-width: 340px;
+      max-width: 360px;
       line-height: 1.6;
     }
-    .e404-agent-note a { color: rgba(240, 232, 213, 0.85); text-decoration: underline; }
+    .e404-recover p { margin: 0 0 8px; }
+    .e404-recover ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px 10px;
+    }
+    .e404-recover a { color: rgba(240, 232, 213, 0.85); text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -125,7 +135,18 @@
       <a href="/thalassa.html" class="e404-link e404-link--secondary">Hestía Thalassa</a>
       <a href="/salinas.html" class="e404-link e404-link--secondary">Hestía Salinas</a>
     </div>
-    <p class="e404-agent-note">¿Buscas una página o una lista completa del sitio? Consulta el <a href="/sitemap.xml">mapa del sitio</a> (sitemap.xml) o <a href="/llms.txt">llms.txt</a>, la guía del sitio para agentes de IA.</p>
+    <nav class="e404-recover" aria-label="Recuperación">
+      <p>¿Buscas algo concreto? Empieza por aquí:</p>
+      <ul>
+        <li><a href="/sitemap.xml">Mapa del sitio (sitemap.xml)</a></li>
+        <li>·</li>
+        <li><a href="/llms.txt">Guía del sitio para agentes de IA (llms.txt)</a></li>
+        <li>·</li>
+        <li><a href="/nosotros.html">Quiénes somos</a></li>
+        <li>·</li>
+        <li><a href="/contacto.html">Contacto</a></li>
+      </ul>
+    </nav>
   </div>
 </body>
 </html>

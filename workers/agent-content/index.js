@@ -36,17 +36,25 @@
 // el bundle evita ese salto por completo. Ver generate-markdown-content.mjs
 // para cómo se genera este archivo a partir de docs/md/*.md (fuente real,
 // también servida tal cual por GitHub Pages para quien la enlace directo).
-import { INDEX_MD, NOSOTROS_MD, CONTACTO_MD, PRIVACIDAD_MD } from './markdown-content.generated.js';
+import {
+  INDEX_MD, NOSOTROS_MD, CONTACTO_MD, PRIVACIDAD_MD,
+  ABOUT_MD, CONTACT_MD, PRIVACY_MD,
+} from './markdown-content.generated.js';
 
 // Mapa explícito ruta pública → markdown. Cerrado a propósito: mejor pasar
 // de largo (passthrough a HTML) que servir un markdown sin revisar para una
-// página que no está en esta lista.
+// página que no está en esta lista. Incluye los alias en inglés
+// (/about.html, /contact.html, /privacy.html) que existen solo para que un
+// agente que prueba rutas convencionales encuentre contenido real.
 const MARKDOWN_MAP = {
   '/': INDEX_MD,
   '/index.html': INDEX_MD,
   '/nosotros.html': NOSOTROS_MD,
   '/contacto.html': CONTACTO_MD,
   '/privacidad.html': PRIVACIDAD_MD,
+  '/about.html': ABOUT_MD,
+  '/contact.html': CONTACT_MD,
+  '/privacy.html': PRIVACY_MD,
 };
 
 function parseAccept(acceptHeader) {

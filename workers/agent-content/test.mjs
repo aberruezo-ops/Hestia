@@ -5,7 +5,10 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import worker from './index.js';
-import { INDEX_MD, NOSOTROS_MD, CONTACTO_MD, PRIVACIDAD_MD } from './markdown-content.generated.js';
+import {
+  INDEX_MD, NOSOTROS_MD, CONTACTO_MD, PRIVACIDAD_MD,
+  ABOUT_MD, CONTACT_MD, PRIVACY_MD,
+} from './markdown-content.generated.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(here, '..', '..');
@@ -15,6 +18,9 @@ const repoRoot = join(here, '..', '..');
 const originFiles = {
   '/': { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' }, body: '<html>home</html>' },
   '/nosotros.html': { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' }, body: '<html>about</html>' },
+  '/about.html': { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' }, body: '<html>about alias</html>' },
+  '/contact.html': { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' }, body: '<html>contact alias</html>' },
+  '/privacy.html': { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' }, body: '<html>privacy alias</html>' },
   '/nope-not-found': { status: 404, headers: { 'Content-Type': 'text/html; charset=utf-8' }, body: '<html>404</html>' },
 };
 
@@ -102,6 +108,9 @@ async function check(name, cond) {
     ['/nosotros.html', NOSOTROS_MD],
     ['/contacto.html', CONTACTO_MD],
     ['/privacidad.html', PRIVACIDAD_MD],
+    ['/about.html', ABOUT_MD],
+    ['/contact.html', CONTACT_MD],
+    ['/privacy.html', PRIVACY_MD],
   ];
   for (const [path, expected] of cases) {
     const res = await worker.fetch(req(path, 'text/markdown'));
@@ -128,8 +137,11 @@ async function check(name, cond) {
     NOSOTROS_MD: 'docs/md/nosotros.md',
     CONTACTO_MD: 'docs/md/contacto.md',
     PRIVACIDAD_MD: 'docs/md/privacidad.md',
+    ABOUT_MD: 'docs/md/about.md',
+    CONTACT_MD: 'docs/md/contact.md',
+    PRIVACY_MD: 'docs/md/privacy.md',
   };
-  const constants = { INDEX_MD, NOSOTROS_MD, CONTACTO_MD, PRIVACIDAD_MD };
+  const constants = { INDEX_MD, NOSOTROS_MD, CONTACTO_MD, PRIVACIDAD_MD, ABOUT_MD, CONTACT_MD, PRIVACY_MD };
   for (const [name, relPath] of Object.entries(sourceFiles)) {
     const fromDisk = readFileSync(join(repoRoot, relPath), 'utf8');
     await check(`9 ${name} matches ${relPath}`, constants[name] === fromDisk);
