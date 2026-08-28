@@ -21,6 +21,9 @@ const FILES = {
   NOSOTROS_MD: 'docs/md/nosotros.md',
   CONTACTO_MD: 'docs/md/contacto.md',
   PRIVACIDAD_MD: 'docs/md/privacidad.md',
+  ABOUT_MD: 'docs/md/about.md',
+  CONTACT_MD: 'docs/md/contact.md',
+  PRIVACY_MD: 'docs/md/privacy.md',
 };
 
 let out = '// GENERADO. No editar a mano: regenerar con\n';
