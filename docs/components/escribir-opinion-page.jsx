@@ -96,6 +96,21 @@ const ESCRIBIR_COPY = {
 
 const StarsInput = ({ value, onChange, lang }) => {
   const [hover, setHover] = React.useState(0);
+  // Patrón ARIA radiogroup: flechas mueven la selección entre las 5 estrellas,
+  // no solo el foco (el valor cambia con la flecha, como cualquier grupo de radios).
+  const onKeyDown = (e, n) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const next = Math.min(5, n + 1);
+      onChange(next);
+      e.currentTarget.parentElement.children[next - 1]?.focus();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const prev = Math.max(1, n - 1);
+      onChange(prev);
+      e.currentTarget.parentElement.children[prev - 1]?.focus();
+    }
+  };
   return (
     <div className="eo-stars" role="radiogroup" aria-label={lang === 'es' ? 'Valoración' : 'Rating'}>
       {[1,2,3,4,5].map(n => (
@@ -105,9 +120,11 @@ const StarsInput = ({ value, onChange, lang }) => {
           role="radio"
           aria-checked={value === n}
           aria-label={`${n} ${lang === 'es' ? 'estrellas' : 'stars'}`}
+          tabIndex={value === n || (value === 0 && n === 1) ? 0 : -1}
           className={`eo-star${(hover ? hover >= n : value >= n) ? ' is-on' : ''}`}
           onMouseEnter={() => setHover(n)}
           onMouseLeave={() => setHover(0)}
+          onKeyDown={(e) => onKeyDown(e, n)}
           onClick={() => onChange(n)}>
           <HiIcon name="star-rate" size={26} />
         </button>
@@ -149,14 +166,19 @@ const EscribirOpinionForm = ({ lang }) => {
     if (text.trim().length > TEXT_MAX) e.text = t.val_text;
     if (!consent) e.consent = t.val_consent;
     setErrors(e);
-    return Object.keys(e).length === 0;
+    return e;
   };
 
   const submit = async (ev) => {
     ev.preventDefault();
     // Honeypot: si el campo invisible tiene valor, es un bot
     if (honeypot) return;
-    if (!validate()) return;
+    const e = validate();
+    if (Object.keys(e).length > 0) {
+      const firstKey = Object.keys(e)[0];
+      setTimeout(() => document.getElementById(`eo-${firstKey}`)?.focus(), 50);
+      return;
+    }
     setPhase('sending');
 
     const aptName = { vm: 'Hestía Mar', vt: 'Hestía Thalassa', vs: 'Hestía Salinas' }[apt] || apt;
@@ -198,7 +220,7 @@ const EscribirOpinionForm = ({ lang }) => {
 
   if (phase === 'success') {
     return (
-      <section className="eo-success">
+      <section className="eo-success" role="status" aria-live="polite">
         <div className="container">
           <div className="eo-success-card">
             <span className="eo-success-icon" aria-hidden="true">✓</span>
@@ -363,7 +385,7 @@ const EscribirOpinionForm = ({ lang }) => {
             </button>
           </div>
 
-          {phase === 'error' && <p className="eo-error-msg">{t.error_generic}</p>}
+          {phase === 'error' && <p className="eo-error-msg" role="alert">{t.error_generic}</p>}
         </form>
       </div>
     </section>

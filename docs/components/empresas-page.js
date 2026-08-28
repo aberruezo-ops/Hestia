@@ -268,12 +268,17 @@ const EmpresasForm = ({
     if (msg.trim().length > MSG_MAX) e.msg = t.val_msg;
     if (!consent) e.consent = t.val_consent;
     setErrors(e);
-    return Object.keys(e).length === 0;
+    return e;
   };
   const submit = async ev => {
     ev.preventDefault();
     if (honeypot) return;
-    if (!validate()) return;
+    const e = validate();
+    if (Object.keys(e).length > 0) {
+      const firstKey = Object.keys(e)[0];
+      setTimeout(() => document.getElementById(`emp-${firstKey}`)?.focus(), 50);
+      return;
+    }
     setPhase('sending');
     const channelLabel = {
       email: 'Email',
@@ -314,7 +319,9 @@ const EmpresasForm = ({
   };
   if (phase === 'success') {
     return /*#__PURE__*/React.createElement("section", {
-      className: "emp-success"
+      className: "emp-success",
+      role: "status",
+      "aria-live": "polite"
     }, /*#__PURE__*/React.createElement("div", {
       className: "container"
     }, /*#__PURE__*/React.createElement("div", {
@@ -560,6 +567,7 @@ const EmpresasForm = ({
   }, /*#__PURE__*/React.createElement("label", {
     className: "emp-consent-label"
   }, /*#__PURE__*/React.createElement("input", {
+    id: "emp-consent",
     type: "checkbox",
     className: "emp-consent-check",
     checked: consent,
@@ -581,7 +589,8 @@ const EmpresasForm = ({
   }, phase === 'sending' ? t.sending : t.submit, /*#__PURE__*/React.createElement("span", {
     className: "arrow"
   }, " →"))), phase === 'error' && /*#__PURE__*/React.createElement("p", {
-    className: "emp-error-msg"
+    className: "emp-error-msg",
+    role: "alert"
   }, t.error_generic))));
 };
 const EmpresasPageApp = () => {
@@ -592,7 +601,9 @@ const EmpresasPageApp = () => {
   } = useScrollMode();
   useReveal();
   const heroVid = React.useRef(null);
+  const prefersReducedMotion = React.useMemo(() => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
   React.useEffect(() => {
+    if (prefersReducedMotion) return;
     const tryPlay = () => {
       const el = heroVid.current;
       if (el) {
@@ -606,7 +617,7 @@ const EmpresasPageApp = () => {
     };
     document.addEventListener('visibilitychange', onVisible);
     return () => document.removeEventListener('visibilitychange', onVisible);
-  }, []);
+  }, [prefersReducedMotion]);
   React.useEffect(() => {
     localStorage.setItem('hestia-lang', lang);
     document.documentElement.lang = lang;
@@ -628,9 +639,9 @@ const EmpresasPageApp = () => {
   }, /*#__PURE__*/React.createElement("video", {
     ref: heroVid,
     className: "emp-hero-video",
-    autoPlay: true,
+    autoPlay: !prefersReducedMotion,
     muted: true,
-    loop: true,
+    loop: !prefersReducedMotion,
     playsInline: true,
     preload: "auto",
     poster: "assets/empresas-hero-poster.jpg"

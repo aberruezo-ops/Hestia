@@ -137,23 +137,30 @@ const TravelerCard = ({ t, tr, idx, isTitular, onChange, onRemove, onCopy, error
   const set = (k, v) => onChange(idx, { ...tr, [k]: v });
   const menor = ageFrom(tr.fechaNacimiento) != null && ageFrom(tr.fechaNacimiento) < 18;
   const err = (k) => errors[`${idx}.${k}`];
-  const field = (k, label, opts = {}) => (
-    <div className={`reg-field${err(k) ? ' has-err' : ''}${opts.wide ? ' reg-field--wide' : ''}`}>
-      <label>{label}{opts.req && <span className="reg-req"> *</span>}</label>
-      <input
-        type={opts.type || 'text'}
-        inputMode={opts.inputMode}
-        autoComplete={opts.autoComplete || 'off'}
-        autoCapitalize={opts.autoCapitalize}
-        className={opts.upper ? 'reg-input-upper' : undefined}
-        max={opts.max}
-        value={tr[k]}
-        placeholder={opts.ph || ''}
-        onChange={(e) => set(k, opts.upper ? e.target.value.toUpperCase() : e.target.value)}
-      />
-      {err(k) && <span className="reg-err-msg">{err(k)}</span>}
-    </div>
-  );
+  const field = (k, label, opts = {}) => {
+    const fid = `reg-${idx}-${k}`;
+    const errId = `${fid}-err`;
+    return (
+      <div className={`reg-field${err(k) ? ' has-err' : ''}${opts.wide ? ' reg-field--wide' : ''}`}>
+        <label htmlFor={fid}>{label}{opts.req && <span className="reg-req"> *</span>}</label>
+        <input
+          id={fid}
+          type={opts.type || 'text'}
+          inputMode={opts.inputMode}
+          autoComplete={opts.autoComplete || 'off'}
+          autoCapitalize={opts.autoCapitalize}
+          className={opts.upper ? 'reg-input-upper' : undefined}
+          max={opts.max}
+          value={tr[k]}
+          placeholder={opts.ph || ''}
+          onChange={(e) => set(k, opts.upper ? e.target.value.toUpperCase() : e.target.value)}
+          aria-invalid={err(k) ? true : undefined}
+          aria-describedby={err(k) ? errId : undefined}
+        />
+        {err(k) && <span className="reg-err-msg" id={errId}>{err(k)}</span>}
+      </div>
+    );
+  };
   // Hoy, en formato yyyy-mm-dd, para topar la fecha de nacimiento (no se
   // puede haber nacido en el futuro) y ayudar al selector nativo de fecha.
   const todayIso = React.useMemo(() => new Date().toISOString().slice(0, 10), []);
@@ -168,8 +175,8 @@ const TravelerCard = ({ t, tr, idx, isTitular, onChange, onRemove, onCopy, error
         {field('apellido1', t.apellido1, { req: true, autoComplete: 'family-name', autoCapitalize: 'words' })}
         {field('apellido2', t.apellido2, { req: true, autoComplete: 'family-name', autoCapitalize: 'words' })}
         <div className={`reg-field${err('sexo') ? ' has-err' : ''}`}>
-          <label>{t.sexo}<span className="reg-req"> *</span></label>
-          <select value={tr.sexo} onChange={(e) => set('sexo', e.target.value)}>
+          <label htmlFor={`reg-${idx}-sexo`}>{t.sexo}<span className="reg-req"> *</span></label>
+          <select id={`reg-${idx}-sexo`} value={tr.sexo} onChange={(e) => set('sexo', e.target.value)}>
             <option value="">–</option>
             <option value="H">{t.hombre}</option>
             <option value="M">{t.mujer}</option>
@@ -177,25 +184,25 @@ const TravelerCard = ({ t, tr, idx, isTitular, onChange, onRemove, onCopy, error
           {err('sexo') && <span className="reg-err-msg">{err('sexo')}</span>}
         </div>
         <div className="reg-field">
-          <label>{t.tipoDoc}<span className="reg-req"> *</span></label>
-          <select value={tr.tipoDoc} onChange={(e) => set('tipoDoc', e.target.value)}>
+          <label htmlFor={`reg-${idx}-tipoDoc`}>{t.tipoDoc}<span className="reg-req"> *</span></label>
+          <select id={`reg-${idx}-tipoDoc`} value={tr.tipoDoc} onChange={(e) => set('tipoDoc', e.target.value)}>
             {DOC_TYPES.map(d => <option key={d.code} value={d.code}>{lang === 'es' ? d.es : d.en}</option>)}
           </select>
         </div>
         {field('numDoc', t.numDoc, { req: true, upper: true, autoCapitalize: 'characters', autoComplete: 'off' })}
         <div className={`reg-field${err('numSoporte') ? ' has-err' : ''}`}>
-          <label>
+          <label htmlFor={`reg-${idx}-numSoporte`}>
             {t.numSoporte}{tr.tipoDoc !== 'PAS' && <span className="reg-req"> *</span>}
-            <button type="button" className="reg-help-btn" onClick={() => setShowSoporte(s => !s)}>{t.soporteHelp}</button>
+            <button type="button" className="reg-help-btn" aria-expanded={showSoporte} onClick={() => setShowSoporte(s => !s)}>{t.soporteHelp}</button>
           </label>
-          <input value={tr.numSoporte} className="reg-input-upper" autoCapitalize="characters"
+          <input id={`reg-${idx}-numSoporte`} value={tr.numSoporte} className="reg-input-upper" autoCapitalize="characters" spellCheck={false}
             onChange={(e) => set('numSoporte', e.target.value.toUpperCase())} placeholder="IDESP / Núm. soporte" />
           {showSoporte && <p className="reg-help-box">{t.soporteExpl}</p>}
           {err('numSoporte') && <span className="reg-err-msg">{err('numSoporte')}</span>}
         </div>
         <div className="reg-field">
-          <label>{t.nacionalidad}<span className="reg-req"> *</span></label>
-          <select value={tr.nacionalidad} onChange={(e) => set('nacionalidad', e.target.value)}>
+          <label htmlFor={`reg-${idx}-nacionalidad`}>{t.nacionalidad}<span className="reg-req"> *</span></label>
+          <select id={`reg-${idx}-nacionalidad`} value={tr.nacionalidad} onChange={(e) => set('nacionalidad', e.target.value)}>
             {COUNTRIES.map(c => <option key={c.code} value={c.code}>{lang === 'es' ? c.es : c.en}</option>)}
             <option value="OTRO">{lang === 'es' ? 'Otro' : 'Other'}</option>
           </select>
@@ -203,8 +210,8 @@ const TravelerCard = ({ t, tr, idx, isTitular, onChange, onRemove, onCopy, error
         {field('fechaNacimiento', t.nacimiento, { req: true, type: 'date', max: todayIso, autoComplete: 'bday', wide: true })}
         {menor && (
           <div className={`reg-field${err('parentesco') ? ' has-err' : ''}`}>
-            <label>{t.parentesco} <span className="reg-hint">{t.parentescoHint}</span><span className="reg-req"> *</span></label>
-            <input value={tr.parentesco} onChange={(e) => set('parentesco', e.target.value)} placeholder={lang === 'es' ? 'hijo/a, sobrino/a…' : 'son/daughter, nephew…'} />
+            <label htmlFor={`reg-${idx}-parentesco`}>{t.parentesco} <span className="reg-hint">{t.parentescoHint}</span><span className="reg-req"> *</span></label>
+            <input id={`reg-${idx}-parentesco`} value={tr.parentesco} onChange={(e) => set('parentesco', e.target.value)} placeholder={lang === 'es' ? 'hijo/a, sobrino/a…' : 'son/daughter, nephew…'} />
             {err('parentesco') && <span className="reg-err-msg">{err('parentesco')}</span>}
           </div>
         )}
@@ -215,8 +222,8 @@ const TravelerCard = ({ t, tr, idx, isTitular, onChange, onRemove, onCopy, error
       </div>
       <div className="reg-grid">
         <div className="reg-field">
-          <label>{t.pais}<span className="reg-req"> *</span></label>
-          <select value={tr.pais} onChange={(e) => set('pais', e.target.value)}>
+          <label htmlFor={`reg-${idx}-pais`}>{t.pais}<span className="reg-req"> *</span></label>
+          <select id={`reg-${idx}-pais`} value={tr.pais} onChange={(e) => set('pais', e.target.value)}>
             {COUNTRIES.map(c => <option key={c.code} value={c.code}>{lang === 'es' ? c.es : c.en}</option>)}
             <option value="OTRO">{lang === 'es' ? 'Otro' : 'Other'}</option>
           </select>
@@ -251,6 +258,18 @@ const RegistroPage = () => {
   const [topMsg, setTopMsg] = React.useState(null);
 
   React.useEffect(() => { try { localStorage.setItem('hestia-lang', lang); } catch (_) {} document.documentElement.lang = lang; }, [lang]);
+
+  // Avisa antes de cerrar/recargar si hay datos escritos sin enviar: es un
+  // formulario largo con datos de varios viajeros, perderlo por un cierre
+  // accidental es especialmente doloroso.
+  React.useEffect(() => {
+    const hasData = phase === 'form' && travelers.some(tr =>
+      Object.entries(tr).some(([k, v]) => k !== 'tipoDoc' && k !== 'sexo' && k !== 'pais' && String(v || '').trim()));
+    if (!hasData) return;
+    const onBeforeUnload = (e) => { e.preventDefault(); e.returnValue = ''; };
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
+  }, [travelers, phase]);
 
   // Prefill del Viajero 1 con lo que el anfitrión ya sabe de la reserva
   // (nombre, apellidos, teléfono, email), pasado en el enlace. Editable. Luego
@@ -327,14 +346,33 @@ const RegistroPage = () => {
       if (age != null && age < 18 && !String(tr.parentesco || '').trim()) e[`${i}.parentesco`] = t.req;
     });
     setErrors(e);
-    return Object.keys(e).length === 0;
+    return e;
+  };
+
+  // Mueve el foco al primer campo con error (o al checkbox de consentimiento),
+  // además de hacer scroll: quien navega con lector de pantalla o teclado no
+  // tiene por qué "ver" el aviso de arriba para saber qué falta por rellenar.
+  const focusFirstError = (e) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const firstKey = Object.keys(e)[0];
+    if (!firstKey) return;
+    setTimeout(() => {
+      const el = document.getElementById(`reg-${firstKey.replace('.', '-')}`);
+      if (el) el.focus();
+    }, 300);
   };
 
   const submit = async (ev) => {
     ev.preventDefault();
     setTopMsg(null);
-    if (!consent) { setTopMsg(t.errRequired); return; }
-    if (!validate()) { setTopMsg(t.errRequired); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+    if (!consent) {
+      setTopMsg(t.errRequired);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(() => document.getElementById('reg-consent')?.focus(), 300);
+      return;
+    }
+    const e = validate();
+    if (Object.keys(e).length > 0) { setTopMsg(t.errRequired); focusFirstError(e); return; }
     setPhase('sending');
     try {
       const r = await fetch(`${TRAVELER_WORKER_URL}/submit`, {
@@ -382,7 +420,7 @@ const RegistroPage = () => {
             <span className="reg-eyebrow">{t.eyebrow}</span>
             <h1 className="reg-title">{t.title}</h1>
             <p className="reg-legal"><HiIcon name="shield" size={16} className="reg-legal-ic" /> {t.legal}</p>
-            {topMsg && <div className="reg-topmsg">{topMsg}</div>}
+            {topMsg && <div className="reg-topmsg" role="alert">{topMsg}</div>}
 
             {travelers.map((tr, i) => (
               <TravelerCard key={i} t={t} tr={tr} idx={i} isTitular={i === 0}
@@ -394,7 +432,7 @@ const RegistroPage = () => {
             </button>
 
             <label className="reg-consent">
-              <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
+              <input id="reg-consent" type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
               <span>{t.consent}</span>
             </label>
 

@@ -71,10 +71,11 @@ const ratingToStars = (rating, source) => {
   return Math.round(rating);
 };
 const Stars = ({
-  count
+  count,
+  lang
 }) => /*#__PURE__*/React.createElement("div", {
   className: "stars-row",
-  "aria-label": `${count} estrellas`
+  "aria-label": lang === 'en' ? `${count} stars` : `${count} estrellas`
 }, Array.from({
   length: count
 }).map((_, i) => /*#__PURE__*/React.createElement(HiIcon, {
@@ -88,9 +89,11 @@ const OpinionesHero = ({
 }) => {
   const t = OPINIONES_COPY[lang];
   const videoRef = React.useRef(null);
+  const prefersReducedMotion = React.useMemo(() => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
 
   // Auto-play resiliente a iOS (muted + playsInline) y a tabs en background.
   React.useEffect(() => {
+    if (prefersReducedMotion) return;
     const tryPlay = el => {
       if (el) {
         el.muted = true;
@@ -103,15 +106,15 @@ const OpinionesHero = ({
     };
     document.addEventListener('visibilitychange', onVisible);
     return () => document.removeEventListener('visibilitychange', onVisible);
-  }, []);
+  }, [prefersReducedMotion]);
   return /*#__PURE__*/React.createElement("section", {
     className: "page-hero opiniones-hero"
   }, /*#__PURE__*/React.createElement("video", {
     ref: videoRef,
     className: "opiniones-hero-video",
-    autoPlay: true,
+    autoPlay: !prefersReducedMotion,
     muted: true,
-    loop: true,
+    loop: !prefersReducedMotion,
     playsInline: true,
     preload: "auto"
   }, /*#__PURE__*/React.createElement("source", {
@@ -266,6 +269,7 @@ const ReviewCard = ({
   const needsTrunc = words.length > REVIEW_WORDS;
   const [open, setOpen] = React.useState(false);
   const displayed = needsTrunc && !open ? words.slice(0, REVIEW_WORDS).join(' ') + '…' : text;
+  const quoteId = React.useId();
   return /*#__PURE__*/React.createElement("article", {
     className: "testimonial-card",
     "data-apt": rev.apt,
@@ -287,11 +291,14 @@ const ReviewCard = ({
     className: "testimonial-quote-mark",
     "aria-hidden": "true"
   }, "\""), /*#__PURE__*/React.createElement("blockquote", {
-    className: "testimonial-quote"
+    className: "testimonial-quote",
+    id: quoteId
   }, displayed), needsTrunc && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "testimonial-expand-btn",
-    onClick: () => setOpen(o => !o)
+    onClick: () => setOpen(o => !o),
+    "aria-expanded": open,
+    "aria-controls": quoteId
   }, open ? lang === 'es' ? 'Leer menos' : 'Show less' : lang === 'es' ? 'Leer más' : 'Read more'), /*#__PURE__*/React.createElement("footer", {
     className: "testimonial-foot"
   }, /*#__PURE__*/React.createElement("div", {
@@ -301,7 +308,8 @@ const ReviewCard = ({
   }, rev.name.split(' ')[0]), /*#__PURE__*/React.createElement("span", {
     className: "testimonial-year"
   }, fmtDate(rev.date))), /*#__PURE__*/React.createElement(Stars, {
-    count: stars
+    count: stars,
+    lang: lang
   })));
 };
 
@@ -346,10 +354,28 @@ const OpinionesTestimonials = ({
 }) => {
   const t = OPINIONES_COPY[lang];
   const all = window.REVIEWS && Array.isArray(window.REVIEWS.items) ? window.REVIEWS.items.filter(r => r.status === 'published') : [];
-  const [filter, setFilter] = React.useState('all');
-  const [aptFilter, setAptFilter] = React.useState('all');
-  const [page, setPage] = React.useState(0);
-  const [orden, setOrden] = React.useState('relevantes');
+
+  // Estado inicial desde la URL, para que un filtro se pueda compartir o
+  // sobreviva a una recarga (?src=&apt=&orden=&pagina=).
+  const _initQ = React.useMemo(() => new URLSearchParams(location.search), []);
+  const [filter, setFilter] = React.useState(() => _initQ.get('src') || 'all');
+  const [aptFilter, setAptFilter] = React.useState(() => _initQ.get('apt') || 'all');
+  const [page, setPage] = React.useState(() => Math.max(0, (parseInt(_initQ.get('pagina'), 10) || 1) - 1));
+  const [orden, setOrden] = React.useState(() => _initQ.get('orden') || 'relevantes');
+
+  // Refleja el filtro/orden/página activos en la URL (replaceState, sin
+  // apilar entradas de historial por cada clic de filtro).
+  React.useEffect(() => {
+    const q = new URLSearchParams();
+    if (filter !== 'all') q.set('src', filter);
+    if (aptFilter !== 'all') q.set('apt', aptFilter);
+    if (orden !== 'relevantes') q.set('orden', orden);
+    if (page > 0) q.set('pagina', String(page + 1));
+    const qs = q.toString();
+    try {
+      history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
+    } catch (_) {}
+  }, [filter, aptFilter, orden, page]);
   const changeFilter = src => _vt(() => {
     setFilter(src);
     setPage(0);

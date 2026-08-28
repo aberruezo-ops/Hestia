@@ -90,18 +90,21 @@ const CONTACTO_COPY = {
 const ContactoHero = ({ lang }) => {
   const t = CONTACTO_COPY[lang];
   const videoRef = React.useRef(null);
+  const prefersReducedMotion = React.useMemo(
+    () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
 
   React.useEffect(() => {
+    if (prefersReducedMotion) return;
     const tryPlay = (el) => { if (el) { el.muted = true; el.play().catch(() => {}); } };
     tryPlay(videoRef.current);
     const onVisible = () => { if (!document.hidden) tryPlay(videoRef.current); };
     document.addEventListener('visibilitychange', onVisible);
     return () => document.removeEventListener('visibilitychange', onVisible);
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <section className="page-hero contacto-hero">
-      <video ref={videoRef} className="contacto-hero-video" autoPlay muted loop playsInline preload="auto">
+      <video ref={videoRef} className="contacto-hero-video" autoPlay={!prefersReducedMotion} muted loop={!prefersReducedMotion} playsInline preload="auto">
         <source src="assets/contacto-hero.mp4" type="video/mp4"/>
       </video>
       <div className="contacto-hero-wash"/>
@@ -118,7 +121,7 @@ const PersonCard = ({ name, role, langLabel, phone, waLink, quote, initial, acce
   <div className="contacto-card" style={{ '--card-accent': accent }}>
     <div className="contacto-avatar">
       {imgSrc
-        ? <img decoding="async" src={imgSrc} alt={name} loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
+        ? <img decoding="async" src={imgSrc} alt={name} width="64" height="64" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
         : initial}
     </div>
     <div className="contacto-card-body">
@@ -229,11 +232,12 @@ const ContactoFAQ = ({ lang }) => {
         <div className="faq-list">
           {t.faqs.map((faq, i) => (
             <div key={i} className={`faq-item ${open === i ? 'open' : ''}`}>
-              <button className="faq-q" onClick={() => setOpen(open === i ? null : i)}>
+              <button className="faq-q" onClick={() => setOpen(open === i ? null : i)}
+                aria-expanded={open === i} aria-controls={`contacto-faq-a-${i}`}>
                 <span>{faq.q}</span>
-                <span className="faq-chevron">{open === i ? '−' : '+'}</span>
+                <span className="faq-chevron" aria-hidden="true">{open === i ? '−' : '+'}</span>
               </button>
-              <div className="faq-a">{faq.a}</div>
+              <div className="faq-a" id={`contacto-faq-a-${i}`}>{faq.a}</div>
             </div>
           ))}
         </div>

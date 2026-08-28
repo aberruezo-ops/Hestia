@@ -123,12 +123,14 @@ const _fmtRate  = (n, lang) => String(Math.round(Number(n) || 0)).replace(/\B(?=
 
 const LsHero = ({ lang }) => {
   const t = LS_COPY[lang];
+  const prefersReducedMotion = React.useMemo(
+    () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
   return (
     <section className="lsl-hero on-dark">
       <video
         className="lsl-hero-video"
         src="assets/Videoshome/hero-rompeolas.mp4"
-        autoPlay muted loop playsInline
+        autoPlay={!prefersReducedMotion} muted loop={!prefersReducedMotion} playsInline
         aria-hidden="true"
       />
       <div className="lsl-hero-wash"/>
@@ -284,29 +286,10 @@ const LsSearch = ({ lang }) => {
     return ranges;
   }, [availData]);
 
-  const calcLsTotal = (start, end, guests, withPets, aptId) => {
-    const lsCfg = (window.PRICES_V2?.longStayConfig) || { specialNightFlat: 80, easterRanges: [] };
-    const flat              = lsCfg.specialNightFlat   || 80;
-    const easter            = lsCfg.easterRanges        || [];
-    const extraGuestPerMo   = lsCfg.extraGuestPerMonth  || 0;
-    const petPerMo          = lsCfg.petPerMonth         || 0;
-    const aptSupp           = ((lsCfg.aptSupplement || {})[aptId] || 0);
-    const extraGuests       = Math.max(0, (guests || 1) - 2);
-    const rates             = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
-    const isXmas = (ds) => { const m = +ds.slice(5,7), d = +ds.slice(8,10); return (m===12&&d>=23)||(m===1&&d<=6); };
-    const isEast = (ds) => easter.some(([s,e]) => ds>=s && ds<=e);
-    let total = 0, cur = start;
-    while (cur < end) {
-      const yr = +cur.slice(0,4), mo = +cur.slice(5,7);
-      const dim = new Date(yr, mo, 0).getDate();
-      const rate = (mo===6||mo===9) ? rates.alta : (mo===5||mo===10) ? rates.media : rates.baja;
-      total += (isXmas(cur)||isEast(cur)) ? flat : (rate + aptSupp) / dim;
-      if (extraGuests > 0) total += extraGuests * extraGuestPerMo / dim;
-      if (withPets)        total += petPerMo / dim;
-      cur = _drAdj(cur, 1);
-    }
-    return Math.round(total);
-  };
+  // Precio de estancia larga: SIEMPRE _calcLsTotal (shared.jsx), fuente única
+  // compartida con el motor de precios del resto del sitio. No se recalcula
+  // aquí aparte, para que un cambio de tarifas no pueda desincronizar esta
+  // página del resto (ver CLAUDE.md, invariantes de estancias largas).
 
   React.useEffect(() => {
     if (checkin && checkout && nights >= 29) {
@@ -316,7 +299,8 @@ const LsSearch = ({ lang }) => {
         const isAvail = _drAvail(checkin, checkout, [...((availData?.[apt.id]?.blocked) || []), ..._mblk(apt.id)]);
         const regCalc = isAvail ? _calcStay(checkin, checkout, apt.id, false, guests) : null;
         const regTotal = regCalc ? regCalc.baseTotal + (regCalc.guestSuppAmt || 0) + (regCalc.petAmt || 0) : 0;
-        const lsTotal = calcLsTotal(checkin, checkout, guests, false, apt.id);
+        const lsCalc = _calcLsTotal(checkin, checkout, guests, false, apt.id);
+        const lsTotal = lsCalc ? lsCalc.total : 0;
         return { apt, nights, lsTotal, regTotal, available: isAvail };
       }));
     } else {
@@ -347,8 +331,8 @@ const LsSearch = ({ lang }) => {
 
           <div className="lsl-search-footer">
             <div className="lsl-search-field lsl-search-field--sm">
-              <label className="lsl-search-lbl">{es ? 'Personas' : 'Guests'}</label>
-              <select className="lsl-search-input" value={guests}
+              <label className="lsl-search-lbl" htmlFor="lsl-guests-sel">{es ? 'Personas' : 'Guests'}</label>
+              <select id="lsl-guests-sel" className="lsl-search-input" value={guests}
                 onChange={e => setGuests(Number(e.target.value))}>
                 {[1,2,3,4].map(n => <option key={n} value={n}>{n}</option>)}
               </select>
@@ -436,11 +420,12 @@ const LsFaq = ({ lang }) => {
         <div className="lsl-faq-list">
           {t.faqs.map((item, i) => (
             <div key={i} className={`lsl-faq-item${open === i ? ' open' : ''}`}>
-              <button type="button" className="lsl-faq-q" onClick={() => setOpen(open === i ? null : i)}>
+              <button type="button" className="lsl-faq-q" onClick={() => setOpen(open === i ? null : i)}
+                aria-expanded={open === i} aria-controls={`lsl-faq-a-${i}`}>
                 <span>{item.q}</span>
-                <span className="lsl-faq-chev">{open === i ? '−' : '+'}</span>
+                <span className="lsl-faq-chev" aria-hidden="true">{open === i ? '−' : '+'}</span>
               </button>
-              {open === i && <p className="lsl-faq-a">{item.a}</p>}
+              {open === i && <p className="lsl-faq-a" id={`lsl-faq-a-${i}`}>{item.a}</p>}
             </div>
           ))}
         </div>
@@ -481,7 +466,7 @@ const EstanciasLargasPageApp = () => {
     <>
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <LsHero     lang={lang} />
         <LsWho      lang={lang} />
         <LsIncludes lang={lang} />

@@ -165,21 +165,27 @@ const LegalHero = ({ copy }) => (
 );
 
 const CookieTable = ({ items, lang }) => (
-  <div className="legal-cookie-table">
-    <div className="cookie-row cookie-head">
-      <span>{lang === 'es' ? 'Nombre' : 'Name'}</span>
-      <span>{lang === 'es' ? 'Tipo' : 'Type'}</span>
-      <span>{lang === 'es' ? 'Duración' : 'Duration'}</span>
-      <span>{lang === 'es' ? 'Descripción' : 'Description'}</span>
-    </div>
-    {items.map((it, i) => (
-      <div key={i} className="cookie-row">
-        <span className="cookie-name">{it.name}</span>
-        <span>{it.type}</span>
-        <span>{it.duration}</span>
-        <span>{it.desc}</span>
-      </div>
-    ))}
+  <div className="legal-cookie-table-wrap">
+    <table className="legal-cookie-table">
+      <thead>
+        <tr>
+          <th scope="col">{lang === 'es' ? 'Nombre' : 'Name'}</th>
+          <th scope="col">{lang === 'es' ? 'Tipo' : 'Type'}</th>
+          <th scope="col">{lang === 'es' ? 'Duración' : 'Duration'}</th>
+          <th scope="col">{lang === 'es' ? 'Descripción' : 'Description'}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {items.map((it, i) => (
+          <tr key={i}>
+            <th scope="row" className="cookie-name">{it.name}</th>
+            <td>{it.type}</td>
+            <td>{it.duration}</td>
+            <td>{it.desc}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   </div>
 );
 
@@ -352,7 +358,7 @@ const LegalPageApp = () => {
     <>
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <LegalHero copy={copy}/>
         {type === 'normas' ? <NormasContent lang={lang}/>
           : type === 'letrero' ? <LetreroContent lang={lang}/>

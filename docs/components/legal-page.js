@@ -178,15 +178,23 @@ const CookieTable = ({
   items,
   lang
 }) => /*#__PURE__*/React.createElement("div", {
+  className: "legal-cookie-table-wrap"
+}, /*#__PURE__*/React.createElement("table", {
   className: "legal-cookie-table"
-}, /*#__PURE__*/React.createElement("div", {
-  className: "cookie-row cookie-head"
-}, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Nombre' : 'Name'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Tipo' : 'Type'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Duración' : 'Duration'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Descripción' : 'Description')), items.map((it, i) => /*#__PURE__*/React.createElement("div", {
-  key: i,
-  className: "cookie-row"
-}, /*#__PURE__*/React.createElement("span", {
+}, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+  scope: "col"
+}, lang === 'es' ? 'Nombre' : 'Name'), /*#__PURE__*/React.createElement("th", {
+  scope: "col"
+}, lang === 'es' ? 'Tipo' : 'Type'), /*#__PURE__*/React.createElement("th", {
+  scope: "col"
+}, lang === 'es' ? 'Duración' : 'Duration'), /*#__PURE__*/React.createElement("th", {
+  scope: "col"
+}, lang === 'es' ? 'Descripción' : 'Description'))), /*#__PURE__*/React.createElement("tbody", null, items.map((it, i) => /*#__PURE__*/React.createElement("tr", {
+  key: i
+}, /*#__PURE__*/React.createElement("th", {
+  scope: "row",
   className: "cookie-name"
-}, it.name), /*#__PURE__*/React.createElement("span", null, it.type), /*#__PURE__*/React.createElement("span", null, it.duration), /*#__PURE__*/React.createElement("span", null, it.desc))));
+}, it.name), /*#__PURE__*/React.createElement("td", null, it.type), /*#__PURE__*/React.createElement("td", null, it.duration), /*#__PURE__*/React.createElement("td", null, it.desc))))));
 const LegalContent = ({
   copy,
   lang
@@ -389,7 +397,10 @@ const LegalPageApp = () => {
     mode: mode,
     scrolled: scrolled,
     lang: lang
-  }), /*#__PURE__*/React.createElement("main", null, /*#__PURE__*/React.createElement(LegalHero, {
+  }), /*#__PURE__*/React.createElement("main", {
+    id: "main-content",
+    tabIndex: -1
+  }, /*#__PURE__*/React.createElement(LegalHero, {
     copy: copy
   }), type === 'normas' ? /*#__PURE__*/React.createElement(NormasContent, {
     lang: lang

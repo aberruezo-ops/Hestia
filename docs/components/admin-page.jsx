@@ -3876,7 +3876,7 @@ const FacturasTab = ({ token }) => {
                 <div className="rv-edit-eyebrow">{editIdx >= 0 ? 'Editar factura' : 'Nueva factura'} · {focusYear}</div>
                 <h3>{draft.proveedor || '(sin proveedor)'}</h3>
               </div>
-              <button type="button" className="rv-edit-close" onClick={cancelDraft}>×</button>
+              <button type="button" className="rv-edit-close" onClick={cancelDraft} aria-label="Cerrar">×</button>
             </header>
             <div className="rv-edit-body">
               <div className="rv-row2">
@@ -4416,7 +4416,7 @@ const PagoLinkInline = ({ pr, noches, onClose }) => {
 
   return (
     <div style={{ background: 'rgba(42,15,46,.04)', border: '1px solid rgba(42,15,46,.12)', borderRadius: 8, padding: '16px 18px', marginTop: 10, position: 'relative' }}>
-      <button onClick={onClose} style={{ position:'absolute', top:10, right:12, background:'none', border:'none', fontSize:16, cursor:'pointer', color:'#7A5A72' }} title="Cerrar">✕</button>
+      <button onClick={onClose} style={{ position:'absolute', top:10, right:12, background:'none', border:'none', fontSize:16, cursor:'pointer', color:'#7A5A72' }} title="Cerrar" aria-label="Cerrar">✕</button>
       <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', color: '#7A5A72', marginBottom: 10 }}>Link de pago</div>
       <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:6, flexWrap:'wrap' }}>
         <span style={{ fontSize:11.5, color:'#3D1A35', background:'rgba(42,15,46,.07)', borderRadius:5, padding:'4px 10px', wordBreak:'break-all', flex:1, minWidth:0 }}>{url}</span>

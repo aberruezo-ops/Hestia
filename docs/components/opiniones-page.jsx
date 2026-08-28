@@ -48,8 +48,8 @@ const ratingToStars = (rating, source) => {
   return Math.round(rating);
 };
 
-const Stars = ({ count }) => (
-  <div className="stars-row" aria-label={`${count} estrellas`}>
+const Stars = ({ count, lang }) => (
+  <div className="stars-row" aria-label={lang === 'en' ? `${count} stars` : `${count} estrellas`}>
     {Array.from({ length: count }).map((_, i) => (
       <HiIcon key={i} name="star-fill" size={15} className="star" />
     ))}
@@ -59,19 +59,22 @@ const Stars = ({ count }) => (
 const OpinionesHero = ({ lang }) => {
   const t = OPINIONES_COPY[lang];
   const videoRef = React.useRef(null);
+  const prefersReducedMotion = React.useMemo(
+    () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
 
   // Auto-play resiliente a iOS (muted + playsInline) y a tabs en background.
   React.useEffect(() => {
+    if (prefersReducedMotion) return;
     const tryPlay = (el) => { if (el) { el.muted = true; el.play().catch(() => {}); } };
     tryPlay(videoRef.current);
     const onVisible = () => { if (!document.hidden) tryPlay(videoRef.current); };
     document.addEventListener('visibilitychange', onVisible);
     return () => document.removeEventListener('visibilitychange', onVisible);
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <section className="page-hero opiniones-hero">
-      <video ref={videoRef} className="opiniones-hero-video" autoPlay muted loop playsInline preload="auto">
+      <video ref={videoRef} className="opiniones-hero-video" autoPlay={!prefersReducedMotion} muted loop={!prefersReducedMotion} playsInline preload="auto">
         <source src="assets/mp_.mp4" type="video/mp4"/>
       </video>
       <div className="opiniones-hero-wash"/>
@@ -175,6 +178,7 @@ const ReviewCard = ({ rev, lang, fmtDate }) => {
   const needsTrunc = words.length > REVIEW_WORDS;
   const [open, setOpen] = React.useState(false);
   const displayed = needsTrunc && !open ? words.slice(0, REVIEW_WORDS).join(' ') + '…' : text;
+  const quoteId = React.useId();
 
   return (
     <article
@@ -189,9 +193,10 @@ const ReviewCard = ({ rev, lang, fmtDate }) => {
         <span className="testimonial-apt-pill">{aptName}</span>
       </header>
       <span className="testimonial-quote-mark" aria-hidden="true">"</span>
-      <blockquote className="testimonial-quote">{displayed}</blockquote>
+      <blockquote className="testimonial-quote" id={quoteId}>{displayed}</blockquote>
       {needsTrunc && (
-        <button type="button" className="testimonial-expand-btn" onClick={() => setOpen(o => !o)}>
+        <button type="button" className="testimonial-expand-btn" onClick={() => setOpen(o => !o)}
+          aria-expanded={open} aria-controls={quoteId}>
           {open
             ? (lang === 'es' ? 'Leer menos' : 'Show less')
             : (lang === 'es' ? 'Leer más' : 'Read more')}
@@ -202,7 +207,7 @@ const ReviewCard = ({ rev, lang, fmtDate }) => {
           <span className="testimonial-name">{rev.name.split(' ')[0]}</span>
           <span className="testimonial-year">{fmtDate(rev.date)}</span>
         </div>
-        <Stars count={stars}/>
+        <Stars count={stars} lang={lang}/>
       </footer>
     </article>
   );
@@ -245,10 +250,25 @@ const OpinionesTestimonials = ({ lang }) => {
     ? window.REVIEWS.items.filter(r => r.status === 'published')
     : [];
 
-  const [filter, setFilter] = React.useState('all');
-  const [aptFilter, setAptFilter] = React.useState('all');
-  const [page, setPage] = React.useState(0);
-  const [orden, setOrden] = React.useState('relevantes');
+  // Estado inicial desde la URL, para que un filtro se pueda compartir o
+  // sobreviva a una recarga (?src=&apt=&orden=&pagina=).
+  const _initQ = React.useMemo(() => new URLSearchParams(location.search), []);
+  const [filter, setFilter] = React.useState(() => _initQ.get('src') || 'all');
+  const [aptFilter, setAptFilter] = React.useState(() => _initQ.get('apt') || 'all');
+  const [page, setPage] = React.useState(() => Math.max(0, (parseInt(_initQ.get('pagina'), 10) || 1) - 1));
+  const [orden, setOrden] = React.useState(() => _initQ.get('orden') || 'relevantes');
+
+  // Refleja el filtro/orden/página activos en la URL (replaceState, sin
+  // apilar entradas de historial por cada clic de filtro).
+  React.useEffect(() => {
+    const q = new URLSearchParams();
+    if (filter !== 'all') q.set('src', filter);
+    if (aptFilter !== 'all') q.set('apt', aptFilter);
+    if (orden !== 'relevantes') q.set('orden', orden);
+    if (page > 0) q.set('pagina', String(page + 1));
+    const qs = q.toString();
+    try { history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '')); } catch (_) {}
+  }, [filter, aptFilter, orden, page]);
 
   const changeFilter = (src) => _vt(() => { setFilter(src); setPage(0); });
   const changeApt   = (apt) => _vt(() => { setAptFilter(apt); setPage(0); });

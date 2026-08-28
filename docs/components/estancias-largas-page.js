@@ -161,14 +161,15 @@ const LsHero = ({
   lang
 }) => {
   const t = LS_COPY[lang];
+  const prefersReducedMotion = React.useMemo(() => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
   return /*#__PURE__*/React.createElement("section", {
     className: "lsl-hero on-dark"
   }, /*#__PURE__*/React.createElement("video", {
     className: "lsl-hero-video",
     src: "assets/Videoshome/hero-rompeolas.mp4",
-    autoPlay: true,
+    autoPlay: !prefersReducedMotion,
     muted: true,
-    loop: true,
+    loop: !prefersReducedMotion,
     playsInline: true,
     "aria-hidden": "true"
   }), /*#__PURE__*/React.createElement("div", {
@@ -377,42 +378,12 @@ const LsSearch = ({
     }
     return ranges;
   }, [availData]);
-  const calcLsTotal = (start, end, guests, withPets, aptId) => {
-    const lsCfg = window.PRICES_V2?.longStayConfig || {
-      specialNightFlat: 80,
-      easterRanges: []
-    };
-    const flat = lsCfg.specialNightFlat || 80;
-    const easter = lsCfg.easterRanges || [];
-    const extraGuestPerMo = lsCfg.extraGuestPerMonth || 0;
-    const petPerMo = lsCfg.petPerMonth || 0;
-    const aptSupp = (lsCfg.aptSupplement || {})[aptId] || 0;
-    const extraGuests = Math.max(0, (guests || 1) - 2);
-    const rates = lsCfg.monthlyRates || {
-      baja: 1490,
-      media: 1590,
-      alta: 1850
-    };
-    const isXmas = ds => {
-      const m = +ds.slice(5, 7),
-        d = +ds.slice(8, 10);
-      return m === 12 && d >= 23 || m === 1 && d <= 6;
-    };
-    const isEast = ds => easter.some(([s, e]) => ds >= s && ds <= e);
-    let total = 0,
-      cur = start;
-    while (cur < end) {
-      const yr = +cur.slice(0, 4),
-        mo = +cur.slice(5, 7);
-      const dim = new Date(yr, mo, 0).getDate();
-      const rate = mo === 6 || mo === 9 ? rates.alta : mo === 5 || mo === 10 ? rates.media : rates.baja;
-      total += isXmas(cur) || isEast(cur) ? flat : (rate + aptSupp) / dim;
-      if (extraGuests > 0) total += extraGuests * extraGuestPerMo / dim;
-      if (withPets) total += petPerMo / dim;
-      cur = _drAdj(cur, 1);
-    }
-    return Math.round(total);
-  };
+
+  // Precio de estancia larga: SIEMPRE _calcLsTotal (shared.jsx), fuente única
+  // compartida con el motor de precios del resto del sitio. No se recalcula
+  // aquí aparte, para que un cambio de tarifas no pueda desincronizar esta
+  // página del resto (ver CLAUDE.md, invariantes de estancias largas).
+
   React.useEffect(() => {
     if (checkin && checkout && nights >= 29) {
       const mo = +checkin.slice(5, 7);
@@ -424,7 +395,8 @@ const LsSearch = ({
         const isAvail = _drAvail(checkin, checkout, [...(availData?.[apt.id]?.blocked || []), ..._mblk(apt.id)]);
         const regCalc = isAvail ? _calcStay(checkin, checkout, apt.id, false, guests) : null;
         const regTotal = regCalc ? regCalc.baseTotal + (regCalc.guestSuppAmt || 0) + (regCalc.petAmt || 0) : 0;
-        const lsTotal = calcLsTotal(checkin, checkout, guests, false, apt.id);
+        const lsCalc = _calcLsTotal(checkin, checkout, guests, false, apt.id);
+        const lsTotal = lsCalc ? lsCalc.total : 0;
         return {
           apt,
           nights,
@@ -470,8 +442,10 @@ const LsSearch = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "lsl-search-field lsl-search-field--sm"
   }, /*#__PURE__*/React.createElement("label", {
-    className: "lsl-search-lbl"
+    className: "lsl-search-lbl",
+    htmlFor: "lsl-guests-sel"
   }, es ? 'Personas' : 'Guests'), /*#__PURE__*/React.createElement("select", {
+    id: "lsl-guests-sel",
     className: "lsl-search-input",
     value: guests,
     onChange: e => setGuests(Number(e.target.value))
@@ -577,11 +551,15 @@ const LsFaq = ({
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "lsl-faq-q",
-    onClick: () => setOpen(open === i ? null : i)
+    onClick: () => setOpen(open === i ? null : i),
+    "aria-expanded": open === i,
+    "aria-controls": `lsl-faq-a-${i}`
   }, /*#__PURE__*/React.createElement("span", null, item.q), /*#__PURE__*/React.createElement("span", {
-    className: "lsl-faq-chev"
+    className: "lsl-faq-chev",
+    "aria-hidden": "true"
   }, open === i ? '−' : '+')), open === i && /*#__PURE__*/React.createElement("p", {
-    className: "lsl-faq-a"
+    className: "lsl-faq-a",
+    id: `lsl-faq-a-${i}`
   }, item.a))))));
 };
 const LsCta = ({
@@ -627,7 +605,8 @@ const EstanciasLargasPageApp = () => {
     scrolled: scrolled,
     lang: lang
   }), /*#__PURE__*/React.createElement("main", {
-    id: "main-content"
+    id: "main-content",
+    tabIndex: -1
   }, /*#__PURE__*/React.createElement(LsHero, {
     lang: lang
   }), /*#__PURE__*/React.createElement(LsWho, {
