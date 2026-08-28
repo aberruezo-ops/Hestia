@@ -584,6 +584,9 @@ const GalleryCarousel = ({ imgs, captions, lang = 'es' }) => {
   const timerRef   = React.useRef(null);
   const pausedRef  = React.useRef(false);
   const lbCloseRef = React.useRef(null);
+  const prefersReducedMotion = React.useMemo(
+    () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
+  const [autoplayOn, setAutoplayOn] = React.useState(!prefersReducedMotion);
 
   // Smart object-position per photo, calculated from edge centroid.
   // Loaded from data/photo-positions.json (cargado en window.PHOTO_POS).
@@ -619,6 +622,7 @@ const GalleryCarousel = ({ imgs, captions, lang = 'es' }) => {
 
   const resetTimer = () => {
     clearInterval(timerRef.current);
+    if (!autoplayOn) return;
     timerRef.current = setInterval(() => {
       if (!pausedRef.current) stepTo((cur + 1) % n);
     }, 6000);
@@ -627,7 +631,7 @@ const GalleryCarousel = ({ imgs, captions, lang = 'es' }) => {
   React.useEffect(() => {
     resetTimer();
     return () => clearInterval(timerRef.current);
-  }, [cur, n]);
+  }, [cur, n, autoplayOn]);
 
   // Keyboard navigation + focus trap for lightbox
   React.useEffect(() => {
@@ -694,6 +698,8 @@ const GalleryCarousel = ({ imgs, captions, lang = 'es' }) => {
              onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
              onMouseEnter={() => { pausedRef.current = true; }}
              onMouseLeave={() => { pausedRef.current = false; }}
+             onFocus={() => { pausedRef.current = true; }}
+             onBlur={() => { pausedRef.current = false; }}
              onClick={openLightbox}>
           {imgs.map((src, i) => (
             <div key={i} className={`gc-slide${i === cur ? ' gc-slide-active' : ''}`}
@@ -712,6 +718,12 @@ const GalleryCarousel = ({ imgs, captions, lang = 'es' }) => {
           </div>
           <button className="gc-prev" onClick={e => { e.stopPropagation(); go((cur - 1 + n) % n); }} aria-label={lang === 'es' ? 'Anterior' : 'Previous'}>‹</button>
           <button className="gc-next" onClick={e => { e.stopPropagation(); go((cur + 1) % n); }} aria-label={lang === 'es' ? 'Siguiente' : 'Next'}>›</button>
+          <button className="gc-autoplay-toggle" onClick={e => { e.stopPropagation(); setAutoplayOn(v => !v); }}
+            aria-label={autoplayOn
+              ? (lang === 'es' ? 'Pausar cambio automático de fotos' : 'Pause automatic photo change')
+              : (lang === 'es' ? 'Reanudar cambio automático de fotos' : 'Resume automatic photo change')}>
+            {autoplayOn ? '❚❚' : '▶'}
+          </button>
         </div>
         <div className="gc-thumbs" ref={thumbsRef}>
           {imgs.map((src, i) => (
@@ -1014,15 +1026,17 @@ const AmrCard = ({ r, lang }) => {
   const needsTrunc = full.length > 145;
   const [open, setOpen] = React.useState(false);
   const text = needsTrunc && !open ? full.slice(0, 142) + '…' : full;
+  const textId = React.useId();
   return (
     <div className="amr-card">
       <div className="amr-top">
-        <span className="amr-stars" aria-label={`${stars} estrellas`}>{'★'.repeat(stars)}</span>
+        <span className="amr-stars" aria-label={lang === 'en' ? `${stars} stars` : `${stars} estrellas`}>{'★'.repeat(stars)}</span>
         <span className="amr-src-lbl">{_amrSrc[r.source] || r.source}</span>
       </div>
-      <p className="amr-text">"{text}"</p>
+      <p className="amr-text" id={textId}>"{text}"</p>
       {needsTrunc && (
-        <button type="button" className="amr-expand-btn" onClick={() => setOpen(o => !o)}>
+        <button type="button" className="amr-expand-btn" onClick={() => setOpen(o => !o)}
+          aria-expanded={open} aria-controls={textId}>
           {open ? (lang === 'es' ? 'Leer menos' : 'Show less') : (lang === 'es' ? 'Leer más' : 'Read more')}
         </button>
       )}

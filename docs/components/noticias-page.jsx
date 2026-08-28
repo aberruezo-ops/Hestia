@@ -483,8 +483,18 @@ const ArticleCardWithZone = ({ article, cat, lang }) => (
 
 const NoticiasPage = ({ lang }) => {
   const N = NOTICIAS;
-  const [terrView, setTerrView] = React.useState('zona'); // 'zona' | 'mes'
+  const [terrView, setTerrViewState] = React.useState(
+    () => (new URLSearchParams(location.search).get('vista') === 'mes') ? 'mes' : 'zona');
+  const setTerrView = (v) => {
+    setTerrViewState(v);
+    const q = new URLSearchParams(location.search);
+    if (v === 'mes') q.set('vista', 'mes'); else q.delete('vista');
+    const qs = q.toString();
+    try { history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '')); } catch (_) {}
+  };
   const [floatEd, setFloatEd]   = React.useState(false);  // badge de edición flotante al scrollear
+  const prefersReducedMotion = React.useMemo(
+    () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
 
   React.useEffect(() => {
     // El badge flotante aparece cuando el hero sale de la vista. Usamos
@@ -548,7 +558,7 @@ const NoticiasPage = ({ lang }) => {
         <video
           className="noticias-hero-video"
           src="assets/BE123FA9-6E78-4AE0-AF49-8253801E58E8.MP4"
-          autoPlay muted loop playsInline
+          autoPlay={!prefersReducedMotion} muted loop={!prefersReducedMotion} playsInline
           aria-hidden="true"
         />
         <div className="noticias-hero-wash"/>

@@ -7000,6 +7000,22 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .gc-prev { left: 0; border-radius: 0 12px 12px 0; }
 .gc-next { right: 0; border-radius: 12px 0 0 12px; }
 .gc-prev:hover, .gc-next:hover { opacity: 1; background: rgba(42,15,46,.75); }
+.gc-autoplay-toggle {
+  position: absolute;
+  bottom: 12px; left: 12px;
+  background: rgba(42,15,46,.5);
+  border: none;
+  color: var(--arena);
+  font-size: 11px;
+  width: 28px; height: 28px;
+  border-radius: 6px 0 6px 0;
+  cursor: pointer;
+  z-index: 3;
+  opacity: 0.7;
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity .2s, background .2s;
+}
+.gc-autoplay-toggle:hover, .gc-autoplay-toggle:focus-visible { opacity: 1; background: rgba(42,15,46,.75); }
 @media (hover: none) {
   .gc-prev, .gc-next { opacity: 0.6; }
 }
@@ -8031,31 +8047,29 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 
 /* Cookie table */
-.legal-cookie-table {
+.legal-cookie-table-wrap {
   margin-top: 12px;
   border: 1px solid rgba(61,26,53,.10);
   border-radius: 6px 0 6px 0;
-  overflow: hidden;
+  overflow: auto;
 }
-.cookie-row {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 2fr;
-  gap: 0;
+.legal-cookie-table {
+  width: 100%;
+  border-collapse: collapse;
   font-size: 13px;
 }
-@media (max-width: 620px) {
-  .cookie-row { grid-template-columns: 1fr 1fr; }
-}
-.cookie-row span {
+.legal-cookie-table th, .legal-cookie-table td {
   padding: 10px 14px;
   border-right: 1px solid rgba(61,26,53,.06);
   border-bottom: 1px solid rgba(61,26,53,.06);
   color: var(--ink-soft);
   line-height: 1.4;
+  text-align: left;
+  font-weight: 400;
 }
-.cookie-row span:last-child { border-right: none; }
-.cookie-head { background: rgba(61,26,53,.04); }
-.cookie-head span { font-weight: 500; font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ber); }
+.legal-cookie-table th:last-child, .legal-cookie-table td:last-child { border-right: none; }
+.legal-cookie-table tbody tr:last-child th, .legal-cookie-table tbody tr:last-child td { border-bottom: none; }
+.legal-cookie-table thead th { background: rgba(61,26,53,.04); font-weight: 500; font-family: var(--sans); font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ber); }
 .cookie-name { font-family: monospace; font-size: 12px; color: var(--sol-h); font-weight: 500; }
 
 /* ================================================================

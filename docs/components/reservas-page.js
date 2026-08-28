@@ -476,6 +476,26 @@ const _emailSuggest = raw => {
   }
   return fixed && fixed !== domain ? local + '@' + fixed : null;
 };
+
+// Navegación por flechas para grupos role="radio"/role="tab": mueve el foco
+// (y dispara el click, para que también cambie la selección, como pide el
+// patrón ARIA de radiogroup/tab) al elemento hermano anterior/siguiente
+// dentro del mismo contenedor. Un único handler reutilizable en vez de
+// repetir la lógica en cada grupo (apartamento, huéspedes, mascota, bebé,
+// canal de contacto).
+const _radioKeyNav = e => {
+  const keys = ['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'];
+  if (!keys.includes(e.key)) return;
+  e.preventDefault();
+  const group = e.currentTarget.parentElement;
+  const items = Array.from(group.children).filter(el => el.getAttribute('role') === 'radio' || el.getAttribute('role') === 'tab');
+  const i = items.indexOf(e.currentTarget);
+  if (i === -1) return;
+  const dir = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : -1;
+  const next = items[(i + dir + items.length) % items.length];
+  next.focus();
+  next.click();
+};
 const ReservasForm = ({
   lang
 }) => {
@@ -810,6 +830,22 @@ const ReservasForm = ({
     };
   }, []);
 
+  // Además de capturar el lead (arriba), avisa al propio huésped si intenta
+  // cerrar o recargar con datos escritos y sin enviar: para él, sin este
+  // aviso, cerrar por error significa volver a rellenarlo todo desde cero.
+  React.useEffect(() => {
+    const onBeforeUnload = e => {
+      const s = abandonRef.current;
+      if (s.sent) return;
+      const hasData = (s.name || '').trim() || (s.tel || '').trim() || (s.email || '').trim() || s.checkin || s.checkout;
+      if (!hasData) return;
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
+  }, []);
+
   // Avanzar pasos. step1Ready basta (sin apt), en step 2 el huésped
   // verá la disponibilidad de los 3 Hestías y puede elegir uno.
   const goToStep2 = () => {
@@ -1078,7 +1114,8 @@ const ReservasForm = ({
     style: {
       '--apt-accent': o.accent
     },
-    onClick: () => setApt(o.id)
+    onClick: () => setApt(o.id),
+    onKeyDown: _radioKeyNav
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-apt-chip-dot",
     "aria-hidden": "true"
@@ -1109,7 +1146,8 @@ const ReservasForm = ({
     role: "radio",
     "aria-checked": guests === o,
     className: `rf-chip${guests === o ? ' is-on' : ''}`,
-    onClick: () => setGuests(o)
+    onClick: () => setGuests(o),
+    onKeyDown: _radioKeyNav
   }, i + 1))), /*#__PURE__*/React.createElement("span", {
     className: "rf-chip-hint"
   }, guests || (lang === 'es' ? 'Selecciona número de huéspedes' : 'Pick the number of guests'))), /*#__PURE__*/React.createElement("div", {
@@ -1123,13 +1161,15 @@ const ReservasForm = ({
     role: "radio",
     "aria-checked": pets === 'no',
     className: `rf-chip rf-chip-wide${pets === 'no' ? ' is-on' : ''}`,
-    onClick: () => setPets('no')
+    onClick: () => setPets('no'),
+    onKeyDown: _radioKeyNav
   }, t.f_pets_no), /*#__PURE__*/React.createElement("button", {
     type: "button",
     role: "radio",
     "aria-checked": pets === 'yes',
     className: `rf-chip rf-chip-wide${pets === 'yes' ? ' is-on' : ''}`,
-    onClick: () => setPets('yes')
+    onClick: () => setPets('yes'),
+    onKeyDown: _radioKeyNav
   }, /*#__PURE__*/React.createElement(HiIcon, {
     name: "paw",
     size: 15,
@@ -1148,13 +1188,15 @@ const ReservasForm = ({
     role: "radio",
     "aria-checked": baby === 'no',
     className: `rf-chip rf-chip-wide${baby === 'no' ? ' is-on' : ''}`,
-    onClick: () => setBaby('no')
+    onClick: () => setBaby('no'),
+    onKeyDown: _radioKeyNav
   }, t.f_baby_no), /*#__PURE__*/React.createElement("button", {
     type: "button",
     role: "radio",
     "aria-checked": baby === 'yes',
     className: `rf-chip rf-chip-wide${baby === 'yes' ? ' is-on' : ''}`,
-    onClick: () => setBaby('yes')
+    onClick: () => setBaby('yes'),
+    onKeyDown: _radioKeyNav
   }, /*#__PURE__*/React.createElement(HiIcon, {
     name: "baby",
     size: 15,
@@ -1524,7 +1566,8 @@ const ReservasForm = ({
     role: "tab",
     "aria-selected": channel === 'whatsapp',
     className: `rf-channel ${channel === 'whatsapp' ? 'is-active' : ''}`,
-    onClick: () => setChannel('whatsapp')
+    onClick: () => setChannel('whatsapp'),
+    onKeyDown: _radioKeyNav
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-channel-name"
   }, t.channel_wa), /*#__PURE__*/React.createElement("span", {
@@ -1534,7 +1577,8 @@ const ReservasForm = ({
     role: "tab",
     "aria-selected": channel === 'email',
     className: `rf-channel ${channel === 'email' ? 'is-active' : ''}`,
-    onClick: () => setChannel('email')
+    onClick: () => setChannel('email'),
+    onKeyDown: _radioKeyNav
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-channel-name"
   }, t.channel_email), /*#__PURE__*/React.createElement("span", {
@@ -1569,7 +1613,9 @@ const ReservasForm = ({
     onChange: e => setEmail(e.target.value),
     required: true,
     autoComplete: "email"
-  }), emailTypo && /*#__PURE__*/React.createElement("button", {
+  }), /*#__PURE__*/React.createElement("div", {
+    "aria-live": "polite"
+  }, emailTypo && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "rf-email-suggest",
     onClick: () => setEmail(emailTypo)
@@ -1579,7 +1625,7 @@ const ReservasForm = ({
     className: "rf-email-mismatch"
   }, lang === 'es' ? `El dominio "${emailDomain}" no existe. Revisa tu correo.` : `The domain "${emailDomain}" does not exist. Check your email.`), !emailTypo && emailDns === 'nomx' && /*#__PURE__*/React.createElement("span", {
     className: "rf-email-mismatch"
-  }, lang === 'es' ? `"${emailDomain}" no parece poder recibir correos. Revísalo.` : `"${emailDomain}" does not seem able to receive emails. Please check it.`)), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? `"${emailDomain}" no parece poder recibir correos. Revísalo.` : `"${emailDomain}" does not seem able to receive emails. Please check it.`))), /*#__PURE__*/React.createElement("div", {
     className: "form-field full"
   }, /*#__PURE__*/React.createElement("label", null, lang === 'es' ? 'Confirma tu email' : 'Confirm your email'), /*#__PURE__*/React.createElement("input", {
     type: "email",
@@ -1588,9 +1634,11 @@ const ReservasForm = ({
     onChange: e => setEmailConfirm(e.target.value),
     required: true,
     autoComplete: "off"
-  }), emailConfirm.trim() && !emailMatch && /*#__PURE__*/React.createElement("span", {
+  }), /*#__PURE__*/React.createElement("div", {
+    "aria-live": "polite"
+  }, emailConfirm.trim() && !emailMatch && /*#__PURE__*/React.createElement("span", {
     className: "rf-email-mismatch"
-  }, lang === 'es' ? 'Los dos emails no coinciden.' : 'The two emails do not match.')), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Los dos emails no coinciden.' : 'The two emails do not match.'))), /*#__PURE__*/React.createElement("div", {
     className: "form-field full"
   }, /*#__PURE__*/React.createElement("label", null, lang === 'es' ? 'Teléfono (opcional, por si el email falla)' : 'Phone (optional, in case the email fails)'), /*#__PURE__*/React.createElement("input", {
     type: "tel",

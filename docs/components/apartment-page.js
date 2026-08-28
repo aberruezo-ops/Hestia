@@ -617,6 +617,8 @@ const GalleryCarousel = ({
   const timerRef = React.useRef(null);
   const pausedRef = React.useRef(false);
   const lbCloseRef = React.useRef(null);
+  const prefersReducedMotion = React.useMemo(() => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
+  const [autoplayOn, setAutoplayOn] = React.useState(!prefersReducedMotion);
 
   // Smart object-position per photo, calculated from edge centroid.
   // Loaded from data/photo-positions.json (cargado en window.PHOTO_POS).
@@ -651,6 +653,7 @@ const GalleryCarousel = ({
   const stepTo = next => setCur(next);
   const resetTimer = () => {
     clearInterval(timerRef.current);
+    if (!autoplayOn) return;
     timerRef.current = setInterval(() => {
       if (!pausedRef.current) stepTo((cur + 1) % n);
     }, 6000);
@@ -658,7 +661,7 @@ const GalleryCarousel = ({
   React.useEffect(() => {
     resetTimer();
     return () => clearInterval(timerRef.current);
-  }, [cur, n]);
+  }, [cur, n, autoplayOn]);
 
   // Keyboard navigation + focus trap for lightbox
   React.useEffect(() => {
@@ -748,6 +751,12 @@ const GalleryCarousel = ({
     onMouseLeave: () => {
       pausedRef.current = false;
     },
+    onFocus: () => {
+      pausedRef.current = true;
+    },
+    onBlur: () => {
+      pausedRef.current = false;
+    },
     onClick: openLightbox
   }, imgs.map((src, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
@@ -792,7 +801,14 @@ const GalleryCarousel = ({
       go((cur + 1) % n);
     },
     "aria-label": lang === 'es' ? 'Siguiente' : 'Next'
-  }, "›")), /*#__PURE__*/React.createElement("div", {
+  }, "›"), /*#__PURE__*/React.createElement("button", {
+    className: "gc-autoplay-toggle",
+    onClick: e => {
+      e.stopPropagation();
+      setAutoplayOn(v => !v);
+    },
+    "aria-label": autoplayOn ? lang === 'es' ? 'Pausar cambio automático de fotos' : 'Pause automatic photo change' : lang === 'es' ? 'Reanudar cambio automático de fotos' : 'Resume automatic photo change'
+  }, autoplayOn ? '❚❚' : '▶')), /*#__PURE__*/React.createElement("div", {
     className: "gc-thumbs",
     ref: thumbsRef
   }, imgs.map((src, i) => /*#__PURE__*/React.createElement("button", {
@@ -1175,21 +1191,25 @@ const AmrCard = ({
   const needsTrunc = full.length > 145;
   const [open, setOpen] = React.useState(false);
   const text = needsTrunc && !open ? full.slice(0, 142) + '…' : full;
+  const textId = React.useId();
   return /*#__PURE__*/React.createElement("div", {
     className: "amr-card"
   }, /*#__PURE__*/React.createElement("div", {
     className: "amr-top"
   }, /*#__PURE__*/React.createElement("span", {
     className: "amr-stars",
-    "aria-label": `${stars} estrellas`
+    "aria-label": lang === 'en' ? `${stars} stars` : `${stars} estrellas`
   }, '★'.repeat(stars)), /*#__PURE__*/React.createElement("span", {
     className: "amr-src-lbl"
   }, _amrSrc[r.source] || r.source)), /*#__PURE__*/React.createElement("p", {
-    className: "amr-text"
+    className: "amr-text",
+    id: textId
   }, "\"", text, "\""), needsTrunc && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "amr-expand-btn",
-    onClick: () => setOpen(o => !o)
+    onClick: () => setOpen(o => !o),
+    "aria-expanded": open,
+    "aria-controls": textId
   }, open ? lang === 'es' ? 'Leer menos' : 'Show less' : lang === 'es' ? 'Leer más' : 'Read more'), /*#__PURE__*/React.createElement("div", {
     className: "amr-author"
   }, /*#__PURE__*/React.createElement("span", {

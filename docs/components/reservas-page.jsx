@@ -479,6 +479,26 @@ const _emailSuggest = (raw) => {
   return fixed && fixed !== domain ? local + '@' + fixed : null;
 };
 
+// Navegación por flechas para grupos role="radio"/role="tab": mueve el foco
+// (y dispara el click, para que también cambie la selección, como pide el
+// patrón ARIA de radiogroup/tab) al elemento hermano anterior/siguiente
+// dentro del mismo contenedor. Un único handler reutilizable en vez de
+// repetir la lógica en cada grupo (apartamento, huéspedes, mascota, bebé,
+// canal de contacto).
+const _radioKeyNav = (e) => {
+  const keys = ['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp'];
+  if (!keys.includes(e.key)) return;
+  e.preventDefault();
+  const group = e.currentTarget.parentElement;
+  const items = Array.from(group.children).filter(el => el.getAttribute('role') === 'radio' || el.getAttribute('role') === 'tab');
+  const i = items.indexOf(e.currentTarget);
+  if (i === -1) return;
+  const dir = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : -1;
+  const next = items[(i + dir + items.length) % items.length];
+  next.focus();
+  next.click();
+};
+
 const ReservasForm = ({ lang }) => {
   const t = RESERVAS_COPY[lang];
   const aptNames = { vm: 'Hestía Mar', vt: 'Hestía Thalassa', vs: 'Hestía Salinas' };
@@ -750,6 +770,22 @@ const ReservasForm = ({ lang }) => {
     document.addEventListener('visibilitychange', onVis);
     window.addEventListener('pagehide', capture);
     return () => { document.removeEventListener('visibilitychange', onVis); window.removeEventListener('pagehide', capture); };
+  }, []);
+
+  // Además de capturar el lead (arriba), avisa al propio huésped si intenta
+  // cerrar o recargar con datos escritos y sin enviar: para él, sin este
+  // aviso, cerrar por error significa volver a rellenarlo todo desde cero.
+  React.useEffect(() => {
+    const onBeforeUnload = (e) => {
+      const s = abandonRef.current;
+      if (s.sent) return;
+      const hasData = (s.name || '').trim() || (s.tel || '').trim() || (s.email || '').trim() || s.checkin || s.checkout;
+      if (!hasData) return;
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    window.addEventListener('beforeunload', onBeforeUnload);
+    return () => window.removeEventListener('beforeunload', onBeforeUnload);
   }, []);
 
   // Avanzar pasos. step1Ready basta (sin apt), en step 2 el huésped
@@ -1039,6 +1075,7 @@ const ReservasForm = ({ lang }) => {
                     className={`rf-apt-chip${apt === o.id ? ' is-on' : ''}`}
                     style={{ '--apt-accent': o.accent }}
                     onClick={() => setApt(o.id)}
+                    onKeyDown={_radioKeyNav}
                   >
                     <span className="rf-apt-chip-dot" aria-hidden="true"/>
                     <span className="rf-apt-chip-name">{o.name}</span>
@@ -1084,6 +1121,7 @@ const ReservasForm = ({ lang }) => {
                     aria-checked={guests === o}
                     className={`rf-chip${guests === o ? ' is-on' : ''}`}
                     onClick={() => setGuests(o)}
+                    onKeyDown={_radioKeyNav}
                   >
                     {i + 1}
                   </button>
@@ -1102,6 +1140,7 @@ const ReservasForm = ({ lang }) => {
                   aria-checked={pets === 'no'}
                   className={`rf-chip rf-chip-wide${pets === 'no' ? ' is-on' : ''}`}
                   onClick={() => setPets('no')}
+                  onKeyDown={_radioKeyNav}
                 >
                   {t.f_pets_no}
                 </button>
@@ -1111,6 +1150,7 @@ const ReservasForm = ({ lang }) => {
                   aria-checked={pets === 'yes'}
                   className={`rf-chip rf-chip-wide${pets === 'yes' ? ' is-on' : ''}`}
                   onClick={() => setPets('yes')}
+                  onKeyDown={_radioKeyNav}
                 >
                   <HiIcon name="paw" size={15} style={{verticalAlign:'-2px',marginRight:4}} />{t.f_pets_yes}
                 </button>
@@ -1125,6 +1165,7 @@ const ReservasForm = ({ lang }) => {
                   aria-checked={baby === 'no'}
                   className={`rf-chip rf-chip-wide${baby === 'no' ? ' is-on' : ''}`}
                   onClick={() => setBaby('no')}
+                  onKeyDown={_radioKeyNav}
                 >
                   {t.f_baby_no}
                 </button>
@@ -1134,6 +1175,7 @@ const ReservasForm = ({ lang }) => {
                   aria-checked={baby === 'yes'}
                   className={`rf-chip rf-chip-wide${baby === 'yes' ? ' is-on' : ''}`}
                   onClick={() => setBaby('yes')}
+                  onKeyDown={_radioKeyNav}
                 >
                   <HiIcon name="baby" size={15} style={{verticalAlign:'-2px',marginRight:4}} />{t.f_baby_yes}
                 </button>
@@ -1495,6 +1537,7 @@ const ReservasForm = ({ lang }) => {
                 aria-selected={channel === 'whatsapp'}
                 className={`rf-channel ${channel === 'whatsapp' ? 'is-active' : ''}`}
                 onClick={() => setChannel('whatsapp')}
+                onKeyDown={_radioKeyNav}
               >
                 <span className="rf-channel-name">{t.channel_wa}</span>
                 <span className="rf-channel-desc">{t.channel_wa_desc}</span>
@@ -1505,6 +1548,7 @@ const ReservasForm = ({ lang }) => {
                 aria-selected={channel === 'email'}
                 className={`rf-channel ${channel === 'email' ? 'is-active' : ''}`}
                 onClick={() => setChannel('email')}
+                onKeyDown={_radioKeyNav}
               >
                 <span className="rf-channel-name">{t.channel_email}</span>
                 <span className="rf-channel-desc">{t.channel_email_desc}</span>
@@ -1529,29 +1573,33 @@ const ReservasForm = ({ lang }) => {
                   <label>{t.f_email}</label>
                   <input type="email" placeholder={t.f_email_ph} value={email}
                     onChange={e => setEmail(e.target.value)} required autoComplete="email"/>
-                  {emailTypo && (
-                    <button type="button" className="rf-email-suggest" onClick={() => setEmail(emailTypo)}>
-                      {lang === 'es' ? '¿Quisiste decir' : 'Did you mean'} <strong>{emailTypo}</strong>? · {lang === 'es' ? 'Usar' : 'Use it'}
-                    </button>
-                  )}
-                  {!emailTypo && hasEmail && emailDns === 'checking' && (
-                    <span className="rf-email-checking">{lang === 'es' ? 'Comprobando el correo…' : 'Checking your email…'}</span>
-                  )}
-                  {!emailTypo && emailDns === 'baddomain' && (
-                    <span className="rf-email-mismatch">{lang === 'es' ? `El dominio "${emailDomain}" no existe. Revisa tu correo.` : `The domain "${emailDomain}" does not exist. Check your email.`}</span>
-                  )}
-                  {!emailTypo && emailDns === 'nomx' && (
-                    <span className="rf-email-mismatch">{lang === 'es' ? `"${emailDomain}" no parece poder recibir correos. Revísalo.` : `"${emailDomain}" does not seem able to receive emails. Please check it.`}</span>
-                  )}
+                  <div aria-live="polite">
+                    {emailTypo && (
+                      <button type="button" className="rf-email-suggest" onClick={() => setEmail(emailTypo)}>
+                        {lang === 'es' ? '¿Quisiste decir' : 'Did you mean'} <strong>{emailTypo}</strong>? · {lang === 'es' ? 'Usar' : 'Use it'}
+                      </button>
+                    )}
+                    {!emailTypo && hasEmail && emailDns === 'checking' && (
+                      <span className="rf-email-checking">{lang === 'es' ? 'Comprobando el correo…' : 'Checking your email…'}</span>
+                    )}
+                    {!emailTypo && emailDns === 'baddomain' && (
+                      <span className="rf-email-mismatch">{lang === 'es' ? `El dominio "${emailDomain}" no existe. Revisa tu correo.` : `The domain "${emailDomain}" does not exist. Check your email.`}</span>
+                    )}
+                    {!emailTypo && emailDns === 'nomx' && (
+                      <span className="rf-email-mismatch">{lang === 'es' ? `"${emailDomain}" no parece poder recibir correos. Revísalo.` : `"${emailDomain}" does not seem able to receive emails. Please check it.`}</span>
+                    )}
+                  </div>
                 </div>
                 <div className="form-field full">
                   <label>{lang === 'es' ? 'Confirma tu email' : 'Confirm your email'}</label>
                   <input type="email" placeholder={lang === 'es' ? 'Repite tu email' : 'Re-type your email'}
                     value={emailConfirm} onChange={e => setEmailConfirm(e.target.value)} required
                     autoComplete="off"/>
-                  {emailConfirm.trim() && !emailMatch && (
-                    <span className="rf-email-mismatch">{lang === 'es' ? 'Los dos emails no coinciden.' : 'The two emails do not match.'}</span>
-                  )}
+                  <div aria-live="polite">
+                    {emailConfirm.trim() && !emailMatch && (
+                      <span className="rf-email-mismatch">{lang === 'es' ? 'Los dos emails no coinciden.' : 'The two emails do not match.'}</span>
+                    )}
+                  </div>
                 </div>
                 <div className="form-field full">
                   <label>{lang === 'es' ? 'Teléfono (opcional, por si el email falla)' : 'Phone (optional, in case the email fails)'}</label>

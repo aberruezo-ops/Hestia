@@ -4811,7 +4811,8 @@ const FacturasTab = ({
   }, editIdx >= 0 ? 'Editar factura' : 'Nueva factura', " · ", focusYear), /*#__PURE__*/React.createElement("h3", null, draft.proveedor || '(sin proveedor)')), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "rv-edit-close",
-    onClick: cancelDraft
+    onClick: cancelDraft,
+    "aria-label": "Cerrar"
   }, "×")), /*#__PURE__*/React.createElement("div", {
     className: "rv-edit-body"
   }, /*#__PURE__*/React.createElement("div", {
@@ -5545,7 +5546,8 @@ const PagoLinkInline = ({
       cursor: 'pointer',
       color: '#7A5A72'
     },
-    title: "Cerrar"
+    title: "Cerrar",
+    "aria-label": "Cerrar"
   }, "✕"), /*#__PURE__*/React.createElement("div", {
     style: {
       fontSize: 12,
