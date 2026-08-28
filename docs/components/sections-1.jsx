@@ -107,16 +107,22 @@ const Hero = ({ lang, onScrollDown }) => {
   const [vidIdx, setVidIdx] = React.useState(0);
   const pick = playlist[vidIdx];
 
+  // prefers-reduced-motion: se queda con el poster fijo, sin autoplay ni reintentos.
+  const prefersReducedMotion = React.useMemo(
+    () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
+
   // Arranca reproducción al montar y al cambiar de clip (key remonta el <video>)
   React.useEffect(() => {
+    if (prefersReducedMotion) return;
     const el = bgVideoRef.current;
     if (el) { el.muted = true; el.play().catch(() => {}); }
-  }, [vidIdx]);
+  }, [vidIdx, prefersReducedMotion]);
 
   // Reanuda el vídeo al volver a la pestaña/app. En iOS, volver de otra app no
   // cuenta como gesto y play() puede rechazarse, dejando el vídeo congelado; en ese
   // caso reanudamos al primer toque. También escuchamos pageshow (bfcache de Safari).
   React.useEffect(() => {
+    if (prefersReducedMotion) return;
     let armed = false;
     const evs = ['pointerdown', 'touchstart', 'click', 'keydown'];
     const cleanup = () => evs.forEach(ev => window.removeEventListener(ev, onGesture, true));
@@ -142,7 +148,7 @@ const Hero = ({ lang, onScrollDown }) => {
       window.removeEventListener('focus', resume);
       cleanup();
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <section
@@ -151,11 +157,12 @@ const Hero = ({ lang, onScrollDown }) => {
       data-screen-label="01 Hero"
       data-hero-video={pick.src}
     >
-      {/* Vídeo de fondo: playlist aleatoria, avanza al siguiente al terminar */}
+      {/* Vídeo de fondo: playlist aleatoria, avanza al siguiente al terminar.
+          Con prefers-reduced-motion, se queda fijo en el poster (sin autoplay). */}
       <video
         ref={bgVideoRef}
         className="hero-bg-video"
-        autoPlay muted playsInline
+        autoPlay={!prefersReducedMotion} muted playsInline
         preload="metadata"
         poster={pick.poster}
         aria-label={pick.alt}
@@ -591,30 +598,32 @@ const Compare = ({ lang }) => {
       <div className="container">
         <div className="eyebrow">{t.compare_eyebrow}</div>
         <h2 style={{marginTop: 14}}>{t.compare_title}</h2>
-        <div className="compare-grid">
-          <div className="label"> </div>
-          <div className="head vm">
-            <span className="apt-tag">01 · Hestía</span>
-            <span>Mar</span>
-            <span className="apt-concept">« {t.apt_01_concept} »</span>
-          </div>
-          <div className="head vt">
-            <span className="apt-tag">02 · Hestía</span>
-            <span>Thalassa</span>
-            <span className="apt-concept">« {t.apt_02_concept} »</span>
-          </div>
-          <div className="head vs">
-            <span className="apt-tag">03 · Hestía</span>
-            <span>Salinas</span>
-            <span className="apt-concept">« {t.apt_03_concept} »</span>
+        <div className="compare-grid" role="table" aria-label={lang === 'es' ? 'Comparativa de los tres Hestía' : 'Comparison of the three Hestías'}>
+          <div role="row" style={{ display: 'contents' }}>
+            <div className="label" role="columnheader"> </div>
+            <div className="head vm" role="columnheader">
+              <span className="apt-tag">01 · Hestía</span>
+              <span>Mar</span>
+              <span className="apt-concept">« {t.apt_01_concept} »</span>
+            </div>
+            <div className="head vt" role="columnheader">
+              <span className="apt-tag">02 · Hestía</span>
+              <span>Thalassa</span>
+              <span className="apt-concept">« {t.apt_02_concept} »</span>
+            </div>
+            <div className="head vs" role="columnheader">
+              <span className="apt-tag">03 · Hestía</span>
+              <span>Salinas</span>
+              <span className="apt-concept">« {t.apt_03_concept} »</span>
+            </div>
           </div>
           {rows.map((r, i) => (
-            <React.Fragment key={i}>
-              <div className="label">{r.label}</div>
-              <div className={`cell ${r.rate ? 'rate' : ''}`}>{r.vm}</div>
-              <div className={`cell ${r.rate ? 'rate' : ''}`}>{r.vt}</div>
-              <div className={`cell ${r.rate ? 'rate' : ''}`}>{r.vs}</div>
-            </React.Fragment>
+            <div key={i} role="row" style={{ display: 'contents' }}>
+              <div className="label" role="rowheader">{r.label}</div>
+              <div className={`cell ${r.rate ? 'rate' : ''}`} role="cell">{r.vm}</div>
+              <div className={`cell ${r.rate ? 'rate' : ''}`} role="cell">{r.vt}</div>
+              <div className={`cell ${r.rate ? 'rate' : ''}`} role="cell">{r.vs}</div>
+            </div>
           ))}
         </div>
 

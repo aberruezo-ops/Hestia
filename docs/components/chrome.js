@@ -255,7 +255,8 @@ const Header = ({
     muted: true,
     playsInline: true,
     preload: "auto",
-    onEnded: onVitEnded
+    onEnded: onVitEnded,
+    "aria-hidden": "true"
   }, /*#__PURE__*/React.createElement("source", {
     src: "assets/hestia-vitruvio.mp4",
     type: "video/mp4"
@@ -1560,10 +1561,15 @@ const FooterNewsletter = ({
 }) => {
   const [email, setEmail] = React.useState('');
   const [state, setState] = React.useState('idle');
+  const [err, setErr] = React.useState(null);
   const handleSubmit = async e => {
     e.preventDefault();
     const raw = email.trim();
-    if (!raw.includes('@') || !raw.includes('.')) return;
+    if (!raw.includes('@') || !raw.includes('.')) {
+      setErr(lang === 'es' ? 'Escribe un email válido, como tu@email.com.' : 'Enter a valid email, like your@email.com.');
+      return;
+    }
+    setErr(null);
     setState('sending');
     try {
       const fd = new FormData();
@@ -1590,22 +1596,33 @@ const FooterNewsletter = ({
     className: "footer-nl-ok"
   }, lang === 'es' ? 'Te avisamos. Gracias.' : 'You\'re on the list. Thanks.') : /*#__PURE__*/React.createElement("form", {
     className: "footer-nl-form",
-    onSubmit: handleSubmit
+    onSubmit: handleSubmit,
+    noValidate: true
   }, /*#__PURE__*/React.createElement("input", {
     type: "email",
+    name: "email",
+    autoComplete: "email",
+    inputMode: "email",
     className: "footer-nl-input",
     placeholder: lang === 'es' ? 'tu@email.com' : 'your@email.com',
     value: email,
-    onChange: e => setEmail(e.target.value),
+    onChange: e => {
+      setEmail(e.target.value);
+      if (err) setErr(null);
+    },
     required: true,
     maxLength: 120,
     "aria-label": lang === 'es' ? 'Email para newsletter' : 'Newsletter email',
+    "aria-invalid": err ? true : undefined,
     spellCheck: false
   }), /*#__PURE__*/React.createElement("button", {
     type: "submit",
     className: "footer-nl-btn",
     disabled: state === 'sending'
-  }, state === 'sending' ? '…' : lang === 'es' ? 'Suscribir' : 'Subscribe')));
+  }, state === 'sending' ? lang === 'es' ? 'Enviando…' : 'Sending…' : lang === 'es' ? 'Suscribir' : 'Subscribe')), err && /*#__PURE__*/React.createElement("p", {
+    className: "footer-nl-err",
+    role: "alert"
+  }, err));
 };
 Object.assign(window, {
   Topbar,

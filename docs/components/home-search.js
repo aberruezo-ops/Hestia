@@ -47,9 +47,24 @@ const _hsDiff = (a, b) => Math.round((new Date(b + 'T12:00:00Z') - new Date(a + 
 const _hsFmtDate = (ds, lang) => {
   if (!ds) return '';
   const d = new Date(ds + 'T12:00:00Z');
-  const M = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-  const ME = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  return lang === 'es' ? `${d.getUTCDate()} ${M[d.getUTCMonth()].slice(0, 3).toLowerCase()}. ${d.getUTCFullYear()}` : `${ME[d.getUTCMonth()].slice(0, 3)} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+  return new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC'
+  }).format(d);
+};
+
+// Fecha larga (para aria-label de las celdas del calendario): "17 de enero de 2026" / "17 January 2026".
+const _hsFmtDateLong = (ds, lang) => {
+  if (!ds) return '';
+  const d = new Date(ds + 'T12:00:00Z');
+  return new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'UTC'
+  }).format(d);
 };
 const _hsShiftLabel = (shift, lang) => {
   if (shift === 0) return lang === 'es' ? 'Mismas fechas' : 'Same dates';
@@ -257,12 +272,24 @@ const HsDateRange = ({
       // Un blocked-start es clickable (puede ser check-out: mañana libre)
       const isClickable = !isPast && !isBeyond && !isTooSoon && (!isBlk || isBlkStart);
       const showBlk = isBlk && !inSel && !inPrev;
+      const dayLabel = _hsFmtDateLong(ds, lang) + (isSS ? lang === 'es' ? ', entrada seleccionada' : ', selected check-in' : isSE ? lang === 'es' ? ', salida seleccionada' : ', selected check-out' : isBlk && !isClickable ? lang === 'es' ? ', no disponible' : ', unavailable' : '');
       return /*#__PURE__*/React.createElement("div", {
         key: d,
+        role: isClickable ? 'button' : undefined,
+        tabIndex: isClickable ? 0 : undefined,
+        "aria-label": isClickable ? dayLabel : undefined,
+        "aria-pressed": isClickable ? isSS || isSE : undefined,
         className: ['cal-cell', (isPast || isBeyond) && 'past', isToday && 'today', isBlk && 'blk', isBlkAfter && 'blk-after', isTooSoon && 'too-soon', isClickable && 'clickable', inSel && 'in-sel', isSS && 'sel-s', isSE && 'sel-e', isSM && 'sel-m', inPrev && 'in-prev', isPS && 'prev-s', isPE && 'prev-e', isPM && 'prev-m'].filter(Boolean).join(' '),
         onClick: isClickable ? () => handleDayClick(ds) : undefined,
+        onKeyDown: isClickable ? e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleDayClick(ds);
+          }
+        } : undefined,
         onMouseEnter: isClickable && !checkout ? () => setHover(ds) : undefined,
         onMouseLeave: isClickable ? () => setHover(null) : undefined,
+        onFocus: isClickable && !checkout ? () => setHover(ds) : undefined,
         title: isTooSoon ? lang === 'es' ? `Estancia mínima ${_effectiveMinN(checkin, ds)} noches` : `Minimum stay ${_effectiveMinN(checkin, ds)} nights` : undefined
       }, showBlk && !isBlkSingle && isBlkStart && /*#__PURE__*/React.createElement("div", {
         className: "c-strip c-sr"
@@ -403,7 +430,7 @@ const HsResultCard = ({
   // Larga estancia: ≥29 noches, no julio ni agosto
   const isLsStay = nights > 28 && checkin && +checkin.slice(5, 7) !== 7 && +checkin.slice(5, 7) !== 8;
   const lsCalc = isLsStay ? _calcLsTotal(checkin, checkout, parseInt(guests, 10) || 1, false, apt.id) : null;
-  const fmt = n => n.toLocaleString('es-ES') + ' €';
+  const fmt = n => new Intl.NumberFormat(lang === 'es' ? 'es-ES' : 'en-GB').format(n) + ' €';
 
   // URL del CTA "Avanzar con la reserva", pasa apt+fechas+huéspedes.
   // Mascota y extras se eligen en /reservas (paso único de extras).
@@ -654,9 +681,12 @@ const HomeSearch = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "hs-field hs-field--full"
   }, /*#__PURE__*/React.createElement("label", {
-    className: "hs-lbl"
+    className: "hs-lbl",
+    id: "hs-lbl-apt"
   }, lang === 'es' ? 'Hestía' : 'Hestía'), /*#__PURE__*/React.createElement("div", {
-    className: "hs-apt-sel"
+    className: "hs-apt-sel",
+    role: "group",
+    "aria-labelledby": "hs-lbl-apt"
   }, [{
     id: '',
     label: lang === 'es' ? 'Cualquiera' : 'Any',
@@ -672,6 +702,7 @@ const HomeSearch = ({
     style: {
       '--btn-accent': o.accent
     },
+    "aria-pressed": apt === o.id,
     onClick: () => setApt(o.id)
   }, o.label)))), /*#__PURE__*/React.createElement(HsDateRange, {
     checkin: checkin,
@@ -693,16 +724,20 @@ const HomeSearch = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "hs-field hs-field--inline"
   }, /*#__PURE__*/React.createElement("label", {
-    className: "hs-lbl"
+    className: "hs-lbl",
+    id: "hs-lbl-guests"
   }, lang === 'es' ? 'Huéspedes' : 'Guests'), /*#__PURE__*/React.createElement("div", {
-    className: "hs-counter"
+    className: "hs-counter",
+    role: "group",
+    "aria-labelledby": "hs-lbl-guests"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hs-cnt-btn",
     "aria-label": lang === 'es' ? 'Reducir huéspedes' : 'Fewer guests',
     onClick: () => setGuests(g => Math.max(1, g - 1))
   }, "−"), /*#__PURE__*/React.createElement("span", {
-    className: "hs-cnt-num"
+    className: "hs-cnt-num",
+    "aria-live": "polite"
   }, guests), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "hs-cnt-btn",
@@ -788,7 +823,7 @@ const HomeSearch = ({
       max: 4
     });
     if (!alts.length) return null;
-    const fmt = n => n.toLocaleString('es-ES') + ' €';
+    const fmt = n => new Intl.NumberFormat(lang === 'es' ? 'es-ES' : 'en-GB').format(n) + ' €';
     const altHref = alt => {
       const p = new URLSearchParams();
       p.set('apt', alt.aptId);
@@ -841,15 +876,29 @@ const HomeSearch = ({
   }, lang === 'es' ? 'Anotado. Te escribimos si se libera algo.' : 'Got it. We\'ll message you if something opens up.') : /*#__PURE__*/React.createElement("form", {
     className: "hs-notify-form",
     onSubmit: handleNotify
-  }, /*#__PURE__*/React.createElement("input", {
+  }, /*#__PURE__*/React.createElement("label", {
+    className: "sr-only",
+    htmlFor: "hs-notify-name"
+  }, lang === 'es' ? 'Nombre' : 'Name'), /*#__PURE__*/React.createElement("input", {
+    id: "hs-notify-name",
     type: "text",
+    name: "name",
+    autoComplete: "name",
     className: "hs-notify-field",
     placeholder: lang === 'es' ? 'Nombre' : 'Name',
     value: notifyName,
     onChange: e => setNotifyName(e.target.value),
     maxLength: 60
-  }), /*#__PURE__*/React.createElement("input", {
+  }), /*#__PURE__*/React.createElement("label", {
+    className: "sr-only",
+    htmlFor: "hs-notify-email"
+  }, lang === 'es' ? 'Email' : 'Email'), /*#__PURE__*/React.createElement("input", {
+    id: "hs-notify-email",
     type: "email",
+    name: "email",
+    autoComplete: "email",
+    inputMode: "email",
+    spellCheck: false,
     className: "hs-notify-field",
     placeholder: lang === 'es' ? 'tu@email.com' : 'your@email.com',
     value: notifyEmail,
@@ -860,7 +909,7 @@ const HomeSearch = ({
     type: "submit",
     className: "hs-notify-submit",
     disabled: notifyState === 'sending'
-  }, notifyState === 'sending' ? '…' : lang === 'es' ? 'Avísame →' : 'Notify me →'))) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", {
+  }, notifyState === 'sending' ? lang === 'es' ? 'Enviando…' : 'Sending…' : lang === 'es' ? 'Avísame →' : 'Notify me →'))) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("p", {
     className: "hs-notify-text"
   }, lang === 'es' ? '¿Tus fechas están ocupadas? Avísanos y te escribimos si se libera algo: cancelaciones, aperturas de calendario…' : 'Are your dates taken? Let us know and we\'ll reach out if something opens up: cancellations, new slots…'), /*#__PURE__*/React.createElement("a", {
     href: lang === 'es' ? 'https://wa.me/34620316370?text=Hola%2C%20me%20interesan%20vuestros%20Hest%C3%ADas%20pero%20mis%20fechas%20est%C3%A1n%20ocupadas.%20%C2%BFPod%C3%A9is%20avisarme%20si%20se%20libera%20algo%3F' : 'https://wa.me/34620316370?text=Hi%2C%20I%27m%20interested%20in%20your%20Hest%C3%ADas%20but%20my%20dates%20are%20taken.%20Could%20you%20let%20me%20know%20if%20something%20becomes%20available%3F',

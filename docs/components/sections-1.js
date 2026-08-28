@@ -126,19 +126,24 @@ const Hero = ({
   const [vidIdx, setVidIdx] = React.useState(0);
   const pick = playlist[vidIdx];
 
+  // prefers-reduced-motion: se queda con el poster fijo, sin autoplay ni reintentos.
+  const prefersReducedMotion = React.useMemo(() => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
+
   // Arranca reproducción al montar y al cambiar de clip (key remonta el <video>)
   React.useEffect(() => {
+    if (prefersReducedMotion) return;
     const el = bgVideoRef.current;
     if (el) {
       el.muted = true;
       el.play().catch(() => {});
     }
-  }, [vidIdx]);
+  }, [vidIdx, prefersReducedMotion]);
 
   // Reanuda el vídeo al volver a la pestaña/app. En iOS, volver de otra app no
   // cuenta como gesto y play() puede rechazarse, dejando el vídeo congelado; en ese
   // caso reanudamos al primer toque. También escuchamos pageshow (bfcache de Safari).
   React.useEffect(() => {
+    if (prefersReducedMotion) return;
     let armed = false;
     const evs = ['pointerdown', 'touchstart', 'click', 'keydown'];
     const cleanup = () => evs.forEach(ev => window.removeEventListener(ev, onGesture, true));
@@ -174,7 +179,7 @@ const Hero = ({
       window.removeEventListener('focus', resume);
       cleanup();
     };
-  }, []);
+  }, [prefersReducedMotion]);
   return /*#__PURE__*/React.createElement("section", {
     id: "top",
     className: `hero on-dark mood-${pick.mood}`,
@@ -183,7 +188,7 @@ const Hero = ({
   }, /*#__PURE__*/React.createElement("video", {
     ref: bgVideoRef,
     className: "hero-bg-video",
-    autoPlay: true,
+    autoPlay: !prefersReducedMotion,
     muted: true,
     playsInline: true,
     preload: "metadata",
@@ -847,37 +852,56 @@ const Compare = ({
       marginTop: 14
     }
   }, t.compare_title), /*#__PURE__*/React.createElement("div", {
-    className: "compare-grid"
+    className: "compare-grid",
+    role: "table",
+    "aria-label": lang === 'es' ? 'Comparativa de los tres Hestía' : 'Comparison of the three Hestías'
   }, /*#__PURE__*/React.createElement("div", {
-    className: "label"
+    role: "row",
+    style: {
+      display: 'contents'
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "label",
+    role: "columnheader"
   }, " "), /*#__PURE__*/React.createElement("div", {
-    className: "head vm"
+    className: "head vm",
+    role: "columnheader"
   }, /*#__PURE__*/React.createElement("span", {
     className: "apt-tag"
   }, "01 · Hestía"), /*#__PURE__*/React.createElement("span", null, "Mar"), /*#__PURE__*/React.createElement("span", {
     className: "apt-concept"
   }, "« ", t.apt_01_concept, " »")), /*#__PURE__*/React.createElement("div", {
-    className: "head vt"
+    className: "head vt",
+    role: "columnheader"
   }, /*#__PURE__*/React.createElement("span", {
     className: "apt-tag"
   }, "02 · Hestía"), /*#__PURE__*/React.createElement("span", null, "Thalassa"), /*#__PURE__*/React.createElement("span", {
     className: "apt-concept"
   }, "« ", t.apt_02_concept, " »")), /*#__PURE__*/React.createElement("div", {
-    className: "head vs"
+    className: "head vs",
+    role: "columnheader"
   }, /*#__PURE__*/React.createElement("span", {
     className: "apt-tag"
   }, "03 · Hestía"), /*#__PURE__*/React.createElement("span", null, "Salinas"), /*#__PURE__*/React.createElement("span", {
     className: "apt-concept"
-  }, "« ", t.apt_03_concept, " »")), rows.map((r, i) => /*#__PURE__*/React.createElement(React.Fragment, {
-    key: i
+  }, "« ", t.apt_03_concept, " »"))), rows.map((r, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    role: "row",
+    style: {
+      display: 'contents'
+    }
   }, /*#__PURE__*/React.createElement("div", {
-    className: "label"
+    className: "label",
+    role: "rowheader"
   }, r.label), /*#__PURE__*/React.createElement("div", {
-    className: `cell ${r.rate ? 'rate' : ''}`
+    className: `cell ${r.rate ? 'rate' : ''}`,
+    role: "cell"
   }, r.vm), /*#__PURE__*/React.createElement("div", {
-    className: `cell ${r.rate ? 'rate' : ''}`
+    className: `cell ${r.rate ? 'rate' : ''}`,
+    role: "cell"
   }, r.vt), /*#__PURE__*/React.createElement("div", {
-    className: `cell ${r.rate ? 'rate' : ''}`
+    className: `cell ${r.rate ? 'rate' : ''}`,
+    role: "cell"
   }, r.vs)))), /*#__PURE__*/React.createElement("div", {
     className: "compare-cards-mobile"
   }, [{

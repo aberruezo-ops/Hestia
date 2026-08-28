@@ -804,11 +804,12 @@ const QuickFAQ = ({ lang, pageId = 'home' }) => {
         <div className="qfaq-grid">
           {faqs.map((f, i) => (
             <div key={i} className={`qfaq-item ${open === i ? 'open' : ''}`}>
-              <button className="qfaq-q" onClick={() => setOpen(open === i ? null : i)}>
+              <button className="qfaq-q" onClick={() => setOpen(open === i ? null : i)}
+                aria-expanded={open === i} aria-controls={`qfaq-a-${pageId}-${i}`}>
                 <span>{f.q}</span>
-                <span className="qfaq-chevron">{open === i ? '−' : '+'}</span>
+                <span className="qfaq-chevron" aria-hidden="true">{open === i ? '−' : '+'}</span>
               </button>
-              <div className="qfaq-a">{f.a}</div>
+              <div className="qfaq-a" id={`qfaq-a-${pageId}-${i}`}>{f.a}</div>
             </div>
           ))}
         </div>
@@ -1961,6 +1962,8 @@ const FraseHogar = ({ lang }) => {
   const [visible, setVisible] = React.useState(true);
 
   React.useEffect(() => {
+    const prm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prm) return; // cita fija, sin rotación automática
     const tick = setInterval(() => {
       setVisible(false);
       setTimeout(() => {
@@ -3587,6 +3590,8 @@ const WidgetSabiasQue = ({ lang }) => {
 
   React.useEffect(() => {
     if (min) return;
+    const prm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prm) return;
     const t = setInterval(() => {
       setVisible(false);
       setTimeout(() => {
@@ -3900,7 +3905,8 @@ const GuestAccessModal = ({ lang, onClose }) => {
   const inputRef = React.useRef(null);
 
   React.useEffect(() => {
-    if (step === 'pin' && inputRef.current) {
+    const isDesktop = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+    if (step === 'pin' && isDesktop && inputRef.current) {
       setTimeout(() => inputRef.current.focus(), 80);
     }
   }, [step]);
