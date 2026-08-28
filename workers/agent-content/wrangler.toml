@@ -1,0 +1,32 @@
+name               = "hestia-agent-content"
+main               = "index.js"
+compatibility_date = "2024-09-23"
+workers_dev        = true
+
+# Una vez desplegado, el Worker estará en:
+#   https://hestia-agent-content.<tu-subdominio>.workers.dev
+#
+# Para desplegar:
+#   cd workers/agent-content
+#   wrangler deploy
+#
+# Sin KV ni secretos: es un passthrough sin estado.
+#
+# IMPORTANTE — este Worker NO hace nada hasta que se le asigna una ruta.
+# Para activarlo de verdad delante del dominio (necesario para que
+# Accept: text/markdown y el header Vary funcionen en producción):
+#   Cloudflare dashboard → Workers & Pages → hestia-agent-content → Settings
+#   → Triggers → Routes → añadir:
+#     hestiayourhome.com/*
+#     www.hestiayourhome.com/*
+#
+# Antes de apuntar esas rutas al Worker en el dominio real, probarlo primero
+# en el subdominio *.workers.dev contra /, /nosotros.html, /mar.html y una
+# ruta inexistente, porque a partir de asignar la ruta TODO el tráfico del
+# dominio pasa por este Worker.
+#
+# Test unitario (sin desplegar ni tocar Cloudflare):
+#   node workers/agent-content/test.mjs
+#
+# Si editas docs/md/*.md, regenera el contenido inlineado del Worker:
+#   node workers/agent-content/generate-markdown-content.mjs

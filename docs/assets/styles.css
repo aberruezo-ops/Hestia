@@ -1720,6 +1720,15 @@ section {
 
 /* -------- Utility -------- */
 .container { max-width: 1400px; margin: 0 auto; }
+
+/* Contenido estático de #root, visible antes de que React monte (o si JS
+   está desactivado). Se sustituye por completo en cuanto carga la app; solo
+   define aquí lo mínimo para que no se vea como texto plano sin estilo. */
+.seo-fallback { padding: 48px var(--page-pad) 64px; }
+.seo-fallback h1 { font-family: var(--serif); font-size: clamp(28px, 4vw, 44px); margin: 0 0 18px; color: var(--ink); }
+.seo-fallback h2 { font-family: var(--serif); font-size: clamp(20px, 2.6vw, 26px); margin: 30px 0 10px; color: var(--ink); }
+.seo-fallback p { line-height: 1.65; margin: 0 0 14px; max-width: 68ch; color: var(--ink-soft); }
+.seo-fallback nav a { text-decoration: underline; color: var(--sol-text); }
 .rule {
   width: 48px; height: 1px; background: currentColor; opacity: 0.5;
   display: inline-block; vertical-align: middle; margin-right: 14px;
