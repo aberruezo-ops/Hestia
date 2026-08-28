@@ -150,9 +150,8 @@ const App = () => {
       <main id="main-content" tabIndex={-1}>
         <Hero lang={lang} />
         <OfertaBanner lang={lang} />
-        <FraseHogar lang={lang} />
         <RatingsMarquee lang={lang} />
-        {typeof LastMinuteStrip !== 'undefined' && <LastMinuteStrip lang={lang} />}
+        <FraseHogar lang={lang} />
         <HomeSearch lang={lang} />
         <Apartments lang={lang} />
         <DirectBookingPerks lang={lang} />

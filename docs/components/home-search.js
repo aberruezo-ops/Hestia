@@ -704,7 +704,10 @@ const HomeSearch = ({
     },
     "aria-pressed": apt === o.id,
     onClick: () => setApt(o.id)
-  }, o.label)))), /*#__PURE__*/React.createElement(HsDateRange, {
+  }, o.label)))), typeof LastMinuteStrip !== 'undefined' && /*#__PURE__*/React.createElement(LastMinuteStrip, {
+    lang: lang,
+    embedded: true
+  }), /*#__PURE__*/React.createElement(HsDateRange, {
     checkin: checkin,
     checkout: checkout,
     setCheckin: v => {

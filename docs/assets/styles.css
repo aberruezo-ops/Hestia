@@ -11277,16 +11277,19 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   }
 }
 
-/* ── z-index decreciente: A siempre encima de B ── */
-.frase-hogar          { z-index: 49; }
-.home-search          { z-index: 48; }
-.apartments-intro     { z-index: 47; }
-.compare              { z-index: 46; }
-.counters             { z-index: 45; }
-.team                 { z-index: 44; }
-.manifest             { z-index: 43; }
-.ratings              { z-index: 42; }
-.ratings-marquee      { z-index: 41; }
+/* ── z-index decreciente: A siempre encima de B ──
+   Orden real en la home: ratings-marquee y frase-hogar van justo después
+   del hero (ratings-marquee primero), así que llevan los valores más
+   altos tras el hero; el resto baja un escalón para dejarles sitio. */
+.ratings-marquee      { z-index: 49; }
+.frase-hogar          { z-index: 48; }
+.home-search          { z-index: 47; }
+.apartments-intro     { z-index: 46; }
+.compare              { z-index: 45; }
+.counters             { z-index: 44; }
+.team                 { z-index: 43; }
+.manifest             { z-index: 42; }
+.ratings              { z-index: 41; }
 .quick-faq            { z-index: 40; }
 .direct-perks-teaser  { z-index: 40; }
 .contact-cta          { z-index: 40; }
