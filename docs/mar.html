@@ -166,7 +166,7 @@
   -->
 </head>
 <body>
-<a href="#root" class="skip-link">Saltar al contenido principal</a>
+<a href="#main-content" class="skip-link">Saltar al contenido principal</a>
 <div id="root"></div>
 <noscript>
   <h1>Hestía Mar · Apartamento en Vera Playa, Almería</h1>
@@ -214,7 +214,7 @@
     } catch (e) { console.warn('photo-positions.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=3d69ba7693');
+      const res = await fetch(file + '?cv=1debf445c3');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

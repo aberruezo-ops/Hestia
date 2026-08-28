@@ -278,7 +278,7 @@ const NosotrosPageApp = () => {
     <>
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <NosotrosHero lang={lang} />
         <FraseHogar lang={lang} />
 

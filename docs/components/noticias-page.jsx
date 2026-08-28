@@ -717,7 +717,7 @@ const NoticiasPageApp = () => {
     <>
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
-      <main><NoticiasPage lang={lang} /></main>
+      <main id="main-content" tabIndex={-1}><NoticiasPage lang={lang} /></main>
       <Footer lang={lang} />
       <FloatingChat lang={lang} />
       <Cookies lang={lang} />

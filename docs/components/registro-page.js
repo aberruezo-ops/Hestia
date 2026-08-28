@@ -573,8 +573,10 @@ const RegistroPage = () => {
       setTopMsg(t.errSend);
     }
   };
-  return /*#__PURE__*/React.createElement("div", {
-    className: "reg-page on-dark"
+  return /*#__PURE__*/React.createElement("main", {
+    className: "reg-page on-dark",
+    id: "main-content",
+    tabIndex: -1
   }, /*#__PURE__*/React.createElement(IconSprite, null), /*#__PURE__*/React.createElement("div", {
     className: "reg-lang"
   }, /*#__PURE__*/React.createElement("button", {

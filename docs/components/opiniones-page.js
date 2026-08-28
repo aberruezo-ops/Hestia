@@ -548,7 +548,10 @@ const OpinionesPageApp = () => {
     mode: mode,
     scrolled: scrolled,
     lang: lang
-  }), /*#__PURE__*/React.createElement("main", null, /*#__PURE__*/React.createElement(OpinionesHero, {
+  }), /*#__PURE__*/React.createElement("main", {
+    id: "main-content",
+    tabIndex: -1
+  }, /*#__PURE__*/React.createElement(OpinionesHero, {
     lang: lang
   }), /*#__PURE__*/React.createElement(FraseHogar, {
     lang: lang

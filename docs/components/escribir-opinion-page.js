@@ -463,7 +463,10 @@ const EscribirOpinionPageApp = () => {
     mode: mode,
     scrolled: scrolled,
     lang: lang
-  }), /*#__PURE__*/React.createElement("main", null, /*#__PURE__*/React.createElement("section", {
+  }), /*#__PURE__*/React.createElement("main", {
+    id: "main-content",
+    tabIndex: -1
+  }, /*#__PURE__*/React.createElement("section", {
     className: "page-hero eo-hero"
   }, /*#__PURE__*/React.createElement("div", {
     className: "page-hero-content"

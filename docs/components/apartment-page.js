@@ -1616,6 +1616,8 @@ const ApartmentPageApp = () => {
     scrolled: scrolled,
     lang: lang
   }), /*#__PURE__*/React.createElement("main", {
+    id: "main-content",
+    tabIndex: -1,
     className: "apt-main",
     "data-phase": phase,
     "data-apt": apt.id

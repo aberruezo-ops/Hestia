@@ -1686,7 +1686,7 @@ const ReservasPageApp = () => {
     <>
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <ReservasHero lang={lang} />
         <FraseHogar lang={lang} />
         <div className="reservas-body">
