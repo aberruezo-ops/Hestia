@@ -147,7 +147,7 @@ const App = () => {
     <>
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Hero lang={lang} />
         <OfertaBanner lang={lang} />
         <FraseHogar lang={lang} />

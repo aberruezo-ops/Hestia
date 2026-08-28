@@ -3060,7 +3060,9 @@ body.apt-bar-shown .cookies {
   gap: 0;
   border-top: 1px solid rgba(61,26,53,0.1);
 }
-.compare-grid > div {
+.compare-grid .label,
+.compare-grid .head,
+.compare-grid .cell {
   padding: 20px 24px;
   border-bottom: 1px solid rgba(61,26,53,0.08);
   display: flex; align-items: center;
@@ -4174,6 +4176,12 @@ footer .footer-brand .addr {
   cursor: default;
   user-select: none;
 }
+.cal-cell.clickable:focus-visible {
+  outline: 2px solid var(--sol-lt, #6FC4D1);
+  outline-offset: -2px;
+  border-radius: 4px;
+  z-index: 4;
+}
 .cal-empty { visibility: hidden; }
 .c-n {
   position: relative;
@@ -5278,7 +5286,7 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
   .compare { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .compare-grid { min-width: 580px; }
   .compare-grid .head { padding-top: 30px; }
-  .compare-grid > div { padding: 12px 16px; }
+  .compare-grid .label, .compare-grid .head, .compare-grid .cell { padding: 12px 16px; }
   .team-head { grid-template-columns: 1fr; gap: 30px; }
   .team-grid { grid-template-columns: 1fr; }
   .manifest-inner { grid-template-columns: 1fr; gap: 40px; }
@@ -23067,6 +23075,13 @@ img[src*="apt-vt-gallery-"] {
   font-size: 13px;
   color: #3AAABB;
   margin: 0;
+}
+.footer-nl-err {
+  font-size: 12.5px;
+  /* --err mezclado con crema: sobre el footer oscuro, --err solo no da contraste suficiente. */
+  color: color-mix(in srgb, var(--err) 55%, var(--crema) 45%);
+  margin: 8px 0 0;
+  width: 100%;
 }
 @media (max-width: 480px) {
   .footer-nl-form { min-width: 0; width: 100%; }

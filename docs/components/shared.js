@@ -2879,11 +2879,15 @@ const QuickFAQ = ({
     className: `qfaq-item ${open === i ? 'open' : ''}`
   }, /*#__PURE__*/React.createElement("button", {
     className: "qfaq-q",
-    onClick: () => setOpen(open === i ? null : i)
+    onClick: () => setOpen(open === i ? null : i),
+    "aria-expanded": open === i,
+    "aria-controls": `qfaq-a-${pageId}-${i}`
   }, /*#__PURE__*/React.createElement("span", null, f.q), /*#__PURE__*/React.createElement("span", {
-    className: "qfaq-chevron"
+    className: "qfaq-chevron",
+    "aria-hidden": "true"
   }, open === i ? '−' : '+')), /*#__PURE__*/React.createElement("div", {
-    className: "qfaq-a"
+    className: "qfaq-a",
+    id: `qfaq-a-${pageId}-${i}`
   }, f.a)))), /*#__PURE__*/React.createElement("div", {
     className: "qfaq-more"
   }, /*#__PURE__*/React.createElement("a", {
@@ -4664,6 +4668,8 @@ const FraseHogar = ({
   const [idx, setIdx] = React.useState(() => Math.floor(Math.random() * _QUOTES_POOL.length));
   const [visible, setVisible] = React.useState(true);
   React.useEffect(() => {
+    const prm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prm) return; // cita fija, sin rotación automática
     const tick = setInterval(() => {
       setVisible(false);
       setTimeout(() => {
@@ -6862,6 +6868,8 @@ const WidgetSabiasQue = ({
   };
   React.useEffect(() => {
     if (min) return;
+    const prm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prm) return;
     const t = setInterval(() => {
       setVisible(false);
       setTimeout(() => {
@@ -7246,7 +7254,8 @@ const GuestAccessModal = ({
   const [status, setStatus] = React.useState('idle');
   const inputRef = React.useRef(null);
   React.useEffect(() => {
-    if (step === 'pin' && inputRef.current) {
+    const isDesktop = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+    if (step === 'pin' && isDesktop && inputRef.current) {
       setTimeout(() => inputRef.current.focus(), 80);
     }
   }, [step]);

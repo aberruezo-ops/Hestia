@@ -32,13 +32,16 @@ const _hsDiff = (a, b) =>
 const _hsFmtDate = (ds, lang) => {
   if (!ds) return '';
   const d = new Date(ds + 'T12:00:00Z');
-  const M = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
-             'Septiembre','Octubre','Noviembre','Diciembre'];
-  const ME = ['January','February','March','April','May','June','July','August',
-              'September','October','November','December'];
-  return lang === 'es'
-    ? `${d.getUTCDate()} ${M[d.getUTCMonth()].slice(0,3).toLowerCase()}. ${d.getUTCFullYear()}`
-    : `${ME[d.getUTCMonth()].slice(0,3)} ${d.getUTCDate()}, ${d.getUTCFullYear()}`;
+  return new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB',
+    { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(d);
+};
+
+// Fecha larga (para aria-label de las celdas del calendario): "17 de enero de 2026" / "17 January 2026".
+const _hsFmtDateLong = (ds, lang) => {
+  if (!ds) return '';
+  const d = new Date(ds + 'T12:00:00Z');
+  return new Intl.DateTimeFormat(lang === 'es' ? 'es-ES' : 'en-GB',
+    { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(d);
 };
 
 const _hsShiftLabel = (shift, lang) => {
@@ -220,8 +223,18 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
             const isClickable = !isPast && !isBeyond && !isTooSoon && (!isBlk || isBlkStart);
             const showBlk = isBlk && !inSel && !inPrev;
 
+            const dayLabel = _hsFmtDateLong(ds, lang)
+              + (isSS ? (lang === 'es' ? ', entrada seleccionada' : ', selected check-in')
+                : isSE ? (lang === 'es' ? ', salida seleccionada' : ', selected check-out')
+                : (isBlk && !isClickable) ? (lang === 'es' ? ', no disponible' : ', unavailable')
+                : '');
+
             return (
               <div key={d}
+                role={isClickable ? 'button' : undefined}
+                tabIndex={isClickable ? 0 : undefined}
+                aria-label={isClickable ? dayLabel : undefined}
+                aria-pressed={isClickable ? (isSS || isSE) : undefined}
                 className={['cal-cell',(isPast||isBeyond)&&'past',isToday&&'today',isBlk&&'blk',
                   isBlkAfter && 'blk-after',
                   isTooSoon && 'too-soon',
@@ -229,8 +242,10 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
                   inPrev&&'in-prev',isPS&&'prev-s',isPE&&'prev-e',isPM&&'prev-m',
                 ].filter(Boolean).join(' ')}
                 onClick={isClickable ? () => handleDayClick(ds) : undefined}
+                onKeyDown={isClickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleDayClick(ds); } } : undefined}
                 onMouseEnter={isClickable && !checkout ? () => setHover(ds) : undefined}
                 onMouseLeave={isClickable ? () => setHover(null) : undefined}
+                onFocus={isClickable && !checkout ? () => setHover(ds) : undefined}
                 title={isTooSoon ? (lang === 'es' ? `Estancia mínima ${_effectiveMinN(checkin, ds)} noches` : `Minimum stay ${_effectiveMinN(checkin, ds)} nights`) : undefined}
               >
                 {showBlk && !isBlkSingle && isBlkStart && <div className="c-strip c-sr"/>}
@@ -346,7 +361,7 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
   // Larga estancia: ≥29 noches, no julio ni agosto
   const isLsStay = nights > 28 && checkin && +checkin.slice(5,7) !== 7 && +checkin.slice(5,7) !== 8;
   const lsCalc   = isLsStay ? _calcLsTotal(checkin, checkout, parseInt(guests,10)||1, false, apt.id) : null;
-  const fmt = n => n.toLocaleString('es-ES') + ' €';
+  const fmt = n => new Intl.NumberFormat(lang === 'es' ? 'es-ES' : 'en-GB').format(n) + ' €';
 
   // URL del CTA "Avanzar con la reserva", pasa apt+fechas+huéspedes.
   // Mascota y extras se eligen en /reservas (paso único de extras).
@@ -660,10 +675,10 @@ const HomeSearch = ({ lang, b2b = false }) => {
 
           {/* Apartment selector */}
           <div className="hs-field hs-field--full">
-            <label className="hs-lbl">
+            <label className="hs-lbl" id="hs-lbl-apt">
               {lang === 'es' ? 'Hestía' : 'Hestía'}
             </label>
-            <div className="hs-apt-sel">
+            <div className="hs-apt-sel" role="group" aria-labelledby="hs-lbl-apt">
               {[
                 { id: '', label: lang === 'es' ? 'Cualquiera' : 'Any', accent: '#3aaabb' },
                 ...HS_APTS.map(a => ({ id: a.id, label: a.short, accent: a.accent })),
@@ -673,6 +688,7 @@ const HomeSearch = ({ lang, b2b = false }) => {
                   type="button"
                   className={`hs-apt-btn${apt === o.id ? ' active' : ''}`}
                   style={{ '--btn-accent': o.accent }}
+                  aria-pressed={apt === o.id}
                   onClick={() => setApt(o.id)}
                 >
                   {o.label}
@@ -695,14 +711,14 @@ const HomeSearch = ({ lang, b2b = false }) => {
               para comprobar disponibilidad y ver precio base. */}
           <div className="hs-row hs-row--wrap">
             <div className="hs-field hs-field--inline">
-              <label className="hs-lbl">
+              <label className="hs-lbl" id="hs-lbl-guests">
                 {lang === 'es' ? 'Huéspedes' : 'Guests'}
               </label>
-              <div className="hs-counter">
+              <div className="hs-counter" role="group" aria-labelledby="hs-lbl-guests">
                 <button type="button" className="hs-cnt-btn"
                   aria-label={lang === 'es' ? 'Reducir huéspedes' : 'Fewer guests'}
                   onClick={() => setGuests(g => Math.max(1, g - 1))}>−</button>
-                <span className="hs-cnt-num">{guests}</span>
+                <span className="hs-cnt-num" aria-live="polite">{guests}</span>
                 <button type="button" className="hs-cnt-btn"
                   aria-label={lang === 'es' ? 'Añadir huésped' : 'Add guest'}
                   onClick={() => setGuests(g => Math.min(6, g + 1))}>+</button>
@@ -806,7 +822,7 @@ const HomeSearch = ({ lang, b2b = false }) => {
             {results.some(r => r.available !== null) && results.every(r => r.available !== true) && (() => {
               const alts = _hestiaFindAlternatives({ checkin, checkout, apt, avail, guests, max: 4 });
               if (!alts.length) return null;
-              const fmt = n => n.toLocaleString('es-ES') + ' €';
+              const fmt = n => new Intl.NumberFormat(lang === 'es' ? 'es-ES' : 'en-GB').format(n) + ' €';
               const altHref = (alt) => {
                 const p = new URLSearchParams();
                 p.set('apt', alt.aptId);
@@ -879,16 +895,26 @@ const HomeSearch = ({ lang, b2b = false }) => {
                 </p>
               ) : (
                 <form className="hs-notify-form" onSubmit={handleNotify}>
+                  <label className="sr-only" htmlFor="hs-notify-name">{lang === 'es' ? 'Nombre' : 'Name'}</label>
                   <input
+                    id="hs-notify-name"
                     type="text"
+                    name="name"
+                    autoComplete="name"
                     className="hs-notify-field"
                     placeholder={lang === 'es' ? 'Nombre' : 'Name'}
                     value={notifyName}
                     onChange={e => setNotifyName(e.target.value)}
                     maxLength={60}
                   />
+                  <label className="sr-only" htmlFor="hs-notify-email">{lang === 'es' ? 'Email' : 'Email'}</label>
                   <input
+                    id="hs-notify-email"
                     type="email"
+                    name="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    spellCheck={false}
                     className="hs-notify-field"
                     placeholder={lang === 'es' ? 'tu@email.com' : 'your@email.com'}
                     value={notifyEmail}
@@ -897,7 +923,7 @@ const HomeSearch = ({ lang, b2b = false }) => {
                     maxLength={120}
                   />
                   <button type="submit" className="hs-notify-submit" disabled={notifyState === 'sending'}>
-                    {notifyState === 'sending' ? '…' : (lang === 'es' ? 'Avísame →' : 'Notify me →')}
+                    {notifyState === 'sending' ? (lang === 'es' ? 'Enviando…' : 'Sending…') : (lang === 'es' ? 'Avísame →' : 'Notify me →')}
                   </button>
                 </form>
               )}

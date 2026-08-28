@@ -208,7 +208,10 @@ const App = () => {
     mode: mode,
     scrolled: scrolled,
     lang: lang
-  }), /*#__PURE__*/React.createElement("main", null, /*#__PURE__*/React.createElement(Hero, {
+  }), /*#__PURE__*/React.createElement("main", {
+    id: "main-content",
+    tabIndex: -1
+  }, /*#__PURE__*/React.createElement(Hero, {
     lang: lang
   }), /*#__PURE__*/React.createElement(OfertaBanner, {
     lang: lang
