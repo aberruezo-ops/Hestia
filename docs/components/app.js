@@ -215,11 +215,9 @@ const App = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement(OfertaBanner, {
     lang: lang
-  }), /*#__PURE__*/React.createElement(FraseHogar, {
-    lang: lang
   }), /*#__PURE__*/React.createElement(RatingsMarquee, {
     lang: lang
-  }), typeof LastMinuteStrip !== 'undefined' && /*#__PURE__*/React.createElement(LastMinuteStrip, {
+  }), /*#__PURE__*/React.createElement(FraseHogar, {
     lang: lang
   }), /*#__PURE__*/React.createElement(HomeSearch, {
     lang: lang

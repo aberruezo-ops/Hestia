@@ -697,6 +697,10 @@ const HomeSearch = ({ lang, b2b = false }) => {
             </div>
           </div>
 
+          {/* Huecos de última hora, como atajo antes del calendario: coger uno
+              de estos evita tener que buscar fecha a fecha. */}
+          {typeof LastMinuteStrip !== 'undefined' && <LastMinuteStrip lang={lang} embedded />}
+
           {/* Calendar date range picker */}
           <HsDateRange
             checkin={checkin} checkout={checkout}
