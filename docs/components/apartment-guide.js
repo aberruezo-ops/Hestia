@@ -1393,7 +1393,7 @@ const PLACES = [
   desc: 'Las Negras. Asador argentino dentro del Parque Natural.',
   desc_en: 'Las Negras. Argentine grill inside the Natural Park.',
   specialty: 'parrillada argentina, entraña, mollejas, empanadas criollas y el bife de chorizo: los cortes son espectaculares.',
-  tip: 'Pide el bife de chorizo y, de postre, el crepe con dulce de leche. Mesa fuera en primavera/otoño, el cielo de Cabo de Gata vale por sí solo.',
+  tip: 'Pide el bife de chorizo y, de postre, el panqueque con dulce de leche. Mesa fuera en primavera/otoño, el cielo de Cabo de Gata vale por sí solo.',
   tier: '€€€',
   cat: 'restaurant',
   rating: 4.6,
