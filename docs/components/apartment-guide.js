@@ -2080,6 +2080,29 @@ const PLACES = [
   lat: 37.1820,
   lng: -1.8235,
   featured: true
+}, {
+  id: 'pralex-maricielo',
+  name: 'Pralex Heladeros Artesanos Maricielo',
+  desc: 'Puerto Rey. Heladería artesana con terraza vista al mar; también café y desayunos.',
+  desc_en: 'Puerto Rey. Artisan ice cream shop with a sea-view terrace; also serves coffee and breakfast.',
+  specialty: 'helados artesanos, café y desayunos con vistas al mar.',
+  cat: 'bar',
+  rating: 4.6,
+  lat: 37.2030,
+  lng: -1.8090,
+  featured: true
+}, {
+  id: 'chiringuito-manaca',
+  name: 'Chiringuito Manaca (Playa del Sombrerico)',
+  desc: 'Entre Mojácar y Carboneras. Chiringuito apartado a pie de una cala virgen, ideal para copas al atardecer o para comer, famoso por su paella.',
+  desc_en: 'Between Mojácar and Carboneras. A secluded beach bar on an unspoiled cove, good for sunset drinks or a meal, famous for its paella.',
+  specialty: 'paella (mejor encargarla al reservar), pescado a la parrilla y copas al atardecer.',
+  tip: 'Se llega por una pista de tierra desde el parking de Macenas; reserva con antelación en verano.',
+  cat: 'bar',
+  rating: 4.3,
+  lat: 37.0575,
+  lng: -1.8574,
+  featured: true
 },
 // ── Bares top-rated por Google ───────────────────────────────
 // Mojácar pueblo
