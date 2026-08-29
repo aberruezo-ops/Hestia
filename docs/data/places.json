@@ -630,6 +630,20 @@
     "lng": -1.8235
   },
   {
+    "id": "pralex-maricielo",
+    "name": "Pralex Heladeros Artesanos Maricielo",
+    "cat": "bar",
+    "lat": 37.203,
+    "lng": -1.809
+  },
+  {
+    "id": "chiringuito-manaca",
+    "name": "Chiringuito Manaca (Playa del Sombrerico)",
+    "cat": "bar",
+    "lat": 37.0575,
+    "lng": -1.8574
+  },
+  {
     "id": "cantares",
     "name": "Cantares (Mojácar Pueblo)",
     "cat": "bar",
