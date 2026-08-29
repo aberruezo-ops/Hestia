@@ -229,7 +229,7 @@ const LsInfoBlock = ({ calc, lang }) => {
       </div>
       <ul className="rf-ls-conditions">
         <li>{es ? 'Contrato de arrendamiento de temporada' : 'Seasonal rental agreement'}</li>
-        <li>{es ? 'Señal del 20% para confirmar · resto a la llegada' : '20% deposit to confirm · balance on arrival'}</li>
+        <li>{es ? 'Señal del 20% para confirmar · resto a convenir, a la llegada' : '20% deposit to confirm · balance on arrival, to be agreed'}</li>
         <li>{es ? `${nights} noches, tarifa mensual` : `${nights} nights, monthly rate`}</li>
         <li>{es ? 'Sin comisiones de plataformas' : 'No platform commissions'}</li>
       </ul>
@@ -859,12 +859,12 @@ const ReservasForm = ({ lang }) => {
             `   ${fmt(grandTotal)} total\n` +
             (lsCalc.specialNights > 0 ? `   🎄 ${lsCalc.specialNights} noches especiales incluidas\n` : '') +
             (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-            `   Señal 20% = ${fmt(Math.round(grandTotal * 0.2))} · resto a la llegada\n`
+            `   Señal 20% = ${fmt(Math.round(grandTotal * 0.2))} · resto a convenir, a la llegada\n`
           : `\n💰 LONG-STAY PRICE (MONTHLY RATE)\n` +
             `   ${fmt(grandTotal)} total\n` +
             (lsCalc.specialNights > 0 ? `   🎄 ${lsCalc.specialNights} special nights included\n` : '') +
             (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-            `   Deposit 20% = ${fmt(Math.round(grandTotal * 0.2))} · balance on arrival\n`)
+            `   Deposit 20% = ${fmt(Math.round(grandTotal * 0.2))} · balance on arrival, to be agreed\n`)
       : (calc
           ? (lang === 'es'
               ? `\n💰 ${calc.isGapOffer ? 'PRECIO DE OFERTA DIRECTA' : 'PRECIO ESTIMADO DIRECTO'}\n` +
