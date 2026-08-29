@@ -175,6 +175,13 @@
     "lng": -1.773
   },
   {
+    "id": "tango-empanadas",
+    "name": "Tango Empanadas Argentinas",
+    "cat": "restaurant",
+    "lat": 37.246,
+    "lng": -1.775
+  },
+  {
     "id": "rincon-puerto",
     "name": "Rincón del Puerto (Garrucha)",
     "cat": "restaurant",
