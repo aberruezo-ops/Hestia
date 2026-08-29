@@ -1411,16 +1411,6 @@ const PLACES = [
   lat: 36.8480,
   lng: -2.0400
 }, {
-  id: 'la-villa',
-  name: 'La Villa',
-  desc: 'Aguamarga. Mediterráneo elegante a pie de pueblo.',
-  specialty: 'risotto de gambas, atún rojo a la parrilla y postre de chocolate templado.',
-  tier: '€€€',
-  cat: 'restaurant',
-  rating: 4.5,
-  lat: 36.9395,
-  lng: -2.0000
-}, {
   id: 'maruja',
   name: 'Chiringuito Maruja',
   desc: 'Vera Playa. A pie de arena, ambiente sin pretensiones.',
@@ -1463,12 +1453,14 @@ const PLACES = [
   id: 'almirez',
   name: 'El Almirez (Mojácar)',
   desc: 'Mojácar Pueblo. Cocina mediterránea elegante con terraza con vistas.',
+  desc_en: 'Mojácar village. Elegant Mediterranean cooking with a terrace with views.',
   specialty: 'arroz meloso de bogavante y solomillo a la brasa.',
   tier: '€€€',
   rating: 4.6,
   cat: 'restaurant',
   lat: 37.1378,
-  lng: -1.8525
+  lng: -1.8525,
+  featured: true
 },
 // Vera pueblo
 {
@@ -1527,12 +1519,14 @@ const PLACES = [
   id: '4nudos',
   name: '4 Nudos (San José)',
   desc: 'San José. Cocina creativa con producto del mar de Cabo de Gata.',
+  desc_en: 'San José. Creative cooking with seafood from Cabo de Gata.',
   specialty: 'tartar de atún, ceviche de corvina y arroz negro.',
   tier: '€€€',
   rating: 4.6,
   cat: 'restaurant',
   lat: 36.7670,
-  lng: -2.1080
+  lng: -2.1080,
+  featured: true
 }, {
   id: 'casa-miguel-sj',
   name: 'Casa Miguel (San José)',

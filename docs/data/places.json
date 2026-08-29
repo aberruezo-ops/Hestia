@@ -63,6 +63,13 @@
     "lng": -1.854
   },
   {
+    "id": "thefoodco-vera",
+    "name": "The Food Co. (British Supermarket) - Vera",
+    "cat": "super",
+    "lat": 37.2393,
+    "lng": -1.8564
+  },
+  {
     "id": "aldi-vera",
     "name": "Aldi (Vera pueblo)",
     "cat": "super",
@@ -229,13 +236,6 @@
     "cat": "restaurant",
     "lat": 36.848,
     "lng": -2.04
-  },
-  {
-    "id": "la-villa",
-    "name": "La Villa",
-    "cat": "restaurant",
-    "lat": 36.9395,
-    "lng": -2
   },
   {
     "id": "maruja",
@@ -1316,6 +1316,27 @@
     "lng": -1.87
   },
   {
+    "id": "trek-castril",
+    "name": "Cerrada de Utrero (Sierra de Castril, Granada)",
+    "cat": "trek",
+    "lat": 37.8047,
+    "lng": -2.7729
+  },
+  {
+    "id": "trek-espuna",
+    "name": "Sendero de Las Cámaras (Sierra Espuña, Murcia)",
+    "cat": "trek",
+    "lat": 37.858,
+    "lng": -1.555
+  },
+  {
+    "id": "trek-gebas",
+    "name": "Barrancos de Gebas (Alhama de Murcia)",
+    "cat": "trek",
+    "lat": 37.828,
+    "lng": -1.423
+  },
+  {
     "id": "club-nautico",
     "name": "Club Náutico Almanzora",
     "cat": "water",
@@ -1342,6 +1363,13 @@
     "cat": "town",
     "lat": 37.6905,
     "lng": -2.0998
+  },
+  {
+    "id": "t-aledo",
+    "name": "Aledo (Murcia)",
+    "cat": "town",
+    "lat": 37.8163,
+    "lng": -1.5001
   },
   {
     "id": "t-olula",
