@@ -503,7 +503,7 @@ const HsResultCard = ({
     className: "prl-saving-val"
   }, "−", fmt(calc.directTotal - lsCalc.total))))), /*#__PURE__*/React.createElement("p", {
     className: "hs-pb-note"
-  }, isLsStay && lsCalc ? lang === 'es' ? '* Señal del 20% para confirmar. Resto a la llegada.' : '* 20% deposit to confirm. Balance paid on arrival.' : lang === 'es' ? '* Precio máximo orientativo. Cuéntanos de ti, muchas veces podemos ajustar.' : '* Maximum indicative price. Tell us about yourselves, we can often adjust.')), /*#__PURE__*/React.createElement("div", {
+  }, isLsStay && lsCalc ? lang === 'es' ? '* Señal del 20% para confirmar. Resto a la llegada, a convenir.' : '* 20% deposit to confirm. Balance paid on arrival, to be agreed.' : lang === 'es' ? '* Precio máximo orientativo. Cuéntanos de ti, muchas veces podemos ajustar.' : '* Maximum indicative price. Tell us about yourselves, we can often adjust.')), /*#__PURE__*/React.createElement("div", {
     className: "hs-rc-actions hs-rc-actions-forward"
   }, /*#__PURE__*/React.createElement("a", {
     href: reservasHref,

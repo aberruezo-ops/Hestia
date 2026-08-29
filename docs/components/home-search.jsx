@@ -465,8 +465,8 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
                 <p className="hs-pb-note">
                   {isLsStay && lsCalc
                     ? (lang === 'es'
-                        ? '* Señal del 20% para confirmar. Resto a la llegada.'
-                        : '* 20% deposit to confirm. Balance paid on arrival.')
+                        ? '* Señal del 20% para confirmar. Resto a la llegada, a convenir.'
+                        : '* 20% deposit to confirm. Balance paid on arrival, to be agreed.')
                     : (lang === 'es'
                         ? '* Precio máximo orientativo. Cuéntanos de ti, muchas veces podemos ajustar.'
                         : '* Maximum indicative price. Tell us about yourselves, we can often adjust.')}
