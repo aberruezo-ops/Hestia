@@ -43,8 +43,8 @@ const ROOM_PHOTOS = {
     // 4/6/17=Dormitorio principal, 20/21/22=Dormitorio 2
     banos: [5, 23, 24, 25],
     // 5=Baño principal, 23=Baño 1, 24/25=Baño 2
-    terraza: [1, 15, 16, 19],
-    // Terraza (atardecer, horizonte, toldo)
+    terraza: [1, 15, 16, 19, 27],
+    // Terraza (atardecer, horizonte, toldo, amanecer)
     urbanizacion: [7, 8, 9, 10, 11, 12, 14] // Piscina climatizada/minispa, jacuzzi, gimnasio, sauna, piscina exterior
   },
   vs: {
