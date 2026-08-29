@@ -1317,6 +1317,19 @@ const PLACES = [
   lng: -1.7730,
   featured: true
 }, {
+  id: 'tango-empanadas',
+  name: 'Tango Empanadas Argentinas',
+  desc: 'Zona Villaricos-Palomares. Empanadas argentinas para llevar o en su terraza.',
+  desc_en: 'Villaricos-Palomares area. Argentine empanadas to take away or on their terrace.',
+  specialty: 'más de 20 tipos de empanadas (la de cebolla caramelizada es la más pedida) y media luna de dulce de leche para desayunar.',
+  tip: 'Cómetelas en su terraza con un tercio bien frío.',
+  tier: '€',
+  cat: 'restaurant',
+  rating: 5.0,
+  lat: 37.2460,
+  lng: -1.7750,
+  featured: true
+}, {
   id: 'rincon-puerto',
   name: 'Rincón del Puerto (Garrucha)',
   desc: 'Junto a la lonja de Garrucha. Marisco fresquísimo y ambiente de pueblo pesquero.',
