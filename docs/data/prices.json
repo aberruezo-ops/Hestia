@@ -614,50 +614,40 @@
       "lastMinute": true,
       "auto": true
     },
-    "vt|2026-09-13": {
+    "vt|2026-09-15": {
       "apt": "vt",
-      "start": "2026-09-13",
-      "end": "2026-09-17",
+      "start": "2026-09-15",
+      "end": "2026-09-20",
+      "nights": 5,
+      "type": "discount",
+      "value": 5,
+      "lastMinute": true,
+      "auto": true
+    },
+    "vt|2026-09-20": {
+      "apt": "vt",
+      "start": "2026-09-20",
+      "end": "2026-09-24",
       "nights": 4,
       "type": "discount",
       "value": 5,
       "lastMinute": true,
       "auto": true
     },
-    "vt|2026-09-17": {
+    "vt|2026-09-24": {
       "apt": "vt",
-      "start": "2026-09-17",
-      "end": "2026-09-21",
+      "start": "2026-09-24",
+      "end": "2026-09-28",
       "nights": 4,
       "type": "discount",
       "value": 5,
       "lastMinute": true,
       "auto": true
     },
-    "vt|2026-09-21": {
+    "vt|2026-09-28": {
       "apt": "vt",
-      "start": "2026-09-21",
-      "end": "2026-09-25",
-      "nights": 4,
-      "type": "discount",
-      "value": 5,
-      "lastMinute": true,
-      "auto": true
-    },
-    "vt|2026-09-25": {
-      "apt": "vt",
-      "start": "2026-09-25",
-      "end": "2026-09-29",
-      "nights": 4,
-      "type": "discount",
-      "value": 5,
-      "lastMinute": true,
-      "auto": true
-    },
-    "vt|2026-09-29": {
-      "apt": "vt",
-      "start": "2026-09-29",
-      "end": "2026-10-03",
+      "start": "2026-09-28",
+      "end": "2026-10-02",
       "nights": 4,
       "type": "discount",
       "value": 5,
@@ -677,13 +667,12 @@
     "vs|2026-08-23": [
       "2026-08-30"
     ],
-    "vt|2026-09-13": [
-      "2026-09-17",
-      "2026-09-21",
-      "2026-09-25",
-      "2026-09-29",
-      "2026-10-03",
-      "2026-10-07"
+    "vt|2026-09-15": [
+      "2026-09-20",
+      "2026-09-24",
+      "2026-09-28",
+      "2026-10-02",
+      "2026-10-06"
     ]
   },
   "longStayConfig": {
@@ -770,6 +759,6 @@
     ]
   },
   "gapSplitsAuto": [
-    "vt|2026-09-13"
+    "vt|2026-09-15"
   ]
 }
