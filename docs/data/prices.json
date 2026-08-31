@@ -714,11 +714,6 @@
   "guestPins": {
     "vm": [
       {
-        "h": "2bd518b0023d464f6b84dbbe26d71b44418d965e928ca1d09a6d47909a912ea7",
-        "until": "2026-08-30",
-        "ref": "2026-08-24"
-      },
-      {
         "h": "bf8d188eee837379f0e64742083eea416a8e43c377ff9b539dd7498b0371bc9c",
         "until": "2026-09-15",
         "ref": "2026-09-08"
@@ -762,11 +757,6 @@
       }
     ],
     "vs": [
-      {
-        "h": "5010ee35abaf11bba500ea34d683eea9fa931e45d04d4080a5efdf1860c337a8",
-        "until": "2026-09-14",
-        "ref": "2026-09-05"
-      },
       {
         "h": "e2dff5923f69d4f63d5cfda31f86cc4dd5d47f0cc6de5a9ea9e28a1fb6d64bf8",
         "until": "2026-08-31",
