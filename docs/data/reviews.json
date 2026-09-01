@@ -1,7 +1,7 @@
 {
   "_doc": "Reviews curadas y de la web. source: 'booking'|'airbnb'|'google'|'web'. apt: 'vm'|'vt'|'vs'|'all'. highlight: true para destacarse en la sección de relevantes. status: 'published'|'pending' (solo published se muestra al público).",
   "version": 1,
-  "updatedAt": "2026-09-01T00:00:00Z",
+  "updatedAt": "2026-09-01T15:37:00Z",
   "items": [
     {
       "id": "bk-001",
@@ -5370,6 +5370,19 @@
       "lang": "es",
       "text": "Un apartamento absolutamente maravilloso con unos anfitriones increíbles. Alex y Fran son muy acogedores y la comunicación es inmejorable. Realmente se desviven por sus huéspedes. El paquete de bienvenida fue un detalle encantador que agradecimos muchísimo. Todo el apartamento es de alta calidad, huele de maravilla y los acabados son fantásticos. Es como estar en casa. ¡La ducha sobre la bañera es espectacular!\n\nPasamos una semana en el apartamento para nuestra luna de miel y nos encantó. Excelente ubicación. A poca distancia a pie de la playa, restaurantes, cafeterías y tiendas, incluyendo un supermercado. Los autobuses son muy baratos y fáciles de usar. Visitamos Garraucha, Mojácar y Pueblo, que, aunque está bastante cuesta arriba, merece la pena visitar. Es un pueblo precioso con encantadoras tiendecitas independientes.\n\nMerece la pena madrugar para ver el amanecer.\n\nTodos fueron muy amables y hospitalarios. Recomendamos este apartamento sin duda. Sin duda volveríamos.\n\nGracias Alex y Fran ❤️",
       "highlight": true,
+      "status": "published"
+    },
+    {
+      "id": "go-140",
+      "source": "google",
+      "apt": "vs",
+      "name": "Julen Velez Delgado",
+      "country": "ES",
+      "date": "2026-09-01",
+      "rating": 5,
+      "lang": "es",
+      "text": "Hemos estado una semana en familia a finales de agosto. La verdad que hemos estados encantados, la urbanización y la zona muy tranquila. Pero sobre todo hay que mencionar el trato y la casa de Alex y Fran. Hemos tenido un par de problemas y nos los han resuelto de inmediato. Están muy pendientes de los huéspedes y te hacen sentir como en casa. La casa la tienen decorada al detalle y la página web es una locura. Han sido unas vacaciones increíbles. Lo recomendamos y volveremos sin dudar. GRACIAS FRAN Y ALEX!!",
+      "highlight": false,
       "status": "published"
     }
   ]
