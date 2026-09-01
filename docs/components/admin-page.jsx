@@ -58,6 +58,12 @@ const SHEETS_WORKER_URL = 'https://hestia-sheets-sync.SUSTITUIR.workers.dev';
 const PAGO_WORKER_URL = 'https://hestia-pago.SUSTITUIR.workers.dev';
 const PAGO_PAGE_URL   = 'https://www.hestiayourhome.com/pago.html';
 
+// Clave de admin del Worker de pago (PAGO_ADMIN_KEY, wrangler secret put).
+// Se pide una vez por sesión de /p-edit con window.prompt, como el resto de
+// claves de Worker de este panel (READ_SECRET, PUBLISH_SECRET): solo en
+// memoria, nunca en el repo. No es el PAT de GitHub ni viaja a GitHub.
+let _pagoAdminKey = '';
+
 // URL del Worker que publica en Facebook/Instagram (workers/social-publish/).
 // Sustituir tras wrangler deploy.
 const SOCIAL_PUBLISH_WORKER_URL = 'https://hestia-social-publish.SUSTITUIR.workers.dev';
@@ -4399,12 +4405,16 @@ const PagoLinkInline = ({ pr, noches, onClose }) => {
     let cancelled = false;
     setSig(null);
     setSigError(false);
+    if (!_pagoAdminKey) {
+      _pagoAdminKey = (window.prompt('Clave de admin del Worker de pago (PAGO_ADMIN_KEY):') || '').trim();
+    }
+    if (!_pagoAdminKey) { setSigError(true); return; }
     fetch(`${PAGO_WORKER_URL}/pago-api/sign-link`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ apt: pr.apt, checkin: pr.entrada, checkout: pr.salida, total, deposit }),
+      body: JSON.stringify({ apt: pr.apt, checkin: pr.entrada, checkout: pr.salida, total, deposit, key: _pagoAdminKey }),
     })
-      .then(r => r.json())
+      .then(r => { if (r.status === 401) _pagoAdminKey = ''; return r.json(); })
       .then(d => { if (cancelled) return; if (d.sig && d.exp) setSig(d); else setSigError(true); })
       .catch(() => { if (!cancelled) setSigError(true); });
     return () => { cancelled = true; };
