@@ -27,3 +27,8 @@ package.json
 
 # Datos privados de huéspedes — nunca commitear
 data-private/
+
+# Secretos y estado local de wrangler dev (nunca commitear)
+.dev.vars
+.dev.vars.*
+.wrangler/
