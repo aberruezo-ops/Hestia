@@ -96,6 +96,9 @@ async function handleIntent(body, env, corsHeaders) {
   if (!amount || !total || !apt || !checkin) {
     return json({ error: 'Faltan parámetros: amount, total, apt, checkin' }, 400, corsHeaders);
   }
+  if (!['vm', 'vt', 'vs'].includes(apt)) {
+    return json({ error: 'Apartamento no válido' }, 400, corsHeaders);
+  }
 
   // Anti-tampering: el depósito debe ser el 20% del total (±2€ por redondeo)
   const expected = Math.round(total * 0.20);
@@ -188,6 +191,9 @@ async function handleStripeWebhook(req, env) {
 async function handlePaypalOrder(body, env, corsHeaders) {
   const { amount, apt, checkin, name } = body;
   if (!amount || !apt || !checkin) return json({ error: 'Faltan parámetros' }, 400, corsHeaders);
+  if (!['vm', 'vt', 'vs'].includes(apt)) {
+    return json({ error: 'Apartamento no válido' }, 400, corsHeaders);
+  }
   if (!env.PAYPAL_CLIENT_ID || !env.PAYPAL_CLIENT_SECRET) {
     return json({ error: 'PayPal no configurado' }, 500, corsHeaders);
   }
@@ -284,6 +290,15 @@ async function capturePaypalOrder(base, token, orderId) {
   return res.json();
 }
 
+// Sheets formula injection: con valueInputOption=USER_ENTERED, un valor que
+// empiece por = + - @ se interpreta como fórmula al abrir la hoja (p. ej. un
+// nombre "=HYPERLINK(...)" en el formulario de pago). Anteponer un apóstrofe
+// fuerza texto literal, igual que hace Sheets al pegar manualmente.
+const sheetSafe = v => {
+  if (typeof v !== 'string') return v;
+  return /^[=+\-@]/.test(v) ? `'${v}` : v;
+};
+
 // ── Google Sheets: append row ─────────────────────────────────────────────
 async function appendToSheet(token, row) {
   const range = `${SHEET_NAME}!A1`;
@@ -292,7 +307,7 @@ async function appendToSheet(token, row) {
     {
       method: 'POST',
       headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ values: [row] }),
+      body: JSON.stringify({ values: [row.map(sheetSafe)] }),
     }
   );
   if (!res.ok) {

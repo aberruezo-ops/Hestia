@@ -24,3 +24,9 @@ id      = "PLACEHOLDER_SUSTITUIR_CON_ID_REAL"
 #
 # Ruta pública (configurar en Cloudflare dashboard → Workers → Routes):
 #   hestiayourhome.com/pago-api/*
+#
+# IMPORTANTE — de momento sin desplegar a propósito (motor en pruebas, sin
+# acceso público). No asignar la ruta anterior hasta decidirlo.
+#
+# Test unitario (sin desplegar ni tocar Stripe/PayPal/Sheets reales):
+#   node workers/pago/test.mjs

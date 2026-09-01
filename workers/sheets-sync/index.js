@@ -159,13 +159,18 @@ async function writeToSheet(token, reservas) {
     return (a.entrada || '').localeCompare(b.entrada || '');
   });
 
+  // Sheets formula injection: con valueInputOption=USER_ENTERED, un valor
+  // que empiece por = + - @ se interpreta como fórmula al abrir la hoja.
+  // Anteponer un apóstrofe fuerza texto literal, igual que al pegar a mano.
+  const sheetSafe = s => (/^[=+\-@]/.test(s) ? `'${s}` : s);
+
   const rows = [
     HEADERS,
     ...sorted.map(r => COLUMNS.map(k => {
       const v = r[k];
       if (v === null || v === undefined) return '';
       if (typeof v === 'boolean') return v ? 'Sí' : 'No';
-      return String(v);
+      return sheetSafe(String(v));
     })),
   ];
 
