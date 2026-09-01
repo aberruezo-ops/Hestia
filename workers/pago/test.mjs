@@ -35,11 +35,14 @@ function req(path, body) {
   });
 }
 
-const env = { STRIPE_SECRET_KEY: 'sk_test_fake', PAYPAL_CLIENT_ID: '', PAYPAL_CLIENT_SECRET: '', PAGO_LINK_SECRET: 'test-secret-no-real' };
+const env = {
+  STRIPE_SECRET_KEY: 'sk_test_fake', PAYPAL_CLIENT_ID: '', PAYPAL_CLIENT_SECRET: '',
+  PAGO_LINK_SECRET: 'test-secret-no-real', PAGO_ADMIN_KEY: 'test-admin-key-no-real',
+};
 
-async function signLink({ apt = 'vm', checkin = '2026-08-01', checkout = '2026-08-05', total = 500, deposit = 100 } = {}) {
-  const res = await worker.fetch(req('/pago-api/sign-link', { apt, checkin, checkout, total, deposit }), env);
-  return res.json();
+async function signLink({ apt = 'vm', checkin = '2026-08-01', checkout = '2026-08-05', total = 500, deposit = 100, key = env.PAGO_ADMIN_KEY } = {}) {
+  const res = await worker.fetch(req('/pago-api/sign-link', { apt, checkin, checkout, total, deposit, key }), env);
+  return { status: res.status, ...(await res.json()) };
 }
 
 let pass = 0, fail = 0;
@@ -127,13 +130,24 @@ async function check(name, cond) {
   await check('4d PayPal sin firma → sin llamada saliente', outboundCalls.length === 0);
 }
 
-// 5. sign-link valida apt y que la señal sea el 20% del total antes de firmar.
+// 5. sign-link exige la PAGO_ADMIN_KEY (autenticación real: CORS por sí solo
+// no frena a un cliente que no sea navegador y falsee el Origin), valida apt,
+// que la señal sea el 20% del total y que el total no se salga de rango.
 {
+  const noKey = await signLink({ key: '' });
+  await check('5a sign-link sin clave → 401', noKey.status === 401);
+
+  const wrongKey = await signLink({ key: 'clave-incorrecta' });
+  await check('5b sign-link clave incorrecta → 401', wrongKey.status === 401);
+
   const badApt = await signLink({ apt: 'xx' });
-  await check('5a sign-link apt inválido → error', !badApt.sig);
+  await check('5c sign-link apt inválido → error', !badApt.sig);
 
   const badRatio = await signLink({ total: 500, deposit: 10 });
-  await check('5b sign-link señal ≠ 20% → error', !badRatio.sig);
+  await check('5d sign-link señal ≠ 20% → error', !badRatio.sig);
+
+  const tooHigh = await signLink({ total: 999999, deposit: 199999.8 });
+  await check('5e sign-link total fuera de rango → error', !tooHigh.sig);
 }
 
 // 6. sheetSafe(): valores que empiezan por = + - @ quedan neutralizados con

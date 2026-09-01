@@ -8,6 +8,7 @@
 //   PAYPAL_CLIENT_SECRET    — sandbox o live
 //   GCP_SA_KEY              — JSON completo del service account (mismo que sheets-sync)
 //   PAGO_LINK_SECRET        — secreto para firmar el total del link de pago (openssl rand -hex 32)
+//   PAGO_ADMIN_KEY          — clave que debe enviar /p-edit para poder firmar un link (openssl rand -hex 24)
 //
 // KV namespace requerido:
 //   RATE_KV  — para rate limiting por IP
@@ -27,7 +28,14 @@ const ALLOWED_ORIGINS = [
 const RATE_LIMIT  = 20;
 const RATE_WINDOW = 60 * 60; // 1 hora en segundos
 
+// /pago-api/sign-link es una acción de admin (mintar la firma de un importe):
+// límite propio y más estricto, igual que pide el checklist de seguridad del
+// proyecto para endpoints sensibles (10 req/IP/15 min).
+const SIGN_RATE_LIMIT  = 10;
+const SIGN_RATE_WINDOW = 15 * 60;
+
 const LINK_SIG_TTL = 90 * 24 * 60 * 60; // validez de la firma del link de pago (90 días)
+const MAX_SIGNABLE_TOTAL = 50000; // tope de cordura: ninguna reserva real de Hestía llega a esto
 
 export default {
   async fetch(req, env) {
@@ -63,9 +71,10 @@ export default {
       return new Response('Method Not Allowed', { status: 405, headers: corsHeaders });
     }
 
-    // Rate limiting por IP
+    const ip = req.headers.get('CF-Connecting-IP') || 'unknown';
+
+    // Rate limiting por IP (general)
     if (env.RATE_KV) {
-      const ip    = req.headers.get('CF-Connecting-IP') || 'unknown';
       const key   = `rl:pago:${ip}`;
       const count = parseInt(await env.RATE_KV.get(key) || '0');
       if (count >= RATE_LIMIT) {
@@ -75,6 +84,20 @@ export default {
         });
       }
       await env.RATE_KV.put(key, String(count + 1), { expirationTtl: RATE_WINDOW });
+    }
+
+    // Rate limiting adicional y más estricto para sign-link: es una acción de
+    // admin que emite firmas, no un pago de huésped.
+    if (path === '/pago-api/sign-link' && env.RATE_KV) {
+      const key   = `rl:pago:sign:${ip}`;
+      const count = parseInt(await env.RATE_KV.get(key) || '0');
+      if (count >= SIGN_RATE_LIMIT) {
+        return new Response(JSON.stringify({ error: 'Demasiadas peticiones. Espera un momento.' }), {
+          status: 429,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Retry-After': String(SIGN_RATE_WINDOW) },
+        });
+      }
+      await env.RATE_KV.put(key, String(count + 1), { expirationTtl: SIGN_RATE_WINDOW });
     }
 
     let body;
@@ -102,13 +125,29 @@ export default {
 // controlaba quien llamaba al endpoint: cuadraba consigo mismo, no con el
 // precio real de la reserva.
 async function handleSignLink(body, env, corsHeaders) {
-  const { apt, checkin, checkout, total, deposit } = body;
+  const { apt, checkin, checkout, total, deposit, key } = body;
+
+  // Autenticación real de quién puede firmar: CORS solo filtra navegadores
+  // (un cliente que no sea navegador puede falsear el Origin sin problema),
+  // así que sin esta clave cualquiera que alcance el endpoint podría mintar
+  // una firma para el importe que quisiera. PAGO_ADMIN_KEY es un secreto
+  // propio del Worker, nunca el PAT de GitHub: no debe enviarse a GitHub ni
+  // este endpoint debe recibir el PAT.
+  if (!env.PAGO_ADMIN_KEY) {
+    return json({ error: 'Firma no configurada' }, 500, corsHeaders);
+  }
+  if (!key || !timingSafeEqualStr(String(key), env.PAGO_ADMIN_KEY)) {
+    return json({ error: 'No autorizado' }, 401, corsHeaders);
+  }
 
   if (!apt || !checkin || !checkout || !total || !deposit) {
     return json({ error: 'Faltan parámetros: apt, checkin, checkout, total, deposit' }, 400, corsHeaders);
   }
   if (!['vm', 'vt', 'vs'].includes(apt)) {
     return json({ error: 'Apartamento no válido' }, 400, corsHeaders);
+  }
+  if (Number(total) > MAX_SIGNABLE_TOTAL) {
+    return json({ error: 'Total fuera de rango' }, 400, corsHeaders);
   }
   const expected = Math.round(total * 0.20);
   if (Math.abs(deposit - expected) > 2) {
@@ -133,7 +172,7 @@ async function checkLinkSignature(env, { apt, checkin, checkout, total, deposit,
   if (!sig || !exp) return 'Link de pago sin firmar';
   if (Math.floor(Date.now() / 1000) > Number(exp)) return 'Link de pago caducado';
   const expectedSig = await hmacHex(env.PAGO_LINK_SECRET, linkPayload({ apt, checkin, checkout, total, deposit, exp }));
-  if (!timingSafeEqualHex(expectedSig, sig)) return 'Firma no válida';
+  if (!timingSafeEqualStr(expectedSig, sig)) return 'Firma no válida';
   return null;
 }
 
@@ -417,7 +456,7 @@ async function hmacHex(secret, message) {
 // Comparación en tiempo constante: evita filtrar por timing cuánto de una
 // firma coincide. Los hex de un HMAC-SHA256 miden siempre 64 caracteres; si
 // la longitud ya difiere, no es una firma válida.
-function timingSafeEqualHex(a, b) {
+function timingSafeEqualStr(a, b) {
   if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
   let diff = 0;
   for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
@@ -436,7 +475,7 @@ async function verifyStripeSignature(rawBody, sigHeader, secret) {
   if (!ts || !v1) return false;
 
   const computed = await hmacHex(secret, `${ts}.${rawBody}`);
-  return timingSafeEqualHex(computed, v1);
+  return timingSafeEqualStr(computed, v1);
 }
 
 // ── Utility ───────────────────────────────────────────────────────────────
