@@ -5501,17 +5501,60 @@ const PagoLinkInline = ({
   const resto = (Number(pr.ingreso_total) || 0) - deposit;
   const aptShort = APT_NAMES[pr.apt] || pr.apt;
   const aptFull = APT_FULL[pr.apt] || aptShort;
+  const total = Number(pr.ingreso_total) || 0;
+
+  // El Worker de pago aún no está desplegado (motor en pruebas, sin acceso
+  // público): mientras PAGO_WORKER_URL siga siendo el placeholder, el link se
+  // genera sin firmar, igual que hasta ahora. Cuando se despliegue, el total
+  // se sella con un HMAC de servidor para que el Worker pueda verificar que
+  // el importe de la URL no se ha editado a mano (ver workers/pago/index.js).
+  const linkFirmable = !PAGO_WORKER_URL.includes('SUSTITUIR');
+  const [sig, setSig] = React.useState(null);
+  const [sigError, setSigError] = React.useState(false);
+  React.useEffect(() => {
+    if (!linkFirmable) return;
+    let cancelled = false;
+    setSig(null);
+    setSigError(false);
+    fetch(`${PAGO_WORKER_URL}/pago-api/sign-link`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        apt: pr.apt,
+        checkin: pr.entrada,
+        checkout: pr.salida,
+        total,
+        deposit
+      })
+    }).then(r => r.json()).then(d => {
+      if (cancelled) return;
+      if (d.sig && d.exp) setSig(d);else setSigError(true);
+    }).catch(() => {
+      if (!cancelled) setSigError(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [linkFirmable, pr.apt, pr.entrada, pr.salida, total, deposit]);
+  const pending = linkFirmable && !sig && !sigError;
   const params = new URLSearchParams({
     apt: pr.apt,
     checkin: pr.entrada,
     checkout: pr.salida,
     nights: String(noches),
-    total: String(pr.ingreso_total || 0),
+    total: String(total),
     deposit: String(deposit),
     guests: String(pr.huespedes || 2),
     name: pr.responsable || ''
   });
+  if (sig) {
+    params.set('sig', sig.sig);
+    params.set('exp', String(sig.exp));
+  }
   const url = `${PAGO_PAGE_URL}?${params.toString()}`;
+  const actionsDisabled = pending || sigError;
   const [copied, setCopied] = React.useState(false);
   const copyUrl = () => {
     navigator.clipboard.writeText(url).then(() => {
@@ -5565,7 +5608,18 @@ const PagoLinkInline = ({
       marginBottom: 6,
       flexWrap: 'wrap'
     }
-  }, /*#__PURE__*/React.createElement("span", {
+  }, pending ? /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 11.5,
+      color: '#7A5A72',
+      fontStyle: 'italic'
+    }
+  }, "Firmando link seguro…") : sigError ? /*#__PURE__*/React.createElement("span", {
+    style: {
+      fontSize: 11.5,
+      color: '#C0392B'
+    }
+  }, "No se pudo firmar el link. Revisa que el Worker de pago esté desplegado y PAGO_LINK_SECRET configurado.") : /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 11.5,
       color: '#3D1A35',
@@ -5594,11 +5648,14 @@ const PagoLinkInline = ({
     }
   }, /*#__PURE__*/React.createElement("button", {
     className: "pe-btn pe-btn-primary",
-    onClick: copyUrl
+    onClick: copyUrl,
+    disabled: actionsDisabled
   }, copied ? '✓ Copiado' : 'Copiar link'), /*#__PURE__*/React.createElement("a", {
     className: "pe-btn pe-btn-ghost",
     style: {
-      textDecoration: 'none'
+      textDecoration: 'none',
+      pointerEvents: actionsDisabled ? 'none' : 'auto',
+      opacity: actionsDisabled ? 0.5 : 1
     },
     href: `https://wa.me/34620316370?text=${waMsg('es')}`,
     target: "_blank",
@@ -5606,7 +5663,9 @@ const PagoLinkInline = ({
   }, "WhatsApp Alex 🇪🇸"), /*#__PURE__*/React.createElement("a", {
     className: "pe-btn pe-btn-ghost",
     style: {
-      textDecoration: 'none'
+      textDecoration: 'none',
+      pointerEvents: actionsDisabled ? 'none' : 'auto',
+      opacity: actionsDisabled ? 0.5 : 1
     },
     href: `https://wa.me/34654138251?text=${waMsg('en')}`,
     target: "_blank",

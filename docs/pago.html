@@ -529,6 +529,8 @@
     guests:   parseInt(p.get('guests')) || 2,
     name:     p.get('name') || '',
     paid:     p.get('paid') || '',
+    sig:      p.get('sig') || '',
+    exp:      p.get('exp') || '',
   };
 
   const apt = APTS[params.apt];
@@ -687,6 +689,8 @@
           checkin:  params.checkin,
           checkout: params.checkout,
           name:     params.name,
+          sig:      params.sig,
+          exp:      params.exp,
         }),
       });
       const data = await res.json();
@@ -792,7 +796,10 @@
           const res = await fetch(`${CFG.workerUrl}/pago-api/paypal-order`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount: params.deposit, apt: params.apt, checkin: params.checkin, name: params.name }),
+            body: JSON.stringify({
+              amount: params.deposit, apt: params.apt, checkin: params.checkin, checkout: params.checkout,
+              total: params.total, name: params.name, sig: params.sig, exp: params.exp,
+            }),
           });
           const d = await res.json();
           if (!d.id) throw new Error(d.error || 'Error PayPal');
