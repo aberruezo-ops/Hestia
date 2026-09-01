@@ -21,6 +21,7 @@ id      = "PLACEHOLDER_SUSTITUIR_CON_ID_REAL"
 #   wrangler secret put PAYPAL_CLIENT_ID
 #   wrangler secret put PAYPAL_CLIENT_SECRET
 #   wrangler secret put GCP_SA_KEY        (mismo JSON que sheets-sync)
+#   wrangler secret put PAGO_LINK_SECRET  (openssl rand -hex 32 — firma el total del link de pago)
 #
 # Ruta pública (configurar en Cloudflare dashboard → Workers → Routes):
 #   hestiayourhome.com/pago-api/*

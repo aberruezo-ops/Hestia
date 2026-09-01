@@ -7,6 +7,7 @@
 //   PAYPAL_CLIENT_ID        — sandbox o live
 //   PAYPAL_CLIENT_SECRET    — sandbox o live
 //   GCP_SA_KEY              — JSON completo del service account (mismo que sheets-sync)
+//   PAGO_LINK_SECRET        — secreto para firmar el total del link de pago (openssl rand -hex 32)
 //
 // KV namespace requerido:
 //   RATE_KV  — para rate limiting por IP
@@ -25,6 +26,8 @@ const ALLOWED_ORIGINS = [
 
 const RATE_LIMIT  = 20;
 const RATE_WINDOW = 60 * 60; // 1 hora en segundos
+
+const LINK_SIG_TTL = 90 * 24 * 60 * 60; // validez de la firma del link de pago (90 días)
 
 export default {
   async fetch(req, env) {
@@ -81,6 +84,7 @@ export default {
       return json({ error: 'JSON inválido' }, 400, corsHeaders);
     }
 
+    if (path === '/pago-api/sign-link')      return handleSignLink(body, env, corsHeaders);
     if (path === '/pago-api/intent')         return handleIntent(body, env, corsHeaders);
     if (path === '/pago-api/paypal-order')   return handlePaypalOrder(body, env, corsHeaders);
     if (path === '/pago-api/paypal-capture') return handlePaypalCapture(body, env, corsHeaders);
@@ -89,9 +93,53 @@ export default {
   },
 };
 
+// ── Firma del link de pago ────────────────────────────────────────────────
+// El total de la reserva lo declara /p-edit (fuente: _calcStay vía prices.json),
+// nunca el navegador de quien paga. Este endpoint sella ese total con un HMAC
+// de servidor para que /pago-api/intent y /pago-api/paypal-order puedan
+// verificar que el importe de la URL no se ha editado a mano. Sin este sello,
+// el único control era comprobar que amount = 20% de total, pero total lo
+// controlaba quien llamaba al endpoint: cuadraba consigo mismo, no con el
+// precio real de la reserva.
+async function handleSignLink(body, env, corsHeaders) {
+  const { apt, checkin, checkout, total, deposit } = body;
+
+  if (!apt || !checkin || !checkout || !total || !deposit) {
+    return json({ error: 'Faltan parámetros: apt, checkin, checkout, total, deposit' }, 400, corsHeaders);
+  }
+  if (!['vm', 'vt', 'vs'].includes(apt)) {
+    return json({ error: 'Apartamento no válido' }, 400, corsHeaders);
+  }
+  const expected = Math.round(total * 0.20);
+  if (Math.abs(deposit - expected) > 2) {
+    return json({ error: 'La señal debe ser el 20% del total' }, 400, corsHeaders);
+  }
+  if (!env.PAGO_LINK_SECRET) {
+    return json({ error: 'Firma no configurada' }, 500, corsHeaders);
+  }
+
+  const exp = Math.floor(Date.now() / 1000) + LINK_SIG_TTL;
+  const sig = await hmacHex(env.PAGO_LINK_SECRET, linkPayload({ apt, checkin, checkout, total, deposit, exp }));
+  return json({ sig, exp }, 200, corsHeaders);
+}
+
+const linkPayload = ({ apt, checkin, checkout, total, deposit, exp }) =>
+  `${apt}|${checkin}|${checkout}|${total}|${deposit}|${exp}`;
+
+// Mensaje de error si la firma falta, ha caducado o no coincide; null si es
+// válida. Compartido por /pago-api/intent y /pago-api/paypal-order.
+async function checkLinkSignature(env, { apt, checkin, checkout, total, deposit, exp, sig }) {
+  if (!env.PAGO_LINK_SECRET) return 'Firma no configurada';
+  if (!sig || !exp) return 'Link de pago sin firmar';
+  if (Math.floor(Date.now() / 1000) > Number(exp)) return 'Link de pago caducado';
+  const expectedSig = await hmacHex(env.PAGO_LINK_SECRET, linkPayload({ apt, checkin, checkout, total, deposit, exp }));
+  if (!timingSafeEqualHex(expectedSig, sig)) return 'Firma no válida';
+  return null;
+}
+
 // ── Stripe: crear PaymentIntent ───────────────────────────────────────────
 async function handleIntent(body, env, corsHeaders) {
-  const { amount, total, apt, checkin, checkout, name } = body;
+  const { amount, total, apt, checkin, checkout, name, sig, exp } = body;
 
   if (!amount || !total || !apt || !checkin) {
     return json({ error: 'Faltan parámetros: amount, total, apt, checkin' }, 400, corsHeaders);
@@ -99,6 +147,9 @@ async function handleIntent(body, env, corsHeaders) {
   if (!['vm', 'vt', 'vs'].includes(apt)) {
     return json({ error: 'Apartamento no válido' }, 400, corsHeaders);
   }
+
+  const sigError = await checkLinkSignature(env, { apt, checkin, checkout, total, deposit: amount, exp, sig });
+  if (sigError) return json({ error: sigError }, 400, corsHeaders);
 
   // Anti-tampering: el depósito debe ser el 20% del total (±2€ por redondeo)
   const expected = Math.round(total * 0.20);
@@ -189,11 +240,15 @@ async function handleStripeWebhook(req, env) {
 
 // ── PayPal: crear Order ───────────────────────────────────────────────────
 async function handlePaypalOrder(body, env, corsHeaders) {
-  const { amount, apt, checkin, name } = body;
+  const { amount, apt, checkin, checkout, total, name, sig, exp } = body;
   if (!amount || !apt || !checkin) return json({ error: 'Faltan parámetros' }, 400, corsHeaders);
   if (!['vm', 'vt', 'vs'].includes(apt)) {
     return json({ error: 'Apartamento no válido' }, 400, corsHeaders);
   }
+
+  const sigError = await checkLinkSignature(env, { apt, checkin, checkout, total, deposit: amount, exp, sig });
+  if (sigError) return json({ error: sigError }, 400, corsHeaders);
+
   if (!env.PAYPAL_CLIENT_ID || !env.PAYPAL_CLIENT_SECRET) {
     return json({ error: 'PayPal no configurado' }, 500, corsHeaders);
   }
@@ -349,6 +404,26 @@ async function getAccessToken(saKeyJson) {
   return access_token;
 }
 
+// ── HMAC-SHA256 (Web Crypto, sin dependencias) ────────────────────────────
+async function hmacHex(secret, message) {
+  const key = await crypto.subtle.importKey(
+    'raw', new TextEncoder().encode(secret),
+    { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+  );
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(message));
+  return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+// Comparación en tiempo constante: evita filtrar por timing cuánto de una
+// firma coincide. Los hex de un HMAC-SHA256 miden siempre 64 caracteres; si
+// la longitud ya difiere, no es una firma válida.
+function timingSafeEqualHex(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
+  let diff = 0;
+  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return diff === 0;
+}
+
 // ── Stripe webhook signature verification ────────────────────────────────
 async function verifyStripeSignature(rawBody, sigHeader, secret) {
   const parts = sigHeader.split(',').reduce((acc, part) => {
@@ -360,14 +435,8 @@ async function verifyStripeSignature(rawBody, sigHeader, secret) {
   const v1 = parts.v1;
   if (!ts || !v1) return false;
 
-  const payload = `${ts}.${rawBody}`;
-  const key = await crypto.subtle.importKey(
-    'raw', new TextEncoder().encode(secret),
-    { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
-  );
-  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(payload));
-  const computed = Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2,'0')).join('');
-  return computed === v1;
+  const computed = await hmacHex(secret, `${ts}.${rawBody}`);
+  return timingSafeEqualHex(computed, v1);
 }
 
 // ── Utility ───────────────────────────────────────────────────────────────
