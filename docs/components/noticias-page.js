@@ -7,8 +7,8 @@
 
 const NOTICIAS = {
   "edition": {
-    "es": "Agosto 2026",
-    "en": "August 2026"
+    "es": "Septiembre 2026",
+    "en": "September 2026"
   },
   "updated": {
     "es": "Actualizado cada mes por Hestía",
@@ -20,12 +20,12 @@ const NOTICIAS = {
     "slug": "mar.html",
     "accent": "var(--vm)",
     "curiosidad": {
-      "es": "Agosto es el mes más caliente del año en Vera Playa: el Mediterráneo roza los 26-27°C y el aire apenas baja de los 24°C ni de madrugada. La terraza esquinera de Hestía Mar es un respiro con la brisa del atardecer, cuando el calor por fin afloja y el olivar se tiñe de cobre.",
-      "en": "August is the hottest month of the year in Vera Playa: the Mediterranean nudges 26-27°C and the air barely drops below 24°C even at dawn. Hestía Mar's corner terrace is a relief once the evening breeze arrives, when the heat finally eases and the olive grove turns copper."
+      "es": "Septiembre es el mes que en Vera Playa guardamos para nosotros. El termómetro se queda en torno a los 28°C de máxima y las noches no bajan de los 20, el agua conserva el calor de todo el verano y la playa, a cinco minutos a pie de Hestía Mar, recupera el silencio. La terraza esquinera vuelve a ser de mañana, de tarde y de noche, sin esperar a que afloje el calor.",
+      "en": "September is the month we in Vera Playa keep for ourselves. Highs settle around 28°C and nights stay above 20, the sea holds the warmth of the whole summer, and the beach, five minutes on foot from Hestía Mar, gets its quiet back. The corner terrace is yours morning, afternoon and night again, no waiting for the heat to ease."
     },
     "reco": {
-      "es": "En pleno agosto, la playa se llena pronto: llega antes de las 9h o espera a después de las 19h para tener sitio y sombra. A media tarde, mejor una siesta con el aire puesto que forzar la arena a las 3 de la tarde.",
-      "en": "In peak August the beach fills up fast: arrive before 9am or wait until after 7pm for space and shade. Mid-afternoon, a nap with the air conditioning on beats fighting the sand at 3pm."
+      "es": "Ya no hace falta madrugar para tener sitio en la arena. Baja a la playa a la hora que te apetezca y, a media mañana, sube a Puerto Rey: en Pralex Maricielo hacen helado artesano y buen café, con la terraza mirando al mar.",
+      "en": "No need to get up early for a spot on the sand any more. Go down whenever you feel like it and, mid-morning, walk up to Puerto Rey: Pralex Maricielo makes artisan ice cream and good coffee, with a terrace looking out to sea."
     }
   }, {
     "num": "02",
@@ -33,12 +33,12 @@ const NOTICIAS = {
     "slug": "thalassa.html",
     "accent": "var(--vt)",
     "curiosidad": {
-      "es": "La noche del 12 al 13 de agosto, las Perseidas alcanzan su pico máximo, y este año coincide con luna nueva: la oscuridad será total. Desde la terraza del ático, mirando al Salar de los Canos, la lluvia de estrellas se ve sin necesidad de moverse de la hamaca.",
-      "en": "On the night of 12 to 13 August, the Perseids reach their peak, and this year it coincides with a new moon: the darkness will be total. From the penthouse terrace, looking out over the Salar de los Canos, the meteor shower is visible without leaving the lounger."
+      "es": "Con las tardes más suaves, la terraza panorámica del ático se disfruta entera, sin buscar la sombra. Es también el mes en que el SPA y la sauna comunitarios dejan de parecer un lujo de invierno y pasan a cerrar el día: mar por la mañana, vapor al caer el sol y el Salar de los Canos cambiando de color desde arriba.",
+      "en": "With milder evenings, the penthouse's 360° terrace can be enjoyed in full, no hunting for shade. It's also the month when the shared spa and sauna stop feeling like a winter luxury and start closing the day: sea in the morning, steam at sunset, and the Salar de los Canos changing colour from above."
     },
     "reco": {
-      "es": "La mayor densidad de meteoros cae entre las 4h y las 6h de la madrugada del 13 de agosto. Pon el despertador, sube una manta fina y apaga las luces de la terraza: cuanto más oscuro, más estrellas.",
-      "en": "The highest meteor density falls between 4am and 6am on the morning of 13 August. Set an alarm, bring a thin blanket and turn off the terrace lights: the darker it is, the more you'll see."
+      "es": "Reserva una noche para el Asador Martín Fierro, en Las Negras, dentro del Parque Natural de Cabo de Gata: parrilla argentina, entraña, mollejas, empanadas criollas y un bife de chorizo que justifica el viaje. En septiembre se cena fuera sin chaqueta y sin esperar mesa.",
+      "en": "Save one evening for Asador Martín Fierro in Las Negras, inside the Cabo de Gata Natural Park: Argentine grill, skirt steak, sweetbreads, empanadas and a bife de chorizo worth the drive. In September you eat outside without a jacket and without waiting for a table."
     }
   }, {
     "num": "03",
@@ -46,12 +46,12 @@ const NOTICIAS = {
     "slug": "salinas.html",
     "accent": "var(--vs-dk)",
     "curiosidad": {
-      "es": "En agosto las Salinas de Puerto Rey mantienen su rojo más intenso del año, con las temperaturas más altas del verano acelerando la producción de betacaroteno del alga Dunaliella salina. A un paseo corto de Salinas, el paisaje parece de otro planeta a primera hora.",
-      "en": "In August the Puerto Rey salt flats hold their deepest red of the year, as the summer's highest temperatures speed up the beta-carotene production of the Dunaliella salina alga. A short walk from Salinas, the landscape looks otherworldly in the early morning."
+      "es": "Septiembre abre la temporada de estancias largas (de septiembre a junio), y Hestía Salinas es el que mejor la entiende: el más luminoso de los tres, con dos terrazas, tres piscinas y el Parque Natural de las Salinas de Puerto Rey al lado. La fibra hasta 600 Mbps simétricos y una mesa de trabajo bajo petición convierten una semana de teletrabajo en un mes.",
+      "en": "September opens the long-stay season (September to June), and Hestía Salinas is the one that understands it best: the brightest of the three, with two terraces, three pools and the Salinas de Puerto Rey Natural Park next door. Fibre up to 600 Mbps symmetrical and a work desk on request turn a week of remote work into a month."
     },
     "reco": {
-      "es": "Con el calor de agosto, sal a la ruta de los flamencos nada más amanecer, antes de las 8h. Es el único momento en que el paisaje y la temperatura invitan a caminar sin prisa; después, mejor dejarlo para el día siguiente.",
-      "en": "With August's heat, take the flamingo trail right at sunrise, before 8am. It's the only time the landscape and the temperature invite an unhurried walk; after that, better to save it for the next day."
+      "es": "Con el calor a raya, la ruta de los flamencos ya no es cosa solo del amanecer: a media mañana se camina a gusto y la luz sobre las salinas sigue siendo dorada. Lleva agua y prismáticos, y deja la piscina para la vuelta.",
+      "en": "With the heat under control, the flamingo trail is no longer just for sunrise: mid-morning is comfortable walking and the light over the salt flats is still golden. Bring water and binoculars, and save the pool for when you're back."
     }
   }],
   "territorio": [{
@@ -62,32 +62,32 @@ const NOTICIAS = {
     "icon": "🌊",
     "accent": "var(--sol)",
     "articles": [{
-      "months": [8],
+      "months": [9],
       "tag": {
         "es": "Playa",
         "en": "Beach"
       },
       "titulo": {
-        "es": "Agosto, el mes de más gente: cómo disfrutar la playa sin agobios",
-        "en": "August, the busiest month: how to enjoy the beach without the crowds"
+        "es": "Septiembre en Vera Playa: el mismo mar, la mitad de gente",
+        "en": "September in Vera Playa: the same sea, half the people"
       },
       "cuerpo": {
-        "es": "Agosto es el pico de ocupación en Vera Playa. La arena se llena entre las 11h y las 18h, así que el mejor plan es madrugar (antes de las 9h el paseo marítimo está casi vacío) o esperar al aftersun de la tarde, cuando baja el sol y sube el ambiente en los chiringuitos.",
-        "en": "August is peak occupancy in Vera Playa. The sand fills up between 11am and 6pm, so the best plan is an early start (before 9am the seafront is nearly empty) or the evening aftersun, when the sun drops and the beach bars come alive."
+        "es": "Se acaba agosto y la playa cambia de ritmo: la arena vuelve a tener hueco a cualquier hora, el agua guarda el calor del verano y las máximas rondan los 28°C. Es el mes favorito de quienes vivimos aquí, y el mejor para venir fuera de temporada sin renunciar al baño.",
+        "en": "August ends and the beach changes pace: there's room on the sand at any hour, the sea keeps its summer warmth and highs hover around 28°C. It's the favourite month of those of us who live here, and the best time to come off-season without giving up the swim."
       }
     }, {
-      "months": [8],
+      "months": [9],
       "tag": {
-        "es": "Mercado",
-        "en": "Market"
+        "es": "Chiringuito",
+        "en": "Beach bar"
       },
       "titulo": {
-        "es": "Mercado nocturno de Vera pueblo sigue en agosto, viernes y sábados desde las 21h",
-        "en": "Vera village night market continues in August, Fridays and Saturdays from 9pm"
+        "es": "Chiringuito Manaca, en la Playa del Sombrerico: paella y atardecer a pie de cala",
+        "en": "Chiringuito Manaca, on Playa del Sombrerico: paella and sunset at the water's edge"
       },
       "cuerpo": {
-        "es": "El mercado nocturno de la Plaza Mayor sigue activo todo agosto: artesanía, productos del campo y música en directo, a 10 minutos de Hestía. Con el calor del día, es el plan perfecto para cuando cae el sol.",
-        "en": "The night market at the main square keeps running throughout August: crafts, farm produce and live music, 10 minutes from Hestía. With the daytime heat, it's the perfect plan once the sun goes down."
+        "es": "Entre Mojácar y Carboneras, apartado y a pie de una cala virgen, Manaca es famoso por su paella y perfecto para terminar el día con algo de beber. En septiembre, sin las colas del verano, se come mirando al mar con calma.",
+        "en": "Between Mojácar and Carboneras, tucked away on a wild cove, Manaca is known for its paella and perfect for ending the day with a drink. In September, without the summer queues, you eat facing the sea at your own pace."
       }
     }]
   }, {
@@ -98,32 +98,18 @@ const NOTICIAS = {
     "icon": "🎉",
     "accent": "var(--vs)",
     "articles": [{
-      "months": [8],
+      "months": [9],
       "tag": {
-        "es": "Tradición",
-        "en": "Tradition"
+        "es": "Feria",
+        "en": "Fair"
       },
       "titulo": {
-        "es": "Fiestas Patronales de Vera, en honor a la Virgen de las Angustias, el 28 de agosto",
-        "en": "Vera's patron festivities, honouring the Virgen de las Angustias, on 28 August"
+        "es": "Feria de Vera, San Cleofás, del 24 al 29 de septiembre",
+        "en": "Vera Fair, San Cleofás, 24 to 29 September"
       },
       "cuerpo": {
-        "es": "El propio pueblo de Vera, a 10 minutos de Hestía, celebra sus fiestas patronales en honor a la Santísima Virgen de las Angustias, con los tradicionales festejos de San Cleofás como parte del programa. Consulta el programa completo en vera.es antes de ir: horarios y actividades varían cada año.",
-        "en": "Vera itself, 10 minutes from Hestía, celebrates its patron festivities honouring the Santísima Virgen de las Angustias, with the traditional San Cleofás celebrations as part of the programme. Check the full schedule at vera.es before going: times and activities vary each year."
-      }
-    }, {
-      "months": [8],
-      "tag": {
-        "es": "Tradición",
-        "en": "Tradition"
-      },
-      "titulo": {
-        "es": "Fiestas de San Agustín en Mojácar, en torno al 28 de agosto",
-        "en": "San Agustín festivities in Mojácar, around 28 August"
-      },
-      "cuerpo": {
-        "es": "Mojácar celebra a su patrón, San Agustín, con la tradicional carrera de cintas (a caballo y en bicicleta para los más pequeños) entre otros actos populares. A 20 minutos de Hestía, es de las fiestas patronales más animadas de la comarca. Programa en mojacar.es.",
-        "en": "Mojácar celebrates its patron saint, San Agustín, with the traditional ribbon race (on horseback, and by bicycle for children) among other popular events. 20 minutes from Hestía, it's one of the liveliest patron festivities in the area. Programme at mojacar.es."
+        "es": "El pueblo de Vera, a 10 minutos de Hestía, cierra el verano con su feria en honor a San Cleofás: casetas, música y ambiente de pueblo del 24 al 29 de septiembre. Consulta el programa completo en vera.es antes de ir: horarios y actividades cambian cada año.",
+        "en": "Vera town, 10 minutes from Hestía, closes the summer with its fair in honour of San Cleofás: marquees, music and small-town atmosphere from 24 to 29 September. Check the full programme at vera.es before going: times and activities change every year."
       }
     }]
   }, {
@@ -134,96 +120,32 @@ const NOTICIAS = {
     "icon": "🎤",
     "accent": "var(--vm)",
     "articles": [{
-      "months": [8],
+      "months": [9],
       "tag": {
-        "es": "Conciertos",
-        "en": "Concerts"
+        "es": "Cabo de Gata",
+        "en": "Cabo de Gata"
       },
       "titulo": {
-        "es": "Manuel Turizo abre agosto en la Plaza de Toros de Almería, 1 de agosto",
-        "en": "Manuel Turizo opens August at Almería's bullring, 1 August"
+        "es": "Las calas de Cabo de Gata, ahora sí: snorkel sin madrugar en Los Cocederos",
+        "en": "Cabo de Gata's coves, now is the time: snorkelling without an early start at Los Cocederos"
       },
       "cuerpo": {
-        "es": "El ciclo Siente la Plaza sigue en agosto con Manuel Turizo el día 1, a 1h 15' de Vera Playa. El resto de la programación de agosto se va confirmando sobre la marcha: consulta sientelaplaza.com antes de reservar entradas.",
-        "en": "The Siente la Plaza concert series continues into August with Manuel Turizo on the 1st, 1h 15' from Vera Playa. The rest of August's lineup is confirmed as the month goes on: check sientelaplaza.com before booking tickets."
+        "es": "Cala del Cuervo y Los Cocederos, a 15 km por la carretera costera, siguen con el agua templada y la posidonia, las sepias y los bancos de salpas de siempre. La diferencia con julio y agosto es que en septiembre se aparca y se llega a la orilla sin la regla de las 10 de la mañana.",
+        "en": "Cala del Cuervo and Los Cocederos, 15km along the coast road, still have warm water and the usual posidonia, cuttlefish and shoals of salema. The difference from July and August is that in September you park and reach the shore without the before-10am rule."
       }
     }, {
-      "months": [8],
+      "months": [9],
       "tag": {
-        "es": "Festival",
-        "en": "Festival"
+        "es": "Restaurante",
+        "en": "Restaurant"
       },
       "titulo": {
-        "es": "Feria y Fiestas de Almería, del 21 al 29 de agosto, con Cooltural Fest",
-        "en": "Almería's Feria y Fiestas, 21-29 August, with Cooltural Fest"
+        "es": "Asador Martín Fierro, en Las Negras: parrilla argentina dentro del Parque Natural",
+        "en": "Asador Martín Fierro, in Las Negras: Argentine grill inside the Natural Park"
       },
       "cuerpo": {
-        "es": "Nueve días de feria en la capital, con la música en directo como eje central. Dentro del programa, el Cooltural Fest (20-23 agosto en el Recinto Ferial) reúne a Hombres G, Ana Torroja, Rigoberta Bandini, La Pegatina, David Bisbal y Sidecars, entre 82 artistas. A 1h 15' de Vera Playa. coolturalfest.com.",
-        "en": "Nine days of fair in the capital, with live music at its core. Within the programme, Cooltural Fest (20-23 August at the Recinto Ferial) brings together Hombres G, Ana Torroja, Rigoberta Bandini, La Pegatina, David Bisbal and Sidecars, among 82 artists. 1h 15' from Vera Playa. coolturalfest.com."
-      }
-    }, {
-      "months": [8],
-      "tag": {
-        "es": "Gratis",
-        "en": "Free"
-      },
-      "titulo": {
-        "es": "A Pie de Calle: Omar Montes, Malú y Shinova en la playa de Roquetas de Mar, del 6 al 9 de agosto",
-        "en": "A Pie de Calle: Omar Montes, Malú and Shinova on Roquetas de Mar beach, 6-9 August"
-      },
-      "cuerpo": {
-        "es": "Conciertos gratuitos al aire libre en Playa Serena II: Omar Montes (6 ago, 22h), Shinova, Valira y Mono Cuchillo (7 ago, 20h) y Malú (9 ago, 22h). A menos de una hora de Vera Playa, entrada libre hasta completar aforo.",
-        "en": "Free open-air concerts at Playa Serena II: Omar Montes (6 Aug, 10pm), Shinova, Valira and Mono Cuchillo (7 Aug, 8pm) and Malú (9 Aug, 10pm). Under an hour from Vera Playa, free entry until the venue fills up."
-      }
-    }]
-  }, {
-    "cat": {
-      "es": "Andalucía",
-      "en": "Andalucía"
-    },
-    "icon": "✨",
-    "accent": "var(--vt)",
-    "articles": [{
-      "months": [8],
-      "tag": {
-        "es": "Cielo",
-        "en": "Sky"
-      },
-      "titulo": {
-        "es": "Perseidas 2026: pico máximo la noche del 12 al 13 de agosto, con luna nueva",
-        "en": "Perseids 2026: peak on the night of 12 to 13 August, with a new moon"
-      },
-      "cuerpo": {
-        "es": "Este año las Perseidas coinciden con luna nueva, así que la oscuridad será total y la observación, excepcional. El interior del Cabo de Gata y la sierra de los Filabres, sin apenas contaminación lumínica, son de los mejores puntos de España para verlas. Mayor densidad entre las 4h y las 6h del día 13.",
-        "en": "This year the Perseids coincide with a new moon, so darkness will be total and the viewing exceptional. The Cabo de Gata interior and the Filabres mountains, with almost no light pollution, are among the best spots in Spain to watch them. Highest density between 4am and 6am on the 13th."
-      }
-    }, {
-      "months": [8],
-      "tag": {
-        "es": "Naturaleza",
-        "en": "Nature"
-      },
-      "titulo": {
-        "es": "Cabo de Gata en agosto: el mes de más calor pide más disciplina de horarios",
-        "en": "Cabo de Gata in August: the hottest month demands stricter timing"
-      },
-      "cuerpo": {
-        "es": "Agosto es el mes más caluroso del año: en el parque natural, ve antes de las 9h o después de las 19h, nunca al mediodía. Mónsul y el Playazo de Rodalquilar son mucho más agradables a primera y última hora. Agua de sobra y calzado cerrado para los senderos.",
-        "en": "August is the hottest month of the year: in the natural park, go before 9am or after 7pm, never at midday. Mónsul and Playazo de Rodalquilar are far more pleasant early and late. Bring plenty of water and closed shoes for the trails."
-      }
-    }, {
-      "months": [8],
-      "tag": {
-        "es": "Conciertos",
-        "en": "Concerts"
-      },
-      "titulo": {
-        "es": "Starlite Marbella cierra agosto con Niña Pastori, Gloria Trevi y Nile Rodgers & CHIC",
-        "en": "Starlite Marbella closes August with Niña Pastori, Gloria Trevi and Nile Rodgers & CHIC"
-      },
-      "cuerpo": {
-        "es": "El festival de referencia de la Costa del Sol programa conciertos casi a diario durante todo agosto en su auditorio al aire libre: Niña Pastori (21 ago), Gloria Trevi (24 ago) y Nile Rodgers & CHIC cerrando el 26. Marbella está a unas 3h de Vera Playa: un viaje largo, pero para quien quiera hacer noche fuera vale la pena. starlitefestival.com.",
-        "en": "The Costa del Sol's flagship festival programmes concerts almost daily throughout August at its open-air auditorium: Niña Pastori (21 Aug), Gloria Trevi (24 Aug) and Nile Rodgers & CHIC closing on the 26th. Marbella is about 3h from Vera Playa: a long trip, but worth it for those staying over. starlitefestival.com."
+        "es": "Un asador argentino en pleno Parque Natural de Cabo de Gata: parrillada, entraña, mollejas, empanadas criollas y el bife de chorizo como plato bandera. Ideal para combinar con una tarde de calas y volver a Vera Playa con el cielo ya oscuro.",
+        "en": "An Argentine steakhouse right inside the Cabo de Gata Natural Park: mixed grill, skirt steak, sweetbreads, empanadas and the bife de chorizo as the signature dish. Ideal after an afternoon of coves, driving back to Vera Playa under a dark sky."
       }
     }]
   }, {
@@ -234,51 +156,57 @@ const NOTICIAS = {
     "icon": "⛵",
     "accent": "var(--vs-dk)",
     "articles": [{
-      "months": [8],
+      "months": [9],
       "tag": {
-        "es": "Festival",
-        "en": "Festival"
+        "es": "Feria",
+        "en": "Fair"
       },
       "titulo": {
-        "es": "Noches de Sal, 14 al 29 de agosto en Cartagena: Café Quijano, Carlos Ares y Miguel Ríos",
-        "en": "Noches de Sal, 14-29 August in Cartagena: Café Quijano, Carlos Ares and Miguel Ríos"
+        "es": "Feria de Lorca en septiembre: confirma fechas y programa antes de ir",
+        "en": "Lorca Fair in September: check dates and programme before going"
       },
       "cuerpo": {
-        "es": "Sexta edición del festival en el Auditorio Paco Martín (Parque Torres), a 1h 15' de Vera Playa. Seis noches de conciertos: Alejandro Astola (14 ago), Café Quijano (20 ago), 500 Noches (21 ago), Carlos Ares (27 ago) y Taylormanía (28 ago), con Miguel Ríos cerrando el 29. Programa y entradas en crashmusic.es.",
-        "en": "Sixth edition of the festival at the Auditorio Paco Martín (Parque Torres), 1h 15' from Vera Playa. Six nights of concerts: Alejandro Astola (14 Aug), Café Quijano (20 Aug), 500 Noches (21 Aug), Carlos Ares (27 Aug) and Taylormanía (28 Aug), with Miguel Ríos closing on the 29th. Programme and tickets at crashmusic.es."
+        "es": "Lorca celebra su feria en septiembre, una buena excusa para cruzar a Murcia y combinar casco histórico con ambiente de feria. Las fechas exactas cambian cada año: mira el programa oficial del Ayuntamiento de Lorca antes de planear el día.",
+        "en": "Lorca holds its fair in September, a good excuse to cross into Murcia and combine the old town with fairground atmosphere. Exact dates change every year: check Lorca council's official programme before planning the day."
       }
     }, {
-      "months": [8],
+      "months": [9],
       "tag": {
-        "es": "Jazz",
-        "en": "Jazz"
+        "es": "Cala",
+        "en": "Cove"
       },
       "titulo": {
-        "es": "VI Festival de Águilas Jazz, 7 de agosto en la Plaza Antonio Cortijos",
-        "en": "VI Águilas Jazz Festival, 7 August at Plaza Antonio Cortijos"
+        "es": "Cala Cortina sin buscar aparcamiento: la cala urbana de la costa murciana, en septiembre",
+        "en": "Cala Cortina without hunting for parking: the Murcia coast's urban cove, in September"
       },
       "cuerpo": {
-        "es": "Águilas, la localidad murciana más cercana a Vera Playa por la costa, celebra su festival de jazz al aire libre. El 7 de agosto actúa Sara Oschlag, a las 22h en la Plaza Antonio Cortijos. A unos 35 minutos de Hestía; consulta horarios y condiciones de acceso antes de ir.",
-        "en": "Águilas, the closest Murcian town to Vera Playa along the coast, holds its open-air jazz festival. On 7 August, Sara Oschlag performs at 10pm at Plaza Antonio Cortijos. About 35 minutes from Hestía; check timings and access details before going."
-      }
-    }, {
-      "months": [8],
-      "tag": {
-        "es": "Verano",
-        "en": "Summer"
-      },
-      "titulo": {
-        "es": "Cala Cortina, Cartagena: la piscina natural del Mediterráneo, aún mejor fuera de hora punta",
-        "en": "Cala Cortina, Cartagena: the Mediterranean's natural pool, even better outside peak hours"
-      },
-      "cuerpo": {
-        "es": "A 1h 15' de Vera Playa, Cala Cortina sigue siendo la cala urbana mejor conservada del litoral murciano. En agosto, más que nunca, llega antes de las 9h: a media mañana ya no queda ni un hueco para aparcar.",
-        "en": "One hour fifteen from Vera Playa, Cala Cortina remains the best-preserved urban cove on the Murcia coast. In August, more than ever, arrive before 9am: by mid-morning there isn't a parking space left."
+        "es": "A una hora y cuarto de Vera Playa, Cala Cortina sigue siendo la cala urbana mejor conservada de la costa murciana. En agosto había que llegar antes de las 9; en septiembre se puede ir a media mañana y aun así encontrar sitio y agua templada.",
+        "en": "An hour and a quarter from Vera Playa, Cala Cortina remains the best-preserved urban cove on the Murcia coast. In August you had to arrive before 9am; in September you can go mid-morning and still find a space and warm water."
       }
     }]
   }]
 };
 const MONTH_NAMES = {
+  1: {
+    es: 'Enero',
+    en: 'January'
+  },
+  2: {
+    es: 'Febrero',
+    en: 'February'
+  },
+  3: {
+    es: 'Marzo',
+    en: 'March'
+  },
+  4: {
+    es: 'Abril',
+    en: 'April'
+  },
+  5: {
+    es: 'Mayo',
+    en: 'May'
+  },
   6: {
     es: 'Junio',
     en: 'June'
@@ -290,6 +218,22 @@ const MONTH_NAMES = {
   8: {
     es: 'Agosto',
     en: 'August'
+  },
+  9: {
+    es: 'Septiembre',
+    en: 'September'
+  },
+  10: {
+    es: 'Octubre',
+    en: 'October'
+  },
+  11: {
+    es: 'Noviembre',
+    en: 'November'
+  },
+  12: {
+    es: 'Diciembre',
+    en: 'December'
   }
 };
 

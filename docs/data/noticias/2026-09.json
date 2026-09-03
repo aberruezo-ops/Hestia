@@ -1,0 +1,212 @@
+{
+  "key": "2026-09",
+  "edition": {
+    "es": "Septiembre 2026",
+    "en": "September 2026"
+  },
+  "voz": [
+    {
+      "num": "01",
+      "apt": "Hestía Mar",
+      "slug": "mar.html",
+      "accent": "var(--vm)",
+      "curiosidad": {
+        "es": "Septiembre es el mes que en Vera Playa guardamos para nosotros. El termómetro se queda en torno a los 28°C de máxima y las noches no bajan de los 20, el agua conserva el calor de todo el verano y la playa, a cinco minutos a pie de Hestía Mar, recupera el silencio. La terraza esquinera vuelve a ser de mañana, de tarde y de noche, sin esperar a que afloje el calor.",
+        "en": "September is the month we in Vera Playa keep for ourselves. Highs settle around 28°C and nights stay above 20, the sea holds the warmth of the whole summer, and the beach, five minutes on foot from Hestía Mar, gets its quiet back. The corner terrace is yours morning, afternoon and night again, no waiting for the heat to ease."
+      },
+      "reco": {
+        "es": "Ya no hace falta madrugar para tener sitio en la arena. Baja a la playa a la hora que te apetezca y, a media mañana, sube a Puerto Rey: en Pralex Maricielo hacen helado artesano y buen café, con la terraza mirando al mar.",
+        "en": "No need to get up early for a spot on the sand any more. Go down whenever you feel like it and, mid-morning, walk up to Puerto Rey: Pralex Maricielo makes artisan ice cream and good coffee, with a terrace looking out to sea."
+      }
+    },
+    {
+      "num": "02",
+      "apt": "Hestía Thalassa",
+      "slug": "thalassa.html",
+      "accent": "var(--vt)",
+      "curiosidad": {
+        "es": "Con las tardes más suaves, la terraza panorámica del ático se disfruta entera, sin buscar la sombra. Es también el mes en que el SPA y la sauna comunitarios dejan de parecer un lujo de invierno y pasan a cerrar el día: mar por la mañana, vapor al caer el sol y el Salar de los Canos cambiando de color desde arriba.",
+        "en": "With milder evenings, the penthouse's 360° terrace can be enjoyed in full, no hunting for shade. It's also the month when the shared spa and sauna stop feeling like a winter luxury and start closing the day: sea in the morning, steam at sunset, and the Salar de los Canos changing colour from above."
+      },
+      "reco": {
+        "es": "Reserva una noche para el Asador Martín Fierro, en Las Negras, dentro del Parque Natural de Cabo de Gata: parrilla argentina, entraña, mollejas, empanadas criollas y un bife de chorizo que justifica el viaje. En septiembre se cena fuera sin chaqueta y sin esperar mesa.",
+        "en": "Save one evening for Asador Martín Fierro in Las Negras, inside the Cabo de Gata Natural Park: Argentine grill, skirt steak, sweetbreads, empanadas and a bife de chorizo worth the drive. In September you eat outside without a jacket and without waiting for a table."
+      }
+    },
+    {
+      "num": "03",
+      "apt": "Hestía Salinas",
+      "slug": "salinas.html",
+      "accent": "var(--vs-dk)",
+      "curiosidad": {
+        "es": "Septiembre abre la temporada de estancias largas (de septiembre a junio), y Hestía Salinas es el que mejor la entiende: el más luminoso de los tres, con dos terrazas, tres piscinas y el Parque Natural de las Salinas de Puerto Rey al lado. La fibra hasta 600 Mbps simétricos y una mesa de trabajo bajo petición convierten una semana de teletrabajo en un mes.",
+        "en": "September opens the long-stay season (September to June), and Hestía Salinas is the one that understands it best: the brightest of the three, with two terraces, three pools and the Salinas de Puerto Rey Natural Park next door. Fibre up to 600 Mbps symmetrical and a work desk on request turn a week of remote work into a month."
+      },
+      "reco": {
+        "es": "Con el calor a raya, la ruta de los flamencos ya no es cosa solo del amanecer: a media mañana se camina a gusto y la luz sobre las salinas sigue siendo dorada. Lleva agua y prismáticos, y deja la piscina para la vuelta.",
+        "en": "With the heat under control, the flamingo trail is no longer just for sunrise: mid-morning is comfortable walking and the light over the salt flats is still golden. Bring water and binoculars, and save the pool for when you're back."
+      }
+    }
+  ],
+  "territorio": [
+    {
+      "cat": {
+        "es": "Vera Playa & alrededores",
+        "en": "Vera Playa & surroundings"
+      },
+      "icon": "🌊",
+      "accent": "var(--sol)",
+      "articles": [
+        {
+          "months": [
+            9
+          ],
+          "tag": {
+            "es": "Playa",
+            "en": "Beach"
+          },
+          "titulo": {
+            "es": "Septiembre en Vera Playa: el mismo mar, la mitad de gente",
+            "en": "September in Vera Playa: the same sea, half the people"
+          },
+          "cuerpo": {
+            "es": "Se acaba agosto y la playa cambia de ritmo: la arena vuelve a tener hueco a cualquier hora, el agua guarda el calor del verano y las máximas rondan los 28°C. Es el mes favorito de quienes vivimos aquí, y el mejor para venir fuera de temporada sin renunciar al baño.",
+            "en": "August ends and the beach changes pace: there's room on the sand at any hour, the sea keeps its summer warmth and highs hover around 28°C. It's the favourite month of those of us who live here, and the best time to come off-season without giving up the swim."
+          }
+        },
+        {
+          "months": [
+            9
+          ],
+          "tag": {
+            "es": "Chiringuito",
+            "en": "Beach bar"
+          },
+          "titulo": {
+            "es": "Chiringuito Manaca, en la Playa del Sombrerico: paella y atardecer a pie de cala",
+            "en": "Chiringuito Manaca, on Playa del Sombrerico: paella and sunset at the water's edge"
+          },
+          "cuerpo": {
+            "es": "Entre Mojácar y Carboneras, apartado y a pie de una cala virgen, Manaca es famoso por su paella y perfecto para terminar el día con algo de beber. En septiembre, sin las colas del verano, se come mirando al mar con calma.",
+            "en": "Between Mojácar and Carboneras, tucked away on a wild cove, Manaca is known for its paella and perfect for ending the day with a drink. In September, without the summer queues, you eat facing the sea at your own pace."
+          }
+        }
+      ]
+    },
+    {
+      "cat": {
+        "es": "Fiestas de pueblos cercanos",
+        "en": "Festivals in nearby towns"
+      },
+      "icon": "🎉",
+      "accent": "var(--vs)",
+      "articles": [
+        {
+          "months": [
+            9
+          ],
+          "tag": {
+            "es": "Feria",
+            "en": "Fair"
+          },
+          "titulo": {
+            "es": "Feria de Vera, San Cleofás, del 24 al 29 de septiembre",
+            "en": "Vera Fair, San Cleofás, 24 to 29 September"
+          },
+          "cuerpo": {
+            "es": "El pueblo de Vera, a 10 minutos de Hestía, cierra el verano con su feria en honor a San Cleofás: casetas, música y ambiente de pueblo del 24 al 29 de septiembre. Consulta el programa completo en vera.es antes de ir: horarios y actividades cambian cada año.",
+            "en": "Vera town, 10 minutes from Hestía, closes the summer with its fair in honour of San Cleofás: marquees, music and small-town atmosphere from 24 to 29 September. Check the full programme at vera.es before going: times and activities change every year."
+          }
+        }
+      ]
+    },
+    {
+      "cat": {
+        "es": "Almería capital & provincia",
+        "en": "Almería city & province"
+      },
+      "icon": "🎤",
+      "accent": "var(--vm)",
+      "articles": [
+        {
+          "months": [
+            9
+          ],
+          "tag": {
+            "es": "Cabo de Gata",
+            "en": "Cabo de Gata"
+          },
+          "titulo": {
+            "es": "Las calas de Cabo de Gata, ahora sí: snorkel sin madrugar en Los Cocederos",
+            "en": "Cabo de Gata's coves, now is the time: snorkelling without an early start at Los Cocederos"
+          },
+          "cuerpo": {
+            "es": "Cala del Cuervo y Los Cocederos, a 15 km por la carretera costera, siguen con el agua templada y la posidonia, las sepias y los bancos de salpas de siempre. La diferencia con julio y agosto es que en septiembre se aparca y se llega a la orilla sin la regla de las 10 de la mañana.",
+            "en": "Cala del Cuervo and Los Cocederos, 15km along the coast road, still have warm water and the usual posidonia, cuttlefish and shoals of salema. The difference from July and August is that in September you park and reach the shore without the before-10am rule."
+          }
+        },
+        {
+          "months": [
+            9
+          ],
+          "tag": {
+            "es": "Restaurante",
+            "en": "Restaurant"
+          },
+          "titulo": {
+            "es": "Asador Martín Fierro, en Las Negras: parrilla argentina dentro del Parque Natural",
+            "en": "Asador Martín Fierro, in Las Negras: Argentine grill inside the Natural Park"
+          },
+          "cuerpo": {
+            "es": "Un asador argentino en pleno Parque Natural de Cabo de Gata: parrillada, entraña, mollejas, empanadas criollas y el bife de chorizo como plato bandera. Ideal para combinar con una tarde de calas y volver a Vera Playa con el cielo ya oscuro.",
+            "en": "An Argentine steakhouse right inside the Cabo de Gata Natural Park: mixed grill, skirt steak, sweetbreads, empanadas and the bife de chorizo as the signature dish. Ideal after an afternoon of coves, driving back to Vera Playa under a dark sky."
+          }
+        }
+      ]
+    },
+    {
+      "cat": {
+        "es": "Murcia",
+        "en": "Murcia"
+      },
+      "icon": "⛵",
+      "accent": "var(--vs-dk)",
+      "articles": [
+        {
+          "months": [
+            9
+          ],
+          "tag": {
+            "es": "Feria",
+            "en": "Fair"
+          },
+          "titulo": {
+            "es": "Feria de Lorca en septiembre: confirma fechas y programa antes de ir",
+            "en": "Lorca Fair in September: check dates and programme before going"
+          },
+          "cuerpo": {
+            "es": "Lorca celebra su feria en septiembre, una buena excusa para cruzar a Murcia y combinar casco histórico con ambiente de feria. Las fechas exactas cambian cada año: mira el programa oficial del Ayuntamiento de Lorca antes de planear el día.",
+            "en": "Lorca holds its fair in September, a good excuse to cross into Murcia and combine the old town with fairground atmosphere. Exact dates change every year: check Lorca council's official programme before planning the day."
+          }
+        },
+        {
+          "months": [
+            9
+          ],
+          "tag": {
+            "es": "Cala",
+            "en": "Cove"
+          },
+          "titulo": {
+            "es": "Cala Cortina sin buscar aparcamiento: la cala urbana de la costa murciana, en septiembre",
+            "en": "Cala Cortina without hunting for parking: the Murcia coast's urban cove, in September"
+          },
+          "cuerpo": {
+            "es": "A una hora y cuarto de Vera Playa, Cala Cortina sigue siendo la cala urbana mejor conservada de la costa murciana. En agosto había que llegar antes de las 9; en septiembre se puede ir a media mañana y aun así encontrar sitio y agua templada.",
+            "en": "An hour and a quarter from Vera Playa, Cala Cortina remains the best-preserved urban cove on the Murcia coast. In August you had to arrive before 9am; in September you can go mid-morning and still find a space and warm water."
+          }
+        }
+      ]
+    }
+  ]
+}
