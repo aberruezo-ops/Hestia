@@ -1,0 +1,90 @@
+name: Blog mensual (edición del mes siguiente)
+
+# El último día de cada mes prepara la edición del mes siguiente de
+# Noticias & Blog y abre un PR. NO publica: la publicación es el merge.
+# Ver scripts/gen-noticias-mes.mjs para el detalle (archivo del mes vigente,
+# obtención de textos, validación, instalación en el .jsx).
+#
+# Secreto opcional: ANTHROPIC_API_KEY. Sin él, el PR llega con esqueleto y
+# la etiqueta "faltan textos"; con él, con la edición escrita y validada.
+
+on:
+  schedule:
+    - cron: '0 6 * * *'   # diario 06:00 UTC; solo actúa si mañana es día 1
+  workflow_dispatch:
+    inputs:
+      month:
+        description: 'Edición a preparar (YYYY-MM). Por defecto, el mes siguiente.'
+        required: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  edicion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ¿Toca hoy?
+        id: when
+        run: |
+          if [ -n "${{ inputs.month }}" ]; then
+            echo "month=${{ inputs.month }}" >> "$GITHUB_OUTPUT"; echo "run=true" >> "$GITHUB_OUTPUT"
+          elif [ "$(date -u -d tomorrow +%d)" = "01" ]; then
+            echo "month=$(date -u -d tomorrow +%Y-%m)" >> "$GITHUB_OUTPUT"; echo "run=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"; echo "Hoy no es el último día del mes."
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.when.outputs.run == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.when.outputs.run == 'true'
+        with:
+          node-version: '22'
+
+      - name: Babel (misma versión que checks.yml)
+        if: steps.when.outputs.run == 'true'
+        run: npm install --no-save @babel/core@8.0.1 @babel/preset-react@8.0.1
+
+      - name: Preparar edición
+        if: steps.when.outputs.run == 'true'
+        id: gen
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          set +e
+          node scripts/gen-noticias-mes.mjs --month "${{ steps.when.outputs.month }}" | tee gen.log
+          code=${PIPESTATUS[0]}
+          set -e
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          if [ "$code" != "0" ] && [ "$code" != "2" ]; then exit "$code"; fi
+
+      - name: Compilar JSX
+        if: steps.when.outputs.run == 'true' && steps.gen.outputs.code == '0'
+        run: node scripts/build-jsx.js
+
+      - name: Abrir PR
+        if: steps.when.outputs.run == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MONTH: ${{ steps.when.outputs.month }}
+          CODE: ${{ steps.gen.outputs.code }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then echo "Sin cambios."; exit 0; fi
+          branch="bot/noticias-$MONTH"
+          git config user.name "hestia-bot"
+          git config user.email "info@hestiayourhome.com"
+          git checkout -B "$branch"
+          git add -A
+          if [ "$CODE" = "2" ]; then
+            title="Blog $MONTH: esqueleto, faltan textos"
+            body="El agente archivó la edición vigente y dejó el esqueleto de \`docs/data/noticias/$MONTH.json\`. No hay ANTHROPIC_API_KEY: rellena los textos, ejecuta \`node scripts/gen-noticias-mes.mjs --month $MONTH\` y \`node scripts/build-jsx.js\`, y empuja a esta rama."
+          else
+            title="Blog $MONTH: edición lista para revisar"
+            body="Edición generada y validada (esquema, bilingüe, sin precios ni guion largo, artículos etiquetados con el mes). Revisa los textos en \`docs/data/noticias/$MONTH.json\`; el merge la publica.\n\n\`\`\`\n$(cat gen.log)\n\`\`\`"
+          fi
+          git commit -m "blog($MONTH): edición del mes [skip ci]"
+          git push -f origin "$branch"
+          gh pr create --base main --head "$branch" --title "$title" --body "$(printf "%b" "$body")" || gh pr edit "$branch" --title "$title" --body "$(printf "%b" "$body")"
