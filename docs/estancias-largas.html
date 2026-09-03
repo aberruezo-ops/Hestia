@@ -81,8 +81,8 @@
 </noscript>
 
 
-<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react.development.js'"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous" onerror="this.onerror=null;this.src='assets/react-dom.development.js'"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
 <script>
   const __PRM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   window.__TWEAKS__ = { starfield: false, parallax: false };
@@ -94,7 +94,23 @@
     'components/estancias-largas-page.js',
   ];
 
+  // Si el CDN de React falla, carga las copias locales EN ORDEN (react antes
+  // que react-dom) y solo entonces evalúa los componentes. Sin esto, la página
+  // quedaba en blanco con "React is not defined" cuando unpkg no responde.
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = src; s.onload = resolve; s.onerror = () => reject(new Error('No cargó ' + src));
+      document.head.appendChild(s);
+    });
+  }
+  async function waitForReact() {
+    if (!window.React) await loadScript('assets/react.development.js');
+    if (!window.ReactDOM) await loadScript('assets/react-dom.development.js');
+  }
+
   async function loadComponents() {
+    await waitForReact();
     try {
       const pr = await fetch('data/prices.json?t=' + Date.now(), { cache: 'no-store' });
       if (pr.ok) window.PRICES_V2 = await pr.json();
