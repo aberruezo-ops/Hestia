@@ -2631,7 +2631,119 @@ const IntelligenciaTab = ({
       }, stats.bySource.booking_sent?.[src] || 0), /*#__PURE__*/React.createElement("td", {
         className: "num"
       }, stats.bySource.whatsapp_click?.[src] || 0));
-    })))));
+    })))), stats.traffic && (() => {
+      const T = stats.traffic;
+      const SRC_LBL = {
+        direct: 'Directo',
+        organic_search: 'Buscador (SEO)',
+        social: 'Redes sociales',
+        referral: 'Otra web',
+        email: 'Email',
+        other: 'Otro'
+      };
+      const dayKeys = Object.keys(T.visits.byDay).sort();
+      const maxDay = Math.max(1, ...dayKeys.map(d => T.visits.byDay[d] || 0));
+      const camps = Object.entries(T.campaigns || {}).flatMap(([mk, c]) => Object.entries(c).map(([id, n]) => ({
+        mk,
+        id,
+        n
+      }))).sort((a, b) => b.n - a.n);
+      if (!T.visits.total && !T.pageviews.total) {
+        return /*#__PURE__*/React.createElement("p", {
+          className: "pe-hint",
+          style: {
+            marginTop: 14
+          }
+        }, "Visitas y páginas: aún sin datos. Empiezan a contar en cuanto el Worker de analítica esté desplegado con esta versión.");
+      }
+      return /*#__PURE__*/React.createElement("div", {
+        style: {
+          marginTop: 18
+        }
+      }, /*#__PURE__*/React.createElement("p", {
+        className: "pe-hint",
+        style: {
+          marginBottom: 6
+        }
+      }, "Visitas y páginas · últimos ", stats.days, " días, todos los visitantes, sin cookies. Una visita es la primera página de una sesión de navegador."), /*#__PURE__*/React.createElement("div", {
+        style: {
+          display: 'flex',
+          gap: 18,
+          flexWrap: 'wrap',
+          marginBottom: 10
+        }
+      }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", {
+        style: {
+          fontSize: 20
+        }
+      }, T.visits.total), " ", /*#__PURE__*/React.createElement("span", {
+        className: "pe-hint"
+      }, "visitas")), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", {
+        style: {
+          fontSize: 20
+        }
+      }, T.pageviews.total), " ", /*#__PURE__*/React.createElement("span", {
+        className: "pe-hint"
+      }, "páginas vistas")), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("strong", {
+        style: {
+          fontSize: 20
+        }
+      }, T.visits.total ? (T.pageviews.total / T.visits.total).toFixed(1) : '0'), " ", /*#__PURE__*/React.createElement("span", {
+        className: "pe-hint"
+      }, "páginas por visita"))), /*#__PURE__*/React.createElement("div", {
+        style: {
+          display: 'flex',
+          alignItems: 'flex-end',
+          gap: 2,
+          height: 48,
+          marginBottom: 12
+        },
+        title: "Visitas por día"
+      }, dayKeys.map(d => /*#__PURE__*/React.createElement("span", {
+        key: d,
+        title: `${d}: ${T.visits.byDay[d] || 0} visitas`,
+        style: {
+          flex: 1,
+          background: 'var(--sol, #3AAABB)',
+          opacity: .85,
+          height: `${Math.max(2, Math.round((T.visits.byDay[d] || 0) / maxDay * 48))}px`,
+          borderRadius: '2px 0 2px 0'
+        }
+      }))), /*#__PURE__*/React.createElement("div", {
+        style: {
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gap: 16
+        }
+      }, /*#__PURE__*/React.createElement("table", {
+        className: "pe-table"
+      }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Página"), /*#__PURE__*/React.createElement("th", {
+        className: "num"
+      }, "Vistas"))), /*#__PURE__*/React.createElement("tbody", null, (T.pages || []).map(p => /*#__PURE__*/React.createElement("tr", {
+        key: p.path
+      }, /*#__PURE__*/React.createElement("td", null, p.path), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, p.n))))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("table", {
+        className: "pe-table"
+      }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Canal (primera página)"), /*#__PURE__*/React.createElement("th", {
+        className: "num"
+      }, "Visitas"))), /*#__PURE__*/React.createElement("tbody", null, Object.entries(T.visitsBySource || {}).filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1]).map(([s, n]) => /*#__PURE__*/React.createElement("tr", {
+        key: s
+      }, /*#__PURE__*/React.createElement("td", null, SRC_LBL[s] || s), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, n))))), camps.length > 0 && /*#__PURE__*/React.createElement("table", {
+        className: "pe-table",
+        style: {
+          marginTop: 12
+        }
+      }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Campaña (utm_campaign)"), /*#__PURE__*/React.createElement("th", null, "Mes"), /*#__PURE__*/React.createElement("th", {
+        className: "num"
+      }, "Visitas"))), /*#__PURE__*/React.createElement("tbody", null, camps.map(c => /*#__PURE__*/React.createElement("tr", {
+        key: c.mk + c.id
+      }, /*#__PURE__*/React.createElement("td", null, c.id), /*#__PURE__*/React.createElement("td", null, c.mk), /*#__PURE__*/React.createElement("td", {
+        className: "num"
+      }, c.n))))))));
+    })());
   })())), /*#__PURE__*/React.createElement("div", {
     className: "intel-section"
   }, /*#__PURE__*/React.createElement("button", {

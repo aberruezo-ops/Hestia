@@ -107,6 +107,22 @@ const _hestiaTrack = (name, props = {}) => {
 };
 window._hestiaTrack = _hestiaTrack;
 
+// Página vista: +1 en el worker por día y ruta; y visita (+1 por día, canal y
+// utm_campaign) solo en la primera página de la sesión. La "sesión" es un
+// flag en sessionStorage, sin identificador: se pierde al cerrar la pestaña.
+// No cuenta el panel de admin ni el desarrollo en local.
+(() => {
+  try {
+    if (typeof location === 'undefined' || !navigator.sendBeacon) return;
+    if (/localhost|127\.0\.0\.1/.test(location.hostname) || /p-edit/.test(location.pathname)) return;
+    let first = false;
+    try { first = !sessionStorage.getItem('hestia-visit'); if (first) sessionStorage.setItem('hestia-visit', '1'); } catch (_) {}
+    const campaign = (new URLSearchParams(location.search).get('utm_campaign') || '').toLowerCase().slice(0, 40);
+    navigator.sendBeacon(ANALYTICS_WORKER_URL + '/pv',
+      new Blob([JSON.stringify({ path: location.pathname, src: _hestiaDetectSrc(), campaign, first })], { type: 'application/json' }));
+  } catch (_) {}
+})();
+
 // Clic en cualquier enlace de WhatsApp del sitio (hay ~30 repartidos por
 // todas las páginas: topbar, widgets flotantes, fichas de apartamento,
 // footer...). Un único listener delegado en vez de instrumentar cada uno,

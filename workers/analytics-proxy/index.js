@@ -13,8 +13,14 @@
 //   GET  /s.js  → beacon.min.js (cacheado 2h en edge de CF)
 //   POST /r     → reenvía los datos RUM al endpoint de CF
 //   POST /e     → registra 1 ocurrencia de un evento del embudo (rate limited)
-//   GET  /stats?key=…&days=N → cuentas agregadas de los últimos N días.
-//                              Requiere READ_SECRET.
+//   POST /pv    → +1 página vista (por día y por ruta) y, si es la primera
+//                 página de la sesión, +1 visita (por día, por canal y por
+//                 utm_campaign). Sin IP, cookie ni identificador: la "sesión"
+//                 es solo un flag en sessionStorage del navegador.
+//   GET  /stats?key=…&days=N → cuentas agregadas de los últimos N días
+//                              (embudo + visitas, páginas, canales, campañas).
+//                              Requiere READ_SECRET. Cacheado 10 min en KV;
+//                              &fresh=1 lo salta.
 //
 // KV namespace requerido (wrangler kv namespace create EVENTS_KV):
 //   EVENTS_KV
@@ -46,6 +52,30 @@ const MAX_STATS_DAYS = 90;
 // eventos intermedios del embudo que no aportan esa lectura.
 const SOURCES = ['direct', 'organic_search', 'social', 'referral', 'email', 'other'];
 const SRC_TRACKED_EVENTS = ['search_initiated', 'booking_sent', 'whatsapp_click'];
+
+// Páginas vistas y visitas. Gramática cerrada para las claves: solo rutas que
+// parecen páginas del sitio (evita que un escaneo de 404s cree claves sin
+// fin) y campañas con el formato que generan los scripts de redes/boletín.
+const PV_PATH_RE   = /^\/([a-z0-9-]+\/)*([a-z0-9-]+\.html)?$/;
+const PV_PATH_MAX  = 60;
+const CAMPAIGN_RE  = /^[a-z0-9-]{1,40}$/;
+const TOP_PAGES    = 15;
+const STATS_CACHE_TTL = 600;   // segundos; /stats lista muchas claves de KV
+
+const monthKey = (d = new Date()) => d.toISOString().slice(0, 7);
+const prevMonthKey = () => { const d = new Date(); d.setUTCDate(1); d.setUTCMonth(d.getUTCMonth() - 1); return monthKey(d); };
+const inc = (kv, key, ttl = 400 * 86400) =>
+  kv.get(key).then(cur => kv.put(key, String((parseInt(cur || '0', 10) || 0) + 1), { expirationTtl: ttl }));
+async function listAll(kv, prefix) {
+  const names = [];
+  let cursor;
+  do {
+    const page = await kv.list({ prefix, cursor });
+    for (const k of page.keys) names.push(k.name);
+    cursor = page.list_complete ? null : page.cursor;
+  } while (cursor);
+  return names;
+}
 
 // Rate limiting por IP del POST /e (anti-abuso).
 const RATE_LIMIT  = 120;         // eventos máx por IP
@@ -207,6 +237,40 @@ export default {
       return new Response(null, { status: 204, headers: CORS });
     }
 
+    // ── POST /pv — 1 página vista (y visita, si es la primera de la sesión)
+    // Body: { path, src?, campaign?, first? }. Contadores del día por ruta
+    // (pv:), total de páginas vistas (pvday:), visitas (vis:), visitas por
+    // canal (vsrc:) y visitas por campaña del mes (camp:). Nada ligado al
+    // visitante. Ruta o campaña fuera de la gramática: se ignora en silencio.
+    if (pathname === '/pv' && request.method === 'POST') {
+      if (!env.EVENTS_KV) return new Response(null, { status: 204, headers: CORS });
+
+      const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+      const rlKey = 'rl:' + ip;
+      const count = parseInt(await env.EVENTS_KV.get(rlKey) || '0', 10);
+      if (count >= RATE_LIMIT) {
+        return json({ error: 'rate_limited' }, 429, { ...CORS, 'Retry-After': String(RATE_WINDOW) });
+      }
+      await env.EVENTS_KV.put(rlKey, String(count + 1), { expirationTtl: RATE_WINDOW });
+
+      let d = {};
+      try { d = await request.json(); } catch (_) {}
+      let path = String(d.path || '').toLowerCase().slice(0, PV_PATH_MAX);
+      if (path === '/index.html') path = '/';
+      if (!PV_PATH_RE.test(path)) return new Response(null, { status: 204, headers: CORS });
+
+      const day = todayKey();
+      const writes = [inc(env.EVENTS_KV, `pv:${day}:${path}`), inc(env.EVENTS_KV, `pvday:${day}`)];
+      if (d.first === true) {
+        const src = SOURCES.includes(d.src) ? d.src : 'other';
+        writes.push(inc(env.EVENTS_KV, `vis:${day}`), inc(env.EVENTS_KV, `vsrc:${day}:${src}`));
+        const camp = String(d.campaign || '').toLowerCase();
+        if (CAMPAIGN_RE.test(camp)) writes.push(inc(env.EVENTS_KV, `camp:${monthKey()}:${camp}`));
+      }
+      await Promise.all(writes);
+      return new Response(null, { status: 204, headers: CORS });
+    }
+
     // ── GET /stats?key=SECRET&days=N — cuentas agregadas (admin) ─
     if (pathname === '/stats' && request.method === 'GET') {
       if (!env.READ_SECRET || !safeEqual(url.searchParams.get('key') || '', env.READ_SECRET)) {
@@ -215,6 +279,11 @@ export default {
       if (!env.EVENTS_KV) return json({ error: 'storage_unavailable' }, 503, CORS);
 
       const days = Math.min(MAX_STATS_DAYS, Math.max(1, parseInt(url.searchParams.get('days') || '30', 10)));
+      const cacheKey = `statscache:${days}`;
+      if (url.searchParams.get('fresh') !== '1') {
+        const cached = await env.EVENTS_KV.get(cacheKey);
+        if (cached) return new Response(cached, { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8', 'X-Cache': 'hit', ...CORS } });
+      }
       const dates = Array.from({ length: days }, (_, i) =>
         new Date(Date.now() - i * 86400000).toISOString().slice(0, 10));
 
@@ -242,7 +311,37 @@ export default {
         }));
       }));
 
-      return json({ days, totals, byDay, bySource }, 200, CORS);
+      // Visitas y páginas vistas por día, top de páginas, visitas por canal y
+      // por campaña (mes actual y anterior). Una lista de KV por día para las
+      // rutas; por eso el resultado se cachea STATS_CACHE_TTL segundos.
+      const traffic = { visits: { total: 0, byDay: {} }, pageviews: { total: 0, byDay: {} }, pages: [], visitsBySource: {}, campaigns: {} };
+      const pageSum = {};
+      await Promise.all(dates.map(async d => {
+        const [vis, pvd, names] = await Promise.all([
+          env.EVENTS_KV.get(`vis:${d}`), env.EVENTS_KV.get(`pvday:${d}`), listAll(env.EVENTS_KV, `pv:${d}:`),
+        ]);
+        traffic.visits.byDay[d] = parseInt(vis || '0', 10) || 0;
+        traffic.pageviews.byDay[d] = parseInt(pvd || '0', 10) || 0;
+        const vals = await Promise.all(names.map(n => env.EVENTS_KV.get(n)));
+        names.forEach((n, i) => { const p = n.slice(`pv:${d}:`.length); pageSum[p] = (pageSum[p] || 0) + (parseInt(vals[i] || '0', 10) || 0); });
+      }));
+      traffic.visits.total = Object.values(traffic.visits.byDay).reduce((a, b) => a + b, 0);
+      traffic.pageviews.total = Object.values(traffic.pageviews.byDay).reduce((a, b) => a + b, 0);
+      traffic.pages = Object.entries(pageSum).sort((a, b) => b[1] - a[1]).slice(0, TOP_PAGES).map(([path, n]) => ({ path, n }));
+      await Promise.all(SOURCES.map(async src => {
+        const vals = await Promise.all(dates.map(d => env.EVENTS_KV.get(`vsrc:${d}:${src}`)));
+        traffic.visitsBySource[src] = vals.reduce((a, v) => a + (parseInt(v || '0', 10) || 0), 0);
+      }));
+      await Promise.all([monthKey(), prevMonthKey()].map(async mk => {
+        const names = await listAll(env.EVENTS_KV, `camp:${mk}:`);
+        const vals = await Promise.all(names.map(n => env.EVENTS_KV.get(n)));
+        traffic.campaigns[mk] = {};
+        names.forEach((n, i) => { traffic.campaigns[mk][n.slice(`camp:${mk}:`.length)] = parseInt(vals[i] || '0', 10) || 0; });
+      }));
+
+      const body = JSON.stringify({ days, totals, byDay, bySource, traffic, generatedAt: new Date().toISOString() });
+      await env.EVENTS_KV.put(cacheKey, body, { expirationTtl: STATS_CACHE_TTL });
+      return new Response(body, { status: 200, headers: { 'Content-Type': 'application/json; charset=utf-8', 'X-Cache': 'miss', ...CORS } });
     }
 
     return new Response('Not found', { status: 404 });

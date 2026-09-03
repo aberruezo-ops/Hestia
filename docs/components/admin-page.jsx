@@ -1992,6 +1992,52 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
                           </table>
                         </div>
                       )}
+
+                      {stats.traffic && (() => {
+                        const T = stats.traffic;
+                        const SRC_LBL = { direct: 'Directo', organic_search: 'Buscador (SEO)', social: 'Redes sociales', referral: 'Otra web', email: 'Email', other: 'Otro' };
+                        const dayKeys = Object.keys(T.visits.byDay).sort();
+                        const maxDay = Math.max(1, ...dayKeys.map(d => T.visits.byDay[d] || 0));
+                        const camps = Object.entries(T.campaigns || {}).flatMap(([mk, c]) => Object.entries(c).map(([id, n]) => ({ mk, id, n }))).sort((a, b) => b.n - a.n);
+                        if (!T.visits.total && !T.pageviews.total) {
+                          return <p className="pe-hint" style={{ marginTop: 14 }}>Visitas y páginas: aún sin datos. Empiezan a contar en cuanto el Worker de analítica esté desplegado con esta versión.</p>;
+                        }
+                        return (
+                          <div style={{ marginTop: 18 }}>
+                            <p className="pe-hint" style={{ marginBottom: 6 }}>
+                              Visitas y páginas · últimos {stats.days} días, todos los visitantes, sin cookies. Una visita es la primera página de una sesión de navegador.
+                            </p>
+                            <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', marginBottom: 10 }}>
+                              <span><strong style={{ fontSize: 20 }}>{T.visits.total}</strong> <span className="pe-hint">visitas</span></span>
+                              <span><strong style={{ fontSize: 20 }}>{T.pageviews.total}</strong> <span className="pe-hint">páginas vistas</span></span>
+                              <span><strong style={{ fontSize: 20 }}>{T.visits.total ? (T.pageviews.total / T.visits.total).toFixed(1) : '0'}</strong> <span className="pe-hint">páginas por visita</span></span>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'flex-end', gap: 2, height: 48, marginBottom: 12 }} title="Visitas por día">
+                              {dayKeys.map(d => (
+                                <span key={d} title={`${d}: ${T.visits.byDay[d] || 0} visitas`} style={{ flex: 1, background: 'var(--sol, #3AAABB)', opacity: .85, height: `${Math.max(2, Math.round(((T.visits.byDay[d] || 0) / maxDay) * 48))}px`, borderRadius: '2px 0 2px 0' }} />
+                              ))}
+                            </div>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 16 }}>
+                              <table className="pe-table">
+                                <thead><tr><th>Página</th><th className="num">Vistas</th></tr></thead>
+                                <tbody>{(T.pages || []).map(p => <tr key={p.path}><td>{p.path}</td><td className="num">{p.n}</td></tr>)}</tbody>
+                              </table>
+                              <div>
+                                <table className="pe-table">
+                                  <thead><tr><th>Canal (primera página)</th><th className="num">Visitas</th></tr></thead>
+                                  <tbody>{Object.entries(T.visitsBySource || {}).filter(([, n]) => n > 0).sort((a, b) => b[1] - a[1]).map(([s, n]) => <tr key={s}><td>{SRC_LBL[s] || s}</td><td className="num">{n}</td></tr>)}</tbody>
+                                </table>
+                                {camps.length > 0 && (
+                                  <table className="pe-table" style={{ marginTop: 12 }}>
+                                    <thead><tr><th>Campaña (utm_campaign)</th><th>Mes</th><th className="num">Visitas</th></tr></thead>
+                                    <tbody>{camps.map(c => <tr key={c.mk + c.id}><td>{c.id}</td><td>{c.mk}</td><td className="num">{c.n}</td></tr>)}</tbody>
+                                  </table>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })()}
                     </>
                   );
                 })()}
