@@ -134,6 +134,10 @@ export default {
         lang: String(body.lang || 'es').slice(0, 5),
         submittedAt: new Date().toISOString(),
         travelers,
+        // Consentimiento OPCIONAL para el boletín mensual (base distinta del
+        // registro obligatorio RD 933/2021): solo true si el huésped marcó la
+        // casilla. Se lee desde /p-edit para montar la lista del boletín.
+        boletin: body.boletin === true,
       };
       const enc = await encryptJson(payload, env.ENCRYPT_KEY);
       await env.REG_KV.put(`${KEY_PREFIX}${token}`, JSON.stringify(enc), {

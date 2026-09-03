@@ -88,6 +88,7 @@ const T = {
     telefono: 'Teléfono', email: 'Correo electrónico',
     parentesco: 'Parentesco con el titular', parentescoHint: '(menor de edad)',
     consent: 'He leído y acepto que estos datos se usen para el registro obligatorio de viajeros ante el Ministerio del Interior, conforme al RD 933/2021.',
+    boletin: 'Quiero recibir el boletín mensual de Hestía (una vez al mes: lo que pasa en Vera Playa y huecos con precio directo). Opcional; te das de baja cuando quieras.',
     submit: 'Enviar mis datos',
     sending: 'Enviando…',
     okTitle: '¡Listo, gracias!',
@@ -119,6 +120,7 @@ const T = {
     telefono: 'Phone', email: 'Email',
     parentesco: 'Relationship to the holder', parentescoHint: '(minor)',
     consent: 'I have read and accept that these details are used for the mandatory traveller registry with the Ministry of the Interior, under RD 933/2021.',
+    boletin: 'I would like Hestía’s monthly newsletter (once a month: what is on in Vera Playa and open dates at the direct price). Optional; unsubscribe any time.',
     submit: 'Send my details',
     sending: 'Sending…',
     okTitle: 'All done, thank you!',
@@ -253,6 +255,7 @@ const RegistroPage = () => {
   }, []);
   const [travelers, setTravelers] = React.useState([emptyTraveler()]);
   const [consent, setConsent] = React.useState(false);
+  const [boletin, setBoletin] = React.useState(false);
   const [errors, setErrors] = React.useState({});
   const [phase, setPhase] = React.useState('form');   // form | sending | ok | error
   const [topMsg, setTopMsg] = React.useState(null);
@@ -378,7 +381,7 @@ const RegistroPage = () => {
       const r = await fetch(`${TRAVELER_WORKER_URL}/submit`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token, lang, submittedAt: new Date().toISOString(), travelers }),
+        body: JSON.stringify({ token, lang, submittedAt: new Date().toISOString(), travelers, boletin }),
       });
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       setPhase('ok');
@@ -434,6 +437,11 @@ const RegistroPage = () => {
             <label className="reg-consent">
               <input id="reg-consent" type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} />
               <span>{t.consent}</span>
+            </label>
+
+            <label className="reg-consent">
+              <input id="reg-boletin" type="checkbox" checked={boletin} onChange={(e) => setBoletin(e.target.checked)} />
+              <span>{t.boletin}</span>
             </label>
 
             <button type="submit" className="btn btn-primary reg-submit" disabled={phase === 'sending'}>

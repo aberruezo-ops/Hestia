@@ -10622,7 +10622,28 @@ const SocialTab = ({
       verticalAlign: '-2px',
       marginRight: 4
     }
-  }), "Semanal") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(HiIcon, {
+  }), "Semanal") : d.source === 'voz' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "news",
+    size: 13,
+    style: {
+      verticalAlign: '-2px',
+      marginRight: 4
+    }
+  }), "Voz del mes") : d.source === 'agenda' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "news",
+    size: 13,
+    style: {
+      verticalAlign: '-2px',
+      marginRight: 4
+    }
+  }), "Agenda del mes") : d.source === 'guion' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "camera",
+    size: 13,
+    style: {
+      verticalAlign: '-2px',
+      marginRight: 4
+    }
+  }), "Guion para grabar") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(HiIcon, {
     name: "sun",
     size: 13,
     style: {
@@ -10690,9 +10711,14 @@ const SocialTab = ({
     className: "pe-btn pe-btn-ghost pe-btn-sm",
     disabled: busy === d.id,
     onClick: () => setStatus(d.id, 'skipped')
-  }, "Descartar"), /*#__PURE__*/React.createElement("button", {
+  }, "Descartar"), d.source === 'guion' && /*#__PURE__*/React.createElement("span", {
+    className: "pe-hint",
+    style: {
+      alignSelf: 'center'
+    }
+  }, "Este no se publica: se graba. Cuando tengas el reel, súbelo a mano con el texto del borrador \"voz\" del mes."), /*#__PURE__*/React.createElement("button", {
     className: "pe-btn pe-btn-primary pe-btn-sm",
-    disabled: busy === d.id,
+    disabled: busy === d.id || d.source === 'guion',
     onClick: () => publish(d)
   }, busy === d.id ? 'Publicando…' : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(HiIcon, {
     name: "upload",
@@ -10731,7 +10757,7 @@ const SocialTab = ({
 // Secreto de lectura del Worker de registro. Solo en memoria (nunca en storage),
 // igual que el PAT: persiste entre cambios de pestaña dentro de la sesión.
 let _regReadSecret = '';
-const REG_COLS = [['token', 'Reserva'], ['nombre', 'Nombre'], ['apellido1', '1º Apellido'], ['apellido2', '2º Apellido'], ['sexo', 'Sexo'], ['tipoDoc', 'Tipo doc'], ['numDoc', 'Nº documento'], ['numSoporte', 'Nº soporte'], ['nacionalidad', 'Nacionalidad'], ['fechaNacimiento', 'F. nacimiento'], ['pais', 'País resid.'], ['direccion', 'Dirección'], ['municipio', 'Localidad'], ['cp', 'CP'], ['telefono', 'Teléfono'], ['email', 'Email'], ['parentesco', 'Parentesco']];
+const REG_COLS = [['token', 'Reserva'], ['nombre', 'Nombre'], ['apellido1', '1º Apellido'], ['apellido2', '2º Apellido'], ['sexo', 'Sexo'], ['tipoDoc', 'Tipo doc'], ['numDoc', 'Nº documento'], ['numSoporte', 'Nº soporte'], ['nacionalidad', 'Nacionalidad'], ['fechaNacimiento', 'F. nacimiento'], ['pais', 'País resid.'], ['direccion', 'Dirección'], ['municipio', 'Localidad'], ['cp', 'CP'], ['telefono', 'Teléfono'], ['email', 'Email'], ['parentesco', 'Parentesco'], ['boletin', 'Boletín']];
 
 // Botón de copiar el valor de un campo del registro (para pegar en SES.HOSPEDAJES).
 const RegCopyBtn = ({
@@ -10794,7 +10820,7 @@ const TravelerRegistryTab = () => {
     if (!regs || !regs.length) return;
     const rows = [REG_COLS.map(c => c[1]).join(';')];
     regs.forEach(reg => (reg.travelers || []).forEach(tr => {
-      rows.push(REG_COLS.map(([k]) => csvCell(k === 'token' ? reg.token : tr[k])).join(';'));
+      rows.push(REG_COLS.map(([k]) => csvCell(k === 'token' ? reg.token : k === 'boletin' ? reg.boletin ? 'sí' : 'no' : tr[k])).join(';'));
     }));
     const blob = new Blob(['﻿' + rows.join('\r\n')], {
       type: 'text/csv;charset=utf-8'
@@ -10960,7 +10986,10 @@ const TravelerRegistryTab = () => {
     }, isOpen ? '▾' : '▸')), isOpen && (reg.travelers || []).map((tr, ti) => /*#__PURE__*/React.createElement("div", {
       key: ti,
       className: "reg-admin-traveler"
-    }, /*#__PURE__*/React.createElement("strong", null, ti === 0 ? 'Titular' : `Viajero ${ti + 1}`, ": ", tr.nombre, " ", tr.apellido1, " ", tr.apellido2), /*#__PURE__*/React.createElement("div", {
+    }, /*#__PURE__*/React.createElement("strong", null, ti === 0 ? 'Titular' : `Viajero ${ti + 1}`, ": ", tr.nombre, " ", tr.apellido1, " ", tr.apellido2), ti === 0 && reg.boletin && /*#__PURE__*/React.createElement("span", {
+      className: "soc-flag",
+      title: "Aceptó recibir el boletín mensual"
+    }, "✓ boletín"), /*#__PURE__*/React.createElement("div", {
       className: "reg-admin-fields"
     }, REG_COLS.filter(([k]) => k !== 'token').map(([k, lbl]) => tr[k] ? /*#__PURE__*/React.createElement("span", {
       key: k

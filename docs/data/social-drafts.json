@@ -1,6 +1,51 @@
 {
   "drafts": [
     {
+      "id": "voz-2026-09",
+      "createdAt": "2026-09-03T06:51:04.125Z",
+      "status": "pending",
+      "source": "voz",
+      "format": "image",
+      "apt": "vs",
+      "image": "assets/apt-vs-gallery-1.jpg",
+      "networks": [
+        "ig",
+        "fb"
+      ],
+      "caption": "Hestía Salinas, septiembre 2026\n\nSeptiembre abre la temporada de estancias largas (de septiembre a junio), y Hestía Salinas es el que mejor la entiende: el más luminoso de los tres, con dos terrazas, tres piscinas y el Parque Natural de las Salinas de Puerto Rey al lado. La fibra hasta 600 Mbps simétricos y una mesa de trabajo bajo petición convierten una semana de teletrabajo en un mes.\n\nCon el calor a raya, la ruta de los flamencos ya no es cosa solo del amanecer: a media mañana se camina a gusto y la luz sobre las salinas sigue siendo dorada. Lleva agua y prismáticos, y deja la piscina para la vuelta.\n\nSeptember opens the long-stay season (September to June), and Hestía Salinas is the one that understands it best: the brightest of the three, with two terraces, three pools and the Salinas de Puerto Rey Natural Park next door.\n\nReserva directa con nosotros: 0% comisiones, respuesta humana en minutos y mascotas bienvenidas.\n📍 Vera Playa, Almería\n🔗 https://www.hestiayourhome.com/salinas.html?utm_source=redes&utm_medium=social&utm_campaign=voz-2026-09\n\n#VeraPlaya #Almeria #CaboDeGata #HestiaYourHome",
+      "link": "https://www.hestiayourhome.com/salinas.html?utm_source=redes&utm_medium=social&utm_campaign=voz-2026-09"
+    },
+    {
+      "id": "agenda-2026-09",
+      "createdAt": "2026-09-03T06:51:04.125Z",
+      "status": "pending",
+      "source": "agenda",
+      "format": "image",
+      "apt": "vs",
+      "image": "assets/hero-terrace-night.jpg",
+      "networks": [
+        "ig",
+        "fb"
+      ],
+      "caption": "Feria de Vera, San Cleofás, del 24 al 29 de septiembre\n\nEl pueblo de Vera, a 10 minutos de Hestía, cierra el verano con su feria en honor a San Cleofás: casetas, música y ambiente de pueblo del 24 al 29 de septiembre. Consulta el programa completo en vera.es antes de ir: horarios y actividades cambian cada año.\n\nVera Fair, San Cleofás, 24 to 29 September\n\nToda la agenda de septiembre en el blog de Hestía, con lo que pasa en Vera Playa, Almería y Murcia.\n🔗 https://www.hestiayourhome.com/noticias.html?utm_source=redes&utm_medium=social&utm_campaign=agenda-2026-09\n\n#VeraPlaya #Almeria #CaboDeGata #HestiaYourHome #Fiestasdepuebloscercanos",
+      "link": "https://www.hestiayourhome.com/noticias.html?utm_source=redes&utm_medium=social&utm_campaign=agenda-2026-09"
+    },
+    {
+      "id": "guion-2026-09",
+      "createdAt": "2026-09-03T06:51:04.125Z",
+      "status": "pending",
+      "source": "guion",
+      "format": "guion",
+      "apt": "vs",
+      "image": "assets/apt-vs-gallery-1.jpg",
+      "networks": [
+        "ig",
+        "fb"
+      ],
+      "caption": "GUION · reel de 30 segundos · Hestía Salinas · septiembre 2026\n\nDónde: Hestía Salinas, luz natural, móvil en vertical, sin música alta (las redes ya la ponen).\n\n0-5 s · Gancho, a cámara, en la terraza:\n\"Septiembre abre la temporada de estancias largas (de septiembre a junio), y Hestía Salinas es el que mejor la entiende: el más luminoso de los tres, con dos terrazas, tres piscinas y el Parque Natural de las Salinas de Puerto Rey al lado.\"\n\n5-15 s · Plano del apartamento o de la vista mientras dices, en tus palabras:\n\"Con el calor a raya, la ruta de los flamencos ya no es cosa solo del amanecer: a media mañana se camina a gusto y la luz sobre las salinas sigue siendo dorada. Lleva agua y prismáticos, y deja la piscina para la vuelta.\"\n\n15-25 s · Un plano del sitio que recomiendas o del mar, con esta idea:\n\"Feria de Vera, San Cleofás, del 24 al 29 de septiembre\"\n\n25-30 s · Cierre, a cámara:\n\"Reserva directo con nosotros y te lo enseñamos en persona. Hestía Your Home, Vera Playa.\"\n\nTexto del post al publicar el reel: usa el borrador \"voz-2026-09\" tal cual.\nNo hace falta que salga perfecto. Hace falta que salgas tú.",
+      "link": "https://www.hestiayourhome.com/salinas.html?utm_source=redes&utm_medium=social&utm_campaign=voz-2026-09"
+    },
+    {
       "id": "weekly-2026w36",
       "createdAt": "2026-08-31T14:38:24.574Z",
       "status": "pending",
@@ -612,5 +657,5 @@
       "link": "https://www.hestiayourhome.com/noticias.html"
     }
   ],
-  "updatedAt": "2026-08-31T14:38:24.574Z"
+  "updatedAt": "2026-09-03T06:51:04.125Z"
 }

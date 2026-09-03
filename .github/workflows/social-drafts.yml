@@ -1,12 +1,15 @@
 name: Generar borradores de redes
 
-# Propone borradores de posts (escaparate + huecos de última hora) cada lunes.
-# NO publica nada: solo escribe docs/data/social-drafts.json. La publicación es
-# manual desde la pestaña Redes de /p-edit.
+# Tres borradores al mes, sacados de la edición vigente del blog (que el
+# agente mensual deja lista el último día del mes y se publica al fusionar):
+# la Voz del apartamento de turno, el plan del mes y un guion de reel para
+# grabar. Corre el día 2 para dar margen al merge del blog.
+# NO publica nada: solo escribe docs/data/social-drafts.json. La publicación
+# es manual desde la pestaña Redes de /p-edit.
 
 on:
   schedule:
-    - cron: '0 7 * * 1'   # lunes 07:00 UTC
+    - cron: '0 8 2 * *'   # día 2 de cada mes, 08:00 UTC
   workflow_dispatch: {}
 
 permissions:
@@ -28,7 +31,7 @@ jobs:
             git config user.name "hestia-bot"
             git config user.email "info@hestiayourhome.com"
             git add docs/data/social-drafts.json
-            git commit -m "chore(redes): nuevos borradores de posts [skip ci]"
+            git commit -m "chore(redes): borradores del mes [skip ci]"
             git push
           else
             echo "Sin cambios."

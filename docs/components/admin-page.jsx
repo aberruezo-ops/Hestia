@@ -7951,7 +7951,7 @@ const SocialTab = ({ token }) => {
             <div className="soc-body">
               <div className="soc-head">
                 <span className="soc-chip" style={{ background: APT_COLOR[d.apt], color: APT_TEXT[d.apt] }}>{APT_NAMES[d.apt]}</span>
-                <span className="soc-src">{d.source === 'gap' ? <><HiIcon name="clock" size={13} style={{verticalAlign:'-2px',marginRight:4}} />Última hora</> : d.source === 'weekly' ? <><HiIcon name="news" size={13} style={{verticalAlign:'-2px',marginRight:4}} />Semanal</> : <><HiIcon name="sun" size={13} style={{verticalAlign:'-2px',marginRight:4}} />Escaparate</>}</span>
+                <span className="soc-src">{d.source === 'gap' ? <><HiIcon name="clock" size={13} style={{verticalAlign:'-2px',marginRight:4}} />Última hora</> : d.source === 'weekly' ? <><HiIcon name="news" size={13} style={{verticalAlign:'-2px',marginRight:4}} />Semanal</> : d.source === 'voz' ? <><HiIcon name="news" size={13} style={{verticalAlign:'-2px',marginRight:4}} />Voz del mes</> : d.source === 'agenda' ? <><HiIcon name="news" size={13} style={{verticalAlign:'-2px',marginRight:4}} />Agenda del mes</> : d.source === 'guion' ? <><HiIcon name="camera" size={13} style={{verticalAlign:'-2px',marginRight:4}} />Guion para grabar</> : <><HiIcon name="sun" size={13} style={{verticalAlign:'-2px',marginRight:4}} />Escaparate</>}</span>
                 {d.format === 'reel' && <span className="soc-reel-tag"><HiIcon name="film" size={13} style={{verticalAlign:'-2px',marginRight:4}} />Reel</span>}
                 {d.clip && (() => { const fmt = s => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; return (
                   <span className="soc-clip" title={`Trozo del vídeo: ${d.clip.src || ''}`}>
@@ -7975,7 +7975,8 @@ const SocialTab = ({ token }) => {
               <div className="soc-actions">
                 <button className="pe-btn pe-btn-ghost pe-btn-sm" disabled={busy === d.id} onClick={() => saveOne(d.id)}>Guardar</button>
                 <button className="pe-btn pe-btn-ghost pe-btn-sm" disabled={busy === d.id} onClick={() => setStatus(d.id, 'skipped')}>Descartar</button>
-                <button className="pe-btn pe-btn-primary pe-btn-sm" disabled={busy === d.id} onClick={() => publish(d)}>
+                {d.source === 'guion' && <span className="pe-hint" style={{ alignSelf: 'center' }}>Este no se publica: se graba. Cuando tengas el reel, súbelo a mano con el texto del borrador "voz" del mes.</span>}
+                <button className="pe-btn pe-btn-primary pe-btn-sm" disabled={busy === d.id || d.source === 'guion'} onClick={() => publish(d)}>
                   {busy === d.id ? 'Publicando…' : <><HiIcon name="upload" size={14} style={{verticalAlign:'-2px',marginRight:4}} />Publicar</>}
                 </button>
               </div>
@@ -8009,7 +8010,7 @@ const REG_COLS = [
   ['sexo', 'Sexo'], ['tipoDoc', 'Tipo doc'], ['numDoc', 'Nº documento'], ['numSoporte', 'Nº soporte'],
   ['nacionalidad', 'Nacionalidad'], ['fechaNacimiento', 'F. nacimiento'], ['pais', 'País resid.'],
   ['direccion', 'Dirección'], ['municipio', 'Localidad'], ['cp', 'CP'], ['telefono', 'Teléfono'],
-  ['email', 'Email'], ['parentesco', 'Parentesco'],
+  ['email', 'Email'], ['parentesco', 'Parentesco'], ['boletin', 'Boletín'],
 ];
 
 // Botón de copiar el valor de un campo del registro (para pegar en SES.HOSPEDAJES).
@@ -8062,7 +8063,7 @@ const TravelerRegistryTab = () => {
     if (!regs || !regs.length) return;
     const rows = [REG_COLS.map(c => c[1]).join(';')];
     regs.forEach(reg => (reg.travelers || []).forEach(tr => {
-      rows.push(REG_COLS.map(([k]) => csvCell(k === 'token' ? reg.token : tr[k])).join(';'));
+      rows.push(REG_COLS.map(([k]) => csvCell(k === 'token' ? reg.token : k === 'boletin' ? (reg.boletin ? 'sí' : 'no') : tr[k])).join(';'));
     }));
     const blob = new Blob(['﻿' + rows.join('\r\n')], { type: 'text/csv;charset=utf-8' });
     const a = document.createElement('a');
@@ -8155,6 +8156,7 @@ const TravelerRegistryTab = () => {
             {isOpen && (reg.travelers || []).map((tr, ti) => (
               <div key={ti} className="reg-admin-traveler">
                 <strong>{ti === 0 ? 'Titular' : `Viajero ${ti + 1}`}: {tr.nombre} {tr.apellido1} {tr.apellido2}</strong>
+                {ti === 0 && reg.boletin && <span className="soc-flag" title="Aceptó recibir el boletín mensual">✓ boletín</span>}
                 <div className="reg-admin-fields">
                   {REG_COLS.filter(([k]) => k !== 'token').map(([k, lbl]) => (
                     tr[k] ? <span key={k}><em>{lbl}:</em> {tr[k]}<RegCopyBtn value={tr[k]} /></span> : null
