@@ -1,7 +1,7 @@
 ---
 format: 1080x1920
 duration: 24s
-message: "Esto es lo que te espera en Hestía Salinas en septiembre, escrito por Alex y Fran; reserva directo y te lo enseñamos en persona"
+message: "Así es Hestía Salinas, contado por Alex y Fran con lo que dice la web: albero, tres piscinas, dos terrazas, el mar a 900 metros; reserva directa sin comisiones"
 arc: Saludo → Mar → Terraza y piscina → La casa → La promesa → Cierre de marca
 audience: huéspedes pasados y seguidores dormidos de Hestía; familias y parejas que ya conocen Vera Playa
 mode: autonomous
@@ -12,7 +12,7 @@ Una sola composición monolítica (`index.html`): la carta se teclea de forma co
 
 ## Frame 1 — Saludo · terraza al atardecer
 
-- scene: Chip de marca arriba (waterfall-entry); la tarjeta crema aparece y teclea "Hola, esto te espera en Salinas en septiembre:"
+- scene: Chip de marca arriba (waterfall-entry) y la H del logo en albero; se teclea "Hola, así es Hestía Salinas, en Vera Playa:"
 - duration: 4.6s
 - transition_in: cut
 - status: animated
@@ -24,7 +24,7 @@ Apertura cálida: la foto más reconocible de Salinas y la primera línea de la 
 
 ## Frame 2 — El mar · pérgola
 
-- scene: Foto de la pérgola entra por cut-the-curve LEFT; se teclea "El mar guarda el calor del verano." con un error corregido ("veran0" → backspace) para que se note una mano
+- scene: Foto de la pérgola entra por cut-the-curve LEFT; se teclea "Albero del amanecer, junto a las salinas." con un error corregido ("Alber0" → backspace) para que se note una mano
 - duration: 4.2s
 - transition_in: cut-the-curve LEFT
 - status: animated
@@ -34,7 +34,7 @@ Apertura cálida: la foto más reconocible de Salinas y la primera línea de la 
 
 ## Frame 3 — Desayuno y piscina
 
-- scene: Piscina con palmeras; "Desayuno en la terraza, piscina a media mañana."
+- scene: Piscina con palmeras; "Tres piscinas, dos terrazas, el mar a 900 metros."
 - duration: 3.8s
 - transition_in: cut-the-curve LEFT
 - status: animated
@@ -44,7 +44,7 @@ Apertura cálida: la foto más reconocible de Salinas y la primera línea de la 
 
 ## Frame 4 — La casa
 
-- scene: Salón albero con luz de día; "El más luminoso de los tres, junto al Parque Natural."
+- scene: Salón albero con luz de día; "El más grande de los tres, para 6 y un bebé."
 - duration: 3.8s
 - transition_in: cut-the-curve LEFT
 - status: animated
@@ -54,7 +54,7 @@ Apertura cálida: la foto más reconocible de Salinas y la primera línea de la 
 
 ## Frame 5 — La promesa
 
-- scene: Terraza de noche; "Reserva directo: te lo enseñamos en persona." y firma "Alex y Fran"
+- scene: Terraza de noche; "Y la luz dorada de la tarde en cada habitación." y firma "Alex y Fran"
 - duration: 5.1s
 - transition_in: cut-the-curve LEFT
 - status: animated

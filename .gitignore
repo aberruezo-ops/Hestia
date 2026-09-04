@@ -11,6 +11,7 @@
 !docs/assets/photo-*.jpg
 !docs/assets/*.jpg
 !docs/assets/*.mov
+!videos/*/assets/images/*.png
 debug_*.png
 mobile_*.png
 desktop_*.png
@@ -24,6 +25,7 @@ package-lock.json
 package.json
 !remotion-video/package.json
 !remotion-video/package-lock.json
+!videos/*/package.json
 
 # Datos privados de huéspedes — nunca commitear
 data-private/

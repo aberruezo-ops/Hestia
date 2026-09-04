@@ -2,12 +2,12 @@
 workflow: general-video
 flow: automation
 storyboard: no
-message: "Esto es lo que te espera en Hestía Salinas en septiembre, escrito por Alex y Fran; reserva directo y te lo enseñamos en persona"
+message: "Así es Hestía Salinas, contado por Alex y Fran con lo que dice la web: albero, tres piscinas, dos terrazas, el mar a 900 metros; reserva directa sin comisiones"
 destination: instagram-reels
 aspect: 1080x1920
 language: es
 audience: huéspedes pasados y seguidores dormidos de Hestía (1.124), familias y parejas que ya conocen Vera Playa
-length: 22s
+length: 24s
 angle: carta-de-los-anfitriones
 ---
 
@@ -40,5 +40,6 @@ Reel vertical de Hestía Salinas para Instagram y Facebook. Concepto elegido: **
 - Marca Hestía como verdad de diseño (styles.css y pago.html): berenjena #2A0F2E / #3D1A35, crema #FFFCF6 / #F0E8D5, cobre #C87A45, y el color propio de Salinas, dorado #D4A84A (oscuro #7A5E1A). Tipografía Fraunces (display) + Hanken Grotesk (cuerpo). Bordes asimétricos 10px 0 10px 0.
 - Hechos permitidos: solo los de strategy/redes/hechos-y-ventajas.md y la Voz de septiembre 2026 (docs/data/noticias/2026-09.json). Nada de precios ni disponibilidad.
 - El reel es el borrador "voz-2026-09" / "guion-2026-09" de docs/data/social-drafts.json llevado a vídeo; el texto del post sale del borrador voz.
+- Segunda ronda de Alex: la carta no decía nada y "te lo enseñamos en persona" no es cierto. Texto reescrito solo con la ficha de Salinas de la web (concepto "albero del amanecer, cerca de las salinas", tres piscinas, dos terrazas, mar a 900 m, el más grande de los tres, 6 plazas + bebé, luz dorada de la tarde). La H del logo es la real (logo-teal-transparent.png) recoloreada a albero, en la cabecera y en el cierre.
 - Cambio confirmado por Alex tras el primer render: sin tarjeta crema; la carta se escribe en crema directamente sobre las fotos, con velo berenjena inferior y sombra de texto, para que se vean las imágenes.
 - Sin banner de estado de móvil ni teclado falso. Zona segura inferior de Instagram (últimos ~300 px) libre de texto importante.
