@@ -1,22 +1,22 @@
 {
   "fps": 30,
   "seams": [
-    { "id": "saludo→mar", "cut": 4.6, "technique": "cut-the-curve LEFT",
+    { "id": "saludo→casas", "cut": 5.5, "technique": "cut-the-curve LEFT",
       "exit": { "selector": "#ph1 .seam", "axis": "x", "dir": -1 },
       "entry": { "selector": "#ph2 .seam", "axis": "x", "dir": -1 } },
-    { "id": "mar→piscina", "cut": 8.8, "technique": "cut-the-curve LEFT",
+    { "id": "casas→salinas", "cut": 9.4, "technique": "cut-the-curve LEFT",
       "exit": { "selector": "#ph2 .seam", "axis": "x", "dir": -1 },
       "entry": { "selector": "#ph3 .seam", "axis": "x", "dir": -1 } },
-    { "id": "piscina→casa", "cut": 12.6, "technique": "cut-the-curve LEFT",
+    { "id": "salinas→piscinas", "cut": 15.0, "technique": "cut-the-curve LEFT",
       "exit": { "selector": "#ph3 .seam", "axis": "x", "dir": -1 },
       "entry": { "selector": "#ph4 .seam", "axis": "x", "dir": -1 } },
-    { "id": "casa→promesa", "cut": 16.4, "technique": "cut-the-curve LEFT",
+    { "id": "piscinas→promesa", "cut": 19.6, "technique": "cut-the-curve LEFT",
       "exit": { "selector": "#ph4 .seam", "axis": "x", "dir": -1 },
       "entry": { "selector": "#ph5 .seam", "axis": "x", "dir": -1 } },
-    { "id": "promesa→cierre (foto)", "cut": 21.51, "technique": "inverse zoom-through",
+    { "id": "promesa→cierre (foto)", "cut": 26.23, "technique": "inverse zoom-through",
       "exit": { "selector": "#ph5 .seam", "axis": "z", "dir": -1 },
       "entry": { "selector": "#ph6 .seam", "axis": "z", "dir": -1, "scanRoot": "#ph6" } },
-    { "id": "carta→marca", "cut": 21.51, "technique": "inverse zoom-through",
+    { "id": "carta→marca", "cut": 26.23, "technique": "inverse zoom-through",
       "exit": { "selector": "#card .seam", "axis": "z", "dir": -1 },
       "entry": { "selector": "#cta .seam", "axis": "z", "dir": -1, "scanRoot": "#cta" } }
   ]
