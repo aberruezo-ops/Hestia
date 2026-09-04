@@ -1,0 +1,11 @@
+{"id":"bgm_001","type":"bgm","path":"assets/audio/salinas-walkthrough-music.m4a","source":"existing","description":"salinas walkthrough music","duration":81.1,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_001","type":"image","path":"assets/images/salinas-1.jpg","source":"existing","description":"salinas 1","width":1164,"height":1500,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_002","type":"image","path":"assets/images/salinas-13.jpg","source":"existing","description":"salinas 13","width":1500,"height":1125,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_003","type":"image","path":"assets/images/salinas-19.jpg","source":"existing","description":"salinas 19","width":1284,"height":2000,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_004","type":"image","path":"assets/images/salinas-2.jpg","source":"existing","description":"salinas 2","width":1125,"height":1500,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_005","type":"image","path":"assets/images/salinas-20.jpg","source":"existing","description":"salinas 20","width":1200,"height":1500,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_006","type":"image","path":"assets/images/salinas-23.jpg","source":"existing","description":"salinas 23","width":1500,"height":1125,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_007","type":"image","path":"assets/images/salinas-25.jpg","source":"existing","description":"salinas 25","width":1099,"height":1500,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_008","type":"image","path":"assets/images/salinas-27.jpg","source":"existing","description":"salinas 27","width":1500,"height":1259,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_009","type":"image","path":"assets/images/salinas-31.jpg","source":"existing","description":"salinas 31","width":1001,"height":666,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_010","type":"image","path":"assets/images/salinas-32.jpg","source":"existing","description":"salinas 32","width":1018,"height":1342,"provenance":{"provider":"local","adopted":true}}

@@ -32,3 +32,8 @@ data-private/
 .dev.vars
 .dev.vars.*
 .wrangler/
+
+# HyperFrames: renders y capturas son derivados (el reel entregado va a docs/assets/reels/)
+videos/*/renders/
+videos/*/snapshots/
+videos/*/.hyperframes/

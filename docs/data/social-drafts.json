@@ -5,7 +5,7 @@
       "createdAt": "2026-09-03T06:51:04.125Z",
       "status": "pending",
       "source": "voz",
-      "format": "image",
+      "format": "reel",
       "apt": "vs",
       "image": "assets/apt-vs-gallery-1.jpg",
       "networks": [
@@ -13,7 +13,9 @@
         "fb"
       ],
       "caption": "Hestía Salinas, septiembre 2026\n\nSeptiembre abre la temporada de estancias largas (de septiembre a junio), y Hestía Salinas es el que mejor la entiende: el más luminoso de los tres, con dos terrazas, tres piscinas y el Parque Natural de las Salinas de Puerto Rey al lado. La fibra hasta 600 Mbps simétricos y una mesa de trabajo bajo petición convierten una semana de teletrabajo en un mes.\n\nCon el calor a raya, la ruta de los flamencos ya no es cosa solo del amanecer: a media mañana se camina a gusto y la luz sobre las salinas sigue siendo dorada. Lleva agua y prismáticos, y deja la piscina para la vuelta.\n\nSeptember opens the long-stay season (September to June), and Hestía Salinas is the one that understands it best: the brightest of the three, with two terraces, three pools and the Salinas de Puerto Rey Natural Park next door.\n\nReserva directa con nosotros: 0% comisiones, respuesta humana en minutos y mascotas bienvenidas.\n📍 Vera Playa, Almería\n🔗 https://www.hestiayourhome.com/salinas.html?utm_source=redes&utm_medium=social&utm_campaign=voz-2026-09\n\n#VeraPlaya #Almeria #CaboDeGata #HestiaYourHome",
-      "link": "https://www.hestiayourhome.com/salinas.html?utm_source=redes&utm_medium=social&utm_campaign=voz-2026-09"
+      "link": "https://www.hestiayourhome.com/salinas.html?utm_source=redes&utm_medium=social&utm_campaign=voz-2026-09",
+      "video": "assets/reels/voz-2026-09.mp4",
+      "note": "Reel renderizado con HyperFrames (videos/salinas-reel): la carta de Alex y Fran, 24 s, sin audio (añade música en Instagram)."
     },
     {
       "id": "agenda-2026-09",
