@@ -31,7 +31,7 @@ Marca autoral, cálida, de personas (Alex y Fran), no de agencia. La berenjena e
 
 ## The Frame
 
-Fondo de escenario siempre opaco en berenjena. Fotos reales a sangre con movimiento lento. Texto sobre superficies propias (tarjeta crema para la carta, panel berenjena para el cierre), nunca directamente sobre foto salvo un chip pequeño con fondo.
+Fondo de escenario siempre opaco en berenjena. Fotos reales a sangre con movimiento lento. La carta se escribe en crema directamente sobre la foto (decisión de Alex: que se vean las imágenes), siempre sobre un velo berenjena que sube desde abajo y con sombra de texto; el cierre va en panel berenjena y el chip de marca con fondo.
 
 ## Composition Rules
 

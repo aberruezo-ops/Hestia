@@ -40,4 +40,5 @@ Reel vertical de Hestía Salinas para Instagram y Facebook. Concepto elegido: **
 - Marca Hestía como verdad de diseño (styles.css y pago.html): berenjena #2A0F2E / #3D1A35, crema #FFFCF6 / #F0E8D5, cobre #C87A45, y el color propio de Salinas, dorado #D4A84A (oscuro #7A5E1A). Tipografía Fraunces (display) + Hanken Grotesk (cuerpo). Bordes asimétricos 10px 0 10px 0.
 - Hechos permitidos: solo los de strategy/redes/hechos-y-ventajas.md y la Voz de septiembre 2026 (docs/data/noticias/2026-09.json). Nada de precios ni disponibilidad.
 - El reel es el borrador "voz-2026-09" / "guion-2026-09" de docs/data/social-drafts.json llevado a vídeo; el texto del post sale del borrador voz.
+- Cambio confirmado por Alex tras el primer render: sin tarjeta crema; la carta se escribe en crema directamente sobre las fotos, con velo berenjena inferior y sombra de texto, para que se vean las imágenes.
 - Sin banner de estado de móvil ni teclado falso. Zona segura inferior de Instagram (últimos ~300 px) libre de texto importante.

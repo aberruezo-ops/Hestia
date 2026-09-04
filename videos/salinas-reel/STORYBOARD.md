@@ -8,7 +8,7 @@ mode: autonomous
 current: LEFT
 ---
 
-Una sola composición monolítica (`index.html`): la carta se teclea de forma continua en una tarjeta crema (blueprint `typewriter-reveal`, variante Hook, regla `discrete-text-sequence`), mientras la capa de fotos cambia debajo con cortes velocity-matched. Las fotos no son escenas: son el fondo que la carta va revelando. Ruta de movimiento sostenido de cada fase: **staged reveals** (el texto sigue llegando carácter a carácter) + **camera with intent** (paneo lento de cada foto, receta Ken Burns sobre el wrapper interior). Sin música: Instagram la pone; lo dice el guion del mes.
+Una sola composición monolítica (`index.html`): la carta se teclea de forma continua en crema directamente sobre las fotos, con velo berenjena inferior (blueprint `typewriter-reveal`, variante Hook, regla `discrete-text-sequence`), mientras la capa de fotos cambia debajo con cortes velocity-matched. Las fotos no son escenas: son el fondo que la carta va revelando. Ruta de movimiento sostenido de cada fase: **staged reveals** (el texto sigue llegando carácter a carácter) + **camera with intent** (paneo lento de cada foto, receta Ken Burns sobre el wrapper interior). Sin música: Instagram la pone; lo dice el guion del mes.
 
 ## Frame 1 — Saludo · terraza al atardecer
 
