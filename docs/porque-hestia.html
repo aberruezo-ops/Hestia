@@ -6,7 +6,9 @@
   <meta name="theme-color" content="#2A0F2E"/>
   <title>Por qué Hestía · Hestía Your Home · Vera Playa</title>
   <!-- Esta página se fusionó con nosotros.html. GitHub Pages no permite un 301
-       de servidor, así que el redirect es canonical + meta refresh + JS. -->
+       de servidor, así que el redirect es canonical + meta refresh + JS. Sin
+       noindex explícito, Google la trataba como indexable por defecto. -->
+  <meta name="robots" content="noindex, follow"/>
   <link rel="canonical" href="https://www.hestiayourhome.com/nosotros.html"/>
   <meta http-equiv="refresh" content="0; url=/nosotros.html#por-que-hestia"/>
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"/>
