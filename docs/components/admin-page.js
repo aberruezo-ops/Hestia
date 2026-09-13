@@ -4066,6 +4066,14 @@ const PRERESERVAS_PATH = 'prereservas.json'; // en el repo PRIVADO (PII de borra
 // Se llama tras cada save/delete y tras convertir prereserva → reserva.
 // P-Edit es la fuente de verdad: cualquier canal (directo, Airbnb, Booking, etc.)
 // se vuelca al array `direct`, que el iCal sync (4h) también lee para calcular `blocked`.
+//
+// El bot de iCal NO reintenta este paso: solo conserva lo que ya hubiera en
+// `direct` de una ejecución anterior (docs/assets/sync_ical.py, prev_direct).
+// Si este PUT falla (p.ej. conflicto de sha con el bot, que corre cada 4h),
+// la reserva queda invisible en el calendario público hasta el siguiente
+// guardado manual: no hay red de seguridad. Por eso reintenta una vez con
+// el sha fresco y, si aun así falla, lo dice en vez de tragárselo (pasó de
+// verdad: una reserva de Salinas quedó disponible para reservar por encima).
 const _syncReservasToAvailability = async (allReservas, token) => {
   const APTS_LIST = ['vm', 'vt', 'vs'];
   const _cxl = r => r.cancelada === true || (r.cancelacion || '').trim().toUpperCase() === 'CANCELADA' || (r.cancelacion || '').trim().toUpperCase() === 'CANCELADO';
@@ -4095,33 +4103,43 @@ const _syncReservasToAvailability = async (allReservas, token) => {
     return m;
   };
   const AV_PATH = 'docs/assets/availability.json';
-  const avRes = await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}?ref=${BRANCH}`, {
-    headers: apiHeaders(token),
-    cache: 'no-store'
-  });
-  if (!avRes.ok) return;
-  const avFile = await avRes.json();
-  const avData = JSON.parse(b64ToUtf8(avFile.content));
-  for (const apt of APTS_LIST) {
-    const ical = avData[apt]?.ical || avData[apt]?.blocked || [];
-    avData[apt] = {
-      ...avData[apt],
-      blocked: _merge([...ical, ...newDirect[apt]]),
-      ical,
-      direct: newDirect[apt]
-    };
+  const attempt = async () => {
+    const avRes = await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}?ref=${BRANCH}`, {
+      headers: apiHeaders(token),
+      cache: 'no-store'
+    });
+    if (!avRes.ok) throw new Error('No se pudo leer availability.json (' + avRes.status + ')');
+    const avFile = await avRes.json();
+    const avData = JSON.parse(b64ToUtf8(avFile.content));
+    for (const apt of APTS_LIST) {
+      const ical = avData[apt]?.ical || avData[apt]?.blocked || [];
+      avData[apt] = {
+        ...avData[apt],
+        blocked: _merge([...ical, ...newDirect[apt]]),
+        ical,
+        direct: newDirect[apt]
+      };
+    }
+    return fetch(`${API}/repos/${REPO}/contents/${AV_PATH}`, {
+      method: 'PUT',
+      headers: apiHeaders(token),
+      body: JSON.stringify({
+        message: 'chore(availability): sync reservas [skip ci]',
+        content: utf8ToB64(JSON.stringify(avData, null, 2)),
+        sha: avFile.sha,
+        branch: BRANCH
+      })
+    });
+  };
+  let putRes = await attempt();
+  // 409/422 = sha desfasado (el bot escribió entre el GET y el PUT): un solo
+  // reintento con sha fresco resuelve la carrera casi siempre.
+  if (!putRes.ok && (putRes.status === 409 || putRes.status === 422)) putRes = await attempt();
+  if (putRes.ok) {
+    window.dispatchEvent(new CustomEvent('hestia:availability-updated'));
+    return true;
   }
-  const putRes = await fetch(`${API}/repos/${REPO}/contents/${AV_PATH}`, {
-    method: 'PUT',
-    headers: apiHeaders(token),
-    body: JSON.stringify({
-      message: 'chore(availability): sync reservas [skip ci]',
-      content: utf8ToB64(JSON.stringify(avData, null, 2)),
-      sha: avFile.sha,
-      branch: BRANCH
-    })
-  });
-  if (putRes.ok) window.dispatchEvent(new CustomEvent('hestia:availability-updated'));
+  throw new Error('No se pudo sincronizar el calendario público (' + putRes.status + ')');
 };
 const APT_NAMES = {
   vm: 'Mar',
@@ -5985,16 +6003,21 @@ const PrereservasTab = ({
       });
       if (!rPut.ok) throw new Error('Error escribiendo reservas.json (' + rPut.status + ')');
       // 4a. Sincronizar calendario inmediatamente (no esperar al iCal sync de 4h)
-      _syncReservasToAvailability(updated.reservas, token).catch(() => {});
+      const avError = await _syncReservasToAvailability(updated.reservas, token).then(() => null, e => e.message);
       // 4a-bis. Publicar PINs de acceso a la guía de las reservas activas
-      _syncReservasToGuestPins(updated.reservas, token).catch(() => {});
+      const pinError = await _syncReservasToGuestPins(updated.reservas, token).then(() => null, e => e.message);
       // 4b. Borrar de prereservas
       const newItems = items.filter(r => r.id !== pr.id);
       const newSha = await saveList(newItems, sha);
       setItems(newItems);
       setSha(newSha);
-      setIsErr(false);
-      setMsg(`✓ ${pr.responsable} añadida a Reservas.`);
+      if (avError || pinError) {
+        setIsErr(true);
+        setMsg(`✓ ${pr.responsable} añadida a Reservas, pero falló la sincronización: ` + [avError && `calendario público (${avError})`, pinError && `PIN de guía (${pinError})`].filter(Boolean).join(' · ') + '. Repite la acción o usa "Sincronizar" en la pestaña Reservas.');
+      } else {
+        setIsErr(false);
+        setMsg(`✓ ${pr.responsable} añadida a Reservas.`);
+      }
     } catch (e) {
       setIsErr(true);
       setMsg(e.message);
@@ -7032,12 +7055,15 @@ const ReservasTab = ({
       return j.content.sha;
     };
     const onSaved = newReservasList => {
-      _syncReservasToAvailability(newReservasList, token).catch(() => {});
-      // Publica/revoca los PINs de la guía. A diferencia del sync de
-      // disponibilidad, un fallo aquí es un problema de seguridad real (un
-      // huésped con la reserva cancelada podría conservar el acceso a la
-      // guía): si falla, se avisa en vez de tragárselo en silencio como
-      // antes.
+      // Un fallo aquí deja el calendario público desactualizado (riesgo real
+      // de doble reserva) y el bot de iCal no lo repara solo: avisa en vez
+      // de tragárselo en silencio.
+      _syncReservasToAvailability(newReservasList, token).catch(e => {
+        setError('⚠ Reserva guardada, pero el calendario público no se pudo sincronizar: ' + e.message + '. Vuelve a guardar para reintentarlo.');
+      });
+      // Publica/revoca los PINs de la guía. Un fallo aquí es un problema de
+      // seguridad real (un huésped con la reserva cancelada podría
+      // conservar el acceso a la guía): también se avisa.
       _syncReservasToGuestPins(newReservasList, token).catch(e => {
         setError('⚠ Reserva guardada, pero el PIN de la guía no se pudo sincronizar: ' + e.message + '. Pulsa "Sincronizar PINs" para reintentarlo.');
       });
