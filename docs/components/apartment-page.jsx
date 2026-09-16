@@ -17,7 +17,7 @@ const amenityHi = (emoji) => AMENITY_HI[(emoji || '').replace(/️/g, '')];
 
 // Versión de caché de las fotos de galería. Súbela al reemplazar fotos con el
 // mismo nombre para que el navegador cargue las nuevas y no las cacheadas.
-const GALLERY_V = '9';
+const GALLERY_V = '10';
 
 const APT_DATA = {
   vm: {
