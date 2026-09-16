@@ -598,7 +598,7 @@ const PorqueColores = ({
   className: "eyebrow"
 }, lang === 'es' ? 'La paleta de Hestía' : 'The Hestía palette'), /*#__PURE__*/React.createElement("h2", {
   className: "reveal"
-}, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "No inventamos"), " nuestros colores.", /*#__PURE__*/React.createElement("br", null), "Los encontramos aquí.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("em", null, "We didn't invent"), " our colours.", /*#__PURE__*/React.createElement("br", null), "We found them here.")), /*#__PURE__*/React.createElement("p", {
+}, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Los colores de Hestía", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "ya estaban en Vera Playa.")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Hestía's colours", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "were already in Vera Playa."))), /*#__PURE__*/React.createElement("p", {
   className: "nos-colores-intro reveal delay-1"
 }, lang === 'es' ? 'Vera Playa tiene una luz que cambia cada hora y una naturaleza que deja boquiabierto. Un ingeniero que observa y un filólogo que nombra. Así nació la paleta de Hestía: nueve colores del paisaje almeriense, capturados y convertidos en marca.' : 'Vera Playa has a light that changes every hour and a nature that leaves you breathless. An engineer who observes and a philologist who names. That is how the Hestía palette was born: nine colours of the Almería landscape, captured and turned into a brand.'), /*#__PURE__*/React.createElement("div", {
   className: "nos-colores-grid"

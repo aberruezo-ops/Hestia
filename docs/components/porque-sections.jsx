@@ -476,8 +476,8 @@ const PorqueColores = ({ lang }) => (
       <div className="eyebrow">{lang === 'es' ? 'La paleta de Hestía' : 'The Hestía palette'}</div>
       <h2 className="reveal">
         {lang === 'es'
-          ? <><em>No inventamos</em> nuestros colores.<br/>Los encontramos aquí.</>
-          : <><em>We didn't invent</em> our colours.<br/>We found them here.</>}
+          ? <>Los colores de Hestía<br/><em>ya estaban en Vera Playa.</em></>
+          : <>Hestía's colours<br/><em>were already in Vera Playa.</em></>}
       </h2>
       <p className="nos-colores-intro reveal delay-1">
         {lang === 'es'
