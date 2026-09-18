@@ -142,7 +142,7 @@ const LS_APTS = [{
   name: 'Salinas',
   slug: 'salinas',
   accent: '#D4A84A',
-  img: 'assets/apt-vm.jpg',
+  img: 'assets/apt-vs-gallery-33.jpg',
   concept_es: 'El amarillo albero del amanecer',
   concept_en: 'The golden dawn above the salt flats'
 }];
