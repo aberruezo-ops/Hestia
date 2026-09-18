@@ -126,7 +126,7 @@ const LS_APTS = [{
   name: 'Mar',
   slug: 'mar',
   accent: '#6B7A3A',
-  img: 'assets/apt-vs.jpg',
+  img: 'assets/apt-vm-gallery-26.jpg',
   concept_es: 'El campo de olivos llega al mar',
   concept_en: 'Where the olive grove meets the sea'
 }, {
@@ -134,7 +134,7 @@ const LS_APTS = [{
   name: 'Thalassa',
   slug: 'thalassa',
   accent: '#B86A3C',
-  img: 'assets/apt-vt-4.jpg',
+  img: 'assets/apt-vt-gallery-33.jpg',
   concept_es: 'El ático sobre el Mediterráneo',
   concept_en: 'The penthouse above the Mediterranean'
 }, {

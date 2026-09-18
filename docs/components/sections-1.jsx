@@ -300,10 +300,10 @@ const Bridge = ({ lang }) => {
 // --- APARTAMENTOS (scroll horizontal) ---
 const APARTMENTS = [
   { id: 'vm', num: '01', name: 'Hestía Mar',      slug: 'mar',      license: 'VFT/AL/01580', concept: 'apt_01_concept',
-    img: 'assets/apt-vs.jpg', imgW: 1024, imgH: 768, rating: '9.8',
+    img: 'assets/apt-vm-gallery-26.jpg', imgW: 1500, imgH: 1276, rating: '9.8',
     meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición'] },
   { id: 'vt', num: '02', name: 'Hestía Thalassa', slug: 'thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
-    img: 'assets/apt-vt-4.jpg', imgW: 1440, imgH: 1103, rating: '10',
+    img: 'assets/apt-vt-gallery-33.jpg', imgW: 1200, imgH: 1462, rating: '10',
     meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA'] },
   { id: 'vs', num: '03', name: 'Hestía Salinas',  slug: 'salinas',  license: 'VFT/AL/07056', concept: 'apt_03_concept',
     img: 'assets/apt-vs-gallery-33.jpg', imgW: 1500, imgH: 1406, rating: '9.9',

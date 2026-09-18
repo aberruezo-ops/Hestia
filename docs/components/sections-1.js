@@ -382,9 +382,9 @@ const APARTMENTS = [{
   slug: 'mar',
   license: 'VFT/AL/01580',
   concept: 'apt_01_concept',
-  img: 'assets/apt-vs.jpg',
-  imgW: 1024,
-  imgH: 768,
+  img: 'assets/apt-vm-gallery-26.jpg',
+  imgW: 1500,
+  imgH: 1276,
   rating: '9.8',
   meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición']
 }, {
@@ -394,9 +394,9 @@ const APARTMENTS = [{
   slug: 'thalassa',
   license: 'VFT/AL/05535',
   concept: 'apt_02_concept',
-  img: 'assets/apt-vt-4.jpg',
-  imgW: 1440,
-  imgH: 1103,
+  img: 'assets/apt-vt-gallery-33.jpg',
+  imgW: 1200,
+  imgH: 1462,
   rating: '10',
   meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA']
 }, {

@@ -109,8 +109,8 @@ const LS_COPY = {
 };
 
 const LS_APTS = [
-  { id: 'vm', name: 'Mar',      slug: 'mar',      accent: '#6B7A3A', img: 'assets/apt-vs.jpg',   concept_es: 'El campo de olivos llega al mar', concept_en: 'Where the olive grove meets the sea' },
-  { id: 'vt', name: 'Thalassa', slug: 'thalassa', accent: '#B86A3C', img: 'assets/apt-vt-4.jpg', concept_es: 'El ático sobre el Mediterráneo', concept_en: 'The penthouse above the Mediterranean' },
+  { id: 'vm', name: 'Mar',      slug: 'mar',      accent: '#6B7A3A', img: 'assets/apt-vm-gallery-26.jpg',   concept_es: 'El campo de olivos llega al mar', concept_en: 'Where the olive grove meets the sea' },
+  { id: 'vt', name: 'Thalassa', slug: 'thalassa', accent: '#B86A3C', img: 'assets/apt-vt-gallery-33.jpg', concept_es: 'El ático sobre el Mediterráneo', concept_en: 'The penthouse above the Mediterranean' },
   { id: 'vs', name: 'Salinas',  slug: 'salinas',  accent: '#D4A84A', img: 'assets/apt-vs-gallery-33.jpg',   concept_es: 'El amarillo albero del amanecer', concept_en: 'The golden dawn above the salt flats' },
 ];
 

@@ -92,7 +92,7 @@ const APT_CONTRACT_DATA = {
   vm: {
     name: 'Hestía Vera Mar',
     shortName: 'Mar',
-    heroPhoto: 'assets/apt-vs.jpg',
+    heroPhoto: 'assets/apt-vm-gallery-26.jpg',
     direccion: 'Apto. 1A, del portal 14, edificio 3, en la urbanización Paraíso Playa, en C/ Islas Canarias, 7',
     plazaGaraje: '160',
     acceso: 'La vivienda se encuentra en una <strong>primera planta, con ascensor</strong>.',
@@ -106,7 +106,7 @@ const APT_CONTRACT_DATA = {
   vt: {
     name: 'Hestía Vera Thalassa',
     shortName: 'Thalassa',
-    heroPhoto: 'assets/apt-vt-4.jpg',
+    heroPhoto: 'assets/apt-vt-gallery-33.jpg',
     direccion: 'Apto. 11, planta 5ª, escalera 13, en la urbanización Thalassa, en C/ Tomillo 2',
     plazaGaraje: '163',
     acceso: 'La vivienda se encuentra en una <strong>quinta planta (tercera desde el garaje)</strong>: hasta la segunda planta se puede subir en <strong>ascensor</strong>, pero las <strong>tres plantas restantes no disponen de ascensor</strong> y se suben por escalera. Además, existen tramos de escaleras adicionales para acceder a diferentes lugares de la urbanización, como la piscina, el parque, las pistas de tenis, etc.',
