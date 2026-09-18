@@ -406,9 +406,9 @@ const APARTMENTS = [{
   slug: 'salinas',
   license: 'VFT/AL/07056',
   concept: 'apt_03_concept',
-  img: 'assets/apt-vm.jpg',
-  imgW: 1255,
-  imgH: 1146,
+  img: 'assets/apt-vs-gallery-33.jpg',
+  imgW: 1500,
+  imgH: 1406,
   rating: '9.9',
   meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas']
 }];

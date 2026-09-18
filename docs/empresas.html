@@ -92,7 +92,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=59e0538cdd');
+      const res = await fetch(file + '?cv=ddc7548bbc');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

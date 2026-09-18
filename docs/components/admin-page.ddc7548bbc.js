@@ -120,7 +120,7 @@ const APT_CONTRACT_DATA = {
   vs: {
     name: 'Hestía Vera Salinas',
     shortName: 'Salinas',
-    heroPhoto: 'assets/apt-vm.jpg',
+    heroPhoto: 'assets/apt-vs-gallery-33.jpg',
     heroFocusY: 0.8,
     direccion: 'Apto. 7, planta 1ª, bloque 22, en la urbanización Pueblo Salinas, en C/ Alcazaba 115',
     plazaGaraje: '290',
