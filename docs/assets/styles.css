@@ -19019,7 +19019,9 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
    saturación + warmth + drop-shadow suave. En hover (donde
    aplique) intensifica.
    ============================================================ */
-img[src*="apt-vt-gallery-"] {
+.gc-stage img[src*="apt-vt-gallery-"],
+.ag-photo img[src*="apt-vt-gallery-"],
+.apt-card.vt img[src*="apt-vt-gallery-"] {
   filter:
     brightness(1.04)
     contrast(1.10)
@@ -19040,7 +19042,9 @@ img[src*="apt-vt-gallery-"] {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  img[src*="apt-vt-gallery-"] { transition: none; }
+  .gc-stage img[src*="apt-vt-gallery-"],
+  .ag-photo img[src*="apt-vt-gallery-"],
+  .apt-card.vt img[src*="apt-vt-gallery-"] { transition: none; }
 }
 
 /* Warning de estancia mínima en /reservas — visible si el usuario
