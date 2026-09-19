@@ -2901,7 +2901,7 @@ ${clausulaSegunda}
      móvil con el spacer fijo + hero dibujado por jsPDF). La barra fina y el pie se
      dibujan en los márgenes reservados (MARG_TOP/MARG_BOT), fuera del contenido. -->
 <div class="hero">
-  ${heroUrl ? `<img class="hero-img" src="${heroUrl}" alt="">` : ''}
+  ${heroUrl ? `<img class="hero-img" src="${heroUrl}" alt="" width="1050" height="325">` : ''}
   <div class="hero-overlay"></div>
   <div class="hero-text">
     <p class="hero-eyebrow">${heroEyebrow}</p>
@@ -2981,8 +2981,13 @@ ${bodyInner}
       // desaparecían del PDF (la última página salía en blanco). En su lugar, el
       // bloque de firmas se mantiene JUNTO ('avoid') y fluye tras las normas: si
       // cabe en el hueco de la última página entra ahí, si no, se mueve entero a
-      // una nueva. 'tr' evita partir filas de tabla. Nunca se pierde ni se parte.
-      pagebreak: { mode: ['css', 'legacy'], avoid: ['tr', '.firmas', '.sign-page'] }
+      // una nueva. 'tr' evita partir filas de tabla.
+      // 'p', 'li', 'h3': sin esto, el corte de página es puramente por píxeles
+      // dentro de cualquier párrafo o punto de lista, y puede caer a mitad de
+      // una línea de texto (la mitad de arriba en una página, la de abajo en
+      // la siguiente). Al marcarlos, el corte se desplaza siempre al hueco
+      // ENTRE párrafos/puntos, nunca a través de uno. Nunca se pierde ni se parte.
+      pagebreak: { mode: ['css', 'legacy'], avoid: ['tr', 'p', 'li', 'h3', '.firmas', '.sign-page'] }
     };
     var worker = html2pdf().set(opt).from(el);
     await worker.toPdf();
@@ -3000,7 +3005,7 @@ ${bodyInner}
           pdf.saveGraphicsState();
           pdf.setGState(pdf.GState({ opacity: 0.065 }));
           var wmW = 120, wmH = 120; // logo-teal-transparent.png es 600×600 (ratio 1:1)
-          pdf.addImage(WM, 'PNG', pW / 2 - wmW / 2, pH / 2 - wmH / 2, wmW, wmH, '', 'NONE', 25);
+          pdf.addImage(WM, 'PNG', pW / 2 - wmW / 2, pH / 2 - wmH / 2, wmW, wmH, '', 'NONE', 0);
           pdf.restoreGraphicsState();
         } catch(e) {}
       }
