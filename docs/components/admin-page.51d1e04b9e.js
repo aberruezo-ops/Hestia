@@ -2114,7 +2114,7 @@ const IntelligenciaTab = ({
     }, /*#__PURE__*/React.createElement("div", {
       className: "pe-cf-bar",
       style: {
-        width: `${pct}%`
+        transform: `scaleX(${pct / 100})`
       }
     })), /*#__PURE__*/React.createElement("span", {
       className: `pe-cf-row-label${bold ? ' pe-cf-row-bold' : ''}`
@@ -2558,7 +2558,7 @@ const IntelligenciaTab = ({
       }, /*#__PURE__*/React.createElement("div", {
         className: "funnel-bar-fill",
         style: {
-          width: `${pctFirst}%`
+          transform: `scaleX(${pctFirst / 100})`
         }
       })), /*#__PURE__*/React.createElement("span", {
         className: "funnel-n"
@@ -3618,7 +3618,7 @@ ${clausulaSegunda}
      móvil con el spacer fijo + hero dibujado por jsPDF). La barra fina y el pie se
      dibujan en los márgenes reservados (MARG_TOP/MARG_BOT), fuera del contenido. -->
 <div class="hero">
-  ${heroUrl ? `<img class="hero-img" src="${heroUrl}" alt="">` : ''}
+  ${heroUrl ? `<img class="hero-img" src="${heroUrl}" alt="" width="1050" height="325">` : ''}
   <div class="hero-overlay"></div>
   <div class="hero-text">
     <p class="hero-eyebrow">${heroEyebrow}</p>
@@ -3660,14 +3660,30 @@ ${bodyInner}
     // que esas franjas para que SIEMPRE quede una banda blanca entre cabecera y
     // contenido, y entre contenido y pie, imposible que se solapen en ninguna página.
     var MARG_TOP = 26, MARG_BOT = 30;
-    // En iOS/Safari el canvas de html2canvas tiene un límite de tamaño más bajo:
-    // con scale 2 y un contrato de varias páginas, el lienzo se pasaba y el final
-    // (las firmas) y las imágenes salían en blanco. En móvil bajamos a scale 1.5
-    // (menos presión, sigue nítido para un PDF). En escritorio se mantiene en 2.
+    // En iOS/Safari el canvas de html2canvas tiene un límite de tamaño más bajo
+    // (~16M px de área): con scale 2 y un contrato de varias páginas, el lienzo
+    // se pasaba y el final (las firmas) y las imágenes salían en blanco. Bajar
+    // la escala solo "si es móvil" no basta: el contrato ha ido creciendo
+    // (más cláusulas) y el mismo límite se alcanza también en Safari de
+    // escritorio, o vuelve a alcanzarse en móvil según cuánto mida ESTE
+    // contrato en concreto (varía con el idioma, la fianza, mascotas...).
+    // Por eso el techo se calcula a partir del tamaño real del contenido, no
+    // solo del dispositivo: nunca se pide un canvas que pueda pasarse.
     var IS_MOBILE = /iP(hone|ad|od)|Android/i.test(navigator.userAgent)
       || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.userAgent))
       || (window.innerWidth && window.innerWidth < 820);
-    var CANVAS_SCALE = IS_MOBILE ? 1.5 : 2;
+    var IS_SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    var DESIRED_SCALE = IS_MOBILE ? 1.5 : 2;
+    // Techo conservador de área de canvas seguro en WebKit (Safari/iOS).
+    // Chrome/Firefox aguantan mucho más, pero aplicarlo también ahí no cuesta
+    // nada (con contratos de este tamaño nunca se llega a necesitar recortar).
+    var MAX_CANVAS_AREA = 16000000;
+    var contentW = el.scrollWidth || 794;
+    var contentH = el.scrollHeight || 1;
+    var maxScaleForArea = Math.sqrt(MAX_CANVAS_AREA / (contentW * contentH));
+    var CANVAS_SCALE = (IS_SAFARI || IS_MOBILE)
+      ? Math.max(1, Math.min(DESIRED_SCALE, maxScaleForArea))
+      : DESIRED_SCALE;
     var opt = {
       margin: [MARG_TOP, 0, MARG_BOT, 0],
       filename: FILE,
@@ -3682,8 +3698,13 @@ ${bodyInner}
       // desaparecían del PDF (la última página salía en blanco). En su lugar, el
       // bloque de firmas se mantiene JUNTO ('avoid') y fluye tras las normas: si
       // cabe en el hueco de la última página entra ahí, si no, se mueve entero a
-      // una nueva. 'tr' evita partir filas de tabla. Nunca se pierde ni se parte.
-      pagebreak: { mode: ['css', 'legacy'], avoid: ['tr', '.firmas', '.sign-page'] }
+      // una nueva. 'tr' evita partir filas de tabla.
+      // 'p', 'li', 'h3': sin esto, el corte de página es puramente por píxeles
+      // dentro de cualquier párrafo o punto de lista, y puede caer a mitad de
+      // una línea de texto (la mitad de arriba en una página, la de abajo en
+      // la siguiente). Al marcarlos, el corte se desplaza siempre al hueco
+      // ENTRE párrafos/puntos, nunca a través de uno. Nunca se pierde ni se parte.
+      pagebreak: { mode: ['css', 'legacy'], avoid: ['tr', 'p', 'li', 'h3', '.firmas', '.sign-page'] }
     };
     var worker = html2pdf().set(opt).from(el);
     await worker.toPdf();
@@ -3701,7 +3722,7 @@ ${bodyInner}
           pdf.saveGraphicsState();
           pdf.setGState(pdf.GState({ opacity: 0.065 }));
           var wmW = 120, wmH = 120; // logo-teal-transparent.png es 600×600 (ratio 1:1)
-          pdf.addImage(WM, 'PNG', pW / 2 - wmW / 2, pH / 2 - wmH / 2, wmW, wmH, '', 'NONE', 25);
+          pdf.addImage(WM, 'PNG', pW / 2 - wmW / 2, pH / 2 - wmH / 2, wmW, wmH, '', 'NONE', 0);
           pdf.restoreGraphicsState();
         } catch(e) {}
       }

@@ -203,9 +203,9 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
 
 /* ---- barra de progreso de lectura ---- */
-.progreso{position:fixed;top:0;left:0;height:3px;width:0%;z-index:10;
+.progreso{position:fixed;top:0;left:0;height:3px;width:100%;z-index:10;
   background:linear-gradient(90deg,var(--vm),var(--sol),var(--vs));
-  transition:width .1s linear;}
+  transform-origin:left;transform:scaleX(0);transition:transform .1s linear;}
 
 /* ---- revelado al hacer scroll ----
    Esta página vive de que Google lea el contenido sin ejecutar JS: el
@@ -1498,7 +1498,7 @@ can use without signal. It includes:
   var onScroll = function(){
     var h = document.documentElement;
     var alto = h.scrollHeight - h.clientHeight;
-    if (barra) barra.style.width = (alto > 0 ? (h.scrollTop / alto * 100) : 0) + '%';
+    if (barra) barra.style.transform = 'scaleX(' + (alto > 0 ? (h.scrollTop / alto) : 0) + ')';
     if (flot) flot.classList.toggle('is-visible', h.scrollTop > window.innerHeight * 0.6);
   };
   document.addEventListener('scroll', onScroll, { passive: true });

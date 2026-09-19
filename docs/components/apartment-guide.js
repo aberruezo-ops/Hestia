@@ -11338,7 +11338,7 @@ const AptGuideView = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-crumb-fill",
     style: {
-      width: `${(activeSecIdx + 1) / GUIDE_SECTIONS.length * 100}%`
+      transform: `scaleX(${(activeSecIdx + 1) / GUIDE_SECTIONS.length})`
     }
   })));
   return /*#__PURE__*/React.createElement("article", {

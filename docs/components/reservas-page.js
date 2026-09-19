@@ -1749,7 +1749,7 @@ const ReservasAside = ({
   }, "Fran Moral"), /*#__PURE__*/React.createElement("div", {
     className: "r-lang",
     style: {
-      color: 'var(--vt)'
+      color: 'var(--vt-dk)'
     }
   }, "🇬🇧 English"), /*#__PURE__*/React.createElement("div", {
     className: "r-role"

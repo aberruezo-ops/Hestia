@@ -5554,7 +5554,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
         </svg>
       </span>
       <span className="ag-crumb-track" aria-hidden="true">
-        <span className="ag-crumb-fill" style={{ width: `${((activeSecIdx + 1) / GUIDE_SECTIONS.length) * 100}%` }}/>
+        <span className="ag-crumb-fill" style={{ transform: `scaleX(${(activeSecIdx + 1) / GUIDE_SECTIONS.length})` }}/>
       </span>
     </button>
   );
