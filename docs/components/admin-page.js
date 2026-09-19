@@ -3660,14 +3660,30 @@ ${bodyInner}
     // que esas franjas para que SIEMPRE quede una banda blanca entre cabecera y
     // contenido, y entre contenido y pie, imposible que se solapen en ninguna página.
     var MARG_TOP = 26, MARG_BOT = 30;
-    // En iOS/Safari el canvas de html2canvas tiene un límite de tamaño más bajo:
-    // con scale 2 y un contrato de varias páginas, el lienzo se pasaba y el final
-    // (las firmas) y las imágenes salían en blanco. En móvil bajamos a scale 1.5
-    // (menos presión, sigue nítido para un PDF). En escritorio se mantiene en 2.
+    // En iOS/Safari el canvas de html2canvas tiene un límite de tamaño más bajo
+    // (~16M px de área): con scale 2 y un contrato de varias páginas, el lienzo
+    // se pasaba y el final (las firmas) y las imágenes salían en blanco. Bajar
+    // la escala solo "si es móvil" no basta: el contrato ha ido creciendo
+    // (más cláusulas) y el mismo límite se alcanza también en Safari de
+    // escritorio, o vuelve a alcanzarse en móvil según cuánto mida ESTE
+    // contrato en concreto (varía con el idioma, la fianza, mascotas...).
+    // Por eso el techo se calcula a partir del tamaño real del contenido, no
+    // solo del dispositivo: nunca se pide un canvas que pueda pasarse.
     var IS_MOBILE = /iP(hone|ad|od)|Android/i.test(navigator.userAgent)
       || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.userAgent))
       || (window.innerWidth && window.innerWidth < 820);
-    var CANVAS_SCALE = IS_MOBILE ? 1.5 : 2;
+    var IS_SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    var DESIRED_SCALE = IS_MOBILE ? 1.5 : 2;
+    // Techo conservador de área de canvas seguro en WebKit (Safari/iOS).
+    // Chrome/Firefox aguantan mucho más, pero aplicarlo también ahí no cuesta
+    // nada (con contratos de este tamaño nunca se llega a necesitar recortar).
+    var MAX_CANVAS_AREA = 16000000;
+    var contentW = el.scrollWidth || 794;
+    var contentH = el.scrollHeight || 1;
+    var maxScaleForArea = Math.sqrt(MAX_CANVAS_AREA / (contentW * contentH));
+    var CANVAS_SCALE = (IS_SAFARI || IS_MOBILE)
+      ? Math.max(1, Math.min(DESIRED_SCALE, maxScaleForArea))
+      : DESIRED_SCALE;
     var opt = {
       margin: [MARG_TOP, 0, MARG_BOT, 0],
       filename: FILE,
