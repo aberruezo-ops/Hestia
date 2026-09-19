@@ -2114,7 +2114,7 @@ const IntelligenciaTab = ({
     }, /*#__PURE__*/React.createElement("div", {
       className: "pe-cf-bar",
       style: {
-        width: `${pct}%`
+        transform: `scaleX(${pct / 100})`
       }
     })), /*#__PURE__*/React.createElement("span", {
       className: `pe-cf-row-label${bold ? ' pe-cf-row-bold' : ''}`
@@ -2558,7 +2558,7 @@ const IntelligenciaTab = ({
       }, /*#__PURE__*/React.createElement("div", {
         className: "funnel-bar-fill",
         style: {
-          width: `${pctFirst}%`
+          transform: `scaleX(${pctFirst / 100})`
         }
       })), /*#__PURE__*/React.createElement("span", {
         className: "funnel-n"

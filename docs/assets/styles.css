@@ -4126,6 +4126,7 @@ footer .footer-brand .addr {
   border: 1px solid rgba(240,232,213,.18);
   color: rgba(240,232,213,.65);
   width: 38px; height: 38px;
+  flex-shrink: 0;
   border-radius: 8px 0 8px 0;
   cursor: pointer;
   font-size: 20px;
@@ -4136,6 +4137,9 @@ footer .footer-brand .addr {
 }
 .avail-arr:hover:not(.off) { border-color: var(--apt-accent,var(--sol)); color: var(--apt-accent,var(--sol)); }
 .avail-arr.off { opacity: .22; cursor: default; pointer-events: none; }
+@media (hover: none) and (pointer: coarse) {
+  .avail-arr { width: 44px; height: 44px; }
+}
 .avail-months {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -7209,7 +7213,9 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.28em;
-  color: var(--card-accent, var(--sol));
+  /* --card-accent es el tono vivo (vale para el borde/avatar); como texto
+     sobre la tarjeta clara no llega a 4.5:1, se oscurece para leer bien. */
+  color: color-mix(in srgb, var(--card-accent, var(--sol)) 60%, black);
   margin-bottom: 4px;
 }
 .contacto-card-name {
@@ -9868,12 +9874,19 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   cursor: pointer;
   transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
 }
+@media (hover: none) and (pointer: coarse) {
+  .hs-apt-btn { min-height: 44px; }
+}
 .hs-apt-btn:hover {
   border-color: rgba(240,232,213,.45);
   color: var(--arena);
 }
 .hs-apt-btn.active {
-  background: var(--btn-accent, var(--sol));
+  /* El acento base (sol/vm/vt/vs) es demasiado claro para texto crema en
+     AA: se oscurece 30% hacia negro, igual que el patrón -dk del resto
+     del sitio, en vez de fijar un color de texto que solo funcionaría
+     para algunos de los cuatro acentos posibles. */
+  background: color-mix(in srgb, var(--btn-accent, var(--sol)) 70%, black);
   border-color: transparent;
   color: var(--crema);
   font-weight: 500;
@@ -12409,10 +12422,12 @@ footer,
 }
 .ag-crumb-fill {
   display: block;
+  width: 100%;
   height: 100%;
   background: var(--apt-accent);
   border-radius: 2px;
-  transition: width 0.25s var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
+  transform-origin: left;
+  transition: transform 0.25s var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
 @media (max-width: 900px) {
   .ag-crumb {
@@ -16813,6 +16828,9 @@ body.apt-bar-shown .widget-stack {
   cursor: pointer;
   transition: background .25s ease, color .25s ease, border-color .25s ease, transform .15s ease;
 }
+@media (hover: none) and (pointer: coarse) {
+  .opiniones-tab { min-height: 44px; }
+}
 .opiniones-tab:hover {
   background: rgba(240, 232, 213, 0.10);
   border-color: rgba(240, 232, 213, 0.75);
@@ -17107,6 +17125,9 @@ a.cta-wa-btn::before,
   padding: 4px 6px;
   cursor: pointer;
   transition: color .15s ease, transform .15s ease;
+}
+@media (hover: none) and (pointer: coarse) {
+  .eo-star { min-width: 44px; min-height: 44px; padding: 7px 9px; }
 }
 .eo-star.is-on { color: var(--sol); }
 .eo-star:hover { transform: scale(1.12); }
@@ -19475,10 +19496,12 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   z-index: 0;
 }
 .pe-cf-bar {
+  width: 100%;
   height: 100%;
   background: rgba(27,200,216,0.20);
   border-radius: 4px;
-  transition: width 0.4s ease;
+  transform-origin: left;
+  transition: transform 0.4s ease;
 }
 .pe-cf-row-label {
   position: relative;
@@ -19667,7 +19690,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   gap: 8px;
 }
 .amr-stars {
-  color: #C9922A;
+  color: var(--vs-dk, #7A5E1A);
   font-size: 13px;
   letter-spacing: 1px;
 }
@@ -19689,7 +19712,8 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--apt-accent, var(--sol));
+  /* apt-accent/sol en crudo no llega a 4.5:1 sobre la tarjeta blanca */
+  color: color-mix(in srgb, var(--apt-accent, var(--sol)) 65%, black);
   text-decoration: underline;
   text-underline-offset: 3px;
   cursor: pointer;
@@ -19937,6 +19961,11 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   border-color: var(--apt-accent) !important;
   color: #FFFFFF !important;
 }
+/* El fondo activo aquí es --ber o un acento de Hestía (oscuros), no el
+   --sol claro de la fila de fuente: el contador hereda el ber-dk de
+   .opiniones-tab.is-active .opiniones-tab-count (pensado para ese otro
+   fondo) y queda casi invisible. Fuerza blanco, igual que la etiqueta. */
+.opiniones-tab-apt.is-active .opiniones-tab-count { color: #FFFFFF; opacity: 0.85; }
 
 /* ============================================================
    /p-edit · Reviews tab — listado compacto + expansión
@@ -22159,9 +22188,10 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   overflow: hidden;
 }
 .funnel-bar-fill {
-  height: 100%; border-radius: 6px 0 6px 0;
+  width: 100%; height: 100%; border-radius: 6px 0 6px 0;
   background: var(--sol, #3AAABB);
-  transition: width .3s var(--ease-out, ease);
+  transform-origin: left;
+  transition: transform .3s var(--ease-out, ease);
 }
 .funnel-n { text-align: right; color: var(--ink, #2A0F2E); font-variant-numeric: tabular-nums; }
 .funnel-pct { color: var(--ink-soft, #5a5450); white-space: nowrap; }

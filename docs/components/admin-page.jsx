@@ -1643,7 +1643,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
     const pct = total ? Math.round(count / total * 100) : 0;
     return (
       <div className="pe-cf-row">
-        <div className="pe-cf-bar-wrap"><div className="pe-cf-bar" style={{ width: `${pct}%` }}/></div>
+        <div className="pe-cf-bar-wrap"><div className="pe-cf-bar" style={{ transform: `scaleX(${pct / 100})` }}/></div>
         <span className={`pe-cf-row-label${bold ? ' pe-cf-row-bold' : ''}`}>{label}</span>
         <span className="pe-cf-row-n">{count.toLocaleString('es-ES')}</span>
       </div>
@@ -1939,7 +1939,7 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
                             <div className="funnel-row" key={id}>
                               <span className="funnel-label">{label}</span>
                               <div className="funnel-bar-track">
-                                <div className="funnel-bar-fill" style={{ width: `${pctFirst}%` }} />
+                                <div className="funnel-bar-fill" style={{ transform: `scaleX(${pctFirst / 100})` }} />
                               </div>
                               <span className="funnel-n"><strong>{n}</strong></span>
                               <span className="funnel-pct">

@@ -203,9 +203,9 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
 
 /* ---- barra de progreso de lectura ---- */
-.progreso{position:fixed;top:0;left:0;height:3px;width:0%;z-index:10;
+.progreso{position:fixed;top:0;left:0;height:3px;width:100%;z-index:10;
   background:linear-gradient(90deg,var(--vm),var(--sol),var(--vs));
-  transition:width .1s linear;}
+  transform-origin:left;transform:scaleX(0);transition:transform .1s linear;}
 
 /* ---- revelado al hacer scroll ----
    Esta página vive de que Google lea el contenido sin ejecutar JS: el
@@ -337,7 +337,7 @@ html.js .reveal.is-in{opacity:1;transform:none;}
         "item": {
           "@type": "Place",
           "name": "Vera Playa → Garrucha (paseo litoral)",
-          "description": "Flat walk along the shore from Vera Playa to Garrucha's fishing harbour. No incline, buggy or elderly-friendly. At the harbour, fried-fish restaurants serve the area's best catch."
+          "description": "Flat walk along the shore from Vera Playa to Garrucha's fishing harbour, with no incline and easy for buggies or less mobile walkers. At the harbour, fried-fish restaurants serve the area's best catch."
         }
       },
       {
@@ -426,7 +426,7 @@ html.js .reveal.is-in{opacity:1;transform:none;}
         "item": {
           "@type": "Place",
           "name": "Paseo costero Mojácar Playa – Garrucha",
-          "description": "An easy walk (no technical difficulty) along Mojácar Playa's Paseo del Mediterráneo to Garrucha's fishing harbour. No incline, great with kids. Arriving at the harbour with the fishing boats and fried-fish spots makes it a complete plan."
+          "description": "An easy walk (no technical difficulty) along Mojácar Playa's Paseo del Mediterráneo to Garrucha's fishing harbour, flat and easy with kids. Arriving at the harbour, with its fishing boats and fried-fish spots, makes it a complete plan."
         }
       },
       {
@@ -453,7 +453,7 @@ html.js .reveal.is-in{opacity:1;transform:none;}
         "item": {
           "@type": "Place",
           "name": "Lunar Cable Park (wakeboard · ski náutico)",
-          "description": "Cable ski on the former rowing canal of the 2005 Mediterranean Games, next to the Cuevas del Almanzora reservoir. Reopened in 2019 as Lunar Cable Park. No boat, no wake, the cable pulls you along. Distance: ~20 km / 24 min from Vera Playa by local road via Vera and Cuevas del Almanzora."
+          "description": "Cable ski on the former rowing canal of the 2005 Mediterranean Games, next to the Cuevas del Almanzora reservoir, reopened in 2019 as Lunar Cable Park. There's no boat or wake, since a cable pulls you along. Distance: ~20 km / 24 min from Vera Playa by local road via Vera and Cuevas del Almanzora."
         }
       },
       {
@@ -462,7 +462,7 @@ html.js .reveal.is-in{opacity:1;transform:none;}
         "item": {
           "@type": "Place",
           "name": "Las Negras → Cala de San Pedro",
-          "description": "Coastal trail along cliffs to a remote cove with a 15th-century Nasrid castle and crystal-clear water. On arrival you'll find a small self-sufficient community selling coffee and fruit. No road access."
+          "description": "Coastal trail along cliffs to a remote cove, reachable only on foot, with a 15th-century Nasrid castle and crystal-clear water. On arrival you'll find a small self-sufficient community selling coffee and fruit."
         }
       },
       {
@@ -667,7 +667,7 @@ can use without signal. It includes:
 <article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Vera Playa → Garrucha (paseo litoral)</h3>
-    <p>Flat walk along the shore from Vera Playa to Garrucha's fishing harbour. No incline, buggy or elderly-friendly. At the harbour, fried-fish restaurants serve the area's best catch.</p>
+    <p>Flat walk along the shore from Vera Playa to Garrucha's fishing harbour, with no incline and easy for buggies or less mobile walkers. At the harbour, fried-fish restaurants serve the area's best catch.</p>
     <div class="chips"><span class="chip destacado">Must-see</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Paseo+maritimo+Vera+Playa+Garrucha" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">a short walk<small>from home</small></span>
@@ -691,7 +691,7 @@ can use without signal. It includes:
 <article class="ficha reveal">
   <div class="f-cuerpo">
     <h3>Paseo costero Mojácar Playa – Garrucha</h3>
-    <p>An easy walk (no technical difficulty) along Mojácar Playa's Paseo del Mediterráneo to Garrucha's fishing harbour. No incline, great with kids. Arriving at the harbour with the fishing boats and fried-fish spots makes it a complete plan.</p>
+    <p>An easy walk (no technical difficulty) along Mojácar Playa's Paseo del Mediterráneo to Garrucha's fishing harbour, flat and easy with kids. Arriving at the harbour, with its fishing boats and fried-fish spots, makes it a complete plan.</p>
     <div class="chips"><a href="https://www.google.com/maps/search/?api=1&amp;query=Paseo+Maritimo+Mojacar+Garrucha" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">5.8 km<small>from home</small></span>
@@ -707,7 +707,7 @@ can use without signal. It includes:
 <article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Las Negras → Cala de San Pedro</h3>
-    <p>Coastal trail along cliffs to a remote cove with a 15th-century Nasrid castle and crystal-clear water. On arrival you'll find a small self-sufficient community selling coffee and fruit. No road access.</p>
+    <p>Coastal trail along cliffs to a remote cove, reachable only on foot, with a 15th-century Nasrid castle and crystal-clear water. On arrival you'll find a small self-sufficient community selling coffee and fruit.</p>
     <div class="chips"><span class="chip destacado">Must-see</span><a href="https://www.google.com/maps/search/?api=1&amp;query=Cala+San+Pedro+Las+Negras+Almeria" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">43 km<small>from home</small></span>
@@ -767,7 +767,7 @@ can use without signal. It includes:
 <article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Lunar Cable Park (wakeboard · ski náutico)</h3>
-    <p>Cable ski on the former rowing canal of the 2005 Mediterranean Games, next to the Cuevas del Almanzora reservoir. Reopened in 2019 as Lunar Cable Park. No boat, no wake, the cable pulls you along. Distance: ~20 km / 24 min from Vera Playa by local road via Vera and Cuevas del Almanzora.</p>
+    <p>Cable ski on the former rowing canal of the 2005 Mediterranean Games, next to the Cuevas del Almanzora reservoir, reopened in 2019 as Lunar Cable Park. There's no boat or wake, since a cable pulls you along. Distance: ~20 km / 24 min from Vera Playa by local road via Vera and Cuevas del Almanzora.</p>
     <div class="chips"><span class="chip destacado">Must-see</span><span class="chip nota">4.7 out of 5</span><a href="https://lunarcablepark.com/" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">19 km<small>from home</small></span>
@@ -810,7 +810,7 @@ can use without signal. It includes:
   var onScroll = function(){
     var h = document.documentElement;
     var alto = h.scrollHeight - h.clientHeight;
-    if (barra) barra.style.width = (alto > 0 ? (h.scrollTop / alto * 100) : 0) + '%';
+    if (barra) barra.style.transform = 'scaleX(' + (alto > 0 ? (h.scrollTop / alto) : 0) + ')';
     if (flot) flot.classList.toggle('is-visible', h.scrollTop > window.innerHeight * 0.6);
   };
   document.addEventListener('scroll', onScroll, { passive: true });

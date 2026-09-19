@@ -1675,7 +1675,7 @@ const ReservasAside = ({ lang }) => {
         </div>
         <div>
           <div className="r-name">Fran Moral</div>
-          <div className="r-lang" style={{ color: 'var(--vt)' }}>🇬🇧 English</div>
+          <div className="r-lang" style={{ color: 'var(--vt-dk)' }}>🇬🇧 English</div>
           <div className="r-role">{lang === 'es' ? 'Estancia · Mientras estás aquí' : 'Stay · While you are here'}</div>
         </div>
         <div className="r-actions">
