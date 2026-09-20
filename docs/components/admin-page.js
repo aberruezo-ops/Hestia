@@ -3124,8 +3124,10 @@ const ContractTab = ({
     const _filaEfectivo = remanenteN > 0 ? isEn ? `<tr><td><strong>3. Payment on arrival</strong></td><td class="num">${remanente} €</td><td>On the check-in day</td><td>In cash</td></tr>` : `<tr><td><strong>3. Pago a la llegada</strong></td><td class="num">${remanente} €</td><td>El día del check-in</td><td>En efectivo</td></tr>` : '';
     const _filaFianza = fianza ? isEn ? `<tr><td><strong>Security deposit</strong></td><td class="num">300 €</td><td>Two days before arrival</td><td>Bank transfer (refunded at check-out)</td></tr>` : `<tr><td><strong>Fianza</strong></td><td class="num">300 €</td><td>Dos días antes de la llegada</td><td>Transferencia (se devuelve al check-out)</td></tr>` : '';
     const clausulaSegunda = isEn ? `
+<div class="h-keep">
 <h3>Two · Rent and payment milestones</h3>
 <p><strong>2.1</strong> The net rent for this lease is <strong>${precioL} (${precioTotal}) EUROS</strong>, for <strong>${huespL} (${huespedes}) guests${mascotaTexto}</strong>. Payment is structured in three milestones, set out in the table below:</p>
+</div>
 <table>
   <thead><tr><th>Payment milestone</th><th class="num">Amount</th><th>When</th><th>Method</th></tr></thead>
   <tbody>
@@ -3154,8 +3156,10 @@ const ContractTab = ({
 <p><strong>2.6</strong> Cancellation of the contract fewer than <strong>${cancelL} (${diasCancelacion}) days</strong> before the start of the stay will entail the loss of the amounts paid, save for officially demonstrable force majeure affecting one of the guests. In that case, if the property can be re-let, all amounts paid will be refunded, or the dates may be postponed within the following SIX (6) months from the date of the stay.</p>
 ${clausulaFianza}
 ` : `
+<div class="h-keep">
 <h3>Segunda · Renta y momentos de pago</h3>
 <p><strong>2.1</strong> La renta neta del arrendamiento es de <strong>${precioL} (${precioTotal}) EUROS</strong>, para <strong>${huespL} (${huespedes}) personas${mascotaTexto}</strong>. El pago se articula en tres momentos, recogidos en la siguiente tabla:</p>
+</div>
 <table>
   <thead><tr><th>Momento del pago</th><th class="num">Importe</th><th>Cuándo</th><th>Forma de pago</th></tr></thead>
   <tbody>
@@ -3204,15 +3208,21 @@ ${a.acceso_en ? `<p>${a.acceso_en}</p>` : ''}
 
 <h2>CLAUSES</h2>
 
+<div class="h-keep">
 <h3>One · Purpose</h3>
 <p>The Owner leases on a seasonal basis, for the term to be indicated, to the Tenant, who accepts, the property described.</p>
+</div>
 ${clausulaSegunda}
+<div class="h-keep">
 <h3>Three · Term</h3>
 <p>This contract is granted for the season of <strong>${nochesL} (${noches}) nights</strong>, from <strong>${fechaEntradaStr}</strong> at 15:00, and shall be automatically terminated, without need for any notice, on <strong>${fechaSalidaStr}</strong> at 11:00, with the Tenant returning the keys beforehand.</p>
+</div>
 <p>The Tenant must leave the property in the condition in which it was found, free of belongings and effects, with all its services in perfect working order, with no possibility of extension save for written agreement between the parties.</p>
 
+<div class="h-keep">
 <h3>Four · Obligations of the parties</h3>
 <p><strong>4.1</strong> The Tenant undertakes to keep the dwelling in perfect condition throughout the term freely agreed between both parties.</p>
+</div>
 <p><strong>4.2</strong> The Tenant may not accommodate more guests nor carry out in the dwelling any activities that are annoying, unhealthy, harmful, dangerous, unlawful or contrary to the Community Statutes. Nor may the Tenant store flammable, explosive or corrosive materials in the dwelling, or carry out commercial or industrial activities therein.</p>
 <p><strong>4.3</strong> The Tenant shall be directly and exclusively liable, and releases the Owners from all liability, for: i) damage to persons or property arising from the Tenant's misuse of the installations, services and supplies of the leased seasonal home; ii) damage, deterioration or losses occurring in the dwelling, whether caused by the Tenant or by those living with them.</p>
 <p><strong>4.4</strong> The Tenant may not carry out works or make any modification without the written permission of the Owner. Under no circumstances may holes be drilled in the walls.</p>
@@ -3221,32 +3231,44 @@ ${clausulaSegunda}
 <p><strong>4.7</strong> ${clausulaMascotas}</p>
 <p><strong>4.8</strong> Subletting in any form is prohibited.</p>
 
+<div class="h-keep">
 <h3>Five · Waivers</h3>
 <p>The Tenant waives the rights contained in articles 31 to 33 of the Spanish Urban Leases Act, and therefore the rights of lease, subrogation, assignment or transfer, whether total or partial, pre-emption, withdrawal and the right to challenge the transfer.</p>
+</div>
 
+<div class="h-keep">
 <h3>Six · Penalty clause</h3>
 <p>Failure to comply with the obligation to vacate the Dwelling within the agreed period shall oblige the Tenant to pay, as a penalty, the sum corresponding to triple the daily rent, payable by weeks elapsed until the Owner has free availability of the dwelling, without prejudice to costs, expenses and other indemnities payable by the Tenant, including lawyers' and court agents' fees, even where their involvement is not mandatory.</p>
+</div>
 
+<div class="h-keep">
 <h3>Seven · Jurisdiction</h3>
 <p>The parties submit to the jurisdiction and competence of the courts and tribunals of the place where the dwelling is located, with express waiver of their own jurisdiction.</p>
+</div>
 <p>Both parties ratify this contract and sign it in duplicate, to a single effect, at the place and date indicated in the heading.</p>
 
+<div class="h-keep">
 <h3>Eight · Services included</h3>
 <p>The apartment is handed over clean and equipped.</p>
+</div>
 <ul>
   <li>One set of towels per guest.</li>
   <li>${a.bloqueSabanas_en}</li>
 </ul>
 
+<div class="h-keep">
 <h3>Nine · Additional services</h3>
 <p>The following services may be added to the booking. Prices are synchronised with the website:</p>
+</div>
 <table>
   <thead><tr><th>Service</th><th class="num">Price</th><th>Unit</th></tr></thead>
   <tbody>${tablaExtras}</tbody>
 </table>
 
+<div class="h-keep">
 <h3>Ten · Hestía house rules</h3>
 <p>Hestía provides consumable products. Please be cooperative: if you use or consume something, replace it (except the welcome kit, which is a small gift from us).</p>
+</div>
 <p>Respect the environment and try not to waste electricity and water. In your own home you would not leave the air conditioning on with the windows open or when you are out. So please, feel at home.</p>
 <p>Likewise, if you go out, bring in the cushions, the awning and the terrace plants, especially if it is windy, rainy or bad weather is forecast.</p>
 <p>Respect and do not remove from Hestía any equipment, contents, furniture or details. After your stay an inventory and inspection of Hestía will be carried out, so any deterioration or removal will be your responsibility.</p>
@@ -3289,15 +3311,21 @@ ${a.acceso ? `<p>${a.acceso}</p>` : ''}
 
 <h2>CLÁUSULAS</h2>
 
+<div class="h-keep">
 <h3>Primera · Objeto</h3>
 <p>El Propietario cede en arrendamiento de temporada con la duración que se indicará a la Parte Arrendataria, que acepta, la finca descrita.</p>
+</div>
 ${clausulaSegunda}
+<div class="h-keep">
 <h3>Tercera · Duración</h3>
 <p>Este contrato se otorga por la temporada de <strong>${nochesL} (${noches}) noches</strong>, desde el día <strong>${fechaEntradaStr}</strong> a las 15:00, y quedará automáticamente resuelto sin necesidad de aviso alguno, el día <strong>${fechaSalidaStr}</strong> a las 11:00, debiendo la Parte Arrendataria entregar las llaves con anterioridad.</p>
+</div>
 <p>La Parte Arrendataria deberá abandonar la finca en el estado en que la encontró, dejándola libre de efectos y enseres y permaneciendo en perfecto estado los servicios de que dispone, sin que quepa prórroga del mismo salvo acuerdo escrito entre las partes.</p>
 
+<div class="h-keep">
 <h3>Cuarta · Obligaciones de las partes</h3>
 <p><strong>4.1</strong> La Parte Arrendataria se obliga a conservar la vivienda en perfecto estado durante el plazo de duración libremente pactado entre ambas partes.</p>
+</div>
 <p><strong>4.2</strong> La Parte Arrendataria no podrá alojar a más huéspedes ni realizar en la vivienda actividades molestas, insalubres, nocivas, peligrosas, ilícitas o contrarias a los Estatutos de la Comunidad. Tampoco podrá almacenar materias inflamables, explosivas o corrosivas en la vivienda y/o desarrollar, en la misma, actividades mercantiles o de industria.</p>
 <p><strong>4.3</strong> La Parte Arrendataria será directa y exclusivamente responsable y exime de toda responsabilidad a la propiedad por: i) Los daños que puedan ocasionarse a personas o cosas y sean derivados de mal uso por la Parte Arrendataria de instalaciones para servicios y suministros de la casa de temporada arrendada. ii) Los daños, deterioros o pérdidas que se produzcan en la misma, ya sean causados por la Parte Arrendataria o por las personas que convivan en la vivienda.</p>
 <p><strong>4.4</strong> La Parte Arrendataria no podrá hacer obras, ni introducir modificación alguna sin permiso escrito del Propietario. En ningún caso podrá hacer taladros o agujeros en las paredes.</p>
@@ -3306,32 +3334,44 @@ ${clausulaSegunda}
 <p><strong>4.7</strong> ${clausulaMascotas}</p>
 <p><strong>4.8</strong> Queda prohibido el subarriendo en cualquiera de sus modalidades.</p>
 
+<div class="h-keep">
 <h3>Quinta · Renuncias</h3>
 <p>La Parte Arrendataria renuncia a los derechos contenidos en los artículos 31 a 33 de la Ley de Arrendamientos Urbanos, y por tanto a los derechos de Arrendamiento, subrogación, cesión, o traspaso, ya sean de forma total o parcial, tanteo, retracto y derecho de impugnación de la transmisión.</p>
+</div>
 
+<div class="h-keep">
 <h3>Sexta · Cláusula penal</h3>
 <p>El incumplimiento de la obligación de abandonar la Vivienda en el plazo pactado obligará a la Parte Arrendataria a satisfacer en concepto de cláusula penal, la suma correspondiente al triple de la renta diaria, exigibles por semanas vencidas hasta la libre disponibilidad de la vivienda por el Propietario, sin perjuicio de las costas, gastos y demás indemnizaciones que fueran a su cargo incluso minutas de abogado y procurador, aunque no fuera preceptiva su intervención.</p>
+</div>
 
+<div class="h-keep">
 <h3>Séptima · Jurisdicción</h3>
 <p>Las partes integrantes se someten a la jurisdicción y competencia de los tribunales y juzgados del lugar donde está situada la vivienda, con renuncia expresa a su fuero propio.</p>
+</div>
 <p>Ambas partes se ratifican en el presente contrato y firman por duplicado, a un solo efecto, en el lugar y fecha indicados en el encabezamiento.</p>
 
+<div class="h-keep">
 <h3>Octava · Servicios incluidos</h3>
 <p>El apartamento se entrega limpio y dotado.</p>
+</div>
 <ul>
   <li>Un juego de toallas por cada huésped.</li>
   <li>${a.bloqueSabanas}</li>
 </ul>
 
+<div class="h-keep">
 <h3>Novena · Servicios adicionales</h3>
 <p>Los siguientes servicios pueden añadirse a la reserva. Precios sincronizados con la web:</p>
+</div>
 <table>
   <thead><tr><th>Servicio</th><th class="num">Precio</th><th>Unidad</th></tr></thead>
   <tbody>${tablaExtras}</tbody>
 </table>
 
+<div class="h-keep">
 <h3>Décima · Normas de Hestía</h3>
 <p>Hestía dispone de productos consumibles. Por favor, sed colaborativos: si gastáis o consumís, reponed (salvo el kit que es un pequeño regalo por nuestra parte).</p>
+</div>
 <p>Respetad el medio ambiente e intentad no malgastar la luz y el agua. En vuestro hogar no dejaríais el aire acondicionado encendido con las ventanas abiertas o cuando no estáis en casa. Pues eso, sentíos como en vuestro hogar.</p>
 <p>Asimismo, si salís, recoged los cojines, el toldo, las plantas de la terraza, especialmente si hay viento, lluvia o predicción de mal tiempo.</p>
 <p>Respetad y no extraigáis de Hestía el equipamiento, el contenido, el mobiliario y los detalles. Tras vuestra estancia se realizará un inventario e inspección de Hestía, con lo que cualquier deterioro o sustracción será vuestra responsabilidad.</p>
@@ -3699,12 +3739,18 @@ ${bodyInner}
       // bloque de firmas se mantiene JUNTO ('avoid') y fluye tras las normas: si
       // cabe en el hueco de la última página entra ahí, si no, se mueve entero a
       // una nueva. 'tr' evita partir filas de tabla.
-      // 'p', 'li', 'h3': sin esto, el corte de página es puramente por píxeles
+      // 'p', 'li': sin esto, el corte de página es puramente por píxeles
       // dentro de cualquier párrafo o punto de lista, y puede caer a mitad de
       // una línea de texto (la mitad de arriba en una página, la de abajo en
       // la siguiente). Al marcarlos, el corte se desplaza siempre al hueco
       // ENTRE párrafos/puntos, nunca a través de uno. Nunca se pierde ni se parte.
-      pagebreak: { mode: ['css', 'legacy'], avoid: ['tr', 'p', 'li', 'h3', '.firmas', '.sign-page'] }
+      // '.h-keep': marcar 'h3' suelto no evita que un título de cláusula quede
+      // huérfano al final de una página (el título en sí nunca ocupa más de
+      // una página, así que 'avoid' no tenía nada que hacer con él solo). Cada
+      // título va envuelto junto con el párrafo que le sigue en un .h-keep:
+      // ahora SU CONJUNTO es lo que no se puede partir, así que si no caben
+      // los dos, se mueven los dos juntos a la página siguiente.
+      pagebreak: { mode: ['css', 'legacy'], avoid: ['tr', 'p', 'li', '.h-keep', '.firmas', '.sign-page'] }
     };
     var worker = html2pdf().set(opt).from(el);
     await worker.toPdf();
