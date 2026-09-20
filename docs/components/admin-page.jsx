@@ -108,8 +108,8 @@ const APT_CONTRACT_DATA = {
     heroPhoto: 'assets/apt-vt-gallery-33.jpg',
     direccion: 'Apto. 11, planta 5ª, escalera 13, en la urbanización Thalassa, en C/ Tomillo 2',
     plazaGaraje: '163',
-    acceso: 'La vivienda se encuentra en una <strong>quinta planta (tercera desde el garaje)</strong>: hasta la segunda planta se puede subir en <strong>ascensor</strong>, pero las <strong>tres plantas restantes no disponen de ascensor</strong> y se suben por escalera. Además, existen tramos de escaleras adicionales para acceder a diferentes lugares de la urbanización, como la piscina, el parque, las pistas de tenis, etc.',
-    acceso_en: 'The dwelling is on the <strong>fifth floor (third from the garage)</strong>: a <strong>lift</strong> reaches up to the second floor, but the <strong>remaining three floors have no lift</strong> and are reached by stairs. There are also additional flights of stairs to reach different areas of the complex, such as the pool, the park, the tennis courts, etc.',
+    acceso: 'La vivienda se encuentra en una <strong>quinta planta (tercera desde el garaje), sin ascensor</strong>: se sube por escalera. Además, existen tramos de escaleras adicionales para acceder a diferentes lugares de la urbanización, como la piscina, el parque, las pistas de tenis, etc.',
+    acceso_en: 'The dwelling is on the <strong>fifth floor (third from the garage), with no lift</strong>: it is reached by stairs. There are also additional flights of stairs to reach different areas of the complex, such as the pool, the park, the tennis courts, etc.',
     zonaObras: 'cercanas',
     zonaObras_en: 'nearby',
     bloqueAccesibilidad: false,
@@ -2685,7 +2685,8 @@ ${clausulaSegunda}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"><\/script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"><\/script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"><\/script>
 <style>
   * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   @page { size: A4; margin: 0; }
@@ -2838,9 +2839,12 @@ ${clausulaSegunda}
   .blank-line.short  { min-width: 30mm; }
   .blank-line.medium { min-width: 55mm; }
   .blank-line.long   { min-width: 80mm; }
-  ul, ol { margin: 1mm 0 2mm 6mm; padding: 0; color: var(--ber); }
-  li { margin: 0.8mm 0; }
-  li::marker { color: var(--sol); }
+  /* list-style/::marker: html2canvas no soporta bien el pseudo-elemento
+     ::marker (a diferencia de ::before, que sí funciona, como en h3::before
+     más abajo), así que la viñeta se dibuja a mano con ::before. */
+  ul, ol { margin: 1mm 0 2mm 6mm; padding: 0; color: var(--ber); list-style: none; }
+  li { margin: 0.8mm 0; position: relative; padding-left: 4mm; }
+  li::before { content: '•'; color: var(--sol); position: absolute; left: 0; }
 
   table {
     width: 100%;
@@ -2966,78 +2970,154 @@ ${bodyInner}
 
   async function generate() {
     try { await document.fonts.ready; } catch(e) {}
-    var el = document.getElementById('pdf-content');
+    var pdfContentEl = document.getElementById('pdf-content');
     // Espera a que TODAS las imágenes (sobre todo el hero de la primera página)
     // estén decodificadas antes de rasterizar. En Safari/iOS html2canvas a veces
     // capturaba antes de que el data-URL del hero estuviera listo y la cabecera
     // de la primera página salía en blanco al guardar.
     try {
-      await Promise.all([].slice.call(el.querySelectorAll('img')).map(function(img) {
+      await Promise.all([].slice.call(pdfContentEl.querySelectorAll('img')).map(function(img) {
         if (img.complete && img.naturalWidth) return img.decode ? img.decode().catch(function() {}) : Promise.resolve();
         return new Promise(function(res) { img.onload = res; img.onerror = res; });
       }));
     } catch(e) {}
-    // margin: [top, right, bottom, left], la barra fina (18mm) y el pie viven en estos
-    // márgenes; el contenido (incl. el hero, ya dentro del flujo) nunca los invade.
-    // La barra fina ocupa 0–18mm y el pie ~287–290mm. Dejamos MARG_TOP/BOT MAYORES
-    // que esas franjas para que SIEMPRE quede una banda blanca entre cabecera y
-    // contenido, y entre contenido y pie, imposible que se solapen en ninguna página.
+
+    // ────────────────────────────────────────────────────────────────
+    // Paginación manual, bloque a bloque (no la automática de html2pdf).
+    //
+    // html2pdf/html2canvas rasterizan el contrato ENTERO en un único lienzo
+    // gigante y lo cortan a pixeles según un límite de área de canvas y un
+    // sistema de "avoid" que empuja elementos enteros con divs de relleno.
+    // Con contratos largos (muchas cláusulas, fianza, mascota...) ese
+    // sistema es imposible de predecir: a veces la cabecera o las firmas
+    // salían en blanco (canvas demasiado grande), a veces el texto se
+    // partía a mitad de línea, y al forzar que ningún párrafo se partiera
+    // aparecían huecos en mitad de una página sin motivo aparente.
+    //
+    // Aquí cada bloque de nivel superior (cada <h2>, cada título de
+    // cláusula ya unido a su párrafo en .h-keep, cada párrafo, tabla,
+    // lista o el bloque de firmas) se captura como su PROPIO lienzo
+    // pequeño, y la posición en el PDF la decide un cursor Y que llevamos
+    // nosotros mismos: si el bloque cabe en lo que queda de página, entra
+    // ahí; si no, pasa entero a una página nueva. Nunca hay canvas gigante
+    // que pueda pasarse de tamaño, nunca un cálculo de píxeles ajeno que
+    // pueda desalinearse, y el único hueco posible es el de fin de página
+    // (normal en cualquier documento paginado), nunca uno a mitad de página.
+    var heroEl = document.querySelector('.hero');
+    var bodyEl = document.getElementById('contract-body');
+    var blocks = [].slice.call(bodyEl.children);
+
     var MARG_TOP = 26, MARG_BOT = 30;
-    // En iOS/Safari el canvas de html2canvas tiene un límite de tamaño más bajo
-    // (~16M px de área): con scale 2 y un contrato de varias páginas, el lienzo
-    // se pasaba y el final (las firmas) y las imágenes salían en blanco. Bajar
-    // la escala solo "si es móvil" no basta: el contrato ha ido creciendo
-    // (más cláusulas) y el mismo límite se alcanza también en Safari de
-    // escritorio, o vuelve a alcanzarse en móvil según cuánto mida ESTE
-    // contrato en concreto (varía con el idioma, la fianza, mascotas...).
-    // Por eso el techo se calcula a partir del tamaño real del contenido, no
-    // solo del dispositivo: nunca se pide un canvas que pueda pasarse.
+    var PAGE_W = 210, PAGE_H = 297; // mm (A4)
+    var USABLE_H = PAGE_H - MARG_TOP - MARG_BOT;
+
     var IS_MOBILE = /iP(hone|ad|od)|Android/i.test(navigator.userAgent)
       || (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.userAgent))
       || (window.innerWidth && window.innerWidth < 820);
-    var IS_SAFARI = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    var DESIRED_SCALE = IS_MOBILE ? 1.5 : 2;
-    // Techo conservador de área de canvas seguro en WebKit (Safari/iOS).
-    // Chrome/Firefox aguantan mucho más, pero aplicarlo también ahí no cuesta
-    // nada (con contratos de este tamaño nunca se llega a necesitar recortar).
-    var MAX_CANVAS_AREA = 16000000;
-    var contentW = el.scrollWidth || 794;
-    var contentH = el.scrollHeight || 1;
-    var maxScaleForArea = Math.sqrt(MAX_CANVAS_AREA / (contentW * contentH));
-    var CANVAS_SCALE = (IS_SAFARI || IS_MOBILE)
-      ? Math.max(1, Math.min(DESIRED_SCALE, maxScaleForArea))
-      : DESIRED_SCALE;
-    var opt = {
-      margin: [MARG_TOP, 0, MARG_BOT, 0],
-      filename: FILE,
-      image: { type: 'jpeg', quality: 0.96 },
-      // El <meta viewport width=794> del HTML hace que el móvil maquete a 794px (=210mm)
-      // igual que escritorio, en vez del viewport por defecto ~980px que desajustaba la
-      // imagen escalada y desbordaba el contenido sobre cabecera/pie.
-      html2canvas: { scale: CANVAS_SCALE, useCORS: true, allowTaint: true, logging: false },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      // Firmas: NO forzar salto de página propio ('before'). En iOS/Safari ese
-      // salto generaba una página final fantasma que se descartaba, y las firmas
-      // desaparecían del PDF (la última página salía en blanco). En su lugar, el
-      // bloque de firmas se mantiene JUNTO ('avoid') y fluye tras las normas: si
-      // cabe en el hueco de la última página entra ahí, si no, se mueve entero a
-      // una nueva. 'tr' evita partir filas de tabla.
-      // 'p', 'li': sin esto, el corte de página es puramente por píxeles
-      // dentro de cualquier párrafo o punto de lista, y puede caer a mitad de
-      // una línea de texto (la mitad de arriba en una página, la de abajo en
-      // la siguiente). Al marcarlos, el corte se desplaza siempre al hueco
-      // ENTRE párrafos/puntos, nunca a través de uno. Nunca se pierde ni se parte.
-      // '.h-keep': marcar 'h3' suelto no evita que un título de cláusula quede
-      // huérfano al final de una página (el título en sí nunca ocupa más de
-      // una página, así que 'avoid' no tenía nada que hacer con él solo). Cada
-      // título va envuelto junto con el párrafo que le sigue en un .h-keep:
-      // ahora SU CONJUNTO es lo que no se puede partir, así que si no caben
-      // los dos, se mueven los dos juntos a la página siguiente.
-      pagebreak: { mode: ['css', 'legacy'], avoid: ['tr', 'p', 'li', '.h-keep', '.firmas', '.sign-page'] }
-    };
-    var worker = html2pdf().set(opt).from(el);
-    await worker.toPdf();
-    var pdf = await worker.get('pdf');
+    // Cada lienzo es ahora de un solo bloque (un párrafo, una tabla...),
+    // muy por debajo de cualquier límite de área de canvas real, así que
+    // ya no hace falta bajar la escala para esquivarlo: se puede usar una
+    // fija, más nítida que la anterior, igual en cualquier dispositivo.
+    var SCALE = IS_MOBILE ? 2 : 2.5;
+
+    var pdf = new jspdf.jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+    var cursorY = MARG_TOP;
+    // Autocalibrado: el <meta viewport width=794> hace que 210mm equivalgan
+    // a 794px CSS en cualquier dispositivo, pero medir la relación real a
+    // partir del propio hero (que siempre mide 65mm por CSS) es más fiable
+    // que asumir 96dpi a ciegas, y absorbe cualquier redondeo del navegador.
+    var pxPerMm = null;
+
+    function newPage() {
+      pdf.addPage();
+      cursorY = MARG_TOP;
+    }
+
+    async function shot(elToShoot) {
+      return await html2canvas(elToShoot, {
+        scale: SCALE, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false
+      });
+    }
+
+    function placeCanvas(canvas, hMm) {
+      var dataUrl = canvas.toDataURL('image/jpeg', 0.96);
+      pdf.addImage(dataUrl, 'JPEG', 0, cursorY, PAGE_W, hMm, undefined, 'FAST');
+      cursorY += hMm;
+    }
+
+    // Bloques que no deben partirse si se puede evitar (cláusula+título,
+    // tablas, listas, el bloque de firmas): si no caben en lo que queda de
+    // la página, se mueven ENTEROS a una nueva, nunca se cortan a mitad.
+    function isAtomic(elBlock) {
+      var tag = elBlock.tagName;
+      return tag === 'TABLE' || tag === 'UL' || tag === 'OL'
+        || elBlock.classList.contains('h-keep') || elBlock.classList.contains('sign-page');
+    }
+
+    // El hero es el primer bloque, siempre en la página 1, altura fija (65mm
+    // por CSS): medirlo aquí, en vez de darlo por hecho, calibra pxPerMm.
+    var heroCanvas = await shot(heroEl);
+    pxPerMm = (heroCanvas.height / SCALE) / 65;
+    placeCanvas(heroCanvas, 65);
+
+    for (var bi = 0; bi < blocks.length; bi++) {
+      var block = blocks[bi];
+      if (!block || block.offsetHeight === 0) continue; // bloques vacíos (p ?? '' : '')
+      var canvas = await shot(block);
+      var hMm = (canvas.height / SCALE) / pxPerMm;
+      var remaining = PAGE_H - MARG_BOT - cursorY;
+
+      // Evita titulares sueltos: los <h3> de cláusula ya viajan unidos a su
+      // párrafo en .h-keep (un solo bloque), pero los títulos de sección
+      // ("CLÁUSULAS", "EXPONEN"...) son <h2> sueltos. Si uno cabe aquí pero
+      // lo que le sigue no cabría justo debajo, se adelanta el salto de
+      // página para que el título nunca quede solo al final.
+      if (/^H[1-4]$/.test(block.tagName) && hMm <= remaining && bi + 1 < blocks.length) {
+        var peekBlock = blocks[bi + 1];
+        if (peekBlock && peekBlock.offsetHeight > 0) {
+          var peekCanvas = await shot(peekBlock);
+          var peekHmm = (peekCanvas.height / SCALE) / pxPerMm;
+          if (peekHmm <= USABLE_H && peekHmm > (remaining - hMm)) {
+            newPage();
+            remaining = PAGE_H - MARG_BOT - cursorY;
+          }
+        }
+      }
+
+      if (hMm <= remaining) {
+        placeCanvas(canvas, hMm);
+        continue;
+      }
+
+      if (hMm <= USABLE_H || isAtomic(block)) {
+        // Cabe en una página nueva (o debe ir entero pase lo que pase): se
+        // mueve entero. Este es el único hueco posible, y solo al final de
+        // una página, igual que en cualquier documento paginado normal.
+        newPage();
+        placeCanvas(canvas, hMm);
+        continue;
+      }
+
+      // Más alto que una página entera (párrafo excepcionalmente largo):
+      // única situación en la que se recorta, para no perder contenido ni
+      // dejar una página en blanco esperando algo que nunca va a caber.
+      var totalPx = canvas.height;
+      var pxPerMmScaled = SCALE * pxPerMm;
+      var offsetPx = 0;
+      while (offsetPx < totalPx) {
+        remaining = PAGE_H - MARG_BOT - cursorY;
+        if (remaining < 8) { newPage(); remaining = USABLE_H; }
+        var sliceHpx = Math.min(totalPx - offsetPx, Math.floor(remaining * pxPerMmScaled));
+        var sliceCanvas = document.createElement('canvas');
+        sliceCanvas.width = canvas.width;
+        sliceCanvas.height = sliceHpx;
+        sliceCanvas.getContext('2d').drawImage(canvas, 0, offsetPx, canvas.width, sliceHpx, 0, 0, canvas.width, sliceHpx);
+        placeCanvas(sliceCanvas, sliceHpx / pxPerMmScaled);
+        offsetPx += sliceHpx;
+        if (offsetPx < totalPx) newPage();
+      }
+    }
+
     var n = pdf.internal.getNumberOfPages();
     var pW = pdf.internal.pageSize.getWidth();   // 210 mm
     var pH = pdf.internal.pageSize.getHeight();  // 297 mm
@@ -3087,13 +3167,13 @@ ${bodyInner}
       pdf.text('${isEn ? 'Page' : 'Página'} ' + i + ' ${isEn ? 'of' : 'de'} ' + n, pW - 5, footY, { align: 'right' });
     }
 
-    await worker.save();
+    pdf.save(FILE);
     document.getElementById('gen-status').textContent = ${JSON.stringify(isEn ? 'PDF downloaded. You can close this tab or use Ctrl+P if you need to print it.' : 'PDF descargado, puedes cerrar esta pestaña o usar Ctrl+P si necesitas imprimirlo.')};
   }
 
   document.addEventListener('DOMContentLoaded', function() {
     generate().catch(function(err) {
-      console.error('html2pdf error:', err);
+      console.error('PDF generation error:', err);
       document.getElementById('gen-status').textContent = ${JSON.stringify(isEn ? 'Error generating the PDF. Use Ctrl+P as an alternative.' : 'Error al generar el PDF. Usa Ctrl+P como alternativa.')};
       document.getElementById('gen-fallback').style.display = '';
     });
