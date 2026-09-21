@@ -897,7 +897,7 @@ const Footer = ({ lang }) => {
           </div>
         </div>
         <div className="col">
-          <h5>{t.footer_apts}</h5>
+          <h3>{t.footer_apts}</h3>
           <ul>
             <li><a href="mar.html"><span className="apt-dot" data-apt="vm" aria-hidden="true"/>Hestía Mar</a></li>
             <li><a href="thalassa.html"><span className="apt-dot" data-apt="vt" aria-hidden="true"/>Hestía Thalassa</a></li>
@@ -908,7 +908,7 @@ const Footer = ({ lang }) => {
           </ul>
         </div>
         <div className="col">
-          <h5>{t.footer_hestia}</h5>
+          <h3>{t.footer_hestia}</h3>
           <ul>
             <li><a href="nosotros.html">{t.nav[4]}</a></li>
             <li><a href="opiniones.html">{t.nav[5]}</a></li>
@@ -917,7 +917,7 @@ const Footer = ({ lang }) => {
           </ul>
         </div>
         <div className="col">
-          <h5>{t.footer_legal}</h5>
+          <h3>{t.footer_legal}</h3>
           <ul>
             <li><a href="privacidad.html">{lang === 'es' ? 'Privacidad' : 'Privacy'}</a></li>
             <li><a href="cookies.html">Cookies</a></li>
@@ -934,7 +934,7 @@ const Footer = ({ lang }) => {
           </ul>
         </div>
         <div className="col">
-          <h5>{t.footer_contacto}</h5>
+          <h3>{t.footer_contacto}</h3>
           <ul>
             <li><a href="contacto.html">{t.nav[6]}</a></li>
             <li><a href="https://wa.me/34620316370">🇪🇸 Alex · WhatsApp</a></li>

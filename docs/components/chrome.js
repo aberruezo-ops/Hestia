@@ -1487,7 +1487,7 @@ const Footer = ({
     height: "26"
   }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Hestía, tu amuleto de hogar en Vera Playa.' : 'Hestía, your home charm in Vera Playa.'))), /*#__PURE__*/React.createElement("div", {
     className: "col"
-  }, /*#__PURE__*/React.createElement("h5", null, t.footer_apts), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement("h3", null, t.footer_apts), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "mar.html"
   }, /*#__PURE__*/React.createElement("span", {
     className: "apt-dot",
@@ -1513,7 +1513,7 @@ const Footer = ({
     href: "empresas.html"
   }, lang === 'es' ? 'Para empresas' : 'For business')))), /*#__PURE__*/React.createElement("div", {
     className: "col"
-  }, /*#__PURE__*/React.createElement("h5", null, t.footer_hestia), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement("h3", null, t.footer_hestia), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "nosotros.html"
   }, t.nav[4])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "opiniones.html"
@@ -1523,7 +1523,7 @@ const Footer = ({
     href: lang === 'es' ? '/guia-vera/' : '/guia-vera/en/'
   }, lang === 'es' ? 'Extracto Guía' : 'Guide extract')))), /*#__PURE__*/React.createElement("div", {
     className: "col"
-  }, /*#__PURE__*/React.createElement("h5", null, t.footer_legal), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement("h3", null, t.footer_legal), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "privacidad.html"
   }, lang === 'es' ? 'Privacidad' : 'Privacy')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "cookies.html"
@@ -1535,7 +1535,7 @@ const Footer = ({
     onClick: () => window.dispatchEvent(new Event('hestia:cookies-reopen'))
   }, lang === 'es' ? 'Revisar consentimiento' : 'Review consent')))), /*#__PURE__*/React.createElement("div", {
     className: "col"
-  }, /*#__PURE__*/React.createElement("h5", null, t.footer_contacto), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement("h3", null, t.footer_contacto), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "contacto.html"
   }, t.nav[6])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370"

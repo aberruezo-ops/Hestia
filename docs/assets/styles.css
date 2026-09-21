@@ -3952,7 +3952,7 @@ footer::before {
 @media (prefers-reduced-motion: reduce) {
   .footer-grid::after { animation: none; background-position: 50% 0; }
 }
-footer h5 {
+footer h3 {
   font-family: var(--sans); font-weight: 500; font-size: 12px;
   letter-spacing: 0.22em; text-transform: uppercase;
   opacity: 0.90;
