@@ -5356,6 +5356,16 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
   .topbar .contacts { gap: 4px; }
 }
 
+@media (max-width: 400px) {
+  /* Con el page-pad genérico (24px), los 2 teléfonos + ES/EN no caben en
+     390px de ancho y el botón EN queda cortado por el borde. */
+  .topbar { padding-left: 12px; padding-right: 12px; }
+  .topbar .contacts { gap: 2px; }
+  .topbar .contacts .sep { padding: 0 2px; }
+  .topbar .lang button { padding: 4px 6px; }
+  .topbar .lang { gap: 0; }
+}
+
 /* Reveal on scroll — elementos de contenido: fade + translate + blur */
 .reveal {
   opacity: 0;
