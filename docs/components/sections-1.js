@@ -99,9 +99,19 @@ const Hero = ({
   const heroTomorrow = _heroAdd(heroToday, 1);
   const [hcIn, setHcIn] = React.useState(heroTomorrow);
   const [hcOut, setHcOut] = React.useState(_heroAdd(heroTomorrow, 7));
+  // Antes, un rango inválido hacía que el formulario no hiciera nada al
+  // pulsar el botón, sin ningún aviso: el usuario no podía saber si había
+  // funcionado, fallado o estaba cargando. El date input ya limita el
+  // mínimo de salida vía `min`, pero sigue siendo posible teclear una
+  // fecha inválida a mano en algunos navegadores/SO, así que se avisa.
+  const [hcError, setHcError] = React.useState(false);
   const goReservas = e => {
     e.preventDefault();
-    if (!hcIn || !hcOut || hcOut <= hcIn) return;
+    if (!hcIn || !hcOut || hcOut <= hcIn) {
+      setHcError(true);
+      return;
+    }
+    setHcError(false);
     // Sin apartamento (cualquier Hestía) y 4 huéspedes por defecto: /reservas
     // mostrará la disponibilidad de los 3 Hestías para esas fechas + opciones.
     const p = new URLSearchParams({
@@ -209,7 +219,8 @@ const Hero = ({
     className: "hero-sub"
   }, t.hero_sub), /*#__PURE__*/React.createElement("form", {
     className: "hero-availform",
-    onSubmit: goReservas
+    onSubmit: goReservas,
+    noValidate: true
   }, /*#__PURE__*/React.createElement("div", {
     className: "hero-af-field"
   }, /*#__PURE__*/React.createElement("label", {
@@ -219,8 +230,12 @@ const Hero = ({
     type: "date",
     value: hcIn,
     min: heroTomorrow,
+    required: true,
+    "aria-invalid": hcError,
+    "aria-describedby": hcError ? 'hero-af-error' : undefined,
     onChange: e => {
       setHcIn(e.target.value);
+      setHcError(false);
       if (e.target.value) setHcOut(_heroAdd(e.target.value, 7));
     }
   })), /*#__PURE__*/React.createElement("div", {
@@ -232,13 +247,23 @@ const Hero = ({
     type: "date",
     value: hcOut,
     min: _heroAdd(hcIn || heroTomorrow, 1),
-    onChange: e => setHcOut(e.target.value)
+    required: true,
+    "aria-invalid": hcError,
+    "aria-describedby": hcError ? 'hero-af-error' : undefined,
+    onChange: e => {
+      setHcOut(e.target.value);
+      setHcError(false);
+    }
   })), /*#__PURE__*/React.createElement("button", {
     type: "submit",
     className: "btn btn-primary hero-af-btn"
   }, lang === 'es' ? 'Comprobar disponibilidad' : 'Check availability', " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "→"))), /*#__PURE__*/React.createElement("div", {
+  }, "→")), hcError && /*#__PURE__*/React.createElement("p", {
+    id: "hero-af-error",
+    className: "hero-af-error",
+    role: "alert"
+  }, lang === 'es' ? 'La fecha de salida debe ser posterior a la de entrada.' : 'Check-out must be after check-in.')), /*#__PURE__*/React.createElement("div", {
     className: "hero-discover-group"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hero-ctas"

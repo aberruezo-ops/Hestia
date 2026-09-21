@@ -84,9 +84,16 @@ const Hero = ({ lang, onScrollDown }) => {
   const heroTomorrow = _heroAdd(heroToday, 1);
   const [hcIn,  setHcIn ] = React.useState(heroTomorrow);
   const [hcOut, setHcOut] = React.useState(_heroAdd(heroTomorrow, 7));
+  // Antes, un rango inválido hacía que el formulario no hiciera nada al
+  // pulsar el botón, sin ningún aviso: el usuario no podía saber si había
+  // funcionado, fallado o estaba cargando. El date input ya limita el
+  // mínimo de salida vía `min`, pero sigue siendo posible teclear una
+  // fecha inválida a mano en algunos navegadores/SO, así que se avisa.
+  const [hcError, setHcError] = React.useState(false);
   const goReservas = (e) => {
     e.preventDefault();
-    if (!hcIn || !hcOut || hcOut <= hcIn) return;
+    if (!hcIn || !hcOut || hcOut <= hcIn) { setHcError(true); return; }
+    setHcError(false);
     // Sin apartamento (cualquier Hestía) y 4 huéspedes por defecto: /reservas
     // mostrará la disponibilidad de los 3 Hestías para esas fechas + opciones.
     const p = new URLSearchParams({ checkin: hcIn, checkout: hcOut, guests: '4' });
@@ -177,20 +184,29 @@ const Hero = ({ lang, onScrollDown }) => {
           <span className="it">{t.hero_title_2}</span>
         </h1>
         <div className="hero-sub">{t.hero_sub}</div>
-        <form className="hero-availform" onSubmit={goReservas}>
+        <form className="hero-availform" onSubmit={goReservas} noValidate>
           <div className="hero-af-field">
             <label htmlFor="hero-cin">{lang === 'es' ? 'Entrada' : 'Check-in'}</label>
-            <input id="hero-cin" type="date" value={hcIn} min={heroTomorrow}
-              onChange={e => { setHcIn(e.target.value); if (e.target.value) setHcOut(_heroAdd(e.target.value, 7)); }} />
+            <input id="hero-cin" type="date" value={hcIn} min={heroTomorrow} required
+              aria-invalid={hcError} aria-describedby={hcError ? 'hero-af-error' : undefined}
+              onChange={e => { setHcIn(e.target.value); setHcError(false); if (e.target.value) setHcOut(_heroAdd(e.target.value, 7)); }} />
           </div>
           <div className="hero-af-field">
             <label htmlFor="hero-cout">{lang === 'es' ? 'Salida' : 'Check-out'}</label>
-            <input id="hero-cout" type="date" value={hcOut} min={_heroAdd(hcIn || heroTomorrow, 1)}
-              onChange={e => setHcOut(e.target.value)} />
+            <input id="hero-cout" type="date" value={hcOut} min={_heroAdd(hcIn || heroTomorrow, 1)} required
+              aria-invalid={hcError} aria-describedby={hcError ? 'hero-af-error' : undefined}
+              onChange={e => { setHcOut(e.target.value); setHcError(false); }} />
           </div>
           <button type="submit" className="btn btn-primary hero-af-btn">
             {lang === 'es' ? 'Comprobar disponibilidad' : 'Check availability'} <span className="arrow">→</span>
           </button>
+          {hcError && (
+            <p id="hero-af-error" className="hero-af-error" role="alert">
+              {lang === 'es'
+                ? 'La fecha de salida debe ser posterior a la de entrada.'
+                : 'Check-out must be after check-in.'}
+            </p>
+          )}
         </form>
         {/* "Descubre cada Hestía" + miniaturas de apartamento, juntos y justo
             debajo del buscador de fechas: lo primero que se ve al entrar,

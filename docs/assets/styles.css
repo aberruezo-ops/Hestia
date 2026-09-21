@@ -2269,7 +2269,20 @@ body.apt-bar-shown .cookies {
   appearance: none;
 }
 .hero-af-field input[type="date"]:focus { outline: 2px solid var(--sol, #3AAABB); outline-offset: 1px; }
+.hero-af-field input[aria-invalid="true"] { outline: 2px solid var(--err, #B8246E); outline-offset: 1px; }
 .hero-af-btn { flex: 0 0 auto; font-size: 12px !important; padding: 11px 20px !important; }
+/* Antes, un rango de fechas inválido no daba ningún aviso: el botón no
+   hacía nada. --err puro no llega a 4.5:1 sobre este hero oscuro (~2.9:1),
+   así se aclara hacia --crema, igual que exige la regla de contraste en
+   fondos oscuros del proyecto, sin perder la lectura de "error". */
+.hero-af-error {
+  flex: 1 1 100%;
+  margin: 2px 0 0;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: color-mix(in srgb, var(--err, #B8246E) 55%, var(--crema, #FAF6F0));
+  text-align: center;
+}
 .hero-availform .btn-primary {
   background-color: #3AAABB !important;
   background-image: none !important;
