@@ -23411,7 +23411,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .lss-pill-save { font-size: 10px; font-weight: 700; background: rgba(255,255,255,.2); border-radius: 4px 0 4px 0; padding: 1px 5px; letter-spacing: .02em; }
 .lss-cta {
   display: inline-block;
-  background: color-mix(in srgb, var(--accent, #C87A45) 70%, #000);
+  background: color-mix(in srgb, var(--accent, #3AAABB) 70%, #000);
   color: white;
   font-weight: 600;
   font-size: 14px;
@@ -23421,10 +23421,10 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   transition: background var(--dur-fast) var(--ease-out),
               transform var(--dur-fast) var(--ease-out),
               box-shadow var(--dur-base) var(--ease-out);
-  box-shadow: 0 4px 16px rgba(200,122,69,.35);
+  box-shadow: 0 4px 16px rgba(58,170,187,.35);
   align-self: flex-start;
 }
-.lss-cta:hover { background: #A85E2E; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,122,69,.5); }
+.lss-cta:hover { background: #2A8E9E; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(58,170,187,.5); }
 .lss-cta:active { transform: translateY(0) scale(0.97); }
 
 /* ── Long-stay nudge in home search (fondo oscuro: texto y CTA claros,
@@ -23462,8 +23462,8 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  background: rgba(200,122,69,.07);
-  border: 1.5px solid rgba(200,122,69,.30);
+  background: rgba(58,170,187,.07);
+  border: 1.5px solid rgba(58,170,187,.30);
   border-radius: 8px 0 8px 0;
   padding: 14px 16px;
   margin-bottom: 16px;
@@ -23475,15 +23475,15 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   align-items: center;
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--accent-dk, #A85E2E);
+  color: var(--accent-dk, #2A8E9E);
   text-decoration: none;
   white-space: nowrap;
-  border: 1px solid rgba(200,122,69,.4);
+  border: 1px solid rgba(58,170,187,.4);
   border-radius: 6px 0 6px 0;
   padding: 8px 14px;
   transition: background .12s;
 }
-.rf-ls-nudge-cta:hover { background: rgba(200,122,69,.12); }
+.rf-ls-nudge-cta:hover { background: rgba(58,170,187,.12); }
 
 /* ── LsInfoBlock · resumen larga estancia en reservas ─────────── */
 .rf-ls-info {
@@ -23685,17 +23685,17 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .lsl-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
 .lsl-btn-primary {
   display: inline-block;
-  background: color-mix(in srgb, var(--accent, #C87A45) 70%, #000);
+  background: color-mix(in srgb, var(--accent, #3AAABB) 70%, #000);
   color: white;
   font-weight: 600;
   font-size: 15px;
   padding: 14px 26px;
   border-radius: 8px 0 8px 0;
   text-decoration: none;
-  box-shadow: 0 4px 20px rgba(200,122,69,.4);
+  box-shadow: 0 4px 20px rgba(58,170,187,.4);
   transition: background .14s, transform .12s;
 }
-.lsl-btn-primary:hover { background: #A85E2E; transform: translateY(-1px); }
+.lsl-btn-primary:hover { background: #2A8E9E; transform: translateY(-1px); }
 .lsl-btn-ghost {
   display: inline-block;
   color: rgba(255,255,255,.7);
@@ -23745,7 +23745,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-size: 14px;
   color: var(--ink, #3D1A35);
 }
-.lsl-includes-item svg { flex-shrink: 0; color: var(--accent, #C87A45); }
+.lsl-includes-item svg { flex-shrink: 0; color: var(--accent, #3AAABB); }
 
 /* Prices */
 .lsl-prices-note { font-size: 13px; color: var(--ink-soft, #7A5A72); margin-bottom: 20px; line-height: 1.55; }
@@ -23760,7 +23760,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   padding: 12px 16px;
   flex-wrap: wrap;
 }
-.lsl-pt-special { border-color: rgba(200,122,69,.3); background: rgba(200,122,69,.04); }
+.lsl-pt-special { border-color: rgba(58,170,187,.3); background: rgba(58,170,187,.04); }
 .lsl-pt-period { flex: 1; font-size: 14px; font-weight: 500; color: var(--ink, #3D1A35); min-width: 140px; }
 .lsl-pt-tag { font-size: 11px; font-weight: 600; color: var(--ink-soft, #7A5A72); letter-spacing: .06em; text-transform: uppercase; }
 .lsl-pt-rate { font-size: 18px; font-weight: 700; color: var(--ber, #2A0F2E); white-space: nowrap; margin-left: auto; }
@@ -23818,7 +23818,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   transition: background .12s;
 }
 .lsl-faq-q:hover { background: rgba(42,15,46,.03); }
-.lsl-faq-chev { font-size: 18px; font-weight: 400; flex-shrink: 0; color: var(--accent, #C87A45); }
+.lsl-faq-chev { font-size: 18px; font-weight: 400; flex-shrink: 0; color: var(--accent, #3AAABB); }
 .lsl-faq-a {
   padding: 0 16px 14px;
   font-size: 13.5px;
