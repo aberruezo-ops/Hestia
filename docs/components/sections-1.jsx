@@ -208,15 +208,10 @@ const Hero = ({ lang, onScrollDown }) => {
             </p>
           )}
         </form>
-        {/* "Descubre cada Hestía" + miniaturas de apartamento, juntos y justo
-            debajo del buscador de fechas: lo primero que se ve al entrar,
-            sin apenas hacer scroll. */}
+        {/* Miniaturas de apartamento, justo debajo del buscador de fechas:
+            única vía secundaria (el buscador es la acción principal del
+            hero, sin un botón "Descubre cada Hestía" compitiendo con ella). */}
         <div className="hero-discover-group">
-          <div className="hero-ctas">
-            <a href="#apartamentos" className="btn btn-primary hero-cta-anim">
-              {t.hero_cta_1} <span className="arrow">→</span>
-            </a>
-          </div>
           <nav className="hero-apts-quick" aria-label={lang === 'es' ? 'Ir directamente a un apartamento' : 'Jump to an apartment'}>
             {APARTMENTS.map(a => (
               <a key={a.id} href={`${a.slug}.html`} className={`haq-item ${a.id}`}>

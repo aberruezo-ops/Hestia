@@ -2204,19 +2204,10 @@ body.apt-bar-shown .cookies {
   text-transform: uppercase;
   opacity: 0.6;
 }
-/* Botón "Descubre cada Hestía" + miniaturas: agrupados justo debajo del
-   buscador de fechas (ver JSX), para que se vean sin apenas hacer scroll. */
+/* Miniaturas de apartamento: justo debajo del buscador de fechas (ver
+   JSX), para que se vean sin apenas hacer scroll. */
 .hero-discover-group {
   display: flex; flex-direction: column; align-items: center;
-}
-.hero-ctas {
-  margin-top: 28px;
-  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
-  max-width: 680px; margin-left: auto; margin-right: auto;
-}
-.hero-ctas .btn { font-size: 12px; padding: 12px 22px; }
-@media (hover: none) and (pointer: coarse) {
-  .hero-ctas .btn { min-height: 44px; }
 }
 
 /* Aviso de última hora (Mar/Thalassa): una línea entre el subtítulo y el
@@ -2284,36 +2275,6 @@ body.apt-bar-shown .cookies {
   .hero-af-field { flex: 1 1 42%; }
   .hero-af-btn { flex: 1 1 100%; margin-top: 2px; }
   .hero-af-field input[type="date"] { font-size: 16px; }  /* evita zoom iOS */
-}
-
-/* "Descubre cada Hestía" sobre el hero con video — bulletproof.
-   El .btn-primary genérico no ganaba al ::before sheen sobre el wash.
-   Hex literales + !important + sombra glow garantizan silueta. */
-.hero-ctas .btn-primary {
-  background-image: none !important;
-  color: #2A0F2E !important;
-  border: 0 !important;
-  font-weight: 700 !important;
-  box-shadow: 0 4px 14px rgba(58,170,187,.38), 0 0 0 1px rgba(240,232,213,.18);
-  animation: hero-cta-cycle 14s ease-in-out infinite;
-}
-/* Cicla entre los tres colores de los Hestías (olivo · tabernas · albero) y el
-   teal de marca. El !important del background-color rompería la animación, por
-   eso el color va aquí (las keyframes ganan a las reglas normales). */
-@keyframes hero-cta-cycle {
-  0%, 100% { background-color: #3AAABB; box-shadow: 0 4px 14px rgba(58,170,187,.38), 0 0 0 1px rgba(240,232,213,.18); }
-  25%      { background-color: #6B7A3A; box-shadow: 0 4px 14px rgba(107,122,58,.38), 0 0 0 1px rgba(240,232,213,.18); }
-  50%      { background-color: #B86A3C; box-shadow: 0 4px 14px rgba(184,106,60,.38), 0 0 0 1px rgba(240,232,213,.18); }
-  75%      { background-color: #D4A84A; box-shadow: 0 4px 14px rgba(212,168,74,.38), 0 0 0 1px rgba(240,232,213,.18); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-ctas .btn-primary { animation: none; background-color: #3AAABB !important; }
-}
-.hero-ctas .btn-primary::before { display: none !important; }
-.hero-ctas .btn-primary:hover {
-  background-color: #6FC4D1 !important;
-  color: #2A0F2E !important;
-  box-shadow: 0 5px 18px rgba(58,170,187,.49), 0 0 0 1px rgba(240,232,213,.32);
 }
 
 /* Meta bar bottom hero */
@@ -9772,7 +9733,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .section-dark .btn-primary,
 .section-night .btn-primary,
 .contact-cta .btn-primary,
-.hero .btn-primary:not(.hero-cta-anim),
+.hero .btn-primary,
 .eo-hero .btn-primary,
 .apt-page-hero .btn-primary,
 .page-hero .btn-primary {

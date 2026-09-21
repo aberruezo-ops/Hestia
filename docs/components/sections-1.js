@@ -265,14 +265,7 @@ const Hero = ({
     role: "alert"
   }, lang === 'es' ? 'La fecha de salida debe ser posterior a la de entrada.' : 'Check-out must be after check-in.')), /*#__PURE__*/React.createElement("div", {
     className: "hero-discover-group"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "hero-ctas"
-  }, /*#__PURE__*/React.createElement("a", {
-    href: "#apartamentos",
-    className: "btn btn-primary hero-cta-anim"
-  }, t.hero_cta_1, " ", /*#__PURE__*/React.createElement("span", {
-    className: "arrow"
-  }, "→"))), /*#__PURE__*/React.createElement("nav", {
+  }, /*#__PURE__*/React.createElement("nav", {
     className: "hero-apts-quick",
     "aria-label": lang === 'es' ? 'Ir directamente a un apartamento' : 'Jump to an apartment'
   }, APARTMENTS.map(a => /*#__PURE__*/React.createElement("a", {
