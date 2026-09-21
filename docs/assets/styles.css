@@ -2234,6 +2234,9 @@ body.apt-bar-shown .cookies {
   max-width: 680px; margin-left: auto; margin-right: auto;
 }
 .hero-ctas .btn { font-size: 12px; padding: 12px 22px; }
+@media (hover: none) and (pointer: coarse) {
+  .hero-ctas .btn { min-height: 44px; }
+}
 
 /* Aviso de última hora (Mar/Thalassa): una línea entre el subtítulo y el
    buscador de fechas, para captar reservas de última hora por WhatsApp o
@@ -2271,6 +2274,9 @@ body.apt-bar-shown .cookies {
 .hero-af-field input[type="date"]:focus { outline: 2px solid var(--sol, #3AAABB); outline-offset: 1px; }
 .hero-af-field input[aria-invalid="true"] { outline: 2px solid var(--err, #B8246E); outline-offset: 1px; }
 .hero-af-btn { flex: 0 0 auto; font-size: 12px !important; padding: 11px 20px !important; }
+@media (hover: none) and (pointer: coarse) {
+  .hero-af-btn { min-height: 44px; }
+}
 /* Antes, un rango de fechas inválido no daba ningún aviso: el botón no
    hacía nada. --err puro no llega a 4.5:1 sobre este hero oscuro (~2.9:1),
    así se aclara hacia --crema, igual que exige la regla de contraste en
@@ -4210,6 +4216,9 @@ footer .footer-brand .addr {
   outline-offset: -2px;
   border-radius: 4px;
   z-index: 4;
+}
+@media (hover: none) and (pointer: coarse) {
+  .cal-cell.clickable { min-height: 44px; }
 }
 .cal-empty { visibility: hidden; }
 .c-n {
