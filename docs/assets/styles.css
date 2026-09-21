@@ -1796,13 +1796,16 @@ section {
    y texto en crema/arena. Animación con opacity para no chocar con
    transform de padres. z-index altísimo para ir por encima de Tawk. */
 .cookies {
+  /* Esquina, no centrado: centrado + fixed + ancho de 560px significaba que
+     tapaba lo que hubiera scrolleado justo detrás, en el centro de la
+     pantalla, durante todo el tiempo que estuviera visible (confirmado: las
+     miniaturas del hero, el CTA de "RESERVAR" de cada tarjeta de
+     apartamento y el botón de la guía, uno tras otro según el scroll). En
+     una esquina, el contenido central de cada sección queda libre. */
   position: fixed;
-  left: 0;
-  right: 0;
+  left: 20px;
   bottom: 24px;
-  width: min(560px, calc(100% - 24px));
-  margin-left: auto;
-  margin-right: auto;
+  width: min(400px, calc(100% - 40px));
   background-color: #2A0F2E !important;            /* ber-dk literal */
   background-image: none !important;
   color: #F0E8D5 !important;                        /* arena literal */

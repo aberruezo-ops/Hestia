@@ -6255,7 +6255,7 @@ const DIRECT_PERKS = {
   }, {
     id: 'descuento',
     icon: '🎁',
-    stat: 'desde −30%',
+    stat: 'desde −{PCT}%',
     t: 'Estancias largas desde {LS} €/mes.',
     d: 'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.',
     link: {
@@ -6320,7 +6320,7 @@ const DIRECT_PERKS = {
   }, {
     id: 'descuento',
     icon: '🎁',
-    stat: 'from −30%',
+    stat: 'from −{PCT}%',
     t: 'Long stays from €{LS}/month.',
     d: 'Minimum 29 nights · September to June (not available July or August). No commission, formal lease signed by both parties, 100% direct contact.',
     link: {
@@ -6353,8 +6353,13 @@ const DIRECT_PERKS = {
     d: 'We send you a draft contract with the rights and obligations of both parties (prices, payments, cancellation terms and house rules). You review it, fill it in, sign and return it. A small deposit to agree, usually 20 % of the total, is paid when the contract is signed; the rest, also to be agreed, on arrival at Hestía. We acknowledge everything (contract and payment) so you have trust, guarantee and security at every step.'
   }]
 };
-const DIRECT_RIBBON = {
-  es: [{
+
+// Antes '−30%' fijo aquí y calculado en vivo (distinto) en LongStayStrip:
+// dos cifras distintas para el mismo ahorro en la misma página. Ahora las
+// dos salen de _lsSavingsPct(), fuente única, igual que ya hacía el precio.
+const DIRECT_RIBBON = lang => {
+  const pct = `−${_lsSavingsPct()}%`;
+  return lang === 'es' ? [{
     num: '✓',
     label: 'mejor precio'
   }, {
@@ -6364,10 +6369,9 @@ const DIRECT_RIBBON = {
     num: '≤1 h',
     label: 'respuesta'
   }, {
-    num: '−30%',
+    num: pct,
     label: 'estancia larga'
-  }],
-  en: [{
+  }] : [{
     num: '✓',
     label: 'better price'
   }, {
@@ -6377,9 +6381,9 @@ const DIRECT_RIBBON = {
     num: '≤1 h',
     label: 'reply'
   }, {
-    num: '−30%',
+    num: pct,
     label: 'long stay'
-  }]
+  }];
 };
 
 // Cada perk recibe su propio acento de la paleta, 9 micro-identidades.
@@ -6449,10 +6453,22 @@ const _lsMinMonthly = () => {
   const supps = Object.values(c.aptSupplement || {});
   return Math.min(r.baja, r.media, r.alta) + (supps.length ? Math.min(...supps) : 0);
 };
+// % de ahorro de estancia larga vs. la tarifa nocturna más barata prorrateada
+// a 30 noches. Misma fórmula que usa LongStayStrip (sections-1.jsx), para que
+// no puedan volver a mostrarse dos cifras distintas del mismo ahorro.
+const _lsSavingsPct = () => {
+  const v2 = window.PRICES_V2 || {};
+  const bases = v2.apts ? Object.values(v2.apts).map(a => a.base).filter(Boolean) : [];
+  const minBase = bases.length ? Math.min(...bases) : 83;
+  const nightlyMonthly = minBase * 30;
+  return Math.round((1 - _lsMinMonthly() / nightlyMonthly) * 100);
+};
 const getDirectPerks = lang => {
   const fmt = _lsMinMonthly().toLocaleString(lang === 'es' ? 'es-ES' : 'en-US');
+  const pct = String(_lsSavingsPct());
   return DIRECT_PERKS[lang].map(p => p.id === 'descuento' ? {
     ...p,
+    stat: p.stat.replace('{PCT}', pct),
     t: p.t.replace('{LS}', fmt)
   } : p);
 };
@@ -6461,7 +6477,7 @@ const DirectBookingModal = ({
   onClose
 }) => {
   const list = getDirectPerks(lang);
-  const ribbon = DIRECT_RIBBON[lang];
+  const ribbon = DIRECT_RIBBON(lang);
   const len = list.length;
   const [idx, setIdx] = React.useState(0);
   // Dirección del último cambio, 'next' o 'prev' o '' (sin dirección).
@@ -6661,7 +6677,7 @@ const AptDesktopSidebar = ({
   lang,
   onGuideClick
 }) => {
-  const ribbon = DIRECT_RIBBON[lang];
+  const ribbon = DIRECT_RIBBON(lang);
   const [minimized, setMinimized] = React.useState(false);
   if (minimized) {
     return /*#__PURE__*/React.createElement("button", {
@@ -6833,7 +6849,7 @@ const WidgetDirectBooking = ({
   lang
 }) => {
   const [min, setMin] = _useLocalMin('direct', true); // plegado por defecto
-  const ribbon = DIRECT_RIBBON[lang];
+  const ribbon = DIRECT_RIBBON(lang);
   if (min) {
     return /*#__PURE__*/React.createElement(WidgetMiniPill, {
       icon: /*#__PURE__*/React.createElement(HiIcon, {

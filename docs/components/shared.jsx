@@ -3166,7 +3166,7 @@ const DIRECT_PERKS = {
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Respuesta humana, no un bot.',                    d:'Hablas directamente con Alex o Fran. Casi siempre respondemos en minutos; máximo una hora en horario activo.' },
     { id:'cancel',    icon:'🔓', stat:'✓',       t:'Mejoramos las condiciones de cancelación.',       d:'¿Necesitas algo distinto a la política estándar? Pregúntanos, miramos cada caso. Sin formularios eternos, sin sanciones ocultas.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Pago seguro y flexible.',                         d:'Sin pre-autorizaciones que bloqueen tu tarjeta. Si necesitas plazos, los acordamos contigo. Pago directo, sin intermediarios.' },
-    { id:'descuento', icon:'🎁', stat:'desde −30%', t:'Estancias largas desde {LS} €/mes.',             d:'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.', link: { href: 'estancias-largas.html', label: 'Ver tarifas y disponibilidad →' } },
+    { id:'descuento', icon:'🎁', stat:'desde −{PCT}%', t:'Estancias largas desde {LS} €/mes.',             d:'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.', link: { href: 'estancias-largas.html', label: 'Ver tarifas y disponibilidad →' } },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Guía privada y trato cercano.',                   d:'Más que una lista: Alex y Fran te preparan la llegada, te acompañan toda la estancia (recomendaciones, restaurantes, calas, rutas e instrucciones de Hestía) y te echan una mano también a la salida si hace falta. Siempre a un mensaje.' },
     { id:'aliados',   icon:'🤝', stat:'10%',     t:'Descuentos con proveedores locales.',             d:'Acabamos de empezar esta iniciativa: de momento, un 10 % en Lunar Cable Park. La lista está en tu guía privada y la iremos ampliando con más proveedores de la zona.' },
     { id:'mascotas',  icon:'🐾', stat:'3/3',     t:'Mascotas bienvenidas.',                           d:'En los tres. Petición previa y un pequeño suplemento, sin tarifas abusivas ni vetos.' },
@@ -3178,7 +3178,7 @@ const DIRECT_PERKS = {
     { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Human reply, not a bot.',                         d:'You talk directly to Alex or Fran. Usually within minutes; up to an hour during active hours.' },
     { id:'cancel',    icon:'🔓', stat:'✓',       t:'We improve cancellation terms.',                  d:'Need something different from the standard policy? Just ask, we look at each case. No endless forms, no hidden penalties.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Safe, flexible payment.',                         d:'No pre-authorisations blocking your card. If you need installments, we agree them. Direct payment, no middleman.' },
-    { id:'descuento', icon:'🎁', stat:'from −30%', t:'Long stays from €{LS}/month.',                   d:'Minimum 29 nights · September to June (not available July or August). No commission, formal lease signed by both parties, 100% direct contact.', link: { href: 'estancias-largas.html', label: 'See rates and availability →' } },
+    { id:'descuento', icon:'🎁', stat:'from −{PCT}%', t:'Long stays from €{LS}/month.',                   d:'Minimum 29 nights · September to June (not available July or August). No commission, formal lease signed by both parties, 100% direct contact.', link: { href: 'estancias-largas.html', label: 'See rates and availability →' } },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Private guide, personal care.',                   d:'More than a list: Alex & Fran set up your arrival, stay with you all through the trip (recommendations, restaurants, coves, routes and Hestía instructions) and give you a hand at check-out too if needed. Always one message away.' },
     { id:'aliados',   icon:'🤝', stat:'10%',     t:'Discounts with local providers.',                 d:'We just started this: for now, 10% at Lunar Cable Park. The full list is in your private guide, and we will keep adding more local providers over time.' },
     { id:'mascotas',  icon:'🐾', stat:'3/3',     t:'Pets welcome.',                                   d:'In all three Hestías. On request and with a small supplement: no abusive fees, no blanket bans.' },
@@ -3186,19 +3186,22 @@ const DIRECT_PERKS = {
   ],
 };
 
-const DIRECT_RIBBON = {
-  es: [
+// Antes '−30%' fijo aquí y calculado en vivo (distinto) en LongStayStrip:
+// dos cifras distintas para el mismo ahorro en la misma página. Ahora las
+// dos salen de _lsSavingsPct(), fuente única, igual que ya hacía el precio.
+const DIRECT_RIBBON = (lang) => {
+  const pct = `−${_lsSavingsPct()}%`;
+  return lang === 'es' ? [
     { num:'✓',     label:'mejor precio' },
     { num:'0%',    label:'comisiones' },
     { num:'≤1 h',  label:'respuesta' },
-    { num:'−30%',  label:'estancia larga' },
-  ],
-  en: [
+    { num:pct,     label:'estancia larga' },
+  ] : [
     { num:'✓',     label:'better price' },
     { num:'0%',    label:'commissions' },
     { num:'≤1 h',  label:'reply' },
-    { num:'−30%',  label:'long stay' },
-  ],
+    { num:pct,     label:'long stay' },
+  ];
 };
 
 // Cada perk recibe su propio acento de la paleta, 9 micro-identidades.
@@ -3225,14 +3228,27 @@ const _lsMinMonthly = () => {
   const supps = Object.values(c.aptSupplement || {});
   return Math.min(r.baja, r.media, r.alta) + (supps.length ? Math.min(...supps) : 0);
 };
+// % de ahorro de estancia larga vs. la tarifa nocturna más barata prorrateada
+// a 30 noches. Misma fórmula que usa LongStayStrip (sections-1.jsx), para que
+// no puedan volver a mostrarse dos cifras distintas del mismo ahorro.
+const _lsSavingsPct = () => {
+  const v2 = window.PRICES_V2 || {};
+  const bases = v2.apts ? Object.values(v2.apts).map(a => a.base).filter(Boolean) : [];
+  const minBase = bases.length ? Math.min(...bases) : 83;
+  const nightlyMonthly = minBase * 30;
+  return Math.round((1 - _lsMinMonthly() / nightlyMonthly) * 100);
+};
 const getDirectPerks = (lang) => {
   const fmt = _lsMinMonthly().toLocaleString(lang === 'es' ? 'es-ES' : 'en-US');
-  return DIRECT_PERKS[lang].map(p => p.id === 'descuento' ? { ...p, t: p.t.replace('{LS}', fmt) } : p);
+  const pct = String(_lsSavingsPct());
+  return DIRECT_PERKS[lang].map(p => p.id === 'descuento'
+    ? { ...p, stat: p.stat.replace('{PCT}', pct), t: p.t.replace('{LS}', fmt) }
+    : p);
 };
 
 const DirectBookingModal = ({ lang, onClose }) => {
   const list   = getDirectPerks(lang);
-  const ribbon = DIRECT_RIBBON[lang];
+  const ribbon = DIRECT_RIBBON(lang);
   const len    = list.length;
   const [idx, setIdx] = React.useState(0);
   // Dirección del último cambio, 'next' o 'prev' o '' (sin dirección).
@@ -3390,7 +3406,7 @@ const DirectBookingPerks = ({ lang }) => {
 // y acceso a la guía si ya estás reservado.
 // ================================================================
 const AptDesktopSidebar = ({ lang, onGuideClick }) => {
-  const ribbon = DIRECT_RIBBON[lang];
+  const ribbon = DIRECT_RIBBON(lang);
   const [minimized, setMinimized] = React.useState(false);
   if (minimized) {
     return (
@@ -3542,7 +3558,7 @@ const WidgetMiniPill = ({ icon = '✦', label, onClick, ariaLabel, className = '
 
 const WidgetDirectBooking = ({ lang }) => {
   const [min, setMin] = _useLocalMin('direct', true);   // plegado por defecto
-  const ribbon = DIRECT_RIBBON[lang];
+  const ribbon = DIRECT_RIBBON(lang);
   if (min) {
     return (
       <WidgetMiniPill
