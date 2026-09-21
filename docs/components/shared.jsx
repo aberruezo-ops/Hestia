@@ -440,8 +440,6 @@ const COPY = {
     hero_cta_2: 'Escríbenos',
     scroll_hint: 'Desliza para despertar',
     hero_meta_right: 'Noche mediterránea, 36.96° N, 1.83° W',
-    bridge_title: '…y amanece sobre Vera Playa.',
-    bridge_sub: 'La noche morada se retira despacio. El alba trae el albero: tierra, pared encalada, sal seca. A las siete, el Mediterráneo abre el ojo en teal y los olivos reciben la luz de costado. Al fondo, el Desierto de Tabernas ya es naranja.',
     apts_eyebrow: 'Nuestros tres Hestías',
     apts_title: (<>Tres atmósferas, <em>una misma casa.</em></>),
     apts_sub: 'Cada uno toma su color del paisaje que lo rodea. Tres hogares: elige el tuyo, o ven tres veces.',
@@ -457,8 +455,6 @@ const COPY = {
     counter_1: 'familias han vivido aquí desde 2016',
     counter_2: 'de sol al año en Vera Playa',
     counter_3: 'Hestías gestionados en persona por Alex y Fran',
-    gallery_eyebrow: 'Postales desde Vera',
-    gallery_title: (<>La luz de Almería <em>cuenta la historia.</em></>),
     team_eyebrow: 'Quienes os reciben',
     team_title: (<>No somos una recepción. <em>Somos Alex y Fran.</em></>),
     team_intro: 'En 2016 nacieron los tres, el nombre lo tomamos de la diosa griega del hogar. Diez años después seguimos limpiando, recibiendo, respondiendo WhatsApp y eligiendo las toallas. Todo lo hacemos nosotros, por eso todo importa.',
@@ -508,8 +504,6 @@ const COPY = {
     hero_cta_2: 'Say hello',
     scroll_hint: 'Scroll to wake up',
     hero_meta_right: 'Mediterranean night, 36.96° N, 1.83° W',
-    bridge_title: '…and morning breaks over Vera Playa.',
-    bridge_sub: 'The purple night slowly withdraws. Dawn brings the ochre: earth, whitewashed wall, dried salt. By seven, the Mediterranean opens its eye in teal, the olive trees catch the side-light. In the distance, the Tabernas Desert is already orange.',
     apts_eyebrow: 'Our three Hestías',
     apts_title: (<>Three moods, <em>one same home.</em></>),
     apts_sub: 'Each one borrows its colour from the landscape around it. Three homes: choose yours, or come three times.',
@@ -525,8 +519,6 @@ const COPY = {
     counter_1: 'families have lived here since 2016',
     counter_2: 'of sunshine a year in Vera Playa',
     counter_3: 'Hestías run in person by Alex & Fran',
-    gallery_eyebrow: 'Postcards from Vera',
-    gallery_title: (<>Almería's light <em>tells the story.</em></>),
     team_eyebrow: 'The hosts',
     team_title: (<>Not a front desk. <em>Just Alex & Fran.</em></>),
     team_intro: 'In 2016 the three Hestías opened, we took the name from the Greek goddess of home. Ten years later we still clean, welcome, reply WhatsApp and choose the towels. We do everything ourselves, that is why it all matters.',
@@ -633,18 +625,6 @@ const useReveal = () => {
     return () => { io.disconnect(); mo.disconnect(); };
   }, []);
 };
-
-const BRIDGE_PALETTE = [
-  { hex: '#2A0F2E', es: 'Noche · berenjena',   en: 'Night · aubergine' },
-  { hex: '#7B3B6B', es: 'Alba · violeta',       en: 'Dawn · violet' },
-  { hex: '#1BC8D8', es: 'Mar · turquesa',       en: 'Sea · turquoise' },
-  { hex: '#6B7A3A', es: 'Olivos · verde',       en: 'Olives · green' },
-  { hex: '#D42B80', es: 'Buganvilla · fucsia',  en: 'Bougainvillea · fuchsia' },
-  { hex: '#C8975A', es: 'Día · albero',         en: 'Day · ochre' },
-  { hex: '#D4A84A', es: 'Tarde · sol',          en: 'Afternoon · sun' },
-  { hex: '#8B4A1E', es: 'Crepúsculo · siena',  en: 'Dusk · sienna' },
-  { hex: '#F0E8D5', es: 'Calima · arena',       en: 'Calima · sand' },
-];
 
 const QUICK_FAQ = {
   home: {
@@ -3044,7 +3024,7 @@ if (typeof window !== 'undefined' && typeof window.addEventListener === 'functio
   });
 }
 
-Object.assign(window, { HestiaLogoMark, IconSprite, HiIcon, emojiHi, EmojiIcon, AnimatedPrice, lqipFor, BlurImg, WatermarkBadge, IndaloWatermark, IndaloLoader, IndaloShape, Wordmark, COPY, useScrollMode, useReveal, useSectionGlow, BRIDGE_PALETTE, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _regularStayTotal, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt, DateRangePicker, _drAvail, _drAdj, _drDiff, _drFmtDate, _calcLsTotal, _hestiaFindAlternatives, _hestiaSendLead, _hestiaSendLeadFd, _hestiaFlushLeads });
+Object.assign(window, { HestiaLogoMark, IconSprite, HiIcon, emojiHi, EmojiIcon, AnimatedPrice, lqipFor, BlurImg, WatermarkBadge, IndaloWatermark, IndaloLoader, IndaloShape, Wordmark, COPY, useScrollMode, useReveal, useSectionGlow, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _regularStayTotal, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt, DateRangePicker, _drAvail, _drAdj, _drDiff, _drFmtDate, _calcLsTotal, _hestiaFindAlternatives, _hestiaSendLead, _hestiaSendLeadFd, _hestiaFlushLeads });
 
 // Ficha de Google Maps de cada Hestía (mismas que el sameAs del JSON-LD de
 // mar.html / thalassa.html / salinas.html). Abren la ficha donde el huésped

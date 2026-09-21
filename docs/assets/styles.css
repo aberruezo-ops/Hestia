@@ -1649,25 +1649,6 @@ section {
 }
 .contact-cta::after  { animation-delay: -16s; }
 .contacto-hero::after { animation-delay: -4s; }
-/* Estrella fugaz — zona oscura del Bridge */
-.bridge::after {
-  content: '';
-  position: absolute;
-  top: 10%; left: 5%;
-  width: 220px; height: 2px;
-  background: linear-gradient(to right,
-    transparent  0%,
-    rgba(240,232,213,.0) 10%,
-    rgba(240,232,213,.9) 40%,
-    rgba(111,196,209,.7) 70%,
-    transparent 100%);
-  border-radius: 2px;
-  pointer-events: none; z-index: 2;
-  transform-origin: left center;
-  box-shadow: 0 0 6px 1px rgba(111,196,209,.35);
-  animation: shootStar 14s linear infinite;
-  animation-delay: -3s;
-}
 /* ================================================================
    SKY LIFE — Noche estrellada y amanecer/atardecer animados
    ================================================================ */
@@ -2499,174 +2480,6 @@ body.apt-bar-shown .cookies {
 }
 
 /* ============================================================
-   DAY-NIGHT BRIDGE SECTION (transición)
-   ============================================================ */
-.bridge {
-  min-height: 80vh;
-  padding: clamp(80px, 10vw, 140px) var(--page-pad);
-  background: linear-gradient(
-    180deg,
-    var(--ber-dk) 0%,
-    var(--ber)    15%,
-    var(--ber-lt) 35%,
-    var(--vio)    52%,
-    var(--bug)    68%,
-    var(--alb)    84%,
-    var(--arena)  100%
-  );
-  color: var(--arena);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.bridge::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 50% 85%, rgba(240, 168, 138, 0.5), transparent 70%);
-}
-.bridge-inner {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
-}
-.bridge h2 {
-  font-size: clamp(42px, 6vw, 88px);
-  font-style: italic;
-  font-weight: 300;
-  color: var(--crema);
-  text-shadow: 0 2px 30px rgba(42, 15, 46, 0.3);
-}
-.bridge p {
-  margin-top: 28px;
-  font-size: clamp(15px, 1.3vw, 19px);
-  opacity: 0.9;
-  max-width: 600px;
-  margin-left: auto; margin-right: auto;
-  color: var(--ber-dk);
-  font-weight: 300;
-}
-
-/* Palette de colores del amanecer */
-.bridge-time { color: var(--ber-dk); opacity: 0.6; }
-.bridge-palette {
-  display: flex;
-  gap: 28px;
-  justify-content: center;
-  margin-top: 56px;
-  flex-wrap: wrap;
-}
-.bridge-chip {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  cursor: default;
-  opacity: 0; /* hidden until burst */
-}
-/* 3D sphere via highlight gradient */
-.chip-swatch {
-  width: 56px; height: 56px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 28%, rgba(255,255,255,.50) 0%, rgba(255,255,255,0) 52%),
-    var(--chip-color);
-  box-shadow:
-    0 12px 32px rgba(42,15,46,.52),
-    inset 0 -6px 16px rgba(42,15,46,.30),
-    inset 0 5px 12px rgba(255,255,255,.18);
-  transition: transform .32s ease, box-shadow .32s ease;
-}
-@media (hover: hover) {
-  .bridge-chip:hover .chip-swatch {
-    transform: scale(1.16) translateY(-4px);
-    box-shadow: 0 18px 40px rgba(42,15,46,.55), inset 0 -6px 16px rgba(42,15,46,.30), inset 0 5px 12px rgba(255,255,255,.18);
-  }
-}
-.chip-label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-.chip-label span {
-  font-family: var(--sans);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  white-space: nowrap;
-  color: var(--ber-dk);
-  line-height: 1.3;
-}
-.chip-label span:first-child { font-weight: 600; opacity: 0.9; }
-.chip-label span:last-child  { opacity: 0.55; }
-
-/* ── Burst animation — spheres erupt from sun ── */
-@keyframes chipBurst {
-  0%   {
-    opacity: 0;
-    transform: scale(0.55) translate(calc((2 - var(--chip-idx, 2)) * 58px), -130px);
-    filter: blur(10px);
-  }
-  38%  {
-    opacity: 1;
-    filter: blur(0);
-    transform: scale(1.28) translate(calc((2 - var(--chip-idx, 2)) * 5px), -16px);
-  }
-  62%  { transform: scale(0.87) translate(0, 9px); }
-  80%  { transform: scale(1.07) translate(0, -3px); }
-  100% { opacity: 1; transform: scale(1) translate(0, 0); }
-}
-@keyframes chipLabelIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes sunBurst {
-  0%   { transform: translate(-50%,-50%) scale(1);
-         box-shadow: 0 0 70px rgba(245,201,122,.60), 0 0 150px rgba(240,232,213,.28), 0 0 260px rgba(184,136,58,.20); }
-  38%  { transform: translate(-50%,-50%) scale(1.42);
-         box-shadow: 0 0 160px rgba(245,201,122,1), 0 0 320px rgba(240,232,213,.80), 0 0 560px rgba(184,136,58,.60); }
-  100% { transform: translate(-50%,-50%) scale(1);
-         box-shadow: 0 0 70px rgba(245,201,122,.60), 0 0 150px rgba(240,232,213,.28), 0 0 260px rgba(184,136,58,.20); }
-}
-.bridge-palette.burst-active .bridge-chip {
-  animation: chipBurst 0.80s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  animation-delay: calc(var(--chip-idx, 0) * 0.11s + 0.08s);
-}
-.bridge-palette.burst-active .chip-label {
-  opacity: 0;
-  animation: chipLabelIn 0.42s ease forwards;
-  animation-delay: calc(var(--chip-idx, 0) * 0.11s + 0.60s);
-}
-.bridge .celestial.sun-burst {
-  animation: sunBurst 0.95s cubic-bezier(0.22, 0.61, 0.36, 1) forwards,
-             sunPulse 5s ease-in-out infinite 0.95s;
-}
-@media (prefers-reduced-motion: reduce) {
-  .bridge-palette .bridge-chip,
-  .bridge-palette.burst-active .bridge-chip,
-  .bridge-palette.burst-active .chip-label { animation: none; opacity: 1; transform: none; filter: none; }
-  .bridge .celestial.sun-burst { animation: sunPulse 5s ease-in-out infinite; }
-}
-
-/* Sol/luna en el bridge */
-.bridge .celestial {
-  position: absolute;
-  left: 50%; top: 62%;
-  transform: translate(-50%, -50%);
-  width: clamp(120px, 14vw, 200px);
-  height: clamp(120px, 14vw, 200px);
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--crema) 0%, var(--vs2) 55%, var(--vs) 100%);
-  box-shadow: 0 0 120px rgba(232, 196, 118, 0.5);
-  z-index: 1;
-}
-
-/* ============================================================
    APARTMENTS HORIZONTAL SCROLL
    ============================================================ */
 .apartments-intro {
@@ -3267,86 +3080,6 @@ body.apt-bar-shown .cookies {
   font-size: clamp(28px, 3vw, 44px);
   opacity: 0.6;
   margin-left: 4px;
-}
-
-/* ============================================================
-   GALLERY MOSAIC
-   ============================================================ */
-.gallery {
-  background: var(--arena);
-  color: var(--ber-dk);
-  padding: clamp(100px, 10vw, 160px) 0;
-  overflow: hidden;
-}
-.gallery-head {
-  text-align: center;
-  padding: 0 var(--page-pad) 70px;
-}
-.gallery-head h2 { max-width: 18ch; margin: 0 auto; }
-.gallery-head h2 em { font-style: italic; color: var(--sol-h); }
-.gallery-head .eyebrow { color: var(--ber); margin-bottom: 18px; }
-
-.gallery-mosaic {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 14px;
-  padding: 0 var(--page-pad);
-  max-width: 1500px;
-  margin: 0 auto;
-}
-.g-tile {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px 0 10px 0;
-  background: linear-gradient(135deg, var(--sol-lt), var(--vm2));
-  min-height: 240px;
-  transform: translateZ(0);
-  will-change: transform;
-}
-.g-tile .img {
-  position: absolute; inset: -6%;
-  background-size: cover;
-  background-position: center;
-  transition: transform 1.4s cubic-bezier(.2,.8,.2,1);
-  will-change: transform;
-}
-@media (hover: hover) and (pointer: fine) {
-  .g-tile:hover .img { transform: scale(1.04); }
-}
-.g-tile .caption {
-  position: absolute;
-  left: 18px; bottom: 16px;
-  color: var(--crema);
-  font-family: var(--sans); font-size: 11px;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  z-index: 2; mix-blend-mode: difference;
-  opacity: 0.9;
-}
-
-/* Sizes */
-.g-1 { grid-column: span 7; grid-row: span 2; min-height: 480px; }
-.g-2 { grid-column: span 5; min-height: 260px; }
-.g-3 { grid-column: span 5; min-height: 210px; }
-.g-4 { grid-column: span 4; min-height: 300px; }
-.g-5 { grid-column: span 4; min-height: 300px; }
-.g-6 { grid-column: span 4; min-height: 300px; }
-
-/* Placeholder gradient fills · cada tile usa una familia de la paleta
-   corporativa para mantener coherencia con su caption.                */
-.g-tile.tile-a .img { background: linear-gradient(135deg, var(--sol) 0%, var(--sol-h) 55%, var(--sol-text) 100%); }
-.g-tile.tile-b .img { background: linear-gradient(155deg, var(--sie) 0%, var(--vt) 50%, var(--vt2) 100%); }
-.g-tile.tile-c .img { background: linear-gradient(135deg, var(--ber) 0%, var(--ber-lt) 60%, var(--sie) 100%); }
-.g-tile.tile-d .img { background: linear-gradient(175deg, var(--vs-dk) 0%, var(--vs) 50%, var(--vs2) 100%); }
-.g-tile.tile-e .img { background: linear-gradient(115deg, var(--sol-text) 0%, var(--sol) 60%, var(--sol-lt) 100%); }
-.g-tile.tile-f .img { background: linear-gradient(135deg, var(--crema) 0%, var(--arena) 60%, var(--arena-dk) 100%); }
-
-/* Suave texture */
-.g-tile .img::after {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.2), transparent 50%),
-    radial-gradient(ellipse at 70% 70%, rgba(42,15,46,0.22), transparent 50%);
 }
 
 /* ============================================================
@@ -5328,9 +5061,6 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
   .team-head { grid-template-columns: 1fr; gap: 30px; }
   .team-grid { grid-template-columns: 1fr; }
   .manifest-inner { grid-template-columns: 1fr; gap: 40px; }
-  .gallery-mosaic { grid-template-columns: repeat(6, 1fr); }
-  .g-1, .g-2, .g-3, .g-4, .g-5, .g-6 { grid-column: span 3; min-height: 220px; }
-  .g-1 { grid-column: span 6; min-height: 280px; }
   .counters-grid { grid-template-columns: 1fr; }
   .counter { border-left: none; border-top: 1px solid rgba(240,232,213,0.12); }
   .counter:first-child { border-top: none; }
@@ -5415,7 +5145,6 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
 /* Parallax */
 .parallax { will-change: transform; }
 body.no-stars .hero .stars { display: none; }
-body.no-parallax .g-tile .img { transform: none !important; }
 
 /* ============================================================
    TWEAKS PANEL
@@ -5485,9 +5214,6 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .header .brand-lockup { color: inherit; }
 .header.night .brand-lockup { color: var(--arena); }
 .header.day .brand-lockup { color: var(--ber-dk); }
-
-/* Prevent horizontal scrollbar flash from gallery */
-.gallery-mosaic { box-sizing: border-box; }
 
 /* cursor: pointer on anchor-styled elements */
 .apt-card .apt-cta { cursor: pointer; }
@@ -5661,43 +5387,6 @@ body.no-parallax .g-tile .img { transform: none !important; }
   .apt-card:hover .apt-photo { transform: scale(1.09); }
 }
 
-/* ---- GALERÍA: overlay dramático al hover ---- */
-.g-tile::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(42,15,46,.85) 0%,
-    rgba(42,15,46,.30) 38%,
-    transparent        65%
-  );
-  opacity: 0;
-  transition: opacity .42s ease;
-  z-index: 2;
-  pointer-events: none;
-}
-@media (hover: hover) {
-  .g-tile:hover::before { opacity: 1; }
-  .g-tile:hover .img {
-    transform: scale(1.12) !important;
-    transition: transform .65s cubic-bezier(.23,1,.32,1) !important;
-  }
-}
-
-/* Caption reveal desde abajo */
-.g-tile .caption {
-  z-index: 3;
-  mix-blend-mode: normal;
-  color: var(--arena);
-  bottom: 22px; left: 22px;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .4s ease, transform .4s ease;
-}
-@media (hover: hover) {
-  .g-tile:hover .caption { opacity: 1; transform: translateY(0); }
-}
-
 /* ---- COUNTERS: números con gradiente luminoso ---- */
 .counter .num {
   background: linear-gradient(
@@ -5716,29 +5405,6 @@ body.no-parallax .g-tile .img { transform: none !important; }
   -webkit-text-fill-color: var(--arena);
   filter: none;
   opacity: .65;
-}
-
-/* ---- BRIDGE: sol más dramático ---- */
-.bridge .celestial {
-  box-shadow:
-    0 0  70px rgba(245,201,122,.60),
-    0 0 150px rgba(240,232,213,.28),
-    0 0 260px rgba(184,136,58,.20);
-  animation: sunPulse 5s ease-in-out infinite;
-}
-@keyframes sunPulse {
-  0%,100% {
-    box-shadow:
-      0 0  70px rgba(245,201,122,.60),
-      0 0 150px rgba(240,232,213,.28),
-      0 0 260px rgba(184,136,58,.20);
-  }
-  50% {
-    box-shadow:
-      0 0  90px rgba(245,201,122,.80),
-      0 0 200px rgba(240,232,213,.40),
-      0 0 340px rgba(184,136,58,.28);
-  }
 }
 
 /* ---- MANIFEST: números romanos en gradiente + hover slide ---- */
@@ -6883,13 +6549,6 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.gallery-note {
-  text-align: center;
-  font-size: 13px;
-  color: rgba(240,232,213,.35);
-  font-family: var(--sans);
-  margin: 0;
 }
 /* --- Gallery carousel --- */
 .gc-wrap { width: 100%; user-select: none; }
@@ -11268,9 +10927,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .apt-page-gallery,
 .opiniones-share-cta,
 .eo-form-sec,
-.mapa-page,
-.bridge,
-.gallery {
+.mapa-page {
   border-radius: 32px 0 32px 0;
   position: relative;
   margin-bottom: -32px;
@@ -11355,8 +11012,6 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .opiniones-share-cta  { z-index: 46; }
 .eo-form-sec          { z-index: 49; }
 .mapa-page            { z-index: 50; }
-.bridge               { z-index: 49; }
-.gallery              { z-index: 49; }
 
 /* ── Compensación de padding-top en B (original + 32 px) ── */
 .frase-hogar         { padding-top: calc(clamp(22px,  3vw,  36px)  + 32px); }
@@ -11519,8 +11174,7 @@ body:has(.porque-hero)  .nos-colores { z-index: 45; }
 footer::before { background-image: none !important; animation: none !important; }
 
 .contact-cta::after,
-.contacto-hero::after,
-.bridge::after { animation: none !important; opacity: 0 !important; }
+.contacto-hero::after { animation: none !important; opacity: 0 !important; }
 
 .header::after { animation: none !important; opacity: 0 !important; }
 
@@ -11545,29 +11199,19 @@ footer,
   to   { opacity: 1; transform: translateY(0)   translateZ(0); }
 }
 
-.apartments-track .apt-card,
-.gallery-mosaic  .g-tile {
+.apartments-track .apt-card {
   animation: hestia-fade-up 420ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) backwards;
 }
 
-.apartments-track .apt-card:nth-child(1),
-.gallery-mosaic  .g-tile:nth-child(1) { animation-delay:   0ms; }
-.apartments-track .apt-card:nth-child(2),
-.gallery-mosaic  .g-tile:nth-child(2) { animation-delay:  60ms; }
-.apartments-track .apt-card:nth-child(3),
-.gallery-mosaic  .g-tile:nth-child(3) { animation-delay: 120ms; }
-.apartments-track .apt-card:nth-child(4),
-.gallery-mosaic  .g-tile:nth-child(4) { animation-delay: 180ms; }
-.apartments-track .apt-card:nth-child(5),
-.gallery-mosaic  .g-tile:nth-child(5) { animation-delay: 240ms; }
-.apartments-track .apt-card:nth-child(6),
-.gallery-mosaic  .g-tile:nth-child(6) { animation-delay: 300ms; }
-.gallery-mosaic  .g-tile:nth-child(7) { animation-delay: 360ms; }
-.gallery-mosaic  .g-tile:nth-child(8) { animation-delay: 420ms; }
+.apartments-track .apt-card:nth-child(1) { animation-delay:   0ms; }
+.apartments-track .apt-card:nth-child(2) { animation-delay:  60ms; }
+.apartments-track .apt-card:nth-child(3) { animation-delay: 120ms; }
+.apartments-track .apt-card:nth-child(4) { animation-delay: 180ms; }
+.apartments-track .apt-card:nth-child(5) { animation-delay: 240ms; }
+.apartments-track .apt-card:nth-child(6) { animation-delay: 300ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  .apartments-track .apt-card,
-  .gallery-mosaic  .g-tile { animation: none; }
+  .apartments-track .apt-card { animation: none; }
 }
 
 /* ================================================================

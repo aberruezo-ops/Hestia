@@ -343,62 +343,6 @@ const Hero = ({
   }, "Almería · Andalucía")));
 };
 
-// --- BRIDGE (transición día/noche) ---
-const Bridge = ({
-  lang
-}) => {
-  const t = COPY[lang];
-  const sectionRef = React.useRef(null);
-  const [burst, setBurst] = React.useState(false);
-  React.useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => setBurst(true), 420);
-        obs.disconnect();
-      }
-    }, {
-      threshold: 0.38
-    });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-  return /*#__PURE__*/React.createElement("section", {
-    className: "bridge",
-    "data-screen-label": "02 Amanecer",
-    ref: sectionRef
-  }, /*#__PURE__*/React.createElement("div", {
-    className: `celestial${burst ? ' sun-burst' : ''}`
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "bridge-inner"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "eyebrow bridge-time"
-  }, "( 07:14 )"), /*#__PURE__*/React.createElement("h2", {
-    className: "reveal",
-    style: {
-      marginTop: 20
-    }
-  }, t.bridge_title), /*#__PURE__*/React.createElement("p", {
-    className: "reveal delay-1"
-  }, t.bridge_sub), /*#__PURE__*/React.createElement("div", {
-    className: `bridge-palette${burst ? ' burst-active' : ''}`
-  }, BRIDGE_PALETTE.map((c, i) => /*#__PURE__*/React.createElement("div", {
-    key: i,
-    className: "bridge-chip",
-    style: {
-      '--chip-color': c.hex,
-      '--chip-idx': i
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "chip-swatch"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "chip-label"
-  }, (lang === 'es' ? c.es : c.en).split(' · ').map((part, j) => /*#__PURE__*/React.createElement("span", {
-    key: j
-  }, part))))))));
-};
-
 // --- APARTAMENTOS (scroll horizontal) ---
 const APARTMENTS = [{
   id: 'vm',
@@ -1338,7 +1282,6 @@ const LongStayStrip = ({
 };
 Object.assign(window, {
   Hero,
-  Bridge,
   Apartments,
   Compare,
   APARTMENTS,

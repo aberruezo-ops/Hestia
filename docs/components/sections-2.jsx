@@ -1,5 +1,5 @@
 // ================================================================
-// HESTÍA: Secciones parte 2: Counters, Gallery, Team, Manifest, Ratings, Contact
+// HESTÍA: Secciones parte 2: Counters, Team, Manifest, Ratings, Contact
 // ================================================================
 
 // --- COUNTERS con animación ---
@@ -53,55 +53,6 @@ const Counters = ({ lang }) => {
             <div className="lbl">{t.counter_3}</div>
           </div>
         </div>
-      </div>
-    </section>
-  );
-};
-
-// --- GALLERY mosaic con parallax suave ---
-const Gallery = ({ lang }) => {
-  const t = COPY[lang];
-  const tiles = [
-    { cls: 'g-1 tile-a', caption: 'Vera Playa · Golden hour' },
-    { cls: 'g-2 tile-c', caption: 'Hestía Thalassa · SPA' },
-    { cls: 'g-3 tile-b', caption: 'Tabernas · the orange desert' },
-    { cls: 'g-4 tile-d', caption: 'Salinas de Puerto Rey' },
-    { cls: 'g-5 tile-e', caption: 'Cabo de Gata · teal sea' },
-    { cls: 'g-6 tile-f', caption: 'Interiores · luz almeriense' },
-  ];
-  const ref = React.useRef(null);
-
-  React.useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const onScroll = () => {
-      if (document.body.classList.contains('no-parallax')) return;
-      const imgs = el.querySelectorAll('.g-tile .img');
-      imgs.forEach((img, i) => {
-        const rect = img.parentElement.getBoundingClientRect();
-        const mid = rect.top + rect.height / 2;
-        const off = (window.innerHeight / 2 - mid) * 0.08 * ((i % 2 === 0) ? 1 : -1);
-        img.style.transform = `translateY(${off}px) scale(1.12)`;
-      });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  return (
-    <section className="gallery" ref={ref} data-screen-label="06 Galería">
-      <div className="gallery-head">
-        <div className="eyebrow">{t.gallery_eyebrow}</div>
-        <h2>{t.gallery_title}</h2>
-      </div>
-      <div className="gallery-mosaic">
-        {tiles.map((tile, i) => (
-          <div key={i} className={`g-tile ${tile.cls}`}>
-            <div className="img"/>
-            <div className="caption">– {tile.caption}</div>
-          </div>
-        ))}
       </div>
     </section>
   );
@@ -365,4 +316,4 @@ const ContactCTA = ({ lang, availHref }) => {
   );
 };
 
-Object.assign(window, { Counters, Gallery, Team, Manifest, Ratings, RatingsMarquee, ContactCTA });
+Object.assign(window, { Counters, Team, Manifest, Ratings, RatingsMarquee, ContactCTA });
