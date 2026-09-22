@@ -4368,6 +4368,17 @@ function calcDerived(r) {
     ...r
   };
 
+  // 0. Año contable: SIEMPRE se recalcula desde la fecha de SALIDA (mismo
+  //    criterio que usó el parser original al importar). Si no, al duplicar
+  //    una reserva o mover sus fechas a otro año, el campo year se queda
+  //    pegado al valor de origen y la reserva desaparece de su año real en
+  //    la tabla (aunque el resto de la lógica, como el solape, sí la ve).
+  if (out.salida) {
+    out.year = Number(out.salida.slice(0, 4));
+  } else if (out.entrada) {
+    out.year = Number(out.entrada.slice(0, 4));
+  }
+
   // 1. Noches = (salida - entrada) en días.
   if (out.entrada && out.salida) {
     const e = new Date(out.entrada);
