@@ -1649,25 +1649,6 @@ section {
 }
 .contact-cta::after  { animation-delay: -16s; }
 .contacto-hero::after { animation-delay: -4s; }
-/* Estrella fugaz — zona oscura del Bridge */
-.bridge::after {
-  content: '';
-  position: absolute;
-  top: 10%; left: 5%;
-  width: 220px; height: 2px;
-  background: linear-gradient(to right,
-    transparent  0%,
-    rgba(240,232,213,.0) 10%,
-    rgba(240,232,213,.9) 40%,
-    rgba(111,196,209,.7) 70%,
-    transparent 100%);
-  border-radius: 2px;
-  pointer-events: none; z-index: 2;
-  transform-origin: left center;
-  box-shadow: 0 0 6px 1px rgba(111,196,209,.35);
-  animation: shootStar 14s linear infinite;
-  animation-delay: -3s;
-}
 /* ================================================================
    SKY LIFE — Noche estrellada y amanecer/atardecer animados
    ================================================================ */
@@ -1893,13 +1874,13 @@ body.apt-bar-shown .cookies {
   background-color: #3AAABB !important;
   color: #2A0F2E !important;
   border: 0 !important;
-  box-shadow: 0 3px 12px rgba(58,170,187,.40);
+  box-shadow: 0 3px 10px rgba(58,170,187,.30);
 }
 .cookies .cookies-btns .accept:hover {
   background-color: #6FC4D1 !important;
   color: #2A0F2E !important;
   transform: translateY(-1px);
-  box-shadow: 0 5px 16px rgba(58,170,187,.55);
+  box-shadow: 0 4px 12px rgba(58,170,187,.40);
 }
 /* Solo esenciales — outline arena (alto contraste sobre eggplant). */
 .cookies .cookies-btns .essential {
@@ -2223,17 +2204,11 @@ body.apt-bar-shown .cookies {
   text-transform: uppercase;
   opacity: 0.6;
 }
-/* Botón "Descubre cada Hestía" + miniaturas: agrupados justo debajo del
-   buscador de fechas (ver JSX), para que se vean sin apenas hacer scroll. */
+/* Miniaturas de apartamento: justo debajo del buscador de fechas (ver
+   JSX), para que se vean sin apenas hacer scroll. */
 .hero-discover-group {
   display: flex; flex-direction: column; align-items: center;
 }
-.hero-ctas {
-  margin-top: 28px;
-  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
-  max-width: 680px; margin-left: auto; margin-right: auto;
-}
-.hero-ctas .btn { font-size: 12px; padding: 12px 22px; }
 
 /* Aviso de última hora (Mar/Thalassa): una línea entre el subtítulo y el
    buscador de fechas, para captar reservas de última hora por WhatsApp o
@@ -2269,14 +2244,30 @@ body.apt-bar-shown .cookies {
   appearance: none;
 }
 .hero-af-field input[type="date"]:focus { outline: 2px solid var(--sol, #3AAABB); outline-offset: 1px; }
+.hero-af-field input[aria-invalid="true"] { outline: 2px solid var(--err, #B8246E); outline-offset: 1px; }
 .hero-af-btn { flex: 0 0 auto; font-size: 12px !important; padding: 11px 20px !important; }
+@media (hover: none) and (pointer: coarse) {
+  .hero-af-btn { min-height: 44px; }
+}
+/* Antes, un rango de fechas inválido no daba ningún aviso: el botón no
+   hacía nada. --err puro no llega a 4.5:1 sobre este hero oscuro (~2.9:1),
+   así se aclara hacia --crema, igual que exige la regla de contraste en
+   fondos oscuros del proyecto, sin perder la lectura de "error". */
+.hero-af-error {
+  flex: 1 1 100%;
+  margin: 2px 0 0;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: color-mix(in srgb, var(--err, #B8246E) 55%, var(--crema, #FAF6F0));
+  text-align: center;
+}
 .hero-availform .btn-primary {
   background-color: #3AAABB !important;
   background-image: none !important;
   color: #2A0F2E !important;
   border: 0 !important;
   font-weight: 700 !important;
-  box-shadow: 0 6px 22px rgba(58,170,187,.55), 0 0 0 1px rgba(240,232,213,.18);
+  box-shadow: 0 4px 14px rgba(58,170,187,.38), 0 0 0 1px rgba(240,232,213,.18);
 }
 .hero-availform .btn-primary::before { display: none !important; }
 .hero-availform .btn-primary:hover { background-color: #6FC4D1 !important; }
@@ -2284,36 +2275,6 @@ body.apt-bar-shown .cookies {
   .hero-af-field { flex: 1 1 42%; }
   .hero-af-btn { flex: 1 1 100%; margin-top: 2px; }
   .hero-af-field input[type="date"] { font-size: 16px; }  /* evita zoom iOS */
-}
-
-/* "Descubre cada Hestía" sobre el hero con video — bulletproof.
-   El .btn-primary genérico no ganaba al ::before sheen sobre el wash.
-   Hex literales + !important + sombra glow garantizan silueta. */
-.hero-ctas .btn-primary {
-  background-image: none !important;
-  color: #2A0F2E !important;
-  border: 0 !important;
-  font-weight: 700 !important;
-  box-shadow: 0 6px 22px rgba(58,170,187,.55), 0 0 0 1px rgba(240,232,213,.18);
-  animation: hero-cta-cycle 14s ease-in-out infinite;
-}
-/* Cicla entre los tres colores de los Hestías (olivo · tabernas · albero) y el
-   teal de marca. El !important del background-color rompería la animación, por
-   eso el color va aquí (las keyframes ganan a las reglas normales). */
-@keyframes hero-cta-cycle {
-  0%, 100% { background-color: #3AAABB; box-shadow: 0 6px 22px rgba(58,170,187,.55), 0 0 0 1px rgba(240,232,213,.18); }
-  25%      { background-color: #6B7A3A; box-shadow: 0 6px 22px rgba(107,122,58,.55), 0 0 0 1px rgba(240,232,213,.18); }
-  50%      { background-color: #B86A3C; box-shadow: 0 6px 22px rgba(184,106,60,.55), 0 0 0 1px rgba(240,232,213,.18); }
-  75%      { background-color: #D4A84A; box-shadow: 0 6px 22px rgba(212,168,74,.55), 0 0 0 1px rgba(240,232,213,.18); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-ctas .btn-primary { animation: none; background-color: #3AAABB !important; }
-}
-.hero-ctas .btn-primary::before { display: none !important; }
-.hero-ctas .btn-primary:hover {
-  background-color: #6FC4D1 !important;
-  color: #2A0F2E !important;
-  box-shadow: 0 8px 28px rgba(58,170,187,.70), 0 0 0 1px rgba(240,232,213,.32);
 }
 
 /* Meta bar bottom hero */
@@ -2477,174 +2438,6 @@ body.apt-bar-shown .cookies {
 }
 @keyframes fillReveal {
   to { opacity: 1; }
-}
-
-/* ============================================================
-   DAY-NIGHT BRIDGE SECTION (transición)
-   ============================================================ */
-.bridge {
-  min-height: 80vh;
-  padding: clamp(80px, 10vw, 140px) var(--page-pad);
-  background: linear-gradient(
-    180deg,
-    var(--ber-dk) 0%,
-    var(--ber)    15%,
-    var(--ber-lt) 35%,
-    var(--vio)    52%,
-    var(--bug)    68%,
-    var(--alb)    84%,
-    var(--arena)  100%
-  );
-  color: var(--arena);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.bridge::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 50% 85%, rgba(240, 168, 138, 0.5), transparent 70%);
-}
-.bridge-inner {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
-}
-.bridge h2 {
-  font-size: clamp(42px, 6vw, 88px);
-  font-style: italic;
-  font-weight: 300;
-  color: var(--crema);
-  text-shadow: 0 2px 30px rgba(42, 15, 46, 0.3);
-}
-.bridge p {
-  margin-top: 28px;
-  font-size: clamp(15px, 1.3vw, 19px);
-  opacity: 0.9;
-  max-width: 600px;
-  margin-left: auto; margin-right: auto;
-  color: var(--ber-dk);
-  font-weight: 300;
-}
-
-/* Palette de colores del amanecer */
-.bridge-time { color: var(--ber-dk); opacity: 0.6; }
-.bridge-palette {
-  display: flex;
-  gap: 28px;
-  justify-content: center;
-  margin-top: 56px;
-  flex-wrap: wrap;
-}
-.bridge-chip {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  cursor: default;
-  opacity: 0; /* hidden until burst */
-}
-/* 3D sphere via highlight gradient */
-.chip-swatch {
-  width: 56px; height: 56px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 28%, rgba(255,255,255,.50) 0%, rgba(255,255,255,0) 52%),
-    var(--chip-color);
-  box-shadow:
-    0 12px 32px rgba(42,15,46,.52),
-    inset 0 -6px 16px rgba(42,15,46,.30),
-    inset 0 5px 12px rgba(255,255,255,.18);
-  transition: transform .32s ease, box-shadow .32s ease;
-}
-@media (hover: hover) {
-  .bridge-chip:hover .chip-swatch {
-    transform: scale(1.16) translateY(-4px);
-    box-shadow: 0 18px 40px rgba(42,15,46,.55), inset 0 -6px 16px rgba(42,15,46,.30), inset 0 5px 12px rgba(255,255,255,.18);
-  }
-}
-.chip-label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
-.chip-label span {
-  font-family: var(--sans);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  white-space: nowrap;
-  color: var(--ber-dk);
-  line-height: 1.3;
-}
-.chip-label span:first-child { font-weight: 600; opacity: 0.9; }
-.chip-label span:last-child  { opacity: 0.55; }
-
-/* ── Burst animation — spheres erupt from sun ── */
-@keyframes chipBurst {
-  0%   {
-    opacity: 0;
-    transform: scale(0.55) translate(calc((2 - var(--chip-idx, 2)) * 58px), -130px);
-    filter: blur(10px);
-  }
-  38%  {
-    opacity: 1;
-    filter: blur(0);
-    transform: scale(1.28) translate(calc((2 - var(--chip-idx, 2)) * 5px), -16px);
-  }
-  62%  { transform: scale(0.87) translate(0, 9px); }
-  80%  { transform: scale(1.07) translate(0, -3px); }
-  100% { opacity: 1; transform: scale(1) translate(0, 0); }
-}
-@keyframes chipLabelIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes sunBurst {
-  0%   { transform: translate(-50%,-50%) scale(1);
-         box-shadow: 0 0 70px rgba(245,201,122,.60), 0 0 150px rgba(240,232,213,.28), 0 0 260px rgba(184,136,58,.20); }
-  38%  { transform: translate(-50%,-50%) scale(1.42);
-         box-shadow: 0 0 160px rgba(245,201,122,1), 0 0 320px rgba(240,232,213,.80), 0 0 560px rgba(184,136,58,.60); }
-  100% { transform: translate(-50%,-50%) scale(1);
-         box-shadow: 0 0 70px rgba(245,201,122,.60), 0 0 150px rgba(240,232,213,.28), 0 0 260px rgba(184,136,58,.20); }
-}
-.bridge-palette.burst-active .bridge-chip {
-  animation: chipBurst 0.80s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  animation-delay: calc(var(--chip-idx, 0) * 0.11s + 0.08s);
-}
-.bridge-palette.burst-active .chip-label {
-  opacity: 0;
-  animation: chipLabelIn 0.42s ease forwards;
-  animation-delay: calc(var(--chip-idx, 0) * 0.11s + 0.60s);
-}
-.bridge .celestial.sun-burst {
-  animation: sunBurst 0.95s cubic-bezier(0.22, 0.61, 0.36, 1) forwards,
-             sunPulse 5s ease-in-out infinite 0.95s;
-}
-@media (prefers-reduced-motion: reduce) {
-  .bridge-palette .bridge-chip,
-  .bridge-palette.burst-active .bridge-chip,
-  .bridge-palette.burst-active .chip-label { animation: none; opacity: 1; transform: none; filter: none; }
-  .bridge .celestial.sun-burst { animation: sunPulse 5s ease-in-out infinite; }
-}
-
-/* Sol/luna en el bridge */
-.bridge .celestial {
-  position: absolute;
-  left: 50%; top: 62%;
-  transform: translate(-50%, -50%);
-  width: clamp(120px, 14vw, 200px);
-  height: clamp(120px, 14vw, 200px);
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--crema) 0%, var(--vs2) 55%, var(--vs) 100%);
-  box-shadow: 0 0 120px rgba(232, 196, 118, 0.5);
-  z-index: 1;
 }
 
 /* ============================================================
@@ -3251,86 +3044,6 @@ body.apt-bar-shown .cookies {
 }
 
 /* ============================================================
-   GALLERY MOSAIC
-   ============================================================ */
-.gallery {
-  background: var(--arena);
-  color: var(--ber-dk);
-  padding: clamp(100px, 10vw, 160px) 0;
-  overflow: hidden;
-}
-.gallery-head {
-  text-align: center;
-  padding: 0 var(--page-pad) 70px;
-}
-.gallery-head h2 { max-width: 18ch; margin: 0 auto; }
-.gallery-head h2 em { font-style: italic; color: var(--sol-h); }
-.gallery-head .eyebrow { color: var(--ber); margin-bottom: 18px; }
-
-.gallery-mosaic {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 14px;
-  padding: 0 var(--page-pad);
-  max-width: 1500px;
-  margin: 0 auto;
-}
-.g-tile {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px 0 10px 0;
-  background: linear-gradient(135deg, var(--sol-lt), var(--vm2));
-  min-height: 240px;
-  transform: translateZ(0);
-  will-change: transform;
-}
-.g-tile .img {
-  position: absolute; inset: -6%;
-  background-size: cover;
-  background-position: center;
-  transition: transform 1.4s cubic-bezier(.2,.8,.2,1);
-  will-change: transform;
-}
-@media (hover: hover) and (pointer: fine) {
-  .g-tile:hover .img { transform: scale(1.04); }
-}
-.g-tile .caption {
-  position: absolute;
-  left: 18px; bottom: 16px;
-  color: var(--crema);
-  font-family: var(--sans); font-size: 11px;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  z-index: 2; mix-blend-mode: difference;
-  opacity: 0.9;
-}
-
-/* Sizes */
-.g-1 { grid-column: span 7; grid-row: span 2; min-height: 480px; }
-.g-2 { grid-column: span 5; min-height: 260px; }
-.g-3 { grid-column: span 5; min-height: 210px; }
-.g-4 { grid-column: span 4; min-height: 300px; }
-.g-5 { grid-column: span 4; min-height: 300px; }
-.g-6 { grid-column: span 4; min-height: 300px; }
-
-/* Placeholder gradient fills · cada tile usa una familia de la paleta
-   corporativa para mantener coherencia con su caption.                */
-.g-tile.tile-a .img { background: linear-gradient(135deg, var(--sol) 0%, var(--sol-h) 55%, var(--sol-text) 100%); }
-.g-tile.tile-b .img { background: linear-gradient(155deg, var(--sie) 0%, var(--vt) 50%, var(--vt2) 100%); }
-.g-tile.tile-c .img { background: linear-gradient(135deg, var(--ber) 0%, var(--ber-lt) 60%, var(--sie) 100%); }
-.g-tile.tile-d .img { background: linear-gradient(175deg, var(--vs-dk) 0%, var(--vs) 50%, var(--vs2) 100%); }
-.g-tile.tile-e .img { background: linear-gradient(115deg, var(--sol-text) 0%, var(--sol) 60%, var(--sol-lt) 100%); }
-.g-tile.tile-f .img { background: linear-gradient(135deg, var(--crema) 0%, var(--arena) 60%, var(--arena-dk) 100%); }
-
-/* Suave texture */
-.g-tile .img::after {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.2), transparent 50%),
-    radial-gradient(ellipse at 70% 70%, rgba(42,15,46,0.22), transparent 50%);
-}
-
-/* ============================================================
    ALEX & FRAN (revista)
    ============================================================ */
 .team {
@@ -3763,7 +3476,7 @@ body.apt-bar-shown .cookies {
 .dpt-btn:hover {
   background-color: #6FC4D1 !important;
   transform: translateY(-1px);
-  box-shadow: 0 6px 22px rgba(58, 170, 187, 0.55);
+  box-shadow: 0 5px 18px rgba(58, 170, 187, 0.42);
 }
 .dpt-btn:active { transform: translateY(0) scale(.98); }
 .dpt-arrow { font-size: 14px; line-height: 1; transition: transform .25s ease; }
@@ -3933,7 +3646,7 @@ footer::before {
 @media (prefers-reduced-motion: reduce) {
   .footer-grid::after { animation: none; background-position: 50% 0; }
 }
-footer h5 {
+footer h3 {
   font-family: var(--sans); font-weight: 500; font-size: 12px;
   letter-spacing: 0.22em; text-transform: uppercase;
   opacity: 0.90;
@@ -4197,6 +3910,9 @@ footer .footer-brand .addr {
   outline-offset: -2px;
   border-radius: 4px;
   z-index: 4;
+}
+@media (hover: none) and (pointer: coarse) {
+  .cal-cell.clickable { min-height: 44px; }
 }
 .cal-empty { visibility: hidden; }
 .c-n {
@@ -5306,9 +5022,6 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
   .team-head { grid-template-columns: 1fr; gap: 30px; }
   .team-grid { grid-template-columns: 1fr; }
   .manifest-inner { grid-template-columns: 1fr; gap: 40px; }
-  .gallery-mosaic { grid-template-columns: repeat(6, 1fr); }
-  .g-1, .g-2, .g-3, .g-4, .g-5, .g-6 { grid-column: span 3; min-height: 220px; }
-  .g-1 { grid-column: span 6; min-height: 280px; }
   .counters-grid { grid-template-columns: 1fr; }
   .counter { border-left: none; border-top: 1px solid rgba(240,232,213,0.12); }
   .counter:first-child { border-top: none; }
@@ -5332,6 +5045,16 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
   /* Phones: smaller */
   .tl-num { font-size: 11px; letter-spacing: 0; }
   .topbar .contacts { gap: 4px; }
+}
+
+@media (max-width: 400px) {
+  /* Con el page-pad genérico (24px), los 2 teléfonos + ES/EN no caben en
+     390px de ancho y el botón EN queda cortado por el borde. */
+  .topbar { padding-left: 12px; padding-right: 12px; }
+  .topbar .contacts { gap: 2px; }
+  .topbar .contacts .sep { padding: 0 2px; }
+  .topbar .lang button { padding: 4px 6px; }
+  .topbar .lang { gap: 0; }
 }
 
 /* Reveal on scroll — elementos de contenido: fade + translate + blur */
@@ -5383,7 +5106,6 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
 /* Parallax */
 .parallax { will-change: transform; }
 body.no-stars .hero .stars { display: none; }
-body.no-parallax .g-tile .img { transform: none !important; }
 
 /* ============================================================
    TWEAKS PANEL
@@ -5453,9 +5175,6 @@ body.no-parallax .g-tile .img { transform: none !important; }
 .header .brand-lockup { color: inherit; }
 .header.night .brand-lockup { color: var(--arena); }
 .header.day .brand-lockup { color: var(--ber-dk); }
-
-/* Prevent horizontal scrollbar flash from gallery */
-.gallery-mosaic { box-sizing: border-box; }
 
 /* cursor: pointer on anchor-styled elements */
 .apt-card .apt-cta { cursor: pointer; }
@@ -5629,43 +5348,6 @@ body.no-parallax .g-tile .img { transform: none !important; }
   .apt-card:hover .apt-photo { transform: scale(1.09); }
 }
 
-/* ---- GALERÍA: overlay dramático al hover ---- */
-.g-tile::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(42,15,46,.85) 0%,
-    rgba(42,15,46,.30) 38%,
-    transparent        65%
-  );
-  opacity: 0;
-  transition: opacity .42s ease;
-  z-index: 2;
-  pointer-events: none;
-}
-@media (hover: hover) {
-  .g-tile:hover::before { opacity: 1; }
-  .g-tile:hover .img {
-    transform: scale(1.12) !important;
-    transition: transform .65s cubic-bezier(.23,1,.32,1) !important;
-  }
-}
-
-/* Caption reveal desde abajo */
-.g-tile .caption {
-  z-index: 3;
-  mix-blend-mode: normal;
-  color: var(--arena);
-  bottom: 22px; left: 22px;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .4s ease, transform .4s ease;
-}
-@media (hover: hover) {
-  .g-tile:hover .caption { opacity: 1; transform: translateY(0); }
-}
-
 /* ---- COUNTERS: números con gradiente luminoso ---- */
 .counter .num {
   background: linear-gradient(
@@ -5684,29 +5366,6 @@ body.no-parallax .g-tile .img { transform: none !important; }
   -webkit-text-fill-color: var(--arena);
   filter: none;
   opacity: .65;
-}
-
-/* ---- BRIDGE: sol más dramático ---- */
-.bridge .celestial {
-  box-shadow:
-    0 0  70px rgba(245,201,122,.60),
-    0 0 150px rgba(240,232,213,.28),
-    0 0 260px rgba(184,136,58,.20);
-  animation: sunPulse 5s ease-in-out infinite;
-}
-@keyframes sunPulse {
-  0%,100% {
-    box-shadow:
-      0 0  70px rgba(245,201,122,.60),
-      0 0 150px rgba(240,232,213,.28),
-      0 0 260px rgba(184,136,58,.20);
-  }
-  50% {
-    box-shadow:
-      0 0  90px rgba(245,201,122,.80),
-      0 0 200px rgba(240,232,213,.40),
-      0 0 340px rgba(184,136,58,.28);
-  }
 }
 
 /* ---- MANIFEST: números romanos en gradiente + hover slide ---- */
@@ -6144,44 +5803,44 @@ a.apt-page-reserve-btn {
   color: #2A0F2E !important;
   border: 0 !important;
   font-weight: 700 !important;
-  box-shadow: 0 6px 22px rgba(58,170,187,.45);
+  box-shadow: 0 4px 14px rgba(58,170,187,.32);
 }
 a.apt-page-reserve-btn::before { display: none !important; }
 .apt-page-hero[data-apt="vm"] a.apt-page-reserve-btn,
 body[data-apt="mar"] a.apt-page-reserve-btn {
   background-color: #6B7A3A !important;        /* olivo Mar */
   color: #F0E8D5 !important;
-  box-shadow: 0 6px 22px rgba(107,122,58,.55) !important;
+  box-shadow: 0 4px 14px rgba(107,122,58,.38) !important;
 }
 .apt-page-hero[data-apt="vm"] a.apt-page-reserve-btn:hover,
 body[data-apt="mar"] a.apt-page-reserve-btn:hover {
   background-color: #8B9A52 !important;
   color: #2A0F2E !important;
-  box-shadow: 0 8px 28px rgba(107,122,58,.70) !important;
+  box-shadow: 0 5px 18px rgba(107,122,58,.49) !important;
 }
 .apt-page-hero[data-apt="vt"] a.apt-page-reserve-btn,
 body[data-apt="thalassa"] a.apt-page-reserve-btn {
   background-color: #B86A3C !important;        /* siena Thalassa */
   color: #F0E8D5 !important;
-  box-shadow: 0 6px 22px rgba(184,106,60,.55) !important;
+  box-shadow: 0 4px 14px rgba(184,106,60,.38) !important;
 }
 .apt-page-hero[data-apt="vt"] a.apt-page-reserve-btn:hover,
 body[data-apt="thalassa"] a.apt-page-reserve-btn:hover {
   background-color: #D4906A !important;
   color: #2A0F2E !important;
-  box-shadow: 0 8px 28px rgba(184,106,60,.70) !important;
+  box-shadow: 0 5px 18px rgba(184,106,60,.49) !important;
 }
 .apt-page-hero[data-apt="vs"] a.apt-page-reserve-btn,
 body[data-apt="salinas"] a.apt-page-reserve-btn {
   background-color: #D4A84A !important;        /* dorado Salinas */
   color: #2A0F2E !important;
-  box-shadow: 0 6px 22px rgba(212,168,74,.55) !important;
+  box-shadow: 0 4px 14px rgba(212,168,74,.38) !important;
 }
 .apt-page-hero[data-apt="vs"] a.apt-page-reserve-btn:hover,
 body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   background-color: #E8C170 !important;
   color: #2A0F2E !important;
-  box-shadow: 0 8px 28px rgba(212,168,74,.70) !important;
+  box-shadow: 0 5px 18px rgba(212,168,74,.49) !important;
 }
 .apt-page-price {
   font-family: var(--serif);
@@ -6851,13 +6510,6 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.gallery-note {
-  text-align: center;
-  font-size: 13px;
-  color: rgba(240,232,213,.35);
-  font-family: var(--sans);
-  margin: 0;
 }
 /* --- Gallery carousel --- */
 .gc-wrap { width: 100%; user-select: none; }
@@ -9433,14 +9085,14 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   border: 0 !important;
   border-radius: 10px 0 10px 0;
   cursor: pointer;
-  box-shadow: 0 6px 22px rgba(58,170,187,.45);
+  box-shadow: 0 4px 14px rgba(58,170,187,.32);
   transition: background-color var(--dur-liquid) var(--ease-liquid), box-shadow .25s ease, transform .15s ease;
   margin-top: 8px;
 }
 .reservas-submit:hover {
   background-color: #6FC4D1 !important;
   color: #2A0F2E !important;
-  box-shadow: 0 8px 28px rgba(58,170,187,.60);
+  box-shadow: 0 5px 18px rgba(58,170,187,.42);
   transform: translateY(-1px);
 }
 .reservas-submit:active { transform: translateY(0) scale(.99); }
@@ -10081,7 +9733,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .section-dark .btn-primary,
 .section-night .btn-primary,
 .contact-cta .btn-primary,
-.hero .btn-primary:not(.hero-cta-anim),
+.hero .btn-primary,
 .eo-hero .btn-primary,
 .apt-page-hero .btn-primary,
 .page-hero .btn-primary {
@@ -10090,7 +9742,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   color: #2A0F2E !important;                   /* ber-dk */
   border: 0 !important;
   font-weight: 700 !important;
-  box-shadow: 0 6px 22px rgba(58,170,187,.50), 0 0 0 1px rgba(240,232,213,.18) !important;
+  box-shadow: 0 4px 14px rgba(58,170,187,.35), 0 0 0 1px rgba(240,232,213,.18) !important;
 }
 .home-search .btn-primary::before,
 .section-dark .btn-primary::before,
@@ -10112,7 +9764,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .page-hero .btn-primary:hover {
   background-color: #6FC4D1 !important;        /* sol-lt */
   color: #2A0F2E !important;
-  box-shadow: 0 8px 28px rgba(58,170,187,.65), 0 0 0 1px rgba(240,232,213,.32) !important;
+  box-shadow: 0 5px 18px rgba(58,170,187,.46), 0 0 0 1px rgba(240,232,213,.32) !important;
   transform: translateY(-1px);
 }
 .hs-loading-note {
@@ -11236,9 +10888,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .apt-page-gallery,
 .opiniones-share-cta,
 .eo-form-sec,
-.mapa-page,
-.bridge,
-.gallery {
+.mapa-page {
   border-radius: 32px 0 32px 0;
   position: relative;
   margin-bottom: -32px;
@@ -11323,8 +10973,6 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .opiniones-share-cta  { z-index: 46; }
 .eo-form-sec          { z-index: 49; }
 .mapa-page            { z-index: 50; }
-.bridge               { z-index: 49; }
-.gallery              { z-index: 49; }
 
 /* ── Compensación de padding-top en B (original + 32 px) ── */
 .frase-hogar         { padding-top: calc(clamp(22px,  3vw,  36px)  + 32px); }
@@ -11487,8 +11135,7 @@ body:has(.porque-hero)  .nos-colores { z-index: 45; }
 footer::before { background-image: none !important; animation: none !important; }
 
 .contact-cta::after,
-.contacto-hero::after,
-.bridge::after { animation: none !important; opacity: 0 !important; }
+.contacto-hero::after { animation: none !important; opacity: 0 !important; }
 
 .header::after { animation: none !important; opacity: 0 !important; }
 
@@ -11513,29 +11160,19 @@ footer,
   to   { opacity: 1; transform: translateY(0)   translateZ(0); }
 }
 
-.apartments-track .apt-card,
-.gallery-mosaic  .g-tile {
+.apartments-track .apt-card {
   animation: hestia-fade-up 420ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)) backwards;
 }
 
-.apartments-track .apt-card:nth-child(1),
-.gallery-mosaic  .g-tile:nth-child(1) { animation-delay:   0ms; }
-.apartments-track .apt-card:nth-child(2),
-.gallery-mosaic  .g-tile:nth-child(2) { animation-delay:  60ms; }
-.apartments-track .apt-card:nth-child(3),
-.gallery-mosaic  .g-tile:nth-child(3) { animation-delay: 120ms; }
-.apartments-track .apt-card:nth-child(4),
-.gallery-mosaic  .g-tile:nth-child(4) { animation-delay: 180ms; }
-.apartments-track .apt-card:nth-child(5),
-.gallery-mosaic  .g-tile:nth-child(5) { animation-delay: 240ms; }
-.apartments-track .apt-card:nth-child(6),
-.gallery-mosaic  .g-tile:nth-child(6) { animation-delay: 300ms; }
-.gallery-mosaic  .g-tile:nth-child(7) { animation-delay: 360ms; }
-.gallery-mosaic  .g-tile:nth-child(8) { animation-delay: 420ms; }
+.apartments-track .apt-card:nth-child(1) { animation-delay:   0ms; }
+.apartments-track .apt-card:nth-child(2) { animation-delay:  60ms; }
+.apartments-track .apt-card:nth-child(3) { animation-delay: 120ms; }
+.apartments-track .apt-card:nth-child(4) { animation-delay: 180ms; }
+.apartments-track .apt-card:nth-child(5) { animation-delay: 240ms; }
+.apartments-track .apt-card:nth-child(6) { animation-delay: 300ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  .apartments-track .apt-card,
-  .gallery-mosaic  .g-tile { animation: none; }
+  .apartments-track .apt-card { animation: none; }
 }
 
 /* ================================================================
@@ -15396,14 +15033,14 @@ footer,
   text-transform: uppercase;
   font-weight: 700 !important;
   cursor: pointer;
-  box-shadow: 0 3px 12px rgba(58,170,187,.35);
+  box-shadow: 0 3px 10px rgba(58,170,187,.27);
   transition: background-color .25s ease, transform .15s var(--ease-out, ease), box-shadow .25s ease;
 }
 .ads-btn:hover {
   background-color: #6FC4D1 !important;
   color: #2A0F2E !important;
   transform: translateY(-1px);
-  box-shadow: 0 5px 16px rgba(58,170,187,.5);
+  box-shadow: 0 4px 12px rgba(58,170,187,.37);
 }
 .ads-btn:active { transform: translateY(0) scale(.98); }
 .ads-btn-ghost {
@@ -15586,7 +15223,7 @@ footer,
   text-transform: uppercase;
   font-weight: 700 !important;
   cursor: pointer;
-  box-shadow: 0 4px 14px rgba(58,170,187,.40);
+  box-shadow: 0 4px 14px rgba(58,170,187,.32);
   transition: background-color .25s ease, color .25s ease, transform .15s ease, box-shadow .25s ease;
 }
 .widget-cta > span:last-child {
@@ -15598,7 +15235,7 @@ footer,
   background-color: #6FC4D1 !important;
   color: #2A0F2E !important;
   transform: translateY(-1px);
-  box-shadow: 0 7px 20px rgba(58,170,187,.55);
+  box-shadow: 0 5px 15px rgba(58,170,187,.42);
 }
 .widget-cta:hover > span:last-child { transform: translateX(3px); }
 .widget-cta:active { transform: translateY(0) scale(.98); }
@@ -15892,37 +15529,37 @@ body:has(.sound-toggle) .wthr-fab-wrap {
 body[data-apt="mar"] .widget-cta {
   background-color: #6B7A3A !important;
   color: #F0E8D5 !important;
-  box-shadow: 0 4px 14px rgba(107,122,58,.50) !important;
+  box-shadow: 0 4px 14px rgba(107,122,58,.35) !important;
 }
 [data-apt="mar"] .widget-cta:hover,
 body[data-apt="mar"] .widget-cta:hover {
   background-color: #8B9A52 !important;
   color: #2A0F2E !important;
-  box-shadow: 0 7px 20px rgba(107,122,58,.65) !important;
+  box-shadow: 0 5px 15px rgba(107,122,58,.46) !important;
 }
 [data-apt="thalassa"] .widget-cta,
 body[data-apt="thalassa"] .widget-cta {
   background-color: #B86A3C !important;
   color: #2A0F2E !important;
-  box-shadow: 0 4px 14px rgba(184,106,60,.50) !important;
+  box-shadow: 0 4px 14px rgba(184,106,60,.35) !important;
 }
 [data-apt="thalassa"] .widget-cta:hover,
 body[data-apt="thalassa"] .widget-cta:hover {
   background-color: #D4906A !important;
   color: #2A0F2E !important;
-  box-shadow: 0 7px 20px rgba(184,106,60,.65) !important;
+  box-shadow: 0 5px 15px rgba(184,106,60,.46) !important;
 }
 [data-apt="salinas"] .widget-cta,
 body[data-apt="salinas"] .widget-cta {
   background-color: #D4A84A !important;
   color: #2A0F2E !important;
-  box-shadow: 0 4px 14px rgba(212,168,74,.50) !important;
+  box-shadow: 0 4px 14px rgba(212,168,74,.35) !important;
 }
 [data-apt="salinas"] .widget-cta:hover,
 body[data-apt="salinas"] .widget-cta:hover {
   background-color: #E8C170 !important;
   color: #2A0F2E !important;
-  box-shadow: 0 7px 20px rgba(212,168,74,.65) !important;
+  box-shadow: 0 5px 15px rgba(212,168,74,.46) !important;
 }
 
 /* Body del Sabías que. */
@@ -16953,7 +16590,7 @@ body.apt-bar-shown .widget-stack {
   background-color: #6FC4D1 !important;
   color: #2A0F2E !important;
   transform: translateY(-1px);
-  box-shadow: 0 6px 22px rgba(58,170,187,.5);
+  box-shadow: 0 5px 18px rgba(58,170,187,.42);
 }
 
 /* CTA WhatsApp en .contact-cta — bulletproof. El .btn-primary genérico
@@ -16975,7 +16612,7 @@ a.cta-wa-btn:hover,
 .contact-cta a.cta-wa-btn:hover {
   background-color: #6FC4D1 !important;
   color: #2A0F2E !important;
-  box-shadow: 0 6px 22px rgba(58,170,187,.5);
+  box-shadow: 0 5px 18px rgba(58,170,187,.42);
 }
 a.cta-wa-btn:active,
 .contact-cta a.cta-wa-btn:active {
@@ -23735,7 +23372,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .lss-pill-save { font-size: 10px; font-weight: 700; background: rgba(255,255,255,.2); border-radius: 4px 0 4px 0; padding: 1px 5px; letter-spacing: .02em; }
 .lss-cta {
   display: inline-block;
-  background: color-mix(in srgb, var(--accent, #C87A45) 70%, #000);
+  background: color-mix(in srgb, var(--accent, #3AAABB) 70%, #000);
   color: white;
   font-weight: 600;
   font-size: 14px;
@@ -23745,10 +23382,10 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   transition: background var(--dur-fast) var(--ease-out),
               transform var(--dur-fast) var(--ease-out),
               box-shadow var(--dur-base) var(--ease-out);
-  box-shadow: 0 4px 16px rgba(200,122,69,.35);
+  box-shadow: 0 4px 14px rgba(58,170,187,.28);
   align-self: flex-start;
 }
-.lss-cta:hover { background: #A85E2E; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,122,69,.5); }
+.lss-cta:hover { background: #2A8E9E; transform: translateY(-1px); box-shadow: 0 5px 16px rgba(58,170,187,.38); }
 .lss-cta:active { transform: translateY(0) scale(0.97); }
 
 /* ── Long-stay nudge in home search (fondo oscuro: texto y CTA claros,
@@ -23786,8 +23423,8 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  background: rgba(200,122,69,.07);
-  border: 1.5px solid rgba(200,122,69,.30);
+  background: rgba(58,170,187,.07);
+  border: 1.5px solid rgba(58,170,187,.30);
   border-radius: 8px 0 8px 0;
   padding: 14px 16px;
   margin-bottom: 16px;
@@ -23799,15 +23436,15 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   align-items: center;
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--accent-dk, #A85E2E);
+  color: var(--accent-dk, #2A8E9E);
   text-decoration: none;
   white-space: nowrap;
-  border: 1px solid rgba(200,122,69,.4);
+  border: 1px solid rgba(58,170,187,.4);
   border-radius: 6px 0 6px 0;
   padding: 8px 14px;
   transition: background .12s;
 }
-.rf-ls-nudge-cta:hover { background: rgba(200,122,69,.12); }
+.rf-ls-nudge-cta:hover { background: rgba(58,170,187,.12); }
 
 /* ── LsInfoBlock · resumen larga estancia en reservas ─────────── */
 .rf-ls-info {
@@ -24009,17 +23646,17 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .lsl-hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
 .lsl-btn-primary {
   display: inline-block;
-  background: color-mix(in srgb, var(--accent, #C87A45) 70%, #000);
+  background: color-mix(in srgb, var(--accent, #3AAABB) 70%, #000);
   color: white;
   font-weight: 600;
   font-size: 15px;
   padding: 14px 26px;
   border-radius: 8px 0 8px 0;
   text-decoration: none;
-  box-shadow: 0 4px 20px rgba(200,122,69,.4);
+  box-shadow: 0 4px 14px rgba(58,170,187,.28);
   transition: background .14s, transform .12s;
 }
-.lsl-btn-primary:hover { background: #A85E2E; transform: translateY(-1px); }
+.lsl-btn-primary:hover { background: #2A8E9E; transform: translateY(-1px); }
 .lsl-btn-ghost {
   display: inline-block;
   color: rgba(255,255,255,.7);
@@ -24069,7 +23706,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-size: 14px;
   color: var(--ink, #3D1A35);
 }
-.lsl-includes-item svg { flex-shrink: 0; color: var(--accent, #C87A45); }
+.lsl-includes-item svg { flex-shrink: 0; color: var(--accent, #3AAABB); }
 
 /* Prices */
 .lsl-prices-note { font-size: 13px; color: var(--ink-soft, #7A5A72); margin-bottom: 20px; line-height: 1.55; }
@@ -24084,7 +23721,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   padding: 12px 16px;
   flex-wrap: wrap;
 }
-.lsl-pt-special { border-color: rgba(200,122,69,.3); background: rgba(200,122,69,.04); }
+.lsl-pt-special { border-color: rgba(58,170,187,.3); background: rgba(58,170,187,.04); }
 .lsl-pt-period { flex: 1; font-size: 14px; font-weight: 500; color: var(--ink, #3D1A35); min-width: 140px; }
 .lsl-pt-tag { font-size: 11px; font-weight: 600; color: var(--ink-soft, #7A5A72); letter-spacing: .06em; text-transform: uppercase; }
 .lsl-pt-rate { font-size: 18px; font-weight: 700; color: var(--ber, #2A0F2E); white-space: nowrap; margin-left: auto; }
@@ -24142,7 +23779,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   transition: background .12s;
 }
 .lsl-faq-q:hover { background: rgba(42,15,46,.03); }
-.lsl-faq-chev { font-size: 18px; font-weight: 400; flex-shrink: 0; color: var(--accent, #C87A45); }
+.lsl-faq-chev { font-size: 18px; font-weight: 400; flex-shrink: 0; color: var(--accent, #3AAABB); }
 .lsl-faq-a {
   padding: 0 16px 14px;
   font-size: 13.5px;
@@ -24398,7 +24035,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
     letter-spacing: 0.14em; text-transform: uppercase;
     padding: 13px 32px;
     border-radius: 10px 0 10px 0;
-    box-shadow: 0 4px 20px rgba(58,170,187,.45);
+    box-shadow: 0 4px 14px rgba(58,170,187,.32);
     transition: opacity .3s ease, transform .3s cubic-bezier(.23,1,.32,1), box-shadow .2s;
     white-space: nowrap;
     pointer-events: auto;
@@ -24424,7 +24061,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   }
   .mob-book-btn:hover,
   .mob-book-btn:focus-visible {
-    box-shadow: 0 6px 28px rgba(58,170,187,.6);
+    box-shadow: 0 5px 18px rgba(58,170,187,.42);
   }
 }
 

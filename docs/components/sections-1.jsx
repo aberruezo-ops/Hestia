@@ -84,9 +84,16 @@ const Hero = ({ lang, onScrollDown }) => {
   const heroTomorrow = _heroAdd(heroToday, 1);
   const [hcIn,  setHcIn ] = React.useState(heroTomorrow);
   const [hcOut, setHcOut] = React.useState(_heroAdd(heroTomorrow, 7));
+  // Antes, un rango inválido hacía que el formulario no hiciera nada al
+  // pulsar el botón, sin ningún aviso: el usuario no podía saber si había
+  // funcionado, fallado o estaba cargando. El date input ya limita el
+  // mínimo de salida vía `min`, pero sigue siendo posible teclear una
+  // fecha inválida a mano en algunos navegadores/SO, así que se avisa.
+  const [hcError, setHcError] = React.useState(false);
   const goReservas = (e) => {
     e.preventDefault();
-    if (!hcIn || !hcOut || hcOut <= hcIn) return;
+    if (!hcIn || !hcOut || hcOut <= hcIn) { setHcError(true); return; }
+    setHcError(false);
     // Sin apartamento (cualquier Hestía) y 4 huéspedes por defecto: /reservas
     // mostrará la disponibilidad de los 3 Hestías para esas fechas + opciones.
     const p = new URLSearchParams({ checkin: hcIn, checkout: hcOut, guests: '4' });
@@ -177,30 +184,34 @@ const Hero = ({ lang, onScrollDown }) => {
           <span className="it">{t.hero_title_2}</span>
         </h1>
         <div className="hero-sub">{t.hero_sub}</div>
-        <form className="hero-availform" onSubmit={goReservas}>
+        <form className="hero-availform" onSubmit={goReservas} noValidate>
           <div className="hero-af-field">
             <label htmlFor="hero-cin">{lang === 'es' ? 'Entrada' : 'Check-in'}</label>
-            <input id="hero-cin" type="date" value={hcIn} min={heroTomorrow}
-              onChange={e => { setHcIn(e.target.value); if (e.target.value) setHcOut(_heroAdd(e.target.value, 7)); }} />
+            <input id="hero-cin" type="date" value={hcIn} min={heroTomorrow} required
+              aria-invalid={hcError} aria-describedby={hcError ? 'hero-af-error' : undefined}
+              onChange={e => { setHcIn(e.target.value); setHcError(false); if (e.target.value) setHcOut(_heroAdd(e.target.value, 7)); }} />
           </div>
           <div className="hero-af-field">
             <label htmlFor="hero-cout">{lang === 'es' ? 'Salida' : 'Check-out'}</label>
-            <input id="hero-cout" type="date" value={hcOut} min={_heroAdd(hcIn || heroTomorrow, 1)}
-              onChange={e => setHcOut(e.target.value)} />
+            <input id="hero-cout" type="date" value={hcOut} min={_heroAdd(hcIn || heroTomorrow, 1)} required
+              aria-invalid={hcError} aria-describedby={hcError ? 'hero-af-error' : undefined}
+              onChange={e => { setHcOut(e.target.value); setHcError(false); }} />
           </div>
           <button type="submit" className="btn btn-primary hero-af-btn">
             {lang === 'es' ? 'Comprobar disponibilidad' : 'Check availability'} <span className="arrow">→</span>
           </button>
+          {hcError && (
+            <p id="hero-af-error" className="hero-af-error" role="alert">
+              {lang === 'es'
+                ? 'La fecha de salida debe ser posterior a la de entrada.'
+                : 'Check-out must be after check-in.'}
+            </p>
+          )}
         </form>
-        {/* "Descubre cada Hestía" + miniaturas de apartamento, juntos y justo
-            debajo del buscador de fechas: lo primero que se ve al entrar,
-            sin apenas hacer scroll. */}
+        {/* Miniaturas de apartamento, justo debajo del buscador de fechas:
+            única vía secundaria (el buscador es la acción principal del
+            hero, sin un botón "Descubre cada Hestía" compitiendo con ella). */}
         <div className="hero-discover-group">
-          <div className="hero-ctas">
-            <a href="#apartamentos" className="btn btn-primary hero-cta-anim">
-              {t.hero_cta_1} <span className="arrow">→</span>
-            </a>
-          </div>
           <nav className="hero-apts-quick" aria-label={lang === 'es' ? 'Ir directamente a un apartamento' : 'Jump to an apartment'}>
             {APARTMENTS.map(a => (
               <a key={a.id} href={`${a.slug}.html`} className={`haq-item ${a.id}`}>
@@ -254,48 +265,6 @@ const Hero = ({ lang, onScrollDown }) => {
     </section>
   );
 };
-
-// --- BRIDGE (transición día/noche) ---
-const Bridge = ({ lang }) => {
-  const t = COPY[lang];
-  const sectionRef = React.useRef(null);
-  const [burst, setBurst] = React.useState(false);
-
-  React.useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setTimeout(() => setBurst(true), 420); obs.disconnect(); } },
-      { threshold: 0.38 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-
-  return (
-    <section className="bridge" data-screen-label="02 Amanecer" ref={sectionRef}>
-      <div className={`celestial${burst ? ' sun-burst' : ''}`}/>
-      <div className="bridge-inner">
-        <div className="eyebrow bridge-time">( 07:14 )</div>
-        <h2 className="reveal" style={{marginTop: 20}}>{t.bridge_title}</h2>
-        <p className="reveal delay-1">{t.bridge_sub}</p>
-        <div className={`bridge-palette${burst ? ' burst-active' : ''}`}>
-          {BRIDGE_PALETTE.map((c, i) => (
-            <div key={i} className="bridge-chip" style={{ '--chip-color': c.hex, '--chip-idx': i }}>
-              <div className="chip-swatch"/>
-              <div className="chip-label">
-                {(lang === 'es' ? c.es : c.en).split(' · ').map((part, j) => (
-                  <span key={j}>{part}</span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
 
 // --- APARTAMENTOS (scroll horizontal) ---
 const APARTMENTS = [
@@ -952,4 +921,4 @@ const LongStayStrip = ({ lang }) => {
   );
 };
 
-Object.assign(window, { Hero, Bridge, Apartments, Compare, APARTMENTS, LastMinuteStrip, LongStayStrip });
+Object.assign(window, { Hero, Apartments, Compare, APARTMENTS, LastMinuteStrip, LongStayStrip });

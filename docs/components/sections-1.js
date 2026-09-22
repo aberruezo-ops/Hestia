@@ -99,9 +99,19 @@ const Hero = ({
   const heroTomorrow = _heroAdd(heroToday, 1);
   const [hcIn, setHcIn] = React.useState(heroTomorrow);
   const [hcOut, setHcOut] = React.useState(_heroAdd(heroTomorrow, 7));
+  // Antes, un rango inválido hacía que el formulario no hiciera nada al
+  // pulsar el botón, sin ningún aviso: el usuario no podía saber si había
+  // funcionado, fallado o estaba cargando. El date input ya limita el
+  // mínimo de salida vía `min`, pero sigue siendo posible teclear una
+  // fecha inválida a mano en algunos navegadores/SO, así que se avisa.
+  const [hcError, setHcError] = React.useState(false);
   const goReservas = e => {
     e.preventDefault();
-    if (!hcIn || !hcOut || hcOut <= hcIn) return;
+    if (!hcIn || !hcOut || hcOut <= hcIn) {
+      setHcError(true);
+      return;
+    }
+    setHcError(false);
     // Sin apartamento (cualquier Hestía) y 4 huéspedes por defecto: /reservas
     // mostrará la disponibilidad de los 3 Hestías para esas fechas + opciones.
     const p = new URLSearchParams({
@@ -209,7 +219,8 @@ const Hero = ({
     className: "hero-sub"
   }, t.hero_sub), /*#__PURE__*/React.createElement("form", {
     className: "hero-availform",
-    onSubmit: goReservas
+    onSubmit: goReservas,
+    noValidate: true
   }, /*#__PURE__*/React.createElement("div", {
     className: "hero-af-field"
   }, /*#__PURE__*/React.createElement("label", {
@@ -219,8 +230,12 @@ const Hero = ({
     type: "date",
     value: hcIn,
     min: heroTomorrow,
+    required: true,
+    "aria-invalid": hcError,
+    "aria-describedby": hcError ? 'hero-af-error' : undefined,
     onChange: e => {
       setHcIn(e.target.value);
+      setHcError(false);
       if (e.target.value) setHcOut(_heroAdd(e.target.value, 7));
     }
   })), /*#__PURE__*/React.createElement("div", {
@@ -232,22 +247,25 @@ const Hero = ({
     type: "date",
     value: hcOut,
     min: _heroAdd(hcIn || heroTomorrow, 1),
-    onChange: e => setHcOut(e.target.value)
+    required: true,
+    "aria-invalid": hcError,
+    "aria-describedby": hcError ? 'hero-af-error' : undefined,
+    onChange: e => {
+      setHcOut(e.target.value);
+      setHcError(false);
+    }
   })), /*#__PURE__*/React.createElement("button", {
     type: "submit",
     className: "btn btn-primary hero-af-btn"
   }, lang === 'es' ? 'Comprobar disponibilidad' : 'Check availability', " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "→"))), /*#__PURE__*/React.createElement("div", {
+  }, "→")), hcError && /*#__PURE__*/React.createElement("p", {
+    id: "hero-af-error",
+    className: "hero-af-error",
+    role: "alert"
+  }, lang === 'es' ? 'La fecha de salida debe ser posterior a la de entrada.' : 'Check-out must be after check-in.')), /*#__PURE__*/React.createElement("div", {
     className: "hero-discover-group"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "hero-ctas"
-  }, /*#__PURE__*/React.createElement("a", {
-    href: "#apartamentos",
-    className: "btn btn-primary hero-cta-anim"
-  }, t.hero_cta_1, " ", /*#__PURE__*/React.createElement("span", {
-    className: "arrow"
-  }, "→"))), /*#__PURE__*/React.createElement("nav", {
+  }, /*#__PURE__*/React.createElement("nav", {
     className: "hero-apts-quick",
     "aria-label": lang === 'es' ? 'Ir directamente a un apartamento' : 'Jump to an apartment'
   }, APARTMENTS.map(a => /*#__PURE__*/React.createElement("a", {
@@ -316,62 +334,6 @@ const Hero = ({
   }, "·"), /*#__PURE__*/React.createElement("span", null, "Mar Mediterráneo")), /*#__PURE__*/React.createElement("span", {
     className: "hide-mobile hero-meta-province"
   }, "Almería · Andalucía")));
-};
-
-// --- BRIDGE (transición día/noche) ---
-const Bridge = ({
-  lang
-}) => {
-  const t = COPY[lang];
-  const sectionRef = React.useRef(null);
-  const [burst, setBurst] = React.useState(false);
-  React.useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => setBurst(true), 420);
-        obs.disconnect();
-      }
-    }, {
-      threshold: 0.38
-    });
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
-  return /*#__PURE__*/React.createElement("section", {
-    className: "bridge",
-    "data-screen-label": "02 Amanecer",
-    ref: sectionRef
-  }, /*#__PURE__*/React.createElement("div", {
-    className: `celestial${burst ? ' sun-burst' : ''}`
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "bridge-inner"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "eyebrow bridge-time"
-  }, "( 07:14 )"), /*#__PURE__*/React.createElement("h2", {
-    className: "reveal",
-    style: {
-      marginTop: 20
-    }
-  }, t.bridge_title), /*#__PURE__*/React.createElement("p", {
-    className: "reveal delay-1"
-  }, t.bridge_sub), /*#__PURE__*/React.createElement("div", {
-    className: `bridge-palette${burst ? ' burst-active' : ''}`
-  }, BRIDGE_PALETTE.map((c, i) => /*#__PURE__*/React.createElement("div", {
-    key: i,
-    className: "bridge-chip",
-    style: {
-      '--chip-color': c.hex,
-      '--chip-idx': i
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "chip-swatch"
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "chip-label"
-  }, (lang === 'es' ? c.es : c.en).split(' · ').map((part, j) => /*#__PURE__*/React.createElement("span", {
-    key: j
-  }, part))))))));
 };
 
 // --- APARTAMENTOS (scroll horizontal) ---
@@ -1313,7 +1275,6 @@ const LongStayStrip = ({
 };
 Object.assign(window, {
   Hero,
-  Bridge,
   Apartments,
   Compare,
   APARTMENTS,
