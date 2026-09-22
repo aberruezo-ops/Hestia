@@ -354,9 +354,9 @@ const APARTMENTS = [{
   slug: 'thalassa',
   license: 'VFT/AL/05535',
   concept: 'apt_02_concept',
-  img: 'assets/apt-vt-gallery-33.jpg',
-  imgW: 1200,
-  imgH: 1462,
+  img: 'assets/apt-vt-gallery-23.jpg',
+  imgW: 872,
+  imgH: 1024,
   rating: '10',
   meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA']
 }, {
@@ -366,9 +366,9 @@ const APARTMENTS = [{
   slug: 'salinas',
   license: 'VFT/AL/07056',
   concept: 'apt_03_concept',
-  img: 'assets/apt-vs-gallery-33.jpg',
-  imgW: 1500,
-  imgH: 1406,
+  img: 'assets/apt-vs-gallery-21.jpg',
+  imgW: 1067,
+  imgH: 795,
   rating: '9.9',
   meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas']
 }];
