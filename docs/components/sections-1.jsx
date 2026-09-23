@@ -271,7 +271,7 @@ const APARTMENTS = [
     img: 'assets/apt-vm-gallery-26.jpg', imgW: 1600, imgH: 1371, rating: '9.8',
     meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición'] },
   { id: 'vt', num: '02', name: 'Hestía Thalassa', slug: 'thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
-    img: 'assets/apt-vt-gallery-33.jpg', imgW: 1280, imgH: 1600, rating: '10',
+    img: 'assets/apt-vt-gallery-33.jpg', imgW: 871, imgH: 1089, rating: '10',
     meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA'] },
   { id: 'vs', num: '03', name: 'Hestía Salinas',  slug: 'salinas',  license: 'VFT/AL/07056', concept: 'apt_03_concept',
     img: 'assets/apt-vs-gallery-33.jpg', imgW: 1600, imgH: 1422, rating: '9.9',

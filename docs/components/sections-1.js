@@ -355,8 +355,8 @@ const APARTMENTS = [{
   license: 'VFT/AL/05535',
   concept: 'apt_02_concept',
   img: 'assets/apt-vt-gallery-33.jpg',
-  imgW: 1280,
-  imgH: 1600,
+  imgW: 871,
+  imgH: 1089,
   rating: '10',
   meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA']
 }, {
